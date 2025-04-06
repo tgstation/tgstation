@@ -33,7 +33,7 @@
 			for(var/obj/item/clothing/head/integrated_helmet in chosen_clothing.contents) //check if the clothing has a hood/helmet integrated and fireproof it if there is one.
 				apply_fireproof(integrated_helmet)
 		apply_fireproof(chosen_clothing)
-		playsound(get_turf(religious_tool), 'sound/magic/fireball.ogg', 50, TRUE)
+		playsound(get_turf(religious_tool), 'sound/effects/magic/fireball.ogg', 50, TRUE)
 		chosen_clothing = null //our lord and savior no longer cares about this apparel
 		return TRUE
 	chosen_clothing = null
@@ -110,7 +110,7 @@
 	var/altar_turf = get_turf(religious_tool)
 	for(var/i in 1 to 5)
 		new /obj/item/flashlight/flare/candle/infinite(altar_turf)
-	playsound(altar_turf, 'sound/magic/fireball.ogg', 50, TRUE)
+	playsound(altar_turf, 'sound/effects/magic/fireball.ogg', 50, TRUE)
 	return TRUE
 
 /datum/religion_rites/blazing_star

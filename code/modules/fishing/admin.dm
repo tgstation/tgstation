@@ -33,8 +33,14 @@ ADMIN_VERB(fishing_calculator, R_DEBUG, "Fishing Calculator", "A calculator... f
 	switch(action)
 		if("recalc")
 			var/rod_type = text2path(params["rod"])
-			var/bait_type = text2path(params["bait"])
+			if(!rod_type)
+				to_chat(user, span_warning("A fishing rod is needed in order to fish."))
+				return
 			var/hook_type = text2path(params["hook"])
+			if(!hook_type)
+				to_chat(user, span_warning("A fishing hook is needed in order to fish."))
+				return
+			var/bait_type = text2path(params["bait"])
 			var/line_type = text2path(params["line"])
 			var/datum/fish_source/spot = GLOB.preset_fish_sources[text2path(params["spot"])]
 
@@ -45,8 +51,7 @@ ADMIN_VERB(fishing_calculator, R_DEBUG, "Fishing Calculator", "A calculator... f
 
 			if(bait_type)
 				temporary_rod.set_slot(new bait_type(temporary_rod), ROD_SLOT_BAIT)
-			if(hook_type)
-				temporary_rod.set_slot(new hook_type(temporary_rod), ROD_SLOT_HOOK)
+			temporary_rod.set_slot(new hook_type(temporary_rod), ROD_SLOT_HOOK)
 			if(line_type)
 				temporary_rod.set_slot(new line_type(temporary_rod), ROD_SLOT_LINE)
 

@@ -1,9 +1,39 @@
-$badGradient: linear-gradient(to right, #9c1e1e, #6c2828, #9c1e1e);
-$normalGradient: linear-gradient(to right, #5d5041, #40372d, #5d5041);
-$goodGradient: linear-gradient(to right, #515d6c, #252a30, #515d6c);
-$veryGoodGradient: linear-gradient(to right, #977949, #534328, #977949);
-$superGoodGradient: linear-gradient(to right, #9d9948, #777437, #9d9948);
-$bestGradient: linear-gradient(to right, #9d486b, #57283c, #9d486b);
+$badGradient: linear-gradient(
+  to right,
+  hsl(0, 67%, 37%),
+  hsl(0, 43%, 28%),
+  hsl(0, 67%, 37%)
+);
+$normalGradient: linear-gradient(
+  to right,
+  hsl(30, 14%, 34%),
+  hsl(30, 20%, 19%),
+  hsl(30, 14%, 34%)
+);
+$goodGradient: linear-gradient(
+  to right,
+  hsl(210, 11%, 37%),
+  hsl(210, 14%, 17%),
+  hsl(210, 11%, 37%)
+);
+$veryGoodGradient: linear-gradient(
+  to right,
+  hsl(36, 38%, 44%),
+  hsl(36, 33%, 19%),
+  hsl(36, 38%, 44%)
+);
+$superGoodGradient: linear-gradient(
+  to right,
+  hsl(60, 39%, 45%),
+  hsl(60, 35%, 34%),
+  hsl(60, 39%, 45%)
+);
+$bestGradient: linear-gradient(
+  to right,
+  hsl(330, 34%, 45%),
+  hsl(330, 43%, 26%),
+  hsl(330, 34%, 45%)
+);
 
 $_rep_map: (
   'bad': $badGradient,

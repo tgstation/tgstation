@@ -341,6 +341,10 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		var/obj/item/clothing/under/holo_clothing = holo_atom
 		holo_clothing.dump_attachments()
 
+	if(istype(holo_atom, /obj/item/organ))
+		var/obj/item/organ/holo_organ = holo_atom
+		if(holo_organ.owner) // a mob has the holo organ inside them... oh dear
+			to_chat(holo_organ.owner, span_warning("\The [holo_organ] inside of you fades away!"))
 	if(!silent)
 		visible_message(span_notice("[holo_atom] fades away!"))
 

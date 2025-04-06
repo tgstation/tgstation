@@ -48,8 +48,8 @@
 	breakouttime = 1 MINUTES
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
-	pickup_sound = 'sound/items/handcuffs_pick_up.ogg'
-	drop_sound = 'sound/items/handcuffs_drop.ogg'
+	pickup_sound = 'sound/items/handling/handcuffs/handcuffs_pick_up.ogg'
+	drop_sound = 'sound/items/handling/handcuffs/handcuffs_drop.ogg'
 	sound_vary = TRUE
 
 	///How long it takes to handcuff someone
@@ -57,7 +57,7 @@
 	///Multiplier for handcuff time
 	var/handcuff_time_mod = 1
 	///Sound that plays when starting to put handcuffs on someone
-	var/cuffsound = 'sound/weapons/handcuffs.ogg'
+	var/cuffsound = 'sound/items/weapons/handcuffs.ogg'
 	///Sound that plays when restrain is successful
 	var/cuffsuccesssound = 'sound/items/handcuff_finish.ogg'
 	///If set, handcuffs will be destroyed on application and leave behind whatever this is set to.
@@ -200,7 +200,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.75)
 	breakouttime = 30 SECONDS
-	cuffsound = 'sound/weapons/cablecuff.ogg'
+	cuffsound = 'sound/items/weapons/cablecuff.ogg'
 	pickup_sound = null
 	drop_sound = null
 	restraint_strength = HANDCUFFS_TYPE_WEAK
@@ -424,7 +424,7 @@
 
 /obj/item/restraints/legcuffs/beartrap/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is sticking [user.p_their()] head in the [src.name]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, TRUE, -1)
+	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
 /obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
@@ -551,7 +551,7 @@
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE)
 	if(!..())
 		return
-	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, TRUE)
+	playsound(src.loc,'sound/items/weapons/bolathrow.ogg', 75, TRUE)
 
 /obj/item/restraints/legcuffs/bola/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
@@ -606,7 +606,7 @@
 	desc = "A specialized hard-light bola designed to ensnare fleeing criminals and aid in arrests."
 	icon_state = "ebola"
 	inhand_icon_state = "ebola"
-	hitsound = 'sound/weapons/taserhit.ogg'
+	hitsound = 'sound/items/weapons/taserhit.ogg'
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_COMMAND * 0.35

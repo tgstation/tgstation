@@ -167,7 +167,7 @@
 			message = "<b>You wished for power. Little good it did you, cast out of the light. You are the [gender == MALE ? "king" : "queen"] of a hell that holds no subjects. You feel only remorse.</b>"
 		if(4)
 			message = "<b>You wished for immortality, even as your friends lay dying behind you. No matter how many times you cast yourself into the lava, you awaken in this room again within a few days. There is no escape.</b>"
-	to_chat(new_spawn, "<span class='infoplain'>[message]</span>")
+	to_chat(new_spawn, span_infoplain("[message]"))
 
 /obj/effect/mob_spawn/ghost_role/human/nanotrasensoldier
 	name = "sleeper"

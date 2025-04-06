@@ -194,7 +194,7 @@
 		return
 
 	var/flinch_chance = 50
-	var/gun_hand = (source.get_held_index_of_item(weapon) % 2) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
+	var/gun_hand = IS_LEFT_INDEX(source.get_held_index_of_item(weapon)) ? BODY_ZONE_L_ARM : BODY_ZONE_R_ARM
 
 	if(isbodypart(def_zone))
 		var/obj/item/bodypart/hitting = def_zone

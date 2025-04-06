@@ -29,7 +29,7 @@
 /atom/movable/render_step/singularity_act()
 	return
 
-/atom/movable/render_step/singularity_pull()
+/atom/movable/render_step/singularity_pull(atom/singularity, current_size)
 	return
 
 /atom/movable/render_step/blob_act()

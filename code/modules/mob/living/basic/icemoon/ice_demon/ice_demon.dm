@@ -16,7 +16,7 @@
 	melee_damage_upper = 15
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
@@ -24,7 +24,7 @@
 	crusher_loot = /obj/item/crusher_trophy/ice_demon_cube
 	ai_controller = /datum/ai_controller/basic_controller/ice_demon
 	death_message = "fades as the energies that tied it to this world dissipate."
-	death_sound = 'sound/magic/demon_dies.ogg'
+	death_sound = 'sound/effects/magic/demon_dies.ogg'
 
 /mob/living/basic/mining/ice_demon/Initialize(mapload)
 	. = ..()
@@ -38,7 +38,7 @@
 	AddComponent(\
 		/datum/component/ranged_attacks,\
 		projectile_type = /obj/projectile/temp/ice_demon,\
-		projectile_sound = 'sound/weapons/pierce.ogg',\
+		projectile_sound = 'sound/items/weapons/pierce.ogg',\
 	)
 	var/static/list/death_loot = list(/obj/item/stack/ore/bluespace_crystal = 3)
 	AddElement(/datum/element/death_drops, death_loot)
@@ -66,7 +66,7 @@
 	melee_damage_upper = 5
 	attack_verb_continuous = "slices"
 	attack_verb_simple = "slice"
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	alpha = 80
 	ai_controller = /datum/ai_controller/basic_controller/ice_demon/afterimage
 	///how long do we exist for

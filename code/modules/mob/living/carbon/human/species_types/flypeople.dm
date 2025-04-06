@@ -4,18 +4,18 @@
 	id = SPECIES_FLYPERSON
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	meat = /obj/item/food/meat/slab/human/mutant/fly
-	mutanteyes = /obj/item/organ/internal/eyes/fly
+	mutanteyes = /obj/item/organ/eyes/fly
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/fly
 	payday_modifier = 1.0
 
-	mutanttongue = /obj/item/organ/internal/tongue/fly
-	mutantheart = /obj/item/organ/internal/heart/fly
-	mutantlungs = /obj/item/organ/internal/lungs/fly
-	mutantliver = /obj/item/organ/internal/liver/fly
-	mutantstomach = /obj/item/organ/internal/stomach/fly
-	mutantappendix = /obj/item/organ/internal/appendix/fly
-	mutant_organs = list(/obj/item/organ/internal/fly, /obj/item/organ/internal/fly/groin)
+	mutanttongue = /obj/item/organ/tongue/fly
+	mutantheart = /obj/item/organ/heart/fly
+	mutantlungs = /obj/item/organ/lungs/fly
+	mutantliver = /obj/item/organ/liver/fly
+	mutantstomach = /obj/item/organ/stomach/fly
+	mutantappendix = /obj/item/organ/appendix/fly
+	mutant_organs = list(/obj/item/organ/fly, /obj/item/organ/fly/groin)
 
 	bodypart_overrides = list(
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/fly,
@@ -26,7 +26,7 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/fly,
 	)
 
-/datum/species/fly/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+/datum/species/fly/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	RegisterSignal(human_who_gained_species, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
 

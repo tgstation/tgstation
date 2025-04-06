@@ -18,8 +18,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	drop_sound = 'sound/items/medkit_drop.ogg'
-	pickup_sound = 'sound/items/medkit_pick_up.ogg'
+	drop_sound = 'sound/items/handling/medkit/medkit_drop.ogg'
+	pickup_sound = 'sound/items/handling/medkit/medkit_pick_up.ogg'
 	sound_vary = TRUE
 	var/empty = FALSE
 	/// Defines damage type of the medkit. General ones stay null. Used for medibot healing bonuses
@@ -82,9 +82,9 @@
 /obj/item/storage/medkit/Initialize(mapload)
 	. = ..()
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.open_sound = 'sound/items/medkit_open.ogg'
+	atom_storage.open_sound = 'sound/items/handling/medkit/medkit_open.ogg'
 	atom_storage.open_sound_vary = TRUE
-	atom_storage.rustle_sound = 'sound/items/medkit_rustle.ogg'
+	atom_storage.rustle_sound = 'sound/items/handling/medkit/medkit_rustle.ogg'
 
 /obj/item/storage/medkit/regular
 	icon_state = "medkit"
@@ -818,3 +818,8 @@
 /obj/item/storage/test_tube_rack/update_icon_state()
 	icon_state = "[base_icon_state][contents.len > 0 ? contents.len : null]"
 	return ..()
+
+/obj/item/storage/test_tube_rack/full/PopulateContents()
+	for(var/i in 1 to atom_storage.max_slots)
+		new /obj/item/reagent_containers/cup/tube(src)
+

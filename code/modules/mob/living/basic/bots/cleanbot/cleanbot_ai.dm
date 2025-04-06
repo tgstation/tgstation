@@ -15,7 +15,6 @@
 	)
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/manage_unreachable_list,
 		/datum/ai_planning_subtree/pet_planning/cleanbot,
 		/datum/ai_planning_subtree/cleaning_subtree,
 		/datum/ai_planning_subtree/befriend_janitors,
@@ -70,7 +69,7 @@
 /datum/ai_behavior/find_and_set/in_list/clean_targets
 	action_cooldown = 3 SECONDS
 
-/datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
+/datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/basic_controller/bot/controller, locate_paths, search_range)
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/atom/found_item in found)
@@ -82,7 +81,7 @@
 			return found_item
 		var/list/path = get_path_to(controller.pawn, found_item, max_distance = BOT_CLEAN_PATH_LIMIT, access = controller.get_access())
 		if(!length(path))
-			controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, found_item, TRUE)
+			controller.add_to_blacklist(found_item)
 			continue
 		return found_item
 
@@ -132,13 +131,13 @@
 	living_pawn.UnarmedAttack(target, proximity_flag = TRUE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/execute_clean/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+/datum/ai_behavior/execute_clean/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	controller.set_blackboard_key(BB_POST_CLEAN_COOLDOWN, POST_CLEAN_COOLDOWN + world.time)
 	var/atom/target = controller.blackboard[target_key]
 	if(!succeeded && !isnull(target))
 		controller.clear_blackboard_key(target_key)
-		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
+		controller.add_to_blacklist(target)
 		return
 	if(QDELETED(target) || is_type_in_typecache(target, controller.blackboard[BB_HUNTABLE_TRASH]))
 		return

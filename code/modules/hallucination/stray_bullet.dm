@@ -16,7 +16,7 @@
 
 	var/obj/projectile/hallucination/fake_projectile = new fake_type(start, src)
 
-	fake_projectile.preparePixelProjectile(hallucinator, start)
+	fake_projectile.aim_projectile(hallucinator, start)
 	fake_projectile.fire()
 
 	QDEL_IN(src, 10 SECONDS) // Should clean up the projectile if it somehow gets stuck.
@@ -32,7 +32,6 @@
 	ricochets_max = 0
 	ricochet_chance = 0
 	damage = 0
-	projectile_type = /obj/projectile/hallucination
 	log_override = TRUE
 	do_not_log = TRUE
 	/// Our parent hallucination that's created us
@@ -101,7 +100,6 @@
 			spawn_hit(target, TRUE)
 
 	qdel(src)
-	return TRUE
 
 /// Called when a mob is hit by the fake projectile
 /obj/projectile/hallucination/proc/on_mob_hit(mob/living/hit_mob)
@@ -189,7 +187,7 @@
 	name = "bullet"
 	hal_icon_state = "bullet"
 	hal_fire_sound = "gunshot"
-	hal_hitsound = 'sound/weapons/pierce.ogg'
+	hal_hitsound = 'sound/items/weapons/pierce.ogg'
 	hal_hitsound_wall = SFX_RICOCHET
 	hal_impact_effect = "impact_bullet"
 	hal_impact_effect_wall = "impact_bullet"
@@ -203,9 +201,9 @@
 	name = "laser"
 	damage_type = BURN
 	hal_icon_state = "laser"
-	hal_fire_sound = 'sound/weapons/laser.ogg'
-	hal_hitsound = 'sound/weapons/sear.ogg'
-	hal_hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	hal_fire_sound = 'sound/items/weapons/laser.ogg'
+	hal_hitsound = 'sound/items/weapons/sear.ogg'
+	hal_hitsound_wall = 'sound/items/weapons/effects/searwall.ogg'
 	hal_impact_effect = "impact_laser"
 	hal_impact_effect_wall = "impact_laser_wall"
 	hit_duration = 4
@@ -214,7 +212,7 @@
 
 	ricochets_max = 50
 	ricochet_chance = 80
-	reflectable = REFLECT_NORMAL // No idea if this works
+	reflectable = TRUE
 
 /obj/projectile/hallucination/laser/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.adjustStaminaLoss(20)
@@ -225,8 +223,8 @@
 	damage_type = BURN
 	hal_icon_state = "spark"
 	color = COLOR_YELLOW
-	hal_fire_sound = 'sound/weapons/taser.ogg'
-	hal_hitsound = 'sound/weapons/taserhit.ogg'
+	hal_fire_sound = 'sound/items/weapons/taser.ogg'
+	hal_hitsound = 'sound/items/weapons/taserhit.ogg'
 	hal_hitsound_wall = null
 	hal_impact_effect = null
 	hal_impact_effect_wall = null
@@ -250,9 +248,9 @@
 	name = "disabler beam"
 	damage_type = STAMINA
 	hal_icon_state = "omnilaser"
-	hal_fire_sound = 'sound/weapons/taser2.ogg'
-	hal_hitsound = 'sound/weapons/tap.ogg'
-	hal_hitsound_wall = 'sound/weapons/effects/searwall.ogg'
+	hal_fire_sound = 'sound/items/weapons/taser2.ogg'
+	hal_hitsound = 'sound/items/weapons/tap.ogg'
+	hal_hitsound_wall = 'sound/items/weapons/effects/searwall.ogg'
 	hal_impact_effect = "impact_laser_blue"
 	hal_impact_effect_wall = null
 	hit_duration = 4
@@ -260,7 +258,7 @@
 
 	ricochets_max = 50
 	ricochet_chance = 80
-	reflectable = REFLECT_NORMAL // No idea if this works
+	reflectable = TRUE
 
 /obj/projectile/hallucination/disabler/apply_effect_to_hallucinator(mob/living/afflicted)
 	afflicted.adjustStaminaLoss(30)
@@ -269,7 +267,7 @@
 	name = "bolt"
 	damage_type = TOX
 	hal_icon_state = "cbbolt"
-	hal_fire_sound = 'sound/weapons/genhit.ogg'
+	hal_fire_sound = 'sound/items/weapons/genhit.ogg'
 	hal_hitsound = null
 	hal_hitsound_wall = null
 	hal_impact_effect = null
@@ -285,7 +283,7 @@
 	name = "bolt of change"
 	damage_type = BURN
 	hal_icon_state = "ice_1"
-	hal_fire_sound = 'sound/magic/staff_change.ogg'
+	hal_fire_sound = 'sound/effects/magic/staff_change.ogg'
 	hal_hitsound = null
 	hal_hitsound_wall = null
 	hal_impact_effect = null
@@ -307,7 +305,7 @@
 	name = "bolt of death"
 	damage_type = BURN
 	hal_icon_state = "pulse1_bl"
-	hal_fire_sound = 'sound/magic/wandodeath.ogg'
+	hal_fire_sound = 'sound/effects/magic/wandodeath.ogg'
 	hal_hitsound = null
 	hal_hitsound_wall = null
 	hal_impact_effect = null

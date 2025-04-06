@@ -1,6 +1,8 @@
 /atom/proc/investigate_log(message, subject)
-	if(!message || !subject)
+	if(!message)
 		return
+	if(!subject)
+		CRASH("No subject provided for investigate_log")
 	var/F = file("[GLOB.log_directory]/[subject].html")
 	var/source = "[src]"
 

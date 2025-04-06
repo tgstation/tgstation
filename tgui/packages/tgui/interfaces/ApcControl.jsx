@@ -1,5 +1,4 @@
 import { map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
 import { useState } from 'react';
 import {
   Box,
@@ -11,6 +10,7 @@ import {
   Table,
   Tabs,
 } from 'tgui-core/components';
+import { flow } from 'tgui-core/fp';
 
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';

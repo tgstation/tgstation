@@ -17,7 +17,7 @@
 	/// Type of projectile to fire
 	var/projectile_type = /obj/projectile/temp/watcher
 	/// Sound the projectile we fire makes
-	var/projectile_sound = 'sound/weapons/pierce.ogg'
+	var/projectile_sound = 'sound/items/weapons/pierce.ogg'
 	/// Time to watch for
 	var/overwatch_duration = 3 SECONDS
 

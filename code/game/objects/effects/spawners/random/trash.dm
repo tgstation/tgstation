@@ -324,3 +324,18 @@
 	if(istype(crushed_can))
 		crushed_can.icon_state = pick(soda_icons)
 	return crushed_can
+
+/obj/effect/spawner/random/trash/ghetto_containers
+	name = "ghetto container spawner"
+	loot = list(
+		/obj/item/reagent_containers/cup/bucket = 5,
+		/obj/item/reagent_containers/cup/glass/bottle = 5,
+		/obj/item/reagent_containers/cup/glass/bottle/small = 5,
+		/obj/item/reagent_containers/cup/glass/mug = 5,
+		/obj/item/reagent_containers/cup/glass/shaker = 5,
+		/obj/item/reagent_containers/cup/watering_can/wood = 5,
+		/obj/item/reagent_containers/cup/mortar = 2,
+		/obj/item/reagent_containers/cup/soup_pot = 2,
+		/obj/item/reagent_containers/cup/blastoff_ampoule = 1,
+		/obj/item/reagent_containers/cup/maunamug = 1,
+	)

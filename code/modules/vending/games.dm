@@ -46,6 +46,21 @@
 			),
 		),
 		list(
+			"name" = "Fishing",
+			"icon" = "fish",
+			"products" = list(
+				/obj/item/storage/toolbox/fishing = 2,
+				/obj/item/storage/box/fishing_hooks = 2,
+				/obj/item/storage/box/fishing_lines = 2,
+				/obj/item/storage/box/fishing_lures = 2,
+				/obj/item/book/manual/fish_catalog = 5,
+				/obj/item/reagent_containers/cup/fish_feed = 4,
+				/obj/item/fish_analyzer = 2,
+				/obj/item/fishing_rod/telescopic = 1,
+				/obj/item/fish_tank = 1,
+			),
+		),
+		list(
 			"name" = "Skillchips",
 			"icon" = "floppy-disk",
 			"products" = list(
@@ -83,6 +98,7 @@
 		/obj/item/clothing/shoes/wheelys/skishoes = 4,
 		/obj/item/instrument/musicalmoth = 1,
 		/obj/item/gun/ballistic/revolver/russian = 1, //the most dangerous game
+		/obj/item/skillchip/acrobatics = 1,
 	)
 	premium = list(
 		/obj/item/disk/holodisk = 5,

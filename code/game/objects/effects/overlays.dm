@@ -4,7 +4,7 @@
 /obj/effect/overlay/singularity_act()
 	return
 
-/obj/effect/overlay/singularity_pull()
+/obj/effect/overlay/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/overlay/beam//Not actually a projectile, just an effect.
@@ -28,7 +28,7 @@
 	name = "thermite"
 	desc = "Looks hot."
 	icon = 'icons/effects/fire.dmi'
-	icon_state = "2" //what?
+	icon_state = "medium" //what?
 	anchored = TRUE
 	plane = ABOVE_GAME_PLANE
 	layer = FLY_LAYER

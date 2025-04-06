@@ -20,7 +20,6 @@
 	interaction_flags_click = NEED_DEXTERITY
 	throw_range = 1
 	throw_speed = 1
-	COOLDOWN_DECLARE(scanning_person) //Cooldown for scanning a carbon
 	///How long it takes to print on time each mode, ordered NORMAL, FAST, HONK
 	var/list/time_list = list(5 SECONDS, 1 SECONDS, 0.1 SECONDS)
 	///Which print time mode we're on.
@@ -108,20 +107,11 @@
 		balloon_alert(user, "check cell!")
 		return ITEM_INTERACT_BLOCKING
 
-	if(iscarbon(interacting_with)) //Prevents insta scanning people
-		if(!COOLDOWN_FINISHED(src, scanning_person))
-			return ITEM_INTERACT_BLOCKING
-
-		visible_message(span_warning("[user] starts scanning [interacting_with] with [src]"))
-		to_chat(interacting_with, span_userdanger("[user] is trying to scan you for contraband!"))
-		balloon_alert_to_viewers("scanning...")
-		playsound(src, 'sound/effects/genetics.ogg', 40, FALSE)
-		COOLDOWN_START(src, scanning_person, 4 SECONDS)
-		if(!do_after(user, 4 SECONDS, interacting_with))
-			return ITEM_INTERACT_BLOCKING
+	if(iscarbon(interacting_with)) // Prevents scanning people
+		return
 
 	if(contraband_scan(interacting_with, user))
-		playsound(src, 'sound/machines/uplinkerror.ogg', 40)
+		playsound(src, 'sound/machines/uplink/uplinkerror.ogg', 40)
 		balloon_alert(user, "contraband detected!")
 		return ITEM_INTERACT_SUCCESS
 	else
@@ -195,10 +185,10 @@
 */
 /obj/item/inspector/proc/print_report(mob/user)
 	if(!cell)
-		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... It feels quite light. Perhaps it lacks a power cell?")
+		to_chat(user, span_info("\The [src] doesn't seem to be on... It feels quite light. Perhaps it lacks a power cell?"))
 		return
 	if(cell.charge == 0)
-		to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
+		to_chat(user, span_info("\The [src] doesn't seem to be on... Perhaps it ran out of power?"))
 		return
 	if(!cell.use(energy_per_print))
 		if(cell.use(ENERGY_TO_SPEAK))
@@ -389,7 +379,7 @@
 		if(cell.use(ENERGY_TO_SPEAK))
 			say("ERROR! OUT OF PAPER! MAXIMUM PRINTING SPEED UNAVAIBLE! SWITCH TO A SLOWER SPEED TO OR PROVIDE PAPER!")
 		else
-			to_chat(user, "<span class='info'>\The [src] doesn't seem to be on... Perhaps it ran out of power?")
+			to_chat(user, span_info("\The [src] doesn't seem to be on... Perhaps it ran out of power?"))
 		return
 	paper_charges--
 	return ..()

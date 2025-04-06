@@ -15,9 +15,6 @@
 ///from base of atom/movable/Bump(): (/atom)
 #define COMSIG_MOVABLE_BUMP "movable_bump"
 	#define COMPONENT_INTERCEPT_BUMPED (1<<0)
-///from base of atom/movable/newtonian_move(): (inertia_direction, start_delay)
-#define COMSIG_MOVABLE_NEWTONIAN_MOVE "movable_newtonian_move"
-	#define COMPONENT_MOVABLE_NEWTONIAN_BLOCK (1<<0)
 ///from datum/component/drift/apply_initial_visuals(): ()
 #define COMSIG_MOVABLE_DRIFT_VISUAL_ATTEMPT "movable_drift_visual_attempt"
 	#define DRIFT_VISUAL_FAILED (1<<0)
@@ -124,6 +121,9 @@
 
 ///from base of /atom/movable/point_at: (atom/A, obj/effect/temp_visual/point/point)
 #define COMSIG_MOVABLE_POINTED "movable_pointed"
+
+///From /datum/component/aquarium/get_content_beauty: (beauty_holder)
+#define COMSIG_MOVABLE_GET_AQUARIUM_BEAUTY "movable_ge_aquarium_beauty"
 
 /// Sent to movables when they are being stolen by a spy: (mob/living/spy, datum/spy_bounty/bounty)
 #define COMSIG_MOVABLE_SPY_STEALING "movable_spy_stealing"

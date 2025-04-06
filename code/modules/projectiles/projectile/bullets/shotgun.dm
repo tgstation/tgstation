@@ -94,7 +94,7 @@
 	stamina = 11
 	sharpness = NONE
 	embed_type = null
-	speed = 1.2
+	speed = 0.8
 	stamina_falloff_tile = -0.25
 	ricochets_max = 4
 	ricochet_chance = 120
@@ -106,7 +106,7 @@
 	/// Subtracted from the ricochet chance for each tile traveled
 	var/tile_dropoff_ricochet = 4
 
-/obj/projectile/bullet/pellet/shotgun_rubbershot/Range()
+/obj/projectile/bullet/pellet/shotgun_rubbershot/reduce_range()
 	if(ricochet_chance > 0)
 		ricochet_chance -= tile_dropoff_ricochet
 	. = ..()
@@ -124,7 +124,7 @@
 	wound_bonus = -25
 	bare_wound_bonus = 50
 	wound_falloff_tile = -10
-	speed = 0.8
+	speed = 1.2
 	ricochet_decay_chance = 0.6
 	ricochet_decay_damage = 0.3
 	demolition_mod = 10
@@ -141,6 +141,6 @@
 /obj/projectile/bullet/shotgun_breaching
 	name = "12g breaching round"
 	desc = "A breaching round designed to destroy airlocks and windows with only a few shots. Ineffective against other targets."
-	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
+	hitsound = 'sound/items/weapons/sonic_jackhammer.ogg'
 	damage = 5 //does shit damage to everything except doors and windows
 	demolition_mod = 200 //one shot to break a window or grille, or two shots to breach an airlock door

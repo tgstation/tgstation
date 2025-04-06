@@ -242,9 +242,9 @@
 			active gravitational singularities or tesla balls towards it. This will not work when the engine is still \
 			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
-	progression_minimum = 30 MINUTES
+	progression_minimum = 20 MINUTES
 	item = /obj/item/sbeacondrop
-	cost = 10
+	cost = 4
 	surplus = 0 // not while there isnt one on any station
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 

@@ -19,7 +19,7 @@
 	obj_damage = 100
 	melee_damage_lower = 25
 	melee_damage_upper = 25
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	attack_verb_continuous = "pulverizes"
 	attack_verb_simple = "pulverize"
 	throw_blocked_message = "does nothing to the tough hide of"
@@ -68,7 +68,8 @@
 	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/grown/ash_flora), tame_chance = 10, bonus_tame_chance = 5)
+		var/static/list/food_types = list(/obj/item/food/grown/ash_flora)
+		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 10, bonus_tame_chance = 5)
 
 	tentacles = new (src)
 	tentacles.Grant(src)
@@ -118,7 +119,6 @@
 
 /mob/living/basic/mining/goliath/proc/make_rideable()
 	saddled = TRUE
-	buckle_lying = 0
 	add_overlay("goliath_saddled")
 	AddElement(/datum/element/ridable, /datum/component/riding/creature/goliath)
 
@@ -136,7 +136,7 @@
 	if (!COOLDOWN_FINISHED(src, ability_animation_cooldown))
 		return
 	COOLDOWN_START(src, ability_animation_cooldown, 2 SECONDS)
-	playsound(src, 'sound/magic/demon_attack1.ogg', vol = 50, vary = TRUE)
+	playsound(src, 'sound/effects/magic/demon_attack1.ogg', vol = 50, vary = TRUE)
 	Shake(1, 0, 1.5 SECONDS)
 
 /// Called slightly before tentacles ability comes off cooldown, as a warning

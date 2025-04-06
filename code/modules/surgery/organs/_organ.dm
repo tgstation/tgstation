@@ -46,6 +46,10 @@
 
 	/// Food reagents if the organ is edible
 	var/list/food_reagents = list(/datum/reagent/consumable/nutriment = 5)
+	/// Foodtypes if the organ is edible
+	var/foodtype_flags = RAW | MEAT | GORE
+	/// Overrides tastes if the organ is edible
+	var/food_tastes
 	/// The size of the reagent container if the organ is edible
 	var/reagent_vol = 10
 
@@ -74,12 +78,14 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
 			initial_reagents = food_reagents,\
-			foodtypes = RAW | MEAT | GORE,\
+			foodtypes = foodtype_flags,\
 			volume = reagent_vol,\
+			tastes = food_tastes,\
 			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
 
 	if(bodypart_overlay)
 		setup_bodypart_overlay()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/Destroy()
 	if(bodypart_owner && !owner && !QDELETED(bodypart_owner))
@@ -121,10 +127,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		return
 	owner.remove_status_effect(status, type)
 
-/obj/item/organ/proc/on_owner_examine(datum/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-	return
-
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
@@ -135,14 +137,43 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(!IS_ROBOTIC_ORGAN(src) && (clean_types & CLEAN_TYPE_BLOOD))
 		add_blood_DNA(blood_dna_info)
 
-/obj/item/organ/process(seconds_per_tick, times_fired)
-	return
+/obj/item/organ/proc/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
+	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
+		return
 
-/obj/item/organ/proc/on_death(seconds_per_tick, times_fired)
-	return
+	if(owner)
+		if(owner.bodytemperature > T0C)
+			var/air_temperature_factor = min((owner.bodytemperature - T0C) / 20, 1)
+			apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
+	else
+		var/datum/gas_mixture/exposed_air = return_air()
+		if(exposed_air && exposed_air.temperature > T0C)
+			var/air_temperature_factor = min((exposed_air.temperature - T0C) / 20, 1)
+			apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
 
-/obj/item/organ/proc/on_life(seconds_per_tick, times_fired)
-	return
+/obj/item/organ/proc/on_life(seconds_per_tick, times_fired) //repair organ damage if the organ is not failing
+	if(organ_flags & ORGAN_FAILING)
+		handle_failing_organs(seconds_per_tick)
+		return
+
+	if(failure_time > 0)
+		failure_time--
+
+	if(organ_flags & ORGAN_EMP) //Synthetic organ has been emped, is now failing.
+		apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
+		return
+
+	if(!damage) // No sense healing if you're not even hurt bro
+		return
+
+	if(IS_ROBOTIC_ORGAN(src)) // Robotic organs don't naturally heal
+		return
+
+	///Damage decrements by a percent of its maxhealth
+	var/healing_amount = healing_factor
+	///Damage decrements again by a percent of its maxhealth, up to a total of 4 extra times depending on the owner's health
+	healing_amount += (owner.satiety > 0) ? (4 * healing_factor * owner.satiety / MAX_SATIETY) : 0
+	apply_organ_damage(-healing_amount * maxHealth * seconds_per_tick, damage) // pass curent damage incase we are over cap
 
 /obj/item/organ/examine(mob/user)
 	. = ..()
@@ -161,11 +192,14 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 ///Used as callbacks by object pooling
 /obj/item/organ/proc/exit_wardrobe()
-	return
+	START_PROCESSING(SSobj, src)
 
 //See above
 /obj/item/organ/proc/enter_wardrobe()
-	return
+	STOP_PROCESSING(SSobj, src)
+
+/obj/item/organ/process(seconds_per_tick, times_fired)
+	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/proc/OnEatFrom(eater, feeder)
 	useable = FALSE //You can't use it anymore after eating it you spaztic
@@ -244,20 +278,20 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		set_heartattack(FALSE)
 
 		// Ears have aditional vаr "deaf", need to update it too
-		var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+		var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 		ears?.adjustEarDamage(0, -INFINITY) // full heal ears deafness
 
 		return
 
 	// Default organ fixing handling
 	// May result in kinda cursed stuff for mobs which don't need these organs
-	var/obj/item/organ/internal/lungs/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	if(!lungs)
 		lungs = new()
 		lungs.Insert(src)
 	lungs.set_organ_damage(0)
 
-	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
 	if(heart)
 		set_heartattack(FALSE)
 	else
@@ -265,26 +299,32 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		heart.Insert(src)
 	heart.set_organ_damage(0)
 
-	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
+	var/obj/item/organ/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)
 		tongue = new()
 		tongue.Insert(src)
 	tongue.set_organ_damage(0)
 
-	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		eyes = new()
 		eyes.Insert(src)
 	eyes.set_organ_damage(0)
 
-	var/obj/item/organ/internal/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
+	var/obj/item/organ/ears/ears = get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)
 		ears = new()
 		ears.Insert(src)
 	ears.adjustEarDamage(-INFINITY, -INFINITY) // actually do: set_organ_damage(0) and deaf = 0
 
+///Organs don't die instantly, and neither should you when you get fucked up
 /obj/item/organ/proc/handle_failing_organs(seconds_per_tick)
-	return
+	if(owner.stat == DEAD)
+		return
+
+	failure_time += seconds_per_tick
+	organ_failure(seconds_per_tick)
+
 
 /** organ_failure
  * generic proc for handling dying organs
@@ -320,30 +360,43 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		replacement.set_organ_damage(damage)
 
 /// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
-/obj/item/organ/proc/get_status_text(advanced)
-	if(advanced && (organ_flags & ORGAN_PROMINENT))
-		return "<font color='#cc3333'>Harmful Foreign Body</font>"
+/obj/item/organ/proc/get_status_text(advanced, add_tooltips)
+	if(advanced && (organ_flags & ORGAN_HAZARDOUS))
+		return conditional_tooltip("<font color='#cc3333'>Harmful Foreign Body</font>", "Remove surgically.", add_tooltips)
 
 	if(organ_flags & ORGAN_EMP)
-		return "<font color='#cc3333'>EMP-Derived Failure Cascade in Progress</font>"
+		return conditional_tooltip("<font color='#cc3333'>EMP-Derived Failure</font>", "Repair or replace surgically.", add_tooltips)
 
+	var/tech_text = ""
 	if(owner.has_reagent(/datum/reagent/inverse/technetium))
-		return "<font color='#E42426'>[round((damage/maxHealth)*100, 1)]% damaged.</font>"
+		tech_text = "[round((damage / maxHealth) * 100, 1)]% damaged"
 
 	if(organ_flags & ORGAN_FAILING)
-		return "<font color='#cc3333'>Non-Functional</font>"
+		return conditional_tooltip("<font color='#cc3333'>[tech_text || "Non-Functional"]</font>", "Repair or replace surgically.", add_tooltips)
 
 	if(damage > high_threshold)
-		return "<font color='#ff9933'>Severely Damaged</font>"
+		return conditional_tooltip("<font color='#ff9933'>[tech_text || "Severely Damaged"]</font>", "[healing_factor ? "Treat with rest or use specialty medication." : "Repair surgically or use specialty medication."]", add_tooltips && owner.stat != DEAD)
 
-	if (damage > low_threshold)
-		return "<font color='#ffcc33'>Mildly Damaged</font>"
+	if(damage > low_threshold)
+		return conditional_tooltip("<font color='#ffcc33'>[tech_text || "Mildly Damaged"] </font>", "[healing_factor ? "Treat with rest." : "Use specialty medication."]", add_tooltips && owner.stat != DEAD)
+
+	if(tech_text)
+		return "<font color='#33cc33'>[tech_text]</font>"
 
 	return ""
 
+/// Determines if this organ is shown when a user has condensed scans enabled
+/obj/item/organ/proc/show_on_condensed_scans()
+	// We don't need to show *most* damaged organs as they have no effects associated
+	return (organ_flags & (ORGAN_PROMINENT|ORGAN_HAZARDOUS|ORGAN_FAILING|ORGAN_VITAL))
+
+/// Similar to get_status_text, but appends the text after the damage report, for additional status info
+/obj/item/organ/proc/get_status_appendix(advanced, add_tooltips)
+	return
+
 /// Tries to replace the existing organ on the passed mob with this one, with special handling for replacing a brain without ghosting target
 /obj/item/organ/proc/replace_into(mob/living/carbon/new_owner)
-	return Insert(new_owner, special = TRUE, movement_flags = DELETE_IF_REPLACED)
+	Insert(new_owner, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 
 /// Get all possible organ slots by checking every organ, and then store it and give it whenever needed

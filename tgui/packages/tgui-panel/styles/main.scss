@@ -5,11 +5,13 @@
 
 @use 'sass:meta';
 @use 'sass:color';
+// Components
+@use 'pkg:tgui-styles';
 
 @use '~tgui/styles/colors.scss';
 @use '~tgui/styles/base.scss' with (
-  $color-bg: #202020,
-  $color-bg-section: color.adjust(#202020, $lightness: -5%),
+  $color-bg: hsl(0, 0%, 12.5%),
+  $color-bg-section: color.adjust(hsl(0, 0%, 12.5%), $lightness: -5%),
   $color-bg-grad-spread: 0%
 );
 
@@ -22,29 +24,6 @@
 @include meta.load-css('~tgui/styles/atomic/debug-layout.scss');
 @include meta.load-css('~tgui/styles/atomic/outline.scss');
 @include meta.load-css('~tgui/styles/atomic/text.scss');
-
-// Components
-@include meta.load-css('~tgui/styles/components/BlockQuote.scss');
-@include meta.load-css('~tgui/styles/components/Button.scss');
-@include meta.load-css('~tgui/styles/components/ColorBox.scss');
-@include meta.load-css('~tgui/styles/components/Dimmer.scss');
-@include meta.load-css('~tgui/styles/components/Divider.scss');
-@include meta.load-css('~tgui/styles/components/Dropdown.scss');
-@include meta.load-css('~tgui/styles/components/Flex.scss');
-@include meta.load-css('~tgui/styles/components/Input.scss');
-@include meta.load-css('~tgui/styles/components/Knob.scss');
-@include meta.load-css('~tgui/styles/components/LabeledList.scss');
-@include meta.load-css('~tgui/styles/components/Modal.scss');
-@include meta.load-css('~tgui/styles/components/NoticeBox.scss');
-@include meta.load-css('~tgui/styles/components/NumberInput.scss');
-@include meta.load-css('~tgui/styles/components/ProgressBar.scss');
-@include meta.load-css('~tgui/styles/components/Section.scss');
-@include meta.load-css('~tgui/styles/components/Slider.scss');
-@include meta.load-css('~tgui/styles/components/Stack.scss');
-@include meta.load-css('~tgui/styles/components/Table.scss');
-@include meta.load-css('~tgui/styles/components/Tabs.scss');
-@include meta.load-css('~tgui/styles/components/TextArea.scss');
-@include meta.load-css('~tgui/styles/components/Tooltip.scss');
 
 // Components specific to tgui-panel
 @include meta.load-css('./components/Chat.scss');

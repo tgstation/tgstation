@@ -47,14 +47,14 @@
 
 	outfit_weight = 2
 
-/datum/outfit/job/assistant/gimmick/cyborg/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+/datum/outfit/job/assistant/gimmick/cyborg/post_equip(mob/living/carbon/human/equipped, visuals_only)
 	. = ..()
-	var/obj/item/organ/internal/tongue/robot/robotongue = new ()
+	var/obj/item/organ/tongue/robot/robotongue = new ()
 	robotongue.Insert(equipped, movement_flags = DELETE_IF_REPLACED)
 
 /datum/outfit/job/assistant/gimmick/skater
 	name = "Gimmick Assistant - Skater"
-	head = /obj/item/clothing/head/helmet/redtaghelm
+	head = /obj/item/clothing/head/helmet/taghelm/red
 	suit = /obj/item/clothing/suit/redtag
 
 	l_hand = /obj/item/melee/skateboard
@@ -65,7 +65,7 @@
 
 /datum/outfit/job/assistant/gimmick/rollerskater
 	name = "Gimmick Assistant - Rollerskater"
-	head = /obj/item/clothing/head/helmet/bluetaghelm
+	head = /obj/item/clothing/head/helmet/taghelm/blue
 	suit = /obj/item/clothing/suit/bluetag
 
 	shoes = /obj/item/clothing/shoes/wheelys/rollerskates
@@ -103,7 +103,7 @@
 
 	outfit_weight = 5
 
-/datum/outfit/job/assistant/gimmick/mopper/post_equip(mob/living/carbon/human/equipped, visualsOnly)
+/datum/outfit/job/assistant/gimmick/mopper/post_equip(mob/living/carbon/human/equipped, visuals_only)
 	. = ..()
 
 	for(var/turf/turf in range(1, equipped))

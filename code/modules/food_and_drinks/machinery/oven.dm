@@ -31,6 +31,8 @@
 	var/datum/looping_sound/oven/oven_loop
 	///Current state of smoke coming from the oven
 	var/smoke_state = OVEN_SMOKE_STATE_NONE
+	///Currently used particle type, if any
+	var/particle_type
 
 /obj/machinery/oven/Initialize(mapload)
 	. = ..()
@@ -40,7 +42,8 @@
 
 /obj/machinery/oven/Destroy()
 	QDEL_NULL(oven_loop)
-	QDEL_NULL(particles)
+	if (particle_type)
+		remove_shared_particles(particle_type)
 	return ..()
 
 /// Used to determine if the oven appears active and cooking, or offline.
@@ -210,16 +213,22 @@
 /obj/machinery/oven/proc/set_smoke_state(new_state)
 	if(new_state == smoke_state)
 		return
-	smoke_state = new_state
 
-	QDEL_NULL(particles)
+	smoke_state = new_state
+	if (particle_type)
+		remove_shared_particles(particle_type)
+		particle_type = null
+
 	switch(smoke_state)
 		if(OVEN_SMOKE_STATE_BAD)
-			particles = new /particles/smoke()
+			particle_type = /particles/smoke
 		if(OVEN_SMOKE_STATE_NEUTRAL)
-			particles = new /particles/smoke/steam()
+			particle_type = /particles/smoke/steam
 		if(OVEN_SMOKE_STATE_GOOD)
-			particles = new /particles/smoke/steam/mild()
+			particle_type = /particles/smoke/steam/mild
+
+	if (particle_type)
+		add_shared_particles(particle_type)
 
 /obj/machinery/oven/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool, ignore_panel = TRUE)

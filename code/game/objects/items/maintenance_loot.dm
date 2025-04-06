@@ -20,8 +20,9 @@
 	wound_bonus = 20
 	demolition_mod = 1.25
 	grind_results = list(/datum/reagent/lead = 20)
-	pickup_sound = 'sound/items/lead_pipe_pickup.ogg'
-	drop_sound = 'sound/items/lead_pipe_drop.ogg'
+	pickup_sound = 'sound/items/handling/lead_pipe/lead_pipe_pickup.ogg'
+	drop_sound = 'sound/items/handling/materials/metal_drop.ogg'
+	throw_drop_sound = 'sound/items/handling/lead_pipe/lead_pipe_drop.ogg'
 	hitsound = 'sound/items/lead_pipe_hit.ogg'
 
 //A good battery early in the shift. Source of lead & sulfuric acid reagents.

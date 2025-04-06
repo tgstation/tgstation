@@ -37,10 +37,10 @@
 	name = "Tail Club"
 	result = /obj/item/tailclub
 	reqs = list(
-		/obj/item/organ/external/tail/lizard = 1,
+		/obj/item/organ/tail/lizard = 1,
 		/obj/item/stack/sheet/iron = 1,
 	)
-	blacklist = list(/obj/item/organ/external/tail/lizard/fake)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
@@ -63,10 +63,10 @@
 	name = "Liz O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip
 	reqs = list(
-		/obj/item/organ/external/tail/lizard = 1,
+		/obj/item/organ/tail/lizard = 1,
 		/obj/item/stack/cable_coil = 1,
 	)
-	blacklist = list(/obj/item/organ/external/tail/lizard/fake)
+	blacklist = list(/obj/item/organ/tail/lizard/fake)
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
@@ -74,7 +74,7 @@
 	name = "Cat O' Nine Tails"
 	result = /obj/item/melee/chainofcommand/tailwhip/kitty
 	reqs = list(
-		/obj/item/organ/external/tail/cat = 1,
+		/obj/item/organ/tail/cat = 1,
 		/obj/item/stack/cable_coil = 1,
 	)
 	time = 4 SECONDS
@@ -200,4 +200,16 @@
 		/obj/item/grown/log/steel = 2,
 	)
 	time = 8 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/sm_sword
+	name = "Supermatter Sword"
+	result = /obj/item/melee/supermatter_sword
+	reqs = list(
+		/obj/item/assembly/signaler/anomaly/vortex = (MAX_CORES_VORTEX - 1),
+	)
+	machinery = list(
+		/obj/machinery/power/supermatter_crystal/small = CRAFTING_MACHINERY_CONSUME,
+	)
+	time = 120 SECONDS
 	category = CAT_WEAPON_MELEE

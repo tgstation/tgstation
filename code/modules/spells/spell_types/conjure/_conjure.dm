@@ -1,5 +1,5 @@
 /datum/action/cooldown/spell/conjure
-	sound = 'sound/items/welder.ogg'
+	sound = 'sound/items/tools/welder.ogg'
 	school = SCHOOL_CONJURATION
 
 	/// The radius around the caster the items will appear. 0 = spawns on top of the caster.

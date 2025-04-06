@@ -13,7 +13,7 @@
 	. = ..()
 	set_light(set_luminosity, set_cap)
 
-/obj/effect/light_emitter/singularity_pull()
+/obj/effect/light_emitter/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/light_emitter/singularity_act()
@@ -135,9 +135,9 @@
 	roundstart_template = /datum/map_template/shuttle/mining/kilo
 	height = 10
 
-/obj/docking_port/stationary/mining_home/northstar
-	roundstart_template = /datum/map_template/shuttle/mining/northstar
-	height = 6
+/obj/docking_port/stationary/mining_home/nebula
+	roundstart_template = /datum/map_template/shuttle/mining/nebula
+	height = 10
 
 /obj/docking_port/stationary/mining_home/common
 	name = "SS13: Common Mining Dock"
@@ -146,9 +146,6 @@
 
 /obj/docking_port/stationary/mining_home/common/kilo
 	roundstart_template = /datum/map_template/shuttle/mining_common/kilo
-
-/obj/docking_port/stationary/mining_home/common/northstar
-	roundstart_template = /datum/map_template/shuttle/mining_common/northstar
 
 /obj/structure/closet/crate/miningcar
 	name = "mine cart"
@@ -321,7 +318,7 @@
 		return
 	update_rail_state(FALSE)
 	Move(new_destination)
-	var/sound/thud_sound = sound('sound/weapons/thudswoosh.ogg')
+	var/sound/thud_sound = sound('sound/items/weapons/thudswoosh.ogg')
 	thud_sound.pitch = 0.5
 	playsound(src, thud_sound, 50, TRUE)
 

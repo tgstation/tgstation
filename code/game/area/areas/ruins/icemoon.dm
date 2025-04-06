@@ -54,8 +54,23 @@
 /area/ruin/pizzeria/kitchen
 	name = "\improper Moffuchi's Kitchen"
 
+
+/area/ruin/syndibiodome
+	name = "\improper Syndicate Biodome"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+	ambience_index = AMBIENCE_DANGER
+	area_flags = NOTELEPORT
+	mood_bonus = -10
+	mood_message = "What the fuck."
+
+
 /area/ruin/planetengi
 	name = "\improper Engineering Outpost"
+
+/area/ruin/huntinglodge
+	name = "\improper Hunting Lodge"
+	mood_bonus = -5
+	mood_message = "Something feels off..."
 
 /area/ruin/smoking_room/house
 	name = "\improper Tobacco House"

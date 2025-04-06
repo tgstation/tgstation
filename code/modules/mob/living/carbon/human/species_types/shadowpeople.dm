@@ -16,8 +16,8 @@
 	inherent_factions = list(FACTION_FAITHLESS)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 
-	mutantbrain = /obj/item/organ/internal/brain/shadow
-	mutanteyes = /obj/item/organ/internal/eyes/shadow
+	mutantbrain = /obj/item/organ/brain/shadow
+	mutanteyes = /obj/item/organ/eyes/shadow
 	mutantheart = null
 	mutantlungs = null
 
@@ -89,7 +89,7 @@
 
 	return to_add
 
-/obj/item/organ/internal/eyes/shadow
+/obj/item/organ/eyes/shadow
 	name = "burning red eyes"
 	desc = "Even without their shadowy owner, looking at these eyes gives you a sense of dread."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
@@ -98,14 +98,14 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 
 /// the key to some of their powers
-/obj/item/organ/internal/brain/shadow
+/obj/item/organ/brain/shadow
 	name = "shadowling tumor"
 	desc = "Something that was once a brain, before being remolded by a shadowling. It has adapted to the dark, irreversibly."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
 	/// What status effect do we gain while in darkness?
 	var/applied_status = /datum/status_effect/shadow_regeneration
 
-/obj/item/organ/internal/brain/shadow/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/shadow/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	var/turf/owner_turf = owner.loc
 	if(!isturf(owner_turf))

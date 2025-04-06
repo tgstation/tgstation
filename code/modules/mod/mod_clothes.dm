@@ -11,6 +11,11 @@
 	cold_protection = HEAD
 	item_flags = IMMUTABLE_SLOW
 
+// Even without a hat stabilizer, hats can be worn - however, they'll fall off very easily
+/obj/item/clothing/head/mod/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
+
 /obj/item/clothing/suit/mod
 	name = "MOD chestplate"
 	desc = "A chestplate for a MODsuit."
@@ -29,6 +34,7 @@
 	heat_protection = CHEST|GROIN
 	cold_protection = CHEST|GROIN
 	item_flags = IMMUTABLE_SLOW
+	drop_sound = null
 
 /obj/item/clothing/gloves/mod
 	name = "MOD gauntlets"
@@ -42,6 +48,9 @@
 	heat_protection = HANDS|ARMS
 	cold_protection = HANDS|ARMS
 	item_flags = IMMUTABLE_SLOW
+	equip_sound = null
+	pickup_sound = null
+	drop_sound = null
 
 /obj/item/clothing/shoes/mod
 	name = "MOD boots"
@@ -56,3 +65,4 @@
 	cold_protection = FEET|LEGS
 	item_flags = IGNORE_DIGITIGRADE | IMMUTABLE_SLOW
 	can_be_tied = FALSE
+	equip_sound = null

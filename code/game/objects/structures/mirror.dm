@@ -248,13 +248,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
 		user.AddComponent(/datum/component/omen, incidents_left = 7)
 
-/obj/structure/mirror/bullet_act(obj/projectile/P)
-	if(broken || !isliving(P.firer) || !P.damage)
+/obj/structure/mirror/bullet_act(obj/projectile/proj)
+	if(broken || !isliving(proj.firer) || !proj.damage)
 		return ..()
 
 	. = ..()
 	if(broken) // breaking a mirror truly gets you bad luck!
-		var/mob/living/unlucky_dude = P.firer
+		var/mob/living/unlucky_dude = proj.firer
 		to_chat(unlucky_dude, span_warning("A chill runs down your spine as [src] shatters..."))
 		unlucky_dude.AddComponent(/datum/component/omen, incidents_left = 7)
 
@@ -346,14 +346,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/new_hair_color = input(user, "Choose your hair color", "Hair Color", user.hair_color) as color|null
 
 	if(new_hair_color)
-		user.set_haircolor(sanitize_hexcolor(new_hair_color), update = FALSE)
+		user.set_haircolor(sanitize_hexcolor(new_hair_color))
 		user.dna.update_ui_block(DNA_HAIR_COLOR_BLOCK)
 	if(user.physique == MALE)
 		var/new_face_color = input(user, "Choose your facial hair color", "Hair Color", user.facial_hair_color) as color|null
 		if(new_face_color)
-			user.set_facial_haircolor(sanitize_hexcolor(new_face_color), update = FALSE)
+			user.set_facial_haircolor(sanitize_hexcolor(new_face_color))
 			user.dna.update_ui_block(DNA_FACIAL_HAIR_COLOR_BLOCK)
-	user.update_body_parts()
 
 /obj/structure/mirror/magic/attack_hand(mob/living/carbon/human/user)
 	. = ..()

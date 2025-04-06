@@ -83,7 +83,7 @@
  * Otherwise it'd be hard/impossible to cath some fish with it,
  * making that rod a shoddy choice in the long run.
  */
-/obj/item/food/bait/doughball/syntethic/unconsumable
+/obj/item/food/bait/doughball/synthetic/unconsumable
 
 /obj/item/food/bait/doughball/synthetic/unconsumable/Initialize(mapload)
 	. = ..()

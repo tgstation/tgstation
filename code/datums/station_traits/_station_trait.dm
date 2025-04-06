@@ -35,8 +35,8 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/dynamic_threat_id
 	/// If ran during dynamic, do we reduce the total threat? Will be overridden by config if set
 	var/threat_reduction = 0
-	/// Which ruleset flags to allow dynamic to use. null to disregard
-	var/dynamic_category = null
+	/// Which ruleset flags to allow dynamic to use. NONE to disregard
+	var/dynamic_category = NONE
 	/// Trait should not be instantiated in a round if its type matches this type
 	var/abstract_type = /datum/station_trait
 
@@ -51,15 +51,19 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 		GLOB.dynamic_ruleset_categories = dynamic_category
 	if(sign_up_button)
 		GLOB.lobby_station_traits += src
+		if(SSstation.initialized)
+			SSstation.display_lobby_traits()
 	if(trait_processes)
 		START_PROCESSING(SSstation, src)
 	if(trait_to_give)
 		ADD_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 
 /datum/station_trait/Destroy()
-	SSstation.station_traits -= src
-	GLOB.dynamic_station_traits.Remove(src)
 	destroy_lobby_buttons()
+	SSstation.station_traits -= src
+	GLOB.lobby_station_traits -= src
+	GLOB.dynamic_station_traits -= src
+	REMOVE_TRAIT(SSstation, trait_to_give, STATION_TRAIT)
 	return ..()
 
 /// Returns the type of info the centcom report has on this trait, if any.
@@ -125,13 +129,15 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 /// Remove all of our active lobby buttons
 /datum/station_trait/proc/destroy_lobby_buttons()
 	for (var/atom/movable/screen/button as anything in lobby_buttons)
-		var/mob/hud_owner = button.get_mob()
-		qdel(button)
+		var/mob/dead/new_player/hud_owner = button.get_mob()
 		if (QDELETED(hud_owner))
+			qdel(button)
 			continue
-		var/datum/hud/using_hud = hud_owner.hud_used
-		using_hud?.show_hud(using_hud?.hud_version)
-	lobby_buttons = list()
+		var/datum/hud/new_player/using_hud = hud_owner.hud_used
+		if(!using_hud)
+			qdel(button)
+			continue
+		using_hud.remove_station_trait_button(src)
 
 /// Called when overriding a pulsar star command report message.
 /datum/station_trait/proc/get_pulsar_message()

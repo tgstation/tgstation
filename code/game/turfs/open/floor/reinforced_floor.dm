@@ -75,7 +75,7 @@
 
 	return TRUE
 
-/turf/open/floor/engine/singularity_pull(S, current_size)
+/turf/open/floor/engine/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_FIVE)
 		if(floor_tile)

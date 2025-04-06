@@ -59,6 +59,8 @@
 		"comp_ntnet_receive",
 		"comp_ntnet_send",
 		"comp_ntnet_send_list_literal",
+		"comp_nfc_send",
+		"comp_nfc_receive",
 		"comp_pinpointer",
 		"comp_pressuresensor",
 		"comp_radio",

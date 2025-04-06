@@ -8,6 +8,7 @@
 	callback.Invoke()
 
 /datum/ai_behavior/find_hunt_target/pollinate
+	action_cooldown = 10 SECONDS
 
 /datum/ai_behavior/find_hunt_target/pollinate/valid_dinner(mob/living/source, obj/machinery/hydroponics/dinner, radius)
 	if(!dinner.can_bee_pollinate())
@@ -16,6 +17,7 @@
 
 /datum/ai_behavior/enter_exit_hive
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+	action_cooldown = 10 SECONDS
 
 /datum/ai_behavior/enter_exit_hive/setup(datum/ai_controller/controller, target_key, attack_key)
 	. = ..()
@@ -26,14 +28,12 @@
 
 /datum/ai_behavior/enter_exit_hive/perform(seconds_per_tick, datum/ai_controller/controller, target_key, attack_key)
 	var/obj/structure/beebox/current_home = controller.blackboard[target_key]
-	var/mob/living/bee_pawn = controller.pawn
 	var/atom/attack_target = controller.blackboard[attack_key]
 
 	if(attack_target) // forget about who we attacking when we go home
 		controller.clear_blackboard_key(attack_key)
 
-	var/datum/callback/callback = CALLBACK(bee_pawn, TYPE_PROC_REF(/mob/living/basic/bee, handle_habitation), current_home)
-	callback.Invoke()
+	controller.ai_interact(target = current_home, combat_mode = FALSE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/inhabit_hive
@@ -53,8 +53,7 @@
 	if(!potential_home.habitable(bee_pawn)) //the house become full before we get to it
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/datum/callback/callback = CALLBACK(bee_pawn, TYPE_PROC_REF(/mob/living/basic/bee, handle_habitation), potential_home)
-	callback.Invoke()
+	controller.ai_interact(target = potential_home, combat_mode = FALSE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/inhabit_hive/finish_action(datum/ai_controller/controller, succeeded, target_key)

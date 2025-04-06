@@ -2,7 +2,7 @@
 /obj/effect/temp_visual/effect_trail
 	name = "effect trail"
 	desc = "An invisible effect, how did you examine this?"
-	icon = 'icons/mob/silicon/cameramob.dmi'
+	icon = 'icons/mob/eyemob.dmi'
 	icon_state = "marker"
 	duration = 15 SECONDS
 	invisibility = INVISIBILITY_ABSTRACT

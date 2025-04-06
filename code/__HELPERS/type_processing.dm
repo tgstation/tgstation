@@ -128,11 +128,29 @@
 	if(endcheck.len > 1)
 		filter = endcheck[1]
 		end_len = length_char(filter)
+	var/endtype = (filter[length(filter)] == "*")
+	if (endtype)
+		filter = splittext(filter, "*")[1]
 
 	for(var/key in L)
 		var/value = L[key]
-		if(findtext("[key]", filter, -end_len) || findtext("[value]", filter, -end_len))
+		if (findtext("[key]", filter, -end_len))
+			if (endtype)
+				var/list/split_filter = splittext("[key]", filter)
+				if (!findtext(split_filter[length(split_filter)], "/"))
+					matches[key] = value
+					continue
+			else
+				matches[key] = value
+				continue
+
+		if (findtext("[value]", filter, -end_len))
+			if (endtype)
+				var/list/split_filter = splittext("[value]", filter)
+				if (findtext(split_filter[length(split_filter)], "/"))
+					continue
 			matches[key] = value
+
 	return matches
 
 /proc/return_typenames(type)

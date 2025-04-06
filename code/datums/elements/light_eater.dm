@@ -127,7 +127,19 @@
  */
 /datum/element/light_eater/proc/on_interacting_with(obj/item/source, mob/living/user, atom/target)
 	SIGNAL_HANDLER
-	eat_lights(target, source)
+	if(eat_lights(target, source))
+		// do a "pretend" attack if we're hitting something that can't normally be
+		if(isobj(target))
+			var/obj/smacking = target
+			if(smacking.obj_flags & CAN_BE_HIT)
+				return NONE
+		else if(!isturf(target))
+			return NONE
+		user.do_attack_animation(target)
+		user.changeNext_move(CLICK_CD_RAPID)
+		target.play_attack_sound()
+	// not particularly picky about what happens afterwards in the attack chain
+	return NONE
 
 /**
  * Called when a source object is used to block a thrown object, projectile, or attack

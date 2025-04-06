@@ -62,6 +62,7 @@
 #define ENGINE_COEFF_MIN 0.5
 #define ENGINE_COEFF_MAX 2
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
+#define ENGINE_START_TIME 100
 
 // Alert level related
 #define ALERT_COEFF_AUTOEVAC_NORMAL 2.5
@@ -120,3 +121,12 @@
 #define SHUTTLE_EVENT_MISS_SHUTTLE 1 << 0
 ///spawned stuff should hit the shuttle
 #define SHUTTLE_EVENT_HIT_SHUTTLE 1 << 1
+
+// Hijack stages
+
+#define HIJACK_NOT_BEGUN 0
+#define HIJACK_STAGE_1 1
+#define HIJACK_STAGE_2 2
+#define HIJACK_STAGE_3 3
+#define HIJACK_STAGE_4 4
+#define HIJACK_COMPLETED 5

@@ -16,10 +16,6 @@ GLOBAL_LIST_INIT(command_strings, list(
 	basic_mob_flags = DEL_ON_DEATH
 	density = FALSE
 
-	icon = 'icons/mob/silicon/aibots.dmi'
-	icon_state = "medibot0"
-	base_icon_state = "medibot"
-
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	habitable_atmos = null
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
@@ -103,6 +99,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 		TRAIT_IMMOBILIZED,
 		TRAIT_HANDS_BLOCKED,
 	)
+	///name of the UI we will attempt to open
+	var/bot_ui = "SimpleBot"
 	/// If true we will offer this
 	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 
@@ -321,6 +319,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	to_chat(src, span_boldnotice(get_emagged_message()))
 	if(user)
 		log_combat(user, src, "emagged")
+	emag_effects(user)
 	return TRUE
 
 /mob/living/basic/bot/examine(mob/user)
@@ -371,7 +370,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "SimpleBot", name)
+		ui = new(user, src, bot_ui, name)
 		ui.open()
 
 /mob/living/basic/bot/click_alt(mob/user)
@@ -538,6 +537,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/proc/bot_reset(bypass_ai_reset = FALSE)
 	SEND_SIGNAL(src, COMSIG_BOT_RESET)
 	access_card.set_access(initial_access)
+	update_bot_mode(new_mode = src::mode)
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
 	clear_path_hud()
@@ -558,8 +558,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	// process control input
 	switch(command)
 		if("patroloff")
-			bot_reset() //HOLD IT!! //OBJECTION!!
-			set_mode_flags(bot_mode_flags & ~BOT_MODE_AUTOPATROL)
+			set_patrol_off()
 		if("patrolon")
 			set_mode_flags(bot_mode_flags | BOT_MODE_AUTOPATROL)
 		if("summon")
@@ -567,6 +566,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 		if("ejectpai")
 			eject_pai_remote(user)
 
+/mob/living/basic/bot/proc/set_patrol_off()
+	bot_reset()
+	set_mode_flags(bot_mode_flags & ~BOT_MODE_AUTOPATROL)
 
 /mob/living/basic/bot/proc/bot_control_message(command, user)
 	if(command == "summon")
@@ -622,6 +624,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 				return
 			if(!(bot_access_flags & BOT_COVER_EMAGGED))
 				bot_access_flags |= (BOT_COVER_LOCKED|BOT_COVER_EMAGGED|BOT_COVER_HACKED)
+				emag_effects(the_user)
 				to_chat(the_user, span_warning("You overload [src]'s [hackables]."))
 				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(the_user)] in [ADMIN_VERBOSEJMP(the_user)]")
 				the_user.log_message("disabled safety lock of [the_user]", LOG_GAME)
@@ -630,7 +633,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 				to_chat(src, span_boldnotice(get_emagged_message()))
 				return
 			if(!(bot_access_flags & BOT_COVER_HACKED))
-				to_chat(the_user, span_boldannounce("You fail to repair [src]'s [hackables]."))
+				to_chat(the_user, span_bolddanger("You fail to repair [src]'s [hackables]."))
 				return
 			bot_access_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 			to_chat(the_user, span_notice("You reset the [src]'s [hackables]."))
@@ -812,6 +815,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 	if(attack_flags & ATTACKER_DAMAGING_ATTACK)
 		do_sparks(number = 5, cardinal_only = TRUE, source = src)
+
+/mob/living/basic/bot/proc/emag_effects(user)
+	return
 
 /mob/living/basic/bot/spawn_gibs(drop_bitflags = NONE)
 	new /obj/effect/gibspawner/robot(drop_location(), src)

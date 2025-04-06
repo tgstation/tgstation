@@ -10,7 +10,7 @@
 	inhand_icon_state = "gun"
 	item_flags = NOBLUDGEON
 	///overlay when the hook is retracted
-	var/static/mutable_appearance/hook_overlay = new(icon = 'icons/obj/mining.dmi', icon_state = "grapple_gun_hooked")
+	var/static/mutable_appearance/hook_overlay = mutable_appearance(icon = 'icons/obj/mining.dmi', icon_state = "grapple_gun_hooked")
 	///is the hook retracted
 	var/hooked = TRUE
 	///addtimer id for launching the user
@@ -64,7 +64,7 @@
 	if(user.CanReach(attacked_atom))
 		return ITEM_INTERACT_BLOCKING
 
-	var/atom/bullet = fire_projectile(/obj/projectile/grapple_hook, attacked_atom, 'sound/weapons/zipline_fire.ogg')
+	var/atom/bullet = fire_projectile(/obj/projectile/grapple_hook, attacked_atom, 'sound/items/weapons/zipline_fire.ogg')
 	zipline = user.Beam(bullet, icon_state = "zipline_hook", maxdistance = 9, layer = BELOW_MOB_LAYER)
 	hooked = FALSE
 	RegisterSignal(bullet, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_grapple_hit))
@@ -179,8 +179,8 @@
 	icon_state = "grapple_hook"
 	damage = 0
 	range = 9
-	speed = 0.1
+	speed = 10
 	can_hit_turfs = TRUE
-	hitsound = 'sound/weapons/zipline_hit.ogg'
+	hitsound = 'sound/items/weapons/zipline_hit.ogg'
 
 #undef DAMAGE_ON_IMPACT

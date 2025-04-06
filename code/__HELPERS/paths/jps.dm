@@ -55,7 +55,7 @@
 
 /datum/pathfind/jps
 	/// The movable we are pathing
-	var/atom/movable/caller
+	var/atom/movable/requester
 	/// The turf we're trying to path to (note that this won't track a moving target)
 	var/turf/end
 	/// The open list/stack we pop nodes out from (TODO: make this a normal list and macro-ize the heap operations to reduce proc overhead)
@@ -72,9 +72,9 @@
 	///Defines how we handle diagonal moves. See __DEFINES/path.dm
 	var/diagonal_handling = DIAGONAL_REMOVE_CLUNKY
 
-/datum/pathfind/jps/proc/setup(atom/movable/caller, list/access, max_distance, simulated_only, avoid, list/datum/callback/on_finish, atom/goal, mintargetdist, skip_first, diagonal_handling)
-	src.caller = caller
-	src.pass_info = new(caller, access)
+/datum/pathfind/jps/proc/setup(atom/movable/requester, list/access, max_distance, simulated_only, avoid, list/datum/callback/on_finish, atom/goal, mintargetdist, skip_first, diagonal_handling)
+	src.requester = requester
+	src.pass_info = new(requester, access)
 	src.max_distance = max_distance
 	src.simulated_only = simulated_only
 	src.avoid = avoid
@@ -88,12 +88,12 @@
 
 /datum/pathfind/jps/Destroy(force)
 	. = ..()
-	caller = null
+	requester = null
 	end = null
 	open = null
 
 /datum/pathfind/jps/start()
-	start = start || get_turf(caller)
+	start = start || get_turf(requester)
 	. = ..()
 	if(!.)
 		return .
@@ -115,7 +115,7 @@
 	. = ..()
 	if(!.)
 		return .
-	if(QDELETED(caller))
+	if(QDELETED(requester))
 		return FALSE
 
 	while(!open.is_empty() && !path)
@@ -194,7 +194,7 @@
 		if(!CAN_STEP(lag_turf, current_turf, simulated_only, pass_info, avoid))
 			return
 
-		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist)))
+		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist) && !diagonally_blocked(current_turf, end)))
 			var/datum/jps_node/final_node = new(current_turf, parent_node, steps_taken)
 			found_turfs[current_turf] = TRUE
 			if(parent_node) // if this is a direct lateral scan we can wrap up, if it's a subscan from a diag, we need to let the diag make their node first, then finish
@@ -256,7 +256,7 @@
 		if(!CAN_STEP(lag_turf, current_turf, simulated_only, pass_info, avoid))
 			return
 
-		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist)))
+		if(current_turf == end || (mintargetdist && (get_dist(current_turf, end) <= mintargetdist) && !diagonally_blocked(current_turf, end)))
 			var/datum/jps_node/final_node = new(current_turf, parent_node, steps_taken)
 			found_turfs[current_turf] = TRUE
 			unwind_path(final_node)

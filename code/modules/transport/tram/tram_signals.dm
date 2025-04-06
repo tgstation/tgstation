@@ -562,7 +562,7 @@
 	new_partner.paired_sensor = WEAKREF(src)
 	new_partner.set_machine_stat(machine_stat & ~MAINT)
 	new_partner.update_appearance()
-	playsound(src, 'sound/machines/synth_yes.ogg', 75, vary = FALSE, use_reverb = TRUE)
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 75, vary = FALSE, use_reverb = TRUE)
 
 /obj/machinery/transport/guideway_sensor/Destroy()
 	SStransport.sensors -= src
@@ -571,7 +571,7 @@
 		divorcee.set_machine_stat(machine_stat & ~MAINT)
 		divorcee.paired_sensor = null
 		divorcee.update_appearance()
-		playsound(src, 'sound/machines/synth_no.ogg', 75, vary = FALSE, use_reverb = TRUE)
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 75, vary = FALSE, use_reverb = TRUE)
 		paired_sensor = null
 	. = ..()
 

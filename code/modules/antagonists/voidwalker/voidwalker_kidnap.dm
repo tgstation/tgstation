@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 /area/centcom/voidwalker_void
 	name = "Voidwalker void"
 	icon_state = "voidwalker"
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
 	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE

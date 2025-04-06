@@ -31,7 +31,7 @@
 		testing("Ruin \"[name]\" placed at ([central_turf.x], [central_turf.y], [central_turf.z])")
 
 		if(clear_below)
-			var/list/static/clear_below_typecache = typecacheof(list(
+			var/static/list/clear_below_typecache = typecacheof(list(
 				/obj/structure/spawner,
 				/mob/living/simple_animal,
 				/obj/structure/flora
@@ -115,7 +115,7 @@
 		if(R.unpickable)
 			continue
 		ruins_available[R] = R.placement_weight
-	while((budget > 0 || mineral_budget > 0) && (ruins_available.len || forced_ruins.len))
+	while(((budget > 0 || mineral_budget > 0) && ruins_available.len) || forced_ruins.len)
 		var/datum/map_template/ruin/current_pick
 		var/forced = FALSE
 		var/forced_z //If set we won't pick z level and use this one instead.

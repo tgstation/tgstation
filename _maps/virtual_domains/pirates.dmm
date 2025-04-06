@@ -610,7 +610,8 @@
 "HO" = (
 /obj/structure/table/wood,
 /mob/living/basic/parrot{
-	name = "pepper"
+	name = "pepper";
+	faction = list("pirate")
 	},
 /turf/open/floor/carpet/blue,
 /area/virtual_domain)

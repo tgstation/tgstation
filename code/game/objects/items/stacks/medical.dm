@@ -133,7 +133,7 @@
 		if(!try_heal_checks(patient, user, heal_brute, heal_burn))
 			return FALSE
 		if(patient.heal_bodypart_damage((heal_brute * patient.maxHealth/100)))
-			user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] on [patient].</span></span>", "<span class='infoplain'><span class='green'>You apply [src] on [patient].</span></span>")
+			user.visible_message(span_infoplain(span_green("[user] applies [src] on [patient].")), span_infoplain(span_green("You apply [src] on [patient].")))
 			return TRUE
 	patient.balloon_alert(user, "can't heal [patient]!")
 	return FALSE
@@ -279,7 +279,7 @@
 	if(!do_after(user, treatment_delay, target = patient))
 		return
 
-	user.visible_message("<span class='infoplain'><span class='green'>[user] applies [src] to [patient]'s [limb.plaintext_zone].</span></span>", "<span class='infoplain'><span class='green'>You bandage the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone].</span></span>")
+	user.visible_message(span_infoplain(span_green("[user] applies [src] to [patient]'s [limb.plaintext_zone].")), span_infoplain(span_green("You bandage the wounds on [user == patient ? "your" : "[patient]'s"] [limb.plaintext_zone].")))
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
@@ -436,7 +436,7 @@
 		is_open = TRUE
 		balloon_alert(user, "opened")
 		update_appearance()
-		playsound(src, 'sound/items/poster_ripped.ogg', 20, TRUE)
+		playsound(src, 'sound/items/poster/poster_ripped.ogg', 20, TRUE)
 		return
 	return ..()
 
@@ -512,16 +512,14 @@
 		return BRUTELOSS
 
 	patient.emote("scream")
-	for(var/i in patient.bodyparts)
-		var/obj/item/bodypart/bone = i // fine to just, use these raw, its a meme anyway
+	for(var/obj/item/bodypart/bone as anything in patient.bodyparts)
+		// fine to just, use these raw, its a meme anyway
 		var/datum/wound/blunt/bone/severe/oof_ouch = new
 		oof_ouch.apply_wound(bone, wound_source = "bone gel")
 		var/datum/wound/blunt/bone/critical/oof_OUCH = new
 		oof_OUCH.apply_wound(bone, wound_source = "bone gel")
-
-	for(var/i in patient.bodyparts)
-		var/obj/item/bodypart/bone = i
-		bone.receive_damage(brute=60)
+	for(var/zone in GLOB.all_body_zones)
+		patient.apply_damage(60, BRUTE, zone)
 	use(1)
 	return BRUTELOSS
 

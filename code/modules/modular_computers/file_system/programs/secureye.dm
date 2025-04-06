@@ -198,7 +198,7 @@
 		camera_ref = null
 		last_camera_turf = null
 		if(!spying)
-			playsound(computer, 'sound/machines/terminal_off.ogg', 25, FALSE)
+			playsound(computer, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
 /datum/computer_file/program/secureye/proc/update_active_camera_screen()
 	var/obj/machinery/camera/active_camera = camera_ref?.resolve()

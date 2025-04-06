@@ -23,7 +23,7 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "bX" = (
@@ -228,7 +228,7 @@
 "iM" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/structure/table/glass,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /turf/open/indestructible/white,
 /area/deathmatch)
 "iV" = (

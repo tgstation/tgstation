@@ -185,3 +185,9 @@
 		/obj/item/crusher_trophy/vortex_talisman,
 		/obj/item/crusher_trophy/ice_demon_cube,
 	)
+
+/obj/item/bitrunning_disk/item/mini_uzi
+	name = "bitrunning gear: mini-uzi"
+	selectable_items = list(
+		/obj/item/gun/ballistic/automatic/mini_uzi,
+	)

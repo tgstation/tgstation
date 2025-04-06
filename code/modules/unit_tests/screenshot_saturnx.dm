@@ -3,7 +3,7 @@
 
 /datum/unit_test/screenshot_saturnx/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/dummy/consistent) //we don't use a dummy as they have no organs
-	human.equipOutfit(/datum/outfit/job/assistant/consistent, visualsOnly = TRUE)
+	human.equipOutfit(/datum/outfit/job/assistant/consistent, visuals_only = TRUE)
 
 	var/datum/reagent/drug/saturnx/saturnx_reagent = new()
 

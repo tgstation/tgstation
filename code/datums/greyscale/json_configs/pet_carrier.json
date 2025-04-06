@@ -1,0 +1,87 @@
+{
+	"pet_carrier_open": [
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_open",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_gags",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"pet_carrier_closed_unlocked": [
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_unlocked",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_closed",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_gags",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"pet_carrier_closed_locked": [
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_locked",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_closed",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_gags",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"pet_carrier_occupied_unlocked": [
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_unlocked",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_occupied",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_gags",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"pet_carrier_occupied_locked": [
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_locked",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_occupied",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pet_carrier_gags",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}

@@ -83,56 +83,26 @@
 
 	last_check = world.time
 
-	if(!los_check(loc, current_target))
+	if(!los_check(loc, current_target, mid_check = CALLBACK(src, PROC_REF(mid_los_check))))
 		QDEL_NULL(current_beam)//this will give the target lost message
 		return
 
 	if(current_target)
 		on_beam_tick(current_target)
 
-/obj/item/gun/medbeam/proc/los_check(atom/movable/user, mob/target)
-	var/turf/user_turf = user.loc
-	if(mounted)
-		user_turf = get_turf(user)
-	else if(!istype(user_turf))
-		return FALSE
-	var/obj/dummy = new(user_turf)
-	dummy.pass_flags |= PASSTABLE|PASSGLASS|PASSGRILLE //Grille/Glass so it can be used through common windows
-	var/turf/previous_step = user_turf
-	var/first_step = TRUE
-	for(var/turf/next_step as anything in (get_line(user_turf, target) - user_turf))
-		if(first_step)
-			for(var/obj/blocker in user_turf)
-				if(!blocker.density || !(blocker.flags_1 & ON_BORDER_1))
-					continue
-				if(blocker.CanPass(dummy, get_dir(user_turf, next_step)))
-					continue
-				return FALSE // Could not leave the first turf.
-			first_step = FALSE
-		if(mounted && next_step == user_turf)
-
-			continue //Mechs are dense and thus fail the check
-		if(next_step.density)
+/obj/item/gun/medbeam/proc/mid_los_check(atom/movable/user, mob/target, pass_args = PASSTABLE|PASSGLASS|PASSGRILLE, turf/next_step, obj/dummy)
+	for(var/obj/effect/ebeam/medical/B in next_step)// Don't cross the str-beams!
+		if(QDELETED(current_beam))
+			break //We shouldn't be processing anymore.
+		if(QDELETED(B))
+			continue
+		if(!B.owner)
+			stack_trace("beam without an owner! [B]")
+			continue
+		if(B.owner.origin != current_beam.origin)
+			explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8, explosion_cause = src)
 			qdel(dummy)
 			return FALSE
-		for(var/atom/movable/movable as anything in next_step)
-			if(!movable.CanPass(dummy, get_dir(next_step, previous_step)))
-				qdel(dummy)
-				return FALSE
-		for(var/obj/effect/ebeam/medical/B in next_step)// Don't cross the str-beams!
-			if(QDELETED(current_beam))
-				break //We shouldn't be processing anymore.
-			if(QDELETED(B))
-				continue
-			if(!B.owner)
-				stack_trace("beam without an owner! [B]")
-				continue
-			if(B.owner.origin != current_beam.origin)
-				explosion(B.loc, heavy_impact_range = 3, light_impact_range = 5, flash_range = 8, explosion_cause = src)
-				qdel(dummy)
-				return FALSE
-		previous_step = next_step
-	qdel(dummy)
 	return TRUE
 
 /obj/item/gun/medbeam/proc/on_beam_hit(mob/living/target)

@@ -237,6 +237,7 @@
 			if(!user.can_perform_action(src))
 				return
 			balloon_alert(user, "writing box tag...")
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			boxtag_set = TRUE
 			update_appearance()
 			return

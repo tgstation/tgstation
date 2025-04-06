@@ -12,7 +12,7 @@
 	icon_state = "tomealtar"
 	light_range = 1.5
 	light_color = LIGHT_COLOR_FIRE
-	break_message = "<span class='warning'>The books and tomes of the archives burn into ash as the desk shatters!</span>"
+	break_message = span_warning("The books and tomes of the archives burn into ash as the desk shatters!")
 	mansus_conversion_path = /obj/item/codex_cicatrix
 
 /obj/structure/destructible/cult/item_dispenser/archives/setup_options()

@@ -13,7 +13,7 @@
 	inverse_chem_val = 0.1
 	inverse_chem = null
 	creation_purity = CONSUMABLE_STANDARD_PURITY
-	/// How much nutrition this reagent supplies
+	/// How much nutrition this reagent supplies. Look at get_nutriment_factor() for an understanding.
 	var/nutriment_factor = 1
 	/// affects mood, typically higher for mixed drinks with more complex recipes'
 	var/quality = 0
@@ -54,7 +54,7 @@
 			if(isitem(the_real_food) && !is_reagent_container(the_real_food))
 				exposed_mob.add_mob_memory(/datum/memory/good_food, food = the_real_food)
 
-/// Gets just how much nutrition this reagent is worth for the passed mob
+/// Gets just how much nutrition this reagent supplies per server tick to the eater
 /datum/reagent/consumable/proc/get_nutriment_factor(mob/living/carbon/eater)
 	return nutriment_factor * REAGENTS_METABOLISM * purity * 2
 
@@ -65,6 +65,9 @@
 	nutriment_factor = 15
 	color = "#664330" // rgb: 102, 67, 48
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+	/// Whether this reagent should get the tastes of food it's in applied onto it
+	var/carry_food_tastes = TRUE
 
 	var/brute_heal = 1
 	var/burn_heal = 0
@@ -117,11 +120,14 @@
 	data = taste_amounts
 
 /datum/reagent/consumable/nutriment/get_taste_description(mob/living/taster)
-	return data
+	if(length(data))
+		return data
+	return ..()
 
 /datum/reagent/consumable/nutriment/vitamin
 	name = "Vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
+	taste_description = "bitterness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 	brute_heal = 1
@@ -136,6 +142,7 @@
 /datum/reagent/consumable/nutriment/protein
 	name = "Protein"
 	description = "A natural polyamide made up of amino acids. An essential constituent of mosts known forms of life."
+	taste_description = "chalk"
 	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
 	nutriment_factor = 9 //45% as calorie dense as oil.
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -152,7 +159,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	var/fry_temperature = 450 //Around ~350 F (117 C) which deep fryers operate around in the real world
 
-/datum/reagent/consumable/nutriment/fat/expose_obj(obj/exposed_obj, reac_volume)
+/datum/reagent/consumable/nutriment/fat/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
 	if(!holder || (holder.chem_temp <= fry_temperature))
 		return
@@ -208,6 +215,7 @@
 	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
 	taste_mult = 0.8
 	taste_description = "oil"
+	carry_food_tastes = FALSE
 	nutriment_factor = 7 //Not very healthy on its own
 	metabolization_rate = 10 * REAGENTS_METABOLISM
 	penetrates_skin = NONE
@@ -235,9 +243,15 @@
 	taste_description = "rich earthy pungent"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/nutriment/organ_tissue/stomach_lining
+	name = "Stomach Lining"
+	description = "Natural tissue that keeps your stomach safe."
+	carry_food_tastes = FALSE // Don't want stomachs to leech the flavours of what they eat
+
 /datum/reagent/consumable/nutriment/cloth_fibers
 	name = "Cloth Fibers"
 	description = "It's not actually a form of nutriment but it does keep Mothpeople going for a short while..."
+	taste_description = "cloth"
 	nutriment_factor = 30
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	brute_heal = 0
@@ -262,6 +276,7 @@
 /datum/reagent/consumable/nutriment/mineral
 	name = "Mineral Slurry"
 	description = "Minerals pounded into a paste, nutritious only if you too are made of rocks."
+	taste_description = "minerals"
 	color = COLOR_WEBSAFE_DARK_GRAY
 	chemical_flags = NONE
 	brute_heal = 0
@@ -301,6 +316,11 @@
 /datum/reagent/consumable/sugar/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.adjust_drowsiness_up_to((5 SECONDS * REM * seconds_per_tick), 60 SECONDS)
+
+/datum/reagent/consumable/sugar/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(methods & INGEST)
+		exposed_mob.check_allergic_reaction(SUGAR, chance = reac_volume * 10, histamine_add = min(10, reac_volume * 2))
 
 /datum/reagent/consumable/virus_food
 	name = "Virus Food"
@@ -417,7 +437,7 @@
 		return
 
 	var/mob/living/carbon/victim = exposed_mob
-	if(methods & (TOUCH|VAPOR))
+	if(methods & (TOUCH|VAPOR|INHALE))
 		//check for protection
 		//actually handle the pepperspray effects
 		if (!victim.is_pepper_proof()) // you need both eye and mouth protection
@@ -538,7 +558,7 @@
 			affected_mob.Paralyze(10)
 			affected_mob.set_jitter_if_lower(20 SECONDS)
 	else
-		var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+		var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 		if(liver && HAS_TRAIT(liver, TRAIT_CULINARY_METABOLISM))
 			if(SPT_PROB(10, seconds_per_tick)) //stays in the system much longer than sprinkles/banana juice, so heals slower to partially compensate
 				if(affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
@@ -557,7 +577,7 @@
 		return
 
 	var/mob/living/carbon/victim = exposed_mob
-	if(methods & (TOUCH | VAPOR))
+	if(methods & (TOUCH | VAPOR | INHALE))
 		var/tear_proof = victim.is_eyes_covered()
 		if (!tear_proof)
 			to_chat(exposed_mob, span_warning("Your eyes sting!"))
@@ -573,7 +593,7 @@
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	var/obj/item/organ/internal/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(liver && HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 		if(affected_mob.heal_bodypart_damage(brute = 1 * REM * seconds_per_tick, burn = 1 * REM * seconds_per_tick, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH
@@ -841,6 +861,27 @@
 	taste_description = "rancid fungus"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/moltobeso
+	name = "Molt'Obeso" //pardon my Italian
+	description = "Concentrated gluttony."
+	color = "#f8fc36"
+	taste_description = "gluttony"
+	taste_mult = 0.3
+	nutriment_factor = 0 //the essence of this sauce is to stimulate hunger and improve the absorption of calories from food eaten
+	metabolization_rate = 0.025 * REAGENTS_METABOLISM
+	metabolized_traits = list(TRAIT_GLUTTON)
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/moltobeso/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	for(var/datum/reagent/consumable/food in affected_mob.reagents.reagent_list)
+		if(food == src)
+			continue
+		var/food_factor = food.get_nutriment_factor(affected_mob)
+		if(food_factor <= 0)
+			continue
+		affected_mob.adjust_nutrition(food_factor * REM * seconds_per_tick)
+
 /datum/reagent/consumable/eggrot
 	name = "Rotten Eggyolk"
 	description = "It smells absolutely dreadful."
@@ -943,11 +984,11 @@
 
 /datum/reagent/consumable/liquidelectricity/enriched/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume) //can't be on life because of the way blood works.
 	. = ..()
-	if(!(methods & (INGEST|INJECT|PATCH)) || !iscarbon(exposed_mob))
+	if(!(methods & (INGEST|INJECT|PATCH|INHALE)) || !iscarbon(exposed_mob))
 		return
 
 	var/mob/living/carbon/exposed_carbon = exposed_mob
-	var/obj/item/organ/internal/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
+	var/obj/item/organ/stomach/ethereal/stomach = exposed_carbon.get_organ_slot(ORGAN_SLOT_STOMACH)
 	if(istype(stomach))
 		stomach.adjust_charge(reac_volume * 0.03 * ETHEREAL_CHARGE_NORMAL)
 
@@ -1007,6 +1048,11 @@
 	taste_description = "caramel"
 	reagent_state = SOLID
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/caramel/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+	. = ..()
+	if(methods & INGEST)
+		exposed_mob.check_allergic_reaction(SUGAR, chance = reac_volume * 10, histamine_add = min(10, reac_volume * 2))
 
 /datum/reagent/consumable/char
 	name = "Char"

@@ -84,11 +84,12 @@
 	if(scribble_page == current_page)
 		user.balloon_alert(user, "already scribbled!")
 		return
-	var/new_scribble_text = tgui_input_text(user, "What do you want to scribble?", "Write something")
+	var/new_scribble_text = tgui_input_text(user, "What do you want to scribble?", "Write something", max_length = MAX_MESSAGE_LEN)
 	if(isnull(new_scribble_text))
 		return
 	add_fingerprint(user)
 	user.balloon_alert(user, "scribbling...")
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	if(!do_after(user, 2 SECONDS, src))
 		return
 	user.balloon_alert(user, "scribbled!")

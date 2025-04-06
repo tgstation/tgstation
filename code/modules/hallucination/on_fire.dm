@@ -37,7 +37,6 @@
 	return ..()
 
 /datum/hallucination/fire/start()
-	hallucinator.set_fire_stacks(max(hallucinator.fire_stacks, 0.1)) //Placebo flammability
 	fire_overlay = image(fire_icon, hallucinator, fire_icon_state, ABOVE_MOB_LAYER)
 	hallucinator.client?.images |= fire_overlay
 	to_chat(hallucinator, span_userdanger("You're set on fire!"))
@@ -47,7 +46,6 @@
 	return TRUE
 
 /datum/hallucination/fire/Destroy()
-	hallucinator.adjust_fire_stacks(-0.1)
 	hallucinator.clear_alert(ALERT_FIRE, clear_override = TRUE)
 	hallucinator.clear_alert(ALERT_TEMPERATURE, clear_override = TRUE)
 	if(fire_overlay)

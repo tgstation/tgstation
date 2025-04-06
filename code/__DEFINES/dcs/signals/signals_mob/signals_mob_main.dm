@@ -52,6 +52,8 @@
 	#define MOVE_ARG_NEW_LOC 1
 	/// The argument of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
+/// From base of /client/Move(): (new_loc, direction)
+#define COMSIG_MOB_CLIENT_MOVE_NOGRAV "mob_client_move_nograv"
 /// From base of /client/Move(): (direction, old_dir)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
@@ -148,6 +150,10 @@
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT (1<<0)
+///from /mob/living/check_cooldown(): ()
+#define COMSIG_MOB_EMOTE_COOLDOWN_CHECK "mob_emote_cd"
+	/// make a wild guess
+	#define COMPONENT_EMOTE_COOLDOWN_BYPASS (1<<0)
 ///from /mob/living/emote(): ()
 #define COMSIG_MOB_EMOTE "mob_emote"
 ///from base of mob/swap_hand(): (obj/item/currently_held_item)
@@ -252,6 +258,10 @@
 
 /// from /mob/proc/key_down(): (key, client/client, full_key)
 #define COMSIG_MOB_KEYDOWN "mob_key_down"
+
+/// from /mob/Process_Spacemove(movement_dir, continuous_move): (movement_dir, continuous_move, atom/backup)
+#define COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE "mob_attempt_halt_spacemove"
+	#define COMPONENT_PREVENT_SPACEMOVE_HALT (1<<0)
 
 /// from /mob/update_incapacitated(): (old_incap, new_incap)
 #define COMSIG_MOB_INCAPACITATE_CHANGED "mob_incapacitated"

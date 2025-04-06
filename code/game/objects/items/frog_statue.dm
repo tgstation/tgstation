@@ -76,7 +76,7 @@
 	SIGNAL_HANDLER
 
 	contained_frog = null
-	playsound(src, 'sound/magic/demon_dies.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/demon_dies.ogg', 50, TRUE)
 	UnregisterSignal(source, COMSIG_QDELETING)
 
 /obj/item/frog_statue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)

@@ -143,7 +143,7 @@
 		/obj/item/gun/ballistic/automatic/wt550 = 2,
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 	)
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/wt550ammo
 	name = "Smuggled WT-550 Ammo Crate"
@@ -156,7 +156,7 @@
 		/obj/item/ammo_box/magazine/wt550m9/wtic = 2,
 	)
 	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/shocktrooper
 	name = "Shocktrooper Crate"
@@ -172,7 +172,7 @@
 		/obj/item/clothing/suit/armor/vest,
 		/obj/item/clothing/head/helmet,
 	)
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/specialops
 	name = "Special Ops Crate"
@@ -188,7 +188,7 @@
 		/obj/item/switchblade,
 		/obj/item/grenade/mirage = 5,
 	)
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/russian
 	name = "Russian Surplus Military Gear Crate"

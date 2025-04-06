@@ -51,7 +51,7 @@
 	owner_has_control = FALSE
 	cooldown_time = 10 SECONDS
 	projectile_type = /obj/projectile/bileworm_acid
-	projectile_sound = 'sound/creatures/bileworm/bileworm_spit.ogg'
+	projectile_sound = 'sound/mobs/non-humanoids/bileworm/bileworm_spit.ogg'
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/New(Target)
 	firing_directions = GLOB.cardinals.Copy()

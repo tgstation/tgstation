@@ -7,7 +7,7 @@
 	/// The range of the fire
 	var/fire_range = 15
 	/// The sound played when you use this ability
-	var/fire_sound = 'sound/magic/fireball.ogg'
+	var/fire_sound = 'sound/effects/magic/fireball.ogg'
 	/// Time to wait between spawning each fire turf
 	var/fire_delay = 1.5 DECISECONDS
 	/// How hot is our fire
@@ -91,7 +91,7 @@
 /datum/action/cooldown/mob_cooldown/fire_breath/mass_fire
 	name = "Mass Fire"
 	button_icon = 'icons/effects/fire.dmi'
-	button_icon_state = "1"
+	button_icon_state = "light"
 	desc = "Breathe flames in all directions."
 	cooldown_time = 10.5 SECONDS
 	click_to_activate = FALSE

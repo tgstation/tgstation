@@ -13,7 +13,7 @@
 	melee_damage_upper = 5
 	attack_verb_continuous = "rams"
 	attack_verb_simple = "ram"
-	attack_sound = 'sound/weapons/punch2.ogg'
+	attack_sound = 'sound/items/weapons/punch2.ogg'
 	construct_spells = list(
 		/datum/action/cooldown/spell/aoe/magic_missile/lesser,
 		/datum/action/cooldown/spell/conjure/construct/lesser,

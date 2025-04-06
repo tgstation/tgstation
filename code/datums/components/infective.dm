@@ -13,7 +13,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(!islist(diseases))
-		diseases = islist(diseases)
+		diseases = list(diseases)
 
 	///Make sure the diseases list is populated with instances of diseases so that it doesn't have to be for each AddComponent call.
 	for(var/datum/disease/disease as anything in diseases)
@@ -37,7 +37,7 @@
 	src.weak_infection_chance = weak_infection_chance
 
 /datum/component/infective/Destroy()
-	QDEL_NULL(diseases)
+	QDEL_LIST(diseases)
 	return ..()
 
 /datum/component/infective/RegisterWithParent()
@@ -115,8 +115,8 @@
 		return
 
 	if(!is_weak)
-		var/appendage_zone = feeder.held_items.Find(source)
-		appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : (appendage_zone % 2 ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
+		var/appendage_zone = feeder.get_held_index_of_item(source)
+		appendage_zone = appendage_zone == 0 ? BODY_ZONE_CHEST : (IS_RIGHT_INDEX(appendage_zone) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
 		try_infect(feeder, appendage_zone)
 
 	for(var/datum/disease/disease as anything in diseases)

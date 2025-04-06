@@ -14,8 +14,8 @@
 	air_tight = TRUE
 	req_access = list(ACCESS_TCOMMS)
 	transport_linked_id = TRAMSTATION_LINE_1
-	doorOpen = 'sound/machines/tramopen.ogg'
-	doorClose = 'sound/machines/tramclose.ogg'
+	doorOpen = 'sound/machines/tram/tramopen.ogg'
+	doorClose = 'sound/machines/tram/tramclose.ogg'
 	autoclose = FALSE
 	/// Weakref to the tram we're attached
 	var/datum/weakref/transport_ref
@@ -43,7 +43,7 @@
 	update_icon(ALL, AIRLOCK_OPENING, TRUE)
 
 	if(forced >= BYPASS_DOOR_CHECKS)
-		playsound(src, 'sound/machines/airlockforced.ogg', vol = 40, vary = FALSE)
+		playsound(src, 'sound/machines/airlock/airlockforced.ogg', vol = 40, vary = FALSE)
 		sleep(TRAM_DOOR_CYCLE_TIME)
 	else
 		playsound(src, doorOpen, vol = 40, vary = FALSE)
@@ -101,7 +101,7 @@
 			for(var/atom/movable/blocker in checked_turf)
 				if(blocker.density && blocker != src) //something is blocking the door
 					say("Please stand clear of the doors!")
-					playsound(src, 'sound/machines/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 					layer = OPEN_DOOR_LAYER
 					update_icon(ALL, AIRLOCK_OPEN, 1)
 					operating = FALSE
@@ -167,7 +167,7 @@
 		close()
 		return
 
-	playsound(src, 'sound/machines/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, 'sound/machines/buzz/buzz-two.ogg', 60, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	say("YOU'RE HOLDING UP THE TRAM, ASSHOLE!")
 	close(forced = BYPASS_DOOR_CHECKS)
 
@@ -211,7 +211,7 @@
 	if(!hasPower()  && density)
 		balloon_alert(user, "pulling emergency exit...")
 		if(do_after(user, 4 SECONDS, target = src))
-			try_to_crowbar(null, user, TRUE)
+			try_to_crowbar(src, user, TRUE)
 			return TRUE
 
 /**

@@ -122,7 +122,7 @@
 /obj/effect/turf_decal/arrows{
 	dir = 1
 	},
-/turf/open/floor/asphalt/lavaland,
+/turf/open/floor/asphalt/lavaland/outdoors,
 /area/lavaland/surface/outdoors)
 "fF" = (
 /obj/machinery/portable_atmospherics/canister,
@@ -343,7 +343,7 @@
 	},
 /area/ruin/thelizardsgas_lavaland)
 "om" = (
-/turf/open/floor/asphalt/lavaland,
+/turf/open/floor/asphalt/lavaland/outdoors,
 /area/lavaland/surface/outdoors)
 "ou" = (
 /obj/structure/cable,

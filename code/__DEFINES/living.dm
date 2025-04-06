@@ -4,6 +4,12 @@
 /// Always does *deathgasp when they die
 /// If unset mobs will only deathgasp if supplied a death sound or custom death message
 #define ALWAYS_DEATHGASP (1<<1)
+/**
+ * For carbons, this stops bodypart overlays being added to bodyparts from calling mob.update_body_parts().
+ * This is useful for situations like initialization or species changes, where
+ * update_body_parts() is going to be called ONE time once everything is done.
+ */
+#define STOP_OVERLAY_UPDATE_BODY_PARTS (1<<2)
 
 /// Getter for a mob/living's lying angle, otherwise protected
 #define GET_LYING_ANGLE(mob) (UNLINT(mob.lying_angle))

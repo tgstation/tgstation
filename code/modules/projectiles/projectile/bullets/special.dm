@@ -73,14 +73,13 @@
 		return ..()
 
 	coin_check.check_splitshot(firer, src)
-	Impact(coin_check)
+	impact(coin_check)
 
 /// Marksman Coin
 /obj/projectile/bullet/coin
 	name = "marksman coin"
 	icon_state = "coinshot"
-	pixel_speed_multiplier = 0.333
-	speed = 1
+	speed = 0.33
 	damage = 5
 	color = "#dbdd4c"
 
@@ -100,7 +99,7 @@
 /obj/projectile/bullet/coin/Initialize(mapload, turf/the_target, mob/original_firer)
 	src.original_firer = original_firer
 	target_turf = the_target
-	range = (get_dist(original_firer, target_turf) + 3) * 3 // 3 tiles past the origin (the *3 is because Range() ticks 3 times a tile because of the slower speed)
+	range = (get_dist(original_firer, target_turf) + 3) * 3 // 3 tiles past the origin (the *3 is because reduce_range() ticks 3 times a tile because of the slower speed)
 
 	. = ..()
 
@@ -167,7 +166,7 @@
 	if(Adjacent(current_turf, target_turf))
 		new_splitshot.fire(get_angle(current_turf, target_turf), direct_target = next_target)
 	else
-		new_splitshot.preparePixelProjectile(next_target, get_turf(src))
+		new_splitshot.aim_projectile(next_target, get_turf(src))
 		new_splitshot.fire()
 
 	if(istype(next_target, /obj/projectile/bullet/coin)) // handle further splitshot checks
@@ -196,7 +195,7 @@
 	if(possible_victims.len)
 		return pick(possible_victims)
 
-	var/list/static/prioritized_targets = list(/obj/structure/reagent_dispensers, /obj/item/grenade, /obj/structure/window)
+	var/static/list/prioritized_targets = list(/obj/structure/reagent_dispensers, /obj/item/grenade, /obj/structure/window)
 	for(var/iter_type in prioritized_targets)
 		for(var/already_coined_tries in 1 to 3)
 			var/atom/iter_type_check = locate(iter_type) in valid_targets

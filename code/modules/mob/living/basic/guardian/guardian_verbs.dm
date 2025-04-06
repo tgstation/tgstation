@@ -57,7 +57,7 @@
 	if (isnull(summoner))
 		return
 	var/sender_key = key
-	var/input = tgui_input_text(src, "Enter a message to tell your summoner", "Guardian")
+	var/input = tgui_input_text(src, "Enter a message to tell your summoner", "Guardian", max_length = MAX_MESSAGE_LEN)
 	if (sender_key != key || !input) //guardian got reset, or did not enter anything
 		return
 
@@ -91,7 +91,7 @@
 
 /datum/action/cooldown/mob_cooldown/guardian_comms/Activate(atom/target)
 	StartCooldown(360 SECONDS)
-	var/input = tgui_input_text(owner, "Enter a message to tell your guardian", "Message")
+	var/input = tgui_input_text(owner, "Enter a message to tell your guardian", "Message", max_length = MAX_MESSAGE_LEN)
 	StartCooldown()
 	if (!input)
 		return FALSE

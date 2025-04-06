@@ -100,12 +100,12 @@
 /obj/item/assembly_holder/update_overlays()
 	. = ..()
 	for(var/i in 1 to LAZYLEN(assemblies))
-		if(i % 2 == 1)
+		if(IS_LEFT_INDEX(i))
 			var/obj/item/assembly/assembly = assemblies[i]
 			. += "[assembly.icon_state]_left"
 			for(var/left_overlay in assembly.attached_overlays)
 				. += "[left_overlay]_l"
-		if(i % 2 == 0)
+		if(IS_RIGHT_INDEX(i))
 			var/obj/item/assembly/assembly = assemblies[i]
 			var/mutable_appearance/right = mutable_appearance(icon, "[assembly.icon_state]_left")
 			right.transform = matrix(-1, 0, 0, 0, 1, 0)

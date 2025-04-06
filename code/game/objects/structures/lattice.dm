@@ -82,7 +82,7 @@
 			return TRUE
 	return FALSE
 
-/obj/structure/lattice/singularity_pull(S, current_size)
+/obj/structure/lattice/singularity_pull(atom/singularity, current_size)
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
 
@@ -162,7 +162,7 @@
 		to_chat(user, span_warning("You need one floor tile to build atop [src]."))
 		return
 	to_chat(user, span_notice("You construct new plating with [src] as support."))
-	playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
+	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
 
 	var/turf/turf_we_place_on = get_turf(src)
 	turf_we_place_on.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)

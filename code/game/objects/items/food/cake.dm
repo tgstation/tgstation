@@ -267,7 +267,7 @@
 	desc = "Just enough calories for a whole nuclear operative squad."
 	icon_state = "energycake"
 	force = 5
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 10,
 		/datum/reagent/consumable/sprinkles = 10,
@@ -285,7 +285,7 @@
 /obj/item/food/cake/birthday/energy/proc/energy_bite(mob/living/user)
 	to_chat(user, "<font color='red' size='5'>As you eat the cake, you accidentally hurt yourself on the embedded energy sword!</font>")
 	user.apply_damage(30, BRUTE, BODY_ZONE_HEAD)
-	playsound(user, 'sound/weapons/blade1.ogg', 5, TRUE)
+	playsound(user, 'sound/items/weapons/blade1.ogg', 5, TRUE)
 
 /obj/item/food/cake/birthday/energy/attack(mob/living/target_mob, mob/living/user)
 	. = ..()
@@ -298,7 +298,7 @@
 	desc = "For the traitor on the go."
 	icon_state = "energycakeslice"
 	force = 2
-	hitsound = 'sound/weapons/blade1.ogg'
+	hitsound = 'sound/items/weapons/blade1.ogg'
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4,
 		/datum/reagent/consumable/sprinkles = 2,
@@ -325,7 +325,7 @@
 	if(eater != feeder)
 		log_combat(feeder, eater, "fed an energy cake to", src)
 	eater.apply_damage(18, BRUTE, BODY_ZONE_HEAD)
-	playsound(eater, 'sound/weapons/blade1.ogg', 5, TRUE)
+	playsound(eater, 'sound/items/weapons/blade1.ogg', 5, TRUE)
 
 /obj/item/food/cake/apple
 	name = "apple cake"

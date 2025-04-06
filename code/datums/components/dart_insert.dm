@@ -135,8 +135,6 @@
 /datum/component/dart_insert/proc/apply_var_modifiers(obj/projectile/projectile)
 	var_modifiers = istype(modifier_getter) ? modifier_getter.Invoke() : list()
 	projectile.damage += var_modifiers["damage"]
-	if(var_modifiers["speed"])
-		var_modifiers["speed"] = reciprocal_add(projectile.speed, var_modifiers["speed"]) - projectile.speed
 	projectile.speed += var_modifiers["speed"]
 	projectile.armour_penetration += var_modifiers["armour_penetration"]
 	projectile.wound_bonus += var_modifiers["wound_bonus"]

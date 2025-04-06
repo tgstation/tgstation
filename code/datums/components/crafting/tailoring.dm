@@ -253,7 +253,7 @@
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/costume/lizard
 	time = 1 SECONDS
-	reqs = list(/obj/item/organ/external/tail/lizard = 1)
+	reqs = list(/obj/item/organ/tail/lizard = 1)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/lizardhat_alternate
@@ -268,8 +268,8 @@
 	result = /obj/item/clothing/head/costume/kitty/genuine
 	time = 1 SECONDS
 	reqs = list(
-		/obj/item/organ/external/tail/cat = 1,
-		/obj/item/organ/internal/ears/cat = 1,
+		/obj/item/organ/tail/cat = 1,
+		/obj/item/organ/ears/cat = 1,
 	)
 	category = CAT_CLOTHING
 
@@ -641,5 +641,15 @@
 	tool_paths = list(/obj/item/clothing/accessory/press_badge)
 	reqs = list(
 		/obj/item/clothing/head/fedora/beige = 1,
+	)
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/jonkler
+	name = "gamer's wig and mask"
+	result = /obj/item/clothing/mask/gas/jonkler
+	time = 10 SECONDS
+	tool_paths = list(/obj/item/toy/crayon/green)
+	reqs = list(
+		/obj/item/clothing/mask/gas/clown_hat = 1,
 	)
 	category = CAT_CLOTHING

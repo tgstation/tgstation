@@ -10,7 +10,7 @@
 	var/pounce_speed = 2
 
 /mob/living/carbon/alien/adult/hunter/create_internal_organs()
-	organs += new /obj/item/organ/internal/alien/plasmavessel/small
+	organs += new /obj/item/organ/alien/plasmavessel/small
 	..()
 
 //Hunter verbs

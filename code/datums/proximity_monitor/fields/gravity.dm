@@ -80,6 +80,7 @@
 	alpha = 200
 	/// our emissive appearance
 	var/mutable_appearance/emissive
+	var/particles/particle_type
 
 /obj/gravity_fluff_field/Initialize(mapload, strength)
 	. = ..()
@@ -89,20 +90,22 @@
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	switch(strength)
 		if(2 to INFINITY)
-			particles = new /particles/grav_field_down/strong()
+			particle_type = /particles/grav_field_down/strong
 		if(1 to 2)
-			particles = new /particles/grav_field_down()
+			particle_type = /particles/grav_field_down
 		if(0 to 1)
-			particles = new /particles/grav_field_float()
+			particle_type = /particles/grav_field_float
 		if(-INFINITY to -1)
-			particles = new /particles/grav_field_up()
-	color = particles.color
+			particle_type = /particles/grav_field_up
+	if (particle_type)
+		add_shared_particles(/particles/grav_field_down/strong)
+		color = particle_type::color
 	RegisterSignal(src, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(smoothed))
 
 /obj/gravity_fluff_field/Destroy(force)
-	. = ..()
-	QDEL_NULL(particles)
+	remove_shared_particles(particle_type)
 	emissive = null
+	return ..()
 
 /obj/gravity_fluff_field/proc/smoothed(datum/source)
 	SIGNAL_HANDLER

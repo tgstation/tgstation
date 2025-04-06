@@ -4,7 +4,7 @@
 /// Tests to make sure no punks have broken high luminosity eyes
 /datum/unit_test/screenshot_high_luminosity_eyes
 	var/mob/living/carbon/human/test_subject
-	var/obj/item/organ/internal/eyes/robotic/glow/test_eyes
+	var/obj/item/organ/eyes/robotic/glow/test_eyes
 
 /datum/unit_test/screenshot_high_luminosity_eyes/Run()
 	// Create a mob with red and blue eyes. This is to test that high luminosity eyes properly default to the old eye color.
@@ -14,7 +14,7 @@
 	test_subject.eye_color_right = COLOR_BLUE
 
 	// Create our eyes, and insert them into the mob
-	test_eyes = allocate(/obj/item/organ/internal/eyes/robotic/glow)
+	test_eyes = allocate(/obj/item/organ/eyes/robotic/glow)
 	test_eyes.Insert(test_subject)
 
 	// This should be 4, but just in case it ever changes in the future
@@ -57,7 +57,7 @@
 	for(var/mutable_appearance/light_underlay as anything in test_subject.underlays)
 		if(light_underlay.icon == 'icons/effects/light_overlays/light_cone.dmi')
 			// The light cone icon is 96x96, so we have to shift it over to have it match our sprites. x = 1, y = 1 is the lower left corner so we shift 32 pixels opposite to that.
-			final_icon.Blend(get_flat_icon_for_all_directions(light_underlay, no_anim = FALSE), ICON_UNDERLAY, -world.icon_size + 1, -world.icon_size + 1)
+			final_icon.Blend(get_flat_icon_for_all_directions(light_underlay, no_anim = FALSE), ICON_UNDERLAY, -ICON_SIZE_X + 1, -ICON_SIZE_Y + 1)
 	return final_icon
 
 #undef UPDATE_EYES_LEFT

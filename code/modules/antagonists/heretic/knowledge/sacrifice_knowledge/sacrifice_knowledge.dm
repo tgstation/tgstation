@@ -15,7 +15,7 @@
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
-	route = PATH_START
+	is_starting_knowledge = TRUE
 	research_tree_icon_path = 'icons/effects/eldritch.dmi'
 	research_tree_icon_state = "eye_close"
 	research_tree_icon_frame = 1
@@ -31,13 +31,13 @@
 	var/list/return_timers
 	/// Evil organs we can put in people
 	var/static/list/grantable_organs = list(
-		/obj/item/organ/internal/appendix/corrupt,
-		/obj/item/organ/internal/eyes/corrupt,
-		/obj/item/organ/internal/heart/corrupt,
-		/obj/item/organ/internal/liver/corrupt,
-		/obj/item/organ/internal/lungs/corrupt,
-		/obj/item/organ/internal/stomach/corrupt,
-		/obj/item/organ/internal/tongue/corrupt,
+		/obj/item/organ/appendix/corrupt,
+		/obj/item/organ/eyes/corrupt,
+		/obj/item/organ/heart/corrupt,
+		/obj/item/organ/liver/corrupt,
+		/obj/item/organ/lungs/corrupt,
+		/obj/item/organ/stomach/corrupt,
+		/obj/item/organ/tongue/corrupt,
 	)
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
@@ -223,7 +223,7 @@
 		if(prob(min(15 * rewards_given)) && (rewards_given <= 5))
 			for(var/datum/mind/mind as anything in cultist_datum.cult_team.members)
 				if(mind.current)
-					SEND_SOUND(mind.current, 'sound/magic/clockwork/narsie_attack.ogg')
+					SEND_SOUND(mind.current, 'sound/effects/magic/clockwork/narsie_attack.ogg')
 					var/message = span_narsie("A vile heretic has ") + \
 					span_cult_large(span_hypnophrase("sacrificed")) + \
 					span_narsie(" one of our own. Destroy and sacrifice the infidel before it claims more!")
@@ -249,7 +249,7 @@
 	// Visible and audible encouragement!
 	to_chat(user, span_big(span_hypnophrase("A servant of the Sanguine Apostate!")))
 	to_chat(user, span_hierophant("Your patrons are rapturous!"))
-	playsound(sacrifice, 'sound/magic/disintegrate.ogg', 75, TRUE)
+	playsound(sacrifice, 'sound/effects/magic/disintegrate.ogg', 75, TRUE)
 
 	// Drop all items and splatter them around messily.
 	var/list/dustee_items = sacrifice.unequip_everything()
@@ -281,7 +281,7 @@
 		return
 	// Remove the outline, we don't need it anymore.
 	rune?.remove_filter("reward_outline")
-	playsound(loc, 'sound/magic/repulse.ogg', 75, TRUE)
+	playsound(loc, 'sound/effects/magic/repulse.ogg', 75, TRUE)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	ASSERT(heretic_datum)
 	// This list will be almost identical to unlocked_heretic_items, with the same keys, the difference being the values will be 1 to 5.
@@ -389,7 +389,7 @@
 	curse_organs(sac_target)
 
 	// Send 'em to the destination. If the teleport fails, just disembowel them and stop the chain
-	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/magic/repulse.ogg', asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+	if(!destination || !do_teleport(sac_target, destination, asoundin = 'sound/effects/magic/repulse.ogg', asoundout = 'sound/effects/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		disembowel_target(sac_target)
 		return
 
@@ -403,7 +403,7 @@
 
 	to_chat(sac_target, span_big(span_hypnophrase("Unnatural forces begin to claw at your every being from beyond the veil.")))
 
-	playsound(sac_target, 'sound/ambience/antag/heretic/heretic_sacrifice.ogg', 50, FALSE) // play theme
+	playsound(sac_target, 'sound/music/antag/heretic/heretic_sacrifice.ogg', 50, FALSE) // play theme
 
 	sac_target.apply_status_effect(/datum/status_effect/unholy_determination, SACRIFICE_REALM_DURATION)
 	addtimer(CALLBACK(src, PROC_REF(after_target_wakes), sac_target), SACRIFICE_SLEEP_DURATION * 0.5) // Begin the minigame
@@ -415,7 +415,7 @@
 /datum/heretic_knowledge/hunt_and_sacrifice/proc/curse_organs(mob/living/carbon/human/sac_target)
 	var/usable_organs = grantable_organs.Copy()
 	if (isplasmaman(sac_target))
-		usable_organs -= /obj/item/organ/internal/lungs/corrupt // Their lungs are already more cursed than anything I could give them
+		usable_organs -= /obj/item/organ/lungs/corrupt // Their lungs are already more cursed than anything I could give them
 
 	var/total_implant = rand(2, 4)
 
@@ -423,7 +423,7 @@
 		if (!length(usable_organs))
 			return
 		var/organ_path = pick_n_take(usable_organs)
-		var/obj/item/organ/internal/to_give = new organ_path
+		var/obj/item/organ/to_give = new organ_path
 		to_give.Insert(sac_target)
 
 	new /obj/effect/gibspawner/human/bodypartless(get_turf(sac_target))
@@ -525,7 +525,7 @@
 		safe_turf = get_turf(backup_loc)
 		stack_trace("[type] - return_target was unable to find a safe turf for [sac_target] to return to. Defaulting to observer start turf.")
 
-	if(!do_teleport(sac_target, safe_turf, asoundout = 'sound/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
+	if(!do_teleport(sac_target, safe_turf, asoundout = 'sound/effects/magic/blind.ogg', no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC, forced = TRUE))
 		safe_turf = get_turf(backup_loc)
 		sac_target.forceMove(safe_turf)
 		stack_trace("[type] - return_target was unable to teleport [sac_target] to the observer start turf. Forcemoving.")

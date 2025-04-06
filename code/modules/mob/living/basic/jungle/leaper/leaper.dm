@@ -23,7 +23,7 @@
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
 
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	status_flags = NONE
 	lighting_cutoff_red = 5

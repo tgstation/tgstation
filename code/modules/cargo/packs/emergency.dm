@@ -24,7 +24,7 @@
 	cost = CARGO_CRATE_VALUE * 4
 	contains = list(
 		/mob/living/basic/bot/medbot = 2,
-		/mob/living/simple_animal/bot/floorbot = 2,
+		/mob/living/basic/bot/repairbot = 2,
 		/obj/item/tank/internals/emergency_oxygen = 5,
 		/obj/item/clothing/mask/breath = 5,
 	)

@@ -23,7 +23,7 @@
 		return
 
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(check_embed))
-	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(examined_tags))
 	RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, PROC_REF(try_force_embed))
 	RegisterSignal(target, COMSIG_ITEM_DISABLE_EMBED, PROC_REF(detach_from_weapon))
 
@@ -82,13 +82,13 @@
 	Detach(weapon)
 
 ///Someone inspected our embeddable item
-/datum/element/embed/proc/examined(obj/item/I, mob/user, list/examine_list)
+/datum/element/embed/proc/examined_tags(obj/item/I, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
 	if(I.is_embed_harmless())
-		examine_list += "[I] feels sticky, and could probably get stuck to someone if thrown properly!"
+		examine_list["sticky"] = "[I] feels sticky, and could probably get stuck to someone if thrown properly!"
 	else
-		examine_list += "[I] has a fine point, and could probably embed in someone if thrown properly!"
+		examine_list["embeddable"] = "[I] has a fine point, and could probably embed in someone if thrown properly!"
 
 /**
  * check_embed_projectile() is what we get when a projectile with a defined shrapnel_type impacts a target.
@@ -98,12 +98,16 @@
  * That's awful, and it'll limit us to drop-deletable shrapnels in the worry of stuff like
  * arrows and harpoons being embeddable even when not let loose by their weapons.
  */
-/datum/element/embed/proc/check_embed_projectile(obj/projectile/source, atom/movable/firer, atom/hit, angle, hit_zone, blocked)
+/datum/element/embed/proc/check_embed_projectile(obj/projectile/source, atom/movable/firer, atom/hit, angle, hit_zone, blocked, pierce_hit)
 	SIGNAL_HANDLER
+
+	if (pierce_hit)
+		return
 
 	if(!source.can_embed_into(hit) || blocked)
 		Detach(source)
 		return // we don't care
+
 	var/payload_type = source.shrapnel_type
 	var/obj/item/payload = new payload_type(get_turf(hit))
 	payload.set_embed(source.get_embed())
@@ -117,6 +121,8 @@
 
 	if(!try_force_embed(payload, limb))
 		payload.failedEmbed()
+	else
+		SEND_SIGNAL(source, COMSIG_PROJECTILE_ON_EMBEDDED, payload, hit)
 	Detach(source)
 
 /**

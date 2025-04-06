@@ -108,7 +108,7 @@
 	if(!length(user.get_missing_limbs() - dont_regenerate))
 		return
 
-	playsound(user, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	user.visible_message(
 		span_warning("[user]'s missing limbs reform, making a loud, grotesque sound!"),
 		span_userdanger("Your limbs regrow, making a loud, crunchy sound and giving you great pain!"),

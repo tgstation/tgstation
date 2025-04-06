@@ -202,7 +202,7 @@
 "la" = (
 /obj/structure/lattice,
 /obj/structure/grille/broken,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "le" = (
 /obj/structure/door_assembly/door_assembly_mhatch,
@@ -286,7 +286,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "pk" = (
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "pC" = (
 /obj/effect/decal/cleanable/fuel_pool,
@@ -513,7 +513,7 @@
 "zC" = (
 /obj/structure/lattice,
 /obj/structure/grille,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "zN" = (
 /obj/structure/table/reinforced,
@@ -662,7 +662,7 @@
 /obj/structure/mecha_wreckage/ripley,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/molten_object,
-/obj/item/organ/internal/tongue/robot,
+/obj/item/organ/tongue/robot,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "HN" = (
@@ -716,8 +716,8 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "JX" = (
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "Ko" = (
 /obj/machinery/computer/terminal{
 	content = list("Property of Spinward-Upsilon Sanitation Department. Authorised employees only.");
@@ -751,7 +751,7 @@
 "MJ" = (
 /obj/structure/lattice/catwalk,
 /obj/item/crowbar/large/emergency,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "MQ" = (
 /obj/item/stock_parts/power_store/cell/crap/empty{
@@ -885,8 +885,8 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "VL" = (
 /obj/machinery/power/shuttle_engine/propulsion,
-/turf/open/space/basic,
-/area/space)
+/turf/template_noop,
+/area/template_noop)
 "WK" = (
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/clothing/shoes/workboots{
@@ -921,7 +921,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /obj/effect/spawner/random/entertainment/plushie,
-/turf/open/space/basic,
+/turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Zu" = (
 /obj/item/food/candy,

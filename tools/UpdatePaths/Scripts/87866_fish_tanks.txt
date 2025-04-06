@@ -1,0 +1,1 @@
+/obj/structure/aquarium/lawyer : /obj/item/fish_tank/lawyer

@@ -15,11 +15,11 @@
 	infodisplay += healths
 
 	using = new /atom/movable/screen/guardian/manifest(null, src)
-	using.screen_loc = ui_hand_position(2)
+	using.screen_loc = ui_hand_position(RIGHT_HANDS)
 	static_inventory += using
 
 	using = new /atom/movable/screen/guardian/recall(null, src)
-	using.screen_loc = ui_hand_position(1)
+	using.screen_loc = ui_hand_position(LEFT_HANDS)
 	static_inventory += using
 
 	using = new owner.toggle_button_type(null, src)

@@ -8,7 +8,6 @@
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 	click_to_activate = FALSE
 	cooldown_time = 6 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
 	overlay_icon_state = "bg_clock_border"
@@ -57,7 +56,6 @@
 	background_icon_state = "bg_clock"
 	overlay_icon_state = "bg_clock_border"
 	cooldown_time = 8 SECONDS
-	melee_cooldown_time = 0 SECONDS
 	shared_cooldown = NONE
 	/// How close does something need to be for us to recruit it?
 	var/range = 5

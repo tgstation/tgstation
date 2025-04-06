@@ -34,7 +34,7 @@
 	force = 18
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
 /obj/item/knife/envy/afterattack(atom/target, mob/living/carbon/human/user, click_parameters)
 	if(!istype(user) || !ishuman(target))
@@ -49,4 +49,4 @@
 	user.updateappearance(mutcolor_update=1)
 	user.domutcheck()
 	user.visible_message(span_warning("[user]'s appearance shifts into [H]'s!"), \
-	span_boldannounce("[H.p_They()] think[H.p_s()] [H.p_theyre()] <i>sooo</i> much better than you. Not anymore, [H.p_they()] won't."))
+	span_bolddanger("[H.p_They()] think[H.p_s()] [H.p_theyre()] <i>sooo</i> much better than you. Not anymore, [H.p_they()] won't."))

@@ -7,7 +7,7 @@
 const inception = Date.now();
 
 // Runtime detection
-const isNode = process && process.release && process.release.name === 'node';
+const isNode = process?.release?.name === 'node';
 let isChrome = false;
 try {
   isChrome = window.navigator.userAgent.toLowerCase().includes('chrome');

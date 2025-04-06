@@ -3,7 +3,7 @@
 	name = "Lesser Heal"
 	desc = "Heals a small amount of brute and burn damage to the caster."
 
-	sound = 'sound/magic/staff_healing.ogg'
+	sound = 'sound/effects/magic/staff_healing.ogg'
 	school = SCHOOL_RESTORATION
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 1.25 SECONDS

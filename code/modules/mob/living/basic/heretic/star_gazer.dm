@@ -21,11 +21,11 @@
 	attack_verb_continuous = "ravages"
 	attack_verb_simple = "ravage"
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	melee_attack_cooldown = 0.6 SECONDS
 	speak_emote = list("growls")
 	damage_coeff = list(BRUTE = 1, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0)
-	death_sound = 'sound/magic/cosmic_expansion.ogg'
+	death_sound = 'sound/effects/magic/cosmic_expansion.ogg'
 
 	slowed_by_drag = FALSE
 	move_force = MOVE_FORCE_OVERPOWERING

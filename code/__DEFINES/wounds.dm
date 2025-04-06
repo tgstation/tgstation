@@ -25,6 +25,11 @@
 /// outright dismemberment of limb
 #define WOUND_SEVERITY_LOSS 4
 
+// how much blood the limb needs to be losing per tick (not counting laying down/self grasping modifiers) to get the different bleed icons
+#define BLEED_OVERLAY_LOW 0.5
+#define BLEED_OVERLAY_MED 1.5
+#define BLEED_OVERLAY_GUSH 3.25
+
 /// A "chronological" list of wound severities, starting at the least severe.
 GLOBAL_LIST_INIT(wound_severities_chronological, list(
 	"[WOUND_SEVERITY_TRIVIAL]",

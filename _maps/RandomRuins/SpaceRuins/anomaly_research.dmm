@@ -351,7 +351,7 @@
 "kp" = (
 /obj/effect/spawner/random/environmentally_safe_anomaly/immobile,
 /turf/template_noop,
-/area/space)
+/area/space/nearstation)
 "kt" = (
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 1

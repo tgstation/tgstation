@@ -1,7 +1,6 @@
 #define BOT_PATIENT_PATH_LIMIT 20
 /datum/ai_controller/basic_controller/bot/medbot
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/manage_unreachable_list,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/handle_medbot_speech,
 		/datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit,
@@ -59,15 +58,15 @@
 		if(LAZYACCESS(ignore_keys, treatable_target) || treatable_target.stat == DEAD)
 			continue
 		if((access_flags & BOT_COVER_EMAGGED) && treatable_target.stat == CONSCIOUS)
-			controller.set_if_can_reach(BB_PATIENT_TARGET, treatable_target, distance =BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
+			controller.set_if_can_reach(key = BB_PATIENT_TARGET, target = treatable_target, distance = BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
 			break
 		if((heal_type == HEAL_ALL_DAMAGE))
 			if(treatable_target.get_total_damage() > threshold)
-				controller.set_if_can_reach(BB_PATIENT_TARGET, treatable_target, distance = BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
+				controller.set_if_can_reach(key = BB_PATIENT_TARGET, target = treatable_target, distance = BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
 				break
 			continue
 		if(treatable_target.get_current_damage_of_type(damagetype = heal_type) > threshold)
-			controller.set_if_can_reach(BB_PATIENT_TARGET, treatable_target, distance = BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
+			controller.set_if_can_reach(key = BB_PATIENT_TARGET, target = treatable_target, distance = BOT_PATIENT_PATH_LIMIT, bypass_add_to_blacklist = (search_range == 1))
 			break
 
 	if(controller.blackboard_key_exists(BB_PATIENT_TARGET))
@@ -107,13 +106,13 @@
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 // only clear the target if they get healed
-/datum/ai_behavior/tend_to_patient/finish_action(datum/ai_controller/controller, succeeded, target_key, threshold, damage_type_healer, access_flags, is_stationary)
+/datum/ai_behavior/tend_to_patient/finish_action(datum/ai_controller/basic_controller/bot/controller, succeeded, target_key, threshold, damage_type_healer, access_flags, is_stationary)
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(!succeeded)
 
 		if(!isnull(target) && !is_stationary)
-			controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
+			controller.add_to_blacklist(target)
 
 		controller.clear_blackboard_key(target_key)
 		return
@@ -217,6 +216,13 @@
 /datum/ai_planning_subtree/find_patrol_beacon/medbot
 	///travel towards beacon behavior
 	travel_behavior = /datum/ai_behavior/travel_towards/beacon/medbot
+
+/datum/ai_planning_subtree/find_patrol_beacon/medbot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
+	if(bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE)
+		return
+	return ..()
+
 
 /datum/ai_behavior/travel_towards/beacon/medbot
 	new_movement_type = /datum/ai_movement/jps/bot/medbot/travel_to_beacon

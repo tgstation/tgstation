@@ -101,8 +101,8 @@
 
 /datum/supply_pack/organic/randomized/chef/fruits
 	name = "Fruit Crate"
-	desc = "Rich of vitamins. Contains a lime, orange, watermelon, apple, \
-		berries and a lime."
+	desc = "Rich in vitamins. Contains a lime, orange, watermelon, apple, \
+		berries and a lemon."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/food/grown/citrus/lime,
 					/obj/item/food/grown/citrus/orange,

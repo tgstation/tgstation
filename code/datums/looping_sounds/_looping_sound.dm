@@ -4,7 +4,7 @@
 /datum/looping_sound
 	/// (list or soundfile) Since this can be either a list or a single soundfile you can have random sounds. May contain further lists but must contain a soundfile at the end. In a list, path must have also be assigned a value or it will be assigned 0 and not play.
 	var/mid_sounds
-	/// The length of time to wait between playing mid_sounds.
+	/// The length of time to wait between playing mid_sounds. WARNING: Continuously looping sounds like the microwave, grav gen and fan sounds don't work very well with this, just don't set this if you are doing a continuous loop of machinery.
 	var/mid_length
 	/// Amount of time to add/take away from the mid length, randomly
 	var/mid_length_vary = 0

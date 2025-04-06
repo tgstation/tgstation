@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 ///deposit ores into the stand!
 /datum/ai_planning_subtree/find_and_hunt_target/material_stand
 	target_key = BB_MATERIAL_STAND_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/material_stand
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/material_stand
 	finding_behavior = /datum/ai_behavior/find_hunt_target
 	hunt_targets = list(/obj/structure/ore_container/material_stand)
 	hunt_range = 9
@@ -81,14 +81,14 @@ GLOBAL_LIST_INIT(mook_commands, list(
 		return
 	return ..()
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/material_stand
+/datum/ai_behavior/hunt_target/interact_with_target/material_stand
 	required_distance = 0
 	always_reset_target = TRUE
-	switch_combat_mode = TRUE
+	behavior_combat_mode = FALSE
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
 ///try to face the counter when depositing ores
-/datum/ai_behavior/hunt_target/unarmed_attack_target/material_stand/setup(datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
+/datum/ai_behavior/hunt_target/interact_with_target/material_stand/setup(datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	. = ..()
 	var/atom/hunt_target = controller.blackboard[hunting_target_key]
 	if (QDELETED(hunt_target))
@@ -297,7 +297,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 ///find injured miner mooks after they come home from a long day of work
 /datum/ai_planning_subtree/find_and_hunt_target/injured_mooks
 	target_key = BB_INJURED_MOOK
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/injured_mooks
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/injured_mooks
 	finding_behavior = /datum/ai_behavior/find_hunt_target/injured_mooks
 	hunt_targets = list(/mob/living/basic/mining/mook/worker)
 	hunt_range = 9
@@ -313,9 +313,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_behavior/find_hunt_target/injured_mooks/valid_dinner(mob/living/source, mob/living/injured_mook)
 	return (injured_mook.health < injured_mook.maxHealth)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/injured_mooks
-
-/datum/ai_behavior/hunt_target/unarmed_attack_target/injured_mooks
+/datum/ai_behavior/hunt_target/interact_with_target/injured_mooks
 	always_reset_target = TRUE
 	hunt_cooldown = 10 SECONDS
 
@@ -405,7 +403,7 @@ GLOBAL_LIST_INIT(mook_commands, list(
 /datum/ai_planning_subtree/find_and_hunt_target/bonfire
 	target_key = BB_MOOK_BONFIRE_TARGET
 	finding_behavior = /datum/ai_behavior/find_hunt_target/bonfire
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/bonfire
+	hunting_behavior = /datum/ai_behavior/hunt_target/interact_with_target/bonfire
 	hunt_targets = list(/obj/structure/bonfire)
 	hunt_range = 9
 
@@ -418,5 +416,5 @@ GLOBAL_LIST_INIT(mook_commands, list(
 
 	return can_see(source, fire, radius)
 
-/datum/ai_behavior/hunt_target/unarmed_attack_target/bonfire
+/datum/ai_behavior/hunt_target/interact_with_target/bonfire
 	always_reset_target = TRUE

@@ -1,7 +1,7 @@
 /area/deathmatch
 	name = "Deathmatch Arena"
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	area_flags = UNIQUE_AREA | NOTELEPORT | EVENT_PROTECTED | QUIET_LOGS | NO_DEATH_MESSAGE | BINARY_JAMMING
 
 /area/deathmatch/fullbright
@@ -31,3 +31,4 @@
 	icon_state = /turf/open/floor/wood::icon_state
 	base_icon_state = /turf/open/floor/wood::base_icon_state
 	icon = /turf/open/floor/wood::icon
+	smoothing_flags = NONE

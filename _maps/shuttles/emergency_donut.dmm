@@ -317,7 +317,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "ed" = (
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
 /obj/structure/table/optable,

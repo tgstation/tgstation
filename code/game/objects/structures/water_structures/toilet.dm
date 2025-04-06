@@ -25,17 +25,13 @@
 	var/list/cistern_items
 	///Lazylist of fish in the toilet, not to be mixed with the items in the cistern. Max of 3
 	var/list/fishes
-	///Static toilet water overlay given to toilets that are facing a direction we can see the water in.
-	var/static/mutable_appearance/toilet_water_overlay
 
 /obj/structure/toilet/Initialize(mapload)
 	. = ..()
-	if(isnull(toilet_water_overlay))
-		toilet_water_overlay = mutable_appearance(icon, "[base_icon_state]-water")
 	cover_open = round(rand(0, 1))
 	update_appearance(UPDATE_ICON)
 	if(mapload && SSmapping.level_trait(z, ZTRAIT_STATION))
-		AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/toilet)
+		AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/toilet])
 	AddElement(/datum/element/fish_safe_storage)
 	register_context()
 
@@ -176,8 +172,8 @@
 
 /obj/structure/toilet/update_overlays()
 	. = ..()
-	if(!flushing && cover_open && (dir & SOUTH))
-		. += toilet_water_overlay
+	if(!flushing && cover_open)
+		. += "[base_icon_state]-water"
 
 /obj/structure/toilet/atom_deconstruct(dissambled = TRUE)
 	for(var/obj/toilet_item in cistern_items)

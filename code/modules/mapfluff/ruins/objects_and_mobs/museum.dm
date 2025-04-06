@@ -64,7 +64,7 @@
 	max_integrity = 5 //one tap
 
 /obj/structure/fluff/balloon_nuke/atom_destruction()
-	playsound(loc, 'sound/effects/cartoon_pop.ogg', 75, vary = TRUE)
+	playsound(loc, 'sound/effects/cartoon_sfx/cartoon_pop.ogg', 75, vary = TRUE)
 	..()
 
 /obj/structure/fluff/fake_camera
@@ -77,16 +77,16 @@
 	name = /obj/machinery/atmospherics/components/unary/vent_scrubber::name
 	desc = /obj/machinery/atmospherics/components/unary/vent_scrubber::desc
 	icon = /obj/machinery/atmospherics/components/unary/vent_scrubber::icon
-	layer = /obj/machinery/atmospherics/components/unary/vent_scrubber::layer
-	plane = /obj/machinery/atmospherics/components/unary/vent_scrubber::plane
+	layer = ABOVE_OPEN_TURF_LAYER
+	plane = FLOOR_PLANE
 	icon_state = "scrub_on"
 
 /obj/structure/fluff/fake_vent
 	name = /obj/machinery/atmospherics/components/unary/vent_pump::name
 	desc = /obj/machinery/atmospherics/components/unary/vent_pump::desc
 	icon = /obj/machinery/atmospherics/components/unary/vent_pump::icon
-	layer = /obj/machinery/atmospherics/components/unary/vent_pump::layer
-	plane = /obj/machinery/atmospherics/components/unary/vent_pump::plane
+	layer = ABOVE_OPEN_TURF_LAYER
+	plane = FLOOR_PLANE
 	icon_state = "vent_out"
 
 /turf/open/mirage
@@ -199,6 +199,6 @@
 	var/obj/structure/toilet/destination = pick(partners)
 	forceMove(destination)
 	destination.w_items += w_class
-	destination.contents += src
+	LAZYADD(destination.cistern_items, src)
 
 #undef CAFE_KEYCARD_TOILETS

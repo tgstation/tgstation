@@ -242,6 +242,16 @@ export const EFFECTS_NORMAL: PodEffect[] = [
 
 export const EFFECTS_HARM: PodEffect[] = [
   {
+    act: 'create_sparks',
+    choiceNumber: 1,
+    icon: 'certificate',
+    selected: 'create_sparks',
+    title: 'Create sparks; May cause fires if there is plasma in the air',
+  },
+  {
+    divider: true,
+  },
+  {
     act: 'explosionCustom',
     choiceNumber: 1,
     icon: 'bomb',

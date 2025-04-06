@@ -390,7 +390,7 @@ export class PrimaryView extends Component {
                   bold={useBold}
                   height="100%"
                   backgroundColor={paper_color}
-                  onChange={(e, text) => {
+                  onInput={(e, text) => {
                     setTextAreaText(text);
 
                     if (this.scrollableRef.current) {

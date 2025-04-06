@@ -291,9 +291,9 @@
 /area/shuttle/pirate)
 "aS" = (
 /obj/effect/turf_decal/tile/dark_blue/opposingcorners,
-/obj/structure/closet/crate/freezer/blood/interdyne,
 /obj/machinery/light/small/blacklight/directional/south,
 /obj/machinery/iv_drip,
+/obj/structure/closet/crate/secure/freezer/interdyne/blood,
 /turf/open/floor/iron/dark,
 /area/shuttle/pirate)
 "aW" = (

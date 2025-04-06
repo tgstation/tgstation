@@ -4,7 +4,6 @@
 	icon = 'icons/turf/floors/glass.dmi'
 	icon_state = "glass-0"
 	base_icon_state = "glass"
-	baseturfs = /turf/baseturf_bottom
 	layer = GLASS_FLOOR_LAYER
 	underfloor_accessibility = UNDERFLOOR_VISIBLE
 	smoothing_flags = SMOOTH_BITMASK
@@ -15,7 +14,6 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	floor_tile = /obj/item/stack/tile/glass
-	overfloor_placed = FALSE
 	/// List of /atom/movable/render_step that are being used to make this glass floor glow
 	/// These are OWNED by this floor, they delete when we delete them, not before not after
 	var/list/glow_stuff
@@ -60,9 +58,6 @@
 /turf/open/floor/glass/proc/starlight_changed(datum/source, old_star, new_star)
 	if(light_color == old_star)
 		set_light(l_color = new_star)
-
-/turf/open/floor/glass/make_plating()
-	return
 
 /turf/open/floor/glass/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

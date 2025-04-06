@@ -7,7 +7,7 @@
 // Atomic styles
 @include meta.load-css('~tgui/styles/atomic/text.scss');
 // External styles
-@include meta.load-css('~tgui/styles/components/TextArea.scss');
+@include meta.load-css('pkg:tgui-styles/components/TextArea');
 // Local styles
 @include meta.load-css('./button.scss');
 @include meta.load-css('./content.scss');

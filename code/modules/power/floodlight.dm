@@ -69,33 +69,34 @@
 	if(state == FLOODLIGHT_NEEDS_SECURING)
 		icon_state = "floodlight_c3"
 		state = FLOODLIGHT_NEEDS_LIGHTS
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	else if(state == FLOODLIGHT_NEEDS_LIGHTS)
 		icon_state = "floodlight_c2"
 		state = FLOODLIGHT_NEEDS_SECURING
-		return TRUE
-	return FALSE
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/floodlight_frame/wrench_act(mob/living/user, obj/item/tool)
 	if(state != FLOODLIGHT_NEEDS_WIRES)
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
+	balloon_alert(user, "deconstructing...")
 	if(!tool.use_tool(src, user, 30, volume=50))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 	new /obj/item/stack/sheet/iron(loc, 5)
 	qdel(src)
 
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/floodlight_frame/wirecutter_act(mob/living/user, obj/item/tool)
 	if(state != FLOODLIGHT_NEEDS_SECURING)
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
 	icon_state = "floodlight_c1"
 	state = FLOODLIGHT_NEEDS_WIRES
 	new /obj/item/stack/cable_coil(loc, 5)
 
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/floodlight_frame/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/stack/cable_coil) && state == FLOODLIGHT_NEEDS_WIRES)
@@ -109,8 +110,11 @@
 			return
 
 	if(istype(O, /obj/item/light/tube))
+		if(state != FLOODLIGHT_NEEDS_LIGHTS)
+			balloon_alert(user, "construction not completed!")
+			return
 		var/obj/item/light/tube/L = O
-		if(state == FLOODLIGHT_NEEDS_LIGHTS && L.status != 2) //Ready for a light tube, and not broken.
+		if(L.status != LIGHT_BROKEN) // light tube not broken.
 			new /obj/machinery/power/floodlight(loc)
 			qdel(src)
 			qdel(O)
@@ -304,7 +308,7 @@
 	. = ..()
 	if(!.)
 		return
-	playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+	playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 
 	var/obj/structure/floodlight_frame/floodlight_frame = new(loc)
 	floodlight_frame.state = FLOODLIGHT_NEEDS_LIGHTS
@@ -314,7 +318,7 @@
 	qdel(src)
 
 /obj/machinery/power/floodlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	playsound(src, 'sound/effects/glasshit.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 
 #undef FLOODLIGHT_OFF
 #undef FLOODLIGHT_LOW

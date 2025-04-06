@@ -116,7 +116,7 @@
 		user.visible_message(span_notice("[user] starts to shave [src] using \the [attacking_item]."), span_notice("You start to shave [src] using \the [attacking_item]..."))
 		if(do_after(user, 5 SECONDS, target = src))
 			user.visible_message(span_notice("[user] shaves [src]'s hair using \the [attacking_item]."))
-			playsound(get_turf(src), 'sound/items/welder2.ogg', 20, TRUE)
+			playsound(get_turf(src), 'sound/items/tools/welder2.ogg', 20, TRUE)
 			shaved = TRUE
 			icon_living = "[icon_living]_shaved"
 			icon_dead = "[icon_living]_shaved_dead"
@@ -399,7 +399,7 @@
 	place_on_head(new /obj/item/clothing/glasses/eyepatch/medical)
 
 /mob/living/basic/pet/dog/corgi/ian/narsie_act()
-	playsound(src, 'sound/magic/demon_dies.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/magic/demon_dies.ogg', 75, TRUE)
 	var/mob/living/basic/pet/dog/corgi/narsie/narsIan = new(loc)
 	narsIan.setDir(dir)
 	investigate_log("has been gibbed and replaced with Nars-Ian by Nar'Sie.", INVESTIGATE_DEATHS)
@@ -486,7 +486,7 @@
 		return
 	visible_message(span_warning("Dark magic resonating from [src] devours [prey]!"), \
 		"<span class='cult big bold'>DELICIOUS SOULS</span>")
-	playsound(src, 'sound/magic/demon_attack1.ogg', 75, TRUE)
+	playsound(src, 'sound/effects/magic/demon_attack1.ogg', 75, TRUE)
 	new /obj/effect/temp_visual/cult/sac(get_turf(prey))
 	narsie_act()
 	prey.investigate_log("has been sacrificed by [src].", INVESTIGATE_DEATHS)

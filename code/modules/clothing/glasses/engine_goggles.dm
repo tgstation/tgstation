@@ -183,26 +183,26 @@
 			continue
 		var/datum/gas_mixture/environment = open.return_air()
 		var/temp = round(environment.return_temperature())
-		var/image/pic = image('icons/turf/overlays.dmi', open, "greyOverlay", ABOVE_ALL_MOB_LAYER)
+		var/image/turf_overlay = image('icons/turf/overlays.dmi', open, "greyOverlay", ABOVE_OPEN_TURF_LAYER)
 		// Lower than TEMP_SHADE_CYAN should be deep blue
 		switch(temp)
 			if(-INFINITY to TEMP_SHADE_CYAN)
-				pic.color = COLOR_STRONG_BLUE
+				turf_overlay.color = COLOR_STRONG_BLUE
 			// Between TEMP_SHADE_CYAN and TEMP_SHADE_GREEN
 			if(TEMP_SHADE_CYAN to TEMP_SHADE_GREEN)
-				pic.color = BlendRGB(COLOR_DARK_CYAN, COLOR_LIME, max(round((temp - TEMP_SHADE_CYAN)/(TEMP_SHADE_GREEN - TEMP_SHADE_CYAN), 0.01), 0))
+				turf_overlay.color = BlendRGB(COLOR_DARK_CYAN, COLOR_LIME, max(round((temp - TEMP_SHADE_CYAN)/(TEMP_SHADE_GREEN - TEMP_SHADE_CYAN), 0.01), 0))
 			// Between TEMP_SHADE_GREEN and TEMP_SHADE_YELLOW
 			if(TEMP_SHADE_GREEN to TEMP_SHADE_YELLOW)
-				pic.color = BlendRGB(COLOR_LIME, COLOR_YELLOW, clamp(round((temp-TEMP_SHADE_GREEN)/(TEMP_SHADE_YELLOW - TEMP_SHADE_GREEN), 0.01), 0, 1))
+				turf_overlay.color = BlendRGB(COLOR_LIME, COLOR_YELLOW, clamp(round((temp-TEMP_SHADE_GREEN)/(TEMP_SHADE_YELLOW - TEMP_SHADE_GREEN), 0.01), 0, 1))
 			// Between TEMP_SHADE_YELLOW and TEMP_SHADE_RED
 			if(TEMP_SHADE_YELLOW to TEMP_SHADE_RED)
-				pic.color = BlendRGB(COLOR_YELLOW, COLOR_RED, clamp(round((temp-TEMP_SHADE_YELLOW)/(TEMP_SHADE_RED - TEMP_SHADE_YELLOW), 0.01), 0, 1))
+				turf_overlay.color = BlendRGB(COLOR_YELLOW, COLOR_RED, clamp(round((temp-TEMP_SHADE_YELLOW)/(TEMP_SHADE_RED - TEMP_SHADE_YELLOW), 0.01), 0, 1))
 			// Over TEMP_SHADE_RED should be red
 			if(TEMP_SHADE_RED to INFINITY)
-				pic.color = COLOR_RED
-		pic.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-		pic.alpha = 200
-		flick_overlay_global(pic, list(viewer.client), duration)
+				turf_overlay.color = COLOR_RED
+		turf_overlay.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+		turf_overlay.alpha = 200
+		flick_overlay_global(turf_overlay, list(viewer.client), duration)
 
 
 #undef MODE_NONE

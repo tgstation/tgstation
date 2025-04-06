@@ -12,7 +12,7 @@
 	icon_state = "forge"
 	light_range = 2
 	light_color = LIGHT_COLOR_LAVA
-	break_message = "<span class='warning'>The forge breaks apart into shards with a howling scream!</span>"
+	break_message = span_warning("The forge breaks apart into shards with a howling scream!")
 	mansus_conversion_path = /obj/structure/destructible/eldritch_crucible
 
 /obj/structure/destructible/cult/item_dispenser/forge/setup_options()

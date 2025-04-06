@@ -66,7 +66,7 @@
 
 /datum/loadout_item/head/white_cap
 	name = "Cap (White)"
-	item_path = /obj/item/clothing/head/soft
+	item_path = /obj/item/clothing/head/soft/mime
 
 /datum/loadout_item/head/yellow_cap
 	name = "Cap (Yellow)"
@@ -131,6 +131,26 @@
 /datum/loadout_item/head/rose
 	name = "Rose"
 	item_path = /obj/item/food/grown/rose
+
+/datum/loadout_item/head/sunflower
+	name = "Sunflower"
+	item_path = /obj/item/food/grown/sunflower
+
+/datum/loadout_item/head/poppy
+	name = "Poppy"
+	item_path = /obj/item/food/grown/poppy
+
+/datum/loadout_item/head/lily
+	name = "Lily"
+	item_path = /obj/item/food/grown/poppy/lily
+
+/datum/loadout_item/head/geranium
+	name = "Geranium"
+	item_path = /obj/item/food/grown/poppy/geranium
+
+/datum/loadout_item/head/harebell
+	name = "Harebell"
+	item_path = /obj/item/food/grown/harebell
 
 /datum/loadout_item/head/wig
 	name = "Wig"

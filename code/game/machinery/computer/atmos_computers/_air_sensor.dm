@@ -15,6 +15,8 @@
 	var/inlet_id
 	/// The outlet[vent pump] controlled by this sensor
 	var/outlet_id
+	/// The air alarm connected to this sensor
+	var/obj/machinery/airalarm/connected_airalarm
 
 /obj/machinery/air_sensor/Initialize(mapload)
 	id_tag = assign_random_name()
@@ -57,7 +59,7 @@
 
 /obj/machinery/air_sensor/examine(mob/user)
 	. = ..()
-	. += span_notice("Use multitool to link it to an injector/vent or reset its ports")
+	. += span_notice("Use a multitool to link it to an injector, vent, or air alarm, or reset its ports.")
 	. += span_notice("Click with hand to turn it off.")
 
 /obj/machinery/air_sensor/attack_hand(mob/living/user, list/modifiers)
@@ -78,6 +80,11 @@
 /obj/machinery/air_sensor/proc/reset()
 	inlet_id = null
 	outlet_id = null
+	if(connected_airalarm)
+		connected_airalarm.disconnect_sensor()
+		// if air alarm and sensor were linked at roundstart we allow them to link to new devices
+		connected_airalarm.allow_link_change = TRUE
+		connected_airalarm = null
 
 ///right click with multi tool to disconnect everything
 /obj/machinery/air_sensor/multitool_act_secondary(mob/living/user, obj/item/tool)

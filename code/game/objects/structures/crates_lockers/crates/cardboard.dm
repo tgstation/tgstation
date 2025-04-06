@@ -6,7 +6,7 @@
 	material_drop_amount = 4
 	icon_state = "cardboard"
 	base_icon_state = "cardboard"
-	open_sound = 'sound/items/poster_ripped.ogg'
+	open_sound = 'sound/items/poster/poster_ripped.ogg'
 	close_sound = 'sound/machines/cardboard_box.ogg'
 	open_sound_volume = 25
 	close_sound_volume = 25

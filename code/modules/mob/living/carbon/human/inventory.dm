@@ -209,6 +209,7 @@
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
 		has_equipped(equipping, slot, initial)
+		hud_used?.update_locked_slots()
 
 		// Send a signal for when we equip an item that used to cover our feet/shoes. Used for bloody feet
 		if(equipping.body_parts_covered & FEET || (equipping.flags_inv | equipping.transparent_protection) & HIDESHOES)
@@ -300,6 +301,7 @@
 
 	update_equipment_speed_mods()
 	update_obscured_slots(I.flags_inv)
+	hud_used?.update_locked_slots()
 
 /mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
 	// Just close the tank if it's the one the mob already has open.
@@ -333,7 +335,7 @@
 /mob/living/carbon/human/toggle_externals(obj/item/tank)
 	return toggle_internals(tank, TRUE)
 
-/mob/living/carbon/human/proc/equipOutfit(outfit, visualsOnly = FALSE)
+/mob/living/carbon/human/proc/equipOutfit(outfit, visuals_only = FALSE)
 	var/datum/outfit/O = null
 
 	if(ispath(outfit))
@@ -345,11 +347,11 @@
 	if(!O)
 		return 0
 
-	return O.equip(src, visualsOnly)
+	return O.equip(src, visuals_only)
 
 
 ///A version of equipOutfit that overrides passed in outfits with their entry on the species' outfit override registry
-/mob/living/carbon/human/proc/equip_species_outfit(outfit, visualsOnly = FALSE)
+/mob/living/carbon/human/proc/equip_species_outfit(outfit, visuals_only = FALSE)
 	var/datum/outfit/outfit_to_equip
 
 	var/override_outfit_path = dna?.species.outfit_override_registry[outfit]
@@ -361,7 +363,7 @@
 	if(isnull(outfit_to_equip))
 		return FALSE
 
-	return outfit_to_equip.equip(src, visualsOnly)
+	return outfit_to_equip.equip(src, visuals_only)
 
 
 //delete all equipment without dropping anything
@@ -422,7 +424,7 @@
 		hand_bodyparts.len = amt
 		for(var/i in old_limbs+1 to amt)
 			var/path = /obj/item/bodypart/arm/left
-			if(!(i % 2))
+			if(IS_RIGHT_INDEX(i))
 				path = /obj/item/bodypart/arm/right
 
 			var/obj/item/bodypart/BP = new path ()

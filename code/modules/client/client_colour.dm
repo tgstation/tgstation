@@ -220,6 +220,9 @@
 /datum/client_colour/malfunction
 	colour = list(/*R*/ 0,0,0,0, /*G*/ 0,175,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/0,-130,0,0) // Matrix colors
 
+/datum/client_colour/perceptomatrix
+	colour = list(/*R*/ 1,0,0,0, /*G*/ 0,1,0,0, /*B*/ 0,0,1,0, /*A*/ 0,0,0,1, /*C*/0,-0.02,-0.02,0) // veeery slightly pink
+
 /datum/client_colour/monochrome
 	colour = COLOR_MATRIX_GRAYSCALE
 	priority = PRIORITY_HIGH //we can't see colors anyway!

@@ -235,7 +235,7 @@
 "oL" = (
 /obj/structure/bonfire/prelit,
 /obj/effect/decal/cleanable/ash,
-/obj/item/organ/external/tail/lizard,
+/obj/item/organ/tail/lizard,
 /obj/effect/decal/cleanable/blood/old,
 /obj/structure/stone_tile/slab/cracked,
 /turf/open/misc/asteroid/basalt/wasteland,
@@ -313,7 +313,7 @@
 /area/ruin/unpowered/elephant_graveyard)
 "wp" = (
 /obj/item/knife/combat/bone,
-/obj/item/organ/internal/tongue,
+/obj/item/organ/tongue,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
@@ -386,8 +386,8 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface)
 "Di" = (
-/obj/item/organ/internal/lungs,
-/obj/item/organ/internal/liver,
+/obj/item/organ/lungs,
+/obj/item/organ/liver,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
@@ -406,7 +406,7 @@
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "Eh" = (
-/obj/item/organ/internal/brain,
+/obj/item/organ/brain,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)
 "EI" = (
@@ -468,9 +468,9 @@
 /turf/open/floor/mineral/titanium/white,
 /area/ruin/powered/graveyard_shuttle)
 "Kj" = (
-/obj/item/organ/internal/heart,
-/obj/item/organ/internal/eyes,
-/obj/item/organ/internal/ears,
+/obj/item/organ/heart,
+/obj/item/organ/eyes,
+/obj/item/organ/ears,
 /obj/effect/decal/cleanable/blood/gibs/old,
 /turf/open/misc/asteroid/basalt/wasteland,
 /area/ruin/unpowered/elephant_graveyard)

@@ -15,7 +15,7 @@
 	attack_verb_continuous = "telekinetically rams its moonihorn into"
 	attack_verb_simple = "telekinetically ram your moonihorn into"
 	gold_core_spawnable = NO_SPAWN
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	ai_controller = /datum/ai_controller/basic_controller/cow/moonicorn
 	food_types = list(/obj/item/food/grown/galaxythistle)
@@ -32,7 +32,6 @@
 	var/static/list/food_types
 	if(!food_types)
 		food_types = src.food_types.Copy()
-	AddElement(/datum/element/basic_eating, food_types = food_types)
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15)
 
 /mob/living/basic/cow/moonicorn/tamed(mob/living/tamer, atom/food)

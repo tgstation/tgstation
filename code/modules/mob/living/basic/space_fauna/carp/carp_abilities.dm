@@ -9,7 +9,7 @@
 	button_icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	button_icon_state = "arcane_barrage"
 	cooldown_time = 5 SECONDS
-	projectile_sound = 'sound/weapons/emitter.ogg'
+	projectile_sound = 'sound/items/weapons/emitter.ogg'
 	melee_cooldown_time = 0 SECONDS // Without this they become extremely hesitant to bite anyone ever
 	shared_cooldown = MOB_SHARED_COOLDOWN_2
 
@@ -140,8 +140,8 @@
 
 	var/turf/destination = pick(exit_locs)
 	do_teleport(entered_atom, destination, channel = TELEPORT_CHANNEL_MAGIC)
-	playsound(src, 'sound/magic/wand_teleport.ogg', 50)
-	playsound(destination, 'sound/magic/wand_teleport.ogg', 50)
+	playsound(src, 'sound/effects/magic/wand_teleport.ogg', 50)
+	playsound(destination, 'sound/effects/magic/wand_teleport.ogg', 50)
 
 /// Doesn't actually do anything, just a visual marker
 /obj/effect/temp_visual/lesser_carp_rift/exit

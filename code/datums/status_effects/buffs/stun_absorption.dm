@@ -9,7 +9,7 @@
  */
 /datum/status_effect/stun_absorption
 	id = "absorb_stun"
-	tick_interval = -1
+	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = null
 	status_type = STATUS_EFFECT_MULTIPLE
 

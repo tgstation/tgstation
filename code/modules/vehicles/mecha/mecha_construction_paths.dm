@@ -416,10 +416,10 @@
 	circuit_control = /obj/item/circuitboard/mecha/clarke/main
 	circuit_periph = /obj/item/circuitboard/mecha/clarke/peripherals
 
-	inner_plating = /obj/item/stack/sheet/plasteel
+	inner_plating = /obj/item/stack/sheet/iron
 	inner_plating_amount = 5
 
-	outer_plating = /obj/item/stack/sheet/mineral/gold
+	outer_plating = /obj/item/stack/sheet/plasteel
 	outer_plating_amount = 5
 
 /datum/component/construction/mecha/clarke/get_frame_steps()

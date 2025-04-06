@@ -4,12 +4,12 @@
 	reward = CARGO_CRATE_VALUE * 50
 	required_count = 3
 	wanted_types = list(
-		/obj/item/organ/internal/brain/alien = TRUE,
-		/obj/item/organ/internal/alien = TRUE,
-		/obj/item/organ/internal/body_egg/alien_embryo = TRUE,
-		/obj/item/organ/internal/liver/alien = TRUE,
-		/obj/item/organ/internal/tongue/alien = TRUE,
-		/obj/item/organ/internal/eyes/alien = TRUE,
+		/obj/item/organ/brain/alien = TRUE,
+		/obj/item/organ/alien = TRUE,
+		/obj/item/organ/body_egg/alien_embryo = TRUE,
+		/obj/item/organ/liver/alien = TRUE,
+		/obj/item/organ/tongue/alien = TRUE,
+		/obj/item/organ/eyes/alien = TRUE,
 	)
 
 /datum/bounty/item/syndicate_documents

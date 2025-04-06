@@ -67,7 +67,7 @@
 	name = "rebar"
 	icon_state = "rebar"
 	damage = 30
-	speed = 0.4
+	speed = 2.5
 	dismemberment = 1 //because a 1 in 100 chance to just blow someones arm off is enough to be cool but also not enough to be reliable
 	armour_penetration = 10
 	wound_bonus = -20
@@ -92,8 +92,7 @@
 /obj/projectile/bullet/rebar/syndie
 	name = "rebar"
 	icon_state = "rebar"
-	damage = 55
-	speed = 0.4
+	damage = 45
 	dismemberment = 2 //It's a budget sniper rifle.
 	armour_penetration = 20 //A bit better versus armor. Gets past anti laser armor or a vest, but doesnt wound proc on sec armor.
 	wound_bonus = 10
@@ -116,7 +115,7 @@
 	name = "zaukerite shard"
 	icon_state = "rebar_zaukerite"
 	damage = 60
-	speed = 0.6
+	speed = 1.6
 	dismemberment = 10
 	damage_type = TOX
 	eyeblur = 5
@@ -140,23 +139,23 @@
 /obj/projectile/bullet/rebar/hydrogen
 	name = "metallic hydrogen bolt"
 	icon_state = "rebar_hydrogen"
-	damage = 55
-	speed = 0.6
+	damage = 35
+	speed = 1.6
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	projectile_phasing = ~(PASSMOB|PASSVEHICLE)
+	max_pierces = 3
 	phasing_ignore_direct_target = TRUE
 	dismemberment = 0 //goes through clean.
 	damage_type = BRUTE
 	armour_penetration = 30 //very pointy.
-	wound_bonus = -15
-	bare_wound_bonus = 10
+	wound_bonus = -100
+	bare_wound_bonus = 0
 	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 	embed_type = /datum/embed_data/rebar_hydrogen
 	embed_falloff_tile = -3
-	shrapnel_type = /obj/item/ammo_casing/rebar/hydrogen
 	accurate_range = 205 //15 tiles before falloff starts to kick in
 
-/obj/projectile/bullet/rebar/hydrogen/Impact(atom/A)
+/obj/projectile/bullet/rebar/hydrogen/impact(atom/A)
 	. = ..()
 	def_zone = ran_zone(def_zone, clamp(205-(7*get_dist(get_turf(A), starting)), 5, 100))
 
@@ -168,16 +167,10 @@
 		return BULLET_ACT_FORCE_PIERCE
 	return ..()
 
-/obj/projectile/bullet/rebar/hydrogen/process_hit(turf/T, atom/target, atom/bumped, hit_something)
-	. = ..()
-	if(pierces >= 3)
-		qdel(src)
-
 /obj/projectile/bullet/rebar/healium
 	name = "healium bolt"
 	icon_state = "rebar_healium"
 	damage = 0
-	speed = 0.4
 	dismemberment = 0
 	damage_type = BRUTE
 	armour_penetration = 100
@@ -204,7 +197,6 @@
 	name = "supermatter bolt"
 	icon_state = "rebar_supermatter"
 	damage = 0
-	speed = 0.4
 	dismemberment = 0
 	damage_type = TOX
 	embed_type = null

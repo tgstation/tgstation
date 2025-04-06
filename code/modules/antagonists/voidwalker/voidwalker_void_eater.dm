@@ -16,7 +16,7 @@
 	resistance_flags = INDESTRUCTIBLE | ACID_PROOF | FIRE_PROOF | LAVA_PROOF | UNACIDABLE
 	w_class = WEIGHT_CLASS_HUGE
 	tool_behaviour = TOOL_MINING
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	wound_bonus = -30
 	bare_wound_bonus = 20
 
@@ -63,7 +63,7 @@
 			hewmon.balloon_alert(user, "shattering...")
 			if(do_after(user, 4 SECONDS, hewmon))
 				new /obj/effect/spawner/random/glass_shards (spawnloc)
-				var/obj/item/organ/brain = hewmon.get_organ_by_type(/obj/item/organ/internal/brain)
+				var/obj/item/organ/brain = hewmon.get_organ_by_type(/obj/item/organ/brain)
 				if(brain)
 					brain.Remove(hewmon)
 					brain.forceMove(spawnloc)

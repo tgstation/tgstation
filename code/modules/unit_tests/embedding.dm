@@ -6,7 +6,7 @@
 	var/obj/projectile/bullet/c38/bullet = new(get_turf(firer))
 	bullet.set_embed(bullet.get_embed().generate_with_values(embed_chance = 100))
 	TEST_ASSERT_EQUAL(bullet.get_embed().embed_chance, 100, "embed_chance failed to modify")
-	bullet.preparePixelProjectile(victim, firer)
+	bullet.aim_projectile(victim, firer)
 	bullet.fire(get_angle(firer, victim), victim)
 	var/list/components = victim.GetComponents(/datum/component/embedded)
 	TEST_ASSERT_EQUAL(components.len, 1, "Projectile with 100% embed chance didn't embed, or embedded multiple times")

@@ -85,7 +85,7 @@
 	syllable_max = default_name_syllable_max,
 	force_use_syllables = FALSE,
 )
-	if(gender != MALE)
+	if(gender != MALE && gender != FEMALE)
 		gender = pick(MALE, FEMALE)
 	if(!length(syllables) || always_use_default_namelist)
 		return default_name(gender)

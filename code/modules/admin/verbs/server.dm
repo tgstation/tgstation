@@ -98,7 +98,7 @@ ADMIN_VERB(start_now, R_SERVER, "Start Now", "Start the round RIGHT NOW.", ADMIN
 		SSticker.start_immediately = FALSE
 		SSticker.SetTimeLeft(3 MINUTES)
 		to_chat(world, span_big(span_notice("The game will start in 3 minutes.")))
-		SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
+		SEND_SOUND(world, sound('sound/announcer/default/attention.ogg'))
 		message_admins(span_adminnotice("[key_name_admin(user)] has cancelled immediate game start. Game will start in 3 minutes."))
 		log_admin("[key_name(user)] has cancelled immediate game start.")
 		return
@@ -202,11 +202,11 @@ ADMIN_VERB(delay, R_SERVER, "Delay Pre-Game", "Delay the game start.", ADMIN_CAT
 	SSticker.SetTimeLeft(newtime)
 	SSticker.start_immediately = FALSE
 	if(newtime < 0)
-		to_chat(world, "<span class='infoplain'><b>The game start has been delayed.</b></span>", confidential = TRUE)
+		to_chat(world, span_infoplain("<b>The game start has been delayed.</b>"), confidential = TRUE)
 		log_admin("[key_name(user)] delayed the round start.")
 	else
 		to_chat(world, span_infoplain(span_bold("The game will start in [DisplayTimeText(newtime)].")), confidential = TRUE)
-		SEND_SOUND(world, sound('sound/ai/default/attention.ogg'))
+		SEND_SOUND(world, sound('sound/announcer/default/attention.ogg'))
 		log_admin("[key_name(user)] set the pre-game delay to [DisplayTimeText(newtime)].")
 	BLACKBOX_LOG_ADMIN_VERB("Delay Game Start")
 
