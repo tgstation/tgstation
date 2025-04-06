@@ -35,14 +35,9 @@
 	// So people can see where it came from
 	var/appearance_ref
 
-// all alone at the end of the universe
-GLOBAL_DATUM_INIT(pluto, /atom/movable, new /atom/movable(null))
-
 // arg is actually an appearance, typed as mutable_appearance as closest mirror
 /mutable_appearance/appearance_mirror/New(mutable_appearance/appearance_father)
 	. = ..() // /mutable_appearance/New() copies over all the appearance vars MAs care about by default
-	// We copy over our appearance onto an atom. This is done so we can read vars carried by but not accessible on appearances
-	GLOB.pluto.appearance = appearance_father
 	appearance_ref = REF(appearance_father)
 
 // This means if the appearance loses refs before a click it's gone, but that's consistent to other datums so it's fine
