@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "All humans no longer have a baseline \"75\" ghost nutrition (which means you can eat more)"
+  - qol: "Hunger bar update! It's now dynamic and updates as you eat."
+  - qol: "Adds a hunger tier between hungry and starving (for mood)"
