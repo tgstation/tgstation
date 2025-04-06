@@ -390,7 +390,7 @@
 		return FALSE
 
 	var/fraction = (seconds_per_tick SECONDS) / initial(lifetime)
-	reagents.copy_to(smoker, reagents.total_volume, fraction)
+	reagents.copy_to(smoker, reagents.total_volume, fraction, copy_methods = INHALE)
 	reagents.expose(smoker, INHALE, fraction)
 	return TRUE
 
