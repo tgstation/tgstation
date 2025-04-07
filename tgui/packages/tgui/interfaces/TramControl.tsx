@@ -58,7 +58,7 @@ const marginDipped = 3;
 
 const dipUnderCircle = (dest, dep) => {
   const index = Object.keys(dest.dest_icons).indexOf(dep);
-  const dipped = index == 1;
+  const dipped = index === 1;
   return dipped ? marginDipped : marginNormal;
 };
 
