@@ -54,6 +54,7 @@ export type MainData = {
   modules: MechModule[];
   selected_module_index: number;
   sheet_material_amount: number;
+  diagnostic_status: BooleanLike;
 };
 
 export type MechModule = {
