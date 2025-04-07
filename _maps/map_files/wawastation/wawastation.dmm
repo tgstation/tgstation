@@ -2713,10 +2713,9 @@
 /area/station/security/detectives_office)
 "aSK" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 1
+/obj/structure/disposalpipe/segment{
+	dir = 10
 	},
-/obj/effect/mapping_helpers/mail_sorting/security/general,
 /turf/open/floor/iron,
 /area/station/security/office)
 "aSM" = (
@@ -12046,6 +12045,15 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"ehT" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
 "ehY" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/purple/filled/arrow_ccw,
@@ -12892,6 +12900,9 @@
 /area/station/security/courtroom)
 "exF" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "exQ" = (
@@ -14938,6 +14949,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/explab)
+"fmQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/security/office)
 "fmR" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
@@ -41484,7 +41504,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "ozr" = (
@@ -50457,6 +50479,16 @@
 /obj/effect/turf_decal/box,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
+"rAX" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/security)
 "rAZ" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -51319,6 +51351,9 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/security/office)
 "rQO" = (
@@ -59927,7 +59962,7 @@
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
+/obj/structure/disposalpipe/junction/flip{
 	dir = 4
 	},
 /turf/open/floor/iron,
@@ -89384,7 +89419,7 @@ igQ
 gIO
 dCi
 hcQ
-cpO
+ehT
 uzh
 kSP
 eDG
@@ -89641,10 +89676,10 @@ lHC
 lar
 bPY
 jMU
-cpO
+fmQ
 exF
 rQK
-iyG
+rAX
 uJO
 azb
 rRK
