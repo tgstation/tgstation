@@ -1,5 +1,0 @@
-author: "hry-gh"
-delete-after: True
-changes:
-  - qol: "there's a new UI preference called UI scale which allows people that use windows scaling to have their UIs original size with the contents zoomed out, instead of the default, which is the UIs being larger with the contents \"normal\" size"
-  - bugfix: "various UIs did not respect windows scaling, they now do"

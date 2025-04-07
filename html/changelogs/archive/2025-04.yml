@@ -126,3 +126,66 @@
   - bugfix: TGUI Say should focus on its initial open, once more
   subject217:
   - bugfix: Delta Tech Storage has telecomms parts, bringing parity with other maps.
+2025-04-07:
+  Cruix:
+  - rscadd: Added a system to create hairstyles with multiple layers to allow better
+      interaction with hats and helmets
+  - image: Added additional sprite layers to the Ponytail (High) hairstyle
+  Holoo-1:
+  - bugfix: fixed emp flashlight not working on cyborgs
+  Jacquerel:
+  - bugfix: Folding a wheelchair will no longer destroy attached bells or bombs.
+  JohnFulpWillard:
+  - admin: Interviews now has a button to open a player's Centcom ban list, which
+      will be in red if they have existing server permabans.
+  Krysonism:
+  - balance: kronkaine now restores double stamina when smoked or injected.
+  - balance: kronkaine now restores stamina each cycle, the effect is dose dependant.
+  - balance: kronkaine now causes heart damage in a dose dependant manner, instead
+      of a flat value.
+  - balance: kronkus seed packs are now three times as common.
+  - balance: the kronkaine anti-purging disease now only triggers if you take stamina
+      damage while using purging chems.
+  - balance: the kronkaine reaction uses less ammonia and welding fuel.
+  - rscadd: added an alternative kronkaine reaction that uses lye instead of ammonia.
+  - balance: kronkus extract now lasts twice as long but deals a bit more heart damage(0.1->0.2)
+  - balance: 'the kronkus vine plant is now a lot hardier(endurance: 10 -> 40) and
+      matures a bit quicker.'
+  - bugfix: kronkus extract now inflicts heart damage correctly.
+  Melbert:
+  - bugfix: All humans no longer have a baseline "75" ghost nutrition (which means
+      you can eat more)
+  - qol: Hunger bar update! It's now dynamic and updates as you eat.
+  - qol: Adds a hunger tier between hungry and starving (for mood)
+  Rhials:
+  - balance: Heart attacks are now more violent and urgent. If you can hear your own
+      heartbeat and are short of breath, you should probably see a doctor.
+  - balance: Heart attacks can now be treated and eventually cured with repeated defibrillation
+      shocks.
+  - balance: Heart attacks can now be treated and eventually cured with repeated shocks
+      from other sources.
+  - bugfix: A test tube rack, which was (definitely) intentionally placed in Metastation
+      Perma, has been moved out of a wall and onto a table.
+  Unit2E:
+  - bugfix: Mobs should no longer fall asleep when breathing in enough Nitrium to
+      provide sleep immunity.
+  Wallem:
+  - qol: The active sonar module has been slightly tweaked, resulting in smoother
+      updates & a red tinge on highlighted humans.
+  hry-gh:
+  - qol: there's a new UI preference called UI scale which allows people that use
+      windows scaling to have their UIs original size with the contents zoomed out,
+      instead of the default, which is the UIs being larger with the contents "normal"
+      size
+  - bugfix: various UIs did not respect windows scaling, they now do
+  - bugfix: admins trying to play certain songs would crash the chat, it no longer
+      does
+  - qol: under the chat settings, you can now press "Adjust UI Sizes" to drag around
+      some of the panel sizes
+  - bugfix: the input at the bottom right is no longer so teeny tiny on 516 if you
+      use a window scaling that is greater than 100%
+  jlsnow301:
+  - rscadd: TGUI is now v6! No more internet explorer.  All gloves are off, it's running
+      edge under the hood now. Report any issues to the github, please. Yes, I look!
+  necromanceranne:
+  - code_imp: The paper mache robe now works a bit better under the hood.
