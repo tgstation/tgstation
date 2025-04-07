@@ -23791,12 +23791,14 @@
 /turf/open/floor/iron/textured_large,
 /area/station/security/prison/rec)
 "hMF" = (
-/obj/machinery/button/ignition/incinerator/atmos,
 /obj/machinery/button/door/incinerator_vent_atmos_aux{
 	pixel_y = 24
 	},
 /obj/machinery/button/door/incinerator_vent_atmos_main{
 	pixel_y = 40
+	},
+/obj/machinery/button/ignition/incinerator/atmos{
+	pixel_y = 9
 	},
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos/project)
@@ -32350,6 +32352,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "kwG" = (
+/obj/machinery/igniter/incinerator_atmos,
 /turf/open/floor/engine/airless,
 /area/station/engineering/atmos/project)
 "kwK" = (
