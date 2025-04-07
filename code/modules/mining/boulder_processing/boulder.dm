@@ -39,11 +39,14 @@
 	return ..()
 
 /obj/item/boulder/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(held_item?.tool_behaviour == TOOL_MINING || isbasicmob(user) && HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+	if(held_item && (held_item.tool_behaviour == TOOL_MINING || HAS_TRAIT(held_item, TRAIT_BOULDER_BREAKER)))
 		context[SCREENTIP_CONTEXT_LMB] = "Crush boulder into ore"
 		return CONTEXTUAL_SCREENTIP_SET
 	else if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		context[SCREENTIP_CONTEXT_RMB] = "Crush boulder into ore"
+		if(isbasicmob(user))
+			context[SCREENTIP_CONTEXT_LMB] = "Crush boulder into ore"
+		else
+			context[SCREENTIP_CONTEXT_RMB] = "Crush boulder into ore"
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/boulder/examine(mob/user)
