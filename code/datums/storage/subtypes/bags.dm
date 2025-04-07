@@ -105,7 +105,6 @@
 
 ///Book bag
 /datum/storage/bag/books
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_total_storage = 21
 	max_slots = 7
 

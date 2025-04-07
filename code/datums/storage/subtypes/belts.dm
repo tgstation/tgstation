@@ -341,6 +341,8 @@
 	max_total_storage = 21
 
 /datum/storage/unfathomable_curio/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
 	set_holdable(list(
 		/obj/item/ammo_box/strilka310/lionhunter,
 		/obj/item/heretic_labyrinth_handbook,
