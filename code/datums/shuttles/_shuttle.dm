@@ -26,10 +26,6 @@
 	var/emag_only = FALSE
 	/// If set, overrides default movement_force on shuttle
 	var/list/movement_force
-	/// Does the shuttle have modular parts? If true, loading will be briefly delayed to allow modular segments to load in.
-	var/modular = FALSE
-
-	var/list/turfs
 
 	var/port_x_offset
 	var/port_y_offset
@@ -61,23 +57,20 @@
 	if(!.)
 		return
 
-	turfs = block(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ], \
+	var/list/turfs = block(.[MAP_MINX], .[MAP_MINY], .[MAP_MINZ], \
 					.[MAP_MAXX], .[MAP_MAXY], .[MAP_MAXZ])
 
-	dispatch(register)
+	dispatch(turfs, register)
 
-/datum/map_template/shuttle/proc/dispatch(register=TRUE)
+/datum/map_template/shuttle/proc/dispatch(list/turfs, register=TRUE)
 	while(TRUE)
 		var/found = FALSE
 		for(var/turf/current_turf in turfs)
 			if(is_type_on_turf(current_turf, /obj/modular_map_root))
-				message_admins("Found a root ([current_turf.x], [current_turf.y], [current_turf.z])")
 				found = TRUE
 		if(found)
-			message_admins("Waiting")
 			sleep(5 DECISECONDS)
 		else
-			message_admins("GO!")
 			break
 
 	for(var/i in 1 to turfs.len)
