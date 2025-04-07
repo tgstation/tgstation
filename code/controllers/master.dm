@@ -268,7 +268,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 
 
 /datum/controller/master/Recover()
-	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
+	var/msg = "## DEBUG: [time2text(world.timeofday, "DDD MMM DD hh:mm:ss YYYY", TIMEZONE_UTC)] MC restarted. Reports:\n"
 	var/list/master_attributes = Master.vars
 	var/list/filtered_variables = list(
 		NAMEOF(src, name),
