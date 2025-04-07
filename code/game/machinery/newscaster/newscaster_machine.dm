@@ -812,7 +812,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	else
 		balloon_alert(user, "no photo identified.")
 
-/obj/machinery/newscaster/proc/clear_wanted_issue(user)
+/obj/machinery/newscaster/proc/clear_wanted_issue(mob/user)
 	var/obj/item/card/id/id_card
 	if(isliving(user))
 		var/mob/living/living_user = user

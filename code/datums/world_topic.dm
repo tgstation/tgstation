@@ -250,7 +250,7 @@
 
 /datum/world_topic/create_news_channel
 	keyword = "create_news_channel"
-	/// List of timers for actually creating the channel to give admins some time
+	/// Lazylist of timers for actually creating the channel to give admins some time
 	var/list/timers
 
 /datum/world_topic/create_news_channel/Run(list/input)
@@ -305,7 +305,7 @@
 	var/channel_name = input["message"]
 
 	var/found_channel = FALSE
-	for(var/datum/feed_channel/channel in GLOB.news_network.network_channels)
+	for(var/datum/feed_channel/channel as anything in GLOB.news_network.network_channels)
 		if(channel.channel_name == channel_name)
 			found_channel = TRUE
 			break
