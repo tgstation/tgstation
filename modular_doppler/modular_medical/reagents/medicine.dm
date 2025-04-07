@@ -10,17 +10,39 @@
 /datum/reagent/flightpotion
 	process_flags = REAGENT_ORGANIC | REAGENT_SYNTHETIC
 
+
+//Lidocaine
 /datum/reagent/medicine/lidocaine
 	name = "Lidocaine"
-	description = "A numbing agent used often for surgeries, metabolizes slowly."
+	description = "A numbing agent used often for surgeries, metabolizes slower than most medicines, and when combined with epinephrine metabolizes extremely slowly."
 	color = "#6dbdbd" // 109, 189, 189
-	metabolization_rate = 0.2 * REAGENTS_METABOLISM
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	overdose_threshold = 20
 	ph = 6.09
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	inverse_chem_val = 0.55
+	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/inverse/lidocaine
 	metabolized_traits = list(TRAIT_ANALGESIA)
+	taste_description = "a stinging sensation that quickly numbs"
+
+/datum/reagent/medicine/lidocaine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..() //I've nerfed the metabolization rate of lidocaine, but by giving epinephrine for just a tick you can quadruple it to being better than before
+	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
+		metabolization_rate = 0.125 * REAGENTS_METABOLISM
+
+/datum/chemical_reaction/lidocaine
+	results = list(/datum/reagent/medicine/lidocaine = 3)
+	required_reagents = list(/datum/reagent/nitrous_oxide = 2, /datum/reagent/diethylamine = 3, /datum/reagent/medicine/salglu_solution = 1 )
+	required_temp = 400 //hee hee be careful dont mindlessly set to 1000k or you'll blow up your nitrous
+	mix_message = "The mixture crystalizes into a salt like solute that immediately dissolves into the saline."
+	mix_sound = 'sound/effects/bubbles/bubbles2.ogg'
+	optimal_temp = 530
+	optimal_ph_min = 4.0
+	optimal_ph_max = 6.9
+	ph_exponent_factor = 0.25
+	determin_ph_range = 5
+	H_ion_release = -0.05 //All this is pretty helpful to make ph-balancing easier, the difficulty is meant to be the compound steps and that you'll probably blow up Nitrous
+	reaction_tags = REACTION_TAG_HARD | REACTION_TAG_DRUG //I think |most| chems should be harder to make personally. Making this hard also still encourages the use of Deforest despite my rebellion against it
 
 /datum/reagent/medicine/lidocaine/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
