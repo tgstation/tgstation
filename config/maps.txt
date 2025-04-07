@@ -61,5 +61,4 @@ map multiz_debug
 endmap
 
 map runtimestation
-	#default
 endmap
