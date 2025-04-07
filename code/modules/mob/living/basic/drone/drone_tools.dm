@@ -14,19 +14,21 @@
 
 /obj/item/storage/drone_tools/PopulateContents()
 	var/list/builtintools = list()
-	builtintools += new /obj/item/crowbar/drone(src)
-	builtintools += new /obj/item/screwdriver/drone(src)
-	builtintools += new /obj/item/wrench/drone(src)
-	builtintools += new /obj/item/weldingtool/drone(src)
-	builtintools += new /obj/item/wirecutters/drone(src)
-	builtintools += new /obj/item/multitool/drone(src)
-	builtintools += new /obj/item/pipe_dispenser/drone(src)
-	builtintools += new /obj/item/t_scanner/drone(src)
-	builtintools += new /obj/item/analyzer/drone(src)
-	builtintools += new /obj/item/soap/drone(src)
+	builtintools += new /obj/item/crowbar/drone(null)
+	builtintools += new /obj/item/screwdriver/drone(null)
+	builtintools += new /obj/item/wrench/drone(null)
+	builtintools += new /obj/item/weldingtool/drone(null)
+	builtintools += new /obj/item/wirecutters/drone(null)
+	builtintools += new /obj/item/multitool/drone(null)
+	builtintools += new /obj/item/pipe_dispenser/drone(null)
+	builtintools += new /obj/item/t_scanner/drone(null)
+	builtintools += new /obj/item/analyzer/drone(null)
+	builtintools += new /obj/item/soap/drone(null)
 
 	for(var/obj/item/tool as anything in builtintools)
 		tool.AddComponent(/datum/component/holderloving, src)
+
+	return builtintools
 
 /obj/item/crowbar/drone
 	name = "built-in crowbar"
@@ -47,14 +49,11 @@
 	random_color = FALSE
 
 
-/obj/item/screwdriver/drone/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
+/obj/item/screwdriver/drone/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
 	. = ..()
 	if(!isinhands)
 		return
-
-	var/mutable_appearance/head = mutable_appearance(icon_file, "screwdriver_head")
-	head.appearance_flags = RESET_COLOR
-	. += head
+	. += mutable_appearance(icon_file, "screwdriver_head", appearance_flags = RESET_COLOR)
 
 /obj/item/wrench/drone
 	name = "built-in wrench"

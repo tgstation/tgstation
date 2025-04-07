@@ -10,6 +10,7 @@
 	denied_type = /obj/item/crusher_trophy/watcher_wing
 	trophy_id = TROPHY_WATCHER
 	bonus_value = 5
+	wildhunter_drop = /obj/item/stack/sheet/sinew
 
 /obj/item/crusher_trophy/watcher_wing/effect_desc()
 	return "mark detonation to prevent certain creatures from using certain attacks for <b>[bonus_value*0.1]</b> second\s"
@@ -33,6 +34,7 @@
 	icon_state = "magma_wing"
 	gender = NEUTER
 	bonus_value = 5
+	wildhunter_drop = /obj/item/stack/sheet/sinew
 
 /obj/item/crusher_trophy/blaster_tubes/magma_wing/effect_desc()
 	return "mark detonation to make the next destabilizer shot deal <b>[bonus_value]</b> damage"
@@ -50,6 +52,7 @@
 	desc = "A carefully preserved frozen wing from an icewing watcher. Suitable as a trophy for a kinetic crusher."
 	icon_state = "ice_wing"
 	bonus_value = 8
+	wildhunter_drop = /obj/item/stack/sheet/sinew
 
 //legion
 /obj/item/crusher_trophy/legion_skull
@@ -58,6 +61,7 @@
 	icon_state = "legion_skull"
 	denied_type = /obj/item/crusher_trophy/legion_skull
 	bonus_value = 3
+	wildhunter_drop = /obj/item/organ/monster_core/regenerative_core/legion // if you killed blood drunk you can afford stabilizer potions sooo....
 
 /obj/item/crusher_trophy/legion_skull/effect_desc()
 	return "a kinetic crusher to recharge <b>[bonus_value*0.1]</b> second\s faster"
@@ -80,6 +84,7 @@
 	denied_type = /obj/item/crusher_trophy/goliath_tentacle
 	bonus_value = 2
 	trophy_id = TROPHY_GOLIATH_TENTACLE
+	wildhunter_drop = /obj/item/stack/sheet/animalhide/goliath_hide
 	/// Your missing health is multiplied by this value to find the bonus damage
 	var/missing_health_ratio = 0.1
 	/// Amount of health you must lose to gain damage, according to the examine text. Cached so we don't recalculate it every examine.
@@ -108,6 +113,7 @@
 	denied_type = /obj/item/crusher_trophy/lobster_claw
 	trophy_id = TROPHY_LOBSTER_CLAW
 	bonus_value = 1
+	wildhunter_drop = /obj/item/organ/monster_core/rush_gland
 
 /obj/item/crusher_trophy/lobster_claw/effect_desc()
 	return "mark detonation to briefly rebuke the target for [bonus_value] seconds"
@@ -123,6 +129,7 @@
 	desc = "A fang from a brimdemon's corpse."
 	denied_type = /obj/item/crusher_trophy/brimdemon_fang
 	trophy_id = TROPHY_BRIMDEMON_FANG
+	wildhunter_drop = /obj/item/organ/monster_core/brimdust_sac
 	/// Cartoon punching vfx
 	var/static/list/comic_phrases = list("BOOM", "BANG", "KABLOW", "KAPOW", "OUCH", "BAM", "KAPOW", "WHAM", "POW", "KABOOM")
 
@@ -141,6 +148,7 @@
 	icon_state = "bileworm_spewlet"
 	desc = "A baby bileworm. Suitable as a trophy for a kinetic crusher."
 	denied_type = /obj/item/crusher_trophy/bileworm_spewlet
+	wildhunter_drop = /obj/item/stack/sheet/animalhide/bileworm
 	///item ability that handles the effect
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet/ability
 
@@ -171,7 +179,7 @@
 
 /obj/item/crusher_trophy/bileworm_spewlet/on_projectile_hit_mineral(turf/closed/mineral, mob/living/user)
 	for(var/turf/closed/mineral/mineral_turf in RANGE_TURFS(1, mineral) - mineral)
-		mineral_turf.gets_drilled(user, TRUE)
+		mineral_turf.gets_drilled(user, 1)
 
 //yes this is a /mob_cooldown subtype being added to an item. I can't recommend you do what I'm doing
 /datum/action/cooldown/mob_cooldown/projectile_attack/dir_shots/spewlet

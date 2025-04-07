@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Fixed our pathfinding logic getting deeply confused by border objects"
+  - admin: "Added clientside displayed pathfinding debug tools, give em a go"

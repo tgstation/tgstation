@@ -257,10 +257,7 @@
 	name = "\improper Nanotrasen banner backpack"
 	desc = "It's a backpack with lots of extra room.  A banner with Nanotrasen's logo is attached, that can't be removed."
 	icon_state = "backpack-banner"
-
-/obj/item/storage/backpack/bannerpack/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.
+	storage_type = /datum/storage/backpack/bannerpack
 
 /obj/item/storage/backpack/bannerpack/red
 	name = "red banner backpack"
@@ -410,18 +407,6 @@
 
 /obj/item/clothing/shoes/plate/blue
 	icon_state = "crusader-blue"
-
-/obj/item/storage/box/itemset/crusader/blue/PopulateContents()
-	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/blue(src)
-	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
-	new /obj/item/clothing/gloves/plate/blue(src)
-	new /obj/item/clothing/shoes/plate/blue(src)
-
-/obj/item/storage/box/itemset/crusader/red/PopulateContents()
-	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/red(src)
-	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
-	new /obj/item/clothing/gloves/plate/red(src)
-	new /obj/item/clothing/shoes/plate/red(src)
 
 /obj/item/claymore/weak
 	desc = "This one is rusted."

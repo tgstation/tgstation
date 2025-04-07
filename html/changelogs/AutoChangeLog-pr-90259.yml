@@ -1,0 +1,4 @@
+author: "RandomDudeFromTheRim"
+delete-after: True
+changes:
+  - bugfix: "fixed an extremely hypothetical, yet possible respawn exploit"

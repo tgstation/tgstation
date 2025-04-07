@@ -110,11 +110,13 @@
 	illustration = "beaker"
 
 /obj/item/storage/box/alchemist_basic_chems/PopulateContents()
+	. = list()
+
 	for(var/i in 1 to 7)
 		if(prob(1))
-			new /obj/item/reagent_containers/cup/glass/coffee(src)
+			. += /obj/item/reagent_containers/cup/glass/coffee
 			continue
-		new /obj/item/reagent_containers/cup/bottle/alchemist_basic(src)
+		. += /obj/item/reagent_containers/cup/bottle/alchemist_basic
 
 /obj/item/storage/box/alchemist_random_chems
 	name = "box of potions"
@@ -123,25 +125,28 @@
 	illustration = "beaker"
 
 /obj/item/storage/box/alchemist_random_chems/PopulateContents()
+	. = list()
+
 	for(var/i in 1 to 7)
 		if(prob(1))
-			new /obj/item/reagent_containers/cup/glass/coffee(src)
+			. += /obj/item/reagent_containers/cup/glass/coffee
 			continue
-		new /obj/item/reagent_containers/cup/bottle/alchemist_random(src)
+		. += /obj/item/reagent_containers/cup/bottle/alchemist_random
 
 /obj/item/storage/box/alchemist_chemistry_kit
 	name = "box of alchemy tools"
 	desc = "Contains everything needed for the up and coming chemistry student to enact hazardous chemical mishaps in the comfort of their own home."
 
 /obj/item/storage/box/alchemist_chemistry_kit/PopulateContents()
-	new /obj/item/reagent_containers/cup/mortar(src)
-	new /obj/item/pestle(src)
-	new /obj/item/lighter/skull(src)
-	new /obj/item/ph_booklet(src)
-	new /obj/item/thermometer(src)
-	new /obj/item/storage/test_tube_rack/full(src)
-	new /obj/item/reagent_containers/cup/glass/coffee(src)
-
+	return list(
+		/obj/item/reagent_containers/cup/mortar,
+		/obj/item/pestle,
+		/obj/item/lighter/skull,
+		/obj/item/ph_booklet,
+		/obj/item/thermometer,
+		/obj/item/storage/test_tube_rack/full,
+		/obj/item/reagent_containers/cup/glass/coffee,
+	)
 
 /datum/bitrunning_gimmick/rogue
 	name = "Rogue"
@@ -173,10 +178,11 @@
 	name = "fannypack of ULTIMATE DESPAIR"
 
 /obj/item/storage/belt/fannypack/black/rogue/PopulateContents()
-	new /obj/item/food/drug/saturnx(src)
-	new /obj/item/reagent_containers/cup/blastoff_ampoule(src)
-	new /obj/item/reagent_containers/hypospray/medipen/methamphetamine(src)
-
+	return list(
+		/obj/item/food/drug/saturnx,
+		/obj/item/reagent_containers/cup/blastoff_ampoule,
+		/obj/item/reagent_containers/hypospray/medipen/methamphetamine,
+	)
 
 /datum/bitrunning_gimmick/healer
 	name = "Healer"

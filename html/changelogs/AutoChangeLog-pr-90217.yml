@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Nyctophobia and Claustrophobia quirks now have proper terror effects instead of making you walk/suffocate. Immersion!"
+  - refactor: "All sources of \"terror\"/\"fear\" now use a common component, meaning they share their counters."

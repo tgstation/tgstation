@@ -160,7 +160,7 @@
 	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, worm_chance = 50, \
 		action_text = "uproot", action_text_third_person = "uproots")
 
-/turf/open/floor/grass/Airless
+/turf/open/floor/grass/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/grass/proc/spawniconchange()

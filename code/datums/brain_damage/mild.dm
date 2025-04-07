@@ -11,17 +11,19 @@
 	scan_desc = "schizophrenia"
 	gain_text = span_warning("You feel your grip on reality slipping...")
 	lose_text = span_notice("You feel more grounded.")
+	/// Whether the hallucinations we give are uncapped, ie all the wacky ones
+	var/uncapped = FALSE
 
 /datum/brain_trauma/mild/hallucinations/on_life(seconds_per_tick, times_fired)
-	if(owner.stat != CONSCIOUS || owner.IsSleeping() || owner.IsUnconscious())
+	if(owner.stat >= UNCONSCIOUS)
 		return
 	if(HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
 		owner.remove_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
+		owner.adjust_hallucinations(-10 SECONDS * seconds_per_tick)
 		return
-	if(!HAS_TRAIT(owner, TRAIT_RDS_SUPPRESSED))
-		owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
 
-	owner.adjust_hallucinations_up_to(10 SECONDS * seconds_per_tick, 100 SECONDS)
+	owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
+	owner.adjust_hallucinations_up_to(((uncapped ? 12 SECONDS : 5 SECONDS) * seconds_per_tick), (uncapped ? 240 SECONDS : 60 SECONDS))
 
 /datum/brain_trauma/mild/hallucinations/on_lose()
 	owner.remove_status_effect(/datum/status_effect/hallucination)
@@ -280,11 +282,11 @@
 	lose_text = span_notice("The world feels bright and colorful again.")
 
 /datum/brain_trauma/mild/color_blindness/on_gain()
-	owner.add_client_colour(/datum/client_colour/monochrome/colorblind)
+	owner.add_client_colour(/datum/client_colour/monochrome, TRAUMA_TRAIT)
 	return ..()
 
 /datum/brain_trauma/mild/color_blindness/on_lose(silent)
-	owner.remove_client_colour(/datum/client_colour/monochrome/colorblind)
+	owner.remove_client_colour(TRAUMA_TRAIT)
 	return ..()
 
 /datum/brain_trauma/mild/possessive

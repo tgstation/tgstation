@@ -14,7 +14,6 @@
 	density = TRUE
 	max_integrity = 300
 	integrity_failure = 0.33
-	req_access = list(ACCESS_CARGO)
 	circuit = /obj/item/circuitboard/machine/mailsorter
 
 	var/light_mask = "mailsorter-light-mask"
@@ -101,9 +100,6 @@
 	return is_type_in_list(weapon, accepted_items)
 
 /obj/machinery/mailsorter/interact(mob/user)
-	if (!allowed(user))
-		to_chat(user, span_warning("Access denied."))
-		return
 	if (currentstate != STATE_IDLE)
 		return
 	if (length(mail_list) == 0)

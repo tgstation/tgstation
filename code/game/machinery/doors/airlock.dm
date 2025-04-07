@@ -1232,7 +1232,7 @@
 		return
 
 	open(BYPASS_DOOR_CHECKS)
-	take_damage(25, BRUTE, 0, 0) // Enough to sometimes spark
+	take_damage(AIRLOCK_PRY_DAMAGE, BRUTE, 0, 0) // Enough to sometimes spark
 	if(density && !open(BYPASS_DOOR_CHECKS))
 		to_chat(user, span_warning("Despite your attempts, [src] refuses to open."))
 

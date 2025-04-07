@@ -1537,9 +1537,12 @@
 	name = "box of pierced realities"
 	desc = "A box containing toys resembling pierced realities."
 
-/obj/item/storage/box/heretic_box/PopulateContents()
+/obj/item/storage/box/heretic_box/PopulateContents(datum/storage_config/config)
+	config.compute_max_item_weight = TRUE
+
+	. = list()
 	for(var/i in 1 to rand(1,4))
-		new /obj/item/toy/reality_pierce(src)
+		. += /obj/item/toy/reality_pierce
 
 /obj/item/toy/foamfinger
 	name = "foam finger"
