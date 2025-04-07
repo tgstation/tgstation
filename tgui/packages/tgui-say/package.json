@@ -9,7 +9,6 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tgui": "workspace:*",
-    "tgui-core": "^1.8.4",
-    "tgui-polyfill": "workspace:*"
+    "tgui-core": "^1.8.4"
   }
 }

@@ -45,7 +45,6 @@
 @include meta.load-css('./interfaces/RequestManager.scss');
 @include meta.load-css('./interfaces/Roulette.scss');
 @include meta.load-css('./interfaces/Safe.scss');
-@include meta.load-css('./interfaces/TachyonArray.scss');
 @include meta.load-css('./interfaces/Techweb.scss');
 @include meta.load-css('./interfaces/Trophycase.scss');
 @include meta.load-css('./interfaces/Uplink.scss');
@@ -67,4 +66,9 @@
   background-size: 70% 70%;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+// A default, in case someone uses the vp() function outside of a <Window>
+:root {
+  --scaling-amount: 1;
 }

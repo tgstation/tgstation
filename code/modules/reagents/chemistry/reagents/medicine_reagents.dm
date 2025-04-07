@@ -232,13 +232,15 @@
 	affected_mob.set_dizzy_if_lower(10 SECONDS * REM * seconds_per_tick)
 	affected_mob.set_jitter_if_lower(10 SECONDS * REM * seconds_per_tick)
 
-/datum/reagent/medicine/rezadone/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+/datum/reagent/medicine/rezadone/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if(!iscarbon(exposed_mob))
 		return
 
+	var/functional_react_volume = reac_volume * (1 - touch_protection)
+
 	var/mob/living/carbon/patient = exposed_mob
-	if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, BURN) && patient.getFireLoss() < UNHUSK_DAMAGE_THRESHOLD) //One carp yields 12u rezadone.
+	if(functional_react_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, BURN) && patient.getFireLoss() < UNHUSK_DAMAGE_THRESHOLD) //One carp yields 12u rezadone.
 		patient.cure_husk(BURN)
 		patient.visible_message(span_nicegreen("[patient]'s body rapidly absorbs moisture from the environment, taking on a more healthy appearance."))
 
@@ -346,15 +348,17 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
-/datum/reagent/medicine/mine_salve/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
+/datum/reagent/medicine/mine_salve/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if(!iscarbon(exposed_mob) || (exposed_mob.stat == DEAD))
 		return
 
 	if(methods & (INGEST|VAPOR|INJECT|INHALE))
-		exposed_mob.adjust_nutrition(-5)
-		if(show_message)
-			to_chat(exposed_mob, span_warning("Your stomach feels empty and cramps!"))
+		var/miner_cramps = 5 * (1 - touch_protection)
+		if(miner_cramps)
+			exposed_mob.adjust_nutrition(-miner_cramps)
+			if(show_message)
+				to_chat(exposed_mob, span_warning("Your stomach feels empty and cramps!"))
 
 	if(methods & (PATCH|TOUCH))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
@@ -596,8 +600,7 @@
 /datum/reagent/medicine/ephedrine/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(SPT_PROB(1 * (1 + (1-normalise_creation_purity())), seconds_per_tick) && iscarbon(affected_mob))
-		var/datum/disease/D = new /datum/disease/heart_failure
-		affected_mob.ForceContractDisease(D)
+		affected_mob.apply_status_effect(/datum/status_effect/heart_attack)
 		to_chat(affected_mob, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 		affected_mob.playsound_local(affected_mob, 'sound/effects/singlebeat.ogg', 100, 0)
 
