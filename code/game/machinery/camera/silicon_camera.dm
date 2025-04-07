@@ -9,9 +9,9 @@
 
 /obj/machinery/camera/silicon/Initialize(mapload)
 	. = ..()
-	src.living_host = loc
 	if(!istype(living_host))
 		return INITIALIZE_HINT_QDEL
+	src.living_host = loc
 
 /obj/machinery/camera/silicon/Destroy()
 	if(!isnull(living_host))
