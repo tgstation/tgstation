@@ -12,7 +12,6 @@
 
 /datum/storage/lockbox/medal/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/clothing/accessory/medal)
 
 ///Dueling lockbox
@@ -22,7 +21,6 @@
 
 /datum/storage/lockbox/dueling/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/gun/energy/dueling)
 
 ///Bitrunning decrypted lockbox

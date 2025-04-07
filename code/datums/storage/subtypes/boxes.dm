@@ -14,7 +14,6 @@
 ///Donk Pocket box
 /datum/storage/box/donk_pockets/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/food/donkpocket)
 
 ///Coffee box
@@ -23,7 +22,6 @@
 
 /datum/storage/box/coffee/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/food/grown/coffee)
 
 ///Bandage box
@@ -32,7 +30,6 @@
 
 /datum/storage/box/bandages/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/stack/medical/bandage,
 		/obj/item/reagent_containers/applicator/pill,
@@ -45,7 +42,6 @@
 
 /datum/storage/box/monkey_cube/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(
 		can_hold_list = /obj/item/food/monkeycube,
 		cant_hold_list = /obj/item/food/monkeycube/gorilla,
@@ -57,7 +53,6 @@
 
 /datum/storage/box/gorilla_cube_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/food/monkeycube/gorilla)
 
 ///Stabalized extract box
@@ -73,7 +68,6 @@
 
 /datum/storage/box/snappops/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/toy/snappop)
 
 ///Match box
@@ -82,7 +76,6 @@
 
 /datum/storage/box/match/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/match)
 
 ///Light Box
@@ -93,7 +86,6 @@
 
 /datum/storage/box/lights/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/light/tube,
 		/obj/item/light/bulb
@@ -107,7 +99,6 @@
 
 /datum/storage/box/balloon/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/toy/balloon/long)
 
 ///Stickers Box
@@ -117,7 +108,6 @@
 
 /datum/storage/box/stickers/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/sticker)
 
 ///Syndicate space box
@@ -126,7 +116,6 @@
 
 /datum/storage/box/syndicate_space/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/clothing/suit/space/syndicate,
 		/obj/item/clothing/head/helmet/space/syndicate
@@ -144,7 +133,6 @@
 
 /datum/storage/box/syndicate_throwing/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/restraints/legcuffs/bola/tactical,
 		/obj/item/paperplane/syndicate,
@@ -157,7 +145,6 @@
 
 /datum/storage/box/skub/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(exception_hold_list = list(
 		/obj/item/skub,
 		/obj/item/clothing/suit/costume/wellworn_shirt/skub,
@@ -166,7 +153,6 @@
 ///Stickers anti skub box
 /datum/storage/box/anti_skub/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(exception_hold_list = /obj/item/clothing/suit/costume/wellworn_shirt/skub)
 
 ///Flat box
@@ -179,13 +165,11 @@
 
 /datum/storage/box/gum/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/food/bubblegum)
 
 ///Fishing lures box
 /datum/storage/box/fishing_lures/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/fishing_lure) //can only hold lures
 	//adds an extra slot, so we can put back the lures even if we didn't take out the instructions.
 	src.max_slots = length(typesof(/obj/item/fishing_lure)) + 1

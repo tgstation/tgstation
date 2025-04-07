@@ -31,8 +31,6 @@
 ///Fishing toolbox
 /datum/storage/toolbox/fishing/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
-	// Can hold fishing rod despite the size
 	set_holdable(exception_hold_list = /obj/item/fishing_rod)
 
 ///Fishing toolbox small

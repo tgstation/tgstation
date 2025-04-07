@@ -10,7 +10,6 @@
 
 /datum/storage/test_tube_rack/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/reagent_containers/cup/tube)
 
 ///Surgery tray
@@ -22,7 +21,6 @@
 
 /datum/storage/surgery_tray/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/autopsy_scanner,
 		/obj/item/blood_filter,
@@ -47,7 +45,6 @@
 
 /datum/storage/organ_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/organ,
 		/obj/item/bodypart,
@@ -77,7 +74,6 @@
 
 /datum/storage/portable_chem_mixer/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
@@ -95,7 +91,6 @@
 
 /datum/storage/implant/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(cant_hold_list = /obj/item/disk/nuclear)
 
 ///Drone storage
@@ -107,7 +102,6 @@
 
 /datum/storage/drone/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/crowbar/drone,
 		/obj/item/screwdriver/drone,
@@ -131,7 +125,6 @@
 ///Easter basket
 /datum/storage/basket/easter/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/food/egg,
 		/obj/item/food/chocolateegg,
@@ -172,19 +165,16 @@
 ///Egg box
 /datum/storage/egg_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/food/egg)
 
 ///Generic fancy holder
 /datum/storage/fancy_holder/New(obj/item/storage/fancy/candle_box/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(parent.spawn_type)
 
 ///Heart box
 /datum/storage/heart_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/food/bonbon)
 
 ///Cigrate boxes
@@ -193,7 +183,6 @@
 
 /datum/storage/cigarette_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/cigarette,
 		/obj/item/lighter,
@@ -205,7 +194,6 @@
 
 /datum/storage/coffee_condi_display/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/reagent_containers/condiment/pack/sugar,
 		/obj/item/reagent_containers/condiment/creamer,
@@ -219,7 +207,6 @@
 
 /datum/storage/coffee_cart_rack/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/coffee_cartridge)
 
 //=================================================
@@ -232,7 +219,6 @@
 
 /datum/storage/pillbottle/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/reagent_containers/applicator/patch,
@@ -248,7 +234,6 @@
 
 /datum/storage/sixcan/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/reagent_containers/cup/soda_cans,
 		/obj/item/reagent_containers/cup/glass/bottle/beer,
@@ -263,7 +248,6 @@
 
 /datum/storage/wallet/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/stack/spacecash,
@@ -304,7 +288,6 @@
 ///Crayons storage
 /datum/storage/crayons/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(
 		can_hold_list = /obj/item/toy/crayon,
 		cant_hold_list = list(
@@ -320,7 +303,6 @@
 
 /datum/storage/dice/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/dice)
 
 ///Mail counterfeit
@@ -348,7 +330,6 @@
 
 /datum/storage/card_binder/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/tcgcard)
 
 ///Toilet bang
@@ -361,5 +342,4 @@
 
 /datum/storage/toiletbang/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/food)

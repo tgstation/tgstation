@@ -13,7 +13,6 @@
 
 /datum/storage/bag/trash/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(cant_hold_list = /obj/item/disk/nuclear)
 
 /datum/storage/bag/trash/remove_single(mob/removing, obj/item/thing, atom/remove_to_loc, silent)
@@ -42,7 +41,6 @@
 
 /datum/storage/bag/ore/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/stack/ore)
 
 ///Ore bag of holding
@@ -59,7 +57,6 @@
 
 /datum/storage/bag/plants/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/food/grown,
 		/obj/item/graft,
@@ -74,7 +71,6 @@
 
 /datum/storage/bag/sheet_snatcher/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(
 		can_hold_list = /obj/item/stack/sheet,
 		cant_hold_list = list(
@@ -96,7 +92,6 @@
 
 /datum/storage/bag/sheet_snatcher_debug/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/stack/sheet,
 		/obj/item/stack/sheet/mineral/sandstone,
@@ -110,7 +105,6 @@
 
 /datum/storage/bag/books/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/book,
 		/obj/item/spellbook,
@@ -126,7 +120,6 @@
 
 /datum/storage/bag/tray/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/cigarette,
@@ -156,7 +149,6 @@
 
 /datum/storage/bag/chemistry/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/reagent_containers/chem_pack,
 		/obj/item/reagent_containers/dropper,
@@ -176,7 +168,6 @@
 
 /datum/storage/bag/bio/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/bodypart,
 		/obj/item/food/monkeycube,
@@ -198,7 +189,6 @@
 
 /datum/storage/bag/xeno/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/bodypart,
 		/obj/item/food/deadmouse,
@@ -222,7 +212,6 @@
 
 /datum/storage/bag/construction/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/assembly,
 		/obj/item/circuitboard,
@@ -242,7 +231,6 @@
 
 /datum/storage/bag/harpoon_quiver/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/ammo_casing/harpoon)
 
 ///Rebar quiber bag
@@ -253,7 +241,6 @@
 
 /datum/storage/bag/rebar_quiver/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/ammo_casing/rebar,
 		/obj/item/ammo_casing/rebar/syndie,
@@ -277,7 +264,6 @@
 
 /datum/storage/bag/mail/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/mail,
 		/obj/item/delivery/small,
@@ -294,7 +280,6 @@
 
 /datum/storage/bag/garment/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/clothing)
 
 ///Quiver bag
@@ -306,7 +291,6 @@
 
 /datum/storage/bag/quiver/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/ammo_casing/arrow)
 
 ///Quiver bag less
@@ -331,7 +315,6 @@
 
 /datum/storage/bag/money/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/coin,
 		/obj/item/stack/spacecash,
@@ -346,5 +329,4 @@
 
 /datum/storage/bag/fishing/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/fish)

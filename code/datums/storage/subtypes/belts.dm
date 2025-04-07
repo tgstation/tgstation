@@ -5,7 +5,6 @@
 
 /datum/storage/utility_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(GLOB.tool_items + list(
 		/obj/item/clothing/gloves,
 		/obj/item/radio,
@@ -20,7 +19,6 @@
 
 /datum/storage/medical_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/bikehorn/rubberducky,
 		/obj/item/blood_filter,
@@ -88,7 +86,6 @@
 
 /datum/storage/security_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/ammo_box,
 		/obj/item/ammo_casing/shotgun,
@@ -119,7 +116,6 @@
 
 /datum/storage/mining_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/analyzer,
 		/obj/item/clothing/gloves,
@@ -172,7 +168,6 @@
 
 /datum/storage/soulstone_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/soulstone)
 
 ///Champion belt
@@ -181,7 +176,6 @@
 
 /datum/storage/champion_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/clothing/mask/luchador)
 
 ///Military belt
@@ -194,7 +188,6 @@
 
 /datum/storage/military_belt/snack/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/food,
 		/obj/item/reagent_containers/cup/glass,
@@ -213,7 +206,6 @@
 
 /datum/storage/grenade_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/food/grown/cherry_bomb,
 		/obj/item/food/grown/firelemon,
@@ -231,7 +223,6 @@
 
 /datum/storage/wands_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/gun/magic/wand)
 
 ///Janitor belt
@@ -241,7 +232,6 @@
 
 /datum/storage/janitor_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/access_key,
 		/obj/item/assembly/mousetrap,
@@ -272,7 +262,6 @@
 
 /datum/storage/bandolier_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/ammo_casing/strilka310,
 		/obj/item/ammo_casing/shotgun,
@@ -295,7 +284,6 @@
 
 /datum/storage/sabre_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/melee/sabre)
 
 ///Green sabre belt
@@ -307,7 +295,6 @@
 
 /datum/storage/green_sabre_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/melee/parsnip_sabre)
 
 ///Plant belt
@@ -317,7 +304,6 @@
 
 /datum/storage/plant_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/cultivator,
 		/obj/item/geneshears,
@@ -342,7 +328,6 @@
 
 /datum/storage/unfathomable_curio/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/ammo_box/strilka310/lionhunter,
 		/obj/item/heretic_labyrinth_handbook,

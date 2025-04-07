@@ -38,7 +38,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(exception_hold_list = list(
 		/obj/item/katana,
 		/obj/item/toy/katana,
@@ -65,7 +64,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/clothing/head/mob_holder,
 		/obj/item/food/deadmouse
@@ -93,7 +91,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/knife,
@@ -141,7 +138,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/ammo_box/magazine/m10mm,
@@ -191,7 +187,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(list( //Same items as a PDA
 		/obj/item/pen,
 		/obj/item/toy/crayon,
@@ -213,7 +208,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/reagent_containers/cup/glass/bottle/vodka,
 		/obj/item/reagent_containers/cup/glass/bottle/molotov,

@@ -7,7 +7,6 @@
 
 /datum/storage/holster/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
 	. = ..()
-
 	if(!length(holdables))
 		holdables = list(
 			/obj/item/gun/ballistic/automatic/pistol,

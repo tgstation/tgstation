@@ -94,7 +94,6 @@
 
 /datum/storage/medkit/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdable_override)
 	. = ..()
-
 	if(isnull(holdable_override))
 		holdable_override = list_of_everything_medkits_can_hold
 

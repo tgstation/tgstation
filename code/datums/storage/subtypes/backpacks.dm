@@ -10,7 +10,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(exception_hold_list = /obj/item/fish_tank)
 
 ///Saddle backpack
@@ -23,5 +22,4 @@
 
 /datum/storage/backpack/satchel_flat/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(cant_hold_list = /obj/item/storage/backpack/satchel/flat) //muh recursive backpacks

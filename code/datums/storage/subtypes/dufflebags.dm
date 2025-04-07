@@ -10,7 +10,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(exception_hold_list = /obj/item/fish_tank)
 
 // Syndi bags get some FUN extras
@@ -28,7 +27,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	var/static/list/exception_type_list = list(
 		// Gun and gun-related accessories
 		/obj/item/gun,
