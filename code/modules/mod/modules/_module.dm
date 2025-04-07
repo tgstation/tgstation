@@ -274,6 +274,8 @@
 
 /// Called from MODsuit's install() proc, so when the module is installed
 /obj/item/mod/module/proc/on_install()
+	SHOULD_CALL_PARENT(TRUE)
+
 	if (mask_worn_overlay)
 		for (var/obj/item/part as anything in mod.get_parts(all = TRUE))
 			RegisterSignal(part, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS, PROC_REF(add_module_overlay))
@@ -288,6 +290,8 @@
 
 /// Called from MODsuit's uninstall() proc, so when the module is uninstalled
 /obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if (deleting)
 		return
 
