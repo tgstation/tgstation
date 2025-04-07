@@ -40,7 +40,7 @@ type CurrentBets = {
   personally_invested: number;
 };
 
-export const NtosSportsBetting = () => {
+export const NtosSpaceBetting = () => {
   const { act, data } = useBackend<Data>();
   const { bank_name, bank_money, can_create_bet } = data;
   return (

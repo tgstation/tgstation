@@ -7,14 +7,14 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 
 /datum/computer_file/program/betting
 	filename = "betting"
-	filedesc = "Sports Betting"
+	filedesc = "SpaceBet"
 	downloader_category = PROGRAM_CATEGORY_GAMES
 	program_open_overlay = "gambling"
 	extended_desc = "A multi-platform network for placing requests across the station, with payment across the network being possible."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	can_run_on_flags = PROGRAM_PDA
 	size = 4
-	tgui_id = "NtosSportsBetting"
+	tgui_id = "NtosSpaceBetting"
 	program_icon = "dice"
 
 	///The active bet this program made, as we can only have 1 going at a time to prevent flooding/spam.
@@ -176,7 +176,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 		if(FC.channel_name == NEWSCASTER_SPORTS_BETTING)
 			if(!length(FC.messages))
 				should_alert = TRUE
-	newscaster_message = GLOB.news_network.submit_article("The bet [name] has started, place your bets now!", "NtOS Sports Betting App", NEWSCASTER_SPORTS_BETTING, null, update_alert = should_alert)
+	newscaster_message = GLOB.news_network.submit_article("The bet [name] has started, place your bets now!", "NtOS Space Betting App", NEWSCASTER_SPACE_BETTING, null, update_alert = should_alert)
 
 /datum/active_bet/Destroy(force)
 	GLOB.active_bets -= src

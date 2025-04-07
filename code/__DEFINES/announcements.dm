@@ -8,4 +8,4 @@
 
 //Defines for newscaster news stations, the defined thing is what it'll be called in the Newscaster.
 #define NEWSCASTER_STATION_ANNOUNCEMENTS "Station Announcements"
-#define NEWSCASTER_SPORTS_BETTING "Sports Betting"
+#define NEWSCASTER_SPACE_BETTING "SpaceBet"
