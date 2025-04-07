@@ -197,6 +197,10 @@
 				var/quirk_goodie = pick(quirk.mail_goodies)
 				goodies[quirk_goodie] = 5
 
+		if(LAZYLEN(GLOB.holiday_mail))
+			var/holiday_goodie = pick(GLOB.holiday_mail)
+			goodies[holiday_goodie] = 5
+
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)
 		var/atom/movable/target_atom = new target_good(src)
