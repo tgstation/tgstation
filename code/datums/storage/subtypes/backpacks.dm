@@ -23,3 +23,7 @@
 /datum/storage/backpack/satchel_flat/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(cant_hold_list = /obj/item/storage/backpack/satchel/flat) //muh recursive backpacks
+
+///Santa bag
+/datum/storage/backpack/santabag
+	max_total_storage = 60
