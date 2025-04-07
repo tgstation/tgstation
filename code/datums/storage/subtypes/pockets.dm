@@ -21,7 +21,6 @@
 ///Small pockets
 /datum/storage/pockets/small
 	max_slots = 1
-	max_specific_storage = WEIGHT_CLASS_SMALL
 	attack_hand_interact = FALSE
 
 ///Tiny pockets

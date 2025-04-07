@@ -26,7 +26,6 @@
 ///Energy holster
 /datum/storage/holster/energy
 	max_slots = 2
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /datum/storage/holster/energy/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
 	holdables = list(
@@ -45,7 +44,6 @@
 ///Detective holster
 /datum/storage/holster/detective
 	max_slots = 3
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /datum/storage/holster/detective/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
 	holdables = list(
@@ -74,7 +72,6 @@
 ///Chameleon Holster
 /datum/storage/holster/chameleon
 	max_slots = 2
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	silent = TRUE
 
 /datum/storage/holster/chameleon/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)

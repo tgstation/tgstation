@@ -1,6 +1,5 @@
 ///Utility belt
 /datum/storage/utility_belt
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_total_storage = 21
 
 /datum/storage/utility_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
@@ -14,7 +13,6 @@
 
 ///Medical belt
 /datum/storage/medical_belt
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_total_storage = 21
 
 /datum/storage/medical_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
@@ -79,7 +77,6 @@
 ///Security belt
 /datum/storage/security_belt
 	max_slots = 5
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	open_sound = 'sound/items/handling/holster_open.ogg'
 	open_sound_vary = TRUE
 	rustle_sound = null
@@ -111,7 +108,6 @@
 ///Mining belt
 /datum/storage/mining_belt
 	max_slots = 6
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_total_storage = 20
 
 /datum/storage/mining_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)

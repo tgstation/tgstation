@@ -2,7 +2,6 @@
 /datum/storage/toolbox
 	open_sound = 'sound/items/handling/toolbox/toolbox_open.ogg'
 	rustle_sound = 'sound/items/handling/toolbox/toolbox_rustle.ogg'
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 ///Heirloom toolbox
 /datum/storage/toolbox/heirloom
