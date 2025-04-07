@@ -387,25 +387,6 @@
 
 	weather_reagent_holder.reagents.expose(living, TOUCH)
 
-	if(!(weather_flags & WEATHER_NOTIFICATION) || prob(95))
-		return
-
-	var/reagent_name = LOWER_TEXT(weather_reagent.name)
-	var/weather_name = replacetext(name, " storm", "") // Remove " storm" if it exists
-	var/wetmessage = pick(
-		"You're coated in [reagent_name] from the [weather_name]!",
-		"The [weather_name] leaves you thoroughly covered in [reagent_name]!",
-		"You feel the [reagent_name] from the [weather_name] clinging to you!",
-		"The [weather_name] causes [reagent_name] to accumulate on your clothing!",
-		"The [weather_name] drops [reagent_name] onto you, soaking your outfit!",
-		"Moving through the [weather_name], you're quickly affected by the [reagent_name]!",
-		"The [weather_name] leaves a layer of [reagent_name] on your person!",
-		"The [weather_name] leaves you feeling damp from the [reagent_name]!",
-		"The [reagent_name] from the [weather_name] quickly accumulates on you!",
-		"The intense [weather_name] forces [reagent_name] to coat your exposed skin!",
-	)
-	to_chat(living, span_warning(wetmessage))
-
 /**
  * Affects the turf with whatever the weather does
  */

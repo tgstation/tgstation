@@ -49,10 +49,8 @@ GLOBAL_LIST_INIT(thunder_chance_options, list(
 #define WEATHER_ENDLESS (1<<4)
 /// If weather will be detected by a barometer
 #define WEATHER_BAROMETER (1<<5)
-/// If weather provides a notification message to mobs
-#define WEATHER_NOTIFICATION (1<<6)
 /// If weather temperature ignores clothing insulation when adjusting bodytemperature
-#define WEATHER_TEMPERATURE_BYPASS_CLOTHING (1<<7)
+#define WEATHER_TEMPERATURE_BYPASS_CLOTHING (1<<6)
 
 /// Does weather have any type of processing related to mobs, turfs, or thunder?
 #define FUNCTIONAL_WEATHER (WEATHER_TURFS|WEATHER_MOBS|WEATHER_THUNDER)

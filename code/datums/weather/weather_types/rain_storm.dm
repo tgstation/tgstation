@@ -24,7 +24,7 @@
 	immunity_type = TRAIT_RAINSTORM_IMMUNE
 	probability = 90
 
-	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER | WEATHER_NOTIFICATION)
+	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER)
 	whitelist_weather_reagents = list(/datum/reagent/water)
 
 /datum/weather/rain_storm/telegraph()
