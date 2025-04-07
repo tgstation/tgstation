@@ -17,7 +17,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-popper": "^2.3.0",
-    "tgui-core": "^2.0.2",
+    "tgui-core": "^2.0.3",
     "tgui-dev-server": "workspace:*"
   }
 }
