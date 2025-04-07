@@ -39,9 +39,10 @@
 /datum/component/holographic_nature/proc/on_entered(atom/movable/source, atom/movable/thing)
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
-	if(!isturf(movable_parent.loc) || !thing.density) //ghosts cant make us wobbleee
+	if(!isturf(movable_parent.loc))
 		return
-	apply_effects()
+	if(isprojectile(thing) || thing.density)
+		apply_effects()
 
 /datum/component/holographic_nature/proc/apply_effects()
 	if(!COOLDOWN_FINISHED(src, glitch_cooldown))
