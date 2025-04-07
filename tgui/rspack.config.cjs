@@ -27,14 +27,15 @@ module.exports = (env = {}, argv) => {
   const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
 
+  /** @type {import('@rspack/core').Configuration} */
   const config = defineConfig({
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
-    target: ['web', 'es5', 'browserslist:ie 11'],
+    target: ['web', 'browserslist:edge >= 123'],
     entry: {
-      tgui: ['./packages/tgui-polyfill', './packages/tgui'],
-      'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
-      'tgui-say': ['./packages/tgui-polyfill', './packages/tgui-say'],
+      tgui: ['./packages/tgui'],
+      'tgui-panel': ['./packages/tgui-panel'],
+      'tgui-say': ['./packages/tgui-say'],
     },
     output: {
       path: argv.useTmpFolder
@@ -62,21 +63,19 @@ module.exports = (env = {}, argv) => {
       rules: [
         {
           test: /\.([tj]s(x)?|cjs)$/,
-          exclude: /node_modules[\\/]core-js/,
           use: [
             {
               loader: 'builtin:swc-loader',
               options: {
-                loose: true,
                 jsc: {
                   parser: {
                     syntax: 'typescript',
                     tsx: true,
                   },
-                },
-                transform: {
-                  react: {
-                    runtime: 'automatic',
+                  transform: {
+                    react: {
+                      runtime: 'automatic',
+                    },
                   },
                 },
               },
@@ -146,10 +145,7 @@ module.exports = (env = {}, argv) => {
 
   if (bench) {
     config.entry = {
-      'tgui-bench': [
-        './packages/tgui-polyfill',
-        './packages/tgui-bench/entrypoint',
-      ],
+      'tgui-bench': ['./packages/tgui-bench/entrypoint'],
     };
   }
 
