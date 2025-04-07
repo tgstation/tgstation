@@ -13429,7 +13429,7 @@
 /obj/machinery/power/turbine/inlet_compressor{
 	dir = 8
 	},
-/turf/open/floor/engine/airless,
+/turf/open/floor/engine,
 /area/station/engineering/atmos/project)
 "ewY" = (
 /obj/machinery/door/airlock/maintenance,
@@ -16508,9 +16508,6 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology/hallway)
 "fAb" = (
-/obj/machinery/computer/atmos_control/nocontrol/incinerator{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "fAl" = (
@@ -41248,8 +41245,10 @@
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
 "nBl" = (
-/obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/computer/turbine_computer{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "nBq" = (
@@ -43030,10 +43029,10 @@
 /area/station/maintenance/starboard/lesser)
 "ogB" = (
 /obj/machinery/power/turbine/core_rotor{
-	mapping_id = "main_turbine";
-	dir = 8
+	dir = 8;
+	mapping_id = "main_turbine"
 	},
-/turf/open/floor/engine/airless,
+/turf/open/floor/engine,
 /area/station/engineering/atmos/project)
 "ogF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -45142,6 +45141,10 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/airlock_sensor/incinerator_atmos{
+	pixel_x = 28;
+	pixel_y = -25
+	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/project)
 "oTr" = (
@@ -56954,7 +56957,7 @@
 /obj/machinery/power/turbine/turbine_outlet{
 	dir = 8
 	},
-/turf/open/floor/engine/airless,
+/turf/open/floor/engine,
 /area/station/engineering/atmos/project)
 "sRe" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -60470,7 +60473,7 @@
 /area/station/maintenance/port/fore)
 "uaP" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
-/obj/machinery/computer/turbine_computer,
+/obj/machinery/computer/atmos_control/nocontrol/incinerator,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/project)
 "uaR" = (
@@ -63023,8 +63026,8 @@
 /area/station/hallway/secondary/construction)
 "uRB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/airlock_sensor/incinerator_atmos,
-/turf/closed/wall/r_wall,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "uRM" = (
 /obj/structure/table,
@@ -69071,7 +69074,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "wUI" = (
-/turf/open/openspace/airless,
+/obj/machinery/door/poddoor/incinerator_atmos_main,
+/turf/open/floor/engine,
 /area/station/engineering/atmos/project)
 "wVd" = (
 /obj/effect/turf_decal/delivery,
@@ -185168,7 +185172,7 @@ xrx
 xrx
 xsS
 kHY
-shx
+kHY
 shx
 wyd
 shx
