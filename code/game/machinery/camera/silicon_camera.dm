@@ -2,6 +2,7 @@
 /obj/machinery/camera/silicon
 	network = list(CAMERANET_NETWORK_SS13)
 	internal_light = FALSE
+	start_active = TRUE
 	///Reference to the host (drone, silicon) that we're a host of.
 	var/mob/living/living_host
 	///Lazylist of sources watching the camera through consoles.
@@ -9,7 +10,7 @@
 
 /obj/machinery/camera/silicon/Initialize(mapload)
 	. = ..()
-	if(!istype(living_host))
+	if(!isliving(loc))
 		return INITIALIZE_HINT_QDEL
 	src.living_host = loc
 
