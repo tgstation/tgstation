@@ -50113,7 +50113,6 @@
 /turf/open/floor/iron/white,
 /area/station/maintenance/hallway/abandoned_recreation)
 "qCa" = (
-/obj/effect/landmark/start/hangover,
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
