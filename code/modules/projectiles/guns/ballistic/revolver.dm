@@ -207,7 +207,7 @@
 	if(loc != user || user.incapacitated)
 		return CLICK_ACTION_BLOCKING
 	aim_time = new_aim_time * (1 SECONDS)
-	to_chat(user, span_warning("You're going to pause [aim_time] second\s before pulling the trigger. [aim_time == 0 ? "...Good luck." : ""]"))
+	to_chat(user, span_warning("You're going to pause [aim_time] second\s before pulling the trigger[aim_time == 0 ? "... Good luck" : ""]."))
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/gun/ballistic/revolver/russian/dropped(mob/user, silent)
