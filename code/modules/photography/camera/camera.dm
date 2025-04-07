@@ -49,7 +49,7 @@
 	var/print_picture_on_snap = TRUE
 	/// Whether we allow setting picture label/desc/scribble when a picture is taken.
 	var/can_customise = TRUE
-	/// Picture name we default to when none is set manually
+	/// Picture name we default to when none is set manually.
 	var/default_picture_name
 
 	var/picture_size_x = 2
