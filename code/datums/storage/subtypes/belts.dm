@@ -228,7 +228,6 @@
 ///Janitor belt
 /datum/storage/janitor_belt
 	max_slots = 6
-	max_specific_storage = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
 
 /datum/storage/janitor_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
