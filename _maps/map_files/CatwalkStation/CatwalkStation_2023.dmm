@@ -20660,7 +20660,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "gRX" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
+/obj/machinery/atmospherics/components/unary/thermomachine/heater/layer4{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -20926,7 +20926,7 @@
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "gWP" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "gWW" = (
@@ -23607,10 +23607,10 @@
 /turf/open/floor/carpet/purple,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "hNe" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/green/visible,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/light/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold/green/visible/layer4,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "hNf" = (
@@ -45694,10 +45694,10 @@
 /turf/open/floor/wood,
 /area/station/service/library/printer)
 "pbM" = (
-/obj/machinery/atmospherics/components/trinary/filter{
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/trinary/filter/layer4{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "pbN" = (
@@ -67861,10 +67861,8 @@
 /turf/open/openspace,
 /area/station/medical/cryo)
 "wxi" = (
-/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
-	dir = 6
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer4,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "wxq" = (
