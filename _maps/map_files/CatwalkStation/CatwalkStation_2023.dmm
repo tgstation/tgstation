@@ -2462,10 +2462,6 @@
 /obj/structure/window/spawner/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"aTM" = (
-/obj/structure/grille,
-/turf/open/openspace/airless,
-/area/space)
 "aTW" = (
 /obj/effect/turf_decal/trimline/red/filled/corner,
 /obj/effect/turf_decal/trimline/red/filled/warning{
@@ -5830,6 +5826,9 @@
 "bXd" = (
 /obj/structure/barricade/wooden/crude,
 /obj/effect/mapping_helpers/airlock/abandoned,
+/obj/machinery/door/airlock/grunge{
+	name = "Abandoned Arcade"
+	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/hallway/abandoned_recreation)
 "bXg" = (
@@ -9087,6 +9086,9 @@
 /area/station/maintenance/starboard/fore)
 "cXM" = (
 /obj/effect/mapping_helpers/airlock/access/all/service/general,
+/obj/machinery/door/airlock/maintenance{
+	name = "Hydroponics Maintenance"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "cXV" = (
@@ -16271,7 +16273,7 @@
 	c_tag = "Armory - Space"
 	},
 /turf/open/openspace/airless,
-/area/space)
+/area/space/nearstation)
 "fsQ" = (
 /obj/structure/reflector/single{
 	dir = 9
@@ -32464,15 +32466,6 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/sepia,
 /area/station/hallway/secondary/construction)
-"kya" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "kyi" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating/airless,
@@ -32676,7 +32669,6 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/power/apc/auto_name/directional/east,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "kBq" = (
@@ -35346,6 +35338,7 @@
 	c_tag = "AI Upload Foyer";
 	network = list("aiupload")
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "lyP" = (
@@ -36601,6 +36594,7 @@
 /area/station/command/bridge)
 "lSN" = (
 /obj/effect/mapping_helpers/airlock/access/all/service/general,
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "lSU" = (
@@ -37372,6 +37366,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/general,
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/door/airlock/maintenance{
+	name = "Maintenance Access"
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
@@ -44455,9 +44452,6 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "oAz" = (
-/obj/machinery/door/airlock/highsecurity{
-	name = "AI Upload"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47203,6 +47197,9 @@
 /obj/machinery/recharge_station,
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/light_switch/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "pwE" = (
@@ -48173,6 +48170,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "pMk" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/carpet,
 /area/station/hallway/secondary/exit/departure_lounge)
 "pMm" = (
@@ -51664,6 +51662,9 @@
 "qUa" = (
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/door/airlock/maintenance{
+	name = "Maintenance Access"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "qUq" = (
@@ -53461,6 +53462,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "rwW" = (
@@ -55065,15 +55067,6 @@
 /obj/effect/spawner/random/trash/mess,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
-"rYV" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "rZs" = (
 /obj/structure/chair,
 /obj/machinery/camera/directional/north{
@@ -58590,14 +58583,12 @@
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
 "tlb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "tld" = (
@@ -105218,7 +105209,7 @@ fQp
 fqn
 hDg
 mTp
-rYV
+oAz
 toj
 hDg
 juQ
@@ -105475,7 +105466,7 @@ fQp
 fQp
 hDg
 lyA
-kya
+oAz
 pwC
 hDg
 aoY
@@ -187959,7 +187950,7 @@ coh
 dDL
 vwe
 dDL
-aTM
+coh
 nlm
 eRz
 nlm
