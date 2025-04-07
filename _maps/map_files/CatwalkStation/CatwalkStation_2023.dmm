@@ -8269,11 +8269,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/deployable_turret/hmg{
-	firesound = 'sound/weapons/gun/pistol/shot.ogg';
-	overheatsound = 'sound/weapons/gun/general/dry_fire.ogg';
-	projectile_type = /obj/projectile/beam/lasertag/redtag
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/eighties,
 /area/station/maintenance/hallway/abandoned_recreation)
@@ -15105,11 +15100,11 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/eva)
 "fdf" = (
-/obj/machinery/bluespace_vendor/directional/north,
 /obj/effect/turf_decal/tile/dark_blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue,
+/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
 "fdl" = (
@@ -21773,8 +21768,8 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/starboard/fore)
 "hkq" = (
-/obj/machinery/atmospherics/components/unary/bluespace_sender,
 /obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/unary/bluespace_sender,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/upper)
 "hkw" = (
@@ -26306,9 +26301,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer2,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/machinery/airlock_controller/incinerator_atmos{
-	pixel_x = -24
-	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/atmos,
 /turf/open/floor/engine,
 /area/station/engineering/atmos/project)
@@ -27279,7 +27271,6 @@
 /turf/open/openspace/airless,
 /area/station/science/ordnance/bomb)
 "iXg" = (
-/obj/machinery/bluespace_vendor/directional/east,
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/purple/arrow_cw{
 	dir = 8
@@ -27287,6 +27278,7 @@
 /obj/effect/turf_decal/tile/purple/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "iXm" = (
@@ -30696,14 +30688,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
-"kba" = (
-/obj/machinery/bluespace_vendor/directional/east,
-/obj/effect/turf_decal/tile/dark_blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/dark_blue,
-/turf/open/floor/iron/white,
-/area/station/hallway/secondary/entry)
 "kbe" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner,
@@ -30873,10 +30857,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/construction/storage_wing)
-"kdO" = (
-/obj/machinery/atmospherics/components/unary/bluespace_sender,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/aft)
 "kdQ" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/effect/landmark/start/quartermaster,
@@ -31944,6 +31924,10 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/machinery/airlock_controller/incinerator_atmos{
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/open/floor/plating,
 /area/station/engineering/atmos/project)
 "kuv" = (
@@ -39497,7 +39481,7 @@
 /turf/open/floor/wood,
 /area/station/maintenance/starboard/aft)
 "mWN" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/mix_output{
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/monitored/nitrous_output{
 	dir = 4
 	},
 /turf/open/floor/engine/n2o,
@@ -40795,10 +40779,10 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "ntw" = (
-/obj/machinery/bluespace_vendor/directional/north,
 /obj/machinery/camera/directional/north{
 	c_tag = "Dormitories - Lower Entrance"
 	},
+/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
 "ntx" = (
@@ -41779,6 +41763,7 @@
 /area/station/maintenance/port)
 "nJl" = (
 /obj/machinery/vending/cigarette,
+/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "nJB" = (
@@ -45164,10 +45149,11 @@
 "oTq" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible/layer2,
-/obj/machinery/airlock_sensor/incinerator_atmos{
-	pixel_x = -24
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/airlock_sensor/incinerator_atmos{
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/project)
 "oTr" = (
@@ -49003,6 +48989,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_blue,
+/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron/white,
 /area/station/hallway/secondary/entry)
 "qid" = (
@@ -49292,7 +49279,6 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/machinery/bluespace_vendor/directional/east,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
@@ -51153,8 +51139,8 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/bluespace_vendor/directional/north,
 /obj/machinery/light/directional/north,
+/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "qTm" = (
@@ -70412,7 +70398,6 @@
 /turf/open/openspace,
 /area/station/hallway/secondary/construction)
 "xre" = (
-/obj/machinery/bluespace_vendor/directional/west,
 /obj/effect/turf_decal/trimline/dark/arrow_cw{
 	dir = 8
 	},
@@ -71160,6 +71145,7 @@
 	dir = 5
 	},
 /obj/machinery/vending/tool,
+/obj/machinery/bluespace_vendor/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "xEO" = (
@@ -105490,7 +105476,7 @@ dcE
 dcE
 dcE
 dcE
-iFB
+jMr
 rAV
 uEP
 pMk
@@ -106877,7 +106863,7 @@ eap
 qhH
 nZF
 qPM
-kba
+nZF
 nZF
 nZF
 iMr
@@ -118709,7 +118695,7 @@ jcQ
 jcQ
 gdG
 gdG
-kdO
+eEv
 wKb
 kzD
 eUr
