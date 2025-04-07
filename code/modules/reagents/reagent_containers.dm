@@ -326,9 +326,9 @@
 			///Blue - BR, BG, BB, BA
 			0.25 * blue_mod, 0.33 * blue_mod, float_b * blue_scale, 0,
 			//Alpha - AR, AG, AB, AA
-			 0, 0, 0, float_a,
+			0, 0, 0, float_a,
 			//Constant - CR, CG, CB, CA
-			 red_base, green_base, blue_base, 0)
+			red_base, green_base, blue_base, 0)
 
 		filling.color = reagent_color_and_contrast_matrix
 	else
