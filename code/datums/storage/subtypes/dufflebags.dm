@@ -79,4 +79,7 @@
 	set_holdable(exception_hold_list = exception_type_list)
 
 	//...So we can run this without it generating a line for every subtype.
-	can_hold_description = generate_hold_desc(exception_type_list)
+	var/list/desc = list()
+	for(var/obj/item/valid_item as anything in exception_type_list)
+		desc += "\a [initial(valid_item.name)]"
+	can_hold_description = "\n\t[span_notice("[desc.Join("\n\t")]")]"

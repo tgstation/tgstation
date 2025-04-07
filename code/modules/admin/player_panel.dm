@@ -4,10 +4,14 @@
 	log_admin("[key_name(usr)] checked the player panel.")
 	var/dat = "<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge' charset='UTF-8'/><title>Player Panel</title></head>"
 
+	var/ui_scale = owner.prefs.read_preference(/datum/preference/toggle/ui_scale)
+
 	//javascript, the part that does most of the work~
 	dat += {"
 
 		<head>
+			[!ui_scale && owner.window_scaling ? "<style>body {zoom: [100 / owner.window_scaling]%;}</style>" : ""]
+
 			<script type='text/javascript'>
 
 				var locked_tabs = new Array();
@@ -328,4 +332,8 @@
 	</body></html>
 	"}
 
-	usr << browse(dat, "window=players;size=600x480")
+	var/window_size = "size=600x480"
+	if(owner.window_scaling && ui_scale)
+		window_size = "size=[600 * owner.window_scaling]x[400 * owner.window_scaling]"
+
+	usr << browse(dat, "window=players;[window_size]")

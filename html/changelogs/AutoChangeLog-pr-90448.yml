@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes the AI detector breaking if there is a machinery-camera operating user nearby (like xenobio console or camera console for instance)"

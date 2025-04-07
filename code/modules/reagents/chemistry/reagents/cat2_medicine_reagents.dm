@@ -574,7 +574,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
-	user.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
+	send_alert(user)
 	user.add_traits(subject_traits, type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
@@ -611,7 +611,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	affected_mob.clear_alert("penthrite")
+	remove_alert(affected_mob)
 	affected_mob.remove_traits(subject_traits, type)
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
@@ -624,6 +624,11 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
+/datum/reagent/medicine/c2/penthrite/proc/send_alert(mob/living/affected_mob)
+	affected_mob.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
+
+/datum/reagent/medicine/c2/penthrite/proc/remove_alert(mob/living/affected_mob)
+	affected_mob.clear_alert("penthrite")
 
 /******NICHE******/
 //todo

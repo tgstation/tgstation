@@ -1,7 +1,9 @@
 SUBSYSTEM_DEF(market)
 	name = "Market"
 	flags = SS_BACKGROUND
-	init_order = INIT_ORDER_DEFAULT
+	dependencies = list(
+		/datum/controller/subsystem/atoms
+	)
 
 	/// Descriptions for each shipping methods.
 	var/shipping_method_descriptions = list(

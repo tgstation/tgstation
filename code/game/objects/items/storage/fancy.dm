@@ -496,6 +496,7 @@
 	icon_state = "nuggetbox"
 	base_icon_state = "nuggetbox"
 	contents_tag = "nugget"
+	w_class = WEIGHT_CLASS_SMALL
 	spawn_type = /obj/item/food/nugget
 	spawn_count = 6
 	storage_type = /datum/storage/fancy_holder

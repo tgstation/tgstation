@@ -216,8 +216,8 @@
 
 	set_holdable(list(
 		/obj/item/reagent_containers/cup/glass/bottle/vodka,
-		/obj/item/reagent_containers/cup/glass/bottle/molotov,,
-		/obj/item/reagent_containers/cup/glass/drinkingglass,,
+		/obj/item/reagent_containers/cup/glass/bottle/molotov,
+		/obj/item/reagent_containers/cup/glass/drinkingglass,
 		/obj/item/ammo_box/strilka310
 	))
 
@@ -234,7 +234,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/ammo_box/strilka310/lionhunter,

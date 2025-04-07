@@ -21,7 +21,6 @@
 	. = ..()
 
 	register_context()
-	update_appearance()
 
 /obj/item/storage/lockbox/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	var/obj/item/card/card = tool.GetID()
@@ -42,13 +41,8 @@
 	return FALSE
 
 /obj/item/storage/lockbox/proc/toggle_locked(mob/living/user)
-	if(atom_storage.locked)
-		atom_storage.locked = STORAGE_NOT_LOCKED
-	else
-		atom_storage.locked = STORAGE_FULLY_LOCKED
-		atom_storage.close_all()
+	atom_storage.set_locked(atom_storage.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
 	balloon_alert(user, atom_storage.locked ? "locked" : "unlocked")
-	update_appearance()
 
 /obj/item/storage/lockbox/update_icon_state()
 	. = ..()
@@ -64,11 +58,10 @@
 /obj/item/storage/lockbox/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!broken)
 		broken = TRUE
-		atom_storage.locked = STORAGE_NOT_LOCKED
+		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 		balloon_alert(user, "lock destroyed")
 		if (emag_card && user)
 			user.visible_message(span_warning("[user] swipes [emag_card] over [src], breaking it!"))
-		update_appearance()
 		return TRUE
 	return FALSE
 
