@@ -33905,6 +33905,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/engine_access,
+/obj/effect/mapping_helpers/airalarm/tlv_no_checks,
+/obj/effect/mapping_helpers/airalarm/link{
+	chamber_id = "engine"
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "cqi" = (
@@ -46263,6 +46267,10 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"jXZ" = (
+/obj/machinery/air_sensor/engine_chamber,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter)
 "jYf" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 8
@@ -93581,7 +93589,7 @@ cqg
 cqE
 cqZ
 crt
-hTU
+jXZ
 cAm
 hTU
 cMN
