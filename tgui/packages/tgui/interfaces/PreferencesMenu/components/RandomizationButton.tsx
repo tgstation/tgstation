@@ -50,11 +50,10 @@ export function RandomizationButton(props: Props) {
       color={color}
       {...dropdownProps}
       icon="dice-d20"
+      iconOnly
       options={options}
-      noChevron
       onSelected={setValue}
       menuWidth={20}
-      width={1.85}
       selected="None"
     />
   );
