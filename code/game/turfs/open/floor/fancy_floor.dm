@@ -69,7 +69,7 @@
 
 //Used in Snowcabin.dm
 /turf/open/floor/wood/freezing
-	temperature = 180
+	temperature = ICEBOX_MIN_TEMPERATURE
 
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS

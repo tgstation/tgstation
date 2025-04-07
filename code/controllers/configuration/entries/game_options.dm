@@ -457,6 +457,11 @@
 
 /datum/config_entry/str_list/tts_voice_blacklist
 
+/// Maximum timeout for http calls
+/datum/config_entry/number/tts_http_timeout_seconds
+	default = 30
+	min_val = 0
+
 /datum/config_entry/flag/give_tutorials_without_db
 
 /datum/config_entry/string/new_player_alert_role_id

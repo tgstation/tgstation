@@ -37302,6 +37302,7 @@
 	},
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic,
+/obj/structure/sign/tram_plate/directional/south,
 /turf/open/openspace,
 /area/station/hallway/primary/tram/center)
 "may" = (
@@ -39728,12 +39729,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
-"mXi" = (
-/obj/structure/transport/linear/tram,
-/obj/structure/tram,
-/obj/structure/plaque/static_plaque/tram,
-/turf/open/openspace,
-/area/station/hallway/primary/tram/center)
 "mXo" = (
 /obj/structure/kitchenspike,
 /obj/effect/turf_decal/weather/snow,
@@ -170305,7 +170300,7 @@ oKm
 uzl
 xBS
 mar
-mXi
+oKm
 dhI
 lej
 fxs

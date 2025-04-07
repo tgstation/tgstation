@@ -242,6 +242,7 @@
 #define NUTRITION_LEVEL_WELL_FED 450
 #define NUTRITION_LEVEL_FED 350
 #define NUTRITION_LEVEL_HUNGRY 250
+#define NUTRITION_LEVEL_VERY_HUNGRY 200
 #define NUTRITION_LEVEL_STARVING 150
 
 #define NUTRITION_LEVEL_START_MIN 250
@@ -619,11 +620,6 @@
 #define GRADIENT_APPLIES_TO_HAIR (1<<0)
 #define GRADIENT_APPLIES_TO_FACIAL_HAIR (1<<1)
 
-// Hair masks
-#define HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM "hide_above_45deg_medium"
-#define HAIR_MASK_HIDE_ABOVE_45_DEG_LOW "hide_above_45deg_low"
-#define HAIR_MASK_HIDE_WINTERHOOD "hide_winterhood"
-
 // Height defines
 // - They are numbers so you can compare height values (x height < y height)
 // - They do not start at 0 for futureproofing
@@ -659,59 +655,61 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 35
+#define TOTAL_LAYERS 36
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 35
+#define MUTATIONS_LAYER 36
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 34
+#define BODY_BEHIND_LAYER 35
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 33
+#define BODYPARTS_LOW_LAYER 34
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 32
+#define BODYPARTS_LAYER 33
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 31
+#define BODY_ADJ_LAYER 32
 /// Underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_LAYER 30
+#define BODY_LAYER 31
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 29
+#define FRONT_MUTATIONS_LAYER 30
 /// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 28
+#define DAMAGE_LAYER 29
 /// Jumpsuit clothing layer
-#define UNIFORM_LAYER 27
+#define UNIFORM_LAYER 28
 /// ID card layer
-#define ID_LAYER 26
+#define ID_LAYER 27
 /// ID card layer (might be deprecated)
-#define ID_CARD_LAYER 25
+#define ID_CARD_LAYER 26
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
-#define BODYPARTS_HIGH_LAYER 24
+#define BODYPARTS_HIGH_LAYER 25
 /// Gloves layer
-#define GLOVES_LAYER 23
+#define GLOVES_LAYER 24
 /// Shoes layer
-#define SHOES_LAYER 22
+#define SHOES_LAYER 23
 /// Layer for masks that are worn below ears and eyes (like Balaclavas) (layers below hair, use flagsinv=HIDEHAIR as needed)
-#define LOW_FACEMASK_LAYER 21
+#define LOW_FACEMASK_LAYER 22
 /// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 20
+#define EARS_LAYER 21
 /// Layer for neck apperal that should appear below the suit slot (like neckties)
-#define LOW_NECK_LAYER 19
+#define LOW_NECK_LAYER 20
 /// Suit layer (armor, coats, etc.)
-#define SUIT_LAYER 18
+#define SUIT_LAYER 19
 /// Glasses layer
-#define GLASSES_LAYER 17
+#define GLASSES_LAYER 18
 /// Belt layer
-#define BELT_LAYER 16 //Possible make this an overlay of something required to wear a belt?
+#define BELT_LAYER 17 //Possible make this an overlay of something required to wear a belt?
 /// Suit storage layer (tucking a gun or baton underneath your armor)
-#define SUIT_STORE_LAYER 15
+#define SUIT_STORE_LAYER 16
 /// Neck layer (for wearing capes and bedsheets)
-#define NECK_LAYER 14
+#define NECK_LAYER 15
 /// Back layer (for backpacks and equipment on your back)
-#define BACK_LAYER 13
+#define BACK_LAYER 14
 /// Hair layer (mess with the fro and you got to go!)
-#define HAIR_LAYER 12 //TODO: make part of head layer?
+#define HAIR_LAYER 13 //TODO: make part of head layer?
 /// Facemask layer (gas masks, breath masks, etc.)
-#define FACEMASK_LAYER 11
+#define FACEMASK_LAYER 12
 /// Head layer (hats, helmets, etc.)
-#define HEAD_LAYER 10
+#define HEAD_LAYER 11
+/// Hair that layers out above clothing, including hats (high ponytails and such)
+#define OUTER_HAIR_LAYER 10
 /// Handcuff layer (when your hands are cuffed)
 #define HANDCUFF_LAYER 9
 /// Legcuff layer (when your feet are cuffed)

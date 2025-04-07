@@ -222,7 +222,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	if(length(selected_hat))
 		var/mutable_appearance/our_selected_hat = selected_hat["appearance"]
 		var/mutable_appearance/hat_preview = mutable_appearance(our_selected_hat.icon, our_selected_hat.icon_state, appearance_flags = RESET_COLOR|KEEP_APART)
-		hat_preview.pixel_y = -9 + selected_hat["worn_offset"]
+		hat_preview.pixel_z = -9 + selected_hat["worn_offset"]
 		var/list/spec_hat = special_hat_placement[selected_hat["type"]]?["south"]
 		if(spec_hat)
 			hat_preview.pixel_w += spec_hat[1]

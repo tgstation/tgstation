@@ -6,9 +6,8 @@
 	illustration = "swab"
 
 /obj/item/storage/box/swab/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/swab
+		new /obj/item/swab(src)
 
 /obj/item/storage/box/petridish
 	name = "box of petri dishes"
@@ -16,9 +15,8 @@
 	illustration = "petridish"
 
 /obj/item/storage/box/petridish/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/petri_dish
+		new /obj/item/petri_dish(src)
 
 /obj/item/storage/box/plumbing
 	name = "box of plumbing supplies"
@@ -31,25 +29,29 @@
 	illustration = "disk_kit"
 
 /obj/item/storage/box/disks/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/disk/data
+		new /obj/item/disk/data(src)
 
 /obj/item/storage/box/monkeycubes
 	name = "monkey cube box"
 	desc = "Drymate brand monkey cubes. Just add water!"
 	icon_state = "monkeycubebox"
 	illustration = null
-	custom_price = PAYCHECK_CREW * 2
-	storage_type = /datum/storage/box/monkey_cubes
-
 	/// Which type of cube are we spawning in this box?
 	var/cube_type = /obj/item/food/monkeycube
+	custom_price = PAYCHECK_CREW * 2
+
+/obj/item/storage/box/monkeycubes/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 7
+	atom_storage.set_holdable(
+		can_hold_list = /obj/item/food/monkeycube,
+		cant_hold_list = /obj/item/food/monkeycube/gorilla,
+	)
 
 /obj/item/storage/box/monkeycubes/PopulateContents()
-	. = list()
 	for(var/i in 1 to 5)
-		. += cube_type
+		new cube_type(src)
 
 /obj/item/storage/box/monkeycubes/syndicate
 	desc = "Waffle Corp. brand monkey cubes. Just add water and a dash of subterfuge!"
@@ -60,30 +62,29 @@
 	desc = "Waffle Corp. brand gorilla cubes. Do not taunt."
 	icon_state = "monkeycubebox"
 	illustration = null
-	storage_type = /datum/storage/box/gorilla_cubes
+
+/obj/item/storage/box/gorillacubes/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 3
+	atom_storage.set_holdable(/obj/item/food/monkeycube/gorilla)
 
 /obj/item/storage/box/gorillacubes/PopulateContents()
-	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/food/monkeycube/gorilla
-
-/obj/item/storage/box/stockparts
-	storage_type = /datum/storage/box/stockparts
+		new /obj/item/food/monkeycube/gorilla(src)
 
 /obj/item/storage/box/stockparts/basic //for ruins where it's a bad idea to give access to an autolathe/protolathe, but still want to make stock parts accessible
 	name = "box of stock parts"
 	desc = "Contains a variety of basic stock parts."
 
 /obj/item/storage/box/stockparts/basic/PopulateContents()
-	var/static/items_inside = flatten_quantified_list(list(
+	var/static/items_inside = list(
 		/obj/item/stock_parts/capacitor = 3,
 		/obj/item/stock_parts/servo = 3,
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/micro_laser = 3,
 		/obj/item/stock_parts/scanning_module = 3,
-	))
-
-	return items_inside
+	)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/stockparts/deluxe
 	name = "box of deluxe stock parts"
@@ -91,15 +92,14 @@
 	icon_state = "syndiebox"
 
 /obj/item/storage/box/stockparts/deluxe/PopulateContents()
-	var/static/items_inside = flatten_quantified_list(list(
+	var/static/items_inside = list(
 		/obj/item/stock_parts/capacitor/quadratic = 3,
 		/obj/item/stock_parts/scanning_module/triphasic = 3,
 		/obj/item/stock_parts/servo/femto = 3,
 		/obj/item/stock_parts/micro_laser/quadultra = 3,
 		/obj/item/stock_parts/matter_bin/bluespace = 3,
-	))
-
-	return items_inside
+		)
+	generate_items_inside(items_inside,src)
 
 /obj/item/storage/box/rndboards
 	name = "\proper the liberator's legacy"
@@ -107,43 +107,45 @@
 	illustration = "scicircuit"
 
 /obj/item/storage/box/rndboards/PopulateContents()
-	return list(
-		/obj/item/circuitboard/machine/protolathe/offstation,
-		/obj/item/circuitboard/machine/destructive_analyzer,
-		/obj/item/circuitboard/machine/circuit_imprinter/offstation,
-		/obj/item/circuitboard/computer/rdconsole,
-	)
+	new /obj/item/circuitboard/machine/protolathe/offstation(src)
+	new /obj/item/circuitboard/machine/destructive_analyzer(src)
+	new /obj/item/circuitboard/machine/circuit_imprinter/offstation(src)
+	new /obj/item/circuitboard/computer/rdconsole(src)
 
 /obj/item/storage/box/stabilized //every single stabilized extract from xenobiology
 	name = "box of stabilized extracts"
 	icon_state = "syndiebox"
 
-/obj/item/storage/box/stabilized/PopulateContents(datum/storage_config/config)
-	config.compute_max_values()
+/obj/item/storage/box/stabilized/Initialize(mapload)
+	. = ..()
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_slots = 99
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	atom_storage.max_total_storage = 99
 
+/obj/item/storage/box/stabilized/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/slimecross/stabilized/adamantine,
-		/obj/item/slimecross/stabilized/black,
-		/obj/item/slimecross/stabilized/blue,
-		/obj/item/slimecross/stabilized/bluespace,
-		/obj/item/slimecross/stabilized/cerulean,
-		/obj/item/slimecross/stabilized/darkblue,
-		/obj/item/slimecross/stabilized/darkpurple,
-		/obj/item/slimecross/stabilized/gold,
-		/obj/item/slimecross/stabilized/green,
-		/obj/item/slimecross/stabilized/grey,
-		/obj/item/slimecross/stabilized/lightpink,
-		/obj/item/slimecross/stabilized/metal,
-		/obj/item/slimecross/stabilized/oil,
-		/obj/item/slimecross/stabilized/orange,
-		/obj/item/slimecross/stabilized/pink,
-		/obj/item/slimecross/stabilized/purple,
-		/obj/item/slimecross/stabilized/pyrite,
-		/obj/item/slimecross/stabilized/rainbow,
-		/obj/item/slimecross/stabilized/red,
-		/obj/item/slimecross/stabilized/sepia,
-		/obj/item/slimecross/stabilized/silver,
-		/obj/item/slimecross/stabilized/yellow,
+		/obj/item/slimecross/stabilized/adamantine=1,
+		/obj/item/slimecross/stabilized/black=1,
+		/obj/item/slimecross/stabilized/blue=1,
+		/obj/item/slimecross/stabilized/bluespace=1,
+		/obj/item/slimecross/stabilized/cerulean=1,
+		/obj/item/slimecross/stabilized/darkblue=1,
+		/obj/item/slimecross/stabilized/darkpurple=1,
+		/obj/item/slimecross/stabilized/gold=1,
+		/obj/item/slimecross/stabilized/green=1,
+		/obj/item/slimecross/stabilized/grey=1,
+		/obj/item/slimecross/stabilized/lightpink=1,
+		/obj/item/slimecross/stabilized/metal=1,
+		/obj/item/slimecross/stabilized/oil=1,
+		/obj/item/slimecross/stabilized/orange=1,
+		/obj/item/slimecross/stabilized/pink=1,
+		/obj/item/slimecross/stabilized/purple=1,
+		/obj/item/slimecross/stabilized/pyrite=1,
+		/obj/item/slimecross/stabilized/rainbow=1,
+		/obj/item/slimecross/stabilized/red=1,
+		/obj/item/slimecross/stabilized/sepia=1,
+		/obj/item/slimecross/stabilized/silver=1,
+		/obj/item/slimecross/stabilized/yellow=1,
 		)
-
-	return items_inside
+	generate_items_inside(items_inside,src)

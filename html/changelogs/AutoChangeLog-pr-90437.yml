@@ -1,0 +1,4 @@
+author: "Wallem"
+delete-after: True
+changes:
+  - rscadd: "Some holidays have been given their own pool of mail goodies."

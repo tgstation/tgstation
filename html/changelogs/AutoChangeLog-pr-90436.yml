@@ -1,0 +1,4 @@
+author: "Wallem, LemonInTheDark"
+delete-after: True
+changes:
+  - code_imp: "Added a couple helpers & procs for coders"

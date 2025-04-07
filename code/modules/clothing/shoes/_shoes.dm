@@ -9,10 +9,9 @@
 	equip_sound = 'sound/items/equip/sneakers_equip1.ogg'
 	sound_vary = TRUE
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-
+	clothing_flags = CLOTHING_MOD_OVERSLOTTING
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
-
 	armor_type = /datum/armor/clothing_shoes
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
@@ -83,7 +82,7 @@
 /obj/item/clothing/shoes/visual_equipped(mob/user, slot)
 	..()
 	if(offset && (slot_flags & slot))
-		user.pixel_y += offset
+		user.pixel_z += offset
 		worn_y_dimension -= (offset * 2)
 		user.update_worn_shoes()
 		equipped_before_drop = TRUE
@@ -96,7 +95,7 @@
 
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
 	equipped_before_drop = FALSE
-	user.pixel_y -= offset
+	user.pixel_z -= offset
 	worn_y_dimension = ICON_SIZE_Y
 
 /obj/item/clothing/shoes/dropped(mob/user)

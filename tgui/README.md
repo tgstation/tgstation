@@ -26,13 +26,14 @@ This project uses React. Take your time to read the guide:
 
 - [React guide](https://react.dev/learn)
 
-If you were already familiar with an older, Ractive-based tgui, and want to
+If you were already familiar with an older, Ractive-based tgui and want to
 translate concepts between old and new tgui, read this
 [interface conversion guide](docs/converting-old-tgui-interfaces.md).
 
 ### Other Documentation
 
 - [Component Reference](docs/component-reference.md) - UI building blocks
+- [Tgui Core](https://github.com/tgstation/tgui-core) - The component library for tgui.
 - [Using TGUI and Byond API for custom HTML popups](docs/tgui-for-custom-html-popups.md)
 - [Chat Embedded Components](docs/chat-embedded-components.md)
 - [Writing Tests](docs/writing-tests.md)
@@ -48,8 +49,8 @@ will need these:
 - [Node v22.11+](https://nodejs.org/en/download/)
   - **LTS** release is recommended instead of latest
   - **DO NOT install Chocolatey if Node installer asks you to!**
-- [Yarn v4.5.1+](https://yarnpkg.com/getting-started/install)
-  - You can run `npm install -g yarn` to install it.
+- [Yarn v4.8.1+](https://yarnpkg.com/getting-started/install)
+  - Yarn is normally installed with corepack.
 
 ## Usage
 
@@ -123,6 +124,11 @@ address them anyway (unless it's a false positive or something unfixable).
 
 ## Troubleshooting
 
+**Development server isn't attaching to the game**
+
+Make sure that you have a tgui window open before you run the dev server. Then,
+once it's running, you may need to press F5 to refresh the page.
+
 **Development server is crashing**
 
 Make sure path to your working directory does not contain spaces, special
@@ -173,37 +179,20 @@ visible.
 
 ## Browser Developer Tools
 
-To debug TGUI interfaces with browser-style developer tools, there exists a
-utility that Microsoft bundles with Windows called IEChooser/F12 to debug any
-Internet Explorer/Trident-using interface, which BYOND uses.
-
-This provides invaluable tools such as a local console, a DOM viewer, an
-interactive debugger, and more.
-
-You can access the `IEChooser.exe` by pressing <kbd>Win + R</kbd>, then typing
-`f12`, then pressing enter. To manually go there: 64-bit version that we use is
-located at `%windir%\SysWOW64\F12\IEChooser.exe`. There's also a 32-bit one in
-`system32\`.
-
-Simply launch the application after you've opened a TGUI window, and choose the
-.html name. This is likely to be something like `tgui-window-1`. There's a
-refresh button in the top right.
-
-Unfortunately, it seems this program doesn't have a new target chooser if your
-window is fully closed so you'll need to restart it if it disconnects from the
-window.
+WebView2 is chromium based, so you can access the dev tools much easier than its
+predecessor. Simply go to debug tab in your stat panel and click "Allow Browser
+Inspection". You can then f12 to open the standard chrome dev tools.
 
 ## Project Structure
 
 - `/packages` - Each folder here represents a self-contained Node module.
 - `/packages/common` - Helper functions that are used throughout all packages.
-- `/packages/tgui/index.js` - Application entry point.
-- `/packages/tgui/components` - Basic UI building blocks.
+- `/packages/tgui/index.ts` - Application entry point.
 - `/packages/tgui/interfaces` - Actual in-game interfaces.
 - `/packages/tgui/layouts` - Root level UI components, that affect the final
   look and feel of the browser window. These hold various window elements, like
   the titlebar and resize handlers, and control the UI theme.
-- `/packages/tgui/routes.js` - This is where tgui decides which interface to
+- `/packages/tgui/routes.ts` - This is where tgui decides which interface to
   pull and render.
 - `/packages/tgui/styles/main.scss` - CSS entry point.
 - `/packages/tgui/styles/functions.scss` - Useful SASS functions. Stuff like
@@ -211,14 +200,11 @@ window.
 - `/packages/tgui/styles/atomic` - Atomic CSS classes. These are very simple,
   tiny, reusable CSS classes which you can use and combine to change appearance
   of your elements. Keep them small.
-- `/packages/tgui/styles/components` - CSS classes which are used in UI
-  components. These stylesheets closely follow the
-  [BEM](https://en.bem.info/methodology/) methodology.
 - `/packages/tgui/styles/interfaces` - Custom stylesheets for your interfaces.
   Add stylesheets here if you really need a fine control over your UI styles.
 - `/packages/tgui/styles/layouts` - Layout-related styles.
 - `/packages/tgui/styles/themes` - Contains themes that you can use in tgui.
-  Each theme must be registered in `/packages/tgui/index.js` file.
+  Each theme must be registered in `/packages/tgui/index.ts` file.
 
 ## License
 
