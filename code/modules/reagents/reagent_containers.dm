@@ -305,14 +305,14 @@
 		var/blue_mod = max(float_b - float_v, 0) * 1.5
 
 		//red multiplier
-		var/red_scale = 1.70
+		var/red_scale = 1.6
 		//green_multiplier
 		var/green_scale = 1.5
 		//blue scale
 		var/blue_scale = 1.1 * (1 + 0.60 * blue_mod)
 
 		//additive red - modifies red across the board by val * 255
-		var/red_base = -0.09 - (0.045 * float_v)
+		var/red_base = -0.07 - (0.035 * float_v)
 		//additive green - modifies green across the board by val * 255
 		var/green_base = -0.06 - (0.03 * float_v)
 		//additive blue - modifies blue across the board by val * 255
