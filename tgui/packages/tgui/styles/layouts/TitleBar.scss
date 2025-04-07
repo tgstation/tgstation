@@ -6,13 +6,14 @@
 @use 'sass:color';
 @use '../base';
 @use '../colors';
+@use '../functions.scss' as *;
 
 .TitleBar {
   user-select: none;
   position: fixed;
   display: flex;
   align-items: center;
-  width: 100vw;
+  width: vp(100vw);
   height: base.rem(32px);
   background-color: var(--titlebar-background);
   border-bottom: var(--border-thickness-tiny) solid var(--titlebar-shadow-core);

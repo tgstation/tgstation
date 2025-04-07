@@ -68,7 +68,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEEARS
-	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
+	hair_mask = /datum/hair_mask/winterhood
 	armor_type = /datum/armor/hooded_winterhood
 
 // An coat intended for use for general crew EVA, with values close to those of the space suits found in EVA normally
