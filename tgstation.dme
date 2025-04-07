@@ -2175,6 +2175,7 @@
 #include "code\game\machinery\camera\camera_construction.dm"
 #include "code\game\machinery\camera\motion.dm"
 #include "code\game\machinery\camera\presets.dm"
+#include "code\game\machinery\camera\silicon_camera.dm"
 #include "code\game\machinery\camera\trackable.dm"
 #include "code\game\machinery\computer\_computer.dm"
 #include "code\game\machinery\computer\accounting.dm"

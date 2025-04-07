@@ -99,12 +99,15 @@
 		return
 
 	if(action == "switch_camera")
+		if(active_camera)
+			active_camera.on_stop_watching(src)
 		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
 		active_camera = selected_camera
 
 		if(isnull(active_camera))
 			return TRUE
 
+		active_camera.on_start_watching(src)
 		update_active_camera_screen()
 
 		return TRUE
@@ -152,6 +155,8 @@
 	cam_screen.hide_from(user)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
+		if(active_camera)
+			active_camera.on_stop_watching(src)
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
