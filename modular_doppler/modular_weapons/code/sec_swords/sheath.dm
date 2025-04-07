@@ -46,7 +46,7 @@
 	if(length(contents))
 		. += span_notice("<b>Left Click</b> to draw a stored blade, <b>Right Click</b> to draw a stored baton while wearing.")
 
-/obj/item/storage/belt/secsword/attack_hand(mob/user, list/modifiers)
+/obj/item/storage/belt/secsword/attack_hand_secondary(mob/user, list/modifiers)
 	if(!(user.get_slot_by_item(src) & ITEM_SLOT_BELT) && !(user.get_slot_by_item(src) & ITEM_SLOT_BACK) && !(user.get_slot_by_item(src) & ITEM_SLOT_SUITSTORE))
 		return ..()
 	for(var/obj/item/melee/secblade/blade_runner in contents)
@@ -54,10 +54,10 @@
 		user.put_in_hands(blade_runner)
 		playsound(user, 'sound/items/sheath.ogg', 50, TRUE)
 		update_appearance()
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 
-/obj/item/storage/belt/secsword/attack_hand_secondary(mob/user, list/modifiers)
+/obj/item/storage/belt/secsword/attack_hand(mob/user, list/modifiers)
 	if(!(user.get_slot_by_item(src) & ITEM_SLOT_BELT) && !(user.get_slot_by_item(src) & ITEM_SLOT_BACK) && !(user.get_slot_by_item(src) & ITEM_SLOT_SUITSTORE))
 		return ..()
 	for(var/obj/item/melee/baton/doppler_security/simply_shocking in contents)
@@ -65,7 +65,7 @@
 		user.put_in_hands(simply_shocking)
 		playsound(user, 'sound/items/sheath.ogg', 50, TRUE)
 		update_appearance()
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
 	return ..()
 
 /obj/item/storage/belt/secsword/update_icon_state()
