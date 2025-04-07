@@ -135,14 +135,14 @@
 	if(istype(tool, /obj/item/disk/holodisk))
 		return holodisk_act(user, tool)
 
-/obj/item/camera/proc/camera_film_act(mob/living/user, obj/item/tool)
+/obj/item/camera/proc/camera_film_act(mob/living/user, obj/item/camera_film/new_film)
 	if(pictures_left)
 		balloon_alert(user, "isn't empty!")
 		return ITEM_INTERACT_BLOCKING
-	if(!user.temporarilyRemoveItemFromInventory(tool))
+	if(!user.temporarilyRemoveItemFromInventory(new_film))
 		return ITEM_INTERACT_BLOCKING
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
-	qdel(tool)
+	qdel(new_film)
 	pictures_left = pictures_max
 	return ITEM_INTERACT_SUCCESS
 
