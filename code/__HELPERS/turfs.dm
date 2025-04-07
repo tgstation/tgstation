@@ -279,6 +279,67 @@ Turf and target are separate in case you want to teleport some distance from a t
 	LAZYSET(modifiers, ICON_Y, "[(click_turf_py - click_turf.pixel_y) + ((click_turf_y - click_turf.y) * ICON_SIZE_Y)]")
 	return click_turf
 
+/**
+ * Takes mousepos_x and mousepos_y and the client that provided them and returns the turf clicked on
+ * reminder, mouseposx and mouseposy start from the top left corner because we can't have consistency or nice things
+ * they also ignore sizes, so we need to compensate for that
+ * sizex and sizey are the size of the map for this purpose
+ * also keep in mind that the screen size is the worlds pixel size, while mousepos and size are the completely unrelated control size
+ */
+/proc/get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, client/viewing_client)
+	//hack because we can't have shit with this engine!!!!!!
+	// https://discord.com/channels/725444629172060262/1063155296052191373/1357460149836451960
+	mousepos_x = mousepos_x / 2
+	mousepos_y = mousepos_y / 2
+	sizex = sizex / 2
+	sizey = sizey / 2
+
+	var/turf/baseloc = get_turf(viewing_client.eye)
+	var/list/actual_view = getviewsize(viewing_client ? viewing_client.view : world.view)
+
+	var/screen_width = actual_view[1] * ICON_SIZE_X
+	var/screen_height = actual_view[2] * ICON_SIZE_Y
+
+	//handle letterboxing to get the right sizes and mouseposes
+	var/size_ratio = sizex/sizey
+	var/screen_ratio = screen_width/screen_height
+	if(size_ratio < screen_ratio) //sizex too high, y has black banners
+		var/effective_height = sizex / screen_ratio
+		var/banner_height = (sizey - effective_height) / 2
+		mousepos_y -= banner_height
+		sizey -= (banner_height*2)
+	else if (size_ratio > screen_ratio) //sizey too high, x has black banners
+		var/effective_width = sizey * screen_ratio
+		var/banner_width = (sizex - effective_width) / 2
+		mousepos_x -= banner_width
+		sizex -= (banner_width*2)
+
+	// if its a black banner, just assume we clicked the turf
+	mousepos_x = max(mousepos_x, 0)
+	mousepos_y = max(mousepos_y, 0)
+
+	//fix ratios being off due to screen width/height
+	var/x_ratio = sizex/screen_width
+	var/y_ratio = sizey/screen_height
+	mousepos_x /= x_ratio
+	mousepos_y /= y_ratio
+
+	//relative to bottom left corner of turf in the middle of the screen
+	var/relative_x = mousepos_x - (screen_width / 2) + (ICON_SIZE_X/2)
+	var/relative_y = -(mousepos_y - (screen_height / 2))+ (ICON_SIZE_Y/2) - 1
+	var/turf_x_diff = FLOOR(relative_x / ICON_SIZE_X, 1)
+	var/turf_y_diff = FLOOR(relative_y / ICON_SIZE_Y, 1)
+
+	var/click_turf_x = baseloc.x + turf_x_diff
+	var/click_turf_y = baseloc.y + turf_y_diff
+	var/click_turf_z = baseloc.z
+
+	var/turf/click_turf = locate(clamp(click_turf_x, 1, world.maxx), clamp(click_turf_y, 1, world.maxy), click_turf_z)
+
+	var/x_residual = relative_x % ICON_SIZE_X
+	var/y_residual = relative_y % ICON_SIZE_Y
+	return list(click_turf, x_residual, y_residual)
+
 ///Almost identical to the params_to_turf(), but unused (remove?)
 /proc/screen_loc_to_turf(text, turf/origin, client/C)
 	if(!text)
