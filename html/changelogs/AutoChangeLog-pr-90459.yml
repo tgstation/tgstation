@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "Wawastation: Security disposals has been rerouted to avoid trash being returned to sender."
