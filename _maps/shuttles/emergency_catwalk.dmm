@@ -76,7 +76,7 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "ft" = (
-/mob/living/simple_animal/bot/vibebot,
+/obj/machinery/vending/boozeomat,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "fu" = (
@@ -465,7 +465,6 @@
 /turf/open/floor/iron,
 /area/shuttle/escape)
 "CO" = (
-/obj/machinery/vending/boozeomat/all_access,
 /obj/effect/turf_decal/siding/thinplating_new,
 /turf/open/floor/iron/herringbone,
 /area/shuttle/escape)
