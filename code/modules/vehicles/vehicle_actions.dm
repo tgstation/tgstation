@@ -322,6 +322,7 @@
 		return
 	TIMER_COOLDOWN_START(src, bell_cooldown, 0.5 SECONDS)
 	playsound(vehicle_ridden_target, 'sound/machines/microwave/microwave-end.ogg', 70)
+	SEND_SIGNAL(vehicle_ridden_target, COMSIG_WHEELCHAIR_BELL_RANG)
 
 /datum/action/vehicle/ridden/scooter/skateboard/ollie
 	name = "Ollie"

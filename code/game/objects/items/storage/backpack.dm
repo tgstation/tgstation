@@ -499,19 +499,16 @@
 	SEND_SIGNAL(src, COMSIG_DUFFEL_ZIP_CHANGE, new_zip)
 	if(zipped_up)
 		slowdown = initial(slowdown)
-		atom_storage.locked = STORAGE_SOFT_LOCKED
+		atom_storage.set_locked(STORAGE_SOFT_LOCKED)
 		atom_storage.display_contents = FALSE
-		for(var/obj/item/weapon as anything in get_all_contents_type(/obj/item)) //close ui of this and all items inside dufflebag
-			weapon.atom_storage?.close_all() //not everything has storage initialized
 	else
 		slowdown = zip_slowdown
-		atom_storage.locked = STORAGE_NOT_LOCKED
+		atom_storage.set_locked(STORAGE_NOT_LOCKED)
 		atom_storage.display_contents = TRUE
 
 	if(isliving(loc))
 		var/mob/living/wearer = loc
 		wearer.update_equipment_speed_mods()
-	update_appearance()
 
 /obj/item/storage/backpack/duffelbag/cursed
 	name = "living duffel bag"
