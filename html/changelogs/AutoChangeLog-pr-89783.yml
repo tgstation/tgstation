@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Getting a carp infusion or committing a certain holofish suicide no longer gets rid of your voidwalker overlay."

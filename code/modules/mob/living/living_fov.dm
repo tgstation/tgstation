@@ -2,59 +2,62 @@
 /mob/living/proc/in_fov(atom/observed_atom, ignore_self = FALSE)
 	if(ignore_self && observed_atom == src)
 		return TRUE
+
 	if(is_blind())
 		return FALSE
-	. = FALSE
+
 	var/turf/my_turf = get_turf(src) //Because being inside contents of something will cause our x,y to not be updated
 	// If turf doesn't exist, then we wouldn't get a fov check called by `play_fov_effect` or presumably other new stuff that might check this.
 	//  ^ If that case has changed and you need that check, add it.
 	var/rel_x = observed_atom.x - my_turf.x
 	var/rel_y = observed_atom.y - my_turf.y
-	if(fov_view)
-		if(rel_x >= -1 && rel_x <= 1 && rel_y >= -1 && rel_y <= 1) //Cheap way to check inside that 3x3 box around you
-			return TRUE //Also checks if both are 0 to stop division by zero
-
-		// Get the vector length so we can create a good directional vector
-		var/vector_len = sqrt(abs(rel_x) ** 2 + abs(rel_y) ** 2)
-
-		/// Getting a direction vector
-		var/dir_x
-		var/dir_y
-		switch(dir)
-			if(SOUTH)
-				dir_x = 0
-				dir_y = -vector_len
-			if(NORTH)
-				dir_x = 0
-				dir_y = vector_len
-			if(EAST)
-				dir_x = vector_len
-				dir_y = 0
-			if(WEST)
-				dir_x = -vector_len
-				dir_y = 0
-
-		///Calculate angle
-		var/angle = arccos((dir_x * rel_x + dir_y * rel_y) / (sqrt(dir_x**2 + dir_y**2) * sqrt(rel_x**2 + rel_y**2)))
-
-		/// Calculate vision angle and compare
-		var/vision_angle = (360 - fov_view) / 2
-		if(angle < vision_angle)
-			. = TRUE
-	else
-		. = TRUE
 
 	// Handling nearsightnedness
-	if(. && is_nearsighted_currently())
-		if((rel_x >= NEARSIGHTNESS_FOV_BLINDNESS || rel_x <= -NEARSIGHTNESS_FOV_BLINDNESS) || (rel_y >= NEARSIGHTNESS_FOV_BLINDNESS || rel_y <= -NEARSIGHTNESS_FOV_BLINDNESS))
+	if(is_nearsighted_currently())
+		if(abs(rel_x) >= NEARSIGHTNESS_FOV_BLINDNESS || abs(rel_y) >= NEARSIGHTNESS_FOV_BLINDNESS)
 			return FALSE
+
+	if(!fov_view)
+		return TRUE
+
+	if(rel_x >= -1 && rel_x <= 1 && rel_y >= -1 && rel_y <= 1) //Cheap way to check inside that 3x3 box around you
+		return TRUE //Also checks if both are 0 to stop division by zero
+
+	// Get the vector length so we can create a good directional vector
+	var/vector_len = sqrt(abs(rel_x) ** 2 + abs(rel_y) ** 2)
+
+	/// Getting a direction vector
+	var/dir_x
+	var/dir_y
+	switch(dir)
+		if(SOUTH)
+			dir_x = 0
+			dir_y = -vector_len
+		if(NORTH)
+			dir_x = 0
+			dir_y = vector_len
+		if(EAST)
+			dir_x = vector_len
+			dir_y = 0
+		if(WEST)
+			dir_x = -vector_len
+			dir_y = 0
+
+	///Calculate angle
+	var/angle = arccos((dir_x * rel_x + dir_y * rel_y) / (sqrt(dir_x**2 + dir_y**2) * sqrt(rel_x**2 + rel_y**2)))
+
+	/// Calculate vision angle and compare
+	var/vision_angle = (360 - abs(fov_view)) / 2
+	if(fov_view > 0)
+		return angle < vision_angle
+	return angle > vision_angle
 
 /// Updates the applied FOV value and applies the handler to client if able
 /mob/living/proc/update_fov()
 	var/highest_fov
 	for(var/trait_type in fov_traits)
 		var/fov_type = fov_traits[trait_type]
-		if(fov_type > highest_fov)
+		if(!highest_fov || fov_type > highest_fov) // Forward-facing FOV always takes priority over reversed FOV
 			highest_fov = fov_type
 	fov_view = highest_fov
 	if(HAS_TRAIT(src, TRAIT_EXPANDED_FOV))
@@ -76,16 +79,14 @@
 
 /// Adds a trait which limits a user's FOV
 /mob/living/proc/add_fov_trait(source, type)
-	LAZYINITLIST(fov_traits)
-	fov_traits[source] = type
+	LAZYSET(fov_traits, source, type)
 	update_fov()
 
 /// Removes a trait which limits a user's FOV
 /mob/living/proc/remove_fov_trait(source, type)
 	if(!fov_traits) //Clothing equip/unequip is bad code and invokes this several times
 		return
-	fov_traits -= source
-	UNSETEMPTY(fov_traits)
+	LAZYREMOVE(fov_traits, source)
 	update_fov()
 
 //did you know you can subtype /image and /mutable_appearance? // Stop telling them that they might actually do it

@@ -46,6 +46,8 @@ type CharacterControlsProps = {
   gender: Gender;
   setGender: (gender: Gender) => void;
   showGender: boolean;
+  canDeleteCharacter: boolean;
+  handleDeleteCharacter: () => void;
 };
 
 function CharacterControls(props: CharacterControlsProps) {
@@ -79,6 +81,18 @@ function CharacterControls(props: CharacterControlsProps) {
           />
         </Stack.Item>
       )}
+
+      <Stack.Item>
+        <Button
+          onClick={props.handleDeleteCharacter}
+          fontSize="22px"
+          icon="trash"
+          color="red"
+          tooltip="Delete Character"
+          tooltipPosition="top"
+          disabled={!props.canDeleteCharacter}
+        />
+      </Stack.Item>
     </Stack>
   );
 }
@@ -511,8 +525,8 @@ export function MainPage(props: MainPageProps) {
     data.character_preferences.secondary_features || [];
 
   const mainFeatures = [
-    ...Object.entries(data.character_preferences.clothing),
-    ...Object.entries(data.character_preferences.features),
+    ...Object.entries(data.character_preferences.clothing ?? {}),
+    ...Object.entries(data.character_preferences.features ?? {}),
   ];
 
   const randomBodyEnabled =
@@ -578,6 +592,12 @@ export function MainPage(props: MainPageProps) {
                 showGender={
                   currentSpeciesData ? !!currentSpeciesData.sexes : true
                 }
+                canDeleteCharacter={
+                  Object.values(data.character_profiles).filter(
+                    (name) => !!name,
+                  ).length > 1
+                }
+                handleDeleteCharacter={() => setDeleteCharacterPopupOpen(true)}
               />
             </Stack.Item>
 
@@ -659,21 +679,7 @@ export function MainPage(props: MainPageProps) {
               )}
               preferences={nonContextualPreferences}
               maxHeight="auto"
-            >
-              <Box my={0.5}>
-                <Button
-                  color="red"
-                  disabled={
-                    Object.values(data.character_profiles).filter(
-                      (name) => name,
-                    ).length < 2
-                  } // check if existing chars more than one
-                  onClick={() => setDeleteCharacterPopupOpen(true)}
-                >
-                  Delete Character
-                </Button>
-              </Box>
-            </PreferenceList>
+            />
           </Stack>
         </Stack.Item>
       </Stack>

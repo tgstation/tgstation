@@ -191,7 +191,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/holy, 32)
 
 /obj/structure/sign/departments/holy_alt
 	name = "\improper Chapel sign"
-	sign_change_name = "Department - Chapel"
+	sign_change_name = "Department - Chapel Alt"
 	desc = "A sign labelling a religious area."
 	icon_state = "chapel"
 

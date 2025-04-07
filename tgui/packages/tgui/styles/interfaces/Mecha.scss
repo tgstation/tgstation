@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 @use '../base.scss';
 @use '../colors.scss';
 @use '../functions.scss' as *;
@@ -37,7 +39,7 @@ $color-danger: hsl(0, 74%, 45%) !default;
   padding-left: 0 !important;
   padding-right: 0 !important;
   &:hover {
-    background-color: lighten($color-danger, 15%) !important;
-    border-color: lighten($color-danger, 15%) !important;
+    background-color: color.adjust($color-danger, $lightness: 15%) !important;
+    border-color: color.adjust($color-danger, $lightness: 15%) !important;
   }
 }

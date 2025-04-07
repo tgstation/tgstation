@@ -85,7 +85,7 @@
 		target_zone = ran_zone()
 	casing.fire_casing(target, firer, null, null, null, target_zone, 0,  firer)
 	casing.update_appearance()
-	casing.AddElement(/datum/element/temporary_atom, 30 SECONDS)
+	casing.fade_into_nothing(30 SECONDS)
 	SEND_SIGNAL(parent, COMSIG_BASICMOB_POST_ATTACK_RANGED, target, modifiers)
 	return
 

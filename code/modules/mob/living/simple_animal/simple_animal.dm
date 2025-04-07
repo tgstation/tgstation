@@ -361,9 +361,11 @@
 	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/simple_animal/proc/drop_loot()
-	if(loot.len)
-		for(var/i in loot)
-			new i(loc)
+	if (!length(loot))
+		return
+	for(var/i in loot)
+		new i(drop_location())
+	loot.Cut()
 
 /mob/living/simple_animal/death(gibbed)
 	drop_loot()

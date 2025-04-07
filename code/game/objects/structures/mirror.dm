@@ -250,8 +250,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/new_eye_color = input(user, "Choose your eye color", "Eye Color", user.eye_color_left) as color|null
 	if(isnull(new_eye_color))
 		return TRUE
-	user.eye_color_left = sanitize_hexcolor(new_eye_color)
-	user.eye_color_right = sanitize_hexcolor(new_eye_color)
+	user.set_eye_color(sanitize_hexcolor(new_eye_color))
 	user.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
 	user.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
 	user.update_body()

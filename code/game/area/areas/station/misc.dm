@@ -32,3 +32,4 @@
 	ambience_index = AMBIENCE_MINING
 	area_flags = UNIQUE_AREA
 	outdoors = TRUE
+	allow_shuttle_docking = TRUE
