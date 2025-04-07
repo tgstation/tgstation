@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "You can now customize pill duration in chemical presses"
+  - balance: "ChemMasters and chemical presses can now create 0s duration pills."
