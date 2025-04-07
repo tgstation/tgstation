@@ -34,9 +34,6 @@
 /datum/storage/bag/ore
 	max_specific_storage = WEIGHT_CLASS_HUGE
 	max_total_storage = 50
-	numerical_stacking = TRUE
-	allow_quick_empty = TRUE
-	allow_quick_gather = TRUE
 	silent_for_user = TRUE
 
 /datum/storage/bag/ore/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
@@ -51,7 +48,6 @@
 
 ///Plant bag
 /datum/storage/bag/plants
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_total_storage = 100
 	max_slots = 100
 
@@ -257,7 +253,6 @@
 
 ///Mail bag
 /datum/storage/bag/mail
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_total_storage = 42
 	max_slots = 21
 	numerical_stacking = FALSE
@@ -272,7 +267,6 @@
 
 ///Garment bag
 /datum/storage/bag/garment
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	numerical_stacking = FALSE
 	max_total_storage = 200
 	max_slots = 15
@@ -284,7 +278,6 @@
 
 ///Quiver bag
 /datum/storage/bag/quiver
-	numerical_stacking = TRUE
 	max_specific_storage = WEIGHT_CLASS_TINY
 	max_slots = 40
 	max_total_storage = 100
@@ -325,7 +318,6 @@
 /datum/storage/bag/fishing
 	max_total_storage = 24 // Up to 8 normal fish
 	max_slots = 21
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /datum/storage/bag/fishing/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
