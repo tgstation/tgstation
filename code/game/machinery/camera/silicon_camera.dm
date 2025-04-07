@@ -10,11 +10,14 @@
 /obj/machinery/camera/silicon/Initialize(mapload)
 	. = ..()
 	src.living_host = loc
+	if(!istype(living_host))
+		return INITIALIZE_HINT_QDEL
 
 /obj/machinery/camera/silicon/Destroy()
-	if(living_host.has_alert(ALERT_SILICON_RECORDING))
-		living_host.clear_alert(ALERT_SILICON_RECORDING)
-	living_host = null
+	if(!isnull(living_host))
+		if(living_host.has_alert(ALERT_SILICON_RECORDING))
+			living_host.clear_alert(ALERT_SILICON_RECORDING)
+		living_host = null
 	sources_watching = null
 	return ..()
 
