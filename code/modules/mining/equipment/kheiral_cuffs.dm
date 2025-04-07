@@ -62,6 +62,7 @@
 	AddComponent(/datum/component/gps/kheiral_cuffs, "*[gps_name]'s Kheiral Link")
 	balloon_alert(user, "gps activated")
 	ADD_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
+	RegisterSignal(user, COMSIG_LIVING_GIBBED, PROC_REF(handle_gib))
 	gps_enabled = TRUE
 
 /// Disables the GPS and removes the multiz trait
@@ -115,3 +116,37 @@
 	to_chat(victim, span_danger("At the ripe age of [victim.age], your cells fail their cycle of mitosis, allowing the sands of time to wash over you."))
 	victim.dust(TRUE, TRUE, TRUE)
 	return MANUAL_SUICIDE
+
+#define KHEIRAL_RECOVERABLE "Recoverable"
+#define KHEIRAL_BRAINLESS "Brainless"
+#define KHEIRAL_GIBCHECK(dropflags) ((dropflags & DROP_BRAIN) ? KHEIRAL_RECOVERABLE : KHEIRAL_BRAINLESS)
+/// If we get gibbed, then we announce the user's location over supply comms. This is mainly to deal with megafauna.
+/obj/item/kheiral_cuffs/proc/handle_gib(datum/source, drop_bitflags)
+	SIGNAL_HANDLER
+
+	var/mob/living/user
+	if(isliving(source))
+		user = source
+
+	var/turf/pos = get_turf(user)
+	var/obj/item/card/id/id_card = user.get_idcard(hand_first = FALSE)
+	var/users_name = "Unknown"
+	if(id_card)
+		users_name = id_card.registered_name
+
+	aas_config_announce(/datum/aas_config_entry/kheiral_gibbed, list("USER" = users_name, "LOCATION" = "([pos.x], [pos.y], [pos.z])"), src, list(RADIO_CHANNEL_SUPPLY), KHEIRAL_GIBCHECK(drop_bitflags), ignore_z = TRUE)
+	UnregisterSignal(user, COMSIG_LIVING_GIBBED)
+
+/datum/aas_config_entry/kheiral_gibbed
+	name = "Cargo Alert: Gibbed Kheiral User"
+	announcement_lines_map = list(
+		KHEIRAL_RECOVERABLE = "%USER has been crushed to gibs at %LOCATION. Their brain <b>can</b> be recovered.",
+		KHEIRAL_BRAINLESS = "%USER has been crushed to gibs at %LOCATION. Their brain <b>cannot</b> be recovered.")
+	vars_and_tooltips_map = list(
+		"USER" = "Replaced with the person who died",
+		"LOCATION" = "Replaced with the coords of the person who died",
+	)
+
+#undef KHEIRAL_BRAINLESS
+#undef KHEIRAL_RECOVERABLE
+#undef KHEIRAL_GIBCHECK
