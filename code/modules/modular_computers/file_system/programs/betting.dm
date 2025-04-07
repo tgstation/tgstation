@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 	//we'll only advertise it on the first bet of the round, as to not make this overly annoying.
 	var/should_alert = FALSE
 	for(var/datum/feed_channel/FC in GLOB.news_network.network_channels)
-		if(FC.channel_name == NEWSCASTER_SPORTS_BETTING)
+		if(FC.channel_name == NEWSCASTER_SPACE_BETTING)
 			if(!length(FC.messages))
 				should_alert = TRUE
 	newscaster_message = GLOB.news_network.submit_article("The bet [name] has started, place your bets now!", "NtOS Space Betting App", NEWSCASTER_SPACE_BETTING, null, update_alert = should_alert)
