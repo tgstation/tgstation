@@ -1,0 +1,3228 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aC" = (
+/obj/structure/stairs/stone{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"aG" = (
+/obj/structure/bed/double/pelt,
+/obj/structure/curtain/bounty,
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"aV" = (
+/obj/structure/table/wood,
+/obj/item/paper/natural{
+	pixel_y = 3;
+	pixel_x = -2
+	},
+/obj/item/pen/charcoal,
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"bl" = (
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"bK" = (
+/obj/structure/lamppost,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"bX" = (
+/turf/closed/mineral/snowmountain/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"cy" = (
+/obj/structure/rugs/pelt/black{
+	dir = 4;
+	pixel_y = -15
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"cZ" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/structure/flora/tree/pine/style_random,
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"dF" = (
+/obj/structure/table/wood,
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"dG" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"dM" = (
+/obj/structure/rack/wooden,
+/obj/item/bonesetter/primitive,
+/obj/item/cautery/primitive,
+/obj/item/chisel/primitive,
+/obj/item/circular_saw/primitive,
+/obj/item/scalpel/primitive,
+/obj/item/retractor/primitive,
+/obj/item/surgicaldrill/primitive,
+/obj/structure/wall_torch/spawns_lit/directional/north,
+/obj/item/smelling_salts,
+/obj/item/bedsheet/black,
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"ev" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"ex" = (
+/obj/structure/chair/wood,
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"eW" = (
+/obj/structure/spacevine{
+	name = "thick vines";
+	opacity = 1
+	},
+/turf/closed/mineral/snowmountain/cavern/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"fl" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"fs" = (
+/obj/structure/wall_torch/spawns_lit/directional/south,
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"fF" = (
+/obj/structure/rugs/pelt/black,
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"fW" = (
+/obj/structure/rack/wooden,
+/obj/item/reagent_containers/cup/glass/bottle/hooch{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass/bottle/moonshine{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/cup/glass/bottle/moonshine{
+	pixel_x = -6
+	},
+/obj/structure/sign/evil_eye{
+	pixel_y = 32
+	},
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"fX" = (
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"gq" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/mortar,
+/obj/item/pestle{
+	pixel_y = -1;
+	pixel_x = -6
+	},
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"hq" = (
+/obj/structure/wall_torch/spawns_lit/directional/north,
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"iM" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/closed/mineral/snowmountain/cavern/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"iT" = (
+/obj/structure/wall_torch/spawns_lit/directional/west,
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"iV" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"jD" = (
+/obj/structure/flora/bush/snow/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"kz" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"lq" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"lB" = (
+/obj/structure/rack/wooden,
+/obj/item/bonesetter/primitive,
+/obj/item/cautery/primitive,
+/obj/item/chisel/primitive,
+/obj/item/circular_saw/primitive,
+/obj/item/scalpel/primitive,
+/obj/item/retractor/primitive,
+/obj/item/surgicaldrill/primitive,
+/obj/item/smelling_salts,
+/obj/item/bedsheet/black,
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"nX" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"od" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"pg" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/small{
+	pixel_y = 15;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/cup/glass/bottle/small{
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/cup/glass/bottle/small{
+	pixel_y = 15;
+	pixel_x = 6
+	},
+/obj/item/ceramic/cup{
+	pixel_x = -6
+	},
+/obj/item/ceramic/cup{
+	pixel_x = 4
+	},
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"py" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"pP" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"qj" = (
+/obj/structure/hearthkin_rune_stone,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"sh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"so" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"sq" = (
+/obj/structure/railing/wooden_fencing,
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"sr" = (
+/obj/structure/rugs/pelt,
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"tb" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"tF" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"uz" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 8
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"uG" = (
+/obj/structure/table/wood,
+/obj/structure/chem_separator{
+	pixel_y = 12
+	},
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"uT" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"vm" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 1
+	},
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/structure/wall_torch/spawns_lit/directional/west,
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"vZ" = (
+/obj/structure/wall_torch/spawns_lit/directional/east,
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"yk" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 8
+	},
+/obj/structure/railing/wooden_fencing,
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"zj" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"zu" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"As" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"AZ" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"By" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"CA" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle{
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/glass/bottle{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/glass/bottle{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"CR" = (
+/obj/structure/flora/tree/pine/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"DZ" = (
+/obj/structure/lamppost{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"El" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"EL" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"EN" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Fx" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"FV" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 1
+	},
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Gd" = (
+/turf/closed/mineral/snowmountain/cavern/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Gf" = (
+/obj/structure/flora/rock/pile/icy/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"GH" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"GI" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"GR" = (
+/obj/structure/wall_torch/spawns_lit/directional/north,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"HM" = (
+/obj/item/pillow,
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"HN" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"HP" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 8
+	},
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Ih" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin/unpowered/primitive_genemod_den)
+"IE" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 4
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Ku" = (
+/obj/structure/table/wood,
+/obj/structure/large_mortar,
+/obj/item/pestle{
+	pixel_y = -1;
+	pixel_x = -8
+	},
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Lk" = (
+/turf/open/misc/grass/roofing,
+/area/ruin/unpowered/primitive_genemod_den)
+"LO" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 8
+	},
+/obj/structure/railing/wooden_fencing{
+	dir = 1
+	},
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"LP" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/primitive_centrifuge{
+	pixel_x = -14;
+	pixel_y = -1
+	},
+/obj/item/paper_bin/bundlenatural{
+	pixel_y = 8;
+	pixel_x = 3
+	},
+/obj/item/pen/charcoal,
+/obj/structure/sign/evil_eye{
+	pixel_y = 32
+	},
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"LS" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"MZ" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 1
+	},
+/obj/structure/railing/wooden_fencing{
+	dir = 8
+	},
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Nb" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 1
+	},
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Nz" = (
+/obj/effect/spawner/structure/window/ice,
+/obj/structure/curtain/bounty,
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"OC" = (
+/turf/open/floor/stone/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Pr" = (
+/obj/structure/wall_torch/spawns_lit/directional/south,
+/obj/item/pillow,
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Px" = (
+/obj/structure/railing/wooden_fencing,
+/obj/structure/railing/wooden_fencing{
+	dir = 8
+	},
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Rj" = (
+/obj/structure/spacevine{
+	name = "thick vines";
+	opacity = 1
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Sy" = (
+/obj/structure/railing/wooden_fencing{
+	dir = 1
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"TB" = (
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"TO" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner,
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"UJ" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"UW" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"VY" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Xc" = (
+/obj/structure/stairs/stone,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"Xj" = (
+/turf/open/openspace/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"XX" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"YK" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 4
+	},
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+"ZB" = (
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/snow/corner{
+	dir = 10
+	},
+/obj/structure/flora/bush/sparsegrass/style_random,
+/turf/open/misc/sandy_dirt/icemoon,
+/area/ruin/unpowered/primitive_genemod_den)
+
+(1,1,1) = {"
+bX
+bX
+bX
+bX
+bX
+bX
+Gd
+bX
+bX
+bX
+Gd
+bX
+bX
+bX
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+Gd
+Gd
+Gd
+Gd
+Gd
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+Gd
+Gd
+bX
+bX
+bX
+bX
+Gd
+bX
+bX
+bX
+"}
+(2,1,1) = {"
+bX
+bX
+bX
+bX
+Gd
+Gd
+Gd
+Gd
+Gd
+bX
+Gd
+Xj
+TB
+zj
+zj
+Gd
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+Gd
+zj
+zj
+Gd
+Gd
+zj
+zj
+zj
+zj
+zj
+zj
+jD
+zj
+Gf
+zj
+Gd
+bX
+bX
+bX
+bX
+bX
+Gd
+bX
+bX
+bX
+bX
+"}
+(3,1,1) = {"
+bX
+bX
+bX
+Gd
+Gd
+Gd
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+El
+zj
+CR
+zj
+zj
+Gd
+bX
+bX
+bX
+bX
+Gd
+Gd
+zj
+zj
+eW
+eW
+Gd
+qj
+zj
+zj
+zj
+cZ
+zj
+TO
+zj
+Gd
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+Gd
+Gd
+Gd
+bX
+"}
+(4,1,1) = {"
+bX
+bX
+bX
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+El
+zj
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+Gd
+zj
+zj
+zj
+Rj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+kz
+dG
+zj
+Gd
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+Gd
+"}
+(5,1,1) = {"
+bX
+bX
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+As
+El
+zj
+zj
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+eW
+Rj
+zj
+zj
+pP
+zj
+zj
+pP
+zj
+zj
+zj
+pP
+zj
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+"}
+(6,1,1) = {"
+bX
+Gd
+Xj
+Xj
+Lk
+Lk
+Lk
+Ih
+Ih
+Ih
+Ih
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+El
+zj
+zj
+zj
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+iV
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+Gd
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+Gd
+"}
+(7,1,1) = {"
+bX
+Gd
+Xj
+Lk
+Lk
+Lk
+Ih
+Ih
+IE
+IE
+Ih
+Ih
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+As
+As
+As
+El
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+uT
+As
+As
+As
+As
+El
+zj
+zj
+zj
+zj
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+"}
+(8,1,1) = {"
+bX
+Xj
+Xj
+Lk
+Lk
+Ih
+Ih
+iT
+Xj
+Xj
+vm
+Ih
+Ih
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+El
+zj
+zj
+zj
+pP
+zj
+zj
+uT
+As
+As
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+El
+zj
+zj
+zj
+bK
+Gd
+bX
+bX
+bX
+bX
+bX
+Gd
+"}
+(9,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+fX
+fX
+Xj
+Xj
+Sy
+fF
+Ih
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+El
+zj
+zj
+zj
+zj
+uT
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+El
+zj
+UJ
+Xc
+Gd
+bX
+bX
+bX
+bX
+bX
+Gd
+"}
+(10,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+fX
+fX
+uz
+uz
+fX
+fX
+Ih
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+As
+As
+As
+As
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+Xc
+Gd
+bX
+bX
+bX
+bX
+Gd
+bX
+"}
+(11,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+GR
+fl
+od
+fX
+fX
+fs
+Ih
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+Gd
+bX
+bX
+bX
+bX
+Gd
+bX
+"}
+(12,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+lB
+OC
+sh
+od
+fX
+fX
+Ih
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+py
+zj
+zj
+zj
+zj
+Gd
+bX
+bX
+bX
+Gd
+Gd
+"}
+(13,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+aG
+OC
+pg
+UW
+fX
+fX
+Nz
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+py
+zj
+zj
+zj
+jD
+Gd
+bX
+bX
+bX
+bX
+Gd
+Gd
+"}
+(14,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+fW
+OC
+gq
+UW
+fX
+fX
+Nz
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+py
+zj
+zj
+zj
+zj
+Gd
+Gd
+bX
+bX
+bX
+bX
+bX
+Gd
+"}
+(15,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+aG
+OC
+CA
+UW
+fX
+fX
+Ih
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+py
+zj
+zj
+zj
+zj
+Gd
+Gd
+Gd
+bX
+bX
+bX
+bX
+bX
+Gd
+"}
+(16,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+dM
+OC
+OC
+UW
+cy
+Pr
+Ih
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+py
+zj
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+bX
+bX
+bX
+Gd
+bX
+Gd
+"}
+(17,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+Ku
+OC
+OC
+UW
+HM
+fX
+Ih
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+bX
+bX
+Gd
+"}
+(18,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+LP
+OC
+GH
+UW
+fX
+fX
+Ih
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+Xj
+Xj
+Gd
+Gd
+bX
+bX
+Gd
+"}
+(19,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+uG
+OC
+aV
+HN
+fX
+fX
+Nz
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+Xj
+Xj
+Xj
+Gd
+Gd
+Gd
+Gd
+bX
+"}
+(20,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+dF
+OC
+so
+GI
+fX
+fX
+Nz
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Xj
+Xj
+Xj
+Xj
+Xj
+Gd
+Gd
+Gd
+bX
+"}
+(21,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+ev
+ev
+MZ
+Px
+fX
+fX
+Ih
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+El
+zj
+zj
+Gd
+Gd
+Gd
+Xj
+Xj
+Xj
+Xj
+Xj
+Gd
+Gd
+bX
+Gd
+"}
+(22,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+hq
+fX
+FV
+sq
+fX
+fs
+Ih
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+py
+zj
+zj
+Gd
+Gd
+Gd
+Xj
+Xj
+Xj
+Xj
+Xj
+Gd
+Gd
+Gd
+bX
+"}
+(23,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+fX
+fX
+FV
+sq
+ex
+sr
+Ih
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Xj
+Xj
+Xj
+Xj
+Xj
+Gd
+Gd
+Gd
+bX
+"}
+(24,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+fX
+fX
+FV
+sq
+ex
+fX
+Ih
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+eW
+Rj
+zj
+Nb
+Xj
+Xj
+Xj
+Xj
+Gd
+bX
+Gd
+bX
+"}
+(25,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+fX
+LO
+Xj
+Xj
+yk
+tF
+Ih
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+Rj
+Rj
+zj
+Nb
+Xj
+Xj
+Xj
+Gd
+Gd
+Gd
+Gd
+bX
+"}
+(26,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+HP
+Xj
+Xj
+Xj
+Xj
+HP
+Ih
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+zj
+Rj
+eW
+Gd
+Xj
+Xj
+Xj
+Gd
+Gd
+Gd
+bX
+Gd
+"}
+(27,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Ih
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+El
+zj
+zj
+zj
+zj
+eW
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+bX
+bX
+bX
+"}
+(28,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Ih
+Ih
+vZ
+Xj
+Xj
+vZ
+Ih
+Ih
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+El
+zj
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+bX
+bX
+bX
+"}
+(29,1,1) = {"
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Ih
+Ih
+Xj
+Xj
+Ih
+Ih
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+El
+zj
+bl
+bl
+zj
+bl
+bX
+Gd
+Gd
+bX
+bX
+bX
+bX
+"}
+(30,1,1) = {"
+bX
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Ih
+Ih
+Ih
+Ih
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+bl
+zj
+zj
+zj
+bX
+bX
+Gd
+bX
+bX
+bX
+bX
+"}
+(31,1,1) = {"
+bX
+bX
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+El
+zj
+zj
+zj
+zj
+Gf
+bX
+bX
+bX
+bX
+bX
+bX
+"}
+(32,1,1) = {"
+bX
+bX
+bX
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+CR
+zj
+zj
+bX
+bX
+bX
+bX
+bX
+bX
+"}
+(33,1,1) = {"
+bX
+bX
+bX
+bX
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+zj
+zj
+bX
+bX
+bX
+bX
+bX
+bX
+"}
+(34,1,1) = {"
+bX
+bX
+bX
+bX
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+zj
+jD
+Gd
+bX
+bX
+bX
+bX
+bX
+"}
+(35,1,1) = {"
+bX
+bX
+bX
+bX
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+py
+zj
+zj
+zj
+bl
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+"}
+(36,1,1) = {"
+bX
+bX
+bX
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+zj
+Gd
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+"}
+(37,1,1) = {"
+bX
+bX
+bX
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+py
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+bX
+bX
+bX
+bX
+bX
+"}
+(38,1,1) = {"
+bX
+bX
+bX
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+bX
+bX
+"}
+(39,1,1) = {"
+bX
+bX
+bX
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+Gd
+Gd
+Gd
+aC
+aC
+aC
+Gd
+Gd
+Gd
+bX
+bX
+"}
+(40,1,1) = {"
+bX
+bX
+bX
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+Gd
+Gd
+Gd
+zu
+EL
+LS
+bK
+Gd
+Gd
+bX
+bX
+"}
+(41,1,1) = {"
+bX
+bX
+bX
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+py
+zj
+Gd
+Gd
+Gd
+zj
+zu
+zu
+AZ
+zj
+zj
+Gd
+Gd
+bX
+"}
+(42,1,1) = {"
+bX
+bX
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+py
+zj
+zj
+Gd
+Gd
+zj
+zj
+Fx
+zu
+ZB
+zj
+zj
+bX
+bX
+bX
+"}
+(43,1,1) = {"
+bX
+bX
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Ih
+Ih
+Ih
+Ih
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+By
+By
+py
+zj
+zj
+zj
+zj
+zj
+nX
+EN
+VY
+zj
+zj
+zj
+zj
+bX
+bX
+bX
+"}
+(44,1,1) = {"
+bX
+bX
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Ih
+Xj
+Xj
+Ih
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+XX
+zj
+zj
+zj
+zj
+Gf
+zj
+bX
+bX
+bX
+"}
+(45,1,1) = {"
+bX
+bX
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Ih
+Ih
+Ih
+Ih
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+py
+zj
+tb
+YK
+zj
+zj
+zj
+lq
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+bX
+bX
+bX
+"}
+(46,1,1) = {"
+bX
+bX
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Lk
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+TB
+zj
+zj
+zj
+zj
+pP
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+Gd
+bX
+bX
+bX
+"}
+(47,1,1) = {"
+bX
+bX
+bX
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+bX
+bX
+iM
+Gd
+Gd
+zj
+zj
+zj
+DZ
+zj
+zj
+zj
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+bX
+bX
+Gd
+"}
+(48,1,1) = {"
+bX
+bX
+bX
+bX
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+Xj
+bX
+bX
+bX
+bX
+bX
+bX
+Gd
+Gd
+qj
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+"}
+(49,1,1) = {"
+bX
+bX
+bX
+bX
+bX
+bX
+Xj
+Xj
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+Gd
+bX
+bX
+bX
+bX
+zj
+zj
+zj
+zj
+zj
+zj
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+"}
+(50,1,1) = {"
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+Gd
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+zj
+Gd
+Gd
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+bX
+"}

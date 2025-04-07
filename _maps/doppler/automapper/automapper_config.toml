@@ -41,7 +41,15 @@ trait_name = "Station"
 map_files = ["icemoon_underground_icewalker_lower.dmm"]
 directory = "_maps/RandomRuins/IceRuins/doppler/"
 required_map = "IceBoxStation.dmm"
-coordinates = [170, 16, 1]
+coordinates = [12, 9, 1]
+trait_name = "Station"
+
+# Icecats Camp Middle Level
+[templates.icebox_icecats_middle]
+map_files = ["icemoon_underground_icewalker_middle.dmm"]
+directory = "_maps/RandomRuins/IceRuins/doppler/"
+required_map = "IceBoxStation.dmm"
+coordinates = [12, 9, 2]
 trait_name = "Station"
 
 # Icecats Camp Upper Level
@@ -49,7 +57,7 @@ trait_name = "Station"
 map_files = ["icemoon_underground_icewalker_upper.dmm"]
 directory = "_maps/RandomRuins/IceRuins/doppler/"
 required_map = "IceBoxStation.dmm"
-coordinates = [170, 16, 2]
+coordinates = [12, 9, 3]
 trait_name = "Station"
 
 # ICELAND ADDITIONS
@@ -61,12 +69,20 @@ required_map = "Iceland.dmm"
 coordinates = [121, 203, 1]
 trait_name = "Mining"
 
+# Icecats Camp Lower Level: ICELAND ADDITION
+[templates.icebox_icecats_middle_iceland]
+map_files = ["icemoon_underground_icewalker_middle.dmm"]
+directory = "_maps/RandomRuins/IceRuins/doppler/"
+required_map = "Iceland.dmm"
+coordinates = [121, 203, 2]
+trait_name = "Mining"
+
 # Icecats Camp Upper Level: ICELAND ADDITION
 [templates.icebox_icecats_upper_iceland]
 map_files = ["icemoon_underground_icewalker_upper.dmm"]
 directory = "_maps/RandomRuins/IceRuins/doppler/"
 required_map = "Iceland.dmm"
-coordinates = [121, 203, 2]
+coordinates = [121, 203, 3]
 trait_name = "Mining"
 
 # TRAMSTATION MAP EDITS
