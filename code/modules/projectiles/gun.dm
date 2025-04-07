@@ -61,7 +61,7 @@
 	var/projectile_wound_bonus = 0
 
 	/// The most reasonable way to modify projectile speed values for projectile fired from this gun. Honest.
-	/// Lower values are better, higher values are worse.
+	/// Lower values are worse, higher values are better.
 	var/projectile_speed_multiplier = 1
 
 	var/spread = 0 //Spread induced by the gun itself.
