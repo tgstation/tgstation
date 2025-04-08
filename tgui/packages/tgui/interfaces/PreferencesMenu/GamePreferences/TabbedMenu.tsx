@@ -78,7 +78,6 @@ export class TabbedMenu extends Component<TabbedMenuProps> {
               return (
                 <Stack.Item
                   key={category}
-                  // @ts-expect-error
                   innerRef={this.getCategoryRef(category)}
                 >
                   <Section fill title={category}>
