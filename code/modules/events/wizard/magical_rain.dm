@@ -4,7 +4,7 @@
 	typepath = /datum/round_event/wizard/magical_rain
 	max_occurrences = 5
 	earliest_start = 0 MINUTES
-	description = "Turns the floor into hot lava."
+	description = "A magical thunderstorm rains down below, drenching anyone caught in it with mysterious rain."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 7
 
