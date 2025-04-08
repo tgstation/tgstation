@@ -22,3 +22,9 @@
 	if(!started)
 		started = TRUE
 		SSweather.run_weather(/datum/weather/rain_storm/wizard)
+
+/datum/round_event/wizard/magical_rain/end()
+	for(var/mob/living/wizard in GLOB.alive_mob_list)
+		if(IS_WIZARD(wizard) && HAS_TRAIT_FROM(wizard, TRAIT_RAINSTORM_IMMUNE, MAGIC_TRAIT))
+			REMOVE_TRAIT(wizard, TRAIT_RAINSTORM_IMMUNE, MAGIC_TRAIT)
+			to_chat(wizard, span_notice("You feel your magical resistance to rain fade!"))
