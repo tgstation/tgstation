@@ -21,6 +21,7 @@
 	immunity_type = TRAIT_ASHSTORM_IMMUNE
 	probability = 90
 	turf_thunder_chance = THUNDER_CHANCE_VERY_RARE
+	thunder_color = "#7a0000"
 
 	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_THUNDER)
 
