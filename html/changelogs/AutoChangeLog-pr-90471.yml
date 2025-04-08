@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Drones now have internal cameras that shows up on camera consoles (like Cyborgs)"
+  - balance: "Cyborgs (and drones) now get a notification when someone is watching them through a security camera console."
+  - bugfix: "Cutting a Cyborg's camera wire now properly disables it, and mending it now properly re-enables it."

@@ -30,7 +30,7 @@
 	// Stuff needed to render the map
 	var/atom/movable/screen/map_view/camera/cam_screen
 
-	///Internal tracker used to find a specific person and keep them on cameras.
+	///Internal tracker used to find a specific person and keep them on cameras, only used if this is a 'spying' console.
 	var/datum/trackable/internal_tracker
 
 ///Syndicate subtype that has no access restrictions and is available on Syndinet
@@ -52,13 +52,21 @@
 	)
 	spying = TRUE
 
+///Human AI subtype that has access to most networks on the station and can't be copied.
 /datum/computer_file/program/secureye/human_ai
 	filename = "Overseer"
 	filedesc = "OverSeer"
 	run_access = list(ACCESS_MINISAT)
 	can_run_on_flags = PROGRAM_PDA
 	program_flags = PROGRAM_UNIQUE_COPY
-	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
+	network = list(
+		CAMERANET_NETWORK_SS13,
+		CAMERANET_NETWORK_MINE,
+		CAMERANET_NETWORK_RD,
+		CAMERANET_NETWORK_LABOR,
+		CAMERANET_NETWORK_ORDNANCE,
+		CAMERANET_NETWORK_MINISAT,
+	)
 	spying = TRUE
 
 /datum/computer_file/program/secureye/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
@@ -130,15 +138,21 @@
 		return
 	switch(action)
 		if("switch_camera")
+			var/obj/machinery/camera/active_camera = camera_ref?.resolve()
+			if(!spying && active_camera)
+				active_camera.on_stop_watching(src)
+
+			if(!spying)
+				playsound(computer, SFX_TERMINAL_TYPE, 25, FALSE)
+
 			var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
 			if(selected_camera)
 				camera_ref = WEAKREF(selected_camera)
 			else
 				camera_ref = null
-			if(!spying)
-				playsound(computer, SFX_TERMINAL_TYPE, 25, FALSE)
-			if(isnull(camera_ref))
 				return TRUE
+			if(!spying)
+				selected_camera.on_start_watching(src)
 			if(internal_tracker)
 				internal_tracker.reset_tracking()
 
@@ -181,6 +195,9 @@
 	cam_screen.hide_from(user)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
+		var/obj/machinery/camera/active_camera = camera_ref?.resolve()
+		if(!spying && active_camera)
+			active_camera.on_stop_watching(src)
 		camera_ref = null
 		last_camera_turf = null
 		if(!spying)
