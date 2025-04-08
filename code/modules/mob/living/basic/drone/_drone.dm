@@ -402,6 +402,6 @@
 	return FALSE //So they don't die trying to fix wiring
 
 /mob/living/basic/drone/can_track(mob/living/user)
-	if(built_in_camera && built_in_camera.can_use())
+	if(built_in_camera?.can_use())
 		return TRUE
 	return ..()
