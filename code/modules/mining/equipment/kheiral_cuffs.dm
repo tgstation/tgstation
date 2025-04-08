@@ -73,6 +73,7 @@
 		return
 	balloon_alert(user, "gps de-activated")
 	REMOVE_TRAIT(user, TRAIT_MULTIZ_SUIT_SENSORS, REF(src))
+	UnregisterSignal(user, COMSIG_LIVING_GIBBED)
 	gps_enabled = FALSE
 
 /// If we're off the Z-level, set far_from_home = TRUE. If being worn, trigger kheiral_network proc
