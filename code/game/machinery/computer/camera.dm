@@ -154,8 +154,7 @@
 	cam_screen?.hide_from(user)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
-		if(active_camera)
-			active_camera.on_stop_watching(src)
+		active_camera?.on_stop_watching(src)
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
