@@ -280,11 +280,26 @@ Turf and target are separate in case you want to teleport some distance from a t
 	return click_turf
 
 /**
- * Takes mousepos_x and mousepos_y and the client that provided them and returns the turf clicked on
- * reminder, mouseposx and mouseposy start from the top left corner because we can't have consistency or nice things
- * they also ignore sizes, so we need to compensate for that
- * sizex and sizey are the size of the map for this purpose
- * also keep in mind that the screen size is the worlds pixel size, while mousepos and size are the completely unrelated control size
+ * Converts mouse-pos control coordinates to a specific turf location on the map.
+ *
+ * Handles the conversion between control-space mouse coordinates and screen-space map coordinates,
+ * accounting for various BYOND quirks and display scaling factors.
+ *
+ * @param mousepos_x	The x-coordinate of the mouse click (in control pixels, top-left origin)
+ * @param mousepos_y	The y-coordinate of the mouse click (in control pixels, top-left origin)
+ * @param sizex			x control width of the map
+ * @param sizey			y control width of the map
+ * @param viewing_client The client whose view perspective to use for the conversion
+ *
+ * @return The turf at the calculated map position, or the closest one if out of bounds, as well as the residual x and y map offsets
+ *
+ * Important Notes:
+ * - Mouse coordinates originate from the top-left corner because we can't have consistency in this engine
+ * - Coordinate systems are inconsistent between control pixels and screen pixels
+ * - Something on the byond side (icon size likely? needs debugging) affects the control pixels
+ * - This uses the ratios between them rather than absolute values for reliable results
+ * - For absolute value comparisons, dividing by 2 may work as a temporary hack,
+ *   but using ratios (as implemented in the proc) is the recommended approach
  */
 /proc/get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, client/viewing_client)
 	var/turf/baseloc = get_turf(viewing_client.eye)
