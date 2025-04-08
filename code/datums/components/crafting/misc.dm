@@ -55,3 +55,13 @@
 		/obj/item/stack/sheet/cardboard = 1,
 	)
 	category = CAT_MISC
+
+/datum/crafting_recipe/battery_match
+	name = "Battery Match"
+	result = /obj/item/match/battery
+	time = 4 SECONDS
+	reqs = list(
+		/obj/item/stock_parts/power_store/cell = 1,
+		/obj/item/storage/bubblegum_wrapper = 1,
+	)
+	category = CAT_MISC
