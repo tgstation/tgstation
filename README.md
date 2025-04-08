@@ -10,13 +10,15 @@
 |---------------------------|---------------------------------------------------------------------------|
 | MassMeta Code             | [https://github.com/Huz2e/massmeta](https://github.com/Huz2e/massmeta)    |
 | Guide to Modularization   | [./modular_meta/modularization_guide_ru.md](./massmeta/modularization_guide.md)  |
-| MassMeta Discord          | [https://discord.gg/massmeta](https://discord.gg/Pp7SpQgvNt)              |
+| Lambda Discord          | [https://discord.gg/lambda](https://discord.gg/lambda13)              |
 | MassMeta Wiki             | [https://massmeta.ru](https://massmeta.ru/index.php/Заглавная_страница) |
 | /TG/ Website              | [https://www.tgstation13.org](https://www.tgstation13.org)                |
 | /TG/ Codedocs             | [https://codedocs.tgstation13.org/](https://codedocs.tgstation13.org/)    |
 | /TG/ Coderbus Discord     | [https://discord.gg/Vh8TJp9](https://discord.gg/Vh8TJp9)                  |
 
 This is MassMeta downstream fork of /tg/station SpaceStation 13.
+
+**Powered by Lambda 13 server**
 
 **This is Kvass-Based repository, mmmmmm Kvass.**
 
@@ -42,7 +44,7 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 ## Contributors
 [Guides for Contributors](.github/CONTRIBUTING.md)
 
-**Если вы хотите, чтобы ваша фича попала в репозиторий на показ игрокам, то велком в `#Code-chat` в [нашем Дискорде](https://discord.gg/Pp7SpQgvNt).**
+**Если вы хотите, чтобы ваша фича попала в репозиторий на показ игрокам, то велком в `#Code-chat` в [нашем Дискорде](https://discord.gg/lambda13).**
 
 [/tg/station HACKMD account (BLOCKED in RU)](https://hackmd.io/@tgstation) - Design documentation here
 
