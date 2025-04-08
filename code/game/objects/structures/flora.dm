@@ -52,7 +52,7 @@
 	/// Flags for the flora to determine what kind of sound to play when it gets hit
 	var/flora_flags = NONE
 
-/obj/structure/flora/attackby(obj/item/used_item, mob/living/user, params)
+/obj/structure/flora/attackby(obj/item/used_item, mob/living/user, list/modifiers)
 	if(user.combat_mode)
 		return ..()
 	if(flags_1 & HOLOGRAM_1)

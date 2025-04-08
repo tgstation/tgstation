@@ -58,7 +58,7 @@
 	to_chat(user, span_notice("The wire panel can be accessed without a screwdriver."))
 	return TRUE
 
-/obj/item/grenade/c4/attackby(obj/item/item, mob/user, params)
+/obj/item/grenade/c4/attackby(obj/item/item, mob/user, list/modifiers)
 	if(is_wire_tool(item))
 		wires.interact(user)
 	else

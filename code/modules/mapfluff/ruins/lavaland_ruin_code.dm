@@ -40,7 +40,7 @@
 	/// Type of shell to create
 	var/shell_type = /obj/effect/mob_spawn/ghost_role/human/golem
 
-/obj/item/golem_shell/attackby(obj/item/potential_food, mob/user, params)
+/obj/item/golem_shell/attackby(obj/item/potential_food, mob/user, list/modifiers)
 	. = ..()
 	if(!isstack(potential_food))
 		balloon_alert(user, "not a mineral!")

@@ -46,7 +46,7 @@
 		QDEL_NULL(foldedbag_instance)
 	return ..()
 
-/obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, params)
+/obj/structure/closet/body_bag/attackby(obj/item/interact_tool, mob/user, list/modifiers)
 	if (IS_WRITING_UTENSIL(interact_tool))
 		if(!user.can_write(interact_tool))
 			return

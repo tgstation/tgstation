@@ -63,7 +63,7 @@
 		qdel(src)
 		return PROCESS_KILL
 
-/obj/effect/rend/attackby(obj/item/I, mob/user, params)
+/obj/effect/rend/attackby(obj/item/I, mob/user, list/modifiers)
 	if(istype(I, /obj/item/nullrod))
 		user.visible_message(span_danger("[user] seals \the [src] with \the [I]."))
 		qdel(src)

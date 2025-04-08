@@ -91,8 +91,8 @@
 
 	return ..()
 
-/obj/item/toy/cards/cardhand/attackby_secondary(obj/item/weapon, mob/user, params)
-	attackby(weapon, user, params, flip_card = TRUE)
+/obj/item/toy/cards/cardhand/attackby_secondary(obj/item/weapon, mob/user, list/modifiers)
+	attackby(weapon, user, modifiers, flip_card = TRUE)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 #define CARDS_MAX_DISPLAY_LIMIT 5 // the amount of cards that are displayed in a hand

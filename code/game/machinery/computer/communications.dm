@@ -110,7 +110,7 @@
 		return TRUE
 	return authenticated
 
-/obj/machinery/computer/communications/attackby(obj/I, mob/user, params)
+/obj/machinery/computer/communications/attackby(obj/I, mob/user, list/modifiers)
 	if(isidcard(I))
 		attack_hand(user)
 	else

@@ -118,7 +118,7 @@
 	add_fingerprint(user)
 	return ..()
 
-/obj/item/paper_bin/attackby(obj/item/I, mob/user, params)
+/obj/item/paper_bin/attackby(obj/item/I, mob/user, list/modifiers)
 	if(at_overlay_limit())
 		dump_contents(drop_location(), TRUE)
 		return

@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	icon_state = dir_string
 	return ..()
 
-/obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
+/obj/structure/cable/proc/handlecable(obj/item/W, mob/user, list/modifiers)
 	var/turf/T = get_turf(src)
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
@@ -207,8 +207,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 //   - Wirecutters : cut it duh !
 //   - Multitool : get the power currently passing through the cable
 //
-/obj/structure/cable/attackby(obj/item/W, mob/user, params)
-	handlecable(W, user, params)
+/obj/structure/cable/attackby(obj/item/item, mob/user, list/modifiers)
+	handlecable(item, user, modifiers)
 
 
 // shock the user with probability prb

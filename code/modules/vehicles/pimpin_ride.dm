@@ -34,7 +34,7 @@
 	if (installed_upgrade)
 		. += "It has been upgraded with [installed_upgrade], which can be removed with a screwdriver."
 
-/obj/vehicle/ridden/janicart/attackby(obj/item/I, mob/user, params)
+/obj/vehicle/ridden/janicart/attackby(obj/item/I, mob/user, list/modifiers)
 	if(istype(I, /obj/item/storage/bag/trash))
 		if(trash_bag)
 			to_chat(user, span_warning("[src] already has a trashbag hooked!"))

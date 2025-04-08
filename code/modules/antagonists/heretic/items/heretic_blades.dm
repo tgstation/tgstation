@@ -41,7 +41,7 @@
 /obj/item/melee/sickly_blade/proc/check_usability(mob/living/user)
 	return IS_HERETIC_OR_MONSTER(user)
 
-/obj/item/melee/sickly_blade/pre_attack(atom/A, mob/living/user, params)
+/obj/item/melee/sickly_blade/pre_attack(atom/target, mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return .
@@ -89,7 +89,7 @@
 	playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
 	qdel(src)
 
-/obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, list/modifiers)
 	SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
 
 /obj/item/melee/sickly_blade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -163,7 +163,7 @@
 	///If our blade is currently infused with the mansus grasp
 	var/infused = FALSE
 
-/obj/item/melee/sickly_blade/dark/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/melee/sickly_blade/dark/afterattack(atom/target, mob/user, list/modifiers)
 	. = ..()
 	if(!infused || target == user || !isliving(target))
 		return
