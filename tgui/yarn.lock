@@ -19150,17 +19150,17 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     tgui: "workspace:*"
-    tgui-core: "npm:^2.0.4"
+    tgui-core: "npm:^2.0.5"
   languageName: unknown
   linkType: soft
 
-"tgui-core@npm:^2.0.4":
-  version: 2.0.4
-  resolution: "tgui-core@npm:2.0.4"
+"tgui-core@npm:^2.0.5":
+  version: 2.0.5
+  resolution: "tgui-core@npm:2.0.5"
   peerDependencies:
     react: ^19.1.0
     react-dom: ^19.1.0
-  checksum: 10c0/4f7c2133a58effb4e909d0e2b9cf756109f82a5d0f8eb0d4968fbb7c08dd6fb444a2c5d9536edeec17fa7c11fb0775ebe281bde188f8902efbdba7aa57e8a9b3
+  checksum: 10c0/2c4e0bdf89c6538003cf9908eed78238e637d604909bfbd80df5f6a0c76ec87d458d224d417ba3a1ee7235695703d7f63cc1041b091257032f1f1541d2c3a153
   languageName: node
   linkType: hard
 
@@ -19188,7 +19188,7 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     tgui: "workspace:*"
-    tgui-core: "npm:^2.0.4"
+    tgui-core: "npm:^2.0.5"
     tgui-dev-server: "workspace:*"
   languageName: unknown
   linkType: soft
@@ -19203,7 +19203,7 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     tgui: "workspace:*"
-    tgui-core: "npm:^2.0.4"
+    tgui-core: "npm:^2.0.5"
   languageName: unknown
   linkType: soft
 
@@ -19273,7 +19273,7 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     react-popper: "npm:^2.3.0"
-    tgui-core: "npm:^2.0.4"
+    tgui-core: "npm:^2.0.5"
     tgui-dev-server: "workspace:*"
   languageName: unknown
   linkType: soft
