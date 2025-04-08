@@ -121,9 +121,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 	while(topmost_thing?.loc && !isturf(topmost_thing.loc))
 		topmost_thing = topmost_thing.loc
 		if(stop_type && istype(topmost_thing, stop_type))
-			break
+			return topmost_thing
 
-	return topmost_thing
+	if (!stop_type)
+		return topmost_thing
 
 ///Returns the turf located at the map edge in the specified direction relative to target_atom used for mass driver
 /proc/get_edge_target_turf(atom/target_atom, direction)
