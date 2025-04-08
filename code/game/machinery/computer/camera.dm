@@ -98,8 +98,7 @@
 		return
 
 	if(action == "switch_camera")
-		if(active_camera)
-			active_camera.on_stop_watching(src)
+		active_camera?.on_stop_watching(src)
 		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
 		active_camera = selected_camera
 
