@@ -136,7 +136,7 @@
 /datum/component/life_link/proc/on_status_tab_updated(mob/living/source, list/items)
 	SIGNAL_HANDLER
 	var/healthpercent = health_percentage(host)
-	items += "Host Health: [round(healthpercent, 0.5)]%"
+	items += list(list("Host Health: [round(healthpercent, 0.5)]%"))
 
 /// Called when our host dies, we should die too
 /datum/component/life_link/proc/on_host_died(mob/living/source, gibbed)

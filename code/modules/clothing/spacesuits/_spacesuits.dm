@@ -130,8 +130,8 @@
 
 /obj/item/clothing/suit/space/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
-	items += "Thermal Regulator: [thermal_on ? "On" : "Off"]"
-	items += "Cell Charge: [cell ? "[round(cell.percent(), 0.1)]%" : "No Cell!"]"
+	items += list(list("Thermal Regulator: [thermal_on ? "On" : "Off"]"))
+	items += list(list("Cell Charge: [cell ? "[round(cell.percent(), 0.1)]%" : "No Cell!"]"))
 
 // Space Suit temperature regulation and power usage
 /obj/item/clothing/suit/space/process(seconds_per_tick)

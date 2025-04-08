@@ -213,7 +213,7 @@
 
 /obj/item/organ/heart/vampire/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
-	items += "Blood Level: [source.blood_volume]/[BLOOD_VOLUME_MAXIMUM]"
+	items += list(list("Blood Level: [source.blood_volume]/[BLOOD_VOLUME_MAXIMUM]"))
 
 #undef VAMPIRES_PER_HOUSE
 #undef VAMP_DRAIN_AMOUNT

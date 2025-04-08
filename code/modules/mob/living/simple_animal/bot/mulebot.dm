@@ -465,11 +465,11 @@
 /mob/living/simple_animal/bot/mulebot/get_status_tab_items()
 	. = ..()
 	if(cell)
-		. += "Charge Left: [cell.charge]/[cell.maxcharge]"
+		. += list(list("Charge Left: [cell.charge]/[cell.maxcharge]"))
 	else
-		. += "No Cell Inserted!"
+		. += list(list("No Cell Inserted!"))
 	if(load)
-		. += "Current Load: [get_load_name()]"
+		. += list(list("Current Load: [get_load_name()]"))
 
 
 /mob/living/simple_animal/bot/mulebot/call_bot()

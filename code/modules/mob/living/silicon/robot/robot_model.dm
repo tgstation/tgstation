@@ -988,7 +988,7 @@
 
 /datum/robot_energy_storage/proc/get_status_tab_item(mob/living/silicon/robot/source, list/items)
 	SIGNAL_HANDLER
-	items += "[name]: [energy]/[max_energy]"
+	items += list(list("[name]: [energy]/[max_energy]"))
 
 /datum/robot_energy_storage/proc/use_charge(amount)
 	if (energy >= amount)

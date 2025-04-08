@@ -389,7 +389,7 @@
 
 /mob/living/simple_animal/soulscythe/get_status_tab_items()
 	. = ..()
-	. += "Blood: [blood_level]/[MAX_BLOOD_LEVEL]"
+	. += list(list("Blood: [blood_level]/[MAX_BLOOD_LEVEL]"))
 
 /mob/living/simple_animal/soulscythe/Life(seconds_per_tick, times_fired)
 	. = ..()

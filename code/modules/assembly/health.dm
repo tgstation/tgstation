@@ -81,7 +81,7 @@
 
 /obj/item/assembly/health/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
-	items += "Health: [round((source.health / source.maxHealth) * 100)]%"
+	items += list(list("Health: [round((source.health / source.maxHealth) * 100)]%"))
 
 
 /obj/item/assembly/health/ui_status(mob/user, datum/ui_state/state)
