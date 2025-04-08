@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Messages sent to MMIs in wiremod components now have a 1 second cooldown, to prevent massive spam."

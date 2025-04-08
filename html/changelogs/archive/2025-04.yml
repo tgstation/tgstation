@@ -189,3 +189,65 @@
       edge under the hood now. Report any issues to the github, please. Yes, I look!
   necromanceranne:
   - code_imp: The paper mache robe now works a bit better under the hood.
+2025-04-08:
+  Absolucy:
+  - bugfix: Messages sent to MMIs in wiremod components now have a 1 second cooldown,
+      to prevent massive spam.
+  - bugfix: Fixed improperly cleaning up memories when a mind is deleted.
+  Ezel:
+  - map: Wawastation supermatter upperfloor has extra entrances and is easier to fix
+      for gas leaks
+  Ghommie:
+  - bugfix: Locking a storage item now locks you out of other storage items inside
+      it.
+  Goat:
+  - qol: You can now insert tanks into bluespace gas vendors to fill instead of having
+      to buy and use a large tank.
+  - sound: Bluespace gas vendors now use sounds from canisters when adding/removing
+      tanks
+  JohnFulpWillard:
+  - rscadd: Bubblegum now comes in wrappers.
+  - rscadd: You can make a match out of a battery and a gum wrapper.
+  - spellcheck: Matches no longer have 2 periods in the description once used.
+  Profakos:
+  - qol: Extends the examine description of cameras with the fact that they can hold
+      holodisks.
+  SmArtKar:
+  - rscadd: You can now customize pill duration in chemical presses
+  - balance: ChemMasters and chemical presses can now create 0s duration pills.
+  - bugfix: Fixed constant runtimes caused by modular computers without IDs
+  - spellcheck: Moved krav maga action descriptions into descriptions
+  SyncIt21:
+  - code_imp: further improved storage code
+  - bugfix: monkey cube boxes can no longer hold gorilla cubes & vice versa
+  - code_imp: improved storage code
+  Thunder12345:
+  - bugfix: 'Wawastation: Security disposals has been rerouted to avoid trash being
+      returned to sender.'
+  Wallem:
+  - rscadd: Some holidays have been given their own pool of mail goodies.
+  - image: Resprited circuit shell icons
+  Wallem, LemonInTheDark:
+  - code_imp: Added a couple helpers & procs for coders
+  hry-gh:
+  - bugfix: removes an excess debug line
+  sqnztb:
+  - bugfix: soybeans now grind into the proper reagents and juice into soymilk.
+  timothymtorres:
+  - rscadd: Added new weather types for rain and sandstorms. Rain now uses a reagent
+      that gets exposed to the turfs, mobs, and objects. There is also a thunder strike
+      setting you can apply to any weather.
+  - rscadd: Hydro trays and soil will now add reagents to their trays when exposed
+      to a chemical reaction. (weather, shower, chem spills, foam grenades, etc.)
+  - rscadd: Weather temperature now affects weather reagents and mobs body temperature.
+  - sound: Added weather sounds from TGMC for rain and sirens (attributed to Cuboos
+      and IFartInUrGeneralDirection )
+  - image: Added weather images from TGMC for rain and sand storms (attributed to
+      Novaepee and Bimmer)
+  - refactor: Refactored a lot of the weather code to be more robust
+  - admin: Admins can now control more weather related options when running weather
+      events. The weather admin verbs have been moved to their own "Weather" category
+      under the Admin tab.
+  vinylspiders:
+  - bugfix: fixes the AI detector breaking if there is a machinery-camera operating
+      user nearby (like xenobio console or camera console for instance)
