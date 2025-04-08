@@ -1,0 +1,106 @@
+#define SNAIL_MOVEMENT_DISTANCE 5
+#define SNAIL_MOVEMENT_TIME 10 SECONDS
+
+/mob/living/basic/snail
+	name = "snail"
+	desc = "Is petting this thing sanitary?"
+	icon_state = "snail"
+	icon_living = "snail"
+	icon_dead = "snail"
+	base_icon_state = "snail"
+	held_state = "snail"
+	basic_mob_flags = FLIP_ON_DEATH
+	head_icon = 'icons/mob/clothing/head/pets_head.dmi'
+	icon = 'icons/mob/simple/pets.dmi'
+	butcher_results = list(/obj/item/food/meat/rawcutlet = 1)
+	mob_biotypes = MOB_ORGANIC
+	health = 30
+	maxHealth = 30
+	speed = 6
+	verb_say = "gurgles"
+	verb_ask = "gurgles curiously"
+	can_be_held = TRUE
+	verb_exclaim = "gurgles loudly"
+	verb_yell = "gurgles loudly"
+	worn_slot_flags = ITEM_SLOT_HEAD
+	faction = list(FACTION_NEUTRAL)
+	ai_controller = /datum/ai_controller/basic_controller/snail
+
+/mob/living/basic/snail/Initialize(mapload)
+	. = ..()
+	var/static/list/loc_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_entered))
+	AddElement(/datum/element/connect_loc, loc_connections)
+	var/static/list/eatable_food = list(
+		/obj/item/food/grown,
+		/obj/item/food/appleslice,
+	)
+	AddElement(/datum/element/ai_retaliate)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(eatable_food))
+	AddElement(/datum/element/basic_eating, food_types = eatable_food)
+	create_reagents(100, REAGENT_HOLDER_ALIVE)
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagents_update))
+
+/mob/living/basic/snail/proc/on_entered(datum/source, obj/effect/decal/cleanable/food/salt/potential_salt)
+	SIGNAL_HANDLER
+	if(istype(potential_salt))
+		death() //immediately perish
+
+/mob/living/basic/snail/proc/on_reagents_update(datum/source)
+	SIGNAL_HANDLER
+	if(reagents.has_reagent(/datum/reagent/consumable/salt))
+		death()
+
+/mob/living/basic/snail/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(!isturf(loc))
+		return
+	if(locate(/obj/effect/decal/cleanable/food/salt) in loc.contents)
+		death()
+
+/mob/living/basic/snail/mob_pickup(mob/living/user)
+	var/obj/item/clothing/head/mob_holder/snail/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/display_message = "[user] [HAS_TRAIT(src, TRAIT_MOVE_FLOATING) ? "scoops up" : "peels [src] off the ground"]!"
+	user.visible_message(span_warning(display_message))
+	user.put_in_hands(holder)
+
+/obj/item/clothing/head/mob_holder/snail
+
+/obj/item/clothing/head/mob_holder/snail/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/machinery/hydroponics))
+		return NONE
+
+	. = ITEM_INTERACT_BLOCKING
+	if(held_mob.stat == DEAD)
+		user.balloon_alert(user, "appears to be dead!")
+		return
+
+	if(locate(type) in interacting_with)
+		user.balloon_alert(user, "already has a snail!")
+		return
+
+	if(!do_after(user, 2 SECONDS, interacting_with))
+		return
+
+	forceMove(interacting_with)
+	user.balloon_alert(user, "placed")
+	return ITEM_INTERACT_SUCCESS
+
+/obj/effect/overlay/vis_effect/snail
+	vis_flags = VIS_INHERIT_PLANE
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	icon_state = "snail_hydrotray"
+	///are we currently walking?
+	var/is_waddling = FALSE
+
+/obj/effect/overlay/vis_effect/snail/proc/handle_animation()
+	if(is_waddling)
+		return
+	is_waddling = TRUE
+	var/movement_direction = pixel_x >= 0 ? -1 : 1
+	transform = transform.Scale(-1, 1) //face the other direction
+	animate(src, pixel_x = movement_direction * SNAIL_MOVEMENT_DISTANCE, time = SNAIL_MOVEMENT_TIME)
+	addtimer(VARSET_CALLBACK(src, is_waddling, FALSE), SNAIL_MOVEMENT_TIME)
+
+
+#undef SNAIL_MOVEMENT_DISTANCE
+#undef SNAIL_MOVEMENT_TIME

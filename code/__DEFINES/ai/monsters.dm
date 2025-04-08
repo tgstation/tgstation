@@ -328,3 +328,7 @@
 #define BB_TURTLE_FLORA_TARGET "turtle_flora_target"
 
 #define BB_GUNMIMIC_GUN_EMPTY "BB_GUNMIMIC_GUN_EMPTY"
+
+//snails
+///snail people we dance around
+#define BB_SNAIL_PERSON "snail_person"
