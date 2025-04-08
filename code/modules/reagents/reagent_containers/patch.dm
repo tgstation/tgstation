@@ -192,7 +192,7 @@
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	list_reagents_purity = 1
 	icon_state = "bandaid_both"
-	embed_type = /datum/embedding/med_patch/instant
+	embed_type = /datum/embedding/med_patch/instant //synthflesh effects occur on the initial apply only, so we need to apply it all at once
 
 /obj/item/reagent_containers/applicator/patch/synthflesh/canconsume(mob/eater, mob/user)
 	. = ..()
