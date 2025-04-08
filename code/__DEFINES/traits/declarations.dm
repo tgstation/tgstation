@@ -698,6 +698,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ASHSTORM_IMMUNE "ashstorm_immune"
 #define TRAIT_SNOWSTORM_IMMUNE "snowstorm_immune"
 #define TRAIT_RADSTORM_IMMUNE "radstorm_immune"
+#define TRAIT_SANDSTORM_IMMUNE "sandstorm_immune"
+#define TRAIT_RAINSTORM_IMMUNE "rainstorm_immune"
 #define TRAIT_WEATHER_IMMUNE "weather_immune" //Immune to ALL weather effects.
 
 /// Cannot be grabbed by goliath tentacles
@@ -985,6 +987,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// If present on a [/mob/living/carbon], will make them appear to have a medium level disease on health HUDs.
 #define TRAIT_DISEASELIKE_SEVERITY_MEDIUM "diseaselike_severity_medium"
+/// If present on a [/mob/living/carbon], will make them appear to have a dangerous level disease on health HUDs.
+#define TRAIT_DISEASELIKE_SEVERITY_HIGH "diseaselike_severity_high"
 
 /// trait denoting someone will crawl faster in soft crit
 #define TRAIT_TENACIOUS "tenacious"
