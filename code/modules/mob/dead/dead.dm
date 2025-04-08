@@ -35,16 +35,17 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		return
 	var/time_remaining = SSticker.GetTimeLeft()
 	if(time_remaining > 0)
-		. += "Time To Start: [round(time_remaining/10)]s"
+		. += list(list("Time To Start: [round(time_remaining/10)]s"))
 	else if(time_remaining == -10)
-		. += "Time To Start: DELAYED"
+		. += list(list("Time To Start: DELAYED"))
 	else
-		. += "Time To Start: SOON"
+		. += list(list("Time To Start: SOON"))
 
-	. += "Players: [LAZYLEN(GLOB.clients)]"
+	. += list(list("Players: [LAZYLEN(GLOB.clients)]"))
 	if(client.holder)
-		. += "Players Ready: [SSticker.totalPlayersReady]"
-		. += "Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
+		. += list(list("Players Ready: [SSticker.totalPlayersReady]"))
+		. += list(list("Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"))
+	return .
 
 #define SERVER_HOPPER_TRAIT "server_hopper"
 

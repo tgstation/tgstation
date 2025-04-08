@@ -350,14 +350,18 @@ function draw_status() {
 	for (var i = 0; i < status_tab_parts.length; i++) {
 		var part = status_tab_parts[i];
 		var div = document.createElement("div");
-		div.textContent = part[0];
-		if (part[2]) {
-			var a = document.createElement("a");
-			a.href = "byond://?" + part[2];
-			a.textContent = part[1];
-			div.appendChild(a);
+		if (part[0].trim() == "") {
+			table.appendChild(document.createElement("br"));
+		} else {
+			div.textContent = part[0];
+			if (part[2]) {
+				var a = document.createElement("a");
+				a.href = "byond://?" + part[2];
+				a.textContent = part[1];
+				div.appendChild(a);
+			}
+			table.appendChild(div);
 		}
-		table.appendChild(div);
 	}
 	document.getElementById("statcontent").appendChild(table);
 	if (verb_tabs.length == 0 || !verbs) {

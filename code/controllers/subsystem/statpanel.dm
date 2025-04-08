@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(statpanels)
 			isnull(SSmapping.current_map) ? list("Loading") : \
 				SSmapping.current_map?.feedback_link ? list("Map: ", "[SSmapping.current_map.map_name]", "action=openLink&link=[SSmapping.current_map.feedback_link]") : \
 				list("Map: [SSmapping.current_map?.map_name]"),
-			cached ? list("Next Map: [cached.map_name]") : list(""),
+			cached ? list("Next Map: [cached.map_name]") : null,
 			list("Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]"),
 			list("Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)]"),
 			list("Round Time: [ROUND_TIME()]"),
