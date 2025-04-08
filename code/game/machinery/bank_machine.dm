@@ -53,7 +53,7 @@
 		value = inserted_holochip.credits
 	else if(istype(weapon, /obj/item/coin))
 		var/obj/item/coin/inserted_coin = weapon
-		value = inserted_coin.credits
+		value = inserted_coin.value
 	if(value)
 		if(synced_bank_account)
 			synced_bank_account.adjust_money(value)
