@@ -287,13 +287,6 @@ Turf and target are separate in case you want to teleport some distance from a t
  * also keep in mind that the screen size is the worlds pixel size, while mousepos and size are the completely unrelated control size
  */
 /proc/get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, client/viewing_client)
-	//hack because we can't have shit with this engine!!!!!!
-	// https://discord.com/channels/725444629172060262/1063155296052191373/1357460149836451960
-	mousepos_x = mousepos_x / 2
-	mousepos_y = mousepos_y / 2
-	sizex = sizex / 2
-	sizey = sizey / 2
-
 	var/turf/baseloc = get_turf(viewing_client.eye)
 	var/list/actual_view = getviewsize(viewing_client ? viewing_client.view : world.view)
 
