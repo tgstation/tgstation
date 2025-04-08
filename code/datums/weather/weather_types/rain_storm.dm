@@ -204,4 +204,4 @@
 	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent))
 
 	whitelist_weather_reagents = GLOB.wizard_rain_reagents
-	..()
+	return ..()
