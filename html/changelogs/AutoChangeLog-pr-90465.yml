@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Supermatter delamination now applies hallucinations based on distance"

@@ -37,10 +37,6 @@ SUBSYSTEM_DEF(tgui)
 	ntos_error = "<style type='text/css'>\n[ntos_error]\n</style>"
 	basehtml = replacetextEx(basehtml, "<!-- tgui:ntos-error -->", ntos_error)
 
-	// Inject inline polyfills
-	var/polyfill = file2text('tgui/public/tgui-polyfill.min.js')
-	polyfill = "<script type='text/javascript'>\n[polyfill]\n</script>"
-	basehtml = replacetextEx(basehtml, "<!-- tgui:inline-polyfill -->", polyfill)
 	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[CURRENT_STATION_YEAR]")
 
 

@@ -58,6 +58,11 @@
 	. += span_notice("It has [pictures_left] photos left.")
 	. += span_notice("Alt-click to change its focusing, allowing you to set how big of an area it will capture.")
 
+	if(!disk)
+		. += span_notice("It has a slot for a holographic disk.")
+	else
+		. += span_notice("It has \an [disk.name] inserted.")
+
 /obj/item/camera/proc/adjust_zoom(mob/user)
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the camera to continue!"))
