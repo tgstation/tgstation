@@ -91,6 +91,9 @@
 	icon_state = "synthgel"
 	current_skin = "synthgel"
 	list_reagents = list(/datum/reagent/medicine/c2/synthflesh = 60)
+	list_reagents_purity = 1
+	amount_per_transfer_from_this = 60
+	possible_transfer_amounts = list(5, 10, 60)
 	custom_price = PAYCHECK_CREW * 5
 
 /obj/item/reagent_containers/medigel/sterilizine
