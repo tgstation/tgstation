@@ -143,7 +143,7 @@
 
 	if(minimize_when_attached)
 		transform *= 2
-		// Reset our visual offset
+		// Reset our applied offset
 		pixel_w = 0
 		pixel_z = 0
 		// just randomize position
