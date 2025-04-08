@@ -262,6 +262,12 @@
 			SPECIES_PERK_NAME = "Hydrophobia",
 			SPECIES_PERK_DESC = "Felinids don't like getting soaked with water.",
 		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "face-tired",
+			SPECIES_PERK_NAME = "Xenophobia",
+			SPECIES_PERK_DESC = "Some humans tend to look down on non-humans and may be harsher to you.",
+		),
 	)
 
 	return to_add
