@@ -167,7 +167,7 @@
 	if(flags_1 & HOLOGRAM_1)
 		return
 
-	for(var/mob/living/nearby in viewers())
+	for(var/mob/living/nearby in viewers(src))
 		if(nearby.stat >= UNCONSCIOUS || nearby.is_blind())
 			continue
 		var/datum/mood_event/existing = nearby.mob_mood?.mood_events[DEATH_MOODLET]
