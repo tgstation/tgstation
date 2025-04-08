@@ -2,9 +2,9 @@ import {
   Box,
   Button,
   Collapsible,
-  Stack,
   ProgressBar,
   Section,
+  Stack,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
