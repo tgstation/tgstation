@@ -110,9 +110,10 @@ Turf and target are separate in case you want to teleport some distance from a t
  *
  * Arguments
  * * something_in_turf - a movable within the turf, somewhere.
- * * stop_type - optional - stops looking if stop_type is found in the turf, returning that type (if found).
+ * * stop_type - stops looking if stop_type is found in the turf, returning that type (if found).
+ * * return_any - if set to TRUE, will return last movable found even if its not of the passed type
  **/
-/proc/get_atom_on_turf(atom/movable/something_in_turf, stop_type)
+/proc/get_atom_on_turf(atom/movable/something_in_turf, stop_type = null, return_any = FALSE)
 	if(!istype(something_in_turf))
 		CRASH("get_atom_on_turf was not passed an /atom/movable! Got [isnull(something_in_turf) ? "null":"type: [something_in_turf.type]"]")
 
@@ -123,7 +124,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if(stop_type && istype(topmost_thing, stop_type))
 			return topmost_thing
 
-	if (!stop_type)
+	if (!stop_type || return_any)
 		return topmost_thing
 
 ///Returns the turf located at the map edge in the specified direction relative to target_atom used for mass driver
