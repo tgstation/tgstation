@@ -60,6 +60,7 @@
 		"MECHA_INT_CONTROL_LOST" = MECHA_INT_CONTROL_LOST,
 		"MECHA_INT_SHORT_CIRCUIT" = MECHA_INT_SHORT_CIRCUIT,
 	)
+	data["diagnostic_status"] = HAS_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED)
 
 	var/list/regions = list()
 	var/list/tgui_region_data = SSid_access.all_region_access_tgui
@@ -225,5 +226,12 @@
 		if("equip_act")
 			var/obj/item/mecha_parts/mecha_equipment/gear = locate(params["ref"]) in flat_equipment
 			return gear?.ui_act(params["gear_action"], params, ui, state)
+		if("diagnostic")
+			if(HAS_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED))
+				return FALSE
+			var/obj/item/mecha_diagnostic/diagnostic = new /obj/item/mecha_diagnostic(get_turf(src))
+			diagnostic.name = "mecha holodiagnostic ([src.name])"
+			diagnostic.mech_data += src
+			ADD_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED, REF(src))
 	return TRUE
 

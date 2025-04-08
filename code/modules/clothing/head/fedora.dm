@@ -4,7 +4,7 @@
 	icon_state = "fedora"
 	icon = 'icons/obj/clothing/head/hats.dmi'
 	worn_icon = 'icons/mob/clothing/head/hats.dmi'
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
+	hair_mask = /datum/hair_mask/standard_hat_low
 
 /obj/item/clothing/head/fedora/Initialize(mapload)
 	. = ..()

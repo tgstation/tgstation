@@ -1,0 +1,45 @@
+@use 'sass:meta';
+@use 'sass:color';
+@use './colors.scss';
+
+// Core styles
+@include meta.load-css('~tgui/styles/reset');
+// Atomic styles
+@include meta.load-css('~tgui/styles/atomic/text.scss');
+// External styles
+@include meta.load-css('~tgui-core/styles/components/TextArea');
+// Local styles
+@include meta.load-css('./styles.scss');
+
+@each $channel, $color in colors.$channel-map {
+  $darkened: color.adjust($color, $lightness: -20%, $space: hsl);
+
+  .button-#{$channel} {
+    border-color: color.adjust($color, $lightness: -10%, $space: hsl);
+    color: $color;
+    user-select: none;
+    &:hover {
+      border-color: color.adjust($color, $lightness: 10%, $space: hsl);
+      color: color.adjust($color, $lightness: 5%, $space: hsl);
+    }
+  }
+
+  .textarea-#{$channel} {
+    color: $color;
+  }
+
+  .window-#{$channel} {
+    background-color: $color;
+  }
+
+  .shine-#{$channel} {
+    background: radial-gradient(
+      circle,
+      color.adjust($color, $lightness: 5%, $space: hsl),
+      color.adjust($color, $lightness: -15%, $space: hsl),
+      color.adjust($color, $lightness: 15%, $space: hsl),
+      color.adjust($color, $lightness: -15%, $space: hsl),
+      color.adjust($color, $lightness: 5%, $space: hsl)
+    );
+  }
+}

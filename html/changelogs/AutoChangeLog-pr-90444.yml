@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "You can now mark newscaster channels as cross-sector to send messages to other servers."
