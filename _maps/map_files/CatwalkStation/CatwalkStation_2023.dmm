@@ -6749,7 +6749,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/multiz/yellow/hidden,
+/obj/machinery/atmospherics/pipe/multiz/yellow/hidden{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "clT" = (
@@ -73325,7 +73327,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/anesthetic_mix,
 /turf/open/openspace,
 /area/station/medical/cryo)
 "yco" = (
