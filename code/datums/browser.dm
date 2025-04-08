@@ -14,7 +14,11 @@
 	var/content = ""
 
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
-	user = nuser
+	if(IS_CLIENT_OR_MOCK(nuser))
+		var/client/client_user = user
+		user = client_user.mob
+	else
+		user = nuser
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(user_deleted))
 	window_id = nwindow_id
 	if (ntitle)
@@ -113,9 +117,6 @@
 		to_chat(user, span_userdanger("The [title] browser you tried to open failed a sanity check! Please report this on GitHub!"))
 		return
 	var/window_size = ""
-	if(IS_CLIENT_OR_MOCK(user))
-		var/client/client_user = user
-		user = client_user.mob
 	if(width && height)
 		if(user.client?.prefs?.read_preference(/datum/preference/toggle/ui_scale))
 			var/scaling = user.client.window_scaling
