@@ -53,12 +53,12 @@
 		RND_CATEGORY_AKHTER_SEEDS,
 	)
 
-/datum/design/organic_oat_seed
-	name = "Oat Seed Pack"
-	id = "oganic_oat_seed"
+/datum/design/organic_wheat_seed
+	name = "Wheat Seed Pack"
+	id = "oganic_wheat_seed"
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 25)
-	build_path = /obj/item/seeds/wheat/oat
+	build_path = /obj/item/seeds/wheat
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_AKHTER_SEEDS,
@@ -81,6 +81,39 @@
 	build_type = BIOGENERATOR
 	materials = list(/datum/material/biomass = 25)
 	build_path = /obj/item/seeds/plump
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_AKHTER_SEEDS,
+	)
+
+/datum/design/organic_towercap_seed
+	name = "Tower-cap Seed Pack"
+	id = "oganic_towercap_seed"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 25)
+	build_path = /obj/item/seeds/tower
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_AKHTER_SEEDS,
+	)
+
+/datum/design/organic_tobacco_seed
+	name = "Tobacco Seed Pack"
+	id = "oganic_tobacco_seed"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 25)
+	build_path = /obj/item/seeds/tobacco
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_AKHTER_SEEDS,
+	)
+
+/datum/design/organic_ambrosia_seed
+	name = "Ambrosia Vulgaris Seed Pack"
+	id = "oganic_ambrosia_seed"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass = 25)
+	build_path = /obj/item/seeds/ambrosia
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_AKHTER_SEEDS,
