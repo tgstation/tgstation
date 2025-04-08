@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(air)
 	name = "Atmospherics"
 	dependencies = list(
 		/datum/controller/subsystem/mapping,
-		/datum/controller/subsystem/atoms
+		/datum/controller/subsystem/atoms,
 	)
 	priority = FIRE_PRIORITY_AIR
 	wait = 0.5 SECONDS
