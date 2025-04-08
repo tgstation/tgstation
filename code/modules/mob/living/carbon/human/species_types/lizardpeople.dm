@@ -162,13 +162,17 @@
 			tolerance for cold temperatures. Additionally, they cannot self-regulate their body temperature - \
 			they are as cold or as warm as the environment around them is. Stay warm!",
 	),
-	list(
-		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-		SPECIES_PERK_ICON = "face-tired",
-		SPECIES_PERK_NAME = "Xenophobia",
-		SPECIES_PERK_DESC = "Some humans tend to look down on non-humans and may be harsher to you.",
-	),
 	)
+
+	if(CONFIG_GET(string/human_authority))
+		to_add += list(
+			list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "face-tired",
+			SPECIES_PERK_NAME = "Xenophobia",
+			SPECIES_PERK_DESC = "Some humans tend to look down on non-humans and may be harsher to you.",
+		),
+		)
 
 	return to_add
 

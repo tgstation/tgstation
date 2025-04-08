@@ -157,12 +157,16 @@
 				themselves, such as against security officers or when welding. Welding \
 				masks will work.",
 		),
-		list(
+	)
+
+	if(CONFIG_GET(string/human_authority))
+		to_add += list(
+			list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "face-tired",
 			SPECIES_PERK_NAME = "Xenophobia",
 			SPECIES_PERK_DESC = "Some humans tend to look down on non-humans and may be harsher to you.",
 		),
-	)
+		)
 
 	return to_add
