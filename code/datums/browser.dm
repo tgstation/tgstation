@@ -113,6 +113,9 @@
 		to_chat(user, span_userdanger("The [title] browser you tried to open failed a sanity check! Please report this on GitHub!"))
 		return
 	var/window_size = ""
+	if(IS_CLIENT_OR_MOCK(user))
+		var/client/client_user = user
+		user = client_user.mob
 	if(width && height)
 		if(user.client?.prefs?.read_preference(/datum/preference/toggle/ui_scale))
 			var/scaling = user.client.window_scaling
@@ -125,7 +128,7 @@
 		SSassets.transport.send_assets(user, stylesheets)
 	if (scripts.len)
 		SSassets.transport.send_assets(user, scripts)
-	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
+	DIRECT_OUTPUT(user, browse(get_content(), "window=[window_id];[window_size][window_options]"))
 	if (use_onclose)
 		setup_onclose()
 
