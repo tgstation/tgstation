@@ -15,7 +15,7 @@
 
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
 	if(IS_CLIENT_OR_MOCK(nuser))
-		var/client/client_user = user
+		var/client/client_user = nuser
 		user = client_user.mob
 	else
 		user = nuser
