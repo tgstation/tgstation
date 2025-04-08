@@ -15,7 +15,7 @@ if (!String.prototype.trim) {
 }
 
 // Status panel implementation ------------------------------------------------
-var status_tab_parts = ["Loading..."];
+var status_tab_parts = [["Loading...", ""]];
 var current_tab = null;
 var mc_tab_parts = [["Loading...", ""]];
 var href_token = null;
@@ -346,16 +346,20 @@ function draw_status() {
 		current_tab = "Status";
 	}
 	statcontentdiv.textContent = '';
+	var table = document.createElement("table");
 	for (var i = 0; i < status_tab_parts.length; i++) {
-		if (status_tab_parts[i].trim() == "") {
-			document.getElementById("statcontent").appendChild(document.createElement("br"));
-		} else {
-			var div = document.createElement("div");
-			div.textContent = status_tab_parts[i];
-			div.className = "status-info";
-			document.getElementById("statcontent").appendChild(div);
+		var part = status_tab_parts[i];
+		var div = document.createElement("div");
+		div.textContent = part[0];
+		if (part[2]) {
+			var a = document.createElement("a");
+			a.href = "byond://?" + part[2];
+			a.textContent = part[1];
+			div.appendChild(a);
 		}
+		table.appendChild(div);
 	}
+	document.getElementById("statcontent").appendChild(table);
 	if (verb_tabs.length == 0 || !verbs) {
 		Byond.command("Fix-Stat-Panel");
 	}

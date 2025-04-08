@@ -13,6 +13,9 @@
 	var/voteweight = 1
 	var/votable = FALSE
 
+	///A URL linking to a place for people to send feedback about this map.
+	var/feedback_link
+
 	// Config actually from the JSON - should default to Meta
 	var/map_name = "MetaStation"
 	var/map_path = "map_files/MetaStation"
@@ -34,7 +37,8 @@
 		"cargo" = "cargo_box",
 		"ferry" = "ferry_fancy",
 		"whiteship" = "whiteship_meta",
-		"emergency" = "emergency_meta")
+		"emergency" = "emergency_meta",
+	)
 
 	/// Dictionary of job sub-typepath to template changes dictionary
 	var/job_changes = list()
@@ -190,6 +194,9 @@
 
 	if ("load_all_away_missions" in json)
 		load_all_away_missions = json["load_all_away_missions"]
+
+	if("feedbacklink" in json)
+		feedback_link = json["feedbacklink"]
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 

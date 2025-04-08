@@ -22,13 +22,15 @@ SUBSYSTEM_DEF(statpanels)
 		num_fires++
 		var/datum/map_config/cached = SSmap_vote.next_map_config
 		global_data = list(
-			"Map: [SSmapping.current_map?.map_name || "Loading..."]",
-			cached ? "Next Map: [cached.map_name]" : null,
-			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
-			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)]",
-			"Round Time: [ROUND_TIME()]",
-			"Station Time: [station_time_timestamp()]",
-			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)"
+			isnull(SSmapping.current_map) ? list("Loading") : \
+				SSmapping.current_map?.feedback_link ? list("Map: ", "[SSmapping.current_map.map_name]", "action=openLink&link=[SSmapping.current_map.feedback_link]") : \
+				list("Map: [SSmapping.current_map?.map_name]"),
+			cached ? list("Next Map: [cached.map_name]") : list(""),
+			list("Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]"),
+			list("Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)]"),
+			list("Round Time: [ROUND_TIME()]"),
+			list("Station Time: [station_time_timestamp()]"),
+			list("Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)"),
 		)
 
 		if(SSshuttle.emergency)
@@ -103,7 +105,7 @@ SUBSYSTEM_DEF(statpanels)
 		return
 	target.stat_panel.send_message("update_stat", list(
 		"global_data" = global_data,
-		"ping_str" = "Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)",
+		"ping_str" = list("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)"),
 		"other_str" = target.mob?.get_status_tab_items(),
 	))
 
