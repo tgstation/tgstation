@@ -162,10 +162,11 @@
 ///Gum Box
 /datum/storage/box/gum
 	max_slots = 4
+	allow_big_nesting = TRUE
 
 /datum/storage/box/gum/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-	set_holdable(/obj/item/food/bubblegum)
+	set_holdable(/obj/item/storage/bubblegum_wrapper)
 
 ///Fishing lures box
 /datum/storage/box/fishing_lures/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
