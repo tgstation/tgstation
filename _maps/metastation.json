@@ -3,7 +3,6 @@
 	"map_name": "MetaStation",
 	"map_path": "map_files/MetaStation",
 	"map_file": "MetaStation.dmm",
-	"feedbacklink": "https://www.youtube.com/watch?v=XG8b7WhANNA",
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
