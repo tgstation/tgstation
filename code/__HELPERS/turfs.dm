@@ -333,8 +333,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 	mousepos_y /= y_ratio
 
 	//relative to bottom left corner of turf in the middle of the screen
-	var/relative_x = mousepos_x - (screen_width / 2) + (ICON_SIZE_X/2)
-	var/relative_y = -(mousepos_y - (screen_height / 2))+ (ICON_SIZE_Y/2) - 1
+	var/relative_x = mousepos_x - (screen_width / 2) + (ICON_SIZE_X/2) + viewing_client.pixel_x + viewing_client.pixel_w
+	var/relative_y = -(mousepos_y - (screen_height / 2))+ (ICON_SIZE_Y/2) - 1 + viewing_client.pixel_y + viewing_client.pixel_z
 	var/turf_x_diff = FLOOR(relative_x / ICON_SIZE_X, 1)
 	var/turf_y_diff = FLOOR(relative_y / ICON_SIZE_Y, 1)
 
