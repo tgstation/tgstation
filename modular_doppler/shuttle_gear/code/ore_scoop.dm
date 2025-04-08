@@ -19,14 +19,14 @@
 	var/callback_tracker
 	/// Weighted list of the ores we can spawn
 	var/list/mineral_breakdown = list(
-		/datum/material/iron = 1,
-		/datum/material/glass = 1,
-		/datum/material/plasma = 1,
-		/datum/material/titanium = 1,
-		/datum/material/silver = 1,
-		/datum/material/gold = 1,
+		/datum/material/iron = 5,
+		/datum/material/glass = 5,
+		/datum/material/titanium = 5,
+		/datum/material/silver = 3,
+		/datum/material/gold = 3,
+		/datum/material/plasma = 2,
+		/datum/material/uranium = 2,
 		/datum/material/diamond = 1,
-		/datum/material/uranium = 1,
 		/datum/material/bluespace = 1,
 		/datum/material/plastic = 1,
 	)
@@ -147,5 +147,6 @@
 		flying = FALSE
 		if(callback_tracker)
 			deltimer(callback_tracker)
+			callback_tracker = null
 
 #undef MINERALS_PER_BOULDER
