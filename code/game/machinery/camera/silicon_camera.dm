@@ -12,7 +12,7 @@
 	. = ..()
 	if(!isliving(loc))
 		return INITIALIZE_HINT_QDEL
-	src.living_host = loc
+	living_host = loc
 
 /obj/machinery/camera/silicon/Destroy()
 	if(!isnull(living_host))
