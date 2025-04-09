@@ -255,7 +255,7 @@
 	if(iscarbon(living_mob))
 		if(living_mob.stat == CONSCIOUS)
 			living_mob.say("ARRRRRRRRRRRGH!!!", forced= "recycler grinding")
-		add_mob_blood(L)
+		add_mob_blood(living_mob)
 
 	if(!bloody && !issilicon(living_mob))
 		bloody = TRUE

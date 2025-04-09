@@ -4886,6 +4886,7 @@
 #include "code\modules\mob\eye\camera\camera.dm"
 #include "code\modules\mob\eye\camera\remote.dm"
 #include "code\modules\mob\living\blood.dm"
+#include "code\modules\mob\living\blood_types.dm"
 #include "code\modules\mob\living\damage_procs.dm"
 #include "code\modules\mob\living\death.dm"
 #include "code\modules\mob\living\emote.dm"
