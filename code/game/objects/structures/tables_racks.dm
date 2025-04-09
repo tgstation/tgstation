@@ -78,7 +78,7 @@
 	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
 
 	if(can_flip && is_flipped)
-		flip_table()
+		flip_table(dir)
 		return
 
 	make_climbable()
@@ -121,7 +121,7 @@
 	is_flipped = FALSE
 
 //proc that removes elements present in now-flipped tables
-/obj/structure/table/proc/flip_table(new_dir)
+/obj/structure/table/proc/flip_table(new_dir = SOUTH)
 	playsound(src, 'sound/items/trayhit/trayhit1.ogg', 100)
 	RemoveElement(/datum/element/climbable)
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)

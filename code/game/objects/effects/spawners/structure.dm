@@ -388,5 +388,9 @@ again.
 	. = ..()
 	var/obj/structure/table/table_to_flipped = new table_to_spawn(loc)
 	table_to_flipped.dir = dir
-	table_to_flipped.flip_table()
+	RegisterSignal(table_to_flipped, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(on_icon_smoothed))
 
+/obj/effect/spawner/structure/flipped_table/proc/on_icon_smoothed(obj/structure/table/table_to_flipped)
+	SIGNAL_HANDLER
+	table_to_flipped.flip_table(table_to_flipped.dir)
+	UnregisterSignal(table_to_flipped, COMSIG_ATOM_SMOOTHED_ICON)
