@@ -128,6 +128,14 @@
 	/// Example: If req_one_access = list(ACCESS_ENGINE, ACCESS_CE)- then the user must have either ACCESS_ENGINE or ACCESS_CE in order to use the object.
 	var/list/req_one_access
 
+/mutable_appearance/emissive_blocker
+
+/mutable_appearance/emissive_blocker/New()
+	. = ..()
+	// Need to do this here because it's overridden by the parent call
+	// This is a microop which is the sole reason why this child exists, because its static this is a really cheap way to set color without setting or checking it every time we create an atom
+	color = EM_BLOCK_COLOR
+
 /atom/movable/Initialize(mapload, ...)
 	. = ..()
 #ifdef UNIT_TESTS
@@ -159,13 +167,12 @@
 			else
 				managed_overlays = em_block
 	else
-		var/static/mutable_appearance/blocker = new()
+		var/static/mutable_appearance/emissive_blocker/blocker = new()
 		blocker.icon = icon
 		blocker.icon_state = icon_state
 		blocker.dir = dir
-		blocker.color = EM_BLOCK_COLOR
 		blocker.appearance_flags = appearance_flags | EMISSIVE_APPEARANCE_FLAGS
-		SET_PLANE_EXPLICIT(blocker, EMISSIVE_PLANE, src)
+		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane)) // Flattens the micro for a microop
 		// Ok so this is really cursed, but I want to set with this blocker cheaply while
 		// Still allowing it to be removed from the overlays list later
 		// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
