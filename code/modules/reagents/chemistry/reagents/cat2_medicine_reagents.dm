@@ -522,8 +522,11 @@
 		return
 
 	//don't try to unhusk mobs above burn damage threshold
-	if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
+	if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD * 2.5)
 		carbies.visible_message(span_minoralert("The liquid fails to properly stick on [carbies]. [carbies]'s burns need to be repaired first!"))
+		return
+	else if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
+		carbies.visible_message(span_boldnotice("A rubbery liquid partially coats [carbies]'s burns... It seems more is required to fully unhusk!"))
 		return
 
 	var/datum/reagent/synthflesh = carbies.reagents.has_reagent(/datum/reagent/medicine/c2/synthflesh)
