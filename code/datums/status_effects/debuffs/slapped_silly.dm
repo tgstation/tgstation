@@ -1,7 +1,7 @@
 /datum/status_effect/slapped_silly
 	id = "slapped_silly"
 	duration = 10 SECONDS
-	alert_type = atom/movable/screen/alert/status_effect/slapped_silly
+	alert_type = /atom/movable/screen/alert/status_effect/slapped_silly
 	///This sound is played for the duration of the effect.
 	var/datum/looping_sound/dizzy_birdies/bird_noise
 	///This overlay is applied to the owner for the duration of the effect.

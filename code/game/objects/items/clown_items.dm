@@ -297,11 +297,12 @@
 	slapped.apply_status_effect(/datum/status_effect/pranked)
 
 /obj/item/rubber_chicken/attack_secondary(mob/living/victim, mob/living/user, params)
+	. = ..()
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to gahonk anyone!"))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-	if(!HAS_TRAIT(user, TRAIT_CLUMSY))
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) || is_clown_job(user.mind?.assigned_role))
 		return SECONDARY_ATTACK_CALL_NORMAL
 
 	var/datum/status_effect/pranked/victim_pranked = victim.has_status_effect(/datum/status_effect/pranked)

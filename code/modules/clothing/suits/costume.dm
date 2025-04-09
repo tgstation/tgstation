@@ -131,7 +131,14 @@
 	inhand_icon_state = "chickensuit"
 	body_parts_covered = CHEST|ARMS|GROIN|LEGS|FEET
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
-	allowed = list(/obj/item/tank/internals/emergency_oxygen,/obj/item/tank/internals/plasmaman,/obj/item/tank/jetpack/oxygen/captain,/obj/item/storage/belt/holster, /obj/item/rubber_chicken, /obj/item/food/egg)
+	allowed = list(
+		/obj/item/tank/internals/emergency_oxygen,
+		/obj/item/tank/internals/plasmaman,
+		/obj/item/tank/jetpack/oxygen/captain,
+		/obj/item/storage/belt/holster, 
+		/obj/item/rubber_chicken, 
+		/obj/item/food/egg,
+	)
 
 /obj/item/clothing/suit/costume/monkeysuit
 	name = "monkey suit"
