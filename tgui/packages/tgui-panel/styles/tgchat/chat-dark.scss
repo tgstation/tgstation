@@ -28,19 +28,25 @@ img.icon {
 }
 
 a {
-  color: hsl(201.7, 48.6%, 43.5%);
-}
-
-a.visited {
-  color: hsl(272.3, 100%, 45.1%);
-}
-
-a:visited {
-  color: hsl(272.3, 100%, 45.1%);
-}
-
-a.popt {
+  cursor: var(--cursor-pointer);
+  color: var(--color-hyperlink);
+  transition: color var(--transition-time-medium);
   text-decoration: none;
+
+  &:hover {
+    color: hsl(from var(--color-hyperlink) h s calc(l + var(--adjust-hover)));
+  }
+}
+
+a.visited,
+a:visited {
+  color: var(--color-hyperlink-visited);
+
+  &:hover {
+    color: hsl(
+      from var(--color-hyperlink-visited) h s calc(l + var(--adjust-hover))
+    );
+  }
 }
 
 .center {
