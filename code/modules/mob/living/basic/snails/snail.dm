@@ -63,6 +63,8 @@
 	user.visible_message(span_warning(display_message))
 	user.put_in_hands(holder)
 
+
+///snail's custom holder object
 /obj/item/clothing/head/mob_holder/snail
 
 /obj/item/clothing/head/mob_holder/snail/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -82,7 +84,6 @@
 		return
 
 	forceMove(interacting_with)
-	user.balloon_alert(user, "placed")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/overlay/vis_effect/snail

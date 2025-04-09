@@ -13,7 +13,7 @@
 	)
 
 /datum/ai_planning_subtree/find_and_hunt_target/snail_people
-	target_key = BB_SNAIL_PERSON
+	target_key = BB_LOW_PRIORITY_HUNTING_TARGET
 	finding_behavior = /datum/ai_behavior/find_hunt_target/snail_people
 	hunting_behavior = /datum/ai_behavior/hunt_target/snail_people
 	hunt_targets = list(
