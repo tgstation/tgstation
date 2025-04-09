@@ -721,6 +721,7 @@
 /obj/machinery/light/cold/directional/north,
 /obj/machinery/light_switch/directional/north,
 /obj/item/circuitboard/machine/techfab,
+/obj/item/screwdriver/omni_drill,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/do_it_yourself_large)
 "Rf" = (
