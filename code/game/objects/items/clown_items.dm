@@ -316,8 +316,16 @@
 
 	playsound(user, 'sound/items/weapons/punch1.ogg', min(slap_power * 10, 80))
 	user.do_attack_animation(src)
-	victim.apply_damage(7 * slap_power, STAMINA, BODY_ZONE_HEAD)
-	victim.apply_status_effect(/datum/status_effect/slapped_silly, slap_power * 2 SECONDS)
+	honk_block = victim.run_armor_check(
+			def_zone = BODY_ZONE_HEAD,
+			attack_flag = MELEE,
+			absorb_text = span_nicegreen("Your helmet has protected your dignity from the clown!"),
+			soften_text = span_warning("Your helmet has softened the impact from the [name]!"),
+			armour_penetration = armour_penetration,
+			weak_against_armour = weak_against_armour)
+
+	victim.apply_damage(force * 0.7 * slap_power, STAMINA, BODY_ZONE_HEAD, blocked = honk_block)
+	victim.apply_status_effect(min(/datum/status_effect/slapped_silly, slap_power * 2 SECONDS, 30 SECONDS))
 	victim.remove_status_effect(/datum/status_effect/pranked)
 	user.visible_message(span_danger("[user] knocks [victim] silly with [src]!"))
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
