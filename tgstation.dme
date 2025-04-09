@@ -7313,6 +7313,7 @@
 #include "modular_doppler\modular_weapons\manufacturer_examine\code\gun_company_additions.dm"
 #include "modular_doppler\modular_weapons\manufacturer_examine\code\manufacturer_element.dm"
 #include "modular_doppler\most_evil_health_rework\code\carbon_health.dm"
+#include "modular_doppler\most_evil_health_rework\code\yo_doc_im_bleedin_here.dm"
 #include "modular_doppler\ntnrc_for_all\code\ai_chat.dm"
 #include "modular_doppler\ntnrc_for_all\code\common_chat.dm"
 #include "modular_doppler\ntnrc_for_all\code\ntnrc_client_edits.dm"
