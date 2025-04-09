@@ -248,7 +248,7 @@
 
 	painting_metadata.creator_ckey = user.ckey
 	painting_metadata.creator_name = user.real_name
-	painting_metadata.creation_date = time2text(world.realtime)
+	painting_metadata.creation_date = time2text(world.realtime, "DDD MMM DD hh:mm:ss YYYY", TIMEZONE_UTC)
 	painting_metadata.creation_round_id = GLOB.round_id
 	generate_proper_overlay()
 	finalized = TRUE
@@ -349,16 +349,16 @@
 	. = ..()
 	if(icon_generated)
 		var/mutable_appearance/detail = mutable_appearance(generated_icon)
-		detail.pixel_x = 1
-		detail.pixel_y = 1
+		detail.pixel_w = 1
+		detail.pixel_z = 1
 		. += detail
 		return
 	if(!used)
 		return
 
 	var/mutable_appearance/detail = mutable_appearance(icon, "[icon_state]wip")
-	detail.pixel_x = 1
-	detail.pixel_y = 1
+	detail.pixel_w = 1
+	detail.pixel_z = 1
 	. += detail
 
 /obj/item/canvas/proc/generate_proper_overlay()
@@ -649,8 +649,8 @@
 		return
 
 	var/mutable_appearance/painting = mutable_appearance(current_canvas.generated_icon)
-	painting.pixel_x = current_canvas.framed_offset_x
-	painting.pixel_y = current_canvas.framed_offset_y
+	painting.pixel_w = current_canvas.framed_offset_x
+	painting.pixel_z = current_canvas.framed_offset_y
 	. += painting
 	var/frame_type = current_canvas.painting_metadata.frame_type
 	. += mutable_appearance(current_canvas.icon,"[current_canvas.icon_state]frame_[frame_type]") //add the frame

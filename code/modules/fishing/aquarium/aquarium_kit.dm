@@ -188,6 +188,7 @@
 	name = "aquarium props box"
 	desc = "All you need to make your aquarium look good."
 	illustration = "fish"
+	custom_price = PAYCHECK_LOWER
 
 /obj/item/storage/box/aquarium_props/PopulateContents()
 	for(var/prop_type in subtypesof(/obj/item/aquarium_prop))

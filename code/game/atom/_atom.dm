@@ -111,15 +111,7 @@
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
 	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
-	var/smoothing_junction = null //This starts as null for us to know when it's first set, but after that it will hold a 8-bit mask ranging from 0 to 255.
-	///Smoothing variable
-	var/top_left_corner
-	///Smoothing variable
-	var/top_right_corner
-	///Smoothing variable
-	var/bottom_left_corner
-	///Smoothing variable
-	var/bottom_right_corner
+	var/smoothing_junction = null
 	///What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it. Must be sorted.
 	var/list/smoothing_groups = null
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself. Must be sorted.
@@ -428,7 +420,7 @@
 
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_ATOM, src, reagents, methods, volume_modifier, show_message)
 	for(var/datum/reagent/current_reagent as anything in reagents)
-		. |= current_reagent.expose_atom(src, reagents[current_reagent])
+		. |= current_reagent.expose_atom(src, reagents[current_reagent], methods)
 	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)
 
 /// Are you allowed to drop this atom

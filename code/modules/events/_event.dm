@@ -162,7 +162,7 @@ Runs the event
 	if(announce_chance_override != null)
 		round_event.announce_chance = announce_chance_override
 
-	testing("[time2text(world.time, "hh:mm:ss")] [round_event.type]")
+	testing("[time2text(world.time, "hh:mm:ss", 0)] [round_event.type]")
 	triggering = TRUE
 
 	if(!triggering)

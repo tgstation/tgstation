@@ -16504,6 +16504,11 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/smooth_large,
 /area/station/command/heads_quarters/hos)
+"eEm" = (
+/obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/glass/reinforced,
+/area/station/engineering/storage/tech)
 "eEO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -22439,7 +22444,7 @@
 /area/mine/living_quarters)
 "gpt" = (
 /obj/machinery/button/door/directional/east{
-	id = "kanyewest";
+	id = "detShutter";
 	name = "Privacy Shutters"
 	},
 /obj/structure/chair/office{
@@ -78891,8 +78896,8 @@
 "wzC" = (
 /obj/machinery/holopad/secure,
 /obj/effect/turf_decal/bot,
-/obj/effect/landmark/event_spawn,
-/obj/effect/spawner/random/engineering/tracking_beacon,
+/obj/structure/rack,
+/obj/effect/spawner/random/techstorage/custom_shuttle,
 /turf/open/floor/iron/large,
 /area/station/engineering/storage/tech)
 "wzH" = (
@@ -82448,7 +82453,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 4;
-	id = "rd_office_shutters";
+	id = "detShutter";
 	name = "Privacy Shutters"
 	},
 /obj/structure/cable,
@@ -245101,7 +245106,7 @@ umu
 umu
 fyK
 oIr
-oIr
+eEm
 wzC
 oIr
 oIr
