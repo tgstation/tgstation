@@ -52,7 +52,7 @@
 		if(blood_dna_info)
 			blood_overlay.color = get_blood_dna_color(blood_dna_info)
 		else
-			blood_overlay.color = "#FF291E"
+			blood_overlay.color = BLOOD_COLOR_RED
 		. += blood_overlay
 	if(machine_stat & (NOPOWER|BROKEN) || panel_open)
 		return

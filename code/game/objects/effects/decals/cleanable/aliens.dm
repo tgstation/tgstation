@@ -10,7 +10,6 @@
 	blood_state = BLOOD_STATE_XENO
 	beauty = -250
 	clean_type = CLEAN_TYPE_BLOOD
-	color = "#C8F000"
 
 /obj/effect/decal/cleanable/xenoblood/add_blood_DNA(list/blood_DNA, no_visuals = FALSE)
 	. = ..()
@@ -19,7 +18,7 @@
 
 /obj/effect/decal/cleanable/xenoblood/Initialize(mapload)
 	. = ..()
-	add_blood_DNA(list("UNKNOWN DNA" = "X*"))
+	add_blood_DNA(list("UNKNOWN DNA" = get_blood_type_by_name("X*")))
 
 /obj/effect/decal/cleanable/xenoblood/xsplatter
 	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")

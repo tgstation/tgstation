@@ -65,7 +65,7 @@
 
 	var/icon/obsessed_icon = render_preview_outfit(preview_outfit)
 	var/icon/blood_icon = icon('icons/effects/blood.dmi', "uniformblood")
-	blood_icon.Blend("#FF291E", ICON_MULTIPLY)
+	blood_icon.Blend(BLOOD_COLOR_RED, ICON_MULTIPLY)
 	obsessed_icon.Blend(blood_icon, ICON_OVERLAY)
 
 	var/icon/final_icon = finish_preview_icon(obsessed_icon)

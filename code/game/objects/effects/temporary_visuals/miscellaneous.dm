@@ -5,10 +5,9 @@
 	randomdir = FALSE
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
-	color = "#FF291E"
 	var/splatter_type = "splatter"
 
-/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir, set_color)
+/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir, set_color = BLOOD_COLOR_RED)
 	if(set_color)
 		color = set_color
 	if(ISDIAGONALDIR(set_dir))
@@ -46,7 +45,9 @@
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
 	splatter_type = "splatter"
-	color = null
+
+/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter/Initialize(mapload, set_dir, set_color = BLOOD_COLOR_XENO)
+	return ..()
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
 	name = "speedbike trails"

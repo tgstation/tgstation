@@ -276,7 +276,7 @@
 		src.footprint_sprite = footprint_sprite
 	if(!bloody_feet)
 		bloody_feet = mutable_appearance('icons/effects/blood.dmi', "shoeblood", SHOES_LAYER, appearance_flags = RESET_COLOR)
-		bloody_feet.color = "#FF291E"
+		bloody_feet.color = COLOR_BLOOD_RED
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	RegisterSignal(parent, COMSIG_STEP_ON_BLOOD, PROC_REF(on_step_blood))

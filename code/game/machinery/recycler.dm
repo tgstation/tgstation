@@ -111,7 +111,7 @@
 		if(blood_dna)
 			blood_overlay.color = get_blood_dna_color(blood_dna)
 		else
-			blood_overlay.color = "#FF291E"
+			blood_overlay.color = BLOOD_COLOR_RED
 		. += blood_overlay
 
 /obj/machinery/recycler/CanAllowThrough(atom/movable/mover, border_dir)

@@ -4,7 +4,7 @@
 	/// A description of the blood type.
 	var/desc
 	/// Shown color of the blood type.
-	var/color = "#FF291E"
+	var/color = BLOOD_COLOR_RED
 	/// Blood types that are safe to use with people that have this blood type.
 	var/compatible_types = list()
 	/// What reagent is represented by this blood type?
@@ -135,7 +135,7 @@
 
 /datum/blood_type/xeno
 	name = "X*"
-	color = "#C8F000"
+	color = BLOOD_COLOR_XENO
 	compatible_types = list(/datum/blood_type/xeno)
 
 /// April fool's blood for clowns

@@ -81,7 +81,7 @@
 	if(istype(data))
 		SetViruses(src, data)
 		var/datum/blood_type/blood_type = data["blood_type"]
-		if(blood_type && blood_type.color != "#FF291E")
+		if(blood_type && blood_type.color != BLOOD_COLOR_RED) // If the blood is default red, just use the darker red color for the reagent.
 			color = blood_type.color
 
 /datum/reagent/blood/on_merge(list/mix_data)
