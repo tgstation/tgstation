@@ -19376,9 +19376,6 @@
 	},
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
-"gkj" = (
-/turf/open/floor/plating,
-/area/space)
 "gkk" = (
 /obj/structure/cable,
 /obj/machinery/gulag_item_reclaimer{
@@ -21795,7 +21792,7 @@
 /obj/item/toy/plush/moth,
 /obj/effect/spawner/random/entertainment/money_large,
 /obj/item/grenade/chem_grenade/holy,
-/obj/structure/safe/vault,
+/obj/structure/safe,
 /turf/open/floor/glass/reinforced,
 /area/station/ai_monitored/command/nuke_storage)
 "gYz" = (
@@ -67516,7 +67513,7 @@
 "vFk" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
-/area/space)
+/area/station/construction/storage_wing)
 "vFr" = (
 /obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
@@ -69716,7 +69713,7 @@
 	dir = 4
 	},
 /turf/open/floor/plating,
-/area/space)
+/area/station/construction/storage_wing)
 "woA" = (
 /obj/structure/ladder,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -69976,10 +69973,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/tcommsat/server)
-"wtV" = (
-/obj/structure/lattice/catwalk,
-/turf/open/openspace/airless,
-/area/space)
 "wua" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/openspace/airless,
@@ -159618,9 +159611,9 @@ rDv
 rDv
 rDv
 rDv
-wtV
-wtV
-wtV
+xrx
+xrx
+xrx
 nlm
 nlm
 nlm
@@ -159876,8 +159869,8 @@ snU
 oqw
 rDv
 wot
-gKI
-gKI
+rDv
+rDv
 nlm
 nlm
 nlm
@@ -160132,9 +160125,9 @@ wLx
 rDv
 crS
 rDv
-gkj
+oqw
 vFk
-gKI
+rDv
 nlm
 nlm
 nlm
