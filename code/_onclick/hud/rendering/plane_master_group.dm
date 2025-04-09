@@ -188,6 +188,14 @@
 /// If you wanna try someday feel free, but I can't manage it
 /datum/plane_master_group/popup
 
+/datum/plane_master_group/popup/attach_to(datum/hud/viewing_hud)
+	if(viewing_hud.master_groups[key])
+		stack_trace("Key [key] is already in use by a plane master group on the passed in hud, belonging to [viewing_hud.mymob].")
+		return
+
+	set_hud(viewing_hud)
+	show_hud()
+
 /datum/plane_master_group/popup/build_planes_offset(datum/hud/source, new_offset, use_scale = TRUE)
 	return ..(source, new_offset, FALSE)
 
