@@ -761,6 +761,37 @@
 	imp.implant(smart_mob, user)
 	smart_mob.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS))
 
+/obj/item/slimepotion/slime/sentience/dangerous_horse
+	name = "dangerous horse potion"
+	desc = "A miraculous chemical mix that grants human like intelligence to pony beings. It has been modified with Syndicate technology to also grant an internal radio implant to the pony and authenticate with identification systems"
+	sentience_type = SENTIENCE_PONY
+
+/obj/item/slimepotion/slime/sentience/dangerous_horse/attack(mob/living/dumb_mob, mob/user)
+	if(being_used || !isliving(dumb_mob))
+		return
+	if(dumb_mob.ckey) //only works on animals that aren't player controlled
+		balloon_alert(user, "already sentient!")
+		return
+	if(dumb_mob.stat)
+		balloon_alert(user, "it's dead!")
+		return
+	if(!dumb_mob.compare_sentience_type(sentience_type)) // Must be a horse to work.
+		balloon_alert(user, "must be a horse!")
+		return
+	balloon_alert(user, "offering...")
+	being_used = TRUE
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
+		question = "[span_danger(user.name)] is offering [span_notice(dumb_mob.name)] an intelligence potion![potion_reason ? " Reason: [span_boldnotice(potion_reason)]" : ""]",
+		check_jobban = ROLE_SENTIENCE,
+		poll_time = 20 SECONDS,
+		checked_target = dumb_mob,
+		ignore_category = POLL_IGNORE_SENTIENCE_POTION,
+		alert_pic = dumb_mob,
+		role_name_text = "intelligence potion",
+		chat_text_border_icon = src,
+	)
+	on_poll_concluded(user, dumb_mob, chosen_one)
+
 /obj/item/slimepotion/transference
 	name = "consciousness transference potion"
 	desc = "A strange slime-based chemical that, when used, allows the user to transfer their consciousness to a lesser being."
