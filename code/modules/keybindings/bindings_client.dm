@@ -111,8 +111,9 @@
 	mob.update_mouse_pointer()
 
 
-// These two verbs are necessary for processing the input from the windows TGUI
+// These two verbs are necessary for processing the input from the TGUI windows
 // We need them for the correct movement handling when player uses TGUI
+// TGUI windows POTENTIALLY still can cause movement keys stuck issue because of the way they are handled, but let's hope it won't happen
 /client/verb/keyDownTGUI(_key as text)
 	set instant = TRUE
 	set hidden = TRUE
