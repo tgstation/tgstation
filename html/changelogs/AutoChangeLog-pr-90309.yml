@@ -1,0 +1,7 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed an issue with paintings related to 516. You should now be able to paint larger strokes again."
+  - bugfix: "Fixed ghosts and other non-adjacent viewers not being able to zoom the canvas in and out."
+  - rscadd: "Added a bucket tool to the canvas UI to fill larger areas. You can find the button for it beside the one for the grid."
+  - qol: "You can toggle the canvas grid and bucket tool with the G and F key respectively."

@@ -3,37 +3,17 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-
-@use '../colors.scss' with (
-  // convert to hsl
-  $primary: hsl(191.93, 79.31%, 39.8%),
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base.scss' with (
-  $color-bg: hsl(204.7, 17.2%, 19.4%),
-  $color-bg-grad-spread: 6%,
-  $border-radius: 2px
-);
-
-.theme-admin {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
+.theme-admin:root {
+  // Base
+  --color-base: hsl(205, 17%, 20%);
+  --primary-hue: 200;
+  --secondary-saturation: 0;
+  --secondary-lightness-adjustment: 1.75;
+  --base-gradient-spread: 6;
+  --candystripe-odd: hsla(200, 70%, 15%, 0.25);
+  --candystripe-even: hsla(210, 70%, 45%, 0.25);
 
   .Layout__content {
     background-image: url('../../assets/bg-admin.svg');
-  }
-
-  .candystripe:nth-child(odd) {
-    background-color: rgba(12, 49, 71, 0.25);
-  }
-  .candystripe:nth-child(even) {
-    background-color: rgba(33, 114, 206, 0.25);
   }
 }

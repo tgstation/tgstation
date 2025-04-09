@@ -77,8 +77,8 @@
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
 
-	builtInCamera = new (src)
-	builtInCamera.network = list(CAMERANET_NETWORK_SS13)
+	//They aren't given a c_tag so they don't show up in camera consoles
+	builtInCamera = new(src)
 
 	ai_tracking_tool = new(src)
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))

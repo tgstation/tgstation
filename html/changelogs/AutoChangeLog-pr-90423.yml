@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - admin: "Interviews now has a button to open a player's Centcom ban list, which will be in red if they have existing server permabans."

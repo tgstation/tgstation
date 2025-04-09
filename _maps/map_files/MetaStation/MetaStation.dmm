@@ -18192,6 +18192,16 @@
 /obj/structure/table,
 /obj/item/aicard,
 /obj/item/ai_module/reset,
+/obj/item/assembly/flash/handheld,
+/obj/item/assembly/flash/handheld,
+/obj/item/flashlight{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/item/flashlight{
+	pixel_x = 1;
+	pixel_y = 5
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "gBe" = (
@@ -46979,10 +46989,6 @@
 /obj/effect/spawner/random/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"qHW" = (
-/obj/item/storage/test_tube_rack/full,
-/turf/closed/wall/r_wall,
-/area/station/security/prison/safe)
 "qHY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
@@ -48639,18 +48645,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "rjZ" = (
-/obj/structure/table,
-/obj/item/flashlight{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/flashlight{
-	pixel_x = 1;
-	pixel_y = 5
-	},
-/obj/item/assembly/flash/handheld,
-/obj/item/assembly/flash/handheld,
 /obj/item/radio/intercom/directional/north,
+/obj/structure/rack,
+/obj/effect/spawner/random/techstorage/custom_shuttle,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "rke" = (
@@ -60335,6 +60332,7 @@
 /area/station/medical/pharmacy)
 "vjZ" = (
 /obj/structure/table,
+/obj/item/storage/test_tube_rack/full,
 /turf/open/floor/iron/dark/side,
 /area/station/security/prison)
 "vkb" = (
@@ -91767,7 +91765,7 @@ hDE
 wZz
 wZz
 wZz
-qHW
+sjP
 iPb
 iPb
 uza

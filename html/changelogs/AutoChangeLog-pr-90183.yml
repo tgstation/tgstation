@@ -1,0 +1,4 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - bugfix: "fixed the vat grower bubble overlay not clearing upon completetion."

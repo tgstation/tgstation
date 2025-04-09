@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add rare chance of thunder strikes during ash storms on lavaland"

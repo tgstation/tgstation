@@ -257,19 +257,6 @@
 		quick_remove_item(/obj/item/cigarette, user)
 	return CLICK_ACTION_SUCCESS
 
-/// Removes an item or puts it in mouth from the packet, if any
-/obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user, equip_to_mouth =  FALSE)
-	var/obj/item/finger = locate(grabbies) in contents
-	if(finger)
-		if(!equip_to_mouth)
-			if(atom_storage.remove_single(user, finger, drop_location()))
-				user.put_in_hands(finger)
-			return
-		if(user.equip_to_slot_if_possible(finger, ITEM_SLOT_MASK, qdel_on_fail = FALSE, disable_warning = TRUE))
-			finger.forceMove(user)
-			return
-		balloon_alert(user, "mouth is covered!")
-
 /obj/item/storage/fancy/cigarettes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if(locate(/obj/item/lighter) in contents)
