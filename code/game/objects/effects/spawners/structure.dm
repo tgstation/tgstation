@@ -390,6 +390,7 @@ again.
 	table_to_flipped.dir = dir
 	RegisterSignal(table_to_flipped, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(on_icon_smoothed))
 
+/// The flip_table() proc HAS to be run after smooth_icon() is completed or else we will get runtimes.
 /obj/effect/spawner/structure/flipped_table/proc/on_icon_smoothed(obj/structure/table/table_to_flipped)
 	SIGNAL_HANDLER
 	table_to_flipped.flip_table(table_to_flipped.dir)
