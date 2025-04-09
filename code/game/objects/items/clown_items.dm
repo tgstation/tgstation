@@ -313,7 +313,7 @@
 
 	playsound(user, 'sound/items/weapons/punch1.ogg', min(slap_power * 10, 80))
 	user.do_attack_animation(src)
-	honk_block = victim.run_armor_check(
+	var/honk_block = victim.run_armor_check(
 			def_zone = BODY_ZONE_HEAD,
 			attack_flag = MELEE,
 			absorb_text = span_nicegreen("Your helmet has protected your dignity from the clown!"),
