@@ -16,7 +16,7 @@
     "tgui:sonar": "eslint packages -c .eslintrc-sonar.yml",
     "tgui:test": "vitest",
     "tgui:test-simple": "CI=true vitest",
-    "tgui:test-ci": "CI=true vitest --collect-coverage",
+    "tgui:test-ci": "CI=true vitest",
     "tgui:tsc": "tsc",
     "tgui:prettier-fix": "prettier --write .",
     "tgui:eslint-fix": "eslint --fix packages --ext .js,.cjs,.ts,.jsx,.tsx"
