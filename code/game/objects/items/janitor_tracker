@@ -1,0 +1,37 @@
+/obj/item/janitor_tracker
+    name = "janitorial tracker"
+    desc = "A handheld device that beeps faster the closer you are to a mess. The janitor's best friend."
+    icon = 'icons/obj/service/janitor.dmi'
+    icon_state = "trashbag2"
+    w_class = WEIGHT_CLASS_SMALL
+    var/scan_delay = 2 SECONDS  // Time between scans
+    var/next_scan = 0
+    var/obj/target_mess  // The mess we're tracking
+
+/obj/item/janitor_tracker/process()
+    if(!target_mess || QDELETED(target_mess))
+        find_mess()
+    else
+        var/dist = get_dist(src, target_mess)
+        var/pitch_mod = clamp(1.5 - (dist * 0.1), 0.5, 1.5)  // Closer = higher pitch
+        playsound(src, 'sound/machines/beep/beep.ogg', 30, FALSE, -1, pitch_mod)
+        // Optional: Icon changes based on distance?
+
+    if(next_scan <= world.time)
+        find_mess()
+        next_scan = world.time + scan_delay
+
+/obj/item/janitor_tracker/proc/find_mess()
+    var/list/possible_messes = list()
+    // Scan for cleanables (blood, vomit, etc.)
+    for(var/obj/effect/decal/cleanable/C in urange(20, src))
+        possible_messes += C
+    // Scan for trash
+    for(var/obj/item/trash/T in urange(20, src))
+        possible_messes += T
+
+    if(possible_messes.len)
+        target_mess = pick(possible_messes)  // Pick a random mess to track
+    else
+        target_mess = null
+        playsound(src, 'sound/machines/beep/deniedbeep.ogg', 30, FALSE, -1, 0.5)  // "No targets" sound
