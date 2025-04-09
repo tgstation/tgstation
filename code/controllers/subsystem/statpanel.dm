@@ -23,7 +23,8 @@ SUBSYSTEM_DEF(statpanels)
 		var/datum/map_config/cached = SSmap_vote.next_map_config
 		global_data = list(
 			isnull(SSmapping.current_map) ? list("Loading") : \
-				SSmapping.current_map?.feedback_link ? list("Map: ", "[SSmapping.current_map.map_name]", "action=openLink&link=[SSmapping.current_map.feedback_link]") : \
+				SSmapping.current_map?.feedback_link ? \
+				list("Map: ", "[SSmapping.current_map.map_name]", "action=openLink&link=[SSmapping.current_map.feedback_link]") : \
 				list("Map: [SSmapping.current_map?.map_name]"),
 			cached ? list("Next Map: [cached.map_name]") : null,
 			list("Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]"),
@@ -103,9 +104,11 @@ SUBSYSTEM_DEF(statpanels)
 /datum/controller/subsystem/statpanels/proc/set_status_tab(client/target)
 	if(!global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
 		return
+	var/mapping_url = config.Get(/datum/config_entry/string/webmap_url)
 	target.stat_panel.send_message("update_stat", list(
 		"global_data" = global_data,
 		"ping_str" = list("Ping: [round(target.lastping, 1)]ms (Average: [round(target.avgping, 1)]ms)"),
+		"webmap_info" = (mapping_url == "") ? null : list(list("Webmap: ", "View on Webmap", "action=openWebMap")),
 		"other_str" = target.mob?.get_status_tab_items(),
 	))
 

@@ -884,13 +884,21 @@ Byond.subscribeTo('init_verbs', function (payload) {
 
 Byond.subscribeTo('update_stat', function (payload) {
 	status_tab_parts = [payload.ping_str];
+
 	var parsed = payload.global_data;
 
-	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
+	for (var i = 0; i < parsed.length; i++)
+		if (parsed[i] != null) status_tab_parts.push(parsed[i]);
+
+	parsed = payload.webmap_info;
+
+	for (var i = 0; i < parsed.length; i++)
+		if (parsed[i] != null) status_tab_parts.push(parsed[i]);
 
 	parsed = payload.other_str;
 
-	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
+	for (var i = 0; i < parsed.length; i++)
+		if (parsed[i] != null) status_tab_parts.push(parsed[i]);
 
 	if (current_tab == "Status") {
 		draw_status();
