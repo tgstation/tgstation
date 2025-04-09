@@ -113,6 +113,15 @@ GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 		lang_list[initial(lang_type.name)] = lang_type
 	return lang_list
 
+// A list of all the possible blood types
+GLOBAL_LIST_INIT(blood_types, init_blood_types())
+
+/proc/init_blood_types()
+	. = list()
+	for(var/path in subtypesof(/datum/blood_type))
+		var/datum/blood_type/new_type = new path()
+		.[new_type.name] = new_type
+
 /// An assoc list of species IDs to type paths
 GLOBAL_LIST_INIT(species_list, init_species_list())
 /// List of all species prototypes to reference, assoc [type] = prototype

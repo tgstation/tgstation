@@ -12,14 +12,15 @@
 /obj/item/reagent_containers/blood/Initialize(mapload, vol)
 	. = ..()
 	if(blood_type != null)
-		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
+		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("viruses"=null,"blood_DNA"=null,"blood_type"=get_blood_type_by_name(blood_type),"resistances"=null,"trace_chem"=null))
 		update_appearance()
 
 /// Handles updating the container when the reagents change.
 /obj/item/reagent_containers/blood/on_reagent_change(datum/reagents/holder, ...)
 	var/datum/reagent/blood/new_reagent = holder.has_reagent(/datum/reagent/blood)
 	if(new_reagent && new_reagent.data && new_reagent.data["blood_type"])
-		blood_type = new_reagent.data["blood_type"]
+		var/datum/blood_type/blood_type = new_reagent.data["blood_type"]
+		blood_type = blood_type.name
 	else if(holder.has_reagent(/datum/reagent/consumable/liquidelectricity))
 		blood_type = "LE"
 	else if(holder.has_reagent(/datum/reagent/lube))

@@ -252,7 +252,8 @@
 						if((blood_disease.spread_flags & DISEASE_SPREAD_SPECIAL) || (blood_disease.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
 							continue
 						carbon_receiver.ForceContractDisease(blood_disease)
-				if(!(blood_data["blood_type"] in get_safe_blood(carbon_receiver.dna.blood_type)) && !(ignore_incompatibility))
+				var/datum/blood_type/blood_type = blood_data["blood_type"]
+				if(!ignore_incompatibility && !(blood_type.type in carbon_receiver.dna.blood_type.compatible_types))
 					carbon_receiver.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return TRUE
 
@@ -322,37 +323,28 @@
 		return
 	return /datum/reagent/blood
 
-// This is has more potential uses, and is probably faster than the old proc.
-/proc/get_safe_blood(bloodtype)
-	. = list()
-	if(!bloodtype)
-		return
+/// Returns the blood_type datum that corresponds to the string
+/proc/get_blood_type_by_name(type_name)
+	return GLOB.blood_types[type_name]
 
-	var/static/list/bloodtypes_safe = list(
-		"A-" = list("A-", "O-"),
-		"A+" = list("A-", "A+", "O-", "O+"),
-		"B-" = list("B-", "O-"),
-		"B+" = list("B-", "B+", "O-", "O+"),
-		"AB-" = list("A-", "B-", "O-", "AB-"),
-		"AB+" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+"),
-		"O-" = list("O-"),
-		"O+" = list("O-", "O+"),
-		"L" = list("L"),
-		"U" = list("A-", "A+", "B-", "B+", "O-", "O+", "AB-", "AB+", "L", "U")
-	)
-
-	var/safe = bloodtypes_safe[bloodtype]
-	if(safe)
-		. = safe
+/// Returns the hex color string of a given blood_type datum given an assoc list of blood_DNA e.g. ("Unknown Blood Type", "*X")
+/proc/get_blood_dna_color(list/blood_DNA)
+	var/datum/blood_type/blood_type
+	if(length(blood_DNA))
+		var/last_added_bloodtype_key = blood_DNA[length(blood_DNA)]
+		blood_type = blood_DNA[last_added_bloodtype_key]
+	if(!istype(blood_type))
+		blood_type = get_blood_type_by_name(blood_type) || random_blood_type()
+	return blood_type.color
 
 /**
  * Returns TRUE if src is compatible with donor's blood, otherwise FALSE.
  * * donor: Carbon mob, the one that is donating blood.
  */
 /mob/living/carbon/proc/get_blood_compatibility(mob/living/carbon/donor)
-	var/patient_blood_data = get_blood_data(get_blood_id())
-	var/donor_blood_data = donor.get_blood_data(donor.get_blood_id())
-	return donor_blood_data["blood_type"] in get_safe_blood(patient_blood_data["blood_type"])
+	var/datum/blood_type/patient_blood_data = dna.blood_type
+	var/datum/blood_type/donor_blood_data = donor.dna.blood_type
+	return (donor_blood_data in patient_blood_data.compatible_types)
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/splatter_turf, small_drip)
@@ -390,7 +382,7 @@
 	blood_spew.bloodiness = min((blood_spew.bloodiness + BLOOD_AMOUNT_PER_DECAL), BLOOD_POOL_MAX)
 	blood_spew.transfer_mob_blood_dna(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
-		blood_spew.add_blood_DNA(temp_blood_DNA)
+		blood_spew.add_blood_DNA(temp_blood_DNA, no_visuals = small_drip)
 
 /mob/living/carbon/human/add_splatter_floor(turf/splatter_turf, small_drip)
 	if(!HAS_TRAIT(src, TRAIT_NOBLOOD))
