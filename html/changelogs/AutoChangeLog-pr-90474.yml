@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - qol: "Moved manual boulder breaking with tools to LMB, corrected boulder tooltips suggesting incorrect mouse buttons for basicmobs."

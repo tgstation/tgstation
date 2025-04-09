@@ -251,3 +251,40 @@
   vinylspiders:
   - bugfix: fixes the AI detector breaking if there is a machinery-camera operating
       user nearby (like xenobio console or camera console for instance)
+2025-04-09:
+  00-Steven:
+  - bugfix: Pictures are no longer blurry.
+  - bugfix: Tall pictures no longer get cut off and are actually the right height.
+  Absolucy:
+  - bugfix: Chat messages now actually queue as intended.
+  Bisar:
+  - rscadd: NanoTrasen reminds all employees that it assumes no liability for any
+      activities carried out when not on the premises of a Nanotrasen colony, station,
+      or bluespace pocket. Any employees electing to leave the premises during their
+      break are reminded that it is imperative that they clock out, as per their contract.
+  - rscadd: Tech storage now includes a small set of custom shuttle supplies.
+  Cruix:
+  - image: Updated several hair sprites to layer better under hats.
+  JohnFulpWillard:
+  - rscadd: Drones now have internal cameras that shows up on camera consoles (like
+      Cyborgs)
+  - balance: Cyborgs (and drones) now get a notification when someone is watching
+      them through a security camera console.
+  - bugfix: Cutting a Cyborg's camera wire now properly disables it, and mending it
+      now properly re-enables it.
+  - balance: Space cola now removes rust
+  - balance: Smoke machines now work as inhalation to turfs and touch to mobs.
+  LT3:
+  - bugfix: Supermatter delamination now applies hallucinations based on distance
+  SmArtKar:
+  - rscadd: You can now mark newscaster channels as cross-sector to send messages
+      to other servers.
+  - bugfix: Fixed mind transfers not transferring mob's observers to mind's new mob.
+  - bugfix: Fixed felinid ears' weird rendering behavior
+  - qol: Moved manual boulder breaking with tools to LMB, corrected boulder tooltips
+      suggesting incorrect mouse buttons for basicmobs.
+  - bugfix: Fixed watcher crusher trophies not applying their effects on basicmobs
+  - bugfix: Fixed runtimes caused by energy bolas
+  - bugfix: Fixed certain mobs runtiming when dusted
+  TiviPlus:
+  - code_imp: optimized balloon alerts

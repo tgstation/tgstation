@@ -1,5 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Pictures are no longer blurry."
-  - bugfix: "Tall pictures no longer get cut off and are actually the right height."
