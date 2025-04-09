@@ -43,6 +43,10 @@
 /// Applies the current offset to a provided overlay image
 /datum/worn_feature_offset/proc/apply_offset(image/overlay)
 	var/list/offset = get_offset()
+
+	// Reset our applied offset
+	overlay.pixel_w = 0
+	overlay.pixel_z = 0
 	overlay.pixel_w += offset["x"]
 	overlay.pixel_z += offset["y"]
 
