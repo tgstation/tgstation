@@ -195,10 +195,6 @@
 	if ("load_all_away_missions" in json)
 		load_all_away_missions = json["load_all_away_missions"]
 
-	//"feedbacklink": "https://www.youtube.com/watch?v=XG8b7WhANNA",
-	if("feedbacklink" in json)
-		feedback_link = json["feedbacklink"]
-
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 
 	if ("job_changes" in json)
