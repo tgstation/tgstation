@@ -437,6 +437,8 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	begin_month = JUNE
 	holiday_hat = /obj/item/clothing/head/costume/garland
 
+//MASSMETA EDIT REMOVAL BEGIN (gay removal)
+/*
 /datum/holiday/pride_week
 	name = PRIDE_WEEK
 	begin_month = JUNE
@@ -451,20 +453,8 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		COLOR_PRIDE_ORANGE,
 		COLOR_PRIDE_RED,
 	)
-	holiday_mail = list(
-		/obj/item/bedsheet/rainbow,
-		/obj/item/clothing/accessory/pride,
-		/obj/item/clothing/gloves/color/rainbow,
-		/obj/item/clothing/head/costume/garland/rainbowbunch,
-		/obj/item/clothing/head/soft/rainbow,
-		/obj/item/clothing/shoes/sneakers/rainbow,
-		/obj/item/clothing/under/color/jumpskirt/rainbow,
-		/obj/item/clothing/under/color/rainbow,
-		/obj/item/food/egg/rainbow,
-		/obj/item/food/grown/rainbow_flower,
-		/obj/item/food/snowcones/rainbow,
-		/obj/item/toy/crayon/rainbow,
-	)
+*/
+//MASSMETA EDIT REMOVAL END
 
 // JULY
 
