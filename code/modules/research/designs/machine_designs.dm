@@ -398,28 +398,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/protolathe
-	name = "Protolathe Board"
-	desc = "The circuit board for a protolathe."
-	id = "protolathe"
-	build_type = IMPRINTER
-	build_path = /obj/item/circuitboard/machine/protolathe
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_FAB
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/board/protolathe/offstation
-	name = "Ancient Protolathe Board"
-	desc = "The circuit board for an ancient protolathe."
-	id = "protolathe_offstation"
-	build_type = AWAY_IMPRINTER
-	build_path = /obj/item/circuitboard/machine/protolathe/offstation
-	category = list(
-		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_FAB
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/circuit_imprinter
 	name = "Circuit Imprinter Board"
 	desc = "The circuit board for a circuit imprinter."

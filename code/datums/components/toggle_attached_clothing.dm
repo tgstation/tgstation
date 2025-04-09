@@ -48,7 +48,7 @@
 	if (!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if (!deployable_type || !equipped_slot)
-		return COMPONENT_INCOMPATIBLE // Not strictly true but INITIALIZE_HINT_QDEL doesn't work from components
+		return COMPONENT_REDUNDANT
 	src.deployable_type = deployable_type
 	src.equipped_slot = equipped_slot
 	src.destroy_on_removal = destroy_on_removal

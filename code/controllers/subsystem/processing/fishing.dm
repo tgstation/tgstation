@@ -1,6 +1,9 @@
 /// subsystem for the fishing minigame processing.
 PROCESSING_SUBSYSTEM_DEF(fishing)
 	name = "Fishing"
+	dependencies = list(
+		/datum/controller/subsystem/atoms
+	)
 	flags = SS_BACKGROUND
 	wait = 0.05 SECONDS // If you raise it to 0.1 SECONDS, you better also modify [datum/fish_movement/move_fish()]
 	///A list of cached fish icons
@@ -13,6 +16,8 @@ PROCESSING_SUBSYSTEM_DEF(fishing)
 	var/list/fish_properties
 	///A cache of fish that can be caught by each type of fishing lure
 	var/list/lure_catchables
+	///A list of fish types with list of turfs where they can happily hop around without dying as assoc value
+	var/list/fish_safe_turfs_by_type = list()
 
 /datum/controller/subsystem/processing/fishing/Initialize()
 	..()
@@ -101,5 +106,20 @@ PROCESSING_SUBSYSTEM_DEF(fishing)
 		qdel(lure)
 
 	QDEL_LIST(spawned_fish)
+
+	//Populate the list of safe turfs for several fishes
+	for(var/source_path in GLOB.preset_fish_sources)
+		var/datum/fish_source/source = GLOB.preset_fish_sources[source_path]
+		if(!length(source.associated_safe_turfs))
+			continue
+		for(var/fish_path in source.fish_table)
+			if(!istype(fish_path, /obj/item/fish))
+				continue
+			LAZYOR(fish_safe_turfs_by_type[fish_path], source.associated_safe_turfs)
+	//If a subtype doesn't have set safe turfs, it'll inherit them from the parent type.
+	for(var/fish_type as anything in fish_safe_turfs_by_type)
+		for(var/fish_subtype in subtypesof(fish_type))
+			if(!length(fish_safe_turfs_by_type[fish_subtype]))
+				fish_safe_turfs_by_type[fish_subtype] = fish_safe_turfs_by_type[fish_type]
 
 	return SS_INIT_SUCCESS

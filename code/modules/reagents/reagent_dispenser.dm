@@ -100,8 +100,8 @@
 		holder.master = src
 		holder.on_attach()
 		assembliesoverlay = holder
-		assembliesoverlay.pixel_x += 6
-		assembliesoverlay.pixel_y += 1
+		assembliesoverlay.pixel_w += 6
+		assembliesoverlay.pixel_z += 1
 		add_overlay(assembliesoverlay)
 		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(rig_boom))
 		log_bomber(user, "attached [holder.name] to ", src)

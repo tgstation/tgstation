@@ -10,6 +10,7 @@ NewSta = Game Master
 Expletives = Game Master
 kingofkosmos = Game Master
 MrStonedOne = Lazy Master
+RandomDudeFromTheRim = Game Master
 microscopics = Game Master
 Gun Hog = Game Master
 KorPhaeron = Game Master

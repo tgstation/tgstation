@@ -1,6 +1,7 @@
 # This is a reusable workflow to run integration tests on a single map.
 # This is run for every single map in ci_suite.yml. You might want to edit that instead.
 name: Run Integration Tests
+
 on:
   workflow_call:
     inputs:

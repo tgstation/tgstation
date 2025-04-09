@@ -167,5 +167,5 @@
 			if(4 to 5)
 				bar_color = "windup_purple"
 		var/mutable_appearance/bar_overlay =  mutable_appearance(icon = icon, icon_state = bar_color, layer = ABOVE_HUD_PLANE)
-		bar_overlay.pixel_y = bar_positions[curr_number]
+		bar_overlay.pixel_z = bar_positions[curr_number]
 		. += bar_overlay

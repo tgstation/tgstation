@@ -97,8 +97,8 @@
 
 	if(minimize_when_attached)
 		transform *= 0.5
-		pixel_x += 8
-		pixel_y += (-8 + LAZYLEN(attach_to.attached_accessories) * 2)
+		pixel_w += 8
+		pixel_z += (-8 + LAZYLEN(attach_to.attached_accessories) * 2)
 
 	RegisterSignal(attach_to, COMSIG_ITEM_EQUIPPED, PROC_REF(on_uniform_equipped))
 	RegisterSignal(attach_to, COMSIG_ITEM_DROPPED, PROC_REF(on_uniform_dropped))

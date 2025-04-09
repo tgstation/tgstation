@@ -4,6 +4,7 @@
   "version": "5.0.3",
   "dependencies": {
     "@fastify/static": "^8.0.2",
+    "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "common": "workspace:*",
     "fastify": "^5.1.0",

@@ -734,6 +734,8 @@
 	id = "spotlight_light"
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	alert_type = null
+	/// Color of the light
+	var/spotlight_color = "#e2e2ca"
 	/// Dummy lighting object to simulate the spotlight highlighting the mob.
 	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
 	/// First visual overlay, this one sits on the back of the mob.
@@ -747,14 +749,16 @@
 	return ..()
 
 /datum/status_effect/spotlight_light/on_apply()
-	mob_light_obj = owner.mob_light(2, 1.5, "#e2e2ca")
+	mob_light_obj = owner.mob_light(2, 1.5, spotlight_color)
 
 	beam_from_above_a = new /obj/effect/overlay/spotlight
+	beam_from_above_a.color = spotlight_color
 	beam_from_above_a.alpha = BEAM_ALPHA
 	owner.vis_contents += beam_from_above_a
 	beam_from_above_a.layer = BELOW_MOB_LAYER
 
 	beam_from_above_b = new /obj/effect/overlay/spotlight
+	beam_from_above_b.color = spotlight_color
 	beam_from_above_b.alpha = BEAM_ALPHA
 	beam_from_above_b.layer = ABOVE_MOB_LAYER
 	beam_from_above_b.pixel_y = -2 //Slight vertical offset for an illusion of volume
@@ -763,9 +767,14 @@
 	return TRUE
 
 /datum/status_effect/spotlight_light/on_remove()
-	if(beam_from_above_a || beam_from_above_b)
-		owner.vis_contents -= beam_from_above_a
-		owner.vis_contents -= beam_from_above_b
+	owner.vis_contents -= beam_from_above_a
+	owner.vis_contents -= beam_from_above_b
+	QDEL_NULL(beam_from_above_a)
+	QDEL_NULL(beam_from_above_b)
 	QDEL_NULL(mob_light_obj)
+
+/datum/status_effect/spotlight_light/divine
+	id = "divine_spotlight"
+	duration = 3 SECONDS
 
 #undef BEAM_ALPHA

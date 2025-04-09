@@ -156,12 +156,12 @@
 	SIGNAL_HANDLER
 	var/sprite_width = 5
 	var/sprite_height = 4
-	var/px_min = visual.aquarium_zone_min_px
-	var/px_max = visual.aquarium_zone_max_px - sprite_width
-	var/py_min = visual.aquarium_zone_min_py - sprite_height
+	var/pw_min = visual.aquarium_zone_min_pw
+	var/pw_max = visual.aquarium_zone_max_pw - sprite_width
+	var/pz_min = visual.aquarium_zone_min_pz - sprite_height
 
-	visual.pixel_x = rand(px_min, px_max)
-	visual.pixel_y = py_min + rand(-1, 1)
+	visual.pixel_w = rand(pw_min, pw_max)
+	visual.pixel_z = pz_min + rand(-1, 1)
 
 /obj/item/food/moonfish_eggs/proc/get_aquarium_beauty(datum/source, list/beauty_holder)
 	SIGNAL_HANDLER

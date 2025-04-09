@@ -369,9 +369,7 @@
 	/// Armor values per tile.
 	var/datum/armor/armor_mod = /datum/armor/mod_ash_accretion
 	/// Speed added when you're fully covered in ash.
-	var/speed_added = 0.5
-	/// Speed that we actually added.
-	var/actual_speed_added = 0
+	var/speed_added = -0.5
 	/// Turfs that let us accrete ash.
 	var/static/list/accretion_turfs
 	/// Turfs that let us keep ash.
@@ -409,23 +407,29 @@
 /obj/item/mod/module/ash_accretion/on_part_activation()
 	mod.wearer.add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), REF(src))
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(mod, COMSIG_MOD_UPDATE_SPEED, PROC_REF(on_update_speed))
 
 /obj/item/mod/module/ash_accretion/on_part_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE), REF(src))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
 	if(!traveled_tiles)
 		return
 	var/datum/armor/to_remove = get_armor_by_type(armor_mod)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().subtract_other_armor(to_remove.generate_new_with_multipliers(list(ARMOR_ALL = traveled_tiles))))
 	if(traveled_tiles == max_traveled_tiles)
-		mod.slowdown += speed_added
-		mod.wearer.update_equipment_speed_mods()
+		mod.update_speed()
 	traveled_tiles = 0
 
 /obj/item/mod/module/ash_accretion/generate_worn_overlay(mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	return ..()
+
+/obj/item/mod/module/ash_accretion/proc/on_update_speed(datum/source, list/module_slowdowns, prevent_slowdown)
+	SIGNAL_HANDLER
+	if (traveled_tiles == max_traveled_tiles)
+		module_slowdowns += speed_added
 
 /obj/item/mod/module/ash_accretion/proc/on_move(atom/source, atom/oldloc, dir, forced)
 	if(!isturf(mod.wearer.loc)) //dont lose ash from going in a locker
@@ -443,18 +447,15 @@
 			mod.wearer.color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,3) //make them super light
 			animate(mod.wearer, 1 SECONDS, color = null, flags = ANIMATION_PARALLEL)
 			playsound(src, 'sound/effects/sparks/sparks1.ogg', 100, TRUE)
-			actual_speed_added = max(0, min(mod.slowdown_deployed, speed_added))
-			mod.slowdown -= actual_speed_added
-			mod.wearer.update_equipment_speed_mods()
+			mod.update_speed()
 	else if(is_type_in_typecache(mod.wearer.loc, keep_turfs))
 		return
 	else
 		if(traveled_tiles <= 0)
 			return
-		if(traveled_tiles == max_traveled_tiles)
-			mod.slowdown += actual_speed_added
-			mod.wearer.update_equipment_speed_mods()
 		traveled_tiles--
+		if(traveled_tiles == max_traveled_tiles - 1) // Just lost our speed buff
+			mod.update_speed()
 		for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 			part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
 		if(traveled_tiles <= 0)
@@ -606,8 +607,8 @@
 
 /obj/structure/mining_bomb/proc/generate_image()
 	explosion_image = image('icons/effects/96x96.dmi', "judicial_explosion")
-	explosion_image.pixel_x = -32
-	explosion_image.pixel_y = -32
+	explosion_image.pixel_w = -32
+	explosion_image.pixel_z = -32
 	SET_PLANE_EXPLICIT(explosion_image, ABOVE_GAME_PLANE, src)
 
 /obj/structure/mining_bomb/proc/prime(atom/movable/firer)

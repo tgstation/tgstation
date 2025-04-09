@@ -178,3 +178,11 @@ GLOBAL_VAR_INIT(ghost_role_flags, ALL)
 /// Used in logging uses of admin verbs (and sometimes some non-admin or debug verbs) to the blackbox
 /// Only pass it a string key, the verb being used.
 #define BLACKBOX_LOG_ADMIN_VERB(the_verb) SSblackbox.record_feedback("tally", "admin_verb", 1, the_verb)
+
+// Smite flags
+/// Plays sfx and adds an overlay to the target
+#define SMITE_DIVINE (1<<0)
+/// Adds a delay before the effect is applied
+#define SMITE_DELAY (1<<1)
+/// Stuns the target for a short duration, ignores stun immunity
+#define SMITE_STUN (1<<2)

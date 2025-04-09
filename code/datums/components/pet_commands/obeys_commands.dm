@@ -36,8 +36,8 @@
 		available_commands[new_command.command_name] = new_command
 
 /datum/component/obeys_commands/Destroy(force)
-	. = ..()
-	QDEL_NULL(available_commands)
+	QDEL_LIST_ASSOC_VAL(available_commands)
+	return ..()
 
 /datum/component/obeys_commands/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_LIVING_BEFRIENDED, PROC_REF(add_friend))
