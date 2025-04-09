@@ -1787,7 +1787,6 @@
 /area/station/maintenance/starboard/fore)
 "aHo" = (
 /obj/structure/safe,
-/obj/item/book/granter/crafting_recipe/death_sandwich,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "aHp" = (
@@ -20924,9 +20923,6 @@
 /obj/item/storage/medkit/regular,
 /turf/open/floor/iron/dark,
 /area/station/security/medical)
-"gKI" = (
-/turf/closed/wall,
-/area/space)
 "gKL" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
@@ -39514,8 +39510,8 @@
 "mBd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/reagent_containers/cup/glass/waterbottle/empty{
-	pixel_x = -11;
-	pixel_y = 9
+	pixel_x = -10;
+	pixel_y = 5
 	},
 /obj/structure/bed/maint{
 	pixel_x = 1;
@@ -94070,11 +94066,11 @@ dcE
 dcE
 dcE
 dcE
-gKI
+iWu
 bWY
 bWY
 bWY
-gKI
+iWu
 dcE
 dcE
 dcE
@@ -94325,7 +94321,7 @@ dcE
 dcE
 dcE
 dcE
-gKI
+iWu
 bWY
 bWY
 dcE
