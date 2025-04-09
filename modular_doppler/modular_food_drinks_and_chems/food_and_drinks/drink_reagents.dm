@@ -83,3 +83,35 @@
 	description = "A refreshing beverage of carbonated yogurt drink"
 	color = "#dddada"
 	taste_description = "bubbly sweet yogurt."
+
+/datum/reagent/consumable/gakster_energy
+	name = "Gakster energy drink"
+	description = "An ungodly concotion of carbonated water, caffeine, taurine, and dozens of other additives. Contains approximately \
+	4000% of the recommended daily value of vitamin B12."
+	color = "#f7e6af"
+	taste_description = "battery acid and carbonation"
+	overdose_threshold = 50
+	metabolized_traits = list(TRAIT_STIMULATED)
+
+/datum/movespeed_modifier/reagent/gakster_energy
+	multiplicative_slowdown = -0.1
+
+/datum/reagent/consumable/gakster_energy/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/gakster_energy)
+
+/datum/reagent/consumable/gakster_energy/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/gakster_energy)
+
+/datum/reagent/consumable/gakster_energy/overdose_start(mob/living/affected_mob)
+	. = ..()
+	to_chat(affected_mob, span_userdanger("Your heart flutters and skips!"))
+	affected_mob.add_mood_event("[type]_overdose", /datum/mood_event/overdose, name)
+
+/datum/reagent/consumable/gakster_energy/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/need_mob_update
+	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, 1 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH

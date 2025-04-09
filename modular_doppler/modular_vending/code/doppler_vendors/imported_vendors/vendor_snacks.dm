@@ -24,6 +24,29 @@
 	)
 
 /*
+*	NT Snacks
+*/
+
+/obj/item/food/vendor_snacks/nuke_fuel
+	name = "\improper Nuke Fuel sour pickle"
+	desc = "Once a nutritionally inert snack food, this one has been rendered by crimes against nutritional science into a rough taste facisimile \
+	of 'Nuke Fuel' sour candies. Rumored to have given a kid on Mars stomach ulcers, but only because he ate seventeen in one day."
+	icon_state = "nuke_fuel"
+	trash_type = /obj/item/trash/vendor_trash/nuke_fuel
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/pickle = 2)
+	tastes = list("cucumber" = 1, "battery acid" = 1, "sour brine" = 1)
+	foodtypes = VEGETABLES | SUGAR
+	custom_price = PAYCHECK_LOWER
+
+/obj/item/food/vendor_snacks/nuke_fuel/make_leave_trash()
+	AddElement(/datum/element/food_trash, trash_type, FOOD_TRASH_POPABLE)
+
+/obj/item/trash/vendor_trash/nuke_fuel
+	name = "empty pickle bag"
+	desc = "The plasticine carcass of a bleak meal."
+	icon_state = "nuke_fuel_trash"
+
+/*
 *	Mothic Snacks
 */
 
@@ -207,7 +230,7 @@
 */
 
 /obj/item/reagent_containers/cup/soda_cans/doppler/red_beverage
-	name = "NULL STRENGTH Lemon-Grapefruit Fruit Cooler"
+	name = "\improper NULL STRENGTH Lemon-Grapefruit Fruit Cooler"
 	desc = "The red and blue cans of the NULL STRENGTH line of shochu coolers became a minor memetic icon when the silly \
 	commercials for Marsian holonet broadcasts were posted to the wider 'net."
 	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
@@ -216,13 +239,33 @@
 	drink_type = ALCOHOL | FRUIT
 
 /obj/item/reagent_containers/cup/soda_cans/doppler/yogurt_beverage
-	name = "Suannai yogurt soda"
+	name = "\improper Suannai yogurt soda"
 	desc = "A refreshing, lightly carbonated yogurt drink that goes by nealy a dozen different names depending \
 	on where you are. Supposedly good for your gut, but it's most commonly seen served alongside spicy food."
 	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
 	icon_state = "yogurt_can"
 	list_reagents = list(/datum/reagent/consumable/yogurt_soda = 30)
 	drink_type = DAIRY
+
+/obj/item/reagent_containers/cup/soda_cans/doppler/nevada_tea
+	name = "\improper Nevada green tea"
+	desc = "A staple item of fuel stations, bodegas, convenience stores, and checkout aisle coolers. Cheaper than water, \
+	yet begging the question why."
+	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
+	icon_state = "nevada_can"
+	volume = 60
+	list_reagents = list(/datum/reagent/consumable/icetea = 50, /datum/reagent/consumable/honey = 10)
+	custom_price = PAYCHECK_LOWER
+
+/obj/item/reagent_containers/cup/soda_cans/doppler/gakster_energy
+	name = "\improper Gakster Energy™"
+	desc = "First courting outrage over its commercialization of a cultural locii known to most by way of live combat footage and darkweb \
+	snuff, this beverage later gained a dedicated countercultural following. Nine out of ten doctors recommend never, ever drinking this."
+	icon = 'modular_doppler/modular_vending/icons/imported_quick_foods.dmi'
+	icon_state = "gakster_energy_can"
+	volume = 50
+	list_reagents = list(/datum/reagent/consumable/gakster_energy = 50)
+	custom_price = PAYCHECK_COMMAND
 
 /obj/item/reagent_containers/condiment/pack/chili
 	name = "seasoning multi-pack"
