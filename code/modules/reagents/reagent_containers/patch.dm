@@ -201,7 +201,7 @@
 		if(HAS_TRAIT_FROM(carbies, TRAIT_HUSK, BURN) && carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
 			// give them a warning if the mob is a husk but synthflesh won't unhusk yet
 			application_delay = 4 SECONDS
-			carbies.visible_message(span_boldwarning("[carbies]'s burns need to be first be repaired before synthflesh will unhusk it!"))
+			carbies.visible_message(span_boldwarning("[carbies]'s burns need to be repaired first before synthflesh will unhusk it!"))
 
 /obj/item/reagent_containers/applicator/patch/ondansetron
 	name = "ondansetron patch"
