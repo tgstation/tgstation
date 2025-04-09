@@ -13069,11 +13069,6 @@
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"eDs" = (
-/obj/machinery/door/airlock/maintenance_hatch,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
-/turf/closed/wall/r_wall,
-/area/station/engineering/main)
 "eDu" = (
 /obj/effect/landmark/start/cargo_technician,
 /obj/effect/turf_decal/bot_white,
@@ -41986,7 +41981,6 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "oJn" = (
-/obj/structure/table,
 /obj/item/electronics/airalarm{
 	pixel_x = -5;
 	pixel_y = -5
@@ -176390,7 +176384,7 @@ aWD
 aWD
 aWD
 aWD
-eDs
+vzC
 wtH
 uca
 eVA
