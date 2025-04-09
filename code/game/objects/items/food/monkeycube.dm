@@ -115,8 +115,8 @@
 	spawned_mob = /mob/living/basic/bee
 
 /obj/item/food/monkeycube/dangerous_horse
-	name = "a horse cube"
-	desc = "This is a cube that, when water is added, creates a syndicate horse powerful enough to break the enemy's face!"
+	name = "a pony cube"
+	desc = "This is a cube that, when water is added, creates a syndicate pony powerful enough to break the enemy's face!"
 	bite_consumption = 10
 	food_reagents = list(
 		/datum/reagent/toxin = 15,

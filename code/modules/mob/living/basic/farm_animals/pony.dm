@@ -179,7 +179,7 @@
 	maximum_survivable_temperature = 1500
 	unique_tamer = TRUE
 	melee_damage_lower = 10
-	melee_damage_upper = 15
+	melee_damage_upper = 10
 	armour_penetration = 100
 	sentience_type = SENTIENCE_PONY
 

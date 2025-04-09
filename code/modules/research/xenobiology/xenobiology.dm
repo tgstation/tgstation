@@ -762,7 +762,7 @@
 	smart_mob.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS))
 
 /obj/item/slimepotion/slime/sentience/dangerous_horse
-	name = "dangerous horse potion"
+	name = "dangerous pony potion"
 	desc = "A miraculous chemical mix that grants human like intelligence to pony beings. It has been modified with Syndicate technology to also grant an internal radio implant to the pony and authenticate with identification systems"
 	sentience_type = SENTIENCE_PONY
 
