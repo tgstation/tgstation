@@ -11,7 +11,7 @@
 	if(HAS_TRAIT(mind, TRAIT_DISPLAY_JOB_IN_BINARY))
 		designation = mind.assigned_role.title
 
-	if(isAI(src) || HAS_TRAIT(src, TRAIT_LOUD_BINARY))
+	if(HAS_TRAIT(src, TRAIT_LOUD_BINARY))
 		// AIs are loud and ugly
 		spans |= SPAN_COMMAND
 
