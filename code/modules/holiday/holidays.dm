@@ -100,9 +100,13 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	switch(pattern)
 		if(PATTERN_RANDOM)
 			return "#[random_short_color()]"
+		//MASSMETA EDIT REMOVAL BEGIN (gay removal)
+		/*
 		if(PATTERN_RAINBOW)
 			var/datum/holiday/pride_week/rainbow_datum = new()
 			return rainbow_datum.get_holiday_colors(thing_to_color, PATTERN_DEFAULT)
+		*/
+		//MASSMETA EDIT REMOVAL END
 	if(!length(GLOB.holidays))
 		return
 	for(var/holiday_key in GLOB.holidays)
