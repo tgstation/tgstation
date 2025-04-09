@@ -49592,9 +49592,6 @@
 	},
 /turf/open/openspace,
 /area/station/construction/storage_wing)
-"pLm" = (
-/turf/open/space/basic,
-/area/station/hallway/secondary/construction)
 "pLv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/abandoned,
@@ -181981,7 +181978,7 @@ kXG
 kXG
 kXG
 lmT
-pLm
+nLp
 ubs
 ubs
 uKt
