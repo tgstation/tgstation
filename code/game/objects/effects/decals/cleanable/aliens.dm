@@ -5,7 +5,7 @@
 	desc = "It's green and acidic. It looks like... <i>blood?</i>"
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
-	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	blood_state = BLOOD_STATE_XENO
 	beauty = -250

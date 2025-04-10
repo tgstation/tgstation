@@ -218,7 +218,7 @@
 
 ///Colors for blood greyscale sprites
 #define BLOOD_COLOR_RED "#FF291E" // This is lighter than the blood reagent itself because for the greyscale to look the same as before it needs to be the lightest parts of the sprite.
-#define BLOOD_COLOR_XENO "#C8F000"
+#define BLOOD_COLOR_XENO "#D5FF2C"
 
 ///Main colors for UI themes
 #define COLOR_THEME_MIDNIGHT "#6086A0"
