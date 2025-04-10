@@ -73,11 +73,10 @@
 		to_chat(user, span_notice("You fail to draw any conclusions to [target] being a Bloodsucker."))
 
 /obj/item/book/kindred/attack_self(mob/living/user)
-	if(user.mind && !HAS_TRAIT(user.mind, TRAIT_BLOODSUCKER_HUNTER))
-		if(IS_BLOODSUCKER(user))
-			to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
-		else
-			to_chat(user, span_warning("You feel your eyes unable to read the boring texts..."))
+	if(IS_BLOODSUCKER(user))
+		to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
+	else
+		to_chat(user, span_warning("You feel your eyes unable to read the boring texts..."))
 			user.set_eye_blur_if_lower(10 SECONDS)
 		return
 	ui_interact(user)

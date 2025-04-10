@@ -84,7 +84,7 @@
 
 /obj/structure/bloodsucker/mirror/Initialize(mapload)
 	. = ..()
-	var/static/list/reflection_filter = alpha_mask_filter(icon = icon('fulp_modules/icons/antagonists/bloodsuckers/vamp_obj.dmi', "blood_mirror_mask"))
+	var/static/list/reflection_filter = alpha_mask_filter(icon = icon('modular_meta/features/antagonists/icons/bloodsuckers/vamp_obj.dmi', "blood_mirror_mask"))
 	var/static/matrix/reflection_matrix = matrix(0.75, 0, 0, 0, 0.75, 0)
 	var/datum/callback/can_reflect = CALLBACK(src, PROC_REF(can_reflect))
 	var/list/update_signals = list(COMSIG_ATOM_BREAK)
@@ -433,7 +433,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/bloodsucker/mirror/broken, 28)
 	background_icon = 'modular_meta/features/antagonists/icons/bloodsuckers/bloodsucker_status_effects.dmi'
 	background_icon_state = "template"
 
-	button_icon = 'modular_meta/features/antagonists/icons/bloodsuckers/action_bloodsucker.dmi'
+	button_icon = 'modular_meta/features/antagonists/icons/bloodsuckers/actions_bloodsucker.dmi'
 
 	overlay_icon = 'modular_meta/features/antagonists/icons/bloodsuckers/bloodsucker_status_effects.dmi'
 	overlay_icon_state = "template_border"
