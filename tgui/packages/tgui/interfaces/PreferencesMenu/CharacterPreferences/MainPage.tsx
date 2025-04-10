@@ -316,6 +316,7 @@ function MainFeature(props: MainFeatureProps) {
               onOpen: (event) => {
                 // We're a button inside a button.
                 // Did you know that's against the W3C standard? :)
+                // FIXME: Button unclickable!
                 event.cancelBubble = true;
                 event.stopPropagation();
               },
