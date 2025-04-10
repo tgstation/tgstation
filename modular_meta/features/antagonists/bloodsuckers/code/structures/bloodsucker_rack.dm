@@ -16,9 +16,6 @@
 	vassal_desc = "This is a persuassion rack, which allows your master to thrall crewmembers into their service.\n\
 		Aid your master in bringing their victims here and keeping them secure.\n\
 		You can secure victims to the rack by dragging their sprite onto the rack while it is secured."
-	hunter_desc = "This is a persuassion rack, which vampires use to brainwash crewmembers into their loyal slaves.\n\
-		They usually ensure that victims are handcuffed, to prevent them from running away.\n\
-		Their rituals take time, allowing us to disrupt them."
 
 #ifdef BLOODSUCKER_TESTING
 	var/convert_progress = 1

@@ -48,7 +48,7 @@
 /obj/structure/bloodsucker/mirror
 	name = "scarlet mirror"
 	desc = "It bleeds with visions of a world rendered in red."
-	icon = 'fulp_modules/icons/antagonists/bloodsuckers/vamp_obj.dmi'
+	icon = 'modular_meta/features/antagonists/icons/bloodsuckers/vamp_obj.dmi'
 	icon_state = "blood_mirror"
 	movement_type = FLOATING
 	density = FALSE
@@ -59,8 +59,6 @@
 		It is warded against usage by unvassalized mortals with teleportation magic that can rend psyches asunder at the cost of its own integrity."
 	vassal_desc = "This is a magical blood mirror that Bloodsuckers alone may use to watch over their devotees.\n\
 		Those unworthy of the mirror who haven't been sworn to the service of a Bloodsucker may anger it if they attempt to use it."
-	hunter_desc = "This is a mirror cursed with blood, it allows vampires to spy upon their thralls. \n\
-		 An incredibly shy mirror spirit has also been bound to it, so try not to look into it directly lest you wish to face a phantasmal panic response."
 	light_system = OVERLAY_LIGHT //It glows a bit when in use.
 	light_range = 2
 	light_power = 1.5
@@ -345,8 +343,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/bloodsucker/mirror/broken, 28)
 		balloon_alert(user, "you don't know how to use it!")
 		return
 
-	if(IS_MONSTERHUNTER(user))
-		user.balloon_alert(user, "MOVE— MAYBE WONDERLAND— NOW!") //They might be able to escape it by going to Wonderland...
 
 	if(mirror_will_not_forget_this)
 		katabasis(user, TRUE)
@@ -434,12 +430,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/bloodsucker/mirror/broken, 28)
 /// The parent action datum for blood mirror action buttons.
 /// (Mainly used for the icon changes.)
 /datum/action/innate/mirror
-	background_icon = 'fulp_modules/icons/antagonists/bloodsuckers/bloodsucker_status_effects.dmi'
+	background_icon = 'modular_meta/features/antagonists/icons/bloodsuckers/bloodsucker_status_effects.dmi'
 	background_icon_state = "template"
 
-	button_icon = 'fulp_modules/icons/antagonists/bloodsuckers/actions_bloodsucker.dmi'
+	button_icon = 'modular_meta/features/antagonists/icons/bloodsuckers/action_bloodsucker.dmi'
 
-	overlay_icon = 'fulp_modules/icons/antagonists/bloodsuckers/bloodsucker_status_effects.dmi'
+	overlay_icon = 'modular_meta/features/antagonists/icons/bloodsuckers/bloodsucker_status_effects.dmi'
 	overlay_icon_state = "template_border"
 
 /// The action button that allows players to stop using blood mirrors.

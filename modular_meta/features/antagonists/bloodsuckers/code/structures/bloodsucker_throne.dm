@@ -13,8 +13,6 @@
 	vamp_desc = "This is a blood throne, sitting on it will allow you to telepathically broadcast messages to all of your vassals by simply speaking. \n\
 		Unlike other blood structures this throne may be unsecured by a <b>right-click</b> (just make sure it's unoccupied first)."
 	vassal_desc = "This is a blood throne, it allows your master to telepathically speak to you and others who work under them."
-	hunter_desc = "This blood-red seat allows vampires to telepathically communicate with those in their fold."
-
 	///The static armrest that the throne has while someone is buckled onto it.
 	var/static/mutable_appearance/armrest
 
@@ -22,7 +20,7 @@
 /obj/structure/bloodsucker/bloodthrone/Initialize()
 	AddComponent(/datum/component/simple_rotation, ROTATION_IGNORE_ANCHORED)
 	if(!armrest)
-		armrest = mutable_appearance('fulp_modules/icons/antagonists/bloodsuckers/vamp_obj_64.dmi', "thronearm")
+		armrest = mutable_appearance('modular_meta/features/antagonists/icons/bloodsuckers/vamp_obj_64.dmi', "thronearm")
 		armrest.layer = ABOVE_MOB_LAYER
 	return ..()
 

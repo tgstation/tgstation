@@ -100,7 +100,6 @@
 	vamp_desc = "This magical candle drains the sanity of unvassalized mortals while active.\n\
 		You alone can toggle it from afar by <b>ctrl-clicking</b> it."
 	vassal_desc = "This magical candle drains the sanity of those fools who havent yet accepted your master while active."
-	hunter_desc = "This magical candle causes insanity to those near it while active."
 
 /obj/structure/bloodsucker/lighting/cendelabrum/process()
 	. = ..()
