@@ -34,6 +34,10 @@
 	armor_type = /datum/armor/muzzle_breath
 	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
 
+/obj/item/clothing/mask/muzzle/breath/examine(mob/user)
+	. = ..()
+	. += span_notice("Surgeries can be performed through [src].")
+
 /obj/item/clothing/mask/muzzle/tape
 	name = "tape piece"
 	desc = "A piece of tape that can be put over someone's mouth."
