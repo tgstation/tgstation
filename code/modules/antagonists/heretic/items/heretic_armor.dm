@@ -24,6 +24,8 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	// Slightly better than normal cult robes
 	armor_type = /datum/armor/cultrobes_eldritch
+	/// Whether the hood is flipped up
+	var/hood_up = FALSE
 
 /datum/armor/cultrobes_eldritch
 	melee = 50
@@ -35,6 +37,12 @@
 	fire = 20
 	acid = 20
 	wound = 20
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/on_hood_up(obj/item/clothing/head/hooded/hood)
+	hood_up = TRUE
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/on_hood_down(obj/item/clothing/head/hooded/hood)
+	hood_up = FALSE
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/examine(mob/user)
 	. = ..()
