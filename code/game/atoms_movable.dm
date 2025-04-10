@@ -172,7 +172,7 @@
 		blocker.icon_state = icon_state
 		blocker.dir = dir
 		blocker.appearance_flags = appearance_flags | EMISSIVE_APPEARANCE_FLAGS
-		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane)) // Flattens the micro for a microop
+		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane)) // Takes a light path through the normal macro for a microop
 		// Ok so this is really cursed, but I want to set with this blocker cheaply while
 		// Still allowing it to be removed from the overlays list later
 		// So I'm gonna flatten it, then insert the flattened overlay into overlays AND the managed overlays list, directly
