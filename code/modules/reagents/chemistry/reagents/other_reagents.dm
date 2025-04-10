@@ -78,11 +78,15 @@
 
 /datum/reagent/blood/on_new(list/data)
 	. = ..()
-	if(istype(data))
-		SetViruses(src, data)
-		var/datum/blood_type/blood_type = data["blood_type"]
-		if(blood_type && blood_type.color != BLOOD_COLOR_RED) // If the blood is default red, just use the darker red color for the reagent.
-			color = blood_type.color
+	if(!istype(data))
+		return
+	SetViruses(src, data)
+	var/datum/blood_type/blood_type = data["blood_type"]
+	if(!blood_type)
+		return
+	var/blood_color = blood_type.get_color()
+	if(blood_color != BLOOD_COLOR_RED) // If the blood is default red, just use the darker red color for the reagent.
+		color = blood_color
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)

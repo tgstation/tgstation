@@ -5,6 +5,9 @@
 	var/desc
 	/// Shown color of the blood type.
 	var/color = BLOOD_COLOR_RED
+	/// Additional lightness multiplier for the blood color
+	/// When set, color will be transformed into a matrix with coefficients multiplied by this value
+	var/lightness_mult = null
 	/// Blood types that are safe to use with people that have this blood type.
 	var/compatible_types = list()
 	/// What reagent is represented by this blood type?
@@ -32,6 +35,17 @@
  */
 /datum/blood_type/proc/type_key()
 	return type
+
+/// Returns blood color or color matrix
+/// Useful when you want to have a blood color with values out of normal hex bounds for that acidic look
+/datum/blood_type/proc/get_color()
+	if(isnull(lightness_mult))
+		return color
+
+	var/list/blood_matrix = color_to_full_rgba_matrix(color)
+	for(var/i in 1 to length(blood_matrix))
+		blood_matrix[i] *= lightness_mult
+	return blood_matrix
 
 /datum/blood_type/a_minus
 	name = "A-"
@@ -136,6 +150,7 @@
 /datum/blood_type/xeno
 	name = "X*"
 	color = BLOOD_COLOR_XENO
+	lightness_mult = 1.255 // For parity with pre-refactor xeno blood sprites
 	compatible_types = list(/datum/blood_type/xeno)
 
 /// April fool's blood for clowns

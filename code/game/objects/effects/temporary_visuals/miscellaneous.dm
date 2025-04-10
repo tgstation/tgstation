@@ -46,7 +46,7 @@
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
 	splatter_type = "xsplatter"
 
-/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter/Initialize(mapload, set_dir, set_color = BLOOD_COLOR_XENO)
+/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter/Initialize(mapload, set_dir, set_color = GLOB.blood_types[/datum/blood_type/xeno::name])
 	return ..()
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
