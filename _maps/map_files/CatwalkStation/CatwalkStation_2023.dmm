@@ -46633,6 +46633,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/robotics/lab)
+"oEr" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/spawner/random/structure/billboard/nanotrasen{
+	pixel_y = 12
+	},
+/turf/open/floor/engine/hull,
+/area/space/nearstation)
 "oEw" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/decal/cleanable/dirt,
@@ -69628,6 +69635,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/robotics)
+"vSA" = (
+/obj/effect/turf_decal/bot,
+/turf/open/floor/engine/hull,
+/area/space/nearstation)
 "vSC" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	name = "euthanization chamber freezer"
@@ -183736,7 +183747,7 @@ wcV
 wcV
 wcV
 rKA
-hRj
+oEr
 hRj
 hRj
 hRj
@@ -184250,7 +184261,7 @@ rMj
 rMj
 rMj
 rKA
-hRj
+vSA
 hRj
 hRj
 hRj
