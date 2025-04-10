@@ -136,13 +136,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		if("openLink")
 			src << link(href_list["link"])
 		if("openWebMap")
-			var/mapping_url = config.Get(/datum/config_entry/string/webmap_url)
-			if(!mapping_url)
+			if(!SSmapping.current_map.mapping_url)
 				return
-			if(is_station_level(client_mob.z))
-				src << link("[mapping_url][LOWER_TEXT(sanitize_css_class_name(SSmapping.current_map.map_name))]/?x=[client_mob.x]&y=[client_mob.y]&zoom=6")
+			if(is_station_level(mob.z))
+				src << link("[SSmapping.current_map.mapping_url][LOWER_TEXT(sanitize_css_class_name(SSmapping.current_map.map_name))]/?x=[mob.x]&y=[mob.y]&zoom=6")
 			else
-				src << link("[mapping_url][LOWER_TEXT(sanitize_css_class_name(SSmapping.current_map.map_name))]")
+				src << link("[SSmapping.current_map.mapping_url][LOWER_TEXT(sanitize_css_class_name(SSmapping.current_map.map_name))]")
 	if (hsrc)
 		var/datum/real_src = hsrc
 		if(QDELETED(real_src))
