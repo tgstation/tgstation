@@ -29,6 +29,9 @@ module.exports = (env = {}, argv) => {
 
   /** @type {import('@rspack/core').Configuration} */
   const config = defineConfig({
+    experiments: {
+      css: true,
+    },
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
     target: ['web', 'browserslist:edge >= 123'],
@@ -45,6 +48,7 @@ module.exports = (env = {}, argv) => {
       chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
       publicPath: '/',
+      assetModuleFilename: '[name][ext]',
     },
     resolve: {
       pnp: true,
@@ -87,18 +91,6 @@ module.exports = (env = {}, argv) => {
           test: /\.(s)?css$/,
           use: [
             {
-              loader: rspack.CssExtractRspackPlugin.loader,
-              options: {
-                esModule: false,
-              },
-            },
-            {
-              loader: require.resolve('css-loader'),
-              options: {
-                esModule: false,
-              },
-            },
-            {
               loader: require.resolve('sass-loader'),
               options: {
                 api: 'modern-compiler',
@@ -106,16 +98,39 @@ module.exports = (env = {}, argv) => {
               },
             },
           ],
-          type: 'javascript/auto',
+          type: 'css',
         },
         {
-          test: /\.(png|jpg|svg)$/,
+          test: /\.(png|jpg)$/,
           use: [
             {
               loader: require.resolve('url-loader'),
               options: {
                 esModule: false,
+                outputPath: 'assets/',
+                publicPath: '/assets/',
               },
+            },
+          ],
+        },
+        {
+          test: /\.svg$/,
+          oneOf: [
+            {
+              issuer: /\.(s)?css$/,
+              type: 'asset/inline',
+            },
+            {
+              use: [
+                {
+                  loader: require.resolve('url-loader'),
+                  options: {
+                    esModule: false,
+                    outputPath: 'assets/',
+                    publicPath: '/assets/',
+                  },
+                },
+              ],
             },
           ],
         },
