@@ -4075,13 +4075,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/webpack-env@npm:^1.18.8":
-  version: 1.18.8
-  resolution: "@types/webpack-env@npm:1.18.8"
-  checksum: 10c0/527a5d1eb75c5243e4f3665d956c7c340f899955dd25d16c9fd9750406f32e95a3a17d207640295038e8235c0c2a2daf084f420e088e58b965d82fc74f6012d7
-  languageName: node
-  linkType: hard
-
 "@types/webpack-sources@npm:*":
   version: 3.2.3
   resolution: "@types/webpack-sources@npm:3.2.3"
@@ -19871,6 +19864,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "tgui-dev-server@workspace:packages/tgui-dev-server"
   dependencies:
+    "@rspack/core": "npm:^1.3.4"
     axios: "npm:^1.7.7"
     glob: "npm:^7.2.3"
     source-map: "npm:^0.7.4"
@@ -19926,7 +19920,6 @@ __metadata:
     "@rspack/cli": "npm:^1.3.4"
     "@rspack/core": "npm:^1.3.4"
     "@types/node": "npm:^22.14.0"
-    "@types/webpack-env": "npm:^1.18.8"
     "@types/wicg-file-system-access": "npm:^2023.10.6"
     "@types/ws": "npm:^8.18.1"
     "@typescript-eslint/parser": "npm:^8.13.0"
@@ -19947,7 +19940,7 @@ __metadata:
     typescript: "npm:^5.6.3"
     url-loader: "npm:^4.1.1"
     vitest: "npm:^3.1.1"
-    webpack: "npm:^5.98.0"
+    webpack: "npm:^5.99.5"
   languageName: unknown
   linkType: soft
 
@@ -21411,9 +21404,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.98.0":
-  version: 5.98.0
-  resolution: "webpack@npm:5.98.0"
+"webpack@npm:^5.99.5":
+  version: 5.99.5
+  resolution: "webpack@npm:5.99.5"
   dependencies:
     "@types/eslint-scope": "npm:^3.7.7"
     "@types/estree": "npm:^1.0.6"
@@ -21443,7 +21436,7 @@ __metadata:
       optional: true
   bin:
     webpack: bin/webpack.js
-  checksum: 10c0/bee4fa77f444802f0beafb2ff30eb5454a606163ad7d3cc9a5dcc9d24033c62407bed04601b25dea49ea3969b352c1b530a86c753246f42560a4a084eefb094e
+  checksum: 10c0/8f5ebea5e2ae7449774d535862348ee564c100350643e4bdd0683fa07eabc058e88a07b7af7176ee4038d03e5172001daf65c16acebf90bc7ba48c08e25e6792
   languageName: node
   linkType: hard
 
