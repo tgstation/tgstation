@@ -49,16 +49,11 @@
 	return TRUE
 
 /datum/action/cooldown/bloodsucker/feed/DeactivatePower()
-	// Check if active and early return if not to avoid spamming logs.
-	if(!active)
-		return
 	var/mob/living/user = owner
 	var/mob/living/feed_target
 	if(target_ref)
 		feed_target = target_ref.resolve()
-	if(isnull(feed_target))
-		log_combat(user, user, "fed on blood (target not found)", addition="(and took [blood_taken] blood)")
-	else
+	if(!isnull(feed_target))
 		log_combat(user, feed_target, "fed on blood", addition="(and took [blood_taken] blood)")
 		to_chat(user, span_notice("You slowly release [feed_target]."))
 		if(feed_target.stat == DEAD && blood_taken > 0)
@@ -97,7 +92,6 @@
 	owner.balloon_alert(owner, "feeding off [feed_target]...")
 	if(!do_after(owner, feed_timer, feed_target, NONE, TRUE))
 		owner.balloon_alert(owner, "feed stopped")
-		target_ref = null
 		DeactivatePower()
 		return
 	if(owner.pulling == feed_target && owner.grab_state >= GRAB_AGGRESSIVE)
