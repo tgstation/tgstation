@@ -32711,7 +32711,7 @@
 /obj/item/clothing/glasses/meson{
 	pixel_y = 4
 	},
-/obj/item/reagent_containers/pill/patch/aiuri,
+/obj/item/reagent_containers/applicator/patch/aiuri,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
