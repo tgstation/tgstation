@@ -315,6 +315,7 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "xfloor1"
 	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
+	color = BLOOD_COLOR_XENO
 
 /obj/effect/decal/cleanable/confetti
 	name = "confetti"
