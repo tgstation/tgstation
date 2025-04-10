@@ -68,6 +68,7 @@
 		if (length(blood_matrix) >= 16 && i % 4 == 0) // Don't modify alpha either
 			continue
 		blood_matrix[i] *= 0.5
+	color = blood_matrix
 	return TRUE
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
