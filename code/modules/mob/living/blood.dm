@@ -348,8 +348,6 @@
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/splatter_turf, small_drip)
-	if(get_blood_id() != /datum/reagent/blood)
-		return
 	if(!splatter_turf)
 		splatter_turf = get_turf(src)
 	if(isclosedturf(splatter_turf) || (isgroundlessturf(splatter_turf) && !GET_TURF_BELOW(splatter_turf)))
@@ -385,7 +383,7 @@
 		blood_spew.add_blood_DNA(temp_blood_DNA, no_visuals = small_drip)
 
 /mob/living/carbon/human/add_splatter_floor(turf/splatter_turf, small_drip)
-	if(!HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(!HAS_TRAIT(src, TRAIT_NOBLOOD) && !dna?.blood_type.no_bleed_overlays)
 		. = ..()
 
 /mob/living/carbon/alien/add_splatter_floor(turf/splatter_turf, small_drip)

@@ -494,8 +494,6 @@
 
 ///Get the mobs dna list
 /mob/living/carbon/get_blood_dna_list()
-	if(!(get_blood_id() in list(/datum/reagent/blood, /datum/reagent/toxin/acid)))
-		return
 	var/list/blood_dna = list()
 	if(dna)
 		blood_dna[dna.unique_enzymes] = dna.blood_type
