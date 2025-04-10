@@ -17,8 +17,8 @@
 		user.next_move_dir_sub = NONE
 		return FALSE
 
-	var/movement_dir = user.intended_direction | user.additional_intended_direction
-	user.intended_direction = NONE
+	user.intended_direction |= user.additional_intended_direction
+	var/movement_dir = user.intended_direction
 
 	if(user.next_move_dir_sub)
 		movement_dir &= ~user.next_move_dir_sub
@@ -37,9 +37,10 @@
 	// Null check cause of the signal above
 	else if(user)
 		user.Move(get_step(src, movement_dir), movement_dir)
-		return !!movement_dir //true if there was actually any player input
+		. = !!movement_dir //true if there was actually any player input
 
-	return FALSE
+	user.intended_direction = NONE
+
 
 /client/proc/calculate_move_dir()
 	var/movement_dir = NONE
