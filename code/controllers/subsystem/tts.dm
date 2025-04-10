@@ -2,7 +2,6 @@ SUBSYSTEM_DEF(tts)
 	name = "Text To Speech"
 	wait = 0.05 SECONDS
 	priority = FIRE_PRIORITY_TTS
-	init_order = INIT_ORDER_TTS
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	/// Queued HTTP requests that have yet to be sent. TTS requests are handled as lists rather than datums.
@@ -82,7 +81,7 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request_pitch = new()
 	var/list/headers_pitch = list()
 	headers_pitch["Authorization"] = CONFIG_GET(string/tts_http_token)
-	request_pitch.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/pitch-available", "", headers_pitch)
+	request_pitch.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/pitch-available", "", headers_pitch, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
 	request_pitch.begin_async()
 	UNTIL(request_pitch.is_complete())
 	pitch_enabled = TRUE
