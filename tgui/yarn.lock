@@ -2109,7 +2109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react@npm:^0.27.6":
+"@floating-ui/react@npm:^0.27.6, @floating-ui/react@npm:^0.27.7":
   version: 0.27.7
   resolution: "@floating-ui/react@npm:0.27.7"
   dependencies:
@@ -19292,6 +19292,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "tgui@workspace:packages/tgui"
   dependencies:
+    "@floating-ui/react": "npm:^0.27.7"
     "@types/marked": "npm:4.3.2"
     "@types/react": "npm:^19.1.0"
     common: "workspace:*"

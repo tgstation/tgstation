@@ -154,6 +154,7 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
                 ([name, image], index) => {
                   return (
                     <Button
+                      key={index}
                       onClick={() => {
                         props.onSelect(name);
                       }}
