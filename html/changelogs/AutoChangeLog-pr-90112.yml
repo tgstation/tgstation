@@ -1,6 +1,0 @@
-author: "Iajret"
-delete-after: True
-changes:
-  - balance: "AI uplink brain now comes with built-in radio and free silicon access for the AI to use"
-  - balance: "AI entering uplink brain now locks it for themselves. You can reinsert that brain to reset its controlling AI"
-  - bugfix: "fixed AI borg shells and big brother not having loud binary. Now they do."

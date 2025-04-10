@@ -288,3 +288,35 @@
   - bugfix: Fixed certain mobs runtiming when dusted
   TiviPlus:
   - code_imp: optimized balloon alerts
+2025-04-10:
+  AyIong:
+  - refactor: All TGUI styles was migrated to CSS Variables, if you find something
+      odd in styles, feel free to make an issue on GitHub
+  Ghommie:
+  - bugfix: Fixed an issue with paintings related to 516. You should now be able to
+      paint larger strokes again.
+  - bugfix: Fixed ghosts and other non-adjacent viewers not being able to zoom the
+      canvas in and out.
+  - rscadd: Added a bucket tool to the canvas UI to fill larger areas. You can find
+      the button for it beside the one for the grid.
+  - qol: You can toggle the canvas grid and bucket tool with the G and F key respectively.
+  GremlinSeeker:
+  - bugfix: fixed some issues with wawa's atmos
+  Iajret:
+  - balance: AI uplink brain now comes with built-in radio and free silicon access
+      for the AI to use
+  - balance: AI entering uplink brain now locks it for themselves. You can reinsert
+      that brain to reset its controlling AI
+  - bugfix: fixed AI borg shells and big brother not having loud binary. Now they
+      do.
+  Krysonism:
+  - bugfix: fixed the vat grower bubble overlay not clearing upon completetion.
+  Rhials:
+  - bugfix: Mutation injectors used on incompatible mobs will no longer burn a charge.
+  SmArtKar:
+  - bugfix: Fixed runtimes caused when touching a non-item object with paper
+  - bugfix: Fixed runtimes caused by stabilized crossbreeds
+  - bugfix: Fixed an unintentional buff to stabilized crossbreeds, they now once again
+      need to be put in your backpack or pockets.
+  timothymtorres:
+  - rscadd: Add rare chance of thunder strikes during ash storms on lavaland
