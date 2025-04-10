@@ -175,8 +175,5 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 /// Anywhere on Earth
 #define TIMEZONE_ANYWHERE_ON_EARTH -12
 
-/// in the grim darkness of the thirteenth space station there is no timezones, since they break IC game times. Use this for all IC/round time values
-#define NO_TIMEZONE 0
-
 /// MASSMETA ADDITION: Moscow Time
 #define TIMEZONE_MSK 3
