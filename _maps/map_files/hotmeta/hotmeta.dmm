@@ -56466,7 +56466,7 @@
 "tLW" = (
 /obj/machinery/door/puzzle/keycard{
 	puzzle_id = "blue";
-	color = red
+	color = "red"
 	},
 /turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)

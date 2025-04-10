@@ -6695,7 +6695,7 @@
 /obj/structure/table/reinforced,
 /obj/item/clipboard,
 /obj/item/folder/yellow,
-/obj/item/reagent_containers/pill/patch/aiuri,
+/obj/item/reagent_containers/applicator/patch/aiuri,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -90504,7 +90504,7 @@
 /obj/item/storage/briefcase/secure,
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/bot,
-/obj/item/reagent_containers/pill/patch/aiuri,
+/obj/item/reagent_containers/applicator/patch/aiuri,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
