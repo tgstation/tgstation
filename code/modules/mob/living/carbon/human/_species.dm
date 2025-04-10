@@ -383,7 +383,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//Assigns exotic blood type if the species has one
 	if(exotic_bloodtype && human_who_gained_species.dna.blood_type != exotic_bloodtype)
-		human_who_gained_species.dna.blood_type = exotic_bloodtype
+		human_who_gained_species.dna.blood_type = get_blood_type_by_name(exotic_bloodtype)
 	//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
 	//(why the fuck is blood type not tied to a fucking DNA block?)
 	else if(old_species.exotic_bloodtype && !exotic_bloodtype)
