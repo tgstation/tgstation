@@ -1,5 +1,5 @@
-import { BooleanLike } from 'tgui-core/react';
 import { type Placement } from '@floating-ui/react';
+import { BooleanLike } from 'tgui-core/react';
 
 export type PodLauncherData = {
   bayNumber: string;

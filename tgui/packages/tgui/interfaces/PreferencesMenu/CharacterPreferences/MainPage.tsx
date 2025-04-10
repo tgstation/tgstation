@@ -4,14 +4,14 @@ import { sendAct, useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
+  Floating,
   Input,
   LabeledList,
-  Floating,
-  Stack,
   Section,
+  Stack,
 } from 'tgui-core/components';
-import { createSearch } from 'tgui-core/string';
 import { classes } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
 
 import { CharacterPreview } from '../../common/CharacterPreview';
 import { RandomizationButton } from '../components/RandomizationButton';

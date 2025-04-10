@@ -4,9 +4,9 @@ import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
+  Floating,
   Icon,
   Input,
-  Floating,
   Stack,
   Tooltip,
 } from 'tgui-core/components';
