@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - admin: "Adds Security as one of the captain's departments, ensuring that departmental bans also include the captain, who is an effective member of security."

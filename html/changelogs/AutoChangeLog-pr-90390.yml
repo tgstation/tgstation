@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "further improved storage code"
-  - bugfix: "monkey cube boxes can no longer hold gorilla cubes & vice versa"

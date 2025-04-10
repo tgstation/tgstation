@@ -1,5 +1,0 @@
-author: "Goat"
-delete-after: True
-changes:
-  - qol: "You can now insert tanks into bluespace gas vendors to fill instead of having to buy and use a large tank."
-  - sound: "Bluespace gas vendors now use sounds from canisters when adding/removing tanks"
