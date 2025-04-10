@@ -4075,6 +4075,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/webpack-env@npm:^1.18.8":
+  version: 1.18.8
+  resolution: "@types/webpack-env@npm:1.18.8"
+  checksum: 10c0/527a5d1eb75c5243e4f3665d956c7c340f899955dd25d16c9fd9750406f32e95a3a17d207640295038e8235c0c2a2daf084f420e088e58b965d82fc74f6012d7
+  languageName: node
+  linkType: hard
+
 "@types/webpack-sources@npm:*":
   version: 3.2.3
   resolution: "@types/webpack-sources@npm:3.2.3"
@@ -19920,6 +19927,7 @@ __metadata:
     "@rspack/cli": "npm:^1.3.4"
     "@rspack/core": "npm:^1.3.4"
     "@types/node": "npm:^22.14.0"
+    "@types/webpack-env": "npm:^1.18.8"
     "@types/wicg-file-system-access": "npm:^2023.10.6"
     "@types/ws": "npm:^8.18.1"
     "@typescript-eslint/parser": "npm:^8.13.0"
