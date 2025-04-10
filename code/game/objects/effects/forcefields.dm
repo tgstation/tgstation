@@ -77,6 +77,8 @@
 	receive_ricochet_chance_mod = INFINITY //we do ricochet a lot!
 	initial_duration = 10 SECONDS
 
+GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_field)
+
 /// The cosmic heretics forcefield
 /obj/effect/forcefield/cosmic_field
 	name = "Cosmic Field"
@@ -94,6 +96,16 @@
 /obj/effect/forcefield/cosmic_field/Initialize(mapload, flags = MAGIC_RESISTANCE)
 	. = ..()
 	antimagic_flags = flags
+	GLOB.active_cosmic_fields += src
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_loc_exited),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/effect/forcefield/cosmic_field/Destroy(force)
+	GLOB.active_cosmic_fields -= src
+	return ..()
 
 /obj/effect/forcefield/cosmic_field/CanAllowThrough(atom/movable/mover, border_dir)
 	if(!isliving(mover))
@@ -104,6 +116,37 @@
 	if(living_mover.has_status_effect(/datum/status_effect/star_mark))
 		return FALSE
 	return ..()
+
+/obj/effect/forcefield/cosmic_field/proc/on_entered(datum/source, atom/movable/thing)
+	SIGNAL_HANDLER
+	if(isprojectile(thing))
+		var/obj/projectile/bullet = thing
+		bullet.speed *= 0.5
+		return
+	if(!isliving(thing))
+		return
+	var/mob/living/living_mover = thing
+	var/datum/status_effect/heretic_passive/cosmic/cosmic_passive = living_mover.has_status_effect(/datum/status_effect/heretic_passive/cosmic)
+	if(!cosmic_passive)
+		return
+	living_mover.add_movespeed_modifier(/datum/movespeed_modifier/cosmic_field)
+
+/obj/effect/forcefield/cosmic_field/proc/on_loc_exited(datum/source, atom/movable/thing)
+	SIGNAL_HANDLER
+	if(isprojectile(thing))
+		var/obj/projectile/bullet = thing
+		bullet.speed /= 0.5
+		return
+	if(!isliving(thing))
+		return
+	var/mob/living/living_mover = thing
+	var/datum/status_effect/heretic_passive/cosmic/cosmic_passive = living_mover.has_status_effect(/datum/status_effect/heretic_passive/cosmic)
+	if(!cosmic_passive)
+		return
+	living_mover.remove_movespeed_modifier(/datum/movespeed_modifier/cosmic_field)
+
+/datum/movespeed_modifier/cosmic_field
+	multiplicative_slowdown = -0.5
 
 /obj/effect/forcefield/cosmic_field/star_blast
 	initial_duration = 10 SECONDS

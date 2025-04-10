@@ -33,10 +33,10 @@
 
 /datum/status_effect/heretic_passive/ash/heretic_level_final()
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_RESISTHIGHPRESSURE, REF(src))
+	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTLOWPRESSURE), REF(src))
 
 /datum/status_effect/heretic_passive/ash/on_remove()
-	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE, TRAIT_LAVA_IMMUNE, TRAIT_RESISTHIGHPRESSURE), REF(src))
+	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE, TRAIT_LAVA_IMMUNE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTLOWPRESSURE), REF(src))
 	return ..()
 
 //---- Blade Passive
@@ -135,7 +135,11 @@
 	riposte_ready = TRUE
 	source.balloon_alert(source, "riposte ready")
 
+// XANTODO Fix this later
 //---- Cosmic Passive
+// Level 1
+// Level 2
+// Level 3
 /datum/status_effect/heretic_passive/cosmic/on_apply()
 	. = ..()
 
@@ -148,7 +152,7 @@
 //---- Flesh Passive
 // Makes you never get disgust, virus immune and immune to damage from space ants
 // Level 2, organs and raw meat heals you
-// Level 3, no slowdown from being fat, being fat gives a mood buff and damage resistance
+// Level 3, no slowdown from being fat, being fat gives damage resistance
 /datum/status_effect/heretic_passive/flesh/on_apply()
 	. = ..()
 	owner.add_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY), REF(src))
@@ -160,35 +164,63 @@
 /datum/status_effect/heretic_passive/flesh/heretic_level_upgrade()
 	. = ..()
 	RegisterSignal(owner, COMSIG_FOOD_BIT, PROC_REF(on_eat))
+	owner.add_traits(list(TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON), REF(src))
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/fat_human = owner
+	fat_human.on_fat() // Make sure to update the movespeed modifier in case we gain the trait while already fat
+	var/obj/item/organ/tongue/tongue = fat_human.get_organ_slot(ORGAN_SLOT_TONGUE)
+	tongue.liked_foodtypes = MEAT | VEGETABLES | RAW | JUNKFOOD | GRAIN | FRUIT | DAIRY | FRIED | ALCOHOL | SUGAR | GROSS | TOXIC | PINEAPPLE | BREAKFAST | CLOTH | NUTS | SEAFOOD | ORANGES | BUGS | GORE | STONE
+	tongue.disliked_foodtypes = NONE
+	tongue.toxic_foodtypes = NONE
 
 /// Any time you take a bite of something, if it's meat or an organ you will heal some damage
 /datum/status_effect/heretic_passive/flesh/proc/on_eat(mob/eater, atom/food)
 	SIGNAL_HANDLER
 	if(istype(food, /obj/item/organ))
-		var/obj/item/organ/consumed_organ
-		if(consumed_organ.foodtype_flags & MEAT)
-			owner.adjustBruteLoss(-2)
-			owner.adjustFireLoss(-2)
-			owner.adjustOxyLoss(-2)
-			owner.adjustToxLoss(-2, forced = TRUE)
+		var/obj/item/organ/consumed_organ = food
+		if(!(consumed_organ.foodtype_flags & MEAT))
 			return
-	if(istype(food, /obj/item/food))
-		var/obj/item/food/consumed_food
-		if(consumed_food.foodtypes & MEAT)
-			owner.adjustBruteLoss(-2)
-			owner.adjustFireLoss(-2)
-			owner.adjustOxyLoss(-2)
-			owner.adjustToxLoss(-2, forced = TRUE)
+		owner.adjustBruteLoss(-2)
+		owner.adjustFireLoss(-2)
+		owner.adjustOxyLoss(-2)
+		owner.adjustToxLoss(-2, forced = TRUE)
+		if(owner?.blood_volume)
+			owner.blood_volume += 2.5
+		if(!iscarbon(eater))
+			return
+		var/mob/living/carbon/carbon_eater = eater
+		for(var/obj/item/bodypart/wounded_limb as anything in carbon_eater.bodyparts)
+			for(var/datum/wound/to_cure as anything in wounded_limb.wounds)
+				to_cure.remove_wound()
+		return
+
+	if(!istype(food, /obj/item/food))
+		return
+	var/obj/item/food/consumed_food = food
+	if(!(consumed_food.foodtypes & MEAT))
+		return
+
+	owner.adjustBruteLoss(-2)
+	owner.adjustFireLoss(-2)
+	owner.adjustOxyLoss(-2)
+	owner.adjustToxLoss(-2, forced = TRUE)
+	if(owner?.blood_volume)
+		owner.blood_volume += 2.5
+	if(!iscarbon(eater))
+		return
+	var/mob/living/carbon/carbon_eater = eater
+	for(var/obj/item/bodypart/wounded_limb as anything in carbon_eater.bodyparts)
+		for(var/datum/wound/to_cure as anything in wounded_limb.wounds)
+			to_cure.remove_wound()
 
 /datum/status_effect/heretic_passive/flesh/heretic_level_final()
 	. = ..()
-	owner.add_traits(list(TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON), REF(src))
 	if(!ishuman(owner))
 		return
 	var/mob/living/carbon/human/fat_human = owner
 	RegisterSignals(fat_human, list(SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)), PROC_REF(on_fat))
-	fat_human.on_fat() // Make sure to update the movespeed modifier in case we gain the trait while already fat
-	fat_human.physiology.damage_resistance += 15 // Add the damage resist here too so we don't end up with -15% DR if we were already fat
+	on_fat()
 
 /// Gives/Removes damage resistance when we become/lose fatness
 /datum/status_effect/heretic_passive/flesh/proc/on_fat(datum/source)
@@ -202,7 +234,7 @@
 
 /datum/status_effect/heretic_passive/flesh/on_remove()
 	. = ..()
-	owner.remove_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY, TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS), REF(src))
+	owner.remove_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY, TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON), REF(src))
 	UnregisterSignal(owner, list(COMSIG_FOOD_BIT, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)))
 	if(!ishuman(owner))
 		return
@@ -214,52 +246,25 @@
 
 //---- Lock Passive
 // On gain you can understand and speak every language
-// Level 1 grants you a radio with a captains encryption key
-// Level 2 upgrades your radio with every channel
+// Level 1 Hand insulation + Side knowledge is cheaper
+// Level 2 Gains X-ray Vision
 // Level 3 your grasp no longer goes on cooldown when opening things
-/datum/status_effect/heretic_passive/lock
-	// Radio we use to hear channels and broadcast
-	var/obj/item/implant/radio/my_radio
-
 /datum/status_effect/heretic_passive/lock/on_apply()
 	. = ..()
-	var/obj/item/implant/radio/linked_radio = new(owner)
-	linked_radio.implant(owner, null, TRUE, TRUE)
-	my_radio = linked_radio
-	my_radio.radio_key = /obj/item/encryptionkey/heads/captain
-	ADD_TRAIT(owner.mind, TRAIT_TOWER_OF_BABEL, REF(src))
-	owner.grant_all_languages(language_flags = ALL, grant_omnitongue = TRUE, source = LANGUAGE_BABEL)
+	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, REF(src))
 
 /datum/status_effect/heretic_passive/lock/heretic_level_upgrade()
 	. = ..()
-	my_radio.radio_key = /obj/item/encryptionkey/heretic
-	my_radio.radio.recalculateChannels()
-
-/obj/item/encryptionkey/heretic
-	special_channels = RADIO_SPECIAL_BINARY | RADIO_SPECIAL_CENTCOM | RADIO_SPECIAL_SYNDIE
-	channels = list(
-		RADIO_CHANNEL_COMMAND = 1,
-		RADIO_CHANNEL_SECURITY = 1,
-		RADIO_CHANNEL_ENGINEERING = 1,
-		RADIO_CHANNEL_SCIENCE = 1,
-		RADIO_CHANNEL_MEDICAL = 1,
-		RADIO_CHANNEL_SUPPLY = 1,
-		RADIO_CHANNEL_SERVICE = 1,
-		RADIO_CHANNEL_AI_PRIVATE = 1,
-		RADIO_CHANNEL_ENTERTAINMENT = 1,
-		RADIO_CHANNEL_SYNDICATE = 1,
-		RADIO_CHANNEL_CENTCOM = 1,
-	)
+	ADD_TRAIT(owner, TRAIT_XRAY_VISION, REF(src))
+	owner.update_sight()
 
 /datum/status_effect/heretic_passive/lock/heretic_level_final()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_LOCK_GRASP_UPGRADED, REF(src))
 
 /datum/status_effect/heretic_passive/lock/on_remove()
-	qdel(my_radio)
-	REMOVE_TRAIT(owner.mind, TRAIT_TOWER_OF_BABEL, REF(src))
-	owner.remove_all_languages(source = LANGUAGE_ALL)
-	REMOVE_TRAIT(owner, TRAIT_LOCK_GRASP_UPGRADED, REF(src))
+	owner.remove_traits(list(TRAIT_SHOCKIMMUNE, TRAIT_XRAY_VISION, TRAIT_LOCK_GRASP_UPGRADED), REF(src))
+	owner.update_sight()
 	return ..()
 
 //---- Moon Passive

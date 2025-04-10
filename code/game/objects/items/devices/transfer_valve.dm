@@ -208,6 +208,10 @@
 	if(!istype(target) || (target != tank_one && target != tank_two))
 		return FALSE
 
+	for(var/obj/effect/forcefield/cosmic_field/potential_field as anything in GLOB.active_cosmic_fields)
+		if(get_dist(potential_field, src) < 3)
+			return FALSE
+
 	// Throw both tanks into processing queue
 	var/datum/gas_mixture/target_mix = target.return_air()
 	var/datum/gas_mixture/other_mix
