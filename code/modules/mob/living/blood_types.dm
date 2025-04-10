@@ -43,7 +43,11 @@
 		return color
 
 	var/list/blood_matrix = color_to_full_rgba_matrix(color)
-	for(var/i in 1 to length(blood_matrix))
+	for(var/i in 1 to min(length(blood_matrix), 16))
+		if (length(blood_matrix) == 12 && i > 9) // Don't modify constants
+			break
+		if (length(blood_matrix) >= 16 && i % 4 == 0) // Don't modify alpha either
+			continue
 		blood_matrix[i] *= lightness_mult
 	return blood_matrix
 

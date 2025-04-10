@@ -54,8 +54,20 @@
 	name = dryname
 	desc = drydesc
 	bloodiness = 0
-	add_atom_colour(BlendRGB(color, COLOR_BLACK, 0.5), FIXED_COLOUR_PRIORITY) //not all blood splatters have their own sprites... It still looks pretty nice
 	STOP_PROCESSING(SSobj, src)
+	// We're not using a matrix so we're free to use BlendRGB
+	if(!islist(color))
+		add_atom_colour(BlendRGB(color, COLOR_BLACK, 0.5), FIXED_COLOUR_PRIORITY) //not all blood splatters have their own sprites... It still looks pretty nice
+		return TRUE
+
+	// We're using a matrix, so we need to halve all values
+	var/list/blood_matrix = color
+	for(var/i in 1 to min(length(blood_matrix), 16))
+		if (length(blood_matrix) == 12 && i > 9) // Don't modify constants
+			break
+		if (length(blood_matrix) >= 16 && i % 4 == 0) // Don't modify alpha either
+			continue
+		blood_matrix[i] *= 0.5
 	return TRUE
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/C)
