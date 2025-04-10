@@ -40459,7 +40459,7 @@
 "ogh" = (
 /obj/machinery/door/puzzle/keycard{
 	puzzle_id = "flight";
-	color = red
+	color = "red"
 	},
 /turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
