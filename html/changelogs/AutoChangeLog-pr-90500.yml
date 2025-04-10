@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed runtimes caused by stabilized crossbreeds"
+  - bugfix: "Fixed an unintentional buff to stabilized crossbreeds, they now once again need to be put in your backpack or pockets."

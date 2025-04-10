@@ -1,5 +1,0 @@
-author: "hry-gh"
-delete-after: True
-changes:
-  - qol: "under the chat settings, you can now press \"Adjust UI Sizes\" to drag around some of the panel sizes"
-  - bugfix: "the input at the bottom right is no longer so teeny tiny on 516 if you use a window scaling that is greater than 100%"

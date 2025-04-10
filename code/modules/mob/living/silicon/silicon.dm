@@ -40,7 +40,7 @@
 	var/list/silicon_huds = list(DATA_HUD_MEDICAL_ADVANCED, DATA_HUD_SECURITY_ADVANCED, DATA_HUD_DIAGNOSTIC)
 
 	var/law_change_counter = 0
-	var/obj/machinery/camera/builtInCamera = null
+	var/obj/machinery/camera/silicon/builtInCamera
 	var/updating = FALSE //portable camera camerachunk update
 	///Whether we have been emagged
 	var/emagged = FALSE

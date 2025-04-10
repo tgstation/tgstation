@@ -1,4 +1,0 @@
-author: "hry-gh"
-delete-after: True
-changes:
-  - bugfix: "admins trying to play certain songs would crash the chat, it no longer does"

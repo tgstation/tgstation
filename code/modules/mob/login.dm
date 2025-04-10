@@ -132,6 +132,8 @@
 	client.init_verbs()
 
 	AddElement(/datum/element/weather_listener, /datum/weather/ash_storm, ZTRAIT_ASHSTORM, GLOB.ash_storm_sounds)
+	AddElement(/datum/element/weather_listener, /datum/weather/rain_storm, ZTRAIT_RAINSTORM, GLOB.rain_storm_sounds)
+	AddElement(/datum/element/weather_listener, /datum/weather/sand_storm, ZTRAIT_SANDSTORM, GLOB.sand_storm_sounds)
 	AddElement(/datum/element/weather_listener, /datum/weather/snow_storm, ZTRAIT_SNOWSTORM, GLOB.snowstorm_sounds)
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_LOGGED_IN, src)

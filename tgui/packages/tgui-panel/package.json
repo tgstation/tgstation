@@ -4,13 +4,13 @@
   "version": "6.0.0",
   "dependencies": {
     "@types/node": "^22.9.0",
-    "@types/react": "^18.3.12",
+    "@types/react": "^19.1.0",
     "common": "workspace:*",
     "dompurify": "^2.5.7",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "tgui": "workspace:*",
-    "tgui-core": "^1.8.4",
+    "tgui-core": "^2.0.6",
     "tgui-dev-server": "workspace:*"
   }
 }
