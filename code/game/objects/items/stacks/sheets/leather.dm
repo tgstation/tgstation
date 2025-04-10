@@ -326,7 +326,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/animalhide/bear
 	name = "bear hide"
 	desc = "Fuzzy pelts from a bear. Imagine how warm you could be, wrapped up in a coat of this stuff."
-	icon_state = "dragon_hide" //change
+	icon_state = "bear_hide" //change
 	singular_name = "bear pelt"
 	merge_type = /obj/item/stack/sheet/animalhide/bear
 
