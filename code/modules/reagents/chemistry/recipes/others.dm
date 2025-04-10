@@ -784,7 +784,7 @@
 		var/atom/container = holder.my_atom
 		var/area/container_area = get_area(container)
 		var/blame_msg = "with no known fingerprints"
-		var/lastkey = holder.fingerprintslast
+		var/lastkey = container.fingerprintslast
 		if (lastkey)
 			var/mob/scapegoat = get_mob_by_key(lastkey)
 			blame_msg = "last touched by [ADMIN_LOOKUPFLW(scapegoat)]"
