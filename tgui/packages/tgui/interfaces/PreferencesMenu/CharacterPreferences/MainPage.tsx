@@ -4,7 +4,6 @@ import { sendAct, useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
-  ImageButton,
   Input,
   LabeledList,
   Floating,
@@ -12,6 +11,7 @@ import {
   Section,
 } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
+import { classes } from 'tgui-core/react';
 
 import { CharacterPreview } from '../../common/CharacterPreview';
 import { RandomizationButton } from '../components/RandomizationButton';
@@ -153,19 +153,26 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
               {searchInCatalog(getSearchText, catalog.icons).map(
                 ([name, image], index) => {
                   return (
-                    <ImageButton
-                      key={index}
-                      m={0}
-                      asset={['preferences32x32', image]}
-                      assetSize={30}
-                      imageSize={CLOTHING_SELECTION_CELL_SIZE - 6}
-                      tooltip={name}
-                      tooltipPosition="right"
-                      selected={name === props.selected}
+                    <Button
                       onClick={() => {
                         props.onSelect(name);
                       }}
-                    />
+                      selected={name === props.selected}
+                      tooltip={name}
+                      tooltipPosition="right"
+                      style={{
+                        height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                        width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                      }}
+                    >
+                      <Box
+                        className={classes([
+                          'preferences32x32',
+                          image,
+                          'centered-image',
+                        ])}
+                      />
+                    </Button>
                   );
                 },
               )}
@@ -277,29 +284,47 @@ function MainFeature(props: MainFeatureProps) {
         />
       }
     >
-      <ImageButton
-        m={0}
-        className="Button--color--default"
-        asset={['preferences32x32', catalog.icons![currentValue]]}
-        assetSize={30}
-        imageSize={CLOTHING_CELL_SIZE - 6}
-        tooltip={catalog.name}
-        tooltipPosition="right"
-        buttons={
-          randomization && (
-            <RandomizationButton
-              value={randomization}
-              setValue={setRandomization}
-              dropdownProps={{
-                onOpen: (event) => {
-                  event.cancelBubble = true;
-                  event.stopPropagation();
-                },
-              }}
-            />
-          )
-        }
-      />
+      <Button
+        style={{
+          height: `${CLOTHING_CELL_SIZE}px`,
+          width: `${CLOTHING_CELL_SIZE}px`,
+        }}
+        position="relative"
+      >
+        <Box
+          className={classes([
+            'preferences32x32',
+            catalog.icons![currentValue],
+            'centered-image',
+          ])}
+          style={{
+            transform: randomization
+              ? 'translateX(-70%) translateY(-70%) scale(1.1)'
+              : 'translateX(-50%) translateY(-50%) scale(1.3)',
+          }}
+        />
+
+        {randomization && (
+          <RandomizationButton
+            dropdownProps={{
+              dropdownStyle: {
+                bottom: 0,
+                position: 'absolute',
+                right: '1px',
+              },
+
+              onOpen: (event) => {
+                // We're a button inside a button.
+                // Did you know that's against the W3C standard? :)
+                event.cancelBubble = true;
+                event.stopPropagation();
+              },
+            }}
+            value={randomization}
+            setValue={setRandomization}
+          />
+        )}
+      </Button>
     </Floating>
   );
 }
@@ -548,12 +573,7 @@ export function MainPage(props: MainPageProps) {
                 <Stack.Item key={clothingKey}>
                   {!catalog ? (
                     // Skeleton button
-                    <ImageButton
-                      className="Button--color--default"
-                      height={4}
-                      width={4}
-                      disabled
-                    />
+                    <Button height={4} width={4} disabled />
                   ) : (
                     <MainFeature
                       catalog={catalog}
