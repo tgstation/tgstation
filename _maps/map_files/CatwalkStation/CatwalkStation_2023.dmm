@@ -5174,9 +5174,6 @@
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "bJj" = (
@@ -21737,10 +21734,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
-"gQF" = (
-/obj/item/melee/skateboard,
-/turf/open/space/basic,
-/area/space)
 "gQI" = (
 /obj/effect/turf_decal/trimline/brown/filled/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -24129,7 +24122,6 @@
 "hBS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/barricade/wooden/crude,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "hBY" = (
@@ -37832,10 +37824,6 @@
 	},
 /turf/open/openspace,
 /area/station/maintenance/port/aft)
-"lNL" = (
-/obj/item/sord,
-/turf/open/space/basic,
-/area/space)
 "lNP" = (
 /turf/closed/wall,
 /area/station/maintenance/department/engine)
@@ -39377,10 +39365,6 @@
 	},
 /turf/open/floor/iron/stairs/medium,
 /area/station/hallway/primary/central)
-"mlv" = (
-/obj/item/food/grown/banana/bluespace,
-/turf/open/space/basic,
-/area/space)
 "mlx" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/binary/pump{
@@ -42467,7 +42451,6 @@
 "nng" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/red/opposingcorners{
 	dir = 1
 	},
@@ -51003,10 +50986,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/cytology)
-"pUY" = (
-/obj/item/toy/singlecard,
-/turf/open/space/basic,
-/area/space)
 "pUZ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters/preopen{
@@ -92110,8 +92089,8 @@ dcE
 dcE
 dcE
 dcE
-lNL
-gQF
+dcE
+dcE
 dcE
 dcE
 dcE
@@ -92367,8 +92346,8 @@ dcE
 dcE
 dcE
 dcE
-pUY
-mlv
+dcE
+dcE
 dcE
 dcE
 dcE
