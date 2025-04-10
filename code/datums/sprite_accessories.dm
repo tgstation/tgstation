@@ -1721,10 +1721,13 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 
 // please make sure they're sorted alphabetically and categorized
 
+//MASSMETA EDIT REMOVAL BEGIN (gay removal)
+/*
 /datum/sprite_accessory/socks/ace_knee
 	name = "Knee-high (Ace)"
 	icon_state = "ace_knee"
-
+*/
+//MASSMETA EDIT REMOVAL END
 /datum/sprite_accessory/socks/bee_knee
 	name = "Knee-high (Bee)"
 	icon_state = "bee_knee"
@@ -1740,11 +1743,13 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/socks/usa_knee
 	name = "Knee-High (Freedom)"
 	icon_state = "assblastusa_knee"
-
+//MASSMETA EDIT REMOVAL BEGIN (gay removal)
+/*
 /datum/sprite_accessory/socks/rainbow_knee
 	name = "Knee-high (Rainbow)"
 	icon_state = "rainbow_knee"
-
+*/
+//MASSMETA EDIT REMOVAL END
 /datum/sprite_accessory/socks/striped_knee
 	name = "Knee-high (Striped)"
 	icon_state = "striped_knee"
@@ -1752,11 +1757,13 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/socks/thin_knee
 	name = "Knee-high (Thin)"
 	icon_state = "thin_knee"
-
+//MASSMETA EDIT REMOVAL BEGIN (gay removal)
+/*
 /datum/sprite_accessory/socks/trans_knee
 	name = "Knee-high (Trans)"
 	icon_state = "trans_knee"
-
+*/
+//MASSMETA EDIT REMOVAL END
 /datum/sprite_accessory/socks/uk_knee
 	name = "Knee-High (UK)"
 	icon_state = "uk_knee"
@@ -1824,11 +1831,13 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/socks/stockings_fishnet
 	name = "Stockings (Fishnet)"
 	icon_state = "fishnet_full"
-
+//MASSMETA EDIT REMOVAL BEGIN (gay removal)
+/*
 /datum/sprite_accessory/socks/ace_thigh
 	name = "Thigh-high (Ace)"
 	icon_state = "ace_thigh"
-
+*/
+//MASSMETA EDIT REMOVAL END
 /datum/sprite_accessory/socks/bee_thigh
 	name = "Thigh-high (Bee)"
 	icon_state = "bee_thigh"
@@ -1844,11 +1853,13 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/socks/usa_thigh
 	name = "Thigh-high (Freedom)"
 	icon_state = "assblastusa_thigh"
-
+//MASSMETA EDIT REMOVAL BEGIN (gay removal)
+/*
 /datum/sprite_accessory/socks/rainbow_thigh
 	name = "Thigh-high (Rainbow)"
 	icon_state = "rainbow_thigh"
-
+*/
+//MASSMETA EDIT REMOVAL END
 /datum/sprite_accessory/socks/striped_thigh
 	name = "Thigh-high (Striped)"
 	icon_state = "striped_thigh"
@@ -1856,11 +1867,13 @@ GLOBAL_LIST_EMPTY(blended_hair_icons_cache)
 /datum/sprite_accessory/socks/thin_thigh
 	name = "Thigh-high (Thin)"
 	icon_state = "thin_thigh"
-
+//MASSMETA EDIT REMOVAL BEGIN (gay removal)
+/*
 /datum/sprite_accessory/socks/trans_thigh
 	name = "Thigh-high (Trans)"
 	icon_state = "trans_thigh"
-
+*/
+//MASSMETA EDIT REMOVAL END
 /datum/sprite_accessory/socks/uk_thigh
 	name = "Thigh-high (UK)"
 	icon_state = "uk_thigh"

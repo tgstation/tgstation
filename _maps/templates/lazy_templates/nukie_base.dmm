@@ -507,22 +507,6 @@
 /obj/structure/sign/poster/contraband/syndiemoth/directional/north,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership)
-"fx" = (
-/obj/machinery/light/small/dim/directional/west,
-/obj/structure/rack,
-/obj/effect/turf_decal/box/white,
-/obj/item/stack/cable_coil/thirty{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/circuitboard/computer/station_alert{
-	pixel_y = 1;
-	pixel_x = 3
-	},
-/obj/item/stack/cable_coil/thirty,
-/obj/item/circuitboard/computer/advanced_camera,
-/turf/open/floor/mineral/plastitanium/red,
-/area/centcom/syndicate_mothership)
 "fy" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/turf_decal/stripes/line{
@@ -3630,6 +3614,22 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark/textured_large,
 /area/centcom/syndicate_mothership/control)
+"OI" = (
+/obj/machinery/light/small/dim/directional/west,
+/obj/structure/rack,
+/obj/effect/turf_decal/box/white,
+/obj/item/stack/cable_coil/thirty{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/circuitboard/computer/station_alert{
+	pixel_y = 1;
+	pixel_x = 3
+	},
+/obj/item/stack/cable_coil/thirty,
+/obj/item/circuitboard/computer/advanced_camera,
+/turf/open/floor/mineral/plastitanium/red,
+/area/centcom/syndicate_mothership)
 "OK" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -5692,7 +5692,7 @@ Ye
 Kq
 Kq
 YT
-fx
+OI
 Rn
 Kq
 Kq

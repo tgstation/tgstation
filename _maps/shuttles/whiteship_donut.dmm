@@ -34,11 +34,6 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
-"aX" = (
-/obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/plating/airless,
-/area/shuttle/abandoned)
 "be" = (
 /obj/machinery/power/shuttle_engine/propulsion/left,
 /turf/open/floor/plating/airless,
@@ -55,6 +50,11 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/iron/airless,
+/area/shuttle/abandoned)
+"cq" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "da" = (
 /obj/machinery/light/small/directional/west,
@@ -441,6 +441,17 @@
 /obj/structure/window/reinforced/tinted/spawner/directional/north,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/shuttle/abandoned)
+"VL" = (
+/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
+	dir = 1;
+	x_offset = 0;
+	y_offset = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/disk/holodisk/donutstation/whiteship,
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/iron/airless,
+/area/shuttle/abandoned)
 "Wf" = (
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 8
@@ -462,17 +473,6 @@
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
 	},
-/turf/open/floor/iron/airless,
-/area/shuttle/abandoned)
-"XY" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/whiteship{
-	dir = 1;
-	x_offset = 0;
-	y_offset = 9
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/item/disk/holodisk/donutstation/whiteship,
-/obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "YO" = (
@@ -543,7 +543,7 @@ pM
 nu
 YO
 ab
-aX
+cq
 be
 aa
 aa
@@ -563,7 +563,7 @@ ac
 KL
 Te
 ab
-aX
+cq
 bf
 aa
 aa
@@ -645,7 +645,7 @@ ui
 PT
 gf
 Xd
-XY
+VL
 bq
 "}
 (9,1,1) = {"
@@ -763,7 +763,7 @@ MT
 hP
 eu
 ab
-aX
+cq
 be
 aa
 aa
@@ -783,7 +783,7 @@ qy
 BM
 kI
 ab
-aX
+cq
 bf
 aa
 aa

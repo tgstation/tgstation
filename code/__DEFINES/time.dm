@@ -175,8 +175,8 @@ When using time2text(), please use "DDD" to find the weekday. Refrain from using
 /// Anywhere on Earth
 #define TIMEZONE_ANYWHERE_ON_EARTH -12
 
-/// MASSMETA ADDITION: Moscow Time
-#define TIMEZONE_MSK 3
-
 /// No Timezone
 #define NO_TIMEZONE 0
+
+/// MASSMETA ADDITION: Moscow Time
+#define TIMEZONE_MSK 3

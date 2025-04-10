@@ -4526,6 +4526,17 @@
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
+"Db" = (
+/obj/structure/cable,
+/mob/living/basic/bot/medbot{
+	desc = "A medical bot of syndicate origins. Probably plots about stabbing you full of toxins in its free time.";
+	faction = list("neutral","silicon","turret","Syndicate");
+	name = "Syndicate Medibot";
+	skin = "bezerk";
+	req_one_access = list("syndicate")
+	},
+/turf/open/floor/iron,
+/area/shuttle/sbc_starfury)
 "Dd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark/smooth_large,
@@ -4748,17 +4759,6 @@
 	},
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/iron/dark,
-/area/shuttle/sbc_starfury)
-"Gz" = (
-/obj/structure/cable,
-/mob/living/basic/bot/medbot{
-	desc = "A medical bot of syndicate origins. Probably plots about stabbing you full of toxins in its free time.";
-	faction = list("neutral","silicon","turret","Syndicate");
-	name = "Syndicate Medibot";
-	skin = "bezerk";
-	req_one_access = list("syndicate")
-	},
-/turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "GF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -7041,7 +7041,7 @@ as
 bp
 dI
 Uy
-Gz
+Db
 xG
 aw
 ec

@@ -441,6 +441,15 @@
 /obj/structure/flora/bush/flowers_br/style_random,
 /turf/open/floor/grass,
 /area/centcom/wizard_station)
+"wA" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/engine/cult,
+/area/centcom/wizard_station)
 "wQ" = (
 /obj/structure/mirror/magic{
 	pixel_x = 32
@@ -662,15 +671,6 @@
 /area/centcom/wizard_station)
 "JW" = (
 /obj/machinery/door/window/left/directional/east,
-/turf/open/floor/engine/cult,
-/area/centcom/wizard_station)
-"KL" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/structure/railing{
-	dir = 4
-	},
 /turf/open/floor/engine/cult,
 /area/centcom/wizard_station)
 "Lt" = (
@@ -1685,7 +1685,7 @@ YT
 LU
 LU
 jp
-KL
+wA
 HX
 Ad
 Ad

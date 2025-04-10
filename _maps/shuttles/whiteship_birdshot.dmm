@@ -139,22 +139,6 @@
 /obj/effect/mapping_helpers/airalarm/all_access,
 /turf/open/floor/iron,
 /area/shuttle/abandoned/pod)
-"fl" = (
-/obj/structure/table,
-/obj/item/reagent_containers/blood/o_minus{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/blood,
-/obj/effect/spawner/surgery_tray/full{
-	pixel_x = 2;
-	pixel_y = 9
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/airalarm/directional/north,
-/obj/effect/mapping_helpers/airalarm/all_access,
-/turf/open/floor/iron/freezer,
-/area/shuttle/abandoned/medbay)
 "fC" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
@@ -735,16 +719,6 @@
 /obj/machinery/light/small/broken/directional/west,
 /turf/open/floor/iron/grimy,
 /area/shuttle/abandoned/crew)
-"yM" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/broken/directional/south,
-/obj/machinery/firealarm/directional/east,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/iron/smooth_large,
-/area/shuttle/abandoned/cargo)
 "yZ" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -1373,6 +1347,22 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/small,
 /area/shuttle/abandoned/bridge)
+"Uz" = (
+/obj/structure/table,
+/obj/item/reagent_containers/blood/o_minus{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/blood,
+/obj/effect/spawner/surgery_tray/full{
+	pixel_x = 2;
+	pixel_y = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/turf/open/floor/iron/freezer,
+/area/shuttle/abandoned/medbay)
 "UK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/turretid{
@@ -1428,6 +1418,16 @@
 /obj/machinery/light/built/directional/west,
 /turf/open/floor/carpet/green,
 /area/shuttle/abandoned/bar)
+"WI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/broken/directional/south,
+/obj/machinery/firealarm/directional/east,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/abandoned/cargo)
 "WW" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
@@ -1725,7 +1725,7 @@ qg
 RX
 lu
 Ui
-yM
+WI
 kQ
 xG
 PP
@@ -1892,7 +1892,7 @@ QR
 rZ
 Qs
 pC
-fl
+Uz
 Ht
 Wn
 pC

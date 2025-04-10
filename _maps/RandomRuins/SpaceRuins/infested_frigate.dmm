@@ -1039,31 +1039,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/infested_frigate)
-"rs" = (
-/obj/structure/sign/warning/no_smoking{
-	pixel_x = 28
-	},
-/obj/item/storage/toolbox/syndicate,
-/obj/item/gun_maintenance_supplies,
-/obj/item/gun_maintenance_supplies,
-/obj/item/storage/toolbox/electrical,
-/obj/item/storage/box/lights/bulbs,
-/obj/item/stack/sheet/glass{
-	amount = 10
-	},
-/obj/structure/closet/crate/large{
-	anchored = 1;
-	name = "crew supplies"
-	},
-/obj/structure/cable,
-/obj/item/pickaxe/emergency,
-/obj/item/pickaxe/emergency,
-/obj/effect/spawner/random/decoration/carpet,
-/obj/effect/spawner/random/engineering/vending_restock,
-/obj/effect/spawner/random/engineering/vending_restock,
-/obj/item/bedsheet/syndie/double,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/infested_frigate)
 "rz" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/all_access,
@@ -2986,6 +2961,31 @@
 /obj/effect/spawner/random/special_lighter,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/infested_frigate)
+"WB" = (
+/obj/structure/sign/warning/no_smoking{
+	pixel_x = 28
+	},
+/obj/item/storage/toolbox/syndicate,
+/obj/item/gun_maintenance_supplies,
+/obj/item/gun_maintenance_supplies,
+/obj/item/storage/toolbox/electrical,
+/obj/item/storage/box/lights/bulbs,
+/obj/item/stack/sheet/glass{
+	amount = 10
+	},
+/obj/structure/closet/crate/large{
+	anchored = 1;
+	name = "crew supplies"
+	},
+/obj/structure/cable,
+/obj/item/pickaxe/emergency,
+/obj/item/pickaxe/emergency,
+/obj/effect/spawner/random/decoration/carpet,
+/obj/effect/spawner/random/engineering/vending_restock,
+/obj/effect/spawner/random/engineering/vending_restock,
+/obj/item/bedsheet/syndie/double,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/infested_frigate)
 "WG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/effect/decal/cleanable/blood/gibs{
@@ -3457,7 +3457,7 @@ wP
 iY
 Xc
 Hu
-rs
+WB
 AH
 yt
 YW
