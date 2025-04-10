@@ -24,9 +24,9 @@ SUBSYSTEM_DEF(statpanels)
 		global_data = list(
 			isnull(SSmapping.current_map) ? list("Loading") : \
 				SSmapping.current_map?.feedback_link ? \
-				list("Map: ", "[SSmapping.current_map.map_name]", "action=openLink&link=[SSmapping.current_map.feedback_link]") : \
+				list("Map: [SSmapping.current_map.map_name]", " (Feedback)", "action=openLink&link=[SSmapping.current_map.feedback_link]") : \
 				list("Map: [SSmapping.current_map?.map_name]"),
-			SSmapping.current_map.mapping_url ? list("Webmap: ", "View in your browser", "action=openWebMap") : null,
+			SSmapping.current_map.mapping_url ? list("same_line", " | (View in Browser)", "action=openWebMap") : null,
 			cached ? list("Next Map: [cached.map_name]") : null,
 			list("Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]"),
 			list("Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)]"),

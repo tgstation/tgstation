@@ -349,18 +349,27 @@ function draw_status() {
 	var table = document.createElement("table");
 	for (var i = 0; i < status_tab_parts.length; i++) {
 		var part = status_tab_parts[i];
-		var div = document.createElement("div");
-		if (part[0].trim() == "") {
-			table.appendChild(document.createElement("br"));
+		var div
+
+		if (part[0].trim() == "same_line") {
+			var a = document.createElement("a");
+			a.href = "byond://?" + part[2];
+			a.textContent = part[1];
+			div.appendChild(a);
 		} else {
-			div.textContent = part[0];
-			if (part[2]) {
-				var a = document.createElement("a");
-				a.href = "byond://?" + part[2];
-				a.textContent = part[1];
-				div.appendChild(a);
+			div = document.createElement("div");
+			if (part[0].trim() == "") {
+				table.appendChild(document.createElement("br"));
+			} else {
+				div.textContent = part[0];
+				if (part[2]) {
+					var a = document.createElement("a");
+					a.href = "byond://?" + part[2];
+					a.textContent = part[1];
+					div.appendChild(a);
+				}
+				table.appendChild(div);
 			}
-			table.appendChild(div);
 		}
 	}
 	document.getElementById("statcontent").appendChild(table);
