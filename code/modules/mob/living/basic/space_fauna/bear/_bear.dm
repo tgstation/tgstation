@@ -7,7 +7,7 @@
 	icon_dead = "bear_dead"
 	icon_gib = "bear_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/costume/bearpelt = 1)
+	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/stack/sheet/animalhide/bear = 2)
 
 	response_help_continuous = "pets"
 	response_help_simple = "pet"

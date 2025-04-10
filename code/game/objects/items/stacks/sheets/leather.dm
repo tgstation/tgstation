@@ -323,6 +323,22 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
+/obj/item/stack/sheet/animalhide/bear
+	name = "bear hide"
+	desc = "Fuzzy pelts from a bear. Imagine how warm you could be, wrapped up in a coat of this stuff."
+	icon_state = "dragon_hide" //change
+	singular_name = "bear pelt"
+	merge_type = /obj/item/stack/sheet/animalhide/bear
+
+GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
+	new/datum/stack_recipe("bear costume", /obj/item/clothing/suit/costume/bear_suit, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
+	new/datum/stack_recipe("bear hat", /obj/item/clothing/head/costume/bearpelt, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
+))
+
+/obj/item/stack/sheet/animalhide/bear/get_main_recipes()
+	. = ..()
+	. += GLOB.bear_pelt_recipes
+
 //Step one - dehairing.
 
 /obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, params)
