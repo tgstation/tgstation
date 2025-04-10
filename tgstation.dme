@@ -5510,6 +5510,7 @@
 #include "code\modules\modular_computers\file_system\programs\alarm.dm"
 #include "code\modules\modular_computers\file_system\programs\arcade.dm"
 #include "code\modules\modular_computers\file_system\programs\atmosscan.dm"
+#include "code\modules\modular_computers\file_system\programs\betting.dm"
 #include "code\modules\modular_computers\file_system\programs\borg_monitor.dm"
 #include "code\modules\modular_computers\file_system\programs\bounty_board.dm"
 #include "code\modules\modular_computers\file_system\programs\budgetordering.dm"

@@ -386,7 +386,12 @@ again.
 
 /obj/effect/spawner/structure/flipped_table/Initialize(mapload)
 	. = ..()
-	var/obj/structure/table/table_to_flipped = new table_to_spawn(loc)
-	table_to_flipped.dir = dir
-	table_to_flipped.flip_table()
+	var/obj/structure/table/table_to_flip = new table_to_spawn(loc)
+	table_to_flip.dir = dir
+	RegisterSignal(table_to_flip, COMSIG_ATOM_SMOOTHED_ICON, PROC_REF(on_icon_smoothed))
 
+/// The flip_table() proc HAS to be run after smooth_icon() is completed or else we will get runtimes.
+/obj/effect/spawner/structure/flipped_table/proc/on_icon_smoothed(obj/structure/table/table_to_flip)
+	SIGNAL_HANDLER
+	table_to_flip.flip_table(table_to_flip.dir)
+	UnregisterSignal(table_to_flip, COMSIG_ATOM_SMOOTHED_ICON)

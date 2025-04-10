@@ -1,0 +1,4 @@
+author: "subject217"
+delete-after: True
+changes:
+  - qol: "Added a reminder message for AIs about how to use holopads during communication blackouts."
