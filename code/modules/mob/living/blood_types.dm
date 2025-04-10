@@ -121,7 +121,6 @@
 /datum/blood_type/ethereal
 	name = "LE"
 	color = /datum/reagent/consumable/liquidelectricity::color
-	no_bleed_overlays = TRUE
 	compatible_types = list(
 		/datum/blood_type/ethereal,
 	)
