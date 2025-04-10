@@ -294,7 +294,7 @@ Turf and target are separate in case you want to teleport some distance from a t
  * @return The turf at the calculated map position, or the closest one if out of bounds, as well as the residual x and y map offsets
  *
  * Important Notes:
-  * - This WILL be incorrect when client pixel_wxyz is animating, and it WILL be incorrect if the user is gliding, because we don't have a good way to compensate this on the serverside. Yay!!!
+ * - This WILL be incorrect when client pixel_wxyz is animating, and it WILL be incorrect if the user is gliding, because we don't have a good way to compensate this on the serverside. Yay!!!
  * - Mouse coordinates originate from the top-left corner because we can't have consistency in this engine
  * - Coordinate systems are inconsistent between control pixels and screen pixels
  * - Something on the byond side (icon size likely? needs debugging) affects the control pixels
