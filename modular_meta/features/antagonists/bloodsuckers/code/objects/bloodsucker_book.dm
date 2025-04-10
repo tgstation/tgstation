@@ -77,8 +77,8 @@
 		to_chat(user, span_notice("[src] seems to be too complicated for you. It would be best to leave this for someone else to take."))
 	else
 		to_chat(user, span_warning("You feel your eyes unable to read the boring texts..."))
-	user.set_eye_blur_if_lower(10 SECONDS)
-		return
+		user.set_eye_blur_if_lower(10 SECONDS)
+	return
 	ui_interact(user)
 
 /obj/item/book/kindred/ui_interact(mob/living/user, datum/tgui/ui)
