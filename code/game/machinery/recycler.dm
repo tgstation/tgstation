@@ -105,14 +105,16 @@
 
 /obj/machinery/recycler/update_overlays()
 	. = ..()
-	if(bloody)
-		var/mutable_appearance/blood_overlay = mutable_appearance(icon, "[icon_state]bld", src, appearance_flags = RESET_COLOR)
-		var/blood_dna = GET_ATOM_BLOOD_DNA(src)
-		if(blood_dna)
-			blood_overlay.color = get_blood_dna_color(blood_dna)
-		else
-			blood_overlay.color = BLOOD_COLOR_RED
-		. += blood_overlay
+	if(!bloody)
+		return
+
+	var/mutable_appearance/blood_overlay = mutable_appearance(icon, "[icon_state]bld", src, appearance_flags = RESET_COLOR)
+	var/blood_dna = GET_ATOM_BLOOD_DNA(src)
+	if(blood_dna)
+		blood_overlay.color = get_blood_dna_color(blood_dna)
+	else
+		blood_overlay.color = BLOOD_COLOR_RED
+	. += blood_overlay
 
 /obj/machinery/recycler/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()

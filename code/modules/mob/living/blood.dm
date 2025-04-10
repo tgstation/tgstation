@@ -335,7 +335,7 @@
 		blood_type = blood_DNA[last_added_bloodtype_key]
 	if(!istype(blood_type))
 		blood_type = get_blood_type_by_name(blood_type) || random_blood_type()
-	return blood_type.color
+	return blood_type.get_color()
 
 /**
  * Returns TRUE if src is compatible with donor's blood, otherwise FALSE.
