@@ -14,7 +14,8 @@
 		/obj/item/stock_parts/matter_bin = 3,
 		/obj/item/stock_parts/micro_laser = 3,
 		/obj/item/stock_parts/scanning_module = 3,
-		/obj/item/wirecutters = 1,
+		/obj/item/wirecutters = 2,
+		/obj/item/stack/sticky_tape/duct = 3,
 	)
 	contraband = list(
 		/obj/item/assembly/health = 2,
@@ -23,6 +24,9 @@
 		/obj/item/stock_parts/power_store/cell/high = 1,
 		/obj/item/stock_parts/power_store/battery/high = 1,
 		/obj/item/market_uplink/blackmarket = 1,
+		/obj/item/screwdriver = 2,
+		/obj/item/assembly/mousetrap = 4,
+		/obj/item/weaponcrafting/stock = 2,
 	)
 	premium = list(
 		/obj/item/assembly/igniter/condenser = 2,

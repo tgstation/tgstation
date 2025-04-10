@@ -19,6 +19,7 @@
 	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape
 	greyscale_config = /datum/greyscale_config/tape
 	greyscale_colors = "#B2B2B2#BD6A62"
+	var/object_repair_value = 0
 
 /datum/embedding/sticky_tape
 	pain_mult = 0
@@ -82,6 +83,34 @@
 
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/stack/sticky_tape/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!object_repair_value)
+		return NONE
+
+	if(!isobj(interacting_with))
+		return NONE
+
+	if(iseffect(interacting_with))
+		return NONE
+
+	var/obj/item/object_to_repair = interacting_with
+	var/object_is_damaged = object_to_repair.get_integrity() < object_to_repair.max_integrity
+
+	if(!object_is_damaged)
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice("[user] begins repairing [object_to_repair] with [src]."), span_notice("You begin repairing [object_to_repair] with [src]."))
+	playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
+
+	if(!do_after(user, 3 SECONDS, target = object_to_repair))
+		return ITEM_INTERACT_BLOCKING
+
+	object_to_repair.repair_damage(object_repair_value)
+	use(1)
+	to_chat(user, span_notice("You finish repairing [object_to_repair] with [src]."))
+
+	return ITEM_INTERACT_SUCCESS
+
 /obj/item/stack/sticky_tape/super
 	name = "super sticky tape"
 	singular_name = "super sticky tape"
@@ -142,3 +171,17 @@
 
 /obj/item/stack/sticky_tape/surgical/get_surgery_tool_overlay(tray_extended)
 	return "tape" + (tray_extended ? "" : "_out")
+
+/obj/item/stack/sticky_tape/duct
+	name = "duct tape"
+	singular_name = "duct tape"
+	desc = "Tape designed for sealing punctures, holes and breakages in objects. Engineers swear by this stuff for practically all kinds of repairs. Maybe a little TOO much..."
+	prefix = "duct taped"
+	conferred_embed = /datum/embedding/sticky_tape/duct
+	merge_type = /obj/item/stack/sticky_tape/duct
+	object_repair_value = 30
+	amount = 10
+	max_amount = 10
+
+/datum/embedding/sticky_tape/duct
+	embed_chance = 0 //Wrapping something in duct tape is basically ensuring it never embeds.
