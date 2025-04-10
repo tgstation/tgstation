@@ -313,8 +313,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
-	modify_max_integrity(ceil(max_integrity * integrity_mod))
+	if(uses_integrity)
+		var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+		modify_max_integrity(ceil(max_integrity * integrity_mod))
 	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
 	force *= strength_mod
 	throwforce *= strength_mod
@@ -326,8 +327,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
-	modify_max_integrity(floor(max_integrity / integrity_mod))
+	if(uses_integrity)
+		var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+		modify_max_integrity(floor(max_integrity / integrity_mod))
 	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
 	force /= strength_mod
 	throwforce /= strength_mod
