@@ -5,7 +5,7 @@
 	icon_state = "polarbear"
 	icon_living = "polarbear"
 	icon_dead = "polarbear_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_MINING
 	mouse_opacity = MOUSE_OPACITY_ICON
 	friendly_verb_continuous = "growls at"
 	friendly_verb_simple = "growl at"
@@ -51,7 +51,7 @@
 		rapid_melee = initial(rapid_melee)
 		return
 	if(!aggressive_message_said && target)
-		visible_message(span_danger("The [name] gets an enraged look at [target]!"))
+		visible_message(span_danger("\The [src] gets an enraged look at [target]!"))
 		aggressive_message_said = TRUE
 	rapid_melee = 2
 
@@ -65,20 +65,3 @@
 	name = "magic polar bear"
 	desc = "It seems sentient somehow."
 	faction = list(FACTION_NEUTRAL)
-
-/obj/item/crusher_trophy/bear_paw
-	name = "polar bear paw"
-	desc = "It's a polar bear paw."
-	icon_state = "bear_paw"
-	denied_type = /obj/item/crusher_trophy/bear_paw
-
-/obj/item/crusher_trophy/bear_paw/effect_desc()
-	return "mark detonation to attack twice if you are below half your life"
-
-/obj/item/crusher_trophy/bear_paw/on_mark_detonation(mob/living/target, mob/living/user)
-	if(user.health / user.maxHealth > 0.5)
-		return
-	var/obj/item/I = user.get_active_held_item()
-	if(!I)
-		return
-	I.melee_attack_chain(user, target, null)

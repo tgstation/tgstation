@@ -319,7 +319,7 @@
 		attached_circuit.add_component(to_add)
 	RegisterSignal(circuitboard, COMSIG_CIRCUIT_ADD_COMPONENT_MANUALLY, PROC_REF(on_circuit_add_component_manually))
 	if(attached_circuit.display_name != "")
-		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
+		parent_atom.name = "[initial(parent_atom.name)] ([strip_html(attached_circuit.display_name)])"
 	attached_circuit.set_locked(FALSE)
 
 	if((shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) || circuitboard.admin_only)

@@ -14,6 +14,8 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	fishing_modifier = 0
+	hair_mask = /datum/hair_mask/standard_hat_middle
+	visor_dirt = null
 
 /datum/armor/space_beret
 	melee = 80

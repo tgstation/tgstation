@@ -153,7 +153,7 @@
 		player_mob.set_species(/datum/species/human)
 
 	var/datum/mind/new_member_mind = new_team_member.mob.mind
-	if(new_member_mind?.current)
+	if(new_member_mind)
 		player_mob.AddComponent( \
 			/datum/component/temporary_body, \
 			old_mind = new_member_mind, \

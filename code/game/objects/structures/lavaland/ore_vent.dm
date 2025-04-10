@@ -128,9 +128,8 @@
 
 /obj/structure/ore_vent/attack_basic_mob(mob/user, list/modifiers)
 	. = ..()
-	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		return
-	produce_boulder(TRUE)
+	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		produce_boulder(TRUE)
 
 /obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
@@ -230,7 +229,7 @@
 			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
 				new /obj/effect/decal/cleanable/rubble(rock)
 			if(prob(100 - (i * 15)))
-				rock.gets_drilled(user, FALSE)
+				rock.gets_drilled(user)
 				if(prob(50))
 					new /obj/effect/decal/cleanable/rubble(rock)
 		sleep(0.6 SECONDS)

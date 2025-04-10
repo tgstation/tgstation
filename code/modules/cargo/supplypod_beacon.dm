@@ -104,12 +104,16 @@
 	unlink_console()
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/supplypod_beacon/attackby(obj/item/W, mob/user)
-	if(IS_WRITING_UTENSIL(W)) //give a tag that is visible from the linked express console
-		return ..()
+/obj/item/supplypod_beacon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!IS_WRITING_UTENSIL(tool))
+		return NONE
+
 	var/new_beacon_name = tgui_input_text(user, "What would you like the tag to be?", "Beacon Tag", max_length = MAX_NAME_LEN)
 	if(isnull(new_beacon_name))
-		return
-	if(!user.can_perform_action(src))
-		return
-	name += " ([tag])"
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.can_perform_action(src) || !user.can_write(tool))
+		return ITEM_INTERACT_BLOCKING
+
+	name = "[initial(name)] ([new_beacon_name])"
+	return ITEM_INTERACT_SUCCESS

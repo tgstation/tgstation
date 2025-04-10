@@ -219,7 +219,7 @@
 			var/lostfuel = rand(4,7)
 			var/deadname = game.remove_crewmember()
 			game.fuel -= lostfuel
-			text = "[deadname] was lost deep in the wreckage, and your own vessel lost [lostfuel] Fuel maneuvering to the the abandoned ship."
+			text = "[deadname] was lost deep in the wreckage, and your own vessel lost [lostfuel] Fuel maneuvering to the abandoned ship."
 			event_responses += BUTTON_WHERE_DID_YOU_GO
 		if(36 to 65)
 			var/oldfood = rand(5,11)

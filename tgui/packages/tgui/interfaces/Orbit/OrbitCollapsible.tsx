@@ -1,15 +1,15 @@
 import { useContext } from 'react';
+import { Collapsible, Stack } from 'tgui-core/components';
 
-import { Collapsible, Flex, Tooltip } from '../../components';
+import { useBackend } from '../../backend';
 import { OrbitContext } from '.';
 import { VIEWMODE } from './constants';
 import {
-  isJobOrNameMatch,
+  isJobCkeyOrNameMatch,
   sortByDepartment,
   sortByDisplayName,
 } from './helpers';
 import { OrbitItem } from './OrbitItem';
-import { OrbitTooltip } from './OrbitTooltip';
 import { Observable } from './types';
 
 type Props = {
@@ -23,13 +23,15 @@ type Props = {
  * Filters the results if there is a provided search query.
  */
 export function OrbitCollapsible(props: Props) {
+  const { act } = useBackend();
+
   const { color, section = [], title } = props;
 
   const { autoObserve, realNameDisplay, searchQuery, viewMode } =
     useContext(OrbitContext);
 
   const filteredSection = section.filter((observable) =>
-    isJobOrNameMatch(observable, searchQuery),
+    isJobCkeyOrNameMatch(observable, searchQuery),
   );
 
   if (viewMode === VIEWMODE.Department) {
@@ -38,7 +40,7 @@ export function OrbitCollapsible(props: Props) {
     filteredSection.sort(sortByDisplayName);
   }
 
-  if (!filteredSection.length) {
+  if (filteredSection.length === 0) {
     return;
   }
 
@@ -49,34 +51,23 @@ export function OrbitCollapsible(props: Props) {
       open={!!color}
       title={title + ` - (${filteredSection.length})`}
     >
-      <Flex wrap>
-        {filteredSection.map((item) => {
-          const content = (
+      <Stack wrap g={0.5}>
+        {filteredSection.map((item) => (
+          <Stack.Item
+            key={item.ref}
+            onClick={() =>
+              act('orbit', { auto_observe: autoObserve, ref: item.ref })
+            }
+          >
             <OrbitItem
-              autoObserve={autoObserve}
               realNameDisplay={realNameDisplay}
               color={color}
               item={item}
-              key={item.ref}
               viewMode={viewMode}
             />
-          );
-
-          if (!item.health && !item.extra) {
-            return content;
-          }
-
-          return (
-            <Tooltip
-              content={<OrbitTooltip item={item} realNameDisplay={false} />}
-              key={item.ref}
-              position="bottom-start"
-            >
-              {content}
-            </Tooltip>
-          );
-        })}
-      </Flex>
+          </Stack.Item>
+        ))}
+      </Stack>
     </Collapsible>
   );
 }

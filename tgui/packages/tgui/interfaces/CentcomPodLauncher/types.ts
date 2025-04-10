@@ -1,5 +1,4 @@
-import { Placement } from '@popperjs/core';
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from 'tgui-core/react';
 
 export type PodLauncherData = {
   bayNumber: string;
@@ -65,6 +64,6 @@ export type PodEffect =
       selected?: string;
       soloSelected?: string;
       title: string;
-      tooltipPosition?: Placement;
+      tooltipPosition?: string;
     }
   | { divider: boolean };

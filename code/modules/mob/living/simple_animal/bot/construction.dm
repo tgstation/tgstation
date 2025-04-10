@@ -192,9 +192,9 @@
 
 //Repairbot assemblies
 /obj/item/bot_assembly/repairbot
-	desc = "It's a toolbox with tiles sticking out the top."
 	name = "Repairbot Chasis"
-	icon_state = "repairbot_base"
+	desc = "It's a toolbox with tiles sticking out the top."
+	icon_state = "repairbot_box"
 	throwforce = 10
 	created_name = "Repairbot"
 	///the toolbox our repairbot is made of
@@ -221,9 +221,9 @@
 /obj/item/bot_assembly/repairbot/update_overlays()
 	. = ..()
 	if(build_step >= ASSEMBLY_FIRST_STEP)
-		. += mutable_appearance(icon, "repairbot_base_sensor", appearance_flags = RESET_COLOR)
+		. += mutable_appearance(icon, "repairbot_base_sensor", appearance_flags = RESET_COLOR|KEEP_APART)
 	if(build_step >= ASSEMBLY_SECOND_STEP)
-		. += mutable_appearance(icon, "repairbot_base_arms", appearance_flags = RESET_COLOR)
+		. += mutable_appearance(icon, "repairbot_base_arms", appearance_flags = RESET_COLOR|KEEP_APART)
 
 /obj/item/bot_assembly/repairbot/attackby(obj/item/item, mob/user, params)
 	..()
@@ -257,7 +257,8 @@
 /obj/item/bot_assembly/medbot
 	name = "incomplete medibot assembly"
 	desc = "A first aid kit with a robot arm permanently grafted to it."
-	icon_state = "firstaid_arm"
+	icon_state = "medbot_assembly_generic"
+	base_icon_state = "medbot_assembly"
 	created_name = "Medibot" //To preserve the name if it's a unique medbot I guess
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
 	var/healthanalyzer = /obj/item/healthanalyzer
@@ -266,7 +267,7 @@
 /obj/item/bot_assembly/medbot/proc/set_skin(skin)
 	src.skin = skin
 	if(skin)
-		add_overlay("kit_skin_[skin]")
+		icon_state = "[base_icon_state]_[skin]"
 
 /obj/item/bot_assembly/medbot/attackby(obj/item/W, mob/user, params)
 	..()
@@ -279,7 +280,7 @@
 				to_chat(user, span_notice("You add [W] to [src]."))
 				qdel(W)
 				name = "first aid/robot arm/health analyzer assembly"
-				add_overlay("na_scanner")
+				add_overlay("[base_icon_state]_analyzer")
 				build_step++
 
 		if(ASSEMBLY_SECOND_STEP)

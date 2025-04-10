@@ -1,4 +1,5 @@
-import { Box, Button, Flex } from '../../components';
+import { Box, Button, Flex } from 'tgui-core/components';
+
 import {
   DATATYPE_DISPLAY_HANDLERS,
   FUNDAMENTAL_DATA_TYPES,
@@ -57,7 +58,7 @@ export const DisplayName = (props) => {
         <Flex.Item>
           <Box
             fontSize={0.75}
-            opacity={0.25}
+            opacity={0.5}
             textAlign={isOutput ? 'right' : 'left'}
           >
             {displayType || 'unknown'}

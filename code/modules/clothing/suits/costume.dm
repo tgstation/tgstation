@@ -23,7 +23,7 @@
 
 /obj/item/clothing/head/hooded/flashsuit/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/flash_hood, ITEM_SLOT_HEAD, forced = TRUE)
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/flash_hood, ITEM_SLOT_HEAD, HELMET_TRAIT, forced = TRUE)
 
 /obj/item/clothing/suit/costume/pirate
 	name = "pirate coat"
@@ -588,7 +588,7 @@
 
 /obj/item/clothing/suit/coordinator
 	name = "coordinator jacket"
-	desc = "A jacket for a party ooordinator, stylish!."
+	desc = "A jacket for a party coordinator, stylish!."
 	icon_state = "capformal"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'icons/mob/clothing/suits/armor.dmi'

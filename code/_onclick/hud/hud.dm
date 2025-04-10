@@ -97,7 +97,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll/healthdoll
 	var/atom/movable/screen/spacesuit
-	var/atom/movable/screen/hunger
+	var/atom/movable/screen/hunger/hunger
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
@@ -153,13 +153,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
 	var/client/client = mymob.canon_client
-	if(client.rebuild_plane_masters)
-		var/new_relay_loc = (client.byond_version > 515) ? "1,1" : "CENTER"
-		for(var/group_key as anything in master_groups)
-			var/datum/plane_master_group/group = master_groups[group_key]
-			group.relay_loc = new_relay_loc
-			group.rebuild_plane_masters()
-		client.rebuild_plane_masters = FALSE
 	RegisterSignal(client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
 	on_eye_change(null, null, client.eye)
 
@@ -399,7 +392,12 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// Handles alerts - the things on the right side of the screen
 	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
-	update_parallax_pref(screenmob)
+
+	if(screenmob == mymob)
+		update_parallax_pref(screenmob)
+	else
+		viewmob.hud_used.update_parallax_pref()
+
 	update_reuse(screenmob)
 
 	// ensure observers get an accurate and up-to-date view
@@ -549,6 +547,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			floating_actions += button
 			button.screen_loc = position
 			position = SCRN_OBJ_FLOATING
+			toggle_palette.update_state()
 
 	button.location = position
 
@@ -567,6 +566,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				position_action(button, button.linked_action.default_button_position)
 				return
 			button.screen_loc = get_valid_screen_location(relative_to.screen_loc, ICON_SIZE_ALL, our_client.view_size.getView()) // Asks for a location adjacent to our button that won't overflow the map
+			toggle_palette.update_state()
 
 	button.location = relative_to.location
 
@@ -577,6 +577,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 			CRASH("We just tried to hide an action buttion that somehow has the default position as its location, you done fucked up")
 		if(SCRN_OBJ_FLOATING)
 			floating_actions -= button
+			toggle_palette.update_state()
 		if(SCRN_OBJ_IN_LIST)
 			listed_actions.remove_action(button)
 		if(SCRN_OBJ_IN_PALETTE)

@@ -37,10 +37,8 @@
 	var/complexity_max = DEFAULT_MAX_COMPLEXITY
 	/// How much battery power the MOD uses by just being on
 	var/charge_drain = DEFAULT_CHARGE_DRAIN
-	/// Slowdown of the MOD when not active.
-	var/slowdown_inactive = 1.25
-	/// Slowdown of the MOD when active.
-	var/slowdown_active = 0.75
+	/// Slowdown of the MOD when all of its pieces are deployed.
+	var/slowdown_deployed = 0.75
 	/// How long this MOD takes each part to seal.
 	var/activation_step_time = MOD_ACTIVATION_STEP_TIME
 	/// Theme used by the MOD TGUI.
@@ -102,8 +100,7 @@
 	var/list/parts = list(mod)
 	mod.slot_flags = slot_flags
 	mod.extended_desc = extended_desc
-	mod.slowdown_inactive = slowdown_inactive
-	mod.slowdown_active = slowdown_active
+	mod.slowdown_deployed = slowdown_deployed
 	mod.activation_step_time = activation_step_time
 	mod.complexity_max = complexity_max
 	mod.ui_theme = ui_theme
@@ -122,6 +119,7 @@
 		part_datum.part_item = mod_part
 		mod.mod_parts["[mod_part.slot_flags]"] = part_datum
 		parts += mod_part
+
 	for(var/obj/item/part as anything in parts)
 		part.name = "[name] [part.name]"
 		part.desc = "[part.desc] [desc]"
@@ -133,6 +131,7 @@
 		part.max_heat_protection_temperature = max_heat_protection_temperature
 		part.min_cold_protection_temperature = min_cold_protection_temperature
 		part.siemens_coefficient = siemens_coefficient
+
 	set_skin(mod, skin || default_skin)
 
 /datum/mod_theme/proc/set_skin(obj/item/mod/control/mod, skin)
@@ -191,8 +190,7 @@
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 3
-	slowdown_inactive = 0.5
-	slowdown_active = 0
+	slowdown_deployed = 0
 	variants = list(
 		"civilian" = list(
 			/obj/item/clothing/head/mod = list(
@@ -246,8 +244,7 @@
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
-	slowdown_inactive = 1.5
-	slowdown_active = 1
+	slowdown_deployed = 1
 	allowed_suit_storage = list(
 		/obj/item/construction/rcd,
 		/obj/item/fireaxe/metal_h2_axe,
@@ -312,8 +309,7 @@
 	armor_type = /datum/armor/mod_theme_atmospheric
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	slowdown_inactive = 1.5
-	slowdown_active = 1
+	slowdown_deployed = 1
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
 		/obj/item/extinguisher,
@@ -382,8 +378,7 @@
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
-	slowdown_inactive = 1
-	slowdown_active = 0.5
+	slowdown_deployed = 0.5
 	inbuilt_modules = list(/obj/item/mod/module/magboot/advanced)
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
@@ -569,8 +564,7 @@
 	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
 	siemens_coefficient = 0.25
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
-	slowdown_inactive = 0.5
-	slowdown_active = 0
+	slowdown_deployed = 0
 	allowed_suit_storage = list(
 		/obj/item/mail,
 		/obj/item/delivery/small,
@@ -631,8 +625,7 @@
 	default_skin = "medical"
 	armor_type = /datum/armor/mod_theme_medical
 	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
-	slowdown_inactive = 1
-	slowdown_active = 0.5
+	slowdown_deployed = 0.5
 	allowed_suit_storage = list(
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/dropper,
@@ -640,7 +633,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/stack/medical,
 		/obj/item/sensor_device,
@@ -742,8 +735,7 @@
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	charge_drain = DEFAULT_CHARGE_DRAIN * 1.5
-	slowdown_inactive = 0.75
-	slowdown_active = 0.25
+	slowdown_deployed = 0.25
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
 	allowed_suit_storage = list(
 		/obj/item/healthanalyzer,
@@ -752,7 +744,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/stack/medical,
 		/obj/item/sensor_device,
@@ -824,8 +816,7 @@
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
-	slowdown_inactive = 1.75
-	slowdown_active = 1.25
+	slowdown_deployed = 1.25
 	inbuilt_modules = list(/obj/item/mod/module/reagent_scanner/advanced)
 	allowed_suit_storage = list(
 		/obj/item/analyzer,
@@ -892,8 +883,7 @@
 	default_skin = "security"
 	armor_type = /datum/armor/mod_theme_security
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 2
-	slowdown_inactive = 1
-	slowdown_active = 0.5
+	slowdown_deployed = 0.5
 	allowed_suit_storage = list(
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
@@ -961,8 +951,7 @@
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	inbuilt_modules = list(/obj/item/mod/module/shove_blocker/locked)
-	slowdown_inactive = 0.75
-	slowdown_active = 0.25
+	slowdown_deployed = 0.25
 	allowed_suit_storage = list(
 		/obj/item/reagent_containers/spray/pepper,
 		/obj/item/restraints/handcuffs,
@@ -1033,8 +1022,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
-	slowdown_inactive = 0.75
-	slowdown_active = 0.25
+	slowdown_deployed = 0.25
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1098,8 +1086,7 @@
 	default_skin = "cosmohonk"
 	armor_type = /datum/armor/mod_theme_cosmohonk
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.25
-	slowdown_inactive = 1.75
-	slowdown_active = 1.25
+	slowdown_deployed = 1.25
 	allowed_suit_storage = list(
 		/obj/item/bikehorn,
 		/obj/item/food/grown/banana,
@@ -1171,8 +1158,7 @@
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 3
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
-	slowdown_inactive = 1
-	slowdown_active = 0.5
+	slowdown_deployed = 0
 	ui_theme = "syndicate"
 	resistance_flags = FIRE_PROOF
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
@@ -1279,8 +1265,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 3
 	siemens_coefficient = 0
-	slowdown_inactive = 1
-	slowdown_active = 0.5
+	slowdown_deployed = 0
 	ui_theme = "syndicate"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	allowed_suit_storage = list(
@@ -1352,8 +1337,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	siemens_coefficient = 0
-	slowdown_inactive = 0
-	slowdown_active = 0
+	slowdown_deployed = 0
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.5
 	ui_theme = "syndicate"
 	slot_flags = ITEM_SLOT_BELT
@@ -1418,15 +1402,14 @@
 		Already light, when powered on, this MODsuit injects the wearer seemlessly with muscle-enhancing supplements, while adding piston strength \
 		to their legs. The combination of these mechanisms is very energy draining - but results in next to no speed reduction for the wearer.\
 		Over the years, many a rich person, including Nanotrasen officials with premium subscriptions, had their life or genes rescued thanks to the \
-		unrivaled speed of this suit. Equally as many, however, mysteriously dissapeared in the flash of these white suits after they forgot \
+		unrivaled speed of this suit. Equally as many, however, mysteriously disappeared in the flash of these white suits after they forgot \
 		to pay off said subscriptions in due time or publicly communicated unfavourable opinions on Interdyne's gene-modding tech and ethics. "
 	default_skin = "interdyne"
 	armor_type = /datum/armor/mod_theme_interdyne
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
-	slowdown_inactive = 0.0
-	slowdown_active = -0.5
+	slowdown_deployed = -0.5
 	inbuilt_modules = list(/obj/item/mod/module/quick_carry/advanced)
 	allowed_suit_storage = list(
 		/obj/item/assembly/flash,
@@ -1439,7 +1422,7 @@
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/restraints/handcuffs,
 		/obj/item/sensor_device,
@@ -1512,8 +1495,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
-	slowdown_inactive = 0.75
-	slowdown_active = 0.25
+	slowdown_deployed = 0.25
 	ui_theme = "wizard"
 	inbuilt_modules = list(/obj/item/mod/module/anti_magic/wizard)
 	allowed_suit_storage = list(
@@ -1574,14 +1556,13 @@
 		suits two or three times as thick. The nanomachines making up the outermost layer of armor \
 		are capable of shifting their form into almost-microscopic radiating fins, rendering the suit itself \
 		nigh-immune to even volcanic heat. It's entirely sealed against even the strongest acids, \
-		and the myoelectric artifical muscles of the suit leave it light as a feather during movement."
+		and the myoelectric artificial muscles of the suit leave it light as a feather during movement."
 	default_skin = "ninja"
 	armor_type = /datum/armor/mod_theme_ninja
 	resistance_flags = LAVA_PROOF|FIRE_PROOF|ACID_PROOF
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.5
 	siemens_coefficient = 0
-	slowdown_inactive = 0.5
-	slowdown_active = 0
+	slowdown_deployed = 0
 	ui_theme = "hackerman"
 	inbuilt_modules = list(/obj/item/mod/module/welding/camera_vision, /obj/item/mod/module/hacker, /obj/item/mod/module/weapon_recall, /obj/item/mod/module/adrenaline_boost, /obj/item/mod/module/energy_net)
 	allowed_suit_storage = list(
@@ -1651,8 +1632,7 @@
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 5
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
-	slowdown_inactive = 1.5
-	slowdown_active = 1
+	slowdown_deployed = 1
 	ui_theme = "hackerman"
 	inbuilt_modules = list(/obj/item/mod/module/anomaly_locked/kinesis/prototype)
 	allowed_suit_storage = list(
@@ -1718,9 +1698,8 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY + 3
 	siemens_coefficient = 0
-	slowdown_inactive = 1
-	slowdown_active = 0.5
-	ui_theme = "terminal"
+	slowdown_deployed = 0
+	ui_theme = "ntos_terminal"
 	inbuilt_modules = list(/obj/item/mod/module/armor_booster)
 	allowed_suit_storage = list(
 		/obj/item/ammo_box,
@@ -1787,8 +1766,7 @@
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
-	slowdown_inactive = 0.5
-	slowdown_active = 0
+	slowdown_deployed = 0
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -1970,8 +1948,7 @@
 	atom_flags = PREVENT_CONTENTS_EXPLOSION_1
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	siemens_coefficient = 0
-	slowdown_inactive = 0.5
-	slowdown_active = 0
+	slowdown_deployed = 0
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 		/obj/item/assembly/flash,
@@ -2035,8 +2012,7 @@
 	resistance_flags = FIRE_PROOF|ACID_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 10
-	slowdown_inactive = 0
-	slowdown_active = 0
+	slowdown_deployed = 0
 	allowed_suit_storage = list(
 		/obj/item/restraints/handcuffs,
 	)
@@ -2100,8 +2076,7 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	complexity_max = 50
 	siemens_coefficient = 0
-	slowdown_inactive = 0.5
-	slowdown_active = 0
+	slowdown_deployed = 0
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.2
 	allowed_suit_storage = list(
 		/obj/item/gun,
@@ -2167,8 +2142,7 @@
 	complexity_max = 1000
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0
 	siemens_coefficient = 0
-	slowdown_inactive = 0
-	slowdown_active = 0
+	slowdown_deployed = 0
 	activation_step_time = MOD_ACTIVATION_STEP_TIME * 0.01
 	allowed_suit_storage = list(
 		/obj/item/gun,

@@ -70,6 +70,8 @@
 	var/obj/item/default_storage = /obj/item/storage/drone_tools
 	/// Default [/mob/living/basic/drone/var/head] item
 	var/obj/item/default_headwear
+	///The camera built into the drone which allows it to be seen through cameras.
+	var/obj/machinery/camera/silicon/built_in_camera
 	/**
 	  * icon_state of drone from icons/mobs/drone.dmi
 	  *
@@ -180,6 +182,12 @@
 	AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
 	AddComponent(/datum/component/personal_crafting) // Kind of hard to be a drone and not be able to make tiles
 
+	//only shy drones (so all the station ones) gets a camera.
+	if(shy)
+		built_in_camera = new(src)
+		built_in_camera.c_tag = real_name
+		built_in_camera.network = list(CAMERANET_NETWORK_SS13)
+
 	if(default_storage)
 		var/obj/item/storage = new default_storage(src)
 		equip_to_slot_or_del(storage, ITEM_SLOT_DEX_STORAGE)
@@ -210,6 +218,7 @@
 		TRAIT_SILICON_ACCESS,
 		TRAIT_REAGENT_SCANNER,
 		TRAIT_UNOBSERVANT,
+		TRAIT_SILICON_EMOTES_ALLOWED,
 	), INNATE_TRAIT)
 
 	listener = new(list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER), list(z))
@@ -219,23 +228,23 @@
 	listener.RegisterSignal(src, COMSIG_LIVING_REVIVE, TYPE_PROC_REF(/datum/alarm_listener, allow_alarm_changes))
 
 /mob/living/basic/drone/med_hud_set_health()
-	var/image/holder = hud_list[DIAG_HUD]
-	holder.pixel_y = get_cached_height() - ICON_SIZE_Y
-	holder.icon_state = "huddiag[RoundDiagBar(health/maxHealth)]"
+	set_hud_image_state(DIAG_HUD, "huddiag[RoundDiagBar(health/maxHealth)]")
 
 /mob/living/basic/drone/med_hud_set_status()
-	var/image/holder = hud_list[DIAG_STAT_HUD]
-	holder.pixel_y = get_cached_height() - ICON_SIZE_Y
 	if(stat == DEAD)
-		holder.icon_state = "huddead2"
-	else if(incapacitated)
-		holder.icon_state = "hudoffline"
-	else
-		holder.icon_state = "hudstat"
+		set_hud_image_state(DIAG_STAT_HUD, "huddead2")
+		return
+
+	if(incapacitated)
+		set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
+		return
+
+	set_hud_image_state(DIAG_STAT_HUD, "hudstat")
 
 /mob/living/basic/drone/Destroy()
 	GLOB.drones_list -= src
 	QDEL_NULL(listener)
+	QDEL_NULL(built_in_camera)
 	return ..()
 
 /mob/living/basic/drone/Login()
@@ -278,7 +287,7 @@
 
 	//Hands
 	for(var/obj/item/held_thing in held_items)
-		if(held_thing.item_flags & (ABSTRACT|EXAMINE_SKIP|HAND_ITEM))
+		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
 		. += "It has [held_thing.examine_title(user)] in its [get_held_index_name(get_held_index_of_item(held_thing))]."
 
@@ -391,3 +400,8 @@
 
 /mob/living/basic/drone/electrocute_act(shock_damage, source, siemens_coeff, flags = NONE)
 	return FALSE //So they don't die trying to fix wiring
+
+/mob/living/basic/drone/can_track(mob/living/user)
+	if(built_in_camera?.can_use())
+		return TRUE
+	return ..()

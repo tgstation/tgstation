@@ -69,7 +69,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if(inverted)
 		. += span_notice("It is currently set to go in reverse.")
-	. += "\nLeft-click with a <b>wrench</b> to rotate."
+	. += "\nLeft-click with a <b>wrench</b> to rotate clockwise."
+	. += "Right-click with a <b>wrench</b> to rotate counterclockwise."
 	. += "Left-click with a <b>screwdriver</b> to invert its direction."
 	. += "Right-click with a <b>screwdriver</b> to flip its belt around."
 	. += "Left-click with a <b>multitool</b> to toggle whether this conveyor receives power via cable. Toggling connects and disconnects."
@@ -81,7 +82,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		context[SCREENTIP_CONTEXT_LMB] = "Extend current conveyor belt"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item?.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "Rotate conveyor belt"
+		context[SCREENTIP_CONTEXT_LMB] = "Rotate conveyor belt clockwise"
+		context[SCREENTIP_CONTEXT_RMB] = "Rotate conveyor belt counterclockwise"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "Invert conveyor belt"
@@ -248,8 +250,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			start_conveying(movable)
 	return TRUE
 
-/obj/machinery/conveyor/proc/conveyable_enter(datum/source, atom/convayable)
+/obj/machinery/conveyor/proc/conveyable_enter(datum/source, atom/movable/convayable)
 	SIGNAL_HANDLER
+	if(convayable.loc != loc) // If we are not on the same turf (order of operations memes) go to hell
+		return
 	if(operating == CONVEYOR_OFF)
 		GLOB.move_manager.stop_looping(convayable, SSconveyors)
 		return
@@ -340,6 +344,11 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		flipped = !flipped
 		update_move_direction()
 		to_chat(user, span_notice("You flip [src]'s belt [flipped ? "around" : "back to normal"]."))
+
+	else if(attacking_item.tool_behaviour == TOOL_WRENCH)
+		attacking_item.play_tool_sound(src)
+		setDir(turn(dir, 45))
+		to_chat(user, span_notice("You rotate [src]."))
 
 	else if(!user.combat_mode)
 		user.transferItemToLoc(attacking_item, drop_location())

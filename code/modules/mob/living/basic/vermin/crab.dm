@@ -9,6 +9,7 @@
 	speak_emote = list("clicks")
 	melee_damage_lower = 2
 	melee_damage_upper = 2
+	mob_biotypes = MOB_ORGANIC|MOB_CRUSTACEAN|MOB_AQUATIC
 	butcher_results = list(/obj/item/food/meat/slab/rawcrab = 2)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"

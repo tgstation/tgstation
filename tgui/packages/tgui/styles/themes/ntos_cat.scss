@@ -3,145 +3,50 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-//@use 'sass:map';
-
-//palette
-$cyan: hsl(156, 65%, 60%);
-$pink: hsl(300, 91%, 52%);
-$orange: hsl(36, 100%, 50%);
-$purple: hsl(248, 47%, 37%);
-
-$light-gray: hsl(0, 0%, 76%);
-$dark-gray: hsl(0, 0%, 52%);
-$scrollbar-color-multiplier: 0.5;
-
-@use '../colors.scss' with (
-  $primary: black,
-  $label: hsl(350, 100%, 76.5%),
-  $good: hsl(300, 91%, 52%),
-  $bad: red,
-  // $fg-map-keys: (),
-  // $bg-map-keys: (),
-);
-
-@use '../base.scss' with (
-    $color-bg: hsl(36, 100%, 50%),
-    $color-bg-grad-spread: 12%,
-    //$border-radius: 0,
-  );
-
 .theme-ntos_cat {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss', $with: ());
+  &:root {
+    --color-kitty: hsl(300, 100%, 85%);
+    --color-cuttie: hsl(5, 100%, 75%);
 
-  // Components
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
-    $with: (
-      'color-default': hsl(300, 91%, 52%),
-      'color-transparent-text': hsla(210, 100%, 94%, 0.75),
-      'color-disabled': hsl(0, 0%, 21%),
-      'color-selected': hsl(227, 37%, 45%),
-      'color-caution': hsl(30, 88%, 39%)
-    )
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
-    $with: ('color-default-fill': hsla(350, 100%, 76.5%, 0.75))
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Section',
-    $with: ('background-color': hsla(24, 56%, 31%, 0.75))
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Tooltip',
-    $with: ('background-color': hsla(36, 100%, 50%, 0.75))
-  );
+    // Base
+    --color-base: hsl(35, 100%, 50%);
+    --color-primary: var(--color-kitty);
+    --color-secondary: var(--color-cuttie);
+    --color-section: hsl(from var(--color-base) h s calc(l - 42.5) / 0.33);
+    --color-text: hsl(from var(--color-kitty) h s calc(l + 10));
+    --color-text-translucent: hsl(from var(--color-kitty) h s l / 0.75);
+    --color-label: hsl(
+      from var(--color-kitty) calc(h + 40) calc(s - 50) calc(l - 20)
+    );
+    --color-good: var(--color-kitty);
+    --color-action: var(--color-kitty);
+    --base-gradient-spread: 12;
 
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': hsla(350, 100%, 76.5%, 0.75))
-  );
+    // Components
+    --button-background-default: hsl(from var(--color-kitty) h s 66);
+    --button-background-selected: hsl(227.5, 37.5%, 45%);
+    --button-background-caution: hsl(30, 87.5%, 340%);
+    --input-background: hsl(0, 0%, 100%);
+    --input-color: hsl(from var(--color-kitty) h s calc(l - 10));
+    --tooltip-background-lightness: 50;
+
+    .Layout__content {
+      background-image: url('../../assets/bg-cat.svg');
+      background-size: 100%;
+      background-repeat: no-repeat;
+    }
+  }
 
   .Section {
-    color: black;
-    outline: base.em(2px) inset hsl(350, 100%, 76.5%);
+    outline: var(--border-thickness-small) solid var(--color-cuttie);
   }
+
   .Button {
-    color: hsl(350, 100%, 76.5%);
     background-color: hsl(0, 0%, 100%);
+    color: var(--color-cuttie);
   }
 
-  .ProgressBar {
-    color: black;
-  }
-
-  .Layout__content {
-    background-image: url('../../assets/bg-cat.svg');
-    background-size: 100%;
-    background-repeat: no-repeat;
-  }
-  .Layout,
-  .Layout * {
-    // Fancy scrollbar
-    scrollbar-base-color: color.scale(
-      hsl(248, 17%, 27%),
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-face-color: color.scale(
-      hsl(248, 17%, 27%),
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
-
-    scrollbar-3dlight-color: color.scale(
-      hsl(36, 100%, 50%),
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-highlight-color: color.scale(
-      hsl(36, 100%, 50%),
-      $lightness: 0% * $scrollbar-color-multiplier
-    );
-    scrollbar-track-color: color.scale(
-      hsl(30, 47%, 47%),
-      $lightness: -25% * $scrollbar-color-multiplier
-    );
-    scrollbar-arrow-color: color.scale(
-      hsl(36, 100%, 50%),
-      $lightness: 50% * $scrollbar-color-multiplier
-    );
-    scrollbar-shadow-color: color.scale(
-      hsl(248, 17%, 27%),
-      $lightness: 10% * $scrollbar-color-multiplier
-    );
-  }
-  .Tab {
-    color: hsl(350, 100%, 76.5%);
-    background-color: hsla(0, 0%, 100%, 0.5);
-  }
-  .Tab--selected {
-    color: black;
-    background-color: hsl(350, 100%, 76.5%);
-  }
-  .Box {
-    outline: base.em(3px) outset hsl(0, 0%, 76%);
-  }
-  .Tooltip {
-    color: black;
-  }
-  .Input {
-    background-color: hsl(0, 0%, 100%);
-    outline: base.em(2px) inset hsl(350, 100%, 76.5%);
-  }
   .NtosWindow__header {
     background-color: hsl(248, 17%, 27%);
-  }
-  .Flex {
-    color: hsl(0, 0%, 100%);
-    background-color: hsla(0, 0%, 0%, 0);
   }
 }

@@ -13,12 +13,11 @@
 
 /datum/reagent/medicine/c2/helbital //kinda a C2 only if you're not in hardcrit.
 	name = "Helbital"
-	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Patients will find the medicine 'aids' their healing if not near death by causing asphyxiation."
+	description = "Named after the Norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Patients will find the medicine 'aids' their healing if not near death by causing asphyxiation."
 	color = "#9400D3"
 	taste_description = "cold and lifeless"
 	ph = 8
 	overdose_threshold = 35
-	reagent_state = SOLID
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/inverse/helgrasp
 	var/helbent = FALSE
@@ -46,7 +45,7 @@
 	if(need_mob_update)
 		. = UPDATE_MOB_HEALTH
 
-	if(good_kind_of_healing && !reaping && SPT_PROB(0.00005, seconds_per_tick)) //janken with the grim reaper!
+	if(good_kind_of_healing && !reaping && SPT_PROB(0.005, seconds_per_tick)) //janken with the grim reaper!
 		notify_ghosts(
 			"[affected_mob] has entered a game of rock-paper-scissors with death!",
 			source = affected_mob,
@@ -104,7 +103,6 @@
 	color = "#ECEC8D" // rgb: 236 236 141
 	ph = 8.2
 	taste_description = "bitter with a hint of alcohol"
-	reagent_state = SOLID
 	inverse_chem_val = 0.3
 	inverse_chem = /datum/reagent/inverse/libitoil
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -119,8 +117,7 @@
 
 /datum/reagent/medicine/c2/probital
 	name = "Probital"
-	description = "Originally developed as a prototype-gym supliment for those looking for quick workout turnover, this oral medication quickly repairs broken muscle tissue but causes lactic acid buildup, tiring the patient. Overdosing can cause extreme drowsiness. An Influx of nutrients promotes the muscle repair even further."
-	reagent_state = SOLID
+	description = "Originally developed as a prototype gym supplement for those looking for quick workout turnover, this oral medication quickly repairs broken muscle tissue but causes lactic acid buildup, tiring the patient. Overdosing can cause extreme drowsiness. An influx of nutrients promotes the muscle repair even further."
 	color = "#FFFF6B"
 	ph = 5.5
 	overdose_threshold = 20
@@ -171,7 +168,6 @@
 /datum/reagent/medicine/c2/lenturi
 	name = "Lenturi"
 	description = "Used to treat burns. Applies stomach damage when it leaves your system."
-	reagent_state = LIQUID
 	color = "#6171FF"
 	ph = 4.7
 	var/resetting_probability = 0 //What are these for?? Can I remove them?
@@ -179,7 +175,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	inverse_chem_val = 0.4
 	inverse_chem = /datum/reagent/inverse/lentslurri
-
 
 /datum/reagent/medicine/c2/lenturi/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -192,7 +187,6 @@
 /datum/reagent/medicine/c2/aiuri
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."
-	reagent_state = LIQUID
 	color = "#8C93FF"
 	ph = 4
 	var/resetting_probability = 0 //same with this? Old legacy vars that should be removed?
@@ -212,7 +206,6 @@
 /datum/reagent/medicine/c2/hercuri
 	name = "Hercuri"
 	description = "Not to be confused with element Mercury, this medicine excels in reverting effects of dangerous high-temperature environments. Prolonged exposure can cause hypothermia."
-	reagent_state = LIQUID
 	color = "#F7FFA5"
 	overdose_threshold = 25
 	reagent_weight = 0.6
@@ -262,7 +255,6 @@
 /datum/reagent/medicine/c2/convermol
 	name = "Convermol"
 	description = "Restores oxygen deprivation while producing a lesser amount of toxic byproducts. Both scale with exposure to the drug and current amount of oxygen deprivation. Overdose causes toxic byproducts regardless of oxygen deprivation."
-	reagent_state = LIQUID
 	color = "#FF6464"
 	overdose_threshold = 35 // at least 2 full syringes +some, this stuff is nasty if left in for long
 	ph = 5.6
@@ -407,7 +399,6 @@
 /datum/reagent/medicine/c2/syriniver //Inject >> SYRINge
 	name = "Syriniver"
 	description = "A potent antidote for intravenous use with a narrow therapeutic index, it is considered an active prodrug of musiver."
-	reagent_state = LIQUID
 	color = "#8CDF24" // heavy saturation to make the color blend better
 	metabolization_rate = 0.75 * REAGENTS_METABOLISM
 	overdose_threshold = 6
@@ -452,7 +443,6 @@
 /datum/reagent/medicine/c2/musiver //MUScles
 	name = "Musiver"
 	description = "The active metabolite of syriniver. Causes muscle weakness on overdose"
-	reagent_state = LIQUID
 	color = "#DFD54E"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 25
@@ -494,12 +484,11 @@
 /datum/reagent/medicine/c2/synthflesh
 	name = "Synthflesh"
 	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). 100u or more can restore corpses husked by burns. Touch application only."
-	reagent_state = LIQUID
 	color = "#FFEBEB"
 	ph = 7.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE)
+/datum/reagent/medicine/c2/synthflesh/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if(!iscarbon(exposed_mob))
 		return
@@ -510,8 +499,11 @@
 		return
 	var/current_bruteloss = carbies.getBruteLoss() // because this will be changed after calling adjustBruteLoss()
 	var/current_fireloss = carbies.getFireLoss() // because this will be changed after calling adjustFireLoss()
-	var/harmies = clamp(carbies.adjustBruteLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_bruteloss)
-	var/burnies = clamp(carbies.adjustFireLoss(-1.25 * reac_volume, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_fireloss)
+	var/touch_protection_interference = (1 - touch_protection)
+	if(!touch_protection_interference)
+		return
+	var/harmies = clamp(carbies.adjustBruteLoss(-1.25 * reac_volume * touch_protection_interference, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_bruteloss)
+	var/burnies = clamp(carbies.adjustFireLoss(-1.25 * reac_volume * touch_protection_interference, updating_health = FALSE, required_bodytype = affected_bodytype), 0, current_fireloss)
 	for(var/i in carbies.all_wounds)
 		var/datum/wound/iter_wound = i
 		iter_wound.on_synthflesh(reac_volume)
@@ -582,7 +574,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_metabolize(mob/living/user)
 	. = ..()
-	user.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
+	send_alert(user)
 	user.add_traits(subject_traits, type)
 
 /datum/reagent/medicine/c2/penthrite/on_mob_life(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
@@ -619,7 +611,7 @@
 
 /datum/reagent/medicine/c2/penthrite/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	affected_mob.clear_alert("penthrite")
+	remove_alert(affected_mob)
 	affected_mob.remove_traits(subject_traits, type)
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
@@ -632,6 +624,11 @@
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 
+/datum/reagent/medicine/c2/penthrite/proc/send_alert(mob/living/affected_mob)
+	affected_mob.throw_alert("penthrite", /atom/movable/screen/alert/penthrite)
+
+/datum/reagent/medicine/c2/penthrite/proc/remove_alert(mob/living/affected_mob)
+	affected_mob.clear_alert("penthrite")
 
 /******NICHE******/
 //todo

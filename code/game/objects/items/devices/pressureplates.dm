@@ -7,19 +7,19 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	icon_state = "pressureplate"
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
-	layer = HIGH_TURF_LAYER
 	var/trigger_mob = TRUE
 	var/trigger_item = FALSE
 	var/specific_item = null
 	var/trigger_silent = FALSE
 	var/sound/trigger_sound = 'sound/effects/pressureplate.ogg'
-	var/obj/item/assembly/signaler/sigdev = null
+	var/obj/item/assembly/assembly = null
 	var/roundstart_signaller = FALSE
 	var/roundstart_signaller_freq = FREQ_PRESSURE_PLATE
 	var/roundstart_signaller_code = 30
 	var/roundstart_hide = FALSE
-	var/removable_signaller = TRUE
+	var/removable_assembly = TRUE
 	var/active = FALSE
 	var/image/tile_overlay = null
 	var/can_trigger = TRUE
@@ -31,9 +31,10 @@
 	. = ..()
 	tile_overlay = image(icon = 'icons/turf/floors.dmi', icon_state = "pp_overlay")
 	if(roundstart_signaller)
-		sigdev = new
-		sigdev.code = roundstart_signaller_code
-		sigdev.set_frequency(roundstart_signaller_freq)
+		var/obj/item/assembly/signaler/signaller = new(src)
+		signaller.code = roundstart_signaller_code
+		signaller.set_frequency(roundstart_signaller_freq)
+		assembly = signaller
 
 	if(undertile_pressureplate)
 		AddElement(/datum/element/undertile, tile_overlay = tile_overlay, use_anchor = TRUE)
@@ -59,21 +60,28 @@
 
 /obj/item/pressure_plate/proc/trigger()
 	can_trigger = TRUE
-	if(istype(sigdev))
-		sigdev.signal()
+	if(istype(assembly))
+		assembly.activate()
 
-/obj/item/pressure_plate/attackby(obj/item/I, mob/living/L)
-	if(issignaler(I) && !istype(sigdev) && removable_signaller && L.transferItemToLoc(I, src))
-		sigdev = I
-		to_chat(L, span_notice("You attach [I] to [src]!"))
+/obj/item/pressure_plate/attackby(obj/item/item, mob/living/L)
+	if(isassembly(item) && !istype(assembly) && removable_assembly)
+		var/obj/item/assembly/new_assembly = item
+		if(!(new_assembly.assembly_behavior & ASSEMBLY_FUNCTIONAL_OUTPUT))
+			to_chat(L, span_warning("\The [item] doesn't seem like it would do much of anything inside of [src]..."))
+			return
+		if(L.transferItemToLoc(item, src))
+			assembly = item
+			SEND_SIGNAL(item, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE, src, L)
+		to_chat(L, span_notice("You attach [item] to [src]!"))
 	return ..()
 
 /obj/item/pressure_plate/attack_self(mob/living/L)
-	if(removable_signaller && istype(sigdev))
-		to_chat(L, span_notice("You remove [sigdev] from [src]."))
-		if(!L.put_in_hands(sigdev))
-			sigdev.forceMove(get_turf(src))
-		sigdev = null
+	if(removable_assembly && istype(assembly))
+		to_chat(L, span_notice("You remove [assembly] from [src]."))
+		SEND_SIGNAL(assembly, COMSIG_ASSEMBLY_REMOVED_FROM_PRESSURE_PLATE, src, L)
+		if(!L.put_in_hands(assembly))
+			assembly.forceMove(get_turf(src))
+		assembly = null
 	return ..()
 
 /obj/item/pressure_plate/item_ctrl_click(mob/user)
@@ -97,7 +105,7 @@
 	protected = TRUE
 	anchored = TRUE //this prevents us from being picked up
 	active = TRUE
-	removable_signaller = FALSE
+	removable_assembly = FALSE
 	/// puzzle id we send if stepped on
 	var/puzzle_id
 	/// queue size must match

@@ -1,8 +1,4 @@
-import { BooleanLike } from 'common/react';
-import { capitalize } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -15,7 +11,11 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { capitalize } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
 type Data = {

@@ -211,12 +211,12 @@
 
 /obj/item/kitchen/spoon/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
-/obj/item/kitchen/spoon/proc/on_reagent_change(datum/reagents/reagents, ...)
+/obj/item/kitchen/spoon/proc/on_reagent_change(datum/reagents/reagents)
 	SIGNAL_HANDLER
+
 	update_appearance(UPDATE_OVERLAYS)
-	return NONE
 
 /obj/item/kitchen/spoon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	if(target.is_open_container())

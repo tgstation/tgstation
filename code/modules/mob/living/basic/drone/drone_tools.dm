@@ -47,14 +47,11 @@
 	random_color = FALSE
 
 
-/obj/item/screwdriver/drone/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file)
+/obj/item/screwdriver/drone/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
 	. = ..()
 	if(!isinhands)
 		return
-
-	var/mutable_appearance/head = mutable_appearance(icon_file, "screwdriver_head")
-	head.appearance_flags = RESET_COLOR
-	. += head
+	. += mutable_appearance(icon_file, "screwdriver_head", appearance_flags = RESET_COLOR)
 
 /obj/item/wrench/drone
 	name = "built-in wrench"

@@ -87,9 +87,6 @@
 	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
 	var/atom/movable/render_step/emissive_blocker/em_block
 
-	///Used for the calculate_adjacencies proc for icon smoothing.
-	var/can_be_unanchored = FALSE
-
 	///Lazylist to keep track on the sources of illumination.
 	var/list/affected_dynamic_lights
 	///Highest-intensity light affecting us, which determines our visibility.
@@ -237,9 +234,11 @@
 
 	LAZYNULL(client_mobs_in_contents)
 
+#ifndef DISABLE_DREAMLUAU
 	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
 	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
 	DREAMLUAU_CLEAR_REF_USERDATA(vis_locs)
+#endif
 
 	. = ..()
 
@@ -444,6 +443,8 @@
 			if(z_move_flags & ZMOVE_FEEDBACK)
 				to_chat(rider || src, span_warning("There's nowhere to go in that direction!"))
 			return FALSE
+	if(SEND_SIGNAL(src, COMSIG_CAN_Z_MOVE, start, destination) & COMPONENT_CANT_Z_MOVE)
+		return FALSE
 	if(z_move_flags & ZMOVE_FALL_CHECKS && (throwing || (movement_type & (FLYING|FLOATING)) || !has_gravity(start)))
 		return FALSE
 	if(z_move_flags & ZMOVE_CAN_FLY_CHECKS && !(movement_type & (FLYING|FLOATING)) && has_gravity(start))
@@ -588,7 +589,7 @@
 	if(!. || !isliving(moving_atom))
 		return
 	var/mob/living/pulled_mob = moving_atom
-	set_pull_offsets(pulled_mob, grab_state)
+	set_pull_offsets(pulled_mob, grab_state, animate = FALSE)
 
 /**
  * Checks if the pulling and pulledby should be stopped because they're out of reach.
@@ -637,7 +638,7 @@
 	. = FALSE
 	if(!newloc || newloc == loc)
 		return
-
+	SEND_SIGNAL(src, COMSIG_MOVABLE_ATTEMPTED_MOVE, newloc, direction)
 	// A mid-movement... movement... occurred, resolve that first.
 	RESOLVE_ACTIVE_MOVEMENT
 
@@ -661,13 +662,12 @@
 
 	var/list/new_locs
 	if(is_multi_tile_object && isturf(newloc))
+		var/dx = newloc.x
+		var/dy = newloc.y
+		var/dz = newloc.z
 		new_locs = block(
-			newloc,
-			locate(
-				min(world.maxx, newloc.x + CEILING(bound_width / 32, 1)),
-				min(world.maxy, newloc.y + CEILING(bound_height / 32, 1)),
-				newloc.z
-				)
+			dx, dy, dz,
+			dx + ceil(bound_width / 32), dy + ceil(bound_height / 32), dz
 		) // If this is a multi-tile object then we need to predict the new locs and check if they allow our entrance.
 		for(var/atom/entering_loc as anything in new_locs)
 			if(!entering_loc.Enter(src))
@@ -987,8 +987,9 @@
 
 ///allows this movable to hear and adds itself to the important_recursive_contents list of itself and every movable loc its in
 /atom/movable/proc/become_hearing_sensitive(trait_source = TRAIT_GENERIC)
+	var/already_hearing_sensitive = HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE)
 	ADD_TRAIT(src, TRAIT_HEARING_SENSITIVE, trait_source)
-	if(!HAS_TRAIT(src, TRAIT_HEARING_SENSITIVE))
+	if(already_hearing_sensitive) // If we were already hearing sensitive, we don't wanna be in important_recursive_contents twice, else we'll have potential issues like one radio sending the same message multiple times
 		return
 
 	for(var/atom/movable/location as anything in get_nested_locs(src) + src)
@@ -1153,13 +1154,12 @@
 				return FALSE
 
 			if(is_multi_tile && isturf(destination))
+				var/dx = destination.x
+				var/dy = destination.y
+				var/dz = destination.z
 				var/list/new_locs = block(
-					destination,
-					locate(
-						min(world.maxx, destination.x + ROUND_UP(bound_width / ICON_SIZE_X)),
-						min(world.maxy, destination.y + ROUND_UP(bound_height / ICON_SIZE_Y)),
-						destination.z
-					)
+					dx, dy, dz,
+					dx + ROUND_UP(bound_width / ICON_SIZE_X), dy + ROUND_UP(bound_height / ICON_SIZE_Y), dz
 				)
 				if(old_area && old_area != destarea)
 					old_area.Exited(src, movement_dir)
@@ -1333,7 +1333,7 @@
 	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle)
 
 ///If this returns FALSE then callback will not be called.
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE, quickstart = TRUE)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE, quickstart = TRUE, throw_datum_typepath = /datum/thrownthing)
 	. = FALSE
 
 	if(QDELETED(src))
@@ -1380,7 +1380,7 @@
 	else
 		target_zone = thrower.zone_selected
 
-	var/datum/thrownthing/thrown_thing = new(src, target, get_dir(src, target), range, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
+	var/datum/thrownthing/thrown_thing = new throw_datum_typepath(src, target, get_dir(src, target), range, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)

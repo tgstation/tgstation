@@ -40,8 +40,8 @@
 		to_chat(owner, span_warning("[target_datum] was not already tagged."))
 
 /// Quick define for readability
-#define TAG_DEL(X) "<b>(<A href='?src=[REF(src)];[HrefToken(forceGlobal = TRUE)];del_tag=[REF(X)]'>UNTAG</a>)</b>"
-#define TAG_MARK(X) "<b>(<A href='?src=[REF(src)];[HrefToken(forceGlobal = TRUE)];mark_datum=[REF(X)]'>MARK</a>)</b>"
+#define TAG_DEL(X) "<b>(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];del_tag=[REF(X)]'>UNTAG</a>)</b>"
+#define TAG_MARK(X) "<b>(<A href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];mark_datum=[REF(X)]'>MARK</a>)</b>"
 #define TAG_SIMPLE_HEALTH(X) "<font color='#ff0000'><b>Health: [X.health]</b></font>"
 #define TAG_CARBON_HEALTH(X) "<font color='#ff0000'><b>Health: [X.health]</b></font> (\
 					<font color='#ff3333'>[X.getBruteLoss()]</font> \
@@ -51,12 +51,12 @@
 
 ADMIN_VERB(display_tags, R_ADMIN, "View Tags", "Display all of the tagged datums.", ADMIN_CATEGORY_GAME)
 	var/index = 0
-	var/list/dat = list("<center><B>Tag Menu</B></center><hr>")
+	var/list/dat = list()
 
 	var/list/tagged_datums = user.holder.tagged_datums
 	var/list/marked_datum = user.holder.marked_datum
 
-	dat += "<br><A href='?src=[REF(user)];[HrefToken(forceGlobal = TRUE)];show_tags=1'>Refresh</a><br>"
+	dat += "<br><a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];show_tags=1'>Refresh</a><br>"
 	if(LAZYLEN(tagged_datums))
 		for(var/datum/iter_datum as anything in tagged_datums)
 			index++
@@ -91,8 +91,9 @@ ADMIN_VERB(display_tags, R_ADMIN, "View Tags", "Display all of the tagged datums
 	else
 		dat += "No datums tagged :("
 
-	dat = dat.Join("<br>")
-	user << browse(dat, "window=tag;size=800x480")
+	var/datum/browser/browser = new(user.mob, "tag", "Tag Menu", 800, 480)
+	browser.set_content(dat.Join("<br>"))
+	browser.open()
 
 #undef TAG_DEL
 #undef TAG_MARK

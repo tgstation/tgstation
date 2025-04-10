@@ -8,13 +8,29 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/plumbing/reaction_chamber/can_give(amount, reagent, datum/ductnet/net)
+	. = FALSE
+
 	var/obj/machinery/plumbing/reaction_chamber/reaction_chamber = parent
 
 	//cannot give when we outselves are requesting or reacting the reagents
-	if(!reaction_chamber.emptying || reagents.is_reacting)
-		return FALSE
+	if(amount <= 0 || !reagents.total_volume || !reaction_chamber.emptying || reagents.is_reacting)
+		return
 
-	return ..()
+	//check to see if we can give catalysts only if they are in excess
+	var/list/datum/reagent/catalysts = reaction_chamber.catalysts
+	for(var/datum/reagent/chemical as anything in reagents.reagent_list)
+		if(reagent && chemical.type != reagent)
+			continue
+
+		//we have the exact amounts so no excess to spare
+		if(chemical.volume <= (catalysts[chemical.type] || 0))
+			if(reagent)
+				break
+			else
+				continue
+
+		//atleast 1 reagent to give so take whatever
+		return TRUE
 
 /datum/component/plumbing/reaction_chamber/send_request(dir)
 	var/obj/machinery/plumbing/reaction_chamber/chamber = parent
@@ -47,12 +63,13 @@
 	chamber.emptying = TRUE //If we move this up, it'll instantly get turned off since any reaction always sets the reagent_total to zero. Other option is make the reaction update
 	//everything for every chemical removed, wich isn't a good option either.
 	chamber.on_reagent_change(reagents) //We need to check it now, because some reactions leave nothing left.
+	if(chamber.emptying) //if we are still emptying then keep checking for reagents until we are emptied out
+		chamber.RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, TYPE_PROC_REF(/obj/machinery/plumbing/reaction_chamber, on_reagent_change))
 
 ///Special connect that we currently use for reaction chambers. Being used so we can keep certain inputs separate, like into a special internal acid container
 /datum/component/plumbing/acidic_input
 	demand_connects = WEST
 	demand_color = COLOR_YELLOW
-
 	ducting_layer = SECOND_DUCT_LAYER
 
 /datum/component/plumbing/acidic_input/send_request(dir)

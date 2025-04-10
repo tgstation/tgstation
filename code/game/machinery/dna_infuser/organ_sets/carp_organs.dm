@@ -94,6 +94,10 @@
 	if(tooth_fairy)
 		new /obj/item/knife/carp(tooth_fairy)
 
+/obj/item/organ/tongue/carp/get_possible_languages()
+	. = ..()
+	. += /datum/language/carptongue
+
 /obj/item/knife/carp
 	name = "carp tooth"
 	desc = "Looks sharp. Sharp enough to poke someone's eye out. Holy fuck it's big."

@@ -3,80 +3,47 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-//@use 'sass:map';
-
-//palette
-$cyan: hsl(156, 65%, 60%);
-$pink: hsl(300, 91%, 52%);
-$orange: hsl(36, 100%, 50%);
-$purple: hsl(248, 47%, 37%);
-
-@use '../colors.scss' with (
-  $primary: $pink,
-  $label: $orange,
-  $good: $cyan,
-  // $fg-map-keys: (),
-  // $bg-map-keys: (),
-);
-
-@use '../base.scss' with (
-  $color-bg: $purple,
-  $color-bg-grad-spread: 12%
-);
-
+// That's really cursed theme
 .theme-ntos_synth {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss', $with: ());
+  &:root {
+    --synth-cyan: hsl(156, 65%, 60%);
+    --synth-pink: hsl(300, 91%, 52%);
+    --synth-orange: hsl(36, 100%, 50%);
+    --synth-purple: hsl(248, 47%, 37%);
 
-  // Components
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
-    $with: (
-      'color-default': $cyan,
-      'color-transparent-text': hsla(210, 100%, 94%, 0.75),
-      'color-disabled': hsl(0, 0%, 21%),
-      'color-selected': hsl(227, 37%, 45%),
-      'color-caution': hsl(30, 88%, 39%)
-    )
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
-    $with: ('color-default-fill': hsla(300, 91%, 52%, 0.75))
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Section',
-    $with: ('background-color': hsla(0, 0%, 0%, 0.3))
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Tooltip',
-    $with: ('background-color': hsla(36, 100%, 50%, 0.75))
-  );
+    // Base
+    --color-base: var(--synth-purple);
+    --color-secondary: hsla(185, 95%, 23%, 0.75);
+    --color-primary: var(--synth-pink);
+    --color-label: var(--synth-orange);
+    --color-good: var(--synth-cyan);
+    --base-gradient-spread: 12;
 
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': hsla(185, 95%, 23%, 0.75))
-  );
+    // Components
+    --button-color: var(--color-black);
+    --button-background-default: var(--synth-cyan);
+    --button-background-selected: hsl(227, 37%, 45%);
+    --button-background-caution: hsl(30, 88%, 39%);
+    --tooltip-background: hsla(36, 100%, 50%, 0.75);
+  }
 
   .Section {
-    color: $cyan;
+    color: var(--synth-cyan);
     background-image: linear-gradient(
       to right,
       hsla(300, 100%, 42%, 0.75),
       hsla(185, 95%, 23%, 0.75)
     );
   }
+
   .Button {
-    color: $cyan;
-    background-color: $purple;
-    outline: base.em(2px) outset $pink;
+    background-color: var(--synth-purple);
+    color: var(--synth-cyan);
+    outline: var(--border-thickness-small) outset var(--synth-pink);
   }
+
   .ProgressBar {
-    color: $orange;
+    color: var(--synth-orange);
   }
 
   .Layout__content {
@@ -85,15 +52,17 @@ $purple: hsl(248, 47%, 37%);
     background-position: top;
     background-repeat: no-repeat;
   }
+
   .Tab {
-    color: $cyan;
+    color: var(--synth-cyan);
     background-image: linear-gradient(
       to right,
       hsla(36, 100%, 50%, 0.4),
       hsla(300, 100%, 42%, 0.75)
     );
   }
+
   .Tab--selected {
-    color: $pink;
+    color: var(--synth-pink);
   }
 }

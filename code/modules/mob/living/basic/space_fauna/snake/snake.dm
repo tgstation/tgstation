@@ -68,6 +68,8 @@
 
 /mob/living/basic/snake/befriend(mob/living/new_friend)
 	. = ..()
+	if(!.)
+		return
 	visible_message("[src] hisses happily as it seems to bond with [new_friend].")
 
 /// Snakes are primarily concerned with getting those tasty, tasty mice, but aren't afraid to strike back at those who attack them

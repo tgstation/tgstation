@@ -208,6 +208,9 @@
 // Don't let them be near you!
 /mob/living/basic/construct/harvester/heretic/Life(seconds_per_tick, times_fired)
 	. = ..()
+	if(!.) //dead or deleted
+		return
+
 	if(!SPT_PROB(7, seconds_per_tick))
 		return
 

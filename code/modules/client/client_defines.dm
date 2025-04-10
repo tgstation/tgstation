@@ -138,7 +138,7 @@
 	var/list/credits
 
 	///these persist between logins/logouts during the same round.
-	var/datum/player_details/player_details
+	var/datum/persistent_client/persistent_client
 
 	///Should only be a key-value list of north/south/east/west = atom/movable/screen.
 	var/list/char_render_holders
@@ -270,6 +270,5 @@
 	///Which ambient sound this client is currently being provided.
 	var/current_ambient_sound
 
-	/// Does this client's mob need to rebuild its plane masters after login?
-	/// This is currently only used so a client can switch between 515 and 516 without breaking their rendering.
-	var/rebuild_plane_masters = FALSE
+	/// The DPI scale of the client. 1 is equivalent to 100% window scaling, 2 will be 200% window scaling
+	var/window_scaling

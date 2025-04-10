@@ -135,6 +135,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
+"R" = (
+/obj/structure/filingcabinet/medical,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/telecomms)
 "U" = (
 /obj/machinery/light/small/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -216,7 +220,7 @@ f
 (6,1,1) = {"
 a
 e
-c
+R
 Z
 m
 C

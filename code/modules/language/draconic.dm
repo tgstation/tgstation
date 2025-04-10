@@ -29,7 +29,7 @@
 )
 	if(force_use_syllables)
 		return ..()
-	if(gender != MALE)
+	if(gender != MALE && gender != FEMALE)
 		gender = pick(MALE, FEMALE)
 
 	if(gender == MALE)

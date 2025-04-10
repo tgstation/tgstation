@@ -46,6 +46,7 @@
 	death_sound = 'sound/mobs/non-humanoids/space_dragon/space_dragon_roar.ogg'
 	death_message = "screeches in agony as it collapses to the floor, its life extinguished."
 	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/sinew = 5, /obj/item/stack/sheet/bone = 30)
+	initial_language_holder = /datum/language_holder/carp/dragon
 	can_buckle_to = FALSE
 	lighting_cutoff_red = 12
 	lighting_cutoff_green = 15
@@ -169,8 +170,7 @@
 	else if (HAS_TRAIT(src, TRAIT_WING_BUFFET))
 		overlay_state = "overlay_gust"
 
-	var/mutable_appearance/overlay = mutable_appearance(icon, "[icon_living]_[overlay_state]")
-	overlay.appearance_flags = RESET_COLOR
+	var/mutable_appearance/overlay = mutable_appearance(icon, "[icon_living]_[overlay_state]", appearance_flags = RESET_COLOR|KEEP_APART)
 	. += overlay
 
 /mob/living/basic/space_dragon/melee_attack(obj/vehicle/sealed/mecha/target, list/modifiers, ignore_cooldown)

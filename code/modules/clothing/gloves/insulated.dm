@@ -3,7 +3,7 @@
 	greyscale_colors = null
 
 /obj/item/clothing/gloves/color/yellow
-	desc = "These gloves provide protection against electric shock. The thickness of the rubber makes your fingers seem bigger."
+	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	inhand_icon_state = "ygloves"
@@ -105,6 +105,13 @@
 	. = ..()
 	siemens_coefficient = pick(0,0.5,0.5,0.5,0.5,0.75,1.5)
 
+/obj/item/clothing/gloves/color/fyellow/examine_tags(mob/user)
+	. = ..()
+	// Pretend we're always insulated
+	if (.["partially insulated"])
+		. -= "partially insulated"
+	.["insulated"] = "It is made from a robust electrical insulator and will block any electricity passing through it!"
+
 /obj/item/clothing/gloves/color/fyellow/old
 	desc = "Old and worn out insulated gloves, hopefully they still work."
 	name = "worn out insulated gloves"
@@ -129,7 +136,7 @@
 	desc = "The old gloves your great grandfather stole from Engineering, many moons ago. They've seen some tough times recently."
 
 /obj/item/clothing/gloves/chief_engineer
-	desc = "These gloves provide excellent heat and electric insulation. They are so thin you can barely feel them."
+	desc = "These gloves provide excellent heat and electric insulation."
 	name = "advanced insulated gloves"
 	icon_state = "ce_insuls"
 	inhand_icon_state = null

@@ -13,9 +13,9 @@
 
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
+import { BooleanLike } from 'tgui-core/react';
 
 import { setupDrag } from './drag';
-import { globalEvents } from './events';
 import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
@@ -31,6 +31,16 @@ export const setGlobalStore = (store) => {
 export const backendUpdate = createAction('backend/update');
 export const backendSetSharedState = createAction('backend/setSharedState');
 export const backendSuspendStart = createAction('backend/suspendStart');
+export const backendCreatePayloadQueue = createAction(
+  'backend/createPayloadQueue',
+);
+export const backendDequeuePayloadQueue = createAction(
+  'backend/dequeuePayloadQueue',
+);
+export const backendRemovePayloadQueue = createAction(
+  'backend/removePayloadQueue',
+);
+export const nextPayloadChunk = createAction('nextPayloadChunk');
 
 export const backendSuspendSuccess = () => ({
   type: 'backend/suspendSuccess',
@@ -43,6 +53,7 @@ const initialState = {
   config: {},
   data: {},
   shared: {},
+  outgoingPayloadQueues: {} as Record<string, string[]>,
   // Start as suspended
   suspended: Date.now(),
   suspending: false,
@@ -119,6 +130,44 @@ export const backendReducer = (state = initialState, action) => {
     };
   }
 
+  if (type === 'backend/createPayloadQueue') {
+    const { id, chunks } = payload;
+    const { outgoingPayloadQueues } = state;
+    return {
+      ...state,
+      outgoingPayloadQueues: {
+        ...outgoingPayloadQueues,
+        [id]: chunks,
+      },
+    };
+  }
+
+  if (type === 'backend/dequeuePayloadQueue') {
+    const { id } = payload;
+    const { outgoingPayloadQueues } = state;
+    const { [id]: targetQueue, ...otherQueues } = outgoingPayloadQueues;
+    const [_, ...rest] = targetQueue;
+    return {
+      ...state,
+      outgoingPayloadQueues: rest.length
+        ? {
+            ...otherQueues,
+            [id]: rest,
+          }
+        : otherQueues,
+    };
+  }
+
+  if (type === 'backend/removePayloadQueue') {
+    const { id } = payload;
+    const { outgoingPayloadQueues } = state;
+    const { [id]: _, ...otherQueues } = outgoingPayloadQueues;
+    return {
+      ...state,
+      outgoingPayloadQueues: otherQueues,
+    };
+  }
+
   return state;
 };
 
@@ -127,7 +176,9 @@ export const backendMiddleware = (store) => {
   let suspendInterval;
 
   return (next) => (action) => {
-    const { suspended } = selectBackend(store.getState());
+    const { suspended, outgoingPayloadQueues } = selectBackend(
+      store.getState(),
+    );
     const { type, payload } = action;
 
     if (type === 'update') {
@@ -143,22 +194,6 @@ export const backendMiddleware = (store) => {
     if (type === 'ping') {
       Byond.sendMessage('ping/reply');
       return;
-    }
-
-    if (type === 'byond/mousedown') {
-      globalEvents.emit('byond/mousedown');
-    }
-
-    if (type === 'byond/mouseup') {
-      globalEvents.emit('byond/mouseup');
-    }
-
-    if (type === 'byond/ctrldown') {
-      globalEvents.emit('byond/ctrldown');
-    }
-
-    if (type === 'byond/ctrlup') {
-      globalEvents.emit('byond/ctrlup');
     }
 
     if (type === 'backend/suspendStart' && !suspendInterval) {
@@ -217,6 +252,7 @@ export const backendMiddleware = (store) => {
         Byond.winset(Byond.windowId, {
           'is-visible': true,
         });
+        Byond.sendMessage('visible');
         perf.mark('resume/finish');
         if (process.env.NODE_ENV !== 'production') {
           logger.log(
@@ -227,8 +263,84 @@ export const backendMiddleware = (store) => {
       });
     }
 
+    if (type === 'oversizePayloadResponse') {
+      const { allow } = payload;
+      if (allow) {
+        store.dispatch(nextPayloadChunk(payload));
+      } else {
+        store.dispatch(backendRemovePayloadQueue(payload));
+      }
+    }
+
+    if (type === 'acknowlegePayloadChunk') {
+      store.dispatch(backendDequeuePayloadQueue(payload));
+      store.dispatch(nextPayloadChunk(payload));
+    }
+
+    if (type === 'nextPayloadChunk') {
+      const { id } = payload;
+      const chunk = outgoingPayloadQueues[id][0];
+      Byond.sendMessage('payloadChunk', {
+        id,
+        chunk,
+      });
+    }
+
     return next(action);
   };
+};
+
+const encodedLengthBinarySearch = (haystack: string[], length: number) => {
+  const haystackLength = haystack.length;
+  let high = haystackLength - 1;
+  let low = 0;
+  let mid = 0;
+  while (low < high) {
+    mid = Math.round((low + high) / 2);
+    const substringLength = encodeURIComponent(
+      haystack.slice(0, mid).join(''),
+    ).length;
+    if (substringLength === length) {
+      break;
+    }
+    if (substringLength < length) {
+      low = mid + 1;
+    } else {
+      high = mid - 1;
+    }
+  }
+  return mid;
+};
+
+const chunkSplitter = {
+  [Symbol.split]: (string: string) => {
+    const charSeq = string[Symbol.iterator]().toArray();
+    const length = charSeq.length;
+    let chunks: string[] = [];
+    let startIndex = 0;
+    let endIndex = 1024;
+    while (startIndex < length) {
+      const cut = charSeq.slice(
+        startIndex,
+        endIndex < length ? endIndex : undefined,
+      );
+      const cutString = cut.join('');
+      if (encodeURIComponent(cutString).length > 1024) {
+        const splitIndex = startIndex + encodedLengthBinarySearch(cut, 1024);
+        chunks.push(
+          charSeq
+            .slice(startIndex, splitIndex < length ? splitIndex : undefined)
+            .join(''),
+        );
+        startIndex = splitIndex;
+      } else {
+        chunks.push(cutString);
+        startIndex = endIndex;
+      }
+      endIndex = startIndex + 1024;
+    }
+    return chunks;
+  },
 };
 
 /**
@@ -245,6 +357,31 @@ export const sendAct = (action: string, payload: object = {}) => {
     logger.error(`Payload for act() must be an object, got this:`, payload);
     return;
   }
+
+  const stringifiedPayload = JSON.stringify(payload);
+  const urlSize = Object.entries({
+    type: 'act/' + action,
+    payload: stringifiedPayload,
+    tgui: 1,
+    windowId: Byond.windowId,
+  }).reduce(
+    (url, [key, value], i) =>
+      url +
+      `${i > 0 ? '&' : '?'}${encodeURIComponent(key)}=${encodeURIComponent(value)}`,
+    '',
+  ).length;
+  if (urlSize > 2048) {
+    let chunks: string[] = stringifiedPayload.split(chunkSplitter);
+    const id = `${Date.now()}`;
+    globalStore?.dispatch(backendCreatePayloadQueue({ id, chunks }));
+    Byond.sendMessage('oversizedPayloadRequest', {
+      type: 'act/' + action,
+      id,
+      chunkCount: chunks.length,
+    });
+    return;
+  }
+
   Byond.sendMessage('act/' + action, payload);
 };
 
@@ -252,13 +389,17 @@ type BackendState<TData> = {
   config: {
     title: string;
     status: number;
-    interface: string;
-    refreshing: boolean;
+    interface: {
+      name: string;
+      layout: string;
+    };
+    refreshing: BooleanLike;
     window: {
       key: string;
       size: [number, number];
-      fancy: boolean;
-      locked: boolean;
+      fancy: BooleanLike;
+      locked: BooleanLike;
+      scale: BooleanLike;
     };
     client: {
       ckey: string;
@@ -272,6 +413,7 @@ type BackendState<TData> = {
   };
   data: TData;
   shared: Record<string, any>;
+  outgoingPayloadQueues: Record<string, any[]>;
   suspending: boolean;
   suspended: boolean;
 };

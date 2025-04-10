@@ -7,6 +7,7 @@
 	icon_keyboard = "security_key"
 	circuit = /obj/item/circuitboard/computer/security
 	light_color = COLOR_SOFT_RED
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_SIGHT
 
 	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/active_camera
@@ -15,11 +16,7 @@
 	var/list/concurrent_users = list()
 
 	// Stuff needed to render the map
-	var/atom/movable/screen/map_view/cam_screen
-	/// All the plane masters that need to be applied.
-	var/atom/movable/screen/background/cam_background
-
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_SIGHT
+	var/atom/movable/screen/map_view/camera/cam_screen
 
 /obj/machinery/computer/security/Initialize(mapload)
 	. = ..()
@@ -34,13 +31,9 @@
 	// Initialize map objects
 	cam_screen = new
 	cam_screen.generate_view(map_name)
-	cam_background = new
-	cam_background.assigned_map = map_name
-	cam_background.del_on_map_removal = FALSE
 
 /obj/machinery/computer/security/Destroy()
 	QDEL_NULL(cam_screen)
-	QDEL_NULL(cam_background)
 	return ..()
 
 /obj/machinery/computer/security/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
@@ -69,12 +62,11 @@
 		if(length(concurrent_users) == 1 && is_living)
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 25, FALSE)
 			use_energy(active_power_usage)
-		// Register map objects
-		cam_screen.display_to(user)
-		user.client.register_map_obj(cam_background)
 		// Open UI
 		ui = new(user, src, "CameraConsole", name)
 		ui.open()
+		// Register map objects
+		cam_screen.display_to(user, ui.window)
 
 /obj/machinery/computer/security/ui_status(mob/user, datum/ui_state/state)
 	. = ..()
@@ -97,15 +89,7 @@
 	var/list/data = list()
 	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
-	var/list/cameras = get_camera_list(network)
-	data["cameras"] = list()
-	for(var/i in cameras)
-		var/obj/machinery/camera/C = cameras[i]
-		data["cameras"] += list(list(
-			name = C.c_tag,
-			ref = REF(C),
-		))
-
+	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
 	return data
 
 /obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -114,12 +98,14 @@
 		return
 
 	if(action == "switch_camera")
+		active_camera?.on_stop_watching(src)
 		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
 		active_camera = selected_camera
 
 		if(isnull(active_camera))
 			return TRUE
 
+		active_camera.on_start_watching(src)
 		update_active_camera_screen()
 
 		return TRUE
@@ -127,7 +113,7 @@
 /obj/machinery/computer/security/proc/update_active_camera_screen()
 	// Show static if can't use the camera
 	if(!active_camera?.can_use())
-		show_camera_static()
+		cam_screen.show_camera_static()
 		return
 
 	var/list/visible_turfs = list()
@@ -155,9 +141,7 @@
 	var/size_x = bbox[3] - bbox[1] + 1
 	var/size_y = bbox[4] - bbox[2] + 1
 
-	cam_screen.vis_contents = visible_turfs
-	cam_background.icon_state = "clear"
-	cam_background.fill_rect(1, 1, size_x, size_y)
+	cam_screen.show_camera(visible_turfs, size_x, size_y)
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	. = ..()
@@ -166,20 +150,43 @@
 	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
 	// Unregister map objects
-	cam_screen.hide_from(user)
+	cam_screen?.hide_from(user)
 	// Turn off the console
 	if(length(concurrent_users) == 0 && is_living)
+		active_camera?.on_stop_watching(src)
 		active_camera = null
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
-/obj/machinery/computer/security/proc/show_camera_static()
-	cam_screen.vis_contents.Cut()
+/atom/movable/screen/map_view/camera
+	/// All the plane masters that need to be applied.
+	var/atom/movable/screen/background/cam_background
+
+/atom/movable/screen/map_view/camera/Destroy()
+	QDEL_NULL(cam_background)
+	return ..()
+
+/atom/movable/screen/map_view/camera/generate_view(map_key)
+	. = ..()
+	cam_background = new
+	cam_background.del_on_map_removal = FALSE
+	cam_background.assigned_map = assigned_map
+
+/atom/movable/screen/map_view/camera/display_to_client(client/show_to)
+	show_to.register_map_obj(cam_background)
+	. = ..()
+
+/atom/movable/screen/map_view/camera/proc/show_camera(list/visible_turfs, size_x, size_y)
+	vis_contents = visible_turfs
+	cam_background.icon_state = "clear"
+	cam_background.fill_rect(1, 1, size_x, size_y)
+
+/atom/movable/screen/map_view/camera/proc/show_camera_static()
+	vis_contents.Cut()
 	cam_background.icon_state = "scanline2"
 	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
 
 // SECURITY MONITORS
-
 /obj/machinery/computer/security/wooden_tv
 	name = "security camera monitor"
 	desc = "An old TV hooked into the station's camera network."

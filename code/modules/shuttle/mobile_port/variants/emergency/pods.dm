@@ -116,13 +116,12 @@
 	name = "emergency space helmet"
 	icon_state = "syndicate-helm-orange"
 	inhand_icon_state = "syndicate-helm-orange"
-	slowdown = 1.5
 
 /obj/item/clothing/suit/space/orange
 	name = "emergency space suit"
 	icon_state = "syndicate-orange"
 	inhand_icon_state = "syndicate-orange"
-	slowdown = 1.5
+	slowdown = 3
 
 /obj/item/pickaxe/emergency
 	name = "emergency disembarkation tool"
@@ -146,12 +145,11 @@
 	// (IE all space suits instead of just the emergency ones)
 	// because an enterprising traitor might be able to hide things,
 	// like their syndicate toolbox or softsuit. may be fun?
-	var/static/list/exception_cache = typecacheof(list(
+	set_holdable(exception_hold_list = list(
 		/obj/item/clothing/suit/space,
 		/obj/item/pickaxe,
 		/obj/item/storage/toolbox,
 	))
-	src.exception_hold = exception_cache
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(update_lock))
 	update_lock(new_level = SSsecurity_level.get_current_level_as_number())
 

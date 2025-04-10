@@ -282,7 +282,7 @@
 	if(welded)
 		if(!item.tool_start_check(user, amount=1))
 			return TRUE
-		user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
+		user.visible_message(span_notice("[user.name] starts to cut \the [src] free from the floor."), \
 			span_notice("You start to cut [src] free from the floor..."), \
 			span_hear("You hear welding."))
 		if(!item.use_tool(src, user, 20, 1, 50))
@@ -298,7 +298,7 @@
 		return TRUE
 	if(!item.tool_start_check(user, amount=1))
 		return TRUE
-	user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
+	user.visible_message(span_notice("[user.name] starts to weld \the [src] to the floor."), \
 		span_notice("You start to weld [src] to the floor..."), \
 		span_hear("You hear welding."))
 	if(!item.use_tool(src, user, 20, 1, 50))

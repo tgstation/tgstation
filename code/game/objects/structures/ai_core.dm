@@ -77,10 +77,13 @@
 	icon_state = "ai-empty"
 	anchored = TRUE
 	state = AI_READY_CORE
+	var/mob/living/silicon/ai/attached_ai
 
-/obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE)
+/obj/structure/ai_core/deactivated/Initialize(mapload, skip_mmi_creation = FALSE, posibrain = FALSE, linked_ai)
 	. = ..()
 	circuit = new(src)
+	if(linked_ai)
+		attached_ai = linked_ai
 	if(skip_mmi_creation)
 		return
 	if(posibrain)
@@ -89,6 +92,16 @@
 		core_mmi = new(src)
 		core_mmi.brain = new(core_mmi)
 		core_mmi.update_appearance()
+
+/obj/structure/ai_core/deactivated/Destroy()
+	if(attached_ai)
+		attached_ai.linked_core = null
+		attached_ai = null
+	. = ..()
+
+/obj/structure/ai_core/deactivated/proc/disable_doomsday(datum/source)
+	SIGNAL_HANDLER
+	attached_ai.ShutOffDoomsdayDevice()
 
 /obj/structure/ai_core/latejoin_inactive
 	name = "networked AI core"

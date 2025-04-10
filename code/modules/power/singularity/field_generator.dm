@@ -252,7 +252,7 @@ no power level overlay is currently in the overlays list.
 		check_power_level()
 		return TRUE
 	else
-		visible_message(span_danger("The [name] shuts down!"), span_hear("You hear something shutting down."))
+		visible_message(span_danger("\The [src] shuts down!"), span_hear("You hear something shutting down."))
 		turn_off()
 		investigate_log("ran out of power and DEACTIVATED.", INVESTIGATE_ENGINE)
 		power = 0

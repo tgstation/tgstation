@@ -9,7 +9,7 @@
 			return
 		if(!mineralType)
 			to_chat(user, span_warning("You can not reform this!"))
-			stack_trace("A mineral tile of type [type] doesn't have its' mineralType set.")
+			stack_trace("A mineral tile of type [type] doesn't have its mineralType set.")
 			return
 		if(W.use_tool(src, user, 0, volume=40))
 			var/sheet_type = text2path("/obj/item/stack/sheet/mineral/[mineralType]")

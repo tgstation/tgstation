@@ -3,46 +3,16 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
+.theme-neutral:root {
+  // Base
+  --color-base: hsl(42, 100%, 30%);
+  --color-primary: hsl(42, 100%, 40%);
+  --color-action: hsl(42, 75%, 60%);
+  --base-gradient-spread: 6;
 
-$neutral: hsl(42.12, 100%, 50%);
-
-@use '../colors.scss' with (
-  $primary: $neutral,
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base.scss' with (
-  $color-bg: color.scale($neutral, $lightness: -40%),
-  $color-bg-grad-spread: 6%
-);
-
-.theme-neutral {
   // Components
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
-    $with: (
-      'color-default': color.scale($neutral, $lightness: -30%),
-      'color-transparent-text': color.scale($neutral, $lightness: 30%)
-    )
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
-    $with: (
-      'color-default-fill': $neutral,
-      'background-color': rgba(0, 0, 0, 0.5)
-    )
-  );
-  @include meta.load-css('pkg:tgui-styles/components/Section');
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': color.scale($neutral, $lightness: -25%))
-  );
+  --button-color-transparent: var(--color-action);
+  --tooltip-background-lightness: 33;
 
   .Layout__content {
     background-image: url('../../assets/bg-neutral.svg');

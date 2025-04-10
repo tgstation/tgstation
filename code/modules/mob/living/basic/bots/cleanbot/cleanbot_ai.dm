@@ -145,13 +145,10 @@
 		controller.clear_blackboard_key(target_key)
 		return
 	var/list/speech_list = controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]
-	if(!length(speech_list))
-		return
-	var/mob/living/living_pawn = controller.pawn
-	if(QDELETED(living_pawn)) // pawn can be null at this point
-		controller.clear_blackboard_key(target_key)
-		return
-	living_pawn.say(pick(controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]), forced = "ai controller")
+	if(length(speech_list))
+		var/mob/living/living_pawn = controller.pawn
+		if(!QDELETED(living_pawn)) // pawn can be null at this point
+			living_pawn.say(pick(speech_list), forced = "ai controller")
 	controller.clear_blackboard_key(target_key)
 
 /datum/ai_planning_subtree/use_mob_ability/foam_area
@@ -210,11 +207,11 @@
 
 /datum/pet_command/clean/set_command_target(mob/living/parent, atom/target)
 	if(isnull(target) || !istype(target, /obj/effect/decal/cleanable))
-		return
+		return FALSE
 	if(isnull(parent.ai_controller))
-		return
+		return FALSE
 	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], target))
-		return
+		return FALSE
 	return ..()
 
 /datum/pet_command/clean/execute_action(datum/ai_controller/basic_controller/bot/controller)

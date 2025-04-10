@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 
 /// Crashes the drone somewhere random if there's no launchpad to be found.
 /obj/item/exodrone/proc/drop_somewhere_on_station()
-	var/turf/random_spot = get_safe_random_station_turf()
+	var/turf/random_spot = get_safe_random_station_turf_equal_weight()
 
 	var/obj/structure/closet/supplypod/pod = podspawn(list(
 		"target" = random_spot,

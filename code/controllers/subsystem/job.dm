@@ -1,6 +1,8 @@
 SUBSYSTEM_DEF(job)
 	name = "Jobs"
-	init_order = INIT_ORDER_JOBS
+	dependencies = list(
+		/datum/controller/subsystem/processing/station
+	)
 	flags = SS_NO_FIRE
 
 	/// List of all jobs.
@@ -590,7 +592,7 @@ SUBSYSTEM_DEF(job)
 	job.announce_job(equipping)
 
 	if(player_client?.holder)
-		if(CONFIG_GET(flag/auto_deadmin_players) || (player_client.prefs?.toggles & DEADMIN_ALWAYS))
+		if(CONFIG_GET(flag/auto_deadmin_always) || (player_client.prefs?.toggles & DEADMIN_ALWAYS))
 			player_client.holder.auto_deadmin()
 		else
 			handle_auto_deadmin_roles(player_client, job.title)

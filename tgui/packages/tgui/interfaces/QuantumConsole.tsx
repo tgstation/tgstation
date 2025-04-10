@@ -1,4 +1,3 @@
-import { BooleanLike } from 'common/react';
 import {
   Button,
   Collapsible,
@@ -11,11 +10,11 @@ import {
   Tabs,
   Tooltip,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
-import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
-import { LoadingScreen } from './common/LoadingToolbox';
+import { LoadingScreen } from './common/LoadingScreen';
 
 type Data =
   | {
@@ -144,33 +143,39 @@ function AccessView(props) {
       <Stack.Item grow>
         <Section
           buttons={
-            <>
-              <Button.Checkbox
-                checked={broadcasting}
-                disabled={broadcasting_on_cd}
-                onClick={() => act('broadcast')}
-                tooltip="Toggles whether you broadcast your
+            <Stack fill>
+              <Tooltip
+                content="Toggles whether you broadcast your
                   bitrun to station Entertainment Monitors."
               >
-                Broadcast
-              </Button.Checkbox>
-              <Button
-                disabled={
-                  !ready || occupants > 0 || points < 1 || !!generated_domain
-                }
-                icon="random"
-                onClick={() => act('random_domain')}
-                mr={1}
-                tooltip="Get a random domain for more rewards.
+                <Button.Checkbox
+                  checked={broadcasting}
+                  disabled={broadcasting_on_cd}
+                  onClick={() => act('broadcast')}
+                >
+                  Broadcast
+                </Button.Checkbox>
+              </Tooltip>
+              <Tooltip
+                content="Get a random domain for more rewards.
                   Weighted towards your current points. Minimum: 1 point."
               >
-                Randomize
-              </Button>
+                <Button
+                  disabled={
+                    !ready || occupants > 0 || points < 1 || !!generated_domain
+                  }
+                  icon="random"
+                  onClick={() => act('random_domain')}
+                  mr={1}
+                >
+                  Randomize
+                </Button>
+              </Tooltip>
               <Tooltip content="Accrued points for purchasing domains.">
                 <Icon color="pink" name="star" mr={1} />
                 {points}
               </Tooltip>
-            </>
+            </Stack>
           }
           fill
           scrollable
@@ -229,13 +234,14 @@ function AccessView(props) {
               <NoticeBox info={!!generated_domain}>{selected}</NoticeBox>
             </Stack.Item>
             <Stack.Item>
-              <Button.Confirm
-                disabled={!ready || !generated_domain}
-                onClick={() => act('stop_domain')}
-                tooltip="Begins shutdown. Will notify anyone connected."
-              >
-                Stop Domain
-              </Button.Confirm>
+              <Tooltip content="Begins shutdown. Will notify anyone connected.">
+                <Button.Confirm
+                  disabled={!ready || !generated_domain}
+                  onClick={() => act('stop_domain')}
+                >
+                  Stop Domain
+                </Button.Confirm>
+              </Tooltip>
             </Stack.Item>
           </Stack>
         </Section>
@@ -284,14 +290,15 @@ function DomainEntry(props: DomainEntryProps) {
   return (
     <Collapsible
       buttons={
-        <Button
-          disabled={!!generated_domain || !ready || occupied || points < cost}
-          icon={buttonIcon}
-          onClick={() => act('set_domain', { id })}
-          tooltip={!!generated_domain && 'Stop current domain first.'}
-        >
-          {buttonName}
-        </Button>
+        <Tooltip content={!!generated_domain && 'Stop current domain first.'}>
+          <Button
+            disabled={!!generated_domain || !ready || occupied || points < cost}
+            icon={buttonIcon}
+            onClick={() => act('set_domain', { id })}
+          >
+            {buttonName}
+          </Button>
+        </Tooltip>
       }
       color={getColor(difficulty)}
       title={
@@ -313,16 +320,16 @@ function DomainEntry(props: DomainEntryProps) {
         <Stack.Divider />
         <Stack.Item grow>
           <Table>
-            <TableRow>
+            <Table.Row>
               <Tooltip content="Points cost for deploying domain.">
                 <DisplayDetails amount={cost} color="pink" icon="star" />
               </Tooltip>
-            </TableRow>
-            <TableRow>
+            </Table.Row>
+            <Table.Row>
               <Tooltip content="Reward for competing domain.">
                 <DisplayDetails amount={reward} color="gold" icon="coins" />
               </Tooltip>
-            </TableRow>
+            </Table.Row>
           </Table>
         </Stack.Item>
       </Stack>
@@ -355,25 +362,23 @@ const AvatarDisplay = (props) => {
             </Stack.Item>
           )}
           <Stack.Item>
-            <Button
-              icon="sync"
-              onClick={() => act('refresh')}
-              tooltip="Refresh avatar data."
-            >
-              Refresh
-            </Button>
+            <Tooltip content="Refresh avatar data.">
+              <Button icon="sync" onClick={() => act('refresh')}>
+                Refresh
+              </Button>
+            </Tooltip>
           </Stack.Item>
         </Stack>
       }
     >
       <Table>
         {avatars.map(({ health, name, pilot, brute, burn, tox, oxy }) => (
-          <TableRow key={name}>
-            <TableCell color="label">
+          <Table.Row key={name}>
+            <Table.Cell color="label">
               {pilot} as{' '}
               <span style={{ color: 'white' }}>&quot;{name}&quot;</span>
-            </TableCell>
-            <TableCell collapsing>
+            </Table.Cell>
+            <Table.Cell collapsing>
               <Stack>
                 {brute === 0 && burn === 0 && tox === 0 && oxy === 0 && (
                   <Stack.Item>
@@ -396,8 +401,8 @@ const AvatarDisplay = (props) => {
                   <Icon color={oxy > 50 ? 'blue' : 'gray'} name="lungs" />
                 </Stack.Item>
               </Stack>
-            </TableCell>
-            <TableCell>
+            </Table.Cell>
+            <Table.Cell>
               <ProgressBar
                 minValue={-100}
                 maxValue={100}
@@ -408,8 +413,8 @@ const AvatarDisplay = (props) => {
                 }}
                 value={health}
               />
-            </TableCell>
-          </TableRow>
+            </Table.Cell>
+          </Table.Row>
         ))}
       </Table>
     </Section>
@@ -420,28 +425,28 @@ const DisplayDetails = (props: DisplayDetailsProps) => {
   const { amount = 0, color, icon = 'star' } = props;
 
   if (amount === 0) {
-    return <TableCell color="label">None</TableCell>;
+    return <Table.Cell color="label">None</Table.Cell>;
   }
 
   if (typeof amount === 'string') {
-    return <TableCell color="label">{String(amount)}</TableCell>; // don't ask
+    return <Table.Cell color="label">{String(amount)}</Table.Cell>; // don't ask
   }
 
   if (amount > 4) {
     return (
-      <TableCell>
+      <Table.Cell>
         <Stack>
           <Stack.Item>{amount}</Stack.Item>
           <Stack.Item>
             <Icon color={color} name={icon} />
           </Stack.Item>
         </Stack>
-      </TableCell>
+      </Table.Cell>
     );
   }
 
   return (
-    <TableCell>
+    <Table.Cell>
       <Stack>
         {Array.from({ length: amount }, (_, index) => (
           <Stack.Item key={index}>
@@ -449,6 +454,6 @@ const DisplayDetails = (props: DisplayDetailsProps) => {
           </Stack.Item>
         ))}
       </Stack>
-    </TableCell>
+    </Table.Cell>
   );
 };

@@ -1,16 +1,16 @@
+import { Box, Button, Section, Stack } from 'tgui-core/components';
+
 import { useBackend } from '../../backend';
-import { Box, Button, Dimmer, Section, Stack } from '../../components';
-import { ObjectiveElement } from './ObjectiveMenu';
+import { ObjectiveElement } from './ObjectiveElement';
 
 type PrimaryObjectiveMenuProps = {
   primary_objectives;
-  final_objective;
   can_renegotiate;
 };
 
 export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
   const { act } = useBackend();
-  const { primary_objectives, final_objective, can_renegotiate } = props;
+  const { primary_objectives, can_renegotiate } = props;
   return (
     <Section fill scrollable align="center">
       <Box my={4} bold fontSize={1.2} color="green">
@@ -19,34 +19,6 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
       <Box my={4} bold fontSize={1.2}>
         Your Primary Objectives are as follows. Complete these at all costs.
       </Box>
-      <Box my={4} bold fontSize={1.2}>
-        Completing Secondary Objectives may allow you to aquire additional
-        equipment.
-      </Box>
-      {final_objective && (
-        <Dimmer>
-          <Box
-            color="red"
-            fontFamily={'Bahnschrift'}
-            fontSize={3}
-            align={'top'}
-            as="span"
-          >
-            PRIORITY MESSAGE
-            <br />
-            SOURCE: xxx.xxx.xxx.224:41394
-            <br />
-            <br />
-            \\Debrief in progress.
-            <br />
-            \\Final Objective confirmed complete. <br />
-            \\Your work is done here, agent.
-            <br />
-            <br />
-            CONNECTION CLOSED_
-          </Box>
-        </Dimmer>
-      )}
       <Stack vertical>
         {primary_objectives.map((prim_obj, index) => (
           <Stack.Item key={index}>
@@ -54,22 +26,6 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
               key={prim_obj.id}
               name={prim_obj['task_name']}
               description={prim_obj['task_text']}
-              dangerLevel={{
-                minutesLessThan: 0,
-                title: 'none',
-                gradient:
-                  index === primary_objectives.length - 1
-                    ? 'reputation-good'
-                    : 'reputation-very-good',
-              }}
-              telecrystalReward={0}
-              telecrystalPenalty={0}
-              progressionReward={0}
-              originalProgression={0}
-              hideTcRep
-              canAbort={false}
-              grow={false}
-              finalObjective={false}
             />
           </Stack.Item>
         ))}

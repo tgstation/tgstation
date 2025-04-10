@@ -147,11 +147,8 @@
 				target_mind = pick(backup_players)
 		hidden_uplink = target.AddComponent(/datum/component/uplink, target_mind, enabled = TRUE, starting_tc = telecrystals, has_progression = TRUE)
 		hidden_uplink.unlock_code = unlock_code
-		hidden_uplink.uplink_handler.has_objectives = TRUE
 		hidden_uplink.uplink_handler.owner = target_mind
-		hidden_uplink.uplink_handler.can_take_objectives = FALSE
 		hidden_uplink.uplink_handler.progression_points = min(SStraitor.current_global_progression, current_progression)
-		hidden_uplink.uplink_handler.generate_objectives()
 		SStraitor.register_uplink_handler(hidden_uplink.uplink_handler)
 	else
 		hidden_uplink.uplink_handler.add_telecrystals(telecrystals)

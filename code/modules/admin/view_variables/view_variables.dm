@@ -54,7 +54,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 			else // it means: icon_state=""
 				if(!dmi_nullstate_checklist[icon_filename_text])
 					dmi_nullstate_checklist[icon_filename_text] = ICON_STATE_CHECKED
-					if("" in icon_states(image_object.icon))
+					if(icon_exists(image_object.icon, ""))
 						// this dmi has nullstate. We'll allow "icon_state=null" to show image.
 						dmi_nullstate_checklist[icon_filename_text] = ICON_STATE_NULL
 
@@ -114,6 +114,8 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 
 	sleep(1 TICKS)
 
+	var/ui_scale = prefs?.read_preference(/datum/preference/toggle/ui_scale)
+
 	var/list/variable_html = list()
 	if(islist)
 		var/list/list_value = thing
@@ -135,6 +137,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 		<title>[title]</title>
 		<link rel="stylesheet" type="text/css" href="[SSassets.transport.get_asset_url("view_variables.css")]">
+		[!ui_scale && window_scaling ? "<style>body {zoom: [100 / window_scaling]%;}</style>" : ""]
 	</head>
 	<body onload='selectTextField()' onkeydown='return handle_keydown()' onkeyup='handle_keyup()'>
 		<script type="text/javascript">
@@ -257,7 +260,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 					</td>
 					<td width='50%'>
 						<div align='center'>
-							<a id='refresh_link' href='?_src_=vars;
+							<a id='refresh_link' href='byond://?_src_=vars;
 datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 							<form>
 								<select name="file" size="1"
@@ -303,7 +306,11 @@ datumrefresh=[refid];[HrefToken()]'>Refresh</a>
 	</body>
 </html>
 "}
-	src << browse(html, "window=variables[refid];size=475x650")
+	var/size_string = "size=475x650";
+	if(ui_scale && window_scaling)
+		size_string = "size=[475 * window_scaling]x[650 * window_scaling]"
+
+	src << browse(html, "window=variables[refid];[size_string]")
 
 /client/proc/vv_update_display(datum/thing, span, content)
 	src << output("[span]:[content]", "variables[REF(thing)].browser:replace_span")

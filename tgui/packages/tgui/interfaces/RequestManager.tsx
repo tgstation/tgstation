@@ -3,12 +3,19 @@
  * @copyright 2021 bobbahbrown (https://github.com/bobbahbrown)
  * @license MIT
  */
-import { BooleanLike } from 'common/react';
-import { createSearch, decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
+import {
+  Button,
+  Input,
+  Popper,
+  Section,
+  Stack,
+  Table,
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { createSearch, decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
-import { Button, Input, Popper, Section, Stack, Table } from '../components';
 import { Window } from '../layouts';
 
 type Data = {

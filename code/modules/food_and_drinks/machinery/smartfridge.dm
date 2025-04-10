@@ -32,8 +32,7 @@
 	var/welded_down = FALSE
 	/// The sound of item retrieval
 	var/vend_sound = 'sound/machines/machine_vend.ogg'
-	/// Whether the UI should be set to list view by default
-	var/default_list_view = FALSE
+	layout_prefs_used = /datum/preference/choiced/tgui_layout/smartfridge
 
 /obj/machinery/smartfridge/Initialize(mapload)
 	. = ..()
@@ -64,7 +63,7 @@
 			return ITEM_INTERACT_BLOCKING
 
 		user.visible_message(
-			span_notice("[user.name] starts to cut the [name] free from the floor."),
+			span_notice("[user.name] starts to cut \the [src] free from the floor."),
 			span_notice("You start to cut [src] free from the floor..."),
 			span_hear("You hear welding."),
 		)
@@ -84,7 +83,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
-		span_notice("[user.name] starts to weld the [name] to the floor."),
+		span_notice("[user.name] starts to weld \the [src] to the floor."),
 		span_notice("You start to weld [src] to the floor..."),
 		span_hear("You hear welding."),
 	)
@@ -385,7 +384,6 @@
 	.["contents"] = sort_list(listofitems)
 	.["name"] = name
 	.["isdryer"] = FALSE
-	.["default_list_view"] = default_list_view
 
 /obj/machinery/smartfridge/Exited(atom/movable/gone, direction) // Update the UIs in case something inside is removed
 	. = ..()
@@ -729,7 +727,6 @@
 	desc = "A refrigerated storage unit for medicine storage."
 	base_build_path = /obj/machinery/smartfridge/chemistry
 	contents_overlay_icon = "chem"
-	default_list_view = TRUE
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/weapon)
 	// not an item or reagent container
@@ -737,7 +734,7 @@
 		return FALSE
 
 	// empty pill prank ok
-	if(istype(weapon, /obj/item/reagent_containers/pill))
+	if(istype(weapon, /obj/item/reagent_containers/applicator))
 		return TRUE
 
 	//check each pill in the pill bottle
@@ -767,8 +764,8 @@
 
 /obj/machinery/smartfridge/chemistry/preloaded
 	initial_contents = list(
-		/obj/item/reagent_containers/pill/epinephrine = 12,
-		/obj/item/reagent_containers/pill/multiver = 5,
+		/obj/item/reagent_containers/applicator/pill/epinephrine = 12,
+		/obj/item/reagent_containers/applicator/pill/multiver = 5,
 		/obj/item/reagent_containers/cup/bottle/epinephrine = 1,
 		/obj/item/reagent_containers/cup/bottle/multiver = 1)
 
@@ -780,7 +777,6 @@
 	desc = "A refrigerated storage unit for volatile sample storage."
 	base_build_path = /obj/machinery/smartfridge/chemistry/virology
 	contents_overlay_icon = "viro"
-	default_list_view = TRUE
 
 /obj/machinery/smartfridge/chemistry/virology/preloaded
 	initial_contents = list(

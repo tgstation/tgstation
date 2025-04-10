@@ -81,7 +81,7 @@
 			if (!scalpel.usesLeft)
 				to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
 		else
-			to_chat(user, span_warning("You fail to extract a sliver from \The [src]! \the [scalpel] isn't sharp enough anymore."))
+			to_chat(user, span_warning("You fail to extract a sliver from \the [src]! \The [scalpel] isn't sharp enough anymore."))
 		return
 
 	if(istype(item, /obj/item/hemostat/supermatter))

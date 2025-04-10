@@ -3,70 +3,46 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-
-@use '../colors.scss' with (
-  $primary: hsl(0, 0%, 0%),
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base.scss' with (
-  $color-bg: hsl(48, 38%, 84%),
-  $color-bg-grad-spread: 0%,
-  $border-radius: 0
-);
-
-// A fat warning to anyone who wants to use this: this only half works.
-// It was made almost purely for the nuke ui, and requires a good amount of manual hacks to get it working as intended.
-.theme-retro {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+.theme-retro:root {
+  // Base
+  --color-base: hsl(45, 40%, 85%);
+  --color-primary: hsl(from var(--color-base) h s calc(l - 30));
+  --color-label: hsl(from var(--color-primary) h s 65);
+  --secondary-saturation: 10;
+  --secondary-lightness-adjustment: -56;
+  --base-gradient-spread: 0;
+  --border-radius-unit: 0;
 
   // Components
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
-    $with: (
-      'color-default': hsl(48, 38%, 84%),
-      'color-disabled': hsl(60, 6%, 28%),
-      'color-selected': hsl(0, 91%, 31%),
-      'color-caution': hsl(28, 87%, 39%),
-      'color-danger': hsl(61, 100%, 30%)
-    )
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
-    $with: ('background-color': hsla(0, 0%, 0%, 0.5))
-  );
-  @include meta.load-css('pkg:tgui-styles/components/Section');
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': hsl(48, 10%, 28%))
-  );
-
-  .Button {
-    font-family: monospace;
-    color: hsl(60, 6%, 8%);
-    border: base.em(2px) outset hsl(48, 38%, 84%);
-    outline: base.em(1px) solid hsl(60, 6%, 8%);
-  }
-
-  .Button--disabled {
-    color: hsl(60, 6%, 77%);
-    font-family: monospace;
-    &:hover {
-      color: hsl(0, 0%, 100%);
-    }
-    &:focus {
-      color: hsl(0, 0%, 100%);
-    }
-  }
+  --button-color: var(--color-black);
+  --button-background-default: var(--color-base);
+  --button-background-selected: hsl(0, 90%, 35%);
+  --button-background-caution: hsl(30, 85%, 40%);
+  --button-background-danger: hsl(60, 100%, 30%);
+  --progress-bar-background: hsl(0, 0%, 0%, 0.5);
+  --input-background: transparent;
 
   .Layout__content {
     background-image: none;
+  }
+
+  .Button {
+    font-family: var(--font-family-mono);
+    border: var(--border-thickness-small) outset var(--color-base);
+    outline: var(--border-thickness-tiny) solid hsl(60, 6%, 8%);
+
+    &-disabled {
+      color: hsl(60, 6%, 77%);
+      font-family: var(--font-family-mono);
+
+      &:hover {
+        color: hsl(0, 0%, 100%);
+      }
+    }
+
+    &--selected {
+      color: var(--color-white);
+      border-style: inset;
+    }
   }
 }

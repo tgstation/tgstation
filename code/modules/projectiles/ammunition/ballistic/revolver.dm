@@ -22,6 +22,11 @@
 	name = ".357 heartseeker bullet casing"
 	projectile_type = /obj/projectile/bullet/c357/heartseeker
 
+/obj/item/ammo_casing/c357/heartseeker/ready_proj(atom/target, mob/living/user, quiet, zone_override, atom/fired_from)
+	. = ..()
+	if(!isturf(target))
+		loaded_projectile.set_homing_target(target)
+
 // 7.62x38mmR (Nagant Revolver)
 
 /obj/item/ammo_casing/n762

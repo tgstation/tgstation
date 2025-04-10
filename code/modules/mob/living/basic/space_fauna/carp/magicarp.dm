@@ -52,6 +52,7 @@ GLOBAL_LIST_INIT(magicarp_spell_colours, list(
 	gold_core_spawnable = NO_SPAWN
 	greyscale_config = /datum/greyscale_config/carp_magic
 	ai_controller = /datum/ai_controller/basic_controller/carp/ranged
+	initial_language_holder = /datum/language_holder/carp/hear_common // its magic
 	tamed_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,

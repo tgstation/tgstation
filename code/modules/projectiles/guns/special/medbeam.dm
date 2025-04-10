@@ -83,7 +83,7 @@
 
 	last_check = world.time
 
-	if(!los_check(loc, current_target, mid_check = CALLBACK(src, PROC_REF(mid_los_check))))
+	if(!los_check(get_atom_on_turf(src), current_target, mid_check = CALLBACK(src, PROC_REF(mid_los_check))))
 		QDEL_NULL(current_beam)//this will give the target lost message
 		return
 

@@ -2316,6 +2316,15 @@
 	name = "Reinforced Soviet Hatch"
 	},
 /area/awaymission/cabin/caves/sovietcave)
+"lk" = (
+/obj/item/reagent_containers/applicator/patch/libital,
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/turf/open/floor/plating/snowed/snow_cabin,
+/area/awaymission/cabin/snowforest/sovietsurface)
 "ll" = (
 /obj/structure/cable,
 /obj/machinery/light/small/directional/south,
@@ -2350,6 +2359,13 @@
 	},
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"lM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/gun/ballistic/rifle/sks/chekhov,
+/turf/open/floor/mineral/plastitanium/red{
+	name = "soviet floor"
+	},
+/area/awaymission/cabin/caves/sovietcave)
 "lS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/spider/stickyweb,
@@ -2390,16 +2406,6 @@
 "ms" = (
 /turf/closed/indestructible/rock/snow/ice,
 /area/awaymission/cabin/caves)
-"my" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/gun/ballistic/automatic/surplus{
-	desc = "Uses 10mm ammo and its bulky frame prevents one-hand firing. It has the word CHEKOV engraved on the stock.";
-	name = "chekov's rifle"
-	},
-/turf/open/floor/mineral/plastitanium/red{
-	name = "soviet floor"
-	},
-/area/awaymission/cabin/caves/sovietcave)
 "mI" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
@@ -2549,16 +2555,6 @@
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
-"nw" = (
-/obj/effect/decal/cleanable/blood,
-/obj/item/reagent_containers/pill/patch/libital,
-/obj/effect/light_emitter{
-	set_cap = 3;
-	set_luminosity = 6;
-	light_color = "#9bbbff"
-	},
-/turf/open/floor/plating/snowed/snow_cabin,
-/area/awaymission/cabin/snowforest/sovietsurface)
 "nB" = (
 /obj/structure/table/wood/poker,
 /obj/item/dice/d6{
@@ -4262,15 +4258,6 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest/sovietsurface)
-"IJ" = (
-/obj/item/reagent_containers/pill/patch/libital,
-/obj/effect/light_emitter{
-	set_cap = 3;
-	set_luminosity = 6;
-	light_color = "#9bbbff"
-	},
-/turf/open/floor/plating/snowed/snow_cabin,
-/area/awaymission/cabin/snowforest/sovietsurface)
 "IR" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/blood,
@@ -4617,6 +4604,16 @@
 	},
 /turf/open/floor/plating/snowed/smoothed,
 /area/awaymission/cabin/caves)
+"MR" = (
+/obj/effect/decal/cleanable/blood,
+/obj/item/reagent_containers/applicator/patch/libital,
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/turf/open/floor/plating/snowed/snow_cabin,
+/area/awaymission/cabin/snowforest/sovietsurface)
 "Na" = (
 /obj/machinery/button/door/directional/north{
 	id = "fightingcommunity10";
@@ -4682,6 +4679,16 @@
 "Oe" = (
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
+"Ok" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/reagent_containers/applicator/patch/libital,
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/turf/open/floor/plating/snowed/snow_cabin,
+/area/awaymission/cabin/snowforest/sovietsurface)
 "Oq" = (
 /obj/effect/light_emitter{
 	set_cap = 3;
@@ -5555,16 +5562,6 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
-"ZB" = (
-/obj/effect/decal/cleanable/blood/gibs,
-/obj/item/reagent_containers/pill/patch/libital,
-/obj/effect/light_emitter{
-	set_cap = 3;
-	set_luminosity = 6;
-	light_color = "#9bbbff"
-	},
-/turf/open/floor/plating/snowed/snow_cabin,
-/area/awaymission/cabin/snowforest/sovietsurface)
 "ZH" = (
 /obj/item/lighter/greyscale,
 /obj/effect/light_emitter{
@@ -42288,7 +42285,7 @@ Ae
 Ae
 qn
 Ae
-ZB
+Ok
 Ae
 Ae
 Ae
@@ -42796,7 +42793,7 @@ Jz
 Jz
 vH
 IR
-nw
+MR
 QC
 Ae
 Ae
@@ -43058,7 +43055,7 @@ SK
 uF
 Ae
 zT
-IJ
+lk
 QV
 Ie
 SK
@@ -44599,7 +44596,7 @@ Ae
 zT
 Ae
 Ae
-IJ
+lk
 Hk
 Ae
 Ae
@@ -58990,7 +58987,7 @@ ii
 ii
 ii
 mO
-my
+lM
 kF
 im
 im

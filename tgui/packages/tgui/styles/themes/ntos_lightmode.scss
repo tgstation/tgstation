@@ -3,65 +3,23 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
+.theme-ntos_lightmode:root {
+  --color-nanotrasen: var(--color-white);
 
-$nanotrasen: hsl(0, 0%, 100%);
+  // Base
+  --primary-lightness: 100%;
+  --color-base: var(--color-nanotrasen);
+  --secondary-lightness-adjustment: -50;
+  --color-section: hsla(0, 0%, 50%, 0.33);
+  --color-text: var(--color-black);
+  --color-label: hsl(
+    var(--primary-hue) calc(var(--primary-saturation) - 20%) 40%
+  );
+  --border-primary-lightness: 35;
+  --tooltip-background-lightness: 90;
 
-@use '../colors.scss' with (
-  $primary: hsl(0, 0%, 0%),
-  $label: hsl(0, 0%, 0%)
-);
-@use '../base.scss' with (
-  $color-bg: hsl(0, 0%, 100%)
-);
-
-.theme-ntos_lightmode {
-  @include meta.load-css('../atomic/color.scss', $with: ());
   // Components
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
-    $with: ('color-default': $nanotrasen)
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
-    $with: (
-      'color-default-fill': $nanotrasen,
-      'background-color': hsla(0, 0%, 0%, 0.5)
-    )
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Section',
-    $with: ('background-color': hsla(0, 0%, 47%, 0.4))
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Tooltip',
-    $with: ('background-color': hsl(0, 0%, 100%))
-  );
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': hsl(0, 0%, 50%))
-  );
-  .Button {
-    color: hsl(45, 6%, 8%);
-  }
-  .Button:hover {
-    background-color: hsl(0, 0%, 47%);
-    transition: 0.1s;
-  }
-
-  .Section {
-    color: hsl(0, 0%, 0%);
-  }
-  .Tab {
-    color: hsl(0, 0%, 0%);
-  }
-  .Tab--selected {
-    color: hsl(0, 0%, 100%);
-    background-color: hsl(0, 0%, 66%);
-  }
+  --button-color: var(--color-black);
+  --input-background-lightness: 90;
+  --tab-color-selected: hsl(from var(--color-primary) h s 10);
 }

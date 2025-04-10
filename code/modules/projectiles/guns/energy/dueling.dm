@@ -298,15 +298,17 @@
 
 /obj/item/ammo_casing/energy/duel/ready_proj(atom/target, mob/living/user, quiet, zone_override)
 	. = ..()
-	var/obj/projectile/energy/duel/D = loaded_projectile
-	D.setting = setting
-	D.update_appearance()
+	var/obj/projectile/energy/duel/dueling_projectile = loaded_projectile
+	dueling_projectile.setting = setting
+	dueling_projectile.update_appearance()
+	if(!isturf(target))
+		dueling_projectile.set_homing_target(target)
 
 /obj/item/ammo_casing/energy/duel/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	. = ..()
-	var/obj/effect/temp_visual/dueling_chaff/C = new(get_turf(user))
-	C.setting = setting
-	C.update_appearance()
+	var/obj/effect/temp_visual/dueling_chaff/chaff = new(get_turf(user))
+	chaff.setting = setting
+	chaff.update_appearance()
 
 //Projectile
 
@@ -314,7 +316,6 @@
 	name = "dueling beam"
 	icon_state = "declone"
 	reflectable = FALSE
-	homing = TRUE
 	var/setting
 
 /obj/projectile/energy/duel/update_icon()

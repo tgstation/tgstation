@@ -736,7 +736,7 @@
 		being_used = FALSE
 		return
 
-	dumb_mob.key = ghost.key
+	dumb_mob.PossessByPlayer(ghost.key)
 	dumb_mob.mind.enslave_mind_to_creator(user)
 	SEND_SIGNAL(dumb_mob, COMSIG_SIMPLEMOB_SENTIENCEPOTION, user)
 
@@ -912,7 +912,7 @@
 		return ITEM_INTERACT_SUCCESS
 	if(isitem(interacting_with))
 		var/obj/item/apply_to = interacting_with
-		if(apply_to.slowdown <= 0 || (apply_to.item_flags & IMMUTABLE_SLOW))
+		if(apply_to.slowdown <= 0 || (apply_to.item_flags & IMMUTABLE_SLOW) || HAS_TRAIT(apply_to, TRAIT_NO_SPEED_POTION))
 			if(interacting_with.atom_storage)
 				return NONE // lets us put the potion in the bag
 			to_chat(user, span_warning("[apply_to] can't be made any faster!"))
@@ -987,7 +987,7 @@
 
 /obj/item/slimepotion/slime/renaming
 	name = "renaming potion"
-	desc = "A potion that allows a self-aware being to change what name it subconciously presents to the world."
+	desc = "A potion that allows a self-aware being to change what name it subconsciously presents to the world."
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "potbrown"
 

@@ -37,7 +37,7 @@
 /// Makes the AI Malf, as well as give it syndicate laws.
 /obj/item/ai_module/malf
 	name = "Infected AI Module"
-	desc = "An virus-infected AI Module."
+	desc = "A virus-infected AI Module."
 	bypass_law_amt_check = TRUE
 	laws = list("")
 	///Is this upload board unused?

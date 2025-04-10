@@ -32,6 +32,7 @@
 		/obj/item/food/icecream = 1
 	)
 	result = /obj/item/food/spacefreezy
+	added_foodtypes = FRUIT
 	category = CAT_ICE
 
 /datum/crafting_recipe/food/sundae
@@ -67,6 +68,7 @@
 		/obj/item/food/icecream = 1
 	)
 	result = /obj/item/food/cornuto
+	removed_foodtypes = JUNKFOOD
 	category = CAT_ICE
 
 //////////////////////////SNOW CONES///////////////////////
@@ -295,6 +297,8 @@
 		/datum/reagent/consumable/sugar = 2
 	)
 	result = /obj/item/food/popsicle/jumbo
+	added_foodtypes = DAIRY
+	removed_foodtypes = JUNKFOOD
 	category = CAT_ICE
 
 /datum/crafting_recipe/food/licorice_creamsicle
@@ -320,4 +324,5 @@
 		/datum/reagent/consumable/sugar = 2
 	)
 	result = /obj/item/food/popsicle/meatsicle
+	added_foodtypes = SUGAR
 	category = CAT_ICE

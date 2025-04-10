@@ -33,9 +33,9 @@
 	speed = 1
 	range = 25
 	shrapnel_type = null
-	embed_type = /datum/embed_data/arrow
+	embed_type = /datum/embedding/arrow
 
-/datum/embed_data/arrow
+/datum/embedding/arrow
 	embed_chance = 90
 	fall_chance = 2
 	jostle_chance = 2
@@ -62,9 +62,9 @@
 	damage = 30
 	speed = 1.3
 	range = 20
-	embed_type = /datum/embed_data/arrow/sticky
+	embed_type = /datum/embedding/arrow/sticky
 
-/datum/embed_data/arrow/sticky
+/datum/embedding/arrow/sticky
 	embed_chance = 99
 	fall_chance = 0
 	jostle_chance = 1
@@ -89,7 +89,7 @@
 	desc = "Better to not get hit with this!"
 	icon_state = "poison_arrow_projectile"
 	damage = 40
-	embed_type = /datum/embed_data/arrow
+	embed_type = /datum/embedding/arrow
 
 /obj/projectile/bullet/arrow/poison/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()
@@ -125,7 +125,7 @@
 	name = "plastic arrow"
 	desc = "The earliest mining teams within the Spinward Sector were the somewhat stout ancestors of the modern settlers. These teams \
 		found themselves often unable to access the quality materials they were digging up for equipment maintenance, all being sent off-site. \
-		Left with few options, and in need of a way to protect themselves in the hostile work enviroments of the Spinward, they turned \
+		Left with few options, and in need of a way to protect themselves in the hostile work environments of the Spinward, they turned \
 		to the one material they had in abundance."
 	icon_state = "plastic_arrow"
 	base_icon_state = "plastic_arrow"

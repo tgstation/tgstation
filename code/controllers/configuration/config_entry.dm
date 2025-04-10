@@ -11,7 +11,7 @@
 	var/modified = FALSE
 	/// The config name of a configuration type that depricates this, if it exists
 	var/deprecated_by
-	/// The /datum/config_entry type that supercedes this one
+	/// The /datum/config_entry type that supersedes this one
 	var/protection = NONE
 	/// Do not instantiate if type matches this
 	var/abstract_type = /datum/config_entry

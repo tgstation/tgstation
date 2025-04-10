@@ -1,5 +1,5 @@
 /**
- * If your mob is concious, drop the item in the active hand
+ * If your mob is conscious, drop the item in the active hand
  *
  * This is a hidden verb, likely for binding with winset for hotkeys
  */
@@ -376,12 +376,13 @@
  * slipped_on - optional, what'd we slip on? if not set, we assume they just fell over
  * lube - bitflag of "lube flags", see [mobs.dm] for more information
  * paralyze - time (in deciseconds) the slip leaves them paralyzed / unable to move
+ * daze - time (in deciseconds) the slip leaves them vulnerable to shove stuns
  * force_drop = the slip forces them to drop held items
  */
-/mob/proc/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, force_drop = FALSE)
+/mob/proc/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
 	add_mob_memory(/datum/memory/was_slipped, antagonist = slipped_on)
 
-	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, force_drop)
+	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, daze, force_drop)
 
 //bodypart selection verbs - Cyberboss
 //8: repeated presses toggles through head - eyes - mouth

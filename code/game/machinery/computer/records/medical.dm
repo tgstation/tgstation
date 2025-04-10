@@ -32,7 +32,6 @@
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		character_preview_view = create_character_preview_view(user)
 		ui = new(user, src, "MedicalRecords")
 		ui.set_autoupdate(FALSE)
 		ui.open()
@@ -96,7 +95,9 @@
 		if("add_note")
 			if(!params["content"])
 				return FALSE
-			var/content = trim(params["content"], MAX_MESSAGE_LEN)
+			var/content = reject_bad_name(params["content"], allow_numbers = TRUE, max_length = MAX_MESSAGE_LEN, strict = TRUE, cap_after_symbols = FALSE)
+			if(!content)
+				return FALSE
 
 			var/datum/medical_note/new_note = new(usr.name, content)
 			while(length(target.medical_notes) > 2)

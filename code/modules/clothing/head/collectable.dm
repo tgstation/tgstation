@@ -72,6 +72,7 @@
 	greyscale_config_worn = /datum/greyscale_config/beret/worn
 	greyscale_colors = "#972A2A"
 	dog_fashion = /datum/dog_fashion/head/beret
+	hair_mask = /datum/hair_mask/standard_hat_middle
 
 /obj/item/clothing/head/collectable/welding
 	name = "collectable welding helmet"

@@ -41,10 +41,10 @@
 		// can't receive messages on the hivemind right now
 		if(HAS_TRAIT(ling_mob, TRAIT_CHANGELING_HIVEMIND_MUTE))
 			continue
-		to_chat(ling_mob, msg)
+		to_chat(ling_mob, msg, type = MESSAGE_TYPE_RADIO, avoid_highlighting = ling_mob == user)
 
 	for(var/mob/dead/ghost as anything in GLOB.dead_mob_list)
-		to_chat(ghost, "[FOLLOW_LINK(ghost, user)] [msg]")
+		to_chat(ghost, "[FOLLOW_LINK(ghost, user)] [msg]", type = MESSAGE_TYPE_RADIO)
 	return FALSE
 
 /datum/saymode/xeno

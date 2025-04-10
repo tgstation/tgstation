@@ -244,6 +244,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	old_area.turfs_to_uncontain_by_zlevel[z] += src
 	new_area.turfs_by_zlevel[z] += src
 	new_area.contents += src
+	SEND_SIGNAL(src, COMSIG_TURF_AREA_CHANGED, old_area)
+	SEND_SIGNAL(new_area, COMSIG_AREA_TURF_ADDED, src, old_area)
+	SEND_SIGNAL(old_area, COMSIG_AREA_TURF_REMOVED, src, new_area)
 
 	//changes to make after turf has moved
 	on_change_area(old_area, new_area)
@@ -592,7 +595,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	SET_PLANE(I, GAME_PLANE, src)
 	I.layer = OBJ_LAYER
 	I.appearance = AM.appearance
-	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM|KEEP_APART
 	I.loc = src
 	I.setDir(AM.dir)
 	I.alpha = 128
@@ -657,7 +660,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 /turf/proc/add_vomit_floor(mob/living/vomiter, vomit_type = /obj/effect/decal/cleanable/vomit, vomit_flags, purge_ratio = 0.1)
-	var/obj/effect/decal/cleanable/vomit/throw_up = new vomit_type (src, vomiter.get_static_viruses())
+	var/obj/effect/decal/cleanable/vomit/throw_up = new vomit_type (src, vomiter?.get_static_viruses())
 
 	// if the vomit combined, apply toxicity and reagents to the old vomit
 	if (QDELETED(throw_up))
@@ -735,16 +738,16 @@ GLOBAL_LIST_EMPTY(station_turfs)
  * Returns adjacent turfs to this turf that are reachable, in all cardinal directions
  *
  * Arguments:
- * * caller: The movable, if one exists, being used for mobility checks to see what tiles it can reach
+ * * requester: The movable, if one exists, being used for mobility checks to see what tiles it can reach
  * * access: A list that decides if we can gain access to doors that would otherwise block a turf
  * * simulated_only: Do we only worry about turfs with simulated atmos, most notably things that aren't space?
  * * no_id: When true, doors with public access will count as impassible
 */
-/turf/proc/reachableAdjacentTurfs(atom/movable/caller, list/access, simulated_only, no_id = FALSE)
+/turf/proc/reachableAdjacentTurfs(atom/movable/requester, list/access, simulated_only, no_id = FALSE)
 	var/static/space_type_cache = typecacheof(/turf/open/space)
 	. = list()
 
-	var/datum/can_pass_info/pass_info = new(caller, access, no_id)
+	var/datum/can_pass_info/pass_info = new(requester, access, no_id)
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/turf_to_check = get_step(src,iter_dir)
 		if(!turf_to_check || (simulated_only && space_type_cache[turf_to_check.type]))
@@ -771,7 +774,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/apply_main_material_effects(datum/material/main_material, amount, multipier)
 	. = ..()
 	if(alpha < 255)
-		AddElement(/datum/element/turf_z_transparency)
+		ADD_TURF_TRANSPARENCY(src, MATERIAL_SOURCE(main_material))
 		main_material.setup_glow(src)
 	rust_resistance = main_material.mat_rust_resistance
 
@@ -780,7 +783,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	rust_resistance = initial(rust_resistance)
 	if(alpha == 255)
 		return
-	RemoveElement(/datum/element/turf_z_transparency)
+	REMOVE_TURF_TRANSPARENCY(src, MATERIAL_SOURCE(custom_material))
 	// yeets glow
 	UnregisterSignal(SSdcs, COMSIG_STARLIGHT_COLOR_CHANGED)
 	set_light(0, 0, null)
@@ -790,12 +793,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 /**
- * the following are some hacky fishing-related optimizations to shave off
+ * the following are some fishing-related optimizations to shave off as much
  * time we spend implementing the fishing as possible, even if that means
- * doing hackier code, because we've hundreds of turfs like lava, water etc every round,
+ * hackier code, because we've hundreds of turfs like lava, water etc every round,
  */
 /turf/proc/add_lazy_fishing(fish_source_path)
-	RegisterSignal(src, COMSIG_PRE_FISHING, PROC_REF(add_fishing_spot_comp))
+	RegisterSignal(src, COMSIG_FISHING_ROD_CAST, PROC_REF(add_fishing_spot_comp))
 	RegisterSignal(src, COMSIG_NPC_FISHING, PROC_REF(on_npc_fishing))
 	RegisterSignal(src, COMSIG_FISH_RELEASED_INTO, PROC_REF(on_fish_release_into))
 	RegisterSignal(src, COMSIG_TURF_CHANGE, PROC_REF(remove_lazy_fishing))
@@ -805,7 +808,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/remove_lazy_fishing()
 	SIGNAL_HANDLER
 	UnregisterSignal(src, list(
-		COMSIG_PRE_FISHING,
+		COMSIG_FISHING_ROD_CAST,
 		COMSIG_NPC_FISHING,
 		COMSIG_FISH_RELEASED_INTO,
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
@@ -814,10 +817,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	REMOVE_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
 	fish_source = null
 
-/turf/proc/add_fishing_spot_comp(datum/source)
+/turf/proc/add_fishing_spot_comp(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
-	source.AddComponent(/datum/component/fishing_spot, fish_source)
+	var/datum/component/fishing_spot/spot = source.AddComponent(/datum/component/fishing_spot, fish_source)
 	remove_lazy_fishing()
+	return spot.handle_cast(arglist(args))
 
 /turf/proc/on_npc_fishing(datum/source, list/fish_spot_container)
 	SIGNAL_HANDLER
@@ -825,7 +829,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/on_fish_release_into(datum/source, obj/item/fish/fish, mob/living/releaser)
 	SIGNAL_HANDLER
-	GLOB.preset_fish_sources[fish_source].readd_fish(fish, releaser)
+	GLOB.preset_fish_sources[fish_source].readd_fish(src, fish, releaser)
 
 /turf/examine(mob/user)
 	. = ..()

@@ -1,0 +1,5 @@
+#comment Fixes some turfs' airless subtypes being capitalized.
+
+/turf/open/floor/grass/Airless : /turf/open/floor/grass/airless{@OLD}
+/turf/open/floor/iron/recharge_floor/Airless : /turf/open/floor/iron/recharge_floor/airless{@OLD}
+/turf/open/floor/catwalk_floor/titanium/Airless : /turf/open/floor/catwalk_floor/titanium/airless{@OLD}

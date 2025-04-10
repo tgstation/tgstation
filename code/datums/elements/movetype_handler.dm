@@ -49,6 +49,8 @@
 	source.movement_type |= flag
 	if(!(old_state & (FLOATING|FLYING)) && (source.movement_type & (FLOATING|FLYING)) && !HAS_TRAIT(source, TRAIT_NO_FLOATING_ANIM))
 		DO_FLOATING_ANIM(source)
+	if(source.movement_type & UPSIDE_DOWN)
+		ADD_TRAIT(source, TRAIT_IGNORE_ELEVATION, SOURCE_MOVETYPES)
 	SEND_SIGNAL(source, COMSIG_MOVETYPE_FLAG_ENABLED, flag, old_state)
 
 /// Called when a movement type trait is removed from the movable. Disables the relative bitflag if it wasn't there in the compile-time bitfield.
@@ -64,12 +66,15 @@
 		var/turf/pitfall = source.loc //Things that don't fly fall in open space.
 		if(istype(pitfall))
 			pitfall.zFall(source)
+	if((old_state & UPSIDE_DOWN) && !(source.movement_type & UPSIDE_DOWN))
+		REMOVE_TRAIT(source, TRAIT_IGNORE_ELEVATION, SOURCE_MOVETYPES)
 	SEND_SIGNAL(source, COMSIG_MOVETYPE_FLAG_DISABLED, flag, old_state)
 
 /// Called when the TRAIT_NO_FLOATING_ANIM trait is added to the movable. Stops it from bobbing up and down.
 /datum/element/movetype_handler/proc/on_no_floating_anim_trait_gain(atom/movable/source, trait)
 	SIGNAL_HANDLER
-	STOP_FLOATING_ANIM(source)
+	if(source.movement_type & (FLOATING|FLYING))
+		STOP_FLOATING_ANIM(source)
 
 /// Called when the TRAIT_NO_FLOATING_ANIM trait is removed from the mob. Restarts the bobbing animation.
 /datum/element/movetype_handler/proc/on_no_floating_anim_trait_loss(atom/movable/source, trait)

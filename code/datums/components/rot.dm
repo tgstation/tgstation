@@ -22,7 +22,6 @@
 	)
 
 
-
 /datum/component/rot/Initialize(delay, scaling, severity)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -46,9 +45,7 @@
 		RegisterSignal(parent, COMSIG_LIVING_GET_PULLED, PROC_REF(rot_react_touch))
 	if(iscarbon(parent))
 		var/mob/living/carbon/carbon_parent = parent
-		RegisterSignals(carbon_parent.reagents, list(COMSIG_REAGENTS_ADD_REAGENT,
-			COMSIG_REAGENTS_REM_REAGENT,
-			COMSIG_REAGENTS_DEL_REAGENT), PROC_REF(check_reagent))
+		RegisterSignal(carbon_parent.reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(check_reagent))
 		RegisterSignals(parent, list(SIGNAL_ADDTRAIT(TRAIT_HUSK), SIGNAL_REMOVETRAIT(TRAIT_HUSK)), PROC_REF(check_husk_trait))
 		check_reagent(carbon_parent.reagents, null)
 		check_husk_trait(null)
@@ -85,10 +82,9 @@
 	SIGNAL_HANDLER
 	qdel(src)
 
-/datum/component/rot/proc/check_reagent(datum/reagents/source, datum/reagent/modified)
+/datum/component/rot/proc/check_reagent(datum/reagents/source)
 	SIGNAL_HANDLER
-	if(modified && !istype(modified, /datum/reagent/toxin/formaldehyde) && !istype(modified, /datum/reagent/cryostylane))
-		return
+
 	if(source.has_reagent(/datum/reagent/toxin/formaldehyde, 15) || source.has_reagent(/datum/reagent/cryostylane))
 		rest(REAGENT_BLOCKER)
 		return

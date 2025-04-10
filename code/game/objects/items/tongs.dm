@@ -40,7 +40,7 @@
 		return TRUE
 	if (!COOLDOWN_FINISHED(src, clack_cooldown))
 		return TRUE
-	user.visible_message(span_notice("[user] clacks [user.p_their()] [src] together like a crab. Click clack!"))
+	user.visible_message(span_notice("[user] clacks [user.p_their()] [name] together like a crab. Click clack!"))
 	click_clack()
 	return TRUE
 
@@ -97,6 +97,6 @@
 	held_food.layer = layer
 	held_food.plane = plane
 	held_food.transform = held_food.transform.Scale(0.7, 0.7)
-	held_food.pixel_x = 6
-	held_food.pixel_y = 6
+	held_food.pixel_w = 6
+	held_food.pixel_z = 6
 	. += held_food

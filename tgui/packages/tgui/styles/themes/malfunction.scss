@@ -3,63 +3,23 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-
-@use '../colors.scss' with (
-  $primary: hsl(0, 99%, 29%),
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base.scss' with (
-  $color-bg: hsl(204, 43%, 19%),
-  $color-bg-grad-spread: 6%
-);
-
-.theme-malfunction {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+.theme-malfunction:root {
+  // Base
+  --color-base: hsl(205, 42.5%, 20%);
+  --color-primary: hsl(0, 100%, 30%);
+  --color-border-primary: hsl(from var(--color-primary) h s l / 0.75);
+  --secondary-saturation: 55;
+  --secondary-lightness-adjustment: 3;
+  --base-gradient-spread: 6;
 
   // Components
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Button',
-    $with: (
-      'color-default': colors.$primary,
-      'color-disabled': hsl(0, 0%, 21%),
-      'color-selected': hsl(204, 61%, 31%),
-      'color-caution': hsl(30, 88%, 39%),
-      'color-danger': hsl(62, 100%, 30%)
-    )
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Input',
-    $with: ('border-color': hsl(0, 99%, 29%))
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/NoticeBox',
-    $with: ('background-color': hsl(204, 54%, 23%))
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/NumberInput',
-    $with: ('border-color': hsl(0, 99%, 29%))
-  );
-  @include meta.load-css(
-    'pkg:tgui-styles/components/ProgressBar',
-    $with: ('background-color': hsla(0, 0%, 0%, 0.5))
-  );
-  @include meta.load-css('pkg:tgui-styles/components/Section');
-  @include meta.load-css(
-    'pkg:tgui-styles/components/Tooltip',
-    $with: ('background-color': hsl(204, 54%, 29%))
-  );
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': hsl(204, 54%, 23%))
-  );
+  --button-background-selected: hsl(205, 60%, 30%);
+  --button-background-caution: hsl(30, 70%, 40%);
+  --button-background-danger: hsl(62.5, 100%, 30%);
+  --notice-box-background: hsl(205, 55%, 22.5%);
+  --notice-box-color: var(--color-text-fixed-white);
+  --progress-bar-background: hsla(0, 0%, 0%, 0.5);
+  --tooltip-background-lightness: 25;
 
   .Layout__content {
     background-image: none;

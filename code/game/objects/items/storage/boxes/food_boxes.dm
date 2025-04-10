@@ -46,6 +46,12 @@
 	icon_state = "donkpocketboxbanana"
 	donktype = /obj/item/food/donkpocket/honk
 
+/obj/item/storage/box/donkpockets/donkpocketshell
+	name = "box of Donk Co. 'Donk Spike' flechette shells"
+	desc = "Instructions: DO NOT heat in microwave. Product will remove all hostile threats with cutting edge Donk Co. technology."
+	icon_state = "donkpocketboxshell"
+	donktype = /obj/item/ammo_casing/shotgun/flechette/donk
+
 /obj/item/storage/box/papersack
 	name = "paper sack"
 	desc = "A sack neatly crafted out of paper."
@@ -335,24 +341,79 @@
 	foldable_result = null
 	custom_price = PAYCHECK_CREW
 
+	///Typepath of the type of gum that spawns with this box, this is passed to the wrapper for spawning in.
+	var/spawning_gum_type = /obj/item/food/bubblegum
+
 /obj/item/storage/box/gum/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(/obj/item/food/bubblegum)
+	atom_storage.set_holdable(/obj/item/storage/bubblegum_wrapper)
 	atom_storage.max_slots = 4
+	atom_storage.allow_big_nesting = TRUE
 
 /obj/item/storage/box/gum/PopulateContents()
 	for(var/i in 1 to 4)
-		new/obj/item/food/bubblegum(src)
+		new /obj/item/storage/bubblegum_wrapper(src, spawning_gum_type)
+
+/obj/item/storage/bubblegum_wrapper
+	name = "bubblegum wrapper"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "bubblegum_wrapper"
+	w_class = WEIGHT_CLASS_TINY
+	resistance_flags = FLAMMABLE
+	item_flags = NOBLUDGEON|SKIP_FANTASY_ON_SPAWN
+	grind_results = list(/datum/reagent/aluminium = 1)
+
+	///The typepath of the type of gum that will spawn in our PopulateContents,
+	///this is set in Initialize by the gum box if there is one.
+	var/gum_to_spawn = /obj/item/food/bubblegum
+
+/obj/item/storage/bubblegum_wrapper/Initialize(mapload, spawning_gum_type)
+	if(!isnull(spawning_gum_type))
+		gum_to_spawn = spawning_gum_type
+	. = ..()
+	atom_storage.set_holdable(/obj/item/food/bubblegum)
+	atom_storage.max_slots = 1
+	atom_storage.display_contents = FALSE
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/storage/bubblegum_wrapper/PopulateContents()
+	new gum_to_spawn(src)
+
+/obj/item/storage/bubblegum_wrapper/update_overlays()
+	. = ..()
+	var/obj/item/food/bubblegum/gum_inside = locate() in contents
+	if(isnull(gum_inside))
+		return .
+	var/mutable_appearance/gum_overlay = mutable_appearance(gum_inside.icon, gum_inside.icon_state, layer = src.layer - 0.01)
+	gum_overlay.color = gum_inside.color
+	. += gum_overlay
+
+//These procs are copied over from cigarette packets
+/obj/item/storage/bubblegum_wrapper/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	. = ..()
+	if(istype(interacting_with, /obj/item/food/bubblegum))
+		atom_storage.item_interact_insert(user, interacting_with)
+		return ITEM_INTERACT_SUCCESS
+	if(interacting_with != user)
+		return ..()
+	quick_remove_item(/obj/item/food/bubblegum, user, equip_to_mouth = TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/storage/bubblegum_wrapper/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	quick_remove_item(/obj/item/food/bubblegum, user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/storage/bubblegum_wrapper/click_alt(mob/user)
+	quick_remove_item(/obj/item/food/bubblegum, user)
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/storage/box/gum/nicotine
 	name = "nicotine gum packet"
 	desc = "Designed to help with nicotine addiction and oral fixation all at once without destroying your lungs in the process. Mint flavored!"
 	icon_state = "bubblegum_nicotine"
 	custom_premium_price = PAYCHECK_CREW * 1.5
-
-/obj/item/storage/box/gum/nicotine/PopulateContents()
-	for(var/i in 1 to 4)
-		new/obj/item/food/bubblegum/nicotine(src)
+	spawning_gum_type = /obj/item/food/bubblegum/nicotine
 
 /obj/item/storage/box/gum/happiness
 	name = "HP+ gum packet"
@@ -360,24 +421,18 @@
 	icon_state = "bubblegum_happiness"
 	custom_price = PAYCHECK_COMMAND * 3
 	custom_premium_price = PAYCHECK_COMMAND * 3
+	spawning_gum_type = /obj/item/food/bubblegum/happiness
 
 /obj/item/storage/box/gum/happiness/Initialize(mapload)
 	. = ..()
 	if (prob(25))
 		desc += " You can faintly make out the word 'Hemopagopril' was once scribbled on it."
 
-/obj/item/storage/box/gum/happiness/PopulateContents()
-	for(var/i in 1 to 4)
-		new/obj/item/food/bubblegum/happiness(src)
-
 /obj/item/storage/box/gum/bubblegum
 	name = "bubblegum gum packet"
 	desc = "The packaging is entirely in Demonic, apparently. You feel like even opening this would be a sin."
 	icon_state = "bubblegum_bubblegum"
-
-/obj/item/storage/box/gum/bubblegum/PopulateContents()
-	for(var/i in 1 to 4)
-		new/obj/item/food/bubblegum/bubblegum(src)
+	spawning_gum_type = /obj/item/food/bubblegum/bubblegum
 
 /obj/item/storage/box/mothic_rations
 	name = "Mothic Rations Pack"

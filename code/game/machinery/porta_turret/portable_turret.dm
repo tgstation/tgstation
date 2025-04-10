@@ -730,13 +730,13 @@ DEFINE_BITFIELD(turret_flags, list(
 	remote_controller = null
 	return TRUE
 
-/obj/machinery/porta_turret/proc/InterceptClickOn(mob/living/caller, params, atom/A)
+/obj/machinery/porta_turret/proc/InterceptClickOn(mob/living/clicker, params, atom/A)
 	if(!manual_control)
 		return FALSE
-	if(!can_interact(caller))
+	if(!can_interact(clicker))
 		remove_control()
 		return FALSE
-	log_combat(caller,A,"fired with manual turret control at")
+	log_combat(clicker, A, "fired with manual turret control at")
 	target(A)
 	return TRUE
 
@@ -779,6 +779,11 @@ DEFINE_BITFIELD(turret_flags, list(
 	lethal_projectile_sound = 'sound/items/weapons/laser.ogg'
 	desc = "An energy blaster auto-turret."
 	armor_type = /datum/armor/syndicate_turret
+
+/obj/machinery/porta_turret/syndicate/energy/ruin/assess_perp(mob/living/carbon/human/perp)
+	if (!check_access(perp.wear_id?.GetID()))
+		return 10
+	return 0
 
 /datum/armor/syndicate_turret
 	melee = 40

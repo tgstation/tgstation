@@ -182,7 +182,7 @@
 		beaker_data["maxVolume"] = beaker.volume
 		beaker_data["transferAmounts"] = beaker.possible_transfer_amounts
 		beaker_data["pH"] = round(beaker.reagents.ph, 0.01)
-		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
+		beaker_data["currentVolume"] = beaker.reagents.total_volume
 		var/list/beakerContents = list()
 		if(length(beaker.reagents.reagent_list))
 			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
@@ -205,7 +205,7 @@
 			if(isnull(target))
 				return
 
-			amount = target
+			amount = round(target, CHEMICAL_VOLUME_ROUNDING)
 			return TRUE
 
 		if("dispense")
@@ -257,12 +257,7 @@
 
 /obj/item/storage/portable_chem_mixer/item_ctrl_click(mob/user)
 	if(atom_storage.locked == STORAGE_FULLY_LOCKED)
-		atom_storage.locked = STORAGE_NOT_LOCKED
 		replace_beaker(user)
 		SStgui.close_uis(src)
-	else
-		atom_storage.locked = STORAGE_FULLY_LOCKED
-		atom_storage.hide_contents(user)
-
-	update_appearance()
+	atom_storage.set_locked(atom_storage.locked ? STORAGE_NOT_LOCKED : STORAGE_FULLY_LOCKED)
 	return CLICK_ACTION_SUCCESS

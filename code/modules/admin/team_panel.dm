@@ -3,22 +3,22 @@
 	var/list/content = list()
 	for(var/datum/team/T in GLOB.antagonist_teams)
 		content += "<h3>[T.name] - [T.type]</h3>"
-		content += "<a href='?_src_=holder;[HrefToken()];team_command=rename_team;team=[REF(T)]'>Rename</a>"
-		content += "<a href='?_src_=holder;[HrefToken()];team_command=delete_team;team=[REF(T)]'>Delete</a>"
-		content += "<a href='?_src_=holder;[HrefToken()];team_command=communicate;team=[REF(T)]'>Communicate</a>"
+		content += "<a href='byond://?_src_=holder;[HrefToken()];team_command=rename_team;team=[REF(T)]'>Rename</a>"
+		content += "<a href='byond://?_src_=holder;[HrefToken()];team_command=delete_team;team=[REF(T)]'>Delete</a>"
+		content += "<a href='byond://?_src_=holder;[HrefToken()];team_command=communicate;team=[REF(T)]'>Communicate</a>"
 		for(var/command in T.get_admin_commands())
-			content += "<a href='?src=[REF(T)];command=[command]'>[command]</a>"
+			content += "<a href='byond://?src=[REF(T)];command=[command]'>[command]</a>"
 		content += "<br>"
 		content += "Objectives:<br><ol>"
 		for(var/datum/objective/O in T.objectives)
-			content += "<li>[O.explanation_text] - <a href='?_src_=holder;[HrefToken()];team_command=remove_objective;team=[REF(T)];tobjective=[REF(O)]'>Remove</a></li>"
-		content += "</ol><a href='?_src_=holder;[HrefToken()];team_command=add_objective;team=[REF(T)]'>Add Objective</a><br>"
+			content += "<li>[O.explanation_text] - <a href='byond://?_src_=holder;[HrefToken()];team_command=remove_objective;team=[REF(T)];tobjective=[REF(O)]'>Remove</a></li>"
+		content += "</ol><a href='byond://?_src_=holder;[HrefToken()];team_command=add_objective;team=[REF(T)]'>Add Objective</a><br>"
 		content += "Members: <br><ul>"
 		for(var/datum/mind/M in T.members)
-			content += "<li>[M.name] - <a href='?_src_=holder;[HrefToken()];team_command=remove_member;team=[REF(T)];tmember=[REF(M)]'>Remove Member</a></li>"
-		content += "</ul><a href='?_src_=holder;[HrefToken()];team_command=add_member;team=[REF(T)]'>Add Member</a>"
+			content += "<li>[M.name] - <a href='byond://?_src_=holder;[HrefToken()];team_command=remove_member;team=[REF(T)];tmember=[REF(M)]'>Remove Member</a></li>"
+		content += "</ul><a href='byond://?_src_=holder;[HrefToken()];team_command=add_member;team=[REF(T)]'>Add Member</a>"
 		content += "<hr>"
-	content += "<a href='?_src_=holder;[HrefToken()];team_command=create_team'>Create Team</a><br>"
+	content += "<a href='byond://?_src_=holder;[HrefToken()];team_command=create_team'>Create Team</a><br>"
 	return content.Join()
 
 

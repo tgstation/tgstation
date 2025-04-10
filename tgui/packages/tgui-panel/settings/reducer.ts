@@ -7,6 +7,7 @@
 import {
   addHighlightSetting,
   changeSettingsTab,
+  importSettings,
   loadSettings,
   openChatSettings,
   removeHighlightSetting,
@@ -14,7 +15,7 @@ import {
   updateHighlightSetting,
   updateSettings,
 } from './actions';
-import { FONTS, MAX_HIGHLIGHT_SETTINGS, SETTINGS_TABS } from './constants';
+import { FONTS, SETTINGS_TABS } from './constants';
 import { createDefaultHighlightSetting } from './model';
 
 const defaultHighlightSetting = createDefaultHighlightSetting();
@@ -38,6 +39,7 @@ const initialState = {
     visible: false,
     activeTab: SETTINGS_TABS[0].id,
   },
+  initialized: false,
   statLinked: true,
   statFontSize: 12,
   statTabsStyle: 'default',
@@ -60,7 +62,12 @@ export function settingsReducer(
       {
         // Validate version and/or migrate state
         if (!payload?.version) {
-          return state;
+          const nextState = {
+            ...state,
+            ...payload,
+          };
+          nextState.initialized = true;
+          return nextState;
         }
 
         delete payload.view;
@@ -68,6 +75,7 @@ export function settingsReducer(
           ...state,
           ...payload,
         };
+        nextState.initialized = true;
         // Lazy init the list for compatibility reasons
         if (!nextState.highlightSettings) {
           nextState.highlightSettings = [defaultHighlightSetting.id];
@@ -93,6 +101,18 @@ export function settingsReducer(
 
         return nextState;
       }
+    }
+
+    case importSettings.type: {
+      const newSettings = payload.newSettings;
+      if (!newSettings) {
+        return state;
+      }
+      const nextState = {
+        ...state,
+        ...newSettings,
+      };
+      return nextState;
     }
 
     case toggleSettings.type: {
@@ -130,10 +150,6 @@ export function settingsReducer(
 
     case addHighlightSetting.type: {
       const highlightSetting = payload;
-
-      if (state.highlightSettings.length >= MAX_HIGHLIGHT_SETTINGS) {
-        return state;
-      }
 
       return {
         ...state,

@@ -145,7 +145,7 @@
 		if(prob(20))
 			user.Stun(40)
 		user.take_overall_damage(burn = shock_damage)
-		user.visible_message(span_danger("[user.name] is shocked by the [src.name]!"), \
+		user.visible_message(span_danger("[user.name] is shocked by \the [src]!"), \
 		span_userdanger("Energy pulse detected, system damaged!"), \
 		span_hear("You hear an electrical crack."))
 

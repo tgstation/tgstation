@@ -15,7 +15,7 @@
 	var/map = ""
 	/// Controls the screen_loc that owned plane masters will use when generating relays. Due to a Byond bug, relays using the CENTER positional loc
 	/// Will be improperly offset
-	var/relay_loc = "CENTER"
+	var/relay_loc = "SCREEN_SOUTHWEST"
 
 /datum/plane_master_group/New(key, map = "")
 	. = ..()
@@ -47,14 +47,6 @@
 		stack_trace("Hey brother, our key [key] is already in use by a plane master group on the passed in hud, belonging to [viewing_hud.mymob]. Ya fucked up, why are there dupes")
 		return
 
-#if MIN_COMPILER_VERSION > 516
-	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
-#endif
-
-	if(viewing_hud.mymob?.client?.byond_version > 515)
-		relay_loc = "1,1"
-		rebuild_plane_masters()
-
 	set_hud(viewing_hud)
 	our_hud.master_groups[key] = src
 	show_hud()
@@ -70,6 +62,7 @@
 	hide_hud()
 	rebuild_plane_masters()
 	show_hud()
+	our_hud.update_parallax_pref()
 	build_planes_offset(our_hud, active_offset)
 
 /// Regenerate our plane masters, this is useful if we don't have a mob but still want to rebuild. Such in the case of changing the screen_loc of relays
@@ -194,20 +187,6 @@
 /// This is because it's annoying to get turfs to position inside it correctly
 /// If you wanna try someday feel free, but I can't manage it
 /datum/plane_master_group/popup
-
-/// This is janky as hell but since something changed with CENTER positioning after build 1614 we have to switch to the bandaid LEFT,TOP positioning
-/// using LEFT,TOP *at* or *before* 1614 will result in another broken offset for cameras
-#define MAX_CLIENT_BUILD_WITH_WORKING_SECONDARY_MAPS 1614
-
-/datum/plane_master_group/popup/attach_to(datum/hud/viewing_hud)
-	// If we're about to display this group to a mob who's client is more recent than the last known version with working CENTER, then we need to remake the relays
-	// with the correct screen_loc using the relay override
-	if(viewing_hud.mymob?.client?.byond_build > MAX_CLIENT_BUILD_WITH_WORKING_SECONDARY_MAPS)
-		relay_loc = "LEFT,TOP"
-		rebuild_plane_masters()
-	return ..()
-
-#undef MAX_CLIENT_BUILD_WITH_WORKING_SECONDARY_MAPS
 
 /datum/plane_master_group/popup/build_planes_offset(datum/hud/source, new_offset, use_scale = TRUE)
 	return ..(source, new_offset, FALSE)

@@ -65,9 +65,9 @@
 /area/virtual_domain/fullbright)
 "cb" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/lsd,
-/obj/item/reagent_containers/pill/lsd,
-/obj/item/reagent_containers/pill/lsd,
+/obj/item/reagent_containers/applicator/pill/lsd,
+/obj/item/reagent_containers/applicator/pill/lsd,
+/obj/item/reagent_containers/applicator/pill/lsd,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "cv" = (
@@ -127,7 +127,7 @@
 /area/virtual_domain/fullbright)
 "fc" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/happy,
+/obj/item/reagent_containers/applicator/pill/happy,
 /obj/item/toy/figure/bartender{
 	pixel_x = -8;
 	pixel_y = -1
@@ -417,9 +417,9 @@
 /area/virtual_domain/fullbright)
 "vN" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/morphine,
-/obj/item/reagent_containers/pill/morphine,
-/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "vT" = (
@@ -496,9 +496,9 @@
 /area/virtual_domain/fullbright)
 "ya" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/zoom,
-/obj/item/reagent_containers/pill/zoom,
-/obj/item/reagent_containers/pill/zoom,
+/obj/item/reagent_containers/applicator/pill/zoom,
+/obj/item/reagent_containers/applicator/pill/zoom,
+/obj/item/reagent_containers/applicator/pill/zoom,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "yi" = (
@@ -1116,7 +1116,7 @@
 /area/virtual_domain/fullbright)
 "Zt" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/pill/morphine,
+/obj/item/reagent_containers/applicator/pill/morphine,
 /obj/item/storage/fancy/donut_box,
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)

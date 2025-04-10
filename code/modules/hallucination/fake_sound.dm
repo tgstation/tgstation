@@ -1,6 +1,7 @@
 /// Hallucination that plays a fake sound somewhere nearby.
 /datum/hallucination/fake_sound
 	abstract_hallucination_parent = /datum/hallucination/fake_sound
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	/// Volume of the fake sound
 	var/volume = 50
@@ -10,6 +11,9 @@
 	var/sound_type
 
 /datum/hallucination/fake_sound/start()
+	if(!hallucinator.can_hear())
+		return FALSE
+
 	var/sound_to_play = islist(sound_type) ? pick(sound_type) : sound_type
 	play_fake_sound(random_far_turf(), sound_to_play)
 	feedback_details += "Sound: [sound_to_play]"
@@ -148,9 +152,31 @@
 	volume = 90
 	sound_type = 'sound/items/weapons/flash.ogg'
 
+/datum/hallucination/fake_sound/normal/ringtone
+	volume = 50
+
+/datum/hallucination/fake_sound/normal/ringtone/New(mob/living/hallucinator)
+	. = ..()
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
+		sound_type = pick(
+			'sound/machines/beep/twobeep_voice1.ogg',
+			'sound/machines/beep/twobeep_voice2.ogg',
+		)
+	else
+		sound_type = 'sound/machines/beep/twobeep_high.ogg'
+
+/datum/hallucination/fake_sound/normal/ringtone/play_fake_sound(turf/source, sound_to_play = sound_type)
+	if(prob(33))
+		source = get_turf(hallucinator)
+		var/obj/item/modular_computer/pda/pda = locate() in hallucinator.get_all_contents()
+		var/datum/computer_file/program/messenger/messenger_app = locate() in pda?.stored_files
+		hallucinator.balloon_alert(hallucinator, "*[messenger_app?.ringtone || MESSENGER_RINGTONE_DEFAULT]*")
+	return ..()
+
 /datum/hallucination/fake_sound/weird
 	abstract_hallucination_parent = /datum/hallucination/fake_sound/weird
 	random_hallucination_weight = 1
+	hallucination_tier = HALLUCINATION_TIER_VERYSPECIAL
 
 	/// if FALSE, we will pass "null" in as the turf source, meaning the sound will just play without direction / etc.
 	var/no_source = FALSE
@@ -187,6 +213,7 @@
 	sound_type = 'sound/effects/magic/clockwork/invoke_general.ogg'
 
 /datum/hallucination/fake_sound/weird/creepy
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 /datum/hallucination/fake_sound/weird/creepy/New(mob/living/hallucinator)
 	. = ..()
@@ -202,6 +229,7 @@
 /datum/hallucination/fake_sound/weird/game_over
 	sound_vary = FALSE
 	sound_type = 'sound/machines/compiler/compiler-failure.ogg'
+	hallucination_tier = HALLUCINATION_TIER_RARE
 
 /datum/hallucination/fake_sound/weird/hallelujah
 	sound_vary = FALSE
@@ -216,8 +244,10 @@
 	sound_vary = FALSE
 	no_source = TRUE
 	sound_type = 'sound/runtime/hyperspace/hyperspace_begin.ogg'
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 /datum/hallucination/fake_sound/weird/laugher
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 	sound_type = list(
 		'sound/mobs/humanoids/human/laugh/womanlaugh.ogg',
 		'sound/mobs/humanoids/human/laugh/manlaugh1.ogg',
@@ -228,6 +258,7 @@
 	volume = 15
 	sound_vary = FALSE
 	sound_type = 'sound/items/weapons/ring.ogg'
+	hallucination_tier = HALLUCINATION_TIER_RARE
 
 /datum/hallucination/fake_sound/weird/phone/play_fake_sound(turf/source, sound_to_play)
 	for(var/next_ring in 1 to 3)
@@ -236,6 +267,7 @@
 	return ..()
 
 /datum/hallucination/fake_sound/weird/spell
+	hallucination_tier = HALLUCINATION_TIER_RARE
 	sound_type = list(
 		'sound/effects/magic/disintegrate.ogg',
 		'sound/effects/magic/ethereal_enter.ogg',
@@ -247,15 +279,18 @@
 	)
 
 /datum/hallucination/fake_sound/weird/spell/just_jaunt // A few antags use jaunts, so this sound specifically is fun to isolate
+	hallucination_tier = HALLUCINATION_TIER_RARE
 	sound_type = 'sound/effects/magic/ethereal_enter.ogg'
 
 /datum/hallucination/fake_sound/weird/summon_sound // Heretic circle sound, notably
 	volume = 75
+	hallucination_tier = HALLUCINATION_TIER_RARE
 	sound_type = 'sound/effects/magic/castsummon.ogg'
 
 /datum/hallucination/fake_sound/weird/tesloose
 	volume = 35
 	sound_type = 'sound/effects/magic/lightningbolt.ogg'
+	hallucination_tier = HALLUCINATION_TIER_RARE
 
 /datum/hallucination/fake_sound/weird/tesloose/play_fake_sound(turf/source, sound_to_play)
 	. = ..()
@@ -265,6 +300,7 @@
 /datum/hallucination/fake_sound/weird/xeno
 	random_hallucination_weight = 2 // Some of these are ambience sounds too
 	volume = 25
+	hallucination_tier = HALLUCINATION_TIER_RARE
 	sound_type = list(
 		'sound/mobs/non-humanoids/hiss/lowHiss1.ogg',
 		'sound/mobs/non-humanoids/hiss/lowHiss2.ogg',
@@ -283,7 +319,7 @@
 	sound_type = 'sound/effects/hallucinations/radio_static.ogg'
 
 /datum/hallucination/fake_sound/weird/ice_crack
-	random_hallucination_weight = 2
+	random_hallucination_weight = 0
 	volume = 100
 	no_source = TRUE
 	sound_type = 'sound/effects/ice_shovel.ogg'

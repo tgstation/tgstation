@@ -148,7 +148,6 @@
 	for(var/scan_target in scanned_atoms)
 		if(action_experiment(source, scan_target))
 			successful_scan = TRUE
-			break
 	if(successful_scan)
 		playsound(our_scanner, 'sound/machines/ping.ogg', 25)
 		to_chat(our_scanner, span_notice("The scan succeeds."))
@@ -211,7 +210,7 @@
 				any_success = TRUE
 		return any_success
 	else
-		// Returns true if the experiment was succesfuly handled
+		// Returns true if the experiment was successfuly handled
 		return selected_experiment.actionable(arglist(arguments)) && selected_experiment.perform_experiment(arglist(arguments))
 
 /**
@@ -275,6 +274,7 @@
  */
 /datum/component/experiment_handler/proc/link_experiment(datum/experiment/experiment)
 	if (can_select_experiment(experiment))
+		unlink_experiment()
 		selected_experiment = experiment
 		selected_experiment.on_selected(src)
 

@@ -149,6 +149,9 @@
 	var/datum/point/last_point
 	/// Next forceMove will not create tracer end/start effects
 	var/free_hitscan_forceMove = FALSE
+	// Used to prevent duplicate effects during lag chunking
+	/// If a hitscan muzzle effect has been created for this "path", reset during forceMoves.
+	var/spawned_muzzle = FALSE
 
 	/// Hitscan tracer effect left behind the projectile
 	var/tracer_type
@@ -169,8 +172,9 @@
 	var/impact_light_color_override
 
 	// Homing
-	/// If the projectile is homing. Warning - this changes projectile's processing logic, reverting it to segmented processing instead of new raymarching logic
-	var/homing = FALSE
+	/// If the projectile is currently homing. Warning - this changes projectile's processing logic, reverting it to segmented processing instead of new raymarching logic
+	/// This does not actually set up the projectile to home in on a target - you need to set that up with set_homing_target() on the projectile!
+	VAR_FINAL/homing = FALSE
 	/// Target the projectile is homing on
 	var/atom/homing_target
 	/// Angles per move segment, distance is based on SSprojectiles.pixels_per_decisecond
@@ -247,7 +251,7 @@
 	/// If we have a shrapnel_type defined, these embedding stats will be passed to the spawned shrapnel type, which will roll for embedding on the target
 	var/embed_type
 	/// Saves embedding data
-	var/datum/embed_data/embed_data
+	VAR_PROTECTED/datum/embedding/embed_data
 	/// If TRUE, hit mobs, even if they are lying on the floor and are not our target within MAX_RANGE_HIT_PRONE_TARGETS tiles
 	var/hit_prone_targets = FALSE
 	/// If TRUE, ignores the range of MAX_RANGE_HIT_PRONE_TARGETS tiles of hit_prone_targets
@@ -272,8 +276,8 @@
 /obj/projectile/Initialize(mapload)
 	. = ..()
 	maximum_range = range
-	if (get_embed())
-		AddElement(/datum/element/embed)
+	if (embed_type)
+		set_embed(embed_type)
 	add_traits(list(TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_FREE_HYPERSPACE_SOFTCORDON_MOVEMENT), INNATE_TRAIT)
 
 /obj/projectile/Destroy()
@@ -282,6 +286,7 @@
 	STOP_PROCESSING(SSprojectiles, src)
 	firer = null
 	original = null
+	QDEL_NULL(embed_data)
 	if (movement_vector)
 		QDEL_NULL(movement_vector)
 	if (beam_points)
@@ -298,7 +303,7 @@
 		wound_bonus += wound_falloff_tile
 		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
 	if(embed_falloff_tile && get_embed())
-		set_embed(embed_data.generate_with_values(embed_data.embed_chance + embed_falloff_tile))
+		embed_data.embed_chance += embed_falloff_tile
 	if(damage_falloff_tile && damage >= 0)
 		damage += damage_falloff_tile
 	if(stamina_falloff_tile && stamina >= 0)
@@ -386,6 +391,7 @@
 		new impact_effect_type(target_turf, impact_x, impact_y)
 
 	var/mob/living/living_target = target
+	get_embed()?.try_embed_projectile(src, target, hit_limb_zone, blocked, pierce_hit)
 	var/reagent_note
 	if(reagents?.reagent_list)
 		reagent_note = "REAGENTS: [pretty_string_from_reagent_list(reagents.reagent_list)]"
@@ -993,7 +999,8 @@
 				moving_turfs = FALSE
 			// If we've impacted something, we need to animate our movement until the actual hit
 			// Otherwise the projectile visually disappears slightly before the actual impact
-			if (deletion_queued)
+			// Not if we're hitscan, however, microop time!
+			if (deletion_queued && !hitscan)
 				// distance_to_move is how much we have to step to get to the next turf, hypotenuse is how much we need
 				// to move in the next turf to get from entry to impact position
 				delete_distance = distance_to_move + sqrt((impact_x - entry_x) ** 2 + (impact_y - entry_y) ** 2)
@@ -1010,6 +1017,10 @@
 				delete_distance = distance_to_move - (ICON_SIZE_ALL - pixels_moved_last_tile)
 
 		if (deletion_queued)
+			// Hitscans don't need to wait before deleting
+			if (hitscan)
+				return movements_done
+
 			// We moved to the next turf first, then impacted something
 			// This means that we need to offset our visual position back to the previous turf, then figure out
 			// how much we moved on the next turf (or we didn't move at all in which case we both shifts are 0 anyways)
@@ -1086,8 +1097,18 @@
 
 	while (isturf(loc) && !QDELETED(src))
 		process_movement(ICON_SIZE_ALL, hitscan = TRUE)
-		if (TICK_CHECK || paused || QDELETED(src))
+
+		if (QDELETED(src))
 			return
+
+		if (!TICK_CHECK && !paused)
+			continue
+
+		create_hitscan_point()
+		// Create tracers if we get timestopped or lagchunk so there aren't weird delays
+		generate_hitscan_tracers(impact_point = FALSE, impact_visual = FALSE)
+		record_hitscan_start(offset = FALSE)
+		return
 
 /// Creates (or wipes clean) list of tracer keypoints and creates a first point.
 /obj/projectile/proc/record_hitscan_start(offset = TRUE)
@@ -1122,15 +1143,16 @@
 	if (isnull(movement_vector) || free_hitscan_forceMove)
 		return
 	// Create firing VFX and start a new chain because we most likely got teleported
-	generate_hitscan_tracers(impact = FALSE)
+	generate_hitscan_tracers(impact_point = FALSE)
 	original_angle = angle
+	spawned_muzzle = FALSE
 	record_hitscan_start(offset = FALSE)
 
-/obj/projectile/proc/generate_hitscan_tracers(impact = TRUE)
+/obj/projectile/proc/generate_hitscan_tracers(impact_point = TRUE, impact_visual = TRUE)
 	if (!length(beam_points))
 		return
 
-	if (impact)
+	if (impact_point)
 		create_hitscan_point(impact = TRUE)
 
 	if (tracer_type)
@@ -1140,7 +1162,8 @@
 		for (var/beam_point in beam_points)
 			generate_tracer(beam_point, passed_turfs)
 
-	if (muzzle_type)
+	if (muzzle_type && !spawned_muzzle)
+		spawned_muzzle = TRUE
 		var/datum/point/start_point = beam_points[1]
 		var/atom/movable/muzzle_effect = new muzzle_type(loc)
 		start_point.move_atom_to_src(muzzle_effect)
@@ -1151,7 +1174,7 @@
 		muzzle_effect.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override || color)
 		QDEL_IN(muzzle_effect, PROJECTILE_TRACER_DURATION)
 
-	if (impact_type)
+	if (impact_type && impact_visual)
 		var/atom/movable/impact_effect = new impact_type(loc)
 		last_point.move_atom_to_src(impact_effect)
 		var/matrix/matrix = new
@@ -1331,7 +1354,7 @@
 
 ///Checks if the projectile can embed into someone
 /obj/projectile/proc/can_embed_into(atom/hit)
-	return get_embed() && shrapnel_type && iscarbon(hit) && !HAS_TRAIT(hit, TRAIT_PIERCEIMMUNE)
+	return shrapnel_type && get_embed()?.can_embed(src, hit)
 
 /// Reflects the projectile off of something
 /obj/projectile/proc/reflect(atom/hit_atom)
@@ -1371,19 +1394,27 @@
 	bullet.fire()
 	return bullet
 
-/// Fetches embedding data
-/obj/projectile/proc/get_embed()
-	RETURN_TYPE(/datum/embed_data)
-	return embed_type ? (embed_data ||= get_embed_by_type(embed_type)) : embed_data
-
-/obj/projectile/proc/set_embed(datum/embed_data/embed)
-	if(embed_data == embed)
-		return
-	// GLOB.embed_by_type stores shared "default" embedding values of datums
-	// Dynamically generated embeds use the base class and thus are not present in there, and should be qdeleted upon being discarded
-	if(!isnull(embed_data) && !GLOB.embed_by_type[embed_data.type])
-		qdel(embed_data)
-	embed_data = ispath(embed) ? get_embed_by_type(armor) : embed
-
 #undef MOVES_HITSCAN
 #undef MUZZLE_EFFECT_PIXEL_INCREMENT
+
+/// Fetches, or lazyloads, our embedding datum
+/obj/projectile/proc/get_embed()
+	RETURN_TYPE(/datum/embedding)
+	if (embed_data)
+		return embed_data
+	if (embed_type)
+		embed_data = new embed_type()
+	return embed_data
+
+/// Sets our embedding datum to a different one. Can also take types
+/obj/projectile/proc/set_embed(datum/embedding/new_embed, dont_delete = FALSE)
+	if (new_embed == embed_data)
+		return
+
+	if (!isnull(embed_data) && !dont_delete)
+		qdel(embed_data)
+
+	if (ispath(new_embed))
+		new_embed = new new_embed()
+
+	embed_data = new_embed

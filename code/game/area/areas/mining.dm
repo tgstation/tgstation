@@ -135,6 +135,7 @@
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED
 	sound_environment = SOUND_AREA_LAVALAND
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
+	allow_shuttle_docking = TRUE
 
 /area/lavaland/surface
 	name = "Lavaland"
@@ -146,8 +147,6 @@
 	requires_power = TRUE
 	ambience_index = AMBIENCE_MINING
 	area_flags = VALID_TERRITORY | UNIQUE_AREA
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/lavaland/underground
 	name = "Lavaland Caves"
@@ -159,8 +158,6 @@
 	power_light = FALSE
 	ambience_index = AMBIENCE_MINING
 	area_flags = VALID_TERRITORY | UNIQUE_AREA | FLORA_ALLOWED
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/lavaland/surface/outdoors
 	name = "Lavaland Wastes"
@@ -196,6 +193,7 @@
 	ambience_index = AMBIENCE_ICEMOON
 	sound_environment = SOUND_AREA_ICEMOON
 	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
+	allow_shuttle_docking = TRUE
 
 /area/icemoon/surface
 	name = "Icemoon"
@@ -206,8 +204,6 @@
 	power_light = FALSE
 	requires_power = TRUE
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/icemoon/surface/outdoors // parent that defines if something is on the exterior of the station.
 	name = "Icemoon Wastes"
@@ -269,8 +265,6 @@
 	power_equip = FALSE
 	power_light = FALSE
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
-	min_ambience_cooldown = 70 SECONDS
-	max_ambience_cooldown = 220 SECONDS
 
 /area/icemoon/underground/unexplored // mobs and megafauna and ruins spawn here
 	name = "Icemoon Caves"

@@ -84,7 +84,7 @@
 
 /datum/bounty/item/security/contraband
 	name = "Confiscated Contraband"
-	description = "The syndicate are constantly acting to subvert crewmates of Nanotrasen afilliated stations. Ship us your latest batch of confiscated contraband."
+	description = "The Syndicate is constantly acting to subvert crewmates of Nanotrasen-affiliated stations. Ship us your latest batch of confiscated contraband."
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 5
 	wanted_types = list(/obj/item = TRUE)

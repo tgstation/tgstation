@@ -6,6 +6,7 @@
 // TODO: well, a lot really, but specifically I want to add potential fusing of clothing/equipment on the affected area, and limb infections, though those may go in body part code
 /datum/wound/burn
 	name = "Burn Wound"
+	undiagnosed_name = "Burns"
 	a_or_from = "from"
 	sound_effect = 'sound/effects/wounds/sizzle1.ogg'
 
@@ -225,9 +226,9 @@
 
 /// Checks if the wound is in a state that ointment or flesh will help
 /datum/wound/burn/flesh/proc/can_be_ointmented_or_meshed()
-	if(infestation > 0 || sanitization < infestation)
+	if(infestation > 0 && sanitization < infestation)
 		return TRUE
-	if(flesh_damage > 0 || flesh_healing <= flesh_damage)
+	if(flesh_damage > 0 && flesh_healing <= flesh_damage)
 		return TRUE
 	return FALSE
 

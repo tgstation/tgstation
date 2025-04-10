@@ -1,9 +1,15 @@
 import { sortBy } from 'common/collections';
-import { classes } from 'common/react';
 import { ReactNode } from 'react';
+import {
+  Dimmer,
+  Icon,
+  Section,
+  Stack,
+  VirtualList,
+} from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
 import { useSharedState } from '../../backend';
-import { Dimmer, Icon, Section, Stack, VirtualList } from '../../components';
 import { SearchBar } from '../common/SearchBar';
 import { Design, MaterialMap } from './Types';
 
@@ -208,8 +214,8 @@ export const DesignBrowser = <T extends Design = Design>(
             <Stack.Item>
               <Section title="Categories" fitted />
             </Stack.Item>
-            <Stack.Item grow>
-              <Section fill style={{ overflow: 'auto' }}>
+            <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
+              <Section fill>
                 <div className="FabricatorTabs">
                   <div
                     className={classes([
@@ -269,8 +275,8 @@ export const DesignBrowser = <T extends Design = Design>(
                 />
               </Section>
             </Stack.Item>
-            <Stack.Item grow>
-              <Section fill style={{ overflow: 'auto' }}>
+            <Stack.Item grow style={{ overflowY: 'auto', overflowX: 'hidden' }}>
+              <Section fill>
                 {searchText.length > 0 ? (
                   <VirtualList>
                     {sortBy(

@@ -1,9 +1,5 @@
 import { sortBy } from 'common/collections';
-import { BooleanLike } from 'common/react';
-import { createSearch } from 'common/string';
 import { useState } from 'react';
-
-import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -15,7 +11,11 @@ import {
   Section,
   Stack,
   TextArea,
-} from '../../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+import { createSearch } from 'tgui-core/string';
+
+import { useBackend } from '../../backend';
 import { NtosWindow } from '../../layouts';
 import { ChatScreen } from './ChatScreen';
 import { NtChat, NtMessenger, NtPicture } from './types';
@@ -52,7 +52,7 @@ export const NtosMessenger = (props) => {
     sending_virus,
   } = data;
 
-  let content: JSX.Element;
+  let content: React.JSX.Element;
   if (remote_silicon) {
     content = <AccessDeniedScreen />;
   } else if (open_chat !== null) {

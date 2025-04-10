@@ -216,18 +216,6 @@
 			return M
 	return 0
 
-///Find the first name of a mob from the real name with regex
-/mob/proc/first_name()
-	var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
-	firstname.Find(real_name)
-	return firstname.match
-
-/// Find the last name of a mob from the real name with regex
-/mob/proc/last_name()
-	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
-	lasttname.Find(real_name)
-	return lasttname.match
-
 ///Returns a mob's real name between brackets. Useful when you want to display a mob's name alongside their real name
 /mob/proc/get_realname_string()
 	if(real_name && real_name != name)
@@ -324,8 +312,8 @@
 			to_chat(ghost, span_ghostalert(message))
 			continue
 
-		var/interact_link = click_interact ? " <a href='?src=[REF(ghost)];play=[REF(source)]'>(Play)</a>" : ""
-		var/view_link = " <a href='?src=[REF(ghost)];view=[REF(source)]'>(View)</a>"
+		var/interact_link = click_interact ? " <a href='byond://?src=[REF(ghost)];play=[REF(source)]'>(Play)</a>" : ""
+		var/view_link = " <a href='byond://?src=[REF(ghost)];view=[REF(source)]'>(View)</a>"
 
 		to_chat(ghost, span_ghostalert("[message][custom_link][interact_link][view_link]"))
 
@@ -388,7 +376,7 @@
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(FALSE)
-		M.key = chosen_one.key
+		M.PossessByPlayer(chosen_one.key)
 		M.client?.init_verbs()
 		return TRUE
 	else
