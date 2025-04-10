@@ -29,7 +29,7 @@
 	if(!targName || !user.is_holding(src))
 		return
 	targetName = targName
-	laws[1] = "Only [targetName] is human"
+	laws[1] = "Только [targetName] является человеком" //MASSMETA EDIT (ru_ai_laws)
 	..()
 
 /obj/item/ai_module/zeroth/onehuman/install(datum/ai_laws/law_datum, mob/user)

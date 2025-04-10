@@ -80,14 +80,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned)
-"cE" = (
-/obj/effect/turf_decal/bot_white,
-/obj/machinery/atmospherics/components/tank/air/layer4{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/shuttle/abandoned)
 "cS" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
@@ -1050,6 +1042,14 @@
 "Sc" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/abandoned)
+"SN" = (
+/obj/effect/turf_decal/bot_white,
+/obj/machinery/atmospherics/components/tank/air/layer4{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/shuttle/abandoned)
 "Ts" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
@@ -1359,7 +1359,7 @@ CG
 Il
 pV
 Bu
-cE
+SN
 Sc
 ot
 cx

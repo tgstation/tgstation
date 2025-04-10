@@ -31,15 +31,15 @@
 	icon_state = "wood"
 	},
 /area/template_noop)
-"f" = (
-/obj/structure/table/wood,
-/obj/item/flashlight/lamp/green,
+"e" = (
+/obj/structure/table/wood/shuttle_bar,
+/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
 	},
 /area/template_noop)
-"h" = (
+"g" = (
 /obj/structure/table/wood,
 /obj/item/cigarette/pipe,
 /obj/effect/holodeck_effect/random_book,
@@ -53,24 +53,9 @@
 	icon_state = "wood"
 	},
 /area/template_noop)
-"j" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/template_noop)
 "k" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/box/matches,
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/template_noop)
-"l" = (
-/obj/structure/chair/stool/bar/directional/south,
-/obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -100,6 +85,14 @@
 "q" = (
 /turf/open/floor/holofloor/carpet,
 /area/template_noop)
+"s" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "wood"
+	},
+/area/template_noop)
 "t" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/item/book/manual/wiki/barman_recipes,
@@ -112,6 +105,14 @@
 /obj/structure/chair/wood{
 	dir = 4
 	},
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "wood"
+	},
+/area/template_noop)
+"v" = (
+/obj/structure/table/wood/poker,
+/obj/item/cigarette/pipe,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"
@@ -248,14 +249,6 @@
 	icon_state = "wood"
 	},
 /area/template_noop)
-"T" = (
-/obj/structure/table/wood/poker,
-/obj/item/cigarette/pipe,
-/turf/open/floor/holofloor{
-	dir = 9;
-	icon_state = "wood"
-	},
-/area/template_noop)
 "U" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/dice,
@@ -271,8 +264,15 @@
 	icon_state = "wood"
 	},
 /area/template_noop)
-"Y" = (
-/obj/structure/table/wood/shuttle_bar,
+"W" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/holofloor{
+	dir = 9;
+	icon_state = "wood"
+	},
+/area/template_noop)
+"X" = (
+/obj/structure/chair/stool/bar/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/holofloor{
 	dir = 9;
@@ -297,7 +297,7 @@ H
 a
 "}
 (2,1,1) = {"
-f
+s
 z
 z
 z
@@ -314,9 +314,9 @@ u
 u
 z
 z
-j
-l
-Y
+W
+X
+e
 c
 G
 "}
@@ -347,7 +347,7 @@ p
 (6,1,1) = {"
 m
 P
-T
+v
 o
 z
 F
@@ -390,5 +390,5 @@ O
 q
 E
 E
-h
+g
 "}

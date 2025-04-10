@@ -359,31 +359,8 @@
 	},
 /turf/open/floor/carpet/blue/airless,
 /area/shuttle/pirate/flying_dutchman)
-"nb" = (
-/obj/structure/mounted_gun/canister_gatling,
-/turf/open/floor/wood/airless,
-/area/shuttle/pirate/flying_dutchman)
 "pG" = (
 /obj/structure/window/reinforced/shuttle/survival_pod,
-/turf/open/floor/wood/airless,
-/area/shuttle/pirate/flying_dutchman)
-"qG" = (
-/obj/item/ammo_casing/canister_shot{
-	pixel_y = 8;
-	pixel_x = -8
-	},
-/obj/item/ammo_casing/canister_shot{
-	pixel_y = -8;
-	pixel_x = -8
-	},
-/obj/item/ammo_casing/canister_shot{
-	pixel_x = 6;
-	pixel_y = -8
-	},
-/obj/item/ammo_casing/canister_shot{
-	pixel_y = 8;
-	pixel_x = 6
-	},
 /turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "rd" = (
@@ -789,6 +766,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/carpet/royalblack/airless,
 /area/shuttle/pirate/flying_dutchman)
+"ND" = (
+/obj/structure/mounted_gun/canister_gatling,
+/turf/open/floor/wood/airless,
+/area/shuttle/pirate/flying_dutchman)
 "Oe" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -903,6 +884,25 @@
 "VF" = (
 /obj/machinery/loot_locator,
 /turf/open/floor/carpet/royalblack/airless,
+/area/shuttle/pirate/flying_dutchman)
+"Wg" = (
+/obj/item/ammo_casing/canister_shot{
+	pixel_y = 8;
+	pixel_x = -8
+	},
+/obj/item/ammo_casing/canister_shot{
+	pixel_y = -8;
+	pixel_x = -8
+	},
+/obj/item/ammo_casing/canister_shot{
+	pixel_x = 6;
+	pixel_y = -8
+	},
+/obj/item/ammo_casing/canister_shot{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/turf/open/floor/wood/airless,
 /area/shuttle/pirate/flying_dutchman)
 "WB" = (
 /turf/open/floor/wood/airless,
@@ -1257,7 +1257,7 @@ fW
 St
 QM
 da
-nb
+ND
 WB
 RQ
 eG
@@ -1284,7 +1284,7 @@ km
 sC
 mG
 bn
-qG
+Wg
 WB
 xY
 WR

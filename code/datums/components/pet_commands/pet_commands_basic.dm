@@ -8,7 +8,7 @@
 	command_name = "Stay"
 	command_desc = "Command your pet to stay idle in this location."
 	radial_icon_state = "halt"
-	speech_commands = list("sit", "stay", "stop")
+	speech_commands = list("sit", "stay", "stop", "сидеть", "лежать", "место", "фу", "стоп", "стой", "стоять") //MASSMETA EDIT CHANGE (add ru commands)
 	command_feedback = "sits"
 
 /datum/pet_command/idle/execute_action(datum/ai_controller/controller)
@@ -25,7 +25,7 @@
 	command_name = "Loose"
 	command_desc = "Allow your pet to resume its natural behaviours."
 	radial_icon_state = "free"
-	speech_commands = list("free", "loose")
+	speech_commands = list("free", "loose", "гулять", "вон", "свобод", "брысь") //MASSMETA EDIT CHANGE (add ru commands)
 	command_feedback = "relaxes"
 
 /datum/pet_command/free/execute_action(datum/ai_controller/controller)
@@ -43,7 +43,7 @@
 	command_name = "Follow"
 	command_desc = "Command your pet to accompany you."
 	radial_icon_state = "follow"
-	speech_commands = list("heel", "follow")
+	speech_commands = list("heel", "follow", "за мной", "след", "охран", "к ноге", "ко мне") //MASSMETA EDIT CHANGE (add ru commands)
 	callout_type = /datum/callout_option/move
 	///the behavior we use to follow
 	var/follow_behavior = /datum/ai_behavior/pet_follow_friend
@@ -67,7 +67,7 @@
 	command_name = "Play Dead"
 	command_desc = "Play a macabre trick."
 	radial_icon_state = "play_dead"
-	speech_commands = list("play dead") // Don't get too creative here, people talk about dying pretty often
+	speech_commands = list("play dead", "притворись", "мертв", "умри") // Don't get too creative here, people talk about dying pretty often //MASSMETA EDIT CHANGE (add ru commands)
 
 /datum/pet_command/play_dead/execute_action(datum/ai_controller/controller)
 	controller.queue_behavior(/datum/ai_behavior/play_dead)
@@ -135,8 +135,8 @@
 	command_desc = "Command your pet to attack things that you point out to it."
 	radial_icon_state = "attack"
 	requires_pointing = TRUE
+	speech_commands = list("attack", "sic", "kill", "апорт", "фас", "бить", "атак") //MASSMETA EDIT CHANGE (add ru commands)
 	callout_type = /datum/callout_option/attack
-	speech_commands = list("attack", "sic", "kill")
 	command_feedback = "growl"
 	pointed_reaction = "and growls"
 	/// Balloon alert to display if providing an invalid target
@@ -180,7 +180,7 @@
 	command_desc = "Command your pet to attempt to breed with a partner."
 	requires_pointing = TRUE
 	radial_icon_state = "breed"
-	speech_commands = list("breed", "consummate")
+	speech_commands = list("breed", "consummate", "размножайся", "ебитес") //MASSMETA EDIT CHANGE (add ru commands)
 	///the behavior we use to make babies
 	var/datum/ai_behavior/reproduce_behavior = /datum/ai_behavior/make_babies
 
@@ -217,7 +217,7 @@
 	radial_icon = 'icons/mob/actions/actions_spells.dmi'
 	radial_icon_state = "projectile"
 	requires_pointing = TRUE
-	speech_commands = list("shoot", "blast", "cast")
+	speech_commands = list("shoot", "blast", "cast", "стреля", "выстрел", "пиу", "паф", "каст") //MASSMETA EDIT CHANGE (add ru commands)
 	command_feedback = "growl"
 	pointed_reaction = "and growls"
 	/// Blackboard key where a reference to some kind of mob ability is stored

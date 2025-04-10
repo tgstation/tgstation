@@ -6537,6 +6537,19 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/white,
 /area/centcom/central_command_areas/evacuation)
+"Dh" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/surgery_tray/full{
+	pixel_y = 10;
+	pixel_x = 2
+	},
+/obj/item/storage/box/masks{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/white,
+/area/centcom/central_command_areas/evacuation/ship)
 "Di" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/ai_multicam_room)
@@ -9981,19 +9994,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/armory)
-"Vh" = (
-/obj/structure/table/reinforced,
-/obj/effect/spawner/surgery_tray/full{
-	pixel_y = 10;
-	pixel_x = 2
-	},
-/obj/item/storage/box/masks{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron/white,
-/area/centcom/central_command_areas/evacuation/ship)
 "Vi" = (
 /obj/item/book/manual/wiki/security_space_law,
 /obj/structure/table/wood,
@@ -37914,7 +37914,7 @@ Lt
 aa
 aa
 Lt
-Vh
+Dh
 LI
 CH
 CH

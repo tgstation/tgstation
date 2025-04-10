@@ -66,7 +66,7 @@
  */
 /proc/htmlrendertext(t)
 	// Trim "whitespace" by lazily capturing word characters in the middle
-	var/static/regex/matchMiddle = new(@"^\s*([\W\w]*?)\s*$")
+	var/static/regex/matchMiddle = new(@"^\s*([\W\wа-яА-ЯёЁ]*?)\s*$", "i") //MASSMETA EDIT CHANGE (cyrillic) - ORIGINAL: = new(@"^\s*([\W\w]*?)\s*$")
 	if(matchMiddle.Find(t) == 0)
 		return t
 	t = matchMiddle.group[1]
@@ -92,7 +92,7 @@
 	if(ascii_only)
 		if(length(text) > max_length)
 			return null
-		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\t\n]")
+		var/static/regex/non_ascii = regex(@"[^\x20-\x7E\t\n\u0400-\u04FF]") //MASSMETA EDIT CHANGE (cyrillic) - ORIGINAL: = regex(@"[^\x20-\x7E\t\n]")
 		if(non_ascii.Find(text))
 			return null
 	else if(length_char(text) > max_length)
@@ -178,12 +178,12 @@
 		switch(text2ascii(char))
 
 			// A  .. Z
-			if(65 to 90) //Uppercase Letters
+			if(65 to 90, 1040 to 1071, 1025) //Uppercase Letters //MASSMETA EDIT CHANGE (cyrillic)
 				number_of_alphanumeric++
 				last_char_group = LETTERS_DETECTED
 
 			// a  .. z
-			if(97 to 122) //Lowercase Letters
+			if(97 to 122, 1072 to 1103, 1105) //Lowercase Letters //MASSMETA EDIT CHANGE (cyrillic)
 				if(last_char_group == NO_CHARS_DETECTED || last_char_group == SPACES_DETECTED || cap_after_symbols && last_char_group == SYMBOLS_DETECTED) //start of a word
 					char = uppertext(char)
 				number_of_alphanumeric++

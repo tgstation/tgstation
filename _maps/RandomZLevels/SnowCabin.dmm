@@ -597,11 +597,6 @@
 /obj/item/food/meat/slab/synthmeat,
 /turf/open/floor/iron/freezer,
 /area/awaymission/cabin)
-"cH" = (
-/obj/effect/landmark/awaystart/snowcabin,
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/awaymission/cabin)
 "cI" = (
 /obj/structure/cable,
 /obj/structure/chair/office/light,
@@ -658,11 +653,6 @@
 "cP" = (
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/awaymission/cabin)
-"cQ" = (
-/obj/effect/landmark/awaystart/snowcabin,
-/obj/structure/cable,
-/turf/open/floor/carpet,
 /area/awaymission/cabin)
 "cS" = (
 /obj/machinery/button/door/directional/north{
@@ -2330,6 +2320,11 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
+"lx" = (
+/obj/effect/landmark/awaystart/snowcabin,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/awaymission/cabin)
 "lz" = (
 /obj/structure/sign/poster/official/cleanliness/directional/south,
 /turf/open/floor/iron/white,
@@ -2702,6 +2697,11 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin)
+"pm" = (
+/obj/effect/landmark/awaystart/snowcabin,
+/obj/structure/cable,
+/turf/open/floor/carpet,
+/area/awaymission/cabin)
 "pq" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -2898,13 +2898,6 @@
 	},
 /turf/open/floor/plating/snowed/snow_cabin,
 /area/awaymission/cabin/snowforest)
-"rk" = (
-/obj/machinery/light/directional/south,
-/obj/effect/landmark/awaystart/snowcabin,
-/obj/structure/sign/poster/official/report_crimes/directional/south,
-/obj/structure/cable,
-/turf/open/floor/carpet,
-/area/awaymission/cabin)
 "rK" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
 /obj/effect/light_emitter{
@@ -4107,27 +4100,6 @@
 /obj/structure/light_construct/directional/south,
 /turf/open/misc/asteroid/snow/snow_cabin,
 /area/awaymission/cabin/caves)
-"FQ" = (
-/obj/structure/statue/snow/snowman{
-	anchored = 1;
-	name = "Because"
-	},
-/obj/item/clothing/head/costume/scarecrow_hat{
-	desc = "A replica straw hat that isn't actually made out of straw";
-	name = "synthetic straw hat";
-	pixel_x = -1;
-	pixel_y = 10
-	},
-/obj/item/gun/ballistic/shotgun/toy{
-	pixel_y = -2
-	},
-/obj/effect/light_emitter{
-	set_cap = 3;
-	set_luminosity = 6;
-	light_color = "#9bbbff"
-	},
-/turf/open/misc/asteroid/snow/snow_cabin,
-/area/awaymission/cabin/caves)
 "FW" = (
 /obj/effect/decal/remains/human,
 /obj/structure/light_construct/directional/south,
@@ -4508,6 +4480,27 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/indestructible,
 /area/awaymission/cabin/caves/mountain)
+"LF" = (
+/obj/structure/statue/snow/snowman{
+	anchored = 1;
+	name = "Because"
+	},
+/obj/item/clothing/head/costume/scarecrow_hat{
+	desc = "A replica straw hat that isn't actually made out of straw";
+	name = "synthetic straw hat";
+	pixel_x = -1;
+	pixel_y = 10
+	},
+/obj/item/gun/ballistic/shotgun/toy{
+	pixel_y = -2
+	},
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 6;
+	light_color = "#9bbbff"
+	},
+/turf/open/misc/asteroid/snow/snow_cabin,
+/area/awaymission/cabin/caves)
 "LG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible{
 	dir = 4
@@ -5474,6 +5467,13 @@
 "Yp" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
+/area/awaymission/cabin)
+"YC" = (
+/obj/machinery/light/directional/south,
+/obj/effect/landmark/awaystart/snowcabin,
+/obj/structure/sign/poster/official/report_crimes/directional/south,
+/obj/structure/cable,
+/turf/open/floor/carpet,
 /area/awaymission/cabin)
 "YG" = (
 /obj/structure/chair{
@@ -28295,7 +28295,7 @@ ab
 ab
 ab
 ue
-FQ
+LF
 vh
 vh
 vh
@@ -35813,8 +35813,8 @@ aq
 aq
 aq
 eg
-cH
-cQ
+lx
+pm
 bb
 an
 xt
@@ -36071,8 +36071,8 @@ cp
 eg
 eg
 aq
-cQ
-rk
+pm
+YC
 an
 xt
 vh
@@ -36327,8 +36327,8 @@ aq
 aq
 aq
 eg
-cH
-cQ
+lx
+pm
 az
 an
 xt

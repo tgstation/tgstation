@@ -566,11 +566,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
-"bH" = (
-/obj/machinery/vending/boozeomat,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/pirate)
 "bI" = (
 /obj/machinery/light/small/directional/south,
 /obj/machinery/computer/piratepad_control{
@@ -945,6 +940,11 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/pirate)
+"RI" = (
+/obj/machinery/vending/boozeomat,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/pirate)
 "RY" = (
 /obj/effect/mob_spawn/ghost_role/human/pirate/captain{
 	dir = 4
@@ -1068,7 +1068,7 @@ af
 aj
 az
 bx
-bH
+RI
 aj
 aj
 aj

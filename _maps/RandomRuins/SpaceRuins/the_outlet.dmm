@@ -699,12 +699,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/the_outlet/employeesection)
-"rF" = (
-/obj/structure/table/reinforced/rglass,
-/obj/effect/spawner/surgery_tray/full,
-/obj/item/reagent_containers/syringe/lethal/execution,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/has_grav/the_outlet/researchrooms)
 "rH" = (
 /obj/effect/decal/cleanable/blood{
 	icon_state = "floor1-old"
@@ -1760,6 +1754,12 @@
 /obj/effect/spawner/random/structure/crate_abandoned,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/the_outlet/employeesection)
+"Qg" = (
+/obj/structure/table/reinforced/rglass,
+/obj/effect/spawner/surgery_tray/full,
+/obj/item/reagent_containers/syringe/lethal/execution,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/the_outlet/researchrooms)
 "Qi" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2759,7 +2759,7 @@ Er
 Er
 Er
 Fm
-rF
+Qg
 qo
 zB
 Nb
