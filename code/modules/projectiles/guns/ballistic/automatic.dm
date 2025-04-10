@@ -2,7 +2,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	can_suppress = TRUE
 	burst_size = 3
-	fire_delay = 2
+	burst_delay = 2
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	semi_auto = TRUE
 	fire_sound = 'sound/items/weapons/gun/smg/shot.ogg'
@@ -40,7 +40,7 @@
 	inhand_icon_state = "c20r"
 	selector_switch_icon = TRUE
 	accepted_magazine_type = /obj/item/ammo_box/magazine/smgm45
-	fire_delay = 2
+	burst_delay = 2
 	burst_size = 3
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
@@ -73,7 +73,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	inhand_icon_state = "arg"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/wt550m9
-	fire_delay = 2
+	burst_delay = 2
 	can_suppress = FALSE
 	burst_size = 1
 	actions_types = list()
@@ -96,7 +96,7 @@
 	inhand_icon_state = "smartgun"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/smartgun
 	burst_size = 4
-	fire_delay = 1
+	burst_delay = 1
 	spread = 40
 	dual_wield_spread = 20
 	actions_types = list()
@@ -150,7 +150,7 @@
 	can_suppress = FALSE
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
 	burst_size = 3
-	fire_delay = 2
+	burst_delay = 2
 	spread = 5
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
@@ -199,7 +199,7 @@
 	can_suppress = FALSE
 	burst_size = 1
 	actions_types = list()
-	fire_delay = 1
+	burst_delay = 1
 	bolt_type = BOLT_TYPE_OPEN
 	empty_indicator = TRUE
 	show_bolt_icon = FALSE
@@ -217,7 +217,7 @@
 /obj/item/gun/ballistic/automatic/tommygun/chimpgun
 	name = "\improper Typewriter"
 	desc = "It was the best of times, it was the BLURST of times!? You stupid monkeys!"
-	fire_delay = 2
+	burst_delay = 2
 	rof = 0.2 SECONDS
 	projectile_damage_multiplier = 0.4
 	projectile_wound_bonus = -25
@@ -232,7 +232,7 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/m223
 	can_suppress = FALSE
 	burst_size = 3
-	fire_delay = 1
+	burst_delay = 1
 
 // L6 SAW //
 
@@ -317,49 +317,6 @@
 		balloon_alert(user, "open the cover!")
 		return
 	..()
-
-// SKS semi-automatic rifle //
-
-/obj/item/gun/ballistic/automatic/sks
-	name = "\improper Sakhno SKS semi-automatic rifle"
-	desc = "A revival of the ancient SKS semi-automatic rifle, redesigned to utilize .310 Strilka rounds. Produced to celebrate the \
-		establishment of the Third Soviet Union in the Spinward Sector. In the wake of the union's collapse, these weapons now hold a \
-		unique place in history amongst the populace of the sector. However, they are strangely rarer than the Sakhno M2442 Army. \
-		Frontier settlers are known for owning one of these for hunting purposes. Or fighting off annoying tax collectors."
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
-	icon_state = "sks"
-	worn_icon_state = "sks"
-	inhand_icon_state = "sks"
-	burst_size = 1
-	fire_delay = 0
-	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/sks
-	internal_magazine = TRUE
-	bolt_type = BOLT_TYPE_NO_BOLT
-	can_suppress = FALSE
-	tac_reloads = FALSE
-	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
-	weapon_weight = WEAPON_HEAVY
-	projectile_damage_multiplier = 0.5
-	fire_sound = 'sound/items/weapons/gun/rifle/shot_heavy.ogg'
-	fire_sound_volume = 90
-	drop_sound = 'sound/items/handling/gun/ballistics/rifle/rifle_drop1.ogg'
-	pickup_sound = 'sound/items/handling/gun/ballistics/rifle/rifle_pickup1.ogg'
-	actions_types = list()
-
-	SET_BASE_PIXEL(-8, 0)
-
-/obj/item/gun/ballistic/automatic/sks/add_bayonet_point()
-	AddComponent(/datum/component/bayonet_attachable, offset_x = 38, offset_y = 12)
-
-/obj/item/gun/ballistic/automatic/sks/chekhov
-	name = "\improper Chekhov's SKS semi-automatic rifle"
-	desc = "A revival of the ancient SKS semi-automatic rifle, redesigned to utilize .310 Strilka rounds. The name \
-		'Chekhov' is engraved in the side of the stock. You feel like this had some kind of significance at one point, \
-		but you cannot be sure as to what that might have been. Or whether that true meaning has yet to reveal itself."
-
-/obj/item/gun/ballistic/automatic/sks/empty
-	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/sks/empty
 
 // Laser rifle (rechargeable magazine) //
 
@@ -446,7 +403,7 @@
 	. = ..()
 	. += span_notice("<b><i>Looking down at \the [src], you recall something you read in a promotional pamphlet... </i></b>")
 
-	. += span_info("The BR-38 possesses an acceleration rail that launches bullets at higher than typical velocity.\
+	. += span_info("The BR-38 possesses an acceleration rail that launches bullets at higher than typical velocity. \
 		This allows even less powerful cartridges to put out significant amounts of stopping power.")
 
 	. += span_notice("<b><i>However, you also remember some of the rumors...  </i></b>")

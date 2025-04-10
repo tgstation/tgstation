@@ -99,10 +99,10 @@
 	var/mutable_appearance/low_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", CLEANABLE_OBJECT_LAYER, target, GAME_PLANE)
 	var/mutable_appearance/high_bubble = mutable_appearance('icons/effects/effects.dmi', "bubbles", CLEANABLE_OBJECT_LAYER, target, ABOVE_GAME_PLANE)
 	var/list/icon_offsets = target.get_oversized_icon_offsets()
-	low_bubble.pixel_x = icon_offsets["x"]
-	low_bubble.pixel_y = icon_offsets["y"]
-	high_bubble.pixel_x = icon_offsets["x"]
-	high_bubble.pixel_y = icon_offsets["y"]
+	low_bubble.pixel_w = icon_offsets["x"]
+	low_bubble.pixel_z = icon_offsets["y"]
+	high_bubble.pixel_w = icon_offsets["x"]
+	high_bubble.pixel_z = icon_offsets["y"]
 	if(target.plane > low_bubble.plane) //check if the higher overlay is necessary
 		target.add_overlay(high_bubble)
 	else if(target.plane == low_bubble.plane)

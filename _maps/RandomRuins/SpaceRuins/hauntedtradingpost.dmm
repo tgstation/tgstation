@@ -4042,15 +4042,15 @@
 	},
 /obj/effect/decal/cleanable/oil/slippery,
 /obj/item/trash/popcorn/salty,
-/obj/item/ammo_casing/shotgun/fletchette{
+/obj/item/ammo_casing/shotgun/flechette/donk{
 	pixel_x = 8;
 	pixel_y = 4
 	},
-/obj/item/ammo_casing/shotgun/fletchette{
+/obj/item/ammo_casing/shotgun/flechette/donk{
 	pixel_x = -2;
 	pixel_y = -7
 	},
-/obj/item/ammo_casing/shotgun/fletchette{
+/obj/item/ammo_casing/shotgun/flechette/donk{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -5744,11 +5744,11 @@
 	pixel_y = 12;
 	pixel_x = -6
 	},
-/obj/item/food/dankpocket{
+/obj/item/food/donkpocket/dank{
 	pixel_x = -10
 	},
-/obj/item/food/dankpocket,
-/obj/item/food/dankpocket{
+/obj/item/food/donkpocket/dank,
+/obj/item/food/donkpocket/dank{
 	pixel_x = 10
 	},
 /obj/machinery/light/warm/directional/east,

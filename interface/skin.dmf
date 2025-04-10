@@ -374,6 +374,7 @@ window "output_browser"
 		background-color = none
 		saved-params = ""
 
+
 window "popupwindow"
 	elem "popupwindow"
 		type = MAIN

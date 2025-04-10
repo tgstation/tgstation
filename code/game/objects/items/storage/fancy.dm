@@ -127,7 +127,9 @@
 		if (!istype(donut))
 			continue
 
-		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH)
+		var/image/donut_image = image(icon = initial(icon), icon_state = donut.in_box_sprite())
+		donut_image.pixel_w = donuts * DONUT_INBOX_SPRITE_WIDTH
+		. += donut_image
 		donuts += 1
 
 	. += image(icon = initial(icon), icon_state = "[base_icon_state]_top")
@@ -254,19 +256,6 @@
 	else
 		quick_remove_item(/obj/item/cigarette, user)
 	return CLICK_ACTION_SUCCESS
-
-/// Removes an item or puts it in mouth from the packet, if any
-/obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user, equip_to_mouth =  FALSE)
-	var/obj/item/finger = locate(grabbies) in contents
-	if(finger)
-		if(!equip_to_mouth)
-			if(atom_storage.remove_single(user, finger, drop_location()))
-				user.put_in_hands(finger)
-			return
-		if(user.equip_to_slot_if_possible(finger, ITEM_SLOT_MASK, qdel_on_fail = FALSE, disable_warning = TRUE))
-			finger.forceMove(user)
-			return
-		balloon_alert(user, "mouth is covered!")
 
 /obj/item/storage/fancy/cigarettes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -509,6 +498,7 @@
 	icon_state = "nuggetbox"
 	base_icon_state = "nuggetbox"
 	contents_tag = "nugget"
+	w_class = WEIGHT_CLASS_SMALL
 	spawn_type = /obj/item/food/nugget
 	spawn_count = 6
 

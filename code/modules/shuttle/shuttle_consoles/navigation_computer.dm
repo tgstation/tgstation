@@ -29,6 +29,7 @@
 	var/designate_time = 0
 	var/turf/designating_target_loc
 	var/jammed = FALSE
+	var/zlink_range = 0
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/Initialize(mapload)
 	. = ..()
@@ -380,6 +381,23 @@
 	. = ..()
 	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin_ref?.resolve()
 	console.checkLandingSpot()
+
+/mob/eye/camera/remote/shuttle_docker/allow_z_transition(datum/space_level/from, datum/space_level/into)
+	. = ..()
+	if(.)
+		return
+	var/obj/machinery/computer/camera_advanced/shuttle_docker/console = origin_ref?.resolve()
+	if(!console.zlink_range)
+		return
+	var/obj/docking_port/mobile/shuttle = console.shuttle_port
+	if(!shuttle)
+		return
+	var/list/zlevel_stack = SSmapping.get_connected_levels(shuttle.z)
+	var/list/zlevels_in_range = list()
+	for(var/level in zlevel_stack)
+		zlevels_in_range |= get_linked_z_levels_in_range(level, console.zlink_range)
+	return zlevels_in_range[into]
+
 
 /mob/eye/camera/remote/shuttle_docker/update_remote_sight(mob/living/user)
 	user.set_sight(BLIND|SEE_TURFS)

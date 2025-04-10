@@ -630,6 +630,10 @@
 "lJ" = (
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/film_studio/backstage)
+"mc" = (
+/obj/machinery/vending/boozeomat,
+/turf/closed/wall,
+/area/ruin/space/has_grav/film_studio/dorms)
 "mf" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/effect/decal/cleanable/dirt,
@@ -767,6 +771,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/film_studio/starboard)
+"pq" = (
+/obj/machinery/chem_dispenser/drinks/fullupgrade{
+	dir = 8;
+	pixel_y = 0;
+	pixel_x = -16
+	},
+/turf/closed/wall,
+/area/ruin/space/has_grav/film_studio/dorms)
 "pA" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/coffee/no_lid{
@@ -830,11 +842,6 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/siding/dark_green{
 	dir = 4
-	},
-/obj/machinery/chem_dispenser/drinks/fullupgrade{
-	dir = 8;
-	pixel_y = 0;
-	pixel_x = 18
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/dorms)
@@ -1082,9 +1089,6 @@
 /obj/effect/turf_decal/siding/dark_green{
 	dir = 6
 	},
-/obj/machinery/vending/boozeomat{
-	pixel_x = 32
-	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/dorms)
 "tY" = (
@@ -1148,6 +1152,14 @@
 /area/ruin/space)
 "vD" = (
 /turf/open/floor/iron/smooth,
+/area/ruin/space/has_grav/film_studio/dorms)
+"vI" = (
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
+	dir = 8;
+	pixel_y = 0;
+	pixel_x = -16
+	},
+/turf/closed/wall,
 /area/ruin/space/has_grav/film_studio/dorms)
 "vJ" = (
 /obj/structure/chair/sofa/bench/right,
@@ -2987,11 +2999,6 @@
 	dir = 4
 	},
 /obj/structure/sink/kitchen/directional/south,
-/obj/machinery/chem_dispenser/drinks/beer/fullupgrade{
-	dir = 8;
-	pixel_x = 18;
-	pixel_y = 0
-	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/dorms)
 "Yc" = (
@@ -4071,9 +4078,9 @@ jN
 uR
 hY
 XK
-XK
-XK
-XK
+vI
+pq
+mc
 XK
 XK
 XK

@@ -210,18 +210,17 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		else
 			live_guy.fully_heal()
 
-		for(var/area/check_area in GLOB.areas)
-			if(!is_type_in_list(check_area, GLOB.the_station_areas))
-				continue
-			if(!(check_area.area_flags & BLOBS_ALLOWED))
-				continue
-			check_area.color = blobstrain.color
-			check_area.name = "blob"
-			check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
-			check_area.icon_state = "blob_shield"
-			check_area.layer = BELOW_MOB_LAYER
-			check_area.SetInvisibility(INVISIBILITY_NONE)
-			check_area.blend_mode = 0
+	for(var/area_type in GLOB.the_station_areas)
+		var/area/check_area = GLOB.areas_by_type[area_type]
+		if(!(check_area.area_flags & BLOBS_ALLOWED))
+			continue
+		check_area.color = blobstrain.color
+		check_area.name = "blob"
+		check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
+		check_area.icon_state = "blob_shield"
+		check_area.layer = BELOW_MOB_LAYER
+		check_area.SetInvisibility(INVISIBILITY_NONE)
+		check_area.blend_mode = 0
 
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
 	if(B)
@@ -325,7 +324,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	var/message_a = say_quote(message)
 	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]"))
-	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src)
+	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src, MESSAGE_TYPE_RADIO)
 
 /mob/eye/blob/blob_act(obj/structure/blob/B)
 	return

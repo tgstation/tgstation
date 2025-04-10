@@ -1,9 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "The Kitchen Coldroom, RND Server Room, Xenobio Kill Room, and Telecomms on all maps now come equipped with walkable, transparent airtight plastic flaps."
-  - rscadd: "Medbay Coldrooms are now consistently cold across all maps that has one. They, too, now have plastic flaps."
-  - rscadd: "Plastic flaps will now melt in hot environments / active fires. Cargo flaps are more resilient to fire than kitchen flaps."
-  - qol: "Open doors no longer layer beneath plastic flaps, in other words you can actually click on them to shut them."
-  - qol: "Plastic flaps may be less irritating to traverse for things which can already pass through glass"
-  - sound: "Walking out of plastic flaps now has sfx. Crawling out is still silent."

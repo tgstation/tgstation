@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 		for (var/i in 1 to 4)
 			if (init_dir & j)
 				volume += UNARY_PIPE_VOLUME
-			j << 1
+			j <<= 1
 		volume = max(volume, UNARY_PIPE_VOLUME * 2) // Minimum 2 directions
 	else
 		initialize_directions = ALL_CARDINALS

@@ -124,3 +124,9 @@
 	. = ..()
 	affected_mob.remove_status_effect(/datum/status_effect/frozenstasis/irresistable)
 	affected_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
+
+/datum/reagent/inverse/cryostylane/on_mob_delete(mob/living/affected_mob, amount)
+	. = ..()
+	affected_mob.remove_status_effect(/datum/status_effect/frozenstasis/irresistable)
+	affected_mob.remove_status_effect(/datum/status_effect/grouped/stasis, STASIS_CHEMICAL_EFFECT)
+

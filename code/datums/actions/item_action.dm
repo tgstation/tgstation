@@ -27,7 +27,11 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(target)
-		var/obj/item/item_target = target
-		item_target.ui_action_click(owner, src)
+	return do_effect(trigger_flags)
+
+/datum/action/item_action/proc/do_effect(trigger_flags)
+	if(!target)
+		return FALSE
+	var/obj/item/item_target = target
+	item_target.ui_action_click(owner, src)
 	return TRUE

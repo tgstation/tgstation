@@ -162,19 +162,23 @@
 	if(!IS_HERETIC_OR_MONSTER(user))
 		user.balloon_alert(user, "you feel a presence watching you")
 		user.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
-		user.mob_mood.set_sanity(user.mob_mood.sanity - 50)
+		user.mob_mood.adjust_sanity(-50)
 		return
+
 	if(hit.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
 		return
+
 	if(!hit.mob_mood)
 		return
+
 	if(hit.mob_mood.sanity_level > SANITY_LEVEL_UNSTABLE)
 		user.balloon_alert(user, "their mind is too strong!")
 		hit.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
-		hit.mob_mood.set_sanity(hit.mob_mood.sanity - sanity_damage)
-	else
-		user.balloon_alert(user, "their mind bends to see the truth!")
-		hit.apply_status_effect(/datum/status_effect/moon_converted)
-		user.log_message("made [target] insane.", LOG_GAME)
-		hit.log_message("was driven insane by [user]")
+		hit.mob_mood.adjust_sanity(-sanity_damage)
+		return ..()
+
+	user.balloon_alert(user, "their mind bends to see the truth!")
+	hit.apply_status_effect(/datum/status_effect/moon_converted)
+	user.log_message("made [target] insane.", LOG_GAME)
+	hit.log_message("was driven insane by [user]")
 	. = ..()

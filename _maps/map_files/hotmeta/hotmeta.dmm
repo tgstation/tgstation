@@ -12196,8 +12196,8 @@
 /area/station/commons/fitness/recreation)
 "epK" = (
 /obj/machinery/door/puzzle/keycard{
-	puzzle_id = yellow;
-	color = red
+	puzzle_id = "yellow";
+	color = "red"
 	},
 /turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
@@ -15674,7 +15674,7 @@
 /obj/structure/table/reinforced,
 /obj/item/folder/yellow,
 /obj/item/stamp/head/ce,
-/obj/item/reagent_containers/pill/patch/aiuri,
+/obj/item/reagent_containers/applicator/patch/aiuri,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
@@ -40459,7 +40459,7 @@
 "ogh" = (
 /obj/machinery/door/puzzle/keycard{
 	puzzle_id = "flight";
-	color = red
+	color = "red"
 	},
 /turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
@@ -56466,7 +56466,7 @@
 "tLW" = (
 /obj/machinery/door/puzzle/keycard{
 	puzzle_id = "blue";
-	color = red
+	color = "red"
 	},
 /turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)

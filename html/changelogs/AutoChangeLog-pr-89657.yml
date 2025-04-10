@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "The part of a MODsuit that the other parts deploy from always counts as deployed for the purposes of speed calculation."

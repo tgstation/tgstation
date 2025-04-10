@@ -162,6 +162,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		if("set_emergency")
 			if(emergency)
 				return
+			emergency = params["emergency"]
 			switch(params["emergency"])
 				if(REQ_EMERGENCY_SECURITY) //Security
 					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)

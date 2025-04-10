@@ -147,6 +147,14 @@
 	. = ..()
 	allowed_turf_typecache = typecacheof(allowed_turf)
 
+/datum/component/riding/vehicle/lavaboat/get_parent_offsets_and_layers()
+	return list(
+		TEXT_NORTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_SOUTH = list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_EAST =  list(0, 0, ABOVE_MOB_LAYER),
+		TEXT_WEST =  list(0, 0, ABOVE_MOB_LAYER),
+	)
+
 /datum/component/riding/vehicle/lavaboat/dragonboat
 	vehicle_move_delay = 1
 

@@ -23,11 +23,11 @@
 	name = "fly eyes"
 	desc = "These eyes seem to stare back no matter the direction you look at it from."
 	eye_icon_state = "flyeyes"
-	icon_state = "eyeballs-fly"
+	icon_state = "eyes_fly"
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	native_fov = NONE //flies can see all around themselves.
 	blink_animation = FALSE
-	iris_overlays = FALSE
+	iris_overlay = null
 
 /obj/item/organ/eyes/fly/Initialize(mapload)
 	. = ..()

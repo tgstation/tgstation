@@ -38,8 +38,7 @@
 	var/fish_type = get_fish_type()
 	if(fish_type)
 		var/obj/item/fish/spawned_fish = new fish_type(null)
-		ADD_TRAIT(spawned_fish, TRAIT_FISH_FROM_CASE, TRAIT_GENERIC)
-		ADD_TRAIT(spawned_fish, TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_GENERIC)
+		spawned_fish.add_traits(list(TRAIT_NO_FISHING_ACHIEVEMENT, TRAIT_FISH_LOW_PRICE), INNATE_TRAIT)
 		spawned_fish.forceMove(src) // trigger storage.handle_entered
 
 /obj/item/storage/fish_case/proc/get_fish_type()
@@ -189,6 +188,7 @@
 	name = "aquarium props box"
 	desc = "All you need to make your aquarium look good."
 	illustration = "fish"
+	custom_price = PAYCHECK_LOWER
 
 /obj/item/storage/box/aquarium_props/PopulateContents()
 	for(var/prop_type in subtypesof(/obj/item/aquarium_prop))

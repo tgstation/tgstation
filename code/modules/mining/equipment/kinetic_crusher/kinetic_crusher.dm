@@ -29,6 +29,7 @@
 	attack_verb_simple = list("smash", "crush", "cleave", "chop", "pulp")
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/toggle_light)
+	action_slots = ALL
 	obj_flags = UNIQUE_RENAME
 	light_system = OVERLAY_LIGHT
 	light_range = 5
@@ -316,7 +317,7 @@
 		if(QDELETED(hit_mineral))
 			return ..()
 		new /obj/effect/temp_visual/kinetic_blast(hit_mineral)
-		hit_mineral.gets_drilled(firer, TRUE)
+		hit_mineral.gets_drilled(firer, 1)
 		if(!iscarbon(firer))
 			return ..()
 		var/mob/living/carbon/carbon_firer = firer

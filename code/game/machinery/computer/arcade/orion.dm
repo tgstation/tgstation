@@ -78,9 +78,8 @@
 		if(!(event.type in event_whitelist))
 			events.Remove(event)
 
-/obj/machinery/computer/arcade/orion_trail/proc/newgame()
+/obj/machinery/computer/arcade/orion_trail/proc/newgame(mob/living/player)
 	// Set names of settlers in crew
-	var/mob/living/player = usr
 	var/player_crew_name = first_name(player.name)
 	settlers = list()
 	for(var/i in 1 to ORION_STARTING_CREW_COUNT - 1) //one reserved to be YOU
@@ -143,7 +142,7 @@
 
 /obj/machinery/computer/arcade/orion_trail/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/moods),
+		get_asset_datum(/datum/asset/spritesheet_batched/moods),
 	)
 
 /obj/machinery/computer/arcade/orion_trail/ui_data(mob/user)
@@ -183,7 +182,7 @@
 	if(.)
 		return
 
-	var/mob/living/gamer = usr
+	var/mob/living/gamer = ui.user
 	if(!istype(gamer))
 		return
 
@@ -213,7 +212,7 @@
 		if("start_game")
 			if(gameStatus != ORION_STATUS_START)
 				return
-			newgame()
+			newgame(gamer)
 		if("instructions")
 			if(gameStatus != ORION_STATUS_START)
 				return
@@ -333,9 +332,8 @@
 	if(obj_flags & EMAGGED)
 		event.emag_effect(src, gamer)
 
-/obj/machinery/computer/arcade/orion_trail/proc/set_game_over(user, given_reason)
-	usr.lost_game()
-
+/obj/machinery/computer/arcade/orion_trail/proc/set_game_over(mob/living/user, given_reason)
+	user.lost_game()
 	gameStatus = ORION_STATUS_GAMEOVER
 	event = null
 	reason = given_reason || death_reason(user)
@@ -463,15 +461,14 @@
 		if(lings_suspected) //lings ruin any good mood
 			settlermoods[settlers[i]] = min(settlermoods[settlers[i]], 3)
 
-/obj/machinery/computer/arcade/orion_trail/proc/win(mob/user)
-	usr.won_game()
-
+/obj/machinery/computer/arcade/orion_trail/proc/win(mob/living/user)
+	user.won_game()
 	gameStatus = ORION_STATUS_START
 	say("Congratulations, you made it to Orion!")
 	if(obj_flags & EMAGGED)
 		new /obj/item/orion_ship(loc)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] made it to Orion on an emagged machine and got an explosive toy ship.")
-		usr.log_message("made it to Orion on an emagged machine and got an explosive toy ship.", LOG_GAME)
+		message_admins("[ADMIN_LOOKUPFLW(user)] made it to Orion on an emagged machine and got an explosive toy ship.")
+		user.log_message("made it to Orion on an emagged machine and got an explosive toy ship.", LOG_GAME)
 	else
 		new /obj/item/stack/arcadeticket((get_turf(src)), 2)
 		to_chat(user, span_notice("[src] dispenses 2 tickets!"))
@@ -479,17 +476,21 @@
 	name = initial(name)
 	desc = initial(desc)
 
-/obj/machinery/computer/arcade/orion_trail/emag_act(mob/user, obj/item/card/emag/emag_card)
+/obj/machinery/computer/arcade/orion_trail/emag_act(mob/living/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if (user)
-		user.log_message("emagged [src], activating Realism Mode.", LOG_GAME)
-		balloon_alert(user, "realism mode enabled")
-		to_chat(user, span_notice("You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode."))
+
 	name = "The Orion Trail: Realism Edition"
 	desc = "Learn how our ancestors got to Orion, and try not to die in the process!"
-	newgame()
 	obj_flags |= EMAGGED
+
+	if (!user)
+		return TRUE
+
+	user.log_message("emagged [src], activating Realism Mode.", LOG_GAME)
+	balloon_alert(user, "realism mode enabled")
+	to_chat(user, span_notice("You override the cheat code menu and skip to Cheat #[rand(1, 50)]: Realism Mode."))
+	newgame(user)
 	return TRUE
 
 ///A minibomb achieved from winning at emagged Orion.
@@ -515,7 +516,7 @@
 	if(active)
 		return
 
-	log_bomber(usr, "primed an explosive", src, "for detonation")
+	log_bomber(user, "primed an explosive", src, "for detonation")
 	to_chat(user, span_warning("You flip the switch on the underside of [src]."))
 	active = TRUE
 	addtimer(CALLBACK(src, PROC_REF(commit_explosion)), 1 SECONDS)

@@ -22,7 +22,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_shadyjims = 10,
 		/obj/item/storage/box/donkpockets = 10,
 		/obj/effect/spawner/random/contraband/plus = 10,
-		/obj/item/reagent_containers/pill/maintenance = 5,
+		/obj/item/reagent_containers/applicator/pill/maintenance = 5,
 		/obj/item/survivalcapsule/fishing = 5,
 	)
 

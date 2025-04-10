@@ -184,14 +184,17 @@
 		labor_console = null
 	return ..()
 
-/obj/machinery/mineral/stacking_machine/laborstacker/process_sheet(obj/item/stack/sheet/input)
-	if (input.manufactured && input.gulag_valid)
-		points += SHEET_POINT_VALUE * input.amount
+/obj/machinery/mineral/stacking_machine/laborstacker/process_stack(obj/item/stack/input)
+	if (!istype(input, /obj/item/stack/sheet))
+		return ..()
+	var/obj/item/stack/sheet/sheet = input
+	if (sheet.manufactured && sheet.gulag_valid)
+		points += SHEET_POINT_VALUE * sheet.amount
 	return ..()
 
 /obj/machinery/mineral/stacking_machine/laborstacker/base_item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
-	if(istype(weapon, /obj/item/stack/sheet))
-		process_sheet(weapon)
+	if (is_type_in_typecache(weapon, accepted_types))
+		process_stack(weapon)
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 

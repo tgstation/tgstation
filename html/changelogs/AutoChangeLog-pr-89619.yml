@@ -1,8 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Mech PKA low-pressure damage has been reduced to 50, from 80. Increased the attack cooldown to match the standard PKA."
-  - balance: "Mech PKA AOE blast does not mine turfs, and only does 30% of the main projectiles damage to mining mobs in the AOE effect."
-  - bugfix: "The mech PKA AOE blast visual effect now properly appears when hitting a mob directly."
-  - code_imp: "MOB_MINING and MOB_CRUSTACEAN are now defined biotypes."
-  - code_imp: "Audits some mining mob biotypes to make more sense based on what kind of creature they are and to include MOB_MINING in their defines."

@@ -1,8 +1,8 @@
 {
   "private": true,
   "name": "tgui-workspace",
-  "version": "5.0.3",
-  "packageManager": "yarn@4.5.1",
+  "version": "6.0.0",
+  "packageManager": "yarn@4.8.1",
   "workspaces": [
     "packages/*"
   ],
@@ -27,6 +27,7 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.9.0",
     "@types/webpack-env": "^1.18.5",
+    "@types/wicg-file-system-access": "^2023.10.5",
     "@typescript-eslint/parser": "^8.13.0",
     "@typescript-eslint/utils": "^8.13.0",
     "css-loader": "^7.1.2",

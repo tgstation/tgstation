@@ -10,10 +10,10 @@
 	var/former_visor_flags
 	/// If true, add_overlay will use worn overlay instead of item appearance
 	var/use_worn_icon = TRUE
-	/// Pixel_y offset for the hat
-	var/pixel_y_offset
+	/// Pixel z offset for the hat
+	var/pixel_z_offset
 
-/datum/component/hat_stabilizer/Initialize(use_worn_icon = FALSE, pixel_y_offset = 0, loose_hat = FALSE)
+/datum/component/hat_stabilizer/Initialize(use_worn_icon = FALSE, pixel_z_offset = 0, loose_hat = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -21,7 +21,7 @@
 	source.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 	src.use_worn_icon = use_worn_icon
-	src.pixel_y_offset = pixel_y_offset
+	src.pixel_z_offset = pixel_z_offset
 	src.loose_hat = loose_hat
 	// Examine signals
 	RegisterSignal(source, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
@@ -36,12 +36,13 @@
 	RegisterSignal(source, COMSIG_ATOM_ATTACK_HAND_SECONDARY, PROC_REF(on_secondary_attack_hand))
 
 	// Overlays
-	RegisterSignals(source, list(COMSIG_MODULE_GENERATE_WORN_OVERLAY, COMSIG_ITEM_GET_WORN_OVERLAYS), PROC_REF(get_worn_overlays))
+	RegisterSignal(source, COMSIG_MODULE_GENERATE_WORN_OVERLAY, PROC_REF(get_worn_overlays))
+	RegisterSignal(source, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS, PROC_REF(get_separate_worn_overlays))
 
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_qdel))
 
 // Inherit the new values passed to the component
-/datum/component/hat_stabilizer/InheritComponent(datum/component/hat_stabilizer/new_comp, original, use_worn_icon, pixel_y_offset, loose_hat)
+/datum/component/hat_stabilizer/InheritComponent(datum/component/hat_stabilizer/new_comp, original, use_worn_icon, pixel_z_offset, loose_hat)
 	if(!original)
 		return
 
@@ -49,8 +50,8 @@
 		src.use_worn_icon = use_worn_icon
 	if(!isnull(use_worn_icon))
 		src.use_worn_icon = use_worn_icon
-	if(!isnull(pixel_y_offset))
-		src.pixel_y_offset = pixel_y_offset
+	if(!isnull(pixel_z_offset))
+		src.pixel_z_offset = pixel_z_offset
 	if(!isnull(loose_hat))
 		src.loose_hat = loose_hat
 
@@ -59,7 +60,7 @@
 		remove_hat()
 	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE, COMSIG_ATOM_ATTACKBY,
 	COMSIG_ATOM_ATTACK_HAND_SECONDARY, COMSIG_MODULE_GENERATE_WORN_OVERLAY,
-	COMSIG_ITEM_GET_WORN_OVERLAYS, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_QDELETING,
+	COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS, COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_QDELETING,
 	COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 
 /datum/component/hat_stabilizer/proc/on_equip(datum/source, mob/equipper, slot)
@@ -103,18 +104,38 @@
 
 /datum/component/hat_stabilizer/proc/get_worn_overlays(atom/movable/source, list/overlays, mutable_appearance/standing, isinhands, icon_file)
 	SIGNAL_HANDLER
+	if(isinhands)
+		return
+	if(!attached_hat)
+		return
+	var/mutable_appearance/worn_overlay = attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER - 0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+	worn_overlay.appearance_flags |= RESET_COLOR
+	// loose hats are slightly angled
+	if(loose_hat)
+		var/matrix/tilt_trix = matrix(worn_overlay.transform)
+		var/angle = 5
+		tilt_trix.Turn(angle * pick(1, -1))
+		worn_overlay.transform = tilt_trix
+	worn_overlay.pixel_z = pixel_z_offset + attached_hat.worn_y_offset
+	overlays += worn_overlay
+
+/datum/component/hat_stabilizer/proc/get_separate_worn_overlays(atom/movable/source, list/overlays, mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+	SIGNAL_HANDLER
 	if (isinhands)
 		return
-	if(attached_hat)
-		var/mutable_appearance/worn_overlay = attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER-0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
-		// loose hats are slightly angled
-		if(loose_hat)
-			var/matrix/tilt_trix = matrix(worn_overlay.transform)
-			var/angle = 5
-			tilt_trix.Turn(angle * pick(1, -1))
-			worn_overlay.transform = tilt_trix
-		worn_overlay.pixel_y = pixel_y_offset + attached_hat.worn_y_offset
-		overlays += worn_overlay
+	if(!attached_hat)
+		return
+	var/mutable_appearance/worn_overlay = attached_hat.build_worn_icon(default_layer = ABOVE_BODY_FRONT_HEAD_LAYER - 0.1, default_icon_file = 'icons/mob/clothing/head/default.dmi')
+	for (var/mutable_appearance/overlay in worn_overlay.overlays)
+		overlay.layer = -ABOVE_BODY_FRONT_HEAD_LAYER + 0.1
+	// loose hats are slightly angled
+	if(loose_hat)
+		var/matrix/tilt_trix = matrix(worn_overlay.transform)
+		var/angle = 5
+		tilt_trix.Turn(angle * pick(1, -1))
+		worn_overlay.transform = tilt_trix
+	worn_overlay.pixel_z = pixel_z_offset + attached_hat.worn_y_offset
+	overlays += worn_overlay
 
 /datum/component/hat_stabilizer/proc/on_qdel(atom/movable/source)
 	SIGNAL_HANDLER
@@ -206,7 +227,7 @@
 
 	var/former_hat = attached_hat
 	var/obj/item/clothing/apparel = parent
-	apparel.detach_clothing_traits(attached_hat)
+	apparel.detach_clothing_traits(attached_hat.clothing_traits)
 	apparel.flags_cover = former_flags
 	apparel.visor_flags_cover = former_visor_flags
 	apparel.update_appearance()

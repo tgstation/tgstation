@@ -96,6 +96,7 @@
 	)
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
+	test_ignored = TRUE
 
 /datum/supply_pack/imports/shells
 	name = "Lethal Shotgun Shell Box Crate"
@@ -145,6 +146,7 @@
 		/obj/effect/spawner/random/contraband = 5,
 	)
 	crate_name = "crate"
+	test_ignored = TRUE
 
 /datum/supply_pack/imports/wt550
 	name = "Smuggled WT-550 Autorifle Crate"
@@ -199,7 +201,7 @@
 		/obj/item/clothing/mask/chameleon,
 		/obj/item/clothing/under/chameleon,
 		/obj/item/storage/belt/chameleon,
-		/obj/item/card/id/advanced/chameleon,
+		/obj/item/card/id/advanced/chameleon/crummy,
 		/obj/item/switchblade,
 		/obj/item/grenade/mirage = 5,
 	)
@@ -289,6 +291,7 @@
 	cost = CARGO_CRATE_VALUE * 30
 	contains = list(/obj/effect/spawner/random/animalhide = 5)
 	crate_name = "animal hide crate"
+	test_ignored = TRUE
 
 /datum/supply_pack/imports/dreadnog
 	name = "Dreadnog Carton Crate"

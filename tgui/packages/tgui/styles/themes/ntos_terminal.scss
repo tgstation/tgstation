@@ -3,110 +3,76 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
+.theme-ntos_terminal:root {
+  --terminal-color: hsl(146, 82%, 53%);
 
-@use '../colors.scss' with (
-  $primary: hsl(146, 82%, 53%),
-  $label: hsl(146, 82%, 53%),
-  $good: hsla(146, 82%, 53%, 0.5),
-  // $fg-map-keys: (),
-  // $bg-map-keys: (),
-);
-@use '../base.scss' with (
-  $color-bg: hsl(120, 10%, 9%),
-  $color-bg-grad-spread: 0%
-);
-
-.theme-ntos_terminal {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+  // Base
+  --color-base: hsl(120, 10%, 10%);
+  --color-secondary: hsl(
+    from var(--terminal-color) calc(h - 25) calc(s + 20) calc(l - 34) / 0.25
+  );
+  --color-primary: var(--terminal-color);
+  --color-good: hsl(from var(--terminal-color) h s l / 0.5);
+  --color-text: var(--color-white);
+  --color-action: var(--terminal-color);
+  --font-family: Inconsolata;
+  --base-gradient-spread: 0;
 
   // Components
-  @include meta.load-css(
-    '~tgui-core/styles/components/Button',
-    $with: (
-      'color-default': rgba(0, 0, 0, 0),
-      'color-disabled': hsl(120, 18%, 35%),
-      'color-selected': hsla(146, 82%, 53%, 0.25)
-    )
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/Input',
-    $with: ('border-color': colors.$primary)
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/ProgressBar',
-    $with: (
-      'background-color': hsla(0, 0%, 0%, 0.5),
-      'color-default-fill': hsla(146, 82%, 53%, 0.5)
-    )
-  );
-  @include meta.load-css('~tgui-core/styles/components/Modal');
-  @include meta.load-css('~tgui-core/styles/components/Section');
+  --button-color: var(--terminal-color);
+  --button-background-default: transparent;
+  --button-background-selected: hsl(from var(--terminal-color) h s l / 0.25);
+  --progress-bar-background: hsla(0, 0%, 0%, 0.5);
+  --progress-bar-fill: hsl(from var(--terminal-color) h s l / 0.5);
 
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': hsla(120, 100%, 19%, 0.25))
-  );
+  body {
+    letter-spacing: 1px;
+  }
 
-  .Layout__content {
-    //background-image: none;
-    background-image: repeating-linear-gradient(
+  .Window__rest {
+    background-image:
+      repeating-linear-gradient(
         0deg,
         hsla(0, 0%, 0%, 0.15),
         hsla(0, 0%, 0%, 0.15) 1px,
         transparent 2.5px,
         transparent 5px
       ),
-      radial-gradient(hsla(120, 100%, 19%, 0.75), black 120%);
+      radial-gradient(
+        hsl(
+          from var(--terminal-color) calc(h - 25) calc(s + 20) calc(l - 34) /
+            0.75
+        ),
+        black 150%
+      );
     background-size: 100%, 100%;
     background-position: center, center;
   }
 
-  .Button {
-    font: Inconsolata;
-    color: hsl(146, 82%, 53%);
-    text-shadow: 0 0 2px hsl(146, 82%, 53%);
+  .Layout__content {
+    background-image: none;
   }
+
   .Button:hover {
     background-color: hsla(146, 82%, 53%, 0.25);
     transition: 0.1s;
   }
-  .Button--selected {
-    color: hsl(146, 82%, 53%);
-  }
 
-  body {
-    //background-color: black;
-    color: hsl(0, 0%, 100%);
-    font: 1.3rem Inconsolata;
-    text-shadow: 0 0 2px hsl(146, 82%, 53%);
-
-    //font: bold 12px Arial, 'Helvetica Neue', Helvetica, sans-serif;
-  }
-  .Section {
-    color: hsl(146, 82%, 53%);
-  }
-  .Tab {
-    color: hsl(146, 82%, 53%);
-  }
+  .Tab,
+  .Section,
   .Tab--selected {
-    color: hsl(146, 82%, 53%);
-    border: 2px solid hsl(146, 82%, 53%);
-    background-color: hsla(146, 82%, 53%, 0.25);
+    color: var(--terminal-color);
   }
+
+  body,
+  .Flex,
+  .Table,
+  .Button {
+    text-shadow: 0 0 2px var(--terminal-color);
+  }
+
   ::selection {
     background: hsl(210, 100%, 50%);
     text-shadow: none;
-  }
-  .Table {
-    text-shadow: 0 0 2px hsl(146, 82%, 53%);
-  }
-  .Flex {
-    text-shadow: 0 0 2px hsl(146, 82%, 53%);
   }
 }

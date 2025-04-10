@@ -48583,7 +48583,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "tSN" = (
-/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+/mob/living/basic/goose/vomit,
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
 "tSR" = (

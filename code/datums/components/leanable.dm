@@ -40,7 +40,7 @@
 		if(fall)
 			to_chat(leaner, span_danger("You lose balance!"))
 			leaner.Paralyze(0.5 SECONDS)
-	leaning_mobs = null
+	leaning_mobs.Cut()
 
 /datum/component/leanable/proc/on_moved(datum/source)
 	SIGNAL_HANDLER

@@ -107,7 +107,7 @@
 
 /obj/item/food/grown/holymelon/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_holyness)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_holyness)))
 
 
 /obj/item/food/grown/holymelon/attackby(obj/item/I, mob/user, params)

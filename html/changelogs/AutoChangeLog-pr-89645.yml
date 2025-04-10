@@ -1,4 +1,0 @@
-author: "possiblepossibility"
-delete-after: True
-changes:
-  - bugfix: "Fixes (most) emergency access on maintenance airlocks on WawaStation"

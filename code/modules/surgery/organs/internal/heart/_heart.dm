@@ -93,8 +93,10 @@
 	return beating
 
 /obj/item/organ/heart/get_status_text(advanced, add_tooltips)
-	if(!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD)
-		return conditional_tooltip("<font color='#cc3333'>Cardiac Arrest</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
+	if(owner.has_status_effect(/datum/status_effect/heart_attack))
+		return conditional_tooltip("<font color='#cc3333'>Myocardial Infarction</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
+	if((!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD))
+		return conditional_tooltip("<font color='#cc3333'>Cardiac Arrest</font>", "Repair tissue damage and apply defibrillation immediately.", add_tooltips)
 	return ..()
 
 /obj/item/organ/heart/show_on_condensed_scans()
@@ -137,6 +139,15 @@
 
 /obj/item/organ/heart/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantheart
+
+/obj/item/organ/heart/feel_for_damage(self_aware)
+	if(owner.needs_heart() && (!beating || (organ_flags & ORGAN_FAILING)))
+		return span_boldwarning("[self_aware ? "Your heart is not beating!" : "You don't feel your heart beating."]")
+	if(damage < low_threshold)
+		return ""
+	if(damage < high_threshold)
+		return span_warning("[self_aware ? "Your heart hurts." : "It hurts, and your heart rate feels irregular."]")
+	return span_boldwarning("[self_aware ? "Your heart seriously hurts!" : "It seriously hurts, and your heart rate is all over the place."]")
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"

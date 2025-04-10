@@ -23,7 +23,7 @@
 	var/list/allowed_item_typecache
 	/// Whether or not this material container allows specific amounts from sheets to be inserted
 	var/precise_insertion = FALSE
-	/// The material container flags. See __DEFINES/materials.dm.
+	/// The material container flags. See __DEFINES/construction/materials.dm.
 	var/mat_container_flags
 	/// Signals that are registered with this contained
 	var/list/registered_signals
@@ -81,6 +81,7 @@
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 		//to insert stuff into the container
 		RegisterSignal(atom_target, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+		RegisterSignal(atom_target, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))
 
 		//screen tips for inserting items
 		atom_target.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
@@ -98,6 +99,7 @@
 
 	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 		signals += COMSIG_ATOM_ITEM_INTERACTION
+		signals += COMSIG_ATOM_ITEM_INTERACTION_SECONDARY
 		signals +=  COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM
 	if(mat_container_flags & MATCONTAINER_EXAMINE)
 		signals +=  COMSIG_ATOM_EXAMINE
@@ -130,8 +132,9 @@
 
 		if(old_flags & MATCONTAINER_NO_INSERT && !(mat_container_flags & MATCONTAINER_NO_INSERT))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))
 		else if(!(old_flags & MATCONTAINER_NO_INSERT) && mat_container_flags & MATCONTAINER_NO_INSERT)
-			UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
+			UnregisterSignal(parent, list(COMSIG_ATOM_ITEM_INTERACTION, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY))
 
 /**
  * 3 Types of Procs
@@ -164,7 +167,7 @@
 	var/max_mat_value = 0
 	var/material_amount = 0
 
-	var/list/item_materials = source.get_material_composition()
+	var/list/item_materials = source.get_material_composition(mat_container_flags)
 	var/list/mats_consumed = list()
 	for(var/MAT in item_materials)
 		if(!can_hold_material(MAT))
@@ -485,16 +488,28 @@
 		if(!QDELETED(deleting)) //deleting parents also delete their children so we check
 			qdel(deleting)
 
-/// Proc that allows players to fill the parent with mats
-/datum/component/material_container/proc/on_item_insert(datum/source, mob/living/user, obj/item/weapon, list/modifiers)
+/datum/component/material_container/proc/on_item_insert(datum/source, mob/living/user, obj/item/weapon)
 	SIGNAL_HANDLER
+	// Don't insert material items with left click
+	if (isstack(weapon))
+		return attempt_insert(user, weapon)
 
+/datum/component/material_container/proc/on_secondary_insert(datum/source, mob/living/user, obj/item/weapon)
+	SIGNAL_HANDLER
+	return attempt_insert(user, weapon)
+
+/// Proc that allows players to fill the parent with mats
+/datum/component/material_container/proc/attempt_insert(mob/living/user, obj/item/weapon)
 	//Allows you to attack the machine with iron sheets for e.g.
 	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
 		return
 
-	user_insert(weapon, user)
+	if(ismachinery(parent))
+		var/obj/machinery/machine = parent
+		if(machine.machine_stat || machine.panel_open)
+			return
 
+	user_insert(weapon, user)
 	return ITEM_INTERACT_SUCCESS
 //===============================================================================================
 
@@ -552,11 +567,11 @@
  * Arguments:
  * - [I][obj/item]: the item whos materials must be retrieved
  */
-/datum/component/material_container/proc/get_item_material_amount(obj/item/I)
-	if(!istype(I) || !I.custom_materials)
+/datum/component/material_container/proc/get_item_material_amount(obj/item/item)
+	if(!istype(item) || !item.custom_materials)
 		return 0
 	var/material_amount = 0
-	var/list/item_materials = I.get_material_composition()
+	var/list/item_materials = item.get_material_composition(mat_container_flags)
 	for(var/MAT in item_materials)
 		if(!can_hold_material(MAT))
 			continue
@@ -764,7 +779,7 @@
 		return NONE
 	if((held_item.flags_1 & HOLOGRAM_1) || (held_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(held_item, allowed_item_typecache)))
 		return NONE
-	var/list/item_materials = held_item.get_material_composition()
+	var/list/item_materials = held_item.get_material_composition(mat_container_flags)
 	if(!length(item_materials))
 		return NONE
 	for(var/material in item_materials)
@@ -772,7 +787,9 @@
 			continue
 		return NONE
 
-	context[SCREENTIP_CONTEXT_LMB] = "Insert"
+	if (isstack(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert stack"
+	context[SCREENTIP_CONTEXT_RMB] = "Insert"
 
 	return CONTEXTUAL_SCREENTIP_SET
 

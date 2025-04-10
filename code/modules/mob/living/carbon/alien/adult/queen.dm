@@ -20,6 +20,8 @@
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	// that'd be a too cheeky shield bashing strat
 	ADD_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, INNATE_TRAIT)
+	// Lets you spin without falling over
+	ADD_TRAIT(src, TRAIT_STRENGTH, INNATE_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
 
 /mob/living/carbon/alien/adult/royal/on_lying_down(new_lying_angle)
@@ -56,12 +58,12 @@
 		ORGAN_SLOT_XENO_ACIDGLAND = /obj/item/organ/alien/acid,
 		ORGAN_SLOT_XENO_NEUROTOXINGLAND = /obj/item/organ/alien/neurotoxin,
 		ORGAN_SLOT_XENO_EGGSAC = /obj/item/organ/alien/eggsac,
+		ORGAN_SLOT_EXTERNAL_TAIL = /obj/item/organ/tail/xeno_queen,
 	)
 
 /mob/living/carbon/alien/adult/royal/queen/Initialize(mapload)
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/alien/promote,
-		/datum/action/cooldown/spell/aoe/repulse/xeno,
 	)
 	grant_actions_by_list(innate_actions)
 

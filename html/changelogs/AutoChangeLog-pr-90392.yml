@@ -1,0 +1,4 @@
+author: "GremlinSeeker"
+delete-after: True
+changes:
+  - bugfix: "fixed some issues with wawa's atmos"
