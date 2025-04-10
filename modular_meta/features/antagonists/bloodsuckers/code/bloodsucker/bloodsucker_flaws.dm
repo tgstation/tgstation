@@ -47,6 +47,23 @@
 	if(!chosen_clan)
 		to_chat(person_selecting, span_announce("You choose to remain ignorant, for now."))
 		return
+
+	/// If they chose Brujah then warn them about their increased Frenzy threshold.
+	if(chosen_clan == /datum/bloodsucker_clan/brujah)
+		var/warning_accepted = tgui_alert(person_selecting, \
+			"You are selecting the Brujah clan; Brujah vampires start with a decent amount of \
+			Humanity loss. Selecting this clan will put \
+			[admin_selecting ? "this player's" : "your"] Frenzy threshold at \
+			[src.frenzy_threshold + 375]. Please ensure that \
+			[admin_selecting ? "this player has" : "you have"] enough blood before \
+			continuing or else risk \
+			[admin_selecting ? "them entering" : "entering"] Frenzy.", \
+			"Warning", \
+			list("Accept Warning", "Abort Clan Selection"))
+		if(warning_accepted != "Accept Warning")
+			to_chat(person_selecting, span_announce("You choose to remain ignorant, for now."))
+			return
+
 	my_clan = new chosen_clan(src)
 
 /datum/antagonist/bloodsucker/proc/remove_clan(mob/admin)

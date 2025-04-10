@@ -2,7 +2,7 @@
 	name = CLAN_NOSFERATU
 	description = "The Nosferatu clan is unable to blend in with the crew, with no human mimicry abilities such as Masquerade or Veil. \n\
 		Additionally, they have a permanent bad back, are completely unrecognizable, and look like a Bloodsucker at a simple glance.  \n\
-		They can fit in vents regardless of their form and equipment. \n\
+		They can fit in vents regardless of their form and equipment, and they are generally known to possess a fondness for light switches. \n\
 		Their favorite vassal becomes permanetly disfigured, and can also ventcrawl though only while entirely nude."
 	clan_objective = /datum/objective/nosferatu_clan_objective
 	join_icon_state = "nosferatu"
@@ -31,6 +31,12 @@
 	. = ..()
 	if(!HAS_TRAIT(bloodsuckerdatum.owner.current, TRAIT_NOBLOOD))
 		bloodsuckerdatum.owner.current.blood_volume = BLOOD_VOLUME_SURVIVE
+
+	// "Who's flickering the lights?"
+	for(var/obj/machinery/light_switch/our_switch in orange(1, source.owner.current))
+		if(prob(33) && our_switch.is_operational)
+			to_chat(source.owner.current, span_warning("You succumb to the sudden urge to flip the [our_switch.name]..."))
+			our_switch.interact(source.owner.current)
 
 /datum/bloodsucker_clan/nosferatu/on_favorite_vassal(datum/antagonist/bloodsucker/source, datum/antagonist/vassal/favorite/vassaldatum)
 	vassaldatum.owner.current.add_traits(list(TRAIT_VENTCRAWLER_NUDE, TRAIT_DISFIGURED), BLOODSUCKER_TRAIT)

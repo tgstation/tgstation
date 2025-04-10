@@ -423,7 +423,7 @@
 	if(HAS_TRAIT(owner.current, TRAIT_SKITTISH))
 		REMOVE_TRAIT(owner.current, TRAIT_SKITTISH, ROUNDSTART_TRAIT)
 	// Tongue & Language
-	owner.current.grant_all_languages(FALSE, FALSE, TRUE)
+	owner.current.get_language_holder().omnitongue = TRUE //Grants omnitongue
 	owner.current.grant_language(/datum/language/vampiric)
 	/// Clear Disabilities & Organs
 	heal_vampire_organs()
