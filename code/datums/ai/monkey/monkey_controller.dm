@@ -4,10 +4,12 @@ have ways of interacting with a specific mob and control it.
 */
 ///OOK OOK OOK
 
-/datum/ai_controller/monkey
+/datum/ai_controller/basic_controller/monkey
 	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.4 SECONDS
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/monkey,
+		/datum/ai_planning_subtree/flee_target,
 		/datum/ai_planning_subtree/generic_resist,
 		/datum/ai_planning_subtree/monkey_combat,
 		/datum/ai_planning_subtree/generic_hunger,
@@ -27,6 +29,7 @@ have ways of interacting with a specific mob and control it.
 		BB_RESISTING = FALSE,
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
+	incap_ignore_flags = INCAPABLE_RESTRAINTS | INCAPABLE_STASIS | INCAPABLE_GRAB
 
 /datum/targeting_strategy/basic/monkey
 
@@ -35,7 +38,7 @@ have ways of interacting with a specific mob and control it.
 		return FALSE
 	return ..()
 
-/datum/ai_controller/monkey/process(seconds_per_tick)
+/datum/ai_controller/basic_controller/monkey/process(seconds_per_tick)
 
 	var/mob/living/living_pawn = src.pawn
 
@@ -47,14 +50,14 @@ have ways of interacting with a specific mob and control it.
 
 	. = ..()
 
-/datum/ai_controller/monkey/New(atom/new_pawn)
+/datum/ai_controller/basic_controller/monkey/New(atom/new_pawn)
 	var/static/list/control_examine = list(
 		ORGAN_SLOT_EYES = span_monkey("%PRONOUN_They stare%PRONOUN_s around with wild, primal eyes."),
 	)
 	AddElement(/datum/element/ai_control_examine, control_examine)
 	return ..()
 
-/datum/ai_controller/monkey/pun_pun
+/datum/ai_controller/basic_controller/monkey/pun_pun
 	movement_delay = 0.7 SECONDS //pun pun moves slower so the bartender can keep track of them
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/generic_resist,
@@ -65,9 +68,9 @@ have ways of interacting with a specific mob and control it.
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey/pun_pun
 
-/datum/ai_controller/monkey/angry
+/datum/ai_controller/basic_controller/monkey/angry
 
-/datum/ai_controller/monkey/angry/TryPossessPawn(atom/new_pawn)
+/datum/ai_controller/basic_controller/monkey/angry/TryPossessPawn(atom/new_pawn)
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
@@ -75,10 +78,8 @@ have ways of interacting with a specific mob and control it.
 	set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE) //Angry cunt
 	set_trip_mode(mode = FALSE)
 
-/datum/ai_controller/monkey/TryPossessPawn(atom/new_pawn)
-	if(!isliving(new_pawn))
-		return AI_CONTROLLER_INCOMPATIBLE
 
+/datum/ai_controller/basic_controller/monkey/TryPossessPawn(atom/new_pawn)
 	var/mob/living/living_pawn = new_pawn
 	if(!HAS_TRAIT(living_pawn, TRAIT_RELAYING_ATTACKER))
 		living_pawn.AddElement(/datum/element/relay_attackers)
@@ -86,12 +87,18 @@ have ways of interacting with a specific mob and control it.
 	RegisterSignal(new_pawn, COMSIG_LIVING_START_PULL, PROC_REF(on_startpulling))
 	RegisterSignals(new_pawn, list(COMSIG_LIVING_TRY_SYRINGE_INJECT, COMSIG_LIVING_TRY_SYRINGE_WITHDRAW), PROC_REF(on_try_syringe))
 	RegisterSignal(new_pawn, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(on_attempt_cuff))
-	RegisterSignal(new_pawn, COMSIG_MOB_MOVESPEED_UPDATED, PROC_REF(update_movespeed))
 
 	movement_delay = living_pawn.cached_multiplicative_slowdown
 	return ..() //Run parent at end
 
-/datum/ai_controller/monkey/UnpossessPawn(destroy)
+/datum/ai_controller/basic_controller/monkey/PossessPawn(mob/living/new_pawn)
+	. = ..()
+	if(!. || !istype(new_pawn))
+		return
+	var/flee_percent = (MONKEY_FLEE_HEALTH / new_pawn.maxHealth)
+	new_pawn.AddElement(/datum/element/ai_flee_while_injured, start_fleeing_below = flee_percent, stop_fleeing_at = flee_percent + 0.01)
+
+/datum/ai_controller/basic_controller/monkey/UnpossessPawn(destroy)
 
 	UnregisterSignal(pawn, list(
 		COMSIG_ATOM_WAS_ATTACKED,
@@ -104,30 +111,12 @@ have ways of interacting with a specific mob and control it.
 
 	return ..() //Run parent at end
 
-/datum/ai_controller/monkey/on_sentience_lost()
+/datum/ai_controller/basic_controller/monkey/on_sentience_lost()
 	. = ..()
 	set_trip_mode(mode = TRUE)
 
-/datum/ai_controller/monkey/on_stat_changed(mob/living/source, new_stat)
-	. = ..()
-	update_able_to_run()
 
-/datum/ai_controller/monkey/setup_able_to_run()
-	. = ..()
-	RegisterSignal(pawn, COMSIG_MOB_INCAPACITATE_CHANGED, PROC_REF(update_able_to_run))
-
-/datum/ai_controller/monkey/clear_able_to_run()
-	UnregisterSignal(pawn, list(COMSIG_MOB_INCAPACITATE_CHANGED, COMSIG_MOB_STATCHANGE))
-	return ..()
-
-/datum/ai_controller/monkey/get_able_to_run()
-	var/mob/living/living_pawn = pawn
-
-	if(INCAPACITATED_IGNORING(living_pawn, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS|INCAPABLE_GRAB) || living_pawn.stat > CONSCIOUS)
-		return AI_UNABLE_TO_RUN
-	return ..()
-
-/datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
+/datum/ai_controller/basic_controller/monkey/proc/set_trip_mode(mode = TRUE)
 	var/mob/living/carbon/regressed_monkey = pawn
 	var/brain = regressed_monkey.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(istype(brain, /obj/item/organ/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
@@ -135,7 +124,7 @@ have ways of interacting with a specific mob and control it.
 		monkeybrain.tripping = mode
 
 ///re-used behavior pattern by monkeys for finding a weapon
-/datum/ai_controller/monkey/proc/TryFindWeapon()
+/datum/ai_controller/basic_controller/monkey/proc/TryFindWeapon()
 	var/mob/living/living_pawn = pawn
 
 	if(!(locate(/obj/item) in living_pawn.held_items))
@@ -178,37 +167,33 @@ have ways of interacting with a specific mob and control it.
 	return TRUE
 
 ///Reactive events to being hit
-/datum/ai_controller/monkey/proc/retaliate(mob/living/living_mob)
+/datum/ai_controller/basic_controller/monkey/proc/retaliate(mob/living/living_mob)
 	// just to be safe
 	if(QDELETED(living_mob))
 		return
 
 	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, living_mob, MONKEY_HATRED_AMOUNT)
 
-/datum/ai_controller/monkey/proc/on_attacked(datum/source, mob/attacker)
+/datum/ai_controller/basic_controller/monkey/proc/on_attacked(datum/source, mob/attacker)
 	SIGNAL_HANDLER
 	if(prob(MONKEY_RETALIATE_PROB))
 		retaliate(attacker)
 
-/datum/ai_controller/monkey/proc/on_startpulling(datum/source, atom/movable/puller, state, force)
+/datum/ai_controller/basic_controller/monkey/proc/on_startpulling(datum/source, atom/movable/puller, state, force)
 	SIGNAL_HANDLER
 	var/mob/living/living_pawn = pawn
 	if(!IS_DEAD_OR_INCAP(living_pawn) && prob(MONKEY_PULL_AGGRO_PROB)) // nuh uh you don't pull me!
 		retaliate(living_pawn.pulledby)
 		return TRUE
 
-/datum/ai_controller/monkey/proc/on_try_syringe(datum/source, mob/user)
+/datum/ai_controller/basic_controller/monkey/proc/on_try_syringe(datum/source, mob/user)
 	SIGNAL_HANDLER
 	// chance of monkey retaliation
 	if(prob(MONKEY_SYRINGE_RETALIATION_PROB))
 		retaliate(user)
 
-/datum/ai_controller/monkey/proc/on_attempt_cuff(datum/source, mob/user)
+/datum/ai_controller/basic_controller/monkey/proc/on_attempt_cuff(datum/source, mob/user)
 	SIGNAL_HANDLER
 	// chance of monkey retaliation
 	if(prob(MONKEY_CUFF_RETALIATION_PROB))
 		retaliate(user)
-
-/datum/ai_controller/monkey/proc/update_movespeed(mob/living/pawn)
-	SIGNAL_HANDLER
-	movement_delay = pawn.cached_multiplicative_slowdown

@@ -63,7 +63,7 @@
 /datum/action/cooldown/spell/conjure/simian/proc/equip_monky(mob/living/carbon/human/species/monkey/summoned_monkey)
 
 	// These are advanced monkeys we're talking about
-	var/datum/ai_controller/monkey/monky_controller = summoned_monkey.ai_controller
+	var/datum/ai_controller/basic_controller/monkey/monky_controller = summoned_monkey.ai_controller
 	monky_controller.set_trip_mode(mode = FALSE)
 	summoned_monkey.fully_replace_character_name(summoned_monkey.real_name, "primal " + summoned_monkey.name)
 

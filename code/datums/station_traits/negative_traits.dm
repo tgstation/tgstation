@@ -239,7 +239,7 @@
 	if(!isnull(punpun.ai_controller)) // In case punpun somehow lacks AI
 		QDEL_NULL(punpun.ai_controller)
 
-	new /datum/ai_controller/monkey/angry(punpun)
+	new /datum/ai_controller/basic_controller/monkey/angry(punpun)
 
 	var/area/place = get_area(punpun)
 
