@@ -955,5 +955,12 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 		CRASH("The following [number_of_remaining_levels] away mission(s) were not loaded: [checkable_levels.Join("\n")]")
 
 ///Returns the map name, with an openlink action tied to it (if one exists) for the map.
-/datum/map_config/proc/return_map_name()
-	return feedback_link ? "<a href='byond://?action=openLink&link=[url_encode(feedback_link)]'>[map_name]</a>" : map_name
+/datum/map_config/proc/return_map_name(webmap_included)
+	var/text
+	if(feedback_link)
+		text = "<a href='byond://?action=openLink&link=[url_encode(feedback_link)]'>[map_name]</a>"
+	else
+		text = map_name
+	if(webmap_included && !isnull(SSmapping.current_map.mapping_url))
+		text += " | <a href='byond://?action=openWebMap'>(Show Map)</a>"
+	return text
