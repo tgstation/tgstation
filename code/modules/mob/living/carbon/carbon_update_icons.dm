@@ -319,6 +319,9 @@
 /mob/living/carbon/update_wound_overlays()
 	remove_overlay(WOUND_LAYER)
 
+	if(dna?.blood_type.no_bleed_overlays)
+		return
+
 	var/mutable_appearance/wound_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.bleed_overlay_icon)

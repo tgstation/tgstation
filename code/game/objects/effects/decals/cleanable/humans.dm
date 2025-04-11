@@ -22,7 +22,7 @@
 	if(bloodiness)
 		start_drying()
 	else
-		dry()
+		dry(freshly_made = TRUE)
 
 /obj/effect/decal/cleanable/blood/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -45,7 +45,10 @@
 	START_PROCESSING(SSobj, src)
 
 ///This is what actually "dries" the blood. Returns true if it's all out of blood to dry, and false otherwise
-/obj/effect/decal/cleanable/blood/proc/dry()
+/obj/effect/decal/cleanable/blood/proc/dry(freshly_made = FALSE)
+	if(freshly_made)
+		start_drying()
+		return FALSE
 	if(bloodiness > 20)
 		bloodiness -= BLOOD_AMOUNT_PER_DECAL
 		get_timer()
@@ -164,7 +167,7 @@
 /obj/effect/decal/cleanable/blood/gibs/replace_decal(obj/effect/decal/cleanable/C)
 	return FALSE //Never fail to place us
 
-/obj/effect/decal/cleanable/blood/gibs/dry()
+/obj/effect/decal/cleanable/blood/gibs/dry(freshly_made = FALSE)
 	. = ..()
 	if(!.)
 		return
