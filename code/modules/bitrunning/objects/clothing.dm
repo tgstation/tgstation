@@ -5,7 +5,7 @@
 	icon_state = "jensenshades"
 
 /obj/item/clothing/suit/jacket/trenchcoat
-	name = "trenchcoat"
+	name = "leather trenchcoat"
 	desc = "A long, black trenchcoat. Makes you feel like you're the one, but you're not."
-	icon_state = "trenchcoat"
+	icon_state = "leather_trenchcoat"
 	flags_inv = HIDEBELT
