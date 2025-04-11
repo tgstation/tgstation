@@ -1,0 +1,4 @@
+author: "Webcomicartist"
+delete-after: True
+changes:
+  - rscadd: "People shoved onto wooden tables now have a 1 in 3 chance to break it, for all your wrestling needs - but please do not let this pull request distract you from the fact that in 1998, The Undertaker threw Mankind off Hell In A Cell, and plummeted 16 ft through an announcer's table."
