@@ -116,22 +116,10 @@ function SenderInfo(props: SenderInfoProps) {
   return (
     <Section title="From Who?" textAlign="center">
       <Box fontSize="14px">
-        <Input
-          placeholder="Sender name..."
-          fluid
-          onChange={(e, value) => {
-            setName(value);
-          }}
-        />
+        <Input placeholder="Sender name..." fluid onChange={setName} />
       </Box>
       <Box fontSize="14px" pt="10px">
-        <Input
-          placeholder="Sender's job..."
-          fluid
-          onChange={(e, value) => {
-            setJob(value);
-          }}
-        />
+        <Input placeholder="Sender's job..." fluid onChange={setJob} />
       </Box>
     </Section>
   );
@@ -180,9 +168,7 @@ function MessageInput(props: MessageInputProps) {
           placeholder="Type the message you want to send..."
           height="200px"
           mb={1}
-          onInput={(e, value) => {
-            setMessageText(value);
-          }}
+          onChange={setMessageText}
         />
       </Box>
       <Box>
