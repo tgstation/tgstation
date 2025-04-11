@@ -10,17 +10,19 @@ body {
   box-sizing: border-box;
   height: 100%;
   margin: 0;
-  font-size: base.$font-size;
+  font-size: var(--font-size, 12px);
+  color: var(--color-text, hsl(0, 0%, 100%));
+  scrollbar-color: var(--color-scrollbar-thumb) var(--color-scrollbar-base);
 }
 
 html {
+  cursor: var(--cursor-default, default); // Reset the cursor.
   overflow: hidden;
-  cursor: default; // Reset the cursor.
 }
 
 body {
   overflow: auto;
-  font-family: Verdana, Geneva, sans-serif;
+  font-family: var(--font-family, Verdana, Geneva, sans-serif);
 }
 
 *,
@@ -33,27 +35,23 @@ body {
 h1, h2, h3, h4, h5, h6 {
   display: block;
   margin: 0;
-  padding: 6px 0;
-  padding: 0.5rem 0;
+  padding: var(--space-m, 6px) 0;
+  padding: var(--space-m, 0.5rem) 0;
 }
 
 h1 {
-  font-size: 18px;
   font-size: 1.5rem;
 }
 
 h2 {
-  font-size: 16px;
   font-size: 1.333rem;
 }
 
 h3 {
-  font-size: 14px;
   font-size: 1.167rem;
 }
 
 h4 {
-  font-size: 12px;
   font-size: 1rem;
 }
 

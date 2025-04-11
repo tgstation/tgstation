@@ -128,6 +128,7 @@ export class ObjectComponent extends Component {
 
     return (
       <Box
+        className="ObjectComponent"
         position="absolute"
         left={`${x_pos}px`}
         top={`${y_pos}px`}

@@ -1,18 +1,18 @@
 {
   "private": true,
   "name": "tgui-bench",
-  "version": "5.0.3",
+  "version": "6.0.0",
   "dependencies": {
     "@fastify/static": "^8.0.2",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.1",
     "common": "workspace:*",
     "fastify": "^5.1.0",
     "lodash": "^4.17.21",
     "platform": "^1.3.6",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "tgui": "workspace:*",
-    "tgui-core": "^1.8.4"
+    "tgui-core": "^2.0.6"
   }
 }

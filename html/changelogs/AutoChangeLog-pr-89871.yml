@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscadd: "Bubblegum now comes in wrappers."
-  - rscadd: "You can make a match out of a battery and a gum wrapper."
-  - spellcheck: "Matches no longer have 2 periods in the description once used."

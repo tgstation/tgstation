@@ -189,3 +189,162 @@
       edge under the hood now. Report any issues to the github, please. Yes, I look!
   necromanceranne:
   - code_imp: The paper mache robe now works a bit better under the hood.
+2025-04-08:
+  Absolucy:
+  - bugfix: Messages sent to MMIs in wiremod components now have a 1 second cooldown,
+      to prevent massive spam.
+  - bugfix: Fixed improperly cleaning up memories when a mind is deleted.
+  Ezel:
+  - map: Wawastation supermatter upperfloor has extra entrances and is easier to fix
+      for gas leaks
+  Ghommie:
+  - bugfix: Locking a storage item now locks you out of other storage items inside
+      it.
+  Goat:
+  - qol: You can now insert tanks into bluespace gas vendors to fill instead of having
+      to buy and use a large tank.
+  - sound: Bluespace gas vendors now use sounds from canisters when adding/removing
+      tanks
+  JohnFulpWillard:
+  - rscadd: Bubblegum now comes in wrappers.
+  - rscadd: You can make a match out of a battery and a gum wrapper.
+  - spellcheck: Matches no longer have 2 periods in the description once used.
+  Profakos:
+  - qol: Extends the examine description of cameras with the fact that they can hold
+      holodisks.
+  SmArtKar:
+  - rscadd: You can now customize pill duration in chemical presses
+  - balance: ChemMasters and chemical presses can now create 0s duration pills.
+  - bugfix: Fixed constant runtimes caused by modular computers without IDs
+  - spellcheck: Moved krav maga action descriptions into descriptions
+  SyncIt21:
+  - code_imp: further improved storage code
+  - bugfix: monkey cube boxes can no longer hold gorilla cubes & vice versa
+  - code_imp: improved storage code
+  Thunder12345:
+  - bugfix: 'Wawastation: Security disposals has been rerouted to avoid trash being
+      returned to sender.'
+  Wallem:
+  - rscadd: Some holidays have been given their own pool of mail goodies.
+  - image: Resprited circuit shell icons
+  Wallem, LemonInTheDark:
+  - code_imp: Added a couple helpers & procs for coders
+  hry-gh:
+  - bugfix: removes an excess debug line
+  sqnztb:
+  - bugfix: soybeans now grind into the proper reagents and juice into soymilk.
+  timothymtorres:
+  - rscadd: Added new weather types for rain and sandstorms. Rain now uses a reagent
+      that gets exposed to the turfs, mobs, and objects. There is also a thunder strike
+      setting you can apply to any weather.
+  - rscadd: Hydro trays and soil will now add reagents to their trays when exposed
+      to a chemical reaction. (weather, shower, chem spills, foam grenades, etc.)
+  - rscadd: Weather temperature now affects weather reagents and mobs body temperature.
+  - sound: Added weather sounds from TGMC for rain and sirens (attributed to Cuboos
+      and IFartInUrGeneralDirection )
+  - image: Added weather images from TGMC for rain and sand storms (attributed to
+      Novaepee and Bimmer)
+  - refactor: Refactored a lot of the weather code to be more robust
+  - admin: Admins can now control more weather related options when running weather
+      events. The weather admin verbs have been moved to their own "Weather" category
+      under the Admin tab.
+  vinylspiders:
+  - bugfix: fixes the AI detector breaking if there is a machinery-camera operating
+      user nearby (like xenobio console or camera console for instance)
+2025-04-09:
+  00-Steven:
+  - bugfix: Pictures are no longer blurry.
+  - bugfix: Tall pictures no longer get cut off and are actually the right height.
+  Absolucy:
+  - bugfix: Chat messages now actually queue as intended.
+  Bisar:
+  - rscadd: NanoTrasen reminds all employees that it assumes no liability for any
+      activities carried out when not on the premises of a Nanotrasen colony, station,
+      or bluespace pocket. Any employees electing to leave the premises during their
+      break are reminded that it is imperative that they clock out, as per their contract.
+  - rscadd: Tech storage now includes a small set of custom shuttle supplies.
+  Cruix:
+  - image: Updated several hair sprites to layer better under hats.
+  JohnFulpWillard:
+  - rscadd: Drones now have internal cameras that shows up on camera consoles (like
+      Cyborgs)
+  - balance: Cyborgs (and drones) now get a notification when someone is watching
+      them through a security camera console.
+  - bugfix: Cutting a Cyborg's camera wire now properly disables it, and mending it
+      now properly re-enables it.
+  - balance: Space cola now removes rust
+  - balance: Smoke machines now work as inhalation to turfs and touch to mobs.
+  LT3:
+  - bugfix: Supermatter delamination now applies hallucinations based on distance
+  SmArtKar:
+  - rscadd: You can now mark newscaster channels as cross-sector to send messages
+      to other servers.
+  - bugfix: Fixed mind transfers not transferring mob's observers to mind's new mob.
+  - bugfix: Fixed felinid ears' weird rendering behavior
+  - qol: Moved manual boulder breaking with tools to LMB, corrected boulder tooltips
+      suggesting incorrect mouse buttons for basicmobs.
+  - bugfix: Fixed watcher crusher trophies not applying their effects on basicmobs
+  - bugfix: Fixed runtimes caused by energy bolas
+  - bugfix: Fixed certain mobs runtiming when dusted
+  TiviPlus:
+  - code_imp: optimized balloon alerts
+2025-04-10:
+  AyIong:
+  - refactor: All TGUI styles was migrated to CSS Variables, if you find something
+      odd in styles, feel free to make an issue on GitHub
+  Ghommie:
+  - bugfix: Fixed an issue with paintings related to 516. You should now be able to
+      paint larger strokes again.
+  - bugfix: Fixed ghosts and other non-adjacent viewers not being able to zoom the
+      canvas in and out.
+  - rscadd: Added a bucket tool to the canvas UI to fill larger areas. You can find
+      the button for it beside the one for the grid.
+  - qol: You can toggle the canvas grid and bucket tool with the G and F key respectively.
+  GremlinSeeker:
+  - bugfix: fixed some issues with wawa's atmos
+  Iajret:
+  - balance: AI uplink brain now comes with built-in radio and free silicon access
+      for the AI to use
+  - balance: AI entering uplink brain now locks it for themselves. You can reinsert
+      that brain to reset its controlling AI
+  - bugfix: fixed AI borg shells and big brother not having loud binary. Now they
+      do.
+  Krysonism:
+  - bugfix: fixed the vat grower bubble overlay not clearing upon completetion.
+  Rhials:
+  - bugfix: Mutation injectors used on incompatible mobs will no longer burn a charge.
+  SmArtKar:
+  - bugfix: Fixed runtimes caused when touching a non-item object with paper
+  - bugfix: Fixed runtimes caused by stabilized crossbreeds
+  - bugfix: Fixed an unintentional buff to stabilized crossbreeds, they now once again
+      need to be put in your backpack or pockets.
+  timothymtorres:
+  - rscadd: Add rare chance of thunder strikes during ash storms on lavaland
+2025-04-11:
+  00-Steven:
+  - bugfix: Fixed accessories getting slowly but surely offset further down-right
+      each time you attached them to an outfit.
+  Ben10Omintrix:
+  - bugfix: fixes being able to pull mobs while riding them
+  FlufflesTheDog:
+  - bugfix: Mining vendors will no longer mistake non-voucher items as authentic mining
+      vouchers
+  JohnFulpWillard:
+  - bugfix: Roundend reports now show up again.
+  - rscadd: Adds a new sports betting app on your PDA, you can now host and vote on
+      polls using in-game credits.
+  Melbert:
+  - bugfix: Fix divine smites making you glow forever
+  Toriate, Ezel:
+  - image: Envy Knife from Envy ruin has a new sprite
+  ZeroKelvn:
+  - qol: Bank machines accept coins of monetary value
+  necromanceranne:
+  - admin: Adds Security as one of the captain's departments, ensuring that departmental
+      bans also include the captain, who is an effective member of security.
+  subject217:
+  - qol: Added a reminder message for AIs about how to use holopads during communication
+      blackouts.
+  vinylspiders:
+  - bugfix: fixes persistent paintings not loading
+  - bugfix: fixes flipped table spawners not initializing correctly
