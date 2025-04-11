@@ -691,7 +691,7 @@
 	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(hide_info))
 
 /atom/movable/screen/lobby/new_player_info/proc/update_text()
-	if(!always_available)
+	if(!always_available || !hud)
 		maptext = null
 		return
 	var/new_maptext
