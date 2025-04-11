@@ -1,4 +1,0 @@
-author: "FlufflesTheDog"
-delete-after: True
-changes:
-  - bugfix: "Mining vendors will no longer mistake non-voucher items as authentic mining vouchers"
