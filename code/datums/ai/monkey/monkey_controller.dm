@@ -100,7 +100,7 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/basic_controller/monkey/UnpossessPawn(destroy)
 
-	var/mob/living/living_pawn = controller.pawn
+	var/mob/living/living_pawn = pawn
 	var/flee_percent = (MONKEY_FLEE_HEALTH / new_pawn.living_pawn)
 	living_pawn.RemoveElement(/datum/element/ai_flee_while_injured, start_fleeing_below = flee_percent, stop_fleeing_at = flee_percent + 0.01)
 	UnregisterSignal(pawn, list(
