@@ -10285,7 +10285,9 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/machinery/door/airlock/command,
+/obj/machinery/door/airlock/command{
+	name = "Abandoned Lab"
+	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/lesser)
 "dmJ" = (
@@ -32200,7 +32202,9 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
-/obj/machinery/door/airlock/command,
+/obj/machinery/door/airlock/command{
+	name = "Abandoned Lab"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "jWT" = (
