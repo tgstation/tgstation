@@ -6153,6 +6153,7 @@
 #include "code\modules\spells\spell_types\shapeshift\gorilla.dm"
 #include "code\modules\spells\spell_types\shapeshift\polar_bear.dm"
 #include "code\modules\spells\spell_types\shapeshift\shapechange.dm"
+#include "code\modules\spells\spell_types\shapeshift\wolf.dm"
 #include "code\modules\spells\spell_types\teleport\_teleport.dm"
 #include "code\modules\spells\spell_types\teleport\blink.dm"
 #include "code\modules\spells\spell_types\teleport\teleport.dm"
