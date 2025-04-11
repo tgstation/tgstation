@@ -637,6 +637,84 @@
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))
 
+///Lobby screen that appears before the game has started showing how many players there are and who is ready.
+/atom/movable/screen/lobby/new_player_info
+	name = "New Player Info"
+	screen_loc = "TOP:0,CENTER:210"
+	icon = 'icons/hud/lobby/newplayer.dmi'
+	icon_state = "newplayer"
+	base_icon_state = "newplayer"
+	always_shown = TRUE
+	maptext_height = 70
+	maptext_width = 80
+	maptext_x = 10
+
+/atom/movable/screen/lobby/new_player_info/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	switch(SSticker.current_state)
+		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
+			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(hide_info))
+		if(GAME_STATE_SETTING_UP)
+			RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, PROC_REF(show_info))
+
+	START_PROCESSING(SSnewplayer_info, src)
+	update_text()
+
+/atom/movable/screen/lobby/new_player_info/update_icon_state()
+	. = ..()
+	if(!always_available)
+		icon_state = "[base_icon_state]_disabled"
+	else
+		icon_state = base_icon_state
+
+/atom/movable/screen/lobby/new_player_info/process(seconds_per_tick)
+	update_text()
+
+/atom/movable/screen/lobby/new_player_info/proc/hide_info()
+	SIGNAL_HANDLER
+
+	STOP_PROCESSING(SSnewplayer_info, src)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP)
+	RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, PROC_REF(show_info))
+	always_available = FALSE
+	update_appearance(UPDATE_ICON)
+	update_text()
+
+/atom/movable/screen/lobby/new_player_info/proc/show_info()
+	SIGNAL_HANDLER
+
+	always_available = TRUE
+	update_appearance(UPDATE_ICON)
+	update_text()
+	START_PROCESSING(SSnewplayer_info, src)
+	UnregisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP)
+	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(hide_info))
+
+/atom/movable/screen/lobby/new_player_info/proc/update_text()
+	if(!always_available)
+		maptext = null
+		return
+	var/new_maptext
+	if(!MC_RUNNING())
+		new_maptext = "<span style='text-align: center; vertical-align: middle'>Loading...</span>"
+	else
+		var/time_remaining = SSticker.GetTimeLeft()
+		if(time_remaining > 0)
+			time_remaining = "[round(time_remaining/10)]s"
+		else if(time_remaining == -10)
+			time_remaining = "DELAYED"
+		else
+			time_remaining = "SOON"
+
+		new_maptext = "<span style='text-align: center; vertical-align: middle'>Starting In: [time_remaining]<br /> \
+				Players: [LAZYLEN(GLOB.clients)]<br />"
+		if(hud.mymob.client.holder)
+			new_maptext += "Players Ready: [SSticker.totalPlayersReady]<br /> \
+				Admins Ready: [SSticker.total_admins_ready] / [length(GLOB.admins)]"
+		new_maptext += "</span>"
+
+	maptext = MAPTEXT(new_maptext)
+
 #undef SHUTTER_MOVEMENT_DURATION
 #undef SHUTTER_WAIT_DURATION
 #undef MAX_STATION_TRAIT_BUTTONS_VERTICAL
