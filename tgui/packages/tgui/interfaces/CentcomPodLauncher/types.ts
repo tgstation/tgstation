@@ -1,3 +1,4 @@
+import { type Placement } from '@floating-ui/react';
 import { BooleanLike } from 'tgui-core/react';
 
 export type PodLauncherData = {
@@ -64,6 +65,6 @@ export type PodEffect =
       selected?: string;
       soloSelected?: string;
       title: string;
-      tooltipPosition?: string;
+      tooltipPosition?: Placement;
     }
   | { divider: boolean };

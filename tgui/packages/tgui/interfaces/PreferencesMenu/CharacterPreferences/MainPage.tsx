@@ -2,13 +2,12 @@ import { filter, map, sortBy } from 'common/collections';
 import { ReactNode, useState } from 'react';
 import { sendAct, useBackend } from 'tgui/backend';
 import {
-  Autofocus,
   Box,
   Button,
-  Flex,
+  Floating,
   Input,
   LabeledList,
-  Popper,
+  Section,
   Stack,
 } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
@@ -103,7 +102,6 @@ type ChoicedSelectionProps = {
   selected: string;
   supplementalFeature?: string;
   supplementalValue?: unknown;
-  onClose: () => void;
   onSelect: (value: string) => void;
 };
 
@@ -119,96 +117,68 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
     <Box
       className="ChoicedSelection"
       style={{
-        padding: '5px',
-
         height: `${
           CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_MULTIPLIER
         }px`,
         width: `${CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_WIDTH}px`,
       }}
     >
-      <Stack vertical fill>
+      <Stack fill vertical g={0}>
         <Stack.Item>
-          <Stack fill>
-            {supplementalFeature && (
-              <Stack.Item>
+          <Section
+            fill
+            title={`Select ${props.name.toLowerCase()}`}
+            buttons={
+              supplementalFeature && (
                 <FeatureValueInput
+                  shrink
                   feature={features[supplementalFeature]}
                   featureId={supplementalFeature}
-                  shrink
                   value={supplementalValue}
                 />
-              </Stack.Item>
-            )}
-
-            <Stack.Item grow>
-              <Box
-                style={{
-                  borderBottom: '1px solid #888',
-                  fontWeight: 'bold',
-                  fontSize: '14px',
-                  textAlign: 'center',
-                }}
-              >
-                Select {props.name.toLowerCase()}
-              </Box>
-            </Stack.Item>
-
-            <Stack.Item>
-              <Button color="red" onClick={props.onClose}>
-                X
-              </Button>
-            </Stack.Item>
-          </Stack>
-        </Stack.Item>
-
-        <Stack.Item overflowX="hidden" overflowY="scroll">
-          <Autofocus>
+              )
+            }
+          >
             <Input
+              autoFocus
+              width="100%"
               placeholder="Search..."
-              style={{
-                margin: '0px 5px',
-                width: '95%',
-              }}
               onInput={(_, value) => searchTextSet(value)}
             />
-            <Flex wrap>
+          </Section>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Section fill scrollable noTopPadding>
+            <Stack wrap>
               {searchInCatalog(getSearchText, catalog.icons).map(
                 ([name, image], index) => {
                   return (
-                    <Flex.Item
+                    <Button
                       key={index}
-                      basis={`${CLOTHING_SELECTION_CELL_SIZE}px`}
+                      onClick={() => {
+                        props.onSelect(name);
+                      }}
+                      selected={name === props.selected}
+                      tooltip={name}
+                      tooltipPosition="right"
                       style={{
-                        padding: '5px',
+                        height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
+                        width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
                       }}
                     >
-                      <Button
-                        onClick={() => {
-                          props.onSelect(name);
-                        }}
-                        selected={name === props.selected}
-                        tooltip={name}
-                        tooltipPosition="right"
-                        style={{
-                          height: `${CLOTHING_SELECTION_CELL_SIZE}px`,
-                          width: `${CLOTHING_SELECTION_CELL_SIZE}px`,
-                        }}
-                      >
-                        <Box
-                          className={classes([
-                            'preferences32x32',
-                            image,
-                            'centered-image',
-                          ])}
-                        />
-                      </Button>
-                    </Flex.Item>
+                      <Box
+                        className={classes([
+                          'preferences32x32',
+                          image,
+                          'centered-image',
+                        ])}
+                      />
+                    </Button>
                   );
                 },
               )}
-            </Flex>
-          </Autofocus>
+            </Stack>
+          </Section>
         </Stack.Item>
       </Stack>
     </Box>
@@ -232,15 +202,11 @@ type GenderButtonProps = {
 };
 
 function GenderButton(props: GenderButtonProps) {
-  const [genderMenuOpen, setGenderMenuOpen] = useState(false);
-
   return (
-    <Popper
-      isOpen={genderMenuOpen}
-      onClickOutside={() => setGenderMenuOpen(false)}
-      placement="right-end"
+    <Floating
+      placement="right"
       content={
-        <Stack backgroundColor="white" ml={0.5} p={0.3}>
+        <Stack backgroundColor="white" p={0.3}>
           {[Gender.Male, Gender.Female, Gender.Other, Gender.Other2].map(
             (gender) => {
               return (
@@ -249,7 +215,6 @@ function GenderButton(props: GenderButtonProps) {
                     selected={gender === props.gender}
                     onClick={() => {
                       props.handleSetGender(gender);
-                      setGenderMenuOpen(false);
                     }}
                     fontSize="22px"
                     icon={GENDERS[gender].icon}
@@ -263,16 +228,15 @@ function GenderButton(props: GenderButtonProps) {
         </Stack>
       }
     >
-      <Button
-        onClick={() => {
-          setGenderMenuOpen(!genderMenuOpen);
-        }}
-        fontSize="22px"
-        icon={GENDERS[props.gender].icon}
-        tooltip="Gender"
-        tooltipPosition="top"
-      />
-    </Popper>
+      <div>
+        <Button
+          fontSize="22px"
+          icon={GENDERS[props.gender].icon}
+          tooltip="Gender"
+          tooltipPosition="top"
+        />
+      </div>
+    </Floating>
   );
 }
 
@@ -284,9 +248,6 @@ type CatalogItem = {
 type MainFeatureProps = {
   catalog: FeatureChoicedServerData & CatalogItem;
   currentValue: string;
-  isOpen: boolean;
-  handleClose: () => void;
-  handleOpen: () => void;
   handleSelect: (newClothing: string) => void;
   randomization?: RandomSetting;
   setRandomization: (newSetting: RandomSetting) => void;
@@ -294,13 +255,9 @@ type MainFeatureProps = {
 
 function MainFeature(props: MainFeatureProps) {
   const { data } = useBackend<PreferencesMenuData>();
-
   const {
     catalog,
     currentValue,
-    isOpen,
-    handleOpen,
-    handleClose,
     handleSelect,
     randomization,
     setRandomization,
@@ -309,11 +266,9 @@ function MainFeature(props: MainFeatureProps) {
   const supplementalFeature = catalog.supplemental_feature;
 
   return (
-    <Popper
-      placement="bottom-start"
-      isOpen={isOpen}
-      onClickOutside={handleClose}
-      baseZIndex={1} // Below the default popper at z 2
+    <Floating
+      stopChildPropagation
+      placement="right-start"
       content={
         <ChoicedSelection
           name={catalog.name}
@@ -326,27 +281,16 @@ function MainFeature(props: MainFeatureProps) {
               supplementalFeature
             ]
           }
-          onClose={handleClose}
           onSelect={handleSelect}
         />
       }
     >
       <Button
-        onClick={(event) => {
-          event.stopPropagation();
-          if (isOpen) {
-            handleClose();
-          } else {
-            handleOpen();
-          }
-        }}
         style={{
           height: `${CLOTHING_CELL_SIZE}px`,
           width: `${CLOTHING_CELL_SIZE}px`,
         }}
         position="relative"
-        tooltip={catalog.name}
-        tooltipPosition="right"
       >
         <Box
           className={classes([
@@ -373,6 +317,7 @@ function MainFeature(props: MainFeatureProps) {
               onOpen: (event) => {
                 // We're a button inside a button.
                 // Did you know that's against the W3C standard? :)
+                // FIXME: Button unclickable!
                 event.cancelBubble = true;
                 event.stopPropagation();
               },
@@ -382,7 +327,7 @@ function MainFeature(props: MainFeatureProps) {
           />
         )}
       </Button>
-    </Popper>
+    </Floating>
   );
 }
 
@@ -508,9 +453,6 @@ type MainPageProps = {
 
 export function MainPage(props: MainPageProps) {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const [currentClothingMenu, setCurrentClothingMenu] = useState<string | null>(
-    null,
-  );
   const [deleteCharacterPopupOpen, setDeleteCharacterPopupOpen] =
     useState(false);
   const [multiNameInputOpen, setMultiNameInputOpen] = useState(false);
@@ -620,8 +562,8 @@ export function MainPage(props: MainPageProps) {
           </Stack>
         </Stack.Item>
 
-        <Stack.Item width={`${CLOTHING_CELL_SIZE * 2 + 15}px`}>
-          <Stack height="100%" vertical wrap>
+        <Stack.Item>
+          <Stack fill vertical wrap>
             {mainFeatures.map(([clothingKey, clothing]) => {
               const catalog = serverData?.[
                 clothingKey
@@ -630,7 +572,7 @@ export function MainPage(props: MainPageProps) {
               };
 
               return (
-                <Stack.Item key={clothingKey} mt={0.5} px={0.5}>
+                <Stack.Item key={clothingKey}>
                   {!catalog ? (
                     // Skeleton button
                     <Button height={4} width={4} disabled />
@@ -638,13 +580,6 @@ export function MainPage(props: MainPageProps) {
                     <MainFeature
                       catalog={catalog}
                       currentValue={clothing}
-                      isOpen={currentClothingMenu === clothingKey}
-                      handleClose={() => {
-                        setCurrentClothingMenu(null);
-                      }}
-                      handleOpen={() => {
-                        setCurrentClothingMenu(clothingKey);
-                      }}
                       handleSelect={createSetPreference(act, clothingKey)}
                       randomization={randomizationOfMainFeatures[clothingKey]}
                       setRandomization={createSetRandomization(

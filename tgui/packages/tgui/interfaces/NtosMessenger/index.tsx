@@ -355,7 +355,6 @@ const SendToAllSection = (props) => {
               icon="arrow-right"
               disabled={on_spam_cooldown || message === ''}
               tooltip={on_spam_cooldown && 'Wait before sending more messages!'}
-              tooltipPosition="auto-start"
               onClick={() => {
                 act('PDA_sendEveryone', { message: message });
                 setmessage('');
