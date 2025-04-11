@@ -8,6 +8,8 @@
 	/// Additional lightness multiplier for the blood color
 	/// When set, color will be transformed into a matrix with coefficients multiplied by this value
 	var/lightness_mult = null
+	/// The cached color matrix if we end up using that
+	var/list/blood_color_matrix
 	/// Blood types that are safe to use with people that have this blood type.
 	var/compatible_types = list()
 	/// What reagent is represented by this blood type?
@@ -42,14 +44,18 @@
 	if(isnull(lightness_mult))
 		return color
 
-	var/static/list/blood_matrix = color_to_full_rgba_matrix(color)
-	for(var/i in 1 to min(length(blood_matrix), 16))
-		if (length(blood_matrix) == 12 && i > 9) // Don't modify constants
+	if(!isnull(blood_color_matrix))
+		return blood_color_matrix
+
+	blood_color_matrix = color_to_full_rgba_matrix(color)
+	for(var/i in 1 to min(length(blood_color_matrix), 16))
+		if (length(blood_color_matrix) == 12 && i > 9) // Don't modify constants
 			break
-		if (length(blood_matrix) >= 16 && i % 4 == 0) // Don't modify alpha either
+		if (length(blood_color_matrix) >= 16 && i % 4 == 0) // Don't modify alpha either
 			continue
-		blood_matrix[i] *= lightness_mult
-	return blood_matrix
+		blood_color_matrix[i] *= lightness_mult
+
+	return blood_color_matrix
 
 /datum/blood_type/a_minus
 	name = "A-"
