@@ -43,7 +43,7 @@
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
-/obj/item/clothing/suit/jacket/trenchcoat
+/obj/item/clothing/suit/toggle/jacket/trenchcoat
 	name = "trenchcoat"
 	desc = "A multi-purpose trenchcoat."
 	icon_state = "trenchcoat"
