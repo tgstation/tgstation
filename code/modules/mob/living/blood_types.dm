@@ -42,7 +42,7 @@
 	if(isnull(lightness_mult))
 		return color
 
-	var/list/blood_matrix = color_to_full_rgba_matrix(color)
+	var/static/list/blood_matrix = color_to_full_rgba_matrix(color)
 	for(var/i in 1 to min(length(blood_matrix), 16))
 		if (length(blood_matrix) == 12 && i > 9) // Don't modify constants
 			break
