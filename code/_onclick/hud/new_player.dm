@@ -649,6 +649,11 @@
 	maptext_width = 80
 	maptext_x = 10
 
+/atom/movable/screen/lobby/new_player_info/Destroy()
+	maptext = null
+	STOP_PROCESSING(SSnewplayer_info, src)
+	return ..()
+
 /atom/movable/screen/lobby/new_player_info/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	switch(SSticker.current_state)
