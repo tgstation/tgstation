@@ -47806,12 +47806,6 @@
 /obj/effect/turf_decal/tile/green/fourcorners,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
-"oVg" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall/r_wall,
-/area/station/maintenance/starboard/aft)
 "oVn" = (
 /obj/machinery/dna_scannernew,
 /turf/open/floor/iron/dark/textured_large,
@@ -178417,8 +178411,8 @@ gsm
 gsm
 gsm
 cWU
-oVg
-oVg
+cWU
+cWU
 cWU
 cWU
 cWU
