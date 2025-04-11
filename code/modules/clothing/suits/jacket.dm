@@ -43,6 +43,26 @@
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/suit/jacket/trenchcoat
+	name = "trenchcoat"
+	desc = "A multi-purpose trenchcoat."
+	icon_state = "trenchcoat"
+	greyscale_config = /datum/greyscale_config/trenchcoat
+	greyscale_config_worn = /datum/greyscale_config/trenchcoat/worn
+	greyscale_colors = "#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
+	blood_overlay_type = "coat"
+	flags_inv = HIDEBELT
+
+/obj/item/clothing/suit/jacket/blazer
+	name = "blazer jacket"
+	desc = "A blazer jacket."
+	icon_state = "blazer"
+	greyscale_config = /datum/greyscale_config/blazer
+	greyscale_config_worn = /datum/greyscale_config/blazer/worn
+	greyscale_colors = "#414344"
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 /obj/item/clothing/suit/jacket/oversized
 	name = "oversized jacket"
 	desc = "An oversized jacket."

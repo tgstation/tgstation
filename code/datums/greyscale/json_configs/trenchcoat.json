@@ -1,0 +1,10 @@
+{
+	"trenchcoat": [
+		{
+			"type": "icon_state",
+			"icon_state": "trenchcoat",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	]
+}
