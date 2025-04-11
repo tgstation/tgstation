@@ -53,8 +53,9 @@ Key procs
 	/// Tracks the entity that owns the holder.
 	VAR_FINAL/atom/movable/owner
 	/// Lazyassoclist of all mutual understanding this holder has
+	/// You generally don't want to access this, you want [best_mutual_languages] instead
 	/// Format: list(language_type = list(source = % of understanding))
-	var/list/mutual_understanding
+	VAR_PROTECTED/list/mutual_understanding
 	/// Cached form of the mutual language list which only contains the best understanding available to each language
 	VAR_FINAL/list/best_mutual_languages
 
@@ -102,6 +103,9 @@ Key procs
 	best_mutual_languages = list()
 	for(var/language in mutual_understanding)
 		for(var/source in mutual_understanding[language])
+			// if this mutual understanding comes from a language, and that language is blocked, skip it
+			if(LAZYACCESS(blocked_languages, source))
+				continue
 			if(!best_mutual_languages[language] || best_mutual_languages[language] < mutual_understanding[language][source])
 				best_mutual_languages[language] = mutual_understanding[language][source]
 
@@ -140,7 +144,8 @@ Key procs
 			LAZYREMOVE(understood_languages, language)
 		else
 			LAZYREMOVEASSOC(understood_languages, language, source)
-		lose_partial_understanding_from_language(language)
+		if(!LAZYACCESS(understood_languages, language))
+			lose_partial_understanding_from_language(language)
 		. = TRUE
 
 	if(language_flags & SPOKEN_LANGUAGE)
@@ -162,17 +167,21 @@ Key procs
 
 /// Removes partial understanding of the passed language.
 /datum/language_holder/proc/remove_partial_language(language, source = LANGUAGE_MIND)
+	. = FALSE
 	if(source == LANGUAGE_ALL)
 		for(var/other_source in mutual_understanding[language])
 			if(ispath(other_source, /datum/language))
 				continue
-			remove_partial_language(language, other_source)
-	else
+			. = remove_partial_language(language, other_source) || .
+	else if(LAZYACCESSASSOC(mutual_understanding, language, source))
 		LAZYREMOVE(mutual_understanding[language], source)
 		ASSOC_UNSETEMPTY(mutual_understanding, language)
 		UNSETEMPTY(mutual_understanding)
-	calculate_best_mutual_language()
-	return TRUE
+		. = TRUE
+
+	if(.)
+		calculate_best_mutual_language()
+	return .
 
 /// Removes all partial understandings of all languages.
 /datum/language_holder/proc/remove_all_partial_languages(source = LANGUAGE_MIND)
@@ -187,6 +196,7 @@ Key procs
 
 	for(var/language in languages)
 		LAZYORASSOCLIST(blocked_languages, language, source)
+	calculate_best_mutual_language()
 	return TRUE
 
 /// Removes a single language or list of languages from the blocked language list.
@@ -199,7 +209,7 @@ Key procs
 			LAZYREMOVE(blocked_languages, language)
 		else
 			LAZYREMOVEASSOC(blocked_languages, language, source)
-
+	calculate_best_mutual_language()
 	return TRUE
 
 /// Checks if you have the language passed.
