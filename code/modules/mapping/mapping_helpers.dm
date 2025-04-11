@@ -471,11 +471,12 @@
 	name = "airalarm surgery helper"
 	icon_state = "airalarm_surgery_helper"
 
-/obj/effect/mapping_helpers/airalarm/surgery/payload(obj/machinery/airalarm/target)
-	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in target.my_area.air_scrubbers)
+/obj/effect/mapping_helpers/airalarm/surgery/LateInitialize()
+	var/obj/machinery/airalarm/target = locate() in loc
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in target?.my_area?.air_scrubbers)
 		scrubber.filter_types |= /datum/gas/nitrous_oxide
-		scrubber.set_on(TRUE)
 		scrubber.set_widenet(TRUE)
+	return ..()
 
 //apc helpers
 /obj/effect/mapping_helpers/apc
