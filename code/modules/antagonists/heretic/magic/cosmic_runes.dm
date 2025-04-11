@@ -110,7 +110,7 @@
 	SIGNAL_HANDLER
 	if(source == user)
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, attack_hand), user)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
+		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/effect/cosmic_rune/proc/on_exited(datum/source, exiter)
 	SIGNAL_HANDLER
@@ -120,6 +120,11 @@
 /obj/effect/cosmic_rune/proc/invoke(mob/living/user)
 	var/obj/effect/cosmic_rune/linked_rune_resolved = linked_rune?.resolve()
 	new rune_effect(get_turf(src))
+	var/atom/pulled_thing
+	if(IS_HERETIC(user))
+		if(user.pulling)
+			pulled_thing = user.pulling
+			do_teleport(user.pulling, get_turf(linked_rune_resolved), no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 	do_teleport(
 		user,
 		get_turf(linked_rune_resolved),
@@ -128,6 +133,8 @@
 		asoundin = 'sound/effects/magic/cosmic_energy.ogg',
 		asoundout = 'sound/effects/magic/cosmic_energy.ogg',
 	)
+	if(pulled_thing) // Regrab after the teleports are done
+		user.start_pulling(pulled_thing)
 	for(var/mob/living/person_on_rune in get_turf(src))
 		if(person_on_rune.has_status_effect(/datum/status_effect/star_mark))
 			do_teleport(person_on_rune, get_turf(linked_rune_resolved), no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)

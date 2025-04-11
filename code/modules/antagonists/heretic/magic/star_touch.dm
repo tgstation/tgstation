@@ -37,11 +37,12 @@
 
 /datum/action/cooldown/spell/touch/star_touch/cast_on_hand_hit(obj/item/melee/touch_attack/hand, mob/living/victim, mob/living/carbon/caster)
 	if(!victim.has_status_effect(/datum/status_effect/star_mark))
-		return FALSE
+		victim.apply_status_effect(/datum/status_effect/star_mark, caster)
+		return TRUE
 	victim.remove_status_effect(/datum/status_effect/star_mark)
 	victim.adjust_drowsiness(8 SECONDS)
 	for(var/turf/cast_turf as anything in get_turfs(victim))
-		new /obj/effect/forcefield/cosmic_field(cast_turf)
+		create_cosmic_field(cast_turf, caster)
 	caster.apply_status_effect(/datum/status_effect/cosmic_beam, victim)
 	return TRUE
 
@@ -87,8 +88,6 @@
 	if(!isliving(interacting_with))
 		return
 	var/mob/living/living_target = interacting_with
-	if(!living_target.has_status_effect(/datum/status_effect/star_mark))
-		return
 	if(get_dist(living_target, user) > 3)
 		return
 	return melee_attack_chain(user, living_target, modifiers)
@@ -219,12 +218,12 @@
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 	if(current_target)
-		on_beam_hit(current_target)
+		on_beam_hit(current_target, user)
 
 /// What to add when the beam connects to a target
-/datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target)
+/datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target, mob/living/user)
 	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
-		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
+		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast, user)
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)

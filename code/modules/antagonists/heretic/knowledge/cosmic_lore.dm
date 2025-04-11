@@ -33,7 +33,7 @@
 
 	to_chat(target, span_danger("A cosmic ring appeared above your head!"))
 	target.apply_status_effect(/datum/status_effect/star_mark, source)
-	new /obj/effect/forcefield/cosmic_field(get_turf(source))
+	create_cosmic_field(get_turf(source), source)
 
 /datum/heretic_knowledge/spell/cosmic_runes
 	name = "Cosmic Runes"
@@ -150,7 +150,7 @@
 				if(target.mind && target.stat != DEAD)
 					increase_combo_duration()
 					if(combo_counter == 4)
-						source.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
+						source.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast, source)
 		third_target = second_target
 	second_target = WEAKREF(target)
 

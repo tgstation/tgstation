@@ -135,19 +135,37 @@
 	riposte_ready = TRUE
 	source.balloon_alert(source, "riposte ready")
 
-// XANTODO Fix this later
 //---- Cosmic Passive
-// Level 1
-// Level 2
-// Level 3
-/datum/status_effect/heretic_passive/cosmic/on_apply()
-	. = ..()
+// Level 1 Cosmic fields will speed up the caster and provide stamina regen
+// Level 2 Cosmic fields will temporarily slow down bullets that pass through them
+// Level 3 Cosmic fields will disable any nearby bombs/TTVs/Syndicate Bombs
+/datum/status_effect/heretic_passive/cosmic
 
-/datum/status_effect/heretic_passive/cosmic/heretic_level_upgrade()
-	. = ..()
+/**
+ * Creates a cosmic field at a given loc
+ *
+ * * Args:
+ * * `loc`: Where the cosmic field is created
+ * * Optional `creator`: Checks if the passed mob has a cosmic passive. Upgrades the cosmic field based on their passive level
+ * * Optional `type`: Makes a specific type of cosmic field if we don't want the default
+ */
+/proc/create_cosmic_field(loc, mob/living/creator, type = /obj/effect/forcefield/cosmic_field)
+	var/obj/effect/forcefield/cosmic_field/new_field
+	new_field = new type(loc)
 
-/datum/status_effect/heretic_passive/cosmic/heretic_level_final()
-	. = ..()
+	if(!creator || !ismob(creator))
+		return
+	if(istype(creator, /mob/living/basic/heretic_summon/star_gazer))
+		new_field.slows_projectiles()
+		new_field.prevents_explosions()
+		return
+	var/datum/status_effect/heretic_passive/cosmic/cosmic_passive = creator.has_status_effect(/datum/status_effect/heretic_passive/cosmic)
+	if(!cosmic_passive)
+		return
+	if(cosmic_passive.passive_level > HERETIC_LEVEL_START)
+		new_field.slows_projectiles()
+	if(cosmic_passive.passive_level > HERETIC_LEVEL_UPGRADE)
+		new_field.prevents_explosions()
 
 //---- Flesh Passive
 // Makes you never get disgust, virus immune and immune to damage from space ants

@@ -92,18 +92,18 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	initial_duration = 30 SECONDS
 	/// Flags for what antimagic can just ignore our forcefields
 	var/antimagic_flags = MAGIC_RESISTANCE
+	/// If we are able to slow down projectiles
+	var/slows_projectiles = FALSE
 
 /obj/effect/forcefield/cosmic_field/Initialize(mapload, flags = MAGIC_RESISTANCE)
 	. = ..()
 	antimagic_flags = flags
-	GLOB.active_cosmic_fields += src
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-		COMSIG_ATOM_EXITED = PROC_REF(on_loc_exited),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 
 /obj/effect/forcefield/cosmic_field/Destroy(force)
+	// Make sure when the field goes away that the effects don't persist
+	if(slows_projectiles)
+		for(var/atom/movable/thing in get_turf(src))
+			on_loc_exited(src, thing)
 	GLOB.active_cosmic_fields -= src
 	return ..()
 
@@ -117,12 +117,27 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 		return FALSE
 	return ..()
 
+/// Adds the ability to slow down any projectiles that enters any turf we occupy
+/obj/effect/forcefield/cosmic_field/proc/slows_projectiles()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_loc_exited),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	// Make sure that if we create a field, we apply whatever effects
+	for(var/atom/movable/thing in get_turf(src))
+		on_entered(src, thing)
+	slows_projectiles = TRUE
+
 /obj/effect/forcefield/cosmic_field/proc/on_entered(datum/source, atom/movable/thing)
 	SIGNAL_HANDLER
 	if(isprojectile(thing))
 		var/obj/projectile/bullet = thing
-		bullet.speed *= 0.5
+		if(istype(bullet, /obj/projectile/magic/star_ball)) // Don't slow down star balls
+			return
+		bullet.speed *= 0.25
 		return
+
 	if(!isliving(thing))
 		return
 	var/mob/living/living_mover = thing
@@ -135,8 +150,11 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	SIGNAL_HANDLER
 	if(isprojectile(thing))
 		var/obj/projectile/bullet = thing
-		bullet.speed /= 0.5
+		if(istype(bullet, /obj/projectile/magic/star_ball)) // Don't speed up star balls
+			return
+		bullet.speed /= 0.25
 		return
+
 	if(!isliving(thing))
 		return
 	var/mob/living/living_mover = thing
@@ -145,8 +163,12 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 		return
 	living_mover.remove_movespeed_modifier(/datum/movespeed_modifier/cosmic_field)
 
+/// Adds our cosmic field to the global list which bombs check to see if they have to stop exploding
+/obj/effect/forcefield/cosmic_field/proc/prevents_explosions()
+	GLOB.active_cosmic_fields += src
+
 /datum/movespeed_modifier/cosmic_field
-	multiplicative_slowdown = -0.5
+	multiplicative_slowdown = -0.25
 
 /obj/effect/forcefield/cosmic_field/star_blast
 	initial_duration = 10 SECONDS

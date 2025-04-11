@@ -27,6 +27,7 @@
 /datum/action/cooldown/spell/pointed/projectile/star_blast/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	. = ..()
 	projectile_weakref = WEAKREF(to_fire)
+	to_fire.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast, user)
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/apply_button_overlay(atom/movable/screen/movable/action_button/current_button, force)
 	var/obj/projectile/magic/star_ball/active_ball = projectile_weakref?.resolve()
@@ -49,15 +50,15 @@
 	pull_victims() // Yes, this is intentional, we want to pull mobs from the place we were, and the place we've teleported to
 	QDEL_NULL(active_ball)
 	build_all_button_icons(UPDATE_OVERLAYS)
-	// Cooldown of the ability itself is only 1 second after shooting, it's 30 seconds after we teleport to our ball
-	StartCooldown(30 SECONDS)
+	// Cooldown of the ability itself is only 1 second after shooting, it's 25 seconds after we teleport to our ball
+	StartCooldown(25 SECONDS)
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/proc/pull_victims()
 	new /obj/effect/temp_visual/circle_wave/star_blast(get_turf(owner))
 	for(var/turf/spawn_turf in range(1, get_turf(owner)))
 		if(spawn_turf.density)
 			continue
-		new /obj/effect/forcefield/cosmic_field/star_blast(spawn_turf)
+		create_cosmic_field(spawn_turf, owner, /obj/effect/forcefield/cosmic_field/star_blast)
 	for(var/mob/living/nearby_mob in view(2, owner))
 		if(nearby_mob == owner || nearby_mob == summoner?.resolve())
 			continue
@@ -89,10 +90,6 @@
 	var/obj/effect/explosion_effect = /obj/effect/temp_visual/cosmic_explosion
 	/// The range at which people will get marked with a star mark.
 	var/star_mark_range = 3
-
-/obj/projectile/magic/star_ball/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 
 /obj/projectile/magic/star_ball/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()

@@ -7,13 +7,16 @@
 	argument_hash_start_idx = 2
 	/// The effect used for the trail generation.
 	var/chosen_effect
+	/// The source of the trail if relevant
+	var/mob/effect_source
 
-/datum/element/effect_trail/Attach(datum/target, chosen_effect = /obj/effect/forcefield/cosmic_field)
+/datum/element/effect_trail/Attach(datum/target, chosen_effect = /obj/effect/forcefield/cosmic_field, mob/owner)
 	. = ..()
 	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(generate_effect))
 	src.chosen_effect = chosen_effect
+	effect_source = owner
 
 /datum/element/effect_trail/Detach(datum/target)
 	. = ..()
@@ -24,5 +27,11 @@
 	SIGNAL_HANDLER
 
 	var/turf/open/open_turf = get_turf(target_object)
-	if(istype(open_turf))
-		new chosen_effect(open_turf)
+	if(!istype(open_turf))
+		return
+
+	if(effect_source && ispath(chosen_effect, /obj/effect/forcefield/cosmic_field))
+		create_cosmic_field(open_turf, effect_source, chosen_effect)
+		return
+
+	new chosen_effect(open_turf)

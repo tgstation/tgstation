@@ -35,7 +35,7 @@
 		nearby_mob.apply_status_effect(/datum/status_effect/star_mark, cast_on)
 	if (ascended)
 		for(var/turf/cast_turf as anything in get_turfs(get_turf(cast_on)))
-			new /obj/effect/forcefield/cosmic_field(cast_turf)
+			create_cosmic_field(cast_turf, owner, summon_type)
 	return ..()
 
 /datum/action/cooldown/spell/conjure/cosmic_expansion/proc/get_turfs(turf/target_turf)
@@ -44,3 +44,17 @@
 		target_turfs += get_ranged_target_turf(target_turf, direction, 2)
 		target_turfs += get_ranged_target_turf(target_turf, direction, 3)
 	return target_turfs
+
+/datum/action/cooldown/spell/conjure/cosmic_expansion/post_summon(obj/effect/forcefield/cosmic_field/summoned_object, atom/cast_on)
+	. = ..()
+	if(istype(owner, /mob/living/basic/heretic_summon/star_gazer))
+		summoned_object.slows_projectiles()
+		summoned_object.prevents_explosions()
+		return
+	var/datum/status_effect/heretic_passive/cosmic/cosmic_passive = owner.has_status_effect(/datum/status_effect/heretic_passive/cosmic)
+	if(!cosmic_passive)
+		return
+	if(cosmic_passive.passive_level > 1 || istype(owner, /mob/living/basic/heretic_summon/star_gazer))
+		summoned_object.slows_projectiles()
+	if(cosmic_passive.passive_level > 2 || istype(owner, /mob/living/basic/heretic_summon/star_gazer))
+		summoned_object.prevents_explosions()
