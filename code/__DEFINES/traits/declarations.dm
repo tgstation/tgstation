@@ -1483,4 +1483,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents items from being speed potion-ed, but allows their speed to be altered in other ways
 #define TRAIT_NO_SPEED_POTION "no_speed_potion"
 
+/// Prevents observers from being able to observe (seeing their UI and such)
+#define TRAIT_NO_OBSERVE "no_observe"
+
 // END TRAIT DEFINES
