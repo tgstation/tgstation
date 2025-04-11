@@ -47,15 +47,16 @@ Key procs
 	/// If true, overrides tongue aforementioned limitations.
 	var/omnitongue = FALSE
 	/// Handles displaying the language menu UI.
-	var/datum/language_menu/language_menu
+	VAR_FINAL/datum/language_menu/language_menu
 	/// Currently spoken language
 	var/selected_language
 	/// Tracks the entity that owns the holder.
-	var/atom/movable/owner
-	/// Lazyassoclist of all other mutual understanding this holder has in addition to what they understand from their understood languages.
-	/// This is primarily for adding mutual understanding from other sources at runtime.
+	VAR_FINAL/atom/movable/owner
+	/// Lazyassoclist of all mutual understanding this holder has
 	/// Format: list(language_type = list(source = % of understanding))
-	var/list/other_mutual_understanding
+	var/list/mutual_understanding
+	/// Cached form of the mutual language list which only contains the best understanding available to each language
+	VAR_FINAL/list/best_mutual_languages
 
 /// Initializes, and copies in the languages from the current atom if available.
 /datum/language_holder/New(atom/new_owner)
@@ -70,16 +71,45 @@ Key procs
 	// If we have an owner, we'll set a default selected language
 	if(owner)
 		get_selected_language()
+	// Normally this is applied in grant_language, which we bypass
+	for(var/language in understood_languages)
+		gain_partial_understanding_from_language(language)
 
 /datum/language_holder/Destroy()
 	QDEL_NULL(language_menu)
 	owner = null
 	return ..()
 
+/// Helper to get all the partial understanding from the passed language
+/// Does effectively nothing if given a language already understood
+/datum/language_holder/proc/gain_partial_understanding_from_language(language)
+	PRIVATE_PROC(TRUE)
+
+	var/datum/language/prototype = GLOB.language_datum_instances[language]
+	for(var/other_language in prototype.mutual_understanding)
+		grant_partial_language(other_language, prototype.mutual_understanding[other_language], language)
+
+/// Helper to remove all the partial understanding from the passed language
+/datum/language_holder/proc/lose_partial_understanding_from_language(language)
+	PRIVATE_PROC(TRUE)
+
+	var/datum/language/prototype = GLOB.language_datum_instances[language]
+	for(var/other_language in prototype.mutual_understanding)
+		remove_partial_language(other_language, language)
+
+/// Calculates the "best mutual language list"
+/datum/language_holder/proc/calculate_best_mutual_language()
+	best_mutual_languages = list()
+	for(var/language in mutual_understanding)
+		for(var/source in mutual_understanding[language])
+			if(!best_mutual_languages[language] || best_mutual_languages[language] < mutual_understanding[language][source])
+				best_mutual_languages[language] = mutual_understanding[language][source]
+
 /// Grants the supplied language.
 /datum/language_holder/proc/grant_language(language, language_flags = ALL, source = LANGUAGE_MIND)
 	if(language_flags & UNDERSTOOD_LANGUAGE)
 		LAZYORASSOCLIST(understood_languages, language, source)
+		gain_partial_understanding_from_language(language)
 		. = TRUE
 	if(language_flags & SPOKEN_LANGUAGE)
 		LAZYORASSOCLIST(spoken_languages, language, source)
@@ -98,8 +128,9 @@ Key procs
 /// Grants partial understanding of the passed language.
 /// Giving 100 understanding is basically equivalent to knowning the language, just with butchered punctuation.
 /datum/language_holder/proc/grant_partial_language(language, amount = 50, source = LANGUAGE_MIND)
-	LAZYINITLIST(other_mutual_understanding)
-	LAZYSET(other_mutual_understanding[language], source, amount)
+	LAZYINITLIST(mutual_understanding)
+	LAZYSET(mutual_understanding[language], source, amount)
+	calculate_best_mutual_language()
 	return TRUE
 
 /// Removes a single language or source, removing all sources returns the pre-removal state of the language.
@@ -109,6 +140,7 @@ Key procs
 			LAZYREMOVE(understood_languages, language)
 		else
 			LAZYREMOVEASSOC(understood_languages, language, source)
+		lose_partial_understanding_from_language(language)
 		. = TRUE
 
 	if(language_flags & SPOKEN_LANGUAGE)
@@ -130,14 +162,21 @@ Key procs
 
 /// Removes partial understanding of the passed language.
 /datum/language_holder/proc/remove_partial_language(language, source = LANGUAGE_MIND)
-	LAZYREMOVE(other_mutual_understanding[language], source)
-	ASSOC_UNSETEMPTY(other_mutual_understanding, language)
-	UNSETEMPTY(other_mutual_understanding)
+	if(source == LANGUAGE_ALL)
+		for(var/other_source in mutual_understanding[language])
+			if(ispath(other_source, /datum/language))
+				continue
+			remove_partial_language(language, other_source)
+	else
+		LAZYREMOVE(mutual_understanding[language], source)
+		ASSOC_UNSETEMPTY(mutual_understanding, language)
+		UNSETEMPTY(mutual_understanding)
+	calculate_best_mutual_language()
 	return TRUE
 
 /// Removes all partial understandings of all languages.
 /datum/language_holder/proc/remove_all_partial_languages(source = LANGUAGE_MIND)
-	for(var/language in other_mutual_understanding)
+	for(var/language in mutual_understanding)
 		remove_partial_language(language, source)
 	return TRUE
 
@@ -200,24 +239,6 @@ Key procs
 /datum/language_holder/proc/get_random_understood_language()
 	return pick(understood_languages)
 
-/// Gets a list of all mutually understood languages.
-/datum/language_holder/proc/get_partially_understood_languages()
-	var/list/mutual_languages = list()
-	for(var/language_type in (understood_languages || list()) - blocked_languages)
-		var/datum/language/language_instance = GLOB.language_datum_instances[language_type]
-		for(var/mutual_language_type in language_instance.mutual_understanding)
-			// add it to the list OR override it if it's a stronger mutual understanding
-			if(mutual_languages[mutual_language_type] < language_instance.mutual_understanding[mutual_language_type])
-				mutual_languages[mutual_language_type] = language_instance.mutual_understanding[mutual_language_type]
-
-	for(var/language_type in (other_mutual_understanding || list()) - blocked_languages)
-		for(var/language_source in other_mutual_understanding[language_type])
-			var/understanding_for_type_by_source = other_mutual_understanding[language_type][language_source]
-			if(mutual_languages[language_type] < understanding_for_type_by_source)
-				mutual_languages[language_type] = understanding_for_type_by_source
-
-	return mutual_languages
-
 /// Gets a random spoken language, useful for forced speech and such.
 /datum/language_holder/proc/get_random_spoken_language()
 	return pick(spoken_languages)
@@ -271,8 +292,8 @@ Key procs
 		if(LANGUAGE_MIND in blocked_languages[language])
 			remove_blocked_language(language, LANGUAGE_MIND)
 			to_holder.add_blocked_language(language, LANGUAGE_MIND)
-	for(var/language in other_mutual_understanding)
-		var/mind_understanding = other_mutual_understanding[language][LANGUAGE_MIND]
+	for(var/language in mutual_understanding)
+		var/mind_understanding = mutual_understanding[language][LANGUAGE_MIND]
 		if(mind_understanding > 0)
 			remove_partial_language(language, LANGUAGE_MIND)
 			to_holder.grant_partial_language(language, mind_understanding, LANGUAGE_MIND)
