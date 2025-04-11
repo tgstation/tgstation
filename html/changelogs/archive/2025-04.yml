@@ -320,3 +320,31 @@
       need to be put in your backpack or pockets.
   timothymtorres:
   - rscadd: Add rare chance of thunder strikes during ash storms on lavaland
+2025-04-11:
+  00-Steven:
+  - bugfix: Fixed accessories getting slowly but surely offset further down-right
+      each time you attached them to an outfit.
+  Ben10Omintrix:
+  - bugfix: fixes being able to pull mobs while riding them
+  FlufflesTheDog:
+  - bugfix: Mining vendors will no longer mistake non-voucher items as authentic mining
+      vouchers
+  JohnFulpWillard:
+  - bugfix: Roundend reports now show up again.
+  - rscadd: Adds a new sports betting app on your PDA, you can now host and vote on
+      polls using in-game credits.
+  Melbert:
+  - bugfix: Fix divine smites making you glow forever
+  Toriate, Ezel:
+  - image: Envy Knife from Envy ruin has a new sprite
+  ZeroKelvn:
+  - qol: Bank machines accept coins of monetary value
+  necromanceranne:
+  - admin: Adds Security as one of the captain's departments, ensuring that departmental
+      bans also include the captain, who is an effective member of security.
+  subject217:
+  - qol: Added a reminder message for AIs about how to use holopads during communication
+      blackouts.
+  vinylspiders:
+  - bugfix: fixes persistent paintings not loading
+  - bugfix: fixes flipped table spawners not initializing correctly
