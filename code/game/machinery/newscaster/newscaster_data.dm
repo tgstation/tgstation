@@ -185,7 +185,8 @@ GLOBAL_LIST_EMPTY(request_list)
 	var/message_count = 0
 
 /datum/feed_network/New()
-	create_feed_channel("Station Announcements", "SS13", "Company news, staff announcements, and all the latest information. Have a secure shift!", locked = TRUE, hardset_channel = 1000)
+	create_feed_channel(NEWSCASTER_STATION_ANNOUNCEMENTS, "SS13", "Company news, staff announcements, and all the latest information. Have a secure shift!", locked = TRUE, hardset_channel = 1000)
+	create_feed_channel(NEWSCASTER_SPACE_BETTING, "NtOS", "News from the SpaceBet PDA App! Download now and make your own bets!", locked = TRUE, hardset_channel = 1001)
 	wanted_issue = new /datum/wanted_message
 
 /datum/feed_network/proc/create_feed_channel(channel_name, author, desc, locked, adminChannel = FALSE, hardset_channel = null, author_ckey = null, cross_sector = FALSE, cross_sector_delay = null, receiving_cross_sector = FALSE)
@@ -236,7 +237,6 @@ GLOBAL_LIST_EMPTY(request_list)
 		newMsg.parent_ID = channel.channel_ID
 		if (!channel.cross_sector)
 			break
-
 		// Newscaster articles could be huge, and usefulness of first 50 symbols is dubious
 		message_admins(span_adminnotice("Outgoing cross-sector newscaster article by [key_name(author_mob) || author] in channel [channel_name]."))
 		var/list/payload = list(
@@ -249,6 +249,18 @@ GLOBAL_LIST_EMPTY(request_list)
 
 	for(var/obj/machinery/newscaster/caster in GLOB.allCasters)
 		caster.news_alert(channel_name, update_alert)
+	return newMsg
+
+///Submits a comment on the news network
+/datum/feed_network/proc/submit_comment(mob/user, comment_text, newscaster_username, datum/feed_message/current_message)
+	var/datum/feed_comment/new_feed_comment = new/datum/feed_comment
+	new_feed_comment.author = newscaster_username
+	new_feed_comment.body = comment_text
+	new_feed_comment.time_stamp = station_time_timestamp()
+	GLOB.news_network.last_action ++
+	current_message.comments += new_feed_comment
+	if(user)
+		user.log_message("(as [newscaster_username]) commented on message [current_message.return_body(-1)] -- [current_message.body]", LOG_COMMENT)
 
 /datum/feed_network/proc/submit_wanted(criminal, body, scanned_user, datum/picture/picture, adminMsg = FALSE, newMessage = FALSE)
 	wanted_issue.active = TRUE

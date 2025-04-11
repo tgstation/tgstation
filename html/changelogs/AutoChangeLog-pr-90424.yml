@@ -1,4 +1,0 @@
-author: "AyIong"
-delete-after: True
-changes:
-  - refactor: "All TGUI styles was migrated to CSS Variables, if you find something odd in styles, feel free to make an issue on GitHub"

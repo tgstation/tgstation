@@ -1,0 +1,4 @@
+author: "AyIong"
+delete-after: True
+changes:
+  - code_imp: "PopperJS replaced by FloatingUI. Make an issue report on GitHub if you find any issues with it on Preferences or Request Manager"

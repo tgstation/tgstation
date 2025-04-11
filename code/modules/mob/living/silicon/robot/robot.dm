@@ -895,6 +895,7 @@
 		if((AI.radio.special_channels & RADIO_SPECIAL_SYNDIE))
 			radio.make_syndie()
 		radio.subspace_transmission = TRUE
+		radio.command = TRUE
 		radio.channels = AI.radio.channels
 		for(var/chan in radio.channels)
 			radio.secure_radio_connections[chan] = add_radio(radio, GLOB.radiochannels[chan])
@@ -927,6 +928,7 @@
 	deployed = FALSE
 	mainframe.deployed_shell = null
 	undeployment_action.Remove(src)
+	REMOVE_TRAIT(src, TRAIT_LOUD_BINARY, REF(mainframe))
 	if(radio) //Return radio to normal
 		radio.recalculateChannels()
 	if(!QDELETED(builtInCamera))
