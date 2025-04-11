@@ -91,6 +91,8 @@
 	// slightly worse than normal cult robes
 	armor_type = /datum/armor/cultrobes_void
 	alternative_mode = TRUE
+	/// Whether the hood is flipped up
+	var/hood_up = FALSE
 
 /datum/armor/cultrobes_void
 	melee = 30
@@ -115,6 +117,12 @@
 /obj/item/clothing/suit/hooded/cultrobes/void/dropped(mob/user)
 	. = ..()
 	UnregisterSignal(user, list(COMSIG_MOB_UNEQUIPPED_ITEM, COMSIG_MOB_EQUIPPED_ITEM))
+
+/obj/item/clothing/suit/hooded/cultrobes/void/on_hood_up(obj/item/clothing/head/hooded/hood)
+	hood_up = TRUE
+
+/obj/item/clothing/suit/hooded/cultrobes/void/on_hood_down(obj/item/clothing/head/hooded/hood)
+	hood_up = FALSE
 
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/hide_item(datum/source, obj/item/item, slot)
 	SIGNAL_HANDLER

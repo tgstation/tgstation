@@ -92,6 +92,40 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = NONE
 
+/obj/item/clothing/suit/hooded/cultrobes/hardened/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
+
+/obj/item/clothing/suit/hooded/cultrobes/hardened/proc/on_bible_smacked(obj/item/book/bible/source, mob/user)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(attempt_exorcism), user)
+	return COMSIG_END_BIBLE_CHAIN
+
+/**
+ * attempt_exorcism: called from on_bible_smacked, takes time and if successful
+ * turns into a new set of chaplain clothes
+ *
+ * Arguments:
+ * * exorcist: user who is attempting to remove the spirit
+ */
+/obj/item/clothing/suit/hooded/cultrobes/hardened/proc/attempt_exorcism(mob/living/exorcist)
+	if(IS_CULTIST(exorcist))
+		return
+	balloon_alert(exorcist, "exorcising...")
+	playsound(src, 'sound/effects/hallucinations/veryfar_noise.ogg', 40, TRUE)
+	if(!do_after(exorcist, 4 SECONDS, target = src))
+		return
+	playsound(src, 'sound/effects/pray_chaplain.ogg', 60, TRUE)
+
+	exorcist.visible_message(span_notice("[exorcist] purifies [src]!"))
+	var/new_item_path = GLOB.holy_armor_type || pick(subtypesof(/obj/item/storage/box/holy))
+	var/obj/item/new_item = new new_item_path()
+	//take everything out and delete the box.
+	for(var/obj/item/storage_items as anything in new_item.contents)
+		storage_items.forceMove(get_turf(src))
+	qdel(new_item)
+	qdel(src)
+
 /datum/armor/cultrobes_hardened
 	melee = 50
 	bullet = 40
@@ -101,6 +135,30 @@
 	bio = 100
 	fire = 100
 	acid = 100
+
+/obj/item/clothing/suit/hooded/cultrobes/hardened/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot_flags & slot)
+		START_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/suit/hooded/cultrobes/hardened/dropped(mob/living/user)
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/suit/hooded/cultrobes/hardened/process(seconds_per_tick)
+	var/mob/living/carbon/wearer = loc
+	if(!istype(wearer) || IS_CULTIST(wearer))
+		return
+	if(!SPT_PROB(15, seconds_per_tick))
+		return
+	var/obj/item/bodypart/bone_to_wound = pick(wearer.bodyparts)
+	var/wound_type = pick(list(
+		/datum/wound/blunt/bone/moderate,
+		/datum/wound/pierce/bleed/moderate,
+	))
+	var/datum/wound/wound_of_choice = new wound_type()
+	wound_of_choice.apply_wound(bone_to_wound, wound_source = "cultist robes")
+	to_chat(wearer, span_alert("[src] starts glowing and you suddenly notice injuries all over yourself!"))
 
 /obj/item/clothing/head/hooded/cult_hoodie/hardened
 	name = "\improper Nar'Sien hardened helmet"
