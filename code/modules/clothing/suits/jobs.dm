@@ -116,9 +116,9 @@
 
 //Detective
 /obj/item/clothing/suit/jacket/det_suit
-	name = "trenchcoat"
+	name = "brown trenchcoat"
 	desc = "A 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
-	icon_state = "detective"
+	icon_state = "det_trenchcoat"
 	inhand_icon_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -141,19 +141,19 @@
 /obj/item/clothing/suit/jacket/det_suit/dark
 	name = "noir trenchcoat"
 	desc = "A hard-boiled private investigator's dark trenchcoat."
-	icon_state = "noirdet"
+	icon_state = "noir_trenchcoat"
 	inhand_icon_state = null
 
 /obj/item/clothing/suit/jacket/det_suit/noir
-	name = "noir suit coat"
-	desc = "A dapper private investigator's dark suit coat."
-	icon_state = "detsuit"
+	name = "noir blazer jacket"
+	desc = "A dapper private investigator's dark suit jacket."
+	icon_state = "noir_blazer"
 	inhand_icon_state = null
 
 /obj/item/clothing/suit/jacket/det_suit/brown
-	name = "brown suit jacket"
+	name = "brown blazer jacket"
 	desc = "A suit jacket perfect for dinner dates and criminal investigations."
-	icon_state = "detsuit_brown"
+	icon_state = "det_blazer"
 	inhand_icon_state = null
 
 /obj/item/clothing/suit/jacket/det_suit/kim
