@@ -31,7 +31,6 @@ a {
   cursor: var(--cursor-pointer);
   color: var(--color-hyperlink);
   transition: color var(--transition-time-medium);
-  text-decoration: none;
 
   &:hover {
     color: hsl(from var(--color-hyperlink) h s calc(l + var(--adjust-hover)));
