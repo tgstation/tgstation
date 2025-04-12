@@ -1,0 +1,22 @@
+{
+	"widebrim_feathered": [
+		{
+			"type": "icon_state",
+			"icon_state": "widebrim_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "widebrim_strip",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "feather",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

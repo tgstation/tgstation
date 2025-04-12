@@ -86,6 +86,12 @@
 		/obj/item/clothing/suit/jacket/doppler/peacekeeper_jacket/badged = 5,
 		/obj/item/clothing/suit/toggle/labcoat/high_vis = 5,
 		/obj/item/clothing/head/cap_colonysec = 5,
+		/obj/item/clothing/head/cowboy/doppler/wide = 5,
+		/obj/item/clothing/head/cowboy/doppler/wide/feathered = 5,
+		/obj/item/clothing/head/cowboy/doppler/flat = 5,
+		/obj/item/clothing/head/cowboy/doppler/flat/cowl = 5,
+		/obj/item/clothing/head/cowboy/doppler/cattleman = 5,
+		/obj/item/clothing/head/cowboy/doppler/cattleman/wide = 5,
 	)
 
 

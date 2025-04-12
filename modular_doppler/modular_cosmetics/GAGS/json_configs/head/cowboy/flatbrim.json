@@ -1,0 +1,16 @@
+{
+	"flatbrim": [
+		{
+			"type": "icon_state",
+			"icon_state": "flatbrim_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "flatbrim_strip",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		}
+	]
+}
