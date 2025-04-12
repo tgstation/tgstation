@@ -7138,6 +7138,7 @@
 #include "modular_doppler\modular_jobs\command_bodyguard\code\devices\crew.dm"
 #include "modular_doppler\modular_jobs\command_bodyguard\code\devices\sensor_device.dm"
 #include "modular_doppler\modular_jobs\command_bodyguard\code\job_skillchips\command_bodyguard.dm"
+#include "modular_doppler\modular_jobs\id_trim\access_additions.dm"
 #include "modular_doppler\modular_mapping\code\areas\mining.dm"
 #include "modular_doppler\modular_mapping\code\areas\ruins.dm"
 #include "modular_doppler\modular_mapping\code\areas\station.dm"
