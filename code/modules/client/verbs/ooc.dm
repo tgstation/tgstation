@@ -497,7 +497,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	var/datum/db_query/query_set_token = SSdbcore.NewQuery("INSERT INTO phpbb.tg_byond_oauth_tokens (`token`, `key`) VALUES (:token, :key)", list("token" = token, "key" = key))
 	if(!query_set_token.Execute())
-		to_chat(src, {"<span class="danger">Unknown error #3.</span>"})
+		to_chat(src, span_danger("Failed to insert account link token into database, please try again later."))
 		qdel(query_set_token)
 		return
 
