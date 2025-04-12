@@ -69,7 +69,12 @@ export const AutomatedAnnouncement = (props) => {
           <Stack.Item>
             <LabeledList>
               <LabeledList.Item label="Search">
-                <Input fluid placeholder="Name/Line/Var" onChange={setSearch} />
+                <Input
+                  fluid
+                  placeholder="Name/Line/Var"
+                  onChange={setSearch}
+                  expensive
+                />
               </LabeledList.Item>
             </LabeledList>
           </Stack.Item>

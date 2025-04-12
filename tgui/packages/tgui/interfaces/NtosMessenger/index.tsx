@@ -371,9 +371,9 @@ const SendToAllSection = (props) => {
           value={message}
           placeholder="Send message to everyone..."
           onChange={setMessage}
+          selfClear
           onEnter={() => {
             act('PDA_sendEveryone', { message: message });
-            setMessage('');
           }}
         />
       </Section>

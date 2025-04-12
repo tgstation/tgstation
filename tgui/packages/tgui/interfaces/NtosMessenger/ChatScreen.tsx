@@ -297,16 +297,16 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             )}
             <Stack.Item>
               <Stack fill align="center">
-                <Stack.Item grow={1}>
+                <Stack.Item grow>
                   <Input
                     placeholder={`Send message to ${recipient.name}...`}
                     fluid
                     autoFocus
-                    width="100%"
                     value={message}
                     maxLength={1024}
                     onChange={this.handleMessageInput}
                     onEnter={this.handleSendMessage}
+                    selfClear
                   />
                 </Stack.Item>
                 {buttons}
