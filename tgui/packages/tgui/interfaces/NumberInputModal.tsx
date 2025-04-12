@@ -82,7 +82,7 @@ export const NumberInputModal = (props) => {
 const InputArea = (props) => {
   const { act, data } = useBackend<NumberInputData>();
   const { min_value, max_value, init_value, round_value } = data;
-  const { input, onClick, onChange, onBlur } = props;
+  const { input, onClick, onChange } = props;
 
   return (
     <Stack fill>
@@ -100,11 +100,10 @@ const InputArea = (props) => {
           autoSelect
           fluid
           allowFloats={!round_value}
-          minValue={min_value}
-          maxValue={max_value}
-          onChange={(_, value) => onChange(value)}
-          onBlur={(_, value) => onBlur(value)}
-          onEnter={(_, value) => act('submit', { entry: value })}
+          minValue={min_value ?? undefined}
+          maxValue={max_value ?? undefined}
+          onChange={onChange}
+          onEnter={(value) => act('submit', { entry: value })}
           value={input}
         />
       </Stack.Item>

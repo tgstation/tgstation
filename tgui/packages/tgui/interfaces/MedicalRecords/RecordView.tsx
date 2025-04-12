@@ -91,7 +91,7 @@ export const MedicalRecordView = (props) => {
               <RestrictedInput
                 minValue={min_age}
                 maxValue={max_age}
-                onEnter={(event, value) =>
+                onEnter={(value) =>
                   act('edit_field', {
                     field: 'age',
                     ref: crew_ref,

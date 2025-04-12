@@ -88,8 +88,8 @@ export function MultiNameInput(props: MultiNameProps) {
                       content = (
                         <Input
                           autoSelect
-                          onEnter={(e, value) => updateName(key, value)}
-                          onChange={(e, value) => updateName(key, value)}
+                          expensive
+                          onChange={(value) => updateName(key, value)}
                           onEscape={() => {
                             setCurrentlyEditingName(null);
                           }}
@@ -158,7 +158,7 @@ export function NameInput(props: NameInputProps) {
   );
   const editing = lastNameBeforeEdit === props.name;
 
-  function updateName(e, value) {
+  function updateName(value) {
     setLastNameBeforeEdit(null);
     props.handleUpdateName(value);
   }
@@ -187,17 +187,17 @@ export function NameInput(props: NameInputProps) {
         </Stack.Item>
 
         <Stack.Item grow position="relative">
-          {(editing && (
+          {editing ? (
             <Input
               autoSelect
-              onEnter={updateName}
+              expensive
               onChange={updateName}
               onEscape={() => {
                 setLastNameBeforeEdit(null);
               }}
               value={props.name}
             />
-          )) || (
+          ) : (
             <FitText maxFontSize={16} maxWidth={130}>
               {props.name}
             </FitText>

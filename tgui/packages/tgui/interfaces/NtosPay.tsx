@@ -100,7 +100,7 @@ const TransferSection = (props) => {
               <Input
                 placeholder="Pay Token"
                 width="190px"
-                onChange={(e, value) => (token = value)}
+                onChange={(value) => (token = value)}
               />
             </Tooltip>
           </Box>
@@ -112,7 +112,7 @@ const TransferSection = (props) => {
               width="83px"
               minValue={1}
               maxValue={money}
-              onChange={(_, value) => (money_to_send = value)}
+              onChange={(value) => (money_to_send = value)}
               value={1}
             />
           </Tooltip>
@@ -133,7 +133,7 @@ const TransferSection = (props) => {
             <Input
               placeholder="Full name of account."
               width="190px"
-              onChange={(e, value) => (name_to_token = value)}
+              onChange={(value) => (name_to_token = value)}
             />
             <Button
               content="Get it"

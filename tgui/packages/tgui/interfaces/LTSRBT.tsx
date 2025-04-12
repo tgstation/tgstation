@@ -33,7 +33,8 @@ export const LTSRBT = (props) => {
               width="80%"
               value={name}
               placeholder="Insert a name"
-              onChange={(e, value) =>
+              expensive
+              onChange={(value) =>
                 act('change_name', {
                   value: value,
                 })
@@ -72,7 +73,8 @@ export const LTSRBT = (props) => {
               height="90%"
               value={desc}
               placeholder="Insert a description (or don't)"
-              onChange={(e, value) =>
+              expensive
+              onChange={(value) =>
                 act('change_desc', {
                   value: value,
                 })

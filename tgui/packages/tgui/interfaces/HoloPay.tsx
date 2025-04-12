@@ -211,7 +211,8 @@ const SetupDisplay = (props) => {
             fluid
             height="3rem"
             maxLength={42}
-            onChange={(_, value) => {
+            expensive
+            onChange={(value) => {
               value?.length > 3 && act('rename', { name: value });
             }}
             placeholder={decodeHtmlEntities(name)}
@@ -225,7 +226,8 @@ const SetupDisplay = (props) => {
             <RestrictedInput
               fluid
               maxValue={max_fee}
-              onChange={(_, value) => act('fee', { amount: value })}
+              expensive
+              onChange={(value) => act('fee', { amount: value })}
               value={force_fee}
             />
           </Tooltip>
