@@ -325,7 +325,6 @@
 
 /obj/item/storage/toolbox/medical/full
 	tray_type = /obj/item/surgery_tray/full
-	stor
 
 /obj/item/storage/toolbox/medical/coroner
 	name = "coroner toolbox"
