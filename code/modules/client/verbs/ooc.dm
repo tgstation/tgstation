@@ -469,12 +469,13 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	set category = "Server"
 	to_chat(mob, SSmap_vote.tally_printout)
 
-/client/var/forumlinklimit = 0
+
 /client/verb/linkforumaccount()
 	set category = "OOC"
 	set name = "Link Forum Account"
 	set desc = "Validates your byond account to your forum account. Required to post on the forums."
 
+	var/forumlinklimit = 0
 	var/uri = CONFIG_GET(string/forum_link_uri)
 	if(!uri)
 		to_chat(src, span_warning("This feature is disabled."))
@@ -503,7 +504,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	qdel(query_set_token)
 
-	to_chat(src, "Now opening a window to login to your forum account, your account will automatically be linked the moment you log in. If this window doesn't load, Please go to <a href="[uri]?token=[token]">[uri]?token=[token]</a> - This link will expire in 30 minutes.")
+	to_chat(src, "Now opening a window to login to your forum account, your account will automatically be linked the moment you log in. If this window doesn't load, Please go to <a href=\"[uri]?token=[token]\">[uri]?token=[token]</a> - This link will expire in 30 minutes.")
 	src << link("[uri]?token=[token]")
 
 /client/proc/generate_account_link_token()
@@ -516,9 +517,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	else if (prob(rand(1,15)))
 		text2file("data/entropychain.txt", entropychain)
 
-	#define RANDOM_STRING "SHA2(CONCAT(RAND(),UUID(),?,RAND(),UUID()), 512)"
-	#define RANDOM_STRING_ARGS "[entropychain][GUID()][rand()*rand(999999)][world.time][GUID()][rand()*rand(999999)][world.timeofday][GUID()][rand()*rand(999999)][world.realtime][GUID()][rand()*rand(999999)][time2text(world.timeofday)][GUID()][rand()*rand(999999)][world.tick_usage][computer_id][address][ckey][key][GUID()][rand()*rand(999999)]"
-	var/datum/db_query/query_get_token = SSdbcore.NewQuery("SELECT [RANDOM_STRING], [RANDOM_STRING]", list(RANDOM_STRING_ARGS, RANDOM_STRING_ARGS))
+	var/datum/db_query/query_get_token = SSdbcore.NewQuery("SELECT [random_string()], [random_string()]", list(random_string_args(entropychain), random_string_args(entropychain)))
 
 	if(!query_get_token.Execute())
 		to_chat(src, span_danger("Failed to get random string token from database. (Error #1)"))
@@ -532,6 +531,10 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	entropychain = "[query_get_token.item[2]]"
 	return query_get_token.item[1]
-	
-#undef RANDOM_STRING
-#undef RANDOM_STRING_ARGS
+
+
+/client/proc/random_string()
+	return "SHA2(CONCAT(RAND(),UUID(),?,RAND(),UUID()), 512)"
+
+/client/proc/random_string_args(entropychain)
+	return "[entropychain][GUID()][rand()*rand(999999)][world.time][GUID()][rand()*rand(999999)][world.timeofday][GUID()][rand()*rand(999999)][world.realtime][GUID()][rand()*rand(999999)][time2text(world.timeofday)][GUID()][rand()*rand(999999)][world.tick_usage][computer_id][address][ckey][key][GUID()][rand()*rand(999999)]"
