@@ -530,6 +530,8 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 		qdel(query_get_token)
 		return
 
-	. = query_get_token.item[1]
-
 	entropychain = "[query_get_token.item[2]]"
+	return query_get_token.item[1]
+	
+#undef RANDOM_STRING
+#undef RANDOM_STRING_ARGS
