@@ -642,17 +642,12 @@
 	name = "New Player Info"
 	screen_loc = "TOP:0,CENTER:210"
 	icon = 'icons/hud/lobby/newplayer.dmi'
-	icon_state = "newplayer"
+	icon_state = null //we only show up when we get update appearance called, cause we need our overlay to not look bad.
 	base_icon_state = "newplayer"
 	always_shown = TRUE
 	maptext_height = 70
 	maptext_width = 80
 	maptext_x = 10
-
-/atom/movable/screen/lobby/new_player_info/Destroy()
-	maptext = null
-	STOP_PROCESSING(SSnewplayer_info, src)
-	return ..()
 
 /atom/movable/screen/lobby/new_player_info/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -664,6 +659,20 @@
 
 	START_PROCESSING(SSnewplayer_info, src)
 	update_text()
+	update_appearance(UPDATE_ICON)
+
+/atom/movable/screen/lobby/new_player_info/Destroy()
+	maptext = null
+	STOP_PROCESSING(SSnewplayer_info, src)
+	return ..()
+
+/atom/movable/screen/lobby/new_player_info/update_overlays()
+	. = ..()
+	if(!always_available)
+		return
+	. += mutable_appearance(icon, "[base_icon_state]-overlay", layer = src.layer+0.03)
+	. += mutable_appearance(icon, "static_base", alpha = 20, layer = src.layer+0.01)
+	. += mutable_appearance(generate_icon_alpha_mask(icon, "scanline"), alpha = 20, layer = src.layer+0.02)
 
 /atom/movable/screen/lobby/new_player_info/update_icon_state()
 	. = ..()
