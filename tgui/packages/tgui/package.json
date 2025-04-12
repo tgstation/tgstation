@@ -3,9 +3,6 @@
   "name": "tgui",
   "version": "6.0.0",
   "dependencies": {
-    "@floating-ui/react": "^0.27.7",
-    "@types/marked": "4.3.2",
-    "@types/react": "^19.1.0",
     "common": "workspace:*",
     "dateformat": "^5.0.3",
     "dompurify": "^2.5.7",
@@ -18,5 +15,11 @@
     "react-dom": "^19.1.0",
     "tgui-core": "^2.1.1",
     "tgui-dev-server": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/marked": "4.3.2",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.2",
+    "vitest": "^3.1.1"
   }
 }

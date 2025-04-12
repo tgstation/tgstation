@@ -4,8 +4,6 @@
   "version": "6.0.0",
   "dependencies": {
     "@fastify/static": "^8.0.2",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.1",
     "common": "workspace:*",
     "fastify": "^5.1.0",
     "lodash": "^4.17.21",
@@ -14,5 +12,9 @@
     "react-dom": "^19.1.0",
     "tgui": "workspace:*",
     "tgui-core": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.2"
   }
 }
