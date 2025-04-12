@@ -785,4 +785,3 @@
 
 // If set, enables the "Link forum account" OOC verb
 /datum/config_entry/string/forum_link_uri
-	default = "?"
