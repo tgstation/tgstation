@@ -480,7 +480,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 		to_chat(src, span_warning("This feature is disabled."))
 		return
 
-	if (forumlinklimit > world.time + 100)
+	if (forumlinklimit > world.time + 10 SECONDS)
 		to_chat(src, {"<span class="userdanger">Please wait 10 game seconds between forums link attempts.</span>"})
 		return
 
