@@ -63966,16 +63966,19 @@
 "ueu" = (
 /obj/structure/table,
 /obj/item/folder/white{
-	pixel_x = -3
+	pixel_x = 6
 	},
 /obj/item/paper_bin{
 	pixel_x = 6;
 	pixel_y = 12
 	},
-/obj/item/pen,
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 12
+	},
 /obj/machinery/reagentgrinder{
 	pixel_x = -8;
-	pixel_y = 23
+	pixel_y = 8
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
