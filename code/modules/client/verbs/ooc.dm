@@ -503,7 +503,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	qdel(query_set_token)
 
-	to_chat(src, {"Now opening a window to login to your forum account, Your account will automatically be linked the moment you log in. If this window doesn't load, Please go to <a href="[uri]?token=[token]">[uri]?token=[token]</a> This link will expire in 30 minutes."})
+	to_chat(src, "Now opening a window to login to your forum account, your account will automatically be linked the moment you log in. If this window doesn't load, Please go to <a href="[uri]?token=[token]">[uri]?token=[token]</a> - This link will expire in 30 minutes.")
 	src << link("[uri]?token=[token]")
 
 /client/proc/generate_account_link_token()
