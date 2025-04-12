@@ -637,16 +637,20 @@
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		to_chat(usr, span_admin("The server is still setting up, but the round will be started as soon as possible."))
 
+#define OVERLAY_X_DIFF 12
+#define OVERLAY_Y_DIFF 5
+
 ///Lobby screen that appears before the game has started showing how many players there are and who is ready.
 /atom/movable/screen/lobby/new_player_info
 	name = "New Player Info"
-	screen_loc = "TOP:0,CENTER:210"
+	screen_loc = "TOP:-20,CENTER:192"
 	icon = 'icons/hud/lobby/newplayer.dmi'
 	icon_state = null //we only show up when we get update appearance called, cause we need our overlay to not look bad.
 	base_icon_state = "newplayer"
 	maptext_height = 70
 	maptext_width = 80
-	maptext_x = 10
+	maptext_x = OVERLAY_X_DIFF
+	maptext_y = OVERLAY_Y_DIFF
 
 	var/show_static = TRUE
 
@@ -663,7 +667,6 @@
 	update_appearance(UPDATE_ICON)
 
 /atom/movable/screen/lobby/new_player_info/Destroy()
-	maptext = null
 	STOP_PROCESSING(SSnewplayer_info, src)
 	return ..()
 
@@ -671,10 +674,15 @@
 	. = ..()
 	if(!always_available)
 		return .
-	. += mutable_appearance(icon, "[base_icon_state]-overlay", layer = src.layer+0.03)
+	. += mutable_appearance(icon, "[base_icon_state]_overlay", layer = src.layer+0.03)
 	if(show_static)
 		. += mutable_appearance(icon, "static_base", alpha = 20, layer = src.layer+0.01)
-		. += mutable_appearance(generate_icon_alpha_mask(icon, "scanline"), alpha = 20, layer = src.layer+0.02)
+		//we have this in a separate file because `generate_icon_alpha_mask` puts lighting even on non-existent pixels,
+		//giving the icon a weird background color.
+		var/mutable_appearance/scanline = mutable_appearance(generate_icon_alpha_mask('icons/hud/lobby/newplayer_scanline.dmi', "scanline"), alpha = 20, layer = src.layer+0.02)
+		scanline.pixel_y = OVERLAY_X_DIFF
+		scanline.pixel_x = OVERLAY_Y_DIFF
+		. += scanline
 
 /atom/movable/screen/lobby/new_player_info/update_icon_state()
 	. = ..()
@@ -744,6 +752,9 @@
 		new_maptext += "</span>"
 
 	maptext = MAPTEXT(new_maptext)
+
+#undef OVERLAY_X_DIFF
+#undef OVERLAY_Y_DIFF
 
 #undef SHUTTER_MOVEMENT_DURATION
 #undef SHUTTER_WAIT_DURATION
