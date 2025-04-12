@@ -338,10 +338,10 @@ export const NtosNotepad = (props) => {
     line: 0,
     column: 0,
   });
-  const [activeDialog, setActiveDialog] = useState<Dialogs>(Dialogs.NONE);
+  const [activeDialog, setActiveDialog] = useState(Dialogs.NONE);
   const [retryAction, setRetryAction] = useState<RetryActionType | null>(null);
-  const [showStatusBar, setShowStatusBar] = useState<boolean>(true);
-  const [wordWrap, setWordWrap] = useState<boolean>(true);
+  const [showStatusBar, setShowStatusBar] = useState(true);
+  const [wordWrap, setWordWrap] = useState(true);
 
   const handleCloseDialog = () => setActiveDialog(Dialogs.NONE);
   const handleSave = (newDocumentName: string = documentName) => {
