@@ -204,7 +204,7 @@
 
 		var/obj/item/storage/bag/trash/insert = attacking_item
 		if(!insert.insertable)
-			balloon_alert(user, "[mybag] cannot be inserted")
+			balloon_alert(user, "cannot be inserted!")
 			return
 
 		if(user.transferItemToLoc(attacking_item, src))

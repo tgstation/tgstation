@@ -18,7 +18,8 @@
 	max_integrity = 150
 	storage_type = /datum/storage/briefcase
 
-	var/folder_path = /obj/item/folder //this is the path of the folder that gets spawned in New()
+	/// The path of the folder that gets spawned in New()
+	var/folder_path = /obj/item/folder 
 
 /obj/item/storage/briefcase/PopulateContents()
 	new /obj/item/pen(src)
