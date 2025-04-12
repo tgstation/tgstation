@@ -487,7 +487,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	forumlinklimit = world.time
 
 	if (!SSdbcore.Connect())
-		to_chat(src, {"<span class="danger">No connection to the database.</span>"})
+		to_chat(src, span_danger("No connection to the database."))
 		return
 
 	if  (is_guest_key(ckey))
