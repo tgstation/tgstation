@@ -14871,6 +14871,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/window/right/directional/west{
+	name = "Medical Desk"
+	},
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "eJX" = (
