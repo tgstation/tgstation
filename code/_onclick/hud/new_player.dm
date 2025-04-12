@@ -644,10 +644,11 @@
 	icon = 'icons/hud/lobby/newplayer.dmi'
 	icon_state = null //we only show up when we get update appearance called, cause we need our overlay to not look bad.
 	base_icon_state = "newplayer"
-	always_shown = TRUE
 	maptext_height = 70
 	maptext_width = 80
 	maptext_x = 10
+
+	var/show_static = TRUE
 
 /atom/movable/screen/lobby/new_player_info/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -669,10 +670,11 @@
 /atom/movable/screen/lobby/new_player_info/update_overlays()
 	. = ..()
 	if(!always_available)
-		return
+		return .
 	. += mutable_appearance(icon, "[base_icon_state]-overlay", layer = src.layer+0.03)
-	. += mutable_appearance(icon, "static_base", alpha = 20, layer = src.layer+0.01)
-	. += mutable_appearance(generate_icon_alpha_mask(icon, "scanline"), alpha = 20, layer = src.layer+0.02)
+	if(show_static)
+		. += mutable_appearance(icon, "static_base", alpha = 20, layer = src.layer+0.01)
+		. += mutable_appearance(generate_icon_alpha_mask(icon, "scanline"), alpha = 20, layer = src.layer+0.02)
 
 /atom/movable/screen/lobby/new_player_info/update_icon_state()
 	. = ..()
@@ -682,6 +684,20 @@
 		icon_state = base_icon_state
 
 /atom/movable/screen/lobby/new_player_info/process(seconds_per_tick)
+	update_text()
+
+/atom/movable/screen/lobby/new_player_info/collapse_button()
+	show_static = FALSE
+	update_text()
+	//to be in sync with parent, we'll turn the TV off in this time instead.
+	animate(src, appearance = update_appearance(UPDATE_ICON), time = SHUTTER_MOVEMENT_DURATION + SHUTTER_WAIT_DURATION)
+	//we go to the right, not up
+	animate(transform = transform.Translate(x = 146, y = 0), time = SHUTTER_MOVEMENT_DURATION, easing = CUBIC_EASING|EASE_IN)
+
+/atom/movable/screen/lobby/new_player_info/expand_button()
+	. = ..()
+	show_static = TRUE
+	update_appearance(UPDATE_ICON)
 	update_text()
 
 /atom/movable/screen/lobby/new_player_info/proc/hide_info()
@@ -705,7 +721,7 @@
 	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(hide_info))
 
 /atom/movable/screen/lobby/new_player_info/proc/update_text()
-	if(!always_available || !hud)
+	if(!always_available || !hud || !show_static)
 		maptext = null
 		return
 	var/new_maptext
