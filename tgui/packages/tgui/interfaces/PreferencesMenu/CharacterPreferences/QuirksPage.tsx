@@ -111,7 +111,7 @@ function QuirkDisplay(props: QuirkDisplayProps) {
         onClick(quirkKey, quirk);
       }}
     >
-      <Stack fill>
+      <Stack fill g={0}>
         <Stack.Item
           align="center"
           style={{
