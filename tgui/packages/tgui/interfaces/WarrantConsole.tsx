@@ -176,7 +176,7 @@ const CitationManager = (props) => {
             <RestrictedInput
               maxValue={fine}
               minValue={5}
-              onChange={(event, value) => setPaying(value)}
+              onChange={setPaying}
               value={paying}
             />
             <Button.Confirm

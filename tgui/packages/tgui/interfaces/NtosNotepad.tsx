@@ -9,6 +9,7 @@ import {
   Box,
   Dialog,
   Divider,
+  Input,
   MenuBar,
   Section,
   TextArea,
@@ -253,7 +254,7 @@ interface NotePadTextAreaProps {
 }
 
 class NotePadTextArea extends Component<NotePadTextAreaProps> {
-  innerRef: RefObject<HTMLTextAreaElement | null>;
+  innerRef: RefObject<HTMLTextAreaElement | HTMLInputElement | null>;
 
   constructor(props) {
     super(props);
@@ -310,14 +311,23 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
   render() {
     const { text, setText, wordWrap } = this.props;
 
+    if (!wordWrap) {
+      return (
+        <Input
+          ref={this.innerRef as RefObject<HTMLInputElement>}
+          onChange={setText}
+          className="NtosNotepad__textarea"
+          autoFocus
+          value={text}
+        />
+      );
+    }
     return (
       <TextArea
-        ref={this.innerRef}
-        onInput={(_, value) => setText(value)}
+        ref={this.innerRef as RefObject<HTMLTextAreaElement>}
+        onChange={setText}
         className="NtosNotepad__textarea"
-        nowrap={!wordWrap}
         value={text}
-        scrollbar
         autoFocus
       />
     );

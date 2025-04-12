@@ -347,7 +347,7 @@ const Customization = (props) => {
               fluid
               maxLength={30}
               value={selectedName}
-              onInput={(_, value) => setSelectedName(value)}
+              onChange={setSelectedName}
             />
           </Section>
         </Stack.Item>

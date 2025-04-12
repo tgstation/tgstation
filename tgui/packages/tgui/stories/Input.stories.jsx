@@ -29,7 +29,7 @@ const Story = (props) => {
     <Section>
       <LabeledList>
         <LabeledList.Item label="Input (onChange)">
-          <Input value={text} onChange={(e, value) => setText(value)} />
+          <Input value={text} onChange={setText} />
         </LabeledList.Item>
         <LabeledList.Item label="Input (onInput)">
           <Input value={text} onInput={(e, value) => setText(value)} />

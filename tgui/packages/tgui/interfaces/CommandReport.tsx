@@ -70,7 +70,7 @@ const CentComName = (props) => {
         width="100%"
         selected={command_name}
         options={command_name_presets}
-        onSelected={(value) => sendName(value)}
+        onSelected={sendName}
       />
       {!!custom_name && (
         <Input
@@ -78,7 +78,7 @@ const CentComName = (props) => {
           mt={1}
           value={command_name}
           placeholder={command_name}
-          onChange={(_, value) => sendName(value)}
+          onChange={sendName}
         />
       )}
     </Section>
@@ -94,11 +94,12 @@ const SubHeader = (props) => {
     <Section title="Set report subheader" textAlign="center">
       <Box>Keep blank to not include a subheader</Box>
       <Input
-        width="100%"
+        expensive
+        fluid
         mt={1}
         value={subheader}
         placeholder={subheader}
-        onChange={(_, value) =>
+        onChange={(value) =>
           act('set_subheader', {
             new_subheader: value,
           })
@@ -161,7 +162,7 @@ const ReportText = (props) => {
       <TextArea
         height="200px"
         mb={1}
-        onChange={(_, value) => setCommandReport(value)}
+        onChange={setCommandReport}
         value={commandReport}
       />
       <Stack vertical>

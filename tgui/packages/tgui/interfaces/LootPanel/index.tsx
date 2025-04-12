@@ -60,8 +60,10 @@ export function LootPanel(props) {
       buttons={
         <Box align={'left'}>
           <Input
-            onInput={(event, value) => setSearchText(value)}
-            placeholder={`Search items...`}
+            onChange={setSearchText}
+            placeholder="Search items..."
+            value={searchText}
+            expensive
           />
           <Button
             icon={grouping ? 'layer-group' : 'object-ungroup'}

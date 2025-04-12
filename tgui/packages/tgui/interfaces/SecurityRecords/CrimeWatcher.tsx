@@ -180,7 +180,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
               fluid
               maxLength={25}
               onEscape={() => setEditing(false)}
-              onEnter={(event, value) => {
+              onEnter={(value) => {
                 setEditing(false);
                 act('edit_crime', {
                   crew_ref: crew_ref,
@@ -195,7 +195,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
               maxLength={1025}
               mt={1}
               onEscape={() => setEditing(false)}
-              onEnter={(event, value) => {
+              onEnter={(value) => {
                 setEditing(false);
                 act('edit_crime', {
                   crew_ref: crew_ref,
@@ -257,7 +257,7 @@ const CrimeAuthor = (props) => {
         <Input
           fluid
           maxLength={25}
-          onChange={(_, value) => setCrimeName(value)}
+          onChange={setCrimeName}
           placeholder="Brief overview"
         />
       </Stack.Item>
@@ -267,7 +267,7 @@ const CrimeAuthor = (props) => {
           fluid
           height={4}
           maxLength={1025}
-          onChange={(_, value) => setCrimeDetails(value)}
+          onChange={setCrimeDetails}
           placeholder="Type some details..."
         />
       </Stack.Item>
@@ -277,7 +277,7 @@ const CrimeAuthor = (props) => {
           fluid
           value={crimeFine}
           maxValue={1000}
-          onChange={(_, value) => setCrimeFine(value)}
+          onChange={setCrimeFine}
         />
       </Stack.Item>
       <Stack.Item>

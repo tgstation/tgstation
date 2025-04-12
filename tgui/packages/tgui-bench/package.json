@@ -13,6 +13,6 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tgui": "workspace:*",
-    "tgui-core": "^3.0.0"
+    "tgui-core": "^3.0.1"
   }
 }
