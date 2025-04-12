@@ -546,7 +546,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 
 /datum/centcom_podlauncher/ui_close(mob/user) //Uses the destroy() proc. When the user closes the UI, we clean up the temp_pod and supplypod_selector variables.
 	QDEL_NULL(temp_pod)
-	QDEL_NULL(cam_screen)
+	cam_screen.hide_from(user)
 	qdel(src)
 
 /datum/centcom_podlauncher/proc/setupViewPod()
@@ -793,9 +793,9 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 
 /datum/centcom_podlauncher/Destroy() //The Destroy() proc. This is called by ui_close proc, or whenever the user leaves the game
 	updateCursor(TRUE) //Make sure our moues cursor resets to default. False means we are not in launch mode
-	QDEL_NULL(temp_pod) //Delete the temp_pod
 	QDEL_NULL(selector) //Delete the selector effect
 	QDEL_NULL(indicator)
+	QDEL_NULL(cam_screen)
 	return ..()
 
 /datum/centcom_podlauncher/proc/supplypod_punish_log(list/whoDyin)
