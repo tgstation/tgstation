@@ -124,16 +124,15 @@ export class PrimaryView extends Component {
                 }
               >
                 <TextArea
-                  scrollbar
-                  noborder
+                  style={{ border: 'none' }}
                   value={textAreaText}
                   textColor={useColor}
                   fontFamily={useFont}
                   bold={useBold}
                   height="100%"
                   backgroundColor={paper_color}
-                  onInput={(e, text) => {
-                    setTextAreaText(text);
+                  onChange={(value) => {
+                    setTextAreaText(value);
 
                     if (this.scrollableRef.current) {
                       let thisDistFromBottom =

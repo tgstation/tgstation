@@ -124,15 +124,15 @@ export const OreRedemptionMachine = (props) => {
               Alloys
             </Tabs.Tab>
             <Input
-              autofocus
+              autoFocus
               position="relative"
               left="25%"
               bottom="5%"
               height="20px"
-              width="150px"
               placeholder="Search Material..."
+              expensive
               value={searchItem}
-              onInput={(e, value) => {
+              onChange={(value) => {
                 setSearchItem(value);
 
                 if (value.length > 0) {

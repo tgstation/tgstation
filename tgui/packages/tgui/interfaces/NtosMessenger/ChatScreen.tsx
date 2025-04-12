@@ -157,7 +157,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     setTimeout(() => this.setState({ canSend: true }), SEND_COOLDOWN_MS);
   }
 
-  handleMessageInput(_: any, val: string) {
+  handleMessageInput(val: string) {
     this.setState({ message: val });
   }
 
@@ -305,7 +305,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
                     width="100%"
                     value={message}
                     maxLength={1024}
-                    onInput={this.handleMessageInput}
+                    onChange={this.handleMessageInput}
                     onEnter={this.handleSendMessage}
                   />
                 </Stack.Item>

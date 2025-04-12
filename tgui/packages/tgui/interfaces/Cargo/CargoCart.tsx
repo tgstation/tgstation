@@ -1,7 +1,6 @@
 import {
   Button,
   Icon,
-  Input,
   NoticeBox,
   RestrictedInput,
   Section,
@@ -94,7 +93,7 @@ function CheckoutItems(props) {
                   minValue={0}
                   maxValue={max_order}
                   value={entry.amount}
-                  onEnter={(e, value) =>
+                  onEnter={(value) =>
                     act('modify', {
                       order_name: entry.object,
                       amount: value,
@@ -110,7 +109,7 @@ function CheckoutItems(props) {
                 />
               </>
             ) : (
-              <Input width="40px" value={entry.amount} disabled />
+              <RestrictedInput width="40px" value={entry.amount} disabled />
             )}
           </Table.Cell>
 
