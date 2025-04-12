@@ -521,7 +521,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	var/datum/db_query/query_get_token = SSdbcore.NewQuery("SELECT [RANDOM_STRING], [RANDOM_STRING]", list(RANDOM_STRING_ARGS, RANDOM_STRING_ARGS))
 
 	if(!query_get_token.Execute())
-		to_chat(src, {"<span class="danger">Unknown error #1.</span>"})
+		to_chat(src, span_danger("Failed to get random string token from database. (Error #1)"))
 		qdel(query_get_token)
 		return
 
