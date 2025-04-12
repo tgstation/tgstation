@@ -5688,6 +5688,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/mid_joiner{
 	dir = 8
 	},
+/obj/machinery/digital_clock/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "bQM" = (
@@ -6165,6 +6166,11 @@
 	pixel_y = 9
 	},
 /obj/effect/turf_decal/tile/yellow/full,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Chemistry Shutters";
+	id = "chemshutters";
+	dir = 4
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "bYA" = (
@@ -7092,6 +7098,10 @@
 	pixel_y = 4
 	},
 /obj/machinery/camera/autoname/directional/south,
+/obj/machinery/button/door/directional/south{
+	id = "chemshutters";
+	name = "Chemistry Shutters"
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "cmO" = (
@@ -14597,6 +14607,15 @@
 	luminosity = 2
 	},
 /area/station/ai_monitored/command/nuke_storage)
+"eEk" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Chemistry Shutters";
+	id = "chemshutters";
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/station/medical/pharmacy)
 "eEv" = (
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -20960,6 +20979,15 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood/large,
 /area/station/medical/psychology)
+"gDi" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Chemistry Shutters";
+	id = "chemshutters";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/medical/pharmacy)
 "gDs" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/power/apc/auto_name/directional/south,
@@ -21602,6 +21630,11 @@
 /area/station/maintenance/starboard/aft)
 "gOm" = (
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Chemistry Shutters";
+	id = "chemshutters";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
 "gOC" = (
@@ -21841,6 +21874,11 @@
 	},
 /obj/effect/turf_decal/tile/yellow/full,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Chemistry Shutters";
+	id = "chemshutters";
+	dir = 1
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "gRB" = (
@@ -74214,6 +74252,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
+"xqr" = (
+/obj/machinery/smartfridge/chemistry/preloaded,
+/obj/machinery/door/poddoor/shutters/preopen{
+	name = "Chemistry Shutters";
+	id = "chemshutters";
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/medical/pharmacy)
 "xqs" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/engine_smes)
@@ -107251,8 +107298,8 @@ fYF
 nSk
 pdO
 pdO
-gOm
-gOm
+eEk
+eEk
 jYI
 pdO
 fQp
@@ -107762,7 +107809,7 @@ hXT
 uvh
 hXT
 xsC
-pQV
+xqr
 eMd
 lqp
 tRY
@@ -108276,7 +108323,7 @@ lEe
 uvh
 hXT
 xsC
-gOm
+gDi
 pgN
 rRy
 rxd
@@ -108533,7 +108580,7 @@ lEe
 uvh
 fDk
 vmJ
-gOm
+gDi
 oYy
 cfi
 rSj
