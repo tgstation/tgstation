@@ -65,7 +65,7 @@
     color: hsl(0, 0%, 100%);
     color: inherit;
 
-    &:placeholder {
+    &::placeholder {
       font-style: italic;
       color: hsl(0, 0%, 47%);
       color: hsla(0, 0%, 100%, 0.45);
