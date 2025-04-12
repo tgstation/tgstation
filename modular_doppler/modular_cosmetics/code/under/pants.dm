@@ -47,7 +47,20 @@
 	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/camo_pants/worn/digi
 	set_greyscale(colors = greyscale_colors)
 
+/obj/item/clothing/under/pants/jeans/ripped
+	name = "ripped jeans"
+	desc = "A pair of jeans pocked in rips."
+	icon = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
+	icon_state = "ripped_jeans"
+	greyscale_config = /datum/greyscale_config/ripped_jeans
+	greyscale_config_worn = /datum/greyscale_config/ripped_jeans/worn
 
+/obj/item/clothing/under/pants/jeans/ripped/Initialize(mapload)
+	. = ..()
+	greyscale_config_worn_bodyshapes = list()
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_HUMANOID]"] = /datum/greyscale_config/ripped_jeans/worn
+	greyscale_config_worn_bodyshapes["[BODYSHAPE_DIGITIGRADE]"] = /datum/greyscale_config/ripped_jeans/worn/digi
+	set_greyscale(colors = greyscale_colors)
 
 /// SHORTS UPDATES
 

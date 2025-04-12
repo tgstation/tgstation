@@ -88,6 +88,10 @@
 	name = "Jeans"
 	item_path = /obj/item/clothing/under/pants/jeans
 
+/datum/loadout_item/undersuit/pants/ripped_jeans
+	name = "Ripped Jeans"
+	item_path = /obj/item/clothing/under/pants/jeans/ripped
+
 /datum/loadout_item/undersuit/pants/moto
 	name = "Moto Pants"
 	item_path = /obj/item/clothing/under/pants/moto_leggings

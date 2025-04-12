@@ -131,6 +131,10 @@
 	name = "Medical Labcoat"
 	item_path = /obj/item/clothing/suit/toggle/labcoat/medical
 
+/datum/loadout_item/suit/high_vis_labcoat
+	name = "High-Vis Labcoat"
+	item_path = /obj/item/clothing/suit/toggle/labcoat/high_vis
+
 /*
 *	JACKETS
 */

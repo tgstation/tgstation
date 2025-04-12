@@ -212,25 +212,17 @@
 //PANTS//
 /////////
 
-/datum/greyscale_config/slacks
-	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
-
-/datum/greyscale_config/slacks/worn
-	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
-
 /datum/greyscale_config/slacks/worn/digi
 	name = "Slacks (Worn, Digi)"
 	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
 
-/datum/greyscale_config/shorts
-	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
-
-/datum/greyscale_config/shorts/worn
-	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
-
 /datum/greyscale_config/shorts/worn/digi
 	name = "Shorts (Worn, Digi)"
 	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
+
+
+//these two jeans configs are loadbearing. they are overrides of existing tg configs, and if you remove them absolutely nothing will change in the game
+// itself, but the antag screenshot unit test will fail consistently.
 
 /datum/greyscale_config/jeans
 	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
@@ -242,14 +234,21 @@
 	name = "Jeans (Worn, Digi)"
 	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
 
-/datum/greyscale_config/jeanshorts
-	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
-
-/datum/greyscale_config/jeanshorts/worn
-	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
-
 /datum/greyscale_config/jeanshorts/worn/digi
 	name = "Jeans Shorts (Worn, Digi)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
+
+/datum/greyscale_config/ripped_jeans
+	name = "Ripped Jeans"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/obj/under/pants.dmi'
+	json_config = 'modular_doppler/modular_cosmetics/GAGS/json_configs/under/ripped_jeans.json'
+
+/datum/greyscale_config/ripped_jeans/worn
+	name = "Ripped Jeans (Worn)"
+	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants.dmi'
+
+/datum/greyscale_config/ripped_jeans/worn/digi
+	name = "Ripped Jeans (Worn, Digi)"
 	icon_file = 'modular_doppler/modular_cosmetics/icons/mob/under/pants_digi.dmi'
 
 /// CUSTOM PANTS GAGSIFICATIONS

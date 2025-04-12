@@ -6,6 +6,7 @@
 		/obj/item/storage/belt/med_bandolier = 2,
 		/obj/item/clothing/suit/jacket/doppler/departmental_jacket/med = 2,
 		/obj/item/clothing/suit/toggle/labcoat/medical = 6,
+		/obj/item/clothing/suit/toggle/labcoat/high_vis = 6,
 		/obj/item/clothing/shoes/medical = 6,
 		/obj/item/clothing/under/rank/medical/scrubs/skirt = 6,
 		/obj/item/clothing/under/rank/medical/scrubs/skirt/green = 6,
@@ -83,6 +84,7 @@
 		/obj/item/clothing/suit/jacket/doppler/departmental_jacket/sec = 3,
 		/obj/item/clothing/suit/jacket/doppler/peacekeeper_jacket = 5,
 		/obj/item/clothing/suit/jacket/doppler/peacekeeper_jacket/badged = 5,
+		/obj/item/clothing/suit/toggle/labcoat/high_vis = 5,
 		/obj/item/clothing/head/cap_colonysec = 5,
 	)
 
@@ -129,6 +131,7 @@
 		/obj/item/clothing/head/fedora/beige = 2,
 		/obj/item/clothing/head/fedora/white = 2,
 		/obj/item/clothing/suit/jacket/doppler/runner_coat = 3,
+		/obj/item/clothing/suit/toggle/labcoat/high_vis = 3,
 	)
 
 /*/obj/machinery/vending/wardrobe/law_wardrobe

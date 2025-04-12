@@ -35,12 +35,13 @@
 			),
 		),
 
-/*		list(
+		list(
 			"name" = "Under",
 			"icon" = "shirt",
 			"products" = list(
+				/obj/item/clothing/under/pants/jeans/ripped = 5,
 			),
-		),	*/
+		),
 
 		list(
 			"name" = "Suits & Skirts",
