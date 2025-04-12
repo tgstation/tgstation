@@ -351,6 +351,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(isnull(stinger_sound))
 		return
 
+// //MASSMETA EDIT - Add funny clown traitor sound
+	if(is_clown_job(owner.assigned_role) && job_rank == ROLE_TRAITOR)
+		stinger_sound = 'modular_meta/features/clown_traitor_sound/tatoralert_clown.ogg'
+
 	owner.current.playsound_local(get_turf(owner.current), stinger_sound, 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /**

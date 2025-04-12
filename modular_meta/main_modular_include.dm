@@ -15,6 +15,7 @@
 #endif
 #include "features\uplink_items\includes.dm"
 #include "features\venom_knife\includes.dm"
+#include "features\clown_traitor_sound\includes.dm"
 /* -- REVERTS -- */
 
 #include "reverts\revert_glasses_protect_welding\includes.dm"
