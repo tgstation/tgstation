@@ -745,10 +745,10 @@
 			time_remaining = "SOON"
 
 		if(hud.mymob.client.holder)
-			new_maptext = "<span style='text-align: center; vertical-align: middle'>Starting In: [time_remaining]<br /> \
+			new_maptext = "<span style='text-align: center; vertical-align: middle'>Starting in [time_remaining]<br /> \
 				[LAZYLEN(GLOB.clients)] player\s<br /> \
 				[SSticker.totalPlayersReady] players ready<br /> \
-				[SSticker.total_admins_ready] / [length(GLOB.admins)] Admins ready</span>"
+				[SSticker.total_admins_ready] / [length(GLOB.admins)] admins ready</span>"
 		else
 			new_maptext = "<span style='text-align: center; vertical-align: middle; font-size: 18px'>[time_remaining]</span><br /> \
 				<span style='text-align: center; vertical-align: middle'>[LAZYLEN(GLOB.clients)] player\s</span>"
