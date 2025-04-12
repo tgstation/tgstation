@@ -5,7 +5,7 @@
 	start = /datum/heretic_knowledge/limited_amount/starting/base_rust
 	knowledge_tier1 = /datum/heretic_knowledge/spell/area_conversion
 	knowledge_tier2 = /datum/heretic_knowledge/spell/rust_construction
-	robes = /datum/heretic_knowledge/armor
+	robes = /datum/heretic_knowledge/armor/rust
 	knowledge_tier3 = /datum/heretic_knowledge/spell/entropic_plume
 	blade = /datum/heretic_knowledge/blade_upgrade/rust
 	knowledge_tier4 = /datum/heretic_knowledge/spell/rust_charge
@@ -89,6 +89,15 @@
 		they no longer looked man made. Or perhaps they never were in the first place."
 	action_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
+
+/datum/heretic_knowledge/armor/rust
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust)
+	research_tree_icon_state = "rust_armor"
+	required_atoms = list(
+		/obj/structure/table = 1,
+		/obj/item/clothing/mask = 1,
+		/obj/item/trash = 1,
+	)
 
 /datum/heretic_knowledge/spell/area_conversion
 	name = "Aggressive Spread"

@@ -5,7 +5,7 @@
 	start = /datum/heretic_knowledge/limited_amount/starting/base_blade
 	knowledge_tier1 = /datum/heretic_knowledge/spell/realignment
 	knowledge_tier2 = /datum/heretic_knowledge/duel_stance
-	robes = /datum/heretic_knowledge/armor
+	robes = /datum/heretic_knowledge/armor/blade
 	knowledge_tier3 = /datum/heretic_knowledge/spell/furious_steel
 	blade = /datum/heretic_knowledge/blade_upgrade/blade
 	knowledge_tier4 = /datum/heretic_knowledge/spell/wolves_among_sheep
@@ -127,6 +127,14 @@
 
 #undef BLOOD_FLOW_PER_SEVEIRTY
 
+/datum/heretic_knowledge/armor/blade
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade)
+	research_tree_icon_state = "blade_armor"
+	required_atoms = list(
+		/obj/structure/table = 1,
+		/obj/item/clothing/mask = 1,
+		list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/titanium) = 1,
+	)
 
 /datum/heretic_knowledge/spell/wolves_among_sheep
 	name = "Wolves Among Sheep"

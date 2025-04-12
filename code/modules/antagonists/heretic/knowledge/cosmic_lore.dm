@@ -5,7 +5,7 @@
 	start = /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	knowledge_tier1 = /datum/heretic_knowledge/spell/cosmic_runes
 	knowledge_tier2 = /datum/heretic_knowledge/spell/star_touch
-	robes = /datum/heretic_knowledge/armor
+	robes = /datum/heretic_knowledge/armor/cosmic
 	knowledge_tier3 = /datum/heretic_knowledge/spell/star_blast
 	blade = /datum/heretic_knowledge/blade_upgrade/cosmic
 	knowledge_tier4 = /datum/heretic_knowledge/spell/cosmic_expansion
@@ -56,6 +56,15 @@
 	action_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 1
 
+/datum/heretic_knowledge/armor/cosmic
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic)
+	research_tree_icon_state = "cosmic_armor"
+	required_atoms = list(
+		/obj/structure/table = 1,
+		/obj/item/clothing/mask = 1,
+		/obj/item/stack/sheet/mineral/plasma = 1,
+	)
+
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
 	desc = "Fires a projectile that moves very slowly, raising a short-lived wall of cosmic fields where it goes. \
@@ -92,26 +101,17 @@
 	var/increase_amount = 0.5 SECONDS
 	/// The hits we have on a mob with a mind.
 	var/combo_counter = 0
+	/// How much further we can hit people, modified by ascension
+	var/max_attack_range = 2
 
 /datum/heretic_knowledge/blade_upgrade/cosmic/on_ranged_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	. = ..()
-	if(!isliving(target) || get_dist(source, target) > 2)
-		return
-	if(!target.has_status_effect(/datum/status_effect/star_mark))
+	if(!isliving(target) || get_dist(source, target) > max_attack_range || !target.has_status_effect(/datum/status_effect/star_mark))
 		return
 	source.changeNext_move(blade.attack_speed)
 	return blade.attack(target, source)
 
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
-	var/static/list/valid_organ_slots = list(
-		ORGAN_SLOT_HEART,
-		ORGAN_SLOT_LUNGS,
-		ORGAN_SLOT_STOMACH,
-		ORGAN_SLOT_EYES,
-		ORGAN_SLOT_EARS,
-		ORGAN_SLOT_LIVER,
-		ORGAN_SLOT_BRAIN
-	)
 	if(source == target || !isliving(target))
 		return
 	if(combo_timer)
@@ -121,7 +121,6 @@
 	var/mob/living/third_target_resolved = third_target?.resolve()
 	var/need_mob_update = FALSE
 	need_mob_update += target.adjustFireLoss(5, updating_health = FALSE)
-	need_mob_update += target.adjustOrganLoss(pick(valid_organ_slots), 8)
 	if(need_mob_update)
 		target.updatehealth()
 	if(target == second_target_resolved || target == third_target_resolved)
@@ -134,7 +133,6 @@
 		playsound(get_turf(second_target_resolved), 'sound/effects/magic/cosmic_energy.ogg', 25, FALSE)
 		need_mob_update = FALSE
 		need_mob_update += second_target_resolved.adjustFireLoss(14, updating_health = FALSE)
-		need_mob_update += second_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 12)
 		if(need_mob_update)
 			second_target_resolved.updatehealth()
 		if(third_target_resolved)
@@ -142,7 +140,6 @@
 			playsound(get_turf(third_target_resolved), 'sound/effects/magic/cosmic_energy.ogg', 50, FALSE)
 			need_mob_update = FALSE
 			need_mob_update += third_target_resolved.adjustFireLoss(28, updating_health = FALSE)
-			need_mob_update += third_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 14)
 			if(need_mob_update)
 				third_target_resolved.updatehealth()
 			if(combo_counter > 3)
@@ -178,6 +175,10 @@
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
 	action_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 1
+
+/datum/heretic_knowledge/spell/cosmic_expansion/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
 
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"
@@ -248,6 +249,7 @@
 	blade_upgrade.combo_duration_amount = 10 SECONDS
 	blade_upgrade.max_combo_duration = 30 SECONDS
 	blade_upgrade.increase_amount = 2 SECONDS
+	blade_upgrade.max_attack_range = 3
 
 	var/datum/action/cooldown/spell/conjure/cosmic_expansion/cosmic_expansion_spell = locate() in user.actions
 	cosmic_expansion_spell?.ascended = TRUE

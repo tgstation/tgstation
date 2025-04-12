@@ -5,7 +5,7 @@
 	start = /datum/heretic_knowledge/limited_amount/starting/base_knock
 	knowledge_tier1 = /datum/heretic_knowledge/key_ring
 	knowledge_tier2 = /datum/heretic_knowledge/limited_amount/concierge_rite
-	robes = /datum/heretic_knowledge/armor
+	robes = /datum/heretic_knowledge/armor/lock
 	knowledge_tier3 = /datum/heretic_knowledge/spell/burglar_finesse
 	blade = /datum/heretic_knowledge/blade_upgrade/flesh/lock
 	knowledge_tier4 = /datum/heretic_knowledge/spell/caretaker_refuge
@@ -119,6 +119,15 @@
 	cost = 1
 	research_tree_icon_path = 'icons/obj/service/library.dmi'
 	research_tree_icon_state = "heretichandbook"
+
+/datum/heretic_knowledge/armor/lock
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock)
+	research_tree_icon_state = "eldritch_armor"
+	required_atoms = list(
+		/obj/structure/table = 1,
+		/obj/item/clothing/mask = 1,
+		/obj/item/crowbar = 1,
+	)
 
 /datum/heretic_knowledge/spell/burglar_finesse
 	name = "Burglar's Finesse"

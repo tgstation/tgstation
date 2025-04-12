@@ -98,12 +98,19 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 /obj/effect/forcefield/cosmic_field/Initialize(mapload, flags = MAGIC_RESISTANCE)
 	. = ..()
 	antimagic_flags = flags
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_loc_exited),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+	// Make sure that if we create a field, we apply whatever effects
+	for(var/atom/movable/thing in get_turf(src))
+		on_entered(src, thing)
 
 /obj/effect/forcefield/cosmic_field/Destroy(force)
 	// Make sure when the field goes away that the effects don't persist
-	if(slows_projectiles)
-		for(var/atom/movable/thing in get_turf(src))
-			on_loc_exited(src, thing)
+	for(var/atom/movable/thing in get_turf(src))
+		on_loc_exited(src, thing)
 	GLOB.active_cosmic_fields -= src
 	return ..()
 
@@ -113,29 +120,24 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	var/mob/living/living_mover = mover
 	if(living_mover.can_block_magic(antimagic_flags, charge_cost = 0))
 		return ..()
+	// Being buckled/pulled by a cosmic heretic will allow you through cosmic fields EVEN IF you have a star mark
+	if(ismob(living_mover.buckled))
+		var/mob/living/fireman = living_mover.buckled
+		if(fireman.has_status_effect(/datum/status_effect/heretic_passive/cosmic))
+			return ..()
+	if(living_mover.pulledby?.has_status_effect(/datum/status_effect/heretic_passive/cosmic))
+		return ..()
 	if(living_mover.has_status_effect(/datum/status_effect/star_mark))
 		return FALSE
 	return ..()
 
-/// Adds the ability to slow down any projectiles that enters any turf we occupy
-/obj/effect/forcefield/cosmic_field/proc/slows_projectiles()
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
-		COMSIG_ATOM_EXITED = PROC_REF(on_loc_exited),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
-	// Make sure that if we create a field, we apply whatever effects
-	for(var/atom/movable/thing in get_turf(src))
-		on_entered(src, thing)
-	slows_projectiles = TRUE
-
 /obj/effect/forcefield/cosmic_field/proc/on_entered(datum/source, atom/movable/thing)
 	SIGNAL_HANDLER
-	if(isprojectile(thing))
+	if(isprojectile(thing) && slows_projectiles)
 		var/obj/projectile/bullet = thing
 		if(istype(bullet, /obj/projectile/magic/star_ball)) // Don't slow down star balls
 			return
-		bullet.speed *= 0.25
+		bullet.speed *= 0.2 // 80% Slowdown
 		return
 
 	if(!isliving(thing))
@@ -148,11 +150,11 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 
 /obj/effect/forcefield/cosmic_field/proc/on_loc_exited(datum/source, atom/movable/thing)
 	SIGNAL_HANDLER
-	if(isprojectile(thing))
+	if(isprojectile(thing) && slows_projectiles)
 		var/obj/projectile/bullet = thing
 		if(istype(bullet, /obj/projectile/magic/star_ball)) // Don't speed up star balls
 			return
-		bullet.speed /= 0.25
+		bullet.speed /= 0.2 // 80% Slowdown
 		return
 
 	if(!isliving(thing))
@@ -163,6 +165,10 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 		return
 	living_mover.remove_movespeed_modifier(/datum/movespeed_modifier/cosmic_field)
 
+/// Adds the ability to slow down any projectiles that enters any turf we occupy
+/obj/effect/forcefield/cosmic_field/proc/slows_projectiles()
+	slows_projectiles = TRUE
+
 /// Adds our cosmic field to the global list which bombs check to see if they have to stop exploding
 /obj/effect/forcefield/cosmic_field/proc/prevents_explosions()
 	GLOB.active_cosmic_fields += src
@@ -171,7 +177,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	multiplicative_slowdown = -0.25
 
 /obj/effect/forcefield/cosmic_field/star_blast
-	initial_duration = 10 SECONDS
+	initial_duration = 5 SECONDS
 
 /obj/effect/forcefield/cosmic_field/fast
 	initial_duration = 5 SECONDS

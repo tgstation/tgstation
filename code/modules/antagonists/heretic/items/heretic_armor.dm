@@ -8,6 +8,7 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	flash_protect = FLASH_PROTECTION_WELDER
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/Initialize(mapload)
 	. = ..()
@@ -18,8 +19,9 @@
 	desc = "A ragged, dusty set of robes. Strange eyes line the inside."
 	icon_state = "eldritch_armor"
 	inhand_icon_state = null
-	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEBELT
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	// Slightly better than normal cult robes
@@ -45,6 +47,73 @@
 
 	// Our hood gains the heretic_focus element.
 	. += span_notice("Allows you to cast heretic spells while the hood is up.")
+
+//---- Path-Specific Eldritch Robes, First is robes, then is hood
+// Ash
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash
+	icon_state = "ash_armor"
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/ash
+	flags_inv = HIDEBELT
+
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/ash
+	icon_state = "ash_armor"
+
+// Blade
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade
+	icon_state = "blade_armor"
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/blade
+
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/blade
+	icon_state = "blade_armor"
+
+// Cosmic
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic
+	icon_state = "cosmic_armor"
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/cosmic
+
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/cosmic
+	icon_state = "cosmic_armor"
+
+// Flesh
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh
+	icon_state = "flesh_armor"
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
+
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
+	icon_state = "flesh_armor"
+
+// Lock
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock
+	icon_state = "lock_armor"
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
+
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
+	icon_state = "lock_armor"
+
+// Moon
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon
+	icon_state = "moon_armor"
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/moon
+	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEMUTWINGS
+
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/moon
+	icon_state = "moon_armor"
+
+// Rust
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust
+	icon_state = "rust_armor"
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
+
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
+	icon_state = "rust_armor"
+
+// Void
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/void
+	icon_state = "void_armor"
+	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/void
+
+/obj/item/clothing/head/hooded/cult_hoodie/eldritch/void
+	icon_state = "void_armor"
 
 // Void cloak. Turns invisible with the hood up, lets you hide stuff.
 /obj/item/clothing/head/hooded/cult_hoodie/void

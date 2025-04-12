@@ -137,9 +137,15 @@
 
 //---- Cosmic Passive
 // Level 1 Cosmic fields will speed up the caster and provide stamina regen
-// Level 2 Cosmic fields will temporarily slow down bullets that pass through them
-// Level 3 Cosmic fields will disable any nearby bombs/TTVs/Syndicate Bombs
+// Level 2 Cosmic fields will disable any nearby bombs/TTVs/Syndicate Bombs
+// Level 3 Cosmic fields will temporarily slow down bullets that pass through them
 /datum/status_effect/heretic_passive/cosmic
+
+/datum/status_effect/heretic_passive/cosmic/tick(seconds_between_ticks)
+	. = ..()
+	if(locate(/obj/effect/forcefield/cosmic_field) in get_turf(owner))
+		var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
+		owner.adjustStaminaLoss(-15 * delta_time, updating_stamina = FALSE)
 
 /**
  * Creates a cosmic field at a given loc
@@ -163,9 +169,9 @@
 	if(!cosmic_passive)
 		return
 	if(cosmic_passive.passive_level > HERETIC_LEVEL_START)
-		new_field.slows_projectiles()
-	if(cosmic_passive.passive_level > HERETIC_LEVEL_UPGRADE)
 		new_field.prevents_explosions()
+	if(cosmic_passive.passive_level > HERETIC_LEVEL_UPGRADE)
+		new_field.slows_projectiles()
 
 //---- Flesh Passive
 // Makes you never get disgust, virus immune and immune to damage from space ants

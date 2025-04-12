@@ -5,7 +5,7 @@
 	start = /datum/heretic_knowledge/limited_amount/starting/base_ash
 	knowledge_tier1 = /datum/heretic_knowledge/spell/ash_passage
 	knowledge_tier2 = /datum/heretic_knowledge/spell/fire_blast
-	robes = /datum/heretic_knowledge/armor
+	robes = /datum/heretic_knowledge/armor/ash
 	knowledge_tier3 = /datum/heretic_knowledge/mad_mask
 	blade = /datum/heretic_knowledge/blade_upgrade/ash
 	knowledge_tier4 = /datum/heretic_knowledge/spell/flame_birth
@@ -69,6 +69,14 @@
 	cost = 1
 	research_tree_icon_frame = 7
 
+/datum/heretic_knowledge/armor/ash
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash)
+	research_tree_icon_state = "ash_armor"
+	required_atoms = list(
+		/obj/structure/table = 1,
+		/obj/item/clothing/mask = 1,
+		/obj/item/match = 1,
+	)
 
 /datum/heretic_knowledge/mad_mask
 	name = "Mask of Madness"

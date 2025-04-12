@@ -5,7 +5,7 @@
 	start = /datum/heretic_knowledge/limited_amount/starting/base_void
 	knowledge_tier1 = /datum/heretic_knowledge/spell/void_phase
 	knowledge_tier2 = /datum/heretic_knowledge/spell/void_prison
-	robes = /datum/heretic_knowledge/armor
+	robes = /datum/heretic_knowledge/armor/void
 	knowledge_tier3 = /datum/heretic_knowledge/spell/void_pull
 	blade = /datum/heretic_knowledge/blade_upgrade/void
 	knowledge_tier4 = /datum/heretic_knowledge/spell/void_conduit
@@ -58,6 +58,26 @@
 
 	action_to_add = /datum/action/cooldown/spell/pointed/void_prison
 	cost = 1
+
+/datum/heretic_knowledge/armor/void
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/void)
+	research_tree_icon_state = "void_armor"
+	required_atoms = list(
+		/obj/structure/table = 1,
+		/obj/item/clothing/mask = 1,
+	)
+
+/datum/heretic_knowledge/armor/void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	if(!isopenturf(loc))
+		loc.balloon_alert(user, "ritual failed, invalid location!")
+		return FALSE
+
+	var/turf/open/our_turf = loc
+	if(our_turf.GetTemperature() > T0C)
+		loc.balloon_alert(user, "ritual failed, not cold enough!")
+		return FALSE
+
+	return ..()
 
 /datum/heretic_knowledge/spell/void_conduit
 	name = "Void Conduit"

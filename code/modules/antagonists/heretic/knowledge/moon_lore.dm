@@ -5,7 +5,7 @@
 	start = /datum/heretic_knowledge/limited_amount/starting/base_moon
 	knowledge_tier1 = /datum/heretic_knowledge/spell/mind_gate
 	knowledge_tier2 = /datum/heretic_knowledge/spell/moon_parade
-	robes = /datum/heretic_knowledge/armor
+	robes = /datum/heretic_knowledge/armor/moon
 	knowledge_tier3 = /datum/heretic_knowledge/moon_amulet
 	blade = /datum/heretic_knowledge/blade_upgrade/moon
 	knowledge_tier4 = /datum/heretic_knowledge/spell/moon_ringleader
@@ -64,6 +64,15 @@
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 1
+
+/datum/heretic_knowledge/armor/moon
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon)
+	research_tree_icon_state = "moon_armor"
+	required_atoms = list(
+		/obj/structure/table = 1,
+		/obj/item/clothing/mask = 1,
+		/obj/item/stack/sheet/iron = 2,
+	)
 
 /datum/heretic_knowledge/moon_amulet
 	name = "Moonlight Amulet"

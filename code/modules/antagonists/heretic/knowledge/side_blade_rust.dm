@@ -8,28 +8,6 @@
 */
 
 // Sidepaths for knowledge between Rust and Blade.
-/datum/heretic_knowledge/armor
-	name = "Armorer's Ritual"
-	desc = "Allows you to transmute a table and a gas mask to create Eldritch Armor. \
-		Eldritch Armor provides great protection while also acting as a focus when hooded."
-	gain_text = "The Rusted Hills welcomed the Blacksmith in their generosity. And the Blacksmith \
-		returned their generosity in kind."
-
-	required_atoms = list(
-		/obj/structure/table = 1,
-		/obj/item/clothing/mask/gas = 1,
-	)
-	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
-	cost = 1
-
-	research_tree_icon_path = 'icons/obj/clothing/suits/armor.dmi'
-	research_tree_icon_state = "eldritch_armor"
-	research_tree_icon_frame = 12
-
-/datum/heretic_knowledge/armor/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
-	. = ..()
-	var/datum/status_effect/heretic_passive/our_passive = user.has_status_effect(/datum/status_effect/heretic_passive)
-	our_passive?.heretic_level_upgrade()
 
 /datum/heretic_knowledge/crucible
 	name = "Mawed Crucible"
