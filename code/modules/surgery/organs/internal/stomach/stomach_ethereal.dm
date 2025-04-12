@@ -46,6 +46,7 @@
 	SIGNAL_HANDLER
 	if(flags & SHOCK_ILLUSION)
 		return
+	. = ethereal_shock_absorb(source, shock_damage, shock_source, siemens_coeff = 1, flags = NONE) //DOPPLER EDIT ADDITION
 	adjust_charge(shock_damage * siemens_coeff * 2)
 	to_chat(owner, span_notice("You absorb some of the shock into your body!"))
 
@@ -75,16 +76,25 @@
 			carbon.throw_alert(ALERT_ETHEREAL_CHARGE, /atom/movable/screen/alert/lowcell/ethereal, 2)
 		if(ETHEREAL_CHARGE_ALMOSTFULL to ETHEREAL_CHARGE_FULL)
 			carbon.add_mood_event("charge", /datum/mood_event/charged)
+			carbon.adjustToxLoss(-0.2 * seconds_per_tick, carbon) //DOPPLER EDIT ADDITION
 		if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
 			carbon.add_mood_event("charge", /datum/mood_event/overcharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 1)
-			carbon.apply_damage(0.2, TOX, null, null, carbon)
+			//DOPPLER REMOVAL: carbon.apply_damage(0.2, TOX, null, null, carbon)
 		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
 			carbon.add_mood_event("charge", /datum/mood_event/supercharged)
 			carbon.throw_alert(ALERT_ETHEREAL_OVERCHARGE, /atom/movable/screen/alert/ethereal_overcharge, 2)
 			carbon.apply_damage(0.325 * seconds_per_tick, TOX, null, null, carbon)
 			if(SPT_PROB(5, seconds_per_tick)) // 5% each seacond for ethereals to explosively release excess energy if it reaches dangerous levels
 				discharge_process(carbon)
+
+			//DOPPLER EDIT ADDITION BEGIN
+			if(SPT_PROB(10, seconds_per_tick))
+				do_sparks(5, TRUE, carbon)
+				carbon.visible_message(span_danger("[carbon] sparks, [carbon.p_their()] body aglow with excess energy!"), span_warning("Your body ejects voltage as sparks, you should discharge some electricity!"))
+				carbon.set_dizzy_if_lower(10 SECONDS)
+				carbon.set_jitter_if_lower(10 SECONDS)
+			//DOPPLER EDIT ADDITION END
 		else
 			owner.clear_mood_event("charge")
 			carbon.clear_alert(ALERT_ETHEREAL_CHARGE)
@@ -119,3 +129,21 @@
 			carbon.playsound_local(carbon, 'sound/effects/singlebeat.ogg', 100, 0)
 
 		carbon.Paralyze(100)
+
+//DOPPLER ADDITION BEGIN
+/obj/item/organ/stomach/ethereal/proc/ethereal_shock_absorb(mob/living/stomach_owner = owner, shock_damage, shock_source, siemens_coeff = 1, flags = NONE)
+	do_sparks(number = 5, cardinal_only = TRUE, source = shock_source)
+	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	adjust_charge(25)
+	if(!(flags & SHOCK_SUPPRESS_MESSAGE))
+		stomach_owner.visible_message(
+			span_danger("[stomach_owner] was shocked by \the [shock_source], absorbing it into [stomach_owner.p_their()] body!"), \
+			span_userdanger("You feel a powerful shock coursing through your body, easily handling it!"), \
+			span_hear("You hear a heavy electrical crack.") \
+		)
+	if (!(flags & SHOCK_NO_HUMAN_ANIM))
+		if(ishuman(stomach_owner))
+			var/mob/living/carbon/human/human_target = stomach_owner
+			human_target.electrocution_animation(1 SECONDS)
+	return COMPONENT_LIVING_BLOCK_SHOCK
+//DOPPLER ADDITION END

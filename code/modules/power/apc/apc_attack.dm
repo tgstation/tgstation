@@ -43,11 +43,13 @@
 	// Ethereals can't drain APCs under half charge, so that they are forced to look to alternative power sources if the station is running low
 	if(cell.charge() < half_max_charge)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "safeties prevent draining!"), ETHEREAL_APC_ALERT_DELAY)
+		user.visible_message(span_notice("[src] displays a red X, sealing ports as 'safeties enabled' flashes across the screen!")) //DOPPLER EDIT ADDITION
 		return
 
 	var/obj/item/stock_parts/power_store/stomach_cell = used_stomach.cell
 	used_stomach.drain_time = world.time + ETHEREAL_APC_DRAIN_TIME
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, balloon_alert), user, "draining power..."), ETHEREAL_APC_ALERT_DELAY)
+	user.visible_message(span_notice("[user] presses their fingers into [src]'s screen, static jumping up [user.p_their()] arm as they drain it!")) //DOPPLER EDIT ADDITION
 	while(do_after(user, ETHEREAL_APC_DRAIN_TIME, target = src))
 		if(isnull(used_stomach) || (used_stomach != user.get_organ_slot(ORGAN_SLOT_STOMACH)))
 			balloon_alert(user, "stomach removed!?")
@@ -59,6 +61,7 @@
 			balloon_alert(user, "safeties kicked in!")
 			return
 
+		to_chat(user, span_purple("You try to drain some of [src]'s energy into yourself...")) //DOPPLER EDIT ADDITION
 		var/our_available_charge = cell.charge() - half_max_charge
 		var/stomach_used_charge = stomach_cell.used_charge()
 		var/potential_charge = min(our_available_charge, stomach_used_charge)

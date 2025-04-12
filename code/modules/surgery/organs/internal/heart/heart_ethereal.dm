@@ -229,11 +229,12 @@
 	playsound(get_turf(regenerating), 'sound/mobs/humanoids/ethereal/ethereal_revive.ogg', 100)
 	to_chat(regenerating, span_notice("You burst out of the crystal with vigour... </span><span class='userdanger'>But at a cost."))
 	regenerating.revive(HEAL_ALL & ~HEAL_REFRESH_ORGANS)
+	regenerating.apply_status_effect(/datum/status_effect/vulnerable_to_damage) //DOPPLER EDIT ADDITION
 
 	if(prob(10)) //10% chance for a severe trauma
-		regenerating.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_ABSOLUTE)
+		regenerating.gain_trauma_type(BRAIN_TRAUMA_SEVERE, TRAUMA_RESILIENCE_ETHEREAL) //DOPPLER EDIT: TRAUMA_RESILICENCE_ABSOLUTE -> TRAUMA_RESILIENCE_SURGERY
 	else
-		regenerating.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_ABSOLUTE)
+		regenerating.gain_trauma_type(BRAIN_TRAUMA_MILD, TRAUMA_RESILIENCE_ETHEREAL) //DOPPLER EDIT: TRAUMA_RESILICENCE_ABSOLUTE -> TRAUMA_RESILIENCE_SURGERY
 
 	// revive calls fully heal -> deletes the crystal.
 	// this qdeleted check is just for sanity.

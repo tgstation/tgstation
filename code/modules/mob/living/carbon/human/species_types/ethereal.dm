@@ -68,6 +68,8 @@
 		if(limb.limb_id == SPECIES_ETHEREAL)
 			limb.update_limb(is_creating = TRUE)
 
+	new_ethereal.dna.add_mutation(/datum/mutation/human/shock, MUT_NORMAL) //DOPPLER EDIT ADDITION
+
 /datum/species/ethereal/on_species_loss(mob/living/carbon/human/former_ethereal, datum/species/new_species, pref_load)
 	UnregisterSignal(former_ethereal, list(
 		COMSIG_ATOM_EMAG_ACT,
@@ -77,6 +79,7 @@
 		COMSIG_LIVING_HEALTH_UPDATE,
 	))
 	QDEL_NULL(ethereal_light)
+	former_ethereal.dna.remove_mutation(/datum/mutation/human/shock) //DOPPLER EDIT ADDITION
 	return ..()
 
 /datum/species/ethereal/randomize_features()

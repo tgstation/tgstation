@@ -265,6 +265,8 @@
 				trauma_desc = conditional_tooltip("Deep-rooted ", "Repair via Lobotomy.", add_tooltips)
 			if(TRAUMA_RESILIENCE_WOUND)
 				trauma_desc = conditional_tooltip("Fracture-derived ", "Repair via treatment of wounds afflicting the head.", add_tooltips)
+			if(TRAUMA_RESILIENCE_ETHEREAL) //DOPPLER ADDITION
+				trauma_desc = conditional_tooltip("Ethereal ", "Result of Crystalline Regeneration, repair one per brain surgery.", add_tooltips) //DOPPLER ADDITION
 			if(TRAUMA_RESILIENCE_MAGIC, TRAUMA_RESILIENCE_ABSOLUTE)
 				trauma_desc = conditional_tooltip("Permanent ", "Irreparable under normal circumstances.", add_tooltips)
 		trauma_desc += capitalize(trauma.scan_desc)

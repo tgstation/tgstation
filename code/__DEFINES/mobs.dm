@@ -219,7 +219,8 @@
 #define TRAUMA_RESILIENCE_LOBOTOMY 3 //Curable with lobotomy
 #define TRAUMA_RESILIENCE_WOUND 4 //Curable by healing the head wound
 #define TRAUMA_RESILIENCE_MAGIC 5 //Curable only with magic
-#define TRAUMA_RESILIENCE_ABSOLUTE 6 //This is here to stay
+#define TRAUMA_RESILIENCE_ETHEREAL 6 //DOPPLER ADDITION FOR ETHEREAL REWORK
+#define TRAUMA_RESILIENCE_ABSOLUTE 7 //DOPPLER EDIT: 6 -> 7
 
 //Limit of traumas for each resilience tier
 #define TRAUMA_LIMIT_BASIC 3
@@ -466,7 +467,7 @@
 #define DOOR_CRUSH_DAMAGE 15 //the amount of damage that airlocks deal when they crush you
 
 #define HUNGER_FACTOR 0.05 //factor at which mob nutrition decreases
-#define ETHEREAL_DISCHARGE_RATE (1e-3 * STANDARD_ETHEREAL_CHARGE) // Rate at which ethereal stomach charge decreases
+#define ETHEREAL_DISCHARGE_RATE (1e-3 * STANDARD_ETHEREAL_CHARGE * 0.75) // Rate at which ethereal stomach charge decreases. DOPPLER EDIT ORIGINAL: ETHEREAL_DISCHARGE_RATE (1e-3 * STANDARD_ETHEREAL_CHARGE)
 /// How much nutrition eating clothes as moth gives and drains
 #define CLOTHING_NUTRITION_GAIN 15
 #define REAGENTS_METABOLISM 0.2 //How many units of reagent are consumed per second, by default.
