@@ -11,7 +11,12 @@
 /obj/item/clothing/neck/cloak/wolf_coat
 	name = "wolf pelt cloak"
 	desc = "A cloak made of very lively wolf fur, feels warm to touch."
-	icon_state = "admincloak"
+	icon_state = "icecloak"
+	icon = 'icons/obj/clothing/cloaks.dmi'
+	worn_icon = 'icons/mob/clothing/neck.dmi'
+	inhand_icon_state = "icecloak"
+	lefthand_file = 'icons/mob/inhands/clothing/neck_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/neck_righthand.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
 
 	/// Reference to hood object, if it exists
@@ -48,5 +53,6 @@
 	desc = "A hood made of wolf fur."
 	icon = 'icons/obj/clothing/head/winterhood.dmi'
 	worn_icon = 'icons/mob/clothing/head/winterhood.dmi'
-	icon_state = "hood_qm"
+	icon_state = "icecloak_hood"
 	actions_types = list(/datum/action/cooldown/spell/shapeshift/wolf)
+	flags_inv = HIDEHAIR|HIDEEARS
