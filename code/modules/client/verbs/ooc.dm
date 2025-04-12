@@ -526,7 +526,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 		return
 
 	if(!query_get_token.NextRow())
-		to_chat(src, {"<span class="danger">Unknown error #2.</span>"})
+		to_chat(src, span_danger("Unknown error #2."))
 		qdel(query_get_token)
 		return
 
