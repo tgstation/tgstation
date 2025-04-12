@@ -774,11 +774,25 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/metalgen_imprint/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/datum/reagent/metalgen/MM = holder.has_reagent(/datum/reagent/metalgen)
-	for(var/datum/reagent/R in holder.reagent_list)
-		if(R.material && R.volume >= 40)
-			MM.data["material"] = R.material
-			holder.remove_reagent(R.type, 40)
+	var/datum/reagent/metalgen/metalgen = holder.has_reagent(/datum/reagent/metalgen)
+	for (var/datum/reagent/metal in holder.reagent_list)
+		if (!metal.material || metal.volume < 40)
+			continue
+
+		metalgen.data["material"] = metal.material
+		holder.remove_reagent(metal.type, 40)
+		var/atom/container = holder.my_atom
+		var/area/container_area = get_area(container)
+		var/blame_msg = "with no known fingerprints"
+		var/lastkey = container.fingerprintslast
+		if (lastkey)
+			var/mob/scapegoat = get_mob_by_key(lastkey)
+			blame_msg = "last touched by [ADMIN_LOOKUPFLW(scapegoat)]"
+
+		if(!istype(container, /obj/machinery/plumbing) && !(container_area?.area_flags & QUIET_LOGS))
+			message_admins("[metalgen.volume]u of Metalgen have been imprinted with [metal.material::name] in [container] at [ADMIN_VERBOSEJMP(container)] [blame_msg]")
+		log_game("[metalgen.volume]u of Metalgen have been imprinted with [metal.material::name] in [container] at [AREACOORD(container)] [blame_msg]")
+		break
 
 /datum/chemical_reaction/gravitum
 	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/sorium = 10)
