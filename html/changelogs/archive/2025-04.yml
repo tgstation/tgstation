@@ -348,3 +348,19 @@
   vinylspiders:
   - bugfix: fixes persistent paintings not loading
   - bugfix: fixes flipped table spawners not initializing correctly
+2025-04-12:
+  00-Steven:
+  - bugfix: Deep fryers now properly ding once your item is perfectly fried and smell
+      bad once it's properly burnt again
+  AyIong:
+  - code_imp: PopperJS replaced by FloatingUI. Make an issue report on GitHub if you
+      find any issues with it on Preferences or Request Manager
+  - bugfix: Examine box title border will not come out of... borders
+  Melbert:
+  - bugfix: You can operate through surgical masks again
+  - rscdel: Links have underlines again
+  Webcomicartist:
+  - rscadd: People shoved onto wooden tables now have a 1 in 3 chance to break it,
+      for all your wrestling needs - but please do not let this pull request distract
+      you from the fact that in 1998, The Undertaker threw Mankind off Hell In A Cell,
+      and plummeted 16 ft through an announcer's table.
