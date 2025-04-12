@@ -10,7 +10,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tgui": "workspace:*",
-    "tgui-core": "^3.0.2",
+    "tgui-core": "^3.0.3",
     "tgui-dev-server": "workspace:*"
   }
 }

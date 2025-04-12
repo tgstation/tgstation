@@ -39,6 +39,7 @@ export function NumberInputModal(props) {
   } = data;
 
   const [value, setValue] = useState(init_value);
+  const [isValid, setIsValid] = useState(true);
 
   // Dynamically changes the window height based on the message.
   const windowHeight =
@@ -47,7 +48,7 @@ export function NumberInputModal(props) {
     (message.length && large_buttons ? 5 : 0);
 
   function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
-    if (event.key === KEY.Enter) {
+    if (event.key === KEY.Enter && isValid) {
       act('submit', { entry: value });
     }
     if (isEscape(event.key)) {
@@ -91,9 +92,8 @@ export function NumberInputModal(props) {
                     allowFloats={!round_value}
                     minValue={min_value}
                     maxValue={max_value}
-                    onChange={(value) => {
-                      setValue(value);
-                    }}
+                    onChange={setValue}
+                    onValidationChange={setIsValid}
                     value={value}
                   />
                 </Stack.Item>
@@ -125,7 +125,7 @@ export function NumberInputModal(props) {
               </Stack>
             </Stack.Item>
             <Stack.Item>
-              <InputButtons input={value} />
+              <InputButtons input={value} disabled={!isValid} />
             </Stack.Item>
           </Stack>
         </Section>

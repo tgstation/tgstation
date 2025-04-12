@@ -227,12 +227,13 @@ const CrimeAuthor = (props) => {
     'selectedTab',
     SECURETAB.Crimes,
   );
+  const [crimeFineIsValid, setCrimeFineIsValid] = useState(true);
 
   const nameMeetsReqs = crimeName?.length > 2;
 
   /** Sends form to backend */
   const createCrime = () => {
-    if (!crimeName) return;
+    if (!crimeName || !crimeFineIsValid) return;
     act('add_crime', {
       crew_ref: crew_ref,
       details: crimeDetails,
@@ -278,16 +279,18 @@ const CrimeAuthor = (props) => {
           value={crimeFine}
           maxValue={1000}
           onChange={setCrimeFine}
+          onValidationChange={setCrimeFineIsValid}
         />
       </Stack.Item>
       <Stack.Item>
         <Button.Confirm
-          content="Create"
-          disabled={!nameMeetsReqs}
+          disabled={!nameMeetsReqs || !crimeFineIsValid}
           icon="plus"
           onClick={createCrime}
           tooltip={!nameMeetsReqs ? 'Name must be at least 3 characters.' : ''}
-        />
+        >
+          Create
+        </Button.Confirm>
       </Stack.Item>
     </Stack>
   );

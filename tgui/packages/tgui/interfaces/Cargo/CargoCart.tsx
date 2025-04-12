@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Button,
   Icon,
@@ -62,6 +63,8 @@ function CheckoutItems(props) {
     return <NoticeBox>Nothing in cart</NoticeBox>;
   }
 
+  const [isValid, setIsValid] = useState(true);
+
   return (
     <Table>
       <Table.Row header color="gray">
@@ -94,11 +97,13 @@ function CheckoutItems(props) {
                   maxValue={max_order}
                   value={entry.amount}
                   onEnter={(value) =>
+                    isValid &&
                     act('modify', {
                       order_name: entry.object,
                       amount: value,
                     })
                   }
+                  onValidationChange={setIsValid}
                 />
                 <Button
                   icon="plus"
