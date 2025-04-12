@@ -30,6 +30,7 @@ export const LingMMITalk = (props) => {
             <Stack width="100%">
               <Stack.Item width="85%">
                 <TextArea
+                  fluid
                   height="60px"
                   placeholder="Send a message to have our decoy brain speak."
                   onChange={setmmiMessage}
@@ -39,12 +40,13 @@ export const LingMMITalk = (props) => {
               <Stack.Item align="center">
                 <Button
                   textAlign="center"
-                  content="Send"
                   onClick={() => {
                     act('send_mmi_message', { message: mmiMessage });
                     setmmiMessage('');
                   }}
-                />
+                >
+                  Send
+                </Button>
               </Stack.Item>
             </Stack>
           </Stack.Item>

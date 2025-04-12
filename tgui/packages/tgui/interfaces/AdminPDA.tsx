@@ -165,6 +165,7 @@ function MessageInput(props: MessageInputProps) {
     <Section title="Message" textAlign="center">
       <Box>
         <TextArea
+          fluid
           placeholder="Type the message you want to send..."
           height="200px"
           mb={1}

@@ -70,7 +70,8 @@ export const LTSRBT = (props) => {
           <Stack.Divider />
           <Stack.Item grow>
             <TextArea
-              height="90%"
+              height="100%"
+              fluid
               value={desc}
               placeholder="Insert a description (or don't)"
               expensive
