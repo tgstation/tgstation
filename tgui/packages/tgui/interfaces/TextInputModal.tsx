@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Box, Section, Stack, TextArea } from 'tgui-core/components';
-import { isEscape, KEY } from 'tgui-core/keys';
+import { isEscape } from 'tgui-core/keys';
+import { KEY } from 'tgui-core/keys';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -57,22 +58,18 @@ export const TextInputModal = (props) => {
     (visualMultiline ? 75 : 0) +
     (message.length && large_buttons ? 5 : 0);
 
+  function handleKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
+    if (event.key === KEY.Enter && (!visualMultiline || !event.shiftKey)) {
+      act('submit', { entry: input });
+    }
+    if (isEscape(event.key)) {
+      act('cancel');
+    }
+  }
   return (
     <Window title={title} width={325} height={windowHeight}>
       {timeout && <Loader value={timeout} />}
-      <Window.Content
-        onKeyDown={(event) => {
-          if (
-            event.key === KEY.Enter &&
-            (!visualMultiline || !event.shiftKey)
-          ) {
-            act('submit', { entry: input });
-          }
-          if (isEscape(event.key)) {
-            act('cancel');
-          }
-        }}
-      >
+      <Window.Content onKeyDown={handleKeyDown}>
         <Section fill>
           <Stack fill vertical>
             <Stack.Item>
@@ -82,12 +79,10 @@ export const TextInputModal = (props) => {
               <TextArea
                 autoFocus
                 autoSelect
+                fluid
                 height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
                 maxLength={max_length}
                 onEscape={() => act('cancel')}
-                onEnter={(value) => {
-                  act('submit', { entry: value });
-                }}
                 onChange={onType}
                 placeholder="Type something..."
                 value={input}
