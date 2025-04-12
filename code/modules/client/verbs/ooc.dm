@@ -491,7 +491,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 		return
 
 	if  (is_guest_key(ckey))
-		to_chat(src, {"<span class="danger">Guests can not link accounts.</span>"})
+		to_chat(src, span_danger("Guests can not link accounts."))
 
 	var/token = generate_account_link_token()
 
