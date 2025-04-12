@@ -1122,6 +1122,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 
 /atom/movable/screen/blood_level/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
+	if(isnull(hud_owner))
+		return INITIALIZE_HINT_QDEL
 	RegisterSignal(hud_owner.mymob, COMSIG_LIVING_LIFE, PROC_REF(on_mob_life))
 
 /atom/movable/screen/blood_level/proc/on_mob_life(mob/living/source, seconds_per_tick, times_fired)
