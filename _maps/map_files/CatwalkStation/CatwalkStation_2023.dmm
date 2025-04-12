@@ -30008,9 +30008,6 @@
 /turf/open/floor/iron/vaporwave,
 /area/station/maintenance/starboard/lesser)
 "jpk" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
@@ -31218,10 +31215,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"jEM" = (
-/obj/structure/lattice,
-/turf/open/openspace/airless,
-/area/space)
 "jFj" = (
 /obj/effect/turf_decal/trimline/dark_green/filled/line{
 	dir = 4
@@ -115214,7 +115207,7 @@ idM
 uRu
 bDZ
 iRx
-jpk
+iRx
 iRx
 eOD
 nnH
@@ -115471,7 +115464,7 @@ cTX
 bDZ
 bDZ
 nMu
-bDZ
+jpk
 gwg
 eRR
 nnH
@@ -191034,8 +191027,8 @@ nlm
 nlm
 nlm
 nlm
-nlm
-jEM
+qCR
+dDL
 nlm
 nlm
 nlm
@@ -191290,8 +191283,8 @@ iWu
 nlm
 nlm
 nlm
-nlm
-nlm
+qCR
+qCR
 nlm
 nlm
 nlm
@@ -191546,8 +191539,8 @@ nlm
 nlm
 nlm
 nlm
-nlm
-nlm
+qCR
+qCR
 nlm
 nlm
 nlm
@@ -191803,7 +191796,7 @@ nlm
 nlm
 nlm
 rBG
-jEM
+dDL
 nlm
 nlm
 nlm
