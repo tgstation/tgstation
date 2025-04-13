@@ -64,6 +64,8 @@ GLOBAL_LIST_INIT(stock_part_datums, generate_stock_part_datums())
 			return 5
 		if (4)
 			return 10
+		if (5)			// MASSMETA EDIT: Add tier 5 energy rating
+			return 20	// MASSMETA EDIT: Add tier 5 energy rating (возможно стоит понизить уровень на всякий случай, наверное)
 		else
 			CRASH("Invalid level given to energy_rating: [tier]")
 

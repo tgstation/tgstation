@@ -111,6 +111,7 @@
 #define RND_SUBCATEGORY_STOCK_PARTS_2 "/Tier 2 Parts"
 #define RND_SUBCATEGORY_STOCK_PARTS_3 "/Tier 3 Parts"
 #define RND_SUBCATEGORY_STOCK_PARTS_4 "/Tier 4 Parts"
+#define RND_SUBCATEGORY_STOCK_PARTS_5 "/Tier 5 Parts" // MASSMETA EDIT: tier 5 stock parts
 #define RND_SUBCATEGORY_STOCK_PARTS_EXCHANGERS "/Exchange Devices"
 
 #define RND_CATEGORY_SYNDICATE "/Illegal Designs"

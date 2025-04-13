@@ -17,6 +17,7 @@
 #include "features\venom_knife\includes.dm"
 #include "features\clown_traitor_sound\includes.dm"
 #include "features\not_enough_medical\includes.dm"
+#include "features\tier5\includes.dm"
 /* -- REVERTS -- */
 
 #include "reverts\revert_glasses_protect_welding\includes.dm"
