@@ -1,0 +1,4 @@
+author: "Kryson, JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Lobby info is now on the title screen rather than being hidden in the stat panel."

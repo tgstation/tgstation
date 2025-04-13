@@ -1,0 +1,5 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - rscadd: "Added a greyscale Blazer and Trenchcoat, available in the clothesmate!"
+  - rscadd: "Detective Trenchcoats are now toggleable to pair with the greyscale Trenchcoats"

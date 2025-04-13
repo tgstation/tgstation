@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - code_imp: "Subsystems that are meant to represent a network in-game have been moved into their own category inside the codebase."
