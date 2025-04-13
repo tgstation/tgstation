@@ -173,6 +173,6 @@
 	. = ..()
 	set_holdable(/obj/item/fishing_lure) //can only hold lures
 	//adds an extra slot, so we can put back the lures even if we didn't take out the instructions.
-	src.max_slots = length(typesof(/obj/item/fishing_lure)) + 1
-	src.max_total_storage = WEIGHT_CLASS_SMALL * (src.max_slots + 1)
+	max_slots = length(typesof(/obj/item/fishing_lure)) + 1
+	max_total_storage = WEIGHT_CLASS_SMALL * (max_slots + 1)
 

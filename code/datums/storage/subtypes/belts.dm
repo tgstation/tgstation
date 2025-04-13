@@ -253,7 +253,6 @@
 	numerical_stacking = TRUE
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
-	numerical_stacking = TRUE
 
 /datum/storage/bandolier_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()

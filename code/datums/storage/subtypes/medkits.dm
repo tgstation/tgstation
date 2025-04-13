@@ -105,18 +105,18 @@
 	max_total_storage = 24
 	max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
 
-///Tatical medkit
-/datum/storage/medkit/tatical
+///Tactical medkit
+/datum/storage/medkit/tactical
 	max_slots = 21
 	max_total_storage = 24
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 
-///Tatical premium medkit
-/datum/storage/medkit/tatical/premium
+///Premium tactical medkit
+/datum/storage/medkit/tactical/premium
 	allow_big_nesting = TRUE // so you can put back the box you took out
 	max_total_storage = 34
 
-///Corrinor medkit
+///Coroner medkit
 /datum/storage/medkit/coroner
 	max_slots = 14
 	max_total_storage = 24
