@@ -237,8 +237,6 @@
 	for(var/items in 1 to 10)
 		var/item = pick(contains)
 		new item(our_crate)
-	if(prob(25))
-		new /obj/item/bear_armor(our_crate)
 
 /datum/supply_pack/imports/moistnuggets
 	name = "Refurbished Sakhno Precision Rifle Crate"
