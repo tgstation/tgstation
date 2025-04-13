@@ -342,14 +342,6 @@
 		else
 			RegisterSignal(new_holder, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
-///Gives the owner of the martial art the combo HUD.
-/datum/martial_art/proc/on_hud_created(mob/source)
-	SIGNAL_HANDLER
-	var/datum/hud/hud_used = source.hud_used
-	combo_display = new(null, hud_used)
-	hud_used.infodisplay += combo_display
-	hud_used.show_hud(hud_used.hud_version)
-
 /**
  * Called when this martial art is removed from a mob.
  */
@@ -361,6 +353,14 @@
 	UnregisterSignal(remove_from, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING))
 	if(!isnull(combo_display))
 		QDEL_NULL(combo_display)
+
+///Gives the owner of the martial art the combo HUD.
+/datum/martial_art/proc/on_hud_created(mob/source)
+	SIGNAL_HANDLER
+	var/datum/hud/hud_used = source.hud_used
+	combo_display = new(null, hud_used)
+	hud_used.infodisplay += combo_display
+	hud_used.show_hud(hud_used.hud_version)
 
 /mob/living/proc/verb_switch_style()
 	set name = "Swap Style"
