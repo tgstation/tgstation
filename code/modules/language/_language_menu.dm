@@ -39,7 +39,7 @@
 			lang_data["can_speak"] = !!speaker.has_language(language, SPOKEN_LANGUAGE)
 			lang_data["could_speak"] = !!(language_holder.omnitongue || speaker.could_speak_language(language))
 			lang_data["can_understand"] = !!speaker.has_language(language, UNDERSTOOD_LANGUAGE)
-			lang_data["partial_understanding"] = partial_languages[language] || 0
+			lang_data["partial_understanding"] = partial_languages?[language] || 0
 
 		UNTYPED_LIST_ADD(data["languages"], lang_data)
 
