@@ -31,6 +31,7 @@
 		/obj/item/stack/sticky_tape,
 
 		//containers
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
