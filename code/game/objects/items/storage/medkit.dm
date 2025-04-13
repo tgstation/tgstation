@@ -255,7 +255,7 @@
 	icon_state = "medkit_tactical"
 	inhand_icon_state = "medkit-tactical"
 	damagetype_healed = HEAL_ALL_DAMAGE
-	storage_type = /datum/storage/medkit/tatical
+	storage_type = /datum/storage/medkit/tactical
 
 /obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)
@@ -283,7 +283,7 @@
 	icon_state = "medkit_tactical_premium"
 	inhand_icon_state = "medkit-tactical-premium"
 	grind_results = list(/datum/reagent/lead = 10)
-	storage_type = /datum/storage/medkit/tatical/premium
+	storage_type = /datum/storage/medkit/tactical/premium
 
 /obj/item/storage/medkit/tactical/premium/PopulateContents()
 	if(empty)
