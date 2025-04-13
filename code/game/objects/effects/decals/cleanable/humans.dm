@@ -60,7 +60,7 @@
 	STOP_PROCESSING(SSobj, src)
 	// We're not using a matrix so we're free to use BlendRGB
 	if(!islist(color))
-		add_atom_colour(BlendRGB(color, COLOR_BLACK, 0.5), FIXED_COLOUR_PRIORITY) //not all blood splatters have their own sprites... It still looks pretty nice
+		add_atom_colour(BlendRGB(color, COLOR_BLACK, 0.5), FIXED_COLOUR_PRIORITY)
 		return TRUE
 
 	// We're using a matrix, so we need to halve all values
