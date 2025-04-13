@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Dimmer,
   DmIcon,
   Flex,
   Icon,
@@ -19,6 +20,7 @@ import { Window } from '../layouts';
 type Data = {
   temperature: number;
   fluidType: string;
+  lockedFluidTemp: BooleanLike;
   minTemperature: number;
   maxTemperature: number;
   fluidTypes: string[];
@@ -29,6 +31,8 @@ type Data = {
   heartIcon: string;
   heartIconState: string;
   heartEmptyIconState: string;
+  currentMode: string;
+  aquariumModes: ModeData[];
 };
 
 type FishData = {
@@ -45,6 +49,11 @@ type PropData = {
   prop_name: string;
   prop_icon: string;
   prop_icon_state: string;
+};
+
+type ModeData = {
+  name: string;
+  tooltip: string;
 };
 
 export const Aquarium = (props) => {
@@ -272,11 +281,15 @@ const Settings = (props) => {
     fluidType,
     safe_mode,
     feedingInterval,
+    lockedFluidTemp,
+    currentMode,
+    aquariumModes,
   } = data;
 
   return (
     <Flex fill>
       <Flex.Item grow>
+        {lockedFluidTemp && <LockedSection />}
         <Section fill title="Temperature">
           <Knob
             mt={3}
@@ -297,6 +310,7 @@ const Settings = (props) => {
         </Section>
       </Flex.Item>
       <Flex.Item ml={1} grow>
+        {lockedFluidTemp && <LockedSection />}
         <Section fill title="Fluid">
           <Flex direction="column" mb={1}>
             {fluidTypes.map((f) => (
@@ -319,15 +333,23 @@ const Settings = (props) => {
         <Section fill title="Settings">
           <Box mt={2}>
             <LabeledList>
-              <LabeledList.Item label="Safe Mode">
-                <Button
-                  textAlign="center"
-                  width="75px"
-                  tooltip="Prevent fish dying in hostile water and temperatures at the cost of features like growth and reproduction"
-                  content={safe_mode ? 'Online' : 'Offline'}
-                  selected={safe_mode}
-                  onClick={() => act('safe_mode')}
-                />
+              <LabeledList.Item label="Aquarium Modes">
+                <Stack vertical>
+                  {aquariumModes.map((mode) => (
+                    <Stack.Item key={mode.name}>
+                      <Button
+                        textAlign="center"
+                        width="75px"
+                        tooltip={mode.tooltip}
+                        content={mode.name}
+                        selected={currentMode === mode.name}
+                        onClick={() =>
+                          act('change_mode', { new_mode: mode.name })
+                        }
+                      />
+                    </Stack.Item>
+                  ))}
+                </Stack>
               </LabeledList.Item>
               <LabeledList.Item label="Feeding Interval">
                 <NumberInput
@@ -354,3 +376,16 @@ const Settings = (props) => {
 function dissectName(input: string): string {
   return input.split(' ')[0].slice(0, 18);
 }
+
+const LockedSection = () => {
+  return (
+    <Dimmer>
+      <Stack align="baseline" vertical>
+        <Stack ml={-2}>
+          <Icon color="red" name="lock" size={10} />
+        </Stack>
+        <Stack.Item fontSize="20px">LOCKED</Stack.Item>
+      </Stack>
+    </Dimmer>
+  );
+};
