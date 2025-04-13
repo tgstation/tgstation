@@ -7,12 +7,18 @@
 	circuit = /obj/item/circuitboard/machine/gibber
 	anchored_tabletop_offset = 8
 
-	var/operating = FALSE //Is it on?
-	var/dirty = FALSE // Does it need cleaning?
-	var/gibtime = 40 // Time from starting until meat appears
+	//Is it on?
+	var/operating = FALSE
+	/// Does it need cleaning?
+	var/dirty = FALSE
+	/// Time from starting until meat appears
+	var/gibtime = 40
+	/// How much meat we meet when we meat the meat
 	var/meat_produced = 2
+	/// If the gibber should give the 'Subject may not have abiotic items on' message
 	var/ignore_clothing = FALSE
-	var/blood_dna_info // The DNA of the last gibbed mob
+	/// The DNA info of the last gibbed mob
+	var/blood_dna_info
 
 /obj/machinery/gibber/Initialize(mapload)
 	. = ..()
