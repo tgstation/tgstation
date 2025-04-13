@@ -24099,7 +24099,7 @@
 /area/station/hallway/primary/central)
 "iwd" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
+	dir = 8
 	},
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel/office)
