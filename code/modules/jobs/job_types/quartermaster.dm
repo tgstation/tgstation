@@ -43,6 +43,7 @@
 	jobtype = /datum/job/quartermaster
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic/bronze = 1,
+		/obj/item/cargo_teleporter = 1, // MASSMETA EDIT: Give cargo teleporter to zavhoz
 	)
 	id_trim = /datum/id_trim/job/quartermaster
 	id = /obj/item/card/id/advanced/silver
