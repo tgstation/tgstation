@@ -688,3 +688,37 @@
 	inhand_icon_state = "bear"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	///Are we friendly with bears (wearing the full head/suit combo)?
+	var/full_suit = FALSE
+
+/obj/item/clothing/suit/costume/bear_suit/equipped(mob/living/user, slot)
+	..()
+	if(slot & ITEM_SLOT_OCLOTHING)
+		make_friendly(user)
+
+/obj/item/clothing/suit/costume/bear_suit/dropped(mob/living/user)
+	..()
+	if (!full_suit)
+		return
+	full_suit = FALSE
+	var/mob/living/carbon/human/human_user = user
+	if (istype(human_user.head, /obj/item/clothing/head/costume/bearpelt))
+		UnregisterSignal(human_user.head, COMSIG_ITEM_DROPPED)
+	user.faction -= FACTION_BEAR
+
+/obj/item/clothing/suit/costume/bear_suit/proc/make_friendly(mob/living/carbon/human/human_user, obj/item/clothing/head/costume/bearpelt/bear_head)
+	if(!istype(human_user))
+		return
+	if(!bear_head)
+		bear_head = human_user.head
+	if(!istype(bear_head, /obj/item/clothing/head/costume/bearpelt))
+		return
+	RegisterSignal(bear_head, COMSIG_ITEM_DROPPED, PROC_REF(helmet_drop))
+	full_suit = TRUE
+	human_user.faction |= FACTION_BEAR
+
+/obj/item/clothing/suit/costume/bear_suit/proc/helmet_drop(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
+	full_suit = FALSE
+	user.faction -= FACTION_BEAR

@@ -31,7 +31,7 @@
 	friendly_verb_continuous = "bear hugs"
 	friendly_verb_simple = "bear hug"
 
-	faction = list(FACTION_RUSSIAN)
+	faction = list(FACTION_RUSSIAN, FACTION_BEAR)
 
 	habitable_atmos = null
 	minimum_survivable_temperature = TCMB
