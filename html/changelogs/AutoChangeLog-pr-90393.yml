@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "\"Hypermetabolic Blood\" Mutation"
-  - rscadd: "\"Rock Eater\" Mutation"
-  - rscadd: "\"Rock Absorber\" Combination Mutation"
-  - rscadd: "\"Farsight\" Mutation"
-  - rscadd: "\"Inexorable\" Mutation"
