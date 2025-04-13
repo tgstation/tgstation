@@ -7,9 +7,14 @@
 	plane = GAME_PLANE
 	var/splatter_type = "splatter"
 
+// set_color arg can be either a color string or a singleton /datum/blood_type to pull the color from
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir, set_color = BLOOD_COLOR_RED)
 	if(set_color)
-		color = set_color
+		var/datum/blood_type/blood_type = set_color
+		if(istype(blood_type))
+			color = blood_type.color
+		else
+			color = set_color
 	if(ISDIAGONALDIR(set_dir))
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else

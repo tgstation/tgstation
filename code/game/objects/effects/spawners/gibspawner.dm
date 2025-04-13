@@ -83,7 +83,7 @@
 	gib_mob_type = /mob/living/carbon/human
 	sound_vol = 50
 
-/obj/effect/gibspawner/human/Initialize(mapload)
+/obj/effect/gibspawner/human/Initialize(mapload, mob/living/source_mob, list/datum/disease/diseases, blood_dna_info)
 	if(!gibdirections.len)
 		gibdirections = list(
 			list(NORTH, NORTHEAST, NORTHWEST),
@@ -94,7 +94,10 @@
 			GLOB.alldirs,
 			list(),
 		)
-	return ..(blood_dna_info = list("Human DNA" = random_human_blood_type()))
+	if(!iscarbon(source_mob) && isnull(blood_dna_info))
+		return ..(blood_dna_info = list("Human DNA" = random_human_blood_type()))
+
+	return ..()
 
 
 /obj/effect/gibspawner/human/bodypartless //only the gibs that don't look like actual full bodyparts (except torso).
