@@ -5,6 +5,7 @@
 	gain_text = ""
 	lose_text = ""
 	resilience = TRAUMA_RESILIENCE_SURGERY
+	random_gain = FALSE
 	/// Associated antag datum, used for displaying objectives and antag hud
 	var/datum/antagonist/hypnotized/antagonist
 	var/hypnotic_phrase = ""
@@ -12,7 +13,6 @@
 
 /datum/brain_trauma/hypnosis/New(phrase)
 	if(!phrase)
-		qdel(src)
 		return
 	hypnotic_phrase = phrase
 	try
