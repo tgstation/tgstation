@@ -49,6 +49,7 @@
 /mob/living/basic/frog/Initialize(mapload)
 	. = ..()
 
+	ADD_TRAIT(src, TRAIT_AMPHIBIOUS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	if(prob(1))
