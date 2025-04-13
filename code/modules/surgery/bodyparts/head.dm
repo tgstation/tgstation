@@ -8,6 +8,7 @@
 	body_part = HEAD
 	plaintext_zone = "head"
 	w_class = WEIGHT_CLASS_BULKY //Quite a hefty load
+	slot_flags = ITEM_SLOT_BELT // MASSMETA EDIT: Nas'hrah moment
 	slowdown = 1 //Balancing measure
 	throw_range = 2 //No head bowling
 	px_x = 0
