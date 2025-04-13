@@ -34,7 +34,7 @@
 
 // Bloodtype defines
 #define BLOOD_TYPE_A_MINUS "A-"
-#define BLOOD_TYPE_A_PLUS BLOOD_TYPE_A_PLUS
+#define BLOOD_TYPE_A_PLUS "A+"
 #define BLOOD_TYPE_B_MINUS "B-"
 #define BLOOD_TYPE_B_PLUS "B+"
 #define BLOOD_TYPE_AB_MINUS "AB-"
