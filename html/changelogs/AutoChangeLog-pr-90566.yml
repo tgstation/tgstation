@@ -1,0 +1,4 @@
+author: "LePiromano"
+delete-after: True
+changes:
+  - balance: "Added a second of reaction time to the Colossus' final attack."

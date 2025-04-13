@@ -1,0 +1,4 @@
+author: "Cruix"
+delete-after: True
+changes:
+  - bugfix: "fixed some whiteship windows having airlock icons placed over them in the navigation computer window"

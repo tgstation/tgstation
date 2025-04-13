@@ -85,18 +85,16 @@
 	playsound(vat, 'sound/effects/splat.ogg', 50, TRUE)
 	if(rand(1, 100) < risk) //Fail roll!
 		fuck_up_growing(vat)
-
-		return FALSE
-	succeed_growing(vat)
-	return TRUE
+		. = FALSE
+	else
+		succeed_growing(vat)
+		. = TRUE
+	SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
 
 /datum/micro_organism/cell_line/proc/fuck_up_growing(obj/machinery/vatgrower/vat)
 	vat.visible_message(span_warning("The biological sample in [vat] seems to have dissipated!"))
 	if(prob(50))
 		new /obj/effect/gibspawner/generic(get_turf(vat)) //Spawn some gibs.
-	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
-		return
-	QDEL_NULL(vat.biological_sample)
 
 /datum/micro_organism/cell_line/proc/succeed_growing(obj/machinery/vatgrower/vat)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
@@ -109,9 +107,6 @@
 		//We maybe add some color. the chance is static for now, but idewally we would be able to manipulate it in the future.
 		if(prob(CYTO_SHINY_CHANCE))
 			mutate_color(thing)
-	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
-		return
-	QDEL_NULL(vat.biological_sample)
 
 ///Overriden to show more info like needs, supplementary and supressive reagents and also growth.
 /datum/micro_organism/cell_line/get_details(show_details)

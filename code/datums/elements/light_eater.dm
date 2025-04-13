@@ -195,7 +195,7 @@
  * - [target][/atom]: The atom that was exposed to the light reater reagents
  * - reac_volume: The volume of the reagents the target was exposed to
  */
-/datum/element/light_eater/proc/on_expose_atom(datum/reagent/source, atom/target, reac_volume)
+/datum/element/light_eater/proc/on_expose_atom(datum/reagent/source, atom/target, reac_volume, methods)
 	SIGNAL_HANDLER
 	eat_lights(target, source)
 	return NONE

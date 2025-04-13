@@ -148,7 +148,7 @@ export const PlantAnalyzerTray = (props) => {
       }
     >
       <Stack>
-        <Stack.Item ml={2} mr={4}>
+        <Stack.Item mx={2}>
           <DmIcon
             fallback={Fallback}
             icon={tray_data.icon}
@@ -284,7 +284,7 @@ export const PlantAnalyzerSeed = (props) => {
       buttons={<SeedExtraData />}
     >
       <Stack>
-        <Stack.Item ml={2} mr={4}>
+        <Stack.Item mx={2}>
           <DmIcon
             fallback={Fallback}
             icon={seed_data.icon}
@@ -512,7 +512,7 @@ export const PlantAnalyzerGraft = (props) => {
       }
     >
       <Stack>
-        <Stack.Item ml={2} mr={4}>
+        <Stack.Item mx={2}>
           <DmIcon
             fallback={Fallback}
             icon={graft_data.icon}

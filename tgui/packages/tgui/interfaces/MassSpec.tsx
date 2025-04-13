@@ -401,7 +401,6 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
       {/* Sliders */}
       <Slider
         step={graphUpperRange / base_width}
-        suppressFlicker
         height={17.2}
         format={(value: number) => round(value, 2).toString()}
         width={(centerValue / graphUpperRange) * base_width + 'px'}
@@ -417,7 +416,6 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
       />
       <Slider
         height={17.2}
-        suppressFlicker
         format={(value: number) => round(value, 2).toString()}
         step={graphUpperRange / base_width}
         width={base_width - (centerValue / graphUpperRange) * base_width + 'px'}
@@ -433,7 +431,6 @@ const MassSpectroscopy = (props: SpectroscopyProps) => {
       />
       <Slider
         step={graphUpperRange / base_width}
-        suppressFlicker
         mt={1.2}
         value={centerValue}
         height={1.9}

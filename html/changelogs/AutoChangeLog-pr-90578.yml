@@ -1,0 +1,4 @@
+author: "TheSwain, JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Soulscythes and Vampires now have a blood hud on the left side of their screen rather than a stat panel entry stating how much blood they have."
