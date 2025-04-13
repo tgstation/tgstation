@@ -153,12 +153,16 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
 		/datum/reagent/consumable/sugar = 3,
-		/datum/reagent/consumable/italian_coco = 3,
+		/datum/reagent/consumable/hot_coco = 3,
 		/datum/reagent/consumable/sprinkles = 1,
 	) //the coco reagent is just bitter.
 	tastes = list("donut" = 4, "bitterness" = 1)
 	decorated_icon = "donut_choc_sprinkles"
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/donut/choco/Initialize(mapload)
+	. = ..()
+	reagents.chem_temp = 330 //the warmth with which the cook cooked it
 
 /obj/item/food/donut/blumpkin
 	name = "blumpkin donut"
@@ -306,6 +310,10 @@
 	decorated_icon = "jelly_choc_sprinkles"
 	crafting_complexity = FOOD_COMPLEXITY_3
 
+/obj/item/food/donut/jelly/choco/Initialize(mapload)
+	. = ..()
+	reagents.chem_temp = 330 //the warmth with which the cook cooked it
+
 /obj/item/food/donut/jelly/blumpkin
 	name = "blumpkin jelly donut"
 	desc = "Goes great with a mug of soothing drunken blumpkin."
@@ -444,6 +452,10 @@
 	tastes = list("jelly" = 1, "donut" = 4, "bitterness" = 1)
 	decorated_icon = "jelly_choc_sprinkles"
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/donut/jelly/slimejelly/choco/Initialize(mapload)
+	. = ..()
+	reagents.chem_temp = 330 //the warmth with which the cook cooked it
 
 /obj/item/food/donut/jelly/slimejelly/blumpkin
 	name = "blumpkin jelly donut"
