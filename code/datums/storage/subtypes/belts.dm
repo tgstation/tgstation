@@ -294,7 +294,6 @@
 ///Plant belt
 /datum/storage/plant_belt
 	max_slots = 6
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 /datum/storage/plant_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -317,7 +316,6 @@
 
 ///Unfathomable curio
 /datum/storage/unfathomable_curio
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_total_storage = 21
 
 /datum/storage/unfathomable_curio/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
