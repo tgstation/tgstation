@@ -59,7 +59,8 @@
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
-		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && HAS_TRAIT(exposed_carbon, TRAIT_DRINKS_BLOOD))))
+		var/datum/blood_type/carbon_blood_type = exposed_carbon.dna.blood_type
+		if(carbon_blood_type.chemical == type && ((methods & INJECT) || ((methods & INGEST) && HAS_TRAIT(exposed_carbon, TRAIT_DRINKS_BLOOD))))
 			var/datum/blood_type/recipient_blood_type = exposed_carbon.dna.blood_type
 			var/datum/blood_type/donor_blood_type = data["blood_type"]
 			if(!(donor_blood_type.type in recipient_blood_type.compatible_types))
