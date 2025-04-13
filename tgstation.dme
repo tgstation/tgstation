@@ -2998,6 +2998,7 @@
 #include "code\modules\admin\smites\boneless.dm"
 #include "code\modules\admin\smites\brain_damage.dm"
 #include "code\modules\admin\smites\bsa.dm"
+#include "code\modules\admin\smites\cluwndice.dm"
 #include "code\modules\admin\smites\curse_of_babel.dm"
 #include "code\modules\admin\smites\dock_pay.dm"
 #include "code\modules\admin\smites\dust.dm"
