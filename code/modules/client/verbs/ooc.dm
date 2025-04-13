@@ -475,17 +475,10 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	set name = "Link Forum Account"
 	set desc = "Validates your byond account to your forum account. Required to post on the forums."
 
-	var/forumlinklimit = 0
 	var/uri = CONFIG_GET(string/forum_link_uri)
 	if(!uri)
 		to_chat(src, span_warning("This feature is disabled."))
 		return
-
-	if (forumlinklimit > world.time + 10 SECONDS)
-		to_chat(src, span_userdanger("Please wait 10 seconds between forums link attempts."))
-		return
-
-	forumlinklimit = world.time
 
 	if (!SSdbcore.Connect())
 		to_chat(src, span_danger("No connection to the database."))
