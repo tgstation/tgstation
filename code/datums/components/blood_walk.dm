@@ -26,7 +26,7 @@
 	target_dir_change = FALSE,
 	transfer_blood_dna = FALSE,
 	max_blood = INFINITY,
-	blood_dna_info = list("meaty DNA" = BLOOD_TYPE_MEAT)
+	blood_dna_info = list("meaty DNA" = get_blood_type_by_name(BLOOD_TYPE_MEAT))
 )
 
 	if(!ismovable(parent))

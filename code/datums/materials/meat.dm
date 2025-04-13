@@ -52,7 +52,7 @@
 	source.AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_left = (protein_count + fat_count) * 0.3,\
-		blood_dna = list("meaty DNA" = BLOOD_TYPE_MEAT),\
+		blood_dna = list("meaty DNA" = get_blood_type_by_name(BLOOD_TYPE_MEAT)),\
 		diseases = null,\
 	)
 
