@@ -482,7 +482,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 		return
 
 	if (forumlinklimit > world.time + 10 SECONDS)
-		to_chat(src, span_userdanger("Please wait 10 game seconds between forums link attempts."))
+		to_chat(src, span_userdanger("Please wait 10 seconds between forums link attempts."))
 		return
 
 	forumlinklimit = world.time
