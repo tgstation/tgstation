@@ -48,7 +48,7 @@
 /obj/machinery/gibber/update_overlays()
 	. = ..()
 	if(dirty)
-		var/mutable_appearance/blood_overlay = mutable_appearance(icon, "grinder_bloody", src, appearance_flags = RESET_COLOR)
+		var/mutable_appearance/blood_overlay = mutable_appearance(icon, "grinder_bloody", appearance_flags = RESET_COLOR|KEEP_APART)
 		if(blood_dna_info)
 			blood_overlay.color = get_blood_dna_color(blood_dna_info)
 		else

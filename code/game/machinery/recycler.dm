@@ -108,7 +108,7 @@
 	if(!bloody)
 		return
 
-	var/mutable_appearance/blood_overlay = mutable_appearance(icon, "[icon_state]bld", src, appearance_flags = RESET_COLOR)
+	var/mutable_appearance/blood_overlay = mutable_appearance(icon, "[icon_state]bld", appearance_flags = RESET_COLOR|KEEP_APART)
 	var/blood_dna = GET_ATOM_BLOOD_DNA(src)
 	if(blood_dna)
 		blood_overlay.color = get_blood_dna_color(blood_dna)
