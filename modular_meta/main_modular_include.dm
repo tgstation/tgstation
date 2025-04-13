@@ -19,6 +19,7 @@
 #include "features\not_enough_medical\includes.dm"
 #include "features\more_cell_interactions\includes.dm"
 #include "features\tier5\includes.dm"
+#include "features\copytech\includes.dm"
 #include "features\cargo_teleporter\includes.dm"
 /* -- REVERTS -- */
 
