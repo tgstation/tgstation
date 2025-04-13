@@ -7,7 +7,7 @@
 	uniform = /obj/item/clothing/under/abductor
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = /obj/item/clothing/shoes/jackboots
-	suit = /obj/item/clothing/suit/jacket/trenchcoat
+	suit = /obj/item/clothing/suit/jacket/leather_trenchcoat
 	id = /obj/item/card/id/advanced
 
 
