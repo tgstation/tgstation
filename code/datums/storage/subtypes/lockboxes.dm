@@ -5,14 +5,13 @@
 
 /datum/storage/lockbox/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_locked(STORAGE_FULLY_LOCKED)
 
 ///Medal lockbox
 /datum/storage/lockbox/medal
-	max_specific_storage = WEIGHT_CLASS_SMALL
 	max_slots = 10
 	max_total_storage = 20
+	max_specific_storage = WEIGHT_CLASS_SMALL
 
 /datum/storage/lockbox/medal/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -20,8 +19,8 @@
 
 ///Dueling lockbox
 /datum/storage/lockbox/dueling
-	max_specific_storage = WEIGHT_CLASS_SMALL
 	max_slots = 2
+	max_specific_storage = WEIGHT_CLASS_SMALL
 
 /datum/storage/lockbox/dueling/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
@@ -31,6 +30,10 @@
 /datum/storage/lockbox/bitrunning_decrypted
 	max_slots = 1
 	max_total_storage = 3
-	locked = STORAGE_NOT_LOCKED
+
+/datum/storage/lockbox/bitrunning_decrypted/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+	set_locked(STORAGE_NOT_LOCKED)
+
 
 
