@@ -218,7 +218,7 @@
 	src.color = initial(reagent_type.color)
 	src.reagent_type = reagent_type
 	src.restoration_chem = reagent_type
-	src.abstract = null
+	src.root_abstract_type = null
 
 /datum/blood_type/random_chemical/type_key()
 	return reagent_type

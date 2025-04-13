@@ -45,7 +45,7 @@
 #define BLOOD_TYPE_LIZARD "L"
 #define BLOOD_TYPE_VAMPIRE "V"
 #define BLOOD_TYPE_ANIMAL "Y-"
-#define BLOOD_TYPE_LE "LE"
+#define BLOOD_TYPE_ETHEREAL "LE"
 #define BLOOD_TYPE_TOX "TOX"
 #define BLOOD_TYPE_OIL "Oil"
 #define BLOOD_TYPE_MEAT "MT-"
