@@ -38,9 +38,10 @@
 /// When we've validated that someone is actually in the water start drowning them
 /datum/element/swimming_tile/proc/dip_in(mob/living/floater)
 	SIGNAL_HANDLER
+	floater.apply_damage(20, STAMINA)
 	floater.apply_status_effect(/datum/status_effect/swimming)
 
-///Added by the watery_tile element. Keep adding wet stacks over time until removed from the watery turf.
+///Added by the swimming_tile element. Drains stamina over time until the owner stops being immersed. Starts drowning them if they are prone or small.
 /datum/status_effect/swimming
 	id = "swimming"
 	alert_type = null
@@ -49,7 +50,7 @@
 	/// How much damage do we do every second?
 	var/stamina_per_second = 10
 	/// How much oxygen do we lose every second in which we are drowning?
-	var/oxygen_per_second = 3
+	var/oxygen_per_second = 2
 
 /datum/status_effect/swimming/on_creation(mob/living/new_owner)
 	. = ..()
@@ -65,17 +66,18 @@
 		if (isvehicle(owner.buckled) || ismob(owner.buckled))
 			return
 	owner.apply_damage(stamina_per_second * seconds_between_ticks, STAMINA)
-	if (owner.mob_size >= MOB_SIZE_HUMAN && owner.body_position == STANDING_UP)
+	if (HAS_TRAIT(owner, TRAIT_NOBREATH) || (owner.mob_size >= MOB_SIZE_HUMAN && owner.body_position == STANDING_UP))
 		return
 	if (iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
-		if (carbon_owner.internal)
+		if (carbon_owner.internal || carbon_owner.external)
 			return
 	if (isbasicmob(owner))
 		var/mob/living/basic/basic_owner = owner
 		if (basic_owner.unsuitable_atmos_damage == 0)
 			return // This mob doesn't "breathe"
 	owner.apply_damage(oxygen_per_second * seconds_between_ticks, OXY)
+	owner.losebreath += seconds_between_ticks
 
 /// When we're not in the water any more this don't matter
 /datum/status_effect/swimming/proc/stop_swimming()

@@ -68,31 +68,23 @@
 	return ..()
 
 
-/// Deep water drains stamina and starts drowning you
-/turf/open/water/deep
-	planetary_atmos = FALSE
-	desc = "Don't forget your life jacket."
-	slowdown = 5
-	immerse_overlay = "immerse_deep"
-	icon = 'icons/turf/beach.dmi'
-	icon_state = "deepwater"
-	base_icon_state = "deepwater"
-	baseturfs = /turf/open/water/deep
-	immerse_overlay_color = "#57707c"
-	fishing_datum = /datum/fish_source/ocean
-
-/turf/open/water/deep/make_immersed()
-	. = ..()
-	if (!.)
-		return
-	AddElement(/datum/element/swimming_tile)
-
-
 /turf/open/water/jungle
 
 /turf/open/water/no_planet_atmos
 	baseturfs = /turf/open/water/no_planet_atmos
 	planetary_atmos = FALSE
+
+/turf/open/water/no_planet_atmos/deep
+	name = "deep water"
+	desc = "Less shallow water."
+	icon_state = "deep_riverwater_motion"
+	baseturfs = /turf/open/water/no_planet_atmos/deep
+
+/turf/open/water/no_planet_atmos/deep/make_immersed()
+	. = ..()
+	if (!.)
+		return
+	AddElement(/datum/element/swimming_tile)
 
 /turf/open/water/beach
 	planetary_atmos = FALSE
@@ -108,6 +100,25 @@
 /turf/open/water/beach/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
+
+/// Deep water drains stamina and starts drowning you
+/turf/open/water/deep_beach
+	name = "deep water"
+	desc = "Don't forget your life jacket."
+	slowdown = 8
+	immerse_overlay = "immerse_deep"
+	icon = 'icons/turf/beach.dmi'
+	icon_state = "deepwater"
+	base_icon_state = "deepwater"
+	baseturfs = /turf/open/water/deep_beach
+	immerse_overlay_color = "#57707c"
+	fishing_datum = /datum/fish_source/ocean
+
+/turf/open/water/deep_beach/make_immersed()
+	. = ..()
+	if (!.)
+		return
+	AddElement(/datum/element/swimming_tile)
 
 /turf/open/water/lavaland_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
