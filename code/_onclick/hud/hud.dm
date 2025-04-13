@@ -28,8 +28,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/inventory_shown = FALSE //Equipped item inventory
 	var/hotkey_ui_hidden = FALSE //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
-	var/atom/movable/screen/blobpwrdisplay
-
 	var/atom/movable/screen/alien_plasma_display
 	var/atom/movable/screen/alien_queen_finder
 
@@ -247,7 +245,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	healthdoll = null
 	spacesuit = null
 	hunger = null
-	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
 	combo_display = null

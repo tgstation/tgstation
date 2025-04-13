@@ -162,9 +162,6 @@
 	..()
 	var/atom/movable/screen/using
 
-	blobpwrdisplay = new /atom/movable/screen/blob_power_display(null, src)
-	infodisplay += blobpwrdisplay
-
 	healths = new /atom/movable/screen/healths/blob(null, src)
 	infodisplay += healths
 

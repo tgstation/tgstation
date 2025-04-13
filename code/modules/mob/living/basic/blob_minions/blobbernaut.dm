@@ -34,15 +34,14 @@
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/damage_threshold, 10)
-/*
-	if(hud_used)
-		var/datum/hud/hud_used = hud_used
-		overmind_hud = new(null, hud_used)
-		hud_used.infodisplay += lingchemdisplay
-		hud_used.show_hud(hud_used.hud_version)
-	else
-		RegisterSignal(src, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
-*/
+
+/mob/living/basic/blob_minion/blobbernaut/Destroy()
+	QDEL_NULL(overmind_hud)
+	return ..()
+
+/mob/living/basic/blob_minion/blobbernaut/death(gibbed)
+	flick("blobbernaut_death", src)
+	return ..()
 
 /mob/living/basic/blob_minion/blobbernaut/create_mob_hud()
 	. = ..()
@@ -51,10 +50,6 @@
 	overmind_hud = new(null, hud_used)
 	hud_used.infodisplay += overmind_hud
 	hud_used.show_hud(hud_used.hud_version)
-
-/mob/living/basic/blob_minion/blobbernaut/death(gibbed)
-	flick("blobbernaut_death", src)
-	return ..()
 
 /// This variant is the one actually spawned by blob factories, takes damage when away from blob tiles
 /mob/living/basic/blob_minion/blobbernaut/minion
