@@ -66,22 +66,22 @@
 	root_abstract_type = /datum/blood_type/human
 
 /datum/blood_type/human/a_minus
-	name = "A-"
+	name = BLOOD_TYPE_A_MINUS
 	compatible_types = list(/datum/blood_type/human/a_minus, /datum/blood_type/human/o_minus)
 
 /datum/blood_type/human/a_plus
-	name = "A+"
+	name = BLOOD_TYPE_A_PLUS
 	compatible_types = list(/datum/blood_type/human/a_minus, /datum/blood_type/human/a_plus, /datum/blood_type/human/o_minus, /datum/blood_type/human/o_plus)
 
 /datum/blood_type/human/b_minus
-	name = "B-"
+	name = BLOOD_TYPE_B_MINUS
 	compatible_types = list(
 		/datum/blood_type/human/b_minus,
 		/datum/blood_type/human/o_minus,
 	)
 
 /datum/blood_type/human/b_plus
-	name = "B+"
+	name = BLOOD_TYPE_B_PLUS
 	compatible_types = list(
 		/datum/blood_type/human/b_minus,
 		/datum/blood_type/human/b_plus,
@@ -90,7 +90,7 @@
 	)
 
 /datum/blood_type/human/ab_minus
-	name = "AB-"
+	name = BLOOD_TYPE_AB_MINUS
 	compatible_types = list(
 		/datum/blood_type/human/a_minus,
 		/datum/blood_type/human/b_minus,
@@ -99,7 +99,7 @@
 	)
 
 /datum/blood_type/human/ab_plus
-	name = "AB+"
+	name = BLOOD_TYPE_AB_PLUS
 	compatible_types = list(
 		/datum/blood_type/human/a_minus,
 		/datum/blood_type/human/a_plus,
@@ -112,32 +112,32 @@
 	)
 
 /datum/blood_type/human/o_minus
-	name = "O-"
+	name = BLOOD_TYPE_O_MINUS
 	compatible_types = list(
 		/datum/blood_type/human/o_minus,
 	)
 
 /datum/blood_type/human/o_plus
-	name = "O+"
+	name = BLOOD_TYPE_O_PLUS
 	compatible_types = list(
 		/datum/blood_type/human/o_minus,
 		/datum/blood_type/human/o_plus,
 	)
 
 /datum/blood_type/animal
-	name = "Y-"
+	name = BLOOD_TYPE_ANIMAL
 	compatible_types = list(
 		/datum/blood_type/animal,
 	)
 
 /datum/blood_type/lizard
-	name = "L"
+	name = BLOOD_TYPE_LIZARD
 	compatible_types = list(
 		/datum/blood_type/lizard,
 	)
 
 /datum/blood_type/ethereal
-	name = "LE"
+	name = BLOOD_TYPE_ETHEREAL
 	color = /datum/reagent/consumable/liquidelectricity::color
 	lightness_mult = 1.255 // for more vibrant gatorade coloring
 	compatible_types = list(
@@ -145,35 +145,35 @@
 	)
 
 /datum/blood_type/oil
-	name = "Oil"
+	name = BLOOD_TYPE_OIL
 	color = BLOOD_COLOR_OIL
 	reagent_type = /datum/reagent/fuel/oil
 
 /datum/blood_type/vampire
-	name = "V"
+	name = BLOOD_TYPE_VAMPIRE
 	compatible_types = list(
 		/datum/blood_type/vampire,
 	)
 
 /datum/blood_type/meat // why does this exist
-	name = "MT-"
+	name = BLOOD_TYPE_MEAT
 
 /datum/blood_type/universal
-	name = "U"
+	name = BLOOD_TYPE_UNIVERSAL
 
 /datum/blood_type/universal/New()
 	. = ..()
 	compatible_types = subtypesof(/datum/blood_type)
 
 /datum/blood_type/xeno
-	name = "X*"
+	name = BLOOD_TYPE_XENO
 	color = BLOOD_COLOR_XENO
 	lightness_mult = 1.255 // For parity with pre-refactor xeno blood sprites
 	compatible_types = list(/datum/blood_type/xeno)
 
 /// April fool's blood for clowns
 /datum/blood_type/clown
-	name = "C"
+	name = BLOOD_TYPE_CLOWN
 	reagent_type = /datum/reagent/colorful_reagent
 	lightness_mult = 1.255
 	/// The cached list of random colors to pick from
@@ -191,21 +191,21 @@
 
 /// Slimeperson blood, aka 'toxin' blood type
 /datum/blood_type/slime
-	name = "TOX"
+	name = BLOOD_TYPE_TOX
 	color = /datum/reagent/toxin/slimejelly::color
 	reagent_type = /datum/reagent/toxin/slimejelly
 	no_bleed_overlays = TRUE
 
 /// Podpeople blood
 /datum/blood_type/water
-	name = "H2O"
+	name = BLOOD_TYPE_H2O
 	color = /datum/reagent/water::color
 	reagent_type = /datum/reagent/water
 	no_bleed_overlays = TRUE
 
 /// Snaiil blood
 /datum/blood_type/snail
-	name = "Lube"
+	name = BLOOD_TYPE_SNAIL
 	reagent_type = /datum/reagent/lube
 
 /// An abstract-ish blood type used particularly for species with blood set to random reagents, such as podpeople

@@ -22,13 +22,13 @@
 		var/datum/blood_type/blood_type = new_reagent.data["blood_type"]
 		blood_type = blood_type.name
 	else if(holder.has_reagent(/datum/reagent/consumable/liquidelectricity))
-		blood_type = "LE"
+		blood_type = BLOOD_TYPE_ETHEREAL
 	else if(holder.has_reagent(/datum/reagent/lube))
-		blood_type = "S"
+		blood_type = BLOOD_TYPE_SNAIL
 	else if(holder.has_reagent(/datum/reagent/water))
-		blood_type = "H2O"
+		blood_type = BLOOD_TYPE_H2O
 	else if(holder.has_reagent(/datum/reagent/toxin/slimejelly))
-		blood_type = "TOX"
+		blood_type = BLOOD_TYPE_TOX
 	else
 		blood_type = null
 	return ..()
@@ -44,36 +44,36 @@
 
 /obj/item/reagent_containers/blood/random/Initialize(mapload, vol)
 	icon_state = "bloodpack"
-	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
+	blood_type = pick(BLOOD_TYPE_A_PLUS, BLOOD_TYPE_A_MINUS, BLOOD_TYPE_B_PLUS, BLOOD_TYPE_B_MINUS, BLOOD_TYPE_O_PLUS, BLOOD_TYPE_O_MINUS, BLOOD_TYPE_LIZARD)
 	return ..()
 
 /obj/item/reagent_containers/blood/a_plus
-	blood_type = "A+"
+	blood_type = BLOOD_TYPE_A_PLUS
 
 /obj/item/reagent_containers/blood/a_minus
-	blood_type = "A-"
+	blood_type = BLOOD_TYPE_A_MINUS
 
 /obj/item/reagent_containers/blood/b_plus
-	blood_type = "B+"
+	blood_type = BLOOD_TYPE_B_PLUS
 
 /obj/item/reagent_containers/blood/b_minus
-	blood_type = "B-"
+	blood_type = BLOOD_TYPE_B_MINUS
 
 /obj/item/reagent_containers/blood/o_plus
-	blood_type = "O+"
+	blood_type = BLOOD_TYPE_O_PLUS
 
 /obj/item/reagent_containers/blood/o_minus
-	blood_type = "O-"
+	blood_type = BLOOD_TYPE_O_MINUS
 
 /obj/item/reagent_containers/blood/lizard
-	blood_type = "L"
+	blood_type = BLOOD_TYPE_LIZARD
 
 /obj/item/reagent_containers/blood/ethereal
-	blood_type = "LE"
+	blood_type = BLOOD_TYPE_ETHEREAL
 	unique_blood = /datum/reagent/consumable/liquidelectricity
 
 /obj/item/reagent_containers/blood/snail
-	blood_type = "S"
+	blood_type = BLOOD_TYPE_SNAIL
 	unique_blood = /datum/reagent/lube
 
 /obj/item/reagent_containers/blood/snail/examine()
@@ -81,7 +81,7 @@
 	. += span_notice("It's a bit slimy... The label indicates that this is meant for snails.")
 
 /obj/item/reagent_containers/blood/podperson
-	blood_type = "H2O"
+	blood_type = BLOOD_TYPE_H2O
 	unique_blood = /datum/reagent/water
 
 /obj/item/reagent_containers/blood/podperson/examine()
@@ -90,7 +90,7 @@
 
 // for slimepeople
 /obj/item/reagent_containers/blood/toxin
-	blood_type = "TOX"
+	blood_type = BLOOD_TYPE_TOX
 	unique_blood = /datum/reagent/toxin/slimejelly
 
 /obj/item/reagent_containers/blood/toxin/examine()
@@ -98,7 +98,7 @@
 	. += span_notice("There is a toxin warning on the label. This is for slimepeople.")
 
 /obj/item/reagent_containers/blood/universal
-	blood_type = "U"
+	blood_type = BLOOD_TYPE_UNIVERSAL
 
 /obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, params)
 	if (IS_WRITING_UTENSIL(tool))

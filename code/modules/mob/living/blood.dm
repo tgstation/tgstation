@@ -400,7 +400,7 @@
 	var/obj/effect/decal/cleanable/xenoblood/xeno_blood_splatter = locate() in splatter_turf.contents
 	if(!xeno_blood_splatter)
 		xeno_blood_splatter = new(splatter_turf)
-	xeno_blood_splatter.add_blood_DNA(list("UNKNOWN DNA" = "X*"))
+	xeno_blood_splatter.add_blood_DNA(list("UNKNOWN DNA" = BLOOD_TYPE_XENO))
 
 /mob/living/silicon/robot/add_splatter_floor(turf/splatter_turf, small_drip)
 	if(!splatter_turf)

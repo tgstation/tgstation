@@ -10,5 +10,5 @@
 		return
 
 	var/mob/living/carbon/carbon_target = target
-	carbon_target.dna.blood_type = get_blood_type_by_name("C")
+	carbon_target.dna.blood_type = get_blood_type_by_name(BLOOD_TYPE_CLOWN)
 	SEND_SOUND(carbon_target, 'sound/items/bikehorn.ogg')

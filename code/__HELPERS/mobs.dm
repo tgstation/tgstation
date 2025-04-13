@@ -9,14 +9,14 @@
 /proc/random_human_blood_type()
 	return get_blood_type_by_name(pick_weight(
 		list(
-			"O-" = 4,
-			"O+" = 36,
-			"A-" = 3,
-			"A+" = 28,
-			"B-" = 1,
-			"B+" = 20,
-			"AB-" = 1,
-			"AB+" = 5,
+			BLOOD_TYPE_O_MINUS = 4,
+			BLOOD_TYPE_O_PLUS = 36,
+			BLOOD_TYPE_A_MINUS = 3,
+			BLOOD_TYPE_A_PLUS = 28,
+			BLOOD_TYPE_B_MINUS= 1,
+			BLOOD_TYPE_B_PLUS = 20,
+			BLOOD_TYPE_AB_MINUS = 1,
+			BLOOD_TYPE_AB_PLUS = 5,
 		)))
 
 /proc/random_eye_color()

@@ -43,7 +43,7 @@
 		spawned.apply_pref_name(/datum/preference/name/clown, player_client)
 		if(check_holidays(APRIL_FOOLS)) // Clown blood is real
 			var/mob/living/carbon/human/human_clown = spawned
-			human_clown.dna.blood_type = get_blood_type_by_name("C")
+			human_clown.dna.blood_type = get_blood_type_by_name(BLOOD_TYPE_CLOWN)
 
 	return ..()
 
