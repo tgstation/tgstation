@@ -76,7 +76,7 @@
 	lathe_time_factor = 10 SECONDS
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/techweb_node/parts_bluespace
+/datum/techweb_node/parts_noneuclid
 	id = TECHWEB_NODE_PARTS_NONEUCLID
 	display_name = "Noneuclid Parts"
 	description = "By reverse engineering alien technology, we were able to improve the bluespace parts, which undoubtedly opens up new (as yet unknown to us) frontiers of scientific discovery."
