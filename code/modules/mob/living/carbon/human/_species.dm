@@ -772,7 +772,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			affected.reagents.del_reagent(chem.type)
 			return COMSIG_MOB_STOP_REAGENT_CHECK
 		if(chem.type == blood_type?.restoration_chem && affected.blood_volume < BLOOD_VOLUME_NORMAL)
-			affected.blood_volume += 0.25 * seconds_per_tick
+			affected.blood_volume += BLOOD_REGEN_FACTOR * seconds_per_tick
 			affected.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
 			return COMSIG_MOB_STOP_REAGENT_CHECK
 	if(!chem.overdosed && chem.overdose_threshold && chem.volume >= chem.overdose_threshold && !HAS_TRAIT(affected, TRAIT_OVERDOSEIMMUNE))

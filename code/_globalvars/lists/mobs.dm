@@ -113,9 +113,10 @@ GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 		lang_list[initial(lang_type.name)] = lang_type
 	return lang_list
 
-// A list of all the possible blood types
+// A list of all the possible blood types, keyed by name
 GLOBAL_LIST_INIT(blood_types, init_blood_types())
 
+/// Initializes the list of blood type singletons
 /proc/init_blood_types()
 	. = list()
 	for(var/path in subtypesof(/datum/blood_type))
