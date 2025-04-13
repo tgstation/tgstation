@@ -14,6 +14,11 @@
 	/// Whether the hallucinations we give are uncapped, ie all the wacky ones
 	var/uncapped = FALSE
 
+/datum/brain_trauma/mild/hallucinations/can_gain(mob/living/carbon/potential_owner)
+	if(potential_owner.is_blind_from(QUIRK_TRAIT))
+		return FALSE
+	return ..()
+
 /datum/brain_trauma/mild/hallucinations/on_life(seconds_per_tick, times_fired)
 	if(owner.stat >= UNCONSCIOUS)
 		return
