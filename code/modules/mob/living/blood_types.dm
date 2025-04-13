@@ -1,5 +1,5 @@
 /datum/blood_type
-	/// Displayed name of the blood type.
+	/// Actual name of the blood type.
 	var/name = "?"
 	/// Displayed name of the blood type.
 	var/display_name = "?"
