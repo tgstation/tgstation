@@ -232,8 +232,6 @@
 // Similar to the random reagents bloodtype, this one creates a 'but evil' bloodtype
 /datum/blood_type/evil
 	root_abstract_type = /datum/blood_type/evil
-	// The bloodtype this is piggybacking off of
-	var/real_blood_type
 
 /datum/blood_type/evil/New(datum/blood_type/real_blood_type, list/real_compatible_types)
 	. = ..()
