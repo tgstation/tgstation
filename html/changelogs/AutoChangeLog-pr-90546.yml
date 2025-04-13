@@ -1,7 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Metalgen foam/smoke no longer cause an absurd amount of runtimes"
-  - bugfix: "Foam and smoke no longer affect abstract objects like landmarks"
-  - admin: "Metalgen imprinting is now logged"
-  - admin: "Improved logging for foam and smoke, and plasma metalgenned objects"

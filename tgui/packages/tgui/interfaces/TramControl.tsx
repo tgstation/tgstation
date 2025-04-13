@@ -174,10 +174,10 @@ const Destination = (props) => {
           tooltip={COLOR2BLURB[getDestColor(dest)]}
           onClick={() => setTransitIndex(destinations.indexOf(dest))}
         >
-          <Icon ml={-1.75} fontSize="59px" name="circle-o" />
+          <Icon ml={-0.75} fontSize="59px" name="circle-o" />
         </Button>
         {destinations.length - 1 !== destinations.indexOf(dest) ? (
-          <Section title=" " mt={-7.3} ml={10} mr={-6.1} />
+          <Section title=" " mt={-7.5} ml={10} mr={-6} />
         ) : (
           <Box mt={-0.75} />
         )}

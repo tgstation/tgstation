@@ -333,7 +333,7 @@
 		colossus = firer
 		colossus.say("Perish.", spans = list("colossus", "yell"))
 
-	SLEEP_CHECK_DEATH(0.5 SECONDS, firer) //gives dumbasses in melee range a slim chance to retreat
+	SLEEP_CHECK_DEATH(1.5 SECONDS, firer) //gives dumbasses in melee range a slim chance to retreat
 	var/finale_counter = 10
 	for(var/i in 1 to 20)
 		if(finale_counter > 4 && colossus)

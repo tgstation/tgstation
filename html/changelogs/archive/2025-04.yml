@@ -364,3 +364,19 @@
       for all your wrestling needs - but please do not let this pull request distract
       you from the fact that in 1998, The Undertaker threw Mankind off Hell In A Cell,
       and plummeted 16 ft through an announcer's table.
+2025-04-13:
+  FlufflesTheDog:
+  - bugfix: The ghost of paintings past has been dispelled. Say goodbye.
+  Melbert:
+  - rscadd: '"Hypermetabolic Blood" Mutation'
+  - rscadd: '"Rock Eater" Mutation'
+  - rscadd: '"Rock Absorber" Combination Mutation'
+  - rscadd: '"Farsight" Mutation'
+  - rscadd: '"Inexorable" Mutation'
+  SmArtKar:
+  - bugfix: Metalgen foam/smoke no longer cause an absurd amount of runtimes
+  - bugfix: Foam and smoke no longer affect abstract objects like landmarks
+  - admin: Metalgen imprinting is now logged
+  - admin: Improved logging for foam and smoke, and plasma metalgenned objects
+  vinylspiders:
+  - bugfix: removed the gap from the quirks page menu items
