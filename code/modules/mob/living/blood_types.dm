@@ -42,11 +42,12 @@
 
 /// Returns blood color or color matrix
 /// Useful when you want to have a blood color with values out of normal hex bounds for that acidic look
-/datum/blood_type/proc/get_color()
+/// set dynamic to TRUE to redo the matrix each time (e.g. for clown blood dynamically shifting each time)
+/datum/blood_type/proc/get_color(dynamic = FALSE)
 	if(isnull(lightness_mult))
 		return color
 
-	if(!isnull(blood_color_matrix))
+	if(!isnull(blood_color_matrix) && !dynamic)
 		return blood_color_matrix
 
 	blood_color_matrix = color_to_full_rgba_matrix(color)
@@ -181,6 +182,19 @@
 /datum/blood_type/clown
 	name = "C"
 	reagent_type = /datum/reagent/colorful_reagent
+	lightness_mult = 1.255
+	/// The cached list of random colors to pick from
+	var/list/random_color_list
+
+/datum/blood_type/clown/get_color(dynamic = TRUE)
+	// Set up the random color list if we haven't done that yet. Only need to do this once.
+	if(isnull(random_color_list))
+		var/datum/reagent/colorful_reagent/clown_blood = new
+		random_color_list = clown_blood.random_color_list.Copy()
+		qdel(clown_blood)
+
+	color = pick(random_color_list)
+	return ..()
 
 /// Slimeperson blood, aka 'toxin' blood type
 /datum/blood_type/slime
