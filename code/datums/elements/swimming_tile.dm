@@ -40,7 +40,7 @@
 	SIGNAL_HANDLER
 	if (floater.buckled) // We're going to generously assume that being buckled to any mob or vehicle leaves you above water
 		if (isvehicle(floater.buckled) || ismob(floater.buckled))
-		floater.apply_damage(20, STAMINA)
+			floater.apply_damage(20, STAMINA)
 	floater.apply_status_effect(/datum/status_effect/swimming) // Apply the status anyway for when they stop riding
 
 ///Added by the swimming_tile element. Drains stamina over time until the owner stops being immersed. Starts drowning them if they are prone or small.
