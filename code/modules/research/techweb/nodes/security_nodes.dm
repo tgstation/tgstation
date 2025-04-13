@@ -57,6 +57,7 @@
 		"ballistic_shield",
 		"handcuffs_s",
 		"bola_energy",
+		"case_portable_recharger", // MASSMETA EDIT: Add case portable recharger
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)

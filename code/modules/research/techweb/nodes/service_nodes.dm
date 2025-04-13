@@ -36,6 +36,7 @@
 		"water_balloon",
 		"ticket_machine",
 		"radio_entertainment",
+		"manual_cell_recharger", // MASSMETA EDIT: Add manual cell recharger
 	)
 
 /datum/techweb_node/sanitation
