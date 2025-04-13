@@ -682,8 +682,9 @@
 
 /obj/item/clothing/suit/costume/bear_suit
 	name = "bear suit"
-	desc = "A suit of 100% bear fur. Would probably look badass on you, if there wasn't a HUGE zipper on the front."
+	desc = "A suit of 100% bear fur. Would probably be a lot more convincing without that HUGE zipper on the front."
 	icon_state = "bear"
-	inhand_icon_state = null
+	worn_icon_state = "bear"
+	inhand_icon_state = "bear"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT

@@ -329,6 +329,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	icon_state = "bear_hide" //change
 	singular_name = "bear pelt"
 	merge_type = /obj/item/stack/sheet/animalhide/bear
+	novariants = FALSE
 
 GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
 	new/datum/stack_recipe("bear costume", /obj/item/clothing/suit/costume/bear_suit, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
