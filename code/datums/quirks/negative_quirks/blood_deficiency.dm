@@ -14,8 +14,9 @@
 /datum/quirk/blooddeficiency/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(lose_blood))
 
-/datum/quirk/blooddeficiency/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
+	if(!istype(human_holder))
+		return
 	update_mail(new_species = human_holder.dna.species)
 	RegisterSignal(quirk_holder, COMSIG_SPECIES_GAIN, PROC_REF(update_mail))
 
