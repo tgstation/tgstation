@@ -14058,7 +14058,7 @@
 /area/station/command/meeting_room)
 "eYI" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
-/obj/item/clothing/suit/jacket/det_suit,
+/obj/item/clothing/suit/toggle/jacket/det_trench,
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/head/fedora/det_hat/minor,
 /obj/effect/decal/cleanable/dirt/dust,
