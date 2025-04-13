@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "The scrubber in the Wawastation Chapel Office has been fixed."
