@@ -38,8 +38,10 @@
 /// When we've validated that someone is actually in the water start drowning them
 /datum/element/swimming_tile/proc/dip_in(mob/living/floater)
 	SIGNAL_HANDLER
-	floater.apply_damage(20, STAMINA)
-	floater.apply_status_effect(/datum/status_effect/swimming)
+	if (owner.buckled) // We're going to generously assume that being buckled to any mob or vehicle leaves you above water
+		if (isvehicle(owner.buckled) || ismob(owner.buckled))
+		floater.apply_damage(20, STAMINA)
+	floater.apply_status_effect(/datum/status_effect/swimming) // Apply the status anyway for when they stop riding
 
 ///Added by the swimming_tile element. Drains stamina over time until the owner stops being immersed. Starts drowning them if they are prone or small.
 /datum/status_effect/swimming
