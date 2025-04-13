@@ -519,7 +519,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 		return
 
 	if(!query_get_token.NextRow())
-		to_chat(src, span_danger("Unknown error #2."))
+		to_chat(src, span_danger("Could not locate your token in the database. (Error #2)"))
 		qdel(query_get_token)
 		return
 
