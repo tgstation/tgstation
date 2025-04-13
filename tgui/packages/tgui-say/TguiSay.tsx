@@ -1,13 +1,6 @@
 import './styles/main.scss';
 
-import {
-  FormEvent,
-  KeyboardEvent,
-  MouseEvent,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { dragStartHandler } from 'tgui/drag';
 import { isEscape, KEY } from 'tgui-core/keys';
 import { BooleanLike, classes } from 'tgui-core/react';
@@ -48,9 +41,9 @@ export function TguiSay() {
   const [currentPrefix, setCurrentPrefix] = useState<
     keyof typeof RADIO_PREFIXES | null
   >(null);
-  const [size, setSize] = useState(WindowSize.Small);
-  const [maxLength, setMaxLength] = useState(1024);
   const [lightMode, setLightMode] = useState(false);
+  const [maxLength, setMaxLength] = useState(1024);
+  const [size, setSize] = useState(WindowSize.Small);
   const [value, setValue] = useState('');
 
   const position = useRef([window.screenX, window.screenY]);
@@ -100,7 +93,7 @@ export function TguiSay() {
     }
   }
 
-  function handleButtonClick(event: MouseEvent<HTMLButtonElement>): void {
+  function handleButtonClick(event: React.MouseEvent<HTMLButtonElement>): void {
     isDragging.current = true;
 
     setTimeout(() => {
@@ -172,7 +165,7 @@ export function TguiSay() {
     messages.current.channelIncrementMsg(iterator.isVisible());
   }
 
-  function handleInput(event: FormEvent<HTMLTextAreaElement>): void {
+  function handleInput(event: React.FormEvent<HTMLTextAreaElement>): void {
     const iterator = channelIterator.current;
     let newValue = event.currentTarget.value;
 
@@ -197,7 +190,9 @@ export function TguiSay() {
     setValue(newValue);
   }
 
-  function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>): void {
+  function handleKeyDown(
+    event: React.KeyboardEvent<HTMLTextAreaElement>,
+  ): void {
     if (event.getModifierState('AltGraph')) return;
 
     switch (event.key) {
@@ -230,20 +225,14 @@ export function TguiSay() {
   }
 
   function handleOpen(data: ByondOpen): void {
-    const { channel } = data;
-    const iterator = channelIterator.current;
-    // Catches the case where the modal is already open
-    if (iterator.isSay()) {
-      iterator.set(channel);
-    }
+    channelIterator.current.set(data.channel);
 
-    setButtonContent(iterator.current());
-    windowOpen(iterator.current(), scale.current);
+    setCurrentPrefix(null);
+    setButtonContent(channelIterator.current.current());
 
-    const input = innerRef.current;
-    setTimeout(() => {
-      input?.focus();
-    }, 1);
+    windowOpen(channelIterator.current.current(), scale.current);
+
+    innerRef.current?.focus();
   }
 
   function handleProps(data: ByondProps): void {

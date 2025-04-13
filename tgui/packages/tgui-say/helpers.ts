@@ -7,9 +7,6 @@ import { RADIO_PREFIXES, WindowSize } from './constants';
  */
 export function windowOpen(channel: Channel, scale: boolean): void {
   setWindowVisibility(true, scale);
-  Byond.winset('tgui_say.browser', {
-    focus: true,
-  });
   Byond.sendMessage('open', { channel });
 }
 
@@ -46,7 +43,7 @@ function setWindowVisibility(visible: boolean, scale: boolean): void {
   const sizeStr = `${WindowSize.Width * pixelRatio}x${WindowSize.Small * pixelRatio}`;
 
   Byond.winset(null, {
-    'tgui_say.is-visible': visible,
+    'tgui_say.is-visible': visible ? '1' : '0',
     'tgui_say.size': sizeStr,
     'tgui_say.browser.size': sizeStr,
   });
