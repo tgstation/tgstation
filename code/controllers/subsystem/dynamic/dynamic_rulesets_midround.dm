@@ -848,7 +848,7 @@
 			|| candidate.stat == DEAD \
 			|| !(ROLE_OBSESSED in candidate.client?.prefs?.be_special) \
 			|| !candidate.mind.assigned_role \
-			|| candidate.is_blind()
+			|| candidate.is_blind_from(QUIRK_TRAIT)
 		)
 			candidates -= candidate
 

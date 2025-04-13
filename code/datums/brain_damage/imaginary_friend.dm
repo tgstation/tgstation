@@ -15,7 +15,7 @@
 /datum/brain_trauma/special/imaginary_friend/can_gain(mob/living/carbon/potential_owner)
 	if(potential_owner.stat == DEAD || !potential_owner.client)
 		return FALSE
-	if(potential_owner.is_blind())
+	if(potential_owner.is_blind_from(QUIRK_TRAIT))
 		return FALSE
 	return ..()
 
