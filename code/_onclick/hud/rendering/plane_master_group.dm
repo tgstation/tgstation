@@ -195,7 +195,7 @@
 		stack_trace("Key [key] is already in use by a plane master group on the passed in hud, belonging to [viewing_hud.mymob].")
 		return
 
-	relay_loc = "1,1"
+	relay_loc = "SCREEN_SOUTHWEST"
 	rebuild_plane_masters()
 	set_hud(viewing_hud)
 	show_hud()
