@@ -5,12 +5,12 @@
 	var/desc
 	/// Shown color of the blood type.
 	var/color = BLOOD_COLOR_RED
-	/// Additional lightness multiplier for the blood color
+	/// Additional lightness multiplier for the blood color, useful for when the default lightness from the greyscaling doesn't cut it and you want something more vibrant.
 	/// When set, color will be transformed into a matrix with coefficients multiplied by this value
 	var/lightness_mult = null
-	/// The cached color matrix if we end up using that
+	/// The cached color matrix for blood with a lightness_mult. We only need to calculate this once since blood types are singletons
 	var/list/blood_color_matrix
-	/// Blood types that are safe to use with people that have this blood type.
+	/// Blood types that are safe to use with people that have this blood type (for blood transfusions)
 	var/compatible_types = list()
 	/// What reagent is represented by this blood type?
 	var/datum/reagent/reagent_type = /datum/reagent/blood
@@ -18,6 +18,8 @@
 	var/datum/reagent/restoration_chem = /datum/reagent/iron
 	/// Whether or not this blood type should create blood trails, blood sprays, etc
 	var/no_bleed_overlays
+	/// If this is an abstract blood type, exclude it from being initialized
+	var/abstract
 
 /datum/blood_type/New()
 	. = ..()
@@ -57,63 +59,68 @@
 
 	return blood_color_matrix
 
-/datum/blood_type/a_minus
+// human blood type, for organizational purposes mainly
+/datum/blood_type/human
+	abstract = TRUE
+	desc = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
+
+/datum/blood_type/human/a_minus
 	name = "A-"
-	compatible_types = list(/datum/blood_type/a_minus, /datum/blood_type/o_minus)
+	compatible_types = list(/datum/blood_type/human/a_minus, /datum/blood_type/human/o_minus)
 
-/datum/blood_type/a_plus
+/datum/blood_type/human/a_plus
 	name = "A+"
-	compatible_types = list(/datum/blood_type/a_minus, /datum/blood_type/a_plus, /datum/blood_type/o_minus, /datum/blood_type/o_plus)
+	compatible_types = list(/datum/blood_type/human/a_minus, /datum/blood_type/human/a_plus, /datum/blood_type/human/o_minus, /datum/blood_type/human/o_plus)
 
-/datum/blood_type/b_minus
+/datum/blood_type/human/b_minus
 	name = "B-"
 	compatible_types = list(
-		/datum/blood_type/b_minus,
-		/datum/blood_type/o_minus,
+		/datum/blood_type/human/b_minus,
+		/datum/blood_type/human/o_minus,
 	)
 
-/datum/blood_type/b_plus
+/datum/blood_type/human/b_plus
 	name = "B+"
 	compatible_types = list(
-		/datum/blood_type/b_minus,
-		/datum/blood_type/b_plus,
-		/datum/blood_type/o_minus,
-		/datum/blood_type/o_plus,
+		/datum/blood_type/human/b_minus,
+		/datum/blood_type/human/b_plus,
+		/datum/blood_type/human/o_minus,
+		/datum/blood_type/human/o_plus,
 	)
 
-/datum/blood_type/ab_minus
+/datum/blood_type/human/ab_minus
 	name = "AB-"
 	compatible_types = list(
-		/datum/blood_type/a_minus,
-		/datum/blood_type/b_minus,
-		/datum/blood_type/ab_minus,
-		/datum/blood_type/o_minus,
+		/datum/blood_type/human/a_minus,
+		/datum/blood_type/human/b_minus,
+		/datum/blood_type/human/ab_minus,
+		/datum/blood_type/human/o_minus,
 	)
 
-/datum/blood_type/ab_plus
+/datum/blood_type/human/ab_plus
 	name = "AB+"
 	compatible_types = list(
-		/datum/blood_type/a_minus,
-		/datum/blood_type/a_plus,
-		/datum/blood_type/b_minus,
-		/datum/blood_type/b_plus,
-		/datum/blood_type/o_minus,
-		/datum/blood_type/o_plus,
-		/datum/blood_type/ab_minus,
-		/datum/blood_type/ab_plus,
+		/datum/blood_type/human/a_minus,
+		/datum/blood_type/human/a_plus,
+		/datum/blood_type/human/b_minus,
+		/datum/blood_type/human/b_plus,
+		/datum/blood_type/human/o_minus,
+		/datum/blood_type/human/o_plus,
+		/datum/blood_type/human/ab_minus,
+		/datum/blood_type/human/ab_plus,
 	)
 
-/datum/blood_type/o_minus
+/datum/blood_type/human/o_minus
 	name = "O-"
 	compatible_types = list(
-		/datum/blood_type/o_minus,
+		/datum/blood_type/human/o_minus,
 	)
 
-/datum/blood_type/o_plus
+/datum/blood_type/human/o_plus
 	name = "O+"
 	compatible_types = list(
-		/datum/blood_type/o_minus,
-		/datum/blood_type/o_plus,
+		/datum/blood_type/human/o_minus,
+		/datum/blood_type/human/o_plus,
 	)
 
 /datum/blood_type/animal
@@ -137,7 +144,7 @@
 
 /datum/blood_type/oil
 	name = "Oil"
-	color = "#1f1a00"
+	color = BLOOD_COLOR_OIL
 	reagent_type = /datum/reagent/fuel/oil
 
 /datum/blood_type/vampire
@@ -188,6 +195,7 @@
 
 /// An abstract-ish blood type used particularly for species with blood set to random reagents, such as podpeople
 /datum/blood_type/random_chemical
+	abstract = TRUE
 
 /datum/blood_type/random_chemical/New(datum/reagent/reagent_type)
 	. = ..()

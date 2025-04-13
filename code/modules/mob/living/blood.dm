@@ -253,7 +253,7 @@
 							continue
 						carbon_receiver.ForceContractDisease(blood_disease)
 				var/datum/blood_type/blood_type = blood_data["blood_type"]
-				if(!ignore_incompatibility && !(blood_type.type in carbon_receiver.dna.blood_type.compatible_types))
+				if(!ignore_incompatibility && !(blood_type.type_key() in carbon_receiver.dna.blood_type.compatible_types))
 					carbon_receiver.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return TRUE
 
@@ -334,7 +334,7 @@
 		var/last_added_bloodtype_key = blood_DNA[length(blood_DNA)]
 		blood_type = blood_DNA[last_added_bloodtype_key]
 	if(!istype(blood_type))
-		blood_type = get_blood_type_by_name(blood_type) || random_blood_type()
+		blood_type = get_blood_type_by_name(blood_type) || random_human_blood_type()
 	return blood_type.get_color()
 
 /**

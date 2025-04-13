@@ -42,7 +42,7 @@
 		dna_to_add = temp_mob.get_blood_dna_list()
 		qdel(temp_mob)
 	else
-		dna_to_add = list("Non-human DNA" = random_blood_type()) //else, generate a random bloodtype for it.
+		dna_to_add = list("Non-human DNA" = random_human_blood_type()) //else, generate a random bloodtype for it.
 
 
 	for(var/i in 1 to gibtypes.len)
@@ -94,7 +94,7 @@
 			GLOB.alldirs,
 			list(),
 		)
-	return ..(blood_dna_info = list("Human DNA" = random_blood_type()))
+	return ..(blood_dna_info = list("Human DNA" = random_human_blood_type()))
 
 
 /obj/effect/gibspawner/human/bodypartless //only the gibs that don't look like actual full bodyparts (except torso).

@@ -85,7 +85,7 @@
 	icon_state = "floor1-old"
 
 /obj/effect/decal/cleanable/blood/old/Initialize(mapload, list/datum/disease/diseases)
-	add_blood_DNA(list("Non-human DNA" = random_blood_type())) // Needs to happen before ..()
+	add_blood_DNA(list("Non-human DNA" = random_human_blood_type())) // Needs to happen before ..()
 	return ..()
 
 /obj/effect/decal/cleanable/blood/splatter
@@ -253,7 +253,7 @@
 /obj/effect/decal/cleanable/blood/gibs/old/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
 	setDir(pick(1,2,4,8))
-	add_blood_DNA(list("Non-human DNA" = random_blood_type()))
+	add_blood_DNA(list("Non-human DNA" = random_human_blood_type()))
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,4), 10)
 	dry()
 

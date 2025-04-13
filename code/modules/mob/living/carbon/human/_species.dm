@@ -387,7 +387,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
 	//(why the fuck is blood type not tied to a fucking DNA block?)
 	else if(old_species.exotic_bloodtype && !exotic_bloodtype)
-		human_who_gained_species.dna.blood_type = random_blood_type()
+		human_who_gained_species.dna.blood_type = random_human_blood_type()
 
 	// updates the cached organ blood types in case our blood type changed
 	var/list/blood_dna_info = human_who_gained_species.get_blood_dna_list()

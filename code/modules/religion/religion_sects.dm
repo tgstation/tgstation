@@ -385,7 +385,7 @@
 			var/datum/blood_type/target_blood_data = target.dna.blood_type
 			var/datum/blood_type/chaplain_blood_data = chaplain.dna.blood_type
 			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
-			if(transferred_blood_amount && (chaplain_blood_data in target_blood_data.compatible_types))
+			if(transferred_blood_amount && (chaplain_blood_data.type_key() in target_blood_data.compatible_types))
 				transferred = TRUE
 				chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
 		if(target.blood_volume > BLOOD_VOLUME_EXCESS)
