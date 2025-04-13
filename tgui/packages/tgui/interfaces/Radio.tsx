@@ -5,15 +5,32 @@ import {
   LabeledList,
   NumberInput,
   Section,
+  Slider,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
+type RadioData = {
+  freqlock: number;
+  frequency: number;
+  minFrequency: number;
+  maxFrequency: number;
+  listening: BooleanLike;
+  broadcasting: BooleanLike;
+  command: BooleanLike;
+  useCommand: BooleanLike;
+  subspace: BooleanLike;
+  subspaceSwitchable: BooleanLike;
+  channels: string[];
+  radio_noises: number;
+};
+
 export const Radio = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<RadioData>();
   const {
     freqlock,
     frequency,
@@ -25,6 +42,7 @@ export const Radio = (props) => {
     useCommand,
     subspace,
     subspaceSwitchable,
+    radio_noises,
   } = data;
   const tunedChannel = RADIO_CHANNELS.find(
     (channel) => channel.freq === frequency,
@@ -34,7 +52,7 @@ export const Radio = (props) => {
     status: !!value,
   }));
   // Calculate window height
-  let height = 106;
+  let height = 133;
   if (subspace) {
     if (channels.length > 0) {
       height += channels.length * 21 + 6;
@@ -54,7 +72,7 @@ export const Radio = (props) => {
                 </Box>
               )) || (
                 <NumberInput
-                  animate
+                  animated
                   unit="kHz"
                   step={0.2}
                   stepPixelSize={10}
@@ -108,6 +126,20 @@ export const Radio = (props) => {
                   onClick={() => act('subspace')}
                 />
               )}
+            </LabeledList.Item>
+            <LabeledList.Item label="Radio Noise Volume">
+              <Slider
+                onChange={(e, value) => {
+                  act('set_radio_volume', {
+                    volume: value,
+                  });
+                }}
+                minValue={0}
+                maxValue={100}
+                step={1}
+                value={radio_noises}
+                stepPixelSize={10}
+              />
             </LabeledList.Item>
             {!!subspace && (
               <LabeledList.Item label="Channels">
