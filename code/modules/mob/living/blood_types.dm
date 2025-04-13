@@ -18,8 +18,8 @@
 	var/datum/reagent/restoration_chem = /datum/reagent/iron
 	/// Whether or not this blood type should create blood trails, blood sprays, etc
 	var/no_bleed_overlays
-	/// If this is an abstract blood type, exclude it from being initialized
-	var/abstract
+	/// Exclude abstract root types from being initialized by defining them here
+	var/root_abstract_type
 
 /datum/blood_type/New()
 	. = ..()
@@ -63,17 +63,15 @@
 // human blood type, for organizational purposes mainly
 /datum/blood_type/human
 	desc = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
-	abstract = TRUE
+	root_abstract_type = /datum/blood_type/human
 
 /datum/blood_type/human/a_minus
 	name = "A-"
 	compatible_types = list(/datum/blood_type/human/a_minus, /datum/blood_type/human/o_minus)
-	abstract = null
 
 /datum/blood_type/human/a_plus
 	name = "A+"
 	compatible_types = list(/datum/blood_type/human/a_minus, /datum/blood_type/human/a_plus, /datum/blood_type/human/o_minus, /datum/blood_type/human/o_plus)
-	abstract = null
 
 /datum/blood_type/human/b_minus
 	name = "B-"
@@ -81,7 +79,6 @@
 		/datum/blood_type/human/b_minus,
 		/datum/blood_type/human/o_minus,
 	)
-	abstract = null
 
 /datum/blood_type/human/b_plus
 	name = "B+"
@@ -91,7 +88,6 @@
 		/datum/blood_type/human/o_minus,
 		/datum/blood_type/human/o_plus,
 	)
-	abstract = null
 
 /datum/blood_type/human/ab_minus
 	name = "AB-"
@@ -101,7 +97,6 @@
 		/datum/blood_type/human/ab_minus,
 		/datum/blood_type/human/o_minus,
 	)
-	abstract = null
 
 /datum/blood_type/human/ab_plus
 	name = "AB+"
@@ -115,14 +110,12 @@
 		/datum/blood_type/human/ab_minus,
 		/datum/blood_type/human/ab_plus,
 	)
-	abstract = null
 
 /datum/blood_type/human/o_minus
 	name = "O-"
 	compatible_types = list(
 		/datum/blood_type/human/o_minus,
 	)
-	abstract = null
 
 /datum/blood_type/human/o_plus
 	name = "O+"
@@ -130,7 +123,6 @@
 		/datum/blood_type/human/o_minus,
 		/datum/blood_type/human/o_plus,
 	)
-	abstract = null
 
 /datum/blood_type/animal
 	name = "Y-"
@@ -218,7 +210,7 @@
 
 /// An abstract-ish blood type used particularly for species with blood set to random reagents, such as podpeople
 /datum/blood_type/random_chemical
-	abstract = TRUE
+	root_abstract_type = /datum/blood_type/random_chemical
 
 /datum/blood_type/random_chemical/New(datum/reagent/reagent_type)
 	. = ..()
