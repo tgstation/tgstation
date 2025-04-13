@@ -147,6 +147,7 @@
 /datum/blood_type/ethereal
 	name = "LE"
 	color = /datum/reagent/consumable/liquidelectricity::color
+	lightness_mult = 1.255 // for more vibrant gatorade coloring
 	compatible_types = list(
 		/datum/blood_type/ethereal,
 	)
