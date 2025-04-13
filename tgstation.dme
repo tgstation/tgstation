@@ -623,6 +623,7 @@
 #include "code\_onclick\hud\screen_object_holder.dm"
 #include "code\_onclick\hud\screen_objects.dm"
 #include "code\_onclick\hud\screentip.dm"
+#include "code\_onclick\hud\soulscythe.dm"
 #include "code\_onclick\hud\parallax\parallax.dm"
 #include "code\_onclick\hud\parallax\random_layer.dm"
 #include "code\_onclick\hud\rendering\plane_master_controller.dm"
