@@ -76,7 +76,6 @@
 		/obj/item/gun/syringe/syndicate,
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
-		/obj/item/healthanalyzer/advanced,
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset,
 	)
 
