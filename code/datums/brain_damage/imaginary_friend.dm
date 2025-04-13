@@ -12,12 +12,15 @@
 	var/mob/eye/imaginary_friend/friend
 	var/friend_initialized = FALSE
 
+/datum/brain_trauma/special/imaginary_friend/can_gain(mob/living/carbon/potential_owner)
+	if(potential_owner.stat == DEAD || !potential_owner.client)
+		return FALSE
+	if(potential_owner.is_blind())
+		return FALSE
+	return ..()
+
 /datum/brain_trauma/special/imaginary_friend/on_gain()
-	var/mob/living/M = owner
-	if(M.stat == DEAD || !M.client)
-		qdel(src)
-		return
-	..()
+	. = ..()
 	make_friend()
 	get_ghost()
 

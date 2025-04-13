@@ -1,3 +1,5 @@
+GLOBAL_LIST_INIT(trauma_types, init_subtypes_w_path_keys(/datum/brain_trauma, list()))
+
 //Brain Traumas are the new actual brain damage. Brain damage itself acts as a way to acquire traumas: every time brain damage is dealt, there's a chance of receiving a trauma.
 //This chance gets higher the higher the mob's brainloss is. Removing traumas is a separate thing from removing brain damage: you can get restored to full brain operativity,
 // but keep the quirks, until repaired by neurine, surgery, lobotomy or magic; depending on the resilience
@@ -26,6 +28,11 @@
 		on_lose()
 		owner = null
 	return ..()
+
+///Proc returning TRUE/FALSE on whether or not this brain trauma can roll on this mob,
+///called only on traumas with 'random_gain'.
+/datum/brain_trauma/proc/can_gain(mob/living/carbon/potential_owner)
+	return TRUE
 
 //Called on life ticks
 /datum/brain_trauma/proc/on_life(seconds_per_tick, times_fired)

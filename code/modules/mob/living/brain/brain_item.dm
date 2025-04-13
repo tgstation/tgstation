@@ -512,6 +512,9 @@
 		trauma = trauma.type
 	if(!initial(trauma.can_gain))
 		return FALSE
+	var/datum/brain_trauma/trauma_type = GLOB.trauma_types[trauma]
+	if(!trauma_type.can_gain(owner))
+		return FALSE
 	if(!resilience)
 		resilience = initial(trauma.resilience)
 
