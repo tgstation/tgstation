@@ -70,15 +70,16 @@
 
 /// Deep water drains stamina and starts drowning you
 /turf/open/water/deep
+	planetary_atmos = FALSE
 	desc = "Don't forget your life jacket."
 	slowdown = 5
-	fishing_datum = /datum/fish_source/ocean
 	immerse_overlay = "immerse_deep"
 	icon = 'icons/turf/beach.dmi'
 	icon_state = "deepwater"
 	base_icon_state = "deepwater"
 	baseturfs = /turf/open/water/deep
 	immerse_overlay_color = "#57707c"
+	fishing_datum = /datum/fish_source/ocean
 
 /turf/open/water/deep/make_immersed()
 	. = ..()
