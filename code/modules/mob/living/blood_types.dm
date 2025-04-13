@@ -33,7 +33,7 @@
 	return ..()
 
 /**
- * Key used to identify this blood type in the global blood_types list
+ * Key used to identify this blood type in compatible_types
  *
  * Allows for more complex or dynamically generated blood types
  */
@@ -61,16 +61,18 @@
 
 // human blood type, for organizational purposes mainly
 /datum/blood_type/human
-	abstract = TRUE
 	desc = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
+	abstract = TRUE
 
 /datum/blood_type/human/a_minus
 	name = "A-"
 	compatible_types = list(/datum/blood_type/human/a_minus, /datum/blood_type/human/o_minus)
+	abstract = null
 
 /datum/blood_type/human/a_plus
 	name = "A+"
 	compatible_types = list(/datum/blood_type/human/a_minus, /datum/blood_type/human/a_plus, /datum/blood_type/human/o_minus, /datum/blood_type/human/o_plus)
+	abstract = null
 
 /datum/blood_type/human/b_minus
 	name = "B-"
@@ -78,6 +80,7 @@
 		/datum/blood_type/human/b_minus,
 		/datum/blood_type/human/o_minus,
 	)
+	abstract = null
 
 /datum/blood_type/human/b_plus
 	name = "B+"
@@ -87,6 +90,7 @@
 		/datum/blood_type/human/o_minus,
 		/datum/blood_type/human/o_plus,
 	)
+	abstract = null
 
 /datum/blood_type/human/ab_minus
 	name = "AB-"
@@ -96,6 +100,7 @@
 		/datum/blood_type/human/ab_minus,
 		/datum/blood_type/human/o_minus,
 	)
+	abstract = null
 
 /datum/blood_type/human/ab_plus
 	name = "AB+"
@@ -109,12 +114,14 @@
 		/datum/blood_type/human/ab_minus,
 		/datum/blood_type/human/ab_plus,
 	)
+	abstract = null
 
 /datum/blood_type/human/o_minus
 	name = "O-"
 	compatible_types = list(
 		/datum/blood_type/human/o_minus,
 	)
+	abstract = null
 
 /datum/blood_type/human/o_plus
 	name = "O+"
@@ -122,6 +129,7 @@
 		/datum/blood_type/human/o_minus,
 		/datum/blood_type/human/o_plus,
 	)
+	abstract = null
 
 /datum/blood_type/animal
 	name = "Y-"
@@ -203,6 +211,7 @@
 	src.color = initial(reagent_type.color)
 	src.reagent_type = reagent_type
 	src.restoration_chem = reagent_type
+	src.abstract = null
 
 /datum/blood_type/random_chemical/type_key()
 	return reagent_type
