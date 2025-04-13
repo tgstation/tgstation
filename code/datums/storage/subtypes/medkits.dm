@@ -28,25 +28,16 @@
 
 		//stacks
 		/obj/item/stack/medical,
-		/obj/item/stack/medical/gauze,
 		/obj/item/stack/sticky_tape,
-		/obj/item/stack/medical/suture/medicated,
-		/obj/item/stack/medical/mesh/advanced,
 
 		//containers
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/spray,
-		/obj/item/reagent_containers/applicator/patch/libital,
-		/obj/item/reagent_containers/applicator/patch/aiuri,
-		/obj/item/reagent_containers/applicator/patch/synthflesh,
-		/obj/item/reagent_containers/hypospray/combat/empty,
-		/obj/item/reagent_containers/medigel/sterilizine,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/blood,
 
@@ -54,15 +45,12 @@
 		/obj/item/storage/box/bandages,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
-		/obj/item/storage/box/bandages,
 		/obj/item/storage/box/evilmeds,
 
 		//clothing
-		/obj/item/clothing/mask/surgical,
 		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/breath/medical,
+		/obj/item/clothing/mask/surgical,
 		/obj/item/clothing/neck/stethoscope,
-		/obj/item/clothing/glasses/hud/health/night/science,
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/mask/muzzle,
 		/obj/item/clothing/glasses,
