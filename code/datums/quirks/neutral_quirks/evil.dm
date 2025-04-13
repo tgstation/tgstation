@@ -21,7 +21,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(!istype(human_holder))
 		return
-	make_blood_evil(new_species = human_holder)
+	make_blood_evil(new_species = human_holder.dna.species)
 
 /datum/quirk/evil/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_SPECIES_GAIN))
