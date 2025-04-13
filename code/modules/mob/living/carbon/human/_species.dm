@@ -381,18 +381,20 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(old_species.type != type)
 		replace_body(human_who_gained_species, src)
 
-	//Assigns exotic blood type if the species has one
-	if(exotic_bloodtype && human_who_gained_species.dna.blood_type != exotic_bloodtype)
-		human_who_gained_species.dna.blood_type = get_blood_type_by_name(exotic_bloodtype)
-	//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
-	//(why the fuck is blood type not tied to a fucking DNA block?)
-	else if(old_species.exotic_bloodtype && !exotic_bloodtype)
-		human_who_gained_species.dna.blood_type = random_human_blood_type()
+	var/datum/blood_type/old_blood_type = human_who_gained_species.dna.blood_type
+	if(!human_who_gained_species.dna.blood_type.species_universal) // Clown blood is forever.
+		//Assigns exotic blood type if the species has one
+		if(exotic_bloodtype && human_who_gained_species.dna.blood_type != exotic_bloodtype)
+			human_who_gained_species.dna.blood_type = get_blood_type_by_name(exotic_bloodtype)
+		//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
+		//(why the fuck is blood type not tied to a fucking DNA block?)
+		else if(old_species.exotic_bloodtype && !exotic_bloodtype)
+			human_who_gained_species.dna.blood_type = random_human_blood_type()
 
-	// updates the cached organ blood types in case our blood type changed
-	var/list/blood_dna_info = human_who_gained_species.get_blood_dna_list()
-	for(var/obj/item/organ/organ in human_who_gained_species.organs)
-		organ.blood_dna_info = blood_dna_info
+		// updates the cached organ blood types in case our blood type changed
+		var/list/blood_dna_info = human_who_gained_species.get_blood_dna_list()
+		for(var/obj/item/organ/organ in human_who_gained_species.organs)
+			organ.blood_dna_info = blood_dna_info
 
 	regenerate_organs(human_who_gained_species, old_species, replace_current = FALSE, visual_only = human_who_gained_species.visual_only_organs)
 	// Update locked slots AFTER all organ and body stuff is handled

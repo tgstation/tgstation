@@ -20,6 +20,8 @@
 	var/no_bleed_overlays
 	/// Exclude abstract root types from being initialized by defining them here
 	var/root_abstract_type
+	/// If this blood type is meant to persist across species changes
+	var/is_species_universal
 
 /datum/blood_type/New()
 	. = ..()
@@ -176,6 +178,7 @@
 	name = BLOOD_TYPE_CLOWN
 	reagent_type = /datum/reagent/colorful_reagent
 	lightness_mult = 1.255
+	is_species_universal = TRUE
 	/// The cached list of random colors to pick from
 	var/list/random_color_list
 
@@ -203,7 +206,7 @@
 	reagent_type = /datum/reagent/water
 	no_bleed_overlays = TRUE
 
-/// Snaiil blood
+/// Snail blood
 /datum/blood_type/snail
 	name = BLOOD_TYPE_SNAIL
 	reagent_type = /datum/reagent/lube
