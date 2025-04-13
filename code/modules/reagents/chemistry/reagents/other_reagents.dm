@@ -244,7 +244,7 @@
 
 /datum/reagent/water/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
-	if(!istype(exposed_turf))
+	if(!istype(exposed_turf) || iswaterturf(exposed_turf))
 		return
 
 	var/cool_temp = cooling_temperature
