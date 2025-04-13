@@ -274,12 +274,12 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(!blob_core)
 		return FALSE
 	var/current_health = round((blob_core.get_integrity() / blob_core.max_integrity) * 100)
-	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
+	var/new_maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
+	hud_used.healths.maptext = new_maptext
 	for(var/mob/living/basic/blob_minion/blobbernaut/blobbernaut in blob_mobs)
-		var/datum/hud/using_hud = blobbernaut.hud_used
-		if(!using_hud?.blobpwrdisplay)
+		if(isnull(blobbernaut.overmind_hud))
 			continue
-		using_hud.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
+		blobbernaut.overmind_hud.maptext = new_maptext
 
 /mob/eye/blob/proc/add_points(points)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)

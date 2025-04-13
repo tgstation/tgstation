@@ -297,10 +297,11 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
-		return
+		return FALSE
 	set_hud_used(new hud_type(src))
 	update_sight()
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
+	return TRUE
 
 /mob/proc/set_hud_used(datum/hud/new_hud)
 	hud_used = new_hud
