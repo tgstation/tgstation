@@ -46,9 +46,10 @@
 /datum/quirk/blooddeficiency/proc/update_mail(datum/source, datum/species/new_species, datum/species/old_species, pref_load, regenerate_icons)
 	SIGNAL_HANDLER
 
-	if(TRAIT_NOBLOOD in new_species.inherent_traits)
-		mail_goodies.Cut()
-		return
+	if(isnull(new_species.exotic_blood) && isnull(new_species.exotic_bloodtype))
+		if(TRAIT_NOBLOOD in new_species.inherent_traits) // jellypeople have both exotic_blood and TRAIT_NOBLOOD
+			mail_goodies.Cut()
+			return
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/datum/blood_type/blood_type = human_holder.dna.blood_type
@@ -56,6 +57,6 @@
 		return
 
 	for(var/obj/item/reagent_containers/blood/blood_bag as anything in typesof(/obj/item/reagent_containers/blood))
-		if(blood_bag::blood_type == blood_type.name)
+		if(blood_bag::blood_type == blood_type.display_name)
 			mail_goodies = list(blood_bag)
 			return

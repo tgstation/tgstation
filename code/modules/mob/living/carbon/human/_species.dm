@@ -381,7 +381,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(old_species.type != type)
 		replace_body(human_who_gained_species, src)
 
-	var/datum/blood_type/old_blood_type = human_who_gained_species.dna.blood_type
 	if(!human_who_gained_species.dna.blood_type.is_species_universal) // Clown blood is forever.
 		//Assigns exotic blood type if the species has one
 		if(exotic_bloodtype && human_who_gained_species.dna.blood_type != exotic_bloodtype)

@@ -14,6 +14,8 @@
 	var/drydesc = "Looks like it's been here a while. Eew." //as above
 	var/drytime = 0
 	var/footprint_sprite = null
+	/// If we've dried already
+	var/has_dried
 
 /obj/effect/decal/cleanable/blood/Initialize(mapload)
 	. = ..()
@@ -55,6 +57,7 @@
 		return FALSE
 
 	name = dryname
+	has_dried = TRUE
 	desc = drydesc
 	bloodiness = 0
 	STOP_PROCESSING(SSobj, src)
@@ -160,7 +163,7 @@
 	. = ..()
 	var/mutable_appearance/gib_overlay = mutable_appearance(icon, "[icon_state]-overlay", appearance_flags = KEEP_APART|RESET_COLOR)
 	if(gib_overlay)
-		if(name == dryname)
+		if(has_dried)
 			gib_overlay.color = COLOR_GRAY
 		. += gib_overlay
 

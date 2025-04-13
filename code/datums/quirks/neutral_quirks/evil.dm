@@ -15,3 +15,21 @@
 	var/evil_policy = get_policy("[type]") || "Please note that while you may be [LOWER_TEXT(name)], this does NOT give you any additional right to attack people or cause chaos."
 	// We shouldn't need this, but it prevents people using it as a dumb excuse in ahelps.
 	to_chat(quirk_holder, span_big(span_info(evil_policy)))
+
+/datum/quirk/evil/add(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	// Try to find a corresponding evil blood type for this
+	var/datum/blood_type/new_blood_type = GLOB.blood_types["[human_holder.dna.blood_type.name]_but_evil"]
+	if(isnull(new_blood_type)) // this blood type doesn't exist yet in the global list, so make a new one
+		new_blood_type = new /datum/blood_type/evil(human_holder.dna.blood_type, human_holder.dna.blood_type.compatible_types)
+		GLOB.blood_types[new_blood_type::name] = new_blood_type
+	human_holder.dna.blood_type = new_blood_type
+
+	if(human_holder.dna.species.exotic_bloodtype)
+		human_holder.dna.species.exotic_bloodtype = new_blood_type
+
+	// updates the cached organ blood types to match our new evil blood
+	var/list/blood_dna_info = human_holder.get_blood_dna_list()
+	for(var/obj/item/organ/organ in human_holder.organs)
+		organ.blood_dna_info = blood_dna_info
