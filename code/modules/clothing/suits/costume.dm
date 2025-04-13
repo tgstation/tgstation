@@ -685,7 +685,7 @@
 	desc = "A suit of 100% bear fur. Would probably be a lot more convincing without that HUGE zipper on the front."
 	icon_state = "bear"
 	worn_icon_state = "bear"
-	inhand_icon_state = "bear"
+	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	///Are we friendly with bears (wearing the full head/suit combo)?
