@@ -16,7 +16,7 @@ import { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../../backend';
 
 type GenericUplinkProps = {
-  currency?: string | JSX.Element;
+  currency?: string | React.JSX.Element;
   categories: string[];
   items: Item[];
   handleBuy: (item: Item) => void;
@@ -131,8 +131,8 @@ export type Item = {
   icon: string;
   icon_state: string;
   category: string;
-  cost: JSX.Element | string;
-  desc: JSX.Element | string;
+  cost: React.JSX.Element | string;
+  desc: React.JSX.Element | string;
   population_tooltip: string;
   insufficient_population: BooleanLike;
   disabled: BooleanLike;

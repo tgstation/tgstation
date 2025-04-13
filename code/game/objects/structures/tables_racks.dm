@@ -78,7 +78,7 @@
 	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
 
 	if(can_flip && is_flipped)
-		flip_table()
+		flip_table(dir)
 		return
 
 	make_climbable()
@@ -121,7 +121,7 @@
 	is_flipped = FALSE
 
 //proc that removes elements present in now-flipped tables
-/obj/structure/table/proc/flip_table(new_dir)
+/obj/structure/table/proc/flip_table(new_dir = SOUTH)
 	playsound(src, 'sound/items/trayhit/trayhit1.ogg', 100)
 	RemoveElement(/datum/element/climbable)
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
@@ -742,6 +742,33 @@
 	max_integrity = 70
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
+
+/obj/structure/table/wood/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
+	. = ..()
+	if(prob(33))
+		wood_table_shatter(target)
+
+/obj/structure/table/wood/tablepush(mob/living/user, mob/living/pushed_mob)
+	. = ..()
+	if(!QDELETED(src) && prob(33))
+		wood_table_shatter(pushed_mob)
+
+/obj/structure/table/wood/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
+	. = ..()
+	if(!QDELETED(src) && prob(33))
+		wood_table_shatter(pushed_mob)
+
+/obj/structure/table/wood/proc/wood_table_shatter(mob/living/victim)
+	visible_message(
+		span_warning("[src] smashes into bits!"),
+		blind_message = span_hear("You hear the loud cracking of wood being split."),
+	)
+
+	playsound(src, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
+	victim.Knockdown(10 SECONDS)
+	victim.Paralyze(2 SECONDS)
+	victim.apply_damage(20, BRUTE)
+	deconstruct(FALSE)
 
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)

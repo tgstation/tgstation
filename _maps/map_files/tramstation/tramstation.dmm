@@ -6302,7 +6302,7 @@
 /obj/effect/turf_decal/trimline/white/filled/corner{
 	dir = 1
 	},
-/obj/item/kirbyplants/photosynthetic,
+/obj/machinery/vending/assist,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "bde" = (
@@ -50612,9 +50612,10 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "qRn" = (
-/obj/machinery/vending/assist,
 /obj/effect/turf_decal/trimline/white/filled/line,
 /obj/structure/sign/clock/directional/north,
+/obj/effect/spawner/random/techstorage/custom_shuttle,
+/obj/structure/rack,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "qRp" = (

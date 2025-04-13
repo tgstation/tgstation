@@ -1,16 +1,18 @@
+import { describe, it } from 'vitest';
+
 import { range, zip } from './collections';
 
 // Type assertions, these will lint if the types are wrong.
 const _zip1: [string, number] = zip(['a'], [1])[0];
 
 describe('range', () => {
-  test('range(0, 5)', () => {
+  it('range(0, 5)', ({ expect }) => {
     expect(range(0, 5)).toEqual([0, 1, 2, 3, 4]);
   });
 });
 
 describe('zip', () => {
-  test("zip(['a', 'b', 'c'], [1, 2, 3, 4])", () => {
+  it("zip(['a', 'b', 'c'], [1, 2, 3, 4])", ({ expect }) => {
     expect(zip(['a', 'b', 'c'], [1, 2, 3, 4])).toEqual([
       ['a', 1],
       ['b', 2],

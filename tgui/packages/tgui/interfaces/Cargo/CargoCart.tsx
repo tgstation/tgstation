@@ -20,14 +20,14 @@ export function CargoCart(props) {
   const sendable = !!away && !!docked;
 
   return (
-    <Stack fill vertical>
+    <Stack fill vertical g={0}>
       <Stack.Item grow>
         <Section fill scrollable>
           <CheckoutItems />
         </Section>
       </Stack.Item>
       {cart.length > 0 && !!can_send && (
-        <Stack.Item m={0}>
+        <Stack.Item>
           <Section textAlign="right">
             <Stack fill align="center">
               <Stack.Item grow>
