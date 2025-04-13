@@ -1486,4 +1486,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Prevents observers from being able to observe (seeing their UI and such)
 #define TRAIT_NO_OBSERVE "no_observe"
 
+/// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
+#define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
+
 // END TRAIT DEFINES

@@ -25,6 +25,7 @@
 	var/bare_wound_bonus = 0
 
 	/// A multiplier to an object's force when used against a structure, vehicle, machine, or robot.
+	/// Use [/obj/proc/get_demolition_modifier] to get the value.
 	var/demolition_mod = 1
 
 	/// Cached custom fire overlay
@@ -74,7 +75,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(!attacking_item.force)
 		return
 
-	var/total_force = (attacking_item.force * attacking_item.demolition_mod)
+	var/demo_mod = attacking_item.get_demolition_modifier(src)
+	var/total_force = (attacking_item.force * demo_mod)
 	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, TRUE, get_dir(src, user), attacking_item.armour_penetration)
 
 	// Sanity in case one is null for some reason
@@ -88,11 +90,15 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if (picked_index && length(attacking_item.attack_verb_simple) >= picked_index)
 		message_verb_simple = attacking_item.attack_verb_simple[picked_index]
 
-	if(attacking_item.demolition_mod > 1 && prob(damage * 5))
-		message_verb_simple = "pulverise"
-		message_verb_continuous = "pulverises"
+	if(demo_mod > 1 && prob(damage * 5))
+		if(HAS_TRAIT(src, TRAIT_INVERTED_DEMOLITION))
+			message_verb_simple = "shred"
+			message_verb_continuous = "shreds"
+		else
+			message_verb_simple = "pulverise"
+			message_verb_continuous = "pulverises"
 
-	if(attacking_item.demolition_mod < 1)
+	if(demo_mod < 1)
 		message_verb_simple = "ineffectively " + message_verb_simple
 		message_verb_continuous = "ineffectively " + message_verb_continuous
 
@@ -313,8 +319,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
-	modify_max_integrity(ceil(max_integrity * integrity_mod))
+	if(uses_integrity)
+		var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+		modify_max_integrity(ceil(max_integrity * integrity_mod))
 	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
 	force *= strength_mod
 	throwforce *= strength_mod
@@ -326,10 +333,17 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
-	modify_max_integrity(floor(max_integrity / integrity_mod))
+	if(uses_integrity)
+		var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+		modify_max_integrity(floor(max_integrity / integrity_mod))
 	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
 	force /= strength_mod
 	throwforce /= strength_mod
 	var/list/armor_mods = material.get_armor_modifiers(1 / multiplier)
 	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
+
+/// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
+/obj/proc/get_demolition_modifier(obj/target)
+	if(HAS_TRAIT(target, TRAIT_INVERTED_DEMOLITION))
+		return (1 / demolition_mod)
+	return demolition_mod
