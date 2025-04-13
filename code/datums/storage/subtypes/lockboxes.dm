@@ -2,7 +2,11 @@
 /datum/storage/lockbox
 	max_total_storage = 14
 	max_slots = 4
-	locked = STORAGE_FULLY_LOCKED
+
+/datum/storage/lockbox/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+
+	set_locked(STORAGE_FULLY_LOCKED)
 
 ///Medal lockbox
 /datum/storage/lockbox/medal
