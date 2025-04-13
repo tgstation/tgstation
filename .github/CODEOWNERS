@@ -129,7 +129,6 @@
 # SuperNovaa41
 
 /code/modules/forensics/ @SuperNovaa41
-/code/datums/mood.dm @SuperNovaa41
 
 # Time-Green
 
@@ -168,7 +167,6 @@
 # Kapu1178
 
 /code/modules/surgery/bodyparts/ @Kapu1178
-/code/modules/surgery/organs/ @Kapu1178
 /code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
 /code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
 
@@ -187,6 +185,40 @@
 # Sadboysuss
 
 /sound/ @Sadboysuss
+
+# Timothymtorres
+
+/code/modules/basketball/ @timothymtorres
+/_maps/minigame/basketball/ @timothymtorres
+/code/controllers/subsystem/weather.dm @timothymtorres
+/code/modules/admin/verbs/adminweather.dm @timothymtorres
+/code/datums/weather/ @timothymtorres
+/code/datums/components/anti_magic.dm @timothymtorres
+/code/datums/components/rotation.dm @timothymtorres
+/code/datums/ai_laws/ @timothymtorres
+/code/game/objects/items/AI_modules/ @timothymtorres
+/code/modules/mob/living/silicon/laws.dm @timothymtorres
+/code/game/sound.dm @timothymtorres
+/code/game/objects/structures/shower.dm @timothymtorres
+/code/modules/atmospherics/machinery/air_alarm/ @timothymtorres
+/code/datums/skills/athletics.dm @timothymtorres
+/code/modules/mob/living/death.dm @timothymtorres
+/code/modules/cards/ @timothymtorres
+/code/game/machinery/barsigns.dm @timothymtorres
+/code/game/machinery/slotmachine.dm @timothymtorres
+/code/game/objects/items/devices/flashlight.dm @timothymtorres
+/code/game/say.dm @timothymtorres
+/code/modules/mob/living/carbon/carbon_say.dm @timothymtorres
+/code/modules/language/ @timothymtorres
+/code/datums/status_effects/debuffs/tower_of_babel.dm @timothymtorres
+/code/modules/events/wizard/tower_of_babel.dm @timothymtorres
+/code/modules/spells/spell_types/tower_of_babel.dm @timothymtorres
+/code/game/objects/effects/spawners/ @timothymtorres
+/code/datums/diseases/ @timothymtorres
+/code/datums/mood_events/ @timothymtorres
+/code/game/objects/items/cigs_lighters.dm @timothymtorres
+/code/game/objects/structures/statues.dm @timothymtorres
+/code/datums/elements/can_barricade.dm @timothymtorres
 
 # MULTIPLE OWNERS
 
@@ -215,6 +247,9 @@
 
 /tools/build/ @scriptis @stylemistake
 /tools/tgs_scripts/ @Cyberboss @scriptis
+
+/code/datums/mood.dm @SuperNovaa41 @timothymtorres
+/code/modules/surgery/organs/ @Kapu1178 @timothymtorres
 
 # Host Hell
 
