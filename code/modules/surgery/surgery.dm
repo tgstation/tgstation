@@ -54,7 +54,8 @@
 	operated_bodypart = surgery_bodypart
 	if(targetable_wound)
 		operated_wound = operated_bodypart.get_wound_type(targetable_wound)
-		operated_wound.attached_surgery = src
+		if(operated_wound.attached_surgery) // MASSMETA EDIT: Add checking
+			operated_wound.attached_surgery = src
 
 	SEND_SIGNAL(surgery_target, COMSIG_MOB_SURGERY_STARTED, src, surgery_location, surgery_bodypart)
 
@@ -144,7 +145,8 @@
 
 /datum/surgery/proc/complete(mob/surgeon)
 	SSblackbox.record_feedback("tally", "surgeries_completed", 1, type)
-	surgeon.add_mob_memory(/datum/memory/surgery, deuteragonist = surgeon, surgery_type = name)
+	if(surgeon) // MASSMETA EDIT: Add checking
+		surgeon.add_mob_memory(/datum/memory/surgery, deuteragonist = surgeon, surgery_type = name)
 	qdel(src)
 
 /// Returns a nearby operating computer linked to an operating table

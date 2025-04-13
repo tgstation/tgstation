@@ -77,6 +77,8 @@
 		"defibmount",
 		"medicalbed_emergency",
 		"piercesyringe",
+		"autodoc", // MASSMETA EDIT: Add autodoc
+		"organdoc", // MASSMETA EDIT: Add organdoc
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/reagent/haloperidol)
