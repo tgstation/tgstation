@@ -214,7 +214,6 @@
 			var/obj/item/painting_implement = user.get_active_held_item()
 			if(!painting_implement)
 				return FALSE
-			to_chat(world, "hello")
 			var/x = text2num(params["x"])
 			var/y = text2num(params["y"])
 			painting_implement.set_painting_tool_color(grid[x][y])

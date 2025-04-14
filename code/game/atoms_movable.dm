@@ -1559,6 +1559,10 @@
 /atom/movable/proc/grant_all_languages(language_flags = ALL, grant_omnitongue = TRUE, source = LANGUAGE_MIND)
 	return get_language_holder().grant_all_languages(language_flags, grant_omnitongue, source)
 
+/// Grants partial understanding of a language.
+/atom/movable/proc/grant_partial_language(language, amount = 50, source = LANGUAGE_ATOM)
+	return get_language_holder().grant_partial_language(language, amount, source)
+
 /// Removes a single language.
 /atom/movable/proc/remove_language(language, language_flags = ALL, source = LANGUAGE_ALL)
 	return get_language_holder().remove_language(language, language_flags, source)
@@ -1566,6 +1570,14 @@
 /// Removes every language and sets omnitongue false.
 /atom/movable/proc/remove_all_languages(source = LANGUAGE_ALL, remove_omnitongue = FALSE)
 	return get_language_holder().remove_all_languages(source, remove_omnitongue)
+
+/// Removes partial understanding of a language.
+/atom/movable/proc/remove_partial_language(language, source = LANGUAGE_ALL)
+	return get_language_holder().remove_partial_language(language, source)
+
+/// Removes all partial languages.
+/atom/movable/proc/remove_all_partial_languages(source = LANGUAGE_ALL)
+	return get_language_holder().remove_all_partial_languages(source)
 
 /// Adds a language to the blocked language list. Use this over remove_language in cases where you will give languages back later.
 /atom/movable/proc/add_blocked_language(language, source = LANGUAGE_ATOM)
@@ -1594,6 +1606,10 @@
 /// Gets a random understood language, useful for hallucinations and such.
 /atom/movable/proc/get_random_understood_language()
 	return get_language_holder().get_random_understood_language()
+
+/// Gets a lazylist of all mutually understood languages.
+/atom/movable/proc/get_partially_understood_languages()
+	return get_language_holder().best_mutual_languages
 
 /// Gets a random spoken language, useful for forced speech and such.
 /atom/movable/proc/get_random_spoken_language()

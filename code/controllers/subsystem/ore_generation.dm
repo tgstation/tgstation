@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(ore_generation)
 	name = "Ore Generation"
 	wait = 60 SECONDS
 	dependencies = list(
-		/datum/controller/subsystem/atoms
+		/datum/controller/subsystem/atoms,
 	)
 	runlevels = RUNLEVEL_GAME
 
