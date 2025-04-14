@@ -483,6 +483,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 	modifies_speech = TRUE // not really, they just hiss
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.8,aresample=%SAMPLE_RATE%,atempo=1/0.8,aformat=channel_layouts=mono [p0]; [out2] asetrate=%SAMPLE_RATE%*1.2,aresample=%SAMPLE_RATE%,atempo=1/1.2,aformat=channel_layouts=mono[p2]; [p0][0][p2] amix=inputs=3"}
+
 // Aliens can only speak alien and a few other languages.
 /obj/item/organ/tongue/alien/get_possible_languages()
 	return list(
@@ -589,6 +590,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.99,aresample=%SAMPLE_RATE%,volume=0.3 [p0]; [p0][out2] amix=inputs=2"}
+	languages_native = list(/datum/language/voltaic)
 
 // Ethereal tongues can speak all default + voltaic
 /obj/item/organ/tongue/ethereal/get_possible_languages()
@@ -601,6 +603,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
 	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER)
+	languages_native = list(/datum/language/nekomimetic)
 
 /obj/item/organ/tongue/jelly
 	name = "jelly tongue"
@@ -630,6 +633,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	liked_foodtypes = VEGETABLES | DAIRY | CLOTH
 	disliked_foodtypes = FRUIT | GROSS | BUGS | GORE
 	toxic_foodtypes = MEAT | RAW | SEAFOOD
+	languages_native = list(/datum/language/moffic)
 
 /obj/item/organ/tongue/zombie
 	name = "rotting tongue"
