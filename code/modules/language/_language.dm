@@ -231,6 +231,7 @@
  * Takes into account any languages the hearer knows that has mutual understanding with this language.
  */
 /datum/language/proc/scramble_paragraph(input, list/mutual_languages)
+	// perfect understanding, no need to scramble
 	if(mutual_languages?[type] >= 100)
 		return input
 
