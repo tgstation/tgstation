@@ -30,7 +30,7 @@
 
 /mob/living/basic/crab/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_AMPHIBIOUS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROWN, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddElement(/datum/element/sideway_movement)
 	AddElement(/datum/element/tiny_mob_hunter, MOB_SIZE_TINY)

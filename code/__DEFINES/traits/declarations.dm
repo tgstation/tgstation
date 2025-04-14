@@ -186,7 +186,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mob is immune to oxygen damage, does not need to breathe
 #define TRAIT_NOBREATH "no_breath"
 /// Mob doesn't take stamina or oxygen damage in deep water
-#define TRAIT_AMPHIBIOUS "amphibious"
+#define TRAIT_NODROWN "amphibious"
 /// Mob is currently disguised as something else (like a morph being another mob or an object). Holds a reference to the thing that applied the trait.
 #define TRAIT_DISGUISED "disguised"
 /// Use when you want a mob to be able to metabolize plasma temporarily (e.g. plasma fixation disease symptom)

@@ -61,7 +61,7 @@
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_IMMERSED))
 
 /datum/status_effect/swimming/tick(seconds_between_ticks)
-	if (HAS_TRAIT(owner, TRAIT_AMPHIBIOUS) || HAS_TRAIT(owner, TRAIT_MOB_ELEVATED))
+	if (HAS_TRAIT(owner, TRAIT_NODROWN) || HAS_TRAIT(owner, TRAIT_MOB_ELEVATED))
 		return
 	if (owner.buckled) // We're going to generously assume that being buckled to any mob or vehicle leaves you above water
 		if (isvehicle(owner.buckled) || ismob(owner.buckled))
