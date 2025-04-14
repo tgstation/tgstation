@@ -380,3 +380,56 @@
   - admin: Improved logging for foam and smoke, and plasma metalgenned objects
   vinylspiders:
   - bugfix: removed the gap from the quirks page menu items
+2025-04-14:
+  Bisar:
+  - code_imp: Subsystems that are meant to represent a network in-game have been moved
+      into their own category inside the codebase.
+  Cruix:
+  - bugfix: fixed some whiteship windows having airlock icons placed over them in
+      the navigation computer window
+  Kryson, JohnFulpWillard:
+  - qol: Lobby info is now on the title screen rather than being hidden in the stat
+      panel.
+  LePiromano:
+  - balance: Added a second of reaction time to the Colossus' final attack.
+  Melbert:
+  - balance: Against curtains and spider webs, demolition strength is inverted - so
+      toolboxes are weaker and swords are stronger.
+  - balance: Fireaxes and Chainsaws have a weaker demolition modifier while not wielded
+      or active (This is not factored into above, though.)
+  - rscadd: Air alarms of surgical rooms (Robotics, Medical) start with scrubbers
+      set to filter Nitrous Oxide
+  - rscadd: Languages can now have partial understanding of other languages. More
+      common English words are more likely to be mutually understood.
+  - rscadd: Those who understand Beachtongue can understand 50% of Common and 33%
+      of Uncommon words.
+  - rscadd: Those who understand Common can understand 33% of Beachtongue and 20%
+      of Uncommon words.
+  - rscadd: Those who understand Uncommon can understand 20% of Common and 20% of
+      Beachtongue words.
+  - rscadd: 'Bilingual quirk: You can now choose between being able to speak or not
+      speak the language'
+  - rscadd: 'Bilingual quirk: You can now choose to have partial understanding of
+      your language, rather than full.'
+  - qol: If you speak in ALL CAPS in a foreign language, the translated words will
+      also be ALL CAPS.
+  - qol: Many more forms of punctuation are now conveyed across translations.
+  - qol: The 1000 most common English words will now never be scrambled when translating
+      into other languages for the duration of the round. This means you can actually
+      "learn" some words if you are especially attentive! (Until the next round at
+      least)
+  - refactor: Refactored language translations. Report if you see any super odd looking
+      translations.
+  - bugfix: Force-says forcing you to speak common (such as cult invocations) will
+      now correctly force you to speak common (even if you don't know common)
+  OrionTheFox:
+  - rscadd: Added a greyscale Blazer and Trenchcoat, available in the clothesmate!
+  - rscadd: Detective Trenchcoats are now toggleable to pair with the greyscale Trenchcoats
+  Rhials:
+  - bugfix: The scrubber in the Wawastation Chapel Office has been fixed.
+  SmArtKar:
+  - rscadd: Invisible walls can be leaned on
+  - bugfix: Fixed grilles having weird space shadows when broken
+  TheSwain, JohnFulpWillard:
+  - qol: Soulscythes and Vampires now have a blood hud on the left side of their screen
+      rather than a stat panel entry stating how much blood they have.
