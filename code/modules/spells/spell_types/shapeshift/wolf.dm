@@ -18,7 +18,7 @@
 	lefthand_file = 'icons/mob/inhands/clothing/neck_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/neck_righthand.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
-	resistance_flags = FLAMMABLE | FREEZE_PROOF
+	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
 	/// Reference to hood object, if it exists
 	var/obj/item/clothing/head/hooded/hood
