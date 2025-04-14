@@ -347,13 +347,8 @@
 	return (donor_blood_data in patient_blood_data.compatible_types)
 
 //to add a splatter of blood or other mob liquid.
-/mob/living/proc/add_splatter_floor(turf/splatter_turf, small_drip)
-	if(iscarbon(src))
-		var/mob/living/carbon/carbon_mob = src
-		var/datum/blood_type/carbon_blood_type = carbon_mob.dna?.blood_type
-		if(carbon_blood_type.no_bleed_overlays)
-			return
-	else if(!(get_blood_id() in list(/datum/reagent/blood, /datum/reagent/toxin/acid)))
+/mob/living/proc/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check = FALSE)
+	if(!skip_reagents_check && !(get_blood_id() in list(/datum/reagent/blood, /datum/reagent/toxin/acid)))
 		return
 
 	if(!splatter_turf)
@@ -390,11 +385,11 @@
 	if(temp_blood_DNA)
 		blood_spew.add_blood_DNA(temp_blood_DNA, no_visuals = small_drip)
 
-/mob/living/carbon/human/add_splatter_floor(turf/splatter_turf, small_drip)
+/mob/living/carbon/human/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check = TRUE)
 	if(!HAS_TRAIT(src, TRAIT_NOBLOOD) && !dna?.blood_type.no_bleed_overlays)
 		. = ..()
 
-/mob/living/carbon/alien/add_splatter_floor(turf/splatter_turf, small_drip)
+/mob/living/carbon/alien/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check)
 	if(!splatter_turf)
 		splatter_turf = get_turf(src)
 	var/obj/effect/decal/cleanable/xenoblood/xeno_blood_splatter = locate() in splatter_turf.contents
@@ -402,7 +397,7 @@
 		xeno_blood_splatter = new(splatter_turf)
 	xeno_blood_splatter.add_blood_DNA(list("UNKNOWN DNA" = BLOOD_TYPE_XENO))
 
-/mob/living/silicon/robot/add_splatter_floor(turf/splatter_turf, small_drip)
+/mob/living/silicon/robot/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check)
 	if(!splatter_turf)
 		splatter_turf = get_turf(src)
 	var/obj/effect/decal/cleanable/oil/oil_splatter = locate() in splatter_turf.contents

@@ -221,7 +221,7 @@
 /datum/blood_type/random_chemical/New(datum/reagent/reagent_type)
 	. = ..()
 	src.name = initial(reagent_type.name)
-	src.display_name = real_blood_type.name
+	src.display_name = name
 	src.color = initial(reagent_type.color)
 	src.reagent_type = reagent_type
 	src.restoration_chem = reagent_type
