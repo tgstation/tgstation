@@ -9,7 +9,7 @@ SUBSYSTEM_DEF(skills)
 	///Dictionary of skill.type || skill ref
 	var/list/all_skills = list()
 	///List of level names with index corresponding to skill level
-	var/list/level_names = list("None", "Novice", "Apprentice", "Journeyman", "Expert", "Master", "Legendary") //List of skill level names. Note that indexes can be accessed like so: level_names[SKILL_LEVEL_NOVICE]
+	var/list/level_names = list("None", "Novice", "Apprentice", "Journeyman", "Expert", "Master", "Legendary", "Mythical") //List of skill level names. Note that indexes can be accessed like so: level_names[SKILL_LEVEL_NOVICE]
 
 /datum/controller/subsystem/skills/Initialize()
 	InitializeSkills()
