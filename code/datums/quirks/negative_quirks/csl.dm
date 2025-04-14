@@ -8,12 +8,12 @@
 	gain_text = span_danger("You have difficulty parsing Common.")
 	lose_text = span_notice("Common starts to click for you.")
 
-/datum/quirk/csl/add()
+/datum/quirk/csl/add(client/client_source)
 	if(iscarbon(quirk_holder))
 		quirk_holder.remove_language(/datum/language/common, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
 	else
 		quirk_holder.remove_language(/datum/language/common, UNDERSTOOD_LANGUAGE, LANGUAGE_ATOM)
-	quirk_holder.grant_partial_language(/datum/language/common, 90, type)
+	quirk_holder.grant_partial_language(/datum/language/common, text2num(client_source?.preferences?.read_preference(/datum/preference/choiced/csl_strength)) || 90, type)
 	RegisterSignal(quirk_holder, COMSIG_SPECIES_GAIN, PROC_REF(reremove_common))
 	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, PROC_REF(translate_everything))
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_LANGUAGE_BEING_TRANSLATED, PROC_REF(translate_parts))
@@ -22,6 +22,9 @@
 	UnregisterSignal(quirk_holder, COMSIG_SPECIES_GAIN)
 	UnregisterSignal(quirk_holder, COMSIG_MOB_SAY)
 	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_LANGUAGE_BEING_TRANSLATED)
+
+	if(QDELING(quirk_holder))
+		return
 
 	quirk_holder.remove_partial_language(/datum/language/common, type)
 	var/mob/living/carbon/carbon_quirk_holder = quirk_holder
@@ -87,3 +90,9 @@
 
 	// starts at 95%, then goes down to 20%
 	mutual_understanding[native_language] = max(mutual_understanding[native_language], round(quirk_holder.mob_mood?.sanity + 20, 5))
+
+/datum/quirk_constant_data/csl
+	associated_typepath = /datum/quirk/csl
+	customization_options = list(
+		/datum/preference/choiced/csl_strength,
+	)
