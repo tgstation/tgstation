@@ -236,10 +236,10 @@
 		return input
 
 	var/static/regex/first_sentence = regex(@"(.+?(?:[\.!\?]|$))", "g")
-	var/new_paragraph = ""
+	var/list/new_paragraph = list()
 	while(first_sentence.Find(input))
-		new_paragraph += "[scramble_sentence(trim(first_sentence.group[1]), mutual_languages)] "
-	return new_paragraph
+		new_paragraph += scramble_sentence(trim(first_sentence.group[1]), mutual_languages)
+	return jointext(new_paragraph, " ")
 
 /**
  * Scrambles a sentence in this language.
@@ -252,9 +252,9 @@
 	if(cache?[cache_key])
 		return cache[cache_key]
 
-	var/list/real_words = splittext(input, " ")
+	// Assoc list of word - was it translated
 	var/list/scrambled_words = list()
-	for(var/word in real_words)
+	for(var/word in splittext(input, " "))
 		var/translate_prob = mutual_languages?[type] || 0
 		var/base_word = strip_outer_punctuation(word)
 		if(translate_prob > 0)
@@ -269,22 +269,24 @@
 		scrambled_words[scramble_word(base_word)] = TRUE
 
 	// start building the new sentence. first word is capitalized and otherwise untouched
-	var/sentence = capitalize(popleft(scrambled_words))
-	for(var/word in scrambled_words)
+	var/sentence = capitalize(scrambled_words[1])
+	for(var/i in 2 to length(scrambled_words))
+		var/word = scrambled_words[i]
 		// this was not translated so just throw it in
 		if(!scrambled_words[word])
 			sentence += " [word]"
 			continue
-		// this WAS translated so do the special handling
 		if(prob(between_word_sentence_chance))
 			sentence += ". "
 			word = capitalize(word)
-		else if(prob(between_word_space_chance))
+		// if the LAST word was scrambled, always include a space
+		else if(prob(between_word_space_chance) || scrambled_words[scrambled_words[i - 1]])
 			sentence += " "
 
 		sentence += word
 
-	// scrambling the words will drop punctuation, so re-add it at the end
+	// scrambling the word will drop punctuation, so we need to re-add it at the end
+	// (however we don't need to do anything if the last word was not translated)
 	if(scrambled_words[scrambled_words[length(scrambled_words)]])
 		sentence += find_last_punctuation(input)
 

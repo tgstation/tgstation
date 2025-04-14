@@ -1,12 +1,14 @@
 /datum/quirk/csl
 	name = "Common Second Language"
 	desc = "Common is not your native tongue - it's something you had to pick up along the way. \
-		Parsing common will be difficult (but not impossible), and you may drift back to your native tongue \
-		when you are stressed, anxious, or angry."
+		Some words in common will sound foreign, and you may drift back to your native tongue \
+		when you are anxious or upset."
 	icon = FA_ICON_LANDMARK_DOME
 	value = -2
 	gain_text = span_danger("You have difficulty parsing Common.")
 	lose_text = span_notice("Common starts to click for you.")
+	/// What language typepath is our primary language?
+	var/native_language
 
 /datum/quirk/csl/add(client/client_source)
 	if(iscarbon(quirk_holder))
@@ -15,13 +17,12 @@
 		quirk_holder.remove_language(/datum/language/common, UNDERSTOOD_LANGUAGE, LANGUAGE_ATOM)
 	quirk_holder.grant_partial_language(/datum/language/common, text2num(client_source?.prefs?.read_preference(/datum/preference/choiced/csl_strength)) || 90, type)
 	RegisterSignal(quirk_holder, COMSIG_SPECIES_GAIN, PROC_REF(reremove_common))
-	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, PROC_REF(translate_everything))
-	RegisterSignal(quirk_holder, COMSIG_MOVABLE_LANGUAGE_BEING_TRANSLATED, PROC_REF(translate_parts))
+	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, PROC_REF(translate_parts))
+	native_language = get_native_language()
 
 /datum/quirk/csl/remove()
 	UnregisterSignal(quirk_holder, COMSIG_SPECIES_GAIN)
 	UnregisterSignal(quirk_holder, COMSIG_MOB_SAY)
-	UnregisterSignal(quirk_holder, COMSIG_MOVABLE_LANGUAGE_BEING_TRANSLATED)
 
 	if(QDELING(quirk_holder))
 		return
@@ -53,43 +54,33 @@
 	// Don't want this
 	language_pool -= /datum/language/common
 	// If we have native languages set, prefer them
+	var/list/prioritized_language_pool
 	var/obj/item/organ/tongue/tongue = quirk_holder.get_organ_by_type(/obj/item/organ/tongue)
 	if(length(tongue?.languages_native) > 0)
-		language_pool &= tongue.languages_native
+		prioritized_language_pool = language_pool & tongue.languages_native
 
 	if(length(language_pool) < 1)
 		return // guess we couldn't find one
 
-	return language_pool[1]
+	return length(prioritized_language_pool) > 0 ? prioritized_language_pool[1] : language_pool[1]
 
 // Every time we change species we need to re-remove common from our list
 /datum/quirk/csl/proc/reremove_common(...)
 	SIGNAL_HANDLER
 	quirk_holder.remove_language(/datum/language/common, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
+	native_language = get_native_language()
 
 // At low sanity we translate everything to our native language
-/datum/quirk/csl/proc/translate_everything(datum/source, list/say_args)
+/datum/quirk/csl/proc/translate_parts(datum/source, list/say_args)
 	SIGNAL_HANDLER
 
-	if(say_args[SPEECH_FORCED] || quirk_holder.mob_mood?.sanity > 75)
+	if(say_args[SPEECH_FORCED] || isnull(native_language) || quirk_holder.mob_mood?.sanity > 75)
 		return
-	say_args[SPEECH_LANGUAGE] = get_native_language()
-
-// While all of our messages become our native language, we also add some mutual understanding to everyone else
-/datum/quirk/csl/proc/translate_parts(datum/source, atom/movable/translating_for, language, list/mutual_understanding)
-	SIGNAL_HANDLER
-
-	if(quirk_holder.mob_mood?.sanity > 75)
-		return
-
-	var/native_language = get_native_language()
-	if(isnull(native_language) || native_language != language)
-		return // guh? i guess we do nothing
-	if(quirk_holder.get_selected_language() == native_language)
-		return // we are willingly speaking
-
-	// starts at 95%, then goes down to 20%
-	mutual_understanding[native_language] = max(mutual_understanding[native_language], round(quirk_holder.mob_mood?.sanity + 20, 5))
+	// init this list if nothing else has
+	LAZYINITLIST(say_args[SPEECH_MODS][LANGUAGE_MUTUAL_BONUS])
+	// force speak language, add mutual bonuses so everyone else can understand
+	say_args[SPEECH_LANGUAGE] = native_language
+	say_args[SPEECH_MODS][LANGUAGE_MUTUAL_BONUS][native_language] = max(round(8 * sqrt(quirk_holder.mob_mood?.sanity), 5), say_args[SPEECH_MODS][LANGUAGE_MUTUAL_BONUS][native_language])
 
 /datum/quirk_constant_data/csl
 	associated_typepath = /datum/quirk/csl

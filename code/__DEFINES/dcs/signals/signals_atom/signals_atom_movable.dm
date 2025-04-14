@@ -73,11 +73,6 @@
 	#define HEARING_SPANS 6
 	#define HEARING_MESSAGE_MODE 7
 	#define HEARING_RANGE 8
-/// Send to a movable after some other movable has heard them speak in another language they do not understand
-/// Args: (atom/movable/translating_for, language_type, list/mutual_understanding)
-/// Adding 100 understanding of the language to the mutual_understanding list will stop the translation
-/// Otherwise it affects how much of the sentence will be translated (% wise)
-#define COMSIG_MOVABLE_LANGUAGE_BEING_TRANSLATED "movable_language_being_translated"
 
 ///called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"
