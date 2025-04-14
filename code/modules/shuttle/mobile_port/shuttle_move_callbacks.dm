@@ -250,7 +250,7 @@ All ShuttleMove procs go here
 	if(is_mining_level(z)) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))
 
-/obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/atmospherics/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
 	. = ..()
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
