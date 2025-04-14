@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(library)
 	name = "Library Loading"
 	dependencies = list(
 		/datum/controller/subsystem/atoms,
-		/datum/controller/subsystem/mapping
+		/datum/controller/subsystem/mapping,
 	)
 	flags = SS_NO_FIRE
 
