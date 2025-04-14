@@ -38,7 +38,7 @@
 /// When we've validated that someone is actually in the water start drowning them
 /datum/element/swimming_tile/proc/dip_in(mob/living/floater)
 	SIGNAL_HANDLER
-	if (isnull(floater.buckled) || (!isvehicle(floater.buckled) && !ismob(floater.buckled)))
+	if (!HAS_TRAIT(floater, TRAIT_SWIMMER) && (isnull(floater.buckled) || (!isvehicle(floater.buckled) && !ismob(floater.buckled))))
 		floater.apply_damage(20, STAMINA)
 	floater.apply_status_effect(/datum/status_effect/swimming) // Apply the status anyway for when they stop riding
 
@@ -61,13 +61,16 @@
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_IMMERSED))
 
 /datum/status_effect/swimming/tick(seconds_between_ticks)
-	if (HAS_TRAIT(owner, TRAIT_NODROWN) || HAS_TRAIT(owner, TRAIT_MOB_ELEVATED))
+	if (HAS_TRAIT(owner, TRAIT_MOB_ELEVATED))
 		return
 	if (owner.buckled) // We're going to generously assume that being buckled to any mob or vehicle leaves you above water
 		if (isvehicle(owner.buckled) || ismob(owner.buckled))
 			return
-	owner.apply_damage(stamina_per_second * seconds_between_ticks, STAMINA)
-	if (HAS_TRAIT(owner, TRAIT_NOBREATH) || (owner.mob_size >= MOB_SIZE_HUMAN && owner.body_position == STANDING_UP))
+
+	if (!HAS_TRAIT(owner, TRAIT_SWIMMER))
+		owner.apply_damage(stamina_per_second * seconds_between_ticks, STAMINA)
+
+	if (HAS_TRAIT(owner, TRAIT_NODROWN) || HAS_TRAIT(owner, TRAIT_NOBREATH) || (owner.mob_size >= MOB_SIZE_HUMAN && owner.body_position == STANDING_UP))
 		return
 	if (iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner

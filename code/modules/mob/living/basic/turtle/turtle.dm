@@ -64,7 +64,7 @@
 		"Could this be a Dog?",
 	)
 
-	ADD_TRAIT(src, TRAIT_NODROWN, INNATE_TRAIT)
+	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER), INNATE_TRAIT)
 	var/static/list/eatable_food = list(/obj/item/seeds)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(eatable_food))
 	AddElement(/datum/element/basic_eating, food_types = eatable_food)
