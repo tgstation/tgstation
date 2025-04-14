@@ -1,7 +1,7 @@
 /datum/blood_type
 	/// Actual name of the blood type.
 	var/name = "?"
-	/// Displayed name of the blood type.
+	/// Displayed name of the blood type. Sometimes this differs from the actual name (e.g. secretly evil blood)
 	var/display_name = "?"
 	/// A description of the blood type.
 	var/desc
@@ -221,6 +221,7 @@
 /datum/blood_type/random_chemical/New(datum/reagent/reagent_type)
 	. = ..()
 	src.name = initial(reagent_type.name)
+	src.display_name = real_blood_type.name
 	src.color = initial(reagent_type.color)
 	src.reagent_type = reagent_type
 	src.restoration_chem = reagent_type
@@ -235,8 +236,8 @@
 
 /datum/blood_type/evil/New(datum/blood_type/real_blood_type, list/real_compatible_types)
 	. = ..()
-	src.display_name = real_blood_type.name
 	src.name = type_key()
+	src.display_name = real_blood_type.name
 	src.color = BLOOD_COLOR_BLACK // why it gotta be black though
 	src.reagent_type = real_blood_type.reagent_type
 	src.restoration_chem = real_blood_type.reagent_type
