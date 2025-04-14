@@ -266,8 +266,11 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return "makes a strange sound."
 
 	if(!has_language(language))
+		var/list/mutual_languages = get_partially_understood_languages()?.Copy() || list()
+		SEND_SIGNAL(speaker, COMSIG_MOVABLE_LANGUAGE_BEING_TRANSLATED, src, language, mutual_languages)
+
 		var/datum/language/dialect = GLOB.language_datum_instances[language]
-		raw_message = dialect.scramble_sentence(raw_message, get_partially_understood_languages())
+		raw_message = dialect.scramble_paragraph(raw_message, mutual_languages)
 
 	return raw_message
 
