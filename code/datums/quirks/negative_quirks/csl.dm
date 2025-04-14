@@ -13,7 +13,7 @@
 		quirk_holder.remove_language(/datum/language/common, UNDERSTOOD_LANGUAGE, LANGUAGE_SPECIES)
 	else
 		quirk_holder.remove_language(/datum/language/common, UNDERSTOOD_LANGUAGE, LANGUAGE_ATOM)
-	quirk_holder.grant_partial_language(/datum/language/common, text2num(client_source?.preferences?.read_preference(/datum/preference/choiced/csl_strength)) || 90, type)
+	quirk_holder.grant_partial_language(/datum/language/common, text2num(client_source?.prefs?.read_preference(/datum/preference/choiced/csl_strength)) || 90, type)
 	RegisterSignal(quirk_holder, COMSIG_SPECIES_GAIN, PROC_REF(reremove_common))
 	RegisterSignal(quirk_holder, COMSIG_MOB_SAY, PROC_REF(translate_everything))
 	RegisterSignal(quirk_holder, COMSIG_MOVABLE_LANGUAGE_BEING_TRANSLATED, PROC_REF(translate_parts))
