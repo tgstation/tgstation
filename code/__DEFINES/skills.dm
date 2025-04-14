@@ -7,6 +7,7 @@
 #define SKILL_LEVEL_EXPERT 5
 #define SKILL_LEVEL_MASTER 6
 #define SKILL_LEVEL_LEGENDARY 7
+#define SKILL_LEVEL_MYTHICAL 8
 
 #define SKILL_LVL 1
 #define SKILL_EXP 2
@@ -19,9 +20,10 @@
 #define SKILL_EXP_EXPERT 900
 #define SKILL_EXP_MASTER 1500
 #define SKILL_EXP_LEGENDARY 2500
+#define SKILL_EXP_MYTHICAL 4200
 
 //Allows us to get EXP from level, or level from EXP
-#define SKILL_EXP_LIST list(SKILL_EXP_NONE, SKILL_EXP_NOVICE, SKILL_EXP_APPRENTICE, SKILL_EXP_JOURNEYMAN, SKILL_EXP_EXPERT, SKILL_EXP_MASTER, SKILL_EXP_LEGENDARY)
+#define SKILL_EXP_LIST list(SKILL_EXP_NONE, SKILL_EXP_NOVICE, SKILL_EXP_APPRENTICE, SKILL_EXP_JOURNEYMAN, SKILL_EXP_EXPERT, SKILL_EXP_MASTER, SKILL_EXP_LEGENDARY, SKILL_EXP_MYTHICAL)
 
 //Skill modifier types
 ///ideally added/subtracted in speed calculations to make you do stuff faster
@@ -30,7 +32,7 @@
 #define SKILL_PROBS_MODIFIER "skill_probability_modifier"
 ///ideally added/subtracted where beneficial in rand(x,y) calls
 #define SKILL_RANDS_MODIFIER "skill_randomness_modifier"
-///ideally for addittive operations
+///ideally for additive operations
 #define SKILL_VALUE_MODIFIER "skill_value_modifier"
 
 // Gets the reference for the skill type that was given

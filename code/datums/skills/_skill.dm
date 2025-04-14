@@ -28,14 +28,16 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
 	span_nicegreen("I'm getting much better at [name]!"),
 	span_nicegreen("I feel like I've become quite proficient at [name]!"),
 	span_nicegreen("After lots of practice, I've begun to truly understand the intricacies and surprising depth behind [name]. I now consider myself a master [title]."),
-	span_nicegreen("Through incredible determination and effort, I've reached the peak of my [name] abiltities. I'm finally able to consider myself a legendary [title]!") )
+	span_nicegreen("Through incredible determination and effort, I've reached the peak of my [name] abilities. I'm finally able to consider myself a legendary [title]!")
+	span_nicegreen("I have somehow surpassed the peak of my [name] abilities. My name will be renowned as a mythical [title]!") )
 	levelDownMessages = list(span_nicegreen("I have somehow completely lost all understanding of [name]. Please tell an admin if you see this."),
 	span_nicegreen("I'm starting to forget what [name] really even is. I need more practice..."),
 	span_nicegreen("I'm getting a little worse at [name]. I'll need to keep practicing to get better at it..."),
 	span_nicegreen("I'm getting a little worse at [name]..."),
 	span_nicegreen("I'm losing my [name] expertise ...."),
 	span_nicegreen("I feel like I'm losing my mastery of [name]."),
-	span_nicegreen("I feel as though my legendary [name] skills have deteriorated. I'll need more intense training to recover my lost skills.") )
+	span_nicegreen("I feel as though my legendary [name] skills have deteriorated. I'll need more intense training to recover my lost skills.")
+	span_nicegreen("My [name] abilities have failed me. My name will be lost and forgotten.") )
 
 /**
  * level_gained: Gives skill levelup messages to the user
@@ -50,14 +52,14 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
 /datum/skill/proc/level_gained(datum/mind/mind, new_level, old_level, silent)
 	if(silent)
 		return
-	to_chat(mind.current, levelUpMessages[new_level]) //new_level will be a value from 1 to 6, so we get appropriate message from the 6-element levelUpMessages list
+	to_chat(mind.current, levelUpMessages[new_level]) //new_level will be a value from 1 to 7, so we get appropriate message from the 7-element levelUpMessages list
 /**
  * level_lost: See level_gained, same idea but fires on skill level-down
  */
 /datum/skill/proc/level_lost(datum/mind/mind, new_level, old_level, silent)
 	if(silent)
 		return
-	to_chat(mind.current, levelDownMessages[old_level]) //old_level will be a value from 1 to 6, so we get appropriate message from the 6-element levelUpMessages list
+	to_chat(mind.current, levelDownMessages[old_level]) //old_level will be a value from 1 to 7, so we get appropriate message from the 7-element levelUpMessages list
 
 /**
  * try_skill_reward: Checks to see if a user is eligable for a tangible reward for reaching a certain skill level
