@@ -252,8 +252,11 @@
 	if(cache?[cache_key])
 		return cache[cache_key]
 
-	// Assoc list of word - was it translated
+	// List of words that will be recombined into a sentence
 	var/list/scrambled_words = list()
+	// List which indexes correspond to words in scrambled_words, records whether the word was translated
+	// Can't be a single assoc list because duplicates are expected
+	var/list/translated_index = list()
 	for(var/word in splittext(input, " "))
 		var/translate_prob = mutual_languages?[type] || 0
 		var/base_word = strip_outer_punctuation(word)
@@ -263,31 +266,35 @@
 			var/commonness = GLOB.most_common_words[LOWER_TEXT(base_word)] || 1250
 			translate_prob += (10 * (1 - (min(commonness, 1250) / 500)))
 			if(prob(translate_prob))
-				scrambled_words[word] = FALSE
+				scrambled_words += word
+				translated_index += FALSE
 				continue
 
-		scrambled_words[scramble_word(base_word)] = TRUE
+		var/scrambled_word = scramble_word(base_word)
+		scrambled_words += scrambled_word
+		translated_index += (scrambled_word != base_word)
 
 	// start building the new sentence. first word is capitalized and otherwise untouched
 	var/sentence = capitalize(scrambled_words[1])
 	for(var/i in 2 to length(scrambled_words))
 		var/word = scrambled_words[i]
 		// this was not translated so just throw it in
-		if(!scrambled_words[word])
+		if(!translated_index[i])
 			sentence += " [word]"
 			continue
-		if(prob(between_word_sentence_chance))
+		// if the last word was scrambled, always include a space
+		if(translated_index[i - 1] || prob(between_word_space_chance))
+			sentence += " "
+		// lastly try inserting a new sentence
+		else if(prob(between_word_sentence_chance))
 			sentence += ". "
 			word = capitalize(word)
-		// if the LAST word was scrambled, always include a space
-		else if(prob(between_word_space_chance) || scrambled_words[scrambled_words[i - 1]])
-			sentence += " "
 
 		sentence += word
 
 	// scrambling the word will drop punctuation, so we need to re-add it at the end
 	// (however we don't need to do anything if the last word was not translated)
-	if(scrambled_words[scrambled_words[length(scrambled_words)]])
+	if(translated_index[length(scrambled_words)])
 		sentence += find_last_punctuation(input)
 
 	write_sentence_cache(input, cache_key, sentence)
