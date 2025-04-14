@@ -38,7 +38,7 @@ export function Evidence(props: EvidenceProps) {
     null,
   );
 
-  const [randomRotation] = useState(Math.random() * 2 - 1);
+  const randomRotation = Math.random() * 2 - 1;
 
   function handleMouseDown(args) {
     if (canDrag) {
