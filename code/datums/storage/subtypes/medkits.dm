@@ -80,12 +80,10 @@
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset,
 	)
 
-/datum/storage/medkit/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdable_override)
+/datum/storage/medkit/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables = null)
 	. = ..()
-	if(isnull(holdable_override))
-		holdable_override = list_of_everything_medkits_can_hold
-
-	set_holdable(holdable_override)
+	if(!isnull(holdables))
+		set_holdable(holdables)
 
 ///Surgery medkit
 /datum/storage/medkit/surgery
@@ -93,11 +91,19 @@
 	max_total_storage = 24
 	max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
 
+/datum/storage/medkit/surgery/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
+	holdables = list_of_everything_medkits_can_hold
+	return ..()
+
 ///Tactical medkit
 /datum/storage/medkit/tactical
 	max_slots = 21
 	max_total_storage = 24
 	max_specific_storage = WEIGHT_CLASS_NORMAL
+
+/datum/storage/medkit/tactical/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
+	holdables = list_of_everything_medkits_can_hold
+	return ..()
 
 ///Premium tactical medkit
 /datum/storage/medkit/tactical/premium
@@ -110,8 +116,8 @@
 	max_total_storage = 24
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 
-/datum/storage/medkit/coroner/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdable_override)
-	holdable_override = list(
+/datum/storage/medkit/coroner/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
+	holdables = list(
 		/obj/item/reagent_containers,
 		/obj/item/bodybag,
 		/obj/item/toy/crayon,
@@ -124,7 +130,4 @@
 		/obj/item/cautery,
 		/obj/item/autopsy_scanner,
 	)
-
 	return ..()
-
-
