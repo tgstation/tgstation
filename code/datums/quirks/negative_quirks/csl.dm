@@ -4,9 +4,11 @@
 		Some words in common will sound foreign, and you may drift back to your native tongue \
 		when you are anxious or upset."
 	icon = FA_ICON_LANDMARK_DOME
+	quirk_flags = QUIRK_HIDE_FROM_SCAN
 	value = -2
 	gain_text = span_danger("You have difficulty parsing Common.")
 	lose_text = span_notice("Common starts to click for you.")
+	medical_record_text = "Patient is CSL."
 	/// What language typepath is our primary language?
 	var/native_language
 
