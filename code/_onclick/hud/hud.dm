@@ -292,6 +292,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/get_plane_group(key)
 	return master_groups[key]
 
+///Creates the mob's visible HUD, returns FALSE if it can't, TRUE if it did.
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
 		return FALSE
