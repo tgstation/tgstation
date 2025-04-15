@@ -22,7 +22,7 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props) => {
+function Story() {
   const [number, setNumber] = useState(0);
   const [text, setText] = useState('Sample text');
   return (
@@ -120,4 +120,4 @@ const Story = (props) => {
       </LabeledList>
     </Section>
   );
-};
+}

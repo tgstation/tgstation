@@ -11,10 +11,10 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props) => {
+function Story() {
   return (
     <Section>
       <Blink>Blink</Blink>
     </Section>
   );
-};
+}

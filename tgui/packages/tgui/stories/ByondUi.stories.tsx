@@ -5,7 +5,7 @@
  */
 
 import { useState } from 'react';
-import { Box, Button, ByondUi, Section } from 'tgui-core/components';
+import { Button, ByondUi, Section, TextArea } from 'tgui-core/components';
 
 import { logger } from '../logging';
 
@@ -14,10 +14,11 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props) => {
+function Story() {
   const [code, setCode] = useState(
     `Byond.winset('${Byond.windowId}', {\n  'is-visible': true,\n})`,
   );
+
   return (
     <>
       <Section title="Button">
@@ -53,15 +54,15 @@ const Story = (props) => {
           </Button>
         }
       >
-        <Box
+        <TextArea
           as="textarea"
           width="100%"
           height="10em"
-          onChange={(e) => setCode(e.target.value)}
+          onChange={(event, value) => setCode(value)}
         >
           {code}
-        </Box>
+        </TextArea>
       </Section>
     </>
   );
-};
+}

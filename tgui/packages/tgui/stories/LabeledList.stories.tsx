@@ -11,7 +11,7 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props) => {
+function Story() {
   return (
     <>
       <LabeledList>
@@ -70,4 +70,4 @@ const Story = (props) => {
       </LabeledList>
     </>
   );
-};
+}

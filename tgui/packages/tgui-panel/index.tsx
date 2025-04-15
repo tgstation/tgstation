@@ -84,10 +84,10 @@ function setupApp() {
   });
 
   // Enable hot module reloading
-  if (module.hot) {
+  if (import.meta.webpackHot) {
     setupHotReloading();
 
-    module.hot.accept(
+    import.meta.webpackHot.accept(
       [
         './audio',
         './chat',

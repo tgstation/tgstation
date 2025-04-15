@@ -20,7 +20,6 @@ function ensureConnection() {
   socket = new WebSocket(`ws://${DEV_SERVER_IP}:3000`);
 
   socket.onopen = () => {
-    sendLogEntry(0, null, 'connected to dev server');
     // Empty the message queue
     while (queue.length !== 0) {
       const msg = queue.shift();
@@ -29,7 +28,6 @@ function ensureConnection() {
   };
 
   socket.onmessage = (event) => {
-    sendLogEntry(0, null, 'received', event.data);
     const msg = JSON.parse(event.data);
     for (let subscriber of subscribers) {
       subscriber(msg);
