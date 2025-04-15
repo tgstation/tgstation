@@ -48,6 +48,7 @@
 
 /mob/living/basic/orbie/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/holographic_nature)
 	var/static/list/food_types = list(/obj/item/food/virtual_chocolate)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddElement(/datum/element/basic_eating, food_types = food_types)

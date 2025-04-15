@@ -93,8 +93,10 @@
 	return beating
 
 /obj/item/organ/heart/get_status_text(advanced, add_tooltips)
-	if(!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD)
-		return conditional_tooltip("<font color='#cc3333'>Cardiac Arrest</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
+	if(owner.has_status_effect(/datum/status_effect/heart_attack))
+		return conditional_tooltip("<font color='#cc3333'>Myocardial Infarction</font>", "Apply defibrillation immediately. Similar electric shocks may work in emergencies.", add_tooltips)
+	if((!beating && !(organ_flags & ORGAN_FAILING) && owner.needs_heart() && owner.stat != DEAD))
+		return conditional_tooltip("<font color='#cc3333'>Cardiac Arrest</font>", "Repair tissue damage and apply defibrillation immediately.", add_tooltips)
 	return ..()
 
 /obj/item/organ/heart/show_on_condensed_scans()

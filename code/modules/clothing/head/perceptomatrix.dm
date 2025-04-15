@@ -240,10 +240,7 @@
 	cast_on.emote("scream")
 	cast_on.set_eye_blur_if_lower(eye_blur_duration)
 	cast_on.adjust_staggered(stagger_duration)
-	cast_on.apply_status_effect(/datum/status_effect/hallucination, hallucination_duration, \
-		hallucination_duration * 0.2, hallucination_duration) // lower/upper hallucination freq. bound
-
-	return
+	cast_on.apply_status_effect(/datum/status_effect/hallucination/perceptomatrix, hallucination_duration, HALLUCINATION_TIER_RARE)
 
 #undef PERCEPTOMATRIX_INACTIVE_FLAGS
 #undef PERCEPTOMATRIX_ACTIVE_FLAGS

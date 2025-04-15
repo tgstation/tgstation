@@ -121,3 +121,45 @@
 		balloon_alert(user, "[active ? "opened" : "closed"] [src]")
 	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+// Wildhunter's butchering knife
+
+/obj/item/knife/hunting/wildhunter
+	name = "wildhunter's butchering knife"
+	desc = "A magical knife made out of ashen stone. It was used to butcher local fauna by best hunters. Cuts everything to the simplest."
+	icon = 'icons/obj/weapons/stabby_wide.dmi'
+	inhand_icon_state = "wildhuntingknife"
+	icon_state = "wildhuntingknife"
+	icon_angle = 180
+	force = 20
+	wound_bonus = 15
+	w_class = WEIGHT_CLASS_NORMAL
+	sharpness = SHARP_EDGED
+	attack_verb_continuous = list("slices", "hunts", "butchers", "pierces")
+	attack_verb_simple = list("slice", "hunt", "butcher", "pierce")
+
+//best butchering tool
+/obj/item/knife/hunting/wildhunter/set_butchering()
+	AddComponent(\
+		/datum/component/butchering, \
+		speed = 1.5 SECONDS , \
+		effectiveness = 110, \
+		bonus_modifier = 0, \
+	)
+
+/obj/item/knife/hunting/wildhunter/make_stabby()
+	return
+
+//cut those trophies
+/obj/item/knife/hunting/wildhunter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/item/crusher_trophy))
+		return NONE
+	var/obj/item/crusher_trophy/trophy = interacting_with
+	if(isnull(trophy.wildhunter_drop))
+		return NONE
+	balloon_alert(user, "cutting trophy...")
+	if(!do_after(user, 4 SECONDS, trophy))
+		return ITEM_INTERACT_BLOCKING
+	new trophy.wildhunter_drop(trophy.drop_location())
+	qdel(trophy)
+	return ITEM_INTERACT_SUCCESS

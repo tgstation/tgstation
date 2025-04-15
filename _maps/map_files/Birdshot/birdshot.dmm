@@ -8447,7 +8447,6 @@
 	},
 /obj/structure/closet{
 	anchored = 1;
-	can_be_unanchored = 1;
 	name = "Cold protection gear"
 	},
 /obj/item/clothing/suit/hooded/wintercoat/science,

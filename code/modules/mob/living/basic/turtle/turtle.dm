@@ -174,12 +174,12 @@
 	. = ..()
 	if(stat == DEAD)
 		var/mutable_appearance/dead_overlay = mutable_appearance(icon = 'icons/mob/simple/pets.dmi', icon_state = developed_path ? "dead_tree" : "growing_tree")
-		dead_overlay.pixel_y = -2
+		dead_overlay.pixel_z = -2
 		. += dead_overlay
 		return
 	var/pixel_offset = resting ?  -2 : 2
 	var/mutable_appearance/living_tree = grown_tree ? grown_tree : mutable_appearance(icon = icon, icon_state = "growing_tree")
-	living_tree.pixel_y = pixel_offset
+	living_tree.pixel_z = pixel_offset
 	. += living_tree
 
 /mob/living/basic/turtle/update_resting()

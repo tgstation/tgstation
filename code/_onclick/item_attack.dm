@@ -307,7 +307,7 @@
 
 	var/damage = attacking_item.force
 	if(mob_biotypes & MOB_ROBOTIC)
-		damage *= attacking_item.demolition_mod
+		damage *= attacking_item.get_demolition_modifier(src)
 
 	var/wounding = attacking_item.wound_bonus
 	if((attacking_item.item_flags & SURGICAL_TOOL) && !user.combat_mode && body_position == LYING_DOWN && (LAZYLEN(surgeries) > 0))

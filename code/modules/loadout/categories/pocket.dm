@@ -253,6 +253,10 @@
 	name = "Poster (Pinup)"
 	item_path = /obj/item/poster/random_contraband/pinup
 
+/datum/loadout_item/pocket_items/holodisk
+	name = "Holodisk"
+	item_path = /obj/item/disk/holodisk
+
 // The wallet loadout item is special, and puts the player's ID and other small items into it on initialize (fancy!)
 /datum/loadout_item/pocket_items/wallet
 	name = "Wallet"

@@ -160,11 +160,32 @@
 	if(!id_account.account_job)
 		say("Requesting ID card has no job assignment registered!")
 		return FALSE
-	var/list/datum/bounty/crumbs = list(random_bounty(id_account.account_job.bounty_types), // We want to offer 2 bounties from their appropriate job catagories
-										random_bounty(id_account.account_job.bounty_types), // and 1 guaranteed assistant bounty if the other 2 suck.
-										random_bounty(CIV_JOB_BASIC))
+
+	var/list/datum/bounty/crumbs = generate_bounty_list(id_account.account_job.bounty_types)
 	COOLDOWN_START(id_account, bounty_timer, (5 MINUTES) - cooldown_reduction)
 	id_account.bounties = crumbs
+
+/**
+ * Generates a list of bounties for use with the civilian bounty pad.
+ * @param bounty_types the define taken from a job for selection of a random_bounty() proc.
+ * @param bounty_rolls the number of bounties to be selected from.
+ * @param assistant_failsafe Do we guarentee one assistant bounty per generated list? Used for non-assistant jobs to give an easier alternative to that job's default bounties.
+ */
+/obj/machinery/computer/piratepad_control/civilian/proc/generate_bounty_list(bounty_types, bounty_rolls = 3, assistant_failsafe = TRUE)
+	var/list/rolling_list = list()
+	if(assistant_failsafe)
+		rolling_list += random_bounty(CIV_JOB_BASIC)
+	while(bounty_rolls > 1)
+		var/datum/bounty/potential_bounty = random_bounty(bounty_types)
+		var/repeats_bool = FALSE
+		for(var/datum/iterator in rolling_list)
+			if(iterator.type == potential_bounty.type)
+				repeats_bool = TRUE
+		if(repeats_bool)
+			continue
+		rolling_list += potential_bounty
+		bounty_rolls -= 1
+	return rolling_list
 
 /**
  * Proc that assigned a civilian bounty to an ID card, from the list of potential bounties that that bank account currently has available.
@@ -317,7 +338,7 @@
 /obj/item/bounty_cube/examine()
 	. = ..()
 	if(speed_bonus)
-		. += span_notice("<b>[time2text(next_nag_time - world.time,"mm:ss")]</b> remains until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.")
+		. += span_notice("<b>[time2text(next_nag_time - world.time,"mm:ss", NO_TIMEZONE)]</b> remains until <b>[bounty_value * speed_bonus]</b> credit speedy delivery bonus lost.")
 	if(handler_tip && !bounty_handler_account)
 		. += span_notice("Scan this in the cargo shuttle with an export scanner to register your bank account for the <b>[bounty_value * handler_tip]</b> credit handling tip.")
 
@@ -363,7 +384,7 @@
 		"LOCATION" = get_area_name(src),
 		"PERSON" = bounty_holder,
 		"RANK" = bounty_holder_job,
-		"BONUSTIME" = time2text(next_nag_time - world.time,"mm:ss"),
+		"BONUSTIME" = time2text(next_nag_time - world.time,"mm:ss", NO_TIMEZONE),
 		"COST" = bounty_value
 	), src, list(RADIO_CHANNEL_SUPPLY))
 

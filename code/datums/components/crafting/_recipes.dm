@@ -98,13 +98,6 @@
 /datum/crafting_recipe/proc/on_craft_completion(mob/user, atom/result)
 	return
 
-///Check if the pipe used for atmospheric device crafting is the proper one
-/datum/crafting_recipe/proc/atmos_pipe_check(mob/user, list/collected_requirements)
-	var/obj/item/pipe/required_pipe = collected_requirements[/obj/item/pipe][1]
-	if(ispath(required_pipe.pipe_type, /obj/machinery/atmospherics/pipe/smart))
-		return TRUE
-	return FALSE
-
 /// Additional UI data to be passed to the crafting UI for this recipe
 /datum/crafting_recipe/proc/crafting_ui_data()
 	return list()
