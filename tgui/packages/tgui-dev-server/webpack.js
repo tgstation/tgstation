@@ -30,6 +30,7 @@ class RspackCompiler {
     // Create a require context that is relative to project root
     // and retrieve all necessary dependencies.
     const requireFromRoot = createRequire(dirname(import.meta.url) + '/../..');
+    /** @type {import('@rspack/core').Rspack} */
     const rspack = await requireFromRoot('@rspack/core');
     const createConfig = await requireFromRoot('./rspack.config.cjs');
     const config = createConfig({}, options);
@@ -75,8 +76,7 @@ class RspackCompiler {
         logger.error('compilation error', err);
         return;
       }
-      stats
-        .toString(this.config.devServer.stats)
+      stats?.toString(this.config.devServer.stats)
         .split('\n')
         .forEach((line) => logger.log(line));
     });
