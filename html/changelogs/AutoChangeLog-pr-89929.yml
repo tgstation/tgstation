@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Burst-firing weapons now respect their fire delay, in the event that their fire delay is longer than click cooldown. If your local burst-fire weapon starts to feel weird because of this, please submit an issue report."

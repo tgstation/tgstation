@@ -77,6 +77,70 @@
 	export_types = /obj/item/stack/sheet/mineral/metal_hydrogen
 
 /datum/export/material/market
+	cost = 1
+	k_recovery_elasticity = 1/10 //Modeled such that a stack of materials, selling to drop the cost to ~20%, will recover fully in 8 minutes instead of 20.
+	export_types = list(
+		/obj/item/stack/sheet/mineral,
+		/obj/item/stack/tile/mineral,
+		/obj/item/stack/ore,
+		/obj/item/coin,
+		/obj/item/stock_block,
+	)
+
+/datum/export/material/market/applies_to(obj/exported_obj, apply_elastic)
+	. = ..()
+	if(istype(exported_obj, /obj/item/stock_block))
+		var/obj/item/stock_block/block = exported_obj
+		if(!block.export_mat)
+			return FALSE
+		if(block.export_mat == material_id)
+			return TRUE
+		return FALSE
+
+/datum/export/material/market/get_amount(obj/exported_obj)
+	if(istype(exported_obj, /obj/item/stock_block))
+		var/obj/item/stock_block/block = exported_obj
+		return block.quantity
+	return ..()
+
+/datum/export/material/market/get_cost(obj/exported_obj, apply_elastic = TRUE)
+	. = ..()
+	if(!material_id)
+		return 0
+
+	var/obj/item/exported_item = exported_obj
+	var/amount = get_amount(exported_item)
+	if(!amount)
+		return 0
+
+	var/obj/item/stock_block/block
+	if(istype(exported_item, /obj/item/stock_block))
+		block = exported_item
+		if(block.export_mat != material_id)
+			return 0
+
+	var/material_value = 0
+	if(block)
+		if(block.fluid)
+			material_value = SSstock_market.materials_prices[block.export_mat] * amount
+		else
+			material_value = block.export_value
+	else
+		material_value = SSstock_market.materials_prices[material_id] * amount
+	return cost * material_value // Cost in this case is only serving as the elastic modifier, where material value is the raw value of the sheets sold.
+
+/datum/export/material/market/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
+	. = ..()
+	var/amount = get_amount(sold_item)
+	if(!amount)
+		return
+
+	//This formula should impact lower quantity materials greater, and higher quantity materials less. Still, it's  a bit rough. Tweaking may be needed.
+	if(!dry_run)
+		//decrease the market price
+		SSstock_market.adjust_material_price(material_id, -SSstock_market.materials_prices[material_id] * (amount / (amount + SSstock_market.materials_quantity[material_id])))
+		//increase the stock
+		SSstock_market.adjust_material_quantity(material_id, amount)
 
 /datum/export/material/market/diamond
 	material_id = /datum/material/diamond
@@ -101,7 +165,11 @@
 /datum/export/material/market/bscrystal
 	message = "of bluespace crystals"
 	material_id = /datum/material/bluespace
-	export_types = list(/obj/item/stack/sheet/bluespace_crystal, /obj/item/stack/ore) //For whatever reason, bluespace crystals are not a mineral
+	export_types = list(
+		/obj/item/stack/sheet/bluespace_crystal,
+		/obj/item/stack/ore/bluespace_crystal,
+		/obj/item/stock_block,
+	) //For whatever reason, bluespace crystals are not a mineral
 
 /datum/export/material/market/iron
 	message = "cm3 of iron"
@@ -111,7 +179,8 @@
 		/obj/item/stack/tile/iron,
 		/obj/item/stack/rods,
 		/obj/item/stack/ore,
-		/obj/item/coin
+		/obj/item/coin,
+		/obj/item/stock_block,
 	)
 
 /datum/export/material/market/glass
@@ -120,48 +189,6 @@
 	export_types = list(
 		/obj/item/stack/sheet/glass,
 		/obj/item/stack/ore,
-		/obj/item/shard
+		/obj/item/shard,
+		/obj/item/stock_block,
 	)
-
-/datum/export/material/market/get_cost(obj/O, apply_elastic = FALSE)
-	var/obj/item/I = O
-	var/amount = get_amount(I)
-	if(!amount)
-		return 0
-	var/material_value = (SSstock_market.materials_prices[material_id]) * amount * MARKET_PROFIT_MODIFIER
-	return round(material_value)
-
-/datum/export/material/market/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
-	. = ..()
-	var/amount = get_amount(sold_item)
-	if(!amount)
-		return
-
-	//This formula should impact lower quantity materials greater, and higher quantity materials less. Still, it's  a bit rough. Tweaking may be needed.
-	if(!dry_run)
-		//decrease the market price
-		SSstock_market.adjust_material_price(material_id, -SSstock_market.materials_prices[material_id] * (amount / (amount + SSstock_market.materials_quantity[material_id])))
-
-		//increase the stock
-		SSstock_market.adjust_material_quantity(material_id, amount)
-
-
-// Stock blocks are a special type of export that can be used to sell a quantity of materials at a specific price on the market.
-/datum/export/stock_block
-	cost = 0
-	message = "stock block"
-	export_types = list(/obj/item/stock_block)
-
-/datum/export/stock_block/get_cost(obj/O, apply_elastic = FALSE)
-	var/obj/item/stock_block/block = O
-	return block.export_value
-
-/datum/export/stock_block/sell_object(obj/sold_item, datum/export_report/report, dry_run, apply_elastic)
-	. = ..()
-	if(dry_run)
-		return
-	var/obj/item/stock_block/sold_block = sold_item
-	var/sale_value = sold_block.export_value
-	SSstock_market.materials_quantity[sold_block.export_mat] += sold_block.quantity
-	SSstock_market.materials_prices[sold_block.export_mat] -= round((sale_value) * (sold_block.quantity / (sold_block.quantity + SSstock_market.materials_quantity[sold_block.export_mat])))
-	SSstock_market.materials_prices[sold_block.export_mat] = round(clamp(SSstock_market.materials_prices[sold_block.export_mat], initial(sold_block.export_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5 , initial(sold_block.export_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3))

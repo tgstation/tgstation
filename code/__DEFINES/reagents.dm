@@ -46,6 +46,9 @@
 /// Used by smoke or inhaling from a source. Smoke and cigarettes.
 #define INHALE (1<<6)
 
+///Smoke machines are both touch and inhaling
+#define SMOKE_MACHINE (TOUCH | INHALE)
+
 /// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
 #define UPDATE_MOB_HEALTH 1
 

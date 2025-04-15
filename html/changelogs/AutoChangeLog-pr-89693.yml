@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Syndicate bombs get harder to defuse the longer its timer is set, up to 9 minutes."
-  - bugfix: "Training bombs won't message admins when they're \"detonated\" or defused."

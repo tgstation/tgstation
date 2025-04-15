@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(chat)
 	flags = SS_TICKER|SS_NO_INIT
 	wait = 1
 	priority = FIRE_PRIORITY_CHAT
-	init_order = INIT_ORDER_CHAT
+	init_stage = INITSTAGE_LAST
 
 	/// Assosciates a ckey with a list of messages to send to them.
 	var/list/list/datum/chat_payload/client_to_payloads = list()

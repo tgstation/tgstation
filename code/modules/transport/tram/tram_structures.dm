@@ -36,7 +36,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TRAM_STRUCTURE
 	canSmoothWith = SMOOTH_GROUP_TRAM_STRUCTURE
-	can_be_unanchored = FALSE
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	explosion_block = 3
 	receive_ricochet_chance_mod = 1.2

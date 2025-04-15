@@ -29,6 +29,9 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_TABLES
+	var/static/list/turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
+	///a bit fucky, I know. but this is needed to get sorted on init smoothing groups stored
+	var/list/on_init_smoothed_vars
 	var/frame = /obj/structure/table_frame
 	var/framestack = /obj/item/stack/rods
 	var/glass_shard_type = /obj/item/shard
@@ -37,30 +40,135 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = TRUE
+	///Whether or not the table could be flipped or not
+	var/can_flip = TRUE
+	///Whether or not the table is flipped
+	var/is_flipped = FALSE
+	/// Whether or not when flipped, it ignores PASS_GLASS flag
+	var/is_transparent = FALSE
+	/// If you don't have sprites for flipped tables, you can use matrices instead. looks ever-slightly worse.
+	var/use_matrices_instead = FALSE
+	/// Matrix to return to on unflipping table
+	var/matrix/before_flipped_matrix
 
-/obj/structure/table/Initialize(mapload, _buildstack)
+/obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
-	if(_buildstack)
-		buildstack = _buildstack
-	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+	if(frame_used)
+		apply_frame_properties(frame_used)
+	if(stack_used)
+		apply_stack_properties(stack_used)
 
-	make_climbable()
+	before_flipped_matrix = transform
+	on_init_smoothed_vars = list(smoothing_groups, canSmoothWith)
 
 	var/static/list/loc_connections = list(
 		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(table_living),
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
 	AddElement(/datum/element/connect_loc, loc_connections)
-	var/static/list/give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
-	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
 
+	if(can_flip)
+		AddElement( \
+			/datum/element/contextual_screentip_bare_hands, \
+			rmb_text = "Flip", \
+		)
+
 	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
+
+	if(can_flip && is_flipped)
+		flip_table(dir)
+		return
+
+	make_climbable()
+	AddElement(/datum/element/give_turf_traits, turf_traits)
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+
+/// Applies additional properties based on the frame used to construct this table.
+/obj/structure/table/proc/apply_frame_properties(obj/structure/table_frame/frame_used)
+	frame = frame_used.type
+	framestack = frame_used.framestack
+	framestackamount = frame_used.framestackamount
+
+/// Applies additional properties based on the stack used to construct this table.
+/obj/structure/table/proc/apply_stack_properties(obj/item/stack/stack_used)
+	return
 
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
+
+//proc that adds elements present in normal tables
+/obj/structure/table/proc/unflip_table()
+	playsound(src, 'sound/items/trayhit/trayhit2.ogg', 100)
+	make_climbable()
+	AddElement(/datum/element/give_turf_traits, turf_traits)
+	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+	//resets vars from table being flipped
+	layer = TABLE_LAYER
+	smoothing_flags |= SMOOTH_BITMASK
+	pass_flags_self |= PASSTABLE
+	if(use_matrices_instead)
+		animate(src, transform = before_flipped_matrix, time = 0)
+	else
+		icon = initial(icon)
+	icon_state = initial(icon_state)
+	smoothing_groups = on_init_smoothed_vars[1]
+	canSmoothWith = on_init_smoothed_vars[2]
+	update_appearance()
+	is_flipped = FALSE
+
+//proc that removes elements present in now-flipped tables
+/obj/structure/table/proc/flip_table(new_dir = SOUTH)
+	playsound(src, 'sound/items/trayhit/trayhit1.ogg', 100)
+	RemoveElement(/datum/element/climbable)
+	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
+	RemoveElement(/datum/element/give_turf_traits, turf_traits)
+	RemoveElement(/datum/element/elevation, pixel_shift = 12)
+
+	//change icons
+	layer = LOW_ITEM_LAYER
+	if(new_dir & EAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
+		new_dir = EAST
+	else if(new_dir & WEST)
+		new_dir = WEST
+	dir = new_dir
+	if(new_dir == SOUTH)
+		layer = ABOVE_MOB_LAYER
+
+	var/turf/throw_target = get_step(src, src.dir)
+	if(!isnull(throw_target))
+		for(var/atom/movable/movable_entity in src.loc)
+			if(is_able_to_throw(src, movable_entity))
+				movable_entity.safe_throw_at(throw_target, range = 1, speed = 1, force = MOVE_FORCE_NORMAL, gentle = TRUE)
+
+	smoothing_flags &= ~SMOOTH_BITMASK
+	smoothing_groups = null
+	canSmoothWith = null
+	pass_flags_self &= ~PASSTABLE
+
+	if(use_matrices_instead)
+		icon_state = initial(icon_state)
+		before_flipped_matrix = transform
+		var/matrix/transform_matrix = matrix(1, 0, 0, 0, 0.350, 9) // "flips" the table
+		//there's probably a nicer way to do this but whatever. rotates the table according to the dir
+		if(dir == EAST)
+			transform_matrix.Turn(90)
+		if(dir == SOUTH)
+			transform_matrix.Turn(180)
+		if(dir == WEST)
+			transform_matrix.Turn(270)
+		animate(src, transform = transform_matrix, time = 0)
+	else
+		icon = 'icons/obj/flipped_tables.dmi'
+		icon_state = base_icon_state
+
+	update_appearance()
+	QUEUE_SMOOTH_NEIGHBORS(src)
+
+	is_flipped = TRUE
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
@@ -87,10 +195,54 @@
 
 /obj/structure/table/examine(mob/user)
 	. = ..()
+	if(is_flipped)
+		. += span_notice("It's been flipped on its side!")
 	. += deconstruction_hints(user)
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	return span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")
+
+/obj/structure/table/proc/on_exit(datum/source, atom/movable/leaving, direction)
+	SIGNAL_HANDLER
+	if(!is_flipped)
+		return
+
+	if(leaving.movement_type & PHASING)
+		return
+
+	if(leaving == src)
+		return
+	if(is_transparent) //Glass table, jolly ranchers pass
+		if(istype(leaving) && (leaving.pass_flags & PASSGLASS))
+			return
+
+	if(istype(leaving, /obj/projectile))
+		return
+
+	if(direction == dir)
+		leaving.Bump(src)
+		return COMPONENT_ATOM_BLOCK_EXIT
+
+/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(.)
+		return
+
+	if(!is_flipped)
+		return FALSE
+
+	if(is_transparent) //Glass table, jolly ranchers pass
+		if(istype(mover) && (mover.pass_flags & PASSGLASS))
+			return TRUE
+	if(isprojectile(mover))
+		var/obj/projectile/proj = mover
+		//Lets through bullets shot from behind the cover of the table
+		if(proj.movement_vector && angle2dir_cardinal(proj.movement_vector.angle) == dir)
+			return TRUE
+		return FALSE
+	if(border_dir == dir)
+		return FALSE
+	return TRUE
 
 /obj/structure/table/update_icon(updates=ALL)
 	. = ..()
@@ -107,6 +259,8 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/table/attack_hand(mob/living/user, list/modifiers)
+	if(is_flipped)
+		return
 	if(Adjacent(user) && user.pulling)
 		if(isliving(user.pulling))
 			var/mob/living/pushed_mob = user.pulling
@@ -141,6 +295,41 @@
 				user.stop_pulling()
 	return ..()
 
+/obj/structure/table/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(!istype(user) || !user.can_interact_with(src))
+		return FALSE
+
+	if(!can_flip)
+		return
+
+	if(!is_flipped)
+		user.balloon_alert_to_viewers("flipping table...")
+		if(!do_after(user, max_integrity * 0.25))
+			return
+
+		flip_table(get_dir(user, src))
+
+		return
+
+	else
+		user.balloon_alert_to_viewers("flipping table upright...")
+		if(do_after(user, max_integrity * 0.25, src))
+			unflip_table()
+			return TRUE
+
+/obj/structure/table/proc/is_able_to_throw(obj/structure/table, atom/movable/movable_entity)
+	if (movable_entity == table) //Thing is not the table
+		return FALSE
+	if (movable_entity.anchored) //Thing isn't anchored
+		return FALSE
+	if(!isliving(movable_entity) && !isobj(movable_entity)) //Thing isn't an obj or mob
+		return FALSE
+	if(movable_entity.throwing || (movable_entity.movement_type & (FLOATING|FLYING)) || HAS_TRAIT(movable_entity, TRAIT_IGNORE_ELEVATION)) //Thing isn't flying/floating
+		return FALSE
+
+	return TRUE
+
 /obj/structure/table/attack_tk(mob/user)
 	return
 
@@ -150,8 +339,9 @@
 		return
 	if(mover.throwing)
 		return TRUE
-	if(locate(/obj/structure/table) in get_turf(mover))
-		return TRUE
+	for(var/obj/structure/table/table in get_turf(mover))
+		if(!table.is_flipped)
+			return TRUE
 
 /obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!density)
@@ -183,13 +373,12 @@
 	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
-	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
-		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
 	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
 								span_userdanger("[user] slams you onto \the [src]!"))
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
 	pushed_mob.add_mood_event("table", /datum/mood_event/table)
+	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_SLAMMING, pushed_mob, src)
 
 /obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
@@ -200,13 +389,12 @@
 	pushed_mob.apply_damage(30, BRUTE, banged_limb, wound_bonus = extra_wound)
 	pushed_mob.apply_damage(60, STAMINA)
 	take_damage(50)
-	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
-		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
 	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [src]!"),
 								span_userdanger("[user] smashes your [banged_limb.plaintext_zone] against \the [src]"))
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
 	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
+	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_LIMB_SLAMMING, pushed_mob, src)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(!deconstruction_ready)
@@ -230,6 +418,9 @@
 /obj/structure/table/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(.)
+		return .
+
+	if(is_flipped)
 		return .
 
 	if(istype(tool, /obj/item/toy/cards/deck))
@@ -360,6 +551,11 @@
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
 
+/obj/structure/table/greyscale/apply_stack_properties(obj/item/stack/stack_used)
+	if(!stack_used.material_type)
+		return
+	set_custom_materials(list(stack_used.material_type = SHEET_MATERIAL_AMOUNT))
+
 /obj/structure/table/greyscale/finalize_material_effects(list/materials)
 	. = ..()
 	var/english_list = get_material_english_list(materials)
@@ -377,8 +573,9 @@
 	icon_state = "rollingtable"
 	/// Lazylist of the items that we have on our surface.
 	var/list/attached_items = null
+	can_flip = FALSE
 
-/obj/structure/table/rolling/Initialize(mapload)
+/obj/structure/table/rolling/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	AddElement(/datum/element/noisy_movement)
 
@@ -461,7 +658,7 @@
 	fire = 80
 	acid = 100
 
-/obj/structure/table/glass/Initialize(mapload)
+/obj/structure/table/glass/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -484,6 +681,8 @@
 		check_break(M)
 
 /obj/structure/table/glass/proc/check_break(mob/living/M)
+	if(is_flipped)
+		return FALSE
 	if(M.has_gravity() && M.mob_size > MOB_SIZE_SMALL && !(M.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		table_shatter(M)
 
@@ -544,6 +743,33 @@
 	smoothing_groups = SMOOTH_GROUP_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_WOOD_TABLES
 
+/obj/structure/table/wood/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
+	. = ..()
+	if(prob(33))
+		wood_table_shatter(target)
+
+/obj/structure/table/wood/tablepush(mob/living/user, mob/living/pushed_mob)
+	. = ..()
+	if(!QDELETED(src) && prob(33))
+		wood_table_shatter(pushed_mob)
+
+/obj/structure/table/wood/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
+	. = ..()
+	if(!QDELETED(src) && prob(33))
+		wood_table_shatter(pushed_mob)
+
+/obj/structure/table/wood/proc/wood_table_shatter(mob/living/victim)
+	visible_message(
+		span_warning("[src] smashes into bits!"),
+		blind_message = span_hear("You hear the loud cracking of wood being split."),
+	)
+
+	playsound(src, 'sound/effects/wounds/crack2.ogg', 50, TRUE)
+	victim.Knockdown(10 SECONDS)
+	victim.Paralyze(2 SECONDS)
+	victim.apply_damage(20, BRUTE)
+	deconstruct(FALSE)
+
 /obj/structure/table/wood/narsie_act(total_override = TRUE)
 	if(!total_override)
 		..()
@@ -556,83 +782,87 @@
 	base_icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
 
+/obj/structure/table/wood/poker/apply_stack_properties(obj/item/stack/stack_used)
+	buildstack = stack_used.type
+
 /obj/structure/table/wood/poker/narsie_act()
 	..(FALSE)
 
 /obj/structure/table/wood/fancy
 	name = "fancy table"
 	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "fancy_table"
+	icon = 'icons/obj/smooth_structures/fancy_table.dmi'
+	icon_state = "fancy_table-0"
 	base_icon_state = "fancy_table"
 	frame = /obj/structure/table_frame
 	framestack = /obj/item/stack/rods
 	buildstack = /obj/item/stack/tile/carpet
 	smoothing_groups = SMOOTH_GROUP_FANCY_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
 	canSmoothWith = SMOOTH_GROUP_FANCY_WOOD_TABLES
-	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
-/obj/structure/table/wood/fancy/Initialize(mapload)
+/obj/structure/table/wood/fancy/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	// Needs to be set dynamically because table smooth sprites are 32x34,
 	// which the editor treats as a two-tile-tall object. The sprites are that
 	// size so that the north/south corners look nice - examine the detail on
 	// the sprites in the editor to see why.
-	icon = smooth_icon
+
+/obj/structure/table/wood/fancy/apply_stack_properties(obj/item/stack/stack_used)
+	buildstack = stack_used.type
 
 /obj/structure/table/wood/fancy/black
-	icon_state = "fancy_table_black"
+	icon_state = "fancy_table_black-0"
 	base_icon_state = "fancy_table_black"
 	buildstack = /obj/item/stack/tile/carpet/black
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 
 /obj/structure/table/wood/fancy/blue
-	icon_state = "fancy_table_blue"
+	icon_state = "fancy_table_blue-0"
 	base_icon_state = "fancy_table_blue"
 	buildstack = /obj/item/stack/tile/carpet/blue
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_blue.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table_blue.dmi'
 
 /obj/structure/table/wood/fancy/cyan
-	icon_state = "fancy_table_cyan"
+	icon_state = "fancy_table_cyan-0"
 	base_icon_state = "fancy_table_cyan"
 	buildstack = /obj/item/stack/tile/carpet/cyan
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_cyan.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table_cyan.dmi'
 
 /obj/structure/table/wood/fancy/green
-	icon_state = "fancy_table_green"
+	icon_state = "fancy_table_green-0"
 	base_icon_state = "fancy_table_green"
 	buildstack = /obj/item/stack/tile/carpet/green
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_green.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table_green.dmi'
 
 /obj/structure/table/wood/fancy/orange
-	icon_state = "fancy_table_orange"
+	icon_state = "fancy_table_orange-0"
 	base_icon_state = "fancy_table_orange"
 	buildstack = /obj/item/stack/tile/carpet/orange
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_orange.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table_orange.dmi'
 
 /obj/structure/table/wood/fancy/purple
-	icon_state = "fancy_table_purple"
+	icon_state = "fancy_table_purple-0"
 	base_icon_state = "fancy_table_purple"
 	buildstack = /obj/item/stack/tile/carpet/purple
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_purple.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table_purple.dmi'
 
 /obj/structure/table/wood/fancy/red
-	icon_state = "fancy_table_red"
+	icon_state = "fancy_table_red-0"
 	base_icon_state = "fancy_table_red"
 	buildstack = /obj/item/stack/tile/carpet/red
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_red.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table_red.dmi'
 
 /obj/structure/table/wood/fancy/royalblack
-	icon_state = "fancy_table_royalblack"
+	icon_state = "fancy_table_royalblack-0"
 	base_icon_state = "fancy_table_royalblack"
 	buildstack = /obj/item/stack/tile/carpet/royalblack
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblack.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table_royalblack.dmi'
 
 /obj/structure/table/wood/fancy/royalblue
-	icon_state = "fancy_table_royalblue"
+	icon_state = "fancy_table_royalblue-0"
 	base_icon_state = "fancy_table_royalblue"
 	buildstack = /obj/item/stack/tile/carpet/royalblue
-	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblue.dmi'
+	icon = 'icons/obj/smooth_structures/fancy_table_royalblue.dmi'
 
 /*
  * Reinforced tables
@@ -648,6 +878,7 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	armor_type = /datum/armor/table_reinforced
+	can_flip = FALSE
 
 /datum/armor/table_reinforced
 	melee = 10
@@ -745,6 +976,7 @@
 	buildstack = /obj/item/stack/sheet/bronze
 	smoothing_groups = SMOOTH_GROUP_BRONZE_TABLES //Don't smooth with SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_BRONZE_TABLES
+	can_flip = FALSE
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
@@ -805,10 +1037,11 @@
 	can_buckle = TRUE
 	buckle_lying = 90
 	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
+	can_flip = FALSE
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
-/obj/structure/table/optable/Initialize(mapload)
+/obj/structure/table/optable/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	for(var/direction in GLOB.alldirs)
 		computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)

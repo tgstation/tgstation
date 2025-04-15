@@ -467,6 +467,17 @@
 		log_mapping("[src] failed to find air alarm at [AREACOORD(src)].")
 	qdel(src)
 
+/obj/effect/mapping_helpers/airalarm/surgery
+	name = "airalarm surgery helper"
+	icon_state = "airalarm_surgery_helper"
+
+/obj/effect/mapping_helpers/airalarm/surgery/LateInitialize()
+	var/obj/machinery/airalarm/target = locate() in loc
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in target?.my_area?.air_scrubbers)
+		scrubber.filter_types |= /datum/gas/nitrous_oxide
+		scrubber.set_widenet(TRUE)
+	return ..()
+
 //apc helpers
 /obj/effect/mapping_helpers/apc
 	desc = "You shouldn't see this. Report it please."

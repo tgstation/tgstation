@@ -73,7 +73,7 @@
 	uniform = /obj/item/clothing/under/rank/security/officer/formal
 	head = /obj/item/clothing/head/soft/veteran
 	mask = /obj/item/cigarette/cigar
-	suit = /obj/item/clothing/suit/jacket/trenchcoat
+	suit = /obj/item/clothing/suit/jacket/leather_trenchcoat
 	belt = /obj/item/storage/belt/holster/detective/full/ert //M1911 pistol
 	ears = /obj/item/radio/headset/heads/hos/advisor
 	glasses = /obj/item/clothing/glasses/eyepatch
