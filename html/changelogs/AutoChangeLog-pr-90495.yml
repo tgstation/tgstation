@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add wizard magical rain event. A random reagent is selected to rain down across the station. The only places to escape are in maintenance and inside containers such as lockers. The wizard is not directly affected by the reagent, but the side effects might still apply. (ie. raining lube, will make the floors slippery, which can slip the wizard)"
