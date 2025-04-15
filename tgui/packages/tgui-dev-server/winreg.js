@@ -13,7 +13,7 @@ import { createLogger } from './logging.js';
 
 const logger = createLogger('winreg');
 
-export const regQuery = async (path, key) => {
+export async function regQuery(path, key) {
   if (process.platform !== 'win32') {
     return null;
   }
@@ -42,4 +42,4 @@ export const regQuery = async (path, key) => {
     logger.error(err);
     return null;
   }
-};
+}

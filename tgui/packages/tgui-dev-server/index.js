@@ -11,7 +11,7 @@ const noHot = process.argv.includes('--no-hot');
 const noTmp = process.argv.includes('--no-tmp');
 const reloadOnce = process.argv.includes('--reload');
 
-const setupServer = async () => {
+async function setupServer() {
   const compiler = await createCompiler({
     mode: 'development',
     hot: !noHot,
@@ -25,6 +25,6 @@ const setupServer = async () => {
   }
   // Run a development server
   await compiler.watch();
-};
+}
 
 setupServer();

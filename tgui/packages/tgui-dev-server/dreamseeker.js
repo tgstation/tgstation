@@ -25,10 +25,11 @@ export class DreamSeeker {
   }
 
   topic(params = {}) {
-    // prettier-ignore
     const query = Object.keys(params)
-      .map(key => encodeURIComponent(key)
-        + '=' + encodeURIComponent(params[key]))
+      .map(
+        (key) =>
+          encodeURIComponent(key) + '=' + encodeURIComponent(params[key]),
+      )
       .join('&');
     logger.log(
       `topic call at ${this.client.defaults.baseURL + '/dummy?' + query}`,
@@ -99,4 +100,6 @@ DreamSeeker.getInstancesByPids = async (pids) => {
   return instances;
 };
 
-const plural = (word, n) => (n !== 1 ? word + 's' : word);
+function plural(word, n) {
+  return n !== 1 ? word + 's' : word;
+}

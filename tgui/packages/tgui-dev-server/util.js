@@ -16,7 +16,7 @@ export const resolvePath = path.resolve;
 /**
  * Combines path.resolve with glob patterns.
  */
-export const resolveGlob = (...sections) => {
+export function resolveGlob(...sections) {
   const unsafePaths = globPkg.sync(path.resolve(...sections), {
     strict: false,
     silent: true,
@@ -30,4 +30,4 @@ export const resolveGlob = (...sections) => {
     } catch {}
   }
   return safePaths;
-};
+}

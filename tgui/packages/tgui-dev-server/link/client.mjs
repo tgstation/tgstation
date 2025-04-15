@@ -20,6 +20,7 @@ function ensureConnection() {
   socket = new WebSocket(`ws://${DEV_SERVER_IP}:3000`);
 
   socket.onopen = () => {
+    sendLogEntry(0, null, 'connected to dev server');
     // Empty the message queue
     while (queue.length !== 0) {
       const msg = queue.shift();
@@ -28,6 +29,7 @@ function ensureConnection() {
   };
 
   socket.onmessage = (event) => {
+    sendLogEntry(0, null, 'received', event.data);
     const msg = JSON.parse(event.data);
     for (let subscriber of subscribers) {
       subscriber(msg);
@@ -37,9 +39,11 @@ function ensureConnection() {
   window.onunload = () => socket?.close();
 }
 
-const subscribe = (fn) => subscribers.push(fn);
+export function subscribe(fn) {
+  subscribers.push(fn);
+}
 
-const primitiveReviver = (value) => {
+function primitiveReviver(value) {
   if (typeof value === 'number' && !Number.isFinite(value)) {
     return {
       __number__: String(value),
@@ -51,15 +55,15 @@ const primitiveReviver = (value) => {
     };
   }
   return value;
-};
+}
 
 /**
  * A json serializer which handles circular references and other junk.
  */
-const serializeObject = (obj) => {
+function serializeObject(obj) {
   let refs = [];
 
-  const objectReviver = (key, value) => {
+  function objectReviver(key, value) {
     if (typeof value !== 'object') {
       return primitiveReviver(value);
     }
@@ -88,14 +92,14 @@ const serializeObject = (obj) => {
       return value.map(primitiveReviver);
     }
     return value;
-  };
+  }
 
   const json = JSON.stringify(obj, objectReviver);
   refs = null;
   return json;
-};
+}
 
-const sendMessage = (msg) => {
+export function sendMessage(msg) {
   if (process.env.NODE_ENV === 'production') return;
 
   const json = serializeObject(msg);
@@ -112,9 +116,9 @@ const sendMessage = (msg) => {
     }
     queue.push(json);
   }
-};
+}
 
-const sendLogEntry = (level, ns, ...args) => {
+export function sendLogEntry(level, ns, ...args) {
   if (process.env.NODE_ENV !== 'production') {
     try {
       sendMessage({
@@ -127,9 +131,9 @@ const sendLogEntry = (level, ns, ...args) => {
       });
     } catch (err) {}
   }
-};
+}
 
-const setupHotReloading = () => {
+export function setupHotReloading() {
   if (
     process.env.NODE_ENV === 'production' ||
     !process.env.WEBPACK_HMR_ENABLED ||
@@ -137,7 +141,7 @@ const setupHotReloading = () => {
   ) {
     return;
   }
-  if (!module.hot) return;
+  if (!import.meta.webpackHot) return;
 
   ensureConnection();
   sendLogEntry(0, null, 'setting up hot reloading');
@@ -145,13 +149,13 @@ const setupHotReloading = () => {
     sendLogEntry(0, null, 'received', type);
     if (type !== 'hotUpdate') return;
 
-    const status = module.hot.status();
+    const status = import.meta.webpackHot.status();
     if (status !== 'idle') {
       sendLogEntry(0, null, 'hot reload status:', status);
       return;
     }
 
-    module.hot
+    import.meta.webpackHot
       .check({
         ignoreUnaccepted: true,
         ignoreDeclined: true,
@@ -164,11 +168,4 @@ const setupHotReloading = () => {
         sendLogEntry(0, null, 'reload error', err);
       });
   });
-};
-
-module.exports = {
-  subscribe,
-  sendMessage,
-  sendLogEntry,
-  setupHotReloading,
-};
+}

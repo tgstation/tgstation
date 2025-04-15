@@ -31,7 +31,7 @@ const SEARCH_LOCATIONS = [
 
 let cacheRoot;
 
-export const findCacheRoot = async () => {
+export async function findCacheRoot() {
   if (cacheRoot) {
     return cacheRoot;
   }
@@ -53,25 +53,21 @@ export const findCacheRoot = async () => {
     logger.log('querying windows registry');
     let userpath = await regQuery('HKCU\\Software\\Dantom\\BYOND', 'userpath');
     if (userpath) {
-      // prettier-ignore
-      cacheRoot = userpath
-        .replace(/\\$/, '')
-        .replace(/\\/g, '/')
-        + '/cache';
+      cacheRoot = userpath.replace(/\\$/, '').replace(/\\/g, '/') + '/cache';
       onCacheRootFound(cacheRoot);
       return cacheRoot;
     }
   }
   logger.log('found no cache directories');
-};
+}
 
-const onCacheRootFound = (cacheRoot) => {
+function onCacheRootFound(cacheRoot) {
   logger.log(`found cache at '${cacheRoot}'`);
   // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 514.
   fs.closeSync(fs.openSync(cacheRoot + '/dummy', 'w'));
-};
+}
 
-export const reloadByondCache = async (bundleDir) => {
+export async function reloadByondCache(bundleDir) {
   const cacheRoot = await findCacheRoot();
   if (!cacheRoot) {
     return;
@@ -127,4 +123,4 @@ export const reloadByondCache = async (bundleDir) => {
       });
     }
   }
-};
+}

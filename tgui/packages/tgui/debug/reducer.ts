@@ -4,8 +4,13 @@
  * @license MIT
  */
 
-export const debugReducer = (state = {}, action) => {
-  const { type, payload } = action;
+type DebugState = {
+  kitchenSink: boolean;
+  debugLayout: boolean;
+};
+
+export function debugReducer(state = {} as DebugState, action) {
+  const { type } = action;
   if (type === 'debug/toggleKitchenSink') {
     return {
       ...state,
@@ -19,4 +24,4 @@ export const debugReducer = (state = {}, action) => {
     };
   }
   return state;
-};
+}
