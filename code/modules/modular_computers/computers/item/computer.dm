@@ -997,7 +997,7 @@
 		if(SEC_LEVEL_RED) // all-hands-on-deck situations, everyone is responsible for combatting a threat
 			return ALERT_RELEVANCY_PERTINENT
 		if(SEC_LEVEL_BLUE) // suspected threat. security needs to be alert and possibly preparing for it, no further concerns
-			if(ACCESS_SECURITY in computer_id_slot.access)
+			if(ACCESS_SECURITY in computer_id_slot?.access)
 				return ALERT_RELEVANCY_PERTINENT
 			else
 				return ALERT_RELEVANCY_WARN
