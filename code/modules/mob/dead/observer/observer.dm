@@ -902,7 +902,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Observe"
 	set category = "Ghost"
 
-	if(!isobserver(usr)) //Make sure they're an observer!
+	if(!isobserver(usr) || HAS_TRAIT(src, TRAIT_NO_OBSERVE)) //Make sure they're an observer!
 		return
 
 	reset_perspective(null)
@@ -939,6 +939,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		stack_trace("do_observe called on an observer ([src]) who was already observing something! (observing: [observetarget], new target: [mob_eye])")
 		message_admins("[ADMIN_LOOKUPFLW(src)] attempted to observe someone while already observing someone, \
 			this is a bug (and a past exploit) and should be investigated.")
+		return
+
+	if(HAS_TRAIT(src, TRAIT_NO_OBSERVE))
 		return
 
 	//Istype so we filter out points of interest that are not mobs

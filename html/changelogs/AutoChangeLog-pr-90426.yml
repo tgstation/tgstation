@@ -1,0 +1,11 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fix PB shots with a revolver doing a melee attack"
+  - bugfix: "Fix Russian Revolver"
+  - refactor: "Refactored Russian Roulette entirely"
+  - qol: "Russian Revolver now has a do after associated before pulling the trigger. You can alt-shift-click it to customize length of it, for dramatic effect (or you can set it to 0 seconds)"
+  - qol: "Clowns can partake in Russian Roulette without fumbling"
+  - rscadd: "Adds a penalty for cheating the Cursed Russian Revolver"
+  - rscadd: "Cheating in Russian Roulette and losing now confers a different moodlet than plain losing"
+  - rscdel: "You can no longer use telekinesis in Russian Roulette"

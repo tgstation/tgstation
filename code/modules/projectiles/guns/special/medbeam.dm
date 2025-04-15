@@ -68,6 +68,7 @@
 	START_PROCESSING(SSobj, src)
 
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
+	return TRUE
 
 /obj/item/gun/medbeam/process()
 	if(!mounted && !isliving(loc))
