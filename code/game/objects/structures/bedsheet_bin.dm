@@ -23,8 +23,6 @@ LINEN BINS
 	resistance_flags = FLAMMABLE
 	dying_key = DYE_REGISTRY_BEDSHEET
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
-	/// Like surgery drapes, makes sure you can use the surgery UI while laying down
-	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_IGNORE_MOBILITY
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 	/// Custom nouns to act as the subject of dreams
