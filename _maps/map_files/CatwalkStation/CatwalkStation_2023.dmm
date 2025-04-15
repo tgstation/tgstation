@@ -6311,6 +6311,9 @@
 /turf/open/floor/engine/hull/reinforced/air,
 /area/station/maintenance/department/engine)
 "bWE" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 5
+	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "bWI" = (
@@ -10776,12 +10779,6 @@
 /obj/structure/sign/poster/contraband/missing_gloves/directional/west,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
-"dpn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/station/service/kitchen/coldroom)
 "dpo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -13138,9 +13135,9 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "dZZ" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/passive_vent{
 	dir = 1;
-	name = "Server Vent"
+	name = "server vent"
 	},
 /turf/open/floor/circuit/telecomms/server,
 /area/station/science/server)
@@ -16738,6 +16735,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/disk/tech_disk{
+	pixel_x = -9;
+	pixel_y = 7
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "fji" = (
@@ -17644,7 +17645,18 @@
 /area/station/maintenance/starboard/lesser)
 "fwp" = (
 /obj/structure/table,
-/obj/item/reagent_containers/dropper,
+/obj/item/disk/tech_disk{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/disk/tech_disk{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/disk/tech_disk,
+/obj/item/reagent_containers/dropper{
+	pixel_y = -10
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/lab)
 "fwx" = (
@@ -21816,10 +21828,12 @@
 /turf/open/floor/plating,
 /area/station/commons/storage/art)
 "gJg" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/purple/fourcorners,
-/turf/open/floor/iron,
-/area/station/science/lab)
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/service/kitchen/coldroom)
 "gJh" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/disposaloutlet{
@@ -22126,7 +22140,8 @@
 "gOH" = (
 /obj/structure/sink/kitchen/directional/west,
 /obj/machinery/light_switch/directional/east,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "gOK" = (
@@ -22983,6 +22998,9 @@
 "hbu" = (
 /obj/machinery/food_cart,
 /obj/item/radio/intercom/directional/north,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "hbw" = (
@@ -28032,6 +28050,9 @@
 /area/station/maintenance/port/aft)
 "iDt" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 4
+	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "iDu" = (
@@ -36352,8 +36373,14 @@
 /area/station/maintenance/hallway/abandoned_recreation)
 "lei" = (
 /obj/structure/table,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty{
+	pixel_y = 7;
+	pixel_x = 4
+	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_y = 12;
+	pixel_x = -2
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/lab)
 "leu" = (
@@ -37288,9 +37315,11 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "luI" = (
-/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden,
-/turf/closed/wall/r_wall,
-/area/station/science/server)
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/service/kitchen/coldroom)
 "luN" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -39447,9 +39476,7 @@
 "mbF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "mbK" = (
@@ -46050,6 +46077,9 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /obj/structure/plasticflaps/kitchen,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden{
+	dir = 8
+	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "ocG" = (
@@ -56505,6 +56535,7 @@
 /obj/structure/closet/secure_closet/freezer/meat,
 /obj/machinery/camera/autoname/directional/south,
 /obj/item/fish/catfish,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "rqg" = (
@@ -59998,12 +60029,6 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
-"stv" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 1
-	},
-/turf/open/floor/circuit/telecomms/server,
-/area/station/science/server)
 "stG" = (
 /obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -65597,6 +65622,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "uit" = (
@@ -66349,6 +66375,7 @@
 /area/station/service/library)
 "uts" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "utG" = (
@@ -68369,6 +68396,7 @@
 "uZn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
 /obj/machinery/light/cold/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
 "uZs" = (
@@ -68486,6 +68514,9 @@
 "vbo" = (
 /obj/machinery/icecream_vat,
 /obj/machinery/camera/autoname/directional/north,
+/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
+	dir = 6
+	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "vbN" = (
@@ -68673,6 +68704,7 @@
 /mob/living/basic/goat/pete,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/tlv_cold_room,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "vet" = (
@@ -69922,6 +69954,9 @@
 /area/station/security/office)
 "vxJ" = (
 /obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 8
+	},
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/station/service/kitchen/coldroom)
 "vya" = (
@@ -74474,6 +74509,9 @@
 /obj/item/wrench{
 	pixel_y = 6
 	},
+/obj/item/disk/tech_disk{
+	pixel_x = 12
+	},
 /turf/open/floor/iron,
 /area/station/science/research)
 "wSW" = (
@@ -76890,11 +76928,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
-"xGo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/station/service/kitchen/coldroom)
 "xGG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -78559,6 +78592,9 @@
 /area/station/medical/coldroom)
 "ygN" = (
 /obj/structure/table,
+/obj/item/disk/tech_disk{
+	pixel_x = 5
+	},
 /turf/open/floor/iron,
 /area/station/science/breakroom)
 "ygW" = (
@@ -114710,9 +114746,9 @@ iHS
 dZZ
 hZe
 agy
-luI
-gJg
-gJg
+tsJ
+jFH
+jFH
 uGP
 kxo
 iCa
@@ -115478,7 +115514,7 @@ gme
 mbk
 rOA
 iHS
-stv
+dZZ
 hZe
 fUL
 wNC
@@ -168884,7 +168920,7 @@ gPW
 dpo
 bOk
 hbu
-bWE
+gJg
 rqc
 bOk
 bOk
@@ -169140,9 +169176,9 @@ cTW
 gPW
 gIo
 qUa
-bWE
+luI
 iDt
-xGo
+mbF
 mlL
 bOk
 hGg
@@ -169656,7 +169692,7 @@ meX
 bOk
 nuG
 gOH
-dpn
+mbF
 jLw
 bOk
 hGg
