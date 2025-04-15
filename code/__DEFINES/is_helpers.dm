@@ -36,6 +36,19 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
 
+GLOBAL_LIST_INIT(turfs_no_slip_water, typecacheof(list(
+	/turf/open/misc/asteroid,
+	/turf/open/misc/dirt,
+	/turf/open/misc/grass,
+	/turf/open/misc/basalt,
+	/turf/open/misc/ashplanet,
+	/turf/open/misc/snow,
+	/turf/open/misc/sandy_dirt,
+	/turf/open/floor/noslip,
+	)))
+
+#define isnoslipturf(A) (is_type_in_typecache(A, GLOB.turfs_no_slip_water))
+
 GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 	/turf/open/openspace,
 	/turf/open/space/openspace
