@@ -153,12 +153,12 @@
 	mood_change = -3
 
 /datum/mood_event/claustrophobia
-	description = "Why do I feel trapped?!  Let me out!!!"
+	description = "Why do I feel trapped?! Let me out!!!"
 	mood_change = -7
 	timeout = 1 MINUTES
 
 /datum/mood_event/bright_light
-	description = "I hate it in the light...I need to find a darker place..."
+	description = "I hate it in the light... I need to find a darker place..."
 	mood_change = -12
 
 /datum/mood_event/family_heirloom_missing
@@ -434,6 +434,11 @@
 	mood_change = -3
 	timeout = 3 MINUTES
 
+/datum/mood_event/russian_roulette_lose_cheater
+	description = "I gambled and lost! Good thing I wasn't aiming for my head..."
+	mood_change = -10
+	timeout = 10 MINUTES
+
 /datum/mood_event/russian_roulette_lose
 	description = "I gambled my life and lost! I guess this is the end..."
 	mood_change = -20
@@ -516,3 +521,16 @@
 	description = "I didn't want to believe it, but there are people out there that are genuinely evil."
 	mood_change = -4
 	timeout = 1 MINUTES
+
+/datum/mood_event/smoke_in_face
+	description = "Cigarette smoke is disgusting."
+	mood_change = -3
+	timeout = 30 SECONDS
+
+/datum/mood_event/smoke_in_face/add_effects(param)
+	if(HAS_TRAIT(owner, TRAIT_ANOSMIA))
+		description = "Cigarette smoke is unpleasant."
+		mood_change = -1
+	if(HAS_TRAIT(owner, TRAIT_SMOKER))
+		description = "Blowing smoke in my face, really?"
+		mood_change = 0

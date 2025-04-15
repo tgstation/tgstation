@@ -23,7 +23,7 @@
 	set waitfor = FALSE
 	var/datum/dream/chosen_dream
 
-	if (IS_HERETIC(src) && !("mansus_dream_fatigue" in src.mob_mood.mood_events) && GLOB.reality_smash_track.smashes.len)
+	if (IS_HERETIC(src) && !mob_mood.get_mood_event("mansus_dream_fatigue") && GLOB.reality_smash_track.smashes.len)
 		chosen_dream = new /datum/dream/heretic(pick(GLOB.reality_smash_track.smashes))
 	else
 		chosen_dream = pick_weight(GLOB.dreams)

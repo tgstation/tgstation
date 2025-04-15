@@ -399,20 +399,48 @@
 		list("R&D Purple", "#D381C9"),
 	)
 	decal_list = list(
+		//Primary Category
+		list("4 Corners", "tile_fourcorners"),
 		list("Corner", "tile_corner"),
 		list("Half", "tile_half_contrasted"),
 		list("Opposing Corners", "tile_opposing_corners"),
 		list("3 Corners", "tile_anticorner_contrasted"),
-		list("4 Corners", "tile_fourcorners"),
-		list("Trimline Corner", "trimline_corner_fill"),
-		list("Trimline Fill", "trimline_fill"),
-		list("Trimline Fill L", "trimline_fill__8"), // This is a hack that lives in the spritesheet builder and paint_floor
-		list("Trimline End", "trimline_end_fill"),
-		list("Trimline Box", "trimline_box_fill"),
+		//Trimlines Category
+		list("Trimline Filled Box", "trimline_box_fill"),
+		list("Trimline Filled Corner", "trimline_corner_fill"),
+		list("Trimline Filled", "trimline_fill"),
+		list("Trimline Filled L ", "trimline_fill__8"), // This is a hack that lives in the spritesheet builder and paint_floor
+		list("Trimline Filled End", "trimline_end_fill"),
+		list("Trimline Box", "trimline_box"),
+		list("Trimline Corner", "trimline_corner"),
+		list("Trimline", "trimline"),
+		list("Trimline L ", "trimline__8"),
+		list("Trimline End", "trimline_end"),
+		//A few misc decals to break up the UI a touch
+		list("Diagonal Centre", "diagonal_centre"),
+		list("Diagonal Edge", "diagonal_edge"),
+		list("Full Tile", "tile_full"),
+		list("Full Half", "tile_half"),
+		list("Full Anticorner", "tile_anticorner"),
+		//Decorative Trimlines Category
+		list("Trimline Connector L", "trimline_shrink_cw"),
+		list("Trimline Connector R", "trimline_shrink_ccw"),
+		list("Trimline Arrow L Filled", "trimline_arrow_cw_fill"),
+		list("Trimline Arrow R Filled", "trimline_arrow_ccw_fill"),
+		list("Trimline Warn Filled", "trimline_warn_fill"),
+		list("Trimline Warn Filled L", "trimline_warn_fill__8"),
+		list("Trimline Warn", "trimline_warn"),
+		list("Trimline Warn L", "trimline_warn__8"),
+		list("Trimline Arrow L", "trimline_arrow_cw"),
+		list("Trimline Arrow R", "trimline_arrow_ccw"),
 	)
 	nondirectional_decals = list(
 		"tile_fourcorners",
 		"trimline_box_fill",
+		"trimline_box",
+		"diagonal_centre",
+		"diagonal_edge",
+		"tile_full",
 	)
 
 	/// Regex to split alpha out.

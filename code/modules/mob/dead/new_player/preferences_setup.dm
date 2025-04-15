@@ -23,7 +23,7 @@
 
 ///Setup the random hardcore quirks and give the character the new score prize.
 /datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character)
-	var/next_hardcore_score = select_hardcore_quirks()
+	var/next_hardcore_score = select_hardcore_quirks(character.dna.species.type)
 	character.hardcore_survival_score = next_hardcore_score ** 1.2  //30 points would be about 60 score
 	log_game("[character] started hardcore random with [english_list(all_quirks)], for a score of [next_hardcore_score].")
 
@@ -35,7 +35,7 @@
  * Goes through all quirks that can be used in hardcore mode and select some based on a random budget.
  * Returns the new value to be gained with this setup, plus the previously earned score.
  **/
-/datum/preferences/proc/select_hardcore_quirks()
+/datum/preferences/proc/select_hardcore_quirks(species)
 	. = 0
 
 	var/quirk_budget = rand(8, 35)
@@ -45,10 +45,10 @@
 	var/list/available_hardcore_quirks = SSquirks.hardcore_quirks.Copy()
 
 	while(quirk_budget > 0)
-		for(var/i in available_hardcore_quirks) //Remove from available quirks if its too expensive.
-			var/datum/quirk/available_quirk = i
-			if(available_hardcore_quirks[available_quirk] > quirk_budget)
-				available_hardcore_quirks -= available_quirk
+		for(var/quirk in available_hardcore_quirks) //Remove from available quirks if its too expensive.
+			var/datum/quirk/quirk_prototype = SSquirks.quirk_prototypes[quirk]
+			if(available_hardcore_quirks[quirk] > quirk_budget || !quirk_prototype.is_species_appropriate(species))
+				available_hardcore_quirks -= quirk
 
 		if(!available_hardcore_quirks.len)
 			break

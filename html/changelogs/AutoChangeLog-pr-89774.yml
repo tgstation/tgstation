@@ -1,9 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - rscadd: "The station blueprints can be used to toggle whether custom shuttles can be built/expanded/docked within station areas."
-  - qol: "Custom areas do not have to be completely contained within shuttle frames, as long as the APC isn't attached to the frame."
-  - rscadd: "Custom shuttles with functioning engines will fly off into the sunset when the emergency shuttle leaves."
-  - rscadd: "Custom shuttle navigation computers can view space levels adjacent to the one the shuttle is currently docked at."
-  - bugfix: "Constructed shuttle engines no longer contribute twice as much engine power to shuttles, nor can they be used to add unlimited shuttle power."
-  - bugfix: "Constructed shuttle engines now connect to shuttles when build, rather than needing to be unachored and then reanchored."

@@ -85,18 +85,16 @@
 	playsound(vat, 'sound/effects/splat.ogg', 50, TRUE)
 	if(rand(1, 100) < risk) //Fail roll!
 		fuck_up_growing(vat)
-
-		return FALSE
-	succeed_growing(vat)
-	return TRUE
+		. = FALSE
+	else
+		succeed_growing(vat)
+		. = TRUE
+	SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
 
 /datum/micro_organism/cell_line/proc/fuck_up_growing(obj/machinery/vatgrower/vat)
 	vat.visible_message(span_warning("The biological sample in [vat] seems to have dissipated!"))
 	if(prob(50))
 		new /obj/effect/gibspawner/generic(get_turf(vat)) //Spawn some gibs.
-	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
-		return
-	QDEL_NULL(vat.biological_sample)
 
 /datum/micro_organism/cell_line/proc/succeed_growing(obj/machinery/vatgrower/vat)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new
@@ -106,9 +104,9 @@
 		var/atom/thing = new resulting_atom(get_turf(vat))
 		ADD_TRAIT(thing, TRAIT_VATGROWN, "vatgrowing")
 		vat.visible_message(span_nicegreen("[thing] pops out of [vat]!"))
-	if(SEND_SIGNAL(vat.biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED) & SPARE_SAMPLE)
-		return
-	QDEL_NULL(vat.biological_sample)
+		//We maybe add some color. the chance is static for now, but idewally we would be able to manipulate it in the future.
+		if(prob(CYTO_SHINY_CHANCE))
+			mutate_color(thing)
 
 ///Overriden to show more info like needs, supplementary and supressive reagents and also growth.
 /datum/micro_organism/cell_line/get_details(show_details)
@@ -127,3 +125,36 @@
 		var/datum/reagent/reagent = i
 		reagent_names += initial(reagent.name)
 	return span_notice("[prefix_text] [jointext(reagent_names, ", ")]")
+
+//Adds a hue shift filter and affix to an atom.
+/datum/micro_organism/cell_line/proc/mutate_color(atom/beautiful_mutant)
+	//This determines how much the hue of the atom is shifted, 0.5 is the most extreme, respresenting a 180° hue shift.
+	var/hue_shift = 1
+	//This affix is added to the name of the atom, to help players understand and converse about the different rarity levels.
+	var/rarity_affix = "glitched"
+
+	switch(rand(1, 100))
+		if(1 to 35) //35% chance : painted
+			hue_shift = 0.15
+			rarity_affix = "painted"
+		if(36 to 70) //35% chance : mutant
+			hue_shift = 0.85 //this value is equivalent in distance as the painted tier, just in the other direction.
+			rarity_affix = "mutant"
+		if(71 to 83) //13% chance : rare
+			hue_shift = 0.3
+			rarity_affix = "rare"
+		if(84 to 95) //12% chance : shiny
+			hue_shift = 0.7
+			rarity_affix = "shiny"
+		if(96 to 100) //5% chance : mutant king
+			hue_shift = 0.5 //Best in show, most extreme color change.
+			rarity_affix = "mutant king" //The name is up to debate, since cyto is all about freaky creatures I thought it was good choice over something like "cosmic" or "regal".
+
+	var/list/mutant_shift_matrix = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, hue_shift,0,0,0) //matrix for our colour shifting.
+
+	//Here we make the changes for the atom, we apply a filter and change the name to indicate rarity.
+	beautiful_mutant.add_filter("shiny mutation", 15, color_matrix_filter(mutant_shift_matrix, FILTER_COLOR_HSL))
+	beautiful_mutant.name = "[rarity_affix] [beautiful_mutant.name]"
+	if(isliving(beautiful_mutant)) //update the real name var if it's actually a living mob
+		var/mob/living/living_mutie = beautiful_mutant
+		living_mutie.real_name = living_mutie.name

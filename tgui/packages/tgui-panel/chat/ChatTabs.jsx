@@ -12,18 +12,7 @@ import { addChatPage, changeChatPage } from './actions';
 import { selectChatPages, selectCurrentChatPage } from './selectors';
 
 const UnreadCountWidget = ({ value }) => (
-  <Box
-    style={{
-      fontSize: '0.7em',
-      borderRadius: '0.25em',
-      width: '1.7em',
-      lineHeight: '1.55em',
-      backgroundColor: 'crimson',
-      color: '#fff',
-    }}
-  >
-    {Math.min(value, 99)}
-  </Box>
+  <Box className="UnreadCount">{Math.min(value, 99)}</Box>
 );
 
 export const ChatTabs = (props) => {
@@ -38,12 +27,6 @@ export const ChatTabs = (props) => {
             <Tabs.Tab
               key={page.id}
               selected={page === currentPage}
-              rightSlot={
-                !page.hideUnreadCount &&
-                page.unreadCount > 0 && (
-                  <UnreadCountWidget value={page.unreadCount} />
-                )
-              }
               onClick={() =>
                 dispatch(
                   changeChatPage({
@@ -53,6 +36,9 @@ export const ChatTabs = (props) => {
               }
             >
               {page.name}
+              {!page.hideUnreadCount && page.unreadCount > 0 && (
+                <UnreadCountWidget value={page.unreadCount} />
+              )}
             </Tabs.Tab>
           ))}
         </Tabs>

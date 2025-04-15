@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Settler's bonus reduction to passive hunger drain has been halved, ensuring they will at least get hungry once per round (but they still get hungry considerably less)"

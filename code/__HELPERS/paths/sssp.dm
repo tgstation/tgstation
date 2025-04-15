@@ -77,7 +77,7 @@
 	var/turf/next_turf = other_end
 	// Cache for sonic speed
 	var/next_closest = src.next_closest
-	while(next_turf != FLOW_PATH_END || next_turf == null)
+	while(next_turf != FLOW_PATH_END && next_turf != null)
 		path += next_turf
 		next_turf = next_closest[next_turf] // We take the first entry cause that's the turf
 

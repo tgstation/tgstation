@@ -43,7 +43,7 @@
 	var/hair_alpha = 255
 	/// Is the hair currently hidden by something?
 	var/hair_hidden = FALSE
-	/// Lazy initialized hashset of all hair masks that should be applied
+	/// Lazy initialized hashset of all hair mask types that should be applied
 	var/list/hair_masks
 
 	///Facial hair style

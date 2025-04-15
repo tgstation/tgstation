@@ -18,6 +18,12 @@
 	WILDCARD_NAME_COMMAND = list(limit = 2, usage = list()), \
 	WILDCARD_NAME_PRV_COMMAND = list(limit = 1, usage = list()) \
 )
+/// The Platinum card, an in between of silver and gold, which can have infinite common but is still limited in command
+#define WILDCARD_LIMIT_PLATINUM list( \
+	WILDCARD_NAME_COMMON = list(limit = -1, usage = list()), \
+	WILDCARD_NAME_COMMAND = list(limit = 2, usage = list()), \
+	WILDCARD_NAME_PRV_COMMAND = list(limit = 1, usage = list()) \
+)
 /// Wildcard slot define for Captain gold cards. Can hold infinite of any Captain level wildcard.
 #define WILDCARD_LIMIT_GOLD list(WILDCARD_NAME_CAPTAIN = list(limit = -1, usage = list()))
 /// Wildcard slot define for select Syndicate-affiliated cards. Can hold infinite of any Syndicate level wildcard. Syndicate includes all station accesses.

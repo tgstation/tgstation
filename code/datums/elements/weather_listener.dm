@@ -27,7 +27,6 @@
 
 	RegisterSignal(target, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(handle_z_level_change), override = TRUE)
 	RegisterSignal(target, COMSIG_MOB_LOGOUT, PROC_REF(handle_logout), override = TRUE)
-
 	var/mob/target_mob = target
 	handle_z_level_change(target_mob, null, target_mob.loc)
 

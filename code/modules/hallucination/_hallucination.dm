@@ -9,6 +9,8 @@
 /datum/hallucination
 	/// What is this hallucination's weight in the random hallucination pool?
 	var/random_hallucination_weight = 0
+	/// What tier of hallucination is this? Rarer ones should be higher
+	var/hallucination_tier = HALLUCINATION_TIER_NEVER
 	/// Who's our next highest abstract parent type?
 	var/abstract_hallucination_parent = /datum/hallucination
 	/// Extra info about the hallucination displayed in the log.
@@ -162,8 +164,8 @@
 /obj/effect/client_image_holder/proc/generate_image()
 	var/image/created = image(image_icon, src, image_state, image_layer, dir = src.dir)
 	SET_PLANE_EXPLICIT(created, image_plane, src)
-	created.pixel_x = image_pixel_x
-	created.pixel_y = image_pixel_y
+	created.pixel_w = image_pixel_x
+	created.pixel_z = image_pixel_y
 	if(image_color)
 		created.color = image_color
 	return created

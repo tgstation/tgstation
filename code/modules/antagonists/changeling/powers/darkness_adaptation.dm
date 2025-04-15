@@ -63,7 +63,7 @@
 	COOLDOWN_DECLARE(skip_tick_update)
 
 /datum/status_effect/darkness_adapted/on_apply()
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_invis))
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(owner, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(eye_implanted))
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(eye_removed))
 	RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(examine_mob))

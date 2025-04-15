@@ -95,6 +95,8 @@
 #define WIRE_OVERCLOCK "Overclock"
 #define WIRE_EQUIPMENT "Equipment"
 #define WIRE_ENVIRONMENT "Environment"
+#define WIRE_LOOP_MODE "Loop mode"
+#define WIRE_REPLAY_MODE "Replay mode"
 
 // Wire states for the AI
 #define AI_WIRE_NORMAL 0

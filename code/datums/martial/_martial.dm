@@ -4,37 +4,37 @@
 	/// ID of the martial art
 	var/id = ""
 	/// The streak of attacks the user has performed
-	var/streak = ""
+	VAR_FINAL/streak = ""
 	/// The maximum length of streaks allowed
 	var/max_streak_length = 6
 
+	/// Are we being actively used by a mob?
+	var/active = FALSE
+	/// Where this martial art is from, sometimes the same as the holder if it's tied to them
+	/// If the origin is deleted, this martial art will be too.
+	VAR_PRIVATE/datum/origin
 	/// The current mob associated with this martial art datum. Do not set directly.
 	VAR_PRIVATE/mob/living/holder
 	/// Weakref to the last mob we attacked, for determining when to reset streaks
 	VAR_PRIVATE/datum/weakref/current_target
-	/// Used for temporary martial arts.
-	/// This is a reference to the last martial art that was replaced by this one.
-	VAR_PRIVATE/datum/martial_art/base
 
 	/// Path to verb to display help text for this martial art.
 	var/help_verb
-	/// If TRUE, this martial art can be overridden and stored (via base) by other martial arts if deemed "temporary" via teach().
-	var/allow_temp_override = TRUE
 	/// If TRUE, this martial art smashes tables when performing table slams and head smashes
 	var/smashes_tables = FALSE
 	/// If TRUE, a combo meter will be displayed on the HUD for the current streak
 	var/display_combos = FALSE
+	///The Combo HUD given to display comboes, if we're set to display them.
+	var/atom/movable/screen/combo/combo_display
 	/// The length of time until streaks are auto-reset.
 	var/combo_timer = 6 SECONDS
 	/// Timer ID for the combo reset timer.
 	var/timerid
 	/// If TRUE, this style allows you to punch people despite being a pacifist (IE: Boxing, which does no damage)
 	var/pacifist_style = FALSE
-
-/datum/martial_art/Destroy()
-	if(!isnull(holder))
-		remove(holder)
-	return ..()
+	/// If TRUE, the user is locked to using this martial art, and can't swap to other ones they know.
+	/// If the mob has two locked martial arts, it's first come first serve.
+	var/locked_to_use = FALSE
 
 /datum/martial_art/serialize_list(list/options, list/semvers)
 	. = ..()
@@ -45,6 +45,33 @@
 
 	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return .
+
+/datum/martial_art/New(datum/new_origin)
+	set_origin(new_origin)
+
+/datum/martial_art/Destroy()
+	if(!isnull(holder))
+		unlearn(holder)
+	if(!isnull(origin))
+		set_origin(null)
+	return ..()
+
+/datum/martial_art/proc/set_origin(datum/new_origin)
+	if(origin)
+		UnregisterSignal(origin, COMSIG_QDELETING)
+		origin = null
+	if(isnull(new_origin))
+		return
+	src.origin = new_origin
+	RegisterSignal(origin, COMSIG_QDELETING, PROC_REF(clear_origin))
+
+/datum/martial_art/proc/clear_origin()
+	SIGNAL_HANDLER
+	qdel(src)
+
+/datum/martial_art/proc/clear_holder(datum/source)
+	SIGNAL_HANDLER
+	unlearn(holder)
 
 /// Signal proc for [COMSIG_LIVING_UNARMED_ATTACK] to hook into the appropriate proc
 /datum/martial_art/proc/unarmed_strike(mob/living/source, atom/attack_target, proximity, modifiers)
@@ -205,7 +232,7 @@
 		streak = copytext(streak, 1 + length(streak[1]))
 	if(display_combos)
 		timerid = addtimer(CALLBACK(src, PROC_REF(reset_streak), null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
-		holder.hud_used?.combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
+		combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
 
 /**
  * Resets the current streak.
@@ -220,143 +247,149 @@
 	current_target = WEAKREF(new_target)
 	streak = ""
 	if(display_combos && update_icon)
-		holder.hud_used?.combo_display.update_icon_state(streak)
+		combo_display.update_icon_state(streak)
+
+/datum/martial_art/proc/smash_table(mob/living/source, mob/living/pushed_mob, obj/structure/table/table)
+	SIGNAL_HANDLER
+	if(smashes_tables)
+		table.deconstruct(FALSE)
 
 /**
  * Teaches the passed mob this martial art.
  *
  * Arguments
  * * mob/living/new_holder - The mob to teach this martial art to.
- * * make_temporary - If FALSE, this martial art will completely replace any existing martial arts.
- * If TRUE, any existing martial art will be stored in the base variable, and will be restored when this martial art is removed.
- * This can only occur if allow_temp_override is TRUE.
  *
  * Returns
  * * TRUE - The martial art was successfully taught.
  * * FALSE - The mob failed to learn the martial art, for whatever reason.
  */
-/datum/martial_art/proc/teach(mob/living/new_holder, make_temporary = FALSE)
-	SHOULD_CALL_PARENT(TRUE)
+/datum/martial_art/proc/teach(mob/living/new_holder)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	if(!istype(new_holder) || isnull(new_holder.mind))
+	if(!can_teach(new_holder) || holder == new_holder)
 		return FALSE
 
-	var/datum/martial_art/existing_martial = new_holder.mind.martial_art
-	if(!isnull(existing_martial))
-		if(make_temporary && !existing_martial.allow_temp_override)
-			return FALSE
-
-		if(!isnull(existing_martial.base))
-			store_martial_art(existing_martial.base)
-			existing_martial.unstore_martial_art()
-		else if(make_temporary)
-			store_martial_art(existing_martial)
-
-		// Nulls out any existing martial art, it'll get GC'd if nothing owns it
-		existing_martial.remove(new_holder)
-
-	new_holder.mind.martial_art = src
 	holder = new_holder
-	on_teach(new_holder)
+	if(origin != new_holder)
+		RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(clear_holder))
+	// locked martial arts always get inserted as the next up
+	// (so if you learn two locked martial arts, and you get rid of the first, the second will slot itself in)
+	if(locked_to_use && LAZYLEN(new_holder.martial_arts) >= 2)
+		LAZYINSERT(new_holder.martial_arts, 2, src)
+	else
+		LAZYADD(new_holder.martial_arts, src)
+	if(LAZYLEN(new_holder.martial_arts) >= 2)
+		// newly learned martials are preferred to be the active one
+		add_verb(new_holder, /mob/living/proc/verb_switch_style)
+		// if the active one is locked, this will no-op, which is fine
+		new_holder.switch_style(GET_ACTIVE_MARTIAL_ART(new_holder), src)
+	else if(!active)
+		activate_style(new_holder)
 	return TRUE
 
-/// Stores the passed martial art in the base var.
-/datum/martial_art/proc/store_martial_art(datum/martial_art/martial)
-	if(!isnull(base))
-		UnregisterSignal(base, COMSIG_QDELETING)
-
-	base = martial
-	RegisterSignal(base, COMSIG_QDELETING, PROC_REF(base_deleted))
-
-/// Unstores the base var.
-/datum/martial_art/proc/unstore_martial_art()
-	UnregisterSignal(base, COMSIG_QDELETING)
-	base = null
-
-/datum/martial_art/proc/base_deleted(datum/source)
-	SIGNAL_HANDLER
-	base = null
+/**
+ * Checks if the passed mob can be taught this martial art.
+ *
+ * Arguments
+ * * mob/living/new_holder - The mob to check
+ *
+ * Returns
+ * * TRUE - The mob can be taught this martial art
+ * * FALSE - The mob cannot be taught this martial art
+ */
+/datum/martial_art/proc/can_teach(mob/living/new_holder)
+	return isliving(new_holder)
 
 /**
- * Removes this martial art from the passed mob AND their mind.
+ * Removes this martial art from the passed mob.
  *
  * Arguments
  * * mob/living/old_holder - The mob to remove this martial art from.
  */
-/datum/martial_art/proc/remove(mob/living/old_holder)
-	SHOULD_CALL_PARENT(TRUE)
+/datum/martial_art/proc/unlearn(mob/living/old_holder)
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	ASSERT(old_holder == holder)
-	ASSERT(old_holder.mind.martial_art == src)
-
-	on_remove(old_holder)
-	old_holder.mind.martial_art = null
-	if(!isnull(base))
-		base.teach(old_holder)
-		unstore_martial_art()
-	holder = null
-
-/**
- * A helper proc to remove the martial art from the passed mob fully, e
- * ven if stored in another martial art's base.
- *
- * Arguments
- * * mob/living/maybe_holder - The mob to check.
- *
- * Returns
- * * TRUE - If the martial art was removed in some way
- * * FALSE - If nothing happened
- */
-/datum/martial_art/proc/fully_remove(mob/living/maybe_holder)
-	var/datum/martial_art/holder_art = maybe_holder.mind?.martial_art
-	if(isnull(holder_art))
+	if(old_holder != holder)
 		return FALSE
 
-	if(holder_art == src)
-		remove(maybe_holder)
-		return TRUE
-
-	if(holder_art.base == src)
-		holder_art.unstore_martial_art()
-		return TRUE
-
-	return FALSE
+	if(LAZYLEN(old_holder.martial_arts) >= 2 && !QDELING(old_holder))
+		old_holder.switch_style(src, GET_NEXT_MARTIAL_ART(old_holder))
+	else if(active)
+		deactivate_style(old_holder)
+	if(origin != old_holder)
+		UnregisterSignal(old_holder, COMSIG_QDELETING)
+	LAZYREMOVE(old_holder.martial_arts, src)
+	holder = null
+	if(LAZYLEN(old_holder.martial_arts) <= 1)
+		remove_verb(old_holder, /mob/living/proc/verb_switch_style)
+	return TRUE
 
 /**
  * Called when this martial art is added to a mob.
  */
-/datum/martial_art/proc/on_teach(mob/living/new_holder)
+/datum/martial_art/proc/activate_style(mob/living/new_holder)
+	SHOULD_CALL_PARENT(TRUE)
+	active = TRUE
 	if(help_verb)
 		add_verb(new_holder, help_verb)
-	RegisterSignal(new_holder, COMSIG_QDELETING, PROC_REF(holder_deleted))
 	RegisterSignal(new_holder, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
 	RegisterSignal(new_holder, COMSIG_LIVING_GRAB, PROC_REF(attempt_grab))
-	RegisterSignal(new_holder, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, PROC_REF(transfer_martial_arts))
+	RegisterSignals(new_holder, list(COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING), PROC_REF(smash_table))
+	if(display_combos)
+		if(new_holder.hud_used)
+			on_hud_created(new_holder)
+		else
+			RegisterSignal(new_holder, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /**
  * Called when this martial art is removed from a mob.
  */
-/datum/martial_art/proc/on_remove(mob/living/remove_from)
+/datum/martial_art/proc/deactivate_style(mob/living/remove_from)
+	SHOULD_CALL_PARENT(TRUE)
+	active = FALSE
 	if(help_verb)
 		remove_verb(remove_from, help_verb)
-	UnregisterSignal(remove_from, list(COMSIG_QDELETING, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF))
+	UnregisterSignal(remove_from, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING))
+	if(!isnull(combo_display))
+		QDEL_NULL(combo_display)
 
-/datum/martial_art/proc/holder_deleted(datum/source)
+///Gives the owner of the martial art the combo HUD.
+/datum/martial_art/proc/on_hud_created(mob/source)
 	SIGNAL_HANDLER
-	holder = null
+	var/datum/hud/hud_used = source.hud_used
+	combo_display = new(null, hud_used)
+	hud_used.infodisplay += combo_display
+	hud_used.show_hud(hud_used.hud_version)
 
-/// Signal proc for [COMSIG_MOB_MIND_TRANSFERRED_OUT_OF] to pass martial arts between bodies on mind transfer
-/// By this point the martial art's holder is the old body, but the mind that owns it is in the new body
-/datum/martial_art/proc/transfer_martial_arts(mob/living/old_body, mob/living/new_body)
-	SIGNAL_HANDLER
+/mob/living/proc/verb_switch_style()
+	set name = "Swap Style"
+	set desc = "Switch to a different martial arts style."
+	set category = "IC"
 
-	// This has some notable issues in that martial arts granted by items like Krav Maga
-	// will follow the body swap, the easiest fix would be to move martial arts off of the mind
+	var/datum/martial_art/current = GET_ACTIVE_MARTIAL_ART(src)
+	var/datum/martial_art/next = GET_NEXT_MARTIAL_ART(src)
 
-	if(!isnull(base)) // If we're home to a temporary one just don't touch it, give the base to the new body and leave it at that
-		base.teach(new_body)
-		unstore_martial_art()
+	if(current.locked_to_use)
+		to_chat(src, span_warning("You can't stop practicing [current]! It's too ingrained in your muscle memory."))
 		return
 
-	on_remove(old_body) // on_remove rather than remove, because by this point the mind is already in the new body, which remove handles.
-	teach(new_body)
+	switch_style(GET_ACTIVE_MARTIAL_ART(src), GET_NEXT_MARTIAL_ART(src))
+	to_chat(src, span_notice("You stop practicing [current] and start practicing [next]."))
+
+/// Deactivates the current martial art and activates the next one.
+/mob/living/proc/switch_style(datum/martial_art/current_martial, datum/martial_art/next_martial)
+	if(current_martial.locked_to_use)
+		return
+	// something's wrong if this assertion fails, but not terribly wrong that we need a stack trace
+	if(!current_martial.active || next_martial.active)
+		return
+
+	current_martial.deactivate_style(src)
+	next_martial.activate_style(src)
+	// front of the list with ye
+	LAZYREMOVE(martial_arts, next_martial)
+	LAZYINSERT(martial_arts, 1, next_martial)
+	// back of the list with ye
+	LAZYREMOVE(martial_arts, current_martial)
+	LAZYADD(martial_arts, current_martial)

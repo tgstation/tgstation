@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Screentip images will no longer appear for players on BYOND versions suffering from the bug that makes them way too big."

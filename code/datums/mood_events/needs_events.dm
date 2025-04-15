@@ -17,6 +17,10 @@
 
 /datum/mood_event/hungry
 	description = "I'm getting a bit hungry."
+	mood_change = -3
+
+/datum/mood_event/hungry_very
+	description = "I'm hungry!"
 	mood_change = -6
 
 /datum/mood_event/starving
