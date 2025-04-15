@@ -3,6 +3,9 @@
 
 #define GET_FISH_ELECTROGENESIS(fish) (fish.electrogenesis_power * fish.size * 0.1)
 
+#define FISH_SUBMERGING_THRESHOLD 100 SECONDS
+#define STARVING_FISH_SUBMERGING_THRESHOLD 20 SECONDS
+
 GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	AQUARIUM_FLUID_ANY_WATER = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER, AQUARIUM_FLUID_SULPHWATEVER),
 	AQUARIUM_FLUID_ANADROMOUS = list(AQUARIUM_FLUID_SALTWATER, AQUARIUM_FLUID_FRESHWATER),
@@ -190,6 +193,8 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	/// only used in the suicide for comedic value
 	var/suicide_slap_text = "*SLAP!*"
 
+	var/time_passed_on_safe_turf = 0
+
 /obj/item/fish/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	base_icon_state = icon_state
@@ -297,10 +302,13 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	user.visible_message(span_notice("[user] releases [src] into [interacting_with]"), \
 		span_notice("You release [src] into [interacting_with]. [goodbye_text]"), \
 		span_notice("You hear a splash."))
-	playsound(interacting_with, 'sound/effects/splash.ogg', 50)
-	SEND_SIGNAL(interacting_with, COMSIG_FISH_RELEASED_INTO, src, user)
-	qdel(src)
+	released(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/fish/proc/released(atom/location, mob/living/user)
+	playsound(location, 'sound/effects/splash.ogg', 50)
+	SEND_SIGNAL(location, COMSIG_FISH_RELEASED_INTO, src, user)
+	qdel(src)
 
 ///Main proc that makes the fish edible.
 /obj/item/fish/proc/make_edible()
@@ -952,12 +960,18 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		stop_flopping()
 
 /obj/item/fish/process(seconds_per_tick)
-	do_fish_process(seconds_per_tick)
-
-/obj/item/fish/proc/do_fish_process(seconds_per_tick)
 	if(HAS_TRAIT(src, TRAIT_FISH_STASIS) || status != FISH_ALIVE)
 		return
+	do_fish_process(seconds_per_tick)
+	if(status != FISH_ALIVE || !is_type_in_typecache(loc, SSfishing.fish_safe_turfs_by_type[type]))
+		time_passed_on_safe_turf = 0 SECONDS
+		return
+	time_passed_on_safe_turf += seconds_per_tick SECONDS
+	if(time_passed_on_safe_turf >= (get_starvation_mult() ? STARVING_FISH_SUBMERGING_THRESHOLD : FISH_SUBMERGING_THRESHOLD))
+		visible_message(span_notice("[src] disperses into \the [loc]"), span_notice("You hear a splash."))
+		released(loc)
 
+/obj/item/fish/proc/do_fish_process(seconds_per_tick)
 	//safe mode, don't do much except a few things that don't involve growing or reproducing.
 	if(loc && HAS_TRAIT_FROM(loc, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
 		last_feeding += seconds_per_tick SECONDS
@@ -1166,11 +1180,16 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 /// Checks if our current environment lets us live.
 /obj/item/fish/proc/proper_environment(temp_range_min = required_temperature_min, temp_range_max = required_temperature_max)
-	if(loc && HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
+	if(!loc)
+		return TRUE
+
+	if(HAS_TRAIT(loc, TRAIT_IS_AQUARIUM))
 		if(!(fish_flags & FISH_FLAG_SAFE_TEMPERATURE) || !(fish_flags & FISH_FLAG_SAFE_FLUID))
 			return FALSE
 		return TRUE
 
+	if(is_type_in_typecache(loc, SSfishing.fish_safe_turfs_by_type[type]))
+		return TRUE
 	if(required_fluid_type != AQUARIUM_FLUID_AIR && !HAS_TRAIT(src, TRAIT_FISH_AMPHIBIOUS))
 		return FALSE
 	var/datum/gas_mixture/mixture = loc.return_air()
@@ -1567,3 +1586,5 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 #undef GET_FISH_ELECTROGENESIS
 #undef FISH_SAD
 #undef FISH_VERY_HAPPY
+#undef FISH_SUBMERGING_THRESHOLD
+#undef STARVING_FISH_SUBMERGING_THRESHOLD

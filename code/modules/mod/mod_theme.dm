@@ -106,7 +106,7 @@
 	mod.ui_theme = ui_theme
 	mod.charge_drain = charge_drain
 	var/datum/mod_part/control_part_datum = new()
-	control_part_datum.part_item = mod
+	control_part_datum.set_item(mod)
 	mod.mod_parts["[mod.slot_flags]"] = control_part_datum
 	for(var/path in variants[default_skin])
 		if(!ispath(path))
@@ -116,7 +116,7 @@
 			var/obj/item/clothing/chestplate = mod_part
 			chestplate.allowed |= allowed_suit_storage
 		var/datum/mod_part/part_datum = new()
-		part_datum.part_item = mod_part
+		part_datum.set_item(mod_part)
 		mod.mod_parts["[mod_part.slot_flags]"] = part_datum
 		parts += mod_part
 

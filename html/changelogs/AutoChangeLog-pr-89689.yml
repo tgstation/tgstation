@@ -1,0 +1,4 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - rscadd: "adds a new glitch-out effect for holograms when they're interacted with"

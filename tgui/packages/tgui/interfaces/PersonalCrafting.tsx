@@ -550,7 +550,7 @@ export const PersonalCrafting = (props) => {
               )}
               {recipes.length > displayLimit && (
                 <Section
-                  mb={2}
+                  mb={1}
                   textAlign="center"
                   style={{ cursor: 'pointer' }}
                   onClick={() => setPages(pages + 1)}

@@ -124,7 +124,7 @@
 	if(!fish.catcher_name)
 		fish.catcher_name = catcher
 	if(!fish.catch_date)
-		fish.catch_date = "[time2text(world.realtime, "Day, Month DD")], [CURRENT_STATION_YEAR]"
+		fish.catch_date = "[time2text(world.realtime, "Day, Month DD", NO_TIMEZONE)], [CURRENT_STATION_YEAR]"
 
 	AddElement(/datum/element/beauty, get_fish_beauty())
 	RegisterSignals(fish, list(COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_ATTACK_PAW), PROC_REF(on_fish_attack_hand))

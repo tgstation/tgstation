@@ -81,7 +81,7 @@ export const SelectEquipment = (props) => {
               <Stack.Item>
                 <DisplayTabs categories={categories} />
               </Stack.Item>
-              <Stack.Item mt={0} grow={1} basis={0}>
+              <Stack.Item grow={1} basis={0}>
                 <OutfitDisplay entries={visibleOutfits} currentTab={tab} />
               </Stack.Item>
             </Stack>

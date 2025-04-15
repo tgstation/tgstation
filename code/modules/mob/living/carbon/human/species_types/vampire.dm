@@ -24,6 +24,8 @@
 	mutanttongue = /obj/item/organ/tongue/vampire
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
+	/// UI displaying how much blood we have
+	var/atom/movable/screen/blood_level/blood_display
 
 /datum/species/human/vampire/check_roundstart_eligible()
 	if(check_holidays(HALLOWEEN))
@@ -36,10 +38,15 @@
 	new_vampire.skin_tone = "albino"
 	new_vampire.update_body(0)
 	RegisterSignal(new_vampire, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
+	if(new_vampire.hud_used)
+		on_hud_created(new_vampire)
+	else
+		RegisterSignal(new_vampire, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /datum/species/human/vampire/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
 	UnregisterSignal(C, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
+	QDEL_NULL(blood_display)
 
 /datum/species/human/vampire/spec_life(mob/living/carbon/human/vampire, seconds_per_tick, times_fired)
 	. = ..()
@@ -62,6 +69,14 @@
 		vampire.adjustFireLoss(10 * seconds_per_tick)
 		vampire.adjust_fire_stacks(3 * seconds_per_tick)
 		vampire.ignite_mob()
+
+///Gives the blood HUD to the vampire so they always know how much blood they have.
+/datum/species/human/vampire/proc/on_hud_created(mob/source)
+	SIGNAL_HANDLER
+	var/datum/hud/blood_hud = source.hud_used
+	blood_display = new(null, blood_hud)
+	blood_hud.infodisplay += blood_display
+	blood_hud.show_hud(blood_hud.hud_version)
 
 /datum/species/human/vampire/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
 	SIGNAL_HANDLER
@@ -202,18 +217,6 @@
 /obj/item/organ/heart/vampire
 	name = "vampire heart"
 	color = COLOR_CRAYON_BLACK
-
-/obj/item/organ/heart/vampire/on_mob_insert(mob/living/carbon/receiver)
-	. = ..()
-	RegisterSignal(receiver, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
-
-/obj/item/organ/heart/vampire/on_mob_remove(mob/living/carbon/heartless)
-	. = ..()
-	UnregisterSignal(heartless, COMSIG_MOB_GET_STATUS_TAB_ITEMS)
-
-/obj/item/organ/heart/vampire/proc/get_status_tab_item(mob/living/carbon/source, list/items)
-	SIGNAL_HANDLER
-	items += "Blood Level: [source.blood_volume]/[BLOOD_VOLUME_MAXIMUM]"
 
 #undef VAMPIRES_PER_HOUSE
 #undef VAMP_DRAIN_AMOUNT

@@ -61,7 +61,7 @@ export const CheckboxInput = (props) => {
     <Window title={title} width={425} height={300}>
       {!!timeout && <Loader value={timeout} />}
       <Window.Content>
-        <Stack fill vertical>
+        <Stack fill vertical g={0}>
           <Stack.Item>
             <NoticeBox info textAlign="center">
               {decodeHtmlEntities(message)}{' '}
@@ -69,7 +69,7 @@ export const CheckboxInput = (props) => {
               {max_checked < 50 && ` (Max: ${max_checked})`}
             </NoticeBox>
           </Stack.Item>
-          <Stack.Item grow mt={0}>
+          <Stack.Item grow>
             <Section fill scrollable>
               <Table>
                 {toDisplay.map((item, index) => (
@@ -92,7 +92,7 @@ export const CheckboxInput = (props) => {
               </Table>
             </Section>
           </Stack.Item>
-          <Stack m={1} mb={0}>
+          <Stack m={1}>
             <Stack.Item>
               <Tooltip content="Search" position="bottom">
                 <Icon name="search" mt={0.5} />
@@ -106,7 +106,7 @@ export const CheckboxInput = (props) => {
               />
             </Stack.Item>
           </Stack>
-          <Stack.Item mt={0.7}>
+          <Stack.Item>
             <Section>
               <InputButtons input={selectionsWithIndexes(selections, items)} />
             </Section>

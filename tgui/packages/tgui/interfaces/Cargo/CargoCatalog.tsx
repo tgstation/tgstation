@@ -61,8 +61,8 @@ export function CargoCatalog(props: Props) {
           closeContents={setShowContents}
         />
       )}
-      <Stack fill>
-        <Stack.Item grow mr={-1.33}>
+      <Stack fill g={0}>
+        <Stack.Item grow mr={-0.33}>
           <Section fill>
             <CatalogTabs
               express={express}
@@ -75,7 +75,7 @@ export function CargoCatalog(props: Props) {
           </Section>
         </Stack.Item>
         <Stack.Divider />
-        <Stack.Item grow={express ? 2 : 3} m={0}>
+        <Stack.Item grow={express ? 2 : 3}>
           <Section fill scrollable>
             <CatalogList packs={packs} openContents={setShowContents} />
           </Section>

@@ -638,3 +638,57 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 	new_leg_appearance_lower.layer = -BODYPARTS_LOW_LAYER
 	. += new_leg_appearance_lower
 	return .
+
+/proc/get_default_icon_by_slot(slot_flag)
+	switch(slot_flag)
+		if(ITEM_SLOT_HEAD)
+			return 'icons/mob/clothing/head/default.dmi'
+		if(ITEM_SLOT_EYES)
+			return 'icons/mob/clothing/eyes.dmi'
+		if(ITEM_SLOT_EARS)
+			return 'icons/mob/clothing/ears.dmi'
+		if(ITEM_SLOT_MASK)
+			return 'icons/mob/clothing/mask.dmi'
+		if(ITEM_SLOT_NECK)
+			return 'icons/mob/clothing/neck.dmi'
+		if(ITEM_SLOT_BACK)
+			return 'icons/mob/clothing/back.dmi'
+		if(ITEM_SLOT_BELT)
+			return 'icons/mob/clothing/belt.dmi'
+		if(ITEM_SLOT_ID)
+			return 'icons/mob/clothing/id.dmi'
+		if(ITEM_SLOT_ICLOTHING)
+			return DEFAULT_UNIFORM_FILE
+		if(ITEM_SLOT_OCLOTHING)
+			return DEFAULT_SUIT_FILE
+		if(ITEM_SLOT_GLOVES)
+			return 'icons/mob/clothing/hands.dmi'
+		if(ITEM_SLOT_FEET)
+			return DEFAULT_SHOES_FILE
+
+/proc/get_default_layer_by_slot(slot_flag)
+	switch(text2num(slot_flag))
+		if(ITEM_SLOT_HEAD)
+			return HEAD_LAYER
+		if(ITEM_SLOT_EYES)
+			return GLASSES_LAYER
+		if(ITEM_SLOT_EARS)
+			return EARS_LAYER
+		if(ITEM_SLOT_MASK)
+			return FACEMASK_LAYER
+		if(ITEM_SLOT_NECK)
+			return NECK_LAYER
+		if(ITEM_SLOT_BACK)
+			return BACK_LAYER
+		if(ITEM_SLOT_BELT)
+			return BELT_LAYER
+		if(ITEM_SLOT_ID)
+			return ID_LAYER
+		if(ITEM_SLOT_ICLOTHING)
+			return UNIFORM_LAYER
+		if(ITEM_SLOT_OCLOTHING)
+			return SUIT_LAYER
+		if(ITEM_SLOT_GLOVES)
+			return GLOVES_LAYER
+		if(ITEM_SLOT_FEET)
+			return SHOES_LAYER
