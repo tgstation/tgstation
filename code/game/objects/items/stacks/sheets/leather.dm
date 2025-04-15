@@ -248,6 +248,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/sinew
 	drop_sound = 'sound/effects/meatslap.ogg'
 	pickup_sound = 'sound/effects/meatslap.ogg'
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
@@ -288,7 +289,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	max_amount = 6
 	novariants = FALSE
 	item_flags = NOBLUDGEON
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	merge_type = /obj/item/stack/sheet/animalhide/goliath_hide
