@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "When a MODsuit piece overslots an item, it will now render beneath that piece as long as its unsealed."
+  - refactor: "Refactored how MODsuit modules are rendered, report any bugs on GitHub!"

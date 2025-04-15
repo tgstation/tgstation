@@ -433,3 +433,6 @@
   TheSwain, JohnFulpWillard:
   - qol: Soulscythes and Vampires now have a blood hud on the left side of their screen
       rather than a stat panel entry stating how much blood they have.
+2025-04-15:
+  nfreader:
+  - rscadd: Restores the "Link Forum Account" verb
