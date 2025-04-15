@@ -11,7 +11,8 @@
 			2.5 MINUTES,
 			3 MINUTES,
 			3.5 MINUTES,
-			5 MINUTES
+			5 MINUTES,
+			8 MINUTES
 		),
 		SKILL_RANDS_MODIFIER = list(
 			0,
@@ -20,7 +21,8 @@
 			15,
 			20,
 			30,
-			50
+			50,
+			80
 		)
 	)
 
