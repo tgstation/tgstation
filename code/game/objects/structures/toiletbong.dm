@@ -11,7 +11,6 @@
 
 /obj/structure/toiletbong/Initialize(mapload)
 	. = ..()
-
 	AddComponent(/datum/component/simple_rotation, post_rotation = CALLBACK(src, PROC_REF(post_rotation)))
 	create_storage(storage_type = /datum/storage/toiletbong)
 
