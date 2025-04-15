@@ -278,7 +278,7 @@
 		span_userdanger("You aim \the [src] at your [parse_zone(user.zone_selected)]..."),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 	)
-	if(prob(10)) // future idea : make badasses or insane people not jitter here
+	if(prob(10) && !HAS_TRAIT(user, TRAIT_FEARLESS))
 		user.adjust_jitter(aim_time)
 	if(!do_after(user, aim_time, target))
 		if(!user.incapacitated)
@@ -362,13 +362,14 @@
 			span_userdanger("You've lost the gamble! Your soul is forfeit!"),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
-	else
-		user.visible_message(
-			span_danger("[user] is punished for trying to cheat the game!"),
-			span_userdanger("You've lost the gamble! Not only is your soul forfeit, but it is whisked away for attempting to cheat death!"),
-			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
-		)
-		user.dust(drop_items = TRUE)
+		return
+
+	user.visible_message(
+		span_danger("[user] is punished for trying to cheat the game!"),
+		span_userdanger("You've lost the gamble! Not only is your soul forfeit, but it is whisked away for attempting to cheat death!"),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
+	user.dust(drop_items = TRUE)
 
 /obj/item/gun/ballistic/revolver/reverse //Fires directly at its user... unless the user is a clown, of course.
 	clumsy_check = FALSE
