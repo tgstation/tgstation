@@ -330,11 +330,10 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 /// Spit out everything in our storage
 /obj/item/mecha_parts/mecha_equipment/ejector/proc/drop_contents(atom/drop_loc = drop_location(), drop_prob = 100)
-	for(var/atom/stored in src)
+	for(var/atom/movable/stored in src)
 		if(prob(drop_prob))
-			stored.forceMove(droploc || get_turf(src))
+			stored.forceMove(drop_loc || get_turf(src))
 			step_rand(stored)
-	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/relay_container_resist_act(mob/living/user, obj/container)
 	to_chat(user, span_notice("You lean on the back of [container] and start pushing so it falls out of [src]."))
