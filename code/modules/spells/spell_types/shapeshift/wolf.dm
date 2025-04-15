@@ -57,3 +57,5 @@
 	icon_state = "icecloak_hood"
 	actions_types = list(/datum/action/cooldown/spell/shapeshift/wolf)
 	flags_inv = HIDEHAIR|HIDEEARS
+	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+
