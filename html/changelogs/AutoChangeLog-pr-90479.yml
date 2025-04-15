@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes:
+  - refactor: "Overhauled how looking up and looking down function. they should now not jitter, and trying to look up/down while already doing so will cancel the previous look up/down in the opposite direction"
