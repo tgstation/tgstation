@@ -871,6 +871,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	var/mob/living/Impersonation
 	var/datum/holocall/HC
 
+/obj/effect/overlay/holo_pad_hologram/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/holographic_nature)
+
 /obj/effect/overlay/holo_pad_hologram/Destroy()
 	Impersonation = null
 	if(!QDELETED(HC))

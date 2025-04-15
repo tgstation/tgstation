@@ -1176,6 +1176,7 @@
 #include "code\datums\components\hide_highest_offset.dm"
 #include "code\datums\components\hide_weather_planes.dm"
 #include "code\datums\components\holderloving.dm"
+#include "code\datums\components\holographic_nature.dm"
 #include "code\datums\components\igniter.dm"
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\interaction_booby_trap.dm"
