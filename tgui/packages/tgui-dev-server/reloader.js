@@ -64,7 +64,7 @@ export async function findCacheRoot() {
 function onCacheRootFound(cacheRoot) {
   logger.log(`found cache at '${cacheRoot}'`);
   // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 514.
-  fs.closeSync(fs.openSync(cacheRoot + '/dummy', 'w'));
+  fs.closeSync(fs.openSync(cacheRoot + '/dummy.htm', 'w'));
 }
 
 export async function reloadByondCache(bundleDir) {
@@ -97,7 +97,7 @@ export async function reloadByondCache(bundleDir) {
     );
     try {
       // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 515.
-      fs.closeSync(fs.openSync(cacheDir + '/dummy', 'w'));
+      fs.closeSync(fs.openSync(cacheDir + '/dummy.htm', 'w'));
 
       for (let file of garbage) {
         fs.unlinkSync(file);

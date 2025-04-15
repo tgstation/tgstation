@@ -18,11 +18,13 @@ async function setupServer() {
     devServer: true,
     useTmpFolder: !noTmp,
   });
+
   // Reload cache once
   if (reloadOnce) {
     await reloadByondCache(compiler.bundleDir);
     return;
   }
+
   // Run a development server
   await compiler.watch();
 }

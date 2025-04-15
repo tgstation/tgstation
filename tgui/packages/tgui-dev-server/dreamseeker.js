@@ -43,9 +43,9 @@ export class DreamSeeker {
       )
       .join('&');
     logger.log(
-      `topic call at ${this.client.defaults.baseURL + '/dummy?' + query}`,
+      `topic call at ${this.client.defaults.baseURL}/dummy.htm?${query}`,
     );
-    return this.client.get('/dummy?' + query);
+    return this.client.get('/dummy.htm?' + query);
   }
 
   /**

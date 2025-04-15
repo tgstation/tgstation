@@ -5,9 +5,9 @@
   "type": "module",
   "dependencies": {
     "@rspack/core": "^1.3.4",
-    "axios": "^1.7.7",
+    "axios": "^1.8.4",
     "source-map": "^0.7.4",
-    "stacktrace-parser": "^0.1.10",
+    "stacktrace-parser": "^0.1.11",
     "ws": "^8.18.1"
   },
   "devDependencies": {
