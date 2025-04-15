@@ -1,0 +1,6 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Combat shotguns have a x1.5 damage increase over riot shotguns. This extends to the compact combat shotgun."
+  - balance: "The combat shotgun comes pre-loaded with rubbershot, rather than benabags."
+  - balance: "Compact combat shotguns can be used while wielding something in your off-hand (but still cannot be dual-wielded)."
