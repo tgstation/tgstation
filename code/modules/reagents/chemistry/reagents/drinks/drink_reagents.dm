@@ -994,7 +994,7 @@
 	taste_description = "sweet pomegranates"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/brave_bull/on_mob_add(mob/living/drinker)
+/datum/reagent/consumable/grenadine/on_mob_add(mob/living/drinker)
 	. = ..()
 	if(drinker.mind && drinker.mind.has_antag_datum(/datum/antagonist/rev))
 		to_chat(drinker, span_warning("Antioxidants are weakening your radical spirit!"))
