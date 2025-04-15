@@ -132,7 +132,6 @@
 
 /datum/storage/basket/easter/handle_enter(datum/source, obj/item/arrived)
 	. = ..()
-
 	countEggs(source)
 
 /datum/storage/basket/easter/proc/countEggs(obj/item/storage/basket/easter/basket)
@@ -142,7 +141,6 @@
 
 /datum/storage/basket/easter/handle_exit(datum/source, obj/item/gone)
 	. = ..()
-
 	countEggs(source)
 
 ///Briefcase
@@ -153,7 +151,6 @@
 ///Donut box
 /datum/storage/donut/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(/obj/item/food/donut)
 
 ///Egg box
@@ -324,14 +321,14 @@
 	. = ..()
 	set_holdable(/obj/item/tcgcard)
 
-///Toilet bang
-/datum/storage/toiletbang
+///Toilet bong
+/datum/storage/toiletbong
 	max_slots = 12
 	max_total_storage = 100
 	attack_hand_interact = FALSE
 	do_rustle = FALSE
 	animated = FALSE
 
-/datum/storage/toiletbang/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/toiletbong/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(/obj/item/food)
