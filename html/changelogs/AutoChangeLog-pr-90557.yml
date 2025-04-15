@@ -1,0 +1,5 @@
+author: "Toriate, JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Adds a Wolf pelt cloak as an icemoon drop, replacing the hardened Cult armor."
+  - balance: "Cult's hardened armor now deals bleeding and dislocating limbs to non cultists who wear it, and can also be blessed into holy armor."

@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 			data["x"] = disk_turf.x
 			data["y"] = disk_turf.y
 			data["z"] = disk_turf.z
-		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living)
+		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living, TRUE)
 		if(outer != nuke_disk)
 			if(isliving(outer))
 				var/mob/living/disk_holder = outer

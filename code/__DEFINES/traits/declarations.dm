@@ -1185,6 +1185,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 ///The entity has AI 'access', so is either an AI, has an access wand, or is an admin ghost AI. Used to block off regular Silicons from things.
 ///This is put on the mob, it is used on the client for Admins but they are the exception as they use `isAdminGhostAI`.
 #define TRAIT_AI_ACCESS "ai_access_trait"
+///The entity should have `SPAN_COMMAND` in binary the same way as AI does.
+#define TRAIT_LOUD_BINARY "loud_binary_trait"
 ///The entity is able to receive a tracking button in chat
 #define TRAIT_CAN_GET_AI_TRACKING_MESSAGE "can_get_ai_tracking_message"
 
@@ -1480,5 +1482,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Prevents items from being speed potion-ed, but allows their speed to be altered in other ways
 #define TRAIT_NO_SPEED_POTION "no_speed_potion"
+
+/// Prevents observers from being able to observe (seeing their UI and such)
+#define TRAIT_NO_OBSERVE "no_observe"
+
+/// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
+#define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
 
 // END TRAIT DEFINES

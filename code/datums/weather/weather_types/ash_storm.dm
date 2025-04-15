@@ -20,8 +20,10 @@
 	target_trait = ZTRAIT_ASHSTORM
 	immunity_type = TRAIT_ASHSTORM_IMMUNE
 	probability = 90
+	turf_thunder_chance = THUNDER_CHANCE_VERY_RARE
+	thunder_color = "#7a0000"
 
-	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER)
+	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_THUNDER)
 
 	var/list/weak_sounds = list()
 	var/list/strong_sounds = list()
@@ -81,6 +83,6 @@
 	end_message = span_notice("The emberfall slows, stops. Another layer of hardened soot to the basalt beneath your feet.")
 	end_sound = null
 
-	weather_flags = parent_type::weather_flags & ~WEATHER_MOBS
+	weather_flags = parent_type::weather_flags & ~(WEATHER_MOBS|WEATHER_THUNDER)
 
 	probability = 10

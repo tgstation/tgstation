@@ -24,13 +24,14 @@ type ExperimentData = {
   description: string;
   name: string;
   performance_hint: string;
-  progress: Progress[];
+  progress: Stage[];
   ref: string;
   selected: number;
   tag: string;
 };
 
-type Progress = [string, string, number, number];
+// Value type, Description, Value, AltValue
+type Stage = [string, string, number, number];
 
 type Data = {
   always_active: boolean;
@@ -39,25 +40,19 @@ type Data = {
   techwebs: Techweb[];
 };
 
-function ExperimentStages(props) {
-  return (
-    <Table ml={2} className="ExperimentStage__Table">
-      {props.children.map((stage, idx) => (
-        <ExperimentStageRow key={idx} {...stage} />
-      ))}
-    </Table>
-  );
-}
+type ExperimentStageRowProps = {
+  stage: Stage;
+};
 
-function ExperimentStageRow(props) {
-  const [type, description, value, altValue] = props;
+function ExperimentStageRow(props: ExperimentStageRowProps) {
+  const [type, description, value, altValue] = props.stage;
 
   // Determine completion based on type of stage
   let completion = false;
   switch (type) {
     case 'bool':
     case 'detail':
-      completion = value;
+      completion = !!value;
       break;
     case 'integer':
       completion = value === altValue;
@@ -165,7 +160,11 @@ export function Experiment(props) {
       <div className="ExperimentConfigure__ExperimentContent">
         <Box mb={1}>{description}</Box>
         {props.children}
-        <ExperimentStages>{progress}</ExperimentStages>
+        <Table ml={2} className="ExperimentStage__Table">
+          {progress.map((stage, idx) => (
+            <ExperimentStageRow key={idx} stage={stage} />
+          ))}
+        </Table>
       </div>
     </Box>
   );

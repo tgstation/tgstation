@@ -463,7 +463,7 @@
 	if(isnull(linked_extract))
 		qdel(src)
 		return
-	if(get_atom_on_turf(linked_extract, /mob/living) == owner)
+	if(linked_extract.get_held_mob() == owner)
 		return
 	owner.balloon_alert(owner, "[colour] extract faded!")
 	if(!QDELETED(linked_extract))

@@ -43714,7 +43714,7 @@
 	pixel_x = -10;
 	pixel_y = -4
 	},
-/obj/item/clothing/mask/breath/medical,
+/obj/item/clothing/mask/muzzle/breath,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "kSa" = (
@@ -53195,6 +53195,7 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/airalarm/surgery,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "nnW" = (
@@ -64557,6 +64558,7 @@
 /obj/item/book/manual/wiki/surgery,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/airalarm/surgery,
 /turf/open/floor/iron,
 /area/station/medical/surgery/theatre)
 "qeP" = (
@@ -67709,6 +67711,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den/gaming)
+"qVt" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/rack,
+/obj/effect/spawner/random/techstorage/custom_shuttle,
+/turf/open/floor/iron,
+/area/station/engineering/storage/tech)
 "qVv" = (
 /obj/machinery/power/shieldwallgen,
 /obj/effect/decal/cleanable/dirt,
@@ -72062,13 +72073,6 @@
 /obj/item/tank/internals/anesthetic{
 	pixel_x = -3
 	},
-/obj/item/clothing/mask/breath/medical{
-	pixel_y = 3
-	},
-/obj/item/clothing/mask/breath/medical,
-/obj/item/clothing/mask/breath/medical{
-	pixel_y = -3
-	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/status_display/evac/directional/south,
 /obj/machinery/door/window/left/directional/north{
@@ -72076,6 +72080,11 @@
 	req_access = list("surgery")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/clothing/mask/muzzle/breath{
+	pixel_y = -4
+	},
+/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/mask/muzzle/breath,
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
 "rZf" = (
@@ -126951,7 +126960,7 @@ sUQ
 bpt
 bpt
 bpt
-kNC
+qVt
 kNC
 kNC
 kNC
