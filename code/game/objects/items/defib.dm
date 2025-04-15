@@ -67,7 +67,7 @@
 	if(!cell_removable)
 		return
 	if(cell)
-		. += span_notice("Use a RMB to remove the cell.")
+		. += span_notice("Use RMB to remove the cell.")
 	else
 		. += span_warning("It has no power cell!")
 
