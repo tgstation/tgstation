@@ -206,7 +206,7 @@
 		return path
 
 ///Apply material effects of a single material.
-/atom/proc/apply_single_mat_effect(datum/material/custom_material, amount, multipier)
+/atom/proc/apply_single_mat_effect(datum/material/material, amount, multipier)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !uses_integrity)
 		return
@@ -262,7 +262,7 @@
 	SEND_SIGNAL(src, COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS, materials, main_material)
 
 ///Remove material effects of a single material.
-/atom/proc/remove_single_mat_effect(datum/material/custom_material, amount, multipier)
+/atom/proc/remove_single_mat_effect(datum/material/material, amount, multipier)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS) || !uses_integrity)
 		return
