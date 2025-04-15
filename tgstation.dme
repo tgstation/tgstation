@@ -599,7 +599,6 @@
 #include "code\_onclick\hud\alien.dm"
 #include "code\_onclick\hud\alien_larva.dm"
 #include "code\_onclick\hud\blob_overmind.dm"
-#include "code\_onclick\hud\blobbernaut.dm"
 #include "code\_onclick\hud\credits.dm"
 #include "code\_onclick\hud\drones.dm"
 #include "code\_onclick\hud\fullscreen.dm"
