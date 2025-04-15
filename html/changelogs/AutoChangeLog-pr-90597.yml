@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "You can rotate scanner gates (even though it functionally does nothing)"
