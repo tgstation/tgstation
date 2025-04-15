@@ -4681,10 +4681,10 @@
 /obj/machinery/door/airlock/command{
 	name = "Council Chamber"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "byV" = (
@@ -5133,8 +5133,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "bFj" = (
-/obj/machinery/atmospherics/components/binary/valve/digital{
-	dir = 8;
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4;
 	name = "Cooling Loop Bypass"
 	},
 /turf/open/floor/engine,
@@ -21104,8 +21104,8 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 10
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -37315,11 +37315,15 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "luI" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	dir = 8
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
 	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/station/service/kitchen/coldroom)
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/openspace,
+/area/station/command/bridge)
 "luN" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -40532,7 +40536,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/all/command/general,
+/obj/effect/mapping_helpers/airlock/access/all/command/eva,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/storage/eva)
 "mrS" = (
@@ -40676,7 +40680,9 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold/orange/visible{
+	dir = 8
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "mui" = (
@@ -42785,7 +42791,7 @@
 /obj/machinery/door/airlock{
 	name = "Emergency Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "ndR" = (
@@ -43410,11 +43416,12 @@
 /turf/open/floor/engine/hull,
 /area/space/nearstation)
 "nol" = (
+/obj/effect/spawner/random/engineering/tracking_beacon,
 /obj/machinery/button/door/directional/north{
 	id = "evashutter";
-	name = "E.V.A. Storage Shutter Control"
+	name = "E.V.A. Storage Shutter Control";
+	req_access = list("command")
 	},
-/obj/effect/spawner/random/engineering/tracking_beacon,
 /turf/open/floor/wood,
 /area/station/ai_monitored/command/storage/eva)
 "nom" = (
@@ -43979,10 +43986,10 @@
 /obj/machinery/door/airlock/command{
 	name = "Emergency Escape"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "nwe" = (
@@ -47938,8 +47945,8 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold/cyan/visible{
-	dir = 8
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
+	dir = 6
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -51360,7 +51367,8 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/button/door/directional/south{
 	id = "evashutter";
-	name = "E.V.A. Storage Shutter Control"
+	name = "E.V.A. Storage Shutter Control";
+	req_access = list("command")
 	},
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
@@ -54355,9 +54363,9 @@
 /obj/machinery/door/airlock/command{
 	name = "E.V.A. Storage"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/command,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/command/eva,
 /turf/open/floor/plating,
 /area/station/ai_monitored/command/storage/eva)
 "qGZ" = (
@@ -56525,10 +56533,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "rpW" = (
-/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
-	dir = 4
-	},
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/smart/manifold/orange/visible,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "rqc" = (
@@ -60029,6 +60035,12 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
+"stv" = (
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 8
+	},
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/service/kitchen/coldroom)
 "stG" = (
 /obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -63200,8 +63212,8 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold/orange/visible{
-	dir = 8
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
+	dir = 5
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -63718,8 +63730,8 @@
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
 /obj/machinery/power/energy_accumulator/tesla_coil/anchored,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold/orange/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
+	dir = 9
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
@@ -66066,7 +66078,9 @@
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/captain/private)
 "uoU" = (
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold/green/visible{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "uoV" = (
@@ -169176,7 +169190,7 @@ cTW
 gPW
 gIo
 qUa
-luI
+stv
 iDt
 mbF
 mlL
@@ -175099,7 +175113,7 @@ hqL
 hqL
 vzB
 mMb
-mMb
+luI
 aFX
 qVO
 psk
