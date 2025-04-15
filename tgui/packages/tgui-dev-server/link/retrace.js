@@ -4,19 +4,17 @@
  * @license MIT
  */
 
-import fs from 'fs';
-import { basename } from 'path';
+import fs from 'node:fs';
+import { basename } from 'node:path';
+
+import { SourceMapConsumer } from 'source-map';
+import { parse as parseStackTrace } from 'stacktrace-parser';
 
 import { createLogger } from '../logging.js';
-import { require } from '../require.js';
 import { resolveGlob } from '../util.js';
-
-const SourceMap = require('source-map');
-const { parse: parseStackTrace } = require('stacktrace-parser');
 
 const logger = createLogger('retrace');
 
-const { SourceMapConsumer } = SourceMap;
 const sourceMaps = [];
 
 export async function loadSourceMaps(bundleDir) {
@@ -80,7 +78,7 @@ export function retrace(stack) {
         return `  at ${methodName}`;
       }
       const compactPath = file
-        .replace(/^webpack:\/\/\/?/, './')
+        .replace(/^rspack:\/\/\/?/, './')
         .replace(/.*node_modules\//, '');
       return `  at ${methodName} (${compactPath}:${lineNumber})`;
     })

@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import fs from 'fs';
-import { createRequire } from 'module';
+import fs from 'node:fs';
+import { createRequire } from 'node:module';
 
 import { loadSourceMaps, setupLink } from './link/server.js';
 import { createLogger } from './logging.js';
@@ -21,6 +21,7 @@ const logger = createLogger('rspack');
 export async function createCompiler(options) {
   const compiler = new RspackCompiler();
   await compiler.setup(options);
+
   return compiler;
 }
 

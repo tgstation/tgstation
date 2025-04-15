@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import fs from 'fs';
-import os from 'os';
-import { basename } from 'path';
+import fs from 'node:fs';
+import os from 'node:os';
+import { basename } from 'node:path';
 
 import { DreamSeeker } from './dreamseeker.js';
 import { createLogger } from './logging.js';
@@ -73,15 +73,16 @@ export async function reloadByondCache(bundleDir) {
     return;
   }
   // Find tmp folders in cache
-  const cacheDirs = await resolveGlob(cacheRoot, './tmp*');
+  const cacheDirs = resolveGlob(cacheRoot, './tmp*');
   if (cacheDirs.length === 0) {
     logger.log('found no tmp folder in cache');
     return;
   }
-  // Get dreamseeker instances
-  const pids = cacheDirs.map((cacheDir) =>
-    parseInt(cacheDir.split('/cache/tmp').pop(), 10),
-  );
+
+  const pids = cacheDirs.map((cacheDir) => {
+    return parseInt(cacheDir.split('\\cache\\tmp')[1], 10);
+  });
+
   const dssPromise = DreamSeeker.getInstancesByPids(pids);
   // Copy assets
   const assets = await resolveGlob(

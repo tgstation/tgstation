@@ -20,6 +20,7 @@ function getTimestamp() {
     .padStart(7, ' ');
   const seconds = timestamp.substr(0, timestamp.length - 3);
   const millis = timestamp.substr(-3);
+
   return `${seconds}.${millis}`;
 }
 
