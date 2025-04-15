@@ -363,24 +363,15 @@
 	throw_speed = 3
 	throw_range = 7
 	custom_premium_price = PAYCHECK_CREW * 4
+	storage_type = /datum/storage/organ_box
 	/// var to prevent it freezing the same things over and over
 	var/cooling = FALSE
 
 /obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
 
-	create_storage(
-		storage_type = /datum/storage/organ_box,
-		max_specific_storage = WEIGHT_CLASS_BULKY,
-		max_total_storage = 21,
-		canhold = list(
-			/obj/item/organ,
-			/obj/item/bodypart,
-			/obj/item/food/icecream,
-		),
-	)
-
 	create_reagents(100, TRANSPARENT)
+
 	START_PROCESSING(SSobj, src)
 
 /obj/item/storage/organbox/process(seconds_per_tick)

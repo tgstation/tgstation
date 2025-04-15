@@ -15,7 +15,6 @@
 ///Surgery tray
 /datum/storage/surgery_tray
 	max_total_storage = 30
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_slots = 14
 	animated = FALSE
 
@@ -96,7 +95,6 @@
 ///Drone storage
 /datum/storage/drone
 	max_total_storage = 40
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 	max_slots = 10
 	do_rustle = FALSE
 
@@ -150,10 +148,6 @@
 ///Briefcase
 /datum/storage/briefcase
 	max_total_storage = 21
-
-///Sniper brief case
-/datum/storage/briefcase/sniper
-	max_slots = 13
 
 //=======================Fancy storages======================
 ///Donut box
@@ -311,17 +305,15 @@
 	allow_big_nesting = TRUE
 
 ///Mail counterfeit advanced
-/datum/storage/mail_counterfeit_advanced
+/datum/storage/mail_counterfeit/advanced
 	max_slots = 21
 	max_total_storage = 21
-	allow_big_nesting = TRUE
 
 ///Mail counterfeit bluespace
-/datum/storage/mail_counterfeit_bluespace
+/datum/storage/mail_counterfeit/bluespace
 	max_total_storage = 35
 	max_slots = 30
 	max_specific_storage = WEIGHT_CLASS_GIGANTIC
-	allow_big_nesting = TRUE
 
 ///Card binder
 /datum/storage/card_binder

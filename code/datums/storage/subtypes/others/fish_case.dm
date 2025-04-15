@@ -9,7 +9,8 @@
 		return
 
 	if(!HAS_TRAIT(to_insert, TRAIT_AQUARIUM_CONTENT))
-		user.balloon_alert(user, "can't hold!")
+		if(messages && user)
+			user.balloon_alert(user, "can't hold!")
 		return FALSE
 	return .
 
