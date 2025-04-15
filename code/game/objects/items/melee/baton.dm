@@ -620,9 +620,8 @@
 	else
 		. += span_warning("\The [src] does not have a power source installed.")
 
-/obj/item/melee/baton/security/screwdriver_act(mob/living/user, obj/item/tool)
-	if(tryremovecell(user))
-		tool.play_tool_sound(src)
+/obj/item/melee/baton/security/attack_hand_secondary(mob/living/user)
+	(tryremovecell(user))
 	return TRUE
 
 /obj/item/melee/baton/security/attackby(obj/item/item, mob/user, params)
@@ -646,6 +645,7 @@
 	if(cell && can_remove_cell)
 		cell.forceMove(drop_location())
 		to_chat(user, span_notice("You remove the cell from [src]."))
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50)
 		return TRUE
 	return FALSE
 

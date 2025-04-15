@@ -25,7 +25,7 @@
 	var/safety = TRUE
 	/// If there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/powered = FALSE
-	/// If the cell can be removed via screwdriver
+	/// If the cell can be removed with hands
 	var/cell_removable = TRUE
 	var/obj/item/shockpaddles/paddles
 	var/obj/item/stock_parts/power_store/cell/cell
@@ -67,7 +67,7 @@
 	if(!cell_removable)
 		return
 	if(cell)
-		. += span_notice("Use a screwdriver to remove the cell.")
+		. += span_notice("Use a RMB to remove the cell.")
 	else
 		. += span_warning("It has no power cell!")
 
@@ -144,14 +144,14 @@
 		var/atom/movable/screen/inventory/hand/hand = over_object
 		living_mob.putItemFromInventoryInHandIfPossible(src, hand.held_index)
 
-/obj/item/defibrillator/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/item/defibrillator/attack_hand_secondary(mob/living/user)
 	if(!cell || !cell_removable)
 		return FALSE
 
 	cell.forceMove(get_turf(src))
 	balloon_alert(user, "removed [cell]")
 	cell = null
-	tool.play_tool_sound(src, 50)
+	playsound(src, 'sound/items/tools/screwdriver2.ogg', 50)
 	update_power()
 	return TRUE
 
