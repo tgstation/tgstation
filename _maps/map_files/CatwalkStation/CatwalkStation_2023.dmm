@@ -24581,9 +24581,6 @@
 "hAQ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden{
-	piping_layer = 6
-	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "hBf" = (
@@ -51759,12 +51756,11 @@
 /obj/item/pen,
 /obj/item/pen,
 /obj/item/pen,
-/obj/machinery/door/window/brigdoor/right/directional/north{
-	name = "Head of Personnel's Desk";
-	req_access = list("hop");
-	dir = 4
-	},
 /obj/machinery/door/window/left/directional/west,
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	req_access = list("hop");
+	name = "Head of Personnel's Desk"
+	},
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
 "pPu" = (
@@ -64175,6 +64171,12 @@
 	},
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/trimline/brown/filled,
+/obj/machinery/conveyor_switch/oneway{
+	id = "packageSort2";
+	name = "Trash Conveyor";
+	pixel_x = -13;
+	pixel_y = -5
+	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "tLK" = (
@@ -72487,9 +72489,9 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/medical/morgue)
 "wlR" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/light_switch/directional/east,
-/turf/open/openspace,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/engine/hull/air,
 /area/station/engineering/atmos/upper)
 "wlU" = (
 /obj/structure/cable,
@@ -73846,7 +73848,8 @@
 "wHP" = (
 /obj/item/kirbyplants/random,
 /obj/item/radio/intercom/directional/east,
-/turf/open/floor/engine/hull,
+/obj/structure/lattice/catwalk,
+/turf/open/floor/engine/hull/air,
 /area/station/engineering/atmos/upper)
 "wHQ" = (
 /obj/machinery/light/small/directional/east,
