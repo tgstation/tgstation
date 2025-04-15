@@ -96,7 +96,7 @@ export async function reloadByondCache(bundleDir) {
       './*.+(bundle|chunk|hot-update).*',
     );
     try {
-      // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 515.
+      // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 515-516.
       fs.closeSync(fs.openSync(cacheDir + '/dummy.htm', 'w'));
 
       for (let file of garbage) {
