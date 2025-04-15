@@ -17,7 +17,9 @@ $department_map: (
 );
 
 .ChoicedSelection {
+  padding: var(--space-m);
   background-color: var(--color-base);
+  box-shadow: 0 0.5em 1em hsla(0, 0%, 0%, 0.5);
 }
 
 .PreferencesMenu {

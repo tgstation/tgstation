@@ -290,7 +290,6 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
                   pt={1}
                   onClick={() => act('PDA_clearPhoto')}
                   tooltip="Remove attachment"
-                  tooltipPosition="auto-end"
                 >
                   <Image src={selectedPhoto} />
                 </Button>

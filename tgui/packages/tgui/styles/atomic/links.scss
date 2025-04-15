@@ -7,7 +7,6 @@ a {
   cursor: var(--cursor-pointer);
   color: var(--color-hyperlink);
   transition: color var(--transition-time-medium);
-  text-decoration: none;
 
   &:hover,
   &:active {

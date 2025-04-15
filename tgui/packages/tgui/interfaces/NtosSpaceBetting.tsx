@@ -109,7 +109,7 @@ export const PollsSection = () => {
                                 value={personally_invested}
                                 unit="cr"
                                 width="15px"
-                                disabled={locked}
+                                disabled={!!locked}
                                 minValue={0}
                                 maxValue={10000}
                                 step={1}
