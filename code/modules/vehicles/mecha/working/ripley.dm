@@ -308,7 +308,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 /obj/item/mecha_parts/mecha_equipment/ejector/detach(atom/moveto)
 	var/obj/vehicle/sealed/mecha/ripley/workmech = chassis
 	workmech.cargo_hold = null
-	drop_contents(moveto.drop_location())
+	drop_contents(moveto?.drop_location())
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/ejector/Destroy()
