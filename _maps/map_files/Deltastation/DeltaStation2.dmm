@@ -28284,14 +28284,16 @@
 /area/station/command/bridge)
 "gWv" = (
 /obj/structure/table/wood,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
-/obj/item/chisel{
-	pixel_x = 4;
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 1
+	},
+/obj/item/storage/toolbox/artistic{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/crafter{
+	pixel_x = 2;
+	pixel_y = 1
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
@@ -42755,8 +42757,14 @@
 /area/station/hallway/secondary/entry)
 "kEo" = (
 /obj/structure/table/wood,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
+/obj/item/storage/toolbox/artistic{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/crafter{
+	pixel_x = 2;
+	pixel_y = 1
+	},
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
 "kEp" = (
@@ -46012,15 +46020,18 @@
 /area/station/engineering/atmos/storage)
 "lvL" = (
 /obj/structure/table/wood,
-/obj/item/storage/dice{
-	pixel_x = 12;
-	pixel_y = 1
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/machinery/status_display/ai/directional/south,
-/obj/effect/spawner/random/bureaucracy/folder,
+/obj/item/storage/toolbox/artistic{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/crafter{
+	pixel_x = 2;
+	pixel_y = 1
+	},
 /turf/open/floor/wood/large,
 /area/station/service/library/lounge)
 "lvU" = (
@@ -52947,10 +52958,15 @@
 "nkL" = (
 /obj/structure/table/wood,
 /obj/item/storage/box/actionfigure{
-	pixel_y = 12
+	pixel_y = 20;
+	pixel_x = 0
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
+	},
+/obj/effect/spawner/random/bureaucracy/folder{
+	pixel_x = 3;
+	pixel_y = 0
 	},
 /turf/open/floor/wood/large,
 /area/station/service/library/lounge)
@@ -67694,8 +67710,18 @@
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/light_switch/directional/south,
 /obj/structure/table/wood,
-/obj/item/paper_bin/carbon,
-/obj/item/pen,
+/obj/item/paper_bin/carbon{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/pen{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/storage/dice{
+	pixel_x = -11;
+	pixel_y = 1
+	},
 /turf/open/floor/wood/large,
 /area/station/service/library/lounge)
 "qVn" = (
@@ -79773,7 +79799,10 @@
 /area/station/science/research)
 "tWf" = (
 /obj/structure/table/wood,
-/obj/item/flashlight/lamp,
+/obj/item/flashlight/lamp{
+	pixel_x = 0;
+	pixel_y = 9
+	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
