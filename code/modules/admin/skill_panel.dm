@@ -53,6 +53,6 @@
 		if ("set_lvl")
 			var/skill = text2path(params["skill"])
 			var/max_skill = length(SKILL_EXP_LIST)
-			var/number = input("Please insert a whole number between 1 (NONE) and [max_skill] (LEGENDARY) corresponding to the level you'd like to set the player to.") as num|null
+			var/number = input("Please insert a whole number between 1 (NONE) and [max_skill] (MYTHICAL) corresponding to the level you'd like to set the player to.") as num|null
 			if (number > 0 && number <= max_skill )
 				targetmind.set_level(skill, number)
