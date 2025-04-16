@@ -102,7 +102,7 @@
 	SIGNAL_HANDLER
 	if (isnull(overmind))
 		return
-	status_items += list(list("Blobs to Win: [length(overmind.blobs_legit)]/[overmind.blobwincount]"))
+	status_items += "Blobs to Win: [length(overmind.blobs_legit)]/[overmind.blobwincount]"
 
 /// If we feel the gentle caress of a blob, we feel better
 /datum/component/blob_minion/proc/on_blob_touched(mob/living/minion)

@@ -315,8 +315,8 @@
 
 /datum/antagonist/changeling/proc/get_status_tab_item(mob/living/source, list/items)
 	SIGNAL_HANDLER
-	items += list(list("Chemical Storage: [chem_charges]/[total_chem_storage]"))
-	items += list(list("Absorbed DNA: [absorbed_count]"))
+	items += "Chemical Storage: [chem_charges]/[total_chem_storage]"
+	items += "Absorbed DNA: [absorbed_count]"
 
 /*
  * Adjust the chem charges of the ling by [amount]

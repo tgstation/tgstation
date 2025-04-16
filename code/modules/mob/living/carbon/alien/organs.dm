@@ -84,7 +84,7 @@
 
 /obj/item/organ/alien/plasmavessel/proc/get_status_tab_item(mob/living/carbon/source, list/items)
 	SIGNAL_HANDLER
-	items += list(list("Plasma Stored: [stored_plasma]/[max_plasma]"))
+	items += "Plasma Stored: [stored_plasma]/[max_plasma]"
 
 #define QUEEN_DEATH_DEBUFF_DURATION 2400
 
