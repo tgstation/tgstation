@@ -1,4 +1,0 @@
-author: "Iajret"
-delete-after: True
-changes:
-  - bugfix: "Status display software got updated and it can now automatically change its image in response to current security level when in security level mode"

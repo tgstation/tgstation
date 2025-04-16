@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes:
-  - bugfix: "Job assignment code at round start now properly respects any overflow caps set in the config files."
