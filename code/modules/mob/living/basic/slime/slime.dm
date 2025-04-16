@@ -207,9 +207,9 @@
 /mob/living/basic/slime/get_status_tab_items()
 	. = ..()
 	if(!hunger_disabled)
-		. += list(list("Nutrition: [nutrition]/[SLIME_MAX_NUTRITION]"))
-		. += list(list("Growth: [amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"))
-		. += list(list("Power Level: [powerlevel]/[SLIME_MAX_POWER]"))
+		. += "Nutrition: [nutrition]/[SLIME_MAX_NUTRITION]"
+		. += "Growth: [amount_grown]/[SLIME_EVOLUTION_THRESHOLD]"
+		. += "Power Level: [powerlevel]/[SLIME_MAX_POWER]"
 
 /mob/living/basic/slime/mouse_drop_dragged(atom/target_atom, mob/user)
 	if(isliving(target_atom) && target_atom != src && user == src)

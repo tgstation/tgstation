@@ -332,15 +332,15 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /mob/eye/blob/get_status_tab_items()
 	. = ..()
 	if(blob_core)
-		. += list(list("Core Health: [blob_core.get_integrity()]"))
-		. += list(list("Power Stored: [blob_points]/[max_blob_points]"))
-		. += list(list("Blobs to Win: [blobs_legit.len]/[blobwincount]"))
+		. += "Core Health: [blob_core.get_integrity()]"
+		. += "Power Stored: [blob_points]/[max_blob_points]"
+		. += "Blobs to Win: [blobs_legit.len]/[blobwincount]"
 	if(free_strain_rerolls)
-		. += list(list("You have [free_strain_rerolls] Free Strain Reroll\s Remaining"))
+		. += "You have [free_strain_rerolls] Free Strain Reroll\s Remaining"
 	if(!placed)
 		if(manualplace_min_time)
-			. += list(list("Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"))
-		. += list(list("Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]"))
+			. += "Time Before Manual Placement: [max(round((manualplace_min_time - world.time)*0.1, 0.1), 0)]"
+		. += "Time Before Automatic Placement: [max(round((autoplace_max_time - world.time)*0.1, 0.1), 0)]"
 
 /mob/eye/blob/Move(NewLoc, Dir = 0)
 	if(placed)

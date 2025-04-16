@@ -21,18 +21,26 @@ SUBSYSTEM_DEF(statpanels)
 	if (!resumed)
 		num_fires++
 		var/datum/map_config/cached = SSmap_vote.next_map_config
-		global_data = list(
-			isnull(SSmapping.current_map) ? list("Loading") : \
-				SSmapping.current_map?.feedback_link ? \
-				list("Map: [SSmapping.current_map.map_name]", " (Feedback)", "action=openLink&link=[SSmapping.current_map.feedback_link]") : \
-				list("Map: [SSmapping.current_map?.map_name]"),
-			SSmapping.current_map.mapping_url ? list("same_line", " | (View in Browser)", "action=openWebMap") : null,
-			cached ? list("Next Map: [cached.map_name]") : null,
-			list("Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]"),
-			list("Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)]"),
-			list("Round Time: [ROUND_TIME()]"),
-			list("Station Time: [station_time_timestamp()]"),
-			list("Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)"),
+
+		if(isnull(SSmapping.current_map))
+			global_data = list(list("Loading"))
+		else if(SSmapping.current_map.feedback_link)
+			global_data = list(list("Map: [SSmapping.current_map.map_name]", " (Feedback)", "action=openLink&link=[SSmapping.current_map.feedback_link]"))
+		else
+			global_data = list(list("Map: [SSmapping.current_map?.map_name]"))
+
+		if(SSmapping.current_map?.mapping_url)
+			global_data += list(list("same_line", " | (View in Browser)", "action=openWebMap"))
+
+		if(cached)
+			global_data += list(list("Next Map: [cached.map_name]"))
+
+		global_data += list(
+			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
+			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", world.timezone)]",
+			"Round Time: [ROUND_TIME()]",
+			"Station Time: [station_time_timestamp()]",
+			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
 		)
 
 		if(SSshuttle.emergency)

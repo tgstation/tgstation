@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 
 /mob/living/basic/parrot/get_status_tab_items()
 	. = ..()
-	. += list(list("Held Item: [held_item]"))
+	. += "Held Item: [held_item]"
 
 /mob/living/basic/parrot/radio(message, list/message_mods = list(), list/spans, language) //literally copied from human/radio(), but there's no other way to do this. at least it's better than it used to be.
 	. = ..()

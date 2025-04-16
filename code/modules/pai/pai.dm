@@ -173,9 +173,9 @@
 /mob/living/silicon/pai/get_status_tab_items()
 	. = ..()
 	if(!stat)
-		. += list(list("Emitter Integrity: [holochassis_health * (100 / HOLOCHASSIS_MAX_HEALTH)]."))
+		. += "Emitter Integrity: [holochassis_health * (100 / HOLOCHASSIS_MAX_HEALTH)]."
 	else
-		. += list(list("Systems nonfunctional."))
+		. += "Systems nonfunctional."
 
 /mob/living/silicon/pai/Exited(atom/movable/gone, direction)
 	if(gone == atmos_analyzer)

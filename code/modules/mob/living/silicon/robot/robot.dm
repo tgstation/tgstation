@@ -256,12 +256,12 @@
 /mob/living/silicon/robot/get_status_tab_items()
 	. = ..()
 	if(cell)
-		. += list(list("Charge Left: [display_energy(cell.charge)]/[display_energy(cell.maxcharge)]"))
+		. += "Charge Left: [display_energy(cell.charge)]/[display_energy(cell.maxcharge)]"
 	else
-		. += list(list("No Cell Inserted!"))
+		. += "No Cell Inserted!"
 
 	if(connected_ai)
-		. += list(list("Master AI: [connected_ai.name]"))
+		. += "Master AI: [connected_ai.name]"
 
 /mob/living/silicon/robot/proc/alarm_triggered(datum/source, alarm_type, area/source_area)
 	SIGNAL_HANDLER

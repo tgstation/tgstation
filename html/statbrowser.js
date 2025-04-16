@@ -15,9 +15,9 @@ if (!String.prototype.trim) {
 }
 
 // Status panel implementation ------------------------------------------------
-var status_tab_parts = [["Loading...", ""]];
+var status_tab_parts = [["Loading..."]];
 var current_tab = null;
-var mc_tab_parts = [["Loading...", ""]];
+var mc_tab_parts = [["Loading..."]];
 var href_token = null;
 var spells = [];
 var spell_tabs = [];
@@ -349,26 +349,35 @@ function draw_status() {
 	var table = document.createElement("table");
 	for (var i = 0; i < status_tab_parts.length; i++) {
 		var part = status_tab_parts[i];
-		var div
-
-		if (part[0].trim() == "same_line") {
-			var a = document.createElement("a");
-			a.href = "byond://?" + part[2];
-			a.textContent = part[1];
-			div.appendChild(a);
-		} else {
-			div = document.createElement("div");
-			if (part[0].trim() == "") {
+		if(!Array.isArray(part)) {
+			var div = document.createElement("div");
+			if (part.trim() == "") {
 				table.appendChild(document.createElement("br"));
 			} else {
-				div.textContent = part[0];
-				if (part[2]) {
-					var a = document.createElement("a");
-					a.href = "byond://?" + part[2];
-					a.textContent = part[1];
-					div.appendChild(a);
-				}
+				div.textContent = part;
 				table.appendChild(div);
+			}
+		} else {
+			var div
+			if (part[0].trim() == "same_line") {
+				var a = document.createElement("a");
+				a.href = "byond://?" + part[2];
+				a.textContent = part[1];
+				div.appendChild(a);
+			} else {
+				div = document.createElement("div");
+				if (part[0].trim() == "") {
+					table.appendChild(document.createElement("br"));
+				} else {
+					div.textContent = part[0];
+					if (part[2]) {
+						var a = document.createElement("a");
+						a.href = "byond://?" + part[2];
+						a.textContent = part[1];
+						div.appendChild(a);
+					}
+					table.appendChild(div);
+				}
 			}
 		}
 	}

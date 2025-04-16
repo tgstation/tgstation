@@ -48,7 +48,7 @@
 /mob/living/basic/guardian/assassin/get_status_tab_items()
 	. = ..()
 	if(!COOLDOWN_FINISHED(src, stealth_cooldown))
-		. += list(list("Stealth Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, stealth_cooldown))]"))
+		. += "Stealth Cooldown Remaining: [DisplayTimeText(COOLDOWN_TIMELEFT(src, stealth_cooldown))]"
 
 /// Called when we are removed from stealth involuntarily
 /mob/living/basic/guardian/assassin/proc/on_forced_unstealth(mob/living/source)

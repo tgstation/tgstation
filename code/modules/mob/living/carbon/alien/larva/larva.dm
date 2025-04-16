@@ -53,7 +53,7 @@
 // This comment is 12 years old I hope it's fixed by now
 /mob/living/carbon/alien/larva/get_status_tab_items()
 	. = ..()
-	. += list(list("Progress: [amount_grown]/[max_grown]"))
+	. += "Progress: [amount_grown]/[max_grown]"
 
 /mob/living/carbon/alien/larva/Login()
 	. = ..()

@@ -357,8 +357,8 @@
 
 /mob/living/simple_animal/get_status_tab_items()
 	. = ..()
-	. += list(list("Health: [round((health / maxHealth) * 100)]%"))
-	. += list(list("Combat Mode: [combat_mode ? "On" : "Off"]"))
+	. += "Health: [round((health / maxHealth) * 100)]%"
+	. += "Combat Mode: [combat_mode ? "On" : "Off"]"
 
 /mob/living/simple_animal/proc/drop_loot()
 	if (!length(loot))
