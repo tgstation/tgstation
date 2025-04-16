@@ -10,7 +10,7 @@
 	response_help_simple = "pass through"
 	combat_mode = TRUE
 	basic_mob_flags = DEL_ON_DEATH
-	status_flags = NONE
+	status_flags = CANPUSH
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 15

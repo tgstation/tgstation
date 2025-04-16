@@ -11,7 +11,7 @@
 	icon_living = "amerifat"
 
 	max_grab = GRAB_AGGRESSIVE
-	status_flags = NONE
+	status_flags = CANPUSH
 	basic_mob_flags = DEL_ON_DEATH
 	mob_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_ARTIFICIAL

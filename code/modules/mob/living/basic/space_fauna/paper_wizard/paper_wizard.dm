@@ -13,7 +13,7 @@
 	response_disarm_simple = "push"
 	basic_mob_flags = DEL_ON_DEATH
 
-	status_flags = NONE
+	status_flags = CANPUSH
 	maxHealth = 1000
 	health = 1000
 	melee_damage_lower = 10

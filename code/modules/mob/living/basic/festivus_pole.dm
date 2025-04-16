@@ -13,7 +13,7 @@
 	gender = NEUTER
 	gold_core_spawnable = HOSTILE_SPAWN
 	basic_mob_flags = DEL_ON_DEATH
-	status_flags = NONE
+	status_flags = CANPUSH
 
 	response_help_continuous = "rubs"
 	response_help_simple = "rub"

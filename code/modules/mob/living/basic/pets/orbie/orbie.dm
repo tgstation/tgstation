@@ -8,7 +8,7 @@
 	icon_living = "orbie"
 	speed = 0
 	maxHealth = 100
-	status_flags = NONE
+	status_flags = CANPUSH
 	light_on = FALSE
 	light_system = OVERLAY_LIGHT
 	light_range = 6

@@ -9,7 +9,7 @@
 	maxHealth = 300
 	melee_damage_lower = 15
 	melee_damage_upper = 30
-	status_flags = NONE
+	status_flags = CANPUSH
 	sentience_type = SENTIENCE_ARTIFICIAL
 	ai_controller = /datum/ai_controller/basic_controller/stares_at_people
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)

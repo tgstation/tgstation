@@ -29,7 +29,7 @@
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	melee_attack_cooldown = 1 SECONDS
 
-	status_flags = NONE
+	status_flags = CANPUSH
 	faction = list(FACTION_STATUE)
 	speak_emote = list("screams")
 	death_message = "falls apart into a fine dust."

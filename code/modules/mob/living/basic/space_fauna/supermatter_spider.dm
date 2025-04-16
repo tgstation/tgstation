@@ -9,7 +9,7 @@
 	icon_dead = "smspider_dead"
 
 	gender = NEUTER
-	status_flags = NONE
+	status_flags = CANPUSH
 	mob_biotypes = MOB_BUG|MOB_ROBOTIC
 	speak_emote = list("vibrates")
 

@@ -9,7 +9,7 @@
 	mob_biotypes = MOB_SPIRIT
 	maxHealth = 40
 	health = 40
-	status_flags = NONE
+	status_flags = CANPUSH
 	speak_emote = list("hisses")
 	response_help_continuous = "puts their hand through"
 	response_help_simple = "put your hand through"
