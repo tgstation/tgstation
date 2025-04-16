@@ -41,6 +41,7 @@ SUBSYSTEM_DEF(events)
 		fill_holidays()
 	return SS_INIT_SUCCESS
 
+///Takes the events config json and applies any var edits made there to their respective event.
 /datum/controller/subsystem/events/proc/setup_config()
 	var/json_file = file("[global.config.directory]/events.json")
 	if(!fexists(json_file))
