@@ -15,7 +15,7 @@
 	var/map = ""
 	/// Controls the screen_loc that owned plane masters will use when generating relays. Due to a Byond bug, relays using the CENTER positional loc
 	/// Will be improperly offset
-	var/relay_loc = "SCREEN_SOUTHWEST"
+	var/relay_loc = "1,1"
 
 /datum/plane_master_group/New(key, map = "")
 	. = ..()
