@@ -42,9 +42,6 @@
 	var/map_flags = NONE
 
 /datum/round_event_control/New()
-	if(config && !wizardevent) // Magic is unaffected by configs
-		earliest_start = CEILING(earliest_start * CONFIG_GET(number/events_min_time_mul), 1)
-		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
 	if(!length(admin_setup))
 		return
 	var/list/admin_setup_types = admin_setup.Copy()
