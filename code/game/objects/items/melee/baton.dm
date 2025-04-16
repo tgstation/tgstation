@@ -644,7 +644,7 @@
 /obj/item/melee/baton/security/proc/tryremovecell(mob/user)
 	if(cell && can_remove_cell)
 		balloon_alert(user, "removing [src]'s power cell...")
-		playsound(user, 'sound/items/tools/screwdriver_operating.ogg', 50)
+		playsound(src, 'sound/items/tools/screwdriver_operating.ogg', 50)
 		if(do_after(user, 3 SECONDS, src))
 			cell.forceMove(drop_location())
 			to_chat(user, span_notice("You remove the cell from [src]."))
