@@ -67,6 +67,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	max_integrity = 300
 	integrity_failure = 0.33
 	interaction_flags_mouse_drop = NEED_DEXTERITY | ALLOW_RESTING
+	circuit = /obj/item/circuitboard/machine/photocopier
 
 	/// A reference to a mob on top of the photocopier trying to copy their ass. Null if there is no mob.
 	var/mob/living/ass
@@ -83,14 +84,19 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	/// Variable for the UI telling us how many copies are in the queue.
 	var/copies_left = 0
 	/// The amount of paper this photocoper starts with.
-	var/starting_paper = 30
+	var/starting_paper = 0
 	/// A stack for all the empty paper we have newly inserted (LIFO)
 	var/list/paper_stack = list()
 
+/obj/machinery/photocopier/prebuilt
+	starting_paper = 30
+
+/obj/machinery/photocopier/prebuilt/Initialize(mapload)
+	toner_cartridge = new(src)
+	return ..()
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
-	toner_cartridge = new(src)
 	setup_components()
 	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
 
@@ -521,10 +527,15 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	to_chat(user, span_notice("You take [object] out of [src]. [busy ? "The [src] comes to a halt." : ""]"))
 
-/obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
+/obj/machinery/photocopier/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	if(default_deconstruction_screwdriver(user, "photocopier2", "photocopier", tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/photocopier/crowbar_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/photocopier/attackby(obj/item/object, mob/user, params)
 	if(istype(object, /obj/item/paper) || istype(object, /obj/item/photo) || istype(object, /obj/item/documents))
