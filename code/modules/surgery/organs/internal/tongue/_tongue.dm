@@ -567,7 +567,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/tongue/on_mob_remove(mob/living/carbon/owner)
 	. = ..()
 	owner.remove_language(/datum/language/machine, source = LANGUAGE_TONGUE)
-	to_chat(owner, span_boldnotice("You're not really sure what beeps and boops mean anymore.))
+	to_chat(owner, span_boldnotice("You're not really sure what beeps and boops mean anymore."))
 /obj/item/organ/tongue/snail
 	name = "radula"
 	desc = "A minutely toothed, chitinous ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
