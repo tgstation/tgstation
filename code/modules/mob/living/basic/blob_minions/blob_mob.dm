@@ -5,7 +5,7 @@
 	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blob_head"
 	unique_name = TRUE
-	status_flags = NONE
+	status_flags = CANPUSH
 	pass_flags = PASSBLOB
 	faction = list(ROLE_BLOB)
 	combat_mode = TRUE
