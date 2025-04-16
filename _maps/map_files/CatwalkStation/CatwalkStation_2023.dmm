@@ -12578,6 +12578,9 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/iron/freezer,
 /area/station/engineering/lobby)
 "dSS" = (
@@ -13142,6 +13145,13 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
+"dZZ" = (
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 1;
+	name = "server vent"
+	},
+/turf/open/floor/circuit/telecomms/server,
+/area/station/science/server)
 "eab" = (
 /obj/effect/turf_decal/loading_area,
 /obj/effect/turf_decal/stripes/corner{
@@ -21827,6 +21837,16 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/commons/storage/art)
+"gJg" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/openspace,
+/area/station/command/bridge)
 "gJh" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/disposaloutlet{
@@ -25560,6 +25580,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/freezer,
 /area/station/engineering/main)
 "hPa" = (
@@ -39468,15 +39489,11 @@
 /turf/open/floor/glass,
 /area/station/commons/fitness/recreation)
 "mbF" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 4
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 8
 	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/openspace,
-/area/station/command/bridge)
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/service/kitchen/coldroom)
 "mbK" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Virology Maintenance"
@@ -42342,10 +42359,11 @@
 "mWq" = (
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty{
-	pixel_x = -3
+	pixel_x = -9;
+	pixel_y = 9
 	},
 /obj/item/stack/sheet/glass/fifty{
-	pixel_y = 2
+	pixel_y = 13
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
@@ -48256,21 +48274,21 @@
 /area/station/engineering/storage_shared)
 "oMH" = (
 /obj/item/hfr_box/body/waste_output{
-	pixel_x = -10;
-	pixel_y = 6
+	pixel_x = -15;
+	pixel_y = 13
 	},
 /obj/item/hfr_box/body/interface{
-	pixel_x = 5;
-	pixel_y = 6
+	pixel_y = 17
 	},
 /obj/item/hfr_box/body/moderator_input{
 	pixel_x = -8;
-	pixel_y = -2
+	pixel_y = 8
 	},
 /obj/item/hfr_box/body/waste_output{
-	pixel_x = 12;
-	pixel_y = -4
+	pixel_x = 10;
+	pixel_y = 9
 	},
+/obj/structure/table,
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
 "oMI" = (
@@ -60029,13 +60047,6 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
-"stv" = (
-/obj/machinery/atmospherics/components/unary/passive_vent{
-	dir = 1;
-	name = "server vent"
-	},
-/turf/open/floor/circuit/telecomms/server,
-/area/station/science/server)
 "stG" = (
 /obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -76937,12 +76948,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
-"xGo" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	dir = 8
-	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/station/service/kitchen/coldroom)
 "xGG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -114758,7 +114763,7 @@ hqr
 ojS
 tsJ
 iHS
-stv
+dZZ
 hZe
 agy
 tsJ
@@ -115529,7 +115534,7 @@ gme
 mbk
 rOA
 iHS
-stv
+dZZ
 hZe
 fUL
 wNC
@@ -169191,7 +169196,7 @@ cTW
 gPW
 gIo
 qUa
-xGo
+mbF
 iDt
 dpn
 mlL
@@ -175114,7 +175119,7 @@ hqL
 hqL
 vzB
 mMb
-mbF
+gJg
 aFX
 qVO
 psk
