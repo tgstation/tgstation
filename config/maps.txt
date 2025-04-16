@@ -63,5 +63,4 @@ map multiz_debug
 endmap
 
 map runtimestation
-	feedbacklink https://www.youtube.com/watch?v=XG8b7WhANNA
 endmap
