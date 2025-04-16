@@ -20,6 +20,7 @@ export type OrbitData = {
   misc: Observable[];
   npcs: Observable[];
   orbiting: Observable | null;
+  can_observe: BooleanLike;
 };
 
 export type Observable = {
