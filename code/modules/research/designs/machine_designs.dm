@@ -1349,7 +1349,8 @@
 /datum/design/board/photopcopier
 	name = "Photocopier"
 	desc = "The circuit for a photocopier."
-	id = /obj/item/circuitboard/machine/photocopier
+	id = "photocopier"
+	build_path = /obj/item/circuitboard/machine/photocopier
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
 	)
