@@ -252,4 +252,104 @@
 		"min_players": 20,
 		"weight": 10
 	},
+	"Alien Infestation": {
+		"min_players": 10,
+		"weight": 5
+	},
+	"Blob": {
+		"min_players": 20,
+		"weight": 10
+	},
+	"Changeling Meteor": {
+		"min_players": 20,
+		"weight": 8
+	},
+	"Spawn Fugitives": {
+		"min_players": 20,
+		"weight": 10,
+		"earliest_start": 18000
+	},
+	"Spawn Morph": {
+		"min_players": 0,
+		"weight": 0
+	},
+	"Spawn Nightmare": {
+		"min_players": 20,
+		"weight": 10
+	},
+	"Lone Operative": {
+		"min_players": 0,
+		"weight": 0
+	},
+	"Spawn Revenant": {
+		"min_players": 5,
+		"weight": 7
+	},
+	"Random Human-level Intelligence": {
+		"min_players": 0,
+		"weight": 10
+	},
+	"Station-wide Human-level Intelligence": {
+		"min_players": 0,
+		"weight": 0
+	},
+	"Spawn Slaughter Demon": {
+		"min_players": 20,
+		"weight": 1,
+		"earliest_start": 36000
+	},
+	"Spawn Space Dragon": {
+		"min_players": 20,
+		"weight": 7
+	},
+	"Spawn Space Ninja": {
+		"min_players": 20,
+		"weight": 10
+	},
+	"Immovable Rod": {
+		"min_players": 15,
+		"weight": 10
+	},
+	"Dark Matt-eor": {
+		"min_players": 0,
+		"weight": 0
+	},
+	"Meteor Wave: Normal": {
+		"min_players": 15,
+		"weight": 4,
+		"earliest_start": 15000
+	},
+	"Meteor Wave: Threatening": {
+		"min_players": 20,
+		"weight": 5,
+		"earliest_start": 21000
+	},
+	"Meteor Wave: Catastrophic": {
+		"min_players": 25,
+		"weight": 7,
+		"earliest_start": 27000
+	},
+	"Meteor Wave: Meaty": {
+		"min_players": 15,
+		"weight": 2,
+		"earliest_start": 15000
+	},
+	"Major Space Dust": {
+		"min_players": 15,
+		"weight": 14,
+		"earliest_start": 9000
+	},
+	"Stray Meteor": {
+		"min_players": 15,
+		"weight": 15
+	},
+	"Shuttle Loan": {
+		"min_players": 0,
+		"weight": 10,
+		"earliest_start": 4200
+	},
+	"Space Vines": {
+		"min_players": 10,
+		"weight": 15
+	},
 }
