@@ -10781,12 +10781,6 @@
 /obj/structure/sign/poster/contraband/missing_gloves/directional/west,
 /turf/open/floor/wood,
 /area/station/commons/dorms)
-"dpn" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/station/service/kitchen/coldroom)
 "dpo" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -21838,15 +21832,11 @@
 /turf/open/floor/plating,
 /area/station/commons/storage/art)
 "gJg" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/railing{
-	dir = 4
+/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
+	dir = 8
 	},
-/obj/structure/railing{
-	dir = 4
-	},
-/turf/open/openspace,
-/area/station/command/bridge)
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/service/kitchen/coldroom)
 "gJh" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/disposaloutlet{
@@ -39488,12 +39478,6 @@
 /obj/effect/landmark/start/assistant,
 /turf/open/floor/glass,
 /area/station/commons/fitness/recreation)
-"mbF" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/junction{
-	dir = 8
-	},
-/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
-/area/station/service/kitchen/coldroom)
 "mbK" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Virology Maintenance"
@@ -39590,7 +39574,22 @@
 "mcC" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/table/glass,
-/obj/item/wrench/medical,
+/obj/item/wrench/medical{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_y = 12;
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_y = 6;
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/cup/beaker/cryoxadone{
+	pixel_y = 4;
+	pixel_x = -7
+	},
 /turf/open/openspace,
 /area/station/medical/cryo)
 "mcR" = (
@@ -60047,6 +60046,16 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/wood,
 /area/station/hallway/primary/central)
+"stv" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/openspace,
+/area/station/command/bridge)
 "stG" = (
 /obj/structure/chair/office,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -76948,6 +76957,12 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
+"xGo" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen_coldroom/freezerfloor,
+/area/station/service/kitchen/coldroom)
 "xGG" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -78751,9 +78766,9 @@
 	dir = 1
 	},
 /obj/machinery/light/directional/east,
-/obj/item/storage/box/beakers/variety{
-	pixel_x = -13;
-	pixel_y = 17
+/obj/item/storage/box/beakers{
+	pixel_x = -12;
+	pixel_y = 15
 	},
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
@@ -169196,9 +169211,9 @@ cTW
 gPW
 gIo
 qUa
-mbF
+gJg
 iDt
-dpn
+xGo
 mlL
 bOk
 hGg
@@ -169455,7 +169470,7 @@ bpm
 bOk
 ves
 vxJ
-dpn
+xGo
 ehY
 bOk
 eOS
@@ -169712,7 +169727,7 @@ meX
 bOk
 nuG
 gOH
-dpn
+xGo
 jLw
 bOk
 hGg
@@ -175119,7 +175134,7 @@ hqL
 hqL
 vzB
 mMb
-gJg
+stv
 aFX
 qVO
 psk
