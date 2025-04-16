@@ -162,5 +162,94 @@
 		"min_players": 0,
 		"weight": 6,
 		"earliest_start": 18000
-	}
+	},
+	"Supermatter Surge": {
+		"min_players": 0,
+		"weight": 15
+	},
+	"Supermatter Surge: Poly's Revenge": {
+		"min_players": 0,
+		"weight": 0
+	},
+	"Tram Malfunction": {
+		"min_players": 0,
+		"weight": 30,
+		"earliest_start": 9000
+	},
+	"Ventilation Clog: Minor": {
+		"min_players": 0,
+		"weight": 25,
+		"earliest_start": 3000
+	},
+	"Ventilation Clog: Major": {
+		"min_players": 0,
+		"weight": 10,
+		"earliest_start": 6000
+	},
+	"Ventilation Clog: Critical": {
+		"min_players": 15,
+		"weight": 8,
+		"earliest_start": 15000
+	},
+	"Ventilation Clog: Strange": {
+		"min_players": 0,
+		"weight": 5,
+		"earliest_start": 3000
+	},
+	"Wisdom Cow": {
+		"min_players": 0,
+		"weight": 20
+	},
+	"Wormholes": {
+		"min_players": 2,
+		"weight": 1
+	},
+	"Anomaly: Energetic Flux": {
+		"min_players": 1,
+		"weight": 15
+	},
+	"Anomaly: Bioscrambler": {
+		"min_players": 10,
+		"weight": 20
+	},
+	"Anomaly: Bluespace": {
+		"min_players": 1,
+		"weight": 15
+	},
+	"Anomaly: Dimensional": {
+		"min_players": 10,
+		"weight": 20
+	},
+	"Anomaly: Ectoplasmic Outburst": {
+		"min_players": 30,
+		"weight": 4
+	},
+	"Anomaly: Hyper-Energetic Flux": {
+		"min_players": 10,
+		"weight": 20
+	},
+	"Anomaly: Gravitational": {
+		"min_players": 1,
+		"weight": 25
+	},
+	"Anomaly: Gravitational (High Intensity)": {
+		"min_players": 1,
+		"weight": 15
+	},
+	"Anomaly: Hallucination": {
+		"min_players": 10,
+		"weight": 20
+	},
+	"Anomaly: Pyroclastic": {
+		"min_players": 1,
+		"weight": 20
+	},
+	"Anomaly: Vortex": {
+		"min_players": 20,
+		"weight": 10
+	},
+	"Abductors": {
+		"min_players": 20,
+		"weight": 10
+	},
 }
