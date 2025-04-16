@@ -1,4 +1,4 @@
-
+/// Applies a simple scaling slowdown as a mob's stamina is depleted
 /datum/element/basic_stamina_slowdown
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
