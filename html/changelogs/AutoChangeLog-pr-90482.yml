@@ -1,0 +1,10 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - refactor: "Refactored polaroid camera item interactions. Please report any issues."
+  - spellcheck: "The polaroid camera's description now talks about 'holorecord' disks rather than 'holographic' disks."
+  - qol: "Added screentips to the polaroid camera."
+  - qol: "If a polaroid camera already has a holorecord disk, inserting a new one swaps the old one out instead of blocking."
+  - qol: "Added balloon alerts and sounds to polaroid camera interactions."
+  - bugfix: "Polaroid camera can no longer record to holorecord disks outside of it that left it via nonstandard means."
+  - bugfix: "Rewind camera actually applies its special picture name."
