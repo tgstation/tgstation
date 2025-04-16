@@ -88,7 +88,7 @@
 	maxHealth = 250
 	health = 250
 	faction = list(FACTION_NEUTRAL)
-	status_flags = CANPUSH
+	status_flags = CANPUSH | CANSTUN
 
 /mob/living/basic/bear/snow/ancient
 	name = "ancient polar bear"

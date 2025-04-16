@@ -30,6 +30,10 @@
 	lighting_cutoff_red = 22
 	lighting_cutoff_green = 5
 	lighting_cutoff_blue = 5
+	max_stamina_loss = BASIC_MOB_NO_STAMCRIT
+	stamina_recovery = 5
+	max_stamina_slowdown = 12
+
 	/// Speed modifier to apply if controlled by a human player
 	var/player_speed_modifier = -4
 	/// What reagent the mob injects targets with

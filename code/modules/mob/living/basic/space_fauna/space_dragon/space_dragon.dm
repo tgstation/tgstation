@@ -18,6 +18,7 @@
 	health_doll_icon = "spacedragon"
 	faction = list(FACTION_CARP)
 	mob_biotypes = MOB_SPECIAL
+	status_flags = NONE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	gender = NEUTER
 	maxHealth = 400
@@ -51,6 +52,9 @@
 	lighting_cutoff_red = 12
 	lighting_cutoff_green = 15
 	lighting_cutoff_blue = 34
+	max_stamina_loss = BASIC_MOB_NO_STAMCRIT
+	stamina_recovery = 5
+	max_stamina_slowdown = 12
 
 	/// The colour of the space dragon
 	var/chosen_colour
