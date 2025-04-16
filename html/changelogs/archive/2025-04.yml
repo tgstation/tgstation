@@ -436,3 +436,70 @@
 2025-04-15:
   nfreader:
   - rscadd: Restores the "Link Forum Account" verb
+2025-04-16:
+  Absolucy:
+  - bugfix: Screentip images will no longer appear for players on BYOND versions suffering
+      from the bug that makes them way too big.
+  Ben10Omintrix:
+  - rscadd: adds a new glitch-out effect for holograms when they're interacted with
+  Iajret:
+  - bugfix: Status display software got updated and it can now automatically change
+      its image in response to current security level when in security level mode
+  Jacquerel:
+  - rscadd: Mice can play synthesisers
+  JohnFulpWillard:
+  - balance: Cultists using Spirit Realm to turn themselves into a ghost can no longer
+      see people's UIs.
+  - spellcheck: Fixes "begins" in the autopsy surgery step.
+  Melbert:
+  - bugfix: Fix PB shots with a revolver doing a melee attack
+  - bugfix: Fix Russian Revolver
+  - refactor: Refactored Russian Roulette entirely
+  - qol: Russian Revolver now has a do after associated before pulling the trigger.
+      You can alt-shift-click it to customize length of it, for dramatic effect (or
+      you can set it to 0 seconds)
+  - qol: Clowns can partake in Russian Roulette without fumbling
+  - rscadd: Adds a penalty for cheating the Cursed Russian Revolver
+  - rscadd: Cheating in Russian Roulette and losing now confers a different moodlet
+      than plain losing
+  - rscdel: You can no longer use telekinesis in Russian Roulette
+  - balance: Settler's bonus reduction to passive hunger drain has been halved, ensuring
+      they will at least get hungry once per round (but they still get hungry considerably
+      less)
+  - qol: You can rotate scanner gates (even though it functionally does nothing)
+  Rhials:
+  - balance: Bitrunning simulations of the lowest threat will not spawn Bitrunner
+      Glitches
+  SmArtKar:
+  - bugfix: Fixed rotated objects having odd shadows or not blocking emissives/space
+      light when they should.
+  - qol: Emissives now inherit object's transparency.
+  - rscadd: When a MODsuit piece overslots an item, it will now render beneath that
+      piece as long as its unsealed.
+  - refactor: Refactored how MODsuit modules are rendered, report any bugs on GitHub!
+  Timberpoes:
+  - bugfix: Job assignment code at round start now properly respects any overflow
+      caps set in the config files.
+  TiviPlus:
+  - refactor: Overhauled how looking up and looking down function. they should now
+      not jitter, and trying to look up/down while already doing so will cancel the
+      previous look up/down in the opposite direction
+  Toriate, JohnFulpWillard:
+  - rscadd: Adds a Wolf pelt cloak as an icemoon drop, replacing the hardened Cult
+      armor.
+  - balance: Cult's hardened armor now deals bleeding and dislocating limbs to non
+      cultists who wear it, and can also be blessed into holy armor.
+  necromanceranne:
+  - balance: Combat shotguns have a x1.5 damage increase over riot shotguns. This
+      extends to the compact combat shotgun.
+  - balance: The combat shotgun comes pre-loaded with rubbershot, rather than benabags.
+  - balance: Compact combat shotguns can be used while wielding something in your
+      off-hand (but still cannot be dual-wielded).
+  timothymtorres:
+  - bugfix: Fix water reagent making certain turfs (water/lava/chasm/soil/sand/etc.)
+      slippery
+  - rscadd: Add wizard magical rain event. A random reagent is selected to rain down
+      across the station. The only places to escape are in maintenance and inside
+      containers such as lockers. The wizard is not directly affected by the reagent,
+      but the side effects might still apply. (ie. raining lube, will make the floors
+      slippery, which can slip the wizard)
