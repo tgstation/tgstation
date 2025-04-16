@@ -906,12 +906,14 @@ Byond.subscribeTo('update_stat', function (payload) {
 	var parsed = payload.global_data;
 
 	for (var i = 0; i < parsed.length; i++)
-		if (parsed[i] != null) status_tab_parts.push(parsed[i]);
+		if (parsed[i] != null)
+			status_tab_parts.push(parsed[i]);
 
 	parsed = payload.other_str;
 
 	for (var i = 0; i < parsed.length; i++)
-		if (parsed[i] != null) status_tab_parts.push(parsed[i]);
+		if (parsed[i] != null)
+			status_tab_parts.push(parsed[i]);
 
 	if (current_tab == "Status") {
 		draw_status();
