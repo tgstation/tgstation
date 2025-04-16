@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix water reagent making certain turfs (water/lava/chasm/soil/sand/etc.) slippery"
