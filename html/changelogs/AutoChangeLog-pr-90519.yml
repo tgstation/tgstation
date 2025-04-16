@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed rotated objects having odd shadows or not blocking emissives/space light when they should."
-  - qol: "Emissives now inherit object's transparency."
