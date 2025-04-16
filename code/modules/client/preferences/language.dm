@@ -33,7 +33,6 @@
 	values += "Random"
 	//we add uncommon as it's foreigner-only.
 	values += /datum/language/uncommon::name
-	values += /datum/language/machine::name
 
 	for(var/datum/language/language_type as anything in GLOB.uncommon_roundstart_languages)
 		if(initial(language_type.name) in values)
