@@ -23,17 +23,17 @@ SUBSYSTEM_DEF(statpanels)
 		var/datum/map_config/cached = SSmap_vote.next_map_config
 
 		if(isnull(SSmapping.current_map))
-			global_data = list(list("Loading"))
+			global_data = "Loading"
 		else if(SSmapping.current_map.feedback_link)
 			global_data = list(list("Map: [SSmapping.current_map.map_name]", " (Feedback)", "action=openLink&link=[SSmapping.current_map.feedback_link]"))
 		else
-			global_data = list(list("Map: [SSmapping.current_map?.map_name]"))
+			global_data = "Map: [SSmapping.current_map?.map_name]"
 
 		if(SSmapping.current_map?.mapping_url)
 			global_data += list(list("same_line", " | (View in Browser)", "action=openWebMap"))
 
 		if(cached)
-			global_data += list(list("Next Map: [cached.map_name]"))
+			global_data += "Next Map: [cached.map_name]"
 
 		global_data += list(
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
