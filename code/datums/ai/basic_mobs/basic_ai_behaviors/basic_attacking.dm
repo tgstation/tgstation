@@ -1,3 +1,6 @@
+/// Amount of time to wait before executing attack if not specified
+#define DEFAULT_ATTACK_DELAY (0.4 SECONDS)
+
 /datum/ai_behavior/basic_melee_attack
 	action_cooldown = 0.2 SECONDS // We gotta check unfortunately often because we're in a race condition with nextmove
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
@@ -26,7 +29,7 @@
 	var/can_attack_time = controller.blackboard[BB_BASIC_MOB_MELEE_COOLDOWN_TIMER]
 	if (isnull(can_attack_time))
 		var/blackboard_delay = controller.blackboard[BB_BASIC_MOB_MELEE_DELAY]
-		var/attack_delay = isnull(blackboard_delay) ? 0.4 SECONDS : blackboard_delay
+		var/attack_delay = isnull(blackboard_delay) ? DEFAULT_ATTACK_DELAY : blackboard_delay
 		controller.set_blackboard_key(BB_BASIC_MOB_MELEE_COOLDOWN_TIMER, world.time + attack_delay)
 		return AI_BEHAVIOR_INSTANT
 	if (can_attack_time > world.time)
@@ -158,3 +161,5 @@
 
 /datum/ai_behavior/basic_ranged_attack/avoid_friendly_fire
 	avoid_friendly_fire = TRUE
+
+#undef DEFAULT_ATTACK_DELAY
