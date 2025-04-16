@@ -161,7 +161,7 @@ function ReportText(props) {
     <Section fill title="Set report text" textAlign="center">
       <Stack fill vertical>
         <Stack.Item grow>
-            <TextArea
+          <TextArea
             height="100%"
             fluid
             onChange={setCommandReport}
@@ -202,7 +202,6 @@ function ReportText(props) {
           >
             Submit Report
           </Button.Confirm>
-
         </Stack.Item>
       </Stack>
     </Section>
