@@ -70,7 +70,7 @@
 
 /mob/living/basic/robot_customer/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if(grime_carried && prob(grime_carried * 20) && !throwing && !(movetypes & MOVETYPES_NOT_TOUCHING_GROUND) && has_gravity())
+	if(grime_carried && prob(grime_carried * 20) && !throwing && !(movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && has_gravity())
 		new /obj/effect/decal/cleanable/dirt(old_loc)
 		grime_carried--
 
