@@ -567,6 +567,8 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 
 /obj/item/organ/tongue/robot/on_mob_remove(mob/living/carbon/owner)
 	. = ..()
+	if(QDELING(owner))
+		return
 	owner.remove_language(/datum/language/machine, source = LANGUAGE_TONGUE)
 	to_chat(owner, span_boldnotice("You're not really sure what beeps and boops mean anymore."))
 
