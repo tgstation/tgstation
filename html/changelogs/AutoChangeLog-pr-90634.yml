@@ -1,0 +1,4 @@
+author: "hry-gh"
+delete-after: True
+changes:
+  - qol: "you can now reset the adjustable pane splitters in chat settings"
