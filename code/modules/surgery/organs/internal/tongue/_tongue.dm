@@ -564,6 +564,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	. = ..()
 	receiver.grant_language(/datum/language/machine, source = LANGUAGE_TONGUE)
 	to_chat(receiver, span_boldnotice("You gain a new understanding of Encoded Audio Language."))
+
 /obj/item/organ/tongue/on_mob_remove(mob/living/carbon/owner)
 	. = ..()
 	owner.remove_language(/datum/language/machine, source = LANGUAGE_TONGUE)
