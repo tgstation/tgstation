@@ -72,7 +72,8 @@
 	var/datum/brain_trauma/special/honorbound/honor = user.has_trauma_type(/datum/brain_trauma/special/honorbound)
 	if(honor && (joining_now in honor.guilty))
 		honor.guilty -= joining_now
-	GLOB.religious_sect.adjust_favor(DEACONIZE_FAVOR_GAIN, user)
+	if(crusader)
+		GLOB.religious_sect.adjust_favor(DEACONIZE_FAVOR_GAIN, user)
 	to_chat(user, span_notice("[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)"))
 	joining_now.mind.holy_role = HOLY_ROLE_DEACON
 	GLOB.religious_sect.on_conversion(joining_now)
