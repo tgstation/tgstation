@@ -61,4 +61,5 @@
 	ADD_TRAIT(src, TRAIT_ANGELIC, INNATE_TRAIT)
 
 /mob/living/basic/construct/juggernaut/mystic
+	faction = list(ROLE_WIZARD)
 	theme = THEME_WIZARD

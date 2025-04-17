@@ -43,6 +43,7 @@
 	ADD_TRAIT(src, TRAIT_ANGELIC, INNATE_TRAIT)
 
 /mob/living/basic/construct/wraith/mystic
+	faction = list(ROLE_WIZARD)
 	theme = THEME_WIZARD
 	construct_spells = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/mystic,
