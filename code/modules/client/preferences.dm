@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// If this isn't the case, kill me and restore the code, thanks
 
 	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui)
+	if(!ui && SSgreyscale.initialized)
 		character_preview_view = create_character_preview_view(user)
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
