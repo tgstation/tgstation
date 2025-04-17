@@ -560,7 +560,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/tongue/robot/modify_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
 
-/obj/item/organ/tongue/on_mob_insert(mob/living/carbon/receiver)
+/obj/item/organ/tongue/robot/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
 	receiver.grant_language(/datum/language/machine, source = LANGUAGE_TONGUE)
 	to_chat(receiver, span_boldnotice("You gain a new understanding of Encoded Audio Language."))
