@@ -117,8 +117,8 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, \
-	speed = 4 SECONDS, \
-	effectiveness = 100, \
+		speed = 4 SECONDS, \
+		effectiveness = 100, \
 	)
 	alt_continuous = string_list(alt_continuous)
 	alt_simple = string_list(alt_simple)
