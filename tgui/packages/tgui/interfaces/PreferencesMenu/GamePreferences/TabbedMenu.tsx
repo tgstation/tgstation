@@ -10,7 +10,6 @@ export function TabbedMenu(props: TabbedMenuProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const categoryRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  console.log(categoryRefs);
   return (
     <Stack vertical fill>
       <Stack.Item>
