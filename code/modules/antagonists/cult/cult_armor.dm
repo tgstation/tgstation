@@ -252,13 +252,39 @@
 	bomb = -45
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
-	..()
-	if(!IS_CULTIST(user))
-		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
-		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
-		user.dropItemToGround(src, TRUE)
-		user.set_dizzy_if_lower(1 MINUTES)
-		user.Paralyze(100)
+	. = ..()
+	if(!(slot_flags & slot))
+		return
+	if(IS_CULTIST(user))
+		RegisterSignal(user.mind, COMSIG_ANTAGONIST_REMOVED, PROC_REF(on_antagonist_removed))
+		return
+	if(user.mind)
+		RegisterSignal(user.mind, COMSIG_ANTAGONIST_GAINED, PROC_REF(on_antagonist_gained))
+	user.AddElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
+	to_chat(user, span_warning("As you equip [src], everything begins to feel a whole lot heavier!"))
+
+/obj/item/clothing/suit/hooded/cultrobes/berserker/dropped(mob/living/user)
+	if(user.mind)
+		UnregisterSignal(user.mind, list(COMSIG_ANTAGONIST_REMOVED, COMSIG_ANTAGONIST_GAINED))
+	user.RemoveElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
+	return ..()
+
+///Called when a non-cultist wearer suddenly gains an antag datum, used to clear forced gravity from our source.
+/obj/item/clothing/suit/hooded/cultrobes/berserker/proc/on_antagonist_gained(datum/mind/source, datum/antagonist/antag_datum)
+	SIGNAL_HANDLER
+
+	if(!istype(antag_datum, /datum/antagonist/cult))
+		return
+	source.current.RemoveElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
+	RegisterSignal(source, COMSIG_ANTAGONIST_REMOVED, PROC_REF(on_antagonist_removed))
+
+/obj/item/clothing/suit/hooded/cultrobes/berserker/proc/on_antagonist_removed(datum/mind/source, datum/antagonist/antag_datum)
+	SIGNAL_HANDLER
+
+	if(!istype(antag_datum, /datum/antagonist/cult))
+		return
+	source.current.AddElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
+	RegisterSignal(source, COMSIG_ANTAGONIST_GAINED, PROC_REF(on_antagonist_gained))
 
 /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 	name = "flagellant's hood"
