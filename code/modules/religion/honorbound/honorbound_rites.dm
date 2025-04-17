@@ -15,11 +15,13 @@
 		"Sinners must be silenced ...",
 	)
 	invoke_msg = "... And the code must be upheld!"
+	///Boolean on whether or not the new deacon will be a crusader
+	var/crusader = TRUE
 	///the invited crusader
 	var/mob/living/carbon/human/new_crusader
 
 /datum/religion_rites/deaconize/perform_rite(mob/living/user, atom/religious_tool)
-	var/datum/religion_sect/honorbound/sect = GLOB.religious_sect
+	var/datum/religion_sect/sect = GLOB.religious_sect
 	if(!ismovable(religious_tool))
 		to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
 		return FALSE
@@ -40,8 +42,11 @@
 			to_chat(user, span_warning("Wait for them to decide on whether to join or not!"))
 			return FALSE
 		if(!(possible_crusader in sect.possible_crusaders))
-			INVOKE_ASYNC(sect, TYPE_PROC_REF(/datum/religion_sect/honorbound, invite_crusader), possible_crusader)
-			to_chat(user, span_notice("They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again."))
+			INVOKE_ASYNC(sect, TYPE_PROC_REF(/datum/religion_sect/honorbound, invite_crusader), possible_crusader, crusader)
+			if(crusader)
+				to_chat(user, span_notice("They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again."))
+			else
+				to_chat(user, span_notice("They have been given the option to consider becoming a Deacon. Wait for them to decide and try again."))
 			return FALSE
 		new_crusader = possible_crusader
 		return ..()
@@ -65,7 +70,7 @@
 		joining_now.gib(DROP_ORGANS|DROP_BODYPARTS)
 		return FALSE
 	var/datum/brain_trauma/special/honorbound/honor = user.has_trauma_type(/datum/brain_trauma/special/honorbound)
-	if(joining_now in honor.guilty)
+	if(honor && (joining_now in honor.guilty))
 		honor.guilty -= joining_now
 	GLOB.religious_sect.adjust_favor(DEACONIZE_FAVOR_GAIN, user)
 	to_chat(user, span_notice("[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)"))
@@ -73,6 +78,28 @@
 	GLOB.religious_sect.on_conversion(joining_now)
 	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
 	return TRUE
+
+///One time use subtype of deaconize.
+/datum/religion_rites/deaconize/one_time_use
+	name = "Deaconize"
+	desc = "Converts someone to your sect. They must be willing, so the first invocation will instead prompt them to join. \
+	They will gain the same holy abilities as you, this is a one-time use so make sure they are worthy!"
+	ritual_length = 30 SECONDS
+	ritual_invocations = list(
+		"A good, honorable person has been brought here by faith ...",
+		"With their hands ready to serve ...",
+		"Heart ready to listen ...",
+		"And soul ready to follow ...",
+		"May we offer our own hand in return ..."
+	)
+	invoke_msg = "And use them to the best of our abilities."
+	crusader = FALSE
+
+/datum/religion_rites/deaconize/one_time_use/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+	. = ..()
+	if(!.)
+		return
+	GLOB.religious_sect.rites_list.Remove(/datum/religion_rites/deaconize/one_time_use)
 
 ///Mostly useless funny rite for forgiving someone, making them innocent once again.
 /datum/religion_rites/forgive
