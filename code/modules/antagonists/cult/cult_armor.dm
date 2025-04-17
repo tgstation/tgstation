@@ -321,11 +321,13 @@
 	STOP_PROCESSING(SSprocessing, src)
 
 /obj/item/clothing/glasses/hud/health/night/cultblind/process(seconds_per_tick)
-	. = ..()
 	var/mob/living/carbon/wearer = loc
 	if(!istype(wearer) || IS_CULTIST(wearer))
 		return
 	var/obj/item/organ/eyes/eyes = wearer.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return
-	eyes.apply_organ_damage(1)
+	if(!eyes.apply_organ_damage(1))
+		return
+	if(SPT_PROB(3, seconds_per_tick))
+		to_chat(wearer, span_danger("You feel your eyes burning."))
