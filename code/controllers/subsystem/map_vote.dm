@@ -132,6 +132,20 @@ SUBSYSTEM_DEF(map_vote)
 
 	return valid_maps
 
+/datum/controller/subsystem/map_vote/proc/filter_cache_to_valid_maps()
+	var/connected_players = length(GLOB.player_list)
+	var/list/valid_maps = list()
+	for(var/map_id in map_vote_cache)
+		var/datum/map_config/map = config.maplist[map_id]
+		if(!map.votable)
+			continue
+		if(map.config_min_users > 0 && (connected_players < map.config_min_users))
+			continue
+		if(map.config_max_users > 0 && (connected_players > map.config_max_users))
+			continue
+		valid_maps[map_id] = map_vote_cache[map_id]
+	return valid_maps
+
 /datum/controller/subsystem/map_vote/proc/set_next_map(datum/map_config/change_to)
 	if(!change_to.MakeNextMap())
 		message_admins("Failed to set new map with next_map.json for [change_to.map_name]!")
