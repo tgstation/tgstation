@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	///String dialogue that is added to the player's in-round notes and memories regarding specifics of that antagonist, eg. the nuke code for nuke ops, or your unlock code for traitors.
 	var/antag_memory = ""
 	///typepath of moodlet that the mob will gain when granted this antagonist type.
-	var/antag_moodlet
+	var/datum/mood_event/antag_moodlet/antag_moodlet
 	///If these antags are alone when a shuttle elimination happens.
 	var/can_elimination_hijack = ELIMINATION_NEUTRAL
 	///If above 0, this is the multiplier for the speed at which we hijack the shuttle. Do not directly read, use hijack_speed().

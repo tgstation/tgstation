@@ -4,7 +4,7 @@
 	antagpanel_category = ANTAG_GROUP_SYNDICATE
 	job_rank = ROLE_OPERATIVE
 	antag_hud_name = "synd"
-	antag_moodlet = /datum/mood_event/focused
+	antag_moodlet = /datum/mood_event/antag_moodlet/focused
 	show_to_ghosts = TRUE
 	hijack_speed = 2 //If you can't take out the station, take the shuttle instead.
 	suicide_cry = "FOR THE SYNDICATE!!"

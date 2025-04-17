@@ -92,11 +92,6 @@
 	mood_change = 6
 	timeout = 2 MINUTES
 
-/datum/mood_event/focused
-	description = "I have a goal, and I will reach it, whatever it takes!" //Used for syndies, nukeops etc so they can focus on their goals
-	mood_change = 4
-	hidden = TRUE
-
 /datum/mood_event/badass_antag
 	description = "I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of having me around."
 	mood_change = 7
@@ -108,21 +103,6 @@
 	description = "The voices have released their hooks on my mind! I feel free again!" //creeps get it when they are around their obsession
 	mood_change = 18
 	timeout = 3 SECONDS
-	hidden = TRUE
-
-/datum/mood_event/revolution
-	description = "VIVA LA REVOLUTION!"
-	mood_change = 3
-	hidden = TRUE
-
-/datum/mood_event/cult
-	description = "I have seen the truth, praise the almighty one!"
-	mood_change = 10 //maybe being a cultist isn't that bad after all
-	hidden = TRUE
-
-/datum/mood_event/heretics
-	description = "THE HIGHER I RISE, THE MORE I SEE."
-	mood_change = 10 //maybe being a heretic isnt that bad after all
 	hidden = TRUE
 
 /datum/mood_event/rift_fishing

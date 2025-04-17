@@ -4,7 +4,7 @@
 	antagpanel_category = "Spy"
 	antag_hud_name = "spy"
 	job_rank = ROLE_SPY
-	antag_moodlet = /datum/mood_event/focused
+	antag_moodlet = /datum/mood_event/antag_moodlet/focused
 	hijack_speed = 1
 	ui_name = "AntagInfoSpy"
 	preview_outfit = /datum/outfit/spy

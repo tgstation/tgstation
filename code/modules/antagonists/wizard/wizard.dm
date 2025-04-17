@@ -7,7 +7,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	antagpanel_category = ANTAG_GROUP_WIZARDS
 	job_rank = ROLE_WIZARD
 	antag_hud_name = "wizard"
-	antag_moodlet = /datum/mood_event/focused
+	antag_moodlet = /datum/mood_event/antag_moodlet/focused
 	hijack_speed = 0.5
 	ui_name = "AntagInfoWizard"
 	suicide_cry = "FOR THE FEDERATION!!"
