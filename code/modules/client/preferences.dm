@@ -134,9 +134,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// There used to be code here that readded the preview view if you "rejoined"
 	// I'm making the assumption that ui close will be called whenever a user logs out, or loses a window
 	// If this isn't the case, kill me and restore the code, thanks
+	if(!SSgreyscale.initialized)
+		return
 
 	ui = SStgui.try_update_ui(user, src, ui)
-	if(!ui && SSgreyscale.initialized)
+	if(!ui)
 		character_preview_view = create_character_preview_view(user)
 		ui = new(user, src, "PreferencesMenu")
 		ui.set_autoupdate(FALSE)
