@@ -51919,6 +51919,7 @@
 /area/station/security/execution/transfer)
 "rXG" = (
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
 "rXO" = (

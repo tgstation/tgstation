@@ -23017,6 +23017,10 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/mine/eva)
+"gxT" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "gxU" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -34706,7 +34710,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/explab)
 "jTw" = (
-/obj/machinery/power/port_gen/pacman,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "jTG" = (
@@ -35899,6 +35903,10 @@
 "kkl" = (
 /turf/closed/wall,
 /area/station/security/interrogation)
+"kkv" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/port/fore)
 "kkA" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/newscaster/directional/west,
@@ -41590,6 +41598,10 @@
 /obj/structure/grille,
 /turf/open/floor/plating/snowed/coldroom,
 /area/icemoon/underground/explored)
+"lPv" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/lesser)
 "lPC" = (
 /obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 1
@@ -44322,6 +44334,10 @@
 /obj/structure/lattice/catwalk,
 /turf/open/openspace/icemoon,
 /area/station/science/server)
+"mGA" = (
+/obj/item/rack_parts,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "mGH" = (
 /obj/structure/railing{
 	dir = 4
@@ -46173,7 +46189,7 @@
 /turf/closed/wall,
 /area/mine/laborcamp)
 "njO" = (
-/obj/effect/spawner/random/trash/mess,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "njT" = (
@@ -67375,6 +67391,10 @@
 /obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
+"taX" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/port/aft)
 "tba" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -69799,6 +69819,7 @@
 /area/station/science/research)
 "tKH" = (
 /obj/effect/decal/cleanable/cobweb,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "tKI" = (
@@ -78258,6 +78279,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "wpp" = (
@@ -81588,6 +81610,10 @@
 /obj/effect/turf_decal/tile/yellow/full,
 /turf/open/floor/iron/large,
 /area/station/medical/storage)
+"xli" = (
+/obj/machinery/power/port_gen/pacman/pre_loaded,
+/turf/open/floor/plating,
+/area/station/maintenance/port/greater)
 "xlm" = (
 /obj/machinery/duct,
 /obj/effect/turf_decal/tile/blue{
@@ -194523,7 +194549,7 @@ pMF
 mEW
 rkl
 nPI
-oxO
+lPv
 alM
 thA
 thA
@@ -231711,7 +231737,7 @@ flD
 eUf
 hjI
 hjt
-hjI
+kkv
 hjI
 hjI
 anl
@@ -238417,8 +238443,8 @@ iTy
 tKI
 afz
 rvS
+xli
 kfe
-pdf
 aCU
 jJX
 tKI
@@ -240783,7 +240809,7 @@ pRj
 sCw
 eQz
 rAO
-daS
+taX
 wOB
 beO
 kbs
@@ -258952,7 +258978,7 @@ kKL
 rSq
 raH
 kKL
-lli
+gxT
 gxh
 kKL
 kKL
@@ -266977,7 +267003,7 @@ qQa
 bgx
 gti
 wpn
-jCl
+mGA
 xWo
 axu
 bFq

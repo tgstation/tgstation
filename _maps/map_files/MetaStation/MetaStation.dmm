@@ -9818,6 +9818,12 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
+"dCu" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/lesser)
 "dCx" = (
 /obj/machinery/computer/shuttle/mining{
 	dir = 4
@@ -29310,6 +29316,12 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"koq" = (
+/obj/effect/spawner/random/trash/garbage{
+	spawn_scatter_radius = 1
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "kor" = (
 /turf/closed/wall,
 /area/station/maintenance/department/science/central)
@@ -44932,15 +44944,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
-"pTL" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment,
-/obj/effect/spawner/random/trash/garbage{
-	spawn_scatter_radius = 1
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft/greater)
 "pTS" = (
 /turf/closed/wall,
 /area/station/service/bar)
@@ -52221,10 +52224,6 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
-"sxn" = (
-/obj/machinery/power/port_gen/pacman/pre_loaded,
-/turf/open/floor/plating,
-/area/station/maintenance/port/fore)
 "sxo" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -64652,14 +64651,6 @@
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
-"wFV" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/spawner/random/trash/garbage{
-	spawn_scatter_radius = 1
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/lesser)
 "wGa" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Central Primary Hallway - Starboard - Art Storage"
@@ -84927,7 +84918,7 @@ aFf
 ekI
 eNV
 duk
-oOZ
+dqN
 gbJ
 cBc
 jUb
@@ -87513,7 +87504,7 @@ xTw
 bhS
 fqR
 mwm
-fje
+drm
 tSw
 jsq
 tSw
@@ -89494,7 +89485,7 @@ rlU
 rlU
 aaf
 jXu
-sxn
+rOz
 ciE
 dUd
 rtz
@@ -91633,7 +91624,7 @@ sFY
 xar
 kKh
 tSw
-fje
+koq
 swP
 ixY
 tSw
@@ -91891,7 +91882,7 @@ xSQ
 rGB
 qEK
 fMy
-pTL
+bsZ
 rJI
 taX
 tSw
@@ -105230,7 +105221,7 @@ acj
 pNb
 acj
 acj
-wFV
+acj
 rkO
 rkO
 fkl
@@ -105487,7 +105478,7 @@ pfU
 tUn
 tUn
 oll
-urE
+dCu
 qby
 wXF
 mOD
