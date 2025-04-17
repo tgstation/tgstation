@@ -37,7 +37,7 @@
 
 	if(dir & EAST)
 		dir_x += vector_len
-	else if(dir & EAST)
+	else if(dir & WEST)
 		dir_x -= vector_len
 
 	///Calculate angle
