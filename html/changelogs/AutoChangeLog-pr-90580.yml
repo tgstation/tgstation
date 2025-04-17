@@ -1,0 +1,6 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - map: "added an pacman to wawastation near science"
+  - map: "added pacmans to icebox"
+  - map: "removed some pacmans from metastation"

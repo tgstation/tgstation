@@ -64,6 +64,11 @@
 
 ///Basic Mob Keys
 
+/// How long to wait before attacking a target in range
+#define BB_BASIC_MOB_MELEE_DELAY "BB_basic_melee_delay"
+/// Key used to store the time we can actually attack
+#define BB_BASIC_MOB_MELEE_COOLDOWN_TIMER "BB_basic_melee_cooldown_timer"
+
 ///Targeting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
 #define BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION "BB_basic_current_target_hiding_location"

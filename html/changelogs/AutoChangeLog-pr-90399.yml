@@ -1,0 +1,6 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Redesigned the loadout UI"
+  - balance: "Monocles now work as prescription glasses"
+  - image: "Loadout plushies no longer use mapper previews for their images"

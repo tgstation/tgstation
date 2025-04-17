@@ -44,7 +44,6 @@
 
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddComponent(/datum/component/basic_mob_ability_telegraph)
-	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
 
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/fire_breath/ice = BB_WHELP_STRAIGHTLINE_FIRE,
