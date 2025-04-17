@@ -9,25 +9,18 @@
 	medical_record_text = "This patient has disclosed an extreme hatred for unnatural bodyparts and augmentations."
 	hardcore_value = 3
 	mail_goodies = list(/obj/item/paper/pamphlet/cybernetics)
-	var/cybernetics_level = 0
 
 /datum/quirk/body_purist/add(client/client_source)
 	check_cybernetics()
-	RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(on_organ_gain))
-	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(on_organ_lose))
-	RegisterSignal(quirk_holder, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(on_limb_gain))
-	RegisterSignal(quirk_holder, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(on_limb_lose))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_BODYTYPE_SYNCHRONIZED, PROC_REF(check_cybernetics))
 
 /datum/quirk/body_purist/remove()
-	UnregisterSignal(quirk_holder, list(
-		COMSIG_CARBON_GAIN_ORGAN,
-		COMSIG_CARBON_LOSE_ORGAN,
-		COMSIG_CARBON_ATTACH_LIMB,
-		COMSIG_CARBON_REMOVE_LIMB,
-	))
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_BODYTYPE_SYNCHRONIZED)
 	quirk_holder.clear_mood_event("body_purist")
 
-/datum/quirk/body_purist/proc/check_cybernetics()
+/datum/quirk/body_purist/proc/check_cybernetics(datum/source)
+	SIGNAL_HANDLER
+	var/cybernetics_level = 0
 	var/mob/living/carbon/owner = quirk_holder
 	if(!istype(owner))
 		return
@@ -37,33 +30,10 @@
 	for(var/obj/item/organ/organ as anything in owner.organs)
 		if(IS_ROBOTIC_ORGAN(organ) && !(organ.organ_flags & ORGAN_HIDDEN))
 			cybernetics_level++
-	update_mood()
+	update_mood(cybernetics_level)
 
-/datum/quirk/body_purist/proc/update_mood()
-	quirk_holder.clear_mood_event("body_purist")
+/datum/quirk/body_purist/proc/update_mood(cybernetics_level)
 	if(cybernetics_level)
 		quirk_holder.add_mood_event("body_purist", /datum/mood_event/body_purist, -cybernetics_level * 10)
-
-/datum/quirk/body_purist/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
-	SIGNAL_HANDLER
-	if(IS_ROBOTIC_ORGAN(new_organ) && !(new_organ.organ_flags & ORGAN_HIDDEN)) //why the fuck are there 2 of them
-		cybernetics_level++
-		update_mood()
-
-/datum/quirk/body_purist/proc/on_organ_lose(datum/source, obj/item/organ/old_organ, special)
-	SIGNAL_HANDLER
-	if(IS_ROBOTIC_ORGAN(old_organ) && !(old_organ.organ_flags & ORGAN_HIDDEN))
-		cybernetics_level--
-		update_mood()
-
-/datum/quirk/body_purist/proc/on_limb_gain(datum/source, obj/item/bodypart/new_limb, special)
-	SIGNAL_HANDLER
-	if(IS_ROBOTIC_LIMB(new_limb))
-		cybernetics_level++
-		update_mood()
-
-/datum/quirk/body_purist/proc/on_limb_lose(datum/source, obj/item/bodypart/old_limb, special, dismembered)
-	SIGNAL_HANDLER
-	if(IS_ROBOTIC_LIMB(old_limb))
-		cybernetics_level--
-		update_mood()
+		return
+	quirk_holder.clear_mood_event("body_purist")

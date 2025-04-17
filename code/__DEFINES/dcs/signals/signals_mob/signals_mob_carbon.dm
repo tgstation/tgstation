@@ -53,6 +53,9 @@
 /// Called from /obj/item/bodypart/check_for_injuries (obj/item/bodypart/examined, list/check_list)
 #define COMSIG_CARBON_CHECKING_BODYPART "carbon_checking_injury"
 
+/// Called from /mob/living/carbon/proc/synchronize_bodytypes()
+#define COMSIG_CARBON_BODYTYPE_SYNCHRONIZED "carbon_bodytype_synchronized"
+
 /// Called from carbon losing a limb /obj/item/bodypart/proc/drop_limb(obj/item/bodypart/lost_limb, special, dismembered)
 #define COMSIG_CARBON_REMOVE_LIMB "carbon_remove_limb"
 /// Called from carbon losing a limb /obj/item/bodypart/proc/drop_limb(obj/item/bodypart/lost_limb, special, dismembered)
