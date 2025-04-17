@@ -28,9 +28,14 @@
 	bare_wound_bonus = 20
 	armour_penetration = 35
 	block_sound = 'sound/items/weapons/parry.ogg'
+	///Reference to the person who threw us.
+	var/mob/living/thrower
+	///Reference to a boomerang component we add when a non-cultist throws us.
+	var/datum/component/boomerang/boomerang_component
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 	var/image/silicon_image = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_dagger", silicon_image)
@@ -43,6 +48,11 @@ Striking a noncultist, however, will tear their flesh."}
 
 	AddComponent(/datum/component/cult_ritual_item, span_cult(examine_text))
 
+/obj/item/melee/cultblade/dagger/Destroy(force)
+	thrower = null
+	QDEL_NULL(boomerang_component)
+	return ..()
+
 /obj/item/melee/cultblade/dagger/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	var/block_message = "[owner] parries [attack_text] with [src]"
 	if(owner.get_active_held_item() != src)
@@ -54,6 +64,26 @@ Striking a noncultist, however, will tear their flesh."}
 		return TRUE
 	else
 		return FALSE
+
+/obj/item/melee/cultblade/dagger/on_thrown(mob/living/carbon/user, atom/target)
+	. = ..()
+	if(!.)
+		return
+	thrower = user
+	if(IS_CULTIST(user))
+		if(boomerang_component)
+			REMOVE_TRAIT(src, TRAIT_UNCATCHABLE, HELD_ITEM_TRAIT)
+			QDEL_NULL(boomerang_component)
+	else if(isnull(boomerang_component))
+		ADD_TRAIT(src, TRAIT_UNCATCHABLE, HELD_ITEM_TRAIT)
+		boomerang_component = AddComponent(/datum/component/boomerang, throw_range)
+
+///Called when the dagger is impacting someone, we cancel if the person hit isn't the person who threw us, if we're boomeranging.
+/obj/item/melee/cultblade/dagger/proc/on_impact_zone(atom/source, mob/living/hitby, zone, blocked, throwingdatum)
+	SIGNAL_HANDLER
+
+	if(!isnull(boomerang_component) && hitby != thrower)
+		return MOVABLE_IMPACT_ZONE_OVERRIDE
 
 /obj/item/melee/cultblade
 	name = "eldritch longsword"
