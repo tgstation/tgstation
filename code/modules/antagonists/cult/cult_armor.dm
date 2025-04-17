@@ -293,3 +293,39 @@
 	desc = "A blood-soaked hood infused with dark magic."
 	armor_type = /obj/item/clothing/suit/hooded/cultrobes/berserker::armor_type
 	slowdown = /obj/item/clothing/suit/hooded/cultrobes/berserker::slowdown
+
+/**
+ * Zealot's blindfold
+ * Version of night vision health HUDs that only cultists can use.
+ * Will deal eye damage overtime to non-cultists.
+ */
+/obj/item/clothing/glasses/hud/health/night/cultblind
+	name = "zealot's blindfold"
+	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
+	icon_state = "blindfold"
+	inhand_icon_state = "blindfold"
+	flags_cover = GLASSESCOVERSEYES
+	flash_protect = FLASH_PROTECTION_WELDER
+	actions_types = null
+	color_cutoffs = list(40, 0, 0) //red
+	glass_colour_type = null
+	forced_glass_color = FALSE
+
+/obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
+	. = ..()
+	if(slot_flags & slot)
+		START_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/glasses/hud/health/night/cultblind/dropped(mob/living/user)
+	. = ..()
+	STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/clothing/glasses/hud/health/night/cultblind/process(seconds_per_tick)
+	. = ..()
+	var/mob/living/carbon/wearer = loc
+	if(!istype(wearer) || IS_CULTIST(wearer))
+		return
+	var/obj/item/organ/eyes/eyes = wearer.get_organ_slot(ORGAN_SLOT_EYES)
+	if(!eyes)
+		return
+	eyes.apply_organ_damage(1)

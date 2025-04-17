@@ -584,27 +584,6 @@ Striking a noncultist, however, will tear their flesh."}
 	icon_state = "cult_sharpener[(uses == 0) ? "_used" : ""]"
 	return ..()
 
-/obj/item/clothing/glasses/hud/health/night/cultblind
-	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
-	flags_cover = GLASSESCOVERSEYES
-	name = "zealot's blindfold"
-	icon_state = "blindfold"
-	inhand_icon_state = "blindfold"
-	flash_protect = FLASH_PROTECTION_WELDER
-	actions_types = null
-	color_cutoffs = list(40, 0, 0) //red
-	glass_colour_type = null
-	forced_glass_color = FALSE
-
-/obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
-	..()
-	if(user.stat != DEAD && !IS_CULTIST(user) && (slot & ITEM_SLOT_EYES))
-		to_chat(user, span_cult_large("\"You want to be blind, do you?\""))
-		user.dropItemToGround(src, TRUE)
-		user.set_dizzy_if_lower(1 MINUTES)
-		user.Paralyze(100)
-		user.adjust_temp_blindness(60 SECONDS)
-
 /obj/item/reagent_containers/cup/beaker/unholywater
 	name = "flask of unholy water"
 	desc = "Toxic to nonbelievers; reinvigorating to the faithful - this flask may be sipped or thrown."
