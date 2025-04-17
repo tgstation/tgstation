@@ -4214,6 +4214,7 @@
 #include "code\modules\events\wizard\madness.dm"
 #include "code\modules\events\wizard\magical_rain.dm"
 #include "code\modules\events\wizard\magicarp.dm"
+#include "code\modules\events\wizard\object_rain.dm"
 #include "code\modules\events\wizard\petsplosion.dm"
 #include "code\modules\events\wizard\race.dm"
 #include "code\modules\events\wizard\rpgloot.dm"
