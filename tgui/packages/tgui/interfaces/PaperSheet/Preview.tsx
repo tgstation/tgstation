@@ -9,7 +9,7 @@ import { StampView } from './StampView';
 import { FieldInput, InteractionType, PaperContext } from './types';
 
 type PreviewViewProps = {
-  scrollableRef: RefObject<HTMLDivElement>;
+  scrollableRef: RefObject<HTMLDivElement | null>;
   handleOnScroll: (this: GlobalEventHandlers, ev: Event) => any;
   textArea: string;
 };

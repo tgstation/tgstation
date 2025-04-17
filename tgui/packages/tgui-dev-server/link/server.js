@@ -4,13 +4,12 @@
  * @license MIT
  */
 
-import { inspect } from 'util';
+import { inspect } from 'node:util';
+
+import * as WebSocket from 'ws';
 
 import { createLogger, directLog } from '../logging.js';
-import { require } from '../require.js';
 import { loadSourceMaps, retrace } from './retrace.js';
-
-const WebSocket = require('ws');
 
 const logger = createLogger('link');
 
@@ -18,11 +17,14 @@ const DEBUG = process.argv.includes('--debug');
 
 export { loadSourceMaps };
 
-export const setupLink = () => new LinkServer();
+export function setupLink() {
+  return new LinkServer();
+}
 
 class LinkServer {
   constructor() {
     logger.log('setting up');
+    /** @type {WebSocket.Server | null} */
     this.wss = null;
     this.setupWebSocketLink();
   }
@@ -30,7 +32,8 @@ class LinkServer {
   // WebSocket-based client link
   setupWebSocketLink() {
     const port = 3000;
-    this.wss = new WebSocket.Server({ port });
+    this.wss = new WebSocket.WebSocketServer({ port });
+
     this.wss.on('connection', (ws) => {
       logger.log('client connected');
       ws.on('message', (json) => {
@@ -44,6 +47,10 @@ class LinkServer {
     logger.log(`listening on port ${port} (WebSocket)`);
   }
 
+  /**
+   * @param {WebSocket.Client} ws
+   * @param {WebSocket.MessageEvent} msg
+   */
   handleLinkMessage(ws, msg) {
     const { type, payload } = msg;
     if (type === 'log') {
@@ -69,6 +76,9 @@ class LinkServer {
       return;
     }
     if (type === 'relay') {
+      if (!this.wss) {
+        return;
+      }
       for (let client of this.wss.clients) {
         if (client === ws) {
           continue;
@@ -85,6 +95,9 @@ class LinkServer {
   }
 
   broadcastMessage(msg) {
+    if (!this.wss) {
+      return;
+    }
     const clients = [...this.wss.clients];
     if (clients.length === 0) {
       return;
@@ -97,7 +110,7 @@ class LinkServer {
   }
 }
 
-const deserializeObject = (str) => {
+function deserializeObject(str) {
   return JSON.parse(str, (key, value) => {
     if (typeof value === 'object' && value !== null) {
       if (value.__undefined__) {
@@ -120,4 +133,4 @@ const deserializeObject = (str) => {
     }
     return value;
   });
-};
+}

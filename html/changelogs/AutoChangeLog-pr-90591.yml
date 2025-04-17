@@ -1,0 +1,4 @@
+author: "FeudeyTF"
+delete-after: True
+changes:
+  - qol: "Better UI/UX for detective's board"

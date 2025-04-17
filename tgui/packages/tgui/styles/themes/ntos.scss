@@ -3,42 +3,16 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
+.theme-ntos:root {
+  --nanotrasen-color: hsl(212.5, 30%, 35%);
 
-$nanotrasen: hsl(213, 30%, 32%);
+  // Base
+  --color-base: hsl(from var(--nanotrasen-color) h s calc(l - 17.5));
+  --color-primary: var(--nanotrasen-color);
+  --secondary-lightness-adjustment: 6.33;
 
-@use '../colors.scss' with (
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base.scss' with (
-  $color-bg: color.scale($nanotrasen, $lightness: -45%)
-);
-
-.theme-ntos {
   // Components
-  @include meta.load-css(
-    '~tgui-core/styles/components/Button',
-    $with: (
-      'color-default': $nanotrasen,
-      'color-transparent-text': rgba(227, 240, 255, 0.75)
-    )
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/ProgressBar',
-    $with: (
-      'color-default-fill': $nanotrasen,
-      'background-color': rgba(0, 0, 0, 0.5)
-    )
-  );
-  @include meta.load-css('~tgui-core/styles/components/Section');
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': color.scale($nanotrasen, $lightness: -25%))
-  );
+  --button-color-transparent: hsl(from var(--color-primary) h s 75 / 0.75);
+  --progress-bar-background: hsla(0, 0%, 0%, 0.5);
+  --tooltip-background-lightness: 25;
 }

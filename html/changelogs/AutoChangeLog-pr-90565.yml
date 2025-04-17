@@ -1,0 +1,4 @@
+author: "mcbalaam"
+delete-after: True
+changes:
+  - qol: "Improved chat messages when controlling a mech as an AI"

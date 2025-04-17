@@ -144,7 +144,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	var/loot = rand(1, 27)
 	switch(loot)
 		if(1)
-			new /obj/item/clothing/suit/hooded/cultrobes/hardened(loc)
+			new /obj/item/clothing/neck/cloak/wolf_coat(loc)
 		if(2)
 			new /obj/item/clothing/glasses/godeye(loc)
 		if(3)
