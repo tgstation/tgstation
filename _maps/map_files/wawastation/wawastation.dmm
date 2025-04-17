@@ -1726,6 +1726,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/station/service/library)
 "aDd" = (
@@ -29020,6 +29021,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
+"kfs" = (
+/obj/structure/railing,
+/obj/machinery/door/firedoor/border_only,
+/obj/structure/displaycase/trophy,
+/turf/open/floor/glass/reinforced,
+/area/station/service/bar)
 "kfG" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -31572,6 +31579,7 @@
 /obj/structure/railing,
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/camera/autoname/directional/east,
+/obj/structure/displaycase/trophy,
 /turf/open/floor/glass/reinforced,
 /area/station/service/bar)
 "kXz" = (
@@ -161484,7 +161492,7 @@ rDg
 les
 pdp
 hCK
-ilQ
+kfs
 mGW
 mGW
 mGW
