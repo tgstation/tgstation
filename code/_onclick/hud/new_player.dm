@@ -206,11 +206,11 @@
 
 /atom/movable/screen/lobby/button/character_setup/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	if(SSgreyscale.initialized)
+	if(SSpersistence.initialized)
 		set_button_status(TRUE)
 	else
 		set_button_status(FALSE)
-		RegisterSignal(SSgreyscale, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_character_setup))
+		RegisterSignal(SSpersistence, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_character_setup))
 
 /atom/movable/screen/lobby/button/character_setup/Click(location, control, params)
 	. = ..()
@@ -226,7 +226,7 @@
 	SIGNAL_HANDLER
 	flick("[base_icon_state]_enabled", src)
 	set_button_status(TRUE)
-	UnregisterSignal(SSgreyscale, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSpersistence, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 ///Button that appears before the game has started
 /atom/movable/screen/lobby/button/ready
@@ -395,11 +395,11 @@
 
 /atom/movable/screen/lobby/button/bottom/settings/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	if(SSgreyscale.initialized)
+	if(SSpersistence.initialized)
 		set_button_status(TRUE)
 	else
 		set_button_status(FALSE)
-		RegisterSignal(SSgreyscale, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_settings))
+		RegisterSignal(SSpersistence, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_settings))
 
 /atom/movable/screen/lobby/button/bottom/settings/Click(location, control, params)
 	. = ..()
@@ -414,7 +414,7 @@
 /atom/movable/screen/lobby/button/bottom/settings/proc/enable_settings()
 	SIGNAL_HANDLER
 	set_button_status(TRUE)
-	UnregisterSignal(SSgreyscale, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSpersistence, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /atom/movable/screen/lobby/button/bottom/changelog_button
 	name = "View Changelog"
