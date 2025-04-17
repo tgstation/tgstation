@@ -32,6 +32,7 @@
 
 // Alternate wraith themes
 /mob/living/basic/construct/wraith/angelic
+	faction = list(FACTION_HOLY)
 	theme = THEME_HOLY
 	construct_spells = list(
 		/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/angelic,
