@@ -503,3 +503,24 @@
       containers such as lockers. The wizard is not directly affected by the reagent,
       but the side effects might still apply. (ie. raining lube, will make the floors
       slippery, which can slip the wizard)
+2025-04-17:
+  00-Steven:
+  - refactor: Refactored polaroid camera item interactions. Please report any issues.
+  - spellcheck: The polaroid camera's description now talks about 'holorecord' disks
+      rather than 'holographic' disks.
+  - qol: Added screentips to the polaroid camera.
+  - qol: If a polaroid camera already has a holorecord disk, inserting a new one swaps
+      the old one out instead of blocking.
+  - qol: Added balloon alerts and sounds to polaroid camera interactions.
+  - bugfix: Polaroid camera can no longer record to holorecord disks outside of it
+      that left it via nonstandard means.
+  - bugfix: Rewind camera actually applies its special picture name.
+  Holoo-1:
+  - bugfix: camera consoles, admin supply pod launcher etc. no longer close game when
+      they are closed
+  Jacquerel:
+  - bugfix: Mothroaches and other small animals will now realise that they're free
+      after being dumped from your backpack and resum their daily activities.
+  Melbert:
+  - bugfix: Mecha cargo holds no longer shove themselves inside themselves when being
+      deleted
