@@ -146,15 +146,9 @@ export function ItemListDisplay(props: ListProps) {
               </>
             )}
             <Stack.Item>
-              <Stack wrap>
+              <Stack wrap g={0.5}>
                 {group.items.map((item) => (
-                  <Stack.Item
-                    key={item.name}
-                    mb={1}
-                    style={{
-                      marginLeft: '0.5em', // Remove if tgui core implements gap
-                    }}
-                  >
+                  <Stack.Item key={item.name}>
                     <ItemDisplay
                       item={item}
                       active={
