@@ -276,6 +276,7 @@
 	if(!istype(antag_datum, /datum/antagonist/cult))
 		return
 	source.current.RemoveElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
+	UnregisterSignal(source, COMSIG_ANTAGONIST_GAINED)
 	RegisterSignal(source, COMSIG_ANTAGONIST_REMOVED, PROC_REF(on_antagonist_removed))
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/proc/on_antagonist_removed(datum/mind/source, datum/antagonist/antag_datum)
@@ -284,6 +285,7 @@
 	if(!istype(antag_datum, /datum/antagonist/cult))
 		return
 	source.current.AddElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
+	UnregisterSignal(source, COMSIG_ANTAGONIST_REMOVED)
 	RegisterSignal(source, COMSIG_ANTAGONIST_GAINED, PROC_REF(on_antagonist_gained))
 
 /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
