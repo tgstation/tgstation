@@ -643,7 +643,7 @@
 ///Lobby screen that appears before the game has started showing how many players there are and who is ready.
 /atom/movable/screen/lobby/new_player_info
 	name = "New Player Info"
-	screen_loc = "TOP:-20,CENTER:192"
+	screen_loc = "EAST-3,CENTER:140"
 	icon = 'icons/hud/lobby/newplayer.dmi'
 	icon_state = null //we only show up when we get update appearance called, cause we need our overlay to not look bad.
 	base_icon_state = "newplayer"
