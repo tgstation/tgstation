@@ -221,6 +221,8 @@
 		"active_key" = INFO_GREYSCALE,
 	))
 
+	return .
+
 /datum/loadout_item/pocket_items/lipstick/handle_loadout_action(datum/preference_middleware/loadout/manager, mob/user, action, params)
 	switch(action)
 		if("select_lipstick_style")

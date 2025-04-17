@@ -18,10 +18,8 @@
 /datum/loadout_item/accessory/get_ui_buttons()
 	if(!can_be_layer_adjusted)
 		return ..()
-
-	var/list/buttons = ..()
-
-	UNTYPED_LIST_ADD(buttons, list(
+	. = ..()
+	UNTYPED_LIST_ADD(., list(
 		"label" = "Layer",
 		"act_key" = "set_layer",
 		"active_key" = INFO_LAYER,
@@ -29,7 +27,7 @@
 		"inactive_text" = "Below Suit",
 	))
 
-	return buttons
+	return .
 
 /datum/loadout_item/accessory/handle_loadout_action(datum/preference_middleware/loadout/manager, mob/user, action, params)
 	if(action == "set_layer")
