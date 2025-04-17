@@ -476,8 +476,8 @@
 		if(heal_end_sound)
 			playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 
-	if(limb.get_modified_bleed_rate() && limb.can_bleed())
-		limb.add_mob_blood(patient)
+	if(limb.get_modified_bleed_rate())
+		add_mob_blood(patient)
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
