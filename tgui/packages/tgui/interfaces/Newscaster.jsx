@@ -105,7 +105,6 @@ const NewscasterChannelCreation = (props) => {
               />
             </Box>
             <TextArea
-              fluid
               height="40px"
               width="240px"
               backgroundColor="black"
@@ -124,7 +123,6 @@ const NewscasterChannelCreation = (props) => {
           <Stack.Item>
             <Box pb={1}>Enter channel description here:</Box>
             <TextArea
-              fluid
               height="150px"
               width="240px"
               backgroundColor="black"
@@ -218,7 +216,6 @@ const NewscasterCommentCreation = (props) => {
             />
           </Box>
           <TextArea
-            fluid
             height="120px"
             width="240px"
             backgroundColor="black"
