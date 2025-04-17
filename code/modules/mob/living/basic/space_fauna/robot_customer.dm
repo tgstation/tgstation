@@ -52,7 +52,7 @@
 	clothes_set = pick(customer_info.clothing_sets)
 	update_appearance(UPDATE_ICON)
 
-	grime_carried = prob(2) ? 20 : pick(0, 0, rand(0, 3), rand(1, 4), 6)
+	grime_carried = prob(2) ? 20 : pick(0, 0, 0, 0, rand(0, 2), rand(0, 3), rand(2, 4), 6)
 
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
 /mob/living/basic/robot_customer/Destroy()
