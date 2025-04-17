@@ -524,7 +524,7 @@
 /area/station/cargo/storage)
 "ait" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -30027,7 +30027,7 @@
 /obj/machinery/light/small/directional/east,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
 /obj/item/reagent_containers/cup/glass/drinkingglass/shotglass,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "kvX" = (

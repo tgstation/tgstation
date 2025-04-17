@@ -8286,7 +8286,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
 "cjJ" = (
@@ -10449,7 +10449,7 @@
 /area/station/command/heads_quarters/captain)
 "cQc" = (
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/item/clothing/head/collectable/tophat{
 	pixel_x = 6;
 	pixel_y = 5
@@ -82695,7 +82695,7 @@
 	pixel_x = 5;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/structure/table/wood,
 /obj/item/holosign_creator/robot_seat/bar{
 	pixel_y = 6

@@ -24,6 +24,10 @@
 	///What sound does our consumption play on consuming from the container?
 	var/consumption_sound = 'sound/items/drink.ogg'
 
+/obj/item/reagent_containers/cup/Initialize(mapload, vol)
+	. = ..()
+	AddElement(/datum/element/reagents_item_heatable)
+
 /obj/item/reagent_containers/cup/examine(mob/user)
 	. = ..()
 	if(drink_type)

@@ -2514,7 +2514,7 @@
 /obj/structure/desk_bell{
 	pixel_x = 7
 	},
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/item/reagent_containers/cup/glass/coffee{
 	pixel_x = -3;
 	pixel_y = 9
@@ -6736,7 +6736,7 @@
 	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = -4
 	},
 /turf/open/floor/iron/cafeteria,
@@ -8896,7 +8896,7 @@
 	},
 /obj/item/clothing/mask/surgical,
 /obj/item/clothing/suit/apron/surgical,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/abandoned)
@@ -10187,7 +10187,7 @@
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/ce)
 "dJT" = (
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/structure/table/wood,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
@@ -14347,7 +14347,7 @@
 /obj/structure/table,
 /obj/item/kitchen/rollingpin,
 /obj/effect/turf_decal/trimline/brown/warning,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
@@ -25005,7 +25005,7 @@
 /area/station/security/prison/mess)
 "iSt" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_y = 14
 	},
 /obj/item/reagent_containers/cup/glass/waterbottle{
@@ -38098,7 +38098,7 @@
 /obj/effect/landmark/navigate_destination/bar,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/structure/table,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
@@ -39633,7 +39633,7 @@
 	pixel_x = -6;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = -10;
 	pixel_y = 4
 	},

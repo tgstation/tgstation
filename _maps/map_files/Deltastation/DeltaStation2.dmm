@@ -10047,7 +10047,7 @@
 	name = "Bar Requests Console"
 	},
 /obj/effect/mapping_helpers/requests_console/supplies,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /turf/open/floor/iron/checker{
 	dir = 1
 	},
@@ -47278,7 +47278,7 @@
 	pixel_x = -8
 	},
 /obj/effect/turf_decal/delivery,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /turf/open/floor/iron,
 /area/station/service/kitchen/abandoned)
 "lKe" = (
@@ -66976,7 +66976,7 @@
 	},
 /obj/item/book/manual/wiki/cooking_to_serve_man,
 /obj/item/knife/kitchen,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/structure/table,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
@@ -79494,7 +79494,7 @@
 	name = "scissors";
 	pixel_y = 1
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_y = 4
 	},
 /obj/structure/table,
