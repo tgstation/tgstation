@@ -17,7 +17,7 @@ import { clearChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import { exportSettings, updateSettings } from './actions';
 import { FONTS } from './constants';
-import { setEditPaneSplitters } from './scaling';
+import { resetPaneSplitters, setEditPaneSplitters } from './scaling';
 import { selectSettings } from './selectors';
 import { importChatSettings } from './settingsImExport';
 
@@ -51,18 +51,27 @@ export function SettingsGeneral(props) {
           ))}
         </LabeledList.Item>
         <LabeledList.Item label="UI sizes">
-          <Button
-            onClick={() =>
-              setEditingPanes((val) => {
-                setEditPaneSplitters(!val);
-                return !val;
-              })
-            }
-            color={editingPanes ? 'red' : undefined}
-            icon={editingPanes ? 'save' : undefined}
-          >
-            {editingPanes ? 'Save' : 'Adjust UI Sizes'}
-          </Button>
+          <Stack>
+            <Stack.Item>
+              <Button
+                onClick={() =>
+                  setEditingPanes((val) => {
+                    setEditPaneSplitters(!val);
+                    return !val;
+                  })
+                }
+                color={editingPanes ? 'red' : undefined}
+                icon={editingPanes ? 'save' : undefined}
+              >
+                {editingPanes ? 'Save' : 'Adjust UI Sizes'}
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button onClick={resetPaneSplitters} icon="refresh" color="red">
+                Reset
+              </Button>
+            </Stack.Item>
+          </Stack>
         </LabeledList.Item>
         <LabeledList.Item label="Font style">
           <Stack.Item>
