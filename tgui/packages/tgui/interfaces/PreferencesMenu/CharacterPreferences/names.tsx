@@ -41,9 +41,6 @@ type MultiNameProps = {
 
 export function MultiNameInput(props: MultiNameProps) {
   const { handleUpdateName } = props;
-  const [currentlyEditingName, setCurrentlyEditingName] = useState<
-    string | null
-  >(null);
 
   const data = useServerPrefs();
   if (!data) return;
@@ -58,12 +55,6 @@ export function MultiNameInput(props: MultiNameProps) {
         name,
       },
     );
-  }
-
-  function updateName(key, value) {
-    handleUpdateName(key, value);
-
-    setCurrentlyEditingName(null);
   }
 
   return (
@@ -82,42 +73,21 @@ export function MultiNameInput(props: MultiNameProps) {
               ([_, names], index, collection) => (
                 <>
                   {names.map(({ key, name }) => {
-                    let content;
-
-                    if (currentlyEditingName === key) {
-                      content = (
-                        <Input
-                          autoSelect
-                          expensive
-                          onChange={(value) => updateName(key, value)}
-                          onEscape={() => {
-                            setCurrentlyEditingName(null);
-                          }}
-                          value={props.names[key]}
-                        />
-                      );
-                    } else {
-                      content = (
-                        <Button
-                          width="100%"
-                          onClick={(event) => {
-                            setCurrentlyEditingName(key);
-                            event.cancelBubble = true;
-                            event.stopPropagation();
-                          }}
-                        >
-                          <FitText maxFontSize={12} maxWidth={130}>
-                            {props.names[key]}
-                          </FitText>
-                        </Button>
-                      );
-                    }
-
                     return (
                       <LabeledList.Item key={key} label={name.explanation}>
                         <Stack fill>
-                          <Stack.Item grow>{content}</Stack.Item>
-
+                          <Stack.Item grow>
+                            <Button.Input
+                              fluid
+                              onCommit={(e, value) => {
+                                handleUpdateName(key, value);
+                              }}
+                            >
+                              <FitText maxFontSize={12} maxWidth={130}>
+                                {props.names[key]}
+                              </FitText>
+                            </Button.Input>
+                          </Stack.Item>
                           {!!name.can_randomize && (
                             <Stack.Item>
                               <Button
