@@ -4,7 +4,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
-	initial_language_holder = /datum/language_holder/synthetic
+	initial_language_holder = /datum/language_holder/synthetic/silicon
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
 	death_sound = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg'

@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "Most mobs will now hesitate for a moment before attacking rather than instantly hitting anything that enters melee range, to better simulate human behaviour. Please report if this delay seems too short, or too long."
+  - balance: "Most mobs which telegraphed their basic attacks on you now will not do that"

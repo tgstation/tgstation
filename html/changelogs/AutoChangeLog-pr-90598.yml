@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Radios/headsets now have a slider to change the volume from radio noises."
