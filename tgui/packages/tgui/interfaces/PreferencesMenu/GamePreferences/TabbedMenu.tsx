@@ -46,9 +46,7 @@ export function TabbedMenu(props: TabbedMenuProps) {
         ref={sectionRef}
         position="relative"
         overflowY="scroll"
-        {...{
-          ...props.contentProps,
-        }}
+        {...props.contentProps}
       >
         <Stack vertical fill px={2}>
           {props.categoryEntries.map(([category, children]) => (
