@@ -170,9 +170,10 @@
 
 ///Fishing lures box
 /datum/storage/box/fishing_lures/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	//adds an extra slot, so we can put back the lures even if we didn't take out the instructions.
+	var/static/slots = length(typesof(/obj/item/fishing_lure)) + 1
+	max_slots = slots
+	max_total_storage = WEIGHT_CLASS_SMALL * slots
 	. = ..()
 	set_holdable(/obj/item/fishing_lure) //can only hold lures
-	//adds an extra slot, so we can put back the lures even if we didn't take out the instructions.
-	max_slots = length(typesof(/obj/item/fishing_lure)) + 1
-	max_total_storage = WEIGHT_CLASS_SMALL * (max_slots + 1)
-
+	
