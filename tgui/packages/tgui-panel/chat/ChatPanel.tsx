@@ -11,7 +11,7 @@ import { shallowDiffers } from 'tgui-core/react';
 import { chatRenderer } from './renderer';
 
 type Props = {
-  fontSize: string;
+  fontSize?: string;
   lineHeight: string;
 };
 
