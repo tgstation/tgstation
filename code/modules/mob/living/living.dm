@@ -2295,7 +2295,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /atom/movable/looking_holder
 	invisibility = INVISIBILITY_MAXIMUM
-	resistance_flags = RESIST_ALL
 	///the direction we are operating in
 	var/look_direction
 	///actual atom on the turf, usually the owner
