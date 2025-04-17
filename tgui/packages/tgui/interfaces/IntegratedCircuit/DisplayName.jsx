@@ -23,7 +23,7 @@ export const DisplayName = (props) => {
     <Box {...rest}>
       <Flex direction="column">
         <Flex.Item textAlign={isOutput ? 'right' : 'left'}>
-          {(hasInput && (
+          {(hasInput ? (
             <InputComponent
               setValue={(val, extraParams) =>
                 act('set_component_input', {
@@ -38,8 +38,8 @@ export const DisplayName = (props) => {
               value={port.current_data}
               extraData={port.datatype_data}
             />
-          )) ||
-            (isOutput && (
+          ) : (
+            isOutput ? (
               <Button
                 compact
                 color="transparent"
@@ -52,8 +52,10 @@ export const DisplayName = (props) => {
               >
                 <Box color="white">{port.name}</Box>
               </Button>
-            )) ||
-            port.name}
+            ) : (
+              port.name
+            ))
+          )}
         </Flex.Item>
         <Flex.Item>
           <Box

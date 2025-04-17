@@ -119,7 +119,7 @@ export const FaxMainPanel = (props) => {
               placeholder="From who..."
               tooltip="Name what be user in fax history"
               value={fromWho}
-              width="100%"
+              fluid
               onChange={setFromWho}
             />
           </Tooltip>
