@@ -15,7 +15,7 @@
 		"Sinners must be silenced ...",
 	)
 	invoke_msg = "... And the code must be upheld!"
-	///Boolean on whether or not the new deacon will be a crusader
+	///Boolean on whether or not the new deacon will be a crusader, used in flavortext.
 	var/crusader = TRUE
 	///the invited crusader
 	var/mob/living/carbon/human/new_crusader
@@ -42,7 +42,7 @@
 			to_chat(user, span_warning("Wait for them to decide on whether to join or not!"))
 			return FALSE
 		if(!(possible_crusader in sect.possible_crusaders))
-			INVOKE_ASYNC(sect, TYPE_PROC_REF(/datum/religion_sect/honorbound, invite_crusader), possible_crusader, crusader)
+			INVOKE_ASYNC(sect, TYPE_PROC_REF(/datum/religion_sect, invite_crusader), possible_crusader, crusader)
 			if(crusader)
 				to_chat(user, span_notice("They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again."))
 			else
