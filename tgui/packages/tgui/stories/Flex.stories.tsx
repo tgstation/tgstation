@@ -12,11 +12,12 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props) => {
+function Story() {
   const [grow, setGrow] = useState(1);
   const [direction, setDirection] = useState('column');
   const [fill, setFill] = useState(true);
   const [hasTitle, setHasTitle] = useState(true);
+
   return (
     <Flex height="100%" direction="column">
       <Flex.Item mb={1}>
@@ -64,4 +65,4 @@ const Story = (props) => {
       </Flex.Item>
     </Flex>
   );
-};
+}

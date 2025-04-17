@@ -13,8 +13,9 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props) => {
-  const [theme, setTheme] = useLocalState('kitchenSinkTheme');
+function Story() {
+  const [theme, setTheme] = useLocalState('kitchenSinkTheme', '');
+
   return (
     <Section>
       <LabeledList>
@@ -28,4 +29,4 @@ const Story = (props) => {
       </LabeledList>
     </Section>
   );
-};
+}

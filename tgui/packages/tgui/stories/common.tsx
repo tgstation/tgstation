@@ -6,7 +6,7 @@
 
 import { Box } from 'tgui-core/components';
 
-export const BoxWithSampleText = (props) => {
+export function BoxWithSampleText(props) {
   return (
     <Box {...props}>
       <Box italic>Jackdaws love my big sphinx of quartz.</Box>
@@ -16,4 +16,4 @@ export const BoxWithSampleText = (props) => {
       </Box>
     </Box>
   );
-};
+}

@@ -29,8 +29,15 @@ module.exports = (env = {}, argv) => {
 
   /** @type {import('@rspack/core').Configuration} */
   const config = defineConfig({
+    cache: true,
     experiments: {
-      css: true,
+      cache: {
+        type: 'persistent',
+        storage: {
+          type: 'filesystem',
+          directory: path.resolve(__dirname, '.yarn/rspack'),
+        },
+      },
     },
     mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
@@ -91,6 +98,12 @@ module.exports = (env = {}, argv) => {
           test: /\.(s)?css$/,
           use: [
             {
+              loader: rspack.CssExtractRspackPlugin.loader,
+            },
+            {
+              loader: require.resolve('css-loader'),
+            },
+            {
               loader: require.resolve('sass-loader'),
               options: {
                 api: 'modern-compiler',
@@ -98,7 +111,7 @@ module.exports = (env = {}, argv) => {
               },
             },
           ],
-          type: 'css',
+          type: 'javascript/auto',
         },
         {
           test: /\.(png|jpg)$/,

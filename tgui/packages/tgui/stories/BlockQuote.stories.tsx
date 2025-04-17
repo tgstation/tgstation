@@ -4,21 +4,21 @@
  * @license MIT
  */
 
-import { Button, Collapsible, Section } from 'tgui-core/components';
+import { BlockQuote, Section } from 'tgui-core/components';
 
 import { BoxWithSampleText } from './common';
 
 export const meta = {
-  title: 'Collapsible',
+  title: 'BlockQuote',
   render: () => <Story />,
 };
 
-const Story = (props) => {
+function Story() {
   return (
     <Section>
-      <Collapsible title="Collapsible Demo" buttons={<Button icon="cog" />}>
+      <BlockQuote>
         <BoxWithSampleText />
-      </Collapsible>
+      </BlockQuote>
     </Section>
   );
-};
+}

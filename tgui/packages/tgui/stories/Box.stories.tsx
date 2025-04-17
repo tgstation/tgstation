@@ -11,7 +11,7 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props) => {
+function Story() {
   return (
     <Section>
       <Box bold>bold</Box>
@@ -24,4 +24,4 @@ const Story = (props) => {
       <Box textAlign="right">right</Box>
     </Section>
   );
-};
+}
