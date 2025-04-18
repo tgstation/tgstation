@@ -100,14 +100,15 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	ui_interact(holder.mob)
 
 /datum/centcom_podlauncher/proc/initMap()
-	if(map_name)
-		holder.clear_map(map_name)
+	if(cam_screen)
+		QDEL_NULL(cam_screen)
 
 	map_name = "admin_supplypod_bay_[REF(src)]_map"
 	// Initialize map objects
 	cam_screen = new
 	cam_screen.generate_view(map_name)
-
+	cam_screen.clear_with_screen = FALSE
+	cam_screen.cam_background.clear_with_screen = FALSE
 	// display_to doesn't send the planes to the client, so we have to do it via display_to_client
 	var/datum/plane_master_group/planes = cam_screen.display_to_client(holder)
 	if(!renderLighting)
@@ -546,7 +547,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 
 /datum/centcom_podlauncher/ui_close(mob/user) //Uses the destroy() proc. When the user closes the UI, we clean up the temp_pod and supplypod_selector variables.
 	QDEL_NULL(temp_pod)
-	cam_screen.hide_from(user)
 	qdel(src)
 
 /datum/centcom_podlauncher/proc/setupViewPod()
