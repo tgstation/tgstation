@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	. = ..()
 	// Creates the paper and inserts it so we can drop it when we get destroyed/deconstructed
 	for(var/i in 1 to starting_paper)
-		new created_paper(src)
+		paper_stack += new created_paper(src)
 	setup_components()
 	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
 
