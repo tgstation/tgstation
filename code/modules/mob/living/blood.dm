@@ -364,14 +364,14 @@
 			if(drop.drips < 5)
 				drop.drips++
 				drop.add_overlay(pick(drop.random_icon_states))
-				drop.transfer_mob_blood_dna(src)
+				drop.add_mob_blood(src)
 				return
 			else
 				temp_blood_DNA = GET_ATOM_BLOOD_DNA(drop) //we transfer the dna from the drip to the splatter
 				qdel(drop)//the drip is replaced by a bigger splatter
 		else
 			drop = new(splatter_turf, get_static_viruses())
-			drop.transfer_mob_blood_dna(src)
+			drop.add_mob_blood(src)
 			return
 
 	// Find a blood decal or create a new one.
@@ -381,7 +381,7 @@
 	if(QDELETED(blood_spew)) //Give it up
 		return
 	blood_spew.bloodiness = min((blood_spew.bloodiness + BLOOD_AMOUNT_PER_DECAL), BLOOD_POOL_MAX)
-	blood_spew.transfer_mob_blood_dna(src) //give blood info to the blood decal.
+	blood_spew.add_mob_blood(src) //give blood info to the blood decal.
 	if(temp_blood_DNA)
 		blood_spew.add_blood_DNA(temp_blood_DNA, no_visuals = small_drip)
 

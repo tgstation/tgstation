@@ -111,8 +111,17 @@
 	if(HAS_TRAIT(parent_atom, TRAIT_LIGHT_STEP) || (wielder && HAS_TRAIT(wielder, TRAIT_LIGHT_STEP))) //the character is agile enough to don't mess their clothing and hands just from one blood splatter at floor
 		return TRUE
 
-	parent_atom.add_blood_DNA(GET_ATOM_BLOOD_DNA(pool))
-	update_icon()
+	if(ishuman(parent))
+		var/bloody_slots = ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING|ITEM_SLOT_FEET
+		var/mob/living/carbon/human/to_bloody = parent
+		if(to_bloody.body_position == LYING_DOWN)
+			bloody_slots |= ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_GLOVES
+
+		to_bloody.add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(pool), bloody_slots)
+		return
+
+	var/atom/to_bloody = parent
+	to_bloody.add_blood_DNA(GET_ATOM_BLOOD_DNA(pool))
 
 /**
  * Find a blood decal on a turf that matches our last_blood_state

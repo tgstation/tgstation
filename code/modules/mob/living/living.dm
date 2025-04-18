@@ -428,6 +428,7 @@
 				M.visible_message(span_warning("[src] grabs [M] [grabbed_by_hands ? "by their hands":"passively"]!"), \
 								span_warning("[src] grabs you [grabbed_by_hands ? "by your hands":"passively"]!"), null, null, src)
 				to_chat(src, span_notice("You grab [M] [grabbed_by_hands ? "by their hands":"passively"]!"))
+				grabbed_human.share_blood_on_touch(src, grabbed_by_hands ? ITEM_SLOT_GLOVES : ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 			else
 				M.visible_message(span_warning("[src] grabs [M] passively!"), \
 								span_warning("[src] grabs you passively!"), null, null, src)
@@ -1100,7 +1101,7 @@
 
 		trail.existing_dirs += newdir
 		trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-		trail.transfer_mob_blood_dna(src)
+		trail.add_mob_blood(src)
 		trail.bloodiness = min(trail.bloodiness + bleed_amount, BLOOD_POOL_MAX)
 		found_trail = TRUE
 		break
@@ -1112,7 +1113,7 @@
 	trail.blood_state = trail_blood_type
 	trail.existing_dirs += newdir
 	trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-	trail.transfer_mob_blood_dna(src)
+	trail.add_mob_blood(src)
 	trail.bloodiness = min(bleed_amount, BLOOD_POOL_MAX)
 
 /mob/living/proc/get_trail_blood()
