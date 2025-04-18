@@ -306,7 +306,6 @@
 				FP.species_types |= affecting.limb_id
 				break
 
-
 /datum/component/bloodysoles/feet/is_obscured()
 	if(wielder.shoes)
 		return TRUE
