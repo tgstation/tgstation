@@ -3063,3 +3063,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
 		return
 	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
+
+/// Setter for changing a mob's blood type
+/mob/living/proc/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info)
+	return

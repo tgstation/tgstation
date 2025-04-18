@@ -211,7 +211,7 @@
 	if(isnull(new_blood_type)) // this blood type doesn't exist yet in the global list, so make a new one
 		new_blood_type = new /datum/blood_type/random_chemical(new_blood_reagent)
 		GLOB.blood_types[new_blood_type::name] = new_blood_type
-	podman.dna.blood_type = new_blood_type
+	podman.set_blood_type(new_blood_type)
 
 	investigate_log("[key_name(mind)] cloned as a podman via [src] in [parent]", INVESTIGATE_BOTANY)
 	parent.update_tray(user, 1)

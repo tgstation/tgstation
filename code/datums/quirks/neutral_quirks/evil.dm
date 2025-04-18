@@ -39,13 +39,7 @@
 	if(isnull(new_blood_type)) // this blood type doesn't exist yet in the global list, so make a new one
 		new_blood_type = new /datum/blood_type/evil(human_holder.dna.blood_type, human_holder.dna.blood_type.compatible_types)
 		GLOB.blood_types[new_blood_type::name] = new_blood_type
-	human_holder.dna.blood_type = new_blood_type
+	human_holder.set_blood_type(new_blood_type)
 
 	if(new_species.exotic_bloodtype)
 		new_species.exotic_bloodtype = new_blood_type
-
-	// updates the cached organ blood types to match our new evil blood
-	var/list/blood_dna_info = human_holder.get_blood_dna_list()
-	for(var/obj/item/organ/organ in human_holder.organs)
-		organ.blood_dna_info = blood_dna_info
-

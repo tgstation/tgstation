@@ -41,7 +41,7 @@
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags = NONE
 	///Random flags that describe this bodypart
-	var/bodypart_flags = NONE
+	var/bodypart_flags = BODYPART_VIRGIN
 
 	///Whether the bodypart (and the owner) is husked.
 	var/is_husked = FALSE
@@ -209,6 +209,8 @@
 	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
 	/// Lazylist of /datum/status_effect/grouped/bodypart_effect types. Instances of this are applied to the carbon when added the limb is attached, and merged with similair limbs
 	var/list/bodypart_effects
+	/// The cached info about the blood this organ belongs to
+	var/list/blood_dna_info
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -240,6 +242,8 @@
 
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
+	else
+		blood_dna_info = list("UNKNOWN DNA" = get_blood_type_by_name(BLOOD_TYPE_O_PLUS))
 
 	name = "[limb_id] [parse_zone(body_zone)]"
 	update_icon_dropped()
@@ -850,6 +854,12 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	item_flags |= ABSTRACT
+	if(IS_ORGANIC_LIMB(src) && !(bodypart_flags & ORGAN_VIRGIN))
+		blood_dna_info = new_owner.get_blood_dna_list()
+		// need to remove the synethic blood DNA that is initialized
+		// wash also adds the blood dna again
+		wash(CLEAN_TYPE_BLOOD)
+		bodypart_flags &= ~BODYPART_VIRGIN
 	ADD_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 
 /// Called on removal of a bodypart.
@@ -1007,6 +1017,13 @@
 	SIGNAL_HANDLER
 	wash(clean_types)
 
+/obj/item/bodypart/wash(clean_types)
+	. = ..()
+
+	// always add the original dna to the organ after it's washed
+	if(IS_ORGANIC_LIMB(src) && (clean_types & CLEAN_TYPE_BLOOD))
+		add_blood_DNA(blood_dna_info)
+
 /// To update the bodypart's icon when not attached to a mob
 /obj/item/bodypart/proc/update_icon_dropped()
 	SHOULD_CALL_PARENT(TRUE)
@@ -1056,7 +1073,7 @@
 		if(brutestate)
 			// divided into two overlays: one that gets colored and one that doesn't.
 			var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
-			brute_blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+			brute_blood_overlay.color = get_blood_dna_color(blood_dna_info)
 			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
 			if(brute_damage_overlay)
 				brute_blood_overlay.overlays += brute_damage_overlay

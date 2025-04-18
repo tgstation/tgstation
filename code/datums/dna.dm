@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		return
 	destination.dna.unique_enzymes = unique_enzymes
 	destination.dna.unique_identity = unique_identity
-	destination.dna.blood_type = blood_type
+	destination.set_blood_type(blood_type)
 	destination.dna.unique_features = unique_features
 	destination.dna.features = features.Copy()
 	destination.dna.real_name = real_name
@@ -589,7 +589,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.generate_unique_enzymes()
 
 	if(newblood_type)
-		dna.blood_type = newblood_type
+		set_blood_type(newblood_type)
 
 	if(unique_identity)
 		dna.unique_identity = unique_identity
