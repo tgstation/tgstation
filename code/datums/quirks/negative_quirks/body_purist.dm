@@ -32,15 +32,16 @@
 	for(var/obj/item/organ/organ as anything in quirk_holder.organs)
 		if(IS_ROBOTIC_ORGAN(organ) && !(organ.organ_flags & ORGAN_HIDDEN))
 			new_cybernetics_level++
-	if(new_cybernetics_level != cybernetics_level)
-		cybernetics_level = new_cybernetics_level
-		if(!cybernetics_level)
-			holder_mood.clear_mood_event("body_purist")
-			return
-		if(isnull(our_mood_event))
-			holder_mood.add_mood_event("body_purist", /datum/mood_event/body_purist, -cybernetics_level * 10)
-			our_mood_event = holder_mood.get_mood_event("body_purist")
-			return
-		our_mood_event.mood_change = -cybernetics_level * 10
-		holder_mood.update_mood()
+	if(new_cybernetics_level == cybernetics_level)
+		return
+	cybernetics_level = new_cybernetics_level
+	if(!cybernetics_level)
+		holder_mood.clear_mood_event("body_purist")
+		return
+	if(isnull(our_mood_event))
+		holder_mood.add_mood_event("body_purist", /datum/mood_event/body_purist, -cybernetics_level * 10)
+		our_mood_event = holder_mood.get_mood_event("body_purist")
+		return
+	our_mood_event.mood_change = -cybernetics_level * 10
+	holder_mood.update_mood()
 
