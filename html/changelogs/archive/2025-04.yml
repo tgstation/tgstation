@@ -524,3 +524,41 @@
   Melbert:
   - bugfix: Mecha cargo holds no longer shove themselves inside themselves when being
       deleted
+2025-04-18:
+  Ezel:
+  - map: added an pacman to wawastation near science
+  - map: added pacmans to icebox
+  - map: removed some pacmans from metastation
+  FeudeyTF:
+  - qol: Better UI/UX for detective's board
+  Goat:
+  - map: wawa now has curator trophy cases
+  Jacquerel:
+  - rscadd: Occasionally when a Wizard is around, strange things may being falling
+      from the sky.
+  - balance: Most mobs will now hesitate for a moment before attacking rather than
+      instantly hitting anything that enters melee range, to better simulate human
+      behaviour. Please report if this delay seems too short, or too long.
+  - balance: Most mobs which telegraphed their basic attacks on you now will not do
+      that
+  JohnFulpWillard:
+  - qol: Radios/headsets now have a slider to change the volume from radio noises.
+  LT3:
+  - bugfix: Synthflesh patches unhusk corpses as expected
+  - qol: Better information and feedback about de-husking corpses
+  Melbert:
+  - bugfix: You can't fax unfaxable things by putting them in faxable things
+  - rscadd: Cyborgs and the AI have regained understanding of various non-human languages,
+      but only partially (66%).
+  SmArtKar:
+  - qol: Redesigned the loadout UI
+  - balance: Monocles now work as prescription glasses
+  - image: Loadout plushies no longer use mapper previews for their images
+  TiviPlus:
+  - bugfix: fixed a runtime with holo emissive overlays
+  Wallem, Kryson, Viro, Xhorian, Kreks:
+  - image: Updated a whole bunch of signs
+  hry-gh:
+  - qol: you can now reset the adjustable pane splitters in chat settings
+  mcbalaam:
+  - qol: Improved chat messages when controlling a mech as an AI
