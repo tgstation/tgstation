@@ -1,0 +1,5 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - rscadd: "Added support for modularly loaded shuttles."
+  - rscadd: "The Scrapheap Challenge emergency shuttle now comes in randomly generated variants."

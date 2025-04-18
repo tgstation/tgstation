@@ -542,7 +542,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "aiS" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/light_switch/directional/east,
 /obj/structure/cable,
 /turf/open/floor/carpet/black,
@@ -1726,6 +1726,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/structure/displaycase/trophy,
 /turf/open/floor/wood,
 /area/station/service/library)
 "aDd" = (
@@ -3517,7 +3518,7 @@
 /turf/open/floor/engine,
 /area/station/science/explab)
 "bjv" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
@@ -15898,7 +15899,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/auxlab/firing_range)
 "fFt" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/item/newspaper,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
@@ -22975,7 +22976,7 @@
 	dir = 6
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
@@ -27834,7 +27835,7 @@
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos)
 "jLp" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/carpet/purple,
 /area/station/service/library)
 "jLr" = (
@@ -29020,6 +29021,12 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/hallway/primary/fore)
+"kfs" = (
+/obj/structure/railing,
+/obj/machinery/door/firedoor/border_only,
+/obj/structure/displaycase/trophy,
+/turf/open/floor/glass/reinforced,
+/area/station/service/bar)
 "kfG" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
@@ -31572,6 +31579,7 @@
 /obj/structure/railing,
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/camera/autoname/directional/east,
+/obj/structure/displaycase/trophy,
 /turf/open/floor/glass/reinforced,
 /area/station/service/bar)
 "kXz" = (
@@ -35913,7 +35921,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron,
 /area/station/security)
 "mxx" = (
@@ -45863,9 +45871,7 @@
 /turf/open/floor/iron,
 /area/station/security/breakroom)
 "pWC" = (
-/obj/machinery/photocopier{
-	pixel_y = 3
-	},
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
@@ -50041,7 +50047,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -51127,7 +51133,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "rKW" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/bot_red,
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/textured_large,
@@ -51919,6 +51925,7 @@
 /area/station/security/execution/transfer)
 "rXG" = (
 /obj/machinery/airalarm/directional/north,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
 "rXO" = (
@@ -54684,7 +54691,7 @@
 	},
 /area/station/command/bridge)
 "sRP" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -161483,7 +161490,7 @@ rDg
 les
 pdp
 hCK
-ilQ
+kfs
 mGW
 mGW
 mGW
