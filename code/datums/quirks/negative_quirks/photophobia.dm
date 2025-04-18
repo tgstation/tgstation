@@ -57,9 +57,9 @@
 	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
 		return
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	if(human_holder.sight & SEE_TURFS)
+
+	if(quirk_holder.sight & SEE_TURFS)
 		return
 
 	var/turf/holder_turf = get_turf(quirk_holder)

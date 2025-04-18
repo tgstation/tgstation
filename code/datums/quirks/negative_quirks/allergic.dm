@@ -36,8 +36,8 @@
 	name = "Extreme [allergy_string] Allergies"
 	medical_record_text = "Patient's immune system responds violently to [allergy_string]"
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/clothing/accessory/dogtag/allergy/dogtag = new(get_turf(human_holder), allergy_string)
+
+	var/obj/item/clothing/accessory/dogtag/allergy/dogtag = new(get_turf(quirk_holder), allergy_string)
 
 	give_item_to_holder(dogtag, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS), flavour_text = "Make sure medical staff can see this...")
 

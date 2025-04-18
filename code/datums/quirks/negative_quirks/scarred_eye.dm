@@ -23,9 +23,9 @@
 		))
 		return
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
+
 	var/obj/item/clothing/glasses/eyepatch/eyepatch = new(get_turf(quirk_holder))
-	if (human_holder.get_eye_scars() & LEFT_EYE_SCAR)
+	if (quirk_holder.get_eye_scars() & LEFT_EYE_SCAR)
 		eyepatch.flip_eyepatch()
 	give_item_to_holder(eyepatch, list(
 		LOCATION_EYES = ITEM_SLOT_EYES,

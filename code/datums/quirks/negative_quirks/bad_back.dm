@@ -12,11 +12,11 @@
 	var/datum/weakref/backpack
 
 /datum/quirk/badback/add(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/storage/backpack/equipped_backpack = human_holder.back
+
+	var/obj/item/storage/backpack/equipped_backpack = quirk_holder.back
 	if(istype(equipped_backpack))
 		quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
-		RegisterSignal(human_holder.back, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_unequipped_backpack))
+		RegisterSignal(quirk_holder.back, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_unequipped_backpack))
 	else
 		RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equipped_item))
 

@@ -11,16 +11,16 @@
 	mail_goodies = list(/obj/item/storage/briefcase/secure)
 
 /datum/quirk/item_quirk/family_heirloom/add_unique(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
+
 	var/obj/item/heirloom_type
 
 	// The quirk holder's species - we have a 50% chance, if we have a species with a set heirloom, to choose a species heirloom.
-	var/datum/species/holder_species = human_holder.dna?.species
+	var/datum/species/holder_species = quirk_holder.dna?.species
 	if(holder_species && LAZYLEN(holder_species.family_heirlooms) && prob(50))
 		heirloom_type = pick(holder_species.family_heirlooms)
 	else
 		// Our quirk holder's job
-		var/datum/job/holder_job = human_holder.last_mind?.assigned_role
+		var/datum/job/holder_job = quirk_holder.last_mind?.assigned_role
 		if(holder_job && LAZYLEN(holder_job.family_heirlooms))
 			heirloom_type = pick(holder_job.family_heirlooms)
 
@@ -28,7 +28,7 @@
 	if(!heirloom_type)
 		heirloom_type = pick(/obj/item/toy/cards/deck, /obj/item/lighter, /obj/item/dice/d20)
 
-	var/obj/new_heirloom = new heirloom_type(get_turf(human_holder))
+	var/obj/new_heirloom = new heirloom_type(get_turf(quirk_holder))
 	heirloom = WEAKREF(new_heirloom)
 
 	give_item_to_holder(

@@ -10,7 +10,7 @@
 	/// Flags related to this quirk.
 	var/quirk_flags = QUIRK_HUMAN_ONLY
 	/// Reference to the mob currently tied to this quirk datum. Quirks are not singletons.
-	var/mob/living/quirk_holder
+	var/mob/living/carbon/human/quirk_holder
 	/// Text displayed when this quirk is assigned to a mob (and not transferred)
 	var/gain_text
 	/// Text displayed when this quirk is removed from a mob (and not transferred)
@@ -53,7 +53,7 @@
 	return ..()
 
 /// Called when quirk_holder is qdeleting. Simply qdels this datum and lets Destroy() handle the rest.
-/datum/quirk/proc/on_holder_qdeleting(mob/living/source, force)
+/datum/quirk/proc/on_holder_qdeleting(mob/living/carbon/human/source, force)
 	SIGNAL_HANDLER
 	qdel(src)
 
@@ -225,9 +225,7 @@
 	if(ispath(quirk_item))
 		quirk_item = new quirk_item(get_turf(quirk_holder))
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
-
-	var/where = human_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE, indirect_action = TRUE) || default_location
+	var/where = quirk_holder.equip_in_one_of_slots(quirk_item, valid_slots, qdel_on_fail = FALSE, indirect_action = TRUE) || default_location
 
 	if(where == LOCATION_BACKPACK)
 		open_backpack = TRUE
@@ -237,10 +235,9 @@
 
 /datum/quirk/item_quirk/post_add()
 	if(open_backpack)
-		var/mob/living/carbon/human/human_holder = quirk_holder
 		// post_add() can be called via delayed callback. Check they still have a backpack equipped before trying to open it.
-		if(human_holder.back)
-			human_holder.back.atom_storage.show_contents(human_holder)
+		if(quirk_holder.back)
+			quirk_holder.back.atom_storage.show_contents(quirk_holder)
 
 	for(var/chat_string in where_items_spawned)
 		to_chat(quirk_holder, chat_string)

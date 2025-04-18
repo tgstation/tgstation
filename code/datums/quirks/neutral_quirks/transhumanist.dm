@@ -110,16 +110,16 @@
 			if(initial(shit_limb.body_zone) == initial(part_part.body_zone))
 				return
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
+
 	var/obj/item/new_part = new part_type()
 	if(isbodypart(new_part))
 		var/obj/item/bodypart/new_bodypart = new_part
 		slot_string = new_bodypart.plaintext_zone
-		old_part = human_holder.return_and_replace_bodypart(new_bodypart, special = TRUE)
+		old_part = quirk_holder.return_and_replace_bodypart(new_bodypart, special = TRUE)
 	else if(isorgan(new_part))
 		var/obj/item/organ/new_organ = new_part
-		old_part = human_holder.get_organ_slot(new_organ.slot)
-		new_organ.Insert(human_holder, special = TRUE)
+		old_part = quirk_holder.get_organ_slot(new_organ.slot)
+		new_organ.Insert(quirk_holder, special = TRUE)
 		old_part.moveToNullspace()
 		STOP_PROCESSING(SSobj, old_part)
 		slot_string = new_organ.name
@@ -140,14 +140,14 @@
 		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
 		return
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
+
 	if(isbodypart(old_part))
 		var/obj/item/bodypart/old_bodypart = old_part
-		human_holder.del_and_replace_bodypart(old_bodypart, special = TRUE)
+		quirk_holder.del_and_replace_bodypart(old_bodypart, special = TRUE)
 		old_bodypart = null
 	else if(isorgan(old_part))
 		var/obj/item/organ/old_organ = old_part
-		old_part = human_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+		old_part = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 		old_organ.Insert(quirk_holder, special = TRUE)
 		old_part.moveToNullspace()
 		STOP_PROCESSING(SSobj, old_part)

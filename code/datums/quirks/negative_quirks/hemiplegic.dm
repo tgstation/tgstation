@@ -21,11 +21,11 @@
 	if(isnull(side_choice))  // Client gone or they chose a random side
 		side_choice = GLOB.side_choice_hemiplegic[pick(GLOB.side_choice_hemiplegic)]
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
+
 
 	medical_record_text = "Patient has an untreatable impairment in motor function on the [side_choice::paralysis_type] half of their body."
-	human_holder.gain_trauma(side_choice, TRAUMA_RESILIENCE_ABSOLUTE)
+	quirk_holder.gain_trauma(side_choice, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/hemiplegic/remove()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/hemiplegic, TRAUMA_RESILIENCE_ABSOLUTE)
+
+	quirk_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/hemiplegic, TRAUMA_RESILIENCE_ABSOLUTE)

@@ -43,8 +43,8 @@
 /datum/quirk/gamer/proc/won_game()
 	SIGNAL_HANDLER
 	// Epic gamer victory
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.add_mood_event("gamer_won", /datum/mood_event/gamer_won)
+
+	quirk_holder.add_mood_event("gamer_won", /datum/mood_event/gamer_won)
 
 /**
  * Gamer lost a game
@@ -56,8 +56,8 @@
 /datum/quirk/gamer/proc/lost_game()
 	SIGNAL_HANDLER
 	// Executed when a gamer has lost
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.add_mood_event("gamer_lost", /datum/mood_event/gamer_lost)
+
+	quirk_holder.add_mood_event("gamer_lost", /datum/mood_event/gamer_lost)
 	// Executed asynchronously due to say()
 	INVOKE_ASYNC(src, PROC_REF(gamer_moment))
 /**
@@ -69,9 +69,9 @@
 /datum/quirk/gamer/proc/gamed()
 	SIGNAL_HANDLER
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
+
 	// Remove withdrawal malus
-	human_holder.clear_mood_event("gamer_withdrawal")
+	quirk_holder.clear_mood_event("gamer_withdrawal")
 	// Reset withdrawal timer
 	if (gaming_withdrawal_timer)
 		deltimer(gaming_withdrawal_timer)
@@ -80,11 +80,11 @@
 
 /datum/quirk/gamer/proc/gamer_moment()
 	// It was a heated gamer moment...
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.say(";[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced = name)
+
+	quirk_holder.say(";[pick("SHIT", "PISS", "FUCK", "CUNT", "COCKSUCKER", "MOTHERFUCKER")]!!", forced = name)
 
 /datum/quirk/gamer/proc/enter_withdrawal()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.add_mood_event("gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
+
+	quirk_holder.add_mood_event("gamer_withdrawal", /datum/mood_event/gamer_withdrawal)
 
 #undef GAMING_WITHDRAWAL_TIME

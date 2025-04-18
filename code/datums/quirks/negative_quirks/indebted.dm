@@ -8,10 +8,10 @@
 	hardcore_value = 2
 
 /datum/quirk/indebted/add_unique(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	if(!human_holder.account_id)
+
+	if(!quirk_holder.account_id)
 		return
-	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[human_holder.account_id]"]
+	var/datum/bank_account/account = SSeconomy.bank_accounts_by_id["[quirk_holder.account_id]"]
 	var/debt = PAYCHECK_CREW * rand(275, 325)
 	account.account_debt += debt
 	RegisterSignal(account, COMSIG_BANK_ACCOUNT_DEBT_PAID, PROC_REF(on_debt_paid))
