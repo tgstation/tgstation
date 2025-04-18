@@ -234,8 +234,8 @@
 	root_abstract_type = /datum/blood_type/evil
 
 /datum/blood_type/evil/New(datum/blood_type/real_blood_type, list/real_compatible_types)
-	. = ..()
 	src.name = real_blood_type.name
+	. = ..()
 	id = type_key()
 	src.color = BLOOD_COLOR_BLACK // why it gotta be black though
 	src.reagent_type = real_blood_type.reagent_type
