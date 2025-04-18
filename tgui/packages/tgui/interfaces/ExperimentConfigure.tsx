@@ -148,11 +148,15 @@ export function Experiment(props) {
           <Stack.Item>{name}</Stack.Item>
           <Stack.Item color="rgba(255, 255, 255, 0.5)">
             <div className="ExperimentConfigure__TagContainer">
-              {tag}
-              <Tooltip content={performance_hint} position="bottom-start">
-                <Icon name="question-circle" mx={0.5} />
-                <div className="ExperimentConfigure__PerformanceHint" />
-              </Tooltip>
+              <Stack>
+                <Stack.Item>{tag}</Stack.Item>
+                <Stack.Item>
+                  <Tooltip content={performance_hint} position="bottom-start">
+                    <Icon name="question-circle" mx={0.5} />
+                    <div className="ExperimentConfigure__PerformanceHint" />
+                  </Tooltip>
+                </Stack.Item>
+              </Stack>
             </div>
           </Stack.Item>
         </Stack>
