@@ -15,8 +15,12 @@ if (!String.prototype.trim) {
 }
 
 // Status panel implementation ------------------------------------------------
+//status_tab_parts expects a list to be returned, to which we'll send a list within a list
+//with just "loading" to not appear broken.
 var status_tab_parts = [["Loading..."]];
 var current_tab = null;
+//mc_tab_parts expects a list to be returned, to which we'll send a list within a list
+//with just "loading" to not appear broken.
 var mc_tab_parts = [["Loading..."]];
 var href_token = null;
 var spells = [];
