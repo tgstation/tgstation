@@ -97,6 +97,7 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/scatter, /obj/item/ammo_casing/energy/snare)
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
+	slot_flags = ITEM_SLOT_BACK
 	ammo_y_offset = 1
 	ammo_x_offset = 0
 	charge_sections = 3
