@@ -1054,6 +1054,8 @@
 	blink_animation = FALSE
 
 /obj/item/organ/eyes/ghost
+	name = "ghost eyes"
+	desc = "Despite lacking pupils, these can see pretty well."
 	icon_state = "eyes-ghost"
 	blink_animation = FALSE
 	movement_type = PHASING
