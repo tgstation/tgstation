@@ -28,6 +28,7 @@
 
 .window-lightMode {
   background-color: colors.$lightMode;
+  border: 2px solid colors.$lightBorder;
 }
 
 /** Window sizes */
@@ -97,10 +98,15 @@
   margin: 0.1rem 0 0 0.4rem;
   outline: none;
   resize: none;
+  overflow: hidden;
   scrollbar-width: thin;
   scrollbar-color: color.scale(
       colors.$button,
       $lightness: 20% * colors.$scrollbar-color-multiplier
     )
-    transparent;
+    transparent; 
+}
+
+.textarea-large {
+  overflow-y: scroll;
 }

@@ -21,13 +21,6 @@ type ByondProps = {
   scale: BooleanLike;
 };
 
-const ROWS: Record<keyof typeof WindowSize, number> = {
-  Small: 1,
-  Medium: 2,
-  Large: 3,
-  Width: 1, // not used
-} as const;
-
 export function TguiSay() {
   const innerRef = useRef<HTMLTextAreaElement>(null);
   const channelIterator = useRef(new ChannelIterator());
@@ -268,8 +261,8 @@ export function TguiSay() {
     }
 
     if (size !== newSize) {
-      setSize(newSize);
       windowSet(newSize, scale.current);
+      setSize(newSize);
     }
   }, [value]);
 
@@ -302,13 +295,16 @@ export function TguiSay() {
         </button>
         <textarea
           autoCorrect="off"
-          className={`textarea textarea-${theme}`}
+          className={classes([
+            'textarea',
+            `textarea-${theme}`,
+            value.length > LineLength.Large && 'textarea-large',
+          ])}
           maxLength={maxLength}
           onInput={handleInput}
           onKeyDown={handleKeyDown}
           ref={innerRef}
           spellCheck={false}
-          rows={ROWS[size] || 1}
           value={value}
         />
       </div>
