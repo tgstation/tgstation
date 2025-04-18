@@ -62,7 +62,7 @@
 	///The size of the reagents holder which will store fish feed.
 	var/reagents_size
 
-	///The current aquarium mode
+	///The current aquarium mode, one of either AQUARIUM_MODE_MANUAL, AQUARIUM_MODE_AUTO or AQUARIUM_MODE_SAFE.
 	var/current_mode
 
 /datum/component/aquarium/Initialize(
@@ -181,9 +181,12 @@
 	if(HAS_TRAIT_FROM(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
 		ADD_TRAIT(new_parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	var/atom/movable/movable = parent
+	var/old_mode = current_mode //Make sure we don't keep updating temp/fluid on AQUARIUM_MODE_AUTO for this.
+	current_mode = NONE
 	for(var/atom/movable/moving as anything in movable.contents)
 		if(HAS_TRAIT(moving, TRAIT_AQUARIUM_CONTENT))
 			moving.forceMove(new_parent)
+	current_mode = old_mode
 	if(reagents_size)
 		if(!new_parent.reagents)
 			new_parent.create_reagents(reagents_size, SEALED_CONTAINER)
@@ -488,6 +491,14 @@
 		alive++
 	return not_safe <= (alive / 2)
 
+/**
+ * Called if the mode is AQUARIUM_MODE_AUTO whenever a fish is added, removed, dies or resurrected.
+ *
+ * This tries to find what the best combination of fluid and temperature. is to ensure
+ * the survival of the highest number of fishes. It also can and will activate stasis if over half of
+ * the fish population is at risk of dying. It doesn't care if the fish is big or small, useful
+ * or not. All fish are equal before the impartial eye of AQUARIUM_MODE_AUTO.
+ */
 /datum/component/aquarium/proc/get_optimal_aquarium_settings()
 	if(!length(tracked_fish_by_type))
 		REMOVE_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
@@ -496,6 +507,7 @@
 	var/list/can_survive_with = list()
 	var/list/checked_types = list()
 	var/list/sorted_tracked = sortTim(tracked_fish_by_type.Copy(), GLOBAL_PROC_REF(cmp_list_len_dsc), associative = TRUE)
+	var/list/fish_alive_by_type = list()
 	for(var/obj/item/fish/fish_type as anything in sorted_tracked)
 		var/our_min_temp = fish_type::required_temperature_min
 		var/our_max_temp = fish_type::required_temperature_max
@@ -504,19 +516,38 @@
 		checked_types += fish_type
 		LAZYINITLIST(can_survive_with[fish_type])
 
+		var/fish_amount = 0
+		for(var/obj/item/fish/fish_instance as anything in tracked_fish_by_type[fish_type])
+			if(fish_instance.status == FISH_ALIVE)
+				fish_amount++
+
+		if(!fish_amount) //all fishes of this type are dead, skip it.
+			continue
+
+		fish_alive_by_type[fish_type] = fish_amount
+
+		//Check if there's an overlap with the temp/fluid requirements of the other types.
 		for(var/obj/item/fish/enemy_type as anything in (tracked_fish_by_type - checked_types))
-			if(!check_survivability(enemy_type, our_min_temp, our_max_temp, our_fluid_type))
+			var/enem_min_temp = initial(enemy_type.required_temperature_min)
+			var/enem_max_temp = initial(enemy_type.required_temperature_max)
+			if(our_min_temp > enem_max_temp || our_max_temp < enem_min_temp)
+				continue
+			var/enem_fluid_type = initial(enemy_type.required_fluid_type)
+			if(!length(GLOB.fish_compatible_fluid_types[our_fluid_type]|GLOB.fish_compatible_fluid_types[enem_fluid_type]))
 				continue
 			can_survive_with[fish_type] |= enemy_type
 			LAZYOR(can_survive_with[enemy_type], fish_type)
 
-	var/list/highest_val_list = list(can_survive_with[tracked_fish_by_type[1]]) //If there's only one type of fish in here.
-	var/highest_val = 0
+	var/list/highest_val_list = list(tracked_fish_by_type[1]) //In case there's only one type of fish in here...
+	var/highest_val = -1
 	for(var/fish_type as anything in can_survive_with)
 		var/list/compatible_types = can_survive_with[fish_type]
-		var/list/fish_amount = length(tracked_fish_by_type[fish_type])
+		var/fish_amount = fish_alive_by_type[fish_type]
+		for(var/obj/item/fish/fish_instance as anything in tracked_fish_by_type[fish_type])
+			if(fish_instance.status == FISH_ALIVE)
+				fish_amount++
 		for(var/ally_type in compatible_types)
-			var/val = fish_amount + length(tracked_fish_by_type[ally_type])
+			var/val = fish_amount + fish_alive_by_type[ally_type]
 			var/list/ally_comp_types = can_survive_with[ally_type]
 			ally_comp_types = ally_comp_types.Copy()
 			var/common_allies = compatible_types & ally_comp_types
@@ -524,7 +555,7 @@
 			for(var/third_type in common_allies)
 				if(third_type in excluded)
 					continue
-				val += length(tracked_fish_by_type[third_type])
+				val += fish_alive_by_type[third_type]
 				excluded |= common_allies - can_survive_with[third_type]
 			if(val <= highest_val)
 				continue
@@ -546,16 +577,6 @@
 		ADD_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	else
 		REMOVE_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
-
-/datum/component/aquarium/proc/check_survivability(obj/item/fish/enemy_type, our_min_temp, our_max_temp, our_fluid_type)
-	var/enem_min_temp = initial(enemy_type.required_temperature_min)
-	var/enem_max_temp = initial(enemy_type.required_temperature_max)
-	if(our_min_temp > enem_max_temp || our_max_temp < enem_min_temp)
-		return FALSE
-	var/enem_fluid_type = initial(enemy_type.required_fluid_type)
-	if(!length(GLOB.fish_compatible_fluid_types[our_fluid_type]|GLOB.fish_compatible_fluid_types[enem_fluid_type]))
-		return FALSE
-	return TRUE
 
 /datum/component/aquarium/proc/interact(atom/movable/source, mob/user)
 	SIGNAL_HANDLER
