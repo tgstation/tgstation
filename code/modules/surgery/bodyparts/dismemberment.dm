@@ -25,7 +25,6 @@
 		LAZYSET(limb_owner.body_zone_dismembered_by, body_zone, wounding_type)
 
 	if (can_bleed())
-		add_mob_blood(limb_owner)
 		limb_owner.bleed(rand(20, 40))
 
 	drop_limb(dismembered = TRUE)

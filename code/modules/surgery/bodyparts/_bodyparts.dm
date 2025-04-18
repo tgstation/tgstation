@@ -209,7 +209,7 @@
 	var/datum/bodypart_overlay/texture/texture_bodypart_overlay
 	/// Lazylist of /datum/status_effect/grouped/bodypart_effect types. Instances of this are applied to the carbon when added the limb is attached, and merged with similair limbs
 	var/list/bodypart_effects
-	/// The cached info about the blood this organ belongs to
+	/// The cached info about the blood this organ belongs to, set during on_removal()
 	var/list/blood_dna_info
 
 /obj/item/bodypart/apply_fantasy_bonuses(bonus)
@@ -854,12 +854,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	item_flags |= ABSTRACT
-	if(IS_ORGANIC_LIMB(src) && !(bodypart_flags & ORGAN_VIRGIN))
-		blood_dna_info = new_owner.get_blood_dna_list()
-		// need to remove the synethic blood DNA that is initialized
-		// wash also adds the blood dna again
-		wash(CLEAN_TYPE_BLOOD)
-		bodypart_flags &= ~BODYPART_VIRGIN
 	ADD_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
 
 /// Called on removal of a bodypart.
@@ -949,6 +943,14 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(IS_ORGANIC_LIMB(src))
+		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
+		// Should be fine as this gets called before all the important stuff happens
+		if(!(bodypart_flags & ORGAN_VIRGIN) && owner?.dna?.blood_type)
+			blood_dna_info = owner.get_blood_dna_list()
+			// need to remove the synethic blood DNA that is initialized
+			// wash also adds the blood dna again
+			wash(CLEAN_TYPE_BLOOD)
+			bodypart_flags &= ~BODYPART_VIRGIN
 		if(!(bodypart_flags & BODYPART_UNHUSKABLE) && owner && HAS_TRAIT(owner, TRAIT_HUSK))
 			dmg_overlay_type = "" //no damage overlay shown when husked
 			is_husked = TRUE
@@ -1029,7 +1031,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	cut_overlays()
-	var/list/standing = get_limb_icon(TRUE)
+	var/list/standing = get_limb_icon(dropped = TRUE)
 	if(!standing.len)
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
@@ -1061,7 +1063,7 @@
 		update_icon_dropped()
 
 ///Generates an /image for the limb to be used as an overlay
-/obj/item/bodypart/proc/get_limb_icon(dropped)
+/obj/item/bodypart/proc/get_limb_icon(dropped, mob/living/carbon/update_on)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
 
@@ -1073,7 +1075,7 @@
 		if(brutestate)
 			// divided into two overlays: one that gets colored and one that doesn't.
 			var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
-			brute_blood_overlay.color = get_blood_dna_color(blood_dna_info)
+			brute_blood_overlay.color = get_blood_dna_color(update_on ? update_on.get_blood_dna_list() : blood_dna_info) // living mobs can just get it fresh, dropped limbs use blood_dna_info
 			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
 			if(brute_damage_overlay)
 				brute_blood_overlay.overlays += brute_damage_overlay

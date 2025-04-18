@@ -57,6 +57,6 @@
 		return
 
 	for(var/obj/item/reagent_containers/blood/blood_bag as anything in typesof(/obj/item/reagent_containers/blood))
-		if(blood_bag::blood_type == blood_type.display_name)
+		if(blood_bag::blood_type == blood_type.name)
 			mail_goodies = list(blood_bag)
 			return

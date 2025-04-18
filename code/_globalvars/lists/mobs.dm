@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 		lang_list[initial(lang_type.name)] = lang_type
 	return lang_list
 
-// A list of all the possible blood types, keyed by name
+// A list of all the possible blood types, keyed by id (which is just the name in most cases)
 GLOBAL_LIST_INIT(blood_types, init_blood_types())
 
 /// Initializes the list of blood type singletons
@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(blood_types, init_blood_types())
 		if(blood_type_path::root_abstract_type == blood_type_path) // Don't instantiate abstract blood types
 			continue
 		var/datum/blood_type/new_type = new blood_type_path()
-		.[new_type.name] = new_type
+		.[new_type.id] = new_type
 
 /// An assoc list of species IDs to type paths
 GLOBAL_LIST_INIT(species_list, init_species_list())

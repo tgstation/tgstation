@@ -254,7 +254,7 @@
 			blood_warning = " Patient has low blood levels. Seek a large meal, or iron supplements."
 		if(blood_percent <= 60)
 			blood_warning = " Patient has DANGEROUSLY low blood levels. Seek a blood transfusion, iron supplements, or saline glucose immedietly. Ignoring treatment may lead to death!"
-		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type.display_name] type blood. [blood_warning]"
+		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type.name] type blood. [blood_warning]"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)

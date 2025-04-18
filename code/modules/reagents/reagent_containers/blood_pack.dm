@@ -20,7 +20,7 @@
 	var/datum/reagent/blood/new_reagent = holder.has_reagent(/datum/reagent/blood)
 	if(new_reagent && new_reagent.data && new_reagent.data["blood_type"])
 		var/datum/blood_type/blood_type = new_reagent.data["blood_type"]
-		blood_type = blood_type.display_name
+		blood_type = blood_type.name
 	else if(holder.has_reagent(/datum/reagent/consumable/liquidelectricity))
 		blood_type = BLOOD_TYPE_ETHEREAL
 	else if(holder.has_reagent(/datum/reagent/lube))

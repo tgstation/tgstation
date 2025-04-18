@@ -1,10 +1,10 @@
 /datum/blood_type
-	/// Actual name of the blood type.
+	/// Name of the blood type.
 	var/name = "?"
-	/// Displayed name of the blood type. Sometimes this differs from the actual name (e.g. secretly evil blood)
-	var/display_name = "?"
 	/// A description of the blood type.
 	var/desc
+	/// Unique identifier for the blood type in the global list of singletons. Typically this is just the name, but some blood types might have the same name (e.g. evil blood)
+	var/id
 	/// Shown color of the blood type.
 	var/color = BLOOD_COLOR_RED
 	/// Additional lightness multiplier for the blood color, useful for when the default lightness from the greyscaling doesn't cut it and you want something more vibrant.
@@ -27,7 +27,7 @@
 
 /datum/blood_type/New()
 	. = ..()
-	display_name = name
+	id = name
 	compatible_types |= type_key()
 
 /datum/blood_type/Destroy(force)
@@ -221,7 +221,6 @@
 /datum/blood_type/random_chemical/New(datum/reagent/reagent_type)
 	. = ..()
 	src.name = initial(reagent_type.name)
-	src.display_name = name
 	src.color = initial(reagent_type.color)
 	src.reagent_type = reagent_type
 	src.restoration_chem = reagent_type
@@ -236,8 +235,8 @@
 
 /datum/blood_type/evil/New(datum/blood_type/real_blood_type, list/real_compatible_types)
 	. = ..()
-	src.name = type_key()
-	src.display_name = real_blood_type.name
+	src.name = real_blood_type.name
+	id = type_key()
 	src.color = BLOOD_COLOR_BLACK // why it gotta be black though
 	src.reagent_type = real_blood_type.reagent_type
 	src.restoration_chem = real_blood_type.reagent_type
@@ -245,4 +244,4 @@
 	src.root_abstract_type = null
 
 /datum/blood_type/evil/type_key()
-	return "[display_name]_but_evil"
+	return "[name]_but_evil"

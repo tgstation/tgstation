@@ -378,7 +378,7 @@
 			var/datum/reagent/real_reagent = GLOB.chemical_reagents_list[blood_id]
 			blood_type = real_reagent?.name || blood_id
 		if(carbontarget.blood_volume <= BLOOD_VOLUME_SAFE && carbontarget.blood_volume > BLOOD_VOLUME_OKAY)
-			render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent]%, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type.display_name]")]<br>"
+			render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent]%, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type.name]")]<br>"
 			render_list += "<span class='alert ml-1'>Recommendation: [blood_type.restoration_chem::name] supplements or blood transfusion.</span><br>"
 		else if(carbontarget.blood_volume <= BLOOD_VOLUME_OKAY)
 			render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_percent]%</b>, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]<br>"

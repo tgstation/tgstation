@@ -39,7 +39,7 @@
 		icon_state = "[picked.body_zone]_[pick(2, 3)]",
 		loc = hallucinator,
 	)
-	bleeding.color = carb_hallucinator.dna.blood_type.color
+	bleeding.color = carb_hallucinator.dna.blood_type.get_color()
 	bleeding.layer = -WOUND_LAYER
 	hallucinator.client?.images += bleeding
 	return TRUE
