@@ -422,12 +422,12 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 	if(splatter_strength)
 		src.splatter_strength = splatter_strength
 
-/obj/effect/decal/cleanable/blood/hitsplatter/Destroy()
+/obj/effect/decal/cleanable/blood/hitsplatter/proc/expire()
 	if(isturf(loc) && !skip)
 		playsound(src, 'sound/effects/wounds/splatter.ogg', 60, TRUE, -1)
 		if(blood_dna_info)
 			loc.add_blood_DNA(blood_dna_info)
-	return ..()
+	qdel(src)
 
 /// Set the splatter up to fly through the air until it rounds out of steam or hits something
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/fly_towards(turf/target_turf, range)
@@ -465,29 +465,29 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 		splatter_strength--
 
 	if(splatter_strength <= 0) // we used all the puff so we delete it.
-		qdel(src)
+		expire()
 
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/loop_done(datum/source)
 	SIGNAL_HANDLER
 	if(!QDELETED(src))
-		qdel(src)
+		expire()
 
 /obj/effect/decal/cleanable/blood/hitsplatter/Bump(atom/bumped_atom)
 	if(!iswallturf(bumped_atom) && !istype(bumped_atom, /obj/structure/window))
-		qdel(src)
+		expire()
 		return
 
 	if(istype(bumped_atom, /obj/structure/window))
 		var/obj/structure/window/bumped_window = bumped_atom
 		if(!bumped_window.fulltile)
 			hit_endpoint = TRUE
-			qdel(src)
+			expire()
 			return
 
 	hit_endpoint = TRUE
 	if(!isturf(prev_loc)) // This will only happen if prev_loc is not even a turf, which is highly unlikely.
 		abstract_move(bumped_atom)
-		qdel(src)
+		expire()
 		return
 
 	abstract_move(bumped_atom)
@@ -511,4 +511,4 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 	final_splatter.forceMove(the_window)
 	the_window.vis_contents += final_splatter
 	the_window.bloodied = TRUE
-	qdel(src)
+	expire()
