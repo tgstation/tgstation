@@ -4680,7 +4680,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "bge" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/wood/large,
 /area/station/service/library)
@@ -7298,7 +7298,7 @@
 	name = "medbay camera";
 	network = list("ss13","medbay")
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
 "bLu" = (
@@ -7658,7 +7658,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
 "bPZ" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -9600,7 +9600,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "cnp" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/status_display/ai/directional/north,
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /obj/effect/turf_decal/bot_white,
@@ -15221,7 +15221,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/department/crew_quarters/bar)
 "dKz" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/item/radio/intercom/directional/east,
 /turf/open/floor/carpet/royalblack,
 /area/station/service/chapel/office)
@@ -18164,7 +18164,7 @@
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/south,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "eyr" = (
@@ -22144,7 +22144,7 @@
 /area/station/service/bar)
 "fxs" = (
 /obj/structure/cable,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/command/meeting_room/council)
 "fxu" = (
@@ -22716,7 +22716,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/maintenance/port/fore)
 "fFf" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 8
 	},
@@ -24701,7 +24701,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "gez" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/status_display/evac/directional/east,
 /obj/machinery/camera/directional/east{
 	c_tag = "Lawyer's Office"
@@ -25953,7 +25953,7 @@
 /area/station/service/library/abandoned)
 "gsP" = (
 /obj/machinery/light_switch/directional/north,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/light/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
@@ -34102,7 +34102,7 @@
 /area/station/ai_monitored/turret_protected/ai)
 "ixE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/button/door/directional/east{
 	id = "left_arrivals_shutters";
 	name = "Left Arrivals Hallway Shutters";
@@ -35601,7 +35601,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/science)
 "iSf" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 1
 	},
@@ -35824,7 +35824,7 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "iVT" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/structure/sign/poster/official/work_for_a_future/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -43847,7 +43847,7 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/gravity_generator)
 "kTX" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/item/radio/intercom/directional/south,
 /obj/effect/turf_decal/box/white,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -54486,7 +54486,7 @@
 /area/station/hallway/primary/central/fore)
 "nFN" = (
 /obj/effect/turf_decal/stripes/white/line,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "nFO" = (
@@ -67810,7 +67810,7 @@
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/item/newspaper{
 	pixel_x = 3;
 	pixel_y = 3
@@ -68053,7 +68053,7 @@
 /turf/open/floor/iron/dark,
 /area/station/maintenance/disposal/incinerator)
 "raQ" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/requests_console/directional/north{
 	department = "Head of Security's Desk";
 	name = "Head of Security's Requests Console"
@@ -72223,7 +72223,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "saC" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
@@ -74821,7 +74821,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "sIH" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/bot_white,
@@ -75504,7 +75504,7 @@
 /area/station/security/evidence)
 "sRs" = (
 /obj/item/radio/intercom/directional/north,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/checker,
 /area/station/hallway/secondary/service)
 "sRt" = (
@@ -78025,7 +78025,7 @@
 /area/station/hallway/primary/port)
 "tAj" = (
 /obj/machinery/newscaster/directional/east,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/light/small/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -80363,7 +80363,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "ucD" = (
@@ -89348,7 +89348,7 @@
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
 "wog" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/floor/plating,
