@@ -65,7 +65,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	var/map_name
 	var/atom/movable/screen/map_view/camera/cam_screen
 	var/tabIndex = 1
-	var/renderLighting = FALSE
 	var/static/list/pod_style_info
 	var/static/list/pod_style_lookup
 
@@ -110,10 +109,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	cam_screen.clear_with_screen = FALSE
 	cam_screen.cam_background.clear_with_screen = FALSE
 	// display_to doesn't send the planes to the client, so we have to do it via display_to_client
-	var/datum/plane_master_group/planes = cam_screen.display_to_client(holder)
-	if(!renderLighting)
-		for(var/atom/movable/screen/plane_master/instance as anything in holder.mob.hud_used.get_true_plane_masters(LIGHTING_PLANE, planes.key))
-			instance.set_alpha(100)
+	cam_screen.display_to_client(holder)
 
 	refreshView()
 
@@ -133,6 +129,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		// Open UI
 		ui = new(user, src, "CentcomPodLauncher")
 		ui.open()
+		cam_screen.display_to(holder, ui.window)
 		refreshView()
 
 /datum/centcom_podlauncher/ui_static_data(mob/user)
@@ -149,7 +146,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	data["oldArea"] = (oldTurf ? get_area(oldTurf) : null) //Holds the name of the area that the user was in before using the teleportCentcom action
 	data["picking_dropoff_turf"] = picking_dropoff_turf //If we're picking or have picked a dropoff turf. Only works when pod is in reverse mode
 	data["customDropoff"] = customDropoff
-	data["renderLighting"] = renderLighting
 	data["launchClone"] = launchClone //Do we launch the actual items in the bay or just launch clones of them?
 	data["launchRandomItem"] = launchRandomItem //Do we launch a single random item instead of everything on the turf?
 	data["launchChoice"] = launchChoice //Launch turfs all at once (0), ordered (1), or randomly(1)
@@ -522,9 +518,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		if("refreshView")
 			initMap()
 			. = TRUE
-		if("renderLighting")
-			renderLighting = !renderLighting
-			. = TRUE
 		if("setStyle")
 			var/chosenStyle = params["style"]
 			temp_pod.setStyle(pod_style_lookup[chosenStyle])
@@ -814,7 +807,6 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 /datum/centcom_podlauncher/proc/loadData(list/dataToLoad)
 	bayNumber = dataToLoad["bayNumber"]
 	customDropoff = dataToLoad["customDropoff"]
-	renderLighting = dataToLoad["renderLighting"]
 	launchClone = dataToLoad["launchClone"] //Do we launch the actual items in the bay or just launch clones of them?
 	launchRandomItem = dataToLoad["launchRandomItem"] //Do we launch a single random item instead of everything on the turf?
 	launchChoice = dataToLoad["launchChoice"] //Launch turfs all at once (0), ordered (1), or randomly(1)
