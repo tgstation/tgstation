@@ -92,6 +92,9 @@
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
 
+/obj/item/melee/energy/get_demolition_modifier(obj/target)
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? demolition_mod : 1
+
 /obj/item/melee/energy/update_icon_state()
 	. = ..()
 	if(!sword_color_icon)

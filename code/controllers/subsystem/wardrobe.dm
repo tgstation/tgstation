@@ -11,7 +11,7 @@ SUBSYSTEM_DEF(wardrobe)
 	flags = SS_BACKGROUND
 	dependencies = list(
 		/datum/controller/subsystem/atoms,
-		/datum/controller/subsystem/mapping
+		/datum/controller/subsystem/mapping,
 	)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT // We're going to fill up our cache while players sit in the lobby
 	/// How much to cache outfit items
