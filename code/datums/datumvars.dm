@@ -2,6 +2,8 @@
 	return TRUE
 
 /datum/proc/can_vv_get(var_name)
+	if(var_name == NAMEOF(src, vars))
+		return FALSE
 	return TRUE
 
 /// Called when a var is edited with the new value to change to
