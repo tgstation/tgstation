@@ -1,4 +1,4 @@
-/// Animated beings of stone. They have increased defenses, and do not need to breathe. They must eat minerals to live, which give additional buffs.
+///Spirit mob that lacks legs but spooks around the station.
 /datum/species/ghost
 	name = "Ghost"
 	id = SPECIES_GHOST
@@ -152,13 +152,24 @@
 
 	if(HAS_TRAIT(carbon_owner, TRAIT_NO_FLOATING_ANIM))
 		REMOVE_TRAIT(carbon_owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT)
-		carbon_owner.add_traits(list(TRAIT_MOVE_PHASING, TRAIT_PIERCEIMMUNE), SPECIES_TRAIT)
-		carbon_owner.mobility_flags = MOBILITY_FLAGS_CARBON_PHASING
+		carbon_owner.add_traits(list(
+			TRAIT_MOVE_PHASING,
+			TRAIT_PIERCEIMMUNE,
+			TRAIT_HANDS_BLOCKED, //MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE
+			TRAIT_PULL_BLOCKED, //MOBILITY_PULL
+			TRAIT_UI_BLOCKED, //MOBILITY_UI
+			), SPECIES_TRAIT)
 		carbon_species.update_no_equip_flags(carbon_owner, ALL)
 		RegisterSignal(carbon_owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(attempt_move))
 	else
 		ADD_TRAIT(carbon_owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT)
-		carbon_owner.remove_traits(list(TRAIT_MOVE_PHASING, TRAIT_PIERCEIMMUNE), SPECIES_TRAIT)
+		carbon_owner.remove_traits(list(
+			TRAIT_MOVE_PHASING,
+			TRAIT_PIERCEIMMUNE,
+			TRAIT_HANDS_BLOCKED,
+			TRAIT_PULL_BLOCKED,
+			TRAIT_UI_BLOCKED,
+			), SPECIES_TRAIT)
 		carbon_owner.mobility_flags = initial(carbon_owner.mobility_flags)
 		carbon_species.update_no_equip_flags(carbon_owner, initial(carbon_species.no_equip_flags))
 		UnregisterSignal(carbon_owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
