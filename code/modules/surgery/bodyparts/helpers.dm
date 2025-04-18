@@ -90,10 +90,14 @@
 /mob/living/carbon/alien/larva/has_right_hand(check_disabled = TRUE)
 	return TRUE
 
-
 /mob/living/carbon/proc/get_missing_limbs()
 	RETURN_TYPE(/list)
-	var/list/full = GLOB.all_body_zones.Copy()
+	var/list/full
+	if(dna)
+		full = dna.species.bodypart_overrides.Copy()
+	else
+		full = GLOB.all_body_zones.Copy()
+
 	for(var/zone in full)
 		if(get_bodypart(zone))
 			full -= zone

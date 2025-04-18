@@ -1053,6 +1053,12 @@
 	eye_color_right = "#901f38"
 	blink_animation = FALSE
 
+/obj/item/organ/eyes/ghost
+	icon_state = "eyes-ghost"
+	blink_animation = FALSE
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+
 /obj/item/organ/eyes/snail
 	name = "snail eyes"
 	desc = "These eyes seem to have a large range, but might be cumbersome with glasses."

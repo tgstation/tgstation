@@ -340,7 +340,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			QDEL_NULL(new_organ)
 
 /datum/species/proc/worn_items_fit_body_check(mob/living/carbon/wearer)
-	for(var/obj/item/equipped_item in wearer.get_equipped_items(INCLUDE_POCKETS))
+	for(var/obj/item/equipped_item in wearer.get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD))
 		var/equipped_item_slot = wearer.get_slot_by_item(equipped_item)
 		if(!equipped_item.mob_can_equip(wearer, equipped_item_slot, bypass_equip_delay_self = TRUE, ignore_equipped = TRUE))
 			wearer.dropItemToGround(equipped_item, force = TRUE)
@@ -615,6 +615,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	switch(slot)
 		if(ITEM_SLOT_HANDS)
+			if(!(H.mobility_flags & MOBILITY_PICKUP))
+				return FALSE
 			if(H.get_empty_held_indexes())
 				return TRUE
 			return FALSE

@@ -558,4 +558,11 @@
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
 
+/obj/item/organ/stomach/ghost
+	name = "ghost stomach"
+	desc = "Ghosts eat plenty, you know? And it's not just your life, I swear!"
+	icon_state = "stomach-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+
 #undef STOMACH_METABOLISM_CONSTANT
