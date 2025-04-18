@@ -11866,7 +11866,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 5
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/wood,
 /area/station/hallway/secondary/service)
@@ -25619,7 +25619,7 @@
 /turf/open/openspace,
 /area/station/science/xenobiology)
 "hnP" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/cafeteria{
 	dir = 8
 	},
@@ -29919,7 +29919,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "iyQ" = (
@@ -35141,7 +35141,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "kaw" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/office)
@@ -37153,7 +37153,7 @@
 /area/station/maintenance/port/aft)
 "kCG" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "kCH" = (
@@ -55359,7 +55359,7 @@
 /turf/open/floor/plating,
 /area/station/medical/virology)
 "pGT" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/service/library)
 "pGW" = (
@@ -63850,7 +63850,7 @@
 /area/station/science/ordnance)
 "sbi" = (
 /obj/machinery/newscaster/directional/north,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/hop)
 "sby" = (
@@ -78679,7 +78679,7 @@
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
 "wvJ" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/structure/sign/calendar/directional/north,
 /turf/open/floor/wood,
@@ -80796,7 +80796,7 @@
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
 "xax" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/button/door/directional/north{
 	id = "heads_meeting";
 	name = "Security Shutters"

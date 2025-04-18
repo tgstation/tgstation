@@ -542,7 +542,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central/greater)
 "aiS" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/light_switch/directional/east,
 /obj/structure/cable,
 /turf/open/floor/carpet/black,
@@ -3518,7 +3518,7 @@
 /turf/open/floor/engine,
 /area/station/science/explab)
 "bjv" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/carpet,
 /area/station/service/lawoffice)
@@ -15899,7 +15899,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/auxlab/firing_range)
 "fFt" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/item/newspaper,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/mapping_helpers/broken_floor,
@@ -22976,7 +22976,7 @@
 	dir = 6
 	},
 /obj/structure/extinguisher_cabinet/directional/south,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
@@ -27835,7 +27835,7 @@
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos)
 "jLp" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/carpet/purple,
 /area/station/service/library)
 "jLr" = (
@@ -35921,7 +35921,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron,
 /area/station/security)
 "mxx" = (
@@ -45871,9 +45871,7 @@
 /turf/open/floor/iron,
 /area/station/security/breakroom)
 "pWC" = (
-/obj/machinery/photocopier{
-	pixel_y = 3
-	},
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
@@ -50049,7 +50047,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -51135,7 +51133,7 @@
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/exit/departure_lounge)
 "rKW" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/bot_red,
 /obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/textured_large,
@@ -54693,7 +54691,7 @@
 	},
 /area/station/command/bridge)
 "sRP" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
