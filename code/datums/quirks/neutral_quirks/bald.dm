@@ -4,7 +4,7 @@
 	icon = FA_ICON_EGG
 	value = 0
 	mob_trait = TRAIT_BALD
-	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_CHANGES_APPEARANCE
+	quirk_flags = QUIRK_CHANGES_APPEARANCE
 	gain_text = span_notice("Your head is as smooth as can be, it's terrible.")
 	lose_text = span_notice("Your head itches, could it be... growing hair?!")
 	medical_record_text = "Patient starkly refused to take off headwear during examination."

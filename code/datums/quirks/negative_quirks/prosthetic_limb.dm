@@ -4,7 +4,7 @@
 	icon = "tg-prosthetic-leg"
 	value = -3
 	hardcore_value = 3
-	quirk_flags = QUIRK_HUMAN_ONLY | QUIRK_CHANGES_APPEARANCE
+	quirk_flags =  QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/weldingtool/mini, /obj/item/stack/cable_coil/five)
 	/// The slot to replace, in string form
 	var/slot_string = "limb"

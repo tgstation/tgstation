@@ -17,7 +17,7 @@
 	name = "Transhumanist"
 	desc = "You see silicon life as the perfect lifeform and despise organic flesh. You are happier around silicons, but get frustrated when around organics. You seek to replace your failing flesh with perfect silicon. You start with a robotic augmentation."
 	icon = FA_ICON_ROBOT
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES|QUIRK_MOODLET_BASED
+	quirk_flags = QUIRK_PROCESSES|QUIRK_MOODLET_BASED
 	value = 0
 	gain_text = span_notice("You have a desire to ditch your feeble organic flesh and surround yourself with robots.")
 	lose_text = span_danger("Robots don't seem all that great anymore.")

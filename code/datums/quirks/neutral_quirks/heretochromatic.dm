@@ -2,7 +2,7 @@
 	name = "Heterochromatic"
 	desc = "One of your eyes is a different color than the other!"
 	icon = FA_ICON_EYE_LOW_VISION // Ignore the icon name, its actually a fairly good representation of different color eyes
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+	quirk_flags = QUIRK_CHANGES_APPEARANCE
 	medical_record_text = "Patient's irises are different colors."
 	value = 0
 	mail_goodies = list(/obj/item/clothing/glasses/eyepatch)

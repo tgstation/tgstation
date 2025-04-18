@@ -8,7 +8,7 @@
 	/// What the quirk is worth in preferences, zero = neutral / free
 	var/value = 0
 	/// Flags related to this quirk.
-	var/quirk_flags = QUIRK_HUMAN_ONLY
+	var/quirk_flags
 	/// Reference to the mob currently tied to this quirk datum. Quirks are not singletons.
 	var/mob/living/carbon/human/quirk_holder
 	/// Text displayed when this quirk is assigned to a mob (and not transferred)
@@ -69,9 +69,6 @@
 /datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source)
 	if(!new_holder)
 		CRASH("Quirk attempted to be added to null mob.")
-
-	if((quirk_flags & QUIRK_HUMAN_ONLY) && !ishuman(new_holder))
-		CRASH("Human only quirk attempted to be added to non-human mob.")
 
 	if(new_holder.has_quirk(type))
 		CRASH("Quirk attempted to be added to mob which already had this quirk.")

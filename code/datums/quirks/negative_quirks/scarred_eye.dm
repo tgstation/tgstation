@@ -7,7 +7,7 @@
 	lose_text = span_notice("Your peripherial vision grows by about thirty percent.")
 	medical_record_text = "Patient has severe scarring on one of their eyes, resulting in partial vision loss."
 	hardcore_value = 2
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_CHANGES_APPEARANCE
+	quirk_flags = QUIRK_CHANGES_APPEARANCE
 	mail_goodies = list(/obj/item/reagent_containers/cup/glass/bottle/rum, /obj/item/clothing/mask/bandana/red)
 
 /datum/quirk_constant_data/eye_scarring
