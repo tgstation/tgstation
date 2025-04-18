@@ -160,37 +160,6 @@
 	update_clothing(slots_to_bloody)
 	return TRUE
 
-
-
-
-
-
-
-
-
-
-
-
-
-	if (QDELETED(src))
-		return
-	if(wear_suit)
-		wear_suit.add_blood_DNA(blood_DNA_to_add)
-		update_worn_oversuit()
-	else if(w_uniform)
-		w_uniform.add_blood_DNA(blood_DNA_to_add)
-		update_worn_undersuit()
-	if(gloves)
-		var/obj/item/clothing/gloves/mob_gloves = gloves
-		mob_gloves.add_blood_DNA(blood_DNA_to_add)
-	else if(length(blood_DNA_to_add))
-		if (isnull(forensics))
-			forensics = new(src)
-		forensics.inherit_new(blood_DNA = blood_DNA_to_add)
-		blood_in_hands = rand(2, 4)
-	update_worn_gloves()
-	return TRUE
-
 /*
  * Transfer all the fingerprints and hidden prints from [src] to [transfer_to].
  */

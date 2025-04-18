@@ -444,24 +444,15 @@ GLOBAL_LIST_EMPTY(bloody_footprints_cache)
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/post_move(datum/move_loop/source)
 	SIGNAL_HANDLER
 
-	for(var/atom/iter_atom in get_turf(src))
+	for(var/atom/movable/iter_atom in loc)
 		if(hit_endpoint)
 			return
+		if(iter_atom == src || iter_atom.invisibility || iter_atom.alpha <= 0 || (isobj(iter_atom) && !iter_atom.density))
+			continue
 		if(splatter_strength <= 0)
 			break
-		if(isitem(iter_atom))
-			iter_atom.add_blood_DNA(blood_dna_info)
-			splatter_strength--
-			continue
-		if(!ishuman(iter_atom))
-			continue
-		var/mob/living/carbon/human/splashed_human = iter_atom
-		if(splashed_human.wear_suit)
-			splashed_human.wear_suit.add_blood_DNA(blood_dna_info)
-			splashed_human.update_worn_oversuit()    //updates mob overlays to show the new blood (no refresh)
-		if(splashed_human.w_uniform)
-			splashed_human.w_uniform.add_blood_DNA(blood_dna_info)
-			splashed_human.update_worn_undersuit()    //updates mob overlays to show the new blood (no refresh)
+
+		iter_atom.add_blood_DNA(blood_dna_info)
 		splatter_strength--
 
 	if(splatter_strength <= 0) // we used all the puff so we delete it.
