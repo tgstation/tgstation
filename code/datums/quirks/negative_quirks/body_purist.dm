@@ -37,6 +37,7 @@
 	cybernetics_level = new_cybernetics_level
 	if(!cybernetics_level)
 		holder_mood.clear_mood_event("body_purist")
+		our_mood_event = null
 		return
 	if(isnull(our_mood_event))
 		holder_mood.add_mood_event("body_purist", /datum/mood_event/body_purist, -cybernetics_level * 10)
