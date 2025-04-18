@@ -1,0 +1,4 @@
+author: "Maximal08"
+delete-after: True
+changes:
+  - bugfix: "fixed manipulator throw mode UI"
