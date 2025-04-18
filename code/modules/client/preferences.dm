@@ -134,7 +134,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	// There used to be code here that readded the preview view if you "rejoined"
 	// I'm making the assumption that ui close will be called whenever a user logs out, or loses a window
 	// If this isn't the case, kill me and restore the code, thanks
-	if(!SSpersistence.initialized)
+	if(!SSearly_assets.initialized)
 		return
 
 	ui = SStgui.try_update_ui(user, src, ui)
