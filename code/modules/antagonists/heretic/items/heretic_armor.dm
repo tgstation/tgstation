@@ -54,6 +54,8 @@
 	icon_state = "ash_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/ash
 	flags_inv = HIDEBELT
+	heat_protection = CHEST|GROIN|NECK|LEGS|FEET|ARMS|HANDS
+	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/ash
 	icon_state = "ash_armor"

@@ -160,6 +160,16 @@
 	var/damage_timer
 	/// Reference to our summoner so that we don't disintegrate them by accident
 	var/datum/weakref/our_master
+	/// The overlay on the caster when they fire the beam
+	var/obj/effect/abstract/gazer_orb/orb_visual
+	/// The visual effect at the beginning of the laser
+	var/obj/effect/abstract/gazer_beam/beam_visual
+	/// List of visual effects for the beam, in between and in the end
+	var/list/beam_fillings
+	/// The visual effect at the end of the laser
+	var/obj/effect/abstract/gazer_beamend/end_visual
+	/// Tracks how many times the beam has processed, after the maximum amount of cycles it will forcibly end the beam
+	var/cycle_tracker = 0
 
 /datum/action/cooldown/stargazer_laser/Activate(atom/target)
 	. = ..()
@@ -181,18 +191,87 @@
 	if(!LAZYLEN(targets))
 		return
 
-	giga_laser = owner.Beam(targets[length(targets)], icon_state = "darkbeam", icon = 'icons/effects/beam.dmi', beam_type = /obj/effect/ebeam/phase_in, override_origin_pixel_x = 1)
-	if(!do_after(owner, 2 SECONDS, owner))
-		QDEL_NULL(giga_laser)
+	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE), PROC_REF(stop_beaming))
+	beam_fillings = list()
+	cycle_tracker = 0
+	orb_visual = new(get_step(owner, owner.dir))
+	var/beam_timer = addtimer(CALLBACK(src, PROC_REF(open_laser), owner, targets), 2.2 SECONDS, TIMER_STOPPABLE)
+	if(!do_after(owner, 3 SECONDS, owner))
+		deltimer(beam_timer)
+		QDEL_NULL(orb_visual)
+		QDEL_NULL(beam_visual)
+		QDEL_NULL(end_visual)
+		for(var/atom/to_delete as anything in beam_fillings)
+			QDEL_NULL(to_delete)
 		targets = null
 		return
 
-	QDEL_NULL(giga_laser)
-	giga_laser = owner.Beam(targets[length(targets)], icon_state = "darkbeam", icon = 'icons/effects/beam.dmi', beam_type = /obj/effect/ebeam/phased_in, override_origin_pixel_x = 1)
+	QDEL_NULL(orb_visual)
+	var/turf/starting_turf = get_step(get_step(owner, owner.dir), owner.dir)
+	beam_visual.icon_state = "gazer_beam_active"
+	beam_visual.update_appearance(UPDATE_ICON)
+	end_visual.icon_state = "gazer_beam_end"
+	end_visual.update_appearance(UPDATE_ICON)
 	targets += targets_left
 	targets += targets_right
-	RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE), PROC_REF(stop_beaming))
 	process_beam()
+
+/// Spawns the beginning of the laser, uses `targets` to determine the rotation
+/datum/action/cooldown/stargazer_laser/proc/open_laser(mob/owner, list/turf/targets)
+	beam_visual = new(get_step(get_step(owner, owner.dir), owner.dir), targets[length(targets)])
+	end_visual = new(targets[length(targets)], owner)
+	for(var/turf/to_fill as anything in (get_line(targets[4], targets[length(targets)-2])))
+		var/obj/effect/abstract/gazer_beam_filling/new_filling = new(to_fill, owner.dir)
+		beam_fillings += new_filling
+
+// Visual effect of the big orb when you start channeling the laser
+/obj/effect/abstract/gazer_orb
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "gazer_beam_charge"
+	SET_BASE_VISUAL_PIXEL(-64, -64)
+
+// Visual effect at the start of the beam, has an opening/active/closing state
+/obj/effect/abstract/gazer_beam
+	icon = 'icons/effects/beam96x96.dmi'
+	SET_BASE_VISUAL_PIXEL(-32, -32)
+
+/obj/effect/abstract/gazer_beam/Initialize(mapload, turf/target)
+	. = ..()
+	var/Angle = get_angle_raw(x, y, pixel_x, pixel_y, target.x , target.y, target.pixel_x, target.pixel_y)
+	var/matrix/transform_matrix = matrix()
+	Angle = round(Angle, 45)
+	transform_matrix.Turn(Angle-90)
+	transform_matrix.Scale(2, 2)
+	transform = transform_matrix
+	flick("gazer_beam_start", src)
+
+// Visual effect of the middle of the beam, has an opening/active/closing state
+/obj/effect/abstract/gazer_beam_filling
+	icon = 'icons/effects/beam.dmi'
+	icon_state = "gazer_beam"
+
+/obj/effect/abstract/gazer_beam_filling/Initialize(mapload, direction)
+	. = ..()
+	var/Angle = dir2angle(direction)
+	var/matrix/transform_matrix = matrix()
+	transform_matrix.Turn(Angle)
+	transform_matrix.Scale(2, 2)
+	transform = transform_matrix
+	flick("gazer_beam_end_opening", src)
+
+// Visual effect at the end of the beam, has an opening/active/closing state
+/obj/effect/abstract/gazer_beamend
+	icon = 'icons/effects/beam.dmi'
+
+/obj/effect/abstract/gazer_beamend/Initialize(mapload, atom/origin)
+	. = ..()
+	var/Angle = get_angle_raw(origin.x , origin.y, origin.pixel_x, origin.pixel_y, x, y, pixel_x, pixel_y)
+	var/matrix/transform_matrix = matrix()
+	Angle = round(Angle, 45)
+	transform_matrix.Turn(Angle)
+	transform_matrix.Scale(2, 2)
+	transform = transform_matrix
+	flick("gazer_beam_end_opening", src)
 
 /obj/effect/ebeam/phase_in // Beam subtype that has a "windup" phase
 	alpha = 0
@@ -203,7 +282,7 @@
 
 /obj/effect/ebeam/phased_in/Initialize(mapload, beam_owner)  // phased in, fully powered laser
 	. = ..()
-	transform = matrix(3, 1, MATRIX_SCALE)
+	transform = matrix(2, 2, MATRIX_SCALE)
 
 /// Recursive proc which affects whatever is caught within the beam
 /datum/action/cooldown/stargazer_laser/proc/process_beam()
@@ -238,6 +317,10 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE))
 	QDEL_NULL(giga_laser)
+	QDEL_NULL(beam_visual)
+	QDEL_NULL(end_visual)
+	for(var/atom/to_delete as anything in beam_fillings)
+		QDEL_NULL(to_delete)
 	deltimer(damage_timer)
 	damage_timer = null
 	targets = null
