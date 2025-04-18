@@ -87,6 +87,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/starting_paper = 0
 	/// A stack for all the empty paper we have newly inserted (LIFO)
 	var/list/paper_stack = list()
+	/// Type path to the paper that's created when we're initalized
+	var/created_paper = /obj/item/paper
 
 /obj/machinery/photocopier/prebuilt
 	starting_paper = 30
@@ -97,6 +99,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
+	// Creates the paper and inserts it so we can drop it when we get destroyed/deconstructed
+	for(var/i in 1 to starting_paper)
+		new created_paper(src)
 	setup_components()
 	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
 
@@ -537,6 +542,11 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/photocopier/attackby(obj/item/object, mob/user, params)
 	if(istype(object, /obj/item/paper) || istype(object, /obj/item/photo) || istype(object, /obj/item/documents))
 		if(istype(object, /obj/item/paper))
@@ -566,6 +576,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /// Proc that handles insertion of empty paper, useful for copying later.
 /obj/machinery/photocopier/proc/insert_empty_paper(obj/item/paper/paper, mob/user)
 	if(istype(paper, /obj/item/paper/paperslip))
+		balloon_alert(user, "too small!")
 		return
 	if(get_paper_count() >= MAX_PAPER_CAPACITY)
 		balloon_alert(user, "cannot hold more paper!")
