@@ -1,7 +1,7 @@
 /obj/projectile/energy/snare
 	name = "energy snare"
 	icon_state = "e_netting"
-	damage = 25
+	damage = 30
 	damage_type = STAMINA
 	hitsound = 'sound/items/weapons/taserhit.ogg'
 	range = 10
