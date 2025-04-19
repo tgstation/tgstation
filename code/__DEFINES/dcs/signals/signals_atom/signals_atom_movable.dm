@@ -138,4 +138,3 @@
 #define COMSIG_MOVABLE_BUMP_PUSHED "movable_bump_pushed"
 	/// Stop it from moving
 	#define COMPONENT_NO_PUSH (1<<0)
-
