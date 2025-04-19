@@ -2297,22 +2297,42 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	invisibility = INVISIBILITY_MAXIMUM
 	///the direction we are operating in
 	var/look_direction
-	///owner we are showing this view to
+	///actual atom on the turf, usually the owner
+	var/atom/movable/container
+	///the actual owner who is "looking"
 	var/mob/living/owner
 
 /atom/movable/looking_holder/Initialize(mapload, mob/living/owner, direction)
 	. = ..()
 	look_direction = direction
 	src.owner = owner
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(mirror_move))
+	update_container()
 
 /atom/movable/looking_holder/Destroy()
 	owner = null
 	return ..()
 
+/atom/movable/looking_holder/proc/update_container()
+	SIGNAL_HANDLER
+	var/new_container = get_atom_on_turf(owner)
+	if(new_container == container)
+		return
+	if(container != owner)
+		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	if(container)
+		UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
+
+	container = new_container
+
+	RegisterSignal(new_container, COMSIG_MOVABLE_MOVED, PROC_REF(mirror_move))
+	if(new_container != owner)
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_container))
+
 /atom/movable/looking_holder/proc/mirror_move(mob/living/source, atom/oldloc, direction, Forced, old_locs)
 	SIGNAL_HANDLER
-	set_glide_size(source.glide_size)
+	if(!isturf(owner.loc))
+		update_container()
+	set_glide_size(container.glide_size)
 	var/turf/looking_turf = owner.get_looking_turf(look_direction)
 	if(!looking_turf)
 		owner.end_look()
