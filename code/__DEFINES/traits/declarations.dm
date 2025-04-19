@@ -920,6 +920,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This mob always lands on their feet when they fall, for better or for worse.
 #define TRAIT_CATLIKE_GRACE "catlike_grace"
 
+///Won't show up on cameras when they snap a photo.
+#define TRAIT_INVISIBLE_TO_CAMERA "invisible_to_camera"
+
 ///if the atom has a sticker attached to it
 #define TRAIT_STICKERED "stickered"
 

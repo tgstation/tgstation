@@ -22,7 +22,7 @@
 	if(!iscarbon(target))
 		return FALSE
 	var/mob/living/carbon/carbon_target = target
-	if(!carbon_target.get_bodypart(user.zone_selected)) //can only start if limb is missing
+	if(!carbon_target.get_bodypart(user.zone_selected) && carbon_target.should_have_limb(user.zone_selected)) //can only start if limb is missing
 		return TRUE
 	return FALSE
 

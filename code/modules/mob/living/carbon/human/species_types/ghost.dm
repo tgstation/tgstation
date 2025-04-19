@@ -119,9 +119,14 @@
 	swap_mode()
 
 /datum/action/innate/toggle_passthrough/IsAvailable(feedback)
-	if(LAZYLEN(owner.reagents))
-		if(locate(/datum/reagent/water/holywater) in owner.reagents)
-			return FALSE
+	if(!isliving(owner))
+		return FALSE
+	var/mob/living/living_owner = owner
+	if(living_owner.has_reagent(/datum/reagent/water/holywater))
+		return FALSE
+	var/obj/item/bodypart/chest/their_chest = living_owner.get_bodypart(BODY_ZONE_CHEST)
+	if(!their_chest || !(their_chest.bodytype & BODYTYPE_GHOST))
+		return FALSE
 	return ..()
 
 ///Called when the owner of this action gets a new limb, if it isn't a ghost-limb
@@ -136,7 +141,7 @@
 ///Swaps the mode, allowing us to phase through stuff but drops everything. Optional 'force_off' arg to prevent being able to turn it on.
 /datum/action/innate/toggle_passthrough/proc/swap_mode(force_off)
 	//we can only turn off, early return if we're trying to turn it on instead.
-	if(force_off && HAS_TRAIT(owner, TRAIT_NO_FLOATING_ANIM))
+	if(force_off && HAS_TRAIT_FROM(owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT))
 		return
 
 	var/mob/living/carbon/carbon_owner = owner
@@ -150,11 +155,12 @@
 		if(!(organ.organ_flags & ORGAN_GHOST))
 			organ.Remove(owner, special = FALSE)
 
-	if(HAS_TRAIT(carbon_owner, TRAIT_NO_FLOATING_ANIM))
+	if(HAS_TRAIT_FROM(carbon_owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT))
 		REMOVE_TRAIT(carbon_owner, TRAIT_NO_FLOATING_ANIM, SPECIES_TRAIT)
 		carbon_owner.add_traits(list(
 			TRAIT_MOVE_PHASING,
 			TRAIT_PIERCEIMMUNE,
+			TRAIT_INVISIBLE_TO_CAMERA,
 			TRAIT_HANDS_BLOCKED, //MOBILITY_USE | MOBILITY_PICKUP | MOBILITY_STORAGE
 			TRAIT_PULL_BLOCKED, //MOBILITY_PULL
 			TRAIT_UI_BLOCKED, //MOBILITY_UI
@@ -166,11 +172,11 @@
 		carbon_owner.remove_traits(list(
 			TRAIT_MOVE_PHASING,
 			TRAIT_PIERCEIMMUNE,
+			TRAIT_INVISIBLE_TO_CAMERA,
 			TRAIT_HANDS_BLOCKED,
 			TRAIT_PULL_BLOCKED,
 			TRAIT_UI_BLOCKED,
 			), SPECIES_TRAIT)
-		carbon_owner.mobility_flags = initial(carbon_owner.mobility_flags)
 		carbon_species.update_no_equip_flags(carbon_owner, initial(carbon_species.no_equip_flags))
 		UnregisterSignal(carbon_owner, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
 
