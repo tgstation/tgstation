@@ -49,6 +49,7 @@
 	// A pair of abstract eyelid objects (yes, really) used to animate blinking
 	var/obj/effect/abstract/eyelid_effect/eyelid_left
 	var/obj/effect/abstract/eyelid_effect/eyelid_right
+	var/list/eyelids
 
 	/// Glasses cannot be worn over these eyes. Currently unused
 	var/no_glasses = FALSE
@@ -278,7 +279,10 @@
 	if(my_head.head_flags & HEAD_EYECOLOR)
 		eye_right.color = parent.get_right_eye_color()
 		eye_left.color = parent.get_left_eye_color()
-		var/list/eyelids = setup_eyelids(eye_left, eye_right, parent)
+		if(!eyelids)
+			eyelids = setup_eyelids(eye_left, eye_right, parent, TRUE)
+		else
+			setup_eyelids(eye_left, eye_right, parent, FALSE)
 		if (LAZYLEN(eyelids))
 			overlays += eyelids
 
@@ -291,10 +295,6 @@
 		var/mutable_appearance/left_scar = mutable_appearance('icons/mob/human/human_face.dmi', "eye_scar_left", -BODY_LAYER, parent)
 		left_scar.color = my_head.draw_color
 		overlays += left_scar
-
-	if(my_head.eye_offset)
-		my_head.eye_offset.apply_offset(eye_left)
-		my_head.eye_offset.apply_offset(eye_right)
 
 	return overlays
 
@@ -417,7 +417,7 @@
 #define ASYNC_BLINKING_BRAIN_DAMAGE 60
 
 /// Modifies eye overlays to also act as eyelids, both for blinking and for when you're knocked out cold
-/obj/item/organ/eyes/proc/setup_eyelids(mutable_appearance/eye_left, mutable_appearance/eye_right, mob/living/carbon/human/parent)
+/obj/item/organ/eyes/proc/setup_eyelids(mutable_appearance/eye_left, mutable_appearance/eye_right, mob/living/carbon/human/parent, regen_eyes = TRUE)
 	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
 	// Robotic eyes or colorless heads don't get the privelege of having eyelids
 	if (IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || HAS_TRAIT(parent, TRAIT_NO_EYELIDS))
@@ -438,16 +438,19 @@
 
 	eyelid_left.color = eyelid_color
 	eyelid_right.color = eyelid_color
-	eyelid_left.render_target = "*[REF(parent)]_eyelid_left"
-	eyelid_right.render_target = "*[REF(parent)]_eyelid_right"
-	parent.vis_contents += eyelid_left
-	parent.vis_contents += eyelid_right
-	animate_eyelids(parent)
-	var/mutable_appearance/left_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
-	var/mutable_appearance/right_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
-	left_eyelid_overlay.render_source = "*[REF(parent)]_eyelid_left"
-	right_eyelid_overlay.render_source = "*[REF(parent)]_eyelid_right"
-	return list(left_eyelid_overlay, right_eyelid_overlay)
+	if(regen_eyes)
+		eyelid_left.render_target = "*[REF(parent)]_eyelid_left"
+		eyelid_right.render_target = "*[REF(parent)]_eyelid_right"
+		parent.vis_contents += eyelid_left
+		parent.vis_contents += eyelid_right
+		animate_eyelids(parent)
+		var/mutable_appearance/left_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
+		var/mutable_appearance/right_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
+		left_eyelid_overlay.render_source = "*[REF(parent)]_eyelid_left"
+		right_eyelid_overlay.render_source = "*[REF(parent)]_eyelid_right"
+		return list(left_eyelid_overlay, right_eyelid_overlay)
+	else
+		return
 
 /// Animates one eyelid at a time, thanks BYOND and thanks animation chains
 /obj/item/organ/eyes/proc/animate_eyelid(obj/effect/abstract/eyelid_effect/eyelid, mob/living/carbon/human/parent, sync_blinking = TRUE, list/anim_times = null)
