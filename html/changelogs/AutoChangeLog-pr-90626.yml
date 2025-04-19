@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Mecha cargo holds no longer shove themselves inside themselves when being deleted"

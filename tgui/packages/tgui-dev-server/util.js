@@ -4,30 +4,25 @@
  * @license MIT
  */
 
-import fs from 'fs';
-import path from 'path';
-
-import { require } from './require.js';
-
-const globPkg = require('glob');
+import fs, { globSync } from 'node:fs';
+import path from 'node:path';
 
 export const resolvePath = path.resolve;
 
-/**
- * Combines path.resolve with glob patterns.
- */
-export const resolveGlob = (...sections) => {
-  const unsafePaths = globPkg.sync(path.resolve(...sections), {
-    strict: false,
-    silent: true,
-    windowsPathsNoEscape: true,
-  });
+/** Combines path.resolve with glob patterns. */
+export function resolveGlob(...sections) {
+  /** @type {string[]} */
+  const unsafePaths = globSync(path.resolve(...sections));
+
+  /** @type {string[]} */
   const safePaths = [];
+
   for (let path of unsafePaths) {
     try {
       fs.statSync(path);
       safePaths.push(path);
     } catch {}
   }
+
   return safePaths;
-};
+}

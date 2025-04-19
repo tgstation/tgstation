@@ -483,7 +483,7 @@
 /*Suffix: Combo of healing, prob gonna get wack REAL fast*/
 /datum/reagent/medicine/c2/synthflesh
 	name = "Synthflesh"
-	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). 100u or more can restore corpses husked by burns. Touch application only."
+	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). Patch, splash, and spray application only. 60u of pure synthflesh or 100u at lower purities can restore corpses husked by burns."
 	color = "#FFEBEB"
 	ph = 7.2
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -522,7 +522,11 @@
 		return
 
 	//don't try to unhusk mobs above burn damage threshold
-	if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
+	if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD * 2.5)
+		carbies.visible_message(span_minoralert("The liquid fails to properly stick on [carbies]. [carbies]'s burns need to be repaired first!"))
+		return
+	else if (carbies.getFireLoss() > UNHUSK_DAMAGE_THRESHOLD)
+		carbies.visible_message(span_boldnotice("A rubbery liquid partially coats [carbies]'s burns... It seems more is required to fully unhusk!"))
 		return
 
 	var/datum/reagent/synthflesh = carbies.reagents.has_reagent(/datum/reagent/medicine/c2/synthflesh)
@@ -536,7 +540,11 @@
 	//when purity = 100%, 60u to unhusk, when purity = 60%, 100u to unhusk.
 	if(current_volume >= SYNTHFLESH_UNHUSK_MAX || current_volume * current_purity >= SYNTHFLESH_UNHUSK_AMOUNT)
 		carbies.cure_husk(BURN)
-		carbies.visible_message(span_nicegreen("A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!")) //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
+		carbies.reagents.remove_reagent(/datum/reagent/medicine/c2/synthflesh, current_volume) // consume the synthflesh, it won't do anything in their blood
+		//we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
+		carbies.visible_message(span_nicegreen("A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!"))
+	else
+		carbies.visible_message(span_boldnotice("A rubbery liquid partially coats [carbies]'s burns... It seems more is required to fully unhusk!"))
 
 /******ORGAN HEALING******/
 /*Suffix: -rite*/
