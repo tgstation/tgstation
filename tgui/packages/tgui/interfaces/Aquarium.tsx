@@ -289,8 +289,8 @@ const Settings = (props) => {
   return (
     <Flex fill>
       <Flex.Item grow>
-        {lockedFluidTemp && <LockedSection />}
         <Section fill title="Temperature">
+          {!!lockedFluidTemp && <LockedSection />}
           <Knob
             mt={3}
             size={1.5}
@@ -310,8 +310,8 @@ const Settings = (props) => {
         </Section>
       </Flex.Item>
       <Flex.Item ml={1} grow>
-        {lockedFluidTemp && <LockedSection />}
         <Section fill title="Fluid">
+          {!!lockedFluidTemp && <LockedSection />}
           <Flex direction="column" mb={1}>
             {fluidTypes.map((f) => (
               <Flex.Item className="candystripe" key={f}>
@@ -319,11 +319,10 @@ const Settings = (props) => {
                   textAlign="center"
                   fluid
                   color="transparent"
+                  content={f}
                   selected={fluidType === f}
                   onClick={() => act('fluid', { fluid: f })}
-                >
-                  {f}
-                </Button>
+                />
               </Flex.Item>
             ))}
           </Flex>
@@ -334,12 +333,10 @@ const Settings = (props) => {
           <Box mt={2}>
             <LabeledList>
               <LabeledList.Item label="Aquarium Modes">
-                <Stack vertical>
+                <Flex direction="column" mb={2}>
                   {aquariumModes.map((mode) => (
-                    <Stack.Item key={mode.name}>
+                    <Flex.Item className="candystripe" key={mode.name}>
                       <Button
-                        textAlign="center"
-                        width="75px"
                         tooltip={mode.tooltip}
                         content={mode.name}
                         selected={currentMode === mode.name}
@@ -347,9 +344,9 @@ const Settings = (props) => {
                           act('change_mode', { new_mode: mode.name })
                         }
                       />
-                    </Stack.Item>
+                    </Flex.Item>
                   ))}
-                </Stack>
+                </Flex>
               </LabeledList.Item>
               <LabeledList.Item label="Feeding Interval">
                 <NumberInput
@@ -382,7 +379,7 @@ const LockedSection = () => {
     <Dimmer>
       <Stack align="baseline" vertical>
         <Stack ml={-2}>
-          <Icon color="red" name="lock" size={10} />
+          <Icon color="red" name="lock" size={3} />
         </Stack>
         <Stack.Item fontSize="20px">LOCKED</Stack.Item>
       </Stack>

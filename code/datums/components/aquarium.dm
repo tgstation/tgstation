@@ -533,7 +533,7 @@
 			if(our_min_temp > enem_max_temp || our_max_temp < enem_min_temp)
 				continue
 			var/enem_fluid_type = initial(enemy_type.required_fluid_type)
-			if(!length(GLOB.fish_compatible_fluid_types[our_fluid_type]|GLOB.fish_compatible_fluid_types[enem_fluid_type]))
+			if(!length(GLOB.fish_compatible_fluid_types[our_fluid_type] & GLOB.fish_compatible_fluid_types[enem_fluid_type]))
 				continue
 			can_survive_with[fish_type] |= enemy_type
 			LAZYOR(can_survive_with[enemy_type], fish_type)
@@ -548,18 +548,12 @@
 				fish_amount++
 		for(var/ally_type in compatible_types)
 			var/val = fish_amount + fish_alive_by_type[ally_type]
-			var/list/ally_comp_types = can_survive_with[ally_type]
-			ally_comp_types = ally_comp_types.Copy()
-			var/common_allies = compatible_types & ally_comp_types
-			var/excluded = list()
+			var/list/common_allies = compatible_types & can_survive_with[ally_type]
 			for(var/third_type in common_allies)
-				if(third_type in excluded)
-					continue
 				val += fish_alive_by_type[third_type]
-				excluded |= common_allies - can_survive_with[third_type]
 			if(val <= highest_val)
 				continue
-			highest_val_list = list(fish_type, ally_type) + common_allies - excluded
+			highest_val_list = list(fish_type, ally_type) + common_allies
 			highest_val = val
 
 	var/min_temp = MIN_AQUARIUM_TEMP
