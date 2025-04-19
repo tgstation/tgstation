@@ -98,7 +98,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	refreshBay()
 	ui_interact(holder.mob)
 
-/datum/centcom_podlauncher/proc/initMap()
+/datum/centcom_podlauncher/proc/initMap(datum/tgui/ui)
 	if(cam_screen)
 		QDEL_NULL(cam_screen)
 
@@ -109,7 +109,10 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 	cam_screen.clear_with_screen = FALSE
 	cam_screen.cam_background.clear_with_screen = FALSE
 	// display_to doesn't send the planes to the client, so we have to do it via display_to_client
-	cam_screen.display_to_client(holder)
+
+	if (!ui)
+		ui = ui_interact(holder.mob)
+	cam_screen.display_to(holder.mob, ui.window)
 
 	refreshView()
 
@@ -129,8 +132,8 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 		// Open UI
 		ui = new(user, src, "CentcomPodLauncher")
 		ui.open()
-		cam_screen.display_to(holder, ui.window)
 		refreshView()
+	return ui
 
 /datum/centcom_podlauncher/ui_static_data(mob/user)
 	var/list/data = list()
@@ -516,7 +519,7 @@ ADMIN_VERB(centcom_podlauncher, R_ADMIN, "Config/Launch Supplypod", "Configure a
 			refreshView()
 			. = TRUE
 		if("refreshView")
-			initMap()
+			initMap(ui)
 			. = TRUE
 		if("setStyle")
 			var/chosenStyle = params["style"]
