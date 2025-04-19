@@ -148,31 +148,22 @@
 
 /obj/machinery/big_manipulator/Destroy(force)
 	. = ..()
+	manipulator_arm.vis_contents.Cut()
 	qdel(manipulator_arm)
 	if(!isnull(containment_obj))
 		var/obj/containment_resolve = containment_obj?.resolve()
 		containment_resolve?.forceMove(get_turf(containment_resolve))
+		containment_obj = null
 	if(!isnull(filter_obj))
 		var/obj/filter_resolve = filter_obj?.resolve()
 		filter_resolve?.forceMove(get_turf(filter_resolve))
-	var/mob/monkey_resolve = monkey_worker?.resolve()
+		filter_obj = null
+	var/mob/living/carbon/human/monkey_resolve = monkey_worker?.resolve()
 	if(!isnull(monkey_resolve))
 		monkey_resolve.forceMove(get_turf(monkey_resolve))
+		monkey_resolve.remove_offsets(src)
+		monkey_resolve = null
 	locked_by_this_id = null
-
-/obj/machinery/big_manipulator/Exited(atom/movable/gone, direction)
-	if(isnull(monkey_worker))
-		return
-	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
-	if(gone != poor_monkey)
-		return
-	if(!is_type_in_list(poor_monkey, manipulator_arm.vis_contents))
-		return
-	manipulator_arm.vis_contents -= poor_monkey
-	if(interaction_mode == INTERACT_USE)
-		change_mode()
-	poor_monkey.remove_offsets(type)
-	monkey_worker = null
 
 /obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -264,6 +255,7 @@
 	poor_monkey.forceMove(get_turf(src))
 	REMOVE_TRAIT(poor_monkey, TRAIT_AI_PAUSED, "[src]")
 	monkey_worker = null
+	poor_monkey.remove_offsets(src)
 	status = STATUS_IDLE
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
