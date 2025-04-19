@@ -6,7 +6,7 @@ GLOBAL_DATUM_INIT(animate_panel, /datum/animate_panel, new)
 	var/static/list/datum/animate_easing_flag/easing_flags
 	var/static/list/datum/animate_argument/arguments
 
-	var/list/cached_targets
+	var/list/target_string_by_user
 	var/list/datum/animate_chain/animate_chains_by_user
 
 /datum/animate_panel/New()
@@ -26,7 +26,7 @@ GLOBAL_DATUM_INIT(animate_panel, /datum/animate_panel, new)
 		for(var/datum/animate_argument/argument as anything in subtypesof(/datum/animate_argument))
 			arguments[argument::name] = new argument
 
-	cached_targets = list()
+	target_string_by_user = list()
 	animate_chains_by_user = list()
 
 /datum/animate_panel/proc/get_chain_by_index(mob/user, index)

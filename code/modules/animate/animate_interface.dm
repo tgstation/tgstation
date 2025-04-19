@@ -52,14 +52,8 @@ ADMIN_VERB(animation_panel, R_DEBUG|R_ADMIN|R_VAREDIT, "Animation Debug Panel", 
 
 /datum/animate_panel/ui_data(mob/user)
 	. = list()
-	.["target"] = cached_targets[ref(user)]
-
-	.["chain"] = list()
-	var/datum/animate_chain/chain = animate_chains_by_user[ref(user)]
-	while(!isnull(chain))
-		.["chain"] += list(chain.serialize_list(list(), list()))
-		chain = chain.next
-
+	.["target"] = target_string_by_user[ref(user)]
+	.["chain"] = animate_chains_by_user[ref(user)].serialize_json(list())
 	return .
 
 /datum/animate_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -114,7 +108,7 @@ ADMIN_VERB(animation_panel, R_DEBUG|R_ADMIN|R_VAREDIT, "Animation Debug Panel", 
 			return TRUE
 
 		if("apply")
-			var/target_text = cached_targets[ref(user)]
+			var/target_text = target_string_by_user[ref(user)]
 			var/target = (findtext(target_text, "ckey_") == 1) ? GLOB.directory[copytext(target_text, 6)] : locate(target_text)
 			if(!target)
 				return
@@ -123,7 +117,7 @@ ADMIN_VERB(animation_panel, R_DEBUG|R_ADMIN|R_VAREDIT, "Animation Debug Panel", 
 			return TRUE
 
 		if("revert")
-			var/target = locate(cached_targets[ref(user)])
+			var/target = locate(target_string_by_user[ref(user)])
 			if(!target)
 				return
 			animate(target, flags = ANIMATION_END_NOW)
