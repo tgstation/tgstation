@@ -190,6 +190,7 @@
 		all_limb_flags |= limb.bodytype
 
 	bodytype = all_limb_flags
+	SEND_SIGNAL(src, COMSIG_CARBON_BODYTYPE_SYNCHRONIZED)
 
 /// Makes sure that the owner's bodyshape flags match the flags of all of its parts and organs
 /mob/living/carbon/proc/synchronize_bodyshapes()

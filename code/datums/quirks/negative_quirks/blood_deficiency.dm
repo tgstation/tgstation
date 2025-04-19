@@ -15,8 +15,8 @@
 	RegisterSignal(quirk_holder, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(lose_blood))
 	RegisterSignal(quirk_holder, COMSIG_SPECIES_GAIN, PROC_REF(update_mail))
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	update_mail(new_species = human_holder.dna.species)
+
+	update_mail(new_species = quirk_holder.dna.species)
 
 /datum/quirk/blooddeficiency/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_SPECIES_GAIN))
@@ -32,14 +32,14 @@
 /datum/quirk/blooddeficiency/proc/lose_blood(datum/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	if(human_holder.stat == DEAD || human_holder.blood_volume <= min_blood)
+
+	if(quirk_holder.stat == DEAD || quirk_holder.blood_volume <= min_blood)
 		return
 	// This exotic blood check is solely to snowflake slimepeople into working with this quirk
-	if(HAS_TRAIT(quirk_holder, TRAIT_NOBLOOD) && isnull(human_holder.dna.species.exotic_blood))
+	if(HAS_TRAIT(quirk_holder, TRAIT_NOBLOOD) && isnull(quirk_holder.dna.species.exotic_blood))
 		return
 
-	human_holder.blood_volume = max(min_blood, human_holder.blood_volume - human_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick)
+	quirk_holder.blood_volume = max(min_blood, quirk_holder.blood_volume - quirk_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick)
 
 /datum/quirk/blooddeficiency/proc/update_mail(datum/source, datum/species/new_species, datum/species/old_species, pref_load, regenerate_icons)
 	SIGNAL_HANDLER

@@ -7,7 +7,7 @@
 	lose_text = span_notice("You feel your immune system phase back into perfect shape.")
 	medical_record_text = "Patient's immune system responds violently to certain chemicals."
 	hardcore_value = 3
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
+	quirk_flags = QUIRK_PROCESSES
 	mail_goodies = list(/obj/item/reagent_containers/hypospray/medipen) // epinephrine medipen stops allergic reactions
 	no_process_traits = list(TRAIT_STASIS)
 	var/list/allergies = list()
@@ -36,8 +36,8 @@
 	name = "Extreme [allergy_string] Allergies"
 	medical_record_text = "Patient's immune system responds violently to [allergy_string]"
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/clothing/accessory/dogtag/allergy/dogtag = new(get_turf(human_holder), allergy_string)
+
+	var/obj/item/clothing/accessory/dogtag/allergy/dogtag = new(get_turf(quirk_holder), allergy_string)
 
 	give_item_to_holder(dogtag, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS), flavour_text = "Make sure medical staff can see this...")
 

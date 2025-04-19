@@ -17,7 +17,7 @@
 	name = "Transhumanist"
 	desc = "You see silicon life as the perfect lifeform and despise organic flesh. You are happier around silicons, but get frustrated when around organics. You seek to replace your failing flesh with perfect silicon. You start with a robotic augmentation."
 	icon = FA_ICON_ROBOT
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES|QUIRK_MOODLET_BASED
+	quirk_flags = QUIRK_PROCESSES|QUIRK_MOODLET_BASED
 	value = 0
 	gain_text = span_notice("You have a desire to ditch your feeble organic flesh and surround yourself with robots.")
 	lose_text = span_danger("Robots don't seem all that great anymore.")
@@ -33,19 +33,11 @@
 
 
 /datum/quirk/transhumanist/add(client/client_source)
-	RegisterSignal(quirk_holder, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(calculate_bodypart_score))
-	RegisterSignal(quirk_holder, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(calculate_bodypart_score))
-	RegisterSignal(quirk_holder, COMSIG_CARBON_GAIN_ORGAN, PROC_REF(calculate_bodypart_score))
-	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(calculate_bodypart_score))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_BODYTYPE_SYNCHRONIZED, PROC_REF(calculate_bodypart_score))
 	calculate_bodypart_score()
 
 /datum/quirk/transhumanist/remove()
-	UnregisterSignal(quirk_holder, list(
-		COMSIG_CARBON_POST_ATTACH_LIMB,
-		COMSIG_CARBON_POST_REMOVE_LIMB,
-		COMSIG_CARBON_GAIN_ORGAN,
-		COMSIG_CARBON_LOSE_ORGAN,
-	))
+	UnregisterSignal(quirk_holder, COMSIG_CARBON_BODYTYPE_SYNCHRONIZED)
 
 /datum/quirk/transhumanist/proc/get_bodypart_score(mob/living/carbon/target, limbs_only = FALSE)
 	var/organic_bodytypes = 0
@@ -118,16 +110,16 @@
 			if(initial(shit_limb.body_zone) == initial(part_part.body_zone))
 				return
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
+
 	var/obj/item/new_part = new part_type()
 	if(isbodypart(new_part))
 		var/obj/item/bodypart/new_bodypart = new_part
 		slot_string = new_bodypart.plaintext_zone
-		old_part = human_holder.return_and_replace_bodypart(new_bodypart, special = TRUE)
+		old_part = quirk_holder.return_and_replace_bodypart(new_bodypart, special = TRUE)
 	else if(isorgan(new_part))
 		var/obj/item/organ/new_organ = new_part
-		old_part = human_holder.get_organ_slot(new_organ.slot)
-		new_organ.Insert(human_holder, special = TRUE)
+		old_part = quirk_holder.get_organ_slot(new_organ.slot)
+		new_organ.Insert(quirk_holder, special = TRUE)
 		old_part.moveToNullspace()
 		STOP_PROCESSING(SSobj, old_part)
 		slot_string = new_organ.name
@@ -148,14 +140,14 @@
 		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
 		return
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
+
 	if(isbodypart(old_part))
 		var/obj/item/bodypart/old_bodypart = old_part
-		human_holder.del_and_replace_bodypart(old_bodypart, special = TRUE)
+		quirk_holder.del_and_replace_bodypart(old_bodypart, special = TRUE)
 		old_bodypart = null
 	else if(isorgan(old_part))
 		var/obj/item/organ/old_organ = old_part
-		old_part = human_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+		old_part = quirk_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
 		old_organ.Insert(quirk_holder, special = TRUE)
 		old_part.moveToNullspace()
 		STOP_PROCESSING(SSobj, old_part)

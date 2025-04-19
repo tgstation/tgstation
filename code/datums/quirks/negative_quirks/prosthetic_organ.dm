@@ -17,7 +17,7 @@
 	customization_options = list(/datum/preference/choiced/prosthetic_organ)
 
 /datum/quirk/prosthetic_organ/add_unique(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
+
 	var/static/list/organ_slots = list(
 		ORGAN_SLOT_HEART,
 		ORGAN_SLOT_LUNGS,
@@ -29,13 +29,13 @@
 		preferred_organ = GLOB.organ_choice[pick(GLOB.organ_choice)]
 
 	var/list/possible_organ_slots = organ_slots.Copy()
-	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
+	if(HAS_TRAIT(quirk_holder, TRAIT_NOBLOOD))
 		possible_organ_slots -= ORGAN_SLOT_HEART
-	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH))
+	if(HAS_TRAIT(quirk_holder, TRAIT_NOBREATH))
 		possible_organ_slots -= ORGAN_SLOT_LUNGS
-	if(HAS_TRAIT(human_holder, TRAIT_LIVERLESS_METABOLISM))
+	if(HAS_TRAIT(quirk_holder, TRAIT_LIVERLESS_METABOLISM))
 		possible_organ_slots -= ORGAN_SLOT_LIVER
-	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER))
+	if(HAS_TRAIT(quirk_holder, TRAIT_NOHUNGER))
 		possible_organ_slots -= ORGAN_SLOT_STOMACH
 	if(!length(organ_slots)) //what the hell
 		return
@@ -59,8 +59,8 @@
 			slot_string = "stomach"
 	medical_record_text = "During physical examination, patient was found to have a low-budget prosthetic [slot_string]. \
 		Removal of these organs is known to be dangerous to the patient as well as the practitioner."
-	old_organ = human_holder.get_organ_slot(organ_slot)
-	prosthetic.Insert(human_holder, special = TRUE)
+	old_organ = quirk_holder.get_organ_slot(organ_slot)
+	prosthetic.Insert(quirk_holder, special = TRUE)
 	old_organ.moveToNullspace()
 	STOP_PROCESSING(SSobj, old_organ)
 
