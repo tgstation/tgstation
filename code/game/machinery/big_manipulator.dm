@@ -243,6 +243,9 @@
 /obj/machinery/big_manipulator/proc/eject_worker(mob/user)
 	if(isnull(monkey_worker))
 		return
+	if(status == STATUS_BUSY)
+		balloon_alert(user, "turn it off first!")
+		return
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
 	if(!istype(poor_monkey, /mob/living/carbon/human/species/monkey))
 		monkey_worker = null
