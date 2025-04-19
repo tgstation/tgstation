@@ -199,7 +199,7 @@
 
 /obj/machinery/big_manipulator/wrench_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
-	if(status == STATUS_BUSY)
+	if(status == STATUS_BUSY || on)
 		to_chat(user, span_warning("[src] is activated!"))
 		return ITEM_INTERACT_BLOCKING
 	rotate_big_hand()
@@ -207,7 +207,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/big_manipulator/can_be_unfasten_wrench(mob/user, silent)
-	if(status == STATUS_BUSY)
+	if(status == STATUS_BUSY || on)
 		to_chat(user, span_warning("[src] is activated!"))
 		return FAILED_UNFASTEN
 	return ..()
