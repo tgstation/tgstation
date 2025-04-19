@@ -44,4 +44,9 @@
 #define TRAITOR_DISCOUNT_MIN_PRICE 4
 
 /// The standard minimum player count for "don't spawn this item on low population rounds"
-#define TRAITOR_POPULATION_LOWPOP 20
+
+/*MASSMETA EDIT CHANGE BEGIN (TRAITOR_POPULATION_LOWPOP)
+ ORIGINAL #define TRAITOR_POPULATION_LOWPOP 20
+*/
+#define TRAITOR_POPULATION_LOWPOP 5
+//MASSMETA EDIT CHANGE END
