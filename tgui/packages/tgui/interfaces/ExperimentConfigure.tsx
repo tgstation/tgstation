@@ -219,32 +219,38 @@ export function ExperimentConfigure(props) {
               <TechwebServer key={techweb} techwebs={techwebs} />
             ))}
         </Section>
+        <Stack vertical>
+          {techwebs.some((e) => e.selected) && (
+            <Stack.Item>
+              <Section
+                title="Experiments"
+                className="ExperimentConfigure__ExperimentsContainer"
+                fill
+              >
+                <Box mb={1} color="label">
+                  {textContent}
+                </Box>
+                {experiments.map((exp, i) => (
+                  <Experiment key={i} exp={exp} />
+                ))}
+              </Section>
+            </Stack.Item>
+          )}
 
-        {techwebs.some((e) => e.selected) && (
-          <Section
-            title="Experiments"
-            className="ExperimentConfigure__ExperimentsContainer"
-          >
-            <Box mb={1} color="label">
-              {textContent}
-            </Box>
-            {experiments.map((exp, i) => (
-              <Experiment key={i} exp={exp} />
-            ))}
-          </Section>
-        )}
-
-        {!!has_start_callback && (
-          <Button
-            fluid
-            className="ExperimentConfigure__PerformExperiment"
-            onClick={() => act('start_experiment_callback')}
-            disabled={!experiments.some((e) => e.selected)}
-            icon="flask"
-          >
-            Perform Experiment
-          </Button>
-        )}
+          {!!has_start_callback && (
+            <Stack.Item>
+              <Button
+                fluid
+                className="ExperimentConfigure__PerformExperiment"
+                onClick={() => act('start_experiment_callback')}
+                disabled={!experiments.some((e) => e.selected)}
+                icon="flask"
+              >
+                Perform Experiment
+              </Button>
+            </Stack.Item>
+          )}
+        </Stack>
       </Window.Content>
     </Window>
   );
