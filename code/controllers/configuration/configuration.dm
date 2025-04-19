@@ -432,6 +432,9 @@ Example config:
 				currentmap = null
 			if ("disabled")
 				currentmap = null
+			if("feedbacklink")
+				if(currentmap.map_name == SSmapping.current_map.map_name)
+					SSmapping.current_map.feedback_link = data
 			else
 				log_config("Unknown command in map vote config: '[command]'")
 
