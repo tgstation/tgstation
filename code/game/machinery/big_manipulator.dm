@@ -161,7 +161,7 @@
 	var/mob/living/carbon/human/monkey_resolve = monkey_worker?.resolve()
 	if(!isnull(monkey_resolve))
 		monkey_resolve.forceMove(get_turf(monkey_resolve))
-		monkey_resolve.remove_offsets(src)
+		monkey_resolve.remove_offsets("[src]")
 		monkey_resolve = null
 	locked_by_this_id = null
 
@@ -255,7 +255,7 @@
 	poor_monkey.forceMove(get_turf(src))
 	REMOVE_TRAIT(poor_monkey, TRAIT_AI_PAUSED, "[src]")
 	monkey_worker = null
-	poor_monkey.remove_offsets(src)
+	poor_monkey.remove_offsets("[src]")
 	status = STATUS_IDLE
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
@@ -287,7 +287,7 @@
 	manipulator_arm.vis_contents += poor_monkey
 	poor_monkey.dir = manipulator_arm.dir
 	poor_monkey.add_offsets(
-		type,
+		"[src]",
 		x_add = 32 + manipulator_arm.calculate_item_offset(TRUE, pixels_to_offset = 16),
 		y_add = 32 + manipulator_arm.calculate_item_offset(FALSE, pixels_to_offset = 16)
 	)
