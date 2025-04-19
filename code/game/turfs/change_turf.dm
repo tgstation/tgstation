@@ -18,9 +18,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		SSair.remove_from_active(new_turf)
 		CALCULATE_ADJACENT_TURFS(new_turf, KILL_EXCITED)
 
-/turf/proc/copyTurf(turf/copy_to_turf)
+/turf/proc/copyTurf(turf/copy_to_turf, copy_air = FALSE, flags = null)
 	if(copy_to_turf.type != type)
-		copy_to_turf.ChangeTurf(type)
+		copy_to_turf.ChangeTurf(type, flags)
 	if(copy_to_turf.icon_state != icon_state)
 		copy_to_turf.icon_state = icon_state
 	if(copy_to_turf.icon != icon)
@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		copy_to_turf.setDir(dir)
 	return copy_to_turf
 
-/turf/open/copyTurf(turf/open/copy_to_turf, copy_air = FALSE)
+/turf/open/copyTurf(turf/open/copy_to_turf, copy_air = FALSE, flags = null)
 	. = ..()
 	ASSERT(istype(copy_to_turf, /turf/open))
 	var/datum/component/wet_floor/slip = GetComponent(/datum/component/wet_floor)
@@ -69,6 +69,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	if(!GLOB.use_preloader && path == type && !(flags & CHANGETURF_FORCEOP) && (baseturfs == new_baseturfs)) // Don't no-op if the map loader requires it to be reconstructed, or if this is a new set of baseturfs
 		return src
+
 	if(flags & CHANGETURF_SKIP)
 		return new path(src)
 
@@ -293,13 +294,16 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 /// Attempts to replace a tile with lattice. Amount is the amount of tiles to scrape away.
 /turf/proc/attempt_lattice_replacement(amount = 2)
-	if(lattice_underneath)
-		var/list/successful_replacement_callbacks = list()
-		SEND_SIGNAL(src, COMSIG_TURF_ATTEMPT_LATTICE_REPLACEMENT, successful_replacement_callbacks)
-		var/turf/new_turf = ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
-		if(!istype(new_turf, /turf/open/floor))
-			var/new_lattice = new /obj/structure/lattice(src)
-			for(var/datum/callback/callback as anything in successful_replacement_callbacks)
-				callback.Invoke(new_lattice)
-	else
+	if (!lattice_underneath)
 		ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
+		return
+
+	var/list/successful_replacement_callbacks = list()
+	SEND_SIGNAL(src, COMSIG_TURF_ATTEMPT_LATTICE_REPLACEMENT, successful_replacement_callbacks)
+	var/turf/new_turf = ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
+	if (istype(new_turf, /turf/open/floor))
+		return
+
+	var/new_lattice = new /obj/structure/lattice(src)
+	for (var/datum/callback/callback as anything in successful_replacement_callbacks)
+		callback.Invoke(new_lattice)

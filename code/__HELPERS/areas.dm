@@ -91,25 +91,28 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
 
 /proc/set_turfs_to_area(list/turf/turfs, area/new_area, list/area/affected_areas = list())
 	for(var/turf/the_turf as anything in turfs)
-		var/area/old_area = the_turf.loc
+		set_turf_to_area(the_turf, new_area, affected_areas)
 
-		//keep rack of all areas affected by turf changes
-		affected_areas[old_area.name] = old_area
+/proc/set_turf_to_area(turf/the_turf, area/new_area, list/area/affected_areas = list())
+	var/area/old_area = the_turf.loc
 
-		//move the turf to its new area and unregister it from the old one
-		the_turf.change_area(old_area, new_area)
+	//keep rack of all areas affected by turf changes
+	affected_areas[old_area.name] = old_area
 
-		//inform atoms on the turf that their area has changed
-		for(var/atom/stuff as anything in the_turf)
-			//unregister the stuff from its old area
-			SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
+	//move the turf to its new area and unregister it from the old one
+	the_turf.change_area(old_area, new_area)
 
-			//register the stuff to its new area. special exception for apc as its not registered to this signal
-			if(istype(stuff, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/area_apc = stuff
-				area_apc.assign_to_area()
-			else
-				SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, new_area)
+	//inform atoms on the turf that their area has changed
+	for(var/atom/stuff as anything in the_turf)
+		//unregister the stuff from its old area
+		SEND_SIGNAL(stuff, COMSIG_EXIT_AREA, old_area)
+
+		//register the stuff to its new area. special exception for apc as its not registered to this signal
+		if(istype(stuff, /obj/machinery/power/apc))
+			var/obj/machinery/power/apc/area_apc = stuff
+			area_apc.assign_to_area()
+		else
+			SEND_SIGNAL(stuff, COMSIG_ENTER_AREA, new_area)
 
 /proc/create_area(mob/creator, new_area_type = /area)
 	// Passed into the above proc as list/break_if_found

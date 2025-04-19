@@ -20,10 +20,17 @@
 
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()
-	if(length(give_turf_traits))
+	if (length(give_turf_traits))
 		give_turf_traits = string_list(give_turf_traits)
 		AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
+	// We check for objects in non-nearspace space in both linters and tests, so we can ignore these checks on mapload for performance
+	if (mapload || !isspaceturf(loc))
+		return
+
+	var/area/new_turf_area = get_area(loc)
+	if (istype(new_turf_area, /area/space) && !istype(new_turf_area, /area/space/nearstation))
+		set_turf_to_area(loc, GLOB.areas_by_type[/area/space/nearstation])
 
 /datum/armor/structure_lattice
 	melee = 50
