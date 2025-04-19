@@ -58,7 +58,9 @@
 	make_migo_sound()
 
 /mob/living/basic/migo/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	..()
+	. = ..()
+	if(!.) //dead or deleted
+		return
 	if(stat)
 		return
 	if(SPT_PROB(5, seconds_per_tick))

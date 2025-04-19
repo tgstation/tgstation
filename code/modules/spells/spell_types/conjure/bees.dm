@@ -10,7 +10,7 @@
 	cooldown_time = 1 MINUTES
 	cooldown_reduction_per_rank = 10 SECONDS
 
-	invocation = "NOT THE BEES"
+	invocation = "NOT THE BEES!"
 	invocation_type = INVOCATION_SHOUT
 
 	summon_radius = 3

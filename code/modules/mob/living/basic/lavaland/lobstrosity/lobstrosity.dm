@@ -12,7 +12,7 @@
 	maxHealth = 150
 	health = 150
 	obj_damage = 15
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST|MOB_AQUATIC
+	mob_biotypes = MOB_ORGANIC|MOB_CRUSTACEAN|MOB_AQUATIC|MOB_MINING
 	melee_damage_lower = 15
 	melee_damage_upper = 19
 	attack_verb_continuous = "snips"
@@ -88,6 +88,8 @@
 
 /mob/living/basic/mining/lobstrosity/befriend(mob/living/new_friend)
 	. = ..()
+	if(isnull(.))
+		return
 	faction |= new_friend.faction
 	faction -= FACTION_MINING
 

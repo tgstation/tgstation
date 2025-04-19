@@ -30,4 +30,4 @@
 	. += center
 
 /obj/machinery/atmospherics/pipe/bridge_pipe/update_layer()
-	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? ABOVE_OPEN_TURF_LAYER + 1 : initial(layer))
+	layer = (HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? BELOW_CATWALK_LAYER + 1 : initial(layer))

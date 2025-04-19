@@ -117,7 +117,7 @@
 
 /datum/heretic_knowledge/greaves_of_the_prophet
 	name = "Greaves Of The Prophet"
-	desc = "Conjures a pair of Armored Greaves, they confer to the user fully immunity to slips and the ability resist gravity at will."
+	desc = "Allows you to combine a pair of Jackboots and 2 sheets of Titanium into a pair of Armored Greaves, they confer to the user fully immunity to slips."
 	gain_text = " \
 		Gristle churns into joint, a pop, and the fool twists a blackened foot from the \
 		jaws of another. At their game for centuries, this mangled tree of limbs twists, \

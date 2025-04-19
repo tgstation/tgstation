@@ -62,11 +62,6 @@
 	integer = FALSE
 	min_val = 0
 
-/// Determines the ideal player count for maximum progression per minute.
-/datum/config_entry/number/traitor_ideal_player_count
-	default = 20
-	min_val = 1
-
 /// Determines how fast traitors scale in general.
 /datum/config_entry/number/traitor_scaling_multiplier
 	default = 1
@@ -462,6 +457,11 @@
 
 /datum/config_entry/str_list/tts_voice_blacklist
 
+/// Maximum timeout for http calls
+/datum/config_entry/number/tts_http_timeout_seconds
+	default = 30
+	min_val = 0
+
 /datum/config_entry/flag/give_tutorials_without_db
 
 /datum/config_entry/string/new_player_alert_role_id
@@ -499,3 +499,12 @@
 	integer = FALSE
 	default = 1
 	min_val = 0.05
+
+
+//Custom Shuttles
+//Shuttle size limiter
+/datum/config_entry/number/max_shuttle_count
+	default = 6
+
+/datum/config_entry/number/max_shuttle_size
+	default = 250

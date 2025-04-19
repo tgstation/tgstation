@@ -92,7 +92,6 @@
 	if(body_position == STANDING_UP)
 		// keep us upright so the animation fits.
 		ADD_TRAIT(src, TRAIT_FORCED_STANDING, TRAIT_GENERIC)
-	death(TRUE)
 
 	if(drop_items)
 		unequip_everything()
@@ -100,8 +99,11 @@
 	if(buckled)
 		buckled.unbuckle_mob(src, force = TRUE)
 
-	addtimer(CALLBACK(src, PROC_REF(spawn_dust), just_ash), DUST_ANIMATION_TIME - 0.3 SECONDS)
-	ghostize()
+	death(TRUE)
+	// Some mobs get qdeleted on death
+	if (!QDELETED(src))
+		addtimer(CALLBACK(src, PROC_REF(spawn_dust), just_ash), DUST_ANIMATION_TIME - 0.3 SECONDS)
+		ghostize()
 
 /// Animates turning into dust.
 /// Does not delete src afterwards, BUT it will become invisible (and grey), so ensure you handle that yourself
@@ -193,6 +195,7 @@
 
 	if (client)
 		client.move_delay = initial(client.move_delay)
-		client.player_details.time_of_death = timeofdeath
+
+	persistent_client?.time_of_death = timeofdeath
 
 	return TRUE

@@ -188,7 +188,7 @@
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
 			var/obj/item/gibtonite/free_bomb = new /obj/item/gibtonite(src)
-			free_bomb.quality = rand(1, 3)
+			free_bomb.quality = rand(GIBTONITE_QUALITY_LOW, GIBTONITE_QUALITY_HIGH)
 			free_bomb.GibtoniteReaction(null, "A secure loot closet has spawned a live")
 		if(69 to 70)
 			new /obj/item/stack/ore/bluespace_crystal(src, 5)

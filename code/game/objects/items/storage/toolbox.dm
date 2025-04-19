@@ -643,7 +643,7 @@
 
 /obj/item/storage/toolbox/guncase/monkeycase/Initialize(mapload)
 	. = ..()
-	atom_storage.locked = STORAGE_SOFT_LOCKED
+	atom_storage.set_locked(STORAGE_SOFT_LOCKED)
 
 /obj/item/storage/toolbox/guncase/monkeycase/attack_self(mob/user, modifiers)
 	if(!monkey_check(user))

@@ -13,7 +13,7 @@
 		view_core()
 
 	// Handle power damage (oxy)
-	if (battery <= 0)
+	if (battery <= 0 && lacks_power())
 		to_chat(src, span_warning("Your backup battery's output drops below usable levels. It takes only a moment longer for your systems to fail, corrupted and unusable."))
 		adjustOxyLoss(200)
 

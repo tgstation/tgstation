@@ -15,36 +15,29 @@
 // On Windows, looks in the standard places for `rust_g.dll`.
 // On Linux, looks in `.`, `$LD_LIBRARY_PATH`, and `~/.byond/bin` for either of
 // `librust_g.so` (preferred) or `rust_g` (old).
-// On OpenDream, `rust_g64.dll` / `librust_g64.so` are used instead.
 
 /* This comment bypasses grep checks */ /var/__rust_g
 
-#ifndef OPENDREAM
-#define RUST_G_BASE	"rust_g"
-#else
-#define RUST_G_BASE	"rust_g64"
-#endif
-
 /proc/__detect_rust_g()
+	var/arch_suffix = null
+	#ifdef OPENDREAM
+	arch_suffix = "64"
+	#endif
 	if (world.system_type == UNIX)
-		if (fexists("./lib[RUST_G_BASE].so"))
+		if (fexists("./librust_g[arch_suffix].so"))
 			// No need for LD_LIBRARY_PATH badness.
-			return __rust_g = "./lib[RUST_G_BASE].so"
-#ifndef OPENDREAM
-		else if (fexists("./[RUST_G_BASE]"))
+			return __rust_g = "./librust_g[arch_suffix].so"
+		else if (fexists("./rust_g[arch_suffix]"))
 			// Old dumb filename.
-			return __rust_g = "./[RUST_G_BASE]"
-		else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/[RUST_G_BASE]"))
+			return __rust_g = "./rust_g[arch_suffix]"
+		else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/rust_g[arch_suffix]"))
 			// Old dumb filename in `~/.byond/bin`.
-			return __rust_g = RUST_G_BASE
-#endif
+			return __rust_g = "rust_g[arch_suffix]"
 		else
 			// It's not in the current directory, so try others
-			return __rust_g = "lib[RUST_G_BASE].so"
+			return __rust_g = "librust_g[arch_suffix].so"
 	else
-		return __rust_g = RUST_G_BASE
-
-#undef RUST_G_BASE
+		return __rust_g = "rust_g[arch_suffix]"
 
 #define RUST_G (__rust_g || __detect_rust_g())
 #endif
@@ -315,47 +308,6 @@
  */
 #define rustg_sanitize_html(text, attribute_whitelist_json, tag_whitelist_json) RUSTG_CALL(RUST_G, "sanitize_html")(text, attribute_whitelist_json, tag_whitelist_json)
 
-#define rustg_sql_connect_pool(options) RUSTG_CALL(RUST_G, "sql_connect_pool")(options)
-#define rustg_sql_query_async(handle, query, params) RUSTG_CALL(RUST_G, "sql_query_async")(handle, query, params)
-#define rustg_sql_query_blocking(handle, query, params) RUSTG_CALL(RUST_G, "sql_query_blocking")(handle, query, params)
-#define rustg_sql_connected(handle) RUSTG_CALL(RUST_G, "sql_connected")(handle)
-#define rustg_sql_disconnect_pool(handle) RUSTG_CALL(RUST_G, "sql_disconnect_pool")(handle)
-#define rustg_sql_check_query(job_id) RUSTG_CALL(RUST_G, "sql_check_query")("[job_id]")
-
-#define rustg_time_microseconds(id) text2num(RUSTG_CALL(RUST_G, "time_microseconds")(id))
-#define rustg_time_milliseconds(id) text2num(RUSTG_CALL(RUST_G, "time_milliseconds")(id))
-#define rustg_time_reset(id) RUSTG_CALL(RUST_G, "time_reset")(id)
-
-/// Returns the timestamp as a string
-/proc/rustg_unix_timestamp()
-	return RUSTG_CALL(RUST_G, "unix_timestamp")()
-
-#define rustg_raw_read_toml_file(path) json_decode(RUSTG_CALL(RUST_G, "toml_file_to_json")(path) || "null")
-
-/proc/rustg_read_toml_file(path)
-	var/list/output = rustg_raw_read_toml_file(path)
-	if (output["success"])
-		return json_decode(output["content"])
-	else
-		CRASH(output["content"])
-
-#define rustg_raw_toml_encode(value) json_decode(RUSTG_CALL(RUST_G, "toml_encode")(json_encode(value)))
-
-/proc/rustg_toml_encode(value)
-	var/list/output = rustg_raw_toml_encode(value)
-	if (output["success"])
-		return output["content"]
-	else
-		CRASH(output["content"])
-
-#define rustg_url_encode(text) RUSTG_CALL(RUST_G, "url_encode")("[text]")
-#define rustg_url_decode(text) RUSTG_CALL(RUST_G, "url_decode")(text)
-
-#ifdef RUSTG_OVERRIDE_BUILTINS
-	#define url_encode(text) rustg_url_encode(text)
-	#define url_decode(text) rustg_url_decode(text)
-#endif
-
 /// Provided a static RSC file path or a raw text file path, returns the duration of the file in deciseconds as a float.
 /proc/rustg_sound_length(file_path)
 	var/static/list/sound_cache
@@ -398,3 +350,45 @@
  *)
 */
 #define rustg_sound_length_list(file_paths) json_decode(RUSTG_CALL(RUST_G, "sound_len_list")(json_encode(file_paths)))
+
+#define rustg_sql_connect_pool(options) RUSTG_CALL(RUST_G, "sql_connect_pool")(options)
+#define rustg_sql_query_async(handle, query, params) RUSTG_CALL(RUST_G, "sql_query_async")(handle, query, params)
+#define rustg_sql_query_blocking(handle, query, params) RUSTG_CALL(RUST_G, "sql_query_blocking")(handle, query, params)
+#define rustg_sql_connected(handle) RUSTG_CALL(RUST_G, "sql_connected")(handle)
+#define rustg_sql_disconnect_pool(handle) RUSTG_CALL(RUST_G, "sql_disconnect_pool")(handle)
+#define rustg_sql_check_query(job_id) RUSTG_CALL(RUST_G, "sql_check_query")("[job_id]")
+
+#define rustg_time_microseconds(id) text2num(RUSTG_CALL(RUST_G, "time_microseconds")(id))
+#define rustg_time_milliseconds(id) text2num(RUSTG_CALL(RUST_G, "time_milliseconds")(id))
+#define rustg_time_reset(id) RUSTG_CALL(RUST_G, "time_reset")(id)
+
+/// Returns the timestamp as a string
+/proc/rustg_unix_timestamp()
+	return RUSTG_CALL(RUST_G, "unix_timestamp")()
+
+#define rustg_raw_read_toml_file(path) json_decode(RUSTG_CALL(RUST_G, "toml_file_to_json")(path) || "null")
+
+/proc/rustg_read_toml_file(path)
+	var/list/output = rustg_raw_read_toml_file(path)
+	if (output["success"])
+		return json_decode(output["content"])
+	else
+		CRASH(output["content"])
+
+#define rustg_raw_toml_encode(value) json_decode(RUSTG_CALL(RUST_G, "toml_encode")(json_encode(value)))
+
+/proc/rustg_toml_encode(value)
+	var/list/output = rustg_raw_toml_encode(value)
+	if (output["success"])
+		return output["content"]
+	else
+		CRASH(output["content"])
+
+#define rustg_url_encode(text) RUSTG_CALL(RUST_G, "url_encode")("[text]")
+#define rustg_url_decode(text) RUSTG_CALL(RUST_G, "url_decode")(text)
+
+#ifdef RUSTG_OVERRIDE_BUILTINS
+	#define url_encode(text) rustg_url_encode(text)
+	#define url_decode(text) rustg_url_decode(text)
+#endif
+

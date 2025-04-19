@@ -27,7 +27,7 @@
 	if(case_type && LAZYLEN(contents))
 		var/mutable_appearance/gun_overlay = mutable_appearance(icon, case_type)
 		for(var/i in 1 to contents.len)
-			gun_overlay.pixel_x = 3 * (i - 1)
+			gun_overlay.pixel_w = 3 * (i - 1)
 			. += new /mutable_appearance(gun_overlay)
 	. += "[icon_state]_[open ? "open" : "door"]"
 

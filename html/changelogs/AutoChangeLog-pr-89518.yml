@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Revert Midi2Piano fix (#85967) that broke the the midi converter tool."

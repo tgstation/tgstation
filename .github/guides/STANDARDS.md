@@ -30,7 +30,9 @@ You can avoid hacky code by using object-oriented methodologies, such as overrid
 	* Another less common exploit involves allowing a player to open multiple of an input at once. This may allow the player to stack effects, such as triggering 10 explosions when only 1 should be allowed. While a lot of code is generally built in a way making this infeasible (usually due to runtime errors), it is noteworthy regardless.
 		* You should also consider if it would make sense to apply a timeout to your input, to prevent players from opening it and keeping it on their screen until convenient.
 
-* Calls to the database must be escaped properly - use sanitizeSQL to escape text based database entries from players or admins, and isnum() for number based database entries from players or admins.
+* SQL queries **must** use parameters for any sort of input data, and `format_table_name` for table names. Directly substituting input into SQL queries is how SQL injections happen, which parameterized queries prevent.
+	* Good: `SSdbcore.NewQuery({"UPDATE [format_table_name("round")] SET map_name = :map_name WHERE id = :round_id"}, list("map_name" = current_map.map_name, "round_id" = GLOB.round_id))`
+	* Bad: `SSdbcore.NewQuery({"UPDATE round SET map_name = '[current_map.map_name]' WHERE id = [GLOB.round_id]"}`
 
 * All calls to topics must be checked for correctness. Topic href calls can be easily faked by clients, so you should ensure that the call is valid for the state the item is in. Do not rely on the UI code to provide only valid topic calls, because it won't.
 	* Don't expose a topic call to more than what you need it to. If you are only looking for an item inside an atom, don't look for every item in the world - just look in the atom's contents.

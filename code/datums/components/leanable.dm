@@ -1,4 +1,4 @@
-/// Things with this component can be leaned onto, optionally exclusive to RMB dragging
+/// Things with this component can be leaned onto
 /datum/component/leanable
 	/// How much will mobs that lean onto this object be offset
 	var/leaning_offset = 11
@@ -40,7 +40,7 @@
 		if(fall)
 			to_chat(leaner, span_danger("You lose balance!"))
 			leaner.Paralyze(0.5 SECONDS)
-	leaning_mobs = null
+	leaning_mobs.Cut()
 
 /datum/component/leanable/proc/on_moved(datum/source)
 	SIGNAL_HANDLER

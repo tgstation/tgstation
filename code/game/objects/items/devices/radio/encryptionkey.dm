@@ -3,28 +3,49 @@
 	desc = "An encryption key for a radio headset."
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cypherkey_basic"
+	icon_preview = 'icons/obj/fluff/previews.dmi'
+	icon_state_preview = "cypherkey"
 	w_class = WEIGHT_CLASS_TINY
 	/// What channels does this encryption key grant to the parent headset.
 	var/list/channels = list()
 	/// Flags for which "special" radio networks should be accessible
 	var/special_channels = NONE
-	var/datum/language/translated_language
+	/// Assoc list of language to how well understood it is. 0 is invalid, 100 is perfect.
+	var/list/language_data
+
 	greyscale_config = /datum/greyscale_config/encryptionkey_basic
 	greyscale_colors = "#820a16#3758c4"
 
 /obj/item/encryptionkey/examine(mob/user)
 	. = ..()
-	if(LAZYLEN(channels) || special_channels & RADIO_SPECIAL_BINARY)
-		var/list/examine_text_list = list()
-		for(var/i in channels)
-			examine_text_list += "[GLOB.channel_tokens[i]] - [LOWER_TEXT(i)]"
-
-		if(special_channels & RADIO_SPECIAL_BINARY)
-			examine_text_list += "[GLOB.channel_tokens[MODE_BINARY]] - [MODE_BINARY]"
-
-		. += span_notice("It can access the following channels; [jointext(examine_text_list, ", ")].")
-	else
+	if(!LAZYLEN(channels) && !(special_channels & RADIO_SPECIAL_BINARY) && !LAZYLEN(language_data))
 		. += span_warning("Has no special codes in it. You should probably tell a coder!")
+		return
+
+	var/list/examine_text_list = list()
+	for(var/i in channels)
+		examine_text_list += "[GLOB.channel_tokens[i]] - [LOWER_TEXT(i)]"
+
+	if(special_channels & RADIO_SPECIAL_BINARY)
+		examine_text_list += "[GLOB.channel_tokens[MODE_BINARY]] - [MODE_BINARY]"
+
+	if(length(examine_text_list))
+		. += span_notice("It can access the following channels; [jointext(examine_text_list, ", ")].")
+
+	var/list/language_text_list = list()
+	for(var/lang in language_data)
+		var/langstring = "[GLOB.language_datum_instances[lang].name]"
+		switch(language_data[lang])
+			if(25 to 50)
+				langstring += " (poor)"
+			if(50 to 75)
+				langstring += " (average)"
+			if(75 to 100)
+				langstring += " (good)"
+		language_text_list += langstring
+
+	if(length(language_text_list))
+		. += span_notice("It can translate the following languages; [jointext(language_text_list, ", ")].")
 
 /obj/item/encryptionkey/syndicate
 	name = "syndicate encryption key"
@@ -38,7 +59,9 @@
 	name = "binary translator key"
 	icon_state = "cypherkey_basic"
 	special_channels = RADIO_SPECIAL_BINARY
-	translated_language = /datum/language/machine
+	language_data = list(
+		/datum/language/machine = 100,
+	)
 	greyscale_config = /datum/greyscale_config/encryptionkey_basic
 	greyscale_colors = "#24a157#3758c4"
 
@@ -217,7 +240,9 @@
 		RADIO_CHANNEL_ENTERTAINMENT = 1,
 	)
 	special_channels = RADIO_SPECIAL_BINARY
-	translated_language = /datum/language/machine
+	language_data = list(
+		/datum/language/machine = 100,
+	)
 
 /obj/item/encryptionkey/ai/evil //ported from NT, this goes 'inside' the AI.
 	name = "syndicate binary encryption key"

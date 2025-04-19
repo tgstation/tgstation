@@ -106,7 +106,7 @@
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(checkObstacle))
 	playsound(user, 'sound/items/weapons/thudswoosh.ogg', 40, TRUE, -1)
 
-	var/leap_word = isfelinid(user) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
+	var/leap_word = isfelinid(user) || HAS_TRAIT(user, TRAIT_TACKLING_TAILED_POUNCE) ? "pounce" : "leap" //If cat, "pounce" instead of "leap".
 	if(can_see(user, clicked_atom, 7))
 		user.visible_message(span_warning("[user] [leap_word]s at [clicked_atom]!"), span_danger("You [leap_word] at [clicked_atom]!"))
 	else
@@ -434,6 +434,10 @@
 	if(HAS_TRAIT(sacker, TRAIT_NOGUNS)) //Those dedicated to martial combat are particularly skilled tacklers
 		attack_mod += 2
 
+	if(HAS_TRAIT(sacker, TRAIT_TACKLING_TAILED_POUNCE))
+		var/obj/item/organ/tail/lizard/sacker_tail = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		attack_mod += sacker_tail ? 2 : -2
+
 	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
 		var/obj/item/organ/wings/moth/sacker_moth_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 		if(!sacker_moth_wing || sacker_moth_wing.burnt)
@@ -601,9 +605,14 @@
 	if(windscreen_casualty.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
 		for(var/i in 1 to speed)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
-			shard.set_embed(/datum/embedding/glass_candy)
+			var/datum/embedding/embed = shard.get_embed()
+			embed.embed_chance = 100
+			embed.ignore_throwspeed_threshold = TRUE
+			embed.impact_pain_mult = 1
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
-			shard.set_embed(initial(shard.embed_type))
+			embed.embed_chance = initial(embed.embed_chance)
+			embed.ignore_throwspeed_threshold = initial(embed.ignore_throwspeed_threshold)
+			embed.impact_pain_mult = initial(embed.impact_pain_mult)
 		windscreen_casualty.atom_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.Paralyze(3 SECONDS)

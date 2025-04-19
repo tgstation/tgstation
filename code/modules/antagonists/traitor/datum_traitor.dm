@@ -211,6 +211,12 @@
 	for(var/datum/component/codeword_hearing/component as anything in datum_owner.GetComponents(/datum/component/codeword_hearing))
 		component.delete_if_from_source(src)
 
+/datum/antagonist/traitor/submit_player_objective(retain_existing, retain_escape, force)
+	. = ..()
+	if (!.)
+		return
+	owner.current.playsound_local(get_turf(owner.current), 'sound/music/antag/traitor/final_objective.ogg', 100, FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+
 /datum/antagonist/traitor/ui_static_data(mob/user)
 	var/datum/component/uplink/uplink = uplink_ref?.resolve()
 	var/list/data = list()

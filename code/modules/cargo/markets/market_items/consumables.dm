@@ -57,7 +57,7 @@
 /datum/market_item/consumable/floor_pill
 	name = "Strange Pill"
 	desc = "The Russian Roulette of the Maintenance Tunnels."
-	item = /obj/item/reagent_containers/pill/maintenance
+	item = /obj/item/reagent_containers/applicator/pill/maintenance
 
 	stock_min = 5
 	stock_max = 35

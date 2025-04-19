@@ -1,6 +1,10 @@
 /datum/crafting_recipe/food
 	mass_craftable = TRUE
 	crafting_flags = parent_type::crafting_flags | CRAFT_TRANSFERS_REAGENTS | CRAFT_CLEARS_REAGENTS
+	///The food types that are added to the result when the recipe is completed
+	var/added_foodtypes = NONE
+	///The food types that are removed to the result when the recipe is completed
+	var/removed_foodtypes = NONE
 
 /datum/crafting_recipe/food/on_craft_completion(mob/user, atom/result)
 	SHOULD_CALL_PARENT(TRUE)
@@ -11,6 +15,31 @@
 /datum/crafting_recipe/food/New()
 	. = ..()
 	parts |= reqs
+
+	//rarely, but a few cooking recipes (cake cat & co) don't result food items.
+	if(!PERFORM_ALL_TESTS(focus_only/check_foodtypes) || non_craftable || !ispath(result, /obj/item/food))
+		return
+
+	// Food made from these recipes should inherit the food types of the food ingredients used in it
+	// 'added_foodtypes' and 'added_foodtypes' exist to add and remove (un)desiderable types
+	// If the food types of the result don't match when spawned compared to when crafted (with base ingredients), throw a warning.
+	var/made_with_food = FALSE
+	var/actual_foodtypes = added_foodtypes
+	for(var/req_path in reqs)
+		if(!ispath(req_path, /obj/item/food))
+			continue
+		var/obj/item/food/ingredient = req_path
+		made_with_food = TRUE
+		actual_foodtypes |= initial(ingredient.foodtypes)
+	if(!made_with_food)
+		return
+	actual_foodtypes &= ~removed_foodtypes
+	var/obj/item/food/result_path = result
+	var/result_foodtypes = initial(result_path.foodtypes)
+	if(result_foodtypes != actual_foodtypes)
+		var/text_flags = jointext(bitfield_to_list(result_foodtypes, FOOD_FLAGS),"|")
+		var/text_craft_flags = jointext(bitfield_to_list(actual_foodtypes, FOOD_FLAGS),"|")
+		stack_trace("the foodtypes of [result_path] are [text_flags] when spawned but [text_craft_flags] when crafted.")
 
 /datum/crafting_recipe/food/crafting_ui_data()
 	var/list/data = list()

@@ -3340,11 +3340,9 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
 "zP" = (
-/obj/item/shard{
-	icon_state = "small"
-	},
-/obj/item/shard,
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/structure/table,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/tech_storage)
 "zR" = (

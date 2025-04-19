@@ -306,6 +306,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	wound_bonus = FALSE
 
 	actions_types = list(/datum/action/item_action/toggle_mode)
+	action_slots = ALL
 
 	cooldown = 0 SECONDS
 	stamina_damage = 0

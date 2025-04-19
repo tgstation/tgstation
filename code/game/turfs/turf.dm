@@ -247,6 +247,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	old_area.turfs_to_uncontain_by_zlevel[z] += src
 	new_area.turfs_by_zlevel[z] += src
 	new_area.contents += src
+	SEND_SIGNAL(src, COMSIG_TURF_AREA_CHANGED, old_area)
+	SEND_SIGNAL(new_area, COMSIG_AREA_TURF_ADDED, src, old_area)
+	SEND_SIGNAL(old_area, COMSIG_AREA_TURF_REMOVED, src, new_area)
 
 	//changes to make after turf has moved
 	on_change_area(old_area, new_area)
@@ -595,7 +598,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	SET_PLANE(I, GAME_PLANE, src)
 	I.layer = OBJ_LAYER
 	I.appearance = AM.appearance
-	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM|KEEP_APART
 	I.loc = src
 	I.setDir(AM.dir)
 	I.alpha = 128
@@ -793,9 +796,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 /**
- * the following are some hacky fishing-related optimizations to shave off
+ * the following are some fishing-related optimizations to shave off as much
  * time we spend implementing the fishing as possible, even if that means
- * doing hackier code, because we've hundreds of turfs like lava, water etc every round,
+ * hackier code, because we've hundreds of turfs like lava, water etc every round,
  */
 /turf/proc/add_lazy_fishing(fish_source_path)
 	RegisterSignal(src, COMSIG_FISHING_ROD_CAST, PROC_REF(add_fishing_spot_comp))
@@ -829,7 +832,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/on_fish_release_into(datum/source, obj/item/fish/fish, mob/living/releaser)
 	SIGNAL_HANDLER
-	GLOB.preset_fish_sources[fish_source].readd_fish(fish, releaser)
+	GLOB.preset_fish_sources[fish_source].readd_fish(src, fish, releaser)
 
 /turf/examine(mob/user)
 	. = ..()

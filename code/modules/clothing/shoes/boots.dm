@@ -51,7 +51,7 @@
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor_type = /datum/armor/shoes_jackboots
-	can_be_tied = FALSE
+	fastening_type = SHOES_SLIPON
 	body_parts_covered = FEET|LEGS
 
 /datum/armor/shoes_jackboots
@@ -117,7 +117,7 @@
 	armor_type = /datum/armor/ice_boots_eva
 	strip_delay = 4 SECONDS
 	equip_delay_other = 4 SECONDS
-	clothing_flags = THICKMATERIAL
+	clothing_flags = parent_type::clothing_flags | THICKMATERIAL
 	body_parts_covered = FEET|LEGS
 	resistance_flags = NONE
 

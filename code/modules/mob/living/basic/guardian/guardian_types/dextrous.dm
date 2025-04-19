@@ -87,9 +87,6 @@
 /mob/living/basic/guardian/dextrous/getBackSlot()
 	return ITEM_SLOT_DEX_STORAGE
 
-/mob/living/basic/guardian/dextrous/getBeltSlot()
-	return ITEM_SLOT_DEX_STORAGE
-
 /mob/living/basic/guardian/dextrous/proc/update_inv_internal_storage()
 	if(isnull(internal_storage) || isnull(client) || !hud_used?.hud_shown)
 		return

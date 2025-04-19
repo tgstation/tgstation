@@ -382,7 +382,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
  */
 /datum/heretic_knowledge/bookworm
 	name = "Warren King's Welcome"
-	desc = "Allows you to transmute 5 wires and a piece of paper to infuse any ID with maintenace and external airlock access."
+	desc = "Allows you to transmute 5 cable pieces and a piece of paper to infuse any ID with maintenace and external airlock access."
 	gain_text = "Gnawed into vicious-stained fingerbones, my grim invitation snaps my nauseous and clouded mind towards the heavy-set door. \
 	Slowly, the light dances between a crawling darkness, blanketing the fetid promenade with infinite machinations. \
 	But the King will soon take his pound of flesh. Even here, the taxman takes their cut. For there are a thousands mouths to feed."

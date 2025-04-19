@@ -32,10 +32,6 @@
 	/// List of mood events currently active on this datum
 	var/list/mood_events = list()
 
-	/// Tracks the last mob stat, updates on change
-	/// Used to stop processing SSmood
-	var/last_stat = CONSCIOUS
-
 /datum/mood/New(mob/living/mob_to_make_moody)
 	if (!istype(mob_to_make_moody))
 		stack_trace("Tried to apply mood to a non-living atom!")
@@ -83,40 +79,31 @@
 /datum/mood/process(seconds_per_tick)
 	switch(mood_level)
 		if(MOOD_LEVEL_SAD4)
-			set_sanity(sanity - 0.3 * seconds_per_tick, SANITY_INSANE)
+			adjust_sanity(-0.3 * seconds_per_tick, SANITY_INSANE)
 		if(MOOD_LEVEL_SAD3)
-			set_sanity(sanity - 0.15 * seconds_per_tick, SANITY_INSANE)
+			adjust_sanity(-0.15 * seconds_per_tick, SANITY_INSANE)
 		if(MOOD_LEVEL_SAD2)
-			set_sanity(sanity - 0.1 * seconds_per_tick, SANITY_CRAZY)
+			adjust_sanity(-0.1 * seconds_per_tick, SANITY_CRAZY)
 		if(MOOD_LEVEL_SAD1)
-			set_sanity(sanity - 0.05 * seconds_per_tick, SANITY_UNSTABLE)
+			adjust_sanity(-0.05 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_NEUTRAL)
-			set_sanity(sanity, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
+			adjust_sanity(0, SANITY_UNSTABLE) //This makes sure that mood gets increased should you be below the minimum.
 		if(MOOD_LEVEL_HAPPY1)
-			set_sanity(sanity + 0.2 * seconds_per_tick, SANITY_UNSTABLE)
+			adjust_sanity(0.2 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_HAPPY2)
-			set_sanity(sanity + 0.3 * seconds_per_tick, SANITY_UNSTABLE)
+			adjust_sanity(0.3 * seconds_per_tick, SANITY_UNSTABLE)
 		if(MOOD_LEVEL_HAPPY3)
-			set_sanity(sanity + 0.4 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			adjust_sanity(0.4 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
 		if(MOOD_LEVEL_HAPPY4)
-			set_sanity(sanity + 0.6 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
+			adjust_sanity(0.6 * seconds_per_tick, SANITY_NEUTRAL, SANITY_MAXIMUM)
 
-	// 0.416% is 15 successes / 3600 seconds. Calculated with 2 minute
-	// mood runtime, so 50% average uptime across the hour.
-	if(HAS_TRAIT(mob_parent, TRAIT_DEPRESSION) && SPT_PROB(0.416, seconds_per_tick))
-		add_mood_event("depression", /datum/mood_event/depression)
-
-	if(HAS_TRAIT(mob_parent, TRAIT_JOLLY) && SPT_PROB(0.416, seconds_per_tick))
-		add_mood_event("jolly", /datum/mood_event/jolly)
-
-/datum/mood/proc/handle_mob_death(datum/source)
+/datum/mood/proc/handle_mob_death(datum/source, new_stat, old_stat)
 	SIGNAL_HANDLER
 
-	if (last_stat == DEAD && mob_parent.stat != DEAD)
+	if (old_stat == DEAD && new_stat != DEAD)
 		START_PROCESSING(SSmood, src)
-	else if (last_stat != DEAD && mob_parent.stat == DEAD)
+	else if (old_stat != DEAD && new_stat == DEAD)
 		STOP_PROCESSING(SSmood, src)
-	last_stat = mob_parent.stat
 
 /// Handles mood given by nutrition
 /datum/mood/proc/update_nutrition_moodlets()
@@ -141,8 +128,10 @@
 			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/fed)
 		if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
 			clear_mood_event(MOOD_CATEGORY_NUTRITION)
-		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_HUNGRY)
+		if(NUTRITION_LEVEL_VERY_HUNGRY to NUTRITION_LEVEL_HUNGRY)
 			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/hungry)
+		if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_VERY_HUNGRY)
+			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/hungry_very)
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_mood_event(MOOD_CATEGORY_NUTRITION, /datum/mood_event/starving)
 
@@ -172,15 +161,15 @@
 	var/datum/mood_event/the_event
 	if (mood_events[category])
 		the_event = mood_events[category]
-		if (the_event.type != type)
-			clear_mood_event(category)
-		else
+		if (the_event.type == type)
 			if (the_event.timeout)
 				if (!isnull(mood_to_copy_from))
 					the_event.timeout = mood_to_copy_from.timeout
 				addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
 			qdel(mood_to_copy_from)
 			return // Don't need to update the event.
+
+		clear_mood_event(category)
 	var/list/params = args.Copy(3)
 
 	params.Insert(1, mob_parent)
@@ -216,6 +205,9 @@
 	qdel(event)
 	update_mood()
 
+/datum/mood/proc/get_mood_event(category)
+	return mood_events[category]
+
 /// Updates the mobs mood.
 /// Called after mood events have been added/removed.
 /datum/mood/proc/update_mood()
@@ -224,13 +216,12 @@
 	mood = 0
 	shown_mood = 0
 
-	SEND_SIGNAL(mob_parent, COMSIG_CARBON_MOOD_UPDATE)
-
 	for(var/category in mood_events)
 		var/datum/mood_event/the_event = mood_events[category]
 		mood += the_event.mood_change
 		if (!the_event.hidden)
 			shown_mood += the_event.mood_change
+
 	mood *= mood_modifier
 	shown_mood *= mood_modifier
 
@@ -255,6 +246,7 @@
 			mood_level = MOOD_LEVEL_HAPPY4
 
 	update_mood_icon()
+	SEND_SIGNAL(mob_parent, COMSIG_CARBON_MOOD_UPDATE)
 
 /// Updates the mob's mood icon
 /datum/mood/proc/update_mood_icon()
@@ -329,66 +321,115 @@
 
 	if(user != mob_parent)
 		return
+	if(user.stat >= UNCONSCIOUS)
+		return
 	print_mood(user)
 
 /// Prints the users mood, sanity, and moodies to chat
 /datum/mood/proc/print_mood(mob/user)
-	var/msg = "[span_info("<EM>My current mental status:</EM>")]\n"
+	var/msg = "[span_info("<EM>My current mental status:</EM>")]<br>"
+
+	if(!HAS_TRAIT(src, TRAIT_NOHUNGER))
+		msg += span_notice("My hunger: ")
+		var/nutrition = mob_parent.nutrition
+		switch(nutrition)
+			if(NUTRITION_LEVEL_FULL to INFINITY)
+				msg += "[span_info("I'm completely stuffed!")]<br>"
+			if(NUTRITION_LEVEL_WELL_FED to NUTRITION_LEVEL_FULL)
+				msg += "[span_info("I'm well fed!")]<br>"
+			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_WELL_FED)
+				msg += "[span_info("I'm not hungry.")]<br>"
+			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FED)
+				msg += "[span_info("I could use a bite to eat.")]<br>"
+			if(NUTRITION_LEVEL_VERY_HUNGRY to NUTRITION_LEVEL_HUNGRY)
+				msg += "[span_warning("I'm feeling hungry.")]<br>"
+			if(NUTRITION_LEVEL_STARVING to NUTRITION_LEVEL_VERY_HUNGRY)
+				msg += "[span_warning("I feel quite hungry.")]<br>"
+			if(0 to NUTRITION_LEVEL_STARVING)
+				msg += "[span_boldwarning("I'm starving!")]<br>"
+
+	var/drunkness = mob_parent.get_drunk_amount()
+	if(drunkness >= 1)
+		msg += span_notice("My current drunkenness: ")
+		switch(drunkness)
+			if(1 to 10)
+				msg += "[span_info("I'm feeling a little tipsy.")]<br>"
+			if(11 to 21)
+				msg += "[span_info("I'm feeling a bit drunk.")]<br>"
+			if(21 to 41)
+				msg += "[span_info("I'm feeling quite drunk.")]<br>"
+			if(41 to 61)
+				msg += "[span_info("I'm feeling very drunk.")]<br>"
+			if(61 to 81)
+				msg += "[span_warning("I'm feeling like a mess.")]<br>"
+			if(81 to INFINITY)
+				msg += "[span_boldwarning("I'm completely wasted.")]<br>"
+
 	msg += span_notice("My current sanity: ") //Long term
 	switch(sanity)
 		if(SANITY_GREAT to INFINITY)
-			msg += "[span_boldnicegreen("My mind feels like a temple!")]\n"
+			msg += "[span_boldnicegreen("My mind feels like a temple!")]<br>"
 		if(SANITY_NEUTRAL to SANITY_GREAT)
-			msg += "[span_nicegreen("I have been feeling great lately!")]\n"
+			msg += "[span_nicegreen("I have been feeling great lately!")]<br>"
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
-			msg += "[span_nicegreen("I have felt quite decent lately.")]\n"
+			msg += "[span_nicegreen("I have felt quite decent lately.")]<br>"
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
-			msg += "[span_warning("I'm feeling a little bit unhinged...")]\n"
+			msg += "[span_warning("I'm feeling a little bit unhinged...")]<br>"
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
-			msg += "[span_warning("I'm freaking out!!")]\n"
+			msg += "[span_warning("I'm freaking out!!")]<br>"
 		if(SANITY_INSANE to SANITY_CRAZY)
-			msg += "[span_boldwarning("AHAHAHAHAHAHAHAHAHAH!!")]\n"
+			msg += "[span_boldwarning("AHAHAHAHAHAHAHAHAHAH!!")]<br>"
 
 	msg += span_notice("My current mood: ") //Short term
 	switch(mood_level)
 		if(MOOD_LEVEL_SAD4)
-			msg += "[span_boldwarning("I wish I was dead!")]\n"
+			msg += "[span_boldwarning("I wish I was dead!")]<br>"
 		if(MOOD_LEVEL_SAD3)
-			msg += "[span_boldwarning("I feel terrible...")]\n"
+			msg += "[span_boldwarning("I feel terrible...")]<br>"
 		if(MOOD_LEVEL_SAD2)
-			msg += "[span_boldwarning("I feel very upset.")]\n"
+			msg += "[span_boldwarning("I feel very upset.")]<br>"
 		if(MOOD_LEVEL_SAD1)
-			msg += "[span_warning("I'm a bit sad.")]\n"
+			msg += "[span_warning("I'm a bit sad.")]<br>"
 		if(MOOD_LEVEL_NEUTRAL)
-			msg += "[span_grey("I'm alright.")]\n"
+			msg += "[span_grey("I'm alright.")]<br>"
 		if(MOOD_LEVEL_HAPPY1)
-			msg += "[span_nicegreen("I feel pretty okay.")]\n"
+			msg += "[span_nicegreen("I feel pretty okay.")]<br>"
 		if(MOOD_LEVEL_HAPPY2)
-			msg += "[span_boldnicegreen("I feel pretty good.")]\n"
+			msg += "[span_boldnicegreen("I feel pretty good.")]<br>"
 		if(MOOD_LEVEL_HAPPY3)
-			msg += "[span_boldnicegreen("I feel amazing!")]\n"
+			msg += "[span_boldnicegreen("I feel amazing!")]<br>"
 		if(MOOD_LEVEL_HAPPY4)
-			msg += "[span_boldnicegreen("I love life!")]\n"
+			msg += "[span_boldnicegreen("I love life!")]<br>"
 
-	msg += "[span_notice("Moodlets:")]\n"//All moodlets
+	var/list/additional_lines = list()
+	SEND_SIGNAL(user, COMSIG_CARBON_MOOD_CHECK, additional_lines)
+	if (length(additional_lines))
+		msg += "[additional_lines.Join("<br>")]<br>"
+
+	msg += "[span_notice("Moodlets:")]<br>"//All moodlets
 	if(mood_events.len)
 		for(var/category in mood_events)
 			var/datum/mood_event/event = mood_events[category]
+			msg += "&bull; "
 			switch(event.mood_change)
 				if(-INFINITY to MOOD_SAD2)
-					msg += span_boldwarning(event.description + "\n")
+					msg += "[span_boldwarning(event.description)]<br>"
 				if(MOOD_SAD2 to MOOD_SAD1)
-					msg += span_warning(event.description + "\n")
+					msg += "[span_warning(event.description)]<br>"
 				if(MOOD_SAD1 to MOOD_NEUTRAL)
-					msg += span_grey(event.description + "\n")
+					msg += "[span_grey(event.description)]<br>"
 				if(MOOD_NEUTRAL to MOOD_HAPPY1)
-					msg += span_info(event.description + "\n")
+					msg += "[span_info(event.description)]<br>"
 				if(MOOD_HAPPY1 to MOOD_HAPPY2)
-					msg += span_nicegreen(event.description + "\n")
+					msg += "[span_nicegreen(event.description)]<br>"
 				if(MOOD_HAPPY2 to INFINITY)
-					msg += span_boldnicegreen(event.description + "\n")
+					msg += "[span_boldnicegreen(event.description)]<br>"
 	else
-		msg += "[span_grey("I don't have much of a reaction to anything right now.")]\n"
+		msg += "&bull; [span_grey("I don't have much of a reaction to anything right now.")]<br>"
+
+	if(LAZYLEN(mob_parent.quirks))
+		msg += span_notice("You have these quirks: [mob_parent.get_quirk_string(FALSE, CAT_QUIRK_ALL)].")
+
 	to_chat(user, boxed_message(msg))
 
 /// Updates the mob's moodies, if the area provides a mood bonus
@@ -468,10 +509,16 @@
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(amount < minimum && sanity < minimum)
 		amount = sanity + 0.7
-	if((!override && HAS_TRAIT(mob_parent, TRAIT_UNSTABLE)) || amount > maximum)
+
+	if(!override && HAS_TRAIT(mob_parent, TRAIT_UNSTABLE))
 		amount = min(sanity, amount)
+
+	if (amount > maximum)
+		amount = min(amount, maximum)
+
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
+
 	sanity = amount
 	SEND_SIGNAL(mob_parent, COMSIG_CARBON_SANITY_UPDATE, amount)
 	switch(sanity)
@@ -507,12 +554,16 @@
 			sanity_level = SANITY_LEVEL_GREAT
 
 	// Crazy or insane = add some uncommon hallucinations
-	if(sanity_level >= SANITY_CRAZY)
+	if(sanity_level >= SANITY_LEVEL_CRAZY)
 		mob_parent.apply_status_effect(/datum/status_effect/hallucination/sanity)
 	else
 		mob_parent.remove_status_effect(/datum/status_effect/hallucination/sanity)
 
 	update_mood_icon()
+
+/// Adjusts sanity by a value
+/datum/mood/proc/adjust_sanity(amount, minimum = SANITY_INSANE, maximum = SANITY_GREAT, override = FALSE)
+	set_sanity(sanity + amount, minimum, maximum, override)
 
 /// Sets the insanity effect on the mob
 /datum/mood/proc/set_insanity_effect(newval)
@@ -533,7 +584,7 @@
 
 /// Helper to forcefully drain sanity
 /datum/mood/proc/direct_sanity_drain(amount)
-	set_sanity(sanity + amount, override = TRUE)
+	adjust_sanity(amount, override = TRUE)
 
 /**
  * Returns true if you already have a mood from a provided category.

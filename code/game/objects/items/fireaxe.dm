@@ -53,6 +53,9 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 		GLOB.bridge_axe = null
 	return ..()
 
+/obj/item/fireaxe/get_demolition_modifier(obj/target)
+	return HAS_TRAIT(src, TRAIT_WIELDED) ? demolition_mod : 0.8
+
 /obj/item/fireaxe/update_icon_state()
 	icon_state = "[base_icon_state]0"
 	return ..()

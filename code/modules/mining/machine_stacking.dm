@@ -52,7 +52,7 @@
 		data["input_direction"] = dir2text(machine.input_dir)
 		data["output_direction"] = dir2text(machine.output_dir)
 		for(var/stack_type in machine.stack_list)
-			var/obj/item/stack/sheet/stored_sheet = machine.stack_list[stack_type]
+			var/obj/item/stack/stored_sheet = machine.stack_list[stack_type]
 			if(stored_sheet.amount <= 0)
 				continue
 			data["contents"] += list(list(
@@ -69,11 +69,11 @@
 
 	switch(action)
 		if("release")
-			var/obj/item/stack/sheet/released_type = text2path(params["type"])
+			var/obj/item/stack/released_type = text2path(params["type"])
 			if(!released_type || !(initial(released_type.merge_type) in machine.stack_list))
 				return //someone tried to spawn materials by spoofing hrefs
-			var/obj/item/stack/sheet/inp = machine.stack_list[initial(released_type.merge_type)]
-			var/obj/item/stack/sheet/out = new inp.type(null, inp.amount)
+			var/obj/item/stack/inp = machine.stack_list[initial(released_type.merge_type)]
+			var/obj/item/stack/out = new inp.type(null, inp.amount)
 			inp.amount = 0
 			machine.unload_mineral(out)
 			return TRUE
@@ -103,6 +103,11 @@
 	var/force_connect = FALSE
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
+	/// Typecache of objects that we can suck up
+	var/static/list/accepted_types = typecacheof(list(
+		/obj/item/stack/sheet,
+		/obj/item/stack/ore/bluespace_crystal,
+	))
 
 /obj/machinery/mineral/stacking_machine/Initialize(mapload)
 	. = ..()
@@ -121,22 +126,25 @@
 	materials = null
 	return ..()
 
-/obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/AM)
-	if(QDELETED(AM))
+/obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/entered)
+	if(QDELETED(entered))
 		return
-	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
-		process_sheet(AM)
+	if(entered.loc != get_step(src, input_dir))
+		return
+	if(is_type_in_typecache(entered, accepted_types))
+		process_stack(entered)
 
 /obj/machinery/mineral/stacking_machine/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	if(user.combat_mode || multi_tool.item_flags & ABSTRACT || multi_tool.flags_1 & HOLOGRAM_1)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 
-	. = ITEM_INTERACT_BLOCKING
-	if(istype(multi_tool.buffer, /obj/machinery/mineral/stacking_unit_console))
-		console = multi_tool.buffer
-		console.machine = src
-		to_chat(user, span_notice("You link [src] to the console in [multi_tool]'s buffer."))
-		return ITEM_INTERACT_SUCCESS
+	if(!istype(multi_tool.buffer, /obj/machinery/mineral/stacking_unit_console))
+		return ITEM_INTERACT_BLOCKING
+
+	console = multi_tool.buffer
+	console.machine = src
+	to_chat(user, span_notice("You link [src] to the console in [multi_tool]'s buffer."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/stacking_machine/proc/rotate(input)
 	if (input)
@@ -146,7 +154,7 @@
 	if (input_dir == output_dir)
 		rotate(input)
 
-/obj/machinery/mineral/stacking_machine/proc/process_sheet(obj/item/stack/sheet/input)
+/obj/machinery/mineral/stacking_machine/proc/process_stack(obj/item/stack/input)
 	if(QDELETED(input))
 		return
 
@@ -159,13 +167,13 @@
 
 	// No silo attached process to internal storage
 	var/key = input.merge_type
-	var/obj/item/stack/sheet/storage = stack_list[key]
+	var/obj/item/stack/storage = stack_list[key]
 	if(!storage) //It's the first of this sheet added
 		stack_list[key] = storage = new input.type(src, 0)
 	storage.amount += input.amount //Stack the sheets
 	qdel(input)
 
 	while(storage.amount >= stack_amt) //Get rid of excessive stackage
-		var/obj/item/stack/sheet/out = new input.type(null, stack_amt)
+		var/obj/item/stack/out = new input.type(null, stack_amt)
 		unload_mineral(out)
 		storage.amount -= stack_amt

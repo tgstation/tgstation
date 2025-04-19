@@ -28,24 +28,29 @@
 /datum/material/pizza/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(!IS_EDIBLE(source))
-		make_edible(source, mat_amount)
+		make_edible(source, mat_amount, multiplier)
 	ADD_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src)) //the fishing rod itself is the bait... sorta.
 
 /datum/material/pizza/on_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(IS_EDIBLE(source))
-		make_edible(source, mat_amount)
+		make_edible(source, mat_amount, multiplier)
 
-/datum/material/pizza/proc/make_edible(atom/source, mat_amount)
-	var/nutriment_count = 3 * (mat_amount / SHEET_MATERIAL_AMOUNT)
-	var/oil_count = 2 * (mat_amount / SHEET_MATERIAL_AMOUNT)
-	source.AddComponent(/datum/component/edible, \
+/datum/material/pizza/proc/make_edible(atom/source, mat_amount, multiplier)
+	var/nutriment_count = 3 * (mat_amount / SHEET_MATERIAL_AMOUNT) * multiplier
+	var/oil_count = 2 * (mat_amount / SHEET_MATERIAL_AMOUNT) * multiplier
+	source.AddComponentFrom(
+		SOURCE_EDIBLE_PIZZA_MAT, \
+		/datum/component/edible, \
 		initial_reagents = list(/datum/reagent/consumable/nutriment = nutriment_count, /datum/reagent/consumable/nutriment/fat/oil = oil_count), \
-		foodtypes = GRAIN | MEAT | DAIRY | VEGETABLES, \
+		foodtypes = GRAIN | DAIRY | VEGETABLES, \
 		eat_time = 3 SECONDS, \
-		tastes = list("crust", "tomato", "cheese", "meat"))
+		tastes = list("crust", "tomato", "cheese"))
+
+/datum/material/pizza/on_removed(atom/source, mat_amount, multiplier)
+	. = ..()
+	source.RemoveComponentSource(SOURCE_EDIBLE_PIZZA_MAT, /datum/component/edible)
 
 /datum/material/pizza/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
-	qdel(source.GetComponent(/datum/component/edible))
 	REMOVE_TRAIT(source, TRAIT_ROD_REMOVE_FISHING_DUD, REF(src))

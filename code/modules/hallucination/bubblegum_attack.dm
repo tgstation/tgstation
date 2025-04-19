@@ -1,6 +1,7 @@
 /// Sends a fake bubblegum charging through a nearby wall to our target.
 /datum/hallucination/oh_yeah
 	random_hallucination_weight = 1
+	hallucination_tier = HALLUCINATION_TIER_RARE
 	/// An image overlayed to the wall bubblegum comes out of, to look destroyed.
 	var/image/fake_broken_wall
 	/// An image put where bubblegum is expected to land, to mimic his charge "rune" icon.

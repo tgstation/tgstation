@@ -14,6 +14,8 @@
 
 	spell_requirements = NONE
 
+	jaunt_type = /obj/effect/dummy/phased_mob/blood
+
 	/// The time it takes to enter blood
 	var/enter_blood_time = 0 SECONDS
 	/// The time it takes to exit blood
@@ -162,8 +164,6 @@
 		they will be consumed by you, fully healing you."
 	/// The sound played when someone's consumed.
 	var/consume_sound = 'sound/effects/magic/demon_consume.ogg'
-	/// consume count (statistics and stuff)
-	var/consume_count = 0
 	/// Apply damage every 20 seconds if we bloodcrawling
 	var/jaunt_damage_timer
 	/// When demon first appears, it does not take damage while in Jaunt. He also doesn't take damage while he's eating someone.
@@ -255,10 +255,13 @@
 	// No defib possible after laughter
 	victim.apply_damage(1000, BRUTE, wound_bonus = CANT_WOUND)
 	if(victim.stat != DEAD)
-		victim.investigate_log("has been killed by being consumed by a slaugter demon.", INVESTIGATE_DEATHS)
+		victim.investigate_log("has been killed by being consumed by a slaughter demon.", INVESTIGATE_DEATHS)
 	victim.death()
 	on_victim_consumed(victim, jaunter)
-	consume_count++
+
+	var/datum/antagonist/slaughter/antag = jaunter.mind?.has_antag_datum(/datum/antagonist/slaughter)
+	if(!isnull(antag))
+		antag.consume_count++
 
 /**
  * Called when a victim starts to be consumed.
@@ -374,3 +377,7 @@
 /obj/item/bloodcrawl/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
+
+/// Different graphic for the position indicator
+/obj/effect/dummy/phased_mob/blood
+	phased_mob_icon_state = "mini_leaper"

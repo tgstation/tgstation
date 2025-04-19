@@ -8,7 +8,7 @@
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 2 SECONDS
 
-	invocation = "AULIE OXIN FIERA"
+	invocation = "AULIE OXIN FIERA!"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 	aoe_radius = 3

@@ -85,6 +85,7 @@
 			and gain the ability to swat bullets from the air, but you will also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	progression_minimum = 30 MINUTES
+	population_minimum = TRAITOR_POPULATION_LOWPOP
 	cost = 17
 	surplus = 0
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS

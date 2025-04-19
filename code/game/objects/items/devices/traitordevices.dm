@@ -234,15 +234,12 @@ effective or pretty fucking useless.
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/datum/action/item_action/stealth_mode/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-
+/datum/action/item_action/stealth_mode/do_effect(trigger_flags)
 	if(stealth_engaged)
 		stealth_off()
 	else
 		stealth_on()
+	return TRUE
 
 /datum/action/item_action/stealth_mode/proc/stealth_on()
 	animate(owner, alpha = get_alpha(), time = 0.5 SECONDS)
@@ -311,9 +308,6 @@ effective or pretty fucking useless.
 	attack_verb_simple = list("whip", "lash", "discipline")
 	actions_types = list(/datum/action/item_action/stealth_mode)
 
-/obj/item/shadowcloak/item_action_slot_check(slot, mob/user)
-	return slot & slot_flags
-
 /obj/item/shadowcloak/weaker
 	name = "stealth belt"
 	desc = "Makes you nigh-invisible to the naked eye for a short period of time. \
@@ -333,7 +327,14 @@ effective or pretty fucking useless.
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
+
+	/// The range of devices to disable while active
 	var/range = 12
+
+	/// The range of the disruptor wave, disabling radios
+	var/disruptor_range = 7
+
+	/// The delay between using the disruptor wave
 	var/jam_cooldown_duration = 15 SECONDS
 	COOLDOWN_DECLARE(jam_cooldown)
 
@@ -354,7 +355,7 @@ effective or pretty fucking useless.
 
 	user.balloon_alert(user, "disruptor wave released!")
 	to_chat(user, span_notice("You release a disruptor wave, disabling all nearby radio devices."))
-	for (var/atom/potential_owner in view(7, user))
+	for (var/atom/potential_owner in view(disruptor_range, user))
 		disable_radios_on(potential_owner, ignore_syndie = TRUE)
 	COOLDOWN_START(src, jam_cooldown, jam_cooldown_duration)
 
@@ -378,7 +379,7 @@ effective or pretty fucking useless.
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return
 
-	if (!(interacting_with in view(7, user)))
+	if (!(interacting_with in view(disruptor_range, user)))
 		user.balloon_alert(user, "out of reach!")
 		return
 
@@ -397,6 +398,16 @@ effective or pretty fucking useless.
 /obj/item/jammer/Destroy()
 	GLOB.active_jammers -= src
 	return ..()
+
+/obj/item/jammer/makeshift
+	name = "makeshift radio jammer"
+	desc = "A jury-rigged device that disrupts nearby radio communication. Its crude construction provides a significantly smaller area of effect compared to its Syndicate counterpart."
+	range = 5
+	disruptor_range = 3
+
+/obj/item/jammer/makeshift/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/item/storage/toolbox/emergency/turret
 	desc = "You feel a strange urge to hit this with a wrench."
