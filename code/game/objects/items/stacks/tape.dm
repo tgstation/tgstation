@@ -87,27 +87,47 @@
 	if(!object_repair_value)
 		return NONE
 
-	if(!isobj(interacting_with))
+	if(!isobj(interacting_with) || !issilicon(interacting_with))
 		return NONE
 
 	if(iseffect(interacting_with))
 		return NONE
 
-	var/obj/item/object_to_repair = interacting_with
-	var/object_is_damaged = object_to_repair.get_integrity() < object_to_repair.max_integrity
+	if(issilicon(interacting_with))
+		var/mob/living/silicon/robotic_pal = interacting_with
+		var/robot_is_damaged = robotic_pal.getBruteLoss()
 
-	if(!object_is_damaged)
-		return ITEM_INTERACT_BLOCKING
+		if(!robot_is_damaged)
+			user.balloon_alert(user, "[robotic_pal] is not damaged!")
+			return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] begins repairing [object_to_repair] with [src]."), span_notice("You begin repairing [object_to_repair] with [src]."))
-	playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
+		user.visible_message(span_notice("[user] begins repairing [robotic_pal] with [src]."), span_notice("You begin repairing [robotic_pal] with [src]."))
+		playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
 
-	if(!do_after(user, 3 SECONDS, target = object_to_repair))
-		return ITEM_INTERACT_BLOCKING
+		if(!do_after(user, 3 SECONDS, target = robotic_pal))
+			return ITEM_INTERACT_BLOCKING
 
-	object_to_repair.repair_damage(object_repair_value)
+		robotic_pal.adjustBruteLoss(-object_repair_value)
+
+	else
+
+		var/obj/item/object_to_repair = interacting_with
+		var/object_is_damaged = object_to_repair.get_integrity() < object_to_repair.max_integrity
+
+		if(!object_is_damaged)
+			user.balloon_alert(user, "[object_to_repair] is not damaged!")
+			return ITEM_INTERACT_BLOCKING
+
+		user.visible_message(span_notice("[user] begins repairing [object_to_repair] with [src]."), span_notice("You begin repairing [object_to_repair] with [src]."))
+		playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
+
+		if(!do_after(user, 3 SECONDS, target = object_to_repair))
+			return ITEM_INTERACT_BLOCKING
+
+		object_to_repair.repair_damage(object_repair_value)
+
 	use(1)
-	to_chat(user, span_notice("You finish repairing [object_to_repair] with [src]."))
+	to_chat(user, span_notice("You finish repairing [interacting_with] with [src]."))
 
 	return ITEM_INTERACT_SUCCESS
 
