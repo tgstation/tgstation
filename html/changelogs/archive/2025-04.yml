@@ -562,3 +562,29 @@
   - qol: you can now reset the adjustable pane splitters in chat settings
   mcbalaam:
   - qol: Improved chat messages when controlling a mech as an AI
+2025-04-19:
+  Absolucy:
+  - bugfix: Fixed FOV checks improperly handling diagonal directions.
+  AyIong:
+  - bugfix: Navigating to categories in preferences works again
+  Goat, LePiromano:
+  - qol: Photocopiers now have boards meaning you can build, destroy, and remake them.
+      (If you're a mapper use the prebuilt version to prestock your photocopiers)
+  Holoo-1:
+  - balance: emp flashlight costs 4 -> 2 tc
+  LT3:
+  - bugfix: Fixed opening character preferences menu before subsystem is initialized
+  Maximal08:
+  - bugfix: fixed manipulator throw mode UI
+  Melbert:
+  - rscadd: Human skin suit may trick the health analyzer... sort of
+  - bugfix: Human skin suit no longer gives a useless action
+  SmArtKar:
+  - bugfix: Ash storms do damage again
+  Thunder12345:
+  - rscadd: Added support for modularly loaded shuttles.
+  - rscadd: The Scrapheap Challenge emergency shuttle now comes in randomly generated
+      variants.
+  vinylspiders:
+  - bugfix: shoes with the squeak component will no longer play a squeaking sound
+      when you aren't actually walking (like in a wheelchair for instance)

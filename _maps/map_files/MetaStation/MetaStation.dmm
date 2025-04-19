@@ -11640,7 +11640,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "ehG" = (
@@ -13084,7 +13084,7 @@
 /area/station/cargo/warehouse)
 "eIy" = (
 /obj/structure/cable,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "eIO" = (
@@ -23662,7 +23662,7 @@
 /area/space/nearstation)
 "ivM" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/service/library)
 "ivR" = (
@@ -24377,9 +24377,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "iKj" = (
-/obj/machinery/photocopier{
-	pixel_y = 3
-	},
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
@@ -42934,7 +42932,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/clock/directional/north,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "pke" = (
@@ -50047,9 +50045,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "rIa" = (
-/obj/machinery/photocopier{
-	pixel_y = 3
-	},
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/service/library)
 "rIb" = (
@@ -55293,7 +55289,7 @@
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/primary/aft)
 "tAy" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/camera/directional/east{
 	c_tag = "Law Office"
 	},
@@ -58537,7 +58533,7 @@
 "uFD" = (
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/stripes/corner,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
@@ -65187,7 +65183,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
@@ -67562,7 +67558,7 @@
 /turf/open/floor/plating/reinforced,
 /area/station/cargo/storage)
 "xKk" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "xKl" = (
@@ -68168,9 +68164,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "xXh" = (
-/obj/machinery/photocopier{
-	pixel_y = 3
-	},
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "xXi" = (

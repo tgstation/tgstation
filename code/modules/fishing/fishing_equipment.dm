@@ -25,6 +25,7 @@
 	icon_state = "reel_green"
 	line_color = "#2aae34"
 	wiki_desc = "Allows you to fish in lava and plasma rivers and lakes."
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/item/fishing_line/reinforced/Initialize(mapload)
 	. = ..()
@@ -62,6 +63,7 @@
 	fishing_line_traits = FISHING_LINE_STIFF
 	line_color = "#d1cca3"
 	wiki_desc = "Crafted from sinew. It allows you to fish in lava and plasma like the reinforced line, but it'll make the minigame harder."
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/item/fishing_line/sinew/Initialize(mapload)
 	. = ..()

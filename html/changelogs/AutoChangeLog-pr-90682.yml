@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - qol: "MODlink scryers now alert the user if they try to call without a charged power cell."

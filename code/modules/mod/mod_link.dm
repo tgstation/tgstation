@@ -269,6 +269,10 @@
 /obj/item/clothing/neck/link_scryer/ui_action_click(mob/user)
 	if(mod_link.link_call)
 		mod_link.end_call()
+	else if(QDELETED(cell))
+		user.balloon_alert(user, "no cell installed!")
+	else if(!cell.charge)
+		user.balloon_alert(user, "no charge!")
 	else
 		call_link(user, mod_link)
 
