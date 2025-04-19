@@ -4,7 +4,6 @@
  * file2list
  * angle2dir
  * angle2text
- * worldtime2text
  * text2dir_extended & dir2text_short
  */
 

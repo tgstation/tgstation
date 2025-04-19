@@ -15,7 +15,7 @@ import { captureExternalLinks } from 'tgui/links';
 import { render } from 'tgui/renderer';
 import { configureStore } from 'tgui/store';
 import { setupGlobalEvents } from 'tgui-core/events';
-import { setupHotReloading } from 'tgui-dev-server/link/client.cjs';
+import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
 import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
@@ -72,7 +72,7 @@ function setupApp() {
   Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
 
   // Unhide the panel
-  Byond.winset('legacy_output_selector', {
+  Byond.winset('output_selector.legacy_output_selector', {
     left: 'output_browser',
   });
 
@@ -84,10 +84,10 @@ function setupApp() {
   });
 
   // Enable hot module reloading
-  if (module.hot) {
+  if (import.meta.webpackHot) {
     setupHotReloading();
 
-    module.hot.accept(
+    import.meta.webpackHot.accept(
       [
         './audio',
         './chat',

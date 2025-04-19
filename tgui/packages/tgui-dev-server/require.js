@@ -4,6 +4,6 @@
  * @license MIT
  */
 
-import { createRequire } from 'module';
+import { createRequire } from 'node:module';
 
 export const require = createRequire(import.meta.url);

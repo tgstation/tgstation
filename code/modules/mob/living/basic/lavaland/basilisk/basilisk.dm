@@ -29,7 +29,6 @@
 
 /mob/living/basic/mining/basilisk/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	ranged_attacks = AddComponent(/datum/component/ranged_attacks, projectile_type = /obj/projectile/temp/watcher, projectile_sound = 'sound/items/weapons/pierce.ogg')
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(check_lava))
 

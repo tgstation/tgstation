@@ -112,7 +112,8 @@
 /datum/ai_behavior/leave_venue/setup(datum/ai_controller/controller, venue_key)
 	. = ..()
 	var/datum/venue/attending_venue = controller.blackboard[venue_key]
-	set_movement_target(controller, attending_venue.restaurant_portal)
+	var/datum/weakref/portal_ref = attending_venue.current_visitors[controller.pawn]
+	set_movement_target(controller, portal_ref.resolve())
 
 /datum/ai_behavior/leave_venue/perform(seconds_per_tick, datum/ai_controller/controller, venue_key)
 	qdel(controller.pawn) //save the world, my final message, goodbye.

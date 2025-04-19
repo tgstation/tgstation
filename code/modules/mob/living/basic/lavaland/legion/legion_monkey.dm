@@ -20,7 +20,6 @@
 /mob/living/basic/mining/legion/monkey/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
-	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponent(/datum/component/regenerator, outline_colour = COLOR_SOFT_RED)
 
 /mob/living/basic/mining/legion/monkey/assign_abilities()

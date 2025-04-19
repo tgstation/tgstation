@@ -38,6 +38,7 @@
 		return
 
 	source.attack(user, user)
+	user.hud_used?.hunger?.update_hunger_bar()
 
 /datum/element/foodlike_drink/proc/can_keep_drinking(obj/item/reagent_containers/source, mob/living/user)
 	if(QDELETED(source) || user.get_active_held_item() != source)
