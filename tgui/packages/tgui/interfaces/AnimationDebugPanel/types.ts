@@ -27,7 +27,7 @@ type AnimateChain = {
 type AnimateArgument = {
   name: string;
   description: string;
-  arg_types: AnimateArgumentType[];
+  allowed_types: AnimateArgumentType[];
 };
 
 enum AnimateArgumentType {

@@ -16,6 +16,7 @@ ADMIN_VERB(animation_panel, R_DEBUG|R_ADMIN|R_VAREDIT, "Animation Debug Panel", 
 
 	var/list/animate_flags = list()
 	for(var/datum/animate_flag/flag as anything in flags)
+		flag = flags[flag]
 		animate_flags[flag.name] = list(
 			"description" = flag.description,
 			"value" = flag.value,
@@ -24,6 +25,7 @@ ADMIN_VERB(animation_panel, R_DEBUG|R_ADMIN|R_VAREDIT, "Animation Debug Panel", 
 
 	var/list/animate_easings = list()
 	for(var/datum/animate_easing/easing as anything in easings)
+		easing = easings[easing]
 		animate_easings[easing.name] = list(
 			"description" = easing.description,
 			"value" = easing.value,
@@ -32,6 +34,7 @@ ADMIN_VERB(animation_panel, R_DEBUG|R_ADMIN|R_VAREDIT, "Animation Debug Panel", 
 
 	var/list/animate_easing_flags = list()
 	for(var/datum/animate_easing_flag/easing_flag as anything in easing_flags)
+		easing_flag = easing_flags[easing_flag]
 		animate_easing_flags[easing_flag.name] = list(
 			"description" = easing_flag.description,
 			"value" = easing_flag.value,
@@ -40,6 +43,7 @@ ADMIN_VERB(animation_panel, R_DEBUG|R_ADMIN|R_VAREDIT, "Animation Debug Panel", 
 
 	var/list/animate_arguments = list()
 	for(var/datum/animate_argument/argument as anything in arguments)
+		argument = arguments[argument]
 		animate_arguments[argument.name] = list(
 			"description" = argument.description,
 			"allowed_types" = list(),
