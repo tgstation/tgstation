@@ -239,7 +239,7 @@
 
 	. = cures.len
 	for(var/C_id in cures)
-		if(!affected_mob.reagents.has_reagent(C_id))
+		if(!affected_mob.reagents.has_reagent(target_reagent = C_id, check_subtypes = TRUE))
 			.--
 	if(!. || (needs_all_cures && . < cures.len))
 		return FALSE
