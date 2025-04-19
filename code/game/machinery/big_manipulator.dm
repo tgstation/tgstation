@@ -17,6 +17,7 @@
 #define STATUS_BUSY "busy"
 #define STATUS_IDLE "idle"
 #define STATUS_INSTALLING_WORKER "installing_worker"
+#define STATUS_UNINSTALLING_WORKER "uninstalling_worker"
 
 #define WORKER_SINGLE_USE "single"
 #define WORKER_EMPTY_USE "empty"
@@ -246,10 +247,14 @@
 	if(status == STATUS_BUSY)
 		balloon_alert(user, "turn it off first!")
 		return
+	if(status == STATUS_UNINSTALLING_WORKER)
+		balloon_alert(user, "already uninstalling worker, please wait")
+		return
 	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
 	if(!istype(poor_monkey, /mob/living/carbon/human/species/monkey))
 		monkey_worker = null
 		return
+	status = STATUS_UNINSTALLING_WORKER
 	balloon_alert(user, "uninstalling monkey worker...")
 	if(!do_after(user, 3 SECONDS, src))
 		balloon_alert(user, "interrupted")
@@ -259,6 +264,7 @@
 	poor_monkey.forceMove(get_turf(src))
 	REMOVE_TRAIT(poor_monkey, TRAIT_AI_PAUSED, "[src]")
 	monkey_worker = null
+	status = STATUS_IDLE
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
 	if(!ismonkey(monkey) || !isnull(monkey_worker))
