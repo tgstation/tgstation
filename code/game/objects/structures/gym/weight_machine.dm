@@ -23,7 +23,7 @@
 	var/drunk_message = "You try for a new record and pull through! Through a muscle that is."
 
 	// the total reps you can do before you hit stamcrit based on fitness level
-	var/static/list/total_workout_reps = list(3, 4, 4, 5, 6, 6, 7)
+	var/static/list/total_workout_reps = list(3, 4, 4, 5, 6, 6, 7, 8)
 
 	///List of messages picked when using the machine.
 	var/static/list/more_weight = list(
