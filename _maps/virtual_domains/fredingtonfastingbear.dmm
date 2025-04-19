@@ -150,10 +150,12 @@
 	pixel_x = -5;
 	pixel_y = 4
 	},
-/obj/structure/table,
 /obj/machinery/digital_clock/bitrunner{
 	pixel_y = 28;
 	pixel_x = 5
+	},
+/obj/structure/table{
+	flags_1 = 64
 	},
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain)
@@ -324,7 +326,9 @@
 	pixel_y = 14;
 	icon_state = "pizzabox_messy"
 	},
-/obj/structure/table,
+/obj/structure/table{
+	flags_1 = 64
+	},
 /obj/item/food/pizzaslice/meat{
 	pixel_x = -4;
 	pixel_y = 14
@@ -1063,6 +1067,10 @@
 /obj/bitrunning/animatronic_movement_node/engineering/stage,
 /turf/open/floor/wood,
 /area/virtual_domain)
+"UY" = (
+/obj/structure/table,
+/turf/closed/wall/r_wall,
+/area/virtual_domain)
 "Vd" = (
 /obj/effect/landmark/bitrunning/cache_goal_turf,
 /obj/effect/turf_decal/loading_area,
@@ -1096,7 +1104,6 @@
 	pixel_x = -12;
 	pixel_y = 8
 	},
-/obj/structure/table,
 /obj/item/reagent_containers/cup/glass/coffee{
 	pixel_x = 9;
 	pixel_y = 14
@@ -1106,6 +1113,9 @@
 	pixel_y = 3
 	},
 /obj/machinery/light/very_dim/directional/north,
+/obj/structure/table{
+	flags_1 = 64
+	},
 /turf/open/floor/iron/cafeteria,
 /area/virtual_domain)
 "VU" = (
@@ -1187,6 +1197,12 @@
 "Zf" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/kitchen/small,
+/area/virtual_domain)
+"Zg" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table,
+/turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Zj" = (
 /obj/machinery/light/small/dim/directional/west,
@@ -2074,7 +2090,7 @@ NA
 vy
 NA
 NA
-NA
+Zg
 yz
 yz
 yz
@@ -2115,7 +2131,7 @@ Fc
 jE
 Fc
 Fc
-Fc
+UY
 Fc
 Fc
 Fc

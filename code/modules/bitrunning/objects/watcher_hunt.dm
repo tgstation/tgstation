@@ -66,8 +66,7 @@
 		if(my_score.current_score < 0)
 			my_score.current_score = 0
 		my_score.current_multiplier = 1
-	else
-		my_score.current_multiplier = 1
+
 	playsound(my_score, pick(drop_sounds), 100, TRUE)
 	qdel(src)
 
@@ -241,7 +240,7 @@
 	human_outfit = /datum/outfit/job/clown
 
 /obj/bitrunning/target/bad
-	score = -250
+	score = 0
 	drop_sounds = list(
 		'sound/machines/synth/synth_no.ogg'
 	)
@@ -420,8 +419,7 @@
 	var/return_overlays = list()
 
 	if(!started)
-		var/mutable_appearance/click_me_point = mutable_appearance('icons/hud/screen_gen.dmi', "arrow_perma", offset_spokesman = src, plane = POINT_PLANE)
-		click_me_point.pixel_z = 10
+		var/mutable_appearance/click_me_point = mutable_appearance('icons/obj/machines/bitrunning.dmi', "click_me")
 		return_overlays += click_me_point
 		return return_overlays
 

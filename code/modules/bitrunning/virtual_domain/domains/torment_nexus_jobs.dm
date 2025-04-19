@@ -14,8 +14,9 @@
 		custom_spawns += spawner
 
 	for(var/obj/item/gun/ballistic/ballistic_gun in created_atoms)
-		ballistic_gun.magazine.empty_magazine()
-		ballistic_gun.update_icon()
+		if(ballistic_gun.magazine)
+			ballistic_gun.magazine.empty_magazine()
+			ballistic_gun.update_icon()
 
 	for(var/obj/item/gun/energy/energy_gun in created_atoms)
 		energy_gun.cell.charge = 0

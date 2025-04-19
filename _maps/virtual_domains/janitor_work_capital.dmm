@@ -8457,9 +8457,22 @@
 /obj/effect/turf_decal/siding/wideplating/dark,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/structure/rack,
-/obj/item/soap/homemade,
-/obj/item/soap/homemade,
-/obj/item/soap/homemade,
+/obj/item/soap/homemade{
+	pixel_y = 8
+	},
+/obj/item/soap/homemade{
+	pixel_y = 8
+	},
+/obj/item/soap/homemade{
+	pixel_y = 8
+	},
+/obj/item/pinpointer/mess_finder{
+	pixel_x = -9
+	},
+/obj/item/pinpointer/mess_finder,
+/obj/item/pinpointer/mess_finder{
+	pixel_x = 10
+	},
 /turf/open/floor/stone,
 /area/virtual_domain/fullbright)
 "GN" = (
@@ -12292,11 +12305,6 @@
 /turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "Vo" = (
-/obj/structure/fermenting_barrel{
-	pixel_x = 13;
-	pixel_y = 15;
-	anchored = 1
-	},
 /obj/item/reagent_containers/cup/glass/bottle/ritual_wine{
 	pixel_x = 2;
 	pixel_y = 19

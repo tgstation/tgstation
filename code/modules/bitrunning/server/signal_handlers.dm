@@ -106,6 +106,8 @@
 			jani_scanner.our_room = detect_room(get_turf(jani_scanner))
 			for(var/turf/floor in jani_scanner.our_room) // We fuck up the corpses here because this is our opportunity to do so after they've been spawned.
 				for(var/mob/living/carbon/human/corpse in floor)
+					if(corpse.ears)
+						qdel(corpse.ears)
 					for(var/_ in 1 to rand(5, 15))
 						corpse.apply_damage(
 							damage = rand(25,50),
@@ -117,6 +119,11 @@
 							sharpness = pick(list(null, SHARP_EDGED, SHARP_POINTY)),
 							attack_direction = pick(list(NORTH,SOUTH,EAST,WEST,NORTHWEST,NORTHEAST,SOUTHWEST,SOUTHEAST)),
 						)
+
+
+		if(istype(thing, /obj/item/pinpointer/mess_finder))
+			var/obj/item/pinpointer/mess_finder/mess_finder = thing
+			mess_finder.unique_id = REF(src)
 
 		if(istype(thing, /obj/machinery/janitorial_submit))
 			var/obj/machinery/janitorial_submit/jani_plunger = thing

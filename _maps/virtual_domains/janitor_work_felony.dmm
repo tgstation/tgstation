@@ -344,6 +344,17 @@
 /obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/iron,
 /area/virtual_domain/fullbright)
+"lg" = (
+/obj/structure/rack,
+/obj/item/pinpointer/mess_finder{
+	pixel_x = 10
+	},
+/obj/item/pinpointer/mess_finder,
+/obj/item/pinpointer/mess_finder{
+	pixel_x = -9
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
 "lo" = (
 /obj/effect/landmark/bitrunning/bitrunner_spawn,
 /turf/open/floor/iron,
@@ -1896,7 +1907,7 @@ iH
 pi
 zq
 lo
-RS
+lg
 pi
 gJ
 "}

@@ -376,7 +376,7 @@
 		lightbulb.set_on(TRUE)
 	movement_process_timer = addtimer(CALLBACK(src, PROC_REF(movement_tick)), 5 SECONDS, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
 	every_minute_timer = addtimer(CALLBACK(src, PROC_REF(minute_tick)), 1.5 MINUTES, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
-	six_minute_timer = addtimer(CALLBACK(src, PROC_REF(victory)), 6 MINUTES, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_DELETE_ME)
+	six_minute_timer = addtimer(CALLBACK(src, PROC_REF(victory)), 9 MINUTES, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_DELETE_ME)
 	power_drain_timer = addtimer(CALLBACK(src, PROC_REF(drain_power)), 9.6 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /obj/bitrunning/animatronic_controller/proc/minute_tick()

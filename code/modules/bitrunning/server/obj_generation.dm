@@ -40,7 +40,9 @@
 /// Generates a new avatar for the bitrunner.
 /obj/machinery/quantum_server/proc/generate_avatar(turf/destination, datum/outfit/netsuit)
 	var/mob/living/carbon/human/avatar = new(destination)
-
+	if(bitrunning_network == BITRUNNER_DOMAIN_SECURITY)
+		avatar.set_species(/datum/species/prisoner)
+		avatar.fully_replace_character_name(null, "Prisoner #[rand(1000,9999)]")
 	var/outfit_path = generated_domain.forced_outfit || netsuit
 	var/datum/outfit/to_wear = new outfit_path()
 
@@ -68,15 +70,16 @@
 		for(var/obj/thing in avatar.held_items)
 			qdel(thing)
 
-	var/obj/item/storage/backpack/bag = avatar.back
-	if(istype(bag))
-		QDEL_LIST(bag.contents)
+	if(!bitrunning_network == BITRUNNER_DOMAIN_SECURITY)
+		var/obj/item/storage/backpack/bag = avatar.back
+		if(istype(bag))
+			QDEL_LIST(bag.contents)
 
-		bag.contents += list(
-			new /obj/item/storage/box/survival,
-			new /obj/item/storage/medkit/regular,
-			new /obj/item/flashlight,
-		)
+			bag.contents += list(
+				new /obj/item/storage/box/survival,
+				new /obj/item/storage/medkit/regular,
+				new /obj/item/flashlight,
+			)
 
 	var/obj/item/card/id/outfit_id = avatar.wear_id
 	if(outfit_id)

@@ -644,7 +644,16 @@
 /area/virtual_domain/fullbright)
 "yx" = (
 /obj/structure/rack,
-/obj/item/soap/nanotrasen,
+/obj/item/soap/nanotrasen{
+	pixel_y = 9
+	},
+/obj/item/pinpointer/mess_finder{
+	pixel_x = -9
+	},
+/obj/item/pinpointer/mess_finder,
+/obj/item/pinpointer/mess_finder{
+	pixel_x = 10
+	},
 /turf/open/floor/iron/dark,
 /area/virtual_domain/fullbright)
 "yD" = (

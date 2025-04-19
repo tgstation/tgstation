@@ -128,6 +128,7 @@
 	},
 /obj/effect/turf_decal/siding/thinplating_new,
 /obj/structure/railing,
+/obj/bitrunning/boulder_checkpoint,
 /turf/open/floor/stone,
 /area/virtual_domain/fullbright)
 "kt" = (
@@ -196,6 +197,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
 	},
+/obj/structure/holosign/barrier/engineering,
 /turf/open/floor/stone,
 /area/virtual_domain/fullbright)
 "mS" = (
@@ -238,7 +240,8 @@
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /obj/vehicle/ridden/speedbike/red{
 	dir = 8;
-	anchored = 1
+	anchored = 1;
+	key_type = /obj/item/key/security
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
@@ -263,6 +266,7 @@
 	},
 /obj/effect/turf_decal/siding/thinplating_new,
 /obj/structure/railing,
+/obj/bitrunning/boulder_checkpoint,
 /turf/open/floor/stone,
 /area/virtual_domain/fullbright)
 "pd" = (
@@ -338,12 +342,22 @@
 	dir = 1
 	},
 /area/virtual_domain/fullbright)
+"sN" = (
+/obj/effect/turf_decal/siding/thinplating_new{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/thinplating_new,
+/obj/structure/railing,
+/obj/structure/holosign/barrier/engineering,
+/turf/open/floor/stone,
+/area/virtual_domain/fullbright)
 "sO" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/vehicle/ridden/atv{
 	dir = 4;
-	anchored = 1
+	anchored = 1;
+	key_type = /obj/item/key/security
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 1
@@ -497,7 +511,8 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/vehicle/ridden/atv{
 	dir = 4;
-	anchored = 1
+	anchored = 1;
+	key_type = /obj/item/key/security
 	},
 /turf/open/floor/asphalt,
 /area/virtual_domain/fullbright)
@@ -544,6 +559,7 @@
 "Aw" = (
 /obj/structure/railing,
 /obj/structure/fans/tiny,
+/obj/bitrunning/boulder_checkpoint,
 /turf/open/floor/catwalk_floor/iron,
 /area/virtual_domain/fullbright)
 "Ay" = (
@@ -560,6 +576,7 @@
 /obj/structure/billboard/donk_n_go{
 	density = 0
 	},
+/obj/bitrunning/boulder_checkpoint,
 /turf/open/floor/stone,
 /area/virtual_domain/fullbright)
 "AU" = (
@@ -606,6 +623,7 @@
 /obj/structure/fluff/bus/passable{
 	icon_state = "wheredahoodat"
 	},
+/obj/bitrunning/boulder_checkpoint,
 /turf/open/floor/catwalk_floor/iron,
 /area/virtual_domain/fullbright)
 "Cv" = (
@@ -693,6 +711,7 @@
 	},
 /obj/effect/turf_decal/siding/thinplating_new,
 /obj/structure/railing,
+/obj/bitrunning/boulder_checkpoint,
 /turf/open/floor/stone,
 /area/virtual_domain/fullbright)
 "El" = (
@@ -810,7 +829,8 @@
 	},
 /obj/vehicle/ridden/atv{
 	dir = 4;
-	anchored = 1
+	anchored = 1;
+	key_type = /obj/item/key/security
 	},
 /turf/open/floor/iron/dark/side,
 /area/virtual_domain/fullbright)
@@ -855,7 +875,8 @@
 	},
 /obj/vehicle/ridden/speedbike{
 	dir = 8;
-	anchored = 1
+	anchored = 1;
+	key_type = /obj/item/key/security
 	},
 /turf/open/floor/asphalt,
 /area/virtual_domain/fullbright)
@@ -1263,7 +1284,8 @@
 	},
 /obj/vehicle/ridden/speedbike/red{
 	dir = 8;
-	anchored = 1
+	anchored = 1;
+	key_type = /obj/item/key/security
 	},
 /turf/open/floor/iron/dark/side,
 /area/virtual_domain/fullbright)
@@ -1401,7 +1423,7 @@ ut
 xC
 WU
 hM
-Ej
+sN
 Ti
 Wr
 rZ
@@ -1680,7 +1702,7 @@ ut
 xC
 WU
 hM
-Ej
+sN
 dJ
 bM
 nL
@@ -1696,7 +1718,7 @@ AU
 xC
 WU
 hM
-yJ
+lz
 pg
 bd
 nL

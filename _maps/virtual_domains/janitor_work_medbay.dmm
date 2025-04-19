@@ -532,6 +532,13 @@
 	pixel_x = 7;
 	pixel_y = 8
 	},
+/obj/item/pinpointer/mess_finder{
+	pixel_x = 10
+	},
+/obj/item/pinpointer/mess_finder,
+/obj/item/pinpointer/mess_finder{
+	pixel_x = -9
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/virtual_domain/fullbright)
 "yG" = (
