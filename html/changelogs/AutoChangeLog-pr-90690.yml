@@ -1,0 +1,5 @@
+author: "Ezel/Improvedname, JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Constructs now have their proper factions, so Wizard constructs can't hit Wizard Apprentices."
+  - bugfix: "Juggernaut's Gauntlet echo spell now respects factions."
