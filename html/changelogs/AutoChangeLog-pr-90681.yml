@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Human skin suit may trick the health analyzer... sort of"
-  - bugfix: "Human skin suit no longer gives a useless action"
