@@ -57,7 +57,7 @@
 
 /datum/bounty/item/assistant/toolbox/applies_to(obj/shipped)
 	var/list/packing_list = static_packing_list.Copy()
-	for(var/atom/item_contents as anything in shipped.contents)
+	for(var/obj/item_contents as anything in shipped.contents)
 		for(var/match_type in packing_list)
 			if(istype(item_contents, match_type))
 				packing_list -= match_type
@@ -68,7 +68,7 @@
 
 /datum/bounty/item/assistant/toolbox/ship(obj/shipped)
 	. = ..()
-	for(var/atom/object as anything in shipped.contents)
+	for(var/obj/object as anything in shipped.contents)
 		if(!is_type_in_list(object, static_packing_list))
 			object.forceMove(shipped.drop_location())
 
