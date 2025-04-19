@@ -59,6 +59,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	to_chat(chap, span_boldnotice("\"[quote]\""))
 	to_chat(chap, span_notice("[desc]"))
+	chap.faction |= FACTION_HOLY
 
 /// Activates if religious sect is reset by admins, should clean up anything you added on conversion.
 /datum/religion_sect/proc/on_deconversion(mob/living/chap)
@@ -66,6 +67,7 @@
 	to_chat(chap, span_boldnotice("You have lost the approval of \the [name]."))
 	if(chap.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(chap, span_notice("Return to an altar to reform your sect."))
+	chap.faction -= FACTION_HOLY
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/sacrifice, mob/living/chap)
