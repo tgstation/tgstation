@@ -36,4 +36,8 @@
 /datum/animate_flag/end_loop
 	name = "End Loop"
 	description = "Tells previous animation sequences to stop looping and end naturally. The delay for starting this new sequence is adjusted based on that."
+#ifndef SPACEMAN_DMM
 	value = ANIMATION_END_LOOP
+#else
+	value = 0
+#endif

@@ -3111,6 +3111,7 @@
 #include "code\modules\animate\animate_easing.dm"
 #include "code\modules\animate\animate_easing_flag.dm"
 #include "code\modules\animate\animate_flag.dm"
+#include "code\modules\animate\animate_interface.dm"
 #include "code\modules\animate\animate_panel.dm"
 #include "code\modules\antagonists\_common\antag_datum.dm"
 #include "code\modules\antagonists\_common\antag_helpers.dm"
