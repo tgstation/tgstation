@@ -99,12 +99,12 @@
 
 	var/datum/hud/our_hud = reference_frame.hud_used
 	var/list/our_groups = our_hud.master_groups
-	if(!our_groups[current_group])
+	if (!our_groups[current_group])
 		// We assume we'll always have at least one group
 		current_group = our_groups[length(our_hud.master_groups)]
 
 	var/list/groups = list()
-	for(var/key in our_groups)
+	for (var/key in our_groups)
 		groups += key
 
 	data["enable_group_view"] = length(groups) > 1
@@ -112,30 +112,14 @@
 	data["present_groups"] = groups
 
 	var/list/plane_info = list()
-	data["plane_info"] = plane_info
-	var/list/relay_deets = list()
-	data["relay_info"] = relay_deets
-	var/list/filter_connections = list()
-	data["filter_connect"] = filter_connections
-
-	var/list/filter_queue = list()
-
-	// Assoc of render targets -> planes
-	// Gotta be able to look these up so filter stuff can work
-	var/list/render_target_to_plane = list()
-	// Assoc list of pending planes -> relays
-	// Used to ensure the incoming_relays list is filled, even if the relay's generated before the plane's processed
-	var/list/pending_relays = list()
 
 	var/list/our_planes = our_hud?.get_planes_from(current_group)
-	for(var/plane_string as anything in our_planes)
+	for (var/plane_string as anything in our_planes)
 		var/list/this_plane = list()
 		var/atom/movable/screen/plane_master/plane = our_planes[plane_string]
-		var/string_plane = "[plane.plane]"
 		this_plane["name"] = plane.name
 		this_plane["documentation"] = plane.documentation
 		this_plane["plane"] = plane.plane
-		this_plane["our_ref"] = string_plane
 		this_plane["offset"] = plane.offset
 		this_plane["real_plane"] = plane.real_plane
 		this_plane["renders_onto"] = plane.render_relay_planes
@@ -143,50 +127,40 @@
 		this_plane["color"] = plane.color
 		this_plane["alpha"] = plane.alpha
 		this_plane["render_target"] = plane.render_target
-		this_plane["intended_hidden"] = plane.force_hidden
+		this_plane["force_hidden"] = plane.force_hidden
 
+		var/list/relays = list()
+		var/list/filters = list()
 
-		var/list/incoming_relays = list()
-		this_plane["incoming_relays"] = incoming_relays
-
-		for(var/pending_relay in pending_relays[string_plane])
-			incoming_relays += pending_relay
-			var/list/this_relay = relay_deets[pending_relay]
-			this_relay["target_index"] = length(incoming_relays)
-
-
-		this_plane["outgoing_relays"] = list()
-
-		// You can think of relays as connections between plane master "nodes
-		// They do have some info of their own tho, best to pass that along
-		for(var/atom/movable/render_plane_relay/relay in plane.relays)
-			var/string_target = "[relay.plane]"
+		for (var/atom/movable/render_plane_relay/relay as anything in plane.relays)
 			var/list/this_relay = list()
 			this_relay["name"] = relay.name
 			this_relay["source"] = plane.plane
-			this_relay["source_ref"] = string_plane
 			this_relay["target"] = relay.plane
-			this_relay["target_ref"] = string_target
 			this_relay["layer"] = relay.layer
+			this_relay["our_ref"] = "[plane.plane]-[relay.plane]"
+			this_relay["blend_mode"] = GLOB.blend_names["[relay.blend_mode]"]
+			relays += list(this_relay)
 
-			// Now taht we've encoded our relay, we need to hand out references to it to our source plane, alongside the target plane
-			var/relay_ref = "[string_plane]-[string_target]"
-			this_relay["our_ref"] = relay_ref
-			relay_deets[relay_ref] = this_relay
-			this_plane["outgoing_relays"] += relay_ref
+		for (var/filter_id in plane.filter_data)
+			var/list/filter = plane.filter_data[filter_id]
+			if(!filter["render_source"])
+				continue
 
-			// If we've already encoded our target plane, update its incoming relays list
-			// Otherwise, we'll handle this later
-			var/list/existing_target = plane_info[string_target]
-			if(existing_target)
-				existing_target["incoming_relays"] += relay_ref
-			else
-				var/list/pending_plane = pending_relays[string_target]
-				if(!pending_plane)
-					pending_plane = list()
-					pending_relays[string_target] = pending_plane
-				pending_plane += relay_ref
+			var/list/filter_info = filter.Copy()
+			filter_info["name"] = filter_id
+			filter_info["our_ref"] = "[plane.plane]-[filter_id]"
+			filters += list(filter_info)
 
+		this_plane["relays"] = relays
+		this_plane["filters"] = filters
+
+		plane_info += list(this_plane)
+
+	data["planes"] += plane_info
+	return data
+
+/*
 		this_plane["incoming_filters"] = list()
 		this_plane["outgoing_filters"] = list()
 		// We're gonna collect a list of filters, partly because they're useful info
@@ -328,6 +302,8 @@
 #undef COMMAND_DEPTH_INCREASE
 #undef COMMAND_NEXT_PARENT
 
+*/
+
 /datum/plane_master_debug/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -343,14 +319,19 @@
 	switch(action)
 		if("rebuild")
 			group.rebuild_hud()
+
 		if("reset_mob")
 			set_target(null)
+
 		if("toggle_mirroring")
 			set_mirroring(!mirror_target)
+
 		if("vv_mob")
 			owner.owner.debug_variables(reference_frame)
+
 		if("set_group")
 			current_group = params["target_group"]
+
 		if("connect_relay")
 			var/source_plane = params["source"]
 			var/target_plane = params["target"]
@@ -359,35 +340,41 @@
 				return
 			source.add_relay_to(target_plane)
 			return TRUE
+
 		if("disconnect_relay")
 			var/source_plane = params["source"]
 			var/target_plane = params["target"]
 			var/atom/movable/screen/plane_master/source = our_planes["[source_plane]"]
 			source.remove_relay_from(text2num(target_plane))
 			return TRUE
+
 		if("disconnect_filter")
 			var/target_plane = params["target"]
 			var/atom/movable/screen/plane_master/filtered_plane = our_planes["[target_plane]"]
 			filtered_plane.remove_filter(params["name"])
 			return TRUE
+
 		if("vv_plane")
 			var/plane_edit = params["edit"]
 			var/atom/movable/screen/plane_master/edit = our_planes["[plane_edit]"]
 			var/mob/user = ui.user
 			user?.client?.debug_variables(edit)
 			return TRUE
+
 		if("set_alpha")
 			var/plane_edit = params["edit"]
 			var/atom/movable/screen/plane_master/edit = our_planes["[plane_edit]"]
 			var/newalpha = params["alpha"]
 			animate(edit, 0.4 SECONDS, alpha = newalpha)
 			return TRUE
+
 		if("edit_color_matrix")
 			var/plane_edit = params["edit"]
 			var/atom/movable/screen/plane_master/edit = our_planes["[plane_edit]"]
 			var/mob/user = ui.user
 			user?.client?.open_color_matrix_editor(edit)
 			return TRUE
+
 		if("edit_filters")
 			var/plane_edit = params["edit"]
 			var/atom/movable/screen/plane_master/edit = our_planes["[plane_edit]"]
