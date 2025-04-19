@@ -55,13 +55,13 @@ export const Radio = (props) => {
   let height = 133;
   if (subspace) {
     if (channels.length > 0) {
-      height += channels.length * 21 + 6;
+      height += channels.length * 20 + 6;
     } else {
       height += 24;
     }
   }
   return (
-    <Window width={360} height={height}>
+    <Window width={376} height={height}>
       <Window.Content>
         <Section>
           <LabeledList>
