@@ -53,7 +53,7 @@ ADMIN_VERB(animation_panel, R_DEBUG|R_ADMIN|R_VAREDIT, "Animation Debug Panel", 
 /datum/animate_panel/ui_data(mob/user)
 	. = list()
 	.["target"] = target_string_by_user[ref(user)]
-	.["chain"] = animate_chains_by_user[ref(user)].serialize_json(list())
+	.["chain"] = animate_chains_by_user[ref(user)]?.serialize_json(list())
 	return .
 
 /datum/animate_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
