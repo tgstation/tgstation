@@ -156,7 +156,7 @@ export const Mule = (props) => {
 
   return (
     <Window width={350} height={500}>
-      <Window.Content>
+      <Window.Content scrollable>
         <InterfaceLockNoticeBox />
         <Section
           title="Status"

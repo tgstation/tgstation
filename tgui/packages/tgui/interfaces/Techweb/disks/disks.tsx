@@ -1,4 +1,4 @@
-import { Section } from 'tgui-core/components';
+import { Section, VirtualList } from 'tgui-core/components';
 
 import { useRemappedBackend } from '../helpers';
 import { TechNode } from '../nodes/TechNode';
@@ -36,7 +36,15 @@ export function TechwebTechDisk(props) {
 
   const { stored_research } = t_disk;
 
-  return Object.keys(stored_research)
-    .map((x) => ({ id: x }))
-    .map((n) => <TechNode key={n.id} nocontrols node={n as TechwebNode} />);
+  return (
+    <Section scrollable fill>
+      <VirtualList>
+        {Object.keys(stored_research)
+          .map((x) => ({ id: x }))
+          .map((n) => (
+            <TechNode key={n.id} nocontrols node={n as TechwebNode} />
+          ))}
+      </VirtualList>
+    </Section>
+  );
 }

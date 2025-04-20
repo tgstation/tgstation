@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { Button, Divider, Flex, Tabs } from 'tgui-core/components';
+import {
+  Button,
+  Divider,
+  Flex,
+  Section,
+  Tabs,
+  VirtualList,
+} from 'tgui-core/components';
 
 import { useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
@@ -87,16 +94,24 @@ export function TechNodeDetail(props: TechNodeDetailProps) {
       </Flex.Item>
       {tabIndex === 0 && (
         <Flex.Item className="Techweb__OverviewNodes" grow>
-          {prereqNodes.map((n) => (
-            <TechNode key={n.id} node={n} />
-          ))}
+          <Section scrollable fill>
+            <VirtualList>
+              {prereqNodes.map((n) => (
+                <TechNode key={n.id} node={n} />
+              ))}
+            </VirtualList>
+          </Section>
         </Flex.Item>
       )}
       {tabIndex === 1 && (
         <Flex.Item className="Techweb__OverviewNodes" grow>
-          {unlockedNodes.map((n) => (
-            <TechNode key={n.id} node={n} />
-          ))}
+          <Section scrollable fill>
+            <VirtualList>
+              {unlockedNodes.map((n) => (
+                <TechNode key={n.id} node={n} />
+              ))}
+            </VirtualList>
+          </Section>
         </Flex.Item>
       )}
     </Flex>

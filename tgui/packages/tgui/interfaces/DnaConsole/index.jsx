@@ -37,7 +37,7 @@ export const DnaConsole = (props) => {
           {timeToPulse}s
         </Dimmer>
       )}
-      <Window.Content>
+      <Window.Content scrollable>
         <Stack fill vertical>
           <Stack.Item>
             <DnaScanner />
