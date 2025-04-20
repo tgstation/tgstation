@@ -8,8 +8,8 @@
 	///Timer for the blood mark expiration
 	var/blood_target_reset_timer
 
-	///Has a vote been called for a leader?
-	var/cult_vote_called = FALSE
+	///Has the cult leader passed on their responsibilities to someone else?
+	var/leader_passed_on = FALSE
 	///The cult leader
 	var/datum/antagonist/cult/cult_leader_datum
 	///Has the mass teleport been used yet?

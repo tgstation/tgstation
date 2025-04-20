@@ -54,7 +54,7 @@
 	var/span = "cult italic"
 	var/datum/antagonist/cult/cult_datum = user.mind.has_antag_datum(/datum/antagonist/cult)
 	if(cult_datum.is_cult_leader())
-		span = "cultlarge"
+		span = "cult_large"
 		title = "Master"
 	else if(!ishuman(user))
 		title = "Construct"
@@ -89,12 +89,21 @@
 			var/link = FOLLOW_LINK(player_list, user)
 			to_chat(player_list, "[link] [my_message]")
 
-/datum/action/innate/cult/mastervote
-	name = "Assert Leadership"
+/datum/action/innate/cult/master/pass_role
+	name = "Pass the Control"
+	desc = "Pass the Master role onto another willing cultist."
 	button_icon_state = "cultvote"
-	// So you can use it while your hands are cuffed or you are bucked
-	// If you want to assert your leadership while handcuffed to a chair, be my guest
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_CONSCIOUS|AB_CHECK_HANDS_BLOCKED
+
+/datum/action/innate/cult/master/pass_role/IsAvailable(feedback = FALSE)
+	. = ..()
+	if (!.)
+		return
+	var/datum/antagonist/cult/mind_cult_datum = owner.mind.has_antag_datum(/datum/antagonist/cult)
+	if(!mind_cult_datum || mind_cult_datum.cult_team.leader_passed_on)
+		return FALSE
+
+/*
 
 /datum/action/innate/cult/mastervote/IsAvailable(feedback = FALSE)
 	if(!owner || !owner.mind)
@@ -197,6 +206,8 @@
 	if(!cult_datum.make_cult_leader())
 		CRASH("[cult_datum.owner.current] was supposed to turn into the leader, but they didn't for some reason. This isn't supposed to happen unless an Admin messed with it.")
 	return TRUE
+
+*/
 
 /datum/action/innate/cult/master/IsAvailable(feedback = FALSE)
 	if(!owner.mind || GLOB.cult_narsie)
