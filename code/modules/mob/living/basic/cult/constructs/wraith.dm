@@ -20,6 +20,7 @@
 
 /mob/living/basic/construct/wraith/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SEE_BLESSED_TILES, INNATE_TRAIT)
 	var/datum/action/cooldown/spell/jaunt/ethereal_jaunt/shift/jaunt = locate() in actions
 	if(isnull(jaunt))
 		return .
