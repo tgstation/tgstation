@@ -500,14 +500,28 @@
 	possible_transfer_amounts = list(5, 10)
 	amount_per_transfer_from_this = 5
 	spillable = FALSE
-	///variable to tell if the bottle can be refilled
+	/// Do we currently have our pump cap on?
 	var/cap_on = TRUE
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/Initialize(mapload)
+	. = ..()
+	register_context()
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to toggle the pump cap.")
 	. += span_notice("Use a pen on it to rename it.")
-	return
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = (cap_on ? "Remove Pump Cap" : "Add Pump Cap")
+	if(IS_WRITING_UTENSIL(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Write Label"
+	else if(cap_on && tool.is_refillable())
+		context[SCREENTIP_CONTEXT_LMB] = "Use Pump"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 //when you attack the syrup bottle with a container it refills it
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -521,14 +535,15 @@
 	if(!user.can_write(tool))
 		return ITEM_INTERACT_BLOCKING
 
-	var/inputvalue = tgui_input_text(user, "What would you like to label the syrup bottle?", "Syrup Bottle Labelling", max_length = MAX_NAME_LEN)
-	if(!inputvalue)
-		return ITEM_INTERACT_BLOCKING
+	var/input_name = tgui_input_text(user, "What would you like to label the syrup bottle?", "Syrup Bottle Labelling", max_length = MAX_NAME_LEN)
 	if(!user.can_perform_action(src))
 		return ITEM_INTERACT_BLOCKING
 
 	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-	name = "[(inputvalue ? "[inputvalue]" : null)] bottle"
+	if(input_name)
+		name = "[input_name] bottle"
+	else
+		name = initial(name)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/refillable_act(mob/user, obj/item/tool)
@@ -548,12 +563,15 @@
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/click_alt(mob/user)
 	cap_on = !cap_on
-	if(!cap_on)
-		icon_state = "syrup_open"
-		balloon_alert(user, "removed pump cap")
-	else
+	if(cap_on)
 		icon_state = "syrup"
+		spillable = FALSE
 		balloon_alert(user, "put pump cap on")
+	else
+		icon_state = "syrup_open"
+		spillable = TRUE
+		balloon_alert(user, "removed pump cap")
+		
 	update_icon_state()
 	return CLICK_ACTION_SUCCESS
 
