@@ -1,5 +1,5 @@
 /// How likely are we to do something weird to the clone? Persists between construct/deconstruct
-GLOBAL_VAR(experimental_cloner_fuckup_chance)
+GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 
 /// Machine which experimentally clones people you scanned with the experimental cloner scanner
 /obj/machinery/experimental_cloner
@@ -25,8 +25,6 @@ GLOBAL_VAR(experimental_cloner_fuckup_chance)
 /obj/machinery/experimental_cloner/Initialize(mapload)
 	. = ..()
 	sound_loop = new(src, FALSE)
-	if (isnull(GLOB.experimental_cloner_fuckup_chance))
-		GLOB.experimental_cloner_fuckup_chance = 50
 
 /obj/machinery/experimental_cloner/process()
 	if (machine_stat & BROKEN || machine_stat & NOPOWER)

@@ -320,6 +320,7 @@
 #include "code\__DEFINES\dcs\signals\signals_changeling.dm"
 #include "code\__DEFINES\dcs\signals\signals_circuit.dm"
 #include "code\__DEFINES\dcs\signals\signals_client.dm"
+#include "code\__DEFINES\dcs\signals\signals_cloner.dm"
 #include "code\__DEFINES\dcs\signals\signals_closet.dm"
 #include "code\__DEFINES\dcs\signals\signals_clothing.dm"
 #include "code\__DEFINES\dcs\signals\signals_container.dm"
