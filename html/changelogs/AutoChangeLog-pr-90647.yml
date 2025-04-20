@@ -1,0 +1,4 @@
+author: "Kapu1178, Cirrial"
+delete-after: True
+changes:
+  - bugfix: "The server-configurable shuttle call when enough of the station dies will now actually call the shuttle."
