@@ -41,6 +41,7 @@
 /datum/component/keep_me_secure/UnregisterFromParent()
 	STOP_PROCESSING(SSobj, src)
 	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE)
 
 /// Returns whether the game is supposed to consider the parent "secure".
 /datum/component/keep_me_secure/proc/is_secured()
