@@ -179,7 +179,7 @@ const FishInfo = (props: FishInfoProps) => {
               icon="keyboard"
               buttonText="Rename"
               color="transparent"
-              onEnter={(value) => {
+              onCommit={(value) => {
                 act('rename_fish', {
                   fish_reference: fish.fish_ref,
                   chosen_name: value,

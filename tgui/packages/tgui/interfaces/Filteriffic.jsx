@@ -246,7 +246,7 @@ const FilterEntry = (props) => {
           />
           <Button.Input
             buttonText="Rename"
-            onEnter={(value) =>
+            onCommit={(value) =>
               act('rename_filter', {
                 name,
                 new_name: value,

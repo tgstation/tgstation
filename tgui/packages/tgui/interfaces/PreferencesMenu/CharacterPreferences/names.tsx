@@ -40,7 +40,7 @@ type MultiNameProps = {
 };
 
 export function MultiNameInput(props: MultiNameProps) {
-  const { handleUpdateName } = props;
+  const { handleUpdateName, handleRandomizeName } = props;
 
   const data = useServerPrefs();
   if (!data) return;
@@ -79,9 +79,7 @@ export function MultiNameInput(props: MultiNameProps) {
                           <Stack.Item grow>
                             <Button.Input
                               fluid
-                              onEnter={(value) => {
-                                handleUpdateName(key, value);
-                              }}
+                              onCommit={(value) => handleUpdateName(key, value)}
                               value={props.names[key]}
                             />
                           </Stack.Item>
@@ -91,9 +89,7 @@ export function MultiNameInput(props: MultiNameProps) {
                                 icon="dice"
                                 tooltip="Randomize"
                                 tooltipPosition="right"
-                                onClick={() => {
-                                  props.handleRandomizeName(key);
-                                }}
+                                onClick={() => handleRandomizeName(key)}
                               />
                             </Stack.Item>
                           )}

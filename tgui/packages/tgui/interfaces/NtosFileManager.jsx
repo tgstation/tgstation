@@ -73,7 +73,7 @@ const FileTable = (props) => {
                 fluid
                 buttonText="Rename"
                 value={file.name}
-                onEnter={(value) => onRename(file.name, value)}
+                onCommit={(value) => onRename(file.name, value)}
               />
             ) : (
               file.name

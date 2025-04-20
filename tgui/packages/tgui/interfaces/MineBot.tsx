@@ -71,7 +71,7 @@ export const MineBot = (props) => {
                 <Button.Input
                   buttonText="Rename"
                   color="transparent"
-                  onEnter={(value) =>
+                  onCommit={(value) =>
                     act('set_name', {
                       chosen_name: value,
                     })

@@ -97,7 +97,7 @@ export const NtosNetChat = (props) => {
                   <Button.Input
                     fluid
                     buttonText="New Channel..."
-                    onEnter={(value) =>
+                    onCommit={(value) =>
                       act('PRG_newchannel', {
                         new_channel_name: value,
                       })
@@ -125,7 +125,7 @@ export const NtosNetChat = (props) => {
                     mt={1}
                     buttonText={`${username}...`}
                     value={username}
-                    onEnter={(value) =>
+                    onCommit={(value) =>
                       act('PRG_changename', {
                         new_name: value,
                       })
@@ -265,7 +265,7 @@ export const NtosNetChat = (props) => {
                           <Button.Input
                             fluid
                             buttonText="Save log as..."
-                            onEnter={(value) =>
+                            onCommit={(value) =>
                               act('PRG_savelog', {
                                 log_name: value,
                               })
@@ -290,7 +290,7 @@ export const NtosNetChat = (props) => {
                             fluid
                             disabled={strong}
                             buttonText="Rename Channel..."
-                            onEnter={(value) =>
+                            onCommit={(value) =>
                               act('PRG_renamechannel', {
                                 new_name: value,
                               })
@@ -299,7 +299,7 @@ export const NtosNetChat = (props) => {
                           <Button.Input
                             fluid
                             buttonText="Set Password..."
-                            onEnter={(value) =>
+                            onCommit={(value) =>
                               act('PRG_setpassword', {
                                 new_password: value,
                               })

@@ -249,7 +249,7 @@ A button with an extra confirmation step, using native button component.
 ### `Button.Input`
 
 A button that turns into an input box after the first click. Turns back into a
-button after the user hits enter, defocuses, or hits escape. Enter commits,
+button after the user hits enter, defocuses, or hits escape. Enter or blur commits,
 while escape cancels.
 
 **Props:**
@@ -257,7 +257,7 @@ while escape cancels.
 - See inherited props: [Box](#box)
 - `fluid`: fill available horizontal space
 - `disabled: boolean` - Disables and greys out the button.
-- `onEnter: (value) => void`: function that is called after the user presses enter
+- `onCommit: (value) => void`: sends the value after enter/outside click
 - `value: string`: default string to display when the input is shown
 - `buttonText: string`: The text to display on the button. Defaults to value if
   none is given.

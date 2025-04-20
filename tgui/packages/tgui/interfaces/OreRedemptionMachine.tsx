@@ -128,7 +128,7 @@ function MaterialRow(props: MaterialRowProps) {
             sheet_amounts < max_sheets ? sheet_amounts : max_sheets
           }]`}
           color="transparent"
-          onEnter={onRelease}
+          onCommit={onRelease}
         />
       </Table.Cell>
     </Table.Row>

@@ -258,7 +258,7 @@ const PetTricks = (props) => {
         <Button.Input
           buttonText="Rename Trick"
           color="transparent"
-          onEnter={setTrickName}
+          onCommit={setTrickName}
         />
       }
     >

@@ -371,7 +371,7 @@ const TrickSequence = ({
       <Button.Input
         buttonText="Rename"
         color="transparent"
-        onEnter={setTrickName}
+        onCommit={setTrickName}
         value={TrickName}
       />
     }
