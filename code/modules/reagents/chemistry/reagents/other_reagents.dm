@@ -244,15 +244,14 @@
 
 /datum/reagent/water/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
+
 	if(!istype(exposed_turf))
 		return
 
-	var/cool_temp = cooling_temperature
-	if(reac_volume >= 5)
-		exposed_turf.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
-
 	for(var/mob/living/basic/slime/exposed_slime in exposed_turf)
 		exposed_slime.apply_water()
+
+	var/cool_temp = cooling_temperature
 
 	var/obj/effect/hotspot/hotspot = (locate(/obj/effect/hotspot) in exposed_turf)
 	if(hotspot && !isspaceturf(exposed_turf))
@@ -261,6 +260,12 @@
 			air.temperature = max(min(air.temperature-(cool_temp*1000), air.temperature/cool_temp),TCMB)
 			air.react(src)
 			qdel(hotspot)
+
+	if(isgroundlessturf(exposed_turf) || isnoslipturf(exposed_turf))
+		return
+
+	if(reac_volume >= 5)
+		exposed_turf.MakeSlippery(TURF_WET_WATER, 10 SECONDS, min(reac_volume*1.5 SECONDS, 60 SECONDS))
 
 /*
  * Water reaction to an object
@@ -1214,7 +1219,7 @@
 /datum/reagent/iron/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
-		affected_mob.blood_volume += 0.25 * seconds_per_tick
+		affected_mob.blood_volume += BLOOD_REGEN_FACTOR * seconds_per_tick
 
 /datum/reagent/gold
 	name = "Gold"
@@ -3130,13 +3135,14 @@
 	description = "A frothy extract made from fermented kronkus vine pulp.\nHighly bitter due to the presence of a variety of kronkamines."
 	taste_description = "bitterness"
 	color = "#228f63"
+	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = list(/datum/addiction/stimulants = 5)
 
-/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer)
+/datum/reagent/kronkus_extract/on_mob_life(mob/living/carbon/kronkus_enjoyer, seconds_per_tick)
 	. = ..()
 	var/need_mob_update
-	need_mob_update = kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.1)
+	need_mob_update = kronkus_enjoyer.adjustOrganLoss(ORGAN_SLOT_HEART, 0.2 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
 	need_mob_update += kronkus_enjoyer.adjustStaminaLoss(-6, updating_stamina = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH

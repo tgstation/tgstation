@@ -278,8 +278,7 @@
 		drinker.set_jitter_if_lower(700 SECONDS)
 
 	if(SPT_PROB(0.5, seconds_per_tick) && iscarbon(drinker))
-		var/datum/disease/heart_attack = new /datum/disease/heart_failure
-		drinker.ForceContractDisease(heart_attack)
+		drinker.apply_status_effect(/datum/status_effect/heart_attack)
 		to_chat(drinker, span_userdanger("You're pretty sure you just felt your heart stop for a second there.."))
 		drinker.playsound_local(drinker, 'sound/effects/singlebeat.ogg', 100, 0)
 

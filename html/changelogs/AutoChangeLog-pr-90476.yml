@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "medical toolboxes have their storage adjusted correctly"
+  - bugfix: "surgery and tactical medkits no longer hold different items depending on whether a premium tactical medkit was spawned first"
+  - code_imp: "storage initialization is slightly faster due to some file organizations"

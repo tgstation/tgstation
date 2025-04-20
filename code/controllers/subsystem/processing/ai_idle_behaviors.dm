@@ -4,7 +4,7 @@ PROCESSING_SUBSYSTEM_DEF(idle_ai_behaviors)
 	wait = 1.5 SECONDS
 	priority = FIRE_PRIORITY_IDLE_NPC
 	dependencies = list(
-		/datum/controller/subsystem/ai_controllers
+		/datum/controller/subsystem/ai_controllers,
 	)
 	///List of all the idle ai behaviors
 	var/list/idle_behaviors = list()

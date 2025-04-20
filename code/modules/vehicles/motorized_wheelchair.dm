@@ -185,7 +185,7 @@
 /obj/vehicle/ridden/wheelchair/motorized/Bump(atom/bumped_atom)
 	. = ..()
 	// Here is the shitty emag functionality.
-	if(obj_flags & EMAGGED && (isclosedturf(bumped_atom) || isliving(bumped_atom)))
+	if((obj_flags & EMAGGED) && (isclosedturf(bumped_atom) || isliving(bumped_atom)))
 		detonate_bomb()
 		return
 	// If the speed is higher than delay_multiplier throw the person on the wheelchair away

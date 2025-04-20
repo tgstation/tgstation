@@ -1,0 +1,5 @@
+author: "Iajret"
+delete-after: True
+changes:
+  - bugfix: "Fixed some more missing scrollbars in well everything that is left. Probably. I haven't looked that thoroughly."
+  - bugfix: "Experiment little question mark tooltip now occupies a single line instead of two"

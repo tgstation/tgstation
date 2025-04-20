@@ -90,7 +90,7 @@
 	if (!active)
 		module_slowdowns += space_slowdown
 
-/obj/item/mod/module/armor_booster/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/armor_booster/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	overlay_state_active = "[initial(overlay_state_active)]-[mod.skin]"
 	return ..()
@@ -105,9 +105,11 @@
 		REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_INJURY_BLOCKED, REF(src))
 
 /obj/item/mod/module/armor_booster/on_install()
+	. = ..()
 	RegisterSignal(mod, COMSIG_MOD_GET_VISOR_OVERLAY, PROC_REF(on_visor_overlay))
 
-/obj/item/mod/module/armor_booster/on_uninstall(deleting)
+/obj/item/mod/module/armor_booster/on_uninstall(deleting = FALSE)
+	. = ..()
 	UnregisterSignal(mod, COMSIG_MOD_GET_VISOR_OVERLAY)
 
 /obj/item/mod/module/armor_booster/proc/on_visor_overlay(datum/source,  mutable_appearance/standing, list/overrides)
@@ -241,7 +243,7 @@
 	overlay_state_inactive = "module_insignia"
 	mask_worn_overlay = TRUE
 
-/obj/item/mod/module/insignia/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/insignia/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	. = ..()
 	for(var/mutable_appearance/appearance as anything in .)
@@ -409,6 +411,7 @@
 	var/obj/item/current_disguise
 
 /obj/item/mod/module/chameleon/on_install()
+	. = ..()
 	var/list/all_disguises = sort_list(subtypesof(get_path_by_slot(mod.slot_flags)), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	for(var/clothing_path in all_disguises)
 		var/obj/item/clothing = clothing_path
@@ -418,6 +421,7 @@
 		possible_disguises[chameleon_item_name] = clothing_path
 
 /obj/item/mod/module/chameleon/on_uninstall(deleting = FALSE)
+	. = ..()
 	if(current_disguise)
 		return_look()
 	possible_disguises = null
@@ -449,7 +453,7 @@
 	mod.righthand_file = initial(current_disguise.righthand_file)
 	mod.worn_icon_state = initial(current_disguise.worn_icon_state)
 	mod.inhand_icon_state = initial(current_disguise.inhand_icon_state)
-	mod.wearer.update_clothing(mod.slot_flags)
+	update_clothing_slots()
 	RegisterSignal(mod, COMSIG_MOD_ACTIVATE, PROC_REF(return_look))
 
 /obj/item/mod/module/chameleon/proc/return_look()
@@ -463,7 +467,7 @@
 	mod.righthand_file = initial(mod.righthand_file)
 	mod.worn_icon_state = null
 	mod.inhand_icon_state = null
-	mod.wearer.update_clothing(mod.slot_flags)
+	update_clothing_slots()
 	current_disguise = null
 	UnregisterSignal(mod, COMSIG_MOD_ACTIVATE)
 
@@ -481,10 +485,12 @@
 	var/old_size
 
 /obj/item/mod/module/plate_compression/on_install()
+	. = ..()
 	old_size = mod.w_class
 	mod.update_weight_class(new_size)
 
 /obj/item/mod/module/plate_compression/on_uninstall(deleting = FALSE)
+	. = ..()
 	mod.update_weight_class(old_size)
 	old_size = null
 	if(!mod.loc)
@@ -528,9 +534,11 @@
 	var/list/traits_to_add = list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN, TRAIT_HEAD_INJURY_BLOCKED)
 
 /obj/item/mod/module/infiltrator/on_install()
+	. = ..()
 	ADD_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
 /obj/item/mod/module/infiltrator/on_uninstall(deleting = FALSE)
+	. = ..()
 	REMOVE_TRAIT(mod, TRAIT_EXAMINE_SKIP, REF(src))
 
 /obj/item/mod/module/infiltrator/on_part_activation()

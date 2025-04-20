@@ -115,6 +115,13 @@
 			if(!silent)
 				rotated_obj.balloon_alert(user, "can't rotate in that direction!")
 			return FALSE
+
+	if(rotation_flags & ROTATION_NEEDS_UNBLOCKED)
+		var/turf/rotate_turf = get_turf(rotated_obj)
+		if(rotate_turf.is_blocked_turf(source_atom = rotated_obj))
+			if(!silent)
+				rotated_obj.balloon_alert(user, "rotation is blocked!")
+			return FALSE
 	return TRUE
 
 /datum/component/simple_rotation/proc/default_post_rotation(mob/user, degrees)

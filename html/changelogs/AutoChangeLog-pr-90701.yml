@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Tourist bots track in dirt occasionally"

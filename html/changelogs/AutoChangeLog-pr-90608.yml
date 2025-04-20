@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Fixed more bugs in tgui-say. Admin chat shouldn't be cut off any more."

@@ -22,15 +22,13 @@
 .shine {
   animation: shine 15s linear infinite;
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
   background-size: 150% 150%;
 }
 
 .window-lightMode {
   background-color: colors.$lightMode;
+  border: 2px solid colors.$lightBorder;
 }
 
 /** Window sizes */
@@ -50,7 +48,7 @@
   background-color: black;
   display: grid;
   font: 'tgfont';
-  grid-template-columns: 3.5rem 1fr;
+  grid-template-columns: 4rem 1fr;
   inset: 2px;
   overflow: hidden;
   padding: 2px;
@@ -70,11 +68,10 @@
   font-weight: bold;
   outline: none;
   overflow: hidden;
-  padding: 0.1rem 0.2rem;
+  padding: 0.1rem;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 100%;
   &:hover {
     background-color: color.adjust(
       colors.$button,
@@ -101,19 +98,15 @@
   margin: 0.1rem 0 0 0.4rem;
   outline: none;
   resize: none;
-  &::-webkit-scrollbar {
-    width: 0.8rem;
-  }
-  &::-webkit-scrollbar-track {
-    background: color.scale(
+  overflow: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: color.scale(
       colors.$button,
-      $lightness: -25% * colors.$scrollbar-color-multiplier
-    );
-  }
-  &::-webkit-scrollbar-thumb {
-    background: color.scale(
-      colors.$button,
-      $lightness: 10% * colors.$scrollbar-color-multiplier
-    );
-  }
+      $lightness: 20% * colors.$scrollbar-color-multiplier
+    )
+    transparent;
+}
+
+.textarea-large {
+  overflow-y: scroll;
 }

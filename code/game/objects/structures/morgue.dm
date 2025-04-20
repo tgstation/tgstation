@@ -481,7 +481,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			if(user.stat != DEAD)
 				user.investigate_log("has died from being cremated.", INVESTIGATE_DEATHS)
 			M.death(TRUE)
-			if(M) //some animals get automatically deleted on death.
+			if(!QDELETED(M)) //some animals get automatically deleted on death.
 				M.ghostize()
 				qdel(M)
 

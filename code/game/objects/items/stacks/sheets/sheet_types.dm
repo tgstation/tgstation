@@ -823,6 +823,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	material_type = /datum/material/bone
 	drop_sound = null
 	pickup_sound = null
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/item/stack/sheet/bone/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()

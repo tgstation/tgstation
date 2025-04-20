@@ -200,7 +200,14 @@
 	if(istype(attacking_item, /obj/item/storage/bag/trash))
 		if(mybag)
 			balloon_alert(user, "already has \a [mybag]!")
-		else if(user.transferItemToLoc(attacking_item, src))
+			return
+
+		var/obj/item/storage/bag/trash/insert = attacking_item
+		if(!insert.insertable)
+			balloon_alert(user, "cannot be inserted!")
+			return
+
+		if(user.transferItemToLoc(attacking_item, src))
 			balloon_alert(user, "attached [attacking_item]")
 		return
 

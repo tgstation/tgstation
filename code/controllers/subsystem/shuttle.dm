@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(shuttle)
 	dependencies = list(
 		/datum/controller/subsystem/mapping,
 		/datum/controller/subsystem/atoms,
-		/datum/controller/subsystem/air
+		/datum/controller/subsystem/air,
 	)
 	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
@@ -277,7 +277,7 @@ SUBSYSTEM_DEF(shuttle)
 			sender_override = "Emergency Shuttle Uplink Alert",
 			color_override = "orange",
 		)
-		if(emergency.timeLeft(1) > emergency_call_time * ALERT_COEFF_AUTOEVAC_CRITICAL)
+		if(EMERGENCY_IDLE_OR_RECALLED || emergency.timeLeft(1) > emergency_call_time * ALERT_COEFF_AUTOEVAC_CRITICAL)
 			emergency.request(null, set_coefficient = ALERT_COEFF_AUTOEVAC_CRITICAL)
 
 /datum/controller/subsystem/shuttle/proc/block_recall(lockout_timer)

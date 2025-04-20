@@ -10,14 +10,12 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	w_class = WEIGHT_CLASS_BULKY
+	storage_type = /datum/storage/bag/money
 
 /obj/item/storage/bag/money/Initialize(mapload)
 	. = ..()
 	if(prob(20))
 		icon_state = "moneybagalt"
-	atom_storage.max_slots = 40
-	atom_storage.max_specific_storage = 40
-	atom_storage.set_holdable(list(/obj/item/coin, /obj/item/stack/spacecash, /obj/item/holochip))
 
 /obj/item/storage/bag/money/vault/PopulateContents()
 	new /obj/item/coin/silver(src)
