@@ -98,7 +98,8 @@
 			continue
 
 		trauma.owner = brain_owner
-		trauma.on_gain()
+		if(!trauma.on_gain())
+			qdel(trauma)
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	if(!special && !(brain_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
@@ -575,12 +576,8 @@
 	add_trauma_to_traumas(actual_trauma)
 	if(owner)
 		actual_trauma.owner = owner
-		if(SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma, resilience) & COMSIG_CARBON_BLOCK_TRAUMA)
+		if((SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma, resilience) & COMSIG_CARBON_BLOCK_TRAUMA) || !actual_trauma.on_gain())
 			qdel(actual_trauma)
-			return FALSE
-		actual_trauma.on_gain()
-		// certain traumas will qdel themselves in on_gain() if conditions aren't met
-		if(QDELETED(actual_trauma))
 			return FALSE
 		log_game("[key_name_and_tag(owner)] has gained the following brain trauma: [trauma.type]")
 	if(resilience)
