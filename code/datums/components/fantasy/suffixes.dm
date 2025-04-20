@@ -158,7 +158,6 @@
 											  /obj/projectile/magic/fetch = 15,
 											  /obj/projectile/beam/emitter = 15,
 											  /obj/projectile/magic/flying = 15,
-											  /obj/projectile/energy/net = 15,
 											  /obj/projectile/bullet/incendiary/c9mm = 15,
 											  /obj/projectile/temp/hot = 15,
 											  /obj/projectile/beam/disabler = 15)
