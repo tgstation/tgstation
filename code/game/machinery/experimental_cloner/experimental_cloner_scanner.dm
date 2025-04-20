@@ -147,3 +147,16 @@
 		return
 
 	open_machine()
+
+/obj/machinery/experimental_cloner_scanner/welder_act(mob/living/user, obj/item/tool)
+	if (user.combat_mode)
+		return NONE
+
+	if (!tool.tool_start_check(user, amount = 5))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You start slicing \the [src] apart."))
+	if(!tool.use_tool(src, user, 6 SECONDS, amount = 5, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+	deconstruct(disassembled = TRUE)
+	to_chat(user, span_notice("You slice \the [src] apart."))
+	return ITEM_INTERACT_SUCCESS

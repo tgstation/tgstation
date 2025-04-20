@@ -41,6 +41,23 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 	. = ..()
 	icon_state = "[base_icon_state]_[running]"
 
+/obj/machinery/experimental_cloner/on_deconstruction(disassembled)
+	if (running)
+		new /obj/effect/gibspawner/human(drop_location())
+
+/obj/machinery/experimental_cloner/welder_act(mob/living/user, obj/item/tool)
+	if (user.combat_mode)
+		return NONE
+
+	if (!tool.tool_start_check(user, amount = 5))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You start slicing \the [src] apart."))
+	if(!tool.use_tool(src, user, 6 SECONDS, amount = 5, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+	deconstruct(disassembled = TRUE)
+	to_chat(user, span_notice("You slice \the [src] apart."))
+	return ITEM_INTERACT_SUCCESS
+
 /// Start growing a guy
 /obj/machinery/experimental_cloner/proc/start_cloning(datum/experimental_cloning_record/to_create)
 	if (!to_create)
