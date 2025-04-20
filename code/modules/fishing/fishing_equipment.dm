@@ -327,8 +327,8 @@
 /obj/item/storage/toolbox/fishing
 	name = "fishing toolbox"
 	desc = "Contains everything you need for your fishing trip."
-	icon_state = "fishing"
-	inhand_icon_state = "artistic_toolbox"
+	icon_state = "teal"
+	inhand_icon_state = "toolbox_teal"
 	material_flags = NONE
 	custom_price = PAYCHECK_CREW * 3
 	storage_type = /datum/storage/toolbox/fishing
