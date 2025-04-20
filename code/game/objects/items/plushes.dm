@@ -136,7 +136,7 @@
 				stuffed = FALSE
 			else
 				to_chat(user, span_notice("What a fool you are. [src] is a god, how can you kill a god? What a grand and intoxicating innocence."))
-				user.adjust_drunk_effect(20, up_to = 50)
+				user.adjust_drunkeness_up_to( 20, up_to = 50)
 
 				var/turf/current_location = get_turf(user)
 				var/area/current_area = current_location.loc //copied from hand tele code

@@ -388,7 +388,7 @@
 							span_danger("[src] is knocked senseless!"),
 							span_userdanger("You're knocked senseless!"),
 						)
-						set_confusion_if_lower(20 SECONDS)
+						set_confusion_if_lower(50)
 						adjust_eye_blur(20 SECONDS)
 					if(prob(10))
 						gain_trauma(/datum/brain_trauma/mild/concussion)

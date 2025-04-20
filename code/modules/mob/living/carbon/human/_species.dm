@@ -880,7 +880,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// In a brawl, drunkenness can make you swing more wildly and with more force, and thus catch your opponent off guard, but it could also totally throw you off if you're too intoxicated
 	// But god is it going to make you sick moving too much while drunk
-	var/user_drunkenness = user.get_drunk_amount()
+	var/user_drunkenness = user.get_drunkeness
 
 	if(user_drunkenness)
 		if(HAS_TRAIT(user, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
@@ -918,7 +918,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// In a brawl, drunkenness is a boon if you're a bit drunk but not too much. Else you're easier to hit.
 	// But, generally, getting hit while drunk is probably a good way to start throwing up
-	var/target_drunkenness = target.get_drunk_amount()
+	var/target_drunkenness = target.get_drunkeness
 
 	if(target_drunkenness)
 		if(HAS_TRAIT(target, TRAIT_DRUNKEN_BRAWLER)) // Drunken brawlers only need to be intoxicated, doesn't matter how much
@@ -996,14 +996,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if (11 to 30)
 			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
 			target.adjust_eye_blur_up_to(5 SECONDS, 10 SECONDS)
-			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
+			target.adjust_confusion_up_to(13, 50)
 			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling in agony! Damn!"), \
 				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)
 			to_chat(user, span_warning("Your [atk_verb] causes [target] to go stumbling about in a confuzed daze!"))
 
 		if(31 to 40)
 			target.adjust_dizzy_up_to(5 SECONDS, 10 SECONDS)
-			target.adjust_confusion_up_to(5 SECONDS, 10 SECONDS)
+			target.adjust_confusion_up_to(20, 50)
 			target.adjust_temp_blindness_up_to(5 SECONDS, 10 SECONDS)
 			target.visible_message(span_warning("[user]'s [atk_verb] hits [target] so hard, they are sent reeling blindly in agony! Goddamn!"), \
 				span_warning("You are hit viciously by [user]'s [atk_verb], and everything becomes a dizzying, blinding blur!"), span_hear("You hear a thud!"), COMBAT_MESSAGE_RANGE, user)

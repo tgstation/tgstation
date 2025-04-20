@@ -473,7 +473,7 @@
 		to_chat(victim, span_userdanger("[user] finishes applying [I] to your [limb.plaintext_zone], and you can feel the bones exploding with pain as they begin melting and reforming!"))
 	else
 		if(!HAS_TRAIT(victim, TRAIT_ANALGESIA))
-			if(prob(25 + (20 * (severity - 2)) - min(victim.get_drunk_amount(), 10))) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by drunkenness
+			if(prob(25 + (20 * (severity - 2)) - min(victim.get_drunkeness, 10))) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by drunkenness
 				victim.visible_message(span_danger("[victim] fails to finish applying [I] to [victim.p_their()] [limb.plaintext_zone], passing out from the pain!"), span_notice("You pass out from the pain of applying [I] to your [limb.plaintext_zone] before you can finish!"))
 				victim.AdjustUnconscious(5 SECONDS)
 				return TRUE

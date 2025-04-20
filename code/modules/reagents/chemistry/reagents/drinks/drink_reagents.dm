@@ -1236,7 +1236,7 @@
 			drinker.adjust_dizzy(4 SECONDS * REM * seconds_per_tick)
 		if(21 to 31)
 			if(SPT_PROB(15, seconds_per_tick))
-				drinker.adjust_confusion(4 SECONDS * REM * seconds_per_tick)
+				drinker.adjust_confusion(30 * REM)
 		if(31 to 201)
 			drinker.adjust_hallucinations(60 SECONDS * REM * seconds_per_tick)
 

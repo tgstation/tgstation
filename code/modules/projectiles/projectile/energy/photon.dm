@@ -31,7 +31,7 @@
 	if(isliving(flashed))
 		var/mob/living/flashed_creature = flashed
 		flashed_creature.flash_act(intensity = 3, affect_silicon = TRUE, length = 6)
-		flashed_creature.adjust_confusion(1.5 SECONDS)
+		flashed_creature.adjust_confusion(40)
 	if(issilicon(flashed))
 		do_sparks(rand(1, 4), FALSE, src)
 

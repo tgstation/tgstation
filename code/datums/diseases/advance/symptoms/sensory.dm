@@ -49,10 +49,10 @@
 		for(var/datum/status_effect/speech/slurring/slur in M.status_effects)
 			slur.remove_duration(1 SECONDS)
 
-		M.adjust_confusion(-2 SECONDS)
+		M.adjust_confusion(-5)
 		if(purge_alcohol)
 			M.reagents.remove_reagent(/datum/reagent/consumable/ethanol, 3, include_subtypes = TRUE)
-			M.adjust_drunk_effect(-5)
+			M.adjust_drunkeness( -5)
 
 	if(A.stage >= 4)
 		M.adjust_drowsiness(-4 SECONDS)

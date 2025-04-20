@@ -644,7 +644,7 @@
 		screeched.adjust_dizzy(affect_time)
 		screeched.adjust_staggered(affect_time)
 		screeched.adjust_jitter(affect_time)
-		screeched.adjust_confusion(affect_time)
+		screeched.adjust_confusion(50 * power)
 		screeched.adjust_hallucinations(affect_time)
 		screeched.adjust_eye_blur(affect_time)
 		if(iscarbon(screeched))

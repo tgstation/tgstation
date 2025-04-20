@@ -83,8 +83,8 @@
 /datum/component/wet_floor/proc/AfterSlip(mob/living/slipped)
 	if(highest_strength != TURF_WET_LUBE)
 		return
-
-	slipped.set_confusion_if_lower(8 SECONDS)
+	//HONK! Crawling reduces confusion missteps so we can set a bold value, so they still have some residual confusion when they get up.
+	slipped.set_confusion_if_lower(80)
 
 /datum/component/wet_floor/proc/update_flags()
 	var/intensity

@@ -312,13 +312,13 @@
 
 	if(methods & (TOUCH|VAPOR)) // wakey wakey eggs and bakey
 		exposed_mob.adjust_dizzy(-2 SECONDS)
-		exposed_mob.adjust_confusion(-2 SECONDS)
+		exposed_mob.adjust_confusion(-20)
 		exposed_mob.adjust_drowsiness(-4 SECONDS)
 		exposed_mob.adjust_jitter(-4 SECONDS)
 		exposed_mob.AdjustSleeping(-15 SECONDS)
 		exposed_mob.AdjustUnconscious(-8 SECONDS)
 		var/drunkness_restored = HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) ? -0.5 : -0.25
-		exposed_mob.adjust_drunk_effect(drunkness_restored)
+		exposed_mob.adjust_drunkeness(drunkness_restored)
 
 	if((methods & INGEST) && HAS_TRAIT(exposed_mob, TRAIT_WATER_ADAPTATION) && reac_volume >= 4)
 		exposed_mob.adjust_wet_stacks(0.15 * reac_volume)
@@ -334,7 +334,7 @@
 		var/blood_restored = water_adaptation ? 0.3 : 0.1
 		affected_mob.blood_volume += blood_restored * REM * seconds_per_tick // water is good for you!
 	var/drunkness_restored = water_adaptation ? -0.5 : -0.25
-	affected_mob.adjust_drunk_effect(drunkness_restored * REM * seconds_per_tick) // and even sobers you up slowly!!
+	affected_mob.adjust_drunkeness(drunkness_restored * REM * seconds_per_tick) // and even sobers you up slowly!!
 	if(water_adaptation)
 		var/need_mob_update = FALSE
 		need_mob_update = affected_mob.adjustToxLoss(-0.25 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
@@ -1488,14 +1488,14 @@
 	. = ..()
 	affected_mob.set_dizzy_if_lower(2 SECONDS)
 
-	// Cryptobiolin adjusts the mob's confusion down to 20 seconds if it's higher,
+	// Cryptobiolin adjusts the mob's confusion down to 59 strength if it's higher,
 	// or up to 1 second if it's lower, but will do nothing if it's in between
-	var/confusion_left = affected_mob.get_timed_status_effect_duration(/datum/status_effect/confusion)
-	if(confusion_left < 1 SECONDS)
-		affected_mob.set_confusion(1 SECONDS)
+	var/confusion_left = affected_mob.get_status_effect_strength(/datum/status_effect/confusion)
+	if(confusion_left < 10)
+		affected_mob.set_confusion(10)
 
-	else if(confusion_left > 20 SECONDS)
-		affected_mob.set_confusion(20 SECONDS)
+	else if(confusion_left > 50)
+		affected_mob.set_confusion(50)
 
 /datum/reagent/impedrezene
 	name = "Impedrezene"
@@ -1687,7 +1687,7 @@
 
 	if(SPT_PROB(10, seconds_per_tick))
 		affected_mob.losebreath += 2
-		affected_mob.adjust_confusion_up_to(2 SECONDS, 5 SECONDS)
+		affected_mob.adjust_confusion(50)
 
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents
@@ -2708,7 +2708,8 @@
 
 /datum/reagent/peaceborg/confuse/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.adjust_confusion_up_to(3 SECONDS * REM * seconds_per_tick, 5 SECONDS)
+	//confusion approaches 25% misstep chance after a very long duration.
+	affected_mob.adjust_confusion(10  * REM * seconds_per_tick)
 	affected_mob.adjust_dizzy_up_to(6 SECONDS * REM * seconds_per_tick, 12 SECONDS)
 
 	if(SPT_PROB(10, seconds_per_tick))

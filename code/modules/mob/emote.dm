@@ -1,5 +1,5 @@
 ///How confused a carbon must be before they will vomit
-#define BEYBLADE_PUKE_THRESHOLD (30 SECONDS)
+#define BEYBLADE_PUKE_THRESHOLD (75)
 ///How must nutrition is lost when a carbon pukes
 #define BEYBLADE_PUKE_NUTRIENT_LOSS 60
 ///How often a carbon becomes penalized
@@ -7,9 +7,9 @@
 ///How long the screenshake lasts
 #define BEYBLADE_DIZZINESS_DURATION (20 SECONDS)
 ///How much confusion a carbon gets every time they are penalized
-#define BEYBLADE_CONFUSION_INCREMENT (10 SECONDS)
+#define BEYBLADE_CONFUSION_INCREMENT (25)
 ///A max for how much confusion a carbon will be for beyblading
-#define BEYBLADE_CONFUSION_LIMIT (40 SECONDS)
+#define BEYBLADE_CONFUSION_LIMIT (100)
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
 /mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
@@ -127,7 +127,7 @@
 	if(!iscarbon(user))
 		return
 
-	if(user.get_timed_status_effect_duration(/datum/status_effect/confusion) > BEYBLADE_PUKE_THRESHOLD)
+	if(user.get_status_effect_strength(/datum/status_effect/confusion) > BEYBLADE_PUKE_THRESHOLD)
 		user.vomit(VOMIT_CATEGORY_KNOCKDOWN, lost_nutrition = BEYBLADE_PUKE_NUTRIENT_LOSS, distance = 0)
 		return
 

@@ -836,7 +836,8 @@
 /obj/item/food/ink_sac/proc/blind_em(mob/living/victim, can_splat_on)
 	if(can_splat_on)
 		victim.adjust_temp_blindness_up_to(7 SECONDS, 10 SECONDS)
-		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
+		//They will have about 25 confusion when they get unstunned.
+		victim.adjust_confusion(40)
 		victim.Paralyze(2 SECONDS) //splat!
 	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
 	playsound(victim, SFX_DESECRATION, 50, TRUE)

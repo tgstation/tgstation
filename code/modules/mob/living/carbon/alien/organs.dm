@@ -124,7 +124,7 @@
 		owner.Paralyze(100)
 
 	owner.adjust_jitter(1 MINUTES)
-	owner.adjust_confusion(30 SECONDS)
+	owner.adjust_confusion(1000)
 	owner.adjust_stutter(1 MINUTES)
 
 	recent_queen_death = TRUE

@@ -292,7 +292,7 @@
 /obj/item/fishing_rod/proc/bane_effects(datum/source, mob/living/fish)
 	SIGNAL_HANDLER
 	fish.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 4 SECONDS)
-	fish.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
+	fish.adjust_confusion_up_to(10, 40)
 	fish.adjust_wet_stacks(-4)
 
 /obj/item/fishing_rod/interact(mob/user)

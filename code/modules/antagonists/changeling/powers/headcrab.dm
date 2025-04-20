@@ -34,7 +34,7 @@
 		to_chat(blinded_human, span_userdanger("You are blinded by a shower of blood!"))
 		blinded_human.Stun(4 SECONDS)
 		blinded_human.set_eye_blur_if_lower(40 SECONDS)
-		blinded_human.adjust_confusion(12 SECONDS)
+		blinded_human.adjust_confusion(40)
 
 	for(var/mob/living/silicon/blinded_silicon in range(2,user))
 		to_chat(blinded_silicon, span_userdanger("Your sensors are disabled by a shower of blood!"))

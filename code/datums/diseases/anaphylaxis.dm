@@ -67,7 +67,7 @@
 				affected_mob.adjust_drowsiness_up_to(3 SECONDS * seconds_per_tick, 30 SECONDS)
 			if(SPT_PROB(2, seconds_per_tick))
 				affected_mob.adjust_dizzy_up_to(5 SECONDS * seconds_per_tick, 1 MINUTES)
-				affected_mob.adjust_confusion_up_to(1 SECONDS * seconds_per_tick, 10 SECONDS)
+				affected_mob.adjust_confusion(30)
 			if(SPT_PROB(2, seconds_per_tick))
 				affected_mob.vomit(MOB_VOMIT_MESSAGE|MOB_VOMIT_HARM)
 				affected_mob.Stun(2 SECONDS) // The full 20 second vomit stun would be lethal

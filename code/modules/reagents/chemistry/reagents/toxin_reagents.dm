@@ -279,7 +279,7 @@
 	var/need_mob_update
 	switch(current_cycle)
 		if(2 to 6)
-			affected_mob.adjust_confusion(1 SECONDS * REM * seconds_per_tick)
+			affected_mob.adjust_confusion(20  *  REM * seconds_per_tick)
 			affected_mob.adjust_drowsiness(2 SECONDS * REM * seconds_per_tick)
 			affected_mob.adjust_slurring(6 SECONDS * REM * seconds_per_tick)
 		if(6 to 9)
@@ -480,7 +480,7 @@
 	. = ..()
 	switch(current_cycle)
 		if(2 to 11)
-			affected_mob.adjust_confusion(2 SECONDS * REM * normalise_creation_purity() * seconds_per_tick)
+			affected_mob.adjust_confusion(12 * REM * normalise_creation_purity() * seconds_per_tick)
 			affected_mob.adjust_drowsiness(4 SECONDS * REM * normalise_creation_purity() * seconds_per_tick)
 		if(11 to 51)
 			affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
@@ -1260,10 +1260,10 @@
 		. = UPDATE_MOB_HEALTH
 
 	// If our mob's currently dizzy from anything else, we will also gain confusion
-	var/mob_dizziness = affected_mob.get_timed_status_effect_duration(/datum/status_effect/confusion)
+	var/mob_dizziness = affected_mob.get_timed_status_effect_duration(/datum/status_effect/dizziness)
 	if(mob_dizziness > 0)
-		// Gain confusion equal to about half the duration of our current dizziness
-		affected_mob.set_confusion(mob_dizziness / 2)
+		// Gain confusion equal to 2.5 dizziness, this is equal in misstep chance to the value when bungotoxin was first added.
+		affected_mob.set_confusion(mob_dizziness * 2.5)
 
 	if(current_cycle >= 13 && SPT_PROB(4, seconds_per_tick))
 		var/tox_message = pick("You feel your heart spasm in your chest.", "You feel faint.","You feel you need to catch your breath.","You feel a prickle of pain in your chest.")
@@ -1287,7 +1287,7 @@
 		. = UPDATE_MOB_HEALTH
 	if(SPT_PROB(0.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("Ah, what was that? You thought you heard something..."))
-		affected_mob.adjust_confusion(5 SECONDS)
+		affected_mob.adjust_confusion(100 * REM)
 
 /datum/reagent/toxin/hunterspider
 	name = "Spider Toxin"
@@ -1369,7 +1369,7 @@
 				paralyze_limb(affected_mob)
 				need_mob_update = TRUE
 			if(SPT_PROB(10, seconds_per_tick))
-				affected_mob.adjust_confusion(rand(6 SECONDS, 8 SECONDS))
+				affected_mob.adjust_confusion(rand(35, 40) * REM)
 		if(21 to 29)
 			toxpwr = 1
 			need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.5)
@@ -1386,7 +1386,7 @@
 				paralyze_limb(affected_mob)
 				need_mob_update = TRUE
 			if(SPT_PROB(10, seconds_per_tick))
-				affected_mob.adjust_confusion(rand(6 SECONDS, 8 SECONDS))
+				affected_mob.adjust_confusion(rand(60, 80) * REM)
 		if(29 to INFINITY)
 			toxpwr = 1.5
 			need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1, BRAIN_DAMAGE_DEATH)
@@ -1398,7 +1398,7 @@
 				paralyze_limb(affected_mob)
 				need_mob_update = TRUE
 			if(SPT_PROB(20, seconds_per_tick))
-				affected_mob.adjust_confusion(rand(6 SECONDS, 8 SECONDS))
+				affected_mob.adjust_confusion(rand(60, 80) * REM)
 
 	if(current_cycle > 38 && !length(traits_not_applied) && SPT_PROB(5, seconds_per_tick) && !affected_mob.undergoing_cardiac_arrest())
 		affected_mob.set_heartattack(TRUE)
@@ -1448,3 +1448,9 @@
 	description = "A poison produced by the rare and elusive gatfruit plant."
 	liver_damage_multiplier = 0
 	toxpwr = 1
+
+/datum/reagent/toxin/lucky_toxin
+	name = "Lucky toxin"
+	description = "Feeling lucky?"
+	toxpwr = 0
+	color = "#cfab48"

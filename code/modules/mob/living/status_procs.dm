@@ -678,50 +678,62 @@
 	return existing.duration - world.time
 
 /**
- * Adjust the "drunk value" the mob is currently experiencing,
- * or applies a drunk effect if the mob isn't currently drunk (or tipsy)
+ * Adjusts the strength of a status effect or applies it at that strength if the mob doesn't already have it.
  *
- * The drunk effect doesn't have a set duration, like dizziness or drugginess,
- * but instead relies on a value that decreases every status effect tick (2 seconds) by:
- * 4% the current drunk_value + 0.01
+ * If you have an effect where the strength decays non-linearly over time, remember that repeated flat increases are soft capped as the rate of decay will creep closer to the value you are trying to add.
  *
- * A "drunk value" of 6 is the border between "tipsy" and "drunk".
- *
- * amount - the amount of "drunkness" to apply to the mob.
+ * amount - the amount of strength to apply to the mob.
  * down_to - the lower end of the clamp, when adding the value
  * up_to - the upper end of the clamp, when adding the value
  */
-/mob/living/proc/adjust_drunk_effect(amount, down_to = 0, up_to = INFINITY)
+/mob/living/proc/adjust_status_effect_strength(datum/status_effect/effect_type, amount, down_to = 0, up_to = INFINITY)
 	if(!isnum(amount))
-		CRASH("adjust_drunk_effect: called with an invalid amount. (Got: [amount])")
+		CRASH("adjust_status_effect_strength: called with an invalid amount. (Got: [amount])")
 
-	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
-	if(inebriation)
-		inebriation.set_drunk_value(clamp(inebriation.drunk_value + amount, down_to, up_to))
+	if(!ispath(effect_type, /datum/status_effect))
+		CRASH("adjust_status_effect_strength: called with an invalid effect type. (Got: [effect_type])")
+
+	var/datum/status_effect/existing_effect = has_status_effect(effect_type)
+	if(existing_effect)
+		existing_effect.set_strength(clamp(existing_effect.strength + amount, down_to, up_to))
 	else if(amount > 0)
-		apply_status_effect(/datum/status_effect/inebriated/tipsy, amount)
-
+		apply_status_effect(effect_type, null,  clamp(amount, down_to, up_to))
 
 /**
- * Directly sets the "drunk value" the mob is currently experiencing to the passed value,
- * or applies a drunk effect with the passed value if the mob isn't currently drunk
+* This proc tries to reverse the strength decay of last tick and then increase strength by a flat value for when you want a "slow and steady" linear increase over time for things like reagent ticks.
+* The name might be slightly confusing as this adds a non-linear amount to strength to straighten out the strength curve and make it linear.
+*
+* This might be a fundamentally flawed way of doing things and the math also might have issues. I am a simple factory worker, not some kind of Big Ballz-esque Silicon Valley tech prodgidy like you guys. :)
+*/
+/mob/living/proc/adjust_status_effect_strength_linear(datum/status_effect/effect_type, amount, seconds_per_tick = 1, up_to = INFINITY, decay_mult = 1, decay_flat = 0)
+	if(!decay_mult)
+		CRASH("adjust_status_effect_strength_linear: invalid division. argument 'decay_mult' is zero or null!")
+	world.log <<  "get_strength: [get_status_effect_strength(effect_type)] || multiplier[(1 / decay_mult) ** seconds_per_tick] || amount: [amount * seconds_per_tick]"
+	set_status_effect_strength(effect_type, min((get_status_effect_strength(effect_type) + decay_flat * (1 / decay_mult) ** seconds_per_tick) * (1 / decay_mult) ** seconds_per_tick + amount * seconds_per_tick, up_to))
+
+/**
+ * Directly sets strength of a status effect to the passed value,
+ * or applies a status effect with the passed value if the mob isn't currently under that effect
  *
- * set_to - the amount of "drunkness" to set on the mob.
+ * set_to - the amount of strength to set on the effect.
  */
-/mob/living/proc/set_drunk_effect(set_to)
+/mob/living/proc/set_status_effect_strength(datum/status_effect/effect_type, set_to, raise_only = FALSE)
 	if(!isnum(set_to) || set_to < 0)
-		CRASH("set_drunk_effect: called with an invalid value. (Got: [set_to])")
+		CRASH("set_status_effect_strength: called with an invalid value. (Got: [set_to])")
 
-	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
-	if(inebriation)
-		inebriation.set_drunk_value(set_to)
+	if(!ispath(effect_type, /datum/status_effect))
+		CRASH("set_status_effect_strength: called with an invalid effect type. (Got: [effect_type])")
+
+	var/datum/status_effect/existing_effect = has_status_effect(effect_type)
+	if(existing_effect && (!raise_only || existing_effect.strength < set_to))
+		existing_effect.set_strength(set_to)
 	else if(set_to > 0)
-		apply_status_effect(/datum/status_effect/inebriated/tipsy, set_to)
+		apply_status_effect(effect_type, null,  set_to)
 
-/// Helper to get the amount of drunkness the mob's currently experiencing.
-/mob/living/proc/get_drunk_amount()
-	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
-	return inebriation?.drunk_value || 0
+/// Helper to get the amount of strength of a strength based status effect.
+/mob/living/proc/get_status_effect_strength(datum/status_effect/effect_type)
+	var/datum/status_effect/existing_effect = has_status_effect(effect_type)
+	return existing_effect?.strength || 0
 
 /// Helper to check if we seem to be alive or not
 /mob/living/proc/appears_alive()

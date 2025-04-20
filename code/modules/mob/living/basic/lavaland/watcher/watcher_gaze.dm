@@ -71,7 +71,7 @@
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/apply_effect(mob/living/viewer)
 	if (!viewer.flash_act(intensity = 4, affect_silicon = TRUE, visual = TRUE, length = 3 SECONDS))
 		return FALSE
-	viewer.set_confusion_if_lower(12 SECONDS)
+	viewer.set_confusion_if_lower(30)
 	to_chat(viewer, span_warning("You are blinded by [owner]'s piercing gaze!"))
 	return TRUE
 

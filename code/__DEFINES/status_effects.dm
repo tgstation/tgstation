@@ -66,6 +66,11 @@
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
 
+///Exponential decay of confusion effects over time.
+#define CONFUSION_DECAY_MULT 0.85
+///Flat decay of confusion over time.
+#define CONFUSION_DECAY_FLAT 0.025
+
 /// Causes the mob to become blind via the passed source
 #define become_blind(source) apply_status_effect(/datum/status_effect/grouped/blindness, source)
 /// Cures the mob's blindness from the passed source, removing blindness wholesale if no sources are left
@@ -158,10 +163,17 @@
 #define set_jitter(duration) set_timed_status_effect(duration, /datum/status_effect/jitter)
 #define set_jitter_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/jitter, TRUE)
 
-#define adjust_confusion(duration) adjust_timed_status_effect(duration, /datum/status_effect/confusion)
-#define adjust_confusion_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/confusion, up_to)
-#define set_confusion(duration) set_timed_status_effect(duration, /datum/status_effect/confusion)
-#define set_confusion_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/confusion, TRUE)
+/*
+Because confusion is now a strength based effect that decays non-linearly, adjusting confusion normally has a soft cap as eventually confusion decay will at nearly the same rate you are trying to add it.
+adjust_confusion_linear will increase their actual misstep chance linearly over time like the old duration based confusion,
+but even with adjust_confusion_linear capping the value might not neccessary for most effects because even very high confusion values decay in fairly resonable time if the increase stops.
+*/
+#define adjust_confusion(strength) adjust_status_effect_strength(/datum/status_effect/confusion, strength)
+#define adjust_confusion_up_to(strength, up_to) adjust_status_effect_strength(/datum/status_effect/confusion, strength, 0, up_to)
+#define adjust_confusion_linear(strength, seconds_per_tick) adjust_status_effect_strength_linear(/datum/status_effect/confusion, strength, seconds_per_tick, INFINITY, CONFUSION_DECAY_MULT, CONFUSION_DECAY_FLAT)
+#define adjust_confusion_linear_up_to(strength, seconds_per_tick, up_to) adjust_status_effect_strength_linear(/datum/status_effect/confusion, strength, seconds_per_tick, up_to, CONFUSION_DECAY_MULT, CONFUSION_DECAY_FLAT)
+#define set_confusion(strength) set_status_effect_strength(/datum/status_effect/confusion, strength, FALSE)
+#define set_confusion_if_lower(strength) set_status_effect_strength(/datum/status_effect/confusion, strength, TRUE)
 
 #define adjust_drugginess(duration) adjust_timed_status_effect(duration, /datum/status_effect/drugginess)
 #define adjust_drugginess_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/drugginess, up_to)
@@ -200,3 +212,8 @@
 #define adjust_static_vision_up_to(duration, up_to) adjust_timed_status_effect(duration, /datum/status_effect/static_vision, up_to)
 #define set_static_vision(duration) set_timed_status_effect(duration, /datum/status_effect/static_vision)
 #define set_static_vision_if_lower(duration) set_timed_status_effect(duration, /datum/status_effect/static_vision, TRUE)
+
+#define adjust_drunkeness(strength) adjust_status_effect_strength(/datum/status_effect/inebriated, strength)
+#define adjust_drunkeness_up_to(strength, up_to) adjust_status_effect_strength(/datum/status_effect/inebriated, strength, 0,  up_to)
+#define set_drunkeness(strength) set_status_effect_strength(/datum/status_effect/inebriated, strength)
+#define get_drunkeness get_status_effect_strength(/datum/status_effect/inebriated)

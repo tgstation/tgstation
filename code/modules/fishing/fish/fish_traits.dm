@@ -780,7 +780,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		return
 	if(!iscarbon(target) || target.get_bodypart(BODY_ZONE_HEAD))
 		target.adjust_temp_blindness_up_to(4 SECONDS, 8 SECONDS)
-		target.adjust_confusion_up_to(1.5 SECONDS, 4 SECONDS)
+		target.adjust_confusion(40)
 		target.AddComponent(/datum/component/face_decal/splat, \
 			color = COLOR_NEARLY_ALL_BLACK, \
 			memory_type = /datum/memory/witnessed_inking, \

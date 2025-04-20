@@ -100,7 +100,7 @@
 			if(2,3)
 				owner.adjust_dizzy(20 SECONDS)
 			if(4,5)
-				owner.adjust_confusion(10 SECONDS)
+				owner.adjust_confusion(25 * seconds_per_tick)
 				owner.set_eye_blur_if_lower(20 SECONDS)
 			if(6 to 9)
 				owner.adjust_slurring(1 MINUTES)

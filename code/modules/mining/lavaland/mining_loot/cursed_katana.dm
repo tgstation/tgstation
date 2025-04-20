@@ -137,7 +137,7 @@
 			target.ranged_cooldown += 5 SECONDS
 		else if(iscarbon(source))
 			var/mob/living/carbon/target = source
-			target.set_confusion_if_lower(8 SECONDS)
+			target.set_confusion_if_lower(20)
 	return NONE
 
 /obj/item/cursed_katana/proc/slice(mob/living/target, mob/user)

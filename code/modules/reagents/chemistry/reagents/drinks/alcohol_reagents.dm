@@ -53,7 +53,7 @@
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	if(drinker.get_drunk_amount() < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
+	if(drinker.get_drunkeness < volume * boozepwr * ALCOHOL_THRESHOLD_MODIFIER || boozepwr < 0)
 		var/booze_power = boozepwr
 		if(HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE)) // we're an accomplished drinker
 			booze_power *= 0.7
@@ -74,7 +74,7 @@
 			booze_power *= (total_alcohol_volume / combined_dilute_volume)
 
 		// Volume, power, and server alcohol rate effect how quickly one gets drunk
-		drinker.adjust_drunk_effect(sqrt(volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
+		drinker.adjust_drunkeness( sqrt(volume) * booze_power * ALCOHOL_RATE * REM * seconds_per_tick)
 		if(boozepwr > 0)
 			var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 			var/heavy_drinker_multiplier = (HAS_TRAIT(drinker, TRAIT_HEAVY_DRINKER) ? 0.5 : 1)
@@ -1383,7 +1383,8 @@
 	. = ..()
 	drinker.set_drugginess(100 SECONDS * REM * seconds_per_tick)
 	if(!HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
-		drinker.adjust_confusion(2 SECONDS * REM * seconds_per_tick)
+		//adjust_confusion_linear allows us to build up confusion slow and steady with no ceiling.
+		drinker.adjust_confusion_linear(2.5 * REM, seconds_per_tick)
 	drinker.set_dizzy_if_lower(20 SECONDS * REM * seconds_per_tick)
 	drinker.adjust_slurring(6 SECONDS * REM * seconds_per_tick)
 	switch(current_cycle)
@@ -1411,7 +1412,7 @@
 			drinker.adjust_slurring(3 SECONDS * REM * seconds_per_tick)
 		if(46 to 56)
 			if(SPT_PROB(30, seconds_per_tick))
-				drinker.adjust_confusion(3 SECONDS * REM * seconds_per_tick)
+				drinker.adjust_confusion(20 * REM)
 		if(56 to 201)
 			drinker.set_drugginess(110 SECONDS * REM * seconds_per_tick)
 		if(201 to INFINITY)
@@ -2138,7 +2139,7 @@
 	. = ..()
 	if(SPT_PROB(2, seconds_per_tick))
 		to_chat(drinker, span_notice("[pick("You feel disregard for the rule of law.", "You feel pumped!", "Your head is pounding.", "Your thoughts are racing..")]"))
-	if(drinker.adjustStaminaLoss(-0.5 * drinker.get_drunk_amount() * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype))
+	if(drinker.adjustStaminaLoss(-0.5 * drinker.get_drunkeness * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/consumable/ethanol/old_timer
@@ -2212,7 +2213,7 @@
 
 /datum/reagent/consumable/ethanol/blazaam/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	if(drinker.get_drunk_amount() > 40)
+	if(drinker.get_drunkeness > 40)
 		if(stored_teleports)
 			do_teleport(drinker, get_turf(drinker), rand(1,3), channel = TELEPORT_CHANNEL_WORMHOLE)
 			stored_teleports--

@@ -354,7 +354,7 @@
 	// DE-FENSE
 
 	// Drunks are easier to knock off balance
-	var/target_drunkenness = target.get_drunk_amount()
+	var/target_drunkenness = target.get_drunkeness
 	if(target_drunkenness > 60)
 		defense_mod -= 3
 	else if(target_drunkenness > 30)
@@ -412,7 +412,7 @@
 
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
-	var/sacker_drunkenness = sacker.get_drunk_amount()
+	var/sacker_drunkenness = sacker.get_drunkeness
 
 	//Arms contribute a great deal to potential tackling prowess and defense. Better arms = better bonus
 	var/obj/item/bodypart/arm/sacker_arm = sacker.get_active_hand()
@@ -567,7 +567,7 @@
 			user.visible_message(span_danger("[user] slams head-first into [hit], suffering major cranial trauma!"), span_userdanger("You slam head-first into [hit], and the world explodes around you!"))
 			user.apply_damage(30, BRUTE, spread_damage = TRUE)
 			user.apply_damage(30, STAMINA)
-			user.adjust_confusion(15 SECONDS)
+			user.adjust_confusion(120)
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.playsound_local(get_turf(user), 'sound/items/weapons/flashbang.ogg', 100, TRUE, 8)
@@ -579,7 +579,7 @@
 			user.visible_message(span_danger("[user] slams hard into [hit], knocking [user.p_them()] senseless!"), span_userdanger("You slam hard into [hit], knocking yourself senseless!"))
 			user.apply_damage(10, BRUTE, spread_damage = TRUE)
 			user.apply_damage(30, STAMINA)
-			user.adjust_confusion(10 SECONDS)
+			user.adjust_confusion(65)
 			user.Knockdown(3 SECONDS)
 			shake_camera(user, 3, 4)
 

@@ -442,7 +442,7 @@
 	description = "You've had one drink too many"
 
 /datum/deathmatch_modifier/wasted/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
-	player.adjust_drunk_effect(rand(30, 35))
+	player.adjust_drunkeness( rand(30, 35))
 	var/metabolism_rate = /datum/reagent/consumable/ethanol/jack_rose::metabolization_rate
 	player.reagents.add_reagent(/datum/reagent/consumable/ethanol/jack_rose, initial(lobby.map.automatic_gameend_time) * 0.35 / metabolism_rate)
 

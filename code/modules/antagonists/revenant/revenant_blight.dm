@@ -36,7 +36,7 @@
 			return FALSE
 		if(SPT_PROB(1.5 * stage, seconds_per_tick))
 			to_chat(affected_mob, span_revennotice("You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]..."))
-			affected_mob.adjust_confusion(8 SECONDS)
+			affected_mob.adjust_confusion(25)
 			need_mob_update += affected_mob.adjustStaminaLoss(20, updating_stamina = FALSE)
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)
 		if(stagedamage < stage)

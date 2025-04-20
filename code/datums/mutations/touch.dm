@@ -52,7 +52,7 @@
 
 			carbon_victim.dropItemToGround(carbon_victim.get_active_held_item())
 			carbon_victim.dropItemToGround(carbon_victim.get_inactive_held_item())
-			carbon_victim.adjust_confusion(15 SECONDS)
+			carbon_victim.adjust_confusion(70)
 			carbon_victim.visible_message(
 				span_danger("[caster] electrocutes [victim]!"),
 				span_userdanger("[caster] electrocutes you!"),

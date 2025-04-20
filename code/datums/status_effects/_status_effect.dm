@@ -37,6 +37,8 @@
 	var/heal_flag_necessary = HEAL_STATUS
 	/// A particle effect, for things like embers - Should be set on update_particles()
 	VAR_FINAL/obj/effect/abstract/particle_holder/particle_effect
+	///A strength value for scaling the effect, more legacy status effects could probably be adapted to use this._dm_db_new_con()
+	var/strength = 100
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
@@ -44,7 +46,7 @@
 /// Called from New() with any supplied status effect arguments.
 /// Not guaranteed to exist by the end.
 /// Returning FALSE from on_apply will stop on_creation and self-delete the effect.
-/datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
+/datum/status_effect/proc/on_creation(mob/living/new_owner, new_duration, new_strength, ...)
 	if(new_owner)
 		owner = new_owner
 	if(QDELETED(owner) || !on_apply())
@@ -77,6 +79,8 @@
 				START_PROCESSING(SSprocessing, src)
 			if(STATUS_EFFECT_PRIORITY)
 				START_PROCESSING(SSpriority_effects, src)
+
+	set_strength(new_strength)
 
 	update_particles()
 
@@ -239,6 +243,13 @@
 
 	if(var_name == NAMEOF(src, show_duration))
 		update_shown_duration()
+
+///Sets the our strength to [set_to].
+/datum/status_effect/proc/set_strength(set_to)
+	if(!isnum(set_to))
+		CRASH("set_strength: called with an invalid value. (Got: [set_to])")
+
+	strength = set_to
 
 /// Alert base type for status effect alerts
 /atom/movable/screen/alert/status_effect

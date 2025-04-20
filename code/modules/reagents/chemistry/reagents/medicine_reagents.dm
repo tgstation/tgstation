@@ -125,7 +125,7 @@
 
 /datum/reagent/medicine/sansufentanyl/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.adjust_confusion_up_to(3 SECONDS * REM * seconds_per_tick, 5 SECONDS)
+	affected_mob.adjust_confusion(6 * REM * seconds_per_tick)
 	affected_mob.adjust_dizzy_up_to(6 SECONDS * REM * seconds_per_tick, 12 SECONDS)
 	if(affected_mob.adjustStaminaLoss(1 * REM * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
@@ -1209,7 +1209,7 @@
 	affected_mob.reagents.remove_reagent(/datum/reagent/consumable/ethanol, 8 * REM * seconds_per_tick * normalise_creation_purity(), include_subtypes = TRUE)
 	if(affected_mob.adjustToxLoss(-0.2 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		. = UPDATE_MOB_HEALTH
-	affected_mob.adjust_drunk_effect(-10 * REM * seconds_per_tick * normalise_creation_purity())
+	affected_mob.adjust_drunkeness( -10 * REM * seconds_per_tick * normalise_creation_purity())
 
 /datum/reagent/medicine/antihol/expose_mob(mob/living/carbon/exposed_carbon, methods=TOUCH, reac_volume)
 	. = ..()
@@ -1611,7 +1611,7 @@
 	. = ..()
 	affected_mob.adjust_jitter(-12 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjust_dizzy(-12 SECONDS * REM * seconds_per_tick)
-	affected_mob.adjust_confusion(-6 SECONDS * REM * seconds_per_tick)
+	affected_mob.adjust_confusion(-15 * REM * seconds_per_tick)
 	affected_mob.disgust = max(affected_mob.disgust - (6 * REM * seconds_per_tick), 0)
 	if(affected_mob.mob_mood != null && affected_mob.mob_mood.sanity <= SANITY_NEUTRAL) // only take effect if in negative sanity and then...
 		affected_mob.mob_mood.adjust_sanity(5 * REM * seconds_per_tick, maximum = SANITY_NEUTRAL) // set minimum to prevent unwanted spiking over neutral

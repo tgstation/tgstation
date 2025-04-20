@@ -138,7 +138,9 @@
 	if(lums > 0.5)
 		affected_human.add_mood_event("too_bright", /datum/mood_event/bright_light)
 		affected_human.adjust_dizzy_up_to(6 SECONDS, 80 SECONDS)
-		affected_human.adjust_confusion_up_to(0.5 SECONDS * seconds_per_tick, 20 SECONDS)
+		affected_human.adjust_confusion_linear_up_to(1.25 * lums, seconds_per_tick, 75)
+		if(SPT_PROB(5, seconds_per_tick))
+			to_chat(affected_carbon, span_warning("The light burns your eyes!"))
 	else
 		affected_carbon.clear_mood_event("too_bright")
 
