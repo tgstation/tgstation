@@ -10,6 +10,7 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 	base_icon_state = "pod"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/experimental_cloner
+	use_power = NO_POWER_USE
 	processing_flags = START_PROCESSING_MANUALLY
 	/// Are we cooking?
 	var/running = FALSE
@@ -26,10 +27,10 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 	. = ..()
 	sound_loop = new(src, FALSE)
 
-/obj/machinery/experimental_cloner/process()
-	if (machine_stat & BROKEN || machine_stat & NOPOWER)
+/obj/machinery/experimental_cloner/power_change()
+	. = ..()
+	if (machine_stat & NOPOWER && running)
 		fail_growing()
-		return PROCESS_KILL
 
 /obj/machinery/experimental_cloner/examine(mob/user)
 	. = ..()
@@ -49,7 +50,6 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 	update_use_power(ACTIVE_POWER_USE)
 	update_appearance(UPDATE_ICON_STATE)
 	sound_loop.start()
-	begin_processing()
 	running_timer = addtimer(CALLBACK(src, PROC_REF(finish_cloning)), cloning_time, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /// This one didn't make it
@@ -61,8 +61,9 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 
 /// Stuff to do when we stop processing
 /obj/machinery/experimental_cloner/proc/on_finished()
+	loaded_record = null
 	running = FALSE
-	update_use_power(IDLE_POWER_USE)
+	update_use_power(NO_POWER_USE)
 	update_appearance(UPDATE_ICON_STATE)
 	sound_loop.stop()
 
