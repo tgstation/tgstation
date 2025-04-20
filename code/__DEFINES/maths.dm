@@ -245,7 +245,7 @@
 
 #define GET_TRUE_DIST(a, b) ((a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z)))
 
-/// Returns the distance between a and b fully ignoring multiz (normal getdist counts a z move as 1 extra distance)
+/// Returns the distance between a and b fully ignoring multiz (normal get_dist counts a z move as 1 extra distance)
 #define GET_CARDINAL_DIST(a, b) ((a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y)))
 
 //We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
