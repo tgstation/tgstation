@@ -1416,6 +1416,13 @@
 		return
 	AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
 
+/mob/living/carbon/get_photo_description(obj/item/camera/camera)
+	if(HAS_TRAIT(src, TRAIT_INVISIBLE_TO_CAMERA))
+		if(camera.see_ghosts)
+			return /mob/dead/observer::photo_description
+		return null
+	return ..()
+
 /**
  * This proc is used to determine whether or not the mob can handle touching an acid affected object.
  */
