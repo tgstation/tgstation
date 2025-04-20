@@ -298,6 +298,7 @@
 	if(ispath(rune_to_scribe, /obj/effect/rune/narsie))
 		if(!scribe_narsie_rune(cultist, user_team))
 			return
+		our_turf = get_turf(cultist) //we may have moved. adjust as needed...
 
 	cultist.visible_message(
 		span_warning("[cultist] [cultist.blood_volume ? "cuts open [cultist.p_their()] arm and begins writing in [cultist.p_their()] own blood":"begins sketching out a strange design"]!"),
