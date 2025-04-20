@@ -1,0 +1,614 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"as" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"aZ" = (
+/obj/effect/spawner/random/trash/graffiti,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5;
+	pixel_y = -2
+	},
+/obj/item/bodypart/arm/left{
+	pixel_x = -22
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"fD" = (
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"hl" = (
+/obj/effect/spawner/random/trash/graffiti,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9;
+	pixel_x = 5;
+	pixel_y = -6
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"iL" = (
+/obj/structure/bodycontainer/crematorium{
+	dir = 4;
+	id = "crematoriumBitrunning"
+	},
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"jM" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	pixel_x = 3
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"kq" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6;
+	pixel_x = -4;
+	pixel_y = 22
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"kE" = (
+/obj/effect/mob_spawn/corpse/human/monkey,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/machinery/janitorial_scanner{
+	area_name = "Kitchen";
+	name = "janitorial Kitchen scanner"
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"kW" = (
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"mR" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9;
+	pixel_x = -2;
+	pixel_y = 23
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"mY" = (
+/obj/effect/turf_decal/arrows{
+	dir = 1
+	},
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"nA" = (
+/obj/effect/mob_spawn/corpse/human/assistant,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"nK" = (
+/obj/item/knife/butcher,
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood/hitsplatter{
+	dir = 4;
+	pixel_y = 9;
+	pixel_x = 9
+	},
+/obj/effect/decal/cleanable/blood/hitsplatter{
+	dir = 4;
+	pixel_y = -10;
+	pixel_x = 2
+	},
+/obj/effect/decal/cleanable/blood/hitsplatter{
+	dir = 4;
+	pixel_y = 9;
+	pixel_x = 9
+	},
+/obj/effect/decal/cleanable/blood/hitsplatter{
+	dir = 4;
+	pixel_y = -3;
+	pixel_x = 9
+	},
+/obj/effect/mob_spawn/corpse/human/cook,
+/obj/effect/mapping_helpers/atom_injector/bloody_my_shit_up{
+	target_type = /obj/item/knife/butcher
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"oR" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"pg" = (
+/obj/item/bodypart/head{
+	pixel_x = -1;
+	pixel_y = -19
+	},
+/obj/effect/decal/cleanable/blood/hitsplatter{
+	dir = 1;
+	pixel_x = 1;
+	pixel_y = -10
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"qe" = (
+/obj/structure/mop_bucket/janitorialcart,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"qr" = (
+/obj/structure/table/reinforced,
+/obj/item/bodybag{
+	pixel_y = 17;
+	pixel_x = 7
+	},
+/obj/item/bodybag{
+	pixel_y = 13;
+	pixel_x = 7
+	},
+/obj/item/bodybag{
+	pixel_y = 9;
+	pixel_x = 7
+	},
+/obj/item/storage/box/bodybags{
+	pixel_y = 15;
+	pixel_x = -6
+	},
+/obj/item/storage/box/bodybags{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"qN" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"rq" = (
+/turf/closed/wall/mineral/silver,
+/area/virtual_domain/safehouse)
+"rF" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/structure/railing,
+/obj/machinery/light/directional/north,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/safehouse)
+"rQ" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = -5
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"vr" = (
+/obj/machinery/button/crematorium/indestructible{
+	id = "crematoriumBitrunning"
+	},
+/turf/closed/wall/mineral/silver,
+/area/virtual_domain/safehouse)
+"wI" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	pixel_x = 6
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"xf" = (
+/obj/effect/turf_decal/arrows{
+	dir = 8
+	},
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"yp" = (
+/turf/closed/wall/r_wall,
+/area/virtual_domain/fullbright)
+"Bb" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"BJ" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"EL" = (
+/obj/structure/railing/corner/end{
+	dir = 4
+	},
+/obj/effect/turf_decal/arrows{
+	dir = 4
+	},
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"ER" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 9;
+	pixel_x = 7
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Fs" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"FO" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1;
+	pixel_y = -6;
+	pixel_x = 5
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"FT" = (
+/obj/machinery/oven/range,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"HN" = (
+/obj/effect/mob_spawn/corpse/human/doctor,
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"HS" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6;
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"JE" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/item/bodypart/leg/left/fly{
+	pixel_x = -27;
+	pixel_y = 17
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"JV" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/bodybags{
+	pixel_y = 15;
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/cup/bucket{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/mop,
+/obj/item/storage/bag/trash{
+	pixel_x = 5;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/spray/cleaner{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"Kj" = (
+/obj/machinery/janitorial_submit,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"Kx" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"LJ" = (
+/obj/effect/decal/cleanable/blood/gibs/body,
+/obj/item/bodypart/leg/right/jelly{
+	pixel_x = 26;
+	pixel_y = 16
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Mw" = (
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"Nu" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = -4
+	},
+/obj/item/bodypart/arm/right/ethereal{
+	pixel_x = 20
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"OC" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"Pz" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"RY" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"Tl" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"TI" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"Uh" = (
+/obj/structure/table,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"Ut" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = 22;
+	pixel_x = -3
+	},
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+"Xh" = (
+/obj/effect/decal/cleanable/grand_remains,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/blood/gibs/body{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"XE" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron/textured,
+/area/virtual_domain/safehouse)
+"XM" = (
+/obj/machinery/janitorial_scanner{
+	area_name = "Ritual Room";
+	name = "janitorial Ritual Room scanner"
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"YO" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10;
+	pixel_y = -3;
+	pixel_x = 3
+	},
+/turf/open/floor/iron,
+/area/virtual_domain/fullbright)
+"ZQ" = (
+/obj/item/gun/ballistic/revolver/c38/detective,
+/obj/item/ammo_casing/c38,
+/obj/item/ammo_casing/c38{
+	pixel_x = 1;
+	pixel_y = -6
+	},
+/obj/item/ammo_casing/c38{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/ammo_casing/c38{
+	pixel_y = -6;
+	pixel_x = -6
+	},
+/obj/item/ammo_casing/c38{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/item/ammo_casing/c38{
+	pixel_x = -8
+	},
+/obj/effect/mob_spawn/corpse/human/intern,
+/turf/open/floor/iron/kitchen,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+"}
+(2,1,1) = {"
+as
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+rq
+rq
+rq
+rq
+rq
+rq
+as
+"}
+(3,1,1) = {"
+as
+yp
+FT
+Fs
+Fs
+Fs
+yp
+hl
+FO
+YO
+qN
+nA
+Mw
+rq
+iL
+Kj
+OC
+RY
+rq
+as
+"}
+(4,1,1) = {"
+as
+yp
+FT
+Fs
+ZQ
+Fs
+yp
+rQ
+qN
+Nu
+LJ
+Mw
+Mw
+vr
+xf
+kW
+oR
+Bb
+rq
+as
+"}
+(5,1,1) = {"
+as
+yp
+Kx
+Fs
+Uh
+mR
+Pz
+HS
+pg
+Xh
+ER
+wI
+jM
+Tl
+mY
+kW
+oR
+RY
+rq
+BJ
+"}
+(6,1,1) = {"
+as
+yp
+Kx
+Fs
+Uh
+Ut
+yp
+HN
+fD
+aZ
+JE
+Mw
+Mw
+rq
+EL
+kW
+oR
+XE
+rq
+as
+"}
+(7,1,1) = {"
+as
+yp
+kE
+TI
+nK
+kq
+yp
+Mw
+Mw
+Mw
+nA
+Mw
+XM
+rq
+rF
+qr
+JV
+qe
+rq
+as
+"}
+(8,1,1) = {"
+as
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+rq
+rq
+rq
+rq
+rq
+rq
+as
+"}
+(9,1,1) = {"
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+as
+"}

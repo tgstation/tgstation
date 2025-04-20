@@ -111,6 +111,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	///The typepath we use for lazy fishing on turfs, to save on world init time.
 	var/fish_source
+	/// How expensive is this tile for pathfinding purposes?
+	/// Use for when you don't want JPS to path over a turf.
+	var/jps_heuristic_cost = 0
 
 
 /turf/vv_edit_var(var_name, new_value)

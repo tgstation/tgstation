@@ -23,6 +23,8 @@
 #define BITRUNNER_DIFFICULTY_MEDIUM 2
 /// Red with skull. I am trying to kill bitrunners.
 #define BITRUNNER_DIFFICULTY_HIGH 3
+/// Black with skull. For bitrunners with a death wish.
+#define BITRUNNER_DIFFICULTY_OVERKILL 4
 
 /// Camera network bitrunner bodycams are on
 #define BITRUNNER_CAMERA_NET "bitrunner"
@@ -45,3 +47,12 @@
 #define BITRUNNER_GEAR_LOAD_FAILED (1<<0)
 /// The domain restrictions blocked something from loading
 #define BITRUNNER_GEAR_LOAD_BLOCKED (1<<1)
+
+/// Default bitrunning domains, shows up in Cargo.
+#define BITRUNNER_DOMAIN_DEFAULT "gibson"
+/// Security bitrunning domains, shows up in the Torment Nexus.
+#define BITRUNNER_DOMAIN_SECURITY "torment_nexus"
+
+#define BITRUNNING_DOORBLOCK_RIGHT "right_door"
+#define BITRUNNING_DOORBLOCK_LEFT "left_door"
+

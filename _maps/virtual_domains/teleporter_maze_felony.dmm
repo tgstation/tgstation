@@ -1,0 +1,1825 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"ax" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/fake_stairs/directional/south,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"az" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 16;
+	icon_state = "candle2_lit";
+	pixel_x = 11
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"aS" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/indestructible/binary,
+/area/virtual_domain/fullbright)
+"aV" = (
+/obj/structure/fake_stairs/directional/west,
+/obj/structure/railing,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"bW" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 16;
+	icon_state = "candle2_lit";
+	pixel_x = 11
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"bY" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/turf_decal/caution,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"cn" = (
+/turf/closed/indestructible/cult,
+/area/virtual_domain/fullbright)
+"cq" = (
+/obj/structure/railing/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/virtual_domain/fullbright)
+"cu" = (
+/obj/structure/fake_stairs/directional/north,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"cy" = (
+/obj/structure/table/abductor,
+/obj/item/documents,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"dk" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"du" = (
+/obj/structure/fake_stairs/directional/north,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"dR" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 4;
+	icon_state = "candle2_lit";
+	pixel_x = 0
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10;
+	pixel_y = -3;
+	pixel_x = 3
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"eE" = (
+/obj/structure/stone_tile/center,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/marker_beacon/bronze,
+/turf/open/indestructible/hierophant/two,
+/area/virtual_domain/fullbright)
+"eQ" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/obj/bitrunning/teleporter,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"eR" = (
+/turf/closed/indestructible/alien,
+/area/virtual_domain/fullbright)
+"eT" = (
+/obj/structure/marker_beacon/olive,
+/turf/open/indestructible/binary,
+/area/virtual_domain/fullbright)
+"ft" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/caution{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"fW" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/turf/open/floor/circuit/red,
+/area/virtual_domain/fullbright)
+"fX" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/turf/open/floor/circuit/red,
+/area/virtual_domain/fullbright)
+"gg" = (
+/obj/structure/fake_stairs/directional/west,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"gn" = (
+/obj/structure/stone_tile/center,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/marker_beacon/bronze,
+/turf/open/indestructible/hierophant/two,
+/area/virtual_domain/fullbright)
+"gA" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"gH" = (
+/turf/closed/indestructible/riveted/hierophant,
+/area/virtual_domain/fullbright)
+"gJ" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"gO" = (
+/obj/effect/decal/remains/human,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"gP" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"hf" = (
+/obj/structure/table/abductor,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"hn" = (
+/obj/structure/fake_stairs/directional/north,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"hB" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/bitrunning/teleporter,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"hG" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/fake_stairs/directional/south,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"iJ" = (
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit/green,
+/area/virtual_domain/fullbright)
+"jb" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/indestructible/binary,
+/area/virtual_domain/fullbright)
+"ji" = (
+/obj/structure/closet/crate/secure/bitrunning/encrypted/security,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"ju" = (
+/turf/open/indestructible/binary,
+/area/virtual_domain/fullbright)
+"jz" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 5
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"jP" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/circuit/red,
+/area/virtual_domain/fullbright)
+"ky" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/turf/open/floor/circuit/red,
+/area/virtual_domain/fullbright)
+"kE" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"kJ" = (
+/obj/structure/fake_stairs/directional/west,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"kK" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"lj" = (
+/obj/effect/heretic_rune/big{
+	pixel_y = -32
+	},
+/obj/structure/statue/bone/skull{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/blood{
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"ly" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/circuit/green,
+/area/virtual_domain/fullbright)
+"lB" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/circuit/green,
+/area/virtual_domain/fullbright)
+"mm" = (
+/obj/structure/marker_beacon/violet,
+/turf/open/indestructible/hierophant/two,
+/area/virtual_domain/fullbright)
+"mr" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/indestructible/binary,
+/area/virtual_domain/fullbright)
+"nt" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"nA" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"nB" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/circuit/green,
+/area/virtual_domain/fullbright)
+"nT" = (
+/obj/item/pillow{
+	pixel_x = -1;
+	pixel_y = 10
+	},
+/obj/effect/decal/cleanable/blood/old{
+	pixel_x = 0;
+	pixel_y = 12
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"oc" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"og" = (
+/obj/structure/showcase/machinery/oldpod/used/psyker,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"oO" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"pm" = (
+/obj/structure/railing,
+/obj/structure/fake_stairs/directional/west,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"pD" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"pU" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/mineral/titanium/tiled,
+/area/virtual_domain/fullbright)
+"qr" = (
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"ry" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"rX" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"se" = (
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"sl" = (
+/obj/structure/table/abductor,
+/obj/item/folder/documents,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"sD" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/turf/open/floor/circuit/red,
+/area/virtual_domain/fullbright)
+"tk" = (
+/obj/structure/marker_beacon/burgundy,
+/turf/open/floor/fakepit,
+/area/virtual_domain/fullbright)
+"tF" = (
+/obj/structure/marker_beacon/violet,
+/turf/open/floor/glass/plasma,
+/area/virtual_domain/fullbright)
+"uH" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/turf/open/floor/fakebasalt,
+/area/virtual_domain/fullbright)
+"uR" = (
+/obj/structure/fake_stairs/directional/west,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"vb" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 4;
+	icon_state = "candle2_lit";
+	pixel_x = 0
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"vu" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"vQ" = (
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"vX" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/circuit/green,
+/area/virtual_domain/fullbright)
+"wD" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"wF" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/virtual_domain/fullbright)
+"wO" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"wV" = (
+/obj/effect/decal/cleanable/glass,
+/obj/item/shard,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"xg" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/circuit/green,
+/area/virtual_domain/fullbright)
+"xj" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"xy" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"xA" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/keycard/blue,
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"xC" = (
+/obj/effect/turf_decal/siding/purple,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/virtual_domain/fullbright)
+"xE" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/chair/sofa/corp/left,
+/mob/living/basic/mothroach,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"xO" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"xP" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"yC" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 16;
+	icon_state = "candle2_lit";
+	pixel_x = -11
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"yG" = (
+/obj/effect/forcefield/cult/permanent,
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"zf" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/circuit/green,
+/area/virtual_domain/fullbright)
+"zx" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"zA" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/circuit/green,
+/area/virtual_domain/fullbright)
+"zL" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"Aa" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = -6;
+	icon_state = "candle2_lit";
+	pixel_x = -11
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"Ah" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/turf_decal/caution{
+	dir = 1
+	},
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"AG" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 9
+	},
+/obj/effect/turf_decal/box/corners,
+/obj/structure/hedge,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"AH" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"Be" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 4;
+	icon_state = "candle2_lit";
+	pixel_x = 0
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"Bt" = (
+/obj/structure/fake_stairs/directional/east,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"BM" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/chair/sofa/corp/right{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"CM" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/turf/open/floor/fakebasalt,
+/area/virtual_domain/fullbright)
+"CX" = (
+/turf/closed/wall/r_wall,
+/area/virtual_domain/fullbright)
+"Dr" = (
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"DD" = (
+/obj/structure/table/abductor,
+/obj/item/documents/nanotrasen,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"DH" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/fakebasalt,
+/area/virtual_domain/fullbright)
+"DM" = (
+/obj/machinery/door/puzzle/keycard/entry,
+/turf/open/indestructible/binary,
+/area/virtual_domain/fullbright)
+"El" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/virtual_domain/fullbright)
+"Er" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 5
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 8
+	},
+/obj/structure/hedge,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"Et" = (
+/obj/structure/fake_stairs/directional/east,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"Ft" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 4;
+	icon_state = "candle2_lit";
+	pixel_x = 0
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	desc = "Your instincts say you shouldn't be following these.";
+	dir = 5;
+	icon_state = "ltrails_1"
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"FB" = (
+/turf/open/floor/carpet,
+/area/virtual_domain/fullbright)
+"FG" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/indestructible/binary,
+/area/virtual_domain/fullbright)
+"FU" = (
+/obj/structure/fake_stairs/directional/south,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"GP" = (
+/obj/structure/fake_stairs/directional/east,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"GQ" = (
+/obj/item/pillow{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/effect/decal/cleanable/blood/old{
+	pixel_x = -2;
+	pixel_y = -1
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"Ha" = (
+/obj/item/pillow{
+	pixel_x = -15;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/blood/old{
+	pixel_x = -15;
+	pixel_y = 0
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"Hf" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/structure/bed/pod,
+/obj/effect/spawner/random/bedsheet,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"Hh" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/circuit/red,
+/area/virtual_domain/fullbright)
+"Hl" = (
+/turf/closed/indestructible/wood,
+/area/virtual_domain/fullbright)
+"HU" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/turf/open/indestructible/hierophant/two,
+/area/virtual_domain/fullbright)
+"Iq" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/north,
+/turf/open/floor/fakebasalt,
+/area/virtual_domain/fullbright)
+"IP" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 6
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"IW" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/glass,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"IX" = (
+/obj/machinery/door/puzzle/keycard/blue_required,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Jf" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/bitrunning/teleporter,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"JK" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 4;
+	icon_state = "candle2_lit";
+	pixel_x = 0
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"JQ" = (
+/obj/structure/table/optable/abductor,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"JX" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 16;
+	icon_state = "candle2_lit";
+	pixel_x = -11
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"Kp" = (
+/obj/bitrunning/teleporter,
+/turf/open/floor/circuit/red,
+/area/virtual_domain/fullbright)
+"Ky" = (
+/turf/open/floor/fakebasalt,
+/area/virtual_domain/fullbright)
+"Kz" = (
+/obj/structure/table/abductor,
+/obj/item/keycard/entry,
+/turf/open/floor/glass/plasma,
+/area/virtual_domain/fullbright)
+"KG" = (
+/obj/structure/fake_stairs/directional/east,
+/obj/structure/railing,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"Ll" = (
+/obj/effect/bluespace_stream,
+/turf/open/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Lt" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"LU" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"MB" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/obj/item/toy/crayon/spraycan/infinite{
+	pixel_x = -8
+	},
+/obj/item/toy/crayon/spraycan/infinite,
+/obj/item/toy/crayon/spraycan/infinite{
+	pixel_x = 8
+	},
+/obj/structure/rack,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"Nl" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/bot,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"Ob" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/structure/table/wood/fancy,
+/obj/machinery/coffeemaker/impressa,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"Oo" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"OB" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/turf/open/floor/circuit/red,
+/area/virtual_domain/fullbright)
+"OO" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 10
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/virtual_domain/fullbright)
+"Pa" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 4;
+	icon_state = "candle2_lit";
+	pixel_x = 0
+	},
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"Pm" = (
+/obj/structure/stone_tile/center,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/marker_beacon/bronze,
+/turf/open/indestructible/hierophant/two,
+/area/virtual_domain/fullbright)
+"Ps" = (
+/obj/machinery/door/puzzle/keycard/yellow_required,
+/turf/open/floor/fakebasalt,
+/area/virtual_domain/fullbright)
+"PC" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 9
+	},
+/obj/effect/turf_decal/siding/dark/corner,
+/turf/open/floor/mineral/titanium/tiled,
+/area/virtual_domain/fullbright)
+"PV" = (
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"Qz" = (
+/turf/open/floor/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"Rc" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 10
+	},
+/obj/effect/turf_decal/box/corners{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"Ry" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/chair/comfy/carp{
+	dir = 1
+	},
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"RH" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"RV" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/indestructible/hierophant/two,
+/area/virtual_domain/fullbright)
+"SG" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"SM" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/fake_stairs/directional/west,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"SR" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/box,
+/obj/structure/marker_beacon/yellow,
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"SS" = (
+/obj/structure/stone_tile/surrounding_tile,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"SZ" = (
+/obj/item/keycard/yellow,
+/obj/structure/stone_tile/surrounding,
+/turf/open/indestructible/stone,
+/area/virtual_domain/fullbright)
+"Tf" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"Ts" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"TB" = (
+/obj/effect/turf_decal/siding/wood/corner,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/obj/structure/chair/sofa/corp/corner{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"Ud" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"UE" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/caution{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"UG" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"UH" = (
+/obj/structure/railing,
+/obj/structure/fake_stairs/directional/east,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"US" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"UU" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = -6;
+	icon_state = "candle2_lit";
+	pixel_x = -11
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"Vg" = (
+/obj/structure/stone_tile/center,
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/marker_beacon/bronze,
+/turf/open/indestructible/hierophant/two,
+/area/virtual_domain/fullbright)
+"Vi" = (
+/turf/open/indestructible/hierophant/two,
+/area/virtual_domain/fullbright)
+"VN" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"VW" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"Wg" = (
+/obj/item/toy/reality_pierce,
+/turf/open/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Wp" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/fake_stairs/directional/east,
+/turf/open/floor/mineral/abductor,
+/area/virtual_domain/fullbright)
+"Wq" = (
+/obj/effect/rune{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"WD" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/dresser,
+/turf/open/floor/wood/tile,
+/area/virtual_domain/fullbright)
+"WE" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"WI" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/circuit/green,
+/area/virtual_domain/fullbright)
+"WS" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"Xh" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/turf/open/floor/circuit/red,
+/area/virtual_domain/fullbright)
+"Xq" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"XB" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"Yj" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"Yk" = (
+/obj/bitrunning/teleporter,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/floor/circuit,
+/area/virtual_domain/fullbright)
+"Zb" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = -6;
+	icon_state = "candle2_lit";
+	pixel_x = 11
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"Zc" = (
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 16;
+	icon_state = "candle2_lit";
+	pixel_x = -11
+	},
+/turf/open/floor/cult,
+/area/virtual_domain/fullbright)
+"ZG" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+"ZJ" = (
+/obj/structure/railing/corner,
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled,
+/area/virtual_domain/fullbright)
+"ZM" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/footprints,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/indestructible/hierophant,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+Hl
+Hl
+Hl
+Hl
+Hl
+Ts
+"}
+(2,1,1) = {"
+xj
+iJ
+ju
+zf
+Wg
+ju
+ju
+zA
+ju
+iJ
+xj
+gH
+vQ
+Lt
+WE
+wO
+PV
+wD
+ry
+WS
+vQ
+gH
+Hl
+TB
+BM
+Jf
+Hl
+xj
+"}
+(3,1,1) = {"
+xj
+ju
+eT
+FG
+ju
+Nl
+ju
+DM
+eT
+ju
+xj
+gH
+pD
+HU
+Yj
+PV
+mm
+gO
+qr
+Vi
+WS
+gH
+Hl
+xE
+FB
+Ry
+Hl
+xj
+"}
+(4,1,1) = {"
+xj
+xg
+jb
+lB
+ju
+Ll
+ju
+vX
+jb
+xg
+xj
+gH
+xP
+rX
+gJ
+PV
+wO
+PV
+Tf
+ZG
+xP
+gH
+Hl
+Ob
+FB
+WD
+Hl
+xj
+"}
+(5,1,1) = {"
+xj
+Wg
+ju
+ju
+ju
+ju
+ju
+Wg
+ju
+Ll
+xj
+gH
+wD
+PV
+PV
+gA
+Pm
+RH
+pD
+PV
+PV
+gH
+Hl
+eQ
+xy
+Hf
+Hl
+xj
+"}
+(6,1,1) = {"
+xj
+ju
+Nl
+ju
+ju
+ji
+ju
+ju
+Nl
+ju
+xj
+gH
+PV
+mm
+gO
+Vg
+SZ
+eE
+gO
+mm
+wO
+gH
+Hl
+Hl
+Hl
+Hl
+Hl
+xj
+"}
+(7,1,1) = {"
+xj
+Ll
+ju
+ju
+Wg
+ju
+ju
+ju
+ju
+Wg
+xj
+gH
+PV
+wO
+PV
+AH
+gn
+SS
+PV
+wD
+PV
+gH
+CX
+CX
+CX
+CX
+CX
+xj
+"}
+(8,1,1) = {"
+xj
+nB
+mr
+WI
+ju
+ju
+Ll
+ly
+mr
+nB
+xj
+gH
+Ud
+kE
+oO
+PV
+PV
+gO
+VW
+US
+Ud
+gH
+CX
+hB
+MB
+hB
+CX
+xj
+"}
+(9,1,1) = {"
+xj
+ju
+eT
+FG
+ju
+Nl
+ju
+aS
+eT
+ju
+xj
+gH
+Lt
+RV
+IW
+wV
+mm
+PV
+ZM
+Vi
+WS
+gH
+CX
+jz
+XB
+oc
+CX
+xj
+"}
+(10,1,1) = {"
+xj
+iJ
+ju
+zf
+ju
+Wg
+ju
+zA
+ju
+iJ
+xj
+gH
+vQ
+WS
+WE
+PV
+PV
+wO
+ry
+kK
+vQ
+gH
+CX
+gg
+kJ
+aV
+CX
+CX
+"}
+(11,1,1) = {"
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+gH
+CX
+AG
+UE
+UE
+Rc
+CX
+"}
+(12,1,1) = {"
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+xj
+CX
+Ah
+SR
+SR
+bY
+CX
+"}
+(13,1,1) = {"
+cn
+cn
+cn
+cn
+cn
+cn
+cn
+cn
+cn
+cn
+cn
+eR
+eR
+eR
+eR
+eR
+eR
+eR
+eR
+eR
+eR
+eR
+CX
+Er
+ft
+ft
+IP
+CX
+"}
+(14,1,1) = {"
+cn
+Kp
+Ky
+Hh
+Zb
+Be
+bW
+ky
+Ky
+Kp
+cn
+eR
+vQ
+Qz
+nt
+sl
+cy
+hf
+VN
+Qz
+vQ
+eR
+CX
+Et
+Bt
+KG
+CX
+CX
+"}
+(15,1,1) = {"
+cn
+Ky
+tk
+Ps
+Ft
+Wq
+JK
+Iq
+tk
+Ky
+cn
+eR
+Qz
+tF
+vu
+Dr
+Dr
+Dr
+nA
+tF
+Qz
+eR
+CX
+zL
+LU
+ai
+CX
+xj
+"}
+(16,1,1) = {"
+cn
+sD
+uH
+jP
+UU
+Be
+JX
+fW
+uH
+sD
+cn
+eR
+SG
+dk
+gP
+Wp
+GP
+UH
+zx
+dk
+SG
+eR
+CX
+hB
+MB
+hB
+CX
+xj
+"}
+(17,1,1) = {"
+cn
+Zb
+Be
+az
+se
+nT
+Xq
+Zb
+Be
+bW
+cn
+eR
+og
+Dr
+hG
+PC
+wF
+OO
+du
+Dr
+hf
+eR
+CX
+CX
+CX
+CX
+CX
+xj
+"}
+(18,1,1) = {"
+cn
+Be
+yG
+Pa
+se
+lj
+se
+Be
+xA
+Be
+cn
+eR
+og
+Dr
+FU
+pU
+Kz
+xC
+hn
+Dr
+JQ
+eR
+xj
+xj
+xj
+xj
+xj
+xj
+"}
+(19,1,1) = {"
+cn
+UU
+Be
+yC
+GQ
+se
+Ha
+Aa
+Be
+Zc
+cn
+eR
+og
+Dr
+ax
+cq
+El
+ZJ
+cu
+Dr
+hf
+eR
+xj
+xj
+xj
+xj
+xj
+xj
+"}
+(20,1,1) = {"
+cn
+Xh
+CM
+OB
+Zb
+vb
+bW
+fX
+CM
+Xh
+cn
+eR
+UG
+Oo
+xO
+SM
+uR
+pm
+Yk
+Oo
+UG
+eR
+xj
+xj
+xj
+xj
+xj
+xj
+"}
+(21,1,1) = {"
+cn
+Ky
+tk
+DH
+Be
+Wq
+dR
+Iq
+tk
+Ky
+cn
+eR
+Qz
+tF
+IX
+Dr
+Dr
+Dr
+nA
+tF
+Qz
+eR
+xj
+xj
+xj
+xj
+xj
+xj
+"}
+(22,1,1) = {"
+cn
+Kp
+Ky
+Hh
+UU
+Pa
+Zc
+ky
+Ky
+Kp
+cn
+eR
+vQ
+Qz
+nt
+hf
+sl
+DD
+VN
+Qz
+vQ
+eR
+xj
+xj
+xj
+xj
+xj
+xj
+"}
+(23,1,1) = {"
+cn
+cn
+cn
+cn
+cn
+cn
+cn
+cn
+cn
+cn
+cn
+eR
+eR
+eR
+eR
+eR
+eR
+eR
+eR
+eR
+eR
+eR
+xj
+xj
+xj
+xj
+xj
+xj
+"}

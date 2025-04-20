@@ -7,6 +7,8 @@
 	req_access = list(ACCESS_MINING)
 	/// The server this console is connected to.
 	var/datum/weakref/server_ref
+	/// ID for making sure we connect to the correct server.
+	var/bitrunning_id = "DEFAULT"
 
 /obj/machinery/computer/quantum_console/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()
@@ -55,8 +57,13 @@
 	if(isnull(server))
 		return data
 
-	data["available_domains"] = SSbitrunning.get_available_domains(server.scanner_tier, server.points)
+	data["available_domains"] = SSbitrunning.get_available_domains(server.scanner_tier, server.points, server.bitrunning_network)
 	data["avatars"] = server.get_avatar_data()
+	data["diff1_name"] = (server.bitrunning_network == BITRUNNER_DOMAIN_SECURITY ? "Mischief - 1XX" : "Easy")
+	data["diff2_name"] = (server.bitrunning_network == BITRUNNER_DOMAIN_SECURITY ? "Misdemeanor - 2XX" : "Normal")
+	data["diff3_name"] = (server.bitrunning_network == BITRUNNER_DOMAIN_SECURITY ? "Felony - 3XX" : "Hard")
+	data["diff4_name"] = (server.bitrunning_network == BITRUNNER_DOMAIN_SECURITY ? "Grand Felony - 4XX" : "Very Hard")
+	data["diff5_name"] = (server.bitrunning_network == BITRUNNER_DOMAIN_SECURITY ? "Capital - 5XX" : "Overkill")
 
 	return data
 
@@ -96,6 +103,22 @@
 
 	for(var/direction in GLOB.cardinals)
 		var/obj/machinery/quantum_server/nearby_server = locate(/obj/machinery/quantum_server, get_step(src, direction))
-		if(nearby_server)
+		if(nearby_server && nearby_server.bitrunning_id == bitrunning_id)
 			server_ref = WEAKREF(nearby_server)
 			return nearby_server
+
+/obj/machinery/computer/quantum_console/prisoner_solo1
+	name = "torment nexus #1 console"
+	bitrunning_id = "solo_nexus_1"
+
+/obj/machinery/computer/quantum_console/prisoner_solo2
+	name = "torment nexus #2 console"
+	bitrunning_id = "solo_nexus_2"
+
+/obj/machinery/computer/quantum_console/prisoner_solo3
+	name = "torment nexus #3 console"
+	bitrunning_id = "solo_nexus_3"
+
+/obj/machinery/computer/quantum_console/prisoner_group
+	name = "co-operative torment nexus console"
+	bitrunning_id = "coop_nexus"

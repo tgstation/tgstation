@@ -1,0 +1,1251 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"av" = (
+/obj/structure/minecart_rail/railbreak{
+	dir = 6
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/bronze,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"bl" = (
+/obj/structure/plasticflaps/opaque,
+/obj/bitrunning/watcher_hunt_teleporter,
+/obj/machinery/conveyor/auto/fast/inverted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"bq" = (
+/obj/structure/fluff/meteor/large,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"ca" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/iron/tgmcemblem{
+	dir = 1
+	},
+/area/virtual_domain/fullbright)
+"cd" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"ck" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/machinery/computer/old,
+/obj/structure/sign/poster/contraband/d_day_promo/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"cA" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"cB" = (
+/obj/structure/flora/rock/pile/style_2,
+/obj/machinery/conveyor/auto/very_fast{
+	alpha = 0
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"da" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail,
+/obj/structure/marker_beacon/cerulean{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"di" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"dJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/comfy/black{
+	dir = 8
+	},
+/obj/item/cardboard_cutout/nuclear_operative,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"fr" = (
+/turf/open/floor/iron/tgmcemblem{
+	dir = 4
+	},
+/area/virtual_domain/fullbright)
+"fX" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"gi" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"gS" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line,
+/obj/machinery/conveyor/auto/very_fast,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"hi" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/conveyor/auto/fast{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"ib" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/virtual_domain/fullbright)
+"jn" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/conveyor/auto/very_fast/inverted{
+	dir = 5
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"jN" = (
+/obj/machinery/conveyor/auto/slow/inverted{
+	alpha = 0
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"jW" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/energy/pulse/destroyer/fake,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"kq" = (
+/obj/effect/turf_decal/syndicateemblem/top/right,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/machinery/conveyor/auto/very_fast,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"ky" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 1
+	},
+/obj/machinery/conveyor/auto/very_fast,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"lo" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line,
+/obj/structure/chair/office{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"lG" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"lN" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"mb" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"nv" = (
+/obj/structure/fluff/tram_rail/floor,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"oq" = (
+/obj/machinery/conveyor/auto/very_fast{
+	alpha = 0
+	},
+/obj/bitrunning/watcher_hunt_spawner/meteor,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"ox" = (
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"pj" = (
+/obj/structure/fluff/tram_rail/end,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/marker_beacon/cerulean{
+	pixel_x = 8;
+	pixel_y = -8
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"qf" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/conveyor/auto/fast{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"qq" = (
+/obj/effect/decal/fakelattice,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"qx" = (
+/obj/structure/fluff/tram_rail/electric,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"qZ" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 1
+	},
+/obj/item/cardboard_cutout/nuclear_operative,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"re" = (
+/obj/machinery/conveyor/auto/very_fast{
+	alpha = 0
+	},
+/obj/bitrunning/watcher_hunt_teleporter,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"rf" = (
+/obj/machinery/door/airlock/titanium,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"rn" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/obj/structure/marker_beacon/burgundy{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"rp" = (
+/obj/structure/plasticflaps/opaque,
+/obj/bitrunning/watcher_hunt_teleporter,
+/obj/machinery/conveyor/auto/very_fast/inverted{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"rw" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/iron/tgmcemblem/center{
+	dir = 8
+	},
+/area/virtual_domain/fullbright)
+"rB" = (
+/obj/structure/minecart_rail/railbreak{
+	dir = 5
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"rJ" = (
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/machinery/conveyor/auto/very_fast,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"rZ" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"sm" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/machinery/conveyor/auto/very_fast,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"sx" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/binoculars,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"sK" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 1
+	},
+/obj/item/gun/energy/pulse/destroyer/fake,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"tI" = (
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/iron/tgmcemblem{
+	dir = 6
+	},
+/area/virtual_domain/fullbright)
+"vM" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 8
+	},
+/obj/structure/marker_beacon/burgundy{
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"wk" = (
+/obj/structure/minecart_rail/railbreak{
+	dir = 1
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/bronze,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"wD" = (
+/obj/structure/sign/poster/contraband/gorlex_recruitment/directional/east,
+/obj/machinery/conveyor/auto/fast{
+	dir = 1
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"wK" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/left,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"wL" = (
+/obj/structure/minecart_rail/railbreak{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"xp" = (
+/obj/structure/fluff/tram_rail/floor{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"xK" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/machinery/button/door/directional/west,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"yf" = (
+/obj/structure/fluff/tram_rail/end,
+/obj/structure/fluff/tram_rail{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"yr" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 4
+	},
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"ys" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/obj/structure/fluff/tram_rail,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"yX" = (
+/obj/item/kirbyplants/organic/plant19,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"yY" = (
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/iron/tgmcemblem,
+/area/virtual_domain/fullbright)
+"zp" = (
+/turf/closed/wall/mineral/titanium,
+/area/virtual_domain/fullbright)
+"zH" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/gun/energy/pulse/destroyer/fake,
+/obj/structure/sign/flag/terragov/directional/south,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"zZ" = (
+/obj/structure/plasticflaps/opaque,
+/obj/bitrunning/watcher_hunt_spawner/station_high,
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"AW" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 4
+	},
+/obj/machinery/conveyor/auto/very_fast{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"Bp" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"BK" = (
+/obj/structure/minecart_rail/railbreak{
+	dir = 10
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/bronze,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Dk" = (
+/obj/structure/minecart_rail/railbreak{
+	dir = 6
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Dw" = (
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/obj/structure/table/reinforced/titaniumglass,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"DJ" = (
+/obj/structure/fluff/tram_rail/anchor{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Ed" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/gun/energy/pulse/destroyer/fake,
+/obj/structure/sign/poster/contraband/free_key/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"Eo" = (
+/obj/structure/fluff/meteor,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Ep" = (
+/obj/structure/plasticflaps/opaque,
+/obj/bitrunning/watcher_hunt_spawner/station_max,
+/obj/machinery/conveyor/auto/fast{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"EF" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"ER" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/structure/chair/office/light,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"Fo" = (
+/obj/effect/turf_decal/syndicateemblem/top/middle,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/item/cardboard_cutout/nuclear_operative,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"Ft" = (
+/turf/closed/indestructible/rock,
+/area/virtual_domain/fullbright)
+"FD" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line{
+	dir = 1
+	},
+/obj/structure/chair/office,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"Gh" = (
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"Gl" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/chair/office{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"Gx" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/structure/marker_beacon/cerulean{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"GB" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/implant/radio,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"GQ" = (
+/obj/machinery/conveyor/auto/very_fast{
+	alpha = 0
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Hf" = (
+/obj/structure/minecart_rail/railbreak{
+	dir = 5
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/bronze,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"HS" = (
+/obj/machinery/conveyor/auto/fast{
+	alpha = 0
+	},
+/obj/bitrunning/watcher_hunt_teleporter,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Ib" = (
+/obj/machinery/conveyor/auto/slow/inverted{
+	alpha = 0
+	},
+/obj/bitrunning/watcher_hunt_spawner/station_medium,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"IC" = (
+/obj/structure/chair/comfy{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"IH" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/structure/showcase/machinery/oldpod/used{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"IQ" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/turf/open/floor/iron/tgmcemblem{
+	dir = 9
+	},
+/area/virtual_domain/fullbright)
+"IZ" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/effect/turf_decal/siding/dark,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/conveyor/auto/very_fast/inverted{
+	dir = 9
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"Jp" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/obj/structure/fluff/tram_rail,
+/obj/structure/marker_beacon/burgundy{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"JP" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Kv" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"Ld" = (
+/obj/structure/flora/rock/pile/style_random,
+/obj/machinery/conveyor/auto/fast{
+	alpha = 0
+	},
+/obj/bitrunning/watcher_hunt_spawner/meteor,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"LA" = (
+/turf/open/floor/iron/tgmcemblem{
+	dir = 8
+	},
+/area/virtual_domain/fullbright)
+"Mb" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/iron/tgmcemblem{
+	dir = 5
+	},
+/area/virtual_domain/fullbright)
+"MD" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"MM" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/machinery/fax,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"MY" = (
+/obj/structure/minecart_rail/railbreak{
+	dir = 9
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"NH" = (
+/obj/structure/fluff/tram_rail/end,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"NL" = (
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/effect/turf_decal/trimline/dark_red/filled/line,
+/obj/item/book/granter/crafting_recipe/donk_secret_recipe,
+/obj/item/folder/syndicate/red,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"Of" = (
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/turf/open/floor/iron/tgmcemblem{
+	dir = 10
+	},
+/area/virtual_domain/fullbright)
+"Oi" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/effect/turf_decal/siding/dark/end{
+	dir = 8
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/machinery/fax,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"Op" = (
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/ammo_box/magazine/m12g/dragon,
+/obj/item/ammo_box/magazine/m9mm/fire,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"OV" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/machinery/computer/old,
+/obj/structure/sign/flag/terragov/directional/north,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"Pa" = (
+/obj/machinery/conveyor/auto/slow/inverted{
+	alpha = 0
+	},
+/obj/bitrunning/watcher_hunt_teleporter,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Ss" = (
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Tp" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/gun/energy/pulse/destroyer/fake,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"Tw" = (
+/obj/structure/fluff/tram_rail/end,
+/obj/structure/marker_beacon/cerulean{
+	pixel_x = 8;
+	pixel_y = -8
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"TO" = (
+/obj/structure/minecart_rail/railbreak{
+	dir = 10
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Uw" = (
+/obj/effect/turf_decal/siding/thinplating_new/light{
+	dir = 1
+	},
+/obj/structure/table/reinforced/titaniumglass,
+/obj/item/implant/radio,
+/turf/open/floor/iron/smooth,
+/area/virtual_domain/fullbright)
+"UE" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 1
+	},
+/obj/structure/fluff/tram_rail,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Wg" = (
+/obj/structure/minecart_rail/railbreak{
+	dir = 9
+	},
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/bronze,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Wp" = (
+/obj/structure/fluff/tram_rail/end{
+	dir = 4
+	},
+/obj/structure/marker_beacon/burgundy{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"Wz" = (
+/obj/structure/fluff/tram_rail/anchor,
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"WV" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"Xg" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/middle,
+/obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/item/cardboard_cutout/nuclear_operative,
+/turf/open/floor/mineral/plastitanium/red,
+/area/virtual_domain/fullbright)
+"XF" = (
+/obj/machinery/digital_clock/score_card,
+/turf/closed/wall/mineral/titanium,
+/area/virtual_domain/fullbright)
+"XW" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/obj/structure/showcase/machinery/oldpod/used{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/virtual_domain/fullbright)
+"Yx" = (
+/obj/effect/turf_decal/trimline/dark_red/filled/line,
+/obj/item/cardboard_cutout/nuclear_operative,
+/obj/machinery/button/door/directional/east,
+/turf/open/floor/iron/dark/small,
+/area/virtual_domain/fullbright)
+"YL" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/virtual_domain/fullbright)
+"ZO" = (
+/obj/structure/fluff/tram_rail/electric{
+	dir = 1
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+"ZU" = (
+/obj/machinery/conveyor/auto/fast{
+	alpha = 0
+	},
+/turf/open/floor/fakespace,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+gi
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+gi
+"}
+(2,1,1) = {"
+Ft
+Ft
+Wz
+zp
+zp
+zp
+zp
+rf
+XF
+rf
+zp
+zp
+zp
+zp
+DJ
+Ft
+Ft
+"}
+(3,1,1) = {"
+Ft
+bq
+NH
+qq
+Kv
+cA
+rZ
+di
+yX
+ox
+xK
+IH
+Kv
+qq
+fX
+Ss
+Ft
+"}
+(4,1,1) = {"
+Ft
+Ss
+rB
+av
+Kv
+WV
+MD
+IQ
+LA
+Of
+MD
+XW
+Kv
+Hf
+Dk
+Eo
+Ft
+"}
+(5,1,1) = {"
+Ft
+Wz
+ib
+zp
+zp
+OV
+EF
+ca
+rw
+yY
+ER
+zH
+zp
+zp
+ib
+DJ
+Ft
+"}
+(6,1,1) = {"
+Ft
+qx
+wk
+qq
+Kv
+MM
+sx
+Mb
+fr
+tI
+Tp
+Tp
+Kv
+qq
+wk
+ZO
+Ft
+"}
+(7,1,1) = {"
+Ft
+Wz
+ib
+xp
+zp
+Kv
+Kv
+Uw
+IC
+Dw
+Kv
+Kv
+zp
+nv
+ib
+DJ
+Ft
+"}
+(8,1,1) = {"
+Ft
+NH
+wL
+DJ
+UE
+Tw
+Kv
+Kv
+Kv
+Kv
+Kv
+Gx
+yf
+Wz
+wL
+fX
+Ft
+"}
+(9,1,1) = {"
+Ft
+Ss
+Tw
+fX
+Ss
+Ss
+da
+fX
+Ss
+NH
+pj
+Ss
+Ss
+NH
+Gx
+Ss
+Ft
+"}
+(10,1,1) = {"
+Ft
+Ld
+ZU
+ZU
+ZU
+ZU
+ZU
+ZU
+ZU
+ZU
+ZU
+ZU
+ZU
+ZU
+ZU
+HS
+Ft
+"}
+(11,1,1) = {"
+Ft
+Pa
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+jN
+Ib
+Ft
+"}
+(12,1,1) = {"
+Ft
+oq
+GQ
+GQ
+GQ
+GQ
+GQ
+GQ
+GQ
+GQ
+GQ
+GQ
+GQ
+cB
+GQ
+re
+Ft
+"}
+(13,1,1) = {"
+Ft
+Ss
+vM
+mb
+Ss
+Ss
+Jp
+mb
+Ss
+lG
+rn
+Ss
+Ss
+lG
+Wp
+Ss
+Ft
+"}
+(14,1,1) = {"
+Ft
+lG
+wL
+DJ
+ys
+vM
+cd
+cd
+cd
+cd
+cd
+Wp
+lN
+Wz
+wL
+mb
+Ft
+"}
+(15,1,1) = {"
+Ft
+Wz
+YL
+xp
+YL
+cd
+cd
+Op
+dJ
+GB
+cd
+cd
+YL
+nv
+YL
+DJ
+Ft
+"}
+(16,1,1) = {"
+Ft
+qx
+wk
+qq
+cd
+Oi
+NL
+Gl
+Gh
+wK
+sK
+jW
+cd
+qq
+wk
+ZO
+Ft
+"}
+(17,1,1) = {"
+Ft
+Wz
+YL
+YL
+YL
+ck
+lo
+Fo
+Bp
+Xg
+FD
+Ed
+YL
+YL
+YL
+DJ
+Ft
+"}
+(18,1,1) = {"
+Ft
+bq
+MY
+BK
+cd
+jn
+gS
+kq
+rJ
+sm
+ky
+IZ
+cd
+Wg
+TO
+Eo
+Ft
+"}
+(19,1,1) = {"
+Ft
+Ss
+lG
+qq
+cd
+AW
+Yx
+hi
+wD
+qf
+qZ
+yr
+cd
+qq
+mb
+Ss
+Ft
+"}
+(20,1,1) = {"
+Ft
+Ft
+Wz
+YL
+YL
+zZ
+YL
+bl
+YL
+Ep
+YL
+rp
+YL
+YL
+DJ
+Ft
+Ft
+"}
+(21,1,1) = {"
+gi
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+Ft
+JP
+"}

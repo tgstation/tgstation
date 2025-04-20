@@ -11,6 +11,8 @@
 	var/datum/weakref/server_ref
 	/// The netpod the avatar is in
 	var/datum/weakref/netpod_ref
+	/// Are we trapped in this avatar? AKA, should death be an escape?
+	var/trapped = FALSE
 
 /datum/component/avatar_connection/Initialize(
 	datum/mind/old_mind,
@@ -18,12 +20,14 @@
 	obj/machinery/quantum_server/server,
 	obj/machinery/netpod/pod,
 	help_text,
+	trapped = FALSE,
 	)
 
 	if(!isliving(parent) || !isliving(old_body) || !old_mind || !server.is_operational || !pod.is_operational)
 		return COMPONENT_INCOMPATIBLE
 
 	var/mob/living/avatar = parent
+	src.trapped = trapped
 
 	netpod_ref = WEAKREF(pod)
 	old_body_ref = WEAKREF(old_body)
@@ -97,8 +101,11 @@
 	 */
 	RegisterSignals(parent, list(COMSIG_BITRUNNER_ALERT_SEVER, COMSIG_BITRUNNER_CACHE_SEVER, COMSIG_BITRUNNER_LADDER_SEVER), PROC_REF(on_safe_disconnect))
 	RegisterSignal(parent, COMSIG_LIVING_PILL_CONSUMED, PROC_REF(disconnect_if_red_pill))
-	RegisterSignals(parent, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_sever_connection))
-	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
+	if(!trapped)
+		RegisterSignals(parent, list(COMSIG_LIVING_DEATH, COMSIG_QDELETING), PROC_REF(on_sever_connection))
+		RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
+	else
+		RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_trapped_death))
 
 
 /datum/component/avatar_connection/UnregisterFromParent()
@@ -239,6 +246,12 @@
 	SIGNAL_HANDLER
 
 	full_avatar_disconnect(cause_damage = TRUE, source = source)
+
+/// We died while trapped, rejuvenate.
+/datum/component/avatar_connection/proc/on_trapped_death(mob/living/carbon/source, gibbed)
+	SIGNAL_HANDLER
+	source.revive(HEAL_ALL, force_grab_ghost = TRUE)
+	source.balloon_alert(source, "death is not an escape!")
 
 
 /// Triggers when the server is shutting down
