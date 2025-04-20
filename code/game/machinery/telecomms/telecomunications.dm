@@ -114,7 +114,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 		if(telecomms_machine == src)
 			continue
 		var/turf/their_home = get_turf(telecomms_machine)
-		if (!(long_range_link && telecomms_machine.long_range_link) && !(get_dist(src, telecomms_machine) <= 20 || (their_home.z in connected_zs)))
+		if (!(long_range_link && telecomms_machine.long_range_link) && !(GET_CARDINAL_DIST(src, telecomms_machine) <= 20 || (their_home.z in connected_zs)))
 			continue
 		if(!length(telecomms_machine.autolinkers & autolinkers))
 			continue
