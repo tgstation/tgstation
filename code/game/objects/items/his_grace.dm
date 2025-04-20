@@ -9,7 +9,7 @@
 	desc = "A toolbox painted bright green. Looking at it makes you feel uneasy."
 	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "green"
-	inhand_icon_state = "artistic_toolbox"
+	inhand_icon_state = "toolbox_green"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	w_class = WEIGHT_CLASS_GIGANTIC
@@ -43,7 +43,7 @@
 
 /obj/item/his_grace/update_icon_state()
 	icon_state = ascended ? "gold" : "green"
-	inhand_icon_state = ascended ? "toolbox_gold" : "artistic_toolbox"
+	inhand_icon_state = ascended ? "toolbox_gold" : "toolbox_green"
 	return ..()
 
 /obj/item/his_grace/update_overlays()

@@ -22899,11 +22899,9 @@
 /obj/item/canvas,
 /obj/item/canvas,
 /obj/item/canvas,
-/obj/item/chisel{
-	pixel_y = 7
-	},
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
+/obj/item/hand_labeler,
 /turf/open/floor/iron/textured,
 /area/station/commons/storage/art)
 "hYh" = (
@@ -37716,14 +37714,16 @@
 /area/station/maintenance/department/science)
 "ndI" = (
 /obj/structure/table,
-/obj/item/hand_labeler,
-/obj/item/camera,
-/obj/item/camera_film,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
 /obj/machinery/airalarm/directional/east,
 /obj/structure/sign/poster/contraband/clown/directional/south,
+/obj/item/storage/toolbox/artistic{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/crafter{
+	pixel_x = 2;
+	pixel_y = 1
+	},
 /turf/open/floor/iron/textured,
 /area/station/commons/storage/art)
 "ndR" = (
@@ -40130,7 +40130,14 @@
 /area/station/science/explab)
 "nXO" = (
 /obj/structure/table/wood,
-/obj/item/storage/crayons,
+/obj/item/storage/toolbox/artistic{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/crafter{
+	pixel_x = 2;
+	pixel_y = 1
+	},
 /turf/open/floor/carpet/purple,
 /area/station/service/library)
 "nXY" = (

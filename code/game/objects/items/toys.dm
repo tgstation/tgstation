@@ -696,7 +696,7 @@
 	desc = "A replica toolbox that rumbles when you turn the key."
 	icon = 'icons/obj/storage/toolbox.dmi'
 	icon_state = "green"
-	inhand_icon_state = "artistic_toolbox"
+	inhand_icon_state = "toolbox_green"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	hitsound = 'sound/items/weapons/smash.ogg'
