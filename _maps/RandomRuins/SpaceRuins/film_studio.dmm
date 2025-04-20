@@ -906,7 +906,7 @@
 "rQ" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/item/reagent_containers/cup/glass/bottle/beer{
 	pixel_x = 5;
 	pixel_y = -2

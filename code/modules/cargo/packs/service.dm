@@ -37,7 +37,7 @@
 					/obj/item/clothing/suit/caution = 3,
 					/obj/item/storage/bag/trash,
 					/obj/item/reagent_containers/spray/cleaner,
-					/obj/item/reagent_containers/cup/rag,
+					/obj/item/rag,
 					/obj/item/grenade/chem_grenade/cleaner = 3,
 				)
 	crate_name = "janitorial supplies crate"

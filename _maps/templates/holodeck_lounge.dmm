@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/structure/table/wood/shuttle_bar,
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = 10;
 	pixel_y = 1
 	},

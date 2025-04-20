@@ -563,7 +563,7 @@
 /obj/structure/table/wood/shuttle_bar{
 	boot_dir = 4
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = -3;
 	pixel_y = 1
 	},

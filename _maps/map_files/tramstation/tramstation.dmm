@@ -2163,7 +2163,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = -5;
 	pixel_y = 8
 	},
@@ -10473,7 +10473,7 @@
 "cAJ" = (
 /obj/structure/table,
 /obj/item/razor,
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = 8;
 	pixel_y = 15
 	},
@@ -23650,7 +23650,7 @@
 	pixel_x = 9;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = -6;
 	pixel_y = 2
 	},
@@ -37734,7 +37734,7 @@
 	pixel_x = -5;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = 6;
 	pixel_y = 5
 	},
