@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/Destroy()
 	GLOB.telecomms_list -= src
-	for(var/obj/machinery/telecomms/comm in GLOB.telecomms_list)
+	for(var/obj/machinery/telecomms/comm as anything in GLOB.telecomms_list)
 		remove_link(comm)
 	links = list()
 	return ..()
