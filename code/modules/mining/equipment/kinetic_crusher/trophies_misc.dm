@@ -15,7 +15,8 @@
 	var/forced_skin
 
 /obj/item/crusher_trophy/retool_kit/Destroy(force)
-	QDEL_NULL(active_skin)
+	if (istype(active_skin))
+		QDEL_NULL(active_skin)
 	return ..()
 
 /obj/item/crusher_trophy/retool_kit/effect_desc()
