@@ -74,10 +74,11 @@ GLOBAL_LIST_INIT(atmos_components, typecacheof(list(/obj/machinery/atmospherics)
 			if (init_dir & j)
 				new_volume += UNARY_PIPE_VOLUME
 			j <<= 1
-		set_volume(max(new_volume, UNARY_PIPE_VOLUME * 2))
+		new_volume = max(new_volume, UNARY_PIPE_VOLUME * 2) // Minimum 2 directions
+		set_volume(new_volume)
 	else
-		set_volume(UNARY_PIPE_VOLUME * 4)
 		initialize_directions = ALL_CARDINALS
+		set_volume(UNARY_PIPE_VOLUME * 4)
 
 //mapping helpers
 /obj/machinery/atmospherics/pipe/smart/simple
