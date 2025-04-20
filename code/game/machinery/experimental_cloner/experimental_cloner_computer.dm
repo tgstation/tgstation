@@ -23,10 +23,25 @@
 	var/obj/machinery/experimental_cloner_scanner/scanner = locate() in stuff_in_range
 	if (!isnull(scanner))
 		link_scanner(scanner)
-
 	var/obj/machinery/experimental_cloner/pod = locate() in stuff_in_range
 	if (!isnull(pod))
 		link_pod(pod)
+
+/obj/machinery/computer/experimental_cloner/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
+	. = NONE
+	if (machine_stat & BROKEN || isnull(multi_tool.buffer))
+		return
+
+	if (istype(multi_tool.buffer, /obj/machinery/experimental_cloner_scanner))
+		unlink_scanner()
+		link_scanner(multi_tool.buffer)
+		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
+		return ITEM_INTERACT_SUCCESS
+	if (istype(multi_tool.buffer, /obj/machinery/experimental_cloner))
+		unlink_pod()
+		link_pod(multi_tool.buffer)
+		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
+		return ITEM_INTERACT_SUCCESS
 
 /// Link up with a scanner to scan people
 /obj/machinery/computer/experimental_cloner/proc/link_scanner(obj/machinery/experimental_cloner_scanner/scanner)
@@ -42,6 +57,8 @@
 /// Release held references on deletion
 /obj/machinery/computer/experimental_cloner/proc/unlink_scanner()
 	SIGNAL_HANDLER
+	if (!input)
+		return
 	input = null
 
 /// Link up with a pod to print people
@@ -52,4 +69,6 @@
 /// Release held references on deletion
 /obj/machinery/computer/experimental_cloner/proc/unlink_pod()
 	SIGNAL_HANDLER
+	if (!output)
+		return
 	output = null

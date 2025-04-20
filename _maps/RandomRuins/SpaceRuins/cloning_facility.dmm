@@ -55,7 +55,6 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "i" = (
-/obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -66,6 +65,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/computer/experimental_cloner,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "j" = (
@@ -83,6 +83,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/structure/table,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "k" = (
@@ -96,7 +97,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/showcase/machinery/cloning_pod,
+/obj/machinery/experimental_cloner,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "l" = (
@@ -110,7 +111,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/computer/atmos_control/hydrogen_tank,
+/obj/structure/showcase/horrific_experiment,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "m" = (
@@ -308,6 +309,7 @@
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "Q" = (
 /obj/structure/table/glass,
+/obj/item/disk/design_disk/limbs/felinid,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "R" = (
@@ -340,6 +342,10 @@
 "V" = (
 /turf/closed/wall/r_wall/rust,
 /area/space/nearstation)
+"W" = (
+/obj/machinery/experimental_cloner_scanner,
+/turf/open/floor/iron/white,
+/area/ruin/space/has_grav/powered/ancient_shuttle)
 
 (1,1,1) = {"
 a
@@ -468,7 +474,7 @@ c
 h
 w
 J
-J
+W
 d
 a
 a
