@@ -579,6 +579,9 @@
 			qdel(actual_trauma)
 			return FALSE
 		actual_trauma.on_gain()
+		// certain traumas will qdel themselves in on_gain() if conditions aren't met
+		if(QDELETED(actual_trauma))
+			return FALSE
 		log_game("[key_name_and_tag(owner)] has gained the following brain trauma: [trauma.type]")
 	if(resilience)
 		actual_trauma.resilience = resilience
