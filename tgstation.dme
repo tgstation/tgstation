@@ -1613,6 +1613,7 @@
 #include "code\datums\elements\strippable.dm"
 #include "code\datums\elements\structure_repair.dm"
 #include "code\datums\elements\swabbable.dm"
+#include "code\datums\elements\swimming_tile.dm"
 #include "code\datums\elements\tenacious.dm"
 #include "code\datums\elements\tiny_mob_hunter.dm"
 #include "code\datums\elements\tool_flash.dm"

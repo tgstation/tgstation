@@ -33,7 +33,7 @@
 	)
 	fishing_difficulty = FISHING_DEFAULT_DIFFICULTY + 15
 	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_MALUS
-	associated_safe_turfs = list(/turf/open/water/beach)
+	associated_safe_turfs = list(/turf/open/water/deep_beach, /turf/open/water/beach)
 
 /datum/fish_source/ocean/beach
 	catalog_description = "Beach shore water"
