@@ -11,6 +11,8 @@
 
 /// Ashwalker related creatures
 #define FACTION_ASHWALKER "ashwalker"
+/// Bears of all varieties
+#define FACTION_BEAR "bear"
 /// Megafauna bosses of mining
 #define FACTION_BOSS "boss"
 /// CARPS

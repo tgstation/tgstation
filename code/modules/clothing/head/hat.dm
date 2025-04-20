@@ -83,6 +83,14 @@
 	icon_state = "bearpelt"
 	inhand_icon_state = null
 
+/obj/item/clothing/head/costume/bearpelt/equipped(mob/living/user, slot)
+	..()
+	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
+		var/mob/living/carbon/human/human_user = user
+		if(istype(human_user.wear_suit, /obj/item/clothing/suit/costume/bear_suit))
+			var/obj/item/clothing/suit/costume/bear_suit/our_suit = human_user.wear_suit
+			our_suit.make_friendly(user, src)
+
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."
