@@ -344,6 +344,16 @@ function draw_debug() {
 	document.getElementById("statcontent").appendChild(table3);
 
 }
+
+/*
+ * Can be sent 1 of 4 things:
+ * 1- A string entry, to show up as plain text on the stat panel.
+ * 2- An empty string, which will translate to a new line, to split it from text above/below.
+ * 3- a list, in which the first entry is plain text, the second entry is highlighted text, and the third entry is a link
+ * that clicking the second entry will take you to.
+ * 4- a list, in which "same_line" as the first entry will automatically put it on the line above it,
+ * and the second/third entry matching #3, allowing you to have 2 clickable links on one line.
+ */
 function draw_status() {
 	if (!document.getElementById("Status")) {
 		createStatusTab("Status");
