@@ -43,7 +43,10 @@
 		/obj/item/circuitboard/computer,
 	)
 
-	return is_type_in_list(to_insert, exceptions) ? ..() : FALSE
+	if(!is_type_in_list(to_insert, exceptions))
+		return FALSE
+
+	return ..()
 
 /datum/storage/rped/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	if(isstack(to_insert))

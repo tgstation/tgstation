@@ -14,13 +14,11 @@
 	var/foldable_result = /obj/item/stack/sheet/cardboard
 	/// What drawing will we get on the face of the box?
 	var/illustration = "writing"
+	storage_type = /datum/storage/box
 
 /obj/item/storage/box/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
 	update_appearance()
-	atom_storage.open_sound = 'sound/items/handling/cardboard_box/cardboard_box_open.ogg'
-	atom_storage.rustle_sound = 'sound/items/handling/cardboard_box/cardboard_box_rustle.ogg'
 
 /obj/item/storage/box/suicide_act(mob/living/carbon/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
