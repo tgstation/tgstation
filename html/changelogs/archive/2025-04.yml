@@ -588,3 +588,29 @@
   vinylspiders:
   - bugfix: shoes with the squeak component will no longer play a squeaking sound
       when you aren't actually walking (like in a wheelchair for instance)
+2025-04-20:
+  Absolucy:
+  - qol: MODlink scryers now alert the user if they try to call without a charged
+      power cell.
+  Ezel/Improvedname, JohnFulpWillard:
+  - bugfix: Constructs now have their proper factions, so Wizard constructs can't
+      hit Wizard Apprentices.
+  - bugfix: Juggernaut's Gauntlet echo spell now respects factions.
+  Goku:
+  - bugfix: All surgery initiator items can now be used while laying down (bedsheets,
+      cloaks, towels...), and not just surgery drapes (fixes the surgery UI showing
+      as not-interactable).
+  Holoo-1:
+  - admin: supply pod launcher should be more reliable
+  - bugfix: fixed small view, refresh button
+  Jacquerel:
+  - image: Megafauna kill achievement icons now look more like the bosses actually
+      currently do
+  SmArtKar:
+  - bugfix: Fixed AIs being unable to scan ore vents
+  - bugfix: Toolbox bounties should no longer randomly fail
+  jlsnow301:
+  - bugfix: The plant analyzer's progress bars should fill the window again
+  necromanceranne:
+  - bugfix: Objects crafted from lavaland fauna materials (bone, sinew, hide) are
+      now fireproof and lavaproof. And also reinforced fishing lines.
