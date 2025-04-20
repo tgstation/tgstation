@@ -2876,24 +2876,8 @@
 /obj/item/clothing/under/rank/security/officer/formal,
 /obj/item/clothing/under/rank/security/officer/formal,
 /obj/item/clothing/under/rank/security/officer/formal,
-/obj/item/clothing/suit/jacket/officer,
-/obj/item/clothing/suit/jacket/officer,
-/obj/item/clothing/suit/jacket/officer,
-/obj/item/clothing/suit/jacket/officer,
-/obj/item/clothing/suit/jacket/officer,
-/obj/item/clothing/suit/jacket/officer,
 /obj/item/clothing/under/rank/security/warden/formal,
-/obj/item/clothing/suit/jacket/warden,
 /obj/item/clothing/under/rank/security/head_of_security/formal,
-/obj/item/clothing/suit/jacket/hos,
-/obj/item/clothing/head/beret/sec/navyofficer,
-/obj/item/clothing/head/beret/sec/navyofficer,
-/obj/item/clothing/head/beret/sec/navyofficer,
-/obj/item/clothing/head/beret/sec/navyofficer,
-/obj/item/clothing/head/beret/sec/navyofficer,
-/obj/item/clothing/head/beret/sec/navyofficer,
-/obj/item/clothing/head/beret/sec/navywarden,
-/obj/item/clothing/head/hats/hos/beret/navyhos,
 /obj/structure/closet/crate/secure/gear,
 /obj/effect/turf_decal/box/corners{
 	dir = 1
@@ -7510,10 +7494,15 @@
 "cqk" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/glass{
-	amount = 30
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/iron/ten{
+	pixel_x = 2;
+	pixel_y = 0
+	},
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/office)
 "cql" = (
@@ -8039,7 +8028,6 @@
 "cyd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bodycontainer/crematorium{
-	dir = 1;
 	id = "crematoriumChapel"
 	},
 /obj/structure/sign/warning/hot_temp/directional/north,
@@ -15391,7 +15379,9 @@
 	color = "#52B4E9"
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/cryo)
 "eMI" = (
@@ -19881,9 +19871,6 @@
 "gcO" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/iron{
-	amount = 30
-	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/commons/vacant_room/office)
@@ -20906,12 +20893,13 @@
 /obj/item/flatpack{
 	board = /obj/item/circuitboard/machine/flatpacker;
 	pixel_y = 10;
-	pixel_x = 5
+	pixel_x = 8
 	},
 /obj/item/flatpack{
-	pixel_x = -12;
-	pixel_y = 14
+	pixel_x = -4;
+	pixel_y = 2
 	},
+/obj/structure/table,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/lab)
 "gti" = (
@@ -22809,7 +22797,6 @@
 "gXT" = (
 /obj/item/kirbyplants/random,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
 	},
@@ -33926,8 +33913,23 @@
 	dir = 6
 	},
 /obj/structure/rack,
-/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = 1;
+	pixel_y = 0
+	},
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = 4;
+	pixel_y = 0
+	},
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = 8;
+	pixel_y = 0
+	},
 /obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = -3;
+	pixel_y = 0
+	},
 /turf/open/floor/iron,
 /area/station/science/research)
 "knB" = (
@@ -38735,36 +38737,50 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "lOm" = (
-/obj/structure/closet/crate,
 /obj/item/stack/sheet/rglass{
 	amount = 30;
-	pixel_x = 2;
-	pixel_y = -2
+	pixel_x = 3;
+	pixel_y = 3
 	},
 /obj/item/stack/sheet/plasteel{
 	amount = 10;
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty{
 	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/stack/sheet/iron/fifty{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/glass/fifty{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/stack/cable_coil{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/item/stack/cable_coil{
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/item/stack/rods/fifty{
+	pixel_x = 12;
 	pixel_y = 2
 	},
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
-	},
-/obj/item/stack/cable_coil{
-	pixel_x = 3;
-	pixel_y = -7
-	},
-/obj/item/stack/rods/fifty,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 10
 	},
 /obj/machinery/light/directional/west,
+/obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "lOy" = (
@@ -41530,10 +41546,15 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "mGw" = (
-/obj/structure/closet/crate,
-/obj/item/storage/box/lights/mixed,
+/obj/item/storage/box/lights/mixed{
+	pixel_x = 8;
+	pixel_y = 8
+	},
 /obj/item/electronics/airlock,
-/obj/item/electronics/airlock,
+/obj/item/electronics/airlock{
+	pixel_x = -6;
+	pixel_y = -4
+	},
 /obj/item/stock_parts/power_store/cell/emproof{
 	pixel_x = -4;
 	pixel_y = 6
@@ -41548,6 +41569,7 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/airalarm/directional/south,
+/obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "mGx" = (
@@ -45867,11 +45889,14 @@
 "nWQ" = (
 /obj/item/clothing/shoes/magboots{
 	desc = "Magnetic boots, for the solar enthusiasts. Idential to a regular magboot in everything but soul.";
-	name = "Solars' Magboots"
+	name = "Solars' Magboots";
+	pixel_x = -1;
+	pixel_y = 4
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
+/obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "nWU" = (
@@ -53983,14 +54008,11 @@
 /area/station/science/lab)
 "qyM" = (
 /obj/structure/table/reinforced,
-/obj/item/stack/sheet/plasteel{
-	pixel_x = -4;
-	pixel_y = 1
-	},
 /obj/item/storage/belt/utility/full{
 	pixel_y = 5;
 	pixel_x = 3
 	},
+/obj/item/stack/sheet/plasteel/twenty,
 /turf/open/floor/iron/dark/textured_corner,
 /area/station/science/robotics/lab)
 "qyU" = (
@@ -69385,6 +69407,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/medical/cryo)
 "vkd" = (
@@ -77937,7 +77960,10 @@
 "xSq" = (
 /obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow{
+	pixel_x = 0;
+	pixel_y = 3
+	},
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
@@ -77950,13 +77976,16 @@
 /obj/item/clothing/shoes/magboots,
 /obj/item/crowbar,
 /obj/item/grenade/chem_grenade/smart_metal_foam,
-/obj/item/grenade/chem_grenade/smart_metal_foam,
+/obj/item/grenade/chem_grenade/smart_metal_foam{
+	pixel_x = 4;
+	pixel_y = 0
+	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 4
 	},
-/obj/structure/closet/crate,
 /obj/machinery/firealarm/directional/east,
 /obj/machinery/light/directional/east,
+/obj/structure/table,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "xSz" = (
