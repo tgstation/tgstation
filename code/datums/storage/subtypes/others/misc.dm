@@ -52,19 +52,13 @@
 
 /datum/storage/organ_box/handle_enter(obj/item/storage/organbox/source, obj/item/arrived)
 	. = ..()
-
-	if(!istype(arrived) || !istype(source) || !source.coolant_to_spend())
-		return
-
-	arrived.freeze()
+	if(istype(arrived) && istype(source) && source.coolant_to_spend())
+		arrived.freeze()
 
 /datum/storage/organ_box/handle_exit(datum/source, obj/item/gone)
 	. = ..()
-
-	if(!istype(gone))
-		return
-
-	gone.unfreeze()
+	if(istype(gone))
+		gone.unfreeze()
 
 ///Portable chem mixer
 /datum/storage/portable_chem_mixer
@@ -211,8 +205,7 @@
 /datum/storage/pillbottle/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(list(
-		/obj/item/reagent_containers/applicator/pill,
-		/obj/item/reagent_containers/applicator/patch,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/food/bait/natural,
 	))
 

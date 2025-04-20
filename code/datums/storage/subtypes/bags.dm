@@ -239,11 +239,6 @@
 	. = ..()
 	set_holdable(list(
 		/obj/item/ammo_casing/rebar,
-		/obj/item/ammo_casing/rebar/syndie,
-		/obj/item/ammo_casing/rebar/healium,
-		/obj/item/ammo_casing/rebar/hydrogen,
-		/obj/item/ammo_casing/rebar/zaukerite,
-		/obj/item/ammo_casing/rebar/paperball,
 	))
 
 ///Syndicate rebar quiver bag
@@ -296,9 +291,7 @@
 
 /datum/storage/bag/quiver/endless/handle_exit(datum/source, obj/item/gone)
 	. = ..()
-
 	var/obj/item/storage/bag/quiver/endless/store = real_location
-
 	new store.arrow_path(store)
 
 ///Money bag
