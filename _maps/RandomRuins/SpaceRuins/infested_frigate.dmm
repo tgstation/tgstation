@@ -1738,7 +1738,7 @@
 	},
 /obj/item/ammo_casing/spent,
 /obj/effect/decal/cleanable/xenoblood/xgibs{
-	icon_state = "xtracks";
+	icon_state = "tracks";
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,

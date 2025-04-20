@@ -182,9 +182,13 @@ There are several things that need to be remembered:
 			// When byond gives us filters that respect dirs we can just use an alpha mask for this but until then, two icons weeeee
 			var/mutable_appearance/hands_combined = mutable_appearance(layer = -GLOVES_LAYER, appearance_flags = KEEP_TOGETHER)
 			if(has_left_hand(check_disabled = FALSE))
-				hands_combined.overlays += mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
+				var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_left")
+				blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+				hands_combined.overlays += blood_overlay
 			if(has_right_hand(check_disabled = FALSE))
-				hands_combined.overlays += mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
+				var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
+				blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+				hands_combined.overlays += blood_overlay
 			overlays_standing[GLOVES_LAYER] = hands_combined
 			apply_overlay(GLOVES_LAYER)
 		return
@@ -908,7 +912,7 @@ generate/load female uniform sprites matching all previously decided variables
 
 	my_head.update_limb(is_creating = update_limb_data)
 
-	add_overlay(my_head.get_limb_icon())
+	add_overlay(my_head.get_limb_icon(dropped = FALSE, update_on = src))
 	update_worn_head()
 	update_worn_mask()
 

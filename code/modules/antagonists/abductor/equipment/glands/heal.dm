@@ -223,6 +223,7 @@
 		var/list/dirs = GLOB.alldirs.Copy()
 		for(var/i in 1 to 3)
 			var/obj/effect/decal/cleanable/blood/gibs/gibs = new(get_turf(owner))
+			gibs.add_blood_DNA(blood_dna_info)
 			gibs.streak(dirs)
 
 	var/obj/item/bodypart/chest/new_chest = new(null)

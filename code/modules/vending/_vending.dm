@@ -1050,7 +1050,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 					carbon_target.visible_message(span_danger("[carbon_head] explodes in a shower of gore beneath [src]!"),	span_userdanger("Oh f-"))
 					carbon_head.drop_organs()
 					qdel(carbon_head)
-					new /obj/effect/gibspawner/human/bodypartless(get_turf(carbon_target))
+					new /obj/effect/gibspawner/human/bodypartless(get_turf(carbon_target), carbon_target)
 			return TRUE
 
 	return FALSE

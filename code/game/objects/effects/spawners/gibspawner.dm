@@ -9,8 +9,9 @@
 	var/list/gibtypes = list() //typepaths of the gib decals to spawn
 	var/list/gibamounts = list() //amount to spawn for each gib decal type we'll spawn.
 	var/list/gibdirections = list() //of lists of possible directions to spread each gib decal type towards.
+	var/blood_dna_info // Cached blood_dna_info in case we do not have a source mob
 
-/obj/effect/gibspawner/Initialize(mapload, mob/living/source_mob, list/datum/disease/diseases)
+/obj/effect/gibspawner/Initialize(mapload, mob/living/source_mob, list/datum/disease/diseases, blood_dna_info)
 	. = ..()
 
 	if(gibtypes.len != gibamounts.len)
@@ -32,14 +33,16 @@
 
 
 	var/list/dna_to_add //find the dna to pass to the spawned gibs. do note this can be null if the mob doesn't have blood. add_blood_DNA() has built in null handling.
-	if(source_mob)
+	if(blood_dna_info)
+		dna_to_add = blood_dna_info
+	else if(source_mob)
 		dna_to_add = source_mob.get_blood_dna_list() //ez pz
 	else if(gib_mob_type)
 		var/mob/living/temp_mob = new gib_mob_type(src) //generate a fake mob so that we pull the right type of DNA for the gibs.
 		dna_to_add = temp_mob.get_blood_dna_list()
 		qdel(temp_mob)
 	else
-		dna_to_add = list("Non-human DNA" = random_blood_type()) //else, generate a random bloodtype for it.
+		dna_to_add = list("Non-human DNA" = random_human_blood_type()) //else, generate a random bloodtype for it.
 
 
 	for(var/i in 1 to gibtypes.len)
@@ -66,7 +69,7 @@
 	gibamounts = list(2, 2, 1)
 	sound_vol = 40
 
-/obj/effect/gibspawner/generic/Initialize(mapload)
+/obj/effect/gibspawner/generic/Initialize(mapload, blood_dna_info)
 	if(!gibdirections.len)
 		gibdirections = list(list(WEST, NORTHWEST, SOUTHWEST, NORTH),list(EAST, NORTHEAST, SOUTHEAST, SOUTH), list())
 	return ..()
@@ -80,7 +83,7 @@
 	gib_mob_type = /mob/living/carbon/human
 	sound_vol = 50
 
-/obj/effect/gibspawner/human/Initialize(mapload)
+/obj/effect/gibspawner/human/Initialize(mapload, mob/living/source_mob, list/datum/disease/diseases, blood_dna_info)
 	if(!gibdirections.len)
 		gibdirections = list(
 			list(NORTH, NORTHEAST, NORTHWEST),
@@ -91,6 +94,9 @@
 			GLOB.alldirs,
 			list(),
 		)
+	if(!iscarbon(source_mob) && isnull(blood_dna_info))
+		return ..(blood_dna_info = list("Human DNA" = random_human_blood_type()))
+
 	return ..()
 
 

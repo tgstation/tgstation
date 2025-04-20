@@ -109,24 +109,55 @@
 /turf/closed/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	return FALSE
 
-/mob/living/carbon/human/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases)
-	if (QDELETED(src))
+/obj/item/clothing/under/add_blood_DNA(list/blood_DNA_to_add)
+	. = ..()
+	if(!.)
 		return
-	if(wear_suit)
-		wear_suit.add_blood_DNA(blood_DNA_to_add)
-		update_worn_oversuit()
-	else if(w_uniform)
-		w_uniform.add_blood_DNA(blood_DNA_to_add)
-		update_worn_undersuit()
-	if(gloves)
-		var/obj/item/clothing/gloves/mob_gloves = gloves
-		mob_gloves.add_blood_DNA(blood_DNA_to_add)
-	else if(length(blood_DNA_to_add))
-		if (isnull(forensics))
+	for(var/obj/item/clothing/accessory/thing_accessory as anything in attached_accessories)
+		if(prob(66))
+			continue
+		thing_accessory.add_blood_DNA(blood_DNA_to_add)
+
+/mob/living/carbon/human/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases)
+	return add_blood_DNA_to_items(blood_DNA_to_add)
+
+/// Adds blood DNA to certain slots the mob is wearing
+/mob/living/carbon/human/proc/add_blood_DNA_to_items(
+	list/blood_DNA_to_add,
+	target_flags = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING|ITEM_SLOT_GLOVES|ITEM_SLOT_HEAD|ITEM_SLOT_MASK,
+)
+	if(QDELING(src))
+		return FALSE
+	if(!length(blood_DNA_to_add))
+		return FALSE
+
+	// Don't messy up our jumpsuit if we're got a coat
+	if((target_flags & ITEM_SLOT_OCLOTHING) && (wear_suit?.body_parts_covered & CHEST))
+		target_flags &= ~ITEM_SLOT_ICLOTHING
+
+	var/dirty_hands = !!(target_flags & (ITEM_SLOT_GLOVES|ITEM_SLOT_HANDS))
+	var/dirty_feet = !!(target_flags & ITEM_SLOT_FEET)
+	var/slots_to_bloody = target_flags & ~check_obscured_slots()
+	var/list/all_worn = get_equipped_items()
+	for(var/obj/item/thing as anything in all_worn)
+		if(thing.slot_flags & slots_to_bloody)
+			thing.add_blood_DNA(blood_DNA_to_add)
+		if(thing.body_parts_covered & HANDS)
+			dirty_hands = FALSE
+		if(thing.body_parts_covered & FEET)
+			dirty_feet = FALSE
+
+	if(slots_to_bloody & ITEM_SLOT_HANDS)
+		for(var/obj/item/thing in held_items)
+			thing.add_blood_DNA(blood_DNA_to_add)
+
+	if(dirty_hands || dirty_feet || !length(all_worn))
+		if(isnull(forensics))
 			forensics = new(src)
 		forensics.inherit_new(blood_DNA = blood_DNA_to_add)
-		blood_in_hands = rand(2, 4)
-	update_worn_gloves()
+		if(dirty_hands)
+			blood_in_hands = rand(2, 4)
+	update_clothing(slots_to_bloody)
 	return TRUE
 
 /*

@@ -111,8 +111,17 @@
 	if(HAS_TRAIT(parent_atom, TRAIT_LIGHT_STEP) || (wielder && HAS_TRAIT(wielder, TRAIT_LIGHT_STEP))) //the character is agile enough to don't mess their clothing and hands just from one blood splatter at floor
 		return TRUE
 
-	parent_atom.add_blood_DNA(GET_ATOM_BLOOD_DNA(pool))
-	update_icon()
+	if(ishuman(parent))
+		var/bloody_slots = ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING|ITEM_SLOT_FEET
+		var/mob/living/carbon/human/to_bloody = parent
+		if(to_bloody.body_position == LYING_DOWN)
+			bloody_slots |= ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_GLOVES
+
+		to_bloody.add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(pool), bloody_slots)
+		return
+
+	var/atom/to_bloody = parent
+	to_bloody.add_blood_DNA(GET_ATOM_BLOOD_DNA(pool))
 
 /**
  * Find a blood decal on a turf that matches our last_blood_state
@@ -275,7 +284,8 @@
 	if(footprint_sprite)
 		src.footprint_sprite = footprint_sprite
 	if(!bloody_feet)
-		bloody_feet = mutable_appearance('icons/effects/blood.dmi', "shoeblood", SHOES_LAYER)
+		bloody_feet = mutable_appearance('icons/effects/blood.dmi', "shoeblood", SHOES_LAYER, appearance_flags = RESET_COLOR)
+		bloody_feet.color = BLOOD_COLOR_RED
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	RegisterSignal(parent, COMSIG_STEP_ON_BLOOD, PROC_REF(on_step_blood))
@@ -305,7 +315,6 @@
 				FP.species_types |= affecting.limb_id
 				break
 
-
 /datum/component/bloodysoles/feet/is_obscured()
 	if(wielder.shoes)
 		return TRUE
@@ -322,6 +331,14 @@
 		return
 
 	..()
+
+/datum/component/bloodysoles/feet/share_blood(obj/effect/decal/cleanable/pool)
+	. = ..()
+	if(.)
+		return
+
+	bloody_feet.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(pool))
+	update_icon()
 
 /datum/component/bloodysoles/feet/proc/unequip_shoecover(datum/source)
 	SIGNAL_HANDLER

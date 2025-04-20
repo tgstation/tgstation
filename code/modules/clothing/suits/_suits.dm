@@ -41,7 +41,9 @@
 	if(isinhands)
 		return
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
 
 /obj/item/clothing/suit/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()

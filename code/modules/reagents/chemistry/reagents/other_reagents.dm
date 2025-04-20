@@ -59,8 +59,11 @@
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
-		if(exposed_carbon.get_blood_id() == type && ((methods & INJECT) || ((methods & INGEST) && HAS_TRAIT(exposed_carbon, TRAIT_DRINKS_BLOOD))))
-			if(!data || !(data["blood_type"] in get_safe_blood(exposed_carbon.dna.blood_type)))
+		var/datum/blood_type/carbon_blood_type = exposed_carbon.dna.blood_type
+		if(carbon_blood_type.reagent_type == type && ((methods & INJECT) || ((methods & INGEST) && HAS_TRAIT(exposed_carbon, TRAIT_DRINKS_BLOOD))))
+			var/datum/blood_type/recipient_blood_type = exposed_carbon.dna.blood_type
+			var/datum/blood_type/donor_blood_type = data["blood_type"]
+			if(!(donor_blood_type.type_key() in recipient_blood_type.compatible_types))
 				exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
 			else
 				exposed_carbon.blood_volume = min(exposed_carbon.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
@@ -72,12 +75,19 @@
 			if(data["blood_DNA"] && data["blood_type"])
 				exposed_carbon.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 			else
-				exposed_carbon.add_blood_DNA(list("Non-human DNA" = random_blood_type()))
+				exposed_carbon.add_blood_DNA(list("Non-human DNA" = random_human_blood_type()))
 
 /datum/reagent/blood/on_new(list/data)
 	. = ..()
-	if(istype(data))
-		SetViruses(src, data)
+	if(!istype(data))
+		return
+	SetViruses(src, data)
+	var/datum/blood_type/blood_type = data["blood_type"]
+	if(!blood_type)
+		return
+	var/blood_color = blood_type.get_color()
+	if(blood_color != BLOOD_COLOR_RED) // If the blood is default red, just use the darker red color for the reagent.
+		color = blood_color
 
 /datum/reagent/blood/on_merge(list/mix_data)
 	if(data && mix_data)
@@ -152,7 +162,7 @@
 	if(data["blood_DNA"] && data["blood_type"])
 		exposed_obj.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
 	else
-		exposed_obj.add_blood_DNA(list("Non-human DNA" = random_blood_type()))
+		exposed_obj.add_blood_DNA(list("Non-human DNA" = random_human_blood_type()))
 
 /datum/reagent/blood/get_taste_description(mob/living/taster)
 	if(isnull(taster))
@@ -1215,11 +1225,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	color = "#606060" //pure iron? let's make it violet of course
 	ph = 6
-
-/datum/reagent/iron/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	. = ..()
-	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
-		affected_mob.blood_volume += BLOOD_REGEN_FACTOR * seconds_per_tick
 
 /datum/reagent/gold
 	name = "Gold"

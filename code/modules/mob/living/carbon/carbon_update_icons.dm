@@ -302,7 +302,11 @@
 			damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "blank", -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
 			damage_overlay.color = iter_part.damage_overlay_color
 		if(iter_part.brutestate)
-			damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0") //we're adding icon_states of the base image as overlays
+			var/mutable_appearance/blood_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0", appearance_flags = RESET_COLOR) //we're adding icon_states of the base image as overlays
+			blood_damage_overlay.color = dna.blood_type.get_color()
+			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0_overlay", appearance_flags = RESET_COLOR)
+			blood_damage_overlay.overlays += brute_damage_overlay
+			damage_overlay.add_overlay(blood_damage_overlay)
 		if(iter_part.burnstate)
 			damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_0[iter_part.burnstate]")
 
@@ -315,10 +319,15 @@
 /mob/living/carbon/update_wound_overlays()
 	remove_overlay(WOUND_LAYER)
 
+	if(dna?.blood_type.no_bleed_overlays)
+		return
+
 	var/mutable_appearance/wound_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.bleed_overlay_icon)
-			wound_overlay ||= mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
+			blood_overlay.color = dna.blood_type.get_color()
+			wound_overlay ||= blood_overlay
 			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
 
 	if(isnull(wound_overlay))
@@ -496,7 +505,7 @@
 	var/list/new_limbs = list()
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		if(limb in needs_update)
-			var/bodypart_icon = limb.get_limb_icon()
+			var/bodypart_icon = limb.get_limb_icon(dropped = FALSE, update_on = src)
 			new_limbs += bodypart_icon
 			limb_icon_cache[icon_render_keys[limb.body_zone]] = bodypart_icon //Caches the icon with the bodypart key, as it is new
 		else
