@@ -7,7 +7,7 @@
 	hijack_speed = 0.5
 	ui_name = "AntagInfoBrother"
 	suicide_cry = "FOR MY BROTHER!!"
-	antag_moodlet = /datum/mood_event/focused
+	antag_moodlet = /datum/mood_event/antag_moodlet/focused
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/music/antag/traitor/tatoralert.ogg'
 	VAR_PRIVATE

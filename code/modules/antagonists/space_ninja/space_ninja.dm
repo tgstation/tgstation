@@ -6,7 +6,7 @@
 	hijack_speed = 1
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
-	antag_moodlet = /datum/mood_event/focused
+	antag_moodlet = /datum/mood_event/antag_moodlet/focused
 	suicide_cry = "FOR THE SPIDER CLAN!!"
 	preview_outfit = /datum/outfit/ninja_preview
 	can_assign_self_objectives = TRUE

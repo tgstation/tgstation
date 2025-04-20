@@ -3,7 +3,7 @@
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
 	antagpanel_category = "Revolution"
 	job_rank = ROLE_REV
-	antag_moodlet = /datum/mood_event/revolution
+	antag_moodlet = /datum/mood_event/antag_moodlet/revolution
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
 	stinger_sound = 'sound/music/antag/revolutionary_tide.ogg'
