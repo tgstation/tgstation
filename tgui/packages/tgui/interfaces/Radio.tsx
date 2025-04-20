@@ -6,6 +6,7 @@ import {
   NumberInput,
   Section,
   Slider,
+  Stack,
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 import { BooleanLike } from 'tgui-core/react';
@@ -55,13 +56,13 @@ export const Radio = (props) => {
   let height = 133;
   if (subspace) {
     if (channels.length > 0) {
-      height += channels.length * 21 + 6;
+      height += channels.length * 25 + 8;
     } else {
       height += 24;
     }
   }
   return (
-    <Window width={360} height={height}>
+    <Window width={376} height={height}>
       <Window.Content>
         <Section>
           <LabeledList>
@@ -148,20 +149,22 @@ export const Radio = (props) => {
                     No encryption keys installed.
                   </Box>
                 )}
-                {channels.map((channel) => (
-                  <Box key={channel.name}>
-                    <Button
-                      icon={channel.status ? 'check-square-o' : 'square-o'}
-                      selected={channel.status}
-                      content={channel.name}
-                      onClick={() =>
-                        act('channel', {
-                          channel: channel.name,
-                        })
-                      }
-                    />
-                  </Box>
-                ))}
+                <Stack vertical>
+                  {channels.map((channel) => (
+                    <Box key={channel.name}>
+                      <Button
+                        icon={channel.status ? 'check-square-o' : 'square-o'}
+                        selected={channel.status}
+                        content={channel.name}
+                        onClick={() =>
+                          act('channel', {
+                            channel: channel.name,
+                          })
+                        }
+                      />
+                    </Box>
+                  ))}
+                </Stack>
               </LabeledList.Item>
             )}
           </LabeledList>
