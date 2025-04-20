@@ -79,14 +79,11 @@ export function MultiNameInput(props: MultiNameProps) {
                           <Stack.Item grow>
                             <Button.Input
                               fluid
-                              onCommit={(e, value) => {
+                              onEnter={(value) => {
                                 handleUpdateName(key, value);
                               }}
-                            >
-                              <FitText maxFontSize={12} maxWidth={130}>
-                                {props.names[key]}
-                              </FitText>
-                            </Button.Input>
+                              value={props.names[key]}
+                            />
                           </Stack.Item>
                           {!!name.can_randomize && (
                             <Stack.Item>

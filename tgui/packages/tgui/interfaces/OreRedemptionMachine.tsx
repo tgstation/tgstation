@@ -124,15 +124,12 @@ function MaterialRow(props: MaterialRowProps) {
           x{print_amount}
         </Button>
         <Button.Input
+          buttonText={`[Max: ${
+            sheet_amounts < max_sheets ? sheet_amounts : max_sheets
+          }]`}
           color="transparent"
-          onCommit={(e, value) => {
-            onRelease(value);
-          }}
-        >
-          {'[Max: ' +
-            (sheet_amounts < max_sheets ? sheet_amounts : max_sheets) +
-            ']'}
-        </Button.Input>
+          onEnter={onRelease}
+        />
       </Table.Cell>
     </Table.Row>
   );

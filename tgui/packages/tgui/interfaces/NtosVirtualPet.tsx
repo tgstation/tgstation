@@ -256,11 +256,10 @@ const PetTricks = (props) => {
       title={capitalize(TrickName)}
       buttons={
         <Button.Input
+          buttonText="Rename Trick"
           color="transparent"
-          onCommit={(_, value) => setTrickName(value)}
-        >
-          Rename Trick
-        </Button.Input>
+          onEnter={setTrickName}
+        />
       }
     >
       <LabeledList>

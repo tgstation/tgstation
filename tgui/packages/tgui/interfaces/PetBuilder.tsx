@@ -369,11 +369,11 @@ const TrickSequence = ({
     title={TrickName}
     buttons={
       <Button.Input
+        buttonText="Rename"
         color="transparent"
-        onCommit={(_, value) => setTrickName(value)}
-      >
-        Rename
-      </Button.Input>
+        onEnter={setTrickName}
+        value={TrickName}
+      />
     }
   >
     <Box ml={2}>
