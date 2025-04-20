@@ -1471,6 +1471,7 @@
 #include "code\datums\elements\basic_allergenic_attack.dm"
 #include "code\datums\elements\basic_eating.dm"
 #include "code\datums\elements\basic_health_examine.dm"
+#include "code\datums\elements\basic_stamina_slowdown.dm"
 #include "code\datums\elements\beauty.dm"
 #include "code\datums\elements\bed_tucking.dm"
 #include "code\datums\elements\befriend_petting.dm"

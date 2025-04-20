@@ -10,6 +10,7 @@
 	icon_state = "ai-red"
 	icon_living = "ai-red"
 	gender = NEUTER
+	status_flags = NONE
 	basic_mob_flags = MOB_ROBOTIC
 	mob_size = MOB_SIZE_HUGE
 	basic_mob_flags = DEL_ON_DEATH

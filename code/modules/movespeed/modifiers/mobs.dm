@@ -24,6 +24,9 @@
 /datum/movespeed_modifier/resonance
 	multiplicative_slowdown = 0.75
 
+/datum/movespeed_modifier/basic_stamina_slowdown
+	variable = TRUE
+
 /datum/movespeed_modifier/damage_slowdown
 	blacklisted_movetypes = FLOATING|FLYING
 	variable = TRUE

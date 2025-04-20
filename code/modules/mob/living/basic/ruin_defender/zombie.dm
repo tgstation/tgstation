@@ -15,7 +15,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	combat_mode = TRUE
 	speed = 4
-	status_flags = CANPUSH
+	status_flags = CANPUSH | CANSTUN
 	death_message = "rapidly decays into a pile of bones!"
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0

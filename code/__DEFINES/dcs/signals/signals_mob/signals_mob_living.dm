@@ -96,6 +96,8 @@
 
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
+/// from base of mob/living/updatestamina()
+#define COMSIG_LIVING_STAMINA_UPDATE "living_stamina_update"
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
 
