@@ -186,6 +186,9 @@
 ///The last feeding timestamp of newly instantiated fish is multiplied by this: ergo, they spawn 50% hungry.
 #define NEW_FISH_LAST_FEEDING_MULT 0.33
 
+///If get_hunger is above this value, the fish is considered to be starving and will slowly lose health because of it
+#define FISH_STARVING_THRESHOLD 1
+
 //IF YOU ADD ANY NEW FLAG, ADD IT TO THE RESPECTIVE BITFIELD in _globalvars/bitfields.dm TOO!
 
 ///This fish is shown in the catalog and on the wiki (this only matters as an initial, compile-time value)
@@ -226,6 +229,13 @@
 
 ///Fluff. The name of the aquarium company shown in the fish catalog
 #define AQUARIUM_COMPANY "Aquatech Ltd."
+
+///aquarium mode where you've to manage food, fluid type and temperature to keep fish alive
+#define AQUARIUM_MODE_MANUAL "Manual"
+///Aquarium mode where the code tries to determine what fluid type and temperature to use. Default.
+#define AQUARIUM_MODE_AUTO "Assisted"
+///Prevents fish from dying because of temp/fluid settings and starvation but stops growth.
+#define AQUARIUM_MODE_SAFE "Stasis"
 
 /// how long between electrogenesis zaps
 #define ELECTROGENESIS_DURATION 40 SECONDS

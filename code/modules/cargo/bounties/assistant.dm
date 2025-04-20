@@ -280,4 +280,4 @@
 	description = "We need [LOWER_TEXT(fluid_type)] fish to populate our aquariums with. Fishes that are dead or bought from cargo will only be paid half as much."
 
 /datum/bounty/item/assistant/fish/fluid/can_ship_fish(obj/item/fish/fishie)
-	return compatible_fluid_type(fishie.required_fluid_type, fluid_type)
+	return (fluid_type in GLOB.fish_compatible_fluid_types[fishie.required_fluid_type])
