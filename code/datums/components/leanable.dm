@@ -105,7 +105,7 @@
 		COMSIG_LIVING_GET_PULLED,
 	), PROC_REF(stop_leaning))
 
-	RegisterSignal(src, COMSIG_MOVABLE_TELEPORTED, PROC_REF(teleport_away_while_leaning))
+	RegisterSignal(src, COMSIG_MOVABLE_TELEPORTING, PROC_REF(teleport_away_while_leaning))
 	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(lean_dir_changed))
 	update_fov()
 
@@ -127,7 +127,7 @@
 		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_LIVING_GET_PULLED,
 		COMSIG_ATOM_POST_DIR_CHANGE,
-		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOVABLE_TELEPORTING,
 	))
 	remove_offsets(LEANING_TRAIT)
 	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
