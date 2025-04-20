@@ -8,6 +8,8 @@
 
 /datum/status_effect/food/on_creation(mob/living/new_owner, timeout_mod = 1, new_strength = 1)
 	. = ..()
+	if(isnum(new_strength))
+		strength = new_strength
 	// Buff power equal to food complexity (1 to 5)
 	if(isnum(timeout_mod))
 		duration *= timeout_mod
@@ -19,3 +21,4 @@
 	desc = "Eating it made me feel better."
 	icon_state = "food_buff_1"
 	base_icon_state = "food_buff"
+

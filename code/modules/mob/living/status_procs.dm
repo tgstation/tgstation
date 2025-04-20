@@ -686,7 +686,7 @@
  * down_to - the lower end of the clamp, when adding the value
  * up_to - the upper end of the clamp, when adding the value
  */
-/mob/living/proc/adjust_status_effect_strength(datum/status_effect/effect_type, amount, down_to = 0, up_to = INFINITY)
+/mob/living/proc/adjust_status_effect_strength(datum/status_effect/effect_type, amount, down_to = 0, up_to = INFINITY, freeze_decay = 0 SECONDS)
 	if(!isnum(amount))
 		CRASH("adjust_status_effect_strength: called with an invalid amount. (Got: [amount])")
 
@@ -696,20 +696,10 @@
 	var/datum/status_effect/existing_effect = has_status_effect(effect_type)
 	if(existing_effect)
 		existing_effect.set_strength(clamp(existing_effect.strength + amount, down_to, up_to))
+		if(freeze_decay > existing_effect.decay_freeze)
+			existing_effect.decay_freeze = freeze_decay
 	else if(amount > 0)
-		apply_status_effect(effect_type, null,  clamp(amount, down_to, up_to))
-
-/**
-* This proc tries to reverse the strength decay of last tick and then increase strength by a flat value for when you want a "slow and steady" linear increase over time for things like reagent ticks.
-* The name might be slightly confusing as this adds a non-linear amount to strength to straighten out the strength curve and make it linear.
-*
-* This might be a fundamentally flawed way of doing things and the math also might have issues. I am a simple factory worker, not some kind of Big Ballz-esque Silicon Valley tech prodgidy like you guys. :)
-*/
-/mob/living/proc/adjust_status_effect_strength_linear(datum/status_effect/effect_type, amount, seconds_per_tick = 1, up_to = INFINITY, decay_mult = 1, decay_flat = 0)
-	if(!decay_mult)
-		CRASH("adjust_status_effect_strength_linear: invalid division. argument 'decay_mult' is zero or null!")
-	world.log <<  "get_strength: [get_status_effect_strength(effect_type)] || multiplier[(1 / decay_mult) ** seconds_per_tick] || amount: [amount * seconds_per_tick]"
-	set_status_effect_strength(effect_type, min((get_status_effect_strength(effect_type) + decay_flat * (1 / decay_mult) ** seconds_per_tick) * (1 / decay_mult) ** seconds_per_tick + amount * seconds_per_tick, up_to))
+		apply_status_effect(effect_type,  clamp(amount, down_to, up_to), freeze_decay)
 
 /**
  * Directly sets strength of a status effect to the passed value,
@@ -728,7 +718,7 @@
 	if(existing_effect && (!raise_only || existing_effect.strength < set_to))
 		existing_effect.set_strength(set_to)
 	else if(set_to > 0)
-		apply_status_effect(effect_type, null,  set_to)
+		apply_status_effect(effect_type,  set_to)
 
 /// Helper to get the amount of strength of a strength based status effect.
 /mob/living/proc/get_status_effect_strength(datum/status_effect/effect_type)

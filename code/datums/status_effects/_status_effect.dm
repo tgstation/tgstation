@@ -39,6 +39,8 @@
 	VAR_FINAL/obj/effect/abstract/particle_holder/particle_effect
 	///A strength value for scaling the effect, more legacy status effects could probably be adapted to use this._dm_db_new_con()
 	var/strength = 100
+	///For how many seconds we want to prevent decay for strength based status effects
+	var/decay_freeze = 0 SECONDS
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
@@ -46,7 +48,7 @@
 /// Called from New() with any supplied status effect arguments.
 /// Not guaranteed to exist by the end.
 /// Returning FALSE from on_apply will stop on_creation and self-delete the effect.
-/datum/status_effect/proc/on_creation(mob/living/new_owner, new_duration, new_strength, ...)
+/datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
 	if(new_owner)
 		owner = new_owner
 	if(QDELETED(owner) || !on_apply())
@@ -79,8 +81,6 @@
 				START_PROCESSING(SSprocessing, src)
 			if(STATUS_EFFECT_PRIORITY)
 				START_PROCESSING(SSpriority_effects, src)
-
-	set_strength(new_strength)
 
 	update_particles()
 
@@ -250,6 +250,13 @@
 		CRASH("set_strength: called with an invalid value. (Got: [set_to])")
 
 	strength = set_to
+
+///Sets strength unless decay is frozen, otherwise decrease decay_freeze
+/datum/status_effect/proc/decay_strength(decay_to, seconds_per_tick)
+	if(decay_freeze > 0)
+		decay_freeze -= seconds_per_tick
+		return
+	set_strength(decay_to)
 
 /// Alert base type for status effect alerts
 /atom/movable/screen/alert/status_effect

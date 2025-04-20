@@ -7,11 +7,14 @@
 	id = "confusion"
 	alert_type = null
 	remove_on_fullheal = TRUE
-	strength = 50
 
-/datum/status_effect/confusion/on_creation(mob/living/new_owner, new_duration, new_strength, ...)
-	strength = new_strength
-	return ..()
+/datum/status_effect/confusion/on_creation(mob/living/new_owner, new_strength, new_decay_freeze, ...)
+	. = ..()
+	if(isnum(new_strength))
+		set_strength(new_strength)
+
+	if(isnum(new_decay_freeze))
+		decay_freeze = new_decay_freeze
 
 /datum/status_effect/confusion/on_apply()
 	RegisterSignal(owner, COMSIG_MOB_CLIENT_PRE_MOVE, PROC_REF(on_move))
@@ -19,6 +22,16 @@
 
 /datum/status_effect/confusion/on_remove()
 	UnregisterSignal(owner, COMSIG_MOB_CLIENT_PRE_MOVE)
+
+/datum/status_effect/confusion/tick(seconds_between_ticks)
+	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_STASIS))
+		return
+	decay_strength(strength * CONFUSION_DECAY_MULT ** seconds_between_ticks - CONFUSION_DECAY_FLAT * seconds_between_ticks, seconds_between_ticks)
+
+/datum/status_effect/confusion/set_strength(set_to)
+	. = ..()
+	if(strength <= 0)
+		qdel(src)
 
 /// Signal proc for [COMSIG_MOB_CLIENT_PRE_MOVE]. We have a chance to mix up our movement pre-move with confusion.
 /datum/status_effect/confusion/proc/on_move(datum/source, list/move_args)
@@ -28,8 +41,8 @@
 	var/new_dir
 
 	///We first calculate if we are going to misstep, crawlings helps reduce the risk.
-	if(prob(min(CONFUSION_FULL_STRENGTH * (owner.resting ? CRAWL_MISSTEP_MULT : 1)), strength * (owner.resting ? CRAWL_MISSTEP_MULT : 1)))
-		if(CONFUSION_FULL_STRENGTH >= strength)
+	if(prob(min(CONFUSION_FULL_STRENGTH * (owner.resting ? CRAWL_MISSTEP_MULT : 1), strength * (owner.resting ? CRAWL_MISSTEP_MULT : 1))))
+		if(strength >= CONFUSION_FULL_STRENGTH)
 			new_dir = pick(GLOB.alldirs)
 
 		//if the confusion is serious we get more severe missteps and less light diagonal missteps
@@ -43,11 +56,5 @@
 		move_args[MOVE_ARG_NEW_LOC] = get_step(owner, new_dir)
 		move_args[MOVE_ARG_DIRECTION] = new_dir
 
-/datum/status_effect/confusion/tick(seconds_between_ticks)
-	strength = strength * CONFUSION_DECAY_MULT ** seconds_between_ticks - CONFUSION_DECAY_FLAT * seconds_between_ticks
-
-	if(strength <= 0)
-		qdel(src)
-
 #undef CONFUSION_FULL_STRENGTH
-#undef CONFUSION_MISSTEP_MULT
+#undef CRAWL_MISSTEP_MULT

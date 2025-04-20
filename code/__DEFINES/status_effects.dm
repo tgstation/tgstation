@@ -66,10 +66,16 @@
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
 
-///Exponential decay of confusion effects over time.
+///Multiplicative decay of confusion each second.
 #define CONFUSION_DECAY_MULT 0.85
-///Flat decay of confusion over time.
+///Flat decay of confusion  each second.
 #define CONFUSION_DECAY_FLAT 0.025
+
+///Multiplicative decay of inebriated each second.
+#define DRUNK_DECAY_MULT 0.98
+///Flat decay of inebriated each second.
+#define DRUNK_DECAY_FLAT 0.005
+
 
 /// Causes the mob to become blind via the passed source
 #define become_blind(source) apply_status_effect(/datum/status_effect/grouped/blindness, source)
@@ -170,8 +176,8 @@ but even with adjust_confusion_linear capping the value might not neccessary for
 */
 #define adjust_confusion(strength) adjust_status_effect_strength(/datum/status_effect/confusion, strength)
 #define adjust_confusion_up_to(strength, up_to) adjust_status_effect_strength(/datum/status_effect/confusion, strength, 0, up_to)
-#define adjust_confusion_linear(strength, seconds_per_tick) adjust_status_effect_strength_linear(/datum/status_effect/confusion, strength, seconds_per_tick, INFINITY, CONFUSION_DECAY_MULT, CONFUSION_DECAY_FLAT)
-#define adjust_confusion_linear_up_to(strength, seconds_per_tick, up_to) adjust_status_effect_strength_linear(/datum/status_effect/confusion, strength, seconds_per_tick, up_to, CONFUSION_DECAY_MULT, CONFUSION_DECAY_FLAT)
+#define adjust_confusion_linear(strength, seconds_per_tick) adjust_status_effect_strength(/datum/status_effect/confusion, strength, 0, INFINITY, seconds_per_tick)
+#define adjust_confusion_linear_up_to(strength, seconds_per_tick, up_to) adjust_status_effect_strength(/datum/status_effect/confusion, strength, 0, up_to, seconds_per_tick)
 #define set_confusion(strength) set_status_effect_strength(/datum/status_effect/confusion, strength, FALSE)
 #define set_confusion_if_lower(strength) set_status_effect_strength(/datum/status_effect/confusion, strength, TRUE)
 

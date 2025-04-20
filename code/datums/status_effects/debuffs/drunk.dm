@@ -19,6 +19,14 @@
 	/// The level of drunkness we are currently at.
 	strength = 0
 
+/datum/status_effect/inebriated/on_creation(mob/living/new_owner, new_strength, new_decay_freeze, ...)
+	. = ..()
+	if(isnum(new_strength))
+		set_strength(new_strength)
+
+	if(isnum(new_decay_freeze))
+		decay_freeze = new_decay_freeze
+
 /datum/status_effect/inebriated/get_examine_text()
 	// Dead people don't look drunk
 	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_FAKEDEATH))
@@ -54,7 +62,7 @@
 	if(QDELETED(src))
 		return
 	if(strength < TIPSY_THRESHOLD)
-		owner.apply_status_effect(/datum/status_effect/inebriated/tipsy, null, strength)
+		owner.apply_status_effect(/datum/status_effect/inebriated/tipsy, strength, decay_freeze)
 	else if(strength <= 0)
 		qdel(src)
 
@@ -62,11 +70,8 @@
 	// Drunk value does not decrease while dead or in stasis
 	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_STASIS))
 		return
-
-	// Every tick, the drunk value decrases by
-	// 4% the current strength + 0.01
-	// (until it reaches 0 and terminates)
-	set_strength(strength - (0.01 + strength * 0.04))
+	//Get rid of some percentage of total drunkeness strength + small flat value, we use seconds_per_tick to make it frame independant.
+	decay_strength(strength * DRUNK_DECAY_MULT ** seconds_between_ticks - DRUNK_DECAY_FLAT * seconds_between_ticks, seconds_between_ticks)
 	if(QDELETED(src))
 		return
 
@@ -83,10 +88,6 @@
 /datum/status_effect/inebriated/tipsy
 	alert_type = null
 
-/datum/status_effect/inebriated/tipsy/on_creation(mob/living/new_owner, new_duration, new_strength, ...)
-	. = ..()
-
-
 /datum/status_effect/inebriated/tipsy/set_strength(set_to)
 	. = ..()
 	if(QDELETED(src))
@@ -94,7 +95,7 @@
 
 	// Become fully drunk at over than 6 drunk value
 	if(strength >= TIPSY_THRESHOLD)
-		owner.apply_status_effect(/datum/status_effect/inebriated/drunk, null, strength)
+		owner.apply_status_effect(/datum/status_effect/inebriated/drunk, strength, decay_freeze)
 
 /**
  * Stage 2 of being drunk, applied at drunk values between 6 and onward.
