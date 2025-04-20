@@ -34,6 +34,3 @@
 /datum/storage/lockbox/bitrunning_decrypted/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_locked(STORAGE_NOT_LOCKED)
-
-
-
