@@ -1,7 +1,7 @@
 /mob/living/carbon/human/species/monkey
 	icon_state = "monkey" //for mapping
 	race = /datum/species/monkey
-	ai_controller = /datum/ai_controller/monkey
+	ai_controller = /datum/ai_controller/basic_controller/monkey
 
 /mob/living/carbon/human/species/monkey/Initialize(mapload, cubespawned = FALSE, mob/spawner)
 	ADD_TRAIT(src, TRAIT_BORN_MONKEY, INNATE_TRAIT)
@@ -19,7 +19,7 @@
 	return ..()
 
 /mob/living/carbon/human/species/monkey/angry
-	ai_controller = /datum/ai_controller/monkey/angry
+	ai_controller = /datum/ai_controller/basic_controller/monkey/angry
 
 /mob/living/carbon/human/species/monkey/angry/Initialize(mapload, cubespawned = FALSE, mob/spawner)
 	. = ..()
@@ -38,7 +38,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	name = "Pun Pun" //C A N O N
 	unique_name = FALSE
 	use_random_name = FALSE
-	ai_controller = /datum/ai_controller/monkey/pun_pun
+	ai_controller = /datum/ai_controller/basic_controller/monkey/pun_pun
 	/// If we had one of the rare names in a past life
 	var/ancestor_name
 	/// The number of times Pun Pun has died since he was last gibbed
@@ -64,7 +64,7 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/pu
 	else if(prob(10))
 		name_to_use = pick(list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky"))
 		if(name_to_use == "Furious George")
-			ai_controller = /datum/ai_controller/monkey/angry //hes always mad
+			ai_controller = /datum/ai_controller/basic_controller/monkey/angry //hes always mad
 
 	. = ..()
 

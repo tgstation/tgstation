@@ -1,5 +1,7 @@
 /datum/ai_controller/basic_controller
 	movement_delay = 0.4 SECONDS
+	///flags we should ignore when determining our incapacitated status
+	var/incap_ignore_flags = NONE
 
 /datum/ai_controller/basic_controller/TryPossessPawn(atom/new_pawn)
 	if(!isliving(new_pawn))
@@ -37,7 +39,7 @@
 		// Unroll for flags here
 		if((ai_traits & CAN_ACT_IN_STASIS) && (living_pawn.stat || INCAPACITATED_IGNORING(living_pawn, INCAPABLE_STASIS)))
 			return AI_UNABLE_TO_RUN
-		if(IS_DEAD_OR_INCAP(living_pawn))
+		if(IS_DEAD_OR_INCAP_IGNORING(living_pawn, incap_ignore_flags))
 			return AI_UNABLE_TO_RUN
 	if(ai_traits & PAUSE_DURING_DO_AFTER && LAZYLEN(living_pawn.do_afters))
 		return AI_UNABLE_TO_RUN | AI_PREVENT_CANCEL_ACTIONS //dont erase targets post a do_after

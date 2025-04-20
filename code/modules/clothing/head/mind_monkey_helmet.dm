@@ -126,7 +126,7 @@
 /obj/item/clothing/head/helmet/monkey_sentience/proc/malfunction(mob/living/carbon/target)
 	switch(rand(1,4))
 		if(1) //blood rage
-			var/datum/ai_controller/monkey/monky_controller = target.ai_controller
+			var/datum/ai_controller/basic_controller/monkey/monky_controller = target.ai_controller
 			monky_controller.set_trip_mode(mode = FALSE)
 			monky_controller.set_blackboard_key(BB_MONKEY_AGGRESSIVE, TRUE)
 		if(2) //brain death

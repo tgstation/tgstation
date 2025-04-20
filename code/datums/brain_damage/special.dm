@@ -487,7 +487,7 @@
 		old_ai_controller_type = owner.ai_controller.type
 		QDEL_NULL(owner.ai_controller)
 
-	owner.ai_controller = new /datum/ai_controller/monkey(owner)
+	owner.ai_controller = new /datum/ai_controller/basic_controller/monkey(owner)
 	owner.ai_controller.continue_processing_when_client = TRUE
 	owner.ai_controller.can_idle = FALSE
 	owner.ai_controller.set_ai_status(AI_STATUS_OFF)

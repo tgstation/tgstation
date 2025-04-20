@@ -13,12 +13,14 @@
 	var/targeting_key = BB_TARGETING_STRATEGY
 	///what key should we set the target as
 	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	///target list we pick enemies from
+	var/target_list_key = BB_BASIC_MOB_RETALIATE_LIST
 
 /datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
 	if (controller.blackboard[BB_BASIC_MOB_STOP_FLEEING])
 		return
-	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list/nearest, BB_BASIC_MOB_RETALIATE_LIST, target_key, targeting_key, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+	controller.queue_behavior(/datum/ai_behavior/target_from_retaliate_list/nearest, target_list_key, target_key, targeting_key, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 
 /datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/from_flee_key
 	target_key = BB_BASIC_MOB_FLEE_TARGET
