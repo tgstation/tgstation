@@ -5,23 +5,24 @@
  */
 
 import { useDispatch, useSelector } from 'tgui/backend';
-import { Box, Button, Flex, Tabs } from 'tgui-core/components';
+import { Box, Button, Stack, Tabs } from 'tgui-core/components';
 
 import { openChatSettings } from '../settings/actions';
 import { addChatPage, changeChatPage } from './actions';
 import { selectChatPages, selectCurrentChatPage } from './selectors';
 
-const UnreadCountWidget = ({ value }) => (
-  <Box className="UnreadCount">{Math.min(value, 99)}</Box>
-);
+function UnreadCountWidget({ value }: { value: number }) {
+  return <Box className="UnreadCount">{Math.min(value, 99)}</Box>;
+}
 
-export const ChatTabs = (props) => {
+export function ChatTabs(props) {
   const pages = useSelector(selectChatPages);
   const currentPage = useSelector(selectCurrentChatPage);
   const dispatch = useDispatch();
+
   return (
-    <Flex align="center">
-      <Flex.Item>
+    <Stack align="center">
+      <Stack.Item>
         <Tabs textAlign="center">
           {pages.map((page) => (
             <Tabs.Tab
@@ -42,8 +43,8 @@ export const ChatTabs = (props) => {
             </Tabs.Tab>
           ))}
         </Tabs>
-      </Flex.Item>
-      <Flex.Item ml={1}>
+      </Stack.Item>
+      <Stack.Item>
         <Button
           color="transparent"
           icon="plus"
@@ -52,7 +53,7 @@ export const ChatTabs = (props) => {
             dispatch(openChatSettings());
           }}
         />
-      </Flex.Item>
-    </Flex>
+      </Stack.Item>
+    </Stack>
   );
-};
+}

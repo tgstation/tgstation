@@ -74,7 +74,7 @@ export const CellularEmporium = (props) => {
               <Stack.Item>
                 <Input
                   width="200px"
-                  onInput={(event, value) => setSearchAbilities(value)}
+                  onChange={setSearchAbilities}
                   placeholder="Search Abilities..."
                   value={searchAbilities}
                 />

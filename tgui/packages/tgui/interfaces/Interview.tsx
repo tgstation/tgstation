@@ -211,14 +211,14 @@ const QuestionArea = (props: Question) => {
       }
     >
       <p>{linkifyText(question)}</p>
-      {((read_only || is_admin) && (
+      {read_only || is_admin ? (
         <BlockQuote>{response || 'No response.'}</BlockQuote>
-      )) || (
+      ) : (
         <TextArea
           fluid
           height={10}
           maxLength={500}
-          onChange={(e, input) => setUserInput(input)}
+          onChange={setUserInput}
           onEnter={saveResponse}
           placeholder="Write your response here, max of 500 characters. Press enter to submit."
           value={response || undefined}

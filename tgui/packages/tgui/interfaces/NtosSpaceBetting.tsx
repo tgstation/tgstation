@@ -187,12 +187,13 @@ export const PollsSection = () => {
 export const BettingCreation = () => {
   const { act, data } = useBackend<Data>();
   const { max_title_length, max_description_length } = data;
-  const [Title, setTitle] = useState('');
-  const [Desc, setDesc] = useState('');
-  const [Option1, setOption1] = useState('');
-  const [Option2, setOption2] = useState('');
-  const [Option3, setOption3] = useState('');
-  const [Option4, setOption4] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [option1, setOption1] = useState('');
+  const [option2, setOption2] = useState('');
+  const [option3, setOption3] = useState('');
+  const [option4, setOption4] = useState('');
+
   return (
     <Collapsible title="Bet Creation">
       <Stack fill vertical>
@@ -201,7 +202,7 @@ export const BettingCreation = () => {
             fluid
             placeholder="Title"
             maxLength={max_title_length}
-            onInput={(event, value) => setTitle(value)}
+            onChange={setTitle}
           />
         </Stack.Item>
         <Stack.Item grow>
@@ -213,44 +214,44 @@ export const BettingCreation = () => {
             maxLength={max_description_length}
             backgroundColor="black"
             textColor="white"
-            onChange={(event, value) => setDesc(value)}
+            onChange={setDescription}
           />
         </Stack.Item>
         <Input
           fluid
           placeholder="Option 1"
           maxLength={max_title_length}
-          onInput={(event, value) => setOption1(value)}
+          onChange={setOption1}
         />
         <Input
           fluid
           placeholder="Option 2"
           maxLength={max_title_length}
-          onInput={(event, value) => setOption2(value)}
+          onChange={setOption2}
         />
         <Input
           fluid
           placeholder="Option 3 (Optional)"
           maxLength={max_title_length}
-          onInput={(event, value) => setOption3(value)}
+          onChange={setOption3}
         />
         <Input
           fluid
           placeholder="Option 4 (Optional)"
           maxLength={max_title_length}
-          onInput={(event, value) => setOption4(value)}
+          onChange={setOption4}
         />
         <Stack.Item grow>
           <Button
             fluid
             onClick={() =>
               act('create_bet', {
-                title: Title,
-                description: Desc,
-                option1: Option1,
-                option2: Option2,
-                option3: Option3,
-                option4: Option4,
+                title,
+                description,
+                option1,
+                option2,
+                option3,
+                option4,
               })
             }
           >

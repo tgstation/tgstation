@@ -195,7 +195,7 @@ const MafiaChat = (props) => {
             height="10%"
             maxLength={300}
             className="Section__title candystripe"
-            onChange={(e, value) => setMessagingBox(value)}
+            onChange={setMessagingBox}
             placeholder="Type to chat"
             value={message_to_send}
           />
@@ -371,7 +371,7 @@ const MafiaNotesTab = (props) => {
         height="80%"
         maxLength={600}
         className="Section__title candystripe"
-        onChange={(_, value) => setNotesMessage(value)}
+        onChange={setNotesMessage}
         placeholder="Insert Notes..."
         value={note_message}
       />

@@ -11,8 +11,10 @@ type StateSelectModalProps = {
 export const StateSelectModal = (props: StateSelectModalProps) => {
   const { act, data } = useBackend<LuaEditorData>();
   const { setModal } = props;
-  const [input, setInput] = useState<string>();
+
+  const [input, setInput] = useState('');
   const { states } = data;
+
   return (
     <Modal position="absolute" width="30%" height="50%" top="25%" left="35%">
       <Section
@@ -47,9 +49,7 @@ export const StateSelectModal = (props: StateSelectModalProps) => {
               fluid
               placeholder="New State"
               value={input}
-              onInput={(_, value) => {
-                setInput(value);
-              }}
+              onChange={setInput}
             />
           </Stack.Item>
           <Stack.Item>

@@ -72,7 +72,8 @@ export function Upload(props) {
                     placeholder={cache_title || 'Title'}
                     mt={0.5}
                     width={22}
-                    onChange={(e, value) =>
+                    expensive
+                    onChange={(value) =>
                       act('set_cache_title', {
                         title: value,
                       })
@@ -90,7 +91,8 @@ export function Upload(props) {
                     value={cache_author}
                     placeholder={cache_author || 'Author'}
                     mt={0.5}
-                    onChange={(e, value) =>
+                    expensive
+                    onChange={(value) =>
                       act('set_cache_author', {
                         author: value,
                       })

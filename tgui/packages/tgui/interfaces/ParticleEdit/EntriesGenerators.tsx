@@ -112,8 +112,9 @@ export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
         {!Array.isArray(float) ? (
           <Stack.Item>
             <Input
-              value={float}
-              onChange={(e, value) =>
+              value={float?.toString()}
+              expensive
+              onChange={(value) =>
                 act('edit', {
                   var: var_name,
                   new_value: value,

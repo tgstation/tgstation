@@ -214,7 +214,7 @@ export const LuaEditor = () => {
                           height="100%"
                           value={scriptInput}
                           fontFamily="Consolas"
-                          onChange={(_, value) => setScriptInput(value)}
+                          onChange={setScriptInput}
                           /* displayedValue={
                           <Box
                             style={{

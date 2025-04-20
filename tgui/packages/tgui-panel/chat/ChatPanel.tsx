@@ -10,7 +10,19 @@ import { shallowDiffers } from 'tgui-core/react';
 
 import { chatRenderer } from './renderer';
 
-export class ChatPanel extends Component {
+type Props = {
+  fontSize?: string;
+  lineHeight: string;
+};
+
+type State = {
+  scrollTracking: boolean;
+};
+
+export class ChatPanel extends Component<Props, State> {
+  ref: React.RefObject<HTMLDivElement | null>;
+  handleScrollTrackingChange: (value: boolean) => void;
+
   constructor(props) {
     super(props);
     this.ref = createRef();
@@ -29,7 +41,7 @@ export class ChatPanel extends Component {
       'scrollTrackingChanged',
       this.handleScrollTrackingChange,
     );
-    this.componentDidUpdate();
+    this.componentDidUpdate(null);
   }
 
   componentWillUnmount() {

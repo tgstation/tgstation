@@ -95,8 +95,9 @@ const MainScreen = (props) => {
         <Section>
           <Input
             value={networkId}
-            onChange={(e, value) => setNetworkId(value)}
+            onChange={setNetworkId}
             placeholder="Network ID"
+            onEnter={() => act('scan_network', { network_id: networkId })}
           />
           <Button
             content="Scan"

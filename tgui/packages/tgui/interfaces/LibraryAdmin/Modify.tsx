@@ -82,7 +82,7 @@ export function ModifyPage(props) {
         width="100%"
         backgroundColor="black"
         textColor="white"
-        onChange={(e, value) => setReason(value)}
+        onChange={setReason}
       />
       <Stack justify="center" align="center" pt={1} pb={1}>
         <Stack.Item>

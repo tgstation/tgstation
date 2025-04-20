@@ -59,7 +59,8 @@ const GasSearchBar = (props: {
         {activeInput ? (
           <Input
             fluid
-            onChange={(e, value) => {
+            expensive
+            onChange={(value) => {
               setActiveInput(false);
               onChange(value);
             }}
@@ -126,7 +127,7 @@ const GasHandbook = (props) => {
 };
 
 const ReactionHandbook = (props) => {
-  const { act, data } = useBackend<{ reactionInfo: Reaction[] }>();
+  const { data } = useBackend<{ reactionInfo: Reaction[] }>();
   const { reactionInfo } = data;
   const [activeGasId, setActiveGasId] = useLocalState('activeGasId', '');
   const [activeReactionId, setActiveReactionId] = useLocalState(

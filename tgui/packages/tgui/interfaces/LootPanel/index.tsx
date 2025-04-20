@@ -60,8 +60,10 @@ export function LootPanel(props) {
       buttons={
         <Stack align="center">
           <Input
-            onInput={(event, value) => setSearchText(value)}
-            placeholder={`Search items...`}
+            onChange={setSearchText}
+            placeholder="Search items..."
+            value={searchText}
+            expensive
           />
           <Button
             m={0}
