@@ -139,7 +139,7 @@ ALLOW_LATEJOIN_ANTAGONISTS
 ## Uncomment to enable dynamic ruleset config file.
 DYNAMIC_CONFIG_ENABLED
 
-## Uncomment to enable dynamic ruleset config file.
+## Uncomment to enable event weight/min players config file.
 #EVENTS_CONFIG_ENABLED
 
 ## RANDOM EVENTS ###
