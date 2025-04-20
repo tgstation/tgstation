@@ -59,6 +59,8 @@
 	var/being_pollinated = FALSE
 	///The light level on the tray tile
 	var/light_level = 0
+	///our snail overlay, if any
+	var/obj/effect/overlay/vis_effect/snail/our_snail
 
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -212,6 +214,9 @@
 	. = ..()
 	if(!QDELETED(src) && gone == myseed)
 		set_seed(null, FALSE)
+	if(istype(gone, /obj/item/clothing/head/mob_holder/snail))
+		QDEL_NULL(our_snail)
+
 
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, params)
 	if (!user.combat_mode)
@@ -312,6 +317,9 @@
 
 /obj/machinery/hydroponics/process(seconds_per_tick)
 	var/needs_update = FALSE // Checks if the icon needs updating so we don't redraw empty trays every time
+
+	if(!isnull(our_snail))
+		handle_snail()
 
 	if(self_sustaining)
 		if(powered())
@@ -646,6 +654,17 @@
 /obj/machinery/hydroponics/proc/adjust_pestlevel(amt)
 	set_pestlevel(clamp(pestlevel + amt, 0, MAX_TRAY_PESTS), FALSE)
 
+/obj/machinery/hydroponics/proc/on_snail_death(mob/source)
+	SIGNAL_HANDLER
+
+	var/atom/movable/mob_holder = source.loc
+	mob_holder.forceMove(drop_location())
+
+/obj/machinery/hydroponics/proc/handle_snail()
+	if(prob(15))
+		our_snail.handle_animation() //our snail waddles throughout the tray
+	if(prob(5))
+		adjust_weedlevel(-2)
 
 /**
  * Adjust Weeds.
@@ -1242,6 +1261,17 @@
 	weeds_level = add_output_port("Weeds Level", PORT_TYPE_NUMBER)
 	plant_health = add_output_port("Plant Health", PORT_TYPE_NUMBER)
 	reagents_level = add_output_port("Reagents Level", PORT_TYPE_NUMBER)
+
+/obj/machinery/hydroponics/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(!istype(arrived, /obj/item/clothing/head/mob_holder/snail))
+		return
+	our_snail = new
+	vis_contents += our_snail
+	our_snail.layer = layer + 0.01
+	var/obj/item/clothing/head/mob_holder/snail = arrived
+	RegisterSignal(snail.held_mob, COMSIG_LIVING_DEATH, PROC_REF(on_snail_death)) //rip
+
 
 /obj/item/circuit_component/hydroponics/register_usb_parent(atom/movable/parent)
 	. = ..()
