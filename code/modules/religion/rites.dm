@@ -406,4 +406,75 @@
 /datum/religion_rites/ceremonial_weapon
         name = "Forge Ceremonial Gear"
         desc = "Turn some material into ceremonial gear. Ceremonial blades are weak outside of sparring, and are quite heavy to lug around."
-        rit
+        ritual_length = 10 SECONDS
+        invoke_msg = "Оружия во имя твоё! Бои с кровью твоей!"
+        favor_cost = 0
+        ///the material that will be attempted to be forged into a weapon
+        var/obj/item/stack/sheet/converted
+
+/datum/religion_rites/ceremonial_weapon/perform_rite(mob/living/user, atom/religious_tool)
+        for(var/obj/item/stack/sheet/could_blade in get_turf(religious_tool))
+                if(!(GET_MATERIAL_REF(could_blade.material_type) in SSmaterials.materials_by_category[MAT_CATEGORY_ITEM_MATERIAL]))
+                        continue
+                if(could_blade.amount < 5)
+                        continue
+                converted = could_blade
+                return ..()
+        to_chat(user, span_warning("You need at least 5 sheets of a material that can be made into items!"))
+        return FALSE
+
+/datum/religion_rites/ceremonial_weapon/invoke_effect(mob/living/user, atom/movable/religious_tool)
+        ..()
+        var/altar_turf = get_turf(religious_tool)
+        var/obj/item/stack/sheet/used_for_blade = converted
+        converted = null
+        if(QDELETED(used_for_blade) || !(get_turf(religious_tool) == used_for_blade.loc) || used_for_blade.amount < 5) //check if the same food is still there
+                to_chat(user, span_warning("Your target left the altar!"))
+                return FALSE
+        var/material_used = used_for_blade.material_type
+        to_chat(user, span_warning("[used_for_blade] reshapes into a ceremonial blade!"))
+        if(!used_for_blade.use(5))//use 5 of the material
+                return
+        var/obj/item/ceremonial_blade/blade = new(altar_turf)
+        blade.set_custom_materials(list(GET_MATERIAL_REF(material_used) = SHEET_MATERIAL_AMOUNT * 5))
+        return TRUE
+
+/datum/religion_rites/unbreakable
+        name = "Become Unbreakable"
+        desc = "Your training has made you unbreakable. In times of crisis, you will attempt to keep fighting on."
+        ritual_length = 10 SECONDS
+        invoke_msg = "Воля моя нирушимой быть должна . Дай мне благо твое!"
+        favor_cost = 4 //4 duels won
+
+/datum/religion_rites/unbreakable/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
+        if(!ishuman(user))
+                return FALSE
+        if(HAS_TRAIT_FROM(user, TRAIT_UNBREAKABLE, INNATE_TRAIT))
+                to_chat(user, span_warning("Your spirit is already unbreakable!"))
+                return FALSE
+        return ..()
+
+/datum/religion_rites/unbreakable/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+        ..()
+        to_chat(user, span_nicegreen("You feel [GLOB.deity]'s will to keep fighting pouring into you!"))
+        user.AddComponent(/datum/component/unbreakable)
+
+/datum/religion_rites/tenacious
+        name = "Become Tenacious"
+        desc = "Your training has made you tenacious. In times of crisis, you will be able to crawl faster."
+        ritual_length = 10 SECONDS
+        invoke_msg = "даруй мне твое упорство! Я доказал,что я достоин!"
+        favor_cost = 3 //3 duels won
+
+/datum/religion_rites/tenacious/perform_rite(mob/living/carbon/human/user, atom/religious_tool)
+        if(!ishuman(user))
+                return FALSE
+        if(HAS_TRAIT_FROM(user, TRAIT_TENACIOUS, INNATE_TRAIT))
+                to_chat(user, span_warning("Your spirit is already tenacious!"))
+                return FALSE
+        return ..()
+
+/datum/religion_rites/tenacious/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
+        ..()
+        to_chat(user, span_nicegreen("You feel [GLOB.deity]'s tenacity pouring into you!"))
+        user.AddElement(/datum/element/tenacious)
