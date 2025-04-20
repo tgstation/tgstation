@@ -604,6 +604,7 @@
 	.["temperature"] = fluid_temp
 	.["lockedFluidTemp"] = current_mode == AQUARIUM_MODE_AUTO
 	.["currentMode"] = current_mode
+	.["currentTooltip"] = aquarium_modes[current_mode]
 	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
 	.["propData"] = list()
@@ -633,10 +634,10 @@
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
 	.["heartIcon"] = 'icons/effects/effects.dmi'
-	var/list/modes_list = list()
+	var/list/modes_no_assoc = list() //the UI dropdown won't work with assoc lists here
 	for(var/mode in aquarium_modes)
-		modes_list += list(list(mode, aquarium_modes[mode]))
-	.["aquariumModes"] = modes_list
+		modes_no_assoc += mode
+	.["aquariumModes"] = modes_no_assoc
 
 /datum/component/aquarium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

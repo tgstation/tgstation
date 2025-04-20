@@ -3,6 +3,7 @@ import {
   Button,
   Dimmer,
   DmIcon,
+  Dropdown,
   Flex,
   Icon,
   Knob,
@@ -10,6 +11,7 @@ import {
   NumberInput,
   Section,
   Stack,
+  Tooltip,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
@@ -32,7 +34,8 @@ type Data = {
   heartIconState: string;
   heartEmptyIconState: string;
   currentMode: string;
-  aquariumModes: ModeData[];
+  currentTooltip: string;
+  aquariumModes: string[];
 };
 
 type FishData = {
@@ -49,11 +52,6 @@ type PropData = {
   prop_name: string;
   prop_icon: string;
   prop_icon_state: string;
-};
-
-type ModeData = {
-  name: string;
-  tooltip: string;
 };
 
 export const Aquarium = (props) => {
@@ -283,6 +281,7 @@ const Settings = (props) => {
     feedingInterval,
     lockedFluidTemp,
     currentMode,
+    currentTooltip,
     aquariumModes,
   } = data;
 
@@ -332,21 +331,23 @@ const Settings = (props) => {
         <Section fill title="Settings">
           <Box mt={2}>
             <LabeledList>
-              <LabeledList.Item label="Aquarium Modes">
-                <Flex direction="column" mb={2}>
-                  {aquariumModes.map((mode) => (
-                    <Flex.Item className="candystripe" key={mode.name}>
-                      <Button
-                        tooltip={mode.tooltip}
-                        content={mode.name}
-                        selected={currentMode === mode.name}
-                        onClick={() =>
-                          act('change_mode', { new_mode: mode.name })
-                        }
-                      />
-                    </Flex.Item>
-                  ))}
-                </Flex>
+              <LabeledList.Item label="Aquarium Mode">
+                <Dropdown
+                  width="80%"
+                  selected={currentMode}
+                  options={aquariumModes}
+                  onSelected={(value) =>
+                    act('change_mode', { new_mode: value })
+                  }
+                />
+                <Tooltip content={currentTooltip}>
+                  <Icon
+                    name="question-circle"
+                    color="blue"
+                    size={1.5}
+                    m={0.5}
+                  />
+                </Tooltip>
               </LabeledList.Item>
               <LabeledList.Item label="Feeding Interval">
                 <NumberInput
