@@ -16,10 +16,8 @@ export function PodSounds(props) {
           icon="volume-up"
           onClick={() => act('soundVolume')}
           selected={soundVolume !== defaultSoundVolume}
-          tooltip={
-            `
-            Sound Volume:` + soundVolume
-          }
+          tooltip={`Sound Volume:` + soundVolume}
+          tooltipPosition="right"
         />
       }
       fill
@@ -31,7 +29,7 @@ export function PodSounds(props) {
           onClick={() => act(sound.act)}
           selected={data[sound.act]}
           tooltip={sound.tooltip}
-          tooltipPosition="top-end"
+          tooltipPosition="right"
         >
           {sound.title}
         </Button>
