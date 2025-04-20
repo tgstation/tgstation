@@ -360,7 +360,7 @@
 	desc = "You feel spooked even thinking about someone talking through this."
 	icon_state = "tongue-ghost"
 	movement_type = PHASING
-	say_mod = "oohs"
+	say_mod = "boos"
 	sense_of_taste = FALSE
 	organ_flags = parent_type::organ_flags | ORGAN_GHOST
 
