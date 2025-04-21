@@ -69,9 +69,6 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "j" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/item/paper/fluff/ruins/exp_cloning/manual,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -126,6 +123,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "n" = (
@@ -158,22 +156,11 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "t" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/structure/bed,
 /obj/item/bedsheet/medical,
 /mob/living/basic/living_limb_flesh,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
-/area/ruin/space/has_grav/powered/ancient_shuttle)
-"u" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "v" = (
 /obj/effect/turf_decal/tile/blue{
@@ -219,9 +206,6 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "z" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -295,16 +279,14 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "O" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/structure/bookcase/random/fiction,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "P" = (
 /obj/structure/table/glass,
-/obj/machinery/light,
 /obj/structure/bedsheetbin,
+/obj/machinery/light/cold/directional/south,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "Q" = (
@@ -450,7 +432,7 @@ a
 a
 b
 b
-u
+I
 I
 I
 c
