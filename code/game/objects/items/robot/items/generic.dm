@@ -375,7 +375,7 @@
 		for(var/mob/living/carbon/carbon in get_hearers_in_view(9, user))
 			if(carbon.get_ear_protection())
 				continue
-			carbon.adjust_confusion(20)
+			carbon.adjust_confusion(50)
 
 		audible_message("<font color='red' size='7'>HUMAN HARM</font>")
 		playsound(get_turf(src), 'sound/mobs/non-humanoids/cyborg/harmalarm.ogg', 70, 3)
@@ -390,12 +390,12 @@
 			var/bang_effect = carbon.soundbang_act(2, 0, 0, 5)
 			switch(bang_effect)
 				if(1)
-					carbon.adjust_confusion(15)
+					carbon.adjust_confusion(40)
 					carbon.adjust_stutter(20 SECONDS)
 					carbon.adjust_jitter(20 SECONDS)
 				if(2)
 					carbon.Paralyze(40)
-					carbon.adjust_confusion(50)
+					carbon.adjust_confusion(80)
 					carbon.adjust_stutter(30 SECONDS)
 					carbon.adjust_jitter(50 SECONDS)
 		playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 130, 3)

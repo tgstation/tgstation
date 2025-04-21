@@ -118,7 +118,7 @@
 			return
 
 		// awlways a chance for a person not to fail horribly when drunk
-		if(user.get_drunkeness > SAFE_DRUNK_LEVEL && prob(min(user.get_drunkeness(), 99)))
+		if(user.get_drunkeness() > SAFE_DRUNK_LEVEL && prob(min(user.get_drunkeness(), 99)))
 			playsound(src,'sound/effects/bang.ogg', 50, TRUE)
 			to_chat(user, span_warning(drunk_message))
 			user.take_bodypart_damage(rand(5, 10), wound_bonus = 10)
