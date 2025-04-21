@@ -27,7 +27,7 @@
 
 
 /datum/round_event/communications_blackout/start()
-	for(var/obj/machinery/telecomms/shhh as anything in GLOB.telecomms_list)
+	for(var/obj/machinery/telecomms/shhh as anything in GLOB.telecomm_machines)
 		shhh.emp_act(EMP_HEAVY)
 	for(var/datum/transport_controller/linear/tram/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(!isnull(transport.home_controller))

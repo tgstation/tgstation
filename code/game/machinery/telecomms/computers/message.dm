@@ -41,7 +41,7 @@
 	. = ..()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linked_server)
-		for(var/obj/machinery/telecomms/message_server/message_server in GLOB.telecomms_list)
+		for(var/obj/machinery/telecomms/message_server/message_server in GLOB.telecomm_machines)
 			set_linked_server(message_server)
 			break
 
@@ -150,7 +150,7 @@
 			return TRUE
 		if("link_server")
 			var/list/message_servers = list()
-			for (var/obj/machinery/telecomms/message_server/message_server in GLOB.telecomms_list)
+			for (var/obj/machinery/telecomms/message_server/message_server in GLOB.telecomm_machines)
 				message_servers += message_server
 
 			if(length(message_servers) > 1)
@@ -212,7 +212,7 @@
 		if("connect_server")
 			if(linked_server)
 				return TRUE
-			for(var/obj/machinery/telecomms/message_server/new_home in GLOB.telecomms_list)
+			for(var/obj/machinery/telecomms/message_server/new_home in GLOB.telecomm_machines)
 				set_linked_server(new_home)
 				break
 			return TRUE
@@ -305,7 +305,7 @@
 	update_appearance()
 
 /obj/item/paper/monitorkey/LateInitialize()
-	for (var/obj/machinery/telecomms/message_server/preset/server in GLOB.telecomms_list)
+	for (var/obj/machinery/telecomms/message_server/preset/server in GLOB.telecomm_machines)
 		if (server.decryptkey)
 			print(server)
 			break

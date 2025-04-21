@@ -29,7 +29,7 @@
 		priority_announce(alert, "Anomaly Alert")
 
 /datum/round_event/processor_overload/start()
-	for(var/obj/machinery/telecomms/processor/spinny_thing in GLOB.telecomms_list)
+	for(var/obj/machinery/telecomms/processor/spinny_thing in GLOB.telecomm_machines)
 		if(!prob(10))
 			spinny_thing.emp_act(EMP_HEAVY)
 			continue

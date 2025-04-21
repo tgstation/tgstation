@@ -1,6 +1,6 @@
 /// A list of all of the `/obj/machinery/telecomms` (and subtypes) machines
 /// that exist in the world currently.
-GLOBAL_LIST_EMPTY(telecomms_list)
+GLOBAL_LIST_EMPTY(telecomm_machines)
 
 /**
  * The basic telecomms machinery type, implementing all of the logic that's
@@ -103,14 +103,14 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 
 /obj/machinery/telecomms/Initialize(mapload)
 	. = ..()
-	GLOB.telecomms_list += src
+	GLOB.telecomm_machines += src
 	if(mapload && autolinkers.len)
 		return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/telecomms/post_machine_initialize()
 	. = ..()
 	var/list/connected_zs = SSmapping.get_connected_levels(get_turf(src))
-	for(var/obj/machinery/telecomms/telecomms_machine as anything in GLOB.telecomms_list)
+	for(var/obj/machinery/telecomms/telecomms_machine as anything in GLOB.telecomm_machines)
 		if(telecomms_machine == src)
 			continue
 		var/turf/their_home = get_turf(telecomms_machine)
@@ -121,8 +121,8 @@ GLOBAL_LIST_EMPTY(telecomms_list)
 		add_new_link(telecomms_machine)
 
 /obj/machinery/telecomms/Destroy()
-	GLOB.telecomms_list -= src
-	for(var/obj/machinery/telecomms/comm as anything in GLOB.telecomms_list)
+	GLOB.telecomm_machines -= src
+	for(var/obj/machinery/telecomms/comm as anything in GLOB.telecomm_machines)
 		remove_link(comm)
 	links = list()
 	return ..()
