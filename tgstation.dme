@@ -1306,7 +1306,6 @@
 #include "code\datums\components\tattoo.dm"
 #include "code\datums\components\technointrovert.dm"
 #include "code\datums\components\technoshy.dm"
-#include "code\datums\components\telegraph_ability.dm"
 #include "code\datums\components\temporary_body.dm"
 #include "code\datums\components\temporary_description.dm"
 #include "code\datums\components\temporary_glass_shatter.dm"
