@@ -3,6 +3,9 @@
 /// Stamina threshold to not experience stamina crit
 #define BASIC_MOB_NO_STAMCRIT 0
 
+/// Max stamina should be equal to max health
+#define BASIC_MOB_STAMINA_MATCH_HEALTH -1
+
 /// Delete mob upon death
 #define DEL_ON_DEATH (1<<0)
 /// Rotate mob 180 degrees while it is dead

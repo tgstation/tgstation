@@ -77,5 +77,6 @@
 	. = ..()
 	if (stat == DEAD || stamina_crit_threshold == BASIC_MOB_NO_STAMCRIT)
 		return
-	if (current_level >= stamina_crit_threshold)
+
+	if (100 / (max_stamina_loss / current_level) >= stamina_crit_threshold)
 		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)

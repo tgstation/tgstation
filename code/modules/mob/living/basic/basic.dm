@@ -11,17 +11,17 @@
 
 	var/basic_mob_flags = NONE
 
-	///What's the maximum stamina damage we can have?
-	var/max_stamina_loss = 120
+	/// What's the maximum amount of stamina we can lose? By default, same as maximum health
+	var/max_stamina_loss = BASIC_MOB_STAMINA_MATCH_HEALTH
 
 	///Defines how fast the basic mob can move. This is not a multiplier
 	var/speed = 1
 	///How much stamina the mob recovers per second, if set to >0 stamina loses its normal function of resetting after a set amount of time
 	var/stamina_recovery = 0
-	///How much stamina damage the mob must take to enter stamcrit
-	var/stamina_crit_threshold = 100
 	///How slow will we get when we lose all our stamina?
 	var/max_stamina_slowdown = 3
+	///Percentage of max stamina loss we need to lose in order to get stunned
+	var/stamina_crit_threshold = 100
 
 	///how much damage this basic mob does to objects, if any.
 	var/obj_damage = 0
@@ -153,6 +153,8 @@
 
 /// Ensures that this mob can be slowed from taking stamina damage
 /mob/living/basic/proc/make_stamina_slowable()
+	if (max_stamina_loss == BASIC_MOB_STAMINA_MATCH_HEALTH)
+		max_stamina_loss = maxHealth
 	if (damage_coeff[STAMINA] <= 0 || max_stamina_loss <= 0 || max_stamina_slowdown <= 0)
 		return
 	AddElement(/datum/element/basic_stamina_slowdown, minium_stamina_threshold = max_stamina_loss / 3, maximum_stamina = max_stamina_loss, maximum_slowdown = max_stamina_slowdown)

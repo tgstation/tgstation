@@ -12,6 +12,7 @@
 	gender = NEUTER
 	health = 50
 	maxHealth = 50
+	max_stamina_loss = 120
 	melee_damage_lower = 5
 	melee_damage_upper = 5
 	attack_verb_continuous = "chomps"
