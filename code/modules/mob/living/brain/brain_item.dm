@@ -576,7 +576,10 @@
 	add_trauma_to_traumas(actual_trauma)
 	if(owner)
 		actual_trauma.owner = owner
-		if((SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma, resilience) & COMSIG_CARBON_BLOCK_TRAUMA) || !actual_trauma.on_gain())
+		if(SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma, resilience) & COMSIG_CARBON_BLOCK_TRAUMA)
+			qdel(actual_trauma)
+			return FALSE
+		if(!actual_trauma.on_gain())
 			qdel(actual_trauma)
 			return FALSE
 		log_game("[key_name_and_tag(owner)] has gained the following brain trauma: [trauma.type]")
