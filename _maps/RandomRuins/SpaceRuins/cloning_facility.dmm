@@ -6,8 +6,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "c" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "d" = (
@@ -18,8 +17,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "f" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
 "g" = (
@@ -564,7 +562,7 @@ a
 a
 a
 b
-f
+B
 M
 a
 a
