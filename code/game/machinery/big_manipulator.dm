@@ -165,6 +165,18 @@
 		monkey_resolve = null
 	locked_by_this_id = null
 
+/obj/machinery/big_manipulator/Exited(atom/movable/gone, direction)
+	if(gone == monkey_worker?.resolve())
+		var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
+		REMOVE_TRAIT(poor_monkey, TRAIT_AI_PAUSED, "[src]")
+		monkey_worker = null
+		poor_monkey.remove_offsets("[src]")
+		if(interaction_mode == INTERACT_USE)
+			change_mode()
+	if(manipulator_arm.vis_contents.Find(gone))
+		manipulator_arm.vis_contents.Cut(gone)
+	..()
+
 /obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	take_and_drop_turfs_check()
@@ -253,9 +265,6 @@
 	balloon_alert(user, "monkey worker uninstalled")
 	poor_monkey.drop_all_held_items()
 	poor_monkey.forceMove(get_turf(src))
-	REMOVE_TRAIT(poor_monkey, TRAIT_AI_PAUSED, "[src]")
-	monkey_worker = null
-	poor_monkey.remove_offsets("[src]")
 	status = STATUS_IDLE
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
@@ -770,7 +779,8 @@
 			return TRUE
 		if("worker_combat_mode_change")
 			worker_combat_mode = !worker_combat_mode
-			astype(monkey_worker?.resolve(), /mob/living/carbon/human/species/monkey)?.set_combat_mode(worker_combat_mode)
+			var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
+			monkey_resolve?.set_combat_mode(worker_combat_mode)
 			return TRUE
 		if("worker_alt_mode_change")
 			worker_alt_mode = !worker_alt_mode
@@ -938,6 +948,8 @@
 
 #undef STATUS_IDLE
 #undef STATUS_BUSY
+#undef STATUS_INSTALLING_WORKER
+#undef STATUS_UNINSTALLING_WORKER
 
 #undef MIN_DELAY_TIER_1
 #undef MIN_DELAY_TIER_2

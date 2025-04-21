@@ -166,7 +166,7 @@ export const BigManipulator = () => {
                 disabled={!has_worker}
                 onClick={() => act('eject_worker')}
               >
-                {has_worker ? 'Eject' : 'No monkey worker'}
+                {has_worker ? 'Eject monkey' : 'No monkey worker'}
               </Button>
             </>
           }
