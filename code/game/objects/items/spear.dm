@@ -287,3 +287,125 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+/**
+ * Skybulge
+ *
+ * Gives a special ability that allows you to enter the skies
+ */
+/obj/item/spear/skybulge
+	name = "\improper Skybulge"
+	desc = "A legendary stick with a very pointy tip. Takes you to the skies!"
+	icon_state = "sky_bulge0"
+	icon_prefix = "sky_bulge"
+	attack_verb_continuous = list("attacks", "pokes", "jabbes", "tears", "gores", "lances")
+	attack_verb_simple = list("attacked", "poked", "jabbed", "torn", "gored", "lanced")
+	force_unwielded = 10
+	force_wielded = 18
+	throwforce = 24
+	throw_speed = 4
+	slot_flags = parent_type::slot_flags | ITEM_SLOT_HANDS //this is needed for action types to give actions in-hand
+	embed_type = null //no embedding
+	actions_types = list(/datum/action/item_action/skybulge)
+
+
+/datum/action/item_action/skybulge
+	name = "Skybulge Skyfall"
+	///cooldown time between skyfall uses
+	var/skyfall_cooldown_time = 1 MINUTES
+
+/datum/action/item_action/skybulge/do_effect(trigger_flags)
+	if(HAS_TRAIT_FROM(owner, TRAIT_MOVE_PHASING, ACTION_TRAIT))
+		to_chat(owner, span_warning("You're already airborne!"))
+		return
+	if(!HAS_TRAIT(target, TRAIT_WIELDED))
+		to_chat(owner, span_warning("You must wield [target] in both hands!"))
+		return
+	if(TIMER_COOLDOWN_RUNNING(owner, COOLDOWN_MECHA_SKYFALL))
+		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(owner, COOLDOWN_MECHA_SKYFALL)
+		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before attempting to Skyfall."))
+		return
+
+	owner.balloon_alert(owner, "charging skyfall...")
+	INVOKE_ASYNC(src, PROC_REF(skyfall_charge_loop))
+
+
+/**
+ * ## skyfall_charge_loop
+ *
+ * The actual skyfall loop itself. Repeatedly calls itself after a do_after, so any interruptions will call abort_skyfall and end the loop
+ * the other way the loop ends is if charge level (var it's ticking up) gets to SKYFALL_CHARGELEVEL_LAUNCH, in which case it ends the loop and does the ability.
+ */
+/datum/action/item_action/skybulge/proc/skyfall_charge_loop()
+	if(!do_after(owner, 2 SECONDS, target = owner))
+		abort_skyfall()
+		return
+	S_TIMER_COOLDOWN_START(owner, COOLDOWN_MECHA_SKYFALL, skyfall_cooldown_time)
+	build_all_button_icons()
+	new /obj/effect/skyfall_landingzone(get_turf(owner), owner)
+
+	ADD_TRAIT(owner, TRAIT_MOVE_PHASING, ACTION_TRAIT)
+	owner.resistance_flags |= INDESTRUCTIBLE //not while jumping at least
+	owner.set_density(FALSE)
+	owner.layer = ABOVE_ALL_MOB_LAYER
+
+	animate(owner, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(owner, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising mech (just like pods hehe)
+	addtimer(CALLBACK(src, PROC_REF(begin_landing)), 2 SECONDS)
+
+/**
+ * ## begin_landing
+ *
+ * Called by skyfall_charge_loop after some time if it reaches full charge level.
+ * it's just the animations of the mecha coming down + another timer for the final landing effect
+ */
+/datum/action/item_action/skybulge/proc/begin_landing()
+	animate(owner, pixel_z = 0, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	animate(owner, alpha = 255, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+	addtimer(CALLBACK(src, PROC_REF(land)), 1 SECONDS)
+
+/**
+ * ## land
+ *
+ * Called by skyfall_charge_loop after some time if it reaches full charge level.
+ * it's just the animations of the mecha coming down + another timer for the final landing effect
+ */
+/datum/action/item_action/skybulge/proc/land()
+	var/turf/landed_on = get_turf(owner)
+	owner.visible_message(span_danger("[owner] lands from above!"))
+	playsound(owner, 'sound/effects/explosion/explosion1.ogg', 50, 1)
+	owner.resistance_flags &= ~INDESTRUCTIBLE
+	REMOVE_TRAIT(owner, TRAIT_MOVE_PHASING, ACTION_TRAIT)
+	owner.set_density(TRUE)
+	owner.layer = initial(owner.layer)
+	SET_PLANE(owner, initial(owner.plane), landed_on)
+
+	for(var/thing in landed_on)
+		if(thing == owner)
+			continue
+		if(isclosedturf(thing))
+			var/turf/closed/crushed_wall = thing
+			crushed_wall.ScrapeAway()
+			continue
+		if(isobj(thing))
+			var/obj/crushed_object = thing
+			crushed_object.take_damage(150) //same as a hulk punch, makes sense to me
+			continue
+		if(isliving(thing))
+			var/mob/living/crushed_victim = thing
+			to_chat(crushed_victim, span_userdanger("[owner] crashes down on you from above!"))
+			if(crushed_victim.stat != CONSCIOUS)
+				crushed_victim.investigate_log("has been gibbed by a falling Savannah Ivanov mech.", INVESTIGATE_DEATHS)
+				crushed_victim.gib(DROP_ALL_REMAINS)
+				continue
+			crushed_victim.adjustBruteLoss(80)
+
+/**
+ * ## abort_skyfall
+ *
+ * Called by skyfall_charge_loop if the charging is interrupted.
+ * Applies cooldown and resets charge level
+ */
+/datum/action/item_action/skybulge/proc/abort_skyfall()
+	owner.balloon_alert(owner, "skyfall aborted")
+	S_TIMER_COOLDOWN_START(owner, COOLDOWN_MECHA_MISSILE_STRIKE, skyfall_cooldown_time / 2)
