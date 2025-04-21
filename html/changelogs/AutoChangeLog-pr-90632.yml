@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "The TV on the title screen has round info once the round has started or ended."
+  - bugfix: "The TV now fits on non-widescreen screens."

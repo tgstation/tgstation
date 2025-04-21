@@ -36,6 +36,7 @@
 		"water_balloon",
 		"ticket_machine",
 		"radio_entertainment",
+		"photocopier",
 	)
 
 /datum/techweb_node/sanitation

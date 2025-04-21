@@ -1,4 +1,0 @@
-author: "Holoo-1"
-delete-after: True
-changes:
-  - bugfix: "camera consoles, admin supply pod launcher etc. no longer close game when they are closed"
