@@ -71540,10 +71540,15 @@
 /turf/open/floor/stone,
 /area/station/service/bar/atrium)
 "uma" = (
-/obj/item/chisel,
-/obj/item/storage/toolbox/artistic,
+/obj/item/storage/toolbox/artistic{
+	pixel_x = -1;
+	pixel_y = 2
+	},
 /obj/structure/rack,
-/obj/item/storage/crayons,
+/obj/item/storage/toolbox/crafter{
+	pixel_x = 3;
+	pixel_y = -3
+	},
 /turf/open/floor/sepia,
 /area/station/security/prison/rec)
 "umg" = (

@@ -3757,9 +3757,6 @@
 /obj/structure/table,
 /obj/item/airlock_painter,
 /obj/item/rcl/pre_loaded,
-/obj/item/chisel{
-	pixel_y = 7
-	},
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 4
 	},
@@ -22840,14 +22837,16 @@
 /area/station/cargo/storage)
 "hbg" = (
 /obj/structure/table,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/stack/pipe_cleaner_coil/random,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 6
+	},
+/obj/item/storage/toolbox/artistic{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/crafter{
+	pixel_x = 2;
+	pixel_y = 1
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/art)
@@ -41229,6 +41228,14 @@
 /obj/structure/table/wood,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/item/storage/toolbox/artistic{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/crafter{
+	pixel_x = 2;
+	pixel_y = 1
+	},
 /turf/open/floor/iron/grimy,
 /area/station/service/library/lounge)
 "nxy" = (

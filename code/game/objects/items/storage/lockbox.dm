@@ -8,6 +8,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	req_access = list(ACCESS_ARMORY)
+	storage_type = /datum/storage/lockbox
+
 	var/broken = FALSE
 	var/open = FALSE
 	var/icon_locked = "lockbox+l"
@@ -17,10 +19,6 @@
 
 /obj/item/storage/lockbox/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 14
-	atom_storage.max_slots = 4
-	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
 
 	register_context()
 
@@ -112,13 +110,7 @@
 	icon_closed = "medalbox"
 	icon_broken = "medalbox+b"
 	icon_open = "medalboxopen"
-
-/obj/item/storage/lockbox/medal/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_slots = 10
-	atom_storage.max_total_storage = 20
-	atom_storage.set_holdable(/obj/item/clothing/accessory/medal)
+	storage_type = /datum/storage/lockbox/medal
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
 	. = ..()

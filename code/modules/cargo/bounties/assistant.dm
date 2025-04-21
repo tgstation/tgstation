@@ -45,37 +45,32 @@
 	description = "There's an absence of robustness at Central Command. Ship them a fully packed toolbox as a solution, containing a screwdriver, wrench, welding tool, crowbar, analyzer, and wirecutters."
 	reward = CARGO_CRATE_VALUE * 4
 	wanted_types = list(/obj/item/storage/toolbox = TRUE)
-	/// Typecache of tools that we want to see sorted into a toolbox. Unpacked in New(), verified in applies_to(), and then contents are filtered out in ship().
-	var/list/static_packing_list = list(
-		/obj/item/screwdriver = TRUE,
-		/obj/item/wrench = TRUE,
-		/obj/item/weldingtool = TRUE,
-		/obj/item/crowbar = TRUE,
-		/obj/item/analyzer = TRUE,
-		/obj/item/wirecutters = TRUE,
+	/// List of tools that we want to see sorted into a toolbox
+	var/static/list/static_packing_list = list(
+		/obj/item/screwdriver,
+		/obj/item/wrench,
+		/obj/item/weldingtool,
+		/obj/item/crowbar,
+		/obj/item/analyzer,
+		/obj/item/wirecutters,
 	)
-
-/datum/bounty/item/assistant/toolbox/New()
-	. = ..()
-	static_packing_list = string_assoc_list(zebra_typecacheof(static_packing_list, only_root_path = FALSE))
 
 /datum/bounty/item/assistant/toolbox/applies_to(obj/shipped)
 	var/list/packing_list = static_packing_list.Copy()
 	for(var/obj/item_contents as anything in shipped.contents)
-		if(is_type_in_typecache(item_contents.type, packing_list))
-			packing_list -= subtypesof(item_contents.type)
-			packing_list -= item_contents.type
+		for(var/match_type in packing_list)
+			if(istype(item_contents, match_type))
+				packing_list -= match_type
+				break
 		if(!length(packing_list))
 			return ..()
-
 	return FALSE
 
 /datum/bounty/item/assistant/toolbox/ship(obj/shipped)
 	. = ..()
 	for(var/obj/object as anything in shipped.contents)
-		if(!is_type_in_typecache(object.type, static_packing_list))
+		if(!is_type_in_list(object, static_packing_list))
 			object.forceMove(shipped.drop_location())
-
 
 /datum/bounty/item/assistant/statue
 	name = "Statue"

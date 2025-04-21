@@ -178,7 +178,7 @@ export const BigManipulator = () => {
               <ConfigRow
                 label="Throwing Range"
                 content={`${throw_range} TILE${throw_range > 1 ? 'S' : ''}`}
-                onClick={() => act('change_throw_range')}
+                onClick={() => act('cycle_throw_range')}
                 tooltip="Cycle the distance an object will travel when thrown"
               />
             )}
