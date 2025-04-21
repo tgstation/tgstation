@@ -38,15 +38,22 @@
 /datum/component/chasm/Initialize(turf/target, mapload)
 	if(!isturf(parent))
 		return COMPONENT_INCOMPATIBLE
+	target_turf = target
+
+	//no teleporting on top of the chasm
+	var/turf/parent_turf = parent
+	var/area/parent_area = get_area(parent_turf)
+	parent_area.area_flags |= NOTELEPORT
+
+	//allow catwalks to give the turf the CHASM_STOPPED trait before dropping stuff when the turf is changed.
+	//otherwise don't do anything because turfs and areas are initialized before movables.
 	RegisterSignal(parent, SIGNAL_ADDTRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_stopped))
 	RegisterSignal(parent, SIGNAL_REMOVETRAIT(TRAIT_CHASM_STOPPED), PROC_REF(on_chasm_no_longer_stopped))
-	target_turf = target
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(entered))
 	RegisterSignal(parent, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(exited))
 	RegisterSignal(parent, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(initialized_on))
-	RegisterSignal(parent, COMSIG_ATOM_INTERCEPT_TELEPORTING, PROC_REF(block_teleport))
-	//allow catwalks to give the turf the CHASM_STOPPED trait before dropping stuff when the turf is changed.
-	//otherwise don't do anything because turfs and areas are initialized before movables.
+
+	//drop stuff asynchronously to avoid lag during init
 	if(!mapload)
 		addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
 	parent.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/chasm])
@@ -65,9 +72,6 @@
 /datum/component/chasm/proc/initialized_on(datum/source, atom/movable/movable, mapload)
 	SIGNAL_HANDLER
 	drop_stuff(movable)
-
-/datum/component/chasm/proc/block_teleport()
-	return TRUE
 
 /datum/component/chasm/proc/on_chasm_stopped(datum/source)
 	SIGNAL_HANDLER
