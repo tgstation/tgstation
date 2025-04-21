@@ -292,21 +292,23 @@
  * Skybulge
  *
  * Gives a special ability that allows you to enter the skies an drop down upon a target.
- * Other than that ability, deals less damage than the average spear.
+ * Other than that ability, is a default spear with extra throw force, but no embedding.
  */
 /obj/item/spear/skybulge
 	name = "\improper Sky Bulge"
 	desc = "A legendary stick with a very pointy tip. Takes you to the skies!"
 	icon_state = "sky_bulge0"
 	icon_prefix = "sky_bulge"
-	attack_verb_continuous = list("attacks", "pokes", "jabbes", "tears", "gores", "lances")
-	attack_verb_simple = list("attacked", "poked", "jabbed", "torn", "gored", "lanced")
-	force_unwielded = 10
-	force_wielded = 18
-	throwforce = 24
-	throw_speed = 4
+	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "gores", "lances")
+	attack_verb_simple = list("attack", "poke", "jab", "tear", "gore", "lance")
 	slot_flags = parent_type::slot_flags | ITEM_SLOT_HANDS //this is needed for action types to give actions in-hand
+	throwforce = 24
 	embed_type = null //no embedding
+
+	custom_materials = list(
+		/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/alloy/plastitaniumglass = SHEET_MATERIAL_AMOUNT,
+	)
 	actions_types = list(/datum/action/item_action/skybulge)
 
 ///The action button the spear gives, usable once a minute.
@@ -314,7 +316,7 @@
 	name = "Dragoon Jump"
 	desc = "Jump up into the skies and fall down upon your opponents to deal double damage."
 	///Cooldown time between jumps.
-	var/skyfall_cooldown_time = 1 MINUTES
+	var/jump_cooldown_time = 1 MINUTES
 
 /datum/action/item_action/skybulge/do_effect(trigger_flags)
 	if(HAS_TRAIT_FROM(owner, TRAIT_MOVE_PHASING, ACTION_TRAIT))
@@ -338,7 +340,7 @@
 		REMOVE_TRAIT(target, TRAIT_NEEDS_TWO_HANDS, ACTION_TRAIT)
 		return
 	playsound(owner, 'sound/effects/footstep/heavy1.ogg', 50, 1)
-	S_TIMER_COOLDOWN_START(owner, COOLDOWN_SKYBULGE_JUMP, skyfall_cooldown_time)
+	S_TIMER_COOLDOWN_START(owner, COOLDOWN_SKYBULGE_JUMP, jump_cooldown_time)
 	new /obj/effect/temp_visual/telegraphing/exclamation/following(get_turf(owner), 2.5 SECONDS, owner)
 
 	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_attack_during_jump))
@@ -356,7 +358,7 @@
 ///Called by jump_up, this is the post-jump effects, damaging objects and mobs it lands on.
 /datum/action/item_action/skybulge/proc/land()
 	var/turf/landed_on = get_turf(owner)
-	playsound(owner, 'sound/effects/explosion/explosion1.ogg', 50, 1)
+	playsound(owner, 'sound/effects/explosion/explosion1.ogg', 40, 1)
 
 	UnregisterSignal(target, COMSIG_ITEM_ATTACK)
 	target.remove_traits(list(TRAIT_NEEDS_TWO_HANDS, TRAIT_NODROP), ACTION_TRAIT)
