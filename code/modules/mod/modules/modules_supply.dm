@@ -422,7 +422,7 @@
 		mod.update_speed()
 	traveled_tiles = 0
 
-/obj/item/mod/module/ash_accretion/generate_worn_overlay(mutable_appearance/standing)
+/obj/item/mod/module/ash_accretion/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
 	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
 	return ..()
 
@@ -607,8 +607,8 @@
 
 /obj/structure/mining_bomb/proc/generate_image()
 	explosion_image = image('icons/effects/96x96.dmi', "judicial_explosion")
-	explosion_image.pixel_x = -32
-	explosion_image.pixel_y = -32
+	explosion_image.pixel_w = -32
+	explosion_image.pixel_z = -32
 	SET_PLANE_EXPLICIT(explosion_image, ABOVE_GAME_PLANE, src)
 
 /obj/structure/mining_bomb/proc/prime(atom/movable/firer)

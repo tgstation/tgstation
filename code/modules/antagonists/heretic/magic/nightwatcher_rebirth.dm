@@ -12,7 +12,7 @@
 	cooldown_time = 1 MINUTES
 	aoe_radius = 14
 
-	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER"
+	invocation = "GL'RY T' TH' N'GHT'W'TCH'ER."
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = SPELL_REQUIRES_HUMAN
 	/// Tracks how many victims the spell has chosen, lowers the cooldown for each target

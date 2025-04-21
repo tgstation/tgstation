@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed \"shit be fucked\" errors and missing lighting on shuttle ceilings docked to bottom z levels of multiz maps"

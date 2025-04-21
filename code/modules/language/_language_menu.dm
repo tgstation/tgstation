@@ -24,6 +24,7 @@
 	var/list/data = list()
 
 	var/atom/movable/speaker = language_holder.owner
+	var/list/partial_languages = speaker?.get_partially_understood_languages()
 	data["languages"] = list()
 	for(var/datum/language/language as anything in GLOB.all_languages)
 		var/list/lang_data = list()
@@ -38,6 +39,7 @@
 			lang_data["can_speak"] = !!speaker.has_language(language, SPOKEN_LANGUAGE)
 			lang_data["could_speak"] = !!(language_holder.omnitongue || speaker.could_speak_language(language))
 			lang_data["can_understand"] = !!speaker.has_language(language, UNDERSTOOD_LANGUAGE)
+			lang_data["partial_understanding"] = partial_languages?[language] || 0
 
 		UNTYPED_LIST_ADD(data["languages"], lang_data)
 

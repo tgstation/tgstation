@@ -30,31 +30,29 @@
 
 /obj/item/storage/box/survival/PopulateContents()
 	if(crafted)
-		return NONE
-
-	. = list()
+		return
 	if(!isnull(mask_type))
-		. += mask_type
+		new mask_type(src)
 
 	if(!isnull(internal_type))
-		. += internal_type
+		new internal_type(src)
 
 	if(!isnull(medipen_type))
-		. += medipen_type
+		new medipen_type(src)
 
 	if(give_premium_goods && HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
-		. += /obj/item/flashlight/flare
-		. += /obj/item/radio/off
+		new /obj/item/flashlight/flare(src)
+		new /obj/item/radio/off(src)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
-		. += /obj/item/storage/pill_bottle/potassiodide
+		new /obj/item/storage/pill_bottle/potassiodide(src)
 
 	if(give_hook && length(SSmapping.levels_by_trait(ZTRAIT_STATION)) > 1)
-		. += /obj/item/climbing_hook/emergency
+		new /obj/item/climbing_hook/emergency(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
-	. = ..() // we want the survival stuff too.
-	. += /obj/item/radio/off
+	..() // we want the survival stuff too.
+	new /obj/item/radio/off(src)
 
 /obj/item/storage/box/survival/proc/wardrobe_removal()
 	if(!isplasmaman(loc)) //We need to specially fill the box with plasmaman gear, since it's intended for one
@@ -75,9 +73,9 @@
 	mask_type = /obj/item/clothing/mask/gas/explorer/folded
 
 /obj/item/storage/box/survival/mining/PopulateContents()
-	. = ..()
-	. += /obj/item/crowbar/red
-	. += /obj/item/healthanalyzer/simple/miner
+	..()
+	new /obj/item/crowbar/red(src)
+	new /obj/item/healthanalyzer/simple/miner(src)
 
 // Engineer survival box
 /obj/item/storage/box/survival/engineer
@@ -87,8 +85,8 @@
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
 
 /obj/item/storage/box/survival/engineer/radio/PopulateContents()
-	. = ..() // we want the regular items too.
-	. += /obj/item/radio/off
+	..() // we want the regular items too.
+	new /obj/item/radio/off(src)
 
 // Syndie survival box
 /obj/item/storage/box/survival/syndie
@@ -98,16 +96,14 @@
 	illustration = "extendedtank"
 	mask_type = /obj/item/clothing/mask/gas/syndicate
 	internal_type = /obj/item/tank/internals/emergency_oxygen/engi
-	medipen_type = /obj/item/reagent_containers/hypospray/medipen/atropine
+	medipen_type =  /obj/item/reagent_containers/hypospray/medipen/atropine
 
-/obj/item/storage/box/survival/syndie/PopulateContents(datum/storage_config/config)
-	config.compute_max_item_count = TRUE
-
-	. = ..()
-	. += /obj/item/crowbar/red
-	. += /obj/item/screwdriver/red
-	. += /obj/item/weldingtool/mini
-	. += /obj/item/paper/fluff/operative
+/obj/item/storage/box/survival/syndie/PopulateContents()
+	..()
+	new /obj/item/crowbar/red(src)
+	new /obj/item/screwdriver/red(src)
+	new /obj/item/weldingtool/mini(src)
+	new /obj/item/paper/fluff/operative(src)
 
 /obj/item/storage/box/survival/centcom
 	name = "emergency response survival box"
@@ -117,15 +113,15 @@
 
 /obj/item/storage/box/survival/centcom/PopulateContents()
 	. = ..()
-	. += /obj/item/crowbar
+	new /obj/item/crowbar(src)
 
 // Security survival box
 /obj/item/storage/box/survival/security
 	mask_type = /obj/item/clothing/mask/gas/sechailer
 
 /obj/item/storage/box/survival/security/radio/PopulateContents()
-	. = ..() // we want the regular stuff too
-	. += /obj/item/radio/off
+	..() // we want the regular stuff too
+	new /obj/item/radio/off(src)
 
 // Medical survival box
 /obj/item/storage/box/survival/medical
@@ -209,11 +205,9 @@
 
 // Special stuff for medical hugboxes.
 /obj/item/storage/box/hug/medical/PopulateContents()
-	return list(
-		/obj/item/stack/medical/bruise_pack,
-		/obj/item/stack/medical/ointment,
-		/obj/item/reagent_containers/hypospray/medipen,
-	)
+	new /obj/item/stack/medical/bruise_pack(src)
+	new /obj/item/stack/medical/ointment(src)
+	new /obj/item/reagent_containers/hypospray/medipen(src)
 
 //Clown survival box
 /obj/item/storage/box/survival/hug
@@ -228,13 +222,11 @@
 /obj/item/storage/box/survival/hug/PopulateContents()
 	if(!random_funny_internals)
 		return ..()
-
 	internal_type = pick(
-		/obj/item/tank/internals/emergency_oxygen/engi/clown/n2o,
-		/obj/item/tank/internals/emergency_oxygen/engi/clown/bz,
-		/obj/item/tank/internals/emergency_oxygen/engi/clown/helium,
-	)
-
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/n2o,
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/bz,
+			/obj/item/tank/internals/emergency_oxygen/engi/clown/helium,
+			)
 	return ..()
 
 //Mime survival box
@@ -260,88 +252,60 @@
 	for Medical Officers who just take the box for themselves."
 
 /obj/item/storage/box/hug/plushes/PopulateContents()
-	for(var/_ in 1 to 7)
-		new /obj/effect/spawner/random/entertainment/plushie(src)
-
-	. = list()
-	for(var/obj/item/insert as anything in src)
-		insert.moveToNullspace()
-		. += insert
+	for(var/i in 1 to 7)
+		var/plush_path = /obj/effect/spawner/random/entertainment/plushie
+		new plush_path(src)
 
 /obj/item/storage/box/survival/mining/bonus
 	mask_type = null
 	internal_type = /obj/item/tank/internals/emergency_oxygen/double
 
 /obj/item/storage/box/survival/mining/bonus/PopulateContents()
-	. = ..()
-	. += /obj/item/gps/mining
-	. += /obj/item/t_scanner/adv_mining_scanner
+	..()
+	new /obj/item/gps/mining(src)
+	new /obj/item/t_scanner/adv_mining_scanner(src)
 
 /obj/item/storage/box/miner_modkits
 	name = "miner modkit/trophy box"
 	desc = "Contains every modkit and trophy in the game."
-	storage_type = /datum/storage/box/minor_modkits
 
-/obj/item/storage/box/miner_modkits/PopulateContents(datum/storage_config/config)
-	config.compute_max_values()
+/obj/item/storage/box/miner_modkits/Initialize(mapload)
+	. = ..()
+	atom_storage.set_holdable(list(
+		/obj/item/borg/upgrade/modkit,
+		/obj/item/crusher_trophy
+	))
+	atom_storage.numerical_stacking = TRUE
 
-	. = list()
+/obj/item/storage/box/miner_modkits/PopulateContents()
 	for(var/trophy in subtypesof(/obj/item/crusher_trophy))
-		. += trophy
+		new trophy(src)
 	for(var/modkit in subtypesof(/obj/item/borg/upgrade/modkit))
 		for(var/i in 1 to 10) //minimum cost ucrrently is 20, and 2 pkas, so lets go with that
-			. += modkit
+			new modkit(src)
 
 /obj/item/storage/box/skillchips
 	name = "box of skillchips"
 	desc = "Contains one copy of every skillchip"
 
-/obj/item/storage/box/skillchips/PopulateContents(datum/storage_config/config)
-	config.compute_max_values()
+/obj/item/storage/box/skillchips/PopulateContents()
+	var/list/skillchips = subtypesof(/obj/item/skillchip)
 
-	return subtypesof(/obj/item/skillchip)
+	for(var/skillchip in skillchips)
+		new skillchip(src)
 
 /obj/item/storage/box/skillchips/science
 	name = "box of science job skillchips"
 	desc = "Contains spares of every science job skillchip."
 
 /obj/item/storage/box/skillchips/science/PopulateContents()
-	return list(
-		/obj/item/skillchip/job/roboticist,
-		/obj/item/skillchip/job/roboticist,
-	)
+	new/obj/item/skillchip/job/roboticist(src)
+	new/obj/item/skillchip/job/roboticist(src)
 
 /obj/item/storage/box/skillchips/engineering
 	name = "box of engineering job skillchips"
 	desc = "Contains spares of every engineering job skillchip."
 
 /obj/item/storage/box/skillchips/engineering/PopulateContents()
-	return list(
-		/obj/item/skillchip/job/engineer,
-		/obj/item/skillchip/job/engineer,
-	)
-
-///Chaplin boxes
-/obj/item/storage/box/itemset/crusader/blue/PopulateContents(datum/storage_config/config)
-	config.contents_are_exceptions = TRUE
-	config.compute_max_item_weight = TRUE
-	config.compute_max_total_weight = TRUE
-
-	return list(
-		/obj/item/clothing/suit/chaplainsuit/armor/crusader/blue,
-		/obj/item/clothing/head/helmet/plate/crusader/blue,
-		/obj/item/clothing/gloves/plate/blue,
-		/obj/item/clothing/shoes/plate/blue,
-	)
-
-/obj/item/storage/box/itemset/crusader/red/PopulateContents(datum/storage_config/config)
-	config.contents_are_exceptions = TRUE
-	config.compute_max_item_weight = TRUE
-	config.compute_max_total_weight = TRUE
-
-	return list(
-		/obj/item/clothing/suit/chaplainsuit/armor/crusader/red,
-		/obj/item/clothing/head/helmet/plate/crusader/red,
-		/obj/item/clothing/gloves/plate/red,
-		/obj/item/clothing/shoes/plate/red,
-	)
+	new/obj/item/skillchip/job/engineer(src)
+	new/obj/item/skillchip/job/engineer(src)

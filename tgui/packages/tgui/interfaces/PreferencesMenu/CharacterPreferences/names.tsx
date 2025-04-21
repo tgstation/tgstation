@@ -67,12 +67,7 @@ export function MultiNameInput(props: MultiNameProps) {
   }
 
   return (
-    <Modal
-      style={{
-        margin: '0 auto',
-        width: '40%',
-      }}
-    >
+    <Modal>
       <TrackOutsideClicks onOutsideClick={props.handleClose}>
         <Section
           buttons={
@@ -248,7 +243,7 @@ export function NameInput(props: NameInputProps) {
                 name="ellipsis-v"
                 style={{
                   position: 'relative',
-                  left: '1px',
+                  left: '-1px',
                   minWidth: '0px',
                 }}
               />

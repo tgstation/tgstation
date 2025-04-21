@@ -48,7 +48,7 @@
 /datum/keybinding/living/look_up/up(client/user)
 	. = ..()
 	var/mob/living/L = user.mob
-	L.end_look_up()
+	L.end_look()
 	return TRUE
 
 /datum/keybinding/living/look_down
@@ -69,7 +69,7 @@
 /datum/keybinding/living/look_down/up(client/user)
 	. = ..()
 	var/mob/living/L = user.mob
-	L.end_look_down()
+	L.end_look()
 	return TRUE
 
 /datum/keybinding/living/rest

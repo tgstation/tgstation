@@ -8,6 +8,7 @@
 	cost = CARGO_CRATE_VALUE * 1.8
 	contains = list(/obj/item/rcl,
 					/obj/item/storage/toolbox/artistic,
+					/obj/item/storage/toolbox/crafter,
 					/obj/item/toy/crayon/spraycan = 3,
 					/obj/item/storage/crayons,
 					/obj/item/toy/crayon/white,
@@ -214,7 +215,7 @@
 	contains = list()
 	crate_name = "syndicate gear crate"
 	crate_type = /obj/structure/closet/crate
-	abstract = TRUE // Not 
+	test_ignored = TRUE
 	///Total TC worth of contained uplink items
 	var/crate_value = 30
 	///What uplink the contents are pulled from

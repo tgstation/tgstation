@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "\"Common Second Language\" quirk"
+  - qol: "Language translations chunk sentences together better, making partial understanding a bit easier to parse."

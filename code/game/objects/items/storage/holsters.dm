@@ -28,25 +28,26 @@
 	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Meant to hold a twinned pair of thermal pistols, but can fit several kinds of energy handguns as well."
 
 /obj/item/storage/belt/holster/energy/thermal/PopulateContents()
-	return list(
+	generate_items_inside(list(
 		/obj/item/gun/energy/laser/thermal/inferno = 1,
 		/obj/item/gun/energy/laser/thermal/cryo = 1,
-	)
+	),src)
 
 /obj/item/storage/belt/holster/energy/disabler
 	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Designed to hold energy weaponry. A production stamp indicates that it was shipped with a disabler."
 
 /obj/item/storage/belt/holster/energy/disabler/PopulateContents()
-	return /obj/item/gun/energy/disabler
+	generate_items_inside(list(
+		/obj/item/gun/energy/disabler = 1,
+	),src)
 
 /obj/item/storage/belt/holster/energy/smoothbore
 	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Designed to hold energy weaponry. Seems it was meant to fit two smoothbores."
 
 /obj/item/storage/belt/holster/energy/smoothbore/PopulateContents()
-	return list(
-		/obj/item/gun/energy/disabler/smoothbore,
-		/obj/item/gun/energy/disabler/smoothbore
-	)
+	generate_items_inside(list(
+		/obj/item/gun/energy/disabler/smoothbore = 2,
+	),src)
 
 /obj/item/storage/belt/holster/detective
 	name = "detective's holster"
@@ -55,11 +56,10 @@
 	storage_type = /datum/storage/holster/detective
 
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
-	return list(
-		/obj/item/ammo_box/c38,
-		/obj/item/ammo_box/c38,
-		/obj/item/gun/ballistic/revolver/c38/detective
-	)
+	generate_items_inside(list(
+		/obj/item/ammo_box/c38 = 2,
+		/obj/item/gun/ballistic/revolver/c38/detective = 1,
+	), src)
 
 /obj/item/storage/belt/holster/detective/full/ert
 	name = "marine's holster"
@@ -69,11 +69,10 @@
 	worn_icon_state = "syndicate_holster"
 
 /obj/item/storage/belt/holster/detective/full/ert/PopulateContents()
-	return list(
-		/obj/item/ammo_box/magazine/m45,
-		/obj/item/ammo_box/magazine/m45,
-		/obj/item/gun/ballistic/automatic/pistol/m1911
-	)
+	generate_items_inside(list(
+		/obj/item/ammo_box/magazine/m45 = 2,
+		/obj/item/gun/ballistic/automatic/pistol/m1911 = 1,
+	),src)
 
 /obj/item/storage/belt/holster/chameleon
 	name = "syndicate holster"
@@ -100,11 +99,10 @@
 	storage_type = /datum/storage/holster/nukie/cowboy
 
 /obj/item/storage/belt/holster/nukie/cowboy/full/PopulateContents()
-	return list(
-		/obj/item/ammo_box/a357,
-		/obj/item/ammo_box/a357,
-		/obj/item/gun/ballistic/revolver/cowboy/nuclear
-	)
+	generate_items_inside(list(
+		/obj/item/ammo_box/a357 = 2,
+		/obj/item/gun/ballistic/revolver/cowboy/nuclear = 1,
+	), src)
 
 
 

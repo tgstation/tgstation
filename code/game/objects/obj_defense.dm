@@ -4,7 +4,7 @@
 	var/damage_taken = hit_by.throwforce
 	if(isitem(hit_by))
 		var/obj/item/as_item = hit_by
-		damage_taken *= as_item.demolition_mod
+		damage_taken *= as_item.get_demolition_modifier(src)
 	take_damage(damage_taken, BRUTE, MELEE, 1, get_dir(src, hit_by))
 
 /obj/ex_act(severity, target)
@@ -35,7 +35,7 @@
 	var/damage_sustained = 0
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		damage_sustained = take_damage(
-			hitting_projectile.damage * hitting_projectile.demolition_mod,
+			hitting_projectile.damage * hitting_projectile.get_demolition_modifier(src),
 			hitting_projectile.damage_type,
 			hitting_projectile.armor_flag,
 			FALSE,

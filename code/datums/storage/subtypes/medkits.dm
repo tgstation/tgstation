@@ -28,25 +28,17 @@
 
 		//stacks
 		/obj/item/stack/medical,
-		/obj/item/stack/medical/gauze,
 		/obj/item/stack/sticky_tape,
-		/obj/item/stack/medical/suture/medicated,
-		/obj/item/stack/medical/mesh/advanced,
 
 		//containers
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/medigel,
 		/obj/item/reagent_containers/spray,
-		/obj/item/reagent_containers/applicator/patch/libital,
-		/obj/item/reagent_containers/applicator/patch/aiuri,
-		/obj/item/reagent_containers/applicator/patch/synthflesh,
-		/obj/item/reagent_containers/hypospray/combat/empty,
-		/obj/item/reagent_containers/medigel/sterilizine,
 		/obj/item/reagent_containers/hypospray,
 		/obj/item/reagent_containers/blood,
 
@@ -54,15 +46,12 @@
 		/obj/item/storage/box/bandages,
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/storage/pill_bottle,
-		/obj/item/storage/box/bandages,
 		/obj/item/storage/box/evilmeds,
 
 		//clothing
-		/obj/item/clothing/mask/surgical,
 		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/breath/medical,
+		/obj/item/clothing/mask/surgical,
 		/obj/item/clothing/neck/stethoscope,
-		/obj/item/clothing/glasses/hud/health/night/science,
 		/obj/item/clothing/gloves,
 		/obj/item/clothing/mask/muzzle,
 		/obj/item/clothing/glasses,
@@ -88,17 +77,13 @@
 		/obj/item/gun/syringe/syndicate,
 		/obj/item/pinpointer/crew,
 		/obj/item/holosign_creator/medical,
-		/obj/item/healthanalyzer/advanced,
 		/obj/item/autosurgeon/syndicate/emaggedsurgerytoolset,
 	)
 
-/datum/storage/medkit/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdable_override)
+/datum/storage/medkit/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables = null)
 	. = ..()
-
-	if(isnull(holdable_override))
-		holdable_override = list_of_everything_medkits_can_hold
-
-	set_holdable(holdable_override)
+	if(!isnull(holdables))
+		set_holdable(holdables)
 
 ///Surgery medkit
 /datum/storage/medkit/surgery
@@ -106,25 +91,33 @@
 	max_total_storage = 24
 	max_specific_storage = WEIGHT_CLASS_NORMAL //holds the same equipment as a medibelt
 
-///Tatical medkit
-/datum/storage/medkit/tatical
-	max_slots = 24
+/datum/storage/medkit/surgery/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
+	holdables = list_of_everything_medkits_can_hold
+	return ..()
+
+///Tactical medkit
+/datum/storage/medkit/tactical
+	max_slots = 21
 	max_total_storage = 24
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 
-///Tatical premium medkit
-/datum/storage/medkit/tatical/premium
-	allow_big_nesting = TRUE // so you can put back the box you took out
-	max_total_storage = 36
+/datum/storage/medkit/tactical/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
+	holdables = list_of_everything_medkits_can_hold
+	return ..()
 
-///Corrinor medkit
+///Premium tactical medkit
+/datum/storage/medkit/tactical/premium
+	allow_big_nesting = TRUE // so you can put back the box you took out
+	max_total_storage = 34
+
+///Coroner medkit
 /datum/storage/medkit/coroner
 	max_slots = 14
 	max_total_storage = 24
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 
-/datum/storage/medkit/coroner/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdable_override)
-	holdable_override = list(
+/datum/storage/medkit/coroner/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
+	holdables = list(
 		/obj/item/reagent_containers,
 		/obj/item/bodybag,
 		/obj/item/toy/crayon,
@@ -137,7 +130,4 @@
 		/obj/item/cautery,
 		/obj/item/autopsy_scanner,
 	)
-
 	return ..()
-
-

@@ -916,12 +916,8 @@
 	return .
 
 /obj/item/storage/box/gum/wake_up/PopulateContents()
-	return list(
-		/obj/item/food/bubblegum/wake_up,
-		/obj/item/food/bubblegum/wake_up,
-		/obj/item/food/bubblegum/wake_up,
-		/obj/item/food/bubblegum/wake_up,
-	)
+	for(var/i in 1 to 4)
+		new/obj/item/food/bubblegum/wake_up(src)
 
 /obj/item/food/spacers_sidekick
 	name = "\improper Spacer's Sidekick mints"

@@ -601,11 +601,9 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
  *
  * Arguments:
  * * limb_overlay - The limb image being masked, not necessarily the original limb image as it could be an overlay on top of it
- * * image_dir - Direction of the masked images.
- *
  * Returns the list of masked images, or `null` if the limb_overlay didn't exist
  */
-/obj/item/bodypart/leg/proc/generate_masked_leg(mutable_appearance/limb_overlay, image_dir = NONE)
+/obj/item/bodypart/leg/proc/generate_masked_leg(mutable_appearance/limb_overlay)
 	RETURN_TYPE(/list)
 	if(!limb_overlay)
 		return
@@ -634,11 +632,63 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 	var/mutable_appearance/new_leg_appearance = new(limb_overlay)
 	new_leg_appearance.icon = new_leg_icon
 	new_leg_appearance.layer = -BODYPARTS_LAYER
-	new_leg_appearance.dir = image_dir //for some reason, things do not work properly otherwise
 	. += new_leg_appearance
 	var/mutable_appearance/new_leg_appearance_lower = new(limb_overlay)
 	new_leg_appearance_lower.icon = new_leg_icon_lower
 	new_leg_appearance_lower.layer = -BODYPARTS_LOW_LAYER
-	new_leg_appearance_lower.dir = image_dir
 	. += new_leg_appearance_lower
 	return .
+
+/proc/get_default_icon_by_slot(slot_flag)
+	switch(slot_flag)
+		if(ITEM_SLOT_HEAD)
+			return 'icons/mob/clothing/head/default.dmi'
+		if(ITEM_SLOT_EYES)
+			return 'icons/mob/clothing/eyes.dmi'
+		if(ITEM_SLOT_EARS)
+			return 'icons/mob/clothing/ears.dmi'
+		if(ITEM_SLOT_MASK)
+			return 'icons/mob/clothing/mask.dmi'
+		if(ITEM_SLOT_NECK)
+			return 'icons/mob/clothing/neck.dmi'
+		if(ITEM_SLOT_BACK)
+			return 'icons/mob/clothing/back.dmi'
+		if(ITEM_SLOT_BELT)
+			return 'icons/mob/clothing/belt.dmi'
+		if(ITEM_SLOT_ID)
+			return 'icons/mob/clothing/id.dmi'
+		if(ITEM_SLOT_ICLOTHING)
+			return DEFAULT_UNIFORM_FILE
+		if(ITEM_SLOT_OCLOTHING)
+			return DEFAULT_SUIT_FILE
+		if(ITEM_SLOT_GLOVES)
+			return 'icons/mob/clothing/hands.dmi'
+		if(ITEM_SLOT_FEET)
+			return DEFAULT_SHOES_FILE
+
+/proc/get_default_layer_by_slot(slot_flag)
+	switch(text2num(slot_flag))
+		if(ITEM_SLOT_HEAD)
+			return HEAD_LAYER
+		if(ITEM_SLOT_EYES)
+			return GLASSES_LAYER
+		if(ITEM_SLOT_EARS)
+			return EARS_LAYER
+		if(ITEM_SLOT_MASK)
+			return FACEMASK_LAYER
+		if(ITEM_SLOT_NECK)
+			return NECK_LAYER
+		if(ITEM_SLOT_BACK)
+			return BACK_LAYER
+		if(ITEM_SLOT_BELT)
+			return BELT_LAYER
+		if(ITEM_SLOT_ID)
+			return ID_LAYER
+		if(ITEM_SLOT_ICLOTHING)
+			return UNIFORM_LAYER
+		if(ITEM_SLOT_OCLOTHING)
+			return SUIT_LAYER
+		if(ITEM_SLOT_GLOVES)
+			return GLOVES_LAYER
+		if(ITEM_SLOT_FEET)
+			return SHOES_LAYER

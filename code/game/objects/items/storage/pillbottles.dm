@@ -1,5 +1,7 @@
 
-/// Pill Bottles
+/*
+ * Pill Bottles
+ */
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
 	desc = "It's an airtight container for storing medication."
@@ -23,161 +25,143 @@
 	desc = "Contains pills used to counter toxins."
 
 /obj/item/storage/pill_bottle/multiver/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/applicator/pill/multiver
+		new /obj/item/reagent_containers/applicator/pill/multiver(src)
 
 /obj/item/storage/pill_bottle/multiver/less
 
 /obj/item/storage/pill_bottle/multiver/less/PopulateContents()
-	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/reagent_containers/applicator/pill/multiver
+		new /obj/item/reagent_containers/applicator/pill/multiver(src)
 
 /obj/item/storage/pill_bottle/epinephrine
 	name = "bottle of epinephrine pills"
 	desc = "Contains pills used to stabilize patients."
 
 /obj/item/storage/pill_bottle/epinephrine/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/applicator/pill/epinephrine
+		new /obj/item/reagent_containers/applicator/pill/epinephrine(src)
 
 /obj/item/storage/pill_bottle/mutadone
 	name = "bottle of mutadone pills"
 	desc = "Contains pills used to treat genetic abnormalities."
 
 /obj/item/storage/pill_bottle/mutadone/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/applicator/pill/mutadone
+		new /obj/item/reagent_containers/applicator/pill/mutadone(src)
 
 /obj/item/storage/pill_bottle/potassiodide
 	name = "bottle of potassium iodide pills"
 	desc = "Contains pills used to reduce radiation damage."
 
 /obj/item/storage/pill_bottle/potassiodide/PopulateContents()
-	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/reagent_containers/applicator/pill/potassiodide
+		new /obj/item/reagent_containers/applicator/pill/potassiodide(src)
 
 /obj/item/storage/pill_bottle/probital
 	name = "bottle of probital pills"
 	desc = "Contains pills used to treat brute damage. The tag in the bottle states 'Eat before ingesting, may cause fatigue'."
 
 /obj/item/storage/pill_bottle/probital/PopulateContents()
-	. = list()
 	for(var/i in 1 to 4)
-		. += /obj/item/reagent_containers/applicator/pill/probital
+		new /obj/item/reagent_containers/applicator/pill/probital(src)
 
 /obj/item/storage/pill_bottle/iron
 	name = "bottle of iron pills"
 	desc = "Contains pills used to reduce blood loss slowly. The tag in the bottle states 'Only take one each five minutes'."
 
 /obj/item/storage/pill_bottle/iron/PopulateContents()
-	. = list()
 	for(var/i in 1 to 4)
-		. += /obj/item/reagent_containers/applicator/pill/iron
+		new /obj/item/reagent_containers/applicator/pill/iron(src)
 
 /obj/item/storage/pill_bottle/mannitol
 	name = "bottle of mannitol pills"
 	desc = "Contains pills used to treat brain damage."
 
 /obj/item/storage/pill_bottle/mannitol/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/applicator/pill/mannitol
+		new /obj/item/reagent_containers/applicator/pill/mannitol(src)
 
 //Contains 4 pills instead of 7, and 5u pills instead of 50u (50u pills heal 250 brain damage, 5u pills heal 25)
 /obj/item/storage/pill_bottle/mannitol/braintumor
 	desc = "Contains diluted pills used to treat brain tumor symptoms. Take one when feeling lightheaded."
 
 /obj/item/storage/pill_bottle/mannitol/braintumor/PopulateContents()
-	. = list()
 	for(var/i in 1 to 4)
-		. += /obj/item/reagent_containers/applicator/pill/mannitol/braintumor
+		new /obj/item/reagent_containers/applicator/pill/mannitol/braintumor(src)
 
 /obj/item/storage/pill_bottle/stimulant
 	name = "bottle of stimulant pills"
 	desc = "Guaranteed to give you that extra burst of energy during a long shift!"
 
 /obj/item/storage/pill_bottle/stimulant/PopulateContents()
-	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/applicator/pill/stimulant
+		new /obj/item/reagent_containers/applicator/pill/stimulant(src)
 
 /obj/item/storage/pill_bottle/sansufentanyl
 	name = "bottle of experimental medication"
 	desc = "A bottle of pills developed by Interdyne Pharmaceuticals. They're used to treat Hereditary Manifold Sickness."
 
 /obj/item/storage/pill_bottle/sansufentanyl/PopulateContents()
-	. = list()
 	for(var/i in 1 to 6)
-		. += /obj/item/reagent_containers/applicator/pill/sansufentanyl
+		new /obj/item/reagent_containers/applicator/pill/sansufentanyl(src)
 
 /obj/item/storage/pill_bottle/mining
 	name = "bottle of patches"
 	desc = "Contains patches used to treat brute and burn damage."
 
 /obj/item/storage/pill_bottle/mining/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/reagent_containers/applicator/patch/aiuri = 1,
-		/obj/item/reagent_containers/applicator/patch/libital = 3,
-	))
+	new /obj/item/reagent_containers/applicator/patch/aiuri(src)
+	for(var/i in 1 to 3)
+		new /obj/item/reagent_containers/applicator/patch/libital(src)
 
 /obj/item/storage/pill_bottle/zoom
 	name = "suspicious pill bottle"
 	desc = "The label is pretty old and almost unreadable, you recognize some chemical compounds."
 
 /obj/item/storage/pill_bottle/zoom/PopulateContents()
-	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/applicator/pill/zoom
+		new /obj/item/reagent_containers/applicator/pill/zoom(src)
 
 /obj/item/storage/pill_bottle/happy
 	name = "suspicious pill bottle"
 	desc = "There is a smiley on the top."
 
 /obj/item/storage/pill_bottle/happy/PopulateContents()
-	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/applicator/pill/happy
+		new /obj/item/reagent_containers/applicator/pill/happy(src)
 
 /obj/item/storage/pill_bottle/lsd
 	name = "suspicious pill bottle"
 	desc = "There is a crude drawing which could be either a mushroom, or a deformed moon."
 
 /obj/item/storage/pill_bottle/lsd/PopulateContents()
-	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/applicator/pill/lsd
+		new /obj/item/reagent_containers/applicator/pill/lsd(src)
 
 /obj/item/storage/pill_bottle/aranesp
 	name = "suspicious pill bottle"
 	desc = "The label has 'fuck disablers' hastily scrawled in black marker."
 
 /obj/item/storage/pill_bottle/aranesp/PopulateContents()
-	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/applicator/pill/aranesp
+		new /obj/item/reagent_containers/applicator/pill/aranesp(src)
 
 /obj/item/storage/pill_bottle/psicodine
 	name = "bottle of psicodine pills"
 	desc = "Contains pills used to treat mental distress and traumas."
 
 /obj/item/storage/pill_bottle/psicodine/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/applicator/pill/psicodine
+		new /obj/item/reagent_containers/applicator/pill/psicodine(src)
 
 /obj/item/storage/pill_bottle/penacid
 	name = "bottle of pentetic acid pills"
 	desc = "Contains pills to expunge radiation and toxins."
 
 /obj/item/storage/pill_bottle/penacid/PopulateContents()
-	. = list()
 	for(var/i in 1 to 3)
-		. += /obj/item/reagent_containers/applicator/pill/penacid
+		new /obj/item/reagent_containers/applicator/pill/penacid(src)
 
 
 /obj/item/storage/pill_bottle/neurine
@@ -185,74 +169,8 @@
 	desc = "Contains pills to treat non-severe mental traumas."
 
 /obj/item/storage/pill_bottle/neurine/PopulateContents()
-	. = list()
 	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/applicator/pill/neurine
-
-/obj/item/storage/pill_bottle/maintenance_pill
-	name = "bottle of maintenance pills"
-	desc = "An old pill bottle. It smells musty."
-
-/obj/item/storage/pill_bottle/maintenance_applicator/pill/Initialize(mapload)
-	. = ..()
-	var/obj/item/reagent_containers/applicator/pill/P = locate() in src
-	name = "bottle of [P.name]s"
-
-/obj/item/storage/pill_bottle/maintenance_applicator/pill/PopulateContents()
-	. = list()
-	for(var/i in 1 to rand(1,7))
-		. += /obj/item/reagent_containers/applicator/pill/maintenance
-
-/obj/item/storage/pill_bottle/maintenance_applicator/pill/full/PopulateContents()
-	. = list()
-	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/applicator/pill/maintenance
-
-///////////////////////////////////////// Psychologist inventory pillbottles
-/obj/item/storage/pill_bottle/happinesspsych
-	name = "happiness pills"
-	desc = "Contains pills used as a last resort means to temporarily stabilize depression and anxiety. WARNING: side effects may include slurred speech, drooling, and severe addiction."
-
-/obj/item/storage/pill_bottle/happinesspsych/PopulateContents()
-	. = list()
-	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/applicator/pill/happinesspsych
-
-/obj/item/storage/pill_bottle/lsdpsych
-	name = "mindbreaker toxin pills"
-	desc = "!FOR THERAPEUTIC USE ONLY! Contains pills used to alleviate the symptoms of Reality Dissociation Syndrome."
-
-/obj/item/storage/pill_bottle/lsdpsych/PopulateContents()
-	. = list()
-	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/applicator/pill/lsdpsych
-
-/obj/item/storage/pill_bottle/paxpsych
-	name = "pax pills"
-	desc = "Contains pills used to temporarily pacify patients that are deemed a harm to themselves or others."
-
-/obj/item/storage/pill_bottle/paxpsych/PopulateContents()
-	. = list()
-	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/applicator/pill/paxpsych
-
-/obj/item/storage/pill_bottle/naturalbait
-	name = "freshness jar"
-	desc = "Full of natural fish bait."
-
-/obj/item/storage/pill_bottle/naturalbait/PopulateContents()
-	. = list()
-	for(var/i in 1 to 7)
-		. += /obj/item/food/bait/natural
-
-/obj/item/storage/pill_bottle/ondansetron
-	name = "ondansetron patches"
-	desc = "A bottle containing patches of ondansetron, a drug used to treat nausea and vomiting. May cause drowsiness."
-
-/obj/item/storage/pill_bottle/ondansetron/PopulateContents()
-	. = list()
-	for(var/i in 1 to 5)
-		. += /obj/item/reagent_containers/applicator/patch/ondansetron
+		new /obj/item/reagent_containers/applicator/pill/neurine(src)
 
 /obj/item/storage/pill_bottle/maintenance_pill
 	name = "bottle of maintenance pills"
@@ -264,11 +182,50 @@
 	name = "bottle of [P.name]s"
 
 /obj/item/storage/pill_bottle/maintenance_pill/PopulateContents()
-	. = list()
-	for(var/i in 1 to rand(1, 7))
-		. += /obj/item/reagent_containers/applicator/pill/maintenance
+	for(var/i in 1 to rand(1,7))
+		new /obj/item/reagent_containers/applicator/pill/maintenance(src)
 
 /obj/item/storage/pill_bottle/maintenance_pill/full/PopulateContents()
-	. = list()
 	for(var/i in 1 to 7)
-		. += /obj/item/reagent_containers/applicator/pill/maintenance
+		new /obj/item/reagent_containers/applicator/pill/maintenance(src)
+
+///////////////////////////////////////// Psychologist inventory pillbottles
+/obj/item/storage/pill_bottle/happinesspsych
+	name = "happiness pills"
+	desc = "Contains pills used as a last resort means to temporarily stabilize depression and anxiety. WARNING: side effects may include slurred speech, drooling, and severe addiction."
+
+/obj/item/storage/pill_bottle/happinesspsych/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/applicator/pill/happinesspsych(src)
+
+/obj/item/storage/pill_bottle/lsdpsych
+	name = "mindbreaker toxin pills"
+	desc = "!FOR THERAPEUTIC USE ONLY! Contains pills used to alleviate the symptoms of Reality Dissociation Syndrome."
+
+/obj/item/storage/pill_bottle/lsdpsych/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/applicator/pill/lsdpsych(src)
+
+/obj/item/storage/pill_bottle/paxpsych
+	name = "pax pills"
+	desc = "Contains pills used to temporarily pacify patients that are deemed a harm to themselves or others."
+
+/obj/item/storage/pill_bottle/paxpsych/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/applicator/pill/paxpsych(src)
+
+/obj/item/storage/pill_bottle/naturalbait
+	name = "freshness jar"
+	desc = "Full of natural fish bait."
+
+/obj/item/storage/pill_bottle/naturalbait/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/food/bait/natural(src)
+
+/obj/item/storage/pill_bottle/ondansetron
+	name = "ondansetron patches"
+	desc = "A bottle containing patches of ondansetron, a drug used to treat nausea and vomiting. May cause drowsiness."
+
+/obj/item/storage/pill_bottle/ondansetron/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/applicator/patch/ondansetron(src)

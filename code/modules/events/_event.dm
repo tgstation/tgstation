@@ -42,9 +42,6 @@
 	var/map_flags = NONE
 
 /datum/round_event_control/New()
-	if(config && !wizardevent) // Magic is unaffected by configs
-		earliest_start = CEILING(earliest_start * CONFIG_GET(number/events_min_time_mul), 1)
-		min_players = CEILING(min_players * CONFIG_GET(number/events_min_players_mul), 1)
 	if(!length(admin_setup))
 		return
 	var/list/admin_setup_types = admin_setup.Copy()
@@ -162,7 +159,7 @@ Runs the event
 	if(announce_chance_override != null)
 		round_event.announce_chance = announce_chance_override
 
-	testing("[time2text(world.time, "hh:mm:ss")] [round_event.type]")
+	testing("[time2text(world.time, "hh:mm:ss", 0)] [round_event.type]")
 	triggering = TRUE
 
 	if(!triggering)

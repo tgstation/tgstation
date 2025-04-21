@@ -7,7 +7,3 @@
 	resistance_flags = FLAMMABLE
 	storage_type = /datum/storage/basket
 
-//Easter Baskets
-/obj/item/storage/basket/easter
-	name = "Easter Basket"
-	storage_type = /datum/storage/basket/easter

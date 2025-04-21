@@ -512,7 +512,7 @@
 		else
 			var/t_growthstate = clamp(round((age / myseed.maturation) * myseed.growthstages), 1, myseed.growthstages)
 			plant_overlay.icon_state = "[myseed.icon_grow][t_growthstate]"
-	plant_overlay.pixel_y = myseed.plant_icon_offset
+	plant_overlay.pixel_z = myseed.plant_icon_offset
 	return plant_overlay
 
 /obj/machinery/hydroponics/proc/update_status_light_overlays()

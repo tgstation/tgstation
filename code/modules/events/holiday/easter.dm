@@ -42,6 +42,12 @@
 			new /mob/living/basic/rabbit/easter/space(spawn_point.loc)
 		CHECK_TICK
 
+
+//Easter Baskets
+/obj/item/storage/basket/easter
+	name = "Easter Basket"
+	storage_type = /datum/storage/basket/easter
+
 //Bunny Suit
 /obj/item/clothing/head/costume/bunnyhead
 	name = "Easter Bunny head"

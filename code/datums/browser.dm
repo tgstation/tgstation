@@ -14,7 +14,11 @@
 	var/content = ""
 
 /datum/browser/New(nuser, nwindow_id, ntitle = 0, nwidth = 0, nheight = 0, atom/nref = null)
-	user = nuser
+	if(IS_CLIENT_OR_MOCK(nuser))
+		var/client/client_user = nuser
+		user = client_user.mob
+	else
+		user = nuser
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(user_deleted))
 	window_id = nwindow_id
 	if (ntitle)
@@ -68,6 +72,14 @@
 	for (file in stylesheets)
 		head_content += "<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url(file)]'>"
 
+	if(user.client?.window_scaling && user.client?.window_scaling != 1 && !user.client?.prefs.read_preference(/datum/preference/toggle/ui_scale) && width && height)
+		head_content += {"
+			<style>
+				body {
+					zoom: [100 / user.client?.window_scaling]%;
+				}
+			</style>
+			"}
 
 	for (file in scripts)
 		head_content += "<script type='text/javascript' src='[SSassets.transport.get_asset_url(file)]'></script>"
@@ -105,15 +117,19 @@
 		to_chat(user, span_userdanger("The [title] browser you tried to open failed a sanity check! Please report this on GitHub!"))
 		return
 	var/window_size = ""
-	if (width && height)
-		window_size = "size=[width]x[height];"
+	if(width && height)
+		if(user.client?.prefs?.read_preference(/datum/preference/toggle/ui_scale))
+			var/scaling = user.client.window_scaling
+			window_size = "size=[width * scaling]x[height * scaling];"
+		else
+			window_size = "size=[width]x[height];"
 	var/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
 	common_asset.send(user)
 	if (stylesheets.len)
 		SSassets.transport.send_assets(user, stylesheets)
 	if (scripts.len)
 		SSassets.transport.send_assets(user, scripts)
-	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
+	DIRECT_OUTPUT(user, browse(get_content(), "window=[window_id];[window_size][window_options]"))
 	if (use_onclose)
 		setup_onclose()
 

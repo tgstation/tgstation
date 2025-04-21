@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - config: "Removed event time/weight multipliers, now all events vars are editable in config."

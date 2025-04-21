@@ -10,11 +10,6 @@
 	max_integrity = 500
 	storage_type = /datum/storage/sixcan
 
-/obj/item/storage/cans/Initialize(mapload)
-	. = ..()
-
-	update_appearance()
-
 /obj/item/storage/cans/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] begins popping open a final cold one with the boys! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
@@ -23,20 +18,22 @@
 	icon_state = "[initial(icon_state)][contents.len]"
 	return ..()
 
+/obj/item/storage/cans/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
 /obj/item/storage/cans/sixsoda
 	name = "soda bottle ring"
 	desc = "Holds six soda cans. Remember to recycle when you're done!"
 
 /obj/item/storage/cans/sixsoda/PopulateContents()
-	. = list()
 	for(var/i in 1 to 6)
-		. += /obj/item/reagent_containers/cup/soda_cans/cola
+		new /obj/item/reagent_containers/cup/soda_cans/cola(src)
 
 /obj/item/storage/cans/sixbeer
 	name = "beer can ring"
 	desc = "Holds six beers. Remember to recycle when you're done!"
 
 /obj/item/storage/cans/sixbeer/PopulateContents()
-	. = list()
 	for(var/i in 1 to 6)
-		. += /obj/item/reagent_containers/cup/soda_cans/beer
+		new /obj/item/reagent_containers/cup/soda_cans/beer(src)

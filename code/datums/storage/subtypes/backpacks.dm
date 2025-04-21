@@ -10,29 +10,20 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(exception_hold_list = /obj/item/fish_tank)
 
-///Sadle bag
-/datum/storage/backpack/sadle_bag
+///Saddle backpack
+/datum/storage/backpack/saddle
 	max_total_storage = 26
 
 ///Satchel flat
-/datum/storage/backpack/satchel
+/datum/storage/backpack/satchel_flat
 	max_total_storage = 15
-	allow_big_nesting = TRUE
 
-/datum/storage/backpack/satchel/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/backpack/satchel_flat/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-
 	set_holdable(cant_hold_list = /obj/item/storage/backpack/satchel/flat) //muh recursive backpacks
 
-///Santa backpack
+///Santa bag
 /datum/storage/backpack/santabag
 	max_total_storage = 60
-	max_slots = 21
-	max_specific_storage = WEIGHT_CLASS_NORMAL
-
-///Banner pack
-/datum/storage/backpack/bannerpack
-	max_total_storage = 27 //6 more then normal, for the tradeoff of declaring yourself an antag at all times.

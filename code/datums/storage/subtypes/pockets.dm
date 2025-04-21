@@ -21,7 +21,6 @@
 ///Small pockets
 /datum/storage/pockets/small
 	max_slots = 1
-	max_specific_storage = WEIGHT_CLASS_SMALL
 	attack_hand_interact = FALSE
 
 ///Tiny pockets
@@ -38,7 +37,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(exception_hold_list = list(
 		/obj/item/katana,
 		/obj/item/toy/katana,
@@ -65,7 +63,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/clothing/head/mob_holder,
 		/obj/item/food/deadmouse
@@ -77,8 +74,6 @@
 		var/obj/item/clothing/head/mob_holder/mausholder = to_insert
 		if(locate(/mob/living/basic/mouse) in mausholder.contents)
 			return
-		if(messages == STORAGE_ERROR_INSERT)
-			stack_trace("[parent.type]: no mouse to hold [to_insert]")
 		return FALSE
 
 ///Shoe pockets
@@ -95,7 +90,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/knife,
@@ -143,7 +137,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/ammo_box/magazine/m10mm,
@@ -193,7 +186,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(list( //Same items as a PDA
 		/obj/item/pen,
 		/obj/item/toy/crayon,
@@ -215,11 +207,10 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(list(
 		/obj/item/reagent_containers/cup/glass/bottle/vodka,
-		/obj/item/reagent_containers/cup/glass/bottle/molotov,,
-		/obj/item/reagent_containers/cup/glass/drinkingglass,,
+		/obj/item/reagent_containers/cup/glass/bottle/molotov,
+		/obj/item/reagent_containers/cup/glass/drinkingglass,
 		/obj/item/ammo_box/strilka310
 	))
 
@@ -236,7 +227,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(
 		can_hold_list = list(
 			/obj/item/ammo_box/strilka310/lionhunter,
