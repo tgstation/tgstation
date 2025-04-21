@@ -122,5 +122,5 @@
 		/datum/reagent/toxin = 15,
 		/datum/reagent/medicine/strange_reagent = 1,
 	)
-	tastes = list("the lost of 5 TC" = 1, "eated friend" = 1)
+	tastes = list("the loss of 5 TC" = 1, "eaten friend" = 1)
 	spawned_mob = /mob/living/basic/pony/dangerous

@@ -182,6 +182,7 @@
 	melee_damage_upper = 10
 	armour_penetration = 100
 	sentience_type = SENTIENCE_PONY
+	gold_core_spawnable = NO_SPAWN
 
 /mob/living/basic/pony/dangerous/Initialize(mapload)
 	. = ..()
