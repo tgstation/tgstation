@@ -6,7 +6,6 @@
 
 // Doesn't really layer, just throwing this in here cause it's the best place imo
 #define FIELD_OF_VISION_BLOCKER_PLANE -45
-#define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
 
 #define CLICKCATCHER_PLANE -40
 
@@ -14,7 +13,6 @@
 #define PLANE_SPACE_PARALLAX -20
 
 #define GRAVITY_PULSE_PLANE -12
-#define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
 #define RENDER_PLANE_TRANSPARENT -11 //Transparent plane that shows openspace underneath the floor
 
@@ -44,7 +42,6 @@
 
 /// Lighting objects that are "free floating"
 #define O_LIGHTING_VISUAL_PLANE 11
-#define O_LIGHTING_VISUAL_RENDER_TARGET "*O_LIGHT_VISUAL_PLANE"
 
 // Render plate used by overlay lighting to mask turf lights
 #define TURF_LIGHTING_PLATE 12
@@ -52,7 +49,7 @@
 #define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
 #define EMISSIVE_RENDER_PLATE 14
-#define EMISSIVE_RENDER_TARGET "*EMISSIVE_PLANE"
+
 // Ensures all the render targets that point at the emissive plate layer correctly
 #define EMISSIVE_Z_BELOW_LAYER 1
 #define EMISSIVE_FLOOR_LAYER 2
@@ -64,7 +61,6 @@
 /// Masks the lighting plane with turfs, so we never light up the void
 /// Failing that, masks emissives and the overlay lighting plane
 #define LIGHT_MASK_PLANE 16
-#define LIGHT_MASK_RENDER_TARGET "*LIGHT_MASK_PLANE"
 
 ///Things that should render ignoring lighting
 #define ABOVE_LIGHTING_PLANE 17

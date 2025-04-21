@@ -45,8 +45,6 @@ SUBSYSTEM_DEF(mapping)
 	var/list/plane_to_offset
 	/// List of planes that do not allow for offsetting
 	var/list/plane_offset_blacklist
-	/// List of render targets that do not allow for offsetting
-	var/list/render_offset_blacklist
 	/// List of plane masters that are of critical priority
 	var/list/critical_planes
 	/// The largest plane offset we've generated so far
@@ -117,7 +115,6 @@ SUBSYSTEM_DEF(mapping)
 	plane_offset_blacklist = list()
 	// You aren't allowed to offset a floatplane that'll just fuck it all up
 	plane_offset_blacklist["[FLOAT_PLANE]"] = TRUE
-	render_offset_blacklist = list()
 	critical_planes = list()
 	create_plane_offsets(0, 0)
 	initialize_biomes()
@@ -818,10 +815,6 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 
 			if(initial(master_type.offsetting_flags) & BLOCKS_PLANE_OFFSETTING)
 				plane_offset_blacklist[string_plane] = TRUE
-				var/render_target = initial(master_type.render_target)
-				if(!render_target)
-					render_target = get_plane_master_render_base(initial(master_type.name))
-				render_offset_blacklist[render_target] = TRUE
 				if(plane_offset != 0)
 					continue
 

@@ -75,11 +75,6 @@
 #define PLANE_IS_CRITICAL(plane) ((SSmapping.plane_to_offset) ? !!SSmapping.critical_planes["[plane]"] : FALSE)
 /// Takes a true plane, returns the offset planes that would canonically represent it
 #define TRUE_PLANE_TO_OFFSETS(plane) ((SSmapping.true_to_offset_planes) ? SSmapping.true_to_offset_planes["[plane]"] : list(plane))
-/// Takes a render target and an offset, returns a canonical render target string for it
-#define OFFSET_RENDER_TARGET(render_target, offset) (_OFFSET_RENDER_TARGET(render_target, SSmapping.render_offset_blacklist?["[render_target]"] ? 0 : offset))
-/// Helper macro for the above
-/// Honestly just exists to make the pattern of render target strings more readable
-#define _OFFSET_RENDER_TARGET(render_target, offset) ("[(render_target)] #[(offset)]")
 
 // Known issues:
 // Potentially too much client load? Hard to tell due to not having a potato pc to hand.

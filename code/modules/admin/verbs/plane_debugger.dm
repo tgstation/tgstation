@@ -192,7 +192,8 @@
 		// We're gonna collect a list of filters, partly because they're useful info
 		// But also because they can be used as connections, and we need to support that
 		for(var/filter_id in plane.filter_data)
-			var/list/filter = plane.filter_data[filter_id]
+			var/datum/filter_data/filt_data = plane.filter_data[filter_id]
+			var/list/filter = filt_data.arguments
 			if(!filter["render_source"])
 				continue
 			var/list/filter_info = filter.Copy()

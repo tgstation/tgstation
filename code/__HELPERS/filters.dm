@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 
 //Helpers to generate lists for filter helpers
 //This is the only practical way of writing these that actually produces sane lists
-/proc/alpha_mask_filter(x, y, icon/icon, render_source, flags)
+/proc/alpha_mask_filter(x, y, icon/icon, atom/render_source, flags)
 	. = list("type" = "alpha")
 	if(!isnull(x))
 		.["x"] = x

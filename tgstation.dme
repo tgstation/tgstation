@@ -2098,6 +2098,7 @@
 #include "code\game\atom\atom_materials.dm"
 #include "code\game\atom\atom_merger.dm"
 #include "code\game\atom\atom_orbit.dm"
+#include "code\game\atom\atom_render.dm"
 #include "code\game\atom\atom_storage.dm"
 #include "code\game\atom\atom_tool_acts.dm"
 #include "code\game\atom\atom_vv.dm"

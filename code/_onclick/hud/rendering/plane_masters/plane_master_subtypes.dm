@@ -3,7 +3,6 @@
 	documentation = "This is one of those planes that's only used as a filter. It cuts out a portion of the game plate and does effects to it."
 	plane = FIELD_OF_VISION_BLOCKER_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_target = FIELD_OF_VISION_BLOCKER_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	render_relay_planes = list()
 	// We do NOT allow offsetting, because there's no case where you would want to block only one layer, at least currently
@@ -169,7 +168,6 @@
 	plane = GRAVITY_PULSE_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	blend_mode = BLEND_ADD
-	render_target = GRAVITY_PULSE_RENDER_TARGET
 	render_relay_planes = list()
 
 ///Contains just the floor
@@ -287,7 +285,6 @@
 		<br>We draw to the game plane, and mask out space for ourselves on the lighting plane so any color we have has the chance to display."
 	plane = O_LIGHTING_VISUAL_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
-	render_target = O_LIGHTING_VISUAL_RENDER_TARGET
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
 	render_relay_planes = list(RENDER_PLANE_LIGHTING)

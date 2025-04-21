@@ -11,6 +11,8 @@
 
 #define isweakref(D) (istype(D, /datum/weakref))
 
+#define isfilterdata(D) (istype(D, /datum/filter_data))
+
 #define isimage(thing) (istype(thing, /image))
 
 GLOBAL_VAR_INIT(magic_appearance_detecting_image, new /image) // appearances are awful to detect safely, but this seems to be the best way ~ninjanomnom

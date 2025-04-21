@@ -129,6 +129,26 @@ const FilterColorEntry = (props) => {
   );
 };
 
+const FilterAtomEntry = (props) => {
+  const { value, filterName } = props;
+  const { act } = useBackend();
+  return (
+    <>
+      <Button
+        icon="pencil-alt"
+        onClick={() =>
+          act('modify_atom_value', {
+            name: filterName,
+          })
+        }
+      />
+      <Box inline ml={1}>
+        {value}
+      </Box>
+    </>
+  );
+};
+
 const FilterIconEntry = (props) => {
   const { value, filterName } = props;
   const { act } = useBackend();
@@ -181,6 +201,7 @@ const FilterDataEntry = (props) => {
     float: <FilterFloatEntry {...props} />,
     string: <FilterTextEntry {...props} />,
     color: <FilterColorEntry {...props} />,
+    atom: <FilterAtomEntry {...props} />,
     icon: <FilterIconEntry {...props} />,
     flags: <FilterFlagsEntry {...props} />,
   };
@@ -189,7 +210,7 @@ const FilterDataEntry = (props) => {
     x: 'float',
     y: 'float',
     icon: 'icon',
-    render_source: 'string',
+    render_source: 'atom',
     flags: 'flags',
     size: 'float',
     color: 'color',

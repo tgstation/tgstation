@@ -49,20 +49,13 @@
 /// Returns a list of objects, automatically added to your vis_contents, that apply this effect
 /// QDEL them when appropriate
 /proc/partially_block_emissives(atom/make_blocker, alpha_to_leave)
-	var/static/uid = 0
-	uid++
-	if(!make_blocker.render_target)
-		make_blocker.render_target = "partial_emissive_block_[uid]"
-
 	// First, we cut away a constant amount
 	var/cut_away = (alpha_to_leave - 1) / 255
-	var/atom/movable/render_step/color/alpha_threshold_down = new(null, make_blocker, list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,-cut_away))
-	alpha_threshold_down.render_target = "*emissive_block_alpha_down_[uid]"
+	var/atom/movable/render_step/color/alpha_threshold_down = new(null, make_blocker, FALSE, list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,-cut_away))
 	// Then we multiply what remains by the amount we took away
-	var/atom/movable/render_step/color/alpha_threshold_up = new(null, alpha_threshold_down, list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,alpha_to_leave, 0,0,0,0))
-	alpha_threshold_up.render_target = "*emissive_block_alpha_up_[uid]"
+	var/atom/movable/render_step/color/alpha_threshold_up = new(null, alpha_threshold_down, TRUE, list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,alpha_to_leave, 0,0,0,0))
 	// Now we just feed that into an emissive blocker
-	var/atom/movable/render_step/emissive_blocker/em_block = new(null, alpha_threshold_up)
+	var/atom/movable/render_step/emissive_blocker/em_block = new(null, alpha_threshold_up, TRUE)
 	var/list/hand_back = list()
 	hand_back += alpha_threshold_down
 	hand_back += alpha_threshold_up
