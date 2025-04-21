@@ -513,7 +513,6 @@
 
 /datum/proc/clear_filters()
 	ASSERT(isatom(src) || isimage(src))
-	var/atom/atom_cast = src // filters only work with images or atoms.
 	for(var/name in filter_data)
 		qdel(filter_data[name])
 
