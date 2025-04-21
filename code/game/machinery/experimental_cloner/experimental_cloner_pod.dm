@@ -98,6 +98,7 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 	var/datum/experimental_cloner_fuckup/mistake = get_cloning_mistake()
 
 	var/mob/living/result = create_result_mob()
+	result.mind_initialize()
 	mistake?.apply_to_mob(result)
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', vol = 100)
 

@@ -70,7 +70,7 @@
 	dna.transfer_identity(subject, TRUE)
 
 	for (var/quirk_type as anything in quirks)
-		subject.add_quirk(quirk_type)
+		subject.add_quirk(quirk_type, add_unique = FALSE)
 
 	for (var/trauma_type as anything in brain_traumas)
 		subject.gain_trauma(trauma_type)
