@@ -51,11 +51,11 @@
 /proc/partially_block_emissives(atom/make_blocker, alpha_to_leave)
 	// First, we cut away a constant amount
 	var/cut_away = (alpha_to_leave - 1) / 255
-	var/atom/movable/render_step/color/alpha_threshold_down = new(null, make_blocker, FALSE, list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,-cut_away))
+	var/atom/movable/render_step/color/alpha_threshold_down = new(null, make_blocker, TRUE, list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,-cut_away))
 	// Then we multiply what remains by the amount we took away
-	var/atom/movable/render_step/color/alpha_threshold_up = new(null, alpha_threshold_down, TRUE, list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,alpha_to_leave, 0,0,0,0))
+	var/atom/movable/render_step/color/alpha_threshold_up = new(null, alpha_threshold_down, FALSE, list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,alpha_to_leave, 0,0,0,0))
 	// Now we just feed that into an emissive blocker
-	var/atom/movable/render_step/emissive_blocker/em_block = new(null, alpha_threshold_up, TRUE)
+	var/atom/movable/render_step/emissive_blocker/em_block = new(null, alpha_threshold_up, FALSE)
 	var/list/hand_back = list()
 	hand_back += alpha_threshold_down
 	hand_back += alpha_threshold_up
