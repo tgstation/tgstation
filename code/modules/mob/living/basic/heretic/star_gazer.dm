@@ -149,9 +149,9 @@
 	background_icon_state = "bg_heretic"
 	overlay_icon_state = "bg_heretic_border"
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
-	button_icon_state = "stargazer_menu"
+	button_icon_state = "gazer_beam_charge"
 	check_flags = NONE
-	cooldown_time = 5 SECONDS
+	cooldown_time = 60 SECONDS
 	/// list of turfs we are hitting while shooting our beam
 	var/list/turf/targets
 	/// The laser beam we generate
@@ -207,7 +207,6 @@
 		return
 
 	QDEL_NULL(orb_visual)
-	var/turf/starting_turf = get_step(get_step(owner, owner.dir), owner.dir)
 	beam_visual.icon_state = "gazer_beam_active"
 	beam_visual.update_appearance(UPDATE_ICON)
 	end_visual.icon_state = "gazer_beam_end"
@@ -286,6 +285,8 @@
 
 /// Recursive proc which affects whatever is caught within the beam
 /datum/action/cooldown/stargazer_laser/proc/process_beam()
+	if(cycle_tracker > 33)
+		stop_beaming()
 	for(var/turf/target as anything in targets)
 		if(iswallturf(target))
 			var/turf/closed/wall/wall_target = target
@@ -309,7 +310,8 @@
 					living_victim.dust()
 				living_victim.emote("scream")
 				living_victim.apply_status_effect(/datum/status_effect/star_mark)
-				living_victim.apply_damage(damage = 10, damagetype = BURN)
+				living_victim.apply_damage(damage = 30, damagetype = BURN)
+	cycle_tracker++
 	damage_timer = addtimer(CALLBACK(src, PROC_REF(process_beam)), 0.3 SECONDS, TIMER_STOPPABLE)
 
 /// Stops the beam after we cancel it

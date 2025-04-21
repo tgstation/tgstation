@@ -53,7 +53,8 @@
 
 /datum/heretic_knowledge/spell/ash_passage
 	name = "Ashen Passage"
-	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality, allowing you to escape restraints and traverse a short distance, passing though any walls."
+	desc = "Grants you Ashen Passage, a spell that lets you phase out of reality, allowing you to escape restraints and traverse a short distance, passing though any walls. \
+			When empowered, it will break you out of any stuns."
 	gain_text = "He knew how to walk between the planes."
 
 	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
@@ -63,13 +64,20 @@
 	name = "Volcano Blast"
 	desc = "Grants you Volcano Blast, a spell that - after a short charge - fires off a beam of energy \
 		at a nearby enemy, setting them on fire and burning them. If they do not extinguish themselves, \
-		the beam will continue to another target."
+		the beam will continue to another target. \
+		When empowered, has instant cast time and blasts enemies with more flames."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
 	action_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
 	cost = 1
 	research_tree_icon_frame = 7
 
 /datum/heretic_knowledge/armor/ash
+	desc = "Allows you to transmute a table, a mask and a match to create a scorched mantle. \
+		It provides completes protection from fire, and is able to produce more flames passively. \
+		When you have enough fire, you may cast empowered versions of your ashen spells. \
+		Acts as a focus while hooded."
+	gain_text = "The Watch remain as they fell, crumbling away from sight. \
+			Yet the winds blowing through the city call them back to service, dust kicked into the air, a drifting silhouette of the fallen."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash)
 	research_tree_icon_state = "ash_armor"
 	required_atoms = list(

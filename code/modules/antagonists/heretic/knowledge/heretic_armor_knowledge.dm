@@ -20,15 +20,3 @@
 	. = ..()
 	var/datum/status_effect/heretic_passive/our_passive = user.has_status_effect(/datum/status_effect/heretic_passive)
 	our_passive?.heretic_level_upgrade()
-
-
-
-
-
-
-
-
-
-
-
-

@@ -369,6 +369,7 @@
 #include "code\__DEFINES\dcs\signals\signals_spatial_grid.dm"
 #include "code\__DEFINES\dcs\signals\signals_species.dm"
 #include "code\__DEFINES\dcs\signals\signals_spell.dm"
+#include "code\__DEFINES\dcs\signals\signals_status_effect.dm"
 #include "code\__DEFINES\dcs\signals\signals_storage.dm"
 #include "code\__DEFINES\dcs\signals\signals_subsystem.dm"
 #include "code\__DEFINES\dcs\signals\signals_swab.dm"

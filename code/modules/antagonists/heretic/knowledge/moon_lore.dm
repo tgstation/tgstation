@@ -66,6 +66,11 @@
 	cost = 1
 
 /datum/heretic_knowledge/armor/moon
+	desc = "Allows you to transmute a table, a mask and two sheets of iron to create a Resplendant Regalia. \
+			Acts as a focus while hooded."
+	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
+				The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
+				I observed, basking in the light, to find my self."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon)
 	research_tree_icon_state = "moon_armor"
 	required_atoms = list(

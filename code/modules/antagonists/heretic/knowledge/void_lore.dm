@@ -60,6 +60,12 @@
 	cost = 1
 
 /datum/heretic_knowledge/armor/void
+	desc = "Allows you to transmute a table and a mask in sub-zero temperatures to create a Hollow Weave. \
+			Acts as a focus while hooded."
+	gain_text = "Stepping through the cold air, I am shocked by a new sensation. \
+				Thousands of almost imperceivable threads cling to my form. \
+				I am left adrift with every step. \
+				Even as I hear the crunch of snow as I plant my foot to the ground, I feel nothing."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/void)
 	research_tree_icon_state = "void_armor"
 	required_atoms = list(

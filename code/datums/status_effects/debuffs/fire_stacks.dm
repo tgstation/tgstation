@@ -170,6 +170,7 @@
 
 	var/decay_multiplier = HAS_TRAIT(owner, TRAIT_HUSK) ? 2 : 1 // husks decay twice as fast
 	adjust_stacks(owner.fire_stack_decay_rate * decay_multiplier * seconds_between_ticks)
+	SEND_SIGNAL(owner, COMSIG_FIRE_STACKS_UPDATED, stacks)
 
 	if(stacks <= 0)
 		qdel(src)
