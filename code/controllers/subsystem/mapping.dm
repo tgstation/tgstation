@@ -117,6 +117,11 @@ SUBSYSTEM_DEF(mapping)
 	plane_offset_blacklist["[FLOAT_PLANE]"] = TRUE
 	critical_planes = list()
 	create_plane_offsets(0, 0)
+	var/obj/starlight_appearance/object = starlight_object(0)
+	var/mutable_appearance/glow = starlight_overlay(0)
+	object.relay_render_to(glow, FALSE)
+	GLOB.starlight_objects += object
+	GLOB.starlight_overlays += glow
 	initialize_biomes()
 	loadWorld()
 	determine_fake_sale()
@@ -785,7 +790,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	if(max_plane_offset == old_max)
 		return
 
-	generate_offset_lists(old_max + 1, max_plane_offset)
+	generate_offset_lists(old_max, max_plane_offset)
 	SEND_SIGNAL(src, COMSIG_PLANE_OFFSET_INCREASE, old_max, max_plane_offset)
 	// Sanity check
 	if(max_plane_offset > MAX_EXPECTED_Z_DEPTH)
@@ -796,8 +801,11 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 /datum/controller/subsystem/mapping/proc/generate_offset_lists(gen_from, new_offset)
 	create_plane_offsets(gen_from, new_offset)
 	for(var/offset in gen_from to new_offset)
-		GLOB.starlight_objects += starlight_object(offset)
-		GLOB.starlight_overlays += starlight_overlay(offset)
+		var/obj/starlight_appearance/object = starlight_object(offset)
+		var/mutable_appearance/glow = starlight_overlay(offset)
+		object.relay_render_to(glow, FALSE)
+		GLOB.starlight_objects += object
+		GLOB.starlight_overlays += glow
 
 	for(var/datum/gas/gas_type as anything in GLOB.meta_gas_info)
 		var/list/gas_info = GLOB.meta_gas_info[gas_type]
