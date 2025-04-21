@@ -50,10 +50,6 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	ADD_TRAIT(src, TRAIT_LIGHTING_DEBUGGED, LIGHT_DEBUG_TRAIT)
 	GLOB.light_debugged_atoms += WEAKREF(src)
 	add_filter("debug_light", 0, outline_filter(2, COLOR_CENTCOM_BLUE))
-	var/static/uid = 0
-	if(!render_target)
-		render_target = "light_debug_[uid]"
-		uid++
 	var/atom/movable/render_step/color/above_light = new(null, src, "#ffffff23")
 	SET_PLANE_EXPLICIT(above_light, ABOVE_LIGHTING_PLANE, src)
 	add_overlay(above_light)

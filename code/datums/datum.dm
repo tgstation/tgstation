@@ -310,7 +310,7 @@
 	var/datum/owner
 	///Filter priority used when sorting the filter
 	var/priority
-
+	///if we want to draw the original image too (* render source)
 	var/draw_original
 	///Assoc List of actual arglist arguments to pass to filter()
 	var/list/arguments
@@ -515,6 +515,12 @@
 	ASSERT(isatom(src) || isimage(src))
 	for(var/name in filter_data)
 		qdel(filter_data[name])
+
+/image/Destroy(force)
+	//doesnt inherit from atom destroy so we want to do it here. dont do it on /datum cus overhead
+	if(length(filter_data))
+		clear_filters()
+	return ..()
 
 /// Calls qdel on itself, because signals dont allow callbacks
 /datum/proc/selfdelete()
