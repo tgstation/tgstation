@@ -614,3 +614,33 @@
   necromanceranne:
   - bugfix: Objects crafted from lavaland fauna materials (bone, sinew, hide) are
       now fireproof and lavaproof. And also reinforced fishing lines.
+2025-04-21:
+  FlufflesTheDog:
+  - bugfix: Passive modsuit modules (radiation protection, welding protection, etc)
+      should work reliably again.
+  - bugfix: Shuttle atmos volumes should no longer become negative
+  - bugfix: Shuttle atmos devices will no longer make illegal connections during rotations
+  Iajret:
+  - bugfix: Fixed some more missing scrollbars in well everything that is left. Probably.
+      I haven't looked that thoroughly.
+  - bugfix: Experiment little question mark tooltip now occupies a single line instead
+      of two
+  JohnFulpWillard:
+  - bugfix: Drawing narsie rune will now always put it where you drew the rune from.
+  Kapu1178, Cirrial:
+  - bugfix: The server-configurable shuttle call when enough of the station dies will
+      now actually call the shuttle.
+  LT3:
+  - bugfix: Severe anxiety can be cured by drinking any type of alcohol
+  Melbert:
+  - rscadd: Tourist bots track in dirt occasionally
+  SyncIt21:
+  - bugfix: medical toolboxes have their storage adjusted correctly
+  - bugfix: surgery and tactical medkits no longer hold different items depending
+      on whether a premium tactical medkit was spawned first
+  - code_imp: storage initialization is slightly faster due to some file organizations
+  Twaticus:
+  - rscadd: Adds a crafters toolbox storing chisels and pipecleaners. Artistic toolbox
+      now stores various painting supplies instead.
+  jlsnow301:
+  - bugfix: Fixed more bugs in tgui-say. Admin chat shouldn't be cut off any more.

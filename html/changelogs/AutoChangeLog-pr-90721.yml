@@ -1,5 +1,0 @@
-author: "FlufflesTheDog"
-delete-after: True
-changes:
-  - bugfix: "Shuttle atmos volumes should no longer become negative"
-  - bugfix: "Shuttle atmos devices will no longer make illegal connections during rotations"

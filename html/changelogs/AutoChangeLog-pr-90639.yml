@@ -1,4 +1,0 @@
-author: "Twaticus"
-delete-after: True
-changes:
-  - rscadd: "Adds a crafters toolbox storing chisels and pipecleaners. Artistic toolbox now stores various painting supplies instead."
