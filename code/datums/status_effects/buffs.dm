@@ -353,7 +353,7 @@
 	if(owner.can_hear())
 		owner.adjust_dizzy(-4 SECONDS)
 		owner.adjust_jitter(-4 SECONDS)
-		owner.adjust_confusion(-1.5 * seconds_between_ticks)
+		owner.adjust_confusion(-3 * seconds_between_ticks)
 		owner.add_mood_event("goodmusic", /datum/mood_event/goodmusic)
 
 /atom/movable/screen/alert/status_effect/regenerative_core
