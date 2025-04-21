@@ -284,9 +284,7 @@
 	underlay_appearance.icon = 'icons/turf/space.dmi'
 	underlay_appearance.icon_state = "space"
 	SET_PLANE(underlay_appearance, PLANE_SPACE, generate_for)
-	if(!generate_for.render_target)
-		generate_for.render_target = ref(generate_for)
-	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for)
+	var/atom/movable/render_step/emissive_blocker/em_block = new(null, generate_for, TRUE)
 	underlay_appearance.overlays += em_block
 	// We used it because it's convienient and easy, but it's gotta go now or it'll hang refs
 	QDEL_NULL(em_block)
