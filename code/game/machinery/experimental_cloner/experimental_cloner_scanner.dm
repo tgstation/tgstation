@@ -65,10 +65,11 @@
 /obj/machinery/experimental_cloner_scanner/proc/on_scan_stopped()
 	update_use_power(NO_POWER_USE)
 	scanning = FALSE
+	if (locked)
+		playsound(src, 'sound/machines/closet/closet_unlock.ogg', vol = 100)
 	locked = FALSE
 	soundloop.stop()
 	deltimer(scan_timer)
-	open_machine()
 
 /obj/machinery/experimental_cloner_scanner/power_change()
 	. = ..()

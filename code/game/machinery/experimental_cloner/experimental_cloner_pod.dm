@@ -12,8 +12,8 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 	circuit = /obj/item/circuitboard/machine/experimental_cloner
 	use_power = NO_POWER_USE
 	processing_flags = START_PROCESSING_MANUALLY
-	/// Can this produce evil clones?
-	var/can_make_evil = TRUE
+	/// How likely are we to produce evil clones?
+	var/evil_chance = 2
 	/// Are we cooking?
 	var/running = FALSE
 	/// Are we waiting for candidates?
@@ -129,7 +129,7 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 
 	UnregisterSignal(result, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	result.forceMove(drop_location())
-	if (can_make_evil && prob(100))
+	if (prob(evil_chance))
 		message_admins("[ADMIN_LOOKUPFLW(result)] has become an evil clone tasked to kill everyone else called '[result.real_name]'.")
 		result.mind?.add_antag_datum(/datum/antagonist/evil_clone)
 

@@ -11,7 +11,7 @@
 
 /datum/antagonist/evil_clone/on_gain()
 	if (owner.current)
-		name = owner.current.real_name
+		name = "[owner.current.real_name] Prime"
 	forge_objectives()
 	return ..()
 
@@ -19,24 +19,34 @@
 	if(silent)
 		return
 	play_stinger()
-	to_chat(owner.current, span_big("You are [src]."))
-	to_chat(owner.current, span_hypnophrase("You are the <b>only</b> [src]."))
-	to_chat(owner.current, span_boldwarning("Anyone else pretending to be [src] must be punished."))
+	var/mob/living/current_mob = owner.current
+	if (current_mob)
+		to_chat(current_mob, span_big("You are [current_mob.real_name]."))
+		to_chat(current_mob, span_hypnophrase("You are the <b>only</b> [current_mob.real_name]."))
+		to_chat(current_mob, span_boldwarning("Anyone else pretending to be [current_mob.real_name] must be punished."))
 	owner.announce_objectives()
 
 /datum/antagonist/evil_clone/forge_objectives()
 	var/datum/objective/accept_no_substitutes/objective = new
 	objective.owner = owner
+	objective.set_target_name(owner.current?.real_name)
 	objectives += objective
 
 /// Kill everyone with the same name as you
 /datum/objective/accept_no_substitutes
 	name = "kill all clones"
-	explanation_text = "Ensure that you are the only remaining person with your name."
+	explanation_text = "Ensure that nobody with a particular name that you don't remember remains alive."
+	/// What name do we want to expunge?
+	var/target_name
+
+/// Set the name to check for
+/datum/objective/accept_no_substitutes/proc/set_target_name(new_name)
+	target_name = new_name
+	explanation_text = "Ensure that nobody with the name [target_name] remains alive."
 
 /datum/objective/accept_no_substitutes/check_completion()
-	if (!owner.current)
-		return FALSE
+	if (!target_name)
+		return FALSE // Well we forgot to check for a name
 
 	for (var/mob/living/someone as anything in GLOB.player_list) // We will generously not include people who logged out or ghosted
 		if (!istype(someone))
@@ -45,7 +55,7 @@
 			continue
 		if (someone == owner.current)
 			continue
-		if (someone.real_name == owner.current.real_name)
+		if (someone.real_name == target_name)
 			return FALSE
 
 	return TRUE
