@@ -1,4 +1,4 @@
-#define ATOM_IS_RENDERING_ORIGINAL(atom) (atom.render_target && atom.render_target[1] == "*")
+#define ATOM_IS_RENDERING_ORIGINAL(atom) (atom.render_target && atom.render_target[1] != "*")
 
 /*!
  * Okay so basically, you're looking at managed render_targets and render_sources

@@ -12,10 +12,6 @@
 	var/clickthrough
 	///Is the seethrough effect currently active
 	var/is_active
-	///The mob's original render_target value
-	var/initial_render_target_value
-	///This component's personal uid
-	var/personal_uid
 
 /datum/component/seethrough_mob/Initialize(target_alpha = 100, animation_time = 0.5 SECONDS, clickthrough = TRUE)
 	. = ..()
@@ -29,15 +25,10 @@
 	src.is_active = FALSE
 	src.render_source_atom = new()
 
-	var/static/uid = 0
-	uid++
-	src.personal_uid = uid
 
 	render_source_atom.appearance_flags |= KEEP_APART
 
 	render_source_atom.vis_flags |= (VIS_INHERIT_ID|VIS_INHERIT_PLANE|VIS_INHERIT_LAYER)
-
-	render_source_atom.render_source = "*transparent_bigmob[personal_uid]"
 
 	var/datum/action/cooldown/toggle_seethrough/action = new(src)
 	action.Grant(parent)
@@ -57,9 +48,8 @@
 
 	render_source_atom.name = "seethrough" //So our name is not just "movable" when looking at VVs
 
-	initial_render_target_value = fool.render_target
-	fool.render_target = "*transparent_bigmob[personal_uid]"
-	fool.vis_contents.Add(render_source_atom)
+	fool.relay_render_to(render_source_atom, FALSE)
+	fool.vis_contents += render_source_atom
 
 	trickery_image = new(render_source_atom)
 	trickery_image.loc = render_source_atom
@@ -91,7 +81,7 @@
 /datum/component/seethrough_mob/proc/clear_image(image/removee, client/remove_from)
 	var/atom/movable/atom_parent = parent
 	atom_parent.vis_contents -= render_source_atom
-	atom_parent.render_target = initial_render_target_value
+	atom_parent.stop_render_to(render_source_atom)
 	remove_from?.images -= removee
 
 ///Effect is disabled when they log out because client gets deleted

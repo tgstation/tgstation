@@ -307,23 +307,17 @@
 
 
 /datum/filter_data
+	var/datum/owner
 	///Filter priority used when sorting the filter
 	var/priority
 
 	var/draw_original
 	///Assoc List of actual arglist arguments to pass to filter()
 	var/list/arguments
-	/**
-	 * Reference to the filter
-	 * Keep in mind, dm_filter is snowflake cus lummy loves us
-	 * So it runtimes if you access vars on it that it isnt using
-	 * oh also type isnt actually the type, its the string of the filter type
-	 * Just use the fuckin arguments var man
-	 */
-	var/dm_filter/filter
 
-/datum/filter_data/New(priority, list/params, draw_original)
+/datum/filter_data/New(datum/owner, priority, list/params, draw_original)
 	. = ..()
+	src.owner = owner
 	src.priority = priority
 	src.draw_original = draw_original
 	arguments = params
@@ -331,11 +325,14 @@
 	if(renderer)
 		renderer.relay_render_to(src, draw_original)
 
+/datum/filter_data/Destroy(force, ...)
+	owner = null
+	return ..()
+
 ///Called when the sources render_target is updated to sync our filters' render_target
 /datum/filter_data/proc/update_render_source()
-	//this is only called by managed render source code so assume render_source is accessible
-	filter?.render_source = rendering_from?.provider.render_target
 	arguments["render_source"] = rendering_from?.provider.render_target
+	owner.update_filters()
 
 /datum/filter_data/proc/set_render_from(datum/render_relay/new_relay)
 	rendering_from = new_relay
@@ -369,7 +366,7 @@
 	if(filter_data[name])
 		qdel(filter_data[name])
 	var/list/copied_parameters = params.Copy()
-	var/datum/filter_data/data = new(priority, copied_parameters, render_source_keep_original)
+	var/datum/filter_data/data = new(src, priority, copied_parameters, render_source_keep_original)
 	filter_data[name] = data
 	if(update_filters)
 		update_filters()
@@ -391,7 +388,6 @@
 	for(var/filter_raw in filter_data)
 		var/datum/filter_data/data = filter_data[filter_raw]
 		var/dm_filter/newfilter = filter(arglist(data.arguments.Copy()))
-		data.filter = newfilter
 		atom_cast.filters += newfilter
 
 /obj/item/update_filters()
@@ -485,8 +481,8 @@
 /datum/proc/get_filter(name)
 	ASSERT(isatom(src) || isimage(src))
 	if(filter_data && filter_data[name])
-		var/datum/filter_data/data = filter_data[name]
-		return data.filter
+		var/atom/atom_cast = src // filters only work with images or atoms.
+		return atom_cast.filters[filter_data.Find(name)]
 
 ///returns the filter data datum associated with this
 /datum/proc/get_filter_data(name)
