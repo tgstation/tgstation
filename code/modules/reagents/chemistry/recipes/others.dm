@@ -734,9 +734,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL
 
 /datum/chemical_reaction/plastic_polymers/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/sheet/plastic(location)
+	new /obj/item/stack/sheet/plastic(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/pax
 	results = list(/datum/reagent/pax = 3)
