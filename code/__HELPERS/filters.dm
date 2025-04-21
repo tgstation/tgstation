@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	if(!isnull(space))
 		.["space"] = space
 
-/proc/displacement_map_filter(icon, render_source, x, y, size = ICON_SIZE_ALL)
+/proc/displacement_map_filter(icon, atom/render_source, x, y, size = ICON_SIZE_ALL)
 	. = list("type" = "displace")
 	if(!isnull(icon))
 		.["icon"] = icon
@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	if(!isnull(size))
 		.["size"] = size
 
-/proc/layering_filter(icon, render_source, x, y, flags, color, transform, blend_mode)
+/proc/layering_filter(icon, atom/render_source, x, y, flags, color, transform, blend_mode)
 	. = list("type" = "layer")
 	if(!isnull(icon))
 		.["icon"] = icon
