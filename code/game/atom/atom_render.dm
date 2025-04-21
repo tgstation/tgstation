@@ -149,14 +149,14 @@
 
 	var/atom/atom_cast = src
 	LAZYREMOVE(rendering_to, relay)
-	if(isatom(relay.target))
-		var/atom/atom_target = relay.target
-		atom_target.render_source = null
-		atom_target.rendering_from = null
-	else
+	if(isfilterdata(relay.target))
 		var/datum/filter_data/data = relay.target
 		data.set_render_from(null)
 		data.update_render_source()
+	else
+		var/atom/atom_target = relay.target
+		atom_target.render_source = null
+		atom_target.rendering_from = null
 	qdel(relay)
 	if(!LAZYLEN(rendering_to))
 		atom_cast.render_target = null
