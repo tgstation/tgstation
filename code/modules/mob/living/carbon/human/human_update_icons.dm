@@ -222,10 +222,8 @@ There are several things that need to be remembered:
 				alpha_filter_target = new(null)
 			alpha_filter_target.icon = 'icons/effects/effects.dmi'
 			alpha_filter_target.icon_state = "missing[!has_left_hand(check_disabled = FALSE) ? "l" : "r"]"
-			alpha_filter_target.render_target = "*MissGlove [REF(src)] [!has_left_hand(check_disabled = FALSE) ? "L" : "R"]"
+			gloves_overlay.add_filter("glovecutter", 1, alpha_mask_filter(0, feature_y_offset, render_source = alpha_filter_target, flags=MASK_INVERSE))
 			gloves_overlay.add_overlay(alpha_filter_target)
-			gloves_overlay.filters += filter(type="alpha", render_source=alpha_filter_target.render_target, y=feature_y_offset, flags=MASK_INVERSE)
-
 		overlays_standing[GLOVES_LAYER] = gloves_overlay
 	apply_overlay(GLOVES_LAYER)
 
