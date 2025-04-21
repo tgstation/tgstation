@@ -104,7 +104,7 @@
 	if(!atom_cast.render_target)
 		var/new_target = ""
 		if(!draw_original)
-			new_target += "*"
+			new_target = "*"
 
 		var/static/uuid = 0
 		uuid++
