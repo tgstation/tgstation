@@ -27,7 +27,7 @@
 		if(2)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_warning("You feel dizzy."))
-				affected_mob.adjust_confusion(13 * seconds_per_tick)
+				affected_mob.adjust_confusion(25)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_notice("You look at your hand. Your vision blurs."))
 				affected_mob.set_eye_blur_if_lower(10 SECONDS)

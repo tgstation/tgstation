@@ -173,8 +173,8 @@
 			// method of healing them, consequence free, to a reasonable amount of health.
 			victim.reagents.add_reagent(/datum/reagent/medicine/omnizine, amount = 20)
 			victim.flash_act()
-			victim.adjust_confusion(3)
-			victim.adjust_eye_blur(5 SECONDS)
+			victim.adjust_confusion(25)
+			victim.adjust_eye_blur(25)
 			to_chat(victim, span_warning("You feel strange..."))
 			time_until_next = 6 SECONDS
 		if(VICTIM_EXPERIENCE_FIRST_HIT)
@@ -184,7 +184,7 @@
 		if(VICTIM_EXPERIENCE_SECOND_HIT)
 			to_chat(victim, span_warning("Your head pounds... It feels like it's going to burst out your skull!"))
 			victim.flash_act()
-			victim.adjust_confusion(6)
+			victim.adjust_confusion(45)
 			victim.adjust_eye_blur(3 SECONDS)
 			time_until_next = 3 SECONDS
 		if(VICTIM_EXPERIENCE_THIRD_HIT)
@@ -198,7 +198,7 @@
 				so it's only a matter of time before we ship you back...\"</i>"))
 			victim.adjust_eye_blur(10 SECONDS)
 			victim.adjust_dizzy(1.5 SECONDS)
-			victim.adjust_confusion(6)
+			victim.adjust_confusion(30)
 
 	level++ //move onto the next level.
 	if(time_until_next)
@@ -253,4 +253,4 @@
 	victim.flash_act()
 	victim.adjust_eye_blur(3 SECONDS)
 	victim.adjust_dizzy(3.5 SECONDS)
-	victim.adjust_confusion(6)
+	victim.adjust_confusion(35)

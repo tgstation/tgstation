@@ -54,7 +54,7 @@
 				affected_mob.AdjustSleeping(10 SECONDS)
 			if(SPT_PROB(1, seconds_per_tick))
 				to_chat(affected_mob, span_userdanger("You feel your mind relax and your thoughts drift!"))
-				affected_mob.adjust_confusion(20 * seconds_per_tick)
+				affected_mob.adjust_confusion(40)
 			if(SPT_PROB(5, seconds_per_tick))
 				affected_mob.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 20)
 			if(SPT_PROB(1.5, seconds_per_tick))

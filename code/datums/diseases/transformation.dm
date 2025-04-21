@@ -141,7 +141,7 @@
 		if(3)
 			if(SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
-				affected_mob.adjust_confusion(13 * seconds_per_tick)
+				affected_mob.adjust_confusion(25)
 		if(4)
 			if(SPT_PROB(1.5, seconds_per_tick))
 				affected_mob.say(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
