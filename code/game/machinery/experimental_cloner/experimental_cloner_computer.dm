@@ -13,13 +13,21 @@
 	var/obj/machinery/experimental_cloner_scanner/input
 	/// Pod we print someone into
 	var/obj/machinery/experimental_cloner/output
+	/// Whether we should automatically try to connect to nearby machines
+	var/find_connections = FALSE
 
 /obj/machinery/computer/experimental_cloner/Initialize(mapload, obj/item/circuitboard/circuit)
 	. = ..()
-	if (!mapload)
-		return
+	find_connections = mapload
 
-	var/list/stuff_in_range = view(7, src)
+/obj/machinery/computer/experimental_cloner/post_machine_initialize()
+	. = ..()
+	if (find_connections)
+		connect_nearby_machines()
+
+/// Find nearby associated machinery and link up
+/obj/machinery/computer/experimental_cloner/proc/connect_nearby_machines()
+	var/list/stuff_in_range = range(5, src)
 
 	var/obj/machinery/experimental_cloner_scanner/scanner = locate() in stuff_in_range
 	if (!isnull(scanner))

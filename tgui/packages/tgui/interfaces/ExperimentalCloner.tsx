@@ -109,7 +109,7 @@ export const ExperimentalCloner = (props: any) => {
                       </Stack.Item>
                       <Stack.Item>
                         <ProgressBar
-                          value={cloning_progress}
+                          value={cloning_progress ?? 0}
                           minValue={0}
                           maxValue={100}
                           color="good"
