@@ -346,6 +346,7 @@
 
 	if (boom?.len == 4)
 		boom.len += 1
+	if (!isnull(boom) && (boom[1] + boom[2] + boom[3] + boom[4] + boom[5])) // spawn explosion only if there is actual explosion range
 		explosion(turf_underneath, boom[1], boom[2], boom[3], flame_range = boom[4], flash_range = boom[5], silent = effectQuiet, ignorecap = istype(src, /obj/structure/closet/supplypod/centcompod), explosion_cause = src)
 	else if (!effectQuiet && !(pod_flags & FIRST_SOUNDS)) //If our explosion list IS all zeroes, we still make a nice explosion sound (unless the effectQuiet var is true)
 		playsound(src, SFX_EXPLOSION, landingSound ? soundVolume * 0.25 : soundVolume, TRUE)
