@@ -110,6 +110,15 @@ SUBSYSTEM_DEF(statpanels)
 		if(MC_TICK_CHECK)
 			return
 
+/*
+ * send_message for the stat panel can be sent 1 of 4 things:
+ * 1- A string entry, to show up as plain text.
+ * 2- An empty string (""), which will translate to a new line, to for a break between lines.
+ * 3- a list, in which the first entry is plain text, the second entry is highlighted text, and the third entry is a link
+ * that clicking the second entry will take you to.
+ * 4- a list with "same_line" as the first entry, which will automatically put it on the line above it,
+ * with the second/third entry matching #3 (text & url), allowing you to have 2 clickable links on one line.
+ */
 /datum/controller/subsystem/statpanels/proc/set_status_tab(client/target)
 	if(!global_data)//statbrowser hasnt fired yet and we were called from immediate_send_stat_data()
 		return
