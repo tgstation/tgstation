@@ -21,7 +21,7 @@
 	/// How long does breaking out take?
 	var/breakout_time = 3 SECONDS
 	/// Sound to play while scanning
-	var/datum/looping_sound/oven/soundloop
+	var/datum/looping_sound/microwave/soundloop
 	/// Timer storing our scanning progress
 	var/scan_timer
 	/// Time to wait between telling people they can't get out
@@ -37,8 +37,7 @@
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', vol = 100)
 		return FALSE
 
-	if (prob(80))
-		SSradiation.irradiate(occupant)
+	SSradiation.irradiate(occupant)
 	scanning = TRUE
 	locked = TRUE
 	update_use_power(ACTIVE_POWER_USE)
@@ -54,7 +53,6 @@
 	var/datum/experimental_cloning_record/new_record = new()
 	new_record.create_profile(occupant)
 	SEND_SIGNAL(src, COMSIG_CLONER_SCAN_SUCCESSFUL, new_record)
-	playsound(src, 'sound/machines/microwave/microwave-end.ogg', vol = 100)
 
 	on_scan_stopped()
 
@@ -159,4 +157,9 @@
 		return ITEM_INTERACT_BLOCKING
 	deconstruct(disassembled = TRUE)
 	to_chat(user, span_notice("You slice \the [src] apart."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/experimental_cloner_scanner/multitool_act(mob/living/user, obj/item/multitool/tool)
+	tool.set_buffer(src)
+	balloon_alert(user, "frequency stored")
 	return ITEM_INTERACT_SUCCESS

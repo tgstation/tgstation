@@ -5,10 +5,6 @@
 /datum/experimental_cloner_fuckup
 	/// How likely is it?
 	var/weight
-	/// What do we spawn instead of a human?
-	var/replacement_mob_path
-	/// What do we tell them? If anything
-	var/post_spawn_message
 
 /// Can we actually mutate this thing?
 /datum/experimental_cloner_fuckup/proc/is_valid(species_type)
@@ -20,8 +16,7 @@
 
 /// What do we do after someone has taken over the mob
 /datum/experimental_cloner_fuckup/proc/post_emerged(mob/living/victim)
-	if (post_spawn_message)
-		to_chat(victim, post_spawn_message)
+	return
 
 /// Become cat
 /datum/experimental_cloner_fuckup/felinise
@@ -124,20 +119,23 @@
 /// Return to monkey
 /datum/experimental_cloner_fuckup/monkey
 	weight = CLONER_FAILURE_RARE
-	post_spawn_message = span_boldwarning("As you emerge from the pod, all the hair on your body starts to grow!")
 
 /datum/experimental_cloner_fuckup/monkey/post_emerged(mob/living/carbon/victim)
-	. = ..()
+	victim.visible_message(\
+		span_boldwarning("[victim]'s hair begins to grow rapidly!"),\
+		span_boldwarning("As you emerge from the pod, all the hair on your body starts to grow!"))
 	victim.monkeyize()
 
 /// No skin
 /datum/experimental_cloner_fuckup/skeletised
 	weight = CLONER_FAILURE_RARE
-	post_spawn_message = span_boldwarning("As you emerge from the pod, your skin slithers off onto the ground!")
 
 /datum/experimental_cloner_fuckup/skeletised/post_emerged(mob/living/victim)
-	. = ..()
-	victim.set_species(/datum/species/skeleton) // No spoilers
+	victim.emote("scream")
+	victim.visible_message(\
+		span_boldwarning("[victim]'s flesh slithers off in a disgusting heap!"),\
+		span_boldwarning("As you emerge from the pod, your skin slithers off onto the ground!"))
+	victim.set_species(/datum/species/skeleton)
 	new /obj/effect/gibspawner/human/bodypartless(victim.drop_location())
 
 /// Become a psyker, possibly the worst fate on this list
@@ -150,15 +148,17 @@
 /// Just fuck me up
 /datum/experimental_cloner_fuckup/total_failure
 	weight = CLONER_FAILURE_RARE
-	replacement_mob_path = /mob/living/basic/fleshblob
-	post_spawn_message = span_boldwarning("As you emerge from the pod, your boneless flesh collapses into a writhing heap!")
 
 /datum/experimental_cloner_fuckup/total_failure/post_emerged(mob/living/victim)
-	. = ..()
-	new /obj/effect/temp_visual/gib_animation(victim.drop_location(), "gibbed-h")
-	new /obj/effect/decal/remains/human(victim.drop_location())
-	new /obj/effect/decal/cleanable/blood(victim.drop_location())
 	victim.emote("scream")
+	victim.visible_message(\
+		span_boldwarning("[victim] collapses bonelessly into a writhing heap of flesh!"),\
+		span_boldwarning("As you emerge from the pod, your boneless flesh collapses into a writhing heap!"))
+	var/mob/living/basic/fleshblob/blob = new(victim.drop_location())
+	blob.name = victim.real_name
+	blob.real_name = victim.real_name
+	victim.mind?.transfer_to(blob, TRUE)
+	victim.gib()
 
 #undef CLONER_FAILURE_COMMON
 #undef CLONER_FAILURE_RARE

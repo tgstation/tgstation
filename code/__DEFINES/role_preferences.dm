@@ -50,6 +50,7 @@
 #define ROLE_BRAINWASHED "Brainwashed Victim"
 #define ROLE_DEATHSQUAD "Deathsquad"
 #define ROLE_DRONE "Drone"
+#define ROLE_EVIL_CLONE "Evil Clone"
 #define ROLE_EMAGGED_BOT "Malfunctioning Bot"
 #define ROLE_HIVE "Hivemind Host" //Role removed, left here for safety.
 #define ROLE_HYPNOTIZED "Hypnotized Victim"

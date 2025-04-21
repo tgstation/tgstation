@@ -12,12 +12,16 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 	circuit = /obj/item/circuitboard/machine/experimental_cloner
 	use_power = NO_POWER_USE
 	processing_flags = START_PROCESSING_MANUALLY
+	/// Can this produce evil clones?
+	var/can_make_evil = TRUE
 	/// Are we cooking?
 	var/running = FALSE
+	/// Are we waiting for candidates?
+	var/awaiting_ghost = FALSE
 	/// Data for mob we're about to produce
 	var/datum/experimental_cloning_record/loaded_record
 	/// Sound to play while cooking
-	var/datum/looping_sound/microwave/sound_loop
+	var/datum/looping_sound/oven/sound_loop
 	/// How long it takes to bake a new man
 	var/cloning_time = 1 MINUTES
 	/// Time until we're done cooking
@@ -58,9 +62,14 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 	to_chat(user, span_notice("You slice \the [src] apart."))
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/experimental_cloner/multitool_act(mob/living/user, obj/item/multitool/tool)
+	tool.set_buffer(src)
+	balloon_alert(user, "frequency stored")
+	return ITEM_INTERACT_SUCCESS
+
 /// Start growing a guy
 /obj/machinery/experimental_cloner/proc/start_cloning(datum/experimental_cloning_record/to_create)
-	if (!to_create)
+	if (!to_create || running)
 		return
 	running = TRUE
 	loaded_record = to_create // We'll need this later
@@ -88,12 +97,13 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 /obj/machinery/experimental_cloner/proc/finish_cloning()
 	var/datum/experimental_cloner_fuckup/mistake = get_cloning_mistake()
 
-	var/mob/living/result = create_result_mob(mistake?.replacement_mob_path)
-	result.forceMove(src)
+	var/mob/living/result = create_result_mob()
 	mistake?.apply_to_mob(result)
+	playsound(src, 'sound/machines/microwave/microwave-end.ogg', vol = 100)
 
 	RegisterSignals(result, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_clone_failed))
 
+	awaiting_ghost = TRUE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		check_jobban = ROLE_RECOVERED_CREW,
 		poll_time = 10 SECONDS,
@@ -104,6 +114,7 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 		announce_chosen = TRUE,
 	)
 
+	awaiting_ghost = FALSE
 	if(QDELETED(result))
 		return // We'll assume the signal will handle ending the cloning process
 	if(isnull(chosen_one))
@@ -118,6 +129,10 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 
 	UnregisterSignal(result, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	result.forceMove(drop_location())
+	if (can_make_evil && prob(100))
+		message_admins("[ADMIN_LOOKUPFLW(result)] has become an evil clone tasked to kill everyone else called '[result.real_name]'.")
+		result.mind?.add_antag_datum(/datum/antagonist/evil_clone)
+
 	mistake?.post_emerged(result)
 	on_finished()
 
@@ -138,12 +153,8 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 	return pick_weight(weighted_types)
 
 /// Return a mob for our tube to produce
-/obj/machinery/experimental_cloner/proc/create_result_mob(mob_type = /mob/living/carbon/human)
-	var/mob/living/carbon/human/new_clone = new mob_type()
-
-	if(!istype(new_clone))
-		return new_clone // Well I guess you're not a human, sorry friend
-
+/obj/machinery/experimental_cloner/proc/create_result_mob()
+	var/mob/living/carbon/human/new_clone = new(src)
 	loaded_record.apply_profile(new_clone)
 
 	if (prob(75))
