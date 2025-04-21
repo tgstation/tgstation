@@ -291,10 +291,11 @@
 /**
  * Skybulge
  *
- * Gives a special ability that allows you to enter the skies
+ * Gives a special ability that allows you to enter the skies an drop down upon a target.
+ * Other than that ability, deals less damage than the average spear.
  */
 /obj/item/spear/skybulge
-	name = "\improper Skybulge"
+	name = "\improper Sky Bulge"
 	desc = "A legendary stick with a very pointy tip. Takes you to the skies!"
 	icon_state = "sky_bulge0"
 	icon_prefix = "sky_bulge"
@@ -308,10 +309,11 @@
 	embed_type = null //no embedding
 	actions_types = list(/datum/action/item_action/skybulge)
 
-
+///The action button the spear gives, usable once a minute.
 /datum/action/item_action/skybulge
-	name = "Skybulge Skyfall"
-	///cooldown time between skyfall uses
+	name = "Dragoon Jump"
+	desc = "Jump up into the skies and fall down upon your opponents to deal double damage."
+	///Cooldown time between jumps.
 	var/skyfall_cooldown_time = 1 MINUTES
 
 /datum/action/item_action/skybulge/do_effect(trigger_flags)
@@ -321,91 +323,63 @@
 	if(!HAS_TRAIT(target, TRAIT_WIELDED))
 		to_chat(owner, span_warning("You must wield [target] in both hands!"))
 		return
-	if(TIMER_COOLDOWN_RUNNING(owner, COOLDOWN_MECHA_SKYFALL))
-		var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(owner, COOLDOWN_MECHA_SKYFALL)
-		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before attempting to Skyfall."))
+	var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(owner, COOLDOWN_SKYBULGE_JUMP)
+	if(timeleft)
+		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before attempting to jump."))
 		return
 
-	owner.balloon_alert(owner, "charging skyfall...")
-	INVOKE_ASYNC(src, PROC_REF(skyfall_charge_loop))
+	owner.balloon_alert(owner, "charging up...")
+	ADD_TRAIT(target, TRAIT_NEEDS_TWO_HANDS, ACTION_TRAIT)
+	INVOKE_ASYNC(src, PROC_REF(jump_up))
 
-
-/**
- * ## skyfall_charge_loop
- *
- * The actual skyfall loop itself. Repeatedly calls itself after a do_after, so any interruptions will call abort_skyfall and end the loop
- * the other way the loop ends is if charge level (var it's ticking up) gets to SKYFALL_CHARGELEVEL_LAUNCH, in which case it ends the loop and does the ability.
- */
-/datum/action/item_action/skybulge/proc/skyfall_charge_loop()
+///Sends the owner up in the air and calls them back down, calling land() for aftereffects.
+/datum/action/item_action/skybulge/proc/jump_up()
 	if(!do_after(owner, 2 SECONDS, target = owner))
-		abort_skyfall()
+		REMOVE_TRAIT(target, TRAIT_NEEDS_TWO_HANDS, ACTION_TRAIT)
 		return
-	S_TIMER_COOLDOWN_START(owner, COOLDOWN_MECHA_SKYFALL, skyfall_cooldown_time)
-	build_all_button_icons()
-	new /obj/effect/skyfall_landingzone(get_turf(owner), owner)
+	playsound(owner, 'sound/effects/footstep/heavy1.ogg', 50, 1)
+	S_TIMER_COOLDOWN_START(owner, COOLDOWN_SKYBULGE_JUMP, skyfall_cooldown_time)
+	new /obj/effect/temp_visual/telegraphing/exclamation/following(get_turf(owner), 2.5 SECONDS, owner)
 
-	ADD_TRAIT(owner, TRAIT_MOVE_PHASING, ACTION_TRAIT)
+	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_attack_during_jump))
+	ADD_TRAIT(target, TRAIT_NODROP, ACTION_TRAIT)
+	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, ACTION_TRAIT)
 	owner.resistance_flags |= INDESTRUCTIBLE //not while jumping at least
 	owner.set_density(FALSE)
 	owner.layer = ABOVE_ALL_MOB_LAYER
 
-	animate(owner, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
-	animate(owner, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising mech (just like pods hehe)
-	addtimer(CALLBACK(src, PROC_REF(begin_landing)), 2 SECONDS)
+	animate(owner, pixel_y = owner.pixel_y + 80, time = (2 SECONDS), easing = CIRCULAR_EASING|EASE_OUT)
+	animate(pixel_y = initial(owner.pixel_y), time = (1 SECONDS), easing = CIRCULAR_EASING|EASE_IN)
 
-/**
- * ## begin_landing
- *
- * Called by skyfall_charge_loop after some time if it reaches full charge level.
- * it's just the animations of the mecha coming down + another timer for the final landing effect
- */
-/datum/action/item_action/skybulge/proc/begin_landing()
-	animate(owner, pixel_z = 0, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
-	animate(owner, alpha = 255, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
-	addtimer(CALLBACK(src, PROC_REF(land)), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(land)), 3 SECONDS)
 
-/**
- * ## land
- *
- * Called by skyfall_charge_loop after some time if it reaches full charge level.
- * it's just the animations of the mecha coming down + another timer for the final landing effect
- */
+///Called by jump_up, this is the post-jump effects, damaging objects and mobs it lands on.
 /datum/action/item_action/skybulge/proc/land()
 	var/turf/landed_on = get_turf(owner)
-	owner.visible_message(span_danger("[owner] lands from above!"))
 	playsound(owner, 'sound/effects/explosion/explosion1.ogg', 50, 1)
+
+	UnregisterSignal(target, COMSIG_ITEM_ATTACK)
+	target.remove_traits(list(TRAIT_NEEDS_TWO_HANDS, TRAIT_NODROP), ACTION_TRAIT)
+	REMOVE_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, ACTION_TRAIT)
 	owner.resistance_flags &= ~INDESTRUCTIBLE
-	REMOVE_TRAIT(owner, TRAIT_MOVE_PHASING, ACTION_TRAIT)
 	owner.set_density(TRUE)
 	owner.layer = initial(owner.layer)
 	SET_PLANE(owner, initial(owner.plane), landed_on)
 
-	for(var/thing in landed_on)
+	for(var/atom/thing as anything in landed_on)
 		if(thing == owner)
 			continue
-		if(isclosedturf(thing))
-			var/turf/closed/crushed_wall = thing
-			crushed_wall.ScrapeAway()
-			continue
 		if(isobj(thing))
-			var/obj/crushed_object = thing
-			crushed_object.take_damage(150) //same as a hulk punch, makes sense to me
+			thing.take_damage(150)
 			continue
 		if(isliving(thing))
-			var/mob/living/crushed_victim = thing
-			to_chat(crushed_victim, span_userdanger("[owner] crashes down on you from above!"))
-			if(crushed_victim.stat != CONSCIOUS)
-				crushed_victim.investigate_log("has been gibbed by a falling Savannah Ivanov mech.", INVESTIGATE_DEATHS)
-				crushed_victim.gib(DROP_ALL_REMAINS)
-				continue
-			crushed_victim.adjustBruteLoss(80)
+			var/obj/item/skybulge_item = target
+			skybulge_item.force *= 2 //we hit for double damage.
+			skybulge_item.attack(thing, owner)
+			skybulge_item.force /= 2
 
-/**
- * ## abort_skyfall
- *
- * Called by skyfall_charge_loop if the charging is interrupted.
- * Applies cooldown and resets charge level
- */
-/datum/action/item_action/skybulge/proc/abort_skyfall()
-	owner.balloon_alert(owner, "skyfall aborted")
-	S_TIMER_COOLDOWN_START(owner, COOLDOWN_MECHA_MISSILE_STRIKE, skyfall_cooldown_time / 2)
+///Called when the person holding us is trying to attack something mid-jump.
+///You're technically in mid-air, so block any attempts at getting extra hits in.
+/datum/action/item_action/skybulge/proc/on_attack_during_jump(atom/source, mob/living/target_mob, mob/living/user, params)
+	SIGNAL_HANDLER
+	return COMPONENT_CANCEL_ATTACK_CHAIN
