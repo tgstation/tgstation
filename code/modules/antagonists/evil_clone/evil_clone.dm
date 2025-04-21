@@ -63,4 +63,5 @@
 
 /datum/objective/accept_no_substitutes/admin_edit(mob/admin)
 	admin_simple_target_pick(admin)
-	target_name = target.real_name
+	if (target.current)
+		set_target_name(target.current.real_name)
