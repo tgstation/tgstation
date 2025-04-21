@@ -435,8 +435,8 @@
 	animate_eyelids(parent)
 	var/mutable_appearance/left_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
 	var/mutable_appearance/right_eyelid_overlay = mutable_appearance(layer = -BODY_LAYER, offset_spokesman = parent)
-	eyelid_left.relay_render_to(left_eyelid_overlay, use_original = FALSE)
-	eyelid_right.relay_render_to(right_eyelid_overlay, use_original = FALSE)
+	eyelid_left.relay_render_to(left_eyelid_overlay, FALSE)
+	eyelid_right.relay_render_to(right_eyelid_overlay, FALSE)
 	return list(left_eyelid_overlay, right_eyelid_overlay)
 
 /// Animates one eyelid at a time, thanks BYOND and thanks animation chains
