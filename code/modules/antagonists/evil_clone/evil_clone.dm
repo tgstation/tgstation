@@ -36,6 +36,7 @@
 /datum/objective/accept_no_substitutes
 	name = "kill all clones"
 	explanation_text = "Ensure that nobody with a particular name that you don't remember remains alive."
+	admin_grantable = TRUE
 	/// What name do we want to expunge?
 	var/target_name
 
@@ -60,3 +61,6 @@
 
 	return TRUE
 
+/datum/objective/accept_no_substitutes/admin_edit(mob/admin)
+	admin_simple_target_pick(admin)
+	target_name = target.real_name
