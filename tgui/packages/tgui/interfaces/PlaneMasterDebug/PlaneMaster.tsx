@@ -1,29 +1,43 @@
-import { sortBy } from 'common/collections';
 import { Box, Button, Stack } from 'tgui-core/components';
 
 import { Port } from './Port';
 import { Filter, Plane, PlaneConnectorsMap, Relay } from './types';
 
 export type PlaneMasterProps = {
-  x: number;
-  y: number;
   plane: Plane;
   connectionData: PlaneConnectorsMap;
+  act: Function;
 };
 
 export function PlaneMaster(props: PlaneMasterProps) {
-  const { x, y, plane, connectionData } = props;
-  let incoming_connections: (Filter | Relay)[] = [
-    ...sortBy(plane.incoming_relays, (relay: Relay) => relay.source?.plane),
-    ...sortBy(plane.incoming_filters, (filter: Filter) => filter.source?.plane),
-  ];
-  let outgoing_connections: (Filter | Relay)[] = [
-    ...sortBy(plane.outgoing_relays, (relay: Relay) => relay.target?.plane),
-    ...sortBy(plane.outgoing_filters, (filter: Filter) => filter.target?.plane),
-  ];
+  const { plane, connectionData, act } = props;
+  let incoming_connections: (Filter | Relay)[] = plane.incoming_filters
+    .concat(plane.incoming_relays)
+    .filter((x: Filter | Relay) => {
+      return x.source !== undefined;
+    })
+    .sort(
+      (a: Filter | Relay, b: Filter | Relay) =>
+        (a.source as Plane).plane - (b.source as Plane).plane,
+    );
+
+  let outgoing_connections: (Filter | Relay)[] = plane.outgoing_filters
+    .concat(plane.outgoing_relays)
+    .filter((x: Filter | Relay) => {
+      return x.target !== undefined;
+    })
+    .sort(
+      (a: Filter | Relay, b: Filter | Relay) =>
+        (a.target as Plane).plane - (b.target as Plane).plane,
+    );
 
   return (
-    <Box position="absolute" left={`${x}px`} top={`${y}px`} minWidth="150px">
+    <Box
+      position="absolute"
+      left={`${plane.position.x}px`}
+      top={`${plane.position.y}px`}
+      minWidth="150px"
+    >
       <Box
         backgroundColor={plane.force_hidden ? '#191919' : '#000000'}
         py={1}
@@ -37,13 +51,17 @@ export function PlaneMaster(props: PlaneMasterProps) {
             : {}
         }
       >
-        {plane.name}
-        <Button
-          ml={2}
-          icon="pager"
-          tooltip="Inspect and edit this plane"
-          style={{ float: 'right' }}
-        />
+        <Stack>
+          <Stack.Item grow>{plane.name}</Stack.Item>
+          <Stack.Item>
+            <Button
+              icon="pager"
+              compact
+              tooltip="Inspect and edit this plane"
+              onClick={() => act('perform_action')}
+            />
+          </Stack.Item>
+        </Stack>
       </Box>
 
       <Box
@@ -92,7 +110,8 @@ export function PlaneMaster(props: PlaneMasterProps) {
               <Stack.Item align="flex-end">
                 <Button
                   icon="plus"
-                  onClick={() => {}}
+                  compact
+                  onClick={() => act('')}
                   tooltip="Connect to another plane"
                 />
               </Stack.Item>

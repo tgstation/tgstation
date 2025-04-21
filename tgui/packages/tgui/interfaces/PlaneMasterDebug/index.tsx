@@ -13,7 +13,7 @@ import {
   PlaneConnectionsMap,
   PlaneConnectorElement,
   PlaneConnectorsMap,
-  PlaneData,
+  PlaneDebugData,
   PlaneMap,
   PlaneTargetMap,
   Relay,
@@ -112,23 +112,35 @@ function getPlaneHeight(plane: Plane) {
         plane.incoming_filters.length + plane.incoming_relays.length,
         plane.outgoing_filters.length + plane.outgoing_relays.length + 1,
       ) +
-    30
+    15
   );
 }
 
-export type PlaneDebugData = {
-  mob_name: string;
-  mob_ref: string;
-  our_ref: string;
-  tracking_active: boolean;
-  enable_group_view: boolean;
-  our_group: string;
-  present_groups: string[];
-  planes: PlaneData[];
-};
+function getDesiredPlanePosition(
+  plane: Plane,
+  curStack: number,
+  tallestStack: number,
+) {
+  const dependents: Plane[] = (
+    curStack > tallestStack
+      ? plane.outgoing_filters.concat(plane.outgoing_relays)
+      : plane.incoming_filters.concat(plane.incoming_relays)
+  )
+    .map((connection: Filter | Relay) =>
+      curStack > tallestStack ? connection.target : connection.source,
+    )
+    .filter(isDefined);
+
+  const avgY =
+    dependents
+      .map((x) => x.position.y + getPlaneHeight(x) / 2)
+      .reduce((a, b) => a + b, 0) / dependents.length;
+
+  return avgY - getPlaneHeight(plane) / 2;
+}
 
 export function PlaneMasterDebug(props) {
-  const { data } = useBackend<PlaneDebugData>();
+  const { data, act } = useBackend<PlaneDebugData>();
   const { mob_name, planes } = data;
   const connectionDom = useRef<PlaneConnectorsMap>({});
   const [connectionData, setConnectionData] = useState<PlaneConnectionsMap>({});
@@ -253,7 +265,6 @@ export function PlaneMasterDebug(props) {
 
     // We sort stacks based on planes that the plane bundle renders onto
     // and the numerical plane value within the actual bundle
-    let baseX = 0;
     for (const key in planeStacks) {
       let stack: Plane[] = planeStacks[key];
       stack = stack.sort((first, second) => {
@@ -316,9 +327,74 @@ export function PlaneMasterDebug(props) {
       planeStacks[key] = stack;
     }
 
+    let baseX = 0;
     for (const key in planeStacks) {
       const stack: Plane[] = planeStacks[key];
+      for (let i = 0; i < stack.length; i++) {
+        const plane: Plane = stack[i];
+        plane.position.x = baseX;
+      }
 
+      baseX -= widthPerDepth[key] + 150;
+    }
+
+    const stackKeys = Object.keys(planeStacks).sort(
+      (a, b) => Math.abs(+a - tallestStack) - Math.abs(+b - tallestStack),
+    );
+
+    for (let k = 0; k < stackKeys.length; k++) {
+      const key: number = +stackKeys[k];
+      const stack: Plane[] = planeStacks[key];
+
+      let stackHeight = 0;
+      for (let i = 0; i < stack.length; i++) {
+        const plane: Plane = stack[i];
+        const height = getPlaneHeight(plane);
+
+        if (key === tallestStack) {
+          plane.position.y = stackHeight;
+          stackHeight += height;
+          continue;
+        }
+
+        const desiredPos = getDesiredPlanePosition(plane, +key, tallestStack);
+
+        if (i === 0 && desiredPos < stackHeight) {
+          stackHeight = desiredPos;
+        } else if (desiredPos > stackHeight) {
+          let curBottom = desiredPos + height;
+          let pushedPosition = 0;
+
+          if (i < stack.length - 1) {
+            for (let j = i + 1; j < stack.length; j++) {
+              const otherPlane: Plane = stack[j];
+              const otherPos = getDesiredPlanePosition(
+                otherPlane,
+                +key,
+                tallestStack,
+              );
+
+              if (Number.isNaN(otherPos)) {
+                continue;
+              }
+
+              const otherHeight = getPlaneHeight(otherPlane);
+              curBottom += otherHeight;
+              pushedPosition = Math.max(
+                pushedPosition,
+                curBottom - otherPos - otherHeight / 2,
+              );
+            }
+          }
+
+          stackHeight = Math.max(desiredPos - pushedPosition / 2, stackHeight);
+        }
+
+        plane.position.y = stackHeight;
+        stackHeight += height;
+      }
+
+      /*
       let baseY = 0;
       for (let i = 0; i < stack.length; i++) {
         const plane: Plane = stack[i];
@@ -327,7 +403,7 @@ export function PlaneMasterDebug(props) {
         baseY += getPlaneHeight(plane);
       }
 
-      baseX -= widthPerDepth[key] + 150;
+      */
     }
 
     /*
@@ -424,16 +500,15 @@ export function PlaneMasterDebug(props) {
           height="100%"
           backgroundImage={resolveAsset('grid_background.png')}
           imageWidth={900}
-          initialLeft={800}
-          initialTop={-740}
+          initialLeft={500}
+          initialTop={-1050}
         >
           {planes.map((plane) => (
             <PlaneMaster
               key={plane.name}
-              x={planesProcessed[plane.plane].position.x}
-              y={planesProcessed[plane.plane].position.y}
               plane={planesProcessed[plane.plane]}
               connectionData={connectionDom.current}
+              act={act}
             />
           ))}
           <Connections connections={connections} />

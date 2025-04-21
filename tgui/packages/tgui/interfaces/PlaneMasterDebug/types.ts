@@ -1,5 +1,16 @@
 import { Position } from './../common/Connections';
 
+export type PlaneDebugData = {
+  mob_name: string;
+  mob_ref: string;
+  our_ref: string;
+  tracking_active: boolean;
+  enable_group_view: boolean;
+  our_group: string;
+  present_groups: string[];
+  planes: PlaneData[];
+};
+
 export type PlaneData = {
   name: string;
   documentation: string;
