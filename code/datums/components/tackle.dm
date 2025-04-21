@@ -354,7 +354,7 @@
 	// DE-FENSE
 
 	// Drunks are easier to knock off balance
-	var/target_drunkenness = target.get_drunkeness
+	var/target_drunkenness = target.get_drunkeness()
 	if(target_drunkenness > 60)
 		defense_mod -= 3
 	else if(target_drunkenness > 30)
@@ -412,7 +412,7 @@
 
 	// OF-FENSE
 	var/mob/living/carbon/sacker = parent
-	var/sacker_drunkenness = sacker.get_drunkeness
+	var/sacker_drunkenness = sacker.get_drunkeness()
 
 	//Arms contribute a great deal to potential tackling prowess and defense. Better arms = better bonus
 	var/obj/item/bodypart/arm/sacker_arm = sacker.get_active_hand()

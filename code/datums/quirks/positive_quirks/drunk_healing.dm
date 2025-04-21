@@ -11,7 +11,7 @@
 
 /datum/quirk/drunkhealing/process(seconds_per_tick)
 	var/need_mob_update = FALSE
-	switch(quirk_holder.get_drunkeness)
+	switch(quirk_holder.get_drunkeness())
 		if (6 to 40)
 			need_mob_update += quirk_holder.adjustBruteLoss(-0.1 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
 			need_mob_update += quirk_holder.adjustFireLoss(-0.05 * seconds_per_tick, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)

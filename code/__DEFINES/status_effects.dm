@@ -222,4 +222,4 @@ but even with adjust_confusion_linear capping the value might not neccessary for
 #define adjust_drunkeness(strength) adjust_status_effect_strength(/datum/status_effect/inebriated, strength)
 #define adjust_drunkeness_up_to(strength, up_to) adjust_status_effect_strength(/datum/status_effect/inebriated, strength, 0,  up_to)
 #define set_drunkeness(strength) set_status_effect_strength(/datum/status_effect/inebriated, strength)
-#define get_drunkeness get_status_effect_strength(/datum/status_effect/inebriated)
+#define get_drunkeness(...) get_status_effect_strength(/datum/status_effect/inebriated)

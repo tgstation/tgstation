@@ -245,7 +245,7 @@
 	text_modification_file = "slurring_drunk_text.json"
 
 /datum/status_effect/speech/slurring/drunk/handle_message(datum/source, list/message_args)
-	var/current_drunkness = owner.get_drunkeness
+	var/current_drunkness = owner.get_drunkeness()
 	// These numbers are arbitarily picked
 	// Common replacements start at about 20, and maxes out at about 85
 	common_prob = clamp((current_drunkness * 0.8) - 16, 0, 50)
