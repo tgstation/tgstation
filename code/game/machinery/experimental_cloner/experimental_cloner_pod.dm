@@ -126,7 +126,10 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 
 	chosen_one.log_message("took control of experimental clone of [result].", LOG_GAME)
 	result.PossessByPlayer(chosen_one.ckey)
-	to_chat(chosen_one, span_boldnotice(get_policy(ROLE_EXPERIMENTAL_CLONER) || "You are [loaded_record.name]! You aren't quite sure where you are or how you got here, though."))
+	to_chat(chosen_one, span_boldnotice("You are [loaded_record.name]! You aren't quite sure where you are or how you got here, though."))
+	var/policy = get_policy(ROLE_EXPERIMENTAL_CLONER)
+	if (policy)
+		to_chat(chosen_one, span_notice(policy))
 
 	UnregisterSignal(result, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	result.forceMove(drop_location())
