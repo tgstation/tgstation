@@ -180,7 +180,7 @@
 		to_chat(user, span_notice("You finish repairing [interacting_with] with [src]."))
 		return ITEM_INTERACT_SUCCESS
 
-	if(!isobj(interacting_with) || iseffect(interacting_with)))
+	if(!isobj(interacting_with) || iseffect(interacting_with))
 		return NONE
 
 	var/obj/item/object_to_repair = interacting_with
