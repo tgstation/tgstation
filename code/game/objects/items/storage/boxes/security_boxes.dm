@@ -114,6 +114,14 @@
 	for(var/i in 1 to 5)
 		new /obj/item/firing_pin/paywall(src)
 
+/obj/item/storage/box/firingpins/syndicate
+	name = "box of syndicate firing pins"
+	desc = "A box full of special syndicate firing pins which allow only syndicate operatives to use weapons with those firing pins."
+
+/obj/item/storage/box/firingpins/syndicate/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/firing_pin/implant/pindicate(src)
+
 /obj/item/storage/box/lasertagpins
 	name = "box of laser tag firing pins"
 	desc = "A box full of laser tag firing pins, to allow newly-developed firearms to require wearing brightly coloured plastic armor before being able to be used."
@@ -278,3 +286,11 @@
 /obj/item/storage/box/sparklers/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/sparkler(src)
+
+/obj/item/storage/box/evidence
+	name = "evidence bag box"
+	desc = "A box claiming to contain evidence bags."
+
+/obj/item/storage/box/evidence/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/evidencebag(src)

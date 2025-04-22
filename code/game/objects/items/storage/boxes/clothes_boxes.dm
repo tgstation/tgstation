@@ -27,6 +27,18 @@
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/glasses/regular(src)
 
+//it needs to be linked, hence a kit.
+/obj/item/storage/box/rxglasses/spyglasskit
+	name = "spyglass kit"
+	desc = "this box contains <i>cool</i> nerd glasses; with built-in displays to view a linked camera."
+
+/obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
+	var/obj/item/clothing/accessory/spy_bug/newbug = new(src)
+	var/obj/item/clothing/glasses/sunglasses/spy/newglasses = new(src)
+	newbug.linked_glasses = newglasses
+	newglasses.linked_bug = newbug
+	new /obj/item/paper/fluff/nerddocs(src)
+
 /obj/item/storage/box/tape_wizard
 	name = "Tape Wizard - Episode 23"
 	desc = "A box containing the costume used by legendary entertainment icon 'Super Tape Wizard'. It got a little stuck on its way out."
