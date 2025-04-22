@@ -374,9 +374,6 @@
 	if(blood_id)
 		var/blood_percent = round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
 		var/datum/blood_type/blood_type = carbontarget.dna.blood_type
-		if(blood_id != /datum/reagent/blood) // special blood substance
-			var/datum/reagent/real_reagent = GLOB.chemical_reagents_list[blood_id]
-			blood_type = real_reagent?.name || blood_id
 		if(carbontarget.blood_volume <= BLOOD_VOLUME_SAFE && carbontarget.blood_volume > BLOOD_VOLUME_OKAY)
 			render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent]%, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type.name]")]<br>"
 			render_list += "<span class='alert ml-1'>Recommendation: [blood_type.restoration_chem::name] supplements or blood transfusion.</span><br>"
