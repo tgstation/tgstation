@@ -26,6 +26,10 @@
 /obj/item/reagent_containers/hypospray/attack(mob/living/affected_mob, mob/user)
 	inject(affected_mob, user)
 
+///Prevents medipens from being blended to extract their reagents.
+/obj/item/reagent_containers/hypospray/blend_requirements(obj/machinery/reagentgrinder/R)
+	return FALSE
+
 ///Handles all injection checks, injection and logging.
 /obj/item/reagent_containers/hypospray/proc/inject(mob/living/affected_mob, mob/user)
 	if(used_up)
