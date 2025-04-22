@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Duct tape! Right-click objects and cyborgs with duct tape to repair them if they have been damaged! Wrap objects in duct tape to make it completely incapable of embedding! Find them in your nearest Part-Mart or Engi-Vend vending machines today!"
+  - balance: "Part-Mart vending machines now have mousetraps, spare screwdrivers and rifle stocks in their contraband section."
