@@ -66,12 +66,12 @@
 	if (prob(25))
 		icon_state = "drake_headless"
 		desc = "Statue of a lesser drake. Time has not been kind."
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/statue/drake/update_overlays()
 	. = ..()
 	if (icon_state == "drake")
 		. += emissive_appearance(icon, "drake_emissive", src)
-	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/statue/dragonman
 	name = "dragonman statue"
