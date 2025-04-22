@@ -23,14 +23,18 @@
 /// Use this if your decal is one of one, and thus we should not spawn it if it's there already
 /// Returns either the existing cleanable, the one we created, or null if we can't spawn on that turf
 /turf/proc/spawn_unique_cleanable(obj/effect/decal/cleanable/cleanable_type)
-	if (isgroundlessturf(src))
-		return null
 	var/turf/checkturf = src
+	while (isgroundlessturf(checkturf) && GET_TURF_BELOW())
+		var/turf/below = GET_TURF_BELOW(checkturf)
+		if (!below)
+			break
+		checkturf = below
+
 	// There is no need to spam unique cleanables, they don't stack and it just chews cpu
-	var/obj/effect/decal/cleanable/existing = locate(cleanable_type) in src
+	var/obj/effect/decal/cleanable/existing = locate(cleanable_type) in checkturf
 	if(existing)
 		return existing
-	return new cleanable_type(src)
+	return new cleanable_type(checkturf)
 
 /obj/effect/decal/cleanable/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
