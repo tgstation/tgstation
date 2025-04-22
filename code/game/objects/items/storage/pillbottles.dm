@@ -151,10 +151,14 @@
 	spawn_type = /obj/item/reagent_containers/applicator/pill/maintenance
 
 /obj/item/storage/pill_bottle/maintenance_pill/Initialize(mapload)
-	spawn_count = rand(1,7)
+	if(!spawn_count)
+		spawn_count = rand(1,7)
 	. = ..()
 	var/obj/item/reagent_containers/applicator/pill/P = locate() in src
 	name = "bottle of [P.name]s"
+
+/obj/item/storage/pill_bottle/maintenance_pill/full
+	spawn_count = 7
 
 ///////////////////////////////////////// Psychologist inventory pillbottles
 /obj/item/storage/pill_bottle/happinesspsych
