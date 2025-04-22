@@ -5,7 +5,7 @@
   "dependencies": {
     "common": "workspace:*",
     "dateformat": "^5.0.3",
-    "dompurify": "^2.5.7",
+    "dompurify": "^3.2.5",
     "file-extension-icon-js": "^1.1.6",
     "highlight.js": "^11.10.0",
     "jest": "^29.7.0",

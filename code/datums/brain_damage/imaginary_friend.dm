@@ -15,9 +15,8 @@
 /datum/brain_trauma/special/imaginary_friend/on_gain()
 	var/mob/living/M = owner
 	if(M.stat == DEAD || !M.client)
-		qdel(src)
-		return
-	..()
+		return FALSE
+	. = ..()
 	make_friend()
 	get_ghost()
 
