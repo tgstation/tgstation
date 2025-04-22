@@ -503,3 +503,170 @@
       containers such as lockers. The wizard is not directly affected by the reagent,
       but the side effects might still apply. (ie. raining lube, will make the floors
       slippery, which can slip the wizard)
+2025-04-17:
+  00-Steven:
+  - refactor: Refactored polaroid camera item interactions. Please report any issues.
+  - spellcheck: The polaroid camera's description now talks about 'holorecord' disks
+      rather than 'holographic' disks.
+  - qol: Added screentips to the polaroid camera.
+  - qol: If a polaroid camera already has a holorecord disk, inserting a new one swaps
+      the old one out instead of blocking.
+  - qol: Added balloon alerts and sounds to polaroid camera interactions.
+  - bugfix: Polaroid camera can no longer record to holorecord disks outside of it
+      that left it via nonstandard means.
+  - bugfix: Rewind camera actually applies its special picture name.
+  Holoo-1:
+  - bugfix: camera consoles, admin supply pod launcher etc. no longer close game when
+      they are closed
+  Jacquerel:
+  - bugfix: Mothroaches and other small animals will now realise that they're free
+      after being dumped from your backpack and resum their daily activities.
+  Melbert:
+  - bugfix: Mecha cargo holds no longer shove themselves inside themselves when being
+      deleted
+2025-04-18:
+  Ezel:
+  - map: added an pacman to wawastation near science
+  - map: added pacmans to icebox
+  - map: removed some pacmans from metastation
+  FeudeyTF:
+  - qol: Better UI/UX for detective's board
+  Goat:
+  - map: wawa now has curator trophy cases
+  Jacquerel:
+  - rscadd: Occasionally when a Wizard is around, strange things may being falling
+      from the sky.
+  - balance: Most mobs will now hesitate for a moment before attacking rather than
+      instantly hitting anything that enters melee range, to better simulate human
+      behaviour. Please report if this delay seems too short, or too long.
+  - balance: Most mobs which telegraphed their basic attacks on you now will not do
+      that
+  JohnFulpWillard:
+  - qol: Radios/headsets now have a slider to change the volume from radio noises.
+  LT3:
+  - bugfix: Synthflesh patches unhusk corpses as expected
+  - qol: Better information and feedback about de-husking corpses
+  Melbert:
+  - bugfix: You can't fax unfaxable things by putting them in faxable things
+  - rscadd: Cyborgs and the AI have regained understanding of various non-human languages,
+      but only partially (66%).
+  SmArtKar:
+  - qol: Redesigned the loadout UI
+  - balance: Monocles now work as prescription glasses
+  - image: Loadout plushies no longer use mapper previews for their images
+  TiviPlus:
+  - bugfix: fixed a runtime with holo emissive overlays
+  Wallem, Kryson, Viro, Xhorian, Kreks:
+  - image: Updated a whole bunch of signs
+  hry-gh:
+  - qol: you can now reset the adjustable pane splitters in chat settings
+  mcbalaam:
+  - qol: Improved chat messages when controlling a mech as an AI
+2025-04-19:
+  Absolucy:
+  - bugfix: Fixed FOV checks improperly handling diagonal directions.
+  AyIong:
+  - bugfix: Navigating to categories in preferences works again
+  Goat, LePiromano:
+  - qol: Photocopiers now have boards meaning you can build, destroy, and remake them.
+      (If you're a mapper use the prebuilt version to prestock your photocopiers)
+  Holoo-1:
+  - balance: emp flashlight costs 4 -> 2 tc
+  LT3:
+  - bugfix: Fixed opening character preferences menu before subsystem is initialized
+  Maximal08:
+  - bugfix: fixed manipulator throw mode UI
+  Melbert:
+  - rscadd: Human skin suit may trick the health analyzer... sort of
+  - bugfix: Human skin suit no longer gives a useless action
+  SmArtKar:
+  - bugfix: Ash storms do damage again
+  Thunder12345:
+  - rscadd: Added support for modularly loaded shuttles.
+  - rscadd: The Scrapheap Challenge emergency shuttle now comes in randomly generated
+      variants.
+  vinylspiders:
+  - bugfix: shoes with the squeak component will no longer play a squeaking sound
+      when you aren't actually walking (like in a wheelchair for instance)
+2025-04-20:
+  Absolucy:
+  - qol: MODlink scryers now alert the user if they try to call without a charged
+      power cell.
+  Ezel/Improvedname, JohnFulpWillard:
+  - bugfix: Constructs now have their proper factions, so Wizard constructs can't
+      hit Wizard Apprentices.
+  - bugfix: Juggernaut's Gauntlet echo spell now respects factions.
+  Goku:
+  - bugfix: All surgery initiator items can now be used while laying down (bedsheets,
+      cloaks, towels...), and not just surgery drapes (fixes the surgery UI showing
+      as not-interactable).
+  Holoo-1:
+  - admin: supply pod launcher should be more reliable
+  - bugfix: fixed small view, refresh button
+  Jacquerel:
+  - image: Megafauna kill achievement icons now look more like the bosses actually
+      currently do
+  SmArtKar:
+  - bugfix: Fixed AIs being unable to scan ore vents
+  - bugfix: Toolbox bounties should no longer randomly fail
+  jlsnow301:
+  - bugfix: The plant analyzer's progress bars should fill the window again
+  necromanceranne:
+  - bugfix: Objects crafted from lavaland fauna materials (bone, sinew, hide) are
+      now fireproof and lavaproof. And also reinforced fishing lines.
+2025-04-21:
+  FlufflesTheDog:
+  - bugfix: Passive modsuit modules (radiation protection, welding protection, etc)
+      should work reliably again.
+  - bugfix: Shuttle atmos volumes should no longer become negative
+  - bugfix: Shuttle atmos devices will no longer make illegal connections during rotations
+  Iajret:
+  - bugfix: Fixed some more missing scrollbars in well everything that is left. Probably.
+      I haven't looked that thoroughly.
+  - bugfix: Experiment little question mark tooltip now occupies a single line instead
+      of two
+  JohnFulpWillard:
+  - bugfix: Drawing narsie rune will now always put it where you drew the rune from.
+  Kapu1178, Cirrial:
+  - bugfix: The server-configurable shuttle call when enough of the station dies will
+      now actually call the shuttle.
+  LT3:
+  - bugfix: Severe anxiety can be cured by drinking any type of alcohol
+  Melbert:
+  - rscadd: Tourist bots track in dirt occasionally
+  SyncIt21:
+  - bugfix: medical toolboxes have their storage adjusted correctly
+  - bugfix: surgery and tactical medkits no longer hold different items depending
+      on whether a premium tactical medkit was spawned first
+  - code_imp: storage initialization is slightly faster due to some file organizations
+  Twaticus:
+  - rscadd: Adds a crafters toolbox storing chisels and pipecleaners. Artistic toolbox
+      now stores various painting supplies instead.
+  jlsnow301:
+  - bugfix: Fixed more bugs in tgui-say. Admin chat shouldn't be cut off any more.
+2025-04-22:
+  DaCoolBoss:
+  - spellcheck: Removed 5 random wizard names. Added 6 to replace them.
+  EmptyLullaby:
+  - bugfix: The Quartermaster's skirt will no longer let one pixel of wild tail action
+      poke through the front.
+  Jacquerel:
+  - rscadd: The nebulastation pool has been deepened, please keep drunks out of the
+      deep end to prevent drowning.
+  JohnFulpWillard:
+  - config: Removed event time/weight multipliers, now all events vars are editable
+      in config.
+  - qol: The TV on the title screen has round info once the round has started or ended.
+  - bugfix: The TV now fits on non-widescreen screens.
+  - admin: Admins can now link a URL for maps, used to give feedback on said maps.
+      Accessible through the roundend report, escape menu, and stat panel.
+  - qol: AIs can track their borgs by clicking on them in the stat panel.
+  - qol: You can now directly go to the webmap of maps from the stat panel (assuming
+      it's set in config).
+  Melbert:
+  - rscadd: '"Common Second Language" quirk'
+  - qol: Language translations chunk sentences together better, making partial understanding
+      a bit easier to parse.
+  SmArtKar:
+  - bugfix: Fixed "shit be fucked" errors and missing lighting on shuttle ceilings
+      docked to bottom z levels of multiz maps
