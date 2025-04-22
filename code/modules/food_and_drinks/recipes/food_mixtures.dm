@@ -282,6 +282,12 @@
 	mix_message = "The mixture thickens into yoghurt."
 	reaction_flags = REACTION_INSTANT
 
+/datum/chemical_reaction/food/yoghurt2
+	required_reagents = list(/datum/reagent/consumable/ethanol/irish_cream = 1, /datum/reagent/consumable/ethanol/irish_cream = 1, /datum/reagent/consumable/berryjuice = 1)
+	results = list(/datum/reagent/consumable/yoghurt = 10)
+	mix_message = "That's the yoghurt effect."
+	reaction_flags = REACTION_INSTANT
+
 /datum/chemical_reaction/food/olive_oil_upconvert
 	required_catalysts = list(/datum/reagent/consumable/nutriment/fat/oil/olive = 1)
 	required_reagents = list( /datum/reagent/consumable/nutriment/fat/oil = 2)
