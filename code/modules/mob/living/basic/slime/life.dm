@@ -28,6 +28,7 @@
 	if(bz_percentage >= 0.05 && bodytemperature < (T0C + 100)) //Check if we should be in stasis
 		if(!has_status_effect(/datum/status_effect/grouped/stasis)) //Check if we don't have the status effect yet
 			to_chat(src, span_danger("Nerve gas in the air has put you in stasis!"))
+			say("Mind... f-foggy... Glub.")
 			apply_status_effect(/datum/status_effect/grouped/stasis, STASIS_SLIME_BZ)
 			powerlevel = 0
 			ai_controller?.clear_blackboard_key(BB_SLIME_RABID)
