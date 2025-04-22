@@ -145,7 +145,7 @@
 
 /datum/embedding/bullet/flechette
 	embed_chance = 25
-	fall_chance = 0
+	fall_chance = 10
 	jostle_chance = 20
 	ignore_throwspeed_threshold = TRUE
 	pain_stam_pct = 0.1
