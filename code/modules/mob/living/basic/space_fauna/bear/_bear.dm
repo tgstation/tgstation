@@ -14,6 +14,7 @@
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 
+	max_stamina_loss = 120
 	maxHealth = 60
 	health = 60
 	speed = 0
