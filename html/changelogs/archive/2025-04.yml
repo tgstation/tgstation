@@ -644,3 +644,29 @@
       now stores various painting supplies instead.
   jlsnow301:
   - bugfix: Fixed more bugs in tgui-say. Admin chat shouldn't be cut off any more.
+2025-04-22:
+  DaCoolBoss:
+  - spellcheck: Removed 5 random wizard names. Added 6 to replace them.
+  EmptyLullaby:
+  - bugfix: The Quartermaster's skirt will no longer let one pixel of wild tail action
+      poke through the front.
+  Jacquerel:
+  - rscadd: The nebulastation pool has been deepened, please keep drunks out of the
+      deep end to prevent drowning.
+  JohnFulpWillard:
+  - config: Removed event time/weight multipliers, now all events vars are editable
+      in config.
+  - qol: The TV on the title screen has round info once the round has started or ended.
+  - bugfix: The TV now fits on non-widescreen screens.
+  - admin: Admins can now link a URL for maps, used to give feedback on said maps.
+      Accessible through the roundend report, escape menu, and stat panel.
+  - qol: AIs can track their borgs by clicking on them in the stat panel.
+  - qol: You can now directly go to the webmap of maps from the stat panel (assuming
+      it's set in config).
+  Melbert:
+  - rscadd: '"Common Second Language" quirk'
+  - qol: Language translations chunk sentences together better, making partial understanding
+      a bit easier to parse.
+  SmArtKar:
+  - bugfix: Fixed "shit be fucked" errors and missing lighting on shuttle ceilings
+      docked to bottom z levels of multiz maps
