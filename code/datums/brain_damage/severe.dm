@@ -15,7 +15,7 @@
 
 /datum/brain_trauma/severe/mute/on_gain()
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/mute/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
@@ -31,7 +31,7 @@
 /datum/brain_trauma/severe/aphasia/on_gain()
 	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/aphasia, LANGUAGE_APHASIA)
 	owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
 	if(!QDELING(owner))
@@ -49,7 +49,7 @@
 
 /datum/brain_trauma/severe/blindness/on_gain()
 	owner.become_blind(TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/blindness/on_lose()
 	owner.cure_blind(TRAUMA_TRAIT)
@@ -104,7 +104,7 @@
 	lose_text = span_notice("You can feel [subject] again!")
 
 /datum/brain_trauma/severe/paralysis/on_gain()
-	..()
+	. = ..()
 	for(var/X in paralysis_traits)
 		ADD_TRAIT(owner, X, TRAUMA_TRAIT)
 
@@ -196,7 +196,7 @@
 
 /datum/brain_trauma/severe/pacifism/on_gain()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
@@ -259,7 +259,7 @@
 
 /datum/brain_trauma/severe/dyslexia/on_gain()
 	ADD_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/dyslexia/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)

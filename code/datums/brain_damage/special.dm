@@ -25,7 +25,7 @@
 
 /datum/brain_trauma/special/godwoken/on_gain()
 	ADD_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/special/godwoken/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
@@ -266,7 +266,7 @@
 
 /datum/brain_trauma/special/tenacity/on_gain()
 	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/special/tenacity/on_lose()
 	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), TRAUMA_TRAIT)
@@ -463,7 +463,7 @@
 	owner.add_mood_event("combat_ptsd", /datum/mood_event/desentized)
 	owner.mob_mood?.mood_modifier -= 1 //Basically nothing can change your mood
 	owner.mob_mood?.sanity_level = SANITY_DISTURBED //Makes sanity on a unstable level unless cured
-	..()
+	. = ..()
 
 /datum/brain_trauma/special/ptsd/on_lose()
 	owner.clear_mood_event("combat_ptsd")
