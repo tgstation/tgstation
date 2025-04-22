@@ -8,7 +8,7 @@
 	content_overlays = FALSE
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-	storage_type = /datum/storage/unfathomable_curio_belt
+	storage_type = /datum/storage/unfathomable_curio
 
 	//Vars used for the shield component
 	var/heretic_shield_icon = "unfathomable_shield"

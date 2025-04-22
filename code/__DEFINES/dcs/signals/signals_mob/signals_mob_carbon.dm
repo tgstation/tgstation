@@ -114,6 +114,8 @@
 #define COMSIG_CARBON_APPLY_OVERLAY "carbon_apply_overlay"
 ///Called from remove_overlay(cache_index, overlay)
 #define COMSIG_CARBON_REMOVE_OVERLAY "carbon_remove_overlay"
+///Called when a carbon checks their mood
+#define COMSIG_CARBON_MOOD_CHECK "carbon_mod_check"
 
 // /mob/living/carbon/human signals
 

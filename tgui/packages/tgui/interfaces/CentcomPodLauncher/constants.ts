@@ -1,5 +1,3 @@
-import { Placement } from '@popperjs/core';
-
 import { TabBay, TabDrop, TabPod } from './Tabs';
 import { PodDelay, PodEffect } from './types';
 
@@ -316,7 +314,7 @@ type Effect = {
   list: typeof EFFECTS_LOAD | typeof EFFECTS_NORMAL | typeof EFFECTS_HARM;
   label: string;
   alt_label?: string;
-  tooltipPosition: Placement;
+  tooltipPosition: string;
 };
 
 export const EFFECTS_ALL: Effect[] = [

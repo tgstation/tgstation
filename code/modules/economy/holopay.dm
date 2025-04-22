@@ -31,6 +31,7 @@
 
 /obj/structure/holopay/Initialize(mapload)
 	. = ..()
+	AddComponent(/datum/component/holographic_nature)
 	register_context()
 
 /obj/structure/holopay/add_context(atom/source, list/context, obj/item/held_item, mob/user)

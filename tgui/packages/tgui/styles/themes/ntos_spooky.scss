@@ -1,67 +1,20 @@
-@use 'sass:color';
-@use 'sass:meta';
-@use 'sass:map';
-
-@use '../colors.scss' with (
-  $primary: hsl(345, 96%, 12%),
-  $good: hsl(0, 82%, 52%),
-  $bad: hsl(340, 91%, 32%)
-);
-@use '../base.scss' with (
-  $color-bg: hsl(0, 98%, 7%),
-  $color-bg-grad-spread: 12%
-);
-
-.theme-ntos_spooky {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+.theme-ntos_spooky:root {
+  // Base
+  --color-base: hsl(0, 100%, 12.5%);
+  --color-primary: hsl(345, 95%, 30%);
+  --color-good: hsl(0, 82%, 52%);
+  --color-bad: hsl(340, 91%, 32%);
+  --base-gradient-spread: 12;
+  --secondary-lightness-adjustment: 9;
 
   // Components
-  @include meta.load-css(
-    '~tgui-core/styles/components/Button',
-    $with: (
-      'color-default': hsl(345, 96%, 25%),
-      'color-disabled': hsl(0, 0%, 21%),
-      'color-selected': hsl(0, 85%, 21%),
-      'color-caution': hsl(240, 80%, 35%),
-      'color-danger': hsl(282, 61%, 30%)
-    )
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/Dimmer',
-    $with: ('background-dimness': 0.45)
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/Input',
-    $with: ('border-color': hsl(15, 14%, 26%))
-  );
-  @include meta.load-css('~tgui-core/styles/components/Modal');
-  @include meta.load-css(
-    '~tgui-core/styles/components/NoticeBox',
-    $with: ('background-color': hsl(0, 90%, 23%))
-  );
-  @include meta.load-css('~tgui-core/styles/components/NumberInput');
-  @include meta.load-css('~tgui-core/styles/components/Section');
-  @include meta.load-css('~tgui-core/styles/components/Table');
-  @include meta.load-css(
-    '~tgui-core/styles/components/Tooltip',
-    $with: ('background-color': hsl(0, 0%, 0%))
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/ProgressBar',
-    $with: (
-      'color-default-fill': hsla(0, 100%, 37%, 0.75),
-      'background-color': hsla(0, 97%, 7%, 0.5)
-    )
-  );
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': hsl(0, 88%, 23%))
-  );
+  --button-background-selected: var(--color-good);
+  --button-background-caution: hsl(240, 80%, 35%);
+  --button-background-danger: hsl(282, 61%, 30%);
+  --dimmer-background-opacity: 0.45;
+  --notice-box-background: hsl(0, 90%, 23%);
+  --notice-box-color: var(--color-fixed-white);
+  --progress-bar-background: hsla(0, 97%, 7%, 0.5);
 
   .Layout__content {
     background-image: url('../../assets/bg-spookycomp-compressed.svg');

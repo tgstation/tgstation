@@ -173,8 +173,8 @@
 
 /datum/hallucination/body/weird/freezer/make_body_image(turf/location)
 	var/image/body = ..()
-	body.pixel_x = pick(rand(-208,-48), rand(48, 208))
-	body.pixel_y = pick(rand(-208,-48), rand(48, 208))
+	body.pixel_w = pick(rand(-208,-48), rand(48, 208))
+	body.pixel_z = pick(rand(-208,-48), rand(48, 208))
 	body.alpha = 245
 	SET_PLANE_EXPLICIT(body, ABOVE_HUD_PLANE, location)
 	return body
@@ -195,5 +195,5 @@
 	if(QDELETED(src))
 		return
 	// Spook 'em before we delete
-	shown_body.pixel_x = (shown_body.pixel_x / 2)
-	shown_body.pixel_y = (shown_body.pixel_y / 2)
+	shown_body.pixel_w = (shown_body.pixel_w / 2)
+	shown_body.pixel_z = (shown_body.pixel_z / 2)

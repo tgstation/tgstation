@@ -1,29 +1,41 @@
 /obj/vehicle/sealed/mecha/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))
 		return
-	//Allows the Malf to scan a mech's status and loadout, helping it to decide if it is a worthy chariot.
-	if(user.can_dominate_mechs)
-		examine(user) //Get diagnostic information!
-		for(var/obj/item/mecha_parts/mecha_tracking/B in trackers)
-			to_chat(user, span_danger("Warning: Tracking Beacon detected. Enter at your own risk. Beacon Data:"))
-			to_chat(user, "[B.get_mecha_info()]")
-			break
-		//Nothing like a big, red link to make the player feel powerful!
-		to_chat(user, "<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_userdanger("ASSUME DIRECT CONTROL?")]</a><br>")
-		return
-	examine(user)
-	if(length(return_occupants()) >= max_occupants)
-		to_chat(user, span_warning("This exosuit has a pilot and cannot be controlled."))
-		return
-	var/can_control_mech = FALSE
-	for(var/obj/item/mecha_parts/mecha_tracking/ai_control/A in trackers)
-		can_control_mech = TRUE
-		to_chat(user, "[span_notice("[icon2html(src, user)] Status of [name]:")]\n[A.get_mecha_info()]")
+
+	var/obj/item/mecha_parts/mecha_tracking/data_tracker = null
+	var/obj/item/mecha_parts/mecha_tracking/ai_control/control_tracker = null
+	var/list/output = list()
+
+	for(var/obj/item/mecha_parts/mecha_tracking/A in trackers)
+		data_tracker = A
 		break
-	if(!can_control_mech)
-		to_chat(user, span_warning("You cannot control exosuits without AI control beacons installed."))
+
+	for(var/obj/item/mecha_parts/mecha_tracking/ai_control/B in trackers)
+		control_tracker = B
+		break
+
+	if(!data_tracker)
+		to_chat(user, span_warning("You cannot interface this exosuit without tracking beacons installed."))
 		return
-	to_chat(user, "<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_boldnotice("Take control of exosuit?")]</a><br>")
+
+	if(data_tracker || user.can_dominate_mechs)
+		output += span_notice("[icon2html(src, user)] [name] Exosuit Status Report\n")
+		output += data_tracker.get_mecha_info()
+
+	if(user.can_dominate_mechs)
+		if(data_tracker)
+			output += span_danger("\nWarning: Tracking detected. Enter at your own risk.")
+
+	if(user.can_dominate_mechs)
+		output += "\n<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_warning("\[INITIALIZE CONTROL OVERRIDE\]")]</a>"
+	else if(!control_tracker)
+		output += span_warning("\n\[UNABLE TO CONTROL - NO AI TRACKING BEACONS INSTALLED\]")
+	else if(length(return_occupants()) >= max_occupants)
+		output += span_warning("\n\[UNABLE TO CONTROL - OCCUPIED\]")
+	else
+		output += "\n<a href='byond://?src=[REF(user)];ai_take_control=[REF(src)]'>[span_boldnotice("\[TAKE DIRECT CONTROL\]")]</a>"
+
+	to_chat(user, boxed_message(jointext(output, "\n")))
 
 /obj/vehicle/sealed/mecha/transfer_ai(interaction, mob/user, mob/living/silicon/ai/AI, obj/item/aicard/card)
 	. = ..()
@@ -105,6 +117,13 @@
 	AI.controlled_equipment = src
 	AI.remote_control = src
 	add_occupant(AI)
-	to_chat(AI, AI.can_dominate_mechs ? span_greenannounce("Takeover of [name] complete! You are now loaded onto the onboard computer. Do not attempt to leave the station sector!") :\
-		span_notice("You have been uploaded to a mech's onboard computer."))
-	to_chat(AI, "<span class='reallybig boldnotice'>Use Middle-Mouse or the action button in your HUD to toggle equipment safety. Clicks with safety enabled will pass AI commands.</span>")
+
+	var/list/output = list()
+	output += span_bold("You have been uploaded to the exosuits onboard computer.\n")
+	output += "• Press the middle mouse button or the action button on your HUD panel to toggle equipment safety."
+	output += "• Clicks with safety enabled will pass AI commands as usual."
+
+	if(AI.can_dominate_mechs)
+		output += "• [span_warning("Do not attempt to leave the station sector.")]"
+
+	to_chat(AI, boxed_message(jointext(output, "\n")))

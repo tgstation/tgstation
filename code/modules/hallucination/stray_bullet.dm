@@ -176,8 +176,8 @@
 		return
 
 	var/image/hit_effect = image('icons/effects/blood.dmi', hit_atom, is_wall ? hal_impact_effect_wall : hal_impact_effect, ABOVE_MOB_LAYER)
-	hit_effect.pixel_x = hit_atom.pixel_x + rand(-4,4)
-	hit_effect.pixel_y = hit_atom.pixel_y + rand(-4,4)
+	hit_effect.pixel_w = hit_atom.pixel_x + rand(-4,4)
+	hit_effect.pixel_z = hit_atom.pixel_y + rand(-4,4)
 	parent.hallucinator.client.images |= hit_effect
 	addtimer(CALLBACK(src, PROC_REF(clean_up_hit), hit_effect), is_wall ? hit_duration_wall : hit_duration)
 

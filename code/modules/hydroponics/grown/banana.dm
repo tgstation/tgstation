@@ -205,3 +205,14 @@
 	if(!is_simian(user))
 		return to_chat(user, span_notice("You don't really know what to do with this."))
 	else start_ripening()
+
+/// Used for april fools mail
+/obj/item/grown/bananapeel/gros_michel
+	name = "gros michel peel"
+	desc = "A peel from a species of banana that's hyper-vulnerable to contamination."
+
+/obj/item/grown/bananapeel/gros_michel/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/germ_sensitive, mapload)
+	transform *= 1.25
+	AddComponent(/datum/component/decomposition, mapload, decomp_req_handle = TRUE, custom_time = 1 MINUTES, decomp_result = /obj/item/food/badrecipe/moldy)

@@ -80,22 +80,22 @@
 	for(var/stamp in stamps)
 		var/image/stamp_image = image(
 			icon = icon,
-			icon_state = stamp,
-			pixel_x = stamp_offset_x,
-			pixel_y = stamp_offset_y + bonus_stamp_offset
+			icon_state = stamp
 		)
-		stamp_image.appearance_flags |= RESET_COLOR
+		stamp_image.pixel_w = pixel_w = stamp_offset_x
+		stamp_image.pixel_z = stamp_offset_y + bonus_stamp_offset
+		stamp_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		bonus_stamp_offset -= 5
 		. += stamp_image
 
 	if(postmarked == TRUE)
 		var/image/postmark_image = image(
 			icon = icon,
-			icon_state = "postmark",
-			pixel_x = stamp_offset_x + rand(-3, 1),
-			pixel_y = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
+			icon_state = "postmark"
 		)
-		postmark_image.appearance_flags |= RESET_COLOR
+		postmark_image.pixel_w = stamp_offset_x + rand(-3, 1)
+		postmark_image.pixel_z = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
+		postmark_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		. += postmark_image
 
 /obj/item/mail/attackby(obj/item/W, mob/user, params)
@@ -196,6 +196,10 @@
 			if(LAZYLEN(quirk.mail_goodies))
 				var/quirk_goodie = pick(quirk.mail_goodies)
 				goodies[quirk_goodie] = 5
+
+		if(LAZYLEN(GLOB.holiday_mail))
+			var/holiday_goodie = pick(GLOB.holiday_mail)
+			goodies[holiday_goodie] = 5
 
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)
@@ -556,7 +560,7 @@
 /// Unobtainable item mostly for (b)admin purposes.
 /obj/item/storage/mail_counterfeit_device/advanced
 	name = "GLA-MACRO mail counterfeit device"
-	storage_type = /datum/storage/mail_counterfeit_advanced
+	storage_type = /datum/storage/mail_counterfeit/advanced
 
 /obj/item/storage/mail_counterfeit_device/advanced/Initialize(mapload)
 	. = ..()
@@ -565,7 +569,7 @@
 /// Unobtainable item mostly for (b)admin purposes.
 /obj/item/storage/mail_counterfeit_device/bluespace
 	name = "GLA-ULTRA mail counterfeit device"
-	storage_type = /datum/storage/mail_counterfeit_bluespace
+	storage_type = /datum/storage/mail_counterfeit/bluespace
 
 /obj/item/storage/mail_counterfeit_device/bluespace/Initialize(mapload)
 	. = ..()

@@ -494,7 +494,6 @@
 	spawn_count = 1
 	storage_type = /datum/storage/coffee_cart_rack
 
-
 /*
  * impressa coffee maker
  * its supposed to be a premium line product, so its cargo-only, the board cant be therefore researched
@@ -522,13 +521,13 @@
 
 /obj/machinery/coffeemaker/impressa/Destroy()
 	QDEL_NULL(coffeepot)
-	QDEL_NULL(coffee)
+	QDEL_LIST(coffee)
 	return ..()
 
 /obj/machinery/coffeemaker/impressa/examine(mob/user)
 	. = ..()
 	if(coffee)
-		. += span_notice("The internal grinder contains [coffee.len] scoop\s of coffee beans")
+		. += span_notice("The internal grinder contains [length(coffee)] scoop\s of coffee beans")
 
 /obj/machinery/coffeemaker/impressa/update_overlays()
 	. = ..()

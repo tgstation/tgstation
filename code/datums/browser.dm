@@ -15,7 +15,10 @@
 	var/head_content = ""
 	var/content = ""
 
-/datum/browser/New(user, window_id, title = "", width = 0, height = 0, atom/source = null)
+/datum/browser/New(mob/user, window_id, title = "", width = 0, height = 0, atom/source = null)
+	if(IS_CLIENT_OR_MOCK(user))
+		var/client/client_user = user
+		user = client_user.mob
 	src.user = user
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(user_deleted))
 	src.window_id = window_id
@@ -73,6 +76,15 @@
 	for (var/file in stylesheets)
 		new_head_content += "<link rel='stylesheet' type='text/css' href='[SSassets.transport.get_asset_url(file)]'>"
 
+	if(user.client?.window_scaling && user.client?.window_scaling != 1 && !user.client?.prefs.read_preference(/datum/preference/toggle/ui_scale) && width && height)
+		new_head_content += {"
+			<style>
+				body {
+					zoom: [100 / user.client?.window_scaling]%;
+				}
+			</style>
+			"}
+
 	for (var/file in scripts)
 		new_head_content += "<script type='text/javascript' src='[SSassets.transport.get_asset_url(file)]'></script>"
 
@@ -112,8 +124,12 @@
 		return
 
 	var/window_size = ""
-	if (width && height)
-		window_size = "size=[width]x[height];"
+	if(width && height)
+		if(user.client?.prefs?.read_preference(/datum/preference/toggle/ui_scale))
+			var/scaling = user.client.window_scaling
+			window_size = "size=[width * scaling]x[height * scaling];"
+		else
+			window_size = "size=[width]x[height];"
 
 	var/datum/asset/simple/namespaced/common/common_asset = get_asset_datum(/datum/asset/simple/namespaced/common)
 	common_asset.send(user)
@@ -121,8 +137,7 @@
 		SSassets.transport.send_assets(user, stylesheets)
 	if (length(scripts))
 		SSassets.transport.send_assets(user, scripts)
-
-	user << browse(get_content(), "window=[window_id];[window_size][window_options]")
+	DIRECT_OUTPUT(user, browse(get_content(), "window=[window_id];[window_size][window_options]"))
 	if (use_on_close)
 		setup_onclose()
 

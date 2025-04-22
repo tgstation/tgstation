@@ -1,4 +1,4 @@
-//Regular duffle bag
+///Normal duffle bag
 /datum/storage/duffel
 	max_total_storage = 30
 	max_slots = 21
@@ -10,7 +10,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	set_holdable(exception_hold_list = /obj/item/fish_tank)
 
 // Syndi bags get some FUN extras
@@ -28,7 +27,6 @@
 	max_total_storage,
 )
 	. = ..()
-
 	var/static/list/exception_type_list = list(
 		// Gun and gun-related accessories
 		/obj/item/gun,
@@ -69,7 +67,6 @@
 		/obj/item/clothing/suit/utility,
 		// Storage
 		/obj/item/storage/bag/money,
-		/obj/item/storage/belt/utility/syndicate,
 		// Heads!
 		/obj/item/bodypart/head,
 		// Fish
@@ -79,17 +76,8 @@
 
 	set_holdable(exception_hold_list = exception_type_list)
 
-///Syndicate firestarter
-/datum/storage/duffel/syndicate/firestarter
-	allow_big_nesting = TRUE
-
-///Syndicate ammo mech box
-/datum/storage/duffel/syndicate/ammo_mech
-	exception_max = 5
-	allow_big_nesting = TRUE
-
-///Syndicate ammo mauler box
-/datum/storage/duffel/syndicate/ammo_mauler
-	exception_max = 9
-	max_total_storage = 36
-	allow_big_nesting = TRUE
+	//...So we can run this without it generating a line for every subtype.
+	var/list/desc = list()
+	for(var/obj/item/valid_item as anything in exception_type_list)
+		desc += "\a [initial(valid_item.name)]"
+	can_hold_description = "\n\t[span_notice("[desc.Join("\n\t")]")]"

@@ -41,11 +41,36 @@
 	wanted_types = list(/obj/item/spear = TRUE)
 
 /datum/bounty/item/assistant/toolbox
-	name = "Toolboxes"
-	description = "There's an absence of robustness at Central Command. Hurry up and ship some toolboxes as a solution."
+	name = "Stocked Toolbox"
+	description = "There's an absence of robustness at Central Command. Ship them a fully packed toolbox as a solution, containing a screwdriver, wrench, welding tool, crowbar, analyzer, and wirecutters."
 	reward = CARGO_CRATE_VALUE * 4
-	required_count = 6
 	wanted_types = list(/obj/item/storage/toolbox = TRUE)
+	/// List of tools that we want to see sorted into a toolbox
+	var/static/list/static_packing_list = list(
+		/obj/item/screwdriver,
+		/obj/item/wrench,
+		/obj/item/weldingtool,
+		/obj/item/crowbar,
+		/obj/item/analyzer,
+		/obj/item/wirecutters,
+	)
+
+/datum/bounty/item/assistant/toolbox/applies_to(obj/shipped)
+	var/list/packing_list = static_packing_list.Copy()
+	for(var/obj/item_contents as anything in shipped.contents)
+		for(var/match_type in packing_list)
+			if(istype(item_contents, match_type))
+				packing_list -= match_type
+				break
+		if(!length(packing_list))
+			return ..()
+	return FALSE
+
+/datum/bounty/item/assistant/toolbox/ship(obj/shipped)
+	. = ..()
+	for(var/obj/object as anything in shipped.contents)
+		if(!is_type_in_list(object, static_packing_list))
+			object.forceMove(shipped.drop_location())
 
 /datum/bounty/item/assistant/statue
 	name = "Statue"
@@ -133,8 +158,11 @@
 	name = "Potted Plants"
 	description = "Central Command is looking to commission a new BirdBoat-class station. You've been ordered to supply the potted plants."
 	reward = CARGO_CRATE_VALUE * 4
-	required_count = 8
-	wanted_types = list(/obj/item/kirbyplants = TRUE)
+	required_count = 3
+	wanted_types = list(
+		/obj/item/kirbyplants = TRUE,
+		/obj/item/kirbyplants/synthetic = FALSE
+		)
 
 /datum/bounty/item/assistant/monkey_cubes
 	name = "Monkey Cubes"
@@ -156,12 +184,12 @@
 	reward = CARGO_CRATE_VALUE * 6
 	wanted_types = list(/obj/item/food/meat/slab/corgi = TRUE)
 
-/datum/bounty/item/assistant/action_figures
-	name = "Action Figures"
-	description = "The vice president's son saw an ad for action figures on the telescreen and now he won't shut up about them. Ship some to ease his complaints."
+/datum/bounty/item/assistant/toys
+	name = "Arcade Toys"
+	description = "The vice president's son saw an ad for new toys on the telescreen and now he won't shut up about them. Ship some arcade toys over to ease his complaints."
 	reward = CARGO_CRATE_VALUE * 8
 	required_count = 5
-	wanted_types = list(/obj/item/toy/figure = TRUE)
+	wanted_types = list(/obj/item/toy = TRUE)
 
 /datum/bounty/item/assistant/paper_bin
 	name = "Paper Bins"
@@ -176,14 +204,6 @@
 	reward = CARGO_CRATE_VALUE * 4
 	required_count = 8
 	wanted_types = list(/obj/item/toy/crayon = TRUE)
-
-/datum/bounty/item/assistant/pens
-	name = "Pens"
-	description = "We are hosting the intergalactic pen balancing competition. We need you to send us some standardized black ballpoint pens."
-	reward = CARGO_CRATE_VALUE * 4
-	required_count = 10
-	include_subtypes = FALSE
-	wanted_types = list(/obj/item/pen = TRUE)
 
 /datum/bounty/item/assistant/water_tank
 	name = "Water Tank"

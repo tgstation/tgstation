@@ -9,11 +9,8 @@
 		return
 
 	if(!HAS_TRAIT(to_insert, TRAIT_AQUARIUM_CONTENT))
-		if(messages)
-			if(messages == STORAGE_ERROR_INSERT)
-				stack_trace("[parent.type]: can't hold [to_insert.type] which does not have TRAIT_AQUARIUM_CONTENT")
-			else if(user)
-				user.balloon_alert(user, "can't hold!")
+		if(messages && user)
+			user.balloon_alert(user, "can't hold!")
 		return FALSE
 	return .
 

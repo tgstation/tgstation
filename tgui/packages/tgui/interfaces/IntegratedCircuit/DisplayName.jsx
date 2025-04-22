@@ -58,7 +58,7 @@ export const DisplayName = (props) => {
         <Flex.Item>
           <Box
             fontSize={0.75}
-            opacity={0.25}
+            opacity={0.5}
             textAlign={isOutput ? 'right' : 'left'}
           >
             {displayType || 'unknown'}

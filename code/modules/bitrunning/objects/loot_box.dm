@@ -23,7 +23,7 @@
 /obj/item/storage/lockbox/bitrunning/decrypted
 	name = "decrypted curiosity"
 	desc = "Compiled from the virtual domain. An extra reward of a successful bitrunner."
-	storage_type = /datum/storage/lockbox/bitrunning
+	storage_type = /datum/storage/lockbox/bitrunning_decrypted
 
 	/// What virtual domain did we come from.
 	var/datum/lazy_template/virtual_domain/source_domain
@@ -45,7 +45,9 @@
 
 	. = ..()
 
+	icon_state = icon_closed
 	playsound(src, 'sound/effects/magic/blink.ogg', 50, TRUE)
 
 /obj/item/storage/lockbox/bitrunning/decrypted/PopulateContents()
-	return SSbitrunning.pick_secondary_loot(source_domain)
+	var/choice = SSbitrunning.pick_secondary_loot(source_domain)
+	new choice(src)

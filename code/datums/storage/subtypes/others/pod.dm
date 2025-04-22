@@ -24,6 +24,7 @@
 	))
 
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(update_lock))
+	update_lock(new_level = SSsecurity_level.get_current_level_as_number())
 
 /datum/storage/pod/set_parent(atom/new_parent)
 	. = ..()

@@ -1,35 +1,35 @@
-///Regular holster
+///Holster
 /datum/storage/holster
 	max_slots = 1
 	max_total_storage = 16
 	open_sound = 'sound/items/handling/holster_open.ogg'
 	open_sound_vary = TRUE
 
-/datum/storage/holster/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdable_override)
+/datum/storage/holster/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
 	. = ..()
-
-	if(!length(holdable_override))
-		holdable_override = list(
-			/obj/item/gun/ballistic/automatic/pistol,
-			/obj/item/gun/ballistic/revolver,
-			/obj/item/gun/energy/e_gun/mini,
-			/obj/item/gun/energy/disabler,
-			/obj/item/gun/energy/dueling,
-			/obj/item/food/grown/banana,
-			/obj/item/gun/energy/laser/thermal,
-			/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
-			/obj/item/gun/energy/laser/captain,
-			/obj/item/gun/energy/e_gun/hos,
-		)
-
-	set_holdable(holdable_override)
+	if(length(holdables))
+		set_holdable(holdables)
+		return
+		
+	set_holdable(list(
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/gun/ballistic/revolver,
+		/obj/item/gun/energy/e_gun/mini,
+		/obj/item/gun/energy/disabler,
+		/obj/item/gun/energy/dueling,
+		/obj/item/food/grown/banana,
+		/obj/item/gun/energy/laser/thermal,
+		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
+	))
 
 ///Energy holster
 /datum/storage/holster/energy
 	max_slots = 2
 
-/datum/storage/holster/energy/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdable_override)
-	holdable_override = list(
+/datum/storage/holster/energy/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
+	holdables = list(
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
@@ -45,10 +45,9 @@
 ///Detective holster
 /datum/storage/holster/detective
 	max_slots = 3
-	max_specific_storage = WEIGHT_CLASS_NORMAL
 
-/datum/storage/holster/detective/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdable_override)
-	holdable_override = list(
+/datum/storage/holster/detective/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
+	holdables = list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm, // Pistol magazines.
 		/obj/item/ammo_box/magazine/m9mm_aps,
@@ -71,13 +70,13 @@
 
 	return ..()
 
-///Chameleon holster
+///Chameleon Holster
 /datum/storage/holster/chameleon
 	max_slots = 2
 	silent = TRUE
 
-/datum/storage/holster/chameleon/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdable_override)
-	holdable_override = list(
+/datum/storage/holster/chameleon/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
+	holdables = list(
 		/obj/item/gun/ballistic/automatic/pistol,
 		/obj/item/ammo_box/magazine/m9mm,
 		/obj/item/ammo_box/magazine/m9mm_aps,
@@ -104,8 +103,8 @@
 	max_slots = 2
 	max_specific_storage = WEIGHT_CLASS_BULKY
 
-/datum/storage/holster/nukie/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdable_override)
-	holdable_override = list(
+/datum/storage/holster/nukie/New(atom/parent, max_slots, max_specific_storage, max_total_storage, list/holdables)
+	holdables = list(
 		/obj/item/gun, // ALL guns.
 		/obj/item/ammo_box/magazine, // ALL magazines.
 		/obj/item/ammo_box/c38, //There isn't a speedloader parent type, so I just put these three here by hand.

@@ -117,7 +117,7 @@ const InstrumentSettings = (props) => {
         <NumberInput
           step={1}
           minValue={0}
-          disabled={playing}
+          disabled={!!playing}
           maxValue={max_repeats}
           value={repeat}
           onChange={(value) =>

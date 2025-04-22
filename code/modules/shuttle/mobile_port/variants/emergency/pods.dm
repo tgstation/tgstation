@@ -136,13 +136,6 @@
 	icon_state = "wall_safe_locked"
 	storage_type = /datum/storage/pod
 
-/obj/item/storage/pod/Initialize(mapload)
-	. = ..()
-
-	var/datum/storage/pod/storage = atom_storage
-
-	storage.update_lock(new_level = SSsecurity_level.get_current_level_as_number())
-
 /obj/item/storage/pod/update_icon_state()
 	. = ..()
 	icon_state = "wall_safe[atom_storage?.locked ? "_locked" : ""]"
@@ -150,13 +143,17 @@
 MAPPING_DIRECTIONAL_HELPERS(/obj/item/storage/pod, 32)
 
 /obj/item/storage/pod/PopulateContents()
-	return flatten_quantified_list(list(
-		/obj/item/clothing/head/helmet/space/orange = 2,
-		/obj/item/clothing/suit/space/orange = 2,
-		/obj/item/clothing/mask/gas = 2,
-		/obj/item/tank/internals/oxygen/red = 2,
-		/obj/item/pickaxe/emergency = 2,
-		/obj/item/survivalcapsule = 1,
-		/obj/item/storage/toolbox/emergency = 1,
-		/obj/item/bodybag/environmental = 2,
-	))
+	new /obj/item/clothing/head/helmet/space/orange(src)
+	new /obj/item/clothing/head/helmet/space/orange(src)
+	new /obj/item/clothing/suit/space/orange(src)
+	new /obj/item/clothing/suit/space/orange(src)
+	new /obj/item/clothing/mask/gas(src)
+	new /obj/item/clothing/mask/gas(src)
+	new /obj/item/tank/internals/oxygen/red(src)
+	new /obj/item/tank/internals/oxygen/red(src)
+	new /obj/item/pickaxe/emergency(src)
+	new /obj/item/pickaxe/emergency(src)
+	new /obj/item/survivalcapsule(src)
+	new /obj/item/storage/toolbox/emergency(src)
+	new /obj/item/bodybag/environmental(src)
+	new /obj/item/bodybag/environmental(src)

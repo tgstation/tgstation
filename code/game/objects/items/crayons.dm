@@ -483,7 +483,7 @@
 
 	var/temp = "rune"
 	var/ascii = (length(drawing) == 1)
-	if(ascii && is_alpha(drawing))
+	if(ascii && is_lowercase_character(drawing))
 		temp = "letter"
 	else if(ascii && is_digit(drawing))
 		temp = "number"
@@ -728,15 +728,14 @@
 	storage_type = /datum/storage/crayons
 
 /obj/item/storage/crayons/PopulateContents()
-	return list(
-		new /obj/item/toy/crayon/red,
-		new /obj/item/toy/crayon/orange,
-		new /obj/item/toy/crayon/yellow,
-		new /obj/item/toy/crayon/green,
-		new /obj/item/toy/crayon/blue,
-		new /obj/item/toy/crayon/purple,
-		new /obj/item/toy/crayon/black,
-	)
+	new /obj/item/toy/crayon/red(src)
+	new /obj/item/toy/crayon/orange(src)
+	new /obj/item/toy/crayon/yellow(src)
+	new /obj/item/toy/crayon/green(src)
+	new /obj/item/toy/crayon/blue(src)
+	new /obj/item/toy/crayon/purple(src)
+	new /obj/item/toy/crayon/black(src)
+	update_appearance()
 
 /obj/item/storage/crayons/update_overlays()
 	. = ..()

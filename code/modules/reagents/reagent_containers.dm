@@ -16,6 +16,8 @@
 	var/reagent_flags
 	/// A list of what initial reagents this container should spawn with
 	var/list/list_reagents = null
+	/// The purity of the spawned reagents in list_reagents. Default purity if `null`
+	var/list_reagents_purity = null
 	/// If this container should spawn with a disease type inside of it
 	var/spawned_disease = null
 	/// How much of a disease specified in spawned_disease should this container spawn with
@@ -67,7 +69,7 @@
 	. = ..()
 	if(has_variable_transfer_amount)
 		if(possible_transfer_amounts.len > 1)
-			. += span_notice("Left-click or right-click in-hand to increase or decrease its transfer amount.")
+			. += span_notice("Left-click or right-click in-hand to increase or decrease its transfer amount. It is currently set to [amount_per_transfer_from_this] units.")
 		else if(possible_transfer_amounts.len)
 			. += span_notice("Left-click or right-click in-hand to view its transfer amount.")
 	if(isliving(user) && HAS_TRAIT(user, TRAIT_REMOTE_TASTING))
@@ -85,7 +87,7 @@
 
 /obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
-		reagents.add_reagent_list(list_reagents)
+		reagents.add_reagent_list(list_reagents, added_purity = list_reagents_purity)
 
 /obj/item/reagent_containers/attack_self(mob/user)
 	if(has_variable_transfer_amount)

@@ -24,18 +24,32 @@
 	verb_yell = "bellows"
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
-	hud_type = /datum/hud/living/blobbernaut
 	gold_core_spawnable = HOSTILE_SPAWN
 	ai_controller = /datum/ai_controller/basic_controller/blobbernaut
+
+	///The HUD given to blobbernauts, updated by the Blob itself
+	var/atom/movable/screen/healths/blob/overmind/overmind_hud
 
 /mob/living/basic/blob_minion/blobbernaut/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/damage_threshold, 10)
 
+/mob/living/basic/blob_minion/blobbernaut/Destroy()
+	QDEL_NULL(overmind_hud)
+	return ..()
+
 /mob/living/basic/blob_minion/blobbernaut/death(gibbed)
 	flick("blobbernaut_death", src)
 	return ..()
+
+/mob/living/basic/blob_minion/blobbernaut/create_mob_hud()
+	. = ..()
+	if(!.)
+		return
+	overmind_hud = new(null, hud_used)
+	hud_used.infodisplay += overmind_hud
+	hud_used.show_hud(hud_used.hud_version)
 
 /// This variant is the one actually spawned by blob factories, takes damage when away from blob tiles
 /mob/living/basic/blob_minion/blobbernaut/minion
@@ -72,9 +86,8 @@
 
 	// take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 	apply_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damage_sources * seconds_per_tick, damagetype = TOX) // We reduce brute damage
-	var/mutable_appearance/harming = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "nautdamage", MOB_LAYER + 0.01)
-	harming.appearance_flags = RESET_COLOR
-	harming.color = atom_colours[FIXED_COLOUR_PRIORITY] || COLOR_WHITE
+	var/mutable_appearance/harming = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "nautdamage", MOB_LAYER + 0.01, appearance_flags = RESET_COLOR|KEEP_APART)
+	harming = color_atom_overlay(harming)
 	harming.dir = dir
 	flick_overlay_view(harming, 0.8 SECONDS)
 	return TRUE

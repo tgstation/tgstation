@@ -56,6 +56,13 @@ export const sound_instruments: Feature<number> = {
   component: FeatureSliderInput,
 };
 
+export const sound_jukebox: Feature<number> = {
+  name: 'Jukebox volume',
+  category: 'SOUND',
+  description: 'Volume of jukebox tracks.',
+  component: FeatureSliderInput,
+};
+
 export const sound_tts: FeatureChoiced = {
   name: 'Enable TTS',
   category: 'SOUND',
@@ -101,13 +108,6 @@ export const sound_achievement: FeatureChoiced = {
     If disabled, no sound will be played.
   `,
   component: FeatureDropdownInput,
-};
-
-export const sound_radio_noise: Feature<number> = {
-  name: 'Radio noise volume',
-  category: 'SOUND',
-  description: `Volume of talking and hearing radio chatter sounds.`,
-  component: FeatureSliderInput,
 };
 
 export const sound_ai_vox: Feature<number> = {
