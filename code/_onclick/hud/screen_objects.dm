@@ -1134,3 +1134,19 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	maptext = FORMAT_BLOOD_LEVEL_HUD_MAPTEXT(source.blood_volume)
 
 #undef FORMAT_BLOOD_LEVEL_HUD_MAPTEXT
+
+#define FORMAT_XENOBIO_HUD_MAPTEXT(monkeys, slimes, maxslimes) MAPTEXT_SPESSFONT("<span style='color: [COLOR_WHITE]; text-align: center; line-height: 1.9; '>[monkeys]\n[slimes]/[maxslimes]</span>")
+
+/// Used to show how many monkeys & slimes are in the console
+/atom/movable/screen/xenobio_console
+	name = "Monkey/Slime Storage"
+	icon_state = "xenobio_console"
+	screen_loc = ui_xenobiodisplay
+
+/// Called by the console any time we update the hud
+/atom/movable/screen/xenobio_console/proc/on_update_hud(slimes, monkeys, max_slimes)
+	maptext = FORMAT_XENOBIO_HUD_MAPTEXT(monkeys, slimes, max_slimes)
+	maptext_x = 5
+	maptext_y = 2
+
+#undef FORMAT_XENOBIO_HUD_MAPTEXT
