@@ -24,9 +24,9 @@
 /// Returns either the existing cleanable, the one we created, or null if we can't spawn on that turf
 /turf/proc/spawn_unique_cleanable(obj/effect/decal/cleanable/cleanable_type)
 	var/turf/checkturf = src
-	while (isgroundlessturf(checkturf) && GET_TURF_BELOW())
+	while (isgroundlessturf(checkturf) && checkturf.zPassOut(DOWN))
 		var/turf/below = GET_TURF_BELOW(checkturf)
-		if (!below)
+		if (!below || !below.zPassIn(DOWN))
 			break
 		checkturf = below
 
