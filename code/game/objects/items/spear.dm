@@ -317,17 +317,23 @@
 	desc = "Jump up into the skies and fall down upon your opponents to deal double damage."
 	///Cooldown time between jumps.
 	var/jump_cooldown_time = 1 MINUTES
+	/**
+	 * boolean we set every time we jump, to know if we should take away the passflags we give,
+	 * so we don't give/take when they have it from other sources (since we don't have traits, we have
+	 * no way to tell which pass flags they get from what source.)
+	 */
+	var/gave_pass_flags = FALSE
 
 /datum/action/item_action/skybulge/do_effect(trigger_flags)
-	if(HAS_TRAIT_FROM(owner, TRAIT_MOVE_PHASING, ACTION_TRAIT))
-		to_chat(owner, span_warning("You're already airborne!"))
-		return
 	if(!HAS_TRAIT(target, TRAIT_WIELDED))
-		to_chat(owner, span_warning("You must wield [target] in both hands!"))
+		owner.balloon_alert(owner, "not dual-wielded!")
 		return
-	var/timeleft = S_TIMER_COOLDOWN_TIMELEFT(owner, COOLDOWN_SKYBULGE_JUMP)
-	if(timeleft)
-		to_chat(owner, span_warning("You need to wait [DisplayTimeText(timeleft, 1)] before attempting to jump."))
+	var/time_left = S_TIMER_COOLDOWN_TIMELEFT(target, COOLDOWN_SKYBULGE_JUMP)
+	if(time_left)
+		owner.balloon_alert(owner, "[FLOOR(time_left * 0.1, 0.1)]s cooldown!")
+		return
+	//do after shows the progress bar as feedback, so nothing here.
+	if(LAZYACCESS(owner.do_afters, target))
 		return
 
 	owner.balloon_alert(owner, "charging up...")
@@ -336,17 +342,22 @@
 
 ///Sends the owner up in the air and calls them back down, calling land() for aftereffects.
 /datum/action/item_action/skybulge/proc/jump_up()
-	if(!do_after(owner, 2 SECONDS, target = owner))
+	if(!do_after(owner, 2 SECONDS, target = owner, timed_action_flags = IGNORE_USER_LOC_CHANGE))
 		REMOVE_TRAIT(target, TRAIT_NEEDS_TWO_HANDS, ACTION_TRAIT)
 		return
 	playsound(owner, 'sound/effects/footstep/heavy1.ogg', 50, 1)
-	S_TIMER_COOLDOWN_START(owner, COOLDOWN_SKYBULGE_JUMP, jump_cooldown_time)
+	S_TIMER_COOLDOWN_START(target, COOLDOWN_SKYBULGE_JUMP, jump_cooldown_time)
 	new /obj/effect/temp_visual/telegraphing/exclamation/following(get_turf(owner), 2.5 SECONDS, owner)
 
 	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_attack_during_jump))
 	ADD_TRAIT(target, TRAIT_NODROP, ACTION_TRAIT)
 	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, ACTION_TRAIT)
 	owner.resistance_flags |= INDESTRUCTIBLE //not while jumping at least
+	if(owner.pass_flags & PASSTABLE)
+		gave_pass_flags = FALSE
+	else
+		gave_pass_flags = TRUE
+		owner.pass_flags |= PASSTABLE
 	owner.set_density(FALSE)
 	owner.layer = ABOVE_ALL_MOB_LAYER
 
@@ -364,6 +375,8 @@
 	target.remove_traits(list(TRAIT_NEEDS_TWO_HANDS, TRAIT_NODROP), ACTION_TRAIT)
 	REMOVE_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, ACTION_TRAIT)
 	owner.resistance_flags &= ~INDESTRUCTIBLE
+	if(gave_pass_flags)
+		owner.pass_flags &= ~PASSTABLE
 	owner.set_density(TRUE)
 	owner.layer = initial(owner.layer)
 	SET_PLANE(owner, initial(owner.plane), landed_on)

@@ -37,6 +37,10 @@
 	ai_controller = /datum/ai_controller/basic_controller/ice_whelp
 	///how much we will heal when cannibalizing a target
 	var/heal_on_cannibalize = 5
+	var/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice = BB_WHELP_STRAIGHTLINE_FIRE,
+		/datum/action/cooldown/mob_cooldown/fire_breath/cross/ice = BB_WHELP_WIDESPREAD_FIRE,
+	)
 
 /mob/living/basic/mining/ice_whelp/Initialize(mapload)
 	. = ..()
@@ -44,11 +48,6 @@
 
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
 	AddComponent(/datum/component/basic_mob_ability_telegraph)
-
-	var/static/list/innate_actions = list(
-		/datum/action/cooldown/mob_cooldown/fire_breath/ice = BB_WHELP_STRAIGHTLINE_FIRE,
-		/datum/action/cooldown/mob_cooldown/fire_breath/ice/cross = BB_WHELP_WIDESPREAD_FIRE,
-	)
 
 	grant_actions_by_list(innate_actions)
 
@@ -92,3 +91,16 @@
 		return
 	target.gib(DROP_ALL_REMAINS)
 	adjustBruteLoss(-1 * heal_on_cannibalize)
+
+///Ash whelp, the "lava" variant of ice whelps.
+/mob/living/basic/mining/ice_whelp/ash
+	name = "ash whelp"
+	desc = "The offspring of an ash drake, weak in comparison but still terrifying."
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon_state = "ash_whelp"
+	icon_living = "ash_whelp"
+	icon_dead = "ash_whelp_dead"
+	innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/fire_breath = BB_WHELP_STRAIGHTLINE_FIRE,
+		/datum/action/cooldown/mob_cooldown/fire_breath/cross = BB_WHELP_WIDESPREAD_FIRE,
+	)

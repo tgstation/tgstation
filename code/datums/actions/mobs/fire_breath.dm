@@ -122,3 +122,19 @@
 	var/additional_offset = spin_count * angle_increment / 2
 	for (var/i in 1 to sectors)
 		fire_line(target, (angle_increment * i) + (additional_offset))
+
+/// Breathes fire in a plus shape
+/datum/action/cooldown/mob_cooldown/fire_breath/cross
+	name = "Fire all directions"
+	desc = "Unleash lines of fire in all directions"
+	button_icon = 'icons/effects/fire.dmi'
+	button_icon_state = "light"
+	cooldown_time = 4 SECONDS
+	click_to_activate = FALSE
+	fire_range = 6
+
+/datum/action/cooldown/mob_cooldown/fire_breath/cross/attack_sequence(atom/target)
+	playsound(owner.loc, fire_sound, 200, TRUE)
+	for(var/direction in GLOB.cardinals)
+		var/turf/target_fire_turf = get_ranged_target_turf(owner, direction, fire_range)
+		fire_line(target_fire_turf)

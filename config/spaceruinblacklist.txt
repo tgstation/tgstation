@@ -87,3 +87,4 @@
 #_maps/RandomRuins/SpaceRuins/waystation.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipdock.dmm
 #_maps/RandomRuins/SpaceRuins/whiteshipruin_box.dmm
+#_maps/RandomRuins/SpaceRuins/dragoontomb.dmm
