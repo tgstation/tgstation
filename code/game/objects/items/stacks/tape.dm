@@ -156,6 +156,7 @@
 
 /datum/embedding/sticky_tape/duct
 	embed_chance = 0 //Wrapping something in duct tape is basically ensuring it never embeds.
+
 /obj/item/stack/sticky_tape/duct/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!object_repair_value)
 		return NONE
