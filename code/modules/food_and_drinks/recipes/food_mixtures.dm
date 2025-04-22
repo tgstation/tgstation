@@ -283,8 +283,8 @@
 	reaction_flags = REACTION_INSTANT
 
 /datum/chemical_reaction/food/yoghurt2
-	required_reagents = list(/datum/reagent/consumable/ethanol/irish_cream = 1, /datum/reagent/consumable/ethanol/irish_cream = 1, /datum/reagent/consumable/berryjuice = 1)
-	results = list(/datum/reagent/consumable/yoghurt = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/irish_cream = 1, /datum/reagent/consumable/ethanol/gin = 1, /datum/reagent/consumable/berryjuice = 1)
+	results = list(/datum/reagent/consumable/yoghurt = 3)
 	mix_message = "That's the yoghurt effect."
 	reaction_flags = REACTION_INSTANT
 
