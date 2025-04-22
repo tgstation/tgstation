@@ -19,7 +19,6 @@
 	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape
 	greyscale_config = /datum/greyscale_config/tape
 	greyscale_colors = "#B2B2B2#BD6A62"
-	var/object_repair_value = 0
 
 /datum/embedding/sticky_tape
 	pain_mult = 0
@@ -80,54 +79,6 @@
 	if(isgrenade(target))
 		var/obj/item/grenade/sticky_bomb = target
 		sticky_bomb.sticky = TRUE
-
-	return ITEM_INTERACT_SUCCESS
-
-/obj/item/stack/sticky_tape/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!object_repair_value)
-		return NONE
-
-	if(!isobj(interacting_with) || !issilicon(interacting_with))
-		return NONE
-
-	if(iseffect(interacting_with))
-		return NONE
-
-	if(issilicon(interacting_with))
-		var/mob/living/silicon/robotic_pal = interacting_with
-		var/robot_is_damaged = robotic_pal.getBruteLoss()
-
-		if(!robot_is_damaged)
-			user.balloon_alert(user, "[robotic_pal] is not damaged!")
-			return ITEM_INTERACT_BLOCKING
-
-		user.visible_message(span_notice("[user] begins repairing [robotic_pal] with [src]."), span_notice("You begin repairing [robotic_pal] with [src]."))
-		playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
-
-		if(!do_after(user, 3 SECONDS, target = robotic_pal))
-			return ITEM_INTERACT_BLOCKING
-
-		robotic_pal.adjustBruteLoss(-object_repair_value)
-
-	else
-
-		var/obj/item/object_to_repair = interacting_with
-		var/object_is_damaged = object_to_repair.get_integrity() < object_to_repair.max_integrity
-
-		if(!object_is_damaged)
-			user.balloon_alert(user, "[object_to_repair] is not damaged!")
-			return ITEM_INTERACT_BLOCKING
-
-		user.visible_message(span_notice("[user] begins repairing [object_to_repair] with [src]."), span_notice("You begin repairing [object_to_repair] with [src]."))
-		playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
-
-		if(!do_after(user, 3 SECONDS, target = object_to_repair))
-			return ITEM_INTERACT_BLOCKING
-
-		object_to_repair.repair_damage(object_repair_value)
-
-	use(1)
-	to_chat(user, span_notice("You finish repairing [interacting_with] with [src]."))
 
 	return ITEM_INTERACT_SUCCESS
 
@@ -199,9 +150,58 @@
 	prefix = "duct taped"
 	conferred_embed = /datum/embedding/sticky_tape/duct
 	merge_type = /obj/item/stack/sticky_tape/duct
-	object_repair_value = 30
+	var/object_repair_value = 30
 	amount = 10
 	max_amount = 10
 
 /datum/embedding/sticky_tape/duct
 	embed_chance = 0 //Wrapping something in duct tape is basically ensuring it never embeds.
+
+
+/obj/item/stack/sticky_tape/duct/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!object_repair_value)
+		return NONE
+
+	if(!isobj(interacting_with) || !issilicon(interacting_with))
+		return NONE
+
+	if(iseffect(interacting_with))
+		return NONE
+
+	if(issilicon(interacting_with))
+		var/mob/living/silicon/robotic_pal = interacting_with
+		var/robot_is_damaged = robotic_pal.getBruteLoss()
+
+		if(!robot_is_damaged)
+			user.balloon_alert(user, "[robotic_pal] is not damaged!")
+			return ITEM_INTERACT_BLOCKING
+
+		user.visible_message(span_notice("[user] begins repairing [robotic_pal] with [src]."), span_notice("You begin repairing [robotic_pal] with [src]."))
+		playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
+
+		if(!do_after(user, 3 SECONDS, target = robotic_pal))
+			return ITEM_INTERACT_BLOCKING
+
+		robotic_pal.adjustBruteLoss(-object_repair_value)
+
+	else
+
+		var/obj/item/object_to_repair = interacting_with
+		var/object_is_damaged = object_to_repair.get_integrity() < object_to_repair.max_integrity
+
+		if(!object_is_damaged)
+			user.balloon_alert(user, "[object_to_repair] is not damaged!")
+			return ITEM_INTERACT_BLOCKING
+
+		user.visible_message(span_notice("[user] begins repairing [object_to_repair] with [src]."), span_notice("You begin repairing [object_to_repair] with [src]."))
+		playsound(user, 'sound/items/duct_tape/duct_tape_rip.ogg', 50, TRUE)
+
+		if(!do_after(user, 3 SECONDS, target = object_to_repair))
+			return ITEM_INTERACT_BLOCKING
+
+		object_to_repair.repair_damage(object_repair_value)
+
+	use(1)
+	to_chat(user, span_notice("You finish repairing [interacting_with] with [src]."))
+
+	return ITEM_INTERACT_SUCCESS
