@@ -303,7 +303,9 @@
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "vf" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/glass{
+	name = "Bar"
+	},
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/escape)
 "vq" = (
