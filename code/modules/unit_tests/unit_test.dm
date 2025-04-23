@@ -350,6 +350,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 	returnable_list += typesof(/obj/structure/transport/linear)
 	// Runtimes if the associated machinery does not exist, but not the base type
 	returnable_list += subtypesof(/obj/machinery/airlock_controller)
+	// Needs an associeted hud to exist (e.g to be able to get other planes for relaying)
+	returnable_list += subtypesof(/atom/movable/screen/plane_master)
 	// Always ought to have an associated escape menu. Any references it could possibly hold would need one regardless.
 	returnable_list += subtypesof(/atom/movable/screen/escape_menu)
 	// Can't spawn openspace above nothing, it'll get pissy at me
