@@ -515,6 +515,7 @@
 	ASSERT(isatom(src) || isimage(src))
 	for(var/name in filter_data)
 		qdel(filter_data[name])
+	filter_data = null
 	update_filters()
 
 /image/Destroy(force)
