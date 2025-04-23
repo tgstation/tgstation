@@ -44,12 +44,13 @@
 	name = "Catalysium P"
 	description = "This reagent is a prefactor to Ionic Modulator, and will react with stable plasma to create it."
 	color = "#bafa69"
+	ph = 1
 
 /datum/reagent/catalyst_precursor_temp
-	name = "Catalysium T" ///as in temperature
+	name = "Catalysium T"
 	description = "This reagent is a prefactor to Thermic Modulator, and will react with stable plasma to create it."
 	color = "#c91a1a"
-
+	ph = 13
 
 ///These affect medicines
 /datum/reagent/catalyst_agent/speed/medicine
