@@ -745,7 +745,7 @@
 
 	return open_lift_radial(user)
 
-/obj/structure/transport/linear/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/transport/linear/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(!radial_travel)
 		return ..()
 

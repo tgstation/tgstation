@@ -130,7 +130,7 @@
 	radiate()
 	return ..()
 
-/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, params)
+/turf/closed/wall/mineral/uranium/attackby(obj/item/W, mob/user, list/modifiers)
 	radiate()
 	return ..()
 
