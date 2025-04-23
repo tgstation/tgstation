@@ -644,3 +644,51 @@
       now stores various painting supplies instead.
   jlsnow301:
   - bugfix: Fixed more bugs in tgui-say. Admin chat shouldn't be cut off any more.
+2025-04-22:
+  DaCoolBoss:
+  - spellcheck: Removed 5 random wizard names. Added 6 to replace them.
+  EmptyLullaby:
+  - bugfix: The Quartermaster's skirt will no longer let one pixel of wild tail action
+      poke through the front.
+  Jacquerel:
+  - rscadd: The nebulastation pool has been deepened, please keep drunks out of the
+      deep end to prevent drowning.
+  JohnFulpWillard:
+  - config: Removed event time/weight multipliers, now all events vars are editable
+      in config.
+  - qol: The TV on the title screen has round info once the round has started or ended.
+  - bugfix: The TV now fits on non-widescreen screens.
+  - admin: Admins can now link a URL for maps, used to give feedback on said maps.
+      Accessible through the roundend report, escape menu, and stat panel.
+  - qol: AIs can track their borgs by clicking on them in the stat panel.
+  - qol: You can now directly go to the webmap of maps from the stat panel (assuming
+      it's set in config).
+  Melbert:
+  - rscadd: '"Common Second Language" quirk'
+  - qol: Language translations chunk sentences together better, making partial understanding
+      a bit easier to parse.
+  SmArtKar:
+  - bugfix: Fixed "shit be fucked" errors and missing lighting on shuttle ceilings
+      docked to bottom z levels of multiz maps
+2025-04-23:
+  Bisar:
+  - rscadd: The big manipulator now supports specifying whether the attached monkey
+      should use either combat mode, right clicking, or even both.
+  - qol: Ejecting monkeys from the big manipulator now uses a UI button instead.
+  - bugfix: You can no longer teleport monkeys into impossible areas with big manipulator
+      unbuckling.
+  - bugfix: You can no longer simultaneously buckle multiple monkeys into the big
+      manipulator.
+  - bugfix: The big manipulator will now properly clear old refs to former workers.
+  Goat:
+  - bugfix: The megacarp (shark) will now be able to fly through space when ridden
+      like its smaller carp siblings.
+  Saukykouko:
+  - rscadd: Added pony to the uplink!
+  necromanceranne:
+  - rscadd: Duct tape! Right-click objects and cyborgs with duct tape to repair them
+      if they have been damaged! Wrap objects in duct tape to make it completely incapable
+      of embedding! Find them in your nearest Part-Mart or Engi-Vend vending machines
+      today!
+  - balance: Part-Mart vending machines now have mousetraps, spare screwdrivers and
+      rifle stocks in their contraband section.
