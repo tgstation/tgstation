@@ -1,18 +1,19 @@
 ///////////////////////////PRECURSOR////////////////////////////
 /datum/chemical_reaction/catalyst_precursor_temp
 	results = list(/datum/reagent/catalyst_precursor_temp = 5)
-	required_reagents = list(/datum/reagent/phenol = 1, /datum/reagent/toxin/mutagen = 3, /datum/reagent/uranium = 1)
-	mix_message = "The solution steams"
-	required_temp = 0
-	optimal_temp = 800
-	overheat_temp = -1 //no overheat
+	required_reagents = list(/datum/reagent/phenol = 1, /datum/reagent/toxin/mutagen = 3, /datum/reagent/toxin/plasma = 1)
+	mix_message = "The solution steams and froths."
+	is_cold_recipe = TRUE
+	required_temp = 800
+	optimal_temp = 300
+	overheat_temp = -1
 	optimal_ph_min = 0.1
-	optimal_ph_max = 14
+	optimal_ph_max = 13.9
 	determin_ph_range = 5
 	temp_exponent_factor = 1
 	ph_exponent_factor = 0
-	thermic_constant = 400
-	H_ion_release = -0.02
+	thermic_constant = -400
+	H_ion_release = 0
 	rate_up_lim = 4
 	purity_min = 0.25
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
@@ -20,17 +21,17 @@
 /datum/chemical_reaction/catalyst_precursor_ph
 	results = list(/datum/reagent/catalyst_precursor_ph = 5)
 	required_reagents = list(/datum/reagent/catalyst_precursor_temp = 5)
-	mix_message = "The solution's viscosity increases."
-	required_temp = 0
-	optimal_temp = 300
-	overheat_temp = 600
+	mix_message = "The solution congeals."
+	required_temp = 50
+	optimal_temp = 500
+	overheat_temp = 500
 	optimal_ph_min = 6.5
 	optimal_ph_max = 7.5
 	determin_ph_range = 1
-	temp_exponent_factor = 0
+	temp_exponent_factor = 1
 	ph_exponent_factor = 3
 	thermic_constant = -800
-	H_ion_release = 0.02
+	H_ion_release = -0.02
 	rate_up_lim = 6
 	purity_min = 0.35
 	reaction_flags = REACTION_COMPETITIVE
@@ -48,6 +49,18 @@
 	rate_up_lim = 3
 	reaction_flags = REACTION_COMPETITIVE //Competes with /datum/chemical_reaction/prefactor_b
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
+
+///////////////////////////CATALYSTS////////////////////////////
+
+
+/datum/chemical_reaction/prefactor_a/purity_tester
+	results = list(/datum/reagent/reaction_agent/purity_tester = 5)
+	required_reagents = list(/datum/reagent/prefactor_a = 5, /datum/reagent/stable_plasma = 5)
+	H_ion_release = 0.05
+	thermic_constant = 0
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
+
+
 
 
 ///////////////////////////MEDICINES////////////////////////////
