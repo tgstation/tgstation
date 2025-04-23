@@ -58,7 +58,7 @@
 	gain_text = "He knew how to walk between the planes."
 
 	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/spell/fire_blast
 	name = "Volcano Blast"
@@ -68,7 +68,7 @@
 		When empowered, has instant cast time and blasts enemies with more flames."
 	gain_text = "No fire was hot enough to rekindle them. No fire was bright enough to save them. No fire is eternal."
 	action_to_add = /datum/action/cooldown/spell/charged/beam/fire_blast
-	cost = 1
+	cost = 2
 	research_tree_icon_frame = 7
 
 /datum/heretic_knowledge/armor/ash
@@ -99,7 +99,7 @@
 		/obj/item/flashlight/flare/candle = 4,
 	)
 	result_atoms = list(/obj/item/clothing/mask/madness_mask)
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/obj/clothing/masks.dmi'
 	research_tree_icon_state = "mad_mask"
 
@@ -128,12 +128,9 @@
 	gain_text = "The fire was inescapable, and yet, life remained in his charred body. \
 		The Nightwatcher was a particular man, always watching."
 	action_to_add = /datum/action/cooldown/spell/aoe/fiery_rebirth
-	cost = 1
+	cost = 2
 	research_tree_icon_frame = 5
-
-/datum/heretic_knowledge/spell/flame_birth/on_research(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
+	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/ultimate/ash_final
 	name = "Ashlord's Rite"

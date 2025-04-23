@@ -4,12 +4,21 @@
 	icon_state = "lintel"
 	initial_duration = 15 SECONDS
 
+/obj/effect/forcefield/wizard/heretic/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(isnull(mover.throwing))
+		return
+	var/datum/thrownthing/thrownthing = mover.throwing
+	var/datum/weakref/thrower = thrownthing.thrower
+	if(istype(thrower.resolve(), /obj/effect/forcefield/wizard/heretic))
+		return TRUE
+
 /obj/effect/forcefield/wizard/heretic/Bumped(mob/living/bumpee)
 	. = ..()
 	if(!istype(bumpee) || IS_HERETIC_OR_MONSTER(bumpee))
 		return
 	var/throwtarget = get_edge_target_turf(loc, get_dir(loc, get_step_away(bumpee, loc)))
-	bumpee.safe_throw_at(throwtarget, 10, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
+	bumpee.safe_throw_at(throwtarget, 10, 10, src, force = MOVE_FORCE_EXTREMELY_STRONG)
 	visible_message(span_danger("[src] repulses [bumpee] in a storm of paper!"))
 
 ///A heretic item that spawns a barrier at the clicked turf, 3 uses

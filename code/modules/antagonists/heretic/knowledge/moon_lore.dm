@@ -55,7 +55,7 @@
 	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
 
 	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/spell/moon_parade
 	name = "Lunar Parade"
@@ -63,7 +63,7 @@
 		when hitting someone they are forced to join the parade and suffer hallucinations."
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/armor/moon
 	desc = "Allows you to transmute a table, a mask and two sheets of iron to create a Resplendant Regalia. \
@@ -93,7 +93,7 @@
 		/obj/item/clothing/neck/tie = 1,
 	)
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulet)
-	cost = 1
+	cost = 2
 
 
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
@@ -133,13 +133,10 @@
 		The ringleader pointed up and the dim light of truth illuminated us further."
 
 	action_to_add = /datum/action/cooldown/spell/aoe/moon_ringleader
-	cost = 1
+	cost = 2
 
 	research_tree_icon_frame = 5
-
-/datum/heretic_knowledge/spell/moon_ringleader/on_research(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
+	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/ultimate/moon_final
 	name = "The Last Act"
@@ -221,7 +218,7 @@
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
-	source.adjustOrganLoss(ORGAN_SLOT_BRAIN, -25)
+	source.adjustOrganLoss(ORGAN_SLOT_BRAIN, -30)
 
 	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader
 	visible_hallucination_pulse(

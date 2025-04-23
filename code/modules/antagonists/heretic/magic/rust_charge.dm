@@ -7,6 +7,7 @@
 	charge_distance = 10
 	charge_damage = 25
 	cooldown_time = 45 SECONDS
+	charge_past = 0
 
 /datum/action/cooldown/mob_cooldown/charge/rust/Activate(atom/target_atom)
 	var/turf/open/start_turf = get_turf(owner)

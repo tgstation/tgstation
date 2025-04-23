@@ -61,7 +61,7 @@
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
 	action_to_add = /datum/action/cooldown/spell/realignment
-	cost = 1
+	cost = 2
 
 /// The amount of blood flow reduced per level of severity of gained bleeding wounds for Stance of the Torn Champion.
 #define BLOOD_FLOW_PER_SEVEIRTY -1
@@ -73,7 +73,7 @@
 		you gain increased resistance to gaining wounds and resistance to batons."
 	gain_text = "In time, it was he who stood alone among the bodies of his former comrades, awash in blood, none of it his own. \
 		He was without rival, equal, or purpose."
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/effects/blood.dmi'
 	research_tree_icon_state = "suitblood"
 	research_tree_icon_dir = SOUTH
@@ -152,12 +152,9 @@
 		I have made an enemy of all, and peace will never be known to me \
 		again. I have shattered bonds and severed all alliances. In this truth, \
 		I know now the fragility of comradery. My enemies will be all, divided."
-	cost = 1
+	cost = 2
 	action_to_add = /datum/action/cooldown/spell/wolves_among_sheep
-
-/datum/heretic_knowledge/spell/wolves_among_sheep/on_research(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
+	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/blade_upgrade/blade
 	name = "Empowered Blades"
@@ -178,11 +175,10 @@
 	. = ..()
 	RegisterSignal(user, COMSIG_TOUCH_HANDLESS_CAST, PROC_REF(on_grasp_cast))
 	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_blade_equipped))
-	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(do_melee_effects))
 
 /datum/heretic_knowledge/blade_upgrade/blade/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	UnregisterSignal(user, list(COMSIG_TOUCH_HANDLESS_CAST, COMSIG_MOB_EQUIPPED_ITEM, COMSIG_HERETIC_BLADE_ATTACK))
+	UnregisterSignal(user, list(COMSIG_TOUCH_HANDLESS_CAST, COMSIG_MOB_EQUIPPED_ITEM))
 
 ///Tries to infuse our held blade with our mansus grasp
 /datum/heretic_knowledge/blade_upgrade/blade/proc/on_grasp_cast(mob/living/carbon/cast_on)
@@ -271,7 +267,7 @@
 	gain_text = "Without thinking, I took the knife of a fallen soldier and threw with all my might. My aim was true! \
 		The Torn Champion smiled at their first taste of agony, and with a nod, their blades became my own."
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/furious_steel
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/ultimate/blade_final
 	name = "Maelstrom of Silver"

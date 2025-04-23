@@ -43,7 +43,7 @@
 	gain_text = "The distant stars crept into my dreams, roaring and screaming without reason. \
 		I spoke, and heard my own words echoed back."
 	action_to_add = /datum/action/cooldown/spell/cosmic_rune
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/spell/star_touch
 	name = "Star Touch"
@@ -54,7 +54,7 @@
 	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
 		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
 	action_to_add = /datum/action/cooldown/spell/touch/star_touch
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/armor/cosmic
 
@@ -76,7 +76,7 @@
 		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
@@ -121,6 +121,7 @@
 		return
 	if(combo_timer)
 		deltimer(combo_timer)
+	target.apply_status_effect(/datum/status_effect/star_mark, source)
 	combo_timer = addtimer(CALLBACK(src, PROC_REF(reset_combo), source), combo_duration, TIMER_STOPPABLE)
 	var/mob/living/second_target_resolved = second_target?.resolve()
 	var/mob/living/third_target_resolved = third_target?.resolve()
@@ -179,11 +180,8 @@
 		Nearby beings will also receive a star mark."
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
 	action_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
-	cost = 1
-
-/datum/heretic_knowledge/spell/cosmic_expansion/on_research(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
+	cost = 2
+	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/ultimate/cosmic_final
 	name = "Creators's Gift"

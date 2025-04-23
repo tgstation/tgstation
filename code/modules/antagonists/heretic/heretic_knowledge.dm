@@ -32,6 +32,8 @@
 	var/priority = 0
 	///If this is considered starting knowledge, TRUE if yes
 	var/is_starting_knowledge = FALSE
+	/// If the spell is final knowledge, disables blade breaking and removes the cap on how many blades we can make
+	var/is_final_knowledge = FALSE
 	/// In case we want to override the default UI icon getter and plug in our own icon instead.
 	/// if research_tree_icon_path is not null, research_tree_icon_state must also be specified or things may break
 	var/research_tree_icon_path
@@ -54,6 +56,8 @@
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
 	on_gain(user, our_heretic)
+	if(is_final_knowledge)
+		ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
 
 /**
  * Called when the knowledge is applied to a mob.

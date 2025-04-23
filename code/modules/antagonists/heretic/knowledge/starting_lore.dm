@@ -418,7 +418,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 		/obj/item/book = 1,
 		/obj/item/clothing/under = 1,
 	)
-	is_starting_knowledge = TRUE
+	cost = 1
 	research_tree_icon_path = 'icons/mob/actions/actions_animal.dmi'
 	research_tree_icon_state = "gaze"
 

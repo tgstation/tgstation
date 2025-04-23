@@ -44,9 +44,8 @@
 	current_button.add_overlay(current_button.button_overlay)
 
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/cast(mob/living/cast_on)
-	. = ..()
 	if(!iscarbon(owner))
-		return
+		return ..()
 	var/mob/living/carbon/carbon_owner = owner
 	carbon_owner.uncuff()
 	var/obj/item/clothing/shoes/shoes = carbon_owner.shoes
@@ -55,18 +54,17 @@
 
 	// Wearing Ash heretic armor empowers your spells if you have over 3 fire stacks
 	if(!ishuman(owner))
-		return
+		return ..()
 	var/mob/living/carbon/human/human_owner = owner
 	if(human_owner.fire_stacks <= 3)
 		return ..()
 	if(!istype(human_owner.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/ash))
 		return ..()
 
-	human_owner.SetStun(0)
-	human_owner.SetKnockdown(0)
-	human_owner.SetImmobilized(0)
-	human_owner.SetParalyzed(0)
 	human_owner.setStaminaLoss(0)
+	human_owner.SetAllImmobility(0)
+
+	return ..()
 
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/do_steam_effects()
 	return

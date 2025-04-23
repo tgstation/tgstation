@@ -799,6 +799,10 @@
 	if(get_knowledge(knowledge_type))
 		return FALSE
 	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()
+	if(initialized_knowledge.is_final_knowledge)
+		var/choice = tgui_alert(owner.current, "THIS WILL DISABLE BLADE BREAKING, Are you ready to research this?", "Get Final Spell?", list("Yes", "No"))
+		if(choice != "Yes")
+			return FALSE
 	researched_knowledge[knowledge_type] = initialized_knowledge
 	initialized_knowledge.on_research(owner.current, src)
 	update_static_data(owner.current)

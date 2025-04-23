@@ -42,6 +42,7 @@
 //---- Blade Passive
 // Gives you riposte while wielding a heretic blade
 // Cooldown starts at 20 and goes down 5 seconds per level
+// Makes you immune to fall damage/stun
 // Level 1 has a 20 second cooldown
 // Level 2 now counts as block
 // Level 3 only has the cooldown reduction (nothing else added)
@@ -57,10 +58,18 @@
 /datum/status_effect/heretic_passive/blade/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
+	RegisterSignal(owner, COMSIG_LIVING_Z_IMPACT, PROC_REF(z_impact_react))
 
 /datum/status_effect/heretic_passive/blade/on_remove()
 	. = ..()
 	UnregisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK)
+	UnregisterSignal(owner, COMSIG_LIVING_Z_IMPACT)
+
+/datum/status_effect/heretic_passive/blade/proc/z_impact_react(datum/source, levels, turf/fell_on)
+	SIGNAL_HANDLER
+	new /obj/effect/temp_visual/mook_dust(fell_on)
+	owner.visible_message(span_notice("[owner] lands on [fell_on] safely, and quite stylishly on [p_their()] feet"))
+	return ZIMPACT_CANCEL_DAMAGE | ZIMPACT_NO_MESSAGE | ZIMPACT_NO_SPIN
 
 /// Checks if we can counter-attack
 /datum/status_effect/heretic_passive/blade/proc/on_shield_reaction(
@@ -335,7 +344,6 @@
 // Level 1 provides healing and baton resist when standing on rust
 // Level 2 will heal wounds when standing on rust
 // Level 3 will restore lost limbs when standing on rust
-// Healing scales with every level of the passive
 /datum/status_effect/heretic_passive/rust/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
@@ -375,11 +383,11 @@
 	// Heals all damage + Stamina
 	var/need_mob_update = FALSE
 	var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
-	need_mob_update += source.adjustBruteLoss((-1 - passive_level) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss((-1 - passive_level) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss((-1 - passive_level) * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
-	need_mob_update += source.adjustOxyLoss((-1 - passive_level) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss((-5 * passive_level) * delta_time, updating_stamina = FALSE)
+	need_mob_update += source.adjustBruteLoss((-3) * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss((-3) * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss((-3) * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjustOxyLoss((-3) * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss((-15) * delta_time, updating_stamina = FALSE)
 	if(need_mob_update)
 		source.updatehealth()
 	// Reduces duration of stuns/etc

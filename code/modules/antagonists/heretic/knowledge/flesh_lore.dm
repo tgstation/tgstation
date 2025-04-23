@@ -100,7 +100,7 @@
 		/obj/item/food/grown/poppy = 1,
 	)
 	limit = 2
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_voiceless"
 
@@ -180,7 +180,7 @@
 	gain_text = "But they were not out of my reach for long. With every step, the screams grew, until at last \
 		I learned that they could be silenced."
 	action_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/armor/flesh
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh)
@@ -204,7 +204,7 @@
 		/obj/item/bodypart/arm/left = 1,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/raw_prophet
-	cost = 1
+	cost = 2
 	poll_ignore_define = POLL_IGNORE_RAW_PROPHET
 
 
@@ -242,13 +242,10 @@
 		/obj/item/paper = 1,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/stalker
-	cost = 1
+	cost = 2
 
 	poll_ignore_define = POLL_IGNORE_STALKER
-
-/datum/heretic_knowledge/summon/stalker/on_research(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
+	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/ultimate/flesh_final
 	name = "Priest's Final Hymn"

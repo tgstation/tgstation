@@ -69,10 +69,7 @@
 
 	action_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
 	cost = 1
-
-/datum/heretic_knowledge/spell/rust_charge/on_research(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
+	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/mark/rust_mark
 	name = "Mark of Rust"
@@ -88,7 +85,7 @@
 	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
 		they no longer looked man made. Or perhaps they never were in the first place."
 	action_to_add = /datum/action/cooldown/spell/pointed/rust_construction
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/armor/rust
 	desc = "Allows you to transmute a table, a mask and any trash item to create a Salvaged Remains. \
@@ -110,7 +107,7 @@
 		Already rusted surfaces are destroyed \ Also improves the rusting abilities of non rust-heretics."
 	gain_text = "All wise men know well not to visit the Rusted Hills... Yet the Blacksmith's tale was inspiring."
 	action_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
-	cost = 1
+	cost = 2
 	research_tree_icon_frame = 5
 
 /datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
@@ -146,7 +143,7 @@
 		The Blacksmith was gone, and you hold their blade. Champions of hope, the Rustbringer is nigh!"
 
 	action_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user)
 	. = ..()

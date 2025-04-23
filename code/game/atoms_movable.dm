@@ -1327,13 +1327,13 @@
 	return ..()
 
 // Calls throw_at after checking that the move strength is greater than the thrown atom's move resist. Identical args.
-/atom/movable/proc/safe_throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
+/atom/movable/proc/safe_throw_at(atom/target, range, speed, atom/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE)
 	if((force < (move_resist * MOVE_FORCE_THROW_RATIO)) || (move_resist == INFINITY))
 		return
 	return throw_at(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle)
 
 ///If this returns FALSE then callback will not be called.
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE, quickstart = TRUE, throw_datum_typepath = /datum/thrownthing)
+/atom/movable/proc/throw_at(atom/target, range, speed, atom/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, force = MOVE_FORCE_STRONG, gentle = FALSE, quickstart = TRUE, throw_datum_typepath = /datum/thrownthing)
 	. = FALSE
 
 	if(QDELETED(src))
@@ -1349,36 +1349,38 @@
 		pulledby.stop_pulling()
 
 	//They are moving! Wouldn't it be cool if we calculated their momentum and added it to the throw?
-	if (thrower && thrower.last_move && thrower.client && thrower.client.move_delay >= world.time + world.tick_lag*2)
-		var/user_momentum = thrower.cached_multiplicative_slowdown
-		if (!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
-			user_momentum = world.tick_lag
+	if(ismob(thrower))
+		var/mob/thrower_mob = thrower
+		if(thrower_mob.last_move && thrower_mob.client && thrower_mob.client.move_delay >= world.time + world.tick_lag*2)
+			var/user_momentum = thrower_mob.cached_multiplicative_slowdown
+			if (!user_momentum) //no movement_delay, this means they move once per byond tick, lets calculate from that instead.
+				user_momentum = world.tick_lag
 
-		user_momentum = 1 / user_momentum // convert from ds to the tiles per ds that throw_at uses.
+			user_momentum = 1 / user_momentum // convert from ds to the tiles per ds that throw_at uses.
 
-		if (get_dir(thrower, target) & last_move)
-			user_momentum = user_momentum //basically a noop, but needed
-		else if (get_dir(target, thrower) & last_move)
-			user_momentum = -user_momentum //we are moving away from the target, lets slowdown the throw accordingly
-		else
-			user_momentum = 0
+			if (get_dir(thrower_mob, target) & last_move)
+				user_momentum = user_momentum //basically a noop, but needed
+			else if (get_dir(target, thrower_mob) & last_move)
+				user_momentum = -user_momentum //we are moving away from the target, lets slowdown the throw accordingly
+			else
+				user_momentum = 0
 
-
-		if (user_momentum)
-			//first lets add that momentum to range.
-			range *= (user_momentum / speed) + 1
-			//then lets add it to speed
-			speed += user_momentum
-			if (speed <= 0)
-				return//no throw speed, the user was moving too fast.
+			if (user_momentum)
+				//first lets add that momentum to range.
+				range *= (user_momentum / speed) + 1
+				//then lets add it to speed
+				speed += user_momentum
+				if (speed <= 0)
+					return//no throw speed, the user was moving too fast.
 
 	. = TRUE // No failure conditions past this point.
 
 	var/target_zone
 	if(QDELETED(thrower))
 		thrower = null //Let's not pass a qdeleting reference if any.
-	else
-		target_zone = thrower.zone_selected
+	else if(ismob(thrower))
+		var/mob/thrower_mob = thrower
+		target_zone = thrower_mob.zone_selected
 
 	var/datum/thrownthing/thrown_thing = new throw_datum_typepath(src, target, get_dir(src, target), range, speed, thrower, diagonals_first, force, gentle, callback, target_zone)
 

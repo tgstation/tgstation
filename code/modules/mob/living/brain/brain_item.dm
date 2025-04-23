@@ -516,11 +516,11 @@
 	if(!resilience)
 		resilience = initial(trauma.resilience)
 
-	if(HAS_TRAIT(src, TRAIT_RESIST_MILD_TRAUMA) && istype(trauma, BRAIN_TRAUMA_MILD))
+	if(HAS_TRAIT(src, TRAIT_RESIST_MILD_TRAUMA) && ispath(trauma, BRAIN_TRAUMA_MILD))
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_RESIST_SEVERE_TRAUMA) && istype(trauma, BRAIN_TRAUMA_SEVERE))
+	if(HAS_TRAIT(src, TRAIT_RESIST_SEVERE_TRAUMA) && ispath(trauma, BRAIN_TRAUMA_SEVERE))
 		return FALSE
-	if(HAS_TRAIT(src, TRAIT_RESIST_MAGIC_TRAUMA) && istype(trauma, BRAIN_TRAUMA_MAGIC))
+	if(HAS_TRAIT(src, TRAIT_RESIST_MAGIC_TRAUMA) && ispath(trauma, BRAIN_TRAUMA_MAGIC))
 		return FALSE
 
 	var/resilience_tier_count = 0

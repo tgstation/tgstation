@@ -47,6 +47,16 @@
 	carbon_target.adjust_silence(10 SECONDS)
 	carbon_target.apply_status_effect(/datum/status_effect/void_chill, 2)
 
+/datum/heretic_knowledge/spell/void_phase
+	name = "Void Phase"
+	desc = "Grants you Void Phase, a long range targeted teleport spell. \
+		Additionally causes damage to heathens around your original and target destination."
+	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
+		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
+	action_to_add = /datum/action/cooldown/spell/pointed/void_phase
+	cost = 2
+	research_tree_icon_frame = 7
+
 /datum/heretic_knowledge/spell/void_prison
 	name = "Void Prison"
 	desc = "Grants you Void Prison, a spell that places your victim into ball, making them unable to do anything or speak. \
@@ -57,7 +67,7 @@
 		My smiling face turns to regard me, reflecting back in glassy eyes the empty path I have been lead down."
 
 	action_to_add = /datum/action/cooldown/spell/pointed/void_prison
-	cost = 1
+	cost = 2
 
 /datum/heretic_knowledge/armor/void
 	desc = "Allows you to transmute a table and a mask in sub-zero temperatures to create a Hollow Weave. \
@@ -85,28 +95,15 @@
 
 	return ..()
 
-/datum/heretic_knowledge/spell/void_conduit
-	name = "Void Conduit"
-	desc = "Grants you Void Conduit, a spell which summons a pulsing gate to the Void itself. Every pulse breaks windows and airlocks, while afflicting Heathens with an eldritch chill and shielding Heretics against low pressure."
-	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
-		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
-		The doors won't close. I can't keep the cold out now."
-	action_to_add = /datum/action/cooldown/spell/conjure/void_conduit
-	cost = 1
+/datum/heretic_knowledge/spell/void_pull
+	name = "Void Pull"
+	desc = "Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly."
+	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
+		The Aristocrat reveals themselves to me again. They tell me I am late. Their pull is immense, I cannot turn back."
 
-/datum/heretic_knowledge/spell/void_conduit/on_research(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	ADD_TRAIT(user, TRAIT_UNLIMITED_BLADES, FINAL_KNOWLEDGE_TRAIT)
-
-/datum/heretic_knowledge/spell/void_phase
-	name = "Void Phase"
-	desc = "Grants you Void Phase, a long range targeted teleport spell. \
-		Additionally causes damage to heathens around your original and target destination."
-	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
-		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
-	action_to_add = /datum/action/cooldown/spell/pointed/void_phase
-	cost = 1
-	research_tree_icon_frame = 7
+	action_to_add = /datum/action/cooldown/spell/aoe/void_pull
+	cost = 2
+	research_tree_icon_frame = 6
 
 /datum/heretic_knowledge/blade_upgrade/void
 	name = "Seeking Blade"
@@ -135,17 +132,15 @@
 /datum/heretic_knowledge/blade_upgrade/void/proc/follow_up_attack(mob/living/user, mob/living/target, obj/item/melee/sickly_blade/blade)
 	blade.melee_attack_chain(user, target)
 
-/datum/heretic_knowledge/spell/void_pull
-	name = "Void Pull"
-	desc = "Grants you Void Pull, a spell that pulls all nearby heathens towards you, stunning them briefly."
-	gain_text = "All is fleeting, but what else stays? I'm close to ending what was started. \
-		The Aristocrat reveals themselves to me again. They tell me I am late. Their pull is immense, I cannot turn back."
-
-	action_to_add = /datum/action/cooldown/spell/aoe/void_pull
-	cost = 1
-
-
-	research_tree_icon_frame = 6
+/datum/heretic_knowledge/spell/void_conduit
+	name = "Void Conduit"
+	desc = "Grants you Void Conduit, a spell which summons a pulsing gate to the Void itself. Every pulse breaks windows and airlocks, while afflicting Heathens with an eldritch chill and shielding Heretics against low pressure."
+	gain_text = "The hum in the still, cold air turns to a cacophonous rattle. \
+		Over the noise, there is no distinction to the clattering of window panes and the yawning knowledge that ricochets through my skull. \
+		The doors won't close. I can't keep the cold out now."
+	action_to_add = /datum/action/cooldown/spell/conjure/void_conduit
+	cost = 2
+	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"
