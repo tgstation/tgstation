@@ -210,7 +210,7 @@
 
 	taser = null
 	firer = null
-	if(!QDELING(tase_line))
+	if(tase_line && !QDELING(tase_line))
 		QDEL_NULL(tase_line)
 	else
 		tase_line = null
