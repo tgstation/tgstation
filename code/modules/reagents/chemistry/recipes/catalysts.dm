@@ -3,16 +3,16 @@
 	results = list(/datum/reagent/catalyst_precursor_temp = 5)
 	required_reagents = list(/datum/reagent/phenol = 1, /datum/reagent/toxin/mutagen = 3, /datum/reagent/uranium = 1)
 	mix_message = "The solution steams"
-	required_temp = 300
-	optimal_temp = 700
-	overheat_temp = 1000
+	required_temp = 800
+	optimal_temp = 300
+	overheat_temp = -1 //no overheat
 	optimal_ph_min = 2
 	optimal_ph_max = 12
 	determin_ph_range = 5
 	temp_exponent_factor = 1
 	ph_exponent_factor = 0
-	thermic_constant = 200
-	H_ion_release = -0.02
+	thermic_constant = -400
+	H_ion_release = 0
 	rate_up_lim = 4
 	purity_min = 0.25
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
@@ -21,20 +21,18 @@
 	results = list(/datum/reagent/prefactor_a = 5)
 	required_reagents = list(/datum/reagent/catalyst_precursor_temp = 5)
 	mix_message = "The solution's viscosity increases."
-	is_cold_recipe = TRUE
-	required_temp = 1
-	optimal_temp = 500
-	overheat_temp = 
-	optimal_ph_min = 6.5
-	optimal_ph_max = 7.5
-	determin_ph_range = 1
+	required_temp = 800
+	optimal_temp = 300
+	overheat_temp = -1 //no overheat
+	optimal_ph_min = 2
+	optimal_ph_max = 12
+	determin_ph_range = 5
 	temp_exponent_factor = 1
-	ph_exponent_factor = 3
+	ph_exponent_factor = 0
 	thermic_constant = -400
-	H_ion_release = 0.02
+	H_ion_release = 0
 	rate_up_lim = 4
 	purity_min = 0.25
-	reaction_flags = REACTION_COMPETITIVE
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
 
 
