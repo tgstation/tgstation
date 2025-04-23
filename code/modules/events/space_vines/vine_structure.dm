@@ -30,6 +30,7 @@
 /obj/structure/spacevine/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CHASM_DESTROYED, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_INVERTED_DEMOLITION, INNATE_TRAIT)
 	add_atom_colour("#ffffff", FIXED_COLOUR_PRIORITY)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -77,15 +78,13 @@
 		qdel(src)
 
 /obj/structure/spacevine/attacked_by(obj/item/item, mob/living/user)
-	var/damage_dealt = item.force
-	if(item.get_sharpness())
-		damage_dealt *= 4
+	LAZYINITLIST(modifiers)
 	if(item.damtype == BURN)
-		damage_dealt *= 4
-
-	for(var/datum/spacevine_mutation/mutation in mutations)
-		damage_dealt = mutation.on_hit(src, user, item, damage_dealt) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
-	take_damage(damage_dealt, item.damtype, MELEE, 1)
+		modifiers[FORCE_MULTIPLIER] *= 4
+	if(item.get_sharpness())
+		modifiers[FORCE_MULTIPLIER] *= 4
+	modifiers[SILENCE_DEFAULT_MESSAGES] = TRUE
+	return ..()
 
 /obj/structure/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

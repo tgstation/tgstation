@@ -225,7 +225,7 @@
 
 	if(get(src, /mob/living) == user) // telekinesis.
 		user.do_attack_animation(target_mob)
-	if(!target_mob.attacked_by(src, user))
+	if(!target_mob.attacked_by(src, user, modifiers))
 		return TRUE
 
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target_mob, user, modifiers)
@@ -260,30 +260,32 @@
 	user.changeNext_move(attack_speed)
 	if(get(src, /mob/living) == user) // telekinesis.
 		user.do_attack_animation(attacked_atom)
-	attacked_atom.attacked_by(src, user)
+	attacked_atom.attacked_by(src, user, modifiers)
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, attacked_atom, user, modifiers)
 	SEND_SIGNAL(attacked_atom, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, modifiers)
 	afterattack(attacked_atom, user, modifiers)
 	return FALSE // unhandled
 
 /// Called from [/obj/item/proc/attack_atom] and [/obj/item/proc/attack] if the attack succeeds
-/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user)
+/atom/proc/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers)
 	if(!uses_integrity)
 		CRASH("attacked_by() was called on an object that doesn't use integrity!")
 
-	if(!attacking_item.force)
-		return
+	var/final_force = (LAZYACCESS(modifiers, FORCE_OVERRIDE) || attacking_item.force) * (LAZYACCESS(modifiers, FORCE_MULTIPLIER) || 1)
+	if(final_force <= 0)
+		return 0
 
-	var/damage = take_damage(attacking_item.force, attacking_item.damtype, MELEE, 1, get_dir(src, user))
+	var/damage = take_damage(final_force, attacking_item.damtype, MELEE, 1, get_dir(src, user))
 	//only witnesses close by and the victim see a hit message.
 	user.visible_message(span_danger("[user] hits [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), \
 		span_danger("You hit [src] with [attacking_item][damage ? "." : ", without leaving a mark!"]"), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
+	return damage
 
 /area/attacked_by(obj/item/attacking_item, mob/living/user)
 	CRASH("areas are NOT supposed to have attacked_by() called on them!")
 
-/mob/living/attacked_by(obj/item/attacking_item, mob/living/user)
+/mob/living/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers)
 
 	var/targeting = check_zone(user.zone_selected)
 	if(user != src)
@@ -304,9 +306,9 @@
 			weak_against_armour = attacking_item.weak_against_armour,
 		), ARMOR_MAX_BLOCK)
 
-	var/damage = attacking_item.force
+	var/final_force = (LAZYACCESS(modifiers, FORCE_OVERRIDE) || attacking_item.force) * (LAZYACCESS(modifiers, FORCE_MULTIPLIER) || 1)
 	if(mob_biotypes & MOB_ROBOTIC)
-		damage *= attacking_item.get_demolition_modifier(src)
+		final_force *= attacking_item.get_demolition_modifier(src)
 
 	var/wounding = attacking_item.wound_bonus
 	if((attacking_item.item_flags & SURGICAL_TOOL) && !user.combat_mode && body_position == LYING_DOWN && (LAZYLEN(surgeries) > 0))
@@ -314,20 +316,20 @@
 
 	if(user != src)
 		// This doesn't factor in armor, or most damage modifiers (physiology). Your mileage may vary
-		if(check_block(attacking_item, damage, "\the [attacking_item]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
-			return FALSE
+		if(check_block(attacking_item, final_force, "\the [attacking_item]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
+			return 0
 
 	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
 
-	if(damage <= 0)
-		return TRUE
+	if(final_force <= 0)
+		return 1
 
 	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
 		SSblackbox.record_feedback("tally", "zone_targeted", 1, targeting_human_readable)
 
 	var/damage_done = apply_damage(
-		damage = damage,
+		damage = final_force,
 		damagetype = attacking_item.damtype,
 		def_zone = targeting,
 		blocked = armor_block,
@@ -340,7 +342,7 @@
 
 	attack_effects(damage_done, targeting, armor_block, attacking_item, user)
 
-	return TRUE
+	return damage_done
 
 /**
  * Called when we take damage, used to cause effects such as a blood splatter.

@@ -59,14 +59,14 @@
 		damage_amount = 0
 	. = ..()
 
-/obj/structure/alien/resin/flower_bud/attacked_by(obj/item/item, mob/living/user)
-	var/damage_dealt = item.force
+/obj/structure/alien/resin/flower_bud/attacked_by(obj/item/item, mob/living/user, list/modifiers)
+	LAZYINITLIST(modifiers)
 	if(item.damtype == BURN)
-		damage_dealt *= 4
+		modifiers[FORCE_MULTIPLIER] *= 4
 	if(item.get_sharpness())
-		damage_dealt *= 16 // alien resin applies 75% reduction to brute damage so this actually x4 damage
-
-	take_damage(damage_dealt, item.damtype, MELEE, 1)
+		modifiers[FORCE_MULTIPLIER] *= 16 // alien resin applies 75% reduction to brute damage so this actually x4 damage
+	modifiers[SILENCE_DEFAULT_MESSAGES] = TRUE
+	return ..()
 
 /obj/structure/alien/resin/flower_bud/Destroy()
 	QDEL_LIST(vines)
