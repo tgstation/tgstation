@@ -670,3 +670,25 @@
   SmArtKar:
   - bugfix: Fixed "shit be fucked" errors and missing lighting on shuttle ceilings
       docked to bottom z levels of multiz maps
+2025-04-23:
+  Bisar:
+  - rscadd: The big manipulator now supports specifying whether the attached monkey
+      should use either combat mode, right clicking, or even both.
+  - qol: Ejecting monkeys from the big manipulator now uses a UI button instead.
+  - bugfix: You can no longer teleport monkeys into impossible areas with big manipulator
+      unbuckling.
+  - bugfix: You can no longer simultaneously buckle multiple monkeys into the big
+      manipulator.
+  - bugfix: The big manipulator will now properly clear old refs to former workers.
+  Goat:
+  - bugfix: The megacarp (shark) will now be able to fly through space when ridden
+      like its smaller carp siblings.
+  Saukykouko:
+  - rscadd: Added pony to the uplink!
+  necromanceranne:
+  - rscadd: Duct tape! Right-click objects and cyborgs with duct tape to repair them
+      if they have been damaged! Wrap objects in duct tape to make it completely incapable
+      of embedding! Find them in your nearest Part-Mart or Engi-Vend vending machines
+      today!
+  - balance: Part-Mart vending machines now have mousetraps, spare screwdrivers and
+      rifle stocks in their contraband section.
