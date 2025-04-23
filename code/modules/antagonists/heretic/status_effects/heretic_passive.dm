@@ -11,13 +11,34 @@
 	///What level is our passive currently on
 	var/passive_level = HERETIC_LEVEL_START
 
+/datum/status_effect/heretic_passive/on_apply()
+	. = ..()
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
+	if(!heretic_datum)
+		return FALSE
+	// Just in case of shenanigans, assume the antag datum is correct about our level
+	if(heretic_datum.passive_level == 3)
+		heretic_level_final()
+		return
+	if(heretic_datum.passive_level == 2)
+		heretic_level_upgrade()
+		return
+
 /// Gives our first upgrade
 /datum/status_effect/heretic_passive/proc/heretic_level_upgrade()
+	SHOULD_CALL_PARENT(TRUE)
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	passive_level = HERETIC_LEVEL_UPGRADE
+	heretic_datum.passive_level = HERETIC_LEVEL_UPGRADE
 
 /// Gives our final upgrade
 /datum/status_effect/heretic_passive/proc/heretic_level_final()
+	SHOULD_CALL_PARENT(TRUE)
+	if(passive_level == HERETIC_LEVEL_START)
+		heretic_level_upgrade()
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	passive_level = HERETIC_LEVEL_FINAL
+	heretic_datum.passive_level = HERETIC_LEVEL_FINAL
 
 //---- Ash Passive
 // Level 1 grants heat and ash storm immunity

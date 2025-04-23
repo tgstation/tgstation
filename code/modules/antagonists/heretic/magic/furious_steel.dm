@@ -10,7 +10,7 @@
 	sound = 'sound/items/weapons/guillotine.ogg'
 
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 60 SECONDS
+	cooldown_time = 30 SECONDS
 	invocation = "F'LSH'NG S'LV'R!"
 	invocation_type = INVOCATION_SHOUT
 

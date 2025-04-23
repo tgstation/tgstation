@@ -449,8 +449,6 @@
 /// The amount of knowledge points the knowledge ritual gives on success.
 #define KNOWLEDGE_RITUAL_POINTS 4
 
-// XANTODO Don't forget to include knowledge ritual as a part of each path's respective passive
-
 /**
  * A subtype of knowledge that generates random ritual components.
  */
@@ -607,6 +605,9 @@
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.ascended = TRUE
+	// In case we skipped ritual of knowledge
+	var/datum/status_effect/heretic_passive/our_passive = user.has_status_effect(/datum/status_effect/heretic_passive)
+	our_passive?.heretic_level_final()
 
 	// Show the cool red gradiant in our UI
 	heretic_datum.update_static_data(user)

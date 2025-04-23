@@ -71,6 +71,8 @@
 	)
 	/// Simpler version of above used to limit amount of loot that can be hoarded
 	var/rewards_given = 0
+	/// Our heretic passive level. Tracked here in case of body moving shenanigans
+	var/passive_level = 1
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)
