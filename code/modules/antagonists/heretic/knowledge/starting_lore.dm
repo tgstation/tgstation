@@ -68,8 +68,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	name = "The Living Heart"
 	desc = "Grants you a Living Heart, allowing you to track sacrifice targets. \
 		Should you lose your heart, you can transmute a poppy and a pool of blood \
-		to awaken your heart into a Living Heart. If your heart is cybernetic, \
-		you will additionally require a usable organic heart in the transmutation."
+		to awaken your heart into a Living Heart. If your heart is Cybernetic, \
+		you will be unable to reawaken it."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/food/grown/poppy = 1,
