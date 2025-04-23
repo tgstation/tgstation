@@ -3,36 +3,50 @@
 	results = list(/datum/reagent/catalyst_precursor_temp = 5)
 	required_reagents = list(/datum/reagent/phenol = 1, /datum/reagent/toxin/mutagen = 3, /datum/reagent/uranium = 1)
 	mix_message = "The solution steams"
-	required_temp = 800
-	optimal_temp = 300
+	required_temp = 0
+	optimal_temp = 800
 	overheat_temp = -1 //no overheat
-	optimal_ph_min = 2
-	optimal_ph_max = 12
+	optimal_ph_min = 0.1
+	optimal_ph_max = 14
 	determin_ph_range = 5
 	temp_exponent_factor = 1
 	ph_exponent_factor = 0
-	thermic_constant = -400
-	H_ion_release = 0
+	thermic_constant = 400
+	H_ion_release = -0.02
 	rate_up_lim = 4
 	purity_min = 0.25
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
 
-/datum/chemical_reaction/prefactor_a
-	results = list(/datum/reagent/prefactor_a = 5)
+/datum/chemical_reaction/catalyst_precursor_ph
+	results = list(/datum/reagent/catalyst_precursor_ph = 5)
 	required_reagents = list(/datum/reagent/catalyst_precursor_temp = 5)
 	mix_message = "The solution's viscosity increases."
-	required_temp = 800
+	required_temp = 0
 	optimal_temp = 300
-	overheat_temp = -1 //no overheat
-	optimal_ph_min = 2
-	optimal_ph_max = 12
-	determin_ph_range = 5
-	temp_exponent_factor = 1
-	ph_exponent_factor = 0
-	thermic_constant = -400
-	H_ion_release = 0
-	rate_up_lim = 4
-	purity_min = 0.25
+	overheat_temp = 600
+	optimal_ph_min = 6.5
+	optimal_ph_max = 7.5
+	determin_ph_range = 1
+	temp_exponent_factor = 0
+	ph_exponent_factor = 3
+	thermic_constant = -800
+	H_ion_release = 0.02
+	rate_up_lim = 6
+	purity_min = 0.35
+	reaction_flags = REACTION_COMPETITIVE
+	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
+
+/datum/chemical_reaction/catalyst_precursor/ph/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
+	. = ..()
+	if(holder.has_reagent(/datum/reagent/gold))
+		holder.remove_reagent(/datum/reagent/gold, 1)
+		reaction.delta_t *= 5
+
+/datum/chemical_reaction/catalyst_precursor_temp/competitive
+	results = list(/datum/reagent/catalyst_precursor_temp = 5)
+	required_reagents = list(/datum/reagent/catalyst_precursor_ph = 5)
+	rate_up_lim = 3
+	reaction_flags = REACTION_COMPETITIVE //Competes with /datum/chemical_reaction/prefactor_b
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
 
 
