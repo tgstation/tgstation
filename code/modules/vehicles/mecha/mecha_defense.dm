@@ -314,7 +314,7 @@
 		return
 
 /obj/vehicle/sealed/mecha/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers)
-	var/final_force = (LAZYACCESS(modifiers, FORCE_OVERRIDE) || attacking_item.force) * (LAZYACCESS(modifiers, FORCE_MULTIPLIER) || 1)
+	var/final_force = CALCULATE_FORCE(attacking_item, modifiers)
 	if(!final_force)
 		return 0
 

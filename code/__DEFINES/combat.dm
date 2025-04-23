@@ -379,5 +379,20 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 #define ELECTROCUTE_DAMAGE(energy) (energy >= 1 KILO JOULES ? clamp(20 + round(energy / JOULES_PER_DAMAGE), 20, 195) + rand(-5,5) : 0)
 
 #define FORCE_OVERRIDE "force_override"
+#define FORCE_MODIFIER "force_modifier"
 #define FORCE_MULTIPLIER "force_multiplier"
 #define SILENCE_DEFAULT_MESSAGES "silence_default_messages"
+
+/// Used in attack chain to add or remove force from the attack.
+#define MODIFY_ATTACK_FORCE(modifiers, amount) \
+	if(!islist(modifiers)) { modifiers = list() }; \
+	modifiers[FORCE_MODIFIER] += amount;
+
+#define SET_ATTACK_FORCE(modifiers, value) \
+	if(!islist(modifiers)) { modifiers = list() }; \
+	modifiers[FORCE_OVERRIDE] = value;
+
+/// Calculates the final force of some item based on modifiers
+/// Needs to have support for force overrides and multipliers of 0 (hence why we ternaries are used over 'or's)
+#define CALCULATE_FORCE(some_item, modifiers) \
+	((((FORCE_OVERRIDE in modifiers) ? modifiers[FORCE_OVERRIDE] : some_item.force) + (modifiers?[FORCE_MODIFIER] || 0)) * ((FORCE_MULTIPLIER in modifiers) ? modifiers[FORCE_MULTIPLIER] : 1))

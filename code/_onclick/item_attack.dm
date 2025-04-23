@@ -271,7 +271,7 @@
 	if(!uses_integrity)
 		CRASH("attacked_by() was called on an object that doesn't use integrity!")
 
-	var/final_force = (LAZYACCESS(modifiers, FORCE_OVERRIDE) || attacking_item.force) * (LAZYACCESS(modifiers, FORCE_MULTIPLIER) || 1)
+	var/final_force = CALCULATE_FORCE(attacking_item, modifiers)
 	if(final_force <= 0)
 		return 0
 
@@ -306,7 +306,7 @@
 			weak_against_armour = attacking_item.weak_against_armour,
 		), ARMOR_MAX_BLOCK)
 
-	var/final_force = (LAZYACCESS(modifiers, FORCE_OVERRIDE) || attacking_item.force) * (LAZYACCESS(modifiers, FORCE_MULTIPLIER) || 1)
+	var/final_force = CALCULATE_FORCE(attacking_item, modifiers)
 	if(mob_biotypes & MOB_ROBOTIC)
 		final_force *= attacking_item.get_demolition_modifier(src)
 

@@ -39,7 +39,7 @@
 		return
 
 	alt_attacking = TRUE
-	source.force += force_mod
+	MODIFY_ATTACK_FORCE(modifiers, force_mod)
 	base_sharpness = source.sharpness
 	source.sharpness = alt_sharpness
 	if (!isnull(verbs_continuous))
@@ -54,7 +54,6 @@
 /datum/component/alternative_sharpness/proc/disable_alt_attack()
 	var/obj/item/weapon = parent
 	alt_attacking = FALSE
-	weapon.force -= force_mod
 	weapon.attack_verb_continuous = base_continuous
 	weapon.attack_verb_simple = base_simple
 	weapon.sharpness = base_sharpness
