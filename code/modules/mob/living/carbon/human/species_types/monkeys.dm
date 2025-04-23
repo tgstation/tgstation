@@ -182,15 +182,3 @@
 	return ..()
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE
-
-/// Monkeys you can play as on monkey day
-/datum/species/monkey/roundstart
-	inherent_traits = list(
-		TRAIT_BORN_MONKEY,
-		TRAIT_NO_AUGMENTS,
-		TRAIT_NO_BLOOD_OVERLAY,
-		TRAIT_NO_DNA_COPY,
-		TRAIT_NO_UNDERWEAR,
-		TRAIT_VENTCRAWLER_NUDE,
-		TRAIT_WEAK_SOUL,
-	)
