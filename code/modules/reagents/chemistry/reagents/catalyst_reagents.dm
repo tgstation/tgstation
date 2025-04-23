@@ -39,6 +39,18 @@
 	if(.)
 		equilibrium.thermic_mod = ((creation_purity-0.5)*2)*modifier //So a purity 1 = the modifier, and a purity 0 = the inverse modifier
 
+///Catalyst precursors (oh boy here i go competing again). P is harder to make, since ph catalyst is the more useful of the two.
+/datum/reagent/catalyst_precursor_ph
+	name = "Catalysium P"
+	description = "This reagent is a prefactor to Ionic Modulator, and will react with stable plasma to create it."
+	color = "#bafa69"
+
+/datum/reagent/catalyst_precursor_temp
+	name = "Catalysium T" ///as in temperature
+	description = "This reagent is a prefactor to Thermic Modulator, and will react with stable plasma to create it."
+	color = "#c91a1a"
+
+
 ///These affect medicines
 /datum/reagent/catalyst_agent/speed/medicine
 	name = "Palladium Synthate Catalyst"
