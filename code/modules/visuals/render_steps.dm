@@ -56,7 +56,7 @@
 	//RESET_COLOR is obvious I hope
 	appearance_flags = KEEP_APART|KEEP_TOGETHER|RESET_COLOR|RESET_TRANSFORM
 
-/atom/movable/render_step/color/Initialize(mapload, atom/source, use_original, color=TRUE)
+/atom/movable/render_step/color/Initialize(mapload, atom/source, use_original=TRUE, color)
 	. = ..()
 	src.color = color
 
