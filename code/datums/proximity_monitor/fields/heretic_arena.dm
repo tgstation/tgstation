@@ -158,16 +158,6 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	owner.add_overlay(crown_overlay)
 	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 
-	// The mansus celebrates your efforts
-	if(IS_HERETIC(owner))
-		owner.heal_overall_damage(60, 60, 60)
-		owner.adjustToxLoss(-60, forced = TRUE) // Slime heretics everywhere...
-		owner.adjustOxyLoss(-60)
-		if(iscarbon(owner))
-			var/mob/living/carbon/carbon_owner = owner
-			for(var/datum/wound/wound as anything in carbon_owner.all_wounds)
-				wound.remove_wound()
-
 	if(arena_victor) // No need to spam if we've already killed at least 1 person
 		return
 	if(IS_HERETIC(owner))

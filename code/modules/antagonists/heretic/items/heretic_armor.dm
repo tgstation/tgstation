@@ -7,7 +7,6 @@
 	desc = "A torn, dust-caked hood. Strange eyes line the inside."
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	flash_protect = FLASH_PROTECTION_WELDER
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/Initialize(mapload)
 	. = ..()
@@ -28,10 +27,10 @@
 	var/hood_up = FALSE
 
 /datum/armor/cultrobes_eldritch
-	melee = 50
-	bullet = 50
-	laser = 50
-	energy = 50
+	melee = 30
+	bullet = 30
+	laser = 30
+	energy = 30
 	bomb = 35
 	bio = 20
 	fire = 20
