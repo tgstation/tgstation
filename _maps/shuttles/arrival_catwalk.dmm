@@ -245,7 +245,7 @@
 "Ez" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/docking_port/mobile/arrivals{
-	dir = 2;
+	dir = 1;
 	name = "catwalk arrivals shuttle"
 	},
 /turf/open/floor/plating,
