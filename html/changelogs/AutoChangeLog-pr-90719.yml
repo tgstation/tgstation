@@ -1,4 +1,0 @@
-author: "FlufflesTheDog"
-delete-after: True
-changes:
-  - bugfix: "Passive modsuit modules (radiation protection, welding protection, etc) should work reliably again."

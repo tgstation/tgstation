@@ -279,14 +279,38 @@
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
 	icon_state = "green"
-	inhand_icon_state = "artistic_toolbox"
+	inhand_icon_state = "toolbox_green"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 	material_flags = NONE
 	storage_type = /datum/storage/toolbox/artistic
 
 /obj/item/storage/toolbox/artistic/PopulateContents()
 	new /obj/item/storage/crayons(src)
-	new /obj/item/crowbar(src)
+	new /obj/item/toy/crayon/spraycan(src)
+	new /obj/item/toy/crayon/spraycan(src)
+	new /obj/item/paint_palette(src)
+	new /obj/item/paint/anycolor(src)
+	new /obj/item/paint/anycolor(src)
+	new /obj/item/paint/anycolor(src)
+
+/obj/item/storage/toolbox/crafter
+	name = "crafter toolbox"
+	desc = "A toolbox painted hot pink. Full of crafting supplies!"
+	icon_state = "pink"
+	inhand_icon_state = "toolbox_pink"
+	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
+	material_flags = NONE
+
+/obj/item/storage/toolbox/crafter/Initialize(mapload)
+	. = ..()
+	atom_storage.max_total_storage = 20
+	atom_storage.max_slots = 11
+
+/obj/item/storage/toolbox/crafter/PopulateContents()
+	new /obj/item/storage/crayons(src)
+	new /obj/item/camera(src)
+	new /obj/item/camera_film(src)
+	new /obj/item/chisel(src)
 	new /obj/item/stack/pipe_cleaner_coil/red(src)
 	new /obj/item/stack/pipe_cleaner_coil/yellow(src)
 	new /obj/item/stack/pipe_cleaner_coil/blue(src)
@@ -382,6 +406,7 @@
 		return ..()
 	var/static/list/allowed_toolbox = list(
 		/obj/item/storage/toolbox/artistic,
+		/obj/item/storage/toolbox/crafter,
 		/obj/item/storage/toolbox/electrical,
 		/obj/item/storage/toolbox/emergency,
 		/obj/item/storage/toolbox/mechanical,
@@ -398,6 +423,7 @@
 		/obj/item/storage/toolbox/emergency = "#445eb3",
 		/obj/item/storage/toolbox/electrical = "#b77931",
 		/obj/item/storage/toolbox/artistic = "#378752",
+		/obj/item/storage/toolbox/crafter = "#9D3282",
 		/obj/item/storage/toolbox/syndicate = "#3d3d3d",
 	)
 	var/obj/item/bot_assembly/repairbot/repair = new

@@ -139,20 +139,15 @@ ALLOW_LATEJOIN_ANTAGONISTS
 ## Uncomment to enable dynamic ruleset config file.
 DYNAMIC_CONFIG_ENABLED
 
+## Uncomment to enable event editing config file.
+#EVENTS_CONFIG_ENABLED
+
 ## RANDOM EVENTS ###
 ## Comment this out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
 
 ## Uncomment this to disable station traits.
 #FORBID_STATION_TRAITS
-
-## Multiplier for earliest start time of dangerous events.
-## Set to 0 to make dangerous events available from round start.
-EVENTS_MIN_TIME_MUL 1
-
-## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
-## Set to 0 to make dangerous events available for all populations.
-EVENTS_MIN_PLAYERS_MUL 1
 
 ## The lower bound, in deciseconds, for how soon another random event can be scheduled.
 ## Defaults to 1500 deciseconds or 2.5 minutes

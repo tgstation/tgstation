@@ -28,6 +28,14 @@
 		volume = UNARY_PIPE_VOLUME * device_type
 	. = ..()
 
+/obj/machinery/atmospherics/pipe/proc/set_volume(new_volume)
+	if(volume == new_volume)
+		return
+	var/datum/gas_mixture/gasmix = parent?.air
+	if(gasmix)
+		gasmix.volume = gasmix.volume + new_volume - volume
+	volume = new_volume
+
 /obj/machinery/atmospherics/pipe/setup_hiding()
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
