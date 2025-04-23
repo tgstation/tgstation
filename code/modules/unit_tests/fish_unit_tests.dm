@@ -516,8 +516,8 @@
 /datum/unit_test/fish_randomize_size_weight
 
 /datum/unit_test/fish_randomize_size_weight/Run()
-	var/obj/item/storage/box/fish_debug/box = allocate(/obj/item/storage/box/fish_debug)
-	for(var/obj/item/fish/fish as anything in box)
+	for(var/fish_type in subtypesof(/obj/item/fish))
+		var/obj/item/fish/fish = allocate(fish_type)
 		fish.randomize_size_and_weight()
 
 /datum/unit_test/aquarium_upgrade
