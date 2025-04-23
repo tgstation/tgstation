@@ -17,6 +17,10 @@
 	drop_sound = 'sound/items/handling/materials/plastic_drop.ogg'
 	resistance_flags = NONE
 
+/obj/item/clothing/head/cone/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/floor_placeable)
+
 /obj/item/clothing/head/cone/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
