@@ -1,4 +1,4 @@
-#define DELAM_MAX_DEVASTATIONE 17.5
+#define DELAM_MAX_DEVASTATION 17.5
 
 // These are supposed to be discrete effects so we can tell at a glance what does each override
 // of [/datum/sm_delam/proc/delaminate] does.
@@ -28,7 +28,7 @@
 
 		//Hilariously enough, running into a closet should make you get hit the hardest.
 		//duration between min and max, calculated by distance from the supermatter and size of the delam explosion
-		var/hallucination_amount = LERP(DETONATION_HALLUCINATION_MIN, DETONATION_HALLUCINATION_MAX, 1 - get_dist(victim, sm) / 128) * LERP(0.75, 1.25, calculate_explosion(sm) * 0.5 / DELAM_MAX_DEVASTATIONE)
+		var/hallucination_amount = LERP(DETONATION_HALLUCINATION_MIN, DETONATION_HALLUCINATION_MAX, 1 - get_dist(victim, sm) / 128) * LERP(0.75, 1.25, calculate_explosion(sm) * 0.5 / DELAM_MAX_DEVASTATION)
 		victim.adjust_hallucinations(hallucination_amount)
 
 	for(var/mob/victim as anything in GLOB.player_list)
@@ -232,4 +232,4 @@
 		while(get_dist(spawn_location, avoid) < 30)
 		new /obj/crystal_mass(get_turf(spawn_location))
 
-#undef DELAM_MAX_DEVASTATIONE
+#undef DELAM_MAX_DEVASTATION
