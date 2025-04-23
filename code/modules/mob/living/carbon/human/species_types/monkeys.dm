@@ -112,12 +112,6 @@
 			SPECIES_PERK_DESC = "Monkeys are primitive humans, and can't do most things a human can do. Computers are impossible, \
 				complex machines are right out, and most clothes don't fit your smaller form.",
 		),
-		list(
-			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-			SPECIES_PERK_ICON = "capsules",
-			SPECIES_PERK_NAME = "Mutadone Averse",
-			SPECIES_PERK_DESC = "Monkeys are reverted into normal humans upon being exposed to Mutadone.",
-		),
 	)
 
 	return to_add
