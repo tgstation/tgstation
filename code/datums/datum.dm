@@ -356,7 +356,7 @@
  * * name - Filter name
  * * priority - Priority used when sorting the filter.
  * * params - Parameters of the filter.
- * * update_filters - whether to update filters. should only be used by [/datum/proc/add_filters] to reduce update_filters calls
+ * * render_source_keep_original - whether to keep the original relaying appearance drawing at it's previous location (* behaviour)
  * * update_filters - whether to update filters. should only be used by [/datum/proc/add_filters] to reduce update_filters calls
  */
 /datum/proc/add_filter(name, priority, list/params, render_source_keep_original = TRUE, update_filters=TRUE)
@@ -515,6 +515,7 @@
 	ASSERT(isatom(src) || isimage(src))
 	for(var/name in filter_data)
 		qdel(filter_data[name])
+	update_filters()
 
 /image/Destroy(force)
 	//doesnt inherit from atom destroy so we want to do it here. dont do it on /datum cus overhead

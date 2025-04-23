@@ -108,12 +108,7 @@
 
 		var/static/uuid = 0
 		uuid++
-		//soooooo lemon thinks that there may be some byond bugs with
-		//non-"normal" chars at the end and slates
-		//cant be assed to test so idk if its true
-		//so lets just add a buffer on both sides just in case(tm)
-		var/static/buffer = "wowza"
-		new_target = new_target + buffer + "[uuid]" + buffer
+		new_target = "[new_target]wowza[uuid]wowza"
 
 		atom_cast.render_target = new_target
 	else if(ATOM_IS_RENDERING_ORIGINAL(atom_cast) && !draw_original)
