@@ -326,6 +326,10 @@
 /obj/machinery/experimental_cloner_scanner,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
+"X" = (
+/obj/item/gps/spaceruin,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 
 (1,1,1) = {"
 a
@@ -531,7 +535,7 @@ f
 o
 B
 p
-C
+X
 V
 a
 a
