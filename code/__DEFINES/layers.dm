@@ -49,7 +49,6 @@
 #define EMISSIVE_PLANE 13
 /// This plane masks out lighting to create an "emissive" effect, ie for glowing lights in otherwise dark areas.
 #define EMISSIVE_RENDER_PLATE 14
-
 // Ensures all the render targets that point at the emissive plate layer correctly
 #define EMISSIVE_Z_BELOW_LAYER 1
 #define EMISSIVE_FLOOR_LAYER 2

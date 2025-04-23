@@ -490,7 +490,6 @@
 	if(filter_data && filter_data[name])
 		return filter_data[name]
 
-
 /// Returns the indice in filters of the given filter name.
 /// If it is not found, returns null.
 /datum/proc/get_filter_index(name)

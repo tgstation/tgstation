@@ -790,7 +790,7 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 	if(max_plane_offset == old_max)
 		return
 
-	generate_offset_lists(old_max, max_plane_offset)
+	generate_offset_lists(old_max + 1, max_plane_offset)
 	SEND_SIGNAL(src, COMSIG_PLANE_OFFSET_INCREASE, old_max, max_plane_offset)
 	// Sanity check
 	if(max_plane_offset > MAX_EXPECTED_Z_DEPTH)
