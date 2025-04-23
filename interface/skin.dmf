@@ -128,7 +128,7 @@ window "mapwindow"
 	elem "status_bar"
 		type = LABEL
 		pos = 0,470
-		size = 210x10
+		size = 128x10
 		anchor1 = 0,99
 		anchor2 = 20,100
 		text-color = #ffffff
