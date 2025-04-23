@@ -11,6 +11,13 @@
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE_TAGS, PROC_REF(get_examine_tags))
 	RegisterSignal(target, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(on_interact_with_atom))
 
+/datum/element/floor_placeable/Detach(datum/source)
+	. = ..()
+	UnregisterSignal(source, list(
+		COMSIG_ATOM_EXAMINE_TAGS,
+		COMSIG_ITEM_INTERACTING_WITH_ATOM,
+	))
+
 /datum/element/floor_placeable/proc/get_examine_tags(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 	examine_list["floor placeable"] = "This item can be placed directly on the floor."
