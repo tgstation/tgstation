@@ -42,6 +42,8 @@
 
 /datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
+	if (pref_load)
+		ADD_TRAIT(human_who_gained_species, TRAIT_BORN_MONKEY, INNATE_TRAIT) // Not a species trait, you cannot escape your genetic destiny
 	passtable_on(human_who_gained_species, SPECIES_TRAIT)
 	human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	human_who_gained_species.dna.activate_mutation(/datum/mutation/human/race)
@@ -180,3 +182,15 @@
 	return ..()
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE
+
+/// Monkeys you can play as on monkey day
+/datum/species/monkey/roundstart
+	inherent_traits = list(
+		TRAIT_BORN_MONKEY,
+		TRAIT_NO_AUGMENTS,
+		TRAIT_NO_BLOOD_OVERLAY,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_VENTCRAWLER_NUDE,
+		TRAIT_WEAK_SOUL,
+	)
