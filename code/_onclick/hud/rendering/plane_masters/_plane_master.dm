@@ -252,7 +252,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
  * filter_args: filter args to pass to the filter as provided by the helpers. render_source will be set to the plane master so no need to provide that
  */
 /atom/movable/screen/plane_master/proc/filter_sourced_from_plane(plane, name, prio, list/filter_args)
-	if(!length(filter_relays))
+	if(!length(filter_relays) && home.our_hud) // home.our_hud for unit test bullshit
 		RegisterSignal(home.our_hud, COMSIG_HUD_PLANES_REBUILT, PROC_REF(planes_rebuilt))
 	filter_relays["[plane]"] = list(name, prio, filter_args)
 	var/atom/movable/screen/plane_master/master = home.our_hud?.get_plane_master(plane)
@@ -262,7 +262,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 /atom/movable/screen/plane_master/proc/remove_sourced_from_plane(plane, name)
 	filter_relays -= plane
 	remove_filter(name)
-	if(!length(filter_relays))
+	if(!length(filter_relays) && home.our_hud) // home.our_hud for unit test bullshit)
 		UnregisterSignal(home.our_hud, COMSIG_HUD_PLANES_REBUILT)
 
 ///when planes rebuild we need to check if our old plane got deleted and update it again
