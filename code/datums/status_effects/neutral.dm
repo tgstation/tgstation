@@ -742,10 +742,14 @@
 	var/obj/effect/overlay/spotlight/beam_from_above_a
 	/// Second visual overlay, this one sits on the front of the mob.
 	var/obj/effect/overlay/spotlight/beam_from_above_b
+	/// An additional overlay to supply with the spotlight
+	var/image/additional_overlay
 
-/datum/status_effect/spotlight_light/on_creation(mob/living/new_owner, duration)
+/datum/status_effect/spotlight_light/on_creation(mob/living/new_owner, duration, additional_overlay)
 	if(duration)
 		src.duration = duration
+	if(additional_overlay)
+		src.additional_overlay = additional_overlay
 	return ..()
 
 /datum/status_effect/spotlight_light/on_apply()
@@ -764,6 +768,9 @@
 	beam_from_above_b.pixel_y = -2 //Slight vertical offset for an illusion of volume
 	owner.vis_contents += beam_from_above_b
 
+	if(additional_overlay)
+		owner.add_overlay(additional_overlay)
+
 	return TRUE
 
 /datum/status_effect/spotlight_light/on_remove()
@@ -773,8 +780,10 @@
 	QDEL_NULL(beam_from_above_b)
 	QDEL_NULL(mob_light_obj)
 
+	if(additional_overlay)
+		owner.cut_overlay(additional_overlay)
+
 /datum/status_effect/spotlight_light/divine
 	id = "divine_spotlight"
-	duration = 3 SECONDS
 
 #undef BEAM_ALPHA

@@ -772,6 +772,16 @@
 		/datum/stock_part/scanning_module = 1,
 	)
 
+/obj/item/circuitboard/machine/photocopier
+	name = "Photocopier"
+	greyscale_colors = CIRCUIT_COLOR_GENERIC
+	build_path = /obj/machinery/photocopier
+	req_components = list(
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/micro_laser = 1,
+		/datum/stock_part/servo = 1
+	)
+
 //Medical
 
 /obj/item/circuitboard/machine/chem_dispenser

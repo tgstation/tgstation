@@ -135,7 +135,9 @@
 	if(ammo_pack && ammo_pack.overheat >= ammo_pack.overheat_max)
 		to_chat(user, span_warning("The gun's heat sensor locked the trigger to prevent lens damage!"))
 		return
-	..()
+	. = ..()
+	if(!.)
+		return
 	ammo_pack.overheat++
 	if(ammo_pack.battery)
 		var/transferred = ammo_pack.battery.use(cell.maxcharge - cell.charge, force = TRUE)

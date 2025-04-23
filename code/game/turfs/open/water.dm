@@ -23,6 +23,8 @@
 	var/immerse_overlay_color = "#5AAA88"
 	///The transparency of the immerse element's overlay
 	var/immerse_overlay_alpha = 180
+	///Icon state to use for the immersion mask
+	var/immerse_overlay = "immerse"
 
 	/// Fishing element for this specific water tile
 	var/datum/fish_source/fishing_datum = /datum/fish_source/river
@@ -42,14 +44,7 @@
 /turf/open/water/proc/on_atom_inited(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
-	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
-		return
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
-	immerse_added = TRUE
-
-/turf/open/water/Destroy()
-	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
-	return ..()
+	make_immersed(movable)
 
 /**
  * turf/Initialize() calls Entered on its contents too, however
@@ -58,16 +53,40 @@
  */
 /turf/open/water/Entered(atom/movable/arrived)
 	. = ..()
-	if(immerse_added || is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
-		return
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
+	make_immersed(arrived)
+
+///Makes this turf immersable, return true if we actually did anything so child procs don't have to repeat our checks
+/turf/open/water/proc/make_immersed(atom/movable/triggering_atom)
+	if(immerse_added || is_type_in_typecache(triggering_atom, GLOB.immerse_ignored_movable))
+		return FALSE
+	AddElement(/datum/element/immerse, icon, icon_state, immerse_overlay, immerse_overlay_color, alpha = immerse_overlay_alpha)
 	immerse_added = TRUE
+	return TRUE
+
+/turf/open/water/Destroy()
+	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
+	return ..()
+
 
 /turf/open/water/jungle
 
 /turf/open/water/no_planet_atmos
 	baseturfs = /turf/open/water/no_planet_atmos
 	planetary_atmos = FALSE
+
+/turf/open/water/no_planet_atmos/deep
+	name = "deep water"
+	desc = "Less shallow water."
+	icon_state = "deep_riverwater_motion"
+	immerse_overlay = "immerse_deep"
+	slowdown = 8
+	baseturfs = /turf/open/water/no_planet_atmos/deep
+
+/turf/open/water/no_planet_atmos/deep/make_immersed()
+	. = ..()
+	if (!.)
+		return
+	AddElement(/datum/element/swimming_tile)
 
 /turf/open/water/beach
 	planetary_atmos = FALSE
@@ -83,6 +102,25 @@
 /turf/open/water/beach/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
+
+/// Deep water drains stamina and starts drowning you
+/turf/open/water/deep_beach
+	name = "deep water"
+	desc = "Don't forget your life jacket."
+	slowdown = 8
+	immerse_overlay = "immerse_deep"
+	icon = 'icons/turf/beach.dmi'
+	icon_state = "deepwater"
+	base_icon_state = "deepwater"
+	baseturfs = /turf/open/water/deep_beach
+	immerse_overlay_color = "#57707c"
+	fishing_datum = /datum/fish_source/ocean
+
+/turf/open/water/deep_beach/make_immersed()
+	. = ..()
+	if (!.)
+		return
+	AddElement(/datum/element/swimming_tile)
 
 /turf/open/water/lavaland_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -116,8 +154,9 @@
 	// we don't want to end up with 4 different immerse elements, which would cause
 	// the immerse trait to be repeatedly removed and readded as someone moves within the pool,
 	// replacing the status effect over and over, which can be seen through the status effect alert icon.
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
-	immerse_added = TRUE
+	if(!immerse_added)
+		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
+		immerse_added = TRUE
 	icon_state = "pool_[rand(1, 4)]"
 	var/obj/effect/abstract/shared_particle_holder/holder = add_shared_particles(/particles/hotspring_steam, "hot_springs_[GET_TURF_PLANE_OFFSET(src)]", pool_size = 4)
 	// Render the steam over mobs and objects on the game plane

@@ -84,7 +84,7 @@ const EmployerSection = (props) => {
               <BlockQuote>{allies}</BlockQuote>
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item>
+            <Stack.Item mb={1}>
               <span style={goalstyle}>
                 Employer thoughts:
                 <br />
@@ -117,7 +117,7 @@ const UplinkSection = (props) => {
               )}
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item mt="1%">
+            <Stack.Item align="center">
               <BlockQuote>{uplink_unlock_info}</BlockQuote>
             </Stack.Item>
           </>

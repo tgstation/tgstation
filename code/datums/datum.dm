@@ -385,6 +385,40 @@
 	animate(filter, new_params, time = time, easing = easing, loop = loop)
 	modify_filter(name, new_params)
 
+/** Keeps the steps in the correct order.
+* Arguments:
+* * params - the parameters you want this step to animate to
+* * duration - the time it takes to animate this step
+* * easing - the type of easing this step has
+*/
+/proc/FilterChainStep(params, duration, easing)
+	params -= "type"
+	return list("params"= params, "duration"=duration, "easing"=easing)
+
+/** Similar to transition_filter(), except it creates an animation chain that moves between a list of states.
+ * Arguments:
+ * * name - Filter name
+ * * num_loops - Amount of times the chain loops. INDEFINITE = Infinite
+ * * ... - a list of each link in the animation chain. Use FilterChainStep(params, duration, easing) for each link
+ * Example use:
+ * * add_filter("blue_pulse", 1, color_matrix_filter(COLOR_WHITE))
+ * * transition_filter_chain(src, "blue_pulse", INDEFINITE,\
+ * *	FilterChainStep(color_matrix_filter(COLOR_BLUE), 10 SECONDS, CUBIC_EASING),\
+ * *	FilterChainStep(color_matrix_filter(COLOR_WHITE), 10 SECONDS, CUBIC_EASING))
+ * The above code would edit a color_matrix_filter() to slowly turn blue over 10 seconds before returning back to white 10 seconds after, repeating this chain forever.
+ */
+/datum/proc/transition_filter_chain(name, num_loops, ...)
+	var/list/transition_steps = args.Copy(3)
+	var/filter = get_filter(name)
+	if(!filter)
+		return
+	var/list/first_step = transition_steps[1]
+	animate(filter, first_step["params"], time = first_step["duration"], easing = first_step["easing"], loop = num_loops)
+	for(var/transition_step in 2 to length(transition_steps))
+		var/list/this_step = transition_steps[transition_step]
+		animate(this_step["params"], time = this_step["duration"], easing = this_step["easing"])
+
+
 /// Updates the priority of the passed filter key
 /datum/proc/change_filter_priority(name, new_priority)
 	if(!filter_data || !filter_data[name])

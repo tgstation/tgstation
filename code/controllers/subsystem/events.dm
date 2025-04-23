@@ -1,11 +1,13 @@
 SUBSYSTEM_DEF(events)
 	name = "Events"
 	dependencies = list(
-		/datum/controller/subsystem/processing/station
+		/datum/controller/subsystem/processing/station,
 	)
 	runlevels = RUNLEVEL_GAME
 	///list of all datum/round_event_control. Used for selecting events based on weight and occurrences.
 	var/list/control = list()
+	///assoc list of all datum/round_event_control, ordered by name. name => event
+	var/list/events_by_name = list()
 	///list of all existing /datum/round_event currently being run.
 	var/list/running = list()
 	///cache of currently running events, for lag checking.
@@ -25,15 +27,36 @@ SUBSYSTEM_DEF(events)
 		if(!event.typepath || !event.valid_for_map())
 			continue //don't want this one! leave it for the garbage collector
 		control += event //add it to the list of all events (controls)
+		events_by_name[event.name] = event
 
 	frequency_lower = CONFIG_GET(number/events_frequency_lower)
 	frequency_upper = CONFIG_GET(number/events_frequency_upper)
+
+	if(CONFIG_GET(flag/events_config_enabled))
+		setup_config()
 
 	reschedule()
 	// Instantiate our holidays list if it hasn't been already
 	if(isnull(GLOB.holidays))
 		fill_holidays()
 	return SS_INIT_SUCCESS
+
+///Takes the events config json and applies any var edits made there to their respective event.
+/datum/controller/subsystem/events/proc/setup_config()
+	var/json_file = file("[global.config.directory]/events.json")
+	if(!fexists(json_file))
+		return
+	var/list/configuration = json_decode(file2text(json_file))
+	for(var/variable in configuration)
+		var/datum/round_event_control/event = events_by_name[variable]
+		if(!event)
+			stack_trace("Invalid event [event] attempting to be configured.")
+			continue
+		for(var/event_variable in configuration[variable])
+			if(!(event.vars.Find(event_variable)))
+				stack_trace("Invalid event configuration variable [event_variable] in variable changes for [variable].")
+				continue
+			event.vars[event_variable] = configuration[variable][event_variable]
 
 /datum/controller/subsystem/events/fire(resumed = FALSE)
 	if(!resumed)

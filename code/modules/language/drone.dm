@@ -8,6 +8,10 @@
 	// ...|..||.||||.|.||.|.|.|||.|||
 	space_chance = 0
 	sentence_chance = 0
+	between_word_sentence_chance = 0
+	between_word_space_chance = 0
+	additional_syllable_low = 0
+	additional_syllable_high = 0
 	default_priority = 20
 
 	icon_state = "drone"

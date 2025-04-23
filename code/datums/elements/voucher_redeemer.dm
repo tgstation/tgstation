@@ -35,24 +35,30 @@
 /datum/element/voucher_redeemer/proc/redeem_voucher(atom/source, mob/living/redeemer, obj/item/voucher, list/modifiers)
 	SIGNAL_HANDLER
 
+	if(!istype(voucher, voucher_type))
+		return NONE
 	INVOKE_ASYNC(src, PROC_REF(redeem_voucher_async), source, redeemer, voucher)
 	return ITEM_INTERACT_SUCCESS
 
+/datum/element/voucher_redeemer/proc/generate_sets()
+	set_instances = list()
+	for(var/datum/voucher_set/static_set as anything in subtypesof(set_type))
+		set_instances[static_set::name] = new static_set
+
+/datum/element/voucher_redeemer/proc/generate_options()
+	cached_options = list()
+	for(var/set_name in set_instances)
+		var/datum/voucher_set/current_set = set_instances[set_name]
+		var/datum/radial_menu_choice/option = new
+		option.image = image(icon = current_set.icon, icon_state = current_set.icon_state)
+		if(current_set.description)
+			option.info = span_boldnotice(current_set.description)
+		cached_options[set_name] = option
+
 /datum/element/voucher_redeemer/proc/redeem_voucher_async(atom/source, mob/living/redeemer, obj/item/voucher)
 	if(!set_instances)
-		set_instances = list()
-		for(var/datum/voucher_set/static_set as anything in subtypesof(set_type))
-			set_instances[initial(static_set.name)] = new static_set()
-
-	if(!cached_options)
-		cached_options = list()
-		for(var/set_name in set_instances)
-			var/datum/voucher_set/current_set = set_instances[set_name]
-			var/datum/radial_menu_choice/option = new()
-			option.image = image(icon = current_set.icon, icon_state = current_set.icon_state)
-			if(current_set.description)
-				option.info = span_boldnotice(current_set.description)
-			cached_options[set_name] = option
+		generate_sets()
+		generate_options()
 
 	var/selection = show_radial_menu(redeemer, source, cached_options, custom_check = CALLBACK(src, PROC_REF(check_menu), voucher, redeemer), radius = 38, require_near = TRUE, tooltips = TRUE)
 	if(!selection)

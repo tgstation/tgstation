@@ -243,7 +243,7 @@ export function NameInput(props: NameInputProps) {
                 name="ellipsis-v"
                 style={{
                   position: 'relative',
-                  left: '1px',
+                  left: '-1px',
                   minWidth: '0px',
                 }}
               />

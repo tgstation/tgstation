@@ -1,4 +1,0 @@
-author: "Profakos"
-delete-after: True
-changes:
-  - qol: "Extends the examine description of cameras with the fact that they can hold holodisks."

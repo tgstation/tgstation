@@ -135,6 +135,13 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	switch(href_list["action"])
 		if("openLink")
 			src << link(href_list["link"])
+		if("openWebMap")
+			if(!SSmapping.current_map.mapping_url)
+				return
+			if(is_station_level(mob.z))
+				src << link("[SSmapping.current_map.mapping_url][LOWER_TEXT(sanitize_css_class_name(SSmapping.current_map.map_name))]/?x=[mob.x]&y=[mob.y]&zoom=6")
+			else
+				src << link("[SSmapping.current_map.mapping_url][LOWER_TEXT(sanitize_css_class_name(SSmapping.current_map.map_name))]")
 	if (hsrc)
 		var/datum/real_src = hsrc
 		if(QDELETED(real_src))
@@ -1252,8 +1259,6 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 /// This grabs the DPI of the user per their skin
 /client/proc/acquire_dpi()
 	window_scaling = text2num(winget(src, null, "dpi"))
-
-	debug_admins("scalies: [window_scaling]")
 
 #undef ADMINSWARNED_AT
 #undef CURRENT_MINUTE

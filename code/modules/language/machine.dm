@@ -9,7 +9,12 @@
 		"bop", "bop", "dee", "dee", "doo", "doo", "hiss", "hss", "buzz",
 		"buzz", "bzz", "ksssh", "keey", "wurr", "wahh", "tzzz",
 	)
-	space_chance = 10
+	space_chance = 0
+	sentence_chance = 0
+	between_word_sentence_chance = 10
+	between_word_space_chance = 10
+	additional_syllable_low = 0
+	additional_syllable_high = 0
 	default_priority = 90
 
 	icon_state = "eal"
