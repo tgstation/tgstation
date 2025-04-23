@@ -457,6 +457,14 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/machine = list(LANGUAGE_ATOM),
 	)
 
+/// For intelligent synthetics like cyborgs and the AI, not for basic baby bots ran on a raspberry pi
+/datum/language_holder/synthetic/silicon
+
+/datum/language_holder/synthetic/silicon/New(atom/new_owner)
+	. = ..()
+	for(var/lang in GLOB.uncommon_roundstart_languages)
+		grant_partial_language(lang, 66, LANGUAGE_ATOM)
+
 /datum/language_holder/moth
 	understood_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),

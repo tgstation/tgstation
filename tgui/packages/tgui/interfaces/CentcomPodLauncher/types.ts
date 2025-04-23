@@ -39,7 +39,6 @@ export type PodLauncherData = {
   picking_dropoff_turf: BooleanLike;
   podDesc: string;
   podName: string;
-  renderLighting: BooleanLike;
   rev_delays: Record<string, number>;
   reverse_option_list: Record<string, BooleanLike>;
   shrapnelMagnitude: number;
