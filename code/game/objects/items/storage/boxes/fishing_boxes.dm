@@ -23,19 +23,9 @@
 	new /obj/item/fishing_line/reinforced(src)
 	new /obj/item/fishing_line/cloaked(src)
 
-/obj/item/storage/box/fishing_lines/master
-
 /obj/item/storage/box/fishing_lines/master/PopulateContents()
 	. = ..()
 	new /obj/item/fishing_line/auto_reel(src)
-
-/obj/item/storage/box/fish_debug
-	name = "box full of fish"
-	illustration = "fish"
-
-/obj/item/storage/box/fish_debug/PopulateContents()
-	for(var/fish_type in subtypesof(/obj/item/fish))
-		new fish_type(src)
 
 ///From the fishing mystery box. It's basically a lazarus and a few bottles of strange reagents.
 /obj/item/storage/box/fish_revival_kit
