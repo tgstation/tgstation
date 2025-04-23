@@ -1198,7 +1198,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	layer = layer-1
 	plane = HUD_PLANE
 	add_filter("potion_outline", 1, outline_filter(1, "#eeeeee", OUTLINE_SQUARE))
-	add_filter("potion_glow", 2, drop_shadow_filter(0.1, 0.1, 2, 1, "#eeeeee"))
+	add_filter("potion_glow", 2, drop_shadow_filter(0.1, 0.1, 2, 0, "#eeeeee"))
 	transform.Scale(0.8, 0.8)
 	animate(src, POTION_DROP_SPEED, easing = BOUNCE_EASING, pixel_y = 19)
 
