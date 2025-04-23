@@ -24,3 +24,7 @@
 
 /datum/armor/suit_caution
 	melee = 5
+
+/obj/item/clothing/suit/caution/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/floor_placeable)
