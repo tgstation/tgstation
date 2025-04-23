@@ -37,7 +37,8 @@
 /datum/reagent/catalyst_agent/temperature/consider_catalyst(datum/equilibrium/equilibrium)
 	. = ..()
 	if(.)
-		equilibrium.thermic_mod = ((creation_purity-0.5)*2)*modifier //So a purity 1 = the modifier, and a purity 0 = the inverse modifier
+		equilibrium.thermic_mod = ((creation_purity-0.5)*2)*modifier //So a purity 1 = the modifier, and a purity 0 = the inverse modifier 
+//Note from confused guy: It looks like this make endothermic reactions suddenly become violently exothermic and visa versa at low purities.
 
 ///Catalyst precursors (oh boy here i go competing again). P is the harder to make, since ph catalyst is the more useful of the two.
 /datum/reagent/catalyst_precursor_ph
@@ -51,6 +52,28 @@
 	description = "A close chemical relative of the prefactors, this reagent is a precursor to Thermic Modulator, and will react with stable plasma to create it."
 	color = "#c91a1a"
 	ph = 13
+
+
+
+///General catalysts
+/datum/reagent/catalyst_agent/ph/generic
+	name = "Ionic Modulator"
+	target_reagent_type = /datum/reagent
+	modifier = 0.5
+	description = "This catalyst reagent will stabilize reactions in its beaker, reducing the changes in pH caused by reacting chemicals."
+	ph = 7 //perfectly balanced, as all things should be. (also it's a ph moderator so this makes sense)
+	color = "#84e30b" //green = neutrality on a ph strip so a neutrality enforcing chem is bright green. logic.
+
+/datum/reagent/catalyst_agent/temperature/generic
+	name = "Thermic Modulator"
+	target_reagent_type = /datum/reagent
+	modifier = 0.5
+	description = "This catalyst reagent will stabilize reactions in its beaker, reducing their endo/exo-thermicity."
+	ph = 7 //perfectly balanced, as all things should be. (also it's a nonreactive catalyst so this makes sense)
+	color = "#84e30b"
+
+
+
 
 ///These affect medicines
 /datum/reagent/catalyst_agent/speed/medicine
