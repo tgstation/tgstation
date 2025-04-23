@@ -148,7 +148,7 @@
 			replaced = TRUE
 		current_potion = used_item
 		xeno_hud.update_potion(current_potion)
-		to_chat(user, span_notice("You load [used_item] in the console's potion slot[replaced ? ", replacing the one that was there before" : ""]."))
+		to_chat(user, span_notice("You load [used_item] in the console's potion slot[replaced ? ", replacing the previous" : ""]."))
 
 		return
 
