@@ -54,6 +54,39 @@
 			new custom_material.sheet_type(drop_location(), amount)
 
 //////////////////////////////////////STATUES/////////////////////////////////////////////////////////////
+
+/obj/structure/statue/drake
+	name = "drake statue"
+	desc = "Statue of a lesser drake. Its carved eye sockets glow slightly."
+	icon_state = "drake"
+	anchored = TRUE
+
+/obj/structure/statue/drake/Initialize(mapload)
+	. = ..()
+	if (prob(25))
+		icon_state = "drake_headless"
+		desc = "Statue of a lesser drake. Time has not been kind."
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/statue/drake/update_overlays()
+	. = ..()
+	if (icon_state == "drake")
+		. += emissive_appearance(icon, "drake_emissive", src)
+
+/obj/structure/statue/dragonman
+	name = "dragonman statue"
+	desc = "Statue of a draconic humanoid warrior. Its glittering eyes seem to follow you around the room."
+	icon_state = "dragonman"
+	anchored = TRUE
+
+/obj/structure/statue/dragonman/Initialize(mapload)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/statue/dragonman/update_overlays()
+	. = ..()
+	. += emissive_appearance(icon, "dragonman_emissive", src)
+
 ////////////////////////uranium///////////////////////////////////
 
 /obj/structure/statue/uranium
