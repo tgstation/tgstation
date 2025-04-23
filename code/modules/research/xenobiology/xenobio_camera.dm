@@ -360,7 +360,7 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	for(var/mob/living/basic/slime/potioned_slime in remote_eye.loc)
 		xeno_console.spit_atom(xeno_console.current_potion, get_turf(remote_eye))
 		xeno_console.current_potion.attack(potioned_slime, owner_mob)
-		xeno_console.xeno_hud.update_potion()
+		xeno_console.xeno_hud.update_potion(xeno_console.current_potion)
 		break
 
 /datum/action/innate/hotkey_help
@@ -411,8 +411,8 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		return
 
 	spit_atom(current_potion, get_turf(target_slime))
-	xeno_hud.update_potion()
 	INVOKE_ASYNC(xeno_console.current_potion, TYPE_PROC_REF(/obj/item/slimepotion/slime, attack), target_slime, user)
+	xeno_hud.update_potion(xeno_console.current_potion)
 
 ///Picks up a slime, and places them in the internal storage
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickShift(mob/living/user, mob/living/basic/slime/target_slime)
