@@ -305,6 +305,100 @@
 	armor_type = /datum/armor/eldritch_armor/moon
 	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEMUTWINGS
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/equipped(mob/living/user, slot)
+	. = ..()
+	if(!ishuman(user))
+		return
+	if(!(slot_flags & slot))
+		user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED), REF(src))
+		user.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
+		UnregisterSignal(user, list(COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
+		return
+	user.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
+	user.add_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED), REF(src))
+	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(block_checked))
+	RegisterSignals(user, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE), PROC_REF(on_damage_adjust))
+	RegisterSignal(user, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_take_damage))
+	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/allow_attack_hand_drop(mob/user)
+	if(!ishuman(user))
+		return ..()
+	var/mob/living/carbon/human/wearer = user
+	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) > 0)
+		to_chat(user, span_warning("Brain too damaged to remove!"))
+		return FALSE
+	return ..()
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/block_checked(mob/living/carbon/human/wearer, attacker, damage, attack_text, attack_type, armour_penetration, damage_type)
+	SIGNAL_HANDLER
+	if(!ishuman(wearer))
+		return
+	if(damage <= 0)
+		return FAILED_BLOCK
+
+	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage)
+	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) >= 200)
+		wearer.death() // Stops any shenanigans
+	return SUCCESSFUL_BLOCK
+
+/**
+ * Handles anything that calls 'adjustBruteLoss()` or any of the other damage types.
+ * Negates the damage and applies it as brain damage instead
+ * Healing won't be negated
+ */
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_damage_adjust(mob/living/carbon/human/wearer, type, amount, forced)
+	if(amount < 0)
+		return
+	if(!ishuman(wearer))
+		return
+	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount)
+	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) >= 200)
+		on_death(wearer)
+	return COMPONENT_IGNORE_CHANGE
+
+/// Handles anything that calls `apply_damage()`, calculates the damage taken and converts it to brain damage
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_take_damage(mob/living/carbon/human/wearer, damage_dealt, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
+	SIGNAL_HANDLER
+	if(!ishuman(wearer))
+		return
+	var/total_damage
+	total_damage += wearer.getBruteLoss()
+	total_damage += wearer.getFireLoss()
+	total_damage += wearer.getToxLoss()
+	total_damage += wearer.getOxyLoss()
+	total_damage += wearer.getStaminaLoss()
+	if(!total_damage)
+		return
+	wearer.setBruteLoss(0, forced = TRUE)
+	wearer.setFireLoss(0, forced = TRUE)
+	wearer.setToxLoss(0, forced = TRUE)
+	wearer.setOxyLoss(0, forced = TRUE)
+	wearer.setStaminaLoss(0, forced = TRUE)
+	// Convert all damage to brain damage, good luck
+	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, total_damage)
+	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) >= 200)
+		wearer.death() // Stops any shenanigans
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_death(mob/wearer)
+	SIGNAL_HANDLER
+	if(!ishuman(wearer))
+		return
+	var/mob/living/carbon/human/human_wearer = wearer
+	var/obj/item/bodypart/head/to_explode = human_wearer.get_bodypart(BODY_ZONE_HEAD)
+	if(!to_explode)
+		return
+	var/obj/item/organ/brain/brain = human_wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(brain)
+		brain.Remove(human_wearer, special = TRUE, movement_flags = NO_ID_TRANSFER)
+		brain.zone = BODY_ZONE_CHEST
+		brain.Insert(human_wearer, special = TRUE, movement_flags = NO_ID_TRANSFER)
+	wearer.visible_message(span_warning("[wearer]'s head splatters with a sickening crunch!"), ignored_mobs = list(wearer))
+	new /obj/effect/gibspawner/generic(get_turf(wearer), wearer)
+	to_explode.drop_organs()
+	to_explode.dismember(dam_type = BRUTE, silent = TRUE)
+	qdel(to_explode)
+
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/moon
 	name = "\improper Resplendant Hood"
 	icon_state = "moon_armor"
