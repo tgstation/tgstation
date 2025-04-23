@@ -147,7 +147,9 @@
 			current_potion.forceMove(drop_location())
 			replaced = TRUE
 		current_potion = used_item
+		xeno_hud.update_potion(current_potion)
 		to_chat(user, span_notice("You load [used_item] in the console's potion slot[replaced ? ", replacing the one that was there before" : ""]."))
+
 		return
 
 	..()
@@ -223,7 +225,6 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	monkeys--
 	monkeys = round(monkeys, 0.1) //Prevents rounding errors
 	spit_out(food, target_turf)
-	target_turf.balloon_alert(user, "[monkeys] monkeys")
 	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 
 ///Recycles the target monkey
@@ -238,8 +239,6 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	connected_recycler.use_energy(500 JOULES)
 	monkeys += connected_recycler.cube_production
 	monkeys = round(monkeys, 0.1) //Prevents rounding errors
-	var/turf/monkey_loc = get_turf(target_mob)
-	monkey_loc.balloon_alert(user, "[monkeys] monkeys")
 	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 	qdel(target_mob)
 
@@ -359,7 +358,9 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		return
 
 	for(var/mob/living/basic/slime/potioned_slime in remote_eye.loc)
+		xeno_console.spit_atom(xeno_console.current_potion, get_turf(remote_eye))
 		xeno_console.current_potion.attack(potioned_slime, owner_mob)
+		xeno_console.xeno_hud.update_potion()
 		break
 
 /datum/action/innate/hotkey_help
@@ -409,6 +410,8 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		to_chat(user, span_warning("No potion loaded."))
 		return
 
+	spit_atom(current_potion, get_turf(target_slime))
+	xeno_hud.update_potion()
 	INVOKE_ASYNC(xeno_console.current_potion, TYPE_PROC_REF(/obj/item/slimepotion/slime, attack), target_slime, user)
 
 ///Picks up a slime, and places them in the internal storage
@@ -504,7 +507,7 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		return
 	var/mobturf = get_turf(target_mob)
 	new /obj/effect/abstract/xenosuction(mobturf)
-	new /obj/effect/abstract/sucked_mob(mobturf, target_mob, TRUE)
+	new /obj/effect/abstract/sucked_atom(mobturf, target_mob, TRUE)
 	/// Make the mob invisible so it doesn't get seen during the animation
 	target_mob.SetInvisibility(INVISIBILITY_MAXIMUM, id=XENOBIO_CONSOLE_TRAIT)
 	addtimer(CALLBACK(target_mob, TYPE_PROC_REF(/atom,RemoveInvisibility), XENOBIO_CONSOLE_TRAIT), SUCTION_DELAY + SUCTION_TIME)
@@ -521,10 +524,23 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		return
 	new /obj/effect/abstract/xenosuction(target_turf)
 	for(var/mob/living/shot_mob in mobs_to_spit)
-		new /obj/effect/abstract/sucked_mob(target_turf, shot_mob, FALSE)
+		new /obj/effect/abstract/sucked_atom(target_turf, shot_mob, FALSE)
 		shot_mob.SetInvisibility(INVISIBILITY_MAXIMUM, id=XENOBIO_CONSOLE_TRAIT)
 		addtimer(CALLBACK(shot_mob, TYPE_PROC_REF(/atom,RemoveInvisibility), XENOBIO_CONSOLE_TRAIT), SUCTION_DELAY + SUCTION_TIME)
 	addtimer(CALLBACK(src, PROC_REF(handle_xeno_sounds), target_turf, TRUE), SUCTION_DELAY)
+
+/// Shoots the target atom out of the tube. Used for anything that isn't a mob (I.e. potions)
+/obj/machinery/computer/camera_advanced/xenobio/proc/spit_atom(atom/movable/target_atom, turf/open/target_turf)
+	if(isnull(target_atom))
+		return
+	if(isnull(target_turf))
+		target_turf = get_turf(target_atom)
+	new /obj/effect/abstract/xenosuction(target_turf)
+	var/ispot = istype(target_atom, /obj/item/slimepotion/slime)
+	new /obj/effect/abstract/sucked_atom(target_turf, target_atom, FALSE, ispot)
+	addtimer(CALLBACK(src, PROC_REF(handle_xeno_sounds), target_turf, TRUE), SUCTION_DELAY)
+	if(ispot)
+		addtimer(CALLBACK(src, PROC_REF(handle_shatter_sound), target_turf), SUCTION_DELAY+SUCTION_TIME)
 
 ///Plays the sound in the given location. Easier to call w/ addtimer()
 /obj/machinery/computer/camera_advanced/xenobio/proc/handle_xeno_sounds(turf/open/target_turf, spitting)
@@ -533,16 +549,20 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		tubesound = 'sound/effects/compressed_air/air_shoot.ogg'
 	playsound(target_turf, tubesound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-/// An abstract effect to simulate sucking the mob up or spitting it out
-/obj/effect/abstract/sucked_mob
+///The sound that plays when a potion shatters. Easier to call w/ addtimer()
+/obj/machinery/computer/camera_advanced/xenobio/proc/handle_shatter_sound(turf/open/target_turf)
+	playsound(target_turf, SFX_SHATTER, 35, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+
+/// An abstract effect to simulate sucking the atom up or spitting it out
+/obj/effect/abstract/sucked_atom
 	layer = MOB_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	/// The initial alpha of the mob, because slimes can be semi-transparent
+	/// The initial alpha of the atom, because slimes can be semi-transparent
 	var/mob_initial_alpha = 255
 
-/obj/effect/abstract/sucked_mob/Initialize(mapload, mob/living/copying, sucking = FALSE)
+/obj/effect/abstract/sucked_atom/Initialize(mapload, atom/movable/copying, sucking = FALSE, shatter = FALSE)
 	. = ..()
-	if(!isliving(copying))
+	if(!ismovable(copying))
 		return
 	appearance = copying.appearance
 	mob_initial_alpha = copying.alpha
@@ -552,19 +572,19 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	else
 		pixel_y = 64
 		alpha = 0
-		shoot_out()
+		shoot_out(shatter)
 
 /// Shoots the mob visual upwards into the pipe then deletes it
-/obj/effect/abstract/sucked_mob/proc/suck_up()
+/obj/effect/abstract/sucked_atom/proc/suck_up()
 	QDEL_IN(src, SUCTION_DELAY + SUCTION_TIME)
 	animate(src, time = SUCTION_DELAY)
 	animate(time = SUCTION_TIME, easing = CUBIC_EASING | EASE_IN, pixel_y = 64, alpha = 0)
 
 /// Shoots the mob visual out then deletes it
-/obj/effect/abstract/sucked_mob/proc/shoot_out()
+/obj/effect/abstract/sucked_atom/proc/shoot_out(shatter)
 	QDEL_IN(src, SUCTION_DELAY + SUCTION_TIME)
 	animate(src, time = SUCTION_DELAY, flags = ANIMATION_PARALLEL)
-	animate(time = SUCTION_TIME, easing = BOUNCE_EASING, pixel_y = 0, flags = ANIMATION_PARALLEL)
+	animate(time = SUCTION_TIME, easing = (shatter ? LINEAR_EASING : BOUNCE_EASING), pixel_y = 0, flags = ANIMATION_PARALLEL)
 
 	animate(src, time = SUCTION_DELAY, flags = ANIMATION_PARALLEL)
 	animate(time = SUCTION_TIME, easing = CUBIC_EASING | EASE_OUT, alpha = mob_initial_alpha, flags = ANIMATION_PARALLEL)
