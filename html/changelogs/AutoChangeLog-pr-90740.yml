@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed moonfish eggs appearing like huge errors inside aquariums."
+  - bugfix: "Fixed starfish suicide sometimes not deleting you."
