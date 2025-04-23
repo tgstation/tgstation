@@ -1149,6 +1149,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 /atom/movable/screen/xenobio_console/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	potion_hud = new()
+	potion_hud.layer = layer-1
 	vis_contents += potion_hud
 	potion_launcher = new()
 	potion_launcher.layer = layer-2
@@ -1195,8 +1196,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/splash)
 	icon_state = potion.icon_state
 	pixel_y = 280
 	pixel_x = -8
-	layer = layer-1
-	plane = HUD_PLANE
 	add_filter("potion_outline", 1, outline_filter(1, "#eeeeee", OUTLINE_SQUARE))
 	add_filter("potion_glow", 2, drop_shadow_filter(0.1, 0.1, 2, 0, "#eeeeee"))
 	transform.Scale(0.8, 0.8)
