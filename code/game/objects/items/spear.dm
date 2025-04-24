@@ -368,7 +368,7 @@
 	animate(owner, pixel_y = owner.pixel_y + 80, time = (2 SECONDS), easing = CIRCULAR_EASING|EASE_OUT)
 	animate(pixel_y = initial(owner.pixel_y), time = (1 SECONDS), easing = CIRCULAR_EASING|EASE_IN)
 
-	jump_timer = addtimer(CALLBACK(src, PROC_REF(land), /*do_effects = */TRUE), 3 SECONDS, TIMER_STOPPABLE)
+	jump_timer = addtimer(CALLBACK(src, PROC_REF(land), /*do_effects = */TRUE, /*mob_override = */owner), 3 SECONDS, TIMER_STOPPABLE)
 
 /datum/action/item_action/skybulge/update_status_on_signal(datum/source, new_stat, old_stat)
 	if(!isnull(jump_timer) && !IsAvailable())
@@ -383,8 +383,7 @@
  * Args:
  * do_effects - Whether we'll do the attacking effects of the land (damaging mobs & sound),
  * we set this to false if we were forced out of the jump, they lost their ability to do the hit.
- * mob_doing_effects - 'owner' by default, this is who we use for aftereffects, this is an arg for when we cancel early due to
- * forcefully dropping us, as 'owner' will be set to null by the time this proc is called in that case, so we must pass them
+ * mob_doing_effects - This is who we use for aftereffects, passing the mob using the ability, with owner as fallback.
  * ourselves.
  */
 /datum/action/item_action/skybulge/proc/land(do_effects = TRUE, mob/living/mob_doing_effects)
