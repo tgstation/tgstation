@@ -38,20 +38,20 @@
 	. = ..()
 	if(.)
 		equilibrium.thermic_mod = ((creation_purity-0.5)*2)*modifier //So a purity 1 = the modifier, and a purity 0 = the inverse modifier 
-//Note from confused guy: It looks like this make endothermic reactions suddenly become violently exothermic and visa versa at low purities.
+///Note from confused guy: It looks like this makes endothermic reactions suddenly become violently exothermic and visa versa at low purities. Wacky.
 
 ///Catalyst precursors (oh boy here i go competing again). P is the harder one to make, (ie. requires a good heater or some extra materials), because it is probably more useful
 /datum/reagent/catalyst_precursor_ph
 	name = "Catalysium P"
 	description = "A close chemical relative of the prefactors, this reagent is a precursor to Ionic Modulator, and will react with stable plasma to create it."
 	color = "#bafa69"
-	ph = 1
+	ph = 7
 
 /datum/reagent/catalyst_precursor_temp
 	name = "Catalysium T"
 	description = "A close chemical relative of the prefactors, this reagent is a precursor to Thermic Modulator, and will react with stable plasma to create it."
 	color = "#c91a1a"
-	ph = 13
+	ph = 7
 
 
 
