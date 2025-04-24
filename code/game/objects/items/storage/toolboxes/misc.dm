@@ -33,7 +33,6 @@
 	new /obj/item/paint/anycolor(src)
 	new /obj/item/paint/anycolor(src)
 
-
 /obj/item/storage/toolbox/haunted
 	name = "old toolbox"
 	custom_materials = list(/datum/material/hauntium = SMALL_MATERIAL_AMOUNT*5)

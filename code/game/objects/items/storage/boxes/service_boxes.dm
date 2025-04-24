@@ -252,7 +252,6 @@
 	for(var/i in 1 to 6)
 		new /obj/item/sticker/googly(src)
 
-
 /// A box containing a skub, for easier carry because skub is a bulky item.
 /obj/item/storage/box/stickers/skub
 	name = "skub fan pack"
@@ -287,7 +286,6 @@
 
 	A.other_pair = B
 	B.other_pair = A
-
 
 /obj/item/storage/box/heretic_box
 	name = "box of pierced realities"

@@ -346,7 +346,6 @@
 	for(var/i in 1 to 4)
 		new /obj/item/storage/bubblegum_wrapper(src, spawning_gum_type)
 
-
 /obj/item/storage/box/gum/wake_up
 	name = "\improper Activin 12 Hour medicated gum packet"
 	desc = "Stay awake during long shifts in the maintenance tunnels with Activin! The approval seal of the Mothic Nomad Fleet \

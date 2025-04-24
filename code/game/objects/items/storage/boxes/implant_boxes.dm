@@ -81,7 +81,6 @@
 	)
 	generate_items_inside(items_inside,src)
 
-
 //BOX O' IMPLANTS
 /obj/item/storage/box/cyber_implants
 	name = "boxed cybernetic implants"
