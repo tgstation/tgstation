@@ -72,6 +72,8 @@
 			break
 	if(itemcheck)
 		var/obj/item/item = atom
+		item.pixel_x = 0
+		item.pixel_y = 0
 		item.forceMove(src)
 		stored = item
 		RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
