@@ -81,9 +81,9 @@
 	LAZYSET(modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
 	LAZYSET(modifiers, FORCE_MULTIPLIER, 1)
 	if(item.damtype == BURN)
-		modifiers[FORCE_MULTIPLIER] *= 4
+		MODIFY_ATTACK_FORCE_MULTIPLIER(modifiers, 4)
 	if(item.get_sharpness())
-		modifiers[FORCE_MULTIPLIER] *= 4
+		MODIFY_ATTACK_FORCE_MULTIPLIER(modifiers, 4)
 	return ..()
 
 /obj/structure/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)

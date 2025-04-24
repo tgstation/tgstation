@@ -370,21 +370,33 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 /// Calculates the amount of burn force when applying this much energy to a mob via electrocution from an energy source.
 #define ELECTROCUTE_DAMAGE(energy) (energy >= 1 KILO JOULES ? clamp(20 + round(energy / JOULES_PER_DAMAGE), 20, 195) + rand(-5,5) : 0)
 
+// Attack chain modifier modifiers
+/// Sets the weapon's base force to this. Use carefully (as multiple overrides may collide). Set via [SET_ATTACK_FORCE]
 #define FORCE_OVERRIDE "force_override"
+/// Flat addition or subtration to the weapon's force. Set via [MODIFY_ATTACK_FORCE]
 #define FORCE_MODIFIER "force_modifier"
+/// Multiplication of the weapon's force. Applied AFTER [FORCE_MODIFIER]. Set via [MODIFY_ATTACK_FORCE_MULTIPLIER]
 #define FORCE_MULTIPLIER "force_multiplier"
+/// If set in modifiers, default messages ("You hit the thing with the thing") are silenced
 #define SILENCE_DEFAULT_MESSAGES "silence_default_messages"
+/// If set in modifiers, default hitsound is silenced
 #define SILENCE_HITSOUND "silence_hitsound"
+
+/// Used in attack chain to set the force of the attack without changing the base force of the item.
+#define SET_ATTACK_FORCE(modifiers, value) \
+	if(!islist(modifiers)) { modifiers = list() }; \
+	modifiers[FORCE_OVERRIDE] = value;
 
 /// Used in attack chain to add or remove force from the attack without changing the base force of the item.
 #define MODIFY_ATTACK_FORCE(modifiers, amount) \
 	if(!islist(modifiers)) { modifiers = list() }; \
 	modifiers[FORCE_MODIFIER] += amount;
 
-/// Used in attack chain to set the force of the attack without changing the base force of the item.
-#define SET_ATTACK_FORCE(modifiers, value) \
+/// Used in attack chain to multiply the force of the attack without changing the base force of the item.
+#define MODIFY_ATTACK_FORCE_MULTIPLIER(modifiers, amount) \
 	if(!islist(modifiers)) { modifiers = list() }; \
-	modifiers[FORCE_OVERRIDE] = value;
+	if(!(FORCE_MULTIPLIER in modifiers)) { modifiers[FORCE_MULTIPLIER] = 1 }; \
+	modifiers[FORCE_MULTIPLIER] *= amount;
 
 /// Used in attack chain to prevent hitsounds on attack (to allow for custom sounds)
 #define MUTE_ATTACK_HITSOUND(modifiers) \

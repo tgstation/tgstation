@@ -63,9 +63,9 @@
 	LAZYSET(modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
 	LAZYSET(modifiers, FORCE_MULTIPLIER, 1)
 	if(item.damtype == BURN)
-		modifiers[FORCE_MULTIPLIER] *= 4
+		MODIFY_ATTACK_FORCE_MULTIPLIER(modifiers, 4)
 	if(item.get_sharpness())
-		modifiers[FORCE_MULTIPLIER] *= 16 // alien resin applies 75% reduction to brute damage so this actually x4 damage
+		MODIFY_ATTACK_FORCE_MULTIPLIER(modifiers, 16) // alien resin applies 75% reduction to brute damage so this actually x4 damage
 	return ..()
 
 /obj/structure/alien/resin/flower_bud/Destroy()
