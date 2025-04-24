@@ -80,8 +80,7 @@
 	if(world.TgsAvailable())
 		var/datum/tgs_version/version = world.TgsVersion()
 		msg += "<b>TGS version</b>: [version.raw_parameter]"
-		var/datum/tgs_version/api_version = world.TgsApiVersion()
-		msg += "<b>DMAPI version</b>: [api_version.raw_parameter]"
+		msg += "<b>DMAPI version</b>: [TGS_DMAPI_VERSION]"
 
 	// Game mode odds
 	msg += "<br><b>Current Informational Settings:</b>"

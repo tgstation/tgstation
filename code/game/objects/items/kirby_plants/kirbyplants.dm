@@ -48,7 +48,7 @@
 	. = ..()
 	icon_state = dead ? "plant-25" : base_icon_state
 
-/obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
+/obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, list/modifiers)
 	. = ..()
 	if(!dead && trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
 		to_chat(user,span_notice("You start trimming [src]."))

@@ -118,11 +118,11 @@
 /obj/item/autosurgeon/attack_self(mob/user)//when the object it used...
 	use_autosurgeon(user, user)
 
-/obj/item/autosurgeon/attack(mob/living/target, mob/living/user, params)
+/obj/item/autosurgeon/attack(mob/living/target, mob/living/user, list/modifiers)
 	add_fingerprint(user)
 	use_autosurgeon(target, user, 8 SECONDS)
 
-/obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(isorgan(attacking_item))
 		load_organ(attacking_item, user)
 	else

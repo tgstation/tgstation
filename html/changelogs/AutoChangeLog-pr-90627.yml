@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Objects crafted from lavaland fauna materials (bone, sinew, hide) are now fireproof and lavaproof. And also reinforced fishing lines."

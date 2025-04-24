@@ -15,7 +15,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
 	pin = /obj/item/firing_pin
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/attackby(obj/item/A, mob/user, params)
+/obj/item/gun/ballistic/revolver/grenadelauncher/attackby(obj/item/A, mob/user, list/modifiers)
 	..()
 	if(istype(A, /obj/item/ammo_box) || isammocasing(A))
 		chamber_round()

@@ -15,7 +15,7 @@
 		FREQ_CTF_BLUE,
 	)
 
-/obj/machinery/telecomms/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/telecomms/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 
 	var/icon_closed = initial(icon_state)
 	var/icon_open = "[initial(icon_state)]_o"
