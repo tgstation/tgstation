@@ -40,7 +40,7 @@
 		equilibrium.thermic_mod = ((creation_purity-0.5)*2)*modifier //So a purity 1 = the modifier, and a purity 0 = the inverse modifier 
 //Note from confused guy: It looks like this make endothermic reactions suddenly become violently exothermic and visa versa at low purities.
 
-///Catalyst precursors (oh boy here i go competing again). P is the harder to make, since ph catalyst is the more useful of the two.
+///Catalyst precursors (oh boy here i go competing again). P is the harder one to make, (ie. requires a good heater or some extra materials), because it is probably more useful
 /datum/reagent/catalyst_precursor_ph
 	name = "Catalysium P"
 	description = "A close chemical relative of the prefactors, this reagent is a precursor to Ionic Modulator, and will react with stable plasma to create it."
