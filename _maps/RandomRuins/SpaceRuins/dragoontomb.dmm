@@ -902,7 +902,7 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "YG" = (
-/turf/closed/mineral/gibtonite,
+/turf/closed/mineral/gibtonite/volcanic/airless,
 /area/ruin/unpowered/no_grav)
 "Zm" = (
 /obj/structure/stone_tile{
