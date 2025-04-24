@@ -22,7 +22,6 @@
 
 	register_context()
 
-
 ///screentips for lockboxes
 /obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(!held_item)
@@ -255,7 +254,6 @@
 		balloon_alert(user, "incorrect bank account!")
 	return FALSE
 
-//Storage case.
 /obj/item/storage/lockbox/dueling
 	name = "dueling pistol case"
 	desc = "Let's solve this like gentlespacemen."
