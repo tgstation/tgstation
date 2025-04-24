@@ -42,7 +42,6 @@
 	var/mob/living/carbon/human/avatar = new(destination)
 	if(bitrunning_network == BITRUNNER_DOMAIN_SECURITY)
 		avatar.set_species(/datum/species/prisoner)
-		avatar.fully_replace_character_name(null, "Prisoner #[rand(1000,9999)]")
 	var/outfit_path = generated_domain.forced_outfit || netsuit
 	var/datum/outfit/to_wear = new outfit_path()
 

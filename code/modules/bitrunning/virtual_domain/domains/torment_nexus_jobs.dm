@@ -532,6 +532,7 @@
 		CRASH("Missing critical items for the domain!")
 	our_controller.camera_console = camera_console
 	camera_console.network = list("[REF(our_controller)]")
+	camera_console.my_controller = our_controller
 	our_controller.our_phone = our_phone
 	our_phone.lines = phone_message
 	our_phone.our_controller = our_controller

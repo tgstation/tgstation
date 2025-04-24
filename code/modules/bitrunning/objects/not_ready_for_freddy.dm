@@ -98,6 +98,7 @@
 					INVOKE_ASYNC(our_controller.left_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, open))
 				else
 					INVOKE_ASYNC(our_controller.left_door, TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
+	our_controller.update_power()
 	update_icon()
 
 /obj/bitrunning/door_button/update_icon(updates)
@@ -141,11 +142,14 @@
 					our_controller.right_light.set_on(FALSE)
 				else
 					our_controller.right_light.set_on(TRUE)
+					our_controller.left_light.set_on(FALSE)
 			if(BITRUNNING_DOORBLOCK_LEFT)
 				if(our_controller.left_light.on)
 					our_controller.left_light.set_on(FALSE)
 				else
 					our_controller.left_light.set_on(TRUE)
+					our_controller.right_light.set_on(FALSE)
+	our_controller.update_power()
 	update_icon()
 
 /obj/bitrunning/light_button/update_icon(updates)
@@ -173,11 +177,17 @@
 	which_side = BITRUNNING_DOORBLOCK_RIGHT
 
 /obj/machinery/computer/security/bitrunner
+	var/obj/bitrunning/animatronic_controller/my_controller
 	var/shut_down = FALSE
 
 /obj/machinery/computer/security/bitrunner/ui_interact(mob/user, datum/tgui/ui)
 	if(!shut_down)
+		my_controller.update_power()
 		. = ..()
+
+/obj/machinery/computer/security/bitrunner/ui_close(mob/user)
+	. = ..()
+	my_controller.update_power()
 
 /obj/machinery/computer/security/bitrunner/update_overlays()
 	if(!shut_down)
@@ -329,7 +339,7 @@
 	var/lightsout_2_timer // every 5 seconds, 20% chance to stop har har har har har
 	var/lightsout_2_current = 0 // once this hits 4 force to next
 	var/lightsout_3_timer // every 2 seconds, 20% chance to kill
-	var/active_drains = 0
+	var/active_drains = 1
 	var/obj/machinery/door/poddoor/left_door
 	var/obj/machinery/door/poddoor/right_door
 	var/obj/machinery/light/small/dim/left_light
@@ -338,6 +348,7 @@
 	var/obj/machinery/digital_clock/bitrunner_power/my_power
 	var/datum/looping_sound/annoying_light_hum/annoying_light_hum
 	var/datum/looping_sound/vent_pump_overclock/fan_sound
+	var/time_since_last_power_tick = 0
 
 /obj/bitrunning/animatronic_controller/proc/start_night()
 	QDEL_NULL(annoying_light_hum)
@@ -362,6 +373,7 @@
 	my_clock.update_icon()
 	my_power.set_light(0)
 	my_power.update_icon()
+	time_since_last_power_tick = world.timeofday
 	for(var/obj/bitrunning/animatronic/robot in animatronics)
 		robot.forceMove(get_turf(robot.starting_node))
 		robot.setDir(robot.starting_node.dir)
@@ -377,7 +389,7 @@
 	movement_process_timer = addtimer(CALLBACK(src, PROC_REF(movement_tick)), 5 SECONDS, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
 	every_minute_timer = addtimer(CALLBACK(src, PROC_REF(minute_tick)), 1.5 MINUTES, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_LOOP | TIMER_DELETE_ME)
 	six_minute_timer = addtimer(CALLBACK(src, PROC_REF(victory)), 9 MINUTES, TIMER_CLIENT_TIME | TIMER_STOPPABLE | TIMER_DELETE_ME)
-	power_drain_timer = addtimer(CALLBACK(src, PROC_REF(drain_power)), 9.6 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
+	power_drain_timer = addtimer(CALLBACK(src, PROC_REF(drain_power)), 3.5 SECONDS, TIMER_STOPPABLE | TIMER_CLIENT_TIME | TIMER_LOOP | TIMER_DELETE_ME)
 
 /obj/bitrunning/animatronic_controller/proc/minute_tick()
 	minutes_passed++
@@ -433,31 +445,28 @@
 			robot.current_node = next_node
 */
 
+/obj/bitrunning/animatronic_controller/proc/update_power()
+	active_drains = 1
+	if(left_door.density)
+		active_drains++
+	if(right_door.density)
+		active_drains++
+	if(length(camera_console.concurrent_users))
+		active_drains++
+	if(left_light.on || right_light.on)
+		active_drains++
+	my_power.update_icon()
+
 /obj/bitrunning/animatronic_controller/proc/drain_power()
-	power_left--
-	active_drains = 0
+	update_power()
+	var/time_to_drain = time_since_last_power_tick + (9.6 SECONDS / active_drains)
+	if(world.timeofday >= time_to_drain)
+		power_left--
+		time_since_last_power_tick = world.timeofday
+		my_power.update_icon()
 	if(power_left <= 0)
 		power_outage()
 		return
-	var/default_timer = 9.6 SECONDS
-	if(left_door.density)
-		default_timer *= 0.5
-		active_drains++
-	if(right_door.density)
-		default_timer *= 0.5
-		active_drains++
-	if(length(camera_console.concurrent_users))
-		default_timer *= 0.5
-		active_drains++
-	if(left_light.on)
-		default_timer *= 0.5
-		active_drains++
-	if(right_light.on)
-		default_timer *= 0.5
-		active_drains++
-	my_power.update_icon()
-	deltimer(power_drain_timer)
-	power_drain_timer = addtimer(CALLBACK(src, PROC_REF(drain_power)), default_timer, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /obj/bitrunning/animatronic_controller/proc/power_outage()
 	deltimer(power_drain_timer)

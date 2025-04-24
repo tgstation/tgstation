@@ -66,6 +66,8 @@
 
 	var/client/our_client = avatar.client
 	var/alias = our_client?.prefs?.read_preference(/datum/preference/name/hacker_alias) || pick(GLOB.hacker_aliases)
+	if(server.bitrunning_network == BITRUNNER_DOMAIN_SECURITY)
+		alias = "Prisoner #[rand(1000,9999)]"
 
 	if(alias && avatar.real_name != alias)
 		avatar.fully_replace_character_name(newname = alias)

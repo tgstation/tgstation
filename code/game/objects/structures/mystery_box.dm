@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	/// The object that represents the rapidly changing item that will be granted upon being claimed. Is not, itself, an item.
 	var/obj/effect/abstract/mystery_box_item/presented_item
 	/// What type of mystery box item should we generate?
-	var/box_item = /obj/mystery_box_item
+	var/box_item = /obj/effect/abstract/mystery_box_item
 	/// A timer for how long it takes for the box to start its expire animation
 	var/box_expire_timer
 	/// A timer for how long it takes for the box to close itself
@@ -199,7 +199,8 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	presented_item = new box_item(loc)
 	presented_item.vis_flags = VIS_INHERIT_PLANE
 	presented_item.flags_1 |= IS_ONTOP_1
-	vis_contents += presented_item	presented_item.start_animation(src)
+	vis_contents += presented_item
+	presented_item.start_animation(src)
 	if(play_sounds)
 		current_sound_channel = SSsounds.reserve_sound_channel(src)
 		playsound(src, open_sound, 70, FALSE, channel = current_sound_channel, falloff_exponent = 10)
@@ -282,7 +283,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	desc = "Only opens with a Baton Case Key from Cargo. Buy one today for 249 credits for a chance at an incredibly rare and unique Baton! \
 	Fun for all ages in sectors of space where gambling regulations are unenforced!"
 	icon_state = "case"
-	box_item = /obj/mystery_box_item/baton_crate
+	box_item = /obj/effect/abstract/mystery_box_item/baton_crate
 	open_on_attackhand = FALSE
 	expires = FALSE
 	anchored = FALSE
@@ -445,7 +446,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	shrink_back.Scale(0.5,0.5)
 	animate(src, pixel_z = -4, transform = shrink_back, time = MBOX_DURATION_EXPIRING)
 
-/obj/mystery_box_item/baton_crate
+/obj/effect/abstract/mystery_box_item/baton_crate
 	name = "Mystery Baton"
 	desc = "Ninety-nine percent of unboxers quit before they win a factory new donut sturambit."
 	hype_light_color = COLOR_SECURITY_RED
@@ -456,13 +457,13 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	var/datum/baton_model/baton_model
 	var/list/possible_models = list()
 
-/obj/mystery_box_item/baton_crate/Initialize(mapload)
+/obj/effect/abstract/mystery_box_item/baton_crate/Initialize(mapload)
 	. = ..()
 	if(!length(possible_models))
 		for(var/datum/baton_model/model as anything in subtypesof(/datum/baton_model))
 			possible_models += list(initial(model.type) = initial(model.rarity))
 
-/obj/mystery_box_item/baton_crate/update_random_icon(new_item_type)
+/obj/effect/abstract/mystery_box_item/baton_crate/update_random_icon(new_item_type)
 	baton_model = pick_weight(possible_models)
 	var/icon/possible_baton = icon('icons/obj/weapons/baton.dmi', initial(baton_model.icon_state))
 	possible_baton.Blend("#000000", ICON_MULTIPLY)
@@ -470,7 +471,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	icon_state = ""
 	playsound(src, 'sound/effects/mysterybox/baton_crate_scroll.ogg', 80, FALSE, -1)
 
-/obj/mystery_box_item/baton_crate/present_item()
+/obj/effect/abstract/mystery_box_item/baton_crate/present_item()
 	var/obj/item/melee/baton/security/skin/selected_item = new /obj/item/melee/baton/security/skin(src, baton_model)
 	name = selected_item.name
 	desc = selected_item.desc

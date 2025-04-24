@@ -341,10 +341,6 @@
 "qK" = (
 /turf/closed/indestructible/fakedoor,
 /area/virtual_domain)
-"rc" = (
-/obj/effect/decal/cleanable/blood/splatter,
-/turf/closed/wall/r_wall,
-/area/virtual_domain)
 "re" = (
 /obj/structure/chair/comfy/black{
 	dir = 8
@@ -1067,10 +1063,6 @@
 /obj/bitrunning/animatronic_movement_node/engineering/stage,
 /turf/open/floor/wood,
 /area/virtual_domain)
-"UY" = (
-/obj/structure/table,
-/turf/closed/wall/r_wall,
-/area/virtual_domain)
 "Vd" = (
 /obj/effect/landmark/bitrunning/cache_goal_turf,
 /obj/effect/turf_decal/loading_area,
@@ -1197,12 +1189,6 @@
 "Zf" = (
 /obj/machinery/deepfryer,
 /turf/open/floor/iron/kitchen/small,
-/area/virtual_domain)
-"Zg" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table,
-/turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "Zj" = (
 /obj/machinery/light/small/dim/directional/west,
@@ -1586,7 +1572,7 @@ Ux
 Ux
 Ux
 Zp
-rc
+Fc
 re
 Ux
 Fc
@@ -2090,7 +2076,7 @@ NA
 vy
 NA
 NA
-Zg
+NA
 yz
 yz
 yz
@@ -2131,7 +2117,7 @@ Fc
 jE
 Fc
 Fc
-UY
+Fc
 Fc
 Fc
 Fc
