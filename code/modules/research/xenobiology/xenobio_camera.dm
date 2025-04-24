@@ -102,7 +102,7 @@
 	))
 	return ..()
 
-/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/used_item, mob/user, params)
+/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/used_item, mob/user, list/modifiers)
 	if(istype(used_item, /obj/item/food/monkeycube))
 		monkeys++
 		to_chat(user, span_notice("You feed [used_item] to [src]. It now has [monkeys] monkey cubes stored."))

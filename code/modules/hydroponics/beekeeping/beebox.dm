@@ -145,7 +145,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/beebox/attackby(obj/item/item, mob/user, params)
+/obj/structure/beebox/attackby(obj/item/item, mob/user, list/modifiers)
 	if(istype(item, /obj/item/honey_frame))
 		var/obj/item/honey_frame/frame = item
 		if(honey_frames.len < BEEBOX_MAX_FRAMES)

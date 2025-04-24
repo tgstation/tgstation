@@ -45,7 +45,7 @@ function Story() {
             <Button onClick={() => setProgress(progress + 0.1)}>+0.1</Button>
           </LabeledList.Item>
           <LabeledList.Item label="Override color">
-            <Input value={color} onChange={(event, value) => setColor(value)} />
+            <Input value={color} onChange={setColor} />
           </LabeledList.Item>
         </LabeledList>
       </Box>

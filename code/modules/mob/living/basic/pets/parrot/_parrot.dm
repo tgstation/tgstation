@@ -333,7 +333,7 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	return FALSE
 
 /// If we're right-clicked on with a cracker, we eat the cracker.
-/mob/living/basic/parrot/proc/on_attacked(mob/living/basic/source, obj/item/thing, mob/living/attacker, params)
+/mob/living/basic/parrot/proc/on_attacked(mob/living/basic/source, obj/item/thing, mob/living/attacker, list/modifiers)
 	SIGNAL_HANDLER
 	if(!istype(thing, /obj/item/food/cracker)) // Poly wants a cracker
 		return

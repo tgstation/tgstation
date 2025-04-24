@@ -106,9 +106,8 @@ const ShoppingTab = (props) => {
                 width="150px"
                 placeholder="Search item..."
                 value={searchItem}
-                onInput={(e, value) => {
-                  setSearchItem(value);
-                }}
+                onChange={setSearchItem}
+                expensive
               />
             </Stack.Item>
           </Tabs>
