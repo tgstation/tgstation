@@ -37,7 +37,7 @@
 	reaction_flags = REACTION_COMPETITIVE
 	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_DANGEROUS | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
 
-/datum/chemical_reaction/catalyst_precursor/ph/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
+/datum/chemical_reaction/catalyst_precursor_ph/reaction_step(datum/reagents/holder, datum/equilibrium/reaction, delta_t, delta_ph, step_reaction_vol)
 	. = ..()
 	if(holder.has_reagent(/datum/reagent/gold))
 		holder.remove_reagent(/datum/reagent/gold, 1)
