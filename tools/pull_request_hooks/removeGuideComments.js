@@ -23,7 +23,7 @@ export async function removeGuideComments({ github, context }) {
 	return;
   }
 
-  let newBody = "";
+  let newBody = originalBody;
 
   for (const comment of comments) {
     newBody = originalBody.replace(
