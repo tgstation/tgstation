@@ -571,11 +571,11 @@ SPY_BOUNTY_MAX_MEDIUM 2
 SPY_BOUNTY_MAX_HARD 2
 ## Changes amount of refreshes necessary per each hard bounty
 ## 1 = A hard bounty is added per refresh (until the max)
-## 0.5 = A hard bounty is added every 2 refreshes (until the max)
+## 0.5 = A hard bounty is added every 2 refreshes (until the max).
 SPY_BOUNTY_HARD_BOUNTIES_PER_REFRESH 1
 ## Easy bounties grant uplink rewards that cost this much TC (or lower).
 ## Also functions as the lower end for medium bounties.
 SPY_EASY_REWARD_TC_THRESHOLD 5
-## Hard bounties grant uplink rewards that cost this much TC (or lower).
+## Hard bounties grant uplink rewards that cost this much TC (or higher).
 ## Also functions as the upper end for medium bounties.
 SPY_HARD_REWARD_TC_THRESHOLD 15
