@@ -60,12 +60,12 @@
 	. = ..()
 
 /obj/structure/alien/resin/flower_bud/attacked_by(obj/item/item, mob/living/user, list/modifiers)
-	LAZYINITLIST(modifiers)
+	LAZYSET(modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
+	LAZYSET(modifiers, FORCE_MULTIPLIER, 1)
 	if(item.damtype == BURN)
 		modifiers[FORCE_MULTIPLIER] *= 4
 	if(item.get_sharpness())
 		modifiers[FORCE_MULTIPLIER] *= 16 // alien resin applies 75% reduction to brute damage so this actually x4 damage
-	modifiers[SILENCE_DEFAULT_MESSAGES] = TRUE
 	return ..()
 
 /obj/structure/alien/resin/flower_bud/Destroy()

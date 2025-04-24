@@ -78,12 +78,12 @@
 		qdel(src)
 
 /obj/structure/spacevine/attacked_by(obj/item/item, mob/living/user, list/modifiers)
-	LAZYINITLIST(modifiers)
+	LAZYSET(modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
+	LAZYSET(modifiers, FORCE_MULTIPLIER, 1)
 	if(item.damtype == BURN)
 		modifiers[FORCE_MULTIPLIER] *= 4
 	if(item.get_sharpness())
 		modifiers[FORCE_MULTIPLIER] *= 4
-	modifiers[SILENCE_DEFAULT_MESSAGES] = TRUE
 	return ..()
 
 /obj/structure/spacevine/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
