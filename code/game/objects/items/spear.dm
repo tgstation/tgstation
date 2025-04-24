@@ -365,7 +365,7 @@
 	owner.set_density(FALSE)
 	owner.layer = ABOVE_ALL_MOB_LAYER
 
-	animate(owner, pixel_y = owner.pixel_y + 80, time = (2 SECONDS), easing = CIRCULAR_EASING|EASE_OUT)
+	animate(owner, pixel_y = owner.pixel_y + 60, time = (2 SECONDS), easing = CIRCULAR_EASING|EASE_OUT)
 	animate(pixel_y = initial(owner.pixel_y), time = (1 SECONDS), easing = CIRCULAR_EASING|EASE_IN)
 
 	jump_timer = addtimer(CALLBACK(src, PROC_REF(land), /*do_effects = */TRUE, /*mob_override = */owner), 3 SECONDS, TIMER_STOPPABLE)
