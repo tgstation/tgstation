@@ -26,7 +26,7 @@ export async function removeGuideComments({ github, context }) {
   let newBody = originalBody;
 
   for (const comment of comments) {
-    newBody = originalBody.replace(
+    newBody = newBody.replace(
       new RegExp(`^\\s*${escapeRegex(comment)}\\s*`, "gm"),
       "\n"
     );
