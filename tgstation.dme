@@ -2763,7 +2763,6 @@
 #include "code\game\objects\items\storage\toolboxes\medical.dm"
 #include "code\game\objects\items\storage\toolboxes\misc.dm"
 #include "code\game\objects\items\storage\toolboxes\service.dm"
-#include "code\game\objects\items\storage\toolboxes\turret.dm"
 #include "code\game\objects\items\storage\toolboxes\weapons.dm"
 #include "code\game\objects\items\tanks\jetpack.dm"
 #include "code\game\objects\items\tanks\tank_types.dm"
