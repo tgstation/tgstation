@@ -208,19 +208,21 @@
 	if(item_flags & NOBLUDGEON)
 		return FALSE
 
-	if(damtype != STAMINA && force && HAS_TRAIT(user, TRAIT_PACIFISM))
+	var/final_force = CALCULATE_FORCE(src, modifiers)
+	if(damtype != STAMINA && final_force && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to harm other living beings!"))
 		return FALSE
 
-	if(!force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
-		playsound(src, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
-	else if(hitsound)
-		playsound(src, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
+	if(!LAZYACCESS(modifiers, SILENCE_HITSOUND))
+		if(!final_force && !HAS_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND))
+			playsound(src, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1)
+		else if(hitsound)
+			playsound(src, hitsound, get_clamped_volume(), TRUE, extrarange = stealthy_audio ? SILENCED_SOUND_EXTRARANGE : -1, falloff_distance = 0)
 
 	target_mob.lastattacker = user.real_name
 	target_mob.lastattackerckey = user.ckey
 
-	if(force && target_mob == user && user.client)
+	if(final_force && target_mob == user && user.client)
 		user.client.give_award(/datum/award/achievement/misc/selfouch, user)
 
 	if(get(src, /mob/living) == user) // telekinesis.
@@ -231,8 +233,8 @@
 	SEND_SIGNAL(src, COMSIG_ITEM_AFTERATTACK, target_mob, user, modifiers)
 	SEND_SIGNAL(target_mob, COMSIG_ATOM_AFTER_ATTACKEDBY, src, user, modifiers)
 	afterattack(target_mob, user, modifiers)
-
-	log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
+	if(final_force > 0)
+		log_combat(user, target_mob, "attacked", src.name, "(COMBAT MODE: [uppertext(user.combat_mode)]) (DAMTYPE: [uppertext(damtype)])")
 	add_fingerprint(user)
 	return FALSE // unhandled
 
@@ -295,7 +297,8 @@
 		targeting = get_random_valid_zone(targeting, zone_hit_chance)
 	var/targeting_human_readable = parse_zone_with_bodypart(targeting)
 
-	send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
+	if(!LAZYACCESS(modifiers, SILENCE_DEFAULT_MESSAGES))
+		send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
 
 	var/armor_block = min(run_armor_check(
 			def_zone = targeting,
@@ -322,7 +325,7 @@
 	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
 
 	if(final_force <= 0)
-		return 1
+		return 1 // Pretend like we did 1 damage so afterattack still runs
 
 	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))

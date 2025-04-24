@@ -77,7 +77,7 @@
 	if(!override)
 		qdel(src)
 
-/obj/structure/spacevine/attacked_by(obj/item/item, mob/living/user)
+/obj/structure/spacevine/attacked_by(obj/item/item, mob/living/user, list/modifiers)
 	LAZYINITLIST(modifiers)
 	if(item.damtype == BURN)
 		modifiers[FORCE_MULTIPLIER] *= 4

@@ -332,14 +332,6 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 /// Calculates the new armour value after armour penetration. Can return negative values, and those must be caught.
 #define PENETRATE_ARMOUR(armour, penetration) (penetration == 100 ? 0 : 100 * (armour - penetration) / (100 - penetration))
 
-/// Return values used in item/melee/baton/baton_attack.
-/// Does a normal item attack.
-#define BATON_DO_NORMAL_ATTACK 1
-/// The attack has been stopped. Either because the user was clumsy or the attack was blocked.
-#define BATON_ATTACK_DONE 2
-/// The baton attack is still going. baton_effect() is called.
-#define BATON_ATTACKING 3
-
 // Defines for combo attack component
 /// LMB Attack
 #define LEFT_ATTACK "Left Attack"
@@ -382,15 +374,27 @@ GLOBAL_LIST_INIT(leg_zones, list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 #define FORCE_MODIFIER "force_modifier"
 #define FORCE_MULTIPLIER "force_multiplier"
 #define SILENCE_DEFAULT_MESSAGES "silence_default_messages"
+#define SILENCE_HITSOUND "silence_hitsound"
 
-/// Used in attack chain to add or remove force from the attack.
+/// Used in attack chain to add or remove force from the attack without changing the base force of the item.
 #define MODIFY_ATTACK_FORCE(modifiers, amount) \
 	if(!islist(modifiers)) { modifiers = list() }; \
 	modifiers[FORCE_MODIFIER] += amount;
 
+/// Used in attack chain to set the force of the attack without changing the base force of the item.
 #define SET_ATTACK_FORCE(modifiers, value) \
 	if(!islist(modifiers)) { modifiers = list() }; \
 	modifiers[FORCE_OVERRIDE] = value;
+
+/// Used in attack chain to prevent hitsounds on attack (to allow for custom sounds)
+#define MUTE_ATTACK_HITSOUND(modifiers) \
+	if(!islist(modifiers)) { modifiers = list() }; \
+	modifiers[SILENCE_HITSOUND] = TRUE;
+
+/// Used in attack chain to prevent default visible messages from being sent (to allow for custom messages)
+#define HIDE_ATTACK_MESSAGES(modifiers) \
+	if(!islist(modifiers)) { modifiers = list() }; \
+	modifiers[SILENCE_DEFAULT_MESSAGES] = TRUE;
 
 /// Calculates the final force of some item based on modifiers
 /// Needs to have support for force overrides and multipliers of 0 (hence why we ternaries are used over 'or's)
