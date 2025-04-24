@@ -16,14 +16,14 @@ function escapeRegex(string) {
 }
 
 export async function removeGuideComments({ github, context }) {
-	const originalBody = (await github.rest.pulls.get(context.issue)).body;
+  const originalBody = (await github.rest.pulls.get(context.issue)).body;
 
   if (!originalBody) {
 	console.log("PR body is empty, skipping...");
 	return;
   }
 
-	let newBody = "";
+  let newBody = "";
 
   for (const comment of comments) {
     newBody = originalBody.replace(
