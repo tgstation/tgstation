@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Inputs in tgui windows (not tgui-say) have been reworked, hopefully making them FAST. Report if they are not FAST."
-  - bugfix: "Fixed a bluescreen caused when moving a tgui window with a tooltip open."
