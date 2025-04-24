@@ -47,7 +47,7 @@
 	results = list(/datum/reagent/catalyst_precursor_temp = 5)
 	required_reagents = list(/datum/reagent/catalyst_precursor_ph = 5)
 	rate_up_lim = 3
-	reaction_flags = REACTION_COMPETITIVE //Competes with /datum/chemical_reaction/prefactor_b
+	reaction_flags = REACTION_COMPETITIVE //Competes with /datum/chemical_reaction/catalyst_precursor_ph
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
 
 ///////////////////////////CATALYSTS////////////////////////////
