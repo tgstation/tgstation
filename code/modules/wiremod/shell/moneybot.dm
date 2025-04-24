@@ -67,7 +67,7 @@
 /obj/item/circuit_component/money_dispenser/get_ui_notices()
 	. = ..()
 	. += create_ui_notice("Dispense Cooldown: [DisplayTimeText(dispense_cd_length)]", "orange", FA_ICON_STOPWATCH)
-	. += create_ui_notice("Dispense Limit: [max_chips]", "orange", FA_ICON_MONEY_BILL_TRANSFER)
+	. += create_ui_notice("Dispense Limit: [max_chips] Holochips (per tile)", "orange", FA_ICON_MONEY_BILL_TRANSFER)
 
 /obj/item/circuit_component/money_dispenser/register_shell(atom/movable/shell)
 	. = ..()
