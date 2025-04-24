@@ -3089,7 +3089,7 @@
 
 /datum/reagent/ants/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
-	if(!istype(exposed_turf) || isspaceturf(exposed_turf)) // Is the turf valid
+	if(!istype(exposed_turf)) // Is the turf valid
 		return
 	if((reac_volume <= 10)) // Makes sure people don't duplicate ants.
 		return

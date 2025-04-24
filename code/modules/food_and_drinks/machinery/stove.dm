@@ -142,7 +142,7 @@
 		update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
-/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

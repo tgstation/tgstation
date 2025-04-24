@@ -512,7 +512,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/mod/module/anomaly_locked/attackby(obj/item/item, mob/living/user, params)
+/obj/item/mod/module/anomaly_locked/attackby(obj/item/item, mob/living/user, list/modifiers)
 	if(item.type in accepted_anomalies)
 		if(core)
 			balloon_alert(user, "core already in!")

@@ -103,7 +103,7 @@
 	if(sticker)
 		. += "[base_icon_state]_barcode"
 
-/obj/item/delivery/attackby(obj/item/item, mob/user, params)
+/obj/item/delivery/attackby(obj/item/item, mob/user, list/modifiers)
 	if(istype(item, /obj/item/dest_tagger))
 		var/obj/item/dest_tagger/dest_tagger = item
 
@@ -352,7 +352,7 @@
 	if(payments_acc)
 		. += span_notice("<b>Ctrl-click</b> to clear the registered account.")
 
-/obj/item/sales_tagger/attackby(obj/item/item, mob/living/user, params)
+/obj/item/sales_tagger/attackby(obj/item/item, mob/living/user, list/modifiers)
 	. = ..()
 	if(isidcard(item))
 		var/obj/item/card/id/potential_acc = item

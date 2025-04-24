@@ -1,0 +1,4 @@
+author: "Pepsilawn"
+delete-after: True
+changes:
+  - bugfix: "Tramstation, fixes a mop that happened to be grabbable while being 2 tiles above its location in an entirely different room"
