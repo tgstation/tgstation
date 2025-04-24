@@ -268,7 +268,9 @@
 
 /atom/movable/screen/navigate_arrow/Initialize(mapload, datum/hud/hud_owner, turf/tracked_turf, arrow_color)
 	. = ..()
-	animate(src, transform = matrix(get_angle(get_mob(), tracked_turf), MATRIX_ROTATE), 0.2 SECONDS)
+	var/mob/owner = get_mob()
+	if (owner)
+		animate(src, transform = matrix(get_angle(owner, tracked_turf), MATRIX_ROTATE), 0.2 SECONDS)
 	screen_loc = around_player
 	color = arrow_color
 	if (hud)
