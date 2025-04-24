@@ -33,6 +33,18 @@
 	min_val = 0.1
 	// Some arbitrarily large number would just result in max hard bounties on first refresh
 
+/// Spy config: Adjusts the tc threshold for easy bounties.
+/datum/config_entry/number/spy_easy_reward_tc_threshold
+	default = SPY_LOWER_COST_THRESHOLD
+	min_val = 0
+	integer = TRUE
+
+/// Spy config: Adjusts the tc threshold for hard bounties.
+/datum/config_entry/number/spy_hard_reward_tc_threshold
+	default = SPY_UPPER_COST_THRESHOLD + 1
+	min_val = 0
+	integer = TRUE
+
 /**
  * ## Spy bounty handler
  *
@@ -108,11 +120,11 @@
 			continue
 		// This will have some overlap, and that's intentional -
 		// Adds some variety, rare moments where you can get a hard reward for an easier bounty (or visa versa)
-		if(item.cost <= SPY_LOWER_COST_THRESHOLD)
+		if(item.cost <= CONFIG_GET(number/spy_easy_reward_tc_threshold))
 			possible_uplink_items[SPY_DIFFICULTY_EASY] += item
-		if(item.cost >= SPY_LOWER_COST_THRESHOLD && item.cost <= SPY_UPPER_COST_THRESHOLD)
+		if(item.cost >= CONFIG_GET(number/spy_easy_reward_tc_threshold) && item.cost <= CONFIG_GET(number/spy_hard_reward_tc_threshold))
 			possible_uplink_items[SPY_DIFFICULTY_MEDIUM] += item
-		if(item.cost >= SPY_UPPER_COST_THRESHOLD)
+		if(item.cost >= CONFIG_GET(number/spy_hard_reward_tc_threshold))
 			possible_uplink_items[SPY_DIFFICULTY_HARD] += item
 
 	refresh_bounty_list()
