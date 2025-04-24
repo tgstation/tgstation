@@ -53,10 +53,17 @@
 ///////////////////////////CATALYSTS////////////////////////////
 
 
-/datum/chemical_reaction/prefactor_a/purity_tester
-	results = list(/datum/reagent/reaction_agent/purity_tester = 5)
-	required_reagents = list(/datum/reagent/prefactor_a = 5, /datum/reagent/stable_plasma = 5)
-	H_ion_release = 0.05
+/datum/chemical_reaction/thermic_modulator
+	results = list(/datum/reagent/catalyst_agent/temperature/generic = 5)
+	required_reagents = list(/datum/reagent/catalyst_precursor_temp = 5, /datum/reagent/stable_plasma = 5)
+	H_ion_release = 0
+	thermic_constant = 0
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
+
+/datum/chemical_reaction/ionic_modulator
+	results = list(/datum/reagent/catalyst_agent/ph/generic = 5)
+	required_reagents = list(/datum/reagent/catalyst_precursor_ph = 5, /datum/reagent/stable_plasma = 5)
+	H_ion_release = 0
 	thermic_constant = 0
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPETITIVE
 
