@@ -278,19 +278,6 @@
 	for(var/i in 1 to 4)
 		new /obj/item/sticker/anti_skub(src)
 
-/obj/item/storage/box/mechabeacons
-	name = "exosuit tracking beacons"
-
-/obj/item/storage/box/mechabeacons/PopulateContents()
-	..()
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-
 /obj/item/storage/box/pinpointer_pairs
 	name = "pinpointer pair box"
 

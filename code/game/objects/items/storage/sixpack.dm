@@ -34,6 +34,10 @@
 	name = "beer can ring"
 	desc = "Holds six beers. Remember to recycle when you're done!"
 
+/obj/item/storage/cans/sixbeer/PopulateContents()
+	for(var/i in 1 to 6)
+		new /obj/item/reagent_containers/cup/soda_cans/beer(src)
+
 /obj/item/storage/cans/sixgamerdrink
 	name = "gamer drink bottle ring"
 	desc = "Holds six gamer drink cans. Remember to recycle when you're done!"
@@ -51,10 +55,6 @@
 	for(var/i in 1 to 6)
 		var/obj/item/chosen_gamer_drink = pick_weight(gamer_drink_options)
 		new chosen_gamer_drink(src)
-
-/obj/item/storage/cans/sixbeer/PopulateContents()
-	for(var/i in 1 to 6)
-		new /obj/item/reagent_containers/cup/soda_cans/beer(src)
 
 /obj/item/storage/cans/sixenergydrink
 	name = "energy drink bottle ring"
