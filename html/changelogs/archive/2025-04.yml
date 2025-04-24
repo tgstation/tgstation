@@ -692,3 +692,17 @@
       today!
   - balance: Part-Mart vending machines now have mousetraps, spare screwdrivers and
       rifle stocks in their contraband section.
+2025-04-24:
+  Ghommie:
+  - qol: You can now interact with held mobs in more ways beside wearing them.
+  - bugfix: Fixed moonfish eggs appearing like huge errors inside aquariums.
+  - bugfix: Fixed starfish suicide sometimes not deleting you.
+  Jacquerel:
+  - bugfix: You can now bleed or vomit onto people below you rather than creating
+      puddles of substance hovering in mid-air.
+  SmArtKar:
+  - bugfix: Fixed AI not getting creampie face decals
+  jlsnow301:
+  - bugfix: Inputs in tgui windows (not tgui-say) have been reworked, hopefully making
+      them FAST. Report if they are not FAST.
+  - bugfix: Fixed a bluescreen caused when moving a tgui window with a tooltip open.

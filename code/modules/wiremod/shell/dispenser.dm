@@ -60,7 +60,7 @@
 		new /obj/item/circuit_component/dispenser_bot()
 	), SHELL_CAPACITY_LARGE)
 
-/obj/structure/dispenser_bot/attackby(obj/item/item, mob/living/user, params)
+/obj/structure/dispenser_bot/attackby(obj/item/item, mob/living/user, list/modifiers)
 	if(user.combat_mode)
 		return ..()
 	if(istype(item, /obj/item/wrench) || istype(item, /obj/item/multitool) || istype(item, /obj/item/integrated_circuit))
