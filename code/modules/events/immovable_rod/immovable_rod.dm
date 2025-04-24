@@ -131,7 +131,7 @@
 		// Did we reach our destination? We're probably on Icebox. Let's get rid of ourselves.
 		// Ordinarily this won't happen as the average destination is the edge of the map and
 		// the rod will auto transition to a new z-level.
-		if(loc == destination_turf)
+		if(y == destination_turf.y || x == destination_turf.x)
 			qdel(src)
 			return
 
