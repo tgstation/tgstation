@@ -60,6 +60,9 @@
 
 /obj/effect/temp_visual/telegraphing/exclamation/following/Initialize(mapload, duration, obj/following)
 	. = ..()
+	if(isnull(following))
+		return INITIALIZE_HINT_QDEL
+	glide_size = following.glide_size
 	RegisterSignal(following, COMSIG_MOVABLE_MOVED, PROC_REF(follow))
 
 ///called when the thing we're following moves

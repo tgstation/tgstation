@@ -315,6 +315,9 @@
 /datum/action/item_action/skybulge
 	name = "Dragoon Jump"
 	desc = "Jump up into the skies and fall down upon your opponents to deal double damage."
+	check_flags = parent_type::check_flags | AB_CHECK_IMMOBILE | AB_CHECK_PHASED
+	///Ref to the addtimer we have between jumping up and falling down, used to cancel early if you're incapacitated mid-jump.
+	var/jump_timer
 	///Cooldown time between jumps.
 	var/jump_cooldown_time = 1 MINUTES
 	/**
@@ -351,38 +354,59 @@
 
 	RegisterSignal(target, COMSIG_ITEM_ATTACK, PROC_REF(on_attack_during_jump))
 	ADD_TRAIT(target, TRAIT_NODROP, ACTION_TRAIT)
-	ADD_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, ACTION_TRAIT)
-	owner.resistance_flags |= INDESTRUCTIBLE //not while jumping at least
+	owner.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_MOVE_FLYING), ACTION_TRAIT)
+
 	if(owner.pass_flags & PASSTABLE)
 		gave_pass_flags = FALSE
 	else
 		gave_pass_flags = TRUE
 		owner.pass_flags |= PASSTABLE
+
 	owner.set_density(FALSE)
 	owner.layer = ABOVE_ALL_MOB_LAYER
 
 	animate(owner, pixel_y = owner.pixel_y + 80, time = (2 SECONDS), easing = CIRCULAR_EASING|EASE_OUT)
 	animate(pixel_y = initial(owner.pixel_y), time = (1 SECONDS), easing = CIRCULAR_EASING|EASE_IN)
 
-	addtimer(CALLBACK(src, PROC_REF(land)), 3 SECONDS)
+	jump_timer = addtimer(CALLBACK(src, PROC_REF(land), /*do_effects = */TRUE), 3 SECONDS, TIMER_STOPPABLE)
 
-///Called by jump_up, this is the post-jump effects, damaging objects and mobs it lands on.
-/datum/action/item_action/skybulge/proc/land()
-	var/turf/landed_on = get_turf(owner)
-	playsound(owner, 'sound/effects/explosion/explosion1.ogg', 40, 1)
+/datum/action/item_action/skybulge/update_status_on_signal(datum/source, new_stat, old_stat)
+	if(!isnull(jump_timer) && !IsAvailable())
+		INVOKE_ASYNC(src, PROC_REF(land), /*do_effects = */FALSE, /*mob_override = */source)
+		deltimer(jump_timer)
+	return ..()
+
+/**
+ * ## land()
+ *
+ * Called by jump_up, this is the post-jump effects, damaging objects and mobs it lands on.
+ * Args:
+ * do_effects - Whether we'll do the attacking effects of the land (damaging mobs & sound),
+ * we set this to false if we were forced out of the jump, they lost their ability to do the hit.
+ * mob_doing_effects - 'owner' by default, this is who we use for aftereffects, this is an arg for when we cancel early due to
+ * forcefully dropping us, as 'owner' will be set to null by the time this proc is called in that case, so we must pass them
+ * ourselves.
+ */
+/datum/action/item_action/skybulge/proc/land(do_effects = TRUE, mob/living/mob_doing_effects)
+	if(!mob_doing_effects)
+		mob_doing_effects = owner
+	var/turf/landed_on = get_turf(mob_doing_effects)
 
 	UnregisterSignal(target, COMSIG_ITEM_ATTACK)
 	target.remove_traits(list(TRAIT_NEEDS_TWO_HANDS, TRAIT_NODROP), ACTION_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_SILENT_FOOTSTEPS, ACTION_TRAIT)
-	owner.resistance_flags &= ~INDESTRUCTIBLE
+	mob_doing_effects.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_MOVE_FLYING), ACTION_TRAIT)
 	if(gave_pass_flags)
-		owner.pass_flags &= ~PASSTABLE
-	owner.set_density(TRUE)
-	owner.layer = initial(owner.layer)
-	SET_PLANE(owner, initial(owner.plane), landed_on)
+		mob_doing_effects.pass_flags &= ~PASSTABLE
+	mob_doing_effects.set_density(TRUE)
+	mob_doing_effects.layer = initial(mob_doing_effects.layer)
+	SET_PLANE(mob_doing_effects, initial(mob_doing_effects.plane), landed_on)
 
+	if(!do_effects)
+		return
+
+	playsound(mob_doing_effects, 'sound/effects/explosion/explosion1.ogg', 40, 1)
 	for(var/atom/thing as anything in landed_on)
-		if(thing == owner)
+		if(thing == mob_doing_effects)
 			continue
 		if(isobj(thing))
 			thing.take_damage(150)
