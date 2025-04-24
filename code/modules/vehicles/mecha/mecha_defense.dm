@@ -314,11 +314,11 @@
 		return
 
 /obj/vehicle/sealed/mecha/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers)
-	var/final_force = CALCULATE_FORCE(attacking_item, modifiers)
+	var/final_force = CALCULATE_FORCE(attacking_item, modifiers) * attacking_item.get_demolition_modifier(src)
 	if(!final_force)
 		return 0
 
-	var/damage_taken = take_damage(final_force * attacking_item.get_demolition_modifier(src), attacking_item.damtype, MELEE, 1, get_dir(src, user))
+	var/damage_taken = take_damage(final_force, attacking_item.damtype, MELEE, 1, get_dir(src, user))
 	try_damage_component(damage_taken, user.zone_selected)
 
 	var/hit_verb = length(attacking_item.attack_verb_simple) ? "[pick(attacking_item.attack_verb_simple)]" : "hit"
