@@ -271,8 +271,9 @@
 	animate(src, transform = matrix(get_angle(get_mob(), tracked_turf), MATRIX_ROTATE), 0.2 SECONDS)
 	screen_loc = around_player
 	color = arrow_color
-	hud.infodisplay += src
-	hud.show_hud(hud.hud_version)
+	if (hud)
+		hud.infodisplay += src
+		hud.show_hud(hud.hud_version)
 	addtimer(CALLBACK(src, PROC_REF(end_effect)), 1.6 SECONDS)
 
 /atom/movable/screen/navigate_arrow/proc/end_effect()
@@ -280,6 +281,7 @@
 	addtimer(CALLBACK(src, PROC_REF(null_arrow)), 0.4 SECONDS)
 
 /atom/movable/screen/navigate_arrow/proc/null_arrow()
-	hud.infodisplay -= src
-	hud.show_hud(hud.hud_version)
+	if (hud)
+		hud.infodisplay -= src
+		hud.show_hud(hud.hud_version)
 	qdel(src)
