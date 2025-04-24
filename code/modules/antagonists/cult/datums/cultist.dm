@@ -174,7 +174,7 @@
 	return (cult_team.cult_leader_datum == src)
 
 ///Turns this antag datum into its team's leader, assigning them their unique abilities, hud, and deathrattle.
-/datum/antagonist/cult/proc/make_cult_leader(silent = FALSE)
+/datum/antagonist/cult/proc/make_cult_leader()
 	if(cult_team.cult_leader_datum)
 		return FALSE
 
@@ -196,9 +196,9 @@
 	owner.current.update_mob_action_buttons()
 
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
-		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(/datum/antagonist/cult)
-		to_chat(cult_mind.current, span_cult_large("[owner.current] is your cult's Master! \
-			Follow [owner.current.p_their()] orders to the best of your ability!"))
+		if (cult_mind != owner)
+			to_chat(cult_mind.current, span_cult_large("[owner.current] is your cult's Master! \
+				Follow [owner.current.p_their()] orders to the best of your ability!"))
 
 	to_chat(owner.current, span_cult_large("<span class='warningplain'>You are the cult's Master</span>. \
 		As the cult's Master, you have a unique title and loud voice when communicating, are capable of marking \
