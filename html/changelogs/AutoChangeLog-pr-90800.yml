@@ -1,0 +1,4 @@
+author: "Cirrial"
+delete-after: True
+changes:
+  - qol: "Added some help for abductors if they get a weird half-machine test subject in their ship."
