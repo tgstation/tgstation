@@ -313,7 +313,7 @@
 
 ///The action button the spear gives, usable once a minute.
 /datum/action/item_action/skybulge
-	name = "Dragoon Jump"
+	name = "Dragoon Strike"
 	desc = "Jump up into the skies and fall down upon your opponents to deal double damage."
 	check_flags = parent_type::check_flags | AB_CHECK_IMMOBILE | AB_CHECK_PHASED
 	///Ref to the addtimer we have between jumping up and falling down, used to cancel early if you're incapacitated mid-jump.
@@ -405,17 +405,23 @@
 		return
 
 	playsound(mob_doing_effects, 'sound/effects/explosion/explosion1.ogg', 40, 1)
+	var/obj/item/skybulge_item = target
+	skybulge_item.force *= 2 //we hit for double damage.
+
 	for(var/atom/thing as anything in landed_on)
 		if(thing == mob_doing_effects)
 			continue
+
 		if(isobj(thing))
 			thing.take_damage(150)
 			continue
+
 		if(isliving(thing))
-			var/obj/item/skybulge_item = target
-			skybulge_item.force *= 2 //we hit for double damage.
 			skybulge_item.attack(thing, owner)
-			skybulge_item.force /= 2
+			var/mob/living/living_target = thing
+			living_target.SetKnockdown(1 SECONDS)
+
+	skybulge_item.force /= 2
 
 ///Called when the person holding us is trying to attack something mid-jump.
 ///You're technically in mid-air, so block any attempts at getting extra hits in.
