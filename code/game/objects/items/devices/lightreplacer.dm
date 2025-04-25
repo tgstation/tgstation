@@ -72,10 +72,6 @@
 	// target not in range
 	if(interacting_with.z != user.z)
 		return NONE
-	// only restrict range if emagged
-	if(obj_flags & EMAGGED && get_dist(interacting_with, user) > 7)
-		user.balloon_alert(user, "out of range!")
-		return ITEM_INTERACT_BLOCKING
 
 	//replace lights & stuff
 	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
