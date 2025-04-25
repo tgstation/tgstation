@@ -202,14 +202,6 @@
 	else
 		object_to_repair.repair_damage(object_repair_value)
 
-	if(ismecha(object_to_repair))
-		var/obj/vehicle/sealed/mecha/mecha_to_repair = object_to_repair
-		mecha_to_repair.diag_hud_set_mechhealth()
-
-	if(istype(object_to_repair, /obj/structure/window))
-		var/obj/structure/window/window_to_repair
-		window_to_repair.update_nearby_icons()
-
 	use(1)
 	to_chat(user, span_notice("You finish repairing [interacting_with] with [src]."))
 	return ITEM_INTERACT_SUCCESS
