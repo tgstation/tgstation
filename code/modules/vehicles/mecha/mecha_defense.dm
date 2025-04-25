@@ -171,7 +171,7 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 	if(get_charge())
-		use_energy((cell.maxcharge/capacitor.raiting)/severity)
+		use_energy((cell.maxcharge / 3) / (severity * capacitor.rating))
 		take_damage(30 / severity, BURN)
 	log_message("EMP detected", LOG_MECHA, color="red")
 
