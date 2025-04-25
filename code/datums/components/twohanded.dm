@@ -9,11 +9,11 @@
 	/// Are we holding the two handed item properly
 	var/wielded = FALSE
 	/// The multiplier applied to force when wielded, does not work with force_wielded, and force_unwielded
-	var/force_multiplier
+	var/force_multiplier = 1
 	/// The force of the item when weilded
-	var/force_wielded
+	var/force_wielded = 0
 	/// The force of the item when unweilded
-	var/force_unwielded
+	var/force_unwielded = 0
 	/// Boolean whether to play sound when wielded
 	var/wieldsound = FALSE
 	/// Boolean whether to play sound when unwielded
@@ -52,7 +52,7 @@
 	wieldsound = FALSE,
 	unwieldsound = FALSE,
 	attacksound = FALSE,
-	force_multiplier = 0,
+	force_multiplier = 1,
 	force_wielded = 0,
 	force_unwielded = 0,
 	icon_wielded = FALSE,
@@ -241,7 +241,7 @@
 
 	// update item stats and name
 	var/obj/item/parent_item = parent
-	if(force_multiplier > 0)
+	if(force_multiplier !== 1)
 		parent_item.force *= force_multiplier
 	else if(force_wielded != force_unwielded)
 		parent_item.force = force_wielded
