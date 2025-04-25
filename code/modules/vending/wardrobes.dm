@@ -231,7 +231,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/mask/bandana/skull/black = 2,
 		/obj/item/clothing/under/rank/rnd/roboticist = 2,
 		/obj/item/clothing/under/rank/rnd/roboticist/skirt = 2,
-		/obj/item/clothing/suit/toggle/labcoat/science-/roboticist = 2,
+		/obj/item/clothing/suit/toggle/labcoat/science/roboticist = 2,
 		/obj/item/clothing/suit/hooded/wintercoat/science/robotics = 2,
 		/obj/item/clothing/gloves/fingerless = 2,
 		/obj/item/clothing/shoes/sneakers/black = 2,
