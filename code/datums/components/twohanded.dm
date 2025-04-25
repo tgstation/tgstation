@@ -241,7 +241,7 @@
 
 	// update item stats and name
 	var/obj/item/parent_item = parent
-	if(force_multiplier !== 1)
+	if(force_multiplier != 1)
 		parent_item.force *= force_multiplier
 	else if(force_wielded != force_unwielded)
 		parent_item.force = force_wielded
