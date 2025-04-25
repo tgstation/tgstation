@@ -1,87 +1,101 @@
 ///Utility belt
-/datum/storage/utility_belt
-	max_total_storage = 21
+/datum/storage/belt
+	max_total_storage = WEIGHT_CLASS_NORMAL * 7
+	max_slots = 14
 
-/datum/storage/utility_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/chameleon
+	silent = TRUE
+	max_slots = 7 //unrestricted storage for size up to normal, so limited slots
+
+#define TOOLBELT_EXTRAS list(\
+	/obj/item/clothing/gloves, \
+	/obj/item/melee/sickly_blade/lock, \
+	/obj/item/reagent_containers/cup/soda_cans, \
+	/obj/item/storage/fancy/cigarettes, \
+)
+
+#define MEDIBELT_ITEMS list(\
+	/obj/item/bikehorn/rubberducky,\
+	/obj/item/blood_filter,\
+	/obj/item/bonesetter,\
+	/obj/item/cautery,\
+	/obj/item/circular_saw,\
+	/obj/item/clothing/glasses,\
+	/obj/item/clothing/gloves,\
+	/obj/item/clothing/neck/stethoscope,\
+	/obj/item/clothing/mask/breath,\
+	/obj/item/clothing/mask/muzzle,\
+	/obj/item/clothing/mask/surgical,\
+	/obj/item/clothing/head/utility/surgerycap,\
+	/obj/item/construction/plumbing,\
+	/obj/item/dnainjector,\
+	/obj/item/extinguisher/mini,\
+	/obj/item/flashlight/pen,\
+	/obj/item/geiger_counter,\
+	/obj/item/gun/syringe/syndicate,\
+	/obj/item/healthanalyzer,\
+	/obj/item/hemostat,\
+	/obj/item/holosign_creator/medical,\
+	/obj/item/implant,\
+	/obj/item/implantcase,\
+	/obj/item/implanter,\
+	/obj/item/lazarus_injector,\
+	/obj/item/lighter,\
+	/obj/item/pinpointer/crew,\
+	/obj/item/plunger,\
+	/obj/item/radio,\
+	/obj/item/reagent_containers/blood,\
+	/obj/item/reagent_containers/dropper,\
+	/obj/item/reagent_containers/cup/beaker,\
+	/obj/item/reagent_containers/cup/bottle,\
+	/obj/item/reagent_containers/cup/tube,\
+	/obj/item/reagent_containers/hypospray,\
+	/obj/item/reagent_containers/medigel,\
+	/obj/item/reagent_containers/applicator,\
+	/obj/item/reagent_containers/spray,\
+	/obj/item/reagent_containers/syringe,\
+	/obj/item/retractor,\
+	/obj/item/scalpel,\
+	/obj/item/shears,\
+	/obj/item/stack/medical,\
+	/obj/item/stack/sticky_tape,\
+	/obj/item/stamp,\
+	/obj/item/sensor_device,\
+	/obj/item/storage/fancy/cigarettes,\
+	/obj/item/storage/pill_bottle,\
+	/obj/item/storage/box/bandages,\
+	/obj/item/surgical_drapes,\
+	/obj/item/surgicaldrill,\
+	/obj/item/tank/internals/emergency_oxygen,\
+	/obj/item/wrench/medical,\
+	/obj/item/knife/ritual,\
+	/obj/item/flesh_shears,\
+)
+
+/datum/storage/belt/utility_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-	set_holdable(GLOB.tool_items + list(
-		/obj/item/clothing/gloves,
-		/obj/item/radio,
-		/obj/item/melee/sickly_blade/lock,
-		/obj/item/reagent_containers/cup/soda_cans,
+	set_holdable(GLOB.tool_items + TOOLBELT_EXTRAS)
+
+/datum/storage/belt/utility_belt/chief_engineer/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+	set_holdable(GLOB.tool_items + TOOLBELT_EXTRAS + list(
+		/obj/item/assembly/flash,
+		/obj/item/blueprints,
+		/obj/item/door_remote,
 	))
 
-///Medical belt
-/datum/storage/medical_belt
-	max_total_storage = 21
-
-/datum/storage/medical_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/medical_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-	set_holdable(list(
-		/obj/item/bikehorn/rubberducky,
-		/obj/item/blood_filter,
-		/obj/item/bonesetter,
-		/obj/item/cautery,
-		/obj/item/circular_saw,
-		/obj/item/clothing/glasses,
-		/obj/item/clothing/gloves,
-		/obj/item/clothing/neck/stethoscope,
-		/obj/item/clothing/mask/breath,
-		/obj/item/clothing/mask/muzzle,
-		/obj/item/clothing/mask/surgical,
-		/obj/item/clothing/head/utility/surgerycap,
-		/obj/item/construction/plumbing,
-		/obj/item/dnainjector,
-		/obj/item/extinguisher/mini,
-		/obj/item/flashlight/pen,
-		/obj/item/geiger_counter,
-		/obj/item/gun/syringe/syndicate,
-		/obj/item/healthanalyzer,
-		/obj/item/hemostat,
-		/obj/item/holosign_creator/medical,
-		/obj/item/implant,
-		/obj/item/implantcase,
-		/obj/item/implanter,
-		/obj/item/lazarus_injector,
-		/obj/item/lighter,
-		/obj/item/pinpointer/crew,
-		/obj/item/plunger,
-		/obj/item/radio,
-		/obj/item/reagent_containers/blood,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/medigel,
-		/obj/item/reagent_containers/applicator,
-		/obj/item/reagent_containers/spray,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/retractor,
-		/obj/item/scalpel,
-		/obj/item/shears,
-		/obj/item/stack/medical,
-		/obj/item/stack/sticky_tape, //surgical tape
-		/obj/item/stamp,
-		/obj/item/sensor_device,
-		/obj/item/storage/fancy/cigarettes,
-		/obj/item/storage/pill_bottle,
-		/obj/item/surgical_drapes, //for true paramedics
-		/obj/item/surgicaldrill,
-		/obj/item/tank/internals/emergency_oxygen,
-		/obj/item/wrench/medical,
-		/obj/item/knife/ritual,
-		/obj/item/flesh_shears,
-	))
+	set_holdable(MEDIBELT_ITEMS)
 
 ///Security belt
-/datum/storage/security_belt
+/datum/storage/belt/security_belt
 	max_slots = 5
 	open_sound = 'sound/items/handling/holster_open.ogg'
 	open_sound_vary = TRUE
 	rustle_sound = null
 
-/datum/storage/security_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/security_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(list(
 		/obj/item/ammo_box,
@@ -102,19 +116,21 @@
 	))
 
 ///Webbing security belt
-/datum/storage/security_belt/webbing
+/datum/storage/belt/security_belt/webbing
 	max_slots = 6
 
 ///Mining belt
-/datum/storage/mining_belt
-	max_slots = 6
-	max_total_storage = 20
+/datum/storage/belt/mining_belt
+	max_slots = 10
+	max_total_storage = WEIGHT_CLASS_NORMAL * 8
+	exception_max = 1
 
-/datum/storage/mining_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/mining_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-	set_holdable(list(
+	set_holdable(
+		can_hold_list = list(
 		/obj/item/analyzer,
-		/obj/item/clothing/gloves,
+		/obj/item/clothing/gloves/color/black,
 		/obj/item/crowbar,
 		/obj/item/extinguisher/mini,
 		/obj/item/flashlight,
@@ -124,65 +140,75 @@
 		/obj/item/knife,
 		/obj/item/lighter,
 		/obj/item/mining_scanner,
-		/obj/item/multitool,
 		/obj/item/organ/monster_core,
-		/obj/item/pickaxe,
 		/obj/item/radio,
 		/obj/item/reagent_containers/cup/glass,
 		/obj/item/reagent_containers/cup/glass/bottle,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/applicator/pill,
 		/obj/item/resonator,
-		/obj/item/screwdriver,
 		/obj/item/shovel,
-		/obj/item/stack/cable_coil,
 		/obj/item/stack/marker_beacon,
-		/obj/item/stack/medical,
+		/obj/item/extraction_pack,
+		/obj/item/fulton_core,
+		/obj/item/gun/energy/recharge/kinetic_accelerator,
 		/obj/item/stack/ore,
 		/obj/item/stack/sheet/animalhide,
 		/obj/item/stack/sheet/bone,
 		/obj/item/stack/sheet/sinew,
 		/obj/item/storage/bag/ore,
 		/obj/item/storage/fancy/cigarettes,
-		/obj/item/storage/pill_bottle,
 		/obj/item/survivalcapsule,
 		/obj/item/t_scanner/adv_mining_scanner,
-		/obj/item/weldingtool,
-		/obj/item/wirecutters,
-		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
 		/obj/item/skeleton_key,
-	))
+		/obj/item/hierophant_club,
+		/obj/item/grapple_gun,
+		/obj/item/lazarus_injector,
+		/obj/item/pinpointer/vent,
+		/obj/item/pickaxe,
+		/obj/item/trench_tool,
+		/obj/item/warp_cube,
+		/obj/item/clothing/gloves/gauntlets,
+		/obj/item/wendigo_skull,
+	),
+		cant_hold_list = list(
+			/obj/item/clothing/gloves/color/black/security,
+			/obj/item/crowbar/mechremoval,
+		),
+		exception_hold_list = list(
+			/obj/item/gibtonite,
+			/obj/item/pickaxe,
+		))
 
 ///Primitive mining belt
-/datum/storage/mining_belt/primitive
-	max_slots = 5
+/datum/storage/belt/mining_belt/primitive
+	max_slots = 7
 
 ///Soulstone belt
-/datum/storage/soulstone_belt
+/datum/storage/belt/soulstone_belt
 	max_slots = 6
 
-/datum/storage/soulstone_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/soulstone_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(/obj/item/soulstone)
 
 ///Champion belt
-/datum/storage/champion_belt
+/datum/storage/belt/champion_belt
 	max_slots = 1
 
-/datum/storage/champion_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/champion_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(/obj/item/clothing/mask/luchador)
 
 ///Military belt
-/datum/storage/military_belt
-	max_specific_storage = WEIGHT_CLASS_SMALL
+/datum/storage/belt/military_belt
+	max_slots = 4
+	max_specific_storage = WEIGHT_CLASS_NORMAL
 
 ///Military snack belt
-/datum/storage/military_belt/snack
+/datum/storage/belt/military_belt/snack
 	max_slots = 6
 
-/datum/storage/military_belt/snack/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/military_belt/snack/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(list(
 		/obj/item/food,
@@ -190,17 +216,17 @@
 	))
 
 ///Military assault belt
-/datum/storage/military_belt/assault
-	max_slots = 6
+/datum/storage/belt/military_belt/assault
+	max_slots = 5
 
 ///Grenade belt
-/datum/storage/grenade_belt
+/datum/storage/belt/grenade_belt
 	max_slots = 30
 	numerical_stacking = TRUE
 	max_total_storage = 60
 	max_specific_storage = WEIGHT_CLASS_BULKY
 
-/datum/storage/grenade_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/grenade_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(list(
 		/obj/item/food/grown/cherry_bomb,
@@ -214,20 +240,17 @@
 	))
 
 ///Wands belt
-/datum/storage/wands_belt
+/datum/storage/belt/wands_belt
 	max_slots = 7
 
-/datum/storage/wands_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/wands_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(/obj/item/gun/magic/wand)
 
-///Janitor belt
-/datum/storage/janitor_belt
-	max_slots = 6
-
-/datum/storage/janitor_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/janitor_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-	set_holdable(list(
+	set_holdable(
+		can_hold_list = list(
 		/obj/item/access_key,
 		/obj/item/assembly/mousetrap,
 		/obj/item/clothing/gloves,
@@ -244,23 +267,27 @@
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
 		/obj/item/wirebrush,
+		/obj/item/weldingtool, //fixing plating to replace tiles, repairing cracks in windows
+		/obj/item/storage/box/lights,
+		/obj/item/stack/sheet/glass, //can carry up to 30 glass sheets for refilling their light replacer or replacing windows
+		/obj/item/crowbar, //for replacing tiles
+		/obj/item/stack/tile, //tiles so you can replace tiles
+		/obj/item/mop, //mop so you can mop tiles
+		/obj/item/reagent_containers/cup/bucket, //bucket so you can wet your mop to mop tiles
 	))
 
 ///Bandolier belt
-/datum/storage/bandolier_belt
+/datum/storage/belt/bandolier_belt
 	max_slots = 24
 	max_total_storage = 24
 	numerical_stacking = TRUE
 	allow_quick_gather = TRUE
 	allow_quick_empty = TRUE
 
-/datum/storage/bandolier_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/bandolier_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(list(
-		/obj/item/ammo_casing/strilka310,
-		/obj/item/ammo_casing/shotgun,
-		/obj/item/ammo_casing/c357,
-		/obj/item/ammo_casing/junk,
+		/obj/item/ammo_casing
 	))
 
 ///Fanny pack
@@ -270,32 +297,21 @@
 	silent = TRUE
 
 ///Sabre belt
-/datum/storage/sabre_belt
+/datum/storage/sabre
 	max_slots = 1
 	do_rustle = FALSE
 	max_specific_storage = WEIGHT_CLASS_BULKY
 	click_alt_open = FALSE
 
-/datum/storage/sabre_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/sabre/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(/obj/item/melee/sabre)
 
-///Green sabre belt
-/datum/storage/green_sabre_belt
-	max_slots = 1
-	do_rustle = FALSE
-	max_specific_storage = WEIGHT_CLASS_BULKY
-	click_alt_open = FALSE
-
-/datum/storage/green_sabre_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/sabre/grass/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(/obj/item/melee/parsnip_sabre)
 
-///Plant belt
-/datum/storage/plant_belt
-	max_slots = 6
-
-/datum/storage/plant_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+/datum/storage/belt/plant_belt/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(list(
 		/obj/item/cultivator,
@@ -306,12 +322,18 @@
 		/obj/item/plant_analyzer,
 		/obj/item/reagent_containers/cup/beaker,
 		/obj/item/reagent_containers/cup/bottle,
+		/obj/item/reagent_containers/cup/bucket,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/spray/pestspray,
 		/obj/item/reagent_containers/spray/plantbgone,
 		/obj/item/secateurs,
 		/obj/item/seeds,
-		/obj/item/shovel/spade,
+		/obj/item/shovel,
+		/obj/item/construction/plumbing/service,
+		/obj/item/match,
+		/obj/item/lighter,
+		/obj/item/cigarette,
+		/obj/item/wrench,
 	))
 
 ///Unfathomable curio
@@ -336,3 +358,7 @@
 		/obj/item/reagent_containers/cup/beaker/eldritch,
 		/obj/item/stack/sheet/glass, // Glass is often used by moon heretics
 	))
+
+
+#undef TOOLBELT_EXTRAS
+#undef MEDIBELT_ITEMS

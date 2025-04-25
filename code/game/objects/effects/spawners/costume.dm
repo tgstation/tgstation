@@ -32,7 +32,7 @@
 	items = list(
 		/obj/item/clothing/under/rank/captain/suit,
 		/obj/item/clothing/head/flatcap,
-		/obj/item/clothing/suit/toggle/labcoat/mad,
+		/obj/item/clothing/suit/toggle/labcoat/science/mad,
 	)
 
 /obj/effect/spawner/costume/elpresidente

@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	/// List of networks
 	var/list/beacon_networks = list("station")
 	/// Number of uses left
-	var/uses_left = 3
+	var/uses_left = 10
 	/// Can be used indoors
 	var/can_use_indoors
 	/// Can be used on living creatures

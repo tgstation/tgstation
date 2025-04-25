@@ -5,6 +5,29 @@
 	max_total_storage = 50
 	do_rustle = FALSE
 
+/datum/storage/pockets/hop_coat
+	max_slots = 20
+	silent = TRUE
+	max_specific_storage = WEIGHT_CLASS_NORMAL
+
+/datum/storage/pockets/hop_coat/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
+	. = ..()
+	set_holdable(list(
+		/obj/item/paper,
+		/obj/item/paper_bin,
+		/obj/item/stamp,
+		/obj/item/pen,
+		/obj/item/card,
+		/obj/item/folder,
+		/obj/item/door_remote,
+	))
+
+
 /datum/storage/pockets/attempt_insert(obj/item/to_insert, mob/user, override, force, messages)
 	. = ..()
 	if(!.)

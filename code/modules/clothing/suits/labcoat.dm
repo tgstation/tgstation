@@ -28,6 +28,15 @@
 		/obj/item/storage/pill_bottle,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
+		/obj/item/scalpel,
+		/obj/item/circular_saw,
+		/obj/item/retractor,
+		/obj/item/surgical_drapes,
+		/obj/item/surgicaldrill,
+		/obj/item/blood_filter,
+		/obj/item/bonesetter,
+		/obj/item/cautery,
+		/obj/item/hemostat,
 		)
 	armor_type = /datum/armor/toggle_labcoat
 	species_exception = list(/datum/species/golem)
@@ -62,12 +71,11 @@
 /obj/item/clothing/suit/toggle/labcoat/paramedic/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, -3) //FISH DOCTOR?!
+	allowed += list(
+		/obj/item/crowbar, //firelocks, depowered doors, nothing gets between paramed and patient
+		/obj/item/bodybag,
+	)
 
-/obj/item/clothing/suit/toggle/labcoat/mad
-	name = "\proper The Mad's labcoat"
-	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."
-	icon_state = "labgreen"
-	inhand_icon_state = null
 
 /obj/item/clothing/suit/toggle/labcoat/genetics
 	name = "geneticist labcoat"
@@ -133,15 +141,45 @@
 
 /obj/item/clothing/suit/toggle/labcoat/science/Initialize(mapload)
 	. = ..()
-	allowed += /obj/item/storage/bag/xeno
+	allowed += list(
+		/obj/item/storage/bag/xeno,
+		/obj/item/extinguisher, //time for slime
+		/obj/item/flashlight,
+		/obj/item/storage/part_replacer,
+		/obj/item/experi_scanner,
+		/obj/item/screwdriver,
+		/obj/item/wrench,
+		/obj/item/crowbar,
+		/obj/item/assembly,
+		/obj/item/multitool,
+		/obj/item/pipe_dispenser,
+		/obj/item/compact_remote,
+		/obj/item/controller,
+		/obj/item/gun/energy/wiremod_gun,
+		/obj/item/keyboard_shell,
+		/obj/item/wiremod_scanner,
+	)
 
-/obj/item/clothing/suit/toggle/labcoat/roboticist
+/obj/item/clothing/suit/toggle/labcoat/science/mad
+	name = "\proper The Mad's labcoat"
+	desc = "It makes you look capable of konking someone on the noggin and shooting them into space."
+	icon_state = "labgreen"
+	inhand_icon_state = null
+
+/obj/item/clothing/suit/toggle/labcoat/science/roboticist
 	name = "roboticist labcoat"
 	desc = "More like an eccentric coat than a labcoat. Helps pass off bloodstains as part of the aesthetic. Comes with red shoulder pads."
 	icon_state = "labcoat_job"
 	greyscale_config = /datum/greyscale_config/labcoat
 	greyscale_config_worn = /datum/greyscale_config/labcoat/worn
 	greyscale_colors = "#EEEEEE#88242D#88242D#39393F"
+
+/obj/item/clothing/suit/toggle/labcoat/science/roboticist/Initialize(mapload)
+	. = ..()
+	allowed += list(
+		/obj/item/weldingtool,
+		/obj/item/wirecutters,
+	)
 
 /obj/item/clothing/suit/toggle/labcoat/interdyne
 	name = "interdyne labcoat"
@@ -153,7 +191,7 @@
 
 // Research Director
 
-/obj/item/clothing/suit/toggle/labcoat/research_director
+/obj/item/clothing/suit/toggle/labcoat/science/research_director
 	name = "research director's coat"
 	desc = "A mix between a labcoat and just a regular coat. It's made out of a special antibacterial, anti-acidic, and anti-biohazardous synthetic fabric."
 	icon_state = "labcoat_rd"
@@ -164,10 +202,11 @@
 	bio = 75
 	fire = 75
 	acid = 75
+	bomb = 25
 
 /obj/item/clothing/suit/toggle/labcoat/research_director/Initialize(mapload)
 	. = ..()
 	allowed += list(
-		/obj/item/storage/bag/xeno,
 		/obj/item/melee/baton/telescopic,
+		/obj/item/hand_tele,
 	)

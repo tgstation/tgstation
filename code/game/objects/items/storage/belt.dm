@@ -41,7 +41,7 @@
 	custom_premium_price = PAYCHECK_CREW * 2
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-	storage_type = /datum/storage/utility_belt
+	storage_type = /datum/storage/belt/utility_belt
 
 /obj/item/storage/belt/utility/chief
 	name = "chief engineer's toolbelt"
@@ -195,7 +195,7 @@
 	worn_icon_state = "medical"
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-	storage_type = /datum/storage/medical_belt
+	storage_type = /datum/storage/belt/medical_belt
 
 /obj/item/storage/belt/medical/paramedic
 	name = "EMT belt"
@@ -259,7 +259,7 @@
 	inhand_icon_state = "security"//Could likely use a better one.
 	worn_icon_state = "security"
 	content_overlays = TRUE
-	storage_type = /datum/storage/security_belt
+	storage_type = /datum/storage/belt/security_belt
 
 /obj/item/storage/belt/security/full/PopulateContents()
 	new /obj/item/reagent_containers/spray/pepper(src)
@@ -277,7 +277,7 @@
 	worn_icon_state = "securitywebbing"
 	content_overlays = FALSE
 	custom_premium_price = PAYCHECK_COMMAND * 3
-	storage_type = /datum/storage/security_belt/webbing
+	storage_type = /datum/storage/belt/security_belt/webbing
 
 /obj/item/storage/belt/mining
 	name = "explorer's webbing"
@@ -286,7 +286,7 @@
 	inhand_icon_state = "explorer1"
 	worn_icon_state = "explorer1"
 	w_class = WEIGHT_CLASS_BULKY
-	storage_type = /datum/storage/mining_belt
+	storage_type = /datum/storage/belt/mining_belt
 
 /obj/item/storage/belt/mining/vendor/PopulateContents()
 	new /obj/item/survivalcapsule(src)
@@ -297,11 +297,7 @@
 	worn_icon_state = "explorer2"
 
 /obj/item/storage/belt/mining/healing/PopulateContents()
-	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/hypospray/medipen/survival/luxury(src)
-	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/hypospray/medipen/survival(src)
-	for(var/i in 1 to 2)
+	for(var/i in 1 to 5)
 		var/obj/item/organ/monster_core/core = new /obj/item/organ/monster_core/regenerative_core/legion(src)
 		core.preserve()
 
@@ -311,7 +307,7 @@
 	icon_state = "ebelt"
 	inhand_icon_state = "ebelt"
 	worn_icon_state = "ebelt"
-	storage_type = /datum/storage/mining_belt/primitive
+	storage_type = /datum/storage/belt/mining_belt/primitive
 
 /obj/item/storage/belt/soulstone
 	name = "soul stone belt"
@@ -321,7 +317,7 @@
 	worn_icon_state = "soulstonebelt"
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-	storage_type = /datum/storage/soulstone_belt
+	storage_type = /datum/storage/belt/soulstone_belt
 
 /obj/item/storage/belt/soulstone/full/PopulateContents()
 	for(var/i in 1 to 6)
@@ -338,7 +334,7 @@
 	inhand_icon_state = "championbelt"
 	worn_icon_state = "championbelt"
 	custom_materials = list(/datum/material/gold=SMALL_MATERIAL_AMOUNT *4)
-	storage_type = /datum/storage/champion_belt
+	storage_type = /datum/storage/belt/champion_belt
 
 /obj/item/storage/belt/champion/Initialize(mapload)
 	. = ..()
@@ -352,11 +348,11 @@
 	inhand_icon_state = "militarywebbing"
 	worn_icon_state = "militarywebbing"
 	resistance_flags = FIRE_PROOF
-	storage_type = /datum/storage/military_belt
+	storage_type = /datum/storage/belt/military_belt
 
 /obj/item/storage/belt/military/snack
 	name = "tactical snack rig"
-	storage_type = /datum/storage/military_belt/snack
+	storage_type = /datum/storage/belt/military_belt/snack
 
 /obj/item/storage/belt/military/snack/Initialize(mapload)
 	. = ..()
@@ -425,7 +421,7 @@
 	icon_state = "assault"
 	inhand_icon_state = "security"
 	worn_icon_state = "assault"
-	storage_type = /datum/storage/military_belt/assault
+	storage_type = /datum/storage/belt/military_belt/assault
 
 /obj/item/storage/belt/military/assault/full/PopulateContents()
 	generate_items_inside(list(
@@ -441,7 +437,7 @@
 	worn_icon_state = "grenadebeltnew"
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-	storage_type = /datum/storage/grenade_belt
+	storage_type = /datum/storage/belt/grenade_belt
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
 	generate_items_inside(list(
@@ -463,7 +459,7 @@
 	icon_state = "soulstonebelt"
 	inhand_icon_state = "soulstonebelt"
 	worn_icon_state = "soulstonebelt"
-	storage_type = /datum/storage/wands_belt
+	storage_type = /datum/storage/belt/wands_belt
 
 /obj/item/storage/belt/wands/full/PopulateContents()
 	new /obj/item/gun/magic/wand/death(src)
@@ -486,7 +482,7 @@
 	worn_icon_state = "janibelt"
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
-	storage_type = /datum/storage/janitor_belt
+	storage_type = /datum/storage/belt/janitor_belt
 
 /obj/item/storage/belt/janitor/full/PopulateContents()
 	new /obj/item/lightreplacer(src)
@@ -501,7 +497,7 @@
 	icon_state = "bandolier"
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
-	storage_type = /datum/storage/bandolier_belt
+	storage_type = /datum/storage/belt/bandolier_belt
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
@@ -572,13 +568,12 @@
 
 /obj/item/storage/belt/sabre
 	name = "sabre sheath"
-	desc = "An ornate sheath designed to hold an officer's blade."
+	desc = "An ornate sheath designed to hold an officer's blade. A couple of bespoke adjustments also look like they would suit small tchotchkes."
 	icon_state = "sheath"
 	inhand_icon_state = "sheath"
 	worn_icon_state = "sheath"
-	w_class = WEIGHT_CLASS_BULKY
 	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
-	storage_type = /datum/storage/sabre_belt
+	storage_type = /datum/storage/sabre
 
 /obj/item/storage/belt/sabre/Initialize(mapload)
 	. = ..()
@@ -609,48 +604,16 @@
 		worn_icon_state += "-sabre"
 	return ..()
 
-/obj/item/storage/belt/sabre/PopulateContents()
-	new /obj/item/melee/sabre(src)
-	update_appearance()
-
-/obj/item/storage/belt/grass_sabre
-	name = "sabre sheath"
+/obj/item/storage/belt/sabre/grass_sabre
+	name = "woven grass sheath"
 	desc = "A simple grass sheath designed to hold a sabre of... some sort. An actual metal one might be too sharp, though..."
 	icon_state = "grass_sheath"
 	inhand_icon_state = "grass_sheath"
 	worn_icon_state = "grass_sheath"
-	w_class = WEIGHT_CLASS_BULKY
-	interaction_flags_click = parent_type::interaction_flags_click | NEED_DEXTERITY | NEED_HANDS
-	storage_type = /datum/storage/green_sabre_belt
+	storage_type = /datum/storage/sabre/grass
 
-/obj/item/storage/belt/grass_sabre/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/update_icon_updates_onmob)
-
-/obj/item/storage/belt/grass_sabre/examine(mob/user)
-	. = ..()
-	if(length(contents))
-		. += span_notice("Alt-click it to quickly draw the blade.")
-
-/obj/item/storage/belt/grass_sabre/click_alt(mob/user)
-	if(length(contents))
-		var/obj/item/I = contents[1]
-		user.visible_message(span_notice("[user] takes [I] out of [src]."), span_notice("You take [I] out of [src]."))
-		user.put_in_hands(I)
-		update_appearance()
-	else
-		balloon_alert(user, "it's empty!")
-	return CLICK_ACTION_SUCCESS
-
-/obj/item/storage/belt/grass_sabre/update_icon_state()
-	icon_state = initial(inhand_icon_state)
-	inhand_icon_state = initial(inhand_icon_state)
-	worn_icon_state = initial(worn_icon_state)
-	if(contents.len)
-		icon_state += "-sabre"
-		inhand_icon_state += "-sabre"
-		worn_icon_state += "-sabre"
-	return ..()
+/obj/item/storage/belt/sabre/grass_sabre/PopulateContents()
+	return NONE
 
 /obj/item/storage/belt/plant
 	name = "botanical belt"
@@ -659,4 +622,4 @@
 	inhand_icon_state = "utility"
 	worn_icon_state = "plantbelt"
 	content_overlays = TRUE
-	storage_type = /datum/storage/plant_belt
+	storage_type = /datum/storage/belt/plant_belt

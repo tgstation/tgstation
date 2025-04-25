@@ -217,6 +217,8 @@
 		/obj/item/stack/ore/bluespace_crystal,
 		/obj/item/stock_parts,
 		/obj/item/wallframe/camera,
+		/obj/item/stack/sheet,
+		/obj/item/rcd_ammo,
 	))
 
 ///Harpoon quiver bag
@@ -264,7 +266,7 @@
 /datum/storage/bag/garment
 	numerical_stacking = FALSE
 	max_total_storage = 200
-	max_slots = 15
+	max_slots = 21
 	insert_preposition = "in"
 
 /datum/storage/bag/garment/New(atom/parent, max_slots, max_specific_storage, max_total_storage)

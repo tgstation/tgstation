@@ -836,7 +836,7 @@
 	head = /obj/item/clothing/head/soft/black
 	id_trim = /datum/id_trim/job/roboticist
 	id = /obj/item/card/id/advanced/chameleon
-	suit = /obj/item/clothing/suit/toggle/labcoat/roboticist
+	suit = /obj/item/clothing/suit/toggle/labcoat/science/roboticist
 	suit_store = /datum/id_trim/job/roboticist
 	uniform = /obj/item/clothing/under/rank/rnd/roboticist
 	l_pocket = /obj/item/assembly/flash

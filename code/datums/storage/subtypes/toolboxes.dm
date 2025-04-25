@@ -1,5 +1,6 @@
 ///Normal toolbox
 /datum/storage/toolbox
+	max_total_storage = WEIGHT_CLASS_NORMAL * 7
 	open_sound = 'sound/items/handling/toolbox/toolbox_open.ogg'
 	rustle_sound = 'sound/items/handling/toolbox/toolbox_rustle.ogg'
 

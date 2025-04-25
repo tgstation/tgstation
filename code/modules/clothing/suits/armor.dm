@@ -259,6 +259,10 @@
 	dog_fashion = null
 	resistance_flags = FIRE_PROOF
 
+/obj/item/clothing/suit/armor/vest/capcarapace/Initialize(mapload)
+	. = ..()
+	allowed = GLOB.security_vest_allowed + list(/obj/item/storage/belt/sabre)
+
 /datum/armor/vest_capcarapace
 	melee = 50
 	bullet = 40
@@ -685,6 +689,10 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dog_fashion = null
+
+/obj/item/clothing/suit/armor/vest/hop/Initialize(mapload)
+	. = ..()
+	create_storage(storage_type = /datum/storage/pockets/hop_coat)
 
 /obj/item/clothing/suit/armor/militia
 	name = "station defender's coat"

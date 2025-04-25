@@ -280,10 +280,7 @@ do { \
 	desc = "Holds tools."
 	actions_types = list(/datum/action/item_action/chameleon/change/belt)
 	action_slots = ALL
-
-/obj/item/storage/belt/chameleon/Initialize(mapload)
-	. = ..()
-	atom_storage.silent = TRUE
+	storage_type = /datum/storage/belt/chameleon
 
 /obj/item/storage/belt/chameleon/broken
 

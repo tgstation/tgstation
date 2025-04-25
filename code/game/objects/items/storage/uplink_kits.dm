@@ -241,7 +241,7 @@
 			new /obj/item/toy/plush/carpplushie/dehy_carp(src) // 1 tc, for use as a personal mount
 
 		if(KIT_MAD_SCIENTIST)
-			new /obj/item/clothing/suit/toggle/labcoat/mad(src) // 0 tc
+			new /obj/item/clothing/suit/toggle/labcoat/science/mad(src) // 0 tc
 			new /obj/item/clothing/shoes/jackboots(src) // 0 tc
 			new /obj/item/megaphone(src) // 0 tc
 			new /obj/item/grenade/clusterbuster/random(src) // 10 tc?

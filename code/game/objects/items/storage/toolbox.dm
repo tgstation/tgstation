@@ -245,6 +245,7 @@
 	name = "suspicious looking toolbox"
 	icon_state = "syndicate"
 	inhand_icon_state = "toolbox_syndi"
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 15
 	throwforce = 18
 	material_flags = NONE

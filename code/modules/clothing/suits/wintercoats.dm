@@ -179,7 +179,7 @@
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize(mapload)
 	. = ..()
-	allowed += GLOB.security_wintercoat_allowed
+	allowed += GLOB.security_wintercoat_allowed + list(/obj/item/storage/belt/sabre)
 
 /obj/item/clothing/head/hooded/winterhood/captain
 	icon_state = "hood_captain"
@@ -434,6 +434,21 @@
 		/obj/item/reagent_containers/syringe,
 		/obj/item/storage/bag/xeno,
 		/obj/item/storage/pill_bottle,
+		/obj/item/extinguisher, //time for slime
+		/obj/item/flashlight,
+		/obj/item/storage/part_replacer,
+		/obj/item/experi_scanner,
+		/obj/item/screwdriver,
+		/obj/item/wrench,
+		/obj/item/crowbar,
+		/obj/item/assembly,
+		/obj/item/multitool,
+		/obj/item/pipe_dispenser,
+		/obj/item/compact_remote,
+		/obj/item/controller,
+		/obj/item/gun/energy/wiremod_gun,
+		/obj/item/keyboard_shell,
+		/obj/item/wiremod_scanner,
 	)
 	armor_type = /datum/armor/wintercoat_science
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science

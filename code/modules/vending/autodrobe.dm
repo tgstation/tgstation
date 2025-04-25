@@ -2,7 +2,7 @@
 GLOBAL_LIST_INIT(autodrobe_costumes_items, list(
 	/obj/item/clothing/under/costume/gladiator = 3,
 	/obj/item/clothing/head/helmet/gladiator = 3,
-	/obj/item/clothing/suit/toggle/labcoat/mad = 3,
+	/obj/item/clothing/suit/toggle/labcoat/science/mad = 3,
 	/obj/item/clothing/suit/bio_suit/plaguedoctorsuit = 3,
 	/obj/item/clothing/head/bio_hood/plague = 3,
 	/obj/item/clothing/mask/gas/plaguedoctor = 3,
