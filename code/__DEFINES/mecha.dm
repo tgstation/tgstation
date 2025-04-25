@@ -62,6 +62,5 @@
 #define MECHA_AMMO_MOUSETRAP "Mousetrap"
 
 /// Values to determine the effects on a mech should it suffer an EMP
-#define MECHA_BASE_EMP_DAMAGE_PROBABILITY 80
 #define MECH_EMP_DAMAGE_LOWER 100
 #define MECH_EMP_DAMAGE_UPPER 180
