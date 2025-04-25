@@ -172,7 +172,7 @@
 		return
 	if(get_charge())
 		use_energy(round((cell.maxcharge / 2) / (severity * capacitor.rating), 1))
-		take_damage(30 / severity, BURN)
+		take_damage(120 / severity * capacitor.rating, BURN)
 	log_message("EMP detected", LOG_MECHA, color="red")
 
 	//Mess with the focus of the inbuilt camera if present
