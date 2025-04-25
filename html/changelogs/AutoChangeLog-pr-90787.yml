@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Losing Farsight or Rock Absorber mutations will properly drop their effects as well"
