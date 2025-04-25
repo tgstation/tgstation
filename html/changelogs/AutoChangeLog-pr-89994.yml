@@ -1,0 +1,5 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - code_imp: "Brought browser code up to standard with the rest of the codebase"
+  - admin: "Hey lads, I cleaned up how non TGUI windows work on the backend, please let me know if anything is broken! PING ME MOTHERFUCKER"
