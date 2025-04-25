@@ -706,3 +706,17 @@
   - bugfix: Inputs in tgui windows (not tgui-say) have been reworked, hopefully making
       them FAST. Report if they are not FAST.
   - bugfix: Fixed a bluescreen caused when moving a tgui window with a tooltip open.
+2025-04-25:
+  Cirrial:
+  - qol: Added some help for abductors if they get a weird half-machine test subject
+      in their ship.
+  Jacquerel:
+  - bugfix: Floating motionless and face down in the water doesn't count as a workout
+  Pepsilawn:
+  - bugfix: Tramstation, fixes a mop that happened to be grabbable while being 2 tiles
+      above its location in an entirely different room
+  RandomDudeFromTheRim:
+  - rscadd: Added a Rimworld reference
+  - rscdel: Removed a potential harmful stereotype
+  loganuk:
+  - map: Added Boulder Retrieval Matrix (BRM) to Delta Station
