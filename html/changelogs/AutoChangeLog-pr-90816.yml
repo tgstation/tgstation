@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - bugfix: "Fixed a visual bug with cyborg tools that are able to carry items."
