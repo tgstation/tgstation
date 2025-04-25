@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Fixed supermatter anomaly generation, hallucination is based on distance and delam explosion size"
