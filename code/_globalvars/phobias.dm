@@ -340,6 +340,9 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/clothing/neck/heretic_focus/moon_amulet,
 		/obj/item/melee/sickly_blade/moon,
 	)),
+	"cucumbers" = typecacheof(list(
+		/obj/item/food/grown/cucumber,
+	)),
 	"doctors" = typecacheof(list(
 		/obj/item/cautery,
 		/obj/item/circular_saw,

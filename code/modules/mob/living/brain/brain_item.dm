@@ -481,6 +481,10 @@
 /obj/item/organ/brain/felinid //A bit smaller than average
 	brain_size = 0.8
 
+/obj/item/organ/brain/felinid/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	organ_owner.gain_trauma(/datum/brain_trauma/mild/phobia/cucumbers)
+
 /obj/item/organ/brain/lizard
 	name = "lizard brain"
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect its owner to be pretty cold blooded."

@@ -192,6 +192,10 @@
 	phobia_type = "conspiracies"
 	random_gain = FALSE
 
+/datum/brain_trauma/mild/phobia/cucumbers
+	phobia_type = "cucumbers"
+	random_gain = FALSE
+
 /datum/brain_trauma/mild/phobia/doctors
 	phobia_type = "doctors"
 	random_gain = FALSE
