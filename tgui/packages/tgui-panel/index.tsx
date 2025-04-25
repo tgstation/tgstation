@@ -14,11 +14,12 @@ import { setGlobalStore } from 'tgui/backend';
 import { captureExternalLinks } from 'tgui/links';
 import { render } from 'tgui/renderer';
 import { configureStore } from 'tgui/store';
+import { EventBus } from 'tgui-core/eventbus';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
-import { audioMiddleware, audioReducer } from './audio';
 import { chatMiddleware, chatReducer } from './chat';
+import { listeners } from './events/listeners';
 import { gameMiddleware, gameReducer } from './game';
 import { Panel } from './Panel';
 import { setupPanelFocusHacks } from './panelFocus';
@@ -29,9 +30,10 @@ import { telemetryMiddleware } from './telemetry';
 perf.mark('inception', window.performance?.timeOrigin);
 perf.mark('init');
 
+const bus = new EventBus(listeners);
+
 const store = configureStore({
   reducer: combineReducers({
-    audio: audioReducer,
     chat: chatReducer,
     game: gameReducer,
     ping: pingReducer,
@@ -43,7 +45,6 @@ const store = configureStore({
       pingMiddleware,
       telemetryMiddleware,
       settingsMiddleware,
-      audioMiddleware,
       gameMiddleware,
     ],
   },
@@ -69,7 +70,10 @@ function setupApp() {
   store.subscribe(() => render(<Panel />));
 
   // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+  Byond.subscribe((type, payload) => {
+    store.dispatch({ type, payload });
+    bus.dispatch({ type, payload } as any);
+  });
 
   // Unhide the panel
   Byond.winset('output_selector.legacy_output_selector', {

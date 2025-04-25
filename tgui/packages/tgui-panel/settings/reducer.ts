@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { handleVolumeUpdate } from '../events/callbacks/audio';
 import {
   addHighlightSetting,
   changeSettingsTab,
@@ -53,12 +54,14 @@ export function settingsReducer(
 
   switch (type) {
     case updateSettings.type:
+      handleVolumeUpdate(payload.adminMusicVolume);
       return {
         ...state,
         ...payload,
       };
 
     case loadSettings.type: {
+      handleVolumeUpdate(payload.adminMusicVolume);
       {
         // Validate version and/or migrate state
         if (!payload?.version) {

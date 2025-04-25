@@ -7,7 +7,8 @@
 import { Pane } from 'tgui/layouts';
 import { Button, Section, Stack } from 'tgui-core/components';
 
-import { NowPlayingWidget, useAudio } from './audio';
+import { useAudio } from './audio/hooks';
+import { NowPlayingWidget } from './audio/NowPlayingWidget';
 import { ChatPanel, ChatTabs } from './chat';
 import { useGame } from './game';
 import { Notifications } from './Notifications';
@@ -16,7 +17,7 @@ import { ReconnectButton } from './reconnect';
 import { SettingsPanel, useSettings } from './settings';
 
 export const Panel = (props) => {
-  const audio = useAudio();
+  const { visible: audioVisible, toggle: audioToggle } = useAudio();
   const settings = useSettings();
   const game = useGame();
   if (process.env.NODE_ENV !== 'production') {
@@ -42,11 +43,11 @@ export const Panel = (props) => {
               <Stack.Item>
                 <Button
                   color="grey"
-                  selected={audio.visible}
+                  selected={audioVisible}
                   icon="music"
                   tooltip="Music player"
                   tooltipPosition="bottom-start"
-                  onClick={() => audio.toggle()}
+                  onClick={() => audioToggle()}
                 />
               </Stack.Item>
               <Stack.Item>
@@ -63,7 +64,7 @@ export const Panel = (props) => {
             </Stack>
           </Section>
         </Stack.Item>
-        {audio.visible && (
+        {audioVisible && (
           <Stack.Item>
             <Section>
               <NowPlayingWidget />

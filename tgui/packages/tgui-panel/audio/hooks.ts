@@ -1,18 +1,19 @@
-/**
- * @file
- * @copyright 2020 Aleksej Komarov
- * @license MIT
- */
+import { useShallow } from 'zustand/react/shallow';
 
-import { useDispatch, useSelector } from 'tgui/backend';
+import { useAudioStore } from '../events/stores/audio';
 
-import { selectAudio } from './selectors';
+export function useAudio() {
+  const meta = useAudioStore(useShallow((state) => state.meta));
+  const playing = useAudioStore((state) => state.playing);
+  const stopMusic = useAudioStore((state) => state.stopMusic);
+  const toggle = useAudioStore((state) => state.toggle);
+  const visible = useAudioStore((state) => state.visible);
 
-export const useAudio = () => {
-  const state = useSelector(selectAudio);
-  const dispatch = useDispatch();
   return {
-    ...state,
-    toggle: () => dispatch({ type: 'audio/toggle' }),
+    meta,
+    playing,
+    stopMusic,
+    toggle,
+    visible,
   };
-};
+}
