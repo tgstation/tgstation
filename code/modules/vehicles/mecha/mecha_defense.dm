@@ -174,7 +174,7 @@
 	var/mecha_explodies_vulnerability = (severity * capacitor.rating) //The more severe the EMP, the worse the outcome. The higher the tier of the capacitor, the less severe the outcome.
 
 	if(get_charge())
-		use_energy(round((cell.maxcharge / 2) / mecha_explodies_vulnerability 1))
+		use_energy(round((cell.maxcharge / 2) / mecha_explodies_vulnerability, 1))
 
 	var/how_hard_are_we_explodies = rand(MECH_EMP_DAMAGE_LOWER, MECH_EMP_DAMAGE_UPPER)
 	take_damage(how_hard_are_we_explodies / mecha_explodies_vulnerability, BURN)
