@@ -291,9 +291,9 @@
 	var/obj/item/parent_item = parent
 	if(sharpened_increase)
 		parent_item.force -= sharpened_increase
-	if(force_multiplier)
+	if(force_multiplier != 1)
 		parent_item.force /= force_multiplier
-	else if(!isnull(force_unwielded))
+	else if(force_unwielded != force_wielded)
 		parent_item.force = force_unwielded
 
 	// update the items name to remove the wielded status
