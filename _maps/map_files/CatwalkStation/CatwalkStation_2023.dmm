@@ -11657,6 +11657,7 @@
 	pixel_x = 4;
 	pixel_y = 10
 	},
+/obj/structure/sign/painting/large/library,
 /turf/open/floor/wood,
 /area/station/service/library)
 "dBe" = (
@@ -12603,6 +12604,15 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
+"dPJ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "dPP" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/disposalpipe/trunk{
@@ -27188,7 +27198,17 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/locker)
 "ijl" = (
-/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/cable,
+/obj/item/restraints/legcuffs/beartrap/prearmed{
+	pixel_y = 11;
+	pixel_x = 5
+	},
+/obj/item/restraints/legcuffs/beartrap/prearmed{
+	pixel_x = -6
+	},
+/obj/structure/railing{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/hallway/abandoned_recreation)
 "ijm" = (
@@ -28128,6 +28148,9 @@
 /area/station/hallway/primary/starboard)
 "iyA" = (
 /obj/machinery/vending/games,
+/obj/structure/sign/painting/library_secure{
+	pixel_y = 32
+	},
 /turf/open/floor/wood,
 /area/station/service/library)
 "iyE" = (
@@ -46302,6 +46325,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
+"nVh" = (
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
+/area/station/hallway/primary/fore)
 "nVk" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
@@ -51199,6 +51236,20 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/science/lab)
+"puJ" = (
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
+/area/station/hallway/primary/fore)
 "puR" = (
 /obj/structure/filingcabinet,
 /obj/machinery/light/directional/south,
@@ -59447,6 +59498,9 @@
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 8
 	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
 /turf/open/floor/iron/edge{
 	dir = 8
 	},
@@ -67674,10 +67728,6 @@
 "uum" = (
 /obj/effect/turf_decal/siding/thinplating/dark/corner{
 	dir = 1
-	},
-/obj/structure/sign/painting/large/library{
-	pixel_y = 30;
-	pixel_x = -16
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -108947,7 +108997,7 @@ rAc
 nHS
 gPW
 anm
-haB
+dPJ
 iWD
 haB
 qkU
@@ -112550,9 +112600,9 @@ njv
 tAT
 pPb
 tAT
-ofi
+puJ
 rTH
-ofi
+nVh
 lRP
 ofi
 ujr
