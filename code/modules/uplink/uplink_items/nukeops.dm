@@ -631,6 +631,24 @@
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	cost = 20
 
+/datum/uplink_item/mech_equipment/repair_droid
+	name = "exosuit repair droid"
+	desc = "An automated repair droid for exosuits. Scans for damage and repairs it. Can fix almost all types of external or internal damage."
+	item = /obj/item/mecha_parts/mecha_equipment/repair_droid
+	cost = 10
+
+/datum/uplink_item/mech_equipment/melee_padding
+	name = "Impact Cushion Plates"
+	desc = "Boosts exosuit armor against melee attacks"
+	item = /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
+	cost = 5
+
+/datum/uplink_item/mech_equipment/ranged_padding
+	name = "Projectile Shielding"
+	desc = "Boosts exosuit armor against ranged kinetic and energy projectiles. Completely blocks taser shots."
+	item = /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
+	cost = 5
+
 // ~~ Mech Support ~~
 
 /datum/uplink_item/mech/support_bag
