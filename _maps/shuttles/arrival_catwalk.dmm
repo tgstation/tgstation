@@ -44,6 +44,13 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
+"hq" = (
+/obj/docking_port/mobile/arrivals{
+	dir = 1;
+	name = "catwalk arrivals shuttle"
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/arrival)
 "hs" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 1
@@ -241,14 +248,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
-/area/shuttle/arrival)
-"Ez" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/docking_port/mobile/arrivals{
-	dir = 1;
-	name = "catwalk arrivals shuttle"
-	},
-/turf/open/floor/plating,
 /area/shuttle/arrival)
 "Fj" = (
 /obj/machinery/door/airlock/shuttle{
@@ -577,7 +576,7 @@ QL
 qt
 "}
 (4,1,1) = {"
-Ez
+BL
 xc
 TZ
 FP
@@ -590,7 +589,7 @@ Mm
 WA
 At
 nu
-nu
+hq
 "}
 (5,1,1) = {"
 BL
