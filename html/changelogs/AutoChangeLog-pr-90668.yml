@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes:
+  - bugfix: "Look up/down now track with the thing you're inside instead of staying in one spot"
