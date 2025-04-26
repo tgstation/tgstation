@@ -591,7 +591,7 @@
 
 // ~~ Mech Equipment ~~
 
-/datum/uplink_item/mech/get_cardboard_cutout_instance(datum/cardboard_cutout/cardboard_cutout)
+/datum/uplink_item/mech/carbine
 	name = "FNX-99 Hades Carbine"
 	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
