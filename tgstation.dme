@@ -3894,6 +3894,7 @@
 #include "code\modules\client\preferences\scarred_eye.dm"
 #include "code\modules\client\preferences\screentips.dm"
 #include "code\modules\client\preferences\security_department.dm"
+#include "code\modules\client\preferences\silicon_gender.dm"
 #include "code\modules\client\preferences\skin_tone.dm"
 #include "code\modules\client\preferences\sounds.dm"
 #include "code\modules\client\preferences\species.dm"

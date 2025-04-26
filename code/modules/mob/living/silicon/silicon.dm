@@ -94,6 +94,14 @@
 	GLOB.silicon_mobs -= src
 	return ..()
 
+///Sets cyborg gender from preferences. Expects a client.
+/mob/living/silicon/proc/set_gender(client/player_client)
+	var/silicon_gender = player_client.prefs.read_preference(/datum/preference/choiced/silicon_gender)
+	if(silicon_gender == "Use gender")
+		gender = player_client.prefs.read_preference(/datum/preference/choiced/gender)
+	else
+		gender = silicon_gender
+
 /mob/living/silicon/proc/on_silicon_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
 	SIGNAL_HANDLER
 	for(var/mob/living/living_mob in buckled_mobs)
