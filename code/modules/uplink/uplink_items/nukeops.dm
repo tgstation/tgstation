@@ -633,6 +633,12 @@
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	cost = 20
 
+/datum/uplink_item/mech_equipment/rcd
+	name = "mounted RCD"
+	desc = "An exosuit-mounted Rapid Construction Device."
+	item = /obj/item/mecha_parts/mecha_equipment/rcd
+	cost = 15
+
  // ~~ Mech Utility ~~
 
 /datum/uplink_item/mech_equipment/repair_droid
