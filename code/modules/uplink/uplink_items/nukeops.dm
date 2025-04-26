@@ -599,7 +599,9 @@
 	category = /datum/uplink_category/mech_equipment
 	surplus = 0
 	purchasable_from = UPLINK_SERIOUS_OPS
-	restrcited = TRUE
+	restricted = TRUE
+
+// ~~ Mech Main hands ~~
 
 /datum/uplink_item/mech_equipment/carbine
 	name = "FNX-99 Hades Carbine"
@@ -630,6 +632,8 @@
 	desc = "A weapon for combat exosuits. Launches short range missiles."
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
 	cost = 20
+
+ // ~~ Mech Utility ~~
 
 /datum/uplink_item/mech_equipment/repair_droid
 	name = "exosuit repair droid"
