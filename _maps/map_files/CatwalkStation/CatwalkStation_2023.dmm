@@ -4872,6 +4872,20 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"bAl" = (
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
+/area/station/hallway/primary/fore)
 "bAq" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/computer/shuttle/mining{
@@ -9951,6 +9965,15 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/plating,
 /area/station/cargo/storage)
+"cYm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "cYq" = (
 /obj/structure/table/reinforced,
 /obj/item/flashlight{
@@ -18532,6 +18555,20 @@
 /obj/machinery/light/directional/north,
 /turf/open/openspace,
 /area/station/security/checkpoint/science)
+"fFY" = (
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
+/area/station/hallway/primary/fore)
 "fGj" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -29780,15 +29817,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
-"iXc" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden{
-	dir = 4
-	},
-/obj/effect/spawner/random/trash/graffiti{
-	pixel_y = 32
-	},
-/turf/open/floor/iron/smooth,
-/area/station/engineering/main)
 "iXd" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/decal/remains/human,
@@ -31135,20 +31163,6 @@
 /obj/structure/sign/poster/contraband/lizard/directional/south,
 /turf/open/openspace,
 /area/station/maintenance/starboard/fore)
-"jsP" = (
-/obj/effect/turf_decal/trimline/dark/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/turf/open/floor/iron/edge{
-	dir = 8
-	},
-/area/station/hallway/primary/fore)
 "jsT" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/requests_console/directional/south{
@@ -56743,9 +56757,14 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "rdW" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/closed/wall,
-/area/station/maintenance/port/greater)
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/smooth,
+/area/station/engineering/main)
 "rea" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Virology Maintenance"
@@ -56886,20 +56905,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/command/meeting_room/council)
-"rgt" = (
-/obj/effect/turf_decal/trimline/dark/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 1
-	},
-/turf/open/floor/iron/edge{
-	dir = 8
-	},
-/area/station/hallway/primary/fore)
 "rgE" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
@@ -78522,15 +78527,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"xJQ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/station/service/library)
 "xJV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset,
@@ -107480,7 +107476,7 @@ uki
 pOM
 nUE
 bNt
-rdW
+bNt
 wYU
 iGB
 pxv
@@ -109001,7 +108997,7 @@ rAc
 nHS
 gPW
 anm
-xJQ
+cYm
 iWD
 haB
 qkU
@@ -112604,9 +112600,9 @@ njv
 tAT
 pPb
 tAT
-jsP
+fFY
 rTH
-rgt
+bAl
 lRP
 ofi
 ujr
@@ -123401,7 +123397,7 @@ wqw
 uBp
 wqw
 bdE
-iXc
+rdW
 qFt
 eNk
 pCb
