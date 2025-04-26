@@ -589,6 +589,14 @@
 	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
 	cost = 50
 
+// ~~ Mech Equipment ~~
+
+/datum/uplink_item/mech/get_cardboard_cutout_instance(datum/cardboard_cutout/cardboard_cutout)
+	name = "FNX-99 Hades Carbine"
+	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
+	cost = 10
+
 // ~~ Mech Support ~~
 
 /datum/uplink_item/mech/support_bag
