@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "examining fishing spots twice with sufficient skill level while holding a rod should work more reliably."
