@@ -1,0 +1,4 @@
+author: "Cirrial"
+delete-after: True
+changes:
+  - bugfix: "Made it so minebot commands don't talk about dumping ore when you're toggling the lights."
