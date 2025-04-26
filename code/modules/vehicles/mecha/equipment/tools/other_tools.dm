@@ -201,11 +201,11 @@
 	bullet = -10
 	energy = 15
 
-/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_boosterattach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
+/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
 	. = ..()
 	chassis.AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 
-/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_boosterdetach(atom/moveto)
+/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/detach(atom/moveto)
 	chassis.RemoveElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
 	return ..()
 
