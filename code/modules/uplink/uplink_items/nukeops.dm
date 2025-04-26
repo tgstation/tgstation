@@ -578,24 +578,24 @@
 /datum/uplink_item/mech/gygax
 	name = "Dark Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-		for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, and ion thrusters."
+		for hit-and-run style attacks. Features ion thrusters."
 	item = /obj/vehicle/sealed/mecha/gygax/dark/loaded
-	cost = 60
+	cost = 30
 
 /datum/uplink_item/mech/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targeting, thrust vectoring \
-		and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, and an antiprojectile armor booster."
+		and deployable smoke."
 	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
-	cost = 100
+	cost = 50
 
 // ~~ Mech Support ~~
 
 /datum/uplink_item/mech/support_bag
 	name = "Mech Support Kit Bag"
-	desc = "A duffel bag containing ammo for four full reloads of the scattershot carbine which is equipped on standard Dark Gygax and Mauler exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
+	desc = "A duffel bag containing tools to perform maintenance on your mech, which includes, duct tape, full toolbelt, inducer"
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
-	cost = 4
+	cost = 2
 	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/mech/support_bag/mauler
