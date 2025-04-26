@@ -591,7 +591,17 @@
 
 // ~~ Mech Equipment ~~
 
-/datum/uplink_item/mech/carbine
+/datum/uplink_category/mech_equipment
+	name = "Mech Equipment"
+	weight = 26
+
+/datum/uplink_item/mech_equipment
+	category = /datum/uplink_category/mech_equipment
+	surplus = 0
+	purchasable_from = UPLINK_SERIOUS_OPS
+	restrcited = TRUE
+
+/datum/uplink_item/mech_equipment/carbine
 	name = "FNX-99 Hades Carbine"
 	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
