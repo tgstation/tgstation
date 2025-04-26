@@ -99,7 +99,15 @@
 )
 	if(!original)
 		return
-	if(require_twohands)
+	var/obj/item/parent_item = parent
+	if(wielded)
+		if(sharpened_increase)
+			parent_item.force -= sharpened_increase
+		if(force_multiplier)
+			parent_item.force /= force_multiplier
+		else if(!isnull(force_unwielded))
+			parent_item.force = force_unwielded
+	if(!isnull(require_twohands))
 		src.require_twohands = require_twohands
 	if(wieldsound)
 		src.wieldsound = wieldsound
@@ -109,9 +117,9 @@
 		src.attacksound = attacksound
 	if(force_multiplier)
 		src.force_multiplier = force_multiplier
-	if(force_wielded)
+	if(!isnull(force_wielded))
 		src.force_wielded = force_wielded
-	if(force_unwielded)
+	if(isnull(force_unwielded))
 		src.force_unwielded = force_unwielded
 	if(icon_wielded)
 		src.icon_wielded = icon_wielded
@@ -119,6 +127,14 @@
 		src.wield_callback = wield_callback
 	if(unwield_callback)
 		src.unwield_callback = unwield_callback
+	if(!wielded)
+		return
+	if(!isnull(force_multiplier))
+		parent_item.force *= force_multiplier
+	else if(!isnull(force_wielded))
+		parent_item.force = force_wielded
+	if(!isnull(sharpened_increase))
+		parent_item.force += sharpened_increase
 
 // register signals withthe parent item
 /datum/component/two_handed/RegisterWithParent()
@@ -225,9 +241,9 @@
 
 	// update item stats and name
 	var/obj/item/parent_item = parent
-	if(force_multiplier)
+	if(!isnull(force_multiplier))
 		parent_item.force *= force_multiplier
-	else if(force_wielded)
+	else if(!isnull(force_wielded))
 		parent_item.force = force_wielded
 	if(sharpened_increase)
 		parent_item.force += sharpened_increase
@@ -277,7 +293,7 @@
 		parent_item.force -= sharpened_increase
 	if(force_multiplier)
 		parent_item.force /= force_multiplier
-	else if(force_unwielded)
+	else if(!isnull(force_unwielded))
 		parent_item.force = force_unwielded
 
 	// update the items name to remove the wielded status

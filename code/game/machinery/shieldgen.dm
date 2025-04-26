@@ -236,7 +236,7 @@
 		set_anchored(FALSE)
 
 
-/obj/machinery/shieldgen/attackby(obj/item/W, mob/user, params)
+/obj/machinery/shieldgen/attackby(obj/item/W, mob/user, list/modifiers)
 	if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
@@ -460,7 +460,7 @@
 		return
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, params)
+/obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, list/modifiers)
 	. = ..()
 	if(W.GetID())
 		if(allowed(user) && !(obj_flags & EMAGGED))

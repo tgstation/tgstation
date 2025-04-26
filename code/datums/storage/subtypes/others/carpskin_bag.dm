@@ -1,5 +1,18 @@
 /datum/storage/carpskin_bag
+	max_total_storage = 42 // Up to 14 normal fish, but we're assuming that you'll be storing a bunch of gear as well
+
 	var/forced_pickup = FALSE
+
+/datum/storage/carpskin_bag/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+	set_holdable(list(
+		/obj/item/fish,
+		/obj/item/fishing_line,
+		/obj/item/fishing_hook,
+		/obj/item/fishing_lure,
+		/obj/item/fish_analyzer,
+		/obj/item/bait_can,
+	))
 
 // All hooks, lines and lures are classified as one type
 /datum/storage/carpskin_bag/process_numerical_display()

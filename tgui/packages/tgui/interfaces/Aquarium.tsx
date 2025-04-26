@@ -48,7 +48,7 @@ type PropData = {
 };
 
 export const Aquarium = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { data } = useBackend<Data>();
   const { fishData } = data;
 
   return (
@@ -93,8 +93,12 @@ export const Aquarium = (props) => {
   );
 };
 
-const FishInfo = (props) => {
-  const { act, data } = useBackend<Data>();
+type FishInfoProps = {
+  fish: FishData;
+};
+
+const FishInfo = (props: FishInfoProps) => {
+  const { act } = useBackend<Data>();
   const { fish } = props;
 
   return (
@@ -119,9 +123,11 @@ const FishInfo = (props) => {
                 {fish.fish_name}
               </Stack.Item>
               <Stack.Item mt={fish.fish_health > 0 ? -4 : 1}>
-                {(fish.fish_health > 0 && (
+                {fish.fish_health > 0 ? (
                   <CalculateHappiness happiness={fish.fish_happiness} />
-                )) || <Icon ml={2} name="skull-crossbones" textColor="white" />}
+                ) : (
+                  <Icon ml={2} name="skull-crossbones" textColor="white" />
+                )}
               </Stack.Item>
             </Stack>
           </Flex.Item>
@@ -170,9 +176,10 @@ const FishInfo = (props) => {
               mt={1}
               ml={1}
               fluid
-              placeholder="Rename"
+              icon="keyboard"
+              buttonText="Rename"
               color="transparent"
-              onCommit={(e, value) => {
+              onCommit={(value) => {
                 act('rename_fish', {
                   fish_reference: fish.fish_ref,
                   chosen_name: value,
@@ -183,14 +190,8 @@ const FishInfo = (props) => {
                 borderRadius: '1em',
                 background: '#151326',
               }}
-            >
-              <Flex>
-                <Flex.Item ml={3}>
-                  <Icon name="keyboard" />
-                </Flex.Item>
-                <Flex.Item ml={1}>Rename</Flex.Item>
-              </Flex>
-            </Button.Input>
+              value={fish.fish_name}
+            />
           </Flex.Item>
         </Flex>
       </Stack.Item>
