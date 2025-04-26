@@ -607,6 +607,12 @@
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	cost = 10
 
+/datum/uplink_item/mech_equipment/
+	name = "LBX AC 10 Scattershot"
+	desc = "A weapon for combat exosuits. Shoots a spread of pellets."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
+	cost = 15
+
 // ~~ Mech Support ~~
 
 /datum/uplink_item/mech/support_bag
