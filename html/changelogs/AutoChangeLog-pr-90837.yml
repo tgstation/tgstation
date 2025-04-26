@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - bugfix: "Holding a two-handed weapon in both hands will now once again appropriately modify its attack power."

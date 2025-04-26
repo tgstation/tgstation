@@ -137,7 +137,7 @@ GLOBAL_LIST_EMPTY(starlight)
 /turf/open/space/handle_slip()
 	return
 
-/turf/open/space/attackby(obj/item/attacking_item, mob/user, params)
+/turf/open/space/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	..()
 	if(!CanBuildHere())
 		return
@@ -242,6 +242,14 @@ GLOBAL_LIST_EMPTY(starlight)
 
 	return FALSE
 
+/turf/open/space/ChangeTurf(path, list/new_baseturfs, flags)
+	. = ..()
+	if (!. || isspaceturf(.))
+		return
+
+	var/area/new_turf_area = get_area(.)
+	if (istype(new_turf_area, /area/space) && !istype(new_turf_area, /area/space/nearstation))
+		set_turf_to_area(., GLOB.areas_by_type[/area/space/nearstation])
 
 /turf/open/space/attempt_lattice_replacement()
 	var/dest_x = destination_x
