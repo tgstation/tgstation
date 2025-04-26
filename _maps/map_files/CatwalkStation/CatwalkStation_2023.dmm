@@ -12604,15 +12604,6 @@
 /obj/structure/cable,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
-"dPJ" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/siding/thinplating/dark{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/station/service/library)
 "dPP" = (
 /obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/disposalpipe/trunk{
@@ -18794,6 +18785,15 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/textured_large,
 /area/station/medical/virology)
+"fJy" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/thinplating/dark{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "fJz" = (
 /obj/effect/turf_decal/trimline/dark/arrow_ccw{
 	dir = 4
@@ -30772,6 +30772,20 @@
 /obj/effect/spawner/random/trash/garbage,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"jmw" = (
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
+/area/station/hallway/primary/fore)
 "jmQ" = (
 /obj/effect/spawner/random/trash/grime,
 /turf/open/floor/plating,
@@ -42184,6 +42198,20 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
+"mIx" = (
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark/arrow_cw{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/iron/edge{
+	dir = 8
+	},
+/area/station/hallway/primary/fore)
 "mID" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Mining Maintenance Access"
@@ -46325,20 +46353,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
-"nVh" = (
-/obj/effect/turf_decal/trimline/dark/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 1
-	},
-/turf/open/floor/iron/edge{
-	dir = 8
-	},
-/area/station/hallway/primary/fore)
 "nVk" = (
 /obj/effect/turf_decal/siding/purple{
 	dir = 4
@@ -51236,20 +51250,6 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron,
 /area/station/science/lab)
-"puJ" = (
-/obj/effect/turf_decal/trimline/dark/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark/arrow_cw{
-	dir = 8
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/turf/open/floor/iron/edge{
-	dir = 8
-	},
-/area/station/hallway/primary/fore)
 "puR" = (
 /obj/structure/filingcabinet,
 /obj/machinery/light/directional/south,
@@ -68340,6 +68340,15 @@
 	},
 /turf/open/openspace,
 /area/station/commons/fitness/recreation)
+"uCX" = (
+/obj/machinery/atmospherics/pipe/smart/simple/yellow/hidden{
+	dir = 4
+	},
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/smooth,
+/area/station/engineering/main)
 "uDd" = (
 /obj/structure/railing{
 	dir = 8
@@ -68448,8 +68457,7 @@
 	},
 /obj/machinery/atmospherics/pipe/multiz/yellow/visible{
 	dir = 8;
-	name = "N2O Multideck Adapter";
-	initialize_directions = 10
+	name = "N2O Multideck Adapter"
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -69551,8 +69559,7 @@
 	},
 /obj/machinery/atmospherics/pipe/multiz/yellow/visible{
 	name = "N2 Multideck Adapter";
-	dir = 1;
-	initialize_directions = 9
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -108997,7 +109004,7 @@ rAc
 nHS
 gPW
 anm
-dPJ
+fJy
 iWD
 haB
 qkU
@@ -112600,9 +112607,9 @@ njv
 tAT
 pPb
 tAT
-puJ
+mIx
 rTH
-nVh
+jmw
 lRP
 ofi
 ujr
@@ -123397,7 +123404,7 @@ wqw
 uBp
 wqw
 bdE
-wqw
+uCX
 qFt
 eNk
 pCb
