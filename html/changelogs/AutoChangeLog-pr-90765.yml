@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixes burdened trauma not granting/losing burden levels when its added/lost"

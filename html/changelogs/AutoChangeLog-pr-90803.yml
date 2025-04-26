@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "If you are turned into a monkey via the DNA scanner, mutadone can once again turn you back. If you are a monkey turned into a human via the DNA scanner, mutadone can also turn you back."
-  - bugfix: "If you are lucky enough to have the opportunity to be a monkey as a roundstart species, the species info box will not lie to you about mutadone."

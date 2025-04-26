@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Moneybots round to the nearest 1 credit."
-  - qol: "Moneybots have a 0.5 second cooldown between being able to dispense credits."
-  - qol: "Moneybots won't dispense more than 50 credits on a tile."
