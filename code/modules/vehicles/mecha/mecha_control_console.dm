@@ -121,7 +121,7 @@
 	chassis = null
 	return ..()
 
-obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mecha_to_attach, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mecha_to_attach, attach_right = FALSE)
 	if(!(mecha_to_attach.mecha_flags & PANEL_OPEN))
 		return
 	if(!..())
