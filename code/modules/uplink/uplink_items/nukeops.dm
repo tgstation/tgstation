@@ -607,11 +607,17 @@
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
 	cost = 10
 
-/datum/uplink_item/mech_equipment/
+/datum/uplink_item/mech_equipment/scattershot
 	name = "LBX AC 10 Scattershot"
 	desc = "A weapon for combat exosuits. Shoots a spread of pellets."
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
 	cost = 15
+
+/datum/uplink_item/mech_equipment/lmg
+	name = "Ultra AC 2"
+	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
+	cost = 10
 
 // ~~ Mech Support ~~
 
