@@ -619,6 +619,18 @@
 	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
 	cost = 10
 
+/datum/uplink_item/mech_equipment/missile_rack_breaching
+	name = "PEP-6 missile rack"
+	desc = "A weapon for combat exosuits. Launches precision explosive projectiles designed to explode only when striking a structured target, including walls, exosuits and cyborgs."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
+	cost = 15
+
+/datum/uplink_item/mech_equipment/missile_rack
+	name = "SRM-8 missile rack"
+	desc = "A weapon for combat exosuits. Launches short range missiles."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	cost = 20
+
 // ~~ Mech Support ~~
 
 /datum/uplink_item/mech/support_bag
