@@ -312,9 +312,9 @@
 				header = "Polytechnical Difficulties",
 			)
 		consumed_mob.dust(force = TRUE)
-		matter_increase += 100 * object_size
+		matter_increase += 100 * object_size * 2
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
-			damage_increase += rand(-30, 30) // HONK
+			damage_increase += rand(-30, 30) * 2 // HONK
 	else if(isobj(consumed_object))
 		if(!iseffect(consumed_object))
 			var/suspicion = ""
