@@ -289,6 +289,10 @@
 *	MISCELLANEOUS
 */
 
+/datum/loadout_item/undersuit/bodysuit
+	name = "Bodysuit"
+	item_path = /obj/item/clothing/under/bodysuit
+
 /datum/loadout_item/undersuit/gear_harness
 	name = "Gear Harness"
 	item_path = /obj/item/clothing/under/misc/gear_harness

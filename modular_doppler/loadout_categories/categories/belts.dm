@@ -99,3 +99,7 @@
 /datum/loadout_item/belts/crusader_belt
 	name = "Sword Belt & Sheath"
 	item_path = /obj/item/storage/belt/crusader
+
+/datum/loadout_item/belts/frontier_colonist
+	name = "Frontier Chest Rig"
+	item_path = /obj/item/storage/belt/utility/frontier_colonist
