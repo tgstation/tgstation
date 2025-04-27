@@ -197,6 +197,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 
 /datum/status_effect/arena_tracker/on_apply()
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_enter_crit))
+	RegisterSignal(owner, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
 	owner.add_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 	crown_overlay = mutable_appearance('icons/mob/effects/crown.dmi', "arena_fighter", -HALO_LAYER)
@@ -248,20 +249,22 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		last_attacker = WEAKREF(attacking_object.loc)
 		return
 
-	// Track being hit by a mob throwing a stick
-	if(isitem(attacking_object))
-		var/obj/item/thrown_item = attacking_item
-		var/thrown_by = thrown_item.thrownby?.resolve()
-		if(ismob(thrown_by))
-			last_attacker = WEAKREF(thrown_by)
-			return
-
 	// Edge case. If our attacking_item is a gun which the owner has dropped we need to find out who shot us
 	// Track being hit by a mob shooting a stick
 	if(isprojectile(attacking_object))
 		var/obj/projectile/attacking_projectile = attacking_object
 		if(ismob(attacking_projectile.firer))
 			last_attacker = WEAKREF(attacking_projectile.firer)
+
+///Called when impacted by something thrown at us, setting the last attacker to the person throwing the item.
+/datum/status_effect/arena_tracker/proc/on_impact_zone(atom/source, mob/living/hitby, zone, blocked, datum/thrownthing/throwingdatum)
+	SIGNAL_HANDLER
+	// Track being hit by a mob throwing a stick
+	if(!isitem(throwingdatum.thrownthing))
+		return
+	var/thrown_by = throwingdatum.get_thrower()
+	if(ismob(thrown_by))
+		last_attacker = WEAKREF(thrown_by)
 
 /datum/antagonist/heretic_arena_participant
 	name = "Arena Participant"

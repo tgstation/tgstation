@@ -219,8 +219,6 @@
 		return ..()
 
 	var/obj/item/thrown_item = AM
-	if(thrown_item.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
-		return ..()
 
 	if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
 		hitpush = FALSE
@@ -236,7 +234,7 @@
 	if(blocked)
 		return SUCCESSFUL_BLOCK
 
-	var/mob/thrown_by = thrown_item.thrownby?.resolve()
+	var/mob/thrown_by = throwingdatum.get_thrower()
 	if(thrown_by)
 		log_combat(thrown_by, src, "threw and hit", thrown_item)
 	else
