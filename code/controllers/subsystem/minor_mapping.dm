@@ -96,5 +96,4 @@ SUBSYSTEM_DEF(minor_mapping)
 
 	return shuffle(suitable)
 
-#undef PROB_MOUSE_SPAWN
 #undef PROB_SPIDER_REPLACEMENT
