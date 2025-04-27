@@ -110,13 +110,6 @@ export const sound_achievement: FeatureChoiced = {
   component: FeatureDropdownInput,
 };
 
-export const sound_radio_noise: Feature<number> = {
-  name: 'Radio noise volume',
-  category: 'SOUND',
-  description: `Volume of talking and hearing radio chatter sounds.`,
-  component: FeatureSliderInput,
-};
-
 export const sound_ai_vox: Feature<number> = {
   name: 'AI VOX announcements volume',
   category: 'SOUND',

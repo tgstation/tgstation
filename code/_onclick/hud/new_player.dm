@@ -200,8 +200,20 @@
 	name = "View Character Setup"
 	screen_loc = "TOP:-70,CENTER:-54"
 	icon = 'icons/hud/lobby/character_setup.dmi'
-	icon_state = "character_setup"
+	icon_state = "character_setup_disabled"
 	base_icon_state = "character_setup"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/character_setup/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	// We need IconForge and the assets to be ready before allowing the menu to open
+	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
+		flick("[base_icon_state]_enabled", src)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_character_setup))
+		RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_character_setup))
 
 /atom/movable/screen/lobby/button/character_setup/Click(location, control, params)
 	. = ..()
@@ -212,6 +224,13 @@
 	preferences.current_window = PREFERENCE_TAB_CHARACTER_PREFERENCES
 	preferences.update_static_data(usr)
 	preferences.ui_interact(usr)
+
+/atom/movable/screen/lobby/button/character_setup/proc/enable_character_setup()
+	SIGNAL_HANDLER
+	flick("[base_icon_state]_enabled", src)
+	set_button_status(TRUE)
+	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 ///Button that appears before the game has started
 /atom/movable/screen/lobby/button/ready
@@ -373,9 +392,20 @@
 
 /atom/movable/screen/lobby/button/bottom/settings
 	name = "View Game Preferences"
-	icon_state = "settings"
+	icon_state = "settings_disabled"
 	base_icon_state = "settings"
 	screen_loc = "TOP:-122,CENTER:+29"
+	enabled = FALSE
+
+/atom/movable/screen/lobby/button/bottom/settings/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	// We need IconForge and the assets to be ready before allowing the menu to open
+	if(SSearly_assets.initialized == INITIALIZATION_INNEW_REGULAR || SSatoms.initialized == INITIALIZATION_INNEW_REGULAR)
+		set_button_status(TRUE)
+	else
+		set_button_status(FALSE)
+		RegisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_settings))
+		RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(enable_settings))
 
 /atom/movable/screen/lobby/button/bottom/settings/Click(location, control, params)
 	. = ..()
@@ -386,6 +416,12 @@
 	preferences.current_window = PREFERENCE_TAB_GAME_PREFERENCES
 	preferences.update_static_data(usr)
 	preferences.ui_interact(usr)
+
+/atom/movable/screen/lobby/button/bottom/settings/proc/enable_settings()
+	SIGNAL_HANDLER
+	set_button_status(TRUE)
+	UnregisterSignal(SSearly_assets, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	UnregisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /atom/movable/screen/lobby/button/bottom/changelog_button
 	name = "View Changelog"
@@ -643,25 +679,20 @@
 ///Lobby screen that appears before the game has started showing how many players there are and who is ready.
 /atom/movable/screen/lobby/new_player_info
 	name = "New Player Info"
-	screen_loc = "TOP:-20,CENTER:192"
+	screen_loc = "EAST-3,CENTER:140"
 	icon = 'icons/hud/lobby/newplayer.dmi'
 	icon_state = null //we only show up when we get update appearance called, cause we need our overlay to not look bad.
 	base_icon_state = "newplayer"
-	maptext_height = 70
+	maptext_height = 75
 	maptext_width = 80
 	maptext_x = OVERLAY_X_DIFF
 	maptext_y = OVERLAY_Y_DIFF
 
+	///Boolean on whether or not we should have our static overlay, so we 'turn' the TV off when collapsing.
 	var/show_static = TRUE
 
 /atom/movable/screen/lobby/new_player_info/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
-	switch(SSticker.current_state)
-		if(GAME_STATE_PREGAME, GAME_STATE_STARTUP)
-			RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(hide_info))
-		if(GAME_STATE_SETTING_UP)
-			RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, PROC_REF(show_info))
-
 	START_PROCESSING(SSnewplayer_info, src)
 	update_text()
 	update_appearance(UPDATE_ICON)
@@ -670,26 +701,22 @@
 	STOP_PROCESSING(SSnewplayer_info, src)
 	return ..()
 
-/atom/movable/screen/lobby/new_player_info/update_overlays()
-	. = ..()
-	if(!always_available)
-		return .
-	. += mutable_appearance(icon, "[base_icon_state]_overlay", layer = src.layer+0.03)
-	if(show_static)
-		. += mutable_appearance(icon, "static_base", alpha = 20, layer = src.layer+0.01)
-		//we have this in a separate file because `generate_icon_alpha_mask` puts lighting even on non-existent pixels,
-		//giving the icon a weird background color.
-		var/mutable_appearance/scanline = mutable_appearance(generate_icon_alpha_mask('icons/hud/lobby/newplayer_scanline.dmi', "scanline"), alpha = 20, layer = src.layer+0.02)
-		scanline.pixel_y = OVERLAY_X_DIFF
-		scanline.pixel_x = OVERLAY_Y_DIFF
-		. += scanline
-
 /atom/movable/screen/lobby/new_player_info/update_icon_state()
 	. = ..()
-	if(!always_available)
-		icon_state = "[base_icon_state]_disabled"
-	else
-		icon_state = base_icon_state
+	icon_state = base_icon_state
+
+/atom/movable/screen/lobby/new_player_info/update_overlays()
+	. = ..()
+	. += mutable_appearance(icon, "[base_icon_state]_overlay", layer = src.layer+0.03)
+	if(!show_static)
+		return .
+	. += mutable_appearance(icon, "static_base", alpha = 20, layer = src.layer+0.01)
+	//we have this in a separate file because `generate_icon_alpha_mask` puts lighting even on non-existent pixels,
+	//giving the icon a weird background color.
+	var/mutable_appearance/scanline = mutable_appearance(generate_icon_alpha_mask('icons/hud/lobby/newplayer_scanline.dmi', "scanline"), alpha = 20, layer = src.layer+0.02)
+	scanline.pixel_y = OVERLAY_X_DIFF
+	scanline.pixel_x = OVERLAY_Y_DIFF
+	. += scanline
 
 /atom/movable/screen/lobby/new_player_info/process(seconds_per_tick)
 	update_text()
@@ -708,33 +735,28 @@
 	update_appearance(UPDATE_ICON)
 	update_text()
 
-/atom/movable/screen/lobby/new_player_info/proc/hide_info()
-	SIGNAL_HANDLER
-
-	STOP_PROCESSING(SSnewplayer_info, src)
-	UnregisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP)
-	RegisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP, PROC_REF(show_info))
-	always_available = FALSE
-	update_appearance(UPDATE_ICON)
-	update_text()
-
-/atom/movable/screen/lobby/new_player_info/proc/show_info()
-	SIGNAL_HANDLER
-
-	always_available = TRUE
-	update_appearance(UPDATE_ICON)
-	update_text()
-	START_PROCESSING(SSnewplayer_info, src)
-	UnregisterSignal(SSticker, COMSIG_TICKER_ERROR_SETTING_UP)
-	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_SETTING_UP, PROC_REF(hide_info))
-
 /atom/movable/screen/lobby/new_player_info/proc/update_text()
-	if(!always_available || !hud || !show_static)
+	if(!hud || !show_static)
 		maptext = null
 		return
-	var/new_maptext
 	if(!MC_RUNNING())
-		new_maptext = "<span style='text-align: center; vertical-align: middle'>Loading...</span>"
+		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>Loading...</span>")
+		return
+	if(SSticker.IsPostgame())
+		maptext = MAPTEXT("<span style='text-align: center; vertical-align: middle'>Game ended, <br /> \
+			restart soon</span>")
+		return
+
+	var/new_maptext
+	var/round_started = SSticker.HasRoundStarted()
+	if(round_started)
+		new_maptext = "<span style='text-align: center; vertical-align: middle'>[SSmapping.current_map.map_name]<br /> \
+			[LAZYLEN(GLOB.clients)] player\s online<br /> \
+			[ROUND_TIME()] in<br />"
+		var/datum/station_trait/overflow_job_bureaucracy/overflow = locate() in SSstation.station_traits
+		if(overflow)
+			new_maptext += "[overflow.chosen_job_name] overflow"
+		new_maptext += "</span>"
 	else
 		var/time_remaining = SSticker.GetTimeLeft()
 		if(time_remaining > 0)

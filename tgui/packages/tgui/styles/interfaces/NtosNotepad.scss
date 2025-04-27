@@ -21,6 +21,11 @@
 .NtosNotepad__textarea {
   background-color: var(--color-section);
   height: 100%;
+  resize: none;
+  color: inherit;
+  outline: none;
+  width: 100%;
+  font-family: var(--font-family-mono);
 }
 
 .NtosNotepad__StatusBar {

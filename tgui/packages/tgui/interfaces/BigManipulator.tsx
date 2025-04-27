@@ -16,6 +16,9 @@ type ManipulatorData = {
   interaction_delay: number;
   worker_interaction: string;
   highest_priority: BooleanLike;
+  worker_combat_mode: BooleanLike;
+  worker_alt_mode: BooleanLike;
+  has_worker: BooleanLike;
   interaction_mode: string;
   settings_list: PrioritySettings[];
   throw_range: number;
@@ -134,7 +137,10 @@ export const BigManipulator = () => {
     active,
     interaction_mode,
     settings_list,
+    has_worker,
     worker_interaction,
+    worker_combat_mode,
+    worker_alt_mode,
     highest_priority,
     throw_range,
     item_as_filter,
@@ -147,12 +153,22 @@ export const BigManipulator = () => {
         <Section
           title="Action Panel"
           buttons={
-            <Button
-              icon="power-off"
-              selected={active}
-              content={active ? 'On' : 'Off'}
-              onClick={() => act('on')}
-            />
+            <>
+              <Button
+                icon="power-off"
+                selected={active}
+                onClick={() => act('on')}
+              >
+                {active ? 'On' : 'Off'}
+              </Button>
+              <Button
+                tooltip="Eject the monkey worker."
+                disabled={!has_worker}
+                onClick={() => act('eject_worker')}
+              >
+                {has_worker ? 'Eject monkey' : 'No monkey worker'}
+              </Button>
+            </>
           }
         >
           <Box
@@ -178,7 +194,7 @@ export const BigManipulator = () => {
               <ConfigRow
                 label="Throwing Range"
                 content={`${throw_range} TILE${throw_range > 1 ? 'S' : ''}`}
-                onClick={() => act('change_throw_range')}
+                onClick={() => act('cycle_throw_range')}
                 tooltip="Cycle the distance an object will travel when thrown"
               />
             )}
@@ -190,18 +206,42 @@ export const BigManipulator = () => {
               tooltip="Cycle through types of items to filter"
             />
             {interaction_mode === 'use' && (
-              <ConfigRow
-                label="Worker Interactions"
-                content={worker_interaction.toUpperCase()}
-                onClick={() => act('worker_interaction_change')}
-                tooltip={
-                  worker_interaction === 'normal'
-                    ? 'Interact using the held item'
-                    : worker_interaction === 'single'
-                      ? 'Drop the item after a single cycle'
-                      : 'Interact with an empty hand'
-                }
-              />
+              <>
+                <ConfigRow
+                  label="Worker Interactions"
+                  content={worker_interaction.toUpperCase()}
+                  onClick={() => act('worker_interaction_change')}
+                  tooltip={
+                    worker_interaction === 'normal'
+                      ? 'Interact using the held item'
+                      : worker_interaction === 'single'
+                        ? 'Drop the item after a single cycle'
+                        : 'Interact with an empty hand'
+                  }
+                />
+                <ConfigRow
+                  label="Worker Combat Mode"
+                  content={worker_combat_mode ? 'TRUE' : 'FALSE'}
+                  selected={!!worker_combat_mode}
+                  onClick={() => act('worker_combat_mode_change')}
+                  tooltip={
+                    worker_combat_mode
+                      ? 'Disable combat mode'
+                      : 'Enable combat mode'
+                  }
+                />
+                <ConfigRow
+                  label="Worker Alt Mode"
+                  content={worker_alt_mode ? 'TRUE' : 'FALSE'}
+                  selected={!!worker_alt_mode}
+                  onClick={() => act('worker_alt_mode_change')}
+                  tooltip={
+                    worker_alt_mode
+                      ? 'Disable alternate mode (right click)'
+                      : 'Enable alternate mode (right click)'
+                  }
+                />
+              </>
             )}
             <ConfigRow
               label="Item Filter"
