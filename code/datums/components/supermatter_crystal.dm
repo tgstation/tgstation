@@ -315,16 +315,8 @@
 		matter_increase += 100 * object_size
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
 			damage_increase += rand(-30, 30) // HONK
-		consume_returns(matter_increase, damage_increase)
 	else if(isobj(consumed_object))
 		if(!iseffect(consumed_object))
-			if (istype(consumed_object, /obj/machinery/nuclearbomb))
-				var/obj/machinery/nuclearbomb/bomb = consumed_object
-				if (!isnull(bomb.core))
-					object_size = 10
-					radiation_range *= 2
-					matter_increase += 10000
-					damage_increase += 110
 			var/suspicion = ""
 			if(consumed_object.fingerprintslast)
 				suspicion = "last touched by [consumed_object.fingerprintslast]"
@@ -338,6 +330,11 @@
 			matter_increase += 70 * object_size
 		else
 			matter_increase += min(0.5 * consumed_object.max_integrity, 1000)
+	if (istype(consumed_object, /obj/machinery/nuclearbomb) || consumed_object.type == /obj/item/nuke_core) // No subtypes, the supermatter sliver shouldn't trigger this
+		object_size = 10
+		radiation_range *= 2
+		matter_increase += 10000
+		damage_increase += 110
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(atom_source, max_range = radiation_range, threshold = 1.2 / max(object_size, 1), chance = 10 * object_size)
