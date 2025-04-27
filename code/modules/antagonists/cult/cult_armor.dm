@@ -243,6 +243,8 @@
 	armor_type = /datum/armor/cultrobes_berserker
 	slowdown = -0.3 //the hood gives an additional -0.3 if you have it flipped up, for a total of -0.6
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
+	///Boolean on whether we've given the forced gravity trait, to keep track of it.
+	var/gave_gravity = FALSE
 
 /datum/armor/cultrobes_berserker
 	melee = -45
@@ -255,38 +257,23 @@
 	. = ..()
 	if(!(slot_flags & slot))
 		return
-	if(IS_CULTIST(user))
-		RegisterSignal(user.mind, COMSIG_ANTAGONIST_REMOVED, PROC_REF(on_antagonist_removed))
-		return
-	if(user.mind)
-		RegisterSignal(user.mind, COMSIG_ANTAGONIST_GAINED, PROC_REF(on_antagonist_gained))
-	user.AddElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
-	to_chat(user, span_warning("As you equip [src], everything begins to feel a whole lot heavier!"))
+	START_PROCESSING(SSprocessing, src)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/dropped(mob/living/user)
-	if(user.mind)
-		UnregisterSignal(user.mind, list(COMSIG_ANTAGONIST_REMOVED, COMSIG_ANTAGONIST_GAINED))
-	user.RemoveElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
+	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
-///Called when a non-cultist wearer suddenly gains an antag datum, used to clear forced gravity from our source.
-/obj/item/clothing/suit/hooded/cultrobes/berserker/proc/on_antagonist_gained(datum/mind/source, datum/antagonist/antag_datum)
-	SIGNAL_HANDLER
-
-	if(!istype(antag_datum, /datum/antagonist/cult))
+/obj/item/clothing/suit/hooded/cultrobes/berserker/process(seconds_per_tick)
+	var/mob/living/carbon/wearer = loc
+	if(!istype(wearer))
 		return
-	source.current.RemoveElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
-	UnregisterSignal(source, COMSIG_ANTAGONIST_GAINED)
-	RegisterSignal(source, COMSIG_ANTAGONIST_REMOVED, PROC_REF(on_antagonist_removed))
-
-/obj/item/clothing/suit/hooded/cultrobes/berserker/proc/on_antagonist_removed(datum/mind/source, datum/antagonist/antag_datum)
-	SIGNAL_HANDLER
-
-	if(!istype(antag_datum, /datum/antagonist/cult))
+	if(IS_CULTIST(wearer) && gave_gravity)
+		wearer.RemoveElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
 		return
-	source.current.AddElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
-	UnregisterSignal(source, COMSIG_ANTAGONIST_REMOVED)
-	RegisterSignal(source, COMSIG_ANTAGONIST_GAINED, PROC_REF(on_antagonist_gained))
+	if(gave_gravity)
+		return
+	wearer.AddElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
+	to_chat(wearer, span_warning("As you equip [src], everything begins to feel a whole lot heavier!"))
 
 /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 	name = "flagellant's hood"
