@@ -56804,10 +56804,6 @@
 /obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"rdW" = (
-/obj/structure/cable,
-/turf/open/space/basic,
-/area/space)
 "rea" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Virology Maintenance"
@@ -131728,8 +131724,8 @@ dcE
 dcE
 dcE
 dcE
-rdW
-rdW
+dcE
+dcE
 dcE
 dcE
 dcE
