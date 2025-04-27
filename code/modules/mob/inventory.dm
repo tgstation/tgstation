@@ -391,7 +391,7 @@
 	if(observers?.len)
 		for(var/mob/dead/observe as anything in observers)
 			if(observe.client)
-				observe.client.screen -= equipping
+				observe.client.screen -= I
 
 	I.layer = initial(I.layer)
 	SET_PLANE_EXPLICIT(I, initial(I.plane), newloc)
