@@ -1,0 +1,5 @@
+author: "EuSouAFazer"
+delete-after: True
+changes:
+  - rscadd: "Adds CatwalkStation"
+  - code_imp: "Multi-Z maps now can toggle on or off having grappling hooks in people's bags"
