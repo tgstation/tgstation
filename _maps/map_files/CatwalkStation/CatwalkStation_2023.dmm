@@ -20693,10 +20693,6 @@
 /obj/structure/lattice/catwalk,
 /turf/open/space/openspace,
 /area/space/nearstation)
-"gln" = (
-/obj/structure/cable,
-/turf/open/space/openspace,
-/area/space)
 "glt" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -184067,7 +184063,7 @@ nlm
 nlm
 nlm
 nlm
-gln
+nlm
 nlm
 nlm
 nlm
