@@ -89,10 +89,10 @@
 		return
 
 	var/mob/living/carbon/human/human_user = user
-	if(!human_user.wear_suit || !istype(human_user.wear_suit, /obj/item/clothing/suit/costume/bear_suit))
+	var/obj/item/clothing/suit/costume/bear_suit/our_suit = human_user.wear_suit
+	if(!our_suit || !istype(our_suit))
 		return
 
-	var/obj/item/clothing/suit/costume/bear_suit/our_suit = human_user.wear_suit
 	our_suit.make_friendly(user, src)
 
 /obj/item/clothing/head/flatcap
