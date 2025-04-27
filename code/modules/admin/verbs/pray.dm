@@ -16,6 +16,8 @@
 			return
 		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
 			return
+	if(issilicon(usr))
+		to_chat(usr, span_info("You have no soul."), confidential = TRUE)
 
 	var/mutable_appearance/cross = mutable_appearance('icons/obj/storage/book.dmi', "bible")
 	var/font_color = "purple"
