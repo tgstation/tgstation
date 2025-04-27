@@ -32,6 +32,11 @@ map icebox
 	votable
 endmap
 
+map catwalkstation
+	minplayers 25
+	votable
+endmap
+
 map metastation
 	minplayers 25
 	#voteweight 0.5
