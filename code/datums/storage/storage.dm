@@ -460,7 +460,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * Arguments
  * * obj/item/to_insert - the item we're inserting
  * * mob/user - (optional) the user who is inserting the item.
- * * override - see item_insertion_feedback()
+ * * override - skip feedback, only do the animation
  * * force - bypass locked storage up to a certain level. See [code/__DEFINES/storage.dm]
  * * messages - if TRUE, we will create balloon alerts for the user.
  */

@@ -839,11 +839,11 @@ SUBSYSTEM_DEF(job)
 		CRASH("Cannot promote [new_captain.real_name] to Captain, there is no id_safe_code.")
 
 	var/paper = new /obj/item/folder/biscuit/confidential/spare_id_safe_code()
-	var/list/slots = list(
-		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
-		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
-		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-		LOCATION_HANDS = ITEM_SLOT_HANDS
+	var/static/list/slots = list(
+		LOCATION_LPOCKET,
+		LOCATION_RPOCKET,
+		LOCATION_BACKPACK,
+		LOCATION_HANDS,
 	)
 	var/where = new_captain.equip_in_one_of_slots(paper, slots, FALSE, indirect_action = TRUE) || "at your feet"
 

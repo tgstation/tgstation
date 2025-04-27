@@ -279,8 +279,8 @@
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	RegisterSignal(parent, COMSIG_STEP_ON_BLOOD, PROC_REF(on_step_blood))
-	RegisterSignal(parent, COMSIG_CARBON_UNEQUIP_SHOECOVER, PROC_REF(unequip_shoecover))
-	RegisterSignal(parent, COMSIG_CARBON_EQUIP_SHOECOVER, PROC_REF(equip_shoecover))
+	RegisterSignal(parent, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(unequip_shoecover))
+	RegisterSignal(parent, COMSIG_MOB_UNEQUIPPED_ITEM, PROC_REF(equip_shoecover))
 
 /datum/component/bloodysoles/feet/update_icon()
 	if(!ishuman(wielder) || HAS_TRAIT(wielder, TRAIT_NO_BLOOD_OVERLAY))
@@ -312,25 +312,21 @@
 	return wielder.check_obscured_slots(TRUE) & ITEM_SLOT_FEET
 
 /datum/component/bloodysoles/feet/on_moved(datum/source, OldLoc, Dir, Forced)
-	if(wielder.num_legs < 2)
-		return
-
-	..()
+	if(wielder.num_legs >= 2)
+		..()
 
 /datum/component/bloodysoles/feet/on_step_blood(datum/source, obj/effect/decal/cleanable/pool)
-	if(wielder.num_legs < 2)
-		return
+	if(wielder.num_legs >= 2)
+		..()
 
-	..()
-
-/datum/component/bloodysoles/feet/proc/unequip_shoecover(datum/source)
+/datum/component/bloodysoles/feet/proc/equip_shoecover(datum/source, obj/item/item)
 	SIGNAL_HANDLER
+	if ((item.body_parts_covered & FEET) || (item.flags_inv & HIDESHOES))
+		update_icon()
 
-	update_icon()
-
-/datum/component/bloodysoles/feet/proc/equip_shoecover(datum/source)
+/datum/component/bloodysoles/feet/proc/unequip_shoecover(datum/source, obj/item/item)
 	SIGNAL_HANDLER
-
-	update_icon()
+	if ((item.body_parts_covered & FEET) || (item.flags_inv & HIDESHOES))
+		update_icon()
 
 #undef BLOOD_PERCENT_LOSS_ON_STEP
