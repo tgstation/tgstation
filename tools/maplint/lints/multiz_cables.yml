@@ -1,0 +1,4 @@
+/obj/structure/grille:
+  banned_neighbors:
+  - /obj/structure/cable
+  - /obj/structure/cable/multilayer/multiz
