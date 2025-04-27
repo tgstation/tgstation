@@ -166,6 +166,8 @@
 	var/obj/effect/abstract/gazer_beam/beam_visual
 	/// List of visual effects for the beam, in between and in the end
 	var/list/beam_fillings
+	/// Sound loop for the active laser
+	var/datum/looping_sound/gazer_beam/sound_loop
 	/// The visual effect at the end of the laser
 	var/obj/effect/abstract/gazer_beamend/end_visual
 	/// Tracks how many times the beam has processed, after the maximum amount of cycles it will forcibly end the beam
@@ -196,6 +198,7 @@
 	cycle_tracker = 0
 	orb_visual = new(get_step(owner, owner.dir))
 	var/beam_timer = addtimer(CALLBACK(src, PROC_REF(open_laser), owner, targets), 2.2 SECONDS, TIMER_STOPPABLE)
+	playsound(owner, 'sound/mobs/non-humanoids/stargazer/beam_open.ogg', 50, FALSE)
 	if(!do_after(owner, 3 SECONDS, owner))
 		deltimer(beam_timer)
 		QDEL_NULL(orb_visual)
@@ -206,6 +209,7 @@
 		targets = null
 		return
 
+	sound_loop.start(owner)
 	QDEL_NULL(orb_visual)
 	beam_visual.icon_state = "gazer_beam_active"
 	beam_visual.update_appearance(UPDATE_ICON)
@@ -214,6 +218,14 @@
 	targets += targets_left
 	targets += targets_right
 	process_beam()
+
+/datum/action/cooldown/stargazer_laser/Destroy()
+	QDEL_NULL(sound_loop)
+	return ..()
+
+/datum/action/cooldown/stargazer_laser/New(Target, original)
+	. = ..()
+	sound_loop = new
 
 /// Spawns the beginning of the laser, uses `targets` to determine the rotation
 /datum/action/cooldown/stargazer_laser/proc/open_laser(mob/owner, list/turf/targets)
@@ -272,6 +284,11 @@
 	transform = transform_matrix
 	flick("gazer_beam_end_opening", src)
 
+/datum/looping_sound/gazer_beam
+	mid_sounds = list('sound/mobs/non-humanoids/stargazer/beam_loop_one.ogg')
+	mid_length = 109
+	volume = 50
+
 /obj/effect/ebeam/phase_in // Beam subtype that has a "windup" phase
 	alpha = 0
 
@@ -317,12 +334,12 @@
 /// Stops the beam after we cancel it
 /datum/action/cooldown/stargazer_laser/proc/stop_beaming()
 	SIGNAL_HANDLER
+	sound_loop.stop()
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_DIR_CHANGE))
 	QDEL_NULL(giga_laser)
 	QDEL_NULL(beam_visual)
 	QDEL_NULL(end_visual)
-	for(var/atom/to_delete as anything in beam_fillings)
-		QDEL_NULL(to_delete)
+	QDEL_LIST(beam_fillings)
 	deltimer(damage_timer)
 	damage_timer = null
 	targets = null

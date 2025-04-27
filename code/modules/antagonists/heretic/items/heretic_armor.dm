@@ -304,6 +304,18 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/moon
 	armor_type = /datum/armor/eldritch_armor/moon
 	flags_inv = HIDESHOES | HIDEJUMPSUIT | HIDEMUTWINGS
+	/// Hud that gets shown to the wearer, gives a rough estimate of their current brain damage
+	var/atom/movable/screen/moon_health/health_hud
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/Destroy()
+	if(!ishuman(loc))
+		return ..()
+	var/mob/living/carbon/human/wearer = loc
+	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED), REF(src))
+	wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
+	UnregisterSignal(wearer, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
+	QDEL_NULL(health_hud)
+	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/equipped(mob/living/user, slot)
 	. = ..()
@@ -312,14 +324,32 @@
 	if(!(slot_flags & slot))
 		user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED), REF(src))
 		user.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
-		UnregisterSignal(user, list(COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
+		UnregisterSignal(user, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
+		QDEL_NULL(health_hud)
 		return
+
+	// Gives the hud to the wearer, if there's no hud, register the signal to be given on creation
+	if(user.hud_used)
+		on_hud_created(user)
+	else
+		RegisterSignal(user, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
+
+	// Gives the traits and effects
 	user.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 	user.add_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED), REF(src))
 	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(block_checked))
 	RegisterSignals(user, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE), PROC_REF(on_damage_adjust))
 	RegisterSignal(user, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_take_damage))
 	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+
+/// Gives the health HUD to the wearer
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_created(mob/source)
+	SIGNAL_HANDLER
+	var/datum/hud/original_hud = source.hud_used
+	health_hud = new(null, original_hud)
+	original_hud.infodisplay += health_hud
+	original_hud.show_hud(original_hud.hud_version)
+	UnregisterSignal(source, COMSIG_MOB_HUD_CREATED)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/allow_attack_hand_drop(mob/user)
 	if(!ishuman(user))
@@ -414,6 +444,39 @@
 	fire = 0
 	acid = 0
 	wound = 0
+
+/atom/movable/screen/moon_health
+	name = "Health Level"
+	icon = 'icons/hud/moon_health_64x64.dmi'
+	icon_state = "moon_hud_1"
+	base_icon_state = "moon_hud"
+	screen_loc = "WEST+0:20, SOUTH+5:0"
+
+/atom/movable/screen/moon_health/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	if(isnull(hud_owner))
+		return INITIALIZE_HINT_QDEL
+	RegisterSignal(hud_owner.mymob, COMSIG_LIVING_LIFE, PROC_REF(update_health))
+
+/// Changes the icon based on the brain health of the wearer
+/atom/movable/screen/moon_health/proc/update_health(datum/source)
+	SIGNAL_HANDLER
+	if(!ishuman(source))
+		return
+	var/mob/living/carbon/human/wearer = source
+	switch(wearer.get_organ_loss(ORGAN_SLOT_BRAIN))
+		if(0 to 20)
+			icon_state = base_icon_state + "_1"
+		if(21 to 50)
+			icon_state = base_icon_state + "_2"
+		if(51 to 100)
+			icon_state = base_icon_state + "_3"
+		if(101 to 150)
+			icon_state = base_icon_state + "_4"
+		if(151 to 189)
+			icon_state = base_icon_state + "_5"
+		if(190 to 200)
+			icon_state = base_icon_state + "_6"
 
 // Rust
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust
