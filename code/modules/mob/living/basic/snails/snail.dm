@@ -23,7 +23,7 @@
 	verb_exclaim = "gurgles loudly"
 	verb_yell = "gurgles loudly"
 	worn_slot_flags = ITEM_SLOT_HEAD
-	faction = list(FACTION_NEUTRAL)
+	faction = list(FACTION_NEUTRAL, FACTION_MAINT_CREATURES)
 	ai_controller = /datum/ai_controller/basic_controller/snail
 
 /mob/living/basic/snail/Initialize(mapload)
