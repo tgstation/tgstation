@@ -16,7 +16,11 @@ function escapeRegex(string) {
 }
 
 export async function removeGuideComments({ github, context }) {
-  const originalBody = (await github.rest.pulls.get(context.issue)).body;
+  const originalBody = (await github.rest.pulls.get({
+    owner: context.repo.owner,
+    repo: context.repo.repo,
+    pull_number: context.payload.pull_request.number,
+  })).data.body;
 
   if (!originalBody) {
 	console.log("PR body is empty, skipping...");
