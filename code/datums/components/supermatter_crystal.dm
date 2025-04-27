@@ -296,6 +296,7 @@
 	var/object_size = 0
 	var/matter_increase = 0
 	var/damage_increase = 0
+	var/radiation_range = 6
 
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
@@ -317,6 +318,13 @@
 		consume_returns(matter_increase, damage_increase)
 	else if(isobj(consumed_object))
 		if(!iseffect(consumed_object))
+			if (istype(consumed_object, /obj/machinery/nuclearbomb))
+				var/obj/machinery/nuclearbomb/bomb = consumed_object
+				if (!isnull(bomb.core))
+					object_size = 10
+					radiation_range *= 2
+					matter_increase += 10000
+					damage_increase += 110
 			var/suspicion = ""
 			if(consumed_object.fingerprintslast)
 				suspicion = "last touched by [consumed_object.fingerprintslast]"
@@ -332,7 +340,7 @@
 			matter_increase += min(0.5 * consumed_object.max_integrity, 1000)
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(atom_source, max_range = 6, threshold = 1.2 / max(object_size, 1), chance = 10 * object_size)
+	radiation_pulse(atom_source, max_range = radiation_range, threshold = 1.2 / max(object_size, 1), chance = 10 * object_size)
 	for(var/mob/living/near_mob in range(10))
 		atom_source.investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_ENGINE)
 		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))
