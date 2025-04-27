@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Space carp will no longer get distracted by repeatedly entering their own portals instead of chasing you."

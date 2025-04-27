@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "cleans up teleportation code. `check_teleport_valid` is now a pure function with no side effects"
