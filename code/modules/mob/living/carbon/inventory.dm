@@ -480,6 +480,7 @@
 
 	visible_message(span_notice("[src] takes [I] from [offerer]."), \
 					span_notice("You take [I] from [offerer]."))
+	I.do_pickup_animation(src, get_turf(offerer))
 	put_in_hands(I)
 
 ///Returns a list of all body_zones covered by clothing
