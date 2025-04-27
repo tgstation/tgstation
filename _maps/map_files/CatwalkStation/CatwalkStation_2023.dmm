@@ -36691,12 +36691,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/secondary/command)
-"kZu" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
 "kZv" = (
 /obj/structure/broken_flooring/pile/directional/south,
 /obj/effect/decal/cleanable/dirt,
@@ -185372,7 +185366,7 @@ lrM
 spK
 roj
 nxi
-kZu
+roj
 hAh
 ikK
 tSE
