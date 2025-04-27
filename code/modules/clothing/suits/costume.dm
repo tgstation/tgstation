@@ -711,7 +711,7 @@
 		return
 	if(!bear_head)
 		bear_head = human_user.head
-	if(!istype(bear_head, /obj/item/clothing/head/costume/bearpelt))
+	if(!istype(bear_head))
 		return
 	RegisterSignal(bear_head, COMSIG_ITEM_DROPPED, PROC_REF(helmet_drop))
 	full_suit = TRUE
