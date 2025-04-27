@@ -536,7 +536,7 @@
 	ignite()
 	log_combat(hit_proj.firer, src, "used [hit_proj] to ignite")
 
-/obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, params)
+/obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, list/modifiers)
 	if(item.ignition_effect(src, user))
 		ignite()
 		log_combat(user, src, "used [item] to ignite")

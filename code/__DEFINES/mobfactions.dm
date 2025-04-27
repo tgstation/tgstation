@@ -85,6 +85,8 @@
 #define FACTION_VINES "vines"
 ///raptor factions
 #define FACTION_RAPTOR "raptor"
+///holy faction, for anything part of the church
+#define FACTION_HOLY "holy"
 // Antagonist factions
 
 /// Cultists and their constructs

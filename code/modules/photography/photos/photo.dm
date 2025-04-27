@@ -75,7 +75,7 @@
 /obj/item/photo/attack_self(mob/user)
 	user.examinate(src)
 
-/obj/item/photo/attackby(obj/item/P, mob/user, params)
+/obj/item/photo/attackby(obj/item/P, mob/user, list/modifiers)
 	if(IS_WRITING_UTENSIL(P))
 		if(!user.can_write(P))
 			return

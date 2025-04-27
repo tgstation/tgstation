@@ -213,7 +213,7 @@
 	if(!QDELETED(src) && gone == myseed)
 		set_seed(null, FALSE)
 
-/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, list/modifiers)
 	if (!user.combat_mode)
 		// handle opening the panel
 		if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -839,7 +839,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params)
+/obj/machinery/hydroponics/attackby(obj/item/O, mob/user, list/modifiers)
 	//Called when mob user "attacks" it with object O
 	if(IS_EDIBLE(O) || is_reagent_container(O))  // Syringe stuff (and other reagent containers now too)
 		var/obj/item/reagent_containers/reagent_source = O
@@ -1059,7 +1059,7 @@
 	else
 		return ..()
 
-/obj/machinery/hydroponics/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/machinery/hydroponics/attackby_secondary(obj/item/weapon, mob/user, list/modifiers)
 	if (istype(weapon, /obj/item/reagent_containers/syringe))
 		to_chat(user, span_warning("You can't get any extract out of this plant."))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -1177,7 +1177,7 @@
 /obj/machinery/hydroponics/soil/update_status_light_overlays()
 	return // Has no lights
 
-/obj/machinery/hydroponics/soil/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/machinery/hydroponics/soil/attackby_secondary(obj/item/weapon, mob/user, list/modifiers)
 	if(weapon.tool_behaviour != TOOL_SHOVEL) //Spades can still uproot plants on left click
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	balloon_alert(user, "clearing up soil...")

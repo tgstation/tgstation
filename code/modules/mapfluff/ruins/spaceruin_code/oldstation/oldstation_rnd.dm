@@ -23,7 +23,7 @@
 
 	. += span_notice("Insert [EXAMINE_HINT("Research Notes")] to generate points.")
 
-/obj/machinery/rnd/server/oldstation/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/rnd/server/oldstation/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(istype(attacking_item, /obj/item/research_notes) && stored_research)
 		var/obj/item/research_notes/research_notes = attacking_item
 		stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = research_notes.value))

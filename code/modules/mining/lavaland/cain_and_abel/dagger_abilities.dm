@@ -6,10 +6,16 @@
 	background_icon_state = "bg_default"
 	overlay_icon_state = "bg_default_border"
 	cooldown_time = 20 SECONDS
+	check_flags = AB_CHECK_INCAPACITATED | AB_CHECK_HANDS_BLOCKED | AB_CHECK_CONSCIOUS
 
 /datum/action/cooldown/dagger_swing/Activate(atom/target_atom)
-	. = ..()
 	var/mob/living/living_owner = owner
+	var/obj/item/cain_and_abel = target
+
+	if(!living_owner.is_holding(cain_and_abel))
+		owner.balloon_alert(owner, "must be held")
+		return FALSE
+
 	living_owner.apply_status_effect(/datum/status_effect/dagger_swinging)
 
 	var/static/list/possible_sounds = list(
@@ -24,3 +30,4 @@
 	var/list/sounds_to_pick_from = possible_sounds.Copy()
 	for(var/index in 0 to 5)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), owner, pick_n_take(sounds_to_pick_from), 65, TRUE), 0.15 SECONDS * index)
+	StartCooldown()

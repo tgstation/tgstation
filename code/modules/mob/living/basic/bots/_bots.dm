@@ -422,7 +422,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	heal_overall_damage(10)
 	user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
 
-/mob/living/basic/bot/attackby(obj/item/attacking_item, mob/living/user, params)
+/mob/living/basic/bot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 	if(attacking_item.GetID())
 		unlock_with_id(user)
 		return

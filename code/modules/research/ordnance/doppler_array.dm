@@ -48,7 +48,7 @@
 	. = ..()
 	. += span_notice("It is currently facing [dir2text(dir)]")
 
-/obj/machinery/doppler_array/attackby(obj/item/item, mob/user, params)
+/obj/machinery/doppler_array/attackby(obj/item/item, mob/user, list/modifiers)
 	if(istype(item, /obj/item/computer_disk))
 		var/obj/item/computer_disk/disk = item
 		eject_disk(user)

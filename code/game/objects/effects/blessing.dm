@@ -21,8 +21,8 @@
 	return ..()
 
 ///Called from intercept teleport signal, blocks cult teleporting from being able to teleport on us.
-/obj/effect/blessing/proc/block_cult_teleport(datum/source, channel, turf/origin, turf/destination)
+/obj/effect/blessing/proc/block_cult_teleport(datum/source, channel, turf/origin)
 	SIGNAL_HANDLER
 
 	if(channel == TELEPORT_CHANNEL_CULT)
-		return COMPONENT_BLOCK_TELEPORT
+		return TRUE

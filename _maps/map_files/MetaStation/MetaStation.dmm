@@ -6651,7 +6651,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos,
+/turf/open/water/no_planet_atmos/deep,
 /area/station/service/hydroponics/garden)
 "ctn" = (
 /obj/effect/turf_decal/stripes/line,
@@ -11640,7 +11640,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 5
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/white,
 /area/station/medical/office)
 "ehG" = (
@@ -13084,7 +13084,7 @@
 /area/station/cargo/warehouse)
 "eIy" = (
 /obj/structure/cable,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "eIO" = (
@@ -23662,7 +23662,7 @@
 /area/space/nearstation)
 "ivM" = (
 /obj/effect/decal/cleanable/cobweb,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/service/library)
 "ivR" = (
@@ -24377,9 +24377,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "iKj" = (
-/obj/machinery/photocopier{
-	pixel_y = 3
-	},
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
@@ -26990,7 +26988,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos,
+/turf/open/water/no_planet_atmos/deep,
 /area/station/service/hydroponics/garden)
 "jAN" = (
 /obj/machinery/airalarm/directional/north,
@@ -36992,9 +36990,6 @@
 /obj/item/canvas,
 /obj/item/canvas,
 /obj/item/canvas,
-/obj/item/chisel{
-	pixel_y = 7
-	},
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "nfK" = (
@@ -37314,12 +37309,15 @@
 /area/station/commons/fitness/recreation)
 "nmN" = (
 /obj/structure/table,
-/obj/item/hand_labeler,
-/obj/item/camera,
-/obj/item/camera_film,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
-/obj/item/storage/crayons,
+/obj/machinery/light_switch/directional/east,
+/obj/item/storage/toolbox/artistic{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/crafter{
+	pixel_x = 2;
+	pixel_y = 1
+	},
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "nmQ" = (
@@ -42934,7 +42932,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/clock/directional/north,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
 "pke" = (
@@ -43629,7 +43627,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos,
+/turf/open/water/no_planet_atmos/deep,
 /area/station/service/hydroponics/garden)
 "pwx" = (
 /obj/structure/chair{
@@ -50047,9 +50045,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "rIa" = (
-/obj/machinery/photocopier{
-	pixel_y = 3
-	},
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/service/library)
 "rIb" = (
@@ -55293,7 +55289,7 @@
 /turf/open/floor/iron/white/corner,
 /area/station/hallway/primary/aft)
 "tAy" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/camera/directional/east{
 	c_tag = "Law Office"
 	},
@@ -56771,7 +56767,6 @@
 /turf/open/floor/plating,
 /area/station/medical/pharmacy)
 "tZL" = (
-/obj/machinery/light_switch/directional/east,
 /obj/structure/easel,
 /obj/item/canvas/twentythree_twentythree,
 /obj/item/canvas/twentythree_twentythree,
@@ -58537,7 +58532,7 @@
 "uFD" = (
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/stripes/corner,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
@@ -65187,7 +65182,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
@@ -67562,7 +67557,7 @@
 /turf/open/floor/plating/reinforced,
 /area/station/cargo/storage)
 "xKk" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/white,
 /area/station/science/research)
 "xKl" = (
@@ -68168,9 +68163,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "xXh" = (
-/obj/machinery/photocopier{
-	pixel_y = 3
-	},
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "xXi" = (
@@ -68934,6 +68927,7 @@
 /obj/item/paper_bin/construction,
 /obj/item/airlock_painter,
 /obj/item/rcl/pre_loaded,
+/obj/item/hand_labeler,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "yks" = (
