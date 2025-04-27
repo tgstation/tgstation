@@ -17,9 +17,9 @@ type AnimateChain = {
   appearance: undefined;
   time: number | undefined;
   loop: number | undefined;
-  easing: AnimateEasing | undefined;
-  easing_flags: AnimateEasingFlag[] | undefined;
-  flags: AnimateFlag[] | undefined;
+  easing: number | undefined;
+  easing_flags: number | undefined;
+  flags: number | undefined;
   a_tag: string | undefined;
   command: string | undefined;
 };
