@@ -323,7 +323,7 @@
 		return
 	return /datum/reagent/blood
 
-/// Returns the blood_type datum that corresponds to the string id key for GLOB.blood_types
+/// Returns the blood_type datum that corresponds to the string id key in GLOB.blood_types
 /proc/get_blood_type(id)
 	return GLOB.blood_types[id]
 
