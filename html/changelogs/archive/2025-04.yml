@@ -789,3 +789,10 @@
   TiviPlus:
   - bugfix: Look up/down now track with the thing you're inside instead of staying
       in one spot
+2025-04-28:
+  EuSouAFazer:
+  - rscadd: Adds CatwalkStation
+  - code_imp: Multi-Z maps now can toggle on or off having grappling hooks in people's
+      bags
+  Ezel:
+  - map: Rewired Centcom Checkpoint buttons to be more accurate

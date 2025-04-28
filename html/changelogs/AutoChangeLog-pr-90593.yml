@@ -1,0 +1,7 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes a lot of instances of gibs, bodyparts/organs, and blood decals not getting the right forensics data attached to them"
+  - refactor: "blood types are now datums, in support of a more robust blood system"
+  - image: "all blood decals and overlays have been greyscaled, so ethereals will have green blood now for instance. fundamentally evil quirk havers get black blood"
+  - admin: "new smite type, 'Clownify blood'. It pretty much does what you might expect."

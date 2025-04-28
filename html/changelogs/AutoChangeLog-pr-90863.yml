@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - image: "Handing someone something now plays an animation."
