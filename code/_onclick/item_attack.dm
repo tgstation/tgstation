@@ -353,7 +353,6 @@
 		attacking_item.add_mob_blood(src)
 		add_splatter_floor(get_turf(src))
 		if(get_dist(attacker, src) <= 1)
-			attacker.add_mob_blood(src)
 			if(ishuman(attacker))
 				var/bloodied_things = ITEM_SLOT_GLOVES
 				if(damage_done >= 20 || (damage_done >= 15 && prob(25)))
