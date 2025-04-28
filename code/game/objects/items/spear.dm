@@ -297,8 +297,8 @@
 /obj/item/spear/skybulge
 	name = "\improper Sky Bulge"
 	desc = "A legendary stick with a very pointy tip. Takes you to the skies!"
-	icon_state = "sky_bulge0"
-	icon_prefix = "sky_bulge"
+	icon_state = "dragoonpole0"
+	icon_prefix = "dragoonpole"
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "gores", "lances")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "gore", "lance")
 	slot_flags = parent_type::slot_flags | ITEM_SLOT_HANDS //this is needed for action types to give actions in-hand
