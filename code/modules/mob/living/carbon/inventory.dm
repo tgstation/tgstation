@@ -1,4 +1,4 @@
-/mob/living/carbon/proc/check_obscured_slots(transparent_protection)
+/mob/living/carbon/proc/check_obscured_slots(transparent_protection = FALSE)
 	var/obscured = NONE
 	var/hidden_slots = NONE
 

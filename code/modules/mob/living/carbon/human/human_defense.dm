@@ -673,7 +673,7 @@
 
 /mob/living/carbon/human/proc/burn_clothing(seconds_per_tick, stacks)
 	var/list/burning_items = list()
-	var/obscured = check_obscured_slots(TRUE)
+	var/obscured = check_obscured_slots(transparent_protection = TRUE)
 	//HEAD//
 
 	if(glasses && !(obscured & ITEM_SLOT_EYES))

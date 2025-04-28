@@ -588,7 +588,7 @@
  * Returns false if we couldn't wash our hands due to them being obscured, otherwise true
  */
 /mob/living/carbon/human/proc/wash_hands(clean_types)
-	var/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots(transparent_protection = TRUE)
 	if(obscured & ITEM_SLOT_GLOVES)
 		return FALSE
 
@@ -614,7 +614,7 @@
 		update_worn_glasses()
 		. = TRUE
 
-	var/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots(transparent_protection = TRUE)
 	if(wear_mask && !(obscured & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
 		update_worn_mask()
 		. = TRUE
@@ -635,7 +635,7 @@
 		. = TRUE
 
 	// Check and wash stuff that can be covered
-	var/obscured = check_obscured_slots()
+	var/obscured = check_obscured_slots(transparent_protection = TRUE)
 
 	if(!(obscured & ITEM_SLOT_ICLOTHING) && w_uniform?.wash(clean_types))
 		update_worn_undersuit()
