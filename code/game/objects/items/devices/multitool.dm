@@ -105,7 +105,7 @@
 	user_hud.infodisplay += arrow
 	user_hud.show_hud(user_hud.hud_version)
 
-	addtimer(CALLBACK(src, .proc/remove_arrow, user_hud, arrow), 1.5 SECONDS)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_image_from_client), arrow, user.client), 1.5 SECONDS)
 
 /obj/item/multitool/proc/remove_arrow(datum/hud/user_hud, atom/movable/screen/multitool_arrow/arrow)
 	if(QDELETED(user_hud) || QDELETED(arrow))
