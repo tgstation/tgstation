@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Examining a fishing lures box twice no longer says it can hold just artificial minnows."
