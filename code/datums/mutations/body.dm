@@ -652,6 +652,13 @@
 	conflicts = list(/datum/mutation/human/rock_eater)
 	locked = TRUE
 
+/datum/mutation/human/rock_absorber/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(. || QDELING(owner) || HAS_TRAIT(owner, TRAIT_ROCK_METAMORPHIC))
+		return
+	owner.remove_status_effect(/datum/status_effect/golem)
+	owner.remove_status_effect(/datum/status_effect/golem_lightbulb)
+
 // Soft crit is disabed
 /datum/mutation/human/inexorable
 	name = "Inexorable"
