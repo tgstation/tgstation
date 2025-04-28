@@ -297,6 +297,7 @@
 	var/matter_increase = 0
 	var/damage_increase = 0
 	var/radiation_range = 6
+	var/effects_calculated = FALSE
 
 	if(isliving(consumed_object))
 		var/mob/living/consumed_mob = consumed_object
@@ -315,6 +316,7 @@
 		matter_increase += 100 * object_size * 2
 		if(is_clown_job(consumed_mob.mind?.assigned_role))
 			damage_increase += rand(-30, 30) * 2 // HONK
+		effects_calculated = TRUE
 	else if(isobj(consumed_object))
 		if(!iseffect(consumed_object))
 			var/suspicion = ""
@@ -322,19 +324,30 @@
 				suspicion = "last touched by [consumed_object.fingerprintslast]"
 				message_admins("[atom_source] has consumed [consumed_object], [suspicion] [ADMIN_JMP(atom_source)].")
 			atom_source.investigate_log("has consumed [consumed_object] - [suspicion].", INVESTIGATE_ENGINE)
+
+		var/is_nuke = FALSE
+		if (consumed_object.type == /obj/item/nuke_core) // No subtypes, the supermatter sliver shouldn't trigger this
+			is_nuke = TRUE
+		else if (istype(consumed_object, /obj/machinery/nuclearbomb))
+			var/obj/machinery/nuclearbomb/bomb = consumed_object
+			is_nuke = !!bomb.core
+
+		if (is_nuke)
+			object_size = 10
+			radiation_range *= 2
+			matter_increase += 10000
+			damage_increase += 110
+			effects_calculated = TRUE
+
 		qdel(consumed_object)
-	if(!iseffect(consumed_object) && !isliving(consumed_object))
+
+	if(!iseffect(consumed_object) && !effects_calculated)
 		if(isitem(consumed_object))
 			var/obj/item/consumed_item = consumed_object
 			object_size = consumed_item.w_class
 			matter_increase += 70 * object_size
 		else
 			matter_increase += min(0.5 * consumed_object.max_integrity, 1000)
-	if (istype(consumed_object, /obj/machinery/nuclearbomb) || consumed_object.type == /obj/item/nuke_core) // No subtypes, the supermatter sliver shouldn't trigger this
-		object_size = 10
-		radiation_range *= 2
-		matter_increase += 10000
-		damage_increase += 110
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
 	radiation_pulse(atom_source, max_range = radiation_range, threshold = 1.2 / max(object_size, 1), chance = 10 * object_size)
