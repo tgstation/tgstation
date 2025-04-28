@@ -6,8 +6,9 @@
 /// Two mobs one is facing a person, but the other is perpendicular
 #define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR 3 //Do I win the most informative but also most stupid define award?
 
+/// Returns one of the human blood types at random, weighted by their rarity
 /proc/random_human_blood_type()
-	return get_blood_type_by_name(pick_weight(
+	return get_blood_type(pick_weight(
 		list(
 			BLOOD_TYPE_O_MINUS = 4,
 			BLOOD_TYPE_O_PLUS = 36,

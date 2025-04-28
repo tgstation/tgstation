@@ -207,7 +207,7 @@
 	podman.dna.species.exotic_blood = new_blood_reagent
 
 	// Try to find a corresponding blood type for this reagent
-	var/datum/blood_type/new_blood_type = GLOB.blood_types[new_blood_reagent]
+	var/datum/blood_type/new_blood_type = get_blood_type(new_blood_reagent)
 	if(isnull(new_blood_type)) // this blood type doesn't exist yet in the global list, so make a new one
 		new_blood_type = new /datum/blood_type/random_chemical(new_blood_reagent)
 		GLOB.blood_types[new_blood_type::id] = new_blood_type

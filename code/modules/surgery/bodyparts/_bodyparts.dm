@@ -243,7 +243,7 @@
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
 	else
-		blood_dna_info = list("UNKNOWN DNA" = get_blood_type_by_name(BLOOD_TYPE_O_PLUS))
+		blood_dna_info = list("UNKNOWN DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
 
 	name = "[limb_id] [parse_zone(body_zone)]"
 	update_icon_dropped()

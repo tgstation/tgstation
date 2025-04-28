@@ -323,9 +323,9 @@
 		return
 	return /datum/reagent/blood
 
-/// Returns the blood_type datum that corresponds to the string
-/proc/get_blood_type_by_name(type_name)
-	return GLOB.blood_types[type_name]
+/// Returns the blood_type datum that corresponds to the string id key for GLOB.blood_types
+/proc/get_blood_type(id)
+	return GLOB.blood_types[id]
 
 /// Returns the hex color string of a given blood_type datum given an assoc list of blood_DNA e.g. ("Unknown Blood Type", "*X")
 /proc/get_blood_dna_color(list/blood_DNA)
@@ -334,7 +334,7 @@
 		var/last_added_bloodtype_key = blood_DNA[length(blood_DNA)]
 		blood_type = blood_DNA[last_added_bloodtype_key]
 	if(!istype(blood_type))
-		blood_type = get_blood_type_by_name(blood_type) || random_human_blood_type()
+		blood_type = get_blood_type(blood_type) || random_human_blood_type()
 	return blood_type.get_color()
 
 /**
