@@ -45,6 +45,7 @@
 	var/obj/item/bodypart/original_limb = newBodyPart(limb_zone)
 	original_limb.try_attach_limb(src, TRUE)
 	original_limb.update_limb(is_creating = TRUE)
+regenerate_icons()
 
 /mob/living/carbon/has_hand_for_held_index(i)
 	if(!i)
