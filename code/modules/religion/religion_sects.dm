@@ -43,7 +43,7 @@
 	/// Whether the structure has CANDLE OVERLAYS!
 	var/candle_overlay = TRUE
 	///people who have agreed to join the crusade, and can be deaconized
-	var/list/possible_crusaders = list()
+	var/list/possible_new_deacons = list()
 	///people who have been offered an invitation, they haven't finished the alert though.
 	var/list/currently_asking = list()
 
@@ -69,7 +69,7 @@
 	var/ask = tgui_alert(invited, "Join [GLOB.deity]?[crusader ? " You will be bound to a code of honor." : " You will be expected to follow the Chaplain's order."]", "Invitation", list("Yes", "No"), 60 SECONDS)
 	currently_asking -= invited
 	if(ask == "Yes")
-		possible_crusaders += invited
+		possible_new_deacons += invited
 
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/chap)
