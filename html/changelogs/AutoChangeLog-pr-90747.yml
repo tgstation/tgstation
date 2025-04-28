@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Tcomms machines will interoperate across z levels in the same \"stack\" as expected now"
