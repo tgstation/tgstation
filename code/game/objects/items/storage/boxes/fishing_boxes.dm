@@ -51,7 +51,7 @@
 
 /obj/item/storage/box/fishing_lures/PopulateContents()
 	new /obj/item/paper/lures_instructions(src)
-	var/list/typesof = typesof(/obj/item/fishing_lure)
+	var/list/typesof = subtypesof(/obj/item/fishing_lure)
 	for(var/type in typesof)
 		new type (src)
 
