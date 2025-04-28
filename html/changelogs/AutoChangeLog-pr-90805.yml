@@ -1,0 +1,6 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - rscadd: "Certain items can now be placed directly on the floor in the clicked on location. This currently includes warning cones, wet floor signs, candles, action figures, plushies, mech toys, and a list of other toys."
+  - sound: "Warning cones now use plastic pickup/drop sounds."
+  - sound: "Wet floor signs now use plastic pickup/drop sounds."
