@@ -382,8 +382,7 @@
 		update_held_items()
 
 	if(!I)
-		SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, null, force, newloc, no_move, invdrop, silent)
-		return TRUE
+		return FALSE
 
 	if(client)
 		client.screen -= I
