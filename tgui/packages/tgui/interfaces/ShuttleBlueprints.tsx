@@ -4,6 +4,7 @@ import {
   Button,
   Dropdown,
   Input,
+  ProgressBar,
   Section,
   Stack,
   Tooltip,
@@ -34,15 +35,27 @@ type ShuttleConfigurationUniqueData = {
   apcs: Record<string, BooleanLike>;
   neighboringAreas: Record<string, string>;
   idle: BooleanLike;
+  frameIsAdjacent: BooleanLike;
 };
 
 type ShuttleBlueprintsData = {
   shuttles?: Record<string, string>;
   visualizing: BooleanLike;
-  onShuttleFrame: BooleanLike;
   masterExists: BooleanLike;
   isMaster: BooleanLike;
-} & (ShuttleConstructionUnieuqData | ShuttleConfigurationUniqueData);
+  size?: number;
+  maxShuttleSize: number;
+} & (OnShuttleFrameData | OffShuttleFrameData) &
+  (ShuttleConstructionUnieuqData | ShuttleConfigurationUniqueData);
+
+type OnShuttleFrameData = {
+  onShuttleFrame: 1;
+  size: number;
+};
+
+type OffShuttleFrameData = {
+  onShuttleFrame: 0;
+};
 
 type DirectionPadProps = {
   title: string;
@@ -138,7 +151,10 @@ const ShuttleConstruction = () => {
     tooManyShuttles,
     onCustomShuttle,
     masterExists,
+    size,
+    maxShuttleSize,
   } = data;
+  const tooLarge = (size ?? 0) > maxShuttleSize;
   return (
     <Stack justify="space-around">
       <Stack.Item grow>
@@ -159,12 +175,14 @@ const ShuttleConstruction = () => {
             <Stack vertical>
               <Stack.Item>
                 <Button.Confirm
-                  disabled={!onShuttleFrame || tooManyShuttles}
+                  disabled={!onShuttleFrame || tooManyShuttles || tooLarge}
                   tooltip={
                     tooManyShuttles
                       ? 'There are too many shuttles already.'
                       : onShuttleFrame
-                        ? null
+                        ? tooLarge
+                          ? 'This shuttle frame is too large.'
+                          : null
                         : 'You must be standing on a shuttle frame to do this.'
                   }
                   onClick={() =>
@@ -174,23 +192,39 @@ const ShuttleConstruction = () => {
                   Build New Shuttle
                 </Button.Confirm>
               </Stack.Item>
-              <Stack.Item>
-                <Button.Confirm
-                  disabled={!onCustomShuttle || masterExists}
-                  tooltip={
-                    onCustomShuttle
-                      ? masterExists
-                        ? 'The master blueprint for this shuttle still exists. \
-                          Whoever has it can copy it to this set of blueprints.'
-                        : null
-                      : 'You must be on a custom shuttle to do this.'
-                  }
-                  onClick={() => act('tryLinkShuttle')}
-                >
-                  Connect To Existing Shuttle
-                </Button.Confirm>
-              </Stack.Item>
+              {onShuttleFrame ? (
+                <Stack.Item>
+                  <ProgressBar
+                    value={size}
+                    maxValue={maxShuttleSize}
+                    ranges={{
+                      green: [0, maxShuttleSize * 0.5],
+                      yellow: [maxShuttleSize * 0.5, maxShuttleSize * 0.75],
+                      orange: [maxShuttleSize * 0.75, maxShuttleSize],
+                      red: [maxShuttleSize, Infinity],
+                    }}
+                  >
+                    {`${size}/${maxShuttleSize}`}
+                  </ProgressBar>
+                </Stack.Item>
+              ) : undefined}
             </Stack>
+          </Stack.Item>
+          <Stack.Item>
+            <Button.Confirm
+              disabled={!onCustomShuttle || masterExists}
+              tooltip={
+                onCustomShuttle
+                  ? masterExists
+                    ? 'The master blueprint for this shuttle still exists. \
+                          Whoever has it can copy it to this set of blueprints.'
+                    : null
+                  : 'You must be on a custom shuttle to do this.'
+              }
+              onClick={() => act('tryLinkShuttle')}
+            >
+              Connect To Existing Shuttle
+            </Button.Confirm>
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -218,11 +252,15 @@ const ShuttleConfiguration = () => {
     apcInMergeRegion,
     idle,
     isMaster,
+    size,
+    maxShuttleSize,
+    frameIsAdjacent,
   } = data;
   const { name: currentAreaName, ref: currentAreaRef } = currentArea;
   const { name: mergeAreaName, ref: mergeAreaRef } = mergeArea;
   const removalApcConflict = defaultApc && apcs[currentAreaRef];
   const mergeApcConflict = apcInMergeRegion && apcs[mergeAreaRef];
+  const tooLarge = (size ?? 0) > maxShuttleSize;
   return (
     <Stack fill vertical align="center" justify="space-around">
       <Stack.Item textAlign="center">
@@ -316,25 +354,53 @@ const ShuttleConfiguration = () => {
         </Stack>
       </Stack.Item>
       <Stack.Item>
-        <Stack>
+        <Stack vertical>
           <Stack.Item>
-            <Button.Confirm
-              disabled={!(idle && onShuttleFrame)}
-              tooltip={
-                'Expand the linked shuttle with an incomplete shuttle frame.' +
-                (idle
-                  ? onShuttleFrame
-                    ? ''
-                    : '\nYou must be on an incomplete shuttle frame to do this.'
-                  : '\nThe shuttle must be idle to do this.')
-              }
-              onClick={() => act('expandWithFrame')}
-            >
-              Expand With Shuttle Frame
-            </Button.Confirm>
+            <Stack>
+              <Stack.Item>
+                <Button.Confirm
+                  disabled={
+                    !(idle && onShuttleFrame && frameIsAdjacent) || tooLarge
+                  }
+                  tooltip={
+                    'Expand the linked shuttle with an incomplete shuttle frame.' +
+                    (idle
+                      ? onShuttleFrame
+                        ? frameIsAdjacent
+                          ? tooLarge
+                            ? '\nThis shuttle frame is too large.'
+                            : ''
+                          : '\nThis shuttle frame is not adjacent to the linked shuttle.'
+                        : '\nYou must be on an incomplete shuttle frame to do this.'
+                      : '\nThe shuttle must be idle to do this.')
+                  }
+                  onClick={() => act('expandWithFrame')}
+                >
+                  Expand With Shuttle Frame
+                </Button.Confirm>
+              </Stack.Item>
+              <Stack.Item>
+                <VisualizationToggle visualizing={visualizing} />
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
           <Stack.Item>
-            <VisualizationToggle visualizing={visualizing} />
+            {onShuttleFrame ? (
+              <Stack.Item>
+                <ProgressBar
+                  value={size}
+                  maxValue={maxShuttleSize}
+                  ranges={{
+                    green: [0, maxShuttleSize * 0.5],
+                    yellow: [maxShuttleSize * 0.5, maxShuttleSize * 0.75],
+                    orange: [maxShuttleSize * 0.75, maxShuttleSize],
+                    red: [maxShuttleSize, Infinity],
+                  }}
+                >
+                  {`${size}/${maxShuttleSize}`}
+                </ProgressBar>
+              </Stack.Item>
+            ) : undefined}
           </Stack.Item>
         </Stack>
       </Stack.Item>
