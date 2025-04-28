@@ -765,3 +765,34 @@
   - rscadd: Allow boats to travel over water
   zxaber:
   - bugfix: Fixed a visual bug with cyborg tools that are able to carry items.
+2025-04-27:
+  Cirrial:
+  - bugfix: Made it so minebot commands don't talk about dumping ore when you're toggling
+      the lights.
+  Ghommie:
+  - bugfix: examining fishing spots twice with sufficient skill level while holding
+      a rod should work more reliably.
+  Jacquerel:
+  - bugfix: Space carp will no longer get distracted by repeatedly entering their
+      own portals instead of chasing you.
+  - bugfix: Holding a two-handed weapon in both hands will now once again appropriately
+      modify its attack power.
+  Melbert:
+  - bugfix: 'Furious Steel now tracks consumed knives better: Using all three knives
+      to block no longer results in a 0 second cooldown, firing a single knife no
+      longer results in a 60 second cooldown.'
+  SmArtKar:
+  - bugfix: Fixed MODpaint menu bluescreening
+  SyncIt21:
+  - code_imp: cleans up teleportation code. `check_teleport_valid` is now a pure function
+      with no side effects
+  TiviPlus:
+  - bugfix: Look up/down now track with the thing you're inside instead of staying
+      in one spot
+2025-04-28:
+  EuSouAFazer:
+  - rscadd: Adds CatwalkStation
+  - code_imp: Multi-Z maps now can toggle on or off having grappling hooks in people's
+      bags
+  Ezel:
+  - map: Rewired Centcom Checkpoint buttons to be more accurate

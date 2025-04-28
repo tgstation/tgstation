@@ -352,7 +352,21 @@
 		attacking_item.add_mob_blood(src)
 		add_splatter_floor(get_turf(src))
 		if(get_dist(attacker, src) <= 1)
-			attacker.add_mob_blood(src)
+			if(ishuman(attacker))
+				var/bloodied_things = ITEM_SLOT_GLOVES
+				if(damage_done >= 20 || (damage_done >= 15 && prob(25)))
+					bloodied_things |= ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING
+					if(prob(33) && damage_done >= 10)
+						bloodied_things |= ITEM_SLOT_FEET
+					if(prob(33) && damage_done >= 24) // fireaxe damage, because heeeeere's johnny
+						bloodied_things |= ITEM_SLOT_MASK
+					if(prob(33) && damage_done >= 30) // esword damage
+						bloodied_things |= ITEM_SLOT_HEAD
+
+				var/mob/living/carbon/human/human_attacker = attacker
+				human_attacker.add_blood_DNA_to_items(get_blood_dna_list(), bloodied_things)
+			else
+				attacker.add_mob_blood(src)
 		return TRUE
 
 	return FALSE
@@ -369,15 +383,10 @@
 	switch(hit_zone)
 		if(BODY_ZONE_HEAD)
 			if(.)
-				if(wear_mask)
-					wear_mask.add_mob_blood(src)
-					update_worn_mask()
-				if(head)
-					head.add_mob_blood(src)
-					update_worn_head()
-				if(glasses && prob(33))
-					glasses.add_mob_blood(src)
-					update_worn_glasses()
+				var/bloodied_things = ITEM_SLOT_MASK|ITEM_SLOT_HEAD
+				if(prob(33))
+					bloodied_things |= ITEM_SLOT_EYES
+				add_blood_DNA_to_items(get_blood_dna_list(), bloodied_things)
 
 			if(!attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_HEAD_INJURY_BLOCKED) && attacking_item.damtype == BRUTE)
 				if(prob(damage_done))
@@ -402,12 +411,7 @@
 
 		if(BODY_ZONE_CHEST)
 			if(.)
-				if(wear_suit)
-					wear_suit.add_mob_blood(src)
-					update_worn_oversuit()
-				if(w_uniform)
-					w_uniform.add_mob_blood(src)
-					update_worn_undersuit()
+				add_blood_DNA_to_items(get_blood_dna_list(), ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 
 			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && attacking_item.damtype == BRUTE)
 				if(prob(damage_done))
