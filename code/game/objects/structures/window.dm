@@ -623,7 +623,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/unanchored/spawner,
 	AddElement(/datum/element/rust)
 	set_armor(/datum/armor/none)
 	take_damage(get_integrity() * 0.5)
-	modify_max_integrity(max_integrity * 0.5)
+	modify_max_integrity(max(10, max_integrity * 0.5))
 
 /obj/structure/window/plasma
 	name = "plasma window"
