@@ -1502,13 +1502,14 @@
 	animate(alpha = 0, transform = matrix().Scale(0.7), time = 0.1 SECONDS)
 
 /obj/item/proc/do_drop_animation(atom/moving_from)
-	if(!istype(loc, /turf))
-		return
-
 	if(!istype(moving_from))
 		return
 
 	var/turf/current_turf = get_turf(src)
+
+	if(current_turf == get_turf(moving_from))
+		return
+
 	var/direction = get_dir(moving_from, current_turf)
 	var/from_x = moving_from.base_pixel_x
 	var/from_y = moving_from.base_pixel_y
