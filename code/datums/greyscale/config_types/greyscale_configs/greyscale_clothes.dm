@@ -508,6 +508,24 @@
 	name = "Sweater (Worn)"
 	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
 
+/datum/greyscale_config/blazer
+	name = "Blazer"
+	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
+	json_config = 'code/datums/greyscale/json_configs/blazer.json'
+
+/datum/greyscale_config/blazer/worn
+	name = "Blazer (Worn)"
+	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
+
+/datum/greyscale_config/trenchcoat
+	name = "Trenchcoat"
+	icon_file = 'icons/obj/clothing/suits/jacket.dmi'
+	json_config = 'code/datums/greyscale/json_configs/trenchcoat.json'
+
+/datum/greyscale_config/trenchcoat/worn
+	name = "Trenchcoat (Worn)"
+	icon_file = 'icons/mob/clothing/suits/jacket.dmi'
+
 /datum/greyscale_config/jacket_oversized
 	name = "Oversized Jacket"
 	icon_file = 'icons/obj/clothing/suits/jacket.dmi'

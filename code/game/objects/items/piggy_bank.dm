@@ -124,7 +124,7 @@
 		if(95 to INFINITY)
 			balloon_alert(user, "brimming with cash")
 
-/obj/item/piggy_bank/attackby(obj/item/item, mob/user, params)
+/obj/item/piggy_bank/attackby(obj/item/item, mob/user, list/modifiers)
 	var/creds_value = item.get_item_credit_value()
 	if(isnull(creds_value))
 		return ..()

@@ -82,7 +82,7 @@
 
 	return discover_after
 
-/obj/item/disk/nuclear/attackby(obj/item/weapon, mob/living/user, params)
+/obj/item/disk/nuclear/attackby(obj/item/weapon, mob/living/user, list/modifiers)
 	if(istype(weapon, /obj/item/claymore/highlander) && !fake)
 		var/obj/item/claymore/highlander/claymore = weapon
 		if(claymore.nuke_disk)

@@ -393,7 +393,7 @@
  * Other vars such as alpha will automatically be applied with the render source
  */
 /atom/movable/screen/plane_master/proc/generate_render_relays()
-	var/relay_loc = home?.relay_loc || "SCREEN_SOUTHWEST"
+	var/relay_loc = home?.relay_loc || "1,1"
 	// If we're using a submap (say for a popup window) make sure we draw onto it
 	if(home?.map)
 		relay_loc = "[home.map]:[relay_loc]"
@@ -427,7 +427,7 @@
 	if(!length(relays) && !initial(render_target))
 		render_target = OFFSET_RENDER_TARGET(get_plane_master_render_base(name), offset)
 	if(!relay_loc)
-		relay_loc = "SCREEN_SOUTHWEST"
+		relay_loc = "1,1"
 		// If we're using a submap (say for a popup window) make sure we draw onto it
 		if(home?.map)
 			relay_loc = "[home.map]:[relay_loc]"

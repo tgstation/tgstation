@@ -163,7 +163,7 @@
 		update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/tram/attackby_secondary(obj/item/tool, mob/user, params)
+/obj/structure/tram/attackby_secondary(obj/item/tool, mob/user, list/modifiers)
 	switch(state)
 		if(TRAM_SCREWED_TO_FRAME)
 			if(tool.tool_behaviour == TOOL_SCREWDRIVER)
@@ -218,7 +218,7 @@
 		for(var/i in 1 to mineral_amount)
 			new mineral(loc)
 
-/obj/structure/tram/attackby(obj/item/item, mob/user, params)
+/obj/structure/tram/attackby(obj/item/item, mob/user, list/modifiers)
 	. = ..()
 
 	if(istype(item, /obj/item/wallframe/tram))
@@ -353,7 +353,7 @@
 	/// The last time a radiation pulse was performed
 	var/last_event = 0
 
-/obj/structure/tram/alt/uranium/attackby(obj/item/W, mob/user, params)
+/obj/structure/tram/alt/uranium/attackby(obj/item/W, mob/user, list/modifiers)
 	radiate()
 	return ..()
 

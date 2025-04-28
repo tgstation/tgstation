@@ -437,7 +437,7 @@
 	forceMove(defib)
 	defib.update_power()
 
-/obj/item/shockpaddles/attack(mob/M, mob/living/user, params)
+/obj/item/shockpaddles/attack(mob/M, mob/living/user, list/modifiers)
 	if(busy)
 		return
 	defib?.update_power()
@@ -458,7 +458,6 @@
 			to_chat(user, span_warning("[src] are recharging!"))
 		return
 
-	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		do_disarm(M, user)
 		return

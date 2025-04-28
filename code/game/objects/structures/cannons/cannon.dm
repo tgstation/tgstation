@@ -53,7 +53,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/cannon/attackby(obj/item/used_item, mob/user, params)
+/obj/structure/cannon/attackby(obj/item/used_item, mob/user, list/modifiers)
 	if(charge_ignited)
 		balloon_alert(user, "it's gonna fire!")
 		return
