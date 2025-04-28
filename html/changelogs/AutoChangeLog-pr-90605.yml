@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Aquariums can now be switched between three different modes (Manual/Assisted/Stasis) to replace the old Safe Mode toggle."
