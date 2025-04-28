@@ -330,11 +330,14 @@
 			render_list += "<hr>"
 			render_list += toReport + "</table></font>" // tables do not need extra linebreak
 
-		// Cybernetics
+		// Cybernetics & mutant
+		var/mutant = HAS_TRAIT(humantarget, TRAIT_HULK)
 		var/list/cyberimps
-		for(var/obj/item/organ/cyberimp/cyberimp in humantarget.organs)
-			if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
-				LAZYADD(cyberimps, cyberimp.examine_title(user))
+		for(var/obj/item/organ/target_organ as anything in humantarget.organs)
+			if(IS_ROBOTIC_ORGAN(target_organ) && !(target_organ.organ_flags & ORGAN_HIDDEN))
+				LAZYADD(target_organ, target_organ.examine_title(user))
+			if(target_organ.organ_flags & ORGAN_MUTANT)
+				mutant = TRUE
 		if(LAZYLEN(cyberimps))
 			if(!render)
 				render_list += "<hr>"
@@ -347,9 +350,8 @@
 		if(advanced && humantarget.has_dna() && humantarget.dna.stability != initial(humantarget.dna.stability))
 			render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span><br>"
 
-		// Hulk and body temperature
+		//body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
-		var/mutant = HAS_TRAIT(humantarget, TRAIT_HULK)
 		var/disguised = !ishumanbasic(humantarget) && istype(humantarget.head, /obj/item/clothing/head/hooded/human_head) && istype(humantarget.wear_suit, /obj/item/clothing/suit/hooded/bloated_human)
 		var/species_name = "[disguised ? "\"[/datum/species/human::name]\"" : targetspecies.name][mutant ? "-derived mutant" : ""]"
 

@@ -676,6 +676,7 @@
 		changed_something = TRUE
 		new_organ = new new_organ()
 		new_organ.replace_into(src)
+		new_organ.organ_flags |= ORGAN_MUTANT
 
 	var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
 	var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
