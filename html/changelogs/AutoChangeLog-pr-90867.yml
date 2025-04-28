@@ -1,0 +1,4 @@
+author: "OrionTheFox"
+delete-after: True
+changes:
+  - bugfix: "fixed Fingerless Gloves not getting their fishing difficulty modifier, and not being slap-craftable into improvised grippers"
