@@ -81,7 +81,7 @@
 		return FALSE
 	var/mob/living/living_target = target
 	if(bane_applier)
-		if(requires_combat_mode && !bane_applier.combat_mode)
+		if(requires_combat_mode && !bane_applier?.combat_mode)
 			return FALSE
 	var/is_correct_biotype = living_target.mob_biotypes & mob_biotypes
 	if(mob_biotypes && !(is_correct_biotype))
