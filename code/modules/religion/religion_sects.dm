@@ -47,8 +47,8 @@
 	. = ..()
 	if(desired_items)
 		desired_items_typecache = typecacheof(desired_items)
-	if(!locate(/datum/religion_rites/deaconize) in rites_list)
-		rites_list += list(/datum/religion_rites/deaconize/one_time_use)
+	if(!locate(/datum/religion_rites/deaconize/crusader) in rites_list)
+		rites_list += list(/datum/religion_rites/deaconize)
 	on_select()
 
 /// Activates once selected
@@ -416,7 +416,7 @@
 	tgui_icon = "scroll"
 	altar_icon_state = "convertaltar-white"
 	alignment = ALIGNMENT_GOOD
-	rites_list = list(/datum/religion_rites/deaconize, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
+	rites_list = list(/datum/religion_rites/deaconize/crusader, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
 
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	..()
