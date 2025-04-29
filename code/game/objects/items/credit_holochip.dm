@@ -95,7 +95,7 @@
 	else
 		return 0
 
-/obj/item/holochip/attackby(obj/item/I, mob/user, params)
+/obj/item/holochip/attackby(obj/item/I, mob/user, list/modifiers)
 	..()
 	if(istype(I, /obj/item/holochip))
 		var/obj/item/holochip/H = I

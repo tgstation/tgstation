@@ -692,3 +692,107 @@
       today!
   - balance: Part-Mart vending machines now have mousetraps, spare screwdrivers and
       rifle stocks in their contraband section.
+2025-04-24:
+  Ghommie:
+  - qol: You can now interact with held mobs in more ways beside wearing them.
+  - bugfix: Fixed moonfish eggs appearing like huge errors inside aquariums.
+  - bugfix: Fixed starfish suicide sometimes not deleting you.
+  Jacquerel:
+  - bugfix: You can now bleed or vomit onto people below you rather than creating
+      puddles of substance hovering in mid-air.
+  SmArtKar:
+  - bugfix: Fixed AI not getting creampie face decals
+  jlsnow301:
+  - bugfix: Inputs in tgui windows (not tgui-say) have been reworked, hopefully making
+      them FAST. Report if they are not FAST.
+  - bugfix: Fixed a bluescreen caused when moving a tgui window with a tooltip open.
+2025-04-25:
+  Cirrial:
+  - qol: Added some help for abductors if they get a weird half-machine test subject
+      in their ship.
+  Jacquerel:
+  - bugfix: Floating motionless and face down in the water doesn't count as a workout
+  Pepsilawn:
+  - bugfix: Tramstation, fixes a mop that happened to be grabbable while being 2 tiles
+      above its location in an entirely different room
+  RandomDudeFromTheRim:
+  - rscadd: Added a Rimworld reference
+  - rscdel: Removed a potential harmful stereotype
+  loganuk:
+  - map: Added Boulder Retrieval Matrix (BRM) to Delta Station
+2025-04-26:
+  BurgerBB:
+  - bugfix: Fixes a taser runtime.
+  - bugfix: Fixes a Beepsky runtime.
+  Goat:
+  - bugfix: Cain and Abel (the colossus drop) now require you to hold them to be able
+      to swing them around
+  Jacquerel:
+  - rscadd: Emagging a fishing spot pod from the black market can create pools of
+      water deep enough to drown people in.
+  - bugfix: If you are turned into a monkey via the DNA scanner, mutadone can once
+      again turn you back. If you are a monkey turned into a human via the DNA scanner,
+      mutadone can also turn you back.
+  - bugfix: If you are lucky enough to have the opportunity to be a monkey as a roundstart
+      species, the species info box will not lie to you about mutadone.
+  LT3:
+  - bugfix: Fixed supermatter anomaly generation, hallucination is based on distance
+      and delam explosion size
+  LemonInTheDark:
+  - code_imp: Brought browser code up to standard with the rest of the codebase
+  - admin: Hey lads, I cleaned up how non TGUI windows work on the backend, please
+      let me know if anything is broken! PING ME MOTHERFUCKER
+  Melbert:
+  - qol: Moneybots round to the nearest 1 credit.
+  - qol: Moneybots have a 0.5 second cooldown between being able to dispense credits.
+  - qol: Moneybots won't dispense more than 50 credits on a tile.
+  - bugfix: Losing Farsight or Rock Absorber mutations will properly drop their effects
+      as well
+  - balance: Heretics with Cybernetic Hearts can no longer complete the Living Heart
+      ritual with an organic heart to automatically have their heart replaced - you
+      will need to get it replaced surgically first, the hard way.
+  SmArtKar:
+  - bugfix: Fixes burdened trauma not granting/losing burden levels when its added/lost
+  - bugfix: Fixed inconsistent proto-kinetic crusher descriptions
+  - bugfix: Fixed Bubblegum and Wendigo crusher trophies sometimes not working.
+  hry-gh:
+  - qol: the statusbar at the bottom left now properly scales with your display
+  necromanceranne:
+  - bugfix: The grenade launcher of the M-90gl can be reloaded once again.
+  - bugfix: Duct tape properly updates the various icons and visuals of mechs, windows
+      and clothing that it repairs.
+  timothymtorres:
+  - rscadd: Allow boats to travel over water
+  zxaber:
+  - bugfix: Fixed a visual bug with cyborg tools that are able to carry items.
+2025-04-27:
+  Cirrial:
+  - bugfix: Made it so minebot commands don't talk about dumping ore when you're toggling
+      the lights.
+  Ghommie:
+  - bugfix: examining fishing spots twice with sufficient skill level while holding
+      a rod should work more reliably.
+  Jacquerel:
+  - bugfix: Space carp will no longer get distracted by repeatedly entering their
+      own portals instead of chasing you.
+  - bugfix: Holding a two-handed weapon in both hands will now once again appropriately
+      modify its attack power.
+  Melbert:
+  - bugfix: 'Furious Steel now tracks consumed knives better: Using all three knives
+      to block no longer results in a 0 second cooldown, firing a single knife no
+      longer results in a 60 second cooldown.'
+  SmArtKar:
+  - bugfix: Fixed MODpaint menu bluescreening
+  SyncIt21:
+  - code_imp: cleans up teleportation code. `check_teleport_valid` is now a pure function
+      with no side effects
+  TiviPlus:
+  - bugfix: Look up/down now track with the thing you're inside instead of staying
+      in one spot
+2025-04-28:
+  EuSouAFazer:
+  - rscadd: Adds CatwalkStation
+  - code_imp: Multi-Z maps now can toggle on or off having grappling hooks in people's
+      bags
+  Ezel:
+  - map: Rewired Centcom Checkpoint buttons to be more accurate

@@ -37,7 +37,7 @@
 	custom_materials = list(/datum/material/bone=SMALL_MATERIAL_AMOUNT)
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 
-/obj/item/knife/envy/afterattack(atom/target, mob/living/carbon/human/user, click_parameters)
+/obj/item/knife/envy/afterattack(atom/target, mob/living/carbon/human/user, list/modifiers)
 	if(!istype(user) || !ishuman(target))
 		return
 

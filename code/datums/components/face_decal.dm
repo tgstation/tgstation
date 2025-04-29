@@ -132,7 +132,7 @@ GLOBAL_LIST_INIT(splattable, zebra_typecacheof(list(
 	src.mood_event_type = mood_event_type
 
 /datum/component/face_decal/splat/get_normal_overlay()
-	return mutable_appearance('icons/mob/effects/face_decal.dmi', "[icon_state]_[GLOB.splattable[type]]")
+	return mutable_appearance('icons/mob/effects/face_decal.dmi', "[icon_state]_[is_type_in_list(parent, GLOB.splattable, zebra = TRUE)]")
 
 /datum/component/face_decal/splat/RegisterWithParent()
 	. = ..()

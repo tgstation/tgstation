@@ -196,7 +196,12 @@
 	if(!do_after(user, 3 SECONDS, target = object_to_repair))
 		return ITEM_INTERACT_BLOCKING
 
-	object_to_repair.repair_damage(object_repair_value)
+	if(isclothing(object_to_repair))
+		var/obj/item/clothing/clothing_to_repair = object_to_repair
+		clothing_to_repair.repair()
+	else
+		object_to_repair.repair_damage(object_repair_value)
+
 	use(1)
 	to_chat(user, span_notice("You finish repairing [interacting_with] with [src]."))
 	return ITEM_INTERACT_SUCCESS
