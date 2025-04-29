@@ -41,7 +41,7 @@
 	undyeable = TRUE
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
 
-/obj/item/clothing/gloves/color/fingerless/Initialize(mapload)
+/obj/item/clothing/gloves/fingerless/Initialize(mapload)
 	. = ..()
 	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gripperoffbrand)
 	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
