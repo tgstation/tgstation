@@ -456,6 +456,21 @@
 /mob/living/carbon/proc/handle_blood(seconds_per_tick, times_fired)
 	return
 
+/mob/living/carbon/reagent_tick(datum/reagent/chem, seconds_per_tick, times_fired)
+	. = ..()
+
+	if(. & COMSIG_MOB_STOP_REAGENT_TICK)
+		return
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if(!blood_type)
+		return
+
+	if(chem.type == blood_type?.restoration_chem && blood_volume < BLOOD_VOLUME_NORMAL)
+		blood_volume += BLOOD_REGEN_FACTOR * seconds_per_tick
+		reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
+		return COMSIG_MOB_STOP_REAGENT_TICK
+
 /mob/living/carbon/proc/handle_bodyparts(seconds_per_tick, times_fired)
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		. |= limb.on_life(seconds_per_tick, times_fired)
@@ -480,7 +495,6 @@
 		var/obj/item/organ/organ = organs_slot[slot]
 		if(organ?.owner) // This exist mostly because reagent metabolization can cause organ reshuffling
 			organ.on_life(seconds_per_tick, times_fired)
-
 
 /mob/living/carbon/handle_diseases(seconds_per_tick, times_fired)
 	for(var/datum/disease/disease as anything in diseases)

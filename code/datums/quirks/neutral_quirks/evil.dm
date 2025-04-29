@@ -35,9 +35,9 @@
 		return
 
 	// Try to find a corresponding evil blood type for this
-	var/datum/blood_type/new_blood_type = get_blood_type("[human_holder.dna.blood_type.id]_but_evil")
+	var/datum/blood_type/new_blood_type = get_blood_type("[human_holder.get_bloodtype().id]_but_evil")
 	if(isnull(new_blood_type)) // this blood type doesn't exist yet in the global list, so make a new one
-		new_blood_type = new /datum/blood_type/evil(human_holder.dna.blood_type, human_holder.dna.blood_type.compatible_types)
+		new_blood_type = new /datum/blood_type/evil(human_holder.get_bloodtype(), human_holder.get_bloodtype().compatible_types)
 		GLOB.blood_types[new_blood_type.id] = new_blood_type
 	human_holder.set_blood_type(new_blood_type)
 

@@ -1454,7 +1454,7 @@
 /mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
 	if(!isturf(loc))
 		return
-	if(dna.blood_type.no_bleed_overlays)
+	if(get_bloodtype().no_bleed_overlays)
 		return
 	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc)
 	our_splatter.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
@@ -1474,7 +1474,8 @@
 /mob/living/carbon/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info = TRUE)
 	if(isnull(dna))
 		return
-	if(dna.blood_type == new_blood_type) // already has this blood type, we don't need to do anything.
+
+	if(get_bloodtype() == new_blood_type) // already has this blood type, we don't need to do anything.
 		return
 
 	dna.blood_type = new_blood_type
@@ -1525,3 +1526,7 @@
 		return hit_zone
 	// When a limb is missing the damage is actually passed to the chest
 	return BODY_ZONE_CHEST
+
+/mob/living/carbon/proc/get_bloodtype()
+	RETURN_TYPE(/datum/blood_type)
+	return dna?.blood_type

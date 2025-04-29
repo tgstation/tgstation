@@ -24,58 +24,70 @@
 
 /datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
-	if(data && data["viruses"])
-		for(var/thing in data["viruses"])
-			var/datum/disease/strain = thing
-
-			if((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
-				continue
-
-			if(methods & INGEST)
-				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_STOMACH))
-					continue
-
-				exposed_mob.ForceContractDisease(strain)
-			else if(methods & (INJECT|PATCH))
-				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_HEART))
-					continue
-
-				exposed_mob.ForceContractDisease(strain)
-			else if((methods & (VAPOR|INHALE)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_LUNGS))
-					continue
-
-				exposed_mob.ContactContractDisease(strain)
-			else if((methods & TOUCH) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-				exposed_mob.ContactContractDisease(strain)
-
-	if(data && data["resistances"])
-		if(methods & (INGEST|INJECT|INHALE)) //have to inject, inhale or ingest it. no curefoam/cheap curesprays
-			for(var/stuff in exposed_mob.diseases)
-				var/datum/disease/infection = stuff
-				if(infection.GetDiseaseID() in data["resistances"])
-					if(!infection.bypasses_immunity)
-						infection.cure(add_resistance = FALSE)
-
-	if(iscarbon(exposed_mob))
-		var/mob/living/carbon/exposed_carbon = exposed_mob
-		var/datum/blood_type/carbon_blood_type = exposed_carbon.dna.blood_type
-		if(carbon_blood_type.reagent_type == type && ((methods & INJECT) || ((methods & INGEST) && HAS_TRAIT(exposed_carbon, TRAIT_DRINKS_BLOOD))))
-			var/datum/blood_type/recipient_blood_type = exposed_carbon.dna.blood_type
-			var/datum/blood_type/donor_blood_type = data["blood_type"]
-			if(!(donor_blood_type.type_key() in recipient_blood_type.compatible_types))
-				exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
-			else
-				exposed_carbon.blood_volume = min(exposed_carbon.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-
-			exposed_carbon.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
-
+	if((methods & (TOUCH|VAPOR)) && reac_volume > 3)
 		// covers them and their worn equipment in blood
-		if((methods & (TOUCH|VAPOR)) && reac_volume > 3)
-			if(data["blood_DNA"] && data["blood_type"])
-				exposed_carbon.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
-			else
-				exposed_carbon.add_blood_DNA(list("Non-human DNA" = random_human_blood_type()))
+		if(data && data["blood_DNA"] && data["blood_type"])
+			exposed_mob.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
+		else
+			exposed_mob.add_blood_DNA(list("Unknown DNA" = random_human_blood_type()))
+
+	if(!data)
+		return
+
+	for(var/thing in data["viruses"])
+		var/datum/disease/strain = thing
+		if((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
+			continue
+
+		if(methods & INGEST)
+			if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_STOMACH))
+				continue
+			exposed_mob.ForceContractDisease(strain)
+
+		else if(methods & (INJECT|PATCH))
+			if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_HEART))
+				continue
+			exposed_mob.ForceContractDisease(strain)
+
+		else if((methods & (VAPOR|INHALE)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+			if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_LUNGS))
+				continue
+			exposed_mob.ContactContractDisease(strain)
+
+		else if((methods & TOUCH) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
+			exposed_mob.ContactContractDisease(strain)
+
+	/// Have to inject, inhale or ingest it. no curefoam/cheap curesprays
+	if(data["resistances"] && (methods & (INGEST|INJECT|INHALE)))
+		for(var/stuff in exposed_mob.diseases)
+			var/datum/disease/infection = stuff
+			if(infection.GetDiseaseID() in data["resistances"])
+				if(!infection.bypasses_immunity)
+					infection.cure(add_resistance = FALSE)
+
+/*
+/mob/living/carbon/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	. = ..()
+
+	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	if(!(methods & INJECT) && !((methods & INGEST) && HAS_TRAIT(src, TRAIT_DRINKS_BLOOD)))
+		return
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if(blood_type.reagent_type != chem.type)
+		return
+
+	if(chem.data?["blood_type"])
+		var/datum/blood_type/donor_type = chem.data["blood_type"]
+		if(!(donor_type.type_key() in blood_type.compatible_types))
+			reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
+			return COMPONENT_NO_EXPOSE_REAGENTS
+
+	blood_volume = min(blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+	return COMPONENT_NO_EXPOSE_REAGENTS
+*/
 
 /datum/reagent/blood/on_new(list/data)
 	. = ..()

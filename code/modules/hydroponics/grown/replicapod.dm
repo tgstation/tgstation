@@ -204,8 +204,6 @@
 			most_plentiful_reagent[reagent] = reagents_add[reagent]
 
 	var/datum/reagent/new_blood_reagent = most_plentiful_reagent[1]
-	podman.dna.species.exotic_blood = new_blood_reagent
-
 	// Try to find a corresponding blood type for this reagent
 	var/datum/blood_type/new_blood_type = get_blood_type(new_blood_reagent)
 	if(isnull(new_blood_type)) // this blood type doesn't exist yet in the global list, so make a new one

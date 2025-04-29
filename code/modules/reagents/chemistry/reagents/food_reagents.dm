@@ -172,7 +172,7 @@
 
 	exposed_obj.visible_message(span_warning("[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow."))
 	exposed_obj.AddElement(/datum/element/fried_item, volume SECONDS)
-	exposed_obj.reagents.add_reagent(src.type, reac_volume, reagtemp = holder.chem_temp)
+	exposed_obj.reagents.add_reagent(type, reac_volume, data, holder.chem_temp)
 
 /datum/reagent/consumable/nutriment/fat/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()

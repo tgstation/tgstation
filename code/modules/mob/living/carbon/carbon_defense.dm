@@ -738,6 +738,6 @@
 		. &= ~SHOVE_CAN_KICK_SIDE
 
 /mob/living/carbon/create_splatter(splatter_dir)
-	new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(src), splatter_dir, dna?.blood_type.get_color())
+	new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(src), splatter_dir, get_bloodtype())
 
 #undef SHAKE_ANIMATION_OFFSET

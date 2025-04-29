@@ -91,14 +91,8 @@
 	else
 		clear_alert(ALERT_XENO_FIRE)
 
-/mob/living/carbon/alien/getTrail()
-	if(getBruteLoss() < 200)
-		return pick (list("xltrails_1", "xltrails2"))
-	else
-		return pick (list("xttrails_1", "xttrails2"))
-
-/mob/living/carbon/alien/get_trail_blood()
-	return BLOOD_STATE_XENO
+/mob/living/carbon/alien/get_bloodtype()
+	return get_blood_type(BLOOD_TYPE_XENO)
 
 /*----------------------------------------
 Proc: AddInfectionImages()

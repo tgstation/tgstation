@@ -37,22 +37,19 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(human_holder.stat == DEAD || human_holder.blood_volume <= min_blood)
 		return
-	// This exotic blood check is solely to snowflake slimepeople into working with this quirk
-	if(HAS_TRAIT(quirk_holder, TRAIT_NOBLOOD) && isnull(human_holder.dna.species.exotic_blood))
-		return
 
-	human_holder.blood_volume = max(min_blood, human_holder.blood_volume - human_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick)
+	if(!HAS_TRAIT(quirk_holder, TRAIT_NOBLOOD))
+		human_holder.blood_volume = max(min_blood, human_holder.blood_volume - human_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick)
 
 /datum/quirk/blooddeficiency/proc/update_mail(datum/source, datum/species/new_species, datum/species/old_species, pref_load, regenerate_icons)
 	SIGNAL_HANDLER
 
-	if(isnull(new_species.exotic_blood) && isnull(new_species.exotic_bloodtype))
-		if(TRAIT_NOBLOOD in new_species.inherent_traits) // jellypeople have both exotic_blood and TRAIT_NOBLOOD
-			mail_goodies.Cut()
-			return
+	if(TRAIT_NOBLOOD in new_species.inherent_traits)
+		mail_goodies.Cut()
+		return
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/blood_type/blood_type = human_holder.dna.blood_type
+	var/datum/blood_type/blood_type = human_holder.get_bloodtype()
 	if(isnull(blood_type))
 		return
 

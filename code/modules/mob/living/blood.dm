@@ -229,13 +229,14 @@
 /mob/living/proc/transfer_blood_to(atom/movable/receiver, amount, forced, ignore_incompatibility)
 	if(!blood_volume || !receiver.reagents)
 		return FALSE
+
 	if(blood_volume < BLOOD_VOLUME_BAD && !forced)
 		return FALSE
 
 	if(blood_volume < amount)
 		amount = blood_volume
 
-	var/blood_id = get_blood_id()
+	var/blood_id = get_blood_reagent()
 	if(!blood_id)
 		return FALSE
 
@@ -245,7 +246,7 @@
 
 	if(iscarbon(receiver))
 		var/mob/living/carbon/carbon_receiver = receiver
-		if(blood_id == carbon_receiver.get_blood_id()) //both mobs have the same blood substance
+		if(blood_id == carbon_receiver.get_blood_reagent()) //both mobs have the same blood substance
 			if(blood_id == /datum/reagent/blood) //normal blood
 				if(blood_data["viruses"])
 					for(var/datum/disease/blood_disease as anything in blood_data["viruses"])
@@ -253,7 +254,7 @@
 							continue
 						carbon_receiver.ForceContractDisease(blood_disease)
 				var/datum/blood_type/blood_type = blood_data["blood_type"]
-				if(!ignore_incompatibility && !(blood_type.type_key() in carbon_receiver.dna.blood_type.compatible_types))
+				if(!ignore_incompatibility && !(blood_type.type_key() in carbon_receiver.get_bloodtype().compatible_types))
 					carbon_receiver.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return TRUE
 
@@ -262,7 +263,6 @@
 
 	receiver.reagents.add_reagent(blood_id, amount, blood_data, bodytemperature)
 	return TRUE
-
 
 /mob/living/proc/get_blood_data(blood_id)
 	return
@@ -294,7 +294,7 @@
 
 		if(!HAS_TRAIT_FROM(src, TRAIT_SUICIDED, REF(src)))
 			blood_data["cloneable"] = 1
-		blood_data["blood_type"] = dna.blood_type
+		blood_data["blood_type"] = get_bloodtype()
 		blood_data["gender"] = gender
 		blood_data["real_name"] = real_name
 		blood_data["features"] = dna.features
@@ -304,24 +304,17 @@
 			blood_data["quirks"] += quirk.type
 		return blood_data
 
-//get the id of the substance this mob use as blood.
-/mob/proc/get_blood_id()
-	return
-
-/mob/living/simple_animal/get_blood_id()
+/mob/living/proc/get_blood_reagent()
 	if(blood_volume)
 		return /datum/reagent/blood
 
-/mob/living/carbon/human/get_blood_id()
-	if(HAS_TRAIT(src, TRAIT_HUSK) || !dna)
+/// Returns the reagent type this mob has for blood
+/mob/living/carbon/get_blood_reagent()
+	if (HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
-	if(check_holidays(APRIL_FOOLS) && is_clown_job(mind?.assigned_role))
-		return /datum/reagent/colorful_reagent
-	if(dna.species.exotic_blood)
-		return dna.species.exotic_blood
-	else if(HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return
-	return /datum/reagent/blood
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	return blood_type?.reagent_type
 
 /// Returns the blood_type datum that corresponds to the string id key in GLOB.blood_types
 /proc/get_blood_type(id)
@@ -342,13 +335,13 @@
  * * donor: Carbon mob, the one that is donating blood.
  */
 /mob/living/carbon/proc/get_blood_compatibility(mob/living/carbon/donor)
-	var/datum/blood_type/patient_blood_data = dna.blood_type
-	var/datum/blood_type/donor_blood_data = donor.dna.blood_type
+	var/datum/blood_type/patient_blood_data = get_bloodtype()
+	var/datum/blood_type/donor_blood_data = donor.get_bloodtype()
 	return (donor_blood_data in patient_blood_data.compatible_types)
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check = FALSE)
-	if(!skip_reagents_check && !(get_blood_id() in list(/datum/reagent/blood, /datum/reagent/toxin/acid)))
+	if(!skip_reagents_check && !(get_blood_reagent() in list(/datum/reagent/blood, /datum/reagent/toxin/acid)))
 		return
 
 	if(!splatter_turf)
@@ -386,7 +379,7 @@
 		blood_spew.add_blood_DNA(temp_blood_DNA, no_visuals = small_drip)
 
 /mob/living/carbon/human/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check = TRUE)
-	if(!HAS_TRAIT(src, TRAIT_NOBLOOD) && !dna?.blood_type.no_bleed_overlays)
+	if(!HAS_TRAIT(src, TRAIT_NOBLOOD) && !get_bloodtype().no_bleed_overlays)
 		. = ..()
 
 /mob/living/carbon/alien/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check)

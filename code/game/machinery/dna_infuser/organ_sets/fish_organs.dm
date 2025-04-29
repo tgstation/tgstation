@@ -387,7 +387,7 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = FISH_COLORS
 
-	organ_traits = list(TRAIT_STRONG_STOMACH, TRAIT_FISH_EATER)
+	organ_traits = list(TRAIT_STRONG_STOMACH, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE)
 	disgust_metabolism = 2.5
 
 	// Seafood instead of meat, because it's a fish organ

@@ -384,8 +384,8 @@
 
 	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
 		if(target.blood_volume < BLOOD_VOLUME_SAFE)
-			var/datum/blood_type/target_blood_data = target.dna.blood_type
-			var/datum/blood_type/chaplain_blood_data = chaplain.dna.blood_type
+			var/datum/blood_type/target_blood_data = target.get_bloodtype()
+			var/datum/blood_type/chaplain_blood_data = chaplain.get_bloodtype()
 			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
 			if(transferred_blood_amount && (chaplain_blood_data.type_key() in target_blood_data.compatible_types))
 				transferred = TRUE

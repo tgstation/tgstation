@@ -189,7 +189,7 @@
 	if(victim.stat == DEAD)
 		to_chat(user, span_warning("You need a living victim!"))
 		return FALSE
-	if(!victim.blood_volume || (victim.dna && (HAS_TRAIT(victim, TRAIT_NOBLOOD) || victim.dna.species.exotic_blood)))
+	if(!victim.blood_volume || (victim.dna && (HAS_TRAIT(victim, TRAIT_NOBLOOD) || victim.get_blood_reagent() != /datum/reagent/blood)))
 		to_chat(user, span_warning("[victim] doesn't have blood!"))
 		return FALSE
 	COOLDOWN_START(licker_drinker, drain_cooldown, 3 SECONDS)

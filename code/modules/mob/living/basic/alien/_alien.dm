@@ -74,9 +74,6 @@
 	visible_message(span_alertalien("[src] plants some alien weeds!"))
 	new /obj/structure/alien/weeds/node(loc)
 
-/mob/living/basic/alien/create_splatter(splatter_dir)
-	new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(get_turf(src), splatter_dir)
-
 ///Lays an egg on the turf the mob is currently standing on.
 /mob/living/basic/alien/proc/lay_alien_egg()
 	if(!isturf(loc) || isspaceturf(loc))
