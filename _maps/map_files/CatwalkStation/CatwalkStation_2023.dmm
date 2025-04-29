@@ -5163,6 +5163,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/mob/living/basic/bot/cleanbot/autopatrol,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "bEw" = (
@@ -29560,14 +29561,6 @@
 	dir = 8
 	},
 /area/station/service/chapel)
-"iQN" = (
-/obj/effect/turf_decal/tile/dark/fourcorners,
-/obj/structure/fluff/fokoff_sign{
-	desc = "This is a map of the station! You are right under the blue central dot. This sign will dissapear when the map is full merged!";
-	name = "READ ME"
-	},
-/turf/open/floor/iron/dark,
-/area/station/hallway/primary/central)
 "iQR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -29812,6 +29805,7 @@
 /area/station/security/checkpoint/supply)
 "iVa" = (
 /obj/machinery/airalarm/directional/east,
+/mob/living/basic/bot/cleanbot/medbay,
 /turf/open/floor/wood,
 /area/station/medical/medbay/central)
 "iVi" = (
@@ -38849,6 +38843,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/navigate_destination/med,
+/mob/living/basic/bot/medbot,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
 "lIi" = (
@@ -43100,6 +43095,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/warning{
 	dir = 8
 	},
+/mob/living/basic/bot/repairbot,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -47652,6 +47648,7 @@
 /obj/effect/mapping_helpers/mail_sorting/service/library,
 /obj/effect/mapping_helpers/mail_sorting/service/chapel,
 /obj/effect/mapping_helpers/mail_sorting/service/dormitories,
+/mob/living/simple_animal/bot/secbot/beepsky,
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
 "opq" = (
@@ -48418,6 +48415,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
@@ -113848,7 +113846,7 @@ vFZ
 jEw
 siZ
 siZ
-iQN
+jEw
 juH
 ibo
 wCP
