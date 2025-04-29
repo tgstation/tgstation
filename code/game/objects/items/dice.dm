@@ -468,9 +468,12 @@
 	spell_max_level = 0 //cannot be improved
 
 	smoke_type = /datum/effect_system/fluid_spread/smoke
-	smoke_amt = 2
+	smoke_amt = 1
 
+	///Weakref to the summonable mob.
 	var/datum/weakref/summon_weakref
+	///Are we already summoning a mob, or have an actively summoned mob?
+	var/selected_summon = FALSE
 
 /datum/action/cooldown/spell/summon_mob/Grant(mob/grant_to)
 	. = ..()
@@ -478,11 +481,12 @@
 
 /datum/action/cooldown/spell/summon_mob/cast()
 	. = ..()
-	var/mob/living/to_summon = summon_weakref?.resolve()
-	if(to_summon == null)
+	if(!selected_summon)
 		find_servant()
 		owner.balloon_alert(owner, "conjuring servant...")
 		return
+
+	var/mob/living/to_summon = summon_weakref?.resolve()
 
 	if(QDELETED(to_summon))
 		to_chat(owner, span_warning("You can't seem to summon your servant - it seems they've vanished from reality, or never existed in the first place..."))
@@ -498,12 +502,14 @@
 	)
 
 /datum/action/cooldown/spell/summon_mob/proc/find_servant()
+	selected_summon = TRUE //If we find a candidate, this stays true and locks in the summoned servant.
 	var/list/candidate_list = SSpolling.poll_ghost_candidates("Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice("Servant")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 10 SECONDS, alert_pic = owner, role_name_text = "dice servant")
 	if(!length(candidate_list))
 		return
 
 	var/mob/chosen_one = pick(candidate_list)
 	if(!chosen_one)
+		selected_summon = FALSE
 		return
 
 	message_admins("[ADMIN_LOOKUPFLW(chosen_one)] was spawned as Dice Servant")
