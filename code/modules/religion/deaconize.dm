@@ -22,7 +22,7 @@
 	)
 	invoke_msg = "... And the code must be upheld!"
 
-	rite_flags = RITE_AUTO_DELETE | RITE_ALLOW_MULTIPLE_PERFORMS | RITE_ONE_TIME_USE
+	rite_flags = RITE_ALLOW_MULTIPLE_PERFORMS
 
 	///Boolean on whether or not the new deacon will have to follow a crusader code, used in flavortext & granting favor.
 	var/crusader_code = TRUE
@@ -111,5 +111,6 @@
 	)
 	invoke_msg = "And use them to the best of our abilities."
 	crusader_code = FALSE
+	rite_flags = RITE_ALLOW_MULTIPLE_PERFORMS | RITE_ONE_TIME_USE
 
 #undef DEACONIZE_FAVOR_GAIN
