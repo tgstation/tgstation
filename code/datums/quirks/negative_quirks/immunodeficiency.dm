@@ -1,17 +1,16 @@
 /datum/quirk/item_quirk/immunodeficiency
 	name = "Immunodeficiency"
-	desc = "Wheither by chronic illness or genetic happenstance, your body is a 24/7 Bed and Breakfast for bacteria, viruses, and parasites of all kinds. Even with your prescribed immunity boosters, you'll be worse off than most others."
+	desc = "Whiether by chronic illness or genetic happenstance, your body is a 24/7 Bed and Breakfast for bacteria, viruses, and parasites of all kinds. Even with your prescribed immunity boosters, you'll fare worse than most others."
 	icon = FA_ICON_SPRAY_CAN
-	value = 4
-	mob_trait = TRAIT_TAGGER
-	gain_text = span_notice("You know how to tag walls efficiently and quickly.")
-	lose_text = span_danger("You forget how to tag walls properly.")
-	medical_record_text = "Patient was recently seen for possible paint huffing incident."
+	value = -8
+	mob_trait = TRAIT_IMMUNODEFICIENCY
+	gain_text = span_danger("Just the thought of illness makes you feverish.")
+	lose_text = span_notice("Your immune system miraculously reasserts itself.")
+	medical_record_text = "Patient is afflicted with chronic immunodeficiency."
 	mail_goodies = list(
-		/obj/item/toy/crayon/spraycan,
+		/obj/item/reagent_containers/syringe/antiviral,
 		/obj/item/canvas/nineteen_nineteen,
-		/obj/item/canvas/twentythree_nineteen,
-		/obj/item/canvas/twentythree_twentythree
+		/obj/item/canvas/twentythree_nineteen
 	)
 
 /datum/quirk_constant_data/tagger
