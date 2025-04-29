@@ -15,3 +15,12 @@
 /datum/quirk/item_quirk/immunodeficiency/add_unique(client/client_source)
 	var/obj/item/clothing/mask/surgical/ppe = new
 	give_item_to_holder(ppe, list(LOCATION_MASK = ITEM_SLOT_MASK, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(
+		/obj/item/storage/pill_bottle/immunodeficiency,
+		list(
+			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+			LOCATION_HANDS = ITEM_SLOT_HANDS,
+		)
+	)
