@@ -3,6 +3,7 @@
 	"map_name": "MultiZ Debug",
 	"map_path": "map_files/debug",
 	"map_file": "multiz.dmm",
+	"exclude_from_ci": false,
 	"ignored_unit_tests": [
 		"/datum/unit_test/cargo_dep_order_locations",
 		"/datum/unit_test/job_roundstart_spawnpoints",

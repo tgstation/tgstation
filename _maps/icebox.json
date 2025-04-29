@@ -3,6 +3,7 @@
 	"map_name": "Ice Box Station",
 	"map_path": "map_files/IceBoxStation",
 	"map_file": "IceBoxStation.dmm",
+	"exclude_from_ci": false,
 	"space_ruin_levels": 0,
 	"space_empty_levels": 0,
 	"planetary": 1,

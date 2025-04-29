@@ -3,6 +3,7 @@
 	"map_name": "Catwalk Station",
 	"map_path": "map_files/CatwalkStation",
 	"map_file": "CatwalkStation_2023.dmm",
+	"exclude_from_ci": false,
 	"shuttles": {
 		"emergency": "emergency_catwalk",
 		"ferry": "ferry_fancy",

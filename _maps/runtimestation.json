@@ -3,6 +3,7 @@
 	"map_name": "Runtime Station",
 	"map_path": "map_files/debug",
 	"map_file": "runtimestation.dmm",
+	"exclude_from_ci": false,
 	"space_ruin_levels": 1,
 	"ignored_unit_tests": [
 		"/datum/unit_test/cargo_dep_order_locations",

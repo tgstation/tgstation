@@ -3,6 +3,7 @@
 	"map_name": "Delta Station",
 	"map_path": "map_files/Deltastation",
 	"map_file": "DeltaStation2.dmm",
+	"exclude_from_ci": false,
 	"shuttles": {
 		"emergency": "emergency_delta",
 		"ferry": "ferry_fancy",
@@ -14,4 +15,5 @@
 			"additional_cqc_areas": ["/area/station/service/cafeteria"]
 		}
 	}
+
 }
