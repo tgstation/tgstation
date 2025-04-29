@@ -142,7 +142,7 @@
 
 /datum/religion_rites/song_tuner/light/Destroy()
 	QDEL_NULL(performer_light_obj)
-	. = ..()
+	return ..()
 
 /datum/religion_rites/song_tuner/light/finish_effect(mob/living/carbon/human/listener, atom/song_source)
 	listener.apply_status_effect(/datum/status_effect/song/light)

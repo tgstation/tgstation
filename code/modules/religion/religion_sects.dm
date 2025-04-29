@@ -42,10 +42,6 @@
 	var/smack_chance = DEFAULT_SMACK_CHANCE
 	/// Whether the structure has CANDLE OVERLAYS!
 	var/candle_overlay = TRUE
-	///people who have agreed to join the crusade, and can be deaconized
-	var/list/possible_new_deacons = list()
-	///people who have been offered an invitation, they haven't finished the alert though.
-	var/list/currently_asking = list()
 
 /datum/religion_sect/New()
 	. = ..()
@@ -59,17 +55,6 @@
 /datum/religion_sect/proc/on_select()
 	SHOULD_CALL_PARENT(TRUE)
 	SSblackbox.record_feedback("text", "sect_chosen", 1, name)
-
-/**
- * Called by deaconize rite, this async'd proc waits for a response on joining the sect.
- * If yes, the deaconize rite can now recruit them instead of just offering invites
- */
-/datum/religion_sect/proc/invite_crusader(mob/living/carbon/human/invited, crusader)
-	currently_asking += invited
-	var/ask = tgui_alert(invited, "Join [GLOB.deity]?[crusader ? " You will be bound to a code of honor." : " You will be expected to follow the Chaplain's order."]", "Invitation", list("Yes", "No"), 60 SECONDS)
-	currently_asking -= invited
-	if(ask == "Yes")
-		possible_new_deacons += invited
 
 /// Activates once selected and on newjoins, oriented around people who become holy.
 /datum/religion_sect/proc/on_conversion(mob/living/chap)

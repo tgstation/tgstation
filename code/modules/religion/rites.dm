@@ -12,6 +12,9 @@
 	var/favor_cost = 0
 	/// does the altar auto-delete the rite
 	var/auto_delete = TRUE
+	/// Boolean on whether this rite can be performed multiple times by the altar,
+	/// so we won't null or delete it until it's done.
+	var/allow_several_performs = FALSE
 
 /datum/religion_rites/New()
 	. = ..()
@@ -60,7 +63,7 @@
 ///Does the thing if the rite was successfully performed. return value denotes that the effect successfully (IE a harm rite does harm)
 /datum/religion_rites/proc/invoke_effect(mob/living/user, atom/religious_tool)
 	SHOULD_CALL_PARENT(TRUE)
-	GLOB.religious_sect.on_riteuse(user,religious_tool)
+	GLOB.religious_sect.on_riteuse(user, religious_tool)
 	return TRUE
 
 
@@ -119,8 +122,10 @@
 	name = "Receive Blessing"
 	desc = "Receive a blessing from the machine god to further your ascension."
 	ritual_length = 5 SECONDS
-	ritual_invocations =list( "Let your will power our forges.",
-							"...Help us in our great conquest!")
+	ritual_invocations = list(
+		"Let your will power our forges.",
+		"...Help us in our great conquest!",
+	)
 	invoke_msg = "The end of flesh is near!"
 	favor_cost = 2000
 

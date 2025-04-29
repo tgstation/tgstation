@@ -21,6 +21,8 @@
 		"Sinners must be silenced ...",
 	)
 	invoke_msg = "... And the code must be upheld!"
+	auto_delete = FALSE
+	allow_several_performs = TRUE
 
 	///Boolean on whether or not the new deacon will have to follow a crusader code, used in flavortext & granting favor.
 	var/crusader_code = TRUE
@@ -28,7 +30,6 @@
 	var/mob/living/carbon/human/potential_deacon
 
 /datum/religion_rites/deaconize/perform_rite(mob/living/user, atom/religious_tool)
-	var/datum/religion_sect/sect = GLOB.religious_sect
 	if(!ismovable(religious_tool))
 		to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
 		return FALSE
@@ -36,56 +37,64 @@
 	if(!movable_reltool)
 		return FALSE
 	if(!LAZYLEN(movable_reltool.buckled_mobs))
-		to_chat(user, span_warning("Nothing is buckled to the altar!"))
+		to_chat(user, span_warning("Nothing is buckled to the [movable_reltool]!"))
 		return FALSE
-	for(var/mob/living/carbon/human/possible_crusader in movable_reltool.buckled_mobs)
-		if(possible_crusader.stat != CONSCIOUS)
-			to_chat(user, span_warning("[possible_crusader] needs to be alive and conscious to join the crusade!"))
+	for(var/mob/living/carbon/human/possible_deacons in movable_reltool.buckled_mobs)
+		if(possible_deacons.stat != CONSCIOUS)
+			to_chat(user, span_warning("[possible_deacons] needs to be alive and conscious to join the crusade!"))
 			return FALSE
-		if(TRAIT_GENELESS in possible_crusader.dna.species.inherent_traits)
+		if(crusader_code && (TRAIT_GENELESS in possible_deacons.dna.species.inherent_traits))
 			to_chat(user, span_warning("This species disgusts [GLOB.deity]! They would never be allowed to join the crusade!"))
 			return FALSE
-		if(possible_crusader in sect.currently_asking)
-			to_chat(user, span_warning("Wait for them to decide on whether to join or not!"))
+		if(possible_deacons.mind && possible_deacons.mind.holy_role)
+			to_chat(user, span_warning("[possible_deacons] is already a member of the religion!"))
 			return FALSE
-		if(!(possible_crusader in sect.possible_new_deacons))
-			INVOKE_ASYNC(sect, TYPE_PROC_REF(/datum/religion_sect, invite_crusader), possible_crusader, crusader_code)
+		//no one invited or this is not the invited person
+		if(!potential_deacon || (possible_deacons != potential_deacon))
+			INVOKE_ASYNC(src, PROC_REF(invite_deacon), possible_deacons)
 			if(crusader_code)
 				to_chat(user, span_notice("They have been given the option to consider joining the crusade against evil. Wait for them to decide and try again."))
 			else
 				to_chat(user, span_notice("They have been given the option to consider becoming a Deacon. Wait for them to decide and try again."))
 			return FALSE
-		potential_deacon = possible_crusader
-		return ..()
+	return ..()
 
 /datum/religion_rites/deaconize/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
-	..()
-	var/mob/living/carbon/human/joining_now = potential_deacon
-	potential_deacon = null
-	if(!(joining_now in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
+	. = ..()
+	if(!(potential_deacon in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
 		to_chat(user, span_warning("The new member is no longer on the altar!"))
 		return FALSE
-	if(joining_now.stat != CONSCIOUS)
+	if(potential_deacon.stat != CONSCIOUS)
 		to_chat(user, span_warning("The new member has to stay alive for the rite to work!"))
 		return FALSE
-	if(!joining_now.mind)
+	if(!potential_deacon.mind)
 		to_chat(user, span_warning("The new member has no mind!"))
 		return FALSE
-	if(IS_CULTIST(joining_now))//what the fuck?!
-		to_chat(user, span_warning("[GLOB.deity] has seen a true, dark evil in [joining_now]'s heart, and they have been smitten!"))
+	if(IS_CULTIST(potential_deacon))//what the fuck?!
+		to_chat(user, span_warning("[GLOB.deity] has seen a true, dark evil in [potential_deacon]'s heart, and they have been smitten!"))
 		playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
-		joining_now.gib(DROP_ORGANS|DROP_BODYPARTS)
+		potential_deacon.gib(DROP_ORGANS|DROP_BODYPARTS)
 		return FALSE
 	var/datum/brain_trauma/special/honorbound/honor = user.has_trauma_type(/datum/brain_trauma/special/honorbound)
-	if(honor && (joining_now in honor.guilty))
-		honor.guilty -= joining_now
+	if(honor && (potential_deacon in honor.guilty))
+		honor.guilty -= potential_deacon
 	if(crusader_code)
 		GLOB.religious_sect.adjust_favor(DEACONIZE_FAVOR_GAIN, user)
-	to_chat(user, span_notice("[GLOB.deity] has bound [joining_now] to the code! They are now a holy role! (albeit the lowest level of such)"))
-	joining_now.mind.holy_role = HOLY_ROLE_DEACON
-	GLOB.religious_sect.on_conversion(joining_now)
+	to_chat(user, span_notice("[GLOB.deity] has bound [potential_deacon] to the code! They are now a holy role! (albeit the lowest level of such)"))
+	potential_deacon.mind.holy_role = HOLY_ROLE_DEACON
+	GLOB.religious_sect.on_conversion(potential_deacon)
 	playsound(get_turf(religious_tool), 'sound/effects/pray.ogg', 50, TRUE)
 	return TRUE
+
+/**
+ * Async proc that waits for a response on joining the sect.
+ * If they accept, the deaconize rite can now recruit them instead of just offering more invites.
+ */
+/datum/religion_rites/deaconize/proc/invite_deacon(mob/living/carbon/human/invited)
+	var/ask = tgui_alert(invited, "Join [GLOB.deity]?[crusader_code ? " You will be bound to a code of honor." : " You will be expected to follow the Chaplain's order."]", "Invitation", list("Yes", "No"), 60 SECONDS)
+	if(ask != "Yes")
+		return
+	potential_deacon = invited
 
 ///One time use subtype of deaconize.
 /datum/religion_rites/deaconize/one_time_use
