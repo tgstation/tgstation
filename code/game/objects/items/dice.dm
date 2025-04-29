@@ -421,7 +421,7 @@
 			new /obj/item/book/granter/action/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
-			selected_turf.visible_message(span_userdanger("A Dice Servant appears in a cloud of smoke!"))
+			selected_turf.visible_message(span_userdanger("A Dice Servant appears in a cloud of smoke!")) //MARKER HERE
 			var/mob/living/carbon/human/human_servant = new(drop_location())
 			do_smoke(0, holder = src, location = drop_location())
 
