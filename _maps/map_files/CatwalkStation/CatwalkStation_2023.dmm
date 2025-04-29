@@ -47648,7 +47648,7 @@
 /obj/effect/mapping_helpers/mail_sorting/service/library,
 /obj/effect/mapping_helpers/mail_sorting/service/chapel,
 /obj/effect/mapping_helpers/mail_sorting/service/dormitories,
-/mob/living/simple_animal/bot/secbot/beepsky,
+/mob/living/simple_animal/bot/secbot/beepsky/officer,
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
 "opq" = (
