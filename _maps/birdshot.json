@@ -3,7 +3,7 @@
 	"map_name": "Birdshot Station",
 	"map_path": "map_files/Birdshot",
 	"map_file": "birdshot.dmm",
-	"exclude_from_ci": true,
+	"exclude_from_ci": false,
 	"shuttles": {
 		"cargo": "cargo_birdshot",
 		"ferry": "ferry_kilo",
