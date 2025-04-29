@@ -694,7 +694,8 @@
 /obj/item/clothing/suit/costume/bear_suit/equipped(mob/living/user, slot)
 	..()
 	if(slot & ITEM_SLOT_OCLOTHING)
-		make_friendly(user)
+		var/mob/living/carbon/human/human_user = user
+		make_friendly(user, human_user.head)
 
 /obj/item/clothing/suit/costume/bear_suit/dropped(mob/living/user)
 	..()
@@ -705,11 +706,10 @@
 	UnregisterSignal(human_user.head, COMSIG_ITEM_DROPPED)
 	user.faction -= FACTION_BEAR
 
-/obj/item/clothing/suit/costume/bear_suit/proc/make_friendly(mob/living/carbon/human/human_user)
+/obj/item/clothing/suit/costume/bear_suit/proc/make_friendly(mob/living/carbon/human/human_user, obj/item/clothing/head/costume/bearpelt/bear_head)
 	if(!istype(human_user))
 		return
-	var/obj/item/clothing/head/costume/bearpelt/bear_head = human_user.head
-	if(!bear_head || !istype(bear_head, /obj/item/clothing/head/costume/bearpelt))
+	if(!bear_head || !istype(bear_head))
 		return
 	RegisterSignal(bear_head, COMSIG_ITEM_DROPPED, PROC_REF(helmet_drop))
 	full_suit = TRUE
