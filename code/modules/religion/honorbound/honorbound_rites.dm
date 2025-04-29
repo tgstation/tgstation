@@ -102,3 +102,48 @@
 	been allowed as it is a school focused on the light and mending of this world.
 	"}
 	return ..()
+
+/// how much favor is gained when someone is deaconized
+#define DEACONIZE_FAVOR_GAIN 300
+
+/**
+ * Crusader deaconize
+ * Along with making the person holy & being an infinite-use type, it comes with the cost
+ * of enforcing an honorbound code onto convertees.
+ * Earns the church favor per conversion, but convincing others to uphold the code is not easy.
+ * Geneless species are not welcome for reasons
+ * (The actual reason is because the honorbound trauma used to be a mutation which they couldn't get,
+ * maybe it's time we let them join? idk)
+ */
+/datum/religion_rites/deaconize/crusader
+	name = "Join Crusade"
+	desc = "Converts someone to your sect. They must be willing, so the first invocation will instead prompt them to join. \
+	They will become honorbound like you, and you will gain a massive favor boost!"
+	ritual_length = 30 SECONDS
+	ritual_invocations = list(
+		"A good, honorable crusade against evil is required.",
+		"We need the righteous ...",
+		"... the unflinching ...",
+		"... and the just.",
+		"Sinners must be silenced ...",
+	)
+	invoke_msg = "... And the code must be upheld!"
+	rite_flags = RITE_ALLOW_MULTIPLE_PERFORMS
+
+/datum/religion_rites/deaconize/crusader/post_invoke_effects(mob/living/user, atom/religious_tool)
+	. = ..()
+	GLOB.religious_sect.adjust_favor(DEACONIZE_FAVOR_GAIN, user)
+
+/datum/religion_rites/deaconize/crusader/is_valid_for_deacon(mob/living/carbon/human/possible_deacon, mob/living/user)
+	if(TRAIT_GENELESS in possible_deacon.dna.species.inherent_traits)
+		to_chat(user, span_warning("This species disgusts [GLOB.deity]! They would never be allowed to join the crusade!"))
+		return FALSE
+	return ..()
+
+/datum/religion_rites/deaconize/crusader/invite_deacon(mob/living/carbon/human/invited)
+	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
+	if(ask != "Yes")
+		return
+	potential_deacon = invited
+
+#undef DEACONIZE_FAVOR_GAIN
