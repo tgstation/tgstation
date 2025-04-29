@@ -301,7 +301,6 @@
 	icon_prefix = "dragoonpole"
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "gores", "lances")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "gore", "lance")
-	slot_flags = parent_type::slot_flags | ITEM_SLOT_HANDS //this is needed for action types to give actions in-hand
 	throwforce = 24
 	embed_type = null //no embedding
 
@@ -309,6 +308,7 @@
 		/datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT,
 		/datum/material/alloy/plastitaniumglass = SHEET_MATERIAL_AMOUNT,
 	)
+	action_slots = ITEM_SLOT_HANDS
 	actions_types = list(/datum/action/item_action/skybulge)
 
 ///The action button the spear gives, usable once a minute.
