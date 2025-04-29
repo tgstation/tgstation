@@ -235,5 +235,5 @@
 	desc = "Contains immune system boosters, used to manage chronic immunodeficiency."
 
 /obj/item/storage/pill_bottle/immunodeficiency/PopulateContents()
-	for(var/i in 1 to 5)
+	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/applicator/pill/spaceacillin(src)
