@@ -5571,6 +5571,7 @@
 "bJI" = (
 /obj/structure/ladder,
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "bJJ" = (
@@ -17170,7 +17171,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "fkv" = (
-/obj/structure/cable,
 /obj/effect/decal/cleanable/oil/streak,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
@@ -26702,6 +26702,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/openspace,
 /area/station/maintenance/department/engine)
 "hYm" = (
@@ -32915,10 +32916,10 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "jPR" = (
@@ -36253,7 +36254,6 @@
 /area/station/maintenance/starboard/aft)
 "kQV" = (
 /obj/structure/girder,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/spawner/structure/electrified_grille,
 /turf/open/floor/plating,
@@ -38229,12 +38229,10 @@
 	pixel_x = -1;
 	pixel_y = 7
 	},
-/obj/machinery/camera/directional/north{
-	c_tag = "AI Upload Foyer";
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/camera/autoname/directional/north{
 	network = list("aiupload")
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
 "lyK" = (
@@ -41990,11 +41988,10 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
 "mDD" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
 /obj/structure/sign/warning/electric_shock/directional/east,
 /obj/machinery/light/directional/east,
 /obj/machinery/camera/autoname/directional/east,
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "mDF" = (
@@ -43163,6 +43160,7 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
 /turf/open/openspace,
 /area/station/maintenance/department/engine)
 "mWq" = (
@@ -51572,11 +51570,6 @@
 	},
 /turf/open/floor/carpet,
 /area/station/commons/lounge)
-"pyv" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/electrified_grille,
-/turf/closed/wall/r_wall,
-/area/station/engineering/main)
 "pyw" = (
 /obj/structure/lattice/catwalk,
 /obj/effect/spawner/random/maintenance/no_decals,
@@ -52331,6 +52324,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/machinery/door/firedoor,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "pKk" = (
@@ -59489,7 +59483,8 @@
 /obj/machinery/modular_computer/preset/engineering{
 	dir = 8
 	},
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/airalarm/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "rRg" = (
@@ -68960,10 +68955,10 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/engineering/engine_smes)
 "uKm" = (
@@ -121002,7 +120997,7 @@ eEN
 ehR
 rlX
 ehR
-pyv
+ehR
 ehR
 rlX
 ehR
@@ -180720,8 +180715,8 @@ wKb
 aGf
 aGf
 aGf
-aGf
 ljf
+aGf
 aGf
 aGf
 aGf
@@ -192183,7 +192178,7 @@ lNP
 kWC
 vGm
 kWC
-xqs
+wHc
 rRf
 mDD
 pUh
