@@ -229,3 +229,11 @@
 /obj/item/storage/pill_bottle/ondansetron/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/applicator/patch/ondansetron(src)
+
+/obj/item/storage/pill_bottle/immunodeficiency
+	name = "bottle of immune boosters"
+	desc = "Contains immune system boosters, used to manage chronic immunodeficiency."
+
+/obj/item/storage/pill_bottle/immunodeficiency/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/applicator/pill/spaceacillin(src)
