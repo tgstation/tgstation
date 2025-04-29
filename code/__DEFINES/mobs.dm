@@ -32,6 +32,28 @@
 /// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
 #define BLOOD_STOP_TEMP 225
 
+// Bloodtype defines
+#define BLOOD_TYPE_A_MINUS "A-"
+#define BLOOD_TYPE_A_PLUS "A+"
+#define BLOOD_TYPE_B_MINUS "B-"
+#define BLOOD_TYPE_B_PLUS "B+"
+#define BLOOD_TYPE_AB_MINUS "AB-"
+#define BLOOD_TYPE_AB_PLUS "AB+"
+#define BLOOD_TYPE_O_MINUS "O-"
+#define BLOOD_TYPE_O_PLUS "O+"
+#define BLOOD_TYPE_UNIVERSAL "U"
+#define BLOOD_TYPE_LIZARD "L"
+#define BLOOD_TYPE_VAMPIRE "V"
+#define BLOOD_TYPE_ANIMAL "Y-"
+#define BLOOD_TYPE_ETHEREAL "LE"
+#define BLOOD_TYPE_TOX "TOX"
+#define BLOOD_TYPE_OIL "Oil"
+#define BLOOD_TYPE_MEAT "MT-"
+#define BLOOD_TYPE_CLOWN "C"
+#define BLOOD_TYPE_XENO "X*"
+#define BLOOD_TYPE_H2O "H2O"
+#define BLOOD_TYPE_SNAIL "S"
+
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
 #define MOB_SIZE_SMALL 1

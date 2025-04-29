@@ -150,6 +150,9 @@
 
 	return null
 
+/obj/effect/decal/cleanable/blood/get_blood_color()
+	return color || ..()
+
 /obj/effect/decal/cleanable/proc/handle_merge_decal(obj/effect/decal/cleanable/merger)
 	if(!merger)
 		return
