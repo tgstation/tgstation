@@ -52,9 +52,13 @@
 		if(reagent.chemical_flags & REAGENT_AFFECTS_WOUNDS)
 			reagent.on_burn_wound_processing(src)
 
-	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
+	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE) && !HAS_TRAIT(victim, TRAIT_IMMUNODEFICIENCY))
 		sanitization += 0.9
-
+	if(HAS_TRAIT(victim, TRAIT_IMMUNODEFICIENCY))
+		infestation += 0.05
+		sanitization = max(sanitization - 0.15, 0)
+		if(infestation_rate <= 0.15 && prob(50))
+			infestation_rate += 0.001
 	if(limb.current_gauze)
 		limb.seep_gauze(WOUND_BURN_SANITIZATION_RATE * seconds_per_tick)
 
