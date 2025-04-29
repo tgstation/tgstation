@@ -136,8 +136,30 @@
 	name = "Potty the Potted Plant"
 	desc = "A secret agent staffed in the station's bar to protect the mystical cakehat."
 	icon_state = "potty"
+	base_icon_state = "potty"
 	custom_plant_name = TRUE
 	trimmable = FALSE
+	actions_types = list(/datum/action/item_action/toggle_light)
+	action_slots = ALL
+
+	///Boolean on whether the light is on and flashing.
+	var/light_enabled = TRUE
+
+//this is called by the action type as well
+/obj/item/kirbyplants/potty/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return .
+	light_enabled = !light_enabled
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/kirbyplants/potty/update_icon_state()
+	. = ..()
+	if(dead)
+		return .
+	if(!light_enabled)
+		icon_state = "[base_icon_state]-off"
+		return .
 
 /obj/item/kirbyplants/fern
 	name = "neglected fern"
