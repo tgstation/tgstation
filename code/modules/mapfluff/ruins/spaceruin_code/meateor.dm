@@ -47,7 +47,7 @@
 	. = ..()
 	AddComponent(/datum/component/bloody_spreader,\
 		blood_left = INFINITY,\
-		blood_dna = list("meaty DNA" = "MT-"),\
+		blood_dna = list("meaty DNA" = get_blood_type(BLOOD_TYPE_MEAT)),\
 		diseases = null,\
 	)
 
@@ -99,7 +99,7 @@
 	. = ..()
 	stored_organ = pick_weight(allowed_organs)
 
-/obj/structure/meateor_fluff/flesh_pod/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/meateor_fluff/flesh_pod/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if (attacking_item.get_sharpness() & SHARP_EDGED)
 		cut_open(user)
 		return

@@ -197,7 +197,7 @@
 	desc = "<I>Cantharellus Cibarius</I>: These jolly yellow little shrooms sure look tasty!"
 	icon_state = "chanterelle"
 
-/obj/item/food/grown/mushroom/chanterelle/attackby(obj/item/I, mob/user, params)
+/obj/item/food/grown/mushroom/chanterelle/attackby(obj/item/I, mob/user, list/modifiers)
 	if(!istype(I, /obj/item/kitchen/spoon))
 		return ..()
 	if(seed.potency < 95)
