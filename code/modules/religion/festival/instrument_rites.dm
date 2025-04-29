@@ -58,7 +58,7 @@
 	desc = "this is a prototype."
 	ritual_length = 10 SECONDS
 	favor_cost = 10
-	auto_delete = FALSE
+	rite_flags = NONE
 	///if repeats count as continuations instead of a song's end, TRUE
 	var/repeats_okay = TRUE
 	///personal message sent to the chaplain as feedback for their chosen song

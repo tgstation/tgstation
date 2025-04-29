@@ -176,15 +176,16 @@
 		performing_rite = new path(parent)
 
 	if(!performing_rite.perform_rite(user, parent))
-		if(!performing_rite.allow_several_performs)
+		if(!(performing_rite.rite_flags & RITE_ALLOW_MULTIPLE_PERFORMS))
 			QDEL_NULL(performing_rite)
 		return
 
-	performing_rite.invoke_effect(user, parent, src)
+	if(performing_rite.invoke_effect(user, parent))
+		performing_rite.post_invoke_effects(user, parent)
 	easy_access_sect.adjust_favor(-performing_rite.favor_cost)
 
-	if(!performing_rite.allow_several_performs)
-		if(performing_rite.auto_delete)
+	if(!(performing_rite.rite_flags & RITE_ALLOW_MULTIPLE_PERFORMS))
+		if(performing_rite.rite_flags & RITE_AUTO_DELETE)
 			QDEL_NULL(performing_rite)
 		else
 			performing_rite = null
