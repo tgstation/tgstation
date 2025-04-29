@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - rscadd: "Bears are now butchered for space bear hides, which can be used to craft a pelt hat and suit. Wearing this suit/hat combo will make you friendly to bears!"
+  - rscadd: "New Gimmick Assistants station trait costume: Bear!"

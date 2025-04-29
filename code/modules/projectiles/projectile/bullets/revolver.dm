@@ -185,6 +185,6 @@
 		blocked = 100
 		target.visible_message(span_danger("\The [src] is deflected!"), span_userdanger("You are protected against \the [src]!"))
 	. = ..()
-	if(reagents & NO_REACT) //first impact on a noncarbon
+	if(reagents.flags & NO_REACT) //first impact on a noncarbon
 		reagents.flags &= ~(NO_REACT)
 		reagents.handle_reactions()

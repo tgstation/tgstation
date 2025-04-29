@@ -533,7 +533,6 @@
 	hitsound = 'sound/items/weapons/punch3.ogg'
 	trigger_range = 0
 	antimagic_flags = MAGIC_RESISTANCE_HOLY
-	ignored_factions = list(FACTION_CULT)
 	range = 105
 	speed = 0.15
 

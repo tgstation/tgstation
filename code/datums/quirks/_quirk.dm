@@ -66,7 +66,7 @@
  * * new_holder - The mob to add this quirk to.
  * * quirk_transfer - If this is being added to the holder as part of a quirk transfer. Quirks can use this to decide not to spawn new items or apply any other one-time effects.
  */
-/datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source)
+/datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source, unique = TRUE)
 	if(!new_holder)
 		CRASH("Quirk attempted to be added to null mob.")
 
@@ -100,7 +100,8 @@
 	if(!quirk_transfer)
 		if(gain_text)
 			to_chat(quirk_holder, gain_text)
-		add_unique(client_source)
+		if (unique)
+			add_unique(client_source)
 
 		if(quirk_holder.client)
 			post_add()

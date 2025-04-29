@@ -56,7 +56,9 @@
 	if(isinhands)
 		return
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "gloveblood")
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "gloveblood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -71,7 +73,7 @@
 		return FALSE // We don't want to cut dyed gloves.
 	return TRUE
 
-/obj/item/clothing/gloves/attackby(obj/item/tool, mob/user, params)
+/obj/item/clothing/gloves/attackby(obj/item/tool, mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

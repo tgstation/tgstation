@@ -96,8 +96,8 @@ export const NtosNetChat = (props) => {
                 <Stack.Item grow>
                   <Button.Input
                     fluid
-                    content="New Channel..."
-                    onCommit={(e, value) =>
+                    buttonText="New Channel..."
+                    onCommit={(value) =>
                       act('PRG_newchannel', {
                         new_channel_name: value,
                       })
@@ -123,9 +123,9 @@ export const NtosNetChat = (props) => {
                   <Button.Input
                     fluid
                     mt={1}
-                    content={username + '...'}
-                    currentValue={username}
-                    onCommit={(e, value) =>
+                    buttonText={`${username}...`}
+                    value={username}
+                    onCommit={(value) =>
                       act('PRG_changename', {
                         new_name: value,
                       })
@@ -264,9 +264,8 @@ export const NtosNetChat = (props) => {
                         <>
                           <Button.Input
                             fluid
-                            content="Save log..."
-                            defaultValue="new_log"
-                            onCommit={(e, value) =>
+                            buttonText="Save log as..."
+                            onCommit={(value) =>
                               act('PRG_savelog', {
                                 log_name: value,
                               })
@@ -290,8 +289,8 @@ export const NtosNetChat = (props) => {
                           <Button.Input
                             fluid
                             disabled={strong}
-                            content="Rename Channel..."
-                            onCommit={(e, value) =>
+                            buttonText="Rename Channel..."
+                            onCommit={(value) =>
                               act('PRG_renamechannel', {
                                 new_name: value,
                               })
@@ -299,8 +298,8 @@ export const NtosNetChat = (props) => {
                           />
                           <Button.Input
                             fluid
-                            content="Set Password..."
-                            onCommit={(e, value) =>
+                            buttonText="Set Password..."
+                            onCommit={(value) =>
                               act('PRG_setpassword', {
                                 new_password: value,
                               })

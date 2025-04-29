@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Against curtains and spider webs, demolition strength is inverted - so toolboxes are weaker and swords are stronger."
-  - balance: "Fireaxes and Chainsaws have a weaker demolition modifier while not wielded or active (This is not factored into above, though.)"

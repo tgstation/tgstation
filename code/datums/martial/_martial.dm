@@ -24,6 +24,8 @@
 	var/smashes_tables = FALSE
 	/// If TRUE, a combo meter will be displayed on the HUD for the current streak
 	var/display_combos = FALSE
+	///The Combo HUD given to display comboes, if we're set to display them.
+	var/atom/movable/screen/combo/combo_display
 	/// The length of time until streaks are auto-reset.
 	var/combo_timer = 6 SECONDS
 	/// Timer ID for the combo reset timer.
@@ -230,7 +232,7 @@
 		streak = copytext(streak, 1 + length(streak[1]))
 	if(display_combos)
 		timerid = addtimer(CALLBACK(src, PROC_REF(reset_streak), null, FALSE), combo_timer, TIMER_UNIQUE | TIMER_STOPPABLE)
-		holder.hud_used?.combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
+		combo_display.update_icon_state(streak, combo_timer - 2 SECONDS)
 
 /**
  * Resets the current streak.
@@ -245,7 +247,7 @@
 	current_target = WEAKREF(new_target)
 	streak = ""
 	if(display_combos && update_icon)
-		holder.hud_used?.combo_display.update_icon_state(streak)
+		combo_display.update_icon_state(streak)
 
 /datum/martial_art/proc/smash_table(mob/living/source, mob/living/pushed_mob, obj/structure/table/table)
 	SIGNAL_HANDLER
@@ -334,6 +336,11 @@
 	RegisterSignal(new_holder, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
 	RegisterSignal(new_holder, COMSIG_LIVING_GRAB, PROC_REF(attempt_grab))
 	RegisterSignals(new_holder, list(COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING), PROC_REF(smash_table))
+	if(display_combos)
+		if(new_holder.hud_used)
+			on_hud_created(new_holder)
+		else
+			RegisterSignal(new_holder, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 
 /**
  * Called when this martial art is removed from a mob.
@@ -344,6 +351,16 @@
 	if(help_verb)
 		remove_verb(remove_from, help_verb)
 	UnregisterSignal(remove_from, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_LIVING_TABLE_SLAMMING, COMSIG_LIVING_TABLE_LIMB_SLAMMING))
+	if(!isnull(combo_display))
+		QDEL_NULL(combo_display)
+
+///Gives the owner of the martial art the combo HUD.
+/datum/martial_art/proc/on_hud_created(mob/source)
+	SIGNAL_HANDLER
+	var/datum/hud/hud_used = source.hud_used
+	combo_display = new(null, hud_used)
+	hud_used.infodisplay += combo_display
+	hud_used.show_hud(hud_used.hud_version)
 
 /mob/living/proc/verb_switch_style()
 	set name = "Swap Style"
