@@ -162,6 +162,7 @@ xxx xxx xxx
  * Returns the junction to use (you almost always want this to just be junction)
 */
 /atom/proc/smoothing_allowed(atom/smoothing_with, direction, junction)
+	SHOULD_BE_PURE(TRUE)
 	stack_trace("Unoverrided call to allow_smooth by [type], if you're going to have SMOOTH_PROC_FILTER (or SMOOTH_BORDER_OBJECT) set you need to do something with it")
 	return NONE
 
