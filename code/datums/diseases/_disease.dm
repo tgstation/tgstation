@@ -109,7 +109,7 @@
 			return FALSE
 
 	if(has_cure())
-		cure_mod = cure_chance
+		cure_mod = HAS_TRAIT(target, TRAIT_IMMUNODEFICIENCY) ? cure_chance / 2 : cure_chance
 		if(istype(src, /datum/disease/advance))
 			cure_mod = max(cure_chance, DISEASE_MINIMUM_CHEMICAL_CURE_CHANCE)
 		if(disease_flags & CHRONIC && SPT_PROB(cure_mod, seconds_per_tick))
