@@ -354,6 +354,7 @@
 			data["masterExists"] = loc_shuttle?.master_blueprint?.resolve()
 		else if(on_shuttle_frame)
 			data["size"] = length(frame.turfs) - length(frame.shuttle_covered_turfs)
+			data["problems"] = shuttle_build_check(current_turf)
 	else
 		var/obj/item/shuttle_blueprints/master = linked_shuttle.master_blueprint?.resolve()
 		data["masterExists"] = master
@@ -370,8 +371,8 @@
 		data["apcs"] = apcs
 		data["idle"] = linked_shuttle.mode == SHUTTLE_IDLE
 		if(on_shuttle_frame)
-			data["frameIsAdjacent"] = !!(frame.adjacent_shuttles[linked_shuttle])
 			data["size"] = length(frame.turfs) - length(frame.shuttle_covered_turfs) + linked_shuttle.turf_count
+			data["problems"] = shuttle_expand_check(current_turf)
 	return data
 
 /obj/item/shuttle_blueprints/proc/link_to_shuttle(obj/docking_port/mobile/custom/shuttle, is_master = FALSE)

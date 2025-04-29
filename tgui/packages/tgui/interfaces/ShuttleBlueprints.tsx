@@ -35,7 +35,6 @@ type ShuttleConfigurationUniqueData = {
   apcs: Record<string, BooleanLike>;
   neighboringAreas: Record<string, string>;
   idle: BooleanLike;
-  frameIsAdjacent: BooleanLike;
 };
 
 type ShuttleBlueprintsData = {
@@ -43,7 +42,6 @@ type ShuttleBlueprintsData = {
   visualizing: BooleanLike;
   masterExists: BooleanLike;
   isMaster: BooleanLike;
-  size?: number;
   maxShuttleSize: number;
 } & (OnShuttleFrameData | OffShuttleFrameData) &
   (ShuttleConstructionUnieuqData | ShuttleConfigurationUniqueData);
@@ -51,10 +49,13 @@ type ShuttleBlueprintsData = {
 type OnShuttleFrameData = {
   onShuttleFrame: 1;
   size: number;
+  problems: number;
 };
 
 type OffShuttleFrameData = {
   onShuttleFrame: 0;
+  size: undefined;
+  problems: undefined;
 };
 
 type DirectionPadProps = {
@@ -71,6 +72,13 @@ const directionData: [Direction, string][] = [
   [Direction.EAST, 'right'],
   [Direction.WEST, 'left'],
 ];
+
+type ProblemsTooltipProps = {
+  description: string;
+  problemHeader: string;
+  problems: number;
+  problemStrings: string[];
+};
 
 const DirectionPad = (props: DirectionPadProps) => {
   const { title, tooltip, enabledDirections, selectedDirection, onSelect } =
@@ -137,6 +145,27 @@ const VisualizationToggle = (props: VisualizationToggleProps) => {
   );
 };
 
+const ProblemsTooltip = (props: ProblemsTooltipProps) => {
+  const { description, problemHeader, problems, problemStrings } = props;
+  return (
+    <Box>
+      {description}
+      {problems ? (
+        <>
+          <Box>{problemHeader}</Box>
+          {problemStrings.reduce(
+            (problemList, problemString, i) =>
+              problems & (1 << i)
+                ? [...problemList, <Box key={i}>{`● ${problemString}`}</Box>]
+                : problemList,
+            [],
+          )}
+        </>
+      ) : undefined}
+    </Box>
+  );
+};
+
 const ShuttleConstruction = () => {
   const [shuttleDirection, setShuttleDirection] = useState<Direction>(
     Direction.NORTH,
@@ -153,8 +182,8 @@ const ShuttleConstruction = () => {
     masterExists,
     size,
     maxShuttleSize,
+    problems,
   } = data;
-  const tooLarge = (size ?? 0) > maxShuttleSize;
   return (
     <Stack justify="space-around">
       <Stack.Item grow>
@@ -175,15 +204,22 @@ const ShuttleConstruction = () => {
             <Stack vertical>
               <Stack.Item>
                 <Button.Confirm
-                  disabled={!onShuttleFrame || tooManyShuttles || tooLarge}
+                  disabled={!onShuttleFrame || tooManyShuttles || problems}
                   tooltip={
-                    tooManyShuttles
-                      ? 'There are too many shuttles already.'
-                      : onShuttleFrame
-                        ? tooLarge
-                          ? 'This shuttle frame is too large.'
-                          : null
-                        : 'You must be standing on a shuttle frame to do this.'
+                    <ProblemsTooltip
+                      description="Create a new shuttle using a shuttle frame."
+                      problemHeader="The following problems prevent you from creating a shuttle with this frame."
+                      problems={problems ?? 0}
+                      problemStrings={[
+                        'You are not on a shuttle frame.',
+                        'There are too many custom shuttles currently.',
+                        'This frame is too large.',
+                        'This frame includes the APC of a custom area, but does not enclose the entire area.\
+                         Remove the APC or add the rest of the area to the frame.',
+                        'This frame encroaches on an area custom shuttles may not dock at.',
+                        'This frame includes an APC belonging to a non-custom area.',
+                      ]}
+                    />
                   }
                   onClick={() =>
                     act('tryBuildShuttle', { dir: shuttleDirection })
@@ -254,7 +290,7 @@ const ShuttleConfiguration = () => {
     isMaster,
     size,
     maxShuttleSize,
-    frameIsAdjacent,
+    problems,
   } = data;
   const { name: currentAreaName, ref: currentAreaRef } = currentArea;
   const { name: mergeAreaName, ref: mergeAreaRef } = mergeArea;
@@ -359,20 +395,22 @@ const ShuttleConfiguration = () => {
             <Stack>
               <Stack.Item>
                 <Button.Confirm
-                  disabled={
-                    !(idle && onShuttleFrame && frameIsAdjacent) || tooLarge
-                  }
+                  disabled={!(idle && onShuttleFrame && problems) || tooLarge}
                   tooltip={
-                    'Expand the linked shuttle with an incomplete shuttle frame.' +
-                    (idle
-                      ? onShuttleFrame
-                        ? frameIsAdjacent
-                          ? tooLarge
-                            ? '\nThis shuttle frame is too large.'
-                            : ''
-                          : '\nThis shuttle frame is not adjacent to the linked shuttle.'
-                        : '\nYou must be on an incomplete shuttle frame to do this.'
-                      : '\nThe shuttle must be idle to do this.')
+                    <ProblemsTooltip
+                      description="Expand the linked shuttle with an adjacent shuttle frame."
+                      problemHeader="The following problems prevent you from expanding the shuttle with this frame."
+                      problems={problems ?? 0}
+                      problemStrings={[
+                        'You are not on a shuttle frame.',
+                        'This frame is not adjacent to the linked shuttle.',
+                        'This frame is too large.',
+                        'This frame includes the APC of a custom area, but does not enclose the entire area.\
+                         Remove the APC or add the rest of the area to the frame.',
+                        'This frame encroaches on an area custom shuttles may not dock at.',
+                        'This frame includes an APC belonging to a non-custom area.',
+                      ]}
+                    />
                   }
                   onClick={() => act('expandWithFrame')}
                 >

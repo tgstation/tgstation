@@ -333,10 +333,11 @@ GLOBAL_LIST_EMPTY(shuttle_frames_by_turf)
 		if(turfs_not_in_frame_count)
 			if(custom_area.apc)
 				var/obj/machinery/power/apc/apc = custom_area.apc
-				var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
-				if(turfs[get_turf(apc)] || turfs[wallmount_comp.hanging_wall_turf])
+				var/list/wallmount_comps = apc.GetComponents(/datum/component/wall_mounted)
+				var/datum/component/wall_mounted/wallmount_comp = length(wallmount_comps) && wallmount_comps[1]
+				if(turfs[get_turf(apc)] || (wallmount_comp && turfs[wallmount_comp.hanging_wall_turf]))
 					. |= CUSTOM_AREA_NOT_COMPLETELY_CONTAINED
-		else
+		else if(areas)
 			areas[custom_area] = area_turfs - turfs_not_in_frame
 		turfs -= area_turfs
 	while(length(turfs))
@@ -347,8 +348,9 @@ GLOBAL_LIST_EMPTY(shuttle_frames_by_turf)
 			. |= INTERSECTS_NON_WHITELISTED_AREA
 		if(checked_area.apc)
 			var/obj/machinery/power/apc/apc = checked_area.apc
-			var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
-			if(turfs[get_turf(apc)] || turfs[wallmount_comp.hanging_wall_turf])
+			var/list/wallmount_comps = apc.GetComponents(/datum/component/wall_mounted)
+			var/datum/component/wall_mounted/wallmount_comp = length(wallmount_comps) && wallmount_comps[1]
+			if(turfs[get_turf(apc)] || (wallmount_comp && turfs[wallmount_comp.hanging_wall_turf]))
 				. |= CONTAINS_APC_OF_NON_CUSTOM_AREA
 		turfs -= area_turfs
 
