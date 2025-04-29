@@ -9,11 +9,7 @@
 	icon = 'icons/obj/toys/dice.dmi'
 	icon_state = "dicebag"
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/storage/dice/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.set_holdable(/obj/item/dice)
+	storage_type = /datum/storage/dice
 
 /obj/item/storage/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
@@ -482,7 +478,7 @@
 	school = SCHOOL_CONJURATION
 	cooldown_time = 10 SECONDS
 
-	invocation = "JE VES"
+	invocation = "JE VES?"
 	invocation_type = INVOCATION_WHISPER
 	spell_requirements = NONE
 	spell_max_level = 0 //cannot be improved

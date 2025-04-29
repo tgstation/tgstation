@@ -946,13 +946,6 @@
 		UNTYPED_LIST_ADD(keys, key)
 	return keys
 
-///Gets the total amount of everything in the associative list.
-/proc/assoc_value_sum(list/input)
-	var/keys = 0
-	for(var/key in input)
-		keys += input[key]
-	return keys
-
 ///compare two lists, returns TRUE if they are the same
 /proc/compare_list(list/l,list/d)
 	if(!islist(l) || !islist(d))
@@ -1334,3 +1327,20 @@
 				&& deep_compare_list(log_1["stack"], log_2["stack"])
 		else
 			return TRUE
+
+
+/**
+ * Similar to pick_weight_recursive, except without the weight part, meaning it should hopefully not take
+ * up as much computing power for things that don't +need+ weights.
+ * * * Able to handle cases such as:
+ * * pick_recursive(list(a), list(b), list(c))
+ * * pick_recursive(list(list(a), list(b)))
+ * * pick_recursive(a, list(b), list(list(c), list(d)))
+ * * pick_recusrive(list(a, b, c), d, e)
+ * Really any combination of lists & vars, as long as the passed lists aren't empty
+ */
+/proc/pick_recursive(...)
+	var/result = pick(args)
+	while(islist(result))
+		result = pick(result)
+	return result

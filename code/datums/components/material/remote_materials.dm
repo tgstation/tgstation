@@ -67,6 +67,7 @@ handles linking back and forth.
 			mat_container = silo.materials
 			if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 				RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+				RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))
 
 	if (!mat_container && allow_standalone)
 		_MakeLocal()
@@ -124,7 +125,7 @@ handles linking back and forth.
 	if (QDELETED(old_silo) || silo != old_silo)
 		return
 
-	UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
+	UnregisterSignal(parent, list(COMSIG_ATOM_ITEM_INTERACTION, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY))
 	silo.ore_connected_machines -= src
 	silo = null
 	mat_container = null
@@ -164,22 +165,28 @@ handles linking back and forth.
 		mat_container = new_container
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
 		return ITEM_INTERACT_SUCCESS
 
-///Insert mats into silo
 /datum/component/remote_materials/proc/on_item_insert(datum/source, mob/living/user, obj/item/target)
 	SIGNAL_HANDLER
+	// Only insert stacks with left click
+	if(isstack(target))
+		return attempt_insert(user, target)
 
-	//Allows you to attack the machine with iron sheets for e.g.
+/datum/component/remote_materials/proc/on_secondary_insert(datum/source, mob/living/user, obj/item/target)
+	SIGNAL_HANDLER
+	return attempt_insert(user, target)
+
+/// Insert mats into silo
+/datum/component/remote_materials/proc/attempt_insert(mob/living/user, obj/item/target)
 	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
 		return
 
 	if(silo)
 		mat_container.user_insert(target, user, parent)
-
-	return ITEM_INTERACT_SUCCESS
-
+		return ITEM_INTERACT_SUCCESS
 
 /**
  * Checks if the param silo is in the same level as this components parent i.e. connected machine, rcd, etc

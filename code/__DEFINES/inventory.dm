@@ -113,6 +113,16 @@ DEFINE_BITFIELD(no_equip_flags, list(
 ///hides antennae
 #define HIDEANTENNAE (1<<15)
 
+//Bitflags for hair appendage zones
+#define HAIR_APPENDAGE_FRONT (1<<0)
+#define HAIR_APPENDAGE_LEFT (1<<1)
+#define HAIR_APPENDAGE_RIGHT (1<<2)
+#define HAIR_APPENDAGE_REAR (1<<3)
+#define HAIR_APPENDAGE_TOP (1<<4)
+#define HAIR_APPENDAGE_HANGING_FRONT (1<<5)
+#define HAIR_APPENDAGE_HANGING_REAR (1<<6)
+#define HAIR_APPENDAGE_ALL (HAIR_APPENDAGE_FRONT|HAIR_APPENDAGE_LEFT|HAIR_APPENDAGE_RIGHT|HAIR_APPENDAGE_REAR|HAIR_APPENDAGE_TOP|HAIR_APPENDAGE_HANGING_FRONT|HAIR_APPENDAGE_HANGING_REAR)
+
 //bitflags for clothing coverage - also used for limbs
 #define HEAD (1<<0)
 #define CHEST (1<<1)

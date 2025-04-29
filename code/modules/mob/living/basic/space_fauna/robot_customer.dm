@@ -25,6 +25,8 @@
 	var/clothes_set = "amerifat_clothes"
 	/// Reference to the hud that we show when the player hovers over us.
 	var/datum/atom_hud/hud_to_show_on_hover
+	/// Amount of grim carried by the bot dropped as it goes
+	var/grime_carried = 0
 
 /mob/living/basic/robot_customer/Initialize(
 	mapload,
@@ -46,9 +48,11 @@
 	icon = customer_info.base_icon
 	icon_state = customer_info.base_icon_state
 	name = "[pick(customer_info.name_prefixes)]-bot"
-	color = rgb(rand(80,255), rand(80,255), rand(80,255))
+	add_atom_colour(rgb(rand(80,255), rand(80,255), rand(80,255)), FIXED_COLOUR_PRIORITY)
 	clothes_set = pick(customer_info.clothing_sets)
 	update_appearance(UPDATE_ICON)
+
+	grime_carried = prob(2) ? 20 : pick(0, 0, 0, 0, rand(0, 2), rand(0, 3), rand(2, 4), 6)
 
 ///Clean up on the mobs seat etc when its deleted (Either by murder or because it left)
 /mob/living/basic/robot_customer/Destroy()
@@ -63,6 +67,12 @@
 ///Robots need robot gibs...!
 /mob/living/basic/robot_customer/spawn_gibs()
 	new /obj/effect/gibspawner/robot(drop_location(), src)
+
+/mob/living/basic/robot_customer/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if(grime_carried && prob(grime_carried * 20) && !throwing && !(movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && has_gravity())
+		new /obj/effect/decal/cleanable/dirt(old_loc)
+		grime_carried--
 
 /mob/living/basic/robot_customer/MouseEntered(location, control, params)
 	. = ..()
@@ -82,13 +92,8 @@
 		underlays.Cut()
 		underlays += new_underlays
 
-	var/mutable_appearance/features = mutable_appearance(icon, "[icon_state]_features")
-	features.appearance_flags = RESET_COLOR
-	. += features
-
-	var/mutable_appearance/clothes = mutable_appearance(icon, clothes_set)
-	clothes.appearance_flags = RESET_COLOR
-	. += clothes
+	. += mutable_appearance(icon, "[icon_state]_features", appearance_flags = RESET_COLOR|KEEP_APART)
+	. += mutable_appearance(icon, clothes_set, appearance_flags = RESET_COLOR|KEEP_APART)
 
 	var/bonus_overlays = customer_info.get_overlays(src)
 	if(bonus_overlays)

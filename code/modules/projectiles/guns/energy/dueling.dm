@@ -165,7 +165,7 @@
 	setting_overlay = mutable_appearance(icon,setting_iconstate())
 	add_overlay(setting_overlay)
 
-/obj/item/gun/energy/dueling/attackby(obj/item/W, mob/user, params)
+/obj/item/gun/energy/dueling/attackby(obj/item/W, mob/user, list/modifiers)
 	if(istype(W, /obj/item/gun/energy/dueling))
 		var/obj/item/gun/energy/dueling/other_gun = W
 
@@ -367,12 +367,7 @@
 	icon_broken = "medalbox+b"
 	base_icon_state = "medalbox"
 	icon_open = "medalboxopen"
-
-/obj/item/storage/lockbox/dueling/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_slots = 2
-	atom_storage.set_holdable(/obj/item/gun/energy/dueling)
+	storage_type = /datum/storage/lockbox/dueling
 
 /obj/item/storage/lockbox/dueling/PopulateContents()
 	. = ..()

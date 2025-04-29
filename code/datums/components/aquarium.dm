@@ -52,9 +52,18 @@
 		AQUARIUM_FLUID_SULPHWATEVER,
 		AQUARIUM_FLUID_AIR,
 	)
+	///static list of available aquarium modes
+	var/static/list/aquarium_modes = list(
+		AQUARIUM_MODE_MANUAL = "Take full control of fluid and temperature settings. There's no stasis option here.",
+		AQUARIUM_MODE_AUTO = "Let an internal processor regulate aquarium settings based on its fish population. Can temporarily fall back to stasis.",
+		AQUARIUM_MODE_SAFE = "Prevent fish from dying from wrong fluid/temperature settings and hunger, but also stops growth and reproduction",
+	)
 
 	///The size of the reagents holder which will store fish feed.
 	var/reagents_size
+
+	///The current aquarium mode, one of either AQUARIUM_MODE_MANUAL, AQUARIUM_MODE_AUTO or AQUARIUM_MODE_SAFE.
+	var/current_mode
 
 /datum/component/aquarium/Initialize(
 	min_px,
@@ -65,6 +74,7 @@
 	reagents_size = 6,
 	min_fluid_temp = MIN_AQUARIUM_TEMP,
 	max_fluid_temp = MAX_AQUARIUM_TEMP,
+	init_mode = AQUARIUM_MODE_AUTO,
 )
 
 	if(!ismovable(parent))
@@ -81,6 +91,8 @@
 	src.min_fluid_temp = min_fluid_temp
 	src.max_fluid_temp = max_fluid_temp
 	fluid_temp = clamp(fluid_temp, min_fluid_temp, max_fluid_temp)
+
+	set_aquarium_mode(init_mode)
 
 /datum/component/aquarium/RegisterWithParent()
 	if(default_beauty)
@@ -169,9 +181,12 @@
 	if(HAS_TRAIT_FROM(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
 		ADD_TRAIT(new_parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	var/atom/movable/movable = parent
+	var/old_mode = current_mode //Make sure we don't keep updating temp/fluid on AQUARIUM_MODE_AUTO for this.
+	current_mode = NONE
 	for(var/atom/movable/moving as anything in movable.contents)
 		if(HAS_TRAIT(moving, TRAIT_AQUARIUM_CONTENT))
 			moving.forceMove(new_parent)
+	current_mode = old_mode
 	if(reagents_size)
 		if(!new_parent.reagents)
 			new_parent.create_reagents(reagents_size, SEALED_CONTAINER)
@@ -220,8 +235,7 @@
 		if(!length(fishes))
 			source.balloon_alert(user, "no fish to feed!")
 			return ITEM_INTERACT_BLOCKING
-		for(var/obj/item/fish/fish as anything in fishes)
-			fish.feed(item.reagents)
+		feed_fishes(item, fishes)
 		source.balloon_alert(user, "fed the fish")
 		return ITEM_INTERACT_SUCCESS
 
@@ -261,9 +275,13 @@
 	if(world.time < last_feeding + feeding_interval)
 		return
 	last_feeding = world.time
-	var/list/fishes = get_fishes()
+	feed_fishes(movable)
+
+/datum/component/aquarium/proc/feed_fishes(atom/movable/movable, list/fishes = get_fishes())
 	for(var/obj/item/fish/fish as anything in fishes)
 		fish.feed(movable.reagents)
+	if(current_mode == AQUARIUM_MODE_AUTO && is_fish_population_safe())
+		REMOVE_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 
 /datum/component/aquarium/proc/on_plunger_act(atom/movable/source, obj/item/plunger/plunger, mob/living/user, reinforced)
 	SIGNAL_HANDLER
@@ -282,8 +300,9 @@
 
 /datum/component/aquarium/proc/on_examine(atom/movable/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
+	examine_list += span_notice("Its temperature and fluid are currently set to [EXAMINE_HINT("[fluid_temp] K")] and [EXAMINE_HINT(fluid_type)].")
 	var/panel_open = HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN)
-	examine_list += span_notice("<b>Alt-click</b> to [panel_open ? "close" : "open"] the control and feed panel.")
+	examine_list += span_notice("[EXAMINE_HINT("Alt-click")] to [panel_open ? "close" : "open"] the control and feed panel.")
 	if(panel_open && source.reagents.total_volume)
 		examine_list += span_notice("You can use a plunger to empty the feed storage.")
 
@@ -315,7 +334,11 @@
 	if(fish.stable_population < length(tracked_fish_by_type[fish.type]))
 		for(var/obj/item/fish/anyfin as anything in tracked_fish_by_type[entered.type])
 			anyfin.fish_flags |= FISH_FLAG_OVERPOPULATED
-	check_fluid_and_temperature(fish)
+
+	if(current_mode == AQUARIUM_MODE_AUTO && fish.status != FISH_DEAD)
+		get_optimal_aquarium_settings()
+	else
+		check_fluid_and_temperature(fish)
 	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_fish_status_changed))
 
 ///update the beauty_by_content of a 'beauty_by_content' key and then recalculate the beauty.
@@ -350,6 +373,8 @@
 	LAZYREMOVEASSOC(tracked_fish_by_type, fish.type, fish)
 	fish.fish_flags &= ~(FISH_FLAG_SAFE_TEMPERATURE|FISH_FLAG_SAFE_FLUID)
 	UnregisterSignal(gone, COMSIG_FISH_STATUS_CHANGED, PROC_REF(on_fish_status_changed))
+	if(current_mode == AQUARIUM_MODE_AUTO && fish.status != FISH_DEAD)
+		get_optimal_aquarium_settings()
 
 ///Return a list of fish which our fishie can reproduce with (including itself if self-reproducing)
 /datum/component/aquarium/proc/get_candidates(atom/movable/source, obj/item/fish/fish, list/candidates)
@@ -385,7 +410,7 @@
  * access this comp in multiple places just to confirm that.
  */
 /datum/component/aquarium/proc/check_fluid_and_temperature(obj/item/fish/fish)
-	if(compatible_fluid_type(fish.required_fluid_type, fluid_type) || (fluid_type == AQUARIUM_FLUID_AIR && HAS_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS)))
+	if((fluid_type in GLOB.fish_compatible_fluid_types[fish.required_fluid_type]) || (fluid_type == AQUARIUM_FLUID_AIR && HAS_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS)))
 		fish.fish_flags |= FISH_FLAG_SAFE_FLUID
 	else
 		fish.fish_flags &= ~FISH_FLAG_SAFE_FLUID
@@ -397,6 +422,8 @@
 ///Fish beauty changes when they're dead, so we need to update the beauty of the aquarium too.
 /datum/component/aquarium/proc/on_fish_status_changed(obj/item/fish/fish)
 	get_content_beauty(fish)
+	if(current_mode == AQUARIUM_MODE_AUTO)
+		get_optimal_aquarium_settings()
 
 /datum/component/aquarium/proc/update_aquarium_beauty(old_beauty)
 	if(QDELETED(parent))
@@ -452,6 +479,99 @@
 		fishes += tracked_fish_by_type[key]
 	return fishes
 
+/datum/component/aquarium/proc/is_fish_population_safe()
+	var/list/fishes = get_fishes()
+	var/alive = 0
+	var/not_safe = 0
+	for(var/obj/item/fish/fishie as anything in fishes)
+		if(fishie.status == FISH_DEAD)
+			continue
+		if(!fishie.proper_environment() || fishie.get_hunger() > FISH_STARVING_THRESHOLD * 0.9)
+			not_safe++
+		alive++
+	return not_safe <= (alive / 2)
+
+/**
+ * Called if the mode is AQUARIUM_MODE_AUTO whenever a fish is added, removed, dies or resurrected.
+ *
+ * This tries to find what the best combination of fluid and temperature. is to ensure
+ * the survival of the highest number of fishes. It also can and will activate stasis if over half of
+ * the fish population is at risk of dying. It doesn't care if the fish is big or small, useful
+ * or not. All fish are equal before the impartial eye of AQUARIUM_MODE_AUTO.
+ */
+/datum/component/aquarium/proc/get_optimal_aquarium_settings()
+	if(!length(tracked_fish_by_type))
+		REMOVE_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+		return
+
+	var/list/can_survive_with = list()
+	var/list/checked_types = list()
+	var/list/sorted_tracked = sortTim(tracked_fish_by_type.Copy(), GLOBAL_PROC_REF(cmp_list_len_dsc), associative = TRUE)
+	var/list/fish_alive_by_type = list()
+	for(var/obj/item/fish/fish_type as anything in sorted_tracked)
+		var/our_min_temp = fish_type::required_temperature_min
+		var/our_max_temp = fish_type::required_temperature_max
+		var/our_fluid_type = fish_type::required_fluid_type
+
+		checked_types += fish_type
+		LAZYINITLIST(can_survive_with[fish_type])
+
+		var/fish_amount = 0
+		for(var/obj/item/fish/fish_instance as anything in tracked_fish_by_type[fish_type])
+			if(fish_instance.status == FISH_ALIVE)
+				fish_amount++
+
+		if(!fish_amount) //all fishes of this type are dead, skip it.
+			continue
+
+		fish_alive_by_type[fish_type] = fish_amount
+
+		//Check if there's an overlap with the temp/fluid requirements of the other types.
+		for(var/obj/item/fish/enemy_type as anything in (tracked_fish_by_type - checked_types))
+			var/enem_min_temp = initial(enemy_type.required_temperature_min)
+			var/enem_max_temp = initial(enemy_type.required_temperature_max)
+			if(our_min_temp > enem_max_temp || our_max_temp < enem_min_temp)
+				continue
+			var/enem_fluid_type = initial(enemy_type.required_fluid_type)
+			if(!length(GLOB.fish_compatible_fluid_types[our_fluid_type] & GLOB.fish_compatible_fluid_types[enem_fluid_type]))
+				continue
+			can_survive_with[fish_type] |= enemy_type
+			LAZYOR(can_survive_with[enemy_type], fish_type)
+
+	var/list/highest_val_list = list(tracked_fish_by_type[1]) //In case there's only one type of fish in here...
+	var/highest_val = -1
+	for(var/fish_type as anything in can_survive_with)
+		var/list/compatible_types = can_survive_with[fish_type]
+		var/fish_amount = fish_alive_by_type[fish_type]
+		for(var/obj/item/fish/fish_instance as anything in tracked_fish_by_type[fish_type])
+			if(fish_instance.status == FISH_ALIVE)
+				fish_amount++
+		for(var/ally_type in compatible_types)
+			var/val = fish_amount + fish_alive_by_type[ally_type]
+			var/list/common_allies = compatible_types & can_survive_with[ally_type]
+			for(var/third_type in common_allies)
+				val += fish_alive_by_type[third_type]
+			if(val <= highest_val)
+				continue
+			highest_val_list = list(fish_type, ally_type) + common_allies
+			highest_val = val
+
+	var/min_temp = MIN_AQUARIUM_TEMP
+	var/max_temp = MAX_AQUARIUM_TEMP
+	var/list/possible_fluids = fluid_types.Copy()
+	for(var/obj/item/fish/chosen_type as anything in highest_val_list)
+		possible_fluids &= GLOB.fish_compatible_fluid_types[chosen_type::required_fluid_type]
+		min_temp = max(min_temp, chosen_type::required_temperature_min)
+		max_temp = min(max_temp, chosen_type::required_temperature_max)
+
+	fluid_temp = clamp(min_temp + round((max_temp - min_temp) / 2), min_fluid_temp, max_fluid_temp)
+	set_fluid_type(possible_fluids[1])
+
+	if(!is_fish_population_safe())
+		ADD_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+	else
+		REMOVE_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+
 /datum/component/aquarium/proc/interact(atom/movable/source, mob/user)
 	SIGNAL_HANDLER
 	if(HAS_TRAIT(source, TRAIT_AQUARIUM_PANEL_OPEN))
@@ -482,7 +602,9 @@
 	var/atom/movable/aquarium = parent
 	.["fluidType"] = fluid_type
 	.["temperature"] = fluid_temp
-	.["safe_mode"] = HAS_TRAIT_FROM(aquarium, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+	.["lockedFluidTemp"] = current_mode == AQUARIUM_MODE_AUTO
+	.["currentMode"] = current_mode
+	.["currentTooltip"] = aquarium_modes[current_mode]
 	.["fishData"] = list()
 	.["feedingInterval"] = feeding_interval / (1 MINUTES)
 	.["propData"] = list()
@@ -512,6 +634,10 @@
 	.["maxTemperature"] = max_fluid_temp
 	.["fluidTypes"] = fluid_types
 	.["heartIcon"] = 'icons/effects/effects.dmi'
+	var/list/modes_no_assoc = list() //the UI dropdown won't work with assoc lists here
+	for(var/mode in aquarium_modes)
+		modes_no_assoc += mode
+	.["aquariumModes"] = modes_no_assoc
 
 /datum/component/aquarium/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -531,11 +657,9 @@
 			if(params["fluid"] != fluid_type && (params["fluid"] in fluid_types))
 				set_fluid_type(params["fluid"])
 			. = TRUE
-		if("safe_mode")
-			if(HAS_TRAIT_FROM(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT))
-				REMOVE_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
-			else
-				ADD_TRAIT(movable, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+		if("change_mode")
+			var/new_mode = params["new_mode"]
+			set_aquarium_mode(new_mode)
 			. = TRUE
 		if("feeding_interval")
 			feeding_interval = params["feeding_interval"] MINUTES
@@ -553,6 +677,17 @@
 			if(!fish || !new_name || new_name == fish.name)
 				return
 			fish.AddComponent(/datum/component/rename, new_name, fish.desc)
+
+/datum/component/aquarium/proc/set_aquarium_mode(new_mode)
+	if(new_mode == current_mode)
+		return
+	REMOVE_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+	current_mode = new_mode
+	switch(current_mode)
+		if(AQUARIUM_MODE_SAFE)
+			ADD_TRAIT(parent, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
+		if(AQUARIUM_MODE_AUTO)
+			get_optimal_aquarium_settings()
 
 /datum/component/aquarium/proc/set_fluid_type(new_fluid_type)
 	var/atom/movable/movable = parent

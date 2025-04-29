@@ -313,8 +313,9 @@
 	name = "insect guts"
 	desc = "One bug squashed. Four more will rise in its place."
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "xfloor1"
-	random_icon_states = list("xfloor1", "xfloor2", "xfloor3", "xfloor4", "xfloor5", "xfloor6", "xfloor7")
+	icon_state = "floor1"
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
+	color = BLOOD_COLOR_XENO
 
 /obj/effect/decal/cleanable/confetti
 	name = "confetti"
@@ -534,10 +535,12 @@
 /obj/effect/decal/cleanable/fuel_pool/bullet_act(obj/projectile/hit_proj)
 	. = ..()
 	ignite()
+	log_combat(hit_proj.firer, src, "used [hit_proj] to ignite")
 
-/obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, params)
+/obj/effect/decal/cleanable/fuel_pool/attackby(obj/item/item, mob/user, list/modifiers)
 	if(item.ignition_effect(src, user))
 		ignite()
+		log_combat(user, src, "used [item] to ignite")
 	return ..()
 
 /obj/effect/decal/cleanable/fuel_pool/on_entered(datum/source, atom/movable/entered_atom)

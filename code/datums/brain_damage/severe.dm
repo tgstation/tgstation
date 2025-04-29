@@ -15,7 +15,7 @@
 
 /datum/brain_trauma/severe/mute/on_gain()
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/mute/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAUMA_TRAIT)
@@ -31,7 +31,7 @@
 /datum/brain_trauma/severe/aphasia/on_gain()
 	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/aphasia, LANGUAGE_APHASIA)
 	owner.grant_language(/datum/language/aphasia, source = LANGUAGE_APHASIA)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
 	if(!QDELING(owner))
@@ -49,7 +49,7 @@
 
 /datum/brain_trauma/severe/blindness/on_gain()
 	owner.become_blind(TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/blindness/on_lose()
 	owner.cure_blind(TRAUMA_TRAIT)
@@ -104,7 +104,7 @@
 	lose_text = span_notice("You can feel [subject] again!")
 
 /datum/brain_trauma/severe/paralysis/on_gain()
-	..()
+	. = ..()
 	for(var/X in paralysis_traits)
 		ADD_TRAIT(owner, X, TRAUMA_TRAIT)
 
@@ -160,83 +160,17 @@
 	name = "Monophobia"
 	desc = "Patient feels sick and distressed when not around other people, leading to potentially lethal levels of stress."
 	scan_desc = "monophobia"
-	gain_text = ""
+	gain_text = span_warning("You feel really lonely...")
 	lose_text = span_notice("You feel like you could be safe on your own.")
 	var/stress = 0
 
 /datum/brain_trauma/severe/monophobia/on_gain()
-	..()
-	if(check_alone())
-		to_chat(owner, span_warning("You feel really lonely..."))
-	else
-		to_chat(owner, span_notice("You feel safe, as long as you have people around you."))
+	. = ..()
+	owner.AddComponentFrom(REF(src), /datum/component/fearful, list(/datum/terror_handler/vomiting, /datum/terror_handler/simple_source/monophobia))
 
-/datum/brain_trauma/severe/monophobia/on_life(seconds_per_tick, times_fired)
-	..()
-	if(check_alone())
-		stress = min(stress + 0.5, 100)
-		if(stress > 10 && SPT_PROB(2.5, seconds_per_tick))
-			stress_reaction()
-	else
-		stress = max(stress - (2 * seconds_per_tick), 0)
-
-/datum/brain_trauma/severe/monophobia/proc/check_alone()
-	var/check_radius = 7
-	if(owner.is_blind())
-		check_radius = 1
-	for(var/mob/M in oview(owner, check_radius))
-		if(!isliving(M)) //ghosts ain't people
-			continue
-		if(istype(M, /mob/living/basic/pet) || M.ckey)
-			return FALSE
-	return TRUE
-
-/datum/brain_trauma/severe/monophobia/proc/stress_reaction()
-	if(owner.stat != CONSCIOUS)
-		return
-
-	var/high_stress = (stress > 60) //things get psychosomatic from here on
-	switch(rand(1, 6))
-		if(1)
-			if(high_stress)
-				to_chat(owner, span_warning("You feel really sick at the thought of being alone!"))
-			else
-				to_chat(owner, span_warning("You feel sick..."))
-			addtimer(CALLBACK(owner, TYPE_PROC_REF(/mob/living/carbon, vomit), high_stress), 5 SECONDS) //blood vomit if high stress
-		if(2)
-			if(high_stress)
-				to_chat(owner, span_warning("You feel weak and scared! If only you weren't alone..."))
-				owner.adjustStaminaLoss(50)
-			else
-				to_chat(owner, span_warning("You can't stop shaking..."))
-
-			owner.adjust_dizzy(40 SECONDS)
-			owner.adjust_confusion(20 SECONDS)
-			owner.set_jitter_if_lower(40 SECONDS)
-
-		if(3, 4)
-			if(high_stress)
-				to_chat(owner, span_warning("You're going mad with loneliness!"))
-				owner.adjust_hallucinations(60 SECONDS)
-			else
-				to_chat(owner, span_warning("You feel really lonely..."))
-
-		if(5)
-			if(high_stress)
-				if(prob(15) && ishuman(owner))
-					var/mob/living/carbon/human/H = owner
-					H.set_heartattack(TRUE)
-					to_chat(H, span_userdanger("You feel a stabbing pain in your heart!"))
-				else
-					to_chat(owner, span_userdanger("You feel your heart lurching in your chest..."))
-					owner.adjustOxyLoss(8)
-			else
-				to_chat(owner, span_warning("Your heart skips a beat."))
-				owner.adjustOxyLoss(8)
-
-		else
-			//No effect
-			return
+/datum/brain_trauma/severe/monophobia/on_lose(silent)
+	. = ..()
+	owner.RemoveComponentSource(REF(src), /datum/component/fearful)
 
 /datum/brain_trauma/severe/discoordination
 	name = "Discoordination"
@@ -262,7 +196,7 @@
 
 /datum/brain_trauma/severe/pacifism/on_gain()
 	ADD_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/pacifism/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_PACIFISM, TRAUMA_TRAIT)
@@ -325,7 +259,7 @@
 
 /datum/brain_trauma/severe/dyslexia/on_gain()
 	ADD_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/severe/dyslexia/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, TRAUMA_TRAIT)

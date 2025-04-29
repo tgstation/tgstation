@@ -48,7 +48,7 @@
 	. = ..()
 	. += span_notice("It is currently facing [dir2text(dir)]")
 
-/obj/machinery/doppler_array/attackby(obj/item/item, mob/user, params)
+/obj/machinery/doppler_array/attackby(obj/item/item, mob/user, list/modifiers)
 	if(istype(item, /obj/item/computer_disk))
 		var/obj/item/computer_disk/disk = item
 		eject_disk(user)
@@ -243,8 +243,8 @@
 
 /obj/machinery/doppler_array/Destroy()
 	inserted_disk = null
-	QDEL_NULL(records) //We only want the list nuked, not the contents.
-	. = ..()
+	records.Cut() // We only want to clear the list itself, not delete its contents.
+	return ..()
 
 /obj/machinery/doppler_array/proc/update_doppler_light()
 	SIGNAL_HANDLER

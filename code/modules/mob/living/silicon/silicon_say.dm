@@ -11,7 +11,7 @@
 	if(HAS_TRAIT(mind, TRAIT_DISPLAY_JOB_IN_BINARY))
 		designation = mind.assigned_role.title
 
-	if(isAI(src))
+	if(HAS_TRAIT(src, TRAIT_LOUD_BINARY))
 		// AIs are loud and ugly
 		spans |= SPAN_COMMAND
 
@@ -24,6 +24,12 @@
 	// If carbon, use voice to account for voice changers
 	if(iscarbon(src))
 		namepart = GetVoice()
+
+	// AI in carbon body should still have its real name
+	var/obj/item/organ/brain/cybernetic/ai/brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+	if(istype(brain))
+		namepart = brain.mainframe.name
+		designation = brain.mainframe.job
 
 	for(var/mob/M in GLOB.player_list)
 		if(M.binarycheck())

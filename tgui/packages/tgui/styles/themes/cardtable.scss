@@ -3,55 +3,24 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
-
-@use '../colors' with (
-  $primary: hsl(0, 0%, 0%),
-  $fg-map-keys: (),
-  $bg-map-keys: ()
-);
-@use '../base' with (
-  $color-bg: hsl(145.26, 73.64%, 25.29%),
-  $color-bg-grad-spread: 0%,
-  $border-radius: 0
-);
-
-//Made for the roulette table, probably requires a bunch of manual hacks to work for anything else
-.theme-cardtable {
-  // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+.theme-cardtable:root {
+  // Base
+  --color-base: hsl(145, 73%, 25%);
+  --color-primary: hsl(from var(--color-base) h s calc(l + 5));
+  --color-border-primary: hsla(0, 0%, 100%, 0.75);
+  --secondary-hue: 17.5;
+  --secondary-lightness-adjustment: -10;
+  --base-gradient-spread: 0;
 
   // Components
-  @include meta.load-css(
-    '~tgui-core/styles/components/Button',
-    $with: (
-      'color-default': hsl(145.26, 73.64%, 25.29%),
-      'color-disabled': hsl(0, 0%, 21.18%),
-      'color-selected': hsl(0, 90.3%, 32.35%),
-      'color-caution': hsl(29.5, 90.95%, 39.02%),
-      'color-danger': hsl(61.15, 100%, 30.78%)
-    )
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/NumberInput',
-    $with: ('border-color': hsl(0, 0%, 100%))
-  );
-  @include meta.load-css(
-    '~tgui-core/styles/components/ProgressBar',
-    $with: ('background-color': rgba(0, 0, 0, 0.5))
-  );
-  @include meta.load-css('~tgui-core/styles/components/Section');
-
-  // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
-  @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': hsl(17.5, 75%, 12.5%))
-  );
+  --button-background-selected: hsl(0, 90.3%, 32.35%);
+  --button-background-caution: hsl(29.5, 90.95%, 39.02%);
+  --button-background-danger: hsl(61.15, 100%, 30.78%);
+  --button-border-radius: 0;
+  --progress-bar-background: hsla(0, 0%, 0%, 0.5);
+  --tab-background-selected: var(--color-base);
 
   .Button {
-    border: base.em(2px) solid hsl(0, 0%, 100%);
+    border: var(--border-thickness-small) solid hsl(0, 0%, 100%);
   }
 }

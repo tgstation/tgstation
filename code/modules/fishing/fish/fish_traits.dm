@@ -581,6 +581,10 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(fish.required_fluid_type == AQUARIUM_FLUID_AIR)
 		fish.required_fluid_type = AQUARIUM_FLUID_FRESHWATER
 
+/datum/fish_trait/amphibious/apply_to_mob(mob/living/basic/mob)
+	. = ..()
+	ADD_TRAIT(mob, TRAIT_NODROWN, FISH_TRAIT_DATUM)
+
 /datum/fish_trait/mixotroph
 	name = "Mixotroph"
 	catalog_description = "This fish is capable of substaining itself by producing its own sources of energy (food)."
@@ -613,6 +617,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/anxiety
 	name = "Anxiety"
 	catalog_description = "This fish tends to die of stress when forced to be around too many other fish."
+
+/datum/fish_trait/anxiety/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
+	. = ..()
+	// Anxious fish are easier with a cloaked line.
+	if(rod.line && (rod.line.fishing_line_traits & FISHING_LINE_CLOAKED))
+		.[ADDITIVE_FISHING_MOD] -= FISH_TRAIT_MINOR_DIFFICULTY_BOOST
 
 /datum/fish_trait/anxiety/apply_to_fish(obj/item/fish/fish)
 	. = ..()

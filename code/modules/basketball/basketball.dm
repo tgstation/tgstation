@@ -149,7 +149,7 @@
 
 	user.balloon_alert_to_viewers("fumbles the ball")
 
-/obj/item/toy/basketball/attack(mob/living/carbon/target, mob/living/user, params)
+/obj/item/toy/basketball/attack(mob/living/carbon/target, mob/living/user, list/modifiers)
 	if(!iscarbon(target) || user.combat_mode)
 		return ..()
 

@@ -55,9 +55,7 @@
 	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/balloon_mallet/check_requirements(mob/user, list/collected_requirements)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
-		return TRUE
+	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
 
 /datum/crafting_recipe/tailwhip
 	name = "Liz O' Nine Tails"

@@ -35,6 +35,7 @@
 	book_data = new(starting_title, starting_author, starting_content)
 
 	AddElement(/datum/element/falling_hazard, damage = 5, wound_bonus = 0, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
+	AddElement(/datum/element/burn_on_item_ignition)
 
 /obj/item/book/examine(mob/user)
 	. = ..()
@@ -97,10 +98,7 @@
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
 	display_content(user)
 
-/obj/item/book/attackby(obj/item/attacking_item, mob/living/user, params)
-	if(burn_paper_product_attackby_check(attacking_item, user))
-		return
-
+/obj/item/book/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 	if(IS_WRITING_UTENSIL(attacking_item))
 		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return
@@ -181,7 +179,7 @@
 				user.balloon_alert(user, "book added to inventory")
 				playsound(loc, 'sound/items/barcodebeep.ogg', 20, FALSE)
 
-	else if(try_carve(attacking_item, user, params))
+	else if(try_carve(attacking_item, user, modifiers))
 		return
 	return ..()
 
@@ -190,7 +188,7 @@
 	icon_state = "book[rand(1, maximum_book_state)]"
 
 /// Called when user attempts to carve the book with an item
-/obj/item/book/proc/try_carve(obj/item/carving_item, mob/living/user, params)
+/obj/item/book/proc/try_carve(obj/item/carving_item, mob/living/user, list/modifiers)
 	if(carved)
 		return FALSE
 	if(!user.combat_mode)
