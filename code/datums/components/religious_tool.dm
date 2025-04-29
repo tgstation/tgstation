@@ -44,8 +44,8 @@
 	RegisterSignal(SSdcs, COMSIG_RELIGIOUS_SECT_RESET, PROC_REF(on_sect_reset))
 
 /datum/component/religious_tool/Destroy(force)
+	QDEL_NULL(performing_rite)
 	easy_access_sect = null
-	performing_rite = null
 	catalyst_type = null
 	after_sect_select_cb = null
 	return ..()
