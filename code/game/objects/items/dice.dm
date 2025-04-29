@@ -421,25 +421,9 @@
 			new /obj/item/book/granter/action/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
-			selected_turf.visible_message(span_userdanger("A Dice Servant appears in a cloud of smoke!")) //MARKER HERE
-			var/mob/living/carbon/human/human_servant = new(drop_location())
-			do_smoke(0, holder = src, location = drop_location())
-
-			var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[user.real_name]'s")] [span_notice("Servant")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 5 SECONDS, checked_target = human_servant, alert_pic = user, role_name_text = "dice servant")
-			if(chosen_one)
-				message_admins("[ADMIN_LOOKUPFLW(chosen_one)] was spawned as Dice Servant")
-				human_servant.PossessByPlayer(chosen_one.key)
-
-			human_servant.equipOutfit(/datum/outfit/butler)
-			var/datum/mind/servant_mind = new /datum/mind()
-			var/datum/antagonist/magic_servant/servant_antagonist = new
-			servant_mind.transfer_to(human_servant)
-			servant_antagonist.setup_master(user)
-			servant_mind.add_antag_datum(servant_antagonist)
-
-			var/datum/action/cooldown/spell/summon_mob/summon_servant = new(user.mind || user, human_servant)
+			selected_turf.visible_message(span_userdanger("You feel a tingle of magical power at your fingertips!"))
+			var/datum/action/cooldown/spell/summon_mob/summon_servant = new(user.mind || user)
 			summon_servant.Grant(user)
-
 		if(17)
 			//Tator Kit
 			selected_turf.visible_message(span_userdanger("A suspicious box appears!"))
@@ -488,25 +472,49 @@
 
 	var/datum/weakref/summon_weakref
 
-/datum/action/cooldown/spell/summon_mob/New(Target, mob/living/summoned_mob)
+/datum/action/cooldown/spell/summon_mob/Grant(mob/grant_to)
 	. = ..()
-	if(summoned_mob)
-		summon_weakref = WEAKREF(summoned_mob)
+	find_servant()
 
-/datum/action/cooldown/spell/summon_mob/cast(atom/cast_on)
+/datum/action/cooldown/spell/summon_mob/cast()
 	. = ..()
 	var/mob/living/to_summon = summon_weakref?.resolve()
+	if(to_summon == null)
+		find_servant()
+		owner.balloon_alert(owner, "conjuring servant...")
+		return
+
 	if(QDELETED(to_summon))
-		to_chat(cast_on, span_warning("You can't seem to summon your servant - it seems they've vanished from reality, or never existed in the first place..."))
+		to_chat(owner, span_warning("You can't seem to summon your servant - it seems they've vanished from reality, or never existed in the first place..."))
 		return
 
 	do_teleport(
 		to_summon,
-		get_turf(cast_on),
+		get_turf(owner),
 		precision = 1,
 		asoundin = 'sound/effects/magic/wand_teleport.ogg',
 		asoundout = 'sound/effects/magic/wand_teleport.ogg',
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
+
+/datum/action/cooldown/spell/summon_mob/proc/find_servant()
+	var/mob/chosen_one = SSpolling.poll_ghost_candidates("Do you want to play as [span_danger("[owner.real_name]'s")] [span_notice("Servant")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 10 SECONDS, alert_pic = owner, role_name_text = "dice servant")
+	if(!chosen_one)
+		return
+	message_admins("[ADMIN_LOOKUPFLW(chosen_one)] was spawned as Dice Servant")
+	var/turf/spawn_location = get_ranged_target_turf(owner, pick(GLOB.alldirs), 2)
+	spawn_location.visible_message(span_userdanger("A Dice Servant appears in a cloud of smoke!"))
+	var/mob/living/carbon/human/human_servant = new(spawn_location)
+	do_smoke(0, holder = src, location = spawn_location)
+	human_servant.PossessByPlayer(chosen_one.key)
+	summon_weakref = WEAKREF(human_servant)
+
+	human_servant.equipOutfit(/datum/outfit/butler)
+	var/datum/mind/servant_mind = new /datum/mind()
+	var/datum/antagonist/magic_servant/servant_antagonist = new
+
+	servant_mind.transfer_to(human_servant)
+	servant_antagonist.setup_master(owner)
+	servant_mind.add_antag_datum(servant_antagonist)
 
 #undef MIN_SIDES_ALERT
