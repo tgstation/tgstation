@@ -1,0 +1,6 @@
+author: "Wallem"
+delete-after: True
+changes:
+  - rscadd: "Xenobio consoles now work off a tube system instead of sudden teleportation"
+  - qol: "Xenobio consoles have a new HUD to show monkey/slime amounts, and slime processors can now suck up more than 1 slime at a time depending on their matter bin"
+  - image: "Added some stripes to the monkey recycler to make it a little more obvious it's not a meat grinder"
