@@ -30,7 +30,7 @@ import { telemetryMiddleware } from './telemetry';
 perf.mark('inception', window.performance?.timeOrigin);
 perf.mark('init');
 
-const bus = new EventBus(listeners);
+export const bus = new EventBus(listeners);
 
 const store = configureStore({
   reducer: combineReducers({

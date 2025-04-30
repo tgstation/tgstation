@@ -13,14 +13,12 @@ import {
 } from 'tgui-core/components';
 import { toFixed } from 'tgui-core/math';
 
-import { useAudioStore } from '../events/stores/audio';
+import { stopMusic } from '../events/callbacks/audio';
 import { useSettings } from '../settings/hooks';
 import { useAudio } from './hooks';
 import { AudioPlayer } from './player';
 
 export const player = new AudioPlayer();
-player.onPlay(() => useAudioStore.getState().setPlaying(true));
-player.onStop(() => useAudioStore.getState().setPlaying(false));
 
 function getDate(uploaded: string | undefined): string {
   if (!uploaded) return 'Unknown Date';
@@ -37,7 +35,7 @@ function getDate(uploaded: string | undefined): string {
 }
 
 export function NowPlayingWidget(props) {
-  const { meta, playing, stopMusic } = useAudio();
+  const { meta, playing } = useAudio();
   const {
     album = 'Unknown Album',
     artist = 'Unknown Artist',

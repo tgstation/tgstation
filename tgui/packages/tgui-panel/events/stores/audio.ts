@@ -18,8 +18,7 @@ type AudioState = {
 };
 
 type Actions = {
-  setMeta: (meta: Meta) => void;
-  setPlaying: (on: boolean) => void;
+  startMusic: (track: Meta) => void;
   stopMusic: () => void;
   toggle: () => void;
 };
@@ -30,15 +29,12 @@ export const useAudioStore = create<AudioState & Actions>((set) => ({
   track: null,
   visible: false,
 
-  setMeta: (meta) =>
+  startMusic: (song) =>
     set(() => ({
-      meta,
-    })),
-
-  setPlaying: (on) =>
-    set(() => ({
-      playing: on,
-      visible: on,
+      meta: song,
+      playing: true,
+      track: song.link ?? null,
+      visible: true,
     })),
 
   stopMusic: () =>

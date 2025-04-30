@@ -19,14 +19,8 @@ export class AudioPlayer {
   options: AudioOptions;
   volume: number;
 
-  onPlaySubscribers: { (): void }[];
-  onStopSubscribers: { (): void }[];
-
   constructor() {
     this.element = null;
-
-    this.onPlaySubscribers = [];
-    this.onStopSubscribers = [];
   }
 
   destroy(): void {
@@ -39,8 +33,11 @@ export class AudioPlayer {
     }
 
     this.options = options;
+    this.element = new Audio(url);
 
-    const audio = (this.element = new Audio(url));
+    const audio = this.element;
+    if (!audio) return;
+
     audio.volume = this.volume;
     audio.playbackRate = this.options.pitch || 1;
 
@@ -68,8 +65,6 @@ export class AudioPlayer {
     }
 
     audio.play()?.catch((error) => logger.log('playback error', error));
-
-    this.onPlaySubscribers.forEach((subscriber) => subscriber());
   }
 
   stop(): void {
@@ -79,8 +74,6 @@ export class AudioPlayer {
 
     this.element.pause();
     this.element = null;
-
-    this.onStopSubscribers.forEach((subscriber) => subscriber());
   }
 
   setVolume(volume: number): void {
@@ -89,13 +82,5 @@ export class AudioPlayer {
     if (!this.element) return;
 
     this.element.volume = volume;
-  }
-
-  onPlay(subscriber: () => void): void {
-    this.onPlaySubscribers.push(subscriber);
-  }
-
-  onStop(subscriber: () => void): void {
-    this.onStopSubscribers.push(subscriber);
   }
 }

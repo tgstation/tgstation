@@ -20,6 +20,7 @@ export const Panel = (props) => {
   const { visible: audioVisible, toggle: audioToggle } = useAudio();
   const settings = useSettings();
   const game = useGame();
+
   if (process.env.NODE_ENV !== 'production') {
     const { useDebug, KitchenSink } = require('tgui/debug');
     const debug = useDebug();
