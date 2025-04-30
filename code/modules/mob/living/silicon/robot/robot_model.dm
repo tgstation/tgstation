@@ -142,7 +142,7 @@
 		cyborg.put_in_hand(module, held_modules.Find(module))
 	if(active_module)
 		cyborg.select_module(held_modules.Find(active_module))
-
+	atom_storage.refresh_views()
 
 ///Restocks things that don't take mats, generally at a power cost. Returns True if anything was restocked/replaced, and False otherwise.
 /obj/item/robot_model/proc/respawn_consumable(mob/living/silicon/robot/cyborg, coeff = 1)

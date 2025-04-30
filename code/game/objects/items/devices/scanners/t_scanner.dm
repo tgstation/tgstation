@@ -31,8 +31,6 @@
 	toggle_on()
 
 /obj/item/t_scanner/cyborg_unequip(mob/user)
-	if(!shut_off_on_unequip)
-		return
 	if(!on)
 		return
 	toggle_on()
