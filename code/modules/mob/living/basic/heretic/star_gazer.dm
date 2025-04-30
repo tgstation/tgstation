@@ -287,7 +287,7 @@
 /datum/looping_sound/gazer_beam
 	mid_sounds = list('sound/mobs/non-humanoids/stargazer/beam_loop_one.ogg')
 	mid_length = 109
-	volume = 50
+	volume = 80
 
 /obj/effect/ebeam/phase_in // Beam subtype that has a "windup" phase
 	alpha = 0
@@ -323,7 +323,7 @@
 					continue
 				var/mob/living/living_victim = victim
 				if(living_victim.stat > CONSCIOUS)
-					playsound(living_victim, 'sound/effects/supermatter.ogg', 50, TRUE)
+					playsound(living_victim, 'sound/effects/supermatter.ogg', 80, TRUE)
 					living_victim.dust()
 				living_victim.emote("scream")
 				living_victim.apply_status_effect(/datum/status_effect/star_mark)

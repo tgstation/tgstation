@@ -314,7 +314,7 @@
 	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED), REF(src))
 	wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 	UnregisterSignal(wearer, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
-	QDEL_NULL(health_hud)
+	on_hud_remove(wearer)
 	return ..()
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/equipped(mob/living/user, slot)
@@ -325,7 +325,8 @@
 		user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED), REF(src))
 		user.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 		UnregisterSignal(user, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
-		QDEL_NULL(health_hud)
+		if(health_hud in user.hud_used.infodisplay)
+			on_hud_remove(user)
 		return
 
 	// Gives the hud to the wearer, if there's no hud, register the signal to be given on creation
@@ -343,15 +344,46 @@
 	RegisterSignal(user, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 
 /// Gives the health HUD to the wearer
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_created(mob/source)
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_created(mob/living/carbon/human/wearer)
 	SIGNAL_HANDLER
-	var/datum/hud/original_hud = source.hud_used
+	var/datum/hud/original_hud = wearer.hud_used
+	// Remove the old health elements
+	var/list/to_remove = list(/atom/movable/screen/stamina, /atom/movable/screen/healths, /atom/movable/screen/healthdoll/human)
+	for(var/removing in original_hud.infodisplay)
+		if(is_type_in_list(removing, to_remove))
+			original_hud.infodisplay -= removing
+			QDEL_NULL(removing)
+	wearer.mob_mood.unmodify_hud()
+	// Add the moon health hud element
 	health_hud = new(null, original_hud)
 	original_hud.infodisplay += health_hud
 	original_hud.show_hud(original_hud.hud_version)
-	UnregisterSignal(source, COMSIG_MOB_HUD_CREATED)
+	UnregisterSignal(wearer, COMSIG_MOB_HUD_CREATED)
+
+/// Removes the HUD element from the wearer
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_hud_remove(mob/living/carbon/human/wearer)
+	var/datum/hud/original_hud = wearer.hud_used
+	original_hud.infodisplay -= health_hud
+	// Restore the old health elements
+	var/atom/movable/screen/stamina/stamina_hud = new(null, original_hud)
+	var/atom/movable/screen/healths/old_health_hud = new(null, original_hud)
+	var/atom/movable/screen/healthdoll/human/health_doll_hud = new(null, original_hud)
+	original_hud.infodisplay += stamina_hud
+	original_hud.infodisplay += old_health_hud
+	original_hud.infodisplay += health_doll_hud
+	wearer.mob_mood.modify_hud()
+	original_hud.show_hud(original_hud.hud_version)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/allow_attack_hand_drop(mob/user)
+	if(!ishuman(user))
+		return ..()
+	var/mob/living/carbon/human/wearer = user
+	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) > 0)
+		to_chat(user, span_warning("Brain too damaged to remove!"))
+		return FALSE
+	return ..()
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
 	if(!ishuman(user))
 		return ..()
 	var/mob/living/carbon/human/wearer = user
@@ -450,7 +482,7 @@
 	icon = 'icons/hud/moon_health_64x64.dmi'
 	icon_state = "moon_hud_1"
 	base_icon_state = "moon_hud"
-	screen_loc = "WEST+0:20, SOUTH+5:0"
+	screen_loc = "EAST-1:0, SOUTH+6:16"
 
 /atom/movable/screen/moon_health/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()

@@ -411,12 +411,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SPECIAL_TRAUMA_BOOST "special_trauma_boost"
 
 //---- Brain trauma resists
-/// Resists mild brain trauma (specifically)
-#define TRAIT_RESIST_MILD_TRAUMA "resist_mild_trauma"
-/// Resists severe brain trauma (specifically)
-#define TRAIT_RESIST_SEVERE_TRAUMA "resist_severe_trauma"
-/// Resists magic brain trauma (specifically)
-#define TRAIT_RESIST_MAGIC_TRAUMA "resist_magic_trauma"
+/// Unable to gain any brain trauma whatsoever
+#define TRAIT_BRAIN_TRAUMA_IMMUNITY "brain_trauma_immunity"
 
 #define TRAIT_SPACEWALK "spacewalk"
 /// Sanity trait to keep track of when we're in hyperspace and add the appropriate element if we weren't

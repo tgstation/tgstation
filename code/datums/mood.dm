@@ -314,6 +314,7 @@
 	if(hud?.infodisplay)
 		hud.infodisplay -= mood_screen_object
 	QDEL_NULL(mood_screen_object)
+	UnregisterSignal(hud, COMSIG_QDELETING)
 
 /// Handles clicking on the mood HUD object
 /datum/mood/proc/hud_click(datum/source, location, control, params, mob/user)

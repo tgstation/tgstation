@@ -323,7 +323,7 @@
 
 //---- Moon Passive
 // Heals 5 brain damage per level
-// Prevents non-special trauma
+// Prevents brain trauma
 // Level 2 grants sleep immunity
 // Level 3, Mind gate + Ringleader's rise will channel the moon amulet effects
 /datum/status_effect/heretic_passive/moon
@@ -333,7 +333,7 @@
 /datum/status_effect/heretic_passive/moon/on_apply()
 	. = ..()
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
-	our_brain.add_traits(list(TRAIT_RESIST_MILD_TRAUMA, TRAIT_RESIST_SEVERE_TRAUMA, TRAIT_RESIST_MAGIC_TRAUMA))
+	ADD_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
 
 /datum/status_effect/heretic_passive/moon/tick(seconds_between_ticks)
 	. = ..()
@@ -356,7 +356,7 @@
 
 /datum/status_effect/heretic_passive/moon/on_remove()
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
-	our_brain.remove_traits(list(TRAIT_RESIST_MILD_TRAUMA, TRAIT_RESIST_SEVERE_TRAUMA, TRAIT_RESIST_MAGIC_TRAUMA))
+	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
 	REMOVE_TRAIT(owner, TRAIT_SLEEPIMMUNE, REF(src))
 	qdel(amulet)
 	return ..()
