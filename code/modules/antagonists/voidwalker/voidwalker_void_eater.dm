@@ -109,16 +109,18 @@
 		balloon_alert(user, "opening window...")
 		if(do_after(user, 8 SECONDS, interacting_with, hidden = TRUE))
 			var/list/target_walls = list()
-			for(var/turf/closed/wall/adjacent_wall in range(1, interacting_with))
+			target_walls += our_wall
+			for(var/turf/closed/wall/adjacent_wall in orange(1, interacting_with))
 				if(adjacent_wall.hardness >= WALL_CONVERT_STRENGTH)
-					target_walls.Add(adjacent_wall)
+					target_walls += adjacent_wall
 			for(var/turf/closed/wall/targeted_wall in target_walls)
 				playsound(targeted_wall, 'sound/effects/magic/blind.ogg', 100, TRUE)
 				new /obj/effect/temp_visual/transmute_tile_flash(targeted_wall)
 				targeted_wall.ScrapeAway()
-				new /obj/structure/grille(targeted_wall)
 				new /obj/structure/window/fulltile/tinted/voidwalker(targeted_wall)
-			COOLDOWN_START(src, wall_conversion, 40 SECONDS)
+				new /obj/structure/grille(targeted_wall)
+
+			COOLDOWN_START(src, wall_conversion, 60 SECONDS)
 
 /// Called when the voidwalker kidnapped someone
 /obj/item/void_eater/proc/refresh(mob/living/carbon/human/voidwalker)
