@@ -6,13 +6,15 @@
 
 import { createLogger } from 'tgui/logging';
 
+import { resetMusic } from '../events/callbacks/audio';
+
 const logger = createLogger('AudioPlayer');
 
-type AudioOptions = {
-  pitch?: number;
-  start?: number;
-  end?: number;
-};
+type AudioOptions = Partial<{
+  pitch: number;
+  start: number;
+  end: number;
+}>;
 
 export class AudioPlayer {
   element: HTMLAudioElement | null;
@@ -74,6 +76,8 @@ export class AudioPlayer {
 
     this.element.pause();
     this.element = null;
+
+    resetMusic();
   }
 
   setVolume(volume: number): void {
