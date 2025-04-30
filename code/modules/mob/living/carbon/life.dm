@@ -471,6 +471,28 @@
 		reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_TICK
 
+/mob/living/carbon/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	. = ..()
+
+	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
+		return
+
+	if(!(methods & INJECT) && !((methods & INGEST) && HAS_TRAIT(src, TRAIT_DRINKS_BLOOD)))
+		return
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if(blood_type.reagent_type != chem.type)
+		return
+
+	if(chem.data?["blood_type"])
+		var/datum/blood_type/donor_type = chem.data["blood_type"]
+		if(!(donor_type.type_key() in blood_type.compatible_types))
+			reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
+			return COMPONENT_NO_EXPOSE_REAGENTS
+
+	blood_volume = min(blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+	return COMPONENT_NO_EXPOSE_REAGENTS
+
 /mob/living/carbon/proc/handle_bodyparts(seconds_per_tick, times_fired)
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		. |= limb.on_life(seconds_per_tick, times_fired)

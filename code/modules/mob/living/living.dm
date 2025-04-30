@@ -1068,6 +1068,14 @@
 		return
 
 	var/trail_type = getTrail()
+	/*
+
+/mob/living/proc/getTrail()
+	if(getBruteLoss() < 300)
+		return pick("ltrails_1", "ltrails_2")
+	else
+		return pick("trails_1", "trails_2")
+		*/
 	var/trail_blood_type = get_trail_blood()
 	if(!trail_type || !trail_blood_type)
 		return
@@ -1116,9 +1124,6 @@
 	trail.add_mob_blood(src)
 	trail.bloodiness = min(bleed_amount, BLOOD_POOL_MAX)
 
-/mob/living/proc/get_trail_blood()
-	return BLOOD_STATE_HUMAN
-
 /mob/living/carbon/human/makeTrail(turf/T)
 	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || dna.blood_type.no_bleed_overlays)
 		return
@@ -1135,12 +1140,6 @@
 		var/datum/wound/iter_wound = i
 		bleed_amount += iter_wound.drag_bleed_amount()
 	return bleed_amount
-
-/mob/living/proc/getTrail()
-	if(getBruteLoss() < 300)
-		return pick("ltrails_1", "ltrails_2")
-	else
-		return pick("trails_1", "trails_2")
 
 /// Print a message about an annoying sensation you are feeling. Returns TRUE if successful.
 /mob/living/proc/itch(obj/item/bodypart/target_part = null, damage = 0.5, can_scratch = TRUE, silent = FALSE)
@@ -3053,8 +3052,3 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
 		return
 	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
-
-/// Setter for changing a mob's blood type
-/mob/living/proc/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info)
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_LIVING_CHANGED_BLOOD_TYPE, new_blood_type, update_cached_blood_dna_info)

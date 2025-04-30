@@ -1454,7 +1454,7 @@
 /mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
 	if(!isturf(loc))
 		return
-	if(get_bloodtype().no_bleed_overlays)
+	if(get_bloodtype()?.no_bleed_overlays)
 		return
 	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc)
 	our_splatter.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
@@ -1471,7 +1471,10 @@
 	for(var/obj/item/bodypart/bodypart in bodyparts)
 		bodypart.blood_dna_info = blood_dna_info
 
-/mob/living/carbon/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info = TRUE)
+/// Setter for changing a mob's blood type
+/mob/living/carbon/proc/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info = TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(isnull(dna))
 		return
 
@@ -1481,8 +1484,7 @@
 	dna.blood_type = new_blood_type
 	if(update_cached_blood_dna_info)
 		update_cached_blood_dna_info()
-
-	return ..()
+	SEND_SIGNAL(src, COMSIG_CARBON_CHANGED_BLOOD_TYPE, new_blood_type, update_cached_blood_dna_info)
 
 /mob/living/carbon/dropItemToGround(obj/item/item, force = FALSE, silent = FALSE, invdrop = TRUE)
 	if(item && ((item in organs) || (item in bodyparts))) //let's not do this, aight?

@@ -1520,11 +1520,6 @@
 	stat = new_stat
 	SEND_SIGNAL(src, COMSIG_MOB_STATCHANGE, new_stat, .)
 
-/// Proc used for custom metabolization of reagents, if any
-/mob/proc/reagent_tick(datum/reagent/chem, seconds_per_tick, times_fired)
-	SHOULD_CALL_PARENT(TRUE)
-	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_TICK, chem, seconds_per_tick, times_fired)
-
 /mob/vv_edit_var(var_name, var_value)
 	switch(var_name)
 		if(NAMEOF(src, focus))

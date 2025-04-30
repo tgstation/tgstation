@@ -15,7 +15,7 @@
 	var/evil_policy = get_policy("[type]") || "Please note that while you may be [LOWER_TEXT(name)], this does NOT give you any additional right to attack people or cause chaos."
 	// We shouldn't need this, but it prevents people using it as a dumb excuse in ahelps.
 	to_chat(quirk_holder, span_big(span_info(evil_policy)))
-	RegisterSignal(quirk_holder, COMSIG_LIVING_CHANGED_BLOOD_TYPE, PROC_REF(make_blood_evil))
+	RegisterSignal(quirk_holder, COMSIG_CARBON_CHANGED_BLOOD_TYPE, PROC_REF(make_blood_evil))
 
 /datum/quirk/evil/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -24,7 +24,7 @@
 	make_blood_evil(human_quirk_holder = human_holder, new_blood_type = human_holder.dna.blood_type)
 
 /datum/quirk/evil/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_LIVING_CHANGED_BLOOD_TYPE))
+	UnregisterSignal(quirk_holder, list(COMSIG_CARBON_CHANGED_BLOOD_TYPE))
 
 /// Get a dynamically generated blood type based off the mob's old blood type and make it 'evil'. Needs to happen whenever the blood type changes.
 /datum/quirk/evil/proc/make_blood_evil(mob/living/carbon/human/human_quirk_holder, datum/blood_type/new_blood_type, update_cached_blood_dna_info)

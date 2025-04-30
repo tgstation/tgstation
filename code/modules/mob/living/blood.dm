@@ -254,7 +254,7 @@
 							continue
 						carbon_receiver.ForceContractDisease(blood_disease)
 				var/datum/blood_type/blood_type = blood_data["blood_type"]
-				if(!ignore_incompatibility && !(blood_type.type_key() in carbon_receiver.get_bloodtype().compatible_types))
+				if(!ignore_incompatibility && !(blood_type.type_key() in carbon_receiver.get_bloodtype()?.compatible_types))
 					carbon_receiver.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 					return TRUE
 
@@ -379,7 +379,7 @@
 		blood_spew.add_blood_DNA(temp_blood_DNA, no_visuals = small_drip)
 
 /mob/living/carbon/human/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check = TRUE)
-	if(!HAS_TRAIT(src, TRAIT_NOBLOOD) && !get_bloodtype().no_bleed_overlays)
+	if(!HAS_TRAIT(src, TRAIT_NOBLOOD) && !get_bloodtype()?.no_bleed_overlays)
 		. = ..()
 
 /mob/living/carbon/alien/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check)

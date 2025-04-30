@@ -117,13 +117,16 @@
 	. |= SEND_SIGNAL(exposed_atom, COMSIG_ATOM_EXPOSE_REAGENT, src, reac_volume, methods)
 
 /// Applies this reagent to a [/mob/living]
-/datum/reagent/proc/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+/datum/reagent/proc/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(SEND_SIGNAL(src, COMSIG_REAGENT_EXPOSE_MOB, exposed_mob, methods, reac_volume, show_message, touch_protection) & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
 	if(isnull(exposed_mob.reagents)) // lots of simple mobs do not have a reagents holder
+		return
+
+	if(exposed_mob.reagent_expose(src, methods, reac_volume, show_message, touch_protection) & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
 	if(penetrates_skin & methods) // models things like vapors which penetrate the skin

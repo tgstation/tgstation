@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/list/temporary_mutations = list()
 	///For temporary name/ui/ue/blood_type modifications
 	var/list/previous = list()
-	var/mob/living/holder
+	var/mob/living/carbon/holder
 	///List of which mutations this carbon has and its assigned block
 	var/mutation_index[DNA_MUTATION_BLOCKS]
 	///List of the default genes from this mutation to allow DNA Scanner highlighting
@@ -85,16 +85,14 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	/// Weighted list of lethal meltdowns
 	var/static/list/fatal_meltdowns = list()
 
-/datum/dna/New(mob/living/new_holder)
+/datum/dna/New(mob/living/carbon/new_holder)
 	if(istype(new_holder))
 		holder = new_holder
 
 /datum/dna/Destroy()
-	if(iscarbon(holder))
-		var/mob/living/carbon/cholder = holder
-		remove_all_mutations() // mutations hold a reference to the dna
-		if(cholder.dna == src)
-			cholder.dna = null
+	remove_all_mutations() // mutations hold a reference to the dna
+	if(holder.dna == src)
+		holder.dna = null
 	holder = null
 
 	QDEL_NULL(species)
