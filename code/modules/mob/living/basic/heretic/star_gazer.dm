@@ -327,7 +327,7 @@
 					living_victim.dust()
 				living_victim.emote("scream")
 				living_victim.apply_status_effect(/datum/status_effect/star_mark)
-				living_victim.apply_damage(damage = 30, damagetype = BURN)
+				living_victim.apply_damage(damage = 30, damagetype = BURN, spread_damage = TRUE)
 	cycle_tracker++
 	damage_timer = addtimer(CALLBACK(src, PROC_REF(process_beam)), 0.3 SECONDS, TIMER_STOPPABLE)
 

@@ -404,11 +404,11 @@
 	// Heals all damage + Stamina
 	var/need_mob_update = FALSE
 	var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
-	need_mob_update += source.adjustBruteLoss((-3) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustFireLoss((-3) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustToxLoss((-3) * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
-	need_mob_update += source.adjustOxyLoss((-3) * delta_time, updating_health = FALSE)
-	need_mob_update += source.adjustStaminaLoss((-15) * delta_time, updating_stamina = FALSE)
+	need_mob_update += source.adjustBruteLoss((-1) * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss((-1) * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss((-1) * delta_time, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjustOxyLoss((-1) * delta_time, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss((-5) * delta_time, updating_stamina = FALSE)
 	if(need_mob_update)
 		source.updatehealth()
 	// Reduces duration of stuns/etc
@@ -416,8 +416,6 @@
 	// Heals blood loss
 	if(source.blood_volume < BLOOD_VOLUME_NORMAL)
 		source.blood_volume += 2.5 * delta_time
-	// Slowly regulates your body temp
-	source.adjust_bodytemperature((source.get_body_temp_normal() - source.bodytemperature) / 5)
 
 	if(!iscarbon(source))
 		return

@@ -414,6 +414,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Unable to gain any brain trauma whatsoever
 #define TRAIT_BRAIN_TRAUMA_IMMUNITY "brain_trauma_immunity"
 
+/// Prevents death from having too much brain damage
+#define TRAIT_BRAIN_DAMAGE_NODEATH "brain_damage_nodeath"
+
 #define TRAIT_SPACEWALK "spacewalk"
 /// Sanity trait to keep track of when we're in hyperspace and add the appropriate element if we weren't
 #define TRAIT_HYPERSPACED "hyperspaced"

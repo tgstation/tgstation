@@ -68,7 +68,7 @@
 	gain_text = "The hills sparkled now, as I neared them my mind began to wander. I quickly regained my resolve and pushed forward, this last leg would be the most treacherous."
 
 	action_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
-	cost = 1
+	cost = 2
 	is_final_knowledge = TRUE
 
 /datum/heretic_knowledge/mark/rust_mark

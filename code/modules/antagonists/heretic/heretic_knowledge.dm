@@ -342,7 +342,7 @@
  */
 /datum/heretic_knowledge/blade_upgrade
 	abstract_parent_type = /datum/heretic_knowledge/blade_upgrade
-	cost = 2
+	cost = 1
 
 /datum/heretic_knowledge/blade_upgrade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))

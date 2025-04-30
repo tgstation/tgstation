@@ -55,6 +55,6 @@
 	if(!cosmic_passive)
 		return
 	if(cosmic_passive.passive_level > 1 || istype(owner, /mob/living/basic/heretic_summon/star_gazer))
-		summoned_object.slows_projectiles()
-	if(cosmic_passive.passive_level > 2 || istype(owner, /mob/living/basic/heretic_summon/star_gazer))
 		summoned_object.prevents_explosions()
+	if(cosmic_passive.passive_level > 2 || istype(owner, /mob/living/basic/heretic_summon/star_gazer))
+		summoned_object.slows_projectiles()
