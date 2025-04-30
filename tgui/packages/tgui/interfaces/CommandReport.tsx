@@ -60,6 +60,7 @@ function CentComName(props) {
   const [name, setName] = useState(command_name);
 
   function sendName(value) {
+    setName(value)
     act('update_command_name', {
       updated_name: value,
     });
