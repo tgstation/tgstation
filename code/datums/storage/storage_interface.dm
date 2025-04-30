@@ -54,11 +54,10 @@
 	atom/real_location,
 	list/datum/numbered_display/numbered_contents,
 )
-	if(iscarbon(user_looking))
-		var/number_of_hands = user_looking.held_items.len
-		while(number_of_hands > 2)
-			number_of_hands /= 2
-			screen_start_y++
+	var/number_of_hands = user_looking.held_items.len
+	while(number_of_hands > 2)
+		number_of_hands /= 2
+		screen_start_y++
 	var/start_pixel_x = screen_start_x * 32 + screen_pixel_x
 	var/start_pixel_y = screen_start_y * 32 + screen_pixel_y
 	var/end_pixel_x = start_pixel_x + (columns - 1) * 32
