@@ -1,0 +1,6 @@
+author: "Ezel/Improvedname, JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Cult daggers boomerang back to non-cultists who throw it."
+  - balance: "Flagellant's robes crushes non-cultists with gravity instead of forcing you to drop it on the floor."
+  - balance: "Zealot's blindfolds now rapidly causes eye damage to non cultists who try to wear it, instead of dropping it on the floor and giving a minute of temporary eye damage."
