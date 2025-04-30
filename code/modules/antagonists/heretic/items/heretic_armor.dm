@@ -466,7 +466,7 @@
 		temp_spell.cast(wearer)
 	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
 	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
-	on_death(wearer)
+	wearer.death()
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_death(mob/wearer)
 	SIGNAL_HANDLER
@@ -481,8 +481,8 @@
 		brain.Remove(human_wearer, special = TRUE, movement_flags = NO_ID_TRANSFER)
 		brain.zone = BODY_ZONE_CHEST
 		brain.Insert(human_wearer, special = TRUE, movement_flags = NO_ID_TRANSFER)
-	wearer.visible_message(span_warning("[wearer]'s head splatters with a sickening crunch!"), ignored_mobs = list(wearer))
-	new /obj/effect/gibspawner/generic(get_turf(wearer), wearer)
+	human_wearer.visible_message(span_warning("[human_wearer]'s head splatters with a sickening crunch!"), ignored_mobs = list(human_wearer))
+	new /obj/effect/gibspawner/generic(get_turf(human_wearer), human_wearer)
 	to_explode.drop_organs()
 	to_explode.dismember(dam_type = BRUTE, silent = TRUE)
 	qdel(to_explode)
