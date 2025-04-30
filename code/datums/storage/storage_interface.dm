@@ -55,8 +55,8 @@
 	list/datum/numbered_display/numbered_contents,
 )
 	var/number_of_hands = user_looking.held_items.len
-	while(number_of_hands > 2)
-		number_of_hands /= 2
+	while(number_of_hands > user_looking.default_hand_amount)
+		number_of_hands /= user_looking.default_hand_amount
 		screen_start_y++
 	var/start_pixel_x = screen_start_x * 32 + screen_pixel_x
 	var/start_pixel_y = screen_start_y * 32 + screen_pixel_y
