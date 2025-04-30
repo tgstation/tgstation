@@ -2474,14 +2474,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
-"aOx" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 4;
-	initialize_directions = 12
-	},
-/turf/open/openspace,
-/area/station/engineering/atmos/upper)
 "aOK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
@@ -8542,10 +8534,11 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
 	},
-/obj/machinery/vending/engivend,
-/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump/on/yellow/visible{
+	name = "N2 to Airmix"
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
@@ -10833,9 +10826,11 @@
 /turf/open/floor/wood,
 /area/station/command/corporate_showroom)
 "dmq" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
 /obj/machinery/atmospherics/pipe/bridge_pipe/scrubbers/visible{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump/on/yellow/visible{
+	name = "O2 to Airmix"
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -11366,8 +11361,8 @@
 "duw" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/multiz/cyan/visible{
-	dir = 8;
-	initialize_directions = 10;
+	dir = 1;
+	initialize_directions = 5;
 	name = "Air Mix Multideck Adapter"
 	},
 /turf/open/openspace,
@@ -12118,6 +12113,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 1
 	},
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/station/engineering/main)
 "dHh" = (
@@ -18965,7 +18961,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "fLj" = (
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 9
 	},
 /turf/open/floor/iron/dark,
@@ -19297,7 +19293,7 @@
 /obj/structure/railing/corner{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/multiz/dark/visible,
+/obj/machinery/atmospherics/pipe/multiz/orange/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/upper)
 "fQp" = (
@@ -21435,9 +21431,8 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "gvc" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	name = "Atmos to Loop"
+/obj/machinery/atmospherics/components/binary/pump/off/orange/visible{
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
@@ -30014,9 +30009,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "iYr" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 6
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/upper)
 "iYJ" = (
@@ -39552,6 +39545,12 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"lRK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/vending/engivend,
+/turf/open/floor/iron/smooth,
+/area/station/engineering/main)
 "lRP" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_cw{
 	dir = 8
@@ -41628,13 +41627,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"mxc" = (
-/obj/structure/lattice/catwalk,
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 4
-	},
-/turf/open/openspace,
-/area/station/engineering/atmos/upper)
 "mxF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
@@ -45364,14 +45356,15 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "nDT" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
 /obj/machinery/camera/autoname/directional/west,
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
+/obj/machinery/atmospherics/components/binary/pump/off/yellow/visible{
+	dir = 4;
+	name = "Plasma to Multideck"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "nEa" = (
@@ -47959,9 +47952,6 @@
 /turf/open/openspace,
 /area/station/hallway/secondary/construction)
 "ouD" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
@@ -47969,6 +47959,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
+/obj/machinery/atmospherics/components/binary/pump/off/yellow/visible{
+	dir = 4;
+	name = "NO2 to Multideck"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "ouE" = (
@@ -59409,13 +59403,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "rPY" = (
-/obj/machinery/meter,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/multiz/dark/visible{
+/obj/machinery/atmospherics/pipe/multiz/orange/visible{
 	dir = 4
 	},
+/obj/machinery/meter,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "rQg" = (
@@ -65894,6 +65888,7 @@
 /area/station/commons/lounge)
 "tRd" = (
 /obj/structure/cable/layer3,
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "tRi" = (
@@ -71708,7 +71703,6 @@
 /turf/open/floor/engine/hull/reinforced/air,
 /area/station/ai_monitored/turret_protected/ai)
 "vBq" = (
-/obj/machinery/power/port_gen/pacman,
 /obj/machinery/power/terminal{
 	dir = 1
 	},
@@ -75315,6 +75309,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
 	},
+/obj/machinery/meter,
 /turf/closed/wall/r_wall,
 /area/station/engineering/main)
 "wFX" = (
@@ -78303,13 +78298,14 @@
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
 "xDy" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/hidden{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
+/obj/machinery/atmospherics/components/binary/pump/off/yellow/visible{
+	dir = 4;
+	name = "CO2 to Multideck"
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "xDB" = (
@@ -120995,15 +120991,15 @@ dCm
 fIg
 eEN
 ehR
-rlX
 ehR
 ehR
 ehR
-rlX
 ehR
 ehR
 ehR
-rlX
+ehR
+ehR
+ehR
 ehR
 ehR
 ehR
@@ -123310,7 +123306,7 @@ xdR
 cBn
 oRw
 xrn
-bdE
+lRK
 utf
 epF
 vya
@@ -190642,8 +190638,8 @@ sWu
 iSN
 unl
 fuI
-aOx
-aOx
+jKe
+vZF
 luN
 xKm
 xxv
@@ -190899,7 +190895,7 @@ lVm
 lVm
 unl
 dcR
-mxc
+jKe
 duw
 cTC
 iKr
