@@ -754,13 +754,15 @@
 
 /atom/movable/screen/healthdoll/human/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
+	if(isnull(hud_owner)) //we require a hud owner to work properly, so return out.
+		return
 	update_body_zones()
 	update_appearance()
 
 /atom/movable/screen/healthdoll/human/update_body_zones()
 	limbs = list()
 	vis_contents.Cut()
-	var/mob/living/carbon/human/owner = hud?.mymob
+	var/mob/living/carbon/human/owner = hud.mymob
 	for(var/body_zone in owner.get_all_limbs())
 		var/atom/movable/screen/healthdoll_limb/limb = new(src, null)
 		// layer chest above other limbs, it's the center after all
