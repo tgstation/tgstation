@@ -376,7 +376,7 @@
 /datum/disease/proc/on_breath(datum/source, seconds_per_tick, ...)
 	SIGNAL_HANDLER
 
-	if(SPT_PROB(infectivity * 4 * (HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1), seconds_per_tick)
+	if(SPT_PROB(infectivity * 4 * (HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1), seconds_per_tick))
 		airborne_spread()
 
 //Use this to compare severities

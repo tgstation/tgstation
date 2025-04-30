@@ -187,7 +187,7 @@
 	name = "spaceacillin pill"
 	desc = "Increases resistance to viruses, bacteria, and parasites."
 	icon_state = "pill17"
-	list_reagents = list(datum/reagent/medicine/spaceacillin = 1.5) 1 minute since 0.05 every tick.
+	list_reagents = list(/datum/reagent/medicine/spaceacillin = 1.5) //1 minute since 0.05 every tick.
 
 /obj/item/reagent_containers/applicator/pill/stimulant
 	name = "stimulant pill"
