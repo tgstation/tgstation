@@ -183,7 +183,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/coffeemaker/attackby(obj/item/attack_item, mob/living/user, params)
+/obj/machinery/coffeemaker/attackby(obj/item/attack_item, mob/living/user, list/modifiers)
 	//You can only screw open empty grinder
 	if(!coffeepot && default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item))
 		return FALSE
@@ -582,7 +582,7 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/coffeemaker/impressa/attackby(obj/item/attack_item, mob/living/user, params)
+/obj/machinery/coffeemaker/impressa/attackby(obj/item/attack_item, mob/living/user, list/modifiers)
 	//You can only screw open empty grinder
 	if(!coffeepot && default_deconstruction_screwdriver(user, icon_state, icon_state, attack_item))
 		return

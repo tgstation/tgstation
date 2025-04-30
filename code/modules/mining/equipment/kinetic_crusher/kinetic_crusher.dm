@@ -52,6 +52,8 @@
 	var/current_inhand_icon_state = "crusher"
 	/// Used by retool kits when changing the crusher's projectile sprite
 	var/projectile_icon = "pulse1"
+	/// Wielded damage we deal, aka our "real" damage
+	var/force_wielded = 20
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
@@ -60,7 +62,7 @@
 		effectiveness = 110, \
 	)
 	//technically it's huge and bulky, but this provides an incentive to use it
-	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
+	update_wielding()
 	register_context()
 
 /obj/item/kinetic_crusher/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -83,12 +85,12 @@
 
 /obj/item/kinetic_crusher/examine(mob/living/user)
 	. = ..()
-	. += span_notice("Mark a large creature with a destabilizing force with right-click, then hit them in melee to do <b>[force + detonation_damage]</b> damage.")
-	. += span_notice("Does <b>[force + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force + detonation_damage]</b>.")
+	. += span_notice("Mark a large creature with a destabilizing force with right-click, then hit them in melee to do <b>[force_wielded + detonation_damage]</b> damage.")
+	. += span_notice("Does <b>[force_wielded + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force_wielded + detonation_damage]</b>.")
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		. += span_notice("It has \a [crusher_trophy] attached, which causes [crusher_trophy.effect_desc()].")
 
-/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(istype(attacking_item, /obj/item/crusher_trophy))
 		var/obj/item/crusher_trophy/crusher_trophy = attacking_item
 		crusher_trophy.add_to(src, user)
@@ -146,7 +148,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, params)
+/obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return TRUE
@@ -159,7 +161,7 @@
 	target.apply_status_effect(/datum/status_effect/crusher_damage)
 	return ..()
 
-/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, clickparams)
+/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, list/modifiers)
 	if(!isliving(target))
 		return
 	// Melee effect
@@ -242,6 +244,10 @@
 		charged = TRUE
 		update_appearance()
 		playsound(src.loc, 'sound/items/weapons/kinetic_reload.ogg', 60, TRUE)
+
+/// Updates the two handed component with new damage values
+/obj/item/kinetic_crusher/proc/update_wielding()
+	AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = force_wielded)
 
 /obj/item/kinetic_crusher/ui_action_click(mob/user, actiontype)
 	set_light_on(!light_on)

@@ -543,7 +543,7 @@
 		if(TANK_PLATING_UNSECURED)
 			icon_state = "plated_frame"
 
-/obj/structure/tank_frame/attackby(obj/item/item, mob/living/user, params)
+/obj/structure/tank_frame/attackby(obj/item/item, mob/living/user, list/modifiers)
 	if(construction_state == TANK_FRAME && isstack(item) && add_plating(user, item))
 		return
 	return ..()

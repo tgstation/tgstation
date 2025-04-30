@@ -98,7 +98,8 @@
 			continue
 
 		trauma.owner = brain_owner
-		trauma.on_gain()
+		if(!trauma.on_gain())
+			qdel(trauma)
 
 	//Update the body's icon so it doesnt appear debrained anymore
 	if(!special && !(brain_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
@@ -163,7 +164,7 @@
 		L.mind.transfer_to(brainmob)
 		to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
 
-/obj/item/organ/brain/attackby(obj/item/item, mob/user, params)
+/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 
 	if(istype(item, /obj/item/borg/apparatus/organ_storage))
@@ -578,7 +579,9 @@
 		if(SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma, resilience) & COMSIG_CARBON_BLOCK_TRAUMA)
 			qdel(actual_trauma)
 			return FALSE
-		actual_trauma.on_gain()
+		if(!actual_trauma.on_gain())
+			qdel(actual_trauma)
+			return FALSE
 		log_game("[key_name_and_tag(owner)] has gained the following brain trauma: [trauma.type]")
 	if(resilience)
 		actual_trauma.resilience = resilience

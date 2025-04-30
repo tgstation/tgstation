@@ -361,7 +361,7 @@ GLOBAL_LIST_EMPTY(exodrone_launchers)
 	if(fuel_canister)
 		. += span_notice("You can remove the [fuel_canister] with a <b>prying tool</b>.")
 
-/obj/machinery/exodrone_launcher/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/exodrone_launcher/attackby(obj/item/weapon, mob/living/user, list/modifiers)
 	if(istype(weapon, /obj/item/fuel_pellet))
 		if(fuel_canister)
 			to_chat(user, span_warning("There's already fuel loaded inside [src]!"))

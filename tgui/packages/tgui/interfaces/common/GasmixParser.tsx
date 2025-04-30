@@ -39,7 +39,7 @@ export const GasmixParser = (props: GasmixParserProps) => {
 
   return !total_moles ? (
     <Box nowrap italic mb="10px">
-      {'No Gas Detected!'}
+      No Gas Detected!
     </Box>
   ) : (
     <LabeledList {...rest}>

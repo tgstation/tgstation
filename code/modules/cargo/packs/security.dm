@@ -221,12 +221,12 @@
 	crate_name = "combat shotguns crate"
 
 /datum/supply_pack/security/armory/dragnet
-	name = "DRAGnet Crate"
-	desc = "Contains three \"Dynamic Rapid-Apprehension of the Guilty\" netting devices, \
+	name = "DRAGnet Translocation Shotgun Crate"
+	desc = "Contains two \"Dynamic Rapid-Apprehension of the Guilty Network\" translocation shotguns, \
 		a recent breakthrough in law enforcement prisoner management technology. Includes a DRAGnet beacon."
-	cost = CARGO_CRATE_VALUE * 5
+	cost = CARGO_CRATE_VALUE * 18
 	contains = list(
-		/obj/item/gun/energy/e_gun/dragnet = 3,
+		/obj/item/gun/energy/e_gun/dragnet = 2,
 		/obj/item/dragnet_beacon = 1
 	)
 	crate_name = "\improper DRAGnet crate"

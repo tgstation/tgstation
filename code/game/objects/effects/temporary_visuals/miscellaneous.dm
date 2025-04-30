@@ -7,7 +7,14 @@
 	plane = GAME_PLANE
 	var/splatter_type = "splatter"
 
-/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
+// set_color arg can be either a color string or a singleton /datum/blood_type to pull the color from
+/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir, set_color = BLOOD_COLOR_RED)
+	if(set_color)
+		var/datum/blood_type/blood_type = set_color
+		if(istype(blood_type))
+			color = blood_type.color
+		else
+			color = set_color
 	if(ISDIAGONALDIR(set_dir))
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
@@ -42,7 +49,10 @@
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
-	splatter_type = "xsplatter"
+	splatter_type = "splatter"
+
+/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter/Initialize(mapload, set_dir, set_color = get_blood_type(/datum/blood_type/xeno::name))
+	return ..()
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
 	name = "speedbike trails"
@@ -568,7 +578,7 @@
 	playsound(loc, 'sound/items/weapons/egloves.ogg', vol = 80, vary = TRUE)
 	end()
 
-/obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)
+/obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, list/modifiers)
 	attacked(user)
 
 /obj/effect/constructing_effect/attack_hand(mob/living/user, list/modifiers)
