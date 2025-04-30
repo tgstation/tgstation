@@ -1,4 +1,6 @@
 /obj/structure/window/fulltile/tinted/voidwalker
+	name = "void-smeared window"
+	desc = "There's no way to see through this window. You probably wouldn't like what's on the other side anyways..."
 	max_integrity = 75 //Doesn't have the damage deflection of a reinforced window
 	/// Particle effect for making the window look spooky.
 	var/obj/effect/abstract/particle_holder/spooky_particles
