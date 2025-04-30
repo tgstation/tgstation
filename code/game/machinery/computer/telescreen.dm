@@ -63,7 +63,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	icon_state = "entertainment_frame"
 	result_path = /obj/machinery/computer/security/telescreen/entertainment
 
-/obj/item/wallframe/telescreen/entertainment
+/obj/item/wallframe/telescreen/entertainment/Initialize(mapload, ...)
+	. = ..()
 	transform.Scale(0.8)
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
