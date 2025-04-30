@@ -144,6 +144,7 @@
 	name = BLOOD_TYPE_LIZARD
 	desc = "Green sulfhemoglobin subtype-based blood, which while less effective at transporting oxygen, \
 		is capable of withstanding much higher temperatures without breaking down or clotting."
+	color = BLOOD_COLOR_LIZARD
 	compatible_types = list(
 		/datum/blood_type/lizard,
 	)
