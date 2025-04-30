@@ -43,6 +43,10 @@
 
 	return put_in_hand(item_module, first_free_slot)
 
+///Helper for cyborgs unequipping things, it calls doUnEquip but always sets the loc back to the model.
+/mob/living/silicon/robot/proc/deactivate_module(obj/item/item_module)
+	doUnEquip(item_module, newloc = model)
+
 /mob/living/silicon/robot/doUnEquip(obj/item/item_dropped, force, atom/newloc, no_move, invdrop = TRUE, silent = FALSE)
 	var/module_num = get_selected_module()
 	. = ..()
@@ -81,7 +85,7 @@
 		return FALSE
 
 	if(held_items[module_num]) //If there's a held item, unequip it first.
-		if(!doUnEquip(held_items[module_num], force = TRUE, newloc = model)) //If we fail to unequip it, then don't continue
+		if(!deactivate_module(held_items[module_num])) //If we fail to unequip it, then don't continue
 			return FALSE
 
 	switch(module_num)
@@ -181,14 +185,14 @@
  */
 /mob/living/silicon/robot/proc/uneq_active()
 	if(module_active)
-		doUnEquip(module_active, newloc = model)
+		deactivate_module(module_active)
 
 // Technically none of the items are dropped, only unequipped
 /mob/living/silicon/robot/drop_all_held_items()
 	for(var/cyborg_slot in 1 to length(held_items))
 		if(!held_items[cyborg_slot])
 			continue
-		doUnEquip(held_items[cyborg_slot], newloc = model)
+		deactivate_module(held_items[cyborg_slot])
 
 /**
  * Checks if the item is currently in a slot.
