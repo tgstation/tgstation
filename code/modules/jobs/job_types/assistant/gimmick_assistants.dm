@@ -210,3 +210,11 @@
 	backpack_contents = list(/obj/item/storage/crayons)
 
 	outfit_weight = 3
+
+/datum/outfit/job/assistant/gimmick/bear
+	name = "Gimmick Assistant - Bear"
+	head = /obj/item/clothing/head/costume/bearpelt
+	suit = /obj/item/clothing/suit/costume/bear_suit
+	shoes = /obj/item/clothing/shoes/sneakers/black
+	uniform = /obj/item/clothing/under/color/black
+	outfit_weight = 6
