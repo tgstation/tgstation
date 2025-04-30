@@ -43,12 +43,13 @@
 
 	return put_in_hand(item_module, first_free_slot)
 
-///Helper for cyborgs unequipping things, it calls doUnEquip but always sets the loc back to the model.
+///Helper for cyborgs unequipping things.
 /mob/living/silicon/robot/proc/deactivate_module(obj/item/item_module)
-	doUnEquip(item_module, newloc = model)
+	doUnEquip(item_module)
 
 /mob/living/silicon/robot/doUnEquip(obj/item/item_dropped, force, atom/newloc, no_move, invdrop = TRUE, silent = FALSE)
 	var/module_num = get_selected_module()
+	newloc = model //we always retract into ourselves.
 	. = ..()
 	if(!.)
 		return

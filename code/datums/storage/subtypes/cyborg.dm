@@ -8,6 +8,9 @@
 	screen_max_columns = 8
 	storage_type = /datum/storage_interface/silicon
 
+/datum/storage/cyborg_internal_storage/can_insert(obj/item/to_insert, mob/living/silicon/robot/user, messages = TRUE, force = STORAGE_NOT_LOCKED)
+	return (to_insert in user.model.modules)
+
 /datum/storage/cyborg_internal_storage/attempt_insert(obj/item/to_insert, mob/living/silicon/robot/user, override = FALSE, force = STORAGE_NOT_LOCKED, messages = TRUE)
 	user.deactivate_module(to_insert)
 
