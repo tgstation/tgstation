@@ -4,7 +4,7 @@
 	gain_text = span_danger("You suddenly feel the craving for... something? You're not sure what it is.")
 	medical_record_text = "Patient has a history with SOMETHING but he refuses to tell us what it is."
 	abstract_parent_type = /datum/quirk/item_quirk/addict
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
+	quirk_flags = QUIRK_PROCESSES
 	no_process_traits = list(TRAIT_LIVERLESS_METABOLISM)
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
@@ -17,7 +17,7 @@
 	COOLDOWN_DECLARE(next_process) //! ticker for processing
 
 /datum/quirk/item_quirk/addict/add_unique(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
+
 
 	if(!reagent_type)
 		reagent_type = GLOB.possible_junkie_addictions[pick(GLOB.possible_junkie_addictions)]
@@ -25,7 +25,7 @@
 	reagent_instance = new reagent_type()
 
 	for(var/addiction in reagent_instance.addiction_types)
-		human_holder.last_mind?.add_addiction_points(addiction, 1000)
+		quirk_holder.last_mind?.add_addiction_points(addiction, 1000)
 
 	var/current_turf = get_turf(quirk_holder)
 
@@ -66,18 +66,18 @@
 	if(!COOLDOWN_FINISHED(src, next_process))
 		return
 	COOLDOWN_START(src, next_process, process_interval)
-	var/mob/living/carbon/human/human_holder = quirk_holder
+
 	var/deleted = QDELETED(reagent_instance)
 	var/missing_addiction = FALSE
 	for(var/addiction_type in reagent_instance.addiction_types)
-		if(!LAZYACCESS(human_holder.last_mind?.active_addictions, addiction_type))
+		if(!LAZYACCESS(quirk_holder.last_mind?.active_addictions, addiction_type))
 			missing_addiction = TRUE
 	if(deleted || missing_addiction)
 		if(deleted)
 			reagent_instance = new reagent_type()
 		to_chat(quirk_holder, span_danger("You thought you kicked it, but you feel like you're falling back onto bad habits.."))
 		for(var/addiction in reagent_instance.addiction_types)
-			human_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
+			quirk_holder.last_mind?.add_addiction_points(addiction, 1000) ///Max that shit out
 
 /datum/quirk/item_quirk/addict/junkie
 	name = "Junkie"
@@ -155,8 +155,8 @@
 
 /datum/quirk/item_quirk/addict/smoker/process(seconds_per_tick)
 	. = ..()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/mask_item = human_holder.get_item_by_slot(ITEM_SLOT_MASK)
+
+	var/obj/item/mask_item = quirk_holder.get_item_by_slot(ITEM_SLOT_MASK)
 	if(istype(mask_item, /obj/item/cigarette))
 		var/obj/item/storage/fancy/cigarettes/cigarettes = drug_container_type
 		if(istype(mask_item, initial(cigarettes.spawn_type)))

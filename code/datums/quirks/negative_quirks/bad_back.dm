@@ -3,7 +3,7 @@
 	desc = "Thanks to your poor posture, backpacks and other bags never sit right on your back. More evenly weighted objects are fine, though."
 	icon = FA_ICON_HIKING
 	value = -8
-	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_MOODLET_BASED
+	quirk_flags = QUIRK_MOODLET_BASED
 	gain_text = span_danger("Your back REALLY hurts!")
 	lose_text = span_notice("Your back feels better.")
 	medical_record_text = "Patient scans indicate severe and chronic back pain."
@@ -12,11 +12,11 @@
 	var/datum/weakref/backpack
 
 /datum/quirk/badback/add(client/client_source)
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/storage/backpack/equipped_backpack = human_holder.back
+
+	var/obj/item/storage/backpack/equipped_backpack = quirk_holder.back
 	if(istype(equipped_backpack))
 		quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
-		RegisterSignal(human_holder.back, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_unequipped_backpack))
+		RegisterSignal(quirk_holder.back, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_unequipped_backpack))
 	else
 		RegisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equipped_item))
 
