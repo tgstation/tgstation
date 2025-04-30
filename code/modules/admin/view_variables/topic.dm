@@ -126,7 +126,7 @@
 			new_val = input("Enter the new damage type for [editing]","Set Damtype", existing_val) in list(BRUTE, BURN, TOX, OXY, STAMINA, BRAIN)
 		else
 			new_val = input("Enter the new value for [editing]'s [href_list["var_tweak"]]","Set [href_list["var_tweak"]]", existing_val) as num|null
-		if(isnull(new_val) || new_val == existing_val || QDELETED(editing) || !check_rights(NONE))
+		if(isnull(new_val) || new_val == existing_val || QDELETED(editing) || !check_rights(R_VAREDIT))
 			return
 
 		switch(href_list["var_tweak"])
