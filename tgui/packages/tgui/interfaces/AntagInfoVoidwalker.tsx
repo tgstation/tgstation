@@ -54,7 +54,8 @@ export const AntagInfoVoidwalker = (props) => {
                 </LabeledList.Item>
                 <LabeledList.Item label="Void Eater">
                   Your divine appendage; it allows you to incapacitate the loud
-                  ones and instantly break windows.
+                  ones and instantly break windows, or convert walls into
+                  windows for you to pass through.
                 </LabeledList.Item>
                 <LabeledList.Item label="Cosmic Physiology">
                   Your natural camouflage makes you nearly invisible in space,

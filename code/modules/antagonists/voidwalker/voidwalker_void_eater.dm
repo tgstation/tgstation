@@ -93,13 +93,17 @@
 	if(istype(interacting_with, /turf/closed/wall))
 		var/turf/closed/wall/our_wall = interacting_with
 		if(our_wall.hardness < 40) //40 is default wall strength. This looks a bit weird, but remember that lower numbers are stronger for some reason
+			balloon_alert(user, "too strong!")
 			return
-		if(do_after(user, 5 SECONDS, interacting_with, hidden = TRUE))
+		playsound(interacting_with, 'sound/effects/magic/blind.ogg', 100, TRUE)
+		new /obj/effect/temp_visual/transmute_tile_flash(interacting_with)
+		balloon_alert(user, "opening window...")
+		if(do_after(user, 8 SECONDS, interacting_with, hidden = TRUE))
 			playsound(interacting_with, 'sound/effects/magic/blind.ogg', 100, TRUE)
 			new /obj/effect/temp_visual/transmute_tile_flash(interacting_with)
+			our_wall.ScrapeAway()
 			new /obj/structure/grille(interacting_with)
 			new /obj/structure/window/fulltile/tinted/voidwalker(interacting_with)
-			qdel(interacting_with)
 
 /// Called when the voidwalker kidnapped someone
 /obj/item/void_eater/proc/refresh(mob/living/carbon/human/voidwalker)
