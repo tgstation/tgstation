@@ -151,15 +151,14 @@
 	if(.)
 		return .
 	light_enabled = !light_enabled
-	update_appearance(UPDATE_ICON_STATE)
+	update_appearance(UPDATE_ICON)
 
-/obj/item/kirbyplants/potty/update_icon_state()
+/obj/item/kirbyplants/potty/update_overlays()
 	. = ..()
 	if(dead)
 		return .
-	if(!light_enabled)
-		icon_state = "[base_icon_state]-off"
-		return .
+	if(light_enabled)
+		. += "[base_icon_state]_light"
 
 /obj/item/kirbyplants/fern
 	name = "neglected fern"
