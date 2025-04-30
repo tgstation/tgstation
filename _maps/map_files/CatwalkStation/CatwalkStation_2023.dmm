@@ -65888,7 +65888,6 @@
 /area/station/commons/lounge)
 "tRd" = (
 /obj/structure/cable/layer3,
-/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "tRi" = (
@@ -71707,6 +71706,7 @@
 	dir = 1
 	},
 /obj/structure/cable/multilayer/connected,
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "vBt" = (
