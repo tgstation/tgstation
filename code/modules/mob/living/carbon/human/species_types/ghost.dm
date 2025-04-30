@@ -130,6 +130,10 @@
 	var/mob/living/living_owner = owner
 	if(living_owner.has_reagent(/datum/reagent/water/holywater))
 		return FALSE
+	//technically you can trap a ghost by blessing them as theyre phasing,
+	//but they can still be dragged out.
+	if(locate(/obj/effect/blessing) in get_turf(owner))
+		return FALSE
 	var/obj/item/bodypart/chest/their_chest = living_owner.get_bodypart(BODY_ZONE_CHEST)
 	if(!their_chest || !(their_chest.bodytype & BODYTYPE_GHOST))
 		return FALSE

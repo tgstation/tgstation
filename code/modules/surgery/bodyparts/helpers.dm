@@ -99,14 +99,24 @@
 /mob/living/carbon/alien/larva/has_right_hand(check_disabled = TRUE)
 	return TRUE
 
-/mob/living/carbon/proc/get_missing_limbs()
+///Returns a list of all limbs this mob should have.
+/mob/living/proc/get_all_limbs() as /list
 	RETURN_TYPE(/list)
+	return GLOB.all_body_zones.Copy()
+
+///Returns a list of all limbs this mob should have.
+/mob/living/carbon/get_all_limbs()
 	var/list/full
 	if(dna)
 		full = dna.species.bodypart_overrides.Copy()
 	else
 		full = GLOB.all_body_zones.Copy()
+	return full
 
+///Returns a list of all missing limbs this mob should have on them, but don't.
+/mob/living/carbon/proc/get_missing_limbs() as /list
+	RETURN_TYPE(/list)
+	var/list/full = get_all_limbs()
 	for(var/zone in full)
 		if(get_bodypart(zone))
 			full -= zone
@@ -123,7 +133,7 @@
 	return list()
 
 /mob/living/carbon/get_disabled_limbs()
-	var/list/full = GLOB.all_body_zones.Copy()
+	var/list/full = get_all_limbs()
 	var/list/disabled = list()
 	for(var/zone in full)
 		var/obj/item/bodypart/affecting = get_bodypart(zone)

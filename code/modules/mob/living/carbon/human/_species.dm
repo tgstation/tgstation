@@ -378,6 +378,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	human_who_gained_species.mob_respiration_type = inherent_respiration_type
 	human_who_gained_species.butcher_results = knife_butcher_results?.Copy()
 
+	//update body zones to match what they are supposed to have
+	human_who_gained_species.hud_used?.healthdoll.update_body_zones()
+
 	if(old_species.type != type)
 		replace_body(human_who_gained_species, src)
 
@@ -428,6 +431,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	properly_gained = TRUE
 
 	human_who_gained_species.living_flags &= ~STOP_OVERLAY_UPDATE_BODY_PARTS
+
+	//we don't allow it to update during species transition, so update it now
+	human_who_gained_species.hud_used?.healthdoll.update_appearance()
 
 /**
  * Proc called when a carbon is no longer this species.
@@ -2008,7 +2014,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /// Creates body parts for the target completely from scratch based on the species
 /datum/species/proc/create_fresh_body(mob/living/carbon/target)
-	target.create_bodyparts(bodypart_overrides)
+	var/list/override_limbs = list()
+	for(var/bodypart in bodypart_overrides)
+		override_limbs += bodypart_overrides[bodypart]
+	target.create_bodyparts(override_limbs)
 
 /**
  * Checks if the species has a head with these head flags, by default.

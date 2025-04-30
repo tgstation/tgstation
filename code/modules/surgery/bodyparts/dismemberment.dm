@@ -377,7 +377,7 @@
 
 /mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
 	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)
-	var/list/zone_list = GLOB.all_body_zones.Copy()
+	var/list/zone_list = get_all_limbs()
 
 	var/list/dismembered_by_copy = body_zone_dismembered_by?.Copy()
 

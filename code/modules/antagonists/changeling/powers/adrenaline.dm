@@ -37,7 +37,7 @@
 		qdel(user.legcuffed)
 
 	// Regenerate our legs only.
-	var/our_leg_zones = (GLOB.all_body_zones - GLOB.leg_zones)
+	var/our_leg_zones = (user.get_all_limbs() - GLOB.leg_zones)
 	user.regenerate_limbs(excluded_zones = our_leg_zones) // why is this exclusive rather than inclusive
 
 	user.add_traits(list(TRAIT_PARALYSIS_L_ARM, TRAIT_PARALYSIS_R_ARM), CHANGELING_TRAIT)
