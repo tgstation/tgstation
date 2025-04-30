@@ -407,8 +407,11 @@
 		return FAILED_BLOCK
 
 	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage)
-	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) >= 200)
-		wearer.death() // Stops any shenanigans
+	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) >= 200 && !braindead)
+		braindead = TRUE
+		playsound(wearer, 'sound/effects/pope_entry.ogg', 100)
+		to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you")))
+		addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
 	return SUCCESSFUL_BLOCK
 
 /**
@@ -424,8 +427,8 @@
 	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, amount)
 	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) >= 200 && !braindead)
 		braindead = TRUE
-		wearer.setOrganLoss(ORGAN_SLOT_BRAIN, INFINITY)
 		playsound(wearer, 'sound/effects/pope_entry.ogg', 100)
+		to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you")))
 		addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
 	return COMPONENT_IGNORE_CHANGE
 
@@ -453,16 +456,17 @@
 		braindead = TRUE
 		wearer.setOrganLoss(ORGAN_SLOT_BRAIN, INFINITY)
 		playsound(wearer, 'sound/effects/pope_entry.ogg', 100)
+		to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you")))
 		addtimer(CALLBACK(src, PROC_REF(kill_wearer), wearer), 5 SECONDS)
 
 /// Once you reach this point you're completely brain dead, so lets play our effects before you eat shit
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/kill_wearer(mob/living/carbon/human/wearer)
-	to_chat(wearer, span_bold(span_hypnophrase("A terrible fate has befallen you")))
 	if(IS_HERETIC(wearer))
 		var/datum/action/cooldown/spell/aoe/moon_ringleader/temp_spell = new(wearer)
 		temp_spell.cast(wearer)
 	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
 	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
+	on_death(wearer)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/proc/on_death(mob/wearer)
 	SIGNAL_HANDLER
