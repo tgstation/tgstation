@@ -106,12 +106,9 @@
 
 ///Returns a list of all limbs this mob should have.
 /mob/living/carbon/get_all_limbs()
-	var/list/full
 	if(dna)
-		full = dna.species.bodypart_overrides.Copy()
-	else
-		full = GLOB.all_body_zones.Copy()
-	return full
+		return dna.species.bodypart_overrides.Copy()
+	return ..()
 
 ///Returns a list of all missing limbs this mob should have on them, but don't.
 /mob/living/carbon/proc/get_missing_limbs() as /list
