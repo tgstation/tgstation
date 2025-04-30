@@ -1,3 +1,6 @@
+//Minimum strength to convert a wall into a void window.
+#define WALL_CONVERT_STRENGTH 40
+
 /**
  * An armblade that pops windows
  */
@@ -25,6 +28,8 @@
 	var/damage_loss_per_hit = 0.5
 	/// The minimal damage we can reach
 	var/damage_minimum = 15
+	/// Cooldown for converting walls to void windows
+	COOLDOWN_DECLARE(wall_conversion)
 
 /obj/item/void_eater/Initialize(mapload)
 	. = ..()
@@ -91,19 +96,29 @@
 /obj/item/void_eater/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(istype(interacting_with, /turf/closed/wall))
+		if(!COOLDOWN_FINISHED(src, wall_conversion))
+			balloon_alert(user, "conversion on cooldown!")
+			return
+
 		var/turf/closed/wall/our_wall = interacting_with
-		if(our_wall.hardness < 40) //40 is default wall strength. This looks a bit weird, but remember that lower numbers are stronger for some reason
+		if(our_wall.hardness < WALL_CONVERT_STRENGTH) //40 is default wall strength. This looks a bit weird, but remember that lower numbers are stronger for some reason
 			balloon_alert(user, "too strong!")
 			return
 		playsound(interacting_with, 'sound/effects/magic/blind.ogg', 100, TRUE)
 		new /obj/effect/temp_visual/transmute_tile_flash(interacting_with)
 		balloon_alert(user, "opening window...")
 		if(do_after(user, 8 SECONDS, interacting_with, hidden = TRUE))
-			playsound(interacting_with, 'sound/effects/magic/blind.ogg', 100, TRUE)
-			new /obj/effect/temp_visual/transmute_tile_flash(interacting_with)
-			our_wall.ScrapeAway()
-			new /obj/structure/grille(interacting_with)
-			new /obj/structure/window/fulltile/tinted/voidwalker(interacting_with)
+			var/list/target_walls = list()
+			for(var/turf/closed/wall/adjacent_wall in range(1, interacting_with))
+				if(adjacent_wall.hardness >= WALL_CONVERT_STRENGTH)
+					target_walls.Add(adjacent_wall)
+			for(var/turf/closed/wall/targeted_wall in target_walls)
+				playsound(targeted_wall, 'sound/effects/magic/blind.ogg', 100, TRUE)
+				new /obj/effect/temp_visual/transmute_tile_flash(targeted_wall)
+				targeted_wall.ScrapeAway()
+				new /obj/structure/grille(targeted_wall)
+				new /obj/structure/window/fulltile/tinted/voidwalker(targeted_wall)
+			COOLDOWN_START(src, wall_conversion, 40 SECONDS)
 
 /// Called when the voidwalker kidnapped someone
 /obj/item/void_eater/proc/refresh(mob/living/carbon/human/voidwalker)
@@ -115,3 +130,5 @@
 	animate(src, color = null, time = 1 SECONDS)//do a color flashy woosh
 
 	to_chat(voidwalker, span_boldnotice("Your [name] refreshes!"))
+
+#undef WALL_CONVERT_STRENGTH
