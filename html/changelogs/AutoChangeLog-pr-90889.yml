@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - bugfix: "fixes bane element not working if it was used by a weapon without a wielder"

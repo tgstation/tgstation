@@ -18,6 +18,7 @@ GLOBAL_LIST_EMPTY(monkey_recyclers)
 	. = ..()
 	if (mapload)
 		GLOB.monkey_recyclers += src
+	add_overlay("grinder_monkey")
 
 /obj/machinery/monkey_recycler/Destroy()
 	GLOB.monkey_recyclers -= src
