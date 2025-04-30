@@ -81,6 +81,7 @@
  * * added_ph - override to force a pH when added
  * * override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)
  * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
+ * * list/reagent_added - If not null will contain the reagent datum that was added after this proc returns. Clear the list to erase old values
  */
 /datum/reagents/proc/add_reagent(
 	datum/reagent/reagent_type,
@@ -91,7 +92,8 @@
 	added_ph,
 	no_react = FALSE,
 	override_base_ph = FALSE,
-	ignore_splitting = FALSE
+	ignore_splitting = FALSE,
+	list/reagent_added = null
 )
 	if(!ispath(reagent_type))
 		stack_trace("invalid reagent passed to add reagent [reagent_type]")
@@ -113,7 +115,7 @@
 	//Split up the reagent if it's in a mob
 	var/has_split = FALSE
 	if(!ignore_splitting && (flags & REAGENT_HOLDER_ALIVE)) //Stomachs are a pain - they will constantly call on_mob_add unless we split on addition to stomachs, but we also want to make sure we don't double split
-		var/adjusted_vol = process_mob_reagent_purity(glob_reagent, amount, added_purity)
+		var/adjusted_vol = process_mob_reagent_purity(glob_reagent, amount, added_purity, reagent_added)
 		if(!adjusted_vol) //If we're inverse or FALSE cancel addition
 			return amount
 			/* We return true here because of #63301
@@ -158,6 +160,8 @@
 				else
 					set_temperature(reagtemp)
 
+			if(!isnull(reagent_added))
+				reagent_added += iter_reagent
 			if(!no_react && !is_reacting) //To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
 				handle_reactions()
 			return amount
@@ -189,6 +193,8 @@
 		else
 			set_temperature(reagtemp)
 
+	if(!isnull(reagent_added))
+		reagent_added += new_reagent
 	if(!no_react)
 		handle_reactions()
 	return amount
@@ -459,8 +465,8 @@
 		transfer_reactions(target_holder)
 
 	var/trans_data = null
+	var/list/r_to_send = methods ? list() : null // Validated list of reagents to be exposed
 	var/list/transfer_log = list()
-	var/list/r_to_send = list()	// Validated list of reagents to be exposed
 	var/list/reagents_to_remove = list()
 
 	var/part = isnull(target_id) ? (amount / total_volume) : 1
@@ -488,11 +494,9 @@
 			update_total()
 			target_holder.update_total()
 			continue
-		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transferred.
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT, reagent_added = r_to_send) //we only handle reaction after every reagent has been transferred.
 		if(!transfered_amount)
 			continue
-		if(methods)
-			r_to_send += reagent
 		reagents_to_remove[reagent] = transfer_amount
 		total_transfered_amount += transfered_amount
 
