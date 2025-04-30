@@ -110,11 +110,11 @@
 			return host.loc
 	return null
 
-/obj/item/borg/projectile_dampen/dropped()
+/obj/item/borg/projectile_dampen/equipped()
 	host = loc
 	return ..()
 
-/obj/item/borg/projectile_dampen/equipped()
+/obj/item/borg/projectile_dampen/dropped()
 	host = loc
 	return ..()
 
@@ -209,7 +209,6 @@
 
 	//if all else fails just make a new one from scratch
 	tool = new reference(user)
-	ADD_TRAIT(tool, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 	atoms[reference] = tool
 	return tool
 

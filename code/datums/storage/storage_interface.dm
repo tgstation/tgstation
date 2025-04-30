@@ -2,6 +2,7 @@
 /datum/storage_interface
 	/// UI elements for this theme
 	var/atom/movable/screen/close/closer
+	var/atom/movable/screen/robot/store/store
 	var/atom/movable/screen/storage/cell/cells
 	var/atom/movable/screen/storage/corner/corner_top_left
 	var/atom/movable/screen/storage/corner/top_right/corner_top_right
@@ -13,25 +14,30 @@
 	/// Storage that owns us
 	var/datum/storage/parent_storage
 
-/datum/storage_interface/New(ui_style, parent_storage)
+/datum/storage_interface/New(ui_style, parent_storage, mob/user)
 	..()
 	src.parent_storage = parent_storage
-	closer = new(null, null, parent_storage)
-	cells = new(null, null, parent_storage)
-	corner_top_left = new(null, null, parent_storage)
-	corner_top_right = new(null, null, parent_storage)
-	corner_bottom_left = new(null, null, parent_storage)
-	corner_bottom_right = new(null, null, parent_storage)
-	rowjoin_left = new(null, null, parent_storage)
-	rowjoin_right = new(null, null, parent_storage)
+	var/datum/hud/owner_hud = user.hud_used
+	if(iscyborg(user))
+		store = new(null, owner_hud)
+	closer = new(null, owner_hud, parent_storage)
+	cells = new(null, owner_hud, parent_storage)
+	corner_top_left = new(null, owner_hud, parent_storage)
+	corner_top_right = new(null, owner_hud, parent_storage)
+	corner_bottom_left = new(null, owner_hud, parent_storage)
+	corner_bottom_right = new(null, owner_hud, parent_storage)
+	rowjoin_left = new(null, owner_hud, parent_storage)
+	rowjoin_right = new(null, owner_hud, parent_storage)
 	for (var/atom/movable/screen/ui_elem as anything in list_ui_elements())
 		ui_elem.icon = ui_style
 
 /// Returns all UI elements under this theme
 /datum/storage_interface/proc/list_ui_elements()
-	return list(cells, corner_top_left, corner_top_right, corner_bottom_left, corner_bottom_right, rowjoin_left, rowjoin_right, closer)
+	return list(cells, corner_top_left, corner_top_right, corner_bottom_left, corner_bottom_right, rowjoin_left, rowjoin_right, closer, store)
 
 /datum/storage_interface/Destroy(force)
+	QDEL_NULL(store)
+	QDEL_NULL(closer)
 	QDEL_NULL(cells)
 	QDEL_NULL(corner_top_left)
 	QDEL_NULL(corner_top_right)
