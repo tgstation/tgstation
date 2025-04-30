@@ -17,11 +17,11 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(!istype(human_holder))
 		return
-	update_mail(new_species = human_holder.dna.species)
-	RegisterSignal(quirk_holder, COMSIG_SPECIES_GAIN, PROC_REF(update_mail))
+	update_mail(human_quirk_holder = human_holder, new_blood_type = human_holder.dna.blood_type) // matches the mail goodies blood bag to our blood type
+	RegisterSignal(quirk_holder, COMSIG_LIVING_CHANGED_BLOOD_TYPE, PROC_REF(update_mail))
 
 /datum/quirk/blooddeficiency/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_SPECIES_GAIN))
+	UnregisterSignal(quirk_holder, list(COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_LIVING_CHANGED_BLOOD_TYPE))
 
 /datum/quirk/blooddeficiency/is_species_appropriate(datum/species/mob_species)
 	var/datum/species_traits = GLOB.species_prototypes[mob_species].inherent_traits
@@ -43,20 +43,19 @@
 
 	human_holder.blood_volume = max(min_blood, human_holder.blood_volume - human_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick)
 
-/datum/quirk/blooddeficiency/proc/update_mail(datum/source, datum/species/new_species, datum/species/old_species, pref_load, regenerate_icons)
+/// Try to update the mail goodies to match the quirk holder's blood type. If we fail for whatever reason then it will just default to the initial O- blood pack that we start with.
+/datum/quirk/blooddeficiency/proc/update_mail(mob/living/carbon/human/human_quirk_holder, datum/blood_type/new_blood_type, update_cached_blood_dna_info)
 	SIGNAL_HANDLER
 
-	if(isnull(new_species.exotic_blood) && isnull(new_species.exotic_bloodtype))
-		if(TRAIT_NOBLOOD in new_species.inherent_traits) // jellypeople have both exotic_blood and TRAIT_NOBLOOD
+	if(isnull(human_quirk_holder.dna.species.exotic_blood) && isnull(human_quirk_holder.dna.species.exotic_bloodtype))
+		if(TRAIT_NOBLOOD in human_quirk_holder.dna.species.inherent_traits) // jellypeople have both exotic_blood and TRAIT_NOBLOOD
 			mail_goodies.Cut()
 			return
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/datum/blood_type/blood_type = human_holder.dna.blood_type
-	if(isnull(blood_type))
+	if(isnull(new_blood_type))
 		return
 
 	for(var/obj/item/reagent_containers/blood/blood_bag as anything in typesof(/obj/item/reagent_containers/blood))
-		if(blood_bag::blood_type == blood_type.name)
+		if(blood_bag::blood_type == new_blood_type.name)
 			mail_goodies = list(blood_bag)
 			return

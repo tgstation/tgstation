@@ -137,6 +137,7 @@
 
 /datum/blood_type/lizard
 	name = BLOOD_TYPE_LIZARD
+	color = BLOOD_COLOR_LIZARD
 	compatible_types = list(
 		/datum/blood_type/lizard,
 	)

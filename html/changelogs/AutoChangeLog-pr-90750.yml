@@ -1,0 +1,5 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - qol: "Shoving a rechargeable magazine into a recharger now has refill speed scale with part tier/recharge efficiency. This probably doesn't matter very much because no regularly-available gun uses rechargeable magazines."
+  - spellcheck: "Examining magazines should no longer have two instances of \"The\" prefixing a casing. Maybe. Probably."
