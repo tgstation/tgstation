@@ -721,6 +721,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 /obj/structure/window/fulltile/unanchored
 	anchored = FALSE
 
+/obj/structure/window/fulltile/tinted
+	opacity = TRUE
+
 /obj/structure/window/plasma/fulltile
 	icon = 'icons/obj/smooth_structures/plasma_window.dmi'
 	icon_state = "plasma_window-0"
