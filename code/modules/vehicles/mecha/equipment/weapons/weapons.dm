@@ -168,11 +168,11 @@
 ///Exosuit thermal guns
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal
-	equip_cooldown = 15
+	equip_cooldown = 20
 	name = "\improper Prototype -I 'Thermal Cannon'"
 	desc = "A special prototype of a heavy thermal weapon designed for use on exosuits. This one is debug-chambered."
 	icon_state = "mecha_laser"
-	energy_drain = 100
+	energy_drain = 50
 	projectile = /obj/item/ammo_casing/energy/nanite
 	fire_sound = 'sound/items/weapons/thermalpistol.ogg'
 	harmful = TRUE
@@ -200,8 +200,8 @@
     if (has_molten)
         for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/I in M.flat_equipment)
             if (istype(I, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
-                I.equip_cooldown = 1
-        src.equip_cooldown = 1
+                I.equip_cooldown = 8
+        src.equip_cooldown = 8
     return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right)
@@ -215,8 +215,8 @@
     if (has_cryo)
         for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/I in M.flat_equipment)
             if (istype(I, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
-                I.equip_cooldown = 1
-        src.equip_cooldown = 1
+                I.equip_cooldown = 8
+        src.equip_cooldown = 8
     return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/detach(atom/moveto)
@@ -224,7 +224,7 @@
     . = ..()
     if (istype(M))
         for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/I in M.flat_equipment)
-            I.equip_cooldown = 15
+            I.equip_cooldown = 20
 
 //Exosuit-mounted kinetic accelerator
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
