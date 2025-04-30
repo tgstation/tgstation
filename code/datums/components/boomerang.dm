@@ -83,15 +83,15 @@
  * * hit_atom: The atom that has been hit by the boomerang'd object.
  */
 /datum/component/boomerang/proc/aerodynamic_swing(datum/thrownthing/throwingdatum)
-	var/obj/item/real_parent = parent
-	var/mob/living/thrown_by = throwingdatum.get_thrower()
+	var/mob/thrown_by = throwingdatum.get_thrower()
+	var/obj/item/true_parent = parent
 	if(thrown_by)
-		addtimer(CALLBACK(real_parent, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, boomerang_throw_range, throwingdatum.speed, thrown_by, TRUE), 0.1 SECONDS)
+		addtimer(CALLBACK(true_parent, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, boomerang_throw_range, throwingdatum.speed, thrown_by, TRUE), 0.1 SECONDS)
 		COOLDOWN_START(src, last_boomerang_throw, BOOMERANG_REBOUND_INTERVAL)
-	var/mob/thrower = throwingdatum?.get_thrower()
-	real_parent.visible_message(
-		span_danger("[real_parent] is flying back at [thrower]!"), \
-		span_danger("You see [real_parent] fly back at you!"), \
-		span_hear("You hear an aerodynamic woosh!"))
+	true_parent.visible_message(
+		span_danger("[true_parent] is flying back at [thrown_by]!"),
+		span_danger("You see [true_parent] fly back at you!"),
+		span_hear("You hear an aerodynamic woosh!"),
+	)
 
 #undef BOOMERANG_REBOUND_INTERVAL

@@ -8,6 +8,7 @@
 	cost = CARGO_CRATE_VALUE * 1.8
 	contains = list(/obj/item/rcl,
 					/obj/item/storage/toolbox/artistic,
+					/obj/item/storage/toolbox/crafter,
 					/obj/item/toy/crayon/spraycan = 3,
 					/obj/item/storage/crayons,
 					/obj/item/toy/crayon/white,

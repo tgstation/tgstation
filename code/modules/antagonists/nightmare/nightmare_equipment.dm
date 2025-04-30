@@ -48,7 +48,7 @@
 	UnregisterSignal(user, COMSIG_MOB_AFTER_EXIT_JAUNT)
 	remove_crit()
 
-/obj/item/light_eater/attack(mob/living/target, mob/living/user, params)
+/obj/item/light_eater/attack(mob/living/target, mob/living/user, list/modifiers)
 	. = ..()
 	if(!has_crit)
 		return

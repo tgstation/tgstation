@@ -327,7 +327,7 @@
 	radial_icon_state = "mech_eject"
 	ability_key = BB_MINEBOT_DUMP_ABILITY
 
-/datum/pet_command/minebot_ability/light/retrieve_command_text(atom/living_pet, atom/target)
+/datum/pet_command/minebot_ability/dump/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to dump its ore!"
 
 /datum/pet_command/attack/minebot

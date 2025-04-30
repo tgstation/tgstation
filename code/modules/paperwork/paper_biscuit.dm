@@ -73,7 +73,7 @@
 
 	return ..()
 
-/obj/item/folder/biscuit/attackby(obj/item/weapon, mob/user, params)
+/obj/item/folder/biscuit/attackby(obj/item/weapon, mob/user, list/modifiers)
 	if (is_type_in_typecache(weapon, folder_insertables) && !crack_check(user))
 		return
 

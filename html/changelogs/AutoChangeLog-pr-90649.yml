@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "You can't fax unfaxable things by putting them in faxable things"

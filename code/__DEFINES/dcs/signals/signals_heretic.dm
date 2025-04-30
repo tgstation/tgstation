@@ -13,3 +13,6 @@
 #define COMSIG_HERETIC_BLADE_ATTACK "blade_attack"
 /// From /obj/item/melee/sickly_blade/ranged_interact_with_atom (without proximity) : (mob/living/source, mob/living/target)
 #define COMSIG_HERETIC_RANGED_BLADE_ATTACK "ranged_blade_attack"
+
+/// For [/datum/status_effect/protective_blades] to signal when it is triggered
+#define COMSIG_BLADE_BARRIER_TRIGGERED "blade_barrier_triggered"
