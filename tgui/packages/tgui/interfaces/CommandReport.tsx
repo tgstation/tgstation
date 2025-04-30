@@ -100,7 +100,9 @@ function SubHeader(props) {
         mt={1}
         value={subheader}
         placeholder="Keep blank to not include a subheader"
-        onChange={(value) => // TODO: replace with onBlur when added
+        onChange={( // TODO: replace with onBlur when added
+          value,
+        ) =>
           act('set_subheader', {
             new_subheader: value,
           })
