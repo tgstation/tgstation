@@ -14,6 +14,16 @@
 	spawned_human.gender = NEUTER
 	//don't need to set the human's body type (neuter)
 
+/obj/effect/mob_spawn/corpse/human/charredskeleton/dragoon
+	outfit = /datum/outfit/dragoon_gear
+
+/datum/outfit/dragoon_gear
+	name = "Dragoon"
+
+	suit = /obj/item/clothing/suit/armor/dragoon
+	head = /obj/item/clothing/head/helmet/dragoon
+	suit_store = /obj/item/spear/skybulge
+
 //Legion infested mobs
 
 /// Mob spawner used by Legion to spawn costumed bodies
