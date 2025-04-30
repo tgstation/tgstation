@@ -20,7 +20,6 @@
 	var/max_reagent_volume = 15
 	var/mopspeed = 1.5 SECONDS
 	force_string = "robust... against germs"
-	var/insertable = TRUE
 	var/static/list/clean_blacklist = typecacheof(list(
 		/obj/item/reagent_containers/cup/bucket,
 		/obj/structure/mop_bucket,
@@ -114,6 +113,3 @@
 /obj/item/mop/advanced/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	return ..()
-
-/obj/item/mop/advanced/cyborg
-	insertable = FALSE

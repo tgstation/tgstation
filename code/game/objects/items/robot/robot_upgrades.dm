@@ -195,7 +195,7 @@
 	model_type = list(/obj/item/robot_model/janitor)
 	model_flags = BORG_MODEL_JANITOR
 
-	items_to_add = list(/obj/item/mop/advanced/cyborg)
+	items_to_add = list(/obj/item/mop/advanced)
 	items_to_remove = list(/obj/item/mop)
 
 /obj/item/borg/upgrade/prt
