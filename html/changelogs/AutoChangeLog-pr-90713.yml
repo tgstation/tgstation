@@ -1,0 +1,7 @@
+author: "NecromancerAnne (Code, Mild Sprite Edits) Michiyamenotehifunana (Sprites)"
+delete-after: True
+changes:
+  - image: "Replaces the decrepit DRAGnet sprite with something newer and more interesting."
+  - balance: "Completely reworks the DRAGnet. They are now bulky energy guns."
+  - balance: "Snare is now a single shot bolt that deals 30 stamina force, staggers the target and lays out a net of teleportation fields that can transport anyone standing on them for too long to a DRAGnet beacon."
+  - balance: "Net has been replaced with a scattershot disabler round."
