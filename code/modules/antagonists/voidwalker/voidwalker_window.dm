@@ -21,7 +21,7 @@
 	height = 100
 	count = 100
 	spawning = 2
-	lifespan = 1.5 SECONDS
+	lifespan = 2 SECONDS
 	fade = 4 SECONDS
 	velocity = list(0, 0.2, 0)
 	position = generator(GEN_BOX, list(-8,-16,0), list(8,16,0), NORMAL_RAND)
