@@ -78,8 +78,7 @@ function CentComName(props) {
           fluid
           mt={1}
           value={name}
-          onChange={setName}
-          onEnter={sendName}
+          onChange={sendName} //TODO: expensive, replace with setName and use onBlur to send
         />
       )}
     </Section>
@@ -99,7 +98,7 @@ function SubHeader(props) {
         mt={1}
         value={subheader}
         placeholder="Keep blank to not include a subheader"
-        onChange={(value) =>
+        onChange={(value) => //TODO: expensive, replace with onBlur when added
           act('set_subheader', {
             new_subheader: value,
           })
