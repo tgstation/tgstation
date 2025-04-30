@@ -30,7 +30,7 @@
 	lighting_cutoff_red = 22
 	lighting_cutoff_green = 5
 	lighting_cutoff_blue = 5
-	max_stamina_loss = 200
+	max_stamina = 200
 	stamina_crit_threshold = BASIC_MOB_NO_STAMCRIT
 	stamina_recovery = 5
 	max_stamina_slowdown = 12

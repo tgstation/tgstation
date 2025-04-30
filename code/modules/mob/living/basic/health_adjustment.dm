@@ -61,7 +61,7 @@
 	. = staminaloss
 
 	var/stamina_delta = forced ? amount : amount * damage_coeff[STAMINA]
-	staminaloss = max(0, min(max_stamina_loss, staminaloss + stamina_delta))
+	staminaloss = max(0, min(max_stamina, staminaloss + stamina_delta))
 
 	if(stamina_delta > 0)
 		received_stamina_damage(staminaloss, -1 * stamina_delta, amount)
@@ -78,5 +78,5 @@
 	if (stat == DEAD || stamina_crit_threshold == BASIC_MOB_NO_STAMCRIT)
 		return
 
-	if (100 / (max_stamina_loss / current_level) >= stamina_crit_threshold)
+	if (100 / (max_stamina / current_level) >= stamina_crit_threshold)
 		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)

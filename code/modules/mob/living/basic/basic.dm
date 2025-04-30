@@ -4,15 +4,13 @@
 	icon = 'icons/mob/simple/animal.dmi'
 	health = 20
 	maxHealth = 20
+	max_stamina = BASIC_MOB_STAMINA_MATCH_HEALTH
 	gender = PLURAL
 	living_flags = MOVES_ON_ITS_OWN
 	status_flags = CANPUSH | CANSTUN
 	fire_stack_decay_rate = -5 // Reasonably fast as NPCs will not usually actively extinguish themselves
 
 	var/basic_mob_flags = NONE
-
-	/// What's the maximum amount of stamina we can lose? By default, same as maximum health
-	var/max_stamina_loss = BASIC_MOB_STAMINA_MATCH_HEALTH
 
 	///Defines how fast the basic mob can move. This is not a multiplier
 	var/speed = 1
@@ -153,11 +151,11 @@
 
 /// Ensures that this mob can be slowed from taking stamina damage
 /mob/living/basic/proc/make_stamina_slowable()
-	if (max_stamina_loss == BASIC_MOB_STAMINA_MATCH_HEALTH)
-		max_stamina_loss = maxHealth
-	if (damage_coeff[STAMINA] <= 0 || max_stamina_loss <= 0 || max_stamina_slowdown <= 0)
+	if (max_stamina == BASIC_MOB_STAMINA_MATCH_HEALTH)
+		max_stamina = maxHealth
+	if (damage_coeff[STAMINA] <= 0 || max_stamina <= 0 || max_stamina_slowdown <= 0)
 		return
-	AddElement(/datum/element/basic_stamina_slowdown, minium_stamina_threshold = max_stamina_loss / 3, maximum_stamina = max_stamina_loss, maximum_slowdown = max_stamina_slowdown)
+	AddElement(/datum/element/basic_stamina_slowdown, minium_stamina_threshold = max_stamina / 3, maximum_stamina = max_stamina, maximum_slowdown = max_stamina_slowdown)
 
 /mob/living/basic/proc/apply_target_randomisation()
 	if (basic_mob_flags & PRECISE_ATTACK_ZONES)
