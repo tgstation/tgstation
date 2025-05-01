@@ -16422,9 +16422,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/computer/security/telescreen/vault{
-	pixel_y = 30
-	},
+/obj/machinery/computer/security/telescreen/vault/directional/north,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/qm)
 "fSz" = (
@@ -17225,12 +17223,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "giR" = (
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 1;
-	pixel_y = -29
-	},
 /obj/structure/bed/dogbed/renault,
 /mob/living/basic/pet/fox/renault,
+/obj/machinery/computer/security/telescreen/minisat/directional/south,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "giT" = (
@@ -35194,10 +35189,8 @@
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/delivery,
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen/ordnance{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/security/telescreen/ordnance,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "mtO" = (
@@ -35914,13 +35907,10 @@
 /obj/structure/rack,
 /obj/item/aicard,
 /obj/item/radio/off,
-/obj/machinery/computer/security/telescreen/minisat{
-	dir = 1;
-	pixel_y = -29
-	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
+/obj/machinery/computer/security/telescreen/minisat/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "mET" = (
@@ -43621,12 +43611,8 @@
 /area/station/science/genetics)
 "ppm" = (
 /obj/structure/cable,
-/obj/machinery/computer/security/telescreen/interrogation{
-	name = "isolation room monitor";
-	network = list("isolation");
-	pixel_y = 31
-	},
 /obj/machinery/light/cold/directional/north,
+/obj/machinery/computer/security/telescreen/interrogation/directional/north,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "ppB" = (
@@ -60389,10 +60375,8 @@
 /area/station/hallway/secondary/entry)
 "uZM" = (
 /obj/structure/table,
-/obj/machinery/computer/security/telescreen/ordnance{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/security/telescreen/ordnance,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "uZO" = (
@@ -64209,10 +64193,7 @@
 /area/station/science/ordnance)
 "wne" = (
 /obj/structure/chair,
-/obj/machinery/computer/security/telescreen/interrogation{
-	dir = 4;
-	pixel_x = -30
-	},
+/obj/machinery/computer/security/telescreen/interrogation/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/security/interrogation)
 "wnQ" = (
@@ -67567,10 +67548,6 @@
 	pixel_y = 34;
 	req_access = list("rd")
 	},
-/obj/machinery/computer/security/telescreen/rd{
-	pixel_x = 31;
-	pixel_y = 30
-	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
@@ -69531,6 +69508,7 @@
 /obj/effect/mapping_helpers/requests_console/announcement,
 /obj/effect/mapping_helpers/requests_console/information,
 /obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/computer/security/telescreen/rd/directional/north,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
 "yfg" = (
