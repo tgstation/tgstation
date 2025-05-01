@@ -418,9 +418,6 @@
 /turf/open/floor/iron/solarpanel/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
-/turf/open/floor/iron/solarpanel/lava_atmos
-	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
-
 
 /turf/open/floor/iron/freezer
 	icon_state = "freezerfloor"
