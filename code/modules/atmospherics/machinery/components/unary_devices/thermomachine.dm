@@ -1,8 +1,6 @@
 #define THERMOMACHINE_POWER_CONVERSION 0.01
 
 /obj/machinery/atmospherics/components/unary/thermomachine
-	icon = 'icons/obj/machines/atmospherics/thermomachine.dmi'
-	icon_state = "thermo_base"
 	plane = GAME_PLANE
 
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -20,6 +18,9 @@
 	vent_movement = NONE
 	pipe_flags = PIPING_ONE_PER_TURF
 
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine"
+	post_init_icon_state = "thermo_base"
 	greyscale_config = /datum/greyscale_config/thermomachine
 	greyscale_colors = COLOR_VIBRANT_LIME
 
@@ -126,9 +127,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_overlays()
 	. = ..()
-	if(!initial(icon))
-		return
-	var/mutable_appearance/thermo_overlay = new(initial(icon))
+	var/mutable_appearance/thermo_overlay = new(icon)
 	var/image/pipe = get_pipe_image(thermo_overlay, "pipe", dir, pipe_color, piping_layer)
 	pipe.appearance_flags |= RESET_COLOR|KEEP_APART
 	. += pipe
@@ -334,6 +333,7 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/layer1
 	piping_layer = 1
@@ -349,7 +349,9 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
 	on = TRUE
-	icon_state = "thermo_base_1"
+	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on"
+	post_init_icon_state = "thermo_1"
+	does_not_generate_gags_preview = FALSE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize(mapload)
 	. = ..()
@@ -357,7 +359,7 @@
 		target_temperature = min_temperature
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom
 	name = "Cold room temperature control unit"
-	icon_state = "thermo_base_1"
+	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom"
 	greyscale_colors = COLOR_CYAN
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/coldroom/Initialize(mapload)
@@ -365,6 +367,7 @@
 	target_temperature = COLD_ROOM_TEMP
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/layer1
 	piping_layer = 1
@@ -380,6 +383,7 @@
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
 	on = TRUE
-	icon_state = "thermo_base_1"
+	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on" // same icon as the freezer
+	post_init_icon_state = "thermo_1"
 
 #undef THERMOMACHINE_POWER_CONVERSION

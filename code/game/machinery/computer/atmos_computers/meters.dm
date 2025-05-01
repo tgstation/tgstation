@@ -1,6 +1,7 @@
 /obj/machinery/meter/monitored
 	/// The unique string that represents which atmos chamber to associate with.
 	var/chamber_id
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/meter/monitored/Initialize(mapload, new_piping_layer)
 	id_tag = assign_random_name()

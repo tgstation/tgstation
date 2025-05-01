@@ -7,9 +7,9 @@
 /obj/item/stack/wrapping_paper
 	name = "wrapping paper"
 	desc = "Wrap packages with this festive paper to make gifts."
+	inhand_icon_state = "wrap_paper"
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "wrap_paper"
-	inhand_icon_state = "wrap_paper"
 	greyscale_config = /datum/greyscale_config/wrap_paper
 	amount = 25
 	max_amount = 25
@@ -63,6 +63,9 @@
 
 //preset wrapping paper meant to fill the original color configuration
 /obj/item/stack/wrapping_paper/xmas
+	icon = 'icons/map_icons/items/item.dmi'
+	icon_state = "/obj/item/stack/wrapping_paper/xmas"
+	post_init_icon_state = "wrap_paper"
 	greyscale_colors = "#00FF00#FF0000"
 
 /obj/item/stack/wrapping_paper/use(used, transfer, check = TRUE)

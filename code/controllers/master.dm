@@ -514,8 +514,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	if(result != SS_INIT_FAILURE)
 		// Some form of success, implicit failure, or the SS in unused.
 		subsystem.initialized = TRUE
-
-		SEND_SIGNAL(subsystem, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+		subsystem.PostInit()
 	else
 		// The subsystem officially reports that it failed to init and wishes to be treated as such.
 		subsystem.initialized = FALSE

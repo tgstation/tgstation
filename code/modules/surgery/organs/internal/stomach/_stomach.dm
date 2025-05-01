@@ -163,6 +163,10 @@
 			hunger_rate = 3 * HUNGER_FACTOR
 		hunger_rate *= hunger_modifier
 		hunger_rate *= human.physiology.hunger_mod
+		// NOVA EDIT ADDITION BEGIN
+		if((human.body_position == LYING_DOWN) || (human.stat == UNCONSCIOUS))
+			hunger_rate *= 0.5
+		// NOVA EDIT ADDITION END
 		human.adjust_nutrition(-hunger_rate * seconds_per_tick)
 
 	var/nutrition = human.nutrition

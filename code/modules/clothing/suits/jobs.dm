@@ -44,10 +44,12 @@
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
 	desc = "A set of overalls, good for protecting thinner clothes from the elements."
-	icon_state = "overalls"
 	inhand_icon_state = ""
 	body_parts_covered = CHEST|GROIN|LEGS
 	species_exception = list(/datum/species/golem)
+	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon_state = "/obj/item/clothing/suit/apron/overalls"
+	post_init_icon_state = "overalls"
 	greyscale_config = /datum/greyscale_config/overalls
 	greyscale_config_worn = /datum/greyscale_config/overalls/worn
 	greyscale_colors = "#313c6e"
@@ -264,8 +266,10 @@
 
 /obj/item/clothing/suit/toggle/lawyer/greyscale
 	name = "formal suit jacket"
-	icon_state = "jacket_lawyer"
 	inhand_icon_state = ""
+	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon_state = "/obj/item/clothing/suit/toggle/lawyer/greyscale"
+	post_init_icon_state = "jacket_lawyer"
 	greyscale_config = /datum/greyscale_config/jacket_lawyer
 	greyscale_config_worn = /datum/greyscale_config/jacket_lawyer/worn
 	greyscale_colors = "#ffffff"
@@ -275,13 +279,14 @@
 /obj/item/clothing/suit/toggle/suspenders
 	name = "suspenders"
 	desc = "They suspend the illusion of the mime's play."
-	icon = 'icons/obj/clothing/belts.dmi'
-	icon_state = "suspenders"
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
 	worn_icon_state = "suspenders"
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	toggle_noun = "straps"
 	species_exception = list(/datum/species/golem)
+	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon_state = "/obj/item/clothing/suit/toggle/suspenders"
+	post_init_icon_state = "suspenders"
 	greyscale_config = /datum/greyscale_config/suspenders
 	greyscale_config_worn = /datum/greyscale_config/suspenders/worn
 	greyscale_colors = "#972A2A"

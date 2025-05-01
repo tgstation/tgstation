@@ -606,8 +606,10 @@
 /obj/item/clothing/suit/costume/hawaiian
 	name = "hawaiian overshirt"
 	desc = "A cool shirt for chilling on the beach."
-	icon_state = "hawaiian_shirt"
 	inhand_icon_state = null
+	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon_state = "/obj/item/clothing/suit/costume/hawaiian"
+	post_init_icon_state = "hawaiian_shirt"
 	greyscale_config = /datum/greyscale_config/hawaiian_shirt
 	greyscale_config_worn = /datum/greyscale_config/hawaiian_shirt/worn
 	greyscale_colors = "#313B82#CCCFF0"
@@ -621,8 +623,10 @@
 /obj/item/clothing/suit/costume/football_armor
 	name = "football protective gear"
 	desc = "Given to members of the football team!"
-	icon_state = "football_armor"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
+	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon_state = "/obj/item/clothing/suit/costume/football_armor"
+	post_init_icon_state = "football_armor"
 	greyscale_config = /datum/greyscale_config/football_armor
 	greyscale_config_worn = /datum/greyscale_config/football_armor/worn
 	greyscale_colors = "#D74722"

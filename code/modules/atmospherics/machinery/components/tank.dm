@@ -1,8 +1,6 @@
 #define TANK_PLATING_SHEETS 12
 
 /obj/machinery/atmospherics/components/tank
-	icon = 'icons/obj/pipes_n_cables/stationary_canisters.dmi'
-	icon_state = "canister-0"
 	base_icon_state = "canister"
 
 	name = "pressure tank"
@@ -26,6 +24,9 @@
 	canSmoothWith = SMOOTH_GROUP_GAS_TANK
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/atmospherics/components/tank"
+	post_init_icon_state = "canister-0"
 	greyscale_config = /datum/greyscale_config/stationary_canister
 	greyscale_colors = "#ffffff"
 	var/overlay_greyscale_config = /datum/greyscale_config/stationary_canister_overlays
@@ -421,6 +422,7 @@
 
 /obj/machinery/atmospherics/components/tank/air
 	name = "pressure tank (Air)"
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/air/layer1
 	piping_layer = 1
@@ -441,63 +443,83 @@
 
 /obj/machinery/atmospherics/components/tank/carbon_dioxide
 	gas_type = /datum/gas/carbon_dioxide
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/plasma
 	gas_type = /datum/gas/plasma
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/nitrogen
 	gas_type = /datum/gas/nitrogen
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/oxygen
 	gas_type = /datum/gas/oxygen
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/nitrous
 	gas_type = /datum/gas/nitrous_oxide
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/bz
 	gas_type = /datum/gas/bz
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/freon
 	gas_type = /datum/gas/freon
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/halon
 	gas_type = /datum/gas/halon
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/healium
 	gas_type = /datum/gas/healium
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/hydrogen
 	gas_type = /datum/gas/hydrogen
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/hypernoblium
 	gas_type = /datum/gas/hypernoblium
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/miasma
 	gas_type = /datum/gas/miasma
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/nitrium
 	gas_type = /datum/gas/nitrium
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/pluoxium
 	gas_type = /datum/gas/pluoxium
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/proto_nitrate
 	gas_type = /datum/gas/proto_nitrate
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/tritium
 	gas_type = /datum/gas/tritium
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/water_vapor
 	gas_type = /datum/gas/water_vapor
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/zauker
 	gas_type = /datum/gas/zauker
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/helium
 	gas_type = /datum/gas/helium
+	does_not_generate_gags_preview = TRUE
 
 /obj/machinery/atmospherics/components/tank/antinoblium
 	gas_type = /datum/gas/antinoblium
+	does_not_generate_gags_preview = TRUE
 
 ///////////////////////////////////////////////////////////////////
 // Tank Frame Structure

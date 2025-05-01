@@ -2,8 +2,6 @@
 	name = "sticky tape"
 	singular_name = "sticky tape"
 	desc = "Used for sticking to things for sticking said things to people."
-	icon = 'icons/obj/tapes.dmi'
-	icon_state = "tape"
 	var/prefix = "sticky"
 	w_class = WEIGHT_CLASS_TINY
 	full_w_class = WEIGHT_CLASS_TINY
@@ -17,6 +15,9 @@
 	var/conferred_embed = /datum/embedding/sticky_tape
 	///The tape type you get when ripping off a piece of tape.
 	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape
+	icon = 'icons/map_icons/items/item.dmi'
+	icon_state = "/obj/item/stack/sticky_tape"
+	post_init_icon_state = "tape"
 	greyscale_config = /datum/greyscale_config/tape
 	greyscale_colors = "#B2B2B2#BD6A62"
 
@@ -101,10 +102,12 @@
 	name = "pointy tape"
 	singular_name = "pointy tape"
 	desc = "Used for sticking to things for sticking said things inside people."
-	icon_state = "tape_spikes"
 	prefix = "pointy"
 	conferred_embed = /datum/embedding/pointy_tape
 	merge_type = /obj/item/stack/sticky_tape/pointy
+	icon = 'icons/map_icons/items/item.dmi'
+	icon_state = "/obj/item/stack/sticky_tape/pointy"
+	post_init_icon_state = "tape_spikes"
 	greyscale_config = /datum/greyscale_config/tape/spikes
 	greyscale_colors = "#E64539#808080#AD2F45"
 	tape_gag = /obj/item/clothing/mask/muzzle/tape/pointy

@@ -210,7 +210,7 @@
 		CRASH("gags_to_universal_icon() received an invalid path of \"[path]\"!")
 	var/datum/greyscale_config/config = initial(path.greyscale_config)
 	var/colors = initial(path.greyscale_colors)
-	var/datum/universal_icon/entry = SSgreyscale.GetColoredIconByTypeUniversalIcon(config, colors, initial(path.icon_state))
+	var/datum/universal_icon/entry = SSgreyscale.GetColoredIconByTypeUniversalIcon(config, colors, path::post_init_icon_state || path::icon_state)
 	return entry
 
 /// Gets the relevant universal icon for an atom, when displayed in TGUI. (see: icon_state_preview)

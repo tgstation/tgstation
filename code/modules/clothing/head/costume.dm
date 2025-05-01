@@ -134,16 +134,20 @@
 
 /obj/item/clothing/head/costume/fancy
 	name = "fancy hat"
-	icon_state = "fancy_hat"
 	greyscale_colors = "#E3C937#782A81"
+	icon = 'icons/map_icons/clothing/head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/fancy"
+	post_init_icon_state = "fancy_hat"
 	greyscale_config = /datum/greyscale_config/fancy_hat
 	greyscale_config_worn = /datum/greyscale_config/fancy_hat/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/football_helmet
 	name = "football helmet"
-	icon_state = "football_helmet"
 	greyscale_colors = "#D74722"
+	icon = 'icons/map_icons/clothing/head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/football_helmet"
+	post_init_icon_state = "football_helmet"
 	greyscale_config = /datum/greyscale_config/football_helmet
 	greyscale_config_worn = /datum/greyscale_config/football_helmet/worn
 	flags_1 = IS_PLAYER_COLORABLE_1

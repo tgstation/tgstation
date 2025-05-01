@@ -2,12 +2,13 @@
 /obj/item/ceremonial_blade
 	name = "ceremonial blade"
 	desc = "A blade created to spar with. It seems weak, but if you spar with it...?"
-	icon_state = "default"
 	inhand_icon_state = "default"
-	icon = 'icons/obj/weapons/ritual_weapon.dmi'
 	icon_angle = -45
 
 	//does the exact thing we want so heck why not
+	icon = 'icons/map_icons/items/item.dmi'
+	icon_state = "/obj/item/ceremonial_blade"
+	post_init_icon_state = "default"
 	greyscale_config = /datum/greyscale_config/ceremonial_blade
 	greyscale_config_inhand_left = /datum/greyscale_config/ceremonial_blade_lefthand
 	greyscale_config_inhand_right = /datum/greyscale_config/ceremonial_blade_righthand
