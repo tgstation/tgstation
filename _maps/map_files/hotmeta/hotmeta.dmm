@@ -66457,11 +66457,7 @@
 "xaj" = (
 /obj/structure/table/reinforced,
 /obj/item/radio/intercom/directional/west,
-/obj/item/nullrod/pride_hammer{
-	name = "Chemists bane";
-	chaplain_spawnable = 0;
-	color = white
-	},
+/obj/item/nullrod/pride_hammer,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
