@@ -76,4 +76,4 @@
 
 /obj/item/toy/plush/carpplushie/dehy_carp/peaceful
 	mobtype = /mob/living/basic/carp/passive
-	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1|	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
