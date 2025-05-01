@@ -213,8 +213,7 @@
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
-		atom_integrity = max_integrity
-		update_nearby_icons()
+		repair_damage(max_integrity)
 		to_chat(user, span_notice("You repair [src]."))
 	return ITEM_INTERACT_SUCCESS
 
@@ -323,6 +322,10 @@
 	. = ..()
 	if(.) //received damage
 		update_nearby_icons()
+
+/obj/structure/window/repair_damage(amount)
+	. = ..()
+	update_nearby_icons()
 
 /obj/structure/window/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)

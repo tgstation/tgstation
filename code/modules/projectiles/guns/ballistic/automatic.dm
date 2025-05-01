@@ -182,8 +182,7 @@
 /obj/item/gun/ballistic/automatic/m90/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(isammocasing(tool))
 		if(istype(tool, underbarrel.magazine.ammo_type))
-			underbarrel.attack_self(user)
-			underbarrel.attackby(tool, user, list2params(modifiers))
+			underbarrel.item_interaction(user, tool, modifiers)
 		return ITEM_INTERACT_BLOCKING
 	return ..()
 

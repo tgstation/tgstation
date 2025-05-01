@@ -122,12 +122,12 @@
 	volume = 50
 	custom_price = PAYCHECK_CREW * 0.9
 
-/obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, ranged = FALSE, break_top)
-	if(bartender_check(target) && ranged)
+/obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
+	if(bartender_check(target, thrower) && throwingdatum)
 		return
-	SplashReagents(target, ranged, override_spillable = TRUE)
+	SplashReagents(target, throwingdatum, override_spillable = TRUE)
 	var/obj/item/broken_bottle/broken = new(drop_location())
-	if(!ranged && thrower)
+	if(!throwingdatum && thrower)
 		thrower.put_in_hands(broken)
 	broken.mimic_broken(src, target, break_top)
 	broken.inhand_icon_state = broken_inhand_icon_state
@@ -748,7 +748,7 @@
 			span_danger("You fail your stunt and cut [src] in half, spilling it over you!"),
 			)
 		user.add_mood_event("sabrage_fail", /datum/mood_event/sabrage_fail)
-		return smash(target = user, ranged = FALSE, break_top = TRUE)
+		return smash(target = user, break_top = TRUE)
 
 /obj/item/reagent_containers/cup/glass/bottle/champagne/update_icon_state()
 	. = ..()
@@ -930,7 +930,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/molotov/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = FALSE)
 	..(hit_atom, throwingdatum, do_splash = FALSE)
 
-/obj/item/reagent_containers/cup/glass/bottle/molotov/smash(atom/target, mob/thrower, ranged = FALSE)
+/obj/item/reagent_containers/cup/glass/bottle/molotov/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
 	var/firestarter = 0
 	for(var/datum/reagent/contained_reagent in reagents.reagent_list)
 		for(var/accelerant_type in accelerants)

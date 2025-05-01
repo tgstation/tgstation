@@ -85,8 +85,12 @@
 	if (!HAS_TRAIT(owner, TRAIT_SWIMMER))
 		var/athletics_skill =  (owner.mind?.get_skill_level(/datum/skill/athletics) || 1) - 1
 		owner.apply_damage((stamina_per_second - athletics_skill) * seconds_between_ticks, STAMINA)
-		owner.mind?.adjust_experience(/datum/skill/athletics, 10)
 
+	// If you can't move you're not swimming
+	if (!HAS_TRAIT(owner, TRAIT_INCAPACITATED) && !HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
+		owner.mind?.adjust_experience(/datum/skill/athletics, 3)
+
+	// You might not be swimming but you can breathe
 	if (HAS_TRAIT(owner, TRAIT_NODROWN) || HAS_TRAIT(owner, TRAIT_NOBREATH) || (owner.mob_size >= MOB_SIZE_HUMAN && owner.body_position == STANDING_UP))
 		return
 	if (iscarbon(owner))

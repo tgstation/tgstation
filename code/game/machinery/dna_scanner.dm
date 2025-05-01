@@ -184,6 +184,10 @@
 	. = ..()
 	icon_state = "datadisk[rand(0,7)]"
 	add_overlay("datadisk_gene")
+	if(length(genetic_makeup_buffer))
+		var/datum/blood_type = genetic_makeup_buffer["blood_type"]
+		if(blood_type)
+			blood_type = get_blood_type(blood_type) || random_human_blood_type()
 
 /obj/item/disk/data/debug
 	name = "\improper CentCom DNA disk"

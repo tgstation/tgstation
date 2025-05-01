@@ -205,7 +205,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /// Wrapper for calling "stun()" and doing relevant vfx/sfx
-/obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, list/modifiers)
 	PROTECTED_PROC(TRUE)
 	COOLDOWN_START(src, cooldown_check, cooldown)
 	if(on_stun_sound)
@@ -777,7 +777,7 @@
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!. && active && prob(throw_stun_chance) && isliving(hit_atom))
-		finalize_baton_attack(hit_atom, thrownby?.resolve())
+		finalize_baton_attack(hit_atom, throwingdatum.get_thrower())
 
 /obj/item/melee/baton/security/emp_act(severity)
 	. = ..()

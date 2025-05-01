@@ -189,9 +189,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 			for(var/datum/paper_input/text_input as anything in paper.raw_text_inputs)
 				paper_text += text_input.raw_text
 			user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[paper.name]</title></head>" \
-			+ "<body style='overflow:hidden;padding:5px'>" \
-			+ "[paper_text]" \
-			+ "</body></html>", "window=photo_showing;size=480x608")
+				+ "<body style='overflow:hidden;padding:5px'>" \
+				+ "[paper_text]" \
+				+ "</body></html>", "window=photo_showing;size=480x608")
 			onclose(user, "[name]")
 		if("remove_evidence")
 			var/datum/case/case = cases[current_case]

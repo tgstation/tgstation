@@ -134,7 +134,10 @@
 					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 
 			hittarget_living.adjustBruteLoss(200)
-			new /obj/effect/decal/cleanable/blood/splatter(get_turf(hittarget_living))
+			var/obj/effect/decal/cleanable/blood/splatter/blood_splatter = new /obj/effect/decal/cleanable/blood/splatter(get_turf(hittarget_living))
+			if(iscarbon(hittarget_living))
+				var/mob/living/carbon/carbon_target = hittarget_living
+				blood_splatter.add_mob_blood(carbon_target)
 
 			log_combat(src, hittarget_living, "rammed into", null, "injuring all passengers and killing the [hittarget_living]")
 			dump_mobs(TRUE)
