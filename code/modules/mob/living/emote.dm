@@ -375,7 +375,7 @@
 	message = "coughs!"
 	message_mime = "acts out an exaggerated cough!"
 	vary = TRUE
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE | EMOTE_RUNECHAT
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 
 /datum/emote/living/cough/can_run_emote(mob/user, status_check = TRUE , intentional, params)
 	return !HAS_TRAIT(user, TRAIT_SOOTHED_THROAT) && ..()

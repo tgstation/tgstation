@@ -153,6 +153,7 @@
 	return ..()
 
 
+// hear only saying, not audible emote/shots
 /obj/item/taperecorder/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, spans, list/message_mods = list(), message_range)
 	. = ..()
 	if(message_mods[MODE_RELAY] || !mytape || istype(speaker, /obj/item/taperecorder))
@@ -161,6 +162,10 @@
 	mytape.timestamp += mytape.used_capacity
 	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.GetVoice()]: [raw_message]"
 
+/obj/item/taperecorder/proc/hear_raw(message, atom/movable/speaker)
+	if(mytape && recording)
+		mytape.timestamp += mytape.used_capacity
+		mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss")]\] [speaker.GetVoice()] [message]"
 
 /obj/item/taperecorder/verb/record()
 	set name = "Start Recording"

@@ -210,6 +210,10 @@
 	fire_sounds()
 	if(suppressed || !message)
 		return FALSE
+
+	for(var/obj/item/taperecorder/rec in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
+		rec.hear_raw("making gunshot!", src)
+
 	if(tk_firing(user))
 		visible_message(
 			span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"),

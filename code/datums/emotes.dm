@@ -114,13 +114,13 @@
 			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH)
 		playsound(source = user,soundin = tmp_sound,vol = 50, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
 
-
+	var/is_runechat = emote_type & EMOTE_RUNECHAT
 	var/is_important = emote_type & EMOTE_IMPORTANT
 	var/is_visual = emote_type & EMOTE_VISIBLE
 	var/is_audible = emote_type & EMOTE_AUDIBLE
 
 	// Emote doesn't get printed to chat, runechat only
-	if(emote_type & EMOTE_RUNECHAT)
+	if(is_runechat)
 		for(var/mob/viewer as anything in viewers(user))
 			if(isnull(viewer.client))
 				continue

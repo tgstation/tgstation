@@ -286,6 +286,7 @@
 
 	if(!islist(ignored_mobs))
 		ignored_mobs = list(ignored_mobs)
+
 	var/list/hearers = get_hearers_in_view(vision_distance, src) //caches the hearers and then removes ignored mobs.
 	hearers -= ignored_mobs
 
@@ -359,9 +360,14 @@
 	var/list/hearers = get_hearers_in_view(hearing_distance, src)
 	if(self_message)
 		hearers -= src
+
+	for(var/obj/item/taperecorder/rec in hearers)
+		rec.hear_raw(message, src)
+
 	var/raw_msg = message
 	if(audible_message_flags & EMOTE_MESSAGE)
 		message = span_emote("<b>[src]</b> [message]")
+
 	for(var/mob/M in hearers)
 		if(audible_message_flags & EMOTE_MESSAGE && runechat_prefs_check(M, audible_message_flags) && M.can_hear())
 			M.create_chat_message(src, raw_message = raw_msg, runechat_flags = audible_message_flags)
