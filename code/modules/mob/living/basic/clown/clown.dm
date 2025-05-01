@@ -141,7 +141,7 @@
 	loot = list(
 		/obj/effect/gibspawner/human,
 		/obj/item/clothing/mask/gas/clown_hat,
-		/obj/item/food/meat/meatclown,
+		/obj/item/food/meatclown,
 		/obj/item/stack/sheet/animalhide/human,
 	)
 	emotes = list(
@@ -349,7 +349,7 @@
 	health = 130
 	pixel_x = -16
 	base_pixel_x = -16
-	speed = 2
+	speed = 1.5
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	attack_verb_continuous = "awkwardly flails at"
@@ -405,7 +405,7 @@
 	. = ..()
 	GRANT_ACTION(/datum/action/cooldown/regurgitate)
 	///filled with the American spirit, only survives the explosion some of the time though.
-	if(prob(33))
+	if(prob(40))
 		loot.Add(/obj/item/organ/heart/freedom)
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
@@ -559,7 +559,6 @@
 	habitable_atmos = list("min_oxy" = 1, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	loot = list(
 		/obj/effect/gibspawner/human,
-		/obj/item/grown/bananapeel,
 		/obj/item/clothing/mask/gas/clown_hat,
 	)
 	emotes = list(
@@ -570,8 +569,15 @@
 
 /mob/living/basic/clown/banana/Initialize(mapload)
 	. = ..()
+	//Add a random assortment of Musa type objects.
 	if(prob(33))
 		loot.Add(/obj/item/food/grown/banana/bunch)
+	if(prob(33))
+		loot.Add(/obj/item/food/grown/banana)
+	if(prob(33))
+		loot.Add(/obj/item/food/grown/banana)
+	else
+		loot.Add(/obj/item/grown/bananapeel)
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWNANA, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	var/static/list/innate_actions = list(
