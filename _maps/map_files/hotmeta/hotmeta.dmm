@@ -2543,10 +2543,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/cafeteria)
-"aUI" = (
-/obj/structure/ash_walker_eggshell,
-/turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins,
-/area/lavaland/surface/outdoors)
 "aUK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -4263,9 +4259,7 @@
 "bvY" = (
 /obj/machinery/power/tracker,
 /obj/structure/cable,
-/turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/solarpanel/lava_atmos,
 /area/lavaland/surface/outdoors)
 "bwb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -19267,7 +19261,6 @@
 /obj/structure/stone_tile{
 	dir = 4
 	},
-/obj/structure/ash_walker_eggshell,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "gTh" = (
@@ -23315,7 +23308,6 @@
 /area/station/medical/treatment_center)
 "inj" = (
 /obj/structure/stone_tile/surrounding/cracked,
-/obj/structure/ash_walker_eggshell,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "inr" = (
@@ -32145,9 +32137,7 @@
 	id = "aftport";
 	name = "Aft-Port Solar Array"
 	},
-/turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/solarpanel/lava_atmos,
 /area/lavaland/surface/outdoors)
 "lln" = (
 /obj/structure/cable,
@@ -32904,9 +32894,7 @@
 /area/station/hallway/secondary/command)
 "lzJ" = (
 /obj/structure/cable,
-/turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/solarpanel/lava_atmos,
 /area/lavaland/surface/outdoors)
 "lzL" = (
 /obj/structure/cable,
@@ -54680,9 +54668,7 @@
 	id = "forestarboard";
 	name = "Fore-Starboard Solar Array"
 	},
-/turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/solarpanel/lava_atmos,
 /area/lavaland/surface/outdoors)
 "taI" = (
 /obj/machinery/door/firedoor,
@@ -67570,9 +67556,7 @@
 	id = "foreport";
 	name = "Fore-Port Solar Array"
 	},
-/turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/open/floor/iron/solarpanel/lava_atmos,
 /area/lavaland/surface/outdoors)
 "xuS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -129741,7 +129725,7 @@ nWF
 nWF
 nWF
 xBm
-aUI
+nWF
 aIw
 nWF
 knd
