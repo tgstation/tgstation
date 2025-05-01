@@ -55,6 +55,15 @@
 	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman, /obj/item/keycard/hotmeta/hierophant)
 	icon = 'icons/mob/simple/lavaland/hotmeta_hierophant.dmi'
 
+/mob/living/simple_animal/hostile/megafauna/hierophant/hotmeta/Initialize(mapload)
+	. = ..()
+	spawned_beacon_ref = WEAKREF(new /obj/effect/hierophant(loc))
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/hiero_old.ogg', 154 SECONDS)
+
+/mob/living/simple_animal/hostile/megafauna/hierophant/hotmeta/Destroy()
+	QDEL_NULL(spawned_beacon_ref)
+	return ..()
+
 /mob/living/simple_animal/hostile/megafauna/dragon/hotmeta
 	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman, /obj/item/keycard/hotmeta/drake)
 
