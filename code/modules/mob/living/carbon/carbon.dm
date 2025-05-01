@@ -1068,6 +1068,10 @@
 
 	synchronize_bodytypes()
 	synchronize_bodyshapes()
+	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
+	// behavior within said bodyparts list. We sort it here as we're adding the bodypart. This can't be in try_attach_limb,
+	// because we're also called in create_bodyparts, where updating health and such is something we wish to avoid.
+	bodyparts = sort_list(bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
 
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
 /mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)

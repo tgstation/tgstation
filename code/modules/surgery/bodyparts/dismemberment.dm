@@ -320,9 +320,6 @@
 	if(can_be_disabled)
 		update_disabled()
 
-	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
-	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
-	new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
 	new_limb_owner.updatehealth()
 	new_limb_owner.update_body()
 	new_limb_owner.update_damage_overlays()
