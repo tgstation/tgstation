@@ -158,9 +158,11 @@
 
 	if(istype(charging, /obj/item/ammo_box/magazine/recharge)) //if you add any more snowflake ones, make sure to update the examine messages too.
 		var/obj/item/ammo_box/magazine/recharge/power_pack = charging
-		if(power_pack.stored_ammo.len < power_pack.max_ammo)
+		for(var/charge_iterations in 1 to recharge_coeff)
+			if(power_pack.stored_ammo.len >= power_pack.max_ammo)
+				break
 			power_pack.stored_ammo += new power_pack.ammo_type(power_pack)
-			use_energy(active_power_usage * recharge_coeff * seconds_per_tick)
+			use_energy(active_power_usage * seconds_per_tick)
 			using_power = TRUE
 		update_appearance()
 		return

@@ -233,7 +233,7 @@
 
 	return TRUE
 
-// Called on limb removal to remove limb specific limb effects or statuses
+/// Called on limb removal to remove limb specific limb effects or statuses
 /obj/item/organ/proc/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
