@@ -263,7 +263,7 @@
 		return FALSE
 	if(!has_required_infectious_organ(affected_mob, ORGAN_SLOT_LUNGS)) //also if you lack lungs
 		return FALSE
-	if((HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety / 2))) && !HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY)) //being full or on spaceacillin makes you less likely to spread a virus
+	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety / 2))) //being full or on spaceacillin makes you less likely to spread a virus
 		return FALSE
 	var/turf/mob_loc = affected_mob.loc
 	if(!istype(mob_loc))
@@ -376,7 +376,7 @@
 /datum/disease/proc/on_breath(datum/source, seconds_per_tick, ...)
 	SIGNAL_HANDLER
 
-	if(SPT_PROB(infectivity * 4 * (HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1), seconds_per_tick))
+	if(SPT_PROB(infectivity * 4, seconds_per_tick))
 		airborne_spread()
 
 //Use this to compare severities
