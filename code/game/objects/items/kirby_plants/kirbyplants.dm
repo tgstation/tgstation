@@ -141,6 +141,11 @@
 	trimmable = FALSE
 	actions_types = list(/datum/action/item_action/toggle_light)
 	action_slots = ALL
+	light_range = 2
+	light_power = 1
+	light_system = OVERLAY_LIGHT
+	light_on = TRUE
+	color = LIGHT_COLOR_DEFAULT
 
 	///Boolean on whether the light is on and flashing.
 	var/light_enabled = TRUE
@@ -151,6 +156,8 @@
 	if(.)
 		return .
 	light_enabled = !light_enabled
+	set_light_on(light_enabled)
+	update_item_action_buttons()
 	update_appearance(UPDATE_ICON)
 
 /obj/item/kirbyplants/potty/update_overlays()
