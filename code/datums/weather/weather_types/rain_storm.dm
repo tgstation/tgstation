@@ -87,4 +87,121 @@
 	)
 	probability = 0
 
+/datum/weather/rain_storm/wizard
+	name = "magical rain"
+	desc = "A magical thunderstorm rains down below, drenching anyone caught in it with mysterious rain."
 
+	telegraph_message = span_danger("A magical rain cloud appears above. You hear droplets falling down.")
+	protected_areas = list(
+		/area/station/maintenance, /area/station/ai_monitored/turret_protected/ai_upload,
+		/area/station/ai_monitored/turret_protected/ai_upload_foyer, /area/station/ai_monitored/turret_protected/aisat/maint,
+		/area/station/ai_monitored/command/storage/satellite, /area/station/ai_monitored/turret_protected/ai,
+		/area/station/commons/storage/emergency/starboard, /area/station/commons/storage/emergency/port,
+		/area/shuttle, /area/station/security/prison/safe, /area/station/security/prison/toilet, /area/mine/maintenance,
+		/area/icemoon/underground, /area/ruin/comms_agent/maint
+	)
+
+	// same time durations as floor_is_lava event
+	telegraph_duration = 15 SECONDS
+	weather_duration_lower = 30 SECONDS
+	weather_duration_upper = 1 MINUTES
+	end_duration = 0 SECONDS
+	target_trait = ZTRAIT_STATION
+
+	turf_weather_chance = 0.02 // double the turf chance
+	whitelist_weather_reagents = list()
+	probability = 0 // shouldn't spawn normally
+	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_INDOORS | WEATHER_BAROMETER)
+
+/datum/weather/rain_storm/wizard/New(z_levels, list/weather_data)
+	if(length(GLOB.wizard_rain_reagents)) // the wizard event has already been run once and setup the whitelist
+		whitelist_weather_reagents = GLOB.wizard_rain_reagents
+		return ..()
+
+	// most medicine do nothing when it comes into contact with turfs or mobs (via TOUCH) except for a few
+	var/list/allowed_medicine = list(
+		/datum/reagent/medicine/c2/synthflesh,
+		/datum/reagent/medicine/adminordrazine,
+		/datum/reagent/medicine/strange_reagent,
+		// include a random medicine
+		pick(subtypesof(/datum/reagent/medicine)),
+	)
+	GLOB.wizard_rain_reagents |= allowed_medicine
+
+	// One randomized type is allowed so the whitelist isn't spammed with subtypes
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/glitter))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/mutationtoxin))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/plantnutriment))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/impurity))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent/drug))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/uranium))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/luminescent_fluid))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/carpet))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/water))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/fuel))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/colorful_reagent))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/ants))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/lube))
+	GLOB.wizard_rain_reagents |= pick(typesof(/datum/reagent/space_cleaner))
+
+	// lots of toxins do nothing so we need to be picky
+	var/list/allowed_toxins = list(
+		/datum/reagent/toxin/itching_powder,
+		/datum/reagent/toxin/polonium, // radiation
+		/datum/reagent/toxin/mutagen,
+		// all the acids
+		/datum/reagent/toxin/acid,
+		/datum/reagent/toxin/acid/fluacid,
+		/datum/reagent/toxin/acid/nitracid,
+		// include a random toxin
+		pick(subtypesof(/datum/reagent/toxin)),
+	)
+	GLOB.wizard_rain_reagents |= allowed_toxins
+
+	// too many food & drinks so blacklist most of them
+	var/list/allowed_food_drinks = list(
+		/datum/reagent/consumable/ethanol/wizz_fizz,
+		/datum/reagent/consumable/condensedcapsaicin,
+		/datum/reagent/consumable/frostoil,
+		// include a random food or drink
+		pick(subtypesof(/datum/reagent/consumable)),
+		// include a random regular drink (vodka, wine, beer, etc.)
+		pick(/obj/machinery/chem_dispenser/drinks/beer::beer_dispensable_reagents),
+	)
+	GLOB.wizard_rain_reagents |= allowed_food_drinks
+
+	var/list/allowed_exotic_reagents = list(
+		// fire
+		/datum/reagent/clf3,
+		/datum/reagent/phlogiston,
+		/datum/reagent/napalm,
+		// cosmetic
+		/datum/reagent/hair_dye,
+		/datum/reagent/barbers_aid,
+		/datum/reagent/baldium,
+		/datum/reagent/mulligan,
+		/datum/reagent/growthserum,
+		// op shit
+		/datum/reagent/romerol,
+		/datum/reagent/gondola_mutation_toxin,
+		/datum/reagent/metalgen,
+		/datum/reagent/flightpotion,
+		/datum/reagent/eigenstate,
+		/datum/reagent/magillitis,
+		/datum/reagent/pax,
+		/datum/reagent/gluttonytoxin,
+		/datum/reagent/aslimetoxin,
+		// misc
+		/datum/reagent/blood,
+		/datum/reagent/hauntium,
+		/datum/reagent/copper,
+	)
+	GLOB.wizard_rain_reagents |= allowed_exotic_reagents
+
+	// add a few randomized reagents not listed above so they at least have a chance
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent))
+	GLOB.wizard_rain_reagents |= pick(subtypesof(/datum/reagent))
+
+	whitelist_weather_reagents = GLOB.wizard_rain_reagents
+	return ..()

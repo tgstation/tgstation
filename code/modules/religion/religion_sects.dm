@@ -59,6 +59,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	to_chat(chap, span_boldnotice("\"[quote]\""))
 	to_chat(chap, span_notice("[desc]"))
+	chap.faction |= FACTION_HOLY
 
 /// Activates if religious sect is reset by admins, should clean up anything you added on conversion.
 /datum/religion_sect/proc/on_deconversion(mob/living/chap)
@@ -66,6 +67,7 @@
 	to_chat(chap, span_boldnotice("You have lost the approval of \the [name]."))
 	if(chap.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
 		to_chat(chap, span_notice("Return to an altar to reform your sect."))
+	chap.faction -= FACTION_HOLY
 
 /// Returns TRUE if the item can be sacrificed. Can be modified to fit item being tested as well as person offering. Returning TRUE will stop the attackby sequence and proceed to on_sacrifice.
 /datum/religion_sect/proc/can_sacrifice(obj/item/sacrifice, mob/living/chap)
@@ -382,10 +384,10 @@
 
 	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
 		if(target.blood_volume < BLOOD_VOLUME_SAFE)
-			var/target_blood_data = target.get_blood_data(target.get_blood_id())
-			var/chaplain_blood_data = chaplain.get_blood_data(chaplain.get_blood_id())
+			var/datum/blood_type/target_blood_data = target.dna.blood_type
+			var/datum/blood_type/chaplain_blood_data = chaplain.dna.blood_type
 			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
-			if(transferred_blood_amount && (chaplain_blood_data["blood_type"] in get_safe_blood(target_blood_data["blood_type"])))
+			if(transferred_blood_amount && (chaplain_blood_data.type_key() in target_blood_data.compatible_types))
 				transferred = TRUE
 				chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
 		if(target.blood_volume > BLOOD_VOLUME_EXCESS)

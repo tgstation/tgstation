@@ -782,3 +782,10 @@
  */
 /datum/config_entry/number/tgui_max_chunk_count
 	default = 32
+
+// If set, enables the "Link forum account" OOC verb
+/datum/config_entry/string/forum_link_uri
+
+/datum/config_entry/string/webmap_url
+	//ex: "https://webmap.affectedarc07.co.uk/maps/tgstation/"
+	default = ""

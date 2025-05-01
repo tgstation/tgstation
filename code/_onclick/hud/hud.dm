@@ -28,12 +28,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/inventory_shown = FALSE //Equipped item inventory
 	var/hotkey_ui_hidden = FALSE //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
-	var/atom/movable/screen/blobpwrdisplay
-
 	var/atom/movable/screen/alien_plasma_display
 	var/atom/movable/screen/alien_queen_finder
-
-	var/atom/movable/screen/combo/combo_display
 
 	var/atom/movable/screen/action_intent
 	var/atom/movable/screen/zone_select
@@ -240,6 +236,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(toggleable_inventory)
 	QDEL_LIST(hotkeybuttons)
 	throw_icon = null
+	resist_icon = null
 	QDEL_LIST(infodisplay)
 
 	healths = null
@@ -247,10 +244,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	healthdoll = null
 	spacesuit = null
 	hunger = null
-	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
-	combo_display = null
 
 	QDEL_LIST_ASSOC_VAL(master_groups)
 	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
@@ -295,12 +290,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/get_plane_group(key)
 	return master_groups[key]
 
+///Creates the mob's visible HUD, returns FALSE if it can't, TRUE if it did.
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
-		return
+		return FALSE
 	set_hud_used(new hud_type(src))
 	update_sight()
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
+	return TRUE
 
 /mob/proc/set_hud_used(datum/hud/new_hud)
 	hud_used = new_hud

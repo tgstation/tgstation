@@ -362,7 +362,7 @@
 	qdel(src)
 	return LAZARUS_INJECTOR_USED
 
-/obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/food/deadmouse/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	var/mob/living/living_user = user
 	if(istype(living_user) && attacking_item.get_sharpness() && living_user.combat_mode)
 		if(!isturf(loc))
@@ -407,21 +407,27 @@
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find people to run away from
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_BASIC_MOB_FLEE_DISTANCE = 3,
+		BB_SONG_LINES = MOUSE_SONG,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		// Try to speak, because it's cute
+		/datum/ai_planning_subtree/random_speech/mouse,
+		// Follow the boss's orders
 		/datum/ai_planning_subtree/pet_planning,
-		// Top priority is to look for and execute hunts for cheese even if someone is looking at us
+		// Look for and execute hunts for cheese even if someone is looking at us
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cheese,
+		// Next priority is to try and appreoach a keyboard
+		/datum/ai_planning_subtree/approach_synthesizer,
+		// And play it if we are near it
+		/datum/ai_planning_subtree/generic_play_instrument/end_planning,
 		// Next priority is see if anyone is looking at us
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
 		// Skedaddle
 		/datum/ai_planning_subtree/flee_target/mouse,
-		// Try to speak, because it's cute
-		/datum/ai_planning_subtree/random_speech/mouse,
 		// Otherwise, look for and execute hunts for cabling
 		/datum/ai_planning_subtree/find_and_hunt_target/look_for_cables,
 	)

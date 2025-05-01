@@ -141,13 +141,13 @@
 		return
 	return ..()
 
-/obj/item/clothing/shoes/sneakers/orange/pre_attack(atom/movable/attacking_movable, mob/living/user, params)
+/obj/item/clothing/shoes/sneakers/orange/pre_attack(atom/movable/attacking_movable, mob/living/user, list/modifiers)
 	if(attached_cuffs || attacking_movable.type != /obj/item/restraints/handcuffs)
 		return ..()
 	attacking_movable.forceMove(src)
 	return TRUE
 
-/obj/item/clothing/shoes/sneakers/orange/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/clothing/shoes/sneakers/orange/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(attached_cuffs || attacking_item.type != /obj/item/restraints/handcuffs) 	// Note: not using istype here because we want to ignore all subtypes
 		return ..()
 	attacking_item.forceMove(src)

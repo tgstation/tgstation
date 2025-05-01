@@ -707,7 +707,7 @@ GLOBAL_LIST_INIT(cardboard_recipes, list ( \
 /obj/item/stack/sheet/cardboard/fifty
 	amount = 50
 
-/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, params)
+/obj/item/stack/sheet/cardboard/attackby(obj/item/I, mob/user, list/modifiers)
 	if(istype(I, /obj/item/stamp/clown) && !istype(loc, /obj/item/storage))
 		var/atom/droploc = drop_location()
 		if(use(1))
@@ -823,6 +823,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	material_type = /datum/material/bone
 	drop_sound = null
 	pickup_sound = null
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/item/stack/sheet/bone/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
 	. = ..()
