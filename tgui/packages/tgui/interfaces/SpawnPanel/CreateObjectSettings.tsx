@@ -101,7 +101,6 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   const isTargetMode =
     spawnLocation === 'Targeted location' ||
     spawnLocation === 'Targeted location (droppod)' ||
-    spawnLocation === 'At a marked object' ||
     spawnLocation === "In targeted mob's hand";
 
   const isPreciseModeActive = data?.precise_mode === 'Target';
