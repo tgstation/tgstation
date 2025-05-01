@@ -522,6 +522,11 @@
 	if(!ishuman(source))
 		return
 	var/mob/living/carbon/human/wearer = source
+	if(istype(wearer.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon))
+		var/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/robes
+		if(robes.braindead)
+			icon_state = base_icon_state + "_6"
+			return // Don't update the icon once our "dying" process has begun
 	switch(wearer.get_organ_loss(ORGAN_SLOT_BRAIN))
 		if(0 to 20)
 			icon_state = base_icon_state + "_1"
