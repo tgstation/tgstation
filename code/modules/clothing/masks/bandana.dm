@@ -124,8 +124,8 @@
 /obj/item/clothing/mask/bandana/black
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
-	icon_state = "/obj/item/clothing/mask/bandana/black"
 	greyscale_colors = "#2e2e2e"
+	does_not_generate_gags_preview = TRUE // Same color as the basetype
 	flags_1 = NONE
 
 /obj/item/clothing/mask/bandana/white

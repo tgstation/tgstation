@@ -200,6 +200,7 @@
 
 /obj/item/clothing/head/wizard/marisa/fake
 	name = "witch hat"
+	does_not_generate_gags_preview = TRUE
 	armor_type = /datum/armor/none
 	resistance_flags = FLAMMABLE
 	fishing_modifier = -2
