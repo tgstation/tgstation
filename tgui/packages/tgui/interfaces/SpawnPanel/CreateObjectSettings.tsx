@@ -220,7 +220,9 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       }}
                       tooltip={cordsType ? 'Absolute' : 'Relative'}
                       tooltipPosition="top"
-                      disabled={isTargetMode}
+                      disabled={
+                        isTargetMode || spawnLocation === 'At a marked object'
+                      }
                     />
                   </Stack.Item>
                   <Stack.Item grow>
@@ -229,7 +231,9 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       value={offset}
                       onChange={(value: string) => setOffset(value)}
                       width="100%"
-                      disabled={isTargetMode}
+                      disabled={
+                        isTargetMode || spawnLocation === 'At a marked object'
+                      }
                     />
                   </Stack.Item>
                 </Stack>
