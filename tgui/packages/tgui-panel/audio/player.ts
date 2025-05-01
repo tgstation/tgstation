@@ -16,6 +16,15 @@ type AudioOptions = Partial<{
   end: number;
 }>;
 
+function isProtected(error: unknown): boolean {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'isTrusted' in error &&
+    (error as Event).isTrusted === true
+  );
+}
+
 export class AudioPlayer {
   element: HTMLAudioElement | null;
   options: AudioOptions;
@@ -35,10 +44,14 @@ export class AudioPlayer {
     }
 
     this.options = options;
-    this.element = new Audio(url);
+    const audio = new Audio(url);
+    if (!audio) {
+      logger.log('failed to create audio element');
+      resetMusic();
+      return;
+    }
 
-    const audio = this.element;
-    if (!audio) return;
+    this.element = audio;
 
     audio.volume = this.volume;
     audio.playbackRate = this.options.pitch || 1;
@@ -51,7 +64,12 @@ export class AudioPlayer {
     });
 
     audio.addEventListener('error', (error) => {
-      logger.log('playback error', error);
+      if (isProtected(error)) {
+        logger.log('audio appears to be protected');
+      } else {
+        logger.log('audio playback error', JSON.stringify(error));
+      }
+      this.stop();
     });
 
     if (this.options.end) {
@@ -66,7 +84,7 @@ export class AudioPlayer {
       });
     }
 
-    audio.play()?.catch((error) => logger.log('playback error', error));
+    audio.play()?.catch(() => logger.log('playback error'));
   }
 
   stop(): void {
@@ -75,7 +93,7 @@ export class AudioPlayer {
     logger.log('stopping');
 
     this.element.pause();
-    this.element = null;
+    this.destroy();
 
     resetMusic();
   }

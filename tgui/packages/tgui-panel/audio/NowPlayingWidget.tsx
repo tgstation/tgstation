@@ -49,7 +49,7 @@ export function NowPlayingWidget(props) {
   const date = getDate(upload_date);
 
   return (
-    <Stack align="center">
+    <Stack fill>
       {!playing ? (
         <Stack.Item grow color="label">
           Nothing to play.
@@ -96,12 +96,10 @@ export function NowPlayingWidget(props) {
           }
         </Stack.Item>
       )}
-      {playing && (
-        <Stack.Item fontSize="0.9em">
-          <Button tooltip="Stop" icon="stop" onClick={stopMusic} />
-        </Stack.Item>
-      )}
-      <Stack.Item fontSize="0.9em">
+      <Stack.Item>
+        {playing && <Button tooltip="Stop" icon="stop" onClick={stopMusic} />}
+      </Stack.Item>
+      <Stack.Item fontSize="0.8em">
         <Knob
           minValue={0}
           maxValue={1}
