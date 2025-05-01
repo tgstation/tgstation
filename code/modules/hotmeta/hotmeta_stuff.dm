@@ -53,10 +53,13 @@
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/hotmeta
 	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman, /obj/item/keycard/hotmeta/hierophant)
-	icon = 'icons/mob/simple/lavaland/hotmeta_hierophant_new.dmi'
+	icon = 'icons/mob/simple/lavaland/hotmeta_hierophant.dmi'
 
 /mob/living/simple_animal/hostile/megafauna/dragon/hotmeta
 	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman, /obj/item/keycard/hotmeta/drake)
 
 /mob/living/simple_animal/hostile/megafauna/legion/hotmeta
 	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman, /obj/item/keycard/hotmeta/legion)
+
+/turf/open/floor/iron/solarpanel/lava_atmos
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS

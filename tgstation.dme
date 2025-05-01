@@ -4390,6 +4390,7 @@
 #include "code\modules\holodeck\holodeck_map_templates.dm"
 #include "code\modules\holodeck\items.dm"
 #include "code\modules\holodeck\turfs.dm"
+#include "code\modules\hotmeta\hotmeta_stuff.dm"
 #include "code\modules\hydroponics\biogenerator.dm"
 #include "code\modules\hydroponics\bouquets.dm"
 #include "code\modules\hydroponics\fermenting_barrel.dm"
