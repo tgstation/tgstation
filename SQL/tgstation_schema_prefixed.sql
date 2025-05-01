@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `SS13_crime` (
   `sender` varchar(32) NOT NULL DEFAULT '',
   `sender_ic` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
   `recipient` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
-  `crime` text NOT NULL,
+  `message` text NOT NULL,
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_constraints` (`round_id`,`server_ip`,`server_port`,`crime`(100)) USING BTREE
