@@ -1,3 +1,5 @@
+/// ~ Ruin Keys ~
+
 /obj/item/keycard/hotmeta
 	name = "omninous key"
 	desc = "This feels like it belongs to a door."
@@ -34,25 +36,27 @@
 /obj/machinery/door/puzzle/keycard/hotmeta/lizard
 	puzzle_id = "lizard"
 	color = "#044116"
-	desc = "A dusty, scratched door with a thick lock attached."
+	desc = "A dusty, scratched door with a thick green lock attached."
 
 /obj/machinery/door/puzzle/keycard/hotmeta/drake
 	puzzle_id = "drake"
 	color = "#830c0c"
-	desc = "A dusty, scratched door with a thick lock attached."
+	desc = "A dusty, scratched door with a thick red lock attached."
 
 /obj/machinery/door/puzzle/keycard/hotmeta/hierophant
 	puzzle_id = "hiero"
 	color = "#770a65"
-	desc = "A dusty, scratched door with a thick lock attached."
+	desc = "A dusty, scratched door with a thick purple lock attached."
 
 /obj/machinery/door/puzzle/keycard/hotmeta/legion
 	puzzle_id = "legion"
 	color = "#2b0496"
-	desc = "A dusty, scratched door with a thick lock attached."
+	desc = "A dusty, scratched door with a thick blue lock attached."
+
+// ~ Ruin Mega fauna ~ //
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/hotmeta
-	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman, /obj/item/keycard/hotmeta/hierophant)
+	loot = list(/obj/item/hierophant_club, /obj/item/keycard/hotmeta/hierophant)
 	icon = 'icons/mob/simple/lavaland/hotmeta_hierophant.dmi'
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/hotmeta/Initialize(mapload)
@@ -65,10 +69,26 @@
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/dragon/hotmeta
-	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman, /obj/item/keycard/hotmeta/drake)
+	loot = list(/obj/structure/closet/crate/necropolis/dragon, /obj/item/keycard/hotmeta/drake)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/hotmeta/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/triumph.ogg', 138 SECONDS)
+
+/mob/living/simple_animal/hostile/megafauna/dragon/hotmeta/Destroy()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/hotmeta
-	crusher_loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman, /obj/item/keycard/hotmeta/legion)
+	loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman, /obj/item/keycard/hotmeta/legion)
+
+/mob/living/simple_animal/hostile/megafauna/legion/hotmeta/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/revenge.ogg', 293 SECONDS)
+
+/mob/living/simple_animal/hostile/megafauna/legion/hotmeta/Destroy()
+	return ..()
+
+// ~ Hotmeta Spefific Turfs ~ //
 
 /turf/open/floor/iron/solarpanel/lava_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
