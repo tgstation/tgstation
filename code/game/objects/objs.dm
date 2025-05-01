@@ -71,15 +71,15 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	GLOB.objects_by_id_tag -= id_tag
 	. = ..()
 
-/obj/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers)
+/obj/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!attacking_item.force)
 		return 0
 
 	var/demo_mod = attacking_item.get_demolition_modifier(src)
-	var/total_force = CALCULATE_FORCE(attacking_item, modifiers) * demo_mod
+	var/total_force = CALCULATE_FORCE(attacking_item, attack_modifiers) * demo_mod
 	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, TRUE, get_dir(src, user), attacking_item.armour_penetration)
 
-	if(!LAZYACCESS(modifiers, SILENCE_DEFAULT_MESSAGES))
+	if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
 		// Sanity in case one is null for some reason
 		var/picked_index = rand(max(length(attacking_item.attack_verb_simple), length(attacking_item.attack_verb_continuous)))
 

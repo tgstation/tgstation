@@ -114,7 +114,7 @@
 	return TRUE
 
 // Stun attack
-/obj/item/melee/baton/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/melee/baton/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(. || !isliving(target))
 		return .
@@ -133,13 +133,13 @@
 
 	if(active)
 		// when we continue to attack, deal 0 (brute) damage (just stun)
-		SET_ATTACK_FORCE(modifiers, 0)
-		MUTE_ATTACK_HITSOUND(modifiers)
-		HIDE_ATTACK_MESSAGES(modifiers)
+		SET_ATTACK_FORCE(attack_modifiers, 0)
+		MUTE_ATTACK_HITSOUND(attack_modifiers)
+		HIDE_ATTACK_MESSAGES(attack_modifiers)
 	return .
 
 // Harm attack
-/obj/item/melee/baton/pre_attack_secondary(atom/target, mob/living/user, list/modifiers)
+/obj/item/melee/baton/pre_attack_secondary(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(. != SECONDARY_ATTACK_CALL_NORMAL || !isliving(target))
 		return .
@@ -152,7 +152,7 @@
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 // This is where stun gets applied
-/obj/item/melee/baton/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/melee/baton/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(!active || !COOLDOWN_FINISHED(src, cooldown_check) || HAS_TRAIT_FROM(target, TRAIT_IWASBATONED, REF(user)))
 		return
 	// worst check in the chain but - right click = harmbaton
@@ -205,7 +205,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /// Wrapper for calling "stun()" and doing relevant vfx/sfx
-/obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, list/modifiers)
+/obj/item/melee/baton/proc/finalize_baton_attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	PROTECTED_PROC(TRUE)
 	COOLDOWN_START(src, cooldown_check, cooldown)
 	if(on_stun_sound)
@@ -535,7 +535,7 @@
 /obj/item/melee/baton/security/suicide_act(mob/living/user)
 	if(cell?.charge && active)
 		user.visible_message(span_suicide("[user] is putting the live [name] in [user.p_their()] mouth! It looks like [user.p_theyre()] trying to commit suicide!"))
-		attack(user, user)
+		finalize_baton_attack(user, user)
 		return FIRELOSS
 	else
 		user.visible_message(span_suicide("[user] is shoving \the [src] down their throat! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -606,7 +606,7 @@
 		tool.play_tool_sound(src)
 	return TRUE
 
-/obj/item/melee/baton/security/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/item/melee/baton/security/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(cell)
@@ -709,7 +709,7 @@
 		SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
 		deductcharge(cell_hit_cost)
 
-/obj/item/melee/baton/security/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/melee/baton/security/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(. || !isliving(target))
 		return .
@@ -838,7 +838,7 @@
 	. = ..()
 	sparkler = new (src)
 
-/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, list/modifiers)//handles sticking a crystal onto a stunprod to make an improved cattleprod
+/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)//handles sticking a crystal onto a stunprod to make an improved cattleprod
 	if(!istype(item, /obj/item/stack))
 		return ..()
 

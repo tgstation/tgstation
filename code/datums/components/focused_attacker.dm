@@ -50,11 +50,11 @@
 	register_new_target(target)
 
 /// Before an item attacks, try increasing its attack power
-/datum/component/focused_attacker/proc/pre_item_attack(obj/item/weapon, atom/target, mob/user, list/modifiers)
+/datum/component/focused_attacker/proc/pre_item_attack(obj/item/weapon, atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	SIGNAL_HANDLER
 	if (target == last_target)
 		current_gain += gain_per_attack
-		MODIFY_ATTACK_FORCE(modifiers, current_gain)
+		MODIFY_ATTACK_FORCE(attack_modifiers, current_gain)
 		return
 
 	current_gain = 0

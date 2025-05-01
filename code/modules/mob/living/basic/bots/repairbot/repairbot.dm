@@ -98,7 +98,7 @@
 	toolbox_color = new_color
 	update_appearance()
 
-/mob/living/basic/bot/repairbot/attackby(obj/item/potential_stack, mob/living/carbon/human/user, list/modifiers)
+/mob/living/basic/bot/repairbot/attackby(obj/item/potential_stack, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	if(!istype(potential_stack, /obj/item/stack))
 		return ..()
 	attempt_merge(potential_stack, user)

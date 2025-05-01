@@ -276,7 +276,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		return CONTEXTUAL_SCREENTIP_SET
 	return .
 
-/obj/structure/mirror/attacked_by(obj/item/I, mob/living/user, list/modifiers)
+/obj/structure/mirror/attacked_by(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(broken || !.) // breaking a mirror truly gets you bad luck!
 		return

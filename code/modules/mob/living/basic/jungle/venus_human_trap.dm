@@ -59,13 +59,13 @@
 		damage_amount = 0
 	. = ..()
 
-/obj/structure/alien/resin/flower_bud/attacked_by(obj/item/item, mob/living/user, list/modifiers)
-	LAZYSET(modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
-	LAZYSET(modifiers, FORCE_MULTIPLIER, 1)
+/obj/structure/alien/resin/flower_bud/attacked_by(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
+	LAZYSET(attack_modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
+	LAZYSET(attack_modifiers, FORCE_MULTIPLIER, 1)
 	if(item.damtype == BURN)
-		MODIFY_ATTACK_FORCE_MULTIPLIER(modifiers, 4)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 4)
 	if(item.get_sharpness())
-		MODIFY_ATTACK_FORCE_MULTIPLIER(modifiers, 16) // alien resin applies 75% reduction to brute damage so this actually x4 damage
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 16) // alien resin applies 75% reduction to brute damage so this actually x4 damage
 	return ..()
 
 /obj/structure/alien/resin/flower_bud/Destroy()

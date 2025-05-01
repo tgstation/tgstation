@@ -79,7 +79,7 @@
 	else
 		playsound(loc, 'sound/mobs/humanoids/moth/scream_moth.ogg', 50, TRUE)
 
-/mob/living/basic/mothroach/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
+/mob/living/basic/mothroach/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(src.stat == DEAD)
 		return

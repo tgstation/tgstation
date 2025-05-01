@@ -28,7 +28,7 @@
 	SSpai.pai_card_list += src
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
-/obj/item/pai_card/attackby(obj/item/used, mob/user, list/modifiers)
+/obj/item/pai_card/attackby(obj/item/used, mob/user, list/modifiers, list/attack_modifiers)
 	if(pai && istype(used, /obj/item/encryptionkey))
 		if(!pai.encrypt_mod)
 			to_chat(user, span_alert("Encryption Key ports not configured."))

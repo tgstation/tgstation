@@ -249,11 +249,11 @@
 /obj/item/gun_control/CanItemAutoclick()
 	return TRUE
 
-/obj/item/gun_control/attack_atom(obj/O, mob/living/user, list/modifiers)
+/obj/item/gun_control/attack_atom(obj/O, mob/living/user, list/modifiers, list/attack_modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	O.attacked_by(src, user, modifiers)
 
-/obj/item/gun_control/attack(mob/living/M, mob/living/user, list/modifiers)
+/obj/item/gun_control/attack(mob/living/M, mob/living/user, list/modifiers, list/attack_modifiers)
 	M.lastattacker = user.real_name
 	M.lastattackerckey = user.ckey
 	M.attacked_by(src, user, modifiers)

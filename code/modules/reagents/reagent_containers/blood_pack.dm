@@ -99,7 +99,7 @@
 /obj/item/reagent_containers/blood/universal
 	blood_type = "U"
 
-/obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, list/modifiers)
+/obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if (IS_WRITING_UTENSIL(tool))
 		if(!user.can_write(tool))
 			return
