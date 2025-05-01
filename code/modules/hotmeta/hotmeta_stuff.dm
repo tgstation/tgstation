@@ -75,18 +75,13 @@
 	. = ..()
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/triumph.ogg', 138 SECONDS)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/hotmeta/Destroy()
-	return ..()
-
 /mob/living/simple_animal/hostile/megafauna/legion/hotmeta
-	loot = list(/obj/item/hierophant_club, /obj/item/crusher_trophy/vortex_talisman, /obj/item/keycard/hotmeta/legion)
+	loot = list(/obj/item/keycard/hotmeta/legion)
 
 /mob/living/simple_animal/hostile/megafauna/legion/hotmeta/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/revenge.ogg', 293 SECONDS)
 
-/mob/living/simple_animal/hostile/megafauna/legion/hotmeta/Destroy()
-	return ..()
 
 // ~ Hotmeta Spefific Turfs ~ //
 
