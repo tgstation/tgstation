@@ -4978,12 +4978,8 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "bJs" = (
-/mob/living/simple_animal/hostile/megafauna/dragon{
-	faction = list("ashwalker");
-	name = "oversized ash walker";
-	loot = list(/obj/structure/closet/crate/necropolis/dragon, /obj/item/keycard/blue)
-	},
 /obj/structure/stone_tile/slab/cracked,
+/mob/living/simple_animal/hostile/megafauna/dragon/hotmeta,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "bJG" = (
@@ -6403,9 +6399,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/sorting)
 "cnj" = (
-/mob/living/simple_animal/hostile/megafauna/hierophant{
-	loot = list(/obj/item/hierophant_club, /obj/item/keycard/yellow)
-	},
+/mob/living/simple_animal/hostile/megafauna/hierophant/hotmeta,
 /turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
 "cnk" = (
@@ -8921,7 +8915,7 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "dgt" = (
-/obj/machinery/door/puzzle/keycard/library,
+/obj/machinery/door/puzzle/keycard/hotmeta/legion,
 /turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
 "dgu" = (
@@ -12261,10 +12255,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "epK" = (
-/obj/machinery/door/puzzle/keycard{
-	puzzle_id = yellow;
-	color = red
-	},
+/obj/machinery/door/puzzle/keycard/hotmeta/hierophant,
 /turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
 "epM" = (
@@ -30647,12 +30638,6 @@
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"kKo" = (
-/mob/living/simple_animal/hostile/megafauna/legion{
-	loot = list(/obj/item/stack/sheet/bone = 3, /obj/item/keycard/library)
-	},
-/turf/open/indestructible/necropolis,
-/area/lavaland/surface/outdoors)
 "kKp" = (
 /obj/structure/rack,
 /obj/item/gun/energy/laser/carbine/practice{
@@ -30855,6 +30840,10 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/commons/dorms)
+"kNh" = (
+/mob/living/simple_animal/hostile/megafauna/legion/hotmeta,
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
 "kNx" = (
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 8;
@@ -40083,9 +40072,7 @@
 /obj/structure/stone_tile/block{
 	dir = 4
 	},
-/obj/item/keycard{
-	puzzle_id = "flight"
-	},
+/obj/item/keycard/hotmeta/lizard,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "nYJ" = (
@@ -40128,6 +40115,11 @@
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"nZb" = (
+/obj/structure/stone_tile/slab/cracked,
+/obj/machinery/door/puzzle/keycard/hotmeta/lizard,
+/turf/open/indestructible/necropolis,
+/area/lavaland/surface/outdoors)
 "nZf" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/circuit/green,
@@ -40579,10 +40571,7 @@
 /turf/open/floor/carpet,
 /area/station/service/theater)
 "ogh" = (
-/obj/machinery/door/puzzle/keycard{
-	puzzle_id = "flight";
-	color = red
-	},
+/obj/machinery/door/puzzle/keycard/hotmeta/lizard,
 /turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
 "ogk" = (
@@ -56644,10 +56633,7 @@
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "tLW" = (
-/obj/machinery/door/puzzle/keycard{
-	puzzle_id = "blue";
-	color = red
-	},
+/obj/machinery/door/puzzle/keycard/hotmeta/drake,
 /turf/open/indestructible/necropolis,
 /area/lavaland/surface/outdoors)
 "tMe" = (
@@ -120167,9 +120153,9 @@ knd
 knd
 knd
 rSk
-knd
+kNh
 rSk
-kKo
+knd
 rSk
 knd
 rSk
@@ -128165,7 +128151,7 @@ rSk
 rSk
 rSk
 qIN
-hdu
+nZb
 qQB
 bla
 bla
