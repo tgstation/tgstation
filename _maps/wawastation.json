@@ -3,7 +3,6 @@
 	"map_name": "Wawastation",
 	"map_path": "map_files/wawastation",
 	"map_file": "wawastation.dmm",
-	"exclude_from_ci": false,
 	"give_players_hooks": 1,
 	"shuttles": {
 		"cargo": "cargo_box",

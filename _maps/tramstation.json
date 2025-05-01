@@ -3,7 +3,6 @@
 	"map_name": "Tramstation",
 	"map_path": "map_files/tramstation",
 	"map_file": "tramstation.dmm",
-	"exclude_from_ci": false,
 	"give_players_hooks": 1,
 	"shuttles": {
 		"cargo": "cargo_box",

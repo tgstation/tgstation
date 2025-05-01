@@ -3,7 +3,6 @@
 	"map_name": "Gateway Test",
 	"map_path": "map_files/debug",
 	"map_file": "gateway_test.dmm",
-	"exclude_from_ci": false,
 	"space_ruin_levels": 1,
 	"load_all_away_missions": true,
 	"ignored_unit_tests": [
