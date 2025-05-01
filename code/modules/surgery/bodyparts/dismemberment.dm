@@ -276,14 +276,23 @@
 		return FALSE
 	return TRUE
 
-///Attach src to target mob if able, returns FALSE if it fails to.
-/obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_limb_owner, special)
+/*
+ * Attach src to target mob if able, returns FALSE if it fails to.
+ * Arguments:
+ * special - The limb is being hotswapped or removed without side effects for some reason
+ * lazy - The owner is currently initializing, so we don't need to call any update procs
+ */
+/obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_limb_owner, special, lazy)
 	if(!can_attach_limb(new_limb_owner, special))
 		return FALSE
 
-	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special)
-	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special)
+	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special, lazy)
+	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special, lazy)
 	new_limb_owner.add_bodypart(src)
+
+	if(lazy)
+		SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_POST_ATTACH_LIMB, src, special, lazy)
+		return TRUE
 
 	LAZYREMOVE(new_limb_owner.body_zone_dismembered_by, body_zone)
 
@@ -328,16 +337,14 @@
 	new_limb_owner.update_damage_overlays()
 	if(!special)
 		new_limb_owner.hud_used?.update_locked_slots()
-	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_POST_ATTACH_LIMB, src, special)
+	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_POST_ATTACH_LIMB, src, special, lazy)
 	return TRUE
 
-/obj/item/bodypart/head/try_attach_limb(mob/living/carbon/new_head_owner, special = FALSE)
+/obj/item/bodypart/head/try_attach_limb(mob/living/carbon/new_head_owner, special, lazy)
 	// These are stored before calling super. This is so that if the head is from a different body, it persists its appearance.
-	var/old_real_name = src.real_name
-
+	var/old_real_name = real_name
 	. = ..()
-
-	if(!.)
+	if(!. || lazy)
 		return
 
 	if(old_real_name)
@@ -367,13 +374,10 @@
 	new_head_owner.update_body()
 	new_head_owner.update_damage_overlays()
 
-/obj/item/bodypart/arm/try_attach_limb(mob/living/carbon/new_arm_owner, special = FALSE)
+/obj/item/bodypart/arm/try_attach_limb(mob/living/carbon/new_arm_owner, special, lazy)
 	. = ..()
-
-	if(!.)
-		return
-
-	new_arm_owner.update_worn_gloves() // To apply bloody hands overlay
+	if(. && !lazy)
+		new_arm_owner.update_worn_gloves() // To apply bloody hands overlay
 
 /mob/living/carbon/proc/regenerate_limbs(list/excluded_zones = list())
 	SEND_SIGNAL(src, COMSIG_CARBON_REGENERATE_LIMBS, excluded_zones)

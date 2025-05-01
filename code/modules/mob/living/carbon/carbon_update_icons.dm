@@ -511,7 +511,6 @@
 		else
 			new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]] //Pulls existing sprites from the cache
 
-
 	remove_overlay(BODYPARTS_LAYER)
 
 	if(new_limbs.len)
