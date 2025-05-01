@@ -1,0 +1,43 @@
+2025-05-01:
+  Ezel/Improvedname, JohnFulpWillard:
+  - balance: Cult daggers boomerang back to non-cultists who throw it.
+  - balance: Flagellant's robes crushes non-cultists with gravity instead of forcing
+      you to drop it on the floor.
+  - balance: Zealot's blindfolds now rapidly causes eye damage to non cultists who
+      try to wear it, instead of dropping it on the floor and giving a minute of temporary
+      eye damage.
+  FlufflesTheDog:
+  - bugfix: Health analyzers properly function on patients with cybernetics
+  Hatterhat:
+  - qol: Shoving a rechargeable magazine into a recharger now has refill speed scale
+      with part tier/recharge efficiency. This probably doesn't matter very much because
+      no regularly-available gun uses rechargeable magazines.
+  - spellcheck: Examining magazines should no longer have two instances of "The" prefixing
+      a casing. Maybe. Probably.
+  Holoo-1:
+  - bugfix: fixed ampcheck in smes room computer, some overlapping cables and cameras
+      on CatwalkStation. Also replaced bridges with pumps in atmos
+  Jacquerel:
+  - map: Adds some bots to Catwalkstation
+  - bugfix: Standard Holoparasites will once again yell their battlecry and can rapidly
+      punch windows.
+  JohnFulpWillard:
+  - admin: People throwing boomeranged items and hitting themselves now logs it as
+      them hitting themselves (rather than being hit by the air).
+  NecromancerAnne (Code, Mild Sprite Edits) Michiyamenotehifunana (Sprites):
+  - image: Replaces the decrepit DRAGnet sprite with something newer and more interesting.
+  - balance: Completely reworks the DRAGnet. They are now bulky energy guns.
+  - balance: Snare is now a single shot bolt that deals 30 stamina force, staggers
+      the target and lays out a net of teleportation fields that can transport anyone
+      standing on them for too long to a DRAGnet beacon.
+  - balance: Net has been replaced with a scattershot disabler round.
+  SmArtKar:
+  - bugfix: You can no longer fish for things in storages, or that you are unable
+      to see
+  SyncIt21:
+  - code_imp: improved performance of stack based reactions
+  TiviPlus:
+  - bugfix: fixed some vv issues
+  grungussuss:
+  - bugfix: throwing items on the same tile as you will make a sound again
+  - bugfix: fixes bane element not working if it was used by a weapon without a wielder

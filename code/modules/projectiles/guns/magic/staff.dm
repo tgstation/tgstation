@@ -202,7 +202,6 @@
 		/obj/projectile/bullet/mime,
 		/obj/projectile/curse_hand,
 		/obj/projectile/energy/electrode,
-		/obj/projectile/energy/net,
 		/obj/projectile/energy/nuclear_particle,
 		/obj/projectile/gravityattract,
 		/obj/projectile/gravitychaos,
