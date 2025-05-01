@@ -125,7 +125,7 @@
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
 	greyscale_colors = "#2e2e2e"
-	does_not_generate_gags_preview = TRUE // Same color as the basetype
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1 // Same color as the basetype
 	flags_1 = NONE
 
 /obj/item/clothing/mask/bandana/white
@@ -158,7 +158,7 @@
 /obj/item/clothing/mask/bandana/striped/black
 	name = "striped bandana"
 	desc = "A fine black and white bandana with nanotech lining and a stripe across."
-	does_not_generate_gags_preview = TRUE // same exact icon/color as the base type
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1 // same exact icon/color as the base type
 	flags_1 = NONE
 
 /obj/item/clothing/mask/bandana/striped/security

@@ -159,7 +159,7 @@
 	greyscale_colors = "#2b2793#67a552"
 
 /obj/item/encryptionkey/heads
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/encryptionkey/heads/captain
 	name = "\proper the captain's encryption key"
@@ -262,7 +262,7 @@
 	greyscale_colors = "#24a157#dca01b"
 
 /obj/item/encryptionkey/ai //ported from NT, this goes 'inside' the AI.
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	channels = list(
 		RADIO_CHANNEL_COMMAND = 1,
 		RADIO_CHANNEL_SECURITY = 1,
@@ -277,7 +277,7 @@
 
 /obj/item/encryptionkey/ai_with_binary
 	name = "ai encryption key"
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	channels = list(
 		RADIO_CHANNEL_COMMAND = 1,
 		RADIO_CHANNEL_SECURITY = 1,

@@ -40,7 +40,7 @@
 	icon = 'icons/map_icons/clothing/under.dmi'
 	icon_state = "/obj/item/clothing/under/color"
 	post_init_icon_state = "jumpsuit"
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	greyscale_config = /datum/greyscale_config/jumpsuit
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left

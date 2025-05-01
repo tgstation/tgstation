@@ -22,7 +22,7 @@ do { \
 	icon = 'icons/map_icons/clothing/under.dmi'
 	icon_state = "/obj/item/clothing/under/color"
 	post_init_icon_state = "jumpsuit"
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	greyscale_config = /datum/greyscale_config/jumpsuit
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
@@ -313,10 +313,10 @@ do { \
 	name = "tablet"
 	actions_types = list(/datum/action/item_action/chameleon/change/tablet)
 	action_slots = ALL
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/modular_computer/pda/chameleon/broken
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/modular_computer/pda/chameleon/broken/Initialize(mapload)
 	. = ..()

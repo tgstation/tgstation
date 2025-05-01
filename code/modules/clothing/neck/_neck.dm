@@ -170,16 +170,16 @@
 
 /obj/item/clothing/neck/tie/red/tied
 	is_tied = TRUE
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/neck/tie/red/hitman
 	desc = "This is a $47,000 custom-tailored Référence Du Tueur À Gages tie. The clot is from neosilkworms raised at a tie microfarm in Cookwell, from a secret pattern passed down by monk tailors since the twenty-first century!"
 	tie_timer = 1 SECONDS // You're a professional.
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/neck/tie/red/hitman/tied
 	is_tied = TRUE
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/neck/tie/black
 	name = "black tie"
@@ -189,7 +189,7 @@
 
 /obj/item/clothing/neck/tie/black/tied
 	is_tied = TRUE
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/neck/tie/horrible
 	name = "horrible tie"

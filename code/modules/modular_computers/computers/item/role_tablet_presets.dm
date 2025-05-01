@@ -417,7 +417,7 @@
  */
 /obj/item/modular_computer/pda/assistant
 	name = "assistant PDA"
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	starting_programs = list(
 		/datum/computer_file/program/bounty_board,
 	)

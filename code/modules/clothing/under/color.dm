@@ -37,7 +37,7 @@
 /obj/item/clothing/under/color/random
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "random_jumpsuit"
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/under/color/random/Initialize(mapload)
 	..()
@@ -60,7 +60,7 @@
 /obj/item/clothing/under/color/jumpskirt/random
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "random_jumpsuit" //Skirt variant needed
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/under/color/jumpskirt/random/Initialize(mapload)
 	..()
@@ -75,11 +75,11 @@
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	resistance_flags = NONE
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/under/color/jumpskirt/black
 	name = "black jumpskirt"
-	does_not_generate_gags_preview = TRUE
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/under/color/black/ghost
 	item_flags = DROPDEL

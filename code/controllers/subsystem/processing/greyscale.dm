@@ -17,8 +17,8 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 #endif
 
 /datum/controller/subsystem/processing/greyscale/Initialize()
-	for(var/datum/greyscale_layer/fake_type as anything in subtypesof(/datum/greyscale_layer))
-		layer_types[initial(fake_type.layer_type)] = fake_type
+	for(var/datum/greyscale_layer/atom_type_type as anything in subtypesof(/datum/greyscale_layer))
+		layer_types[initial(atom_type_type.layer_type)] = atom_type_type
 
 	for(var/greyscale_type in subtypesof(/datum/greyscale_config))
 		var/datum/greyscale_config/config = new greyscale_type()
@@ -145,22 +145,22 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 /datum/controller/subsystem/processing/greyscale/proc/ExportMapPreviewsForType(filename, atom/atom_typepath, list/type_blacklist)
 	var/list/handled_types = list()
 	var/list/icons = list()
-	for(var/atom/fake as anything in subtypesof(atom_typepath))
-		if(type_blacklist && type_blacklist[fake])
+	for(var/atom/atom_type as anything in subtypesof(atom_typepath))
+		if(type_blacklist && type_blacklist[atom_type])
 			continue
-		handled_types[fake] = TRUE
-		var/greyscale_config = fake::greyscale_config
-		var/greyscale_colors = fake::greyscale_colors
-		if(!greyscale_config || !greyscale_colors || fake::does_not_generate_gags_preview)
+		handled_types[atom_type] = TRUE
+		var/greyscale_config = atom_type::greyscale_config
+		var/greyscale_colors = atom_type::greyscale_colors
+		if(!greyscale_config || !greyscale_colors || atom_type::flags_1 & NO_NEW_GAGS_PREVIEW_1)
 			continue
 		var/icon/map_icon = icon(GetColoredIconByType(greyscale_config, greyscale_colors))
 		if((map_icon.Height() > 32) || (map_icon.Width() > 32)) // No large icons, use icon_preview and icon_preview_state instead.
 			continue
-		if(!(fake::post_init_icon_state in map_icon.IconStates()))
-			stack_trace("GAGS configuration missing icon state needed to generate mapping tool graphic for '[fake]'. Make sure the right greyscale_config is set up.")
+		if(!(atom_type::post_init_icon_state in map_icon.IconStates()))
+			stack_trace("GAGS configuration missing icon state needed to generate mapping tool graphic for '[atom_type]'. Make sure the right greyscale_config is set up.")
 			continue
-		map_icon = icon(map_icon, fake::post_init_icon_state)
-		icons["[fake]"] = map_icon
+		map_icon = icon(map_icon, atom_type::post_init_icon_state)
+		icons["[atom_type]"] = map_icon
 
 	var/icon/holder = icon('icons/testing/greyscale_error.dmi')
 	for(var/state in icons)

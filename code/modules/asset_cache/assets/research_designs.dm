@@ -38,9 +38,6 @@
 
 			// GAGS icon short-circuit the rest of the checks
 			if (item::greyscale_config && item::greyscale_colors)
-				var/datum/greyscale_config/greyscale_config = item::greyscale_config
-				icon_file = greyscale_config::icon_file
-				icon_state = item::post_init_icon_state || item::icon_state
 				insert_icon(path::id, gags_to_universal_icon(item))
 				continue
 			else
