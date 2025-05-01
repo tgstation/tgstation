@@ -13,14 +13,14 @@
 	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/inhand_right
-
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/color/jumpskirt
 	body_parts_covered = CHEST|GROIN|ARMS
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
-	icon_state = "jumpskirt"
+	icon_state = "/obj/item/clothing/under/color/jumpskirt"
+	post_init_icon_state = "jumpskirt"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /// Returns a random, acceptable jumpsuit typepath
@@ -37,6 +37,7 @@
 /obj/item/clothing/under/color/random
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "random_jumpsuit"
+	does_not_generate_gags_preview = TRUE
 
 /obj/item/clothing/under/color/random/Initialize(mapload)
 	..()
@@ -59,6 +60,7 @@
 /obj/item/clothing/under/color/jumpskirt/random
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "random_jumpsuit" //Skirt variant needed
+	does_not_generate_gags_preview = TRUE
 
 /obj/item/clothing/under/color/jumpskirt/random/Initialize(mapload)
 	..()
@@ -73,9 +75,11 @@
 /obj/item/clothing/under/color/black
 	name = "black jumpsuit"
 	resistance_flags = NONE
+	does_not_generate_gags_preview = TRUE
 
 /obj/item/clothing/under/color/jumpskirt/black
 	name = "black jumpskirt"
+	does_not_generate_gags_preview = TRUE
 
 /obj/item/clothing/under/color/black/ghost
 	item_flags = DROPDEL

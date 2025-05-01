@@ -4,7 +4,7 @@
 	/// The icon state that will be switched to during initialization.
 	/// Mostly intended for things that have a special map icon.
 	var/post_init_icon_state
-	/// When set TRUE, do not generate a preview icon for this atom.
+	/// When set TRUE, do not generate a preview icon for this atom. Useful for when a subtype would just create the same icon and waste space.
 	var/does_not_generate_gags_preview
 
 /**
