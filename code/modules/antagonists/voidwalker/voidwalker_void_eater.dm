@@ -97,7 +97,7 @@
 	. = ..()
 	if(istype(interacting_with, /turf/closed/wall))
 		if(!COOLDOWN_FINISHED(src, wall_conversion))
-			balloon_alert(user, "conversion on cooldown!")
+			balloon_alert(user, "must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, wall_conversion))]!")
 			return
 
 		var/turf/closed/wall/our_wall = interacting_with
