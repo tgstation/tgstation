@@ -221,6 +221,7 @@
 		var/datum/crime/new_crime = new(name = input_name, details = input_details, author = usr)
 		target.crimes += new_crime
 		investigate_log("New Crime: <strong>[input_name]</strong> | Added to [target.name] by [key_name(user)]. Their previous status was [target.wanted_status]", INVESTIGATE_RECORDS)
+		SSblackbox.ReportCrime(REF(new_crime), user.ckey, user.real_name, target.name, input_name)
 		target.wanted_status = WANTED_ARREST
 
 		update_matching_security_huds(target.name)

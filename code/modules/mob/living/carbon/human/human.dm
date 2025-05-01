@@ -353,6 +353,7 @@
 
 					target_record.crimes += new_crime
 					investigate_log("New Crime: <strong>[crime_name]</strong> | Added to [target_record.name] by [key_name(human_user)]", INVESTIGATE_RECORDS)
+					SSblackbox.ReportCrime(REF(new_crime), human_user.ckey, human_user.real_name, target_record.name, crime_name)
 					to_chat(human_user, span_notice("Successfully added a crime."))
 
 					return

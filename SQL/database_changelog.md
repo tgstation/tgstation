@@ -5,14 +5,39 @@ Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be
 The latest database version is 5.28; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 29);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 30);
 ```
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 29);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 30);
 ```
 In any query remember to add a prefix to the table names if you use one.
+-----------------------------------------------------
+Version 5.30, 1 May 2025, by Rengan
+Added the `crime` table for tracking security crimes in the database.
+
+```sql
+DROP TABLE IF EXISTS `crime`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE IF NOT EXISTS `crime` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `round_id` int(11) unsigned NULL,
+  `server_ip` int(11) unsigned NOT NULL,
+  `server_port` int(11) unsigned NOT NULL,
+  `crime` text NOT NULL,
+  `action` varchar(20) NOT NULL DEFAULT '',
+  `sender` varchar(32) NOT NULL DEFAULT '',
+  `sender_ic` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
+  `recipient` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
+  `crime` text NOT NULL,
+  `timestamp` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_constraints` (`round_id`,`server_ip`,`server_port`,`crime`(100)) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+```
 -----------------------------------------------------
 Version 5.29, 4 February 2024, by Tiviplus
 Fixed admin rank table flags being capped at 16 in the DB instead of 24 (byond max)

@@ -407,3 +407,22 @@ Versioning
 	if(query_report_citation)
 		query_report_citation.Execute(async = TRUE)
 		qdel(query_report_citation)
+
+/datum/controller/subsystem/blackbox/proc/ReportCrime(crime, sender, sender_ic, recipient, message)
+	var/datum/db_query/query_report_crime = SSdbcore.NewQuery({"
+	INSERT INTO [format_table_name("crime")] (server_ip, server_port, round_id, crime, action, sender, sender_ic, recipient, message, timestamp)
+	VALUES ( INET_ATON(:server_ip), :port, :round_id, :crime, :action, :sender, :sender_ic, :recipient, :message, NOW())
+	"}, list(
+		"server_ip" = world.internet_address || "0",
+		"port" = "[world.port]",
+		"round_id" = GLOB.round_id,
+		"crime" = crime,
+		"action" = "Crime Created",
+		"sender" = sender,
+		"sender_ic" = sender_ic,
+		"recipient" = recipient,
+		"message" = message,
+	))
+	if(query_report_crime)
+		query_report_crime.Execute(async = TRUE)
+		qdel(query_report_crime)
