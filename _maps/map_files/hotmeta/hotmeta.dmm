@@ -684,7 +684,7 @@
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "anS" = (
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "anT" = (
 /obj/structure/lattice/catwalk,
@@ -6700,7 +6700,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/red/directional/west,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "cst" = (
 /obj/machinery/door/airlock/engineering/glass{
@@ -27963,7 +27963,7 @@
 /area/station/hallway/primary/central)
 "jLG" = (
 /obj/structure/railing/corner,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "jLQ" = (
 /obj/structure/table/reinforced,
@@ -42699,6 +42699,7 @@
 /area/station/security/prison)
 "oVd" = (
 /obj/effect/turf_decal/delivery,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "oVn" = (
@@ -43118,7 +43119,7 @@
 /obj/structure/railing{
 	dir = 6
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "pdV" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -49790,7 +49791,7 @@
 /area/station/hallway/primary/fore)
 "rsR" = (
 /obj/structure/railing,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "rtd" = (
 /obj/machinery/camera/motion/directional/east{
@@ -51557,7 +51558,7 @@
 "rWS" = (
 /obj/item/newspaper,
 /obj/structure/table,
-/turf/open/floor/plating/airless,
+/turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
 "rWX" = (
 /obj/machinery/door/airlock/research{
@@ -86975,7 +86976,7 @@ aaa
 aaa
 aaa
 aaa
-kZJ
+aaa
 aaa
 aaa
 aaa
