@@ -1,3 +1,6 @@
+/// Each client notifies on protected playback, so this prevents spamming admins.
+var/static/admins_warned = FALSE
+
 /*!
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
@@ -86,9 +89,18 @@
 			),
 		))
 		return TRUE
+
 	if(type == "audio/setAdminMusicVolume")
 		client.admin_music_volume = payload["volume"]
 		return TRUE
+
+	if(type == "audio/protected")
+		if(!admins_warned)
+			message_admins(span_notice("Audio returned a protected playback error."))
+			admins_warned = TRUE
+			addtimer(CALLBACK(src, GLOBAL_PROC_REF(reset_admins_warned)), 10 SECONDS)
+		return TRUE
+
 	if(type == "telemetry")
 		analyze_telemetry(payload)
 		return TRUE
@@ -100,3 +112,8 @@
  */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
+
+
+/// Resets the global variable that tracks admin warnings.
+/proc/reset_admins_warned()
+	admins_warned = FALSE
