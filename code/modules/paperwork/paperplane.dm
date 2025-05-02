@@ -80,7 +80,7 @@
 
 	user.put_in_hands(released_paper)
 
-/obj/item/paperplane/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/paperplane/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(IS_WRITING_UTENSIL(attacking_item))
 		to_chat(user, span_warning("You should unfold [src] before changing it!"))
 		return

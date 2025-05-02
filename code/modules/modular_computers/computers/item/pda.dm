@@ -98,7 +98,7 @@
 
 	return ..()
 
-/obj/item/modular_computer/pda/pre_attack(atom/target, mob/living/user, params)
+/obj/item/modular_computer/pda/pre_attack(atom/target, mob/living/user, list/modifiers)
 	if(!inserted_disk || !ismachinery(target))
 		return ..()
 

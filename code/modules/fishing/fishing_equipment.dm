@@ -411,14 +411,6 @@
 	. = ..()
 	new /obj/item/fishing_line/auto_reel(src)
 
-/obj/item/storage/box/fish_debug
-	name = "box full of fish"
-	illustration = "fish"
-
-/obj/item/storage/box/fish_debug/PopulateContents()
-	for(var/fish_type in subtypesof(/obj/item/fish))
-		new fish_type(src)
-
 ///Used to give the average player info about fishing stuff that's unknown to many.
 /obj/item/paper/paperslip/fishing_tip
 	name = "fishing tip"
@@ -452,7 +444,7 @@
 
 /obj/item/storage/box/fishing_lures/PopulateContents()
 	new /obj/item/paper/lures_instructions(src)
-	var/list/typesof = typesof(/obj/item/fishing_lure)
+	var/list/typesof = subtypesof(/obj/item/fishing_lure)
 	for(var/type in typesof)
 		new type (src)
 

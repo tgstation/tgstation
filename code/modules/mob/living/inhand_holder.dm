@@ -143,3 +143,15 @@
 	if(delete_mob && held_mob)
 		QDEL_NULL(held_mob)
 	return ..()
+
+/obj/item/clothing/head/mob_holder/attack_self(mob/user, modifiers)
+	. = ..()
+	if(. || !held_mob) //overriden or mob missing
+		return
+	user.UnarmedAttack(held_mob, proximity_flag = TRUE, modifiers = modifiers)
+
+/obj/item/clothing/head/mob_holder/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(. || !held_mob) // Another interaction was performed
+		return
+	tool.melee_attack_chain(user, held_mob, modifiers) //Interact with the mob with our tool

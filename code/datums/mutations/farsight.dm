@@ -59,3 +59,10 @@
 
 /datum/action/cooldown/spell/farsight/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return active
+
+/datum/action/cooldown/spell/farsight/Remove(mob/living/remove_from)
+	. = ..()
+	if(active)
+		remove_from.client?.view_size.resetToDefault()
+		active = FALSE
+		cooldown_time *= 2
