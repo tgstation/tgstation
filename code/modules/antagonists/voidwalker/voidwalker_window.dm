@@ -1,16 +1,16 @@
-/obj/structure/window/fulltile/tinted/voidwalker
+/obj/structure/window/fulltile/voidwalker
 	name = "void-smeared window"
-	desc = "This window looks... wrong. The pane is impossibly dark, and reflects nothing. You probably wouldn't want to see whatever's on the other side anyways..."
+	desc = "This window darkens the view of the other side, to the point that nothing but the glow of the stars can be made out. Nothing reflects in the pane."
 	max_integrity = 75 //Doesn't have the damage deflection of a reinforced window
 	/// Particle effect for making the window look spooky.
 	var/obj/effect/abstract/particle_holder/spooky_particles
 
-/obj/structure/window/fulltile/tinted/voidwalker/Initialize(mapload, direct)
+/obj/structure/window/fulltile/voidwalker/Initialize(mapload, direct)
 	. = ..()
 	spooky_particles = new(src, /particles/void_window)
 	add_atom_colour("#642a949d", FIXED_COLOUR_PRIORITY)
 
-/obj/structure/window/fulltile/tinted/voidwalker/Destroy()
+/obj/structure/window/fulltile/voidwalker/Destroy()
 	. = ..()
 	QDEL_NULL(spooky_particles)
 

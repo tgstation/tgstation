@@ -111,13 +111,16 @@
 			var/list/target_walls = list()
 			target_walls += our_wall
 			for(var/turf/closed/wall/adjacent_wall in orange(1, interacting_with))
-				if(adjacent_wall.hardness >= WALL_CONVERT_STRENGTH)
-					target_walls += adjacent_wall
+				var/area/nearby_area = get_area(adjacent_wall)
+				if(istype(nearby_area, /area/space) || istype(nearby_area, /area/space))
+					if(adjacent_wall.hardness >= WALL_CONVERT_STRENGTH)
+						target_walls += adjacent_wall
+
 			for(var/turf/closed/wall/targeted_wall in target_walls)
 				playsound(targeted_wall, 'sound/effects/magic/blind.ogg', 100, TRUE)
 				new /obj/effect/temp_visual/transmute_tile_flash(targeted_wall)
 				targeted_wall.ScrapeAway()
-				new /obj/structure/window/fulltile/tinted/voidwalker(targeted_wall)
+				new /obj/structure/window/fulltile/voidwalker(targeted_wall)
 				new /obj/structure/grille(targeted_wall)
 
 			COOLDOWN_START(src, wall_conversion, 60 SECONDS)
