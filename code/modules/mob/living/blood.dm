@@ -363,7 +363,7 @@
 	else if (mob_biotypes & MOB_REPTILE)
 		return get_blood_type(BLOOD_TYPE_LIZARD)
 	else if (mob_biotypes & MOB_HUMANOID)
-		// O+ as to avoid mobs bleeding all bloodtypes under the sun, and its statistically the most common one
+		// O+ as to avoid mobs bleeding all human bloodtypes under the sun, and its statistically the most common one
 		return get_blood_type(BLOOD_TYPE_O_PLUS)
 
 	return get_blood_type(BLOOD_TYPE_ANIMAL)
@@ -387,12 +387,27 @@
 	if(!length(blood_DNA))
 		return get_blood_type(BLOOD_TYPE_O_PLUS).get_color()
 
-	var/last_added_bloodtype_key = blood_DNA[length(blood_DNA)]
-	blood_type = blood_DNA[last_added_bloodtype_key]
-	if(!istype(blood_type))
-		blood_type = get_blood_type(blood_type)
-	if(istype(blood_type))
-		return blood_type.get_color()
+	var/r_color = 0
+	var/g_color = 0
+	var/b_color = 0
+	var/valid_colors = 0
+	for (var/blood_key in blood_DNA)
+		blood_type = blood_DNA[blood_key]
+		if(!istype(blood_type))
+			blood_type = get_blood_type(blood_type)
+			if(!istype(blood_type))
+				continue
+
+		var/list/rgb_blood = rgb2num(blood_type.get_color())
+		r_color += rgb_blood[1]
+		g_color += rgb_blood[2]
+		b_color += rgb_blood[3]
+		valid_colors += 1
+
+	if (valid_colors > 0)
+		return rgb(r_color / valid_colors, g_color / valid_colors, b_color / valid_colors)
+
+	return get_blood_type(BLOOD_TYPE_O_PLUS).get_color()
 
 /**
  * Returns TRUE if src is compatible with donor's blood, otherwise FALSE.
@@ -453,7 +468,7 @@
 	var/obj/effect/decal/cleanable/xenoblood/xeno_blood_splatter = locate() in splatter_turf.contents
 	if(!xeno_blood_splatter)
 		xeno_blood_splatter = new(splatter_turf)
-	xeno_blood_splatter.add_blood_DNA(list("Unknown DNA" = BLOOD_TYPE_XENO))
+	xeno_blood_splatter.add_blood_DNA(list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)))
 
 /mob/living/silicon/robot/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check)
 	if(!splatter_turf)
