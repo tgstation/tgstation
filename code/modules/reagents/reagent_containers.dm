@@ -287,52 +287,54 @@
 			filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
 
 
-	if(adjust_color_contrast)
-		var/list/mix_colors = rgb2num(mix_color_from_reagents(reagents.reagent_list))
-		//reagent color red
-		var/float_r = mix_colors[1] / 255
-		//reagent color green
-		var/float_g = mix_colors[2] / 255
-		//reagent color blue
-		var/float_b = mix_colors[3] / 255
-		//reagent color alpha
-		var/float_a = mix_colors.len > 3 ? mix_colors[4] / 255 : 1
-
-		//value, used to make modifications depending on if our reagent color is light or dark.
-		var/float_v = (float_r + float_g + float_b) / 3
-
-		//max result of float_b - float_v is 0.6666 so we multiply with 1.5 to get something close to 1 at max blueness.
-		var/blue_mod = max(float_b - float_v, 0) * 1.5
-
-		//red multiplier
-		var/red_scale = 1.6
-		//green_multiplier
-		var/green_scale = 1.5
-		//blue scale
-		var/blue_scale = 1.1 * (1 + 0.60 * blue_mod)
-
-		//additive red - modifies red across the board by val * 255
-		var/red_base = -0.07 - (0.035 * float_v)
-		//additive green - modifies green across the board by val * 255
-		var/green_base = -0.06 - (0.03 * float_v)
-		//additive blue - modifies blue across the board by val * 255
-		var/blue_base = 0.10 - (0.050 * float_v) - (0.40 * blue_mod)
-
-		var/list/reagent_color_and_contrast_matrix  = list(
-			//Red - RR, RG, RB, RA
-			float_r * red_scale, 0, 0, 0,
-			//Green - GR - GG - GB - GA
-			0, float_g * green_scale, 0, 0,
-			///Blue - BR, BG, BB, BA
-			0.25 * blue_mod, 0.33 * blue_mod, float_b * blue_scale, 0,
-			//Alpha - AR, AG, AB, AA
-			0, 0, 0, float_a,
-			//Constant - CR, CG, CB, CA
-			red_base, green_base, blue_base, 0)
-
-		filling.color = reagent_color_and_contrast_matrix
-	else
+	if(!adjust_color_contrast)
 		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling
+		return
+
+	var/list/mix_colors = rgb2num(mix_color_from_reagents(reagents.reagent_list))
+	//reagent color red
+	var/float_r = mix_colors[1] / 255
+	//reagent color green
+	var/float_g = mix_colors[2] / 255
+	//reagent color blue
+	var/float_b = mix_colors[3] / 255
+	//reagent color alpha
+	var/float_a = mix_colors.len > 3 ? mix_colors[4] / 255 : 1
+
+	//value, used to make modifications depending on if our reagent color is light or dark.
+	var/float_v = (float_r + float_g + float_b) / 3
+
+	//max result of float_b - float_v is 0.6666 so we multiply with 1.5 to get something close to 1 at max blueness.
+	var/blue_mod = max(float_b - float_v, 0) * 1.5
+
+	//red multiplier
+	var/red_scale = 1.6
+	//green_multiplier
+	var/green_scale = 1.5
+	//blue scale
+	var/blue_scale = 1.1 * (1 + 0.60 * blue_mod)
+
+	//additive red - modifies red across the board by val * 255
+	var/red_base = -0.07 - (0.035 * float_v)
+	//additive green - modifies green across the board by val * 255
+	var/green_base = -0.06 - (0.03 * float_v)
+	//additive blue - modifies blue across the board by val * 255
+	var/blue_base = 0.10 - (0.050 * float_v) - (0.40 * blue_mod)
+
+	var/list/reagent_color_and_contrast_matrix  = list(
+		//Red - RR, RG, RB, RA
+		float_r * red_scale, 0, 0, 0,
+		//Green - GR - GG - GB - GA
+		0, float_g * green_scale, 0, 0,
+		///Blue - BR, BG, BB, BA
+		0.25 * blue_mod, 0.33 * blue_mod, float_b * blue_scale, 0,
+		//Alpha - AR, AG, AB, AA
+		0, 0, 0, float_a,
+		//Constant - CR, CG, CB, CA
+		red_base, green_base, blue_base, 0)
+
+	filling.color = reagent_color_and_contrast_matrix
 
 	. += filling
 
