@@ -81,7 +81,7 @@
  * * added_ph - override to force a pH when added
  * * override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)
  * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
- * * list/reagent_added - If not null will contain the reagent datum that was added after this proc returns. Clear the list to erase old values
+ * * list/reagent_added - If not null will contain the reagent datum that was added after this proc returns. Use this to store and use the reagent datum that was just added without having to locate it after this proc returns. Clear the list to erase old values
  */
 /datum/reagents/proc/add_reagent(
 	datum/reagent/reagent_type,
