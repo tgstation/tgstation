@@ -54,6 +54,22 @@
 #define BLOOD_TYPE_H2O "H2O"
 #define BLOOD_TYPE_SNAIL "S"
 
+// Blood exposure behavior flag defines
+/// Add our DNA to turfs/mobs/items, does not correlate with adding decals/overlays
+/// mob/turf/item flags will add DNA when triggered even if this flag is false
+#define BLOOD_ADD_DNA (1<<0)
+/// Cover the entire mob in *visible* blood
+#define BLOOD_COVER_MOBS (1<<1)
+/// Create blood splashes and trails on floors
+#define BLOOD_COVER_TURFS (1<<2)
+/// Cover items and objects in ourselves
+#define BLOOD_COVER_OBJS (1<<3)
+/// Instead of adding DNA to mobs/items/objects, cover them in our reagent when add_blood_DNA is called
+/// Will still trigger ADD_DNA stuff from reagent code
+#define BLOOD_COVER_REAGENT (1<<4)
+/// Transfer blood immunities and viruses to exposed mobs
+#define BLOOD_TRANSFER_VIRAL_DATA (1<<5)
+
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0
 #define MOB_SIZE_SMALL 1

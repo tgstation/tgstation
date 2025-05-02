@@ -236,8 +236,9 @@ Primarily used in reagents/reaction_agents
 		src.data = data
 
 /// Called when two reagents of the same are mixing.
-/datum/reagent/proc/on_merge(data, amount)
-	return
+/datum/reagent/proc/on_merge(list/mix_data, amount)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_REAGENT_ON_MERGE, mix_data, amount)
 
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
 /datum/reagent/proc/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)

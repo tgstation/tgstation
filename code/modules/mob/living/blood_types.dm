@@ -5,6 +5,10 @@
 	var/desc
 	/// Unique identifier for the blood type in the global list of singletons. Typically this is just the name, but some blood types might have the same name (e.g. evil blood)
 	var/id
+	/// What DNA string does this bloodtype have by default, if not set by a mob?
+	var/dna_string = "Unknown DNA"
+	/// Alternate name for medical scanners, will prevent "Blood Type: [name]" from showing up
+	var/scanner_name = null
 	/// Shown color of the blood type.
 	var/color = BLOOD_COLOR_RED
 	/// Additional lightness multiplier for the blood color, useful for when the default lightness from the greyscaling doesn't cut it and you want something more vibrant.
@@ -26,6 +30,11 @@
 	var/is_species_universal
 	/// Can this blood type be bloodcrawled in?
 	var/can_bloodcrawl_in = TRUE
+	/// Does this blood type preserve owner's biological information?
+	var/preserve_dna = TRUE
+	/// Can this
+	/// Splash and expose behaviors for this blood type's reagent, to prevent water-blood covered items
+	var/expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_OBJS | BLOOD_TRANSFER_VIRAL_DATA
 
 /datum/blood_type/New()
 	. = ..()
@@ -72,6 +81,7 @@
 // human blood type, for organizational purposes mainly
 /datum/blood_type/human
 	desc = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
+	dna_string = "Human DNA"
 	root_abstract_type = /datum/blood_type/human
 
 /datum/blood_type/human/a_minus
@@ -133,9 +143,17 @@
 		/datum/blood_type/human/o_plus,
 	)
 
+/datum/blood_type/human/universal
+	name = BLOOD_TYPE_UNIVERSAL
+
+/datum/blood_type/human/universal/New()
+	. = ..()
+	compatible_types = subtypesof(/datum/blood_type)
+
 /datum/blood_type/animal
 	name = BLOOD_TYPE_ANIMAL
 	desc = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
+	dna_string = "Animal DNA"
 	compatible_types = list(
 		/datum/blood_type/animal,
 	)
@@ -144,6 +162,7 @@
 	name = BLOOD_TYPE_LIZARD
 	desc = "Green sulfhemoglobin subtype-based blood, which while less effective at transporting oxygen, \
 		is capable of withstanding much higher temperatures without breaking down or clotting."
+	dna_string = "Lizard DNA"
 	color = BLOOD_COLOR_LIZARD
 	compatible_types = list(
 		/datum/blood_type/lizard,
@@ -151,6 +170,8 @@
 
 /datum/blood_type/ethereal
 	name = BLOOD_TYPE_ETHEREAL
+	dna_string = "Ethereal DNA"
+	scanner_name = /datum/reagent/consumable/liquidelectricity::name
 	color = /datum/reagent/consumable/liquidelectricity::color
 	lightness_mult = 1.255 // for more vibrant gatorade coloring
 	reagent_type = /datum/reagent/consumable/liquidelectricity
@@ -160,39 +181,41 @@
 
 /datum/blood_type/oil
 	name = BLOOD_TYPE_OIL
+	dna_string = "Oil"
+	scanner_name = "Oil"
 	color = BLOOD_COLOR_OIL
 	reagent_type = /datum/reagent/fuel/oil
 	restoration_chem = /datum/reagent/fuel
 	can_bloodcrawl_in = FALSE
+	preserve_dna = FALSE
+	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_OBJS | BLOOD_COVER_REAGENT
 
 /datum/blood_type/vampire
 	name = BLOOD_TYPE_VAMPIRE
+	dna_string = "Hemovore DNA"
 	compatible_types = list(
 		/datum/blood_type/vampire,
 	)
 
 /datum/blood_type/meat // why does this exist
 	name = BLOOD_TYPE_MEAT
-
-/datum/blood_type/universal
-	name = BLOOD_TYPE_UNIVERSAL
-
-/datum/blood_type/universal/New()
-	. = ..()
-	compatible_types = subtypesof(/datum/blood_type)
+	dna_string = "Meaty DNA"
 
 /datum/blood_type/xeno
 	name = BLOOD_TYPE_XENO
 	desc = "An incredibly potent mineral acid, somehow capable of carrying oxygen."
+	scanner_name = "Acid"
 	color = BLOOD_COLOR_XENO
 	lightness_mult = 1.255 // For parity with pre-refactor xeno blood sprites
 	compatible_types = list(/datum/blood_type/xeno)
 	reagent_type = /datum/reagent/toxin/acid
-	restoration_chem = /datum/reagent/acetone
+	// Viruses cannot survive in acid
+	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_OBJS | BLOOD_COVER_REAGENT
 
 /// April fool's blood for clowns
 /datum/blood_type/clown
 	name = BLOOD_TYPE_CLOWN
+	dna_string = "Clown DNA"
 	reagent_type = /datum/reagent/colorful_reagent
 	lightness_mult = 1.255
 	is_species_universal = TRUE
@@ -212,6 +235,8 @@
 /// Slimeperson blood, aka 'toxin' blood type
 /datum/blood_type/slime
 	name = BLOOD_TYPE_TOX
+	dna_string = "Slime DNA"
+	scanner_name = "Slime Jelly"
 	color = /datum/reagent/toxin/slimejelly::color
 	reagent_type = /datum/reagent/toxin/slimejelly
 	restoration_chem = /datum/reagent/stable_plasma // Because normal plasma already refills our blood
@@ -221,21 +246,25 @@
 /// Podpeople blood
 /datum/blood_type/water
 	name = BLOOD_TYPE_H2O
+	scanner_name = "Water"
 	color = /datum/reagent/water::color
 	reagent_type = /datum/reagent/water
 	restoration_chem = null
 	no_bleed_overlays = TRUE
 	can_bloodcrawl_in = FALSE
+	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_REAGENT | BLOOD_TRANSFER_VIRAL_DATA
 
 /// Snail blood
 /datum/blood_type/snail
 	name = BLOOD_TYPE_SNAIL
+	dna_string = "Snail DNA"
 	reagent_type = /datum/reagent/lube
 	restoration_chem = /datum/reagent/silicon
 
 /// An abstract-ish blood type used particularly for species with blood set to random reagents, such as podpeople
 /datum/blood_type/random_chemical
 	root_abstract_type = /datum/blood_type/random_chemical
+	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_OBJS | BLOOD_COVER_REAGENT | BLOOD_TRANSFER_VIRAL_DATA
 
 /datum/blood_type/random_chemical/New(datum/reagent/reagent)
 	name = initial(reagent.name)
@@ -244,7 +273,6 @@
 	id = type_key()
 	color = initial(reagent.color)
 	reagent_type = reagent
-	restoration_chem = reagent
 	root_abstract_type = null
 
 /datum/blood_type/random_chemical/type_key()
@@ -258,11 +286,13 @@
 	name = real_blood_type.name
 	desc = real_blood_type.desc
 	. = ..()
+	dna_string = real_blood_type.dna_string
+	scanner_name = real_blood_type.scanner_name
 	id = type_key()
 	color = BLOOD_COLOR_BLACK // why it gotta be black though
 	reagent_type = real_blood_type.reagent_type
 	restoration_chem = real_blood_type.restoration_chem
-	compatible_types = LAZYCOPY(real_compatible_types)
+	compatible_types = LAZYCOPY(real_compatible_types) + type_key()
 	root_abstract_type = null
 
 /datum/blood_type/evil/type_key()

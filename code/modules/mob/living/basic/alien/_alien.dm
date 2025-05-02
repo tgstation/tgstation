@@ -89,3 +89,5 @@
 	else
 		new /obj/effect/gibspawner/xeno/bodypartless(drop_location(), src)
 
+/mob/living/basic/alien/get_bloodtype()
+	return get_blood_type(BLOOD_TYPE_XENO)

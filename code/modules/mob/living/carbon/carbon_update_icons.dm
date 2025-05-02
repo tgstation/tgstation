@@ -316,7 +316,8 @@
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 	apply_overlay(DAMAGE_LAYER)
 
-/mob/living/carbon/update_wound_overlays()
+/// Handles bleeding overlays
+/mob/living/carbon/proc/update_wound_overlays()
 	remove_overlay(WOUND_LAYER)
 
 	if(get_bloodtype()?.no_bleed_overlays)

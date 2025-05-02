@@ -595,7 +595,7 @@
 			update_disabled()
 		if(updating_health)
 			owner.updatehealth()
-	return update_bodypart_damage_state() || .
+	return update_bodypart_damage_state()
 
 /// Returns a bitflag using ANATOMY_EXTERIOR or ANATOMY_INTERIOR. Used to determine if we as a whole have a interior or exterior biostate, or both.
 /obj/item/bodypart/proc/get_bio_state_status()

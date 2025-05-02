@@ -236,77 +236,133 @@
 	if(blood_volume < amount)
 		amount = blood_volume
 
-	var/blood_id = get_blood_reagent()
-	if(!blood_id)
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
 		return FALSE
 
 	blood_volume -= amount
+	var/list/blood_data = get_blood_data()
 
-	var/list/blood_data = get_blood_data(blood_id)
+	if (!isliving(receiver))
+		receiver.reagents.add_reagent(blood_type.reagent_type, amount, blood_data, bodytemperature)
+		return TRUE
 
-	if(iscarbon(receiver))
-		var/mob/living/carbon/carbon_receiver = receiver
-		if(blood_id == carbon_receiver.get_blood_reagent()) //both mobs have the same blood substance
-			if(blood_id == /datum/reagent/blood) //normal blood
-				if(blood_data["viruses"])
-					for(var/datum/disease/blood_disease as anything in blood_data["viruses"])
-						if((blood_disease.spread_flags & DISEASE_SPREAD_SPECIAL) || (blood_disease.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
-							continue
-						carbon_receiver.ForceContractDisease(blood_disease)
-				var/datum/blood_type/blood_type = blood_data["blood_type"]
-				if(!ignore_incompatibility && !(blood_type.type_key() in carbon_receiver.get_bloodtype()?.compatible_types))
-					carbon_receiver.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
-					return TRUE
+	var/mob/living/target = receiver
+	var/datum/blood_type/receiver_blood_type = target.get_bloodtype()
+	if (!receiver_blood_type?.reagent_type == blood_type.reagent_type)
+		target.reagents.add_reagent(blood_type.reagent_type, amount, blood_data, bodytemperature)
+		return TRUE
 
-			carbon_receiver.blood_volume = min(carbon_receiver.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAX_LETHAL)
-			return TRUE
+	if(blood_data["viruses"])
+		for(var/datum/disease/blood_disease as anything in blood_data["viruses"])
+			if((blood_disease.spread_flags & DISEASE_SPREAD_SPECIAL) || (blood_disease.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
+				continue
+			target.ForceContractDisease(blood_disease)
 
-	receiver.reagents.add_reagent(blood_id, amount, blood_data, bodytemperature)
+	if(!ignore_incompatibility && !(blood_type.type_key() in receiver_blood_type.compatible_types))
+		target.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
+		return TRUE
+
+	target.blood_volume = min(target.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAX_LETHAL)
 	return TRUE
 
-/mob/living/proc/get_blood_data(blood_id)
-	return
+/mob/living/proc/get_blood_data()
+	SHOULD_CALL_PARENT(TRUE)
 
-/mob/living/carbon/get_blood_data(blood_id)
-	if(blood_id == /datum/reagent/blood) //actual blood reagent
-		var/blood_data = list()
-		//set the blood data
-		blood_data["viruses"] = list()
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
+		return
 
-		for(var/datum/disease/disease as anything in diseases)
-			blood_data["viruses"] += disease.Copy()
+	var/blood_data = list()
+	blood_data["blood_type"] = blood_type
+	blood_data["blood_DNA"] = blood_type.dna_string
 
-		blood_data["blood_DNA"] = dna.unique_enzymes
-		if(LAZYLEN(disease_resistances))
-			blood_data["resistances"] = disease_resistances.Copy()
+	if (reagents)
 		var/list/temp_chem = list()
 		for(var/datum/reagent/blood_reagent in reagents.reagent_list)
 			temp_chem[blood_reagent.type] = blood_reagent.volume
 		blood_data["trace_chem"] = list2params(temp_chem)
-		if(mind)
-			blood_data["mind"] = mind
-		else if(last_mind)
-			blood_data["mind"] = last_mind
-		if(ckey)
-			blood_data["ckey"] = ckey
-		else if(last_mind)
-			blood_data["ckey"] = ckey(last_mind.key)
 
-		if(!HAS_TRAIT_FROM(src, TRAIT_SUICIDED, REF(src)))
-			blood_data["cloneable"] = 1
-		blood_data["blood_type"] = get_bloodtype()
-		blood_data["gender"] = gender
-		blood_data["real_name"] = real_name
-		blood_data["features"] = dna.features
-		blood_data["factions"] = faction
-		blood_data["quirks"] = list()
-		for(var/datum/quirk/quirk as anything in quirks)
-			blood_data["quirks"] += quirk.type
+	// Viruses, mind, facitons, etc don't get stored in stuff like oil
+	if (!blood_type.preserve_dna)
 		return blood_data
 
+	// Viruses we possess
+	blood_data["viruses"] = list()
+	for(var/datum/disease/disease as anything in diseases)
+		blood_data["viruses"] += disease.Copy()
+
+	if(LAZYLEN(disease_resistances))
+		blood_data["resistances"] = disease_resistances.Copy()
+
+	if(mind)
+		blood_data["mind"] = mind
+
+	if(ckey)
+		blood_data["ckey"] = ckey
+	else if (persistent_client?.mob?.ckey)
+		blood_data["ckey"] = persistent_client.mob.ckey
+
+	blood_data["factions"] = faction
+	return blood_data
+
+/mob/living/carbon/get_blood_data()
+	var/list/blood_data = ..()
+	if (!blood_data)
+		return
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type.preserve_dna)
+		return blood_data
+
+	// If we haven't suicided but the ghost cannot reenter, i.e. we ghosted, don't set ourselves as cloneable
+	var/mob/dead/observer/ghost = get_ghost(TRUE, TRUE)
+	if(!HAS_TRAIT(src, TRAIT_SUICIDED) && (!ghost || ghost.can_reenter_corpse))
+		blood_data["cloneable"] = TRUE
+
+	if (!blood_data["mind"] && last_mind)
+		blood_data["mind"] = last_mind
+
+	if (!blood_data["ckey"] && last_mind)
+		blood_data["ckey"] = ckey(last_mind.key)
+
+	blood_data["gender"] = gender
+	blood_data["real_name"] = real_name
+	if (dna)
+		blood_data["blood_DNA"] = dna.unique_enzymes
+		blood_data["features"] = dna.features
+
+	blood_data["quirks"] = list()
+	for(var/datum/quirk/quirk as anything in quirks)
+		blood_data["quirks"] += quirk.type
+
+	return blood_data
+
 /mob/living/proc/get_blood_reagent()
-	if(blood_volume)
-		return /datum/reagent/blood
+	var/datum/blood_type/blood_type = get_bloodtype()
+	return blood_type?.reagent_type
+
+/mob/living/proc/get_bloodtype()
+	RETURN_TYPE(/datum/blood_type)
+	if (!blood_volume)
+		return
+
+	if (!(mob_biotypes & MOB_ORGANIC))
+		if (mob_biotypes & MOB_ROBOTIC)
+			return get_blood_type(BLOOD_TYPE_OIL)
+		return
+
+	if (mob_biotypes & MOB_SLIME)
+		return get_blood_type(BLOOD_TYPE_TOX)
+	else if (mob_biotypes & MOB_PLANT)
+		return get_blood_type(BLOOD_TYPE_H2O)
+	else if (mob_biotypes & MOB_REPTILE)
+		return get_blood_type(BLOOD_TYPE_LIZARD)
+	else if (mob_biotypes & MOB_HUMANOID)
+		// O+ as to avoid mobs bleeding all bloodtypes under the sun, and its statistically the most common one
+		return get_blood_type(BLOOD_TYPE_O_PLUS)
+
+	return get_blood_type(BLOOD_TYPE_ANIMAL)
 
 /// Returns the reagent type this mob has for blood
 /mob/living/carbon/get_blood_reagent()
@@ -332,12 +388,12 @@
 
 /**
  * Returns TRUE if src is compatible with donor's blood, otherwise FALSE.
- * * donor: Carbon mob, the one that is donating blood.
+ * * donor: Mob that is donating blood.
  */
-/mob/living/carbon/proc/get_blood_compatibility(mob/living/carbon/donor)
+/mob/living/proc/get_blood_compatibility(mob/living/donor)
 	var/datum/blood_type/patient_blood_data = get_bloodtype()
 	var/datum/blood_type/donor_blood_data = donor.get_bloodtype()
-	return (donor_blood_data in patient_blood_data.compatible_types)
+	return (donor_blood_data?.type_key() in patient_blood_data?.compatible_types)
 
 //to add a splatter of blood or other mob liquid.
 /mob/living/proc/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check = FALSE)
@@ -346,6 +402,7 @@
 
 	if(!splatter_turf)
 		splatter_turf = get_turf(src)
+
 	if(isclosedturf(splatter_turf) || (isgroundlessturf(splatter_turf) && !GET_TURF_BELOW(splatter_turf)))
 		return
 
@@ -404,6 +461,85 @@
 		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
 
 	return blood_alcohol_content
+
+
+/mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
+	if(!has_gravity() || !isturf(start) || !blood_volume)
+		return
+
+	var/trail_type // = getTrail()
+	/*
+
+/mob/living/proc/getTrail()
+	if(getBruteLoss() < 300)
+		return pick("ltrails_1", "ltrails_2")
+	else
+		return pick("trails_1", "trails_2")
+		*/
+	var/trail_blood_type // = get_trail_blood()
+	if(!trail_type || !trail_blood_type)
+		return
+
+	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	if(blood_volume < max(BLOOD_VOLUME_NORMAL * (1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
+		return
+
+	var/bleed_amount = bleedDragAmount()
+	blood_volume = max(blood_volume - bleed_amount, 0) //that depends on our brute damage.
+	var/newdir = get_dir(target_turf, start)
+	if(newdir != direction)
+		newdir = newdir | direction
+		if(newdir == (NORTH|SOUTH))
+			newdir = NORTH
+		else if(newdir == (EAST|WEST))
+			newdir = EAST
+
+	if((newdir in GLOB.cardinals) && (prob(50)))
+		newdir = REVERSE_DIR(get_dir(target_turf, start))
+
+	var/found_trail = FALSE
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/trail in start)
+		if (trail.blood_state != trail_blood_type)
+			continue
+
+		// Don't make double trails, even if they're of a different type
+		if(newdir in trail.existing_dirs)
+			found_trail = TRUE
+			break
+
+		trail.existing_dirs += newdir
+		trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+		trail.add_mob_blood(src)
+		trail.bloodiness = min(trail.bloodiness + bleed_amount, BLOOD_POOL_MAX)
+		found_trail = TRUE
+		break
+
+	if (found_trail)
+		return
+
+	var/obj/effect/decal/cleanable/blood/trail_holder/trail = new(start, get_static_viruses())
+	trail.blood_state = trail_blood_type
+	trail.existing_dirs += newdir
+	trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+	trail.add_mob_blood(src)
+	trail.bloodiness = min(bleed_amount, BLOOD_POOL_MAX)
+
+/mob/living/carbon/human/makeTrail(turf/T)
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || dna.blood_type.no_bleed_overlays)
+		return
+	..()
+
+///Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/makeTrail]
+/mob/living/proc/bleedDragAmount()
+	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
+	return max(1, brute_ratio * 2)
+
+/mob/living/carbon/bleedDragAmount()
+	var/bleed_amount = 0
+	for(var/i in all_wounds)
+		var/datum/wound/iter_wound = i
+		bleed_amount += iter_wound.drag_bleed_amount()
+	return bleed_amount
 
 #undef BLOOD_DRIP_RATE_MOD
 #undef DRUNK_POWER_TO_BLOOD_ALCOHOL

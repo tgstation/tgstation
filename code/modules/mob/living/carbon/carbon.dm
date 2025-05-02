@@ -1531,6 +1531,6 @@
 	// When a limb is missing the damage is actually passed to the chest
 	return BODY_ZONE_CHEST
 
-/mob/living/carbon/proc/get_bloodtype()
+/mob/living/carbon/get_bloodtype()
 	RETURN_TYPE(/datum/blood_type)
 	return dna?.blood_type

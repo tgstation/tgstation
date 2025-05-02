@@ -248,13 +248,29 @@
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
 	if(!HAS_TRAIT(patient, TRAIT_GENELESS) && !HAS_TRAIT(patient, TRAIT_NOBLOOD)) //Blood levels Information
+		var/blood_name = LOWER_TEXT(blood_type.scanner_name) || "blood"
 		if(patient.is_bleeding())
-			bleed_status = "Patient is currently bleeding!"
+			bleed_status = " Patient is currently bleeding!"
+
 		if(blood_percent <= 80)
-			blood_warning = " Patient has low blood levels. Seek a large meal, or iron supplements."
-		if(blood_percent <= 60)
-			blood_warning = " Patient has DANGEROUSLY low blood levels. Seek a blood transfusion, iron supplements, or saline glucose immedietly. Ignoring treatment may lead to death!"
-		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type.name] type blood. [blood_warning]"
+			blood_warning = " Patient has [blood_percent <= 60 ? "DANGEROUSLY low" : "low"] [blood_name] levels."
+			var/list/treatments = list()
+			if(blood_percent <= 60)
+				treatments += "[blood_name] trasnfusion"
+			else if(!HAS_TRAIT(patient, TRAIT_NOHUNGER))
+				treatments += "a large meal"
+			if(blood_type.restoration_chem)
+				treatments += "[LOWER_TEXT(blood_type.restoration_chem::name)] supplements"
+				if(blood_percent <= 60 && blood_type.restoration_chem == /datum/reagent/iron)
+					treatments += "saline-glucose immediately"
+
+			if (length(treatments))
+				blood_warning += " Seek [english_list(treatments, and_text = " or ")]"
+
+			if (blood_percent <= 60)
+				blood_warning += " Ignoring treatment may lead to death!"
+
+		blood_status = "Patient [blood_name] levels are currently reading [blood_percent]%.[blood_type.scanner_name ? "" : " Patient has [blood_type.name] type blood."][blood_warning]"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)

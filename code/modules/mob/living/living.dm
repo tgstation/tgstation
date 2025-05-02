@@ -1018,10 +1018,6 @@
 /mob/living/proc/update_damage_overlays()
 	return
 
-/// Proc that only really gets called for humans, to handle bleeding overlays.
-/mob/living/proc/update_wound_overlays()
-	return
-
 /mob/living/Move(atom/newloc, direct, glide_size_override)
 	if(lying_angle != 0)
 		lying_angle_on_movement(direct)
@@ -1062,84 +1058,6 @@
 
 /mob/living/carbon/alien/adult/lying_angle_on_movement(direct)
 	return
-
-/mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
-	if(!has_gravity() || !isturf(start) || !blood_volume)
-		return
-
-	var/trail_type = getTrail()
-	/*
-
-/mob/living/proc/getTrail()
-	if(getBruteLoss() < 300)
-		return pick("ltrails_1", "ltrails_2")
-	else
-		return pick("trails_1", "trails_2")
-		*/
-	var/trail_blood_type = get_trail_blood()
-	if(!trail_type || !trail_blood_type)
-		return
-
-	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-	if(blood_volume < max(BLOOD_VOLUME_NORMAL * (1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-		return
-
-	var/bleed_amount = bleedDragAmount()
-	blood_volume = max(blood_volume - bleed_amount, 0) //that depends on our brute damage.
-	var/newdir = get_dir(target_turf, start)
-	if(newdir != direction)
-		newdir = newdir | direction
-		if(newdir == (NORTH|SOUTH))
-			newdir = NORTH
-		else if(newdir == (EAST|WEST))
-			newdir = EAST
-
-	if((newdir in GLOB.cardinals) && (prob(50)))
-		newdir = REVERSE_DIR(get_dir(target_turf, start))
-
-	var/found_trail = FALSE
-	for(var/obj/effect/decal/cleanable/blood/trail_holder/trail in start)
-		if (trail.blood_state != trail_blood_type)
-			continue
-
-		// Don't make double trails, even if they're of a different type
-		if(newdir in trail.existing_dirs)
-			found_trail = TRUE
-			break
-
-		trail.existing_dirs += newdir
-		trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-		trail.add_mob_blood(src)
-		trail.bloodiness = min(trail.bloodiness + bleed_amount, BLOOD_POOL_MAX)
-		found_trail = TRUE
-		break
-
-	if (found_trail)
-		return
-
-	var/obj/effect/decal/cleanable/blood/trail_holder/trail = new(start, get_static_viruses())
-	trail.blood_state = trail_blood_type
-	trail.existing_dirs += newdir
-	trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-	trail.add_mob_blood(src)
-	trail.bloodiness = min(bleed_amount, BLOOD_POOL_MAX)
-
-/mob/living/carbon/human/makeTrail(turf/T)
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || dna.blood_type.no_bleed_overlays)
-		return
-	..()
-
-///Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/makeTrail]
-/mob/living/proc/bleedDragAmount()
-	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-	return max(1, brute_ratio * 2)
-
-/mob/living/carbon/bleedDragAmount()
-	var/bleed_amount = 0
-	for(var/i in all_wounds)
-		var/datum/wound/iter_wound = i
-		bleed_amount += iter_wound.drag_bleed_amount()
-	return bleed_amount
 
 /// Print a message about an annoying sensation you are feeling. Returns TRUE if successful.
 /mob/living/proc/itch(obj/item/bodypart/target_part = null, damage = 0.5, can_scratch = TRUE, silent = FALSE)
