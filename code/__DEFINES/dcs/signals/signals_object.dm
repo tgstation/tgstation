@@ -588,3 +588,8 @@
 /// Sent from /datum/wires/attach_assembly() : (atom/holder)
 #define COMSIG_ASSEMBLY_PRE_ATTACH "assembly_pre_attach"
 	#define COMPONENT_CANCEL_ATTACH (1<<0)
+
+/// Item has been equipped to a mob as a prosthetic limb
+#define COMSIG_ITEM_USED_AS_PROSTHETIC "item_used_as_prosthetic"
+/// Item has been unequipped from a mob as a prosthetic limb
+#define COMSIG_ITEM_DROPPED_FROM_PROSTHETIC "item_dropped_from_prosthetic"
