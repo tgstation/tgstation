@@ -45,6 +45,8 @@
 	var/datum/effect_system/spark_spread/sparks
 	///Stores the type of gun we are using inside the emitter
 	var/obj/item/gun/energy/gun
+	///A list of guns we don't want to allow in emitters. Ever.
+	var/list/blacklisted_guns = list(/obj/item/gun/energy/dueling)
 	///List of all the properties of the inserted gun
 	var/list/gun_properties
 	//only used to always have the gun properties on non-letal (no other instances found)
@@ -353,6 +355,9 @@
 	if(!istype(energy_gun, /obj/item/gun/energy))
 		return
 	if(!user.transferItemToLoc(energy_gun, src))
+		return
+	if(is_type_in_list(energy_gun, blacklisted_guns))
+		user.balloon_alert(user, "[energy_gun] won't fit!")
 		return
 	gun = energy_gun
 	gun_properties = gun.get_turret_properties()
