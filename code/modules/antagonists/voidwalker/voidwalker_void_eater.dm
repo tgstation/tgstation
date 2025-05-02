@@ -112,7 +112,7 @@
 			target_walls += our_wall
 			for(var/turf/closed/wall/adjacent_wall in orange(1, interacting_with))
 				var/area/nearby_area = get_area(adjacent_wall)
-				if(istype(nearby_area, /area/space) || istype(nearby_area, /area/space))
+				if(istype(nearby_area, /area/space) || istype(nearby_area, /area/space/nearstation) || istype(nearby_area, /area/station/asteroid))
 					if(adjacent_wall.hardness >= WALL_CONVERT_STRENGTH)
 						target_walls += adjacent_wall
 
