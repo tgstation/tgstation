@@ -364,7 +364,7 @@ Versioning
 		query_report_death.Execute(async = TRUE)
 		qdel(query_report_death)
 
-/datum/controller/subsystem/blackbox/proc/ReportCitation(citation, sender, sender_ic, recipient, message, fine = 0, paid = 0)
+/datum/controller/subsystem/blackbox/proc/ReportCitation(citation, action, sender, sender_ic, recipient, message, description, fine = 0, paid = 0)
 	var/datum/db_query/query_report_citation = SSdbcore.NewQuery({"INSERT INTO [format_table_name("citation")]
 	(server_ip,
 	server_port,
@@ -375,6 +375,7 @@ Versioning
 	sender_ic,
 	recipient,
 	crime,
+	crime_desc,
 	fine,
 	paid,
 	timestamp) VALUES (
@@ -387,42 +388,27 @@ Versioning
 	:sender_ic,
 	:recipient,
 	:message,
+	:desc,
 	:fine,
 	:paid,
 	NOW()
 	) ON DUPLICATE KEY UPDATE
-	paid = paid + VALUES(paid)"}, list(
+	paid = paid + VALUES(paid),
+	crime = IF(VALUES(crime) IS NOT NULL, VALUES(crime), crime),
+	crime_desc = IF(VALUES(crime_desc) IS NOT NULL, VALUES(crime_desc), crime_desc)"}, list(
 		"server_ip" = world.internet_address || "0",
 		"port" = "[world.port]",
 		"round_id" = GLOB.round_id,
 		"citation" = citation,
-		"action" = "Citation Created",
+		"action" = action,
 		"sender" = sender,
 		"sender_ic" = sender_ic,
 		"recipient" = recipient,
 		"message" = message,
+		"desc" = description,
 		"fine" = fine,
 		"paid" = paid,
 	))
 	if(query_report_citation)
 		query_report_citation.Execute(async = TRUE)
 		qdel(query_report_citation)
-
-/datum/controller/subsystem/blackbox/proc/ReportCrime(crime, sender, sender_ic, recipient, message)
-	var/datum/db_query/query_report_crime = SSdbcore.NewQuery({"
-	INSERT INTO [format_table_name("crime")] (server_ip, server_port, round_id, crime, action, sender, sender_ic, recipient, message, timestamp)
-	VALUES ( INET_ATON(:server_ip), :port, :round_id, :crime, :action, :sender, :sender_ic, :recipient, :message, NOW())
-	"}, list(
-		"server_ip" = world.internet_address || "0",
-		"port" = "[world.port]",
-		"round_id" = GLOB.round_id,
-		"crime" = crime,
-		"action" = "Crime Created",
-		"sender" = sender,
-		"sender_ic" = sender_ic,
-		"recipient" = recipient,
-		"message" = message,
-	))
-	if(query_report_crime)
-		query_report_crime.Execute(async = TRUE)
-		qdel(query_report_crime)
