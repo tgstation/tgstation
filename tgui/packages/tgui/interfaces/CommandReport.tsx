@@ -60,6 +60,7 @@ function CentComName(props) {
   const [name, setName] = useState(command_name);
 
   function sendName(value) {
+    setName(value);
     act('update_command_name', {
       updated_name: value,
     });
@@ -75,11 +76,12 @@ function CentComName(props) {
       />
       {!!custom_name && (
         <Input
+          expensive
           fluid
           mt={1}
           value={name}
-          onChange={setName}
-          onEnter={sendName}
+          // TODO: replace with setName, should send with onBlur
+          onChange={sendName}
         />
       )}
     </Section>
@@ -99,6 +101,7 @@ function SubHeader(props) {
         mt={1}
         value={subheader}
         placeholder="Keep blank to not include a subheader"
+        // TODO: replace this with onBlur when added
         onChange={(value) =>
           act('set_subheader', {
             new_subheader: value,
