@@ -1,0 +1,4 @@
+author: "Chestlet"
+delete-after: True
+changes:
+  - bugfix: "Removed eyelids from dummies to make all TGUI windows in which they appear more optimized."

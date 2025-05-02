@@ -359,9 +359,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE
 
 /datum/chemical_reaction/medicine/medsuture/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/medical/suture/medicated(location)
+	new /obj/item/stack/medical/suture/medicated(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/medicine/medmesh
 	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/consumable/aloejuice = 20, /datum/reagent/space_cleaner/sterilizine = 10)
@@ -369,9 +367,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BURN
 
 /datum/chemical_reaction/medicine/medmesh/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/medical/mesh/advanced(location)
+	new /obj/item/stack/medical/mesh/advanced(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/medicine/poultice
 	required_reagents = list(/datum/reagent/toxin/bungotoxin = 20, /datum/reagent/cellulose = 20, /datum/reagent/consumable/aloejuice = 20)
@@ -379,9 +375,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_BRUTE | REACTION_TAG_BURN
 
 /datum/chemical_reaction/medicine/poultice/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/location = get_turf(holder.my_atom)
-	for(var/i in 1 to created_volume)
-		new /obj/item/stack/medical/poultice(location)
+	new /obj/item/stack/medical/poultice(get_turf(holder.my_atom), round(created_volume))
 
 /datum/chemical_reaction/medicine/seraka_destroy //seraka extract is destroyed by sodium hydroxide
 	results = list(/datum/reagent/consumable/sugar = 1)
