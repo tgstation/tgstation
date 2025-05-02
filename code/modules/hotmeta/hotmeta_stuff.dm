@@ -82,7 +82,7 @@
 	. = ..()
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/revenge.ogg', 293 SECONDS)
 
-// ~ Stunsword ~ //
+// ~ Hotmeta Spefific guns
 
 /obj/item/gun/energy/e_gun/hos/hotmeta
 	name = "\improper X-420 MultiPhase Energy Gun"
