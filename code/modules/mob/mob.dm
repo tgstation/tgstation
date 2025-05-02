@@ -838,6 +838,7 @@
 /mob/proc/get_status_tab_items()
 	. = list("") //we want to offset unique stuff from standard stuff
 	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
+	return .
 
 /**
  * Convert a list of spells into a displyable list for the statpanel
@@ -1448,11 +1449,15 @@
 		return
 
 	nutrition = max(0, nutrition + change)
-	hud_used?.hunger?.update_appearance()
 
 /mob/living/adjust_nutrition(change, forced)
 	. = ..()
-	mob_mood?.update_nutrition_moodlets()
+	// Queue update if change is small enough (6 is 1% of nutrition softcap)
+	if(abs(change) >= 6)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+	else
+		living_flags |= QUEUE_NUTRITION_UPDATE
 
 ///Force set the mob nutrition
 /mob/proc/set_nutrition(set_to, forced = FALSE) //Seriously fuck you oldcoders.
@@ -1460,11 +1465,16 @@
 		return
 
 	nutrition = max(0, set_to)
-	hud_used?.hunger?.update_appearance()
 
 /mob/living/set_nutrition(set_to, forced)
+	var/old_nutrition = nutrition
 	. = ..()
-	mob_mood?.update_nutrition_moodlets()
+	// Queue update if change is small enough (6 is 1% of nutrition softcap)
+	if(abs(old_nutrition - nutrition) >= 6)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+	else
+		living_flags |= QUEUE_NUTRITION_UPDATE
 
 ///Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()

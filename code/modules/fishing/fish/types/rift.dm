@@ -192,6 +192,9 @@
 
 /obj/item/fish/dolphish/do_fish_process(seconds_per_tick)
 	. = ..()
+	if(QDELETED(src))
+		return
+
 	var/patience_reduction = 1
 
 	var/turf/onturf = get_turf(loc)
@@ -744,7 +747,7 @@
 	. = ..()
 	limb.remove_bodypart_overlay(babbel_overlay)
 
-/obj/item/organ/ears/babbelfish/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/organ/ears/babbelfish/attack(mob/living/target_mob, mob/living/user, list/modifiers)
 	. = ..()
 	var/obj/item/organ/ears/ears = target_mob.get_organ_slot(ORGAN_SLOT_EARS)
 	if(!ears)

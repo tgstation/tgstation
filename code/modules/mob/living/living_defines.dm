@@ -214,8 +214,10 @@
 	///what multiplicative slowdown we get from turfs currently.
 	var/current_turf_slowdown = 0
 
-	/// Is the mob looking vertically
-	var/looking_vertically = FALSE
+	/// Direction that this mob is looking at, used for the look_up and look_down procs
+	var/looking_vertically = NONE
+	///looking holder we use for look_up and look_down. we use this over resetting to the turf because we want to glide
+	var/atom/movable/looking_holder/looking_holder
 
 	/// Living mob's mood datum
 	var/datum/mood/mob_mood

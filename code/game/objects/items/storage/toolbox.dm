@@ -20,9 +20,11 @@
 	drop_sound = 'sound/items/handling/toolbox/toolbox_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbox/toolbox_pickup.ogg'
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	wound_bonus = 5
+	storage_type = /datum/storage/toolbox
+
 	var/latches = "single_latch"
 	var/has_latches = TRUE
-	wound_bonus = 5
 	/// How many interactions are we currently performing
 	var/current_interactions = 0
 	/// Items we should not interact with when left clicking
@@ -35,7 +37,6 @@
 
 /obj/item/storage/toolbox/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
 	if(has_latches)
 		if(prob(10))
 			latches = "double_latch"
@@ -44,8 +45,6 @@
 				if(prob(0.1))
 					latches = "quad_latch" // like winning the lottery, but worse
 	update_appearance()
-	atom_storage.open_sound = 'sound/items/handling/toolbox/toolbox_open.ogg'
-	atom_storage.rustle_sound = 'sound/items/handling/toolbox/toolbox_rustle.ogg'
 	AddElement(/datum/element/falling_hazard, damage = force, wound_bonus = wound_bonus, hardhat_safety = TRUE, crushes = FALSE, impact_sound = hitsound)
 
 /obj/item/storage/toolbox/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -97,7 +96,7 @@
 
 /obj/item/storage/toolbox/proc/use_tool_on(atom/interacting_with, mob/living/user, list/modifiers, obj/item/picked_tool)
 	current_interactions += 1
-	picked_tool.melee_attack_chain(user, interacting_with, list2params(modifiers))
+	picked_tool.melee_attack_chain(user, interacting_with, modifiers)
 	current_interactions -= 1
 
 	if (QDELETED(picked_tool) || picked_tool.loc != user || !user.CanReach(picked_tool))
@@ -176,10 +175,7 @@
 	desc = "It's seen better days."
 	force = 5
 	w_class = WEIGHT_CLASS_NORMAL
-
-/obj/item/storage/toolbox/mechanical/old/heirloom/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	storage_type = /datum/storage/toolbox/heirloom
 
 /obj/item/storage/toolbox/mechanical/old/heirloom/PopulateContents()
 	return
@@ -252,10 +248,7 @@
 	force = 15
 	throwforce = 18
 	material_flags = NONE
-
-/obj/item/storage/toolbox/syndicate/Initialize(mapload)
-	. = ..()
-	atom_storage.silent = TRUE
+	storage_type = /datum/storage/toolbox/syndicate
 
 /obj/item/storage/toolbox/syndicate/PopulateContents()
 	new /obj/item/screwdriver/nuke(src)
@@ -286,18 +279,38 @@
 	name = "artistic toolbox"
 	desc = "A toolbox painted bright green. Why anyone would store art supplies in a toolbox is beyond you, but it has plenty of extra space."
 	icon_state = "green"
-	inhand_icon_state = "artistic_toolbox"
+	inhand_icon_state = "toolbox_green"
+	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
+	material_flags = NONE
+	storage_type = /datum/storage/toolbox/artistic
+
+/obj/item/storage/toolbox/artistic/PopulateContents()
+	new /obj/item/storage/crayons(src)
+	new /obj/item/toy/crayon/spraycan(src)
+	new /obj/item/toy/crayon/spraycan(src)
+	new /obj/item/paint_palette(src)
+	new /obj/item/paint/anycolor(src)
+	new /obj/item/paint/anycolor(src)
+	new /obj/item/paint/anycolor(src)
+
+/obj/item/storage/toolbox/crafter
+	name = "crafter toolbox"
+	desc = "A toolbox painted hot pink. Full of crafting supplies!"
+	icon_state = "pink"
+	inhand_icon_state = "toolbox_pink"
 	w_class = WEIGHT_CLASS_GIGANTIC //Holds more than a regular toolbox!
 	material_flags = NONE
 
-/obj/item/storage/toolbox/artistic/Initialize(mapload)
+/obj/item/storage/toolbox/crafter/Initialize(mapload)
 	. = ..()
 	atom_storage.max_total_storage = 20
 	atom_storage.max_slots = 11
 
-/obj/item/storage/toolbox/artistic/PopulateContents()
+/obj/item/storage/toolbox/crafter/PopulateContents()
 	new /obj/item/storage/crayons(src)
-	new /obj/item/crowbar(src)
+	new /obj/item/camera(src)
+	new /obj/item/camera_film(src)
+	new /obj/item/chisel(src)
 	new /obj/item/stack/pipe_cleaner_coil/red(src)
 	new /obj/item/stack/pipe_cleaner_coil/yellow(src)
 	new /obj/item/stack/pipe_cleaner_coil/blue(src)
@@ -322,16 +335,16 @@
 	/// Tray we steal the og contents from.
 	var/obj/item/surgery_tray/tray_type = /obj/item/surgery_tray
 
-/obj/item/storage/toolbox/medical/Initialize(mapload)
-	. = ..()
-	// what do any of these numbers fucking mean
-	atom_storage.max_total_storage = 20
-	atom_storage.max_slots = 11
-
 /obj/item/storage/toolbox/medical/PopulateContents()
-	var/atom/fake_tray = new tray_type(get_turf(src)) // not in src lest it fill storage that we need for its tools later
-	for(var/atom/movable/thingy in fake_tray)
-		thingy.forceMove(src)
+	atom_storage.max_slots = 0
+	atom_storage.max_total_storage = 0
+
+	var/atom/fake_tray = new tray_type(null)
+	for(var/obj/item/tool in fake_tray)
+		tool.forceMove(src)
+		atom_storage.max_slots += 1
+		atom_storage.max_total_storage += tool.w_class
+
 	qdel(fake_tray)
 
 /obj/item/storage/toolbox/medical/full
@@ -393,6 +406,7 @@
 		return ..()
 	var/static/list/allowed_toolbox = list(
 		/obj/item/storage/toolbox/artistic,
+		/obj/item/storage/toolbox/crafter,
 		/obj/item/storage/toolbox/electrical,
 		/obj/item/storage/toolbox/emergency,
 		/obj/item/storage/toolbox/mechanical,
@@ -409,6 +423,7 @@
 		/obj/item/storage/toolbox/emergency = "#445eb3",
 		/obj/item/storage/toolbox/electrical = "#b77931",
 		/obj/item/storage/toolbox/artistic = "#378752",
+		/obj/item/storage/toolbox/crafter = "#9D3282",
 		/obj/item/storage/toolbox/syndicate = "#3d3d3d",
 	)
 	var/obj/item/bot_assembly/repairbot/repair = new
@@ -435,14 +450,9 @@
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
 	inhand_icon_state = "infiltrator_case"
 	has_latches = FALSE
+	storage_type = /datum/storage/toolbox/guncase
 	var/weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol
 	var/extra_to_spawn = /obj/item/ammo_box/magazine/m9mm
-
-/obj/item/storage/toolbox/guncase/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.max_total_storage = 7 //enough to hold ONE bulky gun and the ammo boxes
-	atom_storage.max_slots = 4
 
 /obj/item/storage/toolbox/guncase/PopulateContents()
 	new weapon_to_spawn (src)
@@ -615,12 +625,7 @@
 	name = "double-bladed energy sword weapon case"
 	weapon_to_spawn = /obj/item/dualsaber
 	extra_to_spawn = /obj/item/soap/syndie
-
-/obj/item/storage/toolbox/guncase/doublesword/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY
-	atom_storage.max_total_storage = 10 //it'll hold enough
-	atom_storage.max_slots = 5
+	storage_type = /datum/storage/toolbox/guncase/doublesword
 
 /obj/item/storage/toolbox/guncase/doublesword/PopulateContents()
 	new weapon_to_spawn (src)
@@ -643,7 +648,7 @@
 
 /obj/item/storage/toolbox/guncase/monkeycase/Initialize(mapload)
 	. = ..()
-	atom_storage.locked = STORAGE_SOFT_LOCKED
+	atom_storage.set_locked(STORAGE_SOFT_LOCKED)
 
 /obj/item/storage/toolbox/guncase/monkeycase/attack_self(mob/user, modifiers)
 	if(!monkey_check(user))

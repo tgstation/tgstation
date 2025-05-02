@@ -18,7 +18,8 @@
 	return ..()
 
 /datum/action/neck_chop
-	name = "Neck Chop - Injures the neck, stopping the victim from speaking for a while."
+	name = "Neck Chop"
+	desc = "Injures the neck, stopping the victim from speaking for a while."
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "neckchop"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
@@ -36,7 +37,8 @@
 		source.streak = "neck_chop"
 
 /datum/action/leg_sweep
-	name = "Leg Sweep - Trips the victim, knocking them down for a brief moment."
+	name = "Leg Sweep"
+	desc = "Trips the victim, knocking them down for a brief moment."
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "legsweep"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS
@@ -54,7 +56,8 @@
 		source.streak = "leg_sweep"
 
 /datum/action/lung_punch//referred to internally as 'quick choke'
-	name = "Lung Punch - Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time."
+	name = "Lung Punch"
+	desc = "Delivers a strong punch just above the victim's abdomen, constraining the lungs. The victim will be unable to breathe for a short time."
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "lungpunch"
 	check_flags = AB_CHECK_INCAPACITATED|AB_CHECK_HANDS_BLOCKED|AB_CHECK_CONSCIOUS

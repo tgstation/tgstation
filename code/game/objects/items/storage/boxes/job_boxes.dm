@@ -47,7 +47,7 @@
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
 		new /obj/item/storage/pill_bottle/potassiodide(src)
 
-	if(give_hook && length(SSmapping.levels_by_trait(ZTRAIT_STATION)) > 1)
+	if(give_hook && length(SSmapping.levels_by_trait(ZTRAIT_STATION)) > 1 && SSmapping.current_map.give_players_hooks)
 		new /obj/item/climbing_hook/emergency(src)
 
 /obj/item/storage/box/survival/radio/PopulateContents()
@@ -271,7 +271,10 @@
 
 /obj/item/storage/box/miner_modkits/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/borg/upgrade/modkit, /obj/item/crusher_trophy))
+	atom_storage.set_holdable(list(
+		/obj/item/borg/upgrade/modkit,
+		/obj/item/crusher_trophy
+	))
 	atom_storage.numerical_stacking = TRUE
 
 /obj/item/storage/box/miner_modkits/PopulateContents()

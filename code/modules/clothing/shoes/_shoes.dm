@@ -9,10 +9,9 @@
 	equip_sound = 'sound/items/equip/sneakers_equip1.ogg'
 	sound_vary = TRUE
 	gender = PLURAL //Carn: for grammarically correct text-parsing
-
+	clothing_flags = CLOTHING_MOD_OVERSLOTTING
 	body_parts_covered = FEET
 	slot_flags = ITEM_SLOT_FEET
-
 	armor_type = /datum/armor/clothing_shoes
 	slowdown = SHOES_SLOWDOWN
 	strip_delay = 1 SECONDS
@@ -65,9 +64,13 @@
 		return
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
 		if(clothing_flags & LARGE_WORN_ICON)
-			. += mutable_appearance('icons/effects/64x64.dmi', "shoeblood_large")
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/64x64.dmi', "shoeblood_large")
+			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+			. += blood_overlay
 		else
-			. += mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "shoeblood")
+			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+			. += blood_overlay
 
 /obj/item/clothing/shoes/examine(mob/user)
 	. = ..()

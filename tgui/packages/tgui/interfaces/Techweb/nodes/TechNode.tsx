@@ -2,9 +2,9 @@ import {
   Box,
   Button,
   Collapsible,
-  Flex,
   ProgressBar,
   Section,
+  Stack,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
@@ -148,12 +148,12 @@ export function TechNode(props: Props) {
       }
     >
       {tier !== 0 && (
-        <Flex className="Techweb__NodeProgress">
+        <Stack className="Techweb__NodeProgress">
           {costs.map((k) => {
             const reqPts = Math.max(0, k.value - nodeDiscount);
             const nodeProg = Math.min(reqPts, points[k.type]) || 0;
             return (
-              <Flex.Item key={k.type} grow basis={0}>
+              <Stack.Item key={k.type} grow basis={0}>
                 <ProgressBar
                   ranges={{
                     good: [0.5, Infinity],
@@ -168,20 +168,20 @@ export function TechNode(props: Props) {
                 >
                   {point_types_abbreviations[k.type]} ({nodeProg}/{reqPts})
                 </ProgressBar>
-              </Flex.Item>
+              </Stack.Item>
             );
           })}
           {prereq_ids.length > 0 && (
-            <Flex.Item grow basis={0}>
+            <Stack.Item grow basis={0}>
               {techProgress}
-            </Flex.Item>
+            </Stack.Item>
           )}
           {required_experiments.length > 0 && (
-            <Flex.Item grow basis={0}>
+            <Stack.Item grow basis={0}>
               {experimentProgress}
-            </Flex.Item>
+            </Stack.Item>
           )}
-        </Flex>
+        </Stack>
       )}
       <Box className="Techweb__NodeDescription" mb={2}>
         {description}

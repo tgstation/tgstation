@@ -60,11 +60,7 @@
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "spbox"
 	illustration = ""
-
-/obj/item/storage/box/snappops/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/toy/snappop)
-	atom_storage.max_slots = 8
+	storage_type = /datum/storage/box/snappops
 
 /obj/item/storage/box/snappops/PopulateContents()
 	for(var/i in 1 to 8)
@@ -86,11 +82,10 @@
 	custom_price = PAYCHECK_CREW * 0.4
 	base_icon_state = "matchbox"
 	illustration = null
+	storage_type = /datum/storage/box/match
 
 /obj/item/storage/box/matches/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 10
-	atom_storage.set_holdable(/obj/item/match)
 	AddElement(/datum/element/ignites_matches)
 
 /obj/item/storage/box/matches/PopulateContents()
@@ -117,13 +112,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	foldable_result = /obj/item/stack/sheet/cardboard //BubbleWrap
 	illustration = "light"
-
-/obj/item/storage/box/lights/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 21
-	atom_storage.set_holdable(list(/obj/item/light/tube, /obj/item/light/bulb))
-	atom_storage.max_total_storage = 21
-	atom_storage.allow_quick_gather = FALSE //temp workaround to re-enable filling the light replacer with the box
+	storage_type = /datum/storage/box/lights
 
 /obj/item/storage/box/lights/bulbs/PopulateContents()
 	for(var/i in 1 to 21)
@@ -205,13 +194,7 @@
 	name = "box of long balloons"
 	desc = "A completely randomized and wacky box of long balloons, harvested straight from balloon farms on the clown planet."
 	illustration = "balloon"
-
-/obj/item/storage/box/balloons/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 24
-	atom_storage.set_holdable(list(/obj/item/toy/balloon/long))
-	atom_storage.max_total_storage = 24
-	atom_storage.allow_quick_gather = FALSE
+	storage_type = /datum/storage/box/balloon
 
 /obj/item/storage/box/balloons/PopulateContents()
 	for(var/i in 1 to 24)
@@ -224,6 +207,8 @@
 	icon_state = "stickerpack"
 	illustration = null
 	w_class = WEIGHT_CLASS_TINY
+	storage_type = /datum/storage/box/stickers
+
 	var/static/list/pack_labels = list(
 		"smile",
 		"frown",
@@ -235,9 +220,6 @@
 
 /obj/item/storage/box/stickers/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 8
-	atom_storage.set_holdable(list(/obj/item/sticker))
-	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
 	if(isnull(illustration))
 		illustration = pick(pack_labels)
 		update_appearance()

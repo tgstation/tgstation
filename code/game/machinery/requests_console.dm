@@ -191,7 +191,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				message = L.treat_message(message)["message"]
 
 			minor_announce(message, "[department] Announcement:", html_encode = FALSE, sound_override = 'sound/announcer/announcement/announce_dig.ogg')
-			GLOB.news_network.submit_article(message, department, "Station Announcements", null)
+			GLOB.news_network.submit_article(message, department, NEWSCASTER_STATION_ANNOUNCEMENTS, null)
 			usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
 			deadchat_broadcast(" made a station announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)
@@ -384,7 +384,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		to_chat(user, span_warning("You must open the maintenance panel first!"))
 	return TRUE
 
-/obj/machinery/requests_console/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/requests_console/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	var/obj/item/card/id/ID = attacking_item.GetID()
 	if(ID)
 		message_verified_by = "[ID.registered_name] ([ID.assignment])"

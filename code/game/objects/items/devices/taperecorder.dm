@@ -84,7 +84,7 @@
 	else
 		soundloop.start()
 
-/obj/item/taperecorder/attackby(obj/item/I, mob/user, params)
+/obj/item/taperecorder/attackby(obj/item/I, mob/user, list/modifiers)
 	if(!mytape && istype(I, /obj/item/tape))
 		if(!user.transferItemToLoc(I,src))
 			return
@@ -159,7 +159,7 @@
 		return
 
 	mytape.timestamp += mytape.used_capacity
-	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss")]\] [speaker.GetVoice()]: [raw_message]"
+	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.GetVoice()]: [raw_message]"
 
 
 /obj/item/taperecorder/verb/record()

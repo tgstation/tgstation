@@ -98,7 +98,7 @@
 	///How large is the object, used for stuff like whether it can fit in backpacks or not
 	var/w_class = WEIGHT_CLASS_NORMAL
 	///This is used to determine on which slots an item can fit.
-	var/slot_flags = 0
+	var/slot_flags = NONE
 	pass_flags = PASSTABLE
 	pressure_resistance = 4
 	/// This var exists as a weird proxy "owner" ref
@@ -133,9 +133,9 @@
 	var/flags_inv
 	///you can see someone's mask through their transparent visor, but you can't reach it
 	var/transparent_protection = NONE
-	///Name of a mask in icons\mob\human\hair_masks.dmi to apply to hair when this item is worn
+	///Path of type /datum/hair_mask to apply to hair when this item is worn
 	///Used by certain hats to give the appearance of squishing down tall hairstyles without hiding the hair completely
-	var/hair_mask = ""
+	var/hair_mask = null
 
 	///flags for what should be done when you click on the item, default is picking it up
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
@@ -171,8 +171,6 @@
 	///This is a bitfield that defines what variations exist for bodyparts like Digi legs. See: code\_DEFINES\inventory.dm
 	var/supports_variations_flags = NONE
 
-	///A weakref to the mob who threw the item
-	var/datum/weakref/thrownby = null //I cannot verbally describe how much I hate this var
 	///Items can by default thrown up to 10 tiles by TK users
 	tk_throw_range = 10
 
@@ -892,7 +890,6 @@
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
-	thrownby = WEAKREF(thrower)
 	callback = CALLBACK(src, PROC_REF(after_throw), callback) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart)
 
@@ -939,31 +936,7 @@
 	if(!ismob(loc))
 		return
 	var/mob/owner = loc
-	var/flags = slot_flags
-	if(flags & ITEM_SLOT_OCLOTHING)
-		owner.update_worn_oversuit()
-	if(flags & ITEM_SLOT_ICLOTHING)
-		owner.update_worn_undersuit()
-	if(flags & ITEM_SLOT_GLOVES)
-		owner.update_worn_gloves()
-	if(flags & ITEM_SLOT_EYES)
-		owner.update_worn_glasses()
-	if(flags & ITEM_SLOT_EARS)
-		owner.update_worn_ears()
-	if(flags & ITEM_SLOT_MASK)
-		owner.update_worn_mask()
-	if(flags & ITEM_SLOT_HEAD)
-		owner.update_worn_head()
-	if(flags & ITEM_SLOT_FEET)
-		owner.update_worn_shoes()
-	if(flags & ITEM_SLOT_ID)
-		owner.update_worn_id()
-	if(flags & ITEM_SLOT_BELT)
-		owner.update_worn_belt()
-	if(flags & ITEM_SLOT_BACK)
-		owner.update_worn_back()
-	if(flags & ITEM_SLOT_NECK)
-		owner.update_worn_neck()
+	owner.update_clothing(slot_flags | owner.get_slot_by_item(src))
 
 ///Returns the temperature of src. If you want to know if an item is hot use this proc.
 /obj/item/proc/get_temperature()
@@ -1309,19 +1282,23 @@
 	if (!ismob(loc))
 		return ..()
 
-	var/mob/M = loc
-	var/hand_index = M.get_held_index_of_item(src)
+	var/mob/owner = loc
+	var/hand_index = owner.get_held_index_of_item(src)
 	if(!hand_index)
 		return ..()
 
-	M.held_items[hand_index] = null
-	M.update_held_items()
-	if(M.client)
-		M.client.screen -= src
+	owner.held_items[hand_index] = null
+	owner.update_held_items()
+	if(owner.client)
+		owner.client.screen -= src
+	if(owner.observers?.len)
+		for(var/mob/dead/observe as anything in owner.observers)
+			if(observe.client)
+				observe.client.screen -= src
 	layer = initial(layer)
 	SET_PLANE_IMPLICIT(src, initial(plane))
 	appearance_flags &= ~NO_CLIENT_COLOR
-	dropped(M, FALSE)
+	dropped(owner, FALSE)
 	return ..()
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)

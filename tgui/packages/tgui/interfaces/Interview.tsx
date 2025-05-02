@@ -7,18 +7,21 @@ import {
   Section,
   TextArea,
 } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
-  connected: boolean;
-  is_admin: boolean;
+  connected: BooleanLike;
+  is_admin: BooleanLike;
   questions: Question[];
   queue_pos: number;
-  read_only: boolean;
+  read_only: BooleanLike;
   status: string;
   welcome_message: string;
+  centcom_connected: BooleanLike;
+  has_permabans: BooleanLike;
 };
 
 type Question = {
@@ -63,6 +66,8 @@ export const Interview = (props) => {
     read_only,
     status,
     welcome_message = '',
+    centcom_connected,
+    has_permabans,
   } = data;
 
   const allAnswered = questions.every((q) => q.response);
@@ -70,7 +75,7 @@ export const Interview = (props) => {
 
   return (
     <Window
-      width={500}
+      width={550}
       height={600}
       canClose={is_admin || status === 'interview_approved'}
     >
@@ -107,6 +112,19 @@ export const Interview = (props) => {
                   <Button color="bad" onClick={() => act('deny')}>
                     Deny
                   </Button>
+                  {!!centcom_connected && (
+                    <Button
+                      color={has_permabans ? 'bad' : 'average'}
+                      tooltip={
+                        has_permabans
+                          ? 'This user has permabans in their history!'
+                          : ''
+                      }
+                      onClick={() => act('check_centcom')}
+                    >
+                      Check Centcom
+                    </Button>
+                  )}
                 </span>
               )}
             </span>
@@ -193,14 +211,14 @@ const QuestionArea = (props: Question) => {
       }
     >
       <p>{linkifyText(question)}</p>
-      {((read_only || is_admin) && (
+      {read_only || is_admin ? (
         <BlockQuote>{response || 'No response.'}</BlockQuote>
-      )) || (
+      ) : (
         <TextArea
           fluid
           height={10}
           maxLength={500}
-          onChange={(e, input) => setUserInput(input)}
+          onChange={setUserInput}
           onEnter={saveResponse}
           placeholder="Write your response here, max of 500 characters. Press enter to submit."
           value={response || undefined}
