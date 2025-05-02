@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "The grassland hunt domain no longer auto-completes just by closing the domain."
