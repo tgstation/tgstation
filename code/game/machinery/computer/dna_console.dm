@@ -172,7 +172,7 @@
 		genetic_damage_pulse()
 		return
 
-/obj/machinery/computer/scan_consolenew/attackby(obj/item/item, mob/user, params)
+/obj/machinery/computer/scan_consolenew/attackby(obj/item/item, mob/user, list/modifiers)
 	// Store chromosomes in the console if there's room
 	if (istype(item, /obj/item/chromosome))
 		item.forceMove(src)
@@ -1750,7 +1750,7 @@
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
-			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
+			scanner_occupant.set_blood_type(buffer_slot["blood_type"])
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE
@@ -1768,7 +1768,7 @@
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
-			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
+			scanner_occupant.set_blood_type(buffer_slot["blood_type"])
 			scanner_occupant.apply_status_effect(/datum/status_effect/genetic_damage, damage_increase)
 			scanner_occupant.domutcheck()
 			return TRUE

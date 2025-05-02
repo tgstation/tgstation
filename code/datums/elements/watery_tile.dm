@@ -9,7 +9,7 @@
 	RegisterSignals(target, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(enter_water))
 	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(out_of_water))
 	for(var/atom/movable/movable as anything in target.contents)
-		if(!(movable.flags_1 & INITIALIZED_1)) //turfs initialize before movables
+		if(!(movable.flags_1 & INITIALIZED_1) || movable.invisibility >= INVISIBILITY_OBSERVER) //turfs initialize before movables
 			continue
 		enter_water(target, movable)
 

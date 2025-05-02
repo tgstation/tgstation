@@ -70,8 +70,10 @@
 				teleatom.balloon_alert(teleatom, "something holds you back!")
 			return FALSE
 
-	SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTED, destination, channel)
-	SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORTED, channel, curturf, destturf)
+	if(SEND_SIGNAL(teleatom, COMSIG_MOVABLE_TELEPORTING, destination, channel))
+		return FALSE
+	if(SEND_SIGNAL(destturf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, curturf))
+		return FALSE
 
 	if(isobserver(teleatom))
 		teleatom.abstract_move(destturf)
@@ -210,11 +212,12 @@
 
 /// Validates that the teleport being attempted is valid or not
 /proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel, atom/original_destination = null)
+	SHOULD_BE_PURE(TRUE)
+
 	if(isnull(destination))
 		return FALSE // Teleporting FROM nullspace is fine, but TO nullspace is not
 
 	var/area/origin_area = get_area(teleported_atom)
-	var/turf/origin_turf = get_turf(teleported_atom)
 
 	var/area/destination_area = get_area(destination)
 	var/turf/destination_turf = get_turf(destination)
@@ -232,12 +235,6 @@
 
 	// If one of the areas you're trying to tp to has local_teleport, and they're not the same, return.
 	if(((origin_area.area_flags & LOCAL_TELEPORT) || (destination_area.area_flags & LOCAL_TELEPORT)) && destination_area != origin_area)
-		return FALSE
-
-	if(SEND_SIGNAL(teleported_atom, COMSIG_MOVABLE_TELEPORTING, destination, channel) & COMPONENT_BLOCK_TELEPORT)
-		return FALSE
-
-	if(SEND_SIGNAL(destination_turf, COMSIG_ATOM_INTERCEPT_TELEPORTING, channel, origin_turf, destination_turf) & COMPONENT_BLOCK_TELEPORT)
 		return FALSE
 
 	return TRUE

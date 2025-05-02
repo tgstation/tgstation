@@ -48,7 +48,7 @@
 	. = ..()
 	icon_state = dead ? "plant-25" : base_icon_state
 
-/obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, params)
+/obj/item/kirbyplants/attackby(obj/item/I, mob/living/user, list/modifiers)
 	. = ..()
 	if(!dead && trimmable && HAS_TRAIT(user,TRAIT_BONSAI) && isturf(loc) && I.get_sharpness())
 		to_chat(user,span_notice("You start trimming [src]."))
@@ -136,8 +136,36 @@
 	name = "Potty the Potted Plant"
 	desc = "A secret agent staffed in the station's bar to protect the mystical cakehat."
 	icon_state = "potty"
+	base_icon_state = "potty"
 	custom_plant_name = TRUE
 	trimmable = FALSE
+	actions_types = list(/datum/action/item_action/toggle_light)
+	action_slots = ALL
+	light_range = 2
+	light_power = 1
+	light_system = OVERLAY_LIGHT
+	light_on = TRUE
+	color = LIGHT_COLOR_DEFAULT
+
+	///Boolean on whether the light is on and flashing.
+	var/light_enabled = TRUE
+
+//this is called by the action type as well
+/obj/item/kirbyplants/potty/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return .
+	light_enabled = !light_enabled
+	set_light_on(light_enabled)
+	update_item_action_buttons()
+	update_appearance(UPDATE_ICON)
+
+/obj/item/kirbyplants/potty/update_overlays()
+	. = ..()
+	if(dead)
+		return .
+	if(light_enabled)
+		. += "[base_icon_state]_light"
 
 /obj/item/kirbyplants/fern
 	name = "neglected fern"

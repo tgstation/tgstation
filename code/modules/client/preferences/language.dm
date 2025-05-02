@@ -82,3 +82,21 @@
 
 /datum/preference/choiced/language_skill/apply_to_human(mob/living/carbon/human/target, value)
 	return
+
+/datum/preference/choiced/csl_strength
+	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
+	savefile_key = "csl_strength"
+	savefile_identifier = PREFERENCE_CHARACTER
+	can_randomize = FALSE
+
+/datum/preference/choiced/csl_strength/create_default_value()
+	return "90%"
+
+/datum/preference/choiced/csl_strength/is_accessible(datum/preferences/preferences)
+	return ..() && (/datum/quirk/csl::name in preferences.all_quirks)
+
+/datum/preference/choiced/csl_strength/init_possible_values()
+	return list("90%", "75%", "50%", "33%", "25%", "10%")
+
+/datum/preference/choiced/csl_strength/apply_to_human(mob/living/carbon/human/target, value)
+	return

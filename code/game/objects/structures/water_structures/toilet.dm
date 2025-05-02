@@ -184,7 +184,7 @@
 		for(var/datum/material/M as anything in custom_materials)
 			new M.sheet_type(loc, FLOOR(custom_materials[M] / SHEET_MATERIAL_AMOUNT, 1))
 
-/obj/structure/toilet/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/structure/toilet/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 	add_fingerprint(user)
 	if(cover_open && istype(attacking_item, /obj/item/fish))
 		if(fishes >= 3)

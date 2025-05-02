@@ -145,7 +145,7 @@
 		return
 	set_scanline("passive")
 
-/obj/machinery/scanner_gate/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/scanner_gate/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	var/obj/item/card/id/card = attacking_item.GetID()
 	if(card)
 		if(locked)

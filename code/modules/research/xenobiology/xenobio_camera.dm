@@ -22,6 +22,9 @@
 	if(new_area.name != allowed_area && !(new_area.area_flags & XENOBIOLOGY_COMPATIBLE))
 		return FALSE
 
+#define SUCTION_DELAY 1 DECISECONDS
+#define SUCTION_TIME 2 DECISECONDS
+
 /obj/machinery/computer/camera_advanced/xenobio
 	name = "Slime management console"
 	desc = "A computer used for remotely handling slimes."
@@ -38,6 +41,8 @@
 	var/max_slimes = 5
 	///The amount of monkey cubes inside the machine
 	var/monkeys = 0
+	/// The HUD for this console
+	var/atom/movable/screen/xenobio_console/xeno_hud
 
 	icon_screen = "slime_comp"
 	icon_keyboard = "rd_key"
@@ -55,6 +60,8 @@
 	actions += new /datum/action/innate/hotkey_help(src)
 
 	stored_slimes = list()
+	xeno_hud = new(null, src)
+	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 
 /obj/machinery/computer/camera_advanced/xenobio/post_machine_initialize()
 	. = ..()
@@ -72,6 +79,7 @@
 	if(connected_recycler)
 		connected_recycler.connected -= src
 	connected_recycler = null
+	QDEL_NULL(xeno_hud)
 	return ..()
 
 /obj/machinery/computer/camera_advanced/xenobio/Exited(atom/movable/gone, direction)
@@ -92,6 +100,10 @@
 	RegisterSignal(user, COMSIG_MOB_ALTCLICKON, PROC_REF(XenoSlimeClickAlt))
 	RegisterSignal(user, COMSIG_XENO_SLIME_CLICK_SHIFT, PROC_REF(XenoSlimeClickShift))
 	RegisterSignal(user, COMSIG_XENO_TURF_CLICK_SHIFT, PROC_REF(XenoTurfClickShift))
+	if(!user.hud_used)
+		return
+	user.hud_used.static_inventory += xeno_hud
+	user.hud_used.show_hud(user.hud_used.hud_version)
 
 /obj/machinery/computer/camera_advanced/xenobio/remove_eye_control(mob/living/user)
 	UnregisterSignal(user, list(
@@ -100,13 +112,18 @@
 		COMSIG_XENO_SLIME_CLICK_SHIFT,
 		COMSIG_XENO_TURF_CLICK_SHIFT,
 	))
+	if(user.hud_used)
+		if(xeno_hud)
+			user.hud_used.static_inventory -= xeno_hud
+			user.hud_used.show_hud(user.hud_used.hud_version)
 	return ..()
 
-/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/used_item, mob/user, params)
+/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/used_item, mob/user, list/modifiers)
 	if(istype(used_item, /obj/item/food/monkeycube))
 		monkeys++
 		to_chat(user, span_notice("You feed [used_item] to [src]. It now has [monkeys] monkey cubes stored."))
 		qdel(used_item)
+		xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 		return
 
 	if(istype(used_item, /obj/item/storage/bag))
@@ -119,6 +136,7 @@
 				qdel(item_in_bag)
 		if(loaded)
 			to_chat(user, span_notice("You fill [src] with the monkey cubes stored in [used_item]. [src] now has [monkeys] monkey cubes stored."))
+			xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 		return
 
 	if(istype(used_item, /obj/item/slimepotion/slime))
@@ -129,7 +147,9 @@
 			current_potion.forceMove(drop_location())
 			replaced = TRUE
 		current_potion = used_item
-		to_chat(user, span_notice("You load [used_item] in the console's potion slot[replaced ? ", replacing the one that was there before" : ""]."))
+		xeno_hud.update_potion(current_potion)
+		to_chat(user, span_notice("You load [used_item] in the console's potion slot[replaced ? ", replacing the previous" : ""]."))
+
 		return
 
 	..()
@@ -161,27 +181,32 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 
 ///Places every slime in storage on target turf
 /obj/machinery/computer/camera_advanced/xenobio/proc/slime_place(turf/open/target_turf)
+	spit_out(stored_slimes, target_turf)
 	for(var/mob/living/basic/slime/stored_slime in stored_slimes)
 		stored_slime.forceMove(target_turf)
-		stored_slime.visible_message(span_notice("[stored_slime] warps in!"))
+		stored_slime.visible_message(span_notice("[stored_slime] is spat out!"))
 		stored_slimes -= stored_slime
 		REMOVE_TRAIT(stored_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
+	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 
 ///Places every slime not controlled by a player into the internal storage, respecting its limits
 ///Returns TRUE to signal it hitting the limit, in case its being called from a loop and we want it to stop
 /obj/machinery/computer/camera_advanced/xenobio/proc/slime_pickup(mob/living/user, mob/living/basic/slime/target_slime)
 	if(stored_slimes.len >= max_slimes)
 		to_chat(user, span_warning("Slime storage is full."))
+		target_slime.balloon_alert(user, "storage full")
 		return TRUE
 	if(target_slime.ckey)
 		to_chat(user, span_warning("The slime wiggled free!"))
 		return FALSE
 	if(target_slime.buckled)
 		target_slime.stop_feeding(silent = TRUE)
-	target_slime.visible_message(span_notice("[target_slime] vanishes in a flash of light!"))
+	target_slime.visible_message(span_notice("[target_slime] gets sucked up!"))
+	suck_up(target_slime)
 	target_slime.forceMove(src)
 	stored_slimes += target_slime
 	ADD_TRAIT(target_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
+	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 
 	return FALSE
 
@@ -189,17 +214,18 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 /obj/machinery/computer/camera_advanced/xenobio/proc/feed_slime(mob/living/user, turf/open/target_turf)
 	if(monkeys < 1)
 		to_chat(user, span_warning("[src] needs to have at least 1 monkey stored. Currently has [monkeys] monkeys stored."))
+		target_turf.balloon_alert(user, "not enough monkeys")
 		return
 
 	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE, user)
 	if (QDELETED(food))
 		return
-
 	food.apply_status_effect(/datum/status_effect/slime_food, user)
 
 	monkeys--
 	monkeys = round(monkeys, 0.1) //Prevents rounding errors
-	to_chat(user, span_notice("[src] now has [monkeys] monkeys stored."))
+	spit_out(food, target_turf)
+	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 
 ///Recycles the target monkey
 /obj/machinery/computer/camera_advanced/xenobio/proc/monkey_recycle(mob/living/user, mob/living/target_mob)
@@ -208,12 +234,13 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	if(!target_mob.stat)
 		return
 
-	target_mob.visible_message(span_notice("[target_mob] vanishes as [p_theyre()] reclaimed for recycling!"))
+	suck_up(target_mob)
+	target_mob.visible_message(span_notice("[target_mob] shoots up as [p_theyre()] reclaimed for recycling!"))
 	connected_recycler.use_energy(500 JOULES)
 	monkeys += connected_recycler.cube_production
 	monkeys = round(monkeys, 0.1) //Prevents rounding errors
+	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 	qdel(target_mob)
-	to_chat(user, span_notice("[src] now has [monkeys] monkeys stored."))
 
 /datum/action/innate/slime_place
 	name = "Place Slimes"
@@ -331,7 +358,9 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		return
 
 	for(var/mob/living/basic/slime/potioned_slime in remote_eye.loc)
+		xeno_console.spit_atom(xeno_console.current_potion, get_turf(remote_eye))
 		xeno_console.current_potion.attack(potioned_slime, owner_mob)
+		xeno_console.xeno_hud.update_potion(xeno_console.current_potion)
 		break
 
 /datum/action/innate/hotkey_help
@@ -381,7 +410,9 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		to_chat(user, span_warning("No potion loaded."))
 		return
 
+	spit_atom(current_potion, get_turf(target_slime))
 	INVOKE_ASYNC(xeno_console.current_potion, TYPE_PROC_REF(/obj/item/slimepotion/slime, attack), target_slime, user)
+	xeno_hud.update_potion(xeno_console.current_potion)
 
 ///Picks up a slime, and places them in the internal storage
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoSlimeClickShift(mob/living/user, mob/living/basic/slime/target_slime)
@@ -406,7 +437,7 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	if(!xeno_console.validate_area(user, remote_eye, target_turf))
 		return
 
-	slime_place(target_turf)
+	slime_place(target_turf, user)
 
 /obj/machinery/computer/camera_advanced/xenobio/proc/XenoClickCtrl(mob/living/user, atom/target)
 	SIGNAL_HANDLER
@@ -469,3 +500,113 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		return
 
 	slime_scan(target_slime, user)
+
+/// Sucks the target mob up into the console
+/obj/machinery/computer/camera_advanced/xenobio/proc/suck_up(mob/living/target_mob)
+	if(!isliving(target_mob))
+		return
+	var/mobturf = get_turf(target_mob)
+	new /obj/effect/abstract/xenosuction(mobturf)
+	new /obj/effect/abstract/sucked_atom(mobturf, target_mob, TRUE)
+	/// Make the mob invisible so it doesn't get seen during the animation
+	target_mob.SetInvisibility(INVISIBILITY_MAXIMUM, id=XENOBIO_CONSOLE_TRAIT)
+	addtimer(CALLBACK(target_mob, TYPE_PROC_REF(/atom,RemoveInvisibility), XENOBIO_CONSOLE_TRAIT), SUCTION_DELAY + SUCTION_TIME)
+	addtimer(CALLBACK(src, PROC_REF(handle_xeno_sounds), mobturf, FALSE), SUCTION_DELAY)
+
+
+/// Shoots the target mob(s) out of the console
+/obj/machinery/computer/camera_advanced/xenobio/proc/spit_out(list/mobs_to_spit, turf/open/target_turf)
+	if(isnull(mobs_to_spit) || isnull(target_turf))
+		return
+	if(!islist(mobs_to_spit))
+		mobs_to_spit = list(mobs_to_spit)
+	if(!LAZYLEN(mobs_to_spit))
+		return
+	new /obj/effect/abstract/xenosuction(target_turf)
+	for(var/mob/living/shot_mob in mobs_to_spit)
+		new /obj/effect/abstract/sucked_atom(target_turf, shot_mob, FALSE)
+		shot_mob.SetInvisibility(INVISIBILITY_MAXIMUM, id=XENOBIO_CONSOLE_TRAIT)
+		addtimer(CALLBACK(shot_mob, TYPE_PROC_REF(/atom,RemoveInvisibility), XENOBIO_CONSOLE_TRAIT), SUCTION_DELAY + SUCTION_TIME)
+	addtimer(CALLBACK(src, PROC_REF(handle_xeno_sounds), target_turf, TRUE), SUCTION_DELAY)
+
+/// Shoots the target atom out of the tube. Used for anything that isn't a mob (I.e. potions)
+/obj/machinery/computer/camera_advanced/xenobio/proc/spit_atom(atom/movable/target_atom, turf/open/target_turf)
+	if(isnull(target_atom))
+		return
+	if(isnull(target_turf))
+		target_turf = get_turf(target_atom)
+	new /obj/effect/abstract/xenosuction(target_turf)
+	var/ispot = istype(target_atom, /obj/item/slimepotion/slime)
+	new /obj/effect/abstract/sucked_atom(target_turf, target_atom, FALSE, ispot)
+	addtimer(CALLBACK(src, PROC_REF(handle_xeno_sounds), target_turf, TRUE), SUCTION_DELAY)
+	if(ispot)
+		addtimer(CALLBACK(src, PROC_REF(handle_shatter_sound), target_turf), SUCTION_DELAY+SUCTION_TIME)
+
+///Plays the sound in the given location. Easier to call w/ addtimer()
+/obj/machinery/computer/camera_advanced/xenobio/proc/handle_xeno_sounds(turf/open/target_turf, spitting)
+	var/tubesound = 'sound/effects/compressed_air/air_suck.ogg'
+	if(spitting)
+		tubesound = 'sound/effects/compressed_air/air_shoot.ogg'
+	playsound(target_turf, tubesound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+
+///The sound that plays when a potion shatters. Easier to call w/ addtimer()
+/obj/machinery/computer/camera_advanced/xenobio/proc/handle_shatter_sound(turf/open/target_turf)
+	playsound(target_turf, SFX_SHATTER, 35, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+
+/// An abstract effect to simulate sucking the atom up or spitting it out
+/obj/effect/abstract/sucked_atom
+	layer = MOB_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	/// The initial alpha of the atom, because slimes can be semi-transparent
+	var/mob_initial_alpha = 255
+
+/obj/effect/abstract/sucked_atom/Initialize(mapload, atom/movable/copying, sucking = FALSE, shatter = FALSE)
+	. = ..()
+	if(!ismovable(copying))
+		return
+	appearance = copying.appearance
+	mob_initial_alpha = copying.alpha
+	layer = MOB_LAYER
+	if(sucking)
+		suck_up()
+	else
+		pixel_y = 64
+		alpha = 0
+		shoot_out(shatter)
+
+/// Shoots the mob visual upwards into the pipe then deletes it
+/obj/effect/abstract/sucked_atom/proc/suck_up()
+	QDEL_IN(src, SUCTION_DELAY + SUCTION_TIME)
+	animate(src, time = SUCTION_DELAY)
+	animate(time = SUCTION_TIME, easing = CUBIC_EASING | EASE_IN, pixel_y = 64, alpha = 0)
+
+/// Shoots the mob visual out then deletes it
+/obj/effect/abstract/sucked_atom/proc/shoot_out(shatter)
+	QDEL_IN(src, SUCTION_DELAY + SUCTION_TIME)
+	animate(src, time = SUCTION_DELAY, flags = ANIMATION_PARALLEL)
+	animate(time = SUCTION_TIME, easing = (shatter ? LINEAR_EASING : BOUNCE_EASING), pixel_y = 0, flags = ANIMATION_PARALLEL)
+
+	animate(src, time = SUCTION_DELAY, flags = ANIMATION_PARALLEL)
+	animate(time = SUCTION_TIME, easing = CUBIC_EASING | EASE_OUT, alpha = mob_initial_alpha, flags = ANIMATION_PARALLEL)
+
+
+/// The tube that sucks up/spits out the mob
+/obj/effect/abstract/xenosuction
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "xenotube_back"
+	layer = BELOW_MOB_LAYER
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	blocks_emissive = EMISSIVE_BLOCK_NONE
+	pixel_y = 48
+	alpha = 0
+
+/obj/effect/abstract/xenosuction/Initialize(mapload)
+	. = ..()
+	add_overlay(mutable_appearance(icon, "xenotube_fore", layer = ABOVE_MOB_LAYER))
+	QDEL_IN(src, SUCTION_DELAY*2 + SUCTION_TIME)
+	animate(src, time = SUCTION_DELAY, alpha = 255, pixel_y = 32)
+	animate(time = SUCTION_TIME)
+	animate(time = SUCTION_DELAY, alpha = 0, pixel_y = 48)
+
+#undef SUCTION_TIME
+#undef SUCTION_DELAY

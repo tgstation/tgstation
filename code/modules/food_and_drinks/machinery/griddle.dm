@@ -62,12 +62,11 @@
 	return default_deconstruction_crowbar(I, ignore_panel = TRUE)
 
 
-/obj/machinery/griddle/attackby(obj/item/I, mob/user, params)
+/obj/machinery/griddle/attackby(obj/item/I, mob/user, list/modifiers)
 
 	if(griddled_objects.len >= max_items)
 		to_chat(user, span_notice("[src] can't fit more items!"))
 		return
-	var/list/modifiers = params2list(params)
 	//Center the icon where the user clicked.
 	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
 		return
