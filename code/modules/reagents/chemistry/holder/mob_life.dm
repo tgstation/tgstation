@@ -148,7 +148,7 @@
  * * reagent - the added reagent datum/object
  * * added_volume - the volume of the reagent that was added (since it can already exist in a mob)
  * * added_purity - the purity of the added volume
- * * list/reagent_added - see /datum/reagents/add_reagent
+ * * list/reagent_datum - a holder that will contain the inverse reagent datum that got added if this returns FALSE
  * returns the volume of the original, pure, reagent to add / keep
  */
 /datum/reagents/proc/process_mob_reagent_purity(datum/reagent/reagent, added_volume, added_purity, list/reagent_datum)
