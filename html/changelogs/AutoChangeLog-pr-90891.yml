@@ -1,0 +1,4 @@
+author: "grungussuss"
+delete-after: True
+changes:
+  - bugfix: "fixed rust heretic hand not being able to destroy windows or windoors"
