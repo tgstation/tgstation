@@ -1,5 +1,5 @@
 /// Each client notifies on protected playback, so this prevents spamming admins.
-var/static/admins_warned = FALSE
+GLOBAL_VAR_INIT(admins_warned, FALSE)
 
 /*!
  * Copyright (c) 2020 Aleksej Komarov
