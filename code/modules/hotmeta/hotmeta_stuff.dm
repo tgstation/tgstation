@@ -84,6 +84,7 @@
 
 // ~ Hotmeta Spefific Lockers ~ //
 
+// ~ Hos ~ //
 /obj/structure/closet/secure_closet/hos/hotmeta
 	name = "head of security's locker"
 	icon_state = "hos"
@@ -95,7 +96,13 @@
 	new /obj/item/computer_disk/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
 	new /obj/item/radio/headset/heads/hos/alt(src)
-	new /obj/item/storage/bag/garment/hos(src)
+	new /obj/item/clothing/shoes/russian(src)
+	new /obj/item/clothing/under/syndicate/rus_army(src)
+	new /obj/item/clothing/suit/armor/vest/russian(src)
+	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/clothing/head/beret/sec(src)
+	new /obj/item/melee/baton(src)
 	new /obj/item/storage/lockbox/medal/sec(src)
 	new /obj/item/megaphone/sec(src)
 	new /obj/item/holosign_creator/security(src)
@@ -113,6 +120,49 @@
 	new /obj/item/gun/energy/e_gun/hos/hotmeta(src)
 	new /obj/item/pinpointer/nuke(src)
 
+// ~ Security Officer ~ //
+/obj/structure/closet/secure_closet/security/hotmeta
+	name = "security officer's locker"
+	icon_state = "sec"
+	req_access = list(ACCESS_BRIG)
+
+/obj/structure/closet/secure_closet/security/hotmeta/PopulateContents()
+	..()
+	new /obj/item/radio/headset/headset_sec(src)
+	new /obj/item/radio/headset/headset_sec/alt(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/flashlight/seclite(src)
+	new /obj/item/clothing/shoes/russian(src)
+	new /obj/item/clothing/under/syndicate/rus_army(src)
+	new /obj/item/clothing/suit/armor/vest/russian(src)
+	new /obj/item/clothing/head/helmet/rus_helmet(src)
+	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/melee/baton(src)
+	new /obj/item/gun/ballistic/automatic/battle_rifle(src)
+	new /obj/item/ammo_box/magazine/m38/hotshot(src)
+	new /obj/item/ammo_box/magazine/m38/iceblox(src)
+
+// ~ Warden ~ //
+/obj/structure/closet/secure_closet/warden/hotmeta
+	name = "warden's locker"
+	icon_state = "warden"
+	req_access = list(ACCESS_ARMORY)
+
+/obj/structure/closet/secure_closet/warden/hotmeta/PopulateContents()
+	..()
+	new /obj/item/dog_bone(src)
+	new /obj/item/radio/headset/headset_sec(src)
+	new /obj/item/holosign_creator/security(src)
+	new /obj/item/storage/box/zipties(src)
+	new /obj/item/storage/box/flashbangs(src)
+	new /obj/item/flashlight/seclite(src)
+	new /obj/item/door_remote/head_of_security(src)
+	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
+	new /obj/item/clothing/shoes/russian(src)
+	new /obj/item/clothing/under/syndicate/rus_army(src)
+	new /obj/item/clothing/suit/armor/vest/russian(src)
+	new /obj/item/clothing/head/helmet/rus_helmet(src)
+	new /obj/item/clothing/gloves/krav_maga/combatglovesplus(src)
 // ~ Hotmeta Spefific guns ~ //
 
 /obj/item/gun/energy/e_gun/hos/hotmeta

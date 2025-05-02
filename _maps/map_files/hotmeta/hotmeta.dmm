@@ -6841,20 +6841,6 @@
 	},
 /obj/structure/cable,
 /obj/machinery/light/directional/west,
-/obj/item/clothing/under/syndicate/rus_army,
-/obj/item/clothing/shoes/russian,
-/obj/item/clothing/suit/armor/vest/russian,
-/obj/item/clothing/head/helmet/rus_helmet,
-/obj/item/melee/baton,
-/obj/item/radio/headset/headset_sec/alt,
-/obj/item/clothing/glasses/hud/security/sunglasses,
-/obj/structure/closet/secure_closet{
-	req_access = list("brig");
-	name = "security locker"
-	},
-/obj/item/gun/ballistic/automatic/battle_rifle,
-/obj/item/ammo_box/magazine/m38/empty,
-/obj/item/ammo_box/magazine/m38/empty,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "cvt" = (
@@ -9475,17 +9461,6 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet{
-	req_access = list("brig");
-	name = "security locker"
-	},
-/obj/item/clothing/gloves/krav_maga/sec,
-/obj/item/clothing/suit/armor/vest/russian,
-/obj/item/clothing/under/syndicate/rus_army,
-/obj/item/clothing/glasses/hud/security/sunglasses,
-/obj/item/radio/headset/headset_sec/alt,
-/obj/item/clothing/head/helmet/rus_helmet,
-/obj/item/clothing/shoes/russian,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "dsl" = (
@@ -11567,20 +11542,6 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
-/obj/item/clothing/under/syndicate/rus_army,
-/obj/item/clothing/shoes/russian,
-/obj/item/clothing/suit/armor/vest/russian,
-/obj/item/clothing/head/helmet/rus_helmet,
-/obj/item/melee/baton,
-/obj/item/radio/headset/headset_sec/alt,
-/obj/item/clothing/glasses/hud/security/sunglasses,
-/obj/structure/closet/secure_closet{
-	req_access = list("brig");
-	name = "security locker"
-	},
-/obj/item/gun/ballistic/automatic/battle_rifle,
-/obj/item/ammo_box/magazine/m38/empty,
-/obj/item/ammo_box/magazine/m38/empty,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "efC" = (
@@ -22369,20 +22330,6 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
-/obj/item/clothing/under/syndicate/rus_army,
-/obj/item/clothing/shoes/russian,
-/obj/item/clothing/suit/armor/vest/russian,
-/obj/item/clothing/head/helmet/rus_helmet,
-/obj/item/melee/baton,
-/obj/item/radio/headset/headset_sec/alt,
-/obj/item/clothing/glasses/hud/security/sunglasses,
-/obj/structure/closet/secure_closet{
-	req_access = list("brig");
-	name = "security locker"
-	},
-/obj/item/gun/ballistic/automatic/battle_rifle,
-/obj/item/ammo_box/magazine/m38/empty,
-/obj/item/ammo_box/magazine/m38/empty,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "hXQ" = (
@@ -39230,20 +39177,6 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
-/obj/item/clothing/under/syndicate/rus_army,
-/obj/item/clothing/shoes/russian,
-/obj/item/clothing/suit/armor/vest/russian,
-/obj/item/clothing/head/helmet/rus_helmet,
-/obj/item/melee/baton,
-/obj/item/radio/headset/headset_sec/alt,
-/obj/item/clothing/glasses/hud/security/sunglasses,
-/obj/structure/closet/secure_closet{
-	req_access = list("brig");
-	name = "security locker"
-	},
-/obj/item/gun/ballistic/automatic/battle_rifle,
-/obj/item/ammo_box/magazine/m38/empty,
-/obj/item/ammo_box/magazine/m38/empty,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "nJA" = (
@@ -39807,20 +39740,6 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
-/obj/item/clothing/under/syndicate/rus_army,
-/obj/item/clothing/suit/armor/vest/russian,
-/obj/item/clothing/shoes/russian,
-/obj/item/clothing/head/helmet/rus_helmet,
-/obj/item/melee/baton,
-/obj/item/radio/headset/headset_sec/alt,
-/obj/item/clothing/glasses/hud/security/sunglasses,
-/obj/structure/closet/secure_closet{
-	req_access = list("brig");
-	name = "security locker"
-	},
-/obj/item/gun/ballistic/automatic/battle_rifle,
-/obj/item/ammo_box/magazine/m38/empty,
-/obj/item/ammo_box/magazine/m38/empty,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "nVq" = (
@@ -41922,19 +41841,6 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
-/obj/item/clothing/under/syndicate/rus_army,
-/obj/item/clothing/shoes/russian,
-/obj/item/clothing/head/helmet/rus_helmet,
-/obj/item/melee/baton,
-/obj/item/radio/headset/headset_sec/alt,
-/obj/item/clothing/glasses/hud/security/sunglasses,
-/obj/structure/closet/secure_closet{
-	req_access = list("brig");
-	name = "security locker"
-	},
-/obj/item/gun/ballistic/automatic/battle_rifle,
-/obj/item/ammo_box/magazine/m38/empty,
-/obj/item/ammo_box/magazine/m38/empty,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "oHO" = (
@@ -43905,20 +43811,6 @@
 /area/station/science/ordnance/storage)
 "pti" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/obj/item/clothing/under/syndicate/rus_army,
-/obj/item/clothing/shoes/russian,
-/obj/item/clothing/suit/armor/vest/russian,
-/obj/item/clothing/head/helmet/rus_helmet,
-/obj/item/melee/baton,
-/obj/item/radio/headset/headset_sec/alt,
-/obj/item/clothing/glasses/hud/security/sunglasses,
-/obj/structure/closet/secure_closet{
-	req_access = list("brig");
-	name = "security locker"
-	},
-/obj/item/gun/ballistic/automatic/battle_rifle,
-/obj/item/ammo_box/magazine/m38/empty,
-/obj/item/ammo_box/magazine/m38/empty,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "pts" = (
@@ -69479,19 +69371,7 @@
 	c_tag = "Head of Security's Office"
 	},
 /obj/structure/cable,
-/obj/item/clothing/under/syndicate/rus_army,
-/obj/item/clothing/shoes/russian,
-/obj/item/clothing/suit/armor/vest/russian,
-/obj/item/clothing/head/beret/sec,
-/obj/structure/closet/secure_closet{
-	req_access = list("brig");
-	name = "security locker"
-	},
-/obj/item/storage/lockbox/loyalty,
-/obj/item/melee/baton,
-/obj/item/clothing/gloves/combat,
-/obj/item/gun/energy/e_gun/hos,
-/obj/item/organ/cyberimp/arm/gun/taser,
+/obj/structure/closet/secure_closet/hos/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "yfa" = (
