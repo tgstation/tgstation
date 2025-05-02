@@ -789,3 +789,69 @@
   TiviPlus:
   - bugfix: Look up/down now track with the thing you're inside instead of staying
       in one spot
+2025-04-28:
+  EuSouAFazer:
+  - rscadd: Adds CatwalkStation
+  - code_imp: Multi-Z maps now can toggle on or off having grappling hooks in people's
+      bags
+  Ezel:
+  - map: Rewired Centcom Checkpoint buttons to be more accurate
+2025-04-29:
+  00-Steven:
+  - rscadd: Certain items can now be placed directly on the floor in the clicked on
+      location. This currently includes warning cones, wet floor signs, candles, action
+      figures, plushies, mech toys, and a list of other toys.
+  - sound: Warning cones now use plastic pickup/drop sounds.
+  - sound: Wet floor signs now use plastic pickup/drop sounds.
+  Bisar:
+  - image: Handing someone something now plays an animation.
+  Ezel/Improvedname, JohnFulpWillard:
+  - balance: Players who use the DNA Infuser are now "derived mutants" of their original
+      species, meaning humans are no longer human after infusing themselves.
+  Ghommie:
+  - rscadd: Aquariums can now be switched between three different modes (Manual/Assisted/Stasis)
+      to replace the old Safe Mode toggle.
+  - bugfix: Examining a fishing lures box twice no longer says it can hold just artificial
+      minnows.
+  LemonInTheDark:
+  - bugfix: Tcomms machines will interoperate across z levels in the same "stack"
+      as expected now
+  OrionTheFox:
+  - bugfix: fixed Fingerless Gloves not getting their fishing difficulty modifier,
+      and not being slap-craftable into improvised grippers
+  SmArtKar:
+  - bugfix: Fixed items in storages sometimes lingering in observer UI
+  TealSeer:
+  - bugfix: fixed a runtime related to pea bullet impacts
+  vinylspiders:
+  - bugfix: fixes a lot of instances of gibs, bodyparts/organs, and blood decals not
+      getting the right forensics data attached to them
+  - refactor: blood types are now datums, in support of a more robust blood system
+  - image: all blood decals and overlays have been greyscaled, so ethereals will have
+      green blood now for instance. fundamentally evil quirk havers get black blood
+  - admin: new smite type, 'Clownify blood'. It pretty much does what you might expect.
+2025-04-30:
+  Jacquerel:
+  - rscadd: Out somewhere in space you may find experimental cloning technology.
+  Pepsilawn:
+  - bugfix: Fixes bins and chutes that did not have a trunk, and adds a maplint for
+      it.
+  Rhials:
+  - rscadd: Bears are now butchered for space bear hides, which can be used to craft
+      a pelt hat and suit. Wearing this suit/hat combo will make you friendly to bears!
+  - rscadd: 'New Gimmick Assistants station trait costume: Bear!'
+  SmArtKar:
+  - bugfix: Fixed a disposals loop on Catwalk's bridge
+  Wallem:
+  - rscadd: Xenobio consoles now work off a tube system instead of sudden teleportation
+  - qol: Xenobio consoles have a new HUD to show monkey/slime amounts, and slime processors
+      can now suck up more than 1 slime at a time depending on their matter bin
+  - image: Added some stripes to the monkey recycler to make it a little more obvious
+      it's not a meat grinder
+  grungussuss:
+  - rscadd: Lizard blood is now green
+  necromanceranne:
+  - balance: Reduces the embed probabilities of flechette rounds, they can fall out
+      naturally. Donk spikes still maintain their high embed chance and inability
+      to fall out naturally. Macroplastics launched straight into your body, as sponsored
+      by the Donk Corporation.
