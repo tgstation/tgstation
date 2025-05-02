@@ -149,6 +149,7 @@
 		if(!guy.has_status_effect(/datum/status_effect/staggered))
 			continue
 		guy.AdjustParalyzed(2 SECONDS)
+		guy.adjust_staggered(2 SECONDS)
 		guy.AdjustKnockdown(5 SECONDS)
 		guy.spin(1 SECONDS, 0.25 SECONDS)
 		guy.apply_damage(rand(4, 8), BRUTE, spread_damage = TRUE)
