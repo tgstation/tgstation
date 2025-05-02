@@ -20302,8 +20302,9 @@
 	},
 /obj/structure/table/wood,
 /obj/item/scythe,
-/obj/item/claymore/shortsword,
-/obj/item/shield/kite,
+/obj/item/clothing/suit/armor/dragoon,
+/obj/item/clothing/head/helmet/dragoon,
+/obj/item/spear/skybulge,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "hnn" = (
@@ -30397,8 +30398,9 @@
 	},
 /obj/structure/table/wood,
 /obj/item/storage/belt/utility,
-/obj/item/claymore/shortsword,
-/obj/item/shield/kite,
+/obj/item/clothing/suit/armor/dragoon,
+/obj/item/clothing/head/helmet/dragoon,
+/obj/item/spear/skybulge,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "kHg" = (
@@ -45618,8 +45620,9 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/claymore/shortsword,
-/obj/item/shield/kite,
+/obj/item/clothing/suit/armor/dragoon,
+/obj/item/clothing/head/helmet/dragoon,
+/obj/item/spear/skybulge,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "qaf" = (
@@ -50773,9 +50776,9 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/clothing/head/helmet/roman/legionnaire,
-/obj/item/claymore/shortsword,
-/obj/item/shield/kite,
+/obj/item/clothing/suit/armor/dragoon,
+/obj/item/clothing/head/helmet/dragoon,
+/obj/item/spear/skybulge,
 /turf/open/indestructible/boss,
 /area/lavaland/surface/outdoors)
 "rMT" = (
@@ -62693,8 +62696,9 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/obj/item/claymore/shortsword,
-/obj/item/shield/kite,
+/obj/item/clothing/suit/armor/dragoon,
+/obj/item/clothing/head/helmet/dragoon,
+/obj/item/spear/skybulge,
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "vPO" = (
