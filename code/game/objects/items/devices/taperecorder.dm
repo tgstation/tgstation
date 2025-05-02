@@ -160,14 +160,14 @@
 		return
 
 	mytape.timestamp += mytape.used_capacity
-	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.GetVoice()]: [raw_message]"
+	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.GetVoice()]: \"[raw_message]\""
 
-/obj/item/taperecorder/proc/hear_raw(message, atom/movable/speaker)
+/obj/item/taperecorder/proc/hear_non_spoken(raw_message, atom/movable/speaker)
 	if(!recording || !mytape || istype(speaker, /obj/item/taperecorder))
 		return
 
 	mytape.timestamp += mytape.used_capacity
-	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.GetVoice()] [message]"
+	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.GetVoice()] [raw_message]"
 
 /obj/item/taperecorder/verb/record()
 	set name = "Start Recording"

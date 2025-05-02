@@ -361,9 +361,6 @@
 	if(self_message)
 		hearers -= src
 
-	for(var/obj/item/taperecorder/rec in hearers)
-		rec.hear_raw(message, src)
-
 	var/raw_msg = message
 	if(audible_message_flags & EMOTE_MESSAGE)
 		message = span_emote("<b>[src]</b> [message]")

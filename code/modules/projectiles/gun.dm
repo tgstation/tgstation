@@ -207,12 +207,14 @@
 /obj/item/gun/proc/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
 	if(recoil && !tk_firing(user))
 		shake_camera(user, recoil + 1, recoil)
+
 	fire_sounds()
+
 	if(suppressed || !message)
 		return FALSE
 
 	for(var/obj/item/taperecorder/rec in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
-		rec.hear_raw("making gunshot!", src)
+		rec.hear_non_spoken("making gunshot!", src)
 
 	if(tk_firing(user))
 		visible_message(
