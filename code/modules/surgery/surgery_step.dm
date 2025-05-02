@@ -174,7 +174,9 @@
 		CRASH("Not passed a target, how did we get here?")
 	if(!surgery_effects_mood)
 		return
+	// Determine how drunk our patient is
 	var/drunken_patient = target.get_drunk_amount()
+	// Create a probability to ignore the pain based on drunkenness level
 	var/drunken_ignorance_probability = clamp(drunken_patient, 0, 100)
 
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA) || drunken_patient && proc(drunken_ignorance_probability))
