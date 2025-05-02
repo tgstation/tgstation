@@ -37,7 +37,7 @@
 /obj/effect/decal/cleanable/blood/add_blood_DNA(list/blood_DNA, no_visuals = FALSE)
 	. = ..()
 	if(!no_visuals && length(blood_DNA))
-		color = BlendRGB(get_blood_dna_color(blood_DNA), color, bloodiness / (bloodiness + BLOOD_AMOUNT_PER_DECAL))
+		color = get_blood_dna_color(blood_DNA)
 
 /obj/effect/decal/cleanable/blood/proc/get_timer()
 	drytime = world.time + 3 MINUTES

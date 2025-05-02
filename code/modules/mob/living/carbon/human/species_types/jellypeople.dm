@@ -58,6 +58,29 @@
 	UnregisterSignal(former_jellyperson, COMSIG_HUMAN_ON_HANDLE_BLOOD)
 	return ..()
 
+/datum/species/jelly/handle_body(mob/living/carbon/human/species_human)
+	. = ..()
+	// Something modified us weirdly, abort
+	if (!exotic_bloodtype)
+		return
+
+	var/datum/blood_type/blood_type = species_human.get_bloodtype()
+	var/jelly_color = species_human.dna.features["mcolor"]
+	if (!jelly_color)
+		return
+
+	if (blood_type.color == jelly_color)
+		return
+
+	if (!(blood_type in GLOB.blood_types))
+		blood_type.color = jelly_color
+		return
+
+	// If our blood type is a singleton, create a new one and don't cache it
+	var/jelly_type = get_blood_type(exotic_bloodtype).type
+	blood_type = new jelly_type(jelly_color)
+	species_human.set_blood_type(blood_type)
+
 /datum/species/jelly/proc/slime_blood(mob/living/carbon/human/slime, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
 

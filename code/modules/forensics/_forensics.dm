@@ -231,4 +231,32 @@
 		return
 	if(!length(blood_DNA))
 		return
-	parent.AddElement(/datum/element/decal/blood, _color = get_blood_dna_color(blood_DNA))
+	var/blood_color = get_blood_dna_color(get_visible_blood())
+	if (blood_color)
+		parent.AddElement(/datum/element/decal/blood, _color = blood_color)
+
+/// Returns how many blood datums on us fit our parent's expose flags
+/datum/forensics/proc/get_visible_blood()
+	RETURN_TYPE(/list)
+	var/expose_flag = null
+	if (isturf(parent))
+		expose_flag = BLOOD_COVER_TURFS
+	else if (ismob(parent))
+		expose_flag = BLOOD_COVER_MOBS
+	else if (isitem(parent))
+		expose_flag = BLOOD_COVER_ITEMS
+
+	if (!expose_flag)
+		return
+
+	var/visible_blood = list()
+	for (var/blood_key in blood_DNA)
+		var/datum/blood_type/blood_type = blood_DNA[blood_key]
+		if (!istype(blood_type))
+			blood_type = get_blood_type(blood_type)
+			if (!istype(blood_type))
+				continue
+		if (blood_type.expose_flags & expose_flag)
+			visible_blood[blood_key] = blood_type
+
+	return visible_blood

@@ -39,4 +39,4 @@
 	human_quirk_holder.set_blood_type(evil_blood_type)
 
 	if(human_quirk_holder.dna.species.exotic_bloodtype)
-		human_quirk_holder.dna.species.exotic_bloodtype = evil_blood_type
+		human_quirk_holder.dna.species.exotic_bloodtype = evil_blood_type.id

@@ -32,9 +32,8 @@
 	var/can_bloodcrawl_in = TRUE
 	/// Does this blood type preserve owner's biological information?
 	var/preserve_dna = TRUE
-	/// Can this
 	/// Splash and expose behaviors for this blood type's reagent, to prevent water-blood covered items
-	var/expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_OBJS | BLOOD_TRANSFER_VIRAL_DATA
+	var/expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS | BLOOD_TRANSFER_VIRAL_DATA
 
 /datum/blood_type/New()
 	. = ..()
@@ -188,7 +187,7 @@
 	restoration_chem = /datum/reagent/fuel
 	can_bloodcrawl_in = FALSE
 	preserve_dna = FALSE
-	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_OBJS | BLOOD_COVER_REAGENT
+	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS
 
 /datum/blood_type/vampire
 	name = BLOOD_TYPE_VAMPIRE
@@ -210,7 +209,7 @@
 	compatible_types = list(/datum/blood_type/xeno)
 	reagent_type = /datum/reagent/toxin/acid
 	// Viruses cannot survive in acid
-	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_OBJS | BLOOD_COVER_REAGENT
+	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS
 
 /// April fool's blood for clowns
 /datum/blood_type/clown
@@ -240,8 +239,15 @@
 	color = /datum/reagent/toxin/slimejelly::color
 	reagent_type = /datum/reagent/toxin/slimejelly
 	restoration_chem = /datum/reagent/stable_plasma // Because normal plasma already refills our blood
-	no_bleed_overlays = TRUE
 	can_bloodcrawl_in = FALSE
+
+/datum/blood_type/slime/New(new_color = /datum/reagent/toxin/slimejelly::color)
+	. = ..()
+	color = new_color
+	id = type_key()
+
+/datum/blood_type/slime/type_key()
+	return "[name]_[color]"
 
 /// Podpeople blood
 /datum/blood_type/water
@@ -252,7 +258,7 @@
 	restoration_chem = null
 	no_bleed_overlays = TRUE
 	can_bloodcrawl_in = FALSE
-	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_REAGENT | BLOOD_TRANSFER_VIRAL_DATA
+	expose_flags = BLOOD_ADD_DNA | BLOOD_TRANSFER_VIRAL_DATA
 
 /// Snail blood
 /datum/blood_type/snail
@@ -264,7 +270,6 @@
 /// An abstract-ish blood type used particularly for species with blood set to random reagents, such as podpeople
 /datum/blood_type/random_chemical
 	root_abstract_type = /datum/blood_type/random_chemical
-	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_OBJS | BLOOD_COVER_REAGENT | BLOOD_TRANSFER_VIRAL_DATA
 
 /datum/blood_type/random_chemical/New(datum/reagent/reagent)
 	name = initial(reagent.name)

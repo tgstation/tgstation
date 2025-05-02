@@ -34,8 +34,8 @@
 		return
 
 	var/blood_color = blood_type.get_color()
-	if(blood_color != BLOOD_COLOR_RED) // If the blood is default red, just use the darker red color for the reagent.
-		color = blood_color
+	if(blood_color == BLOOD_COLOR_RED) // If the blood is default red, just use the darker red color for the reagent.
+		color = initial(color)
 
 /datum/reagent/blood/get_taste_description(mob/living/taster)
 	if(isnull(taster))

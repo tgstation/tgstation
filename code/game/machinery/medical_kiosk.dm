@@ -236,8 +236,9 @@
 
 	var/bleed_status = "Patient is not currently bleeding."
 	var/blood_status = " Patient either has no blood, or does not require it to function."
-	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL)*100)
+	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
 	var/datum/blood_type/blood_type = patient.get_bloodtype()
+	var/blood_name = LOWER_TEXT(blood_type.scanner_name) || "blood"
 	var/blood_warning = " "
 	var/blood_alcohol = patient.get_blood_alcohol_content()
 
@@ -248,7 +249,6 @@
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
 	if(!HAS_TRAIT(patient, TRAIT_GENELESS) && !HAS_TRAIT(patient, TRAIT_NOBLOOD)) //Blood levels Information
-		var/blood_name = LOWER_TEXT(blood_type.scanner_name) || "blood"
 		if(patient.is_bleeding())
 			bleed_status = " Patient is currently bleeding!"
 
@@ -369,6 +369,7 @@
 	data["patient_illness"] = sickness
 	data["illness_info"] = sickness_data
 	data["bleed_status"] = bleed_status
+	data["blood_name"] = capitalize(blood_name)
 	data["blood_levels"] = blood_percent - (chaos_modifier * (rand(1,35)))
 	data["blood_status"] = blood_status
 	data["blood_alcohol"] = blood_alcohol

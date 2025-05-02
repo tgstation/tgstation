@@ -337,7 +337,7 @@
 	if(.)
 		return
 
-	bloody_feet.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(pool))
+	bloody_feet.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(pool)) // todo smartkar
 	update_icon()
 
 /datum/component/bloodysoles/feet/proc/unequip_shoecover(datum/source)

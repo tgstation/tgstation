@@ -496,10 +496,9 @@
 
 ///Get the mobs dna list
 /mob/living/carbon/get_blood_dna_list()
-	. = ..()
-	if (.)
-		return
-	return list("Unknown DNA" = get_blood_type(BLOOD_TYPE_UNIVERSAL))
+	if (dna?.unique_enzymes)
+		return list(dna.unique_enzymes = get_bloodtype())
+	return ..() || list("Unknown DNA" = get_blood_type(BLOOD_TYPE_UNIVERSAL))
 
 /mob/living/silicon/get_blood_dna_list()
 	return

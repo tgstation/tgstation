@@ -26,6 +26,8 @@
 		target.data = list()
 
 	target.data["blood_type"] = blood_type
+	target.color = blood_type.get_color()
+
 	if (!blood_source)
 		return
 
@@ -70,11 +72,10 @@
 	SIGNAL_HANDLER
 
 	if ((methods & (TOUCH | VAPOR)) && reac_volume >= 3 && (blood_type.expose_flags & (BLOOD_ADD_DNA | BLOOD_COVER_MOBS)))
-		var/blood_dna = source.data?["blood_DNA"] || "Unknown DNA"
-		var/list/dna_list = list()
-		// Because DM is a nightmare
-		dna_list[blood_dna] = blood_type
-		exposed_mob.add_blood_DNA(dna_list)
+		if (source.data?["blood_DNA"])
+			exposed_mob.add_blood_DNA(list(source.data["blood_DNA"] = blood_type))
+		else
+			exposed_mob.add_blood_DNA(list("Unknown DNA" = blood_type))
 
 	// Somehow got a no-data reagent, probably artificially created blood
 	if (!source.data)
@@ -142,12 +143,11 @@
 	if (reac_volume < 3 || !(methods & (VAPOR | TOUCH)))
 		return
 
-	if (blood_type.expose_flags & (BLOOD_ADD_DNA | BLOOD_COVER_OBJS))
-		var/blood_dna = source.data?["blood_DNA"] || "Unknown DNA"
-		var/list/dna_list = list()
-		// Because DM is a nightmare
-		dna_list[blood_dna] = blood_type
-		exposed_obj.add_blood_DNA(dna_list)
+	if (blood_type.expose_flags & (BLOOD_ADD_DNA | BLOOD_COVER_ITEMS))
+		if (source.data?["blood_DNA"])
+			exposed_obj.add_blood_DNA(list(source.data["blood_DNA"] = blood_type))
+		else
+			exposed_obj.add_blood_DNA(list("Unknown DNA" = blood_type))
 
 	if (!(blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return

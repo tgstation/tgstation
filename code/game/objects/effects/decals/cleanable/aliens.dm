@@ -14,11 +14,11 @@
 /obj/effect/decal/cleanable/xenoblood/add_blood_DNA(list/blood_DNA, no_visuals = FALSE)
 	. = ..()
 	if(!no_visuals && length(blood_DNA))
-		color = get_blood_dna_color(blood_DNA)
+		color = get_blood_dna_color(blood_DNA) // TOdo smartkar
 
 /obj/effect/decal/cleanable/xenoblood/Initialize(mapload)
 	. = ..()
-	add_blood_DNA(list("UNKNOWN DNA" = get_blood_type(BLOOD_TYPE_XENO)))
+	add_blood_DNA(list("Unknown DNA" = get_blood_type(BLOOD_TYPE_XENO)))
 
 /obj/effect/decal/cleanable/xenoblood/xsplatter
 	random_icon_states = list("xgibbl1", "xgibbl2", "xgibbl3", "xgibbl4", "xgibbl5")

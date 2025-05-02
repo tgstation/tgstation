@@ -244,13 +244,13 @@
 	var/list/blood_data = get_blood_data()
 
 	if (!isliving(receiver))
-		receiver.reagents.add_reagent(blood_type.reagent_type, amount, blood_data, bodytemperature)
+		receiver.reagents.add_reagent(blood_type.reagent_type, amount, blood_data, bodytemperature, creation_callback = CALLBACK(src, PROC_REF(on_blood_created), blood_type))
 		return TRUE
 
 	var/mob/living/target = receiver
 	var/datum/blood_type/receiver_blood_type = target.get_bloodtype()
 	if (!receiver_blood_type?.reagent_type == blood_type.reagent_type)
-		target.reagents.add_reagent(blood_type.reagent_type, amount, blood_data, bodytemperature)
+		target.reagents.add_reagent(blood_type.reagent_type, amount, blood_data, bodytemperature, creation_callback = CALLBACK(src, PROC_REF(on_blood_created), blood_type))
 		return TRUE
 
 	if(blood_data["viruses"])
@@ -265,6 +265,10 @@
 
 	target.blood_volume = min(target.blood_volume + round(amount, 0.1), BLOOD_VOLUME_MAX_LETHAL)
 	return TRUE
+
+/// Callback that adds blood_reagent to any blood extracted from ourselves
+/mob/living/proc/on_blood_created(datum/blood_type/blood_type, datum/reagent/new_blood)
+	new_blood.AddElement(/datum/element/blood_reagent, src, blood_type)
 
 /mob/living/proc/get_blood_data()
 	SHOULD_CALL_PARENT(TRUE)
@@ -374,17 +378,21 @@
 
 /// Returns the blood_type datum that corresponds to the string id key in GLOB.blood_types
 /proc/get_blood_type(id)
+	RETURN_TYPE(/datum/blood_type)
 	return GLOB.blood_types[id]
 
 /// Returns the hex color string of a given blood_type datum given an assoc list of blood_DNA e.g. ("Unknown Blood Type", "*X")
 /proc/get_blood_dna_color(list/blood_DNA)
 	var/datum/blood_type/blood_type
-	if(length(blood_DNA))
-		var/last_added_bloodtype_key = blood_DNA[length(blood_DNA)]
-		blood_type = blood_DNA[last_added_bloodtype_key]
+	if(!length(blood_DNA))
+		return get_blood_type(BLOOD_TYPE_O_PLUS).get_color()
+
+	var/last_added_bloodtype_key = blood_DNA[length(blood_DNA)]
+	blood_type = blood_DNA[last_added_bloodtype_key]
 	if(!istype(blood_type))
-		blood_type = get_blood_type(blood_type) || random_human_blood_type()
-	return blood_type.get_color()
+		blood_type = get_blood_type(blood_type)
+	if(istype(blood_type))
+		return blood_type.get_color()
 
 /**
  * Returns TRUE if src is compatible with donor's blood, otherwise FALSE.
@@ -445,7 +453,7 @@
 	var/obj/effect/decal/cleanable/xenoblood/xeno_blood_splatter = locate() in splatter_turf.contents
 	if(!xeno_blood_splatter)
 		xeno_blood_splatter = new(splatter_turf)
-	xeno_blood_splatter.add_blood_DNA(list("UNKNOWN DNA" = BLOOD_TYPE_XENO))
+	xeno_blood_splatter.add_blood_DNA(list("Unknown DNA" = BLOOD_TYPE_XENO))
 
 /mob/living/silicon/robot/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check)
 	if(!splatter_turf)
