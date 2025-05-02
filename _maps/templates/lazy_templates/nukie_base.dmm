@@ -39,7 +39,7 @@
 /area/centcom/syndicate_mothership/control)
 "aG" = (
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/centcom/syndicate_mothership/control)
+/area/centcom/syndicate_mothership/custodial_closet)
 "aJ" = (
 /obj/structure/fence/cut/medium,
 /turf/open/misc/asteroid/snow/airless,
@@ -613,7 +613,7 @@
 "gi" = (
 /obj/machinery/vending/wardrobe/jani_wardrobe,
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/centcom/syndicate_mothership/control)
+/area/centcom/syndicate_mothership/custodial_closet)
 "go" = (
 /obj/machinery/light/cold/directional/east,
 /obj/machinery/vending/snack/teal,
@@ -2068,7 +2068,7 @@
 "wP" = (
 /obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/centcom/syndicate_mothership/control)
+/area/centcom/syndicate_mothership/custodial_closet)
 "wW" = (
 /obj/structure/flora/rock/pile/style_random,
 /obj/effect/light_emitter{
@@ -3111,8 +3111,9 @@
 	},
 /obj/item/mop,
 /obj/item/reagent_containers/cup/bucket,
+/obj/item/soap/syndie,
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/centcom/syndicate_mothership/control)
+/area/centcom/syndicate_mothership/custodial_closet)
 "If" = (
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible{
 	dir = 10
@@ -3147,7 +3148,7 @@
 "Iq" = (
 /obj/machinery/portable_atmospherics/canister/water_vapor,
 /turf/open/floor/catwalk_floor/iron_smooth,
-/area/centcom/syndicate_mothership/control)
+/area/centcom/syndicate_mothership/custodial_closet)
 "IC" = (
 /obj/structure/chair/stool/bar/directional/west,
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -4148,12 +4149,11 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/centcom/syndicate_mothership/control)
 "Ta" = (
-/obj/item/soap/syndie,
 /obj/machinery/door/puzzle/keycard/syndicate_custodial,
 /turf/open/floor/iron/smooth_half{
 	dir = 4
 	},
-/area/centcom/syndicate_mothership/control)
+/area/centcom/syndicate_mothership/custodial_closet)
 "Tb" = (
 /obj/effect/light_emitter{
 	set_cap = 1;
@@ -4683,6 +4683,9 @@
 	initial_gas_mix = "TEMP=2.7"
 	},
 /area/centcom/syndicate_mothership)
+"YY" = (
+/turf/closed/indestructible/syndicate,
+/area/centcom/syndicate_mothership/custodial_closet)
 "YZ" = (
 /obj/structure/flora/grass/both/style_random,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -5174,9 +5177,9 @@ Ge
 Ge
 Ge
 nQ
-DZ
-DZ
-DZ
+YY
+YY
+YY
 xu
 cO
 HD
@@ -5480,9 +5483,9 @@ qX
 qX
 JU
 nQ
-DZ
+YY
 Ta
-DZ
+YY
 xu
 CF
 Ph
