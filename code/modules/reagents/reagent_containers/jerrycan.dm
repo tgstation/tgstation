@@ -22,12 +22,19 @@
 * The jerrycan is not only a flavourful, setting appropriate way to store reagents, it offers several design benefits due to its unique combination of high roundstart capacity and bulky size.
 
 * It prevents one coworker from hogging a shared reagent container.
+
 * The high volume eases grinding and mixing without enabling big grenade creation.
+
 * It allows reagents to be stolen or borrowed due to being stored outside the safety of an inventory.
+
 * The highly visible inhand sprite allows you to see who is holding or transporting reagents.
+
 * The smart cap flag allows you to throw the container without spilling.
+
 * It reduces the tedium associated with dispensing and throwing away botany nutrient bottles, encouraging refilling.
+
 * Bulky size prevent players from looting the can unless it is something they really want.
+
 * Comes with a large number of visual customization options for coders who with to add new variants.
 **/
 /obj/item/reagent_containers/cup/jerrycan
@@ -49,7 +56,9 @@
 	adjust_color_contrast = TRUE
 	/**
 	* If we want the can to have a label. Use the defines at the top, add new ones if you add new labels.
+
 	* WARNING: How good any particular label looks is highly dependent on the colour of the reagent in the can.
+
 	* Exercise good judgement and choose a label with enough contrast for the intended contents.
 	**/
 	var/label_type
