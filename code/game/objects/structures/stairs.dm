@@ -146,16 +146,30 @@
 	if(levels != 1 || !isTerminator())
 		return
 	for(var/mob/living/guy in falling_movables)
-		if(!guy.has_status_effect(/datum/status_effect/staggered))
+		if(!can_fall_down_stairs(guy))
 			continue
-		guy.AdjustParalyzed(2 SECONDS)
-		guy.adjust_staggered(2 SECONDS)
-		guy.AdjustKnockdown(5 SECONDS)
-		guy.spin(1 SECONDS, 0.25 SECONDS)
-		guy.apply_damage(rand(4, 8), BRUTE, spread_damage = TRUE)
-		GLOB.move_manager.move_towards(guy, get_ranged_target_turf(src, REVERSE_DIR(dir), 2), delay = 0.4 SECONDS, timeout = 1 SECONDS)
 		to_chat(guy, span_warning("You fall down [src]!"))
+		on_fall(guy)
 	. |= FALL_INTERCEPTED | FALL_NO_MESSAGE | FALL_RETAIN_PULL
+
+/// Will the passed mob tumble down the stairs instead of walking?
+/obj/structure/stairs/proc/can_fall_down_stairs(mob/living/falling)
+	if(falling.buckled || falling.pulledby)
+		return FALSE
+	if(falling.stat == DEAD) // if you shove a dead guy down the stairs, they'd probably roll
+		return TRUE
+	if(falling.has_status_effect(/datum/status_effect/staggered)) // off balance
+		return TRUE
+	return FALSE
+
+/// What happens when a mob tumbles down the stairs
+/obj/structure/stairs/proc/on_fall(mob/living/falling)
+	falling.AdjustParalyzed(2 SECONDS)
+	falling.adjust_staggered(2 SECONDS)
+	falling.AdjustKnockdown(5 SECONDS)
+	falling.spin(1 SECONDS, 0.25 SECONDS)
+	falling.apply_damage(rand(4, 8), BRUTE, spread_damage = TRUE)
+	GLOB.move_manager.move_towards(falling, get_ranged_target_turf(src, REVERSE_DIR(dir), 2), delay = 0.4 SECONDS, timeout = 1 SECONDS)
 
 /obj/structure/stairs/proc/isTerminator() //If this is the last stair in a chain and should move mobs up
 	if(terminator_mode != STAIR_TERMINATOR_AUTOMATIC)
