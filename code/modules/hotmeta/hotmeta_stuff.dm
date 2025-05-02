@@ -84,14 +84,15 @@
 
 // ~ Stunsword ~ //
 
-/obj/item/melee/baton/security/stunsword
-	name = "stunsword"
-	desc = "Not actually sharp, this sword is functionally identical to its baton counterpart."
-	icon = 'icons/obj/stunsword.dmi'
-	lefthand_file = 'icons/mob/inhands/stunsword_left.dmi'
-	righthand_file = 'icons/mob/inhands/stunsword_right.dmi'
-	icon_state = "stunsword"
-	inhand_icon_state = "sword"
+/obj/item/gun/energy/e_gun/hos/hotmeta
+	name = "\improper X-420 MultiPhase Energy Gun"
+	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
+	ammo_type = list(/obj/item/ammo_casing/energy/disabler/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos, /obj/item/ammo_casing/energy/electrode/hos)
+
+/obj/item/ammo_casing/energy/electrode/hos
+	projectile_type = /obj/projectile/energy/electrode
+	select_name = "taser"
+	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE)
 
 // ~ Hotmeta Spefific Turfs ~ //
 
