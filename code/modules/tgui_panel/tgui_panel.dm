@@ -95,9 +95,9 @@ GLOBAL_VAR_INIT(admins_warned, FALSE)
 		return TRUE
 
 	if(type == "audio/protected")
-		if(!admins_warned)
+		if(!GLOB.admins_warned)
 			message_admins(span_notice("Audio returned a protected playback error."))
-			admins_warned = TRUE
+			GLOB.admins_warned = TRUE
 			addtimer(CALLBACK(src, GLOBAL_PROC_REF(reset_admins_warned)), 10 SECONDS)
 		return TRUE
 
@@ -116,4 +116,4 @@ GLOBAL_VAR_INIT(admins_warned, FALSE)
 
 /// Resets the global variable that tracks admin warnings.
 /proc/reset_admins_warned()
-	admins_warned = FALSE
+	GLOB.admins_warned = FALSE
