@@ -171,8 +171,6 @@
 	///This is a bitfield that defines what variations exist for bodyparts like Digi legs. See: code\_DEFINES\inventory.dm
 	var/supports_variations_flags = NONE
 
-	///A weakref to the mob who threw the item
-	var/datum/weakref/thrownby = null //I cannot verbally describe how much I hate this var
 	///Items can by default thrown up to 10 tiles by TK users
 	tk_throw_range = 10
 
@@ -892,7 +890,6 @@
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
-	thrownby = WEAKREF(thrower)
 	callback = CALLBACK(src, PROC_REF(after_throw), callback) //replace their callback with our own
 	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart)
 
@@ -1285,19 +1282,23 @@
 	if (!ismob(loc))
 		return ..()
 
-	var/mob/M = loc
-	var/hand_index = M.get_held_index_of_item(src)
+	var/mob/owner = loc
+	var/hand_index = owner.get_held_index_of_item(src)
 	if(!hand_index)
 		return ..()
 
-	M.held_items[hand_index] = null
-	M.update_held_items()
-	if(M.client)
-		M.client.screen -= src
+	owner.held_items[hand_index] = null
+	owner.update_held_items()
+	if(owner.client)
+		owner.client.screen -= src
+	if(owner.observers?.len)
+		for(var/mob/dead/observe as anything in owner.observers)
+			if(observe.client)
+				observe.client.screen -= src
 	layer = initial(layer)
 	SET_PLANE_IMPLICIT(src, initial(plane))
 	appearance_flags &= ~NO_CLIENT_COLOR
-	dropped(M, FALSE)
+	dropped(owner, FALSE)
 	return ..()
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
