@@ -49,9 +49,9 @@
 	WARNING: How good any particular label looks is highly dependent on the colour of the reagent in the can.
 	Exercise good judgement and choose a label with enough contrast for the intended contents.*/
 	var/label_type
-	//different cap colours.
+	///Different cap colours.
 	var/cap_type
-	//You can use this var to tone down the strenght of the highlight for less shiny types of plastic.
+	///You can use this var to tone down the strength of the highlight for less shiny types of plastic.
 	var/highlight_strenght = 1.0
 
 /obj/item/reagent_containers/cup/jerrycan/update_overlays()
@@ -62,12 +62,10 @@
 	. += highlight
 
 	if(label_type)
-		var/mutable_appearance/label = mutable_appearance(icon, "[base_icon_state]_label_[label_type]")
-		. +=  label
+		. += mutable_appearance(icon, "[base_icon_state]_label_[label_type]")
 
 	if(cap_type)
-		var/mutable_appearance/cap_variant = mutable_appearance(icon, "[base_icon_state]_cap_[cap_type]")
-		. +=  cap_variant
+		. += mutable_appearance(icon, "[base_icon_state]_cap_[cap_type]")
 
 /obj/item/reagent_containers/cup/jerrycan/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -78,8 +76,7 @@
 		inhand_reagent_filling.color = mix_color_from_reagents(reagents.reagent_list)
 		. += inhand_reagent_filling
 	if(cap_type)
-		var/mutable_appearance/inhand_cap_overlay = mutable_appearance(icon_file, "[base_icon_state]_cap_[cap_type]")
-		. += inhand_cap_overlay
+		. += mutable_appearance(icon_file, "[base_icon_state]_cap_[cap_type]")
 
 /obj/item/reagent_containers/cup/jerrycan/Initialize(mapload)
 	. = ..()
