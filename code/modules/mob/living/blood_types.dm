@@ -241,13 +241,15 @@
 	restoration_chem = /datum/reagent/stable_plasma // Because normal plasma already refills our blood
 	can_bloodcrawl_in = FALSE
 
-/datum/blood_type/slime/New(new_color = /datum/reagent/toxin/slimejelly::color)
+/datum/blood_type/slime/New(new_color)
 	. = ..()
+	if (!new_color)
+		return
 	color = new_color
-	id = type_key()
+	id = type_key() // Should not be a singleton for perf/memory reasons considering how easy it is to swap colors
 
 /datum/blood_type/slime/type_key()
-	return "[name]_[color]"
+	return "_[name]_[color]"
 
 /// Podpeople blood
 /datum/blood_type/water

@@ -15,7 +15,6 @@
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
 		TRAIT_TOXINLOVER,
-		TRAIT_NOBLOOD,
 	)
 	mutanttongue = /obj/item/organ/tongue/jelly
 	mutantlungs = /obj/item/organ/lungs/slime
@@ -66,18 +65,18 @@
 
 	var/datum/blood_type/blood_type = species_human.get_bloodtype()
 	var/jelly_color = species_human.dna.features["mcolor"]
-	if (!jelly_color)
+	if (!blood_type || !jelly_color)
 		return
 
 	if (blood_type.color == jelly_color)
 		return
 
-	if (!(blood_type in GLOB.blood_types))
+	if (blood_type.id[1] == "_") // Not a singleton
 		blood_type.color = jelly_color
 		return
 
 	// If our blood type is a singleton, create a new one and don't cache it
-	var/jelly_type = get_blood_type(exotic_bloodtype).type
+	var/jelly_type = get_blood_type(exotic_bloodtype)?.type || /datum/blood_type/slime
 	blood_type = new jelly_type(jelly_color)
 	species_human.set_blood_type(blood_type)
 
