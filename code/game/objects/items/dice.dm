@@ -444,3 +444,5 @@
 			//Free wizard!
 			selected_turf.visible_message(span_userdanger("Magic flows out of [src] and into [user]!"))
 			user.mind.make_wizard()
+
+#undef MIN_SIDES_ALERT

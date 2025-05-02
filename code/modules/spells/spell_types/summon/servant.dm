@@ -104,5 +104,3 @@
 	head = /obj/item/clothing/head/hats/bowler
 	glasses = /obj/item/clothing/glasses/monocle
 	gloves = /obj/item/clothing/gloves/color/white
-
-#undef MIN_SIDES_ALERT
