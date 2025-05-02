@@ -209,6 +209,10 @@
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
+/area/centcom/syndicate_mothership/custodial_closet
+	name = "Syndicate Custodial Closet"
+	icon_state = "syndie-elite"
+
 //MAFIA
 /area/centcom/mafia
 	name = "Mafia Minigame"
