@@ -6841,6 +6841,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/light/directional/west,
+/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "cvt" = (
@@ -9461,6 +9462,7 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/warden/hotmeta,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "dsl" = (
@@ -11542,6 +11544,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "efC" = (
@@ -22330,6 +22333,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "hXQ" = (
@@ -26346,9 +26350,9 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "jmR" = (
-/obj/structure/closet/secure_closet/security/cargo,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "jmT" = (
@@ -32572,8 +32576,8 @@
 /area/station/hallway/primary/central)
 "luN" = (
 /obj/machinery/airalarm/directional/west,
-/obj/structure/closet/secure_closet/security/med,
 /obj/effect/turf_decal/tile/red/fourcorners,
+/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "luV" = (
@@ -35820,7 +35824,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
 "mEG" = (
-/obj/structure/closet/secure_closet/security/engine,
 /obj/machinery/airalarm/directional/east,
 /obj/machinery/requests_console/directional/south{
 	department = "Security";
@@ -35832,6 +35835,7 @@
 	pixel_x = 26
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "mEL" = (
@@ -39177,6 +39181,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "nJA" = (
@@ -39740,6 +39745,7 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "nVq" = (
@@ -41841,6 +41847,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "oHO" = (
@@ -43811,6 +43818,7 @@
 /area/station/science/ordnance/storage)
 "pti" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "pts" = (
@@ -62987,8 +62995,8 @@
 /area/station/medical/abandoned)
 "vTK" = (
 /obj/item/radio/intercom/directional/west,
-/obj/structure/closet/secure_closet/security/science,
 /obj/machinery/light/small/directional/west,
+/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "vTR" = (
