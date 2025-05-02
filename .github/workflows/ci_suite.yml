@@ -45,9 +45,16 @@ jobs:
     with:
       max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
 
+  setup_build_artifacts:
+    name: Setup build artifacts
+    needs: collect_data
+    uses: ./.github/workflows/setup_build_artifacts.yml
+    with:
+      build_versions: ${{ needs.collect_data.outputs.required_build_versions }}
+
   run_all_tests:
     name: Integration Tests
-    needs: collect_data
+    needs: [collect_data, setup_build_artifacts]
     uses: ./.github/workflows/perform_regular_version_tests.yml
     with:
       maps: ${{ needs.collect_data.outputs.maps }}
@@ -56,7 +63,7 @@ jobs:
   run_alternate_tests:
     if: needs.collect_data.outputs.alternate_tests != '[]'
     name: Alternate Tests
-    needs: collect_data
+    needs: [collect_data, setup_build_artifacts]
     uses: ./.github/workflows/perform_alternate_version_tests.yml
     with:
       alternate_tests: ${{ needs.collect_data.outputs.alternate_tests }}
