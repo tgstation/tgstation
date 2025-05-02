@@ -229,9 +229,10 @@
 /datum/forensics/proc/check_blood()
 	if(!isitem(parent) || isorgan(parent)) // organs don't spawn with blood decals by default
 		return
-	if(!length(blood_DNA))
+	var/list/visible_dna = get_visible_blood()
+	if(!length(visible_dna))
 		return
-	var/blood_color = get_blood_dna_color(get_visible_blood())
+	var/blood_color = get_blood_dna_color(visible_dna)
 	if (blood_color)
 		parent.AddElement(/datum/element/decal/blood, _color = blood_color)
 
