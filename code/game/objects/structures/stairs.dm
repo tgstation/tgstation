@@ -156,7 +156,7 @@
 /obj/structure/stairs/proc/can_fall_down_stairs(mob/living/falling)
 	if(falling.buckled || falling.pulledby)
 		return FALSE
-	if(falling.stat == DEAD) // if you shove a dead guy down the stairs, they'd probably roll
+	if(falling.stat >= HARD_CRIT) // if you shove a dead guy down the stairs, they'd probably roll
 		return TRUE
 	if(falling.has_status_effect(/datum/status_effect/staggered)) // off balance
 		return TRUE
