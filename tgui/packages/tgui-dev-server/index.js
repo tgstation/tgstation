@@ -13,9 +13,7 @@ const reloadOnce = process.argv.includes('--reload');
 
 async function setupServer() {
   const compiler = await createCompiler({
-    mode: 'development',
     hot: !noHot,
-    devServer: true,
     useTmpFolder: !noTmp,
   });
 
