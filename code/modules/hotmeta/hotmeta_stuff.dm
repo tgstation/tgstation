@@ -82,7 +82,38 @@
 	. = ..()
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/revenge.ogg', 293 SECONDS)
 
-// ~ Hotmeta Spefific guns
+// ~ Hotmeta Spefific Lockers ~ //
+
+/obj/structure/closet/secure_closet/hos/hotmeta
+	name = "head of security's locker"
+	icon_state = "hos"
+	req_access = list(ACCESS_HOS)
+
+/obj/structure/closet/secure_closet/hos/hotmeta/populateContents()
+	..()
+
+	new /obj/item/computer_disk/command/hos(src)
+	new /obj/item/radio/headset/heads/hos(src)
+	new /obj/item/radio/headset/heads/hos/alt(src)
+	new /obj/item/storage/bag/garment/hos(src)
+	new /obj/item/storage/lockbox/medal/sec(src)
+	new /obj/item/megaphone/sec(src)
+	new /obj/item/holosign_creator/security(src)
+	new /obj/item/storage/lockbox/loyalty(src)
+	new /obj/item/storage/box/flashbangs(src)
+	new /obj/item/shield/riot/tele(src)
+	new /obj/item/storage/belt/security/full(src)
+	new /obj/item/circuitboard/machine/techfab/department/security(src)
+	new /obj/item/storage/photo_album/hos(src)
+
+/obj/structure/closet/secure_closet/hos/hotmeta/populate_contents_immediate()
+	. = ..()
+
+	// Traitor steal objectives
+	new /obj/item/gun/energy/e_gun/hos/hotmeta(src)
+	new /obj/item/pinpointer/nuke(src)
+
+// ~ Hotmeta Spefific guns ~ //
 
 /obj/item/gun/energy/e_gun/hos/hotmeta
 	name = "\improper X-420 MultiPhase Energy Gun"
