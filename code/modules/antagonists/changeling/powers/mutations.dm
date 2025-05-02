@@ -224,7 +224,7 @@
 	effectiveness = 80, \
 	)
 
-/obj/item/melee/arm_blade/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/melee/arm_blade/afterattack(atom/target, mob/user, list/modifiers)
 	if(istype(target, /obj/structure/table))
 		var/obj/smash = target
 		smash.deconstruct(FALSE)
@@ -385,7 +385,7 @@
 			victim.visible_message(span_danger("[user] impales [victim] with [user.p_their()] [weapon.name]!"), span_userdanger("[user] impales you with [user.p_their()] [weapon.name]!"))
 			victim.apply_damage(weapon.force, BRUTE, BODY_ZONE_CHEST, attacking_item = weapon)
 			user.do_item_attack_animation(victim, used_item = weapon, animation_type = ATTACK_ANIMATION_PIERCE)
-			user.add_mob_blood(victim)
+			user.add_blood_DNA_to_items(victim.get_blood_dna_list(), ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 			playsound(get_turf(user),weapon.hitsound,75,TRUE)
 			return
 
@@ -642,7 +642,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
-/obj/item/clothing/head/helmet/changeling_hivehead/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/clothing/head/helmet/changeling_hivehead/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	. = ..()
 	if(!istype(attacking_item, /obj/item/organ/monster_core/regenerative_core/legion) || !holds_reagents)
 		return

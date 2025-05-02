@@ -72,7 +72,8 @@ export const AutomatedAnnouncement = (props) => {
                 <Input
                   fluid
                   placeholder="Name/Line/Var"
-                  onInput={(event, value) => setSearch(value)}
+                  onChange={setSearch}
+                  expensive
                 />
               </LabeledList.Item>
             </LabeledList>
@@ -130,11 +131,11 @@ export const AutomatedAnnouncement = (props) => {
                             </Table.Cell>
                             <Table.Cell>
                               <Input
-                                key={entry.entryRef + lineKey}
                                 fluid
+                                expensive
                                 value={announcementLine}
                                 disabled={!entry.modifiable}
-                                onChange={(e, value) =>
+                                onChange={(value) =>
                                   act('Text', {
                                     entryRef: entry.entryRef,
                                     lineKey,

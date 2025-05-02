@@ -2642,15 +2642,15 @@
 	},
 /obj/structure/rack,
 /obj/item/food/grown/grapes{
-	pixel_y = 4;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 4
 	},
 /obj/item/food/grown/grapes{
 	pixel_y = 4
 	},
 /obj/item/food/grown/grapes{
-	pixel_y = 2;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 2
 	},
 /turf/open/floor/wood/large,
 /area/station/maintenance/department/science/xenobiology)
@@ -3046,8 +3046,8 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/table/reinforced/rglass,
 /obj/item/reagent_containers/cup/glass/mug/nanotrasen{
-	pixel_y = 6;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 6
 	},
 /obj/item/storage/box/coffeepack{
 	pixel_x = 8;
@@ -4443,6 +4443,7 @@
 	},
 /obj/structure/mannequin/skeleton,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "bGn" = (
@@ -4911,13 +4912,13 @@
 "bRh" = (
 /obj/structure/table/reinforced,
 /obj/machinery/cell_charger{
-	pixel_y = 3;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 3
 	},
 /obj/item/stock_parts/power_store/cell/high,
 /obj/item/stock_parts/power_store/cell/high{
-	pixel_y = 2;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 2
 	},
 /obj/machinery/camera/autoname/motion/directional/west,
 /turf/open/floor/iron/dark,
@@ -5633,9 +5634,9 @@
 /area/station/ai_monitored/turret_protected/ai)
 "cfq" = (
 /obj/machinery/door/poddoor/shutters{
+	dir = 8;
 	id = "evashutter";
-	name = "E.V.A. Storage Shutter";
-	dir = 8
+	name = "E.V.A. Storage Shutter"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/stripes/corner{
@@ -7115,6 +7116,11 @@
 /obj/effect/mapping_helpers/airlock/access/any/service/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/greater)
+"cFB" = (
+/obj/structure/broken_flooring/side/directional/north,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "cFR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -7893,6 +7899,9 @@
 	name = "Abandoned Brewery"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "cTK" = (
@@ -8960,6 +8969,9 @@
 /obj/effect/turf_decal/trimline/dark/end{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/department/science/xenobiology)
 "dkz" = (
@@ -9341,6 +9353,9 @@
 /area/station/science/genetics)
 "dst" = (
 /obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "dsK" = (
@@ -9368,6 +9383,9 @@
 	name = "Abandoned Brewery"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
@@ -16010,6 +16028,13 @@
 /obj/structure/sign/poster/contraband/random/directional/west,
 /turf/open/floor/iron/white/small,
 /area/station/commons/toilet/restrooms)
+"fHL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
 "fHN" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -17504,11 +17529,11 @@
 /area/station/security/tram)
 "ggi" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/machinery/camera/autoname/directional/west,
+/obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "ggn" = (
@@ -18690,16 +18715,16 @@
 /obj/machinery/button/door{
 	id = "aibridge";
 	name = "AI Maintenance Space Bridge Control";
-	req_access = list("command");
 	pixel_x = -3;
-	pixel_y = 7
+	pixel_y = 7;
+	req_access = list("command")
 	},
 /obj/machinery/button/door{
 	id = "bridge blast";
 	name = "Bridge Access Blast Door Control";
-	req_access = list("command");
 	pixel_x = -3;
-	pixel_y = -3
+	pixel_y = -3;
+	req_access = list("command")
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/command/bridge)
@@ -20500,8 +20525,8 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/glass,
 /obj/item/folder/red{
-	pixel_y = 7;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 7
 	},
 /obj/machinery/cell_charger{
 	pixel_x = -1;
@@ -22562,6 +22587,7 @@
 /area/station/security)
 "hMa" = (
 /obj/effect/turf_decal/trimline/dark/filled/warning,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/department/science/xenobiology)
 "hMh" = (
@@ -23657,12 +23683,12 @@
 	},
 /obj/item/stack/cable_coil,
 /obj/item/plant_analyzer{
-	pixel_y = 2;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 2
 	},
 /obj/item/healthanalyzer{
-	pixel_y = 2;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 2
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
@@ -24982,9 +25008,9 @@
 	dir = 4
 	},
 /obj/machinery/button/door/directional/east{
+	id = "evashutter";
 	name = "E.V.A Shutters";
-	req_access = list("command");
-	id = "evashutter"
+	req_access = list("command")
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 4
@@ -25907,6 +25933,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/stairs,
 /area/station/maintenance/department/science/xenobiology)
 "iLR" = (
@@ -32105,8 +32132,8 @@
 	pixel_y = 6
 	},
 /obj/item/reagent_containers/cup/rag{
-	pixel_y = 4;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 4
 	},
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/department/science/xenobiology)
@@ -34692,6 +34719,7 @@
 "lzf" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science/xenobiology)
 "lzg" = (
@@ -41554,6 +41582,7 @@
 /obj/effect/turf_decal/trimline/dark_blue/filled/line{
 	dir = 2
 	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "nSb" = (
@@ -41807,9 +41836,9 @@
 /obj/machinery/suit_storage_unit/standard_unit,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/button/door/directional/west{
+	id = "evashutter";
 	name = "E.V.A Shutters";
-	req_access = list("command");
-	id = "evashutter"
+	req_access = list("command")
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/command/storage/eva)
@@ -42977,6 +43006,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "otQ" = (
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "otX" = (
@@ -43303,6 +43333,9 @@
 /obj/effect/turf_decal/trimline/dark/filled/warning{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/department/science/xenobiology)
 "oAn" = (
@@ -43331,6 +43364,9 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/department/science/xenobiology)
 "oAY" = (
@@ -45275,8 +45311,8 @@
 "piI" = (
 /obj/structure/table,
 /obj/item/flashlight/lamp{
-	pixel_y = 7;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 7
 	},
 /obj/effect/spawner/random/medical/minor_healing,
 /turf/open/floor/plating,
@@ -46120,6 +46156,12 @@
 /obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
+"pzC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "pzL" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
@@ -48464,6 +48506,9 @@
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=5.0-AftHall-Arrivals";
 	location = "4.0-TechStorage-AftHall"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
@@ -57068,6 +57113,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/security/processing)
+"tcK" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "tdb" = (
 /turf/open/floor/wood,
 /area/station/engineering/main)
@@ -59941,6 +59992,16 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/hallway/secondary/exit/departure_lounge)
+"tYy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
 "tYC" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -60446,6 +60507,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/department/science/xenobiology)
 "ufe" = (
@@ -64520,8 +64582,8 @@
 "vtU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/button/door/directional/east{
-	name = "Abandoned Lab Shutters";
-	id = "abandoned_lab"
+	id = "abandoned_lab";
+	name = "Abandoned Lab Shutters"
 	},
 /obj/item/bot_assembly/medbot,
 /turf/open/floor/plating,
@@ -64668,6 +64730,13 @@
 	},
 /turf/open/floor/iron/textured_half,
 /area/station/hallway/primary/aft)
+"vvn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/department/science/xenobiology)
 "vvs" = (
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/plating,
@@ -65385,8 +65454,8 @@
 "vGX" = (
 /obj/structure/disposaloutlet{
 	desc = "An outlet for the pneumatic disposal system. This one seems designed for rapid corpse disposal.";
-	name = "rapid corpse mover 9000";
-	dir = 4
+	dir = 4;
+	name = "rapid corpse mover 9000"
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -65449,6 +65518,7 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "vId" = (
@@ -66478,6 +66548,9 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/maintenance/department/science/xenobiology)
 "vXd" = (
@@ -71008,6 +71081,10 @@
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/central)
+"xoK" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "xoS" = (
 /obj/structure/cable,
 /obj/structure/table/bronze,
@@ -72325,6 +72402,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
+"xGj" = (
+/obj/machinery/door/airlock{
+	name = "Maintenance"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/medical/coroner,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plating,
+/area/station/maintenance/department/science/xenobiology)
 "xGl" = (
 /obj/machinery/door/airlock/external{
 	name = "External Docking Port"
@@ -74348,6 +74433,9 @@
 "yja" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/broken_flooring/corner/directional/west,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
 "yjd" = (
@@ -107561,7 +107649,7 @@ pDU
 pDU
 pDU
 pDU
-pDU
+tYy
 qgj
 pDU
 pDU
@@ -108850,7 +108938,7 @@ oAS
 ufd
 hMa
 iLO
-xQI
+tcK
 ldq
 lDJ
 jOO
@@ -109364,10 +109452,10 @@ xQI
 jSX
 xid
 jzj
-xQI
-xQI
-xQI
-kuY
+pzC
+xoK
+xoK
+cFB
 lzf
 yja
 ldq
@@ -109626,7 +109714,7 @@ yfQ
 ldq
 xnn
 xnn
-jzj
+vvn
 ldq
 tmr
 vWa
@@ -109883,8 +109971,8 @@ dDB
 ldq
 lxC
 lxC
-jzj
-tmV
+fHL
+xGj
 otQ
 nRS
 vIa

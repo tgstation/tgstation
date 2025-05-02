@@ -114,9 +114,8 @@
  *
  * TL;DR: [/baton_attack()] -> [/finalize_baton_attack()] -> [/baton_effect()] -> [/set_batoned()]
  */
-/obj/item/melee/baton/attack(mob/living/target, mob/living/user, params)
+/obj/item/melee/baton/attack(mob/living/target, mob/living/user, list/modifiers)
 	add_fingerprint(user)
-	var/list/modifiers = params2list(params)
 	switch(baton_attack(target, user, modifiers))
 		if(BATON_DO_NORMAL_ATTACK)
 			return ..()
@@ -625,7 +624,7 @@
 		tool.play_tool_sound(src)
 	return TRUE
 
-/obj/item/melee/baton/security/attackby(obj/item/item, mob/user, params)
+/obj/item/melee/baton/security/attackby(obj/item/item, mob/user, list/modifiers)
 	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(cell)
@@ -797,7 +796,7 @@
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!. && active && prob(throw_stun_chance) && isliving(hit_atom))
-		finalize_baton_attack(hit_atom, thrownby?.resolve(), in_attack_chain = FALSE)
+		finalize_baton_attack(hit_atom, throwingdatum.get_thrower(), in_attack_chain = FALSE)
 
 /obj/item/melee/baton/security/emp_act(severity)
 	. = ..()
@@ -858,7 +857,7 @@
 	. = ..()
 	sparkler = new (src)
 
-/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make an improved cattleprod
+/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, list/modifiers)//handles sticking a crystal onto a stunprod to make an improved cattleprod
 	if(!istype(item, /obj/item/stack))
 		return ..()
 
@@ -926,7 +925,7 @@
 	if(!active)
 		return ..()
 	var/caught = hit_atom.hitby(src, skipcatch = FALSE, hitpush = FALSE, throwingdatum = throwingdatum)
-	var/mob/thrown_by = thrownby?.resolve()
+	var/mob/thrown_by = throwingdatum.get_thrower()
 	if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
 		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
 
