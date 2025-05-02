@@ -49,6 +49,30 @@
 			"label": "Build All (low memory mode)"
 		},
 		{
+			"type": "process",
+			"command": "tools/build/build",
+			"args": ["-DTESTING","-DREAGENTS_TESTING","-DTIMER_DEBUG","-DREFERENCE_DOING_IT_LIVE"],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat",
+				"args": ["-DTESTING","-DREAGENTS_TESTING","-DTIMER_DEBUG","-DREFERENCE_DOING_IT_LIVE"]
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": [
+				"$dreammaker",
+				"$tsc",
+				"$eslint-stylish"
+			],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Build All (testing)"
+		},
+		{
 			"type": "dreammaker",
 			"dme": "tgstation.dme",
 			"problemMatcher": [
