@@ -74,13 +74,7 @@ function CentComName(props) {
         onSelected={sendName}
       />
       {!!custom_name && (
-        <Input
-          fluid
-          mt={1}
-          value={name}
-          onChange={setName}
-          onBlur={sendName}
-        />
+        <Input fluid mt={1} value={name} onChange={setName} onBlur={sendName} />
       )}
     </Section>
   );
