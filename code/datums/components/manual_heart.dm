@@ -56,7 +56,7 @@
 	pump_action.Grant(parent)
 
 	var/mob/living/carbon/carbon_parent = parent
-	var/obj/item/organ/internal/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
 	if(parent_heart && !HAS_TRAIT(carbon_parent, TRAIT_NOBLOOD) && carbon_parent.stat != DEAD)
 		START_PROCESSING(SSdcs, src)
 		COOLDOWN_START(src, heart_timer, pump_delay)
@@ -69,7 +69,7 @@
 	to_chat(parent, span_userdanger("You feel your heart start beating normally again!"))
 	var/mob/living/carbon/carbon_parent = parent
 	if(istype(carbon_parent))
-		carbon_parent.remove_client_colour(/datum/client_colour/manual_heart_blood)
+		carbon_parent.remove_client_colour(REF(src))
 
 /datum/component/manual_heart/proc/restart()
 	SIGNAL_HANDLER
@@ -85,7 +85,7 @@
 	pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	var/mob/living/carbon/carbon_parent = parent
 	if(istype(carbon_parent))
-		carbon_parent.remove_client_colour(/datum/client_colour/manual_heart_blood) //prevents red overlay from getting stuck
+		carbon_parent.remove_client_colour(REF(src)) //prevents red overlay from getting stuck
 	STOP_PROCESSING(SSdcs, src)
 
 /// Worker proc that checks logic for if a pump can happen, and applies effects from doing so
@@ -98,7 +98,7 @@
 	if(HAS_TRAIT(carbon_owner, TRAIT_NOBLOOD))
 		return
 	carbon_owner.blood_volume = min(carbon_owner.blood_volume + (blood_loss * 0.5), BLOOD_VOLUME_MAXIMUM)
-	carbon_owner.remove_client_colour(/datum/client_colour/manual_heart_blood)
+	carbon_owner.remove_client_colour(REF(src))
 	add_colour = TRUE
 	carbon_owner.adjustBruteLoss(-heal_brute)
 	carbon_owner.adjustFireLoss(-heal_burn)
@@ -119,14 +119,14 @@
 	to_chat(carbon_parent, span_userdanger("You have to keep pumping your blood!"))
 	COOLDOWN_START(src, heart_timer, MANUAL_HEART_GRACE_PERIOD) //give two full seconds before losing more blood
 	if(add_colour)
-		carbon_parent.add_client_colour(/datum/client_colour/manual_heart_blood)
+		carbon_parent.add_client_colour(/datum/client_colour/manual_heart_blood, REF(src))
 		add_colour = FALSE
 
 ///If a new heart is added, start processing.
 /datum/component/manual_heart/proc/check_added_organ(mob/organ_owner, obj/item/organ/new_organ)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/internal/heart/new_heart = new_organ
+	var/obj/item/organ/heart/new_heart = new_organ
 
 	if(!istype(new_heart) || !check_valid())
 		return
@@ -134,14 +134,14 @@
 	pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	var/mob/living/carbon/carbon_parent = parent
 	if(istype(carbon_parent))
-		carbon_parent.remove_client_colour(/datum/client_colour/manual_heart_blood) //prevents red overlay from getting stuck
+		carbon_parent.remove_client_colour(REF(src)) //prevents red overlay from getting stuck
 	START_PROCESSING(SSdcs, src)
 
 ///If the heart is removed, stop processing.
 /datum/component/manual_heart/proc/check_removed_organ(mob/organ_owner, obj/item/organ/removed_organ)
 	SIGNAL_HANDLER
 
-	var/obj/item/organ/internal/heart/removed_heart = removed_organ
+	var/obj/item/organ/heart/removed_heart = removed_organ
 
 	if(istype(removed_heart))
 		pump_action.build_all_button_icons(UPDATE_BUTTON_STATUS)
@@ -150,7 +150,7 @@
 ///Helper proc to check if processing can be restarted.
 /datum/component/manual_heart/proc/check_valid()
 	var/mob/living/carbon/carbon_parent = parent
-	var/obj/item/organ/internal/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/parent_heart = carbon_parent.get_organ_slot(ORGAN_SLOT_HEART)
 	return !isnull(parent_heart) && !HAS_TRAIT(carbon_parent, TRAIT_NOBLOOD) && carbon_parent.stat != DEAD
 
 ///Action to pump your heart. Cooldown will always be set to 1 second less than the pump delay.
@@ -171,7 +171,7 @@
 	var/mob/living/carbon/heart_haver = owner
 	if(!istype(heart_haver) || HAS_TRAIT(heart_haver, TRAIT_NOBLOOD) || heart_haver.stat == DEAD)
 		return FALSE
-	var/obj/item/organ/internal/heart/heart_havers_heart = heart_haver.get_organ_slot(ORGAN_SLOT_HEART)
+	var/obj/item/organ/heart/heart_havers_heart = heart_haver.get_organ_slot(ORGAN_SLOT_HEART)
 	if(isnull(heart_havers_heart))
 		return FALSE
 	return ..()

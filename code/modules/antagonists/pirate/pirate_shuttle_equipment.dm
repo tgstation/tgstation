@@ -367,7 +367,7 @@
 		///there are still licing mobs inside that item. Stop, don't sell it ffs.
 		if(locate(/mob/living) in item_on_pad.get_all_contents())
 			continue
-		export_item_and_contents(item_on_pad, apply_elastic = FALSE, dry_run = dry_run, delete_unsold = FALSE, external_report = report, ignore_typecache = nosell_typecache)
+		export_item_and_contents(item_on_pad, apply_elastic = FALSE, dry_run = dry_run, delete_unsold = FALSE, external_report = report, ignore_typecache = nosell_typecache, export_market = EXPORT_MARKET_PIRACY)
 	return report
 
 /// Prepares to sell the items on the pad
@@ -400,6 +400,9 @@
 	var/obj/machinery/piratepad/pad = pad_ref?.resolve()
 	pad.icon_state = pad.idle_state
 	deltimer(sending_timer)
+
+/datum/export/pirate
+	sales_market = EXPORT_MARKET_PIRACY
 
 /// Attempts to find the thing on station
 /datum/export/pirate/proc/find_loot()
@@ -438,7 +441,7 @@
 	var/mob_cost = get_cost(sold_item)
 	sold_item.process_capture(mob_cost, mob_cost * 1.2)
 	do_sparks(8, FALSE, sold_item)
-	playsound(picked_turf, 'sound/weapons/emitter2.ogg', 25, TRUE)
+	playsound(picked_turf, 'sound/items/weapons/emitter2.ogg', 25, TRUE)
 	sold_item.flash_act()
 	sold_item.adjust_confusion(10 SECONDS)
 	sold_item.adjust_dizzy(10 SECONDS)
@@ -469,12 +472,12 @@
 
 /datum/export/pirate/cash
 	cost = 1
-	unit_name = "bills"
+	unit_name = "bill"
 	export_types = list(/obj/item/stack/spacecash)
 
-/datum/export/pirate/cash/get_amount(obj/exported_item)
+/datum/export/pirate/cash/get_cost(obj/exported_item)
 	var/obj/item/stack/spacecash/cash = exported_item
-	return ..() * cash.amount * cash.value
+	return cash.value * cash.amount
 
 /datum/export/pirate/holochip
 	cost = 1

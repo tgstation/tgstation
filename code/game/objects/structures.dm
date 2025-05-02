@@ -1,6 +1,6 @@
 /// Inert structures, such as girders, machine frames, and crates/lockers.
 /obj/structure
-	icon = 'icons/obj/structures/tall.dmi'
+	icon = 'icons/obj/structures.dmi'
 	pressure_resistance = 8
 	max_integrity = 300
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
@@ -22,8 +22,6 @@
 	if(smoothing_flags & USES_SMOOTHING)
 		QUEUE_SMOOTH(src)
 		QUEUE_SMOOTH_NEIGHBORS(src)
-		if(smoothing_flags & SMOOTH_CORNERS)
-			icon_state = ""
 	GLOB.cameranet.updateVisibility(src)
 
 /obj/structure/Destroy(force)
@@ -58,6 +56,9 @@
 			if(!broken)
 				return  span_warning("It's falling apart!")
 
+/obj/structure/examine_descriptor(mob/user)
+	return "structure"
+
 /obj/structure/rust_heretic_act()
 	take_damage(500, BRUTE, "melee", 1)
 
@@ -68,7 +69,7 @@
 	. = ..()
 
 /obj/structure/animate_atom_living(mob/living/owner)
-	new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)
+	new /mob/living/basic/mimic/copy(drop_location(), src, owner)
 
 /// For when a mob comes flying through the window, smash it and damage the mob
 /obj/structure/proc/smash_and_injure(mob/living/flying_mob, atom/oldloc, direction)

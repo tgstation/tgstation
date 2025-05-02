@@ -3,8 +3,8 @@
 /obj/machinery/airalarm
 	name = "air alarm"
 	desc = "A machine that monitors atmosphere levels. Goes off if the area is dangerous."
-	icon = 'icons/obj/machines/air_alarm.dmi'
-	icon_state = "alarm"
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "alarmp"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.02
 	power_channel = AREA_USAGE_ENVIRON
@@ -58,6 +58,8 @@
 
 	/// Used for air alarm helper called tlv_cold_room to adjust alarm thresholds for cold room.
 	var/tlv_cold_room = FALSE
+	/// Used for air alarm helper called tlv_kitchen to adjust temperature thresholds for kitchen.
+	var/tlv_kitchen = FALSE
 	/// Used for air alarm helper called tlv_no_ckecks to remove alarm thresholds.
 	var/tlv_no_checks = FALSE
 
@@ -85,12 +87,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	fire = 90
 	acid = 30
 
-WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
-
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	set_wires(new /datum/wires/airalarm(src))
-
 	if(ndir)
 		setDir(ndir)
 
@@ -104,13 +103,14 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 	tlv_collection = list()
 	tlv_collection["pressure"] = new /datum/tlv/pressure
 	tlv_collection["temperature"] = new /datum/tlv/temperature
-	var/list/meta_info = GLOB.meta_gas_info // shorthand
-	for(var/gas_path in meta_info)
+
+	var/list/cached_gas_info = GLOB.meta_gas_info
+	for(var/datum/gas/gas_path as anything in cached_gas_info)
 		if(ispath(gas_path, /datum/gas/oxygen))
 			tlv_collection[gas_path] = new /datum/tlv/oxygen
 		else if(ispath(gas_path, /datum/gas/carbon_dioxide))
 			tlv_collection[gas_path] = new /datum/tlv/carbon_dioxide
-		else if(meta_info[gas_path][META_GAS_DANGER])
+		else if(cached_gas_info[gas_path][META_GAS_DANGER])
 			tlv_collection[gas_path] = new /datum/tlv/dangerous
 		else
 			tlv_collection[gas_path] = new /datum/tlv/no_checks
@@ -126,12 +126,11 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 		/obj/item/circuit_component/air_alarm_scrubbers,
 		/obj/item/circuit_component/air_alarm_vents
 	))
-	AddComponent(/datum/component/examine_balloon)
 
 	GLOB.air_alarms += src
-	update_appearance()
 	find_and_hang_on_wall()
 	register_context()
+	check_enviroment()
 
 /obj/machinery/airalarm/process()
 	if(!COOLDOWN_FINISHED(src, warning_cooldown))
@@ -143,6 +142,12 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 /obj/machinery/airalarm/Destroy()
 	if(my_area)
 		my_area = null
+	if(connected_sensor)
+		UnregisterSignal(connected_sensor, COMSIG_QDELETING)
+		UnregisterSignal(connected_sensor.loc, COMSIG_TURF_EXPOSE)
+		connected_sensor.connected_airalarm = null
+		connected_sensor = null
+
 	QDEL_NULL(alarm_manager)
 	GLOB.air_alarms -= src
 	return ..()
@@ -207,10 +212,16 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 		return .
 
 	if(istype(multi_tool.buffer, /obj/machinery/air_sensor))
+		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
+
 		if(!allow_link_change)
 			balloon_alert(user, "linking disabled")
 			return ITEM_INTERACT_BLOCKING
-		connect_sensor(multi_tool.buffer)
+		if(connected_sensor || sensor.connected_airalarm)
+			balloon_alert(user, "sensor already connected!")
+			return ITEM_INTERACT_BLOCKING
+
+		connect_sensor(sensor)
 		balloon_alert(user, "connected sensor")
 		return ITEM_INTERACT_SUCCESS
 
@@ -534,26 +545,25 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 				icon_state = "alarm_b1"
 		return ..()
 
-	icon_state = isnull(connected_sensor) ? "alarm" : "alarm_remote"
+	icon_state = isnull(connected_sensor) ? "alarmp" : "alarmp_remote"
 	return ..()
 
 /obj/machinery/airalarm/update_overlays()
 	. = ..()
-	// Open panels will only display a light on the final buildstage
-	if(panel_open)
-		if(buildstage == AIR_ALARM_BUILD_COMPLETE)
-			. += mutable_appearance(icon, "light-out", layer, src, plane)
+
+	if(panel_open || (machine_stat & (NOPOWER|BROKEN)) || shorted)
 		return
 
-	if((machine_stat & (NOPOWER|BROKEN)) || shorted)
-		. += mutable_appearance(icon, "light-out", layer, src, plane)
-		return ..()
+	var/state
+	if(danger_level == AIR_ALARM_ALERT_HAZARD)
+		state = "alarm1"
+	else if(danger_level == AIR_ALARM_ALERT_WARNING || area_danger)
+		state = "alarm2"
+	else
+		state = "alarm0"
 
-	var/alert_level = danger_level
-	if(area_danger)
-		alert_level = 2
-	. += mutable_appearance(icon, "light-[alert_level]")
-	. += emissive_appearance(icon, "light-[alert_level]", src, alpha)
+	. += mutable_appearance(icon, state)
+	. += emissive_appearance(icon, state, src, alpha = src.alpha)
 
 /// Check the current air and update our danger level.
 /// [/obj/machinery/airalarm/var/danger_level]
@@ -577,34 +587,40 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 	danger_level = max(danger_level, tlv_collection["pressure"].check_value(pressure))
 	danger_level = max(danger_level, tlv_collection["temperature"].check_value(temp))
 	if(total_moles)
-		for(var/gas_path in environment.gases)
-			var/moles = environment.gases[gas_path][MOLES]
+		var/list/cached_gas_info = GLOB.meta_gas_info
+		for(var/datum/gas/gas_path as anything in cached_gas_info)
+			var/moles = environment.gases[gas_path] ? environment.gases[gas_path][MOLES] : 0
 			danger_level = max(danger_level, tlv_collection[gas_path].check_value(pressure * moles / total_moles))
 
 	if(danger_level)
 		alarm_manager.send_alarm(ALARM_ATMOS)
-		if(pressure <= WARNING_LOW_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+		var/is_high_pressure = tlv_collection["pressure"].hazard_max != TLV_VALUE_IGNORE && pressure >= tlv_collection["pressure"].hazard_max
+		var/is_high_temp = tlv_collection["temperature"].hazard_max != TLV_VALUE_IGNORE && temp >= tlv_collection["temperature"].hazard_max
+		var/is_low_pressure = tlv_collection["pressure"].hazard_min != TLV_VALUE_IGNORE && pressure <= tlv_collection["pressure"].hazard_min
+		var/is_low_temp = tlv_collection["temperature"].hazard_min != TLV_VALUE_IGNORE && temp <= tlv_collection["temperature"].hazard_min
+
+		if(is_low_pressure && is_low_temp)
 			warning_message = "Danger! Low pressure and temperature detected."
 			return
-		if(pressure <= WARNING_LOW_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(is_low_pressure && is_high_temp)
 			warning_message = "Danger! Low pressure and high temperature detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE && temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(is_high_pressure && is_high_temp)
 			warning_message = "Danger! High pressure and temperature detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE && temp <= BODYTEMP_COLD_WARNING_1+10)
+		if(is_high_pressure && is_low_temp)
 			warning_message = "Danger! High pressure and low temperature detected."
 			return
-		if(pressure <= WARNING_LOW_PRESSURE)
+		if(is_low_pressure)
 			warning_message = "Danger! Low pressure detected."
 			return
-		if(pressure >= WARNING_HIGH_PRESSURE)
+		if(is_high_pressure)
 			warning_message = "Danger! High pressure detected."
 			return
-		if(temp <= BODYTEMP_COLD_WARNING_1+10)
+		if(is_low_temp)
 			warning_message = "Danger! Low temperature detected."
 			return
-		if(temp >= BODYTEMP_HEAT_WARNING_1-27)
+		if(is_high_temp)
 			warning_message = "Danger! High temperature detected."
 			return
 		else
@@ -629,6 +645,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 	if(should_apply)
 		selected_mode.apply(my_area)
 	SEND_SIGNAL(src, COMSIG_AIRALARM_UPDATE_MODE, source)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/airalarm, 27)
 
 /obj/machinery/airalarm/proc/speak(warning_message)
 	if(machine_stat & (BROKEN|NOPOWER))
@@ -679,10 +697,17 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 	tlv_collection["temperature"] = new /datum/tlv/cold_room_temperature
 	tlv_collection["pressure"] = new /datum/tlv/cold_room_pressure
 
+///Used for air alarm kitchen tlv helper, which ensures that kitchen air alarm doesn't trigger from cold room air
+/obj/machinery/airalarm/proc/set_tlv_kitchen()
+	tlv_collection["temperature"] = new /datum/tlv/kitchen_temperature
+
 ///Used for air alarm no tlv helper, which removes alarm thresholds
 /obj/machinery/airalarm/proc/set_tlv_no_checks()
 	tlv_collection["temperature"] = new /datum/tlv/no_checks
 	tlv_collection["pressure"] = new /datum/tlv/no_checks
+
+	for(var/gas_path in GLOB.meta_gas_info)
+		tlv_collection[gas_path] = new /datum/tlv/no_checks
 
 ///Used for air alarm link helper, which connects air alarm to a sensor with corresponding chamber_id
 /obj/machinery/airalarm/proc/setup_chamber_link()
@@ -690,14 +715,22 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 	if(isnull(sensor))
 		log_mapping("[src] at [AREACOORD(src)] tried to connect to a sensor, but no sensor with chamber_id:[air_sensor_chamber_id] found!")
 		return
+	if(connected_sensor)
+		log_mapping("[src] at [AREACOORD(src)] tried to connect to more than one sensor!")
+		return
 	connect_sensor(sensor)
 
 ///Used to connect air alarm with a sensor
 /obj/machinery/airalarm/proc/connect_sensor(obj/machinery/air_sensor/sensor)
-	if(!isnull(connected_sensor))
-		UnregisterSignal(connected_sensor, COMSIG_QDELETING)
+	sensor.connected_airalarm = src
 	connected_sensor = sensor
+
 	RegisterSignal(connected_sensor, COMSIG_QDELETING, PROC_REF(disconnect_sensor))
+
+	// Transfer signal from air alarm to sensor
+	UnregisterSignal(loc, COMSIG_TURF_EXPOSE)
+	RegisterSignal(connected_sensor.loc, COMSIG_TURF_EXPOSE, PROC_REF(check_danger), override=TRUE)
+
 	my_area = get_area(connected_sensor)
 
 	check_enviroment()
@@ -708,6 +741,12 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/airalarm)
 ///Used to reset the air alarm to default configuration after disconnecting from air sensor
 /obj/machinery/airalarm/proc/disconnect_sensor()
 	UnregisterSignal(connected_sensor, COMSIG_QDELETING)
+
+	// Transfer signal from sensor to air alarm
+	UnregisterSignal(connected_sensor.loc, COMSIG_TURF_EXPOSE)
+	RegisterSignal(loc, COMSIG_TURF_EXPOSE, PROC_REF(check_danger), override=TRUE)
+
+	connected_sensor.connected_airalarm = null
 	connected_sensor = null
 	my_area = get_area(src)
 

@@ -11,7 +11,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	can_adjust = FALSE
 	strip_delay = 80
-	var/next_extinguish = 0
+	COOLDOWN_DECLARE(extinguish_timer)
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 5
 
@@ -22,31 +22,54 @@
 
 /obj/item/clothing/under/plasmaman/examine(mob/user)
 	. = ..()
-	. += span_notice("There are [extinguishes_left] extinguisher charges left in this suit.")
+	. += span_notice("There [extinguishes_left == 1 ? "is" : "are"] [extinguishes_left] extinguisher charges left in this suit.")
 
-/obj/item/clothing/under/plasmaman/proc/Extinguish(mob/living/carbon/human/H)
-	if(!istype(H))
+/obj/item/clothing/under/plasmaman/equipped(mob/living/user, slot)
+	. = ..()
+	if (slot & ITEM_SLOT_ICLOTHING)
+		RegisterSignals(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED, SIGNAL_ADDTRAIT(TRAIT_HEAD_ATMOS_SEALED)), PROC_REF(check_fire_state))
+		check_fire_state()
+
+/obj/item/clothing/under/plasmaman/dropped(mob/living/user)
+	. = ..()
+	UnregisterSignal(user, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_LIVING_IGNITED, SIGNAL_ADDTRAIT(TRAIT_HEAD_ATMOS_SEALED)))
+
+/obj/item/clothing/under/plasmaman/proc/check_fire_state(datum/source)
+	SIGNAL_HANDLER
+
+	if (!ishuman(loc))
 		return
 
-	if(H.on_fire)
-		if(extinguishes_left)
-			if(next_extinguish > world.time)
-				return
-			next_extinguish = world.time + extinguish_cooldown
-			extinguishes_left--
-			H.visible_message(span_warning("[H]'s suit automatically extinguishes [H.p_them()]!"),span_warning("Your suit automatically extinguishes you."))
-			H.extinguish_mob()
-			new /obj/effect/particle_effect/water(get_turf(H))
+	// This is weird but basically we're calling this proc once the cooldown ends in case our wearer gets set on fire again during said cooldown
+	// This is why we're ignoring source and instead checking by loc
+	var/mob/living/carbon/human/owner = loc
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, alt_flags = TRUE))
+		return
 
-/obj/item/clothing/under/plasmaman/attackby(obj/item/E, mob/user, params)
-	..()
-	if (istype(E, /obj/item/extinguisher_refill))
-		if (extinguishes_left == 5)
-			to_chat(user, span_notice("The inbuilt extinguisher is full."))
-		else
-			extinguishes_left = 5
-			to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
-			qdel(E)
+	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
+		return
+
+	extinguishes_left -= 1
+	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
+	// Check if our (possibly other) wearer is on fire once the cooldown ends
+	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
+	owner.visible_message(span_warning("[owner]'s suit automatically extinguishes [owner.p_them()]!"), span_warning("Your suit automatically extinguishes you."))
+	owner.extinguish_mob()
+	new /obj/effect/particle_effect/water(get_turf(owner))
+
+/obj/item/clothing/under/plasmaman/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/extinguisher_refill))
+		return ..()
+
+	if (extinguishes_left == 5)
+		to_chat(user, span_notice("The inbuilt extinguisher is full."))
+		return ITEM_INTERACT_BLOCKING
+
+	extinguishes_left = 5
+	to_chat(user, span_notice("You refill the suit's built-in extinguisher, using up the cartridge."))
+	check_fire_state()
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/extinguisher_refill
 	name = "envirosuit extinguisher cartridge"
@@ -54,22 +77,21 @@
 	icon_state = "plasmarefill"
 	icon = 'icons/obj/canisters.dmi'
 
-
 /obj/item/clothing/under/plasmaman/cargo
 	name = "cargo plasma envirosuit"
-	desc = "A joint envirosuit used by plasmamen quartermasters and cargo techs alike, due to the logistical problems of differenciating the two with the length of their pant legs."
+	desc = "A joint envirosuit used by plasmamen quartermasters and cargo techs alike, due to the logistical problems of differentiating the two with the length of their pant legs."
 	icon_state = "cargo_envirosuit"
 	inhand_icon_state = null
 
 /obj/item/clothing/under/plasmaman/mining
 	name = "mining plasma envirosuit"
-	desc = "An air-tight khaki suit designed for operations on lavaland by plasmamen."
+	desc = "An airtight khaki suit designed for operations on lavaland by plasmamen."
 	icon_state = "explorer_envirosuit"
 	inhand_icon_state = null
 
 /obj/item/clothing/under/plasmaman/chef
 	name = "chef's plasma envirosuit"
-	desc = "A white plasmaman envirosuit designed for cullinary practices. One might question why a member of a species that doesn't need to eat would become a chef."
+	desc = "A white plasmaman envirosuit designed for culinary practices. One might question why a member of a species that doesn't need to eat would become a chef."
 	icon_state = "chef_envirosuit"
 	inhand_icon_state = null
 
@@ -134,20 +156,27 @@
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
 
-/obj/item/clothing/under/plasmaman/clown/Extinguish(mob/living/carbon/human/H)
-	if(!istype(H))
+/obj/item/clothing/under/plasmaman/clown/check_fire_state(datum/source, datum/status_effect/fire_handler/status_effect)
+	if (!ishuman(loc))
 		return
 
-	if(H.on_fire)
-		if(extinguishes_left)
-			if(next_extinguish > world.time)
-				return
-			next_extinguish = world.time + extinguish_cooldown
-			extinguishes_left--
-			H.visible_message(span_warning("[H]'s suit spews space lube everywhere!"),span_warning("Your suit spews space lube everywhere!"))
-			H.extinguish_mob()
-			var/datum/effect_system/fluid_spread/foam/foam = new
-			var/datum/reagents/foamreagent = new /datum/reagents(15)
-			foamreagent.add_reagent(/datum/reagent/lube, 15)
-			foam.set_up(4, holder = src, location = H.loc, carry = foamreagent)
-			foam.start() //Truly terrifying.
+	// This is weird but basically we're calling this proc once the cooldown ends in case our wearer gets set on fire again during said cooldown
+	// This is why we're ignoring source and instead checking by loc
+	var/mob/living/carbon/human/owner = loc
+	if (!owner.on_fire || !owner.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE, alt_flags = TRUE))
+		return
+
+	if (!extinguishes_left || !COOLDOWN_FINISHED(src, extinguish_timer))
+		return
+
+	extinguishes_left -= 1
+	COOLDOWN_START(src, extinguish_timer, extinguish_cooldown)
+	// Check if our (possibly other) wearer is on fire once the cooldown ends
+	addtimer(CALLBACK(src, PROC_REF(check_fire_state)), extinguish_cooldown)
+	owner.visible_message(span_warning("[owner]'s suit spews space lube everywhere!"), span_warning("Your suit spews space lube everywhere!"))
+	owner.extinguish_mob()
+	var/datum/effect_system/fluid_spread/foam/foam = new
+	var/datum/reagents/foamreagent = new /datum/reagents(15)
+	foamreagent.add_reagent(/datum/reagent/lube, 15)
+	foam.set_up(4, holder = src, location = get_turf(owner), carry = foamreagent)
+	foam.start() //Truly terrifying.

@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed gas station and phonebooth ruins magically summoning weather on bottom levels of Icebox"

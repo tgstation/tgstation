@@ -40,7 +40,7 @@
 	switch(stage)
 		if(2, 3) //Pretend to be a cold and give time to spread.
 			if(SPT_PROB(4, seconds_per_tick))
-				affected_mob.sneeze()
+				affected_mob.emote("sneeze")
 			if(SPT_PROB(4, seconds_per_tick))
 				affected_mob.emote("cough")
 			if(SPT_PROB(0.5, seconds_per_tick))

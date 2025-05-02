@@ -497,7 +497,7 @@
 
 		var/new_value = input(usr, "Enter the forced threat level for dynamic mode.", "Forced threat level") as num
 		if (new_value > 100)
-			return tgui_alert(usr, "The value must be be under 100.")
+			return tgui_alert(usr, "The value must be under 100.")
 		GLOB.dynamic_forced_threat_level = new_value
 
 		log_admin("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
@@ -847,7 +847,7 @@
 		exportable_text += "[special_role_description]<br>"
 		exportable_text += ADMIN_FULLMONTY_NONAME(subject)
 
-		to_chat(src.owner, examine_block(exportable_text), confidential = TRUE)
+		to_chat(src.owner, boxed_message(exportable_text), confidential = TRUE)
 
 	else if(href_list["addjobslot"])
 		if(!check_rights(R_ADMIN))
@@ -1380,7 +1380,9 @@
 		var/list/dat = list("Related accounts by [uppertext(href_list["showrelatedacc"])]:")
 		dat += thing_to_check
 
-		usr << browse(dat.Join("<br>"), "window=related_[C];size=420x300")
+		var/datum/browser/browser = new(usr, "related_[C]", "[C.ckey] Related Accounts", 420, 300)
+		browser.set_content(dat.Join("<br>"))
+		browser.open()
 
 	else if(href_list["centcomlookup"])
 		if(!check_rights(R_ADMIN))
@@ -1697,6 +1699,7 @@
 			return
 		return usr.client?.mark_datum(datum_to_mark)
 
+#ifndef DISABLE_DREAMLUAU
 	else if(href_list["lua_state"])
 		if(!check_rights(R_DEBUG))
 			return
@@ -1713,6 +1716,7 @@
 				editor.force_view_chunk = log_entry["chunk"]
 				editor.force_modal = "viewChunk"
 		editor.ui_interact(usr)
+#endif
 
 	else if(href_list["show_paper"])
 		if(!check_rights(R_ADMIN))
@@ -1731,7 +1735,7 @@
 			if(FAX.fax_id != href_list["destination"])
 				continue
 			FAX.receive(locate(href_list["print_fax"]), href_list["sender_name"])
-
+			return
 
 	else if(href_list["play_internet"])
 		if(!check_rights(R_SOUND))

@@ -23,14 +23,14 @@
 /datum/component/spy_uplink/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
-	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_pre_attack_secondary))
+	RegisterSignal(parent, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(on_item_atom_interaction))
 	RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(block_pda_bombs))
 
 /datum/component/spy_uplink/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ITEM_ATTACK_SELF,
-		COMSIG_ITEM_PRE_ATTACK_SECONDARY,
+		COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY,
 		COMSIG_TABLET_CHECK_DETONATE,
 	))
 
@@ -60,12 +60,14 @@
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 	return NONE
 
-/datum/component/spy_uplink/proc/on_pre_attack_secondary(obj/item/source, atom/target, mob/living/user, params)
+/datum/component/spy_uplink/proc/on_item_atom_interaction(obj/item/source, mob/living/user, atom/target, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(!ismovable(target))
 		return NONE
 	if(!IS_SPY(user))
+		return NONE
+	if(SHOULD_SKIP_INTERACTION(target, source, user))
 		return NONE
 	if(!try_steal(target, user))
 		return NONE
@@ -94,11 +96,11 @@
 /// Wraps the stealing process in a scanning effect.
 /datum/component/spy_uplink/proc/start_stealing(atom/movable/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	if(!isturf(stealing.loc) && stealing.loc != spy)
-		to_chat(spy, span_warning("Your uplinks blinks red: [stealing] cannot be extracted from there."))
+		to_chat(spy, span_warning("Your uplink blinks red: [stealing] cannot be extracted from there."))
 		return FALSE
 
 	log_combat(spy, stealing, "started stealing", parent, "(spy bounty)")
-	playsound(stealing, 'sound/items/pshoom.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.33, ignore_walls = FALSE)
+	playsound(stealing, 'sound/items/pshoom/pshoom.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.33, ignore_walls = FALSE)
 
 	var/obj/effect/scan_effect/active_scan_effect = new(stealing.loc)
 	active_scan_effect.appearance = stealing.appearance
@@ -112,13 +114,13 @@
 		active_scan_cone = new(spy.loc)
 		var/angle = round(get_angle(spy, stealing), 10)
 		if(angle > 180 && angle < 360)
-			active_scan_cone.pixel_x -= 16
+			active_scan_cone.pixel_w -= 16
 		else if(angle < 180 && angle > 0)
-			active_scan_cone.pixel_x += 16
+			active_scan_cone.pixel_w += 16
 		if(angle > 90 && angle < 270)
-			active_scan_cone.pixel_y -= 16
+			active_scan_cone.pixel_z -= 16
 		else if(angle < 90 || angle > 270)
-			active_scan_cone.pixel_y += 16
+			active_scan_cone.pixel_z += 16
 		active_scan_cone.transform = active_scan_cone.transform.Turn(angle)
 		active_scan_cone.alpha = 0
 		animate(active_scan_cone, time = 0.5 SECONDS, alpha = initial(active_scan_cone.alpha))
@@ -139,10 +141,10 @@
 	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src), hidden = TRUE))
 		return FALSE
 	if(bounty.claimed)
-		to_chat(spy, span_warning("Your uplinks blinks red: The bounty for [stealing] has been claimed by another spy!"))
+		to_chat(spy, span_warning("Your uplink blinks red: The bounty for [stealing] has been claimed by another spy!"))
 		return FALSE
 	if(spy.is_holding(stealing) && !spy.dropItemToGround(stealing))
-		to_chat(spy, span_warning("Your uplinks blinks red: [stealing] seems stuck to your hand!"))
+		to_chat(spy, span_warning("Your uplink blinks red: [stealing] seems stuck to your hand!"))
 		return FALSE
 
 	var/bounty_key = bounty.get_dupe_protection_key(stealing)

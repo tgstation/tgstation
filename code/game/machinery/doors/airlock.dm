@@ -74,7 +74,7 @@
 
 /obj/machinery/door/airlock
 	name = "Airlock"
-	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'
+	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
 	max_integrity = 300
 	var/normal_integrity = AIRLOCK_INTEGRITY_N
@@ -83,11 +83,10 @@
 	autoclose = TRUE
 	explosion_block = 1
 	hud_possible = list(DIAG_AIRLOCK_HUD)
+	smoothing_groups = SMOOTH_GROUP_AIRLOCK
 
-	interaction_flags_click = ALLOW_SILICON_REACH
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_OPEN
-	greyscale_config = /datum/greyscale_config/airlocks/custom
-	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565#777777"
+	interaction_flags_click = ALLOW_SILICON_REACH
 	blocks_emissive = EMISSIVE_BLOCK_NONE // Custom emissive blocker. We don't want the normal behavior.
 
 	///The type of door frame to drop during deconstruction
@@ -120,29 +119,24 @@
 	var/obj/item/note
 	/// The seal on the airlock
 	var/obj/item/seal
-	var/detonated = FALSE
 	var/abandoned = FALSE
 	/// Controls if the door closes quickly or not. FALSE = the door autocloses in 1.5 seconds, TRUE = 8 seconds - see autoclose_in()
 	var/normalspeed = TRUE
 	var/cutAiWire = FALSE
 	var/autoname = FALSE
-	var/doorOpen = 'sound/machines/airlock.ogg'
-	var/doorClose = 'sound/machines/airlockclose.ogg'
-	var/doorDeni = 'sound/machines/deniedbeep.ogg' // i'm thinkin' Deni's
-	var/boltUp = 'sound/machines/boltsup.ogg'
-	var/boltDown = 'sound/machines/boltsdown.ogg'
-	var/noPower = 'sound/machines/doorclick.ogg'
+	var/doorOpen = 'sound/machines/airlock/airlock.ogg'
+	var/doorClose = 'sound/machines/airlock/airlockclose.ogg'
+	var/doorDeni = 'sound/machines/beep/deniedbeep.ogg' // i'm thinkin' Deni's
+	var/boltUp = 'sound/machines/airlock/boltsup.ogg'
+	var/boltDown = 'sound/machines/airlock/boltsdown.ogg'
+	var/noPower = 'sound/machines/airlock/doorclick.ogg'
 	/// What airlock assembly mineral plating was applied to
 	var/previous_airlock = /obj/structure/door_assembly
 	/// Material of inner filling; if its an airlock with glass, this should be set to "glass"
-	var/airlock_material = "fill"
-	var/overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
+	var/airlock_material
+	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	/// Used for papers and photos pinned to the airlock
-	var/note_overlay_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
-	/// Do we use the old style of airlock rendering
-	/// This exists as legacy to allow "small" airlocks to render properly until they are resprited
-	/// This style is deprecated and support will be removed once all existing users are fixed
-	var/short_rendering = FALSE
+	var/note_overlay_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 
 	/// Airlock pump that overrides airlock controlls when set up for cycling
 	var/obj/machinery/atmospherics/components/unary/airlock_pump/cycle_pump
@@ -164,17 +158,11 @@
 	rad_insulation = RAD_MEDIUM_INSULATION
 
 /obj/machinery/door/airlock/Initialize(mapload)
-	// Here we check the style of greyscale_config, then cut down the number of colors passed along to 6 colors for window airlocks, or 5 for solids.
-	// This way we only need to pass along the full 7 color set when making a new airlock pattern.
-	if(!ispath(greyscale_config, /datum/greyscale_config/airlocks/custom))
-		if(glass)
-			greyscale_colors = (copytext(greyscale_colors, 1, 43))
-		else if(ispath(greyscale_config, /datum/greyscale_config/airlocks))
-			greyscale_colors = (copytext(greyscale_colors, 1, 36))
 	. = ..()
 
 	set_wires(get_wires())
-
+	if(glass)
+		airlock_material = "glass"
 	if(security_level > AIRLOCK_SECURITY_IRON)
 		atom_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
 		max_integrity = normal_integrity * AIRLOCK_INTEGRITY_MULTIPLIER
@@ -193,23 +181,11 @@
 	// Click on the floor to close airlocks
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
 
-	// copied from windoors, because fuck you and connect loc
-	var/static/list/loc_connections = list(
-		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
+	AddElement(/datum/element/nav_computer_icon, 'icons/effects/nav_computer_indicators.dmi', "airlock", TRUE)
 
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
+
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
-
-	if(mapload)
-		return INITIALIZE_HINT_LATELOAD
-
-/obj/machinery/door/airlock/post_machine_initialize(mapload)
-	. = ..()
-	if(mapload)
-		auto_align()
-	update_appearance()
 
 /obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
@@ -521,27 +497,23 @@
 /obj/machinery/door/airlock/proc/is_secure()
 	return (security_level > 0)
 
-/obj/machinery/door/airlock/update_icon(updates=ALL, state=0)
+/obj/machinery/door/airlock/update_icon(updates=ALL, state=0, override=FALSE)
+	if(operating && !override)
+		return
+
 	if(!state)
 		state = density ? AIRLOCK_CLOSED : AIRLOCK_OPEN
-	// operating is "doing an animtion"
-	// FUCK
-	if(!operating || (state == AIRLOCK_OPENING || state == AIRLOCK_CLOSING || state == AIRLOCK_EMAG))
-		airlock_state = state
+	airlock_state = state
 
 	. = ..()
 
 /obj/machinery/door/airlock/update_icon_state()
 	. = ..()
 	switch(airlock_state)
-		if(AIRLOCK_OPEN)
-			icon_state = short_rendering ? "open" : "open_top"
-		if(AIRLOCK_CLOSED, AIRLOCK_DENY, AIRLOCK_EMAG)
-			icon_state = "closed"
-		if(AIRLOCK_OPENING)
-			icon_state = "opening"
-		if(AIRLOCK_CLOSING)
-			icon_state = "closing"
+		if(AIRLOCK_OPEN, AIRLOCK_CLOSED)
+			icon_state = ""
+		if(AIRLOCK_DENY, AIRLOCK_OPENING, AIRLOCK_CLOSING, AIRLOCK_EMAG)
+			icon_state = "nonexistenticonstate" //MADNESS
 
 /obj/machinery/door/airlock/update_overlays()
 	. = ..()
@@ -555,8 +527,6 @@
 				light_state = AIRLOCK_LIGHT_BOLTS
 			else if(emergency)
 				light_state = AIRLOCK_LIGHT_EMERGENCY
-			if(!greyscale_config)
-				. += get_airlock_overlay("[airlock_material]_closed", icon , src)
 		if(AIRLOCK_DENY)
 			frame_state = AIRLOCK_FRAME_CLOSED
 			light_state = AIRLOCK_LIGHT_DENIED
@@ -565,21 +535,20 @@
 		if(AIRLOCK_CLOSING)
 			frame_state = AIRLOCK_FRAME_CLOSING
 			light_state = AIRLOCK_LIGHT_CLOSING
-			if(!greyscale_config)
-				. += get_airlock_overlay("[airlock_material]_closing", icon , src)
 		if(AIRLOCK_OPEN)
 			frame_state = AIRLOCK_FRAME_OPEN
-			// If we're open we layer the bit below us "above" any mobs so they can walk through
-			if(!short_rendering)
-				. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-				. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
-			if(!greyscale_config)
-				. += get_airlock_overlay("[airlock_material]_open", icon , src)
 		if(AIRLOCK_OPENING)
 			frame_state = AIRLOCK_FRAME_OPENING
 			light_state = AIRLOCK_LIGHT_OPENING
-			if(!greyscale_config)
-				. += get_airlock_overlay("[airlock_material]_opening", icon , src)
+
+	. += get_airlock_overlay(frame_state, icon, src, em_block = TRUE)
+	if(airlock_material)
+		. += get_airlock_overlay("[airlock_material]_[frame_state]", overlays_file, src, em_block = TRUE)
+	else
+		. += get_airlock_overlay("fill_[frame_state]", icon, src, em_block = TRUE)
+
+	if(lights && hasPower() && light_state)
+		. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
 
 	if(panel_open)
 		. += get_airlock_overlay("panel_[frame_state][security_level ? "_protected" : null]", overlays_file, src, em_block = TRUE)
@@ -589,18 +558,7 @@
 	if(airlock_state == AIRLOCK_EMAG)
 		. += get_airlock_overlay("sparks", overlays_file, src, em_block = FALSE)
 
-	if(hasPower()) //Indicator Lights section
-
-		if(unres_sides && airlock_state == AIRLOCK_CLOSED) //Unrestricted access side. This is the lowest priority light, so we do it first
-			for(var/heading in list(dir,turn(dir, 180))) //Only check the door's dir and the flip
-				if(!(unres_sides & heading))
-					continue
-				for(var/mutable_appearance/bluelight in get_airlock_overlay("lights_unres", overlays_file, src, em_block = FALSE))
-					. += make_mutable_appearance_directional(bluelight, heading)
-
-		if(lights) //bolt lights
-			. += get_airlock_overlay("lights_[light_state]", overlays_file, src, em_block = FALSE)
-
+	if(hasPower())
 		if(frame_state == AIRLOCK_FRAME_CLOSED)
 			if(atom_integrity < integrity_failure * max_integrity)
 				. += get_airlock_overlay("sparks_broken", overlays_file, src, em_block = FALSE)
@@ -616,9 +574,26 @@
 	if(frame_state == AIRLOCK_FRAME_CLOSED && seal)
 		. += get_airlock_overlay("sealed", overlays_file, src, em_block = TRUE)
 
-	update_greyscale()
+	if(hasPower() && unres_sides)
+		for(var/heading in list(NORTH,SOUTH,EAST,WEST))
+			if(!(unres_sides & heading))
+				continue
+			var/mutable_appearance/floorlight = mutable_appearance('icons/obj/doors/airlocks/station/overlays.dmi', "unres_[heading]", FLOAT_LAYER, src, ABOVE_LIGHTING_PLANE)
+			switch (heading)
+				if (NORTH)
+					floorlight.pixel_w = 0
+					floorlight.pixel_z = 32
+				if (SOUTH)
+					floorlight.pixel_w = 0
+					floorlight.pixel_z = -32
+				if (EAST)
+					floorlight.pixel_w = 32
+					floorlight.pixel_z = 0
+				if (WEST)
+					floorlight.pixel_w = -32
+					floorlight.pixel_z = 0
+			. += floorlight
 
-// I HATE AIRLOCKS AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
 /obj/machinery/door/airlock/run_animation(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
@@ -727,8 +702,9 @@
 
 	switch (held_item?.tool_behaviour)
 		if (TOOL_SCREWDRIVER)
-			context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
-			return CONTEXTUAL_SCREENTIP_SET
+			if(has_access_panel)
+				context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+				return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_CROWBAR)
 			if (panel_open)
 				if (security_level == AIRLOCK_SECURITY_PLASTEEL_O_S || security_level == AIRLOCK_SECURITY_PLASTEEL_I_S)
@@ -754,16 +730,12 @@
 
 			context[SCREENTIP_CONTEXT_LMB] = "Repair"
 			return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/wrench/bolter))
+		if(locked)
+			context[SCREENTIP_CONTEXT_LMB] = "Raise bolts"
+			return CONTEXTUAL_SCREENTIP_SET
 
-		if(TOOL_WRENCH)
-			if(panel_open && security_level == AIRLOCK_SECURITY_NONE)
-				if(istype(held_item, /obj/item/wrench/bolter))
-					if(locked)
-						context[SCREENTIP_CONTEXT_LMB] = "Raise bolts"
-						return CONTEXTUAL_SCREENTIP_SET
-				context[SCREENTIP_CONTEXT_LMB] = "Change orientation"
-				return CONTEXTUAL_SCREENTIP_SET
-
+		return CONTEXTUAL_SCREENTIP_SET
 	return .
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
@@ -775,9 +747,6 @@
 			to_chat(user, span_warning("Airlock AI control has been blocked with a firewall. Unable to hack."))
 	if(obj_flags & EMAGGED)
 		to_chat(user, span_warning("Unable to interface: Airlock is unresponsive."))
-		return
-	if(detonated)
-		to_chat(user, span_warning("Unable to interface. Airlock control panel damaged."))
 		return
 
 	ui_interact(user)
@@ -888,7 +857,7 @@
 		set_electrified(MACHINE_ELECTRIFIED_PERMANENT)
 
 /obj/machinery/door/airlock/screwdriver_act(mob/living/user, obj/item/tool)
-	if(panel_open && detonated)
+	if(!has_access_panel)
 		to_chat(user, span_warning("[src] has no maintenance panel!"))
 		return ITEM_INTERACT_SUCCESS
 	toggle_panel_open()
@@ -896,31 +865,6 @@
 	tool.play_tool_sound(src)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/door/airlock/wrench_act(mob/living/user, obj/item/tool)
-	if(!panel_open || !density)
-		return ..()
-
-	if(security_level != AIRLOCK_SECURITY_NONE)
-		balloon_alert(user, "cannot access!")
-		return TRUE
-
-	if(shock(user, 100))
-		return TRUE
-
-	if(locked)
-		if(!istype(tool, /obj/item/wrench/bolter))
-			balloon_alert(user, "bolted!")
-		else
-			return do_bolter_unbolt(user, tool)
-		return TRUE
-
-	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
-		return TRUE
-
-	setDir(turn(dir, 90))
-	balloon_alert(user, "changed orientation [dir2text(dir)]")
-	return TRUE
 
 /obj/machinery/door/airlock/wirecutter_act(mob/living/user, obj/item/tool)
 	if(panel_open && security_level == AIRLOCK_SECURITY_PLASTEEL)
@@ -983,11 +927,22 @@
 		update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/door/airlock/proc/do_bolter_unbolt(mob/living/user, /obj/item/wrench/bolter/bolter)
-	balloon_alert(user, "raising bolts...")
-	if(!do_after(user, 5 SECONDS, src))
+/obj/machinery/door/airlock/wrench_act(mob/living/user, obj/item/tool)
+	if(!locked)
 		return
-	unbolt()
+	if(!panel_open)
+		balloon_alert(user, "panel is closed!")
+		return
+	if(security_level != AIRLOCK_SECURITY_NONE)
+		balloon_alert(user, "airlock is reinforced!")
+		return
+
+	if(istype(tool, /obj/item/wrench/bolter))
+		balloon_alert(user, "raising bolts...")
+		if(!do_after(user, 5 SECONDS, src))
+			return
+		unbolt()
+
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/airlock/welder_act(mob/living/user, obj/item/tool)
@@ -1095,7 +1050,7 @@
 			to_chat(user, span_warning("[src] has already been sealed!"))
 			return
 		user.visible_message(span_notice("[user] begins sealing [src]."), span_notice("You begin sealing [src]."))
-		playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
+		playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE)
 		if(!do_after(user, airlockseal.seal_time, target = src))
 			return
 		if(!density)
@@ -1107,7 +1062,7 @@
 		if(!user.transferItemToLoc(airlockseal, src))
 			to_chat(user, span_warning("For some reason, you can't attach [airlockseal]!"))
 			return
-		playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+		playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
 		user.visible_message(span_notice("[user] finishes sealing [src]."), span_notice("You finish sealing [src]."))
 		seal = airlockseal
 		modify_max_integrity(max_integrity * AIRLOCK_SEAL_MULTIPLIER)
@@ -1181,12 +1136,12 @@
 		to_chat(user, span_warning("You don't have the dexterity to remove the seal!"))
 		return TRUE
 	user.visible_message(span_notice("[user] begins removing the seal from [src]."), span_notice("You begin removing [src]'s pneumatic seal."))
-	playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+	playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
 	if(!do_after(user, airlockseal.unseal_time, target = src))
 		return TRUE
 	if(!seal)
 		return TRUE
-	playsound(src, 'sound/items/jaws_pry.ogg', 30, TRUE)
+	playsound(src, 'sound/items/tools/jaws_pry.ogg', 30, TRUE)
 	airlockseal.forceMove(get_turf(user))
 	user.visible_message(span_notice("[user] finishes removing the seal from [src]."), span_notice("You finish removing [src]'s pneumatic seal."))
 	seal = null
@@ -1219,13 +1174,15 @@
 
 	return TRUE
 
-/obj/machinery/door/airlock/try_to_crowbar(obj/item/I, mob/living/user, forced = FALSE)
-	if(I?.tool_behaviour == TOOL_CROWBAR && should_try_removing_electronics() && !operating)
+/obj/machinery/door/airlock/try_to_crowbar(obj/item/tool, mob/living/user, forced = FALSE)
+	if(!isnull(tool) && tool.tool_behaviour == TOOL_CROWBAR && should_try_removing_electronics() && !operating)
 		user.visible_message(span_notice("[user] removes the electronics from the airlock assembly."), \
 			span_notice("You start to remove electronics from the airlock assembly..."))
-		if(I.use_tool(src, user, 40, volume=100))
+
+		if(tool.use_tool(src, user, 40, volume = 100))
 			deconstruct(TRUE, user)
 			return
+
 	if(seal)
 		to_chat(user, span_warning("Remove the seal first!"))
 		return
@@ -1235,37 +1192,49 @@
 	if(welded)
 		to_chat(user, span_warning("It's welded, it won't budge!"))
 		return
-	if(hasPower())
-		if(forced)
-			var/check_electrified = isElectrified() //setting this so we can check if the mob got shocked during the do_after below
-			if(check_electrified && shock(user,100))
-				return //it's like sticking a fork in a power socket
 
-			if(!density)//already open
-				return
+	if(!hasPower())
+		if(operating)
+			return
 
-			if(!prying_so_hard)
-				var/time_to_open = 50
-				playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
-				prying_so_hard = TRUE
-				if(do_after(user, time_to_open, src))
-					if(check_electrified && shock(user,100))
-						prying_so_hard = FALSE
-						return
-					open(BYPASS_DOOR_CHECKS)
-					take_damage(25, BRUTE, 0, 0) // Enough to sometimes spark
-					if(density && !open(BYPASS_DOOR_CHECKS))
-						to_chat(user, span_warning("Despite your attempts, [src] refuses to open."))
-				prying_so_hard = FALSE
-				return
+		if(istype(tool, /obj/item/fireaxe) && !HAS_TRAIT(tool, TRAIT_WIELDED)) //being fireaxe'd
+			to_chat(user, span_warning("You need to be wielding [tool] to do that!"))
+			return
+
+		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
+		return
+
+	if(!forced)
 		to_chat(user, span_warning("The airlock's motors resist your efforts to force it!"))
 		return
 
-	if(!operating)
-		if(istype(I, /obj/item/fireaxe) && !HAS_TRAIT(I, TRAIT_WIELDED)) //being fireaxe'd
-			to_chat(user, span_warning("You need to be wielding [I] to do that!"))
-			return
-		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
+	var/check_electrified = isElectrified() //setting this so we can check if the mob got shocked during the do_after below
+	if(check_electrified && shock(user,100))
+		return //it's like sticking a fork in a power socket
+
+	if(!density)//already open
+		return
+
+	if(prying_so_hard)
+		return
+
+	var/time_to_open = 5 SECONDS
+	playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE) //is it aliens or just the CE being a dick?
+	prying_so_hard = TRUE
+
+	if(!tool.use_tool(src, user, time_to_open, volume = 100))
+		prying_so_hard = FALSE
+		return
+
+	prying_so_hard = FALSE
+
+	if(check_electrified && shock(user, 100))
+		return
+
+	open(BYPASS_DOOR_CHECKS)
+	take_damage(AIRLOCK_PRY_DAMAGE, BRUTE, 0, 0) // Enough to sometimes spark
+	if(density && !open(BYPASS_DOOR_CHECKS))
+		to_chat(user, span_warning("Despite your attempts, [src] refuses to open."))
 
 /obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
 	if(cycle_pump && !operating && !welded && !seal && locked && density)
@@ -1305,7 +1274,7 @@
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
 	operating = TRUE
-	update_icon(ALL, AIRLOCK_OPENING)
+	update_icon(ALL, AIRLOCK_OPENING, TRUE)
 	var/transparent_delay = animation_segment_delay(AIRLOCK_OPENING_TRANSPARENT)
 	sleep(transparent_delay)
 	set_opacity(0)
@@ -1322,8 +1291,8 @@
 	var/open_delay = animation_segment_delay(AIRLOCK_OPENING_FINISHED) - transparent_delay - passable_delay
 	sleep(open_delay)
 	layer = OPEN_DOOR_LAYER
+	update_icon(ALL, AIRLOCK_OPEN, TRUE)
 	operating = FALSE
-	update_icon(ALL, AIRLOCK_OPEN)
 	if(delayed_close_requested)
 		delayed_close_requested = FALSE
 		addtimer(CALLBACK(src, PROC_REF(close)), FORCING_DOOR_CHECKS)
@@ -1347,7 +1316,7 @@
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS) // No power usage, special sound, get it open.
-			playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
 			return TRUE
 
 		else
@@ -1381,12 +1350,12 @@
 		SSexplosions.med_mov_atom += killthis
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	operating = TRUE
-	update_icon(ALL, AIRLOCK_CLOSING)
+	update_icon(ALL, AIRLOCK_CLOSING, 1)
 	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
 		set_density(TRUE)
 		if(multi_tile)
-			filler.density = TRUE
+			filler.set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
 	var/unpassable_delay = animation_segment_delay(AIRLOCK_CLOSING_UNPASSABLE)
@@ -1394,7 +1363,7 @@
 	if(!air_tight)
 		set_density(TRUE)
 		if(multi_tile)
-			filler.density = TRUE
+			filler.set_density(TRUE)
 		flags_1 |= PREVENT_CLICK_UNDER_1
 		air_update_turf(TRUE, TRUE)
 	var/opaque_delay = animation_segment_delay(AIRLOCK_CLOSING_OPAQUE) - unpassable_delay
@@ -1410,7 +1379,6 @@
 	sleep(close_delay)
 	update_icon(ALL, AIRLOCK_CLOSED, 1)
 	operating = FALSE
-	update_icon(ALL, AIRLOCK_CLOSED)
 	delayed_close_requested = FALSE
 	if(!dangerous_close)
 		CheckForMobs()
@@ -1426,7 +1394,7 @@
 			return TRUE
 
 		if(BYPASS_DOOR_CHECKS)
-			playsound(src, 'sound/machines/airlockforced.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/airlock/airlockforced.ogg', 30, TRUE)
 			return TRUE
 
 		else
@@ -1438,9 +1406,10 @@
 /obj/machinery/door/airlock/proc/prison_open()
 	if(obj_flags & EMAGGED)
 		return
-	locked = FALSE
+	if(locked)
+		unbolt()
 	open()
-	locked = TRUE
+	bolt()
 	return
 
 // gets called when a player uses an airlock painter on this airlock
@@ -1483,7 +1452,7 @@
 			var/obj/item/card/emag/doorjack/doorjack_card = emag_card
 			doorjack_card.use_charge(user)
 		operating = TRUE
-		update_icon(ALL, AIRLOCK_EMAG)
+		update_icon(ALL, AIRLOCK_EMAG, 1)
 		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
 		return TRUE
 	return FALSE
@@ -1519,7 +1488,7 @@
 	var/time_to_open = 5 //half a second
 	if(hasPower())
 		time_to_open = 5 SECONDS //Powered airlocks take longer to open, and are loud.
-		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+		playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 100, TRUE)
 
 
 	if(do_after(user, time_to_open, src))
@@ -1546,27 +1515,6 @@
 		open()
 		safe = TRUE
 
-/// Returns true if a directional move is valid, false otherwise
-/obj/machinery/door/airlock/proc/allow_movement_for(atom/movable/passing_through, direction)
-	if(passing_through.movement_type & PHASING)
-		return TRUE
-	if(density && !operating)
-		return TRUE // to prevent people from getting stuck in doors
-	if(locate(/obj/machinery/door/airlock) in get_step(src, direction))
-		return TRUE // going from one airlock to another
-	return (direction == dir || direction == turn(dir, 180))
-
-/obj/machinery/door/airlock/CanAllowThrough(atom/movable/mover, border_dir)
-	if(allow_movement_for(mover, border_dir))
-		return ..() // only allow movement if they are coming in or out the same direction of the airlock
-
-	return FALSE // lmao theres a wall there fucko
-
-/obj/machinery/door/airlock/proc/on_exit(datum/source, atom/movable/leaving, direction)
-	SIGNAL_HANDLER
-
-	if(!allow_movement_for(leaving, direction))
-		return COMPONENT_ATOM_BLOCK_EXIT
 
 /obj/machinery/door/airlock/proc/on_break()
 	SIGNAL_HANDLER
@@ -1611,14 +1559,13 @@
 /obj/machinery/door/airlock/proc/prepare_deconstruction_assembly(obj/structure/door_assembly/assembly)
 	assembly.heat_proof_finished = heat_proof //tracks whether there's rglass in
 	assembly.set_anchored(TRUE)
-	assembly.setDir(dir)
 	assembly.glass = glass
-	assembly.set_greyscale(greyscale_colors, greyscale_config)
 	assembly.state = AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS
 	assembly.created_name = name
 	assembly.previous_assembly = previous_airlock
 	assembly.update_name()
 	assembly.update_appearance()
+	assembly.dir = dir
 
 /obj/machinery/door/airlock/on_deconstruction(disassembled)
 	var/obj/structure/door_assembly/A
@@ -1661,7 +1608,7 @@
 	return FALSE
 
 /obj/machinery/door/airlock/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data[RCD_DESIGN_MODE])
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
 		if(RCD_DECONSTRUCT)
 			qdel(src)
 			return TRUE
@@ -1887,13 +1834,13 @@
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
 
-/obj/structure/fluff/airlock_filler/can_be_pulled(user, grab_state, force)
+/obj/structure/fluff/airlock_filler/can_be_pulled(user, force)
 	return FALSE
 
 /obj/structure/fluff/airlock_filler/singularity_act()
 	return
 
-/obj/structure/fluff/airlock_filler/singularity_pull(S, current_size)
+/obj/structure/fluff/airlock_filler/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/machinery/door/airlock/proc/set_cycle_pump(obj/machinery/atmospherics/components/unary/airlock_pump/pump)
@@ -1914,29 +1861,23 @@
 	icon = 'icons/obj/doors/airlocks/station/command.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_com
 	normal_integrity = 450
-	greyscale_colors = "#3e7bc1#3e7bc1#2a5b94#2a5b94#369de5#6d6565#2c5280"
 
 /obj/machinery/door/airlock/security
 	name = "security airlock"
-	icon = 'icons/obj/doors/airlocks/tall/department/security.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/station/security.dmi'
+	var/id = null
 	assemblytype = /obj/structure/door_assembly/door_assembly_sec
 	normal_integrity = 450
-	greyscale_config = null
-	greyscale_colors = null
-	var/id = null
 
 /obj/machinery/door/airlock/engineering
 	name = "engineering airlock"
 	icon = 'icons/obj/doors/airlocks/station/engineering.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_eng
-	greyscale_colors = "#d8a81b#d8a81b#c2940d#c2940d#7f292f#6d6565#997715"
 
 /obj/machinery/door/airlock/medical
 	name = "medical airlock"
 	icon = 'icons/obj/doors/airlocks/station/medical.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_med
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#66ccff#6d6565#ffffff"
 
 /obj/machinery/door/airlock/hydroponics	//Hydroponics front doors!
 	name = "hydroponics airlock"
@@ -1945,57 +1886,45 @@
 
 /obj/machinery/door/airlock/maintenance
 	name = "maintenance access"
-	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mai
 	normal_integrity = 250
-	greyscale_config = null
-	greyscale_colors = null
 
 /obj/machinery/door/airlock/maintenance/external
 	name = "external airlock access"
 	icon = 'icons/obj/doors/airlocks/station/maintenanceexternal.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_extmai
-	greyscale_config = /datum/greyscale_config/airlocks/custom
-	greyscale_colors = "#585858#585858#5f5f5f#6d6b6b#ae4e26#ae4e26#4a4a4a"
 
 /obj/machinery/door/airlock/mining
 	name = "mining airlock"
 	icon = 'icons/obj/doors/airlocks/station/mining.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_min
-	greyscale_colors = "#c39344#c39344#b3863c#b3863c#78430d#6d6565#967032"
 
 /obj/machinery/door/airlock/atmos
 	name = "atmospherics airlock"
-	icon = 'icons/obj/doors/airlocks/tall/department/atmos.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/station/atmos.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_atmo
-	greyscale_config = null
-	greyscale_colors = null
 
 /obj/machinery/door/airlock/research
 	name = "research airlock"
 	icon = 'icons/obj/doors/airlocks/station/research.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_research
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#974cdc#6d6565#ffffff"
 
 /obj/machinery/door/airlock/freezer
 	name = "freezer airlock"
 	icon = 'icons/obj/doors/airlocks/station/freezer.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_fre
-	greyscale_colors = "#ffffff#ffffff#eaeaea#eaeaea#808080#6d6565#ffffff"
+	can_be_glass = FALSE
 
 /obj/machinery/door/airlock/science
 	name = "science airlock"
 	icon = 'icons/obj/doors/airlocks/station/science.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_science
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#9966ff#6d6565#ffffff"
 
 /obj/machinery/door/airlock/virology
 	name = "virology airlock"
 	icon = 'icons/obj/doors/airlocks/station/virology.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_viro
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#006600#6d6565#ffffff"
 
 // Station Airlocks Glass
 
@@ -2003,15 +1932,11 @@
 	name = "glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565"
-
 
 /obj/machinery/door/airlock/glass/incinerator
 	autoclose = FALSE
 	heat_proof = TRUE
 	req_access = list(ACCESS_SYNDICATE)
-	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565"
 
 /obj/machinery/door/airlock/glass/incinerator/syndicatelava_interior
 	name = "Turbine Interior Airlock"
@@ -2026,15 +1951,11 @@
 	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 400
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#3e7bc1#3e7bc1#2a5b94#2a5b94#369de5#6d6565"
 
 /obj/machinery/door/airlock/engineering/glass
 	name = "engineering glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#d8a81b#d8a81b#c2940d#c2940d#7f292f#6d6565"
 
 /obj/machinery/door/airlock/engineering/glass/critical
 	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
@@ -2044,28 +1965,21 @@
 	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 400
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/medical/glass
 	name = "medical glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#66ccff#6d6565"
 
 /obj/machinery/door/airlock/hydroponics/glass //Uses same icon as medical/glass, maybe update it with its own unique icon one day?
 	name = "hydroponics glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#a5a7ac#a5a7ac#969696#969696#5ea52c#6d6565"
 
 /obj/machinery/door/airlock/research/glass
 	name = "research glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#974cdc#6d6565"
 
 /obj/machinery/door/airlock/research/glass/incinerator
 	autoclose = FALSE
@@ -2083,14 +1997,11 @@
 	name = "mining glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#c39344#c39344#b3863c#b3863c#78430d#6d6565"
 
 /obj/machinery/door/airlock/atmos/glass
 	name = "atmospheric glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/atmos/glass/critical
 	critical_machine = TRUE //stops greytide virus from opening & bolting doors in critical positions, such as the SM chamber.
@@ -2099,38 +2010,29 @@
 	name = "science glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#9966ff#6d6565"
 
 /obj/machinery/door/airlock/virology/glass
 	name = "virology glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#ffffff#ffffff#ffffff#ffffff#006600#6d6565"
 
 /obj/machinery/door/airlock/maintenance/glass
-	name = "maintainence glass airlock"
+	name = "maintenance glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/maintenance/external/glass
-	name = "maintainence external glass airlock"
+	name = "maintenance external glass airlock"
 	opacity = FALSE
 	glass = TRUE
 	normal_integrity = 200
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#585858#585858#5f5f5f#6d6b6b#ae4e26#ae4e26"
 
 // Station Airlocks Mineral
 
 /obj/machinery/door/airlock/gold
 	name = "gold airlock"
-	icon = 'icons/obj/doors/airlocks/tall/mineral/gold.dmi'
+	icon = 'icons/obj/doors/airlocks/station/gold.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_gold
-	greyscale_config = null
-	greyscale_colors = null
 
 /obj/machinery/door/airlock/gold/discoinferno
 	heat_proof = TRUE
@@ -2149,65 +2051,32 @@
 /obj/machinery/door/airlock/gold/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/silver
 	name = "silver airlock"
-	icon = 'icons/obj/doors/airlocks/tall/mineral/silver.dmi'
+	icon = 'icons/obj/doors/airlocks/station/silver.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_silver
-	greyscale_config = null
-	greyscale_colors = null
 
 /obj/machinery/door/airlock/silver/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/diamond
 	name = "diamond airlock"
-	icon = 'icons/obj/doors/airlocks/tall/mineral/diamond.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tall/mineral/diamond_overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/station/diamond.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_diamond
 	normal_integrity = 1000
 	explosion_block = 2
-	greyscale_config = null
-	greyscale_colors = null
-
-/obj/machinery/door/airlock/diamond/animation_length(animation)
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			return 0.6 SECONDS
-		if(DOOR_CLOSING_ANIMATION)
-			return 0.6 SECONDS
-		if(DOOR_DENY_ANIMATION)
-			return 0.3 SECONDS
-
-/obj/machinery/door/airlock/diamond/animation_segment_delay(animation)
-	switch(animation)
-		if(AIRLOCK_OPENING_TRANSPARENT)
-			return 0.2 SECONDS
-		if(AIRLOCK_OPENING_PASSABLE)
-			return 0.5 SECONDS
-		if(AIRLOCK_OPENING_FINISHED)
-			return 0.6 SECONDS
-		if(AIRLOCK_CLOSING_UNPASSABLE)
-			return 0.3 SECONDS
-		if(AIRLOCK_CLOSING_OPAQUE)
-			return 0.5 SECONDS
-		if(AIRLOCK_CLOSING_FINISHED)
-			return 0.6 SECONDS
 
 /obj/machinery/door/airlock/diamond/glass
 	normal_integrity = 950
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/uranium
 	name = "uranium airlock"
 	icon = 'icons/obj/doors/airlocks/station/uranium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_uranium
-	greyscale_colors = "#003300#003300#004400#004400#003300#6d6565#003300"
 	var/last_event = 0
 	//Is this airlock actually radioactive?
 	var/actually_radioactive = TRUE
@@ -2230,22 +2099,18 @@
 /obj/machinery/door/airlock/uranium/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#003300#003300#004400#004400#003300#6d6565"
 
 /obj/machinery/door/airlock/uranium/safe
 	actually_radioactive = FALSE
 
 /obj/machinery/door/airlock/uranium/glass/safe
 	actually_radioactive = FALSE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/plasma
 	name = "plasma airlock"
 	desc = "No way this can end badly."
 	icon = 'icons/obj/doors/airlocks/station/plasma.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_plasma
-	greyscale_colors = "#890e89#890e89#660066#660066#660066#6d6565#5d035d"
 	material_flags = MATERIAL_EFFECTS
 	material_modifier = 0.25
 
@@ -2259,8 +2124,6 @@
 /obj/machinery/door/airlock/plasma/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#890e89#890e89#660066#660066#660066#6d6565"
 
 /obj/machinery/door/airlock/bananium
 	name = "bananium airlock"
@@ -2268,52 +2131,40 @@
 	icon = 'icons/obj/doors/airlocks/station/bananium.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_bananium
 	doorOpen = 'sound/items/bikehorn.ogg'
-	greyscale_colors = "#ffff00#ffff00#ffff00#ffff00#ffff00#ffff00#ffff00"
 
 /obj/machinery/door/airlock/bananium/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#ffff00#ffff00#ffff00#ffff00#ffff00#ffff00"
 
 /obj/machinery/door/airlock/sandstone
 	name = "sandstone airlock"
 	icon = 'icons/obj/doors/airlocks/station/sandstone.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_sandstone
-	greyscale_colors = "#876f57#876f57#877869#877869#978471#6d6565#876f57"
 
 /obj/machinery/door/airlock/sandstone/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#876f57#876f57#877869#877869#978471#6d6565"
 
 /obj/machinery/door/airlock/wood
 	name = "wooden airlock"
-	icon = 'icons/obj/doors/airlocks/tall/wood.dmi'
+	icon = 'icons/obj/doors/airlocks/station/wood.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_wood
-	greyscale_config = null
-	greyscale_colors = null
 
 /obj/machinery/door/airlock/wood/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/titanium
 	name = "shuttle airlock"
 	assemblytype = /obj/structure/door_assembly/door_assembly_titanium
-	icon = 'icons/obj/doors/airlocks/tall/shuttle/shuttle.dmi'
+	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	normal_integrity = 400
-	greyscale_config = null
-	greyscale_colors = null
 
 /obj/machinery/door/airlock/titanium/glass
 	normal_integrity = 350
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/bronze
 	name = "bronze airlock"
@@ -2334,14 +2185,11 @@
 	icon = 'icons/obj/doors/airlocks/public/glass.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/public/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_public
-	greyscale_config = null
-	greyscale_colors = null
 
 /obj/machinery/door/airlock/public/glass
 	name = "public glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/public/glass/incinerator
 	autoclose = FALSE
@@ -2359,12 +2207,11 @@
 
 /obj/machinery/door/airlock/external
 	name = "external airlock"
-	icon = 'icons/obj/doors/airlocks/tall/external/external.dmi'
+	icon = 'icons/obj/doors/airlocks/external/external.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
-	greyscale_config = null
-	greyscale_colors = null
+
 	/// Whether or not the airlock can be opened without access from a certain direction while powered, or with bare hands from any direction while unpowered OR pressurized.
 	var/space_dir = null
 
@@ -2407,30 +2254,6 @@
 
 	return ..()
 
-/obj/machinery/door/airlock/external/animation_length(animation)
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			return 0.6 SECONDS
-		if(DOOR_CLOSING_ANIMATION)
-			return 0.6 SECONDS
-		if(DOOR_DENY_ANIMATION)
-			return 0.3 SECONDS
-
-/obj/machinery/door/airlock/external/animation_segment_delay(animation)
-	switch(animation)
-		if(AIRLOCK_OPENING_TRANSPARENT)
-			return 0.2 SECONDS
-		if(AIRLOCK_OPENING_PASSABLE)
-			return 0.5 SECONDS
-		if(AIRLOCK_OPENING_FINISHED)
-			return 0.6 SECONDS
-		if(AIRLOCK_CLOSING_UNPASSABLE)
-			return 0.3 SECONDS
-		if(AIRLOCK_CLOSING_OPAQUE)
-			return 0.5 SECONDS
-		if(AIRLOCK_CLOSING_FINISHED)
-			return 0.6 SECONDS
-
 // Access free external airlocks
 /obj/machinery/door/airlock/external/ruin
 
@@ -2438,194 +2261,90 @@
 	name = "external glass airlock"
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/external/glass/ruin
 
 // CentCom Airlocks
 
 /obj/machinery/door/airlock/centcom //Use grunge as a station side version, as these have special effects related to them via phobias and such.
-	icon = 'icons/obj/doors/airlocks/tall/centcom.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_centcom
+	can_be_glass = FALSE
 	normal_integrity = 1000
 	security_level = 6
 	explosion_block = 2
-	greyscale_config = null
-	greyscale_colors = null
 
 /obj/machinery/door/airlock/grunge
-	icon = 'icons/obj/doors/airlocks/tall/centcom.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/centcom/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/centcom/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_grunge
+	can_be_glass = FALSE
 
 
 // Vault Airlocks
 
 /obj/machinery/door/airlock/vault
 	name = "vault door"
-	icon = 'icons/obj/doors/airlocks/tall/vault/vault.dmi'
+	icon = 'icons/obj/doors/airlocks/vault/vault.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/vault/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_vault
+	can_be_glass = FALSE
 	explosion_block = 2
 	normal_integrity = 400 // reverse engieneerd: 400 * 1.5 (sec lvl 6) = 600 = original
 	security_level = 6
-	greyscale_config = null
-	greyscale_colors = null
 
-/obj/machinery/door/airlock/vault/animation_length(animation)
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			return 1.9 SECONDS
-		if(DOOR_CLOSING_ANIMATION)
-			return 1.9 SECONDS
-		if(DOOR_DENY_ANIMATION)
-			return 0.3 SECONDS
-
-/obj/machinery/door/airlock/vault/animation_segment_delay(animation)
-	switch(animation)
-		if(AIRLOCK_OPENING_TRANSPARENT)
-			return 1.3 SECONDS
-		if(AIRLOCK_OPENING_PASSABLE)
-			return 1.8 SECONDS
-		if(AIRLOCK_OPENING_FINISHED)
-			return 1.9 SECONDS
-		if(AIRLOCK_CLOSING_UNPASSABLE)
-			return 0.3 SECONDS
-		if(AIRLOCK_CLOSING_OPAQUE)
-			return 0.6 SECONDS
-		if(AIRLOCK_CLOSING_FINISHED)
-			return 1.9 SECONDS
 
 // Hatch Airlocks
 
 /obj/machinery/door/airlock/hatch
 	name = "airtight hatch"
-	icon = 'icons/obj/doors/airlocks/tall/hatch/centcom.dmi'
-	//overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
-	//note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/hatch/centcom.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_hatch
-	greyscale_config = null
-	greyscale_colors = null
+	can_be_glass = FALSE
 
-/obj/machinery/door/airlock/hatch/animation_length(animation)
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			return 0.95 SECONDS
-		if(DOOR_CLOSING_ANIMATION)
-			return 0.95 SECONDS
-		if(DOOR_DENY_ANIMATION)
-			return 0.3 SECONDS
-
-/obj/machinery/door/airlock/hatch/animation_segment_delay(animation)
-	switch(animation)
-		if(AIRLOCK_OPENING_TRANSPARENT)
-			return 0.25 SECONDS
-		if(AIRLOCK_OPENING_PASSABLE)
-			return 0.75 SECONDS
-		if(AIRLOCK_OPENING_FINISHED)
-			return 0.95 SECONDS
-		if(AIRLOCK_CLOSING_UNPASSABLE)
-			return 0.5 SECONDS
-		if(AIRLOCK_CLOSING_OPAQUE)
-			return 0.75 SECONDS
-		if(AIRLOCK_CLOSING_FINISHED)
-			return 0.95 SECONDS
-
-/obj/machinery/door/airlock/maintenance_hatch //Please dear fucking LORD make this a subtype of the above, they're the SAME GOD DAMN THING
+/obj/machinery/door/airlock/maintenance_hatch
 	name = "maintenance hatch"
-	icon = 'icons/obj/doors/airlocks/tall/hatch/maintenance.dmi'
-	//overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
-	//note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/hatch/maintenance.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
+	note_overlay_file = 'icons/obj/doors/airlocks/hatch/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_mhatch
-	greyscale_config = null
-	greyscale_colors = null
-
-/obj/machinery/door/airlock/maintenance_hatch/animation_length(animation)
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			return 0.9 SECONDS
-		if(DOOR_CLOSING_ANIMATION)
-			return 0.9 SECONDS
-		if(DOOR_DENY_ANIMATION)
-			return 0.3 SECONDS
-
-/obj/machinery/door/airlock/maintenance_hatch/animation_segment_delay(animation)
-	switch(animation)
-		if(AIRLOCK_OPENING_TRANSPARENT)
-			return 0.2 SECONDS
-		if(AIRLOCK_OPENING_PASSABLE)
-			return 0.6 SECONDS
-		if(AIRLOCK_OPENING_FINISHED)
-			return 0.9 SECONDS
-		if(AIRLOCK_CLOSING_UNPASSABLE)
-			return 0.4 SECONDS
-		if(AIRLOCK_CLOSING_OPAQUE)
-			return 0.8 SECONDS
-		if(AIRLOCK_CLOSING_FINISHED)
-			return 0.9 SECONDS
+	can_be_glass = FALSE
 
 // High Security Airlocks
 
 /obj/machinery/door/airlock/highsecurity
 	name = "high tech security airlock"
-	icon = 'icons/obj/doors/airlocks/tall/secure/highsec.dmi'
+	icon = 'icons/obj/doors/airlocks/highsec/highsec.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/highsec/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_highsecurity
+	can_be_glass = FALSE
 	explosion_block = 2
 	normal_integrity = 500
 	security_level = 1
 	damage_deflection = 30
-	greyscale_config = null
-	greyscale_colors = null
-
-/obj/machinery/door/airlock/highsecurity/animation_length(animation)
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			return 1.7 SECONDS
-		if(DOOR_CLOSING_ANIMATION)
-			return 1.7 SECONDS
-		if(DOOR_DENY_ANIMATION)
-			return 0.3 SECONDS
-
-/obj/machinery/door/airlock/highsecurity/animation_segment_delay(animation)
-	switch(animation)
-		if(AIRLOCK_OPENING_TRANSPARENT)
-			return 1.2 SECONDS
-		if(AIRLOCK_OPENING_PASSABLE)
-			return 1.6 SECONDS
-		if(AIRLOCK_OPENING_FINISHED)
-			return 1.7 SECONDS
-		if(AIRLOCK_CLOSING_UNPASSABLE)
-			return 0.3 SECONDS
-		if(AIRLOCK_CLOSING_OPAQUE)
-			return 0.7 SECONDS
-		if(AIRLOCK_CLOSING_FINISHED)
-			return 1.7 SECONDS
 
 // Shuttle Airlocks
 
 /obj/machinery/door/airlock/shuttle
 	name = "shuttle airlock"
-	icon = 'icons/obj/doors/airlocks/tall/shuttle/shuttle.dmi'
+	icon = 'icons/obj/doors/airlocks/shuttle/shuttle.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/shuttle/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_shuttle
-	greyscale_config = null
-	greyscale_colors = null
 
 /obj/machinery/door/airlock/shuttle/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/abductor
 	name = "alien airlock"
 	desc = "With humanity's current technological level, it could take years to hack this advanced airlock... or maybe we should give a screwdriver a try?"
 	icon = 'icons/obj/doors/airlocks/abductor/abductor_airlock.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/abductor/overlays.dmi'
-	// YET TO BE UPDATED TO 3/4ths
-	short_rendering = TRUE
 	assemblytype = /obj/structure/door_assembly/door_assembly_abductor
+	can_be_glass = FALSE
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	damage_deflection = 30
 	explosion_block = 3
@@ -2633,21 +2352,18 @@
 	aiControlDisabled = AI_WIRE_DISABLED
 	normal_integrity = 700
 	security_level = 1
-	greyscale_config = null
-	greyscale_colors = null
 
 // Cult Airlocks
 
 /obj/machinery/door/airlock/cult
 	name = "cult airlock"
-	icon = 'icons/obj/doors/airlocks/tall/cult/cult_runed.dmi'
+	icon = 'icons/obj/doors/airlocks/cult/runed/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/runed/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult
 	hackProof = TRUE
 	aiControlDisabled = AI_WIRE_DISABLED
 	req_access = list(ACCESS_BLOODCULT)
 	damage_deflection = 10
-	greyscale_config = null
-	greyscale_colors = null
 	var/openingoverlaytype = /obj/effect/temp_visual/cult/door
 	var/friendly = FALSE
 	var/stealthy = FALSE
@@ -2681,39 +2397,15 @@
 			new /obj/effect/temp_visual/cult/sac(loc)
 			var/atom/throwtarget
 			throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-			SEND_SOUND(L, sound(pick('sound/hallucinations/turn_around1.ogg','sound/hallucinations/turn_around2.ogg'),0,1,50))
+			SEND_SOUND(L, sound(SFX_HALLUCINATION_TURN_AROUND,0,1,50))
 			flash_color(L, flash_color=COLOR_CULT_RED, flash_time=20)
 			L.Paralyze(40)
 			L.throw_at(throwtarget, 5, 1)
 		return FALSE
 
-/obj/machinery/door/airlock/cult/animation_length(animation)
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			return 1.6 SECONDS
-		if(DOOR_CLOSING_ANIMATION)
-			return 1.6 SECONDS
-		if(DOOR_DENY_ANIMATION)
-			return 0.3 SECONDS
-
-/obj/machinery/door/airlock/cult/animation_segment_delay(animation)
-	switch(animation)
-		if(AIRLOCK_OPENING_TRANSPARENT)
-			return 1.3 SECONDS
-		if(AIRLOCK_OPENING_PASSABLE)
-			return 1.4 SECONDS
-		if(AIRLOCK_OPENING_FINISHED)
-			return 1.6 SECONDS
-		if(AIRLOCK_CLOSING_UNPASSABLE)
-			return 0.9 SECONDS
-		if(AIRLOCK_CLOSING_OPAQUE)
-			return 1.1 SECONDS
-		if(AIRLOCK_CLOSING_FINISHED)
-			return 1.6 SECONDS
-
 /obj/machinery/door/airlock/cult/proc/conceal()
-	icon = 'icons/obj/doors/airlocks/tall/maintenance.dmi'
-	overlays_file = 'icons/obj/doors/airlocks/tall/overlays.dmi'
+	icon = 'icons/obj/doors/airlocks/station/maintenance.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 	name = "Airlock"
 	desc = "It opens and closes."
 	stealthy = TRUE
@@ -2736,13 +2428,13 @@
 /obj/machinery/door/airlock/cult/glass
 	glass = TRUE
 	opacity = FALSE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/cult/glass/friendly
 	friendly = TRUE
 
 /obj/machinery/door/airlock/cult/unruned
-	icon = 'icons/obj/doors/airlocks/tall/cult/cult.dmi'
+	icon = 'icons/obj/doors/airlocks/cult/unruned/cult.dmi'
+	overlays_file = 'icons/obj/doors/airlocks/cult/unruned/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_cult/unruned
 	openingoverlaytype = /obj/effect/temp_visual/cult/door/unruned
 
@@ -2752,7 +2444,6 @@
 /obj/machinery/door/airlock/cult/unruned/glass
 	glass = TRUE
 	opacity = FALSE
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/cult/unruned/glass/friendly
 	friendly = TRUE
@@ -2769,36 +2460,8 @@
 /obj/machinery/door/airlock/material
 	name = "Airlock"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
-	greyscale_config = /datum/greyscale_config/airlocks
-	greyscale_colors = "#a5a7ac#a5a7ac#a5a7ac#a5a7ac#a5a7ac"
+	greyscale_config = /datum/greyscale_config/material_airlock
 	assemblytype = /obj/structure/door_assembly/door_assembly_material
-
-/obj/machinery/door/airlock/material/Initialize(mapload)
-	greyscale_colors = extend_colors(greyscale_colors)
-	return ..()
-
-/obj/machinery/door/airlock/material/set_greyscale(list/colors, new_config)
-	colors = extend_colors(colors)
-	return ..()
-
-/// Takes our greyscale colors, if we don't have enough add copies on till we do
-/obj/machinery/door/airlock/material/proc/extend_colors(grey_colors)
-	var/target = 7 // Colors required for custom, the longest config
-	if(!ispath(greyscale_config, /datum/greyscale_config/airlocks/custom))
-		if(glass)
-			target = 6
-		else if(ispath(greyscale_config, /datum/greyscale_config/airlocks))
-			target = 5
-
-	if(islist(grey_colors))
-		var/list/grey_list = grey_colors
-		grey_colors = grey_list.Join("")
-	var/list/split_greyscale = splittext(grey_colors, "#")
-	// 6 comes from the required length for /datum/greyscale_config/airlocks/window, our worst case scenario
-	// - 1 because the first # sections between nothing and the first color
-	for(var/i in 1 to (target - (length(split_greyscale) - 1)))
-		split_greyscale += split_greyscale[2] // backfill with the first color
-	return split_greyscale.Join("#")
 
 /obj/machinery/door/airlock/material/close(forced, force_crush)
 	. = ..()
@@ -2816,25 +2479,35 @@
 /obj/machinery/door/airlock/material/glass
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = /datum/greyscale_config/airlocks/window
-	greyscale_colors = "#a5a7ac#a5a7ac#a5a7ac#a5a7ac#a5a7ac#a5a7ac"
 
 // Multi-tile (Large) Airlocks
 
 /obj/machinery/door/airlock/multi_tile
 	icon = 'icons/obj/doors/airlocks/multi_tile/public/glass.dmi'
 	overlays_file = 'icons/obj/doors/airlocks/multi_tile/public/overlays.dmi'
-	// YET TO BE UPDATED TO 3/4ths
-	short_rendering = TRUE
 	assemblytype = /obj/structure/door_assembly/multi_tile/door_assembly_public
 	multi_tile = TRUE
 	opacity = FALSE
 	glass = TRUE
-	greyscale_config = null
-	greyscale_colors = null
+
+/obj/machinery/door/airlock/multi_tile/setDir(newdir)
+	. = ..()
+	set_bounds()
+
+/obj/structure/fluff/airlock_filler
+	name = "airlock fluff"
+	desc = "You shouldn't be able to see this fluff!"
+	icon = null
+	icon_state = null
+	density = TRUE
+	opacity = TRUE
+	anchored = TRUE
+	invisibility = INVISIBILITY_MAXIMUM
+	can_atmos_pass = ATMOS_PASS_DENSITY
+	/// The door/airlock this fluff panel is attached to
+	var/obj/machinery/door/filled_airlock
 
 /obj/machinery/door/airlock/multi_tile/public/glass
-	greyscale_config = /datum/greyscale_config/airlocks/window
 
 /obj/machinery/door/airlock/multi_tile/narsie_act()
 	return
@@ -2862,19 +2535,6 @@
 	set_density(TRUE)
 	operating = FALSE
 	return TRUE
-
-/obj/structure/fluff/airlock_filler
-	name = "airlock fluff"
-	desc = "You shouldn't be able to see this fluff!"
-	icon = null
-	icon_state = null
-	density = TRUE
-	opacity = TRUE
-	anchored = TRUE
-	invisibility = INVISIBILITY_MAXIMUM
-	can_atmos_pass = ATMOS_PASS_DENSITY
-	/// The door/airlock this fluff panel is attached to
-	var/obj/machinery/door/filled_airlock
 
 #undef AIRLOCK_SECURITY_NONE
 #undef AIRLOCK_SECURITY_IRON

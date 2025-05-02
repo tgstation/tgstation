@@ -30,7 +30,7 @@
 #define LIGHTING_ROUND_VALUE (1 / 64)
 
 /// icon used for lighting shading effects
-#define LIGHTING_ICON 'icons/effects/lighting_objects/lighting_object.dmi'
+#define LIGHTING_ICON 'icons/effects/lighting_object.dmi'
 
 /// If the max of the lighting lumcounts of each spectrum drops below this, disable luminosity on the lighting objects.
 /// Set to zero to disable soft lighting. Luminosity changes then work if it's lit at all.
@@ -46,6 +46,7 @@
 // These are a percentage of how much darkness to cut off (in rgb)
 #define LIGHTING_CUTOFF_VISIBLE 0
 #define LIGHTING_CUTOFF_REAL_LOW 4.5
+#define LIGHTING_CUTOFF_LOW 10
 #define LIGHTING_CUTOFF_MEDIUM 15
 #define LIGHTING_CUTOFF_HIGH 30
 #define LIGHTING_CUTOFF_FULLBRIGHT 100
@@ -55,6 +56,9 @@
 
 /// The amount of lumcount on a tile for it to be considered dark (used to determine reading and nyctophobia)
 #define LIGHTING_TILE_IS_DARK 0.2
+
+/// Weight of overlay lighting, in percentage of contribution towards total light
+#define OVERLAY_LIGHTING_WEIGHT 0.4
 
 //code assumes higher numbers override lower numbers.
 #define LIGHTING_NO_UPDATE 0

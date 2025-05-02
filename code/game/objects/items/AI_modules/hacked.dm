@@ -4,7 +4,7 @@
 	laws = list("")
 
 /obj/item/ai_module/syndicate/attack_self(mob/user)
-	var/targName = tgui_input_text(user, "Enter a new law for the AI", "Freeform Law Entry", laws[1], CONFIG_GET(number/max_law_len), TRUE)
+	var/targName = tgui_input_text(user, "Enter a new law for the AI", "Freeform Law Entry", laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
 		return
 	if(is_ic_filtered(targName)) // not even the syndicate can uwu
@@ -37,7 +37,7 @@
 /// Makes the AI Malf, as well as give it syndicate laws.
 /obj/item/ai_module/malf
 	name = "Infected AI Module"
-	desc = "An virus-infected AI Module."
+	desc = "A virus-infected AI Module."
 	bypass_law_amt_check = TRUE
 	laws = list("")
 	///Is this upload board unused?

@@ -32,8 +32,6 @@
 /area/ruin/space/has_grav/powered)
 "i" = (
 /obj/structure/closet{
-	base_pixel_x = 0;
-	base_pixel_y = 0;
 	icon_state = "oldcloset";
 	name = "strange closet";
 	enable_door_overlay = 0
@@ -65,7 +63,7 @@
 /obj/structure/chair/old{
 	dir = 1
 	},
-/obj/item/crowbar/large/heavy,
+/obj/item/crowbar/large/twenty_force,
 /turf/open/floor/oldshuttle,
 /area/ruin/space/has_grav/powered)
 "o" = (

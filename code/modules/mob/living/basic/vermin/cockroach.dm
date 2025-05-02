@@ -1,5 +1,4 @@
 /mob/living/basic/cockroach
-	SET_BASE_VISUAL_PIXEL(0, 0) // These guys are too small not to be tile-bound sorry
 	name = "cockroach"
 	desc = "This station is just crawling with bugs."
 	icon_state = "cockroach"
@@ -14,8 +13,6 @@
 	can_be_held = TRUE
 	gold_core_spawnable = FRIENDLY_SPAWN
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	shadow_type = SHADOW_SMALL
-	shadow_offset_y = 12
 
 	verb_say = "chitters"
 	verb_ask = "chitters inquisitively"
@@ -148,7 +145,7 @@
 	obj_damage = 10
 	melee_attack_cooldown = 1 SECONDS
 	gold_core_spawnable = HOSTILE_SPAWN
-	attack_sound = 'sound/weapons/bladeslice.ogg'
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
 	sharpness = SHARP_POINTY

@@ -145,7 +145,7 @@
 	var/new_trim = initial(copied_card.trim)
 
 	if(new_trim)
-		SSid_access.apply_trim_to_chameleon_card(agent_card, new_trim, TRUE)
+		SSid_access.apply_trim_override(agent_card, new_trim, TRUE)
 
 	// If the ID card hasn't been forged, we'll check if there has been an assignment set already by any new trim.
 	// If there has not, we set the assignment to the copied card's default as well as copying over the the
@@ -182,7 +182,7 @@
 	var/new_trim = initial(job_outfit.id_trim) ? initial(job_outfit.id_trim) : initial(copied_card.trim)
 
 	if(new_trim)
-		SSid_access.apply_trim_to_chameleon_card(agent_card, new_trim, FALSE)
+		SSid_access.apply_trim_override(agent_card, new_trim, FALSE)
 	else
 		agent_card.assignment = job_datum.title
 
@@ -229,7 +229,7 @@
 /datum/action/item_action/chameleon/change/id_trim/update_item(picked_trim_path)
 	var/obj/item/card/id/advanced/chameleon/agent_card = target
 
-	SSid_access.apply_trim_to_chameleon_card(agent_card, picked_trim_path, TRUE)
+	SSid_access.apply_trim_override(agent_card, picked_trim_path, TRUE)
 
 	agent_card.update_label()
 	agent_card.update_appearance(UPDATE_ICON)
@@ -301,3 +301,7 @@
 	. = ..()
 	for(var/other_type in other_cham_types)
 		add_chameleon_items(other_type)
+
+/datum/action/item_action/chameleon/change/gun/ballistic
+	chameleon_type = /obj/item/gun/ballistic
+	chameleon_name = "Gun"

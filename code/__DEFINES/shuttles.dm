@@ -62,6 +62,7 @@
 #define ENGINE_COEFF_MIN 0.5
 #define ENGINE_COEFF_MAX 2
 #define ENGINE_DEFAULT_MAXSPEED_ENGINES 5
+#define ENGINE_START_TIME 100
 
 // Alert level related
 #define ALERT_COEFF_AUTOEVAC_NORMAL 2.5
@@ -120,3 +121,31 @@
 #define SHUTTLE_EVENT_MISS_SHUTTLE 1 << 0
 ///spawned stuff should hit the shuttle
 #define SHUTTLE_EVENT_HIT_SHUTTLE 1 << 1
+
+// Hijack stages
+
+#define HIJACK_NOT_BEGUN 0
+#define HIJACK_STAGE_1 1
+#define HIJACK_STAGE_2 2
+#define HIJACK_STAGE_3 3
+#define HIJACK_STAGE_4 4
+#define HIJACK_COMPLETED 5
+
+// Custom shuttle construction errors
+#define ORIGIN_NOT_ON_SHUTTLE 1 << 0
+
+// The following two errors occur in mutually exclusive contexts, so they can share the same bitflag
+#define TOO_MANY_SHUTTLES 1 << 1
+#define FRAME_NOT_ADJACENT_TO_LINKED_SHUTTLE 1 << 1
+
+#define ABOVE_MAX_SHUTTLE_SIZE 1 << 2
+#define CUSTOM_AREA_NOT_COMPLETELY_CONTAINED 1 << 3
+#define INTERSECTS_NON_WHITELISTED_AREA 1 << 4
+#define CONTAINS_APC_OF_NON_CUSTOM_AREA 1 << 5
+
+// Custom shuttle engine defines
+#define CUSTOM_ENGINE_COEFF_MIN 0.5
+#define CUSTOM_ENGINE_COEFF_MAX 10
+
+#define CUSTOM_ENGINE_POWER_MULTIPLIER 25
+#define CUSTOM_ENGINE_POWER_TURF_COUNT_OFFSET 5

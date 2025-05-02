@@ -1,0 +1,6 @@
+{
+grav_gen_start.ogg
+grav_gen_mid1.ogg
+grav_gen_mid2.ogg - + Explosion 7b by LiamG_SFX -- https://freesound.org/s/322492/ -- License: Attribution NonCommercial 4.0
+grav_gen_end.ogg
+} made by sadboysuss by editing a sound made by kayozz , license: CC-by-SA

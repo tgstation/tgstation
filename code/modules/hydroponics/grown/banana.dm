@@ -30,7 +30,7 @@
 
 /obj/item/food/grown/banana/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/grown/banana/Initialize(mapload)
 	. = ..()
@@ -39,7 +39,7 @@
 
 ///Clowns will always like bananas.
 /obj/item/food/grown/banana/proc/check_liked(mob/living/carbon/human/consumer)
-	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if (!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM))
 		return FOOD_LIKED
 
@@ -161,7 +161,7 @@
 
 /obj/item/food/grown/banana/bunch
 	name = "banana bunch"
-	desc = "Am exquisite bunch of bananas. The almost otherwordly plumpness steers the mind any discening entertainer towards the divine."
+	desc = "An exquisite bunch of bananas. The almost otherwordly plumpness steers the mind any discerning entertainer towards the divine."
 	icon_state = "banana_bunch"
 	bite_consumption_mod = 4
 	var/is_ripening = FALSE

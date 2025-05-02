@@ -62,6 +62,7 @@
 		/obj/item/storage/fancy/cigarettes,
 		/obj/item/lighter,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
+		/obj/item/gun/energy/laser/musket,
 		/obj/item/radio,
 	)
 
@@ -83,6 +84,7 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/gun/ballistic/revolver/c38/detective,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
+		/obj/item/gun/energy/laser/musket,
 		/obj/item/radio,
 	)
 
@@ -129,6 +131,7 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/gun/ballistic/revolver/c38/detective,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
+		/obj/item/gun/energy/laser/musket,
 		/obj/item/radio,
 	)
 
@@ -163,6 +166,7 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/gun/ballistic/revolver/c38/detective,
 		/obj/item/gun/ballistic/rifle/boltaction/pipegun,
+		/obj/item/gun/energy/laser/musket,
 		/obj/item/radio,
 	)
 

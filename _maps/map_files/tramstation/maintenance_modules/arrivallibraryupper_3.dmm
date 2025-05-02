@@ -7,6 +7,11 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
+"f" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/warning/vacuum/external/directional/south,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/aft)
 "h" = (
 /turf/open/misc/asteroid/airless,
 /area/station/asteroid)
@@ -27,7 +32,6 @@
 "n" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
-/obj/structure/sign/warning/vacuum/external,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "p" = (
@@ -394,7 +398,7 @@ a
 a
 a
 Z
-Z
+f
 y
 w
 G

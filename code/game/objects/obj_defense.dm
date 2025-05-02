@@ -1,6 +1,11 @@
-/obj/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+
+/obj/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	..()
-	take_damage(AM.throwforce, BRUTE, MELEE, 1, get_dir(src, AM))
+	var/damage_taken = hit_by.throwforce
+	if(isitem(hit_by))
+		var/obj/item/as_item = hit_by
+		damage_taken *= as_item.demolition_mod
+	take_damage(damage_taken, BRUTE, MELEE, 1, get_dir(src, hit_by))
 
 /obj/ex_act(severity, target)
 	if(resistance_flags & INDESTRUCTIBLE)
@@ -27,7 +32,6 @@
 	if(. != BULLET_ACT_HIT)
 		return .
 
-	playsound(src, hitting_projectile.hitsound, 50, TRUE)
 	var/damage_sustained = 0
 	if(!QDELETED(src)) //Bullet on_hit effect might have already destroyed this object
 		damage_sustained = take_damage(
@@ -67,7 +71,7 @@
 
 /obj/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(attack_generic(user, 60, BRUTE, MELEE, 0))
-		playsound(src.loc, 'sound/weapons/slash.ogg', 100, TRUE)
+		playsound(src.loc, 'sound/items/weapons/slash.ogg', 100, TRUE)
 
 /obj/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
@@ -129,11 +133,17 @@
 			return
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, FIRE, 0)
+	if(QDELETED(src)) // take_damage() can send our obj to an early grave, let's stop here if that happens
+		return
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
-		AddComponent(/datum/component/burning, custom_fire_overlay || GLOB.fire_overlay, burning_particles)
+		AddComponent(/datum/component/burning, custom_fire_overlay() || GLOB.fire_overlay, burning_particles)
 		SEND_SIGNAL(src, COMSIG_ATOM_FIRE_ACT, exposed_temperature, exposed_volume)
 		return TRUE
 	return ..()
+
+/// Returns a custom fire overlay, if any
+/obj/proc/custom_fire_overlay()
+	return custom_fire_overlay
 
 /// Should be called when the atom is destroyed by fire, comparable to acid_melt() proc
 /obj/proc/burn()

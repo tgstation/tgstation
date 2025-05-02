@@ -152,7 +152,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "pR" = (
-/obj/item/reagent_containers/pill/maintenance,
+/obj/item/reagent_containers/applicator/pill/maintenance,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav)
 "qi" = (

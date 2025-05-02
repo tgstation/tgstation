@@ -12,6 +12,9 @@
 	banned_upgrades = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
 	matter = 200
 	max_matter = 200
+	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
+	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
+	sound_vary = TRUE
 
 	///category of design selected
 	var/selected_category
@@ -110,7 +113,7 @@
 
 /obj/item/construction/plumbing/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/plumbing),
+		get_asset_datum(/datum/asset/spritesheet_batched/plumbing),
 	)
 
 /obj/item/construction/plumbing/ui_static_data(mob/user)
@@ -152,11 +155,9 @@
 
 	return data
 
-/obj/item/construction/plumbing/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
+/obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
 
-/obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("color")
 			var/color = params["paint_color"]
@@ -246,6 +247,8 @@
 	. = ..()
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
+	if(HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return NONE
 
 	for(var/category_name in plumbing_design_types)
 		var/list/designs = plumbing_design_types[category_name]
@@ -287,7 +290,7 @@
 
 /obj/item/construction/plumbing/proc/mouse_wheeled(mob/source, atom/A, delta_x, delta_y, params)
 	SIGNAL_HANDLER
-	if(source.incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(INCAPACITATED_IGNORING(source, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 		return
 	if(delta_y == 0)
 		return

@@ -80,22 +80,22 @@
 	for(var/stamp in stamps)
 		var/image/stamp_image = image(
 			icon = icon,
-			icon_state = stamp,
-			pixel_x = stamp_offset_x,
-			pixel_y = stamp_offset_y + bonus_stamp_offset
+			icon_state = stamp
 		)
-		stamp_image.appearance_flags |= RESET_COLOR
+		stamp_image.pixel_w = pixel_w = stamp_offset_x
+		stamp_image.pixel_z = stamp_offset_y + bonus_stamp_offset
+		stamp_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		bonus_stamp_offset -= 5
 		. += stamp_image
 
 	if(postmarked == TRUE)
 		var/image/postmark_image = image(
 			icon = icon,
-			icon_state = "postmark",
-			pixel_x = stamp_offset_x + rand(-3, 1),
-			pixel_y = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
+			icon_state = "postmark"
 		)
-		postmark_image.appearance_flags |= RESET_COLOR
+		postmark_image.pixel_w = stamp_offset_x + rand(-3, 1)
+		postmark_image.pixel_z = stamp_offset_y + rand(bonus_stamp_offset + 3, 1)
+		postmark_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		. += postmark_image
 
 /obj/item/mail/attackby(obj/item/W, mob/user, params)
@@ -107,7 +107,7 @@
 			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
 			to_chat(user, span_notice("*[tag]*"))
 			sort_tag = destination_tag.currTag
-			playsound(loc, 'sound/machines/twobeep_high.ogg', vol = 100, vary = TRUE)
+			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', vol = 100, vary = TRUE)
 
 /obj/item/mail/multitool_act(mob/living/user, obj/item/tool)
 	if(user.get_inactive_held_item() == src)
@@ -145,7 +145,7 @@
 			user.put_in_hands(stuff)
 		else
 			stuff.forceMove(drop_location())
-	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
+	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
 	qdel(src)
 	return TRUE
 
@@ -250,8 +250,10 @@
 	base_icon_state = "mail"
 	can_install_electronics = FALSE
 	lid_icon_state = "maillid"
-	lid_x = -26
-	lid_y = 2
+	lid_w = -26
+	lid_z = 2
+	weld_w = 1
+	weld_z = 4
 	paint_jobs = null
 	///if it'll show the nt mark on the crate
 	var/postmarked = TRUE
@@ -342,6 +344,7 @@
 	icon_state = "mailbag"
 	worn_icon_state = "mailbag"
 	resistance_flags = FLAMMABLE
+	custom_premium_price = PAYCHECK_LOWER
 
 /obj/item/storage/bag/mail/Initialize(mapload)
 	. = ..()
@@ -402,7 +405,7 @@
 
 /obj/item/mail/traitor/after_unwrap(mob/user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
-	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
+	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
 	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
 		if(user.put_in_hands(stuff) && armed)
 			var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
@@ -419,7 +422,7 @@
 		if(!do_after(user, 2 SECONDS, target = src))
 			return FALSE
 		balloon_alert(user, "disarmed")
-		playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
+		playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
 		armed = FALSE
 		return TRUE
 	else
@@ -430,7 +433,7 @@
 			return FALSE
 		if(prob(50))
 			balloon_alert(user, "disarmed something...?")
-			playsound(src, 'sound/machines/defib_ready.ogg', vol = 100, vary = TRUE)
+			playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
 			armed = FALSE
 			return TRUE
 		else
@@ -548,10 +551,10 @@
 	shady_mail.made_by_cached_name = user.mind.name
 
 	if(index == 1)
-		var/mail_name = tgui_input_text(user, "Enter mail title, or leave it blank", "Mail Counterfeiting")
+		var/mail_name = tgui_input_text(user, "Enter mail title, or leave it blank", "Mail Counterfeiting", max_length = MAX_LABEL_LEN)
 		if(!(src in user.contents))
 			return FALSE
-		if(reject_bad_text(mail_name, ascii_only = FALSE))
+		if(reject_bad_text(mail_name, max_length = MAX_LABEL_LEN, ascii_only = FALSE))
 			shady_mail.name = mail_name
 		else
 			shady_mail.name = mail_type

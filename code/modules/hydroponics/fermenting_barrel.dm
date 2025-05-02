@@ -1,7 +1,7 @@
 /obj/structure/fermenting_barrel
 	name = "wooden barrel"
 	desc = "A large wooden barrel. You can ferment fruits and such inside it, or just use it to hold reagents."
-	icon = 'icons/obj/service/hydroponics/equipment.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "barrel"
 	base_icon_state = "barrel"
 	resistance_flags = FLAMMABLE
@@ -23,7 +23,7 @@
 	/// The sound of fermentation
 	var/datum/looping_sound/boiling/soundloop
 	/// Sound played when the lid is opened.
-	var/lid_open_sound = 'sound/items/handling/cardboardbox_pickup.ogg'
+	var/lid_open_sound = 'sound/items/handling/cardboard_box/cardboardbox_pickup.ogg'
 	/// Sound played when the lid is closed.
 	var/lid_close_sound = 'sound/effects/footstep/woodclaw2.ogg'
 

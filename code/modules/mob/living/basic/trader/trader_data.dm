@@ -85,7 +85,7 @@
 /datum/trader_data/mr_bones
 	shop_spot_type = /obj/structure/chair/wood/wings
 	sign_type = /obj/structure/trader_sign/mrbones
-	sell_sound = 'sound/voice/hiss2.ogg'
+	sell_sound = 'sound/mobs/non-humanoids/hiss/hiss2.ogg'
 
 	initial_products = list(
 		/obj/item/clothing/head/helmet/skull = list(PAYCHECK_CREW * 3, INFINITY),

@@ -1,4 +1,2 @@
-template = "bitmask/walls"
-
-[animation]
-delays = [ 1 ]
+output_name = "plasma_wall"
+template = "bitmask/diagonal_32x32.toml"

@@ -87,15 +87,9 @@
 /area/virtual_domain)
 "M" = (
 /obj/structure/table/wood,
-/obj/item/storage/bag/tray{
-	pixel_y = 8
-	},
-/obj/item/kitchen/fork{
-	pixel_y = 8
-	},
-/obj/item/knife/kitchen{
-	pixel_y = 8
-	},
+/obj/item/storage/bag/tray,
+/obj/item/kitchen/fork,
+/obj/item/knife/kitchen,
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "N" = (

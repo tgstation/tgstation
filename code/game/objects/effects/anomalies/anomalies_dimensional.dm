@@ -3,7 +3,7 @@
 	name = "dimensional anomaly"
 	icon_state = "dimensional"
 	anomaly_core = /obj/item/assembly/signaler/anomaly/dimensional
-	immortal = TRUE
+	lifespan = ANOMALY_COUNTDOWN_TIMER * 20 // will generally be killed off by reaching max teleports first
 	move_chance = 0
 	/// Range of effect, if left alone anomaly will convert a 2(range)+1 squared area.
 	var/range = 3
@@ -13,13 +13,21 @@
 	var/datum/dimension_theme/theme
 	/// Effect displaying on the anomaly to represent the theme.
 	var/mutable_appearance/theme_icon
+	/// How many times we can still teleport. Delete self if it hits 0 and we try to teleport. If immortal, will simply stay where it is
+	var/teleports_left
+	/// Minimum teleports it will do before going away permanently
+	var/minimum_teleports = 1
+	/// Maximum teleports it will do before going away permanently
+	var/maximum_teleports = 4
 
-/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/dimensional/Initialize(mapload, new_lifespan)
 	. = ..()
 	overlays += mutable_appearance('icons/effects/effects.dmi', "dimensional_overlay")
 
 	animate(src, transform = matrix()*0.85, time = 3, loop = -1)
 	animate(transform = matrix(), time = 3, loop = -1)
+
+	teleports_left = rand(minimum_teleports, maximum_teleports)
 
 /obj/effect/anomaly/dimensional/Destroy()
 	theme = null
@@ -37,6 +45,10 @@
 	if (!theme)
 		prepare_area()
 	if (!target_turfs.len)
+		if(teleports_left <= 0 && !immortal)
+			detonate()
+			return
+		teleports_left--
 		relocate()
 		return
 
@@ -79,6 +91,9 @@
 	priority_announce("Dimensional instability relocated. Expected location: [new_area.name].", "Anomaly Alert")
 	src.forceMove(new_turf)
 	prepare_area()
+
+/obj/effect/anomaly/dimensional/detonate()
+	qdel(src)
 
 /obj/effect/temp_visual/transmute_tile_flash
 	icon = 'icons/effects/effects.dmi'

@@ -15,10 +15,11 @@
 	desc = "<i>\"In case of emergency, please use the stairs.\"</i> Thus, always use the stairs."
 	density = FALSE
 
-	icon = 'icons/obj/structures/wallmounts.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "elevpanel0"
 	base_icon_state = "elevpanel"
 
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	power_channel = AREA_USAGE_ENVIRON
 	// Indestructible until someone wants to make these constructible, with all the chaos that implies
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF

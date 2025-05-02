@@ -127,7 +127,9 @@
 		if (!istype(donut))
 			continue
 
-		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH)
+		var/image/donut_image = image(icon = initial(icon), icon_state = donut.in_box_sprite())
+		donut_image.pixel_w = donuts * DONUT_INBOX_SPRITE_WIDTH
+		. += donut_image
 		donuts += 1
 
 	. += image(icon = initial(icon), icon_state = "[base_icon_state]_top")
@@ -193,7 +195,7 @@
 ////////////
 /obj/item/storage/fancy/cigarettes
 	name = "\improper Space Cigarettes packet"
-	desc = "The most popular brand of cigarettes, sponsors of the Space Olympics. On the back it advertises to be the only brand that can be smoked in the vaccum of space."
+	desc = "The most popular brand of cigarettes, sponsors of the Space Olympics. On the back it advertises to be the only brand that can be smoked in the vacuum of space."
 	icon = 'icons/obj/cigarettes.dmi'
 	icon_state = "cig"
 	inhand_icon_state = "cigpacket"
@@ -260,8 +262,8 @@
 	var/obj/item/finger = locate(grabbies) in contents
 	if(finger)
 		if(!equip_to_mouth)
-			atom_storage.remove_single(user, finger, drop_location())
-			user.put_in_hands(finger)
+			if(atom_storage.remove_single(user, finger, drop_location()))
+				user.put_in_hands(finger)
 			return
 		if(user.equip_to_slot_if_possible(finger, ITEM_SLOT_MASK, qdel_on_fail = FALSE, disable_warning = TRUE))
 			finger.forceMove(user)

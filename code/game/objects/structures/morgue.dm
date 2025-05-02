@@ -31,7 +31,7 @@
 GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants and other ghosties.
 
 /obj/structure/bodycontainer
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "morgue1"
 	density = TRUE
 	anchored = TRUE
@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	update_morgue_status()
 	update_appearance(UPDATE_ICON_STATE)
 	if(morgue_state == MORGUE_HAS_REVIVABLE && beeper && COOLDOWN_FINISHED(src, next_beep))
-		playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
+		playsound(src, 'sound/items/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
 		COOLDOWN_START(src, next_beep, beep_cooldown)
 
 	if(!connected || connected.loc != src)
@@ -594,7 +594,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 /obj/structure/tray/m_tray
 	name = "morgue tray"
 	desc = "Apply corpse before closing."
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "morguet"
 	pass_flags_self = PASSTABLE | LETPASSTHROW
 	layer = /obj/structure/bodycontainer/morgue::layer - 0.03

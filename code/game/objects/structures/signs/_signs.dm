@@ -12,7 +12,7 @@
 	var/buildable_sign = TRUE
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = FALSE
-	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on any sign item or structure which is_editable.
+	///sign_change_name is used to make nice looking, alphabetized and categorized names when you use a pen on any sign item or structure which is_editable.
 	var/sign_change_name
 	///Callback to the knock down proc for wallmounting behavior.
 	var/knock_down_callback
@@ -22,18 +22,11 @@
 	fire = 50
 	acid = 50
 
-/obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inheret from the parent type.
-	icon_state = "backing"
-	name = "sign backing"
-	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
-	is_editable = TRUE
-	sign_change_name = "Blank Sign"
-
 /obj/structure/sign/Initialize(mapload)
 	. = ..()
 	register_context()
 	knock_down_callback = CALLBACK(src, PROC_REF(knock_down))
-	find_and_hang_on_wall(custom_drop_callback = knock_down_callback, wall_layer = FLAT_ON_WALL_LAYER)
+	find_and_hang_on_wall(custom_drop_callback = knock_down_callback)
 
 /obj/structure/sign/Destroy()
 	. = ..()
@@ -142,7 +135,7 @@
 	unwrenched_sign.setDir(dir)
 	qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
 
-/obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inheret from the parent type.
+/obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inherit from the parent type.
 	icon_state = "backing"
 	name = "sign backing"
 	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
@@ -217,13 +210,21 @@
 	return ..()
 
 /obj/item/sign/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!iswallturf(interacting_with))
+	if(!iswallturf(interacting_with) && !istype(interacting_with, /obj/structure/tram))
 		return NONE
 	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
 	var/obj/structure/sign/placed_sign = new sign_path(user_turf) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
 	var/dir = get_dir(user_turf, target_turf)
+	if(dir & NORTH)
+		placed_sign.pixel_y = 32
+	else if(dir & SOUTH)
+		placed_sign.pixel_y = -32
+	if(dir & EAST)
+		placed_sign.pixel_x = 32
+	else if(dir & WEST)
+		placed_sign.pixel_x = -32
 	user.visible_message(span_notice("[user] fastens [src] to [target_turf]."), \
 		span_notice("You attach the sign to [target_turf]."))
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
@@ -274,6 +275,11 @@
 		var/obj/structure/sign/potential_sign = s
 		if(!initial(potential_sign.is_editable))
 			continue
-		output[initial(potential_sign.sign_change_name)] = potential_sign
+		var/shown_name = initial(potential_sign.sign_change_name) || capitalize(format_text(initial(potential_sign.name)))
+		if(output[shown_name])
+			if(!ispath(potential_sign, output[shown_name]))
+				stack_trace("Two signs share the same sign_change_name: [output[shown_name]] and [potential_sign]")
+			continue
+		output[shown_name] = potential_sign
 	output = sort_list(output) //Alphabetizes the results.
 	return output

@@ -52,8 +52,7 @@
 		return
 	if(throw_text)
 		to_chat(our_holder, span_warning(throw_text))
-	var/list/offset_to_add = get_icon_dimensions(our_holder.icon)
-	var/x_position = CEILING(offset_to_add["width"] * 0.5, 1)
+	var/x_position = CEILING(our_holder.get_visual_width() * 0.5, 1)
 	our_bar = new()
 	our_bar.maximum_count = maximum_bonus
 	our_bar.pixel_x = x_position
@@ -168,5 +167,5 @@
 			if(4 to 5)
 				bar_color = "windup_purple"
 		var/mutable_appearance/bar_overlay =  mutable_appearance(icon = icon, icon_state = bar_color, layer = ABOVE_HUD_PLANE)
-		bar_overlay.pixel_y = bar_positions[curr_number]
+		bar_overlay.pixel_z = bar_positions[curr_number]
 		. += bar_overlay

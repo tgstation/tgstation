@@ -1,0 +1,1372 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/obj/structure/sign/poster/contraband/random/directional/north,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"aw" = (
+/obj/structure/sign/poster/contraband/random/directional/south,
+/obj/structure/barricade/wooden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"be" = (
+/obj/effect/decal/cleanable/generic,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"bA" = (
+/obj/structure/sink/directional/east,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"bB" = (
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"ci" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/caution/white,
+/obj/effect/turf_decal/arrows/white{
+	dir = 1;
+	pixel_y = -12
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"cz" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"dg" = (
+/obj/effect/spawner/random/structure/tank_holder,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"dr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sink/directional/south,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"dC" = (
+/obj/effect/turf_decal/delivery/white,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"dJ" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"dM" = (
+/obj/structure/rack,
+/obj/item/clothing/gloves/cut,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"dS" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"eF" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"eN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/chair_maintenance,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"eS" = (
+/obj/structure/sign/poster/contraband/random/directional/north,
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"eU" = (
+/obj/structure/statue/sandstone/assistant,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"fi" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"fj" = (
+/obj/structure/sign/poster/contraband/random/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"fp" = (
+/obj/structure/sign/poster/contraband/grey_tide,
+/turf/closed/wall/r_wall,
+/area/centcom/basketball)
+"fu" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = -32
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"gk" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"gn" = (
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"gq" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"hf" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/botanical_waste,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"hB" = (
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/burnt_floor,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"hG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"jj" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"ju" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"jK" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/cup/glass/waterbottle/large{
+	pixel_x = 5;
+	pixel_y = -7
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_x = -7
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"kc" = (
+/obj/effect/spawner/random/trash/botanical_waste,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"kp" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"ku" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil,
+/obj/effect/spawner/random/structure/chair_maintenance{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"kT" = (
+/obj/structure/sign/poster/contraband/random/directional/south,
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"lh" = (
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"ly" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"lD" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 5
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"lR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"lU" = (
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"mp" = (
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"my" = (
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 9
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"nE" = (
+/obj/structure/sign/poster/contraband/random/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"nV" = (
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"oh" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"oR" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = 32
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"pq" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/assembly/mousetrap/armed,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"pu" = (
+/obj/structure/bonfire,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"pw" = (
+/mob/living/basic/mouse/gray,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"pE" = (
+/obj/machinery/door/window/right/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"qQ" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"qU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/turf_decal/caution,
+/obj/effect/turf_decal/arrows{
+	dir = 1;
+	pixel_y = -12
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"rU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/structure/closet_empty/crate,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"sb" = (
+/obj/structure/girder/displaced,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"te" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 9
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"tJ" = (
+/obj/structure/sink/directional/west,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"tU" = (
+/obj/structure/closet/firecloset,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"tX" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/basketball/team_spawn/referee,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"uH" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"uW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"vo" = (
+/obj/effect/turf_decal/caution/stand_clear,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"wJ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"wK" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"wZ" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"xv" = (
+/obj/effect/turf_decal/caution/white,
+/obj/effect/turf_decal/arrows/white,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"zo" = (
+/obj/structure/grille/indestructible,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"zy" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"zX" = (
+/obj/item/food/deadmouse,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"zZ" = (
+/obj/structure/girder/displaced,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Ax" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/turf_decal/box/red,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"AC" = (
+/obj/structure/closet,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"AI" = (
+/obj/structure/grille/indestructible,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"AU" = (
+/obj/item/storage/toolbox/emergency,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = -32
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"Bd" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Cv" = (
+/obj/effect/turf_decal/bot_white,
+/obj/effect/landmark/basketball/team_spawn/home_hoop,
+/obj/structure/hoop/minigame{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Cw" = (
+/turf/closed/indestructible/fakeglass,
+/area/centcom/basketball)
+"CD" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"De" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Dt" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"DP" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/basketball/team_spawn/away_hoop,
+/obj/structure/hoop/minigame{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Ev" = (
+/obj/structure/headpike,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Fk" = (
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = 32
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"FA" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"Ga" = (
+/obj/structure/barricade/wooden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Gh" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Gi" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Hu" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/basketball)
+"HH" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Ic" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"IA" = (
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"JM" = (
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"KH" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Lu" = (
+/obj/structure/closet,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"LI" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"LS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"LU" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/trash/grime,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"LV" = (
+/obj/structure/sign/poster/contraband/random/directional/south,
+/obj/structure/closet,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Ma" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = -32
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"MS" = (
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/obj/structure/table_frame,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Nt" = (
+/obj/structure/grille/broken,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"NS" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Oj" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Om" = (
+/obj/effect/turf_decal/caution/stand_clear/white,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"OB" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"OL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/caution,
+/obj/effect/turf_decal/arrows,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"PU" = (
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"PW" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Qa" = (
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Qh" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Qi" = (
+/obj/effect/turf_decal/loading_area/white{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Ql" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/mob/living/basic/cockroach,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"QC" = (
+/obj/effect/spawner/random/structure/chair_flipped,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Rl" = (
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
+	pixel_x = 0
+	},
+/obj/structure/rack,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Se" = (
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = 32
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"SF" = (
+/mob/living/basic/cockroach,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Tc" = (
+/obj/structure/closet/mini_fridge/grimy,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Tl" = (
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_y = 32
+	},
+/obj/item/assembly/mousetrap,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"TV" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Uq" = (
+/obj/structure/closet/crate/cardboard,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Uv" = (
+/obj/effect/turf_decal/delivery/white,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Uy" = (
+/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
+/obj/structure/table_frame,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Vr" = (
+/obj/effect/spawner/random/trash/box,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"VW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/trash/mess,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"WB" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/spawner/random/trash/graffiti{
+	pixel_x = -32
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"WK" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/directional{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"WM" = (
+/turf/closed/wall/r_wall,
+/area/centcom/basketball)
+"Xm" = (
+/obj/effect/turf_decal/delivery,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Xn" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/medical/memeorgans{
+	spawn_loot_count = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Xo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/box/red/corners{
+	dir = 1
+	},
+/mob/living/basic/goose/vomit,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/centcom/basketball)
+"Xp" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/basic/mouse/brown,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"XR" = (
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Yp" = (
+/obj/structure/sign/poster/contraband/hacking_guide,
+/turf/closed/wall/r_wall,
+/area/centcom/basketball)
+"YH" = (
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"YX" = (
+/obj/item/toy/basketball,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/bed/maint,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"Zu" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"ZM" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/structure/chair_flipped{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+
+(1,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}
+(2,1,1) = {"
+Hu
+lh
+lh
+lh
+lh
+WM
+WM
+WM
+WM
+WM
+ju
+WM
+Yp
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+lh
+lh
+lh
+lh
+Hu
+"}
+(3,1,1) = {"
+Hu
+lh
+lh
+lh
+lh
+WM
+dJ
+zX
+TV
+Ma
+lh
+lh
+Qh
+Qh
+sb
+WB
+Xn
+lh
+KH
+WM
+lh
+lh
+lh
+lh
+Hu
+"}
+(4,1,1) = {"
+Hu
+lh
+lh
+lh
+lh
+WM
+Qh
+LU
+Qh
+oh
+lh
+lh
+hf
+lh
+Qh
+lh
+Ga
+Qh
+lh
+WM
+lh
+lh
+lh
+lh
+Hu
+"}
+(5,1,1) = {"
+Hu
+lh
+WM
+WM
+WM
+WM
+eS
+uH
+zo
+zo
+zo
+zo
+zo
+zo
+zo
+zo
+zo
+Nt
+kT
+WM
+WM
+WM
+WM
+lh
+Hu
+"}
+(6,1,1) = {"
+Hu
+lh
+WM
+Dt
+PU
+lh
+Qh
+Qh
+zo
+Oj
+Om
+Qh
+Cv
+lh
+Om
+Qh
+zo
+lh
+wJ
+SF
+bA
+AC
+WM
+lh
+Hu
+"}
+(7,1,1) = {"
+Hu
+lh
+WM
+Qh
+AI
+pu
+Gi
+eU
+zo
+Qh
+bB
+Qi
+Qi
+IA
+lU
+lh
+zo
+Qh
+Qh
+oh
+YH
+YH
+WM
+lh
+Hu
+"}
+(8,1,1) = {"
+Hu
+WM
+WM
+nE
+AI
+AI
+lh
+Ev
+zo
+Qh
+lh
+qQ
+hG
+gn
+lh
+Qh
+zo
+kp
+Qh
+lh
+hf
+LV
+WM
+WM
+Hu
+"}
+(9,1,1) = {"
+Hu
+WM
+Tc
+Gi
+jK
+dM
+Qh
+YH
+zo
+dC
+Uv
+dC
+dC
+Uv
+Uv
+gq
+zo
+oh
+Qh
+te
+Gh
+Gh
+Gh
+WM
+Hu
+"}
+(10,1,1) = {"
+Hu
+WM
+dr
+HH
+lh
+lh
+SF
+QC
+zo
+Qh
+Qh
+Qh
+Gi
+lh
+Qh
+lh
+zo
+lh
+CD
+PW
+my
+hB
+FA
+WM
+Hu
+"}
+(11,1,1) = {"
+Hu
+WM
+Se
+Lu
+Cw
+Qh
+Qh
+Uy
+zo
+xv
+lh
+mp
+mp
+LS
+Qh
+ci
+zo
+ku
+pw
+NS
+LI
+Xo
+fu
+WM
+Hu
+"}
+(12,1,1) = {"
+Hu
+WM
+Tl
+dg
+OB
+VW
+Qh
+Rl
+zo
+Qh
+Qh
+mp
+YX
+mp
+lh
+lh
+zo
+tX
+Ic
+pE
+wZ
+lR
+Ax
+WM
+Hu
+"}
+(13,1,1) = {"
+Hu
+WM
+oR
+tU
+Cw
+kc
+lh
+MS
+zo
+OL
+lh
+mp
+LS
+mp
+lh
+qU
+zo
+ZM
+lh
+PW
+wZ
+Qh
+AU
+WM
+Hu
+"}
+(14,1,1) = {"
+Hu
+ju
+JM
+Qh
+Gi
+Qh
+lh
+eN
+zo
+be
+lh
+lh
+lh
+Gi
+lh
+Qh
+zo
+Qh
+LU
+PW
+Qh
+XR
+lh
+WM
+Hu
+"}
+(15,1,1) = {"
+Hu
+WM
+Uq
+lh
+Cw
+AI
+lh
+CD
+zo
+Qa
+Qa
+Qa
+Xm
+Qa
+Qa
+dS
+zo
+uH
+oh
+lD
+WK
+WK
+WK
+WM
+Hu
+"}
+(16,1,1) = {"
+Hu
+WM
+WM
+at
+uW
+Vr
+lh
+Ev
+zo
+HH
+Gi
+eF
+nV
+nV
+lh
+lh
+zo
+kp
+Qh
+TV
+lh
+fj
+WM
+WM
+Hu
+"}
+(17,1,1) = {"
+Hu
+lh
+WM
+ly
+Cw
+Cw
+uW
+eU
+zo
+Qh
+Zu
+Bd
+zy
+Bd
+wK
+Qh
+zo
+YH
+zZ
+YH
+Qh
+gk
+WM
+lh
+Hu
+"}
+(18,1,1) = {"
+Hu
+lh
+WM
+Xp
+TV
+lh
+lh
+lh
+zo
+kp
+vo
+lh
+DP
+Qh
+vo
+lh
+zo
+Qh
+Qh
+Qh
+lh
+rU
+WM
+lh
+Hu
+"}
+(19,1,1) = {"
+Hu
+lh
+WM
+WM
+WM
+WM
+at
+AI
+zo
+zo
+zo
+zo
+zo
+zo
+zo
+zo
+zo
+lh
+aw
+WM
+ju
+WM
+WM
+lh
+Hu
+"}
+(20,1,1) = {"
+Hu
+lh
+lh
+lh
+lh
+WM
+lh
+cz
+lh
+lh
+Qh
+De
+Gi
+Qh
+Qh
+pq
+oh
+JM
+lh
+WM
+lh
+lh
+lh
+lh
+Hu
+"}
+(21,1,1) = {"
+Hu
+lh
+lh
+lh
+lh
+WM
+fi
+Qh
+Gi
+Fk
+oh
+lh
+Ql
+tJ
+Qh
+jj
+CD
+Gi
+KH
+WM
+lh
+lh
+lh
+lh
+Hu
+"}
+(22,1,1) = {"
+Hu
+lh
+lh
+lh
+lh
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+fp
+WM
+WM
+WM
+WM
+WM
+WM
+WM
+lh
+lh
+lh
+lh
+Hu
+"}
+(23,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}

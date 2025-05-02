@@ -41,6 +41,7 @@
 		/datum/reagent/carbon = 4,
 	)
 	tastes = list("toast" = 2, "cheese" = 3, "butter" = 1)
+	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/sandwich/jelly
@@ -95,7 +96,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("butter" = 1, "toast" = 1)
-	foodtypes = GRAIN | BREAKFAST
+	foodtypes = GRAIN | BREAKFAST | DAIRY
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -118,7 +119,7 @@
 
 /obj/item/food/jelliedtoast/slime
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin/slimejelly = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
-	foodtypes = GRAIN | TOXIC | SUGAR | BREAKFAST
+	foodtypes = GRAIN | TOXIC | BREAKFAST
 
 /obj/item/food/twobread
 	name = "two bread"
@@ -241,7 +242,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("bread" = 2, "Britain" = 1, "butter" = 1, "toast" = 1)
-	foodtypes = GRAIN
+	foodtypes = GRAIN|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/sandwich/death
@@ -254,8 +255,9 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("bread" = 1, "meat" = 1, "tomato sauce" = 1, "death" = 1)
-	foodtypes = GRAIN | MEAT
+	foodtypes = MEAT|VEGETABLES|GRAIN
 	eat_time = 4 SECONDS // Makes it harder to force-feed this to people as a weapon, as funny as that is.
+	var/static/list/correct_clothing = list(/obj/item/clothing/under/rank/civilian/cookjorts, /obj/item/clothing/under/shorts/jeanshorts)
 
 /obj/item/food/sandwich/death/Initialize(mapload)
 	. = ..()
@@ -275,7 +277,7 @@
 // Override for after_eat and check_liked callbacks.
 /obj/item/food/sandwich/death/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)), check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /**
 * Callback to be used with the edible component.
@@ -284,7 +286,7 @@
 */
 /obj/item/food/sandwich/death/proc/check_liked(mob/living/carbon/human/consumer)
 	// Closest thing to a mullet we have
-	if(consumer.hairstyle == "Gelled Back" && istype(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), /obj/item/clothing/under/rank/civilian/cookjorts))
+	if(consumer.hairstyle == "Gelled Back" && is_type_in_list(consumer.get_item_by_slot(ITEM_SLOT_ICLOTHING), correct_clothing))
 		return FOOD_LIKED
 	return FOOD_ALLERGIC
 

@@ -11,7 +11,7 @@
 	/// Typepath of custom material to use for objects.
 	var/datum/material/material
 	/// Sound to play when transforming a tile
-	var/sound = 'sound/magic/blind.ogg'
+	var/sound = 'sound/effects/magic/blind.ogg'
 	/// Weighted list of turfs to replace the floor with.
 	var/list/replace_floors = list(/turf/open/floor/material = 1)
 	/// Typepath of turf to replace walls with.
@@ -36,7 +36,7 @@
 /datum/dimension_theme/New()
 	if (material)
 		var/datum/material/using_mat = GET_MATERIAL_REF(material)
-		window_colour = using_mat.greyscale_colors
+		window_colour = using_mat.color
 
 /**
  * Applies themed transformation to the provided turf.
@@ -236,14 +236,12 @@
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "sheet-gold_2"
 	material = /datum/material/gold
-	replace_walls = /turf/closed/wall/mineral/gold
 
 /datum/dimension_theme/plasma
 	name = "Plasma"
 	icon = 'icons/obj/clothing/masks.dmi'
 	icon_state = "gas_alt"
 	material = /datum/material/plasma
-	replace_walls = /turf/closed/wall/mineral/plasma
 
 /datum/dimension_theme/clown
 	name = "Clown"
@@ -251,15 +249,13 @@
 	icon_state = "clown"
 	material = /datum/material/bananium
 	sound = 'sound/items/bikehorn.ogg'
-	replace_walls = /turf/closed/wall/mineral/bananium
 
 /datum/dimension_theme/radioactive
 	name = "Radioactive"
-	icon = 'icons/obj/mining_zones/ore.dmi'
+	icon = 'icons/obj/ore.dmi'
 	icon_state = "uranium"
 	material = /datum/material/uranium
-	sound = 'sound/items/welder.ogg'
-	replace_walls = /turf/closed/wall/mineral/uranium
+	sound = 'sound/items/tools/welder.ogg'
 
 /datum/dimension_theme/meat
 	name = "Meat"
@@ -267,7 +263,6 @@
 	icon_state = "meat"
 	material = /datum/material/meat
 	sound = 'sound/items/eatfood.ogg'
-	replace_walls = /turf/closed/wall/mineral/meat
 
 /datum/dimension_theme/pizza
 	name = "Pizza"
@@ -275,7 +270,6 @@
 	icon_state = "pizzamargherita"
 	material = /datum/material/pizza
 	sound = 'sound/items/eatfood.ogg'
-	replace_walls = /turf/closed/wall/mineral/pizza
 
 /datum/dimension_theme/natural
 	name = "Natural"
@@ -322,7 +316,7 @@
 	name = "Winter Cabin"
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "iceboots"
-	replace_walls = /turf/closed/wall/mineral/wood/nonmetal
+	replace_walls = /turf/closed/wall/mineral/wood
 	replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/wood = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1),
@@ -355,7 +349,6 @@
 	icon = 'icons/obj/debris.dmi'
 	icon_state = "small"
 	material = /datum/material/glass
-	replace_walls = /turf/closed/wall/mineral/titanium/survival // Until we decide what glass walls actually do
 	replace_floors = list(/turf/open/floor/glass = 1)
 	sound = SFX_SHATTER
 
@@ -407,9 +400,8 @@
 
 /datum/dimension_theme/disco
 	name = "Disco"
-	icon = 'icons/obj/service/janitor.dmi'
-	icon_state = "bulb"
-	replace_walls = /turf/closed/wall/fake_hierophant
+	icon = 'icons/obj/lighting.dmi'
+	icon_state = "lbulb"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/light = 1)
 
@@ -427,7 +419,7 @@
 	icon_state = "tile_grass"
 	sound = SFX_CRUNCHY_BUSH_WHACK
 	replace_floors = list(/turf/open/floor/grass = 1)
-	replace_walls = /turf/closed/wall/mineral/wood/nonmetal
+	replace_walls = /turf/closed/wall/mineral/wood
 	replace_objs = list(
 		/obj/structure/chair = list(/obj/structure/chair/wood = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/wood = 1),
@@ -476,4 +468,4 @@
 		/obj/item/reagent_containers/cup/glass/trophy = list(/obj/item/reagent_containers/cup/glass/trophy/bronze_cup = 1),
 		/obj/machinery/door/airlock = list(/obj/machinery/door/airlock/bronze = 1),
 	)
-	sound = 'sound/magic/clockwork/fellowship_armory.ogg'
+	sound = 'sound/effects/magic/clockwork/fellowship_armory.ogg'

@@ -10,7 +10,7 @@
 /mob/living/proc/check_stun_immunity(check_flags = CANSTUN, force_stun = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return TRUE
 
 	if(force_stun) // Does not take priority over god mode? I guess
@@ -89,7 +89,7 @@
 		return K.duration - world.time
 	return 0
 
-/mob/living/proc/Knockdown(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+/mob/living/proc/Knockdown(amount, daze_amount = 0, ignore_canstun = FALSE) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANKNOCKDOWN, ignore_canstun))
@@ -99,6 +99,8 @@
 		K.duration = max(world.time + amount, K.duration)
 	else if(amount > 0)
 		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
+	if(daze_amount > 0)
+		apply_status_effect(/datum/status_effect/dazed, daze_amount)
 	return K
 
 /mob/living/proc/SetKnockdown(amount, ignore_canstun = FALSE) //Sets remaining duration
@@ -117,7 +119,7 @@
 			K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
 	return K
 
-/mob/living/proc/AdjustKnockdown(amount, ignore_canstun = FALSE) //Adds to remaining duration
+/mob/living/proc/AdjustKnockdown(amount, daze_amount = 0, ignore_canstun = FALSE) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANKNOCKDOWN, ignore_canstun))
@@ -127,6 +129,8 @@
 		K.duration += amount
 	else if(amount > 0)
 		K = apply_status_effect(/datum/status_effect/incapacitating/knockdown, amount)
+	if(daze_amount > 0)
+		apply_status_effect(/datum/status_effect/dazed, daze_amount)
 	return K
 
 /* IMMOBILIZED */
@@ -385,7 +389,7 @@
 /mob/living/proc/Sleeping(amount) //Can't go below remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
@@ -397,7 +401,7 @@
 /mob/living/proc/SetSleeping(amount) //Sets remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(amount <= 0)
@@ -412,7 +416,7 @@
 /mob/living/proc/AdjustSleeping(amount) //Adds to remaining duration
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, amount) & COMPONENT_NO_STUN)
 		return
-	if(status_flags & GODMODE)
+	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
 	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
 	if(S)
@@ -421,28 +425,15 @@
 		S = apply_status_effect(/datum/status_effect/incapacitating/sleeping, amount)
 	return S
 
-///Allows us to set a permanent sleep on a player (use with caution and remember to unset it with SetSleeping() after the effect is over)
-/mob/living/proc/PermaSleeping()
-	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_SLEEP, -1) & COMPONENT_NO_STUN)
-		return
-	if(status_flags & GODMODE)
-		return
-	var/datum/status_effect/incapacitating/sleeping/S = IsSleeping()
-	if(S)
-		S.duration = -1
-	else
-		S = apply_status_effect(/datum/status_effect/incapacitating/sleeping, -1)
-	return S
-
 ///////////////////////// CLEAR STATUS /////////////////////////
 
 /mob/living/proc/adjust_status_effects_on_shake_up()
-	AdjustStun(-60)
-	AdjustKnockdown(-60)
-	AdjustUnconscious(-60)
-	AdjustSleeping(-100)
-	AdjustParalyzed(-60)
-	AdjustImmobilized(-60)
+	AdjustStun(-6 SECONDS)
+	AdjustKnockdown(-6 SECONDS)
+	AdjustUnconscious(-6 SECONDS)
+	AdjustSleeping(-10 SECONDS)
+	AdjustParalyzed(-6 SECONDS)
+	AdjustImmobilized(-6 SECONDS)
 
 ///////////////////////////////// FROZEN /////////////////////////////////////
 
@@ -681,7 +672,7 @@
 		return 0
 	// Infinite duration status effects technically are not "timed status effects"
 	// by name or nature, but support is included just in case.
-	if(existing.duration == -1)
+	if(existing.duration == STATUS_EFFECT_PERMANENT)
 		return INFINITY
 
 	return existing.duration - world.time

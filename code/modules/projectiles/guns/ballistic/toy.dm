@@ -15,8 +15,8 @@
 	gun_flags = TOY_FIREARM_OVERLAY | NOT_A_REAL_GUN
 	casing_ejector = FALSE
 
-/obj/item/gun/ballistic/automatic/toy/unrestricted
-	pin = /obj/item/firing_pin
+/obj/item/gun/ballistic/automatic/toy/riot
+	spawn_magazine_type = /obj/item/ammo_box/magazine/toy/smg/riot
 
 /obj/item/gun/ballistic/automatic/pistol/toy
 	name = "foam force pistol"
@@ -31,6 +31,9 @@
 /obj/item/gun/ballistic/automatic/pistol/riot/Initialize(mapload)
 	magazine = new /obj/item/ammo_box/magazine/toy/pistol/riot(src)
 	return ..()
+
+/obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
+	projectile_damage_multiplier = 1.4
 
 /obj/item/gun/ballistic/shotgun/toy
 	name = "foam force shotgun"
@@ -52,8 +55,8 @@
 	if(chambered && !chambered.loaded_projectile)
 		qdel(chambered)
 
-/obj/item/gun/ballistic/shotgun/toy/unrestricted
-	pin = /obj/item/firing_pin
+/obj/item/gun/ballistic/shotgun/toy/riot
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/shot/toy/riot
 
 /obj/item/gun/ballistic/shotgun/toy/crossbow
 	name = "foam force crossbow"
@@ -72,6 +75,9 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	gun_flags = NONE
+
+/obj/item/gun/ballistic/shotgun/toy/crossbow/riot
+	spawn_magazine_type =  /obj/item/ammo_box/magazine/internal/shot/toy/crossbow/riot
 
 /obj/item/gun/ballistic/automatic/c20r/toy //This is the syndicate variant with syndicate firing pin and riot darts.
 	name = "donksoft SMG"

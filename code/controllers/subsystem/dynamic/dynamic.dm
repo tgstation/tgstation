@@ -1,9 +1,3 @@
-#define FAKE_GREENSHIFT_FORM_CHANCE 15
-#define FAKE_REPORT_CHANCE 8
-#define PULSAR_REPORT_CHANCE 8
-#define REPORT_NEG_DIVERGENCE -15
-#define REPORT_POS_DIVERGENCE 15
-
 // Are HIGH_IMPACT_RULESETs allowed to stack?
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 // If enabled does not accept or execute any rulesets.
@@ -67,7 +61,9 @@ SUBSYSTEM_DEF(dynamic)
 	var/list/executed_rules = list()
 	/// If TRUE, the next player to latejoin will guarantee roll for a random latejoin antag
 	/// (this does not guarantee they get said antag roll, depending on preferences and circumstances)
-	var/forced_injection = FALSE
+	var/late_forced_injection = FALSE
+	/// If TRUE, a midround ruleset will be rolled
+	var/mid_forced_injection = FALSE
 	/// Forced ruleset to be executed for the next latejoin.
 	var/datum/dynamic_ruleset/latejoin/forced_latejoin_rule = null
 	/// How many percent of the rounds are more peaceful.
@@ -193,31 +189,27 @@ SUBSYSTEM_DEF(dynamic)
 	/// Used for choosing different midround injections.
 	var/list/current_midround_rulesets
 
-	/// The amount of threat shown on the piece of paper.
-	/// Can differ from the actual threat amount.
-	var/shown_threat
-
 	VAR_PRIVATE/next_midround_injection
 
 /datum/controller/subsystem/dynamic/proc/admin_panel()
-	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
-	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</a> <a href='?src=[text_ref(src)];[HrefToken()]'>\[Refresh\]</a><BR>"
+	var/list/dat = list()
+	dat += "Dynamic Mode <a href='byond://?_src_=vars;[HrefToken()];Vars=[REF(src)]'>VV</a><a href='byond://?src=[text_ref(src)];[HrefToken()]'>Refresh</a><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
 	dat += "Budgets (Roundstart/Midrounds): <b>[initial_round_start_budget]/[threat_level - initial_round_start_budget]</b><br/>"
 
-	dat += "Midround budget to spend: <b>[mid_round_budget]</b> <a href='?src=[text_ref(src)];[HrefToken()];adjustthreat=1'>\[Adjust\]</A> <a href='?src=[text_ref(src)];[HrefToken()];threatlog=1'>\[View Log\]</a><br/>"
+	dat += "Midround budget to spend: <b>[mid_round_budget]</b> <a href='byond://?src=[text_ref(src)];[HrefToken()];adjustthreat=1'>Adjust</a><a href='byond://?src=[text_ref(src)];[HrefToken()];threatlog=1'>View Log</a><br/>"
 	dat += "<br/>"
 	dat += "Parameters: centre = [threat_curve_centre] ; width = [threat_curve_width].<br/>"
 	dat += "Split parameters: centre = [roundstart_split_curve_centre] ; width = [roundstart_split_curve_width].<br/>"
 	dat += "<i>On average, <b>[clamp(peaceful_percentage, 1, 99)]</b>% of the rounds are more peaceful.</i><br/>"
-	dat += "Forced extended: <a href='?src=[text_ref(src)];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
-	dat += "No stacking (only one round-ender): <a href='?src=[text_ref(src)];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
-	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='?src=[text_ref(src)];[HrefToken()];stacking_limit=1'>\[Adjust\]</A>"
+	dat += "Forced extended: <a href='byond://?src=[text_ref(src)];[HrefToken()];forced_extended=1'><b>[GLOB.dynamic_forced_extended ? "On" : "Off"]</b></a><br/>"
+	dat += "No stacking (only one round-ender): <a href='byond://?src=[text_ref(src)];[HrefToken()];no_stacking=1'><b>[GLOB.dynamic_no_stacking ? "On" : "Off"]</b></a><br/>"
+	dat += "Stacking limit: [GLOB.dynamic_stacking_limit] <a href='byond://?src=[text_ref(src)];[HrefToken()];stacking_limit=1'>Adjust</a>"
 	dat += "<br/>"
-	dat += "<A href='?src=[text_ref(src)];[HrefToken()];force_latejoin_rule=1'>\[Force Next Latejoin Ruleset\]</A><br>"
+	dat += "<A href='byond://?src=[text_ref(src)];[HrefToken()];force_latejoin_rule=1'>Force Next Latejoin Ruleset</A><br>"
 	if (forced_latejoin_rule)
-		dat += {"<A href='?src=[text_ref(src)];[HrefToken()];clear_forced_latejoin=1'>-> [forced_latejoin_rule.name] <-</A><br>"}
-	dat += "<A href='?src=[text_ref(src)];[HrefToken()];force_midround_rule=1'>\[Execute Midround Ruleset\]</A><br>"
+		dat += {"<A href='byond://?src=[text_ref(src)];[HrefToken()];clear_forced_latejoin=1'>-> [forced_latejoin_rule.name] <-</A><br>"}
+	dat += "<A href='byond://?src=[text_ref(src)];[HrefToken()];force_midround_rule=1'>Execute Midround Ruleset</A><br>"
 	dat += "<br />"
 	dat += "Executed rulesets: "
 	if (executed_rules.len > 0)
@@ -227,15 +219,17 @@ SUBSYSTEM_DEF(dynamic)
 	else
 		dat += "none.<br>"
 	dat += "<br>Injection Timers: (<b>[get_heavy_midround_injection_chance(dry_run = TRUE)]%</b> heavy midround chance)<BR>"
-	dat += "Latejoin: [DisplayTimeText(latejoin_injection_cooldown-world.time)] <a href='?src=[text_ref(src)];[HrefToken()];injectlate=1'>\[Now!\]</a><BR>"
+	dat += "Latejoin: [DisplayTimeText(latejoin_injection_cooldown-world.time)] <a href='byond://?src=[text_ref(src)];[HrefToken()];injectlate=1'>Now!</a><BR>"
 
 	var/next_injection = next_midround_injection()
 	if (next_injection == INFINITY)
 		dat += "All midrounds have been exhausted."
 	else
-		dat += "Midround: [DisplayTimeText(next_injection - world.time)] <a href='?src=[text_ref(src)];[HrefToken()];injectmid=1'>\[Now!\]</a><BR>"
+		dat += "Midround: [DisplayTimeText(next_injection - world.time)] <a href='byond://?src=[text_ref(src)];[HrefToken()];injectmid=1'>Now!</a><BR>"
 
-	usr << browse(dat.Join(), "window=gamemode_panel;size=500x500")
+	var/datum/browser/browser = new(usr, "gamemode_panel", "Game Mode Panel", 500, 500)
+	browser.set_content(dat.Join())
+	browser.open()
 
 /datum/controller/subsystem/dynamic/Topic(href, href_list)
 	if (..()) // Sanity, maybe ?
@@ -258,10 +252,10 @@ SUBSYSTEM_DEF(dynamic)
 			spend_midround_budget(-threatadd, threat_log, "[worldtime2text()]: decreased by [key_name(usr)]")
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
-		forced_injection = TRUE
+		late_forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a latejoin injection.")
 	else if (href_list["injectmid"])
-		forced_injection = TRUE
+		mid_forced_injection = TRUE
 		message_admins("[key_name(usr)] forced a midround injection.")
 		try_midround_roll()
 	else if (href_list["threatlog"])
@@ -332,7 +326,7 @@ SUBSYSTEM_DEF(dynamic)
 			continue
 		min_threat = min(ruleset.cost, min_threat)
 
-	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time
+	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat) //if threat is below any ruleset, its extended time
 	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
 
 	var/list/datum/station_goal/goals = SSstation.get_station_goals()
@@ -376,39 +370,10 @@ SUBSYSTEM_DEF(dynamic)
 /// Generate the advisory level depending on the shown threat level.
 /datum/controller/subsystem/dynamic/proc/generate_advisory_level()
 	var/advisory_string = ""
-	if(prob(PULSAR_REPORT_CHANCE))
-		for(var/datum/station_trait/our_trait as anything in shuffle(SSstation.station_traits))
-			advisory_string += our_trait.get_pulsar_message()
-			if(length(advisory_string))
-				return advisory_string
-
-		advisory_string += "Advisory Level: <b>Pulsar Star</b></center><BR>"
-		advisory_string += "Your sector's advisory level is Pulsar Star. A large, unknown electromagnetic field has stormed through nearby surveillance equipment, causing major data loss. Partial data was recovered and showed no credible threats to Nanotrasen assets within the Spinward Sector; however, the Department of Intelligence advises maintaining high alert against potential threats due to the lack of complete data."
-		return advisory_string
-	//a white dwarf shift leads to a green security alert on report and special announcement, this prevents a meta check if the alert report is fake or not.
-	if(round(shown_threat) == 0 && round(threat_level) == 0)
-		advisory_string += "Advisory Level: <b>White Dwarf</b></center><BR>"
-		advisory_string += "Your sector's advisory level is White Dwarf. Our surveillance has ruled out any and all potential threats known in our database, eliminating most risks to our assets in the Spinward Sector. We advise a lower level of security, alongside distributing resources on potential profit."
-		return advisory_string
-
-	switch(round(shown_threat))
-		if(0 to 19)
-			var/show_core_territory = (GLOB.current_living_antags.len > 0)
-			if (prob(FAKE_GREENSHIFT_FORM_CHANCE))
-				show_core_territory = !show_core_territory
-
-			if (show_core_territory)
-				advisory_string += "Advisory Level: <b>Blue Star</b></center><BR>"
-				advisory_string += "Your sector's advisory level is Blue Star. At this threat advisory, the risk of attacks on Nanotrasen assets within the sector is minor but cannot be ruled out entirely. Remain vigilant."
-			else
-				advisory_string += "Advisory Level: <b>Green Star</b></center><BR>"
-				advisory_string += "Your sector's advisory level is Green Star. Surveillance information shows no credible threats to Nanotrasen assets within the Spinward Sector at this time. As always, the Department of Intelligence advises maintaining vigilance against potential threats, regardless of a lack of known threats."
-		if(20 to 39)
+	switch(round(threat_level))
+		if(0 to 65)
 			advisory_string += "Advisory Level: <b>Yellow Star</b></center><BR>"
 			advisory_string += "Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security alongside maintaining vigilance against potential threats."
-		if(40 to 65)
-			advisory_string += "Advisory Level: <b>Orange Star</b></center><BR>"
-			advisory_string += "Your sector's advisory level is Orange Star. Upon reviewing your sector's intelligence, the Department has determined that the risk of enemy activity is moderate to severe. At this advisory, we recommend maintaining a higher degree of security and reviewing red alert protocols with command and the crew."
 		if(66 to 79)
 			advisory_string += "Advisory Level: <b>Red Star</b></center><BR>"
 			advisory_string += "Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
@@ -429,7 +394,7 @@ SUBSYSTEM_DEF(dynamic)
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/list/out = list("<TITLE>Threat Log</TITLE><B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [threat_level]<BR>")
+	var/list/out = list("<B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [threat_level]<BR>")
 
 	for(var/entry in threat_log)
 		if(istext(entry))
@@ -437,7 +402,7 @@ SUBSYSTEM_DEF(dynamic)
 
 	out += "<B>Remaining threat/threat_level:</B> [mid_round_budget]/[threat_level]"
 
-	usr << browse(out.Join(), "window=threatlog;size=700x500")
+	usr << browse(HTML_SKELETON_TITLE("Threat Log", out.Join()), "window=threatlog;size=700x500")
 
 /// Generates the threat level using lorentz distribution and assigns peaceful_percentage.
 /datum/controller/subsystem/dynamic/proc/generate_threat()
@@ -493,11 +458,6 @@ SUBSYSTEM_DEF(dynamic)
 	)
 	return TRUE
 
-/datum/controller/subsystem/dynamic/proc/setup_shown_threat()
-	if (prob(FAKE_REPORT_CHANCE))
-		shown_threat = rand(1, 100)
-	else
-		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
 
 /datum/controller/subsystem/dynamic/proc/set_cooldowns()
 	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
@@ -519,14 +479,13 @@ SUBSYSTEM_DEF(dynamic)
 	configure_station_trait_costs()
 	setup_parameters()
 	setup_hijacking()
-	setup_shown_threat()
 	setup_rulesets()
 
 	//We do this here instead of with the midround rulesets and such because these rules can hang refs
 	//To new_player and such, and we want the datums to just free when the roundstart work is done
 	var/list/roundstart_rules = init_rulesets(/datum/dynamic_ruleset/roundstart)
 
-	SSjob.DivideOccupations(pure = TRUE, allow_all = TRUE)
+	SSjob.divide_occupations(pure = TRUE, allow_all = TRUE)
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind && player.check_preferences())
@@ -541,7 +500,7 @@ SUBSYSTEM_DEF(dynamic)
 			else
 				roundstart_pop_ready++
 				candidates.Add(player)
-	SSjob.ResetOccupations()
+	SSjob.reset_occupations()
 	log_dynamic("Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if (candidates.len <= 0)
 		log_dynamic("[candidates.len] candidates.")
@@ -567,7 +526,7 @@ SUBSYSTEM_DEF(dynamic)
 /datum/controller/subsystem/dynamic/proc/post_setup(report)
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/controller/subsystem/dynamic/, execute_roundstart_rule), rule), rule.delay)
+		addtimer(CALLBACK(src, PROC_REF(execute_roundstart_rule), rule), rule.delay)
 
 	if (!CONFIG_GET(flag/no_intercept_report))
 		addtimer(CALLBACK(src, PROC_REF(send_intercept)), rand(waittime_l, waittime_h))
@@ -617,7 +576,7 @@ SUBSYSTEM_DEF(dynamic)
 				failed = TRUE //AFK client
 			if(!failed && L.stat)
 				if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
-					msg += "<b>[L.name]</b> ([L.key]), the [L.job] ([span_boldannounce("Suicide")])\n"
+					msg += "<b>[L.name]</b> ([L.key]), the [L.job] ([span_bolddanger("Suicide")])\n"
 					failed = TRUE //Disconnected client
 				if(!failed && (L.stat == UNCONSCIOUS || L.stat == HARD_CRIT))
 					msg += "<b>[L.name]</b> ([L.key]), the [L.job] (Dying)\n"
@@ -631,7 +590,7 @@ SUBSYSTEM_DEF(dynamic)
 			if(D.mind && D.mind.current == L)
 				if(L.stat == DEAD)
 					if(HAS_TRAIT(L, TRAIT_SUICIDED)) //Suicider
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_boldannounce("Suicide")])\n"
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_bolddanger("Suicide")])\n"
 						continue //Disconnected client
 					else
 						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] (Dead)\n"
@@ -640,7 +599,7 @@ SUBSYSTEM_DEF(dynamic)
 					if(D.can_reenter_corpse)
 						continue //Adminghost, or cult/wizard ghost
 					else
-						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_boldannounce("Ghosted")])\n"
+						msg += "<b>[L.name]</b> ([ckey(D.mind.key)]), the [L.job] ([span_bolddanger("Ghosted")])\n"
 						continue //Ghosted while alive
 
 	var/concatenated_message = msg.Join()
@@ -873,14 +832,14 @@ SUBSYSTEM_DEF(dynamic)
 		forced_latejoin_rule = null
 		return
 
-	if(!forced_injection)
+	if(!late_forced_injection)
 		if(latejoin_injection_cooldown >= world.time)
 			return
 		if(!prob(latejoin_roll_chance))
 			return
 
-	var/was_forced = forced_injection
-	forced_injection = FALSE
+	var/was_forced = late_forced_injection
+	late_forced_injection = FALSE
 	var/list/possible_latejoin_rules = list()
 	for (var/datum/dynamic_ruleset/latejoin/rule in latejoin_rules)
 		if(!rule.weight)
@@ -1018,7 +977,7 @@ SUBSYSTEM_DEF(dynamic)
 	var/list/reopened_jobs = list()
 
 	for(var/mob/living/quitter in GLOB.suicided_mob_list)
-		var/datum/job/job = SSjob.GetJob(quitter.job)
+		var/datum/job/job = SSjob.get_job(quitter.job)
 		if(!job || !(job.job_flags & JOB_REOPEN_ON_ROUNDSTART_LOSS))
 			continue
 		if(!include_command && job.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
@@ -1052,9 +1011,3 @@ SUBSYSTEM_DEF(dynamic)
 
 
 #undef MAXIMUM_DYN_DISTANCE
-
-#undef FAKE_REPORT_CHANCE
-#undef FAKE_GREENSHIFT_FORM_CHANCE
-#undef PULSAR_REPORT_CHANCE
-#undef REPORT_NEG_DIVERGENCE
-#undef REPORT_POS_DIVERGENCE

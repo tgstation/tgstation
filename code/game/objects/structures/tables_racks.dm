@@ -13,12 +13,9 @@
  */
 
 /obj/structure/table
-	// Shift tables down to avoid layering headaches
-	SET_BASE_PIXEL_NOMAP(0, -8)
-	SET_BASE_VISUAL_PIXEL(0, 8)
 	name = "table"
 	desc = "A square piece of iron standing on four metal legs. It can not move."
-	icon = 'icons/obj/structures/smooth/table.dmi'
+	icon = 'icons/obj/smooth_structures/table.dmi'
 	icon_state = "table-0"
 	base_icon_state = "table"
 	density = TRUE
@@ -40,15 +37,14 @@
 	var/buildstackamount = 1
 	var/framestackamount = 2
 	var/deconstruction_ready = TRUE
-	var/bottom_placable_y = 9
-	var/top_placable_y = 37
-	var/bottom_placable_x = 4
-	var/top_placable_x = 28
 
-/obj/structure/table/Initialize(mapload, _buildstack)
+/obj/structure/table/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
-	if(_buildstack)
-		buildstack = _buildstack
+	if(frame_used)
+		apply_frame_properties(frame_used)
+	if(stack_used)
+		apply_stack_properties(stack_used)
+
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 
 	make_climbable()
@@ -62,10 +58,21 @@
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
 
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
+
+/// Applies additional properties based on the frame used to construct this table.
+/obj/structure/table/proc/apply_frame_properties(obj/structure/table_frame/frame_used)
+	frame = frame_used.type
+	framestack = frame_used.framestack
+	framestackamount = frame_used.framestackamount
+
+/// Applies additional properties based on the stack used to construct this table.
+/obj/structure/table/proc/apply_stack_properties(obj/item/stack/stack_used)
+	return
+
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
-	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/table/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -150,6 +157,15 @@
 /obj/structure/table/attack_tk(mob/user)
 	return
 
+/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	if(.)
+		return
+	if(mover.throwing)
+		return TRUE
+	if(locate(/obj/structure/table) in get_turf(mover))
+		return TRUE
+
 /obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!density)
 		return TRUE
@@ -180,13 +196,12 @@
 	pushed_mob.Knockdown(30)
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
-	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
-		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
 	pushed_mob.visible_message(span_danger("[user] slams [pushed_mob] onto \the [src]!"), \
 								span_userdanger("[user] slams you onto \the [src]!"))
 	log_combat(user, pushed_mob, "tabled", null, "onto [src]")
 	pushed_mob.add_mood_event("table", /datum/mood_event/table)
+	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_SLAMMING, pushed_mob, src)
 
 /obj/structure/table/proc/tablelimbsmash(mob/living/user, mob/living/pushed_mob)
 	pushed_mob.Knockdown(30)
@@ -194,16 +209,15 @@
 	var/extra_wound = 0
 	if(HAS_TRAIT(user, TRAIT_HULK))
 		extra_wound = 20
-	banged_limb?.receive_damage(30, wound_bonus = extra_wound)
+	pushed_mob.apply_damage(30, BRUTE, banged_limb, wound_bonus = extra_wound)
 	pushed_mob.apply_damage(60, STAMINA)
 	take_damage(50)
-	if(user.mind?.martial_art?.smashes_tables && user.mind?.martial_art.can_use(user))
-		deconstruct(FALSE)
 	playsound(pushed_mob, 'sound/effects/bang.ogg', 90, TRUE)
 	pushed_mob.visible_message(span_danger("[user] smashes [pushed_mob]'s [banged_limb.plaintext_zone] against \the [src]!"),
 								span_userdanger("[user] smashes your [banged_limb.plaintext_zone] against \the [src]"))
 	log_combat(user, pushed_mob, "head slammed", null, "against [src]")
 	pushed_mob.add_mood_event("table", /datum/mood_event/table_limbsmash, banged_limb)
+	SEND_SIGNAL(user, COMSIG_LIVING_TABLE_LIMB_SLAMMING, pushed_mob, src)
 
 /obj/structure/table/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(!deconstruction_ready)
@@ -223,36 +237,24 @@
 		deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/table/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/construction/rcd))
-		return NONE
+// This extends base item interaction because tables default to blocking 99% of interactions
+/obj/structure/table/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
 
-	var/deck_act_value = NONE
 	if(istype(tool, /obj/item/toy/cards/deck))
-		deck_act_value = deck_act(user, tool, modifiers, TRUE)
-	// Continue to placing if we don't do anything else
-	if(deck_act_value != NONE)
-		return deck_act_value
-
-	if(!user.combat_mode)
-		return table_place_act(user, tool, modifiers)
-
-	return NONE
-
-/obj/structure/table/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = NONE
+		. = deck_act(user, tool, modifiers, !!LAZYACCESS(modifiers, RIGHT_CLICK))
 	if(istype(tool, /obj/item/storage/bag/tray))
 		. = tray_act(user, tool)
-	else if(istype(tool, /obj/item/toy/cards/deck))
-		. = deck_act(user, tool, modifiers, FALSE)
 	else if(istype(tool, /obj/item/riding_offhand))
 		. = riding_offhand_act(user, tool)
 
 	// Continue to placing if we don't do anything else
-	if(. != NONE)
+	if(.)
 		return .
 
-	if(!user.combat_mode)
+	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
 		return table_place_act(user, tool, modifiers)
 
 	return NONE
@@ -297,7 +299,7 @@
 		tableplace_delay = 2.75 SECONDS
 		skills_space = " quickly"
 
-	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
 	if(istype(potential_spine))
 		tableplace_delay *= potential_spine.athletics_boost_multiplier
 
@@ -317,10 +319,9 @@
 		return ITEM_INTERACT_BLOCKING
 	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
 	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
-		//Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-		// +- 8 to bound it to a typical item hitbox (16x16) instead of the assumed max of 32x32
-		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, bottom_placable_x - 8, top_placable_x + 8)
-		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, bottom_placable_y - 8, top_placable_y + 8)
+		// Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
+		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X*0.5), ICON_SIZE_X*0.5)
+		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y*0.5), ICON_SIZE_Y*0.5)
 	AfterPutItemOnTable(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -346,33 +347,16 @@
 	return FALSE
 
 /obj/structure/table/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	if(rcd_data[RCD_DESIGN_MODE] == RCD_DECONSTRUCT)
+	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
 		qdel(src)
 		return TRUE
 	return FALSE
-
-/obj/structure/table/set_smoothed_icon_state(new_junction)
-	. = ..()
-	bottom_placable_x = initial(bottom_placable_x)
-	bottom_placable_y = initial(bottom_placable_y)
-	top_placable_x = initial(top_placable_x)
-	top_placable_y = initial(top_placable_y)
-	// Allow free movement if we smooth in a direction, while handling bounding
-	if(new_junction & NORTH)
-		top_placable_y = 32 + 8
-	if(new_junction & SOUTH)
-		bottom_placable_y = 0 - 8
-	if(new_junction & EAST)
-		top_placable_x = 32 + 8
-	if(new_junction & WEST)
-		bottom_placable_x = 0 - 8
 
 /obj/structure/table/proc/table_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
 	if((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED))
 		return
-	target.Knockdown(SHOVE_KNOCKDOWN_TABLE)
-	target.apply_status_effect(/datum/status_effect/next_shove_stuns)
+	target.Knockdown(SHOVE_KNOCKDOWN_TABLE, daze_amount = 3 SECONDS)
 	target.visible_message(span_danger("[shover.name] shoves [target.name] onto \the [src]!"),
 		span_userdanger("You're shoved onto \the [src] by [shover.name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
 	to_chat(shover, span_danger("You shove [target.name] onto \the [src]!"))
@@ -381,50 +365,62 @@
 	return COMSIG_LIVING_SHOVE_HANDLED
 
 /obj/structure/table/greyscale
-	icon = 'icons/obj/structures/smooth/table_greyscale.dmi'
+	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
 	icon_state = "table_greyscale-0"
 	base_icon_state = "table_greyscale"
 	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	buildstack = null //No buildstack, so generate from mat datums
 
-/obj/structure/table/greyscale/set_custom_materials(list/materials, multiplier)
+/obj/structure/table/greyscale/apply_stack_properties(obj/item/stack/stack_used)
+	if(!stack_used.material_type)
+		return
+	set_custom_materials(list(stack_used.material_type = SHEET_MATERIAL_AMOUNT))
+
+/obj/structure/table/greyscale/finalize_material_effects(list/materials)
 	. = ..()
-	var/list/materials_list = list()
-	for(var/custom_material in custom_materials)
-		var/datum/material/current_material = GET_MATERIAL_REF(custom_material)
-		materials_list += "[current_material.name]"
-	desc = "A square [(materials_list.len > 1) ? "amalgamation" : "piece"] of [english_list(materials_list)] on four legs. It can not move."
+	var/english_list = get_material_english_list(materials)
+	desc = "A square [(length(materials) > 1) ? "amalgamation" : "piece"] of [english_list] on four legs. It can not move."
 
 ///Table on wheels
 /obj/structure/table/rolling
-	SET_BASE_PIXEL(0, 0)
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "Rolling table"
 	desc = "An NT brand \"Rolly poly\" rolling table. It can and will move."
 	anchored = FALSE
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
-	icon = 'icons/obj/structures/smooth/rollingtable.dmi'
+	icon = 'icons/obj/smooth_structures/rollingtable.dmi'
 	icon_state = "rollingtable"
-	// this one's 32x32 so it uses different clickable bounds
-	bottom_placable_y = 12
-	top_placable_y = 29
-	bottom_placable_x = 4
-	top_placable_x = 28
 	/// Lazylist of the items that we have on our surface.
 	var/list/attached_items = null
 
-/obj/structure/table/rolling/Initialize(mapload)
+/obj/structure/table/rolling/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	AddElement(/datum/element/noisy_movement)
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_our_moved))
 
 /obj/structure/table/rolling/Destroy()
 	for(var/item in attached_items)
 		clear_item_reference(item)
 	LAZYNULL(attached_items) // safety
 	return ..()
+
+/obj/structure/table/rolling/item_interaction(mob/living/user, obj/item/rolling_table_dock/rable, list/modifiers)
+	. = NONE
+	if(!istype(rable))
+		return
+
+	if(rable.loaded)
+		to_chat(user, span_warning("You already have \a [rable.loaded] docked!"))
+		return ITEM_INTERACT_FAILURE
+
+	if(locate(/mob/living) in loc.get_all_contents())
+		to_chat(user, span_warning("You can't collect \the [src] with that much on top!"))
+		return ITEM_INTERACT_FAILURE
+
+	rable.loaded = src
+	forceMove(rable)
+	user.visible_message(span_notice("[user] collects \the [src]."), span_notice("You collect \the [src]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/table/rolling/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	. = ..()
@@ -442,8 +438,9 @@
 	clear_item_reference(thing)
 
 /// Handles movement of the table itself, as well as moving along any atoms we have on our surface.
-/obj/structure/table/rolling/proc/on_our_moved(datum/source, atom/old_loc, dir, forced, list/old_locs, momentum_change)
-	SIGNAL_HANDLER
+/obj/structure/table/rolling/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+
 	if(isnull(loc)) // aw hell naw
 		return
 
@@ -465,7 +462,7 @@
 /obj/structure/table/glass
 	name = "glass table"
 	desc = "What did I say about leaning on the glass tables? Now you need surgery."
-	icon = 'icons/obj/structures/smooth/glass_table.dmi'
+	icon = 'icons/obj/smooth_structures/glass_table.dmi'
 	icon_state = "glass_table-0"
 	base_icon_state = "glass_table"
 	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT)
@@ -480,7 +477,7 @@
 	fire = 80
 	acid = 100
 
-/obj/structure/table/glass/Initialize(mapload)
+/obj/structure/table/glass/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -537,7 +534,7 @@
 /obj/structure/table/glass/plasmaglass
 	name = "plasma glass table"
 	desc = "Someone thought this was a good idea."
-	icon = 'icons/obj/structures/smooth/plasmaglass_table.dmi'
+	icon = 'icons/obj/smooth_structures/plasmaglass_table.dmi'
 	icon_state = "plasmaglass_table-0"
 	base_icon_state = "plasmaglass_table"
 	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT)
@@ -552,7 +549,7 @@
 /obj/structure/table/wood
 	name = "wooden table"
 	desc = "Do not apply fire to this. Rumour says it burns easily."
-	icon = 'icons/obj/structures/smooth/wood_table.dmi'
+	icon = 'icons/obj/smooth_structures/wood_table.dmi'
 	icon_state = "wood_table-0"
 	base_icon_state = "wood_table"
 	frame = /obj/structure/table_frame/wood
@@ -570,10 +567,13 @@
 /obj/structure/table/wood/poker //No specialties, Just a mapping object.
 	name = "gambling table"
 	desc = "A seedy table for seedy dealings in seedy places."
-	icon = 'icons/obj/structures/smooth/poker_table.dmi'
+	icon = 'icons/obj/smooth_structures/poker_table.dmi'
 	icon_state = "poker_table-0"
 	base_icon_state = "poker_table"
 	buildstack = /obj/item/stack/tile/carpet
+
+/obj/structure/table/wood/poker/apply_stack_properties(obj/item/stack/stack_used)
+	buildstack = stack_used.type
 
 /obj/structure/table/wood/poker/narsie_act()
 	..(FALSE)
@@ -581,7 +581,7 @@
 /obj/structure/table/wood/fancy
 	name = "fancy table"
 	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
-	icon = 'icons/obj/structures/smooth/table_singles.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "fancy_table"
 	base_icon_state = "fancy_table"
 	frame = /obj/structure/table_frame
@@ -589,9 +589,9 @@
 	buildstack = /obj/item/stack/tile/carpet
 	smoothing_groups = SMOOTH_GROUP_FANCY_WOOD_TABLES //Don't smooth with SMOOTH_GROUP_TABLES or SMOOTH_GROUP_WOOD_TABLES
 	canSmoothWith = SMOOTH_GROUP_FANCY_WOOD_TABLES
-	var/smooth_icon = 'icons/obj/structures/smooth/fancy_table.dmi' // see Initialize()
+	var/smooth_icon = 'icons/obj/smooth_structures/fancy_table.dmi' // see Initialize()
 
-/obj/structure/table/wood/fancy/Initialize(mapload)
+/obj/structure/table/wood/fancy/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	// Needs to be set dynamically because table smooth sprites are 32x34,
 	// which the editor treats as a two-tile-tall object. The sprites are that
@@ -599,59 +599,62 @@
 	// the sprites in the editor to see why.
 	icon = smooth_icon
 
+/obj/structure/table/wood/fancy/apply_stack_properties(obj/item/stack/stack_used)
+	buildstack = stack_used.type
+
 /obj/structure/table/wood/fancy/black
 	icon_state = "fancy_table_black"
 	base_icon_state = "fancy_table_black"
 	buildstack = /obj/item/stack/tile/carpet/black
-	smooth_icon = 'icons/obj/structures/smooth/fancy_table_black.dmi'
+	smooth_icon = 'icons/obj/smooth_structures/fancy_table_black.dmi'
 
 /obj/structure/table/wood/fancy/blue
 	icon_state = "fancy_table_blue"
 	base_icon_state = "fancy_table_blue"
 	buildstack = /obj/item/stack/tile/carpet/blue
-	smooth_icon = 'icons/obj/structures/smooth/fancy_table_blue.dmi'
+	smooth_icon = 'icons/obj/smooth_structures/fancy_table_blue.dmi'
 
 /obj/structure/table/wood/fancy/cyan
 	icon_state = "fancy_table_cyan"
 	base_icon_state = "fancy_table_cyan"
 	buildstack = /obj/item/stack/tile/carpet/cyan
-	smooth_icon = 'icons/obj/structures/smooth/fancy_table_cyan.dmi'
+	smooth_icon = 'icons/obj/smooth_structures/fancy_table_cyan.dmi'
 
 /obj/structure/table/wood/fancy/green
 	icon_state = "fancy_table_green"
 	base_icon_state = "fancy_table_green"
 	buildstack = /obj/item/stack/tile/carpet/green
-	smooth_icon = 'icons/obj/structures/smooth/fancy_table_green.dmi'
+	smooth_icon = 'icons/obj/smooth_structures/fancy_table_green.dmi'
 
 /obj/structure/table/wood/fancy/orange
 	icon_state = "fancy_table_orange"
 	base_icon_state = "fancy_table_orange"
 	buildstack = /obj/item/stack/tile/carpet/orange
-	smooth_icon = 'icons/obj/structures/smooth/fancy_table_orange.dmi'
+	smooth_icon = 'icons/obj/smooth_structures/fancy_table_orange.dmi'
 
 /obj/structure/table/wood/fancy/purple
 	icon_state = "fancy_table_purple"
 	base_icon_state = "fancy_table_purple"
 	buildstack = /obj/item/stack/tile/carpet/purple
-	smooth_icon = 'icons/obj/structures/smooth/fancy_table_purple.dmi'
+	smooth_icon = 'icons/obj/smooth_structures/fancy_table_purple.dmi'
 
 /obj/structure/table/wood/fancy/red
 	icon_state = "fancy_table_red"
 	base_icon_state = "fancy_table_red"
 	buildstack = /obj/item/stack/tile/carpet/red
-	smooth_icon = 'icons/obj/structures/smooth/fancy_table_red.dmi'
+	smooth_icon = 'icons/obj/smooth_structures/fancy_table_red.dmi'
 
 /obj/structure/table/wood/fancy/royalblack
 	icon_state = "fancy_table_royalblack"
 	base_icon_state = "fancy_table_royalblack"
 	buildstack = /obj/item/stack/tile/carpet/royalblack
-	smooth_icon = 'icons/obj/structures/smooth/fancy_table_royalblack.dmi'
+	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblack.dmi'
 
 /obj/structure/table/wood/fancy/royalblue
 	icon_state = "fancy_table_royalblue"
 	base_icon_state = "fancy_table_royalblue"
 	buildstack = /obj/item/stack/tile/carpet/royalblue
-	smooth_icon = 'icons/obj/structures/smooth/fancy_table_royalblue.dmi'
+	smooth_icon = 'icons/obj/smooth_structures/fancy_table_royalblue.dmi'
 
 /*
  * Reinforced tables
@@ -659,7 +662,7 @@
 /obj/structure/table/reinforced
 	name = "reinforced table"
 	desc = "A reinforced version of the four legged table."
-	icon = 'icons/obj/structures/smooth/reinforced_table.dmi'
+	icon = 'icons/obj/smooth_structures/reinforced_table.dmi'
 	icon_state = "reinforced_table-0"
 	base_icon_state = "reinforced_table"
 	deconstruction_ready = FALSE
@@ -697,6 +700,9 @@
 
 /obj/structure/table/reinforced/welder_act_secondary(mob/living/user, obj/item/tool)
 	if(tool.tool_start_check(user, amount = 0))
+		if(attempt_electrocution(user))
+			return ITEM_INTERACT_BLOCKING
+
 		if(deconstruction_ready)
 			to_chat(user, span_notice("You start strengthening the reinforced table..."))
 			if (tool.use_tool(src, user, 50, volume = 50))
@@ -717,10 +723,44 @@
 
 	return ..()
 
+/obj/structure/table/reinforced/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	if(deconstruction_ready && attempt_electrocution(user))
+		return ITEM_INTERACT_BLOCKING
+	return ..()
+
+/obj/structure/table/reinforced/wrench_act_secondary(mob/living/user, obj/item/tool)
+	if(deconstruction_ready && attempt_electrocution(user))
+		return ITEM_INTERACT_BLOCKING
+	return ..()
+
+/// Attempts to shock the user, given the table is hooked up and they're within range.
+/// Returns TRUE on successful electrocution, FALSE otherwise.
+/obj/structure/table/reinforced/proc/attempt_electrocution(mob/user)
+	if(!anchored) // If for whatever reason it's not anchored, it can't be shocked either.
+		return FALSE
+	if(!in_range(src, user)) // To prevent TK and mech users from getting shocked.
+		return FALSE
+
+	var/turf/our_turf = get_turf(src)
+	if(our_turf.overfloor_placed) // Can't have a floor in the way.
+		return FALSE
+
+	var/obj/structure/cable/cable_node = our_turf.get_cable_node()
+	if(isnull(cable_node))
+		return FALSE
+	if(!electrocute_mob(user, cable_node, src, 1, TRUE))
+		return FALSE
+
+	var/datum/effect_system/spark_spread/sparks = new /datum/effect_system/spark_spread
+	sparks.set_up(3, TRUE, src)
+	sparks.start()
+
+	return TRUE
+
 /obj/structure/table/bronze
 	name = "bronze table"
 	desc = "A solid table made out of bronze."
-	icon = 'icons/obj/structures/smooth/brass_table.dmi'
+	icon = 'icons/obj/smooth_structures/brass_table.dmi'
 	icon_state = "brass_table-0"
 	base_icon_state = "brass_table"
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -730,12 +770,12 @@
 
 /obj/structure/table/bronze/tablepush(mob/living/user, mob/living/pushed_mob)
 	..()
-	playsound(src, 'sound/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 50, TRUE)
 
 /obj/structure/table/reinforced/rglass
 	name = "reinforced glass table"
 	desc = "A reinforced version of the glass table."
-	icon = 'icons/obj/structures/smooth/rglass_table.dmi'
+	icon = 'icons/obj/smooth_structures/rglass_table.dmi'
 	icon_state = "rglass_table-0"
 	base_icon_state = "rglass_table"
 	custom_materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
@@ -745,7 +785,7 @@
 /obj/structure/table/reinforced/plasmarglass
 	name = "reinforced plasma glass table"
 	desc = "A reinforced version of the plasma glass table."
-	icon = 'icons/obj/structures/smooth/rplasmaglass_table.dmi'
+	icon = 'icons/obj/smooth_structures/rplasmaglass_table.dmi'
 	icon_state = "rplasmaglass_table-0"
 	base_icon_state = "rplasmaglass_table"
 	custom_materials = list(/datum/material/alloy/plasmaglass =SHEET_MATERIAL_AMOUNT, /datum/material/iron =SHEET_MATERIAL_AMOUNT)
@@ -754,7 +794,7 @@
 /obj/structure/table/reinforced/titaniumglass
 	name = "titanium glass table"
 	desc = "A titanium reinforced glass table, with a fresh coat of NT white paint."
-	icon = 'icons/obj/structures/smooth/titaniumglass_table.dmi'
+	icon = 'icons/obj/smooth_structures/titaniumglass_table.dmi'
 	icon_state = "titaniumglass_table-0"
 	base_icon_state = "titaniumglass_table"
 	custom_materials = list(/datum/material/alloy/titaniumglass =SHEET_MATERIAL_AMOUNT)
@@ -764,7 +804,7 @@
 /obj/structure/table/reinforced/plastitaniumglass
 	name = "plastitanium glass table"
 	desc = "A table made of titanium reinforced silica-plasma composite. About as durable as it sounds."
-	icon = 'icons/obj/structures/smooth/plastitaniumglass_table.dmi'
+	icon = 'icons/obj/smooth_structures/plastitaniumglass_table.dmi'
 	icon_state = "plastitaniumglass_table-0"
 	base_icon_state = "plastitaniumglass_table"
 	custom_materials = list(/datum/material/alloy/plastitaniumglass =SHEET_MATERIAL_AMOUNT)
@@ -776,7 +816,6 @@
  */
 
 /obj/structure/table/optable
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "operating table"
 	desc = "Used for advanced medical procedures."
 	icon = 'icons/obj/medical/surgery_table.dmi'
@@ -791,7 +830,7 @@
 	var/mob/living/carbon/patient = null
 	var/obj/machinery/computer/operating/computer = null
 
-/obj/structure/table/optable/Initialize(mapload)
+/obj/structure/table/optable/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
 	for(var/direction in GLOB.alldirs)
 		computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)
@@ -817,6 +856,14 @@
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message(span_notice("[user] lays [pushed_mob] on [src]."))
+
+///Align the mob with the table when buckled.
+/obj/structure/table/optable/post_buckle_mob(mob/living/buckled)
+	buckled.add_offsets(type, z_add = 6)
+
+///Disalign the mob with the table when unbuckled.
+/obj/structure/table/optable/post_unbuckle_mob(mob/living/buckled)
+	buckled.remove_offsets(type)
 
 /// Any mob that enters our tile will be marked as a potential patient. They will be turned into a patient if they lie down.
 /obj/structure/table/optable/proc/mark_patient(datum/source, mob/living/carbon/potential_patient)
@@ -860,7 +907,7 @@
 /obj/structure/rack
 	name = "rack"
 	desc = "Different from the Middle Ages version."
-	icon = 'icons/obj/fluff/general.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack"
 	layer = TABLE_LAYER
 	density = TRUE
@@ -879,6 +926,7 @@
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 	register_context()
+	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
 
 /obj/structure/rack/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
@@ -906,8 +954,11 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if((tool.item_flags & ABSTRACT) || user.combat_mode)
+/obj/structure/rack/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(.)
+		return .
+	if((tool.item_flags & ABSTRACT) || (user.combat_mode && !(tool.item_flags & NOBLUDGEON)))
 		return NONE
 	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
 		return ITEM_INTERACT_SUCCESS
@@ -933,9 +984,9 @@
 			if(damage_amount)
 				playsound(loc, 'sound/items/dodgeball.ogg', 80, TRUE)
 			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(loc, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 40, TRUE)
+			playsound(loc, 'sound/items/tools/welder.ogg', 40, TRUE)
 
 /*
  * Rack destruction
@@ -954,7 +1005,7 @@
 /obj/item/rack_parts
 	name = "rack parts"
 	desc = "Parts of a rack."
-	icon = 'icons/obj/fluff/general.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "rack_parts"
 	inhand_icon_state = "rack_parts"
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -996,8 +1047,7 @@
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(get_turf(src))
-		user.visible_message("<span class='notice'>[user] assembles \a [R].\
-			</span>", span_notice("You assemble \a [R]."))
+		user.visible_message(span_notice("[user] assembles \a [R]."), span_notice("You assemble \a [R]."))
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE

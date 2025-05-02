@@ -237,12 +237,16 @@
 
 /datum/supply_pack/service/randomized/ready_donk
 	name = "Ready-Donk Variety Crate"
-	desc = "Featuring a line up of Donk Co.'s most popular pastry! Contains \
+	desc = "Featuring a line up of Donk Co.'s fan-favourite microwave meal! Contains \
 		a random assortment of Ready Donk products."
 	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/food/ready_donk,
 					/obj/item/food/ready_donk/mac_n_cheese,
 					/obj/item/food/ready_donk/donkhiladas,
+					/obj/item/food/ready_donk/nachos_grandes,
+					/obj/item/food/ready_donk/donkrange_chicken,
+					/obj/item/food/ready_donk/salisbury_steak,
+					/obj/item/food/ready_donk/country_chicken,
 				)
 	crate_name = "\improper Ready-Donk crate"
 	crate_type = /obj/structure/closet/crate/freezer/donk
@@ -281,21 +285,6 @@
 	crate_type = /obj/structure/closet/crate/large
 	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
-/datum/supply_pack/service/aquarium_kit
-	name = "Aquarium Kit"
-	desc = "Everything you need to start your own aquarium. Contains aquarium construction kit, \
-		fish catalog, fish food and three freshwater fish from our collection."
-	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/obj/item/book/manual/fish_catalog,
-					/obj/item/storage/fish_case/random/freshwater = 3,
-					/obj/item/fish_feed,
-					/obj/item/storage/box/aquarium_props,
-					/obj/item/aquarium_kit,
-				)
-	crate_name = "aquarium kit crate"
-	crate_type = /obj/structure/closet/crate/wooden
-	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
-
 /// Spare bar sign wallmount
 /datum/supply_pack/service/bar_sign
 	name = "Bar Sign Replacement Kit"
@@ -318,3 +307,10 @@
 	)
 	crate_name = "bowmaking starter kit crate"
 	crate_type = /obj/structure/closet/crate/wooden
+
+/datum/supply_pack/service/mousetraps
+	name = "Pest-B-Gon Mousetraps"
+	desc = "Three boxes of handy little spring-loaded traps for catching pesty rodents. Keep out of reach of children!"
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/storage/box/mousetraps = 3)
+	crate_name = "mousetraps crate"

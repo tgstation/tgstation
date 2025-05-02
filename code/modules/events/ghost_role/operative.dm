@@ -22,7 +22,7 @@
 	operative.randomize_human_appearance(~RANDOMIZE_SPECIES)
 	operative.dna.update_dna_identity()
 	var/datum/mind/Mind = new /datum/mind(chosen_one.key)
-	Mind.set_assigned_role(SSjob.GetJobType(/datum/job/lone_operative))
+	Mind.set_assigned_role(SSjob.get_job_type(/datum/job/lone_operative))
 	Mind.special_role = ROLE_LONE_OPERATIVE
 	Mind.active = TRUE
 	Mind.transfer_to(operative)

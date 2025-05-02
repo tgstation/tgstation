@@ -1,7 +1,0 @@
-template = "bitmask/walls"
-
-[slice_point]
-west = 11
-north = 16
-south = 16
-east = 21

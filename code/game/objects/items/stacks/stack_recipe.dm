@@ -7,6 +7,8 @@
 	var/title = "ERROR"
 	/// What atom the recipe makes, typepath
 	var/atom/result_type
+	/// Generated base64 image. Used only if result has color
+	var/result_image
 	/// Amount of stack required to make
 	var/req_amount = 1
 	/// Amount of resulting atoms made
@@ -52,6 +54,15 @@
 	src.trait_booster = trait_booster
 	src.trait_modifier = trait_modifier
 	src.category = src.category || category || CAT_MISC
+
+	// We create base64 image only if item have color. Otherwise use icon_ref for TGUI
+	var/obj/item/result = result_type
+	var/paint = result::color
+	if(!isnull(paint) && paint != COLOR_WHITE)
+		var/icon/result_icon = icon(result::icon, result::icon_state, SOUTH, 1)
+		result_icon.Scale(32, 32)
+		result_icon.Blend(paint, ICON_MULTIPLY)
+		src.result_image = "[icon2base64(result_icon)]"
 
 /datum/stack_recipe/radial
 	/// Optional info to be shown on the radial option for this item

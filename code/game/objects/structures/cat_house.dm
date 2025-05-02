@@ -1,5 +1,4 @@
 /obj/structure/cat_house
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "cat house"
 	desc = "Cozy home for cats."
 	icon = 'icons/mob/simple/pets.dmi'
@@ -42,6 +41,6 @@
 		return
 	var/image/cat_icon = image(icon = resident_cat.icon, icon_state = resident_cat.icon_state, layer = LOW_ITEM_LAYER)
 	cat_icon.transform = cat_icon.transform.Scale(0.7, 0.7)
-	cat_icon.pixel_x = 0
-	cat_icon.pixel_y = -9
+	cat_icon.pixel_w = 0
+	cat_icon.pixel_z = -9
 	. += cat_icon

@@ -69,7 +69,9 @@ SUBSYSTEM_DEF(discord)
 	var/notifymsg = jointext(people_to_notify, ", ")
 	if(notifymsg)
 		notifymsg += ", a new round is starting!"
-		send2chat(new /datum/tgs_message_content(trim(notifymsg)), CONFIG_GET(string/chat_new_game_notifications)) // Sends the message to the discord, using same config option as the roundstart notification
+		for(var/channel_tag in CONFIG_GET(str_list/chat_new_game_notifications))
+			// Sends the message to the discord, using same config option as the roundstart notification
+			send2chat(new /datum/tgs_message_content(trim(notifymsg)), channel_tag)
 	fdel(notify_file) // Deletes the file
 	return SS_INIT_SUCCESS
 

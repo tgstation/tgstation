@@ -28,7 +28,7 @@
 	var/extend_pipe_to_edge = FALSE
 
 ///turn_connects is for wheter or not we spin with the object to change our pipes
-/datum/component/plumbing/Initialize(start=TRUE, ducting_layer, turn_connects=TRUE, datum/reagents/custom_receiver, extend_pipe_to_edge = FALSE, invert_demand = FALSE)
+/datum/component/plumbing/Initialize(start=TRUE, ducting_layer, turn_connects=TRUE, datum/reagents/custom_receiver, extend_pipe_to_edge = FALSE)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -45,20 +45,9 @@
 
 	set_recipient_reagents_holder(custom_receiver ? custom_receiver : parent_movable.reagents)
 
-	if(invert_demand)
-		var/new_demand_connects
-		var/new_supply_connects
-		for(var/direction in GLOB.cardinals)
-			if(direction & initial(demand_connects))
-				new_demand_connects += turn(direction, 180)
-			if(direction & initial(supply_connects))
-				new_supply_connects += turn(direction, 180)
-		demand_connects = new_demand_connects
-		supply_connects = new_supply_connects
-
 	if(start)
-		// We're registering here because I need to check whether we start active or not, and this is just easier
-		// Should be called after we finished. Done this way because other networks need to finish setting up aswell
+		//We're registering here because I need to check whether we start active or not, and this is just easier
+		//Should be called after we finished. Done this way because other networks need to finish setting up aswell
 		RegisterSignal(parent, COMSIG_COMPONENT_ADDED, PROC_REF(enable))
 
 /datum/component/plumbing/RegisterWithParent()
@@ -132,6 +121,8 @@
 
 ///returns TRUE when they can give the specified amount and reagent. called by process request
 /datum/component/plumbing/proc/can_give(amount, reagent, datum/ductnet/net)
+	SHOULD_BE_PURE(TRUE)
+
 	if(amount <= 0)
 		return
 
@@ -197,8 +188,8 @@
 			overlay.dir = direction
 
 		overlay.color = color
-		overlay.pixel_x = duct_x
-		overlay.pixel_y = duct_y
+		overlay.pixel_w = duct_x
+		overlay.pixel_z = duct_y
 
 		overlays += overlay
 
@@ -207,8 +198,8 @@
 			var/image/edge_overlay = image('icons/obj/pipes_n_cables/hydrochem/connects.dmi', "edge-extension", layer = duct_layer)
 			edge_overlay.dir = parent_movable.dir
 			edge_overlay.color = color
-			edge_overlay.pixel_x = -parent_movable.pixel_x - parent_movable.pixel_w
-			edge_overlay.pixel_y = -parent_movable.pixel_y - parent_movable.pixel_z
+			edge_overlay.pixel_w = -parent_movable.pixel_x - parent_movable.pixel_w
+			edge_overlay.pixel_z = -parent_movable.pixel_y - parent_movable.pixel_z
 			overlays += edge_overlay
 			// only show extension for the first pipe. This means we'll only reflect that color.
 			extension_handled = TRUE
@@ -346,7 +337,7 @@
 		tile_covered = should_hide
 		parent_obj.update_appearance()
 
-/datum/component/plumbing/proc/change_ducting_layer(obj/caller, obj/changer, new_layer = DUCT_LAYER_DEFAULT)
+/datum/component/plumbing/proc/change_ducting_layer(obj/source, obj/changer, new_layer = DUCT_LAYER_DEFAULT)
 	SIGNAL_HANDLER
 	ducting_layer = new_layer
 
@@ -354,7 +345,7 @@
 	parent_movable.update_appearance()
 
 	if(changer)
-		playsound(changer, 'sound/items/ratchet.ogg', 10, TRUE) //sound
+		playsound(changer, 'sound/items/tools/ratchet.ogg', 10, TRUE) //sound
 
 	//quickly disconnect and reconnect the network.
 	if(active)

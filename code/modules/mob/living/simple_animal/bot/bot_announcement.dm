@@ -8,7 +8,6 @@
 	button_icon_state = "intercom"
 	cooldown_time = 5 SECONDS
 	shared_cooldown = MOB_SHARED_COOLDOWN_BOT_ANNOUNCMENT
-	melee_cooldown_time = 0 SECONDS
 	/// List of strings to sound effects corresponding to automated messages we can play
 	var/list/automated_announcements
 	/// Maximum amount of buttons this can have
@@ -173,7 +172,6 @@
 /datum/action/cooldown/bot_announcement_shortcut
 	desc = "Play a prerecorded message for the benefit of those around you."
 	shared_cooldown = MOB_SHARED_COOLDOWN_BOT_ANNOUNCMENT
-	melee_cooldown_time = 0 SECONDS
 	background_icon_state = "bg_tech_blue"
 	overlay_icon_state = "bg_tech_blue_border"
 	button_icon = 'icons/obj/machines/wallmounts.dmi'

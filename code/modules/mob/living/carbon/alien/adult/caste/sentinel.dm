@@ -6,12 +6,20 @@
 	icon_state = "aliens"
 	alien_speed = 0.2
 
+	default_organ_types_by_slot = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/alien,
+		ORGAN_SLOT_XENO_HIVENODE = /obj/item/organ/alien/hivenode,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/alien,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes/alien,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/alien,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/alien,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = /obj/item/organ/alien/plasmavessel,
+		ORGAN_SLOT_XENO_ACIDGLAND = /obj/item/organ/alien/acid,
+		ORGAN_SLOT_XENO_NEUROTOXINGLAND = /obj/item/organ/alien/neurotoxin,
+		ORGAN_SLOT_EXTERNAL_TAIL = /obj/item/organ/tail/xeno,
+	)
+
 /mob/living/carbon/alien/adult/sentinel/Initialize(mapload)
 	GRANT_ACTION(/datum/action/cooldown/mob_cooldown/sneak/alien)
 	return ..()
-
-/mob/living/carbon/alien/adult/sentinel/create_internal_organs()
-	organs += new /obj/item/organ/internal/alien/plasmavessel
-	organs += new /obj/item/organ/internal/alien/acid
-	organs += new /obj/item/organ/internal/alien/neurotoxin
-	..()

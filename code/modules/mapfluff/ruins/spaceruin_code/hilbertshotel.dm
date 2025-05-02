@@ -4,7 +4,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/item/hilbertshotel
 	name = "Hilbert's Hotel"
 	desc = "A sphere of what appears to be an intricate network of bluespace. Observing it in detail seems to give you a headache as you try to comprehend the infinite amount of infinitesimally distinct points on its surface."
-	icon = 'icons/obj/fluff/general.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "hilbertshotel"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -72,7 +72,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 		to_chat(target, span_warning("You too far away from \the [src] to enter it!"))
 
 	// If the target is incapacitated after selecting a room, they're not allowed to teleport.
-	if(target.incapacitated())
+	if(target.incapacitated)
 		to_chat(target, span_warning("You aren't able to activate \the [src] anymore!"))
 
 	// Has the user thrown it away or otherwise disposed of it such that it's no longer in their hands or in some storage connected to them?
@@ -238,7 +238,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	name = "Hilbert's Hotel Room"
 	mappath = "_maps/templates/hilbertshotel.dmm"
 	var/landingZoneRelativeX = 2
-	var/landingZoneRelativeY = 12
+	var/landingZoneRelativeY = 8
 
 /datum/map_template/hilbertshotel/empty
 	name = "Empty Hilbert's Hotel Room"
@@ -256,9 +256,8 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 //Turfs and Areas
 /turf/closed/indestructible/hotelwall
 	name = "hotel wall"
-	icon = 'icons/turf/walls/hotel_wall.dmi'
 	desc = "A wall designed to protect the security of the hotel's guests."
-	smoothing_flags = SMOOTH_BITMASK
+	icon_state = "hotelwall"
 	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_HOTEL_WALLS
 	canSmoothWith = SMOOTH_GROUP_HOTEL_WALLS
 	explosive_resistance = INFINITY
@@ -299,21 +298,13 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 
 /turf/closed/indestructible/hoteldoor
 	name = "Hotel Door"
-	icon = 'icons/turf/walls/hotel_door.dmi'
+	icon_state = "hoteldoor"
 	explosive_resistance = INFINITY
-	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_CLOSED_TURFS + SMOOTH_GROUP_HOTEL_WALLS
-	canSmoothWith = SMOOTH_GROUP_HOTEL_WALLS
 	var/obj/item/hilbertshotel/parentSphere
 
 /turf/closed/indestructible/hoteldoor/Initialize(mapload)
 	. = ..()
 	register_context()
-	// Build the glow animation
-	var/mutable_appearance/glow_animation = mutable_appearance('icons/turf/walls/hotel_door_glow.dmi', "glow")
-	// Add emissive as a suboverlay, to make working with it easier
-	glow_animation.add_overlay(emissive_appearance('icons/turf/walls/hotel_door_glow.dmi', "glow", src))
-	AddComponent(/datum/component/split_overlay, glow_animation, list(SOUTH_JUNCTION))
 
 /turf/closed/indestructible/hoteldoor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -401,10 +392,10 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon = 'icons/area/areas_ruins.dmi'
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
-	has_gravity = TRUE
+	default_gravity = STANDARD_GRAVITY
 	area_flags = NOTELEPORT | HIDDEN_AREA
 	static_lighting = TRUE
-	ambientsounds = list('sound/ambience/servicebell.ogg')
+	ambientsounds = list('sound/ambience/ruin/servicebell.ogg')
 	var/roomnumber = 0
 	var/obj/item/hilbertshotel/parentSphere
 	var/datum/turf_reservation/reservation
@@ -492,7 +483,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	icon_state = "hilbertshotel"
 	requires_power = FALSE
 	area_flags = HIDDEN_AREA | NOTELEPORT | UNIQUE_AREA
-	has_gravity = TRUE
+	default_gravity = STANDARD_GRAVITY
 
 /obj/item/abstracthotelstorage
 	anchored = TRUE
@@ -534,25 +525,25 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	worn_icon_state = "analyzer"
 
 /obj/item/analyzer/hilbertsanalyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(istype(interacting_with, /obj/item/hilbertshotel))
-		if(!Adjacent(interacting_with))
-			to_chat(user, span_warning("It's to far away to scan!"))
-			return ITEM_INTERACT_BLOCKING
-		var/obj/item/hilbertshotel/sphere = interacting_with
-		if(sphere.activeRooms.len)
-			to_chat(user, "Currently Occupied Rooms:")
-			for(var/roomnumber in sphere.activeRooms)
-				to_chat(user, roomnumber)
-		else
-			to_chat(user, "No currenty occupied rooms.")
-		if(sphere.storedRooms.len)
-			to_chat(user, "Vacated Rooms:")
-			for(var/roomnumber in sphere.storedRooms)
-				to_chat(user, roomnumber)
-		else
-			to_chat(user, "No vacated rooms.")
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	if(!istype(interacting_with, /obj/item/hilbertshotel))
+		return ..()
+	if(!user.CanReach(interacting_with))
+		to_chat(user, span_warning("It's to far away to scan!"))
+		return ITEM_INTERACT_BLOCKING
+	var/obj/item/hilbertshotel/sphere = interacting_with
+	if(sphere.activeRooms.len)
+		to_chat(user, "Currently Occupied Rooms:")
+		for(var/roomnumber in sphere.activeRooms)
+			to_chat(user, roomnumber)
+	else
+		to_chat(user, "No currenty occupied rooms.")
+	if(sphere.storedRooms.len)
+		to_chat(user, "Vacated Rooms:")
+		for(var/roomnumber in sphere.storedRooms)
+			to_chat(user, roomnumber)
+	else
+		to_chat(user, "No vacated rooms.")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/effect/landmark/transport/transport_id/hilbert
 	specific_transport_id = HILBERT_LINE_1
@@ -598,9 +589,9 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	id_trim = /datum/id_trim/away/hilbert
 
-/datum/outfit/doctorhilbert/pre_equip(mob/living/carbon/human/hilbert, visualsOnly)
+/datum/outfit/doctorhilbert/pre_equip(mob/living/carbon/human/hilbert, visuals_only)
 	. = ..()
-	if(!visualsOnly)
+	if(!visuals_only)
 		hilbert.gender = MALE
 		hilbert.update_body()
 
@@ -717,6 +708,9 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 /obj/machinery/porta_turret/syndicate/teleport
 	name = "displacement turret"
 	desc = "A ballistic machine gun auto-turret that fires bluespace bullets."
-	lethal_projectile = /obj/projectile/magic/teleport
-	stun_projectile = /obj/projectile/magic/teleport
+	lethal_projectile = /obj/projectile/magic/teleport/bluespace
+	stun_projectile = /obj/projectile/magic/teleport/bluespace
 	faction = list(FACTION_TURRET)
+
+/obj/projectile/magic/teleport/bluespace
+	antimagic_flags = NONE

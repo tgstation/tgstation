@@ -40,6 +40,9 @@
 	if (istype(name, /datum/asset/spritesheet))
 		var/datum/asset/spritesheet/sheet = name
 		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
+	else if (istype(name, /datum/asset/spritesheet_batched))
+		var/datum/asset/spritesheet_batched/sheet = name
+		stylesheets["spritesheet_[sheet.name].css"] = "data/spritesheets/[sheet.name]"
 	else
 		var/asset_name = "[name].css"
 
@@ -138,13 +141,13 @@
 
 	var/output = {"<center><b>[Message]</b></center><br />
 		<div style="text-align:center">
-		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href="?src=[REF(src)];button=1">[Button1]</a>"}
+		<a style="font-size:large;float:[( Button2 ? "left" : "right" )]" href='byond://?src=[REF(src)];button=1'>[Button1]</a>"}
 
 	if (Button2)
-		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href="?src=[REF(src)];button=2">[Button2]</a>"}
+		output += {"<a style="font-size:large;[( Button3 ? "" : "float:right" )]" href='byond://?src=[REF(src)];button=2'>[Button2]</a>"}
 
 	if (Button3)
-		output += {"<a style="font-size:large;float:right" href="?src=[REF(src)];button=3">[Button3]</a>"}
+		output += {"<a style="font-size:large;float:right" href='byond://?src=[REF(src)];button=3'>[Button3]</a>"}
 
 	output += {"</div>"}
 
@@ -309,25 +312,25 @@
 	if (A.selectedbutton)
 		return list("button" = A.selectedbutton, "values" = A.valueslist)
 
-/proc/input_bitfield(mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor, allowed_edit_list = null)
-	if (!User || !(bitfield in GLOB.bitfields))
+/proc/input_bitfield(mob/User, title, bitfield, current_value, nwidth = 350, nheight = 350, nslidecolor, allowed_edit_flags = ALL)
+	var/list/bitflags = get_valid_bitflags(bitfield)
+	if (!User || !length(bitflags))
 		return
-	var/list/pickerlist = list()
-	for (var/i in GLOB.bitfields[bitfield])
-		var/can_edit = 1
-		if(!isnull(allowed_edit_list) && !(allowed_edit_list & GLOB.bitfields[bitfield][i]))
-			can_edit = 0
-		if (current_value & GLOB.bitfields[bitfield][i])
-			pickerlist += list(list("checked" = 1, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
-		else
-			pickerlist += list(list("checked" = 0, "value" = GLOB.bitfields[bitfield][i], "name" = i, "allowed_edit" = can_edit))
-	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", Timeout=FALSE, values = pickerlist, width = nwidth, height = nheight, slidecolor = nslidecolor)
+	var/list/picker_list = list()
+	for (var/bit_name in bitflags)
+		var/bit_value = bitflags[bit_name]
+		// TRUE/FALSE cast, sorry :)
+		var/can_edit = !!(allowed_edit_flags & bit_value)
+		var/flag_set = !!(current_value & bit_value)
+		picker_list += list(list("checked" = flag_set, "value" = bit_value, "name" = bit_name, "allowed_edit" = can_edit))
+
+	var/list/result = presentpicker(User, "", title, Button1="Save", Button2 = "Cancel", Timeout=FALSE, values = picker_list, width = nwidth, height = nheight, slidecolor = nslidecolor)
 	if (islist(result))
 		if (result["button"] == 2) // If the user pressed the cancel button
 			return
-		. = 0
-		for (var/flag in result["values"])
-			. |= GLOB.bitfields[bitfield][flag]
+		. = NONE
+		for (var/flag_name in result["values"])
+			. |= bitflags[flag_name]
 	else
 		return
 
@@ -356,11 +359,11 @@
 		var/setting = settings["mainsettings"][name]
 		if (setting["type"] == "datum")
 			if (setting["subtypesonly"])
-				dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;subtypesonly=1;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+				dat += "<b>[setting["desc"]]:</b> <a href='byond://?src=[REF(src)];setting=[name];task=input;subtypesonly=1;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
 			else
-				dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
+				dat += "<b>[setting["desc"]]:</b> <a href='byond://?src=[REF(src)];setting=[name];task=input;type=datum;path=[setting["path"]]'>[setting["value"]]</a><BR>"
 		else
-			dat += "<b>[setting["desc"]]:</b> <a href='?src=[REF(src)];setting=[name];task=input;type=[setting["type"]]'>[setting["value"]]</a><BR>"
+			dat += "<b>[setting["desc"]]:</b> <a href='byond://?src=[REF(src)];setting=[name];task=input;type=[setting["type"]]'>[setting["value"]]</a><BR>"
 
 	if (preview_icon)
 		dat += "<td valign='center'>"
@@ -371,7 +374,7 @@
 
 	dat += "</tr></table>"
 
-	dat += "<hr><center><a href='?src=[REF(src)];button=1'>Ok</a> "
+	dat += "<hr><center><a href='byond://?src=[REF(src)];button=1'>Ok</a> "
 
 	dat += "</center>"
 

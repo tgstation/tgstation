@@ -6,7 +6,7 @@
 	inhand_icon_state = "staff"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
-	fire_sound = 'sound/weapons/emitter.ogg'
+	fire_sound = 'sound/items/weapons/emitter.ogg'
 	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_HUGE
 	///what kind of magic is this
@@ -129,7 +129,7 @@
 
 
 /obj/item/gun/magic/shoot_with_empty_chamber(mob/living/user as mob|obj)
-	to_chat(user, span_warning("The [name] whizzles quietly."))
+	to_chat(user, span_warning("\The [src] whizzles quietly."))
 
 /obj/item/gun/magic/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is twisting [src] above [user.p_their()] head, releasing a magical blast! It looks like [user.p_theyre()] trying to commit suicide!"))

@@ -88,8 +88,8 @@
 	visuals.layer = beam_layer
 	visuals.update_appearance()
 	Draw()
-	RegisterSignal(origin, COMSIG_MOVABLE_MOVED, PROC_REF(redrawing))
-	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(redrawing))
+	RegisterSignals(origin, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(redrawing))
+	RegisterSignals(target, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(redrawing))
 
 /**
  * Triggered by signals set up when the beam is set up. If it's still sane to create a beam, it removes the old beam, creates a new one. Otherwise it kills the beam.
@@ -101,7 +101,9 @@
  */
 /datum/beam/proc/redrawing(atom/movable/mover, atom/oldloc, direction)
 	SIGNAL_HANDLER
-	if(origin && target && get_dist(origin,target)<max_distance && origin.z == target.z)
+	if(QDELING(src))
+		return
+	if(!QDELETED(origin) && !QDELETED(target) && get_dist(origin,target)<max_distance && origin.z == target.z)
 		QDEL_LIST(elements)
 		INVOKE_ASYNC(src, PROC_REF(Draw))
 	else
@@ -110,8 +112,8 @@
 /datum/beam/Destroy()
 	QDEL_LIST(elements)
 	QDEL_NULL(visuals)
-	UnregisterSignal(origin, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(origin, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
+	UnregisterSignal(target, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	target = null
 	origin = null
 	return ..()
@@ -122,10 +124,10 @@
 /datum/beam/proc/Draw()
 	if(SEND_SIGNAL(src, COMSIG_BEAM_BEFORE_DRAW) & BEAM_CANCEL_DRAW)
 		return
-	var/origin_px = isnull(override_origin_pixel_x) ? origin.pixel_x : override_origin_pixel_x
-	var/origin_py = isnull(override_origin_pixel_y) ? origin.pixel_y : override_origin_pixel_y
-	var/target_px = isnull(override_target_pixel_x) ? target.pixel_x : override_target_pixel_x
-	var/target_py = isnull(override_target_pixel_y) ? target.pixel_y : override_target_pixel_y
+	var/origin_px = (isnull(override_origin_pixel_x) ? origin.pixel_x : override_origin_pixel_x) + origin.pixel_w
+	var/origin_py = (isnull(override_origin_pixel_y) ? origin.pixel_y : override_origin_pixel_y) + origin.pixel_z
+	var/target_px = (isnull(override_target_pixel_x) ? target.pixel_x : override_target_pixel_x) + target.pixel_w
+	var/target_py = (isnull(override_target_pixel_y) ? target.pixel_y : override_target_pixel_y) + target.pixel_z
 	var/Angle = get_angle_raw(origin.x, origin.y, origin_px, origin_py, target.x , target.y, target_px, target_py)
 	///var/Angle = round(get_angle(origin,target))
 	var/matrix/rot_matrix = matrix()
@@ -206,11 +208,14 @@
 	owner = null
 	return ..()
 
-/obj/effect/ebeam/singularity_pull()
+/obj/effect/ebeam/singularity_pull(atom/singularity, current_size)
 	return
 
 /obj/effect/ebeam/singularity_act()
 	return
+
+/obj/effect/ebeam/Process_Spacemove(movement_dir, continuous_move)
+	return TRUE
 
 /// A beam subtype used for advanced beams, to react to atoms entering the beam
 /obj/effect/ebeam/reacting

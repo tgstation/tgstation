@@ -2,7 +2,7 @@
 
 /obj/projectile/bullet/p50
 	name =".50 BMG bullet"
-	speed = 0.4
+	speed = 2.5
 	range = 400 // Enough to travel from one corner of the Z to the opposite corner and then some.
 	damage = 70
 	paralyze = 100
@@ -87,11 +87,12 @@
 	name = ".50 BMG aggression dissuasion round"
 	icon_state = "gaussstrong"
 	damage = 25
-	speed = 0.3
+	speed = 3
 	range = 16
 
 /obj/projectile/bullet/p50/marksman
 	name = ".50 BMG marksman round"
+	icon_state = null
 	damage = 50
 	range = 50
 	paralyze = 0

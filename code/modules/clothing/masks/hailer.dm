@@ -56,8 +56,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	flags_cover = MASKCOVERSMOUTH
 	visor_flags_cover = MASKCOVERSMOUTH
 	tint = 0
-	has_fov = FALSE
-	unique_death = 'sound/voice/sec_death.ogg'
+	fishing_modifier = 0
+	unique_death = 'sound/items/sec_hailer/sec_death.ogg'
 	COOLDOWN_DECLARE(hailer_cooldown)
 	///Decides the phrases available for use; defines used are the last index of a category of available phrases
 	var/aggressiveness = AGGR_BAD_COP
@@ -86,6 +86,8 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	visor_flags_inv = 0
 	flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
 	visor_flags_cover = MASKCOVERSMOUTH | MASKCOVERSEYES | PEPPERPROOF
+	fishing_modifier = 2
+	pepper_tint = FALSE
 
 /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	name = "spacepol mask"
@@ -103,6 +105,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	slot_flags = null
 	aggressiveness = AGGR_GOOD_COP // Borgs are nicecurity!
 	actions_types = list(/datum/action/item_action/halt)
+	fishing_modifier = 0
 
 /obj/item/clothing/mask/gas/sechailer/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -120,13 +123,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		aggressiveness = AGGR_BROKEN
 		return
 
-/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, action)
-	if(istype(action, /datum/action/item_action/halt))
-		halt()
-	else
-		adjust_visor(user)
-
-/obj/item/clothing/mask/gas/sechailer/attack_self()
+/obj/item/clothing/mask/gas/sechailer/ui_action_click(mob/user, actiontype)
 	halt()
 
 /obj/item/clothing/mask/gas/sechailer/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -200,6 +197,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 	custom_price = PAYCHECK_COMMAND * 1.5
 	w_class = WEIGHT_CLASS_SMALL
 	actions_types = list(/datum/action/item_action/halt)
+	action_slots = ALL
 	COOLDOWN_DECLARE(whistle_cooldown)
 
 /obj/item/clothing/mask/whistle/ui_action_click(mob/user, action)
@@ -207,7 +205,7 @@ GLOBAL_LIST_INIT(hailer_phrases, list(
 		return
 	COOLDOWN_START(src, whistle_cooldown, 10 SECONDS)
 	user.audible_message("<font color='red' size='5'><b>HALT!</b></font>")
-	playsound(src, 'sound/misc/whistle.ogg', 50, FALSE, 4)
+	playsound(src, 'sound/items/whistle/whistle.ogg', 50, FALSE, 4)
 
 /datum/action/item_action/halt
 	name = "HALT!"

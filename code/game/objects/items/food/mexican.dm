@@ -26,7 +26,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("torilla" = 2, "beans" = 3)
-	foodtypes = GRAIN
+	foodtypes = VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_2
@@ -42,7 +42,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("torilla" = 2, "beans" = 3, "cheese" = 1)
-	foodtypes = GRAIN | DAIRY
+	foodtypes = VEGETABLES|GRAIN|DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -58,7 +58,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("torilla" = 2, "meat" = 4)
-	foodtypes = GRAIN | MEAT
+	foodtypes = VEGETABLES|GRAIN|MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -75,7 +75,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 3,
 	)
 	tastes = list("torilla" = 2, "beans" = 3, "hot peppers" = 1)
-	foodtypes = GRAIN
+	foodtypes = VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_LEGENDARY
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -122,8 +122,9 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("nachos" = 2, "hot pepper" = 1)
-	foodtypes = VEGETABLES | FRIED | DAIRY
+	foodtypes = VEGETABLES|FRIED|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/taco
@@ -177,7 +178,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("hot peppers" = 1, "meat" = 3, "cheese" = 1, "sour cream" = 1)
-	foodtypes = MEAT | GRAIN
+	foodtypes = MEAT|VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -210,7 +211,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("peppers" = 1, "salsa" = 3, "tortilla chips" = 1, "onion" = 1)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -278,7 +279,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("crunchy taco shell" = 1, "cabbage" = 3, "tomatoes" = 1, "ground meat" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | MEAT | DAIRY
+	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -293,7 +294,7 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
 	tastes = list("crunchy taco shell" = 1, "ground meat" = 1)
-	foodtypes = GRAIN | MEAT
+	foodtypes = MEAT|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -324,7 +325,7 @@
 	)
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	tastes = list("zesty rice" = 1, "tomato sauce" = 3,)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 

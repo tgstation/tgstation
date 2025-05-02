@@ -1,6 +1,4 @@
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Button,
   Collapsible,
@@ -10,7 +8,9 @@ import {
   Section,
   Stack,
   Tabs,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {

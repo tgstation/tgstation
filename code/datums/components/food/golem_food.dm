@@ -108,7 +108,7 @@
 
 /obj/item/food/golem_food/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(took_bite)), volume = INFINITY)
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, after_eat = CALLBACK(src, PROC_REF(took_bite)), volume = INFINITY)
 
 /// Called when someone bites this food, subtract one charge from our material stack
 /obj/item/food/golem_food/proc/took_bite(mob/eater)

@@ -212,7 +212,7 @@
 		TOOL_SCREWDRIVER = 40,
 	)
 	time = 2.4 SECONDS
-	preop_sound = 'sound/surgery/hemostat1.ogg'
+	preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 
 /datum/surgery_step/clamp_bleeders/discard_skull_debris/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(

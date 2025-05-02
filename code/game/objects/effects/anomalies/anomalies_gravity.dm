@@ -17,7 +17,7 @@
 	///Warp effect holder for displacement filter to "pulse" the anomaly
 	var/atom/movable/warp_effect/warp
 
-/obj/effect/anomaly/grav/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/grav/Initialize(mapload, new_lifespan)
 	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
@@ -82,6 +82,10 @@
 		A.throw_at(target, 5, 1)
 		boing = 0
 
+/obj/effect/anomaly/grav/detonate()
+	new /obj/effect/temp_visual/circle_wave/gravity(get_turf(src))
+	playsound(src, 'sound/effects/magic/cosmic_energy.ogg', vol = 50)
+
 /obj/effect/anomaly/grav/high
 	var/datum/proximity_monitor/advanced/gravity/grav_field
 
@@ -93,6 +97,7 @@
 	grav_field = new(src, 7, TRUE, rand(0, 3))
 
 /obj/effect/anomaly/grav/high/detonate()
+	..()
 	for(var/obj/machinery/gravity_generator/main/the_generator as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/gravity_generator/main))
 		if(is_station_level(the_generator.z))
 			the_generator.blackout()
@@ -107,7 +112,10 @@
 	anomaly_core = null
 	move_force = MOVE_FORCE_OVERPOWERING
 
-/obj/effect/anomaly/grav/high/big/Initialize(mapload, new_lifespan, drops_core)
+/obj/effect/anomaly/grav/high/big/Initialize(mapload, new_lifespan)
 	. = ..()
 
 	transform *= 3
+
+/obj/effect/temp_visual/circle_wave/gravity
+	color = COLOR_NAVY

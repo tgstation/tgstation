@@ -90,7 +90,7 @@
 	name = "lumbermill saw"
 	desc = "Faster then the cartoons!"
 	obj_flags = CAN_BE_HIT | EMAGGED
-	item_recycle_sound = 'sound/weapons/chainsawhit.ogg'
+	item_recycle_sound = 'sound/items/weapons/chainsawhit.ogg'
 
 /obj/machinery/recycler/lumbermill/recycle_item(obj/item/grown/log/L)
 	if(!istype(L))

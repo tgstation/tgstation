@@ -52,7 +52,8 @@
 		Note: This bundle is not at a discount. You can purchase all of these items separately. You do not NEED these items, but most operatives fail WITHOUT at \
 		least SOME of these items. More experienced operatives can do without."
 	item = /obj/item/storage/box/syndie_kit/core_gear
-	cost = 22 //freedom 5, doormag 3, c-4 1, stimpack 5, shield modsuit module 8
+	//The cost for the core kit is always equivalent to the combined costs of the included items
+	cost = (/datum/uplink_item/device_tools/doorjack::cost + /datum/uplink_item/implants/freedom::cost + /datum/uplink_item/explosives/c4::cost + /datum/uplink_item/device_tools/stimpack::cost +	/datum/uplink_item/suits/energy_shield::cost)
 	limited_stock = 1
 	cant_discount = TRUE
 	purchasable_from = UPLINK_SERIOUS_OPS
@@ -83,6 +84,21 @@
 	desc = "An additional 8-round slug magazine for use with the Bulldog shotgun. \
 		Now 8 times less likely to shoot your pals."
 	item = /obj/item/ammo_box/magazine/m12g/slug
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+
+/datum/uplink_item/ammo_nuclear/basic/flechette
+	name = "12g Flechette Shells (Bulldog)"
+	desc = "An alternative 8-round flechette magazine for use in the Bulldog shotgun. \
+		Getting stopped by armor? Why not flechette? Turn meat and kevlar to tatters!"
+	item = /obj/item/ammo_box/magazine/m12g/flechette
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+
+/datum/uplink_item/ammo_nuclear/basic/donk
+	name = "12g Donk Co. 'Donk Spike' Flechette Magazine Box (Bulldog)"
+	desc = "A whole box of 8-round Donk Co. 'Donk Spike' flechette magazines for use in the \
+		Bulldog shotgun. Sponsored by the Donk Corporation! A whole box of these magazines for \
+		the price of one purchase! WARNING: DO NOT SNIFF THE MAGAZINES!"
+	item = /obj/item/storage/box/syndie_kit/shotgun_surplus
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
 /datum/uplink_item/ammo_nuclear/incendiary/dragon
@@ -178,7 +194,7 @@
 
 /datum/uplink_item/weapon_kits/medium_cost/sword_and_board
 	name = "Energy Shield and Sword Case (Very Hard)"
-	desc = "A case containing an energy sword and energy shield. Paired together, it provides considerable defensive power without lethal potency. \
+	desc = "A case containing an energy sword and energy shield. Paired together, it provides considerable defensive power without compromising lethal potency. \
 		Perfect for the enterprising nuclear knight. Comes with a medieval helmet for your MODsuit!"
 	item = /obj/item/storage/toolbox/guncase/sword_and_board
 
@@ -195,13 +211,13 @@
 /datum/uplink_item/weapon_kits/medium_cost/revolvercase
 	name = "Syndicate Revolver Case (Moderate)"
 	desc = "Waffle Corp's modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum. \
-		A classic operative weapon, brought to the modern era. Comes with 3 additional speedloaders of .357."
+		A classic operative weapon, improved for the modern era. Comes with 3 additional speedloaders of .357."
 	item = /obj/item/storage/toolbox/guncase/revolver
 
 /datum/uplink_item/ammo_nuclear/basic/revolver
 	name = ".357 Speed Loader (Revolver)"
 	desc = "A speed loader that contains seven additional .357 Magnum rounds; usable with the Syndicate revolver. \
-		For when you really need a lot of things dead. Operatives get a discount from most of our agents!"
+		For when you really need a lot of things dead. Unlike field agents, operatives get a premium price for their speedloaders!"
 	item = /obj/item/ammo_box/a357
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
@@ -228,7 +244,7 @@
 /datum/uplink_item/weapon_kits/medium_cost/rawketlawnchair
 	name = "Dardo-RE Rocket Propelled Grenade Launcher (Hard)"
 	desc = "A reusable rocket propelled grenade launcher preloaded with a low-yield 84mm HE round. \
-		Guaranteed to send your target out with a bang or your money back! Comes with a bouquet of additional rockets!"
+		Guaranteed to take your target out with a bang, or your money back! Comes with a bouquet of additional rockets!"
 	item = /obj/item/storage/toolbox/guncase/rocketlauncher
 
 /datum/uplink_item/ammo_nuclear/basic/rocket
@@ -291,8 +307,8 @@
 
 /datum/uplink_item/weapon_kits/high_cost/carbine
 	name = "M-90gl Carbine Case (Hard)"
-	desc = "A fully-loaded, specialized three-round burst carbine that fires .223 ammunition from a 30 round magazine \
-		with a 40mm underbarrel grenade launcher. Use secondary-fire to fire the grenade launcher. Comes with two spare magazines \
+	desc = "A fully-loaded, specialized three-round burst carbine that fires .223 ammunition from a 30 round magazine.\
+		Comes with a 40mm underbarrel grenade launcher. Use secondary-fire to fire the grenade launcher. Also comes with two spare magazines \
 		and a box of 40mm rubber slugs."
 	item = /obj/item/storage/toolbox/guncase/m90gl
 
@@ -320,7 +336,7 @@
 
 /datum/uplink_item/weapon_kits/high_cost/sniper
 	name = "Anti-Materiel Sniper Rifle Briefcase (Hard)"
-	desc = "An outdated, but still extremely powerful anti-material sniper rifle. Fires .50 BMG cartridges from a 6 round magazine. \
+	desc = "An outdated, but still extremely powerful anti-materiel sniper rifle. Fires .50 BMG cartridges from a 6 round magazine. \
 		Can be fitted with a suppressor. If anyone asks how that even works, tell them it's Nanotrasen's fault. Comes with \
 		3 spare magazines; 2 regular magazines and 1 disruptor magazine. Also comes with a suit and tie."
 	item = /obj/item/storage/briefcase/sniper
@@ -374,9 +390,11 @@
 
 /datum/uplink_item/weapon_kits/surplus_smg
 	name = "Surplus Smart-SMG (Flukie)"
-	desc = "An outdated smart-SMG with limited stopping power, however it's bullets will gradually track towards whatever \
-		the gun was shot at. This does require you to actually aim at the person you are shooting at before firing, but \
-		surely a highly trained operative such as yourself can manage that."
+	desc = "A failed experimental 'smart gun'. The use of .160 rocket propelled projectiles resulted in reduced stopping power \
+		but increased overally accuracy so long as the shooter vaguely aimed towards their target. The relative increase in \
+		operator effort from absurd recoil contradicted advertized advantages, resulting in poor market performance. However, \
+		there sure are a lots still lying around in poorly secured warehouses. So we took them. And now you can have them. \
+		If you REALLY want it. All I'm saying is: good luck."
 	item = /obj/item/gun/ballistic/automatic/smartgun
 	cost = 2
 	purchasable_from = UPLINK_SERIOUS_OPS
@@ -575,14 +593,14 @@
 
 /datum/uplink_item/mech/support_bag
 	name = "Mech Support Kit Bag"
-	desc = "A duffel bag containing ammo for four full reloads of the scattershotm which is equipped on standard Dark Gygax and Mauler exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
+	desc = "A duffel bag containing ammo for four full reloads of the scattershot carbine which is equipped on standard Dark Gygax and Mauler exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
 	cost = 4
 	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/mech/support_bag/mauler
 	name = "Mauler Ammo Bag"
-	desc = "A duffel bag containing ammo for three full reloads of the LMG, scattershot carbine, and SRM-8 missile laucher that are equipped on a standard Mauler exosuit."
+	desc = "A duffel bag containing ammo for three full reloads of the LMG, scattershot carbine, and SRM-8 missile launcher that are equipped on a standard Mauler exosuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mauler
 	cost = 6
 	purchasable_from = UPLINK_SERIOUS_OPS
@@ -601,7 +619,9 @@
 		along with slurred speech, aggression, and the ability to infect others with this agent."
 	item = /obj/item/storage/box/syndie_kit/romerol
 	cost = 25
-	purchasable_from = UPLINK_ALL_SYNDIE_OPS
+	population_minimum = TRAITOR_POPULATION_LOWPOP
+	progression_minimum = 30 MINUTES
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS | UPLINK_TRAITORS // Don't give this to spies
 	cant_discount = TRUE
 
 // Modsuits

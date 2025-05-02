@@ -37,9 +37,7 @@
 "m" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "o" = (
@@ -84,9 +82,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/six,
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/eva)
 "G" = (

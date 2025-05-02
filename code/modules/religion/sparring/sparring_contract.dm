@@ -21,7 +21,7 @@
 	name = "[GLOB.deity]'s sparring contract"
 
 /obj/item/sparring_contract/Destroy()
-	QDEL_NULL(signed_by)
+	signed_by.Cut()
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 	sect?.existing_contract = null
 	return ..()
@@ -84,7 +84,7 @@
 		if(!isnull(resolved))
 			resolved_opponents += resolved
 
-	if(user in resolved_opponents && params["stakes"] == STAKES_HOLY_MATCH)
+	if((user in resolved_opponents) && params["stakes"] == STAKES_HOLY_MATCH)
 		to_chat(user, span_warning("This contract refuses to be signed up for a holy match by a previous holy match loser. Pick a different stake!"))
 
 	//any updating of the terms should update the UI to display new terms

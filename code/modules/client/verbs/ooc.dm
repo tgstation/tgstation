@@ -58,7 +58,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	msg = emoji_parse(msg)
 
-	if(SSticker.HasRoundStarted() && (msg[1] in list(".",";",":","#") || findtext_char(msg, "say", 1, 5)))
+	if(SSticker.HasRoundStarted() && ((msg[1] in list(".",";",":","#")) || findtext_char(msg, "say", 1, 5)))
 		if(tgui_alert(usr,"Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", list("Yes", "No")) != "Yes")
 			return
 
@@ -66,7 +66,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		if(handle_spam_prevention(msg,MUTE_OOC))
 			return
 		if(findtext(msg, "byond://"))
-			to_chat(src, span_boldannounce("<B>Advertising other servers is not allowed.</B>"))
+			to_chat(src, span_boldannounce("Advertising other servers is not allowed."))
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
 			return
@@ -82,7 +82,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.read_preference(/datum/preference/color/ooc_color) || GLOB.normal_ooc_colour]'>[icon2html('icons/ui/chat/member_content.dmi', world, "blag")][keyname]</font>"
 	if(prefs.hearted)
-		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
+		var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
 		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 	for(var/client/receiver as anything in GLOB.clients)
@@ -254,7 +254,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	// Check if the list is empty
 	if(!length(players))
 		// Express that there are no players we can ignore in chat
-		to_chat(src, "<span class='infoplain'>There are no other players you can ignore!</span>")
+		to_chat(src, span_infoplain("There are no other players you can ignore!"))
 
 		// Stop running
 		return
@@ -275,7 +275,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	// Check if the selected player is on our ignore list
 	if(selection in prefs.ignoring)
 		// Express that the selected player is already on our ignore list in chat
-		to_chat(src, "<span class='infoplain'>You are already ignoring [selection]!</span>")
+		to_chat(src, span_infoplain("You are already ignoring [selection]!"))
 
 		// Stop running
 		return
@@ -287,7 +287,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	prefs.save_preferences()
 
 	// Express that we've ignored the selected player in chat
-	to_chat(src, "<span class='infoplain'>You are now ignoring [selection] on the OOC channel.</span>")
+	to_chat(src, span_infoplain("You are now ignoring [selection] on the OOC channel."))
 
 // Unignore verb
 /client/verb/select_unignore()
@@ -298,7 +298,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	// Check if we've ignored any players
 	if(!length(prefs.ignoring))
 		// Express that we haven't ignored any players in chat
-		to_chat(src, "<span class='infoplain'>You haven't ignored any players!</span>")
+		to_chat(src, span_infoplain("You haven't ignored any players!"))
 
 		// Stop running
 		return
@@ -313,7 +313,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	// Check if the selected player is not on our ignore list
 	if(!(selection in prefs.ignoring))
 		// Express that the selected player is not on our ignore list in chat
-		to_chat(src, "<span class='infoplain'>You are not ignoring [selection]!</span>")
+		to_chat(src, span_infoplain("You are not ignoring [selection]!"))
 
 		// Stop running
 		return
@@ -325,7 +325,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	prefs.save_preferences()
 
 	// Express that we've unignored the selected player in chat
-	to_chat(src, "<span class='infoplain'>You are no longer ignoring [selection] on the OOC channel.</span>")
+	to_chat(src, span_infoplain("You are no longer ignoring [selection] on the OOC channel."))
 
 /client/proc/show_previous_roundend_report()
 	set name = "Your Last Round"
@@ -360,6 +360,13 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	var/list/map_size = splittext(sizes["mapwindow.size"], "x")
 
+	var/split_size = splittext(sizes["mainwindow.split.size"], "x")
+	var/split_width = text2num(split_size[1])
+
+	// Window is minimized, we can't get proper data so return to avoid division by 0
+	if (!split_width)
+		return
+
 	// Gets the type of zoom we're currently using from our view datum
 	// If it's 0 we do our pixel calculations based off the size of the mapwindow
 	// If it's not, we already know how big we want our window to be, since zoom is the exact pixel ratio of the map
@@ -367,7 +374,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	var/desired_width = 0
 	if(zoom_value)
-		desired_width = round(view_size[1] * zoom_value * world.icon_size)
+		desired_width = round(view_size[1] * zoom_value * ICON_SIZE_X)
 	else
 
 		// Looks like we expect mapwindow.size to be "ixj" where i and j are numbers.
@@ -380,9 +387,6 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	if (text2num(map_size[1]) == desired_width)
 		// Nothing to do
 		return
-
-	var/split_size = splittext(sizes["mainwindow.split.size"], "x")
-	var/split_width = text2num(split_size[1])
 
 	// Avoid auto-resizing the statpanel and chat into nothing.
 	desired_width = min(desired_width, split_width - 300)
@@ -429,7 +433,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	//Collect keywords
 	var/list/keywords = mob.get_policy_keywords()
 	var/header = get_policy(POLICY_VERB_HEADER)
-	var/list/policytext = list(header,"<hr>")
+	var/list/policytext = list(header)
 	var/anything = FALSE
 	for(var/keyword in keywords)
 		var/p = get_policy(keyword)
@@ -440,7 +444,9 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	if(!anything)
 		policytext += "No related rules found."
 
-	usr << browse(policytext.Join(""),"window=policy")
+	var/datum/browser/browser = new(usr, "policy", "Server Policy", 600, 500)
+	browser.set_content(policytext.Join(""))
+	browser.open()
 
 /client/verb/fix_stat_panel()
 	set name = "Fix Stat Panel"
@@ -456,3 +462,9 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
 
 	prefs.savefile.export_json_to_client(usr, ckey)
+
+/client/verb/map_vote_tally_count()
+	set name = "Show Map Vote Tallies"
+	set desc = "View the current map vote tally counts."
+	set category = "Server"
+	to_chat(mob, SSmap_vote.tally_printout)

@@ -1,0 +1,7 @@
+{
+fish_drop1.ogg - fish slap ground or snow writhing wet.wav by kyles -- https://freesound.org/s/450830/ -- License: Creative Commons 0
+fish_pickup1.ogg - fish slap ground or snow writhing wet.wav by kyles -- https://freesound.org/s/450830/ -- License: Creative Commons 0
+fish_pickup2.ogg - fish slap ground or snow writhing wet.wav by kyles -- https://freesound.org/s/450830/ -- License: Creative Commons 0
+fish_slap1.ogg - Slap - Cartoony by AdminMP -- https://freesound.org/s/383201/ -- License: Creative Commons 0
+fish_slap2.ogg - Major punch by janbezouska -- https://freesound.org/s/399183/ -- License: Creative Commons 0
+} - edited by sadboysuss

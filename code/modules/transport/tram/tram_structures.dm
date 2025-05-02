@@ -6,7 +6,7 @@
  *
  * if you map something on to the tram, make SURE if possible that it doesnt have anything reacting to its own movement
  * it will make the tram more expensive to move and we dont want that because we dont want to return to the days where
- * the tram took a third of the tick per movement when its just carrying its default mapped in objects
+ * the tram took a third of the tick per movement when it's just carrying its default mapped in objects
  */
 
 /obj/structure/grille/tram/Initialize(mapload)
@@ -22,7 +22,7 @@
 /obj/structure/tram
 	name = "tram wall"
 	desc = "A lightweight titanium composite structure with titanium silicate panels."
-	icon = 'icons/obj/structures/tram/tram_structure.dmi'
+	icon = 'icons/obj/tram/tram_structure.dmi'
 	icon_state = "tram-part-0"
 	base_icon_state = "tram-part"
 	max_integrity = 150
@@ -33,10 +33,9 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	pass_flags_self = PASSWINDOW
 	armor_type = /datum/armor/tram_structure
-	smoothing_flags = SMOOTH_BITMASK | SMOOTH_OBJ
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TRAM_STRUCTURE
 	canSmoothWith = SMOOTH_GROUP_TRAM_STRUCTURE
-	can_be_unanchored = FALSE
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	explosion_block = 3
 	receive_ricochet_chance_mod = 1.2
@@ -55,9 +54,9 @@
 	/// Sound when it breaks
 	var/break_sound = SFX_SHATTER
 	/// Sound when hit without combat mode
-	var/knock_sound = 'sound/effects/glassknock.ogg'
+	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
 	/// Sound when hit with combat mode
-	var/bash_sound = 'sound/effects/glassbash.ogg'
+	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
 
 /obj/structure/tram/split
 	base_icon_state = "tram-split"
@@ -109,7 +108,7 @@
 	if(ratio > 75)
 		return
 
-	damage_overlay = mutable_appearance('icons/turf/damaged.dmi', "damage[ratio]", -(layer + 0.1))
+	damage_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer + 0.1))
 	. += damage_overlay
 
 /obj/structure/tram/attack_hand(mob/living/user, list/modifiers)
@@ -145,7 +144,7 @@
 /obj/structure/tram/narsie_act()
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
-/obj/structure/tram/singularity_pull(singulo, current_size)
+/obj/structure/tram/singularity_pull(atom/singularity, current_size)
 	..()
 
 	if(current_size >= STAGE_FIVE)
@@ -155,7 +154,7 @@
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_warning("[src] is already in good condition!"))
 		return ITEM_INTERACT_SUCCESS
-	if(!tool.tool_start_check(user, amount = 0))
+	if(!tool.tool_start_check(user, amount = 0, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
 	if(tool.use_tool(src, user, 4 SECONDS, volume = 50))
@@ -240,84 +239,97 @@
  */
 
 /obj/structure/tram/alt
-	icon = null
-	var/wall_icon = null
 
-/obj/structure/tram/alt/update_overlays(updates=ALL)
-	. = ..()
-	. += generate_joined_wall(wall_icon, smoothing_junction)
-	if((smoothing_flags & SMOOTH_BITMASK) && (updates & UPDATE_SMOOTHING))
-		QUEUE_SMOOTH(src)
 
 /obj/structure/tram/alt/titanium
 	name = "solid tram"
 	desc = "A lightweight titanium composite structure. There is further solid plating where the panels usually attach to the frame."
-	wall_icon = 'icons/turf/walls/shuttle_wall.dmi'
+	icon = 'icons/turf/walls/shuttle_wall.dmi'
+	icon_state = "shuttle_wall-0"
+	base_icon_state = "shuttle_wall"
 	mineral = /obj/item/stack/sheet/mineral/titanium
 	tram_wall_type = /obj/structure/tram/alt/titanium
-	smoothing_groups = SMOOTH_GROUP_TITANIUM_WALLS
-	canSmoothWith = SMOOTH_GROUP_TITANIUM_WALLS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_TITANIUM_WALLS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_TITANIUM_WALLS
 
 /obj/structure/tram/alt/plastitanium
 	name = "reinforced tram"
 	desc = "An evil tram of plasma and titanium."
-	wall_icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon = 'icons/turf/walls/plastitanium_wall.dmi'
+	icon_state = "plastitanium_wall-0"
+	base_icon_state = "plastitanium_wall"
 	mineral = /obj/item/stack/sheet/mineral/plastitanium
 	tram_wall_type = /obj/structure/tram/alt/plastitanium
-	smoothing_groups = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_TALL_WALLS
-	canSmoothWith = SMOOTH_GROUP_PLASTITANIUM_WALLS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_PLASTITANIUM_WALLS + SMOOTH_GROUP_WALLS
+	canSmoothWith = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_AIRLOCK + SMOOTH_GROUP_PLASTITANIUM_WALLS
 
 /obj/structure/tram/alt/gold
 	name = "gold tram"
 	desc = "A solid gold tram. Swag!"
-	wall_icon = 'icons/turf/walls/gold_wall.dmi'
+	icon = 'icons/turf/walls/gold_wall.dmi'
+	icon_state = "gold_wall-0"
+	base_icon_state = "gold_wall"
 	mineral = /obj/item/stack/sheet/mineral/gold
 	tram_wall_type = /obj/structure/tram/alt/gold
 	explosion_block = 0 //gold is a soft metal you dingus.
-	smoothing_groups = SMOOTH_GROUP_GOLD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_TALL_WALLS
+	smoothing_groups = SMOOTH_GROUP_GOLD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_GOLD_WALLS
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/tram/alt/silver
 	name = "silver tram"
 	desc = "A solid silver tram. Shiny!"
-	wall_icon = 'icons/turf/walls/silver_wall.dmi'
+	icon = 'icons/turf/walls/silver_wall.dmi'
+	icon_state = "silver_wall-0"
+	base_icon_state = "silver_wall"
 	mineral = /obj/item/stack/sheet/mineral/silver
 	tram_wall_type = /obj/structure/tram/alt/silver
-	smoothing_groups = SMOOTH_GROUP_SILVER_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SILVER_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SILVER_WALLS
 	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/tram/alt/diamond
 	name = "diamond tram"
 	desc = "A composite structure with diamond-plated panels. Looks awfully sharp..."
-	wall_icon = 'icons/turf/walls/diamond_wall.dmi'
+	icon = 'icons/turf/walls/diamond_wall.dmi'
+	icon_state = "diamond_wall-0"
+	base_icon_state = "diamond_wall"
 	mineral = /obj/item/stack/sheet/mineral/diamond
 	tram_wall_type = /obj/structure/tram/alt/diamond //diamond wall takes twice as much time to slice
 	max_integrity = 800
 	explosion_block = 3
-	smoothing_groups = SMOOTH_GROUP_DIAMOND_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_DIAMOND_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_DIAMOND_WALLS
 	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2)
 
 /obj/structure/tram/alt/bananium
 	name = "bananium tram"
 	desc = "A composite structure with bananium plating. Honk!"
-	wall_icon = 'icons/turf/walls/bananium_wall.dmi'
+	icon = 'icons/turf/walls/bananium_wall.dmi'
+	icon_state = "bananium_wall-0"
+	base_icon_state = "bananium_wall"
 	mineral = /obj/item/stack/sheet/mineral/bananium
 	tram_wall_type = /obj/structure/tram/alt/bananium
-	smoothing_groups = SMOOTH_GROUP_BANANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_BANANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BANANIUM_WALLS
 	custom_materials = list(/datum/material/bananium = SHEET_MATERIAL_AMOUNT*2)
 
 /obj/structure/tram/alt/sandstone
 	name = "sandstone tram"
 	desc = "A composite structure with sandstone plating. Rough."
-	wall_icon = 'icons/turf/walls/sandstone_wall.dmi'
+	icon = 'icons/turf/walls/sandstone_wall.dmi'
+	icon_state = "sandstone_wall-0"
+	base_icon_state = "sandstone_wall"
 	mineral = /obj/item/stack/sheet/mineral/sandstone
 	tram_wall_type = /obj/structure/tram/alt/sandstone
 	explosion_block = 0
-	smoothing_groups = SMOOTH_GROUP_SANDSTONE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_SANDSTONE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_SANDSTONE_WALLS
 	custom_materials = list(/datum/material/sandstone = SHEET_MATERIAL_AMOUNT*2)
 
@@ -325,10 +337,13 @@
 	article = "a"
 	name = "uranium tram"
 	desc = "A composite structure with uranium plating. This is probably a bad idea."
-	wall_icon = 'icons/turf/walls/uranium_wall.dmi'
+	icon = 'icons/turf/walls/uranium_wall.dmi'
+	icon_state = "uranium_wall-0"
+	base_icon_state = "uranium_wall"
 	mineral = /obj/item/stack/sheet/mineral/uranium
 	tram_wall_type = /obj/structure/tram/alt/uranium
-	smoothing_groups = SMOOTH_GROUP_URANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_URANIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_URANIUM_WALLS
 	custom_materials = list(/datum/material/uranium = SHEET_MATERIAL_AMOUNT*2)
 
@@ -367,21 +382,27 @@
 /obj/structure/tram/alt/plasma
 	name = "plasma tram"
 	desc = "A composite structure with plasma plating. This is definitely a bad idea."
-	wall_icon = 'icons/turf/walls/plasma_wall.dmi'
+	icon = 'icons/turf/walls/plasma_wall.dmi'
+	icon_state = "plasma_wall-0"
+	base_icon_state = "plasma_wall"
 	mineral = /obj/item/stack/sheet/mineral/plasma
 	tram_wall_type = /obj/structure/tram/alt/plasma
-	smoothing_groups = SMOOTH_GROUP_PLASMA_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_PLASMA_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_PLASMA_WALLS
 	custom_materials = list(/datum/material/plasma = SHEET_MATERIAL_AMOUNT*2)
 
 /obj/structure/tram/alt/wood
 	name = "wooden tram"
 	desc = "A tram with wooden framing. Flammable. There's a reason we use metal now."
-	wall_icon = 'icons/turf/walls/wood_wall.dmi'
+	icon = 'icons/turf/walls/wood_wall.dmi'
+	icon_state = "wood_wall-0"
+	base_icon_state = "wood_wall"
 	mineral = /obj/item/stack/sheet/mineral/wood
 	tram_wall_type = /obj/structure/tram/alt/wood
 	explosion_block = 0
-	smoothing_groups = SMOOTH_GROUP_WOOD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WOOD_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WOOD_WALLS
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT*2)
 
@@ -398,8 +419,11 @@
 /obj/structure/tram/alt/bamboo
 	name = "bamboo tram"
 	desc = "A tram with a bamboo framing."
-	wall_icon = 'icons/turf/walls/bamboo_wall.dmi'
-	smoothing_groups = SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	icon = 'icons/turf/walls/bamboo_wall.dmi'
+	icon_state = "bamboo_wall-0"
+	base_icon_state = "wall"
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_BAMBOO_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_BAMBOO_WALLS
 	mineral = /obj/item/stack/sheet/mineral/bamboo
 	tram_wall_type = /obj/structure/tram/alt/bamboo
@@ -407,22 +431,28 @@
 /obj/structure/tram/alt/iron
 	name = "rough iron tram"
 	desc = "A composite structure with rough iron plating."
-	wall_icon = 'icons/turf/walls/iron_wall.dmi'
+	icon = 'icons/turf/walls/iron_wall.dmi'
+	icon_state = "iron_wall-0"
+	base_icon_state = "iron_wall"
 	mineral = /obj/item/stack/rods
 	mineral_amount = 5
 	tram_wall_type = /obj/structure/tram/alt/iron
-	smoothing_groups = SMOOTH_GROUP_IRON_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_IRON_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_IRON_WALLS
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/structure/tram/alt/abductor
 	name = "alien tram"
 	desc = "A composite structure made of some kind of alien alloy."
-	wall_icon = 'icons/turf/walls/abductor_wall.dmi'
+	icon = 'icons/turf/walls/abductor_wall.dmi'
+	icon_state = "abductor_wall-0"
+	base_icon_state = "abductor_wall"
 	mineral = /obj/item/stack/sheet/mineral/abductor
 	tram_wall_type = /obj/structure/tram/alt/abductor
 	explosion_block = 3
-	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_TALL_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_ABDUCTOR_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
 	custom_materials = list(/datum/material/alloy/alien = SHEET_MATERIAL_AMOUNT*2)
 
@@ -431,7 +461,7 @@
 
 /obj/structure/tram/spoiler
 	name = "tram spoiler"
-	icon = 'icons/obj/structures/tram/tram_structure.dmi'
+	icon = 'icons/obj/tram/tram_structure.dmi'
 	desc = "Nanotrasen bought the luxury package under the impression titanium spoilers make the tram go faster. They're just for looks, or potentially stabbing anybody who gets in the way."
 	icon_state = "tram-spoiler-retracted"
 	max_integrity = 400
@@ -443,8 +473,8 @@
 	canSmoothWith = null
 	/// Position of the spoiler
 	var/deployed = FALSE
-	/// Malfunctioning due to tampering or emag
-	var/malfunctioning = FALSE
+	/// Locked in position
+	var/locked = FALSE
 	/// Weakref to the tram piece we control
 	var/datum/weakref/tram_ref
 	/// The tram we're attached to
@@ -463,7 +493,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "repair"
 
 	if(held_item?.tool_behaviour == TOOL_WELDER && atom_integrity >= max_integrity)
-		context[SCREENTIP_CONTEXT_LMB] = "[malfunctioning ? "repair" : "lock"]"
+		context[SCREENTIP_CONTEXT_LMB] = "[locked ? "repair" : "sabotage"]"
 
 	return CONTEXTUAL_SCREENTIP_SET
 
@@ -472,22 +502,19 @@
 	if(obj_flags & EMAGGED)
 		. += span_warning("The electronics panel is sparking occasionally. It can be reset with a [EXAMINE_HINT("multitool.")]")
 
-	if(malfunctioning)
+	if(locked)
 		. += span_warning("The spoiler is [EXAMINE_HINT("welded")] in place!")
 	else
-		. += span_notice("The spoiler can be locked in to place with a [EXAMINE_HINT("welder.")]")
+		. += span_notice("The spoiler can be locked in place with a [EXAMINE_HINT("welder.")]")
 
 /obj/structure/tram/spoiler/proc/set_spoiler(source, controller, controller_active, controller_status, travel_direction)
 	SIGNAL_HANDLER
 
 	var/spoiler_direction = travel_direction
-	if(obj_flags & EMAGGED && !malfunctioning)
-		malfunctioning = TRUE
-
-	if(malfunctioning || controller_status & COMM_ERROR)
+	if(locked || controller_status & COMM_ERROR || obj_flags & EMAGGED)
 		if(!deployed)
 			// Bring out the blades
-			if(malfunctioning)
+			if(locked)
 				visible_message(span_danger("\the [src] locks up due to its servo overheating!"))
 			do_sparks(3, cardinal_only = FALSE, source = src)
 			deploy_spoiler()
@@ -548,18 +575,18 @@
 	return FALSE
 
 /obj/structure/tram/spoiler/welder_act(mob/living/user, obj/item/tool)
-	if(!tool.tool_start_check(user, amount = 1))
+	if(!tool.tool_start_check(user, amount = 1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return FALSE
 
 	if(atom_integrity >= max_integrity)
-		to_chat(user, span_warning("You begin to weld \the [src], [malfunctioning ? "repairing damage" : "preventing retraction"]."))
+		to_chat(user, span_warning("You begin to weld \the [src], [locked ? "repairing damage" : "preventing retraction"]."))
 		if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
 			return
-		malfunctioning = !malfunctioning
-		user.visible_message(span_warning("[user] [malfunctioning ? "welds \the [src] in place" : "repairs \the [src]"] with [tool]."), \
-			span_warning("You finish welding \the [src], [malfunctioning ? "locking it in place." : "it can move freely again!"]"), null, COMBAT_MESSAGE_RANGE)
+		locked = !locked
+		user.visible_message(span_warning("[user] [locked ? "welds \the [src] in place" : "repairs \the [src]"] with [tool]."), \
+			span_warning("You finish welding \the [src], [locked ? "locking it in place." : "it can move freely again!"]"), null, COMBAT_MESSAGE_RANGE)
 
-		if(malfunctioning)
+		if(locked)
 			deploy_spoiler()
 
 		update_appearance()
@@ -575,7 +602,7 @@
 
 /obj/structure/tram/spoiler/update_overlays()
 	. = ..()
-	if(deployed && malfunctioning)
+	if(deployed && locked)
 		. += mutable_appearance(icon, "tram-spoiler-welded")
 
 /obj/structure/chair/sofa/bench/tram

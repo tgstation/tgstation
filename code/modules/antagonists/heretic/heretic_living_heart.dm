@@ -32,8 +32,8 @@
 	REMOVE_TRAIT(parent, TRAIT_LIVING_HEART, REF(src))
 	UnregisterSignal(parent, list(COMSIG_ORGAN_REMOVED, COMSIG_ORGAN_BEING_REPLACED))
 
-/datum/component/living_heart/PostTransfer()
-	if(!isorgan(parent))
+/datum/component/living_heart/PostTransfer(datum/new_parent)
+	if(!isorgan(new_parent))
 		return COMPONENT_INCOMPATIBLE
 
 /**
@@ -76,10 +76,12 @@
 
 	/// Tracks whether we were right clicked or left clicked in our last trigger
 	var/right_clicked = FALSE
-	/// The real name of the last mob we tracked
+	/// The real name of the last thing we tracked
 	var/last_tracked_name
 	/// Whether the target radial is currently opened.
 	var/radial_open = FALSE
+	/// Navigator to our target that we have.
+	var/datum/status_effect/agent_pinpointer/scan/heretic/heretic_pinpointer
 
 /datum/action/cooldown/track_target/Grant(mob/granted)
 	if(!IS_HERETIC(granted))
@@ -106,16 +108,40 @@
 /datum/action/cooldown/track_target/Activate(atom/target)
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
 	var/datum/heretic_knowledge/sac_knowledge = heretic_datum.get_knowledge(/datum/heretic_knowledge/hunt_and_sacrifice)
+
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		owner.balloon_alert(owner, "no targets, visit a rune!")
 		StartCooldown(1 SECONDS)
 		return TRUE
 
-	var/list/targets_to_choose = list()
-	var/list/mob/living/carbon/human/human_targets = list()
+	// Holds a list of `name = image` used to display the radial menu when you left click the living heart
+	var/list/choosable_targets = list()
+	// Holds a list of 'name = atom/thing` used to check if our thing still exists after we've made our selection
+	var/list/possible_tracked_atoms = list()
+
+	// Checks if our heretic has a blade research, and then checks if they have made blades
+	// adds them to our list of target when pulsing the living heart so that you can locate them
+	var/datum/heretic_knowledge/limited_amount/starting/blade_knowledge
+	for(var/datum/potential_knowledge as anything in subtypesof(/datum/heretic_knowledge/limited_amount/starting))
+		blade_knowledge = heretic_datum.get_knowledge(potential_knowledge)
+		if(blade_knowledge)
+			break
+	for(var/datum/weakref/blade_ref as anything in blade_knowledge?.created_items)
+		var/obj/item/melee/sickly_blade/blade = blade_ref.resolve()
+		if(QDELETED(blade))
+			blade_knowledge.created_items -= blade_ref
+			continue
+		if(!istype(blade, /obj/item/melee/sickly_blade))
+			continue // Just in case someone makes a /datum/heretic_knowledge/limited_amount/starting that doesn't create blades
+		if(get(blade, /mob/living) == owner)
+			continue
+		// Means our blade is somewhere, but not on our person, so let's make it trackable
+		choosable_targets[blade.name] = image(icon = blade.icon, icon_state = blade.icon_state)
+		possible_tracked_atoms[blade.name] = blade
+
 	for(var/mob/living/carbon/human/sac_target as anything in heretic_datum.sac_targets)
-		human_targets[sac_target.real_name] = sac_target
-		targets_to_choose[sac_target.real_name] = heretic_datum.sac_targets[sac_target]
+		choosable_targets[sac_target.real_name] = heretic_datum.sac_targets[sac_target]
+		possible_tracked_atoms[sac_target.real_name] = sac_target
 
 	// If we don't have a last tracked name, open a radial to set one.
 	// If we DO have a last tracked name, we skip the radial if they right click the action.
@@ -124,7 +150,7 @@
 		last_tracked_name = show_radial_menu(
 			owner,
 			owner,
-			targets_to_choose,
+			choosable_targets,
 			custom_check = CALLBACK(src, PROC_REF(check_menu)),
 			radius = 40,
 			require_near = TRUE,
@@ -136,21 +162,43 @@
 	if(isnull(last_tracked_name))
 		return FALSE
 
-	var/mob/living/carbon/human/tracked_mob = human_targets[last_tracked_name]
-	if(QDELETED(tracked_mob))
+	var/atom/tracked_thing = possible_tracked_atoms[last_tracked_name]
+	if(QDELETED(tracked_thing))
 		last_tracked_name = null
 		return FALSE
 
 	playsound(owner, 'sound/effects/singlebeat.ogg', 50, TRUE, SILENCED_SOUND_EXTRARANGE)
-	owner.balloon_alert(owner, get_balloon_message(tracked_mob))
+	owner.balloon_alert(owner, get_balloon_message(tracked_thing))
 
 	// Let them know how to sacrifice people if they're able to be sac'd
-	if(tracked_mob.stat == DEAD)
-		to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
-			and invoke \"[sac_knowledge.name]\" to sacrifice them!"))
+	if(ismob(tracked_thing))
+		var/mob/tracked_mob = tracked_thing
+		if(tracked_mob.stat == DEAD)
+			to_chat(owner, span_hierophant("[tracked_mob] is dead. Bring them to a transmutation rune \
+				and invoke \"[sac_knowledge.name]\" to sacrifice them!"))
 
 	StartCooldown()
 	return TRUE
+
+/datum/action/cooldown/track_target/proc/make_navigate_arrow(turf/tracked_turf, arrow_color)
+	var/datum/hud/user_hud = owner.hud_used
+	if(!user_hud)
+		return
+	var/atom/movable/screen/heretic_arrow/arrow = new /atom/movable/screen/heretic_arrow(null, user_hud)
+	animate(arrow, transform = matrix(dir2angle(get_dir(owner, tracked_turf)), MATRIX_ROTATE), 0.2 SECONDS)
+	arrow.screen_loc = around_player
+	arrow.color = arrow_color
+	user_hud.infodisplay += arrow
+	user_hud.show_hud(user_hud.hud_version)
+	addtimer(CALLBACK(src, PROC_REF(end_effect), user_hud, arrow), 1.6 SECONDS)
+
+/datum/action/cooldown/track_target/proc/end_effect(datum/hud/user_hud, atom/movable/screen/heretic_arrow/arrow)
+	arrow.icon_state = "heretic_arrow_disappear"
+	addtimer(CALLBACK(src, PROC_REF(null_arrow), user_hud, arrow), 0.4 SECONDS)
+
+/datum/action/cooldown/track_target/proc/null_arrow(datum/hud/user_hud, atom/movable/screen/heretic_arrow/arrow)
+	user_hud.infodisplay -= arrow
+	user_hud.show_hud(user_hud.hud_version)
 
 /// Callback for the radial to ensure it's closed when not allowed.
 /datum/action/cooldown/track_target/proc/check_menu()
@@ -161,9 +209,9 @@
 	return TRUE
 
 /// Gets the balloon message for who we're tracking.
-/datum/action/cooldown/track_target/proc/get_balloon_message(mob/living/carbon/human/tracked_mob)
+/datum/action/cooldown/track_target/proc/get_balloon_message(atom/tracked_thing)
 	var/balloon_message = "error text!"
-	var/turf/their_turf = get_turf(tracked_mob)
+	var/turf/their_turf = get_turf(tracked_thing)
 	var/turf/our_turf = get_turf(owner)
 	var/their_z = their_turf?.z
 	var/our_z = our_turf?.z
@@ -204,17 +252,34 @@
 		var/dist = get_dist(our_turf, their_turf)
 		var/dir = get_dir(our_turf, their_turf)
 
+		var/arrow_color
+
 		switch(dist)
 			if(0 to 15)
 				balloon_message = "very near, [dir2text(dir)]!"
+				arrow_color = COLOR_GREEN
 			if(16 to 31)
 				balloon_message = "near, [dir2text(dir)]!"
+				arrow_color = COLOR_YELLOW
 			if(32 to 127)
 				balloon_message = "far, [dir2text(dir)]!"
+				arrow_color = COLOR_ORANGE
 			else
 				balloon_message = "very far!"
+				arrow_color = COLOR_RED
 
-	if(tracked_mob.stat == DEAD)
-		balloon_message = "they're dead, " + balloon_message
+		make_navigate_arrow(their_turf, arrow_color)
+
+	if(ismob(tracked_thing))
+		var/mob/tracked_mob = tracked_thing
+		if(tracked_mob.stat == DEAD)
+			balloon_message = "they're dead, " + balloon_message
 
 	return balloon_message
+
+/atom/movable/screen/heretic_arrow
+	icon = 'icons/effects/96x96.dmi'
+	name = "heretic arrow"
+	icon_state = "heretic_arrow_appear"
+	pixel_x = -32
+	pixel_y = -32

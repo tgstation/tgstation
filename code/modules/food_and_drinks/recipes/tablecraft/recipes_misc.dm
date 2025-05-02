@@ -10,6 +10,7 @@
 		/obj/item/food/grown/apple = 1
 	)
 	result = /obj/item/food/candiedapple
+	added_foodtypes = JUNKFOOD|SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/spiderlollipop
@@ -20,6 +21,8 @@
 		/obj/item/food/spiderling = 1
 	)
 	result = /obj/item/food/spiderlollipop
+	added_foodtypes = JUNKFOOD|SUGAR
+	removed_foodtypes = TOXIC
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/chococoin
@@ -66,6 +69,7 @@
 		/datum/reagent/consumable/gravy = 3
 	)
 	result = /obj/item/food/poutine
+	added_foodtypes = MEAT
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/beans
@@ -95,6 +99,7 @@
 	)
 	parts = list(/obj/item/reagent_containers/cup/glass/bottle/vodka = 1)
 	result = /obj/item/food/melonkeg
+	added_foodtypes = ALCOHOL
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/honeybar
@@ -104,6 +109,7 @@
 		/datum/reagent/consumable/honey = 5
 	)
 	result = /obj/item/food/honeybar
+	added_foodtypes = SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/powercrepe
@@ -117,6 +123,7 @@
 		/obj/item/melee/sabre = 1
 	)
 	result = /obj/item/food/powercrepe
+	added_foodtypes = FRUIT|SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/branrequests
@@ -126,6 +133,8 @@
 		/obj/item/food/no_raisin = 1,
 	)
 	result = /obj/item/food/branrequests
+	removed_foodtypes = JUNKFOOD
+	added_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/ricepudding
@@ -137,6 +146,8 @@
 		/obj/item/food/boiledrice = 1
 	)
 	result = /obj/item/food/salad/ricepudding
+	added_foodtypes = DAIRY|SUGAR
+	removed_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/risotto
@@ -149,13 +160,14 @@
 		/obj/item/food/grown/mushroom/chanterelle = 1
 	)
 	result = /obj/item/food/salad/risotto
+	removed_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!
 	name = "Living bear/butter hybrid"
 	reqs = list(
-		/obj/item/organ/internal/brain = 1,
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/food/butter = 4,
 		/obj/item/food/meat/slab = 5,
 		/datum/reagent/blood = 50,
@@ -173,6 +185,7 @@
 		/obj/item/food/meat/slab/rawcrab = 1
 	)
 	result = /obj/item/food/crab_rangoon
+	removed_foodtypes = RAW
 	category = CAT_SEAFOOD
 
 /datum/crafting_recipe/food/royalcheese
@@ -228,6 +241,7 @@
 		/obj/item/food/butterslice = 1
 	)
 	result = /obj/item/food/bechamel_sauce
+	added_foodtypes = GRAIN
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/pierogi
@@ -249,6 +263,7 @@
 		/obj/item/food/grown/tomato = 1,
 	)
 	result = /obj/item/food/stuffed_cabbage
+	removed_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/granola_bar
@@ -260,6 +275,7 @@
 		/obj/item/food/no_raisin = 1,
 	)
 	result = /obj/item/food/granola_bar
+	removed_foodtypes = JUNKFOOD
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/onigiri
@@ -269,6 +285,7 @@
 		/obj/item/food/seaweedsheet = 1,
 	)
 	result = /obj/item/food/onigiri
+	removed_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/mashed_potatoes
@@ -289,6 +306,7 @@
 		/datum/reagent/consumable/salt = 2,
 	)
 	result = /obj/item/food/pacoca
+	added_foodtypes = SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/springroll
@@ -301,6 +319,7 @@
 		/datum/reagent/water = 10,
 	)
 	result = /obj/item/food/springroll
+	added_foodtypes = GRAIN
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/caramel_popcorn
@@ -310,6 +329,7 @@
 		/datum/reagent/consumable/caramel = 3,
 	)
 	result = /obj/item/food/popcorn/caramel
+	added_foodtypes = SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/salty_popcorn
@@ -339,6 +359,7 @@
 		/obj/item/food/grown/mushroom/amanita = 3
 	)
 	result = /obj/item/food/bowled/amanitajelly
+	added_foodtypes = TOXIC
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/buttered_baked_potato
@@ -359,6 +380,7 @@
 		/obj/item/food/grown/cabbage = 1,
 	)
 	result = /obj/item/food/loaded_baked_potato
+	removed_foodtypes = BREAKFAST
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/cheese_pierogi
@@ -415,6 +437,7 @@
 		/datum/reagent/consumable/peanut_butter = 2,
 	)
 	result = /obj/item/food/bonbon/peanut_butter_cup
+	added_foodtypes = NUTS
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/pickles_jar
@@ -494,6 +517,7 @@
 		/datum/reagent/water = 2,
 	)
 	result = /obj/item/food/candied_pineapple
+	added_foodtypes = SUGAR
 	category = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/tzatziki_sauce

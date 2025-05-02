@@ -67,16 +67,7 @@
 
 		mind.transfer_to(desired_mob, 1) // second argument to force key move to new mob
 	else
-		desired_mob.key = key
-
-	if(desired_mob.base_pixel_x)
-		desired_mob.pixel_x = desired_mob.base_pixel_x
-	if(desired_mob.base_pixel_y)
-		desired_mob.pixel_y = desired_mob.base_pixel_y
-	if(desired_mob.base_pixel_x)
-		desired_mob.pixel_w = desired_mob.base_pixel_w
-	if(desired_mob.base_pixel_y)
-		desired_mob.pixel_z = desired_mob.base_pixel_z
+		desired_mob.PossessByPlayer(key)
 
 	SEND_SIGNAL(src, COMSIG_MOB_CHANGED_TYPE, desired_mob)
 	if(delete_old_mob)

@@ -1,6 +1,3 @@
-import { BooleanLike } from 'common/react';
-
-import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -11,9 +8,12 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../components';
-import { FakeTerminal } from '../components/FakeTerminal';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { FakeTerminal } from './common/FakeTerminal';
 
 enum CONTRACT {
   Inactive = 1,

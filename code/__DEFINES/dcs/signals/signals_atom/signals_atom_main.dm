@@ -9,6 +9,8 @@
 #define COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON "atom_init_success_on"
 ///from base of atom/examine(): (/mob, list/examine_text)
 #define COMSIG_ATOM_EXAMINE "atom_examine"
+///from base of atom/examine_tags(): (/mob, list/examine_tags)
+#define COMSIG_ATOM_EXAMINE_TAGS "atom_examine_tags"
 ///from base of atom/get_examine_name(): (/mob, list/overrides)
 #define COMSIG_ATOM_GET_EXAMINE_NAME "atom_examine_name"
 	//Positions for overrides list
@@ -51,8 +53,6 @@
 #define COMSIG_ATOM_UPDATE_OVERLAYS "atom_update_overlays"
 ///from base of [/atom/update_icon]: (signalOut, did_anything)
 #define COMSIG_ATOM_UPDATED_ICON "atom_updated_icon"
-///from base of atom/set_smoothed_icon_state(): (new_junction)
-#define COMSIG_ATOM_SET_SMOOTHED_ICON_STATE "set_smoothed_icon_state"
 ///from base of [/atom/proc/smooth_icon]: ()
 #define COMSIG_ATOM_SMOOTHED_ICON "atom_smoothed_icon"
 ///from [/datum/controller/subsystem/processing/dcs/proc/rotate_decals]: (list/datum/element/decal/rotating)
@@ -88,15 +88,9 @@
 	#define COMPONENT_BLOCK_TELEPORT (1<<0)
 ///called when an atom is added to the hearers on get_hearers_in_view(): (list/processing_list, list/hearers)
 #define COMSIG_ATOM_HEARER_IN_VIEW "atom_hearer_in_view"
-
-/// fired by the orbiting atom when an atom starts orbiting another atom
-#define COMSIG_ATOM_BEGAN_ORBITING "atom_orbiting_began"
-/// fired by the orbiting atom when an atom stops orbiting another atom
-#define COMSIG_ATOM_STOPPED_ORBITING "atom_orbiting_stopped"
-
-/// fired by the orbited atom when an atom starts orbiting another atom: (atom)
+///called when an atom starts orbiting another atom: (atom)
 #define COMSIG_ATOM_ORBIT_BEGIN "atom_orbit_begin"
-/// fired by the orbited atom when an atom stops orbiting another atom: (atom)
+///called when an atom stops orbiting another atom: (atom)
 #define COMSIG_ATOM_ORBIT_STOP "atom_orbit_stop"
 ///from base of atom/set_opacity(): (new_opacity)
 #define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
@@ -151,3 +145,18 @@
 
 /// From whoever has been revealed (atom/revealed)
 #define COMSIG_ATOM_REVEAL "atom_reveal"
+
+/// From /atom/proc/set_density(new_value) for when an atom changes density
+#define COMSIG_ATOM_DENSITY_CHANGED "atom_density_change"
+
+/// From /datum/component/tether/UnregisterFromParent()
+#define COMSIG_ATOM_TETHER_SNAPPED "atom_tether_snapped"
+
+/// From /atom/proc/update_atom_colour() : (color_changed)
+#define COMSIG_ATOM_COLOR_UPDATED "atom_color_updated"
+	/// Cancels update_appearance call in case you are somehow forced to call it manually to prevent dupe calls
+	#define COMPONENT_CANCEL_COLOR_APPEARANCE_UPDATE (1<<0)
+
+/// From /obj/item/organ/stomach/on_life() : (obj/item/organ/stomach/stomach, mob/living/carbon/owner, seconds_per_tick)
+#define COMSIG_ATOM_STOMACH_DIGESTED "atom_stomach_digested"
+	#define COMPONENT_CANCEL_DIGESTION (1<<0)

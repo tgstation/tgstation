@@ -48,12 +48,6 @@
 /obj/structure/flora/bush/grassy,
 /turf/open/floor/grass,
 /area/station/asteroid)
-"ds" = (
-/obj/structure/flora/bush/sparsegrass/style_random,
-/obj/structure/flora/bush/grassy,
-/obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/floor/grass,
-/area/station/asteroid)
 "ec" = (
 /obj/structure/railing/corner{
 	dir = 1
@@ -65,9 +59,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "eW" = (
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/openspace,
 /area/station/maintenance/department/security)
 "fV" = (
@@ -85,9 +77,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/engineering/atmospherics_portable,
-/obj/effect/decal/cleanable/cobweb/cobweb2{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "ip" = (
@@ -317,15 +307,12 @@
 /obj/machinery/plumbing/synthesizer{
 	reagent_id = /datum/reagent/water
 	},
-/obj/effect/decal/cleanable/cobweb{
-	pixel_y = 24
-	},
+/obj/effect/decal/cleanable/cobweb,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/department/security)
 "DS" = (
 /obj/structure/ladder,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/poster/official/nanotrasen_logo,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "EH" = (
@@ -397,10 +384,6 @@
 "LI" = (
 /turf/closed/wall/rock/porous,
 /area/station/maintenance/department/security)
-"LX" = (
-/obj/structure/flora/bush/flowers_br/style_random,
-/turf/open/floor/grass,
-/area/station/asteroid)
 "Mt" = (
 /obj/modular_map_root/tramstation{
 	key = "secbarupper_attachment_a"
@@ -507,6 +490,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/table,
 /obj/item/reagent_containers/cup/bucket,
+/obj/structure/sign/poster/official/nanotrasen_logo/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "Yg" = (
@@ -783,7 +767,7 @@ Sc
 Sc
 Sc
 Sc
-Sc
+Py
 Py
 Py
 Py
@@ -823,7 +807,7 @@ Sc
 Sc
 Sc
 Sc
-Sc
+Py
 Py
 Py
 Py
@@ -863,11 +847,11 @@ Sc
 Sc
 Sc
 Sc
-Sc
-Sc
-Sc
-Sc
-Sc
+Py
+Py
+Py
+Py
+Py
 Sc
 Sc
 Py
@@ -903,15 +887,15 @@ Sc
 Sc
 Sc
 Sc
+Py
+Py
+Py
+Py
+Py
 Sc
 Sc
 Sc
-tn
-JT
-bE
-tn
-Rr
-tn
+Sc
 Py
 Py
 Py
@@ -942,16 +926,16 @@ Sc
 Sc
 Sc
 Sc
+Sc
+Py
+Py
+Py
+Py
+Py
+Sc
 KS
-KS
-tn
-bE
-bE
-tn
-ds
-JT
-LX
-tn
+Sc
+Sc
 Py
 Py
 Py
@@ -982,13 +966,13 @@ Sc
 Sc
 Sc
 Sc
-tn
-tn
-Rr
-JT
-tn
-tn
-tn
+Sc
+Py
+Py
+Py
+Py
+Py
+Sc
 Py
 Py
 Py

@@ -61,7 +61,7 @@
 
 	skillchips = list(/obj/item/skillchip/drunken_brawler)
 
-/datum/outfit/job/bartender/post_equip(mob/living/carbon/human/H, visualsOnly)
+/datum/outfit/job/bartender/post_equip(mob/living/carbon/human/H, visuals_only)
 	. = ..()
 
 	var/obj/item/card/id/W = H.wear_id

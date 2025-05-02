@@ -15,7 +15,7 @@
 #define COMSIG_MOB_REAGENT_CHECK "mob_reagent_check"
 	///stops the reagent check call
 	#define COMSIG_MOB_STOP_REAGENT_CHECK (1<<0)
-///from base of mob/clickon(): (atom/A, params)
+///from base of mob/clickon(): (atom/A, list/modifiers)
 #define COMSIG_MOB_CLICKON "mob_clickon"
 ///from base of mob/MiddleClickOn(): (atom/A)
 #define COMSIG_MOB_MIDDLECLICKON "mob_middleclickon"
@@ -52,6 +52,8 @@
 	#define MOVE_ARG_NEW_LOC 1
 	/// The argument of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
+/// From base of /client/Move(): (new_loc, direction)
+#define COMSIG_MOB_CLIENT_MOVE_NOGRAV "mob_client_move_nograv"
 /// From base of /client/Move(): (direction, old_dir)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
@@ -74,6 +76,9 @@
 #define COMSIG_MOB_MIND_TRANSFERRED_OUT_OF "mob_mind_transferred_out_of"
 /// From /mob/proc/ghostize() Called when a mob successfully ghosts
 #define COMSIG_MOB_GHOSTIZED "mob_ghostized"
+/// can_roll_midround(datum/antagonist/antag_type) from certain midround rulesets, (mob/living/source, datum/mind/mind, datum/antagonist/antagonist)
+#define COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL "mob_mind_transferred_out_of"
+	#define CANCEL_ROLL (1<<1)
 
 ///from base of obj/allowed(mob/M): (/obj) returns ACCESS_ALLOWED if mob has id access to the obj
 #define COMSIG_MOB_TRIED_ACCESS "tried_access"
@@ -140,9 +145,18 @@
 	#define SPEECH_SAYMODE 10
 	#define SPEECH_MODS 11
 
+///from /datum/component/speechmod/handle_speech(): ()
+#define COMSIG_TRY_MODIFY_SPEECH "try_modify_speech"
+	///Return value if we prevent speech from being modified
+	#define PREVENT_MODIFY_SPEECH 1
+
 ///from /mob/say_dead(): (mob/speaker, message)
 #define COMSIG_MOB_DEADSAY "mob_deadsay"
 	#define MOB_DEADSAY_SIGNAL_INTERCEPT (1<<0)
+///from /mob/living/check_cooldown(): ()
+#define COMSIG_MOB_EMOTE_COOLDOWN_CHECK "mob_emote_cd"
+	/// make a wild guess
+	#define COMPONENT_EMOTE_COOLDOWN_BYPASS (1<<0)
 ///from /mob/living/emote(): ()
 #define COMSIG_MOB_EMOTE "mob_emote"
 ///from base of mob/swap_hand(): (obj/item/currently_held_item)
@@ -167,11 +181,13 @@
 	#define COMPONENT_CLIENT_MOUSEUP_INTERCEPT (1<<0)
 //from base of client/MouseUp(): (/client, object, location, control, params)
 #define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"
+///Called on the mob being stripped, accepts COMPONENT_CANT_STRIP (mob/user, obj/item/unequipping)
+#define COMSIG_BEING_STRIPPED "try_strip"
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
-///From /datum/component/creamed/Initialize()
-#define COMSIG_MOB_CREAMED "mob_creamed"
+///From /datum/component/face_decal/splat/Initialize()
+#define COMSIG_MOB_HIT_BY_SPLAT "hit_by_splat"
 ///From /obj/item/gun/proc/check_botched()
 #define COMSIG_MOB_CLUMSY_SHOOT_FOOT "mob_clumsy_shoot_foot"
 ///from /obj/item/hand_item/slapper/attack_atom(): (source=obj/structure/table/slammed_table, mob/living/slammer)
@@ -247,3 +263,16 @@
 
 /// from /mob/proc/key_down(): (key, client/client, full_key)
 #define COMSIG_MOB_KEYDOWN "mob_key_down"
+
+/// from /mob/Process_Spacemove(movement_dir, continuous_move): (movement_dir, continuous_move, atom/backup)
+#define COMSIG_MOB_ATTEMPT_HALT_SPACEMOVE "mob_attempt_halt_spacemove"
+	#define COMPONENT_PREVENT_SPACEMOVE_HALT (1<<0)
+
+/// from /mob/update_incapacitated(): (old_incap, new_incap)
+#define COMSIG_MOB_INCAPACITATE_CHANGED "mob_incapacitated"
+
+/// from /obj/item/reagent_containers/dropper/interact_with_atom(atom/target, mob/living/user, list/modifiers): (mob/living/user, atom/dropper, datum/reagents/reagents, fraction)
+#define COMSIG_MOB_REAGENTS_DROPPED_INTO_EYES "mob_reagents_drop_into_eyes"
+
+///from /obj/item/crusher_trophy/on_mark_activate(): (trophy, user)
+#define COMSIG_MOB_TROPHY_ACTIVATED(identifier) "COMSIG_MOB_TROPHY_ACTIVATED[identifier]"

@@ -15,6 +15,7 @@
 	pixel_y = 3
 	base_pixel_y = 3
 	layer = ABOVE_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	/// Which body type we use, male or female?
 	var/body_type
 	/// Material we're used of, wood or plastic?
@@ -92,7 +93,7 @@
 /obj/structure/mannequin/update_overlays()
 	. = ..()
 	var/mutable_appearance/pedestal = mutable_appearance(icon, "pedestal_[material]")
-	pedestal.pixel_y = -3
+	pedestal.pixel_z = -3
 	. += pedestal
 	var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[underwear_name]
 	if(underwear)

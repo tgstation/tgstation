@@ -8,6 +8,7 @@
 	callback.Invoke()
 
 /datum/ai_behavior/find_hunt_target/pollinate
+	action_cooldown = 10 SECONDS
 
 /datum/ai_behavior/find_hunt_target/pollinate/valid_dinner(mob/living/source, obj/machinery/hydroponics/dinner, radius)
 	if(!dinner.can_bee_pollinate())
@@ -16,6 +17,7 @@
 
 /datum/ai_behavior/enter_exit_hive
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+	action_cooldown = 10 SECONDS
 
 /datum/ai_behavior/enter_exit_hive/setup(datum/ai_controller/controller, target_key, attack_key)
 	. = ..()
@@ -26,14 +28,12 @@
 
 /datum/ai_behavior/enter_exit_hive/perform(seconds_per_tick, datum/ai_controller/controller, target_key, attack_key)
 	var/obj/structure/beebox/current_home = controller.blackboard[target_key]
-	var/mob/living/bee_pawn = controller.pawn
 	var/atom/attack_target = controller.blackboard[attack_key]
 
 	if(attack_target) // forget about who we attacking when we go home
 		controller.clear_blackboard_key(attack_key)
 
-	var/datum/callback/callback = CALLBACK(bee_pawn, TYPE_PROC_REF(/mob/living/basic/bee, handle_habitation), current_home)
-	callback.Invoke()
+	controller.ai_interact(target = current_home, combat_mode = FALSE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/inhabit_hive
@@ -53,8 +53,7 @@
 	if(!potential_home.habitable(bee_pawn)) //the house become full before we get to it
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/datum/callback/callback = CALLBACK(bee_pawn, TYPE_PROC_REF(/mob/living/basic/bee, handle_habitation), potential_home)
-	callback.Invoke()
+	controller.ai_interact(target = potential_home, combat_mode = FALSE)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/inhabit_hive/finish_action(datum/ai_controller/controller, succeeded, target_key)
@@ -114,8 +113,9 @@
 	required_distance = 0
 
 ///swirl around the owner in menacing fashion
-/datum/pet_command/point_targeting/attack/swirl
+/datum/pet_command/attack/swirl
 	command_name = "Swirl"
+	requires_pointing = TRUE
 	command_desc = "Your pets will swirl around you and attack whoever you point at!"
 	speech_commands = list("swirl", "spiral", "swarm")
 	pointed_reaction = null
@@ -124,7 +124,7 @@
 	///the owner we will swarm around
 	var/key_to_swarm = BB_SWARM_TARGET
 
-/datum/pet_command/point_targeting/attack/swirl/try_activate_command(mob/living/commander)
+/datum/pet_command/attack/swirl/try_activate_command(mob/living/commander, radial_command)
 	var/mob/living/living_pawn = weak_parent.resolve()
 	if(isnull(living_pawn))
 		return
@@ -135,7 +135,7 @@
 	controller.set_blackboard_key(key_to_swarm, commander)
 	return ..()
 
-/datum/pet_command/point_targeting/attack/swirl/execute_action(datum/ai_controller/controller)
+/datum/pet_command/attack/swirl/execute_action(datum/ai_controller/controller)
 	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
 		return ..()
 	controller.queue_behavior(/datum/ai_behavior/swirl_around_target, BB_SWARM_TARGET)
@@ -187,7 +187,7 @@
 	radial_icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	radial_icon_state = "beebox"
 
-/datum/pet_command/beehive/try_activate_command(mob/living/commander)
+/datum/pet_command/beehive/try_activate_command(mob/living/commander, radial_command)
 	var/mob/living/living_pawn = weak_parent.resolve()
 	if(isnull(living_pawn))
 		return

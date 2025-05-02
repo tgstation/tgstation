@@ -1,0 +1,215 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/r_wall,
+/area/ruin/comms_agent)
+"f" = (
+/obj/machinery/door/window/brigdoor/left/directional/south,
+/obj/machinery/syndicatebomb/self_destruct{
+	anchored = 1
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/structure/sign/warning/explosives/alt/directional/north,
+/turf/open/floor/mineral/gold,
+/area/ruin/comms_agent)
+"j" = (
+/obj/machinery/computer/message_monitor{
+	dir = 4
+	},
+/obj/machinery/newscaster/directional/north,
+/turf/open/floor/carpet/donk,
+/area/ruin/comms_agent)
+"k" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/machinery/light_switch/directional/south,
+/obj/item/paper_bin/carbon{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/pen/fountain{
+	pixel_y = 6;
+	pixel_x = -2
+	},
+/obj/item/paper{
+	pixel_y = 6;
+	default_raw_text = "Your office has been sponsored by yours truly, Donk Corporation!";
+	pixel_x = 15
+	},
+/obj/item/paper/monitorkey{
+	pixel_y = 1;
+	pixel_x = 15
+	},
+/turf/open/floor/carpet/donk,
+/area/ruin/comms_agent)
+"m" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/structure/sign/poster/contraband/donk_co/directional/east,
+/turf/open/floor/wood/large,
+/area/ruin/comms_agent)
+"n" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/carpet/donk,
+/area/ruin/comms_agent)
+"o" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/machinery/button/door{
+	id = "syndie_lpost_icemoon_windows";
+	name = "Window Shutters";
+	req_access = list("syndicate");
+	pixel_y = 9;
+	pixel_x = -2
+	},
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/carpet/donk,
+/area/ruin/comms_agent)
+"r" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet/donk,
+/area/ruin/comms_agent)
+"u" = (
+/obj/structure/table/reinforced/plasmarglass,
+/obj/machinery/fax{
+	syndicate_network = 1;
+	allow_exotic_faxes = 1;
+	fax_name = "Listening Post";
+	desc = "Bluespace technologies on the application of bureaucracy. This one is send-only"
+	},
+/turf/open/floor/carpet/donk,
+/area/ruin/comms_agent)
+"v" = (
+/obj/item/kirbyplants/random,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/ruin/comms_agent)
+"w" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/machinery/modular_computer/preset,
+/turf/open/floor/wood/large,
+/area/ruin/comms_agent)
+"x" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/centcom{
+	name = "Syndicate Secure Airlock System";
+	desc = "Truly, a marvel of modern engineering."
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/structure/cable,
+/turf/open/floor/wood/large,
+/area/ruin/comms_agent)
+"C" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet/donk,
+/area/ruin/comms_agent)
+"D" = (
+/obj/structure/fireplace,
+/obj/structure/railing{
+	dir = 1;
+	pixel_y = -10
+	},
+/obj/item/stack/sheet/mineral/wood/fifty,
+/turf/open/floor/carpet/donk,
+/area/ruin/comms_agent)
+"J" = (
+/obj/machinery/computer/camera_advanced/syndie{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/west,
+/obj/item/reagent_containers/cup/glass/coffee{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/radio/intercom/syndicate/freerange{
+	pixel_x = -31
+	},
+/turf/open/floor/carpet/donk,
+/area/ruin/comms_agent)
+"M" = (
+/obj/structure/filingcabinet,
+/obj/item/paperwork,
+/obj/item/paper/monitorkey,
+/obj/item/paper/fluff/ruins/listeningstation/briefing{
+	pixel_x = -2
+	},
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"N" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/wood/large,
+/area/ruin/comms_agent)
+"W" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "syndie_lpost_icemoon_windows"
+	},
+/obj/effect/spawner/structure/window/reinforced/plasma,
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"X" = (
+/obj/modular_map_connector,
+/turf/closed/wall/r_wall,
+/area/ruin/comms_agent)
+
+(1,1,1) = {"
+X
+j
+J
+k
+a
+"}
+(2,1,1) = {"
+x
+n
+C
+o
+W
+"}
+(3,1,1) = {"
+a
+D
+r
+u
+W
+"}
+(4,1,1) = {"
+a
+w
+N
+v
+W
+"}
+(5,1,1) = {"
+a
+f
+m
+M
+W
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+"}

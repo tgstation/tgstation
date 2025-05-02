@@ -13,8 +13,10 @@
 	///ID using the UID.
 	var/id
 
-	///List of all messages sent in the conversation.
+	///Associative list of all messages sent in the conversation. id > message
 	var/list/messages = list()
+	///ID used for next message, increments each use. Convert to string before use.
+	var/next_message_id = 0
 
 	///The "Administrator" of the channel, the creator starts as channel's operator by default.
 	var/datum/computer_file/program/chatclient/channel_operator
@@ -45,11 +47,14 @@
 
 /datum/ntnet_conversation/proc/add_message(message, username)
 	message = "[station_time_timestamp(format = "hh:mm")] [username]: [message]"
-	messages.Add(message)
+	messages["[next_message_id]"] = message
+	next_message_id++
 	trim_message_list()
 
 /datum/ntnet_conversation/proc/add_status_message(message)
-	messages.Add("[station_time_timestamp(format = "hh:mm")] -!- [message]")
+	message = "[station_time_timestamp(format = "hh:mm")] -!- [message]"
+	messages["[next_message_id]"] = message
+	next_message_id++
 	trim_message_list()
 
 /datum/ntnet_conversation/proc/trim_message_list()

@@ -21,23 +21,15 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/effect/landmark/generic_maintenance_landmark,
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/item/pen{
-	pixel_x = 8;
-	pixel_y = -3
-	},
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/cargo)
 "da" = (
 /obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/stripes/end,
+/obj/structure/sign/warning/electric_shock/directional/north,
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/structure/sign/warning/electric_shock,
 /turf/open/floor/plating,
 /area/station/maintenance/department/cargo)
 "dB" = (
@@ -210,9 +202,17 @@
 "tV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 4
+	},
 /obj/item/flashlight/lamp{
-	pixel_x = -1;
+	pixel_x = 8;
 	pixel_y = 9
+	},
+/obj/item/pen{
+	pixel_x = 8;
+	pixel_y = -3
 	},
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/smooth,

@@ -11,8 +11,7 @@
 
 	stoned.forceMove(container)
 	stoned.fully_heal()
-	stoned.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), SOULSTONE_TRAIT)
-	stoned.status_flags |= GODMODE
+	stoned.add_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), SOULSTONE_TRAIT)
 
 	RegisterSignal(stoned, COMSIG_MOVABLE_MOVED, PROC_REF(free_prisoner))
 
@@ -25,5 +24,4 @@
 
 /datum/component/soulstoned/UnregisterFromParent()
 	var/mob/living/stoned = parent
-	stoned.status_flags &= ~GODMODE
-	stoned.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), SOULSTONE_TRAIT)
+	stoned.remove_traits(list(TRAIT_GODMODE, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), SOULSTONE_TRAIT)

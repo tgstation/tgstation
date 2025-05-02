@@ -2,6 +2,7 @@
 /datum/hallucination/battle
 	abstract_hallucination_parent = /datum/hallucination/battle
 	random_hallucination_weight = 3
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 /// Subtype of battle hallucination for gun based battles, where it sounds like someone is being shot.
 /datum/hallucination/battle/gun
@@ -11,9 +12,9 @@
 	/// The upper end to how many shots we'll fire.
 	var/shots_to_fire_upper_range = 6
 	/// The sound effect we play when we "fire" a shot.
-	var/fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
+	var/fire_sound = 'sound/items/weapons/gun/shotgun/shot.ogg'
 	/// The sound we make when our shot actually "hits" "someone".
-	var/hit_person_sound = 'sound/weapons/pierce.ogg'
+	var/hit_person_sound = 'sound/items/weapons/pierce.ogg'
 	/// The sound we make when our shot misses someone and "hits" a "wall".
 	var/hit_wall_sound = SFX_RICOCHET
 	/// The number of successful hits required to "down" the "someone" we're firing at.
@@ -60,9 +61,9 @@
 /datum/hallucination/battle/gun/disabler
 	shots_to_fire_lower_range = 5
 	shots_to_fire_upper_range = 10
-	fire_sound = 'sound/weapons/taser2.ogg'
-	hit_person_sound = 'sound/weapons/tap.ogg'
-	hit_wall_sound = 'sound/weapons/effects/searwall.ogg'
+	fire_sound = 'sound/items/weapons/taser2.ogg'
+	hit_person_sound = 'sound/items/weapons/tap.ogg'
+	hit_wall_sound = 'sound/items/weapons/effects/searwall.ogg'
 	number_of_hits_to_end = 3
 	chance_to_fall = 70
 
@@ -70,9 +71,9 @@
 /datum/hallucination/battle/gun/laser
 	shots_to_fire_lower_range = 5
 	shots_to_fire_upper_range = 10
-	fire_sound = 'sound/weapons/laser.ogg'
-	hit_person_sound = 'sound/weapons/sear.ogg'
-	hit_wall_sound = 'sound/weapons/effects/searwall.ogg'
+	fire_sound = 'sound/items/weapons/laser.ogg'
+	hit_person_sound = 'sound/items/weapons/sear.ogg'
+	hit_wall_sound = 'sound/items/weapons/effects/searwall.ogg'
 	number_of_hits_to_end = 4
 	chance_to_fall = 70
 
@@ -82,7 +83,7 @@
 /datum/hallucination/battle/stun_prod/start()
 	var/turf/source = random_far_turf()
 
-	hallucinator.playsound_local(source, 'sound/weapons/egloves.ogg', 40, TRUE)
+	hallucinator.playsound_local(source, 'sound/items/weapons/egloves.ogg', 40, TRUE)
 	hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(fake_cuff), source), 2 SECONDS)
 	return TRUE
@@ -92,7 +93,7 @@
 	if(QDELETED(src) || QDELETED(hallucinator) || !source)
 		return
 
-	hallucinator.playsound_local(source, 'sound/weapons/cablecuff.ogg', 15, TRUE)
+	hallucinator.playsound_local(source, 'sound/items/weapons/cablecuff.ogg', 15, TRUE)
 	qdel(src)
 
 /// A hallucination of someone being stun batonned, and subsequently harmbatonned.
@@ -101,7 +102,7 @@
 /datum/hallucination/battle/harm_baton/start()
 	var/turf/source = random_far_turf()
 
-	hallucinator.playsound_local(source, 'sound/weapons/egloves.ogg', 40, TRUE)
+	hallucinator.playsound_local(source, 'sound/items/weapons/egloves.ogg', 40, TRUE)
 	hallucinator.playsound_local(source, SFX_BODYFALL, 25, TRUE)
 
 	addtimer(CALLBACK(src, PROC_REF(harmbaton_loop), source, rand(5, 12)), 2 SECONDS)
@@ -126,7 +127,7 @@
 /datum/hallucination/battle/e_sword/start()
 	var/turf/source = random_far_turf()
 
-	hallucinator.playsound_local(source, 'sound/weapons/saberon.ogg', 15, 1)
+	hallucinator.playsound_local(source, 'sound/items/weapons/saberon.ogg', 15, 1)
 	addtimer(CALLBACK(src, PROC_REF(stab_loop), source, rand(4, 8)), CLICK_CD_MELEE)
 	return TRUE
 
@@ -136,10 +137,10 @@
 		return
 
 	if(stabs_remaining >= 1)
-		hallucinator.playsound_local(source, 'sound/weapons/blade1.ogg', 50, TRUE)
+		hallucinator.playsound_local(source, 'sound/items/weapons/blade1.ogg', 50, TRUE)
 
 	else
-		hallucinator.playsound_local(source, 'sound/weapons/saberoff.ogg', 15, TRUE)
+		hallucinator.playsound_local(source, 'sound/items/weapons/saberoff.ogg', 15, TRUE)
 		qdel(src)
 		return
 

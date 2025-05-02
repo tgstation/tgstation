@@ -64,7 +64,7 @@
 
 /obj/item/clothing/head/costume/foilhat/proc/warp_up()
 	name = "scorched tinfoil hat"
-	desc = "A badly warped up hat. Quite unprobable this will still work against any of fictional and contemporary dangers it used to."
+	desc = "A badly warped up hat. Quite unlikely this will still work against any of the fictional or real dangers it used to."
 	warped = TRUE
 	clothing_flags &= ~ANTI_TINFOIL_MANEUVER
 	if(!isliving(loc) || !paranoia)
@@ -109,7 +109,7 @@
 		";WE REPEAT OUR LIVES DAILY WITHOUT FURTHER QUESTIONS!!"
 	)
 	user.say(pick(conspiracy_line), forced=type)
-	var/obj/item/organ/internal/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
+	var/obj/item/organ/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
 		brain.set_organ_damage(BRAIN_DAMAGE_DEATH)
 	return OXYLOSS

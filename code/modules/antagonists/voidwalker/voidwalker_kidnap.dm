@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 /area/centcom/voidwalker_void
 	name = "Voidwalker void"
 	icon_state = "voidwalker"
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	ambience_index = AMBIENCE_SPOOKY
 	sound_environment = SOUND_ENVIRONMENT_CAVE
 	area_flags = UNIQUE_AREA | NOTELEPORT | HIDDEN_AREA | BLOCK_SUICIDE
@@ -58,7 +58,7 @@ GLOBAL_LIST_EMPTY(voidwalker_void)
 	driver.add_traits(wisp_driver_traits, REF(src))
 	add_atom_colour(random_color(), FIXED_COLOUR_PRIORITY)
 
-	addtimer(CALLBACK(driver, TYPE_PROC_REF(/atom/movable, forceMove), get_safe_random_station_turf()), 60 SECONDS)
+	addtimer(CALLBACK(driver, TYPE_PROC_REF(/atom/movable, forceMove), get_safe_random_station_turf_equal_weight()), 60 SECONDS)
 
 /obj/effect/wisp_mobile/relaymove(mob/living/user, direction)
 	if(can_move >= world.time)

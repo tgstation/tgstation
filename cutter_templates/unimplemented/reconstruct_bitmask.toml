@@ -1,6 +1,0 @@
-# Uses a currently unimplemented (only on my copy of the cutter) template to reconstruct a template from a dmi
-mode = "BitmaskSliceReconstruct"
-extract = ["0", "3", "12", "15", "255"]
-
-[set]
-"template" = "\"bitmask/diagonal_32x32.toml\""

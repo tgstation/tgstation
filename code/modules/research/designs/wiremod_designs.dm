@@ -347,6 +347,16 @@
 	id = "comp_ntnet_send"
 	build_path = /obj/item/circuit_component/ntnet_send
 
+/datum/design/component/nfc_send
+	name = "NFC Transmitter"
+	id = "comp_nfc_send"
+	build_path = /obj/item/circuit_component/nfc_send
+
+/datum/design/component/nfc_receive
+	name = "NFC Receiver"
+	id = "comp_nfc_receive"
+	build_path = /obj/item/circuit_component/nfc_receive
+
 /datum/design/component/list_literal/ntnet_send
 	name = "NTNet Transmitter List Literal"
 	id = "comp_ntnet_send_list_literal"
@@ -466,6 +476,26 @@
 	name = "Associative List Pick Component"
 	id = "comp_assoc_list_pick"
 	build_path = /obj/item/circuit_component/list_pick/assoc
+
+/datum/design/component/wire_bundle
+	name = "Wire Bundle"
+	id = "comp_wire_bundle"
+	build_path = /obj/item/circuit_component/wire_bundle
+
+/datum/design/component/wirenet_receive
+	name = "Wirenet Receiver Component"
+	id = "comp_wirenet_receive"
+	build_path = /obj/item/circuit_component/wirenet_receive
+
+/datum/design/component/wirenet_send
+	name = "Wirenet Transmitter Component"
+	id = "comp_wirenet_send"
+	build_path = /obj/item/circuit_component/wirenet_send
+
+/datum/design/component/wirenet_send_literal
+	name = "Wirenet List Literal Transmitter Component"
+	id = "comp_wirenet_send_literal"
+	build_path = /obj/item/circuit_component/list_literal/wirenet_send
 
 /datum/design/component/bci/bci_camera
 	name = "BCI Camera"
@@ -662,6 +692,35 @@
 	id = "module_shell"
 	materials = list(/datum/material/glass =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/mod/module/circuit
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
+
+/datum/design/undertile_shell
+	name = "Under-tile Shell"
+	desc = "A small shell that can fit under the floor."
+	id = "undertile_shell"
+	materials = list(
+		/datum/material/glass=HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*2.5,
+	)
+	build_path = /obj/item/undertile_circuit
+	build_type = COMPONENT_PRINTER
+	category = list(
+		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS
+	)
+
+
+/datum/design/wallmount_shell
+	name = "Wall-mounted Shell"
+	desc = "A large shell that can be mounted on a wall."
+	id = "wallmount_shell"
+	materials = list(
+		/datum/material/glass=SHEET_MATERIAL_AMOUNT,
+		/datum/material/iron=SHEET_MATERIAL_AMOUNT*5,
+	)
+	build_path = /obj/item/wallframe/circuit
 	build_type = COMPONENT_PRINTER
 	category = list(
 		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_SHELLS

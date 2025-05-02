@@ -11,8 +11,6 @@
 		/obj/item/clothing/under = 1,
 	)
 	cost = 1
-	route = PATH_SIDE
-	depth = 8
 	research_tree_icon_path = 'icons/mob/actions/actions_animal.dmi'
 	research_tree_icon_state = "gaze"
 

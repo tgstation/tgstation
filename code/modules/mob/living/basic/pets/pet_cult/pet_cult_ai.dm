@@ -111,9 +111,7 @@
 	if(isnull(revive_mob) || revive_mob.stat != DEAD || !(revive_mob.mind in cult_team.members))
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	var/mob/living/basic/living_pawn = controller.pawn
-	living_pawn.melee_attack(target)
-
+	controller.ai_interact(target = target)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/activate_rune/finish_action(datum/ai_controller/controller, success, target_key)
@@ -238,3 +236,6 @@
 	radial_icon_state = "1"
 	speech_commands = list("rune", "revival")
 	ability_key = BB_RUNE_ABILITY
+
+/datum/pet_command/untargeted_ability/draw_rune/retrieve_command_text(atom/living_pet, atom/target)
+	return "signals [living_pet] to draw a rune!"

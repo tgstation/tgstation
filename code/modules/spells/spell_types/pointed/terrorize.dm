@@ -6,6 +6,7 @@
 	button_icon_state = "terrify"
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
+	antimagic_flags = MAGIC_RESISTANCE_MIND
 	panel = null
 	spell_requirements = NONE
 	cooldown_time = 25 SECONDS
@@ -15,7 +16,6 @@
 
 /datum/action/cooldown/spell/pointed/terrorize/is_valid_target(atom/cast_on)
 	. = ..()
-
 	if(!ishuman(cast_on))
 		cast_on.balloon_alert(owner, "cannot be terrorized!")
 		return FALSE
@@ -36,5 +36,4 @@
 
 /datum/action/cooldown/spell/pointed/terrorize/cast(mob/living/carbon/human/cast_on)
 	. = ..()
-
 	cast_on.apply_status_effect(/datum/status_effect/terrified) //Effect stacks, adding bonus terror to the victim if cast again

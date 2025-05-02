@@ -5,7 +5,6 @@
 #define BASE_HEATING_ENERGY (40 KILO JOULES)
 
 /obj/machinery/space_heater
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	anchored = FALSE
 	density = TRUE
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
@@ -89,6 +88,11 @@
 		LAZYADD(component_parts, cell)
 		cell = null
 	return ..()
+
+/obj/machinery/space_heater/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
+		cell = null
 
 /obj/machinery/space_heater/examine(mob/user)
 	. = ..()
@@ -289,7 +293,6 @@
 		if("eject")
 			if(panel_open && cell)
 				usr.put_in_hands(cell)
-				cell = null
 				. = TRUE
 
 /obj/machinery/space_heater/proc/toggle_power(user)

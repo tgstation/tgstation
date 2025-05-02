@@ -98,8 +98,8 @@
 
 	var/turf/my_turf = get_turf(src)
 	dir = get_dir(spawn_from, my_turf)
-	var/move_x = (my_turf.x - spawn_from.x) * world.icon_size
-	var/move_y = (my_turf.y - spawn_from.y) * world.icon_size
+	var/move_x = (my_turf.x - spawn_from.x) * ICON_SIZE_X
+	var/move_y = (my_turf.y - spawn_from.y) * ICON_SIZE_Y
 	pixel_x = -move_x
 	pixel_y = -move_y
 

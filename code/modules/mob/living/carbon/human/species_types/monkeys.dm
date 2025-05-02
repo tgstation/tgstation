@@ -4,10 +4,10 @@
 	name = "\improper Monkey"
 	id = SPECIES_MONKEY
 	mutant_organs = list(
-		/obj/item/organ/external/tail/monkey = "Monkey",
+		/obj/item/organ/tail/monkey = "Monkey",
 	)
-	mutanttongue = /obj/item/organ/internal/tongue/monkey
-	mutantbrain = /obj/item/organ/internal/brain/primate
+	mutanttongue = /obj/item/organ/tongue/monkey
+	mutantbrain = /obj/item/organ/brain/primate
 	skinned_type = /obj/item/stack/sheet/animalhide/monkey
 	meat = /obj/item/food/meat/slab/monkey
 	knife_butcher_results = list(/obj/item/food/meat/slab/monkey = 5, /obj/item/stack/sheet/animalhide/monkey = 1)
@@ -35,24 +35,34 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
 	fire_overlay = "monkey"
-	dust_anim = "dust-m"
 	gib_anim = "gibbed-m"
 
 	payday_modifier = 1.5
 	ai_controlled_species = TRUE
 
-/datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+/datum/species/monkey/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
 	passtable_on(human_who_gained_species, SPECIES_TRAIT)
 	human_who_gained_species.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
 	human_who_gained_species.dna.activate_mutation(/datum/mutation/human/race)
 	human_who_gained_species.AddElement(/datum/element/human_biter)
+	human_who_gained_species.update_mob_height()
 
 /datum/species/monkey/on_species_loss(mob/living/carbon/human/C)
 	. = ..()
 	passtable_off(C, SPECIES_TRAIT)
 	C.dna.remove_mutation(/datum/mutation/human/race)
 	C.RemoveElement(/datum/element/human_biter)
+	C.update_mob_height()
+
+/datum/species/monkey/update_species_heights(mob/living/carbon/human/holder)
+	if(HAS_TRAIT(holder, TRAIT_DWARF))
+		return MONKEY_HEIGHT_DWARF
+
+	if(HAS_TRAIT(holder, TRAIT_TOO_TALL))
+		return MONKEY_HEIGHT_TALL
+
+	return MONKEY_HEIGHT_MEDIUM
 
 /datum/species/monkey/check_roundstart_eligible()
 	// STOP ADDING MONKEY SUBTYPES YOU HEATHEN
@@ -63,6 +73,10 @@
 
 /datum/species/monkey/get_scream_sound(mob/living/carbon/human/monkey)
 	return get_sfx(SFX_SCREECH)
+
+/datum/species/monkey/get_hiss_sound(mob/living/carbon/human/monkey)
+	return 'sound/mobs/humanoids/human/hiss/human_hiss.ogg'
+	// we're both great apes, or something..
 
 /datum/species/monkey/get_physical_attributes()
 	return "Monkeys are slippery, can crawl into vents, and are more dextrous than humans.. but only when stealing things. \
@@ -124,9 +138,9 @@
 
 	return to_add
 
-/obj/item/organ/internal/brain/primate //Ook Ook
+/obj/item/organ/brain/primate //Ook Ook
 	name = "Primate Brain"
-	desc = "This wad of meat is small, but has enlaged occipital lobes for spotting bananas."
+	desc = "This wad of meat is small, but has enlarged occipital lobes for spotting bananas."
 	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE, TRAIT_GUN_NATURAL) // No literacy or advanced tool usage.
 	actions_types = list(/datum/action/item_action/organ_action/toggle_trip)
 	/// Will this monkey stumble if they are crossed by a simple mob or a carbon in combat mode? Toggable by monkeys with clients, and is messed automatically set to true by monkey AI.
@@ -139,12 +153,8 @@
 	background_icon_state = "bg_default_on"
 	overlay_icon_state = "bg_default_border"
 
-/datum/action/item_action/organ_action/toggle_trip/Trigger(trigger_flags)
-	. = ..()
-	if(!.)
-		return
-
-	var/obj/item/organ/internal/brain/primate/monkey_brain = target
+/datum/action/item_action/organ_action/toggle_trip/do_effect(trigger_flags)
+	var/obj/item/organ/brain/primate/monkey_brain = target
 	if(monkey_brain.tripping)
 		monkey_brain.tripping = FALSE
 		background_icon_state = "bg_default"
@@ -152,24 +162,25 @@
 	else
 		monkey_brain.tripping = TRUE
 		background_icon_state = "bg_default_on"
-		to_chat(monkey_brain.owner, span_notice("You will now stumble while while colliding with people who are in combat mode."))
+		to_chat(monkey_brain.owner, span_notice("You will now stumble while colliding with people who are in combat mode."))
 	build_all_button_icons()
+	return TRUE
 
-/obj/item/organ/internal/brain/primate/on_mob_insert(mob/living/carbon/primate)
+/obj/item/organ/brain/primate/on_mob_insert(mob/living/carbon/primate)
 	. = ..()
 	RegisterSignal(primate, COMSIG_LIVING_MOB_BUMPED, PROC_REF(on_mob_bump))
 
-/obj/item/organ/internal/brain/primate/on_mob_remove(mob/living/carbon/primate)
+/obj/item/organ/brain/primate/on_mob_remove(mob/living/carbon/primate)
 	. = ..()
 	UnregisterSignal(primate, COMSIG_LIVING_MOB_BUMPED)
 
-/obj/item/organ/internal/brain/primate/proc/on_mob_bump(mob/source, mob/living/crossing_mob)
+/obj/item/organ/brain/primate/proc/on_mob_bump(mob/source, mob/living/crossing_mob)
 	SIGNAL_HANDLER
 	if(!tripping || !crossing_mob.combat_mode)
 		return
 	crossing_mob.knockOver(owner)
 
-/obj/item/organ/internal/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
+/obj/item/organ/brain/primate/get_attacking_limb(mob/living/carbon/human/target)
 	if(!HAS_TRAIT(owner, TRAIT_ADVANCEDTOOLUSER))
 		return owner.get_bodypart(BODY_ZONE_HEAD)
 	return ..()

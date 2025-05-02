@@ -15,7 +15,7 @@
 /area/shuttle/hunter/mi13_foodtruck)
 "af" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full,
 /obj/structure/sign/poster/contraband/hacking_guide/directional/south,
 /turf/open/floor/circuit/red/off,
 /area/shuttle/hunter/mi13_foodtruck)
@@ -104,14 +104,6 @@
 /obj/item/binoculars{
 	pixel_y = 10
 	},
-/obj/item/traitor_bug{
-	pixel_y = 6;
-	pixel_x = 6
-	},
-/obj/item/traitor_bug{
-	pixel_y = 3;
-	pixel_x = -5
-	},
 /obj/item/storage/box/zipties{
 	pixel_y = -4;
 	pixel_x = 4
@@ -123,7 +115,7 @@
 /turf/open/floor/circuit/red/off,
 /area/shuttle/hunter/mi13_foodtruck)
 "eA" = (
-/obj/machinery/vending/medical/syndicate_access/cybersun,
+/obj/machinery/vending/medical/syndicate/cybersun,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/circuit/red/off,
@@ -214,7 +206,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/mi13_foodtruck)
 "hB" = (
-/obj/machinery/power/shuttle_engine/propulsion,
+/obj/machinery/power/shuttle_engine/propulsion/left,
 /turf/template_noop,
 /area/shuttle/hunter/mi13_foodtruck)
 "iO" = (
@@ -271,8 +263,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/shuttle/hunter/mi13_foodtruck)
 "kf" = (
-/obj/effect/turf_decal/box,
-/turf/closed/wall/mineral/titanium/nodiagonal,
+/obj/machinery/power/shuttle_engine/propulsion/right,
+/turf/template_noop,
 /area/shuttle/hunter/mi13_foodtruck)
 "kj" = (
 /obj/structure/table/reinforced/plastitaniumglass,
@@ -634,7 +626,7 @@
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/pill/cyanide{
+/obj/item/reagent_containers/applicator/pill/cyanide{
 	pixel_y = -9;
 	pixel_x = -2
 	},
@@ -758,7 +750,7 @@
 	pixel_y = 6;
 	pixel_x = 8
 	},
-/obj/item/reagent_containers/pill/cyanide{
+/obj/item/reagent_containers/applicator/pill/cyanide{
 	pixel_y = -6;
 	pixel_x = 10
 	},
@@ -841,7 +833,7 @@ jc
 kv
 ku
 aj
-hB
+kf
 "}
 (5,1,1) = {"
 Ev
@@ -889,7 +881,7 @@ ku
 ku
 ku
 ah
-kf
+ku
 ku
 Pq
 Pq
@@ -960,7 +952,7 @@ pU
 ab
 ku
 aj
-hB
+kf
 "}
 (12,1,1) = {"
 Pq

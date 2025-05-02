@@ -189,8 +189,12 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
  * @param {number} max_interact_count - The maximum amount of interactions allowed.
  *
  * @param {boolean} hidden - By default, any action 1 second or longer shows a cog over the user while it is in progress. If hidden is set to TRUE, the cog will not be shown.
+ *
+ * @param {icon} icon - The icon file of the cog. Default: 'icons/effects/progressbar.dmi'
+ *
+ * @param {iconstate} iconstate - The icon state of the cog. Default: "Cog"
  */
-/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE)
+/proc/do_after(mob/user, delay, atom/target, timed_action_flags = NONE, progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, hidden = FALSE, icon = 'icons/effects/progressbar.dmi', iconstate = "cog")
 	if(!user)
 		return FALSE
 	if(!isnum(delay))
@@ -208,7 +212,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/atom/target_loc = target?.loc
 
 	var/drifting = FALSE
-	if(GLOB.move_manager.processing_on(user, SSspacedrift))
+	if(!isnull(user.drift_handler))
 		drifting = TRUE
 
 	var/holding = user.get_active_held_item()
@@ -224,7 +228,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			progbar = new(user, delay, target || user)
 
 		if(!hidden && delay >= 1 SECONDS)
-			cog = new(user)
+			cog = new(user, icon, iconstate)
 
 	SEND_SIGNAL(user, COMSIG_DO_AFTER_BEGAN)
 
@@ -237,7 +241,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 
-		if(drifting && !GLOB.move_manager.processing_on(user, SSspacedrift))
+		if(drifting && isnull(user.drift_handler))
 			drifting = FALSE
 			user_loc = user.loc
 
@@ -489,7 +493,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		. += borg
 
 //Returns a list of AI's
-/proc/active_ais(check_mind=FALSE, z = null, skip_syndicate, only_syndicate)
+/proc/active_ais(check_mind = FALSE, z = null, skip_syndicate = FALSE, only_syndicate = FALSE)
 	. = list()
 	for(var/mob/living/silicon/ai/ai as anything in GLOB.ai_list)
 		if(ai.stat == DEAD)
@@ -501,10 +505,9 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			continue
 		if(only_syndicate && !syndie_ai)
 			continue
-		if(check_mind)
-			if(!ai.mind)
-				continue
-		if(z && !(z == ai.z) && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+		if(check_mind && !ai.mind)
+			continue
+		if(!isnull(z) && z != ai.z && (!is_station_level(z) || !is_station_level(ai.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
 			continue
 		. += ai
 
@@ -562,7 +565,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 	var/list/sortmob = sort_names(GLOB.mob_list)
 	for(var/mob/living/silicon/ai/mob_to_sort in sortmob)
 		moblist += mob_to_sort
-	for(var/mob/camera/mob_to_sort in sortmob)
+	for(var/mob/eye/mob_to_sort in sortmob)
 		moblist += mob_to_sort
 	for(var/mob/living/silicon/pai/mob_to_sort in sortmob)
 		moblist += mob_to_sort
@@ -720,7 +723,7 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 		mob_occupant = occupant
 
 	else if(isorgan(occupant))
-		var/obj/item/organ/internal/brain/brain = occupant
+		var/obj/item/organ/brain/brain = occupant
 		mob_occupant = brain.brainmob
 
 	return mob_occupant
@@ -741,7 +744,10 @@ GLOBAL_LIST_INIT(skin_tone_names, list(
 			newname = requesting_client?.prefs?.read_preference(preference_type)
 		else
 			var/datum/preference/preference = GLOB.preference_entries[preference_type]
-			newname = preference.create_informed_default_value(requesting_client.prefs)
+			if (requesting_client?.prefs)
+				newname = preference.create_informed_default_value(requesting_client.prefs)
+			else
+				newname = preference.create_default_value()
 
 		for(var/mob/living/checked_mob in GLOB.player_list)
 			if(checked_mob == src)

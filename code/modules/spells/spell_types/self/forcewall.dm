@@ -3,7 +3,7 @@
 	desc = "Create a magical barrier that only you can pass through."
 	button_icon_state = "shield"
 
-	sound = 'sound/magic/forcewall.ogg'
+	sound = 'sound/effects/magic/forcewall.ogg'
 	school = SCHOOL_TRANSMUTATION
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 1.25 SECONDS

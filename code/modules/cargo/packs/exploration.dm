@@ -28,7 +28,7 @@
 	for(var/obj/item/food/food_item in crate)
 		// makes all of our items GROSS
 		food_item.name = "spoiled [food_item.name]"
-		food_item.AddComponent(/datum/component/edible, foodtypes = GROSS)
+		food_item.AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = GROSS)
 
 /datum/supply_pack/exploration/shrubbery
 	name = "Shrubbery Crate"

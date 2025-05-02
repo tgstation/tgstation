@@ -57,6 +57,12 @@
 	icon_state = "firing_effect"
 	duration = 3
 
+/obj/effect/temp_visual/dir_setting/firing_effect/Initialize(mapload, set_dir)
+	. = ..()
+	if (ismovable(loc))
+		var/atom/movable/spawned_inside = loc
+		spawned_inside.vis_contents += src
+
 /obj/effect/temp_visual/dir_setting/firing_effect/setDir(newdir)
 	switch(newdir)
 		if(NORTH)
@@ -145,6 +151,7 @@
 /obj/effect/temp_visual/dir_setting/curse/grasp_portal
 	icon = 'icons/effects/64x64.dmi'
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	pixel_y = -16
 	pixel_x = -16
 	duration = 32
@@ -164,6 +171,7 @@
 	icon = 'icons/effects/beam_splash.dmi'
 	icon_state = "beam_splash_e"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	pixel_y = -16
 	duration = 50
 
@@ -242,7 +250,7 @@
 	duration = 5
 
 /obj/effect/temp_visual/fire
-	icon = 'icons/effects/atmos/fire.dmi'
+	icon = 'icons/effects/fire.dmi'
 	icon_state = "heavy"
 	light_range = LIGHT_RANGE_FIRE
 	light_color = LIGHT_COLOR_FIRE
@@ -297,14 +305,6 @@
 /obj/effect/temp_visual/gib_animation/animal
 	icon = 'icons/mob/simple/animal.dmi'
 
-/obj/effect/temp_visual/dust_animation
-	icon = 'icons/mob/simple/mob.dmi'
-	duration = 15
-
-/obj/effect/temp_visual/dust_animation/Initialize(mapload, dust_icon)
-	icon_state = dust_icon // Before ..() so the correct icon is flick()'d
-	. = ..()
-
 /obj/effect/temp_visual/mummy_animation
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "mummy_revive"
@@ -327,6 +327,7 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "kinetic_blast"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	duration = 4
 
 /obj/effect/temp_visual/explosion
@@ -399,7 +400,12 @@
 	duration = 6
 
 /obj/effect/temp_visual/impact_effect/neurotoxin
-	icon_state = "impact_neurotoxin"
+	icon_state = "impact_spit"
+	color = "#5BDD04"
+
+/obj/effect/temp_visual/impact_effect/ink_spit
+	icon_state = "impact_spit"
+	color = COLOR_NEARLY_ALL_BLACK
 
 /obj/effect/temp_visual/heart
 	name = "heart"
@@ -437,8 +443,7 @@
 	var/size_matrix = matrix()
 	if(size_calc_target)
 		layer = size_calc_target.layer + 0.01
-		var/icon/I = icon(size_calc_target.icon, size_calc_target.icon_state, size_calc_target.dir)
-		size_matrix = matrix() * (I.Height()/world.icon_size)
+		size_matrix = matrix() * (size_calc_target.get_visual_height() / ICON_SIZE_Y)
 		transform = size_matrix //scale the bleed overlay's size based on the target's icon size
 	var/matrix/M = transform
 	if(shrink)
@@ -492,6 +497,7 @@
 	icon = 'icons/effects/rcd.dmi'
 	icon_state = ""
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
@@ -559,7 +565,7 @@
 /obj/effect/constructing_effect/proc/attacked(mob/user)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, 'sound/weapons/egloves.ogg', vol = 80, vary = TRUE)
+	playsound(loc, 'sound/items/weapons/egloves.ogg', vol = 80, vary = TRUE)
 	end()
 
 /obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)
@@ -611,8 +617,10 @@
 	creature_x = creature.x
 	creature_y = creature.y
 
-	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
+	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER)
 	modsuit_image.plane = ABOVE_LIGHTING_PLANE
+	modsuit_image.pixel_w = (creature.x - looker.x) * 32
+	modsuit_image.pixel_z = (creature.y - looker.y) * 32
 	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
 	mod_man = WEAKREF(looker)
 	pinged_person = WEAKREF(creature)
@@ -647,8 +655,8 @@
 	if(follow_creature)
 		creature_y = creature.y
 		creature_x = creature.x
-	modsuit_image.pixel_x = ((creature_x - looker.x) * 32)
-	modsuit_image.pixel_y = ((creature_y - looker.y) * 32)
+	modsuit_image.pixel_w = ((creature_x - looker.x) * 32)
+	modsuit_image.pixel_z = ((creature_y - looker.y) * 32)
 
 /obj/effect/temp_visual/block //color is white by default, set to whatever is needed
 	name = "blocking glow"
@@ -731,3 +739,11 @@
 	duration = 0.5 SECONDS
 	pixel_x = -32
 	pixel_y = -32
+
+/obj/effect/temp_visual/spotlight
+	name = "Spotlight"
+	icon = 'icons/effects/light_overlays/light_64.dmi'
+	icon_state = "spotlight"
+	duration = 5 MINUTES
+	pixel_x = -16
+	pixel_y = -8 //32

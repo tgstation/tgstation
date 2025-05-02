@@ -142,11 +142,11 @@ Choiced preferences can generate icons. This is how the clothing/species prefere
 /datum/preference/choiced/favorite_drink/icon_for(value)
 	switch (value)
 		if ("Milk")
-			return icon('drinks.dmi', "milk")
+			return uni_icon('drinks.dmi', "milk")
 		if ("Cola")
-			return icon('drinks.dmi', "cola")
+			return uni_icon('drinks.dmi', "cola")
 		if ("Water")
-			return icon('drinks.dmi', "water")
+			return uni_icon('drinks.dmi', "water")
 ```
 
 Then, change your `.tsx` file to look like:
@@ -398,11 +398,11 @@ For inspiration, here is changeling's:
 	var/icon/final_icon = render_preview_outfit(/datum/outfit/changeling)
 	var/icon/split_icon = render_preview_outfit(/datum/outfit/job/engineer)
 
-	final_icon.Shift(WEST, world.icon_size / 2)
-	final_icon.Shift(EAST, world.icon_size / 2)
+	final_icon.Shift(WEST, ICON_SIZE_X / 2)
+	final_icon.Shift(EAST, ICON_SIZE_X / 2)
 
-	split_icon.Shift(EAST, world.icon_size / 2)
-	split_icon.Shift(WEST, world.icon_size / 2)
+	split_icon.Shift(EAST, ICON_SIZE_X / 2)
+	split_icon.Shift(WEST, ICON_SIZE_X / 2)
 
 	final_icon.Blend(split_icon, ICON_OVERLAY)
 

@@ -9,7 +9,7 @@
 		return
 	return considering
 
-/mob/living/carbon/human/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, force_drop = FALSE)
+/mob/living/carbon/human/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
 	if(HAS_TRAIT(src, TRAIT_NO_SLIP_ALL))
 		return FALSE
 
@@ -30,7 +30,3 @@
 		if((. && !moving_diagonally) || (!. && moving_diagonally == SECOND_DIAG_STEP))
 			SEND_SIGNAL(shoes, COMSIG_SHOES_STEP_ACTION)
 
-/mob/living/carbon/human/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
-	if(movement_type & FLYING || HAS_TRAIT(src, TRAIT_FREE_FLOAT_MOVEMENT))
-		return TRUE
-	return ..()

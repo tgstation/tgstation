@@ -39,7 +39,7 @@
 /mob/living/basic/pet/gondola/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_MUTE, INNATE_TRAIT)
-	AddElement(/datum/element/pet_bonus, "smiles!")
+	AddElement(/datum/element/pet_bonus, "smile")
 	if(LAZYLEN(loot))
 		loot = string_list(loot)
 		AddElement(/datum/element/death_drops, loot)
@@ -57,17 +57,16 @@
 	//Offset the face to match the Gondola's height.
 	switch(height)
 		if("gondola_body_medium")
-			eyes_overlay.pixel_y = -4
-			moustache_overlay.pixel_y = -4
+			eyes_overlay.pixel_z = -4
+			moustache_overlay.pixel_z = -4
 		if("gondola_body_short")
-			eyes_overlay.pixel_y = -8
-			moustache_overlay.pixel_y = -8
+			eyes_overlay.pixel_z = -8
+			moustache_overlay.pixel_z = -8
 
 	cut_overlays(TRUE)
 	add_overlay(body_overlay)
 	add_overlay(eyes_overlay)
 	add_overlay(moustache_overlay)
-	update_appearance(UPDATE_OVERLAYS)
 
 /datum/ai_controller/basic_controller/gondola
 	blackboard = list(

@@ -297,11 +297,9 @@
 "dv" = (
 /obj/structure/table,
 /obj/item/wrench{
-	pixel_y = 13
+	pixel_y = 4
 	},
-/obj/item/storage/toolbox/emergency{
-	pixel_y = 3
-	},
+/obj/item/storage/toolbox/emergency,
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron/dark/herringbone,
 /area/virtual_domain)
@@ -496,8 +494,8 @@
 /turf/open/floor/wood/large,
 /area/virtual_domain)
 "fY" = (
-/obj/structure/window/reinforced/half/directional/west,
-/obj/structure/window/reinforced/half/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
 /obj/item/binoculars{
 	pixel_y = 20
 	},
@@ -704,8 +702,8 @@
 /turf/open/floor/wood,
 /area/virtual_domain/fullbright)
 "iy" = (
-/obj/structure/window/reinforced/half/directional/east,
-/obj/structure/window/reinforced/half/directional/north,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/north,
 /obj/structure/chair/stool/directional/south,
 /obj/item/clothing/glasses/sunglasses{
 	pixel_y = -2;
@@ -855,10 +853,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/virtual_domain)
-"kI" = (
-/obj/effect/turf_decal/sand,
-/turf/closed/wall/mineral/wood,
 /area/virtual_domain)
 "kJ" = (
 /obj/machinery/shower/directional/south,
@@ -1446,7 +1440,7 @@
 "sI" = (
 /obj/structure/table/bronze,
 /obj/item/clothing/suit/costume/hawaiian{
-	pixel_y = 8;
+	pixel_y = 2;
 	pixel_x = 5
 	},
 /obj/item/clothing/suit/costume/hawaiian{
@@ -1592,7 +1586,7 @@
 /turf/open/floor/iron/white/textured_large,
 /area/virtual_domain)
 "ut" = (
-/obj/structure/window/reinforced/half/directional/east,
+/obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
@@ -2057,7 +2051,7 @@
 "Aq" = (
 /obj/structure/table/wood/poker,
 /obj/item/storage/dice{
-	pixel_y = 5;
+	pixel_y = 3;
 	pixel_x = 5
 	},
 /turf/open/floor/wood/large,
@@ -2185,7 +2179,6 @@
 /obj/structure/closet/crate/bin,
 /obj/item/flashlight/glowstick/yellow,
 /obj/item/trash/candy,
-/obj/structure/sign/poster/official/tactical_game_cards/directional/north,
 /turf/open/floor/eighties,
 /area/virtual_domain)
 "BU" = (
@@ -2195,8 +2188,13 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "BV" = (
+/obj/structure/sign/directions/dorms/directional/north{
+	pixel_y = 35
+	},
+/obj/structure/sign/directions/medical/directional/north{
+	pixel_y = 29
+	},
 /obj/machinery/computer/slot_machine,
-/obj/structure/sign/directions/dorms/north_arrow/directional/north,
 /turf/open/floor/wood/large,
 /area/virtual_domain)
 "BW" = (
@@ -2631,6 +2629,7 @@
 /turf/open/water/beach,
 /area/virtual_domain)
 "HR" = (
+/obj/structure/sign/poster/official/tactical_game_cards/directional/west,
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
 /turf/open/floor/eighties,
 /area/virtual_domain)
@@ -2933,9 +2932,7 @@
 	pixel_x = 8;
 	pixel_y = 9
 	},
-/obj/machinery/cell_charger{
-	pixel_y = 8
-	},
+/obj/machinery/cell_charger,
 /turf/open/floor/iron/dark/diagonal,
 /area/virtual_domain)
 "Lm" = (
@@ -3176,10 +3173,6 @@
 	},
 /turf/open/floor/iron/white/textured_large,
 /area/virtual_domain)
-"NZ" = (
-/obj/effect/turf_decal/sand,
-/turf/closed/wall/mineral/wood,
-/area/virtual_domain/fullbright)
 "Of" = (
 /obj/item/reagent_containers/cup/soda_cans/space_mountain_wind{
 	pixel_x = -17;
@@ -3415,14 +3408,14 @@
 /turf/open/floor/wood/parquet,
 /area/virtual_domain)
 "QX" = (
-/obj/machinery/vending/boozeomat/all_access{
+/obj/machinery/vending/boozeomat{
 	desc = "A technological marvel, supposedly able to mix just the mixture you'd like to drink the moment you ask for one. May not work for bartenders that don't have Nanotrasen bank accounts."
 	},
 /turf/open/floor/wood/large,
 /area/virtual_domain)
 "QY" = (
-/obj/structure/window/reinforced/half/directional/north,
-/obj/structure/window/reinforced/half/directional/west,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/wood,
 /obj/item/storage/medkit/o2{
 	pixel_y = 4;
@@ -3465,9 +3458,7 @@
 /area/virtual_domain/fullbright)
 "Rk" = (
 /obj/structure/table/glass,
-/obj/item/storage/box/donkpockets{
-	pixel_y = 8
-	},
+/obj/item/storage/box/donkpockets,
 /turf/open/floor/iron/dark/diagonal,
 /area/virtual_domain)
 "Rs" = (
@@ -3543,7 +3534,8 @@
 	pixel_y = 6
 	},
 /obj/item/clothing/head/utility/welding{
-	pixel_x = -10
+	pixel_x = -10;
+	pixel_y = -8
 	},
 /turf/open/floor/wood/parquet,
 /area/virtual_domain)
@@ -3718,12 +3710,11 @@
 "TK" = (
 /obj/structure/table/bronze,
 /obj/item/clothing/suit/costume/hawaiian{
-	pixel_y = 8;
+	pixel_y = 1;
 	pixel_x = 7
 	},
 /obj/item/clothing/suit/costume/hawaiian{
-	pixel_x = -14;
-	pixel_y = 8
+	pixel_x = -14
 	},
 /turf/open/floor/wood/parquet,
 /area/virtual_domain/fullbright)
@@ -3749,16 +3740,14 @@
 	dir = 1
 	},
 /obj/item/clothing/mask/breath/medical{
-	pixel_y = 14;
+	pixel_y = 7;
 	pixel_x = -9
 	},
 /obj/item/clothing/mask/breath/medical{
-	pixel_y = 10;
+	pixel_y = 4;
 	pixel_x = 3
 	},
-/obj/item/clothing/gloves/latex{
-	pixel_y = 3
-	},
+/obj/item/clothing/gloves/latex,
 /obj/structure/table/glass,
 /turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
@@ -3811,7 +3800,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/virtual_domain)
 "Uk" = (
-/obj/machinery/vending/autodrobe/all_access,
+/obj/machinery/vending/autodrobe,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "Um" = (
@@ -3904,7 +3893,6 @@
 /area/virtual_domain/fullbright)
 "VI" = (
 /obj/machinery/vending/dinnerware,
-/obj/machinery/light/directional/north,
 /turf/open/floor/wood/large,
 /area/virtual_domain)
 "VK" = (
@@ -4016,8 +4004,8 @@
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
 "Yb" = (
-/obj/structure/sign/directions/medical/right/north_arrow/directional/west,
-/turf/open/floor/wood/large,
+/obj/structure/sign/poster/contraband/pwr_game/directional/west,
+/turf/open/floor/eighties,
 /area/virtual_domain)
 "Yd" = (
 /obj/structure/flora/tree/palm/style_2{
@@ -6382,7 +6370,7 @@ Mb
 JG
 Mb
 dj
-Yb
+Mb
 Mb
 IS
 gN
@@ -6815,7 +6803,7 @@ eK
 UO
 en
 ty
-en
+Yb
 en
 HR
 gi
@@ -7870,9 +7858,9 @@ bX
 ev
 ka
 ka
-NZ
-NZ
-eK
+Bq
+Bq
+Bq
 JN
 JN
 ka
@@ -7952,7 +7940,7 @@ bX
 Yo
 sz
 ka
-NZ
+Bq
 YI
 LD
 JN
@@ -7963,7 +7951,7 @@ ka
 ka
 eK
 eK
-Mb
+pv
 uD
 DT
 Mb
@@ -8034,9 +8022,9 @@ Yo
 Yo
 sz
 ka
-NZ
-kI
-eK
+Bq
+Bq
+Bq
 JN
 JN
 ka
@@ -8116,7 +8104,7 @@ Yo
 ka
 ka
 ka
-NZ
+Bq
 Qk
 Uf
 JN
@@ -8198,9 +8186,9 @@ ka
 th
 ka
 eK
-kI
-kI
-eK
+Bq
+Bq
+Bq
 JN
 JN
 ka
@@ -8280,7 +8268,7 @@ ka
 ka
 ka
 ka
-NZ
+Bq
 ZB
 sa
 JN
@@ -8362,9 +8350,9 @@ ka
 ka
 ka
 ka
-eK
-eK
-eK
+Bq
+Bq
+Bq
 JN
 JN
 ka
@@ -11229,8 +11217,8 @@ cO
 oa
 th
 ka
-NZ
-NZ
+eK
+eK
 eK
 ka
 ka
@@ -11311,7 +11299,7 @@ cO
 wb
 MT
 ka
-NZ
+eK
 EA
 xe
 ka

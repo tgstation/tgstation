@@ -2,7 +2,6 @@
 #define REAGENTS_BASE_VOLUME 100
 
 /obj/machinery/smoke_machine
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "smoke machine"
 	desc = "A machine with a centrifuge installed into it. It produces smoke with any reagents you put into the machine."
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -182,7 +181,7 @@
 
 	var/list/tank_data = list()
 	tank_data["maxVolume"] = reagents.maximum_volume
-	tank_data["currentVolume"] = round(reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
+	tank_data["currentVolume"] = reagents.total_volume
 	var/list/tankContents = list()
 	for(var/datum/reagent/reagent in reagents.reagent_list)
 		tankContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING)))

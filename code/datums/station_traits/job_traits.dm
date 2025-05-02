@@ -41,6 +41,10 @@
 	else
 		LAZYADD(lobby_candidates, user)
 
+/datum/station_trait/job/on_lobby_button_destroyed(atom/movable/screen/lobby/button/sign_up/lobby_button)
+	. = ..()
+	LAZYREMOVE(lobby_candidates, lobby_button.get_mob())
+
 /datum/station_trait/job/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
 	if (LAZYFIND(lobby_candidates, lobby_button.get_mob()))
 		lobby_button.base_icon_state = "signup_on"
@@ -61,7 +65,7 @@
 		if (isnull(signee) || !signee.client || !signee.mind || signee.ready != PLAYER_READY_TO_PLAY)
 			LAZYREMOVE(lobby_candidates, signee)
 
-	var/datum/job/our_job = SSjob.GetJobType(job_to_add)
+	var/datum/job/our_job = SSjob.get_job_type(job_to_add)
 	our_job.total_positions = position_amount
 	our_job.spawn_positions = position_amount
 	while(length(lobby_candidates) && position_amount > 0)
@@ -73,14 +77,14 @@
 	lobby_candidates = null
 
 /datum/station_trait/job/can_display_lobby_button(client/player)
-	var/datum/job/our_job = SSjob.GetJobType(job_to_add)
+	var/datum/job/our_job = SSjob.get_job_type(job_to_add)
 	return our_job.player_old_enough(player) && ..()
 
 /// Adds a gorilla to the cargo department, replacing the sloth and the mech
 /datum/station_trait/job/cargorilla
 	name = "Cargo Gorilla"
 	button_desc = "Sign up to become the Cargo Gorilla, a peaceful shepherd of boxes."
-	weight = 1
+	weight = 0
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
 	can_roll_antag = CAN_ROLL_NEVER
 	job_to_add = /datum/job/cargo_gorilla
@@ -242,6 +246,27 @@
 		else
 			qdel(thing_on_table)
 	new /obj/machinery/fax/auto_name(picked_turf)
+
+/datum/station_trait/job/pun_pun
+	name = "Pun Pun is a Crewmember"
+	button_desc = "Ook ook ah ah, sign up to play as the bartender's monkey."
+	weight = 0 //Unrollable by default, available all day during monkey day.
+	report_message = "We've evaluated the bartender's monkey to have the mental capacity of the average crewmember. As such, we made them one."
+	show_in_report = TRUE
+	can_roll_antag = CAN_ROLL_ALWAYS
+	job_to_add = /datum/job/pun_pun
+
+/datum/station_trait/job/pun_pun/New()
+	. = ..()
+	//Make sure we don't have two Pun Puns if loaded before the start of the round.
+	if(SSticker.HasRoundStarted() || !GLOB.the_one_and_only_punpun)
+		return
+	new /obj/effect/landmark/start/pun_pun(GLOB.the_one_and_only_punpun.loc)
+	qdel(GLOB.the_one_and_only_punpun)
+
+/datum/station_trait/job/pun_pun/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	. = ..()
+	overlays += LAZYFIND(lobby_candidates, lobby_button.get_mob()) ? "pun_pun_on" : "pun_pun_off"
 
 #undef CAN_ROLL_ALWAYS
 #undef CAN_ROLL_PROTECTED

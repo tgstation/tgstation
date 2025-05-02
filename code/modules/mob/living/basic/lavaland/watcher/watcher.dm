@@ -13,6 +13,9 @@
 	speed = 3
 	maxHealth = 160
 	health = 160
+	melee_damage_lower = 15
+	melee_damage_upper = 15
+	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = "buffets"
 	attack_verb_simple = "buffet"
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing
@@ -22,8 +25,6 @@
 		/obj/item/stack/ore/diamond = 2,
 		/obj/item/stack/sheet/sinew = 2,
 	)
-	shadow_type = SHADOW_LARGE
-
 	/// How often can we shoot?
 	var/ranged_cooldown = 3 SECONDS
 	/// What kind of beams we got?
@@ -31,7 +32,7 @@
 	/// Icon state for our eye overlay
 	var/eye_glow = "ice_glow"
 	/// Sound to play when we shoot
-	var/shoot_sound = 'sound/weapons/pierce.ogg'
+	var/shoot_sound = 'sound/items/weapons/pierce.ogg'
 	/// Typepath of our gaze ability
 	var/gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze
 	// We attract and eat these things for some reason

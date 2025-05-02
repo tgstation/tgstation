@@ -9,6 +9,8 @@
 /datum/security_level
 	/// The name of this security level.
 	var/name = "not set"
+	/// A three-letter shortform of the security level.
+	var/name_shortform = "not set"
 	/// The color of our announcement divider.
 	var/announcement_color = "default"
 	/// The numerical level of this security level, see defines for more information.
@@ -48,8 +50,9 @@
  */
 /datum/security_level/green
 	name = "green"
+	name_shortform = "GRN"
 	announcement_color = "green"
-	sound = 'sound/misc/notice2.ogg' // Friendly beep
+	sound = 'sound/announcer/notice/notice2.ogg' // Friendly beep
 	number_level = SEC_LEVEL_GREEN
 	status_display_icon_state = "greenalert"
 	fire_alarm_light_color = LIGHT_COLOR_BLUEGREEN
@@ -63,8 +66,9 @@
  */
 /datum/security_level/blue
 	name = "blue"
+	name_shortform = "BLU"
 	announcement_color = "blue"
-	sound = 'sound/misc/notice1.ogg' // Angry alarm
+	sound = 'sound/announcer/notice/notice1.ogg' // Angry alarm
 	number_level = SEC_LEVEL_BLUE
 	status_display_icon_state = "bluealert"
 	fire_alarm_light_color = LIGHT_COLOR_ELECTRIC_CYAN
@@ -79,8 +83,9 @@
  */
 /datum/security_level/red
 	name = "red"
+	name_shortform = "RED"
 	announcement_color = "red"
-	sound = 'sound/misc/notice3.ogg' // More angry alarm
+	sound = 'sound/announcer/notice/notice3.ogg' // More angry alarm
 	number_level = SEC_LEVEL_RED
 	status_display_icon_state = "redalert"
 	fire_alarm_light_color = LIGHT_COLOR_FLARE
@@ -95,8 +100,9 @@
  */
 /datum/security_level/delta
 	name = "delta"
+	name_shortform = "Δ"
 	announcement_color = "purple"
-	sound = 'sound/misc/airraid.ogg' // Air alarm to signify importance
+	sound = 'sound/announcer/alarm/airraid.ogg' // Air alarm to signify importance
 	number_level = SEC_LEVEL_DELTA
 	status_display_icon_state = "deltaalert"
 	fire_alarm_light_color = LIGHT_COLOR_INTENSE_RED

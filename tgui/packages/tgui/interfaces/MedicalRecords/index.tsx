@@ -1,6 +1,6 @@
 import { useBackend } from 'tgui/backend';
-import { Box, Button, Icon, NoticeBox, Stack } from 'tgui/components';
 import { Window } from 'tgui/layouts';
+import { Box, Button, Icon, NoticeBox, Stack } from 'tgui-core/components';
 
 import { MedicalRecordTabs } from './RecordTabs';
 import { MedicalRecordView } from './RecordView';

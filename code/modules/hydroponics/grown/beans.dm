@@ -53,7 +53,7 @@
 //Now squeezable for imitation carpmeat
 /obj/item/food/grown/koibeans/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] crushes [src] into a slab of carplike meat."), span_notice("You crush [src] into something that resembles a slab of carplike meat."))
-	playsound(user, 'sound/effects/blobattack.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/blob/blobattack.ogg', 50, TRUE)
 	var/obj/item/food/fishmeat/carp/imitation/fishie = new(null)
 	fishie.reagents.set_all_reagents_purity(seed.get_reagent_purity())
 	qdel(src)
@@ -85,7 +85,7 @@
 
 /obj/item/food/grown/butterbeans/attack_self(mob/living/user)
 	user.visible_message(span_notice("[user] crushes [src] into a pat of butter."), span_notice("You crush [src] into something that resembles butter."))
-	playsound(user, 'sound/effects/blobattack.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/blob/blobattack.ogg', 50, TRUE)
 	var/obj/item/food/butterslice/butties = new(null)
 	butties.reagents.set_all_reagents_purity(seed.get_reagent_purity())
 	qdel(src)

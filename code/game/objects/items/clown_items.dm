@@ -14,7 +14,7 @@
 	name = "soap"
 	desc = "A cheap bar of soap. Doesn't smell."
 	gender = PLURAL
-	icon = 'icons/obj/cosmetic.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "soap"
 	inhand_icon_state = "soap"
 	worn_icon_state = "soap"
@@ -161,9 +161,6 @@
 		return CLEAN_BLOCKED
 	return ..()
 
-/obj/item/soap/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/living/user)
-	return !user.combat_mode  // only cleans a storage item if on combat
-
 /*
  * Bike Horns
  */
@@ -212,7 +209,7 @@
 	desc = "Damn son, where'd you find this?"
 	icon_state = "air_horn"
 	worn_icon_state = "horn_air"
-	sound_file = 'sound/items/airhorn2.ogg'
+	sound_file = 'sound/items/airhorn/airhorn2.ogg'
 
 /datum/crafting_recipe/airhorn
 	name = "Air Horn"
@@ -257,7 +254,7 @@
 /obj/item/bikehorn/rubberducky
 	name = "rubber ducky"
 	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~" //thanks doohl
-	icon = 'icons/obj/toys/toy.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "rubberducky"
 	inhand_icon_state = "rubberducky"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'

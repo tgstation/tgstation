@@ -1,5 +1,4 @@
 /obj/machinery/teleport
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "teleport"
 	icon = 'icons/obj/machines/teleporter.dmi'
 	density = TRUE
@@ -34,7 +33,7 @@
 /obj/machinery/teleport/hub/examine(mob/user)
 	. = ..()
 	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Probability of malfunction decreased by <b>[(accuracy*25)-25]%</b>.")
+		. += span_notice("The status display reads: Success chance is <b>[70 + (accuracy * 10)]%</b>.")
 
 /obj/machinery/teleport/hub/proc/link_power_station()
 	if(power_station)

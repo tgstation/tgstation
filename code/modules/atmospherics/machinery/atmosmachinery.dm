@@ -26,22 +26,22 @@
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
 	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
-	var/initialize_directions = 0
+	var/initialize_directions = NONE
 	///The color of the pipe
-	var/pipe_color = COLOR_VERY_LIGHT_GRAY
+	var/pipe_color = ATMOS_COLOR_OMNI
 	///What layer the pipe is in (from 1 to 5, default 3)
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	///The flags of the pipe/component (PIPING_ALL_LAYER | PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY | PIPING_CARDINAL_AUTONORMALIZE)
 	var/pipe_flags = NONE
 
-	///This only works on pipes, because they have 1000 subtypes wich need to be visible and invisible under tiles, so we track this here
+	///This only works on pipes, because they have 1000 subtypes which need to be visible and invisible under tiles, so we track this here
 	var/hide = TRUE
 
 	///The image of the pipe/device used for ventcrawling
 	var/image/pipe_vision_img = null
 
 	///The type of the device (UNARY, BINARY, TRINARY, QUATERNARY)
-	var/device_type = 0
+	var/device_type = NONE
 	///The lists of nodes that a pipe/device has, depends on the device_type var (from 1 to 4)
 	var/list/obj/machinery/atmospherics/nodes
 
@@ -257,8 +257,7 @@
  * Return a list of the nodes that can connect to other machines, get called by atmos_init()
  */
 /obj/machinery/atmospherics/proc/get_node_connects()
-	var/list/node_connects = list()
-	node_connects.len = device_type
+	var/list/node_connects[device_type] //empty list of size device_type
 
 	var/init_directions = get_init_directions()
 	for(var/i in 1 to device_type)
@@ -331,7 +330,7 @@
 	if(isnull(given_layer))
 		given_layer = piping_layer
 
-	// you cant place the machine on the same location as the target cause it blocks
+	// you can't place the machine on the same location as the target cause it blocks
 	if(target.loc == loc)
 		return FALSE
 
@@ -343,7 +342,7 @@
 		return FALSE
 
 	//if the target does not have the same color and it does not have all color connection flag[which allows it to be connected regardless of color] & one of the pipes is not gray[allowing for connection regardless] then we are out
-	if(target.pipe_color != pipe_color && !((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) && target.pipe_color != COLOR_VERY_LIGHT_GRAY && pipe_color != COLOR_VERY_LIGHT_GRAY)
+	if(target.pipe_color != pipe_color && !((target.pipe_flags | pipe_flags) & PIPING_ALL_COLORS) && target.pipe_color != ATMOS_COLOR_OMNI && pipe_color != ATMOS_COLOR_OMNI)
 		return FALSE
 
 	return TRUE
@@ -478,7 +477,7 @@
  * Called by wrench_act() before deconstruct()
  * Arguments:
  * * mob_user - the mob doing the act
- * * pressures - it can be passed on from wrench_act(), it's the pressure difference between the enviroment pressure and the pipe internal pressure
+ * * pressures - it can be passed on from wrench_act(), it's the pressure difference between the environment pressure and the pipe internal pressure
  */
 /obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user, pressures = null)
 	if(!user)
@@ -524,7 +523,7 @@
  * * piping_layer - the piping_layer the device is in, used inside PIPING_LAYER_SHIFT
  * * trinary - if TRUE we also use PIPING_FORWARD_SHIFT on layer 1 and 5 for trinary devices (filters and mixers)
  */
-/obj/machinery/atmospherics/proc/get_pipe_image(iconfile, iconstate, direction, color = COLOR_VERY_LIGHT_GRAY, piping_layer = 3, trinary = FALSE)
+/obj/machinery/atmospherics/proc/get_pipe_image(iconfile, iconstate, direction, color = ATMOS_COLOR_OMNI, piping_layer = 3, trinary = FALSE)
 	var/image/pipe_overlay = image(iconfile, iconstate, dir = direction)
 	pipe_overlay.color = color
 	PIPING_LAYER_SHIFT(pipe_overlay, piping_layer)
@@ -545,7 +544,7 @@
 	SSair.add_to_rebuild_queue(src)
 
 /obj/machinery/atmospherics/update_name()
-	if(!override_naming)
+	if(!override_naming && !HAS_TRAIT(src, TRAIT_WAS_RENAMED))
 		name = "[GLOB.pipe_color_name[pipe_color]] [initial(name)]"
 	return ..()
 
@@ -560,7 +559,7 @@
 		L.ventcrawl_layer = piping_layer
 	return ..()
 
-/obj/machinery/atmospherics/singularity_pull(S, current_size)
+/obj/machinery/atmospherics/singularity_pull(atom/singularity, current_size)
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 	return ..()
@@ -569,7 +568,7 @@
 
 // Handles mob movement inside a pipenet
 /obj/machinery/atmospherics/relaymove(mob/living/user, direction)
-	if(!direction) //cant go this way.
+	if(!direction) //can't go this way.
 		return
 	if(user in buckled_mobs)// fixes buckle ventcrawl edgecase fuck bug
 		return
@@ -614,8 +613,8 @@
 	our_client.set_eye(target_move)
 	// Let's smooth out that movement with an animate yeah?
 	// If the new x is greater (move is left to right) we get a negative offset. vis versa
-	our_client.pixel_x = (x - target_move.x) * world.icon_size
-	our_client.pixel_y = (y - target_move.y) * world.icon_size
+	our_client.pixel_x = (x - target_move.x) * ICON_SIZE_X
+	our_client.pixel_y = (y - target_move.y) * ICON_SIZE_Y
 	animate(our_client, pixel_x = 0, pixel_y = 0, time = 0.05 SECONDS)
 	our_client.move_delay = world.time + 0.05 SECONDS
 
@@ -661,7 +660,7 @@
 			continue
 
 		var/turf/node_turf = get_turf(node)
-		if(isplatingturf(node_turf) || iscatwalkturf(node_turf))
+		if(node_turf.underfloor_accessibility > UNDERFLOOR_HIDDEN)
 			continue
 
 		var/connected_dir = get_dir(src, node)

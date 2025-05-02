@@ -1,12 +1,13 @@
-import { useBackend } from '../backend';
 import {
   Button,
   LabeledList,
   NoticeBox,
   ProgressBar,
   Section,
-} from '../components';
-import { formatEnergy } from '../format';
+} from 'tgui-core/components';
+import { formatEnergy } from 'tgui-core/format';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 export const MechBayPowerConsole = (props) => {

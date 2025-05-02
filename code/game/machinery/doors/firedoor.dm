@@ -1,5 +1,5 @@
-#define CONSTRUCTION_PANEL_OPEN 1 //Maintenance panel is open, still functioning
-#define CONSTRUCTION_NO_CIRCUIT 2 //Circuit board removed, can safely weld apart
+#define CONSTRUCTION_NO_CIRCUIT 1 //Empty frame, can safely weld apart or install circuit
+#define CONSTRUCTION_PANEL_OPEN 2 //Circuit panel exposed for removal or securing
 #define DEFAULT_STEP_TIME 20 /// default time for each step
 #define REACTIVATION_DELAY (3 SECONDS) // Delay on reactivation, used to prevent dumb crowbar things. Just trust me
 
@@ -7,10 +7,7 @@
 	name = "firelock"
 	desc = "Apply crowbar."
 	icon = 'icons/obj/doors/doorfireglass.dmi'
-	icon_state = "door_open_map"
-	dir_mask = "firelock_mask"
-	edge_dir_mask = "shutter"
-	inner_transparent_dirs = EAST|WEST
+	icon_state = "door_open"
 	opacity = FALSE
 	density = FALSE
 	max_integrity = 300
@@ -27,8 +24,6 @@
 
 	COOLDOWN_DECLARE(activation_cooldown)
 
-	///If we split up our sprite into top and bottom parts or not
-	var/use_split_sprites = TRUE
 	///X offset for the overlay lights, so that they line up with the thin border firelocks
 	var/light_xoffset = 0
 	///Y offset for the overlay lights, so that they line up with the thin border firelocks
@@ -64,8 +59,8 @@
 	///Keeps track of if we're playing the alarm sound loop (as only one firelock per group should be). Used during power changes.
 	var/is_playing_alarm = FALSE
 
-	var/knock_sound = 'sound/effects/glassknock.ogg'
-	var/bash_sound = 'sound/effects/glassbash.ogg'
+	var/knock_sound = 'sound/effects/glass/glassknock.ogg'
+	var/bash_sound = 'sound/effects/glass/glassbash.ogg'
 
 
 /datum/armor/door_firedoor
@@ -94,37 +89,9 @@
 
 	RegisterSignal(src, COMSIG_MACHINERY_POWER_RESTORED, PROC_REF(on_power_restore))
 	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, PROC_REF(on_power_loss))
-	AddComponent(/datum/component/conditionally_transparent, \
-		transparent_signals = list(COSMIG_DOOR_OPENING), \
-		opaque_signals = list(COSMIG_DOOR_CLOSING), \
-		start_transparent = !density, \
-		transparency_delay = 0 SECONDS, \
-		in_midpoint_alpha = 215, \
-		transparent_alpha = 64, \
-		opacity_delay = 0 SECONDS, \
-		out_midpoint_alpha = 104, \
-	)
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/door/firedoor/setDir(new_dir)
-	. = ..()
-	update_layering()
-
-/obj/machinery/door/firedoor/proc/update_layering()
-	switch(dir)
-		if(NORTH)
-			layer = BELOW_OPEN_DOOR_LAYER
-			closingLayer = CLOSED_FIREDOOR_LAYER
-		else
-			layer = ABOVE_MOB_LAYER
-			closingLayer = ABOVE_MOB_LAYER
-
-/obj/machinery/door/firedoor/set_init_door_layer()
-	update_layering()
-	if(density)
-		layer = closingLayer
-
-/obj/machinery/door/firedoor/post_machine_initialize(mapload)
+/obj/machinery/door/firedoor/post_machine_initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, PROC_REF(merger_removing))
@@ -134,8 +101,13 @@
 	if(alarm_type) // Fucking subtypes fucking mappers fucking hhhhhhhh
 		start_activation_process(alarm_type)
 
-	if(mapload)
-		auto_align()
+/**
+ * Sets the offset for the warning lights.
+ *
+ * Used for special firelocks with light overlays that don't line up to their sprite.
+ */
+/obj/machinery/door/firedoor/proc/adjust_lights_starting_offset()
+	return
 
 /obj/machinery/door/firedoor/Destroy()
 	remove_from_areas()
@@ -572,22 +544,24 @@
 		correct_state()
 
 /// We check for adjacency when using the primary attack.
-/obj/machinery/door/firedoor/try_to_crowbar(obj/item/acting_object, mob/user)
+/obj/machinery/door/firedoor/try_to_crowbar(obj/item/acting_object, mob/user, forced = FALSE)
 	if(welded || operating)
 		return
 
+	var/atom/crowbar_owner = acting_object?.loc || user // catches mechs and any other non-mob using a crowbar
+
 	if(density)
 		being_held_open = TRUE
-		user.balloon_alert_to_viewers("holding firelock open", "holding firelock open")
+		crowbar_owner.balloon_alert_to_viewers("holding firelock open", "holding firelock open")
 		COOLDOWN_START(src, activation_cooldown, REACTIVATION_DELAY)
 		open()
-		if(QDELETED(user))
+		if(QDELETED(crowbar_owner))
 			being_held_open = FALSE
 			return
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_held_open_adjacency))
-		RegisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(handle_held_open_adjacency))
-		RegisterSignal(user, COMSIG_QDELETING, PROC_REF(handle_held_open_adjacency))
-		handle_held_open_adjacency(user)
+		RegisterSignal(crowbar_owner, COMSIG_MOVABLE_MOVED, PROC_REF(handle_held_open_adjacency))
+		RegisterSignal(crowbar_owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(handle_held_open_adjacency))
+		RegisterSignal(crowbar_owner, COMSIG_QDELETING, PROC_REF(handle_held_open_adjacency))
+		handle_held_open_adjacency(crowbar_owner)
 	else
 		close()
 
@@ -603,19 +577,23 @@
 	else
 		close()
 
-/obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
+/obj/machinery/door/firedoor/proc/handle_held_open_adjacency(atom/crowbar_owner)
 	SIGNAL_HANDLER
 
-	var/mob/living/living_user = user
-	if(!QDELETED(user) && Adjacent(user) && isliving(user) && (living_user.body_position == STANDING_UP))
-		return
+
+	if(!QDELETED(crowbar_owner) && crowbar_owner.CanReach(src))
+		if(!ismob(crowbar_owner))
+			return
+		var/mob/living/mob_user = crowbar_owner
+		if(isliving(mob_user) && (mob_user.body_position == STANDING_UP))
+			return
 	being_held_open = FALSE
 	correct_state()
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(user, COMSIG_LIVING_SET_BODY_POSITION)
-	UnregisterSignal(user, COMSIG_QDELETING)
-	if(user)
-		user.balloon_alert_to_viewers("released firelock", "released firelock")
+	UnregisterSignal(crowbar_owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(crowbar_owner, COMSIG_LIVING_SET_BODY_POSITION)
+	UnregisterSignal(crowbar_owner, COMSIG_QDELETING)
+	if(crowbar_owner)
+		crowbar_owner.balloon_alert_to_viewers("released firelock", "released firelock")
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
@@ -641,60 +619,52 @@
 	if(active)
 		addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 
-/// Returns the base icon state we're currently using
-/obj/machinery/door/firedoor/proc/get_base_state()
-	if(animation)
-		return "[base_icon_state]_[animation]"
-	return "[base_icon_state]_[density ? "closed" : "open"]"
-
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
-	if(use_split_sprites)
-		icon_state = "[get_base_state()]_top"
-	else
-		icon_state = get_base_state()
-
-/obj/machinery/door/firedoor/update_overlays()
-	. = ..()
-
-	if(use_split_sprites)
-		var/working_icon_state = "[get_base_state()]_bottom"
-		. += mutable_appearance(icon, working_icon_state, ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-		. += emissive_blocker(icon, working_icon_state, src, ABOVE_MOB_LAYER)
-
-	if(welded)
-		. += mutable_appearance(icon, density ? "welded_bottom" : "welded_top")
-
-	if(alarm_type && powered() && !ignore_alarms)
-		var/mutable_appearance/hazards
-		hazards = mutable_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]")
-		hazards.pixel_x = light_xoffset
-		hazards.pixel_y = light_yoffset
-		. += hazards
-		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", src, alpha = src.alpha)
-		hazards.pixel_x = light_xoffset
-		hazards.pixel_y = light_yoffset
-		. += hazards
+	switch(animation)
+		if(DOOR_OPENING_ANIMATION)
+			icon_state = "[base_icon_state]_opening"
+		if(DOOR_CLOSING_ANIMATION)
+			icon_state = "[base_icon_state]_closing"
+		if(DOOR_DENY_ANIMATION)
+			icon_state = "[base_icon_state]_deny"
+		else
+			icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
 
 /obj/machinery/door/firedoor/animation_length(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			return 0.9 SECONDS
+			return 1.2 SECONDS
 		if(DOOR_CLOSING_ANIMATION)
-			return 1.1 SECONDS
+			return 1.2 SECONDS
 		if(DOOR_DENY_ANIMATION)
 			return 0.3 SECONDS
 
 /obj/machinery/door/firedoor/animation_segment_delay(animation)
 	switch(animation)
 		if(DOOR_OPENING_PASSABLE)
-			return 0.6 SECONDS
+			return 1.0 SECONDS
 		if(DOOR_OPENING_FINISHED)
-			return 0.9 SECONDS
+			return 1.2 SECONDS
 		if(DOOR_CLOSING_UNPASSABLE)
 			return 0.2 SECONDS
 		if(DOOR_CLOSING_FINISHED)
-			return 1.1 SECONDS
+			return 1.2 SECONDS
+
+/obj/machinery/door/firedoor/update_overlays()
+	. = ..()
+	if(welded)
+		. += density ? "welded" : "welded_open"
+	if(alarm_type && powered() && !ignore_alarms)
+		var/mutable_appearance/hazards
+		hazards = mutable_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]")
+		hazards.pixel_w = light_xoffset
+		hazards.pixel_z = light_yoffset
+		. += hazards
+		hazards = emissive_appearance(icon, "[(obj_flags & EMAGGED) ? "firelock_alarm_type_emag" : alarm_type]", src, alpha = src.alpha)
+		hazards.pixel_w = light_xoffset
+		hazards.pixel_z = light_yoffset
+		. += hazards
 
 /**
  * Corrects the current state of the door, based on its activity.
@@ -739,6 +709,7 @@
 		else
 			unbuilt_lock.constructionStep = CONSTRUCTION_NO_CIRCUIT
 			unbuilt_lock.update_integrity(unbuilt_lock.max_integrity * 0.5)
+		unbuilt_lock.setDir(dir)
 		unbuilt_lock.update_appearance()
 	else
 		new /obj/item/electronics/firelock (targetloc)
@@ -749,20 +720,16 @@
 	register_adjacent_turfs()
 
 /obj/machinery/door/firedoor/closed
-	icon_state = "door_closed_map"
+	icon_state = "door_closed"
 	density = TRUE
 	alarm_type = FIRELOCK_ALARM_TYPE_GENERIC
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
-	icon_state = "door_open"
-	// Disable directional opacity please (we are always transparent)
-	dir_mask = ""
-	edge_dir_mask = ""
 	can_crush = FALSE
 	flags_1 = ON_BORDER_1
 	can_atmos_pass = ATMOS_PASS_PROC
-	use_split_sprites = FALSE
+	assemblytype = /obj/structure/firelock_frame/border_only
 
 /obj/machinery/door/firedoor/border_only/closed
 	icon_state = "door_closed"
@@ -771,35 +738,30 @@
 
 /obj/machinery/door/firedoor/border_only/Initialize(mapload)
 	. = ..()
+	adjust_lights_starting_offset()
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
 	)
 
-	// Needed because render targets seem to shift larger then 32x32 icons down constantly. This is a known side effect that should? be changed by 516
-	pixel_y = 0
-	pixel_z = 12
-	AddElement(/datum/element/render_over_keep_hitbox, 0, /* use_position_layering = */ TRUE, NORTH|WEST|EAST)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/door/firedoor/border_only/animation_length(animation)
-	switch(animation)
-		if(DOOR_OPENING_ANIMATION)
-			return 0.7 SECONDS
-		if(DOOR_CLOSING_ANIMATION)
-			return 0.7 SECONDS
-		if(DOOR_DENY_ANIMATION)
-			return 0.4 SECONDS
+/obj/machinery/door/firedoor/border_only/adjust_lights_starting_offset()
+	light_xoffset = 0
+	light_yoffset = 0
+	switch(dir)
+		if(NORTH)
+			light_yoffset = 2
+		if(SOUTH)
+			light_yoffset = -2
+		if(EAST)
+			light_xoffset = 2
+		if(WEST)
+			light_xoffset = -2
+	update_appearance(UPDATE_ICON)
 
-/obj/machinery/door/firedoor/border_only/animation_segment_delay(animation)
-	switch(animation)
-		if(DOOR_OPENING_PASSABLE)
-			return 0.6 SECONDS
-		if(DOOR_OPENING_FINISHED)
-			return 0.7 SECONDS
-		if(DOOR_CLOSING_UNPASSABLE)
-			return 0.2 SECONDS
-		if(DOOR_CLOSING_FINISHED)
-			return 0.2 SECONDS
+/obj/machinery/door/firedoor/border_only/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
+	. = ..()
+	adjust_lights_starting_offset()
 
 /obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -828,7 +790,7 @@
 
 /obj/machinery/door/firedoor/heavy
 	name = "heavy firelock"
-	icon = 'icons/obj/doors/Doorfire.dmi'
+	icon = 'icons/obj/doors/doorfire.dmi'
 	glass = FALSE
 	explosion_block = 2
 	assemblytype = /obj/structure/firelock_frame/heavy
@@ -843,33 +805,29 @@
 /obj/structure/firelock_frame
 	name = "firelock frame"
 	desc = "A partially completed firelock."
-	icon = 'icons/obj/doors/Doorfire.dmi'
-	icon_state = "frame1_map"
+	icon = 'icons/obj/doors/doorfire.dmi'
+	icon_state = "frame1"
 	base_icon_state = "frame"
 	anchored = FALSE
 	density = TRUE
 	var/constructionStep = CONSTRUCTION_NO_CIRCUIT
 	var/reinforced = 0
+	/// Is this a border_only firelock? Used in several checks during construction
+	var/directional = FALSE
 
 /obj/structure/firelock_frame/examine(mob/user)
 	. = ..()
 	switch(constructionStep)
 		if(CONSTRUCTION_PANEL_OPEN)
 			. += span_notice("It is <i>unbolted</i> from the floor. The circuit could be removed with a <b>crowbar</b>.")
-			if(!reinforced)
+			if(!reinforced && !directional)
 				. += span_notice("It could be reinforced with plasteel.")
 		if(CONSTRUCTION_NO_CIRCUIT)
 			. += span_notice("There are no <i>firelock electronics</i> in the frame. The frame could be <b>welded</b> apart .")
 
 /obj/structure/firelock_frame/update_icon_state()
-	icon_state = "[base_icon_state][constructionStep]_top"
+	icon_state = "[base_icon_state][constructionStep]"
 	return ..()
-
-/obj/structure/firelock_frame/update_overlays()
-	. = ..()
-	var/working_icon_state = "[base_icon_state][constructionStep]_bottom"
-	. += mutable_appearance(icon, working_icon_state, ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-	. += emissive_blocker(icon, working_icon_state, src, ABOVE_MOB_LAYER)
 
 /obj/structure/firelock_frame/attackby(obj/item/attacking_object, mob/user)
 	switch(constructionStep)
@@ -905,11 +863,18 @@
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				if(reinforced)
 					new /obj/machinery/door/firedoor/heavy(get_turf(src))
+				else if(directional)
+					var/obj/machinery/door/firedoor/border_only/new_firedoor = new /obj/machinery/door/firedoor/border_only(get_turf(src))
+					new_firedoor.setDir(dir)
+					new_firedoor.adjust_lights_starting_offset()
 				else
 					new /obj/machinery/door/firedoor(get_turf(src))
 				qdel(src)
 				return
 			if(istype(attacking_object, /obj/item/stack/sheet/plasteel))
+				if(directional)
+					to_chat(user, span_warning("[src] can not be reinforced."))
+					return
 				var/obj/item/stack/sheet/plasteel/plasteel_sheet = attacking_object
 				if(reinforced)
 					to_chat(user, span_warning("[src] is already reinforced."))
@@ -943,6 +908,7 @@
 					span_notice("You insert and secure [attacking_object]."))
 				playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 				constructionStep = CONSTRUCTION_PANEL_OPEN
+				update_appearance()
 				return
 			if(attacking_object.tool_behaviour == TOOL_WELDER)
 				if(!attacking_object.tool_start_check(user, amount=1))
@@ -955,10 +921,10 @@
 						return
 					user.visible_message(span_notice("[user] cuts apart [src]!"), \
 						span_notice("You cut [src] into metal."))
-					var/turf/tagetloc = get_turf(src)
-					new /obj/item/stack/sheet/iron(tagetloc, 3)
+					var/turf/targetloc = get_turf(src)
+					new /obj/item/stack/sheet/iron(targetloc, directional ? 2 : 3)
 					if(reinforced)
-						new /obj/item/stack/sheet/plasteel(tagetloc, 2)
+						new /obj/item/stack/sheet/plasteel(targetloc, 2)
 					qdel(src)
 				return
 			if(istype(attacking_object, /obj/item/electroadaptive_pseudocircuit))
@@ -975,12 +941,12 @@
 /obj/structure/firelock_frame/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_DECONSTRUCT)
 		return list("delay" = 5 SECONDS, "cost" = 16)
-	else if((constructionStep == CONSTRUCTION_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	else if((constructionStep == CONSTRUCTION_NO_CIRCUIT) && (the_rcd.construction_upgrades & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("delay" = 2 SECONDS, "cost" = 1)
 	return FALSE
 
 /obj/structure/firelock_frame/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
-	switch(rcd_data[RCD_DESIGN_MODE])
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
 		if(RCD_UPGRADE_SIMPLE_CIRCUITS)
 			user.balloon_alert(user, "circuit installed")
 			constructionStep = CONSTRUCTION_PANEL_OPEN
@@ -994,6 +960,45 @@
 /obj/structure/firelock_frame/heavy
 	name = "heavy firelock frame"
 	reinforced = TRUE
+
+/obj/structure/firelock_frame/border_only
+	icon = 'icons/obj/doors/edge_Doorfire.dmi'
+	flags_1 = ON_BORDER_1
+	obj_flags = CAN_BE_HIT | IGNORE_DENSITY
+	directional = TRUE
+
+/obj/structure/firelock_frame/border_only/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/simple_rotation, ROTATION_NEEDS_ROOM)
+
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_EXIT = PROC_REF(on_exit),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/obj/structure/firelock_frame/border_only/proc/on_exit(datum/source, atom/movable/leaving, direction)
+	SIGNAL_HANDLER
+
+	if(leaving == src)
+		return // Let's not block ourselves.
+
+	if(!(direction & dir))
+		return
+
+	if (!density)
+		return
+
+	if (leaving.movement_type & (PHASING))
+		return
+
+	if (leaving.move_force >= MOVE_FORCE_EXTREMELY_STRONG)
+		return
+
+	leaving.Bump(src)
+	return COMPONENT_ATOM_BLOCK_EXIT
+
+/obj/structure/firelock_frame/border_only/CanPass(atom/movable/mover, border_dir)
+	return border_dir & dir ? ..() : TRUE
 
 #undef CONSTRUCTION_PANEL_OPEN
 #undef CONSTRUCTION_NO_CIRCUIT

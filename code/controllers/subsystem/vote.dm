@@ -101,24 +101,28 @@ SUBSYSTEM_DEF(vote)
 
 	// stringify the winners to prevent potential unimplemented serialization errors.
 	// Perhaps this can be removed in the future and we assert that vote choices must implement serialization.
-	var/final_winner_string = final_winner && "[final_winner]"
+	var/final_winner_string = (final_winner && "[final_winner]") || "NO WINNER"
 	var/list/winners_string = list()
-	for(var/winner in winners)
-		winners_string += "[winner]"
+
+	if(length(winners))
+		for(var/winner in winners)
+			winners_string += "[winner]"
+	else
+		winners_string = list("NO WINNER")
 
 	var/list/vote_log_data = list(
+		"type" = "[current_vote.type]",
 		"choices" = vote_choice_data,
 		"total" = total_votes,
 		"winners" = winners_string,
 		"final_winner" = final_winner_string,
 	)
-	var/log_string = replacetext(to_display, "\n", "\\n") // 'keep' the newlines, but dont actually print them as newlines
-	log_vote(log_string, vote_log_data)
-	to_chat(world, span_infoplain(vote_font("\n[to_display]")))
+	log_vote("vote finalized", vote_log_data)
+	if(to_display)
+		to_chat(world, span_infoplain(vote_font("[to_display]")))
 
 	// Finally, doing any effects on vote completion
-	if (final_winner) // if no one voted, or the vote cannot be won, final_winner will be null
-		current_vote.finalize_vote(final_winner)
+	current_vote.finalize_vote(final_winner)
 
 /**
  * One selection per person, and the selection with the most votes wins.
@@ -226,9 +230,9 @@ SUBSYSTEM_DEF(vote)
 	var/to_display = current_vote.initiate_vote(vote_initiator_name, duration)
 
 	log_vote(to_display)
-	to_chat(world, span_infoplain(vote_font("\n[span_bold(to_display)]\n\
+	to_chat(world, custom_boxed_message("purple_box center", span_infoplain(vote_font("[span_bold(to_display)]<br>\
 		Type <b>vote</b> or click <a href='byond://winset?command=vote'>here</a> to place your votes.\n\
-		You have [DisplayTimeText(duration)] to vote.")))
+		You have [DisplayTimeText(duration)] to vote."))))
 
 	// And now that it's going, give everyone a voter action
 	for(var/client/new_voter as anything in GLOB.clients)
@@ -236,10 +240,9 @@ SUBSYSTEM_DEF(vote)
 		voting_action.name = "Vote: [current_vote.override_question || current_vote.name]"
 		voting_action.Grant(new_voter.mob)
 
-		new_voter.player_details.player_actions += voting_action
+		new_voter.persistent_client.player_actions += voting_action
 		generated_actions += voting_action
-
-		if(current_vote.vote_sound && (new_voter.prefs.read_preference(/datum/preference/toggle/sound_announcements)))
+		if(current_vote.vote_sound && new_voter.prefs.read_preference(/datum/preference/toggle/sound_announcements))
 			SEND_SOUND(new_voter, sound(current_vote.vote_sound))
 
 	return TRUE
@@ -469,12 +472,12 @@ SUBSYSTEM_DEF(vote)
 
 // We also need to remove our action from the player actions when we're cleaning up.
 /datum/action/vote/Remove(mob/removed_from)
-	if(removed_from.client)
-		removed_from.client?.player_details.player_actions -= src
+	if(removed_from.persistent_client)
+		removed_from.persistent_client.player_actions -= src
 
 	else if(removed_from.ckey)
-		var/datum/player_details/associated_details = GLOB.player_details[removed_from.ckey]
-		associated_details?.player_actions -= src
+		var/datum/persistent_client/persistent_client = GLOB.persistent_clients_by_ckey[removed_from.ckey]
+		persistent_client?.player_actions -= src
 
 	return ..()
 

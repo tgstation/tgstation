@@ -12,7 +12,7 @@
  * Plant Bag
  * Sheet Snatcher
  * Book Bag
- *      Biowaste Bag
+ * Biowaste Bag
  *
  * -Sayu
  */
@@ -119,7 +119,7 @@
 /obj/item/storage/bag/ore
 	name = "mining satchel"
 	desc = "This little bugger can be used to store and transport ores."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "satchel"
 	worn_icon_state = "satchel"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
@@ -155,13 +155,13 @@
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
 
-/obj/item/storage/bag/ore/storage_insert_on_interacted_with(datum/storage, obj/item/inserted, mob/living/user)
-	if(istype(inserted, /obj/item/boulder))
-		to_chat(user, span_warning("You can't fit [inserted] into [src]. \
+/obj/item/storage/bag/ore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/boulder))
+		to_chat(user, span_warning("You can't fit [tool] into [src]. \
 			Perhaps you should break it down first, or find an ore box."))
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
-	return TRUE
+	return NONE
 
 /obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
 	SIGNAL_HANDLER
@@ -278,6 +278,9 @@
 		seedify(plant, 1)
 	return CLICK_ACTION_SUCCESS
 
+/obj/item/storage/bag/plants/cyborg
+	name = "cyborg plant bag"
+
 // -----------------------------
 //        Sheet Snatcher
 // -----------------------------
@@ -286,7 +289,7 @@
 /obj/item/storage/bag/sheetsnatcher
 	name = "sheet snatcher"
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "sheetsnatcher"
 	worn_icon_state = "satchel"
 
@@ -316,6 +319,66 @@
 	name = "sheet snatcher 9000"
 	desc = ""
 	capacity = 500//Borgs get more because >specialization
+
+
+// -----------------------------
+//    Sheet Snatcher (Debug)
+// -----------------------------
+
+/obj/item/storage/bag/sheetsnatcher/debug
+	name = "sheet snatcher EXTREME EDITION"
+	desc = "A Nanotrasen storage system designed which has been given post-market alterations to hold any type of sheet. Comes pre-populated with "
+	color = "#ff3737" // I'm too lazy to make a unique sprite
+	capacity = 5000 // Hopefully enough to fit anything you need
+	w_class = WEIGHT_CLASS_TINY
+
+// Copy-pasted from the former /obj/item/storage/box/material, w/ small additions like rods, cardboard, plastic.
+// "Only 20 uranium 'cause of radiation"
+/obj/item/storage/bag/sheetsnatcher/debug/PopulateContents()
+	// amount should be null if it should spawn with the type's default amount
+	var/static/items_inside = list(
+		/obj/item/stack/sheet/iron/fifty = null,
+		/obj/item/stack/sheet/glass/fifty = null,
+		/obj/item/stack/sheet/rglass/fifty = null,
+		/obj/item/stack/sheet/plasmaglass/fifty = null,
+		/obj/item/stack/sheet/titaniumglass/fifty = null,
+		/obj/item/stack/sheet/plastitaniumglass/fifty = null,
+		/obj/item/stack/sheet/plasteel/fifty = null,
+		/obj/item/stack/sheet/mineral/titanium/fifty = null,
+		/obj/item/stack/sheet/mineral/gold = 50,
+		/obj/item/stack/sheet/mineral/silver = 50,
+		/obj/item/stack/sheet/mineral/plasma = 50,
+		/obj/item/stack/sheet/mineral/uranium = 20,
+		/obj/item/stack/sheet/mineral/diamond = 50,
+		/obj/item/stack/sheet/bluespace_crystal = 50,
+		/obj/item/stack/sheet/mineral/bananium = 50,
+		/obj/item/stack/sheet/mineral/wood/fifty = null,
+		/obj/item/stack/sheet/plastic/fifty = null,
+		/obj/item/stack/sheet/runed_metal/fifty = null,
+		/obj/item/stack/rods/fifty = null,
+		/obj/item/stack/sheet/mineral/plastitanium = 50,
+		/obj/item/stack/sheet/mineral/abductor = 50,
+		/obj/item/stack/sheet/cardboard/fifty = null,
+	)
+	//This needs to be done here and not in Initialize() because the stacks get merged and fall out when their weight updates if this is set after PopulateContents()
+	atom_storage.allow_big_nesting = TRUE
+	atom_storage.max_slots = 99
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
+	atom_storage.max_total_storage = capacity
+	for(var/obj/item/stack/stack_type as anything in items_inside)
+		var/amt = items_inside[stack_type]
+		new stack_type(src, amt, FALSE)
+
+/obj/item/storage/bag/sheetsnatcher/debug/Initialize(mapload)
+	. = ..()
+	// Overrides so it can hold all possible sheets
+	atom_storage.set_holdable(
+		can_hold_list = list(
+			/obj/item/stack/sheet,
+			/obj/item/stack/sheet/mineral/sandstone,
+			/obj/item/stack/sheet/mineral/wood,
+		)
+	)
 
 // -----------------------------
 //           Book bag
@@ -396,9 +459,9 @@
 		do_scatter(tray_item)
 
 	if(prob(50))
-		playsound(M, 'sound/items/trayhit1.ogg', 50, TRUE)
+		playsound(M, 'sound/items/trayhit/trayhit1.ogg', 50, TRUE)
 	else
-		playsound(M, 'sound/items/trayhit2.ogg', 50, TRUE)
+		playsound(M, 'sound/items/trayhit/trayhit2.ogg', 50, TRUE)
 
 	if(ishuman(M))
 		if(prob(10))
@@ -464,7 +527,7 @@
 		/obj/item/reagent_containers/cup/bottle,
 		/obj/item/reagent_containers/cup/tube,
 		/obj/item/reagent_containers/medigel,
-		/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/applicator,
 		/obj/item/reagent_containers/syringe,
 	))
 
@@ -575,13 +638,13 @@
 		new /obj/item/ammo_casing/harpoon(src)
 
 /obj/item/storage/bag/rebar_quiver
-	name = "Rebar Storage Quiver"
+	name = "rebar quiver"
 	icon = 'icons/obj/weapons/bows/quivers.dmi'
 	icon_state = "rebar_quiver"
 	worn_icon_state = "rebar_quiver"
 	inhand_icon_state = "rebar_quiver"
 	desc = "A oxygen tank cut in half, used for holding sharpened rods for the rebar crossbow."
-	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE|ITEM_SLOT_NECK
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/rebar_quiver/Initialize(mapload)
@@ -597,5 +660,61 @@
 		/obj/item/ammo_casing/rebar/zaukerite,
 		/obj/item/ammo_casing/rebar/paperball,
 		))
+
+/obj/item/storage/bag/rebar_quiver/syndicate
+	icon_state = "syndie_quiver_0"
+	worn_icon_state = "syndie_quiver_0"
+	inhand_icon_state = "holyquiver"
+	desc = "A specialized quiver meant to hold any kind of bolts intended for use with the rebar crossbow. \
+		Clearly a better design than a cut up oxygen tank..."
+	slot_flags = ITEM_SLOT_NECK
+	w_class = WEIGHT_CLASS_NORMAL
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	actions_types = list(/datum/action/item_action/reload_rebar)
+	action_slots = ALL
+
+/obj/item/storage/bag/rebar_quiver/syndicate/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 20
+	atom_storage.max_total_storage = 20
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/item/storage/bag/rebar_quiver/syndicate/PopulateContents()
+	for(var/to_fill in 1 to 20)
+		new /obj/item/ammo_casing/rebar/syndie(src)
+
+/obj/item/storage/bag/rebar_quiver/syndicate/update_icon_state()
+	. = ..()
+	switch(contents.len)
+		if(0)
+			icon_state = "syndie_quiver_0"
+		if(1 to 7)
+			icon_state = "syndie_quiver_1"
+		if(8 to 13)
+			icon_state = "syndie_quiver_2"
+		if(14 to 20)
+			icon_state = "syndie_quiver_3"
+
+/obj/item/storage/bag/rebar_quiver/syndicate/ui_action_click(mob/user, actiontype)
+	if(istype(actiontype, /datum/action/item_action/reload_rebar))
+		reload_held_rebar(user)
+
+/obj/item/storage/bag/rebar_quiver/syndicate/proc/reload_held_rebar(mob/user)
+	if(!contents.len)
+		user.balloon_alert(user, "no bolts left!")
+		return
+	var/obj/held_item = user.get_active_held_item()
+	if(!held_item || !istype(held_item, /obj/item/gun/ballistic/rifle/rebarxbow))
+		user.balloon_alert(user, "no held crossbow!")
+		return
+	var/obj/item/gun/ballistic/rifle/rebarxbow/held_crossbow = held_item
+	if(held_crossbow.magazine.contents.len >= held_crossbow.magazine.max_ammo)
+		user.balloon_alert(user, "no more room!")
+		return
+	if(!do_after(user, 1.2 SECONDS, user))
+		return
+
+	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
+	held_crossbow.attackby(ammo_to_load, user)
 
 #undef ORE_BAG_BALOON_COOLDOWN

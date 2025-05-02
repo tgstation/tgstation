@@ -14,6 +14,8 @@
 #define COMSIG_PREQDELETED "parent_preqdeleted"
 /// just before a datum's Destroy() is called: (force), at this point none of the other components chose to interrupt qdel and Destroy will be called
 #define COMSIG_QDELETING "parent_qdeleting"
+/// Called whenever an admin manually deletes an object, via the "Delete" verb, before qdel() is called: (client/deleting_admin)
+#define COMSIG_ADMIN_DELETING "parent_admin_deleting"
 /// generic topic handler (usr, href_list)
 #define COMSIG_TOPIC "handle_topic"
 /// handler for vv_do_topic (usr, href_list)
@@ -24,7 +26,7 @@
 
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"
-/// fires on the target datum when an element is attached to it  (/datum/element)
+/// fires on the target datum when an element is detached from it (/datum/element)
 #define COMSIG_ELEMENT_DETACH "element_detach"
 
 // Merger datum signals
@@ -48,3 +50,6 @@
 
 ///from /datum/component/on_hit_effect/send_signal(): (user, target, hit_zone)
 #define COMSIG_ON_HIT_EFFECT "comsig_on_hit_effect"
+
+///from /datum/component/bubble_icon_override/get_bubble_icon(): (list/holder)
+#define COMSIG_GET_BUBBLE_ICON "get_bubble_icon"

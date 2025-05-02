@@ -61,9 +61,9 @@
 				if(bodypart_to_attach.check_for_frankenstein(target))
 					organ_rejection_dam = 30
 
-			if(!bodypart_to_attach.can_attach_limb(target))
-				target.balloon_alert(user, "that doesn't go on the [target.parse_zone_with_bodypart(target_zone)]!")
-				return SURGERY_STEP_FAIL
+		if(!bodypart_to_attach.can_attach_limb(target))
+			target.balloon_alert(user, "that doesn't go on the [target.parse_zone_with_bodypart(target_zone)]!")
+			return SURGERY_STEP_FAIL
 
 		if(target_zone == bodypart_to_attach.body_zone) //so we can't replace a leg with an arm, or a human arm with a monkey arm.
 			display_results(
@@ -134,4 +134,3 @@
 			var/obj/item/melee/arm_blade/new_arm = new(target,TRUE,TRUE)
 			target_zone == BODY_ZONE_R_ARM ? target.put_in_r_hand(new_arm) : target.put_in_l_hand(new_arm)
 			return
-	return ..() //if for some reason we fail everything we'll print out some text okay?

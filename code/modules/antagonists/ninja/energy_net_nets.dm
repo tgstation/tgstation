@@ -15,6 +15,7 @@
 	density = TRUE //Can't pass through.
 	anchored = TRUE //Can't drag/grab the net.
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	max_integrity = 60 //How much health it has.
 	can_buckle = TRUE
 	buckle_lying = 0
@@ -29,7 +30,7 @@
 
 /obj/structure/energy_net/play_attack_sound(damage, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BRUTE || damage_type == BURN)
-		playsound(src, 'sound/weapons/slash.ogg', 80, TRUE)
+		playsound(src, 'sound/items/weapons/slash.ogg', 80, TRUE)
 
 /obj/structure/energy_net/atom_destruction(damage_flag)
 	for(var/mob/recovered_mob as anything in buckled_mobs)

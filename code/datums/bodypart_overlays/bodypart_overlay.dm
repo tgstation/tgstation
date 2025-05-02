@@ -69,11 +69,11 @@
 			return -BODY_FRONT_LAYER
 
 ///Check whether we can draw the overlays. You generally don't want lizard snouts to draw over an EVA suit
-/datum/bodypart_overlay/proc/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/proc/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
 	return TRUE
 
 ///Colorizes the limb it's inserted to, if required.
-/datum/bodypart_overlay/proc/override_color(rgb_value)
+/datum/bodypart_overlay/proc/override_color(obj/item/bodypart/bodypart_owner)
 	CRASH("External organ color set to override with no override proc.")
 
 ///Generate a unique identifier to cache with. If you change something about the image, but the icon cache stays the same, it'll simply pull the unchanged image out of the cache

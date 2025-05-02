@@ -22,7 +22,7 @@
 	result = /obj/item/toy/plush/moth
 	reqs = list(
 		/obj/item/stack/sheet/animalhide/mothroach = 1,
-		/obj/item/organ/internal/heart = 1,
+		/obj/item/organ/heart = 1,
 		/obj/item/stack/sheet/cloth = 3,
 	)
 	category = CAT_ENTERTAINMENT
@@ -248,7 +248,7 @@
 		/obj/item/clothing/gloves/latex = 1,
 		/obj/item/stack/cable_coil = 2,
 	)
-	category = CAT_EQUIPMENT
+	category = CAT_ENTERTAINMENT
 
 /datum/crafting_recipe/violin
 	name = "Violin"

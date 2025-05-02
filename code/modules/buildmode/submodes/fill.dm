@@ -7,7 +7,7 @@
 	var/atom/objholder = null
 
 /datum/buildmode_mode/fill/show_help(client/builder)
-	to_chat(builder, span_purple(examine_block(
+	to_chat(builder, span_purple(boxed_message(
 		"[span_bold("Select corner")] -> Left Mouse Button on turf/obj/mob\n\
 		[span_bold("Delete region")] -> Left Mouse Button + Alt on turf/obj/mob\n\
 		[span_bold("Select object type")] -> Right Mouse Button on buildmode button"))
@@ -66,7 +66,7 @@
 					T = T.ChangeTurf(objholder)
 					T.setDir(BM.build_dir)
 				else if(ispath(objholder, /obj/effect/turf_decal))
-					T.AddElement(/datum/element/decal, initial(objholder.icon), initial(objholder.icon_state), BM.build_dir, null, null, initial(objholder.alpha), initial(objholder.color), null, null, null, FALSE, null)
+					T.AddElement(/datum/element/decal, initial(objholder.icon), initial(objholder.icon_state), BM.build_dir, null, null, initial(objholder.alpha), initial(objholder.color), null, FALSE, null)
 				else
 					var/obj/A = new objholder(T)
 					A.setDir(BM.build_dir)

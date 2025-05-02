@@ -7,7 +7,7 @@
 	button_icon_state = "moon_parade"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/moon_target.dmi'
 
-	sound = 'sound/magic/cosmic_energy.ogg'
+	sound = 'sound/effects/magic/cosmic_energy.ogg'
 	school = SCHOOL_FORBIDDEN
 	cooldown_time = 30 SECONDS
 
@@ -26,12 +26,11 @@
 	icon_state = "lunar_parade"
 	damage = 0
 	damage_type = BURN
-	speed = 1
+	speed = 0.2
 	range = 75
 	ricochets_max = 40
 	ricochet_chance = 500
 	ricochet_incidence_leeway = 0
-	pixel_speed_multiplier = 0.2
 	projectile_piercing = PASSMOB|PASSVEHICLE
 	///looping sound datum for our projectile.
 	var/datum/looping_sound/moon_parade/soundloop
@@ -64,7 +63,7 @@
 		return PROJECTILE_PIERCE_PHASE
 
 	// Anti-magic destroys the projectile for consistency and counterplay
-	if(victim.can_block_magic(MAGIC_RESISTANCE))
+	if(victim.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
 		visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 		return PROJECTILE_DELETE_WITHOUT_HITTING
 
@@ -86,7 +85,7 @@
 
 	victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 	victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, name)
-	victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
+	victim.mob_mood.adjust_sanity(-20)
 
 /obj/projectile/moon_parade/Destroy()
 	for(var/mob/living/leftover_mob as anything in mobs_hit)

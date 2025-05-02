@@ -33,7 +33,7 @@
 
 	human_holder.blood_volume = max(min_blood, human_holder.blood_volume - human_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick)
 
-/datum/quirk/blooddeficiency/proc/update_mail(datum/source, datum/species/new_species, datum/species/old_species)
+/datum/quirk/blooddeficiency/proc/update_mail(datum/source, datum/species/new_species, datum/species/old_species, pref_load, regenerate_icons)
 	SIGNAL_HANDLER
 
 	mail_goodies.Cut()

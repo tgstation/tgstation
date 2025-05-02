@@ -8,8 +8,10 @@ SUBSYSTEM_DEF(ai_controllers)
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	///type of status we are interested in running
 	var/planning_status = AI_STATUS_ON
-	/// The tick cost of all active AI, calculated on fire.
+	/// The average tick cost of all active AI, calculated on fire.
 	var/our_cost
+	/// The tick cost of all currently processed AI, being summed together
+	var/summing_cost
 
 /datum/controller/subsystem/ai_controllers/Initialize()
 	setup_subtrees()
@@ -21,18 +23,25 @@ SUBSYSTEM_DEF(ai_controllers)
 	return ..()
 
 /datum/controller/subsystem/ai_controllers/fire(resumed)
+	if(!resumed)
+		summing_cost = 0
 	var/timer = TICK_USAGE_REAL
 	for(var/datum/ai_controller/ai_controller as anything in GLOB.ai_controllers_by_status[planning_status])
-		if(!COOLDOWN_FINISHED(ai_controller, failed_planning_cooldown))
-			continue
-
-		if(!ai_controller.able_to_plan())
+		if(!ai_controller.able_to_plan)
 			continue
 		ai_controller.SelectBehaviors(wait * 0.1)
-		if(!LAZYLEN(ai_controller.current_behaviors)) //Still no plan
-			COOLDOWN_START(ai_controller, failed_planning_cooldown, AI_FAILED_PLANNING_COOLDOWN)
 
-	our_cost = MC_AVERAGE(our_cost, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		if(!length(ai_controller.current_behaviors)) //Still no plan
+			ai_controller.planning_failed()
+
+		if(MC_TICK_CHECK)
+			break
+
+	summing_cost += TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer)
+	if(MC_TICK_CHECK)
+		return
+
+	our_cost = MC_AVERAGE(our_cost, summing_cost)
 
 ///Creates all instances of ai_subtrees and assigns them to the ai_subtrees list.
 /datum/controller/subsystem/ai_controllers/proc/setup_subtrees()

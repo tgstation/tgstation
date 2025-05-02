@@ -20,6 +20,11 @@
 	//holosign image that is projected
 	var/holosign_type = /obj/structure/holosign/wetsign
 	var/holocreator_busy = FALSE //to prevent placing multiple holo barriers at once
+	/// List of special things we can project holofans under/through.
+	var/list/projectable_through = list(
+		/obj/machinery/door,
+		/obj/structure/mineral_door,
+	)
 
 /obj/item/holosign_creator/Initialize(mapload)
 	. = ..()
@@ -35,6 +40,11 @@
 		return
 	. += span_notice("It is currently maintaining <b>[signs.len]/[max_signs]</b> projections.")
 
+/obj/item/holosign_creator/check_allowed_items(atom/target, not_inside, target_self)
+	if(HAS_TRAIT(target, TRAIT_COMBAT_MODE_SKIP_INTERACTION))
+		return FALSE
+	return ..()
+
 /obj/item/holosign_creator/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!check_allowed_items(interacting_with, not_inside = TRUE))
 		return NONE
@@ -44,7 +54,7 @@
 
 	if(target_holosign)
 		return ITEM_INTERACT_BLOCKING
-	if(target_turf.is_blocked_turf(TRUE)) //can't put holograms on a tile that has dense stuff
+	if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //can't put holograms on a tile that has dense stuff
 		return ITEM_INTERACT_BLOCKING
 	if(holocreator_busy)
 		balloon_alert(user, "busy making a hologram!")
@@ -63,7 +73,7 @@
 		holocreator_busy = FALSE
 		if(LAZYLEN(signs) >= max_signs)
 			return ITEM_INTERACT_BLOCKING
-		if(target_turf.is_blocked_turf(TRUE)) //don't try to sneak dense stuff on our tile during the wait.
+		if(target_turf.is_blocked_turf(TRUE, ignore_atoms = projectable_through, type_list = TRUE)) //don't try to sneak dense stuff on our tile during the wait.
 			return ITEM_INTERACT_BLOCKING
 
 	target_holosign = create_holosign(interacting_with, user)
@@ -130,6 +140,12 @@
 	holosign_type = /obj/structure/holosign/barrier/atmos
 	creation_time = 0
 	max_signs = 6
+	projectable_through = list(
+		/obj/machinery/door,
+		/obj/structure/mineral_door,
+		/obj/structure/window,
+		/obj/structure/grille,
+	)
 	/// Clearview holograms don't catch clicks and are more transparent
 	var/clearview = FALSE
 	/// Timer for auto-turning off clearview

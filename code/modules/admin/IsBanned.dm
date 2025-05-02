@@ -214,7 +214,7 @@
 
 		if (ban["fromdb"])
 			if(SSdbcore.Connect())
-				INVOKE_ASYNC(SSdbcore, /datum/controller/subsystem/dbcore/proc.QuerySelect, list(
+				INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore, QuerySelect), list(
 					SSdbcore.NewQuery(
 						"INSERT INTO [format_table_name("stickyban_matched_ckey")] (matched_ckey, stickyban) VALUES (:ckey, :bannedckey) ON DUPLICATE KEY UPDATE last_matched = now()",
 						list("ckey" = ckey, "bannedckey" = bannedckey)

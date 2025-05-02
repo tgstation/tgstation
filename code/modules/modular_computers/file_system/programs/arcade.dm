@@ -37,32 +37,32 @@
 	heads_up = "Are you a bad enough dude to grief the station?"
 	boss_name = "George Melon"
 
-/datum/computer_file/program/arcade/proc/game_check(mob/user)
+/datum/computer_file/program/arcade/proc/game_check(mob/living/user)
 	sleep(0.5 SECONDS)
 	user?.mind?.adjust_experience(/datum/skill/gaming, 1)
 	if(boss_hp <= 0)
 		heads_up = "You have crushed [boss_name]! Rejoice!"
-		playsound(computer.loc, 'sound/arcade/win.ogg', 50)
+		playsound(computer.loc, 'sound/machines/arcade/win.ogg', 50)
 		game_active = FALSE
 		program_open_overlay = "arcade_off"
 		if(istype(computer))
 			computer.update_appearance()
 		ticket_count += 1
 		user?.mind?.adjust_experience(/datum/skill/gaming, 50)
-		usr.won_game()
+		user.won_game()
 		sleep(1 SECONDS)
 	else if(player_hp <= 0 || player_mp <= 0)
 		heads_up = "You have been defeated... how will the station survive?"
-		playsound(computer.loc, 'sound/arcade/lose.ogg', 50)
+		playsound(computer.loc, 'sound/machines/arcade/lose.ogg', 50)
 		game_active = FALSE
 		program_open_overlay = "arcade_off"
 		if(istype(computer))
 			computer.update_appearance()
 		user?.mind?.adjust_experience(/datum/skill/gaming, 10)
-		usr.lost_game()
+		user.lost_game()
 		sleep(1 SECONDS)
 
-/datum/computer_file/program/arcade/proc/enemy_check(mob/user)
+/datum/computer_file/program/arcade/proc/enemy_check(mob/living/user)
 	var/boss_attackamt = 0 //Spam protection from boss attacks as well.
 	var/boss_mpamt = 0
 	var/bossheal = 0
@@ -74,21 +74,21 @@
 		return
 	if (boss_mp <= 5)
 		heads_up = "[boss_mpamt] magic power has been stolen from you!"
-		playsound(computer.loc, 'sound/arcade/steal.ogg', 50, TRUE)
+		playsound(computer.loc, 'sound/machines/arcade/steal.ogg', 50, TRUE)
 		player_mp -= boss_mpamt
 		boss_mp += boss_mpamt
 	else if(boss_mp > 5 && boss_hp <12)
 		heads_up = "[boss_name] heals for [bossheal] health!"
-		playsound(computer.loc, 'sound/arcade/heal.ogg', 50, TRUE)
+		playsound(computer.loc, 'sound/machines/arcade/heal.ogg', 50, TRUE)
 		boss_hp += bossheal
 		boss_mp -= boss_mpamt
 	else
 		heads_up = "[boss_name] attacks you for [boss_attackamt] damage!"
-		playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE)
+		playsound(computer.loc, 'sound/machines/arcade/hit.ogg', 50, TRUE)
 		player_hp -= boss_attackamt
 
 	pause_state = FALSE
-	game_check()
+	game_check(user)
 
 /datum/computer_file/program/arcade/ui_assets(mob/user)
 	return list(
@@ -109,12 +109,15 @@
 
 /datum/computer_file/program/arcade/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	usr.played_game()
+	var/mob/living/gamer = ui.user
+	if (!istype(gamer))
+		return
+	gamer.played_game()
 	var/gamerSkillLevel = 0
 	var/gamerSkill = 0
-	if(usr?.mind)
-		gamerSkillLevel = usr.mind.get_skill_level(/datum/skill/gaming)
-		gamerSkill = usr.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+	if(gamer?.mind)
+		gamerSkillLevel = gamer.mind.get_skill_level(/datum/skill/gaming)
+		gamerSkill = gamer.mind.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 	switch(action)
 		if("Attack")
 			var/attackamt = 0 //Spam prevention.
@@ -122,11 +125,11 @@
 				attackamt = rand(2,6) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You attack for [attackamt] damage."
-			playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE)
+			playsound(computer.loc, 'sound/machines/arcade/hit.ogg', 50, TRUE)
 			boss_hp -= attackamt
 			sleep(1 SECONDS)
-			game_check()
-			enemy_check()
+			game_check(gamer)
+			enemy_check(gamer)
 			return TRUE
 		if("Heal")
 			var/healamt = 0 //More Spam Prevention.
@@ -139,12 +142,12 @@
 				healcost = rand(1, maxPointCost)
 			pause_state = TRUE
 			heads_up = "You heal for [healamt] damage."
-			playsound(computer.loc, 'sound/arcade/heal.ogg', 50, TRUE)
+			playsound(computer.loc, 'sound/machines/arcade/heal.ogg', 50, TRUE)
 			player_hp += healamt
 			player_mp -= healcost
 			sleep(1 SECONDS)
-			game_check()
-			enemy_check()
+			game_check(gamer)
+			enemy_check(gamer)
 			return TRUE
 		if("Recharge_Power")
 			var/rechargeamt = 0 //As above.
@@ -152,25 +155,25 @@
 				rechargeamt = rand(4,7) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You regain [rechargeamt] magic power."
-			playsound(computer.loc, 'sound/arcade/mana.ogg', 50, TRUE)
+			playsound(computer.loc, 'sound/machines/arcade/mana.ogg', 50, TRUE)
 			player_mp += rechargeamt
 			sleep(1 SECONDS)
-			game_check()
-			enemy_check()
+			game_check(gamer)
+			enemy_check(gamer)
 			return TRUE
 		if("Dispense_Tickets")
 			if(computer.stored_paper <= 0)
-				to_chat(usr, span_notice("Printer is out of paper."))
+				to_chat(gamer, span_notice("Printer is out of paper."))
 				return
 			else
 				computer.visible_message(span_notice("\The [computer] prints out paper."))
 				if(ticket_count >= 1)
 					new /obj/item/stack/arcadeticket((get_turf(computer)), 1)
-					to_chat(usr, span_notice("[computer] dispenses a ticket!"))
+					to_chat(gamer, span_notice("[computer] dispenses a ticket!"))
 					ticket_count -= 1
 					computer.stored_paper -= 1
 				else
-					to_chat(usr, span_notice("You don't have any stored tickets!"))
+					to_chat(gamer, span_notice("You don't have any stored tickets!"))
 				return TRUE
 		if("Start_Game")
 			game_active = TRUE

@@ -1,6 +1,6 @@
 #define CREDIT_ROLL_SPEED 125
 #define CREDIT_SPAWN_SPEED 10
-#define CREDIT_ANIMATE_HEIGHT (14 * world.icon_size)
+#define CREDIT_ANIMATE_HEIGHT (14 * ICON_SIZE_Y)
 #define CREDIT_EASE_DURATION 22
 #define CREDITS_PATH "[global.config.directory]/contributors.dmi"
 
@@ -45,9 +45,9 @@
 	parent = P
 	icon_state = credited
 	maptext = MAPTEXT_PIXELLARI(credited)
-	maptext_x = world.icon_size + 8
-	maptext_y = (world.icon_size / 2) - 4
-	maptext_width = world.icon_size * 3
+	maptext_x = ICON_SIZE_X + 8
+	maptext_y = (ICON_SIZE_Y / 2) - 4
+	maptext_width = ICON_SIZE_X * 3
 	var/matrix/M = matrix(transform)
 	M.Translate(0, CREDIT_ANIMATE_HEIGHT)
 	animate(src, transform = M, time = CREDIT_ROLL_SPEED)

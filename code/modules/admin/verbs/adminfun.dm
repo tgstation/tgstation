@@ -76,6 +76,18 @@ ADMIN_VERB(gib_self, R_ADMIN, "Gibself", "Give yourself the same treatment you g
 	if (istype(ourself))
 		ourself.gib()
 
+ADMIN_VERB(dust_self, R_ADMIN, "Dustself", "Give yourself the same treatment you give others.", ADMIN_CATEGORY_FUN)
+	var/confirm = tgui_alert(user, "You sure?", "Confirm", list("Yes", "No"))
+	if(confirm != "Yes")
+		return
+	log_admin("[key_name(user)] used dustself.")
+	message_admins(span_adminnotice("[key_name_admin(user)] used dustself."))
+	BLACKBOX_LOG_ADMIN_VERB("Dust Self")
+
+	var/mob/living/ourself = user.mob
+	if (istype(ourself))
+		ourself.dust(just_ash = FALSE, drop_items = FALSE, force = TRUE)
+
 ADMIN_VERB(everyone_random, R_SERVER, "Make Everyone Random", "Make everyone have a random appearance.", ADMIN_CATEGORY_FUN)
 	if(SSticker.HasRoundStarted())
 		to_chat(user, "Nope you can't do this, the game's already started. This only works before rounds!", confidential = TRUE)
@@ -110,7 +122,7 @@ ADMIN_VERB(mass_zombie_infection, R_ADMIN, "Mass Zombie Infection", "Infects all
 
 	for(var/i in GLOB.human_list)
 		var/mob/living/carbon/human/H = i
-		new /obj/item/organ/internal/zombie_infection/nodamage(H)
+		new /obj/item/organ/zombie_infection/nodamage(H)
 
 	message_admins("[key_name_admin(user)] added a latent zombie infection to all humans.")
 	log_admin("[key_name(user)] added a latent zombie infection to all humans.")
@@ -121,7 +133,7 @@ ADMIN_VERB(mass_zombie_cure, R_ADMIN, "Mass Zombie Cure", "Removes the zombie in
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/organ/internal/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
+	for(var/obj/item/organ/zombie_infection/nodamage/I in GLOB.zombie_infection_list)
 		qdel(I)
 
 	message_admins("[key_name_admin(user)] cured all zombies.")
@@ -147,7 +159,7 @@ ADMIN_VERB(polymorph_all, R_ADMIN, "Polymorph All", "Applies the effects of the 
 			continue
 
 		M.audible_message(span_hear("...wabbajack...wabbajack..."))
-		playsound(M.loc, 'sound/magic/staff_change.ogg', 50, TRUE, -1)
+		playsound(M.loc, 'sound/effects/magic/staff_change.ogg', 50, TRUE, -1)
 
 		M.wabbajack()
 
@@ -164,11 +176,15 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player
 	var/configuration_success = smite.configure(user)
 	if (configuration_success == FALSE)
 		return
-	smite.effect(user, target)
+	smite.do_effect(user, target)
 
 /// "Turns" people into objects. Really, we just add them to the contents of the item.
-/proc/objectify(atom/movable/target, path)
-	var/atom/tomb = new path(get_turf(target))
+/proc/objectify(atom/movable/target, path_or_instance)
+	var/atom/tomb
+	if(ispath(path_or_instance))
+		tomb = new path_or_instance(get_turf(target))
+	else
+		tomb = path_or_instance
 	target.forceMove(tomb)
 	target.AddComponent(/datum/component/itembound, tomb)
 
@@ -187,14 +203,14 @@ ADMIN_VERB_AND_CONTEXT_MENU(admin_smite, R_ADMIN|R_FUN, "Smite", "Smite a player
 /proc/firing_squad(mob/living/carbon/target, turf/source_turf, body_zone, wound_bonus, damage)
 	if(!target.get_bodypart(body_zone))
 		return
-	playsound(target, 'sound/weapons/gun/revolver/shot.ogg', 100)
+	playsound(target, 'sound/items/weapons/gun/revolver/shot.ogg', 100)
 	var/obj/projectile/bullet/smite/divine_wrath = new(source_turf)
 	divine_wrath.damage = damage
 	divine_wrath.wound_bonus = wound_bonus
 	divine_wrath.original = target
 	divine_wrath.def_zone = body_zone
 	divine_wrath.spread = 0
-	divine_wrath.preparePixelProjectile(target, source_turf)
+	divine_wrath.aim_projectile(target, source_turf)
 	divine_wrath.fire()
 
 /client/proc/punish_log(whom, punishment)

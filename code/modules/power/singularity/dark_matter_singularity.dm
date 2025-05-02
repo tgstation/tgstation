@@ -8,18 +8,22 @@
 		a cosmic paradox that defies all logic. I can't \
 		take my eyes off it, even though I know it could \
 		devour us all in an instant.\
-		\"</i><br>- Chief Engineer Miles O'Brien"
+		\"</i><br>- Chief Engineer Tenshin Nakamura"
 	ghost_notification_message = "IT'S HERE"
 	icon_state = "dark_matter_s1"
 	singularity_icon_variant = "dark_matter"
 	maximum_stage = STAGE_FOUR
+	energy = 250
 	singularity_component_type = /datum/component/singularity/bloodthirsty
 	///to avoid cases of the singuloth getting blammed out of existence by the very meteor it rode in on...
 	COOLDOWN_DECLARE(initial_explosion_immunity)
 
-/obj/singularity/dark_matter/Initialize(mapload, starting_energy = 250)
+/obj/singularity/dark_matter/Initialize(mapload, starting_energy)
 	. = ..()
 	COOLDOWN_START(src, initial_explosion_immunity, 5 SECONDS)
+	var/datum/component/singularity/resolved_singularity = singularity_component.resolve()
+	resolved_singularity.chance_to_move_to_target = 100
+	addtimer(CALLBACK(src, PROC_REF(normalize_tracking)), 20 SECONDS)
 
 /obj/singularity/dark_matter/examine(mob/user)
 	. = ..()
@@ -35,7 +39,7 @@
 		we have collected from this sector. The singularity does not seem \
 		to care for other inanimate objects or machines, but will consume \
 		them all the same. We have tried to communicate with it using various \
-		methods, but received no response.\"</i><br>- Research Director Jadzia Dax")
+		methods, but received no response.\"</i><br>- Research Director Huey Knorr")
 
 /obj/singularity/dark_matter/ex_act(severity, target)
 	if(!COOLDOWN_FINISHED(src, initial_explosion_immunity))
@@ -48,5 +52,10 @@
 	name = "Dark Lord Singuloth"
 	desc = "You managed to make a singularity from dark matter, which makes no sense at all, and then you threw a supermatter into it? Are you fucking insane? Fuck it, praise Lord Singuloth."
 	consumed_supermatter = TRUE
+
+///For 20 seconds, the singularity has buffed tracking to ensure it actually makes its way to the station, normalizes after 20 seconds
+/obj/singularity/dark_matter/proc/normalize_tracking()
+	var/datum/component/singularity/resolved_singularity = singularity_component.resolve()
+	resolved_singularity.chance_to_move_to_target = consumed_supermatter ? initial(resolved_singularity.chance_to_move_to_target) + DARK_MATTER_SUPERMATTER_CHANCE_BONUS : initial(resolved_singularity.chance_to_move_to_target)
 
 #undef DARK_MATTER_SUPERMATTER_CHANCE_BONUS

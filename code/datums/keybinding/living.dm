@@ -16,9 +16,19 @@
 	. = ..()
 	if(.)
 		return
-	var/mob/living/L = user.mob
-	L.resist()
+	var/mob/living/owner = user.mob
+	owner.resist()
+	if (owner.hud_used?.resist_icon)
+		owner.hud_used.resist_icon.icon_state = "[owner.hud_used.resist_icon.base_icon_state]_on"
 	return TRUE
+
+/datum/keybinding/living/resist/up(client/user)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/owner = user.mob
+	if (owner.hud_used?.resist_icon)
+		owner.hud_used.resist_icon.icon_state = owner.hud_used.resist_icon.base_icon_state
 
 /datum/keybinding/living/look_up
 	hotkey_keys = list("L")
@@ -36,6 +46,7 @@
 	return TRUE
 
 /datum/keybinding/living/look_up/up(client/user)
+	. = ..()
 	var/mob/living/L = user.mob
 	L.end_look_up()
 	return TRUE
@@ -56,6 +67,7 @@
 	return TRUE
 
 /datum/keybinding/living/look_down/up(client/user)
+	. = ..()
 	var/mob/living/L = user.mob
 	L.end_look_down()
 	return TRUE
@@ -134,6 +146,7 @@
 	return TRUE
 
 /datum/keybinding/living/toggle_move_intent/up(client/user)
+	. = ..()
 	var/mob/living/M = user.mob
 	M.toggle_move_intent()
 	return TRUE
@@ -152,24 +165,3 @@
 	var/mob/living/M = user.mob
 	M.toggle_move_intent()
 	return TRUE
-
-/datum/keybinding/living/toggle_examine_balloons
-	hotkey_keys = list("Shift")
-	name = "toggle_examine_balloons"
-	full_name = "Examine wallmounts"
-	description = "Held down to view wallmounts more closely, release to stop"
-	keybind_signal = COMSIG_KB_LIVING_TOGGLEMOVEINTENT_DOWN
-
-/datum/keybinding/living/toggle_examine_balloons/down(client/user)
-	. = ..()
-
-	var/datum/hud/our_hud = user.mob.hud_used
-	for(var/atom/movable/screen/plane_master/examine_balloons/balloons in our_hud.get_true_plane_masters(EXAMINE_BALLOONS_PLANE))
-		balloons.fade_in()
-
-/datum/keybinding/living/toggle_examine_balloons/up(client/user)
-	. = ..()
-
-	var/datum/hud/our_hud = user.mob.hud_used
-	for(var/atom/movable/screen/plane_master/examine_balloons/balloons in our_hud.get_true_plane_masters(EXAMINE_BALLOONS_PLANE))
-		balloons.fade_out()

@@ -1,5 +1,3 @@
-import { toFixed } from 'common/math';
-import { capitalize } from 'common/string';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'tgui/backend';
 import {
@@ -11,20 +9,22 @@ import {
   Section,
   Slider,
   Stack,
-} from 'tgui/components';
+} from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+import { capitalize } from 'tgui-core/string';
 
 import { clearChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
-import { updateSettings } from './actions';
+import { exportSettings, updateSettings } from './actions';
 import { FONTS } from './constants';
 import { selectSettings } from './selectors';
+import { importChatSettings } from './settingsImExport';
 
 export function SettingsGeneral(props) {
-  const { theme, fontFamily, fontSize, lineHeight, statLinked, statFontSize } =
+  const { theme, fontFamily, fontSize, lineHeight } =
     useSelector(selectSettings);
   const dispatch = useDispatch();
   const [freeFont, setFreeFont] = useState(false);
-  const [statFont, setStatFont] = useState(false);
 
   return (
     <Section>
@@ -119,46 +119,14 @@ export function SettingsGeneral(props) {
                 stepPixelSize={20}
                 minValue={8}
                 maxValue={32}
-                value={statFont ? statFontSize : fontSize}
+                value={fontSize}
                 unit="px"
                 format={(value) => toFixed(value)}
                 onChange={(e, value) =>
-                  dispatch(
-                    updateSettings({
-                      [statFont ? 'statFontSize' : 'fontSize']: value,
-                    }),
-                  )
+                  dispatch(updateSettings({ fontSize: value }))
                 }
               />
             </Stack.Item>
-            <Stack.Item>
-              <Button
-                width={statFont ? 7.3 : 10}
-                onClick={() => setStatFont(!statFont)}
-              >
-                {statFont ? 'Stat Panel' : 'Chat'}
-              </Button>
-            </Stack.Item>
-            {!!statFont && (
-              <Stack.Item>
-                <Button
-                  tooltip={
-                    statLinked
-                      ? 'Unlink Stat Panel settings from chat'
-                      : 'Link Stat Panel settings to chat'
-                  }
-                  icon={statLinked ? 'link' : 'link-slash'}
-                  color={statLinked ? 'bad' : 'good'}
-                  onClick={() =>
-                    dispatch(
-                      updateSettings({
-                        statLinked: !statLinked,
-                      }),
-                    )
-                  }
-                />
-              </Stack.Item>
-            )}
           </Stack>
         </LabeledList.Item>
         <LabeledList.Item label="Line height">
@@ -181,6 +149,25 @@ export function SettingsGeneral(props) {
       </LabeledList>
       <Divider />
       <Stack fill>
+        <Stack.Item mt={0.15}>
+          <Button
+            icon="compact-disc"
+            tooltip="Export chat settings"
+            onClick={() => dispatch(exportSettings())}
+          >
+            Export settings
+          </Button>
+        </Stack.Item>
+        <Stack.Item mt={0.15}>
+          <Button.File
+            accept=".json"
+            tooltip="Import chat settings"
+            icon="arrow-up-from-bracket"
+            onSelectFiles={(files) => importChatSettings(files)}
+          >
+            Import settings
+          </Button.File>
+        </Stack.Item>
         <Stack.Item grow mt={0.15}>
           <Button
             icon="save"

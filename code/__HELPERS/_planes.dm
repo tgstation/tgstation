@@ -35,7 +35,7 @@
 #define SET_PLANE_W_SCALAR(thing, new_value, multiplier) (thing.plane = GET_NEW_PLANE(new_value, multiplier))
 
 
-/// Implicit plane set. We take the turf from the atom we're changing the plane of, and use ITS z as a spokesperson for our plane value
+/// Implicit plane set. We take the turf from the object we're changing the plane of, and use ITS z as a spokesperson for our plane value
 #define SET_PLANE_IMPLICIT(thing, new_value) SET_PLANE_EXPLICIT(thing, new_value, thing)
 
 // This is an unrolled and optimized version of SET_PLANE, for use anywhere where you are unsure of a source's "turfness"
@@ -92,12 +92,13 @@ GLOBAL_LIST_INIT(topdown_planes, list(
 		"[FLOOR_PLANE]" = TRUE,
 	))
 
+#define IS_TOPDOWN_PLANE(plane) GLOB.topdown_planes["[PLANE_TO_TRUE(plane)]"]
+
 /// Checks if a passed in MA or atom is allowed to have its current plane/layer matchup
 /proc/check_topdown_validity(mutable_appearance/thing_to_check)
 	if(istype(thing_to_check, /atom/movable/screen/plane_master))
 		return
-	var/topdown_plane = GLOB.topdown_planes["[PLANE_TO_TRUE(thing_to_check.plane)]"]
-	if(topdown_plane)
+	if(IS_TOPDOWN_PLANE(thing_to_check.plane))
 		if(thing_to_check.layer - TOPDOWN_LAYER < 0 || thing_to_check.layer >= BACKGROUND_LAYER)
 			stack_trace("[thing_to_check] ([thing_to_check.type]) was expected to have a TOPDOWN_LAYER layer due to its plane, but it DID NOT! layer: ([thing_to_check.layer]) plane: ([thing_to_check.plane])")
 	else if(thing_to_check.layer - TOPDOWN_LAYER >= 0 && thing_to_check.layer < BACKGROUND_LAYER)

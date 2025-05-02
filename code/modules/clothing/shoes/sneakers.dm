@@ -9,8 +9,16 @@
 	greyscale_config_worn = /datum/greyscale_config/sneakers/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
+	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	flags_1 = IS_PLAYER_COLORABLE_1
 	interaction_flags_mouse_drop = NEED_HANDS
+
+/obj/item/clothing/shoes/sneakers/get_general_color(icon/base_icon)
+	var/colors = SSgreyscale.ParseColorString(greyscale_colors)
+	return colors ? colors[1] : ..()
+
+/obj/item/clothing/shoes/sneakers/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
+	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "sneakers_worn")
 
 /obj/item/clothing/shoes/sneakers/random/Initialize(mapload)
 	. = ..()
@@ -172,7 +180,7 @@
 	greyscale_config_worn = /datum/greyscale_config/sneakers_marisa/worn
 	strip_delay = 5
 	equip_delay_other = 50
-	can_be_tied = FALSE
+	fastening_type = SHOES_SLIPON
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/sneakers/cyborg

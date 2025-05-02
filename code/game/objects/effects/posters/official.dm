@@ -15,7 +15,7 @@
 	icon_state = "random_official"
 	never_random = TRUE
 
-INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/random, 32)
 //This is being hardcoded here to ensure we don't print directionals from the library management computer because they act wierd as a poster item
 /obj/structure/sign/poster/official/random/directional
 	printable = FALSE
@@ -253,7 +253,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/the_owl, 32)
 
 /obj/structure/sign/poster/official/no_erp
 	name = "No ERP"
-	desc = "This poster reminds the crew that Eroticism, Rape and Pornography are banned on Nanotrasen stations."
+	desc = "This poster reminds the crew that Enterprise Resource Planning is not allowed by company policy, in accordance with Spinward governmental regulations on megacorporations."
 	icon_state = "no_erp"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/official/no_erp, 32)

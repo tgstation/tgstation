@@ -75,17 +75,14 @@
 /area/station/maintenance/department/crew_quarters/dorms)
 "O" = (
 /obj/structure/table/wood,
-/obj/item/taperecorder{
-	pixel_y = 12;
-	pixel_x = -7
-	},
+/obj/item/taperecorder,
 /obj/item/tape{
 	pixel_x = 6;
-	pixel_y = 13
+	pixel_y = -2
 	},
 /obj/item/tape{
-	pixel_x = 6;
-	pixel_y = 3
+	pixel_x = -3;
+	pixel_y = -5
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,

@@ -183,7 +183,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate)
 "gQ" = (
-/obj/machinery/vending/boozeomat/all_access,
+/obj/machinery/vending/boozeomat,
 /turf/closed/wall,
 /area/shuttle/pirate)
 "hk" = (

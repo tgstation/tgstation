@@ -81,12 +81,16 @@
 #endif // REFERENCE_TRACKING_STANDARD
 
 // If this is uncommented, we do a single run though of the game setup and tear down process with unit tests in between
-// #define UNIT_TESTS
+//#define UNIT_TESTS
 
 // If this is uncommented, will attempt to load and initialize prof.dll/libprof.so by default.
 // Even if it's not defined, you can pass "tracy" via -params in order to try to load it.
-// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy/
+// We do not ship byond-tracy. Build it yourself here: https://github.com/mafemergency/byond-tracy,
+// or the fork which writes profiling data to a file: https://github.com/ParadiseSS13/byond-tracy
 // #define USE_BYOND_TRACY
+
+// If uncommented, will display info about byond-tracy's status in the MC tab.
+// #define MC_TAB_TRACY_INFO
 
 // If defined, we will compile with FULL timer debug info, rather then a limited scope
 // Be warned, this increases timer creation cost by 5x
@@ -101,6 +105,16 @@
 
 /// If this is uncommented, will profile mapload atom initializations
 // #define PROFILE_MAPLOAD_INIT_ATOM
+
+/// If uncommented, Dreamluau will be fully disabled.
+// #define DISABLE_DREAMLUAU
+
+// OpenDream currently doesn't support byondapi, so automatically disable it on OD,
+// unless CIBUILDING is defined - we still want to lint dreamluau-related code.
+// Get rid of this whenever it does have support.
+#if defined(OPENDREAM) && !defined(SPACEMAN_DMM) && !defined(CIBUILDING)
+#define DISABLE_DREAMLUAU
+#endif
 
 /// If this is uncommented, force our verb processing into just the 2% of a tick
 /// We normally reserve for it

@@ -7,7 +7,7 @@
 	density = TRUE
 	obj_flags = BLOCKS_CONSTRUCTION // Becomes undense when the door is open
 	interaction_flags_mouse_drop = NEED_DEXTERITY
-	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/internal/brain)
+	occupant_typecache = list(/mob/living, /obj/item/bodypart/head, /obj/item/organ/brain)
 	circuit = /obj/item/circuitboard/machine/dnascanner
 
 	var/locked = FALSE
@@ -168,6 +168,17 @@
 	var/list/mutations = list()
 	var/max_mutations = 6
 	var/read_only = FALSE //Well,it's still a floppy disk
+	obj_flags = parent_type::obj_flags | INFINITE_RESKIN
+	unique_reskin = list(
+			"Red" = "datadisk0",
+			"Dark Blue" = "datadisk1",
+			"Yellow" = "datadisk2",
+			"Black" = "datadisk3",
+			"Green" = "datadisk4",
+			"Purple" = "datadisk5",
+			"Grey" = "datadisk6",
+			"Light Blue" = "datadisk7",
+	)
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()

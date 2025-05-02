@@ -5,24 +5,21 @@
 	requires_power = TRUE
 	always_unpowered = TRUE
 	static_lighting = FALSE
-
 	base_lighting_alpha = 255
 	base_lighting_color = COLOR_STARLIGHT
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
-	area_flags = UNIQUE_AREA
+	area_flags = UNIQUE_AREA|NO_GRAVITY
 	outdoors = TRUE
 	ambience_index = AMBIENCE_SPACE
 	flags_1 = CAN_BE_DIRTY_1
 	sound_environment = SOUND_AREA_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
-	min_ambience_cooldown = 195 SECONDS //length of ambispace.ogg
-	max_ambience_cooldown = 200 SECONDS
+	allow_shuttle_docking = TRUE
 
 /area/space/nearstation
 	icon_state = "space_near"
-	area_flags = UNIQUE_AREA
 	static_lighting = TRUE
 	base_lighting_alpha = 0
 	base_lighting_color = null
@@ -33,12 +30,12 @@
 	requires_power = FALSE
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	ambient_buzz = null
 
 /area/misc/testroom
 	requires_power = FALSE
-	has_gravity = STANDARD_GRAVITY
+	default_gravity = STANDARD_GRAVITY
 	// Mobs should be able to see inside the testroom
 	static_lighting = FALSE
 	base_lighting_alpha = 255

@@ -20,7 +20,7 @@
 /datum/supply_pack/security/armor
 	name = "Armor Crate"
 	desc = "Three vests of well-rounded, decently-protective armor."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/clothing/suit/armor/vest = 3)
 	crate_name = "armor crate"
@@ -36,7 +36,7 @@
 /datum/supply_pack/security/forensics
 	name = "Forensics Crate"
 	desc = "Stay hot on the criminal's heels with Nanotrasen's Detective Essentials™. \
-		Contains a forensics scanner, six evidence bags, camera, tape recorder, stick of chalk, \
+		Contains a forensics scanner, six evidence bags, camera, special board for evidences, tape recorder, stick of chalk, \
 		and of course, a fedora."
 	cost = CARGO_CRATE_VALUE * 2.5
 	access_view = ACCESS_MORGUE
@@ -46,13 +46,14 @@
 					/obj/item/taperecorder,
 					/obj/item/toy/crayon/white,
 					/obj/item/clothing/head/fedora/det_hat,
+					/obj/item/wallframe/detectiveboard
 				)
 	crate_name = "forensics crate"
 
 /datum/supply_pack/security/helmets
 	name = "Helmets Crate"
 	desc = "Contains three standard-issue brain buckets."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 3
 	contains = list(/obj/item/clothing/head/helmet/sec = 3)
 	crate_name = "helmet crate"
 
@@ -112,6 +113,14 @@
 				)
 	crate_name = "security supply crate"
 
+/datum/supply_pack/security/maintenance_kits
+	name = "Gun Maintenance Kits"
+	desc = "Three gun maintenance kits for the repair and maintenance of a firearm."
+	access_view = ACCESS_BRIG
+	contains = list(/obj/item/gun_maintenance_supplies = 3)
+	cost = CARGO_CRATE_VALUE * 2
+	crate_name = "gun maintenance kit crate"
+
 /datum/supply_pack/security/firingpins
 	name = "Standard Firing Pins Crate"
 	desc = "Upgrade your arsenal with 10 standard firing pins."
@@ -145,7 +154,7 @@
 /datum/supply_pack/security/baton
 	name = "Stun Batons Crate"
 	desc = "Arm the Civil Protection Forces with three stun batons. Batteries included."
-	cost = CARGO_CRATE_VALUE * 2
+	cost = CARGO_CRATE_VALUE * 3
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/melee/baton/security/loaded = 3)
 	crate_name = "stun baton crate"
@@ -246,6 +255,30 @@
 	contains = list(/obj/item/gun/energy/disabler/smg = 3)
 	crate_name = "disabler smg crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+
+/datum/supply_pack/security/armory/battle_rifle
+	name = "NT BR-38 Crate"
+	desc = "An experimental energy-based ballistic battle rifle. Only available to \
+		Nanotrasen stations for security purposes. DO NOT RESELL TO OUTSIDE COMPANIES. \
+		Contains three NT BR-38 rifles and three magazines containing .38 Standard."
+	cost = CARGO_CRATE_VALUE * 100
+	contains = list(
+		/obj/item/gun/ballistic/automatic/battle_rifle = 2,
+		/obj/item/ammo_box/magazine/m38 = 4,
+	)
+	crate_name = "battle rifle crate"
+
+/datum/supply_pack/security/armory/br_mag
+	name = "NT BR-38 Magazine Crate"
+	desc = "Six .38 magazines, able to fit into the NT BR-38. Contains \
+		two standard magazines, two Hot Shot magazines and two Iceblox magazines."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(
+		/obj/item/ammo_box/magazine/m38 = 2,
+		/obj/item/ammo_box/magazine/m38/hotshot = 2,
+		/obj/item/ammo_box/magazine/m38/iceblox =2,
+	)
+	crate_name = ".38 magazine crate"
 
 /datum/supply_pack/security/armory/exileimp
 	name = "Exile Implants Crate"

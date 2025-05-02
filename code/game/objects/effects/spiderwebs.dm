@@ -14,7 +14,7 @@
 
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
-		playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+		playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/spider/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(damage_flag == MELEE)
@@ -32,9 +32,9 @@
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
-	layer = MID_TURF_LAYER
-	icon = 'icons/obj/structures/smooth/stickyweb.dmi'
+	icon = 'icons/obj/smooth_structures/stickyweb.dmi'
 	base_icon_state = "stickyweb"
 	icon_state = "stickyweb-0"
 	smoothing_flags = SMOOTH_BITMASK
@@ -140,8 +140,8 @@
 /obj/structure/spider/stickyweb/very_sticky/update_overlays()
 	. = ..()
 	var/mutable_appearance/web_overlay = mutable_appearance(icon = 'icons/effects/web.dmi', icon_state = "sticky_overlay", layer = layer + 1)
-	web_overlay.pixel_x -= pixel_x
-	web_overlay.pixel_y -= pixel_y
+	web_overlay.pixel_w -= pixel_x
+	web_overlay.pixel_z -= pixel_y
 	. += web_overlay
 
 
@@ -149,7 +149,7 @@
 /obj/structure/spider/stickyweb/sealed
 	name = "sealed web"
 	desc = "A solid wall of web, dense enough to block air flow."
-	icon = 'icons/obj/structures/smooth/webwall.dmi'
+	icon = 'icons/obj/smooth_structures/webwall.dmi'
 	base_icon_state = "webwall"
 	icon_state = "webwall-0"
 	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB_WALL
@@ -168,7 +168,7 @@
 /obj/structure/spider/stickyweb/sealed/reflector
 	name = "reflective silk screen"
 	desc = "Hardened webbing treated with special chemicals which cause it to repel projectiles."
-	icon = 'icons/obj/structures/smooth/webwall_reflector.dmi'
+	icon = 'icons/obj/smooth_structures/webwall_reflector.dmi'
 	base_icon_state = "webwall_reflector"
 	icon_state = "webwall_reflector-0"
 	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB_WALL_MIRROR
@@ -182,7 +182,7 @@
 /obj/structure/spider/stickyweb/sealed/tough
 	name = "hardened web"
 	desc = "Webbing hardened through a chemical process into a durable barrier."
-	icon = 'icons/obj/structures/smooth/webwall_dark.dmi'
+	icon = 'icons/obj/smooth_structures/webwall_dark.dmi'
 	base_icon_state = "webwall_dark"
 	icon_state = "webwall_dark-0"
 	smoothing_groups = SMOOTH_GROUP_SPIDER_WEB_WALL_TOUGH
@@ -196,7 +196,7 @@
 /obj/structure/spider/passage
 	name = "web passage"
 	desc = "An opaque curtain of web which seals in air but doesn't impede passage."
-	icon = 'icons/obj/structures/smooth/stickyweb_rotated.dmi'
+	icon = 'icons/obj/smooth_structures/stickyweb_rotated.dmi'
 	base_icon_state = "stickyweb_rotated"
 	icon_state = "stickyweb_rotated-0"
 	smoothing_flags = SMOOTH_BITMASK
@@ -248,9 +248,9 @@
 /obj/structure/spider/spikes
 	name = "web spikes"
 	desc = "Silk hardened into small yet deadly spikes."
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
-	layer = MID_TURF_LAYER
-	icon = 'icons/obj/structures/smooth/stickyweb_spikes.dmi'
+	icon = 'icons/obj/smooth_structures/stickyweb_spikes.dmi'
 	base_icon_state = "stickyweb_spikes"
 	icon_state = "stickyweb_spikes-0"
 	smoothing_flags = SMOOTH_BITMASK
@@ -275,6 +275,6 @@
 
 /obj/structure/spider/effigy/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/temporary_atom, 1 MINUTES)
+	fade_into_nothing(1 MINUTES)
 
 #undef SPIDER_WEB_TINT

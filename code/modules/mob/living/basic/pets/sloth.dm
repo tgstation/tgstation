@@ -1,7 +1,6 @@
 GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 /mob/living/basic/sloth
-	SET_BASE_VISUAL_PIXEL(0, 10)
 	name = "sloth"
 	desc = "An adorable, sleepy creature."
 	icon = 'icons/mob/simple/pets.dmi'
@@ -23,7 +22,7 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	attack_sound = 'sound/weapons/bite.ogg'
+	attack_sound = 'sound/items/weapons/bite.ogg'
 	attack_vis_effect = ATTACK_EFFECT_BITE
 
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
@@ -35,13 +34,22 @@ GLOBAL_DATUM(cargo_sloth, /mob/living/basic/sloth)
 	maxHealth = 50
 	speed = 10 // speed is fucking weird man. they aren't fast though don't worry
 	butcher_results = list(/obj/item/food/meat/slab = 3)
-	shadow_offset_y = 2
 
 	ai_controller = /datum/ai_controller/basic_controller/sloth
 
+/datum/emote/sloth
+	mob_type_allowed_typecache = /mob/living/basic/sloth
+	mob_type_blacklist_typecache = list()
+
+/datum/emote/sloth/smile_slow
+	key = "ssmile"
+	key_third_person = "slowlysmiles"
+	message = "slowly smiles!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
 /mob/living/basic/sloth/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "slowly smiles!")
+	AddElement(/datum/element/pet_bonus, "ssmile")
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/ai_retaliate)
 	AddComponent(/datum/component/tree_climber)

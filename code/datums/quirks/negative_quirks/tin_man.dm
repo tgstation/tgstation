@@ -11,10 +11,10 @@
 /datum/quirk/tin_man/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/static/list/organ_slots = list(
-		ORGAN_SLOT_HEART = /obj/item/organ/internal/heart/cybernetic/surplus,
-		ORGAN_SLOT_LUNGS = /obj/item/organ/internal/lungs/cybernetic/surplus,
-		ORGAN_SLOT_LIVER = /obj/item/organ/internal/liver/cybernetic/surplus,
-		ORGAN_SLOT_STOMACH = /obj/item/organ/internal/stomach/cybernetic/surplus,
+		ORGAN_SLOT_HEART = /obj/item/organ/heart/cybernetic/surplus,
+		ORGAN_SLOT_LUNGS = /obj/item/organ/lungs/cybernetic/surplus,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/cybernetic/surplus,
+		ORGAN_SLOT_STOMACH = /obj/item/organ/stomach/cybernetic/surplus,
 	)
 	var/list/possible_organ_slots = organ_slots.Copy()
 	if(HAS_TRAIT(human_holder, TRAIT_NOBLOOD))
@@ -33,5 +33,5 @@
 		new_organ.Insert(human_holder, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/quirk/tin_man/post_add()
-	to_chat(quirk_holder, span_boldannounce("Most of your internal organs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
+	to_chat(quirk_holder, span_bolddanger("Most of your internal organs have been replaced with surplus prosthetics. They are fragile and will easily come apart under duress. \
 	Additionally, any EMP will make them stop working entirely."))

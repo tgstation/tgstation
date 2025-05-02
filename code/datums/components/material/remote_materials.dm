@@ -23,8 +23,6 @@ handles linking back and forth.
 	var/mat_container_flags = NONE
 	///List of signals to hook onto the local container
 	var/list/mat_container_signals
-	///Typecache for items that the silo will accept through this remote no matter what
-	var/list/whitelist_typecache
 
 /datum/component/remote_materials/Initialize(
 	mapload,
@@ -32,7 +30,6 @@ handles linking back and forth.
 	force_connect = FALSE,
 	mat_container_flags = NONE,
 	list/mat_container_signals = null,
-	list/whitelist_typecache = null
 )
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -40,7 +37,6 @@ handles linking back and forth.
 	src.allow_standalone = allow_standalone
 	src.mat_container_flags = mat_container_flags
 	src.mat_container_signals = mat_container_signals
-	src.whitelist_typecache = whitelist_typecache
 
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
 
@@ -48,11 +44,9 @@ handles linking back and forth.
 	var/connect_to_silo = FALSE
 	if(force_connect || (mapload && is_station_level(T.z)))
 		connect_to_silo = TRUE
-		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 
 	if(mapload) // wait for silo to initialize during mapload
-		addtimer(CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo))
+		SSticker.OnRoundstart(CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo))
 	else //directly register in round
 		_PrepareStorage(connect_to_silo)
 
@@ -70,17 +64,20 @@ handles linking back and forth.
 		silo = GLOB.ore_silo_default
 		if (silo)
 			silo.ore_connected_machines += src
-			mat_container = silo.GetComponent(/datum/component/material_container)
+			mat_container = silo.materials
+			if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
+				RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+				RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))
+
 	if (!mat_container && allow_standalone)
 		_MakeLocal()
 
 /datum/component/remote_materials/Destroy()
-	if (silo)
-		silo.ore_connected_machines -= src
-		silo.holds -= src
-		silo = null
-		UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
+	if(silo)
+		allow_standalone = FALSE
+		disconnect_from(silo)
 	mat_container = null
+
 	return ..()
 
 /datum/component/remote_materials/proc/_MakeLocal()
@@ -97,16 +94,12 @@ handles linking back and forth.
 		allowed_items = /obj/item/stack \
 	)
 
-	if (whitelist_typecache)
-		mat_container.allowed_item_typecache |= whitelist_typecache
-
-/datum/component/remote_materials/proc/toggle_holding(force_hold = FALSE)
+/// Adds/Removes this connection from the silo
+/datum/component/remote_materials/proc/toggle_holding()
 	if(isnull(silo))
 		return
 
-	if(force_hold)
-		silo.holds[src] = TRUE
-	else if(!silo.holds[src])
+	if(!silo.holds[src])
 		silo.holds[src] = TRUE
 	else
 		silo.holds -= src
@@ -129,27 +122,16 @@ handles linking back and forth.
  * old_silo- The silo we are trying to disconnect from
  */
 /datum/component/remote_materials/proc/disconnect_from(obj/machinery/ore_silo/old_silo)
-	if (!old_silo || silo != old_silo)
+	if (QDELETED(old_silo) || silo != old_silo)
 		return
+
+	UnregisterSignal(parent, list(COMSIG_ATOM_ITEM_INTERACTION, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY))
 	silo.ore_connected_machines -= src
 	silo = null
 	mat_container = null
-	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
+
 	if (allow_standalone)
 		_MakeLocal()
-
-///Insert mats into silo
-/datum/component/remote_materials/proc/SiloAttackBy(datum/source, obj/item/target, mob/living/user)
-	SIGNAL_HANDLER
-
-	//Allows you to attack the machine with iron sheets for e.g.
-	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
-		return
-
-	if(silo)
-		mat_container.user_insert(target, user, parent, (whitelist_typecache && is_type_in_typecache(target, whitelist_typecache)))
-
-	return COMPONENT_NO_AFTERATTACK
 
 /datum/component/remote_materials/proc/OnMultitool(datum/source, mob/user, obj/item/multitool/M)
 	SIGNAL_HANDLER
@@ -182,8 +164,28 @@ handles linking back and forth.
 		silo.ore_connected_machines += src
 		mat_container = new_container
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
+			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
+			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
+		return ITEM_INTERACT_SUCCESS
+
+/datum/component/remote_materials/proc/on_item_insert(datum/source, mob/living/user, obj/item/target)
+	SIGNAL_HANDLER
+	// Only insert stacks with left click
+	if(isstack(target))
+		return attempt_insert(user, target)
+
+/datum/component/remote_materials/proc/on_secondary_insert(datum/source, mob/living/user, obj/item/target)
+	SIGNAL_HANDLER
+	return attempt_insert(user, target)
+
+/// Insert mats into silo
+/datum/component/remote_materials/proc/attempt_insert(mob/living/user, obj/item/target)
+	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
+		return
+
+	if(silo)
+		mat_container.user_insert(target, user, parent)
 		return ITEM_INTERACT_SUCCESS
 
 /**
@@ -228,7 +230,7 @@ handles linking back and forth.
 
 /**
  * Use materials from either the silo(if connected) or from the local storage. If silo then this action
- * is logged else not e.g. action="build" & name="matter bin" means you are trying to build an matter bin
+ * is logged else not e.g. action="build" & name="matter bin" means you are trying to build a matter bin
  *
  * Arguments
  * [mats][list]- list of materials to use

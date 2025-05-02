@@ -1,5 +1,4 @@
 /mob/living/carbon/alien/larva
-	SET_BASE_VISUAL_PIXEL(0, 7)
 	name = "alien larva"
 	real_name = "alien larva"
 	icon_state = "larva0"
@@ -19,13 +18,21 @@
 	num_legs = 1 //Alien larvas always have a movable apendage.
 	usable_legs = 1 //Alien larvas always have a movable apendage.
 	default_num_hands = 0
-	shadow_offset_y = 5
 
 	bodyparts = list(
 		/obj/item/bodypart/chest/larva,
 		/obj/item/bodypart/head/larva,
 	)
-	shadow_type = SHADOW_SMALL
+
+	default_organ_types_by_slot = list(
+		ORGAN_SLOT_BRAIN = /obj/item/organ/brain/alien,
+		ORGAN_SLOT_XENO_HIVENODE = /obj/item/organ/alien/hivenode,
+		ORGAN_SLOT_TONGUE = /obj/item/organ/tongue/alien,
+		ORGAN_SLOT_EYES = /obj/item/organ/eyes/alien,
+		ORGAN_SLOT_LIVER = /obj/item/organ/liver/alien,
+		ORGAN_SLOT_EARS = /obj/item/organ/ears,
+		ORGAN_SLOT_XENO_PLASMAVESSEL = /obj/item/organ/alien/plasmavessel/small/tiny,
+	)
 
 	var/amount_grown = 0
 	var/max_grown = 100
@@ -41,10 +48,6 @@
 	grant_actions_by_list(innate_actions)
 
 	return ..()
-
-/mob/living/carbon/alien/larva/create_internal_organs()
-	organs += new /obj/item/organ/internal/alien/plasmavessel/small/tiny
-	..()
 
 //This needs to be fixed
 // This comment is 12 years old I hope it's fixed by now

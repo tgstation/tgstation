@@ -11,6 +11,8 @@
 	var/atom/movable/screen/component_button/button_x
 	var/atom/movable/screen/component_button/button_expand
 	var/atom/movable/screen/component_button/button_shrink
+	var/atom/movable/screen/component_button/button_pop
+	var/atom/movable/screen/map_view/popup_screen
 
 	var/mutable_appearance/standard_background
 
@@ -19,6 +21,8 @@
 	make_backgrounds()
 	RegisterSignal(SSmapping, COMSIG_PLANE_OFFSET_INCREASE, PROC_REF(multiz_offset_increase))
 	multiz_offset_increase(SSmapping)
+	popup_screen = new
+	popup_screen.generate_view("camera-[REF(src)]_map")
 
 /atom/movable/screen/movable/pic_in_pic/proc/multiz_offset_increase(datum/source)
 	SIGNAL_HANDLER
@@ -30,15 +34,20 @@
 	QDEL_NULL(button_x)
 	QDEL_NULL(button_shrink)
 	QDEL_NULL(button_expand)
+	QDEL_NULL(button_pop)
+	QDEL_NULL(popup_screen)
 	return ..()
 
 /atom/movable/screen/movable/pic_in_pic/component_click(atom/movable/screen/component_button/component, params)
 	if(component == button_x)
+		usr.client?.close_popup("camera-[REF(src)]")
 		qdel(src)
 	else if(component == button_expand)
 		set_view_size(width+1, height+1)
 	else if(component == button_shrink)
 		set_view_size(width-1, height-1)
+	else if(component == button_pop)
+		pop_to_screen()
 
 /atom/movable/screen/movable/pic_in_pic/proc/make_backgrounds()
 	standard_background = new /mutable_appearance()
@@ -56,7 +65,7 @@
 		move_tab.icon_state = "move"
 		move_tab.plane = HUD_PLANE
 	var/matrix/M = matrix()
-	M.Translate(0, (height + 0.25) * world.icon_size)
+	M.Translate(0, (height + 0.25) * ICON_SIZE_Y)
 	move_tab.transform = M
 	add_overlay(move_tab)
 
@@ -69,7 +78,7 @@
 		MA.plane = HUD_PLANE
 		button_x.appearance = MA
 	M = matrix()
-	M.Translate((max(4, width) - 0.75) * world.icon_size, (height + 0.25) * world.icon_size)
+	M.Translate((max(4, width) - 0.75) * ICON_SIZE_X, (height + 0.25) * ICON_SIZE_Y)
 	button_x.transform = M
 	vis_contents += button_x
 
@@ -82,7 +91,7 @@
 		MA.plane = HUD_PLANE
 		button_expand.appearance = MA
 	M = matrix()
-	M.Translate(world.icon_size, (height + 0.25) * world.icon_size)
+	M.Translate(ICON_SIZE_X, (height + 0.25) * ICON_SIZE_Y)
 	button_expand.transform = M
 	vis_contents += button_expand
 
@@ -95,15 +104,28 @@
 		MA.plane = HUD_PLANE
 		button_shrink.appearance = MA
 	M = matrix()
-	M.Translate(2 * world.icon_size, (height + 0.25) * world.icon_size)
+	M.Translate(2 * ICON_SIZE_X, (height + 0.25) * ICON_SIZE_Y)
 	button_shrink.transform = M
 	vis_contents += button_shrink
+
+	if(!button_pop)
+		button_pop = new /atom/movable/screen/component_button(null, src)
+		var/mutable_appearance/MA = new /mutable_appearance()
+		MA.name = "pop"
+		MA.icon = 'icons/hud/pic_in_pic.dmi'
+		MA.icon_state = "pop"
+		MA.plane = HUD_PLANE
+		button_pop.appearance = MA
+	M = matrix()
+	M.Translate((max(4, width) - 0.75) * ICON_SIZE_X, (height + 0.25) * ICON_SIZE_Y + 16)
+	button_pop.transform = M
+	vis_contents += button_pop
 
 /atom/movable/screen/movable/pic_in_pic/proc/add_background()
 	if((width > 0) && (height > 0))
 		var/matrix/M = matrix()
 		M.Scale(width + 0.5, height + 0.5)
-		M.Translate((width-1)/2 * world.icon_size, (height-1)/2 * world.icon_size)
+		M.Translate((width-1)/2 * ICON_SIZE_X, (height-1)/2 * ICON_SIZE_Y)
 		standard_background.transform = M
 		add_overlay(standard_background)
 
@@ -115,7 +137,7 @@
 	src.width = width
 	src.height = height
 
-	y_off = -height * world.icon_size - 16
+	y_off = (-height * ICON_SIZE_Y) - (ICON_SIZE_Y / 2)
 
 	cut_overlays()
 	add_background()
@@ -134,6 +156,9 @@
 		return
 	viewing_turfs = get_visible_turfs()
 	vis_contents += viewing_turfs
+	if (popup_screen)
+		popup_screen.vis_contents.Cut()
+		popup_screen.vis_contents += viewing_turfs
 
 /atom/movable/screen/movable/pic_in_pic/proc/get_visible_turfs()
 	var/turf/T = get_turf(center)
@@ -152,3 +177,17 @@
 	if(C)
 		shown_to -= C
 		C.screen -= src
+
+/atom/movable/screen/movable/pic_in_pic/proc/pop_to_screen()
+	if(usr.client.screen_maps["camera-[REF(src)]_map"])
+		return
+	usr.client.setup_popup("camera-[REF(src)]", width, height, 2, "1984")
+	popup_screen.display_to(usr)
+	RegisterSignal(usr.client, COMSIG_POPUP_CLEARED, PROC_REF(on_popup_clear))
+
+/atom/movable/screen/movable/pic_in_pic/proc/on_popup_clear(client/source, window)
+	SIGNAL_HANDLER
+	if (window == "camera-[REF(src)]")
+		UnregisterSignal(usr.client, COMSIG_POPUP_CLEARED)
+		popup_screen.hide_from(usr)
+

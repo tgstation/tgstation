@@ -16,38 +16,22 @@ path/corner/color_name {\
 /obj/structure/chair/sofa
 	name = "old ratty sofa"
 	icon_state = "error"
-	icon = 'icons/obj/structures/chairs_wide.dmi'
+	icon = 'icons/obj/chairs_wide.dmi'
 	buildstackamount = 1
 	item_chair = null
-	var/mutable_appearance/armrest
+	fishing_modifier = -6
+	has_armrest = TRUE
 
 /obj/structure/chair/sofa/Initialize(mapload)
 	. = ..()
-	gen_armrest()
 	AddElement(/datum/element/soft_landing)
-
-/obj/structure/chair/sofa/proc/gen_armrest()
-	armrest = mutable_appearance(initial(icon), "[icon_state]_armrest", ABOVE_MOB_LAYER)
-	update_armrest()
 
 /obj/structure/chair/sofa/electrify_self(obj/item/assembly/shock_kit/input_shock_kit, mob/user, list/overlays_from_child_procs)
 	if(!overlays_from_child_procs)
-		overlays_from_child_procs = list(image('icons/obj/structures/chairs.dmi', loc, "echair_over", pixel_x = -1))
+		var/mutable_appearance/echair_overlay = mutable_appearance('icons/obj/chairs.dmi', "echair_over", OBJ_LAYER, src, appearance_flags = KEEP_APART)
+		echair_overlay.pixel_x = -1
+		overlays_from_child_procs = list(echair_overlay)
 	. = ..()
-
-/obj/structure/chair/sofa/post_buckle_mob(mob/living/M)
-	. = ..()
-	update_armrest()
-
-/obj/structure/chair/sofa/proc/update_armrest()
-	if(has_buckled_mobs())
-		add_overlay(armrest)
-	else
-		cut_overlay(armrest)
-
-/obj/structure/chair/sofa/post_unbuckle_mob()
-	. = ..()
-	update_armrest()
 
 /obj/structure/chair/sofa/corner/handle_layer() //only the armrest/back of this chair should cover the mob.
 	return
@@ -92,6 +76,7 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	icon_state = "bench_middle"
 	greyscale_config = /datum/greyscale_config/bench_middle
 	greyscale_colors = "#af7d28"
+	has_armrest = FALSE
 
 /obj/structure/chair/sofa/bench/left
 	icon_state = "bench_left"
@@ -119,6 +104,7 @@ COLORED_SOFA(/obj/structure/chair/sofa, maroon, SOFA_MAROON)
 	max_integrity = 60
 	buildstacktype = /obj/item/stack/sheet/mineral/bamboo
 	buildstackamount = 3
+	has_armrest = FALSE
 
 /obj/structure/chair/sofa/bamboo/left
 	icon_state = "bamboo_sofaend_left"

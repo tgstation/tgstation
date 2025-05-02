@@ -1,7 +1,7 @@
 /obj/structure/headpike
 	name = "spooky head on a spear"
 	desc = "When you really want to send a message."
-	icon = 'icons/obj/weapons/spear.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "headpike"
 	density = FALSE
 	anchored = TRUE
@@ -53,7 +53,7 @@
 		return
 	var/mutable_appearance/appearance = new()
 	appearance.copy_overlays(victim)
-	appearance.pixel_y = 12
+	appearance.pixel_z = 12
 	appearance.layer = layer + 0.1
 	. += appearance
 

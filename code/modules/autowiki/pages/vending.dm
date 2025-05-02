@@ -10,7 +10,10 @@
 	// So we put it inside, something
 	var/obj/parent = new
 
-	for (var/vending_type in sort_list(subtypesof(/obj/machinery/vending), GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	for (var/obj/machinery/vending/vending_type as anything in sort_list(subtypesof(/obj/machinery/vending), GLOBAL_PROC_REF(cmp_typepaths_asc)))
+		var/obj/machinery/vending/parent_machine = type2parent(vending_type)
+		if(initial(parent_machine.name) == initial(vending_type.name))
+			continue //Same name, likely just a slightly touched up subtype for specific maps.
 		var/obj/machinery/vending/vending_machine = new vending_type(parent)
 		vending_machine.use_power = FALSE
 		vending_machine.update_icon(UPDATE_ICON_STATE)

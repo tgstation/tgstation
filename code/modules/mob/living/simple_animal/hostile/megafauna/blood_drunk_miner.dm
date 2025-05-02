@@ -27,7 +27,7 @@ Difficulty: Medium
 	icon_living = "miner"
 	icon = 'icons/mob/simple/broadMobs.dmi'
 	health_doll_icon = "miner"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPECIAL|MOB_MINING
 	light_color = COLOR_LIGHT_GRAYISH_RED
 	speak_emote = list("roars")
 	speed = 3
@@ -37,7 +37,7 @@ Difficulty: Medium
 	rapid_melee = 5 // starts fast because the saw's closed. gets reduced appropriately when extended, see their transform_weapon ability
 	pixel_x = -16
 	base_pixel_x = -16
-	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye)
+	crusher_loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator, /obj/item/crusher_trophy/miner_eye, /obj/item/knife/hunting/wildhunter)
 	loot = list(/obj/item/melee/cleaving_saw, /obj/item/gun/energy/recharge/kinetic_accelerator)
 	wander = FALSE
 	del_on_death = TRUE
@@ -51,7 +51,6 @@ Difficulty: Medium
 	death_sound = SFX_BODYFALL
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	move_force = MOVE_FORCE_NORMAL //Miner beeing able to just move structures like bolted doors and glass looks kinda strange
-	shadow_type = SHADOW_MEDIUM
 	/// Does this blood-drunk miner heal slightly while attacking and heal more when gibbing people?
 	var/guidance = FALSE
 	/// Dash ability
@@ -77,7 +76,7 @@ Difficulty: Medium
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
 
-	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/bdm_boss.ogg', 167 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
 	dash = null
@@ -107,7 +106,7 @@ Difficulty: Medium
 
 /obj/projectile/kinetic/miner
 	damage = 20
-	speed = 0.9
+	speed = 1.1
 	icon_state = "ka_tracer"
 	range = 4
 

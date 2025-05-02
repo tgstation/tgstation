@@ -15,7 +15,7 @@
 	///The type of projectile that fires from attacks.
 	var/projectiletype = /obj/projectile/neurotoxin/damaging
 	///The sound that plays when the projectile is fired.
-	var/projectilesound = 'sound/weapons/pierce.ogg'
+	var/projectilesound = 'sound/items/weapons/pierce.ogg'
 
 /mob/living/basic/alien/queen/Initialize(mapload)
 	. = ..()
@@ -37,6 +37,4 @@
 	)
 	mob_size = MOB_SIZE_LARGE
 	gold_core_spawnable = NO_SPAWN
-	pixel_x = -16
-	base_pixel_x = -16
-	shadow_type = SHADOW_LARGE
+

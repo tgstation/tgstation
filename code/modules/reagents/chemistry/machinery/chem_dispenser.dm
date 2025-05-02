@@ -1,5 +1,4 @@
 /obj/machinery/chem_dispenser
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "chem dispenser"
 	desc = "Creates and dispenses chemicals."
 	density = TRUE
@@ -123,9 +122,9 @@
 	if(panel_open)
 		. += span_notice("[src]'s maintenance hatch is open!")
 	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads:\n\
+		. += span_notice("The status display reads:\n\
 		Recharge rate: <b>[display_power(recharge_amount, convert = FALSE)]</b>.\n\
-		Energy cost: <b>[siunit(power_cost, "J/u", 3)]</b>.</span>"
+		Energy cost: <b>[siunit(power_cost, "J/u", 3)]</b>.")
 	. += span_notice("Use <b>RMB</b> to eject a stored beaker.")
 
 /obj/machinery/chem_dispenser/on_set_is_operational(old_value)
@@ -143,8 +142,8 @@
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
-	b_o.pixel_y = -4
-	b_o.pixel_x = -7
+	b_o.pixel_w = -7
+	b_o.pixel_z = -4
 	return b_o
 
 /obj/machinery/chem_dispenser/proc/work_animation()
@@ -226,9 +225,11 @@
 		var/datum/reagent/temp = GLOB.chemical_reagents_list[re]
 		if(temp)
 			var/chemname = temp.name
+			var/chemcolor = temp.color
 			if(is_hallucinating && prob(5))
 				chemname = "[pick_list_replacements("hallucination.json", "chemicals")]"
-			chemicals += list(list("title" = chemname, "id" = temp.name, "pH" = temp.ph, "pHCol" = convert_ph_to_readable_color(temp.ph)))
+				chemcolor = random_colour()
+			chemicals += list(list("title" = chemname, "id" = temp.name, "pH" = temp.ph, "color" = chemcolor, "pHCol" = convert_ph_to_readable_color(temp.ph)))
 	.["chemicals"] = chemicals
 	.["recipes"] = saved_recipes
 
@@ -347,7 +348,7 @@
 		if("save_recording")
 			if(!is_operational)
 				return
-			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name", MAX_NAME_LEN)
+			var/name = tgui_input_text(ui.user, "What do you want to name this recipe?", "Recipe Name", max_length = MAX_NAME_LEN)
 			if(!ui.user.can_perform_action(src, ALLOW_SILICON_REACH))
 				return
 			if(saved_recipes[name] && tgui_alert(ui.user, "\"[name]\" already exists, do you want to overwrite it?",, list("Yes", "No")) == "No")
@@ -358,7 +359,7 @@
 					if(!dispensable_reagents.Find(reagent_id))
 						visible_message(span_warning("[src] buzzes."), span_hear("You hear a faint buzz."))
 						to_chat(ui.user, span_warning("[src] cannot find <b>[reagent]</b>!"))
-						playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
+						playsound(src, 'sound/machines/buzz/buzz-two.ogg', 50, TRUE)
 						return
 				saved_recipes[name] = recording_recipe
 				recording_recipe = null
@@ -557,17 +558,17 @@
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
 	switch(dir)
 		if(NORTH)
-			b_o.pixel_y = 7
-			b_o.pixel_x = rand(-9, 9)
+			b_o.pixel_w = rand(-9, 9)
+			b_o.pixel_z = 7
 		if(EAST)
-			b_o.pixel_x = 4
-			b_o.pixel_y = rand(-5, 7)
+			b_o.pixel_w = 4
+			b_o.pixel_z = rand(-5, 7)
 		if(WEST)
-			b_o.pixel_x = -5
-			b_o.pixel_y = rand(-5, 7)
+			b_o.pixel_w = -5
+			b_o.pixel_z = rand(-5, 7)
 		else//SOUTH
-			b_o.pixel_y = -7
-			b_o.pixel_x = rand(-9, 9)
+			b_o.pixel_w = rand(-9, 9)
+			b_o.pixel_z = -7
 	return b_o
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged

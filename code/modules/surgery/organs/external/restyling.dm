@@ -1,4 +1,4 @@
-//Contains a bunch of procs for different types, but in the end it just lets you restyle the bodypart overlay so thats why its here
+//Contains a bunch of procs for different types, but in the end it just lets you restyle the bodypart overlay so that's why it's here
 
 ///Helper proc to fetch a list of styles a player might want to restyle their features into during the round : returns list("Cabbage" = /datum/sprite_accessory/cabbage)
 /obj/item/organ/proc/get_valid_restyles()
@@ -22,7 +22,7 @@
 	if(src.body_zone == body_zone)
 		INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
 
-///Invoke async so we dont break signals
+///Invoke async so we don't break signals
 /obj/item/bodypart/proc/on_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	SIGNAL_HANDLER
 
@@ -41,7 +41,7 @@
 			target_organ = valid_features[1]
 		if(2 to INFINITY)
 			var/choose_options = list()
-			var/name_to_organ = list() //literally so I dont have to loop again after someones made their choice
+			var/name_to_organ = list() //literally so I don't have to loop again after someone's made their choice
 			for(var/obj/item/organ/organ_choice as anything in valid_features)
 				choose_options[organ_choice.name] = image(organ_choice)
 				name_to_organ[organ_choice.name] = organ_choice
@@ -56,14 +56,14 @@
 
 	target_organ.attempt_feature_restyle(source, trimmer, original_target, body_zone, restyle_type, style_speed)
 
-///Invoke async so we dont break signals
+///Invoke async so we don't break signals
 /obj/item/organ/proc/on_attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
 	SIGNAL_HANDLER
 
 	if(restyle_flags & restyle_type)
 		INVOKE_ASYNC(src, PROC_REF(attempt_feature_restyle), source, trimmer, original_target, body_zone, restyle_type, style_speed)
 	else
-		to_chat(trimmer, span_warning("This tool is incompatible with the [src.name]!"))
+		to_chat(trimmer, span_warning("This tool is incompatible with \the [src]!"))
 
 ///Restyles the external organ from a list of valid options
 /obj/item/organ/proc/attempt_feature_restyle(atom/source, mob/living/trimmer, atom/movable/original_target, body_zone, restyle_type, style_speed)
@@ -81,3 +81,47 @@
 		)
 
 		simple_change_sprite(restyles[new_style]) //turn name to type and pass it on
+
+/// Allows for the restyling of visual organs to other styles within the same pool (if not forbidden)
+/obj/item/flesh_shears
+	name = "flesh reshaper"
+	desc = "Uses shearing action and growth inducers to reshape your coworkers external features!"
+
+	icon_state = "flesh_shaper"
+	icon = 'icons/obj/medical/surgery_tools.dmi'
+	icon_angle = 90
+
+	inhand_icon_state = "flesh_shaper"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
+
+	force = 5
+	w_class = WEIGHT_CLASS_SMALL
+	throwforce = 10
+
+	attack_verb_continuous = list("shears", "snips")
+	attack_verb_simple = list("shear", "snip")
+	sharpness = SHARP_EDGED
+
+	obj_flags = CONDUCTS_ELECTRICITY
+
+	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1, /datum/material/silver=SHEET_MATERIAL_AMOUNT*1)
+
+	/// How long does it take, after selecting a new style, for the new style to be applied?
+	var/restyle_speed = 2 SECONDS
+
+///Catch right clicks so we can stylize!
+/obj/item/flesh_shears/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(user.combat_mode || !iscarbon(interacting_with))
+		return NONE
+
+	restyle(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+///Send a signal to whatever we clicked and start RESTYLING
+/obj/item/flesh_shears/proc/restyle(atom/target, mob/living/user)
+	SEND_SIGNAL(target, COMSIG_ATOM_RESTYLE, user, target, user.zone_selected, EXTERNAL_RESTYLE_ALL, restyle_speed)
+
+/obj/item/flesh_shears/medical
+	icon_state = "flesh_shaper_med"
+	inhand_icon_state = "flesh_shaper_med"

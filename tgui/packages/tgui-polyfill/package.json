@@ -1,16 +1,16 @@
 {
   "private": true,
   "name": "tgui-polyfill",
-  "version": "5.0.1",
+  "version": "5.0.3",
   "scripts": {
     "tgui-polyfill:build": "terser 1-misc.js -f ascii_only,comments=false -o ../../public/tgui-polyfill.min.js"
   },
   "dependencies": {
-    "core-js": "^3.36.1",
+    "core-js": "^3.39.0",
     "regenerator-runtime": "^0.14.1",
     "unfetch": "^5.0.0"
   },
   "devDependencies": {
-    "terser": "^5.30.2"
+    "terser": "^5.36.0"
   }
 }

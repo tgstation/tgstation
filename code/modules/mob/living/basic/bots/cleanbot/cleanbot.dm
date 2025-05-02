@@ -1,7 +1,6 @@
 
 //Cleanbot
 /mob/living/basic/bot/cleanbot
-	SET_BASE_VISUAL_PIXEL(0, 8)
 	name = "\improper Cleanbot"
 	desc = "A little cleaning robot, he looks so excited!"
 	icon = 'icons/mob/silicon/aibots.dmi'
@@ -19,8 +18,6 @@
 	possessed_message = "You are a cleanbot! Clean the station to the best of your ability!"
 	ai_controller = /datum/ai_controller/basic_controller/bot/cleanbot
 	path_image_color = "#993299"
-	shadow_offset_x = 4
-	shadow_offset_y = 4
 	///the bucket used to build us.
 	var/obj/item/reagent_containers/cup/bucket/build_bucket
 	///Flags indicating what kind of cleanables we should scan for to set as our target to clean.
@@ -98,7 +95,6 @@
 	var/static/list/cleanable_blood = typecacheof(list(
 		/obj/effect/decal/cleanable/xenoblood,
 		/obj/effect/decal/cleanable/blood,
-		/obj/effect/decal/cleanable/trail_holder,
 	))
 	///pests we hunt
 	var/static/list/huntable_pests = typecacheof(list(
@@ -130,7 +126,7 @@
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/point_targeting/clean,
+		/datum/pet_command/clean,
 	)
 
 /mob/living/basic/bot/cleanbot/Initialize(mapload)
@@ -202,15 +198,11 @@
 	if(var_name == NAMEOF(src, base_icon))
 		update_appearance(UPDATE_ICON)
 
-/mob/living/basic/bot/cleanbot/emag_act(mob/user, obj/item/card/emag/emag_card)
-	. = ..()
-	if(!(bot_access_flags & BOT_COVER_EMAGGED))
-		return
+/mob/living/basic/bot/cleanbot/emag_effects(mob/user)
 	if(weapon)
 		weapon.force = initial(weapon.force)
 	balloon_alert(user, "safeties disabled")
 	audible_message(span_danger("[src] buzzes oddly!"))
-	return TRUE
 
 /mob/living/basic/bot/cleanbot/explode()
 	var/atom/drop_loc = drop_location()

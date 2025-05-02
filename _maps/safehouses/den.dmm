@@ -49,12 +49,12 @@
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 9
 	},
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/pod/dark,
 /area/virtual_domain/safehouse)
 "u" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/siding/dark,
+/obj/structure/sign/poster/contraband/hacking_guide/directional/east,
 /obj/effect/landmark/bitrunning/cache_goal_turf,
 /obj/effect/turf_decal/loading_area{
 	dir = 4
@@ -126,10 +126,6 @@
 	},
 /turf/open/floor/pod/dark,
 /area/virtual_domain/safehouse)
-"Q" = (
-/obj/structure/sign/poster/contraband/hacking_guide/directional/north,
-/turf/open/floor/pod/dark,
-/area/virtual_domain/safehouse)
 "R" = (
 /obj/effect/turf_decal/trimline/yellow/line{
 	dir = 4
@@ -139,6 +135,7 @@
 "U" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/sign/departments/cargo/directional/west,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/pod,
 /area/virtual_domain/safehouse)
 "W" = (
@@ -155,11 +152,10 @@
 /area/virtual_domain/safehouse)
 "Y" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/machinery/button/door/table{
-	id = "safehouseshutter";
-	name = "Window shutters";
+/obj/machinery/button/door{
+	pixel_x = 4;
 	pixel_y = 4;
-	pixel_x = 4
+	id = "safehouseshutter"
 	},
 /obj/effect/spawner/random/food_or_drink/refreshing_beverage{
 	pixel_y = 6;
@@ -208,7 +204,7 @@ i
 "}
 (5,1,1) = {"
 C
-Q
+M
 l
 e
 I

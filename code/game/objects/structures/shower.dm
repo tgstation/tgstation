@@ -29,7 +29,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 /obj/machinery/shower
 	name = "shower"
 	desc = "The HS-452. Installed in the 2550s by the Nanotrasen Hygiene Division, now with 2560 lead compliance! Passively replenishes itself with water when not in use."
-	icon = 'icons/obj/structures/watercloset.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
 	layer = ABOVE_WINDOW_LAYER
@@ -55,8 +55,10 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	var/mode = SHOWER_MODE_UNTIL_EMPTY
 	///The cooldown for SHOWER_MODE_TIMED mode.
 	COOLDOWN_DECLARE(timed_cooldown)
+	///How far to shift the sprite when placing.
+	var/pixel_shift = 16
 
-SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 
 /obj/machinery/shower/Initialize(mapload, ndir = 0, has_water_reclaimer = null)
 	. = ..()
@@ -67,16 +69,30 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 	if(has_water_reclaimer != null)
 		src.has_water_reclaimer = has_water_reclaimer
 
+	switch(dir)
+		if(NORTH)
+			pixel_x = 0
+			pixel_y = -pixel_shift
+		if(SOUTH)
+			pixel_x = 0
+			pixel_y = pixel_shift
+		if(EAST)
+			pixel_x = -pixel_shift
+			pixel_y = 0
+		if(WEST)
+			pixel_x = pixel_shift
+			pixel_y = 0
+
 	create_reagents(reagent_capacity)
 	if(src.has_water_reclaimer)
 		reagents.add_reagent(reagent_id, reagent_capacity)
 	soundloop = new(src, FALSE)
-	AddComponent(/datum/component/plumbing/inverted_simple_demand, extend_pipe_to_edge = TRUE, invert_demand = TRUE)
+	AddComponent(/datum/component/plumbing/simple_demand, extend_pipe_to_edge = TRUE)
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
+		COMSIG_ATOM_EXITED = PROC_REF(on_exited),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-	find_and_hang_on_wall()
 
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
@@ -173,23 +189,21 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 	deconstruct()
 	return TRUE
 
-/obj/machinery/shower/setDir(newdir)
-	. = ..()
-	update_appearance(UPDATE_OVERLAYS)
-
 /obj/machinery/shower/update_overlays()
 	. = ..()
 	if(!actually_on)
 		return
-	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/structures/watercloset.dmi', "water", ABOVE_MOB_LAYER)
+	var/mutable_appearance/water_falling = mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
 	water_falling.color = mix_color_from_reagents(reagents.reagent_list)
 	switch(dir)
+		if(NORTH)
+			water_falling.pixel_y += pixel_shift
 		if(SOUTH)
-			water_falling.pixel_z -= 24
+			water_falling.pixel_y -= pixel_shift
 		if(EAST)
-			water_falling.pixel_w += 16
+			water_falling.pixel_x += pixel_shift
 		if(WEST)
-			water_falling.pixel_w -= 16
+			water_falling.pixel_x -= pixel_shift
 	. += water_falling
 
 /obj/machinery/shower/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -219,19 +233,39 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 	if(mist && !(actually_on && current_temperature != SHOWER_FREEZING))
 		qdel(mist)
 
-
-/obj/machinery/shower/proc/on_entered(datum/source, atom/movable/AM)
+/obj/machinery/shower/proc/on_entered(datum/source, atom/movable/enterer)
 	SIGNAL_HANDLER
-	if(actually_on && reagents.total_volume)
-		wash_atom(AM)
 
-/obj/machinery/shower/proc/wash_atom(atom/target)
-	target.wash(CLEAN_RAD | CLEAN_WASH)
+	if(actually_on && reagents.total_volume)
+		expose_to_reagents(enterer)
+
+/obj/machinery/shower/proc/on_exited(datum/source, atom/movable/exiter)
+	SIGNAL_HANDLER
+
+	if(!isliving(exiter))
+		return
+
+	var/obj/machinery/shower/locate_new_shower = locate() in get_turf(exiter)
+	if(locate_new_shower && isturf(exiter.loc))
+		return
+	var/mob/living/take_his_status_effect = exiter
+	take_his_status_effect.remove_status_effect(/datum/status_effect/washing_regen)
+
+/obj/machinery/shower/proc/expose_to_reagents(atom/target)
+	var/purity_volume = reagents.total_volume*0.70 	// need 70% of total reagents
+	var/datum/reagent/blood/bloody_shower = reagents.has_reagent(/datum/reagent/blood, amount=purity_volume)
+	var/datum/reagent/water/clean_shower = reagents.has_reagent(/datum/reagent/water, amount=purity_volume)
+	// we only care about blood and h20 for mood/status effect
+	var/datum/reagent/shower_reagent = bloody_shower || clean_shower || null
+
 	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
-	if(isliving(target))
-		var/mob/living/living_target = target
-		check_heat(living_target)
-		living_target.add_mood_event("shower", /datum/mood_event/nice_shower)
+	if(!isliving(target))
+		return
+	var/mob/living/living_target = target
+	check_heat(living_target)
+
+	living_target.apply_status_effect(/datum/status_effect/washing_regen, shower_reagent)
+	living_target.add_mood_event("shower", /datum/mood_event/shower, shower_reagent)
 
 /**
  * Toggle whether shower is actually on and outputting water.
@@ -262,7 +296,8 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 		if(isopenturf(loc))
 			var/turf/open/tile = loc
 			tile.MakeSlippery(TURF_WET_WATER, min_wet_time = 5 SECONDS, wet_time_to_add = 1 SECONDS)
-
+		for(var/mob/living/showerer in loc)
+			showerer.remove_status_effect(/datum/status_effect/washing_regen)
 	return TRUE
 
 /obj/machinery/shower/process(seconds_per_tick)
@@ -290,13 +325,30 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 
 		// FOREVER mode stays processing so it can cycle back on.
 		return mode == SHOWER_MODE_FOREVER ? 0 : PROCESS_KILL
+	// Assemble cleaning flags
+	var/purity_volume = reagents.total_volume*0.70 	// need 70% of total reagents
+	var/datum/reagent/water/clean_shower = reagents.has_reagent(/datum/reagent/water, amount=purity_volume)
+
+	// radiation my beloved
+	var/rad_purity_volume = reagents.total_volume*0.20 // need 20% of total reagents
+	var/radium_volume = reagents.get_reagent_amount(/datum/reagent/uranium/radium)
+	var/uranium_volume = reagents.get_reagent_amount(/datum/reagent/uranium)
+	var/polonium_volume = reagents.get_reagent_amount(/datum/reagent/toxin/polonium) * 3 // highly radioactive
+	var/total_radiation_volume = (radium_volume + uranium_volume + polonium_volume)
+	var/radioactive_shower = total_radiation_volume >= rad_purity_volume
+
+	var/wash_flags = NONE
+	if(clean_shower)
+		wash_flags |= CLEAN_WASH
+	if(!radioactive_shower)
+		// note it is possible to have a clean_shower that is radioactive (+70% water mixed with +20% radiation)
+		wash_flags |= CLEAN_RAD
 
 	// Wash up.
-	wash_atom(loc)
+	loc.wash(wash_flags, TRUE)
+	expose_to_reagents(loc)
 	for(var/atom/movable/movable_content as anything in loc)
-		if(!ismopable(movable_content)) // Mopables will be cleaned anyways by the turf wash above
-			wash_atom(movable_content) // Reagent exposure is handled in wash_atom
-
+		expose_to_reagents(movable_content) // Wash the items on the turf (=expose them to the shower reagent)
 	reagents.remove_all(SHOWER_SPRAY_VOLUME)
 
 /obj/machinery/shower/on_deconstruction(disassembled = TRUE)
@@ -304,23 +356,20 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 	if(has_water_reclaimer)
 		new /obj/item/stock_parts/water_recycler(drop_location())
 
-/obj/machinery/shower/proc/check_heat(mob/living/L)
-	var/mob/living/carbon/C = L
+/obj/machinery/shower/proc/check_heat(mob/living/living)
 
 	if(current_temperature == SHOWER_FREEZING)
-		if(iscarbon(L))
-			C.adjust_bodytemperature(-80, 80)
-		to_chat(L, span_warning("[src] is freezing!"))
+		living.adjust_bodytemperature(-80, 80)
+		to_chat(living, span_warning("[src] is freezing!"))
 	else if(current_temperature == SHOWER_BOILING)
-		if(iscarbon(L))
-			C.adjust_bodytemperature(35, 0, 500)
-		L.adjustFireLoss(5)
-		to_chat(L, span_danger("[src] is searing!"))
+		living.adjust_bodytemperature(35, 0, 500)
+		living.adjustFireLoss(5)
+		to_chat(living, span_danger("[src] is searing!"))
 
 
 /obj/structure/showerframe
 	name = "shower frame"
-	icon = 'icons/obj/structures/watercloset.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower_frame"
 	desc = "A shower frame, that needs a water recycler to finish construction."
 	anchored = FALSE
@@ -356,9 +405,10 @@ SHOWER_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 
 /obj/effect/mist
 	name = "mist"
-	icon = 'icons/obj/structures/watercloset.dmi'
+	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mist"
 	layer = FLY_LAYER
+	plane = ABOVE_GAME_PLANE
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 

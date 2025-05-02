@@ -40,6 +40,9 @@
 	new stacktype(user.drop_location(), grassAmt)
 	qdel(src)
 
+/obj/item/food/grown/grass/make_dryable()
+	AddElement(/datum/element/dryable, /obj/item/stack/tile/hay)
+
 //Fairygrass
 /obj/item/seeds/grass/fairy
 	name = "fairygrass seed pack"
@@ -58,7 +61,7 @@
 /obj/item/food/grown/grass/fairy
 	seed = /obj/item/seeds/grass/fairy
 	name = "fairygrass"
-	desc = "Blue, glowing, and smells fainly of mushrooms."
+	desc = "Blue, glowing, and smells faintly of mushrooms."
 	icon_state = "fairygrassclump"
 	bite_consumption_mod = 1
 	stacktype = /obj/item/stack/tile/fairygrass

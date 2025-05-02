@@ -160,4 +160,4 @@
  * Generates a clickable link to open this interview
  */
 /datum/interview/proc/link_self()
-	return "<a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];interview=[REF(src)]'>Interview #[id]</a>"
+	return "<a href='byond://?_src_=holder;[HrefToken(forceGlobal = TRUE)];interview=[REF(src)]'>Interview #[id]</a>"

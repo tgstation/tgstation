@@ -1,11 +1,9 @@
 /** This structure acts as a source of moisture loving cell lines,
-as well as a location where a hidden item can somtimes be retrieved
+as well as a location where a hidden item can sometimes be retrieved
 at the cost of risking a vicious bite.**/
 /obj/structure/moisture_trap
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "moisture trap"
-	desc = "A device installed in order to control moisture in poorly ventilated areas.\nThe stagnant water inside basin seems to produce serious biofouling issues when improperly maintained.\nThis unit in particular seems to be teeming with life!\nWho thought mother Gaia could assert herself so vigoriously in this sterile and desolate place?"
-	icon = 'icons/obj/maintenance_loot.dmi'
+	desc = "A device installed in order to control moisture in poorly ventilated areas.\nThe stagnant water inside basin seems to produce serious biofouling issues when improperly maintained.\nThis unit in particular seems to be teeming with life!\nWho thought mother Gaia could assert herself so vigorously in this sterile and desolate place?"
 	icon_state = "moisture_trap"
 	anchored = TRUE
 	density = FALSE
@@ -60,7 +58,7 @@ at the cost of risking a vicious bite.**/
 	if(!isliving(user))
 		return FALSE
 	var/mob/living/living_user = user
-	if(living_user.body_position == STANDING_UP && ishuman(living_user)) //I dont think monkeys can crawl on command.
+	if(living_user.body_position == STANDING_UP && ishuman(living_user)) //I don't think monkeys can crawl on command.
 		return FALSE
 	return TRUE
 
@@ -82,12 +80,11 @@ at the cost of risking a vicious bite.**/
 		return
 	if(critter_infested && prob(50) && iscarbon(user))
 		var/mob/living/carbon/bite_victim = user
-		var/obj/item/bodypart/affecting = bite_victim.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-		to_chat(user, span_danger("You feel a sharp pain as an unseen creature sinks its [pick("fangs", "beak", "proboscis")] into your arm!"))
-		if(affecting?.receive_damage(30))
-			bite_victim.update_damage_overlays()
-			playsound(src,'sound/weapons/bite.ogg', 70, TRUE)
-			return
+		var/obj/item/bodypart/affecting = bite_victim.get_active_hand()
+		to_chat(user, span_danger("You feel a sharp pain as an unseen creature sinks its [pick("fangs", "beak", "proboscis")] into your [affecting.plaintext_zone]!"))
+		bite_victim.apply_damage(30, BRUTE, affecting)
+		playsound(src,'sound/items/weapons/bite.ogg', 70, TRUE)
+		return
 	to_chat(user, span_warning("You find nothing of value..."))
 
 /obj/structure/moisture_trap/attackby(obj/item/I, mob/user, params)
@@ -124,8 +121,8 @@ at the cost of risking a vicious bite.**/
 	desc = "What is this? Who put it on this station? And why does it emanate <span class='hypnophrase'>strange energy?</span>"
 	icon_state = "altar"
 	cult_examine_tip = "Even you don't understand the eldritch magic behind this."
-	break_message = "<span class='warning'>The structure shatters, leaving only a demonic screech!</span>"
-	break_sound = 'sound/magic/demon_dies.ogg'
+	break_message = span_warning("The structure shatters, leaving only a demonic screech!")
+	break_sound = 'sound/effects/magic/demon_dies.ogg'
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 	light_range = 2
 	use_cooldown_duration = 1 MINUTES
@@ -180,8 +177,7 @@ at the cost of risking a vicious bite.**/
 			overlayicon = "altar_pants2"
 		if(ALTAR_STAGETHREE)
 			overlayicon = "altar_pants3"
-	var/mutable_appearance/pants_overlay = mutable_appearance(icon, overlayicon)
-	pants_overlay.appearance_flags = RESET_COLOR
+	var/mutable_appearance/pants_overlay = mutable_appearance(icon, overlayicon, appearance_flags = RESET_COLOR|KEEP_APART)
 	pants_overlay.color = pants_color
 	. += pants_overlay
 
@@ -190,7 +186,7 @@ at the cost of risking a vicious bite.**/
 	status = ALTAR_STAGEONE
 	update_icon()
 	visible_message(span_warning("[src] starts creating something..."))
-	playsound(src, 'sound/magic/pantsaltar.ogg', 60)
+	playsound(src, 'sound/effects/magic/pantsaltar.ogg', 60)
 	addtimer(CALLBACK(src, PROC_REF(pants_stagetwo)), ALTAR_TIME)
 
 /// Continues the creation, making every mob nearby nauseous.
@@ -228,7 +224,7 @@ at the cost of risking a vicious bite.**/
 /obj/structure/destructible/cult/pants_altar/proc/check_menu(mob/user)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated || !user.Adjacent(src))
 		return FALSE
 	return TRUE
 
@@ -250,7 +246,6 @@ at the cost of risking a vicious bite.**/
 /obj/structure/steam_vent
 	name = "steam vent"
 	desc = "A device periodically filtering out moisture particles from the nearby walls and windows. It's only possible due to the moisture traps nearby."
-	icon = 'icons/obj/maintenance_loot.dmi'
 	icon_state = "steam_vent"
 	anchored = TRUE
 	density = FALSE

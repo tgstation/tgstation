@@ -62,7 +62,7 @@
 /turf/open/floor/plating/lavaland_atmos,
 /area/ruin/unpowered)
 "l" = (
-/turf/open/water/lavaland_atmos,
+/turf/open/water/hot_spring/lavaland_atmos,
 /area/lavaland/surface)
 "m" = (
 /obj/machinery/door/airlock/survival_pod/glass,
@@ -118,7 +118,7 @@
 /obj/structure/chair/plastic{
 	dir = 8
 	},
-/turf/open/misc/ashplanet/wateryrock,
+/turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
 /area/lavaland/surface)
 "y" = (
 /obj/structure/chair/comfy/shuttle{
@@ -129,7 +129,7 @@
 /area/ruin/unpowered)
 "z" = (
 /obj/item/book/manual/fish_catalog,
-/turf/open/misc/ashplanet/wateryrock,
+/turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
 /area/lavaland/surface)
 "B" = (
 /mob/living/basic/mining/goliath,
@@ -140,7 +140,7 @@
 /turf/open/misc/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface)
 "E" = (
-/turf/open/misc/ashplanet/wateryrock,
+/turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
 /area/lavaland/surface)
 "F" = (
 /obj/effect/mob_spawn/corpse/human/cargo_tech,
@@ -175,7 +175,7 @@
 /area/ruin/powered)
 "L" = (
 /obj/item/storage/toolbox/fishing,
-/turf/open/misc/ashplanet/wateryrock,
+/turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
 /area/lavaland/surface)
 "M" = (
 /obj/structure/rack,
@@ -213,7 +213,7 @@
 /area/ruin/powered)
 "U" = (
 /obj/item/bait_can/worm/premium,
-/turf/open/misc/ashplanet/wateryrock,
+/turf/open/misc/ashplanet/wateryrock/lavaland_atmos,
 /area/lavaland/surface)
 "V" = (
 /obj/structure/table/survival_pod,

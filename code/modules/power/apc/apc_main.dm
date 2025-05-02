@@ -17,9 +17,8 @@
 /obj/machinery/power/apc
 	name = "area power controller"
 	desc = "A control terminal for the area's electrical systems."
-
-	icon = 'icons/obj/machines/APC.dmi'
-	icon_state = "frame"
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "apc0"
 	use_power = NO_POWER_USE
 	req_access = null
 	max_integrity = 200
@@ -43,7 +42,6 @@
 	///Type of cell we start with
 	var/cell_type = /obj/item/stock_parts/power_store/battery/upgraded //Base cell has 2500 capacity. Enter the path of a different cell you want to use. cell determines charge rates, max capacity, ect. These can also be changed with other APC vars, but isn't recommended to minimize the risk of accidental usage of dirty editted APCs
 	///State of the cover (closed, opened, removed)
-	///Opens the upper hatch, exposes the cell, and the first part of the terminal
 	var/opened = APC_COVER_CLOSED
 	///Is the APC shorted and not working?
 	var/shorted = FALSE
@@ -114,6 +112,8 @@
 	var/low_power_nightshift_lights = FALSE
 	///Time when the nightshift where turned on last, to prevent spamming
 	var/last_nightshift_switch = 0
+	///Stores the flags for the icon state
+	var/update_state = -1
 	///Stores the flag for the overlays
 	var/update_overlay = -1
 	///Used to stop process from updating the icons too much
@@ -122,6 +122,8 @@
 	var/mob/remote_control_user = null
 	///Represents a signel source of power alarms for this apc
 	var/datum/alarm_handler/alarm_manager
+	/// Offsets the object by APC_PIXEL_OFFSET (defined in apc_defines.dm) pixels in the direction we want it placed in. This allows the APC to be embedded in a wall, yet still inside an area (like mapping).
+	var/offset_old
 	/// Used for apc helper called cut_AI_wire to make apc's wore responsible for ai connectione mended.
 	var/cut_AI_wire = FALSE
 	/// Used for apc helper called unlocked to make apc unlocked.
@@ -157,10 +159,26 @@
 		SSmachines.processing_apcs += src
 
 	//Pixel offset its appearance based on its direction
-	setDir(ndir)
+	dir = ndir
+	switch(dir)
+		if(NORTH)
+			offset_old = pixel_y
+			pixel_y = APC_PIXEL_OFFSET
+		if(SOUTH)
+			offset_old = pixel_y
+			pixel_y = -APC_PIXEL_OFFSET
+		if(EAST)
+			offset_old = pixel_x
+			pixel_x = APC_PIXEL_OFFSET
+		if(WEST)
+			offset_old = pixel_x
+			pixel_x = -APC_PIXEL_OFFSET
 
+	var/image/hud_image = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked")
+	hud_image.pixel_w = pixel_x
+	hud_image.pixel_z = pixel_y
 	hud_list = list(
-		MALF_APC_HUD = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked", pixel_x = src.pixel_x, pixel_y = src.pixel_y)
+		MALF_APC_HUD = hud_image
 	)
 
 	//Assign it to its area. If mappers already assigned an area string fast load the area from it else get the current area
@@ -195,18 +213,19 @@
 			cell = new cell_type(src)
 			cell.charge = start_charge * cell.maxcharge / 100 // (convert percentage to actual value)
 		make_terminal()
+		///This is how we test to ensure that mappers use the directional subtypes of APCs, rather than use the parent and pixel-shift it themselves.
+		if(abs(offset_old) != APC_PIXEL_OFFSET)
+			log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")
 	// For apcs created during the round players need to configure them from scratch
 	else
 		opened = APC_COVER_OPENED
 		operating = FALSE
 		set_machine_stat(machine_stat | MAINT)
-		setDir(REVERSE_DIR(ndir))
 
 	//Make the apc visually interactive
 	register_context()
 	addtimer(CALLBACK(src, PROC_REF(update)), 0.5 SECONDS)
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	update_appearance()
 
 	var/static/list/hovering_mob_typechecks = list(
@@ -221,7 +240,6 @@
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle interface lock")
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 	find_and_hang_on_wall()
-	AddComponent(/datum/component/examine_balloon)
 
 /obj/machinery/power/apc/Destroy()
 	if(malfai)
@@ -239,12 +257,11 @@
 		disconnect_terminal()
 	return ..()
 
-/obj/machinery/power/apc/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
-
+/obj/machinery/power/apc/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	disrupt_duration *= 0.1 // so, turns out, failure timer is in seconds, not deciseconds; without this, disruptions last 10 times as long as they probably should
 	energy_fail(disrupt_duration)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/machinery/power/apc/on_set_is_operational(old_value)
 	update_area_power_usage(!old_value)
@@ -253,7 +270,6 @@
 	. = ..()
 	if(auto_name)
 		name = "\improper [get_area_name(area, TRUE)] APC"
-
 
 /obj/machinery/power/apc/proc/assign_to_area(area/target_area = get_area(src))
 	if(area == target_area)
@@ -407,20 +423,26 @@
 	say("Remote access detected.[locked ? " Interface unlocked." : ""]")
 	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Connected to [src]."))
 	if(locked)
-		playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_on.ogg', 25, FALSE)
 		locked = FALSE
-	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 	update_appearance()
 
-/obj/machinery/power/apc/proc/disconnect_remote_access()
+/**
+ * Disconnects anyone using this APC via an APC control console and locks the interface.
+ * arguments:
+ * mute - whether the APC should announce the disconnection locally
+ */
+/obj/machinery/power/apc/proc/disconnect_remote_access(mute = FALSE)
 	// nothing to disconnect from
 	if(isnull(remote_control_user))
 		return
 	locked = TRUE
-	say("Remote access canceled. Interface locked.")
 	to_chat(remote_control_user, span_danger("[icon2html(src, remote_control_user)] Disconnected from [src]."))
-	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
-	playsound(src, 'sound/machines/terminal_alert.ogg', 50, FALSE)
+	if(!mute)
+		say("Remote access canceled. Interface locked.")
+		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
+		playsound(src, 'sound/machines/terminal/terminal_alert.ogg', 50, FALSE)
 	update_appearance()
 	remote_control_user = null
 
@@ -512,20 +534,24 @@
  * This adds up the total static power usage for the apc's area, then draw that power usage from the grid or APC cell.
  */
 /obj/machinery/power/apc/proc/early_process()
-	if(cell && cell.charge < cell.maxcharge)
+	if(!QDELETED(cell) && cell.charge < cell.maxcharge)
 		last_charging = charging
 		charging = APC_NOT_CHARGING
 	if(isnull(area))
 		return
 
 	var/total_static_energy_usage = 0
-	total_static_energy_usage += APC_CHANNEL_IS_ON(lighting) * area.energy_usage[AREA_USAGE_STATIC_LIGHT]
-	total_static_energy_usage += APC_CHANNEL_IS_ON(equipment) * area.energy_usage[AREA_USAGE_STATIC_EQUIP]
-	total_static_energy_usage += APC_CHANNEL_IS_ON(environ) * area.energy_usage[AREA_USAGE_STATIC_ENVIRON]
+	if(operating)
+		total_static_energy_usage += APC_CHANNEL_IS_ON(lighting) * area.energy_usage[AREA_USAGE_STATIC_LIGHT]
+		total_static_energy_usage += APC_CHANNEL_IS_ON(equipment) * area.energy_usage[AREA_USAGE_STATIC_EQUIP]
+		total_static_energy_usage += APC_CHANNEL_IS_ON(environ) * area.energy_usage[AREA_USAGE_STATIC_ENVIRON]
 	area.clear_usage()
 
 	if(total_static_energy_usage) //Use power from static power users.
-		draw_energy(total_static_energy_usage)
+		var/grid_used = min(terminal?.surplus(), total_static_energy_usage)
+		terminal?.add_load(grid_used)
+		if(total_static_energy_usage > grid_used && !QDELETED(cell))
+			cell.use(total_static_energy_usage - grid_used, force = TRUE)
 
 /obj/machinery/power/apc/proc/late_process(seconds_per_tick)
 	if(icon_update_needed)
@@ -545,9 +571,15 @@
 			flicker_hacked_icon()
 
 	//dont use any power from that channel if we shut that power channel off
-	lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.energy_usage[AREA_USAGE_LIGHT] + area.energy_usage[AREA_USAGE_STATIC_LIGHT] : 0
-	lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.energy_usage[AREA_USAGE_EQUIP] + area.energy_usage[AREA_USAGE_STATIC_EQUIP] : 0
-	lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.energy_usage[AREA_USAGE_ENVIRON] + area.energy_usage[AREA_USAGE_STATIC_ENVIRON] : 0
+	if(operating)
+		lastused_light = APC_CHANNEL_IS_ON(lighting) ? area.energy_usage[AREA_USAGE_LIGHT] + area.energy_usage[AREA_USAGE_STATIC_LIGHT] : 0
+		lastused_equip = APC_CHANNEL_IS_ON(equipment) ? area.energy_usage[AREA_USAGE_EQUIP] + area.energy_usage[AREA_USAGE_STATIC_EQUIP] : 0
+		lastused_environ = APC_CHANNEL_IS_ON(environ) ? area.energy_usage[AREA_USAGE_ENVIRON] + area.energy_usage[AREA_USAGE_STATIC_ENVIRON] : 0
+	else
+		lastused_light = 0
+		lastused_equip = 0
+		lastused_environ = 0
+
 	lastused_charge = charging == APC_CHARGING ? area.energy_usage[AREA_USAGE_APC_CHARGE] : 0
 
 	lastused_total = lastused_light + lastused_equip + lastused_environ + lastused_charge
@@ -670,7 +702,7 @@
 /obj/machinery/power/apc/proc/overload_lighting()
 	if(!operating || shorted)
 		return
-	if(cell && cell.use(0.02 * STANDARD_CELL_CHARGE))
+	if(cell && cell.use(0.02 * STANDARD_BATTERY_CHARGE))
 		INVOKE_ASYNC(src, PROC_REF(break_lights))
 
 /obj/machinery/power/apc/proc/break_lights()
@@ -736,21 +768,6 @@
 /// Returns the cell's current charge.
 /obj/machinery/power/apc/proc/charge()
 	return cell.charge
-
-/// Draws energy from the connected grid. When there isn't enough surplus energy from the grid, draws the rest of the demand from its cell. Returns the energy used.
-/obj/machinery/power/apc/proc/draw_energy(amount)
-	var/grid_used = min(terminal?.surplus(), amount)
-	terminal?.add_load(grid_used)
-	if(QDELETED(cell))
-		return grid_used
-	var/cell_used = 0
-	if(amount > grid_used)
-		cell_used += cell.use(amount - grid_used, force = TRUE)
-	return grid_used + cell_used
-
-/// Draws power from the connected grid. When there isn't enough surplus energy from the grid, draws the rest of the demand from its cell. Returns the energy used.
-/obj/machinery/power/apc/proc/draw_power(amount)
-	return draw_energy(power_to_energy(amount))
 
 /*Power module, used for APC construction*/
 /obj/item/electronics/apc

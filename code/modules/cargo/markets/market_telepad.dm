@@ -2,7 +2,7 @@
 #define PLACE_ON_MARKET_COST PAYCHECK_LOWER * 1.2
 
 /obj/item/circuitboard/machine/ltsrbt
-	name = "LTSRBT (Machine Board)"
+	name = "Long-To-Short-Range Bluespace Transceiver"
 	icon_state = "bluespacearray"
 	build_path = /obj/machinery/ltsrbt
 	req_components = list(
@@ -13,8 +13,8 @@
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/machinery/ltsrbt
-	name = "Long-To-Short-Range-Bluespace-Transceiver"
-	desc = "The LTSRBT is a compact teleportation machine for receiving and sending items outside the station and inside the station.\nUsing teleportation frequencies stolen from NT it is near undetectable.\nEssential for any illegal market operations on NT stations.\n"
+	name = "Long-To-Short-Range Bluespace Transceiver"
+	desc = "The LTSRBT is a compact teleportation machine for sending and receiving items both inside and outside the station.\nUsing teleportation frequencies stolen from NT, it is near undetectable.\nEssential for any illegal market operations on NT stations."
 	icon = 'icons/obj/machines/ltsrbt.dmi'
 	icon_state = "ltsrbt_idle"
 	base_icon_state = "ltsrbt"
@@ -176,7 +176,7 @@
 	if(state_open)
 		if(locate(/mob/living) in tool.get_all_contents())
 			say("Living being detected, cannot sell!")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return ITEM_INTERACT_BLOCKING
 		if(!user.transferItemToLoc(tool, src))
 			balloon_alert(user, "stuck to your hands!")
@@ -193,7 +193,7 @@
 
 	if(creds_value < restock_cost)
 		say("Insufficient credits!")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 		return ITEM_INTERACT_BLOCKING
 
 	if(istype(tool, /obj/item/holochip))
@@ -271,7 +271,7 @@
 		return
 	if(locate(/mob/living) in occupant.get_all_contents())
 		say("Living being detected, cannot sell!")
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
+		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 		return
 	var/datum/bank_account/account
 	var/datum/market/our_market = SSmarket.markets[/datum/market/blackmarket]
@@ -280,17 +280,17 @@
 			return
 		if(length(our_market.available_items[/datum/market_item/local_good::category]) >= LTSRBT_MAX_MARKET_ITEMS)
 			say("Local market saturated, buy some goods first!")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return
 		var/mob/living/living_user = user
 		var/obj/item/card/id/card = living_user.get_idcard(TRUE)
 		if(!(card?.registered_account))
 			say("No bank account to charge market fees detected!")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return
 		if(!card.registered_account.adjust_money(-PLACE_ON_MARKET_COST, "Market: Placement Fee"))
 			say("Insufficient credits!")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 40, FALSE)
+			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 40, FALSE)
 			return
 		account = card.registered_account
 

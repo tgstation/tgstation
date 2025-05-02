@@ -43,6 +43,7 @@
 		if((user.get_active_held_item() != used_item) || !user.can_perform_action(src))
 			return
 		if(new_name)
+			playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 			name = "implant case - '[new_name]'"
 		else
 			name = "implant case"

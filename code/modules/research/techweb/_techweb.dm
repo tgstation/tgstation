@@ -149,10 +149,10 @@
 		CHECK_TICK
 		if(get_available_nodes()[i] || get_researched_nodes()[i] || get_visible_nodes()[i])
 			receiver.hidden_nodes -= i //We can see it so let them see it too.
-	for(var/i in researched_nodes)
+	for(var/i in researched_nodes - receiver.researched_nodes)
 		CHECK_TICK
 		receiver.research_node_id(i, TRUE, FALSE, FALSE)
-	for(var/i in researched_designs)
+	for(var/i in researched_designs - receiver.researched_designs)
 		CHECK_TICK
 		receiver.add_design_by_id(i)
 	receiver.recalculate_nodes()
@@ -317,11 +317,7 @@
 	var/points_rewarded
 	if(completed_experiment.points_reward)
 		add_point_list(completed_experiment.points_reward)
-		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding "
-		var/list/english_list_keys = list()
-		for(var/points_type in completed_experiment.points_reward)
-			english_list_keys += "[completed_experiment.points_reward[points_type]] [points_type]"
-		points_rewarded += "[english_list(english_list_keys)] points"
+		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding [completed_experiment.get_points_reward_text()]"
 		result_text += points_rewarded
 	result_text += "!"
 
@@ -365,10 +361,10 @@
 
 	return TRUE
 
-/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id)
-	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id)
+/datum/techweb/proc/research_node_id(id, force, auto_update_points, get_that_dosh_id, atom/research_source)
+	return research_node(SSresearch.techweb_node_by_id(id), force, auto_update_points, get_that_dosh_id, research_source)
 
-/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE)
+/datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, atom/research_source)
 	if(!istype(node))
 		return FALSE
 	update_node_status(node)
@@ -490,7 +486,7 @@
 		return
 	if(researched)
 		researched_nodes[node.id] = TRUE
-		for(var/id in node.design_ids)
+		for(var/id in node.design_ids - researched_designs)
 			add_design(SSresearch.techweb_design_by_id(id))
 	else
 		if(available)

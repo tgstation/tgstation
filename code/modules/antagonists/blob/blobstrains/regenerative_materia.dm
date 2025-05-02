@@ -12,10 +12,11 @@
 
 /datum/reagent/blob/regenerative_materia
 	name = "Regenerative Materia"
+	description = "Chemical that inflicts toxin damage and makes the target believe they are fully healed. Regenerative materia blobs inject this into their victims."
 	taste_description = "heaven"
 	color = "#A88FB7"
 
-/datum/reagent/blob/regenerative_materia/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+/datum/reagent/blob/regenerative_materia/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/eye/blob/overmind)
 	. = ..()
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 	if(iscarbon(exposed_mob))

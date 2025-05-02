@@ -1,18 +1,10 @@
 /obj/machinery/button
 	name = "button"
 	desc = "A remote control switch."
-	icon = 'icons/obj/machines/button.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	base_icon_state = "button"
 	icon_state = "button"
 	power_channel = AREA_USAGE_ENVIRON
-	/// How long to animate our success for
-	var/success_delay = 1 SECONDS
-	/// How long to animate failure to activate for
-	var/deny_delay = 3 SECONDS
-	/// Mutable appearance that holds our current emissive state
-	var/mutable_appearance/glow
-	/// Timer id of the current animation that's running, if any exists
-	var/animation_timer
 	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
 	light_range = 1.5
 	light_color = LIGHT_COLOR_VIVID_GREEN
@@ -20,6 +12,7 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	interaction_flags_machine = parent_type::interaction_flags_machine | INTERACT_MACHINE_OPEN
+	mouse_over_pointer = MOUSE_HAND_POINTER
 	///Icon suffix for the skin of the front pannel that is added to base_icon_state
 	var/skin = ""
 	///Whether it is possible to change the panel skin
@@ -31,15 +24,9 @@
 	var/id = null
 	var/initialized_button = FALSE
 	var/silicon_access_disabled = FALSE
-	// Is this button meant to draw on a table
-	var/on_table = FALSE
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button)
 
 /obj/machinery/button/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/indestructible)
 
 /datum/armor/machinery_button
 	melee = 50
@@ -75,10 +62,7 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/indestructible)
 			board.accesses = req_one_access
 
 	setup_device()
-	update_glow()
-	if(!on_table)
-		find_and_hang_on_wall()
-		AddComponent(/datum/component/examine_balloon, pixel_y_offset = 24, pixel_y_offset_arrow = 0, size_upscaling = 2)
+	find_and_hang_on_wall()
 	register_context()
 
 /obj/machinery/button/Destroy()
@@ -103,10 +87,7 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/indestructible)
  */
 
 /obj/machinery/button/update_icon_state()
-	if(!(panel_open && machine_stat & (NOPOWER|BROKEN)))
-		return ..()
-	halt_animation()
-	icon_state = "[base_icon_state]"
+	icon_state = "[base_icon_state][skin]"
 	if(panel_open)
 		icon_state += "-open"
 	else if(machine_stat & (NOPOWER|BROKEN))
@@ -125,36 +106,15 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/indestructible)
 	. = ..()
 
 	if(panel_open && board)
-		. += "[base_icon_state]-board"
+		. += "[base_icon_state]-overlay-board"
 	if(panel_open && device)
 		if(istype(device, /obj/item/assembly/signaler))
-			. += "[base_icon_state]-signaler"
+			. += "[base_icon_state]-overlay-signaler"
 		else
-			. += "[base_icon_state]-device"
+			. += "[base_icon_state]-overlay-device"
 
 	if(!(machine_stat & (NOPOWER|BROKEN)) && !panel_open)
-		. += glow
-
-/obj/machinery/button/proc/update_glow()
-	make_glow()
-	update_appearance()
-
-/obj/machinery/button/proc/make_glow()
-	// Icon state so this works for success/failure cases. The sprites finish forever on the base sprite so it's... fine this way
-	glow = emissive_appearance(icon, "[icon_state]-mask", src, alpha = src.alpha)
-
-/obj/machinery/button/proc/start_animation(delay)
-	halt_animation()
-	animation_timer = addtimer(CALLBACK(src, PROC_REF(halt_animation)), delay, TIMER_CLIENT_TIME|TIMER_STOPPABLE|TIMER_UNIQUE)
-
-/obj/machinery/button/proc/halt_animation()
-	if(!animation_timer)
-		return
-	deltimer(animation_timer)
-	animation_timer = null
-	icon_state = base_icon_state
-	update_glow()
-	update_appearance()
+		. += emissive_appearance(icon, "[base_icon_state]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/button/on_set_panel_open(old_value)
 	if(panel_open) // Only allow renaming while the panel is open
@@ -180,11 +140,15 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/indestructible)
 	if(device)
 		to_chat(user, span_warning("The button already contains a device!"))
 		return ITEM_INTERACT_BLOCKING
+	if(!(new_device.assembly_behavior & ASSEMBLY_FUNCTIONAL_OUTPUT))
+		to_chat(user, span_warning("\The [new_device] won't really do anything meaningful inside of the button..."))
+		return ITEM_INTERACT_BLOCKING
 	if(!user.transferItemToLoc(new_device, src, silent = FALSE))
 		to_chat(user, span_warning("\The [new_device] is stuck to you!"))
 		return ITEM_INTERACT_BLOCKING
 
 	device = new_device
+	SEND_SIGNAL(new_device, COMSIG_ASSEMBLY_ADDED_TO_BUTTON, src, user)
 	to_chat(user, span_notice("You add \the [new_device] to the button."))
 
 	update_appearance()
@@ -210,14 +174,12 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/indestructible)
 
 /obj/machinery/button/screwdriver_act(mob/living/user, obj/item/tool)
 	if(panel_open || allowed(user))
-		default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, tool)
+		default_deconstruction_screwdriver(user, "[base_icon_state][skin]-open", "[base_icon_state][skin]", tool)
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "access denied")
-	icon_state = "[base_icon_state]-denied"
-	update_glow()
-	start_animation(deny_delay)
+	flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
 	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/button/wrench_act(mob/living/user, obj/item/tool)
@@ -260,7 +222,6 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/indestructible)
 	if(!device?.emag_act(user, emag_card))
 		balloon_alert(user, "access overridden")
 	return TRUE
-
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!silicon_access_disabled && !panel_open)
@@ -316,6 +277,7 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/indestructible)
 	return ..()
 
 /obj/machinery/button/proc/remove_assembly(mob/user)
+	SEND_SIGNAL(device, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON, src, user)
 	user.put_in_hands(device)
 	to_chat(user, span_notice("You remove \the [device] from the button frame."))
 	device = null
@@ -338,13 +300,11 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/indestructible)
 
 	if(!allowed(user))
 		balloon_alert(user, "access denied")
-		icon_state = "[base_icon_state]-denied"
-		update_glow()
-		start_animation(deny_delay)
+		flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
 		return FALSE
 
 	use_energy(5 JOULES)
-	start_animation(success_delay)
+	flick_overlay_view("[base_icon_state]-overlay-success", 1 SECONDS)
 
 	if(device)
 		device.pulsed(user)
@@ -433,12 +393,10 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/indestructible)
 	var/specialfunctions = OPEN // Bitflag, see assembly file
 	var/sync_doors = TRUE
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/door)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/door, 24)
 
 /obj/machinery/button/door/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/door/indestructible)
 
 /obj/machinery/button/door/setup_device()
 	if(!device)
@@ -457,118 +415,84 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/door/indestructible)
 	id = INCINERATOR_ORDMIX_VENT
 	req_access = list(ACCESS_ORDNANCE)
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/door/incinerator_vent_ordmix)
-
 /obj/machinery/button/door/incinerator_vent_atmos_main
 	name = "turbine vent control"
 	id = INCINERATOR_ATMOS_MAINVENT
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/door/incinerator_vent_atmos_main)
 
 /obj/machinery/button/door/incinerator_vent_atmos_aux
 	name = "combustion chamber vent control"
 	id = INCINERATOR_ATMOS_AUXVENT
 	req_one_access = list(ACCESS_ATMOSPHERICS, ACCESS_MAINT_TUNNELS)
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/door/incinerator_vent_atmos_aux)
-
 /obj/machinery/button/door/atmos_test_room_mainvent_1
 	name = "test chamber 1 vent control"
 	id = TEST_ROOM_ATMOS_MAINVENT_1
 	req_one_access = list(ACCESS_ATMOSPHERICS)
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/door/atmos_test_room_mainvent_1)
 
 /obj/machinery/button/door/atmos_test_room_mainvent_2
 	name = "test chamber 2 vent control"
 	id = TEST_ROOM_ATMOS_MAINVENT_2
 	req_one_access = list(ACCESS_ATMOSPHERICS)
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/door/atmos_test_room_mainvent_2)
-
 /obj/machinery/button/door/incinerator_vent_syndicatelava_main
 	name = "turbine vent control"
 	id = INCINERATOR_SYNDICATELAVA_MAINVENT
 	req_access = list(ACCESS_SYNDICATE)
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/door/incinerator_vent_syndicatelava_main)
 
 /obj/machinery/button/door/incinerator_vent_syndicatelava_aux
 	name = "combustion chamber vent control"
 	id = INCINERATOR_SYNDICATELAVA_AUXVENT
 	req_access = list(ACCESS_SYNDICATE)
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/door/incinerator_vent_syndicatelava_aux)
-
 /obj/machinery/button/massdriver
 	name = "mass driver button"
 	desc = "A remote control switch for a mass driver."
-	icon_state = "launcher"
-	base_icon_state = "launcher"
+	icon_state= "button-warning"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/massdriver
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/massdriver)
 
 /obj/machinery/button/massdriver/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/massdriver/indestructible)
-
 /obj/machinery/button/ignition
 	name = "ignition switch"
 	desc = "A remote control switch for a mounted igniter."
-	icon_state = "launcher"
-	base_icon_state = "launcher"
+	icon_state= "button-warning"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/igniter
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ignition)
 
 /obj/machinery/button/ignition/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ignition/indestructible)
 
 /obj/machinery/button/ignition/incinerator
 	name = "combustion chamber ignition switch"
 	desc = "A remote control switch for the combustion chamber's igniter."
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ignition/incinerator)
-
 /obj/machinery/button/ignition/incinerator/ordmix
 	id = INCINERATOR_ORDMIX_IGNITER
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ignition/incinerator/ordmix)
 
 /obj/machinery/button/ignition/incinerator/atmos
 	id = INCINERATOR_ATMOS_IGNITER
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ignition/incinerator/atmos)
-
 /obj/machinery/button/ignition/incinerator/syndicatelava
 	id = INCINERATOR_SYNDICATELAVA_IGNITER
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/ignition/incinerator/syndicatelava)
 
 /obj/machinery/button/flasher
 	name = "flasher button"
 	desc = "A remote control switch for a mounted flasher."
-	icon_state = "launcher"
-	base_icon_state = "launcher"
+	icon_state= "button-warning"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/flasher
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/flasher)
 
 /obj/machinery/button/flasher/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/flasher/indestructible)
-
 /obj/machinery/button/curtain
 	name = "curtain button"
 	desc = "A remote control switch for a mechanical curtain."
-	icon_state = "launcher"
-	base_icon_state = "launcher"
+	icon_state= "button-warning"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/curtain
 	var/sync_doors = TRUE
 
@@ -577,28 +501,22 @@ BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/flasher/indestructible)
 	curtain.sync_doors = sync_doors
 	return ..()
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/curtain)
-
 /obj/machinery/button/crematorium
 	name = "crematorium igniter"
 	desc = "Burn baby burn!"
-	icon_state = "launcher"
-	base_icon_state = "launcher"
+	icon_state= "button-warning"
+	skin = "-warning"
 	device_type = /obj/item/assembly/control/crematorium
 	req_access = list()
 	id = 1
 
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/crematorium)
-
 /obj/machinery/button/crematorium/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/crematorium/indestructible)
 
 /obj/item/wallframe/button
 	name = "button frame"
 	desc = "Used for building buttons."
-	icon = 'icons/obj/machines/button.dmi'
 	icon_state = "button"
 	result_path = /obj/machinery/button
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
+	pixel_shift = 24

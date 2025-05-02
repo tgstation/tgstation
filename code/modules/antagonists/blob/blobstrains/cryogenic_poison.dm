@@ -12,11 +12,11 @@
 
 /datum/reagent/blob/cryogenic_poison
 	name = "Cryogenic Poison"
-	description = "will inject targets with a freezing poison that does high damage over time."
+	description = "A freezing poison that does high damage over time. Cryogenic poison blobs inject this into their victims."
 	color = "#8BA6E9"
 	taste_description = "brain freeze"
 
-/datum/reagent/blob/cryogenic_poison/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/overmind)
+/datum/reagent/blob/cryogenic_poison/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message, touch_protection, mob/eye/blob/overmind)
 	. = ..()
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 	if(exposed_mob.reagents)

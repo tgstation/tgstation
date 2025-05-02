@@ -1,8 +1,8 @@
-import { isEscape, KEY } from 'common/keys';
 import { KeyboardEvent, useState } from 'react';
+import { Box, Section, Stack, TextArea } from 'tgui-core/components';
+import { isEscape, KEY } from 'tgui-core/keys';
 
 import { useBackend } from '../backend';
-import { Box, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
@@ -83,7 +83,7 @@ export const TextInputModal = (props) => {
             <Stack.Item>
               <InputButtons
                 input={input}
-                message={`${input.length}/${max_length}`}
+                message={`${input.length}/${max_length || '∞'}`}
               />
             </Stack.Item>
           </Stack>

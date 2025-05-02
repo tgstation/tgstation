@@ -6,7 +6,7 @@
 	max_volume = 80
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pie" = 1)
-	foodtypes = GRAIN
+	foodtypes = GRAIN | DAIRY
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_2
 	/// type is spawned 5 at a time and replaces this pie when processed by cutting tool
@@ -24,7 +24,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("pie" = 1, "uncertainty" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pie/plain
@@ -36,7 +36,6 @@
 		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("pie" = 1)
-	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pie/plain/Initialize(mapload)
@@ -47,14 +46,12 @@
 	name = "pie"
 	desc = "A custom pie made by a crazed chef."
 	icon_state = "pie_custom"
-	foodtypes = GRAIN
 	slice_type = /obj/item/food/pieslice/empty
 
 /obj/item/food/pieslice/empty
 	name = "pie slice"
 	desc = "A custom pie slice made by a crazed chef."
 	icon_state = "pie_custom_slice"
-	foodtypes = GRAIN
 
 /obj/item/food/pieslice/empty/Initialize(mapload)
 	. = ..()
@@ -70,36 +67,21 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("pie" = 1)
-	foodtypes = GRAIN | DAIRY | SUGAR
+	foodtypes = GRAIN|DAIRY|SUGAR|FRUIT
 	var/stunning = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/pie/cream/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/food/pie/cream/Initialize(mapload)
 	. = ..()
-	if(!.) //if we're not being caught
-		splat(hit_atom)
+	AddComponent(/datum/component/splat, hit_callback = CALLBACK(src, PROC_REF(stun_and_blur)))
 
-/obj/item/food/pie/cream/proc/splat(atom/movable/hit_atom)
-	if(isliving(loc)) //someone caught us!
-		return
-	var/turf/hit_turf = get_turf(hit_atom)
-	new/obj/effect/decal/cleanable/food/pie_smudge(hit_turf)
-	if(reagents?.total_volume)
-		reagents.expose(hit_atom, TOUCH)
-	var/is_creamable = TRUE
-	if(isliving(hit_atom))
-		var/mob/living/living_target_getting_hit = hit_atom
-		if(stunning)
-			living_target_getting_hit.Paralyze(2 SECONDS) //splat!
-		if(iscarbon(living_target_getting_hit))
-			is_creamable = !!(living_target_getting_hit.get_bodypart(BODY_ZONE_HEAD))
-		if(is_creamable)
-			living_target_getting_hit.adjust_eye_blur(2 SECONDS)
-		living_target_getting_hit.visible_message(span_warning("[living_target_getting_hit] is creamed by [src]!"), span_userdanger("You've been creamed by [src]!"))
-		playsound(living_target_getting_hit, SFX_DESECRATION, 50, TRUE)
-	if(is_creamable && is_type_in_typecache(hit_atom, GLOB.creamable))
-		hit_atom.AddComponent(/datum/component/creamed, src)
-	qdel(src)
+/obj/item/food/pie/cream/proc/stun_and_blur(mob/living/victim, can_splat_on)
+	if(stunning)
+		victim.Paralyze(2 SECONDS) //splat!
+	if(can_splat_on)
+		victim.adjust_eye_blur(2 SECONDS)
+	victim.visible_message(span_warning("[victim] is creamed by [src]!"), span_userdanger("You've been creamed by [src]!"))
+	playsound(victim, SFX_DESECRATION, 50, TRUE)
 
 /obj/item/food/pie/cream/nostun
 	stunning = FALSE
@@ -114,7 +96,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("pie" = 1, "blackberries" = 1)
-	foodtypes = GRAIN | FRUIT | SUGAR
+	foodtypes = GRAIN|FRUIT|DAIRY|SUGAR
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -128,7 +110,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("pie" = 1, "meat" = 1, "salmon" = 1)
-	foodtypes = GRAIN | SUGAR | MEAT | FRUIT
+	foodtypes = GRAIN|DAIRY|SUGAR|MEAT|FRUIT
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pie/meatpie
@@ -141,7 +123,7 @@
 		/datum/reagent/consumable/nutriment/protein = 2,
 	)
 	tastes = list("pie" = 1, "meat" = 1)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN|DAIRY|MEAT
 	venue_value = FOOD_PRICE_NORMAL
 	slice_type = /obj/item/food/pieslice/meatpie
 	crafting_complexity = FOOD_COMPLEXITY_3
@@ -151,7 +133,7 @@
 	desc = "Oh nice, meat pie!"
 	icon_state = "meatpie_slice"
 	tastes = list("pie" = 1, "meat" = 1)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN|DAIRY|MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/tofupie
@@ -164,7 +146,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("pie" = 1, "tofu" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN|DAIRY|VEGETABLES
 	slice_type = /obj/item/food/pieslice/tofupie
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -173,7 +155,7 @@
 	desc = "Oh nice, meat pie- WAIT A MINUTE!!"
 	icon_state = "meatpie_slice"
 	tastes = list("pie" = 1, "disappointment" = 1, "tofu" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN|DAIRY|VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/amanita_pie
@@ -188,7 +170,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("pie" = 1, "mushroom" = 1)
-	foodtypes = GRAIN | VEGETABLES | TOXIC | GROSS
+	foodtypes = GRAIN|DAIRY|VEGETABLES|TOXIC|GROSS
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/plump_pie
@@ -200,7 +182,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("pie" = 1, "mushroom" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN|DAIRY|VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/plump_pie/Initialize(mapload)
@@ -225,7 +207,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("pie" = 1, "meat" = 1, "acid" = 1)
-	foodtypes = GRAIN | MEAT
+	foodtypes = MEAT|GRAIN|DAIRY
 	slice_type = /obj/item/food/pieslice/xemeatpie
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -234,7 +216,7 @@
 	desc = "Oh god... Is that still moving?"
 	icon_state = "xenopie_slice"
 	tastes = list("pie" = 1, "acid" = 1, "meat" = 1)
-	foodtypes = GRAIN | MEAT
+	foodtypes = GRAIN|DAIRY|MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/applepie
@@ -246,7 +228,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("pie" = 1, "apple" = 1)
-	foodtypes = GRAIN | FRUIT | SUGAR
+	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
 	slice_type = /obj/item/food/pieslice/apple
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -255,7 +237,7 @@
 	desc = "A slice of comfy apple pie, warm autumn memories ahead."
 	icon_state = "applepie_slice"
 	tastes = list("pie" = 1, "apples" = 1)
-	foodtypes = GRAIN | FRUIT | SUGAR
+	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 
@@ -268,7 +250,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("pie" = 7, "Nicole Paige Brooks" = 2)
-	foodtypes = GRAIN | FRUIT | SUGAR
+	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
 	slice_type = /obj/item/food/pieslice/cherry
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -277,7 +259,7 @@
 	desc = "A slice of delicious cherry pie, I hope it's morellos!"
 	icon_state = "cherrypie_slice"
 	tastes = list("pie" = 1, "apples" = 1)
-	foodtypes = GRAIN | FRUIT | SUGAR
+	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/pumpkinpie
@@ -289,7 +271,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("pie" = 1, "pumpkin" = 1)
-	foodtypes = GRAIN | VEGETABLES | SUGAR
+	foodtypes = GRAIN|DAIRY|VEGETABLES|SUGAR
 	slice_type = /obj/item/food/pieslice/pumpkin
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -298,7 +280,7 @@
 	desc = "A slice of pumpkin pie, with whipped cream on top. Perfection."
 	icon_state = "pumpkinpieslice"
 	tastes = list("pie" = 1, "pumpkin" = 1)
-	foodtypes = GRAIN | VEGETABLES | SUGAR
+	foodtypes = GRAIN|DAIRY|VEGETABLES|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/appletart
@@ -311,7 +293,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("pie" = 1, "apple" = 1, "expensive metal" = 1)
-	foodtypes = GRAIN | FRUIT | SUGAR
+	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pie/grapetart
@@ -323,7 +305,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("pie" = 1, "grape" = 1)
-	foodtypes = GRAIN | FRUIT | SUGAR
+	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pie/mimetart
@@ -336,7 +318,7 @@
 		/datum/reagent/consumable/nothing = 10,
 	)
 	tastes = list("nothing" = 3)
-	foodtypes = GRAIN
+	foodtypes = GRAIN|DAIRY|SUGAR
 	crafted_food_buff = /datum/status_effect/food/trait/mute
 
 /obj/item/food/pie/berrytart
@@ -348,7 +330,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("pie" = 1, "berries" = 2)
-	foodtypes = GRAIN | FRUIT
+	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
 
 /obj/item/food/pie/cocolavatart
 	name = "chocolate lava tart"
@@ -359,7 +341,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 	)
 	tastes = list("pie" = 1, "dark chocolate" = 3)
-	foodtypes = GRAIN | SUGAR
+	foodtypes = GRAIN|DAIRY|SUGAR
 
 /obj/item/food/pie/blumpkinpie
 	name = "blumpkin pie"
@@ -370,7 +352,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("pie" = 1, "a mouthful of pool water" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN|DAIRY|VEGETABLES|SUGAR
 	slice_type = /obj/item/food/pieslice/blumpkin
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -379,7 +361,7 @@
 	desc = "A slice of blumpkin pie, with whipped cream on top. Is this edible?"
 	icon_state = "blumpkinpieslice"
 	tastes = list("pie" = 1, "a mouthful of pool water" = 1)
-	foodtypes = GRAIN | VEGETABLES
+	foodtypes = GRAIN|DAIRY|VEGETABLES|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/pie/dulcedebatata
@@ -413,7 +395,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("mint" = 1, "pie" = 1)
-	foodtypes = GRAIN | FRUIT | SUGAR
+	foodtypes = GRAIN|DAIRY|FRUIT|SUGAR
 	slice_type = /obj/item/food/pieslice/frostypie
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -434,7 +416,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 6,
 	)
 	tastes = list("nuts" = 1, "pie" = 1)
-	foodtypes = NUTS | SUGAR
+	foodtypes = GRAIN|DAIRY|SUGAR
 	slice_type = /obj/item/food/pieslice/baklava
 	yield = 6
 	crafting_complexity = FOOD_COMPLEXITY_4
@@ -444,7 +426,8 @@
 	desc = "A portion of a delightful healthy snack made of nut layers with thin bread"
 	icon_state = "baklavaslice"
 	tastes = list("nuts" = 1, "pie" = 1)
-	foodtypes = NUTS | SUGAR
+	foodtypes = GRAIN|DAIRY|SUGAR
+	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/pie/frenchsilkpie
 	name = "french silk pie"
@@ -504,7 +487,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("pie" = 1, "the far off year of 2010" = 1)
-	foodtypes = GRAIN
+	foodtypes = GRAIN|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/pie/bacid_pie
@@ -516,7 +499,7 @@
 		/datum/reagent/consumable/liquidelectricity/enriched = 18
 	)
 	tastes = list("battery acid" = 2, "electricity" = 2, "a cyber world" = 2)
-	foodtypes = TOXIC
+	foodtypes = GRAIN|DAIRY|TOXIC
 	slice_type = /obj/item/food/pieslice/bacid_pie
 	yield = 4
 	crafting_complexity = FOOD_COMPLEXITY_3

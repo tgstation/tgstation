@@ -2,7 +2,7 @@
 
 /obj/item/resonator
 	name = "resonator"
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "resonator"
 	inhand_icon_state = "resonator"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 15
 	throwforce = 10
+	slot_flags = ITEM_SLOT_BELT
 
 	/// the mode of the resonator; has three modes: auto (1), manual (2), and matrix (3)
 	var/mode = RESONATOR_MODE_AUTO
@@ -53,6 +54,7 @@
 	desc = "A resonating field that significantly damages anything inside of it when the field eventually ruptures. More damaging in low pressure environments."
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	duration = 60 SECONDS
 	/// the amount of damage living beings will take whilst inside the field during its burst
 	var/resonance_damage = 20
@@ -86,7 +88,7 @@
 	if(parent_resonator)
 		parent_resonator.fields += src
 	adding_failure = set_failure
-	playsound(src,'sound/weapons/resonator_fire.ogg',50,TRUE)
+	playsound(src,'sound/items/weapons/resonator_fire.ogg',50,TRUE)
 	if(mode == RESONATOR_MODE_AUTO)
 		transform = matrix()*0.75
 		animate(src, transform = matrix()*1.5, time = duration)
@@ -122,7 +124,7 @@
 		var/turf/closed/mineral/mineral_turf = src_turf
 		mineral_turf.gets_drilled(creator)
 	check_pressure(src_turf)
-	playsound(src_turf, 'sound/weapons/resonator_blast.ogg', 50, TRUE)
+	playsound(src_turf, 'sound/items/weapons/resonator_blast.ogg', 50, TRUE)
 	for(var/mob/living/attacked_living in src_turf)
 		if(creator)
 			log_combat(creator, attacked_living, "used a resonator field on", "resonator")
@@ -146,6 +148,7 @@
 /obj/effect/temp_visual/resonance_crush
 	icon_state = "shield1"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	duration = 4
 
 /obj/effect/temp_visual/resonance_crush/Initialize(mapload)

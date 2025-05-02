@@ -1,4 +1,4 @@
-import { Box, Flex } from '../../components';
+import { Box, Flex } from 'tgui-core/components';
 
 export const calculateProgression = (progression_points: number) => {
   return Math.round(progression_points / 6) / 10;
@@ -69,8 +69,6 @@ export const ranks: Rank[] = [
     gradient: bestGradient,
   },
 ];
-
-export const dangerDefault = 50 * 600;
 
 let lastMinutesThan = -1;
 export const dangerLevelsTooltip = (

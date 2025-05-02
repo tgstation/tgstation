@@ -22,7 +22,7 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	materials = AddComponent(/datum/component/remote_materials, mapload, whitelist_typecache = typecacheof(/obj/item/circuit_component))
+	materials = AddComponent(/datum/component/remote_materials, mapload)
 
 /obj/machinery/component_printer/post_machine_initialize()
 	. = ..()
@@ -66,6 +66,19 @@
 		return
 	current_unlocked_designs -= added_design.build_path
 
+/obj/machinery/component_printer/base_item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	//to allow quick recycling of circuits
+	if(istype(tool, /obj/item/circuit_component))
+		var/amount_inserted = materials.insert_item(tool)
+
+		if(amount_inserted)
+			to_chat(user, span_notice("[tool] worth [amount_inserted / SHEET_MATERIAL_AMOUNT] sheets of material was consumed by [src]"))
+		else
+			to_chat(user, span_warning("[tool] was rejected by [src]"))
+
+		return amount_inserted > 0 ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_FAILURE
+
+	return ..()
 
 /obj/machinery/component_printer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -75,7 +88,8 @@
 
 /obj/machinery/component_printer/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/component_printer/RefreshParts()
@@ -164,7 +178,7 @@
 
 	var/list/designs = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	// for (var/datum/design/component/component_design_type as anything in subtypesof(/datum/design/component))
@@ -272,8 +286,8 @@
 
 /obj/machinery/debug_component_printer/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/debug_component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -337,8 +351,8 @@
 
 /obj/machinery/module_duplicator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/module_duplicator/RefreshParts()

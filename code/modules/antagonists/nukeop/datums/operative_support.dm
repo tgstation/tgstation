@@ -14,6 +14,9 @@
 	..()
 	for(var/datum/mind/teammate_mind in nuke_team.members)
 		var/mob/living/our_teammate = teammate_mind.current
+		if(!istype(our_teammate)) // If an agent is purchased after the death of an agent -- when they no longer have a body, we skip that mind because they're invalid.
+			continue
+
 		our_teammate.AddComponent( \
 			/datum/component/simple_bodycam, \
 			camera_name = "operative bodycam", \
@@ -21,7 +24,7 @@
 			network = OPERATIVE_CAMERA_NET, \
 			emp_proof = FALSE, \
 		)
-		our_teammate.playsound_local(get_turf(owner.current), 'sound/weapons/egloves.ogg', 100, 0)
+		our_teammate.playsound_local(get_turf(owner.current), 'sound/items/weapons/egloves.ogg', 100, 0)
 		to_chat(our_teammate, span_notice("A Syndicate Overwatch Intelligence Agent has been assigned to your team. Smile, you're on camera!"))
 
 	RegisterSignal(nuke_team, COMSIG_NUKE_TEAM_ADDITION, PROC_REF(late_bodycam))

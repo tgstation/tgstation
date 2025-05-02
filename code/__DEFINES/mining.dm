@@ -18,6 +18,14 @@
 /// Small vents, giving small boulders.
 #define SMALL_VENT_TYPE "small"
 
+//gibtonite strength
+/// Gibtonite was deactivated right before it could explode
+#define GIBTONITE_QUALITY_HIGH 3
+/// Gibtonite was deactivated a few seconds before it could explode
+#define GIBTONITE_QUALITY_MEDIUM 2
+/// Gibtonite was deactivated right after it was struck.
+#define GIBTONITE_QUALITY_LOW 1
+
 // Timers for the ore vents to perform wave defense.
 /// Duration for wave defense for a small vent.
 #define WAVE_DURATION_SMALL 60 SECONDS
@@ -67,8 +75,3 @@
 //String defines to use with CaveGenerator presets for what ore breakdown to use.
 #define OREGEN_PRESET_LAVALAND "lavaland"
 #define OREGEN_PRESET_TRIPLE_Z "triple_z"
-
-/// Signal sent on an atom when fulton beacon begins transporting it
-#define COMSIG_ATOM_FULTON_BEGAN "fulton_began"
-/// Signal sent on an atom when fulton beacon finishes transporting it
-#define COMSIG_ATOM_FULTON_LANDED "fulton_landed"

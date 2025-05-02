@@ -25,7 +25,7 @@
 		fusion_process(seconds_per_tick)
 		// Note that we process damage/healing even if the fusion process aborts.
 		// Running out of fuel won't save you if your moderator and coolant are exploding on their own.
-		check_spill()
+		process_moderator_overflow()
 		process_damageheal(seconds_per_tick)
 		check_alert()
 	if (start_power)
@@ -493,7 +493,7 @@
 			zaps_aspect = OVER_9000_ZAP_ICON_STATE
 			flags |= (ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE)
 
-	playsound(loc, 'sound/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
+	playsound(loc, 'sound/items/weapons/emitter2.ogg', 100, TRUE, extrarange = 10)
 	for(var/i in 1 to zap_number)
 		supermatter_zap(src, 5, power_level * 2.4e5, flags, zap_cutoff = cutoff, power_level = src.power_level * 1000, zap_icon = zaps_aspect)
 

@@ -95,7 +95,7 @@
 	if (random_roll && !can_be_randomly_generated)
 		return FALSE
 
-	if (HAS_TRAIT(limb.owner, TRAIT_NEVER_WOUNDED) || (limb.owner.status_flags & GODMODE))
+	if (HAS_TRAIT(limb.owner, TRAIT_NEVER_WOUNDED) || HAS_TRAIT(limb.owner, TRAIT_GODMODE))
 		return FALSE
 
 	if (!wounding_types_valid(suggested_wounding_types))

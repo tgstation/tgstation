@@ -31,6 +31,13 @@
 	crate_name = "collectable hats crate"
 	crate_type = /obj/structure/closet/crate/wooden
 	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
+	test_ignored = TRUE
+
+/datum/supply_pack/costumes_toys/randomised/fill(obj/structure/closet/crate/C)
+	var/list/L = contains.Copy()
+	for(var/i in 1 to num_contained)
+		var/item = pick_n_take(L)
+		new item(C)
 
 /datum/supply_pack/costumes_toys/formalwear
 	name = "Formalwear Crate"
@@ -82,8 +89,8 @@
 					/obj/item/gun/energy/laser/bluetag = 3,
 					/obj/item/clothing/suit/redtag = 3,
 					/obj/item/clothing/suit/bluetag = 3,
-					/obj/item/clothing/head/helmet/redtaghelm = 3,
-					/obj/item/clothing/head/helmet/bluetaghelm = 3,
+					/obj/item/clothing/head/helmet/taghelm/blue = 3,
+					/obj/item/clothing/head/helmet/taghelm/red = 3,
 				)
 	crate_name = "laser tag crate"
 
@@ -198,12 +205,6 @@
 				)
 	crate_name = "wizard costume crate"
 	crate_type = /obj/structure/closet/crate/wooden
-
-/datum/supply_pack/costumes_toys/randomised/fill(obj/structure/closet/crate/C)
-	var/list/L = contains.Copy()
-	for(var/i in 1 to num_contained)
-		var/item = pick_n_take(L)
-		new item(C)
 
 /datum/supply_pack/costumes_toys/trekkie
 	name = "Trekkie Costume Crate"

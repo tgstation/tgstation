@@ -13,10 +13,10 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/reagent_containers/cup,
 	/obj/item/reagent_containers/syringe,
 	/obj/item/reagent_containers/hypospray/medipen, //letting medipens become edible opens them to being injected/drained with IV drip & saltshakers
+	/obj/item/slimecrossbeaker/autoinjector, //same as medipen
 )))
 
 /obj/machinery/deepfryer
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "deep fryer"
 	desc = "Deep fried <i>everything</i>."
 	icon = 'icons/obj/machines/kitchen.dmi'
@@ -64,6 +64,8 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	reagents.add_reagent(/datum/reagent/consumable/nutriment/fat/oil, 25)
 	fry_loop = new(src, FALSE)
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
+	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/deepfryer])
+	AddElement(/datum/element/fish_safe_storage) //Prevents fryish and fritterish from dying inside the deepfryer.
 
 /obj/machinery/deepfryer/Destroy()
 	QDEL_NULL(fry_loop)
@@ -102,7 +104,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 
 /obj/machinery/deepfryer/attackby(obj/item/weapon, mob/user, params)
 	// Dissolving pills into the frier
-	if(istype(weapon, /obj/item/reagent_containers/pill))
+	if(istype(weapon, /obj/item/reagent_containers/applicator/pill))
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("There's nothing to dissolve [weapon] in!"))
 			return
@@ -155,7 +157,7 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	reagents.trans_to(frying, oil_use * seconds_per_tick, multiplier = fry_speed * 3) //Fried foods gain more of the reagent thanks to space magic
 	grease_level += prob(grease_increase_chance) * grease_Increase_amount
 
-	cook_time += fry_speed * seconds_per_tick
+	cook_time += fry_speed * seconds_per_tick SECONDS
 	if(cook_time >= DEEPFRYER_COOKTIME && !frying_fried)
 		frying_fried = TRUE //frying... frying... fried
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)

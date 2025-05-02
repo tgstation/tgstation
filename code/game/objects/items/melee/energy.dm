@@ -1,5 +1,6 @@
 /obj/item/melee/energy
 	icon = 'icons/obj/weapons/transforming_energy.dmi'
+	icon_angle = -45
 	max_integrity = 200
 	armor_type = /datum/armor/melee_energy
 	attack_verb_continuous = list("hits", "taps", "pokes")
@@ -24,7 +25,7 @@
 	/// Sharpness while active.
 	var/active_sharpness = SHARP_EDGED
 	/// Hitsound played attacking while active.
-	var/active_hitsound = 'sound/weapons/blade1.ogg'
+	var/active_hitsound = 'sound/items/weapons/blade1.ogg'
 	/// Weight class while active.
 	var/active_w_class = WEIGHT_CLASS_BULKY
 	/// The heat given off when active.
@@ -63,8 +64,8 @@
 		sharpness_on = active_sharpness, \
 		hitsound_on = active_hitsound, \
 		w_class_on = active_w_class, \
-		attack_verb_continuous_on = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
-		attack_verb_simple_on = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut"), \
+		attack_verb_continuous_on = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts"), \
+		attack_verb_simple_on = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut"), \
 	)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
@@ -87,7 +88,7 @@
 		var/mob/living/carbon/carbon_user = user
 		if(carbon_user.wear_mask)
 			in_mouth = ", barely missing [carbon_user.p_their()] nose"
-	. = span_warning("[user] swings [user.p_their()] [name][in_mouth]. [user.p_They()] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
+	. = span_rose("[user] swings [user.p_their()] [name][in_mouth]. [user.p_They()] light[user.p_s()] [user.p_their()] [atom.name] in the process.")
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
 
@@ -122,7 +123,7 @@
 	tool_behaviour = (active ? TOOL_SAW : NONE) //Lets energy weapons cut trees. Also lets them do bonecutting surgery, which is kinda metal!
 	if(user)
 		balloon_alert(user, "[name] [active ? "enabled":"disabled"]")
-	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
+	playsound(src, active ? 'sound/items/weapons/saberon.ogg' : 'sound/items/weapons/saberoff.ogg', 35, TRUE)
 	set_light_on(active)
 	update_appearance(UPDATE_ICON_STATE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
@@ -136,7 +137,7 @@
 	base_icon_state = "axe"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
-	hitsound = 'sound/weapons/bladeslice.ogg'
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("attacks", "chops", "cleaves", "tears", "lacerates", "cuts")
 	attack_verb_simple = list("attack", "chop", "cleave", "tear", "lacerate", "cut")
 	force = 40
@@ -169,7 +170,7 @@
 	return (BRUTELOSS|FIRELOSS)
 
 /// Energy swords.
-/datum/embed_data/esword
+/datum/embedding/esword
 	embed_chance = 75
 	impact_pain_mult = 10
 
@@ -188,8 +189,16 @@
 	throw_range = 5
 	armour_penetration = 35
 	block_chance = 50
-	block_sound = 'sound/weapons/block_blade.ogg'
-	embed_type = /datum/embed_data/esword
+	block_sound = 'sound/items/weapons/block_blade.ogg'
+	embed_type = /datum/embedding/esword
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
+
+/obj/item/melee/energy/sword/Initialize(mapload)
+	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -10, TRAIT_TRANSFORM_ACTIVE)
 
 /obj/item/melee/energy/sword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
@@ -227,7 +236,7 @@
 	desc = "For heavy duty cutting. It has a carbon-fiber blade in addition to a toggleable hard-light edge to dramatically increase sharpness."
 	icon = 'icons/obj/medical/surgery_tools.dmi'
 	icon_state = "esaw"
-	hitsound = 'sound/weapons/circsawhit.ogg'
+	hitsound = 'sound/items/weapons/circsawhit.ogg'
 	force = 18
 	hitcost = 0.075 * STANDARD_CELL_CHARGE // Costs more than a standard cyborg esword.
 	w_class = WEIGHT_CLASS_NORMAL
@@ -321,9 +330,9 @@
 	base_icon_state = "blade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = 'sound/weapons/blade1.ogg'
-	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "cuts")
-	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "cut")
+	hitsound = 'sound/items/weapons/blade1.ogg'
+	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "cuts")
+	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	force = 30
 	throwforce = 1 // Throwing or dropping the item deletes it.
 	throw_speed = 3
@@ -333,10 +342,15 @@
 	w_class = WEIGHT_CLASS_BULKY
 	/// Our linked spark system that emits from our sword.
 	var/datum/effect_system/spark_spread/spark_system
+	var/list/alt_continuous = list("stabs", "pierces", "impales")
+	var/list/alt_simple = list("stab", "pierce", "impale")
 
 //Most of the other special functions are handled in their own files. aka special snowflake code so kewl
 /obj/item/melee/energy/blade/Initialize(mapload)
 	. = ..()
+	alt_continuous = string_list(alt_continuous)
+	alt_simple = string_list(alt_simple)
+	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple, -10)
 	spark_system = new /datum/effect_system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -356,3 +370,4 @@
 	icon_state = "lightblade"
 	inhand_icon_state = "lightblade"
 	base_icon_state = "lightblade"
+	icon_angle = 0

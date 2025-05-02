@@ -6,26 +6,49 @@
 //Helpers
 ///Moves the icon of the device based on the piping layer and on the direction
 #define PIPING_LAYER_SHIFT(T, PipingLayer) \
-	if(T.dir & (NORTH|SOUTH)) { \
-		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
-	} \
-	if(T.dir & (EAST|WEST)) { \
-		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
+	if(T.layer > -1) { \
+		if(T.dir & (NORTH|SOUTH)) { \
+			T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
+		} \
+		if(T.dir & (EAST|WEST)) { \
+			T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
+		} \
+	} else { \
+		if(T.dir & (NORTH|SOUTH)) { \
+			T.pixel_w = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
+		} \
+		if(T.dir & (EAST|WEST)) { \
+			T.pixel_z = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;\
+		} \
 	}
 
 ///Moves the icon of the device based on the piping layer and on the direction, the shift amount is dictated by more_shift
 #define PIPING_FORWARD_SHIFT(T, PipingLayer, more_shift) \
-	if(T.dir & (NORTH|SOUTH)) { \
-		T.pixel_y += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
-	} \
-	if(T.dir & (EAST|WEST)) { \
-		T.pixel_x += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
+	if(T.layer > -1) { \
+		if(T.dir & (NORTH|SOUTH)) { \
+			T.pixel_y += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
+		} \
+		if(T.dir & (EAST|WEST)) { \
+			T.pixel_x += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
+		} \
+	} else { \
+		if(T.dir & (NORTH|SOUTH)) { \
+			T.pixel_z += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
+		} \
+		if(T.dir & (EAST|WEST)) { \
+			T.pixel_w += more_shift * (PipingLayer - PIPING_LAYER_DEFAULT);\
+		} \
 	}
 
 ///Moves the icon of the device based on the piping layer on both x and y
 #define PIPING_LAYER_DOUBLE_SHIFT(T, PipingLayer) \
-	T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
-	T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y;
+	if(T.layer > -1) { \
+		T.pixel_x = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
+		T.pixel_y = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y; \
+	} else { \
+		T.pixel_w = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_X;\
+		T.pixel_z = (PipingLayer - PIPING_LAYER_DEFAULT) * PIPING_LAYER_P_Y; \
+	}
 
 ///Calculate the thermal energy of the selected gas (J)
 #define THERMAL_ENERGY(gas) (gas.temperature * gas.heat_capacity())
@@ -50,9 +73,7 @@
 
 GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
 ///Returns a list of overlays of every gas in the mixture
-///Duplicate of code logic of update_visuals(), keep both up to date
-///Macro in case it ever needs to be used in hotcode
-#define GAS_OVERLAYS(gases, out_var, z_layer_turf, junction)\
+#define GAS_OVERLAYS(gases, out_var, z_layer_turf)\
 	do { \
 		out_var = list();\
 		var/offset = GET_TURF_PLANE_OFFSET(z_layer_turf) + 1;\
@@ -62,7 +83,7 @@ GLOBAL_LIST_INIT(nonoverlaying_gases, typecache_of_gases_with_no_overlays())
 			var/_GAS_META = _GAS[GAS_META];\
 			if(_GAS[MOLES] <= _GAS_META[META_GAS_MOLES_VISIBLE]) continue;\
 			var/_GAS_OVERLAY = _GAS_META[META_GAS_OVERLAY][offset];\
-			out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))][junction + 1];\
+			out_var += _GAS_OVERLAY[min(TOTAL_VISIBLE_STATES, CEILING(_GAS[MOLES] / MOLES_GAS_VISIBLE_STEP, 1))];\
 		} \
 	}\
 	while (FALSE)

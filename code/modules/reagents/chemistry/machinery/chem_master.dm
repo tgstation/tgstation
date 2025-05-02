@@ -1,7 +1,6 @@
 #define MAX_CONTAINER_PRINT_AMOUNT 50
 
 /obj/machinery/chem_master
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "ChemMaster 3000"
 	desc = "Used to separate chemicals and distribute them in a variety of forms."
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -31,6 +30,8 @@
 	var/printing_total
 	/// The time it takes to print a container
 	var/printing_speed = 0.75 SECONDS
+	/// Amount of layers which printed pills will be coated in
+	var/pill_layers = 3
 
 /obj/machinery/chem_master/Initialize(mapload)
 	create_reagents(100)
@@ -38,6 +39,7 @@
 	printable_containers = load_printable_containers()
 	default_container = printable_containers[printable_containers[1]][1]
 	selected_container = default_container
+	pill_layers = /obj/item/reagent_containers/applicator/pill::layers_remaining
 
 	register_context()
 
@@ -258,6 +260,7 @@
 	var/list/data = list()
 
 	data["maxPrintable"] = MAX_CONTAINER_PRINT_AMOUNT
+	data["maxPillDuration"] = PILL_MAX_PRINTABLE_LAYERS
 	data["categories"] = list()
 	for(var/category in printable_containers)
 		//make the category
@@ -288,13 +291,14 @@
 	.["isPrinting"] = is_printing
 	.["printingProgress"] = printing_progress
 	.["printingTotal"] = printing_total
+	.["selectedPillDuration"] = pill_layers
 
 	//contents of source beaker
 	var/list/beaker_data = null
 	if(!QDELETED(beaker))
 		beaker_data = list()
 		beaker_data["maxVolume"] = beaker.volume
-		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
+		beaker_data["currentVolume"] = beaker.reagents.total_volume
 		var/list/beakerContents = list()
 		if(length(beaker.reagents.reagent_list))
 			for(var/datum/reagent/reagent as anything in beaker.reagents.reagent_list)
@@ -316,7 +320,7 @@
 	//contents of buffer
 	beaker_data = list()
 	beaker_data["maxVolume"] = reagents.maximum_volume
-	beaker_data["currentVolume"] = round(reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
+	beaker_data["currentVolume"] = reagents.total_volume
 	var/list/beakerContents = list()
 	if(length(reagents.reagent_list))
 		for(var/datum/reagent/reagent as anything in reagents.reagent_list)
@@ -358,6 +362,11 @@
 	.["selectedContainerRef"] = REF(selected_container)
 	.["selectedContainerVolume"] = initial(selected_container.volume)
 
+	for (var/category in printable_containers)
+		if (selected_container in printable_containers[category])
+			.["selectedContainerCategory"] = category
+			break
+
 /**
  * Transfers a single reagent between buffer & beaker
  * Arguments
@@ -394,7 +403,6 @@
 		. = TRUE
 	if(. && !QDELETED(src)) //transferring volatile reagents can cause a explosion & destory us
 		update_appearance(UPDATE_OVERLAYS)
-	return .
 
 /obj/machinery/chem_master/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -403,6 +411,10 @@
 
 	switch(action)
 		if("eject")
+			if(is_printing)
+				say("The buffer is locked while printing.")
+				return
+
 			replace_beaker(ui.user)
 			return TRUE
 
@@ -417,7 +429,7 @@
 
 			if(amount == -1) // Set custom amount
 				var/mob/user = ui.user //Hold a reference of the user if the UI is closed
-				amount = tgui_input_number(user, "Enter amount to transfer", "Transfer amount")
+				amount = round(tgui_input_number(user, "Enter amount to transfer", "Transfer amount", round_value = FALSE), CHEMICAL_VOLUME_ROUNDING)
 				if(!amount || !user.can_perform_action(src))
 					return FALSE
 
@@ -446,11 +458,33 @@
 			update_appearance(UPDATE_OVERLAYS)
 			return TRUE
 
+		if ("setPillDuration")
+			pill_layers = clamp(params["duration"], 0, PILL_MAX_PRINTABLE_LAYERS)
+			return TRUE
+
 		if("selectContainer")
 			var/obj/item/reagent_containers/target = locate(params["ref"])
+
+			//is this even a valid type path
 			if(!ispath(target))
 				return FALSE
 
+			//are we printing a valid container
+			var/container_found = FALSE
+			for(var/category in printable_containers)
+				//container found in previous iteration
+				if(container_found)
+					break
+
+				//find for matching typepath
+				for(var/obj/item/reagent_containers/container as anything in printable_containers[category])
+					if(target == container)
+						container_found = TRUE
+						break
+			if(!container_found)
+				return FALSE
+
+			//set the container
 			selected_container = target
 			return TRUE
 
@@ -466,7 +500,7 @@
 			if(isnull(item_count) || item_count <= 0)
 				return FALSE
 			item_count = min(item_count, MAX_CONTAINER_PRINT_AMOUNT)
-			var/volume_in_each = round(reagents.total_volume / item_count, CHEMICAL_VOLUME_ROUNDING)
+			var/volume_in_each = min(round(reagents.total_volume / item_count, CHEMICAL_VOLUME_ROUNDING), initial(selected_container.volume))
 
 			// Generate item name
 			var/item_name_default = initial(selected_container.name)
@@ -475,12 +509,15 @@
 				item_name_default = "[master_reagent.name] [item_name_default]"
 			if(!(initial(selected_container.reagent_flags) & OPENCONTAINER)) // Closed containers get both reagent name and units in the name
 				item_name_default = "[master_reagent.name] [item_name_default] ([volume_in_each]u)"
-			var/item_name = tgui_input_text(usr,
+			var/item_name = tgui_input_text(
+				usr,
 				"Container name",
 				"Name",
 				item_name_default,
-				MAX_NAME_LEN)
-			if(!item_name)
+				max_length = MAX_NAME_LEN,
+			)
+
+			if(!item_name || is_printing)
 				return FALSE
 
 			//start printing
@@ -488,7 +525,7 @@
 			printing_progress = 0
 			printing_total = item_count
 			update_appearance(UPDATE_OVERLAYS)
-			create_containers(ui.user, item_count, item_name, volume_in_each)
+			create_containers(ui.user, item_count, item_name, volume_in_each, selected_container)
 			return TRUE
 
 /**
@@ -499,8 +536,9 @@
  * * item_count - number of containers to print
  * * item_name - the name for each container printed
  * * volume_in_each - volume in each container created
+ * * chosen_container - type of the container we're going to print
  */
-/obj/machinery/chem_master/proc/create_containers(mob/user, item_count, item_name, volume_in_each)
+/obj/machinery/chem_master/proc/create_containers(mob/user, item_count, item_name, volume_in_each, chosen_container)
 	PRIVATE_PROC(TRUE)
 
 	//lost power or manually stopped
@@ -514,18 +552,21 @@
 		return
 
 	//print the stuff
-	var/obj/item/reagent_containers/item = new selected_container(drop_location())
+	var/obj/item/reagent_containers/item = new chosen_container(drop_location())
 	adjust_item_drop_location(item)
 	item.name = item_name
 	item.reagents.clear_reagents()
 	reagents.trans_to(item, volume_in_each, transferred_by = user)
+	if (istype(item, /obj/item/reagent_containers/applicator/pill))
+		var/obj/item/reagent_containers/applicator/pill/pill = item
+		pill.layers_remaining = pill_layers
 	printing_progress++
 	update_appearance(UPDATE_OVERLAYS)
 
 	//print more items
 	item_count --
 	if(item_count > 0)
-		addtimer(CALLBACK(src, PROC_REF(create_containers), user, item_count, item_name, volume_in_each), printing_speed)
+		addtimer(CALLBACK(src, PROC_REF(create_containers), user, item_count, item_name, volume_in_each, chosen_container), printing_speed)
 	else
 		is_printing = FALSE
 		update_appearance(UPDATE_OVERLAYS)

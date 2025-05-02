@@ -54,9 +54,9 @@
 
 /obj/structure/pitgrate
 	name = "pit grate"
-	icon = 'icons/obj/structures/smooth/lattice.dmi'
+	icon = 'icons/obj/smooth_structures/lattice.dmi'
 	icon_state = "lattice-255"
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_CATWALK_LAYER
 	plane = FLOOR_PLANE
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
@@ -108,7 +108,7 @@
 
 /obj/structure/pitgrate/proc/reset_plane()
 	SET_PLANE_IMPLICIT(src, FLOOR_PLANE)
-	layer = ABOVE_OPEN_TURF_LAYER
+	layer = BELOW_CATWALK_LAYER
 
 /obj/structure/pitgrate/Destroy()
 	if(hidden)
@@ -137,3 +137,16 @@
 	if(!istype(mover))
 		return
 	return isnull(mover.ckey) == reverse
+
+/obj/effect/invisible_wall // why didnt we have this already
+	name = "invisible wall"
+	desc = "You shall not pass"
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = "blocker"
+	color = COLOR_BLUE_LIGHT
+	invisibility = INVISIBILITY_MAXIMUM
+	anchored = TRUE
+
+/obj/effect/invisible_wall/CanAllowThrough(mob/living/mover, border_dir)
+	..()
+	return FALSE // NO

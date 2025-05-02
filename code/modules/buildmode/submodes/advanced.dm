@@ -3,7 +3,7 @@
 	var/atom/objholder = null
 
 /datum/buildmode_mode/advanced/show_help(client/builder)
-	to_chat(builder, span_purple(examine_block(
+	to_chat(builder, span_purple(boxed_message(
 		"[span_bold("Set object type")] -> Right Mouse Button on buildmode button\n\
 		[span_bold("Copy object type")] -> Left Mouse Button + Alt on turf/obj\n\
 		[span_bold("Place objects")] -> Left Mouse Button on turf/obj\n\
@@ -47,7 +47,7 @@
 			T.setDir(BM.build_dir)
 		else if(ispath(objholder, /obj/effect/turf_decal))
 			var/turf/T = get_turf(object)
-			T.AddElement(/datum/element/decal, initial(objholder.icon), initial(objholder.icon_state), BM.build_dir, null, null, initial(objholder.alpha), initial(objholder.color), null, null, null, FALSE, null)
+			T.AddElement(/datum/element/decal, initial(objholder.icon), initial(objholder.icon_state), BM.build_dir, null, null, initial(objholder.alpha), initial(objholder.color), null, FALSE, null)
 			log_admin("Build Mode: [key_name(c)] in [AREACOORD(object)] added a [initial(objholder.name)] decal with dir [BM.build_dir] to [T]")
 		else if(!isnull(objholder))
 			var/obj/A = new objholder (get_turf(object))

@@ -37,8 +37,6 @@
 	var/datum/ui_state/state = null
 	/// Rate limit client refreshes to prevent DoS.
 	COOLDOWN_DECLARE(refresh_cooldown)
-	/// Are byond mouse events beyond the window passed in to the ui
-	var/mouse_hooked = FALSE
 
 /**
  * public
@@ -107,8 +105,6 @@
 	window.send_message("update", get_payload(
 		with_data = TRUE,
 		with_static_data = TRUE))
-	if(mouse_hooked)
-		window.set_mouse_macro()
 	SStgui.on_open(src)
 
 	return TRUE
@@ -158,18 +154,6 @@
  */
 /datum/tgui/proc/set_autoupdate(autoupdate)
 	src.autoupdate = autoupdate
-
-/**
- * public
- *
- * Enable/disable passing through byond mouse events to the window
- *
- * required value bool Enable/disable hooking.
- */
-/datum/tgui/proc/set_mouse_hook(value)
-	src.mouse_hooked = value
-	//Handle unhooking/hooking on already open windows ?
-
 
 /**
  * public
@@ -246,7 +230,10 @@
 	json_data["config"] = list(
 		"title" = title,
 		"status" = status,
-		"interface" = interface,
+		"interface" = list(
+			"name" = interface,
+			"layout" = user.client.prefs.read_preference(src_object.layout_prefs_used),
+		),
 		"refreshing" = refreshing,
 		"window" = list(
 			"key" = window_key,

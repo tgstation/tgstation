@@ -58,7 +58,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return parsed_blanks
 
 /obj/machinery/photocopier
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "photocopier"
 	desc = "Used to copy important documents and anatomy studies."
 	icon = 'icons/obj/service/library.dmi'
@@ -664,6 +663,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	desc = "A small, lightweight cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "tonercartridge"
+	w_class = WEIGHT_CLASS_SMALL
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
 	var/charges = 5
 	var/max_charges = 5

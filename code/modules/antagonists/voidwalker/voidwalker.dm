@@ -39,7 +39,7 @@
 /datum/outfit/voidwalker
 	name = "Voidwalker (Preview only)"
 
-/datum/outfit/voidwalker/post_equip(mob/living/carbon/human/human, visualsOnly)
+/datum/outfit/voidwalker/post_equip(mob/living/carbon/human/human, visuals_only)
 	human.set_species(/datum/species/voidwalker)
 
 /datum/objective/voidwalker_objective

@@ -94,6 +94,9 @@ DEFINE_BITFIELD(foodtypes, list(
 	"Rocks", \
 )
 
+/// Food types assigned to all podperson organs
+#define PODPERSON_ORGAN_FOODTYPES (VEGETABLES | RAW | GORE)
+
 #define DRINK_REVOLTING 1
 #define DRINK_NICE 2
 #define DRINK_GOOD 3
@@ -170,11 +173,20 @@ GLOBAL_LIST_INIT(food_buffs, list(
 #define FOOD_IN_CONTAINER (1<<0)
 /// Finger food can be eaten while walking / running around
 #define FOOD_FINGER_FOOD (1<<1)
+/// Examining this edible won't show infos on food types, bites and remote tasting etc.
+#define FOOD_NO_EXAMINE (1<<2)
+/// This food item doesn't track bitecounts, use responsibly.
+#define FOOD_NO_BITECOUNT (1<<3)
 
 DEFINE_BITFIELD(food_flags, list(
 	"FOOD_FINGER_FOOD" = FOOD_FINGER_FOOD,
 	"FOOD_IN_CONTAINER" = FOOD_IN_CONTAINER,
+	"FOOD_NO_EXAMINE" = FOOD_NO_EXAMINE,
+	"FOOD_NO_BITECOUNT" = FOOD_NO_BITECOUNT,
 ))
+
+///Define for return value of the after_eat callback that will call OnConsume if it hasn't already.
+#define FOOD_AFTER_EAT_CONSUME_ANYWAY 2
 
 #define STOP_SERVING_BREAKFAST (15 MINUTES)
 

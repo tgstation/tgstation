@@ -2,7 +2,7 @@
 /**********************Ore box**************************/
 
 /obj/structure/ore_box
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "orebox"
 	name = "ore box"
 	desc = "A heavy wooden box, which can be filled with a lot of ores or boulders"
@@ -65,6 +65,13 @@
 		return TRUE
 	else
 		return ..()
+
+/obj/structure/ore_box/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived, /obj/item/boulder) && ismecha(loc)) //Boulders being put into a mech's orebox get processed
+		var/obj/item/boulder/to_process = arrived
+		to_process.convert_to_ore(src)
+		qdel(to_process)
 
 /obj/structure/ore_box/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

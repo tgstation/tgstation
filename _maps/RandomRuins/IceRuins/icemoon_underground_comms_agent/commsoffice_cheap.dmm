@@ -1,0 +1,169 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/filingcabinet,
+/obj/item/paper/fluff/ruins/listeningstation/briefing{
+	pixel_x = -2
+	},
+/obj/item/paper/monitorkey,
+/obj/item/paperwork,
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"b" = (
+/turf/closed/wall/r_wall,
+/area/ruin/comms_agent)
+"c" = (
+/turf/closed/wall,
+/area/ruin/comms_agent)
+"h" = (
+/obj/modular_map_connector,
+/turf/closed/wall/rust,
+/area/ruin/comms_agent)
+"l" = (
+/obj/machinery/computer/camera_advanced/syndie{
+	dir = 1
+	},
+/obj/item/paper/monitorkey,
+/obj/machinery/newscaster/directional/south,
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"n" = (
+/obj/structure/chair/office/tactical,
+/obj/effect/decal/cleanable/blood/old,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"q" = (
+/obj/item/radio/intercom/syndicate/freerange{
+	pixel_x = -31
+	},
+/obj/machinery/modular_computer/preset{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"s" = (
+/turf/closed/wall/rust,
+/area/ruin/comms_agent)
+"v" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"w" = (
+/obj/item/kirbyplants/random/fullysynthetic,
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"y" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"z" = (
+/obj/structure/table,
+/obj/machinery/fax{
+	syndicate_network = 1;
+	allow_exotic_faxes = 1;
+	fax_name = "Listening Post";
+	desc = "Bluespace technologies on the application of bureaucracy. This one is send-only";
+	pixel_y = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"B" = (
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/machinery/door/airlock/centcom{
+	name = "Syndicate Secure Airlock System";
+	desc = "Truly, a marvel of modern engineering."
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/tile,
+/area/ruin/comms_agent)
+"I" = (
+/obj/structure/closet/crate/secure/syndicate,
+/obj/item/storage/backpack/duffelbag/syndie/x4,
+/obj/item/storage/backpack/duffelbag/syndie/x4,
+/obj/item/assembly/signaler,
+/obj/structure/sign/poster/contraband/random/directional/east,
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"P" = (
+/obj/effect/spawner/random/trash/moisture_trap,
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"Q" = (
+/obj/machinery/computer/message_monitor{
+	dir = 1
+	},
+/obj/structure/sign/poster/contraband/random/directional/south,
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"T" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/machinery/light/small/red/directional/east,
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+"U" = (
+/obj/structure/closet/crate,
+/mob/living/basic/cockroach,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/clothing/syndie,
+/obj/effect/spawner/random/contraband/armory,
+/obj/effect/spawner/random/maintenance/three,
+/obj/item/pen,
+/obj/item/paper_bin,
+/turf/open/floor/plating,
+/area/ruin/comms_agent)
+
+(1,1,1) = {"
+h
+w
+q
+P
+c
+"}
+(2,1,1) = {"
+B
+v
+v
+Q
+s
+"}
+(3,1,1) = {"
+c
+a
+n
+l
+s
+"}
+(4,1,1) = {"
+s
+s
+y
+z
+c
+"}
+(5,1,1) = {"
+s
+I
+T
+U
+s
+"}
+(6,1,1) = {"
+c
+s
+c
+s
+b
+"}

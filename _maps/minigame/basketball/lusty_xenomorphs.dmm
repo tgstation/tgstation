@@ -1,0 +1,1223 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/obj/structure/sign/departments/xenobio/alt/directional/north,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"aw" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"be" = (
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"bA" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	name = "Containment Control"
+	},
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"cz" = (
+/obj/structure/sign/poster/contraband/lusty_xenomorph,
+/obj/structure/alien/resin/wall/immovable,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"dg" = (
+/obj/structure/alien/weeds,
+/obj/machinery/smartfridge/extract/preloaded,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"dr" = (
+/obj/item/bodypart/head/monkey,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"dC" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/fake,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"dJ" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/storage/box/monkeycubes,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"dM" = (
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	name = "Containment Pen"
+	},
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"eS" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"eU" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"fi" = (
+/obj/structure/alien/weeds,
+/obj/structure/statue/plasma/xeno,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"fj" = (
+/obj/structure/sign/departments/xenobio/alt/directional/south,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/decoration,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"fu" = (
+/obj/item/bodypart/leg/right/monkey,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"gk" = (
+/obj/structure/sign/departments/xenobio,
+/obj/structure/alien/resin/wall/immovable,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"gq" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/storage/box/gloves{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/storage/box/masks{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"hf" = (
+/obj/structure/alien/weeds,
+/obj/item/stack/sheet/iron,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"hB" = (
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"jj" = (
+/obj/structure/sign/xenobio_guide/directional/east,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/glasses/science,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"kc" = (
+/obj/structure/alien/weeds/node,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"kp" = (
+/obj/structure/bed/nest,
+/obj/item/bodypart/chest/monkey,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"kT" = (
+/obj/item/organ/body_egg/alien_embryo,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"lh" = (
+/obj/structure/sign/departments/xenobio/alt/directional/south,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"ly" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"lD" = (
+/obj/structure/alien/weeds,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 2
+	},
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"lR" = (
+/obj/structure/sign/departments/xenobio/alt/directional/north,
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"mp" = (
+/obj/structure/alien/weeds/node,
+/obj/machinery/shower/directional/west,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"my" = (
+/obj/item/clothing/mask/facehugger/impregnated,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"nE" = (
+/obj/structure/sign/departments/xenobio/alt/directional/north,
+/obj/structure/disposaloutlet{
+	dir = 8
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"oh" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/mask/facehugger/dead,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"oj" = (
+/obj/structure/alien/weeds,
+/obj/effect/landmark/basketball/team_spawn/referee,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"oR" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"pu" = (
+/mob/living/basic/slime/random,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"qU" = (
+/obj/structure/sign/xenobio_guide/directional/west,
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/down,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"rT" = (
+/obj/structure/alien/weeds,
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"rU" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/right/directional/east{
+	name = "Containment Pen"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"sb" = (
+/obj/structure/alien/weeds,
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"tO" = (
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"tU" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"tX" = (
+/obj/structure/alien/weeds,
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"uH" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"uW" = (
+/obj/structure/sign/departments/xenobio/alt/directional/south,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"vo" = (
+/obj/structure/alien/weeds,
+/obj/item/stack/sheet/animalhide/xeno,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"wZ" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"zy" = (
+/obj/structure/alien/weeds,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/basketball)
+"zZ" = (
+/obj/effect/particle_effect/water/extinguisher/stomach_acid,
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/obj/effect/mapping_helpers/damaged_window,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/basketball)
+"Ax" = (
+/obj/structure/alien/weeds,
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
+/obj/structure/window/reinforced/spawner/directional/north{
+	pixel_y = 2
+	},
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"AC" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"AI" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/right/directional/west{
+	name = "Containment Pen"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/iron,
+/area/centcom/basketball)
+"AU" = (
+/obj/structure/alien/weeds,
+/obj/structure/statue/plasma/scientist,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Bd" = (
+/obj/structure/alien/weeds,
+/obj/item/organ/body_egg/alien_embryo,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Cv" = (
+/obj/structure/alien/weeds/node,
+/obj/effect/landmark/basketball/team_spawn/home_hoop,
+/obj/structure/hoop/minigame{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Cw" = (
+/obj/structure/alien/resin/membrane,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"CD" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"CV" = (
+/obj/structure/alien/weeds,
+/obj/structure/door_assembly/door_assembly_research,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Dt" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"DP" = (
+/obj/structure/alien/weeds/node,
+/obj/effect/landmark/basketball/team_spawn/away_hoop,
+/obj/structure/hoop/minigame{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Fd" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/structure/alien/weeds,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Gh" = (
+/obj/structure/alien/egg/burst,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Gi" = (
+/obj/machinery/door/window/brigdoor/left/directional/east{
+	name = "Containment Pen"
+	},
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Hu" = (
+/turf/closed/indestructible/riveted,
+/area/centcom/basketball)
+"Ic" = (
+/obj/structure/sign/xenobio_guide/directional/east,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/spray/cleaner,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"IA" = (
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Jc" = (
+/obj/structure/alien/weeds/node,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"JM" = (
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Le" = (
+/obj/effect/landmark/basketball/team_spawn/away,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Lu" = (
+/obj/structure/alien/resin/wall/immovable,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"LI" = (
+/obj/item/bodypart/arm/right/monkey,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"LS" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/plating,
+/area/centcom/basketball)
+"LU" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/item/folder/white,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"LV" = (
+/obj/structure/alien/weeds,
+/obj/structure/closet/l3closet/scientist,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"MS" = (
+/obj/item/reagent_containers/cup/glass/trophy/silver_cup,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/east,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Nt" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	name = "Containment Control"
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Oj" = (
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"OB" = (
+/obj/structure/chair/office/light{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"OS" = (
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"PN" = (
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"PU" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"PW" = (
+/obj/machinery/door/poddoor/preopen{
+	id = null;
+	name = "Xenobiology Blast Door"
+	},
+/obj/effect/mapping_helpers/damaged_window,
+/turf/closed/indestructible/fakeglass,
+/area/centcom/basketball)
+"Qh" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/button/door{
+	name = "Containment Control"
+	},
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Qi" = (
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
+/obj/structure/alien/resin/wall/immovable,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Ql" = (
+/obj/structure/alien/weeds,
+/obj/structure/sink/directional/west,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Rl" = (
+/obj/item/reagent_containers/cup/glass/trophy/gold_cup{
+	pixel_x = 0
+	},
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Se" = (
+/obj/machinery/computer/camera_advanced/xenobio,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Tc" = (
+/obj/machinery/monkey_recycler,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Uq" = (
+/obj/machinery/processor/slime,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Uv" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/torso,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Uy" = (
+/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
+/obj/structure/alien/weeds,
+/obj/structure/table/reinforced,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"Vr" = (
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"WB" = (
+/obj/structure/sign/xenobio_guide/directional/west,
+/obj/structure/alien/weeds,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"WK" = (
+/obj/machinery/door/poddoor{
+	id = "xenobio_maint_fore";
+	name = "Xenobiology Blast Door"
+	},
+/turf/closed/indestructible/fakeglass,
+/area/centcom/basketball)
+"Xm" = (
+/obj/structure/bed/nest,
+/obj/effect/mob_spawn/corpse/human/monkey,
+/obj/effect/mob_spawn/corpse/facehugger,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"Xo" = (
+/obj/structure/alien/weeds,
+/obj/machinery/shower/directional/west,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"XF" = (
+/obj/structure/alien/weeds,
+/obj/effect/landmark/basketball/team_spawn/home,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"YH" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/turf/open/floor/iron/white,
+/area/centcom/basketball)
+"YX" = (
+/obj/item/toy/basketball,
+/obj/structure/bed/nest,
+/obj/structure/alien/weeds,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+"ZM" = (
+/obj/item/toy/plush/slimeplushie,
+/turf/open/floor/engine,
+/area/centcom/basketball)
+
+(1,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}
+(2,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Lu
+Lu
+Lu
+Lu
+Lu
+Lu
+Lu
+cz
+Lu
+Lu
+Lu
+Lu
+Lu
+Lu
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(3,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Lu
+fi
+YH
+Vr
+WB
+Vr
+dg
+LV
+dg
+Vr
+qU
+Vr
+Vr
+AU
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(4,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Lu
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+YH
+Vr
+Vr
+Vr
+oh
+Vr
+Vr
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(5,1,1) = {"
+Hu
+tO
+Lu
+Lu
+Lu
+Lu
+at
+Vr
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+kc
+uW
+Lu
+Lu
+Lu
+Lu
+tO
+Hu
+"}
+(6,1,1) = {"
+Hu
+tO
+Lu
+Oj
+Oj
+PU
+Vr
+aw
+Cw
+Oj
+uH
+uH
+Cv
+uH
+uH
+Oj
+Cw
+Vr
+Vr
+CV
+Vr
+AC
+Lu
+tO
+Hu
+"}
+(7,1,1) = {"
+Hu
+tO
+Lu
+Oj
+pu
+PU
+kc
+Vr
+Cw
+Oj
+XF
+uH
+uH
+uH
+XF
+Oj
+Cw
+Vr
+Vr
+zy
+tX
+tX
+Lu
+tO
+Hu
+"}
+(8,1,1) = {"
+Hu
+Lu
+Lu
+lR
+Oj
+PU
+Vr
+Vr
+Cw
+Oj
+Oj
+OS
+OS
+OS
+Oj
+Oj
+Cw
+Vr
+Vr
+Ax
+gq
+lh
+Lu
+Lu
+Hu
+"}
+(9,1,1) = {"
+Hu
+Lu
+Tc
+ly
+AI
+LS
+Vr
+Vr
+Cw
+oR
+dC
+dC
+dC
+dC
+dC
+oR
+Cw
+Vr
+Vr
+WK
+WK
+PW
+WK
+Lu
+Hu
+"}
+(10,1,1) = {"
+Hu
+Lu
+JM
+Dt
+Gi
+Nt
+Vr
+Vr
+Cw
+uH
+uH
+uH
+uH
+uH
+uH
+uH
+Cw
+Vr
+Vr
+PN
+kT
+dr
+IA
+Lu
+Hu
+"}
+(11,1,1) = {"
+Hu
+gk
+JM
+JM
+JM
+Vr
+Vr
+Uy
+Cw
+uH
+Fd
+oR
+oR
+oR
+Fd
+uH
+Cw
+Vr
+bA
+WK
+LI
+kp
+fu
+Lu
+Hu
+"}
+(12,1,1) = {"
+Hu
+Lu
+Se
+OB
+Vr
+Vr
+kc
+Rl
+Cw
+uH
+Fd
+oR
+YX
+oR
+Fd
+uH
+Cw
+oj
+kc
+WK
+wZ
+Gh
+Oj
+Lu
+Hu
+"}
+(13,1,1) = {"
+Hu
+gk
+JM
+JM
+JM
+Vr
+Vr
+MS
+Cw
+uH
+Fd
+oR
+oR
+oR
+Fd
+uH
+Cw
+Vr
+dJ
+zZ
+my
+Xm
+Oj
+Lu
+Hu
+"}
+(14,1,1) = {"
+Hu
+Lu
+JM
+eS
+dM
+Qh
+Vr
+Vr
+Cw
+uH
+uH
+uH
+uH
+uH
+uH
+uH
+Cw
+Vr
+Vr
+be
+hB
+Oj
+Uv
+Lu
+Hu
+"}
+(15,1,1) = {"
+Hu
+Lu
+Uq
+ly
+rU
+LS
+Vr
+Vr
+Cw
+oR
+dC
+dC
+dC
+dC
+dC
+oR
+Cw
+Vr
+Vr
+WK
+WK
+WK
+WK
+Lu
+Hu
+"}
+(16,1,1) = {"
+Hu
+Lu
+Lu
+nE
+Oj
+PU
+Vr
+Vr
+Cw
+Oj
+Oj
+Le
+Le
+Le
+Oj
+Oj
+Cw
+Vr
+Vr
+lD
+LU
+fj
+Lu
+Lu
+Hu
+"}
+(17,1,1) = {"
+Hu
+tO
+Lu
+Oj
+ZM
+PU
+Bd
+kc
+Cw
+Oj
+rT
+uH
+uH
+uH
+rT
+Oj
+Cw
+Vr
+Vr
+zy
+sb
+sb
+Lu
+tO
+Hu
+"}
+(18,1,1) = {"
+Hu
+tO
+Lu
+Oj
+Oj
+PU
+Vr
+Vr
+Cw
+Oj
+uH
+uH
+DP
+uH
+uH
+Oj
+Cw
+Vr
+kc
+hf
+CD
+Vr
+Lu
+tO
+Hu
+"}
+(19,1,1) = {"
+Hu
+tO
+Lu
+Lu
+Lu
+Lu
+at
+Vr
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Cw
+Vr
+uW
+Lu
+Lu
+Lu
+Lu
+tO
+Hu
+"}
+(20,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Lu
+eU
+Vr
+kc
+Vr
+Vr
+Vr
+vo
+Vr
+Vr
+Vr
+Vr
+Vr
+Vr
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(21,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Lu
+AU
+Vr
+Vr
+jj
+Vr
+Xo
+Ql
+mp
+Jc
+Ic
+tU
+Vr
+fi
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(22,1,1) = {"
+Hu
+tO
+tO
+tO
+tO
+Lu
+Lu
+Lu
+Lu
+Lu
+Lu
+Lu
+Qi
+Lu
+Lu
+Lu
+Lu
+Lu
+Lu
+Lu
+tO
+tO
+tO
+tO
+Hu
+"}
+(23,1,1) = {"
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+Hu
+"}

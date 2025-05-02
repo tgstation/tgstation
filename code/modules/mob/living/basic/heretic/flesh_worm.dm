@@ -21,7 +21,6 @@
 	mob_size = MOB_SIZE_HUGE
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
-	shadow_type = SHADOW_LARGE
 	///Previous segment in the chain, we hold onto this purely to keep track of how long we currently are and to attach new growth to the back
 	var/mob/living/basic/heretic_summon/armsy/back
 	///How many arms do we have to eat to expand?
@@ -57,7 +56,7 @@
 /mob/living/basic/heretic_summon/armsy/has_gravity(turf/gravity_turf)
 	return TRUE
 
-/mob/living/basic/heretic_summon/armsy/can_be_pulled()
+/mob/living/basic/heretic_summon/armsy/can_be_pulled(user, force)
 	return FALSE // The component does this but not on the head. We don't want the head to be pulled either.
 
 /mob/living/basic/heretic_summon/armsy/proc/build_tail(worm_length)
@@ -99,7 +98,7 @@
 	if(!istype(target, /obj/item/bodypart/arm))
 		return ..()
 	visible_message(span_warning("[src] devours [target]!"))
-	playsound(src, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 	qdel(target)
 	on_arm_eaten()
 

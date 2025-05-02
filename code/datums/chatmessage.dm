@@ -50,6 +50,8 @@
 	var/animate_start = 0
 	/// Our animation lifespan, how long this message will last
 	var/animate_lifespan = 0
+	/// Callback to finish_image_generation passed to SSrunechat
+	var/datum/callback/finish_callback
 
 /**
  * Constructs a chat message overlay
@@ -80,6 +82,10 @@
 		if (owned_by.seen_messages)
 			LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, src)
 		owned_by.images.Remove(message)
+
+	if (finish_callback)
+		SSrunechat.message_queue -= finish_callback
+		finish_callback = null
 
 	owned_by = null
 	message_loc = null
@@ -188,13 +194,14 @@
 	if(!VERB_SHOULD_YIELD)
 		return finish_image_generation(mheight, target, owner, complete_text, lifespan)
 
-	var/datum/callback/our_callback = CALLBACK(src, PROC_REF(finish_image_generation), mheight, target, owner, complete_text, lifespan)
-	SSrunechat.message_queue += our_callback
+	finish_callback = CALLBACK(src, PROC_REF(finish_image_generation), mheight, target, owner, complete_text, lifespan)
+	SSrunechat.message_queue += finish_callback
 	return
 
 ///finishes the image generation after the MeasureText() call in generate_image().
 ///necessary because after that call the proc can resume at the end of the tick and cause overtime.
 /datum/chatmessage/proc/finish_image_generation(mheight, atom/target, mob/owner, complete_text, lifespan)
+	finish_callback = null
 	var/rough_time = REALTIMEOFDAY
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 	var/starting_height = target.maptext_height
@@ -211,35 +218,47 @@
 
 			// When choosing to update the remaining time we have to be careful not to update the
 			// scheduled time once the EOL has been executed.
+			var/continuing = 0
 			if (time_spent >= time_before_fade)
-				if(m.message.pixel_y < starting_height)
-					var/max_height = m.message.pixel_y + m.approx_lines * CHAT_MESSAGE_APPROX_LHEIGHT - starting_height
+				if(m.message.pixel_z < starting_height)
+					var/max_height = m.message.pixel_z + m.approx_lines * CHAT_MESSAGE_APPROX_LHEIGHT - starting_height
 					if(max_height > 0)
-						animate(m.message, pixel_y = m.message.pixel_y + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
-				else if(mheight + starting_height >= m.message.pixel_y)
-					animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
+						animate(m.message, pixel_z = m.message.pixel_z + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+						continuing |= ANIMATION_CONTINUE
+				else if(mheight + starting_height >= m.message.pixel_z)
+					animate(m.message, pixel_z = m.message.pixel_z + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+					continuing |= ANIMATION_CONTINUE
 				continue
 
 			var/remaining_time = time_before_fade * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
 			// Ensure we don't accidentially spike alpha up or something silly like that
 			m.message.alpha = m.get_current_alpha(time_spent)
-			if (remaining_time > 0)
+			if(remaining_time > 0)
+				if(time_spent < CHAT_MESSAGE_SPAWN_TIME)
+					// We haven't even had the time to fade in yet!
+					animate(m.message, alpha = 255, CHAT_MESSAGE_SPAWN_TIME - time_spent, flags=continuing)
+					continuing |= ANIMATION_CONTINUE
 				// Stay faded in for a while, then
-				animate(m.message, alpha = 255, remaining_time)
+				animate(m.message, alpha = 255, time = remaining_time, flags=continuing)
+				continuing |= ANIMATION_CONTINUE
 				// Fade out
-				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+				animate(m.message, alpha = 0, time = CHAT_MESSAGE_EOL_FADE, flags=continuing)
+				continuing |= ANIMATION_CONTINUE
 				m.animate_lifespan = remaining_time + CHAT_MESSAGE_EOL_FADE
 			else
 				// Your time has come my son
-				animate(alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+				animate(m.message, alpha = 0, time = CHAT_MESSAGE_EOL_FADE, flags=continuing)
+				continuing |= ANIMATION_CONTINUE
 			// We run this after the alpha animate, because we don't want to interrup it, but also don't want to block it by running first
 			// Sooo instead we do this. bit messy but it fuckin works
-			if(m.message.pixel_y < starting_height)
-				var/max_height = m.message.pixel_y + m.approx_lines * CHAT_MESSAGE_APPROX_LHEIGHT - starting_height
+			if(m.message.pixel_z < starting_height)
+				var/max_height = m.message.pixel_z + m.approx_lines * CHAT_MESSAGE_APPROX_LHEIGHT - starting_height
 				if(max_height > 0)
-					animate(m.message, pixel_y = m.message.pixel_y + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
-			else if(mheight + starting_height >= m.message.pixel_y)
-				animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = ANIMATION_PARALLEL)
+					animate(m.message, pixel_z = m.message.pixel_z + max_height, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+					continuing |= ANIMATION_CONTINUE
+			else if(mheight + starting_height >= m.message.pixel_z)
+				animate(m.message, pixel_z = m.message.pixel_z + mheight, time = CHAT_MESSAGE_SPAWN_TIME, flags = continuing | ANIMATION_PARALLEL)
+				continuing |= ANIMATION_CONTINUE
 
 	// Reset z index if relevant
 	if (current_z_idx >= CHAT_LAYER_MAX_Z)
@@ -250,8 +269,8 @@
 	SET_PLANE_EXPLICIT(message, RUNECHAT_PLANE, message_loc)
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
-	message.pixel_y = starting_height
-	message.pixel_x = -target.base_pixel_x
+	message.pixel_z = starting_height
+	message.pixel_w = -target.base_pixel_w
 	message.maptext_width = CHAT_MESSAGE_WIDTH
 	message.maptext_height = mheight * 1.25 // We add extra because some characters are superscript, like actions
 	message.maptext_x = (CHAT_MESSAGE_WIDTH - owner.bound_width) * -0.5

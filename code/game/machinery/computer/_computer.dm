@@ -1,5 +1,4 @@
 /obj/machinery/computer
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "computer"
 	icon = 'icons/obj/machines/computer.dmi'
 	icon_state = "computer"
@@ -20,6 +19,8 @@
 	var/time_to_unscrew = 2 SECONDS
 	/// Are we authenticated to use this? Used by things like comms console, security and medical data, and apc controller.
 	var/authenticated = FALSE
+	/// Will projectiles be able to pass over this computer?
+	var/projectiles_pass_chance = 65
 
 /datum/armor/machinery_computer
 	fire = 40
@@ -28,6 +29,28 @@
 /obj/machinery/computer/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
 	power_change()
+
+/obj/machinery/computer/mouse_drop_receive(mob/living/dropping, mob/user, params)
+	. = ..()
+	// We add the component only once here & not in Initialize() because there are tons of computers & we don't want to add to their init times
+	LoadComponent(/datum/component/leanable, dropping)
+
+/obj/machinery/computer/CanAllowThrough(atom/movable/mover, border_dir) // allows projectiles to fly over the computer
+	. = ..()
+	if(.)
+		return
+	if(!projectiles_pass_chance)
+		return FALSE
+	if(!isprojectile(mover))
+		return FALSE
+	var/obj/projectile/proj = mover
+	if(!anchored)
+		return TRUE
+	if(proj.firer && Adjacent(proj.firer))
+		return TRUE
+	if(prob(projectiles_pass_chance))
+		return TRUE
+	return FALSE
 
 /obj/machinery/computer/process()
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -76,26 +99,28 @@
 			if(machine_stat & BROKEN)
 				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 			else
-				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
+				playsound(src.loc, 'sound/effects/glass/glasshit.ogg', 75, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/computer/atom_break(damage_flag)
 	if(!circuit) //no circuit, no breaking
 		return
 	. = ..()
 	if(.)
-		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
+		playsound(loc, 'sound/effects/glass/glassbr3.ogg', 100, TRUE)
 		set_light(0)
 
 /obj/machinery/computer/proc/imprint_gps(gps_tag) // Currently used by the upload computers and communications console
-	var/tracker = gps_tag
-	if(!tracker) // Don't give a null GPS signal if there is none
-		return
-	for(var/obj/item/circuitboard/computer/board in src.contents)
-		if(!contents || board.GetComponent(/datum/component/gps))
-			CRASH("[src] Called imprint_gps without setting gps_tag")
-		board.AddComponent(/datum/component/gps, "[tracker]")
+	if(!length(gps_tag)) // Don't give a null GPS signal if there is none
+		CRASH("[src] called imprint_gps without setting gps_tag")
+	var/set_tracker = FALSE
+	for(var/obj/item/circuitboard/computer/board in contents)
+		if(board.GetComponent(/datum/component/gps))
+			return
+		board.AddComponent(/datum/component/gps, "[gps_tag]")
+		set_tracker = TRUE
+	if (set_tracker)
 		balloon_alert_to_viewers("board tracker enabled", vision_distance = 1)
 
 /obj/machinery/computer/emp_act(severity)

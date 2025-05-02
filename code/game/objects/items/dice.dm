@@ -89,6 +89,7 @@
 			result = rigged_value
 
 	. = result
+	playsound(src, 'sound/items/dice_roll.ogg', 50, TRUE)
 
 	var/fake_result = roll(sides)//Daredevil isn't as good as he used to be
 	var/comment = ""
@@ -360,10 +361,8 @@
 		if(4)
 			//Destroy Equipment
 			selected_turf.visible_message(span_userdanger("Everything [user] is holding and wearing disappears!"))
-			for(var/obj/item/non_implant in user)
-				if(istype(non_implant, /obj/item/implant))
-					continue
-				qdel(non_implant)
+			var/list/belongings = user.get_all_gear()
+			QDEL_LIST(belongings)
 		if(5)
 			//Monkeying
 			selected_turf.visible_message(span_userdanger("[user] transforms into a monkey!"))
@@ -395,9 +394,9 @@
 		if(11)
 			//Cookie
 			selected_turf.visible_message(span_userdanger("A cookie appears out of thin air!"))
-			var/obj/item/food/cookie/C = new(drop_location())
+			var/obj/item/food/cookie/ooh_a_cookie = new(drop_location())
 			do_smoke(0, holder = src, location = drop_location())
-			C.name = "Cookie of Fate"
+			ooh_a_cookie.name = "Cookie of Fate"
 		if(12)
 			//Healing
 			selected_turf.visible_message(span_userdanger("[user] looks very healthy!"))
@@ -433,7 +432,7 @@
 			var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[user.real_name]'s")] [span_notice("Servant")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 5 SECONDS, checked_target = human_servant, alert_pic = user, role_name_text = "dice servant")
 			if(chosen_one)
 				message_admins("[ADMIN_LOOKUPFLW(chosen_one)] was spawned as Dice Servant")
-				human_servant.key = chosen_one.key
+				human_servant.PossessByPlayer(chosen_one.key)
 
 			human_servant.equipOutfit(/datum/outfit/butler)
 			var/datum/mind/servant_mind = new /datum/mind()
@@ -509,8 +508,8 @@
 		to_summon,
 		get_turf(cast_on),
 		precision = 1,
-		asoundin = 'sound/magic/wand_teleport.ogg',
-		asoundout = 'sound/magic/wand_teleport.ogg',
+		asoundin = 'sound/effects/magic/wand_teleport.ogg',
+		asoundout = 'sound/effects/magic/wand_teleport.ogg',
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
 

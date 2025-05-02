@@ -43,7 +43,7 @@
 /datum/radial_menu/persistent/proc/change_choices(list/newchoices, tooltips = FALSE, animate = FALSE, keep_same_page = FALSE)
 	if(!newchoices.len)
 		return
-	entry_animation = FALSE
+	button_animation_flags = NONE
 	var/target_page = keep_same_page ? current_page : 1 //Stores the current_page value before it's set back to 1 on Reset()
 	Reset()
 	set_choices(newchoices,tooltips, set_page = target_page)

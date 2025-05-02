@@ -7,14 +7,11 @@
 	var/climb_stun
 	///Assoc list of object being climbed on - climbers.  This allows us to check who needs to be shoved off a climbable object when its clicked on.
 	var/list/current_climbers
-	///Procpath of the proc to call if someone tries to climb onto our owner!
-	var/on_try_climb_procpath
 
 /datum/element/climbable/Attach(
 	datum/target,
 	climb_time = 2 SECONDS,
 	climb_stun = 2 SECONDS,
-	on_try_climb_procpath,
 )
 	. = ..()
 
@@ -22,7 +19,6 @@
 		return ELEMENT_INCOMPATIBLE
 	src.climb_time = climb_time
 	src.climb_stun = climb_stun
-	src.on_try_climb_procpath = on_try_climb_procpath
 
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
@@ -66,8 +62,19 @@
 	climbed_thing.add_fingerprint(user)
 	user.visible_message(span_warning("[user] starts climbing onto [climbed_thing]."), \
 								span_notice("You start climbing onto [climbed_thing]..."))
+	// Time in deciseoncds it takes to complete the climb do_after()
 	var/adjusted_climb_time = climb_time
+	// Time in deciseonds that the mob is stunned after climbing successfully.
 	var/adjusted_climb_stun = climb_stun
+	// Our climbers fitness level, which removes some climb time and speeds up our climbing do_after, assuming they worked out
+	var/fitness_level = user.mind?.get_skill_level(/datum/skill/athletics) - 1
+	adjusted_climb_time = clamp(adjusted_climb_time - fitness_level, 1, climb_time) //Here we adjust the number of deciseconds we shave off per level of fitness, with a minimum of 1 decisecond and a maximum of climb_time (just in case)
+
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		adjusted_climb_time *= potential_spine.athletics_boost_multiplier
+		adjusted_climb_stun *= potential_spine.athletics_boost_multiplier
+
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED)) //climbing takes twice as long without help from the hands.
 		adjusted_climb_time *= 2
 	if(isalien(user))
@@ -79,8 +86,6 @@
 		adjusted_climb_time *= 1.5
 		adjusted_climb_stun *= 1.5
 	LAZYADDASSOCLIST(current_climbers, climbed_thing, user)
-	if(on_try_climb_procpath)
-		call(climbed_thing, on_try_climb_procpath)(user)
 	if(do_after(user, adjusted_climb_time, climbed_thing))
 		if(QDELETED(climbed_thing)) //Checking if structure has been destroyed
 			return
@@ -94,6 +99,7 @@
 			if(istype(buckle_target))
 				if(buckle_target.is_buckle_possible(user))
 					buckle_target.buckle_mob(user)
+			user.mind?.adjust_experience(/datum/skill/athletics, 5) //Get a bit fitter with every climb.
 		else
 			to_chat(user, span_warning("You fail to climb onto [climbed_thing]."))
 	LAZYREMOVEASSOC(current_climbers, climbed_thing, user)
@@ -103,17 +109,17 @@
 	if(!can_climb(climbed_thing, user))
 		return
 	climbed_thing.set_density(FALSE)
-	var/dir_step = get_dir(user, get_turf(climbed_thing))
-	var/same_turf = get_turf(climbed_thing) == get_turf(user)
+	var/dir_step = get_dir(user, climbed_thing.loc)
+	var/same_loc = climbed_thing.loc == user.loc
 	// on-border objects can be vaulted over and into the next turf.
 	// The reverse dir check is for when normal behavior should apply instead (e.g. John Doe hops east of a railing facing west, ending on the same turf as it).
-	if(climbed_thing.flags_1 & ON_BORDER_1 && (same_turf || !(dir_step & REVERSE_DIR(climbed_thing.dir))))
+	if(climbed_thing.flags_1 & ON_BORDER_1 && (same_loc || !(dir_step & REVERSE_DIR(climbed_thing.dir))))
 		//it can be vaulted over in two different cardinal directions. we choose one.
-		if(ISDIAGONALDIR(climbed_thing.dir) && same_turf)
+		if(ISDIAGONALDIR(climbed_thing.dir) && same_loc)
 			if(params) //we check the icon x and y parameters of the click-drag to determine step_dir.
 				var/list/modifiers = params2list(params)
-				var/x_dist = (text2num(LAZYACCESS(modifiers, ICON_X)) - world.icon_size/2) * (climbed_thing.dir & WEST ? -1 : 1)
-				var/y_dist = (text2num(LAZYACCESS(modifiers, ICON_Y)) - world.icon_size/2) * (climbed_thing.dir & SOUTH ? -1 : 1)
+				var/x_dist = (text2num(LAZYACCESS(modifiers, ICON_X)) - ICON_SIZE_X/2) * (climbed_thing.dir & WEST ? -1 : 1)
+				var/y_dist = (text2num(LAZYACCESS(modifiers, ICON_Y)) - ICON_SIZE_Y/2) * (climbed_thing.dir & SOUTH ? -1 : 1)
 				dir_step = (x_dist >= y_dist ? (EAST|WEST) : (NORTH|SOUTH)) & climbed_thing.dir
 		else
 			dir_step = get_dir(user, get_step(climbed_thing, climbed_thing.dir))

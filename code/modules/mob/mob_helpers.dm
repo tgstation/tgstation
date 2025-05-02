@@ -167,19 +167,27 @@
 	var/client/C = M.client
 	var/oldx = C.pixel_x
 	var/oldy = C.pixel_y
-	var/max = strength*world.icon_size
-	var/min = -(strength*world.icon_size)
+	var/max_x = strength*ICON_SIZE_X
+	var/max_y = strength*ICON_SIZE_Y
+	var/min_x = -(strength*ICON_SIZE_X)
+	var/min_y = -(strength*ICON_SIZE_Y)
+
+	if(C.prefs?.read_preference(/datum/preference/toggle/screen_shake_darken))
+		var/type = /atom/movable/screen/fullscreen/flash/black
+
+		M.overlay_fullscreen("flash", type)
+		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 3 SECONDS), 3 SECONDS)
 
 	//How much time to allot for each pixel moved
-	var/time_scalar = (1 / world.icon_size) * TILES_PER_SECOND
+	var/time_scalar = (1 / ICON_SIZE_ALL) * TILES_PER_SECOND
 	var/last_x = oldx
 	var/last_y = oldy
 
 	var/time_spent = 0
 	while(time_spent < duration)
 		//Get a random pos in our box
-		var/x_pos = rand(min, max) + oldx
-		var/y_pos = rand(min, max) + oldy
+		var/x_pos = rand(min_x, max_x) + oldx
+		var/y_pos = rand(min_y, max_y) + oldy
 
 		//We take the smaller of our two distances so things still have the propencity to feel somewhat jerky
 		var/time = round(max(min(abs(last_x - x_pos), abs(last_y - y_pos)) * time_scalar, 1))
@@ -207,18 +215,6 @@
 		if(M.real_name == msg)
 			return M
 	return 0
-
-///Find the first name of a mob from the real name with regex
-/mob/proc/first_name()
-	var/static/regex/firstname = new("^\[^\\s-\]+") //First word before whitespace or "-"
-	firstname.Find(real_name)
-	return firstname.match
-
-/// Find the last name of a mob from the real name with regex
-/mob/proc/last_name()
-	var/static/regex/lasttname = new("\[^\\s-\]+$") //First word before whitespace or "-"
-	lasttname.Find(real_name)
-	return lasttname.match
 
 ///Returns a mob's real name between brackets. Useful when you want to display a mob's name alongside their real name
 /mob/proc/get_realname_string()
@@ -316,8 +312,8 @@
 			to_chat(ghost, span_ghostalert(message))
 			continue
 
-		var/interact_link = click_interact ? " <a href='?src=[REF(ghost)];play=[REF(source)]'>(Play)</a>" : ""
-		var/view_link = " <a href='?src=[REF(ghost)];view=[REF(source)]'>(View)</a>"
+		var/interact_link = click_interact ? " <a href='byond://?src=[REF(ghost)];play=[REF(source)]'>(Play)</a>" : ""
+		var/view_link = " <a href='byond://?src=[REF(ghost)];view=[REF(source)]'>(View)</a>"
 
 		to_chat(ghost, span_ghostalert("[message][custom_link][interact_link][view_link]"))
 
@@ -380,7 +376,7 @@
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
 		M.ghostize(FALSE)
-		M.key = chosen_one.key
+		M.PossessByPlayer(chosen_one.key)
 		M.client?.init_verbs()
 		return TRUE
 	else
@@ -401,15 +397,6 @@
 ///Can the mob hear
 /mob/proc/can_hear()
 	return !HAS_TRAIT(src, TRAIT_DEAF)
-
-/**
- * Examine text for traits shared by multiple types.
- *
- * I wish examine was less copypasted. (oranges say, be the change you want to see buddy)
- */
-/mob/proc/common_trait_examine()
-	if(HAS_TRAIT(src,TRAIT_HUSK))
-		. += span_warning("This body has been reduced to a grotesque husk.")
 
 /**
  * Get the list of keywords for policy config

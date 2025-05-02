@@ -1,6 +1,4 @@
 /mob/living/basic/spaceman
-	// Sovl
-	SET_BASE_VISUAL_PIXEL(0, 0)
 	name = "Spaceman"
 	desc = "What in the actual hell..?"
 	icon = 'icons/mob/simple/animal.dmi'
@@ -23,11 +21,10 @@
 	melee_damage_upper = 10
 	attack_verb_continuous = "hits"
 	attack_verb_simple = "hit"
-	attack_sound = 'sound/weapons/punch1.ogg'
+	attack_sound = 'sound/items/weapons/punch1.ogg'
 	obj_damage = 0
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	ai_controller = /datum/ai_controller/basic_controller/spaceman
-	shadow_type = SHADOW_NONE
 
 /mob/living/basic/spaceman/Initialize(mapload)
 	. = ..()

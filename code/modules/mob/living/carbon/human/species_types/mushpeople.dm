@@ -6,7 +6,7 @@
 
 	fixed_mut_color = "#DBBF92"
 
-	mutant_organs = list(/obj/item/organ/external/mushroom_cap = "Round")
+	mutant_organs = list(/obj/item/organ/mushroom_cap = "Round")
 
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
@@ -20,8 +20,8 @@
 
 	heatmod = 1.5
 
-	mutanttongue = /obj/item/organ/internal/tongue/mush
-	mutanteyes = /obj/item/organ/internal/eyes/night_vision/mushroom
+	mutanttongue = /obj/item/organ/tongue/mush
+	mutanteyes = /obj/item/organ/eyes/night_vision/mushroom
 	mutantlungs = null
 	species_language_holder = /datum/language_holder/mushroom
 
@@ -33,21 +33,20 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/mushroom,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/mushroom,
 	)
+	/// Martial art for the mushpeople
 	var/datum/martial_art/mushpunch/mush
 
 /datum/species/mush/check_roundstart_eligible()
 	return FALSE //hard locked out of roundstart on the order of design lead kor, this can be removed in the future when planetstation is here OR SOMETHING but right now we have a problem with races.
 
-/datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
+/datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
-	if(ishuman(C))
-		mush = new()
-		mush.teach(C)
-		mush.allow_temp_override = FALSE
+	mush = new(src)
+	mush.locked_to_use = TRUE
+	mush.teach(C)
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	mush.fully_remove(C)
 	QDEL_NULL(mush)
 
 /datum/species/mush/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
@@ -61,7 +60,7 @@
 	return "#FF4B19" //cap color, spot color uses eye color
 
 /// A mushpersons mushroom cap organ
-/obj/item/organ/external/mushroom_cap
+/obj/item/organ/mushroom_cap
 	name = "mushroom cap"
 	desc = "These are yummie, no cap."
 
@@ -77,16 +76,25 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/mushroom_cap
 
+	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
+
 /// Bodypart overlay for the mushroom cap organ
 /datum/bodypart_overlay/mutant/mushroom_cap
 	layers = EXTERNAL_ADJACENT
 	feature_key = "caps"
+	dyable = TRUE
 
 /datum/bodypart_overlay/mutant/mushroom_cap/get_global_feature_list()
 	return SSaccessories.caps_list
 
-/datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
+	var/mob/living/carbon/human/human = bodypart_owner.owner
+	if(!istype(human))
+		return TRUE
 	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
 		return FALSE
-
 	return TRUE
+
+/datum/bodypart_overlay/mutant/mushroom_cap/override_color(obj/item/bodypart/bodypart_owner)
+	//The mushroom cap is red by default (can still be dyed)
+	return "#FF4B19"

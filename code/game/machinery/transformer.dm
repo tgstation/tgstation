@@ -6,6 +6,7 @@
 	icon = 'icons/obj/machines/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
+	plane = ABOVE_GAME_PLANE
 	density = FALSE
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	/// Whether this machine transforms dead mobs into cyborgs
@@ -18,8 +19,6 @@
 	var/cooldown = FALSE
 	/// How long until the next mob can be processed
 	var/cooldown_timer
-	/// The created cyborg's cell chage
-	var/robot_cell_charge = STANDARD_CELL_CHARGE * 5
 	/// The visual countdown effect
 	var/obj/effect/countdown/transformer/countdown
 	/// Who the master AI is that created this factory
@@ -83,7 +82,7 @@
 		return
 
 	if(!transform_dead && victim.stat == DEAD)
-		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		playsound(src.loc, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 		return
 
 	// Activate the cooldown
@@ -91,7 +90,7 @@
 	cooldown_timer = world.time + cooldown_duration
 	update_appearance()
 
-	playsound(src.loc, 'sound/items/welder.ogg', 50, TRUE)
+	playsound(src.loc, 'sound/items/tools/welder.ogg', 50, TRUE)
 	victim.emote("scream") // It is painful
 	victim.adjustBruteLoss(max(0, 80 - victim.getBruteLoss())) // Hurt the human, don't try to kill them though.
 
@@ -100,7 +99,7 @@
 
 	use_energy(active_power_usage) // Use a lot of power.
 	var/mob/living/silicon/robot/new_borg = victim.Robotize()
-	new_borg.cell = new /obj/item/stock_parts/power_store/cell/upgraded/plus(new_borg, robot_cell_charge)
+	new_borg.cell = new /obj/item/stock_parts/power_store/cell/super(new_borg)
 
 	// So he can't jump out the gate right away.
 	new_borg.SetLockdown()

@@ -57,4 +57,3 @@
 	// We can then copy the image's appearance to retain the flag, even on MAs and such
 	var/image/holder = image(to_process, dir = dir)
 	return new /mutable_appearance(holder)
-

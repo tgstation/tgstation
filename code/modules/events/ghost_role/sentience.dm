@@ -6,6 +6,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/crab,
 	/mob/living/basic/cow,
 	/mob/living/basic/goat,
+	/mob/living/basic/goose/vomit,
 	/mob/living/basic/lizard,
 	/mob/living/basic/mouse/brown/tom,
 	/mob/living/basic/parrot,
@@ -17,7 +18,6 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/snake,
 	/mob/living/basic/spider/giant/sgt_araneus,
 	/mob/living/simple_animal/bot/secbot/beepsky,
-	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
 	/mob/living/basic/bear/snow/misha,
 	/mob/living/basic/mining/lobstrosity/juvenile,
 )))
@@ -87,7 +87,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 		spawned_animals++
 
-		selected.key = picked_candidate.key
+		selected.PossessByPlayer(picked_candidate.key)
 
 		selected.grant_all_languages(UNDERSTOOD_LANGUAGE, grant_omnitongue = FALSE, source = LANGUAGE_ATOM)
 
@@ -104,9 +104,9 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 		spawned_mobs += selected
 
 		to_chat(selected, span_userdanger("Hello world!"))
-		to_chat(selected, "<span class='warning'>Due to freak radiation and/or chemicals \
+		to_chat(selected, span_warning("Due to freak radiation and/or chemicals \
 			and/or lucky chance, you have gained human level intelligence \
-			and the ability to speak and understand human language!</span>")
+			and the ability to speak and understand human language!"))
 
 	return SUCCESSFUL_SPAWN
 

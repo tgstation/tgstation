@@ -3,6 +3,7 @@
 	desc = "A blank billboard, with space for all kinds of advertising."
 	icon = 'icons/obj/fluff/billboard.dmi'
 	icon_state = "billboard_blank"
+	plane = ABOVE_GAME_PLANE
 	max_integrity = 1000
 	bound_width = 96
 	bound_height = 32
@@ -46,7 +47,7 @@
 
 /obj/structure/billboard/twenty_four_seven
 	name = "\improper 24-Seven billboard"
-	desc = "A billboard advertising 24-Seven's new range of limited-edition Slushee flavours. 24-Seven: All Day, Everyday."
+	desc = "A billboard advertising 24-Seven's new range of limited-edition Slushee flavours. 24-Seven: All Day, Every Day."
 	icon_state = "billboard_twenty_four_seven"
 
 /obj/structure/billboard/starway

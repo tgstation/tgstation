@@ -44,7 +44,6 @@ GLOBAL_LIST_INIT(rcd_designs, list(
 		//Window Doors[airlock_glass = TRUE is implied]
 		"Windoors" = list(
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/window),
-			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/window/half),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/window/brigdoor),
 		),
 
@@ -58,6 +57,7 @@ GLOBAL_LIST_INIT(rcd_designs, list(
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/command/glass),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/medical/glass),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/research/glass),
+			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/hydroponics/glass),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/virology/glass),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/mining/glass),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/maintenance/glass),
@@ -76,6 +76,7 @@ GLOBAL_LIST_INIT(rcd_designs, list(
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/medical),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/research),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/freezer),
+			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/hydroponics),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/virology),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/mining),
 			list(RCD_DESIGN_MODE = RCD_AIRLOCK, RCD_DESIGN_PATH = /obj/machinery/door/airlock/maintenance),

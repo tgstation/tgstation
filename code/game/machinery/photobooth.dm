@@ -5,7 +5,6 @@
  * Links to buttons for remote control.
  */
 /obj/machinery/photobooth
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "photobooth"
 	desc = "A machine with some drapes and a camera, used to update security record photos. Requires Law Office access to use."
 	icon = 'icons/obj/machines/photobooth.dmi'
@@ -131,7 +130,7 @@
 	if(obj_flags & EMAGGED)
 		var/mob/living/carbon/carbon_occupant = occupant
 		for(var/i in 1 to 5) //play a ton of sounds to mimic it blinding you
-			playsound(src, pick('sound/items/polaroid1.ogg', 'sound/items/polaroid2.ogg'), 75, TRUE)
+			playsound(src, SFX_POLAROID, 75, TRUE)
 			if(carbon_occupant)
 				carbon_occupant.flash_act(5)
 			sleep(0.2 SECONDS)
@@ -142,12 +141,12 @@
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM)) //gives them time to put their hand items away.
 		taking_pictures = FALSE
 		return
-	playsound(src, 'sound/items/polaroid1.ogg', 75, TRUE)
+	playsound(src, 'sound/items/polaroid/polaroid1.ogg', 75, TRUE)
 	flash()
 	if(!do_after(occupant, 3 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM))
 		taking_pictures = FALSE
 		return
-	playsound(src, 'sound/items/polaroid2.ogg', 75, TRUE)
+	playsound(src, 'sound/items/polaroid/polaroid2.ogg', 75, TRUE)
 	flash()
 	if(!do_after(occupant, 2 SECONDS, src, timed_action_flags = IGNORE_HELD_ITEM))
 		taking_pictures = FALSE
@@ -195,8 +194,6 @@
 	id = null
 	controller.id = null
 	balloon_alert(user, "linked to [tool.buffer]")
-
-BUTTON_DIRECTIONAL_HELPERS(/obj/machinery/button/photobooth)
 
 /obj/item/assembly/control/photobooth_control
 	name = "photobooth controller"

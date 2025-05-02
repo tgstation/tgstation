@@ -18,7 +18,7 @@
 	if(tgui_alert(user, "Are you sure you want to crash this market with no survivors?", "Protocol CRAB-17", list("Yes", "No")) == "Yes")
 		if(dumped || QDELETED(src)) //Prevents fuckers from cheesing alert
 			return FALSE
-		var/turf/targetturf = get_safe_random_station_turf()
+		var/turf/targetturf = get_safe_random_station_turf_equal_weight()
 		if (!targetturf)
 			return FALSE
 		var/list/accounts_to_rob = flatten_list(SSeconomy.bank_accounts_by_id)
@@ -43,6 +43,7 @@
 	icon = 'icons/obj/machines/money_machine.dmi'
 	icon_state = "bogdanoff"
 	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	density = TRUE
 	pixel_z = -8
@@ -78,7 +79,7 @@
 
 		var/throwtarget = get_step(user, get_dir(src, user))
 		user.safe_throw_at(throwtarget, 1, 1, force = MOVE_FORCE_EXTREMELY_STRONG)
-		playsound(get_turf(src),'sound/magic/repulse.ogg', 100, TRUE)
+		playsound(get_turf(src),'sound/effects/magic/repulse.ogg', 100, TRUE)
 
 		return
 
@@ -125,12 +126,12 @@
 	sleep(3 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src,'sound/machines/twobeep.ogg',50,FALSE)
+	playsound(src,'sound/machines/beep/twobeep.ogg',50,FALSE)
 	var/mutable_appearance/hologram = mutable_appearance(icon, "hologram")
-	hologram.pixel_y = 16
+	hologram.pixel_z = 16
 	add_overlay(hologram)
 	var/mutable_appearance/holosign = mutable_appearance(icon, "holosign")
-	holosign.pixel_y = 16
+	holosign.pixel_z = 16
 	add_overlay(holosign)
 	add_overlay("legs_extending")
 	cut_overlay("legs_retracted")
@@ -157,7 +158,7 @@
 	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		return
-	playsound(src,'sound/machines/triple_beep.ogg',50,FALSE)
+	playsound(src,'sound/machines/beep/triple_beep.ogg',50,FALSE)
 	add_overlay("text")
 	sleep(1 SECONDS)
 	if(QDELETED(src))
@@ -220,6 +221,7 @@
 	pixel_z = 300
 	desc = "Get out of the way!"
 	layer = FLY_LAYER//that wasn't flying, that was falling with style!
+	plane = ABOVE_GAME_PLANE
 	icon_state = "missile_blur"
 
 /obj/effect/dumpeet_target
@@ -245,7 +247,7 @@
 	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
 	priority_announce("The spacecoin bubble has popped! Get to the credit deposit machine at [get_area(src)] and cash out before you lose all of your funds!", sender_override = "CRAB-17 Protocol")
 	animate(DF, pixel_z = -8, time = 5, , easing = LINEAR_EASING)
-	playsound(src,  'sound/weapons/mortar_whistle.ogg', 70, TRUE, 6)
+	playsound(src,  'sound/items/weapons/mortar_whistle.ogg', 70, TRUE, 6)
 	addtimer(CALLBACK(src, PROC_REF(endLaunch)), 5, TIMER_CLIENT_TIME) //Go onto the last step after a very short falling animation
 
 

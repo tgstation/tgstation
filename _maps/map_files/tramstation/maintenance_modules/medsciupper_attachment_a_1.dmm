@@ -64,15 +64,8 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/spawner/random/engineering/tool{
-	pixel_y = 6;
-	pixel_x = -3
-	},
-/obj/effect/spawner/random/engineering/tool{
-	pixel_y = 12;
-	pixel_x = 5
-	},
-/obj/machinery/light/small/directional/north,
+/obj/effect/spawner/random/engineering/tool,
+/obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/science)
 "x" = (
@@ -128,34 +121,31 @@
 	dir = 8
 	},
 /obj/structure/table,
-/obj/machinery/cell_charger{
-	pixel_y = 10
-	},
-/obj/item/stock_parts/power_store/cell/high/empty{
-	pixel_y = 10
-	},
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/iron,
 /area/station/maintenance/department/science)
 "V" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/north,
 /obj/item/bodypart/head/robot{
 	pixel_x = 6;
-	pixel_y = 17
+	pixel_y = 9
 	},
 /obj/item/bodypart/arm/right/robot{
 	pixel_x = 7;
-	pixel_y = 7
+	pixel_y = -1
 	},
 /obj/item/bodypart/arm/left/robot{
-	pixel_x = -1;
+	pixel_x = -10;
 	pixel_y = 7
 	},
 /obj/item/assembly/flash/cyborg{
 	pixel_x = -6;
-	pixel_y = 15
+	pixel_y = 2
 	},
-/obj/structure/sign/poster/official/build,
+/obj/structure/sign/poster/official/build/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/department/science)
 "X" = (

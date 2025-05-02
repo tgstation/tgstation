@@ -13,7 +13,7 @@ import { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-type Reagent = {
+export type Reagent = {
   name: string;
   volume: number;
 };

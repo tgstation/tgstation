@@ -13,7 +13,7 @@ FLOOR SAFES
 /obj/structure/safe
 	name = "safe"
 	desc = "A huge chunk of metal with a dial embedded in it. Fine print on the dial reads \"Scarborough Arms - 2 tumbler safe, guaranteed thermite resistant, explosion resistant, and assistant resistant.\""
-	icon = 'icons/obj/storage/storage.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "safe"
 	anchored = TRUE
 	density = TRUE
@@ -234,7 +234,7 @@ FLOOR SAFES
 	if(!canhear)
 		return
 	if(current_tick == 2)
-		to_chat(user, "<span class='italics'>The sounds from [src] are too fast and blend together.</span>")
+		to_chat(user, span_italics("The sounds from [src] are too fast and blend together."))
 	if(total_ticks == 1 || prob(SOUND_CHANCE))
 		balloon_alert(user, pick(sounds))
 

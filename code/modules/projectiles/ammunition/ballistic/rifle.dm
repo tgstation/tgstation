@@ -2,7 +2,7 @@
 
 /obj/item/ammo_casing/strilka310
 	name = ".310 Strilka bullet casing"
-	desc = "A .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder."
+	desc = "A .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, it's just a block of red powder."
 	icon_state = "310-casing"
 	caliber = CALIBER_STRILKA310
 	projectile_type = /obj/projectile/bullet/strilka310
@@ -14,7 +14,7 @@
 
 /obj/item/ammo_casing/strilka310/surplus
 	name = ".310 Strilka surplus bullet casing"
-	desc = "A surplus .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, its just a block of red powder. Damp red powder at that."
+	desc = "A surplus .310 Strilka bullet casing. Casing is a bit of a fib, there is no case, it's just a block of red powder. Damp red powder at that."
 	projectile_type = /obj/projectile/bullet/strilka310/surplus
 
 /obj/item/ammo_casing/strilka310/enchanted
@@ -22,7 +22,7 @@
 
 /obj/item/ammo_casing/strilka310/phasic
 	name = ".310 Strilka phasic bullet casing"
-	desc = "A phasic .310 Strika bullet casing. "
+	desc = "A phasic .310 Strilka bullet casing. "
 	projectile_type = /obj/projectile/bullet/strilka310/phasic
 // .223 (M-90gl Carbine)
 
@@ -48,6 +48,7 @@
 	caliber = CALIBER_40MM
 	icon_state = "40mmHE"
 	projectile_type = /obj/projectile/bullet/a40mm
+	newtonian_force = 1.25
 
 /obj/item/ammo_casing/a40mm/rubber
 	name = "40mm rubber shell"
@@ -61,10 +62,11 @@
 	icon_state = "rod_sharp"
 	base_icon_state = "rod_sharp"
 	projectile_type = /obj/projectile/bullet/rebar
+	newtonian_force = 1.5
 
 /obj/item/ammo_casing/rebar/syndie
 	name = "Jagged Iron Rod"
-	desc = "An Iron rod, with notches cut into it. You really dont want this stuck in you."
+	desc = "An Iron rod, with notches cut into it. You really don't want this stuck in you."
 	caliber = CALIBER_REBAR
 	icon_state = "rod_jagged"
 	base_icon_state = "rod_jagged"
@@ -109,6 +111,7 @@
 	icon_state = "paperball"
 	base_icon_state = "paperball"
 	projectile_type = /obj/projectile/bullet/paperball
+	newtonian_force = 0.5
 
 /obj/item/ammo_casing/rebar/Initialize(mapload)
 	. = ..()

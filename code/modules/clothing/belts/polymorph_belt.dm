@@ -31,25 +31,35 @@
 	if (!active)
 		. += span_warning("It requires a Bioscrambler Anomaly Core in order to function.")
 
-/obj/item/polymorph_belt/item_action_slot_check(slot, mob/user, datum/action/action)
-	return slot & ITEM_SLOT_BELT
-
 /obj/item/polymorph_belt/update_icon_state()
 	icon_state = base_icon_state + (active ? "" : "_inactive")
 	worn_icon_state = base_icon_state + (active ? "" : "_inactive")
 	return ..()
 
-/obj/item/polymorph_belt/attackby(obj/item/weapon, mob/user, params)
-	if (!istype(weapon, /obj/item/assembly/signaler/anomaly/bioscrambler))
-		return ..()
+/obj/item/polymorph_belt/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/assembly/signaler/anomaly/bioscrambler))
+		return NONE
+
+	if (active)
+		balloon_alert(user, "core already inserted!")
+		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert(user, "inserting...")
+
 	if (!do_after(user, delay = 3 SECONDS, target = src))
-		return
-	qdel(weapon)
+		balloon_alert(user, "interrupted!")
+		return ITEM_INTERACT_BLOCKING
+
+	if (active)
+		balloon_alert(user, "core already inserted!")
+		return ITEM_INTERACT_BLOCKING
+
 	active = TRUE
 	update_appearance(UPDATE_ICON_STATE)
 	update_transform_action()
-	playsound(src, 'sound/machines/crate_open.ogg', 50, FALSE)
+	playsound(src, 'sound/machines/crate/crate_open.ogg', 50, FALSE)
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/polymorph_belt/attack(mob/living/target_mob, mob/living/user, params)
 	. = ..()
@@ -104,8 +114,13 @@
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
 	possible_shapes = list(/mob/living/basic/cockroach)
+	can_be_shared = FALSE
 	/// Amount of time it takes us to transform back or forth
 	var/channel_time = 3 SECONDS
+
+/datum/action/cooldown/spell/shapeshift/polymorph_belt/cast(mob/living/cast_on)
+	cast_on = owner //make sure this is only affecting the wearer of the belt
+	return ..()
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/Remove(mob/remove_from)
 	var/datum/status_effect/shapechange_mob/shapechange = remove_from.has_status_effect(/datum/status_effect/shapechange_mob/from_spell)
@@ -114,6 +129,7 @@
 	return ..()
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/before_cast(mob/living/cast_on)
+	cast_on = owner
 	. = ..()
 	if (. & SPELL_CANCEL_CAST)
 		return
@@ -139,7 +155,7 @@
 		cast_on.transform = old_transform
 		return . | SPELL_CANCEL_CAST
 	cast_on.visible_message(span_warning("[cast_on]'s body rearranges itself with a horrible crunching sound!"))
-	playsound(cast_on, 'sound/magic/demon_consume.ogg', 50, TRUE)
+	playsound(cast_on, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
 
 /datum/action/cooldown/spell/shapeshift/polymorph_belt/after_cast(atom/cast_on)
 	. = ..()

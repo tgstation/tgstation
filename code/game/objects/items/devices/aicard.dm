@@ -1,7 +1,7 @@
 /obj/item/aicard
 	name = "intelliCard"
 	desc = "A storage device for AIs. Patent pending."
-	icon = 'icons/obj/devices/aicards.dmi'
+	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
 	base_icon_state = "aicard"
 	inhand_icon_state = "electronic"
@@ -43,17 +43,15 @@
 	user.visible_message(span_suicide("[user] is trying to upload [user.p_them()]self into [src]! That's not going to work out well!"))
 	return BRUTELOSS
 
-/obj/item/aicard/pre_attack(atom/target, mob/living/user, params)
-	. = ..()
-	if(.)
-		return
-
+/obj/item/aicard/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(AI)
-		if(upload_ai(target, user))
-			return TRUE
+		if(upload_ai(interacting_with, user))
+			return ITEM_INTERACT_SUCCESS
 	else
-		if(capture_ai(target, user))
-			return TRUE
+		if(capture_ai(interacting_with, user))
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /// Tries to get an AI from the atom clicked
 /obj/item/aicard/proc/capture_ai(atom/from_what, mob/living/user)

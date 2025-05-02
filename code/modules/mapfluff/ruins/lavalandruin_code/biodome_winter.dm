@@ -18,7 +18,7 @@
 	. = ..()
 	. += span_notice("Throw this at objects or creatures to freeze them, it will boomerang back so be cautious!")
 
-/obj/item/freeze_cube/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle, quickstart = TRUE)
+/obj/item/freeze_cube/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	. = ..()
 	if(!.)
 		return
@@ -35,7 +35,7 @@
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, throw_range+2, throw_speed, null, TRUE), 0.1 SECONDS)
 
 /obj/item/freeze_cube/proc/freeze_hit_atom(atom/movable/hit_atom)
-	playsound(src, 'sound/effects/glassbr3.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/glass/glassbr3.ogg', 50, TRUE)
 	COOLDOWN_START(src, freeze_cooldown, cooldown_time)
 	if(isobj(hit_atom))
 		var/obj/hit_object = hit_atom

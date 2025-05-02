@@ -6,9 +6,9 @@
 /datum/reagent/method_patch_test/expose_mob(mob/living/target, methods = PATCH, reac_volume, show_message = TRUE)
 	. = ..()
 	if(methods & PATCH)
-		target.health = 90
+		target.setBruteLoss(20)
 	if(methods & INJECT)
-		target.health = 80
+		target.setBruteLoss(10)
 
 /datum/unit_test/reagent_mob_expose/Run()
 	// Life() is handled just by tests
@@ -17,7 +17,7 @@
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/reagent_containers/dropper/dropper = allocate(/obj/item/reagent_containers/dropper)
 	var/obj/item/reagent_containers/cup/glass/bottle/drink = allocate(/obj/item/reagent_containers/cup/glass/bottle)
-	var/obj/item/reagent_containers/pill/patch/patch = allocate(/obj/item/reagent_containers/pill/patch)
+	var/obj/item/reagent_containers/applicator/patch/patch = allocate(/obj/item/reagent_containers/applicator/patch)
 	var/obj/item/reagent_containers/syringe/syringe = allocate(/obj/item/reagent_containers/syringe)
 
 	// INGEST
@@ -34,8 +34,8 @@
 	TEST_ASSERT(human.fire_stacks < 0, "Human still has fire stacks after touching water")
 
 	// VAPOR
+	human.fully_heal(ALL)
 	TEST_ASSERT_NULL(human.has_status_effect(/datum/status_effect/drowsiness), "Human is drowsy at the start of testing")
-	drink.reagents.clear_reagents()
 	drink.reagents.add_reagent(/datum/reagent/nitrous_oxide, 10)
 	drink.reagents.trans_to(human, 10, methods = VAPOR)
 	TEST_ASSERT_NOTNULL(human.has_status_effect(/datum/status_effect/drowsiness), "Human is not drowsy after exposure to vapors")
@@ -46,17 +46,26 @@
 	TEST_ASSERT(human.fire_stacks < old_fire_stacks, "Human does not get wetter after being exposed to water by vapors")
 
 	// PATCH
-	human.health = 100
-	TEST_ASSERT_EQUAL(human.health, 100, "Human health did not set properly")
+	human.fully_heal(ALL)
+	TEST_ASSERT_EQUAL(human.getBruteLoss(), 0, "Human health did not set properly")
 	patch.reagents.add_reagent(/datum/reagent/method_patch_test, 1)
 	patch.self_delay = 0
-	patch.attack(human, human)
-	TEST_ASSERT_EQUAL(human.health, 90, "Human health did not update after patch was applied")
+	patch.interact_with_atom(human, human)
+	patch.get_embed().process(SSdcs.wait / 10)
+	human.Life(SSMOBS_DT)
+	TEST_ASSERT_EQUAL(human.getBruteLoss(), 20, "Human health did not update after patch was applied")
 
 	// INJECT
 	syringe.reagents.add_reagent(/datum/reagent/method_patch_test, 1)
 	syringe.melee_attack_chain(human, human)
-	TEST_ASSERT_EQUAL(human.health, 80, "Human health did not update after injection from syringe")
+	TEST_ASSERT_EQUAL(human.getBruteLoss(), 10, "Human health did not update after injection from syringe")
+
+	// INHALE
+	human.fully_heal(ALL)
+	TEST_ASSERT_NULL(human.has_status_effect(/datum/status_effect/hallucination), "Human is hallucinating at the start of testing")
+	drink.reagents.add_reagent(/datum/reagent/nitrous_oxide, 10)
+	drink.reagents.trans_to(human, 10, methods = INHALE)
+	TEST_ASSERT_NOTNULL(human.has_status_effect(/datum/status_effect/hallucination), "Human is not hallucinating after exposure to vapors")
 
 /datum/unit_test/reagent_mob_expose/Destroy()
 	SSmobs.ignite()

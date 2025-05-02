@@ -24,7 +24,7 @@
 		var/is_basic = istype(target, /mob/living/basic)
 		var/is_simple = istype(target, /mob/living/simple_animal)
 		// check some basic stuff
-		if(target.status_flags & GODMODE)
+		if(HAS_TRAIT(target, TRAIT_GODMODE))
 			continue
 		if(!(target.mob_biotypes & MOB_ORGANIC))
 			continue

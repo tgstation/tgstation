@@ -96,6 +96,22 @@
 	)
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
+	test_ignored = TRUE
+
+/datum/supply_pack/imports/shells
+	name = "Lethal Shotgun Shell Box Crate"
+	desc = "Contains three boxes of buckshot shotgun shells. \
+		Due to Nanotrasen's failure to secure exclusive manufacturing rights \
+		during the Spinward Hunting and Shooting policy hearings, this import \
+		is heavily taxed, despite being 'legal'. I hope the price tag is worth it."
+	cost = CARGO_CRATE_VALUE * 10
+	access = ACCESS_ARMORY
+	access_view = ACCESS_ARMORY
+	contains = list(
+		/obj/item/storage/box/lethalshot = 3,
+	)
+	crate_name = "shotgun shell crate"
+	crate_type = /obj/structure/closet/crate/secure/weapon
 
 /datum/supply_pack/imports/error
 	name = "NULL_ENTRY"
@@ -130,6 +146,7 @@
 		/obj/effect/spawner/random/contraband = 5,
 	)
 	crate_name = "crate"
+	test_ignored = TRUE
 
 /datum/supply_pack/imports/wt550
 	name = "Smuggled WT-550 Autorifle Crate"
@@ -143,7 +160,7 @@
 		/obj/item/gun/ballistic/automatic/wt550 = 2,
 		/obj/item/ammo_box/magazine/wt550m9 = 2,
 	)
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/wt550ammo
 	name = "Smuggled WT-550 Ammo Crate"
@@ -156,7 +173,7 @@
 		/obj/item/ammo_box/magazine/wt550m9/wtic = 2,
 	)
 	crate_name = "emergency crate"
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/shocktrooper
 	name = "Shocktrooper Crate"
@@ -172,7 +189,7 @@
 		/obj/item/clothing/suit/armor/vest,
 		/obj/item/clothing/head/helmet,
 	)
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/specialops
 	name = "Special Ops Crate"
@@ -184,11 +201,11 @@
 		/obj/item/clothing/mask/chameleon,
 		/obj/item/clothing/under/chameleon,
 		/obj/item/storage/belt/chameleon,
-		/obj/item/card/id/advanced/chameleon,
+		/obj/item/card/id/advanced/chameleon/crummy,
 		/obj/item/switchblade,
 		/obj/item/grenade/mirage = 5,
 	)
-	crate_type = /obj/structure/closet/crate/secure/gorlex_weapons/jammed
+	crate_type = /obj/structure/closet/crate/secure/syndicate/gorlex/weapons/bustedlock
 
 /datum/supply_pack/imports/russian
 	name = "Russian Surplus Military Gear Crate"
@@ -201,9 +218,8 @@
 		/obj/item/food/rationpack,
 		/obj/item/ammo_box/strilka310,
 		/obj/item/ammo_box/strilka310/surplus,
-		/obj/item/storage/toolbox/ammobox/strilka310,
-		/obj/item/storage/toolbox/ammobox/strilka310/surplus,
-		/obj/item/storage/toolbox/maint_kit,
+		/obj/effect/spawner/random/armory/strilka,
+		/obj/item/gun_maintenance_supplies,
 		/obj/item/clothing/suit/armor/vest/russian,
 		/obj/item/clothing/head/helmet/rus_helmet,
 		/obj/item/clothing/shoes/russian,
@@ -275,6 +291,7 @@
 	cost = CARGO_CRATE_VALUE * 30
 	contains = list(/obj/effect/spawner/random/animalhide = 5)
 	crate_name = "animal hide crate"
+	test_ignored = TRUE
 
 /datum/supply_pack/imports/dreadnog
 	name = "Dreadnog Carton Crate"

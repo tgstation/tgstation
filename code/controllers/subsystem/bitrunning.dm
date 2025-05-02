@@ -25,13 +25,13 @@ SUBSYSTEM_DEF(bitrunning)
 		var/can_view_reward = domain.difficulty < (scanner_tier + 1) && domain.cost <= points + 3
 
 		UNTYPED_LIST_ADD(levels, list(
-			"announce_ghosts"= domain.announce_to_ghosts,
+			"announce_ghosts" = domain.announce_to_ghosts,
 			"cost" = domain.cost,
 			"desc" = can_view ? domain.desc : "Limited scanning capabilities. Cannot infer domain details.",
 			"difficulty" = domain.difficulty,
 			"id" = domain.key,
 			"is_modular" = domain.is_modular,
-			"has_secondary_objectives" = assoc_value_sum(domain.secondary_loot) ? TRUE : FALSE,
+			"has_secondary_objectives" = counterlist_sum(domain.secondary_loot) ? TRUE : FALSE,
 			"name" = can_view ? domain.name : REDACTED,
 			"reward" = can_view_reward ? domain.reward_points : REDACTED,
 		))
@@ -42,7 +42,7 @@ SUBSYSTEM_DEF(bitrunning)
 	var/datum/lazy_template/virtual_domain/domain = completed_domain
 	var/choice
 
-	if(assoc_value_sum(domain.secondary_loot))
+	if(counterlist_sum(domain.secondary_loot))
 		choice = pick_weight(domain.secondary_loot)
 		domain.secondary_loot[choice] -= 1
 	else

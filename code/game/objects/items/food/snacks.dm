@@ -39,7 +39,7 @@
 
 /obj/item/food/candy/bronx/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, on_consume = CALLBACK(src, PROC_REF(on_consume)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, on_consume = CALLBACK(src, PROC_REF(on_consume)))
 
 /obj/item/food/candy/bronx/proc/on_consume(mob/living/eater)
 	if(ishuman(eater))
@@ -94,7 +94,7 @@
 	)
 	junkiness = 20
 	tastes = list("salt" = 1, "crisps" = 1)
-	foodtypes = JUNKFOOD | FRIED
+	foodtypes = VEGETABLES|JUNKFOOD|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/chips/make_leave_trash()
@@ -639,7 +639,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 
 /obj/item/food/shok_roks/berry
 	name = "\improper Shok-Roks - Berry Storm flavour"
-	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Berry Storm- filled with non-descript sour berry flavour!"
+	desc = "You've heard of Snap-Roks, now get ready for Shok-Roks: the popping candy for Ethereals! Available in 5 exciting flavours, of which this bag contains Berry Storm- filled with nondescript sour berry flavour!"
 	icon_state = "shok_roks_berry"
 	trash_type = /obj/item/trash/shok_roks/berry
 	tastes = list("sour berry" = 1, "lightning" = 1)

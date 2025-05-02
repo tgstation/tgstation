@@ -26,8 +26,8 @@
 	DL_progress = 0
 	return ..()
 
-/datum/computer_file/program/borg_monitor/tap(atom/A, mob/living/user, params)
-	var/mob/living/silicon/robot/borgo = A
+/datum/computer_file/program/borg_monitor/tap(atom/tapped_atom, mob/living/user, list/modifiers)
+	var/mob/living/silicon/robot/borgo = tapped_atom
 	if(!istype(borgo) || !borgo.modularInterface)
 		return FALSE
 	DL_source = borgo
@@ -39,6 +39,7 @@
 		username = "user [stored_card.registered_name]"
 	to_chat(borgo, span_userdanger("Request received from [username] for the system log file. Upload in progress."))//Damning evidence may be contained, so warn the borg
 	borgo.logevent("File request by [username]: /var/logs/syslog")
+	borgo.balloon_alert(user, "downloading logs")
 	return TRUE
 
 /datum/computer_file/program/borg_monitor/process_tick(seconds_per_tick)
@@ -122,7 +123,7 @@
 	if(robot.stat == DEAD) //Dead borgs will listen to you no longer
 		to_chat(user, span_warning("Error -- Could not open a connection to unit:[robot]"))
 		return FALSE
-	var/message = tgui_input_text(user, "Message to be sent to remote cyborg", "Send Message")
+	var/message = tgui_input_text(user, "Message to be sent to remote cyborg", "Send Message", max_length = MAX_MESSAGE_LEN)
 	if(!message)
 		return FALSE
 	send_message(message, robot, user)
@@ -139,10 +140,10 @@
 	if(user)
 		to_chat(user, "Message sent to [robot]: [message]")
 	robot.logevent("Message from [ID] -- \"[message]\"")
-	SEND_SOUND(robot, 'sound/machines/twobeep_high.ogg')
+	SEND_SOUND(robot, 'sound/machines/beep/twobeep_high.ogg')
 	if(robot.connected_ai)
 		to_chat(robot.connected_ai, "<br><br>[span_notice("Message from [ID] to [robot] -- \"[message]\"")]<br>")
-		SEND_SOUND(robot.connected_ai, 'sound/machines/twobeep_high.ogg')
+		SEND_SOUND(robot.connected_ai, 'sound/machines/beep/twobeep_high.ogg')
 	user?.log_talk(message, LOG_PDA, tag = "Cyborg Monitor Program: ID name \"[ID]\" to [robot]")
 	return TRUE
 
@@ -161,7 +162,9 @@
 		if(computer.obj_flags & EMAGGED)
 			return "STDERR:UNDF"
 		return FALSE
-	return ID.registered_name
+	. = "[ID.registered_name]"
+	if(ID.assignment)
+		. = "[.], [ID.assignment]"
 
 /datum/computer_file/program/borg_monitor/syndicate
 	filename = "roboverlord"

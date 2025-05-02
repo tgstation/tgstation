@@ -5,6 +5,7 @@
 	icon_state = "boxcutter"
 	inhand_icon_state = "boxcutter"
 	base_icon_state = "boxcutter"
+	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/equipment/boxcutter_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/boxcutter_righthand.dmi'
 	inhand_icon_state = null
@@ -38,7 +39,7 @@
 		throwforce_on = 4, \
 		throw_speed_on = throw_speed, \
 		sharpness_on = SHARP_EDGED, \
-		hitsound_on = 'sound/weapons/bladeslice.ogg', \
+		hitsound_on = 'sound/items/weapons/bladeslice.ogg', \
 		w_class_on = WEIGHT_CLASS_NORMAL, \
 		attack_verb_continuous_on = list("cuts", "stabs", "slashes"), \
 		attack_verb_simple_on = list("cut", "stab", "slash"), \

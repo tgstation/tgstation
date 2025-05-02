@@ -1,7 +1,4 @@
-import { BooleanLike } from 'common/react';
 import { useState } from 'react';
-
-import { useBackend } from '../backend';
 import {
   Blink,
   Box,
@@ -13,11 +10,18 @@ import {
   Stack,
   Tabs,
   Tooltip,
-} from '../components';
+} from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
+
+import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 
-// 15x crate value
-const COST_UPPER_BOUND = 3000;
+// 3.5x crate value, 10 minutes
+const COST_MODERATE_BOUND = 700;
+// 13.5x crate value, 15 minutes
+const COST_LONG_BOUND = 2700;
+// 40x crate value, 20 minutes
+const COST_VERY_LONG_BOUND = 8000;
 
 type typePath = string;
 
@@ -44,12 +48,14 @@ type Info = {
 const CooldownEstimate = (props) => {
   const { cost } = props;
   const cooldownColor =
-    (cost > COST_UPPER_BOUND * 0.75 && 'red') ||
-    (cost > COST_UPPER_BOUND * 0.25 && 'orange') ||
+    (cost >= COST_VERY_LONG_BOUND && 'red') ||
+    (cost >= COST_LONG_BOUND && 'orange') ||
+    (cost >= COST_MODERATE_BOUND && 'yellow') ||
     'green';
   const cooldownText =
-    (cost > COST_UPPER_BOUND * 0.75 && 'long') ||
-    (cost > COST_UPPER_BOUND * 0.25 && 'moderate') ||
+    (cost >= COST_VERY_LONG_BOUND && 'very long') ||
+    (cost >= COST_LONG_BOUND && 'long') ||
+    (cost >= COST_MODERATE_BOUND && 'moderate') ||
     'short';
   return (
     <Box as="span" textColor={cooldownColor}>

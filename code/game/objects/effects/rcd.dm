@@ -10,7 +10,7 @@
  * * fade_time - The time for RCD holograms to fade
  */
 /proc/rcd_scan(atom/source, scan_range = RCD_DESTRUCTIVE_SCAN_RANGE, fade_time = RCD_HOLOGRAM_FADE_TIME)
-	playsound(source, 'sound/items/rcdscan.ogg', 50, vary = TRUE, pressure_affected = FALSE)
+	playsound(source, 'sound/items/tools/rcdscan.ogg', 50, vary = TRUE, pressure_affected = FALSE)
 
 	var/turf/source_turf = get_turf(source)
 	for(var/turf/open/surrounding_turf as anything in RANGE_TURFS(scan_range, source_turf))
@@ -28,17 +28,15 @@
 		if(skip_to_next_turf)
 			continue
 
-		var/mutable_appearance/hologram_appearance
+		var/hologram_icon
 		switch(rcd_memory)
 			if(RCD_MEMORY_WALL)
-				hologram_appearance = GLOB.holographic_wall
+				hologram_icon = GLOB.icon_holographic_wall
 			if(RCD_MEMORY_WINDOWGRILLE)
-				hologram_appearance = GLOB.holographic_window
+				hologram_icon = GLOB.icon_holographic_window
 
 		var/obj/effect/rcd_hologram/hologram = new(surrounding_turf)
-		hologram.icon = hologram_appearance.icon
-		hologram.icon_state = hologram_appearance.icon_state
-		hologram.overlays = hologram_appearance.overlays
+		hologram.icon = hologram_icon
 		hologram.makeHologram()
 		animate(hologram, alpha = 0, time = fade_time, easing = CIRCULAR_EASING | EASE_IN)
 

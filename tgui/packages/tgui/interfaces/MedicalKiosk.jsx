@@ -1,4 +1,3 @@
-import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -9,7 +8,9 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from '../components';
+} from 'tgui-core/components';
+
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 
 export const MedicalKiosk = (props) => {

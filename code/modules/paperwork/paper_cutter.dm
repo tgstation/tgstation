@@ -113,9 +113,12 @@
 /obj/item/papercutter/attackby(obj/item/inserted_item, mob/user, params)
 	if(istype(inserted_item, /obj/item/paper))
 		if(is_type_in_list(inserted_item, list(
-			/obj/item/paper/paperslip, /obj/item/paper/report, /obj/item/paper/fake_report,
-			/obj/item/paper/calling_card, /obj/item/paper/pamphlet, /obj/item/paper/holy_writ)
-			))
+				/obj/item/paper/fake_report,
+				/obj/item/paper/holy_writ,
+				/obj/item/paper/pamphlet,
+				/obj/item/paper/paperslip,
+				/obj/item/paper/report,
+		)))
 			balloon_alert(user, "won't fit!")
 			return
 		if(stored_paper)
@@ -163,7 +166,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/papercutter/proc/cut_paper(mob/user)
-	playsound(src.loc, 'sound/weapons/slash.ogg', 50, TRUE)
+	playsound(src.loc, 'sound/items/weapons/slash.ogg', 50, TRUE)
 	var/clumsy = (iscarbon(user) && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(cut_self_chance))
 	to_chat(user, span_userdanger("You neatly cut [stored_paper][clumsy ? "... and your finger in the process!" : "."]"))
 	if(clumsy)

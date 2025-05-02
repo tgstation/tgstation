@@ -3,11 +3,10 @@
 /obj/structure/bed/nest
 	name = "alien nest"
 	desc = "It's a gruesome pile of thick, sticky resin shaped like a nest."
-	icon = 'icons/obj/structures/smooth/alien/nest.dmi'
+	icon = 'icons/obj/smooth_structures/alien/nest.dmi'
 	icon_state = "nest-0"
 	base_icon_state = "nest"
 	max_integrity = 120
-	can_be_unanchored = FALSE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_ALIEN_NEST
 	canSmoothWith = SMOOTH_GROUP_ALIEN_NEST
@@ -26,7 +25,7 @@
 	if(!length(buckled_mobs))
 		return
 
-	if(hero.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
+	if(hero.get_organ_by_type(/obj/item/organ/alien/plasmavessel))
 		unbuckle_mob(captive)
 		add_fingerprint(hero)
 		return
@@ -56,12 +55,12 @@
 	add_fingerprint(hero)
 
 /obj/structure/bed/nest/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
-	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated() || M.buckled )
+	if ( !ismob(M) || (get_dist(src, user) > 1) || (M.loc != src.loc) || user.incapacitated || M.buckled )
 		return
 
-	if(M.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
+	if(M.get_organ_by_type(/obj/item/organ/alien/plasmavessel))
 		return
-	if(!user.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
+	if(!user.get_organ_by_type(/obj/item/organ/alien/plasmavessel))
 		return
 
 	if(has_buckled_mobs())
@@ -74,8 +73,7 @@
 
 /obj/structure/bed/nest/post_buckle_mob(mob/living/M)
 	ADD_TRAIT(M, TRAIT_HANDS_BLOCKED, type)
-	M.pixel_y = M.base_pixel_y
-	M.pixel_x = M.base_pixel_x + 2
+	M.add_offsets(type, x_add = 2)
 	M.layer = BELOW_MOB_LAYER
 	add_overlay(nest_overlay)
 
@@ -86,8 +84,7 @@
 
 /obj/structure/bed/nest/post_unbuckle_mob(mob/living/M)
 	REMOVE_TRAIT(M, TRAIT_HANDS_BLOCKED, type)
-	M.pixel_x = M.base_pixel_x + M.body_position_pixel_x_offset
-	M.pixel_y = M.base_pixel_y + M.body_position_pixel_y_offset
+	M.remove_offsets(type)
 	M.layer = initial(M.layer)
 	cut_overlay(nest_overlay)
 	M.remove_status_effect(/datum/status_effect/nest_sustenance)
@@ -95,9 +92,9 @@
 /obj/structure/bed/nest/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+			playsound(loc, 'sound/effects/blob/attackblob.ogg', 100, TRUE)
 		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/structure/bed/nest/attack_alien(mob/living/carbon/alien/user, list/modifiers)
 	if(!user.combat_mode)

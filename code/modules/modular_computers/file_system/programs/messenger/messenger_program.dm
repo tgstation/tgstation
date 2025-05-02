@@ -148,7 +148,7 @@
 	if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, user, new_ringtone) & COMPONENT_STOP_RINGTONE_CHANGE)
 		return FALSE
 
-	ringtone = ringtone
+	ringtone = new_ringtone
 	return TRUE
 
 /datum/computer_file/program/messenger/ui_interact(mob/user, datum/tgui/ui)
@@ -165,7 +165,7 @@
 	switch(action)
 		if("PDA_ringSet")
 			var/mob/living/user = usr
-			var/new_ringtone = tgui_input_text(user, "Enter a new ringtone", "Ringtone", ringtone, encode = FALSE)
+			var/new_ringtone = tgui_input_text(user, "Enter a new ringtone", "Ringtone", ringtone, max_length = MAX_MESSAGE_LEN, encode = FALSE)
 			if(!computer.can_interact(user))
 				computer.balloon_alert(user, "can't reach!")
 				return FALSE
@@ -337,6 +337,7 @@
 
 	static_data["can_spam"] = spam_mode
 	static_data["is_silicon"] = issilicon(user)
+	static_data["remote_silicon"] = (isAI(user) || iscyborg(user)) && !istype(computer, /obj/item/modular_computer/pda/silicon) //Silicon is accessing a PDA on the ground, not their internal one. Avoiding pAIs in this check.
 	static_data["alert_able"] = alert_able
 
 	return static_data
@@ -384,7 +385,7 @@
 
 /datum/computer_file/program/messenger/ui_assets(mob/user)
 	. = ..()
-	. += get_asset_datum(/datum/asset/spritesheet/chat)
+	. += get_asset_datum(/datum/asset/spritesheet_batched/chat)
 
 //////////////////////
 // MESSAGE HANDLING //
@@ -401,7 +402,7 @@
 		chat.can_reply = FALSE
 		return
 	var/target_name = target.computer.saved_identification
-	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]", encode = FALSE)
+	var/input_message = tgui_input_text(user, "Enter [mime_mode ? "emojis":"a message"]", "NT Messaging[target_name ? " ([target_name])" : ""]", max_length = MAX_MESSAGE_LEN, encode = FALSE)
 	send_message(user, input_message, list(chat))
 
 /// Helper proc that sends a message to everyone
@@ -574,7 +575,7 @@
 	var/mob/sender
 	if(ismob(source))
 		sender = source
-		if(!sender.can_perform_action(computer, ALLOW_RESTING))
+		if(!sender.can_perform_action(computer, ALLOW_RESTING | ALLOW_PAI))
 			return FALSE
 
 	if(!COOLDOWN_FINISHED(src, last_text))
@@ -589,7 +590,7 @@
 		if(sender)
 			to_chat(sender, span_notice("ERROR: Network unavailable, please try again later."))
 		if(alert_able && !alert_silenced)
-			playsound(computer, 'sound/machines/terminal_error.ogg', 15, TRUE)
+			playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 15, TRUE)
 		return FALSE
 
 	// used for logging
@@ -620,7 +621,7 @@
 		if(sender)
 			to_chat(sender, span_notice("ERROR: Server is not responding."))
 		if(alert_able && !alert_silenced)
-			playsound(computer, 'sound/machines/terminal_error.ogg', 15, TRUE)
+			playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 15, TRUE)
 		return FALSE
 
 	var/shell_addendum = ""
@@ -708,7 +709,7 @@
 			reply = "(<a href='byond://?src=[REF(src)];choice=[reply_href];skiprefresh=1;target=[REF(chat)]'>Reply</a>)"
 
 		if (isAI(messaged_mob))
-			sender_title = "<a href='?src=[REF(messaged_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
+			sender_title = "<a href='byond://?src=[REF(messaged_mob)];track=[html_encode(sender_name)]'>[sender_title]</a>"
 
 		var/inbound_message = "[signal.format_message()]"
 
@@ -718,7 +719,7 @@
 		SEND_SIGNAL(computer, COMSIG_COMPUTER_RECEIVED_MESSAGE, sender_title, inbound_message, photo_message)
 
 	if (alert_able && (!alert_silenced || is_rigged))
-		computer.ring(ringtone)
+		computer.ring(ringtone, receievers)
 
 	SStgui.update_uis(computer)
 	update_pictures_for_all()
@@ -729,7 +730,7 @@
 
 	if(QDELETED(src))
 		return
-	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH | ALLOW_RESTING))
+	if(!usr.can_perform_action(computer, FORBID_TELEKINESIS_REACH | ALLOW_RESTING | ALLOW_PAI))
 		return
 
 	// send an activation message and open the messenger

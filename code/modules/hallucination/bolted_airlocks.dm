@@ -1,5 +1,6 @@
 /datum/hallucination/bolts
 	random_hallucination_weight = 7
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 	/// A list of weakrefs to airlocks we bolt down around us
 	var/list/datum/weakref/airlocks_to_hit
 	/// A list of weakrefs to fake lock hallucinations we've created
@@ -73,6 +74,7 @@
 /obj/effect/client_image_holder/hallucination/fake_door_lock
 	layer = CLOSED_DOOR_LAYER + 1 //for Bump priority
 	plane = GAME_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 	/// The real airlock we're fake bolting down.
 	var/obj/machinery/door/airlock/airlock
@@ -102,11 +104,11 @@
 
 /obj/effect/client_image_holder/hallucination/fake_door_lock/show_image_to(mob/show_to)
 	. = ..()
-	show_to.playsound_local(get_turf(src), 'sound/machines/boltsdown.ogg', 30, FALSE, 3)
+	show_to.playsound_local(get_turf(src), 'sound/machines/airlock/boltsdown.ogg', 30, FALSE, 3)
 
 /obj/effect/client_image_holder/hallucination/fake_door_lock/hide_image_from(mob/show_to)
 	. = ..()
-	show_to.playsound_local(get_turf(src), 'sound/machines/boltsup.ogg', 30, FALSE, 3)
+	show_to.playsound_local(get_turf(src), 'sound/machines/airlock/boltsup.ogg', 30, FALSE, 3)
 
 /obj/effect/client_image_holder/hallucination/fake_door_lock/proc/on_airlock_deleted(datum/source)
 	SIGNAL_HANDLER

@@ -91,7 +91,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /// Destroy the bible when it's shot by a bullet
 /obj/item/book/bible/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
 	victim.add_mood_event("blessing", /datum/mood_event/blessing)
-	playsound(victim, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
+	playsound(victim, 'sound/effects/magic/magic_block_holy.ogg', 50, TRUE)
 	victim.visible_message(span_warning("[src] takes [bullet] in [victim]'s place!"))
 	var/obj/structure/fluff/paper/stack/pages = new(get_turf(src))
 	pages.setDir(pick(GLOB.alldirs))
@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return FALSE
 	if(!istype(user) || !user.is_holding(src))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(user.mind?.holy_role != HOLY_ROLE_HIGHPRIEST)
 		return FALSE
@@ -204,25 +204,30 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 /obj/item/book/bible/proc/bless(mob/living/blessed, mob/living/user)
 	if(GLOB.religious_sect)
 		return GLOB.religious_sect.sect_bless(blessed,user)
+
 	if(!ishuman(blessed))
-		return
+		return BLESSING_FAILED
+
 	var/mob/living/carbon/human/built_in_his_image = blessed
 	for(var/obj/item/bodypart/bodypart as anything in built_in_his_image.bodyparts)
 		if(!IS_ORGANIC_LIMB(bodypart))
 			balloon_alert(user, "can't heal inorganic!")
-			return FALSE
+			return BLESSING_IGNORED
 
 	var/heal_amt = 10
 	var/list/hurt_limbs = built_in_his_image.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
-	if(length(hurt_limbs))
-		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-			if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
-				built_in_his_image.update_damage_overlays()
-		built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
-		to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
-		playsound(built_in_his_image, SFX_PUNCH, 25, TRUE, -1)
-		built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
-	return TRUE
+	if(!length(hurt_limbs))
+		return BLESSING_IGNORED
+
+	for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
+		if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
+			built_in_his_image.update_damage_overlays()
+
+	built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
+	to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
+	playsound(built_in_his_image, SFX_PUNCH, 25, TRUE, -1)
+	built_in_his_image.add_mood_event("blessing", /datum/mood_event/blessing)
+	return BLESSING_SUCCESS
 
 /obj/item/book/bible/attack(mob/living/target_mob, mob/living/carbon/human/user, params, heal_mode = TRUE)
 	if(!ISADVANCEDTOOLUSER(user))
@@ -244,7 +249,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return ..()
 
 	if(target_mob.stat == DEAD)
-		if(!GLOB.religious_sect?.sect_dead_bless(target_mob, user))
+		if(GLOB.religious_sect?.sect_dead_bless(target_mob, user) == BLESSING_FAILED)
 			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
 			playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 		return
@@ -256,9 +261,13 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	var/smack_chance = DEFAULT_SMACK_CHANCE
 	if(GLOB.religious_sect)
 		smack_chance = GLOB.religious_sect.smack_chance
-	var/success = !prob(smack_chance) && bless(target_mob, user)
-	if(success)
-		return
+
+	if(!prob(smack_chance))
+		var/bless_result = bless(target_mob, user)
+		if (bless_result != BLESSING_FAILED)
+			SEND_SIGNAL(target_mob, COMSIG_LIVING_BLESSED, user, src, bless_result)
+			return
+
 	if(iscarbon(target_mob))
 		var/mob/living/carbon/carbon_target = target_mob
 		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
@@ -268,9 +277,6 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
 	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 	log_combat(user, target_mob, "attacked", src)
-
-/obj/item/book/bible/storage_insert_on_interaction(datum/storage, atom/storage_holder, mob/user)
-	return !istype(storage_holder, /obj/item/book/bible)
 
 /obj/item/book/bible/interact_with_atom(atom/bible_smacked, mob/living/user, list/modifiers)
 	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user) & COMSIG_END_BIBLE_CHAIN)
@@ -311,10 +317,14 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			return .
 
 	if(istype(bible_smacked, /obj/item/melee/cultblade/haunted) && !IS_CULTIST(user))
+		var/obj/item/melee/cultblade/haunted/sword_smacked = bible_smacked
+		if(!sword_smacked.bound)
+			sword_smacked.balloon_alert(user, "must be bound!")
+			return ITEM_INTERACT_BLOCKING
 		var/obj/item/melee/cultblade/haunted/sword = bible_smacked
 		sword.balloon_alert(user, "exorcising...")
-		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
-		if(do_after(user, 4 SECONDS, target = sword))
+		playsound(src,'sound/effects/hallucinations/veryfar_noise.ogg',40,TRUE)
+		if(do_after(user, 12 SECONDS, target = sword))
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			new /obj/item/nullrod/nullblade(get_turf(sword))
 			user.visible_message(span_notice("[user] exorcises [sword]!"))
@@ -332,7 +342,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	new /obj/item/reagent_containers/cup/glass/bottle/whiskey(src)
 
 /obj/item/book/bible/syndicate
-	name = "Syndicate Tome"
+	name = "syndicate tome"
 	desc = "A very ominous tome resembling a bible."
 	icon_state ="ebook"
 	item_flags = NO_BLOOD_ON_ITEM
@@ -340,10 +350,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	throw_range = 7
 	throwforce = 18
 	force = 18
-	hitsound = 'sound/weapons/sear.ogg'
+	hitsound = 'sound/items/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb_continuous = list("attacks", "burns", "blesses", "damns", "scorches", "curses", "smites")
-	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch", "curses", "smites")
+	attack_verb_simple = list("attack", "burn", "bless", "damn", "scorch", "curse", "smite")
 	deity_name = "The Syndicate"
 	var/uses = 1
 	var/owner_name
@@ -366,8 +376,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	uses -= 1
 	to_chat(user, span_userdanger("You try to open the book AND IT BITES YOU!"))
 	playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)
-	var/active_hand_zone = (!(user.active_hand_index % RIGHT_HANDS) ? BODY_ZONE_R_ARM : BODY_ZONE_L_ARM)
-	user.apply_damage(5, BRUTE, active_hand_zone, attacking_item = src)
+	user.apply_damage(5, BRUTE, user.get_active_hand(), attacking_item = src)
 	to_chat(user, span_notice("Your name appears on the inside cover, in blood."))
 	owner_name = user.real_name
 

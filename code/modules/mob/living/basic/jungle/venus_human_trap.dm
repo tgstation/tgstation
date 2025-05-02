@@ -54,12 +54,6 @@
 	addtimer(CALLBACK(src, PROC_REF(progress_growth)), growth_time/4)
 	countdown.start()
 
-/obj/structure/alien/resin/flower_bud/make_splitvis()
-	return
-
-/obj/structure/alien/resin/flower_bud/get_icon()
-	return 'icons/obj/structures/smooth/alien/resin_membrane.dmi'
-
 /obj/structure/alien/resin/flower_bud/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if((trait_flags & SPACEVINE_HEAT_RESISTANT) && damage_type == BURN)
 		damage_amount = 0
@@ -149,9 +143,9 @@
 	combat_mode = TRUE
 	basic_mob_flags = DEL_ON_DEATH
 	death_message = "collapses into bits of plant matter."
-	attacked_sound = 'sound/creatures/venus_trap_hurt.ogg'
-	death_sound = 'sound/creatures/venus_trap_death.ogg'
-	attack_sound = 'sound/creatures/venus_trap_hit.ogg'
+	attacked_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_hurt.ogg'
+	death_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_death.ogg'
+	attack_sound = 'sound/mobs/non-humanoids/venus_trap/venus_trap_hit.ogg'
 	unsuitable_heat_damage = 5 // heat damage is different from cold damage since coldmos is significantly more common than plasmafires
 	unsuitable_cold_damage = 2 // they now do take cold damage, but this should be sufficiently small that it does not cause major issues
 	habitable_atmos = null

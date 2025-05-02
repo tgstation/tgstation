@@ -33,7 +33,7 @@
 	name = "Lizard tail kebab"
 	reqs = list(
 		/obj/item/stack/rods = 1,
-		/obj/item/organ/external/tail/lizard = 1
+		/obj/item/organ/tail/lizard = 1
 	)
 	result = /obj/item/food/kebab/tail
 	category = CAT_MEAT
@@ -60,6 +60,7 @@
 		/obj/item/food/meat/cutlet/spider = 2
 	)
 	result = /obj/item/food/spidereggsham
+	removed_foodtypes = TOXIC
 	category = CAT_MEAT
 
 ////////////////////////////////////////////////MISC RECIPE's////////////////////////////////////////////////
@@ -71,6 +72,7 @@
 		/obj/item/seeds/plump = 1
 	)
 	result = /obj/item/food/tempehstarter
+	added_foodtypes = GROSS
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/cornedbeef
@@ -91,6 +93,7 @@
 	)
 	tool_paths = list(/obj/item/lighter)
 	result = /obj/item/food/bearsteak
+	added_foodtypes = ALCOHOL
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/stewedsoymeat
@@ -177,6 +180,7 @@
 		/obj/item/food/meat/cutlet = 2
 	)
 	result = /obj/item/food/salad/ricepork
+	removed_foodtypes = BREAKFAST
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/ribs
@@ -187,6 +191,7 @@
 		/obj/item/stack/rods = 2
 	)
 	result = /obj/item/food/bbqribs
+	added_foodtypes = SUGAR
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/meatclown
@@ -219,6 +224,7 @@
 		/obj/item/food/meat/cutlet = 1
 	)
 	result = /obj/item/food/salad/gumbo
+	removed_foodtypes = BREAKFAST
 	category = CAT_MEAT
 
 
@@ -230,6 +236,8 @@
 		/datum/reagent/consumable/corn_starch = 5,
 	)
 	result = /obj/item/food/fried_chicken
+	removed_foodtypes = RAW
+	added_foodtypes = FRIED
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/beef_stroganoff
@@ -246,6 +254,7 @@
 		/obj/item/reagent_containers/cup/bowl = 1,
 	)
 	result = /obj/item/food/beef_stroganoff
+	added_foodtypes = DAIRY
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/beef_wellington
@@ -261,6 +270,7 @@
 		/datum/reagent/consumable/blackpepper = 2
 	)
 	result = /obj/item/food/beef_wellington
+	removed_foodtypes = BREAKFAST
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/korta_wellington
@@ -276,6 +286,7 @@
 		/datum/reagent/consumable/blackpepper = 2
 	)
 	result = /obj/item/food/korta_wellington
+	removed_foodtypes = BREAKFAST
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/full_roast
@@ -294,6 +305,7 @@
 		/datum/reagent/consumable/blackpepper = 2
 	)
 	result = /obj/item/food/roast_dinner
+	added_foodtypes = GRAIN
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/full_roast_lizzy
@@ -313,6 +325,7 @@
 		/datum/reagent/consumable/blackpepper = 2
 	)
 	result = /obj/item/food/roast_dinner_lizzy
+	added_foodtypes = NUTS
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/full_roast_tofu
@@ -331,6 +344,7 @@
 		/datum/reagent/consumable/blackpepper = 2
 	)
 	result = /obj/item/food/roast_dinner_tofu
+	added_foodtypes = GRAIN
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/full_english
@@ -354,6 +368,8 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	result = /obj/item/food/canned/envirochow
+	removed_foodtypes = RAW|GORE
+	added_foodtypes = GROSS
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/meatloaf

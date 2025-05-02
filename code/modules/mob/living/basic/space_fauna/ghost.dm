@@ -19,7 +19,7 @@
 	unsuitable_atmos_damage = 0
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
-	attack_sound = 'sound/hallucinations/growl1.ogg'
+	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	death_message = "wails, disintegrating into a pile of ectoplasm!"
 	gold_core_spawnable = NO_SPAWN //too spooky for science
 	light_system = OVERLAY_LIGHT
@@ -75,7 +75,7 @@
 		ghost_hair = mutable_appearance('icons/mob/human/human_face.dmi', "[hair_style.icon_state]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
-		ghost_hair.pixel_y = hair_style.y_offset
+		ghost_hair.pixel_z = hair_style.y_offset
 		add_overlay(ghost_hair)
 
 	if(!isnull(ghost_facial_hairstyle) && ghost_facial_hairstyle != "Shaved")

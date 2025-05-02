@@ -1,6 +1,5 @@
 //Baseline portable generator. Has all the default handling. Not intended to be used on its own (since it generates unlimited power).
 /obj/machinery/power/port_gen
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "portable generator"
 	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/machines/engine/other.dmi'
@@ -181,9 +180,9 @@
 		var/obj/item/stack/addstack = O
 		var/amount = min((max_sheets - sheets), addstack.amount)
 		if(amount < 1)
-			to_chat(user, span_notice("The [src.name] is full!"))
+			to_chat(user, span_notice("\The [src] is full!"))
 			return
-		to_chat(user, span_notice("You add [amount] sheets to the [src.name]."))
+		to_chat(user, span_notice("You add [amount] sheets to \the [src]."))
 		sheets += amount
 		addstack.use(amount)
 		return

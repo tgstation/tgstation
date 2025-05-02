@@ -14,15 +14,16 @@
 /obj/item/clothing/head/wig/Initialize(mapload)
 	. = ..()
 	update_appearance()
+	AddComponent(/datum/component/hat_stabilizer, loose_hat = FALSE)
 
 /obj/item/clothing/head/wig/equipped(mob/user, slot)
 	. = ..()
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
-		item_flags |= EXAMINE_SKIP
+		ADD_TRAIT(src, TRAIT_EXAMINE_SKIP, CLOTHING_TRAIT)
 
 /obj/item/clothing/head/wig/dropped(mob/user)
 	. = ..()
-	item_flags &= ~EXAMINE_SKIP
+	REMOVE_TRAIT(src, TRAIT_EXAMINE_SKIP, CLOTHING_TRAIT)
 
 /obj/item/clothing/head/wig/update_icon_state()
 	var/datum/sprite_accessory/hair/hair_style = SSaccessories.hairstyles_list[hairstyle]
@@ -42,7 +43,7 @@
 
 	var/mutable_appearance/hair_overlay = mutable_appearance(hair.icon, hair.icon_state, layer = -HAIR_LAYER, appearance_flags = RESET_COLOR)
 	hair_overlay.color = color
-	hair_overlay.pixel_y = hair.y_offset
+	hair_overlay.pixel_z = hair.y_offset
 	. += hair_overlay
 
 	// So that the wig actually blocks emissives.

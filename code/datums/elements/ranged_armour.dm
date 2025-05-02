@@ -40,7 +40,7 @@
 	return ..()
 
 /// Modify or ignore bullet damage based on projectile properties
-/datum/element/ranged_armour/proc/pre_bullet_impact(atom/parent, list/signal_args, obj/projectile/bullet)
+/datum/element/ranged_armour/proc/pre_bullet_impact(atom/parent, obj/projectile/bullet)
 	SIGNAL_HANDLER
 	if (bullet.damage >= minimum_projectile_force || (bullet.damage_type in vulnerable_projectile_types))
 		return

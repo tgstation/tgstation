@@ -178,7 +178,7 @@
 		target.clear_mood_event(SURGERY_MOOD_CATEGORY) //incase they gained the trait mid-surgery. has the added side effect that if someone has a bad surgical memory/mood and gets drunk & goes back to surgery, they'll forget they hated it, which is kinda funny imo.
 		return
 	if(target.stat >= UNCONSCIOUS)
-		var/datum/mood_event/surgery/target_mood_event = target.mob_mood.mood_events[SURGERY_MOOD_CATEGORY]
+		var/datum/mood_event/surgery/target_mood_event = target.mob_mood?.mood_events[SURGERY_MOOD_CATEGORY]
 		if(!target_mood_event || target_mood_event.surgery_completed) //don't give sleeping mobs trauma. that said, if they fell asleep mid-surgery after already getting the bad mood, lets make sure they wake up to a (hopefully) happy memory.
 			return
 	switch(surgery_state)
@@ -202,8 +202,6 @@
 	)
 
 /datum/surgery_step/proc/play_preop_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(!preop_sound)
-		return
 	var/sound_file_use
 	if(islist(preop_sound))
 		for(var/typepath in preop_sound)//iterate and assign subtype to a list, works best if list is arranged from subtype first and parent last
@@ -212,7 +210,9 @@
 				break
 	else
 		sound_file_use = preop_sound
-	playsound(get_turf(target), sound_file_use, 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
+	if(!sound_file_use)
+		return
+	playsound(target, sound_file_use, 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 
 /datum/surgery_step/proc/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = TRUE)
 	SEND_SIGNAL(user, COMSIG_MOB_SURGERY_STEP_SUCCESS, src, target, target_zone, tool, surgery, default_display_results)

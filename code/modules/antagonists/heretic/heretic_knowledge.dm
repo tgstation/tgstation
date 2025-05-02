@@ -13,16 +13,10 @@
 	var/name = "Basic knowledge"
 	/// Description of the knowledge, shown to the heretic. Describes what it unlocks / does.
 	var/desc = "Basic knowledge of forbidden arts."
-	/// What's shown to the heretic when the knowledge is aquired
+	/// What's shown to the heretic when the knowledge is acquired
 	var/gain_text
 	/// The abstract parent type of the knowledge, used in determine mutual exclusivity in some cases
 	var/datum/heretic_knowledge/abstract_parent_type = /datum/heretic_knowledge
-	/// If TRUE, populates the banned_knowledge list of every other subtype of this knowledge's abstract_parent_type
-	var/mutually_exclusive = FALSE
-	/// The knowledge this unlocks next after learning.
-	var/list/next_knowledge = list()
-	/// What knowledge is incompatible with this. Knowledge in this list cannot be researched with this current knowledge.
-	var/list/banned_knowledge = list()
 	/// Assoc list of [typepaths we need] to [amount needed].
 	/// If set, this knowledge allows the heretic to do a ritual on a transmutation rune with the components set.
 	/// If one of the items in the list is a list, it's treated as 'any of these items will work'
@@ -36,30 +30,18 @@
 	/// The priority of the knowledge. Higher priority knowledge appear higher in the ritual list.
 	/// Number itself is completely arbitrary. Does not need to be set for non-ritual knowledge.
 	var/priority = 0
-	/// What path is this on. If set to "null", assumed to be unreachable (or abstract).
-	var/route
+	///If this is considered starting knowledge, TRUE if yes
+	var/is_starting_knowledge = FALSE
 	/// In case we want to override the default UI icon getter and plug in our own icon instead.
 	/// if research_tree_icon_path is not null, research_tree_icon_state must also be specified or things may break
 	var/research_tree_icon_path
 	var/research_tree_icon_state
 	var/research_tree_icon_frame = 1
 	var/research_tree_icon_dir = SOUTH
-	/// Level of knowledge tree where this knowledge should be in the UI
-	var/depth = 1
 	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 
-/datum/heretic_knowledge/New()
-	if(!mutually_exclusive)
-		return
-
-	for(var/knowledge_type in subtypesof(abstract_parent_type))
-		if(knowledge_type == type)
-			continue
-		banned_knowledge += knowledge_type
-
-/**
- * Called when the knowledge is first researched.
+/** Called when the knowledge is first researched.
  * This is only ever called once per heretic.
  *
  * Arguments
@@ -205,26 +187,26 @@
 /datum/heretic_knowledge/spell
 	abstract_parent_type = /datum/heretic_knowledge/spell
 	/// Spell path we add to the heretic. Type-path.
-	var/datum/action/cooldown/spell/spell_to_add
+	var/datum/action/action_to_add
 	/// The spell we actually created.
-	var/datum/weakref/created_spell_ref
+	var/datum/weakref/created_action_ref
 
 /datum/heretic_knowledge/spell/Destroy()
-	QDEL_NULL(created_spell_ref)
+	QDEL_NULL(created_action_ref)
 	return ..()
 
 /datum/heretic_knowledge/spell/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	// Added spells are tracked on the body, and not the mind,
 	// because we handle heretic mind transfers
 	// via the antag datum (on_gain and on_lose).
-	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve() || new spell_to_add(user)
-	created_spell.Grant(user)
-	created_spell_ref = WEAKREF(created_spell)
+	var/datum/action/created_action = created_action_ref?.resolve() || new action_to_add(user)
+	created_action.Grant(user)
+	created_action_ref = WEAKREF(created_action)
 
 /datum/heretic_knowledge/spell/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
-	var/datum/action/cooldown/spell/created_spell = created_spell_ref?.resolve()
-	if(created_spell?.owner == user)
-		created_spell.Remove(user)
+	var/datum/action/cooldown/spell/created_action = created_action_ref?.resolve()
+	if(created_action?.owner == user)
+		created_action.Remove(user)
 
 /**
  * A knowledge subtype for knowledge that can only
@@ -269,24 +251,14 @@
  */
 /datum/heretic_knowledge/limited_amount/starting
 	abstract_parent_type = /datum/heretic_knowledge/limited_amount/starting
-	mutually_exclusive = TRUE
 	limit = 2
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
-	depth = 2
-
-/datum/heretic_knowledge/limited_amount/starting/New()
-	. = ..()
-	// Starting path also determines the final knowledge we're limited too
-	for(var/datum/heretic_knowledge/final_knowledge_type as anything in subtypesof(/datum/heretic_knowledge/ultimate))
-		if(initial(final_knowledge_type.route) == route)
-			continue
-		banned_knowledge += final_knowledge_type
 
 /datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
-	our_heretic.heretic_path = route
-	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, route)
+	our_heretic.heretic_path = GLOB.heretic_research_tree[type][HKT_ROUTE]
+	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path)
 
 /**
  * A knowledge subtype for heretic knowledge
@@ -296,14 +268,12 @@
  */
 /datum/heretic_knowledge/mark
 	abstract_parent_type = /datum/heretic_knowledge/mark
-	mutually_exclusive = TRUE
 	cost = 2
-	depth = 5
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
 
 /datum/heretic_knowledge/mark/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	RegisterSignal(user, COMSIG_HERETIC_MANSUS_GRASP_ATTACK, PROC_REF(on_mansus_grasp))
+	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 
 /datum/heretic_knowledge/mark/on_lose(mob/user, datum/antagonist/heretic/our_heretic)
@@ -327,6 +297,8 @@
 /datum/heretic_knowledge/mark/proc/on_eldritch_blade(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	SIGNAL_HANDLER
 
+	if(!isliving(target))
+		return
 	trigger_mark(source, target)
 
 /**
@@ -362,9 +334,7 @@
  */
 /datum/heretic_knowledge/blade_upgrade
 	abstract_parent_type = /datum/heretic_knowledge/blade_upgrade
-	mutually_exclusive = TRUE
 	cost = 2
-	depth = 9
 
 /datum/heretic_knowledge/blade_upgrade/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
@@ -407,129 +377,6 @@
  */
 /datum/heretic_knowledge/blade_upgrade/proc/do_ranged_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	return
-
-/**
- * A knowledge subtype lets the heretic curse someone with a ritual.
- */
-/datum/heretic_knowledge/curse
-	abstract_parent_type = /datum/heretic_knowledge/curse
-	/// How far can we curse people?
-	var/max_range = 64
-	/// The duration of the curse
-	var/duration = 1 MINUTES
-	/// The duration of the curse on people which have a fingerprint or blood sample present
-	var/duration_modifier = 2
-	/// What color do we outline cursed folk with?
-	var/curse_color = "#dadada"
-	/// A list of all the fingerprints that were found on our atoms, in our last go at the ritual
-	var/list/fingerprints
-	/// A list of all the blood samples that were found on our atoms, in our last go at the ritual
-	var/list/blood_samples
-
-/datum/heretic_knowledge/curse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	fingerprints = list()
-	blood_samples = list()
-	for(var/atom/requirement as anything in atoms)
-		for(var/print in GET_ATOM_FINGERPRINTS(requirement))
-			fingerprints[print] = 1
-
-		for(var/blood in GET_ATOM_BLOOD_DNA(requirement))
-			blood_samples[blood] = 1
-
-	return TRUE
-
-/datum/heretic_knowledge/curse/on_finished_recipe(mob/living/user, list/selected_atoms,  turf/loc)
-
-	// Potential targets is an assoc list of [names] to [human mob ref].
-	var/list/potential_targets = list()
-	// Boosted targets is a list of human mob references.
-	var/list/boosted_targets = list()
-
-	for(var/datum/mind/crewmember as anything in get_crewmember_minds())
-		var/mob/living/carbon/human/human_to_check = crewmember.current
-		if(!istype(human_to_check) || human_to_check.stat == DEAD || !human_to_check.dna)
-			continue
-		var/their_prints = md5(human_to_check.dna.unique_identity)
-		var/their_blood = human_to_check.dna.unique_enzymes
-		// Having their fingerprints or blood present will boost the curse
-		// and also not run any z or dist checks, as a bonus for those going beyond
-		if(fingerprints[their_prints] || blood_samples[their_blood])
-			boosted_targets += human_to_check
-			potential_targets["[human_to_check.real_name] (Boosted)"] = human_to_check
-			continue
-
-		// No boost present, so we should be a little stricter moving forward
-		var/turf/check_turf = get_turf(human_to_check)
-		// We have to match z-levels.
-		// Otherwise, you could probably hard own miners, which is funny but mean.
-		// Multi-z stations technically work though.
-		if(!is_valid_z_level(check_turf, loc))
-			continue
-		// Also has to abide by our max range.
-		if(get_dist(check_turf, loc) > max_range)
-			continue
-
-		potential_targets[human_to_check.real_name] = human_to_check
-
-	var/chosen_mob = tgui_input_list(user, "Select the victim you wish to curse.", name, sort_list(potential_targets, GLOBAL_PROC_REF(cmp_text_asc)))
-	if(isnull(chosen_mob))
-		return FALSE
-
-	var/mob/living/carbon/human/to_curse = potential_targets[chosen_mob]
-	if(QDELETED(to_curse))
-		loc.balloon_alert(user, "ritual failed, invalid choice!")
-		return FALSE
-
-	// Yes, you COULD curse yourself, not sure why but you could
-	if(to_curse == user)
-		var/are_you_sure = tgui_alert(user, "Are you sure you want to curse yourself?", name, list("Yes", "No"))
-		if(are_you_sure != "Yes")
-			return FALSE
-
-	var/boosted = (to_curse in boosted_targets)
-	var/turf/curse_turf = get_turf(to_curse)
-	if(!boosted && (!is_valid_z_level(curse_turf, loc) || get_dist(curse_turf, loc) > max_range * 1.5)) // Give a bit of leeway on max range for people moving around
-		loc.balloon_alert(user, "ritual failed, too far!")
-		return FALSE
-
-	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY, charge_cost = 0))
-		to_chat(to_curse, span_warning("You feel a ghastly chill, but the feeling passes shortly."))
-		return TRUE
-
-	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([boosted ? "Boosted" : ""] [name])")
-	curse(to_curse, boosted)
-	to_chat(user, span_hierophant("You cast a[boosted ? "n empowered":""] [name] upon [to_curse.real_name]."))
-
-	fingerprints = null
-	blood_samples = null
-	return TRUE
-
-/**
- * Calls a curse onto [chosen_mob].
- */
-/datum/heretic_knowledge/curse/proc/curse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
-	SHOULD_CALL_PARENT(TRUE)
-
-	addtimer(CALLBACK(src, PROC_REF(uncurse), chosen_mob, boosted), duration * (boosted ? duration_modifier : 1))
-
-	if(!curse_color)
-		return
-
-	chosen_mob.add_filter(name, 2, list("type" = "outline", "color" = curse_color, "size" = 1))
-
-/**
- * Removes a curse from [chosen_mob]. Used in timers / callbacks.
- */
-/datum/heretic_knowledge/curse/proc/uncurse(mob/living/carbon/human/chosen_mob, boosted = FALSE)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(QDELETED(chosen_mob))
-		return
-
-	if(!curse_color)
-		return
-
-	chosen_mob.remove_filter(name)
 
 /**
  * A knowledge subtype lets the heretic summon a monster with the ritual.
@@ -577,13 +424,14 @@
 	summoned.move_resist = initial(summoned.move_resist)
 
 	summoned.ghostize(FALSE)
-	summoned.key = chosen_one.key
+	summoned.PossessByPlayer(chosen_one.key)
 
 	user.log_message("created a [summoned.name], controlled by [key_name(chosen_one)].", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(user)] created a [summoned.name], [ADMIN_LOOKUPFLW(summoned)].")
 
 	var/datum/antagonist/heretic_monster/heretic_monster = summoned.mind.add_antag_datum(/datum/antagonist/heretic_monster)
 	heretic_monster.set_owner(user.mind)
+	ADD_TRAIT(heretic_monster, TRAIT_HERETIC_SUMMON, INNATE_TRAIT)
 
 	var/datum/objective/heretic_summon/summon_objective = locate() in user.mind.get_all_objectives()
 	summon_objective?.num_summoned++
@@ -601,10 +449,8 @@
 	desc = "A randomly generated transmutation ritual that rewards knowledge points and can only be completed once."
 	gain_text = "Everything can be a key to unlocking the secrets behind the Gates. I must be wary and wise."
 	abstract_parent_type = /datum/heretic_knowledge/knowledge_ritual
-	mutually_exclusive = TRUE
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 10 // A pretty important midgame ritual.
-	depth = 6
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "book_open"
 	/// Whether we've done the ritual. Only doable once.
@@ -613,15 +459,15 @@
 /datum/heretic_knowledge/knowledge_ritual/New()
 	. = ..()
 	var/static/list/potential_organs = list(
-		/obj/item/organ/internal/appendix,
-		/obj/item/organ/external/tail,
-		/obj/item/organ/internal/eyes,
-		/obj/item/organ/internal/tongue,
-		/obj/item/organ/internal/ears,
-		/obj/item/organ/internal/heart,
-		/obj/item/organ/internal/liver,
-		/obj/item/organ/internal/stomach,
-		/obj/item/organ/internal/lungs,
+		/obj/item/organ/appendix,
+		/obj/item/organ/tail,
+		/obj/item/organ/eyes,
+		/obj/item/organ/tongue,
+		/obj/item/organ/ears,
+		/obj/item/organ/heart,
+		/obj/item/organ/liver,
+		/obj/item/organ/stomach,
+		/obj/item/organ/lungs,
 	)
 
 	var/static/list/potential_easy_items = list(
@@ -680,9 +526,8 @@
 	our_heretic.knowledge_points += KNOWLEDGE_RITUAL_POINTS
 	was_completed = TRUE
 
-	var/drain_message = pick(strings(HERETIC_INFLUENCE_FILE, "drain_message"))
 	to_chat(user, span_boldnotice("[name] completed!"))
-	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
+	to_chat(user, span_hypnophrase(span_big("[pick_list(HERETIC_INFLUENCE_FILE, "drain_message")]")))
 	desc += " (Completed!)"
 	log_heretic_knowledge("[key_name(user)] completed a [name] at [worldtime2text()].")
 	user.add_mob_memory(/datum/memory/heretic_knowledge_ritual)
@@ -695,13 +540,17 @@
  */
 /datum/heretic_knowledge/ultimate
 	abstract_parent_type = /datum/heretic_knowledge/ultimate
-	mutually_exclusive = TRUE // I guess, but it doesn't really matter by this point
 	cost = 2
 	priority = MAX_KNOWLEDGE_PRIORITY + 1 // Yes, the final ritual should be ABOVE the max priority.
 	required_atoms = list(/mob/living/carbon/human = 3)
-	depth = 11
-	//use this to store the achievement typepath
+	/// The typepath of the achievement to grant upon successful ascension.
 	var/datum/award/achievement/misc/ascension_achievement
+	/// The text of the ascension announcement.
+	/// %NAME% is replaced with the heretic's real name,
+	/// and %SPOOKY% is replaced with output from [generate_heretic_text]
+	var/announcement_text
+	/// The sound that's played for the ascension announcement.
+	var/announcement_sound
 
 /datum/heretic_knowledge/ultimate/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -755,13 +604,20 @@
 		human_user.physiology.brute_mod *= 0.5
 		human_user.physiology.burn_mod *= 0.5
 
-	SSblackbox.record_feedback("tally", "heretic_ascended", 1, route)
+	SSblackbox.record_feedback("tally", "heretic_ascended", 1, GLOB.heretic_research_tree[type][HKT_ROUTE])
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
 	notify_ghosts(
 		"[user] has completed an ascension ritual!",
 		source = user,
 		header = "A Heretic is Ascending!",
 	)
+	priority_announce(
+		text = replacetext(replacetext(announcement_text, "%NAME%", user.real_name), "%SPOOKY%", GLOBAL_PROC_REF(generate_heretic_text)),
+		title = generate_heretic_text(),
+		sound = announcement_sound,
+		color_override = "pink",
+	)
+
 	if(!isnull(ascension_achievement))
 		user.client?.give_award(ascension_achievement, user)
 	heretic_datum.increase_rust_strength()

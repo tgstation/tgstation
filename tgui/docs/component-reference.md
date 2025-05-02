@@ -256,6 +256,7 @@ commit, while escape cancels.
 
 - See inherited props: [Box](#box)
 - `fluid`: fill available horizontal space
+- `disabled: boolean` - Disables and greys out the button.
 - `onCommit: (e, value) => void`: function that is called after the user
   defocuses the input or presses enter
 - `currentValue: string`: default string to display when the input is shown

@@ -6,7 +6,6 @@
  * All spiders can produce webbing.
  */
 /mob/living/basic/spider/giant
-	SET_BASE_VISUAL_PIXEL(0, 6)
 	name = "giant spider"
 	desc = "Furry and black, it makes you shudder to look at it. This one has deep red eyes."
 	icon_state = "guard"
@@ -22,7 +21,6 @@
 	ai_controller = /datum/ai_controller/basic_controller/giant_spider
 	bite_injection_flags = INJECT_CHECK_PENETRATE_THICK
 	max_grab = GRAB_AGGRESSIVE
-	shadow_offset_y = 6
 	/// Actions to grant on Initialize
 	var/list/innate_actions = null
 
@@ -274,7 +272,7 @@
 	obj_damage = 15
 	speed = 5
 	player_speed_modifier = -4
-	menu_description = "Extremly tanky with very poor offence. Able to self heal and lay reflective silk screens."
+	menu_description = "Extremely tanky with very poor offence. Able to self heal and lay reflective silk screens."
 
 /mob/living/basic/spider/giant/tank/Initialize(mapload)
 	. = ..()
@@ -610,6 +608,6 @@
 
 /mob/living/basic/spider/giant/sgt_araneus/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/pet_bonus, "chitters proudly!")
+	AddElement(/datum/element/pet_bonus, "chitter")
 	AddElement(/datum/element/ai_retaliate)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)

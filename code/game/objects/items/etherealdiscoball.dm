@@ -1,5 +1,5 @@
 /obj/item/etherealballdeployer
-	name = "Portable Ethereal Disco Ball"
+	name = "portable ethereal disco ball"
 	desc = "Press the button for a deployment of slightly-unethical PARTY!"
 	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "ethdisco"
@@ -11,7 +11,7 @@
 	qdel(src)
 
 /obj/structure/etherealball
-	name = "Ethereal Disco Ball"
+	name = "ethereal disco ball"
 	desc = "The ethics of this discoball are questionable."
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "ethdisco_head_0"
@@ -72,6 +72,4 @@
 
 /obj/structure/etherealball/update_overlays()
 	. = ..()
-	var/mutable_appearance/base_overlay = mutable_appearance(icon, "ethdisco_base")
-	base_overlay.appearance_flags = RESET_COLOR
-	. += base_overlay
+	. += mutable_appearance(icon, "ethdisco_base", appearance_flags = RESET_COLOR|KEEP_APART)

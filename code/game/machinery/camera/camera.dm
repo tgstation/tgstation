@@ -29,8 +29,6 @@
 	max_integrity = 100
 	integrity_failure = 0.5
 
-	/// Does this camera try to attach to the wall?
-	var/should_wallmount = TRUE
 	///An analyzer in the camera being used for x-ray upgrade.
 	var/obj/item/analyzer/xray_module
 	///used to keep from revealing malf AI upgrades for user facing isXRay() checks when they use Upgrade Camera Network ability
@@ -90,12 +88,12 @@
 	var/area/station/ai_monitored/area_motion = null
 	var/alarm_delay = 30 // Don't forget, there's another 3 seconds in queueAlarm()
 
-CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera)
-CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname)
-CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/motion)
-CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof)
-CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion)
-CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/motion, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/emp_proof, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/motion, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 
 /datum/armor/machinery_camera
 	melee = 50
@@ -132,10 +130,8 @@ CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 #endif
 
 	alarm_manager = new(src)
-	if(should_wallmount)
-		find_and_hang_on_wall(directional = TRUE, custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE), wall_layer = HIGH_ON_WALL_LAYER)
-
-	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
+	find_and_hang_on_wall(directional = TRUE, \
+		custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE))
 
 /obj/machinery/camera/Destroy(force)
 	if(can_use())
@@ -237,11 +233,11 @@ CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 			M.reset_perspective(null)
 			to_chat(M, span_warning("The screen bursts into static!"))
 
-/obj/machinery/camera/proc/on_saboteur(datum/source, disrupt_duration)
-	SIGNAL_HANDLER
+/obj/machinery/camera/on_saboteur(datum/source, disrupt_duration)
+	. = ..()
 	//lasts twice as much so we don't have to constantly shoot cameras just to be S T E A L T H Y
 	emp_act(EMP_LIGHT, reset_time = disrupt_duration * 2)
-	return COMSIG_SABOTEUR_SUCCESS
+	return TRUE
 
 /obj/machinery/camera/proc/post_emp_reset(thisemp, previous_network)
 	if(QDELETED(src))
@@ -273,7 +269,7 @@ CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 		return
 	user.electrocute_act(10, src)
 
-/obj/machinery/camera/singularity_pull(S, current_size)
+/obj/machinery/camera/singularity_pull(atom/singularity, current_size)
 	if (camera_enabled && current_size >= STAGE_FIVE) // If the singulo is strong enough to pull anchored objects and the camera is still active, turn off the camera as it gets ripped off the wall.
 		toggle_cam(null, 0)
 	return ..()
@@ -340,11 +336,6 @@ CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 	icon_state = "[xray_module][base_icon_state][in_use_lights ? "_in_use" : ""]"
 	return ..()
 
-/obj/machinery/camera/wall_mount_common_plane(direction)
-	if(direction == SOUTH || direction == NORTHEAST)
-		return TRUE
-	return FALSE
-
 /obj/machinery/camera/proc/toggle_cam(mob/user, displaymessage = TRUE)
 	camera_enabled = !camera_enabled
 	if(can_use())
@@ -375,7 +366,7 @@ CAMERA_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 		else
 			visible_message(span_danger("\The [src] [change_msg]!"))
 
-		playsound(src, 'sound/items/wirecutter.ogg', 100, TRUE)
+		playsound(src, 'sound/items/tools/wirecutter.ogg', 100, TRUE)
 	update_appearance() //update Initialize() if you remove this.
 
 	// now disconnect anyone using the camera

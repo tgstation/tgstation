@@ -32,6 +32,8 @@
 /datum/element/muffles_speech/proc/muzzle_talk(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
+	if(HAS_TRAIT(source, TRAIT_SIGN_LANG))
+		return
 	var/spoken_message = speech_args[SPEECH_MESSAGE]
 	if(spoken_message)
 		var/list/words = splittext(spoken_message, " ")

@@ -139,16 +139,16 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon = icon, icon_state = "borg_beaker_apparatus_arm")
 	if(stored)
-		stored.pixel_x = 0
-		stored.pixel_y = 0
+		stored.pixel_w = 0
+		stored.pixel_z = 0
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		if(istype(stored, /obj/item/reagent_containers/cup/beaker))
-			arm.pixel_y = arm.pixel_y - 3
+			arm.pixel_z -= 3
 		stored_copy.layer = FLOAT_LAYER
 		stored_copy.plane = FLOAT_PLANE
 		. += stored_copy
 	else
-		arm.pixel_y = arm.pixel_y - 5
+		arm.pixel_z -= 5
 	. += arm
 
 /obj/item/borg/apparatus/beaker/extra
@@ -195,6 +195,7 @@
 		/obj/item/reagent_containers/condiment,
 		/obj/item/reagent_containers/cup/coffeepot,
 		/obj/item/reagent_containers/cup/bottle/syrup_bottle,
+		/obj/item/reagent_containers/cup/beaker,
 	)
 
 /obj/item/borg/apparatus/beaker/service2/add_glass()
@@ -228,8 +229,8 @@
 		var/mutable_appearance/stored_organ = new /mutable_appearance(stored)
 		stored_organ.layer = FLOAT_LAYER
 		stored_organ.plane = FLOAT_PLANE
-		stored_organ.pixel_x = 0
-		stored_organ.pixel_y = 0
+		stored_organ.pixel_w = 0
+		stored_organ.pixel_z = 0
 		. += stored_organ
 		bag = mutable_appearance(icon, icon_state = "evidence") // full bag
 	else
@@ -250,10 +251,11 @@
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
-	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
+	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles and shuttle frame rods."
 	icon_state = "borg_stack_apparatus"
 	storable = list(/obj/item/stack/sheet,
-					/obj/item/stack/tile)
+					/obj/item/stack/tile,
+					/obj/item/stack/rods/shuttle)
 
 /obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
 	update_appearance()
@@ -263,8 +265,8 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_stack_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = 0
-		stored.pixel_y = 0
+		stored.pixel_w = 0
+		stored.pixel_z = 0
 		arm.icon_state = "borg_stack_apparatus_arm2"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		var/underscore = findtext(stored_copy.icon_state, "_")
@@ -297,8 +299,8 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = -3
-		stored.pixel_y = 0
+		stored.pixel_w = -3
+		stored.pixel_z = 0
 		if(!istype(stored, /obj/item/circuitboard))
 			arm.icon_state = "borg_hardware_apparatus_arm2"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
@@ -320,7 +322,7 @@
 
 /obj/item/borg/apparatus/service
 	name = "service apparatus"
-	desc = "A special apparatus for carrying food, bowls, plates, oven trays, soup pots and paper."
+	desc = "A special apparatus for carrying food, seeds, grafts, bowls, plates, oven trays, soup pots and paper."
 	icon_state = "borg_service_apparatus"
 	storable = list(
 		/obj/item/food,
@@ -329,6 +331,9 @@
 		/obj/item/plate/oven_tray,
 		/obj/item/reagent_containers/cup/bowl,
 		/obj/item/reagent_containers/cup/soup_pot,
+		/obj/item/seeds,
+		/obj/item/graft,
+		/obj/item/fish,
 	)
 
 /obj/item/borg/apparatus/service/Initialize(mapload)
@@ -339,8 +344,8 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = -3
-		stored.pixel_y = 0
+		stored.pixel_w = -3
+		stored.pixel_z = 0
 		if((!istype(stored, /obj/item/plate/oven_tray)) || (!istype(stored, /obj/item/food)))
 			arm.icon_state = "borg_hardware_apparatus_arm2"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)

@@ -3,7 +3,7 @@
 /obj/item/kheiral_cuffs
 	name = "\improper Kheiral cuffs"
 	desc = "A prototype wrist communicator powered by Kheiral Matter. When both ends are clamped to one wrist, acts as a signal range booster for your suit sensors.\n<i>A small engraving on the inside reads, \"NOT HANDCUFFS\"</i>"
-	icon = 'icons/obj/mining_zones/equipment.dmi'
+	icon = 'icons/obj/mining.dmi'
 	icon_state = "strand"
 	worn_icon_state = "strandcuff"
 	slot_flags = ITEM_SLOT_GLOVES
@@ -34,21 +34,18 @@
 	if(gps_enabled)
 		. += span_notice("The cuff's GPS signal is on.")
 
-/obj/item/kheiral_cuffs/item_action_slot_check(slot)
-	return (slot & ITEM_SLOT_GLOVES)
-
 /obj/item/kheiral_cuffs/equipped(mob/user, slot, initial)
 	. = ..()
 	if(!(slot & ITEM_SLOT_GLOVES))
 		return
 	on_wrist = TRUE
-	playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	connect_kheiral_network(user)
 
 /obj/item/kheiral_cuffs/dropped(mob/user, silent)
 	. = ..()
 	if(on_wrist)
-		playsound(loc, 'sound/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	on_wrist = FALSE
 	remove_kheiral_network(user)
 
@@ -93,7 +90,6 @@
 		if(isliving(loc))
 			connect_kheiral_network(loc)
 
-// LEMON AND HERE
 /obj/item/kheiral_cuffs/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)

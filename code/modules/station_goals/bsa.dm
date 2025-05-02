@@ -200,12 +200,19 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 			top_layer.icon_state = "top_east"
 	add_overlay(top_layer)
 
+/obj/machinery/bsa/full/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
+	if(same_z_layer)
+		return ..()
+	cut_overlay(top_layer)
+	get_layer()
+	return ..()
+
 /obj/machinery/bsa/full/proc/fire(mob/user, turf/bullseye)
 	reload()
 
 	var/turf/point = get_front_turf()
 	var/turf/target = get_target_turf()
-	var/atom/movable/blocker
+	var/atom/blocker
 	for(var/T in get_line(get_step(point, dir), target))
 		var/turf/tile = T
 		if(SEND_SIGNAL(tile, COMSIG_ATOM_BSA_BEAM) & COMSIG_ATOM_BLOCKS_BSA_BEAM)

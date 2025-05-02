@@ -95,7 +95,7 @@
 
 /datum/memory/high_five/get_starts()
 	return list(
-		"[protagonist_name] and [deuteragonist_name] having a a legendary [high_five_type]",
+		"[protagonist_name] and [deuteragonist_name] having a legendary [high_five_type]",
 		"[protagonist_name] giving [deuteragonist_name] a [high_five_type]",
 		"[protagonist_name] and [deuteragonist_name] giving each other a [high_five_type]",
 	)
@@ -160,6 +160,28 @@
 		"[protagonist_name] [mood_verb] as the cream drips off their face",
 		"[protagonist_name] [mood_verb] because of their now expanded laundry task.",
 		"[protagonist_name] [mood_verb] as they lick off some of the pie",
+	)
+
+/// Witnessed someone get splashed with squid ink.
+/datum/memory/witnessed_inking
+	story_value = STORY_VALUE_OKAY
+	memory_flags = MEMORY_CHECK_BLINDNESS
+	// Protagonist - The mob that got pied
+
+/datum/memory/witnessed_inking/get_names()
+	return list("The inking of [protagonist_name].")
+
+/datum/memory/witnessed_inking/get_starts()
+	return list(
+		"[protagonist_name]'s face being covered in squid ink",
+		"[protagonist_name] getting squid-inked",
+	)
+
+/datum/memory/witnessed_inking/get_moods()
+	return list(
+		"[protagonist_name] [mood_verb] as ink drips off their face",
+		"[protagonist_name] [mood_verb] because of their now expanded laundry task.",
+		"[protagonist_name] [mood_verb] as they wipe the ink off their face.",
 	)
 
 /// Got slipped by something.

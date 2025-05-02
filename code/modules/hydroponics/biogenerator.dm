@@ -4,7 +4,6 @@
 #define PROCESSED_ITEMS_PER_RATING 5
 
 /obj/machinery/biogenerator
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "biogenerator"
 	desc = "Converts plants into biomass, which can be used to construct useful items."
 	icon = 'icons/obj/machines/biogenerator.dmi'
@@ -74,7 +73,7 @@
 		if(!tool.tool_start_check(user, amount=2))
 			return TRUE
 		user.visible_message(
-			span_notice("[user.name] starts to cut the [name] free from the floor."),
+			span_notice("[user.name] starts to cut \the [src] free from the floor."),
 			span_notice("You start to cut [src] free from the floor..."),
 			span_hear("You hear welding."),
 		)
@@ -89,7 +88,7 @@
 	if(!tool.tool_start_check(user, amount=2))
 		return TRUE
 	user.visible_message(
-		span_notice("[user.name] starts to weld the [name] to the floor."),
+		span_notice("[user.name] starts to weld \the [src] to the floor."),
 		span_notice("You start to weld [src] to the floor..."),
 		span_hear("You hear welding."),
 	)
@@ -466,7 +465,7 @@
 
 /obj/machinery/biogenerator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/research_designs),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
 

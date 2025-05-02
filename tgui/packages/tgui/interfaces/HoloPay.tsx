@@ -1,6 +1,4 @@
-import { decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
-import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -13,8 +11,11 @@ import {
   Table,
   TextArea,
   Tooltip,
-} from 'tgui/components';
-import { Window } from 'tgui/layouts';
+} from 'tgui-core/components';
+import { decodeHtmlEntities } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
 
 type HoloPayData = {
   available_logos: string[];

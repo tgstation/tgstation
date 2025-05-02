@@ -24,7 +24,7 @@
 	max_mobs = 3,
 	spawn_delay = 10 SECONDS,
 	spawn_text = "appears out of nowhere",
-	spawn_sound = 'sound/magic/summon_magic.ogg',
+	spawn_sound = 'sound/effects/magic/summon_magic.ogg',
 	list/faction,
 )
 	if(!isitem(parent) && !ishostile(parent) && !isgun(parent) && !ismachinery(parent) && !isstructure(parent) && !isprojectilespell(parent))

@@ -27,7 +27,7 @@
 	/// A multiplier to an object's force when used against a structure, vehicle, machine, or robot.
 	var/demolition_mod = 1
 
-	/// Custom fire overlay icon, will just use the default overlay if this is null
+	/// Cached custom fire overlay
 	var/custom_fire_overlay
 	/// Particles this obj uses when burning, if any
 	var/burning_particles
@@ -37,6 +37,12 @@
 	/// Map tag for something.  Tired of it being used on snowflake items.  Moved here for some semblance of a standard.
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
+
+	/// The sound this obj makes when something is buckled to it
+	var/buckle_sound = null
+
+	/// The sound this obj makes when something is unbuckled from it
+	var/unbuckle_sound = null
 
 	uses_integrity = TRUE
 
@@ -69,18 +75,29 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return
 
 	var/total_force = (attacking_item.force * attacking_item.demolition_mod)
+	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, TRUE, get_dir(src, user), attacking_item.armour_penetration)
 
-	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, 1, get_dir(src, user))
+	// Sanity in case one is null for some reason
+	var/picked_index = rand(max(length(attacking_item.attack_verb_simple), length(attacking_item.attack_verb_continuous)))
 
-	var/damage_verb = "hit"
+	var/message_verb_continuous = "attacks"
+	var/message_verb_simple = "attack"
+	// Sanity in case one is... longer than the other?
+	if (picked_index && length(attacking_item.attack_verb_continuous) >= picked_index)
+		message_verb_continuous = attacking_item.attack_verb_continuous[picked_index]
+	if (picked_index && length(attacking_item.attack_verb_simple) >= picked_index)
+		message_verb_simple = attacking_item.attack_verb_simple[picked_index]
 
-	if(attacking_item.demolition_mod > 1 && damage)
-		damage_verb = "pulverise"
+	if(attacking_item.demolition_mod > 1 && prob(damage * 5))
+		message_verb_simple = "pulverise"
+		message_verb_continuous = "pulverises"
+
 	if(attacking_item.demolition_mod < 1)
-		damage_verb = "ineffectively pierce"
+		message_verb_simple = "ineffectively " + message_verb_simple
+		message_verb_continuous = "ineffectively " + message_verb_continuous
 
-	user.visible_message(span_danger("[user] [damage_verb][plural_s(damage_verb)] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), \
-		span_danger("You [damage_verb] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), null, COMBAT_MESSAGE_RANGE)
+	user.visible_message(span_danger("[user] [message_verb_continuous] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), \
+		span_danger("You [message_verb_simple] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), null, COMBAT_MESSAGE_RANGE)
 	log_combat(user, src, "attacked", attacking_item)
 
 /obj/assume_air(datum/gas_mixture/giver)
@@ -121,12 +138,12 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	SEND_SIGNAL(src, COMSIG_ATOM_UI_INTERACT, user)
 	ui_interact(user)
 
-/obj/singularity_pull(S, current_size)
+/obj/singularity_pull(atom/singularity, current_size)
 	..()
 	if(move_resist == INFINITY)
 		return
 	if(!anchored || current_size >= STAGE_FIVE)
-		step_towards(src,S)
+		step_towards(src, singularity)
 
 /obj/get_dumping_location()
 	return get_turf(src)
@@ -187,9 +204,11 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(desc_controls)
 		. += span_notice(desc_controls)
-	if(obj_flags & UNIQUE_RENAME)
-		. += span_notice("Use a pen on it to rename it or change its description.")
 
+/obj/examine_tags(mob/user)
+	. = ..()
+	if(obj_flags & UNIQUE_RENAME)
+		.["renameable"] = "Use a pen on it to rename it or change its description."
 
 /obj/analyzer_act(mob/living/user, obj/item/analyzer/tool)
 	if(atmos_scan(user=user, target=src, silent=FALSE))
@@ -204,10 +223,10 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("Unimplemented.")
 
-/obj/handle_ricochet(obj/projectile/P)
+/obj/handle_ricochet(obj/projectile/proj)
 	. = ..()
 	if(. && receive_ricochet_damage_coeff)
-		take_damage(P.damage * receive_ricochet_damage_coeff, P.damage_type, P.armor_flag, 0, REVERSE_DIR(P.dir), P.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
+		take_damage(proj.damage * receive_ricochet_damage_coeff, proj.damage_type, proj.armor_flag, 0, REVERSE_DIR(proj.dir), proj.armour_penetration) // pass along receive_ricochet_damage_coeff damage to the structure for the ricochet
 
 /// Handles exposing an object to reagents.
 /obj/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
@@ -216,9 +235,9 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		return
 
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_OBJ, src, reagents, methods, volume_modifier, show_message)
-	for(var/reagent in reagents)
-		var/datum/reagent/R = reagent
-		. |= R.expose_obj(src, reagents[R])
+	for(var/datum/reagent/reagent as anything in reagents)
+		var/reac_volume = reagents[reagent]
+		. |= reagent.expose_obj(src, reac_volume, methods, show_message)
 
 /// Attempt to freeze this obj if possible. returns TRUE if it succeeded, FALSE otherwise.
 /obj/proc/freeze()
@@ -289,3 +308,28 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		pixel_z = anchored_tabletop_offset
 	else
 		pixel_z = initial(pixel_z)
+
+/obj/apply_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
+		return
+	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+	modify_max_integrity(ceil(max_integrity * integrity_mod))
+	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+	force *= strength_mod
+	throwforce *= strength_mod
+	var/list/armor_mods = material.get_armor_modifiers(multiplier)
+	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
+
+///This proc is called when the material is removed from an object specifically.
+/obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
+	. = ..()
+	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
+		return
+	var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
+	modify_max_integrity(floor(max_integrity / integrity_mod))
+	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
+	force /= strength_mod
+	throwforce /= strength_mod
+	var/list/armor_mods = material.get_armor_modifiers(1 / multiplier)
+	set_armor(get_armor().generate_new_with_multipliers(armor_mods))

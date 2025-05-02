@@ -52,7 +52,8 @@
  */
 /mob/living/silicon/robot/proc/equip_module_to_slot(obj/item/item_module, module_num)
 	var/storage_was_closed = FALSE //Just to be consistant and all
-	if(!shown_robot_modules) //Tools may be invisible if the collection is hidden
+	//spawning a clientless borg won't init its hud, much like with all mobs, so don't bother showing what's not there
+	if(hud_used && !shown_robot_modules) //Tools may be invisible if the collection is hidden
 		hud_used.toggle_show_robot_modules()
 		storage_was_closed = TRUE
 	switch(module_num)
@@ -75,7 +76,7 @@
 
 	observer_screen_update(item_module, TRUE)
 
-	if(storage_was_closed)
+	if(hud_used && storage_was_closed)
 		hud_used.toggle_show_robot_modules()
 	item_module.on_equipped(src, ITEM_SLOT_HANDS)
 	return TRUE
@@ -128,7 +129,7 @@
 	item_module.forceMove(model) //Return item to configuration so it appears in its contents, so it can be taken out again.
 
 	observer_screen_update(item_module, FALSE)
-	hud_used.update_robot_modules_display()
+	hud_used?.update_robot_modules_display()
 	return TRUE
 
 /**

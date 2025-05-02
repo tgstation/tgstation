@@ -15,31 +15,6 @@
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0)
 	return
 
-/turf/open/proc/set_active_hotspot(obj/effect/hotspot/new_lad)
-	if(active_hotspot == new_lad)
-		return
-	var/hotspot_around = NONE
-	if(active_hotspot)
-		if(new_lad)
-			hotspot_around = active_hotspot.smoothing_junction
-		if(!QDELETED(active_hotspot))
-			QDEL_NULL(active_hotspot)
-	else
-		for(var/direction in GLOB.cardinals)
-			var/turf/potentially_open = get_step(src, direction)
-			if(!isopenturf(potentially_open))
-				continue
-			var/turf/open/potentially_hotboxed = potentially_open
-			if(!potentially_hotboxed.active_hotspot)
-				continue
-			var/existing_directions = potentially_hotboxed.active_hotspot.smoothing_junction
-			potentially_hotboxed.active_hotspot.set_smoothed_icon_state(existing_directions | REVERSE_DIR(direction))
-			hotspot_around |= direction
-
-	active_hotspot = new_lad
-	if(active_hotspot)
-		active_hotspot.set_smoothed_icon_state(hotspot_around)
-
 /**
  * Handles the creation of hotspots and initial activation of turfs.
  * Setting the conditions for the reaction to actually happen for gasmixtures
@@ -80,10 +55,7 @@
 	if(((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (plas > 0.5 || trit > 0.5 || h2 > 0.5)) || \
 		((exposed_temperature < FREON_MAXIMUM_BURN_TEMPERATURE) && (freon > 0.5)))
 
-		set_active_hotspot(new /obj/effect/hotspot(src, exposed_volume*25, exposed_temperature))
-
-		active_hotspot.just_spawned = (current_cycle < SSair.times_fired)
-		//remove just_spawned protection if no longer processing this cell
+		new /obj/effect/hotspot(src, exposed_volume * 25, exposed_temperature)
 		SSair.add_to_active(src)
 
 /**
@@ -93,9 +65,10 @@
 /obj/effect/hotspot
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	icon = 'icons/effects/atmos/fire.dmi'
+	icon = 'icons/effects/fire.dmi'
 	icon_state = "light"
 	layer = GASFIRE_LAYER
+	plane = ABOVE_GAME_PLANE
 	blend_mode = BLEND_ADD
 	light_system = OVERLAY_LIGHT
 	light_range = LIGHT_RANGE_FIRE
@@ -120,6 +93,8 @@
 	var/visual_update_tick = 0
 	///Are we burning freon?
 	var/cold_fire = FALSE
+	///the group of hotspots we are a part of
+	var/datum/hot_group/our_hot_group
 
 /obj/effect/hotspot/Initialize(mapload, starting_volume, starting_temperature)
 	. = ..()
@@ -128,7 +103,31 @@
 		volume = starting_volume
 	if(!isnull(starting_temperature))
 		temperature = starting_temperature
-	perform_exposure()
+
+	var/turf/open/our_turf = loc
+	//on creation we check adjacent turfs for hot spot to start grouping, if surrounding do not have hot spots we create our own
+	for(var/turf/open/to_check as anything in our_turf.atmos_adjacent_turfs)
+		if(!to_check.active_hotspot)
+			continue
+		var/obj/effect/hotspot/enemy_spot = to_check.active_hotspot
+		if(!our_hot_group)
+			enemy_spot.our_hot_group.add_to_group(src)
+		else if(our_hot_group != enemy_spot.our_hot_group && enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
+			our_hot_group.merge_hot_groups(enemy_spot.our_hot_group)
+
+	if(!our_hot_group)//if after loop through all the adjacents turfs and we havent belong to a group yet, make our own
+		our_hot_group = new
+		our_hot_group.add_to_group(src)
+
+	// If our hotspot gets created on a turf with existing hotspots on it that just got spawned, abort
+	if(!perform_exposure())
+		if (QDELETED(src))
+			return
+		return INITIALIZE_HINT_QDEL
+
+	if(QDELETED(src)) // It is actually possible for this hotspot to become qdeleted in perform_exposure() if another hotspot gets created (for example in fire_act() of fuel pools)
+		return // In this case, we want to just leave and let the new hotspot take over.
+
 	setDir(pick(GLOB.cardinals))
 	air_update_turf(FALSE, FALSE)
 	var/static/list/loc_connections = list(
@@ -137,17 +136,16 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+	if(COOLDOWN_FINISHED(our_turf, fire_puff_cooldown))
+		playsound(our_turf, 'sound/effects/fire_puff.ogg', 30)
+		COOLDOWN_START(our_turf, fire_puff_cooldown, 5 SECONDS)
+
+	// Remove just_spawned protection if no longer processing the parent cell
+	just_spawned = (our_turf.current_cycle < SSair.times_fired)
+
 /obj/effect/hotspot/set_smoothed_icon_state(new_junction)
+
 	smoothing_junction = new_junction
-	// If we have a connection down offset physically down so we render correctly
-	if(new_junction & SOUTH)
-		// this ensures things physically below us but visually overlapping us render how we would want
-		pixel_y = -16
-		pixel_z = 16
-	// Otherwise render normally, to avoid weird layering
-	else
-		pixel_y = 0
-		pixel_z = 0
 
 	update_color()
 
@@ -163,14 +161,22 @@
  * If the reaction is too small it will perform like the first tick.
  *
  * Also calls fire_act() which handles burning.
+ * Returns TRUE if exposed successfully, and FALSE if the hotspot should delete itself
  */
 /obj/effect/hotspot/proc/perform_exposure()
 	var/turf/open/location = loc
 	var/datum/gas_mixture/reference
-	if(!istype(location) || !(location.air))
-		return
+	if(!istype(location) || !location.air)
+		return FALSE
 
-	location.set_active_hotspot(src)
+	if(location.active_hotspot && location.active_hotspot != src)
+		// If we're attempting to spawn on a turf which *just* had a hotspot spawned on it, abort and kill ourselves
+		if(location.active_hotspot.just_spawned)
+			return FALSE
+		// When we are spawned from a deletion signal from our previous hotspot, this can happen
+		if(!QDELETED(location.active_hotspot))
+			qdel(location.active_hotspot)
+	location.active_hotspot = src
 
 	bypassing = !just_spawned && (volume > CELL_VOLUME*0.95)
 
@@ -195,12 +201,13 @@
 
 	// Handles the burning of atoms.
 	if(cold_fire)
-		return
+		return TRUE
+
 	for(var/A in location)
 		var/atom/AT = A
 		if(!QDELETED(AT) && AT != src)
 			AT.fire_act(temperature, volume)
-	return
+	return TRUE
 
 /// Mathematics to be used for color calculation.
 /obj/effect/hotspot/proc/gauss_lerp(x, x1, x2)
@@ -211,18 +218,11 @@
 /obj/effect/hotspot/proc/update_color()
 	cut_overlays()
 
-	if(!(smoothing_junction & NORTH))
-		var/mutable_appearance/frill = mutable_appearance('icons/effects/atmos/fire.dmi', "[fire_stage]_frill")
-		frill.pixel_z = 32
-		add_overlay(frill)
 	var/heat_r = heat2colour_r(temperature)
 	var/heat_g = heat2colour_g(temperature)
 	var/heat_b = heat2colour_b(temperature)
 	var/heat_a = 255
 	var/greyscale_fire = 1 //This determines how greyscaled the fire is.
-	// Note:
-	// Some of the overlays applied to hotspots are not 3/4th'd. They COULD be but we have not gotten to that point yet.
-	// Wallening todo?
 
 	if(cold_fire)
 		heat_r = 0
@@ -246,16 +246,12 @@
 		sparkle_overlay.alpha = sparkle_amt * 255
 		add_overlay(sparkle_overlay)
 	if(temperature > 400000 && temperature < 1500000) //Lightning because very anime.
-		var/mutable_appearance/lightning_overlay = mutable_appearance('icons/effects/atmos/fire.dmi', "overcharged")
-		if(!(smoothing_junction & NORTH))
-			var/mutable_appearance/frill = mutable_appearance('icons/effects/atmos/fire.dmi', "overcharged_frill")
-			frill.pixel_z = 32
-			lightning_overlay.add_overlay(frill)
+		var/mutable_appearance/lightning_overlay = mutable_appearance('icons/effects/fire.dmi', "overcharged")
 		lightning_overlay.blend_mode = BLEND_ADD
 		add_overlay(lightning_overlay)
 	if(temperature > 4500000) //This is where noblium happens. Some fusion-y effects.
 		var/fusion_amt = temperature < LERP(4500000,12000000,0.5) ? gauss_lerp(temperature, 4500000, 12000000) : 1
-		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/atmos/atmospherics.dmi', "fusion_gas")
+		var/mutable_appearance/fusion_overlay = mutable_appearance('icons/effects/atmospherics.dmi', "fusion_gas")
 		fusion_overlay.blend_mode = BLEND_ADD
 		fusion_overlay.alpha = fusion_amt * 255
 		var/mutable_appearance/rainbow_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "druggy")
@@ -350,9 +346,12 @@
 
 /obj/effect/hotspot/Destroy()
 	SSair.hotspots -= src
-	var/turf/open/T = loc
-	if(istype(T) && T.active_hotspot == src)
-		T.set_active_hotspot(null)
+	var/turf/open/cur_turf = loc
+	if(our_hot_group)
+		our_hot_group.remove_from_group(src)
+		our_hot_group = null
+	if(istype(cur_turf) && cur_turf.active_hotspot == src)
+		cur_turf.active_hotspot = null
 	return ..()
 
 /obj/effect/hotspot/proc/on_entered(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
@@ -361,7 +360,101 @@
 		var/mob/living/immolated = arrived
 		immolated.fire_act(temperature, volume)
 
-/obj/effect/hotspot/singularity_pull()
+/obj/effect/hotspot/singularity_pull(atom/singularity, current_size)
 	return
 
+/datum/looping_sound/fire
+	mid_sounds = list('sound/effects/fireclip1.ogg' = 1, 'sound/effects/fireclip2.ogg' = 1, 'sound/effects/fireclip3.ogg' = 1, 'sound/effects/fireclip4.ogg' = 1,
+	'sound/effects/fireclip5.ogg' = 1, 'sound/effects/fireclip6.ogg' = 1, 'sound/effects/fireclip7.ogg' = 1)
+	volume = 30
+	mid_length = 2 SECONDS
+	falloff_distance = 1
+
+#define MIN_SIZE_SOUND 2
+///handle the grouping of hotspot and then determining an average center to play sound in
+/datum/hot_group
+	var/list/obj/effect/hotspot/spot_list = list()
+	///the sound center turf which the looping sound will play
+	var/turf/open/current_sound_loc
+	var/datum/looping_sound/fire/sound
+	var/tiles_limit = 80 // arbitrary limit so we dont have one giant group
+	///these lists and average var are to find the average center of a group
+	var/list/x_coord = list()
+	var/list/y_coord = list()
+	var/list/z_coord = list()
+	var/average_x
+	var/average_y
+	var/average_Z
+	///the range for the sound to drop off based on the size of the group
+	var/drop_off_dist
+	COOLDOWN_DECLARE(update_sound_center)
+
+
+/datum/hot_group/Destroy()
+	. = ..()
+	current_sound_loc = null
+	spot_list = null
+	qdel(sound)
+
+/datum/hot_group/proc/remove_from_group(obj/effect/hotspot/target)
+	spot_list -= target
+	var/turf/open/target_turf = target.loc
+	if(target_turf)
+		x_coord -= target_turf.x
+		y_coord -= target_turf.y
+	if(!length(spot_list))
+		qdel(src)
+		return
+
+/datum/hot_group/proc/add_to_group(obj/effect/hotspot/target)
+	if(QDELETED(target))
+		return
+	spot_list += target
+	target.our_hot_group = src
+	var/turf/open/target_turf = target.loc
+	x_coord += target_turf.x
+	y_coord += target_turf.y
+	z_coord += target_turf.z
+	if(COOLDOWN_FINISHED(src, update_sound_center) && length(spot_list) > MIN_SIZE_SOUND)//arbitrary size to start playing the sound
+		update_sound()
+		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
+
+/datum/hot_group/proc/merge_hot_groups(datum/hot_group/enemy_group)
+	if(length(spot_list) >= tiles_limit || length(enemy_group.spot_list) >= tiles_limit)
+		return
+	var/datum/hot_group/saving_group
+	var/datum/hot_group/sacrificial_group
+	if(length(spot_list) > length(enemy_group.spot_list) || (length(spot_list) == length(enemy_group.spot_list) && prob(50)))//we're bigger take all of their territory!
+		saving_group = src
+		sacrificial_group = enemy_group
+	else
+		saving_group = enemy_group
+		sacrificial_group = src
+	for(var/obj/effect/hotspot/reference as anything in sacrificial_group.spot_list)
+		reference.our_hot_group = saving_group
+	saving_group.spot_list += sacrificial_group.spot_list
+	saving_group.x_coord += sacrificial_group.x_coord
+	saving_group.y_coord += sacrificial_group.y_coord
+	qdel(sacrificial_group)
+	if(COOLDOWN_FINISHED(src, update_sound_center) && length(spot_list) > MIN_SIZE_SOUND)//arbitrary size to start playing the sound
+		update_sound()
+		COOLDOWN_START(src, update_sound_center, 5 SECONDS)
+
+/datum/hot_group/proc/update_sound()
+	//we can draw a cross around the average middle of any globs of group, curves or hollow groups may cause issues with this
+	average_x = round((max(x_coord) + min(x_coord))/2)
+	average_y = round((max(y_coord) + min(y_coord))/2)
+	average_Z = round((min(z_coord) + max(z_coord))/2)
+	drop_off_dist = max((max(y_coord) - min(y_coord)), (max(x_coord) - min(x_coord)), 1)// pick the largest value between the width and length of the group to determine sound drop off
+	var/turf/open/sound_turf = locate(average_x, average_y, average_Z)
+	if(sound)
+		sound.falloff_distance = drop_off_dist
+		if(sound_turf != current_sound_loc)
+			sound.parent = sound_turf
+		return
+	sound = new(sound_turf, TRUE)
+	sound.falloff_distance = drop_off_dist
+	current_sound_loc = sound_turf
+
+#undef MIN_SIZE_SOUND
 #undef INSUFFICIENT

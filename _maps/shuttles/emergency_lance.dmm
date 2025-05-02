@@ -62,7 +62,7 @@
 /area/shuttle/escape)
 "bV" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/turf_decal/trimline/dark_blue/arrow_ccw{
 	dir = 8
@@ -125,7 +125,7 @@
 /area/shuttle/escape)
 "dW" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -198,15 +198,6 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
-/area/shuttle/escape)
-"gH" = (
-/obj/structure/table/reinforced,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/power_store/cell/high,
-/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
-	dir = 1
-	},
-/turf/open/floor/iron/checker,
 /area/shuttle/escape)
 "gI" = (
 /obj/machinery/power/shuttle_engine/heater,
@@ -293,6 +284,23 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
+/area/shuttle/escape)
+"jo" = (
+/obj/machinery/door/airlock/external/ruin{
+	name = "Emergency Shuttle External Airlock"
+	},
+/obj/effect/turf_decal/trimline/dark_blue/arrow_ccw{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/dark_blue/arrow_cw{
+	dir = 4
+	},
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	name = "Lance Emergency Shuttle";
+	port_direction = 1
+	},
+/turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "jG" = (
 /obj/effect/turf_decal/tile/dark_blue{
@@ -525,7 +533,7 @@
 /area/shuttle/escape)
 "pu" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -565,7 +573,7 @@
 /area/shuttle/escape)
 "qe" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -601,7 +609,7 @@
 /area/shuttle/escape)
 "rw" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/general,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -654,23 +662,6 @@
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"tK" = (
-/obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
-	},
-/obj/effect/turf_decal/trimline/dark_blue/arrow_ccw{
-	dir = 8
-	},
-/obj/effect/turf_decal/trimline/dark_blue/arrow_cw{
-	dir = 4
-	},
-/obj/docking_port/mobile/emergency{
-	dir = 2;
-	name = "Lance Emergency Shuttle";
-	port_direction = 1
-	},
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "uy" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
@@ -691,7 +682,7 @@
 /area/shuttle/escape)
 "uK" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -877,7 +868,7 @@
 /area/shuttle/escape)
 "Cx" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -896,7 +887,7 @@
 /area/shuttle/escape)
 "CR" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -939,6 +930,19 @@
 	dir = 9
 	},
 /area/shuttle/escape)
+"EL" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/turretid{
+	control_area = "/area/shuttle/escape";
+	desc = "Used to control the Lance's automated defenses.";
+	icon_state = "control_kill";
+	lethal = 1;
+	pixel_y = -26;
+	req_access = list("command")
+	},
+/obj/effect/turf_decal/tile/blue/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "ET" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
@@ -959,25 +963,13 @@
 	dir = 5
 	},
 /area/shuttle/escape)
-"Fo" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/turretid/directional/south{
-	control_area = "/area/shuttle/escape";
-	desc = "Used to control the Lance's automated defenses.";
-	icon_state = "control_kill";
-	lethal = 1;
-	req_access = list("command")
-	},
-/obj/effect/turf_decal/tile/blue/half/contrasted,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
 "FX" = (
 /obj/structure/table/reinforced,
 /obj/item/book/manual/wiki/surgery{
 	pixel_x = -15
 	},
-/obj/item/surgery_tray/full,
-/obj/item/surgery_tray/full{
+/obj/effect/spawner/surgery_tray/full,
+/obj/effect/spawner/surgery_tray/full{
 	pixel_x = 5
 	},
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
@@ -1207,7 +1199,7 @@
 /area/shuttle/escape)
 "LD" = (
 /obj/machinery/door/airlock/external/ruin{
-	name = "Emegency Shuttle External Airlock"
+	name = "Emergency Shuttle External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -1289,6 +1281,15 @@
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"Nx" = (
+/obj/structure/table/reinforced,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/power_store/cell/high,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron/checker,
 /area/shuttle/escape)
 "NS" = (
 /obj/structure/chair/comfy/shuttle,
@@ -1832,7 +1833,7 @@ oe
 Yt
 Yt
 Yt
-Fo
+EL
 WQ
 WQ
 WQ
@@ -2108,7 +2109,7 @@ pK
 cz
 "}
 (10,1,1) = {"
-tK
+jo
 jY
 hM
 nE
@@ -2131,7 +2132,7 @@ WI
 Hd
 pX
 ic
-gH
+Nx
 Hd
 WI
 QI

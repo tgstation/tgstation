@@ -3,7 +3,6 @@
 #define TRANSIT_PIPEDISPENSER 2
 
 /obj/machinery/pipedispenser
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "pipe dispenser"
 	icon = 'icons/obj/machines/lathes.dmi'
 	icon_state = "pipe_d"
@@ -172,10 +171,8 @@
 
 /obj/machinery/pipedispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(default_unfasten_wrench(user, tool, time = 4 SECONDS))
-		user << browse(null, "window=pipedispenser")
-
-	return TRUE
+	default_unfasten_wrench(user, tool, time = 4 SECONDS)
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/machinery/pipedispenser/disposal

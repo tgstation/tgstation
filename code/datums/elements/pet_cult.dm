@@ -90,7 +90,8 @@
 	source.ai_controller.set_blackboard_key(BB_CULT_TEAM, team)
 
 	var/static/list/new_pet_commands = list(
-		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/move,
+		/datum/pet_command/attack,
 		/datum/pet_command/follow,
 		/datum/pet_command/free,
 		/datum/pet_command/idle,

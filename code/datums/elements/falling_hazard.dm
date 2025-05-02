@@ -12,7 +12,7 @@
 	/// Does the target crush and flatten whoever it falls on
 	var/crushes_people = FALSE
 	/// What sound is played when the target falls onto a mob
-	var/impact_sound = 'sound/magic/clockwork/fellowship_armory.ogg' //CLANG
+	var/impact_sound = 'sound/effects/magic/clockwork/fellowship_armory.ogg' //CLANG
 
 /datum/element/falling_hazard/Attach(datum/target, damage, wound_bonus, hardhat_safety, crushes, impact_sound)
 	. = ..()
@@ -52,7 +52,7 @@
 		if(crushes_people)
 			poor_target.Knockdown(0.25 SECONDS * fall_damage) // For a piano, that would be 15 seconds
 
-		playsound(poor_target, 'sound/weapons/parry.ogg', 50, TRUE) // You PARRIED the falling object with your EPIC hardhat
+		playsound(poor_target, 'sound/items/weapons/parry.ogg', 50, TRUE) // You PARRIED the falling object with your EPIC hardhat
 		return
 
 	var/obj/item/bodypart/target_head = poor_target.get_bodypart(BODY_ZONE_HEAD)

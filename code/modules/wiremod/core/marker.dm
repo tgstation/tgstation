@@ -45,7 +45,7 @@
 	RegisterSignal(marked_atom, COMSIG_QDELETING, PROC_REF(cleanup_marked_atom))
 	update_icon()
 	flick("multitool_circuit_flick", src)
-	playsound(src.loc, 'sound/misc/compiler-stage2.ogg', 30, TRUE)
+	playsound(src.loc, 'sound/machines/compiler/compiler-stage2.ogg', 30, TRUE)
 	return TRUE
 
 /// Allow users to mark items equipped by the target that are visible.

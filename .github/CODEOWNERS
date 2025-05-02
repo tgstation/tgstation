@@ -23,6 +23,8 @@
 /code/modules/tgs/ @Cyberboss
 /code/ze_genesis_call/ @Cyberboss
 /tools/tgs_test/ @Cyberboss
+/tools/Tgstation.DiscordDiscussions/ @Cyberboss
+/tools/Tgstation.PRAnnouncer/ @Cyberboss
 
 # Cobby
 
@@ -53,6 +55,13 @@
 /.github/guides/VISUALS.md @LemonInTheDark
 /code/_onclick/hud/ @LemonInTheDark
 /code/__DEFINES/layers.dm @LemonInTheDark
+/code/__DEFINES/MC.dm @LemonInTheDark
+/code/controllers/admin.dm @LemonInTheDark
+/code/controllers/failsafe.dm @LemonInTheDark
+/code/controllers/master.dm @LemonInTheDark
+/code/controllers/subsystem.dm @LemonInTheDark
+/code/controllers/subsystem/air.dm @LemonInTheDark
+/code/controllers/subsystem/timer.dm @LemonInTheDark
 
 # Mothblocks
 
@@ -93,6 +102,10 @@
 
 /code/game/area/ @san7890
 /icons/area/ @san7890
+
+# SmArtKar
+
+/code/modules/projectiles/projectile.dm @SmArtKar
 
 # stylemistake
 
@@ -159,17 +172,6 @@
 /code/modules/mob/living/carbon/carbon_update_icons.dm @Kapu1178
 /code/modules/mob/living/carbon/human/human_update_icons.dm @Kapu1178
 
-# MrStonedOne
-
-/code/__DEFINES/MC.dm @MrStonedOne
-/code/controllers/admin.dm @MrStonedOne
-/code/controllers/master.dm @MrStonedOne
-/code/controllers/failsafe.dm @MrStonedOne
-/code/controllers/subsystem.dm @MrStonedOne
-/code/controllers/subsystem/timer.dm @MrStonedOne
-/code/controllers/configuration/entries @MrStonedOne
-/config/ @MrStonedOne
-
 # NamelessFairy
 
 /code/modules/capture_the_flag/ @NamelessFairy
@@ -182,20 +184,21 @@
 /code/modules/atmospherics/ @Pickle-Coding
 /code/modules/power/ @Pickle-Coding
 
+# Sadboysuss
+
+/sound/ @Sadboysuss
+
 # MULTIPLE OWNERS
 
-/SQL/ @Jordie0608 @MrStonedOne
+/SQL/ @Jordie0608 @scriptis
 
 /_maps/ @EOBGames @Maurukas @MMMiracles @san7890 @ShizCalev
 
 /icons/ @Imaginos16 @Krysonism @Twaticus @Wallemations
-/icons/ass/ @Ghilker @tralezab
 
 /code/__DEFINES/atmospherics/ @Ghilker @LemonInTheDark
 
 /code/__HELPERS/logging/ @dragomagol @ZephyrTFA
-
-/code/controllers/subsystem/air.dm @LemonInTheDark @MrStonedOne
 
 /code/modules/atmospherics/ @Ghilker @LemonInTheDark
 
@@ -210,10 +213,13 @@
 
 /code/modules/surgery/ @ExcessiveUseOfCobblestone @Ryll-Ryll
 
-/tools/build/ @MrStonedOne @stylemistake
-/tools/tgs_scripts/ @Cyberboss @MrStonedOne
+/tools/build/ @scriptis @stylemistake
+/tools/tgs_scripts/ @Cyberboss @scriptis
 
-/tools/WebhookProcessor/ @BraveMole @TiviPlus
+# Host Hell
+
+/code/controllers/configuration/entries @scriptis
+/config/ @scriptis
 
 # Expensive files that touching basically always cause performance problems
 ## Init times
@@ -221,4 +227,4 @@
 
 # SIC SEMPER TYRANNIS
 
-/code/modules/hydroponics/grown/citrus.dm @optimumtact
+/code/modules/hydroponics/grown/citrus.dm @LemonInTheDark @optimumtact

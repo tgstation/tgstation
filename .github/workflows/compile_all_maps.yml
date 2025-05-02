@@ -1,0 +1,29 @@
+name: Compile All Maps
+
+on:
+  workflow_call:
+    inputs:
+      max_required_byond_client:
+        required: true
+        type: string
+
+jobs:
+  compile_all_maps:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup_node
+      - name: Restore BYOND from Cache
+        uses: ./.github/actions/restore_or_install_byond
+      - name: Compile All Maps
+        run: |
+          source $HOME/BYOND/byond/bin/byondsetup
+          tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
+      - name: Check client Compatibility
+        uses: tgstation/byond-client-compatibility-check@v3
+        with:
+          dmb-location: tgstation.dmb
+          max-required-client-version: ${{inputs.max_required_byond_client}}

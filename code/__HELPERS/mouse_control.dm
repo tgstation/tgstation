@@ -11,8 +11,8 @@
 	var/x = (text2num(screen_loc_X[1]) * 32 + text2num(screen_loc_X[2]) - 32)
 	var/y = (text2num(screen_loc_Y[1]) * 32 + text2num(screen_loc_Y[2]) - 32)
 	var/list/screenview = getviewsize(client.view)
-	var/screenviewX = screenview[1] * world.icon_size
-	var/screenviewY = screenview[2] * world.icon_size
+	var/screenviewX = screenview[1] * ICON_SIZE_X
+	var/screenviewY = screenview[2] * ICON_SIZE_Y
 	var/ox = round(screenviewX/2) - client.pixel_x //"origin" x
 	var/oy = round(screenviewY/2) - client.pixel_y //"origin" y
 	var/angle = SIMPLIFY_DEGREES(ATAN2(y - oy, x - ox))

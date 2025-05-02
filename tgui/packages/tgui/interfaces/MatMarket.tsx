@@ -1,8 +1,4 @@
 import { sortBy } from 'common/collections';
-import { BooleanLike } from 'common/react';
-import { toTitleCase } from 'common/string';
-
-import { useBackend } from '../backend';
 import {
   Button,
   Collapsible,
@@ -10,8 +6,12 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from '../components';
-import { formatMoney } from '../format';
+} from 'tgui-core/components';
+import { formatMoney } from 'tgui-core/format';
+import { BooleanLike } from 'tgui-core/react';
+import { toTitleCase } from 'tgui-core/string';
+
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Material = {
@@ -83,8 +83,9 @@ export const MatMarket = (props) => {
               <br /> <br />
               To sell materials, please insert sheets or similar stacks of
               materials. All minerals sold on the market directly are subject to
-              an 20% market fee. To prevent market manipulation, all registered
-              traders can buy a total of 10 full stacks of materials at a time.
+              a scaling value decrease per material, but this will recover over
+              time. To prevent market manipulation, all registered traders can
+              buy a total of 10 full stacks of materials at a time.
               <br /> <br />
               All new purchases will include the cost of the shipped crate,
               which may be recycled afterwards.

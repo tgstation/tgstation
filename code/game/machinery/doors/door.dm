@@ -29,11 +29,15 @@
 	var/visible = TRUE
 	var/operating = FALSE
 	var/glass = FALSE
+	/// If something isn't a glass door but doesn't have a fill_closed icon (no glass slots), this prevents it from being used
+	var/can_be_glass = TRUE
 	/// Do we need to keep track of a filler panel with the airlock
 	var/multi_tile
 	/// A filler object used to fill the space of multi-tile airlocks
 	var/obj/structure/fluff/airlock_filler/filler
 	var/welded = FALSE
+	///Whether this door has a panel or not; FALSE also stops the examine blurb about the panel from showing up
+	var/has_access_panel = TRUE
 	/// For rglass-windowed airlocks and firedoors
 	var/heat_proof = FALSE
 	/// Emergency access override
@@ -68,13 +72,6 @@
 	var/elevator_status
 	/// What specific lift ID do we link with?
 	var/transport_linked_id
-	/// Icon state prefix to use for masks from vis_mask.dmi
-	var/dir_mask = "standard"
-	/// Similar to the above but used for cases where walls are adjacent
-	var/edge_dir_mask = "standard"
-	/// What directions in which we do not fully cover our darkness with masks
-	/// Allows for full directional visibility
-	var/inner_transparent_dirs = NONE
 
 /datum/armor/machinery_door
 	melee = 30
@@ -121,12 +118,6 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/can_barricade)
-	make_dir_opaque()
-
-/obj/machinery/door/proc/make_dir_opaque()
-	if(!dir_mask || !edge_dir_mask)
-		return
-	AddComponent(/datum/component/vis_block, dir_mask, edge_dir_mask, inner_transparent_dirs)
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
@@ -135,7 +126,8 @@
 			. += span_notice("Due to a security threat, its access requirements have been lifted!")
 		else
 			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
-	. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
+	if(has_access_panel)
+		. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
 
 /obj/machinery/door/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -223,7 +215,7 @@
 	if(!red_alert_access)
 		return
 	audible_message(span_notice("[src] whirr[p_s()] as [p_they()] automatically lift[p_s()] access requirements!"))
-	playsound(src, 'sound/machines/boltsup.ogg', 50, TRUE)
+	playsound(src, 'sound/machines/airlock/boltsup.ogg', 50, TRUE)
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
 	return FALSE
@@ -347,7 +339,7 @@
 	return
 
 
-/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user)
+/obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user, forced = FALSE)
 	return
 
 /// Called when the user right-clicks on the door with a crowbar.
@@ -412,13 +404,13 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(glass)
-				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
+				playsound(loc, 'sound/effects/glass/glasshit.ogg', 90, TRUE)
 			else if(damage_amount)
-				playsound(loc, 'sound/weapons/smash.ogg', 50, TRUE)
+				playsound(loc, 'sound/items/weapons/smash.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
+			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/door/emp_act(severity)
 	. = ..()
@@ -432,20 +424,24 @@
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
 			if(panel_open)
-				icon_state = "o_doorc0"
+				icon_state = "o_door_opening"
 			else
-				icon_state = "doorc0"
+				icon_state = "door_opening"
 		if(DOOR_CLOSING_ANIMATION)
 			if(panel_open)
-				icon_state = "o_doorc1"
+				icon_state = "o_door_closing"
 			else
-				icon_state = "doorc1"
+				icon_state = "door_closing"
 		if(DOOR_DENY_ANIMATION)
 			if(!machine_stat)
 				icon_state = "door_deny"
 		else
-			icon_state = "[base_icon_state][density]"
-	return ..()
+			icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
+
+/obj/machinery/door/update_overlays()
+	. = ..()
+	if(panel_open)
+		. += mutable_appearance(icon, "panel_open")
 
 /// Returns the delay to use for the passed in animation
 /// We'll do our cleanup once the delay runs out
@@ -495,7 +491,6 @@
 	if(operating)
 		return FALSE
 	operating = TRUE
-	SEND_SIGNAL(src, COSMIG_DOOR_OPENING)
 	use_energy(active_power_usage)
 	run_animation(DOOR_OPENING_ANIMATION)
 	set_opacity(0)
@@ -535,7 +530,6 @@
 				return FALSE
 
 	operating = TRUE
-	SEND_SIGNAL(src, COSMIG_DOOR_CLOSING)
 
 	run_animation(DOOR_CLOSING_ANIMATION)
 	layer = closingLayer
@@ -621,25 +615,10 @@
 
 /obj/machinery/door/morgue
 	icon = 'icons/obj/doors/doormorgue.dmi'
-	icon_state = "closed"
 
 /obj/machinery/door/morgue/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/redirect_attack_hand_from_turf)
-
-/obj/machinery/door/morgue/update_icon_state()
-	. = ..()
-	if(animation && animation != "deny")
-		icon_state = animation
-	else
-		icon_state = density ? "closed" : "open_top"
-
-/obj/machinery/door/morgue/update_overlays()
-	. = ..()
-	if(!density)
-		// If we're open we layer the bit below us "above" any mobs so they can walk through
-		. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
-		. += emissive_blocker(icon, "open_bottom", src, ABOVE_MOB_LAYER)
 
 /obj/machinery/door/get_dumping_location()
 	return null
@@ -647,9 +626,9 @@
 /obj/machinery/door/morgue/animation_length(animation)
 	switch(animation)
 		if(DOOR_OPENING_ANIMATION)
-			return 2.04 SECONDS
+			return 1.5 SECONDS
 		if(DOOR_CLOSING_ANIMATION)
-			return 1.64 SECONDS
+			return 1.5 SECONDS
 		if(DOOR_DENY_ANIMATION)
 			return 0.1 SECONDS
 
@@ -658,11 +637,11 @@
 		if(DOOR_OPENING_PASSABLE)
 			return 1.4 SECONDS
 		if(DOOR_OPENING_FINISHED)
-			return 2.04 SECONDS
+			return 1.5 SECONDS
 		if(DOOR_CLOSING_UNPASSABLE)
-			return 0.54 SECONDS
+			return 0.2 SECONDS
 		if(DOOR_CLOSING_FINISHED)
-			return 1.64 SECONDS
+			return 1.5 SECONDS
 
 /obj/machinery/door/proc/lock()
 	return

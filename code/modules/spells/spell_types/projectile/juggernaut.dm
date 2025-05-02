@@ -6,7 +6,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 
-	sound = 'sound/weapons/resonator_blast.ogg'
+	sound = 'sound/items/weapons/resonator_blast.ogg'
 
 	cooldown_time = 35 SECONDS
 	spell_requirements = NONE

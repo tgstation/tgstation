@@ -37,7 +37,7 @@
 		spookify(cast_on)
 		return
 	owner.balloon_alert(owner, "line of sight broken!")
-	return SPELL_CANCEL_CAST
+	return SPELL_NO_IMMEDIATE_COOLDOWN
 
 /datum/action/cooldown/spell/pointed/unsettle/proc/check_if_in_view(mob/living/carbon/human/target)
 	SIGNAL_HANDLER

@@ -143,12 +143,12 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black medical syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/med
-	name = "black space helmet"
+	name = "black medical space helmet"
 	icon_state = "syndicate-helm-black-med"
 	inhand_icon_state = "syndicate-helm-black"
 
 /obj/item/clothing/suit/space/syndicate/black/med
-	name = "green space suit"
+	name = "black medical space suit"
 	icon_state = "syndicate-black-med"
 	inhand_icon_state = "syndicate-black"
 	helmet_type = /obj/item/clothing/head/helmet/space/syndicate/black/med
@@ -186,6 +186,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 	w_class = WEIGHT_CLASS_SMALL
 	icon_state = "syndicate-contract-helm"
 	inhand_icon_state = "contractor_helmet"
+	visor_dirt = null
 
 /obj/item/clothing/suit/space/syndicate/contract
 	name = "contractor space suit"
@@ -198,7 +199,7 @@ GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(
 
 //Black with yellow/red engineering syndicate space suit
 /obj/item/clothing/head/helmet/space/syndicate/black/engie
-	name = "black space helmet"
+	name = "black engineering space helmet"
 	icon_state = "syndicate-helm-black-engie"
 	inhand_icon_state = "syndicate-helm-black"
 

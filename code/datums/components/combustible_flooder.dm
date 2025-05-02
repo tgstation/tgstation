@@ -57,7 +57,11 @@
 	message_admins(admin_message)
 
 	if(delete_parent && !QDELETED(parent))
-		qdel(parent) // For things with the explodable component like plasma mats this isn't necessary, but there's no harm.
+		if(isobj(parent))
+			var/obj/obj_parent = parent
+			obj_parent.deconstruct(disassembled = FALSE)
+		else
+			qdel(parent) // For things with the explodable component like plasma mats this isn't necessary, but there's no harm.
 	qdel(src)
 
 /// fire_act reaction.

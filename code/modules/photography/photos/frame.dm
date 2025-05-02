@@ -10,6 +10,7 @@
 	icon_state = "frame-overlay"
 	result_path = /obj/structure/sign/picture_frame
 	var/obj/item/photo/displayed
+	pixel_shift = 30
 
 /obj/item/wallframe/picture/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/photo))
@@ -277,6 +278,6 @@
 
 ///Generates a persistence id unique to the current map. Every bar should feel a little bit different after all.
 /obj/structure/sign/picture_frame/portrait/bar/Initialize(mapload)
-	if(SSmapping.config.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
-		persistence_id = "frame_bar_[SSmapping.config.map_name]"
+	if(SSmapping.current_map.map_path != CUSTOM_MAP_PATH) //skip adminloaded custom maps.
+		persistence_id = "frame_bar_[SSmapping.current_map.map_name]"
 	return ..()

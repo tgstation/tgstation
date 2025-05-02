@@ -46,6 +46,12 @@
 	icon_state = "donkpocketboxbanana"
 	donktype = /obj/item/food/donkpocket/honk
 
+/obj/item/storage/box/donkpockets/donkpocketshell
+	name = "box of Donk Co. 'Donk Spike' flechette shells"
+	desc = "Instructions: DO NOT heat in microwave. Product will remove all hostile threats with cutting edge Donk Co. technology."
+	icon_state = "donkpocketboxshell"
+	donktype = /obj/item/ammo_casing/shotgun/flechette/donk
+
 /obj/item/storage/box/papersack
 	name = "paper sack"
 	desc = "A sack neatly crafted out of paper."
@@ -126,7 +132,7 @@
 /obj/item/storage/box/papersack/proc/check_menu(mob/user, obj/item/pen/P)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated())
+	if(user.incapacitated)
 		return FALSE
 	if(contents.len)
 		balloon_alert(user, "items inside!")
@@ -301,7 +307,7 @@
 		new /obj/item/food/fishmeat/armorfish(src)
 		new /obj/item/food/fishmeat/carp(src)
 		new /obj/item/food/fishmeat/moonfish(src)
-	new /obj/item/food/fishmeat/gunner_jellyfish(src)
+	new /obj/item/food/fishmeat/gunner_jellyfish/supply(src)
 
 /obj/item/storage/box/ingredients/salads
 	theme_name = "salads"

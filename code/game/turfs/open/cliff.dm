@@ -30,8 +30,8 @@
 	if(isnull(underlay_tile))
 		return
 	var/image/underlay = image(icon_state = initial(underlay_tile.icon_state), icon = initial(underlay_tile.icon))
-	underlay.pixel_x = undertile_pixel_x //if there's a pixel offset, correct it because we should be lined up with the grid
-	underlay.pixel_y = undertile_pixel_y
+	underlay.pixel_w = undertile_pixel_x //if there's a pixel offset, correct it because we should be lined up with the grid
+	underlay.pixel_z = undertile_pixel_y
 	SET_PLANE(underlay, underlay_plane || plane, src)
 	underlays += underlay
 
@@ -125,7 +125,15 @@
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN_CLIFF
 	canSmoothWith = SMOOTH_GROUP_TURF_OPEN_CLIFF
 	layer = EDGED_TURF_LAYER
-	plane = GAME_PLANE
+	plane = WALL_PLANE
+
+	// This is static
+	// Done like this to avoid needing to make it dynamic and save cpu time
+	// 4 to the left, 4 down
+	transform = MAP_SWITCH(TRANSLATE_MATRIX(-4, -4), matrix())
+
+	undertile_pixel_x = 4
+	undertile_pixel_y = 4
 
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE

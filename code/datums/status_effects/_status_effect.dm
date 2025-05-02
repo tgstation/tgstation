@@ -6,12 +6,16 @@
 	/// When set initially / in on_creation, this is how long the status effect lasts in deciseconds.
 	/// While processing, this becomes the world.time when the status effect will expire.
 	/// -1 = infinite duration.
-	var/duration = -1
+	var/duration = STATUS_EFFECT_PERMANENT
 	/// When set initially / in on_creation, this is how long between [proc/tick] calls in deciseconds.
 	/// Note that this cannot be faster than the processing subsystem you choose to fire the effect on. (See: [var/processing_speed])
 	/// While processing, this becomes the world.time when the next tick will occur.
 	/// -1 = will prevent ticks, and if duration is also unlimited (-1), stop processing wholesale.
 	var/tick_interval = 1 SECONDS
+	///If our tick intervals are set to be a dynamic value within a range, the lowerbound of said range
+	var/tick_interval_lowerbound
+	///If our tick intervals are set to be a dynamic value within a range, the upperbound of said range
+	var/tick_interval_upperbound
 	/// The mob affected by the status effect.
 	VAR_FINAL/mob/living/owner
 	/// How many of the effect can be on one mob, and/or what happens when you try to add a duplicate.
@@ -50,9 +54,13 @@
 		LAZYADD(owner.status_effects, src)
 		RegisterSignal(owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(remove_effect_on_heal))
 
-	if(duration != -1)
+	if(duration == INFINITY)
+		// we will optionally allow INFINITY, because i imagine it'll be convenient in some places,
+		// but we'll still set it to -1 / STATUS_EFFECT_PERMANENT for proper unified handling
+		duration = STATUS_EFFECT_PERMANENT
+	if(duration != STATUS_EFFECT_PERMANENT)
 		duration = world.time + duration
-	if(tick_interval != -1)
+	if(tick_interval != STATUS_EFFECT_NO_TICK)
 		tick_interval = world.time + tick_interval
 
 	if(alert_type)
@@ -67,6 +75,8 @@
 				START_PROCESSING(SSfastprocess, src)
 			if(STATUS_EFFECT_NORMAL_PROCESS)
 				START_PROCESSING(SSprocessing, src)
+			if(STATUS_EFFECT_PRIORITY)
+				START_PROCESSING(SSpriority_effects, src)
 
 	update_particles()
 
@@ -78,6 +88,8 @@
 			STOP_PROCESSING(SSfastprocess, src)
 		if(STATUS_EFFECT_NORMAL_PROCESS)
 			STOP_PROCESSING(SSprocessing, src)
+		if(STATUS_EFFECT_PRIORITY)
+			STOP_PROCESSING(SSpriority_effects, src)
 	if(owner)
 		linked_alert = null
 		owner.clear_alert(id)
@@ -107,15 +119,15 @@
 		qdel(src)
 		return
 
-	if(tick_interval != -1 && tick_interval < world.time)
-		var/tick_length = initial(tick_interval)
+	if(tick_interval != STATUS_EFFECT_NO_TICK && tick_interval < world.time)
+		var/tick_length = (tick_interval_upperbound && tick_interval_lowerbound) ? rand(tick_interval_lowerbound, tick_interval_upperbound) : initial(tick_interval)
 		tick(tick_length / (1 SECONDS))
 		tick_interval = world.time + tick_length
 		if(QDELING(src))
 			// tick deleted us, no need to continue
 			return
 
-	if(duration != -1)
+	if(duration != STATUS_EFFECT_PERMANENT)
 		if(duration < world.time)
 			qdel(src)
 			return
@@ -170,7 +182,7 @@
 /// has its duration refreshed in apply_status_effect - is passed New() args
 /datum/status_effect/proc/refresh(effect, ...)
 	var/original_duration = initial(duration)
-	if(original_duration == -1)
+	if(original_duration == STATUS_EFFECT_PERMANENT)
 		return
 	duration = world.time + original_duration
 
@@ -194,7 +206,7 @@
 
 /// Remove [seconds] of duration from the status effect, qdeling / ending if we eclipse the current world time.
 /datum/status_effect/proc/remove_duration(seconds)
-	if(duration == -1) // Infinite duration
+	if(duration == STATUS_EFFECT_PERMANENT) // Infinite duration
 		return FALSE
 
 	duration -= seconds
@@ -212,6 +224,18 @@
 /datum/status_effect/proc/update_particles()
 	SHOULD_CALL_PARENT(FALSE)
 	return
+
+/datum/status_effect/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(!.)
+		return
+	if(var_name == NAMEOF(src, duration))
+		if(var_value == INFINITY)
+			duration = STATUS_EFFECT_PERMANENT
+		update_shown_duration()
+
+	if(var_name == NAMEOF(src, show_duration))
+		update_shown_duration()
 
 /// Alert base type for status effect alerts
 /atom/movable/screen/alert/status_effect

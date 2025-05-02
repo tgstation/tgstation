@@ -29,18 +29,18 @@ SUBSYSTEM_DEF(vis_overlays)
 			return
 
 //the "thing" var can be anything with vis_contents which includes images - in the future someone should totally allow vis overlays to be passed in as an arg instead of all this bullshit
-/datum/controller/subsystem/vis_overlays/proc/add_vis_overlay(atom/movable/thing, icon, iconstate, layer, plane, dir, alpha = 255, add_appearance_flags = NONE, pixel_x = 0, pixel_y = 0, pixel_z = 0, unique = FALSE)
+/datum/controller/subsystem/vis_overlays/proc/add_vis_overlay(atom/movable/thing, icon, iconstate, layer, plane, dir, alpha = 255, add_appearance_flags = NONE, unique = FALSE)
 	var/obj/effect/overlay/vis/overlay
 	if(!unique)
-		. = "[icon]|[iconstate]|[layer]|[plane]|[dir]|[alpha]|[add_appearance_flags][pixel_x][pixel_y][pixel_z]"
+		. = "[icon]|[iconstate]|[layer]|[plane]|[dir]|[alpha]|[add_appearance_flags]"
 		overlay = vis_overlay_cache[.]
 		if(!overlay)
-			overlay = _create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags, pixel_x, pixel_y, pixel_z)
+			overlay = _create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags)
 			vis_overlay_cache[.] = overlay
 		else
 			overlay.unused = 0
 	else
-		overlay = _create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags, pixel_x, pixel_y, pixel_z)
+		overlay = _create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags)
 		overlay.cache_expiration = -1
 		var/cache_id = "[text_ref(overlay)]@{[world.time]}"
 		vis_overlay_cache[cache_id] = overlay
@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(vis_overlays)
 		thing.managed_vis_overlays += overlay
 	return overlay
 
-/datum/controller/subsystem/vis_overlays/proc/_create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags, pixel_x, pixel_y, pixel_z)
+/datum/controller/subsystem/vis_overlays/proc/_create_new_vis_overlay(icon, iconstate, layer, plane, dir, alpha, add_appearance_flags)
 	var/obj/effect/overlay/vis/overlay = new
 	overlay.icon = icon
 	overlay.icon_state = iconstate
@@ -65,9 +65,6 @@ SUBSYSTEM_DEF(vis_overlays)
 	overlay.dir = dir
 	overlay.alpha = alpha
 	overlay.appearance_flags |= add_appearance_flags
-	overlay.pixel_x = pixel_x
-	overlay.pixel_y = pixel_y
-	overlay.pixel_z = pixel_z
 	return overlay
 
 

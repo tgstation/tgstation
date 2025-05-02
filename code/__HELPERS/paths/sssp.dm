@@ -77,7 +77,7 @@
 	var/turf/next_turf = other_end
 	// Cache for sonic speed
 	var/next_closest = src.next_closest
-	while(next_turf != FLOW_PATH_END || next_turf == null)
+	while(next_turf != FLOW_PATH_END && next_turf != null)
 		path += next_turf
 		next_turf = next_closest[next_turf] // We take the first entry cause that's the turf
 
@@ -201,8 +201,8 @@
 	/// Our current position in the working queue
 	var/working_index
 
-/datum/pathfind/sssp/proc/setup(atom/movable/caller, list/access, turf/center, max_distance, simulated_only, turf/avoid, list/datum/callback/on_finish)
-	src.pass_info = new(caller, access)
+/datum/pathfind/sssp/proc/setup(atom/movable/requester, list/access, turf/center, max_distance, simulated_only, turf/avoid, list/datum/callback/on_finish)
+	src.pass_info = new(requester, access)
 	src.start = center
 	src.max_distance = max_distance
 	src.simulated_only = simulated_only

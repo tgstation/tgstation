@@ -1,7 +1,6 @@
 #define PORTABLE_ATMOS_IGNORE_ATMOS_LIMIT 0
 
 /obj/machinery/portable_atmospherics
-	SET_BASE_VISUAL_PIXEL(0, DEPTH_OFFSET)
 	name = "portable_atmospherics"
 	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	use_power = NO_POWER_USE
@@ -33,8 +32,8 @@
 	var/suppress_reactions = FALSE
 	/// Is there a hypernoblium crystal inserted into this
 	var/nob_crystal_inserted = FALSE
-	var/insert_sound = 'sound/effects/tank_insert_clunky.ogg'
-	var/remove_sound = 'sound/effects/tank_remove_thunk.ogg'
+	var/insert_sound = 'sound/effects/compressed_air/tank_insert_clunky.ogg'
+	var/remove_sound = 'sound/effects/compressed_air/tank_remove_thunk.ogg'
 	var/sound_vol = 50
 
 /datum/armor/machinery_portable_atmospherics
@@ -51,7 +50,6 @@
 	AddElement(/datum/element/climbable, climb_time = 3 SECONDS, climb_stun = 3 SECONDS)
 	AddElement(/datum/element/elevation, pixel_shift = 8)
 	register_context()
-	update_position()
 
 /obj/machinery/portable_atmospherics/on_construction(mob/user)
 	. = ..()
@@ -97,7 +95,7 @@
 /obj/machinery/portable_atmospherics/welder_act(mob/living/user, obj/item/tool)
 	if(user.combat_mode)
 		return ITEM_INTERACT_SKIP_TO_ATTACK
-	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1))
+	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1, heat_required = HIGH_TEMPERATURE_REQUIRED))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "repairing...")
 	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
@@ -196,20 +194,6 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/portable_atmospherics/set_anchored(anchorvalue)
-	. = ..()
-	update_position()
-
-/obj/machinery/portable_atmospherics/proc/update_position()
-	var/new_base = base_pixel_z
-	if(anchored)
-		new_base = 6 // Lands em all perfectly on pipe connectors
-	else
-		new_base = DEPTH_OFFSET
-
-	animate(src, pixel_z = pixel_z + new_base - base_pixel_z, time = 0.1 SECONDS)
-	base_pixel_z = new_base
-
 /obj/machinery/portable_atmospherics/click_alt(mob/living/user)
 	if(!holding)
 		return CLICK_ACTION_BLOCKING
@@ -236,19 +220,21 @@
 		return FALSE
 	if(!user)
 		return FALSE
-	if(!user.transferItemToLoc(new_tank, src))
+	if(new_tank && !user.transferItemToLoc(new_tank, src))
 		return FALSE
 
-	investigate_log("had its internal [holding] swapped with [new_tank] by [key_name(user)].", INVESTIGATE_ATMOS)
-	to_chat(user, span_notice("[holding ? "In one smooth motion you pop [holding] out of [src]'s connector and replace it with [new_tank]" : "You insert [new_tank] into [src]"]."))
-
 	if(holding && new_tank)//for when we are actually switching tanks
+		investigate_log("had its internal [holding] swapped with [new_tank] by [key_name(user)].", INVESTIGATE_ATMOS)
+		to_chat(user, span_notice("In one smooth motion you pop [holding] out of [src]'s connector and replace it with [new_tank]."))
 		user.put_in_hands(holding)
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = new_tank
 		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))
-		playsound(src, list(insert_sound,remove_sound), sound_vol)
+		playsound(src, insert_sound, sound_vol)
+		playsound(src, remove_sound, sound_vol)
 	else if(holding)//we remove a tank
+		investigate_log("had its internal [holding] removed by [key_name(user)].", INVESTIGATE_ATMOS)
+		to_chat(user, span_notice("You remove [holding] from [src]."))
 		if(Adjacent(user))
 			user.put_in_hands(holding)
 		else
@@ -257,6 +243,8 @@
 		UnregisterSignal(holding, COMSIG_QDELETING)
 		holding = null
 	else if(new_tank)//we insert the tank
+		investigate_log("had [new_tank] inserted into it by [key_name(user)].", INVESTIGATE_ATMOS)
+		to_chat(user, span_notice("You insert [new_tank] into [src]."))
 		holding = new_tank
 		playsound(src, insert_sound, sound_vol)
 		RegisterSignal(holding, COMSIG_QDELETING, PROC_REF(unregister_holding))

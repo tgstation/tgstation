@@ -28,6 +28,13 @@
 	var/big_pointer = FALSE
 	///If set, IDs with this trim will give wearers arrows of different colors when pointing
 	var/pointer_color
+	/// What honorifics, if any, will we set our wearer's name to when worn?
+	var/list/honorifics
+	/// What positions can our honorific take? To prevent names like "Peter Dr."
+	var/honorific_positions = NONE
+
+/datum/id_trim/proc/find_job()
+	return null
 
 /// Returns the SecHUD job icon state for whatever this object's ID card is, if it has one.
 /obj/item/proc/get_sechud_job_icon_state()

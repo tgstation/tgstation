@@ -25,9 +25,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		copy_to_turf.icon_state = icon_state
 	if(copy_to_turf.icon != icon)
 		copy_to_turf.icon = icon
-	if(color)
+	if(LAZYLEN(atom_colours))
 		copy_to_turf.atom_colours = atom_colours.Copy()
 		copy_to_turf.update_atom_colour()
+	// New atom_colours system overrides color, but in rare cases its still used
+	else if(color)
+		copy_to_turf.color = color
 	if(copy_to_turf.dir != dir)
 		copy_to_turf.setDir(dir)
 	return copy_to_turf
@@ -125,6 +128,16 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(!(flags & CHANGETURF_DEFER_CHANGE))
 		new_turf.AfterChange(flags, old_type)
 
+	if(flags & CHANGETURF_GENERATE_SHUTTLE_CEILING)
+		var/turf/above = get_step_multiz(src, UP)
+		if(above)
+			if(!(istype(above, /turf/open/floor/engine/hull/ceiling) || above.depth_to_find_baseturf(/turf/open/floor/engine/hull/ceiling)))
+				if(istype(above, /turf/open/openspace) || istype(above, /turf/open/space/openspace))
+					above.place_on_top(/turf/open/floor/engine/hull/ceiling)
+				else
+					above.stack_ontop_of_baseturf(/turf/open/openspace, /turf/open/floor/engine/hull/ceiling)
+					above.stack_ontop_of_baseturf(/turf/open/space/openspace, /turf/open/floor/engine/hull/ceiling)
+
 	new_turf.blueprint_data = old_bp
 	new_turf.rcd_memory = old_rcd_memory
 	new_turf.explosion_throw_details = old_explosion_throw_details
@@ -192,6 +205,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		QUEUE_SMOOTH_NEIGHBORS(src)
 		QUEUE_SMOOTH(src)
 
+	// we need to update gravity for any mob on a tile that is being created or destroyed
+	for(var/mob/living/target in new_turf.contents)
+		target.refresh_gravity()
+
 	return new_turf
 
 /turf/open/ChangeTurf(path, list/new_baseturfs, flags) //Resist the temptation to make this default to keeping air.
@@ -229,7 +246,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if(ispath(oldType, /turf/closed) && isopenturf(src))
 			SSair.add_to_active(src)
 	else //In effect, I want closed turfs to make their tile active when sheered, but we need to queue it since they have no adjacent turfs
-		CALCULATE_ADJACENT_TURFS(src, (!(ispath(oldType, /turf/closed) && isopenturf(src)) ? NORMAL_TURF : MAKE_ACTIVE))
+		CALCULATE_ADJACENT_TURFS(src, (ispath(oldType, /turf/closed) && isopenturf(src) ? MAKE_ACTIVE : NORMAL_TURF))
 
 /turf/open/AfterChange(flags, oldType)
 	..()
@@ -277,8 +294,12 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 /// Attempts to replace a tile with lattice. Amount is the amount of tiles to scrape away.
 /turf/proc/attempt_lattice_replacement(amount = 2)
 	if(lattice_underneath)
+		var/list/successful_replacement_callbacks = list()
+		SEND_SIGNAL(src, COMSIG_TURF_ATTEMPT_LATTICE_REPLACEMENT, successful_replacement_callbacks)
 		var/turf/new_turf = ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)
 		if(!istype(new_turf, /turf/open/floor))
-			new /obj/structure/lattice(src)
+			var/new_lattice = new /obj/structure/lattice(src)
+			for(var/datum/callback/callback as anything in successful_replacement_callbacks)
+				callback.Invoke(new_lattice)
 	else
 		ScrapeAway(amount, flags = CHANGETURF_INHERIT_AIR)

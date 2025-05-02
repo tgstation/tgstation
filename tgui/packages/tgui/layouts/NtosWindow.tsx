@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'common/react';
+import { Box, Button } from 'tgui-core/components';
+import { BooleanLike } from 'tgui-core/react';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button } from '../components';
 import { Window } from './Window';
 
 export type NTOSData = {
@@ -21,6 +21,9 @@ export type NTOSData = {
   light_on: BooleanLike;
   login: Login;
   pai: string | null;
+  alert_style: number;
+  alert_color: string;
+  alert_name: string;
   PC_batteryicon: string | null;
   PC_batterypercent: string | null;
   PC_device_theme: string;

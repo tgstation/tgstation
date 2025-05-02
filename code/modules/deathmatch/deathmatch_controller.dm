@@ -23,7 +23,7 @@
 
 /datum/deathmatch_controller/proc/create_new_lobby(mob/host)
 	lobbies[host.ckey] = new /datum/deathmatch_lobby(host)
-	deadchat_broadcast(" has opened a new deathmatch lobby. <a href=?src=[REF(lobbies[host.ckey])];join=1>(Join)</a>", "<B>[host]</B>")
+	deadchat_broadcast(" has opened a new deathmatch lobby. <a href=byond://?src=[REF(lobbies[host.ckey])];join=1>(Join)</a>", "<B>[host]</B>")
 
 /datum/deathmatch_controller/proc/remove_lobby(ckey)
 	var/lobby = lobbies[ckey]
@@ -54,7 +54,7 @@
 		var/datum/deathmatch_lobby/lobby = lobbies[ckey]
 		if (user.ckey == ckey)
 			.["hosting"] = TRUE
-		if (user.ckey in lobby.observers+lobby.players)
+		if (user.ckey in (lobby.observers+lobby.players))
 			.["playing"] = ckey
 		.["lobbies"] += list(list(
 			name = ckey,
@@ -67,7 +67,7 @@
 /datum/deathmatch_controller/proc/find_lobby_by_user(ckey)
 	for(var/lobbykey in lobbies)
 		var/datum/deathmatch_lobby/lobby = lobbies[lobbykey]
-		if(ckey in lobby.players+lobby.observers)
+		if(ckey in (lobby.players+lobby.observers))
 			return lobby
 
 /datum/deathmatch_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

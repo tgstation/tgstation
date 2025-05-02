@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { Button, Section, Stack } from 'tgui/components';
 import { Pane } from 'tgui/layouts';
+import { Button, Section, Stack } from 'tgui-core/components';
 
 import { NowPlayingWidget, useAudio } from './audio';
 import { ChatPanel, ChatTabs } from './chat';

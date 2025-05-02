@@ -1,21 +1,21 @@
 /proc/generate_icon_with_head_accessory(datum/sprite_accessory/sprite_accessory, y_offset = 0)
-	var/static/icon/head_icon
+	var/static/datum/universal_icon/head_icon
 	if (isnull(head_icon))
-		head_icon = icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
-		head_icon.Blend(skintone2hex("caucasian1"), ICON_MULTIPLY)
+		head_icon = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m")
+		head_icon.blend_color(skintone2hex("caucasian1"), ICON_MULTIPLY)
 
-	var/icon/final_icon = new(head_icon)
-	if (!isnull(sprite_accessory))
+	var/datum/universal_icon/final_icon = head_icon.copy()
+	if (!isnull(sprite_accessory) && sprite_accessory.icon_state != SPRITE_ACCESSORY_NONE)
 		ASSERT(istype(sprite_accessory))
 
-		var/icon/head_accessory_icon = icon(sprite_accessory.icon, sprite_accessory.icon_state)
+		var/datum/universal_icon/head_accessory_icon = uni_icon(sprite_accessory.icon, sprite_accessory.icon_state)
 		if(y_offset)
-			head_accessory_icon.Shift(NORTH, y_offset)
-		head_accessory_icon.Blend(COLOR_DARK_BROWN, ICON_MULTIPLY)
-		final_icon.Blend(head_accessory_icon, ICON_OVERLAY)
+			head_accessory_icon.shift(NORTH, y_offset, ICON_SIZE_X, ICON_SIZE_Y)
+		head_accessory_icon.blend_color(COLOR_DARK_BROWN, ICON_MULTIPLY)
+		final_icon.blend_icon(head_accessory_icon, ICON_OVERLAY)
 
-	final_icon.Crop(10, 19, 22, 31)
-	final_icon.Scale(32, 32)
+	final_icon.crop(10, 19, 22, 31)
+	final_icon.scale(32, 32)
 
 	return final_icon
 
@@ -32,20 +32,18 @@
 	if(!hetero)
 		target.eye_color_right = value
 
-	var/obj/item/organ/internal/eyes/eyes_organ = target.get_organ_by_type(/obj/item/organ/internal/eyes)
+	var/obj/item/organ/eyes/eyes_organ = target.get_organ_by_type(/obj/item/organ/eyes)
 	if (!eyes_organ || !istype(eyes_organ))
 		return
 
 	if (!initial(eyes_organ.eye_color_left))
 		eyes_organ.eye_color_left = value
-	eyes_organ.old_eye_color_left = value
 
 	if(hetero) // Don't override the snowflakes please
 		return
 
 	if (!initial(eyes_organ.eye_color_right))
 		eyes_organ.eye_color_right = value
-	eyes_organ.old_eye_color_right = value
 	eyes_organ.refresh()
 
 /datum/preference/color/eye_color/create_default_value()
@@ -145,6 +143,9 @@
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
 	relevant_head_flag = HEAD_HAIR
 
+/datum/preference/color/hair_color/has_relevant_feature(datum/preferences/preferences)
+	return ..() || (/datum/quirk/item_quirk/bald::name in preferences.all_quirks)
+
 /datum/preference/color/hair_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_haircolor(value, update = FALSE)
 
@@ -159,6 +160,9 @@
 	main_feature_name = "Hairstyle"
 	should_generate_icons = TRUE
 	relevant_head_flag = HEAD_HAIR
+
+/datum/preference/choiced/hairstyle/has_relevant_feature(datum/preferences/preferences)
+	return ..() || (/datum/quirk/item_quirk/bald::name in preferences.all_quirks)
 
 /datum/preference/choiced/hairstyle/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.hairstyles_list)

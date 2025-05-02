@@ -2,8 +2,7 @@
 /obj/item/wallframe/apc
 	name = "\improper APC frame"
 	desc = "Used for repairing or building APCs."
-	icon = 'icons/obj/machines/APC.dmi'
-	icon_state = "frame"
+	icon_state = "apc"
 	result_path = /obj/machinery/power/apc/auto_name
 
 /obj/item/wallframe/apc/try_build(turf/on_wall, user)
@@ -36,5 +35,5 @@
 			var/obj/machinery/power/apc/mounted_apc = locate(/obj/machinery/power/apc) in get_turf(user)
 			mounted_apc.wallframe_act(user, src)
 			return ITEM_INTERACT_SUCCESS
-		turf.attackby(src, user)
+		turf.item_interaction(user, src)
 	return ITEM_INTERACT_SUCCESS

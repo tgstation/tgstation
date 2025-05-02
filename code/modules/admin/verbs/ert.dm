@@ -77,6 +77,8 @@
 	else
 		ertemplate = new /datum/ert/centcom_official
 
+	var/human_authority_setting = CONFIG_GET(string/human_authority)
+
 	var/list/settings = list(
 		"preview_callback" = CALLBACK(src, PROC_REF(makeERTPreviewIcon)),
 		"mainsettings" = list(
@@ -84,7 +86,7 @@
 		"teamsize" = list("desc" = "Team Size", "type" = "number", "value" = ertemplate.teamsize),
 		"mission" = list("desc" = "Mission", "type" = "string", "value" = ertemplate.mission),
 		"polldesc" = list("desc" = "Ghost poll description", "type" = "string", "value" = ertemplate.polldesc),
-		"enforce_human" = list("desc" = "Enforce human authority", "type" = "boolean", "value" = "[(CONFIG_GET(flag/enforce_human_authority) ? "Yes" : "No")]"),
+		"enforce_human" = list("desc" = "Enforce human authority", "type" = "boolean", "value" = "[(human_authority_setting == HUMAN_AUTHORITY_ENFORCED ? "Yes" : "No")]"),
 		"open_armory" = list("desc" = "Open armory doors", "type" = "boolean", "value" = "[(ertemplate.opendoors ? "Yes" : "No")]"),
 		"leader_experience" = list("desc" = "Pick an experienced leader", "type" = "boolean", "value" = "[(ertemplate.leader_experience ? "Yes" : "No")]"),
 		"random_names" = list("desc" = "Randomize names", "type" = "boolean", "value" = "[(ertemplate.random_names ? "Yes" : "No")]"),
@@ -155,7 +157,7 @@
 					spawn_turfs += get_turf(spawner)
 
 				if(!brief_spawn)
-					brief_spawn = locate(/obj/effect/landmark/ert_shuttle_brief_spawn) in affected_turf
+					brief_spawn = get_turf(locate(/obj/effect/landmark/ert_shuttle_brief_spawn) in affected_turf)
 
 			if(!length(spawn_turfs))
 				stack_trace("ERT shuttle loaded but found no spawnpoints, placing the ERT at wherever inside the shuttle instead.")
@@ -172,7 +174,7 @@
 				var/chosen_outfit = usr.client?.prefs?.read_preference(/datum/preference/choiced/brief_outfit)
 				usr.client.prefs.safe_transfer_prefs_to(admin_officer, is_antag = TRUE)
 				admin_officer.equipOutfit(chosen_outfit)
-				admin_officer.key = usr.key
+				admin_officer.PossessByPlayer(usr.key)
 
 			else
 				to_chat(usr, span_warning("Could not spawn you in as briefing officer as you are not a ghost!"))
@@ -204,7 +206,7 @@
 
 			candidate_living_exps = sort_list(candidate_living_exps, cmp=/proc/cmp_numeric_dsc)
 			if(candidate_living_exps.len > ERT_EXPERIENCED_LEADER_CHOOSE_TOP)
-				candidate_living_exps = candidate_living_exps.Cut(ERT_EXPERIENCED_LEADER_CHOOSE_TOP+1) // pick from the top ERT_EXPERIENCED_LEADER_CHOOSE_TOP contenders in playtime
+				candidate_living_exps.Cut(ERT_EXPERIENCED_LEADER_CHOOSE_TOP+1) // pick from the top ERT_EXPERIENCED_LEADER_CHOOSE_TOP contenders in playtime
 			earmarked_leader = pick(candidate_living_exps)
 		else
 			earmarked_leader = pick(candidates)
@@ -230,7 +232,7 @@
 			else
 				ert_operative = new /mob/living/carbon/human(spawnloc)
 				chosen_candidate.client.prefs.safe_transfer_prefs_to(ert_operative, is_antag = TRUE)
-			ert_operative.key = chosen_candidate.key
+			ert_operative.PossessByPlayer(chosen_candidate.key)
 
 			if(ertemplate.enforce_human || !(ert_operative.dna.species.changesource_flags & ERT_SPAWN))
 				ert_operative.set_species(/datum/species/human)
@@ -248,7 +250,7 @@
 			ert_antag.random_names = ertemplate.random_names
 
 			ert_operative.mind.add_antag_datum(ert_antag,ert_team)
-			ert_operative.mind.set_assigned_role(SSjob.GetJobType(ert_antag.ert_job_path))
+			ert_operative.mind.set_assigned_role(SSjob.get_job_type(ert_antag.ert_job_path))
 
 			//Logging and cleanup
 			ert_operative.log_message("has been selected as \a [ert_antag.name].", LOG_GAME)

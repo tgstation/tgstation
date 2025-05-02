@@ -26,6 +26,7 @@
 		/obj/item/secateurs,
 		/obj/item/seeds,
 		/obj/item/storage/bag/plants,
+		/obj/item/tank/internals/emergency_oxygen,
 	)
 	species_exception = list(/datum/species/golem)
 	armor_type = /datum/armor/suit_apron
@@ -51,6 +52,10 @@
 	greyscale_config_worn = /datum/greyscale_config/overalls/worn
 	greyscale_colors = "#313c6e"
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/suit/apron/overalls/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -4)
 
 //Captain
 /obj/item/clothing/suit/jacket/capjacket
@@ -120,6 +125,7 @@
 	armor_type = /datum/armor/jacket_det_suit
 	cold_protection = CHEST|GROIN|ARMS
 	heat_protection = CHEST|GROIN|ARMS
+	flags_inv = HIDEBELT
 
 /datum/armor/jacket_det_suit
 	melee = 25
@@ -190,6 +196,11 @@
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
+/obj/item/clothing/suit/hazardvest/press // Variant used by the Curator
+	name = "press hazard vest"
+	desc = "A blue high-visibility vest used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	icon_state = "hazard_press"
 
 //Lawyer
 /obj/item/clothing/suit/toggle/lawyer
@@ -343,6 +354,10 @@
 		/obj/item/storage/pill_bottle,
 		/obj/item/tank/internals/emergency_oxygen,
 	)
+
+/obj/item/clothing/suit/apron/surgical/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/adjust_fishing_difficulty, -3) // FISH DOCTOR?!
 
 //Curator
 /obj/item/clothing/suit/jacket/curator

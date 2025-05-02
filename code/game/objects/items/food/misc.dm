@@ -195,7 +195,12 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(OnGrill))
 	if(stink_particles)
-		particles = new stink_particles
+		add_shared_particles(stink_particles)
+
+/obj/item/food/badrecipe/Destroy(force)
+	if (stink_particles)
+		remove_shared_particles(stink_particles)
+	return ..()
 
 // We override the parent procs here to prevent burned messes from cooking into burned messes.
 /obj/item/food/badrecipe/make_grillable()
@@ -273,7 +278,7 @@
 	)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("melon" = 1)
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES|FRUIT|ORANGES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -328,7 +333,7 @@
 	throwforce = 15
 	block_chance = 55
 	armour_penetration = 80
-	block_sound = 'sound/weapons/parry.ogg'
+	block_sound = 'sound/items/weapons/parry.ogg'
 	wound_bonus = -50
 	attack_verb_continuous = list("slaps", "slathers")
 	attack_verb_simple = list("slap", "slather")
@@ -339,7 +344,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/branrequests
-	name = "Bran Requests Cereal"
+	name = "bran requests cereal"
 	desc = "A dry cereal that satiates your requests for bran. Tastes uniquely like raisins and salt."
 	icon_state = "bran_requests"
 	food_reagents = list(
@@ -348,7 +353,7 @@
 		/datum/reagent/consumable/salt = 8,
 	)
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
-	foodtypes = GRAIN | FRUIT | BREAKFAST
+	foodtypes = SUGAR|GRAIN|FRUIT|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -361,25 +366,27 @@
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	dog_fashion = /datum/dog_fashion/head/butter
+	var/can_stick = TRUE
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()
-	. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
+	if (can_stick)
+		. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
 
 /obj/item/food/butter/attackby(obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/stack/rods))
-		var/obj/item/stack/rods/rods = item
-		if(!rods.use(1))//borgs can still fail this if they have no metal
-			to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
-			return ..()
-		to_chat(user, span_notice("You stick the rod into the stick of butter."))
-		var/obj/item/food/butter/on_a_stick/new_item = new(usr.loc)
-		var/replace = (user.get_inactive_held_item() == rods)
-		if(!rods && replace)
-			user.put_in_hands(new_item)
-		qdel(src)
-		return TRUE
-	..()
+	if(!istype(item, /obj/item/stack/rods) || !can_stick)
+		return ..()
+	var/obj/item/stack/rods/rods = item
+	if(!rods.use(1))//borgs can still fail this if they have no metal
+		to_chat(user, span_warning("You do not have enough iron to put [src] on a stick!"))
+		return ..()
+	to_chat(user, span_notice("You stick the rod into the stick of butter."))
+	user.temporarilyRemoveItemFromInventory(src)
+	var/obj/item/food/butter/on_a_stick/new_item = new(drop_location())
+	if (user.CanReach(new_item))
+		user.put_in_hands(new_item)
+	qdel(src)
+	return TRUE
 
 /obj/item/food/butter/on_a_stick //there's something so special about putting it on a stick.
 	name = "butter on a stick"
@@ -388,6 +395,7 @@
 	trash_type = /obj/item/stack/rods
 	food_flags = FOOD_FINGER_FOOD
 	venue_value = FOOD_PRICE_CHEAP
+	can_stick = FALSE
 
 /obj/item/food/butter/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/butterslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
@@ -422,7 +430,7 @@
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/food/crab_rangoon
-	name = "Crab Rangoon"
+	name = "crab rangoon"
 	desc = "Has many names, like crab puffs, cheese won'tons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "crabrangoon"
@@ -502,7 +510,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("juicy meat" = 1, "rice" = 1, "cabbage" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = MEAT|VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -545,7 +553,7 @@
 		/datum/reagent/consumable/nutriment/protein = 4,
 	)
 	tastes = list("granola" = 1, "nuts" = 1, "chocolate" = 1, "raisin" = 1)
-	foodtypes = GRAIN | NUTS | FRUIT | SUGAR | DAIRY
+	foodtypes = GRAIN|NUTS|FRUIT|SUGAR
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -559,7 +567,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("rice" = 1, "dried seaweed" = 1)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -572,7 +580,7 @@
 	name = "onigiri"
 	desc = "A ball of cooked rice surrounding a filling formed into a triangular shape and wrapped in seaweed."
 	icon_state = "onigiri"
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES|GRAIN
 	tastes = list()
 
 /obj/item/food/pacoca
@@ -608,10 +616,10 @@
 
 /obj/item/food/pickle/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/pickle/proc/check_liked(mob/living/carbon/human/consumer)
-	var/obj/item/organ/internal/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/obj/item/organ/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(!HAS_TRAIT(consumer, TRAIT_AGEUSIA) && liver && HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM))
 		return FOOD_LIKED
 
@@ -681,7 +689,7 @@
 		/datum/reagent/consumable/nutriment/protein = 20,
 	)
 	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
-	foodtypes = MEAT | DAIRY | VEGETABLES
+	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/moussaka/make_processable()
@@ -697,7 +705,7 @@
 		/datum/reagent/consumable/nutriment/protein = 5,
 	)
 	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
-	foodtypes = MEAT | DAIRY | VEGETABLES
+	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/candied_pineapple
@@ -710,7 +718,7 @@
 	icon_state = "candied_pineapple_1"
 	base_icon_state = "candied_pineapple"
 	tastes = list("sugar" = 2, "chewy pineapple" = 4)
-	foodtypes = FRUIT | SUGAR
+	foodtypes = SUGAR|FRUIT|PINEAPPLE
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_1
@@ -805,3 +813,30 @@
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_4
+
+///Extracted from squids, or any fish with the ink fish trait.
+/obj/item/food/ink_sac
+	name = "ink sac"
+	desc = "the ink sac from some sort of fish or mollusk. It could be canned with a processor."
+	icon_state = "ink_sac"
+	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/salt = 5)
+	tastes = list("seafood" = 3)
+	foodtypes = SEAFOOD|RAW
+
+/obj/item/food/ink_sac/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/splat, \
+		memory_type = /datum/memory/witnessed_inking, \
+		smudge_type = /obj/effect/decal/cleanable/food/squid_ink, \
+		moodlet_type = /datum/mood_event/inked, \
+		splat_color = COLOR_NEARLY_ALL_BLACK, \
+		hit_callback = CALLBACK(src, PROC_REF(blind_em)), \
+	)
+
+/obj/item/food/ink_sac/proc/blind_em(mob/living/victim, can_splat_on)
+	if(can_splat_on)
+		victim.adjust_temp_blindness_up_to(7 SECONDS, 10 SECONDS)
+		victim.adjust_confusion_up_to(3.5 SECONDS, 6 SECONDS)
+		victim.Paralyze(2 SECONDS) //splat!
+	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
+	playsound(victim, SFX_DESECRATION, 50, TRUE)

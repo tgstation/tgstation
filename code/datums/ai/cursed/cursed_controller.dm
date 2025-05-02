@@ -27,9 +27,9 @@
 	return ..() //Run parent at end
 
 ///signal called by the pawn hitting something after a throw
-/datum/ai_controller/cursed/proc/on_throw_hit(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
+/datum/ai_controller/cursed/proc/on_throw_hit(datum/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
 	SIGNAL_HANDLER
-	if(!iscarbon(hit_atom))
+	if(caught || !iscarbon(hit_atom))
 		return
 	//equipcode has sleeps all over it.
 	INVOKE_ASYNC(src, PROC_REF(try_equipping_to_target_slot), hit_atom)

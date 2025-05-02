@@ -24,10 +24,18 @@
 #define FUGITIVE_RESULT_FUGITIVE_VICTORY 7
 #define FUGITIVE_RESULT_MAJOR_FUGITIVE 8
 
+// Wizard's contract school types
 #define APPRENTICE_DESTRUCTION "destruction"
 #define APPRENTICE_BLUESPACE "bluespace"
 #define APPRENTICE_ROBELESS "robeless"
 #define APPRENTICE_HEALING "healing"
+
+#define ALL_APPRENTICE_TYPES list( \
+	APPRENTICE_DESTRUCTION, \
+	APPRENTICE_BLUESPACE, \
+	APPRENTICE_ROBELESS, \
+	APPRENTICE_HEALING, \
+)
 
 //Pirates
 
@@ -88,6 +96,14 @@
 #define PATH_COSMIC "Cosmic Path"
 #define PATH_LOCK "Lock Path"
 #define PATH_MOON "Moon Path"
+
+//Heretic knowledge tree defines
+#define HKT_NEXT "next"
+#define HKT_BAN "ban"
+#define HKT_DEPTH "depth"
+#define HKT_ROUTE "route"
+#define HKT_UI_BGR "ui_bgr"
+
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
@@ -239,12 +255,10 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a heretic and is guaranteed to return the datum if possible - will cause issues with above trait
 #define GET_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
 
-/// Check if the given mob is a heretic monster.
-#define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
 /// Check if the given mob is a  lunatic
 #define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
 /// Checks if the given mob is either a heretic, heretic monster or a lunatic.
-#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
+#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || HAS_TRAIT(mob, TRAIT_HERETIC_SUMMON) || IS_LUNATIC(mob))
 /// CHecks if the given mob is in the mansus realm
 #define IS_IN_MANSUS(mob) (istype(get_area(mob), /area/centcom/heretic_sacrifice))
 

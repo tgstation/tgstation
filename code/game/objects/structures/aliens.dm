@@ -24,12 +24,12 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+				playsound(loc, 'sound/effects/blob/attackblob.ogg', 100, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
+				playsound(src, 'sound/items/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
 			if(damage_amount)
-				playsound(loc, 'sound/items/welder.ogg', 100, TRUE)
+				playsound(loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /*
  * Generic alien stuff, not related to the purple lizards but still alien-like
@@ -50,13 +50,15 @@
 /obj/structure/alien/resin
 	name = "resin"
 	desc = "Looks like some kind of thick resin."
-	icon = 'icons/obj/structures/smooth/alien/resin_wall_1.dmi'
+	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
+	icon_state = "resin_wall-0"
+	base_icon_state = "resin_wall"
 	density = TRUE
 	opacity = TRUE
 	anchored = TRUE
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_TALL_WALLS
-	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
+	smoothing_groups = SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_RESIN
 	max_integrity = 200
 	var/resintype = null
 	can_atmos_pass = ATMOS_PASS_DENSITY
@@ -64,9 +66,7 @@
 
 /obj/structure/alien/resin/Initialize(mapload)
 	. = ..()
-	icon = get_icon()
 	air_update_turf(TRUE, TRUE)
-	make_splitvis()
 
 /obj/structure/alien/resin/Destroy()
 	air_update_turf(TRUE, FALSE)
@@ -77,17 +77,15 @@
 	. = ..()
 	move_update_air(T)
 
-/obj/structure/alien/resin/proc/make_splitvis()
-	AddElement(/datum/element/split_visibility, icon, color)
-
-/obj/structure/alien/resin/proc/get_icon()
-	if(prob(50))
-		return 'icons/obj/structures/smooth/alien/resin_wall_1.dmi'
-	return 'icons/obj/structures/smooth/alien/resin_wall_2.dmi'
-
 /obj/structure/alien/resin/wall
 	name = "resin wall"
 	desc = "Thick resin solidified into a wall."
+	icon = 'icons/obj/smooth_structures/alien/resin_wall.dmi'
+	icon_state = "resin_wall-0"
+	base_icon_state = "resin_wall"
+	resintype = "wall"
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
+	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
 
 /obj/structure/alien/resin/wall/block_superconductivity()
 	return 1
@@ -105,20 +103,14 @@
 /obj/structure/alien/resin/membrane
 	name = "resin membrane"
 	desc = "Resin just thin enough to let light pass through."
-	icon = 'icons/obj/structures/smooth/alien/resin_membrane.dmi'
+	icon = 'icons/obj/smooth_structures/alien/resin_membrane.dmi'
 	icon_state = "resin_membrane-0"
 	base_icon_state = "resin_membrane"
 	opacity = FALSE
 	max_integrity = 160
 	resintype = "membrane"
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WALLS + SMOOTH_GROUP_ALIEN_RESIN
 	canSmoothWith = SMOOTH_GROUP_ALIEN_WALLS
-
-/obj/structure/alien/resin/membrane/make_splitvis()
-	return
-
-/obj/structure/alien/resin/membrane/get_icon()
-	return 'icons/obj/structures/smooth/alien/resin_membrane.dmi'
 
 /obj/structure/alien/resin/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)
@@ -141,14 +133,14 @@
 	desc = "A thick resin surface covers the floor."
 	anchored = TRUE
 	density = FALSE
-	layer = MID_TURF_LAYER
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
-	icon = 'icons/obj/structures/smooth/alien/weeds1.dmi'
+	icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
 	icon_state = "weeds1-0"
 	base_icon_state = "weeds1"
 	max_integrity = 15
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_ALIEN_WEEDS
+	smoothing_groups = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_ALIEN_RESIN
 	canSmoothWith = SMOOTH_GROUP_ALIEN_WEEDS + SMOOTH_GROUP_WALLS
 	///the range of the weeds going to be affected by the node
 	var/node_range = NODERANGE
@@ -185,13 +177,13 @@
 	. = base_icon_state
 	switch(rand(1,3))
 		if(1)
-			icon = 'icons/obj/structures/smooth/alien/weeds1.dmi'
+			icon = 'icons/obj/smooth_structures/alien/weeds1.dmi'
 			base_icon_state = "weeds1"
 		if(2)
-			icon = 'icons/obj/structures/smooth/alien/weeds2.dmi'
+			icon = 'icons/obj/smooth_structures/alien/weeds2.dmi'
 			base_icon_state = "weeds2"
 		if(3)
-			icon = 'icons/obj/structures/smooth/alien/weeds3.dmi'
+			icon = 'icons/obj/smooth_structures/alien/weeds3.dmi'
 			base_icon_state = "weeds3"
 	set_smoothed_icon_state(smoothing_junction)
 
@@ -261,7 +253,7 @@
 /obj/structure/alien/weeds/node
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
-	icon = 'icons/obj/structures/smooth/alien/weednode.dmi'
+	icon = 'icons/obj/smooth_structures/alien/weednode.dmi'
 	icon_state = "weednode-0"
 	base_icon_state = "weednode"
 	light_color = LIGHT_COLOR_BLUE
@@ -393,14 +385,14 @@
 	. = ..()
 	if(.)
 		return
-	if(user.get_organ_by_type(/obj/item/organ/internal/alien/plasmavessel))
+	if(user.get_organ_by_type(/obj/item/organ/alien/plasmavessel))
 		switch(status)
 			if(BURSTING)
 				to_chat(user, span_notice("The child is hatching out."))
 				return
 			if(BURST)
 				to_chat(user, span_notice("You clear the hatched egg."))
-				playsound(loc, 'sound/effects/attackblob.ogg', 100, TRUE)
+				playsound(loc, 'sound/effects/blob/attackblob.ogg', 100, TRUE)
 				qdel(src)
 				return
 			if(GROWING)
@@ -465,7 +457,7 @@
 			return
 
 		var/mob/living/carbon/C = AM
-		if(C.stat == CONSCIOUS && C.get_organ_by_type(/obj/item/organ/internal/body_egg/alien_embryo))
+		if(C.stat == CONSCIOUS && C.get_organ_by_type(/obj/item/organ/body_egg/alien_embryo))
 			return
 
 		Burst(kill=FALSE)
