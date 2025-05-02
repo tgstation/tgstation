@@ -34,8 +34,6 @@
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/storage/dice/hazard
-
 /obj/item/storage/dice/hazard/PopulateContents()
 	new /obj/item/dice/d6(src)
 	new /obj/item/dice/d6(src)
@@ -71,7 +69,7 @@
 	diceroll(user, in_hand = TRUE)
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	var/mob/thrown_by = thrownby?.resolve()
+	var/mob/thrown_by = throwingdatum.get_thrower()
 	if(thrown_by)
 		diceroll(thrown_by)
 	return ..()
