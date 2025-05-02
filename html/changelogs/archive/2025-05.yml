@@ -41,3 +41,12 @@
   grungussuss:
   - bugfix: throwing items on the same tile as you will make a sound again
   - bugfix: fixes bane element not working if it was used by a weapon without a wielder
+2025-05-02:
+  ArrisFairburne:
+  - code_imp: removed non-functional ID saving functions
+  Goat:
+  - balance: More megafauna loot is worth something to export. Notably the demonic
+      frost miner's and the wendigo's drops are now actually worth something.
+  Rhials:
+  - bugfix: The grassland hunt domain no longer auto-completes just by closing the
+      domain.
