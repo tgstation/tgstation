@@ -32,3 +32,10 @@
 		/obj/item/bodypart/leg/left,
 		/obj/item/bodypart/leg/right,
 		)
+
+/obj/item/bodypart/leg/update_draw_color()
+	. = ..()
+	if(!owner)
+		return
+	if (owner.dna.features["legs_color_custom"] == TRUE)
+		draw_color = owner.dna.features["legs_color"]

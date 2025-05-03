@@ -119,7 +119,7 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 
 /datum/preference/choiced/lizard_legs/init_possible_values()
-	return list(NORMAL_LEGS, DIGITIGRADE_LEGS)
+	return GLOB.digi_leg_types // DOPPLER EDIT, old code: list(NORMAL_LEGS, DIGITIGRADE_LEGS)
 
 /datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["legs"] = value
@@ -133,6 +133,19 @@
 	if(value == DIGITIGRADE_LEGS)
 		correct_legs[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
 		correct_legs[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+	// DOPPLER ADDITION START - allows for different digitigrade leg types
+/*	else if(value == DIGI_HOOF)
+		correct_legs[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade/hoof
+		correct_legs[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade/hoof
+
+	else if(value == DIGI_TALON)
+		correct_legs[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade/talon
+		correct_legs[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade/talon */
+
+	else if(value == DIGI_BUG)
+		correct_legs[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade/insectoid
+		correct_legs[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade/insectoid
+	// DOPPLER ADDITION END
 
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if(old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES)

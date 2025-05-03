@@ -6,3 +6,15 @@
 
 #define BODYPART_ICON_SNAIL 'modular_doppler/modular_species/species_types/snails/icons/bodyparts/snail_bodyparts.dmi'
 #define BODYPART_ICON_ROUNDSTARTSLIME 'modular_doppler/modular_species/species_types/slimes/icons/bodyparts.dmi'
+
+#define DIGI_HOOF "Hooved Legs"
+#define DIGI_TALON "Taloned Legs"
+#define DIGI_BUG "Insectoid Legs"
+
+GLOBAL_LIST_INIT(digi_leg_types, list(
+	NORMAL_LEGS,
+	DIGITIGRADE_LEGS,
+//	DIGI_HOOF,
+//	DIGI_TALON,
+	DIGI_BUG,
+))
