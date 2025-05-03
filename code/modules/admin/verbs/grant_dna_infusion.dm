@@ -3,7 +3,7 @@
  * Returns the entry if all organs were successfully replaced.
  * If no infusion was picked, the infusion had no organs, or if one or more organs could not be granted, returns FALSE
 */
-/client/proc/grant_dna_infusion(mob/living/carbon/human/target in world)
+/client/proc/grant_dna_infusion(mob/living/carbon/human/target as anything in GLOB.mob_list)
 	set name = "Apply DNA Infusion"
 	set category = "Debug"
 

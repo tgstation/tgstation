@@ -1,5 +1,5 @@
 ADMIN_VERB_VISIBILITY(manipulate_organs, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(manipulate_organs, R_DEBUG, "Manipulate Organs", "Manipulate the organs of a living carbon.", ADMIN_CATEGORY_DEBUG, mob/living/carbon/carbon_victim in world)
+ADMIN_VERB(manipulate_organs, R_DEBUG, "Manipulate Organs", "Manipulate the organs of a living carbon.", ADMIN_CATEGORY_DEBUG, mob/living/carbon/carbon_victim as anything in GLOB.mob_list)
 	var/operation = tgui_input_list(user, "Select organ operation", "Organ Manipulation", list("add organ", "add implant", "drop organ/implant", "remove organ/implant"))
 	if (isnull(operation))
 		return
