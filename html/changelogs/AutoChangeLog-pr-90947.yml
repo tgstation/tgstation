@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - balance: "Construction bags can now carry stacks of material up to size 'small', and can now also carry RCD ammo."
