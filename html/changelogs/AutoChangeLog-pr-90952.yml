@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - code_imp: "The Dice Servant role will now re-poll itself until a candidate is found."

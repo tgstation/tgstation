@@ -1,0 +1,4 @@
+author: "Hardly"
+delete-after: True
+changes:
+  - sound: "added new sounds for the computer printer when paper is inserted."

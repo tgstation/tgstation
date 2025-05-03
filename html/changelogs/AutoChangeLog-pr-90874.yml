@@ -1,0 +1,4 @@
+author: "Maximal08"
+delete-after: True
+changes:
+  - qol: "Notification that the ninja has completed the task of hacking the airlock."
