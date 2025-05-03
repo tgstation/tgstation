@@ -163,12 +163,17 @@
 		squash_callback = TYPE_PROC_REF(/mob/living/basic/cockroach/hauberoach, on_squish), \
 	)
 
+//NONMODULAR DOPPLER EDIT START
 ///Proc used to override the squashing behavior of the normal cockroach.
 /mob/living/basic/cockroach/hauberoach/proc/on_squish(mob/living/cockroach, mob/living/living_target)
 	if(!istype(living_target))
 		return FALSE //We failed to run the invoke. Might be because we're a structure. Let the squashable element handle it then!
+	if(living_target.mob_size <= MOB_SIZE_SMALL)
+		return FALSE
+	if(living_target.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
+		return FALSE
 
-//NONMODULAR DOPPLER EDIT START
+
 	switch(rand(1,2))
 		if(1)
 			explosion(src, light_impact_range = 2, flame_range = 1)

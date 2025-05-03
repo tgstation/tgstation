@@ -55,6 +55,14 @@
 	name = "Grog"
 	description = "Watered-down rum, scallywag approved!"
 
+/obj/machinery/icecream_vat
+	name = "ice cream vat"
+	desc = "Ding-aling ding dong. Get your 4CA-approved ice cream! Has helpful nutritional detail stickers. Shockingly: contains sugar and dairy!"
+
+/obj/item/flashlight/flare
+	name = "flare"
+	desc = "A red flare. There are instructions on the side: 'pull cord, make light'. This is repeated in roughly ten languages, and there are helpful pictures to go with it."
+
 //antag stuff
 
 /obj/effect/mob_spawn/ghost_role/human/lavaland_syndicate/comms/icemoon
@@ -152,10 +160,8 @@
 	desc = "An old, but reliable laser-gun pattern that's old enough to drink. Suffers from ammo issues but its unique ability to recharge its ammo without the need of a magazine helps compensate. Can probably drop it in a vat of acid and it'll keep working."
 
 /mob/living/basic/mining_drone
-	name = "\improper Nanotrasen minebot"
-	desc = "The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
-
-
+	name = "\improper Port Authority minebot"
+	desc = "An old, but rugged design, based off of open-source software. Reassuring. The instructions printed on the side read: This is a small robot used to support miners, can be set to search and collect loose ore, or to help fend off wildlife."
 
 /obj/item/clothing/under/rank/security/officer
 	name = "security uniform"
@@ -185,6 +191,21 @@
 	name = "prison jumpskirt"
 	desc = "Standardised 4CA prisoner-wear. Has an ID tag at the back. Its suit sensors are stuck in the \"Fully On\" position."
 
+/obj/item/clothing/accessory/pride
+	name = "pride pin"
+	desc = "A holographic pin to show off your pride. Futuristic!"
+
 /obj/item/skeleton_key
 	name = "skeleton key"
 	desc = "An artifact usually found in the hands of the natives of the planet below, which the 4CA is benevolently advancing!"
+
+// MOBS
+
+/mob/living/basic/carp/pet/lia
+	name = "Lia"
+	real_name = "Lia"
+	desc = "A failed experiment of the 4CA Void Corps to create weaponised carp technology. This less than intimidating carp now serves as the Head of Security's pet."
+
+/mob/living/basic/spider/maintenance
+	name = "duct spider"
+	desc = "Near-universal pests; poor biosecurity and nonexistent invasive species prevention on the 4CA's part has led to these pests infesting nearly every modern ship and station."
