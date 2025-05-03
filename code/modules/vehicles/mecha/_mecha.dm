@@ -85,6 +85,8 @@
 	var/obj/machinery/camera/exosuit/chassis_camera
 	///Portable camera camerachunk update
 	var/updating = FALSE
+	///Determines whether or not you can install tracking beacons in the mech.
+	var/can_be_tracked = TRUE
 
 	var/max_temperature = 25000
 
