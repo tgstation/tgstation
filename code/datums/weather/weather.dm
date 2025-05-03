@@ -114,8 +114,8 @@
 	var/turf_iteration = 0
 	/// The weather thunder counter to keep track of how much thunder we have processed so far
 	var/thunder_iteration = 0
-	/// The current section our weather subsystem is processing
-	var/currentpart
+	/// Index of the current section our weather subsystem is processing from our subsystem_tasks
+	var/task_index = 1
 	/// The list of allowed tasks our weather subsystem is allowed to process (determined by weather_flags)
 	var/list/subsystem_tasks = list()
 
@@ -164,9 +164,6 @@
 		subsystem_tasks += SSWEATHER_TURFS
 	if(weather_flags & (WEATHER_THUNDER))
 		subsystem_tasks += SSWEATHER_THUNDER
-
-	if(length(subsystem_tasks))
-		currentpart = subsystem_tasks[1]
 
 	setup_weather_areas()
 	setup_weather_turfs()

@@ -1,0 +1,6 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - rscadd: "When performing a custom emote, `+|_` emphasis formatting applies to the text chat message instead of just the runechat message."
+  - qol: "Intentional emotes don't trip your own highlights."
+  - qol: "Sign language tone messages don't trip your own highlights."

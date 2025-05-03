@@ -58,7 +58,7 @@
 	attack_self(user)
 	return BRUTELOSS
 
-/obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
+/obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, list/modifiers)
 	. = ..()
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly

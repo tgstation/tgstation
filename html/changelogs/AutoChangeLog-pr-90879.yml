@@ -1,0 +1,5 @@
+author: "A.C.M.O."
+delete-after: True
+changes:
+  - rscadd: "Adds an option for picking silicon gender to secondary character preferences. Matches the main gender preference by default."
+  - rscadd: "Adds gender pronouns in cyborg/AI examine text."
