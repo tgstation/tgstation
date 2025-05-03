@@ -407,3 +407,34 @@ Versioning
 	if(query_report_citation)
 		query_report_citation.Execute(async = TRUE)
 		qdel(query_report_citation)
+
+/datum/controller/subsystem/blackbox/ReportManifest(ckey, character, job, special, latejoin)
+	var/datum/db_query/query_report_manifest = SSdbcore.NewQuery({"INSERT INTO [format_table_name("manifest")]
+	(server_ip,
+	server_port,
+	round_id,
+	ckey,
+	character,
+	job,
+	special,
+	latejoin) VALUES (
+	INET_ATON(:server_ip,
+	:port,
+	:round_id,
+	:ckey,
+	:character,
+	:job,
+	:special,
+	:latejoin)
+	"}, list(
+		"server_ip" = world.internet_address || "0",
+		"port" = "[world.port]",
+		"round_id" = GLOB.round_id,
+		"ckey" = ckey,
+		"job" = job,
+		"special" = special,
+		"latejoin" = latejoin
+	))
+	if(query_report_manifest)
+		query_report_manifest.Execute(async = TRUE)
+		qdel(query_report_manifest)

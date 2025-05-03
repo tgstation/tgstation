@@ -5,14 +5,34 @@ Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be
 The latest database version is 5.28; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 29);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 30);
 ```
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 29);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 30);
 ```
 In any query remember to add a prefix to the table names if you use one.
+
+-----------------------------------------------------
+Version 5.30, 3 May 2025, by Atlanta-Ned
+Adds a `manifest` table.
+
+```sql
+CREATE TABLE `manifest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `server_ip` int(10) NOT NULL,
+  `server_port` smallint(5) NOT NULL,
+  `round_id` int(11) NOT NULL,
+  `ckey` varchar(255) NOT NULL,
+  `character` varchar(255) NOT NULL,
+  `job` varchar(255) NOT NULL,
+  `special` varchar(255) DEFAULT NULL,
+  `latejoin` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+```
+
 -----------------------------------------------------
 Version 5.29, 4 February 2024, by Tiviplus
 Fixed admin rank table flags being capped at 16 in the DB instead of 24 (byond max)

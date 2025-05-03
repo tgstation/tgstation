@@ -292,6 +292,27 @@ CREATE TABLE `SS13_library_action` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `SS13_manifest`
+--
+
+DROP TABLE IF EXISTS `SS13_manifest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `SS13_manifest` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `server_ip` int(10) NOT NULL,
+  `server_port` smallint(5) NOT NULL,
+  `round_id` int(11) NOT NULL,
+  `ckey` varchar(255) NOT NULL,
+  `character` varchar(255) NOT NULL,
+  `job` varchar(255) NOT NULL,
+  `special` varchar(255) DEFAULT NULL,
+  `latejoin` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `SS13_messages`
 --
 
