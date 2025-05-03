@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Rather than rolling for internal damage whenever they suffer 15 or more damage, they instead must suffer an attack that deals at least 10% of its max integrity in a single blow before it rolls for internal damage."
