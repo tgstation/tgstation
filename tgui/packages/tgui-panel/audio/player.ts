@@ -70,7 +70,7 @@ export class AudioPlayer {
       if (isProtectedError(error)) {
         Byond.sendMessage('audio/protected');
       }
-      logger.log('playback error', JSON.stringify(error));
+      logger.log('playback error:', JSON.stringify(error));
       this.stop();
     });
 
@@ -86,9 +86,10 @@ export class AudioPlayer {
       });
     }
 
-    audio
-      .play()
-      ?.catch((error) => logger.log('playback error', JSON.stringify(error)));
+    audio.play()?.catch(() => {
+      // no error is passed here, it's sent to the event listener
+      logger.log('playback failed');
+    });
 
     this.onPlaySubscribers.forEach((subscriber) => subscriber());
   }
