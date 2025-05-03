@@ -151,23 +151,18 @@
  * returns the volume of the original, pure, reagent to add / keep
  */
 /datum/reagents/proc/process_mob_reagent_purity(datum/reagent/reagent, added_volume, added_purity)
-	if(!reagent)
-		stack_trace("Attempted to process a mob's reagent purity for a null reagent!")
-		return FALSE
+	PRIVATE_PROC(TRUE)
+
 	if(added_purity == 1)
 		return added_volume
-	if(reagent.chemical_flags & REAGENT_DONOTSPLIT)
-		return added_volume
-	if(added_purity < 0)
-		stack_trace("Purity below 0 for chem on mob splitting: [reagent.type]!")
-		added_purity = 0
 
-	if((reagent.inverse_chem_val > added_purity) && (reagent.inverse_chem))//Turns all of a added reagent into the inverse chem
-		add_reagent(reagent.inverse_chem, added_volume, FALSE, added_purity = reagent.get_inverse_purity(reagent.creation_purity))
+	if(reagent.inverse_chem && reagent.inverse_chem_val > added_purity)//Turns all of a added reagent into the inverse chem
+		added_volume = add_reagent(reagent.inverse_chem, added_volume, FALSE, added_purity = reagent.get_inverse_purity(reagent.creation_purity))
 		var/datum/reagent/inverse_reagent = has_reagent(reagent.inverse_chem)
 		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
 			inverse_reagent.name = reagent.name//Negative effects are hidden
-		return FALSE //prevent addition
+		return added_volume * -1 //prevent addition
+
 	return added_volume
 
 /**

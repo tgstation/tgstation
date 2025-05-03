@@ -80,7 +80,6 @@
  * * added_purity - override to force a purity when added
  * * added_ph - override to force a pH when added
  * * override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)
- * * ignore splitting - Don't call the process that handles reagent spliting in a mob (impure/inverse) - generally leave this false unless you care about REAGENTS_DONOTSPLIT flags (see reagent defines)
  */
 /datum/reagents/proc/add_reagent(
 	datum/reagent/reagent_type,
@@ -91,7 +90,6 @@
 	added_ph,
 	no_react = FALSE,
 	override_base_ph = FALSE,
-	ignore_splitting = FALSE
 )
 	if(!ispath(reagent_type))
 		stack_trace("invalid reagent passed to add reagent [reagent_type]")
@@ -105,23 +103,16 @@
 	if(!glob_reagent)
 		stack_trace("[my_atom] attempted to add a reagent called '[reagent_type]' which doesn't exist. ([usr])")
 		return FALSE
-	if(isnull(added_purity)) //Because purity additions can be 0
+	if(!added_purity) //Because purity additions can be 0
 		added_purity = glob_reagent.creation_purity //Usually 1
 	if(!added_ph)
 		added_ph = glob_reagent.ph
 
 	//Split up the reagent if it's in a mob
-	var/has_split = FALSE
-	if(!ignore_splitting && (flags & REAGENT_HOLDER_ALIVE)) //Stomachs are a pain - they will constantly call on_mob_add unless we split on addition to stomachs, but we also want to make sure we don't double split
-		var/adjusted_vol = process_mob_reagent_purity(glob_reagent, amount, added_purity)
-		if(!adjusted_vol) //If we're inverse or FALSE cancel addition
-			return amount
-			/* We return true here because of #63301
-			The only cases where this will be false or 0 if its an inverse chem, an impure chem of 0 purity (highly unlikely if even possible), or if glob_reagent is null (which shouldn't happen at all as there's a check for that a few lines up),
-			In the first two cases, we would want to return TRUE so trans_to and other similar methods actually delete the corresponding chemical from the original reagent holder.
-			*/
-		amount = adjusted_vol
-		has_split = TRUE
+	if(flags & REAGENT_HOLDER_ALIVE)
+		amount = process_mob_reagent_purity(glob_reagent, amount, added_purity)
+		if(amount <= 0) //Inverse or nothing was added. return true amount
+			return amount * -1
 
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
@@ -177,9 +168,6 @@
 
 	if(isliving(my_atom))
 		new_reagent.on_mob_add(my_atom, amount) //Must occur before it could posibly run on_mob_delete
-
-	if(has_split) //prevent it from splitting again
-		new_reagent.chemical_flags |= REAGENT_DONOTSPLIT
 
 	update_total()
 	if(reagtemp != cached_temp)
@@ -488,7 +476,7 @@
 			update_total()
 			target_holder.update_total()
 			continue
-		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT) //we only handle reaction after every reagent has been transferred.
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE) //we only handle reaction after every reagent has been transferred.
 		if(!transfered_amount)
 			continue
 		if(methods)
@@ -579,7 +567,7 @@
 		transfer_amount = reagent.volume * part * multiplier
 		if(preserve_data)
 			trans_data = copy_data(reagent)
-		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE)
 		if(copy_methods && !no_react)
 			reagent.on_transfer(target, copy_methods, transfer_amount)
 		if(!transfered_amount)
@@ -622,7 +610,7 @@
 
 		reagent_change = reagent.volume * change
 		if(change > 0)
-			add_reagent(reagent.type, reagent_change, added_purity = reagent.purity, added_ph = reagent.ph, no_react = TRUE, ignore_splitting = reagent.chemical_flags & REAGENT_DONOTSPLIT)
+			add_reagent(reagent.type, reagent_change, added_purity = reagent.purity, added_ph = reagent.ph, no_react = TRUE)
 		else
 			reagent.volume += reagent_change
 
