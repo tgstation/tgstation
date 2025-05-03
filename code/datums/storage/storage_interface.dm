@@ -13,7 +13,7 @@
 	/// Storage that owns us
 	var/datum/storage/parent_storage
 
-/datum/storage_interface/New(ui_style, parent_storage, mob/user)
+/datum/storage_interface/New(ui_style, datum/storage/parent_storage, mob/user)
 	..()
 	src.parent_storage = parent_storage
 	var/datum/hud/owner_hud = user.hud_used
@@ -127,13 +127,13 @@
 ///Silicon subtype of storage interface used by their model storage.
 /datum/storage_interface/silicon
 	var/atom/movable/screen/robot/store/store
-	var/mob/living/silicon/robot/robot_owner
+	var/obj/item/robot_model/robot_model
 
-/datum/storage_interface/silicon/New(ui_style, parent_storage, mob/user)
+/datum/storage_interface/silicon/New(ui_style, datum/storage/parent_storage, mob/user)
 	. = ..()
-	if(!iscyborg(user))
+	if(!iscyborg(user) && !isobserver(user))
 		stack_trace("[user] somehow accessed a cyborg storage interface from [parent_storage], this will cause issues.")
-	robot_owner = user
+	robot_model = parent_storage.real_location
 	store = new(null, user.hud_used)
 
 /datum/storage_interface/silicon/Destroy(force)
@@ -158,7 +158,7 @@
 	atom/real_location,
 	list/datum/numbered_display/numbered_contents,
 )
-	var/list/usable_modules = robot_owner.model.get_usable_modules()
+	var/list/usable_modules = robot_model.get_usable_modules()
 
 	var/current_x = screen_start_x
 	var/current_y = screen_start_y
@@ -166,7 +166,7 @@
 
 	for(var/i in 1 to length(usable_modules))
 		var/atom/movable/item = usable_modules[i]
-		if(item in robot_owner.held_items)
+		if(item in robot_model.robot.held_items)
 			current_x++
 			if(current_x - screen_start_x < columns)
 				continue

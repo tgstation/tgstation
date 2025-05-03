@@ -43,6 +43,12 @@
 
 	return put_in_hand(item_module, first_free_slot)
 
+/mob/living/silicon/robot/put_in_hand(obj/item/I, hand_index, forced = FALSE, ignore_anim = TRUE, visuals_only = FALSE)
+	. = ..()
+	if(!.)
+		return
+	observer_screen_update(I, TRUE)
+
 ///Helper for cyborgs unequipping things.
 /mob/living/silicon/robot/proc/deactivate_module(obj/item/item_module)
 	transferItemToLoc(item_module, newloc = model)
@@ -329,3 +335,23 @@
 
 /mob/living/silicon/robot/can_hold_items(obj/item/I)
 	return (I && (I in model.modules)) //Only if it's part of our model.
+
+/**
+ * Updates the observers's screens with cyborg itemss.
+ * Arguments
+ * * item_module - the item being added or removed from the screen
+ * * add - whether or not the item is being added, or removed.
+ */
+/mob/living/silicon/robot/proc/observer_screen_update(obj/item/item_module, add = TRUE)
+	if(!observers?.len)
+		return
+	for(var/mob/dead/observe as anything in observers)
+		if(!observe.client || observe.client.eye != src)
+			observers -= observe
+			if(!observers.len)
+				observers = null
+				return
+		if(add)
+			observe.client.screen += item_module
+		else
+			observe.client.screen -= item_module

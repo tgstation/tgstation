@@ -14,7 +14,7 @@
 	//observers can look at borg's inventories
 	var/mob/living/silicon/robot/robot_owner = hud.mymob
 	if(robot_owner.model.type != /obj/item/robot_model)
-		if(robot_owner.active_storage == robot_owner.model.atom_storage)
+		if(usr.active_storage == robot_owner.model.atom_storage)
 			robot_owner.model.atom_storage.hide_contents(usr)
 		else
 			robot_owner.model.atom_storage.open_storage(usr)
