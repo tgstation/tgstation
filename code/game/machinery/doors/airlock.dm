@@ -648,6 +648,7 @@
 		else
 			. += "There's a [note.name] pinned to the front..."
 			. += note.examine(user)
+		. += span_notice("The [note.name] can be <b>cut</b> off.")
 	if(seal)
 		. += "It's been braced with \a [seal]."
 	if(welded)
