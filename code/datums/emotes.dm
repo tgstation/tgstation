@@ -118,6 +118,7 @@
 	var/is_important = emote_type & EMOTE_IMPORTANT
 	var/is_visual = emote_type & EMOTE_VISIBLE
 	var/is_audible = emote_type & EMOTE_AUDIBLE
+	var/additional_message_flags = get_message_flags(intentional)
 
 	// Emote doesn't get printed to chat, runechat only
 	if(emote_type & EMOTE_RUNECHAT)
@@ -165,21 +166,21 @@
 			message = msg,
 			deaf_message = span_emote("You see how <b>[user]</b> [msg]"),
 			self_message = msg,
-			audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
+			audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE|additional_message_flags,
 		)
 	// Emote is entirely audible, no visible component
 	else if(is_audible)
 		user.audible_message(
 			message = msg,
 			self_message = msg,
-			audible_message_flags = EMOTE_MESSAGE,
+			audible_message_flags = EMOTE_MESSAGE|additional_message_flags,
 		)
 	// Emote is entirely visible, no audible component
 	else if(is_visual)
 		user.visible_message(
 			message = msg,
 			self_message = msg,
-			visible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
+			visible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE|additional_message_flags,
 		)
 	else
 		CRASH("Emote [type] has no valid emote type set!")
@@ -234,6 +235,18 @@
  */
 /datum/emote/proc/get_sound(mob/living/user)
 	return sound //by default just return this var.
+
+/**
+ * To get the flags visible/audible messages for ran by the emote.
+ *
+ * Arguments:
+ * * intentional - Bool that says whether the emote was forced (FALSE) or not (TRUE).
+ *
+ * Returns the additional message flags we should be using, if any.
+ */
+/datum/emote/proc/get_message_flags(intentional)
+	// If we did it, we most often already know what's in it, so we try to avoid highlight clutter.
+	return intentional ? BLOCK_SELF_HIGHLIGHT_MESSAGE : NONE
 
 /**
  * To replace pronouns in the inputed string with the user's proper pronouns.

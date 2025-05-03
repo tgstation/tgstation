@@ -242,9 +242,9 @@
 /obj/item/fish/fryish/fritterish/update_desc()
 	switch(variant)
 		if(FISH_BERNARD)
-			desc = "A <u>deliciously</> extremophile alien fish shaped like a dinosaur. Children love it."
+			desc = "A <u>deliciously</u> extremophile alien fish shaped like a dinosaur. Children love it."
 		if(FISH_MATTHEW)
-			desc = "A <u>deliciously</> extremophile alien fish shaped like a pterodactyl. Children love it."
+			desc = "A <u>deliciously</u> extremophile alien fish shaped like a pterodactyl. Children love it."
 	return ..()
 
 #undef FISH_FRITTERISH
