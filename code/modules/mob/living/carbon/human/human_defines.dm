@@ -53,6 +53,9 @@
 	/// Which body type to use
 	var/physique = MALE
 
+	/// Which quirks this human has
+	var/list/quirks = list()
+
 	//consider updating /mob/living/carbon/human/copy_clothing_prefs() if adding more of these
 	var/underwear = "Nude" //Which underwear the player wants
 	var/underwear_color = COLOR_BLACK

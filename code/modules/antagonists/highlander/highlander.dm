@@ -22,7 +22,7 @@
 	REMOVE_TRAIT(subject, TRAIT_PACIFISM, ROUNDSTART_TRAIT)
 
 /datum/antagonist/highlander/remove_innate_effects(mob/living/mob_override)
-	var/mob/living/subject = owner.current || mob_override
+	var/mob/living/carbon/human/subject = owner.current || mob_override
 	subject.remove_traits(applicable_traits, HIGHLANDER_TRAIT)
 	if(subject.has_quirk(/datum/quirk/nonviolent))
 		ADD_TRAIT(subject, TRAIT_PACIFISM, ROUNDSTART_TRAIT)

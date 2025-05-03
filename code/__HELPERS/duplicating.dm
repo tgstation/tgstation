@@ -88,8 +88,11 @@ GLOBAL_PROTECT(duplicate_forbidden_vars)
 		for(var/obj/item/implant/original_implants as anything in original_living.implants)
 			var/obj/item/implant/copied_implant = new original_implants.type
 			copied_implant.implant(made_copy, silent = TRUE, force = TRUE)
-		//transfer quirks, we do this because transfering the original's quirks keeps the 'owner' as the original.
-		for(var/datum/quirk/original_quirks as anything in original_living.quirks)
-			copied_living.add_quirk(original_quirks.type)
+		if(ishuman(original_living))
+			var/mob/living/carbon/human/original_human = original_living
+			var/mob/living/carbon/human/copied_human = made_copy
+			//transfer quirks, we do this because transfering the original's quirks keeps the 'owner' as the original.
+			for(var/datum/quirk/original_quirks as anything in original_human.quirks)
+				copied_human.add_quirk(original_quirks.type)
 
 	return made_copy

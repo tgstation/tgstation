@@ -89,7 +89,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 			continue
 		hardcore_quirks[quirk_type] += hardcore_value
 
-/datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/applied_client)
+/datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/carbon/human/user, client/applied_client)
 	var/badquirk = FALSE
 	for(var/quirk_name in applied_client.prefs.all_quirks)
 		var/datum/quirk/quirk_type = quirks[quirk_name]
@@ -106,7 +106,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /*
  *Randomises the quirks for a specified mob
  */
-/datum/controller/subsystem/processing/quirks/proc/randomise_quirks(mob/living/user)
+/datum/controller/subsystem/processing/quirks/proc/randomise_quirks(mob/living/carbon/human/user)
 	var/bonus_quirks = max((length(user.quirks) + rand(-RANDOM_QUIRK_BONUS, RANDOM_QUIRK_BONUS)), MINIMUM_RANDOM_QUIRKS)
 	var/added_quirk_count = 0 //How many we've added
 	var/list/quirks_to_add = list() //Quirks we're adding

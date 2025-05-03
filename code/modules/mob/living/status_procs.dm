@@ -450,7 +450,7 @@
  *
  * Returns TRUE on success, FALSE on failure (already has the quirk, etc)
  */
-/mob/living/proc/add_quirk(datum/quirk/quirktype, client/override_client)
+/mob/living/carbon/human/proc/add_quirk(datum/quirk/quirktype, client/override_client)
 	if(has_quirk(quirktype))
 		return FALSE
 	var/qname = initial(quirktype.name)
@@ -469,7 +469,7 @@
 			return TRUE
 	return FALSE
 
-/mob/living/proc/has_quirk(quirktype)
+/mob/living/carbon/proc/has_quirk(quirktype)
 	for(var/datum/quirk/quirk in quirks)
 		if(quirk.type == quirktype)
 			return TRUE

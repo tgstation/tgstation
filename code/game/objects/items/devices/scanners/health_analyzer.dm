@@ -193,9 +193,9 @@
 	if (!target.get_organ_slot(ORGAN_SLOT_BRAIN)) // kept exclusively for soul purposes
 		render_list += "<span class='alert ml-1'>Subject lacks a brain.</span><br>"
 
-	if(iscarbon(target))
-		var/mob/living/carbon/carbontarget = target
-		if(LAZYLEN(carbontarget.quirks))
+	if(ishuman(target))
+		var/mob/living/carbon/human_target = target
+		if(LAZYLEN(human_target.quirks))
 			render_list += "<span class='info ml-1'>Subject Major Disabilities: [carbontarget.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY, from_scan = TRUE)].</span><br>"
 			if(advanced)
 				render_list += "<span class='info ml-1'>Subject Minor Disabilities: [carbontarget.get_quirk_string(FALSE, CAT_QUIRK_MINOR_DISABILITY, TRUE)].</span><br>"

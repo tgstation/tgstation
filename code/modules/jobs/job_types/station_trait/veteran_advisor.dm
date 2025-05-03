@@ -54,7 +54,7 @@
 /datum/job/veteran_advisor/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
 	var/mob/living/carbon/veteran = spawned
-	spawned.add_quirk(/datum/quirk/paraplegic) //Even in 2300s veterans are getting it bad
+	veteran.add_quirk(/datum/quirk/paraplegic) //Even in 2300s veterans are getting it bad
 	if(veteran)
 		veteran.gain_trauma(/datum/brain_trauma/special/ptsd) //War, war never changes...
 

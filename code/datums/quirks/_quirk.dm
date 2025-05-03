@@ -66,7 +66,7 @@
  * * new_holder - The mob to add this quirk to.
  * * quirk_transfer - If this is being added to the holder as part of a quirk transfer. Quirks can use this to decide not to spawn new items or apply any other one-time effects.
  */
-/datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source)
+/datum/quirk/proc/add_to_holder(mob/living/carbon/human/new_holder, quirk_transfer = FALSE, client/client_source)
 	if(!new_holder)
 		CRASH("Quirk attempted to be added to null mob.")
 
@@ -249,7 +249,7 @@
  * * Category- Which types of quirks we want to print out. Defaults to everything
  * * from_scan- If the source of this call is like a health analyzer or HUD, in which case QUIRK_HIDE_FROM_MEDICAL hides the quirk.
  */
-/mob/living/proc/get_quirk_string(medical = FALSE, category = CAT_QUIRK_ALL, from_scan = FALSE)
+/mob/living/carbon/human/proc/get_quirk_string(medical = FALSE, category = CAT_QUIRK_ALL, from_scan = FALSE)
 	var/list/dat = list()
 	for(var/datum/quirk/candidate as anything in quirks)
 		if(from_scan && (candidate.quirk_flags & QUIRK_HIDE_FROM_SCAN))
@@ -270,7 +270,7 @@
 		return medical ? "No issues have been declared." : "None"
 	return medical ?  dat.Join("<br>") : dat.Join(", ")
 
-/mob/living/proc/cleanse_quirk_datums() //removes all trait datums
+/mob/living/carbon/human/proc/cleanse_quirk_datums() //removes all trait datums
 	QDEL_LIST(quirks)
 
 /mob/living/proc/transfer_quirk_datums(mob/living/to_mob)
