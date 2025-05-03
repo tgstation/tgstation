@@ -21,6 +21,10 @@
 	///The person currently being deaconized.
 	var/mob/living/carbon/human/potential_deacon
 
+/datum/religion_rites/deaconize/Destroy()
+	potential_deacon = null
+	return ..()
+
 /datum/religion_rites/deaconize/perform_rite(mob/living/user, atom/religious_tool)
 	if(!ismovable(religious_tool))
 		to_chat(user, span_warning("This rite requires a religious device that individuals can be buckled to."))
