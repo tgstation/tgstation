@@ -64,7 +64,9 @@
 	if(isspider(to_wrap))
 		owner.balloon_alert(owner, "can't wrap spiders!")
 		return FALSE
-
+	if(ismegafauna(to_wrap))
+		owner.balloon_alert(owner, "can't wrap, too strong!")
+		return FALSE
 	var/atom/movable/target_movable = to_wrap
 	if(target_movable.anchored)
 		return FALSE
@@ -108,5 +110,7 @@
 			to_chat(owner, span_warning("[living_wrapped] is not edible!"))
 
 	to_wrap.forceMove(casing)
-	if(to_wrap.density || ismob(to_wrap))
+	if(iscarbon(to_wrap))
 		casing.icon_state = pick("cocoon_large1", "cocoon_large2", "cocoon_large3")
+	else
+		casing.icon_state = pick("cocoon1", "cocoon2", "cocoon3")
