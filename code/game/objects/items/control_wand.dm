@@ -94,7 +94,7 @@
 	// doesn't need a domain because their specific high-security areas aren't on anyone else's trim but cap
 
 /obj/item/door_remote/research_director
-	name = "science door remote"
+	name = "research door remote"
 	desc = "A remote for controlling a set of airlocks. This one is slightly misshapen, as if squeezed by a person possessing ludicrous strength."
 	department = "sci"
 	region_access = REGION_RESEARCH
