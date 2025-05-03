@@ -290,30 +290,31 @@
 	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special, lazy)
 	new_limb_owner.add_bodypart(src)
 
-	if(lazy)
-		SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_POST_ATTACH_LIMB, src, special, lazy)
-		return TRUE
+	if(!lazy)
+		LAZYREMOVE(new_limb_owner.body_zone_dismembered_by, body_zone)
 
-	LAZYREMOVE(new_limb_owner.body_zone_dismembered_by, body_zone)
+		if(special) //non conventional limb attachment
+			for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
+				var/surgery_zone = check_zone(attach_surgery.location)
+				if(surgery_zone == body_zone)
+					new_limb_owner.surgeries -= attach_surgery
+					qdel(attach_surgery)
+					break
 
-	if(special) //non conventional limb attachment
-		for(var/datum/surgery/attach_surgery as anything in new_limb_owner.surgeries) //if we had an ongoing surgery to attach a new limb, we stop it.
-			var/surgery_zone = check_zone(attach_surgery.location)
-			if(surgery_zone == body_zone)
-				new_limb_owner.surgeries -= attach_surgery
-				qdel(attach_surgery)
-				break
+			for(var/obj/item/organ/organ as anything in new_limb_owner.organs)
+				if(deprecise_zone(organ.zone) != body_zone)
+					continue
+				organ.bodypart_insert(src)
 
-		for(var/obj/item/organ/organ as anything in new_limb_owner.organs)
-			if(deprecise_zone(organ.zone) != body_zone)
-				continue
-			organ.bodypart_insert(src)
+		for(var/datum/wound/wound as anything in wounds)
+			// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
+			// otherwise the wound thinks it's trying to replace an existing wound of the same type (itself) and fails/deletes itself
+			LAZYREMOVE(wounds, wound)
+			wound.apply_wound(src, TRUE, wound_source = wound.wound_source)
 
-	for(var/datum/wound/wound as anything in wounds)
-		// we have to remove the wound from the limb wound list first, so that we can reapply it fresh with the new person
-		// otherwise the wound thinks it's trying to replace an existing wound of the same type (itself) and fails/deletes itself
-		LAZYREMOVE(wounds, wound)
-		wound.apply_wound(src, TRUE, wound_source = wound.wound_source)
+		if(new_limb_owner.mob_mood?.has_mood_of_category("dismembered_[body_zone]"))
+			new_limb_owner.clear_mood_event("dismembered_[body_zone]")
+			new_limb_owner.add_mood_event("phantom_pain_[body_zone]", /datum/mood_event/reattachment, src)
 
 	for(var/datum/scar/scar as anything in scars)
 		if(scar in new_limb_owner.all_scars) // prevent double scars from happening for whatever reason
@@ -321,22 +322,20 @@
 		scar.victim = new_limb_owner
 		LAZYADD(new_limb_owner.all_scars, scar)
 
-	if(new_limb_owner.mob_mood?.has_mood_of_category("dismembered_[body_zone]"))
-		new_limb_owner.clear_mood_event("dismembered_[body_zone]")
-		new_limb_owner.add_mood_event("phantom_pain_[body_zone]", /datum/mood_event/reattachment, src)
-
 	update_bodypart_damage_state()
 	if(can_be_disabled)
 		update_disabled()
 
-	// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
-	// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
-	new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
-	new_limb_owner.updatehealth()
-	new_limb_owner.update_body()
-	new_limb_owner.update_damage_overlays()
-	if(!special)
-		new_limb_owner.hud_used?.update_locked_slots()
+	if(!lazy)
+		// Bodyparts need to be sorted for leg masking to be done properly. It also will allow for some predictable
+		// behavior within said bodyparts list. We sort it here, as it's the only place we make changes to bodyparts.
+		new_limb_owner.bodyparts = sort_list(new_limb_owner.bodyparts, GLOBAL_PROC_REF(cmp_bodypart_by_body_part_asc))
+		new_limb_owner.updatehealth()
+		new_limb_owner.update_body()
+		new_limb_owner.update_damage_overlays()
+		if(!special)
+			new_limb_owner.hud_used?.update_locked_slots()
+
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_POST_ATTACH_LIMB, src, special, lazy)
 	return TRUE
 
