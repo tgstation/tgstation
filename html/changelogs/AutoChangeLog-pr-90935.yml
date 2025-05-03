@@ -1,4 +1,0 @@
-author: "tonty"
-delete-after: True
-changes:
-  - admin: "Admins no longer need to hit enter to update custom command report names"

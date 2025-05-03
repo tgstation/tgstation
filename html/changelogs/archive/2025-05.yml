@@ -50,3 +50,32 @@
   Rhials:
   - bugfix: The grassland hunt domain no longer auto-completes just by closing the
       domain.
+2025-05-03:
+  00-Steven:
+  - bugfix: Syrup bottle pumping interaction actually works.
+  - bugfix: Syrup bottles can be renamed even with the cap off.
+  - bugfix: Syrup bottles with the cap removed are actually spillable, meaning they
+      can directly transfer reagents, be drunk from, somesuch.
+  - qol: Renaming a syrup bottle without an input resets the name instead of just
+      not working.
+  - qol: Added screentips for syrup bottle interactions.
+  Chestlet:
+  - bugfix: Removed eyelids from dummies to make all TGUI windows in which they appear
+      more optimized.
+  GoblinBackwards:
+  - bugfix: Fixed being unable to create keybinds to the spacebar.
+  JohnFulpWillard:
+  - bugfix: Four handed wizards now have a drop button & open inventory above their
+      hands.
+  - image: You can now turn potty the plant's light off.
+  NamelessFairy:
+  - bugfix: Wizard spawned demons can now leave their blood crawls and are not stuck
+      in the blood realm forever.
+  SmArtKar:
+  - bugfix: Fixed broken formatting in fryfish examine text
+  SyncIt21:
+  - code_imp: organized storage subtypes under the same files & folders
+  grungussuss:
+  - bugfix: fixed rust heretic hand not being able to destroy windows or windoors
+  tonty:
+  - admin: Admins no longer need to hit enter to update custom command report names
