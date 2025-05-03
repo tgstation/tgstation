@@ -206,6 +206,7 @@
 	name = "horrific necktie"
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "eldritch_tie"
+	post_init_icon_state = null	
 	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."
 	clip_on = TRUE
 	greyscale_config = null

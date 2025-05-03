@@ -1010,7 +1010,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		screw = FALSE
 		to_chat(user, span_notice("You close the cap on [src]."))
 		reagents.flags &= ~(OPENCONTAINER)
-		icon_state = initial(icon_state)
+		icon_state = initial(post_init_icon_state)
 		set_greyscale(new_config = initial(greyscale_config))
 
 /obj/item/vape/multitool_act(mob/living/user, obj/item/tool)

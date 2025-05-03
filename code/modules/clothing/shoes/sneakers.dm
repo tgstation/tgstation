@@ -87,6 +87,7 @@
 	desc = "Very gay shoes."
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "rain_bow"
+	post_init_icon_state = null
 	inhand_icon_state = "rainbow_sneakers"
 
 	greyscale_colors = null
@@ -136,7 +137,7 @@
 	if(attached_cuffs)
 		icon_state = inhand_icon_state = "sneakers_chained"
 	else
-		icon_state = initial(icon_state)
+		icon_state = initial(post_init_icon_state)
 		inhand_icon_state = initial(inhand_icon_state)
 	update_greyscale()
 

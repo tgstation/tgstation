@@ -65,6 +65,7 @@
 	desc = "An EightO brand pair of roller skates. The wheels are retractable, though're quite bulky to walk in."
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "rollerskates"
+	post_init_icon_state = null
 	inhand_icon_state = null
 	greyscale_colors = null
 	greyscale_config = null
@@ -79,6 +80,7 @@
 	desc = "A pair of shoes equipped with foldable skis! Very handy to move in snowy environments unimpeded."
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "skishoes"
+	post_init_icon_state = null
 	inhand_icon_state = null
 	greyscale_colors = null
 	greyscale_config = null

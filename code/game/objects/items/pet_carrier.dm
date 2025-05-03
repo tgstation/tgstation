@@ -228,6 +228,7 @@
 	icon = 'icons/obj/pet_carrier.dmi'
 	base_icon_state = "biopod"
 	icon_state = "biopod_open"
+	post_init_icon_state = null
 	inhand_icon_state = "biopod"
 	greyscale_config = null
 	greyscale_config_inhand_left = null
@@ -241,6 +242,7 @@
 	icon = 'icons/obj/pet_carrier.dmi'
 	base_icon_state = "small_carrier"
 	icon_state = "small_carrier_open"
+	post_init_icon_state = null
 	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'

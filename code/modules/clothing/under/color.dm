@@ -105,6 +105,7 @@
 	desc = "A terribly ragged and frayed grey jumpsuit. It looks like it hasn't been washed in over a decade."
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "grey_ancient"
+	post_init_icon_state = null
 	inhand_icon_state = "gy_suit"
 	greyscale_config = null
 	greyscale_config_inhand_left = null
