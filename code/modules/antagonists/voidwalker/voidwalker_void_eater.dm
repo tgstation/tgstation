@@ -30,6 +30,8 @@
 	var/damage_minimum = 15
 	/// Cooldown for converting walls to void windows
 	COOLDOWN_DECLARE(wall_conversion)
+	///How many wall conversions can we perform before we have to refresh?
+	var/conversions_remaining = 2
 
 /obj/item/void_eater/Initialize(mapload)
 	. = ..()
@@ -50,6 +52,7 @@
 	. = ..()
 	. += span_notice("The [name] weakens each hit, recharge it by kidnapping someone!")
 	. += span_notice("Sharpness: [round(force)]/[initial(force)]")
+	. += span_notice("Wall Conversions remaining: [conversions_remaining ? conversions_remaining : "None! You must resharpen your blade!"]")
 
 /obj/item/void_eater/attack(mob/living/target_mob, mob/living/user, list/modifiers)
 	if(!ishuman(target_mob))
@@ -96,25 +99,28 @@
 /obj/item/void_eater/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	. = ..()
 	if(istype(interacting_with, /turf/closed/wall))
+		if(!conversions_remaining)
+			balloon_alert(user, "must refresh void eater!")
+			return
+
 		if(!COOLDOWN_FINISHED(src, wall_conversion))
 			balloon_alert(user, "must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, wall_conversion))]!")
 			return
 
 		var/turf/closed/wall/our_wall = interacting_with
-		if(our_wall.hardness < WALL_CONVERT_STRENGTH) //40 is default wall strength. This looks a bit weird, but remember that lower numbers are stronger for some reason
-			balloon_alert(user, "too strong!")
+		if(!check_wall_validity(our_wall, user, silent = FALSE))
 			return
 		playsound(interacting_with, 'sound/effects/magic/blind.ogg', 100, TRUE)
 		new /obj/effect/temp_visual/transmute_tile_flash(interacting_with)
 		balloon_alert(user, "opening window...")
 		if(do_after(user, 8 SECONDS, interacting_with, hidden = TRUE))
+			if(!conversions_remaining)
+				return
 			var/list/target_walls = list()
 			target_walls += our_wall
 			for(var/turf/closed/wall/adjacent_wall in orange(1, interacting_with))
-				var/area/nearby_area = get_area(adjacent_wall)
-				if(istype(nearby_area, /area/space) || istype(nearby_area, /area/space/nearstation) || istype(nearby_area, /area/station/asteroid))
-					if(adjacent_wall.hardness >= WALL_CONVERT_STRENGTH)
-						target_walls += adjacent_wall
+				if(check_wall_validity(adjacent_wall, user))
+					target_walls += adjacent_wall
 
 			for(var/turf/closed/wall/targeted_wall in target_walls)
 				playsound(targeted_wall, 'sound/effects/magic/blind.ogg', 100, TRUE)
@@ -122,7 +128,7 @@
 				targeted_wall.ScrapeAway()
 				new /obj/structure/window/fulltile/voidwalker(targeted_wall)
 				new /obj/structure/grille(targeted_wall)
-
+			conversions_remaining--
 			COOLDOWN_START(src, wall_conversion, 60 SECONDS)
 
 /// Called when the voidwalker kidnapped someone
@@ -135,5 +141,23 @@
 	animate(src, color = null, time = 1 SECONDS)//do a color flashy woosh
 
 	to_chat(voidwalker, span_boldnotice("Your [name] refreshes!"))
+
+/obj/item/void_eater/proc/check_wall_validity(turf/closed/wall/wall_to_check, mob/living/user, silent = TRUE)
+	if(wall_to_check.hardness < WALL_CONVERT_STRENGTH)
+		if(!silent)
+			balloon_alert(user, "too strong!")
+		return FALSE
+
+	for(var/turf/nearby_turf in orange(1, wall_to_check))
+		var/area/nearby_area = get_area(nearby_turf)
+		if(istype(nearby_area, /area/space) || istype(nearby_area, /area/space/nearstation) || istype(nearby_area, /area/station/asteroid))
+			return TRUE
+
+	if(!silent)
+		balloon_alert(user, "not near space!")
+
+	return FALSE
+
+
 
 #undef WALL_CONVERT_STRENGTH
