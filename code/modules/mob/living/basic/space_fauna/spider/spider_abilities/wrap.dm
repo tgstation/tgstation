@@ -87,7 +87,7 @@
 	else
 		owner.balloon_alert(owner, "interrupted!")
 
-/datum/action/cooldown/mob_cooldown/wrap/proc/wrap_target(atom/movable/to_wrap)
+/datum/action/cooldown/mob_cooldown/wrap/proc/wrap_target(mob/living/to_wrap)
 	var/obj/structure/spider/cocoon/casing = new(to_wrap.loc)
 	if(isliving(to_wrap))
 		var/mob/living/living_wrapped = to_wrap
@@ -110,7 +110,7 @@
 			to_chat(owner, span_warning("[living_wrapped] is not edible!"))
 
 	to_wrap.forceMove(casing)
-	if(iscarbon(to_wrap))
+	if(to_wrap.mob_biotypes & MOB_HUMANOID)
 		casing.icon_state = pick("cocoon_large1", "cocoon_large2", "cocoon_large3")
 	else
 		casing.icon_state = pick("cocoon1", "cocoon2", "cocoon3")
