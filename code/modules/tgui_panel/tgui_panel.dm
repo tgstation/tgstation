@@ -1,6 +1,3 @@
-/// Each client notifies on protected playback, so this prevents spamming admins.
-GLOBAL_VAR_INIT(admins_warned, FALSE)
-
 /*!
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
@@ -15,6 +12,8 @@ GLOBAL_VAR_INIT(admins_warned, FALSE)
 	var/datum/tgui_window/window
 	var/broken = FALSE
 	var/initialized_at
+	/// Each client notifies on protected playback, so this prevents spamming admins.
+	var/static/admins_warned = FALSE
 
 /datum/tgui_panel/New(client/client, id)
 	src.client = client
@@ -95,10 +94,10 @@ GLOBAL_VAR_INIT(admins_warned, FALSE)
 		return TRUE
 
 	if(type == "audio/protected")
-		if(!GLOB.admins_warned)
+		if(!admins_warned)
 			message_admins(span_notice("Audio returned a protected playback error."))
-			GLOB.admins_warned = TRUE
-			addtimer(CALLBACK(src, GLOBAL_PROC_REF(reset_admins_warned)), 10 SECONDS)
+			admins_warned = TRUE
+			addtimer(VARSET_CALLBACK(src, admins_warned, FALSE), 10 SECONDS)
 		return TRUE
 
 	if(type == "telemetry")
@@ -112,8 +111,3 @@ GLOBAL_VAR_INIT(admins_warned, FALSE)
  */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
-
-
-/// Resets the global variable that tracks admin warnings.
-/proc/reset_admins_warned()
-	GLOB.admins_warned = FALSE
