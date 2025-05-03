@@ -45,16 +45,21 @@
 
 ///Helper for cyborgs unequipping things.
 /mob/living/silicon/robot/proc/deactivate_module(obj/item/item_module)
-	doUnEquip(item_module)
+	transferItemToLoc(item_module, newloc = model)
 
-/mob/living/silicon/robot/doUnEquip(obj/item/item_dropped, force, atom/newloc, no_move, invdrop = TRUE, silent = FALSE)
+/mob/living/silicon/robot/doUnEquip(obj/item/item_dropping, force, atom/newloc, no_move, invdrop, silent)
+	if(newloc != model)
+		to_chat(src, span_notice("You can't drop your [item_dropping.name] module."))
+		return FALSE
+
 	var/module_num = get_selected_module()
-	newloc = model //we always retract into ourselves.
 	. = ..()
 	if(!.)
 		return
-	item_dropped.cyborg_unequip(src)
+	//this is the cyborg equivalent of dropped(), though we call that too in doUnEquip.
+	item_dropping.cyborg_unequip(src)
 	deselect_module(module_num)
+
 
 /mob/living/silicon/robot/update_held_items()
 	. = ..()

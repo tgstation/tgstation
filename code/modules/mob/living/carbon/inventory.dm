@@ -191,36 +191,36 @@
 /mob/living/carbon/proc/has_equipped(obj/item/item, slot, initial = FALSE)
 	return item.on_equipped(src, slot, initial)
 
-/mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
+/mob/living/carbon/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //Sets the default return value to what the parent returns.
-	if(!. || !I) //We don't want to set anything to null if the parent returned 0.
+	if(!. || !item_dropping) //We don't want to set anything to null if the parent returned 0.
 		return
 
 	var/not_handled = FALSE //if we actually unequipped an item, this is because we dont want to run this proc twice, once for carbons and once for humans
-	if(I == head)
+	if(item_dropping == head)
 		head = null
-		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_HAT, I, force, newloc, no_move, invdrop, silent)
+		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_HAT, item_dropping, force, newloc, no_move, invdrop, silent)
 		if(!QDELETED(src))
 			update_worn_head()
-	else if(I == back)
+	else if(item_dropping == back)
 		back = null
 		if(!QDELETED(src))
 			update_worn_back()
-	else if(I == wear_mask)
+	else if(item_dropping == wear_mask)
 		wear_mask = null
 		if(!QDELETED(src))
 			update_worn_mask()
-	else if(I == wear_neck)
+	else if(item_dropping == wear_neck)
 		wear_neck = null
 		if(!QDELETED(src))
-			update_worn_neck(I)
-	else if(I == handcuffed)
+			update_worn_neck(item_dropping)
+	else if(item_dropping == handcuffed)
 		set_handcuffed(null)
 		if(buckled?.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
 		if(!QDELETED(src))
 			update_handcuffed()
-	else if(I == legcuffed)
+	else if(item_dropping == legcuffed)
 		legcuffed = null
 		if(!QDELETED(src))
 			update_worn_legcuffs()
@@ -228,7 +228,7 @@
 		not_handled = TRUE
 
 	// Not an else-if because we're probably equipped in another slot
-	if(I == internal && (QDELETED(src) || QDELETED(I) || I.loc != src))
+	if(item_dropping == internal && (QDELETED(src) || QDELETED(item_dropping) || item_dropping.loc != src))
 		cutoff_internals()
 		if(!QDELETED(src))
 			update_mob_action_buttons(UPDATE_BUTTON_STATUS)
@@ -237,7 +237,7 @@
 		return
 
 	update_equipment_speed_mods()
-	update_obscured_slots(I.flags_inv)
+	update_obscured_slots(item_dropping.flags_inv)
 	hud_used?.update_locked_slots()
 
 /// Returns TRUE if an air tank compatible helmet is equipped.

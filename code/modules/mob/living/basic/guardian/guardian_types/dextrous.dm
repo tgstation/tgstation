@@ -36,12 +36,12 @@
 
 // Bullshit related to having a fake pocket begins here
 
-/mob/living/basic/guardian/dextrous/doUnEquip(obj/item/equipped_item, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
+/mob/living/basic/guardian/dextrous/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..()
 	if (!.)
 		return FALSE
 	update_held_items()
-	if(equipped_item == internal_storage)
+	if(item_dropping == internal_storage)
 		internal_storage = null
 		update_inv_internal_storage()
 	return TRUE
