@@ -106,20 +106,20 @@
 		added_module.forceMove(src)
 	modules += added_module
 	added_module.mouse_opacity = MOUSE_OPACITY_OPAQUE
+	added_module.obj_flags |= ABSTRACT
 	if(nonstandard)
 		added_modules += added_module
 	if(requires_rebuild)
 		rebuild_modules()
 	return added_module
 
-/obj/item/robot_model/proc/remove_module(obj/item/removed_module, delete_after)
+/obj/item/robot_model/proc/remove_module(obj/item/removed_module)
 	basic_modules -= removed_module
 	modules -= removed_module
 	emag_modules -= removed_module
 	added_modules -= removed_module
 	rebuild_modules()
-	if(delete_after)
-		qdel(removed_module)
+	qdel(removed_module)
 
 /obj/item/robot_model/proc/rebuild_modules() //builds the usable module list from the modules we have
 	var/mob/living/silicon/robot/cyborg = loc
@@ -874,7 +874,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	cyborg.faction -= FACTION_SILICON //ai turrets
 
-/obj/item/robot_model/syndicate/remove_module(obj/item/removed_module, delete_after)
+/obj/item/robot_model/syndicate/remove_module(obj/item/removed_module)
 	..()
 	var/mob/living/silicon/robot/cyborg = loc
 	cyborg.faction |= FACTION_SILICON //ai is your bff now!

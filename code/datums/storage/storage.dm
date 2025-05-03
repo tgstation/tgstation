@@ -371,7 +371,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * * force - bypass locked storage up to a certain level. See [code/__DEFINES/storage.dm]
  */
 /datum/storage/proc/can_insert(obj/item/to_insert, mob/user, messages = TRUE, force = STORAGE_NOT_LOCKED)
-	if(QDELETED(to_insert) || !istype(to_insert) || iscyborg(user))
+	if(QDELETED(to_insert) || !istype(to_insert))
 		return FALSE
 
 	//stops you from putting stuff like off-hand thingy inside. Hologram storages can accept only hologram items
@@ -860,9 +860,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /// Called directly from the attack chain if [insert_on_attack] is TRUE.
 /// Handles inserting an item into the storage when clicked.
 /datum/storage/proc/item_interact_insert(mob/living/user, obj/item/thing)
-	if(iscyborg(user))
-		return ITEM_INTERACT_BLOCKING
-
 	attempt_insert(thing, user)
 	return ITEM_INTERACT_SUCCESS
 

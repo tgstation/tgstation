@@ -8,19 +8,21 @@
 
 /atom/movable/screen/robot/Click()
 	if(isobserver(usr))
-		return 1
+		return TRUE
 
 /atom/movable/screen/robot/module/Click()
-	if(..())
-		return
-	var/mob/living/silicon/robot/R = usr
-	if(R.model.type != /obj/item/robot_model)
-		if(R.active_storage == R.model.atom_storage)
-			R.model.atom_storage.hide_contents(R)
+	//observers can look at borg's inventories
+	var/mob/living/silicon/robot/robot_owner = hud.mymob
+	if(robot_owner.model.type != /obj/item/robot_model)
+		if(robot_owner.active_storage == robot_owner.model.atom_storage)
+			robot_owner.model.atom_storage.hide_contents(usr)
 		else
-			R.model.atom_storage.open_storage(R)
+			robot_owner.model.atom_storage.open_storage(usr)
 		return TRUE
-	R.pick_model()
+	. = ..()
+	if(.)
+		return
+	robot_owner.pick_model()
 
 /atom/movable/screen/robot/module1
 	name = "module1"

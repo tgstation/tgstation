@@ -67,7 +67,7 @@
 	for(var/item_to_remove in items)
 		var/obj/item/module_item = locate(item_to_remove) in borg.model.modules
 		if (module_item)
-			borg.model.remove_module(module_item, TRUE)
+			borg.model.remove_module(module_item)
 	return TRUE
 
 /obj/item/borg/upgrade/rename
