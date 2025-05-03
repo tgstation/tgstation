@@ -7,8 +7,6 @@
 	var/id
 	/// What DNA string does this bloodtype have by default, if not set by a mob?
 	var/dna_string = "Unknown DNA"
-	/// Alternate name for medical scanners, will prevent "Blood Type: [name]" from showing up
-	var/scanner_name = null
 	/// Shown color of the blood type.
 	var/color = BLOOD_COLOR_RED
 	/// Additional lightness multiplier for the blood color, useful for when the default lightness from the greyscaling doesn't cut it and you want something more vibrant.
@@ -28,10 +26,6 @@
 	var/root_abstract_type
 	/// If this blood type is meant to persist across species changes
 	var/is_species_universal
-	/// Can this blood type be bloodcrawled in?
-	var/can_bloodcrawl_in = TRUE
-	/// Does this blood type preserve owner's biological information?
-	var/preserve_dna = TRUE
 	/// Splash and expose behaviors for this blood type's reagent, to prevent water-blood covered items
 	var/expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS | BLOOD_TRANSFER_VIRAL_DATA
 
@@ -57,6 +51,10 @@
 /datum/blood_type/proc/type_key()
 	return type
 
+/// Name of the reagent we use for blood
+/datum/blood_type/proc/get_blood_name()
+	return reagent_type::name
+
 /// Returns blood color or color matrix
 /// Useful when you want to have a blood color with values out of normal hex bounds for that acidic look
 /// set dynamic to TRUE to redo the matrix each time (e.g. for clown blood dynamically shifting each time)
@@ -77,7 +75,27 @@
 
 	return blood_color_matrix
 
-// human blood type, for organizational purposes mainly
+/// Returns blood color for mob damage overlays
+/datum/blood_type/proc/get_damage_color(mob/living/carbon/victim)
+	return get_color()
+
+/**
+ * Used to handle any unique facets of blood spawned of this blood type
+ *
+ * You don't need to worry about updating the icon of the decal,
+ * it will be handled automatically after setup is finished
+ *
+ * Arguments
+ * * blood - the blood being set up
+ * * new_splat - whether this is a newly instantiated blood decal, or an existing one this blood is being added to
+ */
+/datum/blood_type/proc/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
+	if (new_splat && !blood.decal_reagent)
+		blood.decal_reagent = reagent_type
+	else if (blood.reagents && blood.bloodiness) // If reagents don't exist yet, we'll be added via lazyloading
+		blood.reagents.add_reagent(reagent_type, round(blood.bloodiness / (GET_ATOM_BLOOD_DNA_LENGTH(blood) - 1) * BLOOD_TO_UNITS_MULTIPLIER, CHEMICAL_VOLUME_ROUNDING)) // -1 as this happens before bloodiness is adjusted
+
+// Human blood type, for organizational purposes mainly
 /datum/blood_type/human
 	desc = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
 	dna_string = "Human DNA"
@@ -153,9 +171,6 @@
 	name = BLOOD_TYPE_ANIMAL
 	desc = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
 	dna_string = "Animal DNA"
-	compatible_types = list(
-		/datum/blood_type/animal,
-	)
 
 /datum/blood_type/lizard
 	name = BLOOD_TYPE_LIZARD
@@ -163,38 +178,40 @@
 		is capable of withstanding much higher temperatures without breaking down or clotting."
 	dna_string = "Lizard DNA"
 	color = BLOOD_COLOR_LIZARD
-	compatible_types = list(
-		/datum/blood_type/lizard,
-	)
 
 /datum/blood_type/ethereal
 	name = BLOOD_TYPE_ETHEREAL
 	dna_string = "Ethereal DNA"
-	scanner_name = /datum/reagent/consumable/liquidelectricity::name
 	color = /datum/reagent/consumable/liquidelectricity::color
 	lightness_mult = 1.255 // for more vibrant gatorade coloring
 	reagent_type = /datum/reagent/consumable/liquidelectricity
-	compatible_types = list(
-		/datum/blood_type/ethereal,
-	)
+
+/datum/blood_type/ethereal/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
+	. = ..()
+	blood.emissive_alpha = max(blood.emissive_alpha, new_splat ? 188 : 125)
+	if (new_splat)
+		return
+	blood.can_dry = FALSE
 
 /datum/blood_type/oil
 	name = BLOOD_TYPE_OIL
 	dna_string = "Oil"
-	scanner_name = "Oil"
 	color = BLOOD_COLOR_OIL
 	reagent_type = /datum/reagent/fuel/oil
 	restoration_chem = /datum/reagent/fuel
-	can_bloodcrawl_in = FALSE
-	preserve_dna = FALSE
-	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS
+	expose_flags = BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS
+
+/datum/blood_type/oil/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
+	. = ..()
+	if (!new_splat)
+		return
+	// Oil blood will never dry and can be ignited with fire
+	blood.can_dry = FALSE
+	blood.AddElement(/datum/element/easy_ignite)
 
 /datum/blood_type/vampire
 	name = BLOOD_TYPE_VAMPIRE
 	dna_string = "Hemovore DNA"
-	compatible_types = list(
-		/datum/blood_type/vampire,
-	)
 
 /datum/blood_type/meat // why does this exist
 	name = BLOOD_TYPE_MEAT
@@ -203,13 +220,15 @@
 /datum/blood_type/xeno
 	name = BLOOD_TYPE_XENO
 	desc = "An incredibly potent mineral acid, somehow capable of carrying oxygen."
-	scanner_name = "Acid"
+	dna_string = "Alien DNA"
 	color = BLOOD_COLOR_XENO
 	lightness_mult = 1.255 // For parity with pre-refactor xeno blood sprites
-	compatible_types = list(/datum/blood_type/xeno)
 	reagent_type = /datum/reagent/toxin/acid
 	// Viruses cannot survive in acid
 	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS
+
+/datum/blood_type/xeno/get_blood_name()
+	return "Acid"
 
 /// April fool's blood for clowns
 /datum/blood_type/clown
@@ -235,11 +254,9 @@
 /datum/blood_type/slime
 	name = BLOOD_TYPE_TOX
 	dna_string = "Slime DNA"
-	scanner_name = "Slime Jelly"
 	color = /datum/reagent/toxin/slimejelly::color
 	reagent_type = /datum/reagent/toxin/slimejelly
 	restoration_chem = /datum/reagent/stable_plasma // Because normal plasma already refills our blood
-	can_bloodcrawl_in = FALSE
 
 /datum/blood_type/slime/New(new_color)
 	. = ..()
@@ -254,13 +271,16 @@
 /// Podpeople blood
 /datum/blood_type/water
 	name = BLOOD_TYPE_H2O
-	scanner_name = "Water"
+	dna_string = "Plant DNA"
 	color = /datum/reagent/water::color
 	reagent_type = /datum/reagent/water
 	restoration_chem = null
 	no_bleed_overlays = TRUE
-	can_bloodcrawl_in = FALSE
 	expose_flags = BLOOD_ADD_DNA | BLOOD_TRANSFER_VIRAL_DATA
+
+/// Prevents awkward grey wounds on the mob while keeping bleed overlays looking like water leaking from a balloon
+/datum/blood_type/water/get_damage_color(mob/living/carbon/victim)
+	return COLOR_LIME
 
 /// Snail blood
 /datum/blood_type/snail
@@ -268,6 +288,14 @@
 	dna_string = "Snail DNA"
 	reagent_type = /datum/reagent/lube
 	restoration_chem = /datum/reagent/silicon
+
+/datum/blood_type/snail/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat)
+	. = ..()
+	if(blood.bloodiness < BLOOD_AMOUNT_PER_DECAL)
+		return
+	var/slip_amt = new_splat ? 4 SECONDS : 1 SECONDS
+	var/slip_flags = new_splat ? (NO_SLIP_WHEN_WALKING | SLIDE) : (NO_SLIP_WHEN_WALKING)
+	blood.AddComponent(/datum/component/slippery, slip_amt, slip_flags)
 
 /// An abstract-ish blood type used particularly for species with blood set to random reagents, such as podpeople
 /datum/blood_type/random_chemical
@@ -294,12 +322,11 @@
 	desc = real_blood_type.desc
 	. = ..()
 	dna_string = real_blood_type.dna_string
-	scanner_name = real_blood_type.scanner_name
 	id = type_key()
 	color = BLOOD_COLOR_BLACK // why it gotta be black though
 	reagent_type = real_blood_type.reagent_type
 	restoration_chem = real_blood_type.restoration_chem
-	compatible_types = LAZYCOPY(real_compatible_types) + type_key()
+	compatible_types = LAZYCOPY(real_compatible_types) | type_key()
 	root_abstract_type = null
 
 /datum/blood_type/evil/type_key()

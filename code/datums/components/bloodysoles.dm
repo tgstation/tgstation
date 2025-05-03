@@ -98,14 +98,14 @@
 /**
  * Run to equally share the blood between us and a decal
  */
-/datum/component/bloodysoles/proc/share_blood(obj/effect/decal/cleanable/pool)
+/datum/component/bloodysoles/proc/share_blood(obj/effect/decal/cleanable/blood/pool)
 	// Share the blood between our boots and the blood pool
-	var/total_bloodiness = pool.bloodiness + bloody_shoes[pool.blood_state]
+	var/total_bloodiness = pool.bloodiness + bloody_shoes[BLOOD_STATE_HUMAN]
 
 	// We can however be limited by how much blood we can hold
 	var/new_our_bloodiness = min(BLOOD_ITEM_MAX, total_bloodiness / 2)
 
-	set_bloody_shoes(pool.blood_state, new_our_bloodiness)
+	set_bloody_shoes(BLOOD_STATE_HUMAN, new_our_bloodiness)
 	pool.bloodiness = total_bloodiness - new_our_bloodiness // Give the pool the remaining blood incase we were limited
 
 	if(HAS_TRAIT(parent_atom, TRAIT_LIGHT_STEP) || (wielder && HAS_TRAIT(wielder, TRAIT_LIGHT_STEP))) //the character is agile enough to don't mess their clothing and hands just from one blood splatter at floor
@@ -128,8 +128,11 @@
  */
 /datum/component/bloodysoles/proc/find_pool_by_blood_state(turf/turfLoc, typeFilter = null, footprint_sprite)
 	for(var/obj/effect/decal/cleanable/blood/pool in turfLoc)
+		return pool
+		/*
 		if(pool.blood_state == last_blood_state && pool.footprint_sprite == footprint_sprite && (!typeFilter || istype(pool, typeFilter)))
 			return pool
+		*/
 
 /**
  * Adds the parent type to the footprint's shoe_types var
@@ -203,7 +206,6 @@
 
 			oldLocFP = new(oldLocTurf, footprint_sprite)
 			if(!QDELETED(oldLocFP)) ///prints merged
-				oldLocFP.blood_state = last_blood_state
 				oldLocFP.exited_dirs |= wielder.dir
 				add_parent_to_footprint(oldLocFP)
 				oldLocFP.bloodiness = blood_lost
@@ -223,7 +225,6 @@
 
 		var/obj/effect/decal/cleanable/blood/footprints/FP = new(get_turf(parent_atom), footprint_sprite)
 		if(!QDELETED(FP)) ///prints merged
-			FP.blood_state = last_blood_state
 			FP.entered_dirs |= wielder.dir
 			add_parent_to_footprint(FP)
 			FP.bloodiness = blood_lost
@@ -242,7 +243,7 @@
 	if(QDELETED(wielder) || is_obscured())
 		return
 
-	if(istype(pool, /obj/effect/decal/cleanable/blood/footprints) && pool.blood_state == last_blood_state)
+	if(istype(pool, /obj/effect/decal/cleanable/blood/footprints))
 		// The pool we stepped in was actually footprints with the same type
 		var/obj/effect/decal/cleanable/blood/footprints/pool_FP = pool
 		add_parent_to_footprint(pool_FP)

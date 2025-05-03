@@ -303,7 +303,7 @@
 			damage_overlay.color = iter_part.damage_overlay_color
 		if(iter_part.brutestate)
 			var/mutable_appearance/blood_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0", appearance_flags = RESET_COLOR) //we're adding icon_states of the base image as overlays
-			blood_damage_overlay.color = get_bloodtype()?.get_color() || BLOOD_COLOR_RED
+			blood_damage_overlay.color = get_bloodtype()?.get_damage_color(src) || BLOOD_COLOR_RED
 			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0_overlay", appearance_flags = RESET_COLOR)
 			blood_damage_overlay.overlays += brute_damage_overlay
 			damage_overlay.add_overlay(blood_damage_overlay)

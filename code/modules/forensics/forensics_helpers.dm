@@ -38,12 +38,12 @@
 	var/old = 0
 	if(suspect.gloves && istype(suspect.gloves, /obj/item/clothing))
 		var/obj/item/clothing/gloves/suspect_gloves = suspect.gloves
-		old = length(GET_ATOM_BLOOD_DNA(suspect_gloves))
+		old = GET_ATOM_BLOOD_DNA_LENGTH(suspect_gloves)
 		if(suspect_gloves.transfer_blood > 1) //bloodied gloves transfer blood to touched objects
 			if(add_blood_DNA(GET_ATOM_BLOOD_DNA(suspect_gloves)) && GET_ATOM_BLOOD_DNA_LENGTH(suspect_gloves) > old) //only reduces the bloodiness of our gloves if the item wasn't already bloody
 				suspect_gloves.transfer_blood -= 1
 	else if(suspect.blood_in_hands > 1)
-		old = length(GET_ATOM_BLOOD_DNA(suspect))
+		old = GET_ATOM_BLOOD_DNA_LENGTH(suspect)
 		if(add_blood_DNA(GET_ATOM_BLOOD_DNA(suspect)) && GET_ATOM_BLOOD_DNA_LENGTH(suspect) > old)
 			suspect.blood_in_hands -= 1
 	if (isnull(forensics))

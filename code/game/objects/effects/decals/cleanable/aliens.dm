@@ -6,8 +6,8 @@
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
-	bloodiness = BLOOD_AMOUNT_PER_DECAL
-	blood_state = BLOOD_STATE_XENO
+	//bloodiness = BLOOD_AMOUNT_PER_DECAL
+	//blood_state = BLOOD_STATE_XENO
 	beauty = -250
 	clean_type = CLEAN_TYPE_BLOOD
 

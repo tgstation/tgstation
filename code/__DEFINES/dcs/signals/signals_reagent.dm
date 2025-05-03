@@ -20,6 +20,8 @@
 #define COMSIG_REAGENT_EXPOSE_TURF "reagent_expose_turf"
 ///from base of [/datum/reagent/proc/on_merge(data, amount)]: (list/data, amount)
 #define COMSIG_REAGENT_ON_MERGE "reagent_on_merge"
+///from base of [/datum/reagent/proc/on_transfer_creation(reagent, target_holder, new_reagent)]: (datum/reagents/target_holder, datum/reagent/new_reagent)
+#define COMSIG_REAGENT_ON_TRANSFER "reagent_on_transfer"
 
 ///from base of [/datum/materials_controller/proc/InitializeMaterial]: (/datum/material)
 #define COMSIG_MATERIALS_INIT_MAT "SSmaterials_init_mat"

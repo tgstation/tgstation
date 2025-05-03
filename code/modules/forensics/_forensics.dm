@@ -240,7 +240,7 @@
 /datum/forensics/proc/get_visible_blood()
 	RETURN_TYPE(/list)
 	var/expose_flag = null
-	if (isturf(parent))
+	if (isturf(parent) || istype(parent, /obj/effect/decal))
 		expose_flag = BLOOD_COVER_TURFS
 	else if (ismob(parent))
 		expose_flag = BLOOD_COVER_MOBS

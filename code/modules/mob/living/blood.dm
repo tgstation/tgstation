@@ -287,17 +287,18 @@
 			temp_chem[blood_reagent.type] = blood_reagent.volume
 		blood_data["trace_chem"] = list2params(temp_chem)
 
-	// Viruses, mind, facitons, etc don't get stored in stuff like oil
-	if (!blood_type.preserve_dna)
+	if (blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA)
+		// Viruses we possess
+		blood_data["viruses"] = list()
+		for(var/datum/disease/disease as anything in diseases)
+			blood_data["viruses"] += disease.Copy()
+
+		if(LAZYLEN(disease_resistances))
+			blood_data["resistances"] = disease_resistances.Copy()
+
+	// DNA, mind, facitons, etc don't get stored in stuff like oil
+	if (!(blood_type.expose_flags & BLOOD_ADD_DNA))
 		return blood_data
-
-	// Viruses we possess
-	blood_data["viruses"] = list()
-	for(var/datum/disease/disease as anything in diseases)
-		blood_data["viruses"] += disease.Copy()
-
-	if(LAZYLEN(disease_resistances))
-		blood_data["resistances"] = disease_resistances.Copy()
 
 	if(mind)
 		blood_data["mind"] = mind
@@ -316,7 +317,7 @@
 		return
 
 	var/datum/blood_type/blood_type = get_bloodtype()
-	if (!blood_type.preserve_dna)
+	if (!(blood_type.expose_flags & BLOOD_ADD_DNA))
 		return blood_data
 
 	// If we haven't suicided but the ghost cannot reenter, i.e. we ghosted, don't set ourselves as cloneable
@@ -386,6 +387,9 @@
 	var/datum/blood_type/blood_type
 	if(!length(blood_DNA))
 		return get_blood_type(BLOOD_TYPE_O_PLUS).get_color()
+	else if (length(blood_DNA) == 1) // Microop for when we don't need to do color mixing
+		blood_type = blood_DNA[blood_DNA[length(blood_DNA)]]
+		return blood_type.get_color()
 
 	var/r_color = 0
 	var/g_color = 0
@@ -394,20 +398,39 @@
 	for (var/blood_key in blood_DNA)
 		blood_type = blood_DNA[blood_key]
 		if(!istype(blood_type))
-			blood_type = get_blood_type(blood_type)
-			if(!istype(blood_type))
-				continue
+			continue
 
-		var/list/rgb_blood = rgb2num(blood_type.get_color())
+		var/list/hopefully_not_a_list = blood_type.get_color()
+		var/list/rgb_blood = null
+		if (islist(hopefully_not_a_list))
+			var/per_row = 3
+			if (length(hopefully_not_a_list) >= 16)
+				per_row = 4
+			rgb_blood = list(hopefully_not_a_list[1], hopefully_not_a_list[per_row + 2], hopefully_not_a_list[per_row * 2 + 3])
+		else
+			rgb_blood = rgb2num(blood_type.get_color())
+
 		r_color += rgb_blood[1]
 		g_color += rgb_blood[2]
 		b_color += rgb_blood[3]
 		valid_colors += 1
 
-	if (valid_colors > 0)
-		return rgb(r_color / valid_colors, g_color / valid_colors, b_color / valid_colors)
+	if (valid_colors == 0)
+		return get_blood_type(BLOOD_TYPE_O_PLUS).get_color()
 
-	return get_blood_type(BLOOD_TYPE_O_PLUS).get_color()
+	r_color /= valid_colors
+	g_color /= valid_colors
+	b_color /= valid_colors
+
+	// Our colors are too vibrant, so we're forced to use matrixes
+	if (r_color > 255 || g_color > 255 || b_color > 255)
+		return list(
+			r_color, 0, 0,
+			0, g_color, 0,
+			0, 0, b_color,
+		)
+
+	return rgb(r_color, g_color, b_color)
 
 /**
  * Returns TRUE if src is compatible with donor's blood, otherwise FALSE.
@@ -522,7 +545,7 @@
 
 	var/found_trail = FALSE
 	for(var/obj/effect/decal/cleanable/blood/trail_holder/trail in start)
-		if (trail.blood_state != trail_blood_type)
+		if (BLOOD_STATE_HUMAN != trail_blood_type)
 			continue
 
 		// Don't make double trails, even if they're of a different type
@@ -541,7 +564,6 @@
 		return
 
 	var/obj/effect/decal/cleanable/blood/trail_holder/trail = new(start, get_static_viruses())
-	trail.blood_state = trail_blood_type
 	trail.existing_dirs += newdir
 	trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
 	trail.add_mob_blood(src)

@@ -8,8 +8,8 @@
 	plane = GAME_PLANE
 	layer = GIB_LAYER
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
-	blood_state = BLOOD_STATE_OIL
-	bloodiness = BLOOD_AMOUNT_PER_DECAL
+	//blood_state = BLOOD_STATE_OIL
+	//bloodiness = BLOOD_AMOUNT_PER_DECAL
 	mergeable_decal = FALSE
 	beauty = -50
 	clean_type = CLEAN_TYPE_BLOOD
@@ -81,8 +81,8 @@
 	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "floor1"
 	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7")
-	blood_state = BLOOD_STATE_OIL
-	bloodiness = BLOOD_AMOUNT_PER_DECAL
+	//blood_state = BLOOD_STATE_OIL
+	//bloodiness = BLOOD_AMOUNT_PER_DECAL
 	beauty = -100
 	clean_type = CLEAN_TYPE_BLOOD
 	decal_reagent = /datum/reagent/fuel/oil

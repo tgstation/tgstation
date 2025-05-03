@@ -238,7 +238,7 @@
 	var/blood_status = " Patient either has no blood, or does not require it to function."
 	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
 	var/datum/blood_type/blood_type = patient.get_bloodtype()
-	var/blood_name = LOWER_TEXT(blood_type.scanner_name) || "blood"
+	var/blood_name = LOWER_TEXT(blood_type.get_blood_name()) || "blood"
 	var/blood_warning = " "
 	var/blood_alcohol = patient.get_blood_alcohol_content()
 
@@ -270,7 +270,7 @@
 			if (blood_percent <= 60)
 				blood_warning += " Ignoring treatment may lead to death!"
 
-		blood_status = "Patient [blood_name] levels are currently reading [blood_percent]%.[blood_type.scanner_name ? "" : " Patient has [blood_type.name] type blood."][blood_warning]"
+		blood_status = "Patient [blood_name] levels are currently reading [blood_percent]%.[blood_type.get_blood_name() ? "" : " Patient has [blood_type.name] type blood."][blood_warning]"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)

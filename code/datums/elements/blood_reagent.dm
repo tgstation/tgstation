@@ -21,6 +21,7 @@
 	RegisterSignal(target, COMSIG_REAGENT_EXPOSE_TURF, PROC_REF(on_turf_expose))
 	RegisterSignal(target, COMSIG_REAGENT_EXPOSE_OBJ, PROC_REF(on_obj_expose))
 	RegisterSignal(target, COMSIG_REAGENT_ON_MERGE, PROC_REF(on_merge))
+	RegisterSignal(target, COMSIG_REAGENT_ON_TRANSFER, PROC_REF(on_transfer))
 
 	if (!target.data)
 		target.data = list()
@@ -57,7 +58,9 @@
 	UnregisterSignal(target, list(
 		COMSIG_REAGENT_EXPOSE_MOB,
 		COMSIG_REAGENT_EXPOSE_TURF,
-		COMSIG_REAGENT_EXPOSE_OBJ
+		COMSIG_REAGENT_EXPOSE_OBJ,
+		COMSIG_REAGENT_ON_MERGE,
+		COMSIG_REAGENT_ON_TRANSFER,
 	))
 
 /// Cover the mob in blood and transfer our viruses and resistances to them
@@ -123,8 +126,11 @@
 	if (!splatter)
 		splatter = new(exposed_turf, blood_type, reac_volume)
 	else
-		var/blood_dna = source.data?["blood_DNA"] || "Unknown DNA"
-		//splatter.add_blood(blood_dna, blood_type, reac_volume) // TODO SMARTKAR
+		if (source.data?["blood_DNA"])
+			splatter.add_blood_DNA(list(source.data?["blood_DNA"] = blood_type))
+		else
+			splatter.add_blood_DNA(list(blood_type.dna_string = blood_type))
+		splatter.adjust_bloodiness(reac_volume / BLOOD_TO_UNITS_MULTIPLIER)
 
 	if (!(blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return
@@ -213,3 +219,7 @@
 			source.data["trace_chem"] = mix_data["trace_chem"]
 		else
 			source.data["trace_chem"] = list2params(params2list(source.data["trace_chem"]) | params2list(mix_data["trace_chem"]))
+
+/datum/element/blood_reagent/proc/on_transfer(datum/reagent/reagent, datum/reagents/target_holder, datum/reagent/new_reagent)
+	SIGNAL_HANDLER
+	new_reagent.AddElement(/datum/element/blood_reagent, null, blood_type)

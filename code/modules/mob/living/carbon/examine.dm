@@ -391,8 +391,8 @@
 		var/list/blood_stains = GET_ATOM_BLOOD_DECALS(src)
 		var/datum/blood_type/blood_type = blood_stains[blood_stains[length(blood_stains)]]
 		var/blood_descriptior = "blood"
-		if(istype(blood_type) && blood_type.scanner_name)
-			blood_descriptior = LOWER_TEXT(blood_type.scanner_name)
+		if(istype(blood_type) && blood_type.get_blood_name())
+			blood_descriptior = LOWER_TEXT(blood_type.get_blood_name())
 		. += span_warning("[t_He] [t_has] [num_hands > 1 ? "" : "a "][blood_descriptior]-stained hand[num_hands > 1 ? "s" : ""]!")
 	//handcuffed?
 	if(handcuffed)
