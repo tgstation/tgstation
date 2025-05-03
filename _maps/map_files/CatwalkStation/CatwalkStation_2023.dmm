@@ -1765,7 +1765,7 @@
 	id = "abandoned_kitchen";
 	name = "Kitchen Shudders"
 	},
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /turf/open/floor/iron/cafeteria,
 /area/station/maintenance/starboard/lesser)
 "aCO" = (
@@ -17427,7 +17427,7 @@
 /area/station/maintenance/department/engine)
 "fmZ" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = 2;
 	pixel_y = 5
 	},
@@ -45221,7 +45221,7 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = 10;
 	pixel_y = 17
 	},
