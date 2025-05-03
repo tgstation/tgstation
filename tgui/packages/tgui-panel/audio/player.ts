@@ -71,6 +71,7 @@ export class AudioPlayer {
         Byond.sendMessage('audio/protected');
       }
       logger.log('playback error', JSON.stringify(error));
+      this.stop();
     });
 
     if (this.options.end) {
