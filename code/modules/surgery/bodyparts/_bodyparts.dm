@@ -1179,7 +1179,7 @@
 	husk_icon.ColorTone(HUSK_COLOR_TONE)
 	thing_to_husk.icon = husk_icon
 	var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]", appearance_flags = RESET_COLOR)
-	// BLEND_INSET_OVERLAY on KEEP_APART atoms masks itself with the atom, so we cannot add this as an overlay to our limb to have it automatically mask
+	// BLEND_INSET_OVERLAY on KEEP_TOGETHER atoms masks itself with the atom, so we cannot add this as an overlay to our limb to have it automatically mask
 	husk_blood.blend_mode = BLEND_INSET_OVERLAY
 	husk_blood.dir = thing_to_husk.dir
 	husk_blood.layer = thing_to_husk.layer
