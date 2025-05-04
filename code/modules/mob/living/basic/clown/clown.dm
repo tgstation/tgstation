@@ -465,7 +465,7 @@
 		//Encourage gluttony RP by giving a litle bonus for each obj eaten.
 		foods_eaten++
 		if(!(foods_eaten % 5) && foods_eaten <= 100)
-			balloon_alert(src, "Weight gained!")
+			balloon_alert(src, "weight gained!")
 			maxHealth += 10
 			health += 10
 		if(istype(eaten_atom, /obj/item/food/grown/banana))
