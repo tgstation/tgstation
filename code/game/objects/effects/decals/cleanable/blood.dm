@@ -433,6 +433,10 @@
 	. = ..()
 	desc = "A [dried ? "dried " : ""]trail of [get_blood_string()]."
 
+/obj/effect/decal/cleanable/blood/lazy_init_reagents()
+	if(!istype(loc, /obj/effect/decal/cleanable/blood/trail_holder))
+		return ..()
+
 /obj/effect/decal/cleanable/blood/trail/adjust_bloodiness(by_amount, ignore_timer = FALSE)
 	. = ..()
 	if(!very_bloody && bloodiness >= 0.25 * BLOOD_AMOUNT_PER_DECAL)
