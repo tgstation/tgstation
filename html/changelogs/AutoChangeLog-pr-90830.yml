@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Mechs are considerably more vulnerable to EMPs than they were previously."
+  - balance: "The tier of capacitor inside a mech will substantially improve a mech's defenses against EMP damage. Having only tier 1 capacitors will result in your mech rapidly destroyed from repeat EMPs."
+  - balance: "Mechs suffer more power loss from EMPs. It can take upwards of 8 heavy strength EMPs to deplete a mechs cell if it has a tier 4 capacitor. It takes only two if it has a tier 1."
+  - balance: "Mechs suffer more integrity loss from EMPs. A durand can withstand around 8 heavy strength EMPs before being destroyed if it has a tier 4 capacitor. It won't survive more than two or three if it has a tier 1."
