@@ -7,7 +7,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
-		/datum/ai_planning_subtree/flee_target,
+		/datum/ai_planning_subtree/use_mob_ability/snail_retreat,
 		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/find_and_hunt_target/snail_people,
 	)
@@ -41,3 +41,27 @@
 /datum/ai_behavior/hunt_target/snail_people/target_caught(mob/living/hunter, atom/hunted)
 	hunter.manual_emote("Celebrates around [hunted]!")
 	hunter.SpinAnimation(speed = 1, loops = 3)
+
+/datum/ai_planning_subtree/use_mob_ability/snail_retreat
+	ability_key = BB_SNAIL_RETREAT_ABILITY
+	finish_planning = TRUE
+
+/datum/ai_planning_subtree/use_mob_ability/snail_retreat/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/shell_retreated = HAS_TRAIT(controller.pawn, TRAIT_SHELL_RETREATED)
+	var/has_target = controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET)
+	if((has_target && shell_retreated) || (!has_target && !shell_retreated))
+		return
+	return ..()
+
+
+/datum/ai_controller/basic_controller/snail/trash
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
+	)
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+	)

@@ -5170,6 +5170,7 @@
 #include "code\modules\mob\living\basic\slime\ai\pet_command.dm"
 #include "code\modules\mob\living\basic\slime\ai\subtrees.dm"
 #include "code\modules\mob\living\basic\snails\snail.dm"
+#include "code\modules\mob\living\basic\snails\snail_ability.dm"
 #include "code\modules\mob\living\basic\snails\snail_ai.dm"
 #include "code\modules\mob\living\basic\space_fauna\ant.dm"
 #include "code\modules\mob\living\basic\space_fauna\cat_surgeon.dm"

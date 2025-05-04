@@ -34,6 +34,12 @@
 		/obj/item/food/grown,
 		/obj/item/food/appleslice,
 	)
+
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/shell_retreat = BB_SNAIL_RETREAT_ABILITY,
+	)
+
+	grant_actions_by_list(innate_actions)
 	AddElement(/datum/element/ai_retaliate)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(eatable_food))
 	AddElement(/datum/element/basic_eating, food_types = eatable_food)
