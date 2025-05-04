@@ -71,6 +71,22 @@
 ///Flat decay of confusion  each second.
 #define CONFUSION_DECAY_FLAT 0.025
 
+///A strong one shot confusion effect causing an initial 100% misstep chance, decaying to 45% in 5 seconds and 20% in 10 seconds.
+#def CONFUSION_STRONG 100
+///A medium one shot confusion effect causing an initial 50% misstep chance, decaying to 23% in 5 seconds and 10% in 10 seconds.
+#def CONFUSION_MEDIUM 50
+
+#def CONFUSION_WEAK 25
+
+#def CONFUSION_STRONG_PER_SECOND 20
+#def CONFUSION_MEDIUM_PER_SECOND 10
+#def CONFUSION_WEAK_PER_SECOND 5
+
+#def CONFUSION_STRONG_PER_SECOND_LINEAR 5
+#def CONFUSION_MEDIUM_PER_SECOND_LINEAR 2
+#def CONFUSION_WEAK_PER_SECOND_LINEAR 1
+
+
 ///Multiplicative decay of inebriated each second.
 #define DRUNK_DECAY_MULT 0.98
 ///Flat decay of inebriated each second.
