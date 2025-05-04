@@ -4207,6 +4207,7 @@
 #include "code\modules\events\ghost_role\slaughter_event.dm"
 #include "code\modules\events\ghost_role\space_dragon.dm"
 #include "code\modules\events\ghost_role\space_ninja.dm"
+#include "code\modules\events\ghost_role\voidwalker.dm"
 #include "code\modules\events\holiday\easter.dm"
 #include "code\modules\events\holiday\halloween.dm"
 #include "code\modules\events\holiday\vday.dm"
