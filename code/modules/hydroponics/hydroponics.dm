@@ -1129,10 +1129,16 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/warning = tgui_alert(user, "Are you sure you wish to empty the tray's nutrient beaker?","Empty Tray Nutrients?", list("Yes", "No"))
 	if(warning == "Yes" && user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		reagents.clear_reagents()
-		to_chat(user, span_warning("You empty [src]'s nutrient tank."))
+		empty_tray(user)
 	update_appearance()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+
+/obj/machinery/hydroponics/proc/empty_tray(mob/user)
+	reagents.clear_reagents()
+	for(var/obj/item/clothing/head/mob_holder/snail/possible_snail in contents)
+		possible_snail.forceMove(drop_location())
+	to_chat(user, span_warning("You empty [src]'s nutrient tank."))
 
 /**
  * Update Tray Proc

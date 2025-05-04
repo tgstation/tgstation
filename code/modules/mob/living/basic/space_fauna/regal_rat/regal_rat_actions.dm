@@ -234,6 +234,7 @@
 	nearby_snail.fully_replace_character_name(nearby_snail.name, "trash [nearby_snail.name]")
 	nearby_snail.ai_controller = new /datum/ai_controller/basic_controller/snail/trash(nearby_snail)
 	make_minion(nearby_snail, " ...This one doesn't look as timid.", mouse_commands)
+	nearby_snail.update_appearance()
 	return TRUE
 
 // Command you can give to a mouse to make it kill someone
