@@ -138,7 +138,6 @@ multiple modular subtrees with behaviors
 	if(TryPossessPawn(new_pawn) & AI_CONTROLLER_INCOMPATIBLE)
 		qdel(src)
 		CRASH("[src] attached to [new_pawn] but these are not compatible!")
-		return FALSE
 
 	pawn = new_pawn
 	pawn.ai_controller = src
