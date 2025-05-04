@@ -238,7 +238,7 @@
 	var/blood_status = " Patient either has no blood, or does not require it to function."
 	var/blood_percent = round((patient.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
 	var/datum/blood_type/blood_type = patient.get_bloodtype()
-	var/blood_name = LOWER_TEXT(blood_type.get_blood_name()) || "blood"
+	var/blood_name = "error"
 	var/blood_warning = " "
 	var/blood_alcohol = patient.get_blood_alcohol_content()
 
@@ -248,7 +248,8 @@
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
-	if(!HAS_TRAIT(patient, TRAIT_GENELESS) && !HAS_TRAIT(patient, TRAIT_NOBLOOD)) //Blood levels Information
+	if(patient.get_blood_reagent()) //Blood levels Information
+		blood_name = LOWER_TEXT(blood_type.get_blood_name()) || "blood"
 		if(patient.is_bleeding())
 			bleed_status = " Patient is currently bleeding!"
 

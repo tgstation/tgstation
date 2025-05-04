@@ -122,12 +122,15 @@
 	var/dna_list = list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type)
 	var/obj/effect/decal/cleanable/blood/splatter = locate() in exposed_turf
 	if (!splatter)
+		if (!(blood_type.expose_flags & BLOOD_COVER_TURFS))
+			return
 		splatter = new(exposed_turf, (blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA) ? source.data?["viruses"] : null, dna_list)
 		splatter.adjust_bloodiness(-splatter.bloodiness + reac_volume / BLOOD_TO_UNITS_MULTIPLIER)
 		return
 
 	splatter.add_blood_DNA(dna_list)
-	splatter.adjust_bloodiness(reac_volume / BLOOD_TO_UNITS_MULTIPLIER)
+	if (blood_type.expose_flags & BLOOD_COVER_TURFS)
+		splatter.adjust_bloodiness(reac_volume / BLOOD_TO_UNITS_MULTIPLIER)
 
 	if (!(blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return

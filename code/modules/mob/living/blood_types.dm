@@ -20,8 +20,6 @@
 	var/datum/reagent/reagent_type = /datum/reagent/blood
 	/// What chem is used to restore this blood type (outside of itself, of course)?
 	var/datum/reagent/restoration_chem = /datum/reagent/iron
-	/// Whether or not this blood type should create blood trails, blood sprays, etc
-	var/no_bleed_overlays
 	/// Exclude abstract root types from being initialized by defining them here
 	var/root_abstract_type
 	/// If this blood type is meant to persist across species changes
@@ -53,7 +51,7 @@
 
 /// Name of the reagent we use for blood
 /datum/blood_type/proc/get_blood_name()
-	return reagent_type::name
+	return capitalize(LOWER_TEXT(reagent_type::name))
 
 /// Returns blood color or color matrix
 /// Useful when you want to have a blood color with values out of normal hex bounds for that acidic look
@@ -90,10 +88,82 @@
  * * new_splat - whether this is a newly instantiated blood decal, or an existing one this blood is being added to
  */
 /datum/blood_type/proc/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
-	if (new_splat && !blood.decal_reagent)
+	if(new_splat && !blood.decal_reagent)
 		blood.decal_reagent = reagent_type
-	else if (blood.reagents && blood.bloodiness) // If reagents don't exist yet, we'll be added via lazyloading
+	else if(blood.reagents && blood.bloodiness) // If reagents don't exist yet, we'll be added via lazyloading
 		blood.reagents.add_reagent(reagent_type, round(blood.bloodiness / (GET_ATOM_BLOOD_DNA_LENGTH(blood) - 1) * BLOOD_TO_UNITS_MULTIPLIER, CHEMICAL_VOLUME_ROUNDING)) // -1 as this happens before bloodiness is adjusted
+
+
+/**
+ * Helper proc to make a blood splatter from the passed mob of this type
+ *
+ * Arguments
+ * * bleeding - the mob bleeding the blood, note we assume this blood type is that mob's blood
+ * * blood_turf - the turf to spawn the blood on
+ * * drip - whether to spawn a drip or a splatter
+ */
+/datum/blood_type/proc/make_blood_splatter(mob/living/bleeding, turf/blood_turf, drip = FALSE)
+	if(!(expose_flags & BLOOD_COVER_TURFS))
+		return
+
+	if(isgroundlessturf(blood_turf))
+		blood_turf = GET_TURF_BELOW(blood_turf)
+
+	if(isnull(blood_turf) || isclosedturf(blood_turf))
+		return
+
+	var/list/temp_blood_DNA
+	if(drip)
+		var/new_blood = /obj/effect/decal/cleanable/blood/drip::bloodiness
+		// Only a certain number of drips (or one large splatter) can be on a given turf.
+		var/obj/effect/decal/cleanable/blood/drip/drop = locate() in blood_turf
+		if(isnull(drop))
+			var/obj/effect/decal/cleanable/blood/splatter = locate() in blood_turf
+			if(!QDELETED(splatter) && !splatter.dried)
+				splatter.add_mob_blood(bleeding)
+				splatter.adjust_bloodiness(new_blood)
+				return splatter
+
+			drop = new(blood_turf, bleeding.get_static_viruses(), bleeding.get_blood_dna_list())
+			if(!QDELETED(drop))
+				drop.random_icon_states -= drop.icon_state
+			return drop
+
+		if(length(drop.random_icon_states))
+			// Handle adding a single drip to the base atom
+			// Makes use of viscontents so every drip can dry at an individual rate (with an individual color)
+			var/obj/effect/decal/cleanable/blood/drip/new_drop = new(drop, null, bleeding.get_blood_dna_list())
+			new_drop.bloodiness = 0
+			new_drop.icon_state = pick_n_take(drop.random_icon_states)
+			new_drop.color = color
+			new_drop.vis_flags |= (VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID)
+			new_drop.appearance_flags |= (RESET_COLOR)
+			drop.gender = PLURAL
+			drop.base_name = "drips of"
+			drop.vis_contents += new_drop
+			// Handle adding blood to the base atom
+			drop.adjust_bloodiness(new_blood)
+			drop.add_mob_blood(bleeding)
+			drop.add_diseases(bleeding.get_static_viruses())
+			return drop
+
+		temp_blood_DNA = GET_ATOM_BLOOD_DNA(drop) // We transfer the dna from the drip to the splatter
+		qdel(drop) // The drip is replaced by a bigger splatter
+
+	// Find a blood decal or create a new one.
+	var/obj/effect/decal/cleanable/blood/splatter = locate() in blood_turf
+	if(isnull(splatter) || splatter.dried)
+		splatter = new(blood_turf, bleeding.get_static_viruses(), bleeding.get_blood_dna_list())
+		if(QDELETED(splatter)) //Give it up
+			return null
+	else
+		splatter.adjust_bloodiness(BLOOD_AMOUNT_PER_DECAL)
+		splatter.add_diseases(bleeding.get_static_viruses())
+		splatter.add_mob_blood(bleeding) // Give blood info to the blood decal
+
+	if(LAZYLEN(temp_blood_DNA))
+		splatter.add_blood_DNA(temp_blood_DNA)
+	return splatter
 
 // Human blood type, for organizational purposes mainly
 /datum/blood_type/human
@@ -206,7 +276,7 @@
 	if (!new_splat)
 		return
 
-	// Oil blood will never dry and can be ignited with fire
+	// Oil blood will never dry and can be ignited with fire or anything sufficiently hot
 	blood.can_dry = FALSE
 	blood.dry_prefix = null
 	blood.dry_desc = null
@@ -241,13 +311,12 @@
 	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS
 
 /datum/blood_type/xeno/get_blood_name()
-	return "Acid"
+	return "Acid" // "pool of sulphuric acid" is a bit too lengthy of a name
 
 /datum/blood_type/xeno/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
 	. = ..()
 	if (!new_splat)
 		return
-
 	// Replace only the default description
 	if (blood.desc == /obj/effect/decal/cleanable/blood::desc)
 		blood.desc = "It's green and acidic. It looks like... <i>blood?</i>"
@@ -280,16 +349,6 @@
 	reagent_type = /datum/reagent/toxin/slimejelly
 	restoration_chem = /datum/reagent/stable_plasma // Because normal plasma already refills our blood
 
-/datum/blood_type/slime/New(new_color)
-	. = ..()
-	if (!new_color)
-		return
-	color = new_color
-	id = type_key() // Should not be a singleton for perf/memory reasons considering how easy it is to swap colors
-
-/datum/blood_type/slime/type_key()
-	return "_[name]_[color]"
-
 /// Podpeople blood
 /datum/blood_type/water
 	name = BLOOD_TYPE_H2O
@@ -297,7 +356,6 @@
 	color = /datum/reagent/water::color
 	reagent_type = /datum/reagent/water
 	restoration_chem = null
-	no_bleed_overlays = TRUE
 	expose_flags = BLOOD_ADD_DNA | BLOOD_TRANSFER_VIRAL_DATA
 
 /// Prevents awkward grey wounds on the mob while keeping bleed overlays looking like water leaking from a balloon

@@ -496,9 +496,13 @@
 
 ///Get the mobs dna list
 /mob/living/carbon/get_blood_dna_list()
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
+		return
+
 	if (dna?.unique_enzymes)
-		return list(dna.unique_enzymes = get_bloodtype())
-	return ..()
+		return list(dna.unique_enzymes = blood_type)
+	return list(blood_type.dna_string = blood_type)
 
 /mob/living/silicon/get_blood_dna_list()
 	return

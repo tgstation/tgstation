@@ -122,22 +122,22 @@
 
 //Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/carbon/proc/bleed(amt)
-	if(!blood_volume || HAS_TRAIT(src, TRAIT_GODMODE))
+	if(HAS_TRAIT(src, TRAIT_GODMODE) || !get_blood_reagent())
 		return
+
 	blood_volume = max(blood_volume - amt, 0)
 
-	//Blood loss still happens in locker, floor stays clean
-	if(isturf(loc) && prob(sqrt(amt)*BLOOD_DRIP_RATE_MOD))
+	// Blood loss still happens in locker, floor stays clean
+	if(isturf(loc) && prob(sqrt(amt) * BLOOD_DRIP_RATE_MOD))
 		add_splatter_floor(loc, (amt <= 10))
 
 /mob/living/carbon/human/bleed(amt)
 	amt *= physiology.bleed_mod
-	if(!HAS_TRAIT(src, TRAIT_NOBLOOD))
-		..()
+	return ..()
 
 /// A helper to see how much blood we're losing per tick
 /mob/living/carbon/proc/get_bleed_rate()
-	if(!blood_volume)
+	if(HAS_TRAIT(src, TRAIT_GODMODE) || !get_blood_reagent())
 		return
 	var/bleed_amt = 0
 	for(var/X in bodyparts)
@@ -146,10 +146,7 @@
 	return bleed_amt
 
 /mob/living/carbon/human/get_bleed_rate()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return
-	. = ..()
-	. *= physiology.bleed_mod
+	return ..() * physiology.bleed_mod
 
 /**
  * bleed_warn() is used to for carbons with an active client to occasionally receive messages warning them about their bleeding status (if applicable)
@@ -240,17 +237,18 @@
 	if (!blood_type)
 		return FALSE
 
+	var/blood_reagent = get_blood_reagent()
+
 	blood_volume -= amount
 	var/list/blood_data = get_blood_data()
 
 	if (!isliving(receiver))
-		receiver.reagents.add_reagent(blood_type.reagent_type, amount, blood_data, bodytemperature, creation_callback = CALLBACK(src, PROC_REF(on_blood_created), blood_type))
+		receiver.reagents.add_reagent(blood_reagent, amount, blood_data, bodytemperature, creation_callback = CALLBACK(src, PROC_REF(on_blood_created), blood_type))
 		return TRUE
 
 	var/mob/living/target = receiver
-	var/datum/blood_type/receiver_blood_type = target.get_bloodtype()
-	if (!receiver_blood_type?.reagent_type == blood_type.reagent_type)
-		target.reagents.add_reagent(blood_type.reagent_type, amount, blood_data, bodytemperature, creation_callback = CALLBACK(src, PROC_REF(on_blood_created), blood_type))
+	if (target.get_blood_reagent() != blood_reagent)
+		target.reagents.add_reagent(blood_reagent, amount, blood_data, bodytemperature, creation_callback = CALLBACK(src, PROC_REF(on_blood_created), blood_type))
 		return TRUE
 
 	if(blood_data["viruses"])
@@ -259,7 +257,7 @@
 				continue
 			target.ForceContractDisease(blood_disease)
 
-	if(!ignore_incompatibility && !(blood_type.type_key() in receiver_blood_type.compatible_types))
+	if(!ignore_incompatibility && !(blood_type.type_key() in target.get_bloodtype().compatible_types))
 		target.reagents.add_reagent(/datum/reagent/toxin, amount * 0.5)
 		return TRUE
 
@@ -275,7 +273,7 @@
 	RETURN_TYPE(/list)
 
 	var/datum/blood_type/blood_type = get_bloodtype()
-	if (!blood_type)
+	if (!blood_type || !get_blood_reagent())
 		return
 
 	var/blood_data = list()
@@ -344,10 +342,6 @@
 
 	return blood_data
 
-/mob/living/proc/get_blood_reagent()
-	var/datum/blood_type/blood_type = get_bloodtype()
-	return blood_type?.reagent_type
-
 /mob/living/proc/get_bloodtype()
 	RETURN_TYPE(/datum/blood_type)
 	if (!blood_volume)
@@ -371,7 +365,8 @@
 	return get_blood_type(BLOOD_TYPE_ANIMAL)
 
 /// Returns the reagent type this mob has for blood
-/mob/living/carbon/get_blood_reagent()
+/// Also used as a way to check if a mob can bleed at all
+/mob/living/proc/get_blood_reagent()
 	if (HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_NOBLOOD))
 		return
 
@@ -438,78 +433,55 @@
  * * donor: Mob that is donating blood.
  */
 /mob/living/proc/get_blood_compatibility(mob/living/donor)
+	if (get_blood_reagent() != donor.get_blood_reagent())
+		return FALSE
+
 	var/datum/blood_type/patient_blood_data = get_bloodtype()
 	var/datum/blood_type/donor_blood_data = donor.get_bloodtype()
 	return (donor_blood_data?.type_key() in patient_blood_data?.compatible_types)
 
-//to add a splatter of blood or other mob liquid.
-/mob/living/proc/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check = FALSE)
-	if(!skip_reagents_check && !(get_blood_reagent() in list(/datum/reagent/blood, /datum/reagent/toxin/acid)))
+/// Create a small visual-only blood splatter
+/mob/living/proc/create_splatter(splatter_dir = pick(GLOB.cardinals))
+	// Check for husking and TRAIT_NOBLOOD
+	if (!get_blood_reagent())
+		return
+	var/obj/effect/temp_visual/dir_setting/bloodsplatter/splatter = new(get_turf(src), splatter_dir)
+	splatter.color = get_bloodtype()?.color
+
+/*
+ * Create a splatter or drip of this mob's blood type
+ * Arguments:
+ * * splatter_turf - If the splatter should be made on a different turf than the mob
+ * * small_drip
+ */
+/mob/living/proc/add_splatter_floor(turf/splatter_turf, small_drip = FALSE)
+	// Check for husking and TRAIT_NOBLOOD
+	if (!get_blood_reagent())
 		return
 
-	if(!splatter_turf)
+	if (!splatter_turf)
 		splatter_turf = get_turf(src)
 
-	if(isclosedturf(splatter_turf) || (isgroundlessturf(splatter_turf) && !GET_TURF_BELOW(splatter_turf)))
+	return get_bloodtype()?.make_blood_splatter(src, splatter_turf, small_drip)
+
+/**
+ * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.
+ *
+ * The strength of the splatter in the second argument determines how much it can dirty and how far it can go
+ *
+ * Arguments:
+ * * splatter_direction: Which direction the blood is flying
+ * * splatter_strength: How many tiles it can go, and how many items it can pass over and dirty
+ */
+/mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
+	// Check if we can bleed and if our splatter can even go anywhere
+	if(!isturf(loc) || !get_blood_reagent())
 		return
+	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc, get_static_viruses(), get_blood_dna_list(), splatter_strength)
+	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
+	our_splatter.fly_towards(targ, splatter_strength)
 
-	var/list/temp_blood_DNA
-	if(small_drip)
-		// Only a certain number of drips (or one large splatter) can be on a given turf.
-		var/obj/effect/decal/cleanable/blood/drip/drop = locate() in splatter_turf
-		if(drop)
-			if(drop.drips < 5)
-				drop.drips++
-				drop.add_overlay(pick(drop.random_icon_states))
-				drop.add_mob_blood(src)
-				return
-			else
-				temp_blood_DNA = GET_ATOM_BLOOD_DNA(drop) //we transfer the dna from the drip to the splatter
-				qdel(drop)//the drip is replaced by a bigger splatter
-		else
-			drop = new(splatter_turf, get_static_viruses())
-			drop.add_mob_blood(src)
-			return
-
-	// Find a blood decal or create a new one.
-	var/obj/effect/decal/cleanable/blood/blood_spew = locate() in splatter_turf
-	if(!blood_spew)
-		blood_spew = new /obj/effect/decal/cleanable/blood/splatter(splatter_turf, get_static_viruses()) // TODO SMARTKAR
-	if(QDELETED(blood_spew)) //Give it up
-		return
-	blood_spew.bloodiness = min((blood_spew.bloodiness + BLOOD_AMOUNT_PER_DECAL), BLOOD_POOL_MAX)
-	blood_spew.add_mob_blood(src) //give blood info to the blood decal.
-	if(temp_blood_DNA)
-		blood_spew.add_blood_DNA(temp_blood_DNA, no_visuals = small_drip)
-
-/mob/living/carbon/human/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check = TRUE)
-	if(!HAS_TRAIT(src, TRAIT_NOBLOOD) && !get_bloodtype()?.no_bleed_overlays)
-		. = ..()
-
-/mob/living/carbon/alien/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check)
-	if(!splatter_turf)
-		splatter_turf = get_turf(src)
-	var/obj/effect/decal/cleanable/blood/xeno/xeno_blood_splatter = locate() in splatter_turf.contents
-	if(!xeno_blood_splatter)
-		xeno_blood_splatter = new(splatter_turf)
-	xeno_blood_splatter.add_blood_DNA(list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)))
-
-/mob/living/silicon/robot/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check)
-	if(!splatter_turf)
-		splatter_turf = get_turf(src)
-	var/obj/effect/decal/cleanable/blood/oil/oil_splatter = locate() in splatter_turf.contents
-	if(!oil_splatter)
-		oil_splatter = new(splatter_turf)
-
-/mob/living/proc/get_blood_alcohol_content()
-	var/blood_alcohol_content = 0
-	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
-	if(!isnull(inebriation))
-		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
-
-	return blood_alcohol_content
-
-
+/*
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity() || !isturf(start) || !blood_volume)
 		return
@@ -586,6 +558,16 @@
 		var/datum/wound/iter_wound = i
 		bleed_amount += iter_wound.drag_bleed_amount()
 	return bleed_amount
+
+*/
+
+/mob/living/proc/get_blood_alcohol_content()
+	var/blood_alcohol_content = 0
+	var/datum/status_effect/inebriated/inebriation = has_status_effect(/datum/status_effect/inebriated)
+	if(!isnull(inebriation))
+		blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
+
+	return blood_alcohol_content
 
 #undef BLOOD_DRIP_RATE_MOD
 #undef DRUNK_POWER_TO_BLOOD_ALCOHOL

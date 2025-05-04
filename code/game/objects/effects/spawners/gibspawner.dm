@@ -1,4 +1,4 @@
-
+// TODO SMARTKAR this entire file
 /obj/effect/gibspawner
 	icon_state = "gibspawner"// For the map editor
 	var/sparks = 0 //whether sparks spread

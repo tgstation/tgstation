@@ -9,8 +9,9 @@
 		return FALSE
 
 	var/mob/living/carbon/carb_hallucinator = hallucinator
-	if(!length(carb_hallucinator.bodyparts) || HAS_TRAIT(carb_hallucinator, TRAIT_NOBLOOD) || carb_hallucinator.get_bloodtype()?.no_bleed_overlays)
+	if(!length(carb_hallucinator.bodyparts) || !carb_hallucinator.get_blood_reagent())
 		return FALSE
+
 	var/obj/item/bodypart/picked
 	var/list/bodyparts = carb_hallucinator.bodyparts.Copy()
 	while(isnull(picked) && length(bodyparts))

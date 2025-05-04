@@ -99,7 +99,7 @@
 
 /turf/add_blood_DNA(list/blood_dna, list/datum/disease/diseases)
 	var/obj/effect/decal/cleanable/blood/splatter/blood_splatter = locate() in src
-	if(!blood_splatter)
+	if(!blood_splatter) // TODO smartkar ensure that this doesnt happen with wrong blood types
 		blood_splatter = new /obj/effect/decal/cleanable/blood/splatter(src, diseases, blood_dna)
 	return !QDELETED(blood_splatter) //we bloodied the floor
 

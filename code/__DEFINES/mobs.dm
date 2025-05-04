@@ -60,7 +60,7 @@
 #define BLOOD_ADD_DNA (1<<0)
 /// Cover the entire mob in *visible* blood
 #define BLOOD_COVER_MOBS (1<<1)
-/// Create blood splashes and trails on floors
+/// Create blood splashes and trails on floors, does not affect gibs creation
 #define BLOOD_COVER_TURFS (1<<2)
 /// Cover items in ourselves
 #define BLOOD_COVER_ITEMS (1<<3)

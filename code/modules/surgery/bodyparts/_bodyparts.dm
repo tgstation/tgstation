@@ -945,7 +945,7 @@
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
 		// Should be fine as this gets called before all the important stuff happens
-		if((bodypart_flags & ORGAN_VIRGIN) && owner?.get_bloodtype())
+		if(bodypart_flags & ORGAN_VIRGIN)
 			blood_dna_info = owner.get_blood_dna_list()
 			// need to remove the synethic blood DNA that is initialized
 			// wash also adds the blood dna again
@@ -1336,7 +1336,7 @@
 /obj/item/bodypart/proc/can_bleed()
 	SHOULD_BE_PURE(TRUE)
 
-	return ((biological_state & BIO_BLOODED) && (!owner || !HAS_TRAIT(owner, TRAIT_NOBLOOD)))
+	return ((biological_state & BIO_BLOODED) && (!owner || owner.get_blood_reagent()))
 
 /**
  * apply_gauze() is used to- well, apply gauze to a bodypart

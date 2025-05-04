@@ -458,7 +458,6 @@
 
 /mob/living/carbon/reagent_tick(datum/reagent/chem, seconds_per_tick, times_fired)
 	. = ..()
-
 	if(. & COMSIG_MOB_STOP_REAGENT_TICK)
 		return
 

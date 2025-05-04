@@ -388,8 +388,7 @@
 	if(.)
 		return .
 
-	var/obj/effect/decal/cleanable/blood/trail/new_trail = new(src, null, null)
-	new_trail.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
+	var/obj/effect/decal/cleanable/blood/trail/new_trail = new(src, null, GET_ATOM_BLOOD_DNA(src))
 	if(new_dir > 0)
 		// add some free sprite variation by flipping it around
 		if((new_dir in GLOB.cardinals) && prob(50))
@@ -590,9 +589,6 @@
 	bloodiness = 0
 	base_name = "drop of"
 	dry_desc = "A dried spattering."
-	/// How many blood droplets are currently on the turf
-	/// Only a certain amount of drops can be on a turf before they merge into a pool of blood
-	var/drips = 1
 
 /obj/effect/decal/cleanable/blood/footprints
 	name = "footprints"
@@ -727,8 +723,6 @@
 
 	/// The turf we just came from, so we can back up when we hit a wall
 	var/turf/prev_loc
-	/// The cached info about the blood
-	var/list/blood_dna_info
 	/// Skip making the final blood splatter when we're done, like if we're not in a turf
 	var/skip = FALSE
 	/// How many tiles/items/people we can paint red
@@ -749,7 +743,6 @@
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/expire()
 	if(isturf(loc) && !skip)
 		playsound(src, 'sound/effects/wounds/splatter.ogg', 60, TRUE, -1)
-		loc.add_blood_DNA(blood_dna_info)
 		loc.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	qdel(src)
 
@@ -777,7 +770,6 @@
 			continue
 		if(splatter_strength <= 0)
 			break
-		iter_atom.add_blood_DNA(blood_dna_info)
 		iter_atom.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 
 	splatter_strength--
@@ -787,13 +779,12 @@
 		return
 
 	// make a trail
-	var/obj/effect/decal/cleanable/blood/fly_trail = new(loc, null, blood_dna_info)
+	var/obj/effect/decal/cleanable/blood/fly_trail = new(loc, null, GET_ATOM_BLOOD_DNA(src))
 	fly_trail.dir = dir
 	if(ISDIAGONALDIR(flight_dir))
 		fly_trail.transform = fly_trail.transform.Turn((flight_dir == NORTHEAST || flight_dir == SOUTHWEST) ? 135 : 45)
 	fly_trail.icon_state = pick("trails_1", "trails2")
 	fly_trail.adjust_bloodiness(fly_trail.bloodiness * -0.66)
-	fly_trail.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/loop_done(datum/source)
 	SIGNAL_HANDLER
@@ -825,8 +816,7 @@
 		land_on_window(bumped_atom)
 		return
 
-	var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new(prev_loc, null, blood_dna_info)
-	final_splatter.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
+	var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new(prev_loc, null, GET_ATOM_BLOOD_DNA(src))
 	final_splatter.pixel_x = (dir == EAST ? 32 : (dir == WEST ? -32 : 0))
 	final_splatter.pixel_y = (dir == NORTH ? 32 : (dir == SOUTH ? -32 : 0))
 
@@ -834,8 +824,7 @@
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/land_on_window(obj/structure/window/the_window)
 	if(!the_window.fulltile)
 		return
-	var/obj/effect/decal/cleanable/final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc, null, blood_dna_info)
-	final_splatter.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
+	var/obj/effect/decal/cleanable/final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc, null, GET_ATOM_BLOOD_DNA(src))
 	final_splatter.forceMove(the_window)
 	the_window.vis_contents += final_splatter
 	expire()

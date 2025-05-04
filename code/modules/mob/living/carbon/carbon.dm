@@ -1442,27 +1442,6 @@
 		return TRUE
 	return FALSE
 
-/**
- * This proc is a helper for spraying blood for things like slashing/piercing wounds and dismemberment.
- *
- * The strength of the splatter in the second argument determines how much it can dirty and how far it can go
- *
- * Arguments:
- * * splatter_direction: Which direction the blood is flying
- * * splatter_strength: How many tiles it can go, and how many items it can pass over and dirty
- */
-/mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
-	if(!isturf(loc))
-		return
-	if(get_bloodtype()?.no_bleed_overlays)
-		return
-	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc) // TODO SMARTKAR
-	our_splatter.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
-	our_splatter.blood_dna_info = get_blood_dna_list()
-	our_splatter.color = get_blood_dna_color(our_splatter.blood_dna_info) // TODO SMARTKAR
-	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
-	our_splatter.fly_towards(targ, splatter_strength)
-
 /// Goes through the organs and bodyparts of the mob and updates their blood_dna_info, in case their blood type has changed (via set_species() or otherwise)
 /mob/living/carbon/proc/update_cached_blood_dna_info()
 	var/list/blood_dna_info = get_blood_dna_list()
@@ -1519,7 +1498,7 @@
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
 	if(isnull(head))
 		return ..()
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(!get_blood_reagent())
 		to_chat(src, span_notice("You get a headache."))
 		return
 	head.adjustBleedStacks(5)

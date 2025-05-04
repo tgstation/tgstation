@@ -386,14 +386,13 @@
 		if(target.blood_volume < BLOOD_VOLUME_SAFE)
 			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
 			if(transferred_blood_amount && target.get_blood_compatibility(chaplain))
-				transferred = TRUE
-				chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
-		if(target.blood_volume > BLOOD_VOLUME_EXCESS)
-			target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
+				transferred = chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
+		else if(target.blood_volume > BLOOD_VOLUME_EXCESS)
+			transferred = target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
 
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()
-	if(transferred)
+	if(!transferred)
 		to_chat(chaplain, span_warning("They hold no burden!"))
 		return BLESSING_IGNORED
 
