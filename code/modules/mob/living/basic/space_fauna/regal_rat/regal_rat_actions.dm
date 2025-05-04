@@ -225,6 +225,7 @@
 
 	nearby_snail.icon_state = "[nearby_snail.base_icon_state]_maints"
 	nearby_snail.icon_living = "[nearby_snail.base_icon_state]_maints"
+	nearby_snail.icon_dead = "[nearby_snail.base_icon_state]_maints_dead"
 	nearby_snail.maxHealth += 10
 	nearby_snail.health += 10
 	nearby_snail.melee_damage_lower += 5

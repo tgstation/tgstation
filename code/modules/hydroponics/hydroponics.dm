@@ -214,8 +214,15 @@
 	. = ..()
 	if(!QDELETED(src) && gone == myseed)
 		set_seed(null, FALSE)
-	if(istype(gone, /obj/item/clothing/head/mob_holder/snail))
-		QDEL_NULL(our_snail)
+	if(!istype(gone, /obj/item/clothing/head/mob_holder/snail))
+		return
+	var/obj/item/clothing/head/mob_holder/snail_object = gone
+	if(snail_object.held_mob)
+		UnregisterSignal(snail_object.held_mob, list(
+			COMSIG_LIVING_DEATH,
+			COMSIG_MOVABLE_ATTEMPTED_MOVE,
+		))
+	QDEL_NULL(our_snail)
 
 
 /obj/machinery/hydroponics/constructable/attackby(obj/item/I, mob/living/user, params)
@@ -654,7 +661,7 @@
 /obj/machinery/hydroponics/proc/adjust_pestlevel(amt)
 	set_pestlevel(clamp(pestlevel + amt, 0, MAX_TRAY_PESTS), FALSE)
 
-/obj/machinery/hydroponics/proc/on_snail_death(mob/source)
+/obj/machinery/hydroponics/proc/remove_snail(mob/source)
 	SIGNAL_HANDLER
 
 	var/atom/movable/mob_holder = source.loc
@@ -1276,7 +1283,7 @@
 	vis_contents += our_snail
 	our_snail.layer = layer + 0.01
 	var/obj/item/clothing/head/mob_holder/snail = arrived
-	RegisterSignal(snail.held_mob, COMSIG_LIVING_DEATH, PROC_REF(on_snail_death)) //rip
+	RegisterSignals(snail.held_mob, list(COMSIG_MOVABLE_ATTEMPTED_MOVE, COMSIG_LIVING_DEATH), PROC_REF(remove_snail)) //rip
 
 
 /obj/item/circuit_component/hydroponics/register_usb_parent(atom/movable/parent)
