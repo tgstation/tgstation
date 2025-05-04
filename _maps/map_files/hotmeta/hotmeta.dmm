@@ -6852,7 +6852,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/light/directional/west,
-/obj/structure/closet/secure_closet/security/hotmeta,
+/obj/structure/closet/secure_closet/hotmeta/security,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "cvt" = (
@@ -9470,7 +9470,7 @@
 /obj/effect/turf_decal/trimline/dark_red/filled/line{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/warden/hotmeta,
+/obj/structure/closet/secure_closet/hotmeta/warden,
 /turf/open/floor/iron,
 /area/station/security/warden)
 "dsl" = (
@@ -11552,7 +11552,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/security/hotmeta,
+/obj/structure/closet/secure_closet/hotmeta/security,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "efC" = (
@@ -22343,7 +22343,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/security/hotmeta,
+/obj/structure/closet/secure_closet/hotmeta/security,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "hXQ" = (
@@ -26362,7 +26362,6 @@
 "jmR" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/tile/red/half/contrasted,
-/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "jmT" = (
@@ -32599,7 +32598,6 @@
 "luN" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/turf_decal/tile/red/fourcorners,
-/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/medical)
 "luV" = (
@@ -35862,7 +35860,6 @@
 	pixel_x = 26
 	},
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/engineering)
 "mEL" = (
@@ -39208,7 +39205,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/security/hotmeta,
+/obj/structure/closet/secure_closet/hotmeta/security,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "nJA" = (
@@ -39772,7 +39769,7 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/security/hotmeta,
+/obj/structure/closet/secure_closet/hotmeta/security,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "nVq" = (
@@ -41874,7 +41871,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/security/hotmeta,
+/obj/structure/closet/secure_closet/hotmeta/security,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "oHO" = (
@@ -43845,7 +43842,7 @@
 /area/station/science/ordnance/storage)
 "pti" = (
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
-/obj/structure/closet/secure_closet/security/hotmeta,
+/obj/structure/closet/secure_closet/hotmeta/security,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "pts" = (
@@ -63025,7 +63022,6 @@
 "vTK" = (
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/light/small/directional/west,
-/obj/structure/closet/secure_closet/security/hotmeta,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
 "vTR" = (
@@ -66161,9 +66157,6 @@
 "wYB" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/service)
-"wZb" = (
-/turf/open/lava/smooth/lava_land_surface,
-/area/space)
 "wZe" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Chapel Office"
@@ -69408,7 +69401,7 @@
 	c_tag = "Head of Security's Office"
 	},
 /obj/structure/cable,
-/obj/structure/closet/secure_closet/hos/hotmeta,
+/obj/structure/closet/secure_closet/hotmeta/hos,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "yfa" = (
@@ -105626,9 +105619,9 @@ qXB
 qXB
 hHd
 qXB
-wZb
-wZb
-wZb
+dgd
+dgd
+dgd
 adp
 hJI
 fRS

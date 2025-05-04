@@ -71,26 +71,27 @@
 /mob/living/simple_animal/hostile/megafauna/dragon/hotmeta
 	loot = list(/obj/structure/closet/crate/necropolis/dragon, /obj/item/keycard/hotmeta/drake)
 
-/mob/living/simple_animal/hostile/megafauna/dragon/hotmeta/Initialize(mapload)
+/mob/living/simple_animal/hostile/megafauna/dragon/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/triumph.ogg', 138 SECONDS)
 
 /mob/living/simple_animal/hostile/megafauna/legion/hotmeta
 	loot = list(/obj/item/keycard/hotmeta/legion)
 
-/mob/living/simple_animal/hostile/megafauna/legion/hotmeta/Initialize(mapload)
+/mob/living/simple_animal/hostile/megafauna/legion/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/revenge.ogg', 293 SECONDS)
 
 // ~ Hotmeta Spefific Lockers ~ //
 
+/obj/structure/closet/secure_closet/hotmeta
 // ~ Hos ~ //
-/obj/structure/closet/secure_closet/hos/hotmeta
+/obj/structure/closet/secure_closet/hotmeta/hos
 	name = "head of security's locker"
 	icon_state = "hos"
 	req_access = list(ACCESS_HOS)
 
-/obj/structure/closet/secure_closet/hos/hotmeta/PopulateContents()
+/obj/structure/closet/secure_closet/hotmeta/hos/PopulateContents()
 	..()
 	new /obj/item/computer_disk/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
@@ -112,7 +113,7 @@
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
 	new /obj/item/storage/photo_album/hos(src)
 
-/obj/structure/closet/secure_closet/hos/hotmeta/populate_contents_immediate()
+/obj/structure/closet/secure_closet/hotmeta/hos/populate_contents_immediate()
 	. = ..()
 
 	// Traitor steal objectives
@@ -120,12 +121,12 @@
 	new /obj/item/pinpointer/nuke(src)
 
 // ~ Security Officer ~ //
-/obj/structure/closet/secure_closet/security/hotmeta
+/obj/structure/closet/secure_closet/hotmeta/security
 	name = "security officer's locker"
 	icon_state = "sec"
 	req_access = list(ACCESS_BRIG)
 
-/obj/structure/closet/secure_closet/security/hotmeta/PopulateContents()
+/obj/structure/closet/secure_closet/hotmeta/security/PopulateContents()
 	..()
 	new /obj/item/radio/headset/headset_sec(src)
 	new /obj/item/radio/headset/headset_sec/alt(src)
@@ -142,12 +143,12 @@
 	new /obj/item/ammo_box/magazine/m38/iceblox(src)
 
 // ~ Warden ~ //
-/obj/structure/closet/secure_closet/warden/hotmeta
+/obj/structure/closet/secure_closet/hotmeta/warden
 	name = "warden's locker"
 	icon_state = "warden"
 	req_access = list(ACCESS_ARMORY)
 
-/obj/structure/closet/secure_closet/warden/hotmeta/PopulateContents()
+/obj/structure/closet/secure_closet/hotmeta/warden/PopulateContents()
 	..()
 	new /obj/item/dog_bone(src)
 	new /obj/item/radio/headset/headset_sec(src)
