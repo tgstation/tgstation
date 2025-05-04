@@ -123,17 +123,26 @@
 			if(length(banned_atom_types))
 				if(nearby_atom.type in banned_atom_types)
 					continue
-			// This item is a valid type. Add it to our selected atoms list.
-			selected_atoms |= nearby_atom
 			// If it's a stack, we gotta see if it has more than one inside,
 			// as our requirements may want more than one item of a stack
+			// It's also important that we split the required amount from the stack and add that
+			// to the selected_atoms instead so we don't thinker with the source stack(s) too much.
 			if(isstack(nearby_atom))
 				var/obj/item/stack/picked_stack = nearby_atom
-				requirements_list[req_type] -= picked_stack.amount // Can go negative, but doesn't matter. Negative = fulfilled
+				var/amount_to_give = min(picked_stack.amount || requirements_list[req_type])
+				var/obj/item/stack/our_stack = locate(req_type) in selected_atoms
+				if(!our_stack)
+					our_stack = picked_stack.split_stack(amount_to_give)
+					selected_atoms |= our_stack
+				else
+					our_stack.merge(our_stack, limit = our_stack.amount + amount_to_give)
+				requirements_list[req_type] -= amount_to_give
 
 			// Otherwise, just add the mark down the item as fulfilled x1
 			else
 				requirements_list[req_type]--
+				// This item is a valid type. Add it to our selected atoms list.
+				selected_atoms |= nearby_atom
 
 	// All of the atoms have been checked, let's see if the ritual was successful
 	var/list/what_are_we_missing = list()
