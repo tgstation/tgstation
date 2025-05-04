@@ -31,7 +31,7 @@
 	/// Autopopulated by `desired_items`
 	var/list/desired_items_typecache
 	/// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
-	var/list/rites_list
+	var/list/rites_list = list()
 	/// Changes the Altar of Gods icon
 	var/altar_icon
 	/// Changes the Altar of Gods icon_state
@@ -47,7 +47,7 @@
 	. = ..()
 	if(desired_items)
 		desired_items_typecache = typecacheof(desired_items)
-	if(!locate(/datum/religion_rites/deaconize/crusader) in rites_list)
+	if(!locate(/datum/religion_rites/deaconize) in rites_list)
 		rites_list += list(/datum/religion_rites/deaconize)
 	on_select()
 

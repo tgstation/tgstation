@@ -32,29 +32,29 @@
 	var/atom/movable/movable_reltool = religious_tool
 	if(!movable_reltool)
 		return FALSE
-	if(!LAZYLEN(movable_reltool.buckled_mobs))
+	var/mob/living/carbon/human/possible_deacon = locate() in movable_reltool.buckled_mobs
+	if(!possible_deacon)
 		to_chat(user, span_warning("Nothing is buckled to the [movable_reltool]!"))
 		return FALSE
-	for(var/mob/living/carbon/human/possible_deacons in movable_reltool.buckled_mobs)
-		if(!is_valid_for_deacon(possible_deacons, user))
-			return FALSE
-		//no one invited or this is not the invited person
-		if(!potential_deacon || (possible_deacons != potential_deacon))
-			INVOKE_ASYNC(src, PROC_REF(invite_deacon), possible_deacons)
-			to_chat(user, span_notice("They have been offered the oppertunity to join our ranks. Wait for them to decide and try again."))
-			return FALSE
-		return ..()
+	if(!is_valid_for_deacon(possible_deacon, user))
+		return FALSE
+	//no one invited or this is not the invited person
+	if(!potential_deacon || (possible_deacon != potential_deacon))
+		INVOKE_ASYNC(src, PROC_REF(invite_deacon), possible_deacon)
+		to_chat(user, span_notice("They have been offered the oppertunity to join our ranks. Wait for them to decide and try again."))
+		return FALSE
+	return ..()
 
 /datum/religion_rites/deaconize/invoke_effect(mob/living/carbon/human/user, atom/movable/religious_tool)
 	. = ..()
 	if(!(potential_deacon in religious_tool.buckled_mobs)) //checks one last time if the right corpse is still buckled
-		to_chat(user, span_warning("The new member is no longer on the altar!"))
+		to_chat(user, span_warning("[potential_deacon] is no longer on the altar!"))
 		return FALSE
 	if(potential_deacon.stat != CONSCIOUS)
-		to_chat(user, span_warning("The new member has to stay alive for the rite to work!"))
+		to_chat(user, span_warning("[potential_deacon] has to be conscious for the rite to work!"))
 		return FALSE
 	if(!potential_deacon.mind)
-		to_chat(user, span_warning("The new member has no mind!"))
+		to_chat(user, span_warning("[potential_deacon]'s mind appears to be elsewhere!"))
 		return FALSE
 	if(IS_CULTIST(potential_deacon))//what the fuck?!
 		to_chat(user, span_warning("[GLOB.deity] has seen a true, dark evil in [potential_deacon]'s heart, and they have been smitten!"))
