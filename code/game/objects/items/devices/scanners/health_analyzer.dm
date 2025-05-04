@@ -335,7 +335,7 @@
 		var/list/cyberimps
 		for(var/obj/item/organ/target_organ as anything in humantarget.organs)
 			if(IS_ROBOTIC_ORGAN(target_organ) && !(target_organ.organ_flags & ORGAN_HIDDEN))
-				LAZYADD(target_organ, target_organ.examine_title(user))
+				LAZYADD(cyberimps, target_organ.examine_title(user))
 			if(target_organ.organ_flags & ORGAN_MUTANT)
 				mutant = TRUE
 		if(LAZYLEN(cyberimps))
