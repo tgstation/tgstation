@@ -1,0 +1,4 @@
+author: "tonty"
+delete-after: True
+changes:
+  - admin: "Cancelling an ERT summon will now say so instead of saying there were no candidates"
