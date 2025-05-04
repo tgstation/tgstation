@@ -130,7 +130,7 @@
 			if(isstack(nearby_atom))
 				var/obj/item/stack/picked_stack = nearby_atom
 				var/amount_to_give = min(picked_stack.amount || requirements_list[req_type])
-				var/obj/item/stack/our_stack = locate(req_type) in selected_atoms
+				var/obj/item/stack/our_stack = locate(picked_stack.merge_type) in selected_atoms
 				if(!our_stack)
 					our_stack = picked_stack.split_stack(amount_to_give)
 					selected_atoms |= our_stack
