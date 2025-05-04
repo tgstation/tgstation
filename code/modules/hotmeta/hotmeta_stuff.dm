@@ -172,6 +172,7 @@
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "gores", "lances")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "gore", "lance")
 	throwforce = 24
+	force_wielded = 21
 	embed_type = null //no embedding
 
 	custom_materials = list(
