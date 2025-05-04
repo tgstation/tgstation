@@ -79,3 +79,38 @@
   - bugfix: fixed rust heretic hand not being able to destroy windows or windoors
   tonty:
   - admin: Admins no longer need to hit enter to update custom command report names
+2025-05-04:
+  00-Steven:
+  - rscadd: When performing a custom emote, `+|_` emphasis formatting applies to the
+      text chat message instead of just the runechat message.
+  - qol: Intentional emotes don't trip your own highlights.
+  - qol: Sign language tone messages don't trip your own highlights.
+  A.C.M.O.:
+  - rscadd: Adds an option for picking silicon gender to secondary character preferences.
+      Matches the main gender preference by default.
+  - rscadd: Adds gender pronouns in cyborg/AI examine text.
+  Bisar:
+  - balance: Construction bags can now carry stacks of material up to size 'small',
+      and can now also carry RCD ammo.
+  Hardly:
+  - sound: added new sounds for the computer printer when paper is inserted.
+  Hardly, sprites by Lutowski:
+  - image: Resprites Long Emo hairstyle
+  Maximal08:
+  - qol: Notification that the ninja has completed the task of hacking the airlock.
+  Pickle-Coding:
+  - bugfix: PRevents an erroneous temperature share when the air falls below superconductionr
+      equirements.
+  Rhials:
+  - code_imp: The Dice Servant role will now re-poll itself until a candidate is found.
+  arcanemusic, Wallem:
+  - image: Entertainment monitors are now on actual tv screens
+  necromanceranne:
+  - balance: Rather than rolling for internal damage whenever they suffer 15 or more
+      damage, they instead must suffer an attack that deals at least 10% of its max
+      integrity in a single blow before it rolls for internal damage.
+  - bugfix: Dark Gygaxes and Maulers (and admin mechs like the Seraph) cannot be slapped
+      with tracker beacons.
+  - bugfix: Weapons that cannot fit into turrets also cannot fit into emitters.
+  - bugfix: The HoP's winter coat now uses the correct suit storage options (like
+      the HoP's firearm). The hood now also shares the chest piece's armor values.
