@@ -150,7 +150,7 @@
 
 	for(var/turf/nearby_turf in orange(1, wall_to_check))
 		var/area/nearby_area = get_area(nearby_turf)
-		if(istype(nearby_area, /area/space) || istype(nearby_area, /area/space/nearstation) || istype(nearby_area, /area/station/asteroid))
+		if(is_nearstation_area(nearby_area))
 			return TRUE
 
 	if(!silent)
