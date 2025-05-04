@@ -120,8 +120,8 @@
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		iter_part.update_part_wound_overlay()
 
-//Makes a blood drop, leaking amt units of blood from the mob
-/mob/living/carbon/proc/bleed(amt)
+/// Makes a blood drop, leaking amt units of blood from the mob
+/mob/living/proc/bleed(amt)
 	if(HAS_TRAIT(src, TRAIT_GODMODE) || !get_blood_reagent())
 		return
 
@@ -136,7 +136,10 @@
 	return ..()
 
 /// A helper to see how much blood we're losing per tick
-/mob/living/carbon/proc/get_bleed_rate()
+/mob/living/proc/get_bleed_rate()
+	return 0
+
+/mob/living/carbon/get_bleed_rate()
 	if(HAS_TRAIT(src, TRAIT_GODMODE) || !get_blood_reagent())
 		return
 	var/bleed_amt = 0
@@ -481,85 +484,100 @@
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
 
-/*
-/mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
-	if(!has_gravity() || !isturf(start) || !blood_volume)
+
+/mob/living/proc/make_blood_trail(turf/target_turf, turf/start, was_facing, movement_direction)
+	if(!has_gravity() || !isturf(start) || !get_blood_reagent())
 		return
 
-	var/trail_type // = getTrail()
-	/*
+	var/base_bleed_rate = get_bleed_rate()
+	var/base_brute = getBruteLoss()
 
-/mob/living/proc/getTrail()
-	if(getBruteLoss() < 300)
-		return pick("ltrails_1", "ltrails_2")
+	var/brute_ratio = round(base_brute / (maxHealth * 4), 0.1)
+	var/bleeding_rate =  round(base_bleed_rate / 4, 0.1)
+	// We only leave a trail if we're below a certain blood threshold
+	// The more brute damage we have, or the more we're bleeding, the less blood we need to leave a trail
+	if(blood_volume < max(BLOOD_VOLUME_NORMAL * (1 - max(bleeding_rate, brute_ratio)), 0))
+		return
+
+	var/blood_to_add = BLOOD_AMOUNT_PER_DECAL * 0.1
+	if(body_position == LYING_DOWN)
+		blood_to_add += bleed_drag_amount()
+		blood_volume = max(blood_volume - blood_to_add, 0)
 	else
-		return pick("trails_1", "trails_2")
-		*/
-	var/trail_blood_type // = get_trail_blood()
-	if(!trail_type || !trail_blood_type)
-		return
+		blood_to_add += base_bleed_rate
 
-	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
-	if(blood_volume < max(BLOOD_VOLUME_NORMAL * (1 - brute_ratio * 0.25), 0))//don't leave trail if blood volume below a threshold
-		return
+	// If we're very damaged or bleeding a lot, add even more blood to the trail
+	if(base_brute >= 300 || base_bleed_rate >= 7)
+		blood_to_add *= 2
 
-	var/bleed_amount = bleedDragAmount()
-	blood_volume = max(blood_volume - bleed_amount, 0) //that depends on our brute damage.
-	var/newdir = get_dir(target_turf, start)
-	if(newdir != direction)
-		newdir = newdir | direction
-		if(newdir == (NORTH|SOUTH))
-			newdir = NORTH
-		else if(newdir == (EAST|WEST))
-			newdir = EAST
+	var/trail_dir = REVERSE_DIR(movement_direction)
+	// The mob is performing a diagonal movement so we need to make a diagonal trail
+	// This is not the same as a diagonal dir. Sorry.
+	// This is insteas denoted by a negative direction (so we don't conflict with real dirs)
+	if(movement_direction in GLOB.diagonals)
+		trail_dir = -1 * movement_direction
+	// The mob is going a direction they were not previously facing
+	// We now factor in their facing direction to make a trail that looks like they're turning
+	// This is done by creating a diagonal dir
+	else if(trail_dir != was_facing && trail_dir != REVERSE_DIR(was_facing))
+		// Look a step back to see if we should be constructing a diagonal dir
+		// If there's no existing trail making a curve would look weird
+		for(var/obj/effect/decal/cleanable/blood/trail_holder/past_trail in get_step(start, REVERSE_DIR(was_facing)))
+			if(past_trail.get_trail_component(was_facing, check_reverse = TRUE, check_diagonals = TRUE, check_reverse_diagonals = TRUE))
+				trail_dir |= was_facing
+				// In case we produced an invalid dir: go back on relevant axis
+				if((trail_dir & (NORTH|SOUTH)) == (NORTH|SOUTH))
+					trail_dir &= ~(was_facing & (NORTH|SOUTH))
+				if((trail_dir & (EAST|WEST)) == (EAST|WEST))
+					trail_dir &= ~(was_facing & (EAST|WEST))
+				break
 
-	if((newdir in GLOB.cardinals) && (prob(50)))
-		newdir = REVERSE_DIR(get_dir(target_turf, start))
 
-	var/found_trail = FALSE
-	for(var/obj/effect/decal/cleanable/blood/trail_holder/trail in start)
-		if (BLOOD_STATE_HUMAN != trail_blood_type)
-			continue
-
-		// Don't make double trails, even if they're of a different type
-		if(newdir in trail.existing_dirs)
-			found_trail = TRUE
+	var/obj/effect/decal/cleanable/blood/trail_holder/trail
+	// Pick any trail in the turf to add onto
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/any_trail in start)
+		// If there exists a trail already, we will add onto the trial
+		// UNLESS that trail has the same direction component and it is already dried
+		//
+		// If that is the case we will look for another trail (or create a new one)
+		// (this will let fresh blood be laid over very dried blood)
+		var/obj/effect/decal/cleanable/blood/trail/any_trail_component = any_trail.get_trail_component(trail_dir, check_reverse = TRUE)
+		if(isnull(any_trail_component) || !any_trail_component.dried)
+			trail = any_trail
 			break
 
-		trail.existing_dirs += newdir
-		trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
+	if(isnull(trail))
+		trail = new(start, get_static_viruses(), get_blood_dna_list())
+		if(QDELETED(trail))
+			return
+		trail.bloodiness = blood_to_add
+	else
+		trail.add_diseases(get_static_viruses())
 		trail.add_mob_blood(src)
-		trail.bloodiness = min(trail.bloodiness + bleed_amount, BLOOD_POOL_MAX)
-		found_trail = TRUE
-		break
+		trail.adjust_bloodiness(blood_to_add)
 
-	if (found_trail)
+	var/obj/effect/decal/cleanable/blood/trail/trail_component = trail.add_dir_to_trail(trail_dir, blood_to_add)
+	if(isnull(trail_component))
 		return
+	trail_component.add_mob_blood(src)
+	trail_component.adjust_bloodiness(blood_to_add)
 
-	var/obj/effect/decal/cleanable/blood/trail_holder/trail = new(start, get_static_viruses())
-	trail.existing_dirs += newdir
-	trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-	trail.add_mob_blood(src)
-	trail.bloodiness = min(bleed_amount, BLOOD_POOL_MAX)
-
-/mob/living/carbon/human/makeTrail(turf/T)
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || dna.blood_type.no_bleed_overlays)
+/mob/living/carbon/human/make_blood_trail(turf/target_turf, turf/start, direction)
+	if(!is_bleeding())
 		return
-	..()
+	return ..()
 
-///Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/makeTrail]
-/mob/living/proc/bleedDragAmount()
+/// Returns how much blood we're losing from being dragged a tile, from [/mob/living/proc/make_blood_trail]
+/mob/living/proc/bleed_drag_amount()
 	var/brute_ratio = round(getBruteLoss() / maxHealth, 0.1)
 	return max(1, brute_ratio * 2)
 
-/mob/living/carbon/bleedDragAmount()
+/mob/living/carbon/bleed_drag_amount()
 	var/bleed_amount = 0
 	for(var/i in all_wounds)
 		var/datum/wound/iter_wound = i
 		bleed_amount += iter_wound.drag_bleed_amount()
 	return bleed_amount
-
-*/
 
 /mob/living/proc/get_blood_alcohol_content()
 	var/blood_alcohol_content = 0
