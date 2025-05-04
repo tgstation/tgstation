@@ -353,23 +353,13 @@ export function CreateObject(props: CreateObjectProps) {
                     style={{
                       backgroundColor:
                         selectedObj === obj
-                          ? 'rgba(255, 255, 255, 0.1)'
+                          ? 'rgba(160, 200, 255, 0.1)'
                           : undefined,
                       color: selectedObj === obj ? '#fff' : undefined,
                     }}
                     onDoubleClick={() => {
                       if (selectedObj) {
                         sendPreferences({ object_list: selectedObj });
-                      }
-                    }}
-                    onMouseDown={(e) => {
-                      if (e.button === 0 && e.shiftKey) {
-                        setTooltipIcon(true);
-                      }
-                    }}
-                    onMouseUp={(e) => {
-                      if (e.button === 0) {
-                        setTooltipIcon(false);
                       }
                     }}
                     onClick={() => {

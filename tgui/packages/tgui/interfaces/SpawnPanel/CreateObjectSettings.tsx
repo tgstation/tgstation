@@ -31,6 +31,21 @@ interface CreateObjectSettingsProps {
   setAdvancedSettings: (value: boolean) => void;
 }
 
+interface StateSetterConfig<T extends unknown> {
+  value: T;
+  storageKey: string;
+  setter: (value: T) => void;
+}
+
+const setStateAndStorage = async <T extends unknown>({
+  value,
+  storageKey,
+  setter,
+}: StateSetterConfig<T>) => {
+  setter(value);
+  await storage.set(storageKey, value);
+};
+
 export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   const { onCreateObject, setAdvancedSettings } = props;
   const { act, data } = useBackend<SpawnPanelData>();
@@ -41,6 +56,54 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   const [direction, setDirection] = useState(0);
   const [objectName, setObjectName] = useState('');
   const [offset, setOffset] = useState('');
+
+  const updateAmount = (value: number) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-object_count',
+      setter: setAmount,
+    });
+  };
+
+  const updateCordsType = (value: number) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-offset_type',
+      setter: setCordsType,
+    });
+  };
+
+  const updateSpawnLocation = (value: string) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-where_dropdown_value',
+      setter: setSpawnLocation,
+    });
+  };
+
+  const updateDirection = (value: number) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-direction',
+      setter: setDirection,
+    });
+  };
+
+  const updateObjectName = (value: string) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-object_name',
+      setter: setObjectName,
+    });
+  };
+
+  const updateOffset = (value: string) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-offset',
+      setter: setOffset,
+    });
+  };
 
   useEffect(() => {
     const loadStoredValues = async () => {
@@ -63,30 +126,6 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
 
     loadStoredValues();
   }, []);
-
-  useEffect(() => {
-    storage.set('spawnpanel-object_count', amount);
-  }, [amount]);
-
-  useEffect(() => {
-    storage.set('spawnpanel-offset_type', cordsType);
-  }, [cordsType]);
-
-  useEffect(() => {
-    storage.set('spawnpanel-where_dropdown_value', spawnLocation);
-  }, [spawnLocation]);
-
-  useEffect(() => {
-    storage.set('spawnpanel-direction', direction);
-  }, [direction]);
-
-  useEffect(() => {
-    storage.set('spawnpanel-object_name', objectName);
-  }, [objectName]);
-
-  useEffect(() => {
-    storage.set('spawnpanel-offset', offset);
-  }, [offset]);
 
   const isTargetMode =
     spawnLocation === 'Targeted location' ||
@@ -157,7 +196,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       maxValue={100}
                       step={1}
                       value={amount}
-                      onChange={(value) => setAmount(value)}
+                      onChange={(value) => updateAmount(value)}
                     />
                   </Stack.Item>
                   <Stack.Item>Dir:</Stack.Item>
@@ -171,7 +210,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                         const values = [1, 2, 4, 8];
                         const currentIndex = values.indexOf(values[direction]);
                         const nextIndex = (currentIndex + 1) % 4;
-                        setDirection(nextIndex);
+                        updateDirection(nextIndex);
                       }}
                     />
                   </Stack.Item>
@@ -186,7 +225,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                         const values = [1, 2, 4, 8];
                         return values[value].toString();
                       }}
-                      onChange={(e, value) => setDirection(value)}
+                      onChange={(e, value) => updateDirection(value)}
                     />
                   </Stack.Item>
                 </Stack>
@@ -202,7 +241,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       fontSize="14"
                       onClick={() => {
                         const newCordsType = cordsType ? 0 : 1;
-                        setCordsType(newCordsType);
+                        updateCordsType(newCordsType);
                         if (isPreciseModeActive) {
                           disablePreciseMode();
                         }
@@ -218,7 +257,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                     <Input
                       placeholder="x, y, z"
                       value={offset}
-                      onChange={(value: string) => setOffset(value)}
+                      onChange={(value: string) => updateOffset(value)}
                       width="100%"
                       disabled={
                         isTargetMode || spawnLocation === 'At a marked object'
@@ -234,7 +273,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
               </Table.Cell>
               <Table.Cell>
                 <Input
-                  onChange={(value: string) => setObjectName(value)}
+                  onChange={(value: string) => updateObjectName(value)}
                   value={objectName}
                   width="100%"
                   placeholder="leave empty for initial"
@@ -332,7 +371,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                           newPreciseType: 'Off',
                         });
                       }
-                      setSpawnLocation(value);
+                      updateSpawnLocation(value);
                     }}
                     selected={spawnLocation}
                   />
