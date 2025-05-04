@@ -135,7 +135,7 @@
 					our_stack = picked_stack.split_stack(amount_to_give)
 					selected_atoms |= our_stack
 				else
-					our_stack.merge(our_stack, limit = our_stack.amount + amount_to_give)
+					picked_stack.merge(our_stack, limit = our_stack.amount + amount_to_give)
 				requirements_list[req_type] -= amount_to_give
 
 			// Otherwise, just add the mark down the item as fulfilled x1
