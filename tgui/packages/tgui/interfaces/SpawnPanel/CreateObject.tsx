@@ -28,9 +28,33 @@ interface SpawnPanelData {
   };
 }
 
+interface SpawnPreferences {
+  hide_icons: boolean;
+  hide_mappings: boolean;
+  sort_by: string;
+  search_text: string;
+  search_by: string;
+  object_list?: string;
+}
+
+interface StateSetterConfig<T extends unknown> {
+  value: T;
+  storageKey: string;
+  setter: (value: T) => void;
+}
+
+const setStateAndStorage = async <T extends unknown>({
+  value,
+  storageKey,
+  setter,
+}: StateSetterConfig<T>) => {
+  setter(value);
+  await storage.set(storageKey, value);
+};
+
 export function CreateObject(props: CreateObjectProps) {
   const { act, data } = useBackend<SpawnPanelData>();
-  const { objList } = props;
+  const { objList, setAdvancedSettings } = props;
 
   const [tooltipIcon, setTooltipIcon] = useState(false);
   const [selectedObj, setSelectedObj] = useState<string | null>(null);
@@ -88,31 +112,55 @@ export function CreateObject(props: CreateObjectProps) {
     loadStoredValues();
   }, []);
 
-  useEffect(() => {
-    storage.set('spawnpanel-searchText', searchText);
-  }, [searchText]);
+  const updateSearchText = (value: string) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-searchText',
+      setter: setSearchText,
+    });
+  };
 
-  useEffect(() => {
-    storage.set('spawnpanel-searchBy', searchBy);
-  }, [searchBy]);
+  const updateSearchBy = (value: boolean) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-searchBy',
+      setter: setSearchBy,
+    });
+  };
 
-  useEffect(() => {
-    storage.set('spawnpanel-sortBy', sortBy);
-  }, [sortBy]);
+  const updateSortBy = (value: string) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-sortBy',
+      setter: setSortBy,
+    });
+  };
 
-  useEffect(() => {
-    storage.set('spawnpanel-hideMapping', hideMapping);
-  }, [hideMapping]);
+  const updateHideMapping = (value: boolean) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-hideMapping',
+      setter: setHideMapping,
+    });
+  };
 
-  useEffect(() => {
-    storage.set('spawnpanel-showIcons', showIcons);
-  }, [showIcons]);
+  const updateShowIcons = (value: boolean) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-showIcons',
+      setter: setshowIcons,
+    });
+  };
 
-  useEffect(() => {
-    storage.set('spawnpanel-showPreview', showPreview);
-  }, [showPreview]);
+  const updateShowPreview = (value: boolean) => {
+    setStateAndStorage({
+      value,
+      storageKey: 'spawnpanel-showPreview',
+      setter: setshowPreview,
+    });
+  };
 
-  const sendPreferences = (settings) => {
+  const sendPreferences = (settings: Partial<SpawnPreferences>) => {
     const prefsToSend = {
       hide_icons: showIcons,
       hide_mappings: hideMapping,
@@ -131,7 +179,10 @@ export function CreateObject(props: CreateObjectProps) {
     <Stack vertical fill>
       <Stack.Item>
         <Section>
-          <CreateObjectSettings onCreateObject={sendPreferences} />
+          <CreateObjectSettings
+            onCreateObject={sendPreferences}
+            setAdvancedSettings={setAdvancedSettings}
+          />
         </Section>
       </Stack.Item>
 
@@ -196,7 +247,7 @@ export function CreateObject(props: CreateObjectProps) {
                     const types = Object.values(listTypes);
                     const currentIndex = types.indexOf(sortBy);
                     const nextIndex = (currentIndex + 1) % types.length;
-                    setSortBy(types[nextIndex]);
+                    updateSortBy(types[nextIndex]);
                   }}
                 >
                   {
@@ -212,7 +263,7 @@ export function CreateObject(props: CreateObjectProps) {
                 <Button
                   icon={searchBy ? 'code' : 'font'}
                   onClick={() => {
-                    setSearchBy(!searchBy);
+                    updateSearchBy(!searchBy);
                   }}
                 >
                   {searchBy ? 'By type' : 'By name'}
@@ -221,7 +272,7 @@ export function CreateObject(props: CreateObjectProps) {
               <Stack.Item>
                 <Button.Checkbox
                   onClick={() => {
-                    setHideMapping(!hideMapping);
+                    updateHideMapping(!hideMapping);
                   }}
                   color={!hideMapping && 'good'}
                   checked={!hideMapping}
@@ -232,7 +283,7 @@ export function CreateObject(props: CreateObjectProps) {
               <Stack.Item>
                 <Button.Checkbox
                   onClick={() => {
-                    setshowIcons(!showIcons);
+                    updateShowIcons(!showIcons);
                   }}
                   color={showIcons && 'good'}
                   checked={showIcons}
@@ -243,7 +294,7 @@ export function CreateObject(props: CreateObjectProps) {
               <Stack.Item>
                 <Button.Checkbox
                   onClick={() => {
-                    setshowPreview(!showPreview);
+                    updateShowPreview(!showPreview);
                   }}
                   color={showPreview && 'good'}
                   checked={showPreview}
@@ -259,7 +310,7 @@ export function CreateObject(props: CreateObjectProps) {
                   placeholder={'Search here...'}
                   query={searchText}
                   onSearch={(query) => {
-                    setSearchText(query);
+                    updateSearchText(query);
                   }}
                 />
               </Stack.Item>

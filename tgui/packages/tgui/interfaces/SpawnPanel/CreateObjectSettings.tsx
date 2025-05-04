@@ -17,32 +17,22 @@ import {
   spawnLocationIcons,
   spawnLocationOptions,
 } from './constants';
+import { SpawnPreferences } from './types';
 
-interface SpawnPanelData {
+export interface SpawnPanelData {
   icon: string;
   iconState: string;
-  preferences?: {
-    hide_icons: boolean;
-    hide_mappings: boolean;
-    sort_by: string;
-    search_text: string;
-    search_by: string;
-    where_dropdown_value: string;
-    offset_type: string;
-    offset: string;
-    object_count: number;
-    dir: number;
-    object_name: string;
-  };
+  preferences?: SpawnPreferences;
   precise_mode: string;
 }
 
 interface CreateObjectSettingsProps {
-  onCreateObject?: (obj: any) => void;
+  onCreateObject?: (obj: Record<string, unknown>) => void;
+  setAdvancedSettings: (value: boolean) => void;
 }
 
 export function CreateObjectSettings(props: CreateObjectSettingsProps) {
-  const { onCreateObject } = props;
+  const { onCreateObject, setAdvancedSettings } = props;
   const { act, data } = useBackend<SpawnPanelData>();
 
   const [amount, setAmount] = useState(1);
@@ -107,7 +97,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   const isMarkModeActive = data?.precise_mode === 'Mark';
   const isCopyModeActive = data?.precise_mode === 'Copy';
 
-  const disablePreciseMode = () => {
+  const disablePreciseMode = function (): void {
     if (isPreciseModeActive) {
       act('toggle-precise-mode', {
         newPreciseType: 'Off',
@@ -115,7 +105,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
     }
   };
 
-  const handleSpawn = () => {
+  const handleSpawn = function (): void {
     const currentSettings = {
       object_count: amount,
       offset_type: cordsType ? 'Absolute offset' : 'Relative offset',
@@ -141,7 +131,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isTargetMode && isPreciseModeActive) {
       disablePreciseMode();
     }
@@ -209,7 +199,6 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                   <Stack.Item>
                     <Button
                       icon={cordsType ? 'a' : 'r'}
-                      height="19px"
                       fontSize="14"
                       onClick={() => {
                         const newCordsType = cordsType ? 0 : 1;
@@ -261,6 +250,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                 <Stack.Item>
                   <Button
                     icon="gear"
+                    onClick={() => setAdvancedSettings(true)}
                     style={{
                       height: '22px',
                       width: '22px',

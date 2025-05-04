@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Stack } from 'tgui-core/components';
+import { Button, Modal, Section, Stack } from 'tgui-core/components';
 import { fetchRetry } from 'tgui-core/http';
 
 import { resolveAsset } from '../../assets';
@@ -10,6 +10,7 @@ import { CreateObjectData } from './types';
 
 export function SpawnPanel() {
   const [data, setData] = useState<CreateObjectData | undefined>();
+  const [advancedSettings, setAdvancedSettings] = useState(false);
 
   useEffect(() => {
     fetchRetry(resolveAsset('spawnpanel.json'))
@@ -25,9 +26,36 @@ export function SpawnPanel() {
   return (
     <Window height={550} title="Spawn Panel" width={500} theme="admin">
       <Window.Content>
+        {advancedSettings && (
+          <Modal
+            style={{
+              padding: '6px',
+              width: '30em',
+              marginTop: '-15em',
+            }}
+          >
+            <Section
+              title="Advanced settings"
+              buttons={
+                <Button
+                  color="transparent"
+                  icon="close"
+                  onClick={() => setAdvancedSettings(false)}
+                />
+              }
+            >
+              settings go here
+            </Section>
+          </Modal>
+        )}
         <Stack vertical fill>
           <Stack.Item grow>
-            {data && <CreateObject objList={data} />}
+            {data && (
+              <CreateObject
+                objList={data}
+                setAdvancedSettings={setAdvancedSettings}
+              />
+            )}
           </Stack.Item>
         </Stack>
       </Window.Content>
