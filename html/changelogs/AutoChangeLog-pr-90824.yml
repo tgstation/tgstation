@@ -1,0 +1,8 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Cult Master is now assigned to the player with most hours as a cultist upon roundstart, instead of being votable."
+  - rscadd: "Cult Masters can transfer their role once."
+  - balance: "Mark Target now gives all cultists a noticable directional indicator, similar to heretics' living hearbeat"
+  - bugfix: "Fixed cult master's broken speech spans"
+  - bugfix: "Fixed Eldritch Pulse not working"

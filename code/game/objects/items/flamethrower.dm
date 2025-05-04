@@ -119,7 +119,7 @@
 		update_appearance()
 		return TRUE
 
-/obj/item/flamethrower/attackby(obj/item/W, mob/user, params)
+/obj/item/flamethrower/attackby(obj/item/W, mob/user, list/modifiers)
 	if(isigniter(W))
 		var/obj/item/assembly/igniter/I = W
 		if(I.secured)

@@ -4,9 +4,8 @@
  * @license MIT
  */
 
-import fs from 'fs';
-import { createRequire } from 'module';
-import { dirname } from 'path';
+import fs from 'node:fs';
+import { createRequire } from 'node:module';
 
 import { loadSourceMaps, setupLink } from './link/server.js';
 import { createLogger } from './logging.js';
@@ -19,26 +18,35 @@ const logger = createLogger('rspack');
  * @param {any} config
  * @return {RspackCompiler}
  */
-export const createCompiler = async (options) => {
+export async function createCompiler(options) {
   const compiler = new RspackCompiler();
   await compiler.setup(options);
+
   return compiler;
-};
+}
 
 class RspackCompiler {
   async setup(options) {
     // Create a require context that is relative to project root
     // and retrieve all necessary dependencies.
-    const requireFromRoot = createRequire(dirname(import.meta.url) + '/../..');
+    const requireFromRoot = createRequire(import.meta.dirname + '/../../..');
+    /** @type {typeof import('@rspack/core')} */
     const rspack = await requireFromRoot('@rspack/core');
+
     const createConfig = await requireFromRoot('./rspack.config.cjs');
+    const createDevConfig = await requireFromRoot('./rspack.config-dev.cjs');
+
     const config = createConfig({}, options);
+    const devConfig = createDevConfig({}, options);
+
+    const mergedConfig = { ...config, ...devConfig };
+
     // Inject the HMR plugin into the config if we're using it
     if (options.hot) {
-      config.plugins.push(new rspack.HotModuleReplacementPlugin());
+      mergedConfig.plugins.push(new rspack.HotModuleReplacementPlugin());
     }
     this.rspack = rspack;
-    this.config = config;
+    this.config = mergedConfig;
     this.bundleDir = config.output.path;
   }
 
@@ -76,7 +84,7 @@ class RspackCompiler {
         return;
       }
       stats
-        .toString(this.config.devServer.stats)
+        ?.toString(this.config.devServer.stats)
         .split('\n')
         .forEach((line) => logger.log(line));
     });

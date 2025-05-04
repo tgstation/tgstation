@@ -102,7 +102,7 @@ function CheckoutModal(props) {
               <Input
                 width="160px"
                 value={checkoutee}
-                onChange={(e, value) => setCheckoutee(value)}
+                onChange={setCheckoutee}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Loan Period">

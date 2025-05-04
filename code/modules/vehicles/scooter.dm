@@ -241,7 +241,7 @@
 	icon_state = "scooter_frame"
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/scooter_frame/attackby(obj/item/I, mob/user, params)
+/obj/item/scooter_frame/attackby(obj/item/I, mob/user, list/modifiers)
 	if(!istype(I, /obj/item/stack/sheet/iron))
 		return ..()
 	if(!I.tool_start_check(user, amount=5))
@@ -264,7 +264,7 @@
 /obj/vehicle/ridden/scooter/skateboard/wrench_act(mob/living/user, obj/item/I)
 	return
 
-/obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/I, mob/user, params)
+/obj/vehicle/ridden/scooter/skateboard/improvised/attackby(obj/item/I, mob/user, list/modifiers)
 	if(!istype(I, /obj/item/stack/rods))
 		return ..()
 	if(!I.tool_start_check(user, amount=2))

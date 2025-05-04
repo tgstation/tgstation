@@ -38,7 +38,6 @@
 	AddElement(/datum/element/simple_flying)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/clickbox, icon_state = "sphere", max_scale = 2)
-	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	addtimer(CALLBACK(src, PROC_REF(death)), 10 SECONDS)
 
 /mob/living/basic/legion_brood/death(gibbed)

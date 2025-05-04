@@ -79,8 +79,9 @@ export function TechwebOverview(props) {
           <Flex.Item align="center">
             <Input
               value={searchText}
-              onInput={(e, value) => setSearchText(value)}
+              onChange={setSearchText}
               placeholder="Search..."
+              expensive
             />
           </Flex.Item>
         </Flex>

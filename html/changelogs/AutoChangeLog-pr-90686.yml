@@ -1,0 +1,5 @@
+author: "Ezel/Improvedname, JohnFulpWillard"
+delete-after: True
+changes:
+  - balance: "Only holy roles can use bibles to their full extent now."
+  - balance: "Non-Honorbound chaplains now have a one-time use rite to turn someone into a Deacon, allowing them to use Chaplain equipment."

@@ -276,6 +276,8 @@ GLOBAL_VAR_INIT(focused_tests, focused_tests())
 		/obj/effect/bug_moving,
 		//The abstract grown item expects a seed, but doesn't have one
 		/obj/item/food/grown,
+		///Single use case holder atom requiring a user
+		/atom/movable/looking_holder
 	)
 
 	// Everything that follows is a typesof() check.

@@ -1,0 +1,7 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Dagger-blaster and harpoon crusher skins have received unique attack animations."
+  - rscadd: "Four base crusher retool kits have been merged into one item."
+  - image: "Resprited crusher skins and the crusher retool kit"
+  - bugfix: "Fixed attack animations being offset when attacking large objects or mobs."

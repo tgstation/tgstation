@@ -4,11 +4,11 @@
   "version": "6.0.0",
   "dependencies": {
     "common": "workspace:*",
-    "dompurify": "^2.5.7",
+    "dompurify": "^3.2.5",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tgui": "workspace:*",
-    "tgui-core": "^2.1.1",
+    "tgui-core": "^3.1.4",
     "tgui-dev-server": "workspace:*"
   },
   "devDependencies": {
