@@ -1510,6 +1510,9 @@
 /area/station/tcommsat/computer)
 "aDQ" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
+/obj/machinery/computer/camera_advanced/xenobio{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "aDR" = (
@@ -3782,6 +3785,13 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
+"bot" = (
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 4;
+	name = "killroom vent"
+	},
+/turf/open/floor/circuit/telecomms,
+/area/station/science/xenobiology)
 "boD" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -5569,10 +5579,8 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /obj/item/radio/intercom/directional/west,
 /obj/item/pinpointer/nuke,
-/obj/item/disk/nuclear,
-/obj/item/paper/crumpled{
-	default_raw_text = "<i>42069";
-	name = "warning"
+/obj/item/disk/nuclear{
+	desc = "Better keep this safe, On the back it says 42069 with a small beer bottle imprinted next to it."
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
@@ -6040,6 +6048,9 @@
 "ces" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/effect/turf_decal/bot_white,
+/obj/structure/chair/comfy/black{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "cez" = (
@@ -9195,9 +9206,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/engineering/storage_shared)
-"dnJ" = (
-/turf/open/floor/iron,
-/area/station/science/xenobiology)
 "dnW" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
 	dir = 4
@@ -17186,6 +17194,10 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"giO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/floor/circuit/telecomms,
+/area/station/science/xenobiology)
 "giR" = (
 /obj/structure/bed/dogbed/renault,
 /mob/living/basic/pet/fox/renault,
@@ -19440,14 +19452,11 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "gXw" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/bot_white,
-/obj/item/extinguisher,
-/obj/item/extinguisher{
-	pixel_x = 4;
-	pixel_y = 3
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 1;
+	name = "killroom vent"
 	},
-/turf/open/floor/iron,
+/turf/open/floor/circuit/telecomms,
 /area/station/science/xenobiology)
 "gXz" = (
 /obj/machinery/duct,
@@ -28227,12 +28236,13 @@
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "jSj" = (
+/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
+/obj/structure/plasticflaps/kitchen,
 /obj/machinery/door/airlock/research{
 	glass = 1;
-	opacity = 0;
-	name = "Water Storage"
+	name = "Slime Euthanization Chamber";
+	opacity = 0
 	},
-/obj/effect/mapping_helpers/airlock/access/all/science/xenobio,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "jSk" = (
@@ -28809,6 +28819,16 @@
 /obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"kcc" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
+	dir = 8;
+	initialize_directions = 4;
+	name = "euthanization chamber freezer"
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "kcg" = (
 /obj/structure/chair/wood{
 	dir = 8
@@ -35258,6 +35278,11 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"mvA" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/sign/warning/cold_temp,
+/turf/open/floor/engine,
+/area/station/science/xenobiology)
 "mvN" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
@@ -61518,7 +61543,7 @@
 	c_tag = "Xenobiology Lab - Euthanasia Chamber";
 	network = list("ss13","rd","xeno")
 	},
-/turf/open/floor/iron,
+/turf/open/floor/circuit/telecomms,
 /area/station/science/xenobiology)
 "vvH" = (
 /obj/machinery/door/firedoor,
@@ -115166,8 +115191,8 @@ uKW
 faD
 iWc
 cXP
-gXw
-gXw
+bot
+giO
 gXw
 cXP
 lVB
@@ -115423,8 +115448,8 @@ iNK
 faD
 iWc
 cXP
-dnJ
-dnJ
+giO
+giO
 vvD
 cXP
 lVB
@@ -115680,9 +115705,9 @@ xVu
 sPy
 iWc
 xVu
-xVu
+kcc
 jSj
-cXP
+mvA
 xVu
 lVB
 pry
