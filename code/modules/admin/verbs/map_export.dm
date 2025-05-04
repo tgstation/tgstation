@@ -239,6 +239,9 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 						CHECK_TICK
 						if(obj_blacklist[thing.type])
 							continue
+						if(is_multi_tile_object(thing) && (thing.loc != pull_from))
+							continue
+
 						var/metadata = generate_tgm_metadata(thing)
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
 						empty = FALSE
@@ -272,14 +275,16 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 
 /proc/generate_tgm_metadata(atom/object)
 	var/list/data_to_add = list()
-
 	var/list/vars_to_save = object.get_save_vars()
+
 	for(var/variable in vars_to_save)
 		CHECK_TICK
 		var/value = object.vars[variable]
 		if(value == initial(object.vars[variable]) || !issaved(object.vars[variable]))
 			continue
 		if(variable == "icon_state" && object.smoothing_flags)
+			continue
+		if(variable == "icon" && object.smoothing_flags)
 			continue
 
 		var/text_value = tgm_encode(value)
