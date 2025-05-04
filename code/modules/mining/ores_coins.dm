@@ -617,7 +617,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	name = "eldritch coin"
 	desc = "A surprisingly heavy, ornate coin. Its sides seem to depict a different image each time you look."
 	icon_state = "coin_heretic"
-	custom_materials = list(/datum/material/diamond =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma =HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT)
 	sideslist = list("heretic", "blade")
 	heads_name = "heretic"
 	has_action = TRUE
@@ -646,18 +646,5 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 			target_airlock.unlock()
 			continue
 		target_airlock.lock()
-
-/obj/item/coin/eldritch/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!istype(interacting_with, /obj/machinery/door/airlock))
-		return NONE
-	if(!IS_HERETIC(user))
-		user.adjustBruteLoss(5)
-		user.adjustFireLoss(5)
-		return ITEM_INTERACT_BLOCKING
-	var/obj/machinery/door/airlock/target_airlock = interacting_with
-	to_chat(user, span_warning("You insert [src] into the airlock."))
-	target_airlock.emag_act(user, src)
-	qdel(src)
-	return ITEM_INTERACT_SUCCESS
 
 #undef ORESTACK_OVERLAYS_MAX

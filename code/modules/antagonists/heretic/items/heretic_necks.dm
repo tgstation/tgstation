@@ -190,6 +190,9 @@
 		return
 	var/mob/living/living_user = user
 	var/mob/living/carbon/human/human_target = target
+	if(IS_HERETIC_OR_MONSTER(human_target))
+		living_user.balloon_alert(living_user, "resists effects!")
+		return FALSE
 	if(!IS_HERETIC_OR_MONSTER(living_user))
 		living_user.balloon_alert(living_user, "you feel a presence watching you")
 		living_user.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)

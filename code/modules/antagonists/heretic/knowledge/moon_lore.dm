@@ -4,9 +4,9 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_moon
 	knowledge_tier1 = /datum/heretic_knowledge/spell/mind_gate
-	knowledge_tier2 = /datum/heretic_knowledge/spell/moon_parade
+	knowledge_tier2 = /datum/heretic_knowledge/moon_amulet
 	robes = /datum/heretic_knowledge/armor/moon
-	knowledge_tier3 = /datum/heretic_knowledge/moon_amulet
+	knowledge_tier3 = /datum/heretic_knowledge/spell/moon_parade
 	blade = /datum/heretic_knowledge/blade_upgrade/moon
 	knowledge_tier4 = /datum/heretic_knowledge/spell/moon_ringleader
 	ascension = /datum/heretic_knowledge/ultimate/moon_final
@@ -57,28 +57,6 @@
 	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
 	cost = 2
 
-/datum/heretic_knowledge/spell/moon_parade
-	name = "Lunar Parade"
-	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
-		when hitting someone they are forced to join the parade and suffer hallucinations."
-	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
-	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
-	cost = 2
-
-/datum/heretic_knowledge/armor/moon
-	desc = "Allows you to transmute a table, a mask and two sheets of iron to create a Resplendant Regalia. \
-			Acts as a focus while hooded."
-	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
-				The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
-				I observed, basking in the light, to find my self."
-	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon)
-	research_tree_icon_state = "moon_armor"
-	required_atoms = list(
-		/obj/structure/table = 1,
-		/obj/item/clothing/mask = 1,
-		/obj/item/stack/sheet/iron = 2,
-	)
-
 /datum/heretic_knowledge/moon_amulet
 	name = "Moonlight Amulet"
 	desc = "Allows you to transmute 2 sheets of glass, a heart and a tie to create a Moonlight Amulet. \
@@ -95,10 +73,31 @@
 	result_atoms = list(/obj/item/clothing/neck/heretic_focus/moon_amulet)
 	cost = 2
 
-
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "moon_amulette"
 	research_tree_icon_frame = 9
+
+/datum/heretic_knowledge/armor/moon
+	desc = "Allows you to transmute a table, a mask and two sheets of iron to create a Resplendant Regalia. \
+			Acts as a focus while hooded."
+	gain_text = "Trails of light and mirth flowed from every arm of this magnificent attire. \
+				The troupe twirled in irridescent cascades, dazzling onlookers with the truth they sought. \
+				I observed, basking in the light, to find my self."
+	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon)
+	research_tree_icon_state = "moon_armor"
+	required_atoms = list(
+		/obj/structure/table = 1,
+		/obj/item/clothing/mask = 1,
+		/obj/item/stack/sheet/iron = 2,
+	)
+
+/datum/heretic_knowledge/spell/moon_parade
+	name = "Lunar Parade"
+	desc = "Grants you Lunar Parade, a spell that - after a short charge - sends a carnival forward \
+		when hitting someone they are forced to join the parade and suffer hallucinations."
+	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
+	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
+	cost = 2
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"

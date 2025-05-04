@@ -13,6 +13,8 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clothing_flags = THICKMATERIAL
 	transparent_protection = HIDEGLOVES | HIDESUITSTORAGE | HIDEJUMPSUIT | HIDESHOES | HIDENECK
+	cold_protection = FULL_BODY
+	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	armor_type = /datum/armor/eldritch_armor
@@ -76,6 +78,7 @@
 	body_parts_covered = FULL_BODY
 	heat_protection = FULL_BODY
 	max_heat_protection_temperature = 50000
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | LAVA_PROOF | FREEZE_PROOF
 	actions_types = list(/datum/action/item_action/toggle/flames)
 	/// If our robes are actively generating flames
 	var/flame_generation = FALSE
@@ -181,7 +184,7 @@
 	bio = 50
 	fire = 50
 	acid = 50
-	wound = 50
+	wound = 30
 
 // Cosmic
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic
@@ -313,7 +316,7 @@
 	if(!ishuman(loc))
 		return ..()
 	var/mob/living/carbon/human/wearer = loc
-	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED), REF(src))
+	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED, TRAIT_NOGUNS), REF(src))
 	wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 	UnregisterSignal(wearer, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
 	on_hud_remove(wearer)
@@ -324,7 +327,7 @@
 	if(!ishuman(user))
 		return
 	if(!(slot_flags & slot))
-		user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED), REF(src))
+		user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED, TRAIT_NOGUNS), REF(src))
 		user.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 		UnregisterSignal(user, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
 		var/obj/item/organ/brain/our_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
@@ -631,6 +634,7 @@
 	desc = "At first, the empty canvas of this robe seems to shimmer with a faint, cold light. \
 			Yet upon tracking the shape of the folds more carefully, it is better to describe it as the absence of such a thing."
 	icon_state = "void_armor"
+	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/void
 	armor_type = /datum/armor/eldritch_armor/void
 	/// Cooldown before we can go back into stealth

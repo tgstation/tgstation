@@ -27,7 +27,7 @@
 /datum/action/cooldown/spell/pointed/projectile/star_blast/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	. = ..()
 	projectile_weakref = WEAKREF(to_fire)
-	to_fire.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast, user)
+	to_fire.AddElement(cosmic_trail_based_on_passive(user), /obj/effect/forcefield/cosmic_field/fast)
 
 /datum/action/cooldown/spell/pointed/projectile/star_blast/apply_button_overlay(atom/movable/screen/movable/action_button/current_button, force)
 	var/obj/projectile/magic/star_ball/active_ball = projectile_weakref?.resolve()

@@ -7,8 +7,6 @@
 	argument_hash_start_idx = 2
 	/// The effect used for the trail generation.
 	var/chosen_effect
-	/// The source of the trail if relevant
-	var/mob/effect_source
 
 /datum/element/effect_trail/Attach(datum/target, chosen_effect = /obj/effect/forcefield/cosmic_field, mob/owner)
 	. = ..()
@@ -16,11 +14,10 @@
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(generate_effect))
 	src.chosen_effect = chosen_effect
-	effect_source = owner
 
 /datum/element/effect_trail/Detach(datum/target)
-	. = ..()
 	UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+	return ..()
 
 /// Generates an effect
 /datum/element/effect_trail/proc/generate_effect(atom/movable/target_object)
@@ -29,9 +26,43 @@
 	var/turf/open/open_turf = get_turf(target_object)
 	if(!istype(open_turf))
 		return
-
-	if(effect_source && ispath(chosen_effect, /obj/effect/forcefield/cosmic_field))
-		create_cosmic_field(open_turf, effect_source, chosen_effect)
-		return
-
 	new chosen_effect(open_turf)
+
+/// If we are a cosmic heretic, this will return the appropriate effect trail based on our passive level. returns the default trail otherwise
+/proc/cosmic_trail_based_on_passive(mob/living/source)
+	. = /datum/element/effect_trail/cosmic_field
+	var/datum/status_effect/heretic_passive/cosmic/cosmic_passive = source.has_status_effect(/datum/status_effect/heretic_passive/cosmic)
+	if(!cosmic_passive)
+		return .
+	if(cosmic_passive.passive_level == 3)
+		return /datum/element/effect_trail/cosmic_field/antiprojectile
+	if(cosmic_passive.passive_level == 2)
+		return /datum/element/effect_trail/cosmic_field/antiexplosion
+	return /datum/element/effect_trail
+
+/datum/element/effect_trail/cosmic_field // Cosmic field subtype which applies any upgrades
+	var/prevents_explosions = FALSE
+	var/slows_projectiles = FALSE
+
+/datum/element/effect_trail/cosmic_field/Attach(datum/target, chosen_effect, mob/owner)
+	. = ..()
+	if(!istype(chosen_effect, /obj/effect/forcefield/cosmic_field))
+		stack_trace("Tried to attach a cosmic_field effect trail with a non-cosmic field as the chosen effect")
+
+/datum/element/effect_trail/cosmic_field/generate_effect(atom/movable/target_object)
+	var/turf/open/open_turf = get_turf(target_object)
+	if(!istype(open_turf))
+		return
+	var/obj/effect/forcefield/cosmic_field/new_field = new chosen_effect(open_turf)
+
+	if(prevents_explosions)
+		new_field.prevents_explosions()
+	if(slows_projectiles)
+		new_field.slows_projectiles()
+
+/datum/element/effect_trail/cosmic_field/antiexplosion
+	prevents_explosions = TRUE
+
+/datum/element/effect_trail/cosmic_field/antiprojectile
+	prevents_explosions = TRUE
+	slows_projectiles = TRUE

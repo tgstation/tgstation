@@ -145,9 +145,12 @@
 	var/datum/beam/current_beam = null
 	/// The timer for the teleport effect
 	var/teleport_timer
+	/// The effect trail that we add to our victim
+	var/cosmic_effect_trail
 
 /datum/status_effect/cosmic_beam/on_creation(mob/living/new_owner, mob/living/current_target)
 	src.current_target = current_target
+	cosmic_effect_trail = cosmic_trail_based_on_passive(new_owner)
 	start_beam(current_target, new_owner)
 	ADD_TRAIT(current_target, TRAIT_NO_TELEPORT, REF(src))
 	teleport_timer = addtimer(CALLBACK(src, PROC_REF(yoink_victim), new_owner), 8 SECONDS, TIMER_STOPPABLE)
@@ -200,6 +203,7 @@
 /datum/status_effect/cosmic_beam/proc/beam_died()
 	SIGNAL_HANDLER
 	to_chat(owner, span_warning("You lose control of the beam!"))
+	active = FALSE
 	lose_target()
 	duration = 0
 
@@ -223,9 +227,9 @@
 /// What to add when the beam connects to a target
 /datum/status_effect/cosmic_beam/proc/on_beam_hit(mob/living/target, mob/living/user)
 	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
-		target.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/star_touch, user)
+		target.AddElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)
 
 /// What to remove when the beam disconnects from a target
 /datum/status_effect/cosmic_beam/proc/on_beam_release(mob/living/target)
 	if(!istype(target, /mob/living/basic/heretic_summon/star_gazer))
-		target.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)
+		target.RemoveElement(cosmic_effect_trail, /obj/effect/forcefield/cosmic_field/star_touch)

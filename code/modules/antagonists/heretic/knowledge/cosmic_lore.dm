@@ -4,9 +4,9 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	knowledge_tier1 = /datum/heretic_knowledge/spell/cosmic_runes
-	knowledge_tier2 = /datum/heretic_knowledge/spell/star_touch
+	knowledge_tier2 = /datum/heretic_knowledge/spell/star_blast
 	robes = /datum/heretic_knowledge/armor/cosmic
-	knowledge_tier3 = /datum/heretic_knowledge/spell/star_blast
+	knowledge_tier3 = /datum/heretic_knowledge/spell/star_touch
 	blade = /datum/heretic_knowledge/blade_upgrade/cosmic
 	knowledge_tier4 = /datum/heretic_knowledge/spell/cosmic_expansion
 	ascension = /datum/heretic_knowledge/ultimate/cosmic_final
@@ -45,15 +45,12 @@
 	action_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 2
 
-/datum/heretic_knowledge/spell/star_touch
-	name = "Star Touch"
-	desc = "Grants you Star Touch, a spell which places a star mark upon your target \
-		and creates a cosmic field at your feet and to the turfs next to you. Targets which already have a star mark \
-		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that burns them. \
-		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
-	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
-		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
-	action_to_add = /datum/action/cooldown/spell/touch/star_touch
+/datum/heretic_knowledge/spell/star_blast
+	name = "Star Blast"
+	desc = "Fires a projectile that moves very slowly, raising a short-lived wall of cosmic fields where it goes. \
+		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
+	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
+	action_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
 	cost = 2
 
 /datum/heretic_knowledge/armor/cosmic
@@ -70,12 +67,15 @@
 		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
 
-/datum/heretic_knowledge/spell/star_blast
-	name = "Star Blast"
-	desc = "Fires a projectile that moves very slowly, raising a short-lived wall of cosmic fields where it goes. \
-		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
-	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
-	action_to_add = /datum/action/cooldown/spell/pointed/projectile/star_blast
+/datum/heretic_knowledge/spell/star_touch
+	name = "Star Touch"
+	desc = "Grants you Star Touch, a spell which places a star mark upon your target \
+		and creates a cosmic field at your feet and to the turfs next to you. Targets which already have a star mark \
+		will be forced to sleep for 4 seconds. When the victim is hit it also creates a beam that burns them. \
+		The beam lasts a minute, until the beam is obstructed or until a new target has been found."
+	gain_text = "After waking in a cold sweat I felt a palm on my scalp, a sigil burned onto me. \
+		My veins now emitted a strange purple glow, the Beast knows I will surpass its expectations."
+	action_to_add = /datum/action/cooldown/spell/touch/star_touch
 	cost = 2
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
@@ -153,7 +153,7 @@
 				if(target.mind && target.stat != DEAD)
 					increase_combo_duration()
 					if(combo_counter == 4)
-						source.AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast, source)
+						source.AddElement(cosmic_trail_based_on_passive(source), /obj/effect/forcefield/cosmic_field/fast)
 		third_target = second_target
 	second_target = WEAKREF(target)
 
@@ -162,7 +162,7 @@
 	second_target = null
 	third_target = null
 	if(combo_counter > 3)
-		source.RemoveElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
+		source.RemoveElement(cosmic_trail_based_on_passive(source), /obj/effect/forcefield/cosmic_field/fast)
 	combo_duration = combo_duration_amount
 	combo_counter = 0
 	new /obj/effect/temp_visual/cosmic_cloud(get_turf(source))
@@ -210,7 +210,9 @@
 		/datum/pet_command/attack/star_gazer
 	)
 	/// List of traits given once ascended
-	var/static/list/ascended_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTCOLD, TRAIT_RESISTHEAT, TRAIT_BOMBIMMUNE, TRAIT_XRAY_VISION)
+	var/static/list/ascended_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTCOLD, TRAIT_RESISTHEAT, TRAIT_XRAY_VISION)
+	/// List of traits given to our cute lil guy
+	var/static/list/stargazer_traits = list(TRAIT_RESISTLOWPRESSURE, TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTCOLD, TRAIT_RESISTHEAT, TRAIT_BOMBIMMUNE, TRAIT_XRAY_VISION)
 
 /datum/heretic_knowledge/ultimate/cosmic_final/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
 	. = ..()
@@ -241,7 +243,7 @@
 	if(star_touch_spell)
 		star_touch_spell.set_star_gazer(star_gazer_mob)
 		star_touch_spell.ascended = TRUE
-	star_gazer_mob.add_traits(ascended_traits, type)
+	star_gazer_mob.add_traits(stargazer_traits, type)
 	star_gazer_mob.summoner = WEAKREF(user)
 	star_gazer_mob.leash_to(star_gazer_mob, user)
 	star_gazer_mob.giga_laser.our_master = WEAKREF(user)

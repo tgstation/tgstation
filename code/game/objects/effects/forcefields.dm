@@ -198,7 +198,7 @@ GLOBAL_LIST_EMPTY_TYPED(active_cosmic_fields, /obj/effect/forcefield/cosmic_fiel
 	initial_duration = 5 SECONDS
 
 /obj/effect/forcefield/cosmic_field/star_touch
-	initial_duration = 20 SECONDS
+	initial_duration = 30 SECONDS
 
 /obj/effect/forcefield/cosmic_field/fast
 	initial_duration = 5 SECONDS

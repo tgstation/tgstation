@@ -329,15 +329,24 @@
 /datum/status_effect/heretic_passive/moon
 	/// Built-in moon amulet which channels through your spells
 	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet
+	/// When were we last attacked?
+	var/last_attack = 0
 
 /datum/status_effect/heretic_passive/moon/on_apply()
 	. = ..()
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	ADD_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
+	owner.AddElement(/datum/element/relay_attackers)
+	RegisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
+
+/// Saves world.time when we are attacked by anything
+/datum/status_effect/heretic_passive/moon/proc/on_attacked(mob/victim, atom/attacker)
+	SIGNAL_HANDLER
+	last_attack = world.time
 
 /datum/status_effect/heretic_passive/moon/tick(seconds_between_ticks)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, (-5 * passive_level))
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, ((world.time > last_attack + 5 SECONDS) ? (-5 * passive_level / 2) : -5 * passive_level))
 
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
@@ -358,6 +367,7 @@
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_TRAUMA_IMMUNITY, REF(src))
 	REMOVE_TRAIT(owner, TRAIT_SLEEPIMMUNE, REF(src))
+	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
 	qdel(amulet)
 	return ..()
 
