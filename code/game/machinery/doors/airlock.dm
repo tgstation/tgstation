@@ -187,6 +187,9 @@
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
+/obj/machinery/door/airlock/get_save_vars()
+	return ..() - NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
+
 /obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
 
