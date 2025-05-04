@@ -829,7 +829,7 @@
 /turf/open/floor/wood/large,
 /area/awaymission/beach)
 "kp" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/button/door/directional/south{
 	id = "BeachGarage"
 	},
@@ -1683,7 +1683,7 @@
 /obj/vehicle/ridden/atv{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/dark/herringbone,
 /area/awaymission/beach)
 "vq" = (
@@ -2175,7 +2175,7 @@
 	pixel_y = 4
 	},
 /obj/item/storage/toolbox/emergency,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/dark/herringbone,
 /area/awaymission/beach)
 "Cf" = (
@@ -3123,7 +3123,7 @@
 /obj/item/clothing/head/soft/black,
 /obj/item/clothing/head/soft/black,
 /obj/item/clothing/head/soft/black,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/clothing/glasses/heat,
 /turf/open/floor/iron/dark/herringbone,

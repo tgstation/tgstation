@@ -72,7 +72,7 @@
 	desc = "I say blue-mah-to, you say blue-mae-to."
 	icon_state = "bluetomato"
 	bite_consumption_mod = 2
-	splat_type = /obj/effect/decal/cleanable/oil
+	splat_type = /obj/effect/decal/cleanable/blood/oil
 	distill_reagent = /datum/reagent/consumable/laughter
 
 // Bluespace Tomato

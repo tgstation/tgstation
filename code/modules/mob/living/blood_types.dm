@@ -205,9 +205,22 @@
 	. = ..()
 	if (!new_splat)
 		return
+
 	// Oil blood will never dry and can be ignited with fire
 	blood.can_dry = FALSE
-	blood.AddElement(/datum/element/easy_ignite)
+	blood.dry_prefix = null
+	blood.dry_desc = null
+
+	// Always force our decals to have our reagent, we don't want liquid gibs from oily guts
+	blood.decal_reagent = reagent_type
+
+	// Oily guts are not converted to robotic ones, so you can still have your biomechanical abominations >X)
+	if (!istype(blood, /obj/effect/decal/cleanable/blood/gibs))
+		blood.AddElement(/datum/element/easy_ignite)
+
+	// Replace only the default description
+	if (blood.desc == /obj/effect/decal/cleanable/blood::desc)
+		blood.desc = /obj/effect/decal/cleanable/blood/oil::desc
 
 /datum/blood_type/vampire
 	name = BLOOD_TYPE_VAMPIRE
@@ -229,6 +242,15 @@
 
 /datum/blood_type/xeno/get_blood_name()
 	return "Acid"
+
+/datum/blood_type/xeno/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
+	. = ..()
+	if (!new_splat)
+		return
+
+	// Replace only the default description
+	if (blood.desc == /obj/effect/decal/cleanable/blood::desc)
+		blood.desc = "It's green and acidic. It looks like... <i>blood?</i>"
 
 /// April fool's blood for clowns
 /datum/blood_type/clown

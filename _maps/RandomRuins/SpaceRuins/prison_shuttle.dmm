@@ -148,7 +148,7 @@
 /area/ruin/space/prison_shuttle)
 "O" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/decal/cleanable/xenoblood/xsplatter,
+/obj/effect/decal/cleanable/blood/splatter/xeno,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/prison_shuttle)
 "P" = (

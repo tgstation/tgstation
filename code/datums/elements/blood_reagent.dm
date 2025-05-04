@@ -75,10 +75,7 @@
 	SIGNAL_HANDLER
 
 	if ((methods & (TOUCH | VAPOR)) && reac_volume >= 3 && (blood_type.expose_flags & (BLOOD_ADD_DNA | BLOOD_COVER_MOBS)))
-		if (source.data?["blood_DNA"])
-			exposed_mob.add_blood_DNA(list(source.data["blood_DNA"] = blood_type))
-		else
-			exposed_mob.add_blood_DNA(list("Unknown DNA" = blood_type))
+		exposed_mob.add_blood_DNA(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type))
 
 	// Somehow got a no-data reagent, probably artificially created blood
 	if (!source.data)
@@ -122,15 +119,15 @@
 	if (reac_volume < 3 || !(blood_type.expose_flags & (BLOOD_ADD_DNA | BLOOD_COVER_TURFS)))
 		return
 
+	var/dna_list = list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type)
 	var/obj/effect/decal/cleanable/blood/splatter = locate() in exposed_turf
 	if (!splatter)
-		splatter = new(exposed_turf, blood_type, reac_volume)
-	else
-		if (source.data?["blood_DNA"])
-			splatter.add_blood_DNA(list(source.data?["blood_DNA"] = blood_type))
-		else
-			splatter.add_blood_DNA(list(blood_type.dna_string = blood_type))
-		splatter.adjust_bloodiness(reac_volume / BLOOD_TO_UNITS_MULTIPLIER)
+		splatter = new(exposed_turf, (blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA) ? source.data?["viruses"] : null, dna_list)
+		splatter.adjust_bloodiness(-splatter.bloodiness + reac_volume / BLOOD_TO_UNITS_MULTIPLIER)
+		return
+
+	splatter.add_blood_DNA(dna_list)
+	splatter.adjust_bloodiness(reac_volume / BLOOD_TO_UNITS_MULTIPLIER)
 
 	if (!(blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return
@@ -150,10 +147,7 @@
 		return
 
 	if (blood_type.expose_flags & (BLOOD_ADD_DNA | BLOOD_COVER_ITEMS))
-		if (source.data?["blood_DNA"])
-			exposed_obj.add_blood_DNA(list(source.data["blood_DNA"] = blood_type))
-		else
-			exposed_obj.add_blood_DNA(list("Unknown DNA" = blood_type))
+		exposed_obj.add_blood_DNA(list(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type) = blood_type))
 
 	if (!(blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return

@@ -8,7 +8,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/floor,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
@@ -21,7 +21,7 @@
 	pixel_x = 5;
 	pixel_y = 8
 	},
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
@@ -75,7 +75,7 @@
 	},
 /area/ruin/huntinglodge)
 "bV" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 10
 	},
 /obj/effect/turf_decal/weather/snow/corner{
@@ -153,7 +153,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/huntinglodge)
 "cS" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 5
 	},
 /turf/open/misc/hay/icemoon,
@@ -167,7 +167,7 @@
 	pixel_y = -4
 	},
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 5
 	},
 /turf/open/floor/carpet/red,
@@ -293,7 +293,7 @@
 /turf/open/floor/wood/large,
 /area/ruin/huntinglodge)
 "fb" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 1
 	},
 /turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
@@ -388,7 +388,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/wood/large,
@@ -552,7 +552,7 @@
 	},
 /obj/item/bodypart/head/ethereal,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/item/chair/stool,
@@ -674,7 +674,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
@@ -752,7 +752,7 @@
 /area/ruin/huntinglodge)
 "mb" = (
 /obj/item/ammo_casing/shotgun/buckshot/spent,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 10
 	},
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag,
@@ -1021,7 +1021,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/item/chair/stool,
@@ -1042,7 +1042,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "rI" = (
 /obj/effect/decal/cleanable/blood/tracks,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1088,7 +1088,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 10
 	},
 /obj/effect/decal/cleanable/brimdust,
@@ -1243,7 +1243,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 5
 	},
 /obj/item/kirbyplants/random,
@@ -1343,7 +1343,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "xz" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood/trail_holder,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/turf_decal/siding/wood/corner{
@@ -1485,7 +1485,7 @@
 /area/icemoon/surface/outdoors/nospawn)
 "yO" = (
 /obj/effect/decal/cleanable/garbage,
-/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood/trail_holder,
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 2
 	},
@@ -1550,7 +1550,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/gibs/core,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
@@ -1579,13 +1579,13 @@
 /turf/open/floor/wood/large,
 /area/ruin/huntinglodge)
 "As" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 5
 	},
 /turf/open/misc/asteroid/snow/icemoon/do_not_chasm,
 /area/icemoon/surface/outdoors/nospawn)
 "Aw" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 10
 	},
 /obj/effect/turf_decal/weather/snow/corner{
@@ -1610,7 +1610,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 10
 	},
 /turf/open/floor/wood/large,
@@ -1697,7 +1697,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/wood/large,
@@ -1771,7 +1771,7 @@
 "Dc" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/stool/directional/south,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/confetti,
@@ -1786,7 +1786,7 @@
 /turf/open/floor/wood,
 /area/ruin/huntinglodge)
 "Dq" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/stone/icemoon,
@@ -1956,7 +1956,7 @@
 /turf/open/floor/wood,
 /area/ruin/huntinglodge)
 "EY" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner{
@@ -2334,7 +2334,7 @@
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
@@ -2357,7 +2357,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/confetti,
@@ -2465,7 +2465,7 @@
 /obj/structure/chair/stool/directional/south,
 /obj/effect/decal/cleanable/plastic,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
@@ -2488,7 +2488,7 @@
 	dir = 1
 	},
 /obj/structure/chair/stool/directional/north,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/confetti,
@@ -2525,7 +2525,7 @@
 /turf/open/floor/carpet/green,
 /area/ruin/huntinglodge)
 "NN" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2559,7 +2559,7 @@
 /area/ruin/huntinglodge)
 "Ok" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/wood/tile,
@@ -2734,7 +2734,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/gibs/limb,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood/corner{
@@ -2769,7 +2769,7 @@
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood/corner{
@@ -2781,11 +2781,11 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /mob/living/basic/viscerator,
@@ -2793,7 +2793,7 @@
 /area/ruin/huntinglodge)
 "RB" = (
 /obj/effect/decal/cleanable/blood/gibs/body,
-/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood/trail_holder,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker,
 /area/ruin/huntinglodge)
@@ -2840,7 +2840,7 @@
 /turf/open/floor/stone/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "Sp" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2908,7 +2908,7 @@
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/stone/icemoon,
@@ -3099,7 +3099,7 @@
 /area/ruin/huntinglodge)
 "Xd" = (
 /obj/effect/decal/cleanable/blood/drip,
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/floor/carpet/royalblack,
@@ -3201,7 +3201,7 @@
 	pixel_x = -1;
 	pixel_y = -1
 	},
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 1
 	},
 /obj/effect/turf_decal/weather/snow/corner{
@@ -3239,7 +3239,7 @@
 /obj/machinery/door/airlock/wood{
 	color = "#beada5"
 	},
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/structure/fans/tiny,
@@ -3288,7 +3288,7 @@
 /turf/open/floor/carpet,
 /area/ruin/huntinglodge)
 "ZI" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/item/bodypart/head/ethereal,

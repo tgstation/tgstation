@@ -75,7 +75,7 @@
 /obj/effect/decal/cleanable/food/squid_ink
 	name = "ink smear"
 	desc = "a smear from some inky substance..."
-	icon = 'icons/mob/silicon/robots.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	color = COLOR_DARK
 

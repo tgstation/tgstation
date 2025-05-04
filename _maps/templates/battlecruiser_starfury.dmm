@@ -1167,7 +1167,7 @@
 /area/shuttle/sbc_starfury)
 "eA" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/pod/dark,
 /area/shuttle/sbc_starfury)
 "eB" = (
@@ -1340,7 +1340,7 @@
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "eY" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -1497,7 +1497,7 @@
 	dir = 8
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/dark/textured_large,
 /area/shuttle/sbc_starfury)
 "fu" = (
@@ -3441,7 +3441,7 @@
 /turf/open/floor/iron,
 /area/shuttle/sbc_starfury)
 "lN" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "lO" = (
@@ -3562,7 +3562,7 @@
 /area/shuttle/sbc_starfury)
 "mI" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "mJ" = (
@@ -5355,7 +5355,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
 "Sh" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

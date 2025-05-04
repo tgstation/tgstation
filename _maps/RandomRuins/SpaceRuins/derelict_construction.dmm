@@ -390,7 +390,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictconstruction)
 "Vh" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/trash/caution_sign,
 /turf/open/floor/plating,

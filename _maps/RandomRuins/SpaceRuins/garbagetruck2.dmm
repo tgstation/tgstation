@@ -163,7 +163,7 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/rack_parts,
 /obj/item/storage/pill_bottle/mannitol,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "qC" = (
@@ -275,7 +275,7 @@
 /obj/item/food/badrecipe/moldy,
 /obj/item/food/badrecipe/moldy,
 /obj/structure/closet/mini_fridge/grimy,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/reagent_containers/cup/bottle/morphine,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
@@ -434,7 +434,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "IM" = (
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /obj/structure/closet/crate/freezer,
 /obj/item/organ/liver/roach,
 /obj/item/organ/stomach,
@@ -560,7 +560,7 @@
 /turf/template_noop,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Pe" = (
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /obj/structure/frame/computer,
 /obj/item/stack/sheet/glass{
 	amount = 2
@@ -581,7 +581,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "QK" = (
-/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
 /obj/item/circular_saw,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)

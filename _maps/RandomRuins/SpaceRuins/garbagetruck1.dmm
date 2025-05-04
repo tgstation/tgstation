@@ -411,7 +411,7 @@
 	desc = "It's just a wooden stick with some compressed ash on the end. At least it can write.";
 	name = "charcoal stick"
 	},
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/structure/closet/crate/trashcart,
 /obj/item/food/grown/ash_flora/shavings,
 /turf/open/floor/plating/dumpsterair,
@@ -912,7 +912,7 @@
 	pixel_y = -2
 	},
 /obj/effect/decal/cleanable/plastic,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/decal/cleanable/glass,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/item/crowbar/hammer{

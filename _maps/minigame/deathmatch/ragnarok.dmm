@@ -418,7 +418,7 @@
 "rh" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/misc/asteroid/moon,
 /area/deathmatch)
 "rm" = (

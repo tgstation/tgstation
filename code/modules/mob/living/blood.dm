@@ -272,6 +272,7 @@
 
 /mob/living/proc/get_blood_data()
 	SHOULD_CALL_PARENT(TRUE)
+	RETURN_TYPE(/list)
 
 	var/datum/blood_type/blood_type = get_bloodtype()
 	if (!blood_type)
@@ -473,7 +474,7 @@
 	// Find a blood decal or create a new one.
 	var/obj/effect/decal/cleanable/blood/blood_spew = locate() in splatter_turf
 	if(!blood_spew)
-		blood_spew = new /obj/effect/decal/cleanable/blood/splatter(splatter_turf, get_static_viruses())
+		blood_spew = new /obj/effect/decal/cleanable/blood/splatter(splatter_turf, get_static_viruses()) // TODO SMARTKAR
 	if(QDELETED(blood_spew)) //Give it up
 		return
 	blood_spew.bloodiness = min((blood_spew.bloodiness + BLOOD_AMOUNT_PER_DECAL), BLOOD_POOL_MAX)
@@ -488,7 +489,7 @@
 /mob/living/carbon/alien/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check)
 	if(!splatter_turf)
 		splatter_turf = get_turf(src)
-	var/obj/effect/decal/cleanable/xenoblood/xeno_blood_splatter = locate() in splatter_turf.contents
+	var/obj/effect/decal/cleanable/blood/xeno/xeno_blood_splatter = locate() in splatter_turf.contents
 	if(!xeno_blood_splatter)
 		xeno_blood_splatter = new(splatter_turf)
 	xeno_blood_splatter.add_blood_DNA(list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)))
@@ -496,7 +497,7 @@
 /mob/living/silicon/robot/add_splatter_floor(turf/splatter_turf, small_drip, skip_reagents_check)
 	if(!splatter_turf)
 		splatter_turf = get_turf(src)
-	var/obj/effect/decal/cleanable/oil/oil_splatter = locate() in splatter_turf.contents
+	var/obj/effect/decal/cleanable/blood/oil/oil_splatter = locate() in splatter_turf.contents
 	if(!oil_splatter)
 		oil_splatter = new(splatter_turf)
 

@@ -587,7 +587,7 @@
 /area/virtual_domain)
 "rJ" = (
 /obj/structure/railing,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "rM" = (
@@ -615,7 +615,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "sW" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/turf_decal/trimline/yellow/corner{
 	dir = 1
 	},
@@ -966,7 +966,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "BX" = (
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Ci" = (
@@ -1049,7 +1049,7 @@
 /obj/effect/turf_decal/stripes{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "EJ" = (
@@ -1867,7 +1867,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Zb" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "Zg" = (

@@ -201,7 +201,7 @@
 /turf/closed/wall/r_wall,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "rc" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/flashlight/flare/torch,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
@@ -383,7 +383,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "wK" = (
-/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
 /obj/item/clothing/under/costume/skeleton,
 /obj/item/clothing/mask/gas/prop,
 /turf/open/floor/plating,
@@ -394,15 +394,15 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "xd" = (
-/obj/effect/decal/cleanable/robot_debris/up,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/melee/skateboard,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "xf" = (
 /obj/structure/door_assembly/door_assembly_wood,
 /obj/effect/decal/cleanable/plastic,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "xC" = (
@@ -844,7 +844,7 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "XL" = (
 /obj/item/scooter_frame,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/decal/cleanable/garbage,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,

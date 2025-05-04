@@ -101,7 +101,7 @@
 /area/shuttle/abandoned)
 "hP" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/stack/cable_coil,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
@@ -178,7 +178,7 @@
 /area/shuttle/abandoned)
 "qy" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating/airless,
 /area/shuttle/abandoned)
 "rq" = (
@@ -195,7 +195,7 @@
 "sg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/airless,
 /area/shuttle/abandoned)
 "sw" = (

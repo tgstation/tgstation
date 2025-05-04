@@ -80,7 +80,7 @@
 	if(!prob(blood_spawn_chance))
 		return
 
-	var/obj/effect/decal/cleanable/blood/blood = new blood_type(current_turf)
+	var/obj/effect/decal/cleanable/blood/blood = new blood_type(current_turf) // TODO SMARTKAR
 	if(QDELETED(blood)) // Our blood was placed on somewhere it shouldn't be and qdeleted in init.
 		return
 

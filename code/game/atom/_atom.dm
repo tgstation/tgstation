@@ -498,7 +498,7 @@
 /mob/living/carbon/get_blood_dna_list()
 	if (dna?.unique_enzymes)
 		return list(dna.unique_enzymes = get_bloodtype())
-	return ..() || list("Unknown DNA" = get_blood_type(BLOOD_TYPE_UNIVERSAL))
+	return ..()
 
 /mob/living/silicon/get_blood_dna_list()
 	return

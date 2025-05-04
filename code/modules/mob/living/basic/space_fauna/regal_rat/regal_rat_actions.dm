@@ -32,7 +32,7 @@
 		if (9)
 			new /obj/effect/decal/cleanable/vomit/old(location)
 		if (10)
-			new /obj/effect/decal/cleanable/oil/slippery(location)
+			new /obj/effect/decal/cleanable/blood/oil/slippery(location)
 		else
 			new /obj/effect/decal/cleanable/dirt(location)
 	StartCooldown()

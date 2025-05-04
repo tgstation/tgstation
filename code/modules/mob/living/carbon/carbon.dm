@@ -1456,7 +1456,7 @@
 		return
 	if(get_bloodtype()?.no_bleed_overlays)
 		return
-	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc)
+	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc) // TODO SMARTKAR
 	our_splatter.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	our_splatter.blood_dna_info = get_blood_dna_list()
 	our_splatter.color = get_blood_dna_color(our_splatter.blood_dna_info) // TODO SMARTKAR

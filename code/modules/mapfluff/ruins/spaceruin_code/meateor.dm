@@ -137,6 +137,6 @@
 	max_integrity = 15
 
 /obj/structure/meateor_fluff/abandoned_headcrab_egg/atom_destruction(damage_flag)
-	new /obj/effect/decal/cleanable/xenoblood(loc)
+	new /obj/effect/decal/cleanable/blood/xeno(loc)
 	playsound(loc, 'sound/effects/footstep/gib_step.ogg', vol = 50, vary = TRUE, pressure_affected = FALSE)
 	return ..()
