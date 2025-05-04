@@ -197,11 +197,11 @@
 		if(obj_flags & EMAGGED)
 			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
 				if(!isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
-					return
+					continue
 
 				var/mob/living/living_mob = CRUNCH
 				if(living_mob.incorporeal_move)
-					return
+					continue
 
 				if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
 					break
