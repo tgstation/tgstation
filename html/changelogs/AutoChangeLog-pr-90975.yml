@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "We're no strangers to bugs: Playing protected audio shouldn't crash the server anymore!"
