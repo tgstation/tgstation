@@ -14,7 +14,6 @@
 		return ..()
 
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/spread_movement_effects(datum/move_loop/has_target/source)
-	SIGNAL_HANDLER
 	if(NeverShouldHaveComeHere(loc))
 		return
 	if (prob(40))
