@@ -42,8 +42,8 @@
 	dir = 4
 	},
 /obj/item/storage/box/mothic_rations{
-	pixel_y = -9;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = -9
 	},
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
@@ -285,13 +285,13 @@
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "w";
-	pixel_y = -15;
-	pixel_x = -17
+	pixel_x = -17;
+	pixel_y = -15
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "e";
-	pixel_y = -16;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = -16
 	},
 /obj/effect/decal/cleanable/blood{
 	pixel_y = -13
@@ -668,8 +668,8 @@
 /area/virtual_domain)
 "fn" = (
 /obj/item/camera/detective{
-	pixel_y = 4;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
@@ -705,9 +705,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/item/flashlight/flare/candle/infinite{
-	pixel_y = 16;
 	icon_state = "candle2_lit";
-	pixel_x = 17
+	pixel_x = 17;
+	pixel_y = 16
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
@@ -1050,8 +1050,8 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/evac/directional/east,
 /obj/item/stock_parts/subspace/crystal{
-	pixel_y = -12;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = -12
 	},
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
@@ -1279,6 +1279,15 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"kU" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/disposalpipe/broken{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
 "kW" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/west,
@@ -1413,15 +1422,15 @@
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "o";
-	pixel_y = 16;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 16
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
 "lN" = (
 /obj/item/bodybag{
-	pixel_y = 5;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 5
 	},
 /obj/item/reagent_containers/spray/cleaner{
 	pixel_x = 9;
@@ -1491,9 +1500,9 @@
 /area/virtual_domain)
 "mj" = (
 /obj/item/flashlight/flare/candle/infinite{
+	icon_state = "candle3_lit";
 	pixel_x = -13;
-	pixel_y = 8;
-	icon_state = "candle3_lit"
+	pixel_y = 8
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
@@ -1686,8 +1695,8 @@
 	},
 /obj/item/modular_computer/laptop{
 	icon_state = "laptop";
-	pixel_y = 12;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 12
 	},
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
@@ -2302,12 +2311,12 @@
 /obj/structure/bed/dogbed/renault,
 /mob/living/basic/pet/fox,
 /obj/item/stack/spacecash/c1000{
-	pixel_y = 15;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 15
 	},
 /obj/item/storage/briefcase/secure/syndie{
-	pixel_y = 13;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 13
 	},
 /obj/item/stack/sheet/mineral/diamond{
 	pixel_x = 9;
@@ -2889,8 +2898,8 @@
 /area/virtual_domain)
 "yq" = (
 /obj/structure/filingcabinet/chestdrawer{
-	pixel_y = 2;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 2
 	},
 /turf/open/floor/carpet,
 /area/virtual_domain)
@@ -3062,8 +3071,8 @@
 /obj/structure/broken_flooring/side/directional/north,
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "m";
-	pixel_y = 17;
-	pixel_x = -13
+	pixel_x = -13;
+	pixel_y = 17
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
@@ -3118,8 +3127,8 @@
 /area/virtual_domain)
 "Ad" = (
 /obj/item/clothing/head/cone{
-	pixel_y = -5;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -5
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
@@ -3167,8 +3176,8 @@
 "AD" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/item/clothing/head/cone{
-	pixel_y = 3;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 3
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
@@ -3484,8 +3493,8 @@
 /obj/effect/turf_decal/bot_white/right,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/clothing/head/cone{
-	pixel_y = 3;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
@@ -3679,8 +3688,8 @@
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "e";
-	pixel_y = -16;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = -16
 	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "guy";
@@ -3695,8 +3704,8 @@
 	},
 /obj/item/clothing/suit/bio_suit/virology,
 /obj/item/clothing/head/bio_hood/virology{
-	pixel_y = 10;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = 10
 	},
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /obj/structure/sign/warning/biohazard/directional/north,
@@ -3965,8 +3974,8 @@
 "Hg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/flashlight/flare/candle/infinite{
-	pixel_y = -9;
-	icon_state = "candle2_lit"
+	icon_state = "candle2_lit";
+	pixel_y = -9
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
@@ -4053,9 +4062,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass,
 /obj/item/flashlight/flare/candle/infinite{
+	icon_state = "candle3_lit";
 	pixel_x = 13;
-	pixel_y = 8;
-	icon_state = "candle3_lit"
+	pixel_y = 8
 	},
 /obj/item/trash/candle,
 /turf/open/floor/plating,
@@ -5157,13 +5166,13 @@
 /area/virtual_domain)
 "Rn" = (
 /obj/item/clothing/head/cone{
-	pixel_y = 3;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 3
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/storage/toolbox/electrical{
-	pixel_y = -5;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = -5
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
@@ -5405,8 +5414,8 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/syringe/lethal/execution,
 /obj/item/reagent_containers/syringe/lethal/execution{
-	pixel_y = 7;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 7
 	},
 /turf/open/floor/carpet,
 /area/virtual_domain)
@@ -5648,9 +5657,9 @@
 "VH" = (
 /obj/item/storage/box/lights/mixed,
 /obj/item/flashlight/flare/candle/infinite{
-	pixel_y = 16;
 	icon_state = "candle2_lit";
-	pixel_x = -17
+	pixel_x = -17;
+	pixel_y = 16
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
@@ -6005,8 +6014,8 @@
 /area/virtual_domain)
 "YD" = (
 /obj/item/clothing/head/cone{
-	pixel_y = 2;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /obj/effect/decal/cleanable/glass,
 /obj/effect/mapping_helpers/broken_floor,
@@ -6124,6 +6133,9 @@
 /area/virtual_domain)
 "Zx" = (
 /obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
 "ZC" = (
@@ -6146,8 +6158,8 @@
 /area/virtual_domain)
 "ZH" = (
 /obj/item/clothing/head/cone{
-	pixel_y = 3;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 3
 	},
 /obj/structure/grille/broken,
 /obj/structure/cable,
@@ -6395,7 +6407,7 @@ xK
 ux
 CM
 KR
-nS
+kU
 ro
 ps
 HM
