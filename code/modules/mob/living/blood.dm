@@ -378,7 +378,7 @@
 /// Check if a mob can bleed, and possibly if they're capable of leaving decals on turfs/mobs/items
 /mob/living/proc/can_bleed(bleed_flag = NONE)
 	if (HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_NOBLOOD))
-		return FALSE
+		return BLEED_NONE
 
 	if (!bleed_flag)
 		return BLEED_SPLATTER
@@ -386,7 +386,11 @@
 	var/datum/blood_type/blood_type = get_bloodtype()
 	if (blood_type.blood_flags & bleed_flag)
 		return BLEED_SPLATTER
-	return BLEED_ADD_DNA
+
+	if (blood_type.blood_flags & BLOOD_ADD_DNA)
+		return BLEED_ADD_DNA
+
+	return BLEED_NONE
 
 /// Returns the blood_type datum that corresponds to the string id key in GLOB.blood_types
 /proc/get_blood_type(id)
@@ -508,7 +512,7 @@
  */
 /mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
 	// Check if we can bleed and if our splatter can even go anywhere
-	if(!isturf(loc) || !can_bleed(BLOOD_COVER_TURFS))
+	if(!isturf(loc) || can_bleed(BLOOD_COVER_TURFS) != BLEED_SPLATTER)
 		return
 	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc, get_static_viruses(), get_blood_dna_list(), splatter_strength)
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)

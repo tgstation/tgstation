@@ -1,4 +1,5 @@
 ///Blood walk, a component that causes you to make blood wherever you walk.
+// Todo smartkar this entire file
 /datum/component/blood_walk
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 

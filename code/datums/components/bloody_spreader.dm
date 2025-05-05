@@ -1,3 +1,4 @@
+// todo smartkar: this entire file
 /datum/component/bloody_spreader
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	// How many bloodening instances are left. Deleted on zero.

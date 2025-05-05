@@ -187,9 +187,12 @@
 		slow_dry(5 SECONDS * by_amount * BLOOD_TO_UNITS_MULTIPLIER)
 	return TRUE
 
-// When color changes we need to update the drying animation
 /obj/effect/decal/cleanable/blood/update_atom_colour()
 	. = ..()
+	update_blood_color()
+
+// When color changes we need to update the drying animation
+/obj/effect/decal/cleanable/blood/proc/update_blood_color()
 	var/base_color = BLOOD_COLOR_RED
 	// Get a default color based on DNA if it ends up unset somehow
 	var/list/blood_DNA = GET_ATOM_BLOOD_DECALS(src)

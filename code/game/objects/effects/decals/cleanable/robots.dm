@@ -23,6 +23,10 @@
 		s.set_up(3, 1, src)
 		s.start()
 
+// Doesn't have overlay support as of now
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/update_blood_color()
+	return
+
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/limb
 	icon_state = "gibarm"
 	random_icon_states = list("gibarm", "gibleg")

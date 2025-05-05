@@ -23,6 +23,9 @@
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6")
 	color = /datum/blood_type/xeno::color // For mapper sanity
 
+/obj/effect/decal/cleanable/blood/gibs/xeno/get_default_blood_type()
+	return get_blood_type(BLOOD_TYPE_XENO)
+
 /obj/effect/decal/cleanable/blood/gibs/xeno/up
 	icon_state = "xgibup1"
 	random_icon_states = list("xgib1", "xgib2", "xgib3", "xgib4", "xgib5", "xgib6","xgibup1","xgibup1","xgibup1")

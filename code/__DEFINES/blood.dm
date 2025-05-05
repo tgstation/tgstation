@@ -12,16 +12,6 @@
 /// Bloodiness -> reagent units multiplier
 #define BLOOD_TO_UNITS_MULTIPLIER 0.1
 
-//Bloody shoe blood states
-/// Red blood
-#define BLOOD_STATE_HUMAN "blood"
-/// Green xeno blood
-#define BLOOD_STATE_XENO "xeno"
-/// Black robot oil
-#define BLOOD_STATE_OIL "oil"
-/// No blood is present
-#define BLOOD_STATE_NOT_BLOODY "no blood whatsoever"
-
 // Bitflags for mob dismemberment and gibbing
 /// Mobs will drop a brain
 #define DROP_BRAIN (1<<0)
