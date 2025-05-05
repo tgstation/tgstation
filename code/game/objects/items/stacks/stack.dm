@@ -126,10 +126,10 @@
 	if(QDELETED(src) || isnull(loc))
 		return
 	for(var/obj/item/stack/item_stack in loc)
-		if(QDELING(item_stack) || item_stack == src || (item_stack in already_found))
+		if(QDELING(item_stack) || item_stack == src || already_found[item_stack])
 			continue
 		if(can_merge(item_stack))
-			already_found += item_stack
+			already_found[item_stack] = TRUE
 			return item_stack
 
 /// Tries to merge the stack with everything on the same tile.
