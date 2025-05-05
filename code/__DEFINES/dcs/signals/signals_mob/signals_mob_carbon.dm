@@ -23,11 +23,11 @@
 ///from base of /obj/item/bodypart/proc/can_attach_limb(): (new_limb, special) allows you to fail limb attachment
 #define COMSIG_ATTEMPT_CARBON_ATTACH_LIMB "attempt_carbon_attach_limb"
 	#define COMPONENT_NO_ATTACH (1<<0)
-///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
+///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special, lazy)
 #define COMSIG_CARBON_ATTACH_LIMB "carbon_attach_limb"
-/// Called from bodypart being attached /obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_owner, special)
+/// Called from bodypart being attached /obj/item/bodypart/proc/try_attach_limb(mob/living/carbon/new_owner, special, lazy)
 #define COMSIG_BODYPART_ATTACHED "bodypart_attached"
-///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special)
+///from base of /obj/item/bodypart/proc/try_attach_limb(): (new_limb, special, lazy)
 #define COMSIG_CARBON_POST_ATTACH_LIMB "carbon_post_attach_limb"
 ///from /obj/item/bodypart/proc/receive_damage, sent from the limb owner (limb, brute, burn)
 #define COMSIG_CARBON_LIMB_DAMAGED "carbon_limb_damaged"

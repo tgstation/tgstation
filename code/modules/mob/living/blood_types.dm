@@ -392,22 +392,3 @@
 
 /datum/blood_type/random_chemical/type_key()
 	return reagent_type
-
-// Similar to the random reagents bloodtype, this one creates a 'but evil' bloodtype
-/datum/blood_type/evil
-	root_abstract_type = /datum/blood_type/evil
-
-/datum/blood_type/evil/New(datum/blood_type/real_blood_type, list/real_compatible_types)
-	name = real_blood_type.name
-	desc = real_blood_type.desc
-	. = ..()
-	dna_string = real_blood_type.dna_string
-	id = type_key()
-	color = BLOOD_COLOR_BLACK // why it gotta be black though
-	reagent_type = real_blood_type.reagent_type
-	restoration_chem = real_blood_type.restoration_chem
-	compatible_types = LAZYCOPY(real_compatible_types) | type_key()
-	root_abstract_type = null
-
-/datum/blood_type/evil/type_key()
-	return "[name]_but_evil"

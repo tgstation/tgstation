@@ -1112,13 +1112,14 @@
 		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer)
 		. += aux
 
-	update_draw_color()
-
 	if(is_husked)
-		huskify_image(thing_to_husk = limb)
+		. += huskify_image(thing_to_husk = limb)
 		if(aux)
-			huskify_image(thing_to_husk = aux)
+			. += huskify_image(thing_to_husk = aux)
 		draw_color = husk_color
+	else
+		update_draw_color()
+
 	if(draw_color)
 		limb.color = "[draw_color]"
 		if(aux_zone)
@@ -1137,6 +1138,7 @@
 			if(aux_zone)
 				var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
 				. += aux_em_block
+
 		if(is_emissive)
 			var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
 			. += limb_em
@@ -1157,29 +1159,31 @@
 			. += leg_source.generate_masked_leg(limb_image)
 
 	// And finally put bodypart_overlays on if not husked
-	if(!is_husked)
-		//Draw external organs like horns and frills
-		for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
-			if(!overlay.can_draw_on_bodypart(src, owner))
-				continue
-			//Some externals have multiple layers for background, foreground and between
-			for(var/external_layer in overlay.all_layers)
-				if(overlay.layers & external_layer)
-					. += overlay.get_overlay(external_layer, src)
-			for(var/datum/layer in .)
-				overlay.modify_bodypart_appearance(layer)
+	if(is_husked)
+		return .
+
+	//Draw external organs like horns and frills
+	for(var/datum/bodypart_overlay/overlay as anything in bodypart_overlays)
+		if(!overlay.can_draw_on_bodypart(src, owner))
+			continue
+		//Some externals have multiple layers for background, foreground and between
+		for(var/external_layer in overlay.all_layers)
+			if(overlay.layers & external_layer)
+				. += overlay.get_overlay(external_layer, src)
+		for(var/datum/layer in .)
+			overlay.modify_bodypart_appearance(layer)
 	return .
 
-/obj/item/bodypart/proc/huskify_image(image/thing_to_husk, draw_blood = TRUE)
+/obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
 	var/icon/husk_icon = new(thing_to_husk.icon)
 	husk_icon.ColorTone(HUSK_COLOR_TONE)
 	thing_to_husk.icon = husk_icon
-	if(draw_blood)
-		var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]")
-		husk_blood.blend_mode = BLEND_INSET_OVERLAY
-		husk_blood.appearance_flags |= RESET_COLOR
-		husk_blood.dir = thing_to_husk.dir
-		thing_to_husk.add_overlay(husk_blood)
+	var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]", appearance_flags = RESET_COLOR)
+	// BLEND_INSET_OVERLAY on KEEP_TOGETHER atoms masks itself with the atom, so we cannot add this as an overlay to our limb to have it automatically mask
+	husk_blood.blend_mode = BLEND_INSET_OVERLAY
+	husk_blood.dir = thing_to_husk.dir
+	husk_blood.layer = thing_to_husk.layer
+	return husk_blood
 
 ///Add a bodypart overlay and call the appropriate update procs
 /obj/item/bodypart/proc/add_bodypart_overlay(datum/bodypart_overlay/overlay, update = TRUE)
