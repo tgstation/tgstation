@@ -36,11 +36,6 @@
 		else
 			new /obj/effect/decal/cleanable/dirt(location)
 
-	var/rat_cap = CONFIG_GET(number/ratcap)
-	if (LAZYLEN(SSmobs.cheeserats) < rat_cap && prob(75))
-		new /mob/living/basic/mouse(owner.loc)
-		owner.visible_message(span_warning("[owner] commands a mouse to their side!"))
-
 	StartCooldown()
 
 /datum/action/cooldown/mob_cooldown/domain/Activate(atom/target)
