@@ -14,11 +14,11 @@
 	SIGNAL_HANDLER
 
 	owner.visible_message(
-		span_danger("[owner] Slowly pops its head out of its shell!"),
+		span_danger("[owner] slowly pops its head out of its shell!"),
 		span_userdanger("You pop your head out of your shell."),
 	)
 	REMOVE_TRAIT(owner, TRAIT_SHELL_RETREATED, REF(src))
-	UnregisterSignal(owner, list(COMSIG_MOVABLE_ATTEMPTED_MOVE))
+	UnregisterSignal(owner, list(COMSIG_MOVABLE_ATTEMPTED_MOVE, COMSIG_LIVING_DEATH))
 	owner.update_appearance(UPDATE_ICON_STATE)
 
 /datum/action/cooldown/mob_cooldown/shell_retreat/proc/retreat_into_shell()
@@ -26,6 +26,6 @@
 		span_danger("[owner] quickly escapes into its shell!"),
 		span_userdanger("You hide in your shell.."),
 	)
-	RegisterSignal(owner, COMSIG_MOVABLE_ATTEMPTED_MOVE, PROC_REF(unretreat_from_shell))
+	RegisterSignals(owner, list(COMSIG_LIVING_DEATH, COMSIG_MOVABLE_ATTEMPTED_MOVE), PROC_REF(unretreat_from_shell))
 	ADD_TRAIT(owner, TRAIT_SHELL_RETREATED, REF(src))
 	owner.update_appearance(UPDATE_ICON_STATE)

@@ -77,8 +77,9 @@
 
 
 /mob/living/basic/snail/update_icon_state()
-	. = ..()
-	icon_state = HAS_TRAIT(src, TRAIT_SHELL_RETREATED) ? "[base_icon_state]_shell" : "[base_icon_state][(faction.Find(FACTION_RAT)) ? "_maints" : ""]"
+	if(stat != DEAD)
+		icon_state = HAS_TRAIT(src, TRAIT_SHELL_RETREATED) ? "[base_icon_state]_shell" : "[base_icon_state][(faction.Find(FACTION_RAT)) ? "_maints" : ""]"
+	return ..()
 
 ///snail's custom holder object
 /obj/item/clothing/head/mob_holder/snail
