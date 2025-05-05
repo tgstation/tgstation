@@ -193,3 +193,18 @@
 /obj/item/circuitboard/computer/personal_shuttle_order/station
 	name = "Station-Linked Personal Shuttle Order Console"
 	build_path = /obj/machinery/computer/personal_shuttle_order/station
+
+// For the cantina
+
+/obj/machinery/computer/personal_shuttle_order/cantina
+	docking_port_id = "cantina"
+	circuit = /obj/item/circuitboard/computer/personal_shuttle_order/cantina
+	valid_shuttle_templates = list(
+		/datum/map_template/shuttle/personal_buyable/ferries,
+		/datum/map_template/shuttle/personal_buyable/mining,
+		/datum/map_template/shuttle/personal_buyable/incomplete,
+	)
+
+/obj/item/circuitboard/computer/personal_shuttle_order/cantina
+	name = "Cantina-Linked Personal Shuttle Order Console"
+	build_path = /obj/machinery/computer/personal_shuttle_order/cantina

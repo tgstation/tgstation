@@ -1,4 +1,3 @@
-//datums
 
 /datum/job/cantina_regular
 	title = "Undisclosed Location regular"
@@ -18,12 +17,36 @@
 	show_in_roundend = FALSE
 	default_custom_objective = "Serve refreshing drinks... by any means necessary!"
 
-//childed to /datum/outfit/syndicate for uplink granting
+/datum/outfit/cantina_regular
+	name = "Cantina Regular"
+	uniform = /obj/item/clothing/under/frontier_colonist
+	shoes = /obj/item/clothing/shoes/jackboots/frontier_colonist
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/storage/backpack/industrial/frontier_colonist
+	ears = /obj/item/radio/headset/syndicate/alt
+	l_pocket = /obj/item/modular_computer/pda
+	r_pocket = /obj/item/pen/edagger
+	id = /obj/item/card/id/advanced/chameleon
+	belt = /obj/item/storage/belt/utility/frontier_colonist
+	box = /obj/item/storage/box/survival/syndie
+	implants = /obj/item/implant/weapons_auth
+	backpack_contents = list(
+		/obj/item/stack/spacecash/c1000 = 2,
+		)
 
-/datum/outfit/syndicate/cantina_regular
-	uplink_type = /obj/item/uplink/
-	l_pocket = null
-
-/datum/outfit/syndicate/cantina_bartender
-	uplink_type = null
-	l_pocket = null
+/datum/outfit/cantina_bartender
+	name = "Cantina Bartender"
+	uniform = /obj/item/clothing/under/frontier_colonist
+	shoes = /obj/item/clothing/shoes/jackboots/frontier_colonist
+	gloves = /obj/item/clothing/gloves/combat
+	back = /obj/item/storage/backpack/industrial/frontier_colonist
+	ears = /obj/item/radio/headset/syndicate/alt
+	l_pocket = /obj/item/modular_computer/pda
+	r_pocket = /obj/item/pen/edagger
+	id = /obj/item/card/id/advanced/chameleon
+	belt = /obj/item/storage/belt/utility/frontier_colonist
+	box = /obj/item/storage/box/survival/syndie
+	implants = /obj/item/implant/weapons_auth
+	backpack_contents = list(
+		/obj/item/stack/spacecash/c1000 = 10,
+		)
