@@ -15,7 +15,7 @@
 #define OFFSET_ABSOLUTE "Absolute offset"
 #define OFFSET_RELATIVE "Relative offset"
 
-ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADMIN_CATEGORY_GAME)
+ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADMIN_CATEGORY_GAME)
 	if (!usr.client.holder.spawnpanel_tgui)
 		usr.client.holder.spawnpanel_tgui = new(usr.client)
 	usr.client.holder.spawnpanel_tgui.ui_interact(usr)
@@ -66,7 +66,6 @@ ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 		toggle_precise_mode(PRECISE_MODE_OFF)
 
 /datum/admins/spawnpanel/ui_state(mob/user)
-	. = ..()
 	return ADMIN_STATE(R_ADMIN)
 
 /datum/admins/spawnpanel/ui_act(action, params)
@@ -85,7 +84,8 @@ ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 				object_name = params["object_name"],
 				object_where = params["where_dropdown_value"] || WHERE_FLOOR_BELOW_MOB,
 				offset_type = params["offset_type"] || OFFSET_RELATIVE,
-				)
+				),
+				usr
 			)
 		if("toggle-precise-mode")
 			var/precise_type = params["newPreciseType"]
@@ -94,12 +94,18 @@ ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 			toggle_precise_mode(precise_type)
 			return TRUE
 		if("update-settings")
-			if(params["object_count"]) object_count = text2num(params["object_count"])
-			if(params["dir"]) dir = text2num(params["dir"])
-			if(params["offset"]) offset = params["offset"]
-			if(params["object_name"]) object_name = params["object_name"]
-			if(params["where_dropdown_value"]) where_dropdown_value = params["where_dropdown_value"]
-			if(params["offset_type"]) offset_type = params["offset_type"]
+			if(params["object_count"])
+				object_count = text2num(params["object_count"])
+			if(params["dir"])
+				dir = text2num(params["dir"])
+			if(params["offset"])
+				offset = params["offset"]
+			if(params["object_name"])
+				object_name = params["object_name"]
+			if(params["where_dropdown_value"])
+				where_dropdown_value = params["where_dropdown_value"]
+			if(params["offset_type"])
+				offset_type = params["offset_type"]
 			return TRUE
 
 /datum/admins/spawnpanel/proc/toggle_precise_mode(precise_type)
@@ -124,11 +130,10 @@ ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 	else
 		winset(admin_client, "mapwindow.map", "right-click=false")
 
-
 	var/mob/holder_mob = admin_client.mob
 	holder_mob?.update_mouse_pointer()
 
-/datum/admins/spawnpanel/proc/InterceptClickOn(user, params, atom/target)
+/datum/admins/spawnpanel/proc/InterceptClickOn(mob/user, params, atom/target)
 	var/list/modifiers = params2list(params)
 	var/left_click = LAZYACCESS(modifiers, LEFT_CLICK)
 	var/right_click = LAZYACCESS(modifiers, RIGHT_CLICK)
@@ -168,18 +173,19 @@ ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 					spawn_params["Y"] = clicked_turf.y
 					spawn_params["Z"] = clicked_turf.z
 
-				spawn_item(spawn_params)
+				spawn_item(spawn_params, user)
 
 			if(PRECISE_MODE_MARK)
-				usr.client.mark_datum(target)
-				to_chat(usr, span_notice("Marked object: [icon2html(target, usr)] [span_bold("[target]")]"))
+				var/client/admin_client = user.client
+				admin_client.mark_datum(target)
+				to_chat(user, span_notice("Marked object: [icon2html(target, user)] [span_bold("[target]")]"))
 				toggle_precise_mode(PRECISE_MODE_OFF)
 				SStgui.update_uis(src)
 
 			if(PRECISE_MODE_COPY)
-				var/copied_type = target.type
-				to_chat(usr, span_notice("Picked object: [icon2html(target, usr)] [span_bold("[target]")]"))
-				src.copied_type = "[copied_type]"
+				var/target_type = target.type
+				to_chat(user, span_notice("Picked object: [icon2html(target, user)] [span_bold("[target]")]"))
+				copied_type = "[target_type]"
 				toggle_precise_mode(PRECISE_MODE_OFF)
 				SStgui.update_uis(src)
 
@@ -192,18 +198,18 @@ ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 	data["precise_mode"] = precise_mode
 	data["selected_object"] = selected_object
 	data["copied_type"] = copied_type
-	return data;
+	return data
 
 /datum/admins/spawnpanel/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/json/spawnpanel),
 	)
 
-/datum/admins/spawnpanel/proc/spawn_item(list/spawn_params)
+/datum/admins/spawnpanel/proc/spawn_item(list/spawn_params, mob/user)
 	if(!check_rights_for(user_client, R_ADMIN) || !spawn_params)
 		return
 
-	var/path = text2path(spawn_params["object_list"]) || null
+	var/path = text2path(spawn_params["object_list"])
 
 	if(!path || (!ispath(path, /obj) && !ispath(path, /turf) && !ispath(path, /mob)))
 		return
@@ -220,20 +226,15 @@ ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 		X = spawn_params["X"]
 		Y = spawn_params["Y"]
 		Z = spawn_params["Z"]
-	else if(offset.len > 0)
-		X = text2num(offset[1])
-		if(isnull(X))
-			X = 0
+	else
+		if(offset.len > 0)
+			X = text2num(offset[1]) || 0
 
 		if(offset.len > 1)
-			Y = text2num(offset[2])
-			if(isnull(Y))
-				Y = 0
+			Y = text2num(offset[2]) || 0
 
 		if(offset.len > 2)
-			Z = text2num(offset[3])
-			if(isnull(Z))
-				Z = 0
+			Z = text2num(offset[3]) || 0
 
 	var/obj_dir = text2num(spawn_params["object_dir"]) || 1
 	var/atom_name = sanitize(spawn_params["object_name"])
@@ -247,30 +248,30 @@ ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 				target_reference = spawn_params["object_reference"]
 
 			if(WHERE_MOB_HAND)
-				target_reference = usr
+				target_reference = user
 
 		if(!target_reference)
-			to_chat(usr, span_warning("No target reference provided."))
+			to_chat(user, span_warning("No target reference provided."))
 			return
 
 		if(!ismob(target_reference))
-			to_chat(usr, span_warning("The targeted atom is not a mob."))
+			to_chat(user, span_warning("The targeted atom is not a mob."))
 			return
 
 		if(!iscarbon(target_reference) && !iscyborg(target_reference))
-			to_chat(usr, span_warning("Can only spawn in hand when the target is a carbon mob or cyborg."))
+			to_chat(user, span_warning("Can only spawn in hand when the target is a carbon mob or cyborg."))
 			where = WHERE_FLOOR_BELOW_MOB
 		target = target_reference
 
 	else if(where == WHERE_MARKED_OBJECT)
-		if(!usr.client.holder.marked_datum)
-			to_chat(usr, span_warning("You don't have any object marked."))
+		if(!user.client.holder.marked_datum)
+			to_chat(user, span_warning("You don't have any object marked."))
 			return
-		else if(!istype(usr.client.holder.marked_datum, /atom))
-			to_chat(usr, "The object you have marked cannot be used as a target. Target must be of type /atom.", confidential = TRUE)
+		else if(!istype(user.client.holder.marked_datum, /atom))
+			to_chat(user, span_warning("The object you have marked cannot be used as a target. Target must be of type /atom."))
 			return
 		else
-			target = get_turf(usr.client.holder.marked_datum)
+			target = get_turf(user.client.holder.marked_datum)
 
 	else
 		switch(spawn_params["offset_type"])
@@ -279,20 +280,20 @@ ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 
 			if(OFFSET_RELATIVE)
 				var/turf/relative_turf
-				var/atom/user_loc = usr.loc
+				var/atom/user_loc = user.loc
 
 				if (user_loc)
 					relative_turf = get_turf(user_loc)
 
 				if (!relative_turf)
-					if(isobserver(usr))
-						var/mob/dead/observer/user_observer = usr
+					if(isobserver(user))
+						var/mob/dead/observer/user_observer = user
 						relative_turf = get_turf(user_observer.client?.eye) || get_turf(user_observer)
 					if (!relative_turf)
 						relative_turf = locate(1, 1, 1)
 
 				if (!relative_turf)
-					to_chat(usr, span_warning("Could not determine a valid relative location."))
+					to_chat(user, span_warning("Could not determine a valid relative location."))
 					return
 
 				target = locate(relative_turf.x + X, relative_turf.y + Y, relative_turf.z + Z)
@@ -306,8 +307,8 @@ ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 	if(use_droppod)
 		pod = new()
 
-	for(var/i = 0; i < amount; i++)
-		if(path in typesof(/turf))
+	for(var/i in 1 to amount)
+		if(ispath(path, /turf))
 			var/turf/original_turf = target
 			var/turf/created_turf = original_turf.ChangeTurf(path)
 			if(created_turf && atom_name)
@@ -363,5 +364,6 @@ ADMIN_VERB(spawn_panel, R_ADMIN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 #undef PRECISE_MODE_OFF
 #undef PRECISE_MODE_TARGET
 #undef PRECISE_MODE_MARK
+#undef PRECISE_MODE_COPY
 #undef OFFSET_ABSOLUTE
 #undef OFFSET_RELATIVE

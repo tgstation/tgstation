@@ -3,9 +3,6 @@
 
 /datum/asset/json/spawnpanel/generate()
 	var/list/data = list()
-	var/list/objects = typesof(/obj)
-	var/list/turfs = typesof(/turf)
-	var/list/mobs = typesof(/mob)
 
 	var/static/list/mapping_objects = typecacheof(list(
 		/obj/effect/mapping_helpers,
@@ -23,34 +20,31 @@
 	data["Turfs"] = list()
 	data["Mobs"] = list()
 
-	for(var/item in objects)
-		var/obj/temp = item;
-		data["Objects"][item] = list(
-			"icon" = temp?.icon || "none",
-			"icon_state" = temp?.icon_state || "none",
-			"name" = temp.name,
-			"description" = temp.desc,
-			"mapping" = is_type_in_typecache(temp, mapping_objects)
+	for(var/obj/each_object as anything in typesof(/obj))
+		data["Objects"][each_object] = list(
+			"icon" = each_object?.icon_preview || each_object?.icon || "none",
+			"icon_state" = each_object?.icon_state_preview || each_object?.icon_state || "none",
+			"name" = each_object.name,
+			"description" = each_object.desc,
+			"mapping" = is_type_in_typecache(each_object, mapping_objects)
 		)
 
-	for(var/item in turfs)
-		var/turf/temp = item;
-		data["Turfs"][item] = list(
-			"icon" = temp?.icon || "noneturf",
-			"icon_state" = temp?.icon_state || "noneturf",
-			"name" = temp.name,
-			"description" = temp.desc,
-			"mapping" = is_type_in_typecache(temp, mapping_objects)
+	for(var/turf/each_turf as anything in typesof(/turf))
+		data["Turfs"][each_turf] = list(
+			"icon" = each_turf?.icon || "noneturf",
+			"icon_state" = each_turf?.icon_state || "noneturf",
+			"name" = each_turf.name,
+			"description" = each_turf.desc,
+			"mapping" = is_type_in_typecache(each_turf, mapping_objects)
 		)
 
-	for(var/item in mobs)
-		var/mob/temp = item;
-		data["Mobs"][item] = list(
-			"icon" = temp?.icon || "nonemob",
-			"icon_state" = temp?.icon_state || "nonemob",
-			"name" = temp.name,
-			"description" = temp.desc,
-			"mapping" = is_type_in_typecache(temp, mapping_objects)
+	for(var/mob/each_mob as anything in typesof(/mob))
+		data["Mobs"][each_mob] = list(
+			"icon" = each_mob?.icon || "nonemob",
+			"icon_state" = each_mob?.icon_state || "nonemob",
+			"name" = each_mob.name,
+			"description" = each_mob.desc,
+			"mapping" = is_type_in_typecache(each_mob, mapping_objects)
 		)
 
 	return data
