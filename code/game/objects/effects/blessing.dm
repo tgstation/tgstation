@@ -25,5 +25,5 @@
 /obj/effect/blessing/proc/block_cult_teleport(datum/source, channel, turf/origin)
 	SIGNAL_HANDLER
 
-	if(channel == TELEPORT_CHANNEL_CULT)
+	if(channel == TELEPORT_CHANNEL_CULT || channel == TELEPORT_CHANNEL_MAGIC)
 		return TRUE
