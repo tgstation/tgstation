@@ -250,7 +250,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 					pull_from = null
 				//====Saving holodeck areas====
 				// All hologram objects get skipped and floor tiles get replaced with empty plating
-				if(ispath(location, /area/holodeck) && istype(place, /turf/open/floor/holofloor)
+				if(ispath(location, /area/station/holodeck) && istype(place, /turf/open/floor/holofloor)
 					place = /turf/open/floor/holofloor/plating
 				//====For toggling not saving areas and turfs====
 				if(!(save_flag & SAVE_AREAS))
