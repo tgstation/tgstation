@@ -84,9 +84,9 @@
 			return
 		if(1 to 5)
 			arrow_color = COLOR_GREEN
-		if(6 to 15)
+		if(6 to 10)
 			arrow_color = COLOR_YELLOW
-		if(16 to 25)
+		if(11 to 15)
 			arrow_color = COLOR_ORANGE
 		else
 			arrow_color = COLOR_RED
