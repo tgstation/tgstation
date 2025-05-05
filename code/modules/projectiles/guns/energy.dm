@@ -160,6 +160,8 @@
 
 /obj/item/gun/energy/Exited(atom/movable/gone, direction)
 	. = ..()
+	if(QDELETED(src))
+		return
 	if(gone == cell)
 		cell = null
 		update_appearance()
