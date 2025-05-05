@@ -196,11 +196,17 @@
 	if(living_detected) // First, check if we have any living beings detected.
 		if(obj_flags & EMAGGED)
 			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
-				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
-					if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
-						break
-					crush_living(CRUNCH)
-					use_energy(active_power_usage)
+				if(!isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
+					continue
+
+				var/mob/living/living_mob = CRUNCH
+				if(living_mob.incorporeal_move)
+					continue
+
+				if(!is_operational) //we ran out of power after recycling a large amount to living stuff, time to stop
+					break
+				crush_living(CRUNCH)
+				use_energy(active_power_usage)
 		else // Stop processing right now without eating anything.
 			emergency_stop()
 			return
