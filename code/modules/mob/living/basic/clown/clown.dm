@@ -101,7 +101,7 @@
 	melee_damage_upper = 1
 	attack_verb_continuous = "cheers up"
 	attack_verb_simple = "cheer up"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SPIRIT //replace MOB_SPIRIT with MOB_DEMON if implemented.
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	loot = list(
 		/obj/item/clothing/mask/gas/clown_hat,
 		/obj/effect/gibspawner/human,
