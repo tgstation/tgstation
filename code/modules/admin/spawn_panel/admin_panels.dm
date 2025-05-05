@@ -21,7 +21,6 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 	BLACKBOX_LOG_ADMIN_VERB("Spawn Panel")
 
 /datum/spawnpanel
-	var/client/user_client
 	var/where_dropdown_value = WHERE_FLOOR_BELOW_MOB
 	var/selected_object = ""
 	var/copied_type = null
@@ -34,14 +33,6 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 	var/offset = ""
 	var/offset_type = "relative"
 	var/precise_mode = FALSE
-
-/datum/spawnpanel/New(user)
-	if(istype(user, /client))
-		var/client/temp_user_client = user
-		user_client = temp_user_client
-	else
-		var/mob/user_mob = user
-		user_client = user_mob.client
 
 /datum/spawnpanel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -195,7 +186,7 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 	)
 
 /datum/spawnpanel/proc/spawn_item(list/spawn_params, mob/user)
-	if(!check_rights_for(user_client, R_ADMIN) || !spawn_params)
+	if(!check_rights(R_SPAWN) || !spawn_params)
 		return
 
 	var/path = text2path(spawn_params["object_list"])
