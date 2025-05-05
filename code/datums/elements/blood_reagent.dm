@@ -74,14 +74,14 @@
 )
 	SIGNAL_HANDLER
 
-	if ((methods & (TOUCH | VAPOR)) && reac_volume >= 3 && (blood_type.expose_flags & (BLOOD_ADD_DNA | BLOOD_COVER_MOBS)))
+	if ((methods & (TOUCH | VAPOR)) && reac_volume >= 3 && (blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_MOBS)))
 		exposed_mob.add_blood_DNA(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type))
 
 	// Somehow got a no-data reagent, probably artificially created blood
 	if (!source.data)
 		return
 
-	if (!(blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA))
+	if (!(blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA))
 		return
 
 	for(var/datum/disease/strain as anything in source.data["viruses"])
@@ -116,23 +116,23 @@
 /datum/element/blood_reagent/proc/on_turf_expose(datum/reagent/source, turf/exposed_turf, reac_volume)
 	SIGNAL_HANDLER
 
-	if (reac_volume < 3 || !(blood_type.expose_flags & (BLOOD_ADD_DNA | BLOOD_COVER_TURFS)))
+	if (reac_volume < 3 || !(blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_TURFS)))
 		return
 
 	var/dna_list = list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type)
 	var/obj/effect/decal/cleanable/blood/splatter = locate() in exposed_turf
 	if (!splatter)
-		if (!(blood_type.expose_flags & BLOOD_COVER_TURFS))
+		if (!(blood_type.blood_flags & BLOOD_COVER_TURFS))
 			return
-		splatter = new(exposed_turf, (blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA) ? source.data?["viruses"] : null, dna_list)
+		splatter = new(exposed_turf, (blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA) ? source.data?["viruses"] : null, dna_list)
 		splatter.adjust_bloodiness(-splatter.bloodiness + reac_volume / BLOOD_TO_UNITS_MULTIPLIER)
 		return
 
 	splatter.add_blood_DNA(dna_list)
-	if (blood_type.expose_flags & BLOOD_COVER_TURFS)
+	if (blood_type.blood_flags & BLOOD_COVER_TURFS)
 		splatter.adjust_bloodiness(reac_volume / BLOOD_TO_UNITS_MULTIPLIER)
 
-	if (!(blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
+	if (!(blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return
 
 	var/list/viruses_to_add = list()
@@ -149,10 +149,10 @@
 	if (reac_volume < 3 || !(methods & (VAPOR | TOUCH)))
 		return
 
-	if (blood_type.expose_flags & (BLOOD_ADD_DNA | BLOOD_COVER_ITEMS))
+	if (blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_ITEMS))
 		exposed_obj.add_blood_DNA(list(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type) = blood_type))
 
-	if (!(blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
+	if (!(blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return
 
 	var/list/viruses_to_add = list()

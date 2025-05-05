@@ -1500,7 +1500,7 @@
 	var/obj/item/bodypart/head = get_bodypart(BODY_ZONE_HEAD)
 	if(isnull(head))
 		return ..()
-	if(!get_blood_reagent())
+	if(!can_bleed())
 		to_chat(src, span_notice("You get a headache."))
 		return
 	head.adjustBleedStacks(5)

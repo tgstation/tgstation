@@ -20,7 +20,7 @@
 		return
 	if(GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "maskblood")
-		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DECALS(src))
+		blood_overlay.color = get_blood_dna_color()
 		. += blood_overlay
 
 /obj/item/clothing/neck/bowtie

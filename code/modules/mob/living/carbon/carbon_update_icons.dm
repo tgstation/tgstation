@@ -321,14 +321,14 @@
 	remove_overlay(WOUND_LAYER)
 
 	var/datum/blood_type/blood_type = get_bloodtype()
-	if(!blood_type || !get_blood_reagent())
+	if(!blood_type || !can_bleed())
 		return
 
 	var/mutable_appearance/wound_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.bleed_overlay_icon)
 			var/mutable_appearance/blood_overlay = mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
-			blood_overlay.color = blood_type.get_color()
+			blood_overlay.color = blood_type.get_wound_color(src)
 			wound_overlay ||= blood_overlay
 			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
 

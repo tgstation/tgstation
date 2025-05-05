@@ -122,7 +122,7 @@
 
 /// Makes a blood drop, leaking amt units of blood from the mob
 /mob/living/proc/bleed(amt)
-	if(HAS_TRAIT(src, TRAIT_GODMODE) || !get_blood_reagent())
+	if(HAS_TRAIT(src, TRAIT_GODMODE) || !can_bleed())
 		return
 
 	blood_volume = max(blood_volume - amt, 0)
@@ -140,7 +140,7 @@
 	return 0
 
 /mob/living/carbon/get_bleed_rate()
-	if(HAS_TRAIT(src, TRAIT_GODMODE) || !get_blood_reagent())
+	if(HAS_TRAIT(src, TRAIT_GODMODE) || !can_bleed())
 		return
 	var/bleed_amt = 0
 	for(var/X in bodyparts)
@@ -276,7 +276,7 @@
 	RETURN_TYPE(/list)
 
 	var/datum/blood_type/blood_type = get_bloodtype()
-	if (!blood_type || !get_blood_reagent())
+	if (!blood_type || !can_bleed())
 		return
 
 	var/blood_data = list()
@@ -289,7 +289,7 @@
 			temp_chem[blood_reagent.type] = blood_reagent.volume
 		blood_data["trace_chem"] = list2params(temp_chem)
 
-	if (blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA)
+	if (blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA)
 		// Viruses we possess
 		blood_data["viruses"] = list()
 		for(var/datum/disease/disease as anything in diseases)
@@ -299,7 +299,7 @@
 			blood_data["resistances"] = disease_resistances.Copy()
 
 	// DNA, mind, facitons, etc don't get stored in stuff like oil
-	if (!(blood_type.expose_flags & BLOOD_ADD_DNA))
+	if (!(blood_type.blood_flags & BLOOD_ADD_DNA))
 		return blood_data
 
 	if(mind)
@@ -319,7 +319,7 @@
 		return
 
 	var/datum/blood_type/blood_type = get_bloodtype()
-	if (!(blood_type.expose_flags & BLOOD_ADD_DNA))
+	if (!(blood_type.blood_flags & BLOOD_ADD_DNA))
 		return blood_data
 
 	// If we haven't suicided but the ghost cannot reenter, i.e. we ghosted, don't set ourselves as cloneable
@@ -368,21 +368,33 @@
 	return get_blood_type(BLOOD_TYPE_ANIMAL)
 
 /// Returns the reagent type this mob has for blood
-/// Also used as a way to check if a mob can bleed at all
 /mob/living/proc/get_blood_reagent()
-	if (HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if (!can_bleed())
 		return
 
 	var/datum/blood_type/blood_type = get_bloodtype()
 	return blood_type?.reagent_type
+
+/// Check if a mob can bleed, and possibly if they're capable of leaving decals on turfs/mobs/items
+/mob/living/proc/can_bleed(bleed_flag = NONE)
+	if (HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_NOBLOOD))
+		return FALSE
+
+	if (!bleed_flag)
+		return BLEED_SPLATTER
+
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (blood_type.blood_flags & bleed_flag)
+		return BLEED_SPLATTER
+	return BLEED_ADD_DNA
 
 /// Returns the blood_type datum that corresponds to the string id key in GLOB.blood_types
 /proc/get_blood_type(id)
 	RETURN_TYPE(/datum/blood_type)
 	return GLOB.blood_types[id]
 
-/// Returns the hex color string of a given blood_type datum given an assoc list of blood_DNA e.g. ("Unknown Blood Type", "*X")
-/proc/get_blood_dna_color(list/blood_DNA)
+/// Returns the hex color string, or a color matrix, of a given blood_type datum given an assoc list of blood_DNA e.g. ("Unknown Blood Type", "*X")
+/proc/get_color_from_blood_list(list/blood_DNA)
 	var/datum/blood_type/blood_type
 	if(!length(blood_DNA))
 		return get_blood_type(BLOOD_TYPE_O_PLUS).get_color()
@@ -431,6 +443,21 @@
 
 	return rgb(r_color, g_color, b_color)
 
+/// Checks if any of the passed blood types have certain blood flags
+/proc/has_blood_flag(list/blood_DNA, blood_flags)
+	if (isnull(blood_DNA))
+		return FALSE
+
+	if (!islist(blood_DNA))
+		var/datum/blood_type/blood_type = blood_DNA
+		blood_DNA = list(blood_type.dna_string = blood_type)
+
+	var/matches = NONE
+	for (var/blood_key in blood_DNA)
+		var/datum/blood_type/blood_type = blood_DNA[blood_key]
+		matches |= (blood_type.blood_flags & blood_flags)
+	return matches
+
 /**
  * Returns TRUE if src is compatible with donor's blood, otherwise FALSE.
  * * donor: Mob that is donating blood.
@@ -446,9 +473,9 @@
 /// Create a small visual-only blood splatter
 /mob/living/proc/create_splatter(splatter_dir = pick(GLOB.cardinals))
 	// Check for husking and TRAIT_NOBLOOD
-	if (!get_blood_reagent())
+	if (!can_bleed()) // Even if we can't cover turfs, we still can add DNA to everything our blood hits
 		return
-	var/obj/effect/temp_visual/dir_setting/bloodsplatter/splatter = new(get_turf(src), splatter_dir)
+	var/obj/effect/temp_visual/dir_setting/bloodsplatter/splatter = new(get_turf(src), splatter_dir, get_bloodtype()?.get_color())
 	splatter.color = get_bloodtype()?.color
 
 /*
@@ -458,12 +485,15 @@
  * * small_drip
  */
 /mob/living/proc/add_splatter_floor(turf/splatter_turf, small_drip = FALSE)
-	// Check for husking and TRAIT_NOBLOOD
-	if (!get_blood_reagent())
-		return
-
 	if (!splatter_turf)
 		splatter_turf = get_turf(src)
+
+	// Check for husking and TRAIT_NOBLOOD
+	switch (can_bleed(BLOOD_COVER_TURFS))
+		if (BLEED_NONE)
+			return
+		if (BLEED_ADD_DNA)
+			return splatter_turf.add_mob_blood(src)
 
 	return get_bloodtype()?.make_blood_splatter(src, splatter_turf, small_drip)
 
@@ -478,15 +508,14 @@
  */
 /mob/living/carbon/proc/spray_blood(splatter_direction, splatter_strength = 3)
 	// Check if we can bleed and if our splatter can even go anywhere
-	if(!isturf(loc) || !get_blood_reagent())
+	if(!isturf(loc) || !can_bleed(BLOOD_COVER_TURFS))
 		return
 	var/obj/effect/decal/cleanable/blood/hitsplatter/our_splatter = new(loc, get_static_viruses(), get_blood_dna_list(), splatter_strength)
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
 
-
 /mob/living/proc/make_blood_trail(turf/target_turf, turf/start, was_facing, movement_direction)
-	if(!has_gravity() || !isturf(start) || !get_blood_reagent())
+	if(!has_gravity() || !isturf(start))
 		return
 
 	var/base_bleed_rate = get_bleed_rate()
@@ -509,6 +538,12 @@
 	// If we're very damaged or bleeding a lot, add even more blood to the trail
 	if(base_brute >= 300 || base_bleed_rate >= 7)
 		blood_to_add *= 2
+
+	switch (can_bleed(BLOOD_COVER_TURFS))
+		if (BLEED_NONE)
+			return
+		if (BLEED_ADD_DNA)
+			return start.add_mob_blood(src)
 
 	var/trail_dir = REVERSE_DIR(movement_direction)
 	// The mob is performing a diagonal movement so we need to make a diagonal trail

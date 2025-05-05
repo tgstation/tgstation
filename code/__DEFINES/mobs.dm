@@ -64,8 +64,18 @@
 #define BLOOD_COVER_TURFS (1<<2)
 /// Cover items in ourselves
 #define BLOOD_COVER_ITEMS (1<<3)
+/// Usually you want all COVER flags together or none at all
+#define BLOOD_COVER_ALL (BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS)
 /// Transfer blood immunities and viruses to exposed mobs
 #define BLOOD_TRANSFER_VIRAL_DATA (1<<4)
+
+// Bleed check results
+/// We cannot bleed (here, or in general) at all
+#define BLEED_NONE 0
+/// We cannot make a splatter, but we can add our DNA
+#define BLEED_ADD_DNA 1
+/// We can bleed just fine
+#define BLEED_SPLATTER 2
 
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0

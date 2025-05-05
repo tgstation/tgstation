@@ -5,6 +5,8 @@
  * Component for clothing items that can pick up blood from decals and spread it around everywhere when walking, such as shoes or suits with integrated shoes.
  */
 /datum/component/bloodysoles
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+
 	/// The type of the last grub pool we stepped in, used to decide the type of footprints to make
 	var/last_blood_state = BLOOD_STATE_NOT_BLOODY
 
@@ -338,7 +340,7 @@
 	if(.)
 		return
 
-	bloody_feet.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(pool)) // todo smartkar
+	bloody_feet.color = pool.get_blood_dna_color() // todo smartkar
 	update_icon()
 
 /datum/component/bloodysoles/feet/proc/unequip_shoecover(datum/source)

@@ -248,7 +248,7 @@
 			sickness = "Warning: Patient is harboring some form of viral disease. Seek further medical attention."
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
-	if(patient.get_blood_reagent()) //Blood levels Information
+	if(patient.can_bleed()) //Blood levels Information
 		blood_name = LOWER_TEXT(blood_type.get_blood_name()) || "blood"
 		if(patient.is_bleeding())
 			bleed_status = " Patient is currently bleeding!"

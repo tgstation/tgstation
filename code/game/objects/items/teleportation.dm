@@ -519,7 +519,7 @@
 
 ///Bleed and make blood splatters at tele start and end points
 /obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/living/user)
-	if(!user.get_blood_reagent())
+	if(!user.can_bleed(BLOOD_COVER_TURFS))
 		return FALSE
 	user.add_splatter_floor(old_location)
 	user.add_splatter_floor(new_location)

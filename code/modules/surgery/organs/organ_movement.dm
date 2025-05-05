@@ -238,7 +238,9 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!IS_ROBOTIC_ORGAN(src) && !(item_flags & NO_BLOOD_ON_ITEM) && !QDELING(src))
-		AddElement(/datum/element/decal/blood, _color = get_blood_dna_color(blood_dna_info))
+		var/blood_color = get_color_from_blood_list(blood_dna_info)
+		if (blood_color)
+			AddElement(/datum/element/decal/blood, _color = blood_color)
 
 	item_flags &= ~ABSTRACT
 	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)

@@ -9,7 +9,7 @@
 		return FALSE
 
 	var/mob/living/carbon/carb_hallucinator = hallucinator
-	if(!length(carb_hallucinator.bodyparts) || !carb_hallucinator.get_blood_reagent())
+	if(!length(carb_hallucinator.bodyparts) || !carb_hallucinator.can_bleed())
 		return FALSE
 
 	var/obj/item/bodypart/picked
@@ -40,7 +40,7 @@
 		icon_state = "[picked.body_zone]_[pick(2, 3)]",
 		loc = hallucinator,
 	)
-	bleeding.color = carb_hallucinator.get_bloodtype()?.get_color() || BLOOD_COLOR_RED
+	bleeding.color = carb_hallucinator.get_bloodtype()?.get_wound_color(carb_hallucinator) || BLOOD_COLOR_RED
 	bleeding.layer = -WOUND_LAYER
 	hallucinator.client?.images += bleeding
 	return TRUE

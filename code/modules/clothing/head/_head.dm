@@ -68,11 +68,11 @@
 	if(GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		if(clothing_flags & LARGE_WORN_ICON)
 			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/64x64.dmi', "helmetblood_large")
-			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DECALS(src))
+			blood_overlay.color = get_blood_dna_color()
 			. += blood_overlay
 		else
 			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "helmetblood")
-			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DECALS(src))
+			blood_overlay.color = get_blood_dna_color()
 			. += blood_overlay
 
 /obj/item/clothing/head/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)

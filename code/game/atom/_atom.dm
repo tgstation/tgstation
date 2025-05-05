@@ -121,7 +121,9 @@
 	var/datum/ai_controller/ai_controller
 
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
-	var/datum/forensics/forensics
+	var/datum/forensics/forensics = null
+	/// Cached color for all blood on us to avoid doing constant matrix math for performance reasons
+	var/cached_blood_color = null
 
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY

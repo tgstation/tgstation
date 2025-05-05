@@ -1075,7 +1075,7 @@
 		if(brutestate)
 			// divided into two overlays: one that gets colored and one that doesn't.
 			var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
-			brute_blood_overlay.color = get_blood_dna_color(update_on ? update_on.get_blood_dna_list() : blood_dna_info) // living mobs can just get it fresh, dropped limbs use blood_dna_info
+			brute_blood_overlay.color = get_color_from_blood_list(update_on ? update_on.get_blood_dna_list() : blood_dna_info) // living mobs can just get it fresh, dropped limbs use blood_dna_info
 			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
 			if(brute_damage_overlay)
 				brute_blood_overlay.overlays += brute_damage_overlay
@@ -1340,7 +1340,7 @@
 /obj/item/bodypart/proc/can_bleed()
 	SHOULD_BE_PURE(TRUE)
 
-	return ((biological_state & BIO_BLOODED) && (!owner || owner.get_blood_reagent()))
+	return ((biological_state & BIO_BLOODED) && (!owner || owner.can_bleed()))
 
 /**
  * apply_gauze() is used to- well, apply gauze to a bodypart

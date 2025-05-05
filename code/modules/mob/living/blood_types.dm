@@ -24,8 +24,8 @@
 	var/root_abstract_type
 	/// If this blood type is meant to persist across species changes
 	var/is_species_universal
-	/// Splash and expose behaviors for this blood type's reagent, to prevent water-blood covered items
-	var/expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS | BLOOD_TRANSFER_VIRAL_DATA
+	/// Splash and expose behaviors for this blood type's reagent, to prevent water-blood covered items, as well as information transfer flags
+	var/blood_flags = BLOOD_ADD_DNA | BLOOD_COVER_ALL | BLOOD_TRANSFER_VIRAL_DATA
 
 /datum/blood_type/New()
 	. = ..()
@@ -77,6 +77,10 @@
 /datum/blood_type/proc/get_damage_color(mob/living/carbon/victim)
 	return get_color()
 
+/// Returns blood color for wound bleeding overlays
+/datum/blood_type/proc/get_wound_color(mob/living/carbon/victim)
+	return get_color()
+
 /**
  * Used to handle any unique facets of blood spawned of this blood type
  *
@@ -103,7 +107,7 @@
  * * drip - whether to spawn a drip or a splatter
  */
 /datum/blood_type/proc/make_blood_splatter(mob/living/bleeding, turf/blood_turf, drip = FALSE)
-	if(!(expose_flags & BLOOD_COVER_TURFS))
+	if(!(blood_flags & BLOOD_COVER_TURFS))
 		return
 
 	if(isgroundlessturf(blood_turf))
@@ -269,7 +273,7 @@
 	color = BLOOD_COLOR_OIL
 	reagent_type = /datum/reagent/fuel/oil
 	restoration_chem = /datum/reagent/fuel
-	expose_flags = BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS
+	blood_flags = BLOOD_COVER_ALL
 
 /datum/blood_type/oil/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
 	. = ..()
@@ -308,7 +312,7 @@
 	lightness_mult = 1.255 // For parity with pre-refactor xeno blood sprites
 	reagent_type = /datum/reagent/toxin/acid
 	// Viruses cannot survive in acid
-	expose_flags = BLOOD_ADD_DNA | BLOOD_COVER_MOBS | BLOOD_COVER_TURFS | BLOOD_COVER_ITEMS
+	blood_flags = BLOOD_ADD_DNA | BLOOD_COVER_ALL
 
 /datum/blood_type/xeno/get_blood_name()
 	return "Acid" // "pool of sulphuric acid" is a bit too lengthy of a name
@@ -349,6 +353,12 @@
 	reagent_type = /datum/reagent/toxin/slimejelly
 	restoration_chem = /datum/reagent/stable_plasma // Because normal plasma already refills our blood
 
+// Ensures that lighter slimefolk look half-decent when wounded and bleeding
+/datum/blood_type/slime/get_wound_color(mob/living/carbon/victim)
+	return victim.dna?.features?["mcolor"] || get_color()
+/datum/blood_type/slime/get_damage_color(mob/living/carbon/victim)
+	return victim.dna?.features?["mcolor"] || get_color()
+
 /// Podpeople blood
 /datum/blood_type/water
 	name = BLOOD_TYPE_H2O
@@ -356,9 +366,9 @@
 	color = /datum/reagent/water::color
 	reagent_type = /datum/reagent/water
 	restoration_chem = null
-	expose_flags = BLOOD_ADD_DNA | BLOOD_TRANSFER_VIRAL_DATA
+	blood_flags = BLOOD_ADD_DNA | BLOOD_TRANSFER_VIRAL_DATA
 
-/// Prevents awkward grey wounds on the mob while keeping bleed overlays looking like water leaking from a balloon
+// Prevents awkward grey wounds on the mob while keeping bleed overlays looking like water leaking from a balloon
 /datum/blood_type/water/get_damage_color(mob/living/carbon/victim)
 	return COLOR_LIME
 

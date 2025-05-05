@@ -41,12 +41,12 @@
 	var/can_hold_viruses = TRUE
 	if(istype(blood_or_dna, /datum/blood_type))
 		var/datum/blood_type/default_type = blood_or_dna
-		can_hold_viruses = default_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA
+		can_hold_viruses = default_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA
 	else if (islist(blood_or_dna))
 		can_hold_viruses = FALSE
 		for (var/blood_key in blood_or_dna)
 			var/datum/blood_type/blood_type = blood_or_dna[blood_key]
-			if (blood_type.expose_flags & BLOOD_TRANSFER_VIRAL_DATA)
+			if (blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA)
 				can_hold_viruses = TRUE
 				break
 	. = ..(diseases = can_hold_viruses ? diseases : null)
@@ -196,7 +196,7 @@
 	if (!length(blood_DNA)) // In case we're only composed of stuff that doesn't normally have a visual
 		blood_DNA = GET_ATOM_BLOOD_DNA(src)
 	if (length(blood_DNA))
-		base_color = get_blood_dna_color(blood_DNA)
+		base_color = get_color_from_blood_list(blood_DNA)
 
 	if (!color)
 		color = base_color
@@ -420,7 +420,7 @@
 	icon_state = "ltrails_1"
 	random_icon_states = list("ltrails_1", "ltrails_2")
 	vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
-	appearance_flags = parent_type::appearance_flags | RESET_COLOR
+	appearance_flags = parent_type::appearance_flags | RESET_COLOR | KEEP_APART
 	beauty = -50
 	decay_bloodiness = FALSE // bloodiness is used as a metric for for how big the sprite is, so don't decay passively
 	bloodiness = BLOOD_AMOUNT_PER_DECAL * 0.1
@@ -464,9 +464,12 @@
 	var/squishy = TRUE
 	/// Do these gibs have a separate non-blood-colored overlay?
 	var/has_overlay = TRUE
+	/// Should we be creating blood decals as we streak?
+	var/leave_blood = TRUE
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type())
 	. = ..()
+	leave_blood = has_blood_flag(GET_ATOM_BLOOD_DNA(src), BLOOD_COVER_TURFS)
 	if(squishy)
 		AddElement(/datum/element/squish_sound)
 	RegisterSignal(src, COMSIG_MOVABLE_PIPE_EJECTING, PROC_REF(on_pipe_eject))
@@ -524,11 +527,13 @@
 
 	if(!mapload)
 		var/datum/move_loop/loop = GLOB.move_manager.move_to(src, get_step(src, direction), delay = delay, timeout = range * delay, priority = MOVEMENT_ABOVE_SPACE_PRIORITY)
-		RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(spread_movement_effects))
+		if (leave_blood)
+			RegisterSignal(loop, COMSIG_MOVELOOP_POSTPROCESS, PROC_REF(spread_movement_effects))
 		return
 
 	for (var/i in 1 to range)
-		create_splatter()
+		if (leave_blood)
+			create_splatter()
 
 		if (!step_to(src, get_step(src, direction), 0))
 			break
@@ -733,9 +738,12 @@
 	var/splatter_speed = 0.1 SECONDS
 	/// Tracks what direction we're flying
 	var/flight_dir = NONE
+	/// Should we be leaving any decals, or just adding DNA to mobs?
+	var/leave_blood = TRUE
 
 /obj/effect/decal/cleanable/blood/hitsplatter/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type(), splatter_strength)
 	. = ..()
+	leave_blood = has_blood_flag(GET_ATOM_BLOOD_DNA(src), BLOOD_COVER_TURFS)
 	prev_loc = loc //Just so we are sure prev_loc exists
 	if(splatter_strength)
 		src.splatter_strength = splatter_strength
@@ -760,7 +768,7 @@
 
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/post_move(datum/move_loop/source)
 	SIGNAL_HANDLER
-	if(loc == prev_loc)
+	if(loc == prev_loc || !isturf(loc))
 		return
 
 	for(var/atom/movable/iter_atom in loc)
@@ -776,6 +784,10 @@
 	// we used all our blood so go away
 	if(splatter_strength <= 0)
 		expire()
+		return
+
+	if(!leave_blood)
+		loc.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 		return
 
 	// make a trail
@@ -813,7 +825,11 @@
 	skip = TRUE
 	//Adjust pixel offset to make splatters appear on the wall
 	if(istype(bumped_atom, /obj/structure/window))
-		land_on_window(bumped_atom)
+		if(land_on_window(bumped_atom))
+			return
+
+	if(!leave_blood)
+		prev_loc.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 		return
 
 	var/obj/effect/decal/cleanable/blood/splatter/over_window/final_splatter = new(prev_loc, null, GET_ATOM_BLOOD_DNA(src))
@@ -822,9 +838,15 @@
 
 /// A special case for hitsplatters hitting windows, since those can actually be moved around, store it in the window and slap it in the vis_contents
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/land_on_window(obj/structure/window/the_window)
+	if(!leave_blood)
+		the_window.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
+		return TRUE
+
 	if(!the_window.fulltile)
-		return
+		return FALSE
+
 	var/obj/effect/decal/cleanable/final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc, null, GET_ATOM_BLOOD_DNA(src))
 	final_splatter.forceMove(the_window)
 	the_window.vis_contents += final_splatter
 	expire()
+	return TRUE

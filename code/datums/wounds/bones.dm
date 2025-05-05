@@ -165,7 +165,7 @@
 		bonus_spread_values[MAX_BONUS_SPREAD_INDEX] += (15 * severity * (limb.current_gauze?.splint_factor || 1))
 
 /datum/wound/blunt/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE || !victim.get_blood_reagent())
+	if(!victim || wounding_dmg < WOUND_MINIMUM_DAMAGE || !victim.can_bleed())
 		return
 
 	if(limb.body_zone == BODY_ZONE_CHEST && victim.blood_volume && prob(internal_bleeding_chance + wounding_dmg))

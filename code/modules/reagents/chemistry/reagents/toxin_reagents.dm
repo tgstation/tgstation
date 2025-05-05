@@ -214,7 +214,7 @@
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
-	color = "#7c6772"
+	color = "#a6959d"
 	toxpwr = 0
 	taste_description = "slime"
 	taste_mult = 1.3

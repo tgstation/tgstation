@@ -109,7 +109,7 @@
 		return
 
 	var/mutable_appearance/blood_overlay = mutable_appearance(icon, "[icon_state]bld", appearance_flags = RESET_COLOR|KEEP_APART)
-	blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DECALS(src))
+	blood_overlay.color = get_blood_dna_color()
 	. += blood_overlay
 
 /obj/machinery/recycler/CanAllowThrough(atom/movable/mover, border_dir)

@@ -70,7 +70,7 @@
 /datum/surgery_step/incise_heart/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/target_human = target
-		if (target_human.get_blood_reagent())
+		if (target_human.can_bleed())
 			var/blood_name = target_human.get_bloodtype()?.get_blood_name() || "Blood"
 			display_results(
 				user,
