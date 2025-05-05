@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - admin: "People throwing boomeranged items and hitting themselves now logs it as them hitting themselves (rather than being hit by the air)."

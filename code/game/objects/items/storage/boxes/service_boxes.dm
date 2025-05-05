@@ -251,3 +251,46 @@
 /obj/item/storage/box/stickers/googly/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/sticker/googly(src)
+
+/// A box containing a skub, for easier carry because skub is a bulky item.
+/obj/item/storage/box/stickers/skub
+	name = "skub fan pack"
+	desc = "A vinyl pouch to store your skub and pro-skub shirt in. A label on the back reads: \"Skubtide, Stationwide\"."
+	icon_state = "skubpack"
+	illustration = "label_skub"
+	w_class = WEIGHT_CLASS_SMALL
+	storage_type = /datum/storage/box/skub
+
+/obj/item/storage/box/stickers/skub/PopulateContents()
+	new /obj/item/skub(src)
+	new /obj/item/sticker/skub(src)
+	new /obj/item/sticker/skub(src)
+
+/obj/item/storage/box/stickers/anti_skub
+	name = "anti-skub stickers pack"
+	desc = "The enemy may have been given a skub and a shirt, but I've got more stickers! Plus the pack can hold my anti-skub shirt."
+	icon_state = "skubpack"
+	illustration = "label_anti_skub"
+	storage_type = /datum/storage/box/anti_skub
+
+/obj/item/storage/box/stickers/anti_skub/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/sticker/anti_skub(src)
+
+/obj/item/storage/box/pinpointer_pairs
+	name = "pinpointer pair box"
+
+/obj/item/storage/box/pinpointer_pairs/PopulateContents()
+	var/obj/item/pinpointer/pair/A = new(src)
+	var/obj/item/pinpointer/pair/B = new(src)
+
+	A.other_pair = B
+	B.other_pair = A
+
+/obj/item/storage/box/heretic_box
+	name = "box of pierced realities"
+	desc = "A box containing toys resembling pierced realities."
+
+/obj/item/storage/box/heretic_box/PopulateContents()
+	for(var/i in 1 to rand(1,4))
+		new /obj/item/toy/reality_pierce(src)

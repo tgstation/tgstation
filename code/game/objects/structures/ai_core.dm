@@ -388,6 +388,8 @@
 	if(malf_datum)
 		malf_datum.add_law_zero()
 
+	if(!isnull(the_brainmob.client))
+		ai_mob.set_gender(the_brainmob.client)
 	if(core_mmi.force_replace_ai_name)
 		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
 	ai_mob.posibrain_inside = core_mmi.braintype == "Android"
