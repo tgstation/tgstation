@@ -15,6 +15,8 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	. = NONE
+	if(QDELETED(src)) // There's no point in updating the appearance of something that's being deleted.
+		return
 	updates &= ~SEND_SIGNAL(src, COMSIG_ATOM_UPDATE_APPEARANCE, updates)
 	if(updates & UPDATE_NAME)
 		. |= update_name(updates)
