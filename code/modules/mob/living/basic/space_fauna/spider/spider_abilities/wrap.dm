@@ -60,13 +60,17 @@
 
 	if(!ismovable(to_wrap) || to_wrap == owner)
 		return FALSE
-
-	if(isspider(to_wrap))
-		owner.balloon_alert(owner, "can't wrap spiders!")
-		return FALSE
-	if(ismegafauna(to_wrap))
-		owner.balloon_alert(owner, "can't wrap, too strong!")
-		return FALSE
+	if(isliving(to_wrap))
+		var/mob/living/living_target = to_wrap
+		if(living_target.mob_biotypes & MOB_SPECIAL)
+			owner.balloon_alert(owner, "can't wrap, too strong!")
+			return FALSE
+		if(living_target.mob_biotypes & MOB_SPIRIT)
+			owner.balloon_alert(owner, "can't wrap ghosts!")
+			return FALSE
+		if(isspider(living_target))
+			owner.balloon_alert(owner, "can't wrap spiders!")
+			return FALSE
 	var/atom/movable/target_movable = to_wrap
 	if(target_movable.anchored)
 		return FALSE
