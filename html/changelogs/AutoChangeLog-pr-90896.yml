@@ -1,0 +1,5 @@
+author: "Maximal08"
+delete-after: True
+changes:
+  - qol: "Replaces the text description for the APC multitool search function with directional arrows similar to Heretic."
+  - image: "Sprite for multitool arrow"
