@@ -47,7 +47,7 @@
 	)
 
 /datum/dynamic_tier/New(list/dynamic_config)
-	for(var/nvar in dynamic_config[config_tag])
+	for(var/nvar in dynamic_config?[config_tag])
 		if(!(nvar in vars))
 			continue
 		set_config_value(nvar, dynamic_config[config_tag][nvar])

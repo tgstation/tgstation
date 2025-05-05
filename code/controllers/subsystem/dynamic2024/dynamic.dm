@@ -3,10 +3,13 @@ SUBSYSTEM_DEF(dynamic)
 	flags = SS_NO_INIT
 	wait = 1 MINUTES
 
+	/// Reference to a dynamic tier datum, the tier picked for this round
 	var/datum/dynamic_tier/current_tier
 
+	/// The config for dynamic loaded from the toml file
 	var/list/dynamic_config = list()
 
+	/// Tracks how many of each ruleset category is yet to be spawned
 	var/list/rulesets_to_spawn = list(
 		ROUNDSTART_RANGE = -1,
 		LIGHT_MIDROUND_RANGE = -1,
@@ -14,7 +17,19 @@ SUBSYSTEM_DEF(dynamic)
 		LATEJOIN_RANGE = -1,
 	)
 
+	/// Cooldown for when we are allowed to spawn light rulesets
+	COOLDOWN_DECLARE(light_ruleset_start)
+	/// Cooldown for when we are allowed to spawn heavy rulesets
+	COOLDOWN_DECLARE(heavy_ruleset_start)
+	/// Cooldown for when we are allowed to spawn latejoin rulesets
+	COOLDOWN_DECLARE(latejoin_ruleset_start)
+
+	/// Cooldown between spawning any mid-game ruleset (latejoin or midround)
+	COOLDOWN_DECLARE(ruleset_cooldown)
+
+	/// List of rulesets that have been executed this round
 	var/list/datum/dynamic_ruleset/executed_rulesets = list()
+	/// List of rulesets that have been set up to run, but not yet executed
 	var/list/datum/dynamic_ruleset/queued_rulesets = list()
 
 /datum/controller/subsystem/dynamic/fire(resumed)
@@ -95,6 +110,7 @@ SUBSYSTEM_DEF(dynamic)
 
 	dynamic_config = json_decode(result["content"])
 
+/// Picks what tier we are going to use for this round and sets up all the corresponding variables and ranges
 /datum/controller/subsystem/dynamic/proc/pick_tier(roundstart_population = 0)
 	PRIVATE_PROC(TRUE)
 
@@ -128,17 +144,21 @@ SUBSYSTEM_DEF(dynamic)
 
 		rulesets_to_spawn[category] = rand(low_end, high_end)
 
+	COOLDOWN_START(src, light_ruleset_start, current_tier.ruleset_ranges[LIGHT_MIDROUND_RANGE][TIME_THRESHOLD])
+	COOLDOWN_START(src, heavy_ruleset_start, current_tier.ruleset_ranges[HEAVY_MIDROUND_RANGE][TIME_THRESHOLD])
+	COOLDOWN_START(src, latejoin_ruleset_start, current_tier.ruleset_ranges[LATEJOIN_RANGE][TIME_THRESHOLD])
+
 	var/roundstart_spawn = rulesets_to_spawn[ROUNDSTART_RANGE]
 	var/light_midround_spawn = rulesets_to_spawn[LIGHT_MIDROUND_RANGE]
 	var/heavy_midround_spawn = rulesets_to_spawn[HEAVY_MIDROUND_RANGE]
 	var/latejoin_spawn = rulesets_to_spawn[LATEJOIN_RANGE]
 
 	log_dynamic("Dynamic tier: [current_tier.tier]")
-	log_dynamic("Roundstart population: [roundstart_population]")
-	log_dynamic("Roundstart ruleset count: [roundstart_spawn]")
-	log_dynamic("Light midround ruleset count: [light_midround_spawn]")
-	log_dynamic("Heavy midround ruleset count: [heavy_midround_spawn]")
-	log_dynamic("Latejoin ruleset count: [latejoin_spawn]")
+	log_dynamic("- Roundstart population: [roundstart_population]")
+	log_dynamic("- Roundstart ruleset count: [roundstart_spawn]")
+	log_dynamic("- Light midround ruleset count: [light_midround_spawn]")
+	log_dynamic("- Heavy midround ruleset count: [heavy_midround_spawn]")
+	log_dynamic("- Latejoin ruleset count: [latejoin_spawn]")
 	SSblackbox.record_feedback(
 		"associative",
 		"dynamic_tier",
@@ -192,6 +212,7 @@ SUBSYSTEM_DEF(dynamic)
 			total_weight -= picked_ruleset.repeatable_weight_decrease
 
 	// clean up unused rulesets
+	rulesets_weighted -= picked_rulesets
 	QDEL_LIST(rulesets_weighted)
 	return picked_rulesets
 
@@ -218,12 +239,15 @@ SUBSYSTEM_DEF(dynamic)
  * Returns TRUE if a ruleset was spawned, FALSE otherwise
  */
 /datum/controller/subsystem/dynamic/proc/spawn_midround(mob/living/carbon/human/latejoiner)
-	if(SSticker.round_start_time + current_tier.ruleset_ranges[LIGHT_MIDROUND_RANGE][TIME_THRESHOLD] >= world.time && rulesets_to_spawn[LIGHT_MIDROUND_RANGE] > 0)
+	if(!COOLDOWN_FINISHED(src, ruleset_cooldown))
+		return FALSE
+
+	if(COOLDOWN_FINISHED(src, light_ruleset_start) && rulesets_to_spawn[LIGHT_MIDROUND_RANGE] > 0)
 		if(try_run_light_midround())
 			rulesets_to_spawn[LIGHT_MIDROUND_RANGE] -= 1
 			return TRUE
 
-	if(SSticker.round_start_time + current_tier.ruleset_ranges[HEAVY_MIDROUND_RANGE][TIME_THRESHOLD] >= world.time && rulesets_to_spawn[HEAVY_MIDROUND_RANGE] > 0)
+	if(COOLDOWN_FINISHED(src, heavy_ruleset_start) && rulesets_to_spawn[HEAVY_MIDROUND_RANGE] > 0)
 		if(try_run_heavy_midround())
 			rulesets_to_spawn[HEAVY_MIDROUND_RANGE] -= 1
 			return TRUE
@@ -337,7 +361,7 @@ SUBSYSTEM_DEF(dynamic)
 		return TRUE
 
 	// Queued rulesets disregard the time threshold
-	if(SSticker.round_start_time + current_tier.ruleset_ranges[LATEJOIN_RANGE][TIME_THRESHOLD] < world.time)
+	if(!COOLDOWN_FINISHED(src, latejoin_ruleset_start) || !COOLDOWN_FINISHED(src, ruleset_cooldown))
 		return FALSE
 	if(rulesets_to_spawn[LATEJOIN_RANGE] <= 0)
 		return FALSE
@@ -431,50 +455,68 @@ SUBSYSTEM_DEF(dynamic)
 	var/data = ""
 	for(var/tier_type in subtypesof(/datum/dynamic_tier))
 		var/datum/dynamic_tier/tier = new tier_type()
+		if(!tier.config_tag)
+			qdel(tier)
+			continue
+
 		data += "\[[tier.config_tag]\]\n"
 		data += "name = \"[tier.name]\"\n"
 		data += "min_pop = [tier.min_pop]\n"
 		data += "advisory_report = \"[tier.advisory_report]\"\n"
 		for(var/range in tier.ruleset_ranges)
-			data += "ruleset_ranges.[range].LOW_END = [tier.ruleset_ranges[range]?[LOW_END] || -1]\n"
-			data += "ruleset_ranges.[range].HIGH_END = [tier.ruleset_ranges[range]?[HIGH_END] || -1]\n"
-			data += "ruleset_ranges.[range].HALF_RANGE_POP_THRESHOLD = [tier.ruleset_ranges[range]?[HALF_RANGE_POP_THRESHOLD] || -1]\n"
-			data += "ruleset_ranges.[range].FULL_RANGE_POP_THRESHOLD = [tier.ruleset_ranges[range]?[FULL_RANGE_POP_THRESHOLD] || -1]\n"
-			data += "ruleset_ranges.[range].TIME_THRESHOLD = [tier.ruleset_ranges[range]?[TIME_THRESHOLD] || -1]\n"
+			data += "ruleset_ranges.[range].[LOW_END] = [tier.ruleset_ranges[range]?[LOW_END] || 0]\n"
+			data += "ruleset_ranges.[range].[HIGH_END] = [tier.ruleset_ranges[range]?[HIGH_END] || 0]\n"
+			data += "ruleset_ranges.[range].[HALF_RANGE_POP_THRESHOLD] = [tier.ruleset_ranges[range]?[HALF_RANGE_POP_THRESHOLD] || 0]\n"
+			data += "ruleset_ranges.[range].[FULL_RANGE_POP_THRESHOLD] = [tier.ruleset_ranges[range]?[FULL_RANGE_POP_THRESHOLD] || 0]\n"
+			if(range != ROUNDSTART_RANGE)
+				data += "ruleset_ranges.[range].[TIME_THRESHOLD] = [tier.ruleset_ranges[range]?[TIME_THRESHOLD] || 0]\n"
 		data += "\n"
 		qdel(tier)
 
 	for(var/ruleset_type in subtypesof(/datum/dynamic_ruleset))
 		var/datum/dynamic_ruleset/ruleset = new ruleset_type()
+		if(!ruleset.config_tag)
+			qdel(ruleset)
+			continue
+
 		data += "\[[ruleset.config_tag]\]\n"
-		if(islist(ruleset.weights))
-			for(var/ruleset_weight in ruleset.weights)
-				data += "weights.[ruleset_weight] = [ruleset.weights[ruleset_weight]]\n"
+		if(islist(ruleset.weight))
+			for(var/i in 1 to length(ruleset.weight))
+				data += "weight.[i] = [ruleset.weight[i]]\n"
 		else
-			data += "weight = [ruleset.weights]\n"
-		if(islist(ruleset.min_pops))
-			for(var/ruleset_min_pop in ruleset.min_pops)
-				data += "min_pops.[ruleset_min_pop] = [ruleset.min_pops[ruleset_min_pop]]\n"
+			data += "weight = [ruleset.weight || 0]\n"
+		if(islist(ruleset.min_pop))
+			for(var/i in 1 to length(ruleset.min_pop))
+				data += "min_pop.[i] = [ruleset.min_pop[i]]\n"
 		else
-			data += "min_pop = [ruleset.min_pops]\n"
-		if(islist(ruleset.blacklisted_roles))
-			for(var/ruleset_blacklisted_role in ruleset.blacklisted_roles)
-				data += "blacklisted_roles.[ruleset_blacklisted_role] = [ruleset.blacklisted_roles[ruleset_blacklisted_role]]\n"
-		if(islist(ruleset.min_antag_cap))
-			for(var/ruleset_min_antag_cap in ruleset.min_antag_cap)
-				data += "min_antag_cap.[ruleset_min_antag_cap] = [ruleset.min_antag_cap[ruleset_min_antag_cap]]\n"
+			data += "min_pop = [ruleset.min_pop || 0]\n"
+		if(length(ruleset.blacklisted_roles))
+			data += "blacklisted_roles = \[\n"
+			for(var/i in ruleset.blacklisted_roles)
+				data += "\t[i],\n"
+			data += "\]\n"
 		else
-			data += "min_antag_cap = [ruleset.min_antag_cap]\n"
-		if(islist(ruleset.max_antag_cap))
-			for(var/ruleset_max_antag_cap in ruleset.max_antag_cap)
-				data += "max_antag_cap.[ruleset_max_antag_cap] = [ruleset.max_antag_cap[ruleset_max_antag_cap]]\n"
-		else
-			data += "max_antag_cap = [ruleset.max_antag_cap]\n"
+			data += "blacklisted_roles = \[\]\n"
+		if(!istype(ruleset, /datum/dynamic_ruleset/latejoin) && !istype(ruleset, /datum/dynamic_ruleset/midround/from_living))
+			if(islist(ruleset.min_antag_cap))
+				for(var/ruleset_min_antag_cap in ruleset.min_antag_cap)
+					data += "min_antag_cap.[ruleset_min_antag_cap] = [ruleset.min_antag_cap[ruleset_min_antag_cap]]\n"
+			else
+				data += "min_antag_cap = [ruleset.min_antag_cap || 0]\n"
+			if(islist(ruleset.max_antag_cap))
+				for(var/ruleset_max_antag_cap in ruleset.max_antag_cap)
+					data += "max_antag_cap.[ruleset_max_antag_cap] = [ruleset.max_antag_cap[ruleset_max_antag_cap]]\n"
+			else if(!isnull(ruleset.max_antag_cap))
+				data += "max_antag_cap = [ruleset.max_antag_cap]\n"
+			else
+				data += "# max_antag_cap = null ## defaults to min_antag_cap\n"
 		data += "repeatable_weight_decrease = [ruleset.repeatable_weight_decrease]\n"
 		data += "repeatable = [ruleset.repeatable]\n"
 		data += "minimum_required_age = [ruleset.minimum_required_age]\n"
+		data += "\n"
 		qdel(ruleset)
 
-	var/file_location = "code/controllers/subsystem/dynamic2024"
-	var/payload = rustg_toml_encode(data)
-	rustg_file_write(payload, file_location)
+	var/fp = "code/controllers/subsystem/dynamic2024/dynamic.toml"
+	fdel(file(fp))
+	text2file(data, fp)
+	return TRUE

@@ -545,7 +545,7 @@
 		if(ruleset.ruleset_flags & RULESET_INVADER)
 			continue
 		dynamic_config[initial(ruleset.config_tag)] ||= list()
-		dynamic_config[initial(ruleset.config_tag)][NAMEOF(ruleset, weights)] = 0
+		dynamic_config[initial(ruleset.config_tag)][NAMEOF(ruleset, weight)] = 0
 
 /datum/station_trait/pet_day
 	name = "Bring Your Pet To Work Day"

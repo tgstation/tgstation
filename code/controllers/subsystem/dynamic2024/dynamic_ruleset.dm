@@ -21,17 +21,12 @@
 	 * The chance the ruleset is picked when selecting from the pool of rulesets.
 	 *
 	 * This can either be
-	 * - A list of weights corresponding to dynamic tiers.
+	 * - A list of weight corresponding to dynamic tiers.
 	 * If a tier is not specified, it will use the next highest tier.
 	 * Or
 	 * - A single weight for all tiers.
 	 */
-	var/list/weights = list(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 0,
-		DYNAMIC_TIER_MEDIUMHIGH = 0,
-		DYNAMIC_TIER_HIGH = 0,
-	)
+	var/list/weight = 0
 	/**
 	 * The min population for which this ruleset is available.
 	 *
@@ -41,26 +36,11 @@
 	 * Or
 	 * - A single min population for all tiers.
 	 */
-	var/list/min_pops = list(
-		DYNAMIC_TIER_LOW = 0,
-		DYNAMIC_TIER_LOWMEDIUM = 0,
-		DYNAMIC_TIER_MEDIUMHIGH = 0,
-		DYNAMIC_TIER_HIGH = 0,
-	)
+	var/list/min_pop = 0
 	/// List of roles that are blacklisted from this ruleset
 	/// For roundstart rulesets, it will prevent players from being selected for this ruleset if they have one of these roles
 	/// For latejoin or midround rulesets, it will prevent players from being assigned to this ruleset if they have one of these roles
-	var/list/blacklisted_roles = list(
-		// removed by protect_assistant_from_antagonist or manually via dynamic_config
-		JOB_ASSISTANT,
-		// removed by protect_roles_from_antagonist or manually via dynamic_config
-		JOB_CAPTAIN,
-		JOB_DETECTIVE,
-		JOB_HEAD_OF_SECURITY,
-		JOB_PRISONER,
-		JOB_SECURITY_OFFICER,
-		JOB_WARDEN,
-	)
+	var/list/blacklisted_roles = list()
 	/**
 	 * How many candidates are needed for this ruleset to be selected?
 	 *
@@ -93,21 +73,7 @@
 	var/list/ruleset_lazy_templates
 
 /datum/dynamic_ruleset/New(list/dynamic_config)
-	if(!CONFIG_GET(flag/protect_roles_from_antagonist))
-		blacklisted_roles -= list(
-			JOB_CAPTAIN,
-			JOB_DETECTIVE,
-			JOB_HEAD_OF_SECURITY,
-			JOB_PRISONER,
-			JOB_SECURITY_OFFICER,
-			JOB_WARDEN,
-		)
-	if(!CONFIG_GET(flag/protect_assistant_from_antagonist))
-		blacklisted_roles -= list(
-			JOB_ASSISTANT,
-		)
-
-	for(var/nvar in dynamic_config[config_tag])
+	for(var/nvar in dynamic_config?[config_tag])
 		if(!(nvar in vars))
 			continue
 		set_config_value(nvar, dynamic_config[config_tag][nvar])
@@ -121,17 +87,22 @@
 	vars[nvar] = nval
 	return TRUE
 
+/datum/dynamic_ruleset/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, config_tag))
+		return FALSE
+	return ..()
+
 // melbert todo : this isn't gonna work with byond
 /datum/dynamic_ruleset/proc/get_closest_bracket(list/bracket, base_tier)
 	// clamp
-	var/_base_tier = min(length(bracket), base_tier)
+	base_tier = min(length(bracket), base_tier)
 	// go bottom up to find the first non-null bracket
-	for(var/i in _base_tier to length(bracket))
+	for(var/i in base_tier to length(bracket))
 		if(isnull(bracket[i]))
 			continue
 		return bracket[i]
 	// if that failed, go top down
-	for(var/i in _base_tier to 1)
+	for(var/i in base_tier to 1)
 		if(isnull(bracket[i]))
 			continue
 		return bracket[i]
@@ -156,12 +127,11 @@
 
 	if(!can_be_selected(population_size))
 		return 0
-	if(isnum(min_pops) && min_pops > population_size)
-		return 0
-	if(get_closest_bracket(min_pops, SSdynamic.current_tier.tier) > population_size)
+	var/final_minpop = islist(min_pop) ? (get_closest_bracket(min_pop, SSdynamic.current_tier.tier) || 0) : min_pop
+	if(final_minpop > population_size)
 		return 0
 
-	var/weight = isnum(weights) ? weights : (get_closest_bracket(weights, SSdynamic.current_tier.tier) || 0)
+	var/final_weight = islist(weight) ? (get_closest_bracket(weight, SSdynamic.current_tier.tier) || 0) : weight
 	for(var/datum/dynamic_ruleset/other_ruleset as anything in SSdynamic.executed_rulesets)
 		if(other_ruleset == src)
 			continue
@@ -169,9 +139,9 @@
 			continue
 		if(!repeatable)
 			return 0
-		weight -= repeatable_weight_decrease
+		final_weight -= repeatable_weight_decrease
 
-	return max(weight, 0)
+	return max(final_weight, 0)
 
 /// Returns what the antag cap with the given population is.
 /datum/dynamic_ruleset/proc/get_antag_cap(population_size, antag_cap)
@@ -209,7 +179,7 @@
 	for(var/mob/candidate as anything in selected_candidates)
 		var/datum/mind/candidate_mind = get_candidate_mind(candidate)
 		prepare_for_role(candidate_mind)
-		LAZYADDASSOCLIST(SSjob.prevented_occupations, candidate_mind, blacklisted_roles) // this is what makes sure you can't roll traitor as a sec-off
+		LAZYADDASSOCLIST(SSjob.prevented_occupations, candidate_mind, get_blacklisted_roles()) // this is what makes sure you can't roll traitor as a sec-off
 		selected_minds += candidate_mind
 		antag_candidates -= candidate
 
@@ -218,6 +188,35 @@
 /// Gets the mind of a candidate
 /datum/dynamic_ruleset/proc/get_candidate_mind(mob/dead/candidate)
 	return candidate.mind
+
+/// Returns a list of roles that cannot be selected for this ruleset
+/datum/dynamic_ruleset/proc/get_blacklisted_roles()
+	return get_config_blacklisted_roles() | get_always_blacklisted_roles()
+
+/// Returns all the jobs the config says this ruleset cannot select
+/datum/dynamic_ruleset/proc/get_config_blacklisted_roles()
+	var/list/blacklist = blacklisted_roles.Copy()
+	if(!CONFIG_GET(flag/protect_roles_from_antagonist))
+		blacklist |= list(
+			JOB_CAPTAIN,
+			JOB_DETECTIVE,
+			JOB_HEAD_OF_SECURITY,
+			JOB_PRISONER,
+			JOB_SECURITY_OFFICER,
+			JOB_WARDEN,
+		)
+	if(!CONFIG_GET(flag/protect_assistant_from_antagonist))
+		blacklisted_roles = list(
+			JOB_ASSISTANT,
+		)
+	return blacklist
+
+/// Returns a list of roles that are always blacklisted from this ruleset, for mechanical reasons (an AI can't be a changeling)
+/datum/dynamic_ruleset/proc/get_always_blacklisted_roles()
+	return list(
+		JOB_AI,
+		JOB_CYBORG,
+	)
 
 /// Takes in a list of players and returns a list of players who are valid candidates for this ruleset
 /// Don't touch this proc if you need to trim candidates further - override is_valid_candidate() instead
@@ -247,6 +246,9 @@
 
 	// technically not pure
 	var/list/resulting_candidates = shuffle(trim_candidates(antag_candidates)) || list()
+	if(length(resulting_candidates) <= num_candidates)
+		return resulting_candidates
+
 	return resulting_candidates.Cut(1, num_candidates + 1)
 
 /datum/dynamic_ruleset/proc/load_templates()
@@ -323,7 +325,7 @@
 	name = "Traitors"
 	config_tag = "Roundstart Traitor"
 	antag_flag = ROLE_TRAITOR
-	weights = 10
+	weight = 10
 	max_antag_cap = list("denominator" = 38)
 
 /datum/dynamic_ruleset/roundstart/traitor/assign_role(datum/mind/candidate)
@@ -334,7 +336,7 @@
 	name = "Malfunctioning AI"
 	config_tag = "Roundstart Malfunctioning AI"
 	antag_flag = ROLE_MALF
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -342,8 +344,11 @@
 	)
 	max_antag_cap = 1
 
+/datum/dynamic_ruleset/roundstart/malf_ai/get_always_blacklisted_roles()
+	return list()
+
 /datum/dynamic_ruleset/roundstart/malf_ai/is_valid_candidate(mob/candidate, client/candidate_client)
-	if(candidate_client.prefs.job_preferences[/datum/job/ai::title])
+	if(!candidate_client.prefs.job_preferences[/datum/job/ai::title])
 		return FALSE
 	if(SSjob.check_job_eligibility(candidate, SSjob.get_job_type(/datum/job/ai), "[name] Candidacy") != JOB_AVAILABLE)
 		return FALSE
@@ -360,7 +365,7 @@
 	name = "Blood Brothers"
 	config_tag = "Roundstart Blood Brothers"
 	antag_flag = ROLE_BROTHER
-	weights = 5
+	weight = 5
 	max_antag_cap = list("denominator" = 29)
 
 /datum/dynamic_ruleset/roundstart/blood_brother/assign_role(datum/mind/candidate)
@@ -371,7 +376,7 @@
 	name = "Changelings"
 	config_tag = "Roundstart Changeling"
 	antag_flag = ROLE_CHANGELING
-	weights = 3
+	weight = 3
 	max_antag_cap = list("denominator" = 29)
 
 /datum/dynamic_ruleset/roundstart/changeling/assign_role(datum/mind/candidate)
@@ -382,7 +387,7 @@
 	name = "Heretics"
 	config_tag = "Roundstart Heretics"
 	antag_flag = ROLE_HERETIC
-	weights = 3
+	weight = 3
 	max_antag_cap = list("denominator" = 24)
 
 /datum/dynamic_ruleset/roundstart/heretic/assign_role(datum/mind/candidate)
@@ -394,7 +399,7 @@
 	config_tag = "Roundstart Wizard"
 	antag_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
@@ -423,7 +428,7 @@
 	name = "Blood Cult"
 	config_tag = "Roundstart Blood Cult"
 	antag_flag = ROLE_CULTIST
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -432,6 +437,9 @@
 	min_antag_cap = list("denominator" = 20, "offset" = 1)
 	/// Ratio of cultists getting on the shuttle to be considered a minor win
 	var/ratio_to_be_considered_escaped = 0.5
+
+/datum/dynamic_ruleset/roundstart/blood_cult/get_always_blacklisted_roles()
+	return ..() | JOB_CHAPLAIN // Always blacklisted, regardless of config
 
 /datum/dynamic_ruleset/roundstart/blood_cult/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/cult) // melbert todo : team handling
@@ -460,7 +468,7 @@
 	config_tag = "Roundstart Nukeops"
 	antag_flag = ROLE_NUCLEAR_OPERATIVE
 	ruleset_flags = RULESET_INVADER
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -512,7 +520,7 @@
 	name = "Clown Operatives"
 	config_tag = "Roundstart Clownops"
 	antag_flag = ROLE_CLOWN_OPERATIVE
-	weights = 0
+	weight = 0
 
 /datum/dynamic_ruleset/roundstart/nukies/clown/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/nukeop/clownop) // melbert todo : leader handling + nukie base handling
@@ -522,7 +530,7 @@
 	name = "Revolution"
 	config_tag = "Roundstart Revolution"
 	antag_flag = ROLE_REV_HEAD
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -557,7 +565,7 @@
 	name = "Spies"
 	config_tag = "Roundstart Spies"
 	antag_flag = ROLE_SPY
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -572,7 +580,7 @@
 /datum/dynamic_ruleset/roundstart/extended
 	name = "Extended"
 	config_tag = "Extended"
-	weights = 0
+	weight = 0
 	min_antag_cap = 0
 
 /datum/dynamic_ruleset/roundstart/extended/execute()
@@ -582,7 +590,7 @@
 /datum/dynamic_ruleset/roundstart/meteor
 	name = "Meteor"
 	config_tag = "Meteor"
-	weights = 0
+	weight = 0
 	min_antag_cap = 0
 
 /datum/dynamic_ruleset/roundstart/meteor/execute()
@@ -592,7 +600,7 @@
 /datum/dynamic_ruleset/roundstart/nations
 	name = "Nations"
 	config_tag = "Nations"
-	weights = 0
+	weight = 0
 	min_antag_cap = 0
 
 /datum/dynamic_ruleset/roundstart/nations/execute()
@@ -660,7 +668,7 @@
 	antag_flag = ROLE_WIZARD_MIDROUND
 	jobban_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
@@ -683,7 +691,7 @@
 	antag_flag = ROLE_OPERATIVE_MIDROUND
 	jobban_flag = ROLE_NUCLEAR_OPERATIVE
 	ruleset_flags = RULESET_INVADER
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -739,7 +747,7 @@
 	config_tag = "Midround Clownops"
 	antag_flag = ROLE_CLOWN_OPERATIVE_MIDROUND
 	jobban_flag = ROLE_CLOWN_OPERATIVE
-	weights = 0
+	weight = 0
 	signup_atom_appearance = /obj/machinery/nuclearbomb/syndicate/bananium
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies/clown/assign_role(datum/mind/candidate)
@@ -754,13 +762,13 @@
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = ROLE_BLOB
 	ruleset_flags = RULESET_INVADER
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
-	min_pops = list(
+	min_pop = list(
 		DYNAMIC_TIER_LOW = 36,
 		DYNAMIC_TIER_LOWMEDIUM = 30,
 		DYNAMIC_TIER_MEDIUMHIGH = 27,
@@ -778,13 +786,13 @@
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = ROLE_ALIEN
 	ruleset_flags = RULESET_INVADER
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 5,
 		DYNAMIC_TIER_HIGH = 5,
 	)
-	min_pops = list(
+	min_pop = list(
 		DYNAMIC_TIER_LOW = 36,
 		DYNAMIC_TIER_LOWMEDIUM = 30,
 		DYNAMIC_TIER_MEDIUMHIGH = 27,
@@ -831,8 +839,8 @@
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
 	antag_flag = ROLE_NIGHTMARE
 	ruleset_flags = RULESET_INVADER
-	weights = 5
-	min_pops = 15
+	weight = 5
+	min_pop = 15
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/item/light_eater
 
@@ -853,13 +861,13 @@
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = ROLE_SPACE_DRAGON
 	ruleset_flags = RULESET_INVADER
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 3,
 		DYNAMIC_TIER_MEDIUMHIGH = 5,
 		DYNAMIC_TIER_HIGH = 5,
 	)
-	min_pops = list(
+	min_pop = list(
 		DYNAMIC_TIER_LOW = 36,
 		DYNAMIC_TIER_LOWMEDIUM = 30,
 		DYNAMIC_TIER_MEDIUMHIGH = 27,
@@ -887,7 +895,7 @@
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
 	antag_flag = ROLE_ABDUCTOR
 	ruleset_flags = RULESET_INVADER
-	weights = 5
+	weight = 5
 	min_antag_cap = 2
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	signup_atom_appearance = /obj/item/melee/baton/abductor
@@ -898,13 +906,13 @@
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = ROLE_NINJA
 	ruleset_flags = RULESET_INVADER
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
 	)
-	min_pops = list(
+	min_pop = list(
 		DYNAMIC_TIER_LOW = 36,
 		DYNAMIC_TIER_LOWMEDIUM = 30,
 		DYNAMIC_TIER_MEDIUMHIGH = 27,
@@ -928,13 +936,13 @@
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = ROLE_SPIDER
 	ruleset_flags = RULESET_INVADER
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
 	)
-	min_pops = list(
+	min_pop = list(
 		DYNAMIC_TIER_LOW = 36,
 		DYNAMIC_TIER_LOWMEDIUM = 30,
 		DYNAMIC_TIER_MEDIUMHIGH = 27,
@@ -953,7 +961,7 @@
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
 	antag_flag = ROLE_REVENANT
 	ruleset_flags = RULESET_INVADER
-	weights = 5
+	weight = 5
 	max_antag_cap = 1
 	signup_atom_appearance = /mob/living/basic/revenant
 	/// There must be this many dead mobs on the station for a revenant to spawn (of all mob types, not just humans)
@@ -998,7 +1006,7 @@
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
 	antag_flag = "Space Pirates"
 	ruleset_flags = RULESET_INVADER
-	weights = 3
+	weight = 3
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
 	signup_atom_appearance = /obj/item/clothing/head/costume/pirate
 
@@ -1018,7 +1026,7 @@
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = "Space Pirates"
 	ruleset_flags = RULESET_INVADER
-	weights = 3
+	weight = 3
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
 
 /datum/dynamic_ruleset/midround/from_ghosts/pirates/heavy/pirate_pool()
@@ -1031,7 +1039,7 @@
 	antag_flag = ROLE_CHANGELING_MIDROUND
 	jobban_flag = ROLE_CHANGELING
 	ruleset_flags = RULESET_INVADER
-	weights = 5
+	weight = 5
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/meteor/meaty/changeling
 
@@ -1044,7 +1052,7 @@
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
 	antag_flag = ROLE_PARADOX_CLONE
 	ruleset_flags = RULESET_INVADER
-	weights = 5
+	weight = 5
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/bluespace_stream
 
@@ -1083,7 +1091,7 @@
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
 	antag_flag = ROLE_VOIDWALKER
 	ruleset_flags = RULESET_INVADER
-	weights = 5
+	weight = 5
 	max_antag_cap = 1
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
 	signup_atom_appearance = /obj/item/clothing/head/helmet/skull/cosmic
@@ -1101,7 +1109,18 @@
 	playsound(new_character, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
 /datum/dynamic_ruleset/midround/from_living
+	min_antag_cap = 1
 	max_antag_cap = 1
+
+/datum/dynamic_ruleset/midround/from_living/set_config_value(nvar, nval)
+	if(nvar == NAMEOF(src, min_antag_cap) || nvar == NAMEOF(src, max_antag_cap))
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_living/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, min_antag_cap) || var_name == NAMEOF(src, max_antag_cap))
+		return FALSE
+	return ..()
 
 /datum/dynamic_ruleset/midround/from_living/collect_candidates()
 	return GLOB.alive_player_list
@@ -1128,7 +1147,7 @@
 	config_tag = "Midround Traitor"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
 	antag_flag = ROLE_TRAITOR
-	weights = 10
+	weight = 10
 
 /datum/dynamic_ruleset/midround/from_living/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)
@@ -1139,12 +1158,15 @@
 	config_tag = "Midround Malfunctioning AI"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = ROLE_MALF
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
+
+/datum/dynamic_ruleset/midround/from_living/malf_ai/get_always_blacklisted_roles()
+	return list()
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai/job_check(mob/candidate)
 	return istype(candidate.mind.assigned_role, /datum/job/ai)
@@ -1159,14 +1181,14 @@
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
 	antag_flag = ROLE_BLOB_INFECTION
 	jobban_flag = ROLE_BLOB
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
 
-/datum/dynamic_ruleset/midround/from_living/malf_ai/assign_role(datum/mind/candidate)
+/datum/dynamic_ruleset/midround/from_living/blob/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/blob/infection)
 	candidate.special_role = ROLE_BLOB_INFECTION
 	notify_ghosts(
@@ -1181,7 +1203,7 @@
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
 	antag_flag = ROLE_OBSESSED
 	blacklisted_roles = list()
-	weights = list(
+	weight = list(
 		DYNAMIC_TIER_LOW = 5,
 		DYNAMIC_TIER_LOWMEDIUM = 5,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
@@ -1203,14 +1225,25 @@
 	)
 
 /datum/dynamic_ruleset/latejoin
+	min_antag_cap = 1
 	max_antag_cap = 1
+
+/datum/dynamic_ruleset/latejoin/from_living/set_config_value(nvar, nval)
+	if(nvar == NAMEOF(src, min_antag_cap) || nvar == NAMEOF(src, max_antag_cap))
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/latejoin/from_living/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, min_antag_cap) || var_name == NAMEOF(src, max_antag_cap))
+		return FALSE
+	return ..()
 
 /datum/dynamic_ruleset/latejoin/traitor
 	name = "Traitor"
 	config_tag = "Latejoin Traitor"
 	antag_flag = ROLE_SYNDICATE_INFILTRATOR
 	jobban_flag = ROLE_TRAITOR
-	weights = 10
+	weight = 10
 
 /datum/dynamic_ruleset/latejoin/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)
@@ -1221,7 +1254,7 @@
 	config_tag = "Latejoin Heretic"
 	antag_flag = ROLE_HERETIC_SMUGGLER
 	jobban_flag = ROLE_HERETIC
-	weights = 3
+	weight = 3
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE)
 
 /datum/dynamic_ruleset/latejoin/heretic/assign_role(datum/mind/candidate)
@@ -1233,7 +1266,7 @@
 	config_tag = "Latejoin Changeling"
 	antag_flag = ROLE_STOWAWAY_CHANGELING
 	jobban_flag = ROLE_CHANGELING
-	weights = 3
+	weight = 3
 
 /datum/dynamic_ruleset/latejoin/changeling/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/changeling)
@@ -1244,7 +1277,7 @@
 	config_tag = "Latejoin Revolution"
 	antag_flag = ROLE_PROVOCATEUR
 	jobban_flag = ROLE_REV_HEAD
-	weights = 1
+	weight = 1
 
 /datum/dynamic_ruleset/latejoin/revolution/can_be_selected(population_size, list/antag_candidates)
 	var/head_check = 0
