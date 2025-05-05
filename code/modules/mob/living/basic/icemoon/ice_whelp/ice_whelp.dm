@@ -100,5 +100,5 @@
 	icon_dead = "ash_whelp_dead"
 	innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/fire_breath = BB_WHELP_STRAIGHTLINE_FIRE,
-		/datum/action/cooldown/mob_cooldown/fire_breath/cross = BB_WHELP_WIDESPREAD_FIRE,
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption/fire = BB_WHELP_WIDESPREAD_FIRE,
 	)
