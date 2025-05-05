@@ -84,7 +84,7 @@
 	atom_integrity = max_integrity
 	return TRUE
 
-/obj/structure/sign/attackby(obj/item/I, mob/user, params)
+/obj/structure/sign/attackby(obj/item/I, mob/user, list/modifiers)
 	if(is_editable && IS_WRITING_UTENSIL(I))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
@@ -191,7 +191,7 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Change design"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/sign/attackby(obj/item/I, mob/user, params)
+/obj/item/sign/attackby(obj/item/I, mob/user, list/modifiers)
 	if(is_editable && IS_WRITING_UTENSIL(I))
 		if(!length(GLOB.editable_sign_types))
 			CRASH("GLOB.editable_sign_types failed to populate")
@@ -210,7 +210,7 @@
 	return ..()
 
 /obj/item/sign/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!iswallturf(interacting_with))
+	if(!iswallturf(interacting_with) && !istype(interacting_with, /obj/structure/tram))
 		return NONE
 	var/turf/target_turf = interacting_with
 	var/turf/user_turf = get_turf(user)
@@ -275,6 +275,11 @@
 		var/obj/structure/sign/potential_sign = s
 		if(!initial(potential_sign.is_editable))
 			continue
-		output[initial(potential_sign.sign_change_name)] = potential_sign
+		var/shown_name = initial(potential_sign.sign_change_name) || capitalize(format_text(initial(potential_sign.name)))
+		if(output[shown_name])
+			if(!ispath(potential_sign, output[shown_name]))
+				stack_trace("Two signs share the same sign_change_name: [output[shown_name]] and [potential_sign]")
+			continue
+		output[shown_name] = potential_sign
 	output = sort_list(output) //Alphabetizes the results.
 	return output

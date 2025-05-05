@@ -24,7 +24,7 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "gK" = (
 /obj/structure/mecha_wreckage/ripley,
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "hq" = (
 /obj/item/stack/tile/iron/smooth,
@@ -127,7 +127,7 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "qH" = (
 /obj/structure/mecha_wreckage/durand,
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "rD" = (
 /obj/machinery/door/airlock/hatch{
@@ -148,7 +148,7 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "uF" = (
 /obj/structure/mecha_wreckage/clarke,
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "uN" = (
 /obj/structure/closet/crate/secure/loot,
@@ -223,7 +223,7 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "DM" = (
 /obj/structure/mecha_wreckage/odysseus,
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Ga" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -249,7 +249,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/layer4{
 	dir = 4
 	},
-/turf/open/floor/catwalk_floor/titanium/Airless,
+/turf/open/floor/catwalk_floor/titanium/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Il" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -280,7 +280,7 @@
 /area/ruin/space/has_grav/powered/mechtransport)
 "NG" = (
 /obj/vehicle/sealed/mecha/ripley,
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Oh" = (
 /obj/machinery/mech_bay_recharge_port{
@@ -293,7 +293,7 @@
 /turf/open/floor/catwalk_floor/iron_smooth/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "OJ" = (
-/turf/open/floor/iron/recharge_floor/Airless,
+/turf/open/floor/iron/recharge_floor/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "PG" = (
 /obj/item/stack/rods,
@@ -303,7 +303,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/layer2{
 	dir = 8
 	},
-/turf/open/floor/catwalk_floor/titanium/Airless,
+/turf/open/floor/catwalk_floor/titanium/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "Ry" = (
 /obj/structure/closet/crate/secure/loot,

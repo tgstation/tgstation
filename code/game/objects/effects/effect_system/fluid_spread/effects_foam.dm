@@ -39,6 +39,8 @@
 	. = ..()
 	if(slippery_foam)
 		AddComponent(/datum/component/slippery, 100)
+	if(HAS_TRAIT(loc, TRAIT_ELEVATED_TURF))
+		layer = WATER_LEVEL_LAYER
 	create_reagents(1000, REAGENT_HOLDER_INSTANT_REACT)
 	playsound(src, 'sound/effects/bubbles/bubbles2.ogg', 80, TRUE, -3)
 	AddElement(/datum/element/atmos_sensitive, mapload)
@@ -94,12 +96,18 @@
 		for(var/obj/object in turf_location)
 			if(object == src)
 				continue
+			if(object.invisibility >= INVISIBILITY_ABSTRACT) // Don't foam landmarks please
+				continue
 			if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
 				continue
+			if (HAS_TRAIT(loc, TRAIT_ELEVATED_TURF) && !HAS_TRAIT(object, TRAIT_ELEVATING_OBJECT))
+				continue // Do expose tables, don't expose items on tables
 			reagents.expose(object, VAPOR, fraction)
 
 	var/hit = 0
 	for(var/mob/living/foamer in loc)
+		if (HAS_TRAIT(foamer, TRAIT_MOB_ELEVATED))
+			continue
 		hit += foam_mob(foamer, seconds_per_tick)
 	if(hit)
 		lifetime += ds_seconds_per_tick //this is so the decrease from mobs hit and the natural decrease don't cumulate.
@@ -137,6 +145,7 @@
 		return FALSE
 
 	var/datum/can_pass_info/info = new(no_id = TRUE)
+	info.pass_flags = PASSTABLE | PASSGRILLE | PASSMACHINE | PASSSTRUCTURE
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/spread_turf = get_step(src, iter_dir)
 		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, info))
@@ -149,6 +158,8 @@
 			continue
 
 		for(var/mob/living/foaming in spread_turf)
+			if (HAS_TRAIT(foaming, TRAIT_MOB_ELEVATED))
+				continue
 			foam_mob(foaming, seconds_per_tick)
 
 		var/obj/effect/particle_effect/fluid/foam/spread_foam = new type(spread_turf, group, src)
@@ -335,7 +346,7 @@
 	to_chat(user, span_warning("You hit [src] but bounce off it!"))
 	playsound(src.loc, 'sound/items/weapons/tap.ogg', 100, TRUE)
 
-/obj/structure/foamedmetal/attackby(obj/item/W, mob/user, params)
+/obj/structure/foamedmetal/attackby(obj/item/W, mob/user, list/modifiers)
 	///A speed modifier for how fast the wall is build
 	var/platingmodifier = 1
 	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))

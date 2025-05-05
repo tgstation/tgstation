@@ -4,6 +4,7 @@ import {
   Button,
   ColorBox,
   Divider,
+  Icon,
   Input,
   Section,
   Stack,
@@ -16,7 +17,7 @@ import {
   removeHighlightSetting,
   updateHighlightSetting,
 } from './actions';
-import { MAX_HIGHLIGHT_SETTINGS } from './constants';
+import { WARN_AFTER_HIGHLIGHT_AMT } from './constants';
 import {
   selectHighlightSettingById,
   selectHighlightSettings,
@@ -36,8 +37,8 @@ export function TextHighlightSettings(props) {
             mb={i + 1 === highlightSettings.length ? 0 : '10px'}
           />
         ))}
-        {highlightSettings.length < MAX_HIGHLIGHT_SETTINGS && (
-          <Stack.Item>
+        <Stack.Item>
+          <Box>
             <Button
               color="transparent"
               icon="plus"
@@ -47,8 +48,15 @@ export function TextHighlightSettings(props) {
             >
               Add Highlight Setting
             </Button>
-          </Stack.Item>
-        )}
+            {highlightSettings.length >= WARN_AFTER_HIGHLIGHT_AMT && (
+              <Box inline fontSize="0.9em" ml={1} color="red">
+                <Icon mr={1} name="triangle-exclamation" />
+                Large amounts of highlights can potentially cause performance
+                issues!
+              </Box>
+            )}
+          </Box>
+        </Stack.Item>
       </Stack>
       <Divider />
       <Box>
@@ -145,11 +153,12 @@ function TextHighlightSetting(props) {
         <Stack.Item>
           <ColorBox mr={1} color={highlightColor} />
           <Input
+            expensive
             width="5em"
             monospace
             placeholder="#ffffff"
             value={highlightColor}
-            onInput={(e, value) =>
+            onChange={(value) =>
               dispatch(
                 updateHighlightSetting({
                   id: id,
@@ -161,10 +170,12 @@ function TextHighlightSetting(props) {
         </Stack.Item>
       </Stack>
       <TextArea
+        expensive
+        fluid
         height="3em"
         value={highlightText}
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
-        onChange={(e, value) =>
+        onChange={(value) =>
           dispatch(
             updateHighlightSetting({
               id: id,

@@ -211,12 +211,12 @@
 
 /obj/item/kitchen/spoon/create_reagents(max_vol, flags)
 	. = ..()
-	RegisterSignals(reagents, list(COMSIG_REAGENTS_NEW_REAGENT, COMSIG_REAGENTS_ADD_REAGENT, COMSIG_REAGENTS_DEL_REAGENT, COMSIG_REAGENTS_REM_REAGENT), PROC_REF(on_reagent_change))
+	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
-/obj/item/kitchen/spoon/proc/on_reagent_change(datum/reagents/reagents, ...)
+/obj/item/kitchen/spoon/proc/on_reagent_change(datum/reagents/reagents)
 	SIGNAL_HANDLER
+
 	update_appearance(UPDATE_OVERLAYS)
-	return NONE
 
 /obj/item/kitchen/spoon/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	if(target.is_open_container())
@@ -236,7 +236,7 @@
 	filled_overlay.color = mix_color_from_reagents(reagents.reagent_list)
 	. += filled_overlay
 
-/obj/item/kitchen/spoon/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/kitchen/spoon/attack(mob/living/target_mob, mob/living/user, list/modifiers)
 	if(!target_mob.reagents || reagents.total_volume <= 0)
 		return  ..()
 
@@ -270,7 +270,7 @@
 	reagents.trans_to(target_mob, spoon_sip_size, methods = INGEST)
 	return TRUE
 
-/obj/item/kitchen/spoon/pre_attack(atom/attacked_atom, mob/living/user, params)
+/obj/item/kitchen/spoon/pre_attack(atom/attacked_atom, mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -290,7 +290,7 @@
 		attacked_atom.balloon_alert(user, "it's full!")
 	return TRUE
 
-/obj/item/kitchen/spoon/pre_attack_secondary(atom/attacked_atom, mob/living/user, params)
+/obj/item/kitchen/spoon/pre_attack_secondary(atom/attacked_atom, mob/living/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return

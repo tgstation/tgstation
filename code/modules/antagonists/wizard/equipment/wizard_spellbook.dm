@@ -74,7 +74,7 @@
 
 	return ..()
 
-/obj/item/spellbook/attackby(obj/item/O, mob/user, params)
+/obj/item/spellbook/attackby(obj/item/O, mob/user, list/modifiers)
 	// This can be generalized in the future, but for now it stays
 	if(istype(O, /obj/item/antag_spawner/contract))
 		var/datum/spellbook_entry/item/contract/contract_entry = locate() in entries
@@ -280,7 +280,7 @@
 
 	for(var/entry in wanted_spells)
 		if(!ispath(entry, /datum/spellbook_entry))
-			stack_trace("Wizard Loadout \"[loadout]\" had an non-spellbook_entry type in its wanted spells list. ([entry])")
+			stack_trace("Wizard Loadout \"[loadout]\" had a non-spellbook_entry type in its wanted spells list. ([entry])")
 			continue
 
 		var/datum/spellbook_entry/to_buy = locate(entry) in entries

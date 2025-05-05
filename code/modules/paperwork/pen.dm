@@ -90,7 +90,7 @@
 	return list(
 		"damage" = max(5, throwforce),
 		"speed" = max(0, throw_speed - 3),
-		"embedding" = get_embed().create_copy(projectile),
+		"embedding" = get_embed().create_copy(),
 		"armour_penetration" = armour_penetration,
 		"wound_bonus" = wound_bonus,
 		"bare_wound_bonus" = bare_wound_bonus,
@@ -242,7 +242,7 @@
 	SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/pen/attack(mob/living/M, mob/user, params)
+/obj/item/pen/attack(mob/living/M, mob/user, list/modifiers)
 	if(force) // If the pen has a force value, call the normal attack procs. Used for e-daggers and captain's pen mostly.
 		return ..()
 	if(!M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
@@ -266,7 +266,7 @@
  * Sleepypens
  */
 
-/obj/item/pen/sleepy/attack(mob/living/M, mob/user, params)
+/obj/item/pen/sleepy/attack(mob/living/M, mob/user, list/modifiers)
 	. = ..()
 	if(!.)
 		return
@@ -398,8 +398,8 @@
 	playsound(source, 'sound/items/weapons/saberoff.ogg', 5, TRUE)
 	UnregisterSignal(source, list(COMSIG_ITEM_UNEMBEDDED, COMSIG_ITEM_FAILED_EMBED))
 	victim.visible_message(
-		message = span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from [victim]!"),
-		self_message = span_warning("The blade of the [hidden_name] retracts as the [source.name] is removed from you!"),
+		message = span_warning("The blade of the [hidden_name] retracts as \the [source] is removed from [victim]!"),
+		self_message = span_warning("The blade of the [hidden_name] retracts as \the [source] is removed from you!"),
 		blind_message = span_warning("You hear an energy blade retract!"),
 		vision_distance = 1
 	)
@@ -484,11 +484,11 @@
 		target_turf = get_turf(src)
 	if(ismineralturf(target_turf))
 		var/turf/closed/mineral/mineral_turf = target_turf
-		mineral_turf.gets_drilled(firer, TRUE)
+		mineral_turf.gets_drilled(firer, 1)
 
 /obj/item/pen/destroyer
 	name = "Fine Tipped Pen"
-	desc = "A pen with an infinitly sharpened tip. Capable of striking the weakest point of a strucutre or robot and annihilating it instantly. Good at putting holes in people too."
+	desc = "A pen with an infinitely-sharpened tip. Capable of striking the weakest point of a strucutre or robot and annihilating it instantly. Good at putting holes in people too."
 	force = 5
 	wound_bonus = 100
 	demolition_mod = 9000

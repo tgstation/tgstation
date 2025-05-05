@@ -13,7 +13,8 @@
 	item = /obj/item/storage/box/syndicate/contract_kit
 	category = /datum/uplink_category/contractor
 	cost = 20
-	purchasable_from = UPLINK_INFILTRATORS
+	purchasable_from = UPLINK_TRAITORS
+	population_minimum = TRAITOR_POPULATION_LOWPOP
 
 /datum/uplink_item/bundles_tc/contract_kit/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	. = ..()
@@ -83,7 +84,7 @@
 
 /datum/uplink_item/contractor/partner
 	name = "Contractor Reinforcement"
-	desc = "A reinforecment operative will be sent to aid you in your goals, \
+	desc = "A reinforcement operative will be sent to aid you in your goals, \
 		they are paid separately, and will not take a cut from your profits."
 	item = /obj/item/antag_spawner/loadout/contractor
 	limited_stock = 1

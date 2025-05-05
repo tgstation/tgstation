@@ -32,7 +32,7 @@
 	description = "A scientist needs vermin to test on, use the cytology equipment to grow some of these simple critters!"
 	total_requirement = 3
 	max_requirement_per_type = 2
-	possible_types = list(/mob/living/basic/cockroach, /mob/living/basic/mouse)
+	possible_types = list(/mob/living/basic/cockroach, /mob/living/basic/mouse, /mob/living/basic/snail)
 
 /datum/experiment/scanning/random/cytology/medium
 	name = "Advanced Cytology Scanning Experiment"
@@ -144,7 +144,7 @@
 
 /datum/experiment/scanning/random/material/meat
 	name = "Biological Material Scanning Experiment"
-	description = "They told us we couldn't make chairs out of every material in the world. You're here to prove those nay-sayers wrong."
+	description = "They told us we couldn't make chairs out of every material in the world. You're here to prove those naysayers wrong."
 	possible_material_types = list(/datum/material/meat)
 
 /datum/experiment/scanning/random/material/easy

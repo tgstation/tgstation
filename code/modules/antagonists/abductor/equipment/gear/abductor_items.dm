@@ -274,10 +274,10 @@
 <br>
 1.Acquire fresh specimen.<br>
 2.Put the specimen on operating table.<br>
-3.Apply surgical drapes, preparing for experimental dissection.<br>
+3.Apply surgical drapes, preparing for experimental organ manipulation.<br>
 4.Apply scalpel to specimen's torso.<br>
-5.Clamp bleeders on specimen's torso with a hemostat.<br>
-6.Retract skin of specimen's torso with a retractor.<br>
+5.Retract skin of specimen's torso with a retractor.<br>
+6.Clamp bleeders on specimen's torso with a hemostat.<br>
 7.Apply scalpel again to specimen's torso.<br>
 8.Search through the specimen's torso with your hands to remove any superfluous organs.<br>
 9.Insert replacement gland (Retrieve one from gland storage).<br>
@@ -286,7 +286,20 @@
 12.Choose one of the machine options. The target will be analyzed and teleported to the selected drop-off point.<br>
 13.You will receive one supply credit, and the subject will be counted towards your quota.<br>
 <br>
-Congratulations! You are now trained for invasive xenobiology research!"}
+Congratulations! You are now trained for invasive xenobiology research!<br>
+<br>
+Addendum for more exotic biomechanical specimens:<br>
+1.Acquire less conventional surgical instruments from your collaborator.<br>
+2.Apply surgical drapes, preparing for hardware manipulation.<br>
+3.Use screwdriver to unscrew specimen's shell.<br>
+4.Open hatch with your hands.<br>
+5.Use wrench to unwrench bolts of specimen's torso.<br>
+6.Use multitool to prepare the mechanical parts for removal.<br>
+7.Remove circulatory mechanism with hemostat.<br>
+8.Insert replacement gland (Retrieve one from gland storage).<br>
+9.Use wrench to secure bolts again.<br>
+10.Use screwdriver to resecure specimen's shell.<br>
+Return to step 11 of normal process."}
 
 /obj/item/paper/guides/antag/abductor/click_alt()
 	return CLICK_ACTION_BLOCKING //otherwise it would fold into a paperplane.
@@ -306,6 +319,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	wound_bonus = FALSE
 
 	actions_types = list(/datum/action/item_action/toggle_mode)
+	action_slots = ALL
 
 	cooldown = 0 SECONDS
 	stamina_damage = 0

@@ -131,7 +131,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/lava
 	name = "heat resistant rod"
-	desc = "Treated, specialized iron rods. When exposed to the vaccum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
+	desc = "Treated, specialized iron rods. When exposed to the vacuum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
 	singular_name = "heat resistant rod"
 	icon_state = "rods"
 	inhand_icon_state = "rods"
@@ -145,3 +145,22 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 
 /obj/item/stack/rods/lava/thirty
 	amount = 30
+
+/obj/item/stack/rods/shuttle
+	name = "shuttle frame rods"
+	desc = "Treated, specialized iron rods suitable for the construction of shuttle frames or the expansion of existing shuttles."
+	singular_name = "shuttle frame rod"
+	mats_per_unit = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT,  /datum/material/titanium=SMALL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/rods/shuttle
+
+/obj/item/stack/rods/shuttle/five
+	amount = 5
+
+/obj/item/stack/rods/shuttle/ten
+	amount = 10
+
+/obj/item/stack/rods/shuttle/twentyfive
+	amount = 25
+
+/obj/item/stack/rods/shuttle/fifty
+	amount = 50

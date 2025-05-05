@@ -218,7 +218,12 @@
 
 	refill()
 	if(edible)
-		AddComponent(/datum/component/edible, bite_consumption = reagents.total_volume / (charges_left / 5), after_eat = CALLBACK(src, PROC_REF(after_eat)))
+		AddComponentFrom(
+			SOURCE_EDIBLE_INNATE, \
+			/datum/component/edible, \
+			bite_consumption = reagents.total_volume / (charges_left / 5), \
+			after_eat = CALLBACK(src, PROC_REF(after_eat)), \
+		)
 
 /// Used for edible component to reduce charges_left on bite.
 /obj/item/toy/crayon/proc/after_eat(mob/user)
@@ -316,7 +321,7 @@
 		ui = new(user, src, "Crayon", name)
 		ui.open()
 
-/obj/item/toy/crayon/proc/staticDrawables()
+/obj/item/toy/crayon/proc/staticDrawables(is_literate_user)
 	. = list()
 
 	var/list/g_items = list()
@@ -352,20 +357,23 @@
 	var/list/rand_items = list()
 	. += list(list(name = "Random", "items" = rand_items))
 	for(var/i in randoms)
+		if(!is_literate_user) // no spelling allowed
+			if(i == RANDOM_LETTER || i == RANDOM_NUMBER || i == RANDOM_PUNCTUATION)
+				continue
 		rand_items += list(list("item" = i))
 
+/obj/item/toy/crayon/ui_data(mob/user)
+	var/list/crayon_drawables
+	var/is_literate_user = user.is_literate()
 
-/obj/item/toy/crayon/ui_data()
-	var/static/list/crayon_drawables
-
-	if (!crayon_drawables)
-		crayon_drawables = staticDrawables()
+	if(!crayon_drawables)
+		crayon_drawables = staticDrawables(is_literate_user)
 
 	. = list()
 	.["drawables"] = crayon_drawables
 	.["selected_stencil"] = drawtype
 	.["text_buffer"] = text_buffer
-
+	.["is_literate_user"] = is_literate_user
 	.["has_cap"] = has_cap
 	.["is_capped"] = is_capped
 	.["can_change_colour"] = can_change_colour
@@ -475,7 +483,7 @@
 
 	var/temp = "rune"
 	var/ascii = (length(drawing) == 1)
-	if(ascii && is_alpha(drawing))
+	if(ascii && is_lowercase_character(drawing))
 		temp = "letter"
 	else if(ascii && is_digit(drawing))
 		temp = "number"
@@ -508,7 +516,7 @@
 		clicky = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
 
 	if(!instant)
-		to_chat(user, span_notice("You start drawing a [temp] on the [target.name]..."))
+		to_chat(user, span_notice("You start drawing a [temp] on \the [target]..."))
 
 	if(pre_noise)
 		audible_message(span_notice("You hear spraying."))
@@ -717,17 +725,7 @@
 	icon_state = "crayonbox"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT)
-
-/obj/item/storage/crayons/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(
-		can_hold_list = /obj/item/toy/crayon,
-		cant_hold_list = list(
-			/obj/item/toy/crayon/spraycan,
-			/obj/item/toy/crayon/mime,
-			/obj/item/toy/crayon/rainbow,
-		),
-	)
+	storage_type = /datum/storage/crayons
 
 /obj/item/storage/crayons/PopulateContents()
 	new /obj/item/toy/crayon/red(src)
@@ -793,6 +791,7 @@
 	var/static/list/direct_color_types = typecacheof(list(
 		/obj/item/paper, // Uses color for TGUI backgrounds, doesn't look very good either
 		/obj/item/fish, // Used for aquarium sprites
+		/obj/structure/window, // Does not play nice with window tint
 	))
 
 /obj/item/toy/crayon/spraycan/Initialize(mapload)
@@ -899,6 +898,9 @@
 	if(iscarbon(target))
 		if(pre_noise || post_noise)
 			playsound(user.loc, 'sound/effects/spray.ogg', 25, TRUE, 5)
+
+		if(SEND_SIGNAL(target, COMSIG_CARBON_SPRAYPAINTED, user, src))
+			return ITEM_INTERACT_BLOCKING
 
 		var/mob/living/carbon/carbon_target = target
 		user.visible_message(span_danger("[user] sprays [src] into the face of [target]!"))

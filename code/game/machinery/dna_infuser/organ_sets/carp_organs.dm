@@ -27,6 +27,7 @@
 	icon_state = "lungs"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
+	organ_traits = list(TRAIT_NODROWN)
 
 /obj/item/organ/lungs/carp/Initialize(mapload)
 	. = ..()
@@ -93,6 +94,10 @@
 	var/turf/tooth_fairy = get_turf(owner)
 	if(tooth_fairy)
 		new /obj/item/knife/carp(tooth_fairy)
+
+/obj/item/organ/tongue/carp/get_possible_languages()
+	. = ..()
+	. += /datum/language/carptongue
 
 /obj/item/knife/carp
 	name = "carp tooth"

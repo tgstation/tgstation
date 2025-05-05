@@ -1,34 +1,35 @@
 @use '../colors.scss';
-@use 'sass:color';
-@use 'sass:math';
 @use '../base.scss';
 
 .BoardTab {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: black;
+  color: var(--color-black);
   min-height: 2.25em;
   min-width: 4em;
-  border-radius: 5px 5px 0 0;
+  border-radius: var(--border-radius-large) var(--border-radius-large) 0 0;
+  transform-origin: 50% 100%;
+  transition-property: background-color, transform;
+  transition-duration: var(--transition-time-medium);
 }
+
 .BoardTab__Text {
-  margin-right: 5px;
+  margin-right: var(--space-m);
 }
+
 .BoardTab__Contain {
   flex-grow: 1;
-  margin: 0 0.5em;
+  margin: 0 var(--space-m);
 }
+
 .BoardTab__Perspective:not(.BoardTab__Contain) {
   perspective-origin: 50%;
-  transform-origin: 50% 100%;
   transform: perspective(100px) rotateX(25deg);
 }
 
 .BoardTab__Selected {
   background-color: hsl(45, 82%, 66%);
-  border-bottom: 1px solid hsl(45, 82%, 66%);
-  transition: all 0.2s;
 }
 
 .BoardTabs {
@@ -36,64 +37,194 @@
   align-items: stretch;
   overflow: hidden;
 }
+
 .Evidence__Pin {
-  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.2);
-  background-color: hsl(0, 72%, 50%);
-  border-radius: 20px;
-  width: 15px;
-  height: 15px;
+  box-shadow: var(--shadow-glow-small) hsla(0, 0%, 0%, 0.33);
+  background-color: hsl(0, 65%, 40%);
+  border-radius: var(--border-radius-circular);
+  width: 16px;
+  height: 16px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  border: 1px solid hsla(0, 0%, 0%, 0.3);
+  background-image: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0) 60%
+  );
+}
+
+.Evidence__Pin:hover {
+  transform: scale(1.2);
+  cursor: var(--cursor-pointer);
+  box-shadow: 0 0 12px hsla(0, 72%, 50%, 0.7);
+}
+
+.Evidence__Pin--connecting {
+  background-color: hsl(0, 82%, 60%);
+  box-shadow: 0 0 15px hsla(0, 72%, 50%, 0.9);
+  transform: scale(1.3);
 }
 
 .Evidence__Box {
-  box-shadow: 0 0 10px hsla(0, 0%, 0%, 0.4);
-  padding: 5px;
-  color: black;
+  cursor: var(--cursor-pointer);
+  box-shadow: 0 4px 12px hsla(0, 0%, 0%, 0.6);
+  padding: var(--space-m);
+  color: var(--color-black);
   min-width: 200px;
   max-width: 300px;
-  background-color: hsl(0, 0%, 100%);
-  border: 2px solid hsl(0, 0%, 50%);
-  -ms-user-select: none;
+  background-color: hsl(46, 39%, 94%);
+  border: 2px solid hsl(35, 30%, 50%);
   user-select: none;
+  -ms-user-select: none;
   text-wrap: wrap;
-  cursor: pointer;
+  position: relative;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.06) 0px,
+    rgba(0, 0, 0, 0.06) 1px,
+    transparent 1px,
+    transparent 22px
+  );
+  transition: all 0.3s ease;
+}
+
+.Evidence__Box:hover {
+  box-shadow: 0 8px 16px hsla(0, 0%, 0%, 0.7);
+  transform: translateY(-4px) rotate(0.5deg);
+  border-color: hsl(35, 40%, 40%);
+  transition: transform 0.3s ease;
+}
+
+.Evidence--dragging .Evidence__Box {
+  animation: card-sway 1s ease-in-out infinite;
+  box-shadow: 0 12px 24px hsla(0, 0%, 0%, 0.7);
+  transform: translateY(-8px) rotate(1deg) translateX(10px);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-color: hsl(35, 40%, 30%);
+  z-index: 100;
+}
+
+.Evidence__Box::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0) 50%
+  );
+  pointer-events: none;
+}
+
+.Evidence__Box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.05) 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  pointer-events: none;
 }
 
 .Evidence__Box__TextBox {
-  border-top: 1px solid hsl(0, 0%, 92%);
+  border-top: var(--border-thickness-tiny) dashed hsl(36, 29%, 80%);
   text-wrap: wrap;
-  padding: 5px 0;
-  margin-top: 5px;
+  padding: var(--space-m) 0;
+  margin-top: var(--space-m);
   max-width: 240px;
   text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  color: #333;
 
   &.title {
     border-top: none;
     margin-top: 0;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #22131b;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
   }
 }
 
 .Board__Content {
   position: relative;
   background-color: hsl(45, 82%, 66%);
-  padding: 5px;
+  padding: var(--space-m);
   overflow: hidden;
   height: 95%;
+  background-image:
+    radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
+    radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position:
+    0 0,
+    8px 8px;
 }
 
 .Evidence__Icon {
-  margin-top: 5px;
-  border: 5px solid hsl(0, 0%, 88%);
+  image-rendering: pixelated;
+  margin-top: var(--space-m);
+  border: var(--border-thickness-large) solid hsl(0, 0%, 88%);
   width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease;
+  filter: sepia(20%);
 }
 
-@each $color-name, $color-value in colors.$fg-map {
+.Evidence__Icon:hover {
+  transform: scale(1.02);
+  filter: sepia(0%);
+}
+
+@each $color-name, $color-value in colors.$color-map {
   .BoardTab__#{$color-name} {
-    color: black;
-    background-color: $color-value;
-    transition: all 0.2s;
-    cursor: pointer;
+    cursor: var(--cursor-pointer);
+    background-color: hsl(from $color-value h s calc(l + var(--adjust-color)));
+    color: var(--color-text-fixed-black);
   }
+
   .BoardTab__#{$color-name}:hover {
-    background-color: color.scale($color-value, $lightness: 25%);
+    background-color: hsl(
+      from $color-value h s calc(l + var(--adjust-color) * 2.5)
+    );
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes card-sway {
+  0% {
+    transform: rotate(-1deg) translateX(0);
+  }
+  50% {
+    transform: rotate(1deg) translateX(5px);
+  }
+  100% {
+    transform: rotate(-1deg) translateX(0);
   }
 }

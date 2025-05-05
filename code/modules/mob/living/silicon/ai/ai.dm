@@ -1,107 +1,6 @@
-#define CALL_BOT_COOLDOWN 900
-
 #define HOLOGRAM_CHOICE_CHARACTER "Existing Character"
 #define CHARACTER_TYPE_SELF "My Character"
 #define CHARACTER_TYPE_CREWMEMBER "Station Member"
-
-/mob/living/silicon/ai
-	name = "AI"
-	real_name = "AI"
-	icon = 'icons/mob/silicon/ai.dmi'
-	icon_state = "ai"
-	move_resist = MOVE_FORCE_OVERPOWERING
-	density = TRUE
-	status_flags = CANSTUN|CANPUSH
-	combat_mode = TRUE //so we always get pushed instead of trying to swap
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
-	hud_type = /datum/hud/ai
-	silicon_huds = list(DATA_HUD_MEDICAL_BASIC, DATA_HUD_SECURITY_BASIC, DATA_HUD_DIAGNOSTIC, DATA_HUD_BOT_PATH)
-	mob_size = MOB_SIZE_LARGE
-	radio = /obj/item/radio/headset/silicon/ai
-	can_buckle_to = FALSE
-	var/battery = 200 //emergency power if the AI's APC is off
-	var/list/network = list(CAMERANET_NETWORK_SS13)
-	var/obj/machinery/camera/current
-	var/list/connected_robots = list()
-	var/aiRestorePowerRoutine = POWER_RESTORATION_OFF
-	var/requires_power = POWER_REQ_ALL
-	var/can_be_carded = TRUE
-	var/mutable_appearance/hologram_appearance //Default is assigned when AI is created.
-	var/obj/controlled_equipment //A piece of equipment, to determine whether to relaymove or use the AI eye.
-	var/radio_enabled = TRUE //Determins if a carded AI can speak with its built in radio or not.
-	radiomod = ";" //AIs will, by default, state their laws on the internal radio.
-	///Used as a fake multitoool in tcomms machinery
-	var/obj/item/multitool/aiMulti
-	///Weakref to the bot the ai's commanding right now
-	var/datum/weakref/bot_ref
-	var/datum/effect_system/spark_spread/spark_system //So they can initialize sparks whenever
-
-	//MALFUNCTION
-	var/datum/module_picker/malf_picker
-	var/list/datum/ai_module/current_modules = list()
-	var/can_dominate_mechs = FALSE
-	var/shunted = FALSE //1 if the AI is currently shunted. Used to differentiate between shunted and ghosted/braindead
-	var/obj/machinery/ai_voicechanger/ai_voicechanger = null // reference to machine that holds the voicechanger
-	var/malfhacking = FALSE // More or less a copy of the above var, so that malf AIs can hack and still get new cyborgs -- NeoFite
-	/// List of hacked APCs
-	var/list/hacked_apcs = list()
-	var/malf_cooldown = 0 //Cooldown var for malf modules, stores a worldtime + cooldown
-
-	var/obj/machinery/power/apc/malfhack
-	var/explosive = FALSE //does the AI explode when it dies?
-
-	var/camera_light_on = FALSE
-	var/list/obj/machinery/camera/lit_cameras = list()
-
-	///The internal tool used to track players visible through cameras.
-	var/datum/trackable/ai_tracking_tool
-
-	var/last_tablet_note_seen = null
-	var/can_shunt = TRUE
-	var/last_announcement = "" // For AI VOX, if enabled
-	var/turf/waypoint //Holds the turf of the currently selected waypoint.
-	var/waypoint_mode = FALSE //Waypoint mode is for selecting a turf via clicking.
-	var/call_bot_cooldown = 0 //time of next call bot command
-	var/obj/machinery/power/apc/apc_override //Ref of the AI's APC, used when the AI has no power in order to access their APC.
-	var/nuking = FALSE
-	var/obj/machinery/doomsday_device/doomsday_device
-
-	var/mob/eye/camera/ai/eyeobj
-	var/sprint = 10
-	var/last_moved = 0
-	var/acceleration = TRUE
-
-	var/obj/structure/ai_core/deactivated/linked_core //For exosuit control
-	var/mob/living/silicon/robot/deployed_shell = null //For shell control
-	var/datum/action/innate/deploy_shell/deploy_action = new
-	var/datum/action/innate/deploy_last_shell/redeploy_action = new
-	var/datum/action/innate/choose_modules/modules_action
-	var/chnotify = 0
-
-	var/multicam_on = FALSE
-	var/atom/movable/screen/movable/pic_in_pic/ai/master_multicam
-	var/list/multicam_screens = list()
-	var/list/all_eyes = list()
-	var/max_multicams = 6
-	var/display_icon_override
-
-	var/list/cam_hotkeys = new/list(9)
-	var/atom/cam_prev
-
-	var/datum/robot_control/robot_control
-	/// Station alert datum for showing alerts UI
-	var/datum/station_alert/alert_control
-	///remember AI's last location
-	var/atom/lastloc
-	interaction_range = INFINITY
-
-	var/atom/movable/screen/ai/modpc/interfaceButton
-	///whether its mmi is a posibrain or regular mmi when going ai mob to ai core structure
-	var/posibrain_inside = TRUE
-	///whether its cover is opened, so you can wirecut it for deconstruction
-	var/opened = FALSE
-	///whether AI is anchored or not, used for checks
-	var/is_anchored = TRUE
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
 	. = ..()
@@ -152,6 +51,7 @@
 	if(client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_name), /datum/preference/name/ai, client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_hologram_display), client)
+		set_gender(client)
 
 	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon))
 
@@ -178,14 +78,14 @@
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
 
-	builtInCamera = new (src)
-	builtInCamera.network = list(CAMERANET_NETWORK_SS13)
+	//They aren't given a c_tag so they don't show up in camera consoles
+	builtInCamera = new(src)
 
 	ai_tracking_tool = new(src)
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
-	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_AI_ACCESS, TRAIT_HANDS_BLOCKED), INNATE_TRAIT)
+	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_AI_ACCESS, TRAIT_HANDS_BLOCKED, TRAIT_CAN_GET_AI_TRACKING_MESSAGE, TRAIT_LOUD_BINARY), INNATE_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
@@ -335,8 +235,13 @@
 		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
 			robot_status = "DEPOWERED"
 		//Name, Health, Battery, Model, Area, and Status! Everything an AI wants to know about its borgies!
-		. += "[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[display_energy(connected_robot.cell.charge)]/[display_energy(connected_robot.cell.maxcharge)]" : "Empty"] | \
-		Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]"
+		. += list(list("[connected_robot.name]: ",
+			"S.Integrity: [connected_robot.health]% | \
+			Cell: [connected_robot.cell ? "[display_energy(connected_robot.cell.charge)]/[display_energy(connected_robot.cell.maxcharge)]" : "Empty"] | \
+			Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | \
+			Status: [robot_status]",
+			"src=[REF(src)];track_cyborg=[text_ref(connected_robot)]",
+		))
 	. += "AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]" //Count of total AI shells
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
@@ -469,6 +374,7 @@
 	the_mmi.brainmob.name = src.real_name
 	the_mmi.brainmob.real_name = src.real_name
 	the_mmi.brainmob.container = the_mmi
+	the_mmi.brainmob.gender = src.gender
 
 	var/has_suicided_trait = HAS_TRAIT(src, TRAIT_SUICIDED)
 	the_mmi.brainmob.set_suicide(has_suicided_trait)
@@ -490,6 +396,12 @@
 	..()
 	if(usr != src)
 		return
+
+	if(href_list["track_cyborg"])
+		var/mob/living/silicon/robot/cyborg = locate(href_list["track_cyborg"]) in connected_robots
+		if(!cyborg)
+			return
+		ai_tracking_tool.set_tracked_mob(cyborg)
 
 	if(href_list["emergencyAPC"]) //This check comes before incapacitated because the only time it would be useful is when we have no power.
 		if(!apc_override)
@@ -528,9 +440,6 @@
 			Holopad.attack_ai_secondary(src) //may as well recycle
 		else
 			to_chat(src, span_notice("Unable to project to the holopad."))
-	if(href_list["track"])
-		ai_tracking_tool.track_name(src, href_list["track"])
-		return
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
 		if (!M)
@@ -608,9 +517,7 @@
 		summon_success = basic_bot.summon_bot(src, waypoint, grant_all_access = TRUE)
 	else
 		var/mob/living/simple_animal/bot/simple_bot = bot
-		call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
 		summon_success = simple_bot.call_bot(src, waypoint)
-		call_bot_cooldown = 0
 
 	var/chat_message = summon_success ? "Sending command to bot..." : "Interface error. Unit is already in use."
 	to_chat(src, span_notice("[chat_message]"))
@@ -1004,7 +911,7 @@
 
 /mob/living/silicon/ai/proc/malfhacked(obj/machinery/power/apc/apc)
 	malfhack = null
-	malfhacking = 0
+	malfhacking = FALSE
 	clear_alert(ALERT_HACKING_APC)
 
 	if(!istype(apc) || QDELETED(apc) || apc.machine_stat & BROKEN)
@@ -1073,6 +980,7 @@
 		deployed_shell = target
 		target.deploy_init(src)
 		mind.transfer_to(target)
+		ADD_TRAIT(target, TRAIT_LOUD_BINARY, REF(src))
 	diag_hud_set_deployed()
 
 /datum/action/innate/deploy_shell
@@ -1153,13 +1061,16 @@
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 
 /mob/living/silicon/ai/proc/show_camera_list()
-	var/list/cameras = get_camera_list(network)
-	var/camera = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
-	if(isnull(camera))
+	var/list/cameras = GLOB.cameranet.get_available_camera_by_tag_list(network)
+	var/camera_tag = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
+	if(isnull(camera_tag))
 		return
-	if(isnull(cameras[camera]))
+
+	var/obj/machinery/camera/chosen_camera = cameras[camera_tag]
+	if(isnull(chosen_camera))
 		return
-	switchCamera(cameras[camera])
+
+	switchCamera(chosen_camera)
 
 /mob/living/silicon/on_handsblocked_start()
 	return // AIs have no hands
@@ -1180,8 +1091,6 @@
 	if(ai_voicechanger && ai_voicechanger.changing_voice)
 		return ai_voicechanger.say_name
 	return
-
-#undef CALL_BOT_COOLDOWN
 
 #undef HOLOGRAM_CHOICE_CHARACTER
 #undef CHARACTER_TYPE_SELF

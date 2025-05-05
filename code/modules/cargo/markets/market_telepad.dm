@@ -2,7 +2,7 @@
 #define PLACE_ON_MARKET_COST PAYCHECK_LOWER * 1.2
 
 /obj/item/circuitboard/machine/ltsrbt
-	name = "LTSRBT (Machine Board)"
+	name = "Long-To-Short-Range Bluespace Transceiver"
 	icon_state = "bluespacearray"
 	build_path = /obj/machinery/ltsrbt
 	req_components = list(
@@ -13,8 +13,8 @@
 	def_components = list(/obj/item/stack/ore/bluespace_crystal = /obj/item/stack/ore/bluespace_crystal/artificial)
 
 /obj/machinery/ltsrbt
-	name = "Long-To-Short-Range-Bluespace-Transceiver"
-	desc = "The LTSRBT is a compact teleportation machine for receiving and sending items outside the station and inside the station.\nUsing teleportation frequencies stolen from NT it is near undetectable.\nEssential for any illegal market operations on NT stations.\n"
+	name = "Long-To-Short-Range Bluespace Transceiver"
+	desc = "The LTSRBT is a compact teleportation machine for sending and receiving items both inside and outside the station.\nUsing teleportation frequencies stolen from NT, it is near undetectable.\nEssential for any illegal market operations on NT stations."
 	icon = 'icons/obj/machines/ltsrbt.dmi'
 	icon_state = "ltsrbt_idle"
 	base_icon_state = "ltsrbt"

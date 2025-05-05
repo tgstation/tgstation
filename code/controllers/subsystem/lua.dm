@@ -1,3 +1,4 @@
+#ifndef DISABLE_DREAMLUAU
 SUBSYSTEM_DEF(lua)
 	name = "Lua Scripting"
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
@@ -156,3 +157,4 @@ SUBSYSTEM_DEF(lua)
 			continue
 		state.log_result(json_data)
 	return
+#endif

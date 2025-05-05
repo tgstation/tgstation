@@ -20,42 +20,76 @@
 	slot_flags = ITEM_SLOT_NECK
 	custom_materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 2
-	var/flash_enabled = TRUE
-	var/state_on = "camera"
-	var/state_off = "camera_off"
-	var/pictures_max = 10
-	var/pictures_left = 10
+
+	/// Cooldown before we can take another picture.
+	var/cooldown = 6.4 SECONDS
+	/// Whether we are currently ready to take a picture.
 	var/on = TRUE
-	var/cooldown = 64
-	var/blending = FALSE //lets not take pictures while the previous is still processing!
-	var/see_ghosts = CAMERA_NO_GHOSTS //for the spoop of it
+	/// Whether we are still processing an image.
+	var/blending = FALSE
+	/// Our icon_state when ready to take a picture.
+	var/state_on = "camera"
+	/// Our icon_state when not ready to take a picture.
+	var/state_off = "camera_off"
+
+	/// The maximum amount of pictures we can take before needing new film.
+	var/pictures_max = 10
+	/// The amount of pictures we can still take before needing new film.
+	var/pictures_left = 10
+	/// Currently inserted holorecord disk.
 	var/obj/item/disk/holodisk/disk
+
+	/// Whether we flash upon taking a picture.
+	var/flash_enabled = TRUE
+	/// Whether we silence our picture taking and zoom adjusting sounds.
 	var/silent = FALSE
+	/// To what degree ghosts are visible in our pictures.
+	var/see_ghosts = CAMERA_NO_GHOSTS //for the spoop of it
+	/// Whether the camera should print pictures immediately when a picture is taken.
+	var/print_picture_on_snap = TRUE
+	/// Whether we allow setting picture label/desc/scribble when a picture is taken.
+	var/can_customise = TRUE
+	/// Picture name we default to when none is set manually.
+	var/default_picture_name
+
 	var/picture_size_x = 2
 	var/picture_size_y = 2
 	var/picture_size_x_min = 1
 	var/picture_size_y_min = 1
 	var/picture_size_x_max = 4
 	var/picture_size_y_max = 4
-	var/can_customise = TRUE
-	var/default_picture_name
-	///Whether the camera should print pictures immediately when a picture is taken.
-	var/print_picture_on_snap = TRUE
 
 /obj/item/camera/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/camera, new /obj/item/circuit_component/remotecam/polaroid), SHELL_CAPACITY_SMALL)
-
-/obj/item/camera/attack_self(mob/user)
-	if(!disk)
-		return
-	to_chat(user, span_notice("You eject [disk] out the back of [src]."))
-	user.put_in_hands(disk)
-	disk = null
+	register_context()
 
 /obj/item/camera/examine(mob/user)
 	. = ..()
+	. += span_notice("It has [pictures_left] photos left.")
 	. += span_notice("Alt-click to change its focusing, allowing you to set how big of an area it will capture.")
+
+	if(isnull(disk))
+		. += span_notice("It has a slot for a holorecord disk.")
+	else
+		. += span_notice("It has \an [disk.name] inserted.")
+
+/obj/item/camera/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Adjust Zoom"
+
+	if(istype(held_item, /obj/item/camera_film))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert Film"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/disk/holodisk))
+		context[SCREENTIP_CONTEXT_LMB] = disk ? "Swap Disks" : "Insert Disk"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if((isnull(held_item) || (held_item == src)) && disk)
+		context[SCREENTIP_CONTEXT_LMB] = "Eject Disk"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/camera/proc/adjust_zoom(mob/user)
 	if(loc != user)
@@ -71,39 +105,59 @@
 	picture_size_y = min(clamp(desired_y, picture_size_y_min, picture_size_y_max), CAMERA_PICTURE_SIZE_HARD_LIMIT)
 	return TRUE
 
+/obj/item/camera/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == disk)
+		disk = null
+
 /obj/item/camera/click_alt(mob/user)
-	adjust_zoom(user)
+	if(!adjust_zoom(user))
+		return CLICK_ACTION_BLOCKING
+	if(silent) // Don't out your silent cameras
+		user.playsound_local(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
+	else
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 	return CLICK_ACTION_SUCCESS
+
+/obj/item/camera/attack_self(mob/user)
+	if(isnull(disk))
+		return
+	playsound(src, 'sound/machines/card_slide.ogg', 50)
+	user.put_in_hands(disk)
+	disk = null
 
 /obj/item/camera/attack(mob/living/carbon/human/M, mob/user)
 	return
 
-/obj/item/camera/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/camera_film))
-		if(pictures_left)
-			to_chat(user, span_notice("[src] still has some film in it!"))
-			return
-		if(!user.temporarilyRemoveItemFromInventory(I))
-			return
-		to_chat(user, span_notice("You insert [I] into [src]."))
-		qdel(I)
-		pictures_left = pictures_max
-		return
-	if(istype(I, /obj/item/disk/holodisk))
-		if (!disk)
-			if(!user.transferItemToLoc(I, src))
-				to_chat(user, span_warning("[I] is stuck to your hand!"))
-				return TRUE
-			to_chat(user, span_notice("You slide [I] into the back of [src]."))
-			disk = I
-		else
-			to_chat(user, span_warning("There's already a disk inside [src]."))
-		return TRUE //no afterattack
-	..()
+/obj/item/camera/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/camera_film))
+		return camera_film_act(user, tool)
+	if(istype(tool, /obj/item/disk/holodisk))
+		return holodisk_act(user, tool)
 
-/obj/item/camera/examine(mob/user)
-	. = ..()
-	. += "It has [pictures_left] photos left."
+/obj/item/camera/proc/camera_film_act(mob/living/user, obj/item/camera_film/new_film)
+	if(pictures_left)
+		balloon_alert(user, "isn't empty!")
+		return ITEM_INTERACT_BLOCKING
+	if(!user.temporarilyRemoveItemFromInventory(new_film))
+		return ITEM_INTERACT_BLOCKING
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	qdel(new_film)
+	pictures_left = pictures_max
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/camera/proc/holodisk_act(mob/living/user, obj/item/disk/holodisk/new_disk)
+	if(!user.transferItemToLoc(new_disk, src))
+		balloon_alert(user, "stuck in hand!")
+		return TRUE
+	if(disk)
+		user.put_in_hands(disk)
+		balloon_alert(user, "disks swapped!")
+	else
+		balloon_alert(user, "disk inserted!")
+	playsound(src, 'sound/machines/card_slide.ogg', 50)
+	disk = new_disk
+	return ITEM_INTERACT_SUCCESS
 
 //user can be atom or mob
 /obj/item/camera/proc/can_target(atom/target, mob/user)
@@ -135,18 +189,17 @@
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/camera/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if (disk)
-		if(ismob(interacting_with))
-			if (disk.record)
-				QDEL_NULL(disk.record)
-
-			disk.record = new
-			var/mob/M = interacting_with
-			disk.record.caller_name = M.name
-			disk.record.set_caller_image(M)
-		else
+	if(disk)
+		if(!ismob(interacting_with))
 			to_chat(user, span_warning("Invalid holodisk target."))
 			return ITEM_INTERACT_BLOCKING
+		if(disk.record)
+			QDEL_NULL(disk.record)
+
+		disk.record = new
+		var/mob/recorded_mob = interacting_with
+		disk.record.caller_name = recorded_mob.name
+		disk.record.set_caller_image(recorded_mob)
 
 	if(!can_target(interacting_with, user))
 		return ITEM_INTERACT_BLOCKING
@@ -261,6 +314,7 @@
 		if(in_range(new_photo, user) && user.put_in_hands(new_photo)) //needed because of TK
 			to_chat(user, span_notice("[pictures_left] photos left."))
 
+		var/name_customized = FALSE
 		if(can_customise)
 			var/customise = user.is_holding(new_photo) && tgui_alert(user, "Do you want to customize the photo?", "Customization", list("Yes", "No"))
 			if(customise == "Yes")
@@ -269,12 +323,14 @@
 				var/caption = user.is_holding(new_photo) && tgui_input_text(user, "Set a caption for this photo, or leave blank.", "Caption", max_length = 256)
 				if(name1)
 					picture.picture_name = name1
+					name_customized = TRUE
 				if(desc1)
 					picture.picture_desc = "[desc1] - [picture.picture_desc]"
 				if(caption)
 					picture.caption = caption
-			else if(default_picture_name)
-				picture.picture_name = default_picture_name
+		if(!name_customized && default_picture_name)
+			picture.picture_name = default_picture_name
+
 	else if(isliving(loc))
 		var/mob/living/holder = loc
 		if(holder.put_in_hands(new_photo))

@@ -1,9 +1,3 @@
-#define FAKE_GREENSHIFT_FORM_CHANCE 15
-#define FAKE_REPORT_CHANCE 8
-#define PULSAR_REPORT_CHANCE 8
-#define REPORT_NEG_DIVERGENCE -15
-#define REPORT_POS_DIVERGENCE 15
-
 // Are HIGH_IMPACT_RULESETs allowed to stack?
 GLOBAL_VAR_INIT(dynamic_no_stacking, TRUE)
 // If enabled does not accept or execute any rulesets.
@@ -195,10 +189,6 @@ SUBSYSTEM_DEF(dynamic)
 	/// Used for choosing different midround injections.
 	var/list/current_midround_rulesets
 
-	/// The amount of threat shown on the piece of paper.
-	/// Can differ from the actual threat amount.
-	var/shown_threat
-
 	VAR_PRIVATE/next_midround_injection
 
 /datum/controller/subsystem/dynamic/proc/admin_panel()
@@ -257,9 +247,9 @@ SUBSYSTEM_DEF(dynamic)
 		if(!threatadd)
 			return
 		if(threatadd > 0)
-			create_threat(threatadd, threat_log, "[worldtime2text()]: increased by [key_name(usr)]")
+			create_threat(threatadd, threat_log, "[gameTimestamp()]: increased by [key_name(usr)]")
 		else
-			spend_midround_budget(-threatadd, threat_log, "[worldtime2text()]: decreased by [key_name(usr)]")
+			spend_midround_budget(-threatadd, threat_log, "[gameTimestamp()]: decreased by [key_name(usr)]")
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		late_forced_injection = TRUE
@@ -327,7 +317,7 @@ SUBSYSTEM_DEF(dynamic)
 		addtimer(CALLBACK(src, PROC_REF(send_intercept)), 10 SECONDS)
 		return
 
-	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]:</i></b><hr>"
+	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD", NO_TIMEZONE)], [CURRENT_STATION_YEAR]:</i></b><hr>"
 	. += generate_advisory_level()
 
 	var/min_threat = 100
@@ -336,7 +326,7 @@ SUBSYSTEM_DEF(dynamic)
 			continue
 		min_threat = min(ruleset.cost, min_threat)
 
-	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat && shown_threat < min_threat) //if both shown and real threat are below any ruleset, its extended time
+	var/greenshift = GLOB.dynamic_forced_extended || (threat_level < min_threat) //if threat is below any ruleset, its extended time
 	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
 
 	var/list/datum/station_goal/goals = SSstation.get_station_goals()
@@ -380,39 +370,10 @@ SUBSYSTEM_DEF(dynamic)
 /// Generate the advisory level depending on the shown threat level.
 /datum/controller/subsystem/dynamic/proc/generate_advisory_level()
 	var/advisory_string = ""
-	if(prob(PULSAR_REPORT_CHANCE))
-		for(var/datum/station_trait/our_trait as anything in shuffle(SSstation.station_traits))
-			advisory_string += our_trait.get_pulsar_message()
-			if(length(advisory_string))
-				return advisory_string
-
-		advisory_string += "Advisory Level: <b>Pulsar Star</b></center><BR>"
-		advisory_string += "Your sector's advisory level is Pulsar Star. A large, unknown electromagnetic field has stormed through nearby surveillance equipment, causing major data loss. Partial data was recovered and showed no credible threats to Nanotrasen assets within the Spinward Sector; however, the Department of Intelligence advises maintaining high alert against potential threats due to the lack of complete data."
-		return advisory_string
-	//a white dwarf shift leads to a green security alert on report and special announcement, this prevents a meta check if the alert report is fake or not.
-	if(round(shown_threat) == 0 && round(threat_level) == 0)
-		advisory_string += "Advisory Level: <b>White Dwarf</b></center><BR>"
-		advisory_string += "Your sector's advisory level is White Dwarf. Our surveillance has ruled out any and all potential threats known in our database, eliminating most risks to our assets in the Spinward Sector. We advise a lower level of security, alongside distributing resources on potential profit."
-		return advisory_string
-
-	switch(round(shown_threat))
-		if(0 to 19)
-			var/show_core_territory = (GLOB.current_living_antags.len > 0)
-			if (prob(FAKE_GREENSHIFT_FORM_CHANCE))
-				show_core_territory = !show_core_territory
-
-			if (show_core_territory)
-				advisory_string += "Advisory Level: <b>Blue Star</b></center><BR>"
-				advisory_string += "Your sector's advisory level is Blue Star. At this threat advisory, the risk of attacks on Nanotrasen assets within the sector is minor but cannot be ruled out entirely. Remain vigilant."
-			else
-				advisory_string += "Advisory Level: <b>Green Star</b></center><BR>"
-				advisory_string += "Your sector's advisory level is Green Star. Surveillance information shows no credible threats to Nanotrasen assets within the Spinward Sector at this time. As always, the Department of Intelligence advises maintaining vigilance against potential threats, regardless of a lack of known threats."
-		if(20 to 39)
+	switch(round(threat_level))
+		if(0 to 65)
 			advisory_string += "Advisory Level: <b>Yellow Star</b></center><BR>"
 			advisory_string += "Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security alongside maintaining vigilance against potential threats."
-		if(40 to 65)
-			advisory_string += "Advisory Level: <b>Orange Star</b></center><BR>"
-			advisory_string += "Your sector's advisory level is Orange Star. Upon reviewing your sector's intelligence, the Department has determined that the risk of enemy activity is moderate to severe. At this advisory, we recommend maintaining a higher degree of security and reviewing red alert protocols with command and the crew."
 		if(66 to 79)
 			advisory_string += "Advisory Level: <b>Red Star</b></center><BR>"
 			advisory_string += "Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
@@ -433,7 +394,7 @@ SUBSYSTEM_DEF(dynamic)
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/list/out = list("<TITLE>Threat Log</TITLE><B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [threat_level]<BR>")
+	var/list/out = list("<B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [threat_level]<BR>")
 
 	for(var/entry in threat_log)
 		if(istext(entry))
@@ -441,7 +402,7 @@ SUBSYSTEM_DEF(dynamic)
 
 	out += "<B>Remaining threat/threat_level:</B> [mid_round_budget]/[threat_level]"
 
-	usr << browse(out.Join(), "window=threatlog;size=700x500")
+	usr << browse(HTML_SKELETON_TITLE("Threat Log", out.Join()), "window=threatlog;size=700x500")
 
 /// Generates the threat level using lorentz distribution and assigns peaceful_percentage.
 /datum/controller/subsystem/dynamic/proc/generate_threat()
@@ -497,11 +458,6 @@ SUBSYSTEM_DEF(dynamic)
 	)
 	return TRUE
 
-/datum/controller/subsystem/dynamic/proc/setup_shown_threat()
-	if (prob(FAKE_REPORT_CHANCE))
-		shown_threat = rand(1, 100)
-	else
-		shown_threat = clamp(threat_level + rand(REPORT_NEG_DIVERGENCE, REPORT_POS_DIVERGENCE), 0, 100)
 
 /datum/controller/subsystem/dynamic/proc/set_cooldowns()
 	var/latejoin_injection_cooldown_middle = 0.5*(latejoin_delay_max + latejoin_delay_min)
@@ -523,7 +479,6 @@ SUBSYSTEM_DEF(dynamic)
 	configure_station_trait_costs()
 	setup_parameters()
 	setup_hijacking()
-	setup_shown_threat()
 	setup_rulesets()
 
 	//We do this here instead of with the midround rulesets and such because these rules can hang refs
@@ -557,7 +512,7 @@ SUBSYSTEM_DEF(dynamic)
 		roundstart(roundstart_rules)
 
 	log_dynamic("[round_start_budget] round start budget was left, donating it to midrounds.")
-	threat_log += "[worldtime2text()]: [round_start_budget] round start budget was left, donating it to midrounds."
+	threat_log += "[gameTimestamp()]: [round_start_budget] round start budget was left, donating it to midrounds."
 	mid_round_budget += round_start_budget
 
 	var/starting_rulesets = ""
@@ -761,7 +716,7 @@ SUBSYSTEM_DEF(dynamic)
 	var/added_threat = ruleset.scale_up(roundstart_pop_ready, scaled_times)
 
 	if(ruleset.pre_execute(roundstart_pop_ready))
-		threat_log += "[worldtime2text()]: Roundstart [ruleset.name] spent [ruleset.cost + added_threat]. [ruleset.scaling_cost ? "Scaled up [ruleset.scaled_times]/[scaled_times] times." : ""]"
+		threat_log += "[gameTimestamp()]: Roundstart [ruleset.name] spent [ruleset.cost + added_threat]. [ruleset.scaling_cost ? "Scaled up [ruleset.scaled_times]/[scaled_times] times." : ""]"
 		if(ruleset.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
 		if(ruleset.flags & HIGH_IMPACT_RULESET)
@@ -819,7 +774,7 @@ SUBSYSTEM_DEF(dynamic)
 		new_rule.load_templates()
 		if (new_rule.ready(forced))
 			if (!ignore_cost)
-				spend_midround_budget(new_rule.cost, threat_log, "[worldtime2text()]: Forced rule [new_rule.name]")
+				spend_midround_budget(new_rule.cost, threat_log, "[gameTimestamp()]: Forced rule [new_rule.name]")
 			new_rule.pre_execute(population)
 			if (new_rule.execute()) // This should never fail since ready() returned 1
 				if(new_rule.flags & HIGH_IMPACT_RULESET)
@@ -1056,9 +1011,3 @@ SUBSYSTEM_DEF(dynamic)
 
 
 #undef MAXIMUM_DYN_DISTANCE
-
-#undef FAKE_REPORT_CHANCE
-#undef FAKE_GREENSHIFT_FORM_CHANCE
-#undef PULSAR_REPORT_CHANCE
-#undef REPORT_NEG_DIVERGENCE
-#undef REPORT_POS_DIVERGENCE

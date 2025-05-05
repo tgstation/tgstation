@@ -135,6 +135,10 @@
 	roundstart_template = /datum/map_template/shuttle/mining/kilo
 	height = 10
 
+/obj/docking_port/stationary/mining_home/northstar
+	roundstart_template = /datum/map_template/shuttle/mining/northstar
+	height = 6
+
 /obj/docking_port/stationary/mining_home/nebula
 	roundstart_template = /datum/map_template/shuttle/mining/nebula
 	height = 10
@@ -146,6 +150,9 @@
 
 /obj/docking_port/stationary/mining_home/common/kilo
 	roundstart_template = /datum/map_template/shuttle/mining_common/kilo
+
+/obj/docking_port/stationary/mining_home/common/northstar
+	roundstart_template = /datum/map_template/shuttle/mining_common/northstar
 
 /obj/structure/closet/crate/miningcar
 	name = "mine cart"

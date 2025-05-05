@@ -2,12 +2,12 @@
 //They'll attempt to leap at their target from afar using their hatchets.
 /mob/living/basic/mining/mook
 	name = "wanderer"
-	desc = "This unhealthy looking primitive seems to be talented at administiring health care."
+	desc = "This unhealthy looking primitive seems to be talented at administering health care."
 	icon = 'icons/mob/simple/jungle/mook.dmi'
 	icon_state = "mook"
 	icon_living = "mook"
 	icon_dead = "mook_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_MINING
 	gender = FEMALE
 	maxHealth = 150
 	faction = list(FACTION_MINING, FACTION_NEUTRAL)
@@ -150,7 +150,7 @@
 
 	. += ore_overlay
 
-/mob/living/basic/mining/mook/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+/mob/living/basic/mining/mook/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	change_combatant_state(state = MOOK_ATTACK_ACTIVE)
 	return ..()
 

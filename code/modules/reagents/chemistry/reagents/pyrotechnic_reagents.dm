@@ -163,11 +163,12 @@
 	self_consuming = TRUE
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/phlogiston/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
+/datum/reagent/phlogiston/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	exposed_mob.adjust_fire_stacks(1)
-	var/burndmg = max(0.3*exposed_mob.fire_stacks, 0.3)
-	exposed_mob.adjustFireLoss(burndmg, 0)
+	var/burndmg = max(0.3*exposed_mob.fire_stacks * (1 - touch_protection), 0.3)
+	if(burndmg)
+		exposed_mob.adjustFireLoss(burndmg, 0)
 	exposed_mob.ignite_mob()
 
 /datum/reagent/phlogiston/on_mob_life(mob/living/carbon/metabolizer, seconds_per_tick, times_fired)
@@ -211,7 +212,7 @@
 	color = "#0000DC"
 	ph = 8.6
 	metabolization_rate = 0.05 * REAGENTS_METABOLISM
-	taste_description = "icey bitterness"
+	taste_description = "icy bitterness"
 	purity = REAGENT_STANDARD_PURITY
 	self_consuming = TRUE
 	inverse_chem_val = 0.5
@@ -288,7 +289,7 @@
 
 /datum/reagent/teslium //Teslium. Causes periodic shocks, and makes shocks against the target much more effective.
 	name = "Teslium"
-	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly. Excessively heating teslium results in dangerous destabilization. Do not allow to come into contact with water."
+	description = "An unstable, electrically-charged metallic slurry. Periodically electrocutes its victim, and makes electrocutions against them more deadly. Excessively heating teslium results in dangerous destabilization. Do not allow it to come into contact with water."
 	color = "#20324D" //RGB: 32, 50, 77
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "charged metal"

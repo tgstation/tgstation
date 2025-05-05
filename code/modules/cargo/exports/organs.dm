@@ -43,7 +43,7 @@
 
 /datum/export/organ/tongue
 	cost = CARGO_CRATE_VALUE * 0.1
-	unit_name = "humanoid tounge"
+	unit_name = "humanoid tongue"
 	export_types = list(/obj/item/organ/tongue)
 
 /datum/export/organ/external/tail/lizard

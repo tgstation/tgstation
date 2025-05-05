@@ -18,7 +18,7 @@
 /turf/closed/indestructible/singularity_act()
 	return
 
-/turf/closed/indestructible/attackby(obj/item/attacking_item, mob/user, params)
+/turf/closed/indestructible/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(istype(attacking_item, /obj/item/poster) && Adjacent(user))
 		return place_poster(attacking_item, user)
 
@@ -333,13 +333,22 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	return TRUE
 
 /turf/closed/indestructible/riveted/hierophant
-	name = "wall"
-	desc = "A wall made out of a strange metal. The squares on it pulse in a predictable pattern."
+	name = "runic wall"
+	desc = "A wall made out of strange stone, runes on its sides pulsating in a rythmic pattern."
 	icon = 'icons/turf/walls/hierophant_wall.dmi'
-	icon_state = "wall"
-	smoothing_flags = SMOOTH_CORNERS
+	icon_state = "hierophant_wall-0"
+	base_icon_state = "hierophant_wall"
+	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_HIERO_WALL
 	canSmoothWith = SMOOTH_GROUP_HIERO_WALL
+
+/turf/closed/indestructible/riveted/hierophant/set_smoothed_icon_state(new_junction)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
+/turf/closed/indestructible/riveted/hierophant/update_overlays()
+	. = ..()
+	. += emissive_appearance('icons/turf/walls/hierophant_wall_e.dmi', icon_state, src)
 
 /turf/closed/indestructible/resin
 	name = "resin wall"

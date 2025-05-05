@@ -202,7 +202,6 @@
 		/obj/projectile/bullet/mime,
 		/obj/projectile/curse_hand,
 		/obj/projectile/energy/electrode,
-		/obj/projectile/energy/net,
 		/obj/projectile/energy/nuclear_particle,
 		/obj/projectile/gravityattract,
 		/obj/projectile/gravitychaos,
@@ -271,7 +270,7 @@
 
 /obj/item/gun/magic/staff/locker
 	name = "staff of the locker"
-	desc = "An artefact that expells encapsulating bolts, for incapacitating thy enemy."
+	desc = "An artefact that expels encapsulating bolts, for incapacitating thy enemy."
 	fire_sound = 'sound/effects/magic/staff_change.ogg'
 	ammo_type = /obj/item/ammo_casing/magic/locker
 	icon_state = "locker"

@@ -69,7 +69,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	. = ..()
 	if(inverted)
 		. += span_notice("It is currently set to go in reverse.")
-	. += "\nLeft-click with a <b>wrench</b> to rotate."
+	. += "\nLeft-click with a <b>wrench</b> to rotate clockwise."
+	. += "Right-click with a <b>wrench</b> to rotate counterclockwise."
 	. += "Left-click with a <b>screwdriver</b> to invert its direction."
 	. += "Right-click with a <b>screwdriver</b> to flip its belt around."
 	. += "Left-click with a <b>multitool</b> to toggle whether this conveyor receives power via cable. Toggling connects and disconnects."
@@ -81,7 +82,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		context[SCREENTIP_CONTEXT_LMB] = "Extend current conveyor belt"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item?.tool_behaviour == TOOL_WRENCH)
-		context[SCREENTIP_CONTEXT_LMB] = "Rotate conveyor belt"
+		context[SCREENTIP_CONTEXT_LMB] = "Rotate conveyor belt clockwise"
+		context[SCREENTIP_CONTEXT_RMB] = "Rotate conveyor belt counterclockwise"
 		return CONTEXTUAL_SCREENTIP_SET
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_LMB] = "Invert conveyor belt"
@@ -283,7 +285,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	GLOB.move_manager.stop_looping(thing, SSconveyors)
 
 // attack with item, place item on conveyor
-/obj/machinery/conveyor/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/conveyor/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 	if(attacking_item.tool_behaviour == TOOL_CROWBAR)
 		user.visible_message(span_notice("[user] struggles to pry up [src] with [attacking_item]."), \
 		span_notice("You struggle to pry up [src] with [attacking_item]."))
@@ -336,12 +338,17 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	else
 		return ..()
 
-/obj/machinery/conveyor/attackby_secondary(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/conveyor/attackby_secondary(obj/item/attacking_item, mob/living/user, list/modifiers)
 	if(attacking_item.tool_behaviour == TOOL_SCREWDRIVER)
 		attacking_item.play_tool_sound(src)
 		flipped = !flipped
 		update_move_direction()
 		to_chat(user, span_notice("You flip [src]'s belt [flipped ? "around" : "back to normal"]."))
+
+	else if(attacking_item.tool_behaviour == TOOL_WRENCH)
+		attacking_item.play_tool_sound(src)
+		setDir(turn(dir, 45))
+		to_chat(user, span_notice("You rotate [src]."))
 
 	else if(!user.combat_mode)
 		user.transferItemToLoc(attacking_item, drop_location())
@@ -538,7 +545,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor_switch/attack_robot_secondary(mob/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
-/obj/machinery/conveyor_switch/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/conveyor_switch/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(is_wire_tool(attacking_item))
 		wires.interact(user)
 		return TRUE
@@ -653,7 +660,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	use(1)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/stack/conveyor/attackby(obj/item/item_used, mob/user, params)
+/obj/item/stack/conveyor/attackby(obj/item/item_used, mob/user, list/modifiers)
 	..()
 	if(istype(item_used, /obj/item/conveyor_switch_construct))
 		to_chat(user, span_notice("You link the switch to the conveyor belt assembly."))

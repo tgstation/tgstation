@@ -40,7 +40,7 @@
 /obj/item/food/grown/watermelon/make_dryable()
 	return //No drying
 
-/obj/item/food/grown/watermelon/attackby(obj/item/I, mob/user, params)
+/obj/item/food/grown/watermelon/attackby(obj/item/I, mob/user, list/modifiers)
 	if(!istype(I, /obj/item/kitchen/spoon))
 		return ..()
 
@@ -107,10 +107,10 @@
 
 /obj/item/food/grown/holymelon/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_holyness)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_holyness)))
 
 
-/obj/item/food/grown/holymelon/attackby(obj/item/I, mob/user, params)
+/obj/item/food/grown/holymelon/attackby(obj/item/I, mob/user, list/modifiers)
 	if(!istype(I, /obj/item/kitchen/spoon))
 		return ..()
 
@@ -183,7 +183,7 @@
 /obj/item/food/grown/barrelmelon/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/barrelmelonslice, 5, 20, screentip_verb = "Chop")
 
-/obj/item/food/grown/barrelmelon/attackby(obj/item/I, mob/user, params)
+/obj/item/food/grown/barrelmelon/attackby(obj/item/I, mob/user, list/modifiers)
 	if(!istype(I, /obj/item/kitchen/spoon))
 		return ..()
 

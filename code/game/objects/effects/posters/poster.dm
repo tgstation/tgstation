@@ -53,7 +53,7 @@
 
 		name = "[name] - [poster_structure.original_name]"
 
-/obj/item/poster/attackby(obj/item/I, mob/user, params)
+/obj/item/poster/attackby(obj/item/I, mob/user, list/modifiers)
 	if(!istype(I, /obj/item/shard))
 		return ..()
 
@@ -65,7 +65,7 @@
 		return
 
 	poster_structure.trap = WEAKREF(I)
-	to_chat(user, span_notice("You conceal the [I.name] inside the rolled up poster."))
+	to_chat(user, span_notice("You conceal \the [I] inside the rolled up poster."))
 
 /obj/item/poster/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -172,7 +172,7 @@
 	desc = holi_data.poster_desc
 	icon_state = holi_data.poster_icon
 
-/obj/structure/sign/poster/attackby(obj/item/tool, mob/user, params)
+/obj/structure/sign/poster/attackby(obj/item/tool, mob/user, list/modifiers)
 	if(tool.tool_behaviour == TOOL_WIRECUTTER)
 		tool.play_tool_sound(src, 100)
 		if(ruined)
@@ -295,5 +295,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/ripped, 32)
 	)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/random, 32)
+
+/obj/structure/sign/poster/greenscreen
+	name = "greenscreen"
+	desc = "Used to create a convincing illusion of a different background."
+	icon_state = "greenscreen"
+	poster_item_name = "greenscreen"
+	poster_item_desc = "Used to create a convincing illusion of a different background."
+	never_random = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/greenscreen, 32)
 
 #undef PLACE_SPEED

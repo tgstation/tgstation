@@ -1,4 +1,4 @@
-import { Flex } from 'tgui-core/components';
+import { Box } from 'tgui-core/components';
 import { createSearch } from 'tgui-core/string';
 
 import { LootBox } from './LootBox';
@@ -17,12 +17,10 @@ export function RawContents(props: Props) {
   );
 
   return (
-    <Flex wrap>
+    <Box m={-0.5}>
       {filteredContents.map((item) => (
-        <Flex.Item key={item.ref} m={1}>
-          <LootBox item={item} />
-        </Flex.Item>
+        <LootBox key={item.ref} item={item} />
       ))}
-    </Flex>
+    </Box>
   );
 }

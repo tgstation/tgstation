@@ -53,6 +53,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	/// The list of strains the blob can reroll for.
 	var/list/strain_choices
 
+	///The HUD given to blobs with their power
+	var/atom/movable/screen/blob_power_display/blob_power_hud
+
 /mob/eye/blob/Initialize(mapload, starting_points = OVERMIND_STARTING_POINTS)
 	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
 	validate_location()
@@ -73,6 +76,14 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	GLOB.blob_telepathy_mobs |= src
+
+/mob/eye/blob/create_mob_hud()
+	. = ..()
+	if(!.)
+		return
+	blob_power_hud = new(null, src)
+	hud_used.infodisplay += blob_power_hud
+	hud_used.show_hud(hud_used.hud_version)
 
 /mob/eye/blob/proc/validate_location()
 	var/turf/T = get_turf(src)
@@ -210,18 +221,17 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		else
 			live_guy.fully_heal()
 
-		for(var/area/check_area in GLOB.areas)
-			if(!is_type_in_list(check_area, GLOB.the_station_areas))
-				continue
-			if(!(check_area.area_flags & BLOBS_ALLOWED))
-				continue
-			check_area.color = blobstrain.color
-			check_area.name = "blob"
-			check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
-			check_area.icon_state = "blob_shield"
-			check_area.layer = BELOW_MOB_LAYER
-			check_area.SetInvisibility(INVISIBILITY_NONE)
-			check_area.blend_mode = 0
+	for(var/area_type in GLOB.the_station_areas)
+		var/area/check_area = GLOB.areas_by_type[area_type]
+		if(!(check_area.area_flags & BLOBS_ALLOWED))
+			continue
+		check_area.color = blobstrain.color
+		check_area.name = "blob"
+		check_area.icon = 'icons/mob/nonhuman-player/blob.dmi'
+		check_area.icon_state = "blob_shield"
+		check_area.layer = BELOW_MOB_LAYER
+		check_area.SetInvisibility(INVISIBILITY_NONE)
+		check_area.blend_mode = 0
 
 	var/datum/antagonist/blob/B = mind.has_antag_datum(/datum/antagonist/blob)
 	if(B)
@@ -234,6 +244,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 /mob/eye/blob/Destroy()
 	QDEL_NULL(blobstrain)
+	QDEL_NULL(blob_power_hud)
 	for(var/BL in GLOB.blobs)
 		var/obj/structure/blob/B = BL
 		if(B && B.overmind == src)
@@ -275,16 +286,16 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(!blob_core)
 		return FALSE
 	var/current_health = round((blob_core.get_integrity() / blob_core.max_integrity) * 100)
-	hud_used.healths.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
+	var/new_maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
+	hud_used.healths.maptext = new_maptext
 	for(var/mob/living/basic/blob_minion/blobbernaut/blobbernaut in blob_mobs)
-		var/datum/hud/using_hud = blobbernaut.hud_used
-		if(!using_hud?.blobpwrdisplay)
+		if(isnull(blobbernaut.overmind_hud))
 			continue
-		using_hud.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#82ed00'>[current_health]%</font></div>")
+		blobbernaut.overmind_hud.maptext = new_maptext
 
 /mob/eye/blob/proc/add_points(points)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
-	hud_used.blobpwrdisplay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
+	blob_power_hud.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
 
 /mob/eye/blob/say(
 	message,
@@ -325,7 +336,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 
 	var/message_a = say_quote(message)
 	var/rendered = span_big(span_blob("<b>\[Blob Telepathy\] [name](<font color=\"[blobstrain.color]\">[blobstrain.name]</font>)</b> [message_a]"))
-	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src)
+	relay_to_list_and_observers(rendered, GLOB.blob_telepathy_mobs, src, MESSAGE_TYPE_RADIO)
 
 /mob/eye/blob/blob_act(obj/structure/blob/B)
 	return

@@ -18,7 +18,7 @@
 	)
 	contraband = list(
 		/obj/item/food/waffles = 2,
-		/obj/item/food/dankpocket = 2,
+		/obj/item/food/donkpocket/dank = 2,
 		/obj/item/food/donkpocket/gondola = 1,
 	)
 	premium = list(

@@ -125,14 +125,14 @@ type PlaneDebugData = {
 };
 
 // Stolen wholesale from fontcode
-const textWidth = (text, font, fontsize) => {
+function textWidth(text: string, font: string, fontsize: number) {
   // default font height is 12 in tgui
   font = fontsize + 'x ' + font;
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d') as CanvasRenderingContext2D;
   ctx.font = font;
   return ctx.measureText(text).width;
-};
+}
 
 const planeToPosition = function (plane: Plane, index, is_incoming): Position {
   return {
@@ -651,7 +651,7 @@ const DrawAbovePlane = (props) => {
           <MobResetButton />
           <ToggleMirror />
           <VVButton />
-          <RefreshButton />
+          <RebuildButton />
         </>
       )}
       {!!enable_group_view && <GroupDropdown />}
@@ -695,7 +695,7 @@ const PlaneWindow = (props) => {
           <MobResetButton no_position />
           <ToggleMirror no_position />
           <VVButton no_position />
-          <RefreshButton no_position />
+          <RebuildButton no_position />
         </>
       }
     >
@@ -896,7 +896,7 @@ const GroupDropdown = (props) => {
   );
 };
 
-const RefreshButton = (props) => {
+const RebuildButton = (props) => {
   const { act } = useBackend();
   const { no_position } = props;
 
@@ -906,8 +906,8 @@ const RefreshButton = (props) => {
       right={no_position ? '' : '6px'}
       position={no_position ? '' : 'absolute'}
       icon="recycle"
-      onClick={() => act('refresh')}
-      tooltip="Refreshes ALL plane masters. Kinda laggy, but useful"
+      onClick={() => act('rebuild')}
+      tooltip="Rebuilds ALL plane masters. Kinda laggy, but useful"
     />
   );
 };

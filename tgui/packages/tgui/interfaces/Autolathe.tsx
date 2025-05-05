@@ -53,7 +53,7 @@ export const Autolathe = (props) => {
 
   return (
     <Window title="Autolathe" width={670} height={600}>
-      <Window.Content scrollable>
+      <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
             <Section title="Total Materials">
@@ -288,15 +288,14 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
       >
         <Button.Input
           color="transparent"
-          onCommit={(_e, value: string) =>
+          buttonText={`[Max: ${maxmult}]`}
+          onCommit={(value) =>
             act('make', {
               id: design.id,
               multiplier: value,
             })
           }
-        >
-          [Max: {maxmult}]
-        </Button.Input>
+        />
       </div>
     </div>
   );

@@ -65,7 +65,7 @@
 		qdel(rip_u)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/supermatter_crystal/attackby(obj/item/item, mob/user, params)
+/obj/machinery/power/supermatter_crystal/attackby(obj/item/item, mob/user, list/modifiers)
 	if(istype(item, /obj/item/scalpel/supermatter))
 		var/obj/item/scalpel/supermatter/scalpel = item
 		to_chat(user, span_notice("You carefully begin to scrape \the [src] with \the [scalpel]..."))
@@ -81,7 +81,7 @@
 			if (!scalpel.usesLeft)
 				to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
 		else
-			to_chat(user, span_warning("You fail to extract a sliver from \The [src]! \the [scalpel] isn't sharp enough anymore."))
+			to_chat(user, span_warning("You fail to extract a sliver from \the [src]! \The [scalpel] isn't sharp enough anymore."))
 		return
 
 	if(istype(item, /obj/item/hemostat/supermatter))

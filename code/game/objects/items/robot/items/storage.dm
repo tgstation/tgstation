@@ -61,7 +61,7 @@
 	stored.forceMove(user.drop_location())
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
+/obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, list/modifiers)
 	if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
 		return ..() // Borgs should not be grabbing their own modules
 
@@ -72,6 +72,8 @@
 			break
 	if(itemcheck)
 		var/obj/item/item = atom
+		item.pixel_x = 0
+		item.pixel_y = 0
 		item.forceMove(src)
 		stored = item
 		RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
@@ -90,9 +92,9 @@
 	update_appearance()
 	return NONE
 
-/obj/item/borg/apparatus/attackby(obj/item/item, mob/user, params)
+/obj/item/borg/apparatus/attackby(obj/item/item, mob/user, list/modifiers)
 	if(stored)
-		item.melee_attack_chain(user, stored, params)
+		item.melee_attack_chain(user, stored, modifiers)
 		return
 	return ..()
 
@@ -139,16 +141,16 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon = icon, icon_state = "borg_beaker_apparatus_arm")
 	if(stored)
-		stored.pixel_x = 0
-		stored.pixel_y = 0
+		stored.pixel_w = 0
+		stored.pixel_z = 0
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		if(istype(stored, /obj/item/reagent_containers/cup/beaker))
-			arm.pixel_y = arm.pixel_y - 3
+			arm.pixel_z -= 3
 		stored_copy.layer = FLOAT_LAYER
 		stored_copy.plane = FLOAT_PLANE
 		. += stored_copy
 	else
-		arm.pixel_y = arm.pixel_y - 5
+		arm.pixel_z -= 5
 	. += arm
 
 /obj/item/borg/apparatus/beaker/extra
@@ -229,8 +231,8 @@
 		var/mutable_appearance/stored_organ = new /mutable_appearance(stored)
 		stored_organ.layer = FLOAT_LAYER
 		stored_organ.plane = FLOAT_PLANE
-		stored_organ.pixel_x = 0
-		stored_organ.pixel_y = 0
+		stored_organ.pixel_w = 0
+		stored_organ.pixel_z = 0
 		. += stored_organ
 		bag = mutable_appearance(icon, icon_state = "evidence") // full bag
 	else
@@ -251,10 +253,11 @@
 ///Apparatus to allow Engineering/Sabo borgs to manipulate any material sheets.
 /obj/item/borg/apparatus/sheet_manipulator
 	name = "material manipulation apparatus"
-	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles."
+	desc = "An apparatus for carrying, deploying, and manipulating sheets of material. The device can also carry custom floor tiles and shuttle frame rods."
 	icon_state = "borg_stack_apparatus"
 	storable = list(/obj/item/stack/sheet,
-					/obj/item/stack/tile)
+					/obj/item/stack/tile,
+					/obj/item/stack/rods/shuttle)
 
 /obj/item/borg/apparatus/sheet_manipulator/Initialize(mapload)
 	update_appearance()
@@ -264,8 +267,8 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_stack_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = 0
-		stored.pixel_y = 0
+		stored.pixel_w = 0
+		stored.pixel_z = 0
 		arm.icon_state = "borg_stack_apparatus_arm2"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		var/underscore = findtext(stored_copy.icon_state, "_")
@@ -298,8 +301,8 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = -3
-		stored.pixel_y = 0
+		stored.pixel_w = -3
+		stored.pixel_z = 0
 		if(!istype(stored, /obj/item/circuitboard))
 			arm.icon_state = "borg_hardware_apparatus_arm2"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
@@ -314,7 +317,7 @@
 		. += "The apparatus currently has [stored] secured."
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored circuit. ")
 
-/obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, params)
+/obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, list/modifiers)
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
@@ -343,8 +346,8 @@
 	. = ..()
 	var/mutable_appearance/arm = mutable_appearance(icon, "borg_hardware_apparatus_arm1")
 	if(stored)
-		stored.pixel_x = -3
-		stored.pixel_y = 0
+		stored.pixel_w = -3
+		stored.pixel_z = 0
 		if((!istype(stored, /obj/item/plate/oven_tray)) || (!istype(stored, /obj/item/food)))
 			arm.icon_state = "borg_hardware_apparatus_arm2"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)

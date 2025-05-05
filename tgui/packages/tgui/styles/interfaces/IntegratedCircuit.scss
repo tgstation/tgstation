@@ -1,20 +1,25 @@
+@use 'sass:map';
 @use '../colors.scss';
 @use '../base.scss';
 
-$fg-map: colors.$fg-map !default;
+$map-keys: colors.$color-map !default;
 
 .CircuitInfo__Examined {
-  background-color: rgba(0, 0, 0, 1);
-  padding: 8px;
-  border-radius: 5px;
+  background-color: var(--color-black);
+  padding: var(--space-ml);
+  border-radius: var(--border-radius-large);
 
   user-select: none;
   pointer-events: none;
 }
 
+.ObjectComponent {
+  pointer-events: auto;
+}
+
 .ObjectComponent__Titlebar {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
+  border-top-left-radius: var(--border-radius-huge);
+  border-top-right-radius: var(--border-radius-huge);
 
   white-space: nowrap;
 
@@ -24,7 +29,7 @@ $fg-map: colors.$fg-map !default;
 
 .ObjectComponent__Content {
   white-space: nowrap;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: hsla(0, 0%, 0%, 0.5);
 
   -ms-user-select: none;
   user-select: none;
@@ -32,7 +37,7 @@ $fg-map: colors.$fg-map !default;
 
 .ObjectComponent__Greyed_Content {
   white-space: nowrap;
-  background-color: rgba(19, 19, 19, 0.5);
+  background-color: hsla(0, 0%, 7.5%, 0.5);
 
   -ms-user-select: none;
   user-select: none;
@@ -46,27 +51,82 @@ $fg-map: colors.$fg-map !default;
 
 .ObjectComponent__PortPos {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
 }
 
-@each $color-name, $color-value in $fg-map {
+@each $color-name, $color-value in $map-keys {
   .color-stroke-#{$color-name} {
-    stroke: $color-value !important;
+    stroke: hsl(from $color-value h s calc(l + var(--adjust-color))) !important;
   }
 
   .color-fill-#{$color-name} {
-    fill: $color-value !important;
+    fill: hsl(from $color-value h s calc(l + var(--adjust-color))) !important;
   }
 }
 
-$border-color: hsl(210, 100%, 73%) !default;
-$border-radius: base.$border-radius !default;
-
 .IntegratedCircuit__BlueBorder {
-  border: base.em(1px) solid $border-color;
-  border: base.em(1px) solid rgba($border-color, 0.75);
-  border-radius: $border-radius;
+  border: var(--border-thickness-tiny) solid var(--color-border-primary);
+  border-radius: var(--border-radius-small);
+}
+
+$category-colors: (
+  'Utility': (
+    bg: hsl(136, 77%, 23%),
+    contrast: white,
+  ),
+  'Entity': (
+    bg: hsl(288, 60%, 49%),
+    contrast: white,
+  ),
+  'Sensor': (
+    bg: hsl(337, 67%, 66%),
+    contrast: white,
+  ),
+  'Math': (
+    bg: hsl(113, 65%, 47%),
+    contrast: black,
+  ),
+  'Unassigned': (
+    bg: hsl(208, 65%, 47%),
+    contrast: white,
+  ),
+  'String': (
+    bg: hsl(24, 84%, 48%),
+    contrast: white,
+  ),
+  'List': (
+    bg: hsl(0, 0%, 67%),
+    contrast: black,
+  ),
+  'Action': (
+    bg: hsl(178, 59%, 45%),
+    contrast: black,
+  ),
+  'ID': (
+    bg: hsl(52, 75%, 48%),
+    contrast: black,
+  ),
+  'NTNet': (
+    bg: hsl(239, 64%, 44%),
+    contrast: white,
+  ),
+  'Abstract': (
+    bg: hsl(208, 65%, 47%),
+    contrast: white,
+  ),
+  'Admin': (
+    bg: hsl(0, 72%, 50%),
+    contrast: white,
+  ),
+  'BCI': (
+    bg: black,
+    contrast: white,
+  ),
+);
+
+@each $category-name, $values in $category-colors {
+  .ObjectComponent__Category__#{$category-name} {
+    background-color: map.get($values, bg);
+    color: map.get($values, contrast);
+  }
 }

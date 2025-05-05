@@ -8,7 +8,7 @@
 
 /obj/item/melee/powerfist
 	name = "power-fist"
-	desc = "A metal gauntlet with a piston-powered ram ontop for that extra 'ompfh' in your punch."
+	desc = "A metal gauntlet with a piston-powered ram on top for that extra 'oomph' in your punch."
 	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "powerfist"
 	inhand_icon_state = "powerfist"
@@ -72,7 +72,7 @@
 	update_tank(tank, TANK_REMOVING, user)
 	return TRUE
 
-/obj/item/melee/powerfist/attackby(obj/item/item_to_insert, mob/user, params)
+/obj/item/melee/powerfist/attackby(obj/item/item_to_insert, mob/user, list/modifiers)
 	if(!istype(item_to_insert, /obj/item/tank/internals))
 		return ..()
 	if(tank)

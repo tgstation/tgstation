@@ -4,15 +4,8 @@
  * @license MIT
  */
 
-import { Component, createRef, RefObject, useState } from 'react';
-import {
-  Box,
-  Dialog,
-  Divider,
-  MenuBar,
-  Section,
-  TextArea,
-} from 'tgui-core/components';
+import { useRef, useState } from 'react';
+import { Box, Dialog, Divider, MenuBar, Section } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
@@ -245,83 +238,41 @@ const TEXTAREA_UPDATE_TRIGGERS = [
 ];
 
 interface NotePadTextAreaProps {
-  maintainFocus: boolean;
   text: string;
   wordWrap: boolean;
   setText: (text: string) => void;
   setStatuses: (statuses: Statuses) => void;
 }
 
-class NotePadTextArea extends Component<NotePadTextAreaProps> {
-  innerRef: RefObject<HTMLTextAreaElement>;
+function NotePadTextArea(props: NotePadTextAreaProps) {
+  const { text, setText, wordWrap, setStatuses } = props;
 
-  constructor(props) {
-    super(props);
-    this.innerRef = createRef();
-  }
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  handleEvent(event: Event) {
+  function handleEvent(event) {
     const area = event.target as HTMLTextAreaElement;
-    this.props.setStatuses(getStatusCounts(area.value, area.selectionStart));
+    setStatuses(getStatusCounts(area.value, area.selectionStart));
   }
 
-  onblur() {
-    if (!this.innerRef.current) {
-      return;
-    }
-
-    if (this.props.maintainFocus) {
-      this.innerRef.current.focus();
-    }
-  }
-
-  // eslint-disable-next-line react/no-deprecated
-  componentDidMount() {
-    const textarea = this.innerRef?.current;
-    if (!textarea) {
-      logger.error(
-        'NotePadTextArea.render(): Textarea RefObject should not be null',
-      );
-      return;
-    }
-
-    // Javascript – execute when textarea caret is moved
-    // https://stackoverflow.com/a/53999418/5613731
-    TEXTAREA_UPDATE_TRIGGERS.forEach((trigger) =>
-      textarea.addEventListener(trigger, this),
-    );
-    // Slight hack: Keep selection when textarea loses focus so menubar actions can be used (i.e. cut, delete)
-    textarea.onblur = this.onblur.bind(this);
-  }
-
-  componentWillUnmount() {
-    const textarea = this.innerRef?.current;
-    if (!textarea) {
-      logger.error(
-        'NotePadTextArea.componentWillUnmount(): Textarea RefObject should not be null',
-      );
-      return;
-    }
-    TEXTAREA_UPDATE_TRIGGERS.forEach((trigger) =>
-      textarea.removeEventListener(trigger, this),
-    );
-  }
-
-  render() {
-    const { text, setText, wordWrap } = this.props;
-
-    return (
-      <TextArea
-        ref={this.innerRef}
-        onInput={(_, value) => setText(value)}
-        className="NtosNotepad__textarea"
-        nowrap={!wordWrap}
-        value={text}
-        scrollbar
-        autoFocus
-      />
-    );
-  }
+  return (
+    <textarea
+      autoFocus
+      className="NtosNotepad__textarea"
+      onClick={handleEvent}
+      onMouseUp={handleEvent}
+      onChange={(event) => {
+        setText(event.currentTarget.value);
+        handleEvent(event);
+      }}
+      ref={textareaRef}
+      spellCheck={false}
+      style={{
+        whiteSpace: wordWrap ? 'normal' : 'nowrap',
+        overflow: wordWrap ? 'hidden auto' : 'scroll hidden',
+      }}
+      value={text}
+    />
+  );
 }
 
 type AboutDialogProps = {
@@ -330,9 +281,10 @@ type AboutDialogProps = {
 
 const AboutDialog = (props: AboutDialogProps) => {
   const { close } = props;
-  const { act, data } = useBackend<NTOSData>();
+  const { data } = useBackend<NTOSData>();
   const { show_imprint, login } = data;
   const paragraphStyle = { padding: '.5rem 1rem 0 2rem' };
+
   return (
     <Dialog title="About Notepad" onClose={close} width={'500px'}>
       <div className="Dialog__body">
@@ -381,15 +333,15 @@ export const NtosNotepad = (props) => {
   const { note } = data;
   const [documentName, setDocumentName] = useState(DEFAULT_DOCUMENT_NAME);
   const [originalText, setOriginalText] = useState(note);
-  const [text, setText] = useState<string>(note);
+  const [text, setText] = useState('');
   const [statuses, setStatuses] = useState<Statuses>({
     line: 0,
     column: 0,
   });
-  const [activeDialog, setActiveDialog] = useState<Dialogs>(Dialogs.NONE);
+  const [activeDialog, setActiveDialog] = useState(Dialogs.NONE);
   const [retryAction, setRetryAction] = useState<RetryActionType | null>(null);
-  const [showStatusBar, setShowStatusBar] = useState<boolean>(true);
-  const [wordWrap, setWordWrap] = useState<boolean>(true);
+  const [showStatusBar, setShowStatusBar] = useState(true);
+  const [wordWrap, setWordWrap] = useState(true);
 
   const handleCloseDialog = () => setActiveDialog(Dialogs.NONE);
   const handleSave = (newDocumentName: string = documentName) => {
@@ -438,13 +390,6 @@ export const NtosNotepad = (props) => {
     setText('');
     setDocumentName(DEFAULT_DOCUMENT_NAME);
   };
-  const noSave = () => {
-    logger.log('Discarding unsaved changes');
-    setActiveDialog(Dialogs.NONE);
-    if (retryAction) {
-      retryAction(true);
-    }
-  };
 
   // MS Notepad displays an asterisk when there's unsaved changes
   const unsavedAsterisk = text !== originalText ? '*' : '';
@@ -472,10 +417,9 @@ export const NtosNotepad = (props) => {
           />
           <Section fill>
             <NotePadTextArea
-              maintainFocus={activeDialog === Dialogs.NONE}
               text={text}
-              wordWrap={wordWrap}
               setText={setText}
+              wordWrap={wordWrap}
               setStatuses={setStatuses}
             />
           </Section>

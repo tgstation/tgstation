@@ -25,7 +25,7 @@
 
 /obj/structure/closet/chefcloset
 	name = "chef's closet"
-	desc = "It's a storage unit for foodservice garments and mouse traps."
+	desc = "It's a storage unit for food service garments and mousetraps."
 	icon_door = "chef_wardrobe"
 
 /obj/structure/closet/chefcloset/PopulateContents()

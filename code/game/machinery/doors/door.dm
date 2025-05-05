@@ -29,6 +29,8 @@
 	var/visible = TRUE
 	var/operating = FALSE
 	var/glass = FALSE
+	/// If something isn't a glass door but doesn't have a fill_closed icon (no glass slots), this prevents it from being used
+	var/can_be_glass = TRUE
 	/// Do we need to keep track of a filler panel with the airlock
 	var/multi_tile
 	/// A filler object used to fill the space of multi-tile airlocks
@@ -359,7 +361,7 @@
 	try_to_crowbar(tool, user, forced_open)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/door/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/door/attackby(obj/item/weapon, mob/living/user, list/modifiers)
 	if(istype(weapon, /obj/item/access_key))
 		var/obj/item/access_key/key = weapon
 		return key.attempt_open_door(user, src)

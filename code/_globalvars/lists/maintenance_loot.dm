@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(trash_loot, list(//junk: useless, very easy to get, or ghetto c
 		/obj/item/rack_parts = 1,
 		/obj/item/shard = 1,
 
-		/obj/item/reagent_containers/pill/maintenance/achievement = 1,
+		/obj/item/reagent_containers/applicator/pill/maintenance/achievement = 1,
 		/obj/item/toy/eightball = 1,
 		) = 8,
 
@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/beacon = 1,
 		/obj/item/paper/fluff/stations/soap = 1, //recipes count as crafting.
 		/obj/item/plaque = 1,
-		/obj/item/seeds/kronkus = 1,
+		/obj/item/seeds/kronkus = 3,
 		/obj/item/seeds/odious_puffball = 1,
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
 		/obj/item/stock_parts/power_store/cell/high = 1,
@@ -256,12 +256,17 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/food/monkeycube = 1,
 		) = 8,
 
+	list(//Donk Co. 'Donk Spike' flechette shells, these things show up everywhere in donkpocket boxes
+		/obj/item/storage/box/donkpockets/donkpocketshell = 1,
+		) = 8,
+
 	list(//computer disks
 		/obj/item/computer_disk/maintenance/scanner = 1,
 		/obj/item/computer_disk/maintenance/camera = 1,
 		/obj/item/computer_disk/maintenance/modsuit_control = 1,
 		/obj/item/computer_disk/maintenance/spectre_meter = 1,
 		/obj/item/computer_disk/maintenance/arcade = 1,
+		/obj/item/disk/design_disk/liberator = 1,
 		/obj/item/computer_disk/maintenance/theme = 3,
 	) = 4,
 
@@ -309,6 +314,7 @@ GLOBAL_LIST_INIT(rarity_loot, list(//rare: really good items
 		/obj/item/weldingtool/hugetank = 1,
 		/obj/item/fishing_rod/telescopic/master = 1,
 		/obj/item/spess_knife = 1,
+		/obj/item/gun/ballistic/automatic/pistol/doorhickey = 1,
 		) = 1,
 
 	list(//equipment

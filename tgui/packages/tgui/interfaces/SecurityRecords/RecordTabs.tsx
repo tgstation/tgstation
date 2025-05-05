@@ -39,7 +39,8 @@ export const SecurityRecordTabs = (props) => {
         <Input
           fluid
           placeholder="Name/Job/Fingerprints"
-          onInput={(event, value) => setSearch(value)}
+          onChange={setSearch}
+          expensive
         />
       </Stack.Item>
       <Stack.Item grow>
@@ -97,6 +98,15 @@ const CrewTab = (props: { record: SecurityRecord }) => {
     if (selectedRecord?.crew_ref === crew_ref) {
       setSelectedRecord(undefined);
     } else {
+      // See MedicalRecords/RecordTabs.tsx for explanation
+      if (selectedRecord === undefined) {
+        setTimeout(() => {
+          act('view_record', {
+            assigned_view: assigned_view,
+            crew_ref: crew_ref,
+          });
+        });
+      }
       setSelectedRecord(record);
       act('view_record', { assigned_view: assigned_view, crew_ref: crew_ref });
     }

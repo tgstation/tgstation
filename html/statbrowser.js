@@ -15,9 +15,13 @@ if (!String.prototype.trim) {
 }
 
 // Status panel implementation ------------------------------------------------
-var status_tab_parts = ["Loading..."];
+//status_tab_parts expects a list to be returned, to which we'll send a list within a list
+//with just "loading" to not appear broken.
+var status_tab_parts = [["Loading..."]];
 var current_tab = null;
-var mc_tab_parts = [["Loading...", ""]];
+//mc_tab_parts expects a list to be returned, to which we'll send a list within a list
+//with just "loading" to not appear broken.
+var mc_tab_parts = [["Loading..."]];
 var href_token = null;
 var spells = [];
 var spell_tabs = [];
@@ -67,10 +71,7 @@ function createStatusTab(name) {
 	button.textContent = name;
 	button.className = "button";
 	//ORDERING ALPHABETICALLY
-	button.style.order = name.charCodeAt(0);
-	if (name == "Status" || name == "MC") {
-		button.style.order = name == "Status" ? 1 : 2;
-	}
+	button.style.order = ({"Status": 1, "MC": 2})[name] || name.charCodeAt(0);
 	//END ORDERING
 	menu.appendChild(button);
 	SendTabToByond(name);
@@ -349,16 +350,42 @@ function draw_status() {
 		current_tab = "Status";
 	}
 	statcontentdiv.textContent = '';
+	var table = document.createElement("table");
 	for (var i = 0; i < status_tab_parts.length; i++) {
-		if (status_tab_parts[i].trim() == "") {
-			document.getElementById("statcontent").appendChild(document.createElement("br"));
-		} else {
+		var part = status_tab_parts[i];
+		if(!Array.isArray(part)) {
 			var div = document.createElement("div");
-			div.textContent = status_tab_parts[i];
-			div.className = "status-info";
-			document.getElementById("statcontent").appendChild(div);
+			if (part.trim() == "") {
+				table.appendChild(document.createElement("br"));
+			} else {
+				div.textContent = part;
+				table.appendChild(div);
+			}
+		} else {
+			var div
+			if (part[0].trim() == "same_line") {
+				var a = document.createElement("a");
+				a.href = "byond://?" + part[2];
+				a.textContent = part[1];
+				div.appendChild(a);
+			} else {
+				div = document.createElement("div");
+				if (part[0].trim() == "") {
+					table.appendChild(document.createElement("br"));
+				} else {
+					div.textContent = part[0];
+					if (part[2]) {
+						var a = document.createElement("a");
+						a.href = "byond://?" + part[2];
+						a.textContent = part[1];
+						div.appendChild(a);
+					}
+					table.appendChild(div);
+				}
+			}
 		}
 	}
+	document.getElementById("statcontent").appendChild(table);
 	if (verb_tabs.length == 0 || !verbs) {
 		Byond.command("Fix-Stat-Panel");
 	}
@@ -438,24 +465,7 @@ function draw_listedturf() {
 	var table = document.createElement("table");
 	for (var i = 0; i < turfcontents.length; i++) {
 		var part = turfcontents[i];
-		if (storedimages[part[1]] == null && part[2]) {
-			var img = document.createElement("img");
-			img.src = part[2];
-			img.id = part[1];
-			storedimages[part[1]] = part[2];
-			img.onerror = iconError;
-			table.appendChild(img);
-		} else {
-			var img = document.createElement("img");
-			img.onerror = iconError;
-			img.src = storedimages[part[1]];
-			img.id = part[1];
-			table.appendChild(img);
-		}
-		var b = document.createElement("div");
-		var clickcatcher = "";
-		b.className = "link";
-		b.onmousedown = function (part) {
+		var clickfunc = function (part) {
 			// The outer function is used to close over a fresh "part" variable,
 			// rather than every onmousedown getting the "part" of the last entry.
 			return function (e) {
@@ -483,6 +493,26 @@ function draw_listedturf() {
 				window.location.href = clickcatcher;
 			}
 		}(part);
+		if (storedimages[part[1]] == null && part[2]) {
+			var img = document.createElement("img");
+			img.src = part[2];
+			img.id = part[1];
+			storedimages[part[1]] = part[2];
+			img.onerror = iconError;
+			img.onmousedown = clickfunc;
+			table.appendChild(img);
+		} else {
+			var img = document.createElement("img");
+			img.onerror = iconError;
+			img.onmousedown = clickfunc;
+			img.src = storedimages[part[1]];
+			img.id = part[1];
+			table.appendChild(img);
+		}
+		var b = document.createElement("div");
+		var clickcatcher = "";
+		b.className = "link";
+		b.onmousedown = clickfunc;
 		b.textContent = part[0];
 		table.appendChild(b);
 		table.appendChild(document.createElement("br"));
@@ -876,13 +906,18 @@ Byond.subscribeTo('init_verbs', function (payload) {
 
 Byond.subscribeTo('update_stat', function (payload) {
 	status_tab_parts = [payload.ping_str];
+
 	var parsed = payload.global_data;
 
-	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
+	for (var i = 0; i < parsed.length; i++)
+		if (parsed[i] != null)
+			status_tab_parts.push(parsed[i]);
 
 	parsed = payload.other_str;
 
-	for (var i = 0; i < parsed.length; i++) if (parsed[i] != null) status_tab_parts.push(parsed[i]);
+	for (var i = 0; i < parsed.length; i++)
+		if (parsed[i] != null)
+			status_tab_parts.push(parsed[i]);
 
 	if (current_tab == "Status") {
 		draw_status();

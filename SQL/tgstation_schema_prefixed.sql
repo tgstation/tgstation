@@ -53,9 +53,9 @@ DROP TABLE IF EXISTS `SS13_admin_ranks`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SS13_admin_ranks` (
   `rank` varchar(32) NOT NULL,
-  `flags` smallint(5) unsigned NOT NULL,
-  `exclude_flags` smallint(5) unsigned NOT NULL,
-  `can_edit_flags` smallint(5) unsigned NOT NULL,
+  `flags` mediumint(5) unsigned NOT NULL,
+  `exclude_flags` mediumint(5) unsigned NOT NULL,
+  `can_edit_flags` mediumint(5) unsigned NOT NULL,
   PRIMARY KEY (`rank`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

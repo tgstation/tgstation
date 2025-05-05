@@ -357,7 +357,7 @@
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/bci_implanter/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/bci_implanter/attackby(obj/item/weapon, mob/user, list/modifiers)
 	var/obj/item/organ/cyberimp/bci/new_bci = weapon
 	if (istype(new_bci))
 		if (!(locate(/obj/item/integrated_circuit) in new_bci))
@@ -379,7 +379,7 @@
 
 	return ..()
 
-/obj/machinery/bci_implanter/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/machinery/bci_implanter/attackby_secondary(obj/item/weapon, mob/user, list/modifiers)
 	if (!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, weapon))
 		update_appearance()
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -505,7 +505,7 @@
 	return ..()
 
 /obj/item/circuitboard/machine/bci_implanter
-	name = "Brain-Computer Interface Manipulation Chamber (Machine Board)"
+	name = "Brain-Computer Interface Manipulation Chamber"
 	greyscale_colors = CIRCUIT_COLOR_SCIENCE
 	build_path = /obj/machinery/bci_implanter
 	req_components = list(

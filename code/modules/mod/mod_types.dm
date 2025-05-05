@@ -82,9 +82,11 @@
 		/obj/item/mod/module/t_ray,
 		/obj/item/mod/module/quick_carry,
 		/obj/item/mod/module/headprotector,
+		/obj/item/mod/module/mister/atmos,
 	)
 	default_pins = list(
 		/obj/item/mod/module/magboot,
+		/obj/item/mod/module/mister/atmos,
 		/obj/item/mod/module/flashlight,
 	)
 
@@ -521,6 +523,7 @@
 	starting_frequency = MODLINK_FREQ_SYNDICATE
 	req_access = null
 	applied_cell = /obj/item/stock_parts/power_store/cell/super
+	insignia_type = /obj/item/mod/module/insignia/syndie
 	theme = /datum/mod_theme/responsory/traitor
 	applied_modules = list(
 		/obj/item/mod/module/storage/syndicate,

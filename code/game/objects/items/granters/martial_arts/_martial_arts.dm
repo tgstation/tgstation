@@ -6,10 +6,12 @@
 	/// The text given to the user when they learn the martial arts
 	var/greet = ""
 
-/obj/item/book/granter/martial/can_learn(mob/user)
+/obj/item/book/granter/martial/can_learn(mob/living/user)
 	if(!martial)
 		CRASH("Someone attempted to learn [type], which did not have a martial arts set.")
-	if(istype(user.mind?.martial_art, martial))
+	if(!isliving(user))
+		return FALSE
+	if(locate(martial) in user.martial_arts)
 		to_chat(user, span_warning("You already know [martial_name]!"))
 		return FALSE
 	return TRUE
@@ -19,12 +21,14 @@
 	return TRUE
 
 /obj/item/book/granter/martial/on_reading_finished(mob/user)
-	var/datum/martial_art/martial_to_learn = new martial()
-	if(!martial_to_learn.teach(user))
-		to_chat(user, span_warning("You attempt to learn [martial_name] from [src], \
-			but your current knowledge of martial arts conflicts with the new style, so it just doesn't stick with you."))
-		uses += 1 // Return the use
-		return
+	if(user.mind)
+		if(!user.mind.AddComponent(/datum/component/mindbound_martial_arts, martial))
+			to_chat(user, span_warning("You attempt to learn [martial_name] from [src], but it doesn't stick."))
+			uses += 1 // Return the use
+			return
+	else
+		var/datum/martial_art/martial_art = new martial(user)
+		martial_art.teach(user)
 
 	to_chat(user, "[greet]")
-	user.log_message("learned the martial art [martial_name] ([martial_to_learn])", LOG_ATTACK, color = "orange")
+	user.log_message("learned the martial art [martial_name] ([martial])", LOG_ATTACK, color = "orange")

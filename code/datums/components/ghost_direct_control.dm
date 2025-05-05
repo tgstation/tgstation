@@ -80,7 +80,6 @@
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(
 		question = poll_question,
 		check_jobban = ban_type,
-		role = ban_type,
 		poll_time = poll_length,
 		checked_target = parent,
 		ignore_category = poll_ignore_key,
@@ -145,7 +144,7 @@
 
 	harbinger.log_message("took control of [new_body].", LOG_GAME)
 	// doesn't transfer mind because that transfers antag datum as well
-	new_body.key = harbinger.key
+	new_body.PossessByPlayer(harbinger.ckey)
 
 	// Already qdels due to below proc but just in case
 	qdel(src)

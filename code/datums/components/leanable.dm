@@ -1,4 +1,4 @@
-/// Things with this component can be leaned onto, optionally exclusive to RMB dragging
+/// Things with this component can be leaned onto
 /datum/component/leanable
 	/// How much will mobs that lean onto this object be offset
 	var/leaning_offset = 11
@@ -40,7 +40,7 @@
 		if(fall)
 			to_chat(leaner, span_danger("You lose balance!"))
 			leaner.Paralyze(0.5 SECONDS)
-	leaning_mobs = null
+	leaning_mobs.Cut()
 
 /datum/component/leanable/proc/on_moved(datum/source)
 	SIGNAL_HANDLER
@@ -81,8 +81,8 @@
  * * leaning_offset - pixel offset to apply on the mob when leaning
  */
 /mob/living/proc/start_leaning(atom/lean_target, leaning_offset)
-	var/new_x = lean_target.pixel_x + base_pixel_x + body_position_pixel_x_offset
-	var/new_y = lean_target.pixel_y + base_pixel_y + body_position_pixel_y_offset
+	var/new_x = 0
+	var/new_y = 0
 	switch(dir)
 		if(SOUTH)
 			new_y += leaning_offset
@@ -93,7 +93,7 @@
 		if(EAST)
 			new_x -= leaning_offset
 
-	animate(src, 0.2 SECONDS, pixel_x = new_x, pixel_y = new_y)
+	add_offsets(LEANING_TRAIT, x_add = new_x, y_add = new_y)
 	add_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
 	visible_message(
 		span_notice("[src] leans against [lean_target]."),
@@ -105,12 +105,12 @@
 		COMSIG_LIVING_GET_PULLED,
 	), PROC_REF(stop_leaning))
 
-	RegisterSignal(src, COMSIG_MOVABLE_TELEPORTED, PROC_REF(teleport_away_while_leaning))
+	RegisterSignal(src, COMSIG_MOVABLE_POST_TELEPORT, PROC_REF(teleported_away_while_leaning))
 	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(lean_dir_changed))
 	update_fov()
 
 /// You fall on your face if you get teleported while leaning
-/mob/living/proc/teleport_away_while_leaning()
+/mob/living/proc/teleported_away_while_leaning()
 	SIGNAL_HANDLER
 
 	// Make sure we unregister signal handlers and reset animation
@@ -127,9 +127,9 @@
 		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_LIVING_GET_PULLED,
 		COMSIG_ATOM_POST_DIR_CHANGE,
-		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOVABLE_POST_TELEPORT,
 	))
-	animate(src, 0.2 SECONDS, pixel_x = base_pixel_x + body_position_pixel_x_offset, pixel_y = base_pixel_y + body_position_pixel_y_offset)
+	remove_offsets(LEANING_TRAIT)
 	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
 	SEND_SIGNAL(src, COMSIG_LIVING_STOPPED_LEANING)
 	update_fov()

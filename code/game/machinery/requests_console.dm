@@ -43,8 +43,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	var/message_verified_by = ""
 	/// If a message is stamped, this will contain the stamp name
 	var/message_stamped_by = ""
-	/// Reference to the internal radio
-	var/obj/item/radio/radio
 	///If an emergency has been called by this device. Acts as both a cooldown and lets the responder know where it the emergency was triggered from
 	var/emergency
 	/// If ore redemption machines will send an update when it receives new ores.
@@ -124,13 +122,9 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	GLOB.req_console_all += src
 
 	GLOB.req_console_ckey_departments[ckey(department)] = department // and then we set ourselves a listed name
-
-	radio = new /obj/item/radio(src)
-	radio.set_listening(FALSE)
 	find_and_hang_on_wall()
 
 /obj/machinery/requests_console/Destroy()
-	QDEL_NULL(radio)
 	QDEL_LIST(messages)
 	GLOB.req_console_all -= src
 	return ..()
@@ -168,20 +162,16 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		if("set_emergency")
 			if(emergency)
 				return
-			var/radio_freq
+			emergency = params["emergency"]
 			switch(params["emergency"])
 				if(REQ_EMERGENCY_SECURITY) //Security
-					radio_freq = FREQ_SECURITY
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_SECURITY), REQ_EMERGENCY_SECURITY)
 				if(REQ_EMERGENCY_ENGINEERING) //Engineering
-					radio_freq = FREQ_ENGINEERING
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_ENGINEERING), REQ_EMERGENCY_ENGINEERING)
 				if(REQ_EMERGENCY_MEDICAL) //Medical
-					radio_freq = FREQ_MEDICAL
-			if(radio_freq)
-				emergency = params["emergency"]
-				radio.set_frequency(radio_freq)
-				radio.talk_into(src,"[emergency] emergency in [department]!!",radio_freq)
-				update_appearance()
-				addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
+					aas_config_announce(/datum/aas_config_entry/rc_emergency, list("LOCATION" = department), null, list(RADIO_CHANNEL_MEDICAL), REQ_EMERGENCY_MEDICAL)
+			update_appearance()
+			addtimer(CALLBACK(src, PROC_REF(clear_emergency)), 5 MINUTES)
 			return TRUE
 		if("send_announcement")
 			if(!COOLDOWN_FINISHED(src, announcement_cooldown))
@@ -201,7 +191,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 				message = L.treat_message(message)["message"]
 
 			minor_announce(message, "[department] Announcement:", html_encode = FALSE, sound_override = 'sound/announcer/announcement/announce_dig.ogg')
-			GLOB.news_network.submit_article(message, department, "Station Announcements", null)
+			GLOB.news_network.submit_article(message, department, NEWSCASTER_STATION_ANNOUNCEMENTS, null)
 			usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 			message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
 			deadchat_broadcast(" made a station announcement from [span_name("[get_area_name(usr, TRUE)]")].", span_name("[usr.real_name]"), usr, message_type=DEADCHAT_ANNOUNCEMENT)
@@ -242,20 +232,22 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 ///Sends the message from the request console
 /obj/machinery/requests_console/proc/send_message(recipient, message, priority, request_type)
-	var/radio_freq
+	var/radio_channel
+	// They all naming them wrong, all the time... I'll probably rewrite this later in separate PR.
+	// Automatically from areas or via mapping helpers. (ther is no "Cargobay Request Console" in any map)
 	switch(ckey(recipient))
 		if("bridge")
-			radio_freq = FREQ_COMMAND
+			radio_channel = RADIO_CHANNEL_COMMAND
 		if("medbay")
-			radio_freq = FREQ_MEDICAL
+			radio_channel = RADIO_CHANNEL_MEDICAL
 		if("science")
-			radio_freq = FREQ_SCIENCE
+			radio_channel = RADIO_CHANNEL_SCIENCE
 		if("engineering")
-			radio_freq = FREQ_ENGINEERING
+			radio_channel = RADIO_CHANNEL_ENGINEERING
 		if("security")
-			radio_freq = FREQ_SECURITY
+			radio_channel = RADIO_CHANNEL_SECURITY
 		if("cargobay", "mining")
-			radio_freq = FREQ_SUPPLY
+			radio_channel = RADIO_CHANNEL_SUPPLY
 
 	var/datum/signal/subspace/messaging/rc/signal = new(src, list(
 		"sender_department" = department,
@@ -264,7 +256,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		"verified" = message_verified_by,
 		"stamped" = message_stamped_by,
 		"priority" = priority,
-		"notify_freq" = radio_freq,
+		"notify_channel" = radio_channel,
 		"request_type" = request_type,
 	))
 	signal.send_to_receivers()
@@ -347,15 +339,26 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	SStgui.update_uis(src)
 
-	var/alert = new_message.get_alert()
-
 	if(!silent)
 		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
-		say(alert)
+		say(new_message.get_alert())
 
-	if(new_message.radio_freq)
-		radio.set_frequency(new_message.radio_freq)
-		radio.talk_into(src, "[alert]: <i>[new_message.content]</i>", new_message.radio_freq)
+	if(new_message.radio_channel)
+		var/authentication
+		var/announcement_line = "Unauthenticated"
+		if (new_message.message_verified_by)
+			authentication = new_message.message_verified_by
+			announcement_line = "Verified with ID"
+		else if (new_message.message_stamped_by)
+			authentication = new_message.message_stamped_by
+			announcement_line = "Stamped with stamp"
+
+		aas_config_announce(/datum/aas_config_entry/rc_new_message, list(
+			"AUTHENTICATION" = authentication,
+			"SENDER" = new_message.sender_department,
+			"RECEIVER" = department,
+			"MESSAGE" = new_message.content
+			), null, list(new_message.radio_channel), announcement_line, new_message.priority == REQ_EXTREME_MESSAGE_PRIORITY)
 
 /obj/machinery/requests_console/crowbar_act(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src, 50)
@@ -381,7 +384,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		to_chat(user, span_warning("You must open the maintenance panel first!"))
 	return TRUE
 
-/obj/machinery/requests_console/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/requests_console/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	var/obj/item/card/id/ID = attacking_item.GetID()
 	if(ID)
 		message_verified_by = "[ID.registered_name] ([ID.assignment])"
@@ -411,6 +414,32 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/requests_console/auto_name, 30)
 	icon_state = "req_comp_off"
 	result_path = /obj/machinery/requests_console/auto_name
 	pixel_shift = 30
+
+/datum/aas_config_entry/rc_emergency
+	name = "RC Alert: Emergency"
+	announcement_lines_map = list(
+		"Security" = "Security emergency in %LOCATION!!!",
+		"Engineering" = "Engineering emergency in %LOCATION!!!",
+		"Medical" = "Medical emergency in %LOCATION!!!",
+	)
+	vars_and_tooltips_map = list(
+		"LOCATION" = "will be replaced with the department name",
+	)
+
+/datum/aas_config_entry/rc_new_message
+	name = "RC Alert: New Message "
+	// Yes, players can't use html tags, however they can use speech mods like | or +, but sh-sh-sh, don't tell them!
+	announcement_lines_map = list(
+		"Unauthenticated" = "Message from %SENDER to %RECEIVER: <i>%MESSAGE</i>",
+		"Verified with ID" = "Message from %SENDER to %RECEIVER, Verified by %AUTHENTICATION (Authenticated): <i>%MESSAGE</i>",
+		"Stamped with stamp" = "Message from %SENDER to %RECEIVER, Stamped by %AUTHENTICATION (Authenticated): <i>%MESSAGE</i>",
+	)
+	vars_and_tooltips_map = list(
+		"AUTHENTICATION" = "will be replaced with ID or stamp, if present",
+		"SENDER" = "with the sender department ",
+		"RECEIVER" = "with the receiver department",
+		"MESSAGE" = "with the message content",
+	)
 
 #undef REQ_EMERGENCY_SECURITY
 #undef REQ_EMERGENCY_ENGINEERING

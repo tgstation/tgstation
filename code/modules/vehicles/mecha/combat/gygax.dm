@@ -18,7 +18,7 @@
 		MECHA_R_ARM = 1,
 		MECHA_UTILITY = 3,
 		MECHA_POWER = 1,
-		MECHA_ARMOR = 2,
+		MECHA_ARMOR = 1,
 	)
 	step_energy_drain = 4
 	can_use_overclock = TRUE
@@ -45,6 +45,7 @@
 	overclock_coeff = 2
 	overclock_temp_danger = 20
 	force = 30
+	can_be_tracked = FALSE
 	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/gygax/dark
 	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE

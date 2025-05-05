@@ -2,15 +2,17 @@ import {
   AnimatedNumber,
   Box,
   Button,
+  Icon,
   LabeledList,
+  NoticeBox,
   Section,
+  Stack,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { CargoCatalog } from './Cargo/CargoCatalog';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 type Data = {
   locked: BooleanLike;
@@ -18,21 +20,41 @@ type Data = {
   using_beacon: BooleanLike;
   beaconzone: string;
   beaconName: string;
+  beaconError: BooleanLike;
   canBuyBeacon: BooleanLike;
   hasBeacon: BooleanLike;
+  canBeacon: BooleanLike;
   printMsg: string;
   message: string;
 };
 
 export function CargoExpress(props) {
   const { data } = useBackend<Data>();
-  const { locked } = data;
+  const { beaconError, canBeacon, message, locked } = data;
 
   return (
     <Window width={600} height={700}>
-      <Window.Content scrollable>
-        <InterfaceLockNoticeBox accessText="a Cargo Technician-level ID card" />
-        {!locked && <CargoExpressContent />}
+      <Window.Content>
+        {locked ? (
+          <Section fill>
+            <Stack fill vertical textAlign={'center'} justify={'center'}>
+              <Stack.Item bold color={'red'}>
+                <Icon mb={3} name={'lock'} size={7.5} />
+                <br />
+                {`Swipe a Cargo Technician-level ID card to unlock this interface.`}
+              </Stack.Item>
+            </Stack>
+          </Section>
+        ) : (
+          <Stack fill vertical g={0}>
+            <NoticeBox color={beaconError || !canBeacon ? 'red' : 'blue'}>
+              {message}
+            </NoticeBox>
+            <Stack.Item grow>
+              <CargoExpressContent />
+            </Stack.Item>
+          </Stack>
+        )}
       </Window.Content>
     </Window>
   );
@@ -42,7 +64,6 @@ function CargoExpressContent(props) {
   const { act, data } = useBackend<Data>();
   const {
     hasBeacon,
-    message,
     points,
     using_beacon,
     beaconzone,
@@ -52,36 +73,43 @@ function CargoExpressContent(props) {
   } = data;
 
   return (
-    <>
-      <Section
-        title="Cargo Express"
-        buttons={
-          <Box inline bold>
-            <AnimatedNumber value={Math.round(points)} />
-            {' credits'}
-          </Box>
-        }
-      >
-        <LabeledList>
-          <LabeledList.Item label="Landing Location">
-            <Button selected={!using_beacon} onClick={() => act('LZCargo')}>
-              Cargo Bay
-            </Button>
-            <Button
-              selected={using_beacon}
-              disabled={!hasBeacon}
-              onClick={() => act('LZBeacon')}
-            >
-              {beaconzone} ({beaconName})
-            </Button>
-            <Button disabled={!canBuyBeacon} onClick={() => act('printBeacon')}>
-              {printMsg}
-            </Button>
-          </LabeledList.Item>
-          <LabeledList.Item label="Notice">{message}</LabeledList.Item>
-        </LabeledList>
-      </Section>
-      <CargoCatalog express />
-    </>
+    <Stack fill vertical g={0}>
+      <Stack.Item>
+        <Section
+          title="Cargo Express"
+          buttons={
+            <Box inline bold verticalAlign={'middle'}>
+              <AnimatedNumber value={Math.round(points)} />
+              {' credits'}
+            </Box>
+          }
+        >
+          <LabeledList>
+            <LabeledList.Item label="Landing Location">
+              <Button selected={!using_beacon} onClick={() => act('LZCargo')}>
+                Cargo Bay
+              </Button>
+              <Button
+                selected={using_beacon}
+                disabled={!hasBeacon}
+                tooltip={beaconzone}
+                onClick={() => act('LZBeacon')}
+              >
+                {beaconName}
+              </Button>
+              <Button
+                disabled={!canBuyBeacon}
+                onClick={() => act('printBeacon')}
+              >
+                {printMsg}
+              </Button>
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+      </Stack.Item>
+      <Stack.Item grow>
+        <CargoCatalog express />
+      </Stack.Item>
+    </Stack>
   );
 }

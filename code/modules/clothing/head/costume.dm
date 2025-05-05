@@ -184,6 +184,9 @@
 	desc = "A neon-blue pair of headphones. They look neo-futuristic."
 	icon_state = "decker_hat"
 	inhand_icon_state = null
+	equip_sound = SFX_HEADSET_EQUIP
+	pickup_sound = SFX_HEADSET_PICKUP
+	drop_sound = 'sound/items/handling/headset/headset_drop1.ogg'
 
 /obj/item/clothing/head/costume/yuri
 	name = "yuri initiate helmet"
@@ -205,3 +208,22 @@
 	desc = "A delicate hairpin normally paired with traditional clothing"
 	icon_state = "hairpin_fancy"
 	inhand_icon_state = "hairpin_fancy"
+
+
+/obj/item/clothing/head/costume/snakeeater
+	name = "strange bandana"
+	desc = "A bandana. It seems to have a little carp embroidered on the inside, as well as the kanji '魚'."
+	icon_state = "snake_eater"
+	inhand_icon_state = null
+	clothing_traits = list(TRAIT_FISH_EATER)
+
+/obj/item/clothing/head/costume/knight
+	name = "fake medieval helmet"
+	desc = "A classic metal helmet. Though, this one seems to be very obviously fake..."
+	icon = 'icons/obj/clothing/head/helmet.dmi'
+	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
+	icon_state = "knight_green"
+	inhand_icon_state = "knight_helmet"
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
+	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
+	dog_fashion = null

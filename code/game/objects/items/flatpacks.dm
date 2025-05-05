@@ -125,7 +125,7 @@
 	var/offset = 0
 	for(var/item in contents)
 		var/mutable_appearance/flatpack_overlay = mutable_appearance(icon, "flatcart_flat", layer = layer + (offset * 0.01))
-		flatpack_overlay.pixel_y = offset
+		flatpack_overlay.pixel_z = offset
 		offset += 4
 		. += flatpack_overlay
 

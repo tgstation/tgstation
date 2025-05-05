@@ -49,6 +49,11 @@
 #define BB_BANE_BATMAN "BB_bane_batman"
 //yep that's it
 
+/// Are we a panicking goose?
+#define BB_GOOSE_PANICKED "BB_goose_panicked"
+/// Are we a panicking goose?
+#define BB_GOOSE_VOMIT_CHANCE "BB_goose_vomit_chance"
+
 //Hunting BB keys
 ///key that holds our current hunting target
 #define BB_CURRENT_HUNTING_TARGET "BB_current_hunting_target"
@@ -56,7 +61,13 @@
 #define BB_LOW_PRIORITY_HUNTING_TARGET "BB_low_priority_hunting_target"
 ///key that holds the cooldown for our hunting subtree
 #define BB_HUNTING_COOLDOWN(type) "BB_HUNTING_COOLDOWN_[type]"
+
 ///Basic Mob Keys
+
+/// How long to wait before attacking a target in range
+#define BB_BASIC_MOB_MELEE_DELAY "BB_basic_melee_delay"
+/// Key used to store the time we can actually attack
+#define BB_BASIC_MOB_MELEE_COOLDOWN_TIMER "BB_basic_melee_cooldown_timer"
 
 ///Targeting subtrees
 #define BB_BASIC_MOB_CURRENT_TARGET "BB_basic_current_target"
@@ -72,6 +83,13 @@
 #define BB_TARGET_WOUNDED_ONLY "BB_target_wounded_only"
 /// What typepath the holding object targeting strategy should look for
 #define BB_TARGET_HELD_ITEM "BB_target_held_item"
+/// How likely is this mob to move when idle per tick?
+#define BB_BASIC_MOB_IDLE_WALK_CHANCE "BB_basic_idle_walk_chance"
+
+/// Minimum range to keep target within
+#define BB_RANGED_SKIRMISH_MIN_DISTANCE "BB_ranged_skirmish_min_distance"
+/// Maximum range to keep target within
+#define BB_RANGED_SKIRMISH_MAX_DISTANCE "BB_ranged_skirmish_max_distance"
 
 /// Blackboard key storing how long your targeting strategy has held a particular target
 #define BB_BASIC_MOB_HAS_TARGET_TIME "BB_basic_mob_has_target_time"
@@ -139,6 +157,9 @@
 
 /// Blackboard key for a held item
 #define BB_SIMPLE_CARRY_ITEM "BB_SIMPLE_CARRY_ITEM"
+
+///key holding a range to look for stuff in
+#define BB_SEARCH_RANGE "BB_search_range"
 
 ///Mob the MOD is trying to attach to
 #define BB_MOD_TARGET "BB_mod_target"

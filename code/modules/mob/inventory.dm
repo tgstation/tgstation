@@ -380,18 +380,28 @@
 	if(hand_index)
 		held_items[hand_index] = null
 		update_held_items()
-	if(I)
-		if(client)
-			client.screen -= I
-		I.layer = initial(I.layer)
-		SET_PLANE_EXPLICIT(I, initial(I.plane), newloc)
-		I.appearance_flags &= ~NO_CLIENT_COLOR
-		if(!no_move && !(I.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
-			if (isnull(newloc))
-				I.moveToNullspace()
-			else
-				I.forceMove(newloc)
-		I.dropped(src, silent)
+
+	if(!I)
+		return FALSE
+
+	if(client)
+		client.screen -= I
+
+	if(observers?.len)
+		for(var/mob/dead/observe as anything in observers)
+			if(observe.client)
+				observe.client.screen -= I
+
+	I.layer = initial(I.layer)
+	SET_PLANE_EXPLICIT(I, initial(I.plane), newloc)
+	I.appearance_flags &= ~NO_CLIENT_COLOR
+	if(!no_move && !(I.item_flags & DROPDEL)) //item may be moved/qdel'd immedietely, don't bother moving it
+		if (isnull(newloc))
+			I.moveToNullspace()
+		else
+			I.forceMove(newloc)
+
+	I.dropped(src, silent)
 	SEND_SIGNAL(I, COMSIG_ITEM_POST_UNEQUIP, force, newloc, no_move, invdrop, silent)
 	SEND_SIGNAL(src, COMSIG_MOB_UNEQUIPPED_ITEM, I, force, newloc, no_move, invdrop, silent)
 	return TRUE
@@ -560,9 +570,6 @@
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()
 	return ITEM_SLOT_BACK
-
-/mob/proc/getBeltSlot()
-	return ITEM_SLOT_BELT
 
 //Inventory.dm is -kind of- an ok place for this I guess
 

@@ -36,6 +36,10 @@
 
 #define ROUND_UP(x) ( -round(-(x)))
 
+/// Probabilistic rounding: Adds 1 to the integer part of x with a probability equal to the decimal part of x.
+/// ie. ROUND_PROB(40.25) returns 40 with 75% probability, and 41 with 25% probability.
+#define ROUND_PROB(x) ( floor(x) + (prob(fract(x) * 100)) )
+
 /// Returns the number of digits in a number. Only works on whole numbers.
 /// This is marginally faster than string interpolation -> length
 #define DIGITS(x) (ROUND_UP(log(10, x)))
@@ -243,7 +247,10 @@
 // This value per these many units. Very unnecessary but helpful for readability (For example wanting 30 units of synthflesh to heal 50 damage - VALUE_PER(50, 30))
 #define VALUE_PER(value, per) (value / per)
 
-#define GET_TRUE_DIST(a, b) (a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z))
+#define GET_TRUE_DIST(a, b) ((a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y), abs(a.z-b.z)))
+
+/// Returns the distance between a and b fully ignoring multiz (normal get_dist counts a z move as 1 extra distance)
+#define GET_CARDINAL_DIST(a, b) ((a == null || b == null) ? -1 : max(abs(a.x -b.x), abs(a.y-b.y)))
 
 //We used to use linear regression to approximate the answer, but Mloc realized this was actually faster.
 //And lo and behold, it is, and it's more accurate to boot.

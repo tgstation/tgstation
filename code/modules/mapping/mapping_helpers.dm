@@ -102,7 +102,7 @@
 /obj/effect/baseturf_helper/reinforced_plating/ceiling/replace_baseturf(turf/thing)
 	var/turf/ceiling = get_step_multiz(thing, UP)
 	if(isnull(ceiling))
-		CRASH("baseturf helper is attempting to modify the Z level above but there is no Z level above above it.")
+		CRASH("baseturf helper is attempting to modify the Z level above but there is no Z level above it.")
 	if(isspaceturf(ceiling) || istype(ceiling, /turf/open/openspace))
 		return
 	return ..(ceiling)
@@ -130,6 +130,8 @@
 /obj/effect/mapping_helpers/airlock
 	layer = DOOR_HELPER_LAYER
 	late = TRUE
+	/// If TRUE we will apply to every windoor in the loc if we can't find an airlock.
+	var/apply_to_windoors = FALSE
 
 /obj/effect/mapping_helpers/airlock/Initialize(mapload)
 	. = ..()
@@ -139,9 +141,19 @@
 
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
 	if(!airlock)
+		if(apply_to_windoors)
+			var/any_found = FALSE
+			for(var/obj/machinery/door/window/windoor in loc)
+				payload(windoor)
+				any_found = TRUE
+			if(!any_found)
+				log_mapping("[src] failed to find an airlock at [AREACOORD(src)], AND no windoors were found.")
+			return
+
 		log_mapping("[src] failed to find an airlock at [AREACOORD(src)]")
-	else
-		payload(airlock)
+		return
+
+	payload(airlock)
 
 /obj/effect/mapping_helpers/airlock/LateInitialize()
 	var/obj/machinery/door/airlock/airlock = locate(/obj/machinery/door/airlock) in loc
@@ -277,6 +289,14 @@
 	else
 		airlock.req_access += list(ACCESS_INACCESSIBLE)
 
+/obj/effect/mapping_helpers/airlock/red_alert_access
+	name = "airlock red alert access helper"
+	icon_state = "airlock_red_alert_access"
+	apply_to_windoors = TRUE
+
+/obj/effect/mapping_helpers/airlock/red_alert_access/payload(obj/machinery/door/airlock)
+	airlock.red_alert_access = TRUE
+
 //air alarm helpers
 /obj/effect/mapping_helpers/airalarm
 	desc = "You shouldn't see this. Report it please."
@@ -308,9 +328,11 @@
 
 	if(target.tlv_cold_room)
 		target.set_tlv_cold_room()
+	if(target.tlv_kitchen)
+		target.set_tlv_kitchen()
 	if(target.tlv_no_checks)
 		target.set_tlv_no_checks()
-	if(target.tlv_no_checks && target.tlv_cold_room)
+	if(target.tlv_no_checks + target.tlv_cold_room + target.tlv_kitchen > 1)
 		CRASH("Tried to apply incompatible air alarm threshold helpers!")
 
 	if(target.syndicate_access)
@@ -402,6 +424,16 @@
 		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to cold_room but it's already changed!")
 	target.tlv_cold_room = TRUE
 
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen
+	name = "airalarm kitchen tlv helper"
+	icon_state = "airalarm_tlv_kitchen_helper"
+
+/obj/effect/mapping_helpers/airalarm/tlv_kitchen/payload(obj/machinery/airalarm/target)
+	if(target.tlv_kitchen)
+		var/area/area = get_area(target)
+		log_mapping("[src] at [AREACOORD(src)] [(area.type)] tried to adjust [target]'s tlv to kitchen but it's already changed!")
+	target.tlv_kitchen = TRUE
+
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks
 	name = "airalarm no checks tlv helper"
 	icon_state = "airalarm_tlv_no_checks_helper"
@@ -434,6 +466,17 @@
 	else
 		log_mapping("[src] failed to find air alarm at [AREACOORD(src)].")
 	qdel(src)
+
+/obj/effect/mapping_helpers/airalarm/surgery
+	name = "airalarm surgery helper"
+	icon_state = "airalarm_surgery_helper"
+
+/obj/effect/mapping_helpers/airalarm/surgery/LateInitialize()
+	var/obj/machinery/airalarm/target = locate() in loc
+	for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in target?.my_area?.air_scrubbers)
+		scrubber.filter_types |= /datum/gas/nitrous_oxide
+		scrubber.set_widenet(TRUE)
+	return ..()
 
 //apc helpers
 /obj/effect/mapping_helpers/apc
@@ -1274,7 +1317,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 /obj/effect/mapping_helpers/requests_console/LateInitialize()
 	var/obj/machinery/airalarm/target = locate(/obj/machinery/requests_console) in loc
 	if(isnull(target))
-		var/area/target_area = get_area(target)
+		var/area/target_area = get_area(src)
 		log_mapping("[src] failed to find a requests console at [AREACOORD(src)] ([target_area.type]).")
 	else
 		payload(target)
@@ -1373,6 +1416,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/mob_buckler/Initialize(mapload)
 	. = ..()
+	if(!mapload)
+		log_mapping("[src] spawned outside of mapload!")
+		return INITIALIZE_HINT_QDEL
+
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/mapping_helpers/mob_buckler/LateInitialize()
 	var/atom/movable/buckle_to
 	var/list/mobs = list()
 	for(var/atom/movable/possible_buckle as anything in loc)
@@ -1385,12 +1435,13 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 	if(isnull(buckle_to))
 		log_mapping("[type] at [x] [y] [z] did not find anything to buckle to")
-		return INITIALIZE_HINT_QDEL
+		qdel(src)
+		return
 
 	for(var/mob/living/mob as anything in mobs)
 		buckle_to.buckle_mob(mob, force = force_buckle)
 
-	return INITIALIZE_HINT_QDEL
+	qdel(src)
 
 ///Basic mob flag helpers for things like deleting on death.
 /obj/effect/mapping_helpers/basic_mob_flags

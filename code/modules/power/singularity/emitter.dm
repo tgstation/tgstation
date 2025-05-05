@@ -282,7 +282,7 @@
 	if(welded)
 		if(!item.tool_start_check(user, amount=1))
 			return TRUE
-		user.visible_message(span_notice("[user.name] starts to cut the [name] free from the floor."), \
+		user.visible_message(span_notice("[user.name] starts to cut \the [src] free from the floor."), \
 			span_notice("You start to cut [src] free from the floor..."), \
 			span_hear("You hear welding."))
 		if(!item.use_tool(src, user, 20, 1, 50))
@@ -298,7 +298,7 @@
 		return TRUE
 	if(!item.tool_start_check(user, amount=1))
 		return TRUE
-	user.visible_message(span_notice("[user.name] starts to weld the [name] to the floor."), \
+	user.visible_message(span_notice("[user.name] starts to weld \the [src] to the floor."), \
 		span_notice("You start to weld [src] to the floor..."), \
 		span_hear("You hear welding."))
 	if(!item.use_tool(src, user, 20, 1, 50))
@@ -335,7 +335,7 @@
 	locked = !locked
 	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
 
-/obj/machinery/power/emitter/attackby(obj/item/item, mob/user, params)
+/obj/machinery/power/emitter/attackby(obj/item/item, mob/user, list/modifiers)
 	if(item.GetID())
 		togglelock(user)
 		return
@@ -353,6 +353,9 @@
 	if(!istype(energy_gun, /obj/item/gun/energy))
 		return
 	if(!user.transferItemToLoc(energy_gun, src))
+		return
+	if(energy_gun.gun_flags & TURRET_INCOMPATIBLE)
+		user.balloon_alert(user, "[energy_gun] won't fit!")
 		return
 	gun = energy_gun
 	gun_properties = gun.get_turret_properties()

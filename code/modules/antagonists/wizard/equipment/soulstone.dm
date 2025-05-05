@@ -271,7 +271,7 @@
 	if(IS_CULTIST(user) || HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) || user.stat == DEAD)
 		. += extra_desc
 
-/obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
+/obj/structure/constructshell/attackby(obj/item/O, mob/user, list/modifiers)
 	if(istype(O, /obj/item/soulstone))
 		var/obj/item/soulstone/SS = O
 		if(!IS_CULTIST(user) && !HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && !SS.theme == THEME_HOLY)
@@ -392,7 +392,7 @@
 	soulstone_spirit.AddComponent(/datum/component/soulstoned, src)
 	soulstone_spirit.name = "Shade of [victim.real_name]"
 	soulstone_spirit.real_name = "Shade of [victim.real_name]"
-	soulstone_spirit.key = shade_controller.key
+	soulstone_spirit.PossessByPlayer(shade_controller.key)
 	soulstone_spirit.copy_languages(victim, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
 	if(user)
 		soulstone_spirit.copy_languages(user, LANGUAGE_MASTER)
@@ -516,7 +516,7 @@
 		seek_master.Grant(newstruct)
 
 	if (isnull(target.mind))
-		newstruct.key = target.key
+		newstruct.PossessByPlayer(target.key)
 	else
 		target.mind.transfer_to(newstruct, force_key_move = TRUE)
 	var/atom/movable/screen/alert/bloodsense/sense_alert

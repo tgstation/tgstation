@@ -7,25 +7,29 @@
 	if(!ui)
 		ui = new(user, src, "Mecha", name)
 		ui.open()
-		ui_view.display_to(user)
+		ui_view.display_to(user, ui.window)
 
 /obj/vehicle/sealed/mecha/ui_status(mob/user, datum/ui_state/state)
-	if(contains(user))
-		return UI_INTERACTIVE
-	return min(
+	var/common_status = min(
 		ui_status_user_is_abled(user, src),
-		ui_status_user_has_free_hands(user, src),
-		ui_status_user_is_advanced_tool_user(user),
 		ui_status_only_living(user),
-		max(
-			ui_status_user_is_adjacent(user, src),
-			ui_status_silicon_has_access(user, src),
-		)
 	)
+	var/mob_specific_status = UI_INTERACTIVE
+	if(ishuman(user))
+		mob_specific_status = min(
+			ui_status_user_inside(user, src),
+			ui_status_user_has_free_hands(user, src, allowed_source = VEHICLE_TRAIT),
+			ui_status_user_is_advanced_tool_user(user),
+		)
+	if(isAI(user))
+		mob_specific_status = ui_status_silicon_has_access(user, src)
+	if(isbrain(user))
+		mob_specific_status = ui_status_user_inside(user, src)
+	return min(common_status, mob_specific_status)
 
 /obj/vehicle/sealed/mecha/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/mecha_equipment),
+		get_asset_datum(/datum/asset/spritesheet_batched/mecha_equipment),
 	)
 
 /obj/vehicle/sealed/mecha/ui_static_data(mob/user)
@@ -56,6 +60,7 @@
 		"MECHA_INT_CONTROL_LOST" = MECHA_INT_CONTROL_LOST,
 		"MECHA_INT_SHORT_CIRCUIT" = MECHA_INT_SHORT_CIRCUIT,
 	)
+	data["diagnostic_status"] = HAS_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED)
 
 	var/list/regions = list()
 	var/list/tgui_region_data = SSid_access.all_region_access_tgui
@@ -221,5 +226,12 @@
 		if("equip_act")
 			var/obj/item/mecha_parts/mecha_equipment/gear = locate(params["ref"]) in flat_equipment
 			return gear?.ui_act(params["gear_action"], params, ui, state)
+		if("diagnostic")
+			if(HAS_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED))
+				return FALSE
+			var/obj/item/mecha_diagnostic/diagnostic = new /obj/item/mecha_diagnostic(get_turf(src))
+			diagnostic.name = "mecha holodiagnostic ([src.name])"
+			diagnostic.mech_data += src
+			ADD_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED, REF(src))
 	return TRUE
 

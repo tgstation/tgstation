@@ -29,8 +29,7 @@ GLOBAL_LIST_INIT(abstract_mob_types, list(
 	/mob/living/simple_animal/hostile/asteroid/elite,
 	/mob/living/simple_animal/hostile/asteroid,
 	/mob/living/simple_animal/hostile/megafauna,
-	/mob/living/simple_animal/hostile/mimic, // Cannot exist if spawned without being passed an item reference
-	/mob/living/simple_animal/hostile/retaliate,
+	/mob/living/basic/mimic, // Cannot exist if spawned without being passed an item reference
 	/mob/living/simple_animal/hostile,
 	/mob/living/simple_animal/soulscythe, // As mimic, can't exist if spawned outside an item
 	/mob/living/simple_animal,
@@ -113,6 +112,18 @@ GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 			continue
 		lang_list[initial(lang_type.name)] = lang_type
 	return lang_list
+
+// A list of all the possible blood types, keyed by id (which is just the name in most cases)
+GLOBAL_LIST_INIT(blood_types, init_blood_types())
+
+/// Initializes the list of blood type singletons
+/proc/init_blood_types()
+	. = list()
+	for(var/datum/blood_type/blood_type_path as anything in subtypesof(/datum/blood_type))
+		if(blood_type_path::root_abstract_type == blood_type_path) // Don't instantiate abstract blood types
+			continue
+		var/datum/blood_type/new_type = new blood_type_path()
+		.[new_type.id] = new_type
 
 /// An assoc list of species IDs to type paths
 GLOBAL_LIST_INIT(species_list, init_species_list())

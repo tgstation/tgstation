@@ -182,7 +182,7 @@
 /obj/item/fish/tadpole
 	name = "tadpole"
 	fish_id = "tadpole"
-	desc = "The larval spawn of an amphibian. A very minuscle, round creature with a long tail it uses to swim around."
+	desc = "The larval spawn of an amphibian. A very miniscule, round creature with a long tail it uses to swim around."
 	icon_state = "tadpole"
 	average_size = 3
 	average_weight = 10

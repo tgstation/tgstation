@@ -29,7 +29,7 @@
 /area/shuttle/abandoned/cargo)
 "cD" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -194,7 +194,7 @@
 /area/shuttle/abandoned/bar)
 "iI" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_bridge";
 	name = "Cockpit Emergency Blast Door"
 	},
@@ -634,7 +634,7 @@
 /area/shuttle/abandoned/bar)
 "FW" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -642,7 +642,7 @@
 /area/shuttle/abandoned/crew)
 "Gj" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -775,7 +775,7 @@
 /area/shuttle/abandoned/engine)
 "Kx" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -823,7 +823,7 @@
 /area/shuttle/abandoned/engine)
 "LK" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},
@@ -1157,7 +1157,7 @@
 /area/shuttle/abandoned/engine)
 "YN" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/door/poddoor{
+/obj/machinery/door/poddoor/shutters{
 	id = "whiteship_windows";
 	name = "Exterior Window Blast Door"
 	},

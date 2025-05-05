@@ -2,7 +2,7 @@
 # If the compiled world requires clients use a version higher than this, ci will fail.
 #   for instance: if this is set to 514, and a pr uses a 515 client feature, an alert will trigger
 # If you have to update this number for your pr, you should make it VERY CLEAR in the pr body that you did so.
-#   (Requiring clients update to connect to the game server is not something we like to spring on them with no notice, 
+#   (Requiring clients update to connect to the game server is not something we like to spring on them with no notice,
 #   especially for beta builds where the pager/updater won't let them update without additional configuration.)
 
-515
+516

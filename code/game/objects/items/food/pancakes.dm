@@ -30,7 +30,7 @@
 				positive_result = TRUE,\
 				use_large_steam_sprite = TRUE)
 
-/obj/item/food/pancakes/raw/attackby(obj/item/garnish, mob/living/user, params)
+/obj/item/food/pancakes/raw/attackby(obj/item/garnish, mob/living/user, list/modifiers)
 	var/newresult
 	if(istype(garnish, /obj/item/food/grown/berries))
 		newresult = /obj/item/food/pancakes/blueberry
@@ -117,7 +117,7 @@
 			ingredients_listed += "[ING.name], "
 		. += "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)]."
 
-/obj/item/food/pancakes/attackby(obj/item/item, mob/living/user, params)
+/obj/item/food/pancakes/attackby(obj/item/item, mob/living/user, list/modifiers)
 	if(istype(item, /obj/item/food/pancakes))
 		var/obj/item/food/pancakes/pancake = item
 		if((contents.len >= PANCAKE_MAX_STACK) || ((pancake.contents.len + contents.len) > PANCAKE_MAX_STACK))
@@ -140,13 +140,13 @@
 		return
 	else if(contents.len)
 		var/obj/O = contents[contents.len]
-		return O.attackby(item, user, params)
+		return O.attackby(item, user, modifiers)
 	..()
 
 /obj/item/food/pancakes/proc/update_snack_overlays(obj/item/food/pancakes/pancake)
 	var/mutable_appearance/pancake_visual = mutable_appearance(icon, "[pancake.stack_name]_[rand(1, 3)]")
-	pancake_visual.pixel_x = rand(-1, 1)
-	pancake_visual.pixel_y = 3 * contents.len - 1
+	pancake_visual.pixel_w = rand(-1, 1)
+	pancake_visual.pixel_z = 3 * contents.len - 1
 	pancake_visual.layer = layer + (contents.len * 0.01)
 	add_overlay(pancake_visual)
 	update_appearance()

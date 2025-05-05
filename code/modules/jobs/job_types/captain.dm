@@ -30,6 +30,7 @@
 	department_for_prefs = /datum/job_department/captain
 	departments_list = list(
 		/datum/job_department/command,
+		/datum/job_department/security,
 	)
 
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/flask/gold, /obj/item/toy/captainsaid/collector)
@@ -67,7 +68,7 @@
 	uniform = /obj/item/clothing/under/rank/captain
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace
 	backpack_contents = list(
-		/obj/item/melee/baton/telescopic = 1,
+		/obj/item/melee/baton/telescopic/gold = 1,
 		/obj/item/station_charter = 1,
 		)
 	belt = /obj/item/modular_computer/pda/heads/captain

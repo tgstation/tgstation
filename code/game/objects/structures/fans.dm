@@ -45,7 +45,7 @@
 
 /obj/structure/fans/tiny/shield
 	name = "shuttle bay shield"
-	desc = "An tenuously thin energy shield only capable of holding in air, but not solid objects or people."
+	desc = "A tenuously thin energy shield only capable of holding in air, but not solid objects or people."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield-old" // We should probably get these their own icon at some point
 	light_color = LIGHT_COLOR_BLUE

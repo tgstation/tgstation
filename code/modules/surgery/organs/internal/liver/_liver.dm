@@ -207,6 +207,13 @@
 /obj/item/organ/liver/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantliver
 
+/obj/item/organ/liver/feel_for_damage(self_aware)
+	if(damage < low_threshold)
+		return
+	if(damage < high_threshold)
+		return span_warning("Your [self_aware ? "liver" : "lower abdomen"] feels sore.")
+	return span_boldwarning("Your [self_aware ? "liver" : "lower abdomen"] feels like it's on fire!")
+
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/liver/alien
 	name = "alien liver" // doesnt matter for actual aliens because they dont take toxin damage
@@ -272,6 +279,21 @@
 /obj/item/organ/liver/cybernetic/surplus/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
+
+/obj/item/organ/liver/pod
+	name = "pod peroxisome"
+	desc = "A small plant-like organ found in podpeople responsible for filtering toxins while aiding in photosynthesis."
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME
+
+/obj/item/organ/liver/pod/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, times_fired)
+	. = ..()
+	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
+		return
+	if(!(organ_owner.mob_biotypes & MOB_PLANT))
+		return
+	if(chem.type == /datum/reagent/toxin/plantbgone)
+		organ_owner.adjustToxLoss(3 * REM * seconds_per_tick)
 
 #undef LIVER_DEFAULT_TOX_TOLERANCE
 #undef LIVER_DEFAULT_TOX_RESISTANCE

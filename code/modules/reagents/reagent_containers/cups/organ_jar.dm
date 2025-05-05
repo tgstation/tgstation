@@ -58,7 +58,7 @@
 	balloon_alert(user, "inserted [tool]")
 	held_organ = tool
 	name = "[tool.name] in a jar"
-	desc = "A jar with the [tool.name] inside it."
+	desc = "A jar with \the [tool] inside it."
 	check_organ_freeze()
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
@@ -70,14 +70,13 @@
 	. = ..()
 	// Draw the organ icon inside the jar, if present
 	if(!isnull(held_organ))
-		var/image/organ_img = image(held_organ, src)
+		var/image/organ_img = image(held_organ, src, layer = FLOAT_LAYER)
 		var/list/icon_dimensions = get_icon_dimensions(held_organ.icon)
 		organ_img.transform = organ_img.transform.Scale( // Make it smaller so it fits
 			JAR_INNER_ICON_SIZE / icon_dimensions["width"],
 			JAR_INNER_ICON_SIZE / icon_dimensions["height"],
 		)
-		organ_img.pixel_y -= 3
-		organ_img.layer = FLOAT_LAYER
+		organ_img.pixel_z -= 3
 		organ_img.plane = FLOAT_PLANE
 		organ_img.blend_mode = BLEND_INSET_OVERLAY
 		. += organ_img

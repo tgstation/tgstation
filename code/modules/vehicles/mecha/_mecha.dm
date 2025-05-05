@@ -85,13 +85,13 @@
 	var/obj/machinery/camera/exosuit/chassis_camera
 	///Portable camera camerachunk update
 	var/updating = FALSE
+	///Determines whether or not you can install tracking beacons in the mech.
+	var/can_be_tracked = TRUE
 
 	var/max_temperature = 25000
 
 	///Bitflags for internal damage
 	var/internal_damage = NONE
-	/// damage amount above which we can take internal damages
-	var/internal_damage_threshold = 15
 	/// % chance for internal damage to occur
 	var/internal_damage_probability = 20
 	/// list of possibly dealt internal damage for this mech type
@@ -303,7 +303,7 @@
 	QDEL_NULL(spark_system)
 	QDEL_NULL(smoke_system)
 	QDEL_NULL(ui_view)
-	QDEL_NULL(trackers)
+	QDEL_LIST(trackers)
 	QDEL_NULL(chassis_camera)
 
 	GLOB.mechas_list -= src //global mech list
@@ -454,9 +454,6 @@
 	update_energy_drain()
 
 	if(capacitor)
-		var/datum/armor/stock_armor = get_armor_by_type(armor_type)
-		var/initial_energy = stock_armor.get_rating(ENERGY)
-		set_armor_rating(ENERGY, initial_energy + (capacitor.rating * 5))
 		overclock_temp_danger = initial(overclock_temp_danger) * capacitor.rating
 	else
 		overclock_temp_danger = initial(overclock_temp_danger)

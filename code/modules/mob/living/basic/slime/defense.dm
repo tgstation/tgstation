@@ -23,7 +23,7 @@
 
 	defender_slime.discipline_slime()
 
-/mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, params)
+/mob/living/basic/slime/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 
 	//Lets you feed slimes plasma. Checks before the passthrough force check
 	if(istype(attacking_item, /obj/item/stack/sheet/mineral/plasma) && stat == CONSCIOUS)

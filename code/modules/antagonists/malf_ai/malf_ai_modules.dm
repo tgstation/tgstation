@@ -63,12 +63,12 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	/// The owner AI, so we don't have to typecast every time
 	var/mob/living/silicon/ai/owner_AI
-	/// If we have multiple uses of the same power
-	var/uses
+	/// Amount of uses for this action. Defining this as 0 will make this infinite-use
+	var/uses = FALSE
 	/// If we automatically use up uses on each activation
 	var/auto_use_uses = TRUE
 	/// If applicable, the time in deciseconds we have to wait before using any more modules
-	var/cooldown_period
+	var/cooldown_period = 0 SECONDS
 
 /datum/action/innate/ai/Grant(mob/living/player)
 	. = ..()
@@ -79,16 +79,16 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		owner_AI = owner
 
 /datum/action/innate/ai/IsAvailable(feedback = FALSE)
+	if(owner_AI && !COOLDOWN_FINISHED(owner_AI, malf_cooldown))
+		return FALSE
 	. = ..()
-	if(owner_AI && owner_AI.malf_cooldown > world.time)
-		return
 
 /datum/action/innate/ai/Trigger(trigger_flags)
 	. = ..()
 	if(auto_use_uses)
 		adjust_uses(-1)
 	if(cooldown_period)
-		owner_AI.malf_cooldown = world.time + cooldown_period
+		COOLDOWN_START(owner_AI, malf_cooldown, cooldown_period)
 
 /datum/action/innate/ai/proc/adjust_uses(amt, silent)
 	uses += amt
@@ -188,6 +188,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	set_up_us_the_bomb(owner)
 
 /datum/action/innate/ai/nuke_station/proc/set_up_us_the_bomb(mob/living/owner)
+	//oh my GOD.
 	set waitfor = FALSE
 	message_admins("[key_name_admin(owner)][ADMIN_FLW(owner)] has activated AI Doomsday.")
 	var/pass = prob(10) ? "******" : "hunter2"
@@ -478,7 +479,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	if(QDELETED(to_animate))
 		return
 
-	new /mob/living/simple_animal/hostile/mimic/copy/machine(get_turf(to_animate), to_animate, clicker, TRUE)
+	new /mob/living/basic/mimic/copy/machine(get_turf(to_animate), to_animate, clicker, TRUE)
 
 /// Destroy RCDs: Detonates all non-cyborg RCDs on the station.
 /datum/ai_module/malf/destructive/destroy_rcd
@@ -807,7 +808,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 	button_icon_state = "reactivate_cameras"
 	uses = 30
 	auto_use_uses = FALSE
-	cooldown_period = 30
+	cooldown_period = 3 SECONDS
 
 /datum/action/innate/ai/reactivate_cameras/New()
 	..()

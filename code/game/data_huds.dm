@@ -22,15 +22,17 @@
 
 /datum/atom_hud/data/human/medical/basic
 
-/datum/atom_hud/data/human/medical/basic/proc/check_sensors(mob/living/carbon/human/H)
-	if(!istype(H))
+/datum/atom_hud/data/human/medical/basic/proc/check_sensors(mob/living/carbon/human/human)
+	if(!istype(human))
 		return FALSE
-	var/obj/item/clothing/under/U = H.w_uniform
-	if(!istype(U))
+	if(HAS_TRAIT(human, HUMAN_SENSORS_VISIBLE_WITHOUT_SUIT))
+		return TRUE
+	var/obj/item/clothing/under/undersuit = human.w_uniform
+	if(!istype(undersuit))
 		return FALSE
-	if(U.has_sensor < HAS_SENSORS)
+	if(undersuit.has_sensor < HAS_SENSORS)
 		return FALSE
-	if(U.sensor_mode <= SENSOR_VITALS)
+	if(undersuit.sensor_mode <= SENSOR_VITALS)
 		return FALSE
 	return TRUE
 
@@ -97,6 +99,10 @@ Medical HUD! Basic mode needs suit sensors on.
 	var/severity
 	if(HAS_TRAIT(src, TRAIT_DISEASELIKE_SEVERITY_MEDIUM))
 		severity = DISEASE_SEVERITY_MEDIUM
+		threat = get_disease_severity_value(severity)
+
+	if(HAS_TRAIT(src, TRAIT_DISEASELIKE_SEVERITY_HIGH))
+		severity = DISEASE_SEVERITY_DANGEROUS
 		threat = get_disease_severity_value(severity)
 
 	for(var/thing in diseases)
@@ -547,10 +553,10 @@ Diagnostic HUDs!
 
 /atom/proc/adjust_hud_position(image/holder, animate_time = null)
 	if (animate_time)
-		animate(holder, pixel_x = -(get_cached_width() - ICON_SIZE_X) / 2, pixel_y = get_cached_height() - ICON_SIZE_Y, time = animate_time)
+		animate(holder, pixel_w = -(get_cached_width() - ICON_SIZE_X) / 2, pixel_z = get_cached_height() - ICON_SIZE_Y, time = animate_time)
 		return
-	holder.pixel_x = -(get_cached_width() - ICON_SIZE_X) / 2
-	holder.pixel_y = get_cached_height() - ICON_SIZE_Y
+	holder.pixel_w = -(get_cached_width() - ICON_SIZE_X) / 2
+	holder.pixel_z = get_cached_height() - ICON_SIZE_Y
 
 /atom/proc/set_hud_image_state(hud_type, hud_state, x_offset = 0, y_offset = 0)
 	if (!hud_list) // Still initializing
@@ -563,5 +569,5 @@ Diagnostic HUDs!
 	holder.icon_state = hud_state
 	adjust_hud_position(holder)
 	if (x_offset || y_offset)
-		holder.pixel_x += x_offset
-		holder.pixel_y += y_offset
+		holder.pixel_w += x_offset
+		holder.pixel_z += y_offset

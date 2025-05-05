@@ -58,7 +58,7 @@
 			context[SCREENTIP_CONTEXT_RMB] = "Rotate"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, params)
+/obj/machinery/atmospherics/components/binary/crystallizer/attackby(obj/item/I, mob/user, list/modifiers)
 	if(!on)
 		if(default_deconstruction_screwdriver(user, "[base_icon_state]-open", "[base_icon_state]-off", I))
 			return
@@ -71,7 +71,6 @@
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_overlays()
 	. = ..()
-	cut_overlays()
 	var/mutable_appearance/pipe_appearance1 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[dir]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)
 	pipe_appearance1.color = COLOR_LIME
 	var/mutable_appearance/pipe_appearance2 = mutable_appearance('icons/obj/pipes_n_cables/pipe_underlays.dmi', "intact_[REVERSE_DIR(dir)]_[piping_layer]", layer = GAS_SCRUBBER_LAYER)

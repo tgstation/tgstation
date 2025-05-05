@@ -20,7 +20,7 @@
 		specimen = humie.dna.species.name
 	desc = pick(list(
 		"If you're looking for a recently stolen [specimen], you've come to the right place.",
-		"we've recently aquired a fine [specimen] from a station around here, eheh...",
+		"We've recently acquired a fine [specimen] from a station around here, eheh...",
 		"For a limited time, we're offering this [specimen] for you to buy (back).",
 	))
 	desc += " DISCLAIMER: The offer will expire once the creature is returned to the station."

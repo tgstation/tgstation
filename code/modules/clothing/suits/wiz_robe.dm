@@ -225,18 +225,9 @@
 	resistance_flags = FLAMMABLE
 	fishing_modifier = -3
 
-/obj/item/clothing/suit/wizrobe/paper
-	name = "papier-mache robe" // no non-latin characters!
-	desc = "A robe held together by various bits of clear-tape and paste."
-	icon_state = "wizard-paper"
-	inhand_icon_state = null
-	var/robe_charge = TRUE
-	actions_types = list(/datum/action/item_action/stickmen)
-
-
 /obj/item/clothing/suit/wizrobe/durathread
 	name = "durathread robe"
-	desc = "A rather dull durathread robe; not quite as protective as a proper piece of armour, but much stylish."
+	desc = "A rather dull durathread robe; not quite as protective as a proper piece of armour, but much more stylish."
 	icon_state = "durathread-fake"
 	inhand_icon_state = null
 	armor_type = /datum/armor/robe_durathread
@@ -254,12 +245,12 @@
 
 /obj/item/clothing/suit/wizrobe/durathread/fire
 	name = "pyromancer robe"
-	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	desc = "A rather dull durathread robe; not quite as protective as woven armour, but much more stylish."
 	icon_state = "durathread-fire"
 
 /obj/item/clothing/suit/wizrobe/durathread/ice
 	name = "pyromancer robe"
-	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	desc = "A rather dull durathread robe; not quite as protective as woven armour, but much more stylish."
 	icon_state = "durathread-ice"
 
 /obj/item/clothing/suit/wizrobe/durathread/electric
@@ -269,36 +260,43 @@
 
 /obj/item/clothing/suit/wizrobe/durathread/earth
 	name = "geomancer robe"
-	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	desc = "A rather dull durathread robe; not quite as protective as woven armour, but much more stylish."
 	icon_state = "durathread-earth"
 
 /obj/item/clothing/suit/wizrobe/durathread/necro
 	name = "necromancer robe"
-	desc = "A rather dull durathread robe; not quite as protective as an woven armour, but much stylish."
+	desc = "A rather dull durathread robe; not quite as protective as woven armour, but much more stylish."
 	icon_state = "durathread-necro"
 
+/obj/item/clothing/suit/wizrobe/paper
+	name = "papier-mache robe" // no non-latin characters!
+	desc = "A robe held together by various bits of clear-tape and paste."
+	icon_state = "wizard-paper"
+	inhand_icon_state = null
+	COOLDOWN_DECLARE(summoning_cooldown)
+	actions_types = list(/datum/action/item_action/stickmen)
 
 /obj/item/clothing/suit/wizrobe/paper/ui_action_click(mob/user, action)
-	stickmen()
-
-
-/obj/item/clothing/suit/wizrobe/paper/verb/stickmen()
-	set category = "Object"
-	set name = "Summon Stick Minions"
-	if(!isliving(usr))
-		return
-	if(!robe_charge)
-		to_chat(usr, span_warning("The robe's internal magic supply is still recharging!"))
+	if(!ishuman(user))
 		return
 
-	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
-	playsound(loc, 'sound/effects/magic/summon_magic.ogg', 50, TRUE, TRUE)
-	var/mob/living/M = new /mob/living/basic/stickman/lesser(get_turf(usr))
-	M.faction += list("[REF(usr)]")
-	robe_charge = FALSE
-	sleep(3 SECONDS)
-	robe_charge = TRUE
-	to_chat(usr, span_notice("The robe hums, its internal magic supply restored."))
+	if(!COOLDOWN_FINISHED(src, summoning_cooldown))
+		user.balloon_alert(user, "robe recharging!")
+		return
+
+	conjure_stickmen(user)
+
+/obj/item/clothing/suit/wizrobe/paper/proc/conjure_stickmen(mob/living/carbon/human/summoner)
+	summoner.force_say()
+	summoner.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
+	playsound(src, 'sound/effects/magic/summon_magic.ogg', 50, TRUE, TRUE)
+
+	var/mob/living/stickman = new /mob/living/basic/stickman/lesser(get_turf(summoner))
+
+	stickman.faction += summoner.faction
+
+	COOLDOWN_START(src, summoning_cooldown, 3 SECONDS)
+
 
 // The actual code for this is handled in the shielded component, see [/datum/component/shielded/proc/check_recharge_rune]
 /obj/item/wizard_armour_charge

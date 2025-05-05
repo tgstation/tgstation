@@ -52,7 +52,7 @@
 /obj/item/construction/rld/attack_self(mob/user)
 	. = ..()
 
-	if((upgrade & RCD_UPGRADE_SILO_LINK) && display_options["Silo Link"] == null) //silo upgrade instaled but option was not updated then update it just one
+	if((construction_upgrades & RCD_UPGRADE_SILO_LINK) && display_options["Silo Link"] == null) //silo upgrade instaled but option was not updated then update it just one
 		display_options["Silo Link"] = icon(icon = 'icons/obj/machines/ore_silo.dmi', icon_state = "silo")
 
 	var/choice = show_radial_menu(user, src, display_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
@@ -198,7 +198,20 @@
 			if(!useResource(GLOW_STICK_COST, user))
 				return ITEM_INTERACT_BLOCKING
 			activate()
-			var/obj/item/flashlight/glowstick/new_stick = new /obj/item/flashlight/glowstick(start)
+			// Picks the closest fitting color for the fluid by hue
+			var/closest_diff = null
+			var/closest_fluid = null
+			var/list/unwrapped_color = rgb2num(color_choice, COLORSPACE_HSV)
+			var/chosen_hue = unwrapped_color[1]
+			for (var/datum/reagent/luminescent_fluid/glowstick_fluid as anything in typesof(/datum/reagent/luminescent_fluid))
+				unwrapped_color = rgb2num(glowstick_fluid::color, COLORSPACE_HSV)
+				var/hue_diff = abs(chosen_hue - unwrapped_color[1])
+				if (hue_diff > 180)
+					hue_diff = 360 - hue_diff
+				if (isnull(closest_diff) || hue_diff < closest_diff)
+					closest_diff = hue_diff
+					closest_fluid = glowstick_fluid
+			var/obj/item/flashlight/glowstick/new_stick = new /obj/item/flashlight/glowstick(start, null, closest_fluid)
 			new_stick.color = color_choice
 			new_stick.set_light_color(new_stick.color)
 			new_stick.throw_at(interacting_with, 9, 3, user)

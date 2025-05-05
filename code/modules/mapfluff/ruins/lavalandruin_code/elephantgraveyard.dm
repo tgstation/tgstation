@@ -105,7 +105,7 @@
 	reagents.expose(user, TOUCH, 20) //Covers target in 20u of oil.
 	to_chat(user, span_notice("You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water."))
 
-/obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, params)
+/obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, list/modifiers)
 	flick("puddle-oil-splash",src)
 	if(O.tool_behaviour == TOOL_SHOVEL) //attempt to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
@@ -322,7 +322,7 @@
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"
-	desc = "Even in a place filled to the brim with graves, this one shows a level of preperation and planning that fills you with dread."
+	desc = "Even in a place filled to the brim with graves, this one shows a level of preparation and planning that fills you with dread."
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave_lead"
 	lead_tomb = TRUE

@@ -71,8 +71,9 @@ const MainScreen = (props: any) => {
               <Input
                 fluid
                 value={networkId}
-                onChange={(_, value) => setNetworkId(value)}
+                onChange={setNetworkId}
                 placeholder="Enter Network ID..."
+                onEnter={() => act('probe', { id: networkId })}
               />
             </Stack.Item>
             <Stack.Item>
@@ -161,6 +162,7 @@ const MachineList = (props: MachineListProps) => {
 
   return (
     <Section
+      scrollable
       fill
       title={title}
       buttons={
@@ -179,7 +181,7 @@ const MachineList = (props: MachineListProps) => {
       {sortedMachines.length > 0 ? (
         <Stack fill vertical>
           <Stack.Item grow>
-            <Stack fill vertical overflowY="scroll">
+            <Stack fill vertical>
               {sortedMachines.map((machine, index) => (
                 <Stack.Item key={index}>
                   <Button
@@ -210,7 +212,7 @@ const MachineList = (props: MachineListProps) => {
                 value={search}
                 verticalAlign="middle"
                 placeholder="Enter machine ID..."
-                onChange={(_e, value) => setSearch(value)}
+                onChange={setSearch}
               />
             </Stack.Item>
           )}

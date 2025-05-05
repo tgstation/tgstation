@@ -40,14 +40,18 @@
 			footstep_sounds = GLOB.footstep
 		if(FOOTSTEP_MOB_RUST)
 			footstep_sounds = 'sound/effects/footstep/rustystep1.ogg'
+			src.volume = 90*volume
 		if(FOOTSTEP_MOB_SLIME)
 			footstep_sounds = 'sound/effects/footstep/slime1.ogg'
+			src.volume = 90*volume
 		if(FOOTSTEP_OBJ_MACHINE)
 			footstep_sounds = 'sound/effects/bang.ogg'
+			src.volume = 90*volume
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep_machine))
 			return
 		if(FOOTSTEP_OBJ_ROBOT)
 			footstep_sounds = 'sound/effects/tank_treads.ogg'
+			src.volume = 90*volume
 			RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep_machine))
 			return
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(play_simplestep))
@@ -126,6 +130,7 @@
 		return
 
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
+		/// the volume for this is defined on attach when the sound gets set footstep_sounds
 		playsound(source.loc, footstep_sounds, volume, falloff_distance = 1, vary = sound_vary)
 		return
 

@@ -20,9 +20,10 @@
 	var/x = target_turf.x
 	var/y = target_turf.y
 	var/z = clamp(target_turf.z, 1, world.maxz)
-	var/turf/southwest = locate(clamp(x - (direction & WEST ? range : 0), 1, world.maxx), clamp(y - (direction & SOUTH ? range : 0), 1, world.maxy), z)
-	var/turf/northeast = locate(clamp(x + (direction & EAST ? range : 0), 1, world.maxx), clamp(y + (direction & NORTH ? range : 0), 1, world.maxy), z)
-	holder.vis_contents += block(southwest, northeast)
+	holder.vis_contents += block(
+		x - (direction & WEST ? range : 0), y - (direction & SOUTH ? range : 0), z,
+		x + (direction & EAST ? range : 0), y + (direction & NORTH ? range : 0), z
+	)
 	if(direction & SOUTH)
 		holder.pixel_y -= ICON_SIZE_Y * range
 	if(direction & WEST)

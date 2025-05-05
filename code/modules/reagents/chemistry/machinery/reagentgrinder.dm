@@ -254,8 +254,8 @@
 
 	//add item directly
 	else if(length(tool.grind_results) || tool.reagents?.total_volume)
-		if(tool.atom_storage) //anything that has internal storage would be too much recursion for us to handle
-			to_chat(user, span_notice("Drag this item onto [src] to dump its contents."))
+		if(tool.atom_storage && length(tool.contents)) //anything that has internal storage would be too much recursion for us to handle
+			to_chat(user, span_notice("Drag this item onto [src] to dump its contents, or empty it to grind the container."))
 			return ITEM_INTERACT_BLOCKING
 
 		//add the items
@@ -453,7 +453,7 @@
 			total_weight += item_weight
 
 	//use power according to the total weight of items grinded
-	use_energy((active_power_usage * (duration / 1 SECONDS)) * (total_weight / maximum_weight))
+	use_energy((active_power_usage * (duration / (1 SECONDS))) * (total_weight / maximum_weight))
 
 	addtimer(CALLBACK(src, PROC_REF(stop_operating)), duration)
 
@@ -513,6 +513,6 @@
 	beaker.reagents.convert_reagent(/datum/reagent/consumable/cream, /datum/reagent/consumable/whipped_cream)
 
 	//power consumed based on the ratio of total reagents mixed
-	use_energy((active_power_usage * (duration / 1 SECONDS)) * (beaker.reagents.total_volume / beaker.reagents.maximum_volume))
+	use_energy((active_power_usage * (duration / (1 SECONDS))) * (beaker.reagents.total_volume / beaker.reagents.maximum_volume))
 
 	operating = FALSE

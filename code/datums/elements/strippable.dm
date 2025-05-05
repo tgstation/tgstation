@@ -90,6 +90,8 @@
 /datum/strippable_item/proc/try_equip(atom/source, obj/item/equipping, mob/user)
 	if(SEND_SIGNAL(user, COMSIG_TRY_STRIP, source, equipping) & COMPONENT_CANT_STRIP)
 		return FALSE
+	if(SEND_SIGNAL(source, COMSIG_BEING_STRIPPED, user, equipping) & COMPONENT_CANT_STRIP)
+		return FALSE
 
 	if (HAS_TRAIT(equipping, TRAIT_NODROP))
 		to_chat(user, span_warning("You can't put [equipping] on [source], it's stuck to your hand!"))
@@ -124,6 +126,8 @@
 
 	if (ismob(source))
 		if(SEND_SIGNAL(user, COMSIG_TRY_STRIP, source, item) & COMPONENT_CANT_STRIP)
+			return FALSE
+		if(SEND_SIGNAL(source, COMSIG_BEING_STRIPPED, user, item) & COMPONENT_CANT_STRIP)
 			return FALSE
 		var/mob/mob_source = source
 		if (!item.canStrip(user, mob_source))
@@ -362,7 +366,7 @@
 			continue
 
 		var/obj/item/item = item_data.get_item(owner)
-		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP) || (item.item_flags & EXAMINE_SKIP)))
+		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP) || HAS_TRAIT(item, TRAIT_EXAMINE_SKIP)))
 			items[strippable_key] = result
 			continue
 

@@ -112,7 +112,7 @@ img {
 #statcontent {
 	flex: 1;
 	padding: 0.75em 0.5em;
-	overflow-y: scroll;
+	overflow-y: auto;
 	overflow-x: hidden;
 }
 
@@ -150,6 +150,7 @@ img {
 }
 
 .grid-item:hover .grid-item-text {
+	height: 100%;
 	overflow: visible;
 	white-space: normal;
 	background-color: #ececec;

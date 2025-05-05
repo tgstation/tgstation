@@ -234,7 +234,7 @@
 				continue //putting them at the edge is dumb
 			if(dangerous_turf.y > world.maxy - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.y < PORTAL_DANGEROUS_EDGE_LIMIT)
 				continue
-			if(!check_teleport_valid(src, teleport_location))
+			if(!check_teleport_valid(src, dangerous_turf))
 				continue
 			dangerous_turfs += dangerous_turf
 
@@ -570,13 +570,6 @@
 		<br>
 		Final word of caution: the technology involved is experimental in nature. Although many years of research have allowed us to prevent leaving your organs behind, it simply cannot account for all of the liquid in your body.
 		"}
-
-/obj/item/storage/box/syndie_kit/syndicate_teleporter
-	name = "syndicate teleporter kit"
-
-/obj/item/storage/box/syndie_kit/syndicate_teleporter/PopulateContents()
-	new /obj/item/syndicate_teleporter(src)
-	new /obj/item/paper/syndicate_teleporter(src)
 
 /obj/effect/temp_visual/teleport_abductor/syndi_teleporter
 	duration = 5

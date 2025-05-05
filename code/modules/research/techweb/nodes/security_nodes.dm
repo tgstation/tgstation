@@ -90,6 +90,7 @@
 		"c38_true_strike",
 		"c38_true_strike_mag",
 		"techshotshell",
+		"flechetteshell",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/ordnance/explosive/highyieldbomb = TECHWEB_TIER_4_POINTS)

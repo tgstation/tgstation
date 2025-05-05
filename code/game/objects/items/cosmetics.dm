@@ -1,7 +1,3 @@
-#define UPPER_LIP "Upper"
-#define MIDDLE_LIP "Middle"
-#define LOWER_LIP "Lower"
-
 /obj/item/lipstick
 	gender = PLURAL
 	name = "red lipstick"
@@ -212,7 +208,7 @@
 		skinhead.set_hairstyle("Skinhead", update = TRUE)
 	playsound(loc, 'sound/items/tools/welder2.ogg', 20, TRUE)
 
-/obj/item/razor/attack(mob/target_mob, mob/living/user, params)
+/obj/item/razor/attack(mob/target_mob, mob/living/user, list/modifiers)
 	if(!ishuman(target_mob))
 		return ..()
 	var/mob/living/carbon/human/human_target = target_mob
@@ -343,7 +339,3 @@
 
 /obj/item/razor/surgery/get_surgery_tool_overlay(tray_extended)
 	return "razor"
-
-#undef UPPER_LIP
-#undef MIDDLE_LIP
-#undef LOWER_LIP

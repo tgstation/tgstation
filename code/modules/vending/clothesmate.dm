@@ -32,6 +32,9 @@
 				/obj/item/clothing/head/chaplain/taqiyah/red = 3,
 				/obj/item/clothing/head/hats/tophat = 3,
 				/obj/item/clothing/head/fedora = 3,
+				/obj/item/clothing/head/fedora/white = 3,
+				/obj/item/clothing/head/fedora/beige = 3,
+				/obj/item/clothing/head/fedora/greyscale = 3,
 				/obj/item/clothing/head/hats/bowler = 3,
 				/obj/item/clothing/head/cowboy/white = 3,
 				/obj/item/clothing/head/cowboy/grey = 3,
@@ -93,6 +96,8 @@
 			"icon" = "vest",
 			"products" = list(
 				/obj/item/clothing/suit/toggle/jacket/sweater = 4,
+				/obj/item/clothing/suit/jacket/blazer = 4,
+				/obj/item/clothing/suit/toggle/jacket/trenchcoat = 4,
 				/obj/item/clothing/suit/jacket/oversized = 4,
 				/obj/item/clothing/suit/jacket/fancy = 4,
 				/obj/item/clothing/suit/toggle/lawyer/greyscale = 4,

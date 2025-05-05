@@ -79,6 +79,7 @@
 		/mob/living/basic/cockroach,
 		/mob/living/basic/spider/maintenance,
 		/mob/living/basic/mouse,
+		/mob/living/basic/snail,
 	)
 	return pick(mob_list)
 
@@ -295,11 +296,11 @@
 	var/static/list/mob_list = list(
 		/mob/living/basic/bear,
 		/mob/living/basic/cockroach/glockroach/mobroach,
+		/mob/living/basic/goose,
 		/mob/living/basic/lightgeist,
 		/mob/living/basic/mothroach,
 		/mob/living/basic/mushroom,
 		/mob/living/basic/viscerator,
-		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 		/mob/living/basic/pet/gondola,
 	)
 	return pick(mob_list)

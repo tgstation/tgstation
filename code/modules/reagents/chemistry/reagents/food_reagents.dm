@@ -139,7 +139,7 @@
 /// The basic resource of vat growing.
 /datum/reagent/consumable/nutriment/protein
 	name = "Protein"
-	description = "A natural polyamide made up of amino acids. An essential constituent of mosts known forms of life."
+	description = "A natural polyamide made up of amino acids. An essential constituent of most known forms of life."
 	taste_description = "chalk"
 	brute_heal = 0.8 //Rewards the player for eating a balanced diet.
 	nutriment_factor = 9 //45% as calorie dense as oil.
@@ -183,16 +183,17 @@
 	if(methods & TOUCH)
 		burn_damage *= max(1 - touch_protection, 0)
 	var/FryLoss = round(min(38, burn_damage * reac_volume))
-	if(!HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
-		exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
-		span_userdanger("You're covered in boiling oil!"))
-		if(FryLoss)
-			exposed_mob.emote("scream")
-		playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
-		ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
-		addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 0.3 SECONDS)
+	if(HAS_TRAIT(exposed_mob, TRAIT_OIL_FRIED))
+		return
+
+	exposed_mob.visible_message(span_warning("The boiling oil sizzles as it covers [exposed_mob]!"), \
+	span_userdanger("You're covered in boiling oil!"))
 	if(FryLoss)
+		exposed_mob.emote("scream")
 		exposed_mob.adjustFireLoss(FryLoss)
+	playsound(exposed_mob, 'sound/machines/fryer/deep_fryer_emerge.ogg', 25, TRUE)
+	ADD_TRAIT(exposed_mob, TRAIT_OIL_FRIED, "cooking_oil_react")
+	addtimer(CALLBACK(exposed_mob, TYPE_PROC_REF(/mob/living, unfry_mob)), 2 SECONDS)
 
 /datum/reagent/consumable/nutriment/fat/expose_turf(turf/open/exposed_turf, reac_volume)
 	. = ..()
@@ -881,7 +882,7 @@
 
 /datum/reagent/consumable/nutriment/stabilized
 	name = "Stabilized Nutriment"
-	description = "A bioengineered protien-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
+	description = "A bioengineered protein-nutrient structure designed to decompose in high saturation. In layman's terms, it won't get you fat."
 	nutriment_factor = 15
 	color = "#664330" // rgb: 102, 67, 48
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -991,7 +992,7 @@
 
 /datum/reagent/consumable/astrotame
 	name = "Astrotame"
-	description = "A space age artifical sweetener."
+	description = "A space age artificial sweetener."
 	nutriment_factor = 0
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	color = COLOR_WHITE // rgb: 255, 255, 255
@@ -1125,7 +1126,7 @@
 
 /datum/reagent/consumable/korta_flour
 	name = "Korta Flour"
-	description = "A coarsely ground, peppery flour made from korta nut shells."
+	description = "A coarsely-ground, peppery flour made from korta nut shells."
 	taste_description = "earthy heat"
 	color = "#EEC39A"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED

@@ -415,7 +415,7 @@
 		priority_announce("WARNING - The explosion will likely cover a big part of the station and the coming EMP will wipe out most of the electronics. \
 				Get as far away as possible from the reactor or find a way to shut it down.", "Alert", 'sound/announcer/notice/notice3.ogg')
 	var/speaking = "[emergency_alert] The Hypertorus fusion reactor has reached critical integrity failure. Emergency magnetic dampeners online."
-	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
+	radio.talk_into(src, speaking, common_channel)
 
 	notify_ghosts(
 		"The [src] has begun melting down!",
@@ -569,18 +569,27 @@
  * HFR cracking related procs
  */
 
+/**
+ * Checks for any hypertorus part that is cracked and returns it if found, otherwise returns null.
+ */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_cracked_parts()
 	for(var/obj/machinery/atmospherics/components/unary/hypertorus/part in machine_parts)
 		if(part.cracked)
-			return TRUE
-	return FALSE
+			return part
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/create_crack()
+/**
+ * Causes a random hypertorus part in machine_parts to become cracked and update their appearance.
+ * Returns the hypertorus part.
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/create_crack() as /obj/machinery/atmospherics/components/unary/hypertorus
 	var/obj/machinery/atmospherics/components/unary/hypertorus/part = pick(machine_parts)
 	part.cracked = TRUE
 	part.update_appearance()
 	return part
 
+/**
+ * Takes a ratio portion of target_mix and moves it to the origin's location's air.
+ */
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/spill_gases(obj/origin, datum/gas_mixture/target_mix, ratio)
 	var/datum/gas_mixture/remove_mixture = target_mix.remove_ratio(ratio)
 	var/turf/origin_turf = origin.loc
@@ -588,8 +597,12 @@
 		return
 	origin_turf.assume_air(remove_mixture)
 
-/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/check_spill(seconds_per_tick)
+/**
+ * Processes leaking from moderator hypercriticality.
+ */
+/obj/machinery/atmospherics/components/unary/hypertorus/core/proc/process_moderator_overflow(seconds_per_tick)
 	var/obj/machinery/atmospherics/components/unary/hypertorus/cracked_part = check_cracked_parts()
+	// Processing of a preexisting crack if any.
 	if (cracked_part)
 		// We have an existing crack
 		var/leak_rate
@@ -607,6 +620,7 @@
 		spill_gases(cracked_part, moderator_internal, ratio = 1 - (1 - leak_rate) ** seconds_per_tick)
 		return
 
+	// No crack. Check for conditions to cause a leak and create a crack if possible.
 	if (moderator_internal.total_moles() < HYPERTORUS_HYPERCRITICAL_MOLES)
 		return
 	cracked_part = create_crack()

@@ -149,7 +149,6 @@
 /datum/fish_trait/dummy
 	incompatible_traits = list(/datum/fish_trait/dummy/two)
 	inheritability = 100
-	diff_traits_inheritability = 100
 	reagents_to_add = list(/datum/reagent/fishdummy = FISH_REAGENT_AMOUNT)
 
 /datum/fish_trait/dummy/apply_to_fish(obj/item/fish/fish)
@@ -236,13 +235,13 @@
 /datum/unit_test/fish_portal_gen_linking
 
 /datum/unit_test/fish_portal_gen_linking/Run()
-	var/mob/living/carbon/human/consistent/user = allocate(/mob/living/carbon/human/consistent)
-	var/obj/machinery/fishing_portal_generator/portal = allocate(/obj/machinery/fishing_portal_generator/no_power)
+	var/mob/living/carbon/human/consistent/user = allocate(__IMPLIED_TYPE__)
+	var/obj/machinery/fishing_portal_generator/portal = allocate(__IMPLIED_TYPE__)
 	var/obj/structure/toilet/unit_test/fishing_spot = new(get_turf(user)) //This is deleted during the test
 	var/obj/structure/moisture_trap/extra_spot = allocate(/obj/structure/moisture_trap)
-	var/obj/machinery/hydroponics/constructable/inaccessible = allocate(/obj/machinery/hydroponics/constructable)
+	var/obj/machinery/hydroponics/constructable/inaccessible = allocate(__IMPLIED_TYPE__)
 	ADD_TRAIT(inaccessible, TRAIT_UNLINKABLE_FISHING_SPOT, INNATE_TRAIT)
-	var/obj/item/multitool/tool = allocate(/obj/item/multitool)
+	var/obj/item/multitool/tool = allocate(__IMPLIED_TYPE__)
 	var/datum/fish_source/toilet/fish_source = GLOB.preset_fish_sources[/datum/fish_source/toilet]
 
 	portal.max_fishing_spots = 1 //We've no scrying orb to know if it'll be buffed or nerfed this in the future. We only have space for one here.
@@ -271,9 +270,6 @@
 	TEST_ASSERT(!portal.active, "[portal] is still linked to the fish source of the deleted fishing spot it's associated to")
 	tool.melee_attack_chain(user, inaccessible)
 	TEST_ASSERT(!length(portal.linked_fishing_spots), "We managed to link to an unlinkable fishing spot")
-
-/obj/machinery/fishing_portal_generator/no_power
-	use_power = NO_POWER_USE
 
 /obj/structure/toilet/unit_test/Initialize(mapload)
 	. = ..()
@@ -326,7 +322,6 @@
 	// pretend like this mob has a mind. they should be fished up first
 	no_brain.mind_initialize()
 
-	SEND_SIGNAL(the_hole, COMSIG_PRE_FISHING) // we need to do this for the fishing spot component to be attached
 	var/datum/component/fishing_spot/the_hole_fishing_spot = the_hole.GetComponent(/datum/component/fishing_spot)
 	var/datum/fish_source/fishing_source = the_hole_fishing_spot.fish_source
 	var/obj/item/fishing_hook/rescue/the_hook = allocate(/obj/item/fishing_hook/rescue, run_loc_floor_top_right)
@@ -456,10 +451,8 @@
 /datum/fish_source/unit_test_profound_fisher
 	fish_table = list(/obj/item/fish/testdummy = 1)
 	fish_counts = list(/obj/item/fish/testdummy = 2)
-	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish
-	fish_source_flags = parent_type::fish_source_flags
 
 /datum/fish_source/unit_test_all_fish/New()
 	for(var/fish_type as anything in subtypesof(/obj/item/fish))
@@ -474,7 +467,6 @@
 	TEST_ASSERT(edible, "Fish is not edible")
 	edible.eat_time = 0
 	TEST_ASSERT(fish.GetComponent(/datum/component/infective), "Fish doesn't have the infective component")
-	var/bite_size = edible.bite_consumption
 
 	var/mob/living/carbon/human/consistent/gourmet = allocate(/mob/living/carbon/human/consistent)
 
@@ -499,9 +491,10 @@
 	TEST_ASSERT(!fish.bites_amount, "bites_amount wasn't reset after the fish revived")
 
 	fish.update_size_and_weight(fish.size, FISH_WEIGHT_BITE_DIVISOR)
+	var/bite_size = edible.bite_consumption
 	fish.AddElement(/datum/element/fried_item, FISH_SAFE_COOKING_DURATION)
 	TEST_ASSERT_EQUAL(fish.status, FISH_DEAD, "The fish didn't die after being cooked")
-	TEST_ASSERT(bite_size < edible.bite_consumption, "The bite_consumption value hasn't increased after being cooked (it removes blood but doubles protein). Value: [bite_size]")
+	TEST_ASSERT(bite_size < edible.bite_consumption, "The bite_consumption value hasn't increased after being cooked (it removes blood but doubles protein). Old: [bite_size]. New: [edible.bite_consumption]")
 	TEST_ASSERT(!(edible.foodtypes & (RAW|GORE)), "Fish still has the GORE and/or RAW foodtypes flags after being cooked")
 	TEST_ASSERT(!fish.GetComponent(/datum/component/infective), "Fish still has the infective component after being cooked for long enough")
 
@@ -520,8 +513,8 @@
 /datum/unit_test/fish_randomize_size_weight
 
 /datum/unit_test/fish_randomize_size_weight/Run()
-	var/obj/item/storage/box/fish_debug/box = allocate(/obj/item/storage/box/fish_debug)
-	for(var/obj/item/fish/fish as anything in box)
+	for(var/fish_type in subtypesof(/obj/item/fish))
+		var/obj/item/fish/fish = allocate(fish_type)
 		fish.randomize_size_and_weight()
 
 /datum/unit_test/aquarium_upgrade

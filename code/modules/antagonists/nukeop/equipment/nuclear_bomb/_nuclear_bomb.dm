@@ -108,7 +108,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	return TRUE
 
-/obj/machinery/nuclearbomb/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/nuclearbomb/attackby(obj/item/weapon, mob/user, list/modifiers)
 	if (istype(weapon, /obj/item/disk/nuclear))
 		if(!disk_check(weapon))
 			return TRUE
@@ -597,7 +597,7 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/proc/really_actually_explode(detonation_status)
 	var/cinematic = get_cinematic_type(detonation_status)
 	if(!isnull(cinematic))
-		play_cinematic(cinematic, world, CALLBACK(SSticker, TYPE_PROC_REF(/datum/controller/subsystem/ticker, station_explosion_detonation), src))
+		play_cinematic(cinematic, world)
 
 	var/drop_level = TRUE
 	switch(detonation_status)
@@ -628,6 +628,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	if(drop_level)
 		SSsecurity_level.set_level(SEC_LEVEL_RED)
+	qdel(src)
 	return TRUE
 
 /// Cause nuke effects to the passed z-levels.

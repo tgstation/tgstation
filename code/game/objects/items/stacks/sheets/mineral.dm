@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(sandbag_recipes, list ( \
 	icon_state = "sandbag"
 	w_class = WEIGHT_CLASS_TINY
 
-/obj/item/emptysandbag/attackby(obj/item/W, mob/user, params)
+/obj/item/emptysandbag/attackby(obj/item/W, mob/user, list/modifiers)
 	if(istype(W, /obj/item/stack/ore/glass))
 		var/obj/item/stack/ore/glass/G = W
 		to_chat(user, span_notice("You fill the sandbag."))
@@ -118,6 +118,9 @@ GLOBAL_LIST_INIT(diamond_recipes, list ( \
 /obj/item/stack/sheet/mineral/diamond/five
 	amount = 5
 
+/obj/item/stack/sheet/mineral/diamond/fifty
+	amount = 50
+
 /*
  * Uranium
  */
@@ -148,6 +151,9 @@ GLOBAL_LIST_INIT(uranium_recipes, list ( \
 
 /obj/item/stack/sheet/mineral/uranium/half
 	amount = 25
+
+/obj/item/stack/sheet/mineral/uranium/fifty
+	amount = 50
 
 /*
  * Plasma
@@ -186,6 +192,9 @@ GLOBAL_LIST_INIT(plasma_recipes, list ( \
 /obj/item/stack/sheet/mineral/plasma/thirty
 	amount = 30
 
+/obj/item/stack/sheet/mineral/plasma/fifty
+	amount = 50
+
 /*
  * Gold
  */
@@ -213,6 +222,9 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	. = ..()
 	. += GLOB.gold_recipes
 
+/obj/item/stack/sheet/mineral/gold/fifty
+	amount = 50
+
 /*
  * Silver
  */
@@ -227,7 +239,7 @@ GLOBAL_LIST_INIT(gold_recipes, list ( \
 	gulag_valid = TRUE
 	merge_type = /obj/item/stack/sheet/mineral/silver
 	material_type = /datum/material/silver
-	tableVariant = /obj/structure/table/optable
+	table_type = /obj/structure/table/optable
 	walltype = /turf/closed/wall/mineral/silver
 
 GLOBAL_LIST_INIT(silver_recipes, list ( \
@@ -238,6 +250,9 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 /obj/item/stack/sheet/mineral/silver/get_main_recipes()
 	. = ..()
 	. += GLOB.silver_recipes
+
+/obj/item/stack/sheet/mineral/silver/fifty
+	amount = 50
 
 /*
  * Clown
@@ -295,6 +310,26 @@ GLOBAL_LIST_INIT(titanium_recipes, list ( \
 /obj/item/stack/sheet/mineral/titanium/get_main_recipes()
 	. = ..()
 	. += GLOB.titanium_recipes
+
+/obj/item/stack/sheet/mineral/titanium/attackby(obj/item/W, mob/user, list/modifiers)
+	add_fingerprint(user)
+	if(istype(W, /obj/item/stack/rods))
+		var/obj/item/stack/rods/old_rods = W
+		if(old_rods.merge_type != /obj/item/stack/rods)
+			to_chat(user, span_warning("You can't craft shuttle frame rods with this type of rod!"))
+		if (old_rods.get_amount() >= 5 && get_amount() >= 1)
+			var/obj/item/stack/rods/shuttle/five/new_rods = new (get_turf(user))
+			if(!QDELETED(new_rods))
+				new_rods.add_fingerprint(user)
+			var/replace = user.get_inactive_held_item() == src
+			old_rods.use(5)
+			use(1)
+			if(QDELETED(src) && replace && !QDELETED(new_rods))
+				user.put_in_hands(new_rods)
+		else
+			to_chat(user, span_warning("You need five rods and one sheet of titanium to make shuttle frame rods!"))
+		return
+	return ..()
 
 /obj/item/stack/sheet/mineral/titanium/fifty
 	amount = 50
@@ -455,7 +490,7 @@ GLOBAL_LIST_INIT(abductor_recipes, list ( \
 	grind_results = list(/datum/reagent/carbon = 20)
 	novariants = TRUE
 
-/obj/item/stack/sheet/mineral/coal/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/sheet/mineral/coal/attackby(obj/item/W, mob/user, list/modifiers)
 	if(W.get_temperature() > 300)//If the temperature of the object is over 300, then ignite
 		var/turf/T = get_turf(src)
 		message_admins("Coal ignited by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(T)]")

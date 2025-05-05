@@ -110,7 +110,7 @@ GLOBAL_REAL(Master, /datum/controller/master)
 			//Code used for first master on game boot or if existing master got deleted
 			Master = src
 			var/list/subsystem_types = subtypesof(/datum/controller/subsystem)
-			sortTim(subsystem_types, GLOBAL_PROC_REF(cmp_subsystem_init))
+			sortTim(subsystem_types, GLOBAL_PROC_REF(cmp_subsystem_init_stage))
 
 			//Find any abandoned subsystem from the previous master (if there was any)
 			var/list/existing_subsystems = list()
@@ -268,7 +268,7 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 
 
 /datum/controller/master/Recover()
-	var/msg = "## DEBUG: [time2text(world.timeofday)] MC restarted. Reports:\n"
+	var/msg = "## DEBUG: [time2text(world.timeofday, "DDD MMM DD hh:mm:ss YYYY", TIMEZONE_UTC)] MC restarted. Reports:\n"
 	var/list/master_attributes = Master.vars
 	var/list/filtered_variables = list(
 		NAMEOF(src, name),
@@ -333,10 +333,90 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 	for (var/i in 1 to INITSTAGE_MAX)
 		stage_sorted_subsystems[i] = list()
 
-	// Sort subsystems by init_order, so they initialize in the correct order.
-	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_init))
+	var/list/type_to_subsystem = list()
+	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
+		type_to_subsystem[subsystem.type] = subsystem
 
-	for (var/datum/controller/subsystem/subsystem as anything in subsystems)
+	// Allows subsystems to declare other subsystems that must initialize after them.
+	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
+		for(var/dependent_type as anything in subsystem.dependents)
+			if(!ispath(dependent_type, /datum/controller/subsystem))
+				stack_trace("ERROR: MC: subsystem `[subsystem.type]` has an invalid dependent: `[dependent_type]`. Skipping")
+				continue
+			var/datum/controller/subsystem/dependent = type_to_subsystem[dependent_type]
+			dependent.dependencies |= subsystem.type
+		subsystem.dependents = list()
+
+	// Constructs a reverse-dependency graph.
+	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
+		for(var/dependency_type as anything in subsystem.dependencies)
+			if(!ispath(dependency_type, /datum/controller/subsystem))
+				stack_trace("ERROR: MC: subsystem `[subsystem.type]` has an invalid dependency: `[dependency_type]`. Skipping")
+				continue
+			var/datum/controller/subsystem/dependency = type_to_subsystem[dependency_type]
+			// Not a foolproof failsafe, likely to only prevent any immediate issues if this is only triggered once.
+			if(subsystem.init_stage < dependency.init_stage)
+				stack_trace("ERROR: MC: subsystem `[subsystem.type]` has an init_stage before one of its dependencies (Dependency: `[dependency.type]`, [subsystem.init_stage] < [dependency.init_stage])! Setting init_stage to [dependency.init_stage]")
+				subsystem.init_stage = dependency.init_stage
+			dependency.dependents += subsystem
+
+	// Topological sorting algorithm
+	var/list/counts = new(subsystems.len)
+	var/list/unsorted_subsystems = list()
+	var/index = 1
+	for(var/datum/controller/subsystem/subsystem as anything in subsystems)
+		counts[index] = length(subsystem.dependencies)
+		subsystem.ordering_id = index
+		if(counts[index] == 0)
+			unsorted_subsystems += subsystem
+		index += 1
+
+	var/list/sorted_subsystems = list()
+	while(length(unsorted_subsystems) > 0)
+		var/datum/controller/subsystem/sub = unsorted_subsystems[unsorted_subsystems.len]
+		unsorted_subsystems.len--
+		sorted_subsystems += sub
+		for(var/datum/controller/subsystem/dependent as anything in sub.dependents)
+			counts[dependent.ordering_id] -= 1
+			if(counts[dependent.ordering_id] == 0)
+				unsorted_subsystems += dependent
+	// Topological sorting algorithm end
+
+	if(length(subsystems) != length(sorted_subsystems))
+		var/list/circular_dependency = subsystems.Copy() - sorted_subsystems
+		var/list/debug_msg = list()
+		var/list/usr_msg = list()
+		for(var/datum/controller/subsystem/subsystem as anything in circular_dependency)
+			usr_msg += "[subsystem.name]"
+
+		var/list/datum/controller/subsystem/nodes = list(circular_dependency[1])
+		var/list/loop = list()
+		while(length(nodes) > 0)
+			var/datum/controller/subsystem/node = nodes[nodes.len]
+			nodes.len--
+			if(node in loop)
+				loop += node
+				break
+			loop += node
+			for(var/datum/controller/subsystem/connected as anything in node.dependencies)
+				nodes += type_to_subsystem[connected]
+
+		var/loop_position = 0
+		for(var/datum/controller/subsystem/node in loop)
+			if(node == loop[loop.len])
+				break
+			loop_position++
+		if(loop_position != 0)
+			loop.Cut(1, loop_position + 1)
+
+		for(var/datum/controller/subsystem/subsystem as anything in loop)
+			debug_msg += "[subsystem.name]"
+
+		// Can't initialize them if they have circular dependencies, there's no real failsafe here.
+		stack_trace("ERROR: CRITICAL: MC: The following subsystems have circular dependencies: [jointext(debug_msg, " -> ")]")
+		to_chat(world, span_bolddanger("CRITICAL: Failed to initialize [jointext(usr_msg, ", ")]"), MESSAGE_TYPE_DEBUG)
+
+	for (var/datum/controller/subsystem/subsystem as anything in sorted_subsystems)
 		var/subsystem_init_stage = subsystem.init_stage
 		if (!isnum(subsystem_init_stage) || subsystem_init_stage < 1 || subsystem_init_stage > INITSTAGE_MAX || round(subsystem_init_stage) != subsystem_init_stage)
 			stack_trace("ERROR: MC: subsystem `[subsystem.type]` has invalid init_stage: `[subsystem_init_stage]`. Setting to `[INITSTAGE_MAX]`")
@@ -344,12 +424,15 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		stage_sorted_subsystems[subsystem_init_stage] += subsystem
 
 	// Sort subsystems by display setting for easy access.
+	var/evaluated_order = 1
 	sortTim(subsystems, GLOBAL_PROC_REF(cmp_subsystem_display))
 	var/start_timeofday = REALTIMEOFDAY
 	for (var/current_init_stage in 1 to INITSTAGE_MAX)
 
 		// Initialize subsystems.
 		for (var/datum/controller/subsystem/subsystem in stage_sorted_subsystems[current_init_stage])
+			subsystem.init_order = evaluated_order
+			evaluated_order++
 			init_subsystem(subsystem)
 
 			CHECK_TICK
@@ -404,7 +487,8 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		SS_INIT_NO_MESSAGE,
 	)
 
-	if (subsystem.flags & SS_NO_INIT || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
+	if ((subsystem.flags & SS_NO_INIT) || subsystem.initialized) //Don't init SSs with the corresponding flag or if they already are initialized
+		subsystem.initialized = TRUE // set initialized to TRUE, because the value of initialized may still be checked on SS_NO_INIT subsystems as an "is this ready" check
 		return
 
 	current_initializing_subsystem = subsystem

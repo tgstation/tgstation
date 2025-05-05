@@ -418,6 +418,12 @@
 	reqs = list(/obj/item/stack/sheet/cloth = 4)
 	category = CAT_CLOTHING
 
+/datum/crafting_recipe/chaplain_hood/New()
+	. = ..()
+	//the resulting hoodie can be used to craft other hoodies.
+	//recipe blacklists should be refactored to only affect components and not tools.
+	blacklist -= result
+
 /datum/crafting_recipe/flower_garland
 	name = "Flower Garland"
 	result = /obj/item/clothing/head/costume/garland
@@ -574,9 +580,7 @@
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/balloon_helmet/check_requirements(mob/user, list/collected_requirements)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
-		return TRUE
+	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
 
 /datum/crafting_recipe/balloon_tophat
 	result = /obj/item/clothing/head/hats/tophat/balloon
@@ -587,9 +591,7 @@
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/balloon_tophat/check_requirements(mob/user, list/collected_requirements)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
-		return TRUE
+	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
 
 /datum/crafting_recipe/balloon_vest
 	result = /obj/item/clothing/suit/armor/balloon_vest
@@ -600,9 +602,7 @@
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/balloon_vest/check_requirements(mob/user, list/collected_requirements)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BALLOON_SUTRA))
-		return TRUE
+	return HAS_TRAIT(user, TRAIT_BALLOON_SUTRA)
 
 /datum/crafting_recipe/press_armor
 	name = "press armor vest"

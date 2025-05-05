@@ -17,7 +17,7 @@ import { toFixed } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { LoadingScreen } from './common/LoadingToolbox';
+import { LoadingScreen } from './common/LoadingScreen';
 
 type Data = {
   areas: Area[];

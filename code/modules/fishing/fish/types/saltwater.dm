@@ -158,8 +158,8 @@
 	wound_bonus = 10
 	bare_wound_bonus = 20
 	armour_penetration = 75
-	base_pixel_x = -18
-	pixel_x = -18
+	base_pixel_w = -18
+	pixel_w = -18
 	sprite_width = 13
 	sprite_height = 6
 	stable_population = 3

@@ -19,9 +19,6 @@
 	floor_change.icon = 'icons/hud/screen_midnight.dmi'
 	static_inventory += floor_change
 
-	combo_display = new /atom/movable/screen/combo(null, src)
-	infodisplay += combo_display
-
 	//mob health doll! assumes whatever sprite the mob is
 	healthdoll = new /atom/movable/screen/healthdoll/living(null, src)
 	infodisplay += healthdoll

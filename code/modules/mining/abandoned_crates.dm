@@ -188,7 +188,7 @@
 			new /obj/item/clothing/suit/hooded/ian_costume(src)
 		if(67 to 68)
 			var/obj/item/gibtonite/free_bomb = new /obj/item/gibtonite(src)
-			free_bomb.quality = rand(1, 3)
+			free_bomb.quality = rand(GIBTONITE_QUALITY_LOW, GIBTONITE_QUALITY_HIGH)
 			free_bomb.GibtoniteReaction(null, "A secure loot closet has spawned a live")
 		if(69 to 70)
 			new /obj/item/stack/ore/bluespace_crystal(src, 5)
@@ -231,7 +231,7 @@
 		if(93)
 			new /obj/item/dnainjector/xraymut(src)
 		if(94)
-			new /mob/living/simple_animal/hostile/mimic/crate(src)
+			new /mob/living/basic/mimic/crate(src)
 			qdel_on_open = TRUE
 		if(95)
 			new /obj/item/toy/plush/nukeplushie(src)

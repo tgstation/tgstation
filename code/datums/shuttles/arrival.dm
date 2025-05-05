@@ -26,6 +26,14 @@
 	suffix = "pubby"
 	name = "arrival shuttle (Pubby)"
 
+/datum/map_template/shuttle/arrival/northstar
+	suffix = "northstar"
+	name = "arrival shuttle (North Star)"
+
+/datum/map_template/shuttle/arrival/catwalk
+	suffix = "catwalk"
+	name = "arrival shuttle (Catwalk)"
+
 /datum/map_template/shuttle/arrival/nebula
 	suffix = "nebula"
 	name = "arrival shuttle (Nebula)"

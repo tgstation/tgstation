@@ -31,11 +31,21 @@ export type Supply = {
   access: BooleanLike;
   cost: number;
   desc: string;
+  first_item_icon: string | null;
+  first_item_icon_state: string | null;
   goody: BooleanLike;
   id: string;
   name: string;
   small_item: BooleanLike;
   contraband: BooleanLike;
+  contains: SupplyItem[];
+};
+
+type SupplyItem = {
+  name: string;
+  icon: string | null;
+  icon_state: string | null;
+  amount: number;
 };
 
 type CartEntry = {

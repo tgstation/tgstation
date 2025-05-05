@@ -37,13 +37,15 @@ export function SearchBar(props: Props) {
 
   return (
     <Stack fill style={style}>
-      <Stack.Item>{!noIcon && <Icon name="search" />}</Stack.Item>
+      <Stack.Item align="center">
+        {!noIcon && <Icon name="search" />}
+      </Stack.Item>
       <Stack.Item grow>
         <Input
           autoFocus={autoFocus}
           expensive
           fluid
-          onInput={(e, value) => onSearch(value)}
+          onChange={onSearch}
           placeholder={placeholder}
           value={query}
         />

@@ -125,16 +125,16 @@
 		return
 	open_machine()
 
-/obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user, params)
+/obj/machinery/dna_scannernew/attackby(obj/item/item, mob/user, list/modifiers)
 
-	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, I))//sent icon_state is irrelevant...
+	if(!occupant && default_deconstruction_screwdriver(user, icon_state, icon_state, item))//sent icon_state is irrelevant...
 		update_appearance()//..since we're updating the icon here, since the scanner can be unpowered when opened/closed
 		return
 
-	if(default_pry_open(I, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
+	if(default_pry_open(item, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE))
 		return
 
-	if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(item))
 		return
 
 	return ..()
@@ -168,11 +168,26 @@
 	var/list/mutations = list()
 	var/max_mutations = 6
 	var/read_only = FALSE //Well,it's still a floppy disk
+	obj_flags = parent_type::obj_flags | INFINITE_RESKIN
+	unique_reskin = list(
+			"Red" = "datadisk0",
+			"Dark Blue" = "datadisk1",
+			"Yellow" = "datadisk2",
+			"Black" = "datadisk3",
+			"Green" = "datadisk4",
+			"Purple" = "datadisk5",
+			"Grey" = "datadisk6",
+			"Light Blue" = "datadisk7",
+	)
 
 /obj/item/disk/data/Initialize(mapload)
 	. = ..()
 	icon_state = "datadisk[rand(0,7)]"
 	add_overlay("datadisk_gene")
+	if(length(genetic_makeup_buffer))
+		var/datum/blood_type = genetic_makeup_buffer["blood_type"]
+		if(blood_type)
+			blood_type = get_blood_type(blood_type) || random_human_blood_type()
 
 /obj/item/disk/data/debug
 	name = "\improper CentCom DNA disk"

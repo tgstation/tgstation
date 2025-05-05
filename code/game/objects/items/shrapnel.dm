@@ -20,6 +20,13 @@
 	icon_state = "s-casing"
 	embed_type = null
 
+/obj/item/shrapnel/plastic
+	name = "plastic shard"
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.5)
+	icon_state = "titaniummedium"
+	sharpness = SHARP_EDGED
+	embed_type = /datum/embedding/shrapnel
+
 /obj/projectile/bullet/shrapnel
 	name = "flying shrapnel shard"
 	damage = 14
@@ -40,6 +47,7 @@
 	embed_chance = 70
 	ignore_throwspeed_threshold = TRUE
 	fall_chance = 1
+	stealthy_embed = TRUE
 
 /obj/projectile/bullet/shrapnel/short_range
 	range = 5
@@ -85,7 +93,7 @@
 	pain_stam_pct = 0.7
 	pain_mult = 3
 	jostle_pain_mult = 3
-	rip_time = 15
+	rip_time = 1.5 SECONDS
 
 /obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
 	hit_prone_targets = TRUE // ducking will save you from the first wave, but not the rebounds
@@ -119,10 +127,9 @@
 	pain_stam_pct = 0.7
 	pain_mult = 5
 	jostle_pain_mult = 6
-	rip_time = 15
+	rip_time = 1.5 SECONDS
 
 /obj/item/shrapnel/capmine
 	name = "\improper AP shrapnel shard"
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 0.5)
 	weak_against_armour = TRUE
-
