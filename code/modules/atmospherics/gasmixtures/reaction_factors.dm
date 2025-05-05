@@ -211,4 +211,5 @@
 /datum/gas_reaction/antinoblium_replication/init_factors()
 	factor = list(
 		/datum/gas/antinoblium = "[MINIMUM_MOLE_COUNT] moles of antinoblium is needed to replicate itself. Requires other gases to be converted to antinoblium."
+	)
 		
