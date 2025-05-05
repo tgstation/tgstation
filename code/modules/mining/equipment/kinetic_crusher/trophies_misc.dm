@@ -76,7 +76,7 @@
 	/// Name of the modification
 	var/name = "error that should be reported to coders"
 	/// Specifies the icon file in which the crusher's new state is stored.
-	var/retool_icon = null
+	var/retool_icon = 'icons/obj/mining.dmi
 	///Specifies the sprite/icon state which the crusher is changed to as an item. Should appear in the icons/obj/mining.dmi file with accompanying "lit" and "recharging" sprites
 	var/retool_icon_state = "ipickaxe"
 	///Specifies the icon state for the crusher's appearance in hand. Should appear in both retool_lefthand_file and retool_righthand_file.
