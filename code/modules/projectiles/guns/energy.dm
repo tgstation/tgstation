@@ -260,9 +260,9 @@
 		return
 
 	var/overlay_icon_state = "[icon_state]_charge"
-	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 
 	if(modifystate)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		if(single_shot_type_overlay)
 			. += "[icon_state]_[initial(shot.select_name)]"
 		overlay_icon_state += "_[initial(shot.select_name)]"
@@ -273,6 +273,7 @@
 		return
 
 	if(shot_type_fluff_overlay)
+		var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 		. += "[icon_state]_[initial(shot.select_name)]_extra"
 
 	if(shaded_charge)
