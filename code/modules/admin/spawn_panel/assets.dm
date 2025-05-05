@@ -6,7 +6,7 @@
 
 	var/static/list/mapping_objects = typecacheof(list(
 		/obj/effect/mapping_helpers,
-  	/obj/effect/landmark,
+		/obj/effect/landmark,
 		/obj/effect/spawner,
 		/obj/effect/mob_spawn,
 		/obj/effect/holodeck_effect,
