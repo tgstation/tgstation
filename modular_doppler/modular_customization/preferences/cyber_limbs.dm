@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(frame_types, list(
 	"zhenkovdark",
 	"shard_alpha",
 	"polytronic",
+	"empty",
 	))
 
 // What will be showed in the drop-down
@@ -46,7 +47,17 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 	"zhenkovdark" = "Zhenkov & Co. Foundries - At Night",
 	"shard_alpha" = "Shard Alpha Raptoral",
 	"polytronic" = "Polytronic Modular Doll",
+	"empty" = "Missing limb",
 	))
+/obj/item/bodypart/head/robot/android/empty
+
+/obj/item/bodypart/arm/right/robot/android/empty
+
+/obj/item/bodypart/arm/left/robot/android/empty
+
+/obj/item/bodypart/leg/right/robot/android/empty
+
+/obj/item/bodypart/leg/left/robot/android/empty
 
 /datum/species/regenerate_organs(mob/living/carbon/target, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	. = ..()
@@ -54,10 +65,12 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 		//head
 		if(target.dna.features["frame_list"][BODY_ZONE_HEAD] && type == /datum/species/android)
 			var/obj/item/bodypart/head/old_limb = target.get_bodypart(BODY_ZONE_HEAD)
-			old_limb.drop_limb(TRUE, FALSE, FALSE)
-			old_limb.moveToNullspace()
-			var/obj/item/bodypart/head/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_HEAD])
-			replacement.try_attach_limb(target, TRUE)
+			if(old_limb)
+				old_limb.drop_limb(TRUE, FALSE, FALSE)
+				old_limb.moveToNullspace()
+			if(target.dna.features["frame_list"][BODY_ZONE_HEAD] != /obj/item/bodypart/head/robot/android/empty)
+				var/obj/item/bodypart/head/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_HEAD])
+				replacement.try_attach_limb(target, TRUE)
 		//chest
 		if(target.dna.features["frame_list"][BODY_ZONE_CHEST])
 			var/obj/item/bodypart/chest/old_limb = target.get_bodypart(BODY_ZONE_CHEST)
@@ -68,31 +81,39 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 		//right arm
 		if(target.dna.features["frame_list"][BODY_ZONE_R_ARM])
 			var/obj/item/bodypart/arm/right/old_limb = target.get_bodypart(BODY_ZONE_R_ARM)
-			old_limb.drop_limb(TRUE, FALSE, FALSE)
-			old_limb.moveToNullspace()
-			var/obj/item/bodypart/arm/right/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_R_ARM])
-			replacement.try_attach_limb(target, TRUE)
+			if(old_limb)
+				old_limb.drop_limb(TRUE, FALSE, FALSE)
+				old_limb.moveToNullspace()
+			if(target.dna.features["frame_list"][BODY_ZONE_R_ARM] != /obj/item/bodypart/arm/right/robot/android/empty)
+				var/obj/item/bodypart/arm/right/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_R_ARM])
+				replacement.try_attach_limb(target, TRUE)
 		//left arm
 		if(target.dna.features["frame_list"][BODY_ZONE_L_ARM])
 			var/obj/item/bodypart/arm/left/old_limb = target.get_bodypart(BODY_ZONE_L_ARM)
-			old_limb.drop_limb(TRUE, FALSE, FALSE)
-			old_limb.moveToNullspace()
-			var/obj/item/bodypart/arm/left/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_L_ARM])
-			replacement.try_attach_limb(target, TRUE)
+			if(old_limb)
+				old_limb.drop_limb(TRUE, FALSE, FALSE)
+				old_limb.moveToNullspace()
+			if(target.dna.features["frame_list"][BODY_ZONE_L_ARM] != /obj/item/bodypart/arm/left/robot/android/empty)
+				var/obj/item/bodypart/arm/left/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_L_ARM])
+				replacement.try_attach_limb(target, TRUE)
 		//right leg
 		if(target.dna.features["frame_list"][BODY_ZONE_R_LEG])
 			var/obj/item/bodypart/leg/right/old_limb = target.get_bodypart(BODY_ZONE_R_LEG)
-			old_limb.drop_limb(TRUE, FALSE, FALSE)
-			old_limb.moveToNullspace()
-			var/obj/item/bodypart/leg/right/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_R_LEG])
-			replacement.try_attach_limb(target, TRUE)
+			if(old_limb)
+				old_limb.drop_limb(TRUE, FALSE, FALSE)
+				old_limb.moveToNullspace()
+			if(target.dna.features["frame_list"][BODY_ZONE_R_LEG] != /obj/item/bodypart/leg/right/robot/android/empty)
+				var/obj/item/bodypart/leg/right/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_R_LEG])
+				replacement.try_attach_limb(target, TRUE)
 		//left leg
 		if(target.dna.features["frame_list"][BODY_ZONE_L_LEG])
 			var/obj/item/bodypart/leg/left/old_limb = target.get_bodypart(BODY_ZONE_L_LEG)
-			old_limb.drop_limb(TRUE, FALSE, FALSE)
-			old_limb.moveToNullspace()
-			var/obj/item/bodypart/leg/left/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_L_LEG])
-			replacement.try_attach_limb(target, TRUE)
+			if(old_limb)
+				old_limb.drop_limb(TRUE, FALSE, FALSE)
+				old_limb.moveToNullspace()
+			if(target.dna.features["frame_list"][BODY_ZONE_L_LEG] != /obj/item/bodypart/leg/left/robot/android/empty)
+				var/obj/item/bodypart/leg/left/replacement = SSwardrobe.provide_type(target.dna.features["frame_list"][BODY_ZONE_L_LEG])
+				replacement.try_attach_limb(target, TRUE)
 		return .
 
 // Head
@@ -134,7 +155,7 @@ GLOBAL_LIST_INIT(frame_type_names, list(
 
 /datum/preference/choiced/chest_type/compile_constant_data()
 	var/list/data = ..()
-	data[CHOICED_PREFERENCE_DISPLAY_NAMES] = GLOB.frame_type_names
+	data[CHOICED_PREFERENCE_DISPLAY_NAMES] = (GLOB.frame_type_names - "empty")
 	return data
 
 /datum/preference/choiced/chest_type/init_possible_values()
