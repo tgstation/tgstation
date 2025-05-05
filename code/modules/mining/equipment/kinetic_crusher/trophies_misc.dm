@@ -50,6 +50,7 @@
 		pkc.righthand_file = active_skin.retool_righthand_file
 	if(active_skin.retool_worn_file)
 		pkc.worn_icon = active_skin.retool_worn_file
+		pkc.worn_icon_state = active_skin::retool_icon_state
 	if (active_skin.retool_inhand_x)
 		pkc.inhand_x_dimension = active_skin.retool_inhand_x
 	if (active_skin.retool_inhand_y)
@@ -68,6 +69,7 @@
 	pkc.lefthand_file = initial(pkc.lefthand_file)
 	pkc.righthand_file = initial(pkc.righthand_file)
 	pkc.worn_icon = initial(pkc.worn_icon)
+	pkc.worn_icon_state = initial(pkc.worn_icon_state)
 	pkc.inhand_x_dimension = initial(pkc.inhand_x_dimension)
 	pkc.inhand_y_dimension = initial(pkc.inhand_y_dimension)
 	pkc.update_appearance()
