@@ -1174,13 +1174,12 @@
 
 /**
  * Antinoblium Recplication
- * 
+ *
  * Converts all gases into antinoblium.
  */
 /datum/gas_reaction/antinoblium_replication/react(datum/gas_mixture/air, datum/holder)
 	. = REACTING
 	var/list/cached_gases = air.gases
-	var/temperature = air.temperature
 	var/heat_capacity = air.heat_capacity()
 	var/total_moles = air.total_moles()
 	var/antinoblium = cached_gases[/datum/gas/antinoblium]
@@ -1201,7 +1200,7 @@
 	antinoblium[MOLES] += reaction_rate
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-		air.temperature = max(air.temperature * new_heat_capacity / heat_capacity, TCMB)
-	
+		air.temperature = max(air.temperature * heat_capacity / new_heat_capacity, TCMB)
+
 
 #undef SET_REACTION_RESULTS
