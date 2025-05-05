@@ -66,10 +66,13 @@
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
 
+/*
+	// melbert todo
 	else if(href_list["gamemode_panel"])
 		if(!check_rights(R_ADMIN))
 			return
 		SSdynamic.admin_panel()
+*/
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
@@ -388,6 +391,7 @@
 			return
 		cmd_admin_mute(href_list["mute"], text2num(href_list["mute_type"]))
 
+/*
 	else if(href_list["f_dynamic_roundstart"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -503,7 +507,7 @@
 		log_admin("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
 		message_admins("[key_name(usr)] set 'forced_threat_level' to [GLOB.dynamic_forced_threat_level].")
 		dynamic_mode_options(usr)
-
+*/
 	else if(href_list["forcespeech"])
 		if(!check_rights(R_FUN))
 			return

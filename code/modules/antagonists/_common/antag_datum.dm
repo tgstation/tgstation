@@ -3,6 +3,10 @@
 
 GLOBAL_LIST_EMPTY(antagonists)
 
+// melbert todo : WE HAVE FIVE WAYS TO SAY THIS ANTAG ISN'T A REAL ANTAG
+// prevent_roundtype_conversion, can_coexist_with_others, count_against_dynamic_roll_chance, antag_flags = FLAG_FAKE_ANTAG, and block_midrounds
+// also typecache_datum_blacklist kinda
+// i hate it here
 /datum/antagonist
 	///Public name for this antagonist. Appears for player prompts and round-end reports.
 	var/name = "\improper Antagonist"
@@ -10,16 +14,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/roundend_category = "other antagonists"
 	///Set to false to hide the antagonists from roundend report
 	var/show_in_roundend = TRUE
-	///If false, the roundtype will still convert with this antag active
-	var/prevent_roundtype_conversion = TRUE
 	///Mind that owns this datum
 	var/datum/mind/owner
 	///Silent will prevent the gain/lose texts to show
 	var/silent = FALSE
-	///Whether or not the person will be able to have more than one datum
-	var/can_coexist_with_others = TRUE
-	///List of datums this type can't coexist with
-	var/list/typecache_datum_blacklist = list()
 	///The define string we use to identify the role for bans/player polls to spawn a random new one in.
 	var/job_rank
 	///Should replace jobbanned player with ghosts if granted.
@@ -63,8 +61,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hardcore_random_bonus = FALSE
 	/// A path to the audio stinger that plays upon gaining this datum.
 	var/stinger_sound
-	/// Whether this antag datum blocks rolling new antag datums
-	var/block_midrounds = TRUE
 
 	//ANTAG UI
 
@@ -78,7 +74,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
-	typecache_datum_blacklist = typecacheof(typecache_datum_blacklist)
 
 /datum/antagonist/Destroy()
 	GLOB.antagonists -= src
@@ -179,12 +174,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist/proc/can_be_owned(datum/mind/new_owner)
 	var/datum/mind/tested = new_owner || owner
-	if(tested.has_antag_datum(type))
-		return FALSE
-	for(var/datum/antagonist/badguy as anything in tested.antag_datums)
-		if(is_type_in_typecache(src, badguy.typecache_datum_blacklist))
-			return FALSE
-	return TRUE
+	return !tested.has_antag_datum(type)
 
 //This will be called in add_antag_datum before owner assignment.
 //Should return antag datum without owner.

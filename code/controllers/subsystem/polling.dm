@@ -288,8 +288,7 @@ SUBSYSTEM_DEF(polling)
 	if(role)
 		if(!(role in potential_candidate.client.prefs.be_special))
 			return FALSE
-		var/required_time = GLOB.special_roles[role] || 0
-		if(potential_candidate.client && potential_candidate.client.get_remaining_days(required_time) > 0)
+		if(potential_candidate.client && potential_candidate.client.get_remaining_days(get_all_antag_time_limits()[role] || 0) > 0)
 			return FALSE
 
 	if(check_jobban)

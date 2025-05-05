@@ -77,10 +77,7 @@
  * Arguments:
  * * candidate - The mob (player) to be transformed into a changeling and meteored.
  */
-/proc/generate_changeling_meteor(mob/dead/selected)
-	var/datum/mind/player_mind = new(selected.key)
-	player_mind.active = TRUE
-
+/proc/generate_changeling_meteor(datum/mind/player_mind)
 	var/turf/picked_start
 
 	if (SSmapping.is_planetary())

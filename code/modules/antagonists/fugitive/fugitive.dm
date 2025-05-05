@@ -7,7 +7,6 @@
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	antagpanel_category = ANTAG_GROUP_FUGITIVES
-	prevent_roundtype_conversion = FALSE
 	antag_hud_name = "fugitive"
 	suicide_cry = "FOR FREEDOM!!"
 	preview_outfit = /datum/outfit/prisoner

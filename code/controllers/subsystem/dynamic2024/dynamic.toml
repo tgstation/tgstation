@@ -1,0 +1,36 @@
+## Tier config
+## It's recommended you keep the weights added up to 100 for ease of reading
+
+## Greenshift
+["Greenshift"]
+weight = 2
+
+## Low
+["Low Chaos"]
+weight = 8
+min_pop = 0
+ruleset_ranges.roundstart.low = 1
+ruleset_ranges.roundstart.high = 1
+ruleset_ranges.light_midround.low = 1
+ruleset_ranges.light_midround.high = 2
+ruleset_ranges.light_midround.time_threshold = 30
+ruleset_ranges.heavy_midround.low = 0
+ruleset_ranges.heavy_midround.high = 1
+ruleset_ranges.heavy_midround.time_threshold = 60
+ruleset_ranges.latejoin.low = 0
+ruleset_ranges.latejoin.high = 1
+
+## Low-med
+["Low-Medium Chaos"]
+weight = 24
+
+## Med-high
+["Medium-High Chaos"]
+weight = 50
+
+## High
+["High Chaos"]
+weight = 16
+
+
+## Ruleset Config

@@ -20,7 +20,6 @@
 	job_rank = ROLE_ALIEN
 	show_in_antagpanel = FALSE
 	antagpanel_category = ANTAG_GROUP_XENOS
-	prevent_roundtype_conversion = FALSE
 	show_to_ghosts = TRUE
 	var/datum/team/xeno/xeno_team
 

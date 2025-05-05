@@ -6,5 +6,5 @@
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = FALSE
 	silent = TRUE
-	block_midrounds = FALSE
+	antag_flags = FLAG_FAKE_ANTAG
 	show_in_roundend = FALSE

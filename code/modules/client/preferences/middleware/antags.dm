@@ -69,12 +69,12 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 
 	for (var/datum/dynamic_ruleset/dynamic_ruleset as anything in subtypesof(/datum/dynamic_ruleset))
 		var/antag_flag = initial(dynamic_ruleset.antag_flag)
-		var/antag_flag_override = initial(dynamic_ruleset.antag_flag_override)
+		var/jobban_flag = initial(dynamic_ruleset.jobban_flag)
 
 		if (isnull(antag_flag))
 			continue
 
-		if (is_banned_from(preferences.parent.ckey, list(antag_flag_override || antag_flag, ROLE_SYNDICATE)))
+		if (is_banned_from(preferences.parent.ckey, list(jobban_flag || antag_flag, ROLE_SYNDICATE)))
 			antag_bans += serialize_antag_name(antag_flag)
 
 	for(var/antag_key in GLOB.non_ruleset_antagonists)
@@ -90,29 +90,9 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 		return
 
 	var/list/antag_days_left = list()
-
-	for (var/datum/dynamic_ruleset/dynamic_ruleset as anything in subtypesof(/datum/dynamic_ruleset))
-		var/antag_flag = initial(dynamic_ruleset.antag_flag)
-		var/antag_flag_override = initial(dynamic_ruleset.antag_flag_override)
-
-		if (isnull(antag_flag))
-			continue
-
-		var/days_needed = preferences.parent?.get_remaining_days(
-			GLOB.special_roles[antag_flag_override || antag_flag]
-		)
-
-		if (days_needed > 0)
-			antag_days_left[serialize_antag_name(antag_flag)] = days_needed
-
-	for(var/antag_key in GLOB.non_ruleset_antagonists)
-		var/datum/antagonist/antag = GLOB.non_ruleset_antagonists[antag_key]
-		var/antag_flag = initial(antag.job_rank)
-
-		var/days_needed = preferences.parent?.get_remaining_days(
-			GLOB.special_roles[antag_flag]
-		)
-
+	var/list/time_limits = get_all_antag_time_limits()
+	for (var/antag_flag in time_limits)
+		var/days_needed = preferences.parent?.get_remaining_days(time_limits[antag_flag] || 0)
 		if (days_needed > 0)
 			antag_days_left[serialize_antag_name(antag_flag)] = days_needed
 
@@ -124,10 +104,53 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 	if (isnull(serialized_antags))
 		serialized_antags = list()
 
-		for (var/special_role in GLOB.special_roles)
+		for (var/special_role in get_all_antag_flags())
 			serialized_antags[serialize_antag_name(special_role)] = special_role
 
 	return serialized_antags
+
+/**
+ * Returns a list of all antag flags that are available to the player
+ *
+ * So includes stuff like traitor, wizard, fugitive, but does not include wizard apprentice or hypnotized
+ */
+/proc/get_all_antag_flags()  as /list
+	var/static/list/antag_flags
+	if(antag_flags)
+		return antag_flags
+
+	antag_flags = list()
+	for(var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
+		antag_flags |= initial(ruleset.antag_flag)
+		antag_flags |= initial(ruleset.jobban_flag)
+
+	var/list/non_ruleset_antags = list(
+		ROLE_GLITCH = /datum/antagonist/bitrunning_glitch,
+		ROLE_FUGITIVE = /datum/antagonist/fugitive,
+		ROLE_LONE_OPERATIVE = /datum/antagonist/nukeop/lone,
+		ROLE_SENTIENCE = /datum/antagonist/sentient_creature,
+	)
+
+	antag_flags |= non_ruleset_antags
+	return antag_flags
+
+/**
+ * Returns an assoc list of antag flag to min account age necessary to play that antag
+ */
+/proc/get_all_antag_time_limits() as /list
+	var/static/list/antag_time_limits
+	if(antag_time_limits)
+		return antag_time_limits
+
+	antag_time_limits = list()
+	for(var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
+		var/antag_flag = initial(ruleset.antag_flag)
+		var/config_min_days = SSdynamic.dynamic_config[initial(ruleset.config_tag)]?[NAMEOF(ruleset, minimum_required_age)]
+		var/min_days = isnull(config_min_days) ? initial(ruleset.minimum_required_age) : config_min_days
+
+		antag_time_limits[antag_flag] = min_days
+
+	return antag_time_limits
 
 /// Sprites generated for the antagonists panel
 /datum/asset/spritesheet/antagonists
