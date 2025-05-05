@@ -262,7 +262,7 @@
 
 /datum/blood_type/ethereal/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
 	. = ..()
-	blood.emissive_alpha = max(blood.emissive_alpha, new_splat ? 188 : 125)
+	blood.emissive_alpha = max(blood.emissive_alpha, new_splat ? 93 : 62)
 	if (new_splat)
 		return
 	blood.can_dry = FALSE

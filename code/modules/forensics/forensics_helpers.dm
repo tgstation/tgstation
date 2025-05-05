@@ -200,7 +200,7 @@
 		blood_in_hands = min(blood_in_hands, rand(2, 4))
 
 	if(dirty_feet)
-		AddComponent(/datum/component/bloodysoles/feet, blood_DNA_to_add)
+		AddComponent(/datum/component/bloodysoles/feet, blood_DNA_to_add) // Add blood to our feet
 
 	update_clothing(slots_to_bloody)
 	return TRUE

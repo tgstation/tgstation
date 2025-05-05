@@ -7,6 +7,8 @@
 /datum/component/bloodysoles
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
+/*
+
 	/// The type of the last grub pool we stepped in, used to decide the type of footprints to make
 	var/last_blood_state = BLOOD_STATE_NOT_BLOODY
 
@@ -352,5 +354,5 @@
 	SIGNAL_HANDLER
 
 	update_icon()
-
+*/
 #undef BLOOD_PERCENT_LOSS_ON_STEP

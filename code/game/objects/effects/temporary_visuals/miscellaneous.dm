@@ -47,7 +47,7 @@
 			target_pixel_x = -16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
+	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration, flags = CUBIC_EASING | EASE_OUT)
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
 	name = "speedbike trails"
