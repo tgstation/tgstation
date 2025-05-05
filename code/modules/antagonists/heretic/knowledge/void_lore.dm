@@ -54,7 +54,7 @@
 	gain_text = "The entity calls themself the Aristocrat. They effortlessly walk through air like \
 		nothing - leaving a harsh, cold breeze in their wake. They disappear, and I am left in the blizzard."
 	action_to_add = /datum/action/cooldown/spell/pointed/void_phase
-	cost = 2
+	cost = 1
 	research_tree_icon_frame = 7
 
 /datum/heretic_knowledge/spell/void_prison

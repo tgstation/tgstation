@@ -55,7 +55,7 @@
 	gain_text = "My mind swings open like a gate, and its insight will let me perceive the truth."
 
 	action_to_add = /datum/action/cooldown/spell/pointed/mind_gate
-	cost = 2
+	cost = 1
 
 /datum/heretic_knowledge/moon_amulet
 	name = "Moonlight Amulet"

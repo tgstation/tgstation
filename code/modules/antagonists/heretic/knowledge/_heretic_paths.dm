@@ -17,16 +17,24 @@ GLOBAL_LIST(heretic_research_tree)
 	var/start
 	///Tier1 knowledge
 	var/knowledge_tier1
+	/// First Draft
+	var/draft_tier1 = list(/datum/heretic_knowledge/drafting, /datum/heretic_knowledge/drafting, /datum/heretic_knowledge/drafting)
 	///Tier2 knowledge
 	var/knowledge_tier2
+	/// Second Draft
+	var/draft_tier2 = list(/datum/heretic_knowledge/drafting, /datum/heretic_knowledge/drafting, /datum/heretic_knowledge/drafting)
 	///Path-Specific Heretic robes
 	var/robes
 	///Tier3 knowledge
 	var/knowledge_tier3
+	/// Third Draft
+	var/draft_tier3 = list(/datum/heretic_knowledge/drafting, /datum/heretic_knowledge/drafting, /datum/heretic_knowledge/drafting)
 	///Blade upgrade
 	var/blade
 	///Tier4 knowledge
 	var/knowledge_tier4
+	/// Fourth Draft
+	var/draft_tier4 = list(/datum/heretic_knowledge/drafting, /datum/heretic_knowledge/drafting, /datum/heretic_knowledge/drafting)
 	///Ascension
 	var/ascension
 
@@ -165,8 +173,37 @@ GLOBAL_LIST(heretic_research_tree)
 		heretic_research_tree[main_column.ascension][HKT_DEPTH] = 13
 
 		//Per path bullshit goes here \/\/\/
+		for(var/t3_knowledge in knowledge_tier3)
+			heretic_research_tree[t3_knowledge][HKT_NEXT] += /datum/heretic_knowledge/reroll_targets
+
+	// Drafting knowledge here. They are placeholders when the tree is built because only 1 tree is built for all heretics.
+	// This means that the knowledge itself is randomized once the heretic unlocks them
+		for(var/t1_knowledge in knowledge_tier1)
+			heretic_research_tree[t1_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/one
+			heretic_research_tree[t1_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/one
+			heretic_research_tree[t1_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/one
 		for(var/t2_knowledge in knowledge_tier2)
-			heretic_research_tree[t2_knowledge][HKT_NEXT] += /datum/heretic_knowledge/reroll_targets
+			heretic_research_tree[t2_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/two
+			heretic_research_tree[t2_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/two
+			heretic_research_tree[t2_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/two
+		for(var/t3_knowledge in knowledge_tier3)
+			heretic_research_tree[t3_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/three
+			heretic_research_tree[t3_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/three
+			heretic_research_tree[t3_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/three
+		for(var/t4_knowledge in knowledge_tier4)
+			heretic_research_tree[t4_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/four
+			heretic_research_tree[t4_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/four
+			heretic_research_tree[t4_knowledge][HKT_NEXT] += /datum/heretic_knowledge/drafting/four
+
+	heretic_research_tree[/datum/heretic_knowledge/drafting/one][HKT_ROUTE] = PATH_SIDE
+	heretic_research_tree[/datum/heretic_knowledge/drafting/one][HKT_DEPTH] = 4
+	heretic_research_tree[/datum/heretic_knowledge/drafting/two][HKT_ROUTE] = PATH_SIDE
+	heretic_research_tree[/datum/heretic_knowledge/drafting/two][HKT_DEPTH] = 6
+	heretic_research_tree[/datum/heretic_knowledge/drafting/three][HKT_ROUTE] = PATH_SIDE
+	heretic_research_tree[/datum/heretic_knowledge/drafting/three][HKT_DEPTH] = 9
+	heretic_research_tree[/datum/heretic_knowledge/drafting/four][HKT_ROUTE] = PATH_SIDE
+	heretic_research_tree[/datum/heretic_knowledge/drafting/four][HKT_DEPTH] = 12
+
 
 	// If you want to do any custom bullshit put it here \/\/\/
 	heretic_research_tree[/datum/heretic_knowledge/reroll_targets][HKT_ROUTE] = PATH_SIDE

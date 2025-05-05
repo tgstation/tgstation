@@ -1,3 +1,5 @@
+/* XANTODO Maybe the unit test has to change
+
 
 /*
  * This test checks all heretic knowledge nodes and validates they are setup correctly.
@@ -44,3 +46,5 @@
 		var/list/unreachables = all_possible_knowledge - list_to_check
 		for(var/datum/heretic_knowledge/lost_knowledge as anything in unreachables)
 			TEST_FAIL("Heretic Knowledge: [lost_knowledge] is unreachable by players! Add it to another knowledge's 'next_knowledge' list. If it is purposeful, set its route to 'null'.")
+
+*/

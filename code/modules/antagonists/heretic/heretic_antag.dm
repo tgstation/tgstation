@@ -30,6 +30,8 @@
 	hardcore_random_bonus = TRUE
 	stinger_sound = 'sound/music/antag/heretic/heretic_gain.ogg'
 
+	/// Heretic knowledge tree
+	var/list/heretic_knowledge_tree
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -134,7 +136,7 @@
 	knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 	knowledge_data["cost"] = initial(knowledge.cost)
 	knowledge_data["disabled"] = (!done) && (initial(knowledge.cost) > knowledge_points)
-	knowledge_data["bgr"] = GLOB.heretic_research_tree[knowledge][HKT_UI_BGR]
+	knowledge_data["bgr"] = heretic_knowledge_tree[knowledge][HKT_UI_BGR]
 	knowledge_data["finished"] = done
 	knowledge_data["ascension"] = ispath(knowledge,/datum/heretic_knowledge/ultimate)
 
@@ -162,10 +164,10 @@
 	for(var/datum/heretic_knowledge/knowledge as anything in researched_knowledge)
 		var/list/knowledge_data = get_knowledge_data(knowledge,TRUE)
 
-		while(GLOB.heretic_research_tree[knowledge][HKT_DEPTH] > tiers.len)
+		while(heretic_knowledge_tree[knowledge][HKT_DEPTH] > tiers.len)
 			tiers += list(list("nodes"=list()))
 
-		tiers[GLOB.heretic_research_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
+		tiers[heretic_knowledge_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
 
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
 		var/list/knowledge_data = get_knowledge_data(knowledge,FALSE)
@@ -174,10 +176,10 @@
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
 			knowledge_data["disabled"] ||= !can_ascend()
 
-		while(GLOB.heretic_research_tree[knowledge][HKT_DEPTH] > tiers.len)
+		while(heretic_knowledge_tree[knowledge][HKT_DEPTH] > tiers.len)
 			tiers += list(list("nodes"=list()))
 
-		tiers[GLOB.heretic_research_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
+		tiers[heretic_knowledge_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
 
 	data["knowledge_tiers"] = tiers
 
@@ -261,11 +263,10 @@
 	return ..()
 
 /datum/antagonist/heretic/on_gain()
-	if(!GLOB.heretic_research_tree)
-		GLOB.heretic_research_tree = generate_heretic_research_tree()
+	heretic_knowledge_tree = generate_heretic_research_tree()
 
 	if(give_objectives)
-		forge_primary_objectives()
+		forge_primary_objectives(heretic_knowledge_tree)
 
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge)
@@ -563,8 +564,8 @@
 /**
  * Create our objectives for our heretic.
  */
-/datum/antagonist/heretic/proc/forge_primary_objectives()
-	var/datum/objective/heretic_research/research_objective = new()
+/datum/antagonist/heretic/proc/forge_primary_objectives(heretic_research_tree)
+	var/datum/objective/heretic_research/research_objective = new(heretic_research_tree = heretic_research_tree)
 	research_objective.owner = owner
 	objectives += research_objective
 
@@ -821,8 +822,8 @@
 	var/list/banned_knowledge = list()
 	for(var/knowledge_index in researched_knowledge)
 		var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_index]
-		researchable_knowledge |= GLOB.heretic_research_tree[knowledge_index][HKT_NEXT]
-		banned_knowledge |= GLOB.heretic_research_tree[knowledge_index][HKT_BAN]
+		researchable_knowledge |= heretic_knowledge_tree[knowledge_index][HKT_NEXT]
+		banned_knowledge |= heretic_knowledge_tree[knowledge_index][HKT_BAN]
 		banned_knowledge |= knowledge.type
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge
@@ -930,7 +931,7 @@
 	/// The length of a main path. Calculated once in New().
 	var/static/main_path_length = 0
 
-/datum/objective/heretic_research/New(text)
+/datum/objective/heretic_research/New(text, heretic_research_tree)
 	. = ..()
 
 	if(!main_path_length)
@@ -938,7 +939,7 @@
 		// (All the main paths are (should be) the same length, so it doesn't matter.)
 		var/rust_paths_found = 0
 		for(var/datum/heretic_knowledge/knowledge as anything in subtypesof(/datum/heretic_knowledge))
-			if(GLOB.heretic_research_tree[knowledge][HKT_ROUTE] == PATH_RUST)
+			if(heretic_research_tree[knowledge][HKT_ROUTE] == PATH_RUST)
 				rust_paths_found++
 
 		main_path_length = rust_paths_found

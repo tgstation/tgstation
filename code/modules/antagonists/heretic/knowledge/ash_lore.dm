@@ -58,7 +58,7 @@
 	gain_text = "He knew how to walk between the planes."
 
 	action_to_add = /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash
-	cost = 2
+	cost = 1
 
 /datum/heretic_knowledge/spell/fire_blast
 	name = "Volcano Blast"
