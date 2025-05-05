@@ -16,27 +16,11 @@
 #define OFFSET_RELATIVE "Relative offset"
 
 ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADMIN_CATEGORY_GAME)
-	if (!usr.client.holder.spawnpanel_tgui)
-		usr.client.holder.spawnpanel_tgui = new(usr.client)
-	usr.client.holder.spawnpanel_tgui.ui_interact(usr)
+	var/static/datum/spawnpanel/ui = new
+	ui.ui_interact(user.mob)
 	BLACKBOX_LOG_ADMIN_VERB("Spawn Panel")
 
-/datum/admins
-	var/datum/admins/spawnpanel/spawnpanel_tgui
-
-/datum/admins/spawnpanel/New(user)
-	if(istype(user, /client))
-		var/client/temp_user_client = user
-		user_client = temp_user_client
-	else
-		var/mob/user_mob = user
-		user_client = user_mob.client
-
-/datum/admins/Destroy()
-	. = ..()
-	qdel(spawnpanel_tgui)
-
-/datum/admins/spawnpanel
+/datum/spawnpanel
 	var/client/user_client
 	var/where_dropdown_value = WHERE_FLOOR_BELOW_MOB
 	var/selected_object = ""
@@ -51,24 +35,29 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 	var/offset_type = "relative"
 	var/precise_mode = FALSE
 
-/datum/admins/spawnpanel/New(user)
-	. = ..()
+/datum/spawnpanel/New(user)
+	if(istype(user, /client))
+		var/client/temp_user_client = user
+		user_client = temp_user_client
+	else
+		var/mob/user_mob = user
+		user_client = user_mob.client
 
-/datum/admins/spawnpanel/ui_interact(mob/user, datum/tgui/ui)
+/datum/spawnpanel/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "SpawnPanel")
 		ui.open()
 
-/datum/admins/spawnpanel/ui_close(mob/user)
+/datum/spawnpanel/ui_close(mob/user)
 	. = ..()
 	if (precise_mode && precise_mode != PRECISE_MODE_OFF)
 		toggle_precise_mode(PRECISE_MODE_OFF)
 
-/datum/admins/spawnpanel/ui_state(mob/user)
+/datum/spawnpanel/ui_state(mob/user)
 	return ADMIN_STATE(R_ADMIN)
 
-/datum/admins/spawnpanel/ui_act(action, params)
+/datum/spawnpanel/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
@@ -108,7 +97,7 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 				offset_type = params["offset_type"]
 			return TRUE
 
-/datum/admins/spawnpanel/proc/toggle_precise_mode(precise_type)
+/datum/spawnpanel/proc/toggle_precise_mode(precise_type)
 	precise_mode = precise_type
 	var/client/admin_client = usr.client
 	if (!admin_client)
@@ -133,7 +122,7 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 	var/mob/holder_mob = admin_client.mob
 	holder_mob?.update_mouse_pointer()
 
-/datum/admins/spawnpanel/proc/InterceptClickOn(mob/user, params, atom/target)
+/datum/spawnpanel/proc/InterceptClickOn(mob/user, params, atom/target)
 	var/list/modifiers = params2list(params)
 	var/left_click = LAZYACCESS(modifiers, LEFT_CLICK)
 	var/right_click = LAZYACCESS(modifiers, RIGHT_CLICK)
@@ -191,7 +180,7 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 
 		return TRUE
 
-/datum/admins/spawnpanel/ui_data(mob/user)
+/datum/spawnpanel/ui_data(mob/user)
 	var/data = list()
 	data["icon"] = selected_object_icon
 	data["iconState"] = selected_object_icon_state
@@ -200,12 +189,12 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Opens Spawn Panel (TGUI).", ADM
 	data["copied_type"] = copied_type
 	return data
 
-/datum/admins/spawnpanel/ui_assets(mob/user)
+/datum/spawnpanel/ui_assets(mob/user)
 	return list(
 		get_asset_datum(/datum/asset/json/spawnpanel),
 	)
 
-/datum/admins/spawnpanel/proc/spawn_item(list/spawn_params, mob/user)
+/datum/spawnpanel/proc/spawn_item(list/spawn_params, mob/user)
 	if(!check_rights_for(user_client, R_ADMIN) || !spawn_params)
 		return
 
