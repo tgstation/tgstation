@@ -157,6 +157,12 @@
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
+/obj/machinery/door/airlock/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
+	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
+	return .
+
 /obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
 
@@ -186,9 +192,6 @@
 	RegisterSignal(src, COMSIG_MACHINERY_BROKEN, PROC_REF(on_break))
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
-
-/obj/machinery/door/airlock/get_save_vars()
-	return ..() - NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
 
 /obj/machinery/door/airlock/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
