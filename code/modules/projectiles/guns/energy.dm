@@ -160,9 +160,7 @@
 
 /obj/item/gun/energy/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(QDELETED(src))
-		return
-	if(gone == cell)
+	if(gone == cell && !QDELETED(src)) // If we are qdeling ourselves, then cell is already null and we do not have to update our appearance.
 		cell = null
 		update_appearance()
 
