@@ -1,0 +1,175 @@
+2025-05-01:
+  Ezel/Improvedname, JohnFulpWillard:
+  - balance: Cult daggers boomerang back to non-cultists who throw it.
+  - balance: Flagellant's robes crushes non-cultists with gravity instead of forcing
+      you to drop it on the floor.
+  - balance: Zealot's blindfolds now rapidly causes eye damage to non cultists who
+      try to wear it, instead of dropping it on the floor and giving a minute of temporary
+      eye damage.
+  FlufflesTheDog:
+  - bugfix: Health analyzers properly function on patients with cybernetics
+  Hatterhat:
+  - qol: Shoving a rechargeable magazine into a recharger now has refill speed scale
+      with part tier/recharge efficiency. This probably doesn't matter very much because
+      no regularly-available gun uses rechargeable magazines.
+  - spellcheck: Examining magazines should no longer have two instances of "The" prefixing
+      a casing. Maybe. Probably.
+  Holoo-1:
+  - bugfix: fixed ampcheck in smes room computer, some overlapping cables and cameras
+      on CatwalkStation. Also replaced bridges with pumps in atmos
+  Jacquerel:
+  - map: Adds some bots to Catwalkstation
+  - bugfix: Standard Holoparasites will once again yell their battlecry and can rapidly
+      punch windows.
+  JohnFulpWillard:
+  - admin: People throwing boomeranged items and hitting themselves now logs it as
+      them hitting themselves (rather than being hit by the air).
+  NecromancerAnne (Code, Mild Sprite Edits) Michiyamenotehifunana (Sprites):
+  - image: Replaces the decrepit DRAGnet sprite with something newer and more interesting.
+  - balance: Completely reworks the DRAGnet. They are now bulky energy guns.
+  - balance: Snare is now a single shot bolt that deals 30 stamina force, staggers
+      the target and lays out a net of teleportation fields that can transport anyone
+      standing on them for too long to a DRAGnet beacon.
+  - balance: Net has been replaced with a scattershot disabler round.
+  SmArtKar:
+  - bugfix: You can no longer fish for things in storages, or that you are unable
+      to see
+  SyncIt21:
+  - code_imp: improved performance of stack based reactions
+  TiviPlus:
+  - bugfix: fixed some vv issues
+  grungussuss:
+  - bugfix: throwing items on the same tile as you will make a sound again
+  - bugfix: fixes bane element not working if it was used by a weapon without a wielder
+2025-05-02:
+  ArrisFairburne:
+  - code_imp: removed non-functional ID saving functions
+  Goat:
+  - balance: More megafauna loot is worth something to export. Notably the demonic
+      frost miner's and the wendigo's drops are now actually worth something.
+  Rhials:
+  - bugfix: The grassland hunt domain no longer auto-completes just by closing the
+      domain.
+2025-05-03:
+  00-Steven:
+  - bugfix: Syrup bottle pumping interaction actually works.
+  - bugfix: Syrup bottles can be renamed even with the cap off.
+  - bugfix: Syrup bottles with the cap removed are actually spillable, meaning they
+      can directly transfer reagents, be drunk from, somesuch.
+  - qol: Renaming a syrup bottle without an input resets the name instead of just
+      not working.
+  - qol: Added screentips for syrup bottle interactions.
+  Chestlet:
+  - bugfix: Removed eyelids from dummies to make all TGUI windows in which they appear
+      more optimized.
+  GoblinBackwards:
+  - bugfix: Fixed being unable to create keybinds to the spacebar.
+  JohnFulpWillard:
+  - bugfix: Four handed wizards now have a drop button & open inventory above their
+      hands.
+  - image: You can now turn potty the plant's light off.
+  NamelessFairy:
+  - bugfix: Wizard spawned demons can now leave their blood crawls and are not stuck
+      in the blood realm forever.
+  SmArtKar:
+  - bugfix: Fixed broken formatting in fryfish examine text
+  SyncIt21:
+  - code_imp: organized storage subtypes under the same files & folders
+  grungussuss:
+  - bugfix: fixed rust heretic hand not being able to destroy windows or windoors
+  tonty:
+  - admin: Admins no longer need to hit enter to update custom command report names
+2025-05-04:
+  00-Steven:
+  - rscadd: When performing a custom emote, `+|_` emphasis formatting applies to the
+      text chat message instead of just the runechat message.
+  - qol: Intentional emotes don't trip your own highlights.
+  - qol: Sign language tone messages don't trip your own highlights.
+  A.C.M.O.:
+  - rscadd: Adds an option for picking silicon gender to secondary character preferences.
+      Matches the main gender preference by default.
+  - rscadd: Adds gender pronouns in cyborg/AI examine text.
+  Bisar:
+  - balance: Construction bags can now carry stacks of material up to size 'small',
+      and can now also carry RCD ammo.
+  Hardly:
+  - sound: added new sounds for the computer printer when paper is inserted.
+  Hardly, sprites by Lutowski:
+  - image: Resprites Long Emo hairstyle
+  Maximal08:
+  - qol: Notification that the ninja has completed the task of hacking the airlock.
+  Pickle-Coding:
+  - bugfix: PRevents an erroneous temperature share when the air falls below superconductionr
+      equirements.
+  Rhials:
+  - code_imp: The Dice Servant role will now re-poll itself until a candidate is found.
+  arcanemusic, Wallem:
+  - image: Entertainment monitors are now on actual tv screens
+  necromanceranne:
+  - balance: Rather than rolling for internal damage whenever they suffer 15 or more
+      damage, they instead must suffer an attack that deals at least 10% of its max
+      integrity in a single blow before it rolls for internal damage.
+  - bugfix: Dark Gygaxes and Maulers (and admin mechs like the Seraph) cannot be slapped
+      with tracker beacons.
+  - bugfix: Weapons that cannot fit into turrets also cannot fit into emitters.
+  - bugfix: The HoP's winter coat now uses the correct suit storage options (like
+      the HoP's firearm). The hood now also shares the chest piece's armor values.
+2025-05-05:
+  Aliceee2ch:
+  - bugfix: huge fix of various mapping mistakes on Catwalk station
+  - map: small additions for Catwalk station (such as missed buttons, shutters and
+      few decals)
+  Ezel/Improvedname, JohnFulpWillard:
+  - balance: Only holy roles can use bibles to their full extent now.
+  - balance: Non-Honorbound chaplains now have a one-time use rite to turn someone
+      into a Deacon, allowing them to use Chaplain equipment.
+  Jacquerel:
+  - balance: Ice Whelps now switch between their breath attacks depending on the situation
+  - bugfix: Ice Whelps will use their breath attacks more than once per encounter
+  Rhials:
+  - bugfix: Revenants can no longer be fake-eaten by the recycler.
+  SmArtKar:
+  - rscadd: Cult Master is now assigned to the player with most hours as a cultist
+      upon roundstart, instead of being votable.
+  - rscadd: Cult Masters can transfer their role once.
+  - balance: Mark Target now gives all cultists a noticable directional indicator,
+      similar to heretics' living hearbeat
+  - bugfix: Fixed cult master's broken speech spans
+  - bugfix: Fixed Eldritch Pulse not working
+  - rscdel: Fundamentally Evil people no longer get black blood
+  - rscadd: Dagger-blaster and harpoon crusher skins have received unique attack animations.
+  - rscadd: Four base crusher retool kits have been merged into one item.
+  - image: Resprited crusher skins and the crusher retool kit
+  - bugfix: Fixed attack animations being offset when attacking large objects or mobs.
+  jlsnow301:
+  - bugfix: 'We''re no strangers to bugs: Playing protected audio shouldn''t crash
+      the server anymore!'
+  necromanceranne:
+  - balance: Mechs are considerably more vulnerable to EMPs than they were previously.
+  - balance: The tier of capacitor inside a mech will substantially improve a mech's
+      defenses against EMP damage. Having only tier 1 capacitors will result in your
+      mech rapidly destroyed from repeat EMPs.
+  - balance: Mechs suffer more power loss from EMPs. It can take upwards of 8 heavy
+      strength EMPs to deplete a mechs cell if it has a tier 4 capacitor. It takes
+      only two if it has a tier 1.
+  - balance: Mechs suffer more integrity loss from EMPs. A durand can withstand around
+      8 heavy strength EMPs before being destroyed if it has a tier 4 capacitor. It
+      won't survive more than two or three if it has a tier 1.
+  tonty:
+  - admin: Cancelling an ERT summon will now say so instead of saying there were no
+      candidates
+2025-05-06:
+  Ben10Omintrix:
+  - rscadd: adds snails to the game. (keep them away from salt!)
+  Maximal08:
+  - qol: Replaces the text description for the APC multitool search function with
+      directional arrows similar to Heretic.
+  - image: Sprite for multitool arrow
+  Melbert:
+  - balance: Rock Absorber duration reduced by 90%
+  - config: Spy Bounties are configurable
+  SmArtKar:
+  - bugfix: Fixed detective's revolver not being able to misfire
+  - bugfix: Fixed reinforced plating consuming all air on the tile upon construction
+  grungussuss:
+  - bugfix: agent ID scanning action is a hidden do_after
