@@ -218,26 +218,7 @@
 
 	var/dry_coeff = round(1 - drying_time / total_dry_time, 0.01)
 	// Otherwise set the color to what it should be at the current drying progress, then animate down to the dried color if we can
-	if(istext(dried_color))
-		color = BlendRGB(color, dried_color, dry_coeff)
-		if(can_dry)
-			animate(src, time = drying_time, color = dried_color)
-		return TRUE
-
-	if(istext(color))
-		color = color_to_full_rgba_matrix(color)
-
-	var/list/as_matrix = color
-	var/per_row = 3
-	if (length(as_matrix) >= 16)
-		per_row = 4
-	color = list(
-		(as_matrix[1] * (1 - dry_coeff) + dried_color[1] * dry_coeff) / 255, 0, 0, 0,
-		0, (as_matrix[per_row + 2] * (1 - dry_coeff) + dried_color[6] * dry_coeff) / 255, 0, 0,
-		0, 0, (as_matrix[per_row * 2 + 3] * (1 - dry_coeff) + dried_color[11] * dry_coeff) / 255, 0,
-		0, 0, 0, ((length(as_matrix) >= 16 ? as_matrix[per_row * 3 + 4] : 255) * (1 - dry_coeff) + dried_color[16] * dry_coeff) / 255,
-	)
-
+	color = BlendRGB(color, dried_color, dry_coeff)
 	if(can_dry)
 		animate(src, time = drying_time, color = dried_color)
 	return TRUE
@@ -245,17 +226,7 @@
 /// Calculates and returns either an RGB or a matrix color for dried blood, depending on whever our current color is RGB or matrix
 /// Because BYOND does *not* like animating from text to matrix and vice versa
 /obj/effect/decal/cleanable/blood/proc/get_dried_color(base_color)
-	var/list/starting_color = null
-	if (istext(base_color))
-		starting_color = rgb2num(base_color)
-	else if (islist(base_color))
-		var/list/as_matrix = base_color
-		var/per_row = 3
-		if (length(as_matrix) >= 16)
-			per_row = 4
-		starting_color = list(as_matrix[1], as_matrix[per_row + 2], as_matrix[per_row * 2 + 3])
-		if (per_row == 4)
-			starting_color += as_matrix[16]
+	var/list/starting_color = rgb2num(base_color)
 
 	if (!starting_color)
 		starting_color = list(255, 255, 255)
@@ -276,18 +247,11 @@
 		blue_offset *= 0.5
 
 	// Finally, get this show on the road
-	var/dry_r = clamp(starting_color[1] - red_offset, 0, 255)
-	var/dry_g = clamp(starting_color[2] - green_offset, 0, 255)
-	var/dry_b = clamp(starting_color[3] - blue_offset, 0, 255)
-	var/dry_a = length(starting_color) >= 4 ? starting_color[4] : 255
-	if (dry_r <= 255 && dry_g <= 255 && dry_b <= 255 && dry_a <= 255 && !islist(color))
-		return rgb(dry_r, dry_g, dry_b, dry_a)
-
-	return list(
-		dry_r / 255, 0, 0, 0,
-		0, dry_g / 255, 0, 0,
-		0, 0, dry_b / 255, 0,
-		0, 0, 0, dry_a / 255,
+	return rgb(
+		clamp(starting_color[1] - red_offset, 0, 255),
+		clamp(starting_color[2] - green_offset, 0, 255),
+		clamp(starting_color[3] - blue_offset, 0, 255),
+		length(starting_color) >= 4 ? starting_color[4] : 255,
 	)
 
 /obj/effect/decal/cleanable/blood/old
@@ -321,8 +285,7 @@
 	name = "trail of blood"
 	desc = "Your instincts say you shouldn't be following these."
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "trails_1"
-	icon_state = null
+	icon_state = "trails_1" // For mappers
 	random_icon_states = null
 	beauty = -50
 	base_name = "trail of"
@@ -333,7 +296,7 @@
 
 /obj/effect/decal/cleanable/blood/trail_holder/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type())
 	. = ..()
-	icon_state = ""
+	icon_state = "nothing"
 	if(mapload)
 		add_dir_to_trail(dir)
 
@@ -798,7 +761,7 @@
 	fly_trail.dir = dir
 	if(ISDIAGONALDIR(flight_dir))
 		fly_trail.transform = fly_trail.transform.Turn((flight_dir == NORTHEAST || flight_dir == SOUTHWEST) ? 135 : 45)
-	fly_trail.icon_state = pick("trails_1", "trails2")
+	fly_trail.icon_state = pick("trails_1", "trails_2")
 	fly_trail.adjust_bloodiness(fly_trail.bloodiness * -0.66)
 
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/loop_done(datum/source)

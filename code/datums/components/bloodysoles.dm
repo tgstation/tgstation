@@ -115,7 +115,7 @@
 	footprint.adjust_bloodiness(bloodiness_to_add)
 	if (!no_dna)
 		footprint.add_blood_DNA(get_blood_dna())
-	var/new_alpha = min(BLOODY_FOOTPRINT_BASE_ALPHA + (255 - BLOODY_FOOTPRINT_BASE_ALPHA) * footprint.bloodiness / ((BLOOD_ITEM_MAX * BLOOD_TO_UNITS_MULTIPLIER) * 2.5), 255)
+	var/new_alpha = min(BLOODY_FOOTPRINT_BASE_ALPHA + (255 - BLOODY_FOOTPRINT_BASE_ALPHA) * footprint.bloodiness / BLOOD_POOL_MAX, 255)
 	if(new_alpha > footprint.alpha)
 		footprint.alpha = new_alpha
 	if(exiting)

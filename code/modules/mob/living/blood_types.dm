@@ -9,11 +9,6 @@
 	var/dna_string = "Unknown DNA"
 	/// Shown color of the blood type.
 	var/color = BLOOD_COLOR_RED
-	/// Additional lightness multiplier for the blood color, useful for when the default lightness from the greyscaling doesn't cut it and you want something more vibrant.
-	/// When set, color will be transformed into a matrix with coefficients multiplied by this value
-	var/lightness_mult = null
-	/// The cached color matrix for blood with a lightness_mult. We only need to calculate this once since blood types are singletons
-	var/list/blood_color_matrix
 	/// Blood types that are safe to use with people that have this blood type (for blood transfusions)
 	var/compatible_types = list()
 	/// What reagent is represented by this blood type?
@@ -57,21 +52,7 @@
 /// Useful when you want to have a blood color with values out of normal hex bounds for that acidic look
 /// set dynamic to TRUE to redo the matrix each time (e.g. for clown blood dynamically shifting each time)
 /datum/blood_type/proc/get_color(dynamic = FALSE)
-	if(isnull(lightness_mult))
-		return color
-
-	if(!isnull(blood_color_matrix) && !dynamic)
-		return blood_color_matrix
-
-	blood_color_matrix = color_to_full_rgba_matrix(color)
-	for(var/i in 1 to min(length(blood_color_matrix), 16))
-		if (length(blood_color_matrix) == 12 && i > 9) // Don't modify constants
-			break
-		if (length(blood_color_matrix) >= 16 && i % 4 == 0) // Don't modify alpha either
-			continue
-		blood_color_matrix[i] *= lightness_mult
-
-	return blood_color_matrix
+	return color
 
 /// Returns blood color for mob damage overlays
 /datum/blood_type/proc/get_damage_color(mob/living/carbon/victim)
@@ -257,7 +238,6 @@
 	name = BLOOD_TYPE_ETHEREAL
 	dna_string = "Ethereal DNA"
 	color = /datum/reagent/consumable/liquidelectricity::color
-	lightness_mult = 1.255 // for more vibrant gatorade coloring
 	reagent_type = /datum/reagent/consumable/liquidelectricity
 
 /datum/blood_type/ethereal/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
@@ -309,7 +289,6 @@
 	desc = "An incredibly potent mineral acid, somehow capable of carrying oxygen."
 	dna_string = "Alien DNA"
 	color = BLOOD_COLOR_XENO
-	lightness_mult = 1.255 // For parity with pre-refactor xeno blood sprites
 	reagent_type = /datum/reagent/toxin/acid
 	// Viruses cannot survive in acid
 	blood_flags = BLOOD_ADD_DNA | BLOOD_COVER_ALL
@@ -330,7 +309,6 @@
 	name = BLOOD_TYPE_CLOWN
 	dna_string = "Clown DNA"
 	reagent_type = /datum/reagent/colorful_reagent
-	lightness_mult = 1.255
 	is_species_universal = TRUE
 	/// The cached list of random colors to pick from
 	var/list/random_color_list
