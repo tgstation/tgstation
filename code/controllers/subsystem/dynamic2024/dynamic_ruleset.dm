@@ -298,6 +298,7 @@
 /datum/dynamic_ruleset/proc/execute()
 	for(var/datum/mind/mind as anything in selected_minds)
 		assign_role(mind)
+		mind.special_role = jobban_flag || antag_flag
 
 /**
  * Used by the ruleset to actually assign the role to the player
@@ -330,7 +331,6 @@
 
 /datum/dynamic_ruleset/roundstart/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)
-	candidate.special_role = ROLE_TRAITOR
 
 /datum/dynamic_ruleset/roundstart/malf_ai
 	name = "Malfunctioning AI"
@@ -359,7 +359,6 @@
 
 /datum/dynamic_ruleset/roundstart/malf_ai/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/malf_ai)
-	candidate.special_role = ROLE_MALF
 
 /datum/dynamic_ruleset/roundstart/blood_brother
 	name = "Blood Brothers"
@@ -370,7 +369,6 @@
 
 /datum/dynamic_ruleset/roundstart/blood_brother/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/brother)
-	candidate.special_role = ROLE_BROTHER
 
 /datum/dynamic_ruleset/roundstart/changeling
 	name = "Changelings"
@@ -381,7 +379,6 @@
 
 /datum/dynamic_ruleset/roundstart/changeling/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/changeling)
-	candidate.special_role = ROLE_CHANGELING
 
 /datum/dynamic_ruleset/roundstart/heretic
 	name = "Heretics"
@@ -392,7 +389,6 @@
 
 /datum/dynamic_ruleset/roundstart/heretic/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/heretic)
-	candidate.special_role = ROLE_HERETIC
 
 /datum/dynamic_ruleset/roundstart/wizard
 	name = "Wizard"
@@ -413,7 +409,6 @@
 
 /datum/dynamic_ruleset/roundstart/wizard/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/wizard)
-	candidate.special_role = ROLE_WIZARD
 	candidate.current.forceMove(pick(GLOB.wizardstart))
 
 /datum/dynamic_ruleset/roundstart/wizard/round_result()
@@ -443,7 +438,6 @@
 
 /datum/dynamic_ruleset/roundstart/blood_cult/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/cult) // melbert todo : team handling
-	candidate.special_role = ROLE_CULTIST
 
 /datum/dynamic_ruleset/roundstart/blood_cult/round_result()
 	var/datum/team/cult/main_cult = locate() in GLOB.antagonist_teams
@@ -479,7 +473,6 @@
 
 /datum/dynamic_ruleset/roundstart/nukies/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/nukeop) // melbert todo : leader handling
-	candidate.special_role = ROLE_NUCLEAR_OPERATIVE
 
 /datum/dynamic_ruleset/roundstart/nukies/round_result()
 	var/datum/team/nuclear/nuke_team = locate() in GLOB.antagonist_teams
@@ -524,7 +517,6 @@
 
 /datum/dynamic_ruleset/roundstart/nukies/clown/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/nukeop/clownop) // melbert todo : leader handling + nukie base handling
-	candidate.special_role = ROLE_CLOWN_OPERATIVE
 
 /datum/dynamic_ruleset/roundstart/revolution
 	name = "Revolution"
@@ -546,7 +538,6 @@
 	return head_check >= 3
 
 /datum/dynamic_ruleset/roundstart/revolution/assign_role(datum/mind/candidate)
-	candidate.special_role = ROLE_REV_HEAD
 	addtimer(CALLBACK(src, PROC_REF(reveal_head), candidate), 7 MINUTES, TIMER_DELETE_ME)
 
 /// Reveals the headrev after a set amount of time
@@ -575,7 +566,6 @@
 
 /datum/dynamic_ruleset/roundstart/spies/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/spy)
-	candidate.special_role = ROLE_SPY
 
 /datum/dynamic_ruleset/roundstart/extended
 	name = "Extended"
@@ -682,7 +672,6 @@
 	var/mob/living/carbon/human/wizard = make_human(candidate.current, pick(GLOB.wizardstart))
 	candidate.transfer_to(wizard, force_key_move = TRUE)
 	candidate.add_antag_datum(/datum/antagonist/wizard)
-	candidate.special_role = ROLE_WIZARD
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies
 	name = "Nuclear Operatives"
@@ -705,7 +694,6 @@
 	var/mob/living/carbon/human/new_character = make_human(candidate.current, pick(GLOB.nukeop_start))
 	candidate.transfer_to(new_character, force_key_move = TRUE)
 	candidate.add_antag_datum(/datum/antagonist/nukeop) // melbert todo : leader handling
-	candidate.special_role = ROLE_NUCLEAR_OPERATIVE
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies/round_result()
 	var/datum/team/nuclear/nuke_team = locate() in GLOB.antagonist_teams
@@ -754,7 +742,6 @@
 	var/mob/living/carbon/human/new_character = make_human(candidate.current, pick(GLOB.nukeop_start))
 	candidate.transfer_to(new_character, force_key_move = TRUE)
 	candidate.add_antag_datum(/datum/antagonist/nukeop/clownop) // melbert todo : leader handling + nukie base handling
-	candidate.special_role = ROLE_CLOWN_OPERATIVE
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob
 	name = "Blob"
@@ -850,7 +837,6 @@
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/assign_role(datum/mind/candidate)
 	var/mob/living/carbon/human/new_character = make_human(candidate.current, find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
 	candidate.add_antag_datum(/datum/antagonist/nightmare)
-	candidate.special_role = ROLE_NIGHTMARE
 	candidate.transfer_to(new_character)
 	new_character.set_species(/datum/species/shadow/nightmare)
 	playsound(new_character, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
@@ -1103,7 +1089,6 @@
 	var/mob/living/carbon/human/new_character = make_human(candidate.current, find_space_spawn())
 	candidate.transfer_to(new_character, force_key_move = TRUE)
 	candidate.add_antag_datum(/datum/antagonist/voidwalker)
-	candidate.special_role = ROLE_VOIDWALKER
 	candidate.current.set_species(/datum/species/voidwalker)
 
 	playsound(new_character, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
@@ -1146,18 +1131,19 @@
 	name = "Traitor"
 	config_tag = "Midround Traitor"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
-	antag_flag = ROLE_TRAITOR
+	antag_flag = ROLE_SLEEPER_AGENT
+	jobban_flag = ROLE_TRAITOR
 	weight = 10
 
 /datum/dynamic_ruleset/midround/from_living/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)
-	candidate.special_role = ROLE_TRAITOR
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai
 	name = "Malfunctioning AI"
 	config_tag = "Midround Malfunctioning AI"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	antag_flag = ROLE_MALF
+	antag_flag = ROLE_MALF_MIDROUND
+	jobban_flag = ROLE_MALF
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
@@ -1173,7 +1159,6 @@
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/malf_ai)
-	candidate.special_role = ROLE_MALF
 
 /datum/dynamic_ruleset/midround/from_living/blob
 	name = "Blob Infection"
@@ -1190,7 +1175,6 @@
 
 /datum/dynamic_ruleset/midround/from_living/blob/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/blob/infection)
-	candidate.special_role = ROLE_BLOB_INFECTION
 	notify_ghosts(
 		"[candidate.current.real_name] has become a blob host!",
 		source = candidate.current,
@@ -1247,7 +1231,6 @@
 
 /datum/dynamic_ruleset/latejoin/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)
-	candidate.special_role = ROLE_TRAITOR
 
 /datum/dynamic_ruleset/latejoin/heretic
 	name = "Heretic"
@@ -1259,7 +1242,6 @@
 
 /datum/dynamic_ruleset/latejoin/heretic/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/heretic)
-	candidate.special_role = ROLE_HERETIC
 
 /datum/dynamic_ruleset/latejoin/changeling
 	name = "Changelings"
@@ -1270,7 +1252,6 @@
 
 /datum/dynamic_ruleset/latejoin/changeling/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/changeling)
-	candidate.special_role = ROLE_CHANGELING
 
 /datum/dynamic_ruleset/latejoin/revolution
 	name = "Revolution"
@@ -1287,7 +1268,6 @@
 	return head_check >= 3
 
 /datum/dynamic_ruleset/latejoin/revolution/assign_role(datum/mind/candidate)
-	candidate.special_role = ROLE_REV_HEAD
 	addtimer(CALLBACK(src, PROC_REF(reveal_head), candidate), 1 MINUTES, TIMER_DELETE_ME)
 
 /datum/dynamic_ruleset/latejoin/revolution/proc/reveal_head(datum/mind/candidate)
