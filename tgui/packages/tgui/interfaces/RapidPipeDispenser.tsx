@@ -15,7 +15,7 @@ import { capitalizeAll } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-const ROOT_CATEGORIES = ['Atmospherics', 'Disposals', 'Transit Tubes'];
+const ROOT_CATEGORIES = ['Atmospherics', 'Disposals', 'Transit Tubes'] as const;
 
 export const ICON_BY_CATEGORY_NAME = {
   Atmospherics: 'wrench',
@@ -27,7 +27,7 @@ export const ICON_BY_CATEGORY_NAME = {
   Devices: 'microchip',
   'Heat Exchange': 'thermometer-half',
   'Station Equipment': 'microchip',
-};
+} as const;
 
 const TOOLS = [
   {
@@ -46,7 +46,7 @@ const TOOLS = [
     name: 'Reprogram',
     bitmask: 8,
   },
-];
+] as const;
 
 type DirectionsAllowed = {
   north: BooleanLike;
@@ -105,10 +105,11 @@ type Data = {
   init_directions: DirectionsAllowed;
 };
 
-export const ColorItem = (props) => {
+export function ColorItem(props) {
   const { act, data } = useBackend<Data>();
-  const { selected_color, paint_colors } = data;
+  const { selected_color, paint_colors = {} } = data;
   const colorNames = Object.keys(paint_colors);
+
   return (
     <LabeledList.Item label="Color">
       {colorNames.map((colorName) => (
@@ -134,11 +135,12 @@ export const ColorItem = (props) => {
       </Box>
     </LabeledList.Item>
   );
-};
+}
 
-const ModeItem = (props) => {
+function ModeItem(props) {
   const { act, data } = useBackend<Data>();
   const { mode } = data;
+
   return (
     <LabeledList.Item label="Modes">
       {TOOLS.map((tool) => (
@@ -156,11 +158,12 @@ const ModeItem = (props) => {
       ))}
     </LabeledList.Item>
   );
-};
+}
 
-const CategoryItem = (props) => {
+function CategoryItem(props) {
   const { act, data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
+
   return (
     <LabeledList.Item label="Category">
       {ROOT_CATEGORIES.map((categoryName, i) => (
@@ -176,11 +179,12 @@ const CategoryItem = (props) => {
       ))}
     </LabeledList.Item>
   );
-};
+}
 
-const SelectionSection = (props) => {
+function SelectionSection(props) {
   const { data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
+
   return (
     <Section fill>
       <LabeledList>
@@ -191,34 +195,33 @@ const SelectionSection = (props) => {
       </LabeledList>
     </Section>
   );
-};
+}
 
-const LayerSelect = (props) => {
+function layerToBitmask(layer: number) {
+  return 1 << layer;
+}
+
+function LayerSelect(props) {
   const { act, data } = useBackend<Data>();
-  const { pipe_layers, multi_layer, max_pipe_layers } = data;
-  const layer_to_bitmask = (layer: number) => {
-    return 1 << layer;
-  };
+  const { pipe_layers, multi_layer, max_pipe_layers = 1 } = data;
 
   return (
     <LabeledList.Item label="Layer">
-      {Array(max_pipe_layers)
-        .keys()
-        .map((layer) => (
-          <Button.Checkbox
-            key={layer}
-            checked={
-              multi_layer
-                ? pipe_layers & layer_to_bitmask(layer)
-                : layer_to_bitmask(layer) === pipe_layers
-            }
-            onClick={() =>
-              act('pipe_layers', { pipe_layers: layer_to_bitmask(layer) })
-            }
-          >
-            {layer + 1}
-          </Button.Checkbox>
-        ))}
+      {Array.from({ length: max_pipe_layers }).map((_, layer) => (
+        <Button.Checkbox
+          key={layer}
+          checked={
+            multi_layer
+              ? pipe_layers & layerToBitmask(layer)
+              : layerToBitmask(layer) === pipe_layers
+          }
+          onClick={() =>
+            act('pipe_layers', { pipe_layers: layerToBitmask(layer) })
+          }
+        >
+          {layer + 1}
+        </Button.Checkbox>
+      ))}
       <Button.Checkbox
         key="multilayer"
         checked={multi_layer}
@@ -231,13 +234,21 @@ const LayerSelect = (props) => {
       </Button.Checkbox>
     </LabeledList.Item>
   );
+}
+
+type PreviewSelectProps = {
+  previews: Preview[];
+  pipe_type: number;
+  category: string;
 };
 
-const PreviewSelect = (props) => {
+function PreviewSelect(props: PreviewSelectProps) {
   const { act } = useBackend<Data>();
+  const { previews, pipe_type, category } = props;
+
   return (
     <Box>
-      {props.previews.map((preview) => (
+      {previews.map((preview) => (
         <Button
           ml={0}
           key={preview.dir}
@@ -250,8 +261,8 @@ const PreviewSelect = (props) => {
           }}
           onClick={() => {
             act('pipe_type', {
-              pipe_type: props.pipe_type,
-              category: props.category,
+              pipe_type: pipe_type,
+              category: category,
             });
             act('setdir', {
               dir: preview.dir,
@@ -272,9 +283,9 @@ const PreviewSelect = (props) => {
       ))}
     </Box>
   );
-};
+}
 
-const PipeTypeSection = (props) => {
+function PipeTypeSection(props) {
   const { data } = useBackend<Data>();
   const { categories = [], selected_category } = data;
   const [categoryName, setCategoryName] = useState(selected_category);
@@ -318,11 +329,12 @@ const PipeTypeSection = (props) => {
       </Table>
     </Section>
   );
-};
+}
 
-export const SmartPipeBlockSection = (props) => {
+export function SmartPipeBlockSection(props) {
   const { act, data } = useBackend<Data>();
   const { init_directions = [] } = data;
+
   return (
     <Section fill>
       <Stack vertical textAlign="center">
@@ -395,11 +407,12 @@ export const SmartPipeBlockSection = (props) => {
       </Stack>
     </Section>
   );
-};
+}
 
-export const RapidPipeDispenser = (props) => {
+export function RapidPipeDispenser(props) {
   const { data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
+
   return (
     <Window width={550} height={580}>
       <Window.Content scrollable>
@@ -423,4 +436,4 @@ export const RapidPipeDispenser = (props) => {
       </Window.Content>
     </Window>
   );
-};
+}
