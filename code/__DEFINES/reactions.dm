@@ -263,5 +263,5 @@
 #define PN_BZASE_NUCLEAR_PARTICLE_RADIATION_ENERGY_CONVERSION 2.5
 
 // Antinoblium:
-/// The divisor for the maximum antinoblium conversion rate. (1/5 of the gases get converted to antinoblium in one reaction tick.)
-#define ANTINOBLIUM_CONVERSION_DIVISOR 5
+/// The divisor for the maximum antinoblium conversion rate. (1/90 of the antinoblium converts other gases to antinoblium in one reaction tick.)
+#define ANTINOBLIUM_CONVERSION_DIVISOR 90
