@@ -93,7 +93,7 @@
 	icon_state = "snail_maints"
 	icon_living = "snail_maints"
 	icon_dead = "snail_maints_dead"
-	base_icon_state = "snail"
+	base_icon_state = "snail_maints"
 	health = 40
 	maxHealth = 40
 	melee_damage_lower = 5

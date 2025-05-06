@@ -83,8 +83,6 @@
  * * Spawn a single mouse if below the mouse cap.
  */
 /datum/action/cooldown/mob_cooldown/riot/proc/riot()
-	//var/sound/playing_sound = sound('sound/mobs/non-humanoids/mouse/mousesqueek.ogg')
-	// playing_sound.pitch = 0.3
 	playsound(owner, 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg', vol = 150, frequency = 10000)
 
 	new /obj/effect/temp_visual/circle_wave/brown(get_turf(owner))
