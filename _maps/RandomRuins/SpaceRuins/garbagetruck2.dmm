@@ -297,7 +297,7 @@
 /obj/item/stack/medical/gauze,
 /obj/item/stack/sticky_tape/surgical,
 /obj/structure/broken_flooring/corner,
-/obj/item/organ/cyberimp/arm/surgery,
+/obj/item/organ/cyberimp/arm/toolkit/surgery,
 /obj/item/organ/cyberimp/eyes/hud/medical,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
