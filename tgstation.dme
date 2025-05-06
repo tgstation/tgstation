@@ -6940,6 +6940,7 @@
 #include "modular_doppler\modular_cosmetics\code\uniform_overrides.dm"
 #include "modular_doppler\modular_cosmetics\code\belt\crusaderbelt.dm"
 #include "modular_doppler\modular_cosmetics\code\belt\med_bandolier.dm"
+#include "modular_doppler\modular_cosmetics\code\belt\rigs.dm"
 #include "modular_doppler\modular_cosmetics\code\face\basemasks.dm"
 #include "modular_doppler\modular_cosmetics\code\face\designs.dm"
 #include "modular_doppler\modular_cosmetics\code\face\glasses.dm"

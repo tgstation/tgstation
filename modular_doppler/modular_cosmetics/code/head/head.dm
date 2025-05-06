@@ -59,3 +59,12 @@
 	)
 	armor_type = /datum/armor/head_helmet
 	strip_delay = 60
+
+/obj/item/clothing/head/flowing_headband
+	name = "flowing headband"
+	desc = "A headband from across the galaxy. Said to make the impossible possible."
+	icon_state = "headband_snake"
+	icon = 'modular_doppler/modular_cosmetics/icons/obj/head/sec_hats.dmi'
+	worn_icon = 'modular_doppler/modular_cosmetics/icons/mob/head/sec_hats.dmi'
+	armor_type = /datum/armor/head_helmet
+	strip_delay = 60

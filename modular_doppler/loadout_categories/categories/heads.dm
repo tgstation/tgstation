@@ -101,3 +101,7 @@
 /datum/loadout_item/head/breach_helmet
 	name = "Breach Helmet"
 	item_path = /obj/item/clothing/head/utility/hardhat/welding/doppler_dc
+
+/datum/loadout_item/head/breach_helmet
+	name = "Flowing Headband"
+	item_path = /obj/item/clothing/head/flowing_headband

@@ -103,3 +103,7 @@
 /datum/loadout_item/belts/frontier_colonist
 	name = "Frontier Chest Rig"
 	item_path = /obj/item/storage/belt/utility/frontier_colonist
+
+/datum/loadout_item/belts/pouch_rig
+	name = "Chest Rig (Alt)"
+	item_path = /obj/item/storage/belt/military/pouches
