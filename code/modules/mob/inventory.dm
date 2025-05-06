@@ -560,8 +560,6 @@
 /mob/proc/equip_to_storage(obj/item/item, slot, indirect_action = FALSE, del_on_fail = FALSE, initial = FALSE)
 	var/obj/item/worn_item = get_item_by_slot(slot)
 	if (worn_item?.atom_storage?.attempt_insert(item, src, override = TRUE, force = indirect_action ? STORAGE_SOFT_LOCKED : STORAGE_NOT_LOCKED))
-		// Slot is passed as null as we're not equipping into the slot we're passed, we're equipping into the item inside of it
-		has_equipped(item, null, initial)
 		return TRUE
 
 	if (del_on_fail)
