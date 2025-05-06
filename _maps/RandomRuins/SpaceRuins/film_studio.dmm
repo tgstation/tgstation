@@ -2889,7 +2889,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/backstage)
 "Xk" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/film_studio/director)
 "Xl" = (

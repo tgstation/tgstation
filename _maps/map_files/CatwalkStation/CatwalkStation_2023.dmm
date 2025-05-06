@@ -4678,7 +4678,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "bxH" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light_switch/directional/west,
 /obj/item/clothing/gloves/boxing,
@@ -18508,7 +18508,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "fBU" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/plating,
 /area/station/medical/psychology)
 "fBX" = (
@@ -33663,7 +33663,7 @@
 /area/station/science/xenobiology)
 "jYs" = (
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "jYE" = (
@@ -37878,7 +37878,7 @@
 /turf/open/floor/iron/checker,
 /area/station/ai_monitored/command/storage/satellite)
 "loc" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/light_switch/directional/south,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/carpet,
@@ -38527,7 +38527,7 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "lzp" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/item/storage/toolbox/electrical,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
@@ -44296,7 +44296,7 @@
 /turf/open/space/openspace,
 /area/space)
 "nlo" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
@@ -48371,7 +48371,7 @@
 /turf/open/floor/glass,
 /area/station/maintenance/starboard/aft)
 "oxg" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -62878,7 +62878,7 @@
 /turf/open/floor/iron/white/textured_half,
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "sQi" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/requests_console/directional/north{
 	department = "Law Office";
 	name = "Lawyer Requests Console"
@@ -66769,7 +66769,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
 "tZK" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/ce)
 "tZO" = (
@@ -67322,7 +67322,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 5
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/engineering/lobby)
 "uiR" = (
@@ -67808,7 +67808,7 @@
 /area/station/hallway/secondary/construction)
 "upR" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron,
 /area/station/science/explab)
@@ -71510,7 +71510,7 @@
 /area/station/service/chapel)
 "vsC" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron,
 /area/station/science/research)
 "vsK" = (
@@ -80380,7 +80380,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/wood,
 /area/station/service/library/printer)
 "ycg" = (
