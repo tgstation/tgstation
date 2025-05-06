@@ -249,7 +249,7 @@ function QuirkPopper(props: QuirkPopperProps) {
                     serverData,
                     randomBodyEnabled,
                   )}
-                  maxHeight="100px"
+                  maxHeight="190px"
                 />
               </Stack.Item>
             </Stack>
