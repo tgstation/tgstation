@@ -174,6 +174,8 @@
 
 /// The number of moles of hyper-noblium required to prevent reactions.
 #define REACTION_OPPRESSION_THRESHOLD 5
+/// Minimum temperature required for hypernoblium to prevent reactions.
+#define REACTION_OPPRESSION_MIN_TEMP 20
 
 // Halon:
 /// Energy released per mole of BZ consumed during halon formation.

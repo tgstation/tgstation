@@ -1170,6 +1170,7 @@
 /datum/gas_reaction/antinoblium_replication/init_reqs()
 	requirements = list(
 		/datum/gas/antinoblium = MINIMUM_MOLE_COUNT * ANTINOBLIUM_CONVERSION_DIVISOR,
+		"MIN_TEMP" = REACTION_OPPRESSION_MIN_TEMP,
 	)
 
 /**
