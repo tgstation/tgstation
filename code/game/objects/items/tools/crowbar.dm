@@ -91,7 +91,7 @@
 	wound_bonus = 35
 
 /obj/item/crowbar/hammer/Initialize(mapload)
-	.=..()
+	. = ..()
 	AddElement(/datum/element/kneejerk)
 
 /obj/item/crowbar/large/twenty_force //from space ruin
