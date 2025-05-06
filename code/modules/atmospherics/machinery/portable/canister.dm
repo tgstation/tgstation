@@ -677,7 +677,7 @@
 
 			var/datum/greyscale_modify_menu/menu = new(
 				src, usr, list("[initial_config]"), CALLBACK(src, PROC_REF(recolor)),
-				starting_icon_state = initial(post_init_icon_state),
+				starting_icon_state = initial(post_init_icon_state) || initial(icon_state),
 				starting_config = initial_config,
 				starting_colors = initial(greyscale_colors)
 			)

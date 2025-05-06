@@ -137,7 +137,7 @@
 	if(attached_cuffs)
 		icon_state = inhand_icon_state = "sneakers_chained"
 	else
-		icon_state = initial(post_init_icon_state)
+		icon_state = initial(post_init_icon_state) || initial(icon_state)
 		inhand_icon_state = initial(inhand_icon_state)
 	update_greyscale()
 
