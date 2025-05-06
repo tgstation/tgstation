@@ -428,6 +428,7 @@
 				M.visible_message(span_warning("[src] grabs [M] [grabbed_by_hands ? "by their hands":"passively"]!"), \
 								span_warning("[src] grabs you [grabbed_by_hands ? "by your hands":"passively"]!"), null, null, src)
 				to_chat(src, span_notice("You grab [M] [grabbed_by_hands ? "by their hands":"passively"]!"))
+				grabbed_human.share_blood_on_touch(src, grabbed_by_hands ? ITEM_SLOT_GLOVES : ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 			else
 				M.visible_message(span_warning("[src] grabs [M] passively!"), \
 								span_warning("[src] grabs you passively!"), null, null, src)
@@ -1100,7 +1101,7 @@
 
 		trail.existing_dirs += newdir
 		trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-		trail.transfer_mob_blood_dna(src)
+		trail.add_mob_blood(src)
 		trail.bloodiness = min(trail.bloodiness + bleed_amount, BLOOD_POOL_MAX)
 		found_trail = TRUE
 		break
@@ -1112,14 +1113,14 @@
 	trail.blood_state = trail_blood_type
 	trail.existing_dirs += newdir
 	trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-	trail.transfer_mob_blood_dna(src)
+	trail.add_mob_blood(src)
 	trail.bloodiness = min(bleed_amount, BLOOD_POOL_MAX)
 
 /mob/living/proc/get_trail_blood()
 	return BLOOD_STATE_HUMAN
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || dna.blood_type.no_bleed_overlays)
 		return
 	..()
 
@@ -1487,7 +1488,7 @@
 /mob/living/carbon/alien/update_stamina()
 	return
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	stop_pulling()
 	. = ..()
 
@@ -1781,7 +1782,7 @@
 
 	// Well, no mmind, guess we should try to move a key over
 	else if(key)
-		new_mob.key = key
+		new_mob.PossessByPlayer(key)
 
 /mob/living/proc/unfry_mob() //Callback proc to tone down spam from multiple sizzling frying oil dipping.
 	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")
@@ -2293,6 +2294,52 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/get_body_temp_cold_damage_limit()
 	return BODYTEMP_COLD_DAMAGE_LIMIT
 
+/atom/movable/looking_holder
+	invisibility = INVISIBILITY_MAXIMUM
+	///the direction we are operating in
+	var/look_direction
+	///actual atom on the turf, usually the owner
+	var/atom/movable/container
+	///the actual owner who is "looking"
+	var/mob/living/owner
+
+/atom/movable/looking_holder/Initialize(mapload, mob/living/owner, direction)
+	. = ..()
+	look_direction = direction
+	src.owner = owner
+	update_container()
+
+/atom/movable/looking_holder/Destroy()
+	owner = null
+	return ..()
+
+/atom/movable/looking_holder/proc/update_container()
+	SIGNAL_HANDLER
+	var/new_container = get_atom_on_turf(owner)
+	if(new_container == container)
+		return
+	if(container != owner)
+		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	if(container)
+		UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
+
+	container = new_container
+
+	RegisterSignal(new_container, COMSIG_MOVABLE_MOVED, PROC_REF(mirror_move))
+	if(new_container != owner)
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_container))
+
+/atom/movable/looking_holder/proc/mirror_move(mob/living/source, atom/oldloc, direction, Forced, old_locs)
+	SIGNAL_HANDLER
+	if(!isturf(owner.loc))
+		update_container()
+	set_glide_size(container.glide_size)
+	var/turf/looking_turf = owner.get_looking_turf(look_direction)
+	if(!looking_turf)
+		owner.end_look()
+		return
+	abstract_move(looking_turf)
+
 ///Checks if the user is incapacitated or on cooldown.
 /mob/living/proc/can_look_up()
 	if(next_move > world.time)
@@ -2300,6 +2347,13 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(INCAPACITATED_IGNORING(src, INCAPABLE_RESTRAINTS))
 		return FALSE
 	return TRUE
+
+/mob/living/proc/end_look()
+	reset_perspective()
+	looking_vertically = NONE
+	QDEL_NULL(looking_holder)
+
+
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob
  *
@@ -2307,61 +2361,40 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  *
  */
 /mob/living/proc/look_up()
-	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
-		stop_look_up()
+	if(looking_vertically == UP)
+		return
+	if(looking_vertically == DOWN)
+		end_look()
+		return
 	if(!can_look_up())
 		return
 	changeNext_move(CLICK_CD_LOOK_UP)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(stop_look_up)) //We stop looking up if we move.
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(start_look_up)) //We start looking again after we move.
-	start_look_up()
-
-/mob/living/proc/start_look_up()
-	SIGNAL_HANDLER
-
-	looking_vertically = TRUE
-
-	var/turf/current_turf = get_turf(src)
-	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
-
-	//Check if turf above exists
+	var/turf/above_turf = get_looking_turf(UP)
 	if(!above_turf)
-		to_chat(src, span_warning("There's nothing interesting above."))
-		to_chat(src, "You set your head straight again.")
-		end_look_up()
 		return
+	looking_vertically = UP
+	looking_holder = new(above_turf, src, UP)
+	reset_perspective(looking_holder)
 
-	var/turf/ceiling = get_step_multiz(src, UP)
-	if(!ceiling) //We are at the highest z-level.
-		if (prob(0.1))
-			to_chat(src, span_warning("You gaze out into the infinite vastness of deep space, for a moment, you have the impulse to continue travelling, out there, out into the deep beyond, before your consciousness reasserts itself and you decide to stay within travelling distance of the station."))
-			return
-		to_chat(src, span_warning("There's nothing interesting up there."))
+/mob/living/proc/get_looking_turf(direction)
+	//down needs to check this floor
+	var/turf/check_turf = get_step_multiz(src, direction == DOWN ? NONE : direction)
+	if(!get_step_multiz(src, direction)) //We are at the edge z-level.
+		to_chat(src, span_warning("There's nothing interesting there."))
 		return
-	else if(!istransparentturf(ceiling)) //There is no turf we can look through above us
-		var/turf/front_hole = get_step(ceiling, dir)
+	else if(!istransparentturf(check_turf)) //There is no turf we can look through above us
+		var/turf/front_hole = get_step(check_turf, dir)
 		if(istransparentturf(front_hole))
-			ceiling = front_hole
+			check_turf = front_hole
 		else
-			for(var/turf/checkhole in TURF_NEIGHBORS(ceiling))
+			for(var/turf/checkhole in TURF_NEIGHBORS(check_turf))
 				if(istransparentturf(checkhole))
-					ceiling = checkhole
+					check_turf = checkhole
 					break
-		if(!istransparentturf(ceiling))
-			to_chat(src, span_warning("You can't see through the floor above you."))
+		if(!istransparentturf(check_turf))
+			to_chat(src, span_warning("You can't see through the floor [direction == DOWN ? "below" : "above"] you."))
 			return
-
-	reset_perspective(ceiling)
-
-/mob/living/proc/stop_look_up()
-	SIGNAL_HANDLER
-	reset_perspective()
-
-/mob/living/proc/end_look_up()
-	stop_look_up()
-	looking_vertically = FALSE
-	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	return direction == DOWN ? get_step_multiz(check_turf, DOWN) : check_turf
 
 /**
  * look_down Changes the perspective of the mob to any openspace turf below the mob
@@ -2370,63 +2403,20 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  *
  */
 /mob/living/proc/look_down()
-	if(client.perspective != MOB_PERSPECTIVE) //We are already looking down.
-		stop_look_down()
+	if(looking_vertically == UP)
+		end_look()
+		return
+	if(looking_vertically == DOWN)
+		return
 	if(!can_look_up()) //if we cant look up, we cant look down.
 		return
 	changeNext_move(CLICK_CD_LOOK_UP)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(stop_look_down)) //We stop looking down if we move.
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(start_look_down)) //We start looking again after we move.
-	start_look_down()
-
-/mob/living/proc/start_look_down()
-	SIGNAL_HANDLER
-
-	looking_vertically = TRUE
-
-	var/turf/current_turf = get_turf(src)
-	var/turf/below_turf = GET_TURF_BELOW(current_turf)
-
-	//Check if turf below exists
+	var/turf/below_turf = get_looking_turf(DOWN)
 	if(!below_turf)
-		to_chat(src, span_warning("There's nothing interesting below."))
-		to_chat(src, "You set your head straight again.")
-		end_look_up()
 		return
-
-	var/turf/floor = get_turf(src)
-	var/turf/lower_level = get_step_multiz(floor, DOWN)
-	if(!lower_level) //We are at the lowest z-level.
-		to_chat(src, span_warning("You can't see through the floor below you."))
-		return
-	else if(!istransparentturf(floor)) //There is no turf we can look through below us
-		var/turf/front_hole = get_step(floor, dir)
-		if(istransparentturf(front_hole))
-			floor = front_hole
-			lower_level = get_step_multiz(front_hole, DOWN)
-		else
-			// Try to find a hole near us
-			for(var/turf/checkhole in TURF_NEIGHBORS(floor))
-				if(istransparentturf(checkhole))
-					floor = checkhole
-					lower_level = get_step_multiz(checkhole, DOWN)
-					break
-		if(!istransparentturf(floor))
-			to_chat(src, span_warning("You can't see through the floor below you."))
-			return
-
-	reset_perspective(lower_level)
-
-/mob/living/proc/stop_look_down()
-	SIGNAL_HANDLER
-	reset_perspective()
-
-/mob/living/proc/end_look_down()
-	stop_look_down()
-	looking_vertically = FALSE
-	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
-	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-
+	looking_vertically = DOWN
+	looking_holder = new(get_looking_turf(DOWN), src, DOWN)
+	reset_perspective(looking_holder)
 
 /mob/living/set_stat(new_stat)
 	. = ..()
@@ -2798,8 +2788,20 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	mob_mood.clear_mood_event(category)
 
-/mob/living/played_game()
-	. = ..()
+/// This should be called by games when the gamer reaches a winning state, just sends a signal
+/mob/living/proc/won_game()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_WON_VIDEOGAME)
+
+/// This should be called by games when the gamer reaches a losing state, just sends a signal
+/mob/living/proc/lost_game()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_LOST_VIDEOGAME)
+
+/// This should be called by games whenever the gamer interacts with the device, sends a signal and grants us a moodlet
+/mob/living/proc/played_game()
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_PLAYED_VIDEOGAME)
 	add_mood_event("gaming", /datum/mood_event/gaming)
 
 /**
@@ -2823,9 +2825,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		lazarus_policy = get_policy(ROLE_LAZARUS_BAD) || "You have been revived by a malfunctioning lazarus injector! You are now enslaved by whoever revived you."
 	to_chat(src, span_boldnotice(lazarus_policy))
 
-/// Proc for giving a mob a new 'friend', generally used for AI control and targeting. Returns false if already friends.
+/// Proc for giving a mob a new 'friend', generally used for AI control and targeting. Returns false if already friends or null if qdeleted.
 /mob/living/proc/befriend(mob/living/new_friend)
 	SHOULD_CALL_PARENT(TRUE)
+	if(QDELETED(new_friend))
+		return
 	var/friend_ref = REF(new_friend)
 	if (faction.Find(friend_ref))
 		return FALSE
@@ -2932,7 +2936,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		summoned_guardian.fully_replace_character_name(null, picked_name)
 	if(picked_color)
 		summoned_guardian.set_guardian_colour(picked_color)
-	summoned_guardian.key = guardian_client?.key
+	summoned_guardian.PossessByPlayer(guardian_client?.key)
 	guardian_client?.init_verbs()
 	if(del_mob)
 		qdel(old_mob)
@@ -2946,7 +2950,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	if(looking_vertically)
 		to_chat(src, "You set your head straight again.")
-		end_look_up()
+		end_look()
 		return
 
 	var/turf/current_turf = get_turf(src)
@@ -2966,7 +2970,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 	if(looking_vertically)
 		to_chat(src, "You set your head straight again.")
-		end_look_down()
+		end_look()
 		return
 
 	var/turf/current_turf = get_turf(src)
@@ -2983,7 +2987,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /**
  * Totals the physical cash on the mob and returns the total.
  */
-/mob/living/verb/tally_physical_credits()
+/mob/living/proc/tally_physical_credits()
 	//Here is all the possible non-ID payment methods.
 	var/list/counted_money = list()
 	var/physical_cash_total = 0
@@ -3051,3 +3055,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
 		return
 	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
+
+/// Setter for changing a mob's blood type
+/mob/living/proc/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_LIVING_CHANGED_BLOOD_TYPE, new_blood_type, update_cached_blood_dna_info)

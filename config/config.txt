@@ -189,10 +189,10 @@ IPINTEL_REJECT_BAD
 # FORUMURL http://tgstation13.org/phpBB/index.php
 
 ## Wiki address
-# WIKIURL http://www.tgstation13.org/wiki
+# WIKIURL http://tgstation13.org/wiki
 
 ## Rules address
-# RULESURL http://www.tgstation13.org/wiki/Rules
+# RULESURL http://tgstation13.org/wiki/Rules
 
 ## Github address
 # GITHUBURL https://www.github.com/tgstation/tgstation
@@ -369,8 +369,11 @@ AUTOADMIN_RANK Game Master
 #AUTOADMIN
 
 
-## Uncomment to automatically deadmin players when the game starts.
-#AUTO_DEADMIN_PLAYERS
+## Uncomment to automatically deadmin players whenever they are controlling a mob.
+#AUTO_DEADMIN_ALWAYS
+
+## Uncomment to automatically deadmin players when they click to ready up or join game. For latejoining, does it before they pick a role because it's best done early to limit metainfo.
+#AUTO_DEADMIN_ON_READY_OR_LATEJOIN
 
 ## Uncomment to automatically deadmin antagonists when they gain the role.
 #AUTO_DEADMIN_ANTAGONISTS
@@ -430,18 +433,20 @@ MINUTE_CLICK_LIMIT 400
 ## Various messages to be sent to connected chat channels.
 ## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS>=4.
 ## If using TGS>=4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
-## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag
+## You can also specify multiple channel tags by using the config option multiple times,
+## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag_1
+## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag_2
 
-## Which channel will have a message about a new game starting, message includes the station name.
+## Which channels will have a message about a new game starting, message includes the station name.
 #CHANNEL_ANNOUNCE_NEW_GAME
 
-## Which channel will have a message about a new game starting, message includes the round ID of the game that has just ended.
+## Which channels will have a message about a new game starting, message includes the round ID of the game that has just ended.
 #CHANNEL_ANNOUNCE_END_GAME
 
 ## Ping users who use the `notify` command when a new game starts.
 #CHAT_NEW_GAME_NOTIFICATIONS
 
-## Uncomment this to validate admin commands from discord by requiring they come from linked discord accounts and that those discord accounts link to a ckey with the right admin permissions.
+## Uncomment this flag to validate admin commands from discord by requiring they come from linked discord accounts and that those discord accounts link to a ckey with the right admin permissions.
 # SECURE_CHAT_COMMANDS
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
@@ -560,6 +565,14 @@ MOTD motd.txt
 ## but enabled on production (the default).
 CACHE_ASSETS 0
 
+## Enables 'smart' asset caching, for assets that support it.
+## This is a type of asset cache that automatically invalidates itself based on inputs to the asset generation.
+## The cache is stored in `data/spritesheets/smart_cache/`.
+## It lowers the generation cost and is safe to enable on development and production.
+## This cache is only cleared by the game or manually, but it shouldn't affect the results.
+## This setting is independent of `CACHE_ASSETS`, they do not affect each other whatsoever.
+SMART_CACHE_ASSETS
+
 ## If this is uncommented, we will save all associated spritesheet PNGs and CSS files to a folder in the round-specific logs folder.
 ## Useful for developers to debug potential spritesheet issues to determine where the issue is cropping up (either in DM-side sprite generation or in the TGUI-side display of said spritesheet).
 ## Will only seek to waste disk space if ran on production.
@@ -601,6 +614,9 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 ## The maximum number of concurrent tts http requests that can be made by the server at once.
 #TTS_MAX_CONCURRENT_REQUESTS 4
 
+## The number of seconds before tts https requests timeout (0 for infinite not recommended)
+#TTS_HTTP_TIMEOUT_SECONDS 30
+
 ## Add voices to the TTS voice blacklist.
 #TTS_VOICE_BLACKLIST Sans Undertale
 #TTS_VOICE_BLACKLIST Papyrus Undertale
@@ -623,3 +639,10 @@ UPLOAD_LIMIT_ADMIN 5242880
 
 ## Uncomment to allow admins with +DEBUG to queue the next round to run the byond-tracy profiler.
 #ALLOW_TRACY_QUEUE
+
+## Tgui payloads larger than the 2kb limit for BYOND topic requests are split into roughly 1kb chunks and sent in sequence.
+## This config option limits the maximum chunk count for which the server will accept a payload, default is 32
+TGUI_MAX_CHUNK_COUNT 32
+
+## Uncomment and replace with the URL where users can verify their byond accounts
+#FORUM_LINK_URI

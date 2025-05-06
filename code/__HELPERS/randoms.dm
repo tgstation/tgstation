@@ -15,7 +15,6 @@
 			/obj/item/food/grown/ash_flora,
 			/obj/item/food/grown/mushroom,
 			/obj/item/food/grown/nettle,
-			/obj/item/food/grown/shell,
 			/obj/item/food/kebab,
 			/obj/item/food/meat,
 			/obj/item/food/meat/slab,

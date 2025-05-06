@@ -20,7 +20,11 @@
 	var/__final_pixel_z = 0; \
 	if(ismovable(target)) { \
 		var/atom/movable/__movable_target = target; \
-		__final_pixel_z = __movable_target.base_pixel_z; \
+		__final_pixel_z += __movable_target.base_pixel_z; \
+	}; \
+	if(isliving(target)) { \
+		var/mob/living/__living_target = target; \
+		__final_pixel_z += __living_target.has_offset(pixel = PIXEL_Z_OFFSET); \
 	}; \
 	animate(target, pixel_z = __final_pixel_z, time = 1 SECONDS)
 
@@ -112,7 +116,9 @@
 		render_target = "HOLOGRAM [uid]"
 		uid++
 	// I'm using static here to reduce the overhead, it does mean we need to do plane stuff manually tho
-	var/static/atom/movable/render_step/emissive/glow = new(null)
+	var/static/atom/movable/render_step/emissive/glow
+	if(!glow)
+		glow = new(null)
 	glow.render_source = render_target
 	SET_PLANE_EXPLICIT(glow, initial(glow.plane), src)
 	// We're creating a render step that copies ourselves, and draws it to the emissive plane

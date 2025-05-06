@@ -427,3 +427,31 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/sks
+	name = "Sakhno SKS semi-automatic rifle"
+	result = /obj/item/gun/ballistic/rifle/sks/empty
+	reqs = list(
+		/obj/item/weaponcrafting/stock = 1,
+		/obj/item/weaponcrafting/receiver = 1,
+		/obj/item/weaponcrafting/gunkit/sks = 1,
+	)
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 10 SECONDS
+	category = CAT_WEAPON_RANGED
+
+/datum/crafting_recipe/dimensional_bombcore
+	name = "Multi-Dimensional Payload"
+	result = /obj/item/bombcore/dimensional
+	reqs = list(
+		/obj/item/gibtonite = 1,
+		/obj/item/grenade/chem_grenade = 2,
+		/obj/item/assembly/signaler/anomaly/dimensional = 1,
+	)
+	parts = list(/obj/item/gibtonite = 1, /obj/item/grenade/chem_grenade = 2)
+	tool_behaviors = list(TOOL_SCREWDRIVER, TOOL_WELDER)
+	time = 12 SECONDS
+	category = CAT_WEAPON_RANGED
+	steps = list(
+		"use high quality gibtonite and advanced release or large grenades for better yield",
+	)

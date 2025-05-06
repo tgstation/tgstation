@@ -85,7 +85,7 @@
 /// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
 /datum/controller/subsystem/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
 	var/datum/dynamic_ruleset/rule = sent_rule
-	spend_midround_budget(rule.cost, threat_log, "[worldtime2text()]: [rule.ruletype] [rule.name]")
+	spend_midround_budget(rule.cost, threat_log, "[gameTimestamp()]: [rule.ruletype] [rule.name]")
 	rule.pre_execute(GLOB.alive_player_list.len)
 	if (rule.execute())
 		log_dynamic("Injected a [rule.ruletype] ruleset [rule.name].")

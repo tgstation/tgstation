@@ -195,10 +195,7 @@
 	else
 		atom_target.icon = initial(picked_item.icon)
 
-/datum/action/item_action/chameleon/change/Trigger(trigger_flags)
-	if(!IsAvailable(feedback = TRUE))
-		return FALSE
-
+/datum/action/item_action/chameleon/change/do_effect(trigger_flags)
 	select_look(owner)
 	return TRUE
 

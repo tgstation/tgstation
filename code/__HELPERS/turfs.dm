@@ -110,9 +110,10 @@ Turf and target are separate in case you want to teleport some distance from a t
  *
  * Arguments
  * * something_in_turf - a movable within the turf, somewhere.
- * * stop_type - optional - stops looking if stop_type is found in the turf, returning that type (if found).
+ * * stop_type - stops looking if stop_type is found in the turf, returning that type (if found).
+ * * return_any - if set to TRUE, will return last movable found even if its not of the passed type
  **/
-/proc/get_atom_on_turf(atom/movable/something_in_turf, stop_type)
+/proc/get_atom_on_turf(atom/movable/something_in_turf, stop_type = null, return_any = FALSE)
 	if(!istype(something_in_turf))
 		CRASH("get_atom_on_turf was not passed an /atom/movable! Got [isnull(something_in_turf) ? "null":"type: [something_in_turf.type]"]")
 
@@ -121,9 +122,10 @@ Turf and target are separate in case you want to teleport some distance from a t
 	while(topmost_thing?.loc && !isturf(topmost_thing.loc))
 		topmost_thing = topmost_thing.loc
 		if(stop_type && istype(topmost_thing, stop_type))
-			break
+			return topmost_thing
 
-	return topmost_thing
+	if (!stop_type || return_any)
+		return topmost_thing
 
 ///Returns the turf located at the map edge in the specified direction relative to target_atom used for mass driver
 /proc/get_edge_target_turf(atom/target_atom, direction)
@@ -460,3 +462,20 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if(nearby_turf.blueprint_data)
 			blueprint_data_returned += nearby_turf.blueprint_data
 	return blueprint_data_returned
+
+/// Returns the diffrence in pressure between a turf from surrounding turfs
+/turf/proc/return_turf_delta_p()
+	var/pressure_greatest = 0
+	var/pressure_smallest = INFINITY //Freaking terrified to use INFINITY, man
+	for(var/turf/open/turf_adjacent in RANGE_TURFS(1, src)) //Begin processing the delta pressure across the wall.
+		pressure_greatest = max(pressure_greatest, turf_adjacent.air.return_pressure())
+		pressure_smallest = min(pressure_smallest, turf_adjacent.air.return_pressure())
+
+	return pressure_greatest - pressure_smallest
+
+///Runs through all adjacent open turfs and checks if any are planetary_atmos returns true if even one passes.
+/turf/proc/is_nearby_planetary_atmos()
+	for(var/turf/open/turf_adjacent in RANGE_TURFS(1, src))
+		if(turf_adjacent.planetary_atmos)
+			return TRUE
+	return FALSE

@@ -77,6 +77,7 @@
 	return list(
 		/datum/language/common,
 		/datum/language/uncommon,
+		/datum/language/spinwarder,
 		/datum/language/draconic,
 		/datum/language/codespeak,
 		/datum/language/monkey,
@@ -176,6 +177,10 @@
 
 /obj/item/organ/tongue/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutanttongue
+
+/obj/item/organ/tongue/feel_for_damage(self_aware)
+	// No effect
+	return ""
 
 /obj/item/organ/tongue/lizard
 	name = "forked tongue"
@@ -395,11 +400,11 @@
 		if(!istype(tongue))
 			continue
 		if(mothership == tongue.mothership)
-			to_chat(living_mob, rendered)
+			to_chat(living_mob, rendered, type = MESSAGE_TYPE_RADIO, avoid_highlighting = user == living_mob)
 
 	for(var/mob/dead_mob in GLOB.dead_mob_list)
 		var/link = FOLLOW_LINK(dead_mob, user)
-		to_chat(dead_mob, "[link] [rendered]")
+		to_chat(dead_mob, "[link] [rendered]", type = MESSAGE_TYPE_RADIO)
 
 	speech_args[SPEECH_MESSAGE] = ""
 
@@ -412,16 +417,15 @@
 	taste_sensitivity = 32
 	liked_foodtypes = GROSS | MEAT | RAW | GORE
 	disliked_foodtypes = NONE
-
-// List of english words that translate to zombie phrases
-GLOBAL_LIST_INIT(english_to_zombie, list())
+	// List of english words that translate to zombie phrases
+	var/static/list/english_to_zombie = list()
 
 /obj/item/organ/tongue/zombie/proc/add_word_to_translations(english_word, zombie_word)
-	GLOB.english_to_zombie[english_word] = zombie_word
+	english_to_zombie[english_word] = zombie_word
 	// zombies don't care about grammar (any tense or form is all translated to the same word)
-	GLOB.english_to_zombie[english_word + plural_s(english_word)] = zombie_word
-	GLOB.english_to_zombie[english_word + "ing"] = zombie_word
-	GLOB.english_to_zombie[english_word + "ed"] = zombie_word
+	english_to_zombie[english_word + plural_s(english_word)] = zombie_word
+	english_to_zombie[english_word + "ing"] = zombie_word
+	english_to_zombie[english_word + "ed"] = zombie_word
 
 /obj/item/organ/tongue/zombie/proc/load_zombie_translations()
 	var/list/zombie_translation = strings("zombie_replacement.json", "zombie")
@@ -430,20 +434,20 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 		var/list/data = islist(zombie_translation[zombie_word]) ? zombie_translation[zombie_word] : list(zombie_translation[zombie_word])
 		for(var/english_word in data)
 			add_word_to_translations(english_word, zombie_word)
-	GLOB.english_to_zombie = sort_list(GLOB.english_to_zombie) // Alphabetizes the list (for debugging)
+	english_to_zombie = sort_list(english_to_zombie) // Alphabetizes the list (for debugging)
 
 /obj/item/organ/tongue/zombie/modify_speech(datum/source, list/speech_args)
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		// setup the global list for translation if it hasn't already been done
-		if(!length(GLOB.english_to_zombie))
+		if(!length(english_to_zombie))
 			load_zombie_translations()
 
 		// make a list of all words that can be translated
 		var/list/message_word_list = splittext(message, " ")
 		var/list/translated_word_list = list()
 		for(var/word in message_word_list)
-			word = GLOB.english_to_zombie[LOWER_TEXT(word)]
+			word = english_to_zombie[LOWER_TEXT(word)]
 			translated_word_list += word ? word : FALSE
 
 		// all occurrences of characters "eiou" (case-insensitive) are replaced with "r"
@@ -478,6 +482,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 	modifies_speech = TRUE // not really, they just hiss
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.8,aresample=%SAMPLE_RATE%,atempo=1/0.8,aformat=channel_layouts=mono [p0]; [out2] asetrate=%SAMPLE_RATE%*1.2,aresample=%SAMPLE_RATE%,atempo=1/1.2,aformat=channel_layouts=mono[p2]; [p0][0][p2] amix=inputs=3"}
+
 // Aliens can only speak alien and a few other languages.
 /obj/item/organ/tongue/alien/get_possible_languages()
 	return list(
@@ -534,6 +539,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	modifies_speech = FALSE
 	liked_foodtypes = VEGETABLES
 	disliked_foodtypes = FRUIT | CLOTH
+	languages_native = list(/datum/language/calcic)
 
 /obj/item/organ/tongue/robot
 	name = "robotic voicebox"
@@ -588,6 +594,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.99,aresample=%SAMPLE_RATE%,volume=0.3 [p0]; [p0][out2] amix=inputs=2"}
+	languages_native = list(/datum/language/voltaic)
 
 // Ethereal tongues can speak all default + voltaic
 /obj/item/organ/tongue/ethereal/get_possible_languages()
@@ -600,6 +607,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
 	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER)
+	languages_native = list(/datum/language/nekomimetic)
 
 /obj/item/organ/tongue/jelly
 	name = "jelly tongue"
@@ -608,6 +616,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	liked_foodtypes = MEAT | BUGS
 	disliked_foodtypes = GROSS
 	toxic_foodtypes = NONE
+	languages_native = list(/datum/language/slime)
 
 /obj/item/organ/tongue/jelly/get_food_taste_reaction(obj/item/food, foodtypes = NONE)
 	// a silver slime created this? what a delicacy!
@@ -621,6 +630,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "chimpers"
 	liked_foodtypes = MEAT | FRUIT | BUGS
 	disliked_foodtypes = CLOTH
+	languages_native = list(/datum/language/monkey)
 
 /obj/item/organ/tongue/moth
 	name = "moth tongue"
@@ -629,11 +639,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	liked_foodtypes = VEGETABLES | DAIRY | CLOTH
 	disliked_foodtypes = FRUIT | GROSS | BUGS | GORE
 	toxic_foodtypes = MEAT | RAW | SEAFOOD
-
-/obj/item/organ/tongue/zombie
-	name = "rotting tongue"
-	desc = "Makes you speak like you're at the dentist and you just absolutely refuse to spit because you forgot to mention you were allergic to space shellfish."
-	say_mod = "moans"
+	languages_native = list(/datum/language/moffic)
 
 /obj/item/organ/tongue/mush
 	name = "mush-tongue-room"
@@ -641,6 +647,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	icon = 'icons/obj/service/hydroponics/seeds.dmi'
 	icon_state = "mycelium-angel"
 	say_mod = "poofs"
+	languages_native = list(/datum/language/mushroom)
 
 /obj/item/organ/tongue/pod
 	name = "pod tongue"
@@ -648,6 +655,9 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "whistles"
 	liked_foodtypes = VEGETABLES | FRUIT | GRAIN
 	disliked_foodtypes = GORE | MEAT | DAIRY | SEAFOOD | BUGS
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME
+	languages_native = list(/datum/language/sylvan)
 
 /obj/item/organ/tongue/golem
 	name = "golem tongue"
@@ -659,3 +669,4 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	liked_foodtypes = STONE
 	disliked_foodtypes = NONE //you don't care for much else besides stone
 	toxic_foodtypes = NONE //you can eat fucking uranium
+	languages_native = list(/datum/language/terrum)

@@ -1,6 +1,7 @@
 # This is a reusable workflow to run integration tests on a single map.
 # This is run for every single map in ci_suite.yml. You might want to edit that instead.
 name: Run Integration Tests
+
 on:
   workflow_call:
     inputs:
@@ -27,16 +28,18 @@ jobs:
     name: Run Tests (${{ inputs.major && format('{0}.{1}; ', inputs.major, inputs.minor) || '' }}${{ inputs.map }}; ${{ inputs.max_required_byond_client }})
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    services:
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: root
-        ports:
-          - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - uses: actions/checkout@v4
+      - name: Restore BYOND from Cache
+        uses: ./.github/actions/restore_or_install_byond
+        with:
+          major: ${{ inputs.major }}
+          minor: ${{ inputs.minor }}
+      - name: Download build outputs
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR}}
+          path: ./
       - name: Setup database
         run: |
           sudo systemctl start mysql
@@ -44,24 +47,12 @@ jobs:
           mysql -u root -proot tg_ci < SQL/tgstation_schema.sql
           mysql -u root -proot -e 'CREATE DATABASE tg_ci_prefixed;'
           mysql -u root -proot tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
-      - name: Setup Node
-        uses: ./.github/actions/setup_node
       - name: Install rust-g
         run: |
           bash tools/ci/install_rust_g.sh
       - name: Install dreamluau
         run: |
           bash tools/ci/install_dreamluau.sh
-      - name: Restore BYOND from Cache
-        uses: ./.github/actions/restore_or_install_byond
-        with:
-          major: ${{ inputs.major }}
-          minor: ${{ inputs.minor }}
-      - name: Compile Tests
-        id: compile_tests
-        run: |
-          source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
       - name: Run Tests
         id: run_tests
         run: |

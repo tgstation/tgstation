@@ -1,0 +1,5 @@
+author: "EuSouAFazer"
+delete-after: True
+changes:
+  - bugfix: "Catwalk's tcomms machines are no longer scattered around"
+  - map: "Catwalk's AI sat now has a brand new laundromat and office"

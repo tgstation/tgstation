@@ -30,10 +30,10 @@ GLOBAL_LIST_INIT(reagent_containers, list(
 		/obj/item/reagent_containers/cup/tube
 	),
 	CAT_PILLS = typecacheof(list(
-		/obj/item/reagent_containers/pill/style
+		/obj/item/reagent_containers/applicator/pill/style
 	)),
 	CAT_PATCHES = typecacheof(list(
-		/obj/item/reagent_containers/pill/patch/style
+		/obj/item/reagent_containers/applicator/patch/style
 	)),
 	/// DOPPLER SHIFT ADDITION BEGIN
 	CAT_HYPOS = typecacheof(list(

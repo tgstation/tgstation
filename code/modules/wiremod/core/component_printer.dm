@@ -88,7 +88,8 @@
 
 /obj/machinery/component_printer/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/component_printer/RefreshParts()
@@ -177,7 +178,7 @@
 
 	var/list/designs = list()
 
-	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	// for (var/datum/design/component/component_design_type as anything in subtypesof(/datum/design/component))
@@ -204,7 +205,7 @@
 
 	return data
 
-/obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/component_printer/attackby(obj/item/weapon, mob/living/user, list/modifiers)
 	if (user.combat_mode)
 		return ..()
 
@@ -285,8 +286,8 @@
 
 /obj/machinery/debug_component_printer/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/debug_component_printer/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -350,8 +351,8 @@
 
 /obj/machinery/module_duplicator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/sheetmaterials),
-		get_asset_datum(/datum/asset/spritesheet/research_designs)
+		get_asset_datum(/datum/asset/spritesheet_batched/sheetmaterials),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	)
 
 /obj/machinery/module_duplicator/RefreshParts()
@@ -430,7 +431,7 @@
 	created_atom.pixel_x = created_atom.base_pixel_x + rand(-5, 5)
 	created_atom.pixel_y = created_atom.base_pixel_y + rand(-5, 5)
 
-/obj/machinery/module_duplicator/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/module_duplicator/attackby(obj/item/weapon, mob/user, list/modifiers)
 	var/list/data = list()
 
 	if(istype(weapon, /obj/item/circuit_component/module))

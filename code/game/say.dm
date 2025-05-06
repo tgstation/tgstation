@@ -19,8 +19,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_CTF_RED]" = "redteamradio",
 	"[FREQ_CTF_BLUE]" = "blueteamradio",
 	"[FREQ_CTF_GREEN]" = "greenteamradio",
-	"[FREQ_CTF_YELLOW]" = "yellowteamradio"
-	))
+	"[FREQ_CTF_YELLOW]" = "yellowteamradio",
+	"[FREQ_STATUS_DISPLAYS]" = "captaincast",
+))
 
 /**
  * What makes things... talk.
@@ -59,8 +60,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(!message || message == "")
 		return
 	spans |= speech_span
-	if(!language)
-		language = get_selected_language()
+	language ||= get_selected_language()
 	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
 	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, forced = forced)
 
@@ -237,20 +237,20 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	/* all inputs should be fully figured out past this point */
 
-	var/processed_input = say_emphasis(input) //This MUST be done first so that we don't get clipped by spans
+	var/processed_input = apply_message_emphasis(input) //This MUST be done first so that we don't get clipped by spans
 	processed_input = attach_spans(processed_input, spans)
 
-	var/processed_say_mod = say_emphasis(say_mod)
-	
+	var/processed_say_mod = apply_message_emphasis(say_mod)
+
 	return "[processed_say_mod], \"[processed_input]\""
 
-/// Transforms the speech emphasis mods from [/atom/movable/proc/say_emphasis] into the appropriate HTML tags. Includes escaping.
+/// Transforms the message emphasis mods from [/atom/proc/apply_message_emphasis] into the appropriate HTML tags. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
 	var/static/regex/##varname = regex("(?<!\\\\)[char](.+?)(?<!\\\\)[char]", "g");\
 	input = varname.Replace_char(input, "<[html]>$1</[html]>&#8203;") //zero-width space to force maptext to respect closing tags.
 
-/// Scans the input sentence for speech emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
-/atom/movable/proc/say_emphasis(input)
+/// Scans the input sentence for message emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
+/atom/proc/apply_message_emphasis(input)
 	ENCODE_HTML_EMPHASIS(input, "\\|", "i", italics)
 	ENCODE_HTML_EMPHASIS(input, "\\+", "b", bold)
 	ENCODE_HTML_EMPHASIS(input, "\\_", "u", underline)
@@ -266,8 +266,16 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		return "makes a strange sound."
 
 	if(!has_language(language))
+		var/list/mutual_languages
+		// Get what we can kinda understand, factor in any bonuses passed in from say mods
+		var/list/partially_understood_languages = get_partially_understood_languages()
+		if(LAZYLEN(partially_understood_languages))
+			mutual_languages = partially_understood_languages.Copy()
+			for(var/bonus_language in message_mods[LANGUAGE_MUTUAL_BONUS])
+				mutual_languages[bonus_language] = max(message_mods[LANGUAGE_MUTUAL_BONUS][bonus_language], mutual_languages[bonus_language])
+
 		var/datum/language/dialect = GLOB.language_datum_instances[language]
-		raw_message = dialect.scramble(raw_message)
+		raw_message = dialect.scramble_paragraph(raw_message, mutual_languages)
 
 	return raw_message
 

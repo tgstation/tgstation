@@ -93,7 +93,7 @@
 /obj/structure/mannequin/update_overlays()
 	. = ..()
 	var/mutable_appearance/pedestal = mutable_appearance(icon, "pedestal_[material]")
-	pedestal.pixel_y = -3
+	pedestal.pixel_z = -3
 	. += pedestal
 	var/datum/sprite_accessory/underwear/underwear = SSaccessories.underwear_list[underwear_name]
 	if(underwear)
@@ -120,49 +120,12 @@
 		var/obj/item/worn_item = worn_items[slot_flag]
 		if(!worn_item)
 			continue
-		var/default_layer = 0
-		var/default_icon = null
+		var/default_icon = get_default_icon_by_slot(text2num(slot_flag))
+		var/default_layer = get_default_layer_by_slot(text2num(slot_flag))
 		var/female_icon = NO_FEMALE_UNIFORM
-		switch(text2num(slot_flag)) //this kinda sucks because build worn icon kinda sucks
-			if(ITEM_SLOT_HEAD)
-				default_layer = HEAD_LAYER
-				default_icon = 'icons/mob/clothing/head/default.dmi'
-			if(ITEM_SLOT_EYES)
-				default_layer = GLASSES_LAYER
-				default_icon = 'icons/mob/clothing/eyes.dmi'
-			if(ITEM_SLOT_EARS)
-				default_layer = EARS_LAYER
-				default_icon = 'icons/mob/clothing/ears.dmi'
-			if(ITEM_SLOT_MASK)
-				default_layer = FACEMASK_LAYER
-				default_icon = 'icons/mob/clothing/mask.dmi'
-			if(ITEM_SLOT_NECK)
-				default_layer = NECK_LAYER
-				default_icon = 'icons/mob/clothing/neck.dmi'
-			if(ITEM_SLOT_BACK)
-				default_layer = BACK_LAYER
-				default_icon = 'icons/mob/clothing/back.dmi'
-			if(ITEM_SLOT_BELT)
-				default_layer = BELT_LAYER
-				default_icon = 'icons/mob/clothing/belt.dmi'
-			if(ITEM_SLOT_ID)
-				default_layer = ID_LAYER
-				default_icon = 'icons/mob/clothing/id.dmi'
-			if(ITEM_SLOT_ICLOTHING)
-				default_layer = UNIFORM_LAYER
-				default_icon = DEFAULT_UNIFORM_FILE
-				if(body_type == FEMALE && istype(worn_item, /obj/item/clothing/under))
-					var/obj/item/clothing/under/worn_jumpsuit = worn_item
-					female_icon = worn_jumpsuit.female_sprite_flags
-			if(ITEM_SLOT_OCLOTHING)
-				default_layer = SUIT_LAYER
-				default_icon = DEFAULT_SUIT_FILE
-			if(ITEM_SLOT_GLOVES)
-				default_layer = GLOVES_LAYER
-				default_icon = 'icons/mob/clothing/hands.dmi'
-			if(ITEM_SLOT_FEET)
-				default_layer = SHOES_LAYER
-				default_icon = DEFAULT_SHOES_FILE
+		if(body_type == FEMALE && istype(worn_item, /obj/item/clothing/under))
+			var/obj/item/clothing/under/worn_jumpsuit = worn_item
+			female_icon = worn_jumpsuit.female_sprite_flags
 		. += worn_item.build_worn_icon(default_layer, default_icon, female_uniform = female_icon)
 
 /obj/structure/mannequin/attack_hand_secondary(mob/user, list/modifiers)

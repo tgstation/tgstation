@@ -1,9 +1,7 @@
-#define ENRAGE_ADDITION 25
 /datum/ai_controller/basic_controller/ice_whelp
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-		BB_WHELP_ENRAGED = 0,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -12,12 +10,27 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/ice_whelp,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree/ice_whelp,
 		/datum/ai_planning_subtree/sculpt_statues,
 		/datum/ai_planning_subtree/find_and_hunt_target/corpses/ice_whelp,
 		/datum/ai_planning_subtree/burn_trees,
 	)
 
+/// Cancel melee attacks when we have our breath weapon
+/datum/ai_planning_subtree/basic_melee_attack_subtree/ice_whelp
+	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/ice_whelp
+
+/// Cancel melee attacks when we have our breath weapon
+/datum/ai_behavior/basic_melee_attack/ice_whelp
+
+/datum/ai_behavior/basic_melee_attack/ice_whelp/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
+	var/datum/action/cooldown/breath_weapon = controller.blackboard[BB_TARGETED_ACTION]
+	if (breath_weapon?.IsAvailable())
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+
+	return ..()
+
+/// Find other tasty dragons
 /datum/ai_planning_subtree/find_and_hunt_target/corpses/ice_whelp
 	target_key = BB_TARGET_CANNIBAL
 	finding_behavior = /datum/ai_behavior/find_hunt_target/corpses/dragon_corpse
@@ -32,6 +45,7 @@
 		return FALSE
 	return ..()
 
+/// Eat other dragons
 /datum/ai_behavior/hunt_target/interact_with_target/dragon_cannibalise
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
@@ -74,28 +88,31 @@
 	. = ..()
 	controller.clear_blackboard_key(target_key)
 
-//subtree to use our attacks on the victim
+/// Only use ability if we are within range
 /datum/ai_planning_subtree/targeted_mob_ability/ice_whelp
-	ability_key = BB_WHELP_STRAIGHTLINE_FIRE
 	use_ability_behaviour = /datum/ai_behavior/targeted_mob_ability/ice_whelp
-	finish_planning = FALSE
 
+/datum/ai_planning_subtree/targeted_mob_ability/ice_whelp/additional_ability_checks(datum/ai_controller/controller, datum/action/cooldown/using_action)
+	var/atom/target = controller.blackboard[target_key]
+	var/range_to_target = get_dist(controller.pawn, target)
+	return range_to_target < /datum/action/cooldown/mob_cooldown/fire_breath/ice::fire_range
 
+/// Select appropriate ability based on range
 /datum/ai_behavior/targeted_mob_ability/ice_whelp
-	///key that stores how enraged we are
-	var/enraged_key = BB_WHELP_ENRAGED
-	///key that stores the ability we will use instead if we are fully enraged
-	var/secondary_ability_key = BB_WHELP_WIDESPREAD_FIRE
 
-/datum/ai_behavior/targeted_mob_ability/ice_whelp/get_ability_to_use(datum/ai_controller/controller, ability_key)
-	var/enraged_value = controller.blackboard[enraged_key]
+/datum/ai_behavior/targeted_mob_ability/ice_whelp/perform(seconds_per_tick, datum/ai_controller/controller, ability_key, target_key)
+	var/mob/living/target = controller.blackboard[target_key]
+	if (isnull(target))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	if(prob(enraged_value))
-		controller.set_blackboard_key(enraged_key, 0)
-		return controller.blackboard[secondary_ability_key]
+	var/dist_to_target = get_dist(controller.pawn, target)
+	var/datum/action/cooldown/mob_cooldown/fire_breath/ice/short_range_ability = controller.blackboard[BB_WHELP_WIDESPREAD_FIRE]
+	if (isnull(short_range_ability) || dist_to_target > short_range_ability.fire_range)
+		controller.set_blackboard_key(BB_TARGETED_ACTION, controller.blackboard[BB_WHELP_STRAIGHTLINE_FIRE])
+		return ..()
 
-	controller.set_blackboard_key(enraged_key, enraged_value + ENRAGE_ADDITION)
-	return controller.blackboard[ability_key]
+	controller.set_blackboard_key(BB_TARGETED_ACTION, controller.blackboard[BB_WHELP_WIDESPREAD_FIRE])
+	return ..()
 
 ///subtree to look for trees and burn them with our flamethrower
 /datum/ai_planning_subtree/burn_trees
@@ -138,5 +155,3 @@
 	if(QDELETED(target))
 		return FALSE
 	set_movement_target(controller, target)
-
-#undef ENRAGE_ADDITION

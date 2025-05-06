@@ -82,7 +82,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		if(prefs.toggles & MEMBER_PUBLIC)
 			keyname = "<font color='[prefs.read_preference(/datum/preference/color/ooc_color) || GLOB.normal_ooc_colour]'>[icon2html('icons/ui/chat/member_content.dmi', world, "blag")][keyname]</font>"
 	if(prefs.hearted)
-		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
+		var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet_batched/chat)
 		keyname = "[sheet.icon_tag("emoji-heart")][keyname]"
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 	for(var/client/receiver as anything in GLOB.clients)
@@ -360,6 +360,13 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 	var/list/map_size = splittext(sizes["mapwindow.size"], "x")
 
+	var/split_size = splittext(sizes["mainwindow.split.size"], "x")
+	var/split_width = text2num(split_size[1])
+
+	// Window is minimized, we can't get proper data so return to avoid division by 0
+	if (!split_width)
+		return
+
 	// Gets the type of zoom we're currently using from our view datum
 	// If it's 0 we do our pixel calculations based off the size of the mapwindow
 	// If it's not, we already know how big we want our window to be, since zoom is the exact pixel ratio of the map
@@ -380,9 +387,6 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	if (text2num(map_size[1]) == desired_width)
 		// Nothing to do
 		return
-
-	var/split_size = splittext(sizes["mainwindow.split.size"], "x")
-	var/split_width = text2num(split_size[1])
 
 	// Avoid auto-resizing the statpanel and chat into nothing.
 	desired_width = min(desired_width, split_width - 300)
@@ -464,3 +468,67 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 	set desc = "View the current map vote tally counts."
 	set category = "Server"
 	to_chat(mob, SSmap_vote.tally_printout)
+
+
+/client/verb/linkforumaccount()
+	set category = "OOC"
+	set name = "Link Forum Account"
+	set desc = "Validates your byond account to your forum account. Required to post on the forums."
+
+	var/uri = CONFIG_GET(string/forum_link_uri)
+	if(!uri)
+		to_chat(src, span_warning("This feature is disabled."))
+		return
+
+	if (!SSdbcore.Connect())
+		to_chat(src, span_danger("No connection to the database."))
+		return
+
+	if  (is_guest_key(ckey))
+		to_chat(src, span_danger("Guests can not link accounts."))
+		return
+
+	var/token = generate_account_link_token()
+
+	var/datum/db_query/query_set_token = SSdbcore.NewQuery("INSERT INTO phpbb.tg_byond_oauth_tokens (`token`, `key`) VALUES (:token, :key)", list("token" = token, "key" = key))
+	if(!query_set_token.Execute())
+		to_chat(src, span_danger("Failed to insert account link token into database, please try again later."))
+		qdel(query_set_token)
+		return
+
+	qdel(query_set_token)
+
+	to_chat(src, "Now opening a window to login to your forum account, your account will automatically be linked the moment you log in. If this window doesn't load, Please go to <a href=\"[uri]?token=[token]\">[uri]?token=[token]</a> - This link will expire in 30 minutes.")
+	src << link("[uri]?token=[token]")
+
+/client/proc/generate_account_link_token()
+	var/static/entropychain
+	if (!entropychain)
+		if (fexists("data/entropychain.txt"))
+			entropychain = file2text("entropychain.txt")
+		else
+			entropychain = "LOL THERE IS NO ENTROPY #HEATDEATH"
+	else if (prob(rand(1,15)))
+		text2file("data/entropychain.txt", entropychain)
+
+	var/datum/db_query/query_get_token = SSdbcore.NewQuery("SELECT [random_string()], [random_string()]", list(random_string_args(entropychain), random_string_args(entropychain)))
+
+	if(!query_get_token.Execute())
+		to_chat(src, span_danger("Failed to get random string token from database. (Error #1)"))
+		qdel(query_get_token)
+		return
+
+	if(!query_get_token.NextRow())
+		to_chat(src, span_danger("Could not locate your token in the database. (Error #2)"))
+		qdel(query_get_token)
+		return
+
+	entropychain = "[query_get_token.item[2]]"
+	return query_get_token.item[1]
+
+
+/client/proc/random_string()
+	return "SHA2(CONCAT(RAND(),UUID(),?,RAND(),UUID()), 512)"
+
+/client/proc/random_string_args(entropychain)
+	return "[entropychain][GUID()][rand()*rand(999999)][world.time][GUID()][rand()*rand(999999)][world.timeofday][GUID()][rand()*rand(999999)][world.realtime][GUID()][rand()*rand(999999)][time2text(world.timeofday)][GUID()][rand()*rand(999999)][world.tick_usage][computer_id][address][ckey][key][GUID()][rand()*rand(999999)]"

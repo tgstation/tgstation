@@ -1041,6 +1041,10 @@
 /obj/item/card/id/away/deep_storage //deepstorage.dmm space ruin
 	name = "bunker access ID"
 
+/obj/item/card/id/away/filmstudio
+	name = "Film Studio ID"
+	desc = "An ID card that allows access to the variety of airlocks present in the film studio"
+
 /obj/item/card/id/departmental_budget
 	name = "departmental card (ERROR)"
 	desc = "Provides access to the departmental budget."
@@ -1270,17 +1274,29 @@
 	trim = /datum/id_trim/maint_reaper
 	registered_name = "Thirteen"
 
+/obj/item/card/id/advanced/platinum
+	name = "platinum identification card"
+	desc = "A platinum card which shows the highest level of dedication."
+	icon_state = "card_platinum"
+	inhand_icon_state = "platinum_id"
+	assigned_icon_state = "assigned_silver"
+	wildcard_slots = WILDCARD_LIMIT_PLATINUM
+
+/obj/item/card/id/advanced/platinum/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, INNATE_TRAIT)
+
 /obj/item/card/id/advanced/gold
 	name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "card_gold"
 	inhand_icon_state = "gold_id"
-	assigned_icon_state = "assigned_gold"
+	assigned_icon_state = "assigned_silver"
 	wildcard_slots = WILDCARD_LIMIT_GOLD
 
 /obj/item/card/id/advanced/gold/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, ROUNDSTART_TRAIT)
+	ADD_TRAIT(src, TRAIT_TASTEFULLY_THICK_ID_CARD, INNATE_TRAIT)
 
 /obj/item/card/id/advanced/gold/captains_spare
 	name = "captain's spare ID"
@@ -1608,8 +1624,9 @@
 	desc = "A highly advanced chameleon ID card. Touch this card on another ID card or player to choose which accesses to copy. \
 		Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
-	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
+	wildcard_slots = WILDCARD_LIMIT_GOLD
 	actions_types = list(/datum/action/item_action/chameleon/change/id, /datum/action/item_action/chameleon/change/id_trim)
+	action_slots = ALL
 
 	/// Have we set a custom name and job assignment, or will we use what we're given when we chameleon change?
 	var/forged = FALSE
@@ -1618,6 +1635,10 @@
 	/// Weak ref to the ID card we're currently attempting to steal access from.
 	var/datum/weakref/theft_target
 
+/obj/item/card/id/advanced/chameleon/crummy
+	desc = "A surplus version of a chameleon ID card. Can only hold a limited number of access codes."
+	wildcard_slots = WILDCARD_LIMIT_CHAMELEON
+
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)
 	. = ..()
 	register_item_context()
@@ -1625,6 +1646,20 @@
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
 	return ..()
+
+/obj/item/card/id/advanced/chameleon/equipped(mob/user, slot)
+	. = ..()
+	if (slot & ITEM_SLOT_ID)
+		RegisterSignal(user, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+
+/obj/item/card/id/advanced/chameleon/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_LIVING_CAN_TRACK)
+	return ..()
+
+/obj/item/card/id/advanced/chameleon/proc/can_track(datum/source, mob/user)
+	SIGNAL_HANDLER
+
+	return COMPONENT_CANT_TRACK
 
 /obj/item/card/id/advanced/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isidcard(interacting_with))
@@ -1640,7 +1675,7 @@
 	if(ishuman(interacting_with))
 		interacting_with.balloon_alert(user, "scanning ID card...")
 
-		if(!do_after(user, 2 SECONDS, interacting_with))
+		if(!do_after(user, 2 SECONDS, interacting_with, hidden = TRUE))
 			interacting_with.balloon_alert(user, "interrupted!")
 			return ITEM_INTERACT_BLOCKING
 
@@ -1906,11 +1941,10 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	return .
 
-/// A special variant of the classic chameleon ID card which accepts all access.
+/// A special variant of the classic chameleon ID card which is black. Cool!
 /obj/item/card/id/advanced/chameleon/black
 	icon_state = "card_black"
 	assigned_icon_state = "assigned_syndicate"
-	wildcard_slots = WILDCARD_LIMIT_GOLD
 
 /obj/item/card/id/advanced/engioutpost
 	registered_name = "George 'Plastic' Miller"

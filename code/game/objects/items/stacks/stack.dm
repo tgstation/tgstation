@@ -47,7 +47,7 @@
 	/// Does this stack require a unique girder in order to make a wall?
 	var/has_unique_girder = FALSE
 	/// What typepath table we create from this stack
-	var/obj/structure/table/tableVariant
+	var/obj/structure/table/table_type
 	/// What typepath stairs do we create from this stack
 	var/obj/structure/stairs/stairs_type
 	/// If TRUE, we'll use a radial instead when displaying recipes
@@ -214,6 +214,12 @@
 		. = round(source?.energy / cost)
 	else
 		. = (amount)
+
+/// Gets the table type we make, accounting for potential exceptions.
+/obj/item/stack/proc/get_table_type()
+	if(ispath(table_type, /obj/structure/table/greyscale) && isnull(material_type))
+		return // This table type breaks without a material type.
+	return table_type
 
 /**
  * Builds all recipes in a given recipe list and returns an association list containing them
@@ -716,7 +722,7 @@
 
 	is_zero_amount(delete_if_zero = TRUE)
 
-/obj/item/stack/attackby(obj/item/W, mob/user, params)
+/obj/item/stack/attackby(obj/item/W, mob/user, list/modifiers)
 	if(can_merge(W, inhand = TRUE))
 		var/obj/item/stack/S = W
 		if(merge(S))

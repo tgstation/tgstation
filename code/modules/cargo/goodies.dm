@@ -3,6 +3,7 @@
 	access = NONE
 	group = "Goodies"
 	goody = TRUE
+	crate_type = null
 	discountable = SUPPLY_PACK_STD_DISCOUNTABLE
 
 /datum/supply_pack/goody/clear_pda
@@ -238,7 +239,7 @@
 	name = "Emergency Mutadone Pill Single-Pack"
 	desc = "A single pill for curing genetic defects. Useful for when you can't procure one from medbay."
 	cost = PAYCHECK_CREW * 2.5
-	contains = list(/obj/item/reagent_containers/pill/mutadone)
+	contains = list(/obj/item/reagent_containers/applicator/pill/mutadone)
 
 /datum/supply_pack/goody/rapid_lighting_device
 	name = "Rapid Lighting Device (RLD) Single-Pack"
@@ -312,6 +313,12 @@
 	cost = PAYCHECK_LOWER
 	contains = list(/obj/item/book/manual/fish_catalog)
 
+/datum/supply_pack/goody/aquarium_props
+	name = "Aquarium Props Single-Pack"
+	desc = "A box containing generic aquarium props. You'll still need an aquarium or fish tank for these."
+	cost = PAYCHECK_LOWER
+	contains = list(/obj/item/storage/box/aquarium_props)
+
 /datum/supply_pack/goody/coffee_mug
 	name = "Coffee Mug Single-Pack"
 	desc = "A bog standard coffee mug, for drinking coffee."
@@ -366,3 +373,16 @@
 	desc = "Many people consider mice to be vermin, or dirty lab animals for experimentation, or a culinary delicacy. That's why we're not asking any questions, here."
 	cost = PAYCHECK_CREW * 1.5
 	contains = list(/obj/item/pet_carrier/small/mouse)
+
+/datum/supply_pack/goody/shuttle_construction_kit
+	name = "Shuttle Construction Starter Kit"
+	desc = "Contains a set of shuttle blueprints, and the circuitboards necessary for constructing your own shuttle. \
+			Well at least the ones you can't source yourself without Science's help."
+	cost = PAYCHECK_COMMAND * 12 //You assistants with shipwrighting ambitions can do a couple bounties, can't you?
+	access_view = ACCESS_AUX_BASE //Engineers have it, QM can give it to whoever, and scientists can just research the tech.
+	contains = list(
+		/obj/item/shuttle_blueprints,
+		/obj/item/circuitboard/computer/shuttle/flight_control,
+		/obj/item/circuitboard/computer/shuttle/docker,
+		/obj/item/circuitboard/machine/engine/propulsion = 2,
+	)

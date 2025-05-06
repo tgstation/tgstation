@@ -98,6 +98,9 @@ DEFINE_BITFIELD(foodtypes, list(
 	"Bloody", \
 )
 
+/// Food types assigned to all podperson organs
+#define PODPERSON_ORGAN_FOODTYPES (VEGETABLES | RAW | GORE)
+
 #define DRINK_REVOLTING 1
 #define DRINK_NICE 2
 #define DRINK_GOOD 3
@@ -234,6 +237,15 @@ DEFINE_BITFIELD(food_flags, list(
 #define DRINK_PRICE_MEDIUM 80
 ///Drinks that are made through rare ingredients, or high levels of processing.
 #define DRINK_PRICE_HIGH 200
+
+/// Time spent deep frying an item after which it becomes fried.
+#define FRYING_TIME_FRIED (15 SECONDS)
+/// Time spent deep frying an item after which it becomes fried to perfection.
+#define FRYING_TIME_PERFECT (50 SECONDS)
+/// Time spent deep frying an item after which it becomes burnt.
+#define FRYING_TIME_BURNT (85 SECONDS)
+/// Time spent deep frying an item after which it starts smelling bad.
+#define FRYING_TIME_WARNING (120 SECONDS)
 
 
 /// Flavour defines (also names) for GLOB.ice_cream_flavours list access. Safer from mispelling than plain text.

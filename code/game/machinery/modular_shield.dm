@@ -143,7 +143,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return TRUE
 
-/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, params)
+/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, list/modifiers)
 
 	if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
@@ -284,7 +284,7 @@
 		if ("set_radius")
 			if (active)
 				return
-			var/change_radius = max(1,(text2num(params["new_radius"])))
+			var/change_radius = clamp(text2num(params["new_radius"]), 1, max_radius)
 			if(change_radius >= 10)
 				radius = round(change_radius)//if its over 10 we don't allow decimals
 				return

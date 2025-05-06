@@ -39,13 +39,13 @@
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
 	visor_toggle_up_sound = SFX_VISOR_UP
 	visor_toggle_down_sound = SFX_VISOR_DOWN
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_LOW
+	hair_mask = /datum/hair_mask/standard_hat_low
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
-/obj/item/clothing/head/helmet/sec/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/clothing/head/helmet/sec/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(issignaler(attacking_item))
 		var/obj/item/assembly/signaler/attached_signaler = attacking_item
 		// There's a flashlight in us. Remove it first, or it'll be lost forever!

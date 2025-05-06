@@ -43,10 +43,20 @@
 /datum/component/New(list/raw_args)
 	parent = raw_args[1]
 	var/list/arguments = raw_args.Copy(2)
-	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
+
+	var/result = Initialize(arglist(arguments))
+
+	if(result == COMPONENT_INCOMPATIBLE)
 		stack_trace("Incompatible [type] assigned to a [parent.type]! args: [json_encode(arguments)]")
 		qdel(src, TRUE, TRUE)
 		return
+
+	if(result == COMPONENT_REDUNDANT)
+		qdel(src, TRUE, TRUE)
+		return
+
+	if(QDELETED(src) || QDELETED(parent))
+		CRASH("Component [type] was created with a deleted parent or was deleted itself before it could be added to a parent")
 
 	_JoinParent()
 
@@ -328,7 +338,7 @@
 	var/datum/component/old_component
 
 	raw_args[1] = src
-	if(dupe_mode != COMPONENT_DUPE_ALLOWED && dupe_mode != COMPONENT_DUPE_SELECTIVE && dupe_mode != COMPONENT_DUPE_SOURCES)
+	if(dupe_mode != COMPONENT_DUPE_ALLOWED && dupe_mode != COMPONENT_DUPE_SELECTIVE)
 		old_component = GetComponent(component_type)
 
 		if(old_component)
@@ -356,7 +366,7 @@
 						old_component.InheritComponent(new_component, TRUE)
 
 				if(COMPONENT_DUPE_SOURCES)
-					if(source in old_component.sources)
+					if((source in old_component.sources) && !old_component.allow_source_update(source))
 						return old_component // source already registered, no work to do
 
 					if(old_component.on_source_add(arglist(list(source) + raw_args.Copy(2))) == COMPONENT_INCOMPATIBLE)
@@ -378,16 +388,13 @@
 		if(!new_component && make_new_component)
 			new_component = new component_type(raw_args)
 
-	else if(dupe_mode == COMPONENT_DUPE_SOURCES)
-		new_component = new component_type(raw_args)
-		if(new_component.on_source_add(arglist(list(source) + raw_args.Copy(2))) == COMPONENT_INCOMPATIBLE)
-			stack_trace("incompatible source added to a [new_component.type]. Args: [json_encode(raw_args)]")
-			return null
-
 	else if(!new_component)
 		new_component = new component_type(raw_args) // Dupes are allowed, act like normal
 
 	if(!old_component && !QDELETED(new_component)) // Nothing related to duplicate components happened and the new component is healthy
+		if(source && new_component.on_source_add(arglist(list(source) + raw_args.Copy(2))) == COMPONENT_INCOMPATIBLE)
+			stack_trace("incompatible source added to a [new_component.type]. Args: [json_encode(raw_args)]")
+			return null
 		SEND_SIGNAL(src, COMSIG_COMPONENT_ADDED, new_component)
 		return new_component
 
@@ -483,3 +490,7 @@
  */
 /datum/component/ui_host()
 	return parent
+
+///Whether the component is allowed to call on_source_add() on a source that's already present
+/datum/component/proc/allow_source_update(source)
+	return FALSE

@@ -15,7 +15,7 @@
 #define COMSIG_MOB_REAGENT_CHECK "mob_reagent_check"
 	///stops the reagent check call
 	#define COMSIG_MOB_STOP_REAGENT_CHECK (1<<0)
-///from base of mob/clickon(): (atom/A, params)
+///from base of mob/clickon(): (atom/A, list/modifiers)
 #define COMSIG_MOB_CLICKON "mob_clickon"
 ///from base of mob/MiddleClickOn(): (atom/A)
 #define COMSIG_MOB_MIDDLECLICKON "mob_middleclickon"
@@ -181,6 +181,8 @@
 	#define COMPONENT_CLIENT_MOUSEUP_INTERCEPT (1<<0)
 //from base of client/MouseUp(): (/client, object, location, control, params)
 #define COMSIG_CLIENT_MOUSEDRAG "client_mousedrag"
+///Called on the mob being stripped, accepts COMPONENT_CANT_STRIP (mob/user, obj/item/unequipping)
+#define COMSIG_BEING_STRIPPED "try_strip"
 ///Called on user, from base of /datum/strippable_item/try_(un)equip() (atom/target, obj/item/equipping?)
 #define COMSIG_TRY_STRIP "try_strip"
 	#define COMPONENT_CANT_STRIP (1<<0)
@@ -192,7 +194,7 @@
 #define COMSIG_TABLE_SLAMMED "table_slammed"
 ///from base of atom/attack_hand(): (mob/user, modifiers)
 #define COMSIG_MOB_ATTACK_HAND "mob_attack_hand"
-///from base of /obj/item/attack(): (mob/M, mob/user)
+///from base of /obj/item/attack(): (mob/M, mob/user, list/modifiers)
 #define COMSIG_MOB_ITEM_ATTACK "mob_item_attack"
 ///from base of mob/RangedAttack(): (atom/A, modifiers)
 #define COMSIG_MOB_ATTACK_RANGED "mob_attack_ranged"

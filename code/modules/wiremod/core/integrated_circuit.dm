@@ -147,7 +147,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 	SEND_SIGNAL(src, COMSIG_CIRCUIT_SET_LOCKED, new_value)
 	locked = new_value
 
-/obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, params)
+/obj/item/integrated_circuit/attackby(obj/item/I, mob/living/user, list/modifiers)
 	. = ..()
 	if(istype(I, /obj/item/circuit_component))
 		add_component_manually(I, user)
@@ -713,7 +713,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /// Sets the display name that appears on the shell.
 /obj/item/integrated_circuit/proc/set_display_name(new_name)
-	display_name = copytext(new_name, 1, label_max_length)
+	display_name = copytext_char(new_name, 1, label_max_length)
 	if(!shell)
 		return
 

@@ -1,6 +1,9 @@
 SUBSYSTEM_DEF(air)
 	name = "Atmospherics"
-	init_order = INIT_ORDER_AIR
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms,
+	)
 	priority = FIRE_PRIORITY_AIR
 	wait = 0.5 SECONDS
 	flags = SS_BACKGROUND
@@ -840,7 +843,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 		currentrun -= machine
 
 /datum/controller/subsystem/air/ui_state(mob/user)
-	return GLOB.debug_state
+	return ADMIN_STATE(R_DEBUG)
 
 /datum/controller/subsystem/air/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

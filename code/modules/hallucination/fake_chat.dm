@@ -1,6 +1,7 @@
 /// Sends a fake chat message to the hallucinator.
 /datum/hallucination/chat
 	random_hallucination_weight = 100
+	hallucination_tier = HALLUCINATION_TIER_COMMON
 
 	/// If TRUE, we force the message to be hallucinated from common radio. Only set in New()
 	var/force_radio
@@ -12,30 +13,59 @@
 	src.specific_message = specific_message
 	return ..()
 
+/// When passed a mob, returns a list of languages that mob could theoretically speak IF a blank slate.
+/datum/hallucination/chat/proc/get_hallucinating_spoken_languages(atom/movable/who)
+	var/override_typepath
+	if(iscarbon(who))
+		var/mob/living/carbon/human_who = who
+		override_typepath = human_who.dna?.species?.species_language_holder
+
+	var/datum/language_holder/what_they_speak = GLOB.prototype_language_holders[override_typepath || who.initial_language_holder]
+	return what_they_speak?.spoken_languages?.Copy() || list()
+
 /datum/hallucination/chat/start()
 	var/mob/living/carbon/human/speaker
-	var/datum/language/understood_language = hallucinator.get_random_understood_language()
-	for(var/mob/living/carbon/nearby_human in view(hallucinator))
-		if(nearby_human == hallucinator)
-			continue
+	var/list/datum/language/understood_languages = hallucinator.get_language_holder().understood_languages
+	var/understood_language
 
-		if(!speaker)
+	if(!force_radio)
+		var/list/valid_humans = list()
+		var/list/valid_corpses = list()
+		for(var/mob/living/carbon/nearby_human in view(hallucinator))
+			if(nearby_human == hallucinator)
+				continue
+			if(nearby_human.stat == DEAD)
+				valid_corpses += nearby_human
+				continue
+			valid_humans += nearby_human
+
+		// pick a nearby human which can speak a language the hallucinator understands
+		for(var/mob/living/carbon/nearby_human in shuffle(valid_humans))
+			var/list/shared_languages = get_hallucinating_spoken_languages(nearby_human) & understood_languages
+			if(!length(shared_languages)) // future idea : have people hallucinating off their minds ignore this check
+				continue
 			speaker = nearby_human
-		else if(get_dist(hallucinator, nearby_human) < get_dist(hallucinator, speaker))
-			speaker = nearby_human
+			understood_language = pick(shared_languages)
+			break
+
+		// corpses disrespect language because they're... dead
+		if(isnull(speaker) && length(valid_corpses))
+			speaker = pick(valid_corpses)
 
 	// Get person to affect if radio hallucination
-	var/is_radio = !speaker || force_radio
+	var/is_radio = force_radio || isnull(speaker)
 	if(is_radio)
-		var/list/humans = list()
+		for(var/datum/mind/crew_mind in shuffle(get_crewmember_minds()))
+			if(crew_mind == hallucinator.mind)
+				continue
+			var/list/shared_languages = get_hallucinating_spoken_languages(crew_mind.current) & understood_languages
+			if(!length(shared_languages))
+				continue
+			speaker = crew_mind.current
+			understood_language = pick(shared_languages)
+			break
 
-		for(var/datum/mind/crew_mind in get_crewmember_minds())
-			if(crew_mind.current)
-				humans += crew_mind.current
-		if(humans.len)
-			speaker = pick(humans)
-
-	if(!speaker)
+	if(isnull(speaker))
 		return
 
 	// Time to generate a message.
@@ -48,7 +78,9 @@
 	if(!chosen)
 		if(is_radio)
 			chosen = pick(list("Help!",
+				"Help [pick_list_replacements(HALLUCINATION_FILE, "location")][prob(50)?"!":"!!"]",
 				"[pick_list_replacements(HALLUCINATION_FILE, "people")] is [pick_list_replacements(HALLUCINATION_FILE, "accusations")]!",
+				"[pick_list_replacements(HALLUCINATION_FILE, "people")] has [pick_list_replacements(HALLUCINATION_FILE, "contraband")]!",
 				"[pick_list_replacements(HALLUCINATION_FILE, "threat")] in [pick_list_replacements(HALLUCINATION_FILE, "location")][prob(50)?"!":"!!"]",
 				"[pick("Where's [first_name(hallucinator.name)]?", "Set [first_name(hallucinator.name)] to arrest!")]",
 				"[pick("C","Ai, c","Someone c","Rec")]all the shuttle!",

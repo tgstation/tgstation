@@ -264,6 +264,8 @@
 		if(isliving(the_target))
 			var/mob/living/L = the_target
 			var/faction_check = faction_check_atom(L)
+			if(L.has_status_effect(/datum/status_effect/shapechange_mob))
+				faction_check = FALSE
 			if(robust_searching)
 				if(faction_check && !attack_same)
 					return FALSE
@@ -639,6 +641,11 @@
 	target = null
 	LoseTarget()
 
+/mob/living/simple_animal/hostile/proc/handle_friend_del(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_QDELETING)
+	friends -= source
+
 /mob/living/simple_animal/hostile/proc/add_target(new_target)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_FOUND_TARGET, new_target)
 	if(target)
@@ -652,6 +659,7 @@
 	if (!.)
 		return
 	friends += new_friend
+	RegisterSignal(new_friend, COMSIG_QDELETING, PROC_REF(handle_friend_del))
 	faction = new_friend.faction.Copy()
 
 /mob/living/simple_animal/hostile/lazarus_revive(mob/living/reviver, malfunctioning)

@@ -76,7 +76,7 @@
 	if(implant_time)
 		user.visible_message(
 			span_notice("[user] prepares to use [src] on [target]."),
-			span_notice("You begin to prepare to use [src] on [target]."),
+			span_notice("You prepare to use [src] on [target]."),
 		)
 		if(!do_after(user, (implant_time * surgery_speed), target))
 			return
@@ -86,11 +86,26 @@
 		user.visible_message(span_notice("[user] presses a button on [src] as it plunges into [target]'s body."), span_notice("You press a button on [src] as it plunges into [target]'s body."))
 	else
 		user.visible_message(
-			span_notice("[user] pressses a button on [src] as it plunges into [user.p_their()] body."),
+			span_notice("[user] presses a button on [src] as it plunges into [user.p_their()] body."),
 			span_notice("You press a button on [src] as it plunges into your body."),
 		)
 
-	stored_organ.Insert(target)//insert stored organ into the user
+	if (stored_organ.valid_zones && user.get_held_index_of_item(src))
+		var/list/checked_zones = list(user.zone_selected)
+		if (IS_RIGHT_INDEX(user.get_held_index_of_item(src)))
+			checked_zones += list(BODY_ZONE_R_ARM, BODY_ZONE_R_LEG)
+		else
+			checked_zones += list(BODY_ZONE_L_ARM, BODY_ZONE_L_LEG)
+
+		for (var/check_zone in checked_zones)
+			if (stored_organ.valid_zones[check_zone])
+				stored_organ.swap_zone(check_zone)
+				break
+
+	if (!stored_organ.Insert(target)) // insert stored organ into the user
+		balloon_alert(user, "insertion failed!")
+		return
+
 	stored_organ = null
 	name = initial(name) //get rid of the organ in the name
 	playsound(target.loc, 'sound/items/weapons/circsawhit.ogg', 50, vary = TRUE)
@@ -103,11 +118,11 @@
 /obj/item/autosurgeon/attack_self(mob/user)//when the object it used...
 	use_autosurgeon(user, user)
 
-/obj/item/autosurgeon/attack(mob/living/target, mob/living/user, params)
+/obj/item/autosurgeon/attack(mob/living/target, mob/living/user, list/modifiers)
 	add_fingerprint(user)
 	use_autosurgeon(target, user, 8 SECONDS)
 
-/obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/autosurgeon/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(isorgan(attacking_item))
 		load_organ(attacking_item, user)
 	else

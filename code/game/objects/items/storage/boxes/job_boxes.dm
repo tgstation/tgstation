@@ -14,15 +14,19 @@
 	var/medipen_type = /obj/item/reagent_containers/hypospray/medipen
 	/// Are we crafted?
 	var/crafted = FALSE
+	/// Should we contain an escape hook on maps with z-levels?
+	var/give_hook = TRUE
+	/// Do we get to benefit from Nanotrasen's largesse?
+	var/give_premium_goods = TRUE
 
-/obj/item/storage/box/survival/Initialize(mapload)
+/obj/item/storage/box/survival/create_storage(max_slots, max_specific_storage, max_total_storage, list/canhold, list/canthold, storage_type)
 	. = ..()
 	if(crafted) //DOPPLER EDIT CHANGE - ORIGINAL: if(crafted || !HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		return
 	atom_storage.max_slots += 2
 	atom_storage.max_total_storage += 4
 	name = "large [name]"
-	transform = transform.Scale(1.25, 1)
+	icon_state = "[icon_state]_large"
 
 /obj/item/storage/box/survival/PopulateContents()
 	if(crafted)
@@ -36,14 +40,14 @@
 	if(!isnull(medipen_type))
 		new medipen_type(src)
 
-	if(HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
+	if(give_premium_goods && HAS_TRAIT(SSstation, STATION_TRAIT_PREMIUM_INTERNALS))
 		new /obj/item/flashlight/flare(src)
 		new /obj/item/radio/off(src)
 
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA))
 		new /obj/item/storage/pill_bottle/potassiodide(src)
 
-	if(length(SSmapping.levels_by_trait(ZTRAIT_STATION)) > 1)
+	if(give_hook && length(SSmapping.levels_by_trait(ZTRAIT_STATION)) > 1 && SSmapping.current_map.give_players_hooks)
 		new /obj/item/climbing_hook/emergency(src)
 
 	//DOPPLER EDIT ADDITION
@@ -63,6 +67,11 @@
 	new /obj/item/tank/internals/plasmaman/belt(src)
 	qdel(mask) // Get rid of the items that shouldn't be
 	qdel(internals)
+
+// Prisoners don't get an escape hook
+/obj/item/storage/box/survival/prisoner
+	give_hook = FALSE
+	give_premium_goods = FALSE
 
 // Mining survival box
 /obj/item/storage/box/survival/mining
@@ -267,7 +276,10 @@
 
 /obj/item/storage/box/miner_modkits/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/borg/upgrade/modkit, /obj/item/crusher_trophy))
+	atom_storage.set_holdable(list(
+		/obj/item/borg/upgrade/modkit,
+		/obj/item/crusher_trophy
+	))
 	atom_storage.numerical_stacking = TRUE
 
 /obj/item/storage/box/miner_modkits/PopulateContents()
@@ -302,3 +314,12 @@
 /obj/item/storage/box/skillchips/engineering/PopulateContents()
 	new/obj/item/skillchip/job/engineer(src)
 	new/obj/item/skillchip/job/engineer(src)
+
+/obj/item/storage/box/contractor/fulton_extraction
+	name = "Fulton Extraction Kit"
+	icon_state = "syndiebox"
+	illustration = "writing_syndie"
+
+/obj/item/storage/box/contractor/fulton_extraction/PopulateContents()
+	new /obj/item/extraction_pack/syndicate(src)
+	new /obj/item/fulton_core(src)

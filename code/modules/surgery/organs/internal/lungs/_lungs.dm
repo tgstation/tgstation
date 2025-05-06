@@ -381,8 +381,7 @@
 /// Too much funny gas, time to get brain damage
 /obj/item/organ/lungs/proc/too_much_bz(mob/living/carbon/breather, datum/gas_mixture/breath, bz_pp, old_bz_pp)
 	if(bz_pp > BZ_trip_balls_min)
-		breather.adjust_hallucinations(20 SECONDS)
-		breather.reagents.add_reagent(/datum/reagent/bz_metabolites, 5)
+		breather.reagents.add_reagent(/datum/reagent/bz_metabolites, clamp(bz_pp, 1, 5))
 	if(bz_pp > BZ_brain_damage_min && prob(33))
 		breather.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150, ORGAN_ORGANIC)
 
@@ -557,7 +556,7 @@
 		breather.reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, max(0, 2 - existing))
 	if (nitrium_pp > 10)
 		var/existing = breather.reagents.get_reagent_amount(/datum/reagent/nitrium_high_metabolization)
-		breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 1 - existing))
+		breather.reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, max(0, 2 - existing))
 
 /// Radioactive, green gas. Toxin damage, and a radiation chance
 /obj/item/organ/lungs/proc/too_much_tritium(mob/living/carbon/breather, datum/gas_mixture/breath, trit_pp, old_trit_pp)
@@ -855,6 +854,21 @@
 /obj/item/organ/lungs/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantlungs
 
+/obj/item/organ/lungs/feel_for_damage(self_aware)
+	if(organ_flags & ORGAN_FAILING)
+		if(self_aware)
+			return span_boldwarning("Your lungs hurt madly[HAS_TRAIT(owner, TRAIT_NOBREATH) ? "" : ", and you can't breathe"]!")
+		return span_boldwarning("It hurts madly[HAS_TRAIT(owner, TRAIT_NOBREATH) ? "" : ", and you can't breathe"]!")
+	if(damage < low_threshold)
+		return ""
+	if(damage < high_threshold)
+		if(self_aware)
+			return span_warning("Your lungs feel tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and breathing is harder"].")
+		return span_warning("It feels tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and breathing is harder"].")
+	if(self_aware)
+		return span_boldwarning("Your lungs feel extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
+	return span_boldwarning("It feels extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
+
 #define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
 #define SMOKER_LUNG_HEALING (STANDARD_ORGAN_HEALING * 0.75)
 
@@ -877,7 +891,7 @@
 	healing_factor = SMOKER_LUNG_HEALING
 
 /obj/item/organ/lungs/slime
-	name = "vacuole"
+	name = "slime vacuole"
 	desc = "A large organelle designed to store oxygen and other important gasses."
 
 	safe_plasma_max = 0 //We breathe this to gain POWER.
@@ -1038,6 +1052,12 @@
 	breath_out.gases[/datum/gas/oxygen][MOLES] += gas_breathed
 	breath_out.gases[/datum/gas/hydrogen][MOLES] += gas_breathed * 2
 
+
+/obj/item/organ/lungs/pod
+	name = "pod vacuole"
+	desc = "A large organelle designed to store oxygen and other important gasses."
+	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	color = COLOR_LIME
 
 #undef BREATH_RELATIONSHIP_INITIAL_GAS
 #undef BREATH_RELATIONSHIP_CONVERT

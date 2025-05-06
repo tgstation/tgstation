@@ -118,7 +118,16 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 		TRAIT_BASIC_QUALITY_BAIT = 0.4,
 	)
 
+	//If set, fish types native to this source won't die if left on these turfs.
+	var/list/associated_safe_turfs
+	//list of subtypes of associated safe turfs that are NOT safe
+	var/list/safe_turfs_blacklist
+
 /datum/fish_source/New()
+	if(!SSfishing.initialized && associated_safe_turfs) //This is only needed during world init
+		associated_safe_turfs = typecacheof(associated_safe_turfs)
+		if(safe_turfs_blacklist)
+			associated_safe_turfs -= typecacheof(safe_turfs_blacklist)
 	if(!PERFORM_ALL_TESTS(focus_only/fish_sources_tables))
 		return
 	for(var/path in fish_counts)
@@ -230,9 +239,15 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	SHOULD_NOT_OVERRIDE(TRUE)
 	rewards += roll_reward(rod, fisherman, location)
 
-/// Returns a typepath or a special value which we use for spawning dispensing a reward later.
+/// Returns a typepath, instance or another special value which we use for dispensing a reward later.
 /datum/fish_source/proc/roll_reward(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
 	return pick_weight(get_modified_fish_table(rod, fisherman, location)) || FISHING_DUD
+
+/// Version of roll_reward() that blacklists objects that shouldn't be caught by ai-controlled mobs.
+/datum/fish_source/proc/roll_mindless_reward(obj/item/fishing_rod/rod, mob/fisherman, atom/location)
+	var/list/final_table = get_modified_fish_table(rod, fisherman, location)
+	final_table -= profound_fisher_blacklist
+	return pick_weight(final_table) || FISHING_DUD
 
 /**
  * Used to register signals or add traits and the such right after conditions have been cleared
@@ -360,9 +375,6 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	if(HAS_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD))
 		final_table -= FISHING_DUD
 
-
-	if(HAS_TRAIT(fisherman, TRAIT_PROFOUND_FISHER) && !fisherman.client)
-		final_table -= profound_fisher_blacklist
 	for(var/result in final_table)
 		final_table[result] *= rod.hook.get_hook_bonus_multiplicative(result)
 		final_table[result] += rod.hook.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
@@ -479,7 +491,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 			var/percent_rod_weight = rod_weights[reward] / total_rod_weight
 			var/obj/item/fish/prototype = reward
 			var/init_name = initial(prototype.name)
-			var/ratio = percent_weight/percent_rod_weight
+			var/ratio = percent_rod_weight ? percent_weight/percent_rod_weight : INFINITY
 			if(ratio < 0.9)
 				init_name = span_bold(init_name)
 				if(ratio < 0.3)
@@ -541,16 +553,21 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 #undef EXPLOSIVE_FISHING_RECOVERY_RATE
 
 ///Called when releasing a fish in a fishing spot with the TRAIT_CATCH_AND_RELEASE trait.
-/datum/fish_source/proc/readd_fish(obj/item/fish/fish, mob/living/releaser)
-	var/is_morbid = HAS_MIND_TRAIT(releaser, TRAIT_MORBID)
-	var/is_naive = HAS_MIND_TRAIT(releaser, TRAIT_NAIVE)
-	if(fish.status == FISH_DEAD) //ded fish won't repopulate the sea.
-		if(is_naive || is_morbid)
+/datum/fish_source/proc/readd_fish(atom/location, obj/item/fish/fish, mob/living/releaser)
+	if(releaser)
+		var/is_morbid = HAS_MIND_TRAIT(releaser, TRAIT_MORBID)
+		var/is_naive = HAS_MIND_TRAIT(releaser, TRAIT_NAIVE)
+		if(fish.status == FISH_DEAD) //ded fish won't repopulate the sea.
+			if(is_naive || is_morbid)
+				releaser.add_mood_event("fish_released", /datum/mood_event/fish_released, is_morbid && !is_naive, fish)
+		if(((fish.type in fish_table) != is_morbid) || is_naive)
 			releaser.add_mood_event("fish_released", /datum/mood_event/fish_released, is_morbid && !is_naive, fish)
+	//don't do anything if the fish is dead, not native to this fish source or has no limited amount.
+	if(fish.status == FISH_DEAD || isnull(fish_table[fish.type]) || isnull(fish_counts[fish.type]))
 		return
-	if(((fish.type in fish_table) != is_morbid) || is_naive)
-		releaser.add_mood_event("fish_released", /datum/mood_event/fish_released, is_morbid && !is_naive, fish)
-	if(isnull(fish_counts[fish.type])) //This fish can be caught indefinitely so it won't matter.
+	//ditto if no restrictions apply
+	var/area/area = get_area(location)
+	if(area.area_flags & UNLIMITED_FISHING)
 		return
 	//If this fish population isn't recovering from recent losses, we just increase it.
 	if(!LAZYACCESS(currently_on_regen, fish.type))

@@ -517,21 +517,33 @@
 /datum/map_template/ruin/space/commsbuoy
 	id = "commsbuoy"
 	suffix = "commsbuoy_lowtech.dmm"
-	name = "Kosmokomm Communications Buoy"
+	name = "Space-Ruin Kosmokomm Communications Buoy"
 	description = "One of the SSC's many Comms Buoys, acting as a broadcaster, receiver and relay for interstellar communications. Due to the \
 	shoddy tech available, it does not enable local communications."
 
 /datum/map_template/ruin/space/commsbuoy_pirate
 	id = "commsbuoy_pirate"
 	suffix = "commsbuoy_pirate.dmm"
-	name = "Pirated Communications Buoy"
+	name = "Space-Ruin Pirated Communications Buoy"
 	description = "A Comms Buoy satellite that has been hijacked by local criminal elements, acting as a broadcaster, receiver and relay for \
 	evil interstellar communications. Due to the shoddy tech available, it does not enable local communications."
 
 /datum/map_template/ruin/space/commsbuoy_nt
 	id = "commsbuoy_nt"
 	suffix = "commsbuoy_nt.dmm"
-	name = "Nanotrasen Model-7 Communications Buoy"
+	name = "Space-Ruin Nanotrasen Model-7 Communications Buoy"
 	description = "One of Nanotrasen's highly advanced Communication Buoys. Besides acting as a broadcaster, receiver and relay for interstellar \
 	communications, the satellite also includes a Local-Network array and two multi-function satellite dishes, providing the local sector with \
 	connectivity - as long as you have your Employee ID handy. Though, this one has been reported to have some recent malfunctions."
+
+/datum/map_template/ruin/space/film_studio
+	id = "film_studio"
+	suffix = "film_studio.dmm"
+	name = "Space-Ruin Space Sector 13 Local Channel"
+	description = "A local TV station serving areas surrounding Space Sector 13, shows including but not limited to: talk shows, operas, stage plays and more!"
+
+/datum/map_template/ruin/space/experimental_cloning
+	id = "cloning_facility"
+	suffix = "cloning_facility.dmm"
+	name = "Space-Ruin Experimental Cloning Facility"
+	description = "A fragment of a research station containing a somewhat functional cloning device."

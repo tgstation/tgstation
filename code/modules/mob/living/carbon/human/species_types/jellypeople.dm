@@ -23,6 +23,7 @@
 	mutantheart = null
 	meat = /obj/item/food/meat/slab/human/mutant/slime
 	exotic_blood = /datum/reagent/toxin/slimejelly
+	exotic_bloodtype = BLOOD_TYPE_TOX
 	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -65,13 +66,13 @@
 		return HANDLE_BLOOD_HANDLED
 
 	if(slime.blood_volume <= 0)
-		slime.blood_volume += JELLY_REGEN_RATE_EMPTY * seconds_per_tick
+		slime.blood_volume += JELLY_REGEN_RATE_EMPTY * slime.physiology.blood_regen_mod * seconds_per_tick
 		slime.adjustBruteLoss(2.5 * seconds_per_tick)
 		to_chat(slime, span_danger("You feel empty!"))
 
 	if(slime.blood_volume < BLOOD_VOLUME_NORMAL)
 		if(slime.nutrition >= NUTRITION_LEVEL_STARVING)
-			slime.blood_volume += JELLY_REGEN_RATE * seconds_per_tick
+			slime.blood_volume += JELLY_REGEN_RATE * slime.physiology.blood_regen_mod * seconds_per_tick
 			if(slime.blood_volume <= BLOOD_VOLUME_LOSE_NUTRITION) // don't lose nutrition if we are above a certain threshold, otherwise slimes on IV drips will still lose nutrition
 				slime.adjust_nutrition(-1.25 * seconds_per_tick)
 
@@ -97,7 +98,7 @@
 	consumed_limb.drop_limb()
 	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
-	H.blood_volume += 65 //DOPPLER EDIT - CHANGE - ORIGINAL: 20 - This is because losing a limb now costs them 60 blood, so this refunds it with a pinch extra so it doesn't. Y'know. Kill you.
+	H.blood_volume += 65 * H.physiology.blood_regen_mod //DOPPLER EDIT - CHANGE - ORIGINAL: 20 - This is because losing a limb now costs them 60 blood, so this refunds it with a pinch extra so it doesn't. Y'know. Kill you.
 
 /datum/species/jelly/get_species_description()
 	return "Jellypeople are a strange and alien species with three eyes, made entirely out of gel."

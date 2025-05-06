@@ -1,89 +1,58 @@
 /**
  * Copyright (c) 2020 Aleksej Komarov
  * SPDX-License-Identifier: MIT
+ *
+ * If you're looking for a color palette,
+ * see tgui-core - https://github.com/tgstation/tgui-core/tree/main/styles
+ * Files: vars-colors.scss | vars-components.scss | vars-vaules.scss
  */
 
-@use 'sass:color';
 @use 'sass:map';
-@use 'sass:meta';
 
-// Base colors
+// Mappings of color names
+$color-map: ();
+$_gen_map: (
+  'black': var(--color-black),
+  'white': var(--color-white),
+  'red': var(--color-red),
+  'orange': var(--color-orange),
+  'yellow': var(--color-yellow),
+  'olive': var(--color-olive),
+  'green': var(--color-green),
+  'teal': var(--color-teal),
+  'blue': var(--color-blue),
+  'violet': var(--color-violet),
+  'purple': var(--color-purple),
+  'pink': var(--color-pink),
+  'brown': var(--color-brown),
+  'grey': var(--color-grey),
+  'gray': var(--color-grey),
+  'light-grey': var(--color-light-grey),
+  'light-gray': var(--color-light-grey),
+  'good': var(--color-good),
+  'average': var(--color-average),
+  'bad': var(--color-bad),
+  'label': var(--color-label),
+);
+$low-contrast-color-map: ('yellow', 'white');
 
-$black: hsl(0, 0%, 0%) !default;
-$white: hsl(0, 0%, 100%) !default;
-$red: hsl(3, 100%, 51%) !default;
-$orange: hsl(26, 81%, 62%) !default;
-$yellow: hsl(65, 86%, 77%) !default;
-$olive: hsl(75, 16%, 52%) !default;
-$green: hsl(110, 34%, 60%) !default;
-$teal: hsl(170, 58%, 88%) !default;
-$blue: hsl(230, 81%, 81%) !default;
-$violet: hsl(272, 13%, 57%) !default;
-$purple: hsl(267, 40%, 76%) !default;
-$pink: hsl(333, 55%, 84%) !default;
-$brown: hsl(34, 27%, 60%) !default;
-$grey: hsl(0, 0%, 55%) !default;
-$light-grey: hsl(0, 0%, 77%) !default;
+// Color names for which to generate a color map
+$color-map-keys: map.keys($_gen_map) !default;
+@each $color-name in $color-map-keys {
+  // prettier-ignore
+  $color-map: map.merge($color-map, (
+     $color-name: map.get($_gen_map, $color-name),
+   ));
+}
 
-$primary: hsl(202, 51%, 38%) !default;
-$good: hsl(117, 64%, 67%) !default;
-$average: hsl(39, 80%, 67%) !default;
-$bad: hsl(2, 79%, 66%) !default;
-$label: hsl(195, 100%, 79%) !default;
-
-// Background and foreground color lightness ratios
-$bg-lightness: -15% !default;
-$fg-lightness: 10% !default;
-
+/**
+  * Background and foreground color lightness ratios
+  * @deprecated
+  */
 @function bg($color) {
-  @return color.scale($color, $lightness: $bg-lightness);
+  @return hsl(from $color h s calc(l - var(--adjust-color)));
 }
 
 @function fg($color) {
-  @return color.scale($color, $lightness: $fg-lightness);
-}
-
-// Mappings of color names
-
-$_gen_map: (
-  'black': $black,
-  'white': $white,
-  'red': $red,
-  'orange': $orange,
-  'yellow': $yellow,
-  'olive': $olive,
-  'green': $green,
-  'teal': $teal,
-  'blue': $blue,
-  'violet': $violet,
-  'purple': $purple,
-  'pink': $pink,
-  'brown': $brown,
-  'grey': $grey,
-  'light-grey': $light-grey,
-  'good': $good,
-  'average': $average,
-  'bad': $bad,
-  'label': $label,
-);
-
-// Foreground color names for which to generate a color map
-$fg-map-keys: map.keys($_gen_map) !default;
-// Background color names for which to generate a color map
-$bg-map-keys: map.keys($_gen_map) !default;
-
-$fg-map: ();
-@each $color-name in $fg-map-keys {
-  // prettier-ignore
-  $fg-map: map.merge($fg-map, (
-    $color-name: fg(map.get($_gen_map, $color-name)),
-  ));
-}
-
-$bg-map: ();
-@each $color-name in $bg-map-keys {
-  // prettier-ignore
-  $bg-map: map.merge($bg-map, (
-    $color-name: bg(map.get($_gen_map, $color-name)),
-  ));
+  @return hsl(from $color h s calc(l + var(--adjust-color)));
 }

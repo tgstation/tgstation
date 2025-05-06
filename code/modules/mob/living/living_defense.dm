@@ -182,7 +182,7 @@
 		return clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
 	if(w_class)
 		return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
-	return 0
+	return 0 // plays no sound
 
 /mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
 
@@ -220,13 +220,11 @@
 		return ..()
 
 	var/obj/item/thrown_item = AM
-	if(thrown_item.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
-		return ..()
-
-	if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
-		hitpush = FALSE
-		skipcatch = TRUE
-		blocked = TRUE
+	if(throwingdatum.get_thrower() != src) //No throwing stuff at yourself to trigger hit reactions
+		if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
+			hitpush = FALSE
+			skipcatch = TRUE
+			blocked = TRUE
 
 	var/zone = get_random_valid_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 	var/nosell_hit = (SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) & MOVABLE_IMPACT_ZONE_OVERRIDE) // TODO: find a better way to handle hitpush and skipcatch for humans
@@ -237,7 +235,7 @@
 	if(blocked)
 		return SUCCESSFUL_BLOCK
 
-	var/mob/thrown_by = thrown_item.thrownby?.resolve()
+	var/mob/thrown_by = throwingdatum.get_thrower()
 	if(thrown_by)
 		log_combat(thrown_by, src, "threw and hit", thrown_item)
 	else
@@ -249,7 +247,7 @@
 	if(!thrown_item.throwforce)
 		return
 	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone_with_bodypart(zone)].", "Your armor has softened hit to your [parse_zone_with_bodypart(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
-	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND))
+	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND), attacking_item = thrown_item)
 	if(QDELETED(src)) //Damage can delete the mob.
 		return
 	if(body_position == LYING_DOWN) // physics says it's significantly harder to push someone by constantly chucking random furniture at them if they are down on the floor.
@@ -660,8 +658,8 @@
 /mob/living/proc/do_slap_animation(atom/slapped)
 	do_attack_animation(slapped, no_effect=TRUE)
 	var/mutable_appearance/glove_appearance = mutable_appearance('icons/effects/effects.dmi', "slapglove")
-	glove_appearance.pixel_y = 10 // should line up with head
-	glove_appearance.pixel_x = 10
+	glove_appearance.pixel_z = 10 // should line up with head
+	glove_appearance.pixel_w = 10
 	var/atom/movable/flick_visual/glove = slapped.flick_overlay_view(glove_appearance, 1 SECONDS)
 
 	// And animate the attack!
@@ -672,17 +670,17 @@
 /** Handles exposing a mob to reagents.
  *
  * If the methods include INGEST or INHALE, the mob tastes the reagents.
- * If the methods include VAPOR it incorporates permiability protection.
+ * If the methods include VAPOR or TOUCH it incorporates permiability protection.
  */
 /mob/living/expose_reagents(list/reagents, datum/reagents/source, methods=TOUCH, volume_modifier=1, show_message=TRUE)
 	. = ..()
 	if(. & COMPONENT_NO_EXPOSE_REAGENTS)
 		return
 
-	if(methods & (INGEST | INHALE))
+	if(show_message && (methods & (INGEST | INHALE)))
 		taste_list(reagents)
 
-	var/touch_protection = (methods & VAPOR) ? getarmor(null, BIO) * 0.01 : 0
+	var/touch_protection = (methods & (VAPOR | TOUCH)) ? getarmor(null, BIO) * 0.01 : 0
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_MOB, src, reagents, methods, volume_modifier, show_message, touch_protection)
 	for(var/datum/reagent/reagent as anything in reagents)
 		var/reac_volume = reagents[reagent]

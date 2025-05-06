@@ -312,11 +312,11 @@
 /datum/component/sign_language/proc/emote_tone(mob/living/carbon/carbon_parent, emote_tone)
 	switch(emote_tone)
 		if(TONE_INQUISITIVE)
-			carbon_parent.visible_message(span_bold("quirks [carbon_parent.p_their()] brows quizzically."), visible_message_flags = EMOTE_MESSAGE)
+			carbon_parent.visible_message(span_bold("quirks [carbon_parent.p_their()] brows quizzically."), visible_message_flags = EMOTE_MESSAGE|BLOCK_SELF_HIGHLIGHT_MESSAGE)
 		if(TONE_EMPHATIC)
-			carbon_parent.visible_message(span_bold("widens [carbon_parent.p_their()] eyes emphatically!"), visible_message_flags = EMOTE_MESSAGE)
+			carbon_parent.visible_message(span_bold("widens [carbon_parent.p_their()] eyes emphatically!"), visible_message_flags = EMOTE_MESSAGE|BLOCK_SELF_HIGHLIGHT_MESSAGE)
 		if(TONE_INQUISITIVE_EMPHATIC)
-			carbon_parent.visible_message(span_bold("wears an intense, befuddled expression!"), visible_message_flags = EMOTE_MESSAGE)
+			carbon_parent.visible_message(span_bold("wears an intense, befuddled expression!"), visible_message_flags = EMOTE_MESSAGE|BLOCK_SELF_HIGHLIGHT_MESSAGE)
 
 
 /// Removes the tonal indicator overlay completely

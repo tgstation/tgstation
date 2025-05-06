@@ -18,7 +18,7 @@
 	. = ..()
 	icon_state = "[base_icon_state][used ? "-used" : ""]"
 
-/obj/item/eyesnatcher/attack(mob/living/carbon/human/target, mob/living/user, params)
+/obj/item/eyesnatcher/attack(mob/living/carbon/human/target, mob/living/user, list/modifiers)
 	if(used || !istype(target) || !target.Adjacent(user)) //Works only once, no TK use
 		return ..()
 

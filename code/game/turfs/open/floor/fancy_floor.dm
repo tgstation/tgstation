@@ -31,7 +31,7 @@
 		return TRUE
 	return pry_tile(I, user) ? TRUE : FALSE
 
-/turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+/turf/open/floor/wood/try_replace_tile(obj/item/stack/tile/T, mob/user, list/modifiers)
 	if(T.turf_type == type)
 		return
 	var/obj/item/tool = user.is_holding_tool_quality(TOOL_SCREWDRIVER)
@@ -42,7 +42,7 @@
 	var/turf/open/floor/plating/P = pry_tile(tool, user, TRUE)
 	if(!istype(P))
 		return
-	P.attackby(T, user, params)
+	P.attackby(T, user, modifiers)
 
 /turf/open/floor/wood/pry_tile(obj/item/C, mob/user, silent = FALSE)
 	C.play_tool_sound(src, 80)
@@ -69,7 +69,7 @@
 
 //Used in Snowcabin.dm
 /turf/open/floor/wood/freezing
-	temperature = 180
+	temperature = ICEBOX_MIN_TEMPERATURE
 
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -160,7 +160,7 @@
 	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, worm_chance = 50, \
 		action_text = "uproot", action_text_third_person = "uproots")
 
-/turf/open/floor/grass/Airless
+/turf/open/floor/grass/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/grass/proc/spawniconchange()
@@ -188,6 +188,22 @@
 
 /turf/open/floor/grass/fairy/spawniconchange()
 	icon_state = "fairygrass[rand(0,3)]"
+
+/turf/open/floor/hay
+	name = "hay"
+	desc = "HOW hungry?"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "hay"
+	base_icon_state = "hay"
+	floor_tile = /obj/item/stack/tile/hay
+	flags_1 = NONE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_GRASS
+	barefootstep = FOOTSTEP_GRASS
+	clawfootstep = FOOTSTEP_GRASS
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_dirt = FALSE
+	rust_resistance = RUST_RESISTANCE_ORGANIC
 
 /turf/open/floor/fake_snow
 	gender = PLURAL
@@ -217,7 +233,7 @@
 /turf/open/floor/fake_snow/broken_states()
 	return list("snow_dug")
 
-/turf/open/floor/fake_snow/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+/turf/open/floor/fake_snow/try_replace_tile(obj/item/stack/tile/T, mob/user, list/modifiers)
 	return
 
 /turf/open/floor/fake_snow/crowbar_act(mob/living/user, obj/item/I)

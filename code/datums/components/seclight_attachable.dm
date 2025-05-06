@@ -212,7 +212,7 @@
 	return COMPONENT_ACTION_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_ATTACKBY] that allows a user to attach a seclite by hitting our parent with it.
-/datum/component/seclite_attachable/proc/on_attackby(obj/item/source, obj/item/attacking_item, mob/attacker, params)
+/datum/component/seclite_attachable/proc/on_attackby(obj/item/source, obj/item/attacking_item, mob/attacker, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(!is_type_in_typecache(attacking_item, valid_lights))
@@ -273,8 +273,8 @@
 
 	var/overlay_state = "[light_overlay][light.light_on ? "_on":""]"
 	var/mutable_appearance/flashlight_overlay = mutable_appearance(light_overlay_icon, overlay_state)
-	flashlight_overlay.pixel_x = overlay_x
-	flashlight_overlay.pixel_y = overlay_y
+	flashlight_overlay.pixel_w = overlay_x
+	flashlight_overlay.pixel_z = overlay_y
 	overlays += flashlight_overlay
 
 /// Signal proc for [COMSIG_ATOM_UPDATE_ICON_STATE] that updates our parent's icon state, if we have one.

@@ -1,6 +1,14 @@
-import { Component, createRef, RefObject } from 'react';
+import { Component, createRef, RefObject, useState } from 'react';
 import { Color } from 'tgui-core/color';
-import { Box, Button, Flex, Icon, Tooltip } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  KeyListener,
+  Tooltip,
+} from 'tgui-core/components';
+import { KEY_F, KEY_G } from 'tgui-core/keycodes';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -11,6 +19,7 @@ const LEFT_CLICK = 0;
 type PaintCanvasProps = Partial<{
   onCanvasModifiedHandler: (data: PointData[]) => void;
   onCanvasDropperHandler: (x: number, y: number) => void;
+  onCanvasFillHandler: (x: number, y: number) => void;
   value: string[][];
   width: number;
   height: number;
@@ -21,12 +30,12 @@ type PaintCanvasProps = Partial<{
   has_palette: boolean;
   show_grid: boolean;
   zoom: number;
+  fillmode: boolean;
 }>;
 
 type PointData = {
   x: number;
   y: number;
-  color: Color;
 };
 
 const fromDM = (data: string[][]) => {
@@ -37,26 +46,33 @@ const toMassPaintFormat = (data: PointData[]) => {
   return data.map((p) => ({ x: p.x + 1, y: p.y + 1 })); // 1-based index dm side
 };
 
+const checkPointCoords = (x: number, y: number, p: PointData) => {
+  return p.x === x && p.y === y;
+};
+
 class PaintCanvas extends Component<PaintCanvasProps> {
-  canvasRef: RefObject<HTMLCanvasElement>;
+  canvasRef: RefObject<HTMLCanvasElement | null>;
   baseImageData: Color[][];
   is_grid_shown: boolean;
   modifiedElements: PointData[];
   onCanvasModified: (data: PointData[]) => void;
   onCanvasDropper: (x: number, y: number) => void;
+  onCanvasFill: (x: number, y: number) => void;
   drawing: boolean;
   drawing_color: string;
   zoom: number;
 
   constructor(props) {
     super(props);
-    this.canvasRef = createRef<HTMLCanvasElement>();
+    this.canvasRef = createRef();
     this.modifiedElements = [];
     this.is_grid_shown = false;
     this.drawing = false;
     this.zoom = props.zoom;
+
     this.onCanvasModified = props.onCanvasModifiedHandler;
     this.onCanvasDropper = props.onCanvasDropperHandler;
+    this.onCanvasFill = props.onCanvasFillHandler;
 
     this.handleStartDrawing = this.handleStartDrawing.bind(this);
     this.handleDrawing = this.handleDrawing.bind(this);
@@ -148,15 +164,23 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     ) {
       return;
     }
+    const coords = this.eventToCoords(event);
+    if (this.props.fillmode) {
+      this.onCanvasFill(coords.x + 1, coords.y + 1); // 1-based index dm side
+      return;
+    }
     this.modifiedElements = [];
     this.drawing = true;
     this.drawing_color = this.props.drawing_color;
-    const coords = this.eventToCoords(event);
     this.drawPoint(coords.x, coords.y, this.drawing_color);
   }
 
   drawPoint(x: number, y: number, color: any) {
-    let p: PointData = { x, y, color: Color.fromHex(color) };
+    // check if modifiedElements already contains a point with same x and y
+    if (this.modifiedElements.some(checkPointCoords.bind(null, x, y))) {
+      return;
+    }
+    let p: PointData = { x, y };
     this.modifiedElements.push(p);
     const canvas = this.canvasRef.current!;
     const ctx = canvas.getContext('2d')!;
@@ -182,8 +206,6 @@ class PaintCanvas extends Component<PaintCanvasProps> {
       return;
     }
     this.drawing = false;
-    const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext('2d')!;
     if (this.onCanvasModified !== undefined) {
       this.onCanvasModified(this.modifiedElements);
     }
@@ -262,6 +284,7 @@ export const Canvas = (props) => {
   const average_plaque_height = 90;
   const palette_height = 38;
   const griddy = !!data.show_grid && !!data.editable && !!data.paint_tool_color;
+  const [fillmode, setFillMode] = useState(false);
   return (
     <Window
       width={Math.max(scaled_width + 72, 280)}
@@ -273,6 +296,21 @@ export const Canvas = (props) => {
       }
     >
       <Window.Content>
+        <KeyListener
+          onKeyDown={(event) => {
+            const keyCode = event.code;
+
+            switch (keyCode) {
+              case KEY_F:
+                setFillMode((prevFill) => !prevFill);
+                break;
+
+              case KEY_G:
+                act('toggle_grid');
+                break;
+            }
+          }}
+        />
         <Flex align="start" direction="row">
           {!!data.paint_tool_palette && (
             <Flex.Item>
@@ -285,7 +323,8 @@ export const Canvas = (props) => {
                     ? `
                   \n Left-Click the palette at the
                   bottom of the UI to select a color,
-                  or input a new one with Right-Click.
+                  or input a new one with Right-Click. \n
+                  Tools may have key shortcuts.
                 `
                     : '')
                 }
@@ -295,15 +334,26 @@ export const Canvas = (props) => {
             </Flex.Item>
           )}
           {!!data.editable && !!data.paint_tool_color && (
-            <Flex.Item>
-              <Button
-                tooltip="Grid Toggle"
-                icon="th-large"
-                backgroundColor={data.show_grid ? 'green' : 'red'}
-                onClick={() => act('toggle_grid')}
-                m={0.5}
-              />
-            </Flex.Item>
+            <>
+              <Flex.Item>
+                <Button
+                  tooltip="Grid Toggle (G)"
+                  icon="th-large"
+                  backgroundColor={data.show_grid ? 'green' : 'red'}
+                  onClick={() => act('toggle_grid')}
+                  m={0.5}
+                />
+              </Flex.Item>
+              <Flex.Item>
+                <Button
+                  tooltip="Bucket Tool (F)"
+                  icon="bucket"
+                  backgroundColor={fillmode ? 'green' : 'red'}
+                  onClick={() => setFillMode((prevFill) => !prevFill)}
+                  m={0.5}
+                />
+              </Flex.Item>
+            </>
           )}
           <Flex.Item>
             <Button
@@ -336,12 +386,14 @@ export const Canvas = (props) => {
                 drawing_color={data.paint_tool_color}
                 show_grid={griddy}
                 zoom={data.zoom}
+                fillmode={fillmode}
                 onCanvasModifiedHandler={(changed) =>
                   act('paint', { data: toMassPaintFormat(changed) })
                 }
                 onCanvasDropperHandler={(x, y) =>
-                  act('select_color_from_coords', { px: x, py: y })
+                  act('select_color_from_coords', { x: x, y: y })
                 }
+                onCanvasFillHandler={(x, y) => act('fill', { x: x, y: y })}
                 editable={data.editable}
                 has_palette={!!data.paint_tool_palette}
               />

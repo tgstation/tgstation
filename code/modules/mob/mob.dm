@@ -29,6 +29,8 @@
 	else if(ckey)
 		stack_trace("Mob without client but with associated ckey, [ckey], has been deleted.")
 
+	persistent_client?.set_mob(null)
+
 	remove_from_mob_list()
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
@@ -106,6 +108,17 @@
 /mob/GenerateTag()
 	. = ..()
 	tag = "mob_[next_mob_id++]"
+
+/// Assigns a (c)key to this mob.
+/mob/proc/PossessByPlayer(ckey)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(isnull(ckey))
+		return
+
+	if(!istext(ckey))
+		CRASH("Tried to assign a mob a non-text ckey, wtf?!")
+
+	src.ckey = ckey(ckey)
 
 /mob/serialize_list(list/options, list/semvers)
 	. = ..()
@@ -291,6 +304,8 @@
 		hearers -= src
 
 	var/raw_msg = message
+	if(visible_message_flags & WITH_EMPHASIS_MESSAGE)
+		message = apply_message_emphasis(message)
 	if(visible_message_flags & EMOTE_MESSAGE)
 		message = span_emote("<b>[src]</b>[separation][message]") // DOPPLER EDIT ADDITION - Better emotes
 
@@ -328,15 +343,17 @@
 		return
 	var/raw_self_message = self_message
 	var/self_runechat = FALSE
+	var/block_self_highlight = (visible_message_flags & BLOCK_SELF_HIGHLIGHT_MESSAGE)
+	if(visible_message_flags & WITH_EMPHASIS_MESSAGE)
+		self_message = apply_message_emphasis(self_message)
 	if(visible_message_flags & EMOTE_MESSAGE)
 		self_message = span_emote("<b>[src]</b> [self_message]") // May make more sense as "You do x"
 
 	if(visible_message_flags & ALWAYS_SHOW_SELF_MESSAGE)
-		to_chat(src, self_message)
+		to_chat(src, self_message, avoid_highlighting = block_self_highlight)
 		self_runechat = TRUE
-
 	else
-		self_runechat = show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE)
+		self_runechat = show_message(self_message, MSG_VISUAL, blind_message, MSG_AUDIBLE, avoid_highlighting = block_self_highlight)
 
 	if(self_runechat && (visible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, visible_message_flags))
 		create_chat_message(src, raw_message = raw_self_message, runechat_flags = visible_message_flags)
@@ -370,6 +387,8 @@
 	if(self_message)
 		hearers -= src
 	var/raw_msg = message
+	if(audible_message_flags & WITH_EMPHASIS_MESSAGE)
+		message = apply_message_emphasis(message)
 	if(audible_message_flags & EMOTE_MESSAGE)
 		message = span_emote("<b>[src]</b>[separation][message]") //DOPPLER EDIT CHANGE
 	for(var/mob/M in hearers)
@@ -394,13 +413,17 @@
 		return
 	var/raw_self_message = self_message
 	var/self_runechat = FALSE
+	var/block_self_highlight = (audible_message_flags & BLOCK_SELF_HIGHLIGHT_MESSAGE)
+	if(audible_message_flags & WITH_EMPHASIS_MESSAGE)
+		self_message = apply_message_emphasis(self_message)
 	if(audible_message_flags & EMOTE_MESSAGE)
 		self_message = span_emote("<b>[src]</b> [self_message]")
+
 	if(audible_message_flags & ALWAYS_SHOW_SELF_MESSAGE)
-		to_chat(src, self_message)
+		to_chat(src, self_message, avoid_highlighting = block_self_highlight)
 		self_runechat = TRUE
 	else
-		self_runechat = show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL)
+		self_runechat = show_message(self_message, MSG_AUDIBLE, deaf_message, MSG_VISUAL, avoid_highlighting = block_self_highlight)
 
 	if(self_runechat && (audible_message_flags & EMOTE_MESSAGE) && runechat_prefs_check(src, audible_message_flags))
 		create_chat_message(src, raw_message = raw_self_message, runechat_flags = audible_message_flags)
@@ -803,14 +826,14 @@
 		qdel(M)
 		return
 
-	M.key = key
+	M.PossessByPlayer(key)
 
 /// Checks if the mob can respawn yet according to the respawn delay
 /mob/proc/check_respawn_delay(override_delay = 0)
 	if(!override_delay && !CONFIG_GET(number/respawn_delay))
 		return TRUE
 
-	var/death_time = world.time - client.player_details.time_of_death
+	var/death_time = world.time - persistent_client.time_of_death
 
 	var/required_delay = override_delay || CONFIG_GET(number/respawn_delay)
 
@@ -848,6 +871,7 @@
 /mob/proc/get_status_tab_items()
 	. = list("") //we want to offset unique stuff from standard stuff
 	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
+	return .
 
 /**
  * Convert a list of spells into a displyable list for the statpanel
@@ -1347,7 +1371,7 @@
 	VV_DROPDOWN_OPTION("", "---------")
 	VV_DROPDOWN_OPTION(VV_HK_GIB, "Gib")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_AI, "Give AI Controller")
-	VV_DROPDOWN_OPTION(VV_HK_REMOVE_SPELL, "Remove Spell")
+	VV_DROPDOWN_OPTION(VV_HK_GIVE_AI_SPEECH, "Give Random AI Speech")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_SPELL, "Give Spell")
 	VV_DROPDOWN_OPTION(VV_HK_REMOVE_SPELL, "Remove Spell")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_MOB_ACTION, "Give Mob Ability")
@@ -1391,6 +1415,9 @@
 
 	if(href_list[VV_HK_GIVE_AI])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_ai_controller, src)
+
+	if(href_list[VV_HK_GIVE_AI_SPEECH])
+		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_ai_speech, src)
 
 	if(href_list[VV_HK_GIVE_MOB_ACTION])
 		return SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/give_mob_action, src)
@@ -1459,11 +1486,15 @@
 		return
 
 	nutrition = max(0, nutrition + change)
-	hud_used?.hunger?.update_appearance()
 
 /mob/living/adjust_nutrition(change, forced)
 	. = ..()
-	mob_mood?.update_nutrition_moodlets()
+	// Queue update if change is small enough (6 is 1% of nutrition softcap)
+	if(abs(change) >= 6)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+	else
+		living_flags |= QUEUE_NUTRITION_UPDATE
 
 ///Force set the mob nutrition
 /mob/proc/set_nutrition(set_to, forced = FALSE) //Seriously fuck you oldcoders.
@@ -1471,11 +1502,16 @@
 		return
 
 	nutrition = max(0, set_to)
-	hud_used?.hunger?.update_appearance()
 
 /mob/living/set_nutrition(set_to, forced)
+	var/old_nutrition = nutrition
 	. = ..()
-	mob_mood?.update_nutrition_moodlets()
+	// Queue update if change is small enough (6 is 1% of nutrition softcap)
+	if(abs(old_nutrition - nutrition) >= 6)
+		mob_mood?.update_nutrition_moodlets()
+		hud_used?.hunger?.update_hunger_bar()
+	else
+		living_flags |= QUEUE_NUTRITION_UPDATE
 
 ///Apply a proper movespeed modifier based on items we have equipped
 /mob/proc/update_equipment_speed_mods()
@@ -1559,8 +1595,7 @@
 	if(!canon_client)
 		return
 
-	for(var/foo in canon_client.player_details.post_logout_callbacks)
-		var/datum/callback/CB = foo
+	for(var/datum/callback/CB as anything in persistent_client.post_logout_callbacks)
 		CB.Invoke()
 
 	if(canon_client?.movingmob)

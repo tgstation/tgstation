@@ -51,8 +51,6 @@
 	var/special_role
 	var/list/restricted_roles = list()
 
-	/// Martial art on this mind
-	var/datum/martial_art/martial_art
 	/// List of antag datums on this mind
 	var/list/antag_datums
 	/// this mind's ANTAG_HUD should have this icon_state
@@ -111,7 +109,7 @@
 /datum/mind/Destroy()
 	SSticker.minds -= src
 	QDEL_NULL(antag_hud)
-	QDEL_LIST(memories)
+	QDEL_LIST_ASSOC_VAL(memories)
 	QDEL_NULL(memory_panel)
 	QDEL_LIST(antag_datums)
 	set_current(null)
@@ -124,7 +122,6 @@
 	.["name"] = name
 	.["ghostname"] = ghostname
 	.["memories"] = memories
-	.["martial_art"] = martial_art
 	.["antag_datums"] = antag_datums
 	.["holy_role"] = holy_role
 	.["special_role"] = special_role
@@ -205,7 +202,7 @@
 
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
-		new_character.key = key //now transfer the key to link the client to our new body
+		new_character.PossessByPlayer(key) //now transfer the key to link the client to our new body
 	if(new_character.client)
 		LAZYCLEARLIST(new_character.client.recent_examines)
 		new_character.client.init_verbs() // re-initialize character specific verbs

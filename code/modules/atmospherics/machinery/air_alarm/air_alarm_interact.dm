@@ -46,7 +46,7 @@
 
 
 /obj/machinery/airalarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if((buildstage == AIR_ALARM_BUILD_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if((buildstage == AIR_ALARM_BUILD_NO_CIRCUIT) && (the_rcd.construction_upgrades & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("delay" = 2 SECONDS, "cost" = 1)
 	return FALSE
 
@@ -100,7 +100,7 @@
 	if((buildstage == AIR_ALARM_BUILD_COMPLETE))
 		new /obj/item/stack/cable_coil(loc, 3)
 
-/obj/machinery/airalarm/attackby(obj/item/W, mob/user, params)
+/obj/machinery/airalarm/attackby(obj/item/W, mob/user, list/modifiers)
 	update_last_used(user)
 	switch(buildstage)
 		if(AIR_ALARM_BUILD_COMPLETE)

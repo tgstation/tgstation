@@ -5,7 +5,76 @@
 
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
-	var/implant_color = COLOR_WHITE
+	/// icon of the bodypart overlay we're going to be applying to our owner
+	var/aug_icon = 'icons/mob/human/species/misc/bodypart_overlay_augmentations.dmi'
+	/// icon_state of the bodypart overlay we're going to be applying to our owner
+	var/aug_overlay = null
+	/// Does the implant have an emissive overlay too?
+	var/emissive_overlay = FALSE
+	/// Bodypart overlay we're going to apply to whoever we're implanted into
+	var/datum/bodypart_overlay/augment/bodypart_aug = null
+
+/obj/item/organ/cyberimp/Initialize(mapload)
+	. = ..()
+	if (aug_overlay)
+		bodypart_aug = new(src)
+
+/obj/item/organ/cyberimp/Destroy()
+	QDEL_NULL(bodypart_aug)
+	return ..()
+
+/obj/item/organ/cyberimp/proc/get_overlay_state()
+	return aug_overlay
+
+/obj/item/organ/cyberimp/proc/get_overlay(image_layer, obj/item/bodypart/limb)
+	. = list()
+	. += image(icon = aug_icon, icon_state = get_overlay_state(), layer = image_layer)
+	if (emissive_overlay)
+		. += emissive_appearance(aug_icon, "[get_overlay_state()]_e", limb.owner || limb, image_layer)
+
+/obj/item/organ/cyberimp/on_bodypart_insert(obj/item/bodypart/limb)
+	. = ..()
+	if (bodypart_aug)
+		limb.add_bodypart_overlay(bodypart_aug)
+
+/obj/item/organ/cyberimp/on_bodypart_remove(obj/item/bodypart/limb)
+	. = ..()
+	if (bodypart_aug)
+		limb.remove_bodypart_overlay(bodypart_aug)
+
+/datum/bodypart_overlay/augment
+	layers = EXTERNAL_ADJACENT
+	/// Implant that owns this overlay
+	var/obj/item/organ/cyberimp/implant
+
+/datum/bodypart_overlay/augment/New(obj/item/organ/cyberimp/implant)
+	. = ..()
+	src.implant = implant
+
+/datum/bodypart_overlay/augment/Destroy(force)
+	implant = null
+	return ..()
+
+/datum/bodypart_overlay/augment/generate_icon_cache()
+	. = ..()
+	. += implant.get_overlay_state()
+
+/datum/bodypart_overlay/augment/get_overlay(layer, obj/item/bodypart/limb)
+	layer = bitflag_to_layer(layer)
+	var/list/imageset = implant.get_overlay(layer, limb)
+	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
+		return imageset
+
+	var/list/all_images = list()
+	for(var/image/overlay as anything in imageset)
+		all_images += overlay
+		all_images += emissive_blocker(overlay.icon, overlay.icon_state, limb, layer = overlay.layer, alpha = overlay.alpha)
+
+	return all_images
+
+/obj/item/organ/cyberimp/feel_for_damage(self_aware)
+	// No feeling in implants (yet?)
+	return ""
 
 //[[[[BRAIN]]]]
 
@@ -285,6 +354,7 @@
 	icon_state = "implant_mask"
 	slot = ORGAN_SLOT_BREATHING_TUBE
 	w_class = WEIGHT_CLASS_TINY
+	aug_overlay = "breathing_tube"
 
 /obj/item/organ/cyberimp/mouth/breathing_tube/emp_act(severity)
 	. = ..()
@@ -293,15 +363,3 @@
 	if(prob(60/severity))
 		to_chat(owner, span_warning("Your breathing tube suddenly closes!"))
 		owner.losebreath += 2
-
-//BOX O' IMPLANTS
-
-/obj/item/storage/box/cyber_implants
-	name = "boxed cybernetic implants"
-	desc = "A sleek, sturdy box."
-	icon_state = "cyber_implants"
-
-/obj/item/storage/box/cyber_implants/PopulateContents()
-	new /obj/item/autosurgeon/syndicate/xray_eyes(src)
-	new /obj/item/autosurgeon/syndicate/anti_stun(src)
-	new /obj/item/autosurgeon/syndicate/reviver(src)

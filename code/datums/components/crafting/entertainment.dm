@@ -248,7 +248,7 @@
 		/obj/item/clothing/gloves/latex = 1,
 		/obj/item/stack/cable_coil = 2,
 	)
-	category = CAT_EQUIPMENT
+	category = CAT_ENTERTAINMENT
 
 /datum/crafting_recipe/violin
 	name = "Violin"

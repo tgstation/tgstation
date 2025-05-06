@@ -51,6 +51,7 @@
 	if(client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_name), /datum/preference/name/ai, client)
 		INVOKE_ASYNC(src, PROC_REF(apply_pref_hologram_display), client)
+		set_gender(client)
 
 	INVOKE_ASYNC(src, PROC_REF(set_core_display_icon))
 
@@ -77,14 +78,14 @@
 	GLOB.ai_list += src
 	GLOB.shuttle_caller_list += src
 
-	builtInCamera = new (src)
-	builtInCamera.network = list(CAMERANET_NETWORK_SS13)
+	//They aren't given a c_tag so they don't show up in camera consoles
+	builtInCamera = new(src)
 
 	ai_tracking_tool = new(src)
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_TRACKING_TARGET, PROC_REF(on_track_target))
 	RegisterSignal(ai_tracking_tool, COMSIG_TRACKABLE_GLIDE_CHANGED, PROC_REF(tracked_glidesize_changed))
 
-	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_AI_ACCESS, TRAIT_HANDS_BLOCKED), INNATE_TRAIT)
+	add_traits(list(TRAIT_PULL_BLOCKED, TRAIT_AI_ACCESS, TRAIT_HANDS_BLOCKED, TRAIT_CAN_GET_AI_TRACKING_MESSAGE, TRAIT_LOUD_BINARY), INNATE_TRAIT)
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z), camera_view = TRUE)
 	RegisterSignal(alert_control.listener, COMSIG_ALARM_LISTENER_TRIGGERED, PROC_REF(alarm_triggered))
@@ -234,8 +235,13 @@
 		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
 			robot_status = "DEPOWERED"
 		//Name, Health, Battery, Model, Area, and Status! Everything an AI wants to know about its borgies!
-		. += "[connected_robot.name] | S.Integrity: [connected_robot.health]% | Cell: [connected_robot.cell ? "[display_energy(connected_robot.cell.charge)]/[display_energy(connected_robot.cell.maxcharge)]" : "Empty"] | \
-		Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | Status: [robot_status]"
+		. += list(list("[connected_robot.name]: ",
+			"S.Integrity: [connected_robot.health]% | \
+			Cell: [connected_robot.cell ? "[display_energy(connected_robot.cell.charge)]/[display_energy(connected_robot.cell.maxcharge)]" : "Empty"] | \
+			Model: [connected_robot.designation] | Loc: [get_area_name(connected_robot, TRUE)] | \
+			Status: [robot_status]",
+			"src=[REF(src)];track_cyborg=[text_ref(connected_robot)]",
+		))
 	. += "AI shell beacons detected: [LAZYLEN(GLOB.available_ai_shells)]" //Count of total AI shells
 
 /mob/living/silicon/ai/proc/ai_call_shuttle()
@@ -368,6 +374,7 @@
 	the_mmi.brainmob.name = src.real_name
 	the_mmi.brainmob.real_name = src.real_name
 	the_mmi.brainmob.container = the_mmi
+	the_mmi.brainmob.gender = src.gender
 
 	var/has_suicided_trait = HAS_TRAIT(src, TRAIT_SUICIDED)
 	the_mmi.brainmob.set_suicide(has_suicided_trait)
@@ -389,6 +396,12 @@
 	..()
 	if(usr != src)
 		return
+
+	if(href_list["track_cyborg"])
+		var/mob/living/silicon/robot/cyborg = locate(href_list["track_cyborg"]) in connected_robots
+		if(!cyborg)
+			return
+		ai_tracking_tool.set_tracked_mob(cyborg)
 
 	if(href_list["emergencyAPC"]) //This check comes before incapacitated because the only time it would be useful is when we have no power.
 		if(!apc_override)
@@ -427,9 +440,6 @@
 			Holopad.attack_ai_secondary(src) //may as well recycle
 		else
 			to_chat(src, span_notice("Unable to project to the holopad."))
-	if(href_list["track"])
-		ai_tracking_tool.track_name(src, href_list["track"])
-		return
 	if (href_list["ai_take_control"]) //Mech domination
 		var/obj/vehicle/sealed/mecha/M = locate(href_list["ai_take_control"]) in GLOB.mechas_list
 		if (!M)
@@ -970,6 +980,7 @@
 		deployed_shell = target
 		target.deploy_init(src)
 		mind.transfer_to(target)
+		ADD_TRAIT(target, TRAIT_LOUD_BINARY, REF(src))
 	diag_hud_set_deployed()
 
 /datum/action/innate/deploy_shell

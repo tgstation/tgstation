@@ -2,7 +2,7 @@
 
 #define in_range(source, user) (get_dist(source, user) <= 1 && (get_step(source, 0)?:z) == (get_step(user, 0)?:z))
 
-/// Within given range, but not counting z-levels
+/// Within given range and on the same z level (get dist is WEIRD bro)
 #define IN_GIVEN_RANGE(source, other, given_range) (get_dist(source, other) <= given_range && (get_step(source, 0)?:z) == (get_step(other, 0)?:z))
 
 #define isatom(A) (isloc(A))
@@ -35,6 +35,19 @@ GLOBAL_LIST_INIT(turfs_without_ground, typecacheof(list(
 	)))
 
 #define isgroundlessturf(A) (is_type_in_typecache(A, GLOB.turfs_without_ground))
+
+GLOBAL_LIST_INIT(turfs_no_slip_water, typecacheof(list(
+	/turf/open/misc/asteroid,
+	/turf/open/misc/dirt,
+	/turf/open/misc/grass,
+	/turf/open/misc/basalt,
+	/turf/open/misc/ashplanet,
+	/turf/open/misc/snow,
+	/turf/open/misc/sandy_dirt,
+	/turf/open/floor/noslip,
+	)))
+
+#define isnoslipturf(A) (is_type_in_typecache(A, GLOB.turfs_no_slip_water))
 
 GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 	/turf/open/openspace,
@@ -165,9 +178,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isanimal_or_basicmob(A) (istype(A, /mob/living/simple_animal) || istype(A, /mob/living/basic))
 
 /// asteroid mobs, which are both simple and basic atm
-#define isminingpath(A) (ispath(A, /mob/living/simple_animal/hostile/asteroid) || ispath(A, /mob/living/basic/mining))
-
-#define ismining(A) (istype(A, /mob/living/simple_animal/hostile/asteroid) || istype(A, /mob/living/basic/mining))
+#define ismining(A) (A.mob_biotypes & MOB_MINING)
 
 //Simple animals
 #define isanimal(A) (istype(A, /mob/living/simple_animal))

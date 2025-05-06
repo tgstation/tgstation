@@ -43,6 +43,8 @@
 //Middle left indicators
 #define ui_lingchemdisplay "WEST,CENTER-1:15"
 #define ui_lingstingdisplay "WEST:6,CENTER-3:11"
+#define ui_blooddisplay "WEST:6,CENTER:-2"
+#define ui_xenobiodisplay "WEST:6,CENTER:-4"
 
 //Lower center, persistent menu
 #define ui_sstore1 "CENTER-5:10,SOUTH:5"

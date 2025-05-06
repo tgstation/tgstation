@@ -122,3 +122,10 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 	)
+
+/// Literally does nothing except random speedh
+/datum/ai_controller/basic_controller/talk
+	idle_behavior = null
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/random_speech/blackboard,
+	)

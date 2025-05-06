@@ -38,6 +38,7 @@ type UplinkItem = {
   restricted_roles: string;
   restricted_species: string;
   progression_minimum: number;
+  population_minimum: number;
   cost_override_string: string;
   lock_other_purchases: BooleanLike;
   ref?: string;
@@ -46,9 +47,8 @@ type UplinkItem = {
 type UplinkData = {
   telecrystals: number;
   progression_points: number;
+  joined_population?: number;
   lockable: BooleanLike;
-  current_expected_progression: number;
-  progression_scaling_deviance: number;
   current_progression_scaling: number;
   uplink_flag: number;
   assigned_role: string;
@@ -175,11 +175,10 @@ export class Uplink extends Component<{}, UplinkState> {
     const {
       telecrystals,
       progression_points,
+      joined_population,
       primary_objectives,
       can_renegotiate,
       has_progression,
-      current_expected_progression,
-      progression_scaling_deviance,
       current_progression_scaling,
       extra_purchasable,
       extra_purchasable_stock,
@@ -202,6 +201,8 @@ export class Uplink extends Component<{}, UplinkState> {
       const item = itemsToAdd[i];
       const hasEnoughProgression =
         progression_points >= item.progression_minimum;
+      const hasEnoughPop =
+        !joined_population || joined_population >= item.population_minimum;
 
       let stock: number | null = current_stock[item.stock_key];
       if (item.ref) {
@@ -245,8 +246,14 @@ export class Uplink extends Component<{}, UplinkState> {
             )}
           </Box>
         ),
+        population_tooltip:
+          'This item is not cleared for operations performed against stations crewed by fewer than ' +
+          item.population_minimum +
+          ' people.',
+        insufficient_population: !hasEnoughPop,
         disabled:
           !canBuy ||
+          !hasEnoughPop ||
           (has_progression && !hasEnoughProgression) ||
           (item.lock_other_purchases && purchased_items > 0),
         extraData: {
@@ -256,17 +263,7 @@ export class Uplink extends Component<{}, UplinkState> {
         },
       });
     }
-    // Get the difference between the current progression and
-    // expected progression
-    let progressionPercentage =
-      current_expected_progression - progression_points;
-    // Clamp it down between 0 and 2
-    progressionPercentage = Math.min(
-      Math.max(progressionPercentage / progression_scaling_deviance, -1),
-      1,
-    );
-    // Round it and convert it into a percentage
-    progressionPercentage = Math.round(progressionPercentage * 1000) / 10;
+
     return (
       <Window width={700} height={600} theme="syndicate">
         <Window.Content>
@@ -292,29 +289,6 @@ export class Uplink extends Component<{}, UplinkState> {
                                 </Box>
                                 &nbsp;every minute
                               </Box>
-                              {Math.abs(progressionPercentage) > 0 && (
-                                <Box mt={0.5}>
-                                  Because your threat level is
-                                  {progressionPercentage < 0
-                                    ? ' ahead '
-                                    : ' behind '}
-                                  of where it should be, you are getting
-                                  <Box
-                                    as="span"
-                                    color={
-                                      progressionPercentage < 0
-                                        ? 'red'
-                                        : 'green'
-                                    }
-                                    ml={1}
-                                    mr={1}
-                                  >
-                                    {progressionPercentage}%
-                                  </Box>
-                                  {progressionPercentage < 0 ? 'less' : 'more'}{' '}
-                                  threat every minute
-                                </Box>
-                              )}
                               {dangerLevelsTooltip}
                             </Box>
                           </Box>

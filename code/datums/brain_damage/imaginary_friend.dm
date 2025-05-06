@@ -15,9 +15,8 @@
 /datum/brain_trauma/special/imaginary_friend/on_gain()
 	var/mob/living/M = owner
 	if(M.stat == DEAD || !M.client)
-		qdel(src)
-		return
-	..()
+		return FALSE
+	. = ..()
 	make_friend()
 	get_ghost()
 
@@ -69,7 +68,7 @@
 		qdel(src)
 		return
 
-	friend.key = ghost.key
+	friend.PossessByPlayer(ghost.ckey)
 	friend.attach_to_owner(owner)
 	friend.setup_appearance()
 	friend_initialized = TRUE
@@ -259,7 +258,7 @@
 		else
 			log_talk(message, LOG_SAY, tag="imaginary friend", forced_by = forced, custom_say_emote = message_mods[MODE_CUSTOM_SAY_EMOTE])
 
-	var/quoted_message = say_quote(say_emphasis(message), spans, message_mods)
+	var/quoted_message = say_quote(apply_message_emphasis(message), spans, message_mods)
 	var/rendered = "[span_name("[name]")] [quoted_message]"
 	var/dead_rendered = "[span_name("[name] (Imaginary friend of [owner])")] [quoted_message]"
 

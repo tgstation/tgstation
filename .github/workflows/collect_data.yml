@@ -1,0 +1,68 @@
+name: Collect Data
+
+on:
+  workflow_call:
+    outputs:
+      maps:
+        description: "The maps that were found"
+        value: ${{ jobs.collect_data.outputs.maps }}
+      alternate_tests:
+        description: "The alternate tests that were found"
+        value: ${{ jobs.collect_data.outputs.alternate_tests }}
+      max_required_byond_client:
+        description: "The max required byond client version"
+        value: ${{ jobs.collect_data.outputs.max_required_byond_client }}
+      required_build_versions:
+        description: "Build versions that need to be precompiled"
+        value: ${{ jobs.collect_data.outputs.required_build_versions }}
+
+jobs:
+  collect_data:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    outputs:
+      maps: ${{ steps.map_finder.outputs.maps }}
+      alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
+      max_required_byond_client: ${{ steps.max_required_byond_client.outputs.max_required_byond_client }}
+      required_build_versions: ${{ steps.setup_required_build_versions.outputs.required_build_versions }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Find Maps
+        id: map_finder
+        run: |
+          > maps_output.txt
+          for file in _maps/*.json; do
+            if ! jq -e '.exclude_from_ci == true' "$file" >/dev/null 2>&1; then
+              echo "\"$(basename "$file" .json)\"" >> maps_output.txt
+            else
+              echo "Excluded: $file"
+            fi
+          done
+          map_list=$(paste -sd, maps_output.txt)
+          echo "Maps: $map_list"
+          echo "maps={\"paths\":[$map_list]}" >> "$GITHUB_OUTPUT"
+      - name: Find Alternate Tests
+        id: alternate_test_finder
+        run: |
+          ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>[^;]+);?(?<max_client_version>[0-9]+)?$")]' .github/alternate_byond_versions.txt)
+          echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
+      - name: Collect byond client version configuration
+        id: max_required_byond_client
+        #the regex here does not filter out non-numbers because error messages about no input are less helpful then error messages about bad input (which includes the bad input)
+        run: |
+          echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
+      - name: Set up BYOND cache
+        uses: ./.github/actions/restore_or_install_byond
+      - name: Set up required build versions
+        id: setup_required_build_versions
+        run: |
+          DEFAULT_VERSION='[{"major": "${{ env.BYOND_MAJOR }}","minor": "${{ env.BYOND_MINOR }}"}]'
+          ALTERNATE_VERSIONS='${{ steps.alternate_test_finder.outputs.alternate_tests }}'
+
+          REQUIRED_BUILD_VERSIONS=$(jq -nc \
+            --argjson alternate "$ALTERNATE_VERSIONS" \
+            --argjson default "$DEFAULT_VERSION" '
+            ($alternate + $default) | map({major, minor}) | unique
+          ')
+          echo "required_build_versions=$REQUIRED_BUILD_VERSIONS" >> $GITHUB_OUTPUT

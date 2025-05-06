@@ -18,7 +18,7 @@
 
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "eyes"
-	iris_overlays = FALSE
+	iris_overlay = null
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = GOLIATH_COLORS
 
@@ -128,7 +128,7 @@
 	. = ..()
 	. += "You can use your tendril hammer arm to deliver a devastating blow against mining fauna, but only once every two seconds."
 
-/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, click_parameters)
+/obj/item/goliath_infuser_hammer/attack(mob/living/target, mob/living/carbon/human/user, list/modifiers)
 	. = ..()
 
 	//If we're on cooldown, we'll do a normal attack.

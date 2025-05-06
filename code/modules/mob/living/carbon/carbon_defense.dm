@@ -289,6 +289,23 @@
 	else
 		Knockdown(stun_duration)
 
+/// When another mob touches us, they may messy us up.
+/mob/living/carbon/proc/share_blood_on_touch(mob/living/carbon/human/who_touched_us)
+	return
+
+/mob/living/carbon/human/share_blood_on_touch(mob/living/carbon/human/who_touched_us, messy_slots = ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
+	if(!istype(who_touched_us) || !messy_slots)
+		return
+
+	for(var/obj/item/thing as anything in who_touched_us.get_equipped_items())
+		if((thing.body_parts_covered & HANDS) && prob(GET_ATOM_BLOOD_DNA_LENGTH(thing) * 25))
+			add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(who_touched_us.wear_suit), messy_slots)
+			return
+
+	if(prob(blood_in_hands * GET_ATOM_BLOOD_DNA_LENGTH(who_touched_us) * 10))
+		add_blood_DNA_to_items(GET_ATOM_BLOOD_DNA(who_touched_us), messy_slots)
+		who_touched_us.blood_in_hands -= 1
+
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/helper, force_friendly)
 	if(on_fire)
 		to_chat(helper, span_warning("You can't put [p_them()] out with just your bare hands!"))
@@ -320,6 +337,7 @@
 		to_chat(helper, span_notice("You give [src] a pat on the head to make [p_them()] feel better!"))
 		to_chat(src, span_notice("[helper] gives you a pat on the head to make you feel better! "))
 
+		share_blood_on_touch(helper, ITEM_SLOT_HEAD|ITEM_SLOT_MASK)
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you pat [p_them()] on the head."))
 		//DOPPLER EDIT ADDITION BEGIN - Excitable quirk! 🐶
@@ -362,6 +380,7 @@
 			to_chat(helper, span_notice("You hug [src] to make [p_them()] feel better!"))
 			to_chat(src, span_notice("[helper] hugs you to make you feel better!"))
 
+		share_blood_on_touch(helper, ITEM_SLOT_HEAD|ITEM_SLOT_MASK|ITEM_SLOT_GLOVES)
 		// Warm them up with hugs
 		share_bodytemperature(helper)
 
@@ -687,6 +706,7 @@
 		changed_something = TRUE
 		new_organ = new new_organ()
 		new_organ.replace_into(src)
+		new_organ.organ_flags |= ORGAN_MUTANT
 
 	var/obj/item/bodypart/new_part = pick(GLOB.bioscrambler_valid_parts)
 	var/obj/item/bodypart/picked_user_part = get_bodypart(initial(new_part.body_zone))
@@ -713,7 +733,7 @@
 		body_parts -= part
 	GLOB.bioscrambler_valid_parts = body_parts
 
-	var/list/organs = subtypesof(/obj/item/organ) + subtypesof(/obj/item/organ)
+	var/list/organs = subtypesof(/obj/item/organ)
 	for(var/obj/item/organ/organ_type as anything in organs)
 		if(!is_type_in_typecache(organ_type, GLOB.bioscrambler_organs_blacklist) && !(initial(organ_type.organ_flags) & ORGAN_ROBOTIC))
 			continue
@@ -727,5 +747,8 @@
 		. |= SHOVE_CAN_KICK_SIDE
 	if(HAS_TRAIT(src, TRAIT_NO_SIDE_KICK)) // added as an extra check, just in case
 		. &= ~SHOVE_CAN_KICK_SIDE
+
+/mob/living/carbon/create_splatter(splatter_dir)
+	new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(src), splatter_dir, dna?.blood_type.get_color())
 
 #undef SHAKE_ANIMATION_OFFSET

@@ -53,7 +53,7 @@
 	tesla_zap(source = organ_owner, zap_range = 20, power = 2.5e5, cutoff = 1e3)
 	qdel(src)
 
-/obj/item/organ/heart/cybernetic/anomalock/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/organ/heart/cybernetic/anomalock/attack(mob/living/target_mob, mob/living/user, list/modifiers)
 	if(target_mob != user || !istype(target_mob) || !core)
 		return ..()
 
@@ -96,6 +96,8 @@
 
 /obj/item/organ/heart/cybernetic/anomalock/on_life(seconds_per_tick, times_fired)
 	. = ..()
+	if(!core)
+		return
 	if(owner.blood_volume <= BLOOD_VOLUME_NORMAL)
 		owner.blood_volume += 5 * seconds_per_tick
 	if(owner.health <= owner.crit_threshold)
@@ -115,10 +117,6 @@
 /obj/item/organ/heart/cybernetic/anomalock/proc/notify_cooldown(mob/living/carbon/organ_owner)
 	balloon_alert(organ_owner, "your heart strengthtens")
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
-
-///Returns the mob we are implanted in so that the electricity effect doesn't runtime
-/obj/item/organ/heart/cybernetic/anomalock/proc/get_held_mob()
-	return owner
 
 /obj/item/organ/heart/cybernetic/anomalock/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, required_anomaly))
@@ -185,19 +183,14 @@
 	owner.reagents.add_reagent(/datum/reagent/medicine/coagulant, 5)
 	owner.add_filter("emp_shield", 2, outline_filter(1, "#639BFF"))
 	to_chat(owner, span_revendanger("You feel a burst of energy! It's do or die!"))
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.gain_trauma(/datum/brain_trauma/special/tenacity, TRAUMA_RESILIENCE_ABSOLUTE)
+	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), REF(src))
 
 /datum/status_effect/voltaic_overdrive/on_remove()
 	. = ..()
 	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_filter("emp_shield")
 	owner.balloon_alert(owner, "your heart weakens")
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.cure_trauma_type(/datum/brain_trauma/special/tenacity, TRAUMA_RESILIENCE_ABSOLUTE)
-
+	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), REF(src))
 
 /atom/movable/screen/alert/status_effect/anomalock_active
 	name = "voltaic overdrive"

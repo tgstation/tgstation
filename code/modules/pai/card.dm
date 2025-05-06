@@ -28,12 +28,12 @@
 	SSpai.pai_card_list += src
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
-/obj/item/pai_card/attackby(obj/item/used, mob/user, params)
+/obj/item/pai_card/attackby(obj/item/used, mob/user, list/modifiers)
 	if(pai && istype(used, /obj/item/encryptionkey))
 		if(!pai.encrypt_mod)
 			to_chat(user, span_alert("Encryption Key ports not configured."))
 			return
-		pai.radio.attackby(used, user, params)
+		pai.radio.attackby(used, user, modifiers)
 		to_chat(user, span_notice("You insert [used] into the [src]."))
 		return
 	return ..()
@@ -212,7 +212,7 @@
 	var/mob/living/silicon/pai/new_pai = new(src)
 	new_pai.name = candidate.name || pick(GLOB.ninja_names)
 	new_pai.real_name = new_pai.name
-	new_pai.key = candidate.ckey
+	new_pai.PossessByPlayer(candidate.ckey)
 	set_personality(new_pai)
 	SSpai.candidates -= ckey
 	return TRUE

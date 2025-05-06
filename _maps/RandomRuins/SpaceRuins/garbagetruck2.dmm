@@ -63,7 +63,7 @@
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "hv" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/pill/maintenance{
+/obj/item/reagent_containers/applicator/pill/maintenance{
 	pixel_x = 3;
 	pixel_y = 7
 	},
@@ -268,7 +268,7 @@
 /obj/item/restraints/handcuffs/cable/zipties/used,
 /obj/structure/closet/crate/trashcart/filled,
 /obj/item/reagent_containers/condiment/soysauce,
-/obj/item/reagent_containers/pill/mannitol,
+/obj/item/reagent_containers/applicator/pill/mannitol,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "xH" = (
@@ -410,7 +410,7 @@
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Go" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/reagent_containers/pill/cyanide{
+/obj/item/reagent_containers/applicator/pill/cyanide{
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
@@ -544,7 +544,7 @@
 /turf/open/floor/catwalk_floor/iron,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Ok" = (
-/obj/item/reagent_containers/pill/cyanide,
+/obj/item/reagent_containers/applicator/pill/cyanide,
 /obj/effect/spawner/random/medical/minor_healing,
 /obj/effect/spawner/random/medical/surgery_tool,
 /obj/item/reagent_containers/blood/o_minus,

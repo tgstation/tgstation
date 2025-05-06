@@ -94,7 +94,7 @@
 
 /obj/item/food/clothing/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, after_eat = CALLBACK(src, PROC_REF(after_eat)))
 
 /obj/item/food/clothing/proc/after_eat(mob/eater)
 	var/obj/item/clothing/resolved_clothing = clothing.resolve()
@@ -103,14 +103,14 @@
 	else
 		qdel(src)
 
-/obj/item/clothing/attack(mob/living/target, mob/living/user, params)
+/obj/item/clothing/attack(mob/living/target, mob/living/user, list/modifiers)
 	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
 		return ..()
 	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()
 	if(isnull(moth_snack))
 		create_moth_snack()
-	moth_snack.attack(target, user, params)
+	moth_snack.attack(target, user, modifiers)
 
 /// Creates a food object in null space which we can eat and imagine we're eating this pair of shoes
 /obj/item/clothing/proc/create_moth_snack()

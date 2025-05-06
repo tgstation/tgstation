@@ -14,6 +14,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	action_slots = ALL
 	force = 10
 	throwforce = 7
 	demolition_mod = 0.25
@@ -242,7 +243,7 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
 	return ..()
 
-/obj/item/melee/beesword/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/melee/beesword/afterattack(atom/target, mob/user, list/modifiers)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 4)
@@ -291,16 +292,16 @@
 		if(!isspaceturf(turf))
 			consume_turf(turf)
 
-/obj/item/melee/supermatter_sword/pre_attack(atom/A, mob/living/user, params)
+/obj/item/melee/supermatter_sword/pre_attack(atom/target, mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return .
 
-	if(A == user)
+	if(target == user)
 		user.dropItemToGround(src, TRUE)
 	else
-		user.do_attack_animation(A)
-	consume_everything(A)
+		user.do_attack_animation(target)
+	consume_everything(target)
 	return TRUE
 
 /obj/item/melee/supermatter_sword/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -385,7 +386,7 @@
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/items/weapons/whip.ogg'
 
-/obj/item/melee/curator_whip/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/melee/curator_whip/afterattack(atom/target, mob/user, list/modifiers)
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.drop_all_held_items()

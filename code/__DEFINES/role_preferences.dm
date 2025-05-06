@@ -53,6 +53,7 @@
 #define ROLE_BRAINWASHED "Brainwashed Victim"
 #define ROLE_DEATHSQUAD "Deathsquad"
 #define ROLE_DRONE "Drone"
+#define ROLE_EVIL_CLONE "Evil Clone"
 #define ROLE_EMAGGED_BOT "Malfunctioning Bot"
 #define ROLE_HIVE "Hivemind Host" //Role removed, left here for safety.
 #define ROLE_HYPNOTIZED "Hypnotized Victim"
@@ -70,6 +71,7 @@
 #define ROLE_SENTIENCE "Sentience Potion Spawn"
 #define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
 #define ROLE_SYNDICATE "Syndicate"
+#define ROLE_EXPERIMENTAL_CLONER "Experimental Cloner"
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_FREE_GOLEM "Free Golem"

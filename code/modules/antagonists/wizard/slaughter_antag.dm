@@ -10,6 +10,8 @@
 	var/fluff = "You're a Demon of Wrath, often dragged into reality by wizards to terrorize their enemies."
 	var/objective_verb = "Kill"
 	var/datum/mind/summoner
+	/// consume count for statistics
+	var/consume_count = 0
 
 /datum/antagonist/slaughter/on_gain()
 	forge_objectives()
@@ -29,6 +31,7 @@
 		objectives += new_objective
 	var/datum/objective/new_objective2 = new /datum/objective
 	new_objective2.owner = owner
+	new_objective2.no_failure = TRUE
 	new_objective2.explanation_text = "[objective_verb] everyone[summoner ? " else while you're at it":""]."
 	objectives += new_objective2
 
@@ -50,20 +53,19 @@
 	if(objectives.len)
 		report += printobjectives(objectives)
 
-	var/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon/consume_ability = locate() in owner.current?.actions
-	if(consume_ability?.consume_count > 0)
-		report += span_greentext("The [name] consumed a total of [consume_ability.consume_count] bodies!")
+	if(consume_count > 0)
+		report += span_greentext("The [name] consumed a total of [consume_count] bodies!")
 	else
 		report += span_redtext("The [name] did not consume anyone! Shame!!")
 
-	if(owner.current?.stat != DEAD)
-		report += "<span class='greentext big'>The [name] survived!</span>"
-	else
+	if(isnull(owner.current) || owner.current.stat == DEAD) //demons delete on death but if someone makes like a subtype that doesnt we also check for stat
 		report += "<span class='redtext big'>The [name] was vanquished!</span>"
+	else
+		report += "<span class='greentext big'>The [name] survived!</span>"
 
 	return report.Join("<br>")
 
 /datum/antagonist/slaughter/laughter
 	name = "Laughter demon"
-	objective_verb = "Hug and Tickle"
+	objective_verb = "Hug and tickle"
 	fluff = "You're a Demon of Envy, sometimes dragged into reality by wizards as a way to cause wanton chaos."

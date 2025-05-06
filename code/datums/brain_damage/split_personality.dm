@@ -17,9 +17,8 @@
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/brain_owner = owner
 	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner)) //No use assigning people to a corpse or braindead
-		qdel(src)
-		return
-	..()
+		return FALSE
+	. = ..()
 	make_backseats()
 
 #ifdef UNIT_TESTS
@@ -56,7 +55,7 @@
 		qdel(src)
 		return
 
-	stranger_backseat.key = ghost.key
+	stranger_backseat.PossessByPlayer(ghost.ckey)
 	stranger_backseat.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
 	message_admins("[ADMIN_LOOKUPFLW(stranger_backseat)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
@@ -209,7 +208,7 @@
 			| strings("ion_laws.json", "iondrinks"))
 
 /datum/brain_trauma/severe/split_personality/brainwashing/on_gain()
-	..()
+	. = ..()
 	var/mob/living/split_personality/traitor/traitor_backseat = stranger_backseat
 	traitor_backseat.codeword = codeword
 	traitor_backseat.objective = objective
@@ -222,7 +221,7 @@
 	set waitfor = FALSE
 	var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[owner.real_name]'s")] brainwashed mind?", poll_time = 7.5 SECONDS, checked_target = stranger_backseat, alert_pic = owner, role_name_text = "brainwashed mind")
 	if(chosen_one)
-		stranger_backseat.key = chosen_one.key
+		stranger_backseat.PossessByPlayer(chosen_one.ckey)
 	else
 		qdel(src)
 

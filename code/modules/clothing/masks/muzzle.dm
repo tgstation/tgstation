@@ -29,9 +29,14 @@
 	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	body_parts_covered = NONE
+	flags_cover = NONE
 	clothing_flags = MASKINTERNALS
 	armor_type = /datum/armor/muzzle_breath
 	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
+
+/obj/item/clothing/mask/muzzle/breath/examine_tags(mob/user)
+	. = ..()
+	.["surgical"] = "Does not block surgery on covered bodyparts."
 
 /obj/item/clothing/mask/muzzle/tape
 	name = "tape piece"
@@ -68,7 +73,7 @@
 		INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
 		to_chat(user, span_userdanger("You feel a massive pain as hundreds of tiny spikes tear free from your face!"))
 
-/obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, params)
+/obj/item/clothing/mask/muzzle/tape/attack(mob/living/carbon/victim, mob/living/carbon/attacker, list/modifiers)
 	if(attacker.combat_mode)
 		return ..()
 	if(victim.is_mouth_covered(ITEM_SLOT_HEAD))

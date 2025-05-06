@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 			data["x"] = disk_turf.x
 			data["y"] = disk_turf.y
 			data["z"] = disk_turf.z
-		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living)
+		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living, TRUE)
 		if(outer != nuke_disk)
 			if(isliving(outer))
 				var/mob/living/disk_holder = outer
@@ -224,7 +224,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
-		C?.playtitlemusic(40)
+		if(COOLDOWN_FINISHED(GLOB, web_sound_cooldown))
+			C?.playtitlemusic(volume_multiplier = 0.5)
 		if(speed_round && was_forced != ADMIN_FORCE_END_ROUND)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
 		HandleRandomHardcoreScore(C)
@@ -246,7 +247,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 	to_chat(world, span_infoplain(span_big(span_bold("<BR><BR><BR>The round has ended."))))
 	log_game("The round has ended.")
-	send2chat(new /datum/tgs_message_content("[GLOB.round_id ? "Round [GLOB.round_id]" : "The round has"] just ended."), CONFIG_GET(string/channel_announce_end_game))
+	for(var/channel_tag in CONFIG_GET(str_list/channel_announce_end_game))
+		send2chat(new /datum/tgs_message_content("[GLOB.round_id ? "Round [GLOB.round_id]" : "The round has"] just ended."), channel_tag)
 	send2adminchat("Server", "Round just ended.")
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))
@@ -287,6 +289,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
+
+	world.TgsTriggerEvent("tg-Roundend", wait_for_completion = TRUE)
 
 	sleep(5 SECONDS)
 	ready_for_reboot = TRUE
@@ -337,6 +341,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='byond://?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
 		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
+	parts += "[FOURSPACES]Map: [SSmapping.current_map?.return_map_name()]"
 	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[FOURSPACES]Station Integrity: <B>[GLOB.station_was_nuked ? span_redtext("Destroyed") : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
@@ -614,12 +619,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	for(var/datum/team/active_teams as anything in all_teams)
 		//check if we should show the team
 		if(!active_teams.show_roundend_report)
+			all_teams -= active_teams
 			continue
-
-		//remove the team's individual antag reports, if the team actually shows up in the report.
-		for(var/datum/mind/team_minds as anything in active_teams.members)
-			if(!isnull(team_minds.antag_datums)) // is_special_character passes if they have a special role instead of an antag
-				all_antagonists -= team_minds.antag_datums
 
 		result += active_teams.roundend_report()
 		result += " "//newline between teams
@@ -632,6 +633,10 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 	for(var/datum/antagonist/antagonists in all_antagonists)
 		if(!antagonists.show_in_roundend)
+			continue
+		// if the antag datum is associated with a team that appeared in the report, skip it.
+		var/datum/team/antag_team = antagonists.get_team()
+		if(!isnull(antag_team) && (antag_team in all_teams))
 			continue
 		if(antagonists.roundend_category != currrent_category)
 			if(previous_category)
@@ -658,7 +663,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 /datum/controller/subsystem/ticker/proc/give_show_report_button(client/C)
 	var/datum/action/report/R = new
-	C.player_details.player_actions += R
+	C.persistent_client.player_actions += R
 	R.Grant(C.mob)
 	to_chat(C,span_infoplain("<a href='byond://?src=[REF(R)];report=1'>Show roundend report again</a>"))
 

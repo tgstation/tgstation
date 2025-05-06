@@ -236,7 +236,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				if(hair_color)
 					hair_overlay.color = hair_color
 				hair_overlay.alpha = 200
-				hair_overlay.pixel_y = S.y_offset
+				hair_overlay.pixel_z = S.y_offset
 				add_overlay(hair_overlay)
 
 /*
@@ -283,7 +283,7 @@ Works together with spawning an observer, noted above.
 	var/mob/dead/observer/ghost = new(src) // Transfer safety to observer spawning proc.
 	SStgui.on_transfer(src, ghost) // Transfer NanoUIs.
 	ghost.can_reenter_corpse = can_reenter_corpse
-	ghost.key = key
+	ghost.PossessByPlayer(key)
 	ghost.client?.init_verbs()
 	if(!can_reenter_corpse)// Disassociates observer mind from the body mind
 		ghost.mind = null
@@ -293,7 +293,7 @@ Works together with spawning an observer, noted above.
 	if(isliving(former_mob))
 		recordable_time = former_mob.timeofdeath
 
-	ghost.client?.player_details.time_of_death = recordable_time
+	ghost.persistent_client?.time_of_death = recordable_time
 	SEND_SIGNAL(src, COMSIG_MOB_GHOSTIZED)
 	return ghost
 
@@ -386,7 +386,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	SStgui.on_transfer(src, mind.current) // Transfer NanoUIs.
 	if(mind.current.stat == DEAD && SSlag_switch.measures[DISABLE_DEAD_KEYLOOP])
 		to_chat(src, span_warning("To leave your body again use the Ghost verb."))
-	mind.current.key = key
+	mind.current.PossessByPlayer(key)
 	mind.current.client.init_verbs()
 	return TRUE
 
@@ -680,7 +680,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(src, span_warning("Someone has taken this body while you were choosing!"))
 		return FALSE
 
-	target.key = key
+	target.PossessByPlayer(key)
 	target.faction = list(FACTION_NEUTRAL)
 	return TRUE
 
@@ -902,7 +902,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Observe"
 	set category = "Ghost"
 
-	if(!isobserver(usr)) //Make sure they're an observer!
+	if(!isobserver(usr) || HAS_TRAIT(src, TRAIT_NO_OBSERVE)) //Make sure they're an observer!
 		return
 
 	reset_perspective(null)
@@ -924,6 +924,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!SSpoints_of_interest.is_valid_poi(chosen_target))
 		return
 
+	if (chosen_target == usr)
+		return
+
 	do_observe(chosen_target)
 
 /mob/dead/observer/proc/do_observe(mob/mob_eye)
@@ -936,6 +939,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		stack_trace("do_observe called on an observer ([src]) who was already observing something! (observing: [observetarget], new target: [mob_eye])")
 		message_admins("[ADMIN_LOOKUPFLW(src)] attempted to observe someone while already observing someone, \
 			this is a bug (and a past exploit) and should be investigated.")
+		return
+
+	if(HAS_TRAIT(src, TRAIT_NO_OBSERVE))
 		return
 
 	//Istype so we filter out points of interest that are not mobs

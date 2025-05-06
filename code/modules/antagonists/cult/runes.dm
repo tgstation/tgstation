@@ -306,6 +306,12 @@ structure_check() searches for nearby cultist structures required for the invoca
 	// We're not guaranteed to be a human but we'll cast here since we use it in a few branches
 	var/mob/living/carbon/human/human_convertee = convertee
 
+	if(istype(human_convertee)) //remove the slurring/stuttering/silence before the april fools punch line reference
+		human_convertee.uncuff()
+		human_convertee.remove_status_effect(/datum/status_effect/silenced)
+		human_convertee.remove_status_effect(/datum/status_effect/speech/slurring/cult)
+		human_convertee.remove_status_effect(/datum/status_effect/speech/stutter)
+
 	if(check_holidays(APRIL_FOOLS) && prob(10))
 		convertee.Paralyze(10 SECONDS)
 		if(istype(human_convertee))
@@ -325,10 +331,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	to_chat(convertee, span_cult_bold_italic("Assist your new compatriots in their dark dealings. \
 		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back."))
 
-	if(istype(human_convertee))
-		human_convertee.uncuff()
-		human_convertee.remove_status_effect(/datum/status_effect/speech/slurring/cult)
-		human_convertee.remove_status_effect(/datum/status_effect/speech/stutter)
 	if(isshade(convertee))
 		convertee.icon_state = "shade_cult"
 		convertee.name = convertee.real_name
@@ -769,7 +771,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
 			message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
 			mob_to_revive.ghostize(FALSE)
-			mob_to_revive.key = chosen_one.key
+			mob_to_revive.PossessByPlayer(chosen_one.key)
 		else
 			fail_invoke()
 			return
@@ -965,10 +967,6 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	var/ghost_limit = 3
 	var/ghosts = 0
 
-/obj/effect/rune/manifest/Initialize(mapload)
-	. = ..()
-
-
 /obj/effect/rune/manifest/can_invoke(mob/living/user)
 	if(!(user in get_turf(src)))
 		to_chat(user, span_cult_italic("You must be standing on [src]!"))
@@ -1033,7 +1031,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 				old_mind = ghost_to_spawn.mind, \
 				old_body = ghost_to_spawn.mind.current, \
 			)
-		new_human.key = ghost_to_spawn.key
+		new_human.PossessByPlayer(ghost_to_spawn.key)
 		var/datum/antagonist/cult/created_cultist = new_human.mind?.add_antag_datum(/datum/antagonist/cult)
 		created_cultist?.silent = TRUE
 		to_chat(new_human, span_cult_italic("<b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b>"))
@@ -1060,6 +1058,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		affecting.visible_message(span_warning("[affecting] freezes statue-still, glowing an unearthly red."), \
 						span_cult("You see what lies beyond. All is revealed. In this form you find that your voice booms louder and you can mark targets for the entire cult"))
 		var/mob/dead/observer/G = affecting.ghostize(TRUE)
+		ADD_TRAIT(G, TRAIT_NO_OBSERVE, CULT_TRAIT)
 		var/datum/action/innate/cult/comm/spirit/CM = new
 		var/datum/action/innate/cult/ghostmark/GM = new
 		G.name = "Dark Spirit of [G.name]"

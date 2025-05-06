@@ -21,6 +21,7 @@
 	item_flags = NEEDS_PERMIT
 	attack_verb_continuous = list("strikes", "hits", "bashes")
 	attack_verb_simple = list("strike", "hit", "bash")
+	action_slots = ALL
 
 	var/gun_flags = NONE
 	var/fire_sound = 'sound/items/weapons/gun/pistol/shot.ogg'
@@ -32,7 +33,8 @@
 	var/can_suppress = FALSE
 	var/suppressed_sound = 'sound/items/weapons/gun/general/heavy_shot_suppressed.ogg'
 	var/suppressed_volume = 60
-	var/can_unsuppress = TRUE /// whether a gun can be unsuppressed. for ballistics, also determines if it generates a suppressor overlay
+	/// whether a gun can be unsuppressed. for ballistics, also determines if it generates a suppressor overlay
+	var/can_unsuppress = TRUE
 	var/recoil = 0 //boom boom shake the room
 	var/clumsy_check = TRUE
 	var/obj/item/ammo_casing/chambered = null
@@ -40,13 +42,20 @@
 	var/sawn_desc = null //description change if weapon is sawn-off
 	var/sawn_off = FALSE
 	var/burst_size = 1 //how large a burst is
-	var/fire_delay = 0 //rate of fire for burst firing and semi auto
+	/// Delay between shots in a burst.
+	var/burst_delay = 2
+	/// Delay between bursts (if burst-firing) or individual shots (if weapon is single-fire).
+	var/fire_delay = 0
 	var/firing_burst = 0 //Prevent the weapon from firing again while already firing
-	var/semicd = 0 //cooldown handler
+	/// firing cooldown, true if this gun shouldn't be allowed to manually fire
+	var/fire_cd = 0
 	var/weapon_weight = WEAPON_LIGHT
 	var/dual_wield_spread = 24 //additional spread when dual wielding
 	///Can we hold up our target with this? Default to yes
 	var/can_hold_up = TRUE
+	/// If TRUE, and we aim at ourselves, it will initiate a do after to fire at ourselves.
+	/// If FALSE it will just try to fire at ourselves straight up.
+	var/doafter_self_shoot = TRUE
 
 	/// Just 'slightly' snowflakey way to modify projectile damage for projectiles fired from this gun.
 	var/projectile_damage_multiplier = 1
@@ -55,7 +64,7 @@
 	var/projectile_wound_bonus = 0
 
 	/// The most reasonable way to modify projectile speed values for projectile fired from this gun. Honest.
-	/// Lower values are better, higher values are worse.
+	/// Lower values are worse, higher values are better.
 	var/projectile_speed_multiplier = 1
 
 	var/spread = 0 //Spread induced by the gun itself.
@@ -97,10 +106,12 @@
 /obj/item/gun/apply_fantasy_bonuses(bonus)
 	. = ..()
 	fire_delay = modify_fantasy_variable("fire_delay", fire_delay, -bonus, 0)
+	burst_delay = modify_fantasy_variable("burst_delay", burst_delay, -bonus, 0)
 	projectile_damage_multiplier = modify_fantasy_variable("projectile_damage_multiplier", projectile_damage_multiplier, bonus/10, 0.1)
 
 /obj/item/gun/remove_fantasy_bonuses(bonus)
 	fire_delay = reset_fantasy_variable("fire_delay", fire_delay)
+	burst_delay = reset_fantasy_variable("burst_delay", burst_delay)
 	projectile_damage_multiplier = reset_fantasy_variable("projectile_damage_multiplier", projectile_damage_multiplier)
 	return ..()
 
@@ -198,34 +209,49 @@
 		shake_camera(user, recoil + 1, recoil)
 	fire_sounds()
 	if(suppressed || !message)
-		return
+		return FALSE
 	if(tk_firing(user))
 		visible_message(
-				span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"),
-				blind_message = span_hear("You hear a gunshot!"),
-				vision_distance = COMBAT_MESSAGE_RANGE
+			span_danger("[src] fires itself[pointblank ? " point blank at [pbtarget]!" : "!"]"),
+			blind_message = span_hear("You hear a gunshot!"),
+			vision_distance = COMBAT_MESSAGE_RANGE
 		)
 	else if(pointblank)
-		user.visible_message(
+		if(user == pbtarget)
+			user.visible_message(
+				span_danger("[user] fires [src] point blank at [user.p_them()]self!"),
+				span_userdanger("You fire [src] point blank at yourself!"),
+				span_hear("You hear a gunshot!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
+		else
+			user.visible_message(
 				span_danger("[user] fires [src] point blank at [pbtarget]!"),
 				span_danger("You fire [src] point blank at [pbtarget]!"),
-				span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE, pbtarget
-		)
-		to_chat(pbtarget, span_userdanger("[user] fires [src] point blank at you!"))
+				span_hear("You hear a gunshot!"),
+				vision_distance = COMBAT_MESSAGE_RANGE,
+				ignored_mobs = pbtarget,
+				visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+			)
+			to_chat(pbtarget, span_userdanger("[user] fires [src] point blank at you!"))
 		if(pb_knockback > 0 && ismob(pbtarget))
 			var/mob/PBT = pbtarget
 			var/atom/throw_target = get_edge_target_turf(PBT, user.dir)
 			PBT.throw_at(throw_target, pb_knockback, 2)
 	else if(!tk_firing(user))
 		user.visible_message(
-				span_danger("[user] fires [src]!"),
-				blind_message = span_hear("You hear a gunshot!"),
-				vision_distance = COMBAT_MESSAGE_RANGE,
-				ignored_mobs = user
+			span_danger("[user] fires [src]!"),
+			span_danger("You fire [src]!"),
+			span_hear("You hear a gunshot!"),
+			vision_distance = COMBAT_MESSAGE_RANGE,
+			ignored_mobs = user,
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)
 
 	if(chambered?.integrity_damage)
 		take_damage(chambered.integrity_damage, sound_effect = FALSE)
+	return TRUE
 
 /obj/item/gun/atom_destruction(damage_flag)
 	if(!isliving(loc))
@@ -277,13 +303,14 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/gun/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(user.combat_mode && isliving(interacting_with))
-		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
 	if(try_fire_gun(interacting_with, user, list2params(modifiers)))
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
 /obj/item/gun/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(user.combat_mode && isliving(interacting_with))
+		return ITEM_INTERACT_SKIP_TO_ATTACK // Gun bash / bayonet attack
+
 	if(!can_hold_up || !isliving(interacting_with))
 		return interact_with_atom(interacting_with, user, modifiers)
 
@@ -326,9 +353,9 @@
 	if(flag) //It's adjacent, is the user, or is on the user's person
 		if(target in user.contents) //can't shoot stuff inside us.
 			return
-		if(!ismob(target) || user.combat_mode) //melee attack
+		if(!ismob(target)) //melee attack
 			return
-		if(target == user && user.zone_selected != BODY_ZONE_PRECISE_MOUTH) //so we can't shoot ourselves (unless mouth selected)
+		if(target == user && (user.zone_selected != BODY_ZONE_PRECISE_MOUTH && doafter_self_shoot)) //so we can't shoot ourselves (unless mouth selected)
 			return
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
@@ -342,10 +369,9 @@
 		if(!can_trigger_gun(L))
 			return
 
-	if(flag)
-		if(user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
-			handle_suicide(user, target, params)
-			return
+	if(flag && doafter_self_shoot && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
+		handle_suicide(user, target, params)
+		return
 
 	if(!can_shoot()) //Just because you can pull the trigger doesn't mean it can shoot.
 		shoot_with_empty_chamber(user)
@@ -460,7 +486,7 @@
 
 	add_fingerprint(user)
 
-	if(semicd)
+	if(fire_cd)
 		return
 
 	//Vary by at least this much
@@ -469,14 +495,18 @@
 	var/total_random_spread = max(0, randomized_bonus_spread + randomized_gun_spread)
 	var/burst_spread_mult = rand()
 
-	var/modified_delay = fire_delay
+	var/modified_burst_delay = burst_delay
+	var/modified_fire_delay = fire_delay
 	if(user && HAS_TRAIT(user, TRAIT_DOUBLE_TAP))
-		modified_delay = ROUND_UP(fire_delay * 0.5)
+		modified_burst_delay = ROUND_UP(burst_delay * 0.5)
+		modified_fire_delay = ROUND_UP(fire_delay * 0.5)
 
 	if(burst_size > 1)
 		firing_burst = TRUE
+		fire_cd = TRUE
 		for(var/i = 1 to burst_size)
-			addtimer(CALLBACK(src, PROC_REF(process_burst), user, target, message, params, zone_override, total_random_spread, burst_spread_mult, i), modified_delay * (i - 1))
+			addtimer(CALLBACK(src, PROC_REF(process_burst), user, target, message, params, zone_override, total_random_spread, burst_spread_mult, i), modified_burst_delay * (i - 1))
+			addtimer(CALLBACK(src, PROC_REF(reset_fire_cd)), modified_fire_delay) // for the case of fire delay longer than burst
 	else
 		if(chambered)
 			if(HAS_TRAIT(user, TRAIT_PACIFISM)) // If the user has the pacifist trait, then they won't be able to fire [src] if the round chambered inside of [src] is lethal.
@@ -496,10 +526,12 @@
 		else
 			shoot_with_empty_chamber(user)
 			return
-		process_chamber()
-		update_appearance()
-		semicd = TRUE
-		addtimer(CALLBACK(src, PROC_REF(reset_semicd)), modified_delay)
+		// If gun gets destroyed as a result of firing
+		if (!QDELETED(src))
+			process_chamber()
+			update_appearance()
+			fire_cd = TRUE
+			addtimer(CALLBACK(src, PROC_REF(reset_fire_cd)), modified_fire_delay)
 
 	if(user)
 		user.update_held_items()
@@ -507,8 +539,8 @@
 
 	return TRUE
 
-/obj/item/gun/proc/reset_semicd()
-	semicd = FALSE
+/obj/item/gun/proc/reset_fire_cd()
+	fire_cd = FALSE
 
 /obj/item/gun/screwdriver_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -568,7 +600,7 @@
 	if(!ishuman(user) || !ishuman(target))
 		return
 
-	if(semicd)
+	if(fire_cd)
 		return
 
 	if(user == target)
@@ -578,7 +610,7 @@
 		target.visible_message(span_warning("[user] points [src] at [target]'s head, ready to pull the trigger..."), \
 			span_userdanger("[user] points [src] at your head, ready to pull the trigger..."))
 
-	semicd = TRUE
+	fire_cd = TRUE
 
 	if(!bypass_timer && (!do_after(user, 12 SECONDS, target) || user.zone_selected != BODY_ZONE_PRECISE_MOUTH))
 		if(user)
@@ -586,10 +618,10 @@
 				user.visible_message(span_notice("[user] decided not to shoot."))
 			else if(target?.Adjacent(user))
 				target.visible_message(span_notice("[user] has decided to spare [target]"), span_notice("[user] has decided to spare your life!"))
-		semicd = FALSE
+		fire_cd = FALSE
 		return
 
-	semicd = FALSE
+	fire_cd = FALSE
 
 	target.visible_message(span_warning("[user] pulls the trigger!"), span_userdanger("[(user == target) ? "You pull" : "[user] pulls"] the trigger!"))
 

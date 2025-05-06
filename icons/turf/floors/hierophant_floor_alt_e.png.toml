@@ -1,0 +1,5 @@
+output_name = "hierophant_floor_alt"
+template = "bitmask/diagonal_32x32.toml"
+
+[animation]
+delays = [ 3,1,1,1,1,1,1,1,21 ]

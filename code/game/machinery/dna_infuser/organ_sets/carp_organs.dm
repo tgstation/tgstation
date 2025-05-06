@@ -27,6 +27,7 @@
 	icon_state = "lungs"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = CARP_COLORS
+	organ_traits = list(TRAIT_NODROWN)
 
 /obj/item/organ/lungs/carp/Initialize(mapload)
 	. = ..()

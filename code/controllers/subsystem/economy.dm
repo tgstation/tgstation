@@ -1,7 +1,6 @@
 SUBSYSTEM_DEF(economy)
 	name = "Economy"
 	wait = 5 MINUTES
-	init_order = INIT_ORDER_ECONOMY
 	runlevels = RUNLEVEL_GAME
 	///How many paychecks should players start out the round with?
 	var/roundstart_paychecks = 5
@@ -187,8 +186,8 @@ SUBSYSTEM_DEF(economy)
 			earning_report += "Our GMM Spotlight would like to alert you that <b>[moneybags.account_holder]</b> is your station's most affulent crewmate! They've hit it big with [moneybags.account_balance] Libre saved. " // DOPPLER EDIT, Credit > Libre
 			update_alerts = TRUE
 			inflict_moneybags(moneybags)
-	earning_report += "That's all from the <i>Port Authority Economist Division</i>." // DOPPLER EDIT, NT > PA
-	GLOB.news_network.submit_article(earning_report, "Station Earnings Report", "Station Announcements", null, update_alert = update_alerts)
+	earning_report += "That's all from the <i>Nanotrasen Economist Division</i>."
+	GLOB.news_network.submit_article(earning_report, "Station Earnings Report", NEWSCASTER_STATION_ANNOUNCEMENTS, null, update_alert = update_alerts)
 	return TRUE
 
 /**

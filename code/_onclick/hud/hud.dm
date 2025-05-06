@@ -28,12 +28,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/inventory_shown = FALSE //Equipped item inventory
 	var/hotkey_ui_hidden = FALSE //This is to hide the buttons that can be used via hotkeys. (hotkeybuttons list of buttons)
 
-	var/atom/movable/screen/blobpwrdisplay
-
 	var/atom/movable/screen/alien_plasma_display
 	var/atom/movable/screen/alien_queen_finder
-
-	var/atom/movable/screen/combo/combo_display
 
 	var/atom/movable/screen/action_intent
 	var/atom/movable/screen/zone_select
@@ -97,7 +93,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/atom/movable/screen/stamina
 	var/atom/movable/screen/healthdoll/healthdoll
 	var/atom/movable/screen/spacesuit
-	var/atom/movable/screen/hunger
+	var/atom/movable/screen/hunger/hunger
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
@@ -105,10 +101,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// They typically use * in their render target. They exist solely so we can reuse them,
 	// and avoid needing to make changes to all idk 300 consumers if we want to change the appearance
 	var/list/asset_refs_for_reuse = list()
-
-	/// The BYOND version of the client that was last logged into this mob.
-	/// Currently used to rebuild all plane master groups when going between 515<->516.
-	var/last_byond_version
 
 /datum/hud/New(mob/owner)
 	mymob = owner
@@ -157,17 +149,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/client_refresh(datum/source)
 	SIGNAL_HANDLER
 	var/client/client = mymob.canon_client
-	var/new_byond_version = client.byond_version
-#if MIN_COMPILER_VERSION > 515
-	#warn Fully change default relay_loc to "1,1", rather than changing it based on client version
-#endif
-	if(!isnull(last_byond_version) && new_byond_version != last_byond_version)
-		var/new_relay_loc = (new_byond_version > 515) ? "1,1" : "CENTER"
-		for(var/group_key as anything in master_groups)
-			var/datum/plane_master_group/group = master_groups[group_key]
-			group.relay_loc = new_relay_loc
-			group.rebuild_hud()
-	last_byond_version = new_byond_version
 	RegisterSignal(client, COMSIG_CLIENT_SET_EYE, PROC_REF(on_eye_change))
 	on_eye_change(null, null, client.eye)
 
@@ -255,6 +236,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(toggleable_inventory)
 	QDEL_LIST(hotkeybuttons)
 	throw_icon = null
+	resist_icon = null
 	QDEL_LIST(infodisplay)
 
 	healths = null
@@ -262,10 +244,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	healthdoll = null
 	spacesuit = null
 	hunger = null
-	blobpwrdisplay = null
 	alien_plasma_display = null
 	alien_queen_finder = null
-	combo_display = null
 
 	QDEL_LIST_ASSOC_VAL(master_groups)
 	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
@@ -310,12 +290,14 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/get_plane_group(key)
 	return master_groups[key]
 
+///Creates the mob's visible HUD, returns FALSE if it can't, TRUE if it did.
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
-		return
+		return FALSE
 	set_hud_used(new hud_type(src))
 	update_sight()
 	SEND_SIGNAL(src, COMSIG_MOB_HUD_CREATED)
+	return TRUE
 
 /mob/proc/set_hud_used(datum/hud/new_hud)
 	hud_used = new_hud
@@ -407,7 +389,12 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// Handles alerts - the things on the right side of the screen
 	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
-	update_parallax_pref(screenmob)
+
+	if(screenmob == mymob)
+		update_parallax_pref(screenmob)
+	else
+		viewmob.hud_used.update_parallax_pref()
+
 	update_reuse(screenmob)
 
 	// ensure observers get an accurate and up-to-date view
@@ -523,6 +510,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		var/hand_ind = RIGHT_HANDS
 		if (num_of_swaps > 1)
 			hand_ind = IS_RIGHT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
+		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
+		hand_num += 1
+	hand_num = 1
+	for(var/atom/movable/screen/drop/swap_hands in static_inventory)
+		var/hand_ind = LEFT_HANDS
+		if (num_of_swaps > 1)
+			hand_ind = IS_LEFT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
 		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
 		hand_num += 1
 

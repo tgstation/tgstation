@@ -9,11 +9,7 @@
 	icon = 'icons/obj/toys/dice.dmi'
 	icon_state = "dicebag"
 	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/storage/dice/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.set_holdable(/obj/item/dice)
+	storage_type = /datum/storage/dice
 
 /obj/item/storage/dice/PopulateContents()
 	new /obj/item/dice/d4(src)
@@ -37,8 +33,6 @@
 /obj/item/storage/dice/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is gambling with death! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
-
-/obj/item/storage/dice/hazard
 
 /obj/item/storage/dice/hazard/PopulateContents()
 	new /obj/item/dice/d6(src)
@@ -75,7 +69,7 @@
 	diceroll(user, in_hand = TRUE)
 
 /obj/item/dice/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	var/mob/thrown_by = thrownby?.resolve()
+	var/mob/thrown_by = throwingdatum.get_thrower()
 	if(thrown_by)
 		diceroll(thrown_by)
 	return ..()
@@ -425,25 +419,9 @@
 			new /obj/item/book/granter/action/spell/random(drop_location())
 		if(16)
 			//Servant & Servant Summon
-			selected_turf.visible_message(span_userdanger("A Dice Servant appears in a cloud of smoke!"))
-			var/mob/living/carbon/human/human_servant = new(drop_location())
-			do_smoke(0, holder = src, location = drop_location())
-
-			var/mob/chosen_one = SSpolling.poll_ghosts_for_target("Do you want to play as [span_danger("[user.real_name]'s")] [span_notice("Servant")]?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 5 SECONDS, checked_target = human_servant, alert_pic = user, role_name_text = "dice servant")
-			if(chosen_one)
-				message_admins("[ADMIN_LOOKUPFLW(chosen_one)] was spawned as Dice Servant")
-				human_servant.key = chosen_one.key
-
-			human_servant.equipOutfit(/datum/outfit/butler)
-			var/datum/mind/servant_mind = new /datum/mind()
-			var/datum/antagonist/magic_servant/servant_antagonist = new
-			servant_mind.transfer_to(human_servant)
-			servant_antagonist.setup_master(user)
-			servant_mind.add_antag_datum(servant_antagonist)
-
-			var/datum/action/cooldown/spell/summon_mob/summon_servant = new(user.mind || user, human_servant)
+			selected_turf.visible_message(span_userdanger("[user] ripples with newfound magical power!"))
+			var/datum/action/cooldown/spell/summon_mob/dice/summon_servant = new(user.mind || user)
 			summon_servant.Grant(user)
-
 		if(17)
 			//Tator Kit
 			selected_turf.visible_message(span_userdanger("A suspicious box appears!"))
@@ -464,53 +442,5 @@
 			//Free wizard!
 			selected_turf.visible_message(span_userdanger("Magic flows out of [src] and into [user]!"))
 			user.mind.make_wizard()
-
-/datum/outfit/butler
-	name = "Butler"
-	uniform = /obj/item/clothing/under/suit/black_really
-	neck = /obj/item/clothing/neck/tie/red/tied
-	shoes = /obj/item/clothing/shoes/laceup
-	head = /obj/item/clothing/head/hats/bowler
-	glasses = /obj/item/clothing/glasses/monocle
-	gloves = /obj/item/clothing/gloves/color/white
-
-/datum/action/cooldown/spell/summon_mob
-	name = "Summon Servant"
-	desc = "This spell can be used to call your servant, whenever you need it."
-	button_icon_state = "summons"
-
-	school = SCHOOL_CONJURATION
-	cooldown_time = 10 SECONDS
-
-	invocation = "JE VES"
-	invocation_type = INVOCATION_WHISPER
-	spell_requirements = NONE
-	spell_max_level = 0 //cannot be improved
-
-	smoke_type = /datum/effect_system/fluid_spread/smoke
-	smoke_amt = 2
-
-	var/datum/weakref/summon_weakref
-
-/datum/action/cooldown/spell/summon_mob/New(Target, mob/living/summoned_mob)
-	. = ..()
-	if(summoned_mob)
-		summon_weakref = WEAKREF(summoned_mob)
-
-/datum/action/cooldown/spell/summon_mob/cast(atom/cast_on)
-	. = ..()
-	var/mob/living/to_summon = summon_weakref?.resolve()
-	if(QDELETED(to_summon))
-		to_chat(cast_on, span_warning("You can't seem to summon your servant - it seems they've vanished from reality, or never existed in the first place..."))
-		return
-
-	do_teleport(
-		to_summon,
-		get_turf(cast_on),
-		precision = 1,
-		asoundin = 'sound/effects/magic/wand_teleport.ogg',
-		asoundout = 'sound/effects/magic/wand_teleport.ogg',
-		channel = TELEPORT_CHANNEL_MAGIC,
-	)
 
 #undef MIN_SIDES_ALERT

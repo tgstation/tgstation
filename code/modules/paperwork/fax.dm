@@ -185,7 +185,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		fax_name = new_fax_name
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/fax/attackby(obj/item/item, mob/user, params)
+/obj/machinery/fax/attackby(obj/item/item, mob/user, list/modifiers)
 	if (jammed && clear_jam(item, user))
 		return
 	if (panel_open)
@@ -242,11 +242,11 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
  * This list expands if you snip a particular wire.
  */
 /obj/machinery/fax/proc/is_allowed_type(obj/item/item)
-	if (is_type_in_list(item, allowed_types))
-		return TRUE
-	if (!allow_exotic_faxes)
-		return FALSE
-	return is_type_in_list(item, exotic_types)
+	var/list/checked_list = allow_exotic_faxes ? (allowed_types | exotic_types) : allowed_types
+	for(var/atom/movable/thing in item.get_all_contents())
+		if(!is_type_in_list(thing, checked_list))
+			return FALSE
+	return TRUE
 
 /obj/machinery/fax/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

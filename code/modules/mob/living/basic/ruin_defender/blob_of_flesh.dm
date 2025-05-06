@@ -18,6 +18,7 @@
 	icon = 'icons/mob/simple/animal.dmi'
 	icon_state = "fleshblob"
 	icon_living = "fleshblob"
+	mob_biotypes = MOB_ORGANIC|MOB_MINING
 	mob_size = MOB_SIZE_LARGE
 	gender = NEUTER
 	basic_mob_flags = DEL_ON_DEATH

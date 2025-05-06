@@ -66,7 +66,7 @@
  * * new_holder - The mob to add this quirk to.
  * * quirk_transfer - If this is being added to the holder as part of a quirk transfer. Quirks can use this to decide not to spawn new items or apply any other one-time effects.
  */
-/datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source)
+/datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source, unique = TRUE)
 	if(!new_holder)
 		CRASH("Quirk attempted to be added to null mob.")
 
@@ -100,7 +100,8 @@
 	if(!quirk_transfer)
 		if(gain_text)
 			to_chat(quirk_holder, gain_text)
-		add_unique(client_source)
+		if (unique)
+			add_unique(client_source)
 
 		if(quirk_holder.client)
 			post_add()
@@ -125,7 +126,7 @@
 	if(!quirk_transfer && lose_text)
 		to_chat(quirk_holder, lose_text)
 
-	if(mob_trait)
+	if(mob_trait && !QDELETED(quirk_holder))
 		REMOVE_TRAIT(quirk_holder, mob_trait, QUIRK_TRAIT)
 
 	if(quirk_flags & QUIRK_PROCESSES)
@@ -195,6 +196,12 @@
 /datum/quirk/proc/on_stat_changed(mob/living/source, new_stat)
 	SIGNAL_HANDLER
 	update_process()
+
+/// If a quirk is able to be selected for the mob's species
+/datum/quirk/proc/is_species_appropriate(datum/species/mob_species)
+	if(mob_trait in GLOB.species_prototypes[mob_species].inherent_traits)
+		return FALSE
+	return TRUE
 
 /// Subtype quirk that has some bonus logic to spawn items for the player.
 /datum/quirk/item_quirk

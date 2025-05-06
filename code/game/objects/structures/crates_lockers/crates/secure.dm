@@ -111,6 +111,7 @@
 	icon_state = "atmos_secure"
 	base_icon_state = "atmos_secure"
 
+
 /obj/structure/closet/crate/secure/science
 	name = "secure science crate"
 	desc = "A crate with a lock on it, painted in the scheme of the station's scientists."
@@ -129,6 +130,7 @@
 	damage_deflection = 10
 	icon_state = "securetrashcart"
 	base_icon_state = "securetrashcart"
+	weld_z = 5
 	paint_jobs = null
 	req_access = list(ACCESS_JANITOR)
 

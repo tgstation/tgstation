@@ -1,8 +1,3 @@
-/// The deep fryer pings after this long, letting people know it's "perfect"
-#define DEEPFRYER_COOKTIME 50
-/// The deep fryer pings after this long, reminding people that there's a very burnt object inside
-#define DEEPFRYER_BURNTIME 120
-
 /// Global typecache of things which should never be fried.
 GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	/obj/item/bodybag/bluespace,
@@ -102,9 +97,9 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/deepfryer/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/deepfryer/attackby(obj/item/weapon, mob/user, list/modifiers)
 	// Dissolving pills into the frier
-	if(istype(weapon, /obj/item/reagent_containers/pill))
+	if(istype(weapon, /obj/item/reagent_containers/applicator/pill))
 		if(!reagents.total_volume)
 			to_chat(user, span_warning("There's nothing to dissolve [weapon] in!"))
 			return
@@ -158,17 +153,17 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 	grease_level += prob(grease_increase_chance) * grease_Increase_amount
 
 	cook_time += fry_speed * seconds_per_tick SECONDS
-	if(cook_time >= DEEPFRYER_COOKTIME && !frying_fried)
+	if(cook_time >= FRYING_TIME_PERFECT && !frying_fried)
 		frying_fried = TRUE //frying... frying... fried
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 		audible_message(span_notice("[src] dings!"))
-	else if (cook_time >= DEEPFRYER_BURNTIME && !frying_burnt)
+	else if (cook_time >= FRYING_TIME_WARNING && !frying_burnt)
 		frying_burnt = TRUE
-		var/list/asomnia_hadders = list()
+		var/list/anosmia_havers = list()
 		for(var/mob/smeller in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
 			if(HAS_TRAIT(smeller, TRAIT_ANOSMIA))
-				asomnia_hadders += smeller
-		visible_message(span_warning("[src] emits an acrid smell!"), ignored_mobs = asomnia_hadders)
+				anosmia_havers += smeller
+		visible_message(span_warning("[src] emits an acrid smell!"), ignored_mobs = anosmia_havers)
 
 	use_energy(active_power_usage)
 
@@ -257,6 +252,3 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 /obj/machinery/deepfryer/proc/on_cleaned(obj/source_component, obj/source)
 	grease_level = 0
 	update_appearance(UPDATE_OVERLAYS)
-
-#undef DEEPFRYER_COOKTIME
-#undef DEEPFRYER_BURNTIME

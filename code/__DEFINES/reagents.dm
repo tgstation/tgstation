@@ -46,6 +46,9 @@
 /// Used by smoke or inhaling from a source. Smoke and cigarettes.
 #define INHALE (1<<6)
 
+///Smoke machines are both touch and inhaling
+#define SMOKE_MACHINE (TOUCH | INHALE)
+
 /// When returned by on_mob_life(), on_mob_dead(), overdose_start() or overdose_processed(), will cause the mob to updatehealth() afterwards
 #define UPDATE_MOB_HEALTH 1
 
@@ -242,3 +245,13 @@
 #define GRENADE_WIRED 2
 /// Grenade is ready to be finished
 #define GRENADE_READY 3
+
+/// Maximum amount of layers a pill can hold, aka maximum number of seconds a pill takes to dissolve
+#define PILL_MAX_LAYERS 60
+/// Maximum amount of layers above which you cannot taste the pill's contents
+#define PILL_MAX_TASTE_LAYERS 20
+/// Maximum amount of layers that a ChemMaster can produce
+#define PILL_MAX_PRINTABLE_LAYERS 30
+
+/// Cooldown between patch reagent messages
+#define PATCH_MESSAGE_COOLDOWN 10 SECONDS

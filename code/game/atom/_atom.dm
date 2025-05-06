@@ -111,15 +111,7 @@
 	///Icon-smoothing behavior.
 	var/smoothing_flags = NONE
 	///What directions this is currently smoothing with. IMPORTANT: This uses the smoothing direction flags as defined in icon_smoothing.dm, instead of the BYOND flags.
-	var/smoothing_junction = null //This starts as null for us to know when it's first set, but after that it will hold a 8-bit mask ranging from 0 to 255.
-	///Smoothing variable
-	var/top_left_corner
-	///Smoothing variable
-	var/top_right_corner
-	///Smoothing variable
-	var/bottom_left_corner
-	///Smoothing variable
-	var/bottom_right_corner
+	var/smoothing_junction = null
 	///What smoothing groups does this atom belongs to, to match canSmoothWith. If null, nobody can smooth with it. Must be sorted.
 	var/list/smoothing_groups = null
 	///List of smoothing groups this atom can smooth with. If this is null and atom is smooth, it smooths only with itself. Must be sorted.
@@ -428,7 +420,7 @@
 
 	SEND_SIGNAL(source, COMSIG_REAGENTS_EXPOSE_ATOM, src, reagents, methods, volume_modifier, show_message)
 	for(var/datum/reagent/current_reagent as anything in reagents)
-		. |= current_reagent.expose_atom(src, reagents[current_reagent])
+		. |= current_reagent.expose_atom(src, reagents[current_reagent], methods)
 	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_EXPOSE_REAGENTS, reagents, source, methods, volume_modifier, show_message)
 
 /// Are you allowed to drop this atom
@@ -498,43 +490,22 @@
 /mob/living/proc/get_blood_dna_list()
 	if(get_blood_id() != /datum/reagent/blood)
 		return
-	return list("ANIMAL DNA" = "Y-")
+	return list("ANIMAL DNA" = get_blood_type(BLOOD_TYPE_ANIMAL))
 
 ///Get the mobs dna list
 /mob/living/carbon/get_blood_dna_list()
-	if(get_blood_id() != /datum/reagent/blood)
-		return
 	var/list/blood_dna = list()
 	if(dna)
 		blood_dna[dna.unique_enzymes] = dna.blood_type
 	else
-		blood_dna["UNKNOWN DNA"] = "X*"
+		blood_dna["UNKNOWN DNA"] = get_blood_type(BLOOD_TYPE_XENO)
 	return blood_dna
 
 /mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = "X*")
+	return list("UNKNOWN DNA" = get_blood_type(BLOOD_TYPE_XENO))
 
 /mob/living/silicon/get_blood_dna_list()
 	return
-
-///to add a mob's dna info into an object's blood_dna list.
-/atom/proc/transfer_mob_blood_dna(mob/living/injected_mob)
-	// Returns 0 if we have that blood already
-	var/new_blood_dna = injected_mob.get_blood_dna_list()
-	if(!new_blood_dna)
-		return FALSE
-	var/old_length = GET_ATOM_BLOOD_DNA_LENGTH(src)
-	add_blood_DNA(new_blood_dna)
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src) == old_length)
-		return FALSE
-	return TRUE
-
-///to add blood from a mob onto something, and transfer their dna info
-/atom/proc/add_mob_blood(mob/living/injected_mob)
-	var/list/blood_dna = injected_mob.get_blood_dna_list()
-	if(!blood_dna)
-		return FALSE
-	return add_blood_DNA(blood_dna)
 
 ///Is this atom in space
 /atom/proc/isinspace()
@@ -907,6 +878,9 @@
 
 			if (contextual_screentip_returns & CONTEXTUAL_SCREENTIP_SET)
 				var/screentip_images = active_hud.screentip_images
+				// Disable screentip images for clients affected by https://www.byond.com/forum/post/2967731
+				if(ISINRANGE(client?.byond_build, MIN_BYOND_BUILD_DISABLE_SCREENTIP_ICONS, MAX_BYOND_BUILD_DISABLE_SCREENTIP_ICONS))
+					screentip_images = FALSE
 				// LMB and RMB on one line...
 				var/lmb_text = build_context(context, SCREENTIP_CONTEXT_LMB, screentip_images)
 				var/rmb_text = build_context(context, SCREENTIP_CONTEXT_RMB, screentip_images)

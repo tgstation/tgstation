@@ -199,7 +199,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/biogenerator/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/biogenerator/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 	if(user.combat_mode)
 		return ..()
 
@@ -465,7 +465,7 @@
 
 /obj/machinery/biogenerator/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/research_designs),
+		get_asset_datum(/datum/asset/spritesheet_batched/research_designs),
 	)
 
 

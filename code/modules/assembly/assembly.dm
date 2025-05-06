@@ -54,9 +54,10 @@
 		connected = null
 	if(!holder)
 		return FALSE
-	forceMove(holder.drop_location())
-	SEND_SIGNAL(src, COMSIG_ASSEMBLY_DETACHED, holder)
+	var/atom/was_holder = holder
 	holder = null
+	forceMove(was_holder.drop_location())
+	SEND_SIGNAL(src, COMSIG_ASSEMBLY_DETACHED, was_holder)
 	return TRUE
 
 /**
@@ -117,7 +118,7 @@
 		return
 	. = ..()
 
-/obj/item/assembly/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(isassembly(attacking_item))
 		var/obj/item/assembly/new_assembly = attacking_item
 		// Check both our's and their's assembly flags to see if either should not duplicate

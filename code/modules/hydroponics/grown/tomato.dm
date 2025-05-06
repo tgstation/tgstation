@@ -22,7 +22,7 @@
 	desc = "I say to-mah-to, you say tom-mae-to."
 	icon_state = "tomato"
 	splat_type = /obj/effect/decal/cleanable/food/tomato_smudge
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	grind_results = list(/datum/reagent/consumable/ketchup = 0)
 	juice_typepath = /datum/reagent/consumable/tomatojuice
 	distill_reagent = /datum/reagent/consumable/enzyme
@@ -46,7 +46,7 @@
 	icon_state = "bloodtomato"
 	bite_consumption_mod = 3
 	splat_type = /obj/effect/gibspawner/generic
-	foodtypes = FRUIT | GORE
+	foodtypes = VEGETABLES | GORE
 	grind_results = list(/datum/reagent/consumable/ketchup = 0, /datum/reagent/blood = 0)
 	distill_reagent = /datum/reagent/consumable/ethanol/bloody_mary
 

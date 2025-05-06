@@ -223,6 +223,7 @@ export type PreferencesMenuData = {
   keybindings: Record<string, string[]>;
   overflow_role: string;
   selected_quirks: string[];
+  species_disallowed_quirks: string[];
 
   antag_bans?: string[];
   antag_days_left?: Record<string, number>;

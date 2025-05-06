@@ -76,7 +76,7 @@
 	return
 
 /// Signal proc for [COMSIG_ITEM_AFTERATTACK] that allows for effects after an attack is done
-/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/source, atom/target, mob/user, click_parameters)
+/datum/plant_gene/trait/attack/proc/after_plant_attack(obj/item/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(after_attack_effect), source, target, user)
 
@@ -129,7 +129,7 @@
 	name = "Bright Petals"
 	description = "Makes others feel the power on hit."
 
-/datum/plant_gene/trait/attack/sunflower_attack/after_attack_effect(obj/item/our_plant, atom/target, mob/user, proximity_flag, click_parameters)
+/datum/plant_gene/trait/attack/sunflower_attack/after_attack_effect(obj/item/our_plant, atom/target, mob/user, list/modifiers)
 	if(ismob(target))
 		var/mob/target_mob = target
 		user.visible_message("<font color='green'>[user] smacks [target_mob] with [user.p_their()] [our_plant.name]! <font color='orange'><b>FLOWER POWER!</b></font></font>", ignored_mobs = list(target_mob, user))
@@ -679,6 +679,14 @@
 	stank.gases[/datum/gas/miasma][MOLES] = (seed.yield + 6) * 3.5 * MIASMA_CORPSE_MOLES * seconds_per_tick // this process is only being called about 2/7 as much as corpses so this is 12-32 times a corpses
 	stank.temperature = T20C // without this the room would eventually freeze and miasma mining would be easier
 	tray_turf.assume_air(stank)
+
+/// Hard caps the yield at 5 (effectively)
+/datum/plant_gene/trait/complex_harvest
+	name = "Complex Harvest"
+	description = "Halves the maximum yield of the plant, and prevents it from benefiting from pollination's yield bonus."
+	icon = FA_ICON_SLASH
+	trait_flags = TRAIT_HALVES_YIELD|TRAIT_NO_POLLINATION
+	mutability_flags = NONE
 
 /// Starthistle's essential invasive spreading
 /datum/plant_gene/trait/invasive/galaxythistle

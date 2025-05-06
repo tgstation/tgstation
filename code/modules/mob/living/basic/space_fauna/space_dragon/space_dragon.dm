@@ -75,7 +75,7 @@
 	AddElement(/datum/element/content_barfer)
 	AddElement(/datum/element/wall_tearer, tear_time = 4 SECONDS, reinforced_multiplier = 3, do_after_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
 	AddElement(/datum/element/door_pryer, pry_time = 4 SECONDS, interaction_key = DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION)
-	AddComponent(/datum/component/seethrough_mob, keep_color = TRUE)
+	AddComponent(/datum/component/seethrough_mob)
 	AddComponent(/datum/component/profound_fisher, new /obj/item/fishing_rod/mob_fisher/dragon(src))
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
@@ -170,8 +170,7 @@
 	else if (HAS_TRAIT(src, TRAIT_WING_BUFFET))
 		overlay_state = "overlay_gust"
 
-	var/mutable_appearance/overlay = mutable_appearance(icon, "[icon_living]_[overlay_state]")
-	overlay.appearance_flags = RESET_COLOR
+	var/mutable_appearance/overlay = mutable_appearance(icon, "[icon_living]_[overlay_state]", appearance_flags = RESET_COLOR|KEEP_APART)
 	. += overlay
 
 /mob/living/basic/space_dragon/melee_attack(obj/vehicle/sealed/mecha/target, list/modifiers, ignore_cooldown)

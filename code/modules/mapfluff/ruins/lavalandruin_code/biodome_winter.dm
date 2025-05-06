@@ -18,7 +18,7 @@
 	. = ..()
 	. += span_notice("Throw this at objects or creatures to freeze them, it will boomerang back so be cautious!")
 
-/obj/item/freeze_cube/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle, quickstart = TRUE)
+/obj/item/freeze_cube/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	. = ..()
 	if(!.)
 		return
@@ -28,7 +28,7 @@
 /obj/item/freeze_cube/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	icon_state = initial(icon_state)
 	var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
-	var/mob/thrown_by = thrownby?.resolve()
+	var/mob/thrown_by = throwingdatum.get_thrower()
 	if(ismovable(hit_atom) && !caught && (!thrown_by || thrown_by && COOLDOWN_FINISHED(src, freeze_cooldown)))
 		freeze_hit_atom(hit_atom)
 	if(thrown_by && !caught)

@@ -125,75 +125,6 @@
 /// Successfully initialized, BUT do not announce it to players (generally to hide game mechanics it would otherwise spoil)
 #define SS_INIT_NO_MESSAGE 4
 
-//! ### SS initialization load orders
-// Subsystem init_order, from highest priority to lowest priority
-// Subsystems shutdown in the reverse of the order they initialize in
-// The numbers just define the ordering, they are meaningless otherwise.
-
-#define INIT_ORDER_PROFILER 101
-#define INIT_ORDER_TITLE 100
-#define INIT_ORDER_GARBAGE 99
-#define INIT_ORDER_DBCORE 95
-#define INIT_ORDER_BLACKBOX 94
-#define INIT_ORDER_SERVER_MAINT 93
-#define INIT_ORDER_WHITELIST 92 // DOPPLER EDIT ADDITION - automatic whitelist refresh
-#define INIT_ORDER_INPUT 85
-#define INIT_ORDER_ADMIN_VERBS 84 // needs to be pretty high, admins can't do much without it
-#define INIT_ORDER_SOUNDS 83
-#define INIT_ORDER_INSTRUMENTS 82
-#define INIT_ORDER_GREYSCALE 81
-#define INIT_ORDER_VIS 80
-#define INIT_ORDER_SECURITY_LEVEL 79 // We need to load before events so that it has a security level to choose from.
-#define INIT_ORDER_DISCORD 78
-#define INIT_ORDER_ACHIEVEMENTS 77
-#define INIT_ORDER_STATION 74 //This is high priority because it manipulates a lot of the subsystems that will initialize after it.
-#define INIT_ORDER_QUIRKS 73
-#define INIT_ORDER_REAGENTS 72 //HAS to be before mapping and assets - both create objects, which creates reagents, which relies on lists made in this subsystem
-#define INIT_ORDER_EVENTS 70
-#define INIT_ORDER_IDACCESS 66
-#define INIT_ORDER_JOBS 65 // Must init before atoms, to set up properly the dynamic job lists.
-#define INIT_ORDER_AI_MOVEMENT 56 //We need the movement setup
-#define INIT_ORDER_AI_CONTROLLERS 55 //So the controller can get the ref
-#define INIT_ORDER_TICKER 55
-#define INIT_ORDER_TCG 55
-#define INIT_ORDER_AUTOMAPPER 51 // DOPPLER EDIT ADDITION - We need to load just before mapping.
-#define INIT_ORDER_MAPPING 50
-#define INIT_ORDER_AI_IDLE_CONTROLLERS 50
-#define INIT_ORDER_EARLY_ASSETS 48
-#define INIT_ORDER_RESEARCH 47
-#define INIT_ORDER_TIMETRACK 46
-#define INIT_ORDER_SPATIAL_GRID 43
-#define INIT_ORDER_ECONOMY 40
-#define INIT_ORDER_OUTPUTS 35
-#define INIT_ORDER_RESTAURANT 34
-#define INIT_ORDER_TTS 33
-#define INIT_ORDER_FLUIDS 32 // Needs to be above atoms, as some atoms may want to start fluids/gases on init
-#define INIT_ORDER_ATOMS 30
-#define INIT_ORDER_LANGUAGE 25
-#define INIT_ORDER_MACHINES 20
-#define INIT_ORDER_SKILLS 15
-#define INIT_ORDER_QUEUELINKS 10
-#define INIT_ORDER_TIMER 1
-#define INIT_ORDER_DEFAULT 0
-#define INIT_ORDER_AIR -1
-#define INIT_ORDER_PERSISTENCE -2
-#define INIT_ORDER_PERSISTENT_PAINTINGS -3 // Assets relies on this
-#define INIT_ORDER_VOTE -4 // Needs to be after persistence so that recent maps are not loaded.
-#define INIT_ORDER_ASSETS -5
-#define INIT_ORDER_ICON_SMOOTHING -6
-#define INIT_ORDER_OVERLAY -7
-#define INIT_ORDER_XKEYSCORE -10
-#define INIT_ORDER_STICKY_BAN -10
-#define INIT_ORDER_LIGHTING -20
-#define INIT_ORDER_SHUTTLE -21
-#define INIT_ORDER_MINOR_MAPPING -40
-#define INIT_ORDER_PATH -50
-#define INIT_ORDER_EXPLOSIONS -69
-#define INIT_ORDER_STATPANELS -97
-#define INIT_ORDER_BAN_CACHE -98
-#define INIT_ORDER_INIT_PROFILER -99 //Near the end, logs the costs of initialize
-#define INIT_ORDER_CHAT -100 //Should be last to ensure chat remains smooth during init.
-
 // Subsystem fire priority, from lowest to highest priority
 // If the subsystem isn't listed here it's either DEFAULT or PROCESS (if it's a processing subsystem child)
 #define FIRE_PRIORITY_UNPLANNED_NPC 3
@@ -312,6 +243,11 @@
 #define SSMACHINES_APCS_LATE 6
 #define SSMACHINES_MACHINES 7
 #define SSMACHINES_MACHINES_LATE 8
+
+// Weather susbsytem tasks
+#define SSWEATHER_MOBS 1
+#define SSWEATHER_TURFS 2
+#define SSWEATHER_THUNDER 3
 
 // Wardrobe subsystem tasks
 #define SSWARDROBE_STOCK 1
