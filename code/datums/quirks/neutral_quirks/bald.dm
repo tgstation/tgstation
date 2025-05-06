@@ -28,7 +28,7 @@
 
 	baldie_wig.update_appearance()
 
-	give_item_to_holder(baldie_wig, list(LOCATION_HEAD = ITEM_SLOT_HEAD, LOCATION_BACKPACK, LOCATION_HANDS), notify_player = FALSE)
+	give_item_to_holder(baldie_wig, list(LOCATION_HEAD, LOCATION_BACKPACK, LOCATION_HANDS), notify_player = FALSE)
 
 /datum/quirk/item_quirk/bald/give_item_to_holder(obj/item/quirk_item, list/valid_slots, flavour_text = null, default_location = "at your feet", notify_player = TRUE)
 	var/any_head = FALSE

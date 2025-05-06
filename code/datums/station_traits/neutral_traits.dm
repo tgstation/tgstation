@@ -311,7 +311,7 @@
 	// Put their silly little scarf or necktie somewhere else
 	var/obj/item/silly_little_scarf = humanspawned.wear_neck
 	if(silly_little_scarf)
-		var/static/list/backup_slots = list(LOCATION_LPOCKET, LOCATION_RPOCKET, LOCATION_BACKPACK)
+		var/list/backup_slots = list(LOCATION_LPOCKET, LOCATION_RPOCKET, LOCATION_BACKPACK)
 		humanspawned.temporarilyRemoveItemFromInventory(silly_little_scarf)
 		silly_little_scarf.forceMove(get_turf(humanspawned))
 		humanspawned.equip_in_one_of_slots(silly_little_scarf, backup_slots, qdel_on_fail = FALSE)
