@@ -671,3 +671,6 @@
 	description = "I can feel my modsuit siphoning my energy. I'd better keep my spirits high."
 	mood_change = 0
 	timeout = 10 SECONDS
+
+/obj/item/mod/core/soul/wizard
+	theme = THEME_WIZARD
