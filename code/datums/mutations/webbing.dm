@@ -8,7 +8,7 @@
 	power_path = /datum/action/cooldown/mob_cooldown/lay_web/genetic
 	energy_coeff = 1
 
-/datum/mutation/human/webbing/modify()
+/datum/mutation/human/webbing/setup(obj/item/chromosome/chromosome)
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/lay_web/genetic/to_modify = .
 

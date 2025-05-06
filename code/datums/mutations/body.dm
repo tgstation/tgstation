@@ -286,10 +286,9 @@
 		return
 	glow_color = get_glow_color()
 	glow = owner.mob_light()
-	modify()
 
 // Override modify here without a parent call, because we don't actually give an action.
-/datum/mutation/human/glow/modify()
+/datum/mutation/human/glow/setup(obj/item/chromosome/chromosome)
 	if(!glow)
 		return
 
@@ -613,7 +612,7 @@
 		owner.physiology.blood_regen_mod /= blood_regen_rate
 		physiology_modified = FALSE // just in case
 
-/datum/mutation/human/bloodier/modify()
+/datum/mutation/human/bloodier/setup(obj/item/chromosome/chromosome)
 	if(owner && physiology_modified)
 		owner.physiology.bleed_mod /= bleed_rate
 		owner.physiology.blood_regen_mod /= blood_regen_rate

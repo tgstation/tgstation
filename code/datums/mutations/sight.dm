@@ -57,7 +57,7 @@
 		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
 		owner.update_sight()
 
-/datum/mutation/human/thermal/modify()
+/datum/mutation/human/thermal/setup(obj/item/chromosome/chromosome)
 	. = ..()
 	var/datum/action/cooldown/spell/thermal_vision/to_modify = .
 	if(!istype(to_modify)) // null or invalid
