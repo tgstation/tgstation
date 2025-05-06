@@ -402,7 +402,6 @@
 	var/list/prank_pouch = list()
 
 /mob/living/basic/clown/mutant/glutton/Initialize(mapload)
-	. = ..()
 	GRANT_ACTION(/datum/action/cooldown/regurgitate)
 	///filled with the American spirit, only survives the explosion some of the time though.
 	if(prob(40))
@@ -415,6 +414,8 @@
 	)
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 30, bonus_tame_chance = 0)
 	AddElement(/datum/element/damage_threshold, 10) //lots of fat to cushion blows.
+	//parent call later so the death_drops elements get a unique list if we added anything.
+	return ..()
 
 /mob/living/basic/clown/mutant/glutton/attacked_by(obj/item/item, mob/living/user)
 	if(!check_edible(item))
@@ -568,7 +569,6 @@
 	)
 
 /mob/living/basic/clown/banana/Initialize(mapload)
-	. = ..()
 	//Add a random assortment of Musa type objects.
 	if(prob(33))
 		loot.Add(/obj/item/food/grown/banana/bunch)
@@ -585,6 +585,8 @@
 		/datum/action/cooldown/rustle,
 	)
 	grant_actions_by_list(innate_actions)
+	//parent call later so the death_drops elements get a unique list if we added anything.
+	return ..()
 
 ///drops peels around the mob when activated
 /datum/action/cooldown/rustle
