@@ -182,6 +182,21 @@
 
 	return ..()
 
+/**
+ * Sets the new internal tool to be used
+ * Arguments
+ *
+ * * obj/item/ref - typepath for the new internal omnitool
+ */
+/obj/item/borg/cyborg_omnitool/proc/set_internal_tool(obj/item/tool)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	for(var/obj/item/internal_tool as anything in omni_toolkit)
+		if(internal_tool == tool)
+			reference = internal_tool
+			tool_behaviour = initial(internal_tool.tool_behaviour)
+			break
+
 /obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
 	. = list()
 	for(var/obj/item/tool as anything in omni_toolkit)
@@ -225,8 +240,7 @@
 	//set the reference & update icons
 	for(var/obj/item/tool as anything in omni_toolkit)
 		if(initial(tool.name) == toolkit_menu)
-			reference = tool
-			tool_behaviour = initial(tool.tool_behaviour)
+			set_internal_tool(tool)
 			update_appearance(UPDATE_ICON_STATE)
 			playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 			break
