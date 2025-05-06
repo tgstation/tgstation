@@ -298,14 +298,14 @@
 	if (!length(new_blood))
 		return
 
-	blood_DNA |= new_blood
+	LAZYOR(blood_DNA, new_blood)
 	update_icon()
 
 /datum/component/bloodysoles/feet/share_blood(obj/effect/decal/cleanable/pool)
 	. = ..()
 	if (!.)
 		return
-	blood_DNA |= GET_ATOM_BLOOD_DNA(pool)
+	LAZYOR(blood_DNA, GET_ATOM_BLOOD_DNA(pool))
 	update_icon()
 
 /datum/component/bloodysoles/feet/update_icon()

@@ -849,6 +849,9 @@ generate/load female uniform sprites matching all previously decided variables
 	var/list/separate_overlays = separate_worn_overlays(standing, draw_target, isinhands, file2use)
 	if(length(separate_overlays))
 		standing.overlays += separate_overlays
+	else // Don't nest overlays if there's nothing to nest against
+		standing.overlays -= draw_target
+		standing = draw_target
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 

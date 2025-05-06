@@ -119,7 +119,7 @@
 		. += blood_emissive(icon, icon_state)
 
 /obj/effect/decal/cleanable/blood/proc/blood_emissive(icon_to_use, icon_state_to_use)
-	return emissive_appearance(icon_to_use, icon_state_to_use, src, layer, 255 * clamp(emissive_alpha / alpha, 0, 1))
+	return emissive_appearance(icon_to_use, icon_state_to_use, src, layer, 255 * emissive_alpha / alpha)
 
 /obj/effect/decal/cleanable/blood/lazy_init_reagents()
 	if (reagents)
@@ -297,6 +297,7 @@
 /obj/effect/decal/cleanable/blood/trail_holder/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type())
 	. = ..()
 	icon_state = "nothing"
+	update_appearance() // Cut possible overlays
 	if(mapload)
 		add_dir_to_trail(dir)
 
@@ -407,6 +408,7 @@
 	if(!very_bloody && bloodiness >= 0.25 * BLOOD_AMOUNT_PER_DECAL)
 		very_bloody = TRUE
 		icon_state = pick("trails_1", "trails_2")
+		update_appearance()
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"
@@ -586,7 +588,7 @@
 	icon_state = "" // All of the footprint visuals come from overlays
 	if(mapload)
 		entered_dirs |= dir // Keep the same appearance as in the map editor
-	update_appearance(mapload ? (ALL) : (UPDATE_NAME | UPDATE_DESC))
+	update_appearance()
 
 /obj/effect/decal/cleanable/blood/footprints/get_blood_string()
 	return null
@@ -763,6 +765,7 @@
 		fly_trail.transform = fly_trail.transform.Turn((flight_dir == NORTHEAST || flight_dir == SOUTHWEST) ? 135 : 45)
 	fly_trail.icon_state = pick("trails_1", "trails_2")
 	fly_trail.adjust_bloodiness(fly_trail.bloodiness * -0.66)
+	fly_trail.update_appearance()
 
 /obj/effect/decal/cleanable/blood/hitsplatter/proc/loop_done(datum/source)
 	SIGNAL_HANDLER

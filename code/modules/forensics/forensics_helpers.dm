@@ -73,15 +73,33 @@
 	return TRUE
 
 /// Fetch current blood color
-/atom/proc/get_blood_dna_color(list/blood_DNA = GET_ATOM_BLOOD_DECALS(src))
+/atom/proc/get_blood_dna_color()
 	if (cached_blood_color)
 		return cached_blood_color
 
+	var/list/blood_DNA = GET_ATOM_BLOOD_DECALS(src)
 	if (!length(blood_DNA))
 		return
 
 	cached_blood_color = get_color_from_blood_list(blood_DNA)
 	return cached_blood_color
+
+/// Check if we have any emissive blood on us
+/atom/proc/get_blood_emissive_alpha()
+	if (cached_blood_emissive)
+		return cached_blood_emissive
+
+	var/list/blood_DNA = GET_ATOM_BLOOD_DECALS(src)
+	if (!length(blood_DNA))
+		return
+
+	cached_blood_emissive = 0
+	for (var/blood_key in blood_DNA)
+		var/datum/blood_type/blood_type = blood_DNA[blood_key]
+		cached_blood_emissive += blood_type.get_emissive_alpha(src)
+
+	cached_blood_emissive /= length(blood_DNA)
+	return cached_blood_emissive
 
 /// Adds blood dna to the atom
 /atom/proc/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases) //ASSOC LIST DNA = BLOODTYPE
@@ -94,6 +112,7 @@
 	if (isnull(blood_DNA_to_add))
 		return .
 	cached_blood_color = null
+	cached_blood_emissive = null
 	if (forensics)
 		forensics.inherit_new(blood_DNA = blood_DNA_to_add)
 	else
@@ -187,6 +206,7 @@
 			thing.add_blood_DNA(blood_DNA_to_add)
 
 	cached_blood_color = null
+	cached_blood_emissive = null
 	if(!has_blood_flag(blood_DNA_to_add, BLOOD_COVER_MOBS))
 		update_clothing(slots_to_bloody)
 		return
@@ -213,6 +233,7 @@
 	if(isnull(forensics))
 		forensics = new(src)
 	cached_blood_color = null
+	cached_blood_emissive = null
 	forensics.inherit_new(blood_DNA = blood_DNA_to_add)
 	return TRUE
 

@@ -122,8 +122,10 @@
 
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
 	var/datum/forensics/forensics = null
-	/// Cached color for all blood on us to avoid doing constant matrix math for performance reasons
+	/// Cached color for all blood on us to avoid doing constant math
 	var/cached_blood_color = null
+	/// Cached emissive alpha for all blood on us to avoid doing constant math
+	var/cached_blood_emissive = null
 
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY

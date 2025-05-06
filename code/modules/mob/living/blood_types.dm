@@ -62,6 +62,10 @@
 /datum/blood_type/proc/get_wound_color(mob/living/carbon/victim)
 	return get_color()
 
+/// Returns emissive value for an atom
+/datum/blood_type/proc/get_emissive_alpha(atom/source)
+	return 0
+
 /**
  * Used to handle any unique facets of blood spawned of this blood type
  *
@@ -239,6 +243,9 @@
 	dna_string = "Ethereal DNA"
 	color = /datum/reagent/consumable/liquidelectricity::color
 	reagent_type = /datum/reagent/consumable/liquidelectricity
+
+/datum/blood_type/ethereal/get_emissive_alpha(atom/source)
+	return 93
 
 /datum/blood_type/ethereal/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
 	. = ..()

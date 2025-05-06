@@ -231,7 +231,7 @@
 		return
 	var/blood_color = parent.get_blood_dna_color()
 	if (blood_color)
-		parent.AddElement(/datum/element/decal/blood, _color = blood_color)
+		parent.AddElement(/datum/element/decal/blood, _color = blood_color, _emissive = parent.get_blood_emissive_alpha())
 
 /// Returns how many blood datums on us fit our parent's expose flags
 /datum/forensics/proc/get_visible_blood()
