@@ -19,14 +19,14 @@ const ROOT_CATEGORIES = ['Atmospherics', 'Disposals', 'Transit Tubes'] as const;
 
 export const ICON_BY_CATEGORY_NAME = {
   Atmospherics: 'wrench',
-  Disposals: 'trash-alt',
-  'Transit Tubes': 'bus',
-  Pipes: 'grip-lines',
   Binary: 'arrows-left-right',
-  'Disposal Pipes': 'grip-lines',
   Devices: 'microchip',
+  'Disposal Pipes': 'grip-lines',
+  Disposals: 'trash-alt',
   'Heat Exchange': 'thermometer-half',
+  Pipes: 'grip-lines',
   'Station Equipment': 'microchip',
+  'Transit Tubes': 'bus',
 } as const;
 
 const TOOLS = [
@@ -49,25 +49,10 @@ const TOOLS = [
 ] as const;
 
 type DirectionsAllowed = {
+  east: BooleanLike;
   north: BooleanLike;
   south: BooleanLike;
-  east: BooleanLike;
   west: BooleanLike;
-};
-
-type Colors = {
-  green: string;
-  blue: string;
-  red: string;
-  orange: string;
-  cyan: string;
-  dark: string;
-  yellow: string;
-  brown: string;
-  pink: string;
-  purple: string;
-  violet: string;
-  omni: string;
 };
 
 type Category = {
@@ -76,33 +61,33 @@ type Category = {
 };
 
 type Recipe = {
-  pipe_name: string;
   pipe_index: number;
+  pipe_name: string;
   previews: Preview[];
 };
 
 type Preview = {
-  selected: BooleanLike;
-  dir: string;
   dir_name: string;
-  icon_state: string;
+  dir: string;
   flipped: BooleanLike;
+  icon_state: string;
+  selected: BooleanLike;
 };
 
 type Data = {
-  // Static
-  paint_colors: Colors;
-  max_pipe_layers: number;
   // Dynamic
-  category: number;
-  pipe_layers: number;
-  multi_layer: BooleanLike;
   categories: Category[];
-  selected_recipe: string;
-  selected_color: string;
-  selected_category: string;
-  mode: number;
+  category: number;
   init_directions: DirectionsAllowed;
+  mode: number;
+  multi_layer: BooleanLike;
+  pipe_layers: number;
+  selected_category: string;
+  selected_color: string;
+  selected_recipe: string;
+  // Static
+  max_pipe_layers: number;
+  paint_colors: Record<string, string>;
 };
 
 export function ColorItem(props) {
@@ -294,8 +279,8 @@ function PipeTypeSection(props) {
     categories[0];
 
   return (
-    <Section>
-      <Tabs>
+    <Stack fill vertical>
+      <Tabs mb={-1}>
         {categories.map((category, i) => (
           <Tabs.Tab
             key={category.cat_name}
@@ -307,27 +292,29 @@ function PipeTypeSection(props) {
           </Tabs.Tab>
         ))}
       </Tabs>
-      <Table>
-        {shownCategory?.recipes.map((recipe) => (
-          <Table.Row
-            key={recipe.pipe_index}
-            style={{ borderBottom: '1px solid #333' }}
-          >
-            <Table.Cell collapsing py="2px" pb="1px">
-              <PreviewSelect
-                previews={recipe.previews}
-                pipe_type={recipe.pipe_index}
-                category={shownCategory.cat_name}
-              />
-            </Table.Cell>
-            <Table.Cell />
-            <Table.Cell style={{ verticalAlign: 'middle' }}>
-              {recipe.pipe_name}
-            </Table.Cell>
-          </Table.Row>
-        ))}
-      </Table>
-    </Section>
+      <Section fill scrollable>
+        <Table>
+          {shownCategory?.recipes.map((recipe) => (
+            <Table.Row
+              key={recipe.pipe_index}
+              style={{ borderBottom: '1px solid #333' }}
+            >
+              <Table.Cell collapsing py="2px" pb="1px">
+                <PreviewSelect
+                  previews={recipe.previews}
+                  pipe_type={recipe.pipe_index}
+                  category={shownCategory.cat_name}
+                />
+              </Table.Cell>
+              <Table.Cell />
+              <Table.Cell style={{ verticalAlign: 'middle' }}>
+                {recipe.pipe_name}
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table>
+      </Section>
+    </Stack>
   );
 }
 
@@ -415,7 +402,7 @@ export function RapidPipeDispenser(props) {
 
   return (
     <Window width={550} height={580}>
-      <Window.Content scrollable>
+      <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
             <Stack fill>
