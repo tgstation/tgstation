@@ -314,3 +314,25 @@
 /datum/loadout_item/pocket_items/security_suit_strap
 	name = "Security Equipment Strap"
 	item_path = /obj/item/job_equipment_strap/security
+
+//PDAs
+
+/datum/loadout_item/pocket_items/pda_neko
+	name = "Neko PDA"
+	item_path = /obj/item/modular_computer/pda/cat
+
+/datum/loadout_item/pocket_items/pda_g3
+	name = "G3 PDA"
+	item_path = /obj/item/modular_computer/pda/g3
+
+/datum/loadout_item/pocket_items/pda_rugged
+	name = "Rugged PDA"
+	item_path = /obj/item/modular_computer/pda/rugged
+
+/datum/loadout_item/pocket_items/pda_slimline
+	name = "Slimline PDA"
+	item_path = /obj/item/modular_computer/pda/slimline
+
+/datum/loadout_item/pocket_items/pda_ultraslim
+	name = "Ultraslim PDA"
+	item_path = /obj/item/modular_computer/pda/ultraslim

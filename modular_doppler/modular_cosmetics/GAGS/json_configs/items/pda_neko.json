@@ -1,0 +1,21 @@
+{
+	"pda": [
+		{
+			"type": "icon_state",
+			"icon_state": "pda_neko",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pda_buttons",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pda_screen_borders",
+			"blend_mode": "overlay"
+		}
+	]
+}
