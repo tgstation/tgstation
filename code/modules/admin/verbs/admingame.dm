@@ -27,7 +27,6 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 	if(player.client)
 		body += "<br>\[<b>First Seen:</b> [player.client.player_join_date]\]"
 		body += "<br>\[<b>Byond account registered on:</b> [player.client.account_join_date]\]"
-		body += "<br>\[IP: [player.client.address]\]"
 		body += "<br><br><b>CentCom Galactic Ban DB: </b> "
 		if(CONFIG_GET(string/centcom_ban_db))
 			body += "<a href='byond://?_src_=holder;[HrefToken()];centcomlookup=[player.client.ckey]'>Search</a>"
