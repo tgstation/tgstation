@@ -47,4 +47,4 @@
 
 	to_chat(spawned, span_boldnotice("You are Cargorilla, a pacifist friend of the station and carrier of freight."))
 	to_chat(spawned, span_notice("You can pick up crates by clicking on them, and drop them by clicking on the ground."))
-	spawned.mind.special_role = "Cargorilla"
+	LAZYADD(spawned.mind.special_roles, "Cargorilla")

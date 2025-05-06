@@ -26,7 +26,7 @@
 		if (isnull(initial(ruleset.antag_datum)))
 			continue
 
-		var/antag_flag = initial(ruleset.antag_flag)
+		var/antag_flag = initial(ruleset.pref_flag)
 
 		if (isnull(antag_flag))
 			TEST_FAIL("[ruleset] has a null antag_flag!")

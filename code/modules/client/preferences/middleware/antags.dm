@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 	var/list/antag_bans = list()
 
 	for (var/datum/dynamic_ruleset/dynamic_ruleset as anything in subtypesof(/datum/dynamic_ruleset))
-		var/antag_flag = initial(dynamic_ruleset.antag_flag)
+		var/antag_flag = initial(dynamic_ruleset.pref_flag)
 		var/jobban_flag = initial(dynamic_ruleset.jobban_flag)
 
 		if (isnull(antag_flag))
@@ -79,8 +79,10 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 
 	for(var/antag_key in GLOB.non_ruleset_antagonists)
 		var/datum/antagonist/antag = GLOB.non_ruleset_antagonists[antag_key]
-		var/antag_flag = initial(antag.job_rank)
-		if(is_banned_from(preferences.parent.ckey, list(antag_flag, ROLE_SYNDICATE)))
+		var/antag_flag = initial(antag.pref_flag)
+		var/jobban_flag = initial(antag.jobban_flag)
+
+		if(is_banned_from(preferences.parent.ckey, list(jobban_flag || antag_flag, ROLE_SYNDICATE)))
 			antag_bans += serialize_antag_name(antag_flag)
 
 	return antag_bans
@@ -114,14 +116,14 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
  *
  * So includes stuff like traitor, wizard, fugitive, but does not include wizard apprentice or hypnotized
  */
-/proc/get_all_antag_flags()  as /list
+/proc/get_all_antag_flags() as /list
 	var/static/list/antag_flags
 	if(antag_flags)
 		return antag_flags
 
 	antag_flags = list()
 	for(var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
-		antag_flags |= initial(ruleset.antag_flag)
+		antag_flags |= initial(ruleset.pref_flag)
 		antag_flags |= initial(ruleset.jobban_flag)
 
 	var/list/non_ruleset_antags = list(
@@ -132,6 +134,7 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 	)
 
 	antag_flags |= non_ruleset_antags
+	antag_flags -= null
 	return antag_flags
 
 /**
@@ -144,7 +147,7 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 
 	antag_time_limits = list()
 	for(var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
-		var/antag_flag = initial(ruleset.antag_flag)
+		var/antag_flag = initial(ruleset.pref_flag)
 		var/config_min_days = SSdynamic.dynamic_config[initial(ruleset.config_tag)]?[NAMEOF(ruleset, minimum_required_age)]
 		var/min_days = isnull(config_min_days) ? initial(ruleset.minimum_required_age) : config_min_days
 
@@ -169,7 +172,7 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 			continue
 
 		// antag_flag is guaranteed to be unique by unit tests.
-		antagonists[initial(ruleset.antag_flag)] = antagonist_type
+		antagonists[initial(ruleset.pref_flag)] = antagonist_type
 
 	var/list/generated_icons = list()
 

@@ -17,7 +17,7 @@
 
 /datum/antagonist/xeno
 	name = "\improper Xenomorph"
-	job_rank = ROLE_ALIEN
+	pref_flag = ROLE_ALIEN
 	show_in_antagpanel = FALSE
 	antagpanel_category = ANTAG_GROUP_XENOS
 	show_to_ghosts = TRUE
@@ -160,7 +160,6 @@
 			mind.add_antag_datum(/datum/antagonist/xeno)
 
 		mind.set_assigned_role(SSjob.get_job_type(/datum/job/xenomorph))
-		mind.special_role = ROLE_ALIEN
 
 /mob/living/carbon/alien/on_wabbajacked(mob/living/new_mob)
 	. = ..()
@@ -170,7 +169,6 @@
 		return
 	mind.remove_antag_datum(/datum/antagonist/xeno)
 	mind.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
-	mind.special_role = null
 
 #undef CAPTIVE_XENO_DEAD
 #undef CAPTIVE_XENO_FAIL

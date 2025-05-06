@@ -4,7 +4,7 @@
 GLOBAL_LIST_EMPTY(antagonists)
 
 // melbert todo : WE HAVE FIVE WAYS TO SAY THIS ANTAG ISN'T A REAL ANTAG
-// prevent_roundtype_conversion, can_coexist_with_others, count_against_dynamic_roll_chance, antag_flags = FLAG_FAKE_ANTAG, and block_midrounds
+// prevent_roundtype_conversion, can_coexist_with_others, count_against_dynamic_roll_chance, antag_flags = ANTAG_FAKE, and block_midrounds
 // also typecache_datum_blacklist kinda
 // i hate it here
 /datum/antagonist
@@ -18,8 +18,10 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/mind/owner
 	///Silent will prevent the gain/lose texts to show
 	var/silent = FALSE
-	///The define string we use to identify the role for bans/player polls to spawn a random new one in.
-	var/job_rank
+	/// What flag is checked for jobbans and polling? Optional, if unset, will use pref_flag
+	var/jobban_flag
+	/// What flag to check for prefs? Required for antags with preferences associated
+	var/pref_flag
 	///Should replace jobbanned player with ghosts if granted.
 	var/replace_banned = TRUE
 	///List of the objective datums that this role currently has, completing all objectives at round-end will cause this antagonist to greentext.
@@ -36,8 +38,6 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/hud_icon = 'icons/mob/huds/antag_hud.dmi'
 	///Name of the antag hud we provide to this mob.
 	var/antag_hud_name
-	/// If set to true, the antag will not be added to the living antag list.
-	var/count_against_dynamic_roll_chance = TRUE
 	/// The battlecry this antagonist shouts when suiciding with C4/X4.
 	var/suicide_cry = ""
 	//Antag panel properties
@@ -192,7 +192,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		info_button.Remove(old_body)
 		info_button.Grant(new_body)
 	apply_innate_effects(new_body)
-	if(count_against_dynamic_roll_chance && new_body.stat != DEAD)
+	if(new_body.stat != DEAD)
 		new_body.add_to_current_living_antags()
 
 //This handles the application of antag huds/special abilities
@@ -260,11 +260,13 @@ GLOBAL_LIST_EMPTY(antagonists)
 		replace_banned_player()
 	else if(owner.current.client?.holder && (CONFIG_GET(flag/auto_deadmin_antagonists) || owner.current.client.prefs?.toggles & DEADMIN_ANTAGONIST))
 		owner.current.client.holder.auto_deadmin()
-	if(count_against_dynamic_roll_chance && owner.current.stat != DEAD && owner.current.client)
+	if(owner.current.stat != DEAD && owner.current.client)
 		owner.current.add_to_current_living_antags()
 
 	for (var/datum/atom_hud/alternate_appearance/basic/antag_hud as anything in GLOB.active_alternate_appearances)
 		antag_hud.apply_to_new_mob(owner.current)
+
+	LAZYADD(owner.special_roles, (jobban_flag || pref_flag))
 
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_GAINED, src)
 
@@ -282,7 +284,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!player.ckey)
 		return FALSE
 
-	return (is_banned_from(player.ckey, list(ROLE_SYNDICATE, job_rank)) || QDELETED(player))
+	return (is_banned_from(player.ckey, list(ROLE_SYNDICATE, jobban_flag || pref_flag)) || QDELETED(player))
 
 /**
  * Proc that replaces a player who cannot play a specific antagonist due to being banned via a poll, and alerts the player of their being on the banlist.
@@ -290,7 +292,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = job_rank, role = job_rank, poll_time = 5 SECONDS, checked_target = owner.current, alert_pic = owner.current, role_name_text = name)
+	var/mob/chosen_one = SSpolling.poll_ghosts_for_target(check_jobban = jobban_flag || pref_flag, role = pref_flag, poll_time = 5 SECONDS, checked_target = owner.current, alert_pic = owner.current, role_name_text = name)
 	if(chosen_one)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(owner)]) to replace antagonist banned player.")
@@ -322,6 +324,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	var/datum/team/team = get_team()
 	if(team)
 		team.remove_member(owner)
+	LAZYREMOVE(owner.special_roles, (jobban_flag || pref_flag))
 	SEND_SIGNAL(owner, COMSIG_ANTAGONIST_REMOVED, src)
 	if(owner.current)
 		SEND_SIGNAL(owner.current, COMSIG_MOB_ANTAGONIST_REMOVED, src)
@@ -444,8 +447,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return ""
 
 /datum/antagonist/proc/enabled_in_preferences(datum/mind/noggin)
-	if(job_rank)
-		if(noggin.current && noggin.current.client && (job_rank in noggin.current.client.prefs.be_special))
+	if(pref_flag)
+		if(noggin.current && noggin.current.client && (pref_flag in noggin.current.client.prefs.be_special))
 			return TRUE
 		else
 			return FALSE
@@ -602,3 +605,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	return TRUE
 
 #undef CUSTOM_OBJECTIVE_MAX_LENGTH
+
+/// Return TRUE to prevent the antag's job from handling the respawn
+/datum/antagonist/proc/on_respawn(mob/new_character)
+	return FALSE

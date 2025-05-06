@@ -2,7 +2,7 @@
 	name = ROLE_NUCLEAR_OPERATIVE
 	roundend_category = "syndicate operatives" //just in case
 	antagpanel_category = ANTAG_GROUP_SYNDICATE
-	job_rank = ROLE_OPERATIVE
+	pref_flag = ROLE_OPERATIVE
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
@@ -212,3 +212,8 @@
 		team_number = nuke_team.members.Find(owner)
 
 	return GLOB.nukeop_start[((team_number - 1) % GLOB.nukeop_start.len) + 1]
+
+/datum/antagonist/nukeop/on_respawn(mob/new_character)
+	new_character.forceMove(pick(GLOB.nukeop_start))
+	equip_op()
+	return TRUE

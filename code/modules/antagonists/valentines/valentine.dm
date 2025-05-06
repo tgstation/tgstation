@@ -5,8 +5,7 @@
 	suicide_cry = "FOR MY LOVE!!"
 	ui_name = null
 	// Not 'true' antags, this disables certain interactions that assume the owner is a baddie
-	antag_flags = FLAG_FAKE_ANTAG
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
 	/// Reference to our date's mind
 	VAR_FINAL/datum/mind/date
 

@@ -4,7 +4,7 @@
 /datum/antagonist/bitrunning_glitch
 	name = "Generic Bitrunning Glitch"
 	antagpanel_category = ANTAG_GROUP_GLITCH
-	job_rank = ROLE_GLITCH
+	pref_flag = ROLE_GLITCH
 	preview_outfit = /datum/outfit/cyber_police
 	show_in_roundend = FALSE
 	show_in_antagpanel = FALSE

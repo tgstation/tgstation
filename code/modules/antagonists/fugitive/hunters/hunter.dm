@@ -8,7 +8,7 @@
 	antagpanel_category = ANTAG_GROUP_HUNTERS
 	antag_hud_name = "fugitive_hunter"
 	suicide_cry = "FOR GLORY!!"
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_SKIP_GLOBAL_LIST
 	var/datum/team/fugitive_hunters/hunter_team
 	var/backstory = "error"
 

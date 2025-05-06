@@ -2,7 +2,7 @@
 	name = "\improper Revolutionary"
 	roundend_category = "revolutionaries" // if by some miracle revolutionaries without revolution happen
 	antagpanel_category = "Revolution"
-	job_rank = ROLE_REV
+	pref_flag = ROLE_REV
 	antag_moodlet = /datum/mood_event/revolution
 	antag_hud_name = "rev"
 	suicide_cry = "VIVA LA REVOLUTION!!"
@@ -153,7 +153,7 @@
 /datum/antagonist/rev/head
 	name = "\improper Head Revolutionary"
 	antag_hud_name = "rev_head"
-	job_rank = ROLE_REV_HEAD
+	pref_flag = ROLE_REV_HEAD
 
 	preview_outfit = /datum/outfit/revolutionary
 	hardcore_random_bonus = TRUE
@@ -277,7 +277,6 @@
 
 	rev_mind.add_memory(/datum/memory/recruited_by_headrev, protagonist = rev_mind.current, antagonist = owner.current)
 	rev_mind.add_antag_datum(/datum/antagonist/rev,rev_team)
-	rev_mind.special_role = ROLE_REV
 	return TRUE
 
 /datum/antagonist/rev/head/proc/demote()
@@ -319,7 +318,6 @@
 	owner.current.log_message("has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!", LOG_ATTACK, color=COLOR_CULT_RED)
 	if(deconverter == DECONVERTER_BORGED)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
-	owner.special_role = null
 	if(iscarbon(owner.current) && deconverter)
 		var/mob/living/carbon/formerrev = owner.current
 		formerrev.Unconscious(10 SECONDS)

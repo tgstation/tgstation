@@ -318,7 +318,6 @@ SUBSYSTEM_DEF(job)
 		if(!player?.mind)
 			continue
 		player.mind.set_assigned_role(get_job_type(/datum/job/unassigned))
-		player.mind.special_role = null
 	setup_occupations()
 	unassigned = list()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
@@ -699,9 +698,10 @@ SUBSYSTEM_DEF(job)
 	return 0
 
 /datum/controller/subsystem/job/proc/try_reject_player(mob/dead/new_player/player)
-	if(player.mind && player.mind.special_role)
-		job_debug("RJCT: Player unable to be rejected due to special_role, Player: [player], SpecialRole: [player.mind.special_role]")
-		return FALSE
+	for(var/datum/dynamic_ruleset/roundstart/ruleset in SSdynamic.queued_rulesets)
+		if(player.mind in ruleset.selected_minds)
+			job_debug("RJCT: Player unable to be rejected due to being selected by dynamic, Player: [player], Ruleset: [ruleset]")
+			return FALSE
 
 	job_debug("RJCT: Player rejected, Player: [player]")
 	unassigned -= player

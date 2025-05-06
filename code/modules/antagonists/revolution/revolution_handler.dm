@@ -86,9 +86,9 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 		if (!isnull(rev_antag))
 			rev_antag.remove_revolutionary(DECONVERTER_STATION_WIN)
 			if(rev_mind in revs.ex_headrevs)
-				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former head revolutionary</span>")
+				LAZYADD(rev_mind.special_roles, "Former Head Revolutionary")
 			else
-				LAZYADD(rev_mind.special_statuses, "<span class='bad'>Former revolutionary</span>")
+				LAZYADD(rev_mind.special_roles, "Former Revolutionary")
 
 	// If the revolution was quelled, make rev heads unable to be revived through pods
 	for(var/datum/mind/rev_head as anything in revs.ex_headrevs)
@@ -150,7 +150,7 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 		return FALSE
 	if(!is_station_level(head_turf.z))
 		return FALSE
-	if(length(candidate.antag_datums) > 0) // melbert todo : account for valentines and whatnot - also i think revs currently can never be triggered on valentines day
+	if(candidate.current.is_antag())
 		return FALSE
 	if(HAS_MIND_TRAIT(candidate.current, TRAIT_UNCONVERTABLE))
 		return FALSE

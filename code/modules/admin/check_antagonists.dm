@@ -152,7 +152,7 @@
 					if (checked_mob.client)
 						observers_connected++
 
-				if(checked_mob.mind.special_role)
+				if(checked_mob.is_antag())
 					antagonists++
 					if(checked_mob.stat == DEAD)
 						antagonists_dead++

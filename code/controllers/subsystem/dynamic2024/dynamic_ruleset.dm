@@ -5,10 +5,10 @@
 	/// Don't change this unless you know what you're doing.
 	var/config_tag
 
-	/// What flag to check for jobbans? If unset, uses antag_flag
+	/// What flag to check for jobbans? Optional, if unset, uses pref_flag
 	var/jobban_flag
-	/// What flag to check for prefs?
-	var/antag_flag
+	/// What flag to check for prefs? Required
+	var/pref_flag
 	/// Flags for this ruleset
 	var/ruleset_flags = NONE
 	/// Antag datum this ruleset applies
@@ -113,7 +113,6 @@
  * Any additional checks to see if this ruleset can be selected
  */
 /datum/dynamic_ruleset/proc/can_be_selected(population_size)
-	//SHOULD_BE_PURE(TRUE)
 	//SHOULD_CALL_PARENT(TRUE)
 	return TRUE
 
@@ -227,9 +226,15 @@
 
 	var/list/valid_candidates = list()
 	for(var/mob/candidate as anything in antag_candidates)
-		var/candidate_client = GET_CLIENT(candidate)
+		var/client/candidate_client = GET_CLIENT(candidate)
 		if(!candidate_client || !candidate.mind)
 			continue
+		if(candidate_client.get_remaining_days(minimum_required_age) > 0)
+			return FALSE
+		if(!(pref_flag in candidate_client.prefs.be_special))
+			return FALSE
+		if(is_banned_from(candidate.ckey, list(ROLE_SYNDICATE, jobban_flag || pref_flag)))
+			return FALSE
 		if(!is_valid_candidate(candidate, candidate_client))
 			continue
 		valid_candidates += candidate
@@ -258,25 +263,11 @@
 	for(var/template in ruleset_lazy_templates)
 		SSmapping.lazy_load_template(template)
 
-/// Used by the ruleset to trim the candidates list down to just relevant players
+/**
+ * Any additional checks to see if this player is a valid candidate for this ruleset
+ */
 /datum/dynamic_ruleset/proc/is_valid_candidate(mob/candidate, client/candidate_client)
-	SHOULD_CALL_PARENT(TRUE)
-	PROTECTED_PROC(TRUE)
-
-	// technically not pure
-	if(candidate_client.get_remaining_days(minimum_required_age) > 0)
-		return FALSE
-
-	if(candidate.mind.special_role)
-		return FALSE
-
-	if(!(antag_flag in candidate_client.prefs.be_special))
-		return FALSE
-
-	// technically not pure
-	if(is_banned_from(candidate.ckey, list(jobban_flag || antag_flag, ROLE_SYNDICATE)))
-		return FALSE
-
+	//SHOULD_CALL_PARENT(TRUE)
 	return TRUE
 
 /**
@@ -298,7 +289,6 @@
 /datum/dynamic_ruleset/proc/execute()
 	for(var/datum/mind/mind as anything in selected_minds)
 		assign_role(mind)
-		mind.special_role = jobban_flag || antag_flag
 
 /**
  * Used by the ruleset to actually assign the role to the player
@@ -322,10 +312,16 @@
 /datum/dynamic_ruleset/roundstart
 	repeatable = TRUE // We can pick multiple of a roundstart ruleset to "scale up" (spawn more of the same type of antag)
 
+/datum/dynamic_ruleset/roundstart/is_valid_candidate(mob/candidate, client/candidate_client)
+	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in SSdynamic.queued_rulesets)
+		if(candidate.mind in ruleset.selected_minds)
+			return FALSE
+	return TRUE
+
 /datum/dynamic_ruleset/roundstart/traitor
 	name = "Traitors"
 	config_tag = "Roundstart Traitor"
-	antag_flag = ROLE_TRAITOR
+	pref_flag = ROLE_TRAITOR
 	weight = 10
 	max_antag_cap = list("denominator" = 38)
 
@@ -335,7 +331,7 @@
 /datum/dynamic_ruleset/roundstart/malf_ai
 	name = "Malfunctioning AI"
 	config_tag = "Roundstart Malfunctioning AI"
-	antag_flag = ROLE_MALF
+	pref_flag = ROLE_MALF
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
@@ -348,8 +344,10 @@
 	return list()
 
 /datum/dynamic_ruleset/roundstart/malf_ai/is_valid_candidate(mob/candidate, client/candidate_client)
+	// Malf AI can only go to people who want to be AI
 	if(!candidate_client.prefs.job_preferences[/datum/job/ai::title])
 		return FALSE
+	// And only to people who can actually be AI this round
 	if(SSjob.check_job_eligibility(candidate, SSjob.get_job_type(/datum/job/ai), "[name] Candidacy") != JOB_AVAILABLE)
 		return FALSE
 	return ..()
@@ -363,7 +361,7 @@
 /datum/dynamic_ruleset/roundstart/blood_brother
 	name = "Blood Brothers"
 	config_tag = "Roundstart Blood Brothers"
-	antag_flag = ROLE_BROTHER
+	pref_flag = ROLE_BROTHER
 	weight = 5
 	max_antag_cap = list("denominator" = 29)
 
@@ -373,7 +371,7 @@
 /datum/dynamic_ruleset/roundstart/changeling
 	name = "Changelings"
 	config_tag = "Roundstart Changeling"
-	antag_flag = ROLE_CHANGELING
+	pref_flag = ROLE_CHANGELING
 	weight = 3
 	max_antag_cap = list("denominator" = 29)
 
@@ -383,7 +381,7 @@
 /datum/dynamic_ruleset/roundstart/heretic
 	name = "Heretics"
 	config_tag = "Roundstart Heretics"
-	antag_flag = ROLE_HERETIC
+	pref_flag = ROLE_HERETIC
 	weight = 3
 	max_antag_cap = list("denominator" = 24)
 
@@ -393,7 +391,7 @@
 /datum/dynamic_ruleset/roundstart/wizard
 	name = "Wizard"
 	config_tag = "Roundstart Wizard"
-	antag_flag = ROLE_WIZARD
+	pref_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -422,7 +420,7 @@
 /datum/dynamic_ruleset/roundstart/blood_cult
 	name = "Blood Cult"
 	config_tag = "Roundstart Blood Cult"
-	antag_flag = ROLE_CULTIST
+	pref_flag = ROLE_CULTIST
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
@@ -460,7 +458,7 @@
 /datum/dynamic_ruleset/roundstart/nukies
 	name = "Nuclear Operatives"
 	config_tag = "Roundstart Nukeops"
-	antag_flag = ROLE_NUCLEAR_OPERATIVE
+	pref_flag = ROLE_NUCLEAR_OPERATIVE
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -512,7 +510,7 @@
 /datum/dynamic_ruleset/roundstart/nukies/clown
 	name = "Clown Operatives"
 	config_tag = "Roundstart Clownops"
-	antag_flag = ROLE_CLOWN_OPERATIVE
+	pref_flag = ROLE_CLOWN_OPERATIVE
 	weight = 0
 
 /datum/dynamic_ruleset/roundstart/nukies/clown/assign_role(datum/mind/candidate)
@@ -521,7 +519,7 @@
 /datum/dynamic_ruleset/roundstart/revolution
 	name = "Revolution"
 	config_tag = "Roundstart Revolution"
-	antag_flag = ROLE_REV_HEAD
+	pref_flag = ROLE_REV_HEAD
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
@@ -538,10 +536,12 @@
 	return head_check >= 3
 
 /datum/dynamic_ruleset/roundstart/revolution/assign_role(datum/mind/candidate)
+	LAZYADD(candidate.special_roles, "Dormant Head Revolutionary")
 	addtimer(CALLBACK(src, PROC_REF(reveal_head), candidate), 7 MINUTES, TIMER_DELETE_ME)
 
 /// Reveals the headrev after a set amount of time
 /datum/dynamic_ruleset/roundstart/revolution/proc/reveal_head(datum/mind/candidate)
+	LAZYREMOVE(candidate.special_roles, "Dormant Head Revolutionary")
 	if(!can_be_headrev(candidate))
 		return
 	GLOB.revolution_handler ||= new()
@@ -555,7 +555,7 @@
 /datum/dynamic_ruleset/roundstart/spies
 	name = "Spies"
 	config_tag = "Roundstart Spies"
-	antag_flag = ROLE_SPY
+	pref_flag = ROLE_SPY
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
@@ -636,12 +636,12 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/collect_candidates()
 	return SSpolling.poll_ghost_candidates(
-		question = "Looking for volunteers to become [span_notice(antag_flag)] for [span_danger(name)]",
-		check_jobban = jobban_flag || antag_flag,
-		role = antag_flag,
+		question = "Looking for volunteers to become [span_notice(pref_flag)] for [span_danger(name)]",
+		check_jobban = jobban_flag || pref_flag,
+		role = pref_flag,
 		poll_time = 30 SECONDS,
 		alert_pic = signup_atom_appearance,
-		role_name_text = antag_flag,
+		role_name_text = pref_flag,
 	)
 
 /// Helper to make a human from a ghost, with their preferences
@@ -655,7 +655,7 @@
 	name = "Wizard"
 	config_tag = "Midround Wizard"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	antag_flag = ROLE_WIZARD_MIDROUND
+	pref_flag = ROLE_WIZARD_MIDROUND
 	jobban_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER
 	weight = list(
@@ -677,7 +677,7 @@
 	name = "Nuclear Operatives"
 	config_tag = "Midround Nukeops"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	antag_flag = ROLE_OPERATIVE_MIDROUND
+	pref_flag = ROLE_OPERATIVE_MIDROUND
 	jobban_flag = ROLE_NUCLEAR_OPERATIVE
 	ruleset_flags = RULESET_INVADER
 	weight = list(
@@ -733,7 +733,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/nukies/clown
 	name = "Clown Operatives"
 	config_tag = "Midround Clownops"
-	antag_flag = ROLE_CLOWN_OPERATIVE_MIDROUND
+	pref_flag = ROLE_CLOWN_OPERATIVE_MIDROUND
 	jobban_flag = ROLE_CLOWN_OPERATIVE
 	weight = 0
 	signup_atom_appearance = /obj/machinery/nuclearbomb/syndicate/bananium
@@ -747,7 +747,7 @@
 	name = "Blob"
 	config_tag = "Blob"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	antag_flag = ROLE_BLOB
+	pref_flag = ROLE_BLOB
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -771,7 +771,7 @@
 	name = "Alien Infestation"
 	config_tag = "Xenomorph"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	antag_flag = ROLE_ALIEN
+	pref_flag = ROLE_ALIEN
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -824,7 +824,7 @@
 	name = "Nightmare"
 	config_tag = "Nightmare"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
-	antag_flag = ROLE_NIGHTMARE
+	pref_flag = ROLE_NIGHTMARE
 	ruleset_flags = RULESET_INVADER
 	weight = 5
 	min_pop = 15
@@ -845,7 +845,7 @@
 	name = "Space Dragon"
 	config_tag = "Space Dragon"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	antag_flag = ROLE_SPACE_DRAGON
+	pref_flag = ROLE_SPACE_DRAGON
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -879,7 +879,7 @@
 	name = "Abductors"
 	config_tag = "Abductors"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
-	antag_flag = ROLE_ABDUCTOR
+	pref_flag = ROLE_ABDUCTOR
 	ruleset_flags = RULESET_INVADER
 	weight = 5
 	min_antag_cap = 2
@@ -890,7 +890,7 @@
 	name = "Space Ninja"
 	config_tag = "Space Ninja"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	antag_flag = ROLE_NINJA
+	pref_flag = ROLE_NINJA
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -920,7 +920,7 @@
 	name = "Spiders"
 	config_tag = "Spiders"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	antag_flag = ROLE_SPIDER
+	pref_flag = ROLE_SPIDER
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -945,7 +945,7 @@
 	name = "Revenant"
 	config_tag = "Revenant"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
-	antag_flag = ROLE_REVENANT
+	pref_flag = ROLE_REVENANT
 	ruleset_flags = RULESET_INVADER
 	weight = 5
 	max_antag_cap = 1
@@ -990,7 +990,7 @@
 	name = "Pirates"
 	config_tag = "Light Pirates"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
-	antag_flag = "Space Pirates"
+	pref_flag = "Space Pirates"
 	ruleset_flags = RULESET_INVADER
 	weight = 3
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
@@ -1010,7 +1010,7 @@
 	name = "Pirates"
 	config_tag = "Heavy Pirates"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	antag_flag = "Space Pirates"
+	pref_flag = "Space Pirates"
 	ruleset_flags = RULESET_INVADER
 	weight = 3
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
@@ -1022,7 +1022,7 @@
 	name = "Space Changeling"
 	config_tag = "Midround Changeling"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
-	antag_flag = ROLE_CHANGELING_MIDROUND
+	pref_flag = ROLE_CHANGELING_MIDROUND
 	jobban_flag = ROLE_CHANGELING
 	ruleset_flags = RULESET_INVADER
 	weight = 5
@@ -1036,7 +1036,7 @@
 	name = "Paradox Clone"
 	config_tag = "Paradox Clone"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
-	antag_flag = ROLE_PARADOX_CLONE
+	pref_flag = ROLE_PARADOX_CLONE
 	ruleset_flags = RULESET_INVADER
 	weight = 5
 	max_antag_cap = 1
@@ -1075,7 +1075,7 @@
 	name = "Voidwalker"
 	config_tag = "Voidwalker"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
-	antag_flag = ROLE_VOIDWALKER
+	pref_flag = ROLE_VOIDWALKER
 	ruleset_flags = RULESET_INVADER
 	weight = 5
 	max_antag_cap = 1
@@ -1116,22 +1116,28 @@
 	// only pick members of the crew
 	if(!job_check(candidate))
 		return FALSE
+	if(!antag_check(candidate))
+		return FALSE
 	// checks for stuff like bitrunner avatars and ghost mafia
 	if(HAS_TRAIT(candidate, TRAIT_MIND_TEMPORARILY_GONE) || HAS_TRAIT(candidate, TRAIT_TEMPORARY_BODY))
 		return FALSE
-	if(SEND_SIGNAL(candidate, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, src, antag_flag) & CANCEL_ROLL)
+	if(SEND_SIGNAL(candidate, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, src, pref_flag) & CANCEL_ROLL)
 		return FALSE
-	return ..()
+	return TRUE
 
 /// Checks if the candidate is a valid job for this ruleset - by default you probably only want crew members
 /datum/dynamic_ruleset/midround/from_living/proc/job_check(mob/candidate)
-	return (candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER)
+	return !(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER)
+
+/// Checks if the candidate is an antag - most of the time you don't want to double dip
+/datum/dynamic_ruleset/midround/from_living/proc/antag_check(mob/candidate)
+	return !candidate.is_antag()
 
 /datum/dynamic_ruleset/midround/from_living/traitor
 	name = "Traitor"
 	config_tag = "Midround Traitor"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
-	antag_flag = ROLE_SLEEPER_AGENT
+	pref_flag = ROLE_SLEEPER_AGENT
 	jobban_flag = ROLE_TRAITOR
 	weight = 10
 
@@ -1142,7 +1148,7 @@
 	name = "Malfunctioning AI"
 	config_tag = "Midround Malfunctioning AI"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	antag_flag = ROLE_MALF_MIDROUND
+	pref_flag = ROLE_MALF_MIDROUND
 	jobban_flag = ROLE_MALF
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -1164,7 +1170,7 @@
 	name = "Blob Infection"
 	config_tag = "Midround Blob"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	antag_flag = ROLE_BLOB_INFECTION
+	pref_flag = ROLE_BLOB_INFECTION
 	jobban_flag = ROLE_BLOB
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -1185,7 +1191,7 @@
 	name = "Obsessed"
 	config_tag = "Midround Obsessed"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
-	antag_flag = ROLE_OBSESSED
+	pref_flag = ROLE_OBSESSED
 	blacklisted_roles = list()
 	weight = list(
 		DYNAMIC_TIER_LOW = 5,
@@ -1195,9 +1201,11 @@
 	)
 
 /datum/dynamic_ruleset/midround/from_living/obsesed/is_valid_candidate(mob/candidate, client/candidate_client)
-	if(!candidate.get_organ_by_type(/obj/item/organ/brain))
-		return FALSE
-	return ..()
+	return ..() && !!candidate.get_organ_by_type(/obj/item/organ/brain)
+
+/datum/dynamic_ruleset/midround/from_living/obsesed/antag_check(mob/candidate)
+	// Obsessed is a special case, it can select other antag players
+	return !candidate.mind.has_antag_datum(/datum/antagonist/obsessed)
 
 /datum/dynamic_ruleset/midround/from_living/obsesed/assign_role(datum/mind/candidate)
 	var/obj/item/organ/brain/brain = candidate.current.get_organ_by_type(__IMPLIED_TYPE__)
@@ -1225,7 +1233,7 @@
 /datum/dynamic_ruleset/latejoin/traitor
 	name = "Traitor"
 	config_tag = "Latejoin Traitor"
-	antag_flag = ROLE_SYNDICATE_INFILTRATOR
+	pref_flag = ROLE_SYNDICATE_INFILTRATOR
 	jobban_flag = ROLE_TRAITOR
 	weight = 10
 
@@ -1235,7 +1243,7 @@
 /datum/dynamic_ruleset/latejoin/heretic
 	name = "Heretic"
 	config_tag = "Latejoin Heretic"
-	antag_flag = ROLE_HERETIC_SMUGGLER
+	pref_flag = ROLE_HERETIC_SMUGGLER
 	jobban_flag = ROLE_HERETIC
 	weight = 3
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE)
@@ -1246,7 +1254,7 @@
 /datum/dynamic_ruleset/latejoin/changeling
 	name = "Changelings"
 	config_tag = "Latejoin Changeling"
-	antag_flag = ROLE_STOWAWAY_CHANGELING
+	pref_flag = ROLE_STOWAWAY_CHANGELING
 	jobban_flag = ROLE_CHANGELING
 	weight = 3
 
@@ -1256,7 +1264,7 @@
 /datum/dynamic_ruleset/latejoin/revolution
 	name = "Revolution"
 	config_tag = "Latejoin Revolution"
-	antag_flag = ROLE_PROVOCATEUR
+	pref_flag = ROLE_PROVOCATEUR
 	jobban_flag = ROLE_REV_HEAD
 	weight = 1
 
@@ -1268,9 +1276,11 @@
 	return head_check >= 3
 
 /datum/dynamic_ruleset/latejoin/revolution/assign_role(datum/mind/candidate)
+	LAZYADD(candidate.special_roles, "Dormant Head Revolutioanry")
 	addtimer(CALLBACK(src, PROC_REF(reveal_head), candidate), 1 MINUTES, TIMER_DELETE_ME)
 
 /datum/dynamic_ruleset/latejoin/revolution/proc/reveal_head(datum/mind/candidate)
+	LAZYREMOVE(candidate.special_roles, "Dormant Head Revolutioanry")
 	if(!can_be_headrev(candidate))
 		return
 	GLOB.revolution_handler ||= new()

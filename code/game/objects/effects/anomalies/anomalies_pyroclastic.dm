@@ -54,7 +54,6 @@
 	if(isnull(chosen_one))
 		return
 	pyro.PossessByPlayer(chosen_one.key)
-	pyro.mind.special_role = ROLE_PYROCLASTIC_SLIME
 	pyro.mind.add_antag_datum(/datum/antagonist/pyro_slime)
 	pyro.log_message("was made into a slime by pyroclastic anomaly", LOG_GAME)
 	chosen_one = null
