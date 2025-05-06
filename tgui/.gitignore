@@ -16,7 +16,8 @@ package-lock.json
 /public/.tmp/**/*
 /public/**/*
 !/public/*.html
-!/public/tgui-polyfill.min.js
+!/public/ntos-error.min.css
+!/public/helpers.min.js
 /coverage
 
 ## Previously ignored locations that are kept to avoid confusing git

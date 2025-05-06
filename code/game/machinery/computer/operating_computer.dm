@@ -50,7 +50,7 @@
 		linked_techweb = tool.buffer
 	return TRUE
 
-/obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)
+/obj/machinery/computer/operating/attackby(obj/item/O, mob/user, list/modifiers)
 	if(istype(O, /obj/item/disk/surgery))
 		user.visible_message(span_notice("[user] begins to load \the [O] in \the [src]..."), \
 			span_notice("You begin to load a surgery protocol from \the [O]..."), \
@@ -123,15 +123,7 @@
 			data["patient"]["stat"] = "Dead"
 			data["patient"]["statstate"] = "bad"
 	data["patient"]["health"] = patient.health
-
-	// check here to see if the patient has standard blood reagent, or special blood (like how ethereals bleed liquid electricity) to show the proper name in the computer
-	var/blood_id = patient.get_blood_id()
-	if(blood_id == /datum/reagent/blood)
-		data["patient"]["blood_type"] = patient.dna?.blood_type
-	else
-		var/datum/reagent/special_blood = GLOB.chemical_reagents_list[blood_id]
-		data["patient"]["blood_type"] = special_blood ? special_blood.name : blood_id
-
+	data["patient"]["blood_type"] = patient.dna?.blood_type.name
 	data["patient"]["maxHealth"] = patient.maxHealth
 	data["patient"]["minHealth"] = HEALTH_THRESHOLD_DEAD
 	data["patient"]["bruteLoss"] = patient.getBruteLoss()

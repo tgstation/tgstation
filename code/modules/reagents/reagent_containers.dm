@@ -16,6 +16,8 @@
 	var/reagent_flags
 	/// A list of what initial reagents this container should spawn with
 	var/list/list_reagents = null
+	/// The purity of the spawned reagents in list_reagents. Default purity if `null`
+	var/list_reagents_purity = null
 	/// If this container should spawn with a disease type inside of it
 	var/spawned_disease = null
 	/// How much of a disease specified in spawned_disease should this container spawn with
@@ -69,7 +71,7 @@
 	. = ..()
 	if(has_variable_transfer_amount)
 		if(possible_transfer_amounts.len > 1)
-			. += span_notice("Left-click or right-click in-hand to increase or decrease its transfer amount.")
+			. += span_notice("Left-click or right-click in-hand to increase or decrease its transfer amount. It is currently set to [amount_per_transfer_from_this] units.")
 		else if(possible_transfer_amounts.len)
 			. += span_notice("Left-click or right-click in-hand to view its transfer amount.")
 	if(isliving(user) && HAS_TRAIT(user, TRAIT_REMOTE_TASTING))
@@ -80,14 +82,14 @@
 	. = ..()
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
-/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, list/modifiers)
 	if (!user.combat_mode)
 		return
 	return ..()
 
 /obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
-		reagents.add_reagent_list(list_reagents)
+		reagents.add_reagent_list(list_reagents, added_purity = list_reagents_purity)
 
 /obj/item/reagent_containers/attack_self(mob/user)
 	if(has_variable_transfer_amount)
@@ -116,7 +118,7 @@
 	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
 	mode_change_message(user)
 
-/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
+/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
 		return ..()
 	if(!user.combat_mode)
@@ -126,7 +128,7 @@
 
 	return ..()
 
-/// Tries to splash the target. Used on both right-click and normal click when in combat mode.
+/// Tries to splash the target, called when right-clicking with a reagent container.
 /obj/item/reagent_containers/proc/try_splash(mob/user, atom/target)
 	if (!spillable || reagent_flags & SMART_CAP)
 		return FALSE
@@ -161,11 +163,6 @@
 
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
-
-	var/mob/thrown_by = thrownby?.resolve()
-	if(isturf(target) && reagents.reagent_list.len && thrown_by)
-		log_combat(thrown_by, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
-		message_admins("[ADMIN_LOOKUPFLW(thrown_by)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
 
 	reagents.expose(target, TOUCH)
 	log_combat(user, target, "splashed", reagent_text)
@@ -206,22 +203,21 @@
 /obj/item/reagent_containers/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = TRUE)
 	. = ..()
 	if(do_splash)
-		SplashReagents(hit_atom, TRUE)
+		SplashReagents(hit_atom, throwingdatum)
 
-/obj/item/reagent_containers/proc/bartender_check(atom/target)
+/obj/item/reagent_containers/proc/bartender_check(atom/target, mob/thrown_by)
 	. = FALSE
-	var/mob/thrown_by = thrownby?.resolve()
 	if(target.CanPass(src, get_dir(target, src)) && thrown_by && HAS_TRAIT(thrown_by, TRAIT_BOOZE_SLIDER))
 		. = TRUE
 
-/obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE, override_spillable = FALSE)
+/obj/item/reagent_containers/proc/SplashReagents(atom/target, datum/thrownthing/throwingdatum, override_spillable = FALSE)
 	if(!reagents || !reagents.total_volume || (!spillable && !override_spillable) || reagent_flags & SMART_CAP)
 		return
-	var/mob/thrown_by = thrownby?.resolve()
+	var/mob/thrown_by = throwingdatum.get_thrower()
 
 	if(ismob(target) && target.reagents)
 		var/splash_multiplier = 1
-		if(thrown)
+		if(throwingdatum)
 			splash_multiplier *= (rand(5,10) * 0.1) //Not all of it makes contact with the target
 		var/mob/M = target
 		var/turf/target_turf = get_turf(target)
@@ -236,7 +232,7 @@
 		reagents.expose(target, TOUCH, splash_multiplier)
 		reagents.expose(target_turf, TOUCH, (1 - splash_multiplier)) // 1 - splash_multiplier because it's what didn't hit the target
 
-	else if(bartender_check(target) && thrown)
+	else if(bartender_check(target, thrown_by) && throwingdatum)
 		visible_message(span_notice("[src] lands onto \the [target] without spilling a single drop."))
 		return
 

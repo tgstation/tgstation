@@ -60,7 +60,7 @@
 	. = ..()
 	owner.log_message("has received [src] which will eventually turn them into a Legion.", LOG_VICTIM)
 
-/obj/item/organ/legion_tumour/attack(mob/living/target, mob/living/user, params)
+/obj/item/organ/legion_tumour/attack(mob/living/target, mob/living/user, list/modifiers)
 	if (try_apply(target, user))
 		qdel(src)
 		return
@@ -72,7 +72,7 @@
 		return FALSE
 
 	if (target.stat <= SOFT_CRIT && !(organ_flags & ORGAN_FAILING))
-		target.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman)
+		target.add_mood_event("legion_core", /datum/mood_event/healsbadman)
 		target.apply_status_effect(applied_status)
 
 		if (target != user)

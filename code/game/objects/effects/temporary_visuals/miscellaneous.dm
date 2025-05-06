@@ -7,7 +7,14 @@
 	plane = GAME_PLANE
 	var/splatter_type = "splatter"
 
-/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir)
+// set_color arg can be either a color string or a singleton /datum/blood_type to pull the color from
+/obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir, set_color = BLOOD_COLOR_RED)
+	if(set_color)
+		var/datum/blood_type/blood_type = set_color
+		if(istype(blood_type))
+			color = blood_type.color
+		else
+			color = set_color
 	if(ISDIAGONALDIR(set_dir))
 		icon_state = "[splatter_type][pick(1, 2, 6)]"
 	else
@@ -42,7 +49,10 @@
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
-	splatter_type = "xsplatter"
+	splatter_type = "splatter"
+
+/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter/Initialize(mapload, set_dir, set_color = get_blood_type(/datum/blood_type/xeno::name))
+	return ..()
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
 	name = "speedbike trails"
@@ -568,7 +578,7 @@
 	playsound(loc, 'sound/items/weapons/egloves.ogg', vol = 80, vary = TRUE)
 	end()
 
-/obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, params)
+/obj/effect/constructing_effect/attackby(obj/item/weapon, mob/user, list/modifiers)
 	attacked(user)
 
 /obj/effect/constructing_effect/attack_hand(mob/living/user, list/modifiers)
@@ -601,11 +611,8 @@
 	var/datum/weakref/pinged_person
 	/// The icon state applied to the image created for this ping.
 	var/real_icon_state = "sonar_ping"
-	/// Does the visual follow the creature?
+	/// If we're following the creature as we move or not
 	var/follow_creature = TRUE
-	/// Creature's X & Y coords, which can either be overridden or kept the same depending on follow_creature.
-	var/creature_x
-	var/creature_y
 
 /obj/effect/temp_visual/sonar_ping/Initialize(mapload, mob/living/looker, mob/living/creature, ping_state, follow_creatures = TRUE)
 	. = ..()
@@ -614,47 +621,60 @@
 	if(ping_state)
 		real_icon_state = ping_state
 	follow_creature = follow_creatures
-	creature_x = creature.x
-	creature_y = creature.y
 
-	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER, pixel_x = ((creature.x - looker.x) * 32), pixel_y = ((creature.y - looker.y) * 32))
+	modsuit_image = image(icon = icon, loc = looker.loc, icon_state = real_icon_state, layer = ABOVE_ALL_MOB_LAYER)
 	modsuit_image.plane = ABOVE_LIGHTING_PLANE
+	modsuit_image.pixel_w = ((creature.x - looker.x) * ICON_SIZE_X) + creature.pixel_w
+	modsuit_image.pixel_z = ((creature.y - looker.y) * ICON_SIZE_Y) + creature.pixel_y
 	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
+	if(ishuman(creature))
+		modsuit_image.color = COLOR_SOFT_RED
 	mod_man = WEAKREF(looker)
 	pinged_person = WEAKREF(creature)
-	add_mind(looker)
-	START_PROCESSING(SSfastprocess, src)
+	looker?.client?.images |= modsuit_image
+	RegisterSignal(looker, COMSIG_MOVABLE_MOVED, PROC_REF(on_user_moved))
+	if(follow_creature)
+		RegisterSignal(creature, COMSIG_MOVABLE_MOVED, PROC_REF(on_target_moved))
+
+/// If the user moves, we want to move the effect on top of them so they always see it
+/obj/effect/temp_visual/sonar_ping/proc/on_user_moved(atom/movable/source, atom/oldloc, direction, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	var/mob/living/looker = mod_man?.resolve()
+	if(isnull(looker))
+		return
+	modsuit_image.loc = looker.loc
+	if(follow_creature)
+		var/mob/living/creature = pinged_person?.resolve()
+		if(isnull(creature))
+			return
+		modsuit_image.pixel_w = ((creature.x - looker.x) * ICON_SIZE_X) + creature.pixel_w
+		modsuit_image.pixel_z = ((creature.y - looker.y) * ICON_SIZE_Y) + creature.pixel_y
+
+/// If the target moves & we have follow_creature = TRUE, then we want to also update the location of the ping when the creature moves
+/obj/effect/temp_visual/sonar_ping/proc/on_target_moved(atom/movable/source, atom/oldloc, direction, forced, list/old_locs)
+	SIGNAL_HANDLER
+
+	var/mob/living/looker = mod_man?.resolve()
+	var/mob/living/creature = pinged_person?.resolve()
+	if(isnull(looker) || isnull(creature))
+		return
+	// Long pings follow, short pings stay put. We still need to update for looker.x&y though
+	modsuit_image.pixel_w = ((creature.x - looker.x) * ICON_SIZE_X) + creature.pixel_w
+	modsuit_image.pixel_z = ((creature.y - looker.y) * ICON_SIZE_Y) + creature.pixel_y
+
 
 /obj/effect/temp_visual/sonar_ping/Destroy()
 	var/mob/living/previous_user = mod_man?.resolve()
 	if(previous_user)
-		remove_mind(previous_user)
-	STOP_PROCESSING(SSfastprocess, src)
-	// Null so we don't shit the bed when we delete
-	modsuit_image = null
-	return ..()
-
-/// Add the image to the modsuit wearer's screen
-/obj/effect/temp_visual/sonar_ping/proc/add_mind(mob/living/looker)
-	looker?.client?.images |= modsuit_image
-
-/// Remove the image from the modsuit wearer's screen
-/obj/effect/temp_visual/sonar_ping/proc/remove_mind(mob/living/looker)
-	looker?.client?.images -= modsuit_image
-
-/// Update the position of the ping while it's still up. Not sure if i need to use the full proc but just being safe
-/obj/effect/temp_visual/sonar_ping/process(seconds_per_tick)
-	var/mob/living/looker = mod_man?.resolve()
+		previous_user?.client?.images -= modsuit_image
+		UnregisterSignal(previous_user, COMSIG_MOVABLE_MOVED)
 	var/mob/living/creature = pinged_person?.resolve()
-	if(isnull(looker) || isnull(creature))
-		return PROCESS_KILL
-	modsuit_image.loc = looker.loc
-	// Long pings follow, short pings stay put. We still need to update for looker.x&y though
-	if(follow_creature)
-		creature_y = creature.y
-		creature_x = creature.x
-	modsuit_image.pixel_x = ((creature_x - looker.x) * 32)
-	modsuit_image.pixel_y = ((creature_y - looker.y) * 32)
+	if(creature)
+		UnregisterSignal(creature, COMSIG_MOVABLE_MOVED)
+	// Null so we don't shit the bed when we delete
+	QDEL_NULL(modsuit_image)
+	return ..()
 
 /obj/effect/temp_visual/block //color is white by default, set to whatever is needed
 	name = "blocking glow"

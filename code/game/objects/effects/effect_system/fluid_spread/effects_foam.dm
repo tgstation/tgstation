@@ -96,6 +96,8 @@
 		for(var/obj/object in turf_location)
 			if(object == src)
 				continue
+			if(object.invisibility >= INVISIBILITY_ABSTRACT) // Don't foam landmarks please
+				continue
 			if(turf_location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(object, TRAIT_T_RAY_VISIBLE))
 				continue
 			if (HAS_TRAIT(loc, TRAIT_ELEVATED_TURF) && !HAS_TRAIT(object, TRAIT_ELEVATING_OBJECT))
@@ -344,7 +346,7 @@
 	to_chat(user, span_warning("You hit [src] but bounce off it!"))
 	playsound(src.loc, 'sound/items/weapons/tap.ogg', 100, TRUE)
 
-/obj/structure/foamedmetal/attackby(obj/item/W, mob/user, params)
+/obj/structure/foamedmetal/attackby(obj/item/W, mob/user, list/modifiers)
 	///A speed modifier for how fast the wall is build
 	var/platingmodifier = 1
 	if(HAS_TRAIT(user, TRAIT_QUICK_BUILD))

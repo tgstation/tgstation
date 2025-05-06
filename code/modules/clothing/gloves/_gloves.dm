@@ -1,6 +1,7 @@
 /obj/item/clothing/gloves
 	name = "gloves"
 	gender = PLURAL //Carn: for grammarically correct text-parsing
+	clothing_flags = CLOTHING_MOD_OVERSLOTTING
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/clothing/gloves.dmi'
 	inhand_icon_state = "greyscale_gloves"
@@ -47,11 +48,17 @@
 	. = ..()
 	if(isinhands)
 		return
-
 	if(damaged_clothes)
 		. += mutable_appearance('icons/effects/item_damage.dmi', "damagedgloves")
+
+/obj/item/clothing/gloves/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
+	. = ..()
+	if(isinhands)
+		return
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "gloveblood")
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "gloveblood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
 
 /obj/item/clothing/gloves/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -66,7 +73,7 @@
 		return FALSE // We don't want to cut dyed gloves.
 	return TRUE
 
-/obj/item/clothing/gloves/attackby(obj/item/tool, mob/user, params)
+/obj/item/clothing/gloves/attackby(obj/item/tool, mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return

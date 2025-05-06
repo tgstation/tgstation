@@ -43,16 +43,14 @@
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_HEAVY)
-	AddComponent(/datum/component/basic_mob_ability_telegraph)
-	AddComponent(/datum/component/basic_mob_attack_telegraph, telegraph_duration = 0.6 SECONDS)
 
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/mob_cooldown/fire_breath/ice = BB_WHELP_STRAIGHTLINE_FIRE,
-		/datum/action/cooldown/mob_cooldown/fire_breath/ice/cross = BB_WHELP_WIDESPREAD_FIRE,
+		/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption = BB_WHELP_WIDESPREAD_FIRE,
 	)
 
 	grant_actions_by_list(innate_actions)
-
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, ai_controller.blackboard[BB_WHELP_STRAIGHTLINE_FIRE])
 
 /mob/living/basic/mining/ice_whelp/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()

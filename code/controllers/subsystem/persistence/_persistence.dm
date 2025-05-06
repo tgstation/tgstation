@@ -3,7 +3,10 @@
 
 SUBSYSTEM_DEF(persistence)
 	name = "Persistence"
-	init_order = INIT_ORDER_PERSISTENCE
+	dependencies = list(
+		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/atoms,
+	)
 	flags = SS_NO_FIRE
 
 	///instantiated wall engraving components

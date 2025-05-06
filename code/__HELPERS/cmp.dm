@@ -24,6 +24,12 @@
 		b = REF(b)
 	return sorttext("[a]", "[b]")
 
+/proc/cmp_list_len_asc(list/a, list/b)
+	return length(a) - length(b)
+
+/proc/cmp_list_len_dsc(list/a, list/b)
+	return length(b) - length(a)
+
 /proc/cmp_name_asc(atom/a, atom/b)
 	return sorttext(b.name, a.name)
 
@@ -65,7 +71,10 @@
 	return cmp_numeric_asc(a.get_exp_living(TRUE), b.get_exp_living(TRUE))
 
 /proc/cmp_subsystem_init(datum/controller/subsystem/a, datum/controller/subsystem/b)
-	return initial(b.init_order) - initial(a.init_order) //uses initial() so it can be used on types
+	return a.init_order - b.init_order
+
+/proc/cmp_subsystem_init_stage(datum/controller/subsystem/a, datum/controller/subsystem/b)
+	return initial(a.init_stage) - initial(b.init_stage)
 
 /proc/cmp_subsystem_display(datum/controller/subsystem/a, datum/controller/subsystem/b)
 	return sorttext(b.name, a.name)

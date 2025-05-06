@@ -351,16 +351,6 @@
 
 /datum/config_entry/flag/forbid_station_traits
 
-/datum/config_entry/number/events_min_time_mul // Multipliers for random events minimal starting time and minimal players amounts
-	default = 1
-	min_val = 0
-	integer = FALSE
-
-/datum/config_entry/number/events_min_players_mul
-	default = 1
-	min_val = 0
-	integer = FALSE
-
 /datum/config_entry/number/events_frequency_lower
 	default = 2.5 MINUTES
 	min_val = 0
@@ -420,6 +410,8 @@
 
 /datum/config_entry/flag/dynamic_config_enabled
 
+/datum/config_entry/flag/events_config_enabled
+
 /datum/config_entry/string/drone_required_role
 	default = "Silicon"
 
@@ -456,6 +448,11 @@
 	min_val = 1
 
 /datum/config_entry/str_list/tts_voice_blacklist
+
+/// Maximum timeout for http calls
+/datum/config_entry/number/tts_http_timeout_seconds
+	default = 30
+	min_val = 0
 
 /datum/config_entry/flag/give_tutorials_without_db
 

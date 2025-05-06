@@ -54,3 +54,17 @@
 #define PUNISHMENT_LIGHTNING "lightningbolt"
 ///brands the sinner
 #define PUNISHMENT_BRAND "brand"
+
+/// Failed to bless the target, beat them over the head
+#define BLESSING_FAILED "failed"
+/// Blessed unsuccessfully, no limbs to heal, robotic limbs, etc
+#define BLESSING_IGNORED "ignored"
+/// Blessed successfully by healing or whatever
+#define BLESSING_SUCCESS "success"
+
+///The rite will automatically delete itself by the religious tool calling it after it's invoked.
+#define RITE_AUTO_DELETE (1<<0)
+///The rite can be performed multiple times with a religious tool, so don't delete/null it.
+#define RITE_ALLOW_MULTIPLE_PERFORMS (1<<1)
+///The rite can only be fully performed once, so we'll completely remove it from the rite list afterwards.
+#define RITE_ONE_TIME_USE (1<<2)

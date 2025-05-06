@@ -114,7 +114,7 @@
 	. = ..()
 	. += "You can use a [EXAMINE_HINT("spoon")] or [EXAMINE_HINT("soup ladle")] to spill reagents."
 
-/obj/machinery/icecream_vat/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/icecream_vat/attackby(obj/item/weapon, mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
@@ -140,7 +140,7 @@
 	balloon_alert(user, "beaker inserted")
 	custom_ice_cream_beaker = beaker
 
-/obj/machinery/icecream_vat/attackby_secondary(obj/item/reagent_containers/beaker, mob/user, params)
+/obj/machinery/icecream_vat/attackby_secondary(obj/item/reagent_containers/beaker, mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return

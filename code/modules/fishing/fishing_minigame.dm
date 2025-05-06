@@ -751,6 +751,14 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	if(current_active_effect == FISHING_MINIGAME_RULE_ANTIGRAV)
 		velocity_change = -velocity_change
 
+	if(reeling_state == REELING_STATE_IDLE && (special_effects & FISHING_MINIGAME_AUTOREEL))
+		var/bait_center = bait_position + bait_height / 2
+		var/auto_adjustment = reeling_velocity * 0.2
+		if(fish_position > bait_center)
+			velocity_change += auto_adjustment
+		else
+			velocity_change -= auto_adjustment
+
 	/**
 	 * Pull the brake on the velocity if the current velocity and the acceleration
 	 * have different directions, making the bait less slippery, thus easier to control
@@ -785,9 +793,9 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 ///update the vertical pixel position of both fish and bait, and the icon state of the completion bar
 /datum/fishing_challenge/proc/update_visuals(seconds_per_tick)
 	var/bait_offset_mult = bait_position / FISHING_MINIGAME_AREA
-	animate(fishing_hud.hud_bait, pixel_y = MINIGAME_SLIDER_HEIGHT * bait_offset_mult, time = seconds_per_tick SECONDS)
+	animate(fishing_hud.hud_bait, pixel_z = MINIGAME_SLIDER_HEIGHT * bait_offset_mult, time = seconds_per_tick SECONDS)
 	var/fish_offset_mult = fish_position / FISHING_MINIGAME_AREA
-	animate(fishing_hud.hud_fish, pixel_y = MINIGAME_SLIDER_HEIGHT * fish_offset_mult, time = seconds_per_tick SECONDS)
+	animate(fishing_hud.hud_fish, pixel_z = MINIGAME_SLIDER_HEIGHT * fish_offset_mult, time = seconds_per_tick SECONDS)
 	fishing_hud.hud_completion.update_state(completion, seconds_per_tick)
 
 ///The screen object which bait, fish, and completion bar are visually attached to.
@@ -845,11 +853,11 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 /atom/movable/screen/hud_bait/update_overlays()
 	. = ..()
 	var/mutable_appearance/bait_top = mutable_appearance(icon, "bait_top")
-	bait_top.pixel_y += cur_height - MINIGAME_BAIT_TOP_AND_BOTTOM_HEIGHT
+	bait_top.pixel_z += cur_height - MINIGAME_BAIT_TOP_AND_BOTTOM_HEIGHT
 	. += bait_top
 	for (var/i in 1 to (cur_height - MINIGAME_BAIT_TOP_AND_BOTTOM_HEIGHT))
 		var/mutable_appearance/bait_bar = mutable_appearance(icon, "bait_bar")
-		bait_bar.pixel_y += i
+		bait_bar.pixel_z += i
 		. += bait_bar
 
 /atom/movable/screen/hud_fish

@@ -1,19 +1,20 @@
+@use 'sass:color';
+
 @use '../base.scss';
 @use '../colors.scss';
 @use '../functions.scss' as *;
 
-$color-danger: colors.bg(colors.$red) !default;
-$color-caution: colors.bg(colors.$yellow) !default;
-
-$background-beige: hsl(50, 33%, 84%);
+:root {
+  --nuclear-beige: hsl(50, 33%, 84%);
+}
 
 .NuclearBomb__displayBox {
   background-color: hsl(150, 100%, 1%);
-  border: 0.167em inset $background-beige;
+  border: var(--border-thickness-small) inset var(--nuclear-beige);
   color: hsl(132, 100%, 45%);
   font-size: 2em;
-  font-family: monospace;
-  padding: 0.25em;
+  font-family: var(--font-family-mono);
+  padding: var(--space-s);
 }
 
 .NuclearBomb__Button {
@@ -21,14 +22,33 @@ $background-beige: hsl(50, 33%, 84%);
   border-width: 0.65rem !important;
   padding-left: 0 !important;
   padding-right: 0 !important;
+  transition-duration: 0s;
+
+  i.Icon {
+    margin: 0;
+  }
+
+  &:active {
+    border-style: inset !important;
+
+    .Button__content {
+      opacity: 0.75;
+      transform: translate(1px, 1px);
+    }
+  }
 }
 
 .NuclearBomb__Button--keypad {
-  background-color: $background-beige;
-  border-color: $background-beige;
-  &:hover {
-    background-color: lighten($background-beige, 15%) !important;
-    border-color: lighten($background-beige, 15%) !important;
+  background-color: var(--nuclear-beige);
+  border-color: ar(--nuclear-beige);
+
+  &:hover:not(:active) {
+    background-color: hsl(
+      from var(--nuclear-beige) h s calc(l + var(--adjust-hover))
+    ) !important;
+    border-color: hsl(
+      from var(--nuclear-beige) h s calc(l + var(--adjust-hover))
+    ) !important;
   }
 }
 
@@ -39,20 +59,28 @@ $background-beige: hsl(50, 33%, 84%);
 }
 
 .NuclearBomb__Button--E {
-  background-color: $color-caution !important;
-  border-color: $color-caution !important;
-  &:hover {
-    background-color: lighten($color-caution, 15%) !important;
-    border-color: lighten($color-caution, 15%) !important;
+  background-color: var(--button-background-caution) !important;
+  border-color: var(--button-background-caution) !important;
+  &:hover:not(:active) {
+    background-color: hsl(
+      from var(--button-background-caution) h s calc(l + var(--adjust-hover))
+    ) !important;
+    border-color: hsl(
+      from var(--button-background-caution) h s calc(l + var(--adjust-hover))
+    ) !important;
   }
 }
 
 .NuclearBomb__Button--C {
-  background-color: $color-danger !important;
-  border-color: $color-danger !important;
-  &:hover {
-    background-color: lighten($color-danger, 15%) !important;
-    border-color: lighten($color-danger, 15%) !important;
+  background-color: var(--button-background-danger) !important;
+  border-color: var(--button-background-danger) !important;
+  &:hover:not(:active) {
+    background-color: hsl(
+      from var(--button-background-danger) h s calc(l + var(--adjust-hover))
+    ) !important;
+    border-color: hsl(
+      from var(--button-background-danger) h s calc(l + var(--adjust-hover))
+    ) !important;
   }
 }
 

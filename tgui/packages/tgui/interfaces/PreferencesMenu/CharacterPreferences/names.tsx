@@ -40,10 +40,7 @@ type MultiNameProps = {
 };
 
 export function MultiNameInput(props: MultiNameProps) {
-  const { handleUpdateName } = props;
-  const [currentlyEditingName, setCurrentlyEditingName] = useState<
-    string | null
-  >(null);
+  const { handleUpdateName, handleRandomizeName } = props;
 
   const data = useServerPrefs();
   if (!data) return;
@@ -60,19 +57,8 @@ export function MultiNameInput(props: MultiNameProps) {
     );
   }
 
-  function updateName(key, value) {
-    handleUpdateName(key, value);
-
-    setCurrentlyEditingName(null);
-  }
-
   return (
-    <Modal
-      style={{
-        margin: '0 auto',
-        width: '40%',
-      }}
-    >
+    <Modal>
       <TrackOutsideClicks onOutsideClick={props.handleClose}>
         <Section
           buttons={
@@ -87,51 +73,23 @@ export function MultiNameInput(props: MultiNameProps) {
               ([_, names], index, collection) => (
                 <>
                   {names.map(({ key, name }) => {
-                    let content;
-
-                    if (currentlyEditingName === key) {
-                      content = (
-                        <Input
-                          autoSelect
-                          onEnter={(e, value) => updateName(key, value)}
-                          onChange={(e, value) => updateName(key, value)}
-                          onEscape={() => {
-                            setCurrentlyEditingName(null);
-                          }}
-                          value={props.names[key]}
-                        />
-                      );
-                    } else {
-                      content = (
-                        <Button
-                          width="100%"
-                          onClick={(event) => {
-                            setCurrentlyEditingName(key);
-                            event.cancelBubble = true;
-                            event.stopPropagation();
-                          }}
-                        >
-                          <FitText maxFontSize={12} maxWidth={130}>
-                            {props.names[key]}
-                          </FitText>
-                        </Button>
-                      );
-                    }
-
                     return (
                       <LabeledList.Item key={key} label={name.explanation}>
                         <Stack fill>
-                          <Stack.Item grow>{content}</Stack.Item>
-
+                          <Stack.Item grow>
+                            <Button.Input
+                              fluid
+                              onCommit={(value) => handleUpdateName(key, value)}
+                              value={props.names[key]}
+                            />
+                          </Stack.Item>
                           {!!name.can_randomize && (
                             <Stack.Item>
                               <Button
                                 icon="dice"
                                 tooltip="Randomize"
                                 tooltipPosition="right"
-                                onClick={() => {
-                                  props.handleRandomizeName(key);
-                                }}
+                                onClick={() => handleRandomizeName(key)}
                               />
                             </Stack.Item>
                           )}
@@ -163,7 +121,7 @@ export function NameInput(props: NameInputProps) {
   );
   const editing = lastNameBeforeEdit === props.name;
 
-  function updateName(e, value) {
+  function updateName(value) {
     setLastNameBeforeEdit(null);
     props.handleUpdateName(value);
   }
@@ -192,17 +150,17 @@ export function NameInput(props: NameInputProps) {
         </Stack.Item>
 
         <Stack.Item grow position="relative">
-          {(editing && (
+          {editing ? (
             <Input
               autoSelect
-              onEnter={updateName}
+              expensive
               onChange={updateName}
               onEscape={() => {
                 setLastNameBeforeEdit(null);
               }}
               value={props.name}
             />
-          )) || (
+          ) : (
             <FitText maxFontSize={16} maxWidth={130}>
               {props.name}
             </FitText>
@@ -248,7 +206,7 @@ export function NameInput(props: NameInputProps) {
                 name="ellipsis-v"
                 style={{
                   position: 'relative',
-                  left: '1px',
+                  left: '-1px',
                   minWidth: '0px',
                 }}
               />

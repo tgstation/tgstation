@@ -224,9 +224,9 @@
 	if(suppressed && can_unsuppress) // if it can't be unsuppressed, we assume the suppressor is integrated into the gun itself and don't generate an overlay
 		var/mutable_appearance/MA = mutable_appearance(icon, "[icon_state]_suppressor")
 		if(suppressor_x_offset)
-			MA.pixel_x = suppressor_x_offset
+			MA.pixel_w = suppressor_x_offset
 		if(suppressor_y_offset)
-			MA.pixel_y = suppressor_y_offset
+			MA.pixel_z = suppressor_y_offset
 		. += MA
 
 	if(!chambered && empty_indicator) //this is duplicated in c20's update_overlayss due to a layering issue with the select fire icon.
@@ -474,7 +474,7 @@
 	return TRUE
 
 /obj/item/gun/ballistic/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	var/could_it_misfire = chambered && chambered.can_misfire
+	var/could_it_misfire = can_misfire || chambered.can_misfire
 	if(target != user && chambered.loaded_projectile && could_it_misfire && prob(misfire_probability) && blow_up(user))
 		to_chat(user, span_userdanger("[src] misfires!"))
 		return

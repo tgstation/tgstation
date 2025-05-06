@@ -220,12 +220,14 @@
 		return FALSE
 	var/result = target.attack_basic_mob(src, modifiers)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
+	if(!ignore_cooldown)
+		changeNext_move(melee_attack_cooldown) // Set it again because objects like to fuck with it in attack_basic_mob
 	return result
 
 /mob/living/basic/proc/early_melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	face_atom(target)
 	if(!ignore_cooldown)
-		changeNext_move(melee_attack_cooldown)
+		changeNext_move(melee_attack_cooldown) // Set cooldown early in case it is cancelled
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target, Adjacent(target), modifiers) & COMPONENT_HOSTILE_NO_ATTACK)
 		return FALSE //but more importantly return before attack_animal called
 	return TRUE
@@ -297,7 +299,7 @@
 			'icons/mob/effects/onfire.dmi',
 			fire_icon,
 			-HIGHEST_LAYER,
-			appearance_flags = RESET_COLOR,
+			appearance_flags = RESET_COLOR|KEEP_APART,
 		)
 
 	return GLOB.fire_appearances[fire_icon]

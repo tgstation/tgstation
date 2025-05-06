@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 			data["x"] = disk_turf.x
 			data["y"] = disk_turf.y
 			data["z"] = disk_turf.z
-		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living)
+		var/atom/outer = get_atom_on_turf(nuke_disk, /mob/living, TRUE)
 		if(outer != nuke_disk)
 			if(isliving(outer))
 				var/mob/living/disk_holder = outer
@@ -224,7 +224,8 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
-		C?.playtitlemusic(volume_multiplier = 0.5)
+		if(COOLDOWN_FINISHED(GLOB, web_sound_cooldown))
+			C?.playtitlemusic(volume_multiplier = 0.5)
 		if(speed_round && was_forced != ADMIN_FORCE_END_ROUND)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
 		HandleRandomHardcoreScore(C)
@@ -340,6 +341,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='byond://?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
 		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
+	parts += "[FOURSPACES]Map: [SSmapping.current_map?.return_map_name()]"
 	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
 	parts += "[FOURSPACES]Station Integrity: <B>[GLOB.station_was_nuked ? span_redtext("Destroyed") : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len

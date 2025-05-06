@@ -205,9 +205,6 @@
 	log_data += list(log_entry_data)
 	return TRUE
 
-/proc/get_timestamp()
-	return time2text(world.time + 432000, ":ss")
-
 /obj/item/detective_scanner/click_alt(mob/living/user)
 	return clear_logs()
 

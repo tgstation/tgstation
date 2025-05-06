@@ -10,16 +10,12 @@ type Props = {
 };
 
 export enum LAYOUT {
-  Default = 'default',
   Grid = 'grid',
   List = 'list',
 }
 
 export function getLayoutState(defaultState?: LAYOUT) {
   const { config } = useBackend();
-  if (config.interface.layout === LAYOUT.Default) {
-    return defaultState || LAYOUT.Default;
-  }
   return config.interface.layout;
 }
 
@@ -29,22 +25,24 @@ export function getLayoutState(defaultState?: LAYOUT) {
  */
 export function LayoutToggle(props: Props) {
   const { setState, state } = props;
+  const { act } = useBackend();
 
   const handleClick = () => {
     const newState = state === LAYOUT.Grid ? LAYOUT.List : LAYOUT.Grid;
     setState(newState);
+    act('change_ui_state', {
+      new_state: newState,
+    });
   };
 
-  if (getLayoutState() === LAYOUT.Default) {
-    return (
-      <Stack.Item>
-        <Button
-          icon={state === LAYOUT.Grid ? 'list' : 'border-all'}
-          tooltip={state === LAYOUT.Grid ? 'View as List' : 'View as Grid'}
-          tooltipPosition={'bottom-end'}
-          onClick={handleClick}
-        />
-      </Stack.Item>
-    );
-  }
+  return (
+    <Stack.Item>
+      <Button
+        icon={state === LAYOUT.Grid ? 'list' : 'border-all'}
+        tooltip={state === LAYOUT.Grid ? 'View as List' : 'View as Grid'}
+        tooltipPosition={'bottom-end'}
+        onClick={handleClick}
+      />
+    </Stack.Item>
+  );
 }

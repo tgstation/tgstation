@@ -36,8 +36,8 @@
 	else //amount > stack_overlays, add some.
 		for(var/i in 1 to difference)
 			var/mutable_appearance/newore = mutable_appearance(icon, icon_state)
-			newore.pixel_x = rand(-8,8)
-			newore.pixel_y = rand(-8,8)
+			newore.pixel_w = rand(-8,8)
+			newore.pixel_z = rand(-8,8)
 			LAZYADD(stack_overlays, newore)
 
 	if(stack_overlays)
@@ -280,7 +280,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 /obj/item/gibtonite/IsSpecialAssembly()
 	return TRUE
 
-/obj/item/gibtonite/attackby(obj/item/I, mob/user, params)
+/obj/item/gibtonite/attackby(obj/item/I, mob/user, list/modifiers)
 	if(istype(I, /obj/item/assembly_holder) && !rig)
 		var/obj/item/assembly_holder/holder = I
 		if(!(locate(/obj/item/assembly/igniter) in holder.assemblies))
@@ -292,7 +292,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		holder.master = src
 		holder.on_attach()
 		rig_overlay = holder
-		rig_overlay.pixel_y -= 5
+		rig_overlay.pixel_z -= 5
 		add_overlay(rig_overlay)
 		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(igniter_prime))
 		log_bomber(user, "attached [holder] to ", src)
@@ -472,7 +472,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	. = ..()
 	. += span_info("It's worth [value] credit\s.")
 
-/obj/item/coin/attackby(obj/item/W, mob/user, params)
+/obj/item/coin/attackby(obj/item/W, mob/user, list/modifiers)
 	if(istype(W, /obj/item/stack/cable_coil))
 		var/obj/item/stack/cable_coil/CC = W
 		if(string_attached)

@@ -148,8 +148,7 @@
 	if(!reagents.total_volume)
 		return
 	var/reagentcolor = mix_color_from_reagents(reagents.reagent_list)
-	var/mutable_appearance/base_overlay = mutable_appearance(icon, "vat_reagent")
-	base_overlay.appearance_flags = RESET_COLOR
+	var/mutable_appearance/base_overlay = mutable_appearance(icon, "vat_reagent", appearance_flags = RESET_COLOR|KEEP_APART)
 	base_overlay.color = reagentcolor
 	. += base_overlay
 	if(biological_sample && is_operational)
@@ -170,5 +169,7 @@
 	if(resampler_active)
 		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), get_turf(src), 'sound/effects/servostep.ogg', 100, 1), 1.5 SECONDS)
 		biological_sample.reset_sample()
-		return SPARE_SAMPLE
-	UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+	else
+		UnregisterSignal(biological_sample, COMSIG_SAMPLE_GROWTH_COMPLETED)
+		QDEL_NULL(biological_sample)
+	update_appearance()

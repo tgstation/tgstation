@@ -9,6 +9,7 @@
 	max_temperature = 60000
 	destruction_sleep_duration = 40
 	exit_delay = 40
+	can_be_tracked = FALSE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	accesses = list(ACCESS_CENT_SPECOPS)
 	wreckage = /obj/structure/mecha_wreckage/marauder

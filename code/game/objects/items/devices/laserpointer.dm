@@ -91,7 +91,7 @@
 	crystal_lens = null
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/laser_pointer/attackby(obj/item/attack_item, mob/user, params)
+/obj/item/laser_pointer/attackby(obj/item/attack_item, mob/user, list/modifiers)
 	if(istype(attack_item, /obj/item/stock_parts/micro_laser))
 		if(diode)
 			balloon_alert(user, "already has a diode!")
@@ -295,12 +295,12 @@
 	var/mutable_appearance/laser = mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', pointer_icon_state)
 	if(modifiers)
 		if(LAZYACCESS(modifiers, ICON_X))
-			laser.pixel_x = (text2num(LAZYACCESS(modifiers, ICON_X)) - 16)
+			laser.pixel_w = (text2num(LAZYACCESS(modifiers, ICON_X)) - 16)
 		if(LAZYACCESS(modifiers, ICON_Y))
-			laser.pixel_y = (text2num(LAZYACCESS(modifiers, ICON_Y)) - 16)
+			laser.pixel_z = (text2num(LAZYACCESS(modifiers, ICON_Y)) - 16)
 	else
-		laser.pixel_x = target.pixel_x + rand(-5,5)
-		laser.pixel_y = target.pixel_y + rand(-5,5)
+		laser.pixel_w = target.pixel_w + rand(-5,5)
+		laser.pixel_z = target.pixel_z + rand(-5,5)
 
 	if(outmsg)
 		to_chat(user, outmsg)

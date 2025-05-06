@@ -29,6 +29,7 @@
 	cut_overlays()
 	if(showpipe)
 		var/image/cap = get_pipe_image(icon, "dpvent_cap", dir, pipe_color, piping_layer = piping_layer)
+		cap.appearance_flags |= RESET_COLOR|KEEP_APART
 		add_overlay(cap)
 
 	if(!on || !is_operational)

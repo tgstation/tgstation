@@ -219,13 +219,11 @@
 		return ..()
 
 	var/obj/item/thrown_item = AM
-	if(thrown_item.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
-		return ..()
-
-	if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
-		hitpush = FALSE
-		skipcatch = TRUE
-		blocked = TRUE
+	if(throwingdatum.get_thrower() != src) //No throwing stuff at yourself to trigger hit reactions
+		if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
+			hitpush = FALSE
+			skipcatch = TRUE
+			blocked = TRUE
 
 	var/zone = get_random_valid_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 	var/nosell_hit = (SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) & MOVABLE_IMPACT_ZONE_OVERRIDE) // TODO: find a better way to handle hitpush and skipcatch for humans
@@ -236,7 +234,7 @@
 	if(blocked)
 		return SUCCESSFUL_BLOCK
 
-	var/mob/thrown_by = thrown_item.thrownby?.resolve()
+	var/mob/thrown_by = throwingdatum.get_thrower()
 	if(thrown_by)
 		log_combat(thrown_by, src, "threw and hit", thrown_item)
 	else
@@ -659,8 +657,8 @@
 /mob/living/proc/do_slap_animation(atom/slapped)
 	do_attack_animation(slapped, no_effect=TRUE)
 	var/mutable_appearance/glove_appearance = mutable_appearance('icons/effects/effects.dmi', "slapglove")
-	glove_appearance.pixel_y = 10 // should line up with head
-	glove_appearance.pixel_x = 10
+	glove_appearance.pixel_z = 10 // should line up with head
+	glove_appearance.pixel_w = 10
 	var/atom/movable/flick_visual/glove = slapped.flick_overlay_view(glove_appearance, 1 SECONDS)
 
 	// And animate the attack!

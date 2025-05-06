@@ -32,7 +32,7 @@
 	if(current_size >= STAGE_FIVE)
 		deconstruct(FALSE)
 
-/obj/structure/transit_tube/attackby(obj/item/W, mob/user, params)
+/obj/structure/transit_tube/attackby(obj/item/W, mob/user, list/modifiers)
 	if(W.tool_behaviour == TOOL_WRENCH)
 		if(tube_construction)
 			for(var/obj/structure/transit_tube_pod/pod in src.loc)
@@ -146,13 +146,13 @@
 		tube_overlay.icon_state = "decorative_diag"
 		switch(shift_dir)
 			if(NORTH)
-				tube_overlay.pixel_y = 32
+				tube_overlay.pixel_z = 32
 			if(SOUTH)
-				tube_overlay.pixel_y = -32
+				tube_overlay.pixel_z = -32
 			if(EAST)
-				tube_overlay.pixel_x = 32
+				tube_overlay.pixel_w = 32
 			if(WEST)
-				tube_overlay.pixel_x = -32
+				tube_overlay.pixel_w = -32
 	else
 		tube_overlay.icon_state = "decorative"
 
