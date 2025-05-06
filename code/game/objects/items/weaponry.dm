@@ -475,6 +475,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/carpenter_hammer/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_killsound, \
+	AddElement(/datum/element/kneejerk), \
 	allowed_mobs = list(/mob/living/carbon/human), \
 	killsound = 'sound/items/weapons/hammer_death_scream.ogg', \
 	replace_default_death_sound = TRUE, \
