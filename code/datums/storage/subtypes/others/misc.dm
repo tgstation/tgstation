@@ -150,7 +150,12 @@
 ///Egg box
 /datum/storage/egg_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
-	set_holdable(/obj/item/food/egg)
+	set_holdable(list(
+		/obj/item/food/egg,
+		/obj/item/food/chocolateegg,
+		/obj/item/food/boiledegg,
+		/obj/item/surprise_egg
+	))
 
 ///Generic fancy holder
 /datum/storage/fancy_holder/New(obj/item/storage/fancy/candle_box/parent, max_slots, max_specific_storage, max_total_storage)
