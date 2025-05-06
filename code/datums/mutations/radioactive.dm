@@ -19,6 +19,8 @@
 
 /datum/mutation/human/radioactive/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
+	if(!.)
+		return
 	var/datum/component/radioactive_emitter/radioactivity_source = make_radioactive(acquirer)
 	radioactivity_source_ref = WEAKREF(radioactivity_source)
 

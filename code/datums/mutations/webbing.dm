@@ -21,7 +21,8 @@
 	to_modify.webbing_time = 2 SECONDS // Spin webs faster but not more often
 
 /datum/mutation/human/webbing/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
 
