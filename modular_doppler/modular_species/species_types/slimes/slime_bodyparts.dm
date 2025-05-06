@@ -90,7 +90,7 @@
 /obj/effect/decal/cleanable/goo
 	name = "small puddle of goo"
 	desc = "Its colorful! Who knows what else it could be..."
-	icon = 'modular_doppler/modular_species/icons/blood.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "slimepuddle1"
 	random_icon_states = list("slimepuddle1", "slimepuddle2", "slimepuddle3")
 	beauty = -50

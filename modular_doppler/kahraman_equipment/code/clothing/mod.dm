@@ -17,8 +17,6 @@
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 7
 	charge_drain = DEFAULT_CHARGE_DRAIN * 2
-	slowdown_inactive = 1.5
-	slowdown_active = 1
 	inbuilt_modules = list(
 		/obj/item/mod/module/plate_compression/permanent,
 		/obj/item/mod/module/joint_torsion/permanent

@@ -9,7 +9,7 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 	if(isandroid(src))
 		new /obj/effect/gibspawner/robot(drop_location(), src, get_static_viruses())
 		return
-	if(hasgreenblood(src))
+	if(isinsectoid(src))
 		new /obj/effect/gibspawner/xeno/bodypartless(drop_location(), src, get_static_viruses())
 		return
 	// DOPPLER ADDITION END

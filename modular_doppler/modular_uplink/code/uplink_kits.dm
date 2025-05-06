@@ -164,7 +164,7 @@
 	new /obj/item/implanter/freedom(src) // 5 tc
 	new /obj/item/flashlight/emp(src) // 2 tc
 	new /obj/item/grenade/c4/x4(src) // 1ish tc
-	new /obj/item/reagent_containers/pill/cyanide(src)
+	new /obj/item/reagent_containers/applicator/pill/cyanide(src)
 	new /obj/item/toy/cards/deck/syndicate(src) // 1 tc, for poker
 
 /obj/item/storage/box/syndicate/bundle/ninja

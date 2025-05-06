@@ -1,21 +1,3 @@
-// dopplerboop helper procs
-
-/proc/random_voice_type()
-	return pick(GLOB.dopplerboop_voice_types)
-
-GLOBAL_LIST_INIT(dopplerboop_voice_types, sort_list(list(
-	"caring",
-	"peppy",
-	"snobby",
-	"sweet",
-	"grumpy",
-	"jock",
-	"lazy",
-	"smug",
-	"mute",
-)))
-
-
 /// List of power prototypes to reference, assoc [type] = prototype
 GLOBAL_LIST_INIT_TYPED(power_datum_instances, /datum/power, init_power_prototypes())
 

@@ -57,8 +57,11 @@
 		can_be_cancelled = FALSE,
 	)
 	say("The order has been delivered to trusted couriers. Contact the customer support line for further assistance.", language = /datum/language/draconic)
-	radio.talk_into(src, "An order has been contracted for delivery by an external supplier, please ensure timely delivery!", radio_channel, language = /datum/language/draconic)
+	aas_config_announce(/datum/aas_config_entry/order_console/grey_market, list(), src, list(radio_channel), capitalize(blackbox_key))
 	SSshuttle.shopping_list += new_order
+
+/datum/aas_config_entry/order_console/grey_market
+	name = "External Supplier Console Announcements"
 
 // Supply order for this
 

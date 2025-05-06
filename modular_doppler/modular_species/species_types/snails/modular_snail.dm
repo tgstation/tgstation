@@ -4,7 +4,7 @@
 	preview_outfit = /datum/outfit/snail_preview
 	mutantliver = /obj/item/organ/liver/snail //This is just a better liver to deal with toxins, it's a thematic thing.
 	mutantheart = /obj/item/organ/heart/snail //This gives them the shell buff where they take less damage from behind, and their heart's more durable.
-	exotic_blood = /datum/reagent/bug_blood
+	exotic_blood = /datum/reagent/blood/bug_blood
 	exotic_bloodtype = "I*"
 
 	digitigrade_customization = DIGITIGRADE_OPTIONAL

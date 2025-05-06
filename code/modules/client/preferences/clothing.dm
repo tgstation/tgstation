@@ -1,4 +1,4 @@
-/proc/generate_underwear_icon(datum/sprite_accessory/accessory, datum/universal_icon/base_icon, color)
+/proc/generate_underwear_icon(datum/sprite_accessory/accessory, datum/universal_icon/base_icon, color, icon_offset = 0) // DOPPLER EDIT CHANGE : adds icon_offset - Colorable Undershirt/Socks
 	var/datum/universal_icon/final_icon = base_icon.copy()
 
 	if (!isnull(accessory))
@@ -7,7 +7,7 @@
 			accessory_icon.blend_color(color, ICON_MULTIPLY)
 		final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
 
-	final_icon.Crop(10, 1+icon_offset, 22, 13+icon_offset)	// DOPPLER EDIT CHANGE : adds icon_offset - Colorable Undershirt/Socks
+	final_icon.crop(10, 1+icon_offset, 22, 13+icon_offset)	// DOPPLER EDIT CHANGE : adds icon_offset - Colorable Undershirt/Socks
 	final_icon.scale(32, 32)
 
 	return final_icon
@@ -167,7 +167,7 @@
 		var/datum/sprite_accessory/accessory = SSaccessories.undershirt_list[value]
 		icon_with_undershirt.blend_icon(uni_icon(accessory.icon, accessory.icon_state), ICON_OVERLAY) // DOPPLER EDIT CHANGE: ORIGINAL - icon_with_undershirt.blend_icon(uni_icon('icons/mob/clothing/underwear.dmi', accessory.icon_state), ICON_OVERLAY)
 
-	icon_with_undershirt.Crop(10, 11, 22, 23) // DOPPLER EDIT CHANGE : ORIGINAL - icon_with_undershirt.Crop(9, 9, 23, 23)
+	icon_with_undershirt.crop(10, 11, 22, 23) // DOPPLER EDIT CHANGE : ORIGINAL - icon_with_undershirt.Crop(9, 9, 23, 23)
 	icon_with_undershirt.scale(32, 32)
 	return icon_with_undershirt
 

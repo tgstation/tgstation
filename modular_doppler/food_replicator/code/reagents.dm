@@ -88,7 +88,7 @@
 	mix_message = "The mixture cools down."
 	reaction_flags = REACTION_INSTANT
 
-/obj/item/reagent_containers/pill/convermol
+/obj/item/reagent_containers/applicator/pill/convermol
 	name = "convermol pill"
 	desc = "Used to treat oxygen deprivation. Intoxicates the body."
 	icon_state = "pill16"

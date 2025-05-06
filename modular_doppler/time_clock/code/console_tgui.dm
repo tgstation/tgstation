@@ -16,7 +16,7 @@
 	/obj/item/door_remote/head_of_security, \
 	/obj/item/door_remote/quartermaster, \
 	/obj/item/door_remote/chief_medical_officer, \
-	/obj/item/door_remote/civilian, \
+	/obj/item/door_remote/head_of_personnel, \
 	/obj/item/circuitboard/machine/techfab/department/engineering, \
 	/obj/item/circuitboard/machine/techfab/department/service, \
 	/obj/item/circuitboard/machine/techfab/department/security, \

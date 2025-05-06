@@ -56,12 +56,9 @@
 /obj/item/storage/pill_bottle/prescription_stimulant
 	name = "bottle of prescribed stimulant pills"
 	desc = "A bottle of mild and medicinally approved stimulants to help prevent drowsiness."
+	spawn_type = /obj/item/reagent_containers/applicator/pill/prescription_stimulant
 
-/obj/item/storage/pill_bottle/prescription_stimulant/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/pill/prescription_stimulant(src)
-
-/obj/item/reagent_containers/pill/prescription_stimulant
+/obj/item/reagent_containers/applicator/pill/prescription_stimulant
 	name = "prescription stimulant pill"
 	desc = "Used to treat symptoms of drowsiness and sudden loss of consciousness. A warning label reads: <b>Take in moderation</b>."
 	list_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/synaptizine = 5, /datum/reagent/medicine/modafinil = 3)

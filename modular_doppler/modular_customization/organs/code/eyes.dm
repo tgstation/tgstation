@@ -3,8 +3,6 @@
 
 /obj/item/organ/eyes/bug
 	blink_animation = FALSE
-	iris_overlays = FALSE
 
 /obj/item/organ/eyes/ramatan
 	blink_animation = FALSE
-	iris_overlays = FALSE

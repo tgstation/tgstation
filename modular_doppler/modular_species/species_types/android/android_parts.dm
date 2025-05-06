@@ -46,7 +46,7 @@
 	. = ..()
 	name = "[GLOB.frame_type_names[limb_id]] [parse_zone(body_zone)]"
 
-/obj/item/bodypart/head/robot/android/get_limb_icon(dropped)
+/obj/item/bodypart/head/robot/android/get_limb_icon(dropped, mob/living/carbon/update_on)
 	. = ..()
 	// emissive handling
 	if(!monitor_state || monitor_state == "none")

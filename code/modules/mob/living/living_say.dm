@@ -266,7 +266,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 		succumb(TRUE)
 		to_chat(src, compose_message(src, language, message, , spans, message_mods))
 
-	SEND_SIGNAL(src, COMSIG_MOB_POST_SAY, args, spans, message_mods) // DOPPLERBOOP ADDITION
 	return TRUE
 
 

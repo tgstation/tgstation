@@ -27,5 +27,6 @@
 		"Captain": {
 			"special_charter": "asteroid"
 		}
-	}
+	},
+	"exclude_from_ci": true
 }

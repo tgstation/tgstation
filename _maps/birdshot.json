@@ -3,6 +3,7 @@
 	"map_name": "Birdshot Station",
 	"map_path": "map_files/Birdshot",
 	"map_file": "birdshot.dmm",
+
 	"shuttles": {
 		"cargo": "cargo_birdshot",
 		"ferry": "ferry_kilo",
@@ -13,5 +14,6 @@
 		"Cook": {
 			"additional_cqc_areas": ["/area/station/service/bar", "/area/station/commons/lounge"]
 		}
-	}
+	},
+	"exclude_from_ci": true
 }

@@ -51,7 +51,7 @@
 	. = ..()
 
 	if(!src.data["blood_type"])
-		src.data["blood_type"] = random_blood_type() // This is so we don't get blood without a blood type spawned from something that doesn't explicitly set the blood type.
+		src.data["blood_type"] = random_human_blood_type() // This is so we don't get blood without a blood type spawned from something that doesn't explicitly set the blood type.
 
 // Catnip
 /datum/reagent/pax/catnip

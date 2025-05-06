@@ -10,8 +10,6 @@
 	siemens_coefficient = 0
 	complexity_max = DEFAULT_MAX_COMPLEXITY
 	charge_drain = DEFAULT_CHARGE_DRAIN * 0.6
-	slowdown_inactive = 2.5 // very slow because the quirk infers you rely on this to move/exist
-	slowdown_active = 0.5
 	inbuilt_modules = list(
 		/obj/item/mod/module/storage,
 		/obj/item/mod/module/status_readout,

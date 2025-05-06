@@ -296,7 +296,7 @@
 		user.visible_message(span_warning("[user] wrings [src], making a mess on \the [current_turf]!"), span_warning("You wring [src], making a mess on \the [current_turf]!"))
 		return CLICK_ACTION_SUCCESS
 
-/obj/item/towel/proc/wring(mob/user, atom/target, datum/reagents/reagent_holder)
+/obj/item/towel/proc/wring(mob/user, atom/target, datum/reagents/reagent_holder, datum/thrownthing/throwingdatum)
 	var/reagent_text
 	user.visible_message(
 		span_danger("[user] splashes the contents of [src] onto [target]."),
@@ -315,7 +315,7 @@
 	for(var/datum/reagent/reagent as anything in reagent_holder.reagent_list)
 		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
 
-	var/mob/thrown_by = thrownby?.resolve()
+	var/mob/thrown_by = throwingdatum?.get_thrower()
 	if(isturf(target) && reagent_holder.reagent_list.len && thrown_by)
 		log_combat(thrown_by, target, "splashed (thrown) [english_list(reagent_holder.reagent_list)]")
 		message_admins("[ADMIN_LOOKUPFLW(thrown_by)] splashed (thrown) [english_list(reagent_holder.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
