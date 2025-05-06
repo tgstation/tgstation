@@ -154,7 +154,7 @@
 
 /obj/item/soulstone/examine_more(mob/user)
 	. = ..()
-	if(!isliving(user))
+	if(!isliving(user) || isnull(user.mind))
 		return
 	if(!user.mind.has_crafting_recipe(/datum/crafting_recipe/mod_core_soul))
 		. += span_notice("You know... there might be <a href='byond://?src=[REF(src)];learn_soul_core_recipe=1'>alternate uses</a> for something like this.")
@@ -168,7 +168,9 @@
 /obj/item/soulstone/proc/learn_soul_core_recipe(mob/user)
 	if(user.mind?.has_crafting_recipe(/datum/crafting_recipe/mod_core_soul))
 		return
-	var/static/list/remarks = list(
+	if(!soul_core_learning_check(user))
+		return
+	var/list/remarks = list(
 		"You begin brainstorming...",
 		"Are constructs <i>powered</i> by souls?",
 		"Then wouldn't that mean...",
