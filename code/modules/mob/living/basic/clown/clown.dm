@@ -391,6 +391,7 @@
 		/obj/effect/gibspawner/generic/animal,
 		/obj/effect/gibspawner/human/bodypartless,
 		/obj/effect/gibspawner/xeno/bodypartless,
+		/obj/effect/spawner/random/chance_for_freedom,
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list("hey, buddy", "HONK!!!", "H-h-h-H-HOOOOONK!!!!", "HONKHONKHONK!!!", "HEY, BUCKO, GET BACK HERE!!!", "HOOOOOOOONK!!!"),
@@ -402,11 +403,8 @@
 	var/list/prank_pouch = list()
 
 /mob/living/basic/clown/mutant/glutton/Initialize(mapload)
+	. = ..()
 	GRANT_ACTION(/datum/action/cooldown/regurgitate)
-	///filled with the American spirit, only survives the explosion some of the time though.
-	if(prob(40))
-		loot.Add(/obj/item/organ/heart/freedom)
-
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	var/static/list/food_types = list(
 		/obj/item/food/cheesiehonkers,
@@ -414,8 +412,6 @@
 	)
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 30, bonus_tame_chance = 0)
 	AddElement(/datum/element/damage_threshold, 10) //lots of fat to cushion blows.
-	//parent call later so the death_drops elements get a unique list if we added anything.
-	return ..()
 
 /mob/living/basic/clown/mutant/glutton/attacked_by(obj/item/item, mob/living/user)
 	if(!check_edible(item))
@@ -561,6 +557,7 @@
 	loot = list(
 		/obj/effect/gibspawner/human,
 		/obj/item/clothing/mask/gas/clown_hat,
+		/obj/effect/spawner/clownana,
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK", "Honk!", "YA-HONK!!!"),
@@ -569,24 +566,14 @@
 	)
 
 /mob/living/basic/clown/banana/Initialize(mapload)
-	//Add a random assortment of Musa type objects.
-	if(prob(33))
-		loot.Add(/obj/item/food/grown/banana/bunch)
-	if(prob(33))
-		loot.Add(/obj/item/food/grown/banana)
-	if(prob(33))
-		loot.Add(/obj/item/food/grown/banana)
-	else
-		loot.Add(/obj/item/grown/bananapeel)
-
+	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWNANA, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/exquisite_bunch,
 		/datum/action/cooldown/rustle,
 	)
 	grant_actions_by_list(innate_actions)
-	//parent call later so the death_drops elements get a unique list if we added anything.
-	return ..()
+
 
 ///drops peels around the mob when activated
 /datum/action/cooldown/rustle

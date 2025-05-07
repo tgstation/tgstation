@@ -2386,6 +2386,7 @@
 #include "code\game\objects\effects\spawners\random\bureaucracy.dm"
 #include "code\game\objects\effects\spawners\random\clothing.dm"
 #include "code\game\objects\effects\spawners\random\contraband.dm"
+#include "code\game\objects\effects\spawners\random\death_drops.dm"
 #include "code\game\objects\effects\spawners\random\decoration.dm"
 #include "code\game\objects\effects\spawners\random\engineering.dm"
 #include "code\game\objects\effects\spawners\random\entertainment.dm"
