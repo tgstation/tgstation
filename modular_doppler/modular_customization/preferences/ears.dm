@@ -533,6 +533,8 @@
 /// Proc to gen that icon
 //	We don't wanna copy paste this
 /datum/preference/choiced/proc/generate_ears_icon(datum/sprite_accessory/sprite_accessory)
+	return uni_icon('icons/effects/crayondecal.dmi', "x")
+/*
 	var/static/datum/universal_icon/final_icon
 	final_icon = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m", SOUTH)
 	var/datum/universal_icon/eyes = uni_icon('icons/mob/human/human_face.dmi', "eyes", SOUTH)
@@ -573,7 +575,7 @@
 	final_icon.crop(11, 20, 23, 32)
 	final_icon.scale(32, 32)
 
-	return final_icon
+	return final_icon */
 
 /// Overwrite lives here
 //	This is for the triple color channel

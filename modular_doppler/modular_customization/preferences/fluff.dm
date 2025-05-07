@@ -66,9 +66,22 @@
 	target.dna.features["fluff"] = value
 
 /datum/preference/choiced/fluff/icon_for(value)
-	var/datum/sprite_accessory/fluff = SSaccessories.fluff_list[value]
-	var/datum/universal_icon/final_icon = uni_icon(fluff.icon, "m_fluff_[fluff.icon_state]_ADJ")
-	final_icon.blend_icon(uni_icon(fluff.icon, "m_fluff_[fluff.icon_state]_ADJ"), ICON_OVERLAY)
+	var/static/datum/universal_icon/body
+	if (isnull(body))
+		body = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_f")
+		body.blend_icon(uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_chest_f"), ICON_OVERLAY)
+
+	var/datum/universal_icon/final_icon = body.copy()
+	if (value != "No Fluff")
+		var/datum/sprite_accessory/sprite_accessory = SSaccessories.fluff_list[value]
+		var/datum/universal_icon/fluff_adj = uni_icon(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_ADJ")
+		var/datum/universal_icon/fluff_front = uni_icon(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_FRONT")
+		final_icon.blend_icon(fluff_adj, ICON_OVERLAY)
+		final_icon.blend_icon(fluff_front, ICON_OVERLAY)
+
+	final_icon.crop(10, 18, 22, 30)
+	final_icon.scale(32, 32)
+
 	return final_icon
 
 /// Overwrite lives here

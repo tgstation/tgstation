@@ -575,6 +575,8 @@
 /// Proc to gen that icon
 //	We don't wanna copy paste this
 /datum/preference/choiced/proc/generate_back_icon(datum/sprite_accessory/sprite_accessory, key)
+	return uni_icon('icons/effects/crayondecal.dmi', "x")
+/*
 	var/static/datum/universal_icon/final_icon
 	final_icon = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_chest_m", NORTH)
 
@@ -626,7 +628,7 @@
 	//final_icon.Scale(32, 26)
 	//final_icon.Crop(-2, 1, 29, 32)
 
-	return final_icon
+	return final_icon */
 
 /// Overwrite lives here
 //	This is for the triple color channel
