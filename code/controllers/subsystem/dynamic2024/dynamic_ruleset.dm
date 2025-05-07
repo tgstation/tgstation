@@ -433,6 +433,8 @@
 	)
 	min_pop = 30
 	min_antag_cap = list("denominator" = 20, "offset" = 1)
+	/// Reference to the cult team this ruleset used
+	var/datum/team/cult/main_cult
 	/// Ratio of cultists getting on the shuttle to be considered a minor win
 	var/ratio_to_be_considered_escaped = 0.5
 
@@ -440,10 +442,12 @@
 	return ..() | JOB_CHAPLAIN // Always blacklisted, regardless of config
 
 /datum/dynamic_ruleset/roundstart/blood_cult/assign_role(datum/mind/candidate)
-	candidate.add_antag_datum(/datum/antagonist/cult) // melbert todo : team handling
+	main_cult ||= new()
+	var/datum/antagonist/cult/cultist = candidate.add_antag_datum(/datum/antagonist/cult, main_cult)
+	if(get_most_experienced(selected_minds, pref_flag) == candidate)
+		cultist.make_cult_leader()
 
 /datum/dynamic_ruleset/roundstart/blood_cult/round_result()
-	var/datum/team/cult/main_cult = locate() in GLOB.antagonist_teams
 	if(main_cult.check_cult_victory())
 		SSticker.mode_result = "win - cult win"
 		SSticker.news_report = CULT_SUMMON
@@ -474,12 +478,17 @@
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	/// Reference to the nuke team this ruleset used
+	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/roundstart/nukies/assign_role(datum/mind/candidate)
-	candidate.add_antag_datum(/datum/antagonist/nukeop) // melbert todo : leader handling
+	nuke_team ||= new()
+	if(get_most_experienced(selected_minds, pref_flag) == candidate)
+		candidate.add_antag_datum(/datum/antagonist/nukeop/leader, nuke_team)
+	else
+		candidate.add_antag_datum(/datum/antagonist/nukeop, nuke_team)
 
 /datum/dynamic_ruleset/roundstart/nukies/round_result()
-	var/datum/team/nuclear/nuke_team = locate() in GLOB.antagonist_teams
 	var/result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
@@ -520,7 +529,11 @@
 	weight = 0
 
 /datum/dynamic_ruleset/roundstart/nukies/clown/assign_role(datum/mind/candidate)
-	candidate.add_antag_datum(/datum/antagonist/nukeop/clownop) // melbert todo : leader handling + nukie base handling
+	nuke_team ||= new()
+	if(get_most_experienced(selected_minds, pref_flag) == candidate)
+		candidate.add_antag_datum(/datum/antagonist/nukeop/leader/clownop, nuke_team)
+	else
+		candidate.add_antag_datum(/datum/antagonist/nukeop/clownop, nuke_team)
 
 /datum/dynamic_ruleset/roundstart/revolution
 	name = "Revolution"
@@ -700,14 +713,19 @@
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	signup_atom_appearance = /obj/machinery/nuclearbomb/syndicate
+	/// Reference to the nuke team this ruleset used
+	var/datum/team/nuclear/nuke_team
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies/assign_role(datum/mind/candidate)
 	var/mob/living/carbon/human/new_character = make_human(candidate.current, pick(GLOB.nukeop_start))
 	candidate.transfer_to(new_character, force_key_move = TRUE)
-	candidate.add_antag_datum(/datum/antagonist/nukeop) // melbert todo : leader handling
+	nuke_team ||= new()
+	if(get_most_experienced(selected_minds, pref_flag) == candidate)
+		candidate.add_antag_datum(/datum/antagonist/nukeop/leader, nuke_team)
+	else
+		candidate.add_antag_datum(/datum/antagonist/nukeop, nuke_team)
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies/round_result()
-	var/datum/team/nuclear/nuke_team = locate() in GLOB.antagonist_teams
 	var/result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
@@ -752,7 +770,11 @@
 /datum/dynamic_ruleset/midround/from_ghosts/nukies/clown/assign_role(datum/mind/candidate)
 	var/mob/living/carbon/human/new_character = make_human(candidate.current, pick(GLOB.nukeop_start))
 	candidate.transfer_to(new_character, force_key_move = TRUE)
-	candidate.add_antag_datum(/datum/antagonist/nukeop/clownop) // melbert todo : leader handling + nukie base handling
+	nuke_team ||= new()
+	if(get_most_experienced(selected_minds, pref_flag) == candidate)
+		candidate.add_antag_datum(/datum/antagonist/nukeop/leader/clownop, nuke_team)
+	else
+		candidate.add_antag_datum(/datum/antagonist/nukeop/clownop, nuke_team)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob
 	name = "Blob"

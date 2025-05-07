@@ -4,6 +4,7 @@
 	roundend_category = "clown operatives"
 	antagpanel_category = ANTAG_GROUP_CLOWNOPS
 	nukeop_outfit = /datum/outfit/syndicate/clownop
+	job_type = /datum/job/clown_operative
 	suicide_cry = "HAPPY BIRTHDAY!!"
 
 	preview_outfit = /datum/outfit/clown_operative_elite
@@ -11,7 +12,6 @@
 	nuke_icon_state = "bananiumbomb_base"
 
 /datum/antagonist/nukeop/clownop/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.set_assigned_role(SSjob.get_job_type(/datum/job/clown_operative))
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has clown op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has clown op'ed [key_name(new_owner)].")
