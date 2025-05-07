@@ -67,8 +67,8 @@
 
 /datum/preference/choiced/fluff/icon_for(value)
 	var/datum/sprite_accessory/fluff = SSaccessories.fluff_list[value]
-	var/icon/final_icon = icon(fluff.icon, "m_fluff_[fluff.icon_state]_ADJ")
-	final_icon.Blend(icon(fluff.icon, "m_fluff_[fluff.icon_state]_ADJ"), ICON_OVERLAY)
+	var/datum/universal_icon/final_icon = uni_icon(fluff.icon, "m_fluff_[fluff.icon_state]_ADJ")
+	final_icon.blend_icon(uni_icon(fluff.icon, "m_fluff_[fluff.icon_state]_ADJ"), ICON_OVERLAY)
 	return final_icon
 
 /// Overwrite lives here

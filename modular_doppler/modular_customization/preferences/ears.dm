@@ -532,8 +532,7 @@
 
 /// Proc to gen that icon
 //	We don't wanna copy paste this
-/datum/preference/choiced/proc/generate_ears_icon(chosen_ears)
-	var/datum/sprite_accessory/sprite_accessory = chosen_ears
+/datum/preference/choiced/proc/generate_ears_icon(datum/sprite_accessory/sprite_accessory)
 	var/static/datum/universal_icon/final_icon
 	final_icon = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_head_m", SOUTH)
 	var/datum/universal_icon/eyes = uni_icon('icons/mob/human/human_face.dmi', "eyes", SOUTH)
@@ -541,31 +540,31 @@
 	final_icon.blend_icon(eyes, ICON_OVERLAY)
 
 	if (sprite_accessory.icon_state != "none")
-		var/datum/universal_icon/markings_icon_1 = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_BEHIND", SOUTH)
+		var/datum/universal_icon/markings_icon_1 = uni_icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_BEHIND", SOUTH)
 		markings_icon_1.blend_color(COLOR_RED, ICON_MULTIPLY)
-		var/datum/universal_icon/markings_icon_2 = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_BEHIND_2", SOUTH)
+		var/datum/universal_icon/markings_icon_2 = uni_icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_BEHIND_2", SOUTH)
 		markings_icon_2.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-		var/datum/universal_icon/markings_icon_3 = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_BEHIND_3", SOUTH)
+		var/datum/universal_icon/markings_icon_3 = uni_icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_BEHIND_3", SOUTH)
 		markings_icon_3.blend_color(COLOR_BLUE, ICON_MULTIPLY)
 		final_icon.blend_icon(markings_icon_1, ICON_OVERLAY)
 		final_icon.blend_icon(markings_icon_2, ICON_OVERLAY)
 		final_icon.blend_icon(markings_icon_3, ICON_OVERLAY)
 		// adj breaker
-		var/datum/universal_icon/markings_icon_1_a = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ", SOUTH)
+		var/datum/universal_icon/markings_icon_1_a = uni_icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ", SOUTH)
 		markings_icon_1_a.blend_color(COLOR_RED, ICON_MULTIPLY)
-		var/datum/universal_icon/markings_icon_2_a = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ_2", SOUTH)
+		var/datum/universal_icon/markings_icon_2_a = uni_icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ_2", SOUTH)
 		markings_icon_2_a.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-		var/datum/universal_icon/markings_icon_3_a = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ_3", SOUTH)
+		var/datum/universal_icon/markings_icon_3_a = uni_icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_ADJ_3", SOUTH)
 		markings_icon_3_a.blend_color(COLOR_BLUE, ICON_MULTIPLY)
 		final_icon.blend_icon(markings_icon_1_a, ICON_OVERLAY)
 		final_icon.blend_icon(markings_icon_2_a, ICON_OVERLAY)
 		final_icon.blend_icon(markings_icon_3_a, ICON_OVERLAY)
 		// front breaker
-		var/datum/universal_icon/markings_icon_1_f = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_FRONT", SOUTH)
+		var/datum/universal_icon/markings_icon_1_f = uni_icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_FRONT", SOUTH)
 		markings_icon_1_f.blend_color(COLOR_RED, ICON_MULTIPLY)
-		var/datum/universal_icon/markings_icon_2_f = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_FRONT_2", SOUTH)
+		var/datum/universal_icon/markings_icon_2_f = uni_icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_FRONT_2", SOUTH)
 		markings_icon_2_f.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-		var/datum/universal_icon/markings_icon_3_f = icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_FRONT_3", SOUTH)
+		var/datum/universal_icon/markings_icon_3_f = uni_icon(sprite_accessory.icon, "m_ears_[sprite_accessory.icon_state]_FRONT_3", SOUTH)
 		markings_icon_3_f.blend_color(COLOR_BLUE, ICON_MULTIPLY)
 		final_icon.blend_icon(markings_icon_1_f, ICON_OVERLAY)
 		final_icon.blend_icon(markings_icon_2_f, ICON_OVERLAY)

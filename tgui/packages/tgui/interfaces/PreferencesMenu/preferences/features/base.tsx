@@ -323,6 +323,7 @@ export const FeatureTextInput = (
   return (
     <TextArea
       height="100px"
+      width="100%"
       value={props.value}
       maxLength={props.serverData.maximum_length}
       onChange={(value) => props.handleSetValue(value)}

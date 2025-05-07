@@ -60,8 +60,8 @@ GLOBAL_LIST_INIT(possible_quirk_implants, list(
 	if(isnull(quirk_holder))
 		return
 
-	var/icon/temporary_icon = icon(icon, icon_state, dir)
-	quirk_holder.pixel_y = temporary_icon.Height() - world.icon_size
+	var/datum/universal_icon/temporary_icon = uni_icon(icon, icon_state, dir)
+	quirk_holder.pixel_y = temporary_icon.scale(32, -world.icon_size)
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/target = src

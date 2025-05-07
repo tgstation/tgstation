@@ -1,3 +1,8 @@
+/datum/asset/spritesheet_batched/chat/create_spritesheets()
+	. = ..()
+
+	insert_all_icons("nif", 'modular_doppler/soulcatcher/icons/chat.dmi')
+
 /datum/component/soulcatcher/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 

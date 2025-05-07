@@ -7511,7 +7511,6 @@
 #include "modular_doppler\soulcatcher\code\soulcatcher_mob.dm"
 #include "modular_doppler\soulcatcher\code\soulcatcher_tgui.dm"
 #include "modular_doppler\soulcatcher\code\soulcatcher_verbs.dm"
-#include "modular_doppler\soulcatcher\code\spritesheets.dm"
 #include "modular_doppler\spacer_swimming\spacer_swim.dm"
 #include "modular_doppler\sprite_swaps\code\bigclosets.dm"
 #include "modular_doppler\sprite_swaps\code\coffee.dm"
