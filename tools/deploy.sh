@@ -29,7 +29,7 @@ mkdir -p \
 		$1/modular_doppler/modular_cosmetics/GAGS/json_configs
 
 find modular_doppler/ -name \*.dmi -exec cp --parents {} $1 \;
-find modular_nova/modules/GAGS/json_configs -name \*.json -exec cp --parents {} $1 \;
+find modular_doppler/modules/GAGS/json_configs -name \*.json -exec cp --parents {} $1 \;
 # DOPPLER EDIT ADDITION END
 cp tgstation.dmb tgstation.rsc $1/
 cp -r _maps/* $1/_maps/
