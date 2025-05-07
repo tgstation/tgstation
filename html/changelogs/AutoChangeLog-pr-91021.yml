@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - bugfix: "roundstart photocopiers should no longer be empty on some maps"

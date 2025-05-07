@@ -173,3 +173,15 @@
   - bugfix: Fixed reinforced plating consuming all air on the tile upon construction
   grungussuss:
   - bugfix: agent ID scanning action is a hidden do_after
+2025-05-07:
+  EuSouAFazer:
+  - bugfix: Catwalk's tcomms machines are no longer scattered around
+  - map: Catwalk's AI sat now has a brand new laundromat and office
+  Iamgoofball:
+  - qol: Heretics can see blessed tiles.
+  Maurukas:
+  - rscdel: Remove an m1911 magazine from a surface ruin
+  SmArtKar:
+  - bugfix: Fixed the error overlay caused by the Tress Shoulder hairstyle
+  TealSeer:
+  - bugfix: roundstart photocopiers should no longer be empty on some maps
