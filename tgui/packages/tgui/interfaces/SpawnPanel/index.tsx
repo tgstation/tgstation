@@ -6,11 +6,23 @@ import { resolveAsset } from '../../assets';
 import { Window } from '../../layouts';
 import { logger } from '../../logging';
 import { CreateObject } from './CreateObject';
+import { CreateObjectAdvancedSettings } from './CreateObjectAdvancedSettings';
 import { CreateObjectData } from './types';
+
+export interface IconSettings {
+  icon: string | null;
+  iconState: string | null;
+  iconSize: number;
+}
 
 export function SpawnPanel() {
   const [data, setData] = useState<CreateObjectData | undefined>();
   const [advancedSettings, setAdvancedSettings] = useState(false);
+  const [iconSettings, setIconSettings] = useState<IconSettings>({
+    icon: null,
+    iconState: null,
+    iconSize: 100,
+  });
 
   useEffect(() => {
     fetchRetry(resolveAsset('spawnpanel.json'))
@@ -22,6 +34,13 @@ export function SpawnPanel() {
         logger.log('Failed to fetch spawnpanel.json', error);
       });
   }, []);
+
+  const handleIconSettingsChange = (newSettings: Partial<IconSettings>) => {
+    setIconSettings((current) => ({
+      ...current,
+      ...newSettings,
+    }));
+  };
 
   return (
     <Window height={550} title="Spawn Panel" width={500} theme="admin">
@@ -44,7 +63,10 @@ export function SpawnPanel() {
                 />
               }
             >
-              settings go here
+              <CreateObjectAdvancedSettings
+                iconSettings={iconSettings}
+                onIconSettingsChange={handleIconSettingsChange}
+              />
             </Section>
           </Modal>
         )}
@@ -54,6 +76,8 @@ export function SpawnPanel() {
               <CreateObject
                 objList={data}
                 setAdvancedSettings={setAdvancedSettings}
+                iconSettings={iconSettings}
+                onIconSettingsChange={handleIconSettingsChange}
               />
             )}
           </Stack.Item>

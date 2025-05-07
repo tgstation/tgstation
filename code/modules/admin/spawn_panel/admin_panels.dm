@@ -26,6 +26,10 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 	var/copied_type = null
 	var/selected_object_icon = null
 	var/selected_object_icon_state = null
+	var/custom_icon = null
+	var/custom_icon_state = null
+	var/custom_icon_size = 100
+	var/list/available_icon_states = null
 	var/object_count = 1
 	var/object_name
 	var/object_desc
@@ -52,8 +56,55 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 	if(..())
 		return
 	switch(action)
+		if("pick-icon")
+			var/icon/new_icon = input("Select a new icon file:", "Icon") as null|icon
+			if(new_icon)
+				custom_icon = new_icon
+				available_icon_states = icon_states(custom_icon)
+				return TRUE
+		if("reset-icon")
+			custom_icon = null
+			custom_icon_state = null
+			if(selected_object)
+				var/path = text2path(selected_object)
+				if(path)
+					var/atom/temp = path
+					selected_object_icon = initial(temp.icon)
+					selected_object_icon_state = initial(temp.icon_state)
+					available_icon_states = icon_states(selected_object_icon)
+			return TRUE
+		if("pick-icon-state")
+			custom_icon_state = params["new_state"]
+			return TRUE
+		if("reset-icon-state")
+			custom_icon_state = null
+			if(selected_object)
+				var/path = text2path(selected_object)
+				if(path)
+					var/atom/temp = path
+					selected_object_icon_state = initial(temp.icon_state)
+			return TRUE
+		if("set-icon-size")
+			custom_icon_size = params["size"]
+			return TRUE
+		if("reset-icon-size")
+			custom_icon_size = 100
+			return TRUE
+		if("get-icon-states")
+			var/icon_to_use = custom_icon || selected_object_icon
+			if(icon_to_use)
+				available_icon_states = icon_states(icon_to_use)
+			return TRUE
 		if("selected-object-changed")
 			selected_object = params?["newObj"]
+			if(selected_object)
+				var/path = text2path(selected_object)
+				if(path)
+					var/atom/temp = path
+					selected_object_icon = initial(temp.icon)
+					selected_object_icon_state = initial(temp.icon_state)
+					if(!custom_icon)
+						available_icon_states = icon_states(selected_object_icon)
 			return TRUE
 		if("create-object-action")
 			spawn_item(list(
@@ -64,6 +115,9 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 				object_name = params["object_name"],
 				object_where = params["where_dropdown_value"] || WHERE_FLOOR_BELOW_MOB,
 				offset_type = params["offset_type"] || OFFSET_RELATIVE,
+				custom_icon = params["custom_icon"],
+				custom_icon_state = params["custom_icon_state"],
+				custom_icon_size = params["custom_icon_size"]
 				),
 				usr
 			)
@@ -173,8 +227,14 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 
 /datum/spawnpanel/ui_data(mob/user)
 	var/data = list()
-	data["icon"] = selected_object_icon
-	data["iconState"] = selected_object_icon_state
+	data["icon"] = custom_icon || selected_object_icon
+	data["iconState"] = custom_icon_state || selected_object_icon_state
+	data["iconSize"] = custom_icon_size
+	var/list/states = list()
+	if(available_icon_states)
+		for(var/state in available_icon_states)
+			states += state
+	data["iconStates"] = states
 	data["precise_mode"] = precise_mode
 	data["selected_object"] = selected_object
 	data["copied_type"] = copied_type
@@ -306,6 +366,15 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 			return
 
 		created_atom.flags_1 |= ADMIN_SPAWNED_1
+
+		if(spawn_params["custom_icon"])
+			created_atom.icon = spawn_params["custom_icon"]
+		if(spawn_params["custom_icon_state"])
+			created_atom.icon_state = spawn_params["custom_icon_state"]
+		if(spawn_params["custom_icon_size"])
+			if(ismob(created_atom))
+				var/mob/living/created_mob = created_atom
+				created_mob.current_size = spawn_params["custom_icon_size"] / 100
 
 		if(obj_dir)
 			created_atom.setDir(obj_dir)

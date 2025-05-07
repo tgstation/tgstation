@@ -21,6 +21,7 @@ export type AtomData = {
   icon_state: string;
   name: string;
   mapping: boolean;
+  description?: string;
 };
 
 export interface CreateObjectData {
@@ -38,4 +39,16 @@ export interface CreateObjectData {
 export interface CreateObjectProps {
   objList: CreateObjectData;
   setAdvancedSettings: (value: boolean) => void;
+  iconSettings: {
+    icon: string | null;
+    iconState: string | null;
+    iconSize: number;
+  };
+  onIconSettingsChange?: (
+    settings: Partial<{
+      icon: string | null;
+      iconState: string | null;
+      iconSize: number;
+    }>,
+  ) => void;
 }

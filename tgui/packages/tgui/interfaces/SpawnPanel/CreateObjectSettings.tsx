@@ -17,6 +17,7 @@ import {
   spawnLocationIcons,
   spawnLocationOptions,
 } from './constants';
+import { IconSettings } from './index';
 import { SpawnPreferences } from './types';
 
 export interface SpawnPanelData {
@@ -29,6 +30,7 @@ export interface SpawnPanelData {
 interface CreateObjectSettingsProps {
   onCreateObject?: (obj: Record<string, unknown>) => void;
   setAdvancedSettings: (value: boolean) => void;
+  iconSettings: IconSettings;
 }
 
 interface StateSetterConfig<T extends unknown> {
@@ -47,7 +49,7 @@ const setStateAndStorage = async <T extends unknown>({
 };
 
 export function CreateObjectSettings(props: CreateObjectSettingsProps) {
-  const { onCreateObject, setAdvancedSettings } = props;
+  const { onCreateObject, setAdvancedSettings, iconSettings } = props;
   const { act, data } = useBackend<SpawnPanelData>();
 
   const [amount, setAmount] = useState(1);
@@ -152,6 +154,9 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       dir: [1, 2, 4, 8][direction],
       offset,
       object_name: objectName,
+      custom_icon: iconSettings.icon,
+      custom_icon_state: iconSettings.iconState,
+      custom_icon_size: iconSettings.iconSize,
     };
     act('update-settings', currentSettings);
 
@@ -165,7 +170,13 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       if (isPreciseModeActive) {
         act('toggle-precise-mode', { newPreciseType: 'Off' });
       } else {
-        act('toggle-precise-mode', { newPreciseType: 'Target' });
+        act('toggle-precise-mode', {
+          newPreciseType: 'Target',
+          where_dropdown_value: spawnLocation,
+          custom_icon: iconSettings.icon,
+          custom_icon_state: iconSettings.iconState,
+          custom_icon_size: iconSettings.iconSize,
+        });
       }
     }
   };

@@ -12,7 +12,7 @@ import { useBackend } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
 import { listNames, listTypes } from './constants';
 import { CreateObjectSettings } from './CreateObjectSettings';
-import { CreateObjectProps } from './types';
+import { AtomData, CreateObjectProps } from './types';
 
 interface SpawnPanelData {
   icon: string;
@@ -52,9 +52,13 @@ const setStateAndStorage = async <T extends unknown>({
   await storage.set(storageKey, value);
 };
 
+interface CurrentList {
+  [key: string]: AtomData;
+}
+
 export function CreateObject(props: CreateObjectProps) {
   const { act, data } = useBackend<SpawnPanelData>();
-  const { objList, setAdvancedSettings } = props;
+  const { objList, setAdvancedSettings, iconSettings } = props;
 
   const [tooltipIcon, setTooltipIcon] = useState(false);
   const [selectedObj, setSelectedObj] = useState<string | null>(null);
@@ -69,11 +73,17 @@ export function CreateObject(props: CreateObjectProps) {
     Object.entries(listTypes).find(([_, value]) => value === sortBy)?.[0] ||
     'Objects';
 
-  const currentList = objList?.[currentType] || {};
+  const currentList = (objList?.[currentType] || {}) as CurrentList;
 
   useEffect(() => {
     if (data.selected_object) {
       setSelectedObj(data.selected_object);
+      if (currentList[data.selected_object]) {
+        props.onIconSettingsChange?.({
+          icon: currentList[data.selected_object].icon,
+          iconState: currentList[data.selected_object].icon_state,
+        });
+      }
     }
   }, [data.selected_object]);
 
@@ -89,8 +99,19 @@ export function CreateObject(props: CreateObjectProps) {
         setSortBy(listTypes.Objects);
       }
       setSearchBy(true);
+      const list = objList.Turfs[data.copied_type]
+        ? objList.Turfs
+        : objList.Mobs[data.copied_type]
+          ? objList.Mobs
+          : objList.Objects;
+      if (list[data.copied_type]) {
+        props.onIconSettingsChange?.({
+          icon: list[data.copied_type].icon,
+          iconState: list[data.copied_type].icon_state,
+        });
+      }
     }
-  }, [data.copied_type, objList]);
+  }, [data.copied_type]);
 
   useEffect(() => {
     const loadStoredValues = async () => {
@@ -175,6 +196,19 @@ export function CreateObject(props: CreateObjectProps) {
     act('create-object-action', prefsToSend);
   };
 
+  const handleObjectSelect = (obj: string) => {
+    setSelectedObj(obj);
+    act('selected-object-changed', {
+      newObj: obj,
+    });
+    if (currentList[obj]) {
+      props.onIconSettingsChange?.({
+        icon: currentList[obj].icon,
+        iconState: currentList[obj].icon_state,
+      });
+    }
+  };
+
   return (
     <Stack vertical fill>
       <Stack.Item>
@@ -182,6 +216,7 @@ export function CreateObject(props: CreateObjectProps) {
           <CreateObjectSettings
             onCreateObject={sendPreferences}
             setAdvancedSettings={setAdvancedSettings}
+            iconSettings={iconSettings}
           />
         </Section>
       </Stack.Item>
@@ -208,8 +243,11 @@ export function CreateObject(props: CreateObjectProps) {
                   <DmIcon
                     width="4em"
                     mt="2px"
-                    icon={currentList[selectedObj].icon}
-                    icon_state={currentList[selectedObj].icon_state}
+                    icon={iconSettings.icon || currentList[selectedObj].icon}
+                    icon_state={
+                      iconSettings.iconState ||
+                      currentList[selectedObj].icon_state
+                    }
                   />
                 </Button>
               </Stack.Item>
@@ -362,12 +400,7 @@ export function CreateObject(props: CreateObjectProps) {
                         sendPreferences({ object_list: selectedObj });
                       }
                     }}
-                    onClick={() => {
-                      setSelectedObj(obj);
-                      act('selected-object-changed', {
-                        newObj: obj,
-                      });
-                    }}
+                    onClick={() => handleObjectSelect(obj)}
                   >
                     {searchBy ? (
                       obj
