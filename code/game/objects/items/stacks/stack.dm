@@ -114,7 +114,7 @@
 
 /obj/item/stack/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
-	if((!throwing || throwing.target_turf == loc) && old_loc != loc)
+	if((!throwing || throwing.target_turf == loc) && old_loc != loc && (flags_1 & INITIALIZED_1))
 		merge_with_loc()
 
 ///Called to lazily update the materials of the item whenever the used or if more is added
