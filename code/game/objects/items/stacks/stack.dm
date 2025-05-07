@@ -125,8 +125,13 @@
 /obj/item/stack/proc/find_other_stack(list/already_found)
 	if(QDELETED(src) || isnull(loc))
 		return
+	if(!(flags_1 & INITIALIZED_1))
+		CRASH("find_other_stack tried to run before the stack was initialized")
 	for(var/obj/item/stack/item_stack in loc)
-		if(QDELING(item_stack) || item_stack == src)
+		if(item_stack == src || QDELING(item_stack))
+			continue
+		if(!(item_stack.flags_1 & INITIALIZED_1))
+			stack_trace("find_other_stack found uninitialized stack in loc? skipping for now")
 			continue
 		var/stack_ref = REF(item_stack)
 		if(already_found[stack_ref])
@@ -142,6 +147,7 @@
 	while(other_stack)
 		if(merge(other_stack))
 			return FALSE
+		other_stack = null // prevents hard deletes as a result of CHECK_TICK sleeping while we have a reference to a stack
 		CHECK_TICK
 		other_stack = find_other_stack(already_found)
 	return TRUE
