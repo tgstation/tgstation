@@ -605,6 +605,7 @@
 #include "code\_onclick\hud\fullscreen.dm"
 #include "code\_onclick\hud\generic_dextrous.dm"
 #include "code\_onclick\hud\ghost.dm"
+#include "code\_onclick\hud\graph_display.dm"
 #include "code\_onclick\hud\guardian.dm"
 #include "code\_onclick\hud\hud.dm"
 #include "code\_onclick\hud\human.dm"

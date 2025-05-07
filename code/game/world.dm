@@ -17,7 +17,8 @@ GLOBAL_VAR(restart_counter)
  *   - world.Genesis() =>
  *     - world.init_byond_tracy()
  *     - (Start native profiling)
- *     - world.init_debugger()
+ *     - new /datum/debugger()
+ *     - world.setup_external_cpu()
  *     - Master =>
  *       - config *unloaded
  *       - (all subsystems) PreInit()
@@ -95,6 +96,9 @@ GLOBAL_VAR(restart_counter)
 
 	// Create the logger
 	logger = new
+
+	// Cpu tracking setup
+	world.setup_external_cpu()
 
 	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
 	Master = new
@@ -182,19 +186,30 @@ GLOBAL_VAR_INIT(spike_cpu, 0)
 	GLOB.cpu_tracker.update_display()
 	// this is for next tick so don't display it yet yeah?
 	var/datum/tick_holder/tick_info = ____tick_info
-	tick_info.tick_cpu_usage[WRAP(tick_info.cpu_index, 1, CPU_SIZE + 1)] = TICK_USAGE
+	tick_info.tick_cpu_usage[WRAP(tick_info.cpu_index + 1, 1, CPU_SIZE + 1)] = TICK_USAGE
 
 GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 
 /atom/movable/screen/usage_display
 	screen_loc = "LEFT:8, CENTER"
 	plane = CPU_DEBUG_PLANE
+	layer = CPU_DISPLAY_LAYER
 	maptext_width = 256
 	maptext_height = 512
 	alpha = 220
 	clear_with_screen = FALSE
 	// how many people are looking at us right now?
 	var/viewer_count = 0
+	var/atom/movable/screen/graph_display/bars/cpu_display/graph_display
+	var/display_graph = TRUE
+
+/atom/movable/screen/usage_display/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	graph_display = new(null, null)
+
+/atom/movable/screen/usage_display/Destroy()
+	QDEL_NULL(graph_display)
+	return ..()
 
 /atom/movable/screen/usage_display/proc/update_display()
 	if(viewer_count <= 0)
@@ -202,30 +217,32 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	var/datum/tick_holder/tick_info = GLOB.tick_info
 	var/list/cpu_values = tick_info.cpu_values
 	var/list/verb_cost = tick_info.verb_cost
-	var/last_index = WRAP(tick_info.cpu_index - 1, 1, CPU_SIZE + 1)
+	var/last_index = tick_info.cpu_index
 	var/full_time = TICKS2DS(CPU_SIZE) / 10 // convert from ticks to seconds
+
+	graph_display.push_value(cpu_values[last_index])
 	maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
-		Toggles: <a href='byond://?src=[REF(src)];act=toggle_movement'>New Glide [GLOB.use_new_glide]</a> <a href='byond://?src=[REF(src)];act=toggle_compensation'>CPU Compensation [GLOB.attempt_corrective_cpu]</a>\n\
-		Queue Control: <a href='byond://?src=[REF(src)];act=clamp_queue'>CLAMP</a> <a href='byond://?src=[REF(src)];act=flush_queue'>FLUSH</a>\n\
+		Toggles: <a href='byond://?src=[REF(src)];act=toggle_movement'>New Glide [GLOB.use_new_glide]</a> <a href='byond://?src=[REF(src)];act=toggle_compensation'>CPU Compensation [GLOB.attempt_corrective_cpu]</a> <a href='byond://?src=[REF(src)];act=toggle_graph'>CPU Graphing [display_graph]</a>\n\
 		Glide: New ([GLOB.glide_size_multiplier]) Old ([GLOB.old_glide_size_multiplier])\n\
+		Graph: <a href='byond://?src=[REF(src)];act=freeze_graph'>[graph_display.freeze ? "Unfreeze" : "Freeze"]</a> <a href='byond://?src=[REF(src)];act=set_graph_scale'>Max Displayable Value [graph_display.max_displayable_cpu]</a>\n\
 		Floor: <a href='byond://?src=[REF(src)];act=set_floor'>[GLOB.floor_cpu]</a>\n\
 		Sustain: <a href='byond://?src=[REF(src)];act=set_sustain_cpu'>[GLOB.sustain_cpu]</a> <a href='byond://?src=[REF(src)];act=set_sustain_chance'>[GLOB.sustain_cpu_chance]%</a>\n\
 		Spike: <a href='byond://?src=[REF(src)];act=set_spike'>[GLOB.spike_cpu]</a>\n\
 		Tick: [FORMAT_CPU(world.time / world.tick_lag)]\n\
-		Frame Behind ~CPU: [FORMAT_CPU(cpu_values[last_index])]\n\
+		Frame Behind CPU: [FORMAT_CPU(cpu_values[last_index])]\n\
 		Frame Behind Tick: [FORMAT_CPU(tick_info.tick_cpu_usage[last_index])]\n\
-		Frame Behind Map Cpu: [FORMAT_CPU(world.map_cpu)]\n\
+		Frame Behind ~Map Cpu: [FORMAT_CPU(world.map_cpu)]\n\
 		Frame Behind ~Verb: [FORMAT_CPU(verb_cost[last_index])]\n\
 		<div style=\"color:#FF0000;\">\
-			Max ~CPU [full_time]s: [FORMAT_CPU(max(cpu_values))]\n\
+			Max CPU [full_time]s: [FORMAT_CPU(max(cpu_values))]\n\
 			Max Tick [full_time]s: [FORMAT_CPU(max(tick_info.tick_cpu_usage))]\n\
-			Max Map [full_time]s: [FORMAT_CPU(max(tick_info.map_cpu_usage))]\n\
+			Max ~Map [full_time]s: [FORMAT_CPU(max(tick_info.map_cpu_usage))]\n\
 			Max ~Verb [full_time]s: [FORMAT_CPU(max(verb_cost))]\n\
 		</div>\
 		<div style=\"color:#0096FF;\">\
-			Min ~CPU [full_time]s: [FORMAT_CPU(min(cpu_values))]\n\
+			Min CPU [full_time]s: [FORMAT_CPU(min(cpu_values))]\n\
 			Min Tick [full_time]s: [FORMAT_CPU(min(tick_info.tick_cpu_usage))]\n\
-			Min Map [full_time]s: [FORMAT_CPU(min(tick_info.map_cpu_usage))]\n\
+			Min ~Map [full_time]s: [FORMAT_CPU(min(tick_info.map_cpu_usage))]\n\
 			Min ~Verb [full_time]s: [FORMAT_CPU(min(verb_cost))]\
 		</div>\n\
 		CPU Drift Max: [FORMAT_CPU(max(tick_info.cpu_error))]\n\
@@ -237,14 +254,17 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	if(modify?.displaying_cpu_debug) // I am lazy and this is a cold path
 		viewer_count -= 1
 		modify.screen -= src
+		modify.screen -= graph_display
 		UnregisterSignal(modify, COMSIG_QDELETING)
 		modify?.displaying_cpu_debug = FALSE
 	else
 		viewer_count += 1
 		modify.screen += src
+		modify.screen += graph_display
 		RegisterSignal(modify, COMSIG_QDELETING, PROC_REF(client_disconnected))
 		modify?.displaying_cpu_debug = TRUE
 		if(viewer_count == 1)
+			graph_display.clear_values()
 			update_display()
 
 	for(var/atom/movable/screen/plane_master/cpu_debug/debuggin as anything in modify.mob?.hud_used?.get_true_plane_masters(CPU_DEBUG_PLANE))
@@ -259,22 +279,25 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		return
 	if(!check_rights(R_DEBUG) || !check_rights(R_SERVER))
 		return FALSE
-	var/datum/tick_holder/tick_info = GLOB.tick_info
 	switch(href_list["act"])
-		if("flush_queue") // last resort for testing, sets queue to the average cpu of the last tick
-			for(var/i in 1 to CPU_SIZE)
-				tick_info.cpu_values[i] = world.cpu
-			return TRUE
-		if("clamp_queue") // last resort for testing, sets queue to the average cpu of the last tick
-			for(var/i in 1 to CPU_SIZE)
-				tick_info.cpu_values[i] = clamp(tick_info.cpu_values[i], 0, 500)
-			return TRUE
 		if("toggle_movement")
 			GLOB.use_new_glide = !GLOB.use_new_glide
 			return TRUE
 		if("toggle_compensation")
 			GLOB.attempt_corrective_cpu = !GLOB.attempt_corrective_cpu
 			return TRUE
+		if("toggle_graph")
+			display_graph = !display_graph
+			if(display_graph)
+				graph_display.alpha = 255
+			else
+				graph_display.alpha = 0
+		if("set_graph_scale")
+			var/current_value = graph_display.max_displayable_cpu
+			var/max_cpu = tgui_input_number(usr, "What should be the highest displayable cpu value?", "Max CPU", max_value = INFINITY, min_value = 0, default = current_value) || current_value
+			graph_display.set_max_display(max_cpu)
+		if("freeze_graph")
+			graph_display.freeze = !graph_display.freeze
 		if("set_floor")
 			var/floor_cpu = tgui_input_number(usr, "How low should we allow the cpu to go?", "Floor CPU", max_value = INFINITY, min_value = 0, default = 0) || 0
 			GLOB.floor_cpu = floor_cpu
@@ -307,12 +330,14 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 // Not initialized, because we have to do that manually
 // That's how fucked we are
 GLOBAL_REAL(____tick_info, /datum/tick_holder)
-GLOBAL_DATUM_INIT(tick_info, /datum/tick_holder, ____tick_info)
+GLOBAL_DATUM(tick_info, /datum/tick_holder)
 /// Inserts our current world.cpu value into our rolling lists
 /// Its job is to pull the actual usage last tick instead of the moving average
 /world/proc/refresh_cpu_values()
 	if(!____tick_info)
 		____tick_info = new()
+	if(GLOB)
+		GLOB.tick_info = ____tick_info
 
 	var/datum/tick_holder/tick_info = ____tick_info
 	if(tick_info.last_cpu_update == world.time)
@@ -322,12 +347,12 @@ GLOBAL_DATUM_INIT(tick_info, /datum/tick_holder, ____tick_info)
 	// cache for sonic speed
 	var/list/old_cpu_values = tick_info.cpu_values
 	var/list/avg_cpu_values = tick_info.avg_cpu_values
-	var/cpu_index = tick_info.cpu_index
+	var/cpu_index = current_cpu_index()
 	var/avg_cpu = world.cpu
 	tick_info.cpu_values = cpu_values()
 	// ok so world.cpu is a 16 entry wide moving average of the actual cpu value
 	// because fuck you
-	// I want the ACTUAL unrolle value, so I need to deaverage it. this is possible because we have access to ALL values and also math
+	// I want the ACTUAL unrolled value, so I need to deaverage it. this is possible because we have access to ALL values and also math
 	// yes byond does average against a constant window size, it doesn't account for a lack of values initially it just sorta assumes they exist.
 	// ♪ it ain't me, it ain't me ♪
 
@@ -343,12 +368,11 @@ GLOBAL_DATUM_INIT(tick_info, /datum/tick_holder, ____tick_info)
 
 	avg_cpu_values[cpu_index] = avg_cpu
 	tick_info.map_cpu_usage[cpu_index] = world.map_cpu
-	tick_info.verb_cost[cpu_index] = max(real_cpu - tick_and_map, 0)
+	tick_info.verb_cost[cpu_index] = real_cpu - tick_and_map
 	tick_info.cpu_error[cpu_index] = inbuilt_error
-	tick_info.cpu_index = WRAP(cpu_index + 1, 1, CPU_SIZE + 1)
+	tick_info.cpu_index = cpu_index
 	if(GLOB)
 		GLOB.cpu_tracker.update_display()
-	// make an animated display of cpu usage to get a better idea of how much we leave on the table
 
 /proc/update_glide_compensation()
 	world.refresh_cpu_values()
@@ -575,6 +599,7 @@ GLOBAL_DATUM_INIT(tick_info, /datum/tick_holder, ____tick_info)
 	if(check_hard_reboot())
 		log_world("World hard rebooted at [time_stamp()]")
 		shutdown_logging() // See comment below.
+		world.cleanup_external_cpu()
 		QDEL_NULL(Tracy)
 		QDEL_NULL(Debugger)
 		TgsEndProcess()
@@ -583,6 +608,7 @@ GLOBAL_DATUM_INIT(tick_info, /datum/tick_holder, ____tick_info)
 	log_world("World rebooted at [time_stamp()]")
 
 	shutdown_logging() // Past this point, no logging procs can be used, at risk of data loss.
+	world.cleanup_external_cpu()
 	QDEL_NULL(Tracy)
 	QDEL_NULL(Debugger)
 
@@ -592,6 +618,7 @@ GLOBAL_DATUM_INIT(tick_info, /datum/tick_holder, ____tick_info)
 	#endif
 
 /world/Del()
+	world.cleanup_external_cpu()
 	QDEL_NULL(Tracy)
 	QDEL_NULL(Debugger)
 	. = ..()

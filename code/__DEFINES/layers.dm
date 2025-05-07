@@ -326,6 +326,14 @@
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1
 
+// CPU_DEBUB_PLANE
+
+///CPU related graph framing
+#define CPU_GRAPH_FRAME_LAYER 1
+
+///Primary CPU readout
+#define CPU_DISPLAY_LAYER 10
+
 ///Plane master controller keys
 #define PLANE_MASTERS_GAME "plane_masters_game"
 #define PLANE_MASTERS_NON_MASTER "plane_masters_non_master"
