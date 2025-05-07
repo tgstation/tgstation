@@ -154,6 +154,7 @@
 		/obj/item/food/egg,
 		/obj/item/food/chocolateegg,
 		/obj/item/food/boiledegg,
+		/obj/item/food/scotchegg,
 		/obj/item/food/grown/eggy,
 		/obj/item/surprise_egg,
 	))
