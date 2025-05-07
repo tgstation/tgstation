@@ -125,8 +125,6 @@
 /obj/item/stack/proc/find_other_stack(list/already_found)
 	if(QDELETED(src) || isnull(loc))
 		return
-	if(!(flags_1 & INITIALIZED_1))
-		CRASH("find_other_stack tried to run before the stack was initialized")
 	for(var/obj/item/stack/item_stack in loc)
 		if(item_stack == src || QDELING(item_stack))
 			continue
