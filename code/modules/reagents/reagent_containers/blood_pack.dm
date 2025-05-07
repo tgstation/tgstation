@@ -76,7 +76,7 @@
 /obj/item/reagent_containers/blood/insectoid
 	blood_type = BLOOD_TYPE_INSECTOID
 
-/obj/item/reagent_containers/blood/synthetikc
+/obj/item/reagent_containers/blood/synthetic
 	blood_type = BLOOD_TYPE_SYNTHETIC
 // DOPPLER ADDITION END
 

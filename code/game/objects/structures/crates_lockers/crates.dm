@@ -284,8 +284,8 @@
 	new /obj/item/reagent_containers/blood/lizard(src)
 	new /obj/item/reagent_containers/blood/ethereal(src)
 	// DOPPLER ADDITION START
-	new /obj/item/reagent_containers/blood/robot(src)
-	new /obj/item/reagent_containers/blood/bug(src)
+	new /obj/item/reagent_containers/blood/insectoid(src)
+	new /obj/item/reagent_containers/blood/synthetic(src)
 	// DOPPLER ADDITION END
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/blood/random(src)

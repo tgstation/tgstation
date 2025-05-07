@@ -15,7 +15,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		if(readied_player.new_character)
 			log_manifest(readied_player.ckey, readied_player.new_character.mind, readied_player.new_character)
 		if(ishuman(readied_player.new_character))
-			inject(readied_player.new_character, readied_player.client)	// DOPPLER EDIT, old code:	inject(readied_player.new_character)
+			inject(readied_player.new_character, person_client = readied_player.client)	// DOPPLER EDIT, old code:	inject(readied_player.new_character)
 		CHECK_TICK
 
 /// Gets the current manifest.

@@ -1,6 +1,6 @@
 // Reagent used as blood by Insect- or Snail-people.
 // Precursor chems and recipes listed here for ease of use/reference.
-/datum/reagent/blood/bug_blood
+/datum/reagent/bug_blood
 	name = "Hemolymph"
 	description = "A blood analog found in invertebrate species. Transports oxygen by binding it to copper, as opposed to the more common iron."
 	taste_description = "viscous copper"
@@ -8,7 +8,7 @@
 	color = "#82fac6" //rgb 130,250,198
 
 /datum/chemical_reaction/bug_blood
-	results = list(/datum/reagent/blood/bug_blood = 2)
+	results = list(/datum/reagent/bug_blood = 2)
 	required_reagents = list(/datum/reagent/imidazole = 6, /datum/reagent/copper = 2, /datum/reagent/oxygen = 1)
 	mix_message = "The solution thickens and turns a buggy-blue"
 	//fermichem

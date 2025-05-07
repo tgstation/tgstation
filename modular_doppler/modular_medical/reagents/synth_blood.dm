@@ -1,6 +1,6 @@
 // Reagent(s) to be used by synthetics and or androids when they are implemented as a selectable species.
 //I'm putting the recipes and precursor chems here for ease of use.
-/datum/reagent/blood/synth_blood
+/datum/reagent/synth_blood
     name = "Synthetic Thermal Solution"
     description = "A non-reactive liquid commonly utilized by humanoid synthetics to insulate their internal systems and conduct heat away from internal components."
     taste_description = "thick water"
@@ -8,12 +8,12 @@
     color = "#A9FBFB"
 
 /datum/glass_style/drinking_glass/synth_blood
-    required_drink_type = /datum/reagent/blood/synth_blood
+    required_drink_type = /datum/reagent/synth_blood
     name = "glass of water"
     desc = "Doesn't really move around like water - oddly thick."
 
 /datum/chemical_reaction/synth_blood
-  results = list(/datum/reagent/blood/synth_blood = 1)
+  results = list(/datum/reagent/synth_blood = 1)
   required_reagents = list(/datum/reagent/toxin/acid/hyflo_acid = 1, /datum/reagent/fuel/oil = 1, /datum/reagent/stable_plasma = 1)
   mix_message = "The solution becomes clear and stabilizes."
   mix_sound = 'sound/effects/bubbles/bubbles.ogg'
