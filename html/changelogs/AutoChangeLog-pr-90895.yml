@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - image: "Animations have been added to inserting/removing items from machines, and to inserting things into containers that are not on your person."
