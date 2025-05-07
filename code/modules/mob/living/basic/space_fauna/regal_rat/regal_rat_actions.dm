@@ -4,15 +4,21 @@
 
 /datum/action/cooldown/mob_cooldown/domain
 	name = "Rat King's Domain"
-	desc = "Corrupts this area to be more suitable for your rat army."
+	desc = "While enabled, continuously corrupt the surrounding area to be more suitable for your rat army."
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 	click_to_activate = FALSE
-	cooldown_time = 6 SECONDS
+	cooldown_time = 1 SECONDS
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
 	overlay_icon_state = "bg_clock_border"
-	button_icon_state = "coffer"
+	button_icon_state = "coffer_off"
 	shared_cooldown = NONE
+	/// Are we currently ticking?
+	var/is_active = FALSE
+	/// How often do we make a mess?
+	var/mess_interval = 6 SECONDS
+	/// Don't do anything if we're on this cooldown
+	COOLDOWN_DECLARE(mess_cooldown)
 
 /datum/action/cooldown/mob_cooldown/domain/IsAvailable(feedback = FALSE)
 	. = ..()
@@ -23,25 +29,64 @@
 			owner.balloon_alert(owner, "can't use while ventcrawling!")
 		return FALSE
 
-/datum/action/cooldown/mob_cooldown/domain/proc/domain()
-	var/turf/location = get_turf(owner)
-	location.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
-	switch (rand(1,10))
-		if (8)
-			new /obj/effect/decal/cleanable/vomit(location)
-		if (9)
-			new /obj/effect/decal/cleanable/vomit/old(location)
-		if (10)
-			new /obj/effect/decal/cleanable/oil/slippery(location)
-		else
-			new /obj/effect/decal/cleanable/dirt(location)
-
-	StartCooldown()
-
 /datum/action/cooldown/mob_cooldown/domain/Activate(atom/target)
 	StartCooldown(10 SECONDS)
-	domain()
+	set_domain_active(!is_active)
 	StartCooldown()
+
+/datum/action/cooldown/mob_cooldown/domain/Remove(mob/removed_from)
+	set_domain_active(FALSE)
+	return ..()
+
+/datum/action/cooldown/mob_cooldown/domain/update_status_on_signal(datum/source, new_stat, old_stat)
+	. = ..()
+	if (!IsAvailable())
+		set_domain_active(FALSE)
+
+/// Enable or disable the ability
+/datum/action/cooldown/mob_cooldown/domain/proc/set_domain_active(should_active)
+	if (is_active == should_active || isnull(owner))
+		return
+	is_active = should_active
+
+	if (is_active)
+		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_MOVE_VENTCRAWLING), PROC_REF(cancel_on_signal))
+		button_icon_state = "coffer"
+		spread_domain()
+	else
+		UnregisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_MOVE_VENTCRAWLING))
+		button_icon_state = "coffer_off"
+
+	build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+
+/// Stop spreading shit when one of these events happens
+/datum/action/cooldown/mob_cooldown/domain/proc/cancel_on_signal()
+	SIGNAL_HANDLER
+	set_domain_active(FALSE)
+
+/// Create gas and spawn mess
+/datum/action/cooldown/mob_cooldown/domain/proc/spread_domain()
+	if (!is_active || !COOLDOWN_FINISHED(src, mess_cooldown) || !owner)
+		return
+
+	var/turf/our_location = get_turf(owner)
+	our_location.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
+
+	var/list/available_spots = list(our_location) + get_adjacent_open_turfs(owner)
+	var/turf/mess_location = pick(available_spots)
+
+	switch (rand(1,10))
+		if (8)
+			new /obj/effect/decal/cleanable/vomit(mess_location)
+		if (9)
+			new /obj/effect/decal/cleanable/vomit/old(mess_location)
+		if (10)
+			new /obj/effect/decal/cleanable/oil/slippery(mess_location)
+		else
+			new /obj/effect/decal/cleanable/dirt(mess_location)
+
+	COOLDOWN_START(src, mess_cooldown, mess_interval) // We use a cooldown AND timer because of the toggle
+	addtimer(CALLBACK(src, PROC_REF(spread_domain)), mess_interval, TIMER_DELETE_ME)
 
 /**
  * This action checks some nearby maintenance animals and makes them your minions.
