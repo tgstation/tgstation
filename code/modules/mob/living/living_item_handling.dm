@@ -39,7 +39,8 @@
 	. = ..()
 	throw_mode_off(THROW_MODE_TOGGLE)
 	if(!HAS_TRAIT(src, TRAIT_CAN_THROW_ITEMS))
-		return FALSE // not sure how we got this far, but no further
+		stack_trace("[src] tried to throw [target], but they shouldn't be able to throw things")
+		return FALSE
 	if(!target || !isturf(loc))
 		return FALSE
 	if(istype(target, /atom/movable/screen))
