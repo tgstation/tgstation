@@ -44,6 +44,7 @@
 		I spoke, and heard my own words echoed back."
 	action_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
+	drafting_tier = 5
 
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"

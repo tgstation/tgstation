@@ -134,7 +134,7 @@
 	knowledge_data["icon_params"] = get_icon_of_knowledge(knowledge)
 	knowledge_data["name"] = initial(knowledge.name)
 	knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
-	knowledge_data["cost"] = initial(knowledge.cost)
+	knowledge_data["cost"] = heretic_knowledge_tree[knowledge][HKT_COST]
 	knowledge_data["disabled"] = (!done) && (initial(knowledge.cost) > knowledge_points)
 	knowledge_data["bgr"] = heretic_knowledge_tree[knowledge][HKT_UI_BGR]
 	knowledge_data["finished"] = done
@@ -190,6 +190,11 @@
 
 	data["objectives"] = get_objectives()
 	data["can_change_objective"] = can_assign_self_objectives
+
+	var/list/path_routes = list("path" = list())
+	for(var/datum/heretic_knowledge_tree_column/path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
+		path_routes["path"] += path.route
+	data["paths"] = heretic_path == PATH_START ? path_routes : list("path" = heretic_path)
 
 	return data
 

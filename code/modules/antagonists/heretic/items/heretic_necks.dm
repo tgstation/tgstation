@@ -186,17 +186,19 @@
 /// Makes whoever the target is a bit more insane. If they are insane enough, they will be zombified into a moon zombie
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/channel_amulet(mob/user, atom/target)
 	SIGNAL_HANDLER
-	if(!isliving(user) || !ishuman(target))
+	if(!isliving(user))
 		return
 	var/mob/living/living_user = user
-	var/mob/living/carbon/human/human_target = target
-	if(IS_HERETIC_OR_MONSTER(human_target))
-		living_user.balloon_alert(living_user, "resists effects!")
-		return FALSE
 	if(!IS_HERETIC_OR_MONSTER(living_user))
 		living_user.balloon_alert(living_user, "you feel a presence watching you")
 		living_user.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		living_user.mob_mood.adjust_sanity(-50)
+		return FALSE
+	if(!ishuman(target))
+		return
+	var/mob/living/carbon/human/human_target = target
+	if(IS_HERETIC_OR_MONSTER(human_target))
+		living_user.balloon_alert(living_user, "resists effects!")
 		return FALSE
 	if(human_target.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND))
 		return FALSE
@@ -210,7 +212,7 @@
 		living_user.balloon_alert(living_user, "their mind bends to see the truth!")
 		human_target.apply_status_effect(/datum/status_effect/moon_converted)
 		living_user.log_message("made [human_target] insane.", LOG_GAME)
-		human_target.log_message("was driven insane by [living_user]")
+		human_target.log_message("was driven insane by [living_user]", LOG_GAME)
 
 /// Modifies any blades that we equip while wearing the amulet
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_equip_item(mob/user, obj/item/blade, slot)

@@ -98,6 +98,7 @@
 	gain_text = "The music like a reflection of the soul compelled them, like moths to a flame they followed"
 	action_to_add = /datum/action/cooldown/spell/pointed/projectile/moon_parade
 	cost = 2
+	drafting_tier = 5
 
 /datum/heretic_knowledge/blade_upgrade/moon
 	name = "Moonlight Blade"

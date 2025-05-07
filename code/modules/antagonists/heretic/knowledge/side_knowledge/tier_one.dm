@@ -2,15 +2,6 @@
  * Tier 1 knowledge: Stealth and general utility
  */
 
-GLOBAL_LIST_INIT(heretic_knowledge_tier_one, list(
-	/datum/heretic_knowledge/void_cloak,
-	/datum/heretic_knowledge/medallion,
-	/datum/heretic_knowledge/essence,
-	/datum/heretic_knowledge/phylactery,
-	/datum/heretic_knowledge/crucible,
-	/datum/heretic_knowledge/eldritch_coin,
-))
-
 /datum/heretic_knowledge/void_cloak
 	name = "Void Cloak"
 	desc = "Allows you to transmute a glass shard, a bedsheet, and any outer clothing item (such as armor or a suit jacket) \
@@ -27,6 +18,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_one, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/clothing/suits/armor.dmi'
 	research_tree_icon_state = "void_cloak"
+	drafting_tier = 1
 
 /datum/heretic_knowledge/medallion
 	name = "Ashen Eyes"
@@ -42,6 +34,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_one, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "eye_medalion"
+	drafting_tier = 1
 
 /datum/heretic_knowledge/essence // AKA Eldritch Flask
 	name = "Priest's Ritual"
@@ -57,6 +50,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_one, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "eldritch_flask"
+	drafting_tier = 1
 
 /datum/heretic_knowledge/phylactery
 	name = "Phylactery of Damnation"
@@ -72,6 +66,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_one, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "phylactery_2"
+	drafting_tier = 1
 
 /datum/heretic_knowledge/crucible
 	name = "Mawed Crucible"
@@ -87,6 +82,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_one, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "crucible"
+	drafting_tier = 1
 
 /datum/heretic_knowledge/eldritch_coin
 	name = "Eldritch Coin"
@@ -103,3 +99,4 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_one, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/economy.dmi'
 	research_tree_icon_state = "coin_heretic"
+	drafting_tier = 1

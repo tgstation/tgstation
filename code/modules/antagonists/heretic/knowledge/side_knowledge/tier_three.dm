@@ -2,14 +2,6 @@
  * Tier 3 knowledge: Summons
  */
 
-GLOBAL_LIST_INIT(heretic_knowledge_tier_three, list(
-	/datum/heretic_knowledge/summon/rusty,
-	/datum/heretic_knowledge/summon/maid_in_mirror,
-	/datum/heretic_knowledge/summon/ashy,
-	/datum/heretic_knowledge/limited_amount/risen_corpse,
-	/datum/heretic_knowledge/summon/fire_shark,
-))
-
 /datum/heretic_knowledge/summon/rusty
 	name = "Rusted Ritual"
 	desc = "Allows you to transmute a pool of vomit, some cable coil, and 10 sheets of iron into a Rust Walker. \
@@ -23,6 +15,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_three, list(
 	mob_to_summon = /mob/living/basic/heretic_summon/rust_walker
 	cost = 1
 	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT
+	drafting_tier = 3
 
 /datum/heretic_knowledge/summon/maid_in_mirror
 	name = "Maid in the Mirror"
@@ -43,6 +36,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_three, list(
 
 	mob_to_summon = /mob/living/basic/heretic_summon/maid_in_the_mirror
 	poll_ignore_define = POLL_IGNORE_MAID_IN_MIRROR
+	drafting_tier = 3
 
 /datum/heretic_knowledge/summon/ashy
 	name = "Ashen Ritual"
@@ -59,6 +53,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_three, list(
 	cost = 1
 
 	poll_ignore_define = POLL_IGNORE_ASH_SPIRIT
+	drafting_tier = 3
 
 /// The max health given to Shattered Risen
 #define RISEN_MAX_HEALTH 125
@@ -81,6 +76,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_three, list(
 	cost = 1
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_shattered"
+	drafting_tier = 3
 
 /datum/heretic_knowledge/limited_amount/risen_corpse/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	. = ..()
@@ -180,3 +176,4 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_three, list(
 	poll_ignore_define = POLL_IGNORE_FIRE_SHARK
 
 	research_tree_icon_dir = EAST
+	drafting_tier = 3

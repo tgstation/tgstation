@@ -71,12 +71,17 @@ type KnowledgeTier = {
   nodes: Knowledge[];
 };
 
+type Paths = {
+  path: string;
+};
+
 type Info = {
   charges: number;
   total_sacrifices: number;
   ascended: BooleanLike;
   objectives: Objective[];
   can_change_objective: BooleanLike;
+  paths: Paths[];
 };
 
 const IntroductionSection = (props) => {
@@ -353,6 +358,24 @@ const ResearchInfo = (props) => {
   );
 };
 
+const PathInfo = (props) => {
+  const { data, act } = useBackend<Info>();
+  const { charges } = data;
+
+  return (
+    <Stack>
+      <Stack.Item fontSize="20px" textAlign="center">
+        You have <b>{charges || 0}</b>&nbsp;
+        <span style={hereticBlue}>
+          knowledge point{charges !== 1 ? 's' : ''}
+        </span>{' '}
+        to spend.
+      </Stack.Item>
+      Hello!
+    </Stack>
+  );
+};
+
 export const AntagInfoHeretic = (props) => {
   const { data } = useBackend<Info>();
   const { ascended } = data;
@@ -386,10 +409,19 @@ export const AntagInfoHeretic = (props) => {
               >
                 Research
               </Tabs.Tab>
+              <Tabs.Tab
+                icon="info"
+                selected={currentTab === 2}
+                onClick={() => setTab(2)}
+              >
+                Path Info
+              </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
-            {(currentTab === 0 && <IntroductionSection />) || <ResearchInfo />}
+            {(currentTab === 0 && <IntroductionSection />) ||
+              (currentTab === 1 && <ResearchInfo />) ||
+              (currentTab === 2 && <PathInfo />)}
           </Stack.Item>
         </Stack>
       </Window.Content>

@@ -2,15 +2,6 @@
  * Tier 2 knowledge: Defensive tools and curses
  */
 
-GLOBAL_LIST_INIT(heretic_knowledge_tier_two, list(
-	/datum/heretic_knowledge/codex_morbus,
-	/datum/heretic_knowledge/greaves_of_the_prophet,
-	/datum/heretic_knowledge/spell/opening_blast,
-	/datum/heretic_knowledge/rune_carver,
-	/datum/heretic_knowledge/ether,
-	/datum/heretic_knowledge/painting,
-))
-
 /**
  * Codex Morbus, an upgrade to the base codex
  * Functionally an upgraded version of the codex, but it also has the ability to cast curses by right clicking at a rune.
@@ -33,6 +24,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_two, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "book_morbus"
+	drafting_tier = 2
 
 /datum/heretic_knowledge/codex_morbus/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
@@ -63,6 +55,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_two, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/clothing/shoes.dmi'
 	research_tree_icon_state = "hereticgreaves"
+	drafting_tier = 2
 
 /datum/heretic_knowledge/spell/opening_blast
 	name = "Wave Of Desperation"
@@ -73,6 +66,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_two, list(
 
 	action_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
 	cost = 1
+	drafting_tier = 2
 
 /datum/heretic_knowledge/rune_carver
 	name = "Carving Knife"
@@ -90,6 +84,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_two, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "rune_carver"
+	drafting_tier = 2
 
 /datum/heretic_knowledge/ether
 	name = "Ether Of The Newborn"
@@ -106,6 +101,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_two, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "poison_flask"
+	drafting_tier = 2
 
 /datum/heretic_knowledge/painting
 	name = "Unsealed Arts"
@@ -123,6 +119,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_two, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/signs.dmi'
 	research_tree_icon_state = "eldritch_painting_weeping"
+	drafting_tier = 2
 
 /datum/heretic_knowledge/painting/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(locate(/obj/item/organ/eyes) in atoms)

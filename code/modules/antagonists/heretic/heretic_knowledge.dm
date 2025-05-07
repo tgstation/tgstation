@@ -42,6 +42,8 @@
 	var/research_tree_icon_dir = SOUTH
 	///Determines what kind of monster ghosts will ignore from here on out. Defaults to POLL_IGNORE_HERETIC_MONSTER, but we define other types of monsters for more granularity.
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
+	/// This is used for the drafting system. By default is 0 (Meaning it won't show up in the draft)
+	var/drafting_tier = 0
 
 /** Called when the knowledge is first researched.
  * This is only ever called once per heretic.
@@ -272,6 +274,7 @@
 	. = ..()
 	our_heretic.heretic_path = our_heretic.heretic_knowledge_tree[type][HKT_ROUTE]
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, our_heretic.heretic_path)
+	determine_drafted_knowledge(user, our_heretic, our_heretic.heretic_path)
 
 /datum/heretic_knowledge/limited_amount/starting/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	RegisterSignals(user, list(COMSIG_HERETIC_MANSUS_GRASP_ATTACK, COMSIG_LIONHUNTER_ON_HIT), PROC_REF(on_mansus_grasp))

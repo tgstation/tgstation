@@ -77,6 +77,7 @@
 	research_tree_icon_path = 'icons/effects/blood.dmi'
 	research_tree_icon_state = "suitblood"
 	research_tree_icon_dir = SOUTH
+	drafting_tier = 5
 	/// Whether we're currently in duelist stance, gaining certain buffs (low health)
 	var/in_duelist_stance = FALSE
 

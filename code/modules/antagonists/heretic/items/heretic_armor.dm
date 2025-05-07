@@ -345,7 +345,7 @@
 
 	// Gives the traits and effects
 	user.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
-	user.add_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED), REF(src))
+	user.add_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED, TRAIT_NOGUNS), REF(src))
 	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(block_checked))
 	RegisterSignals(user, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE), PROC_REF(on_damage_adjust))
 	RegisterSignal(user, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_take_damage))
@@ -526,7 +526,7 @@
 		return
 	var/mob/living/carbon/human/wearer = source
 	if(istype(wearer.wear_suit, /obj/item/clothing/suit/hooded/cultrobes/eldritch/moon))
-		var/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/robes
+		var/obj/item/clothing/suit/hooded/cultrobes/eldritch/moon/robes = wearer.wear_suit
 		if(robes.braindead)
 			icon_state = base_icon_state + "_6"
 			return // Don't update the icon once our "dying" process has begun

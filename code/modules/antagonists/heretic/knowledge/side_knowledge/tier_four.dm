@@ -2,15 +2,6 @@
  * Tier 4 knowledge: Combat related knowledge
  */
 
-GLOBAL_LIST_INIT(heretic_knowledge_tier_four, list(
-	/datum/heretic_knowledge/spell/apetra_vulnera,
-	/datum/heretic_knowledge/spell/space_phase,
-	/datum/heretic_knowledge/unfathomable_curio,
-	/datum/heretic_knowledge/rust_sower,
-	/datum/action/cooldown/spell/pointed/crimson_cleave,
-	/datum/heretic_knowledge/rifle,
-))
-
 /datum/heretic_knowledge/spell/apetra_vulnera
 	name = "Apetra Vulnera"
 	desc = "Grants you Apetra Vulnera, a spell \
@@ -20,6 +11,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_four, list(
 
 	action_to_add = /datum/action/cooldown/spell/pointed/apetra_vulnera
 	cost = 1
+	drafting_tier = 4
 
 /datum/heretic_knowledge/spell/space_phase
 	name = "Space Phase"
@@ -30,6 +22,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_four, list(
 	action_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
 	cost = 1
 	research_tree_icon_frame = 6
+	drafting_tier = 4
 
 /datum/heretic_knowledge/unfathomable_curio
 	name = "Unfathomable Curio"
@@ -48,6 +41,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_four, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/clothing/belts.dmi'
 	research_tree_icon_state = "unfathomable_curio"
+	drafting_tier = 4
 
 /datum/heretic_knowledge/rust_sower
 	name = "Rust Sower Grenade"
@@ -61,6 +55,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_four, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/weapons/grenade.dmi'
 	research_tree_icon_state = "rustgrenade"
+	drafting_tier = 4
 
 /datum/heretic_knowledge/spell/crimson_cleave
 	name = "Crimson Cleave"
@@ -68,6 +63,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_four, list(
 	gain_text = "XANTODO GAIN"
 	action_to_add = /datum/action/cooldown/spell/pointed/crimson_cleave
 	cost = 1
+	drafting_tier = 4
 
 /* XANTODO Fix this up
 /datum/heretic_knowledge/spell/blood_siphon
@@ -109,6 +105,7 @@ GLOBAL_LIST_INIT(heretic_knowledge_tier_four, list(
 	cost = 1
 	research_tree_icon_path = 'icons/obj/weapons/guns/ballistic.dmi'
 	research_tree_icon_state = "goldrevolver"
+	drafting_tier = 4
 
 /datum/heretic_knowledge/rifle_ammo
 	name = "Lionhunter Rifle Ammunition"

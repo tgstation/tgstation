@@ -205,7 +205,7 @@
 
 //---- Flesh Passive
 // Makes you never get disgust, virus immune and immune to damage from space ants
-// Level 2, organs and raw meat heals you
+// Level 2, organs and raw meat heals you. You also become a voracious glutton who likes all food
 // Level 3, no slowdown from being fat, being fat gives damage resistance
 /datum/status_effect/heretic_passive/flesh/on_apply()
 	. = ..()

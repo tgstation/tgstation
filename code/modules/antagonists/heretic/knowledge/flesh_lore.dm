@@ -181,6 +181,7 @@
 		I learned that they could be silenced."
 	action_to_add = /datum/action/cooldown/spell/touch/flesh_surgery
 	cost = 2
+	drafting_tier = 5
 
 /datum/heretic_knowledge/armor/flesh
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh)

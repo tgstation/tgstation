@@ -68,6 +68,7 @@
 
 	action_to_add = /datum/action/cooldown/spell/pointed/void_prison
 	cost = 2
+	drafting_tier = 5
 
 /datum/heretic_knowledge/armor/void
 	desc = "Allows you to transmute a table and a mask in sub-zero temperatures to create a Hollow Weave. \
