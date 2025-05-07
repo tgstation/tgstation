@@ -100,6 +100,13 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 	. += NAMEOF(src, anchored)
 	return .
 
+/turf/open/get_save_vars()
+	. = ..()
+	var/datum/gas_mixture/turf_gasmix = return_air()
+	initial_gas_mix = turf_gasmix.to_string()
+	. += NAMEOF(src, initial_gas_mix)
+	return .
+
 /obj/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, req_access)
@@ -292,7 +299,12 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 						var/metadata = generate_tgm_metadata(thing)
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
 						empty = FALSE
-				current_header += "[empty ? "" : ",\n"][place],\n[location])\n"
+				current_header += "[empty ? "" : ",\n"][place]"
+				//====SAVING ATMOS====
+				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_ATMOS) && !isspaceturf(pull_from))
+					var/metadata = generate_tgm_metadata(pull_from)
+					current_header += "[metadata]"
+				current_header += ",\n[location])\n"
 				//====Fill the contents file====
 				var/textiftied_header = current_header.Join()
 				// If we already know this header just use its key, otherwise we gotta make a new one
