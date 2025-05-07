@@ -1189,9 +1189,9 @@
 	var/reaction_rate = min(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR, total_not_antinoblium_moles)
 	if(reaction_rate < MINIMUM_MOLE_COUNT)
 		. = NO_REACTION
-		if(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR < MINIMUM_MOLE_COUNT)
+		if(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR < MINIMUM_MOLE_COUNT) // Return early when the reaction is being slow due to insignificant antinoblium quantity.
 			return
-		reaction_rate = total_not_antinoblium_moles // If the reaction is slow due to insignificant remaining gases, just eat the rest of the gases.
+		reaction_rate = total_not_antinoblium_moles // Otherwise, if the reaction is slow due to insignificant remaining gases, just eat the rest of the gases.
 	for(var/id in cached_gases)
 		if(id == /datum/gas/antinoblium)
 			continue
