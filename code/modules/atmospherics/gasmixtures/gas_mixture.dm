@@ -726,25 +726,3 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	output_air.merge(removed)
 	return TRUE
-
-/// Convert a gas mixture to a string (ie. "o2=22;n2=82;TEMP=180")
-/// Rounds all temperature and gases to 0.01 and skips any gases less than that amount
-/datum/gas_mixture/proc/to_string()
-	var/list/cached_gases = gases
-	var/rounded_temp = round(temperature, 0.01)
-	var/temperature_str = "TEMP=[num2text(rounded_temp)]"
-
-	if(!length(cached_gases) || total_moles() < 0.01)
-		return temperature_str
-
-	var/gas_mixture_str = ""
-
-	for(var/gas_path in cached_gases)
-		var/gas_moles = cached_gases[gas_path][MOLES]
-		var/gas_id = cached_gases[gas_path][GAS_META][META_GAS_ID]
-
-		gas_moles = round(gas_moles, 0.01)
-		if(gas_moles >= 0.01)
-			gas_mixture_str += "[gas_id]=[num2text(gas_moles)];"
-
-	return gas_mixture_str + temperature_str
