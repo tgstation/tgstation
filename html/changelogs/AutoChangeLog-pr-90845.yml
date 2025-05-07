@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Adds the Exosuit Ablative Insulation armor booster module. Protects the mech from energy-based attacks and its wires from EMPs (only the wires, not the mech). However, the armor booster makes the mech weaker to ballistic and melee weapons."
+  - rscadd: "The Dark Gygax and Mauler now come pre-packaged with a special version that has no weakness to ballistic and melee weapons."
