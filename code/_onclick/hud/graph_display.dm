@@ -364,7 +364,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	)
 	var/scaled = value / 100
 	if(scaled > 1)
-		return gradient(overtime_gradient, clamp(scaled, 0, 1))
-	var/max_value = max_displayable_cpu / 100
-	overtime_gradient[3] = max_value
-	return gradient(cpu_gradient, clamp(scaled, 0, max_value))
+		var/max_value = max_displayable_cpu / 100
+		overtime_gradient[3] = max_value
+		return gradient(overtime_gradient, clamp(scaled, 0, max_value))
+	return gradient(cpu_gradient, clamp(scaled, 0, 1))
