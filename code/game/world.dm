@@ -255,9 +255,9 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			<a href='byond://?src=[REF(src)];act=toggle_graph'>CPU Graphing [display_graph]</a>\n\
 		Glide: New ([GLOB.glide_size_multiplier]) Old ([GLOB.old_glide_size_multiplier])\n\
 		Graph: \
-			Displaying <a href='byond://?src=[REF(src)];act=set_graph_mode'>[display_mode]</a> \
+			Displaying \[<a href='byond://?src=[REF(src)];act=set_graph_mode'>[display_mode]</a>\] \
 			<a href='byond://?src=[REF(src)];act=freeze_graph'>[graph_display.freeze ? "Thaw" : "Freeze"]</a> \
-			Max Displayable Value <a href='byond://?src=[REF(src)];act=set_graph_scale'>[graph_display.max_displayable_cpu]</a>\n\
+			Max Displayable Value \[<a href='byond://?src=[REF(src)];act=set_graph_scale'>[graph_display.max_displayable_cpu]</a>\]\n\
 		Floor: <a href='byond://?src=[REF(src)];act=set_floor'>[GLOB.floor_cpu]</a>\n\
 		Sustain: <a href='byond://?src=[REF(src)];act=set_sustain_cpu'>[GLOB.sustain_cpu]</a> \
 			<a href='byond://?src=[REF(src)];act=set_sustain_chance'>[GLOB.sustain_cpu_chance]%</a>\n\
