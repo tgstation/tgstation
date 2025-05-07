@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(mapping)
 		/datum/controller/subsystem/job,
 		/datum/controller/subsystem/processing/station,
 		/datum/controller/subsystem/processing/reagents,
+		/datum/controller/subsystem/automapper, // DOPPLER EDIT ADDITION
 	)
 	runlevels = ALL
 

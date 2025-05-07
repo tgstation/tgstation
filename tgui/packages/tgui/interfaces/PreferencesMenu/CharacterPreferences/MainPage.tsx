@@ -4,8 +4,8 @@ import { sendAct, useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
-  Floating,
   Dropdown, // DOPPLER ADDITION
+  Floating,
   Input,
   LabeledList,
   Section,

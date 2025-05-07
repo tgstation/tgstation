@@ -6,7 +6,7 @@
 	category_name = "Hands"
 	category_ui_icon = FA_ICON_HAND
 	type_to_generate = /datum/loadout_item/gloves
-	tab_order = /datum/loadout_category/feet::tab_order + 1
+	tab_order = /datum/loadout_category/shoes::tab_order + 1
 
 /datum/loadout_item/gloves
 	abstract_type = /datum/loadout_item/gloves

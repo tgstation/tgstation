@@ -1,6 +1,9 @@
 SUBSYSTEM_DEF(area_spawn)
 	name = "Area Spawn"
 	flags = SS_NO_FIRE
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+	)
 
 	// Can't be on tile or a neighbor.
 	// Usually things where it's important to be sure the players can walk up to them, but aren't dense.
@@ -289,7 +292,7 @@ SUBSYSTEM_DEF(area_spawn)
 	if(!LAZYLEN(available_turfs))
 		if(!optional)
 			log_mapping("[src.type] could not find any suitable turfs on map [SSmapping.current_map.map_name]!")
-			SSarea_spawn.failed_area_spawns += src.type
+			SSarea_spawn.failed_area_spawns += list(list(src.type = SSmapping.current_map.map_name))
 		return
 
 	for(var/i in 1 to amount_to_spawn)

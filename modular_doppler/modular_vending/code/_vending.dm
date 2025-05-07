@@ -52,10 +52,10 @@
 		if(premium[item] < MINIMUM_CLOTHING_STOCK && allow_increase(item))
 			premium[item] = MINIMUM_CLOTHING_STOCK
 
-	QDEL_NULL(products_doppler)
-	QDEL_NULL(product_categories_doppler)
-	QDEL_NULL(premium_doppler)
-	QDEL_NULL(contraband_doppler)
+	products_doppler?.Cut()
+	product_categories_doppler?.Cut()
+	premium_doppler?.Cut()
+	contraband_doppler?.Cut()
 	return ..()
 
 /// This proc checks for forbidden traits cause it'd be pretty bad to have 5 insuls available to assistants roundstart at the vendor!

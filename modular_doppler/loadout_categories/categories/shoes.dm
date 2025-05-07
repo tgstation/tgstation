@@ -115,10 +115,6 @@
 	name = "Green Lizardskin Shoes"
 	item_path = /obj/item/clothing/shoes/discoshoes
 
-/datum/loadout_item/shoes/wraps/glow_shoes
-	name = "Glow Shoes"
-	item_path = /obj/item/clothing/shoes/glow
-
 /datum/loadout_item/shoes/wraps/swag
 	name = "Drip Shoes"
 	item_path = /obj/item/clothing/shoes/swagshoes
