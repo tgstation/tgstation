@@ -145,8 +145,8 @@
 	while(other_stack)
 		if(merge(other_stack))
 			return FALSE
-		other_stack = null // prevents hard deletes as a result of CHECK_TICK sleeping while we have a reference to a stack
-		CHECK_TICK
+		//other_stack = null // prevents hard deletes as a result of CHECK_TICK sleeping while we have a reference to a stack
+		//CHECK_TICK
 		other_stack = find_other_stack(already_found)
 	return TRUE
 
