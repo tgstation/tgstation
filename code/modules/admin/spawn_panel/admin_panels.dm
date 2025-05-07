@@ -399,9 +399,9 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 	if(pod)
 		new /obj/effect/pod_landingzone(target, pod)
 
-	log_admin("[key_name(usr)] created [amount == 1 ? "an instance" : "[amount] instances"] of [path]")
+	log_admin("[key_name(user)] created [amount == 1 ? "an instance" : "[amount] instances"] of [path]")
 	if(ispath(path, /mob))
-		message_admins("[key_name_admin(usr)] created [amount == 1 ? "an instance" : "[amount] instances"] of [path]")
+		message_admins("[key_name_admin(user)] created [amount == 1 ? "an instance" : "[amount] instances"] of [path]")
 
 #undef WHERE_FLOOR_BELOW_MOB
 #undef WHERE_SUPPLY_BELOW_MOB
