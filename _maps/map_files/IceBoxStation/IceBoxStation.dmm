@@ -48120,8 +48120,7 @@
 /obj/structure/sign/painting/library_secure{
 	pixel_x = 32
 	},
-/obj/machinery/door/window/right{
-	dir = 8;
+/obj/machinery/door/window/right/directional/west{
 	name = "Secure Art Exhibition";
 	req_access = list("library")
 	},
