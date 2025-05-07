@@ -44,6 +44,8 @@
 	pkc.current_inhand_icon_state = active_skin.retool_inhand_icon
 	if (active_skin.retool_projectile_icon)
 		pkc.projectile_icon = active_skin.retool_projectile_icon
+	if (active_skin.retool_projectile_icon_state)
+		pkc.projectile_icon_state = active_skin.retool_projectile_icon_state
 	// Should either have both, or neither
 	if (active_skin.retool_lefthand_file)
 		pkc.lefthand_file = active_skin.retool_lefthand_file
@@ -66,6 +68,7 @@
 	pkc.icon_state = initial(pkc.icon_state)
 	pkc.current_inhand_icon_state = initial(pkc.current_inhand_icon_state)
 	pkc.projectile_icon = initial(pkc.projectile_icon)
+	pkc.projectile_icon_state = initial(pkc.projectile_icon_state)
 	pkc.lefthand_file = initial(pkc.lefthand_file)
 	pkc.righthand_file = initial(pkc.righthand_file)
 	pkc.worn_icon = initial(pkc.worn_icon)
@@ -86,8 +89,10 @@
 	var/retool_icon_state = "ipickaxe"
 	///Specifies the icon state for the crusher's appearance in hand. Should appear in both retool_lefthand_file and retool_righthand_file.
 	var/retool_inhand_icon = "ipickaxe"
-	///For if the retool kit changes the projectile's appearance. The sprite should be in icons/obj/weapons/guns/projectiles.dmi.
-	var/retool_projectile_icon = null
+	/// Specifies the icon file in which the crusher's projectile sprite is located.
+	var/retool_projectile_icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	///For if the retool kit changes the projectile's appearance.
+	var/retool_projectile_icon_state = null
 	/// Specifies the left hand inhand icon file. Don't forget to set the right hand file as well.
 	var/retool_lefthand_file = null
 	/// Specifies the right hand inhand icon file. Don't forget to set the left hand file as well.
@@ -120,7 +125,7 @@
 	name = "harpoon"
 	retool_icon_state = "crusher_harpoon"
 	retool_inhand_icon = "crusher_harpoon"
-	retool_projectile_icon = "pulse_harpoon"
+	retool_projectile_icon_state = "pulse_harpoon"
 
 /datum/crusher_skin/harpoon/New(obj/item/kinetic_crusher/new_crusher)
 	. = ..()
@@ -202,5 +207,5 @@
 /datum/crusher_skin/ashen_skull
 	retool_icon_state = "crusher_skull"
 	retool_inhand_icon = "crusher_skull"
-	retool_projectile_icon = "pulse_skull"
+	retool_projectile_icon_state = "pulse_skull"
 	normal_skin = FALSE

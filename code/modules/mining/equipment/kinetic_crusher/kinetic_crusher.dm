@@ -50,8 +50,10 @@
 	var/backstab_bonus = 30
 	/// Used by retool kits when changing the crusher's appearance
 	var/current_inhand_icon_state = "crusher"
+	/// The file in which our projectile icon resides
+	var/projectile_icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	/// Used by retool kits when changing the crusher's projectile sprite
-	var/projectile_icon = "pulse1"
+	var/projectile_icon_state = "pulse1"
 	/// Wielded damage we deal, aka our "real" damage
 	var/force_wielded = 20
 
@@ -220,7 +222,8 @@
 		return
 	var/obj/projectile/destabilizer/destabilizer = new(proj_turf)
 	SEND_SIGNAL(src, COMSIG_CRUSHER_FIRED_BLAST, target, user, destabilizer)
-	destabilizer.icon_state = projectile_icon
+	destabilizer.icon = projectile_icon
+	destabilizer.icon_state = projectile_icon_state
 	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.aim_projectile(target, user, modifiers)
