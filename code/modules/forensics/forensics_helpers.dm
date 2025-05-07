@@ -85,21 +85,24 @@
 	return cached_blood_color
 
 /// Check if we have any emissive blood on us
-/atom/proc/get_blood_emissive_alpha()
-	if (cached_blood_emissive)
+/// is_worn - When TRUE, we're fetching the value for mob overlays, in which case we bypass the cache
+/atom/proc/get_blood_emissive_alpha(is_worn = FALSE)
+	if (cached_blood_emissive && !is_worn)
 		return cached_blood_emissive
 
 	var/list/blood_DNA = GET_ATOM_BLOOD_DECALS(src)
 	if (!length(blood_DNA))
-		return
+		return 0
 
-	cached_blood_emissive = 0
+	var/blood_alpha = 0
 	for (var/blood_key in blood_DNA)
 		var/datum/blood_type/blood_type = blood_DNA[blood_key]
-		cached_blood_emissive += blood_type.get_emissive_alpha(src)
+		blood_alpha += blood_type.get_emissive_alpha(src, is_worn)
 
-	cached_blood_emissive /= length(blood_DNA)
-	return cached_blood_emissive
+	blood_alpha /= length(blood_DNA)
+	if (!is_worn)
+		cached_blood_emissive = blood_alpha
+	return blood_alpha
 
 /// Adds blood dna to the atom
 /atom/proc/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases) //ASSOC LIST DNA = BLOODTYPE
@@ -131,6 +134,7 @@
 		// We shouldn't ever get no valid blood types with BLOOD_COVER_TURFS and first_dna == 0 here so we're safe
 		if(blood_type.blood_flags & BLOOD_COVER_TURFS)
 			blood_type.set_up_blood(src, first_dna == 0)
+	add_diseases(diseases)
 	update_appearance()
 	add_atom_colour(get_blood_dna_color(), FIXED_COLOUR_PRIORITY)
 	return TRUE

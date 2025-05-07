@@ -642,7 +642,7 @@ BLIND     // can't see anything
 
 	blood_overlay.color = get_blood_dna_color()
 
-	var/emissive_alpha = get_blood_emissive_alpha()
+	var/emissive_alpha = get_blood_emissive_alpha(is_worn = TRUE)
 	if (emissive_alpha)
 		var/mutable_appearance/emissive_overlay = emissive_appearance(blood_overlay.icon, blood_overlay.icon_state, src, alpha = emissive_alpha)
 		blood_overlay.overlays += emissive_overlay

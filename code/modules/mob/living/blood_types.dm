@@ -63,7 +63,8 @@
 	return get_color()
 
 /// Returns emissive value for an atom
-/datum/blood_type/proc/get_emissive_alpha(atom/source)
+/// is_worn - Emissive is being fetched for a mob overlay and not the item itself
+/datum/blood_type/proc/get_emissive_alpha(atom/source, is_worn = FALSE)
 	return 0
 
 /**
@@ -244,12 +245,14 @@
 	color = /datum/reagent/consumable/liquidelectricity::color
 	reagent_type = /datum/reagent/consumable/liquidelectricity
 
-/datum/blood_type/ethereal/get_emissive_alpha(atom/source)
-	return 93
+/datum/blood_type/ethereal/get_emissive_alpha(atom/source, is_worn = FALSE)
+	if (is_worn)
+		return 102
+	return 125
 
 /datum/blood_type/ethereal/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
 	. = ..()
-	blood.emissive_alpha = max(blood.emissive_alpha, new_splat ? 93 : 62)
+	blood.emissive_alpha = max(blood.emissive_alpha, new_splat ? 125 : 63)
 	if (new_splat)
 		return
 	blood.can_dry = FALSE

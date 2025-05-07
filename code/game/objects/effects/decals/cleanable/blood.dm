@@ -229,7 +229,7 @@
 	var/list/starting_color = rgb2num(base_color)
 
 	if (!starting_color)
-		starting_color = list(255, 255, 255)
+		starting_color = list(255, 255, 255, alpha)
 
 	// We want a fixed offset for a fixed drop in color intensity, plus a scaling offset based on our strongest color
 	// The scaling offset helps keep dark colors from turning black, while also ensurse bright colors don't stay super bright
@@ -251,7 +251,7 @@
 		clamp(starting_color[1] - red_offset, 0, 255),
 		clamp(starting_color[2] - green_offset, 0, 255),
 		clamp(starting_color[3] - blue_offset, 0, 255),
-		length(starting_color) >= 4 ? starting_color[4] : 255,
+		length(starting_color) >= 4 ? starting_color[4] : alpha, // maintain alpha! (if it has it)
 	)
 
 /obj/effect/decal/cleanable/blood/old
@@ -346,19 +346,80 @@
  * Add a new direction to this trail
  *
  * * new_dir: The direction to add
+ * * source - Mob we're sourcing blood from, if any
+ * * blood_to_add - Amount of bloodiness to give to the new component. Does not adjust this decal's own bloodiness
+ * * half_piece - If TRUE, only creates start of a trail. Does not support corners (diagonal directions)
  * This can be a cardinal direction, a diagonal direction, or a negative number to denote a cardinal direction angled 45 degrees.
  *
  * Returns the new trail, a [/obj/effect/decal/cleanable/blood/trail]
  */
-/obj/effect/decal/cleanable/blood/trail_holder/proc/add_dir_to_trail(new_dir = NORTH)
-	. = get_trail_component(new_dir, check_reverse = TRUE)
-	if(.)
-		return .
+/obj/effect/decal/cleanable/blood/trail_holder/proc/add_dir_to_trail(new_dir = NORTH, mob/living/source, blood_to_add = BLOOD_AMOUNT_PER_DECAL * 0.1, half_piece = FALSE)
+	var/check_reverse = TRUE
+	// Do not check the reverse dir if we're a diagonal corner
+	if (new_dir > 0 && !(new_dir in GLOB.cardinals))
+		check_reverse = FALSE
+	var/obj/effect/decal/cleanable/blood/trail/new_trail = get_trail_component(new_dir, check_reverse = check_reverse, check_diagonals = half_piece)
+	var/list/blood_DNA = GET_ATOM_BLOOD_DNA(src)
+	if (source)
+		// Source's DNA goes first as to override possible matches in non-enzyme DNA
+		blood_DNA = (source.get_blood_dna_list() || list()) | blood_DNA
 
-	var/obj/effect/decal/cleanable/blood/trail/new_trail = new(src, null, GET_ATOM_BLOOD_DNA(src))
+	if(new_trail)
+		// If we found a full trail (straight or diagonal), or a half trail that fully overlaps with us, abort this
+		if (!new_trail.half_piece || half_piece && LAZYACCESS(trail_components, "[new_dir]") == new_trail)
+			new_trail.adjust_bloodiness(blood_to_add)
+			if (source)
+				new_trail.add_mob_blood(source)
+			return new_trail
+
+		// We've found a mirrored half-piece, so we should merge into a full piece
+		// Alternatively, we've found a half piece while being a straight piece that overlaps with it
+		// in which case we just overlap with it which should get us the same full piece
+		new_trail.half_piece = FALSE
+		new_trail.update_appearance()
+		new_trail.adjust_bloodiness(blood_to_add)
+		if (source)
+			new_trail.add_mob_blood(source)
+		return new_trail
+
+	// There's a chance that we're on the same tile as a diagonal corner, in which case we need to check for those too
+	if (half_piece && new_dir > 0)
+		var/first_dir = (new_dir & (NORTH|SOUTH)) ? EAST : NORTH
+		var/second_dir = (new_dir & (NORTH|SOUTH)) ? WEST : SOUTH
+		new_trail = get_trail_component(new_dir | first_dir) || get_trail_component(new_dir | second_dir)
+		// Found a diagonal overlapping with us, abort
+		if (new_trail)
+			new_trail.adjust_bloodiness(blood_to_add)
+			if (source)
+				new_trail.add_mob_blood(source)
+			return new_trail
+
+		// Look for perpendicular pieces to merge into a diagonal with
+		new_trail = get_trail_component(first_dir)
+		if (!new_trail?.half_piece)
+			new_trail = get_trail_component(second_dir)
+
+		if (new_trail?.half_piece)
+			new_trail.half_piece = FALSE
+			LAZYREMOVE(trail_components, "[new_trail.dir]")
+			new_trail.setDir(new_dir | new_trail.dir)
+			LAZYSET(trail_components, "[new_trail.dir]", new_trail)
+			new_trail.update_appearance()
+			new_trail.adjust_bloodiness(blood_to_add)
+			if (source)
+				new_trail.add_mob_blood(source)
+			return new_trail
+
+	new_trail = new(src, source?.get_static_viruses(), blood_DNA)
+	if (half_piece)
+		new_trail.half_piece = TRUE
+		new_trail.update_appearance()
+
+	new_trail.adjust_bloodiness(blood_to_add - new_trail.bloodiness)
+
 	if(new_dir > 0)
 		// add some free sprite variation by flipping it around
-		if((new_dir in GLOB.cardinals) && prob(50))
+		if((new_dir in GLOB.cardinals) && prob(50) && !half_piece)
 			new_trail.setDir(REVERSE_DIR(new_dir))
 		// otherwise the dir is the same
 		else
@@ -392,6 +453,8 @@
 	decay_bloodiness = FALSE // bloodiness is used as a metric for for how big the sprite is, so don't decay passively
 	bloodiness = BLOOD_AMOUNT_PER_DECAL * 0.1
 	base_suffix = "trail"
+	/// Is this just half of a trail
+	var/half_piece = FALSE
 	/// Beyond a threshold we change to a bloodier icon state
 	var/very_bloody = FALSE
 
@@ -405,10 +468,20 @@
 
 /obj/effect/decal/cleanable/blood/trail/adjust_bloodiness(by_amount, ignore_timer = FALSE)
 	. = ..()
-	if(!very_bloody && bloodiness >= 0.25 * BLOOD_AMOUNT_PER_DECAL)
-		very_bloody = TRUE
-		icon_state = pick("trails_1", "trails_2")
-		update_appearance()
+	if(very_bloody || bloodiness < 0.25 * BLOOD_AMOUNT_PER_DECAL)
+		return
+
+	very_bloody = TRUE
+	icon_state = pick("trails_1", "trails_2")
+	base_icon_state = icon_state
+	update_appearance()
+
+/obj/effect/decal/cleanable/blood/trail/update_icon(updates)
+	if (half_piece)
+		icon_state = "[base_icon_state]_start"
+	else
+		icon_state = base_icon_state
+	return ..()
 
 /obj/effect/decal/cleanable/blood/gibs
 	name = "gibs"

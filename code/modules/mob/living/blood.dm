@@ -555,15 +555,22 @@
 	// This is insteas denoted by a negative direction (so we don't conflict with real dirs)
 	if(movement_direction in GLOB.diagonals)
 		trail_dir = -1 * movement_direction
+		// Create a full trail on the tile we came from, and a start of a trail at the one we arrived to
+		create_blood_trail_component(start, trail_dir, blood_to_add * 0.67, FALSE)
+		create_blood_trail_component(target_turf, get_dir(start, target_turf), blood_to_add * 0.33, TRUE)
+		return
+
+	var/continuing_trail = FALSE
 	// The mob is going a direction they were not previously facing
 	// We now factor in their facing direction to make a trail that looks like they're turning
 	// This is done by creating a diagonal dir
-	else if(trail_dir != was_facing && trail_dir != REVERSE_DIR(was_facing))
+	if(trail_dir != was_facing && trail_dir != REVERSE_DIR(was_facing))
 		// Look a step back to see if we should be constructing a diagonal dir
 		// If there's no existing trail making a curve would look weird
 		for(var/obj/effect/decal/cleanable/blood/trail_holder/past_trail in get_step(start, REVERSE_DIR(was_facing)))
 			if(past_trail.get_trail_component(was_facing, check_reverse = TRUE, check_diagonals = TRUE, check_reverse_diagonals = TRUE))
 				trail_dir |= was_facing
+				continuing_trail = TRUE
 				// In case we produced an invalid dir: go back on relevant axis
 				if((trail_dir & (NORTH|SOUTH)) == (NORTH|SOUTH))
 					trail_dir &= ~(was_facing & (NORTH|SOUTH))
@@ -571,35 +578,58 @@
 					trail_dir &= ~(was_facing & (EAST|WEST))
 				break
 
+	if (continuing_trail || (trail_dir in GLOB.diagonals))
+		create_blood_trail_component(start, trail_dir, blood_to_add * 0.67, FALSE)
+		create_blood_trail_component(target_turf, get_dir(start, target_turf), blood_to_add * 0.33, TRUE)
+		return
 
+	// If we're still moving cardinally and didn't change our dir, there's a chance that there's a half-trail on our turf
+	// in which case we want to continue it instead of doing a full trail
+	// Only scenario in which we don't have one is if we just started the trail from our tile
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/trail_holder in start)
+		var/obj/effect/decal/cleanable/blood/trail/trail = trail_holder.get_trail_component(trail_dir)
+		if (trail?.half_piece) // We're moving straight, so just continue the path
+			continuing_trail = TRUE
+			break
+
+	// If we've just started moving, put a half-trail on our previous turf instead of a full one
+	create_blood_trail_component(start, trail_dir, blood_to_add * 0.67, !continuing_trail)
+	create_blood_trail_component(target_turf, get_dir(start, target_turf), blood_to_add * 0.33, TRUE)
+/*
+ * Locate or create a trail holder, and add a dir to it
+ * Arguments:
+ * * trail_turf - Turf on which to look for/spawn a trail
+ * * trail_dir - Direction in which the trail will be facing. Could be diagonal for a corner, or negative for a true diagonal trail
+ * * blood_to_add - How much bloodiness we should add to the trail
+ * * half_piece - Should we only create a beginning of a trail, and not a full tile trail? Does not support corners
+ */
+/mob/living/proc/create_blood_trail_component(turf/trail_turf, trail_dir, blood_to_add, half_piece)
 	var/obj/effect/decal/cleanable/blood/trail_holder/trail
+	var/check_reverse = TRUE
+	// Do not check the reverse dir if we're a diagonal corner or a half piece
+	if (trail_dir > 0 && !(trail_dir in GLOB.cardinals) || half_piece)
+		check_reverse = FALSE
 	// Pick any trail in the turf to add onto
-	for(var/obj/effect/decal/cleanable/blood/trail_holder/any_trail in start)
+	for(var/obj/effect/decal/cleanable/blood/trail_holder/any_trail in trail_turf)
 		// If there exists a trail already, we will add onto the trial
 		// UNLESS that trail has the same direction component and it is already dried
 		//
 		// If that is the case we will look for another trail (or create a new one)
 		// (this will let fresh blood be laid over very dried blood)
-		var/obj/effect/decal/cleanable/blood/trail/any_trail_component = any_trail.get_trail_component(trail_dir, check_reverse = TRUE)
+		var/obj/effect/decal/cleanable/blood/trail/any_trail_component = any_trail.get_trail_component(trail_dir, check_reverse = check_reverse)
 		if(isnull(any_trail_component) || !any_trail_component.dried)
 			trail = any_trail
 			break
 
-	if(isnull(trail))
-		trail = new(start, get_static_viruses(), get_blood_dna_list())
-		if(QDELETED(trail))
-			return
-		trail.bloodiness = blood_to_add
-	else
-		trail.add_diseases(get_static_viruses())
-		trail.add_mob_blood(src)
+	if(!isnull(trail))
 		trail.adjust_bloodiness(blood_to_add)
+		return trail.add_dir_to_trail(trail_dir, src, blood_to_add, half_piece)
 
-	var/obj/effect/decal/cleanable/blood/trail/trail_component = trail.add_dir_to_trail(trail_dir, blood_to_add)
-	if(isnull(trail_component))
+	trail = new(trail_turf, get_static_viruses(), get_blood_dna_list())
+	if(QDELETED(trail))
 		return
-	trail_component.add_mob_blood(src)
-	trail_component.adjust_bloodiness(blood_to_add)
+	trail.bloodiness = blood_to_add
+	return trail.add_dir_to_trail(trail_dir, src, blood_to_add, half_piece)
 
 /mob/living/carbon/human/make_blood_trail(turf/target_turf, turf/start, direction)
 	if(!is_bleeding())
