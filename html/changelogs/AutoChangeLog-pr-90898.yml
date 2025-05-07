@@ -1,0 +1,7 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - bugfix: "Shuttle blueprints don't error out when opening them while on non-custom shuttles."
+  - bugfix: "Custom shuttles calculate their engine count correctly, no longer lagging behind by one engine (un)installation."
+  - bugfix: "Custom shuttle docking consoles are no longer blocked by where the linked shuttle currently is."
+  - qol: "Shuttle blueprints now show you how large a shuttle frame is, along with any issues preventing you from building or expanding a shuttle using said frame."

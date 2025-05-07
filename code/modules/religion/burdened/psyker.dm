@@ -38,7 +38,7 @@
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
 	head_flags = HEAD_DEBRAIN
 
-/obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, abort)
+/obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, lazy)
 	. = ..()
 	if(!.)
 		return
@@ -65,7 +65,7 @@
 		return
 	apply_damage(50, BRUTE, BODY_ZONE_HEAD)
 	to_chat(src, span_userdanger("Your head splits open! Your brain mutates!"))
-	new /obj/effect/gibspawner/generic(drop_location(), src)
+	new /obj/effect/gibspawner/generic(drop_location(), src, get_blood_dna_list())
 	emote("scream")
 
 /// Proc with no side effects that turns someone into a psyker. returns FALSE if it could not psykerize.
