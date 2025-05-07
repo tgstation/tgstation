@@ -24,6 +24,9 @@
 
 /obj/item/usb_cable/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(src, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(before_shuttle_move))
+	RegisterSignal(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(after_shuttle_move))
 	var/static/list/connections = list(
 		COMSIG_MOVABLE_MOVED = PROC_REF(on_moved),
 		COMSIG_ATOM_BEFORE_SHUTTLE_MOVE = PROC_REF(before_shuttle_move),
