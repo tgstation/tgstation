@@ -33,6 +33,9 @@
 		to_chat(M, span_warning("You can't enter the exosuit with other creatures attached to you!"))
 		log_message("Permission denied (Attached mobs).", LOG_MECHA)
 		return FALSE
+	if(M.get_active_held_item() || M.get_inactive_held_item())
+		to_chat(M, span_warning("You can't enter the exosuit while your hands are occupied!"))
+		return FALSE
 	return ..()
 
 ///proc called when a new non-mmi mob enters this mech
