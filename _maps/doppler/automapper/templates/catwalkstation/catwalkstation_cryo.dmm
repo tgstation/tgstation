@@ -1,0 +1,182 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/iron,
+/area/station/commons/cryopods)
+"b" = (
+/obj/structure/cable,
+/obj/structure/falsewall,
+/turf/open/floor/iron,
+/area/station/commons/cryopods)
+"e" = (
+/obj/structure/sign/directions/dorms{
+	dir = 1;
+	pixel_y = 4
+	},
+/turf/closed/wall,
+/area/station/commons/cryopods)
+"f" = (
+/obj/structure/sign/poster/timeclock_psa/directional/south,
+/turf/open/floor/glass,
+/area/station/commons/cryopods)
+"h" = (
+/obj/machinery/cryopod,
+/obj/effect/turf_decal/siding/white,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/commons/cryopods)
+"m" = (
+/obj/machinery/camera/autoname/directional/north{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/cryopods)
+"n" = (
+/obj/machinery/time_clock/directional/east{
+	pixel_x = 0;
+	pixel_y = -32
+	},
+/turf/open/floor/glass,
+/area/station/commons/cryopods)
+"o" = (
+/obj/machinery/cryopod,
+/obj/structure/cable,
+/obj/effect/turf_decal/siding/white{
+	dir = 6
+	},
+/turf/open/floor/iron/dark,
+/area/station/commons/cryopods)
+"p" = (
+/obj/structure/cable,
+/obj/item/kirbyplants/random,
+/obj/structure/sign/poster/official/bless_this_spess/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/cryopods)
+"r" = (
+/obj/structure/table,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron,
+/area/station/commons/cryopods)
+"u" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/obj/machinery/computer/cryopod/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/cryopods)
+"w" = (
+/obj/structure/ladder,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron,
+/area/station/commons/cryopods)
+"z" = (
+/turf/open/floor/glass,
+/area/station/commons/cryopods)
+"E" = (
+/obj/machinery/door/airlock/multi_tile/public/glass{
+	name = "Cryopods";
+	dir = 1
+	},
+/obj/effect/landmark/navigate_destination,
+/turf/open/floor/iron,
+/area/station/commons/cryopods)
+"H" = (
+/obj/structure/table,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron,
+/area/station/commons/cryopods)
+"J" = (
+/turf/closed/wall,
+/area/station/commons/cryopods)
+"M" = (
+/obj/structure/cable,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/cryopods)
+"N" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/commons/cryopods)
+"T" = (
+/obj/machinery/cryopod,
+/obj/effect/turf_decal/siding/white{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/commons/cryopods)
+"X" = (
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/station/commons/cryopods)
+
+(1,1,1) = {"
+J
+J
+N
+J
+J
+"}
+(2,1,1) = {"
+J
+w
+z
+r
+N
+"}
+(3,1,1) = {"
+b
+p
+z
+X
+N
+"}
+(4,1,1) = {"
+J
+m
+z
+n
+J
+"}
+(5,1,1) = {"
+J
+T
+z
+a
+E
+"}
+(6,1,1) = {"
+J
+h
+z
+a
+a
+"}
+(7,1,1) = {"
+J
+o
+z
+f
+J
+"}
+(8,1,1) = {"
+J
+M
+z
+X
+N
+"}
+(9,1,1) = {"
+J
+u
+z
+H
+N
+"}
+(10,1,1) = {"
+J
+J
+N
+J
+e
+"}
