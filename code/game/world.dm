@@ -205,7 +205,7 @@ GLOBAL_VAR_INIT(spike_cpu, 0)
 
 GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 #define USAGE_DISPLAY_CPU "CPU"
-#define USAGE_DISPLAY_MC "Before Tick()"
+#define USAGE_DISPLAY_MC "Before Tick"
 #define USAGE_DISPLAY_POST_TICK "Maptick + Verbs"
 /atom/movable/screen/usage_display
 	screen_loc = "LEFT:8, CENTER-3:14"
@@ -268,20 +268,20 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		Correction Target: [FORMAT_CPU(GLOB.corrective_cpu_threshold)]\n\
 		Correction Distance: [FORMAT_CPU(90 - cpu_values[last_index])]\n\
 		Frame Behind CPU: [FORMAT_CPU(cpu_values[last_index])]\n\
-		Frame Behind Pre Tick(): [FORMAT_CPU(pre_tick_cpu_usage[last_index])]\n\
+		Frame Behind Pre Tick: [FORMAT_CPU(pre_tick_cpu_usage[last_index])]\n\
 		Frame Behind Tick: [FORMAT_CPU(tick_info.tick_cpu_usage[last_index])]\n\
 		Frame Behind ~Map Cpu: [FORMAT_CPU(world.map_cpu)]\n\
 		Frame Behind ~Verb: [FORMAT_CPU(verb_cost[last_index])]\n\
 		<div style=\"color:#FF0000;\">\
 			Max CPU [full_time]s: [FORMAT_CPU(max(cpu_values))]\n\
-			Max Pre Tick(): [FORMAT_CPU(max(pre_tick_cpu_usage))]\n\
+			Max Pre Tick: [FORMAT_CPU(max(pre_tick_cpu_usage))]\n\
 			Max Tick [full_time]s: [FORMAT_CPU(max(tick_info.tick_cpu_usage))]\n\
 			Max ~Map [full_time]s: [FORMAT_CPU(max(tick_info.map_cpu_usage))]\n\
 			Max ~Verb [full_time]s: [FORMAT_CPU(max(verb_cost))]\n\
 		</div>\
 		<div style=\"color:#0096FF;\">\
 			Min CPU [full_time]s: [FORMAT_CPU(min(cpu_values))]\n\
-			Min Pre Tick(): [FORMAT_CPU(min(pre_tick_cpu_usage))]\n\
+			Min Pre Tick: [FORMAT_CPU(min(pre_tick_cpu_usage))]\n\
 			Min Tick [full_time]s: [FORMAT_CPU(min(tick_info.tick_cpu_usage))]\n\
 			Min ~Map [full_time]s: [FORMAT_CPU(min(tick_info.map_cpu_usage))]\n\
 			Min ~Verb [full_time]s: [FORMAT_CPU(min(verb_cost))]\
