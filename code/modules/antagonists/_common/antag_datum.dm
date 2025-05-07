@@ -3,10 +3,6 @@
 
 GLOBAL_LIST_EMPTY(antagonists)
 
-// melbert todo : WE HAVE FIVE WAYS TO SAY THIS ANTAG ISN'T A REAL ANTAG
-// prevent_roundtype_conversion, can_coexist_with_others, count_against_dynamic_roll_chance, antag_flags = ANTAG_FAKE, and block_midrounds
-// also typecache_datum_blacklist kinda
-// i hate it here
 /datum/antagonist
 	///Public name for this antagonist. Appears for player prompts and round-end reports.
 	var/name = "\improper Antagonist"

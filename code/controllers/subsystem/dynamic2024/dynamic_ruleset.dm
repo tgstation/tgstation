@@ -230,11 +230,11 @@
 		if(!candidate_client || !candidate.mind)
 			continue
 		if(candidate_client.get_remaining_days(minimum_required_age) > 0)
-			return FALSE
+			continue
 		if(!(pref_flag in candidate_client.prefs.be_special))
-			return FALSE
+			continue
 		if(is_banned_from(candidate.ckey, list(ROLE_SYNDICATE, jobban_flag || pref_flag)))
-			return FALSE
+			continue
 		if(!is_valid_candidate(candidate, candidate_client))
 			continue
 		valid_candidates += candidate
@@ -254,7 +254,8 @@
 	if(length(resulting_candidates) <= num_candidates)
 		return resulting_candidates
 
-	return resulting_candidates.Cut(1, num_candidates + 1)
+	resulting_candidates.Cut(num_candidates + 1)
+	return resulting_candidates
 
 /datum/dynamic_ruleset/proc/load_templates()
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -323,6 +324,7 @@
 	config_tag = "Roundstart Traitor"
 	pref_flag = ROLE_TRAITOR
 	weight = 10
+	min_pop = 3
 	max_antag_cap = list("denominator" = 38)
 
 /datum/dynamic_ruleset/roundstart/traitor/assign_role(datum/mind/candidate)
@@ -338,6 +340,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
+	min_pop = 30
 	max_antag_cap = 1
 
 /datum/dynamic_ruleset/roundstart/malf_ai/get_always_blacklisted_roles()
@@ -364,6 +367,7 @@
 	pref_flag = ROLE_BROTHER
 	weight = 5
 	max_antag_cap = list("denominator" = 29)
+	min_pop = 10
 
 /datum/dynamic_ruleset/roundstart/blood_brother/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/brother)
@@ -373,6 +377,7 @@
 	config_tag = "Roundstart Changeling"
 	pref_flag = ROLE_CHANGELING
 	weight = 3
+	min_pop = 15
 	max_antag_cap = list("denominator" = 29)
 
 /datum/dynamic_ruleset/roundstart/changeling/assign_role(datum/mind/candidate)
@@ -384,6 +389,7 @@
 	pref_flag = ROLE_HERETIC
 	weight = 3
 	max_antag_cap = list("denominator" = 24)
+	min_pop = 15
 
 /datum/dynamic_ruleset/roundstart/heretic/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/heretic)
@@ -400,14 +406,12 @@
 		DYNAMIC_TIER_HIGH = 2,
 	)
 	max_antag_cap = 1
+	min_pop = 30
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
-/datum/dynamic_ruleset/roundstart/wizard/can_be_selected(population_size, list/antag_candidates)
-	return length(GLOB.wizardstart)
-
 /datum/dynamic_ruleset/roundstart/wizard/assign_role(datum/mind/candidate)
-	candidate.add_antag_datum(/datum/antagonist/wizard)
-	candidate.current.forceMove(pick(GLOB.wizardstart))
+	var/datum/antagonist/wizard/wiz = candidate.add_antag_datum(/datum/antagonist/wizard)
+	wiz.send_to_lair()
 
 /datum/dynamic_ruleset/roundstart/wizard/round_result()
 	for(var/datum/mind/wiz as anything in selected_minds)
@@ -427,6 +431,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
+	min_pop = 30
 	min_antag_cap = list("denominator" = 20, "offset" = 1)
 	/// Ratio of cultists getting on the shuttle to be considered a minor win
 	var/ratio_to_be_considered_escaped = 0.5
@@ -466,6 +471,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
+	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 
@@ -526,6 +532,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
+	min_pop = 30
 	min_antag_cap = 3
 
 /datum/dynamic_ruleset/roundstart/revolution/can_be_selected(population_size, list/antag_candidates)
@@ -562,7 +569,9 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
+	min_pop = 10
 	min_antag_cap = list("denominator" = 20, "offset" = 1)
+	repeatable = FALSE
 
 /datum/dynamic_ruleset/roundstart/spies/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/spy)
@@ -664,6 +673,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
 	)
+	min_pop = 30
 	max_antag_cap = 1
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 	signup_atom_appearance = /obj/item/clothing/head/wizard
@@ -686,6 +696,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
+	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	signup_atom_appearance = /obj/machinery/nuclearbomb/syndicate
@@ -755,12 +766,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
-	min_pop = list(
-		DYNAMIC_TIER_LOW = 36,
-		DYNAMIC_TIER_LOWMEDIUM = 30,
-		DYNAMIC_TIER_MEDIUMHIGH = 27,
-		DYNAMIC_TIER_HIGH = 25,
-	)
+	min_pop = 30
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/structure/blob/normal
 
@@ -779,25 +785,20 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 5,
 		DYNAMIC_TIER_HIGH = 5,
 	)
-	min_pop = list(
-		DYNAMIC_TIER_LOW = 36,
-		DYNAMIC_TIER_LOWMEDIUM = 30,
-		DYNAMIC_TIER_MEDIUMHIGH = 27,
-		DYNAMIC_TIER_HIGH = 25,
-	)
+	min_pop = 30
 	max_antag_cap = 1
 	min_antag_cap = 1
 	signup_atom_appearance = /mob/living/basic/alien
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/New(list/dynamic_config)
 	. = ..()
-	max_antag_cap += prob(50)
+	max_antag_cap += prob(50) // 50% chance to get a second xeno, free!
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/can_be_selected(population_size, list/antag_candidates)
 	return ..() && length(find_vents()) > 0
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/assign_role(datum/mind/candidate)
-	var/obj/vent = pick(find_vents())
+	var/obj/vent = pick(find_vents()) // melbert todo : ensure unique vent per candidate
 	var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
 	candidate.transfer_to(new_xeno, force_key_move = TRUE)
 	new_xeno.move_into_vent(vent)
@@ -853,12 +854,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 5,
 		DYNAMIC_TIER_HIGH = 5,
 	)
-	min_pop = list(
-		DYNAMIC_TIER_LOW = 36,
-		DYNAMIC_TIER_LOWMEDIUM = 30,
-		DYNAMIC_TIER_MEDIUMHIGH = 27,
-		DYNAMIC_TIER_HIGH = 25,
-	)
+	min_pop = 30
 	max_antag_cap = 1
 	signup_atom_appearance = /mob/living/basic/space_dragon
 
@@ -882,6 +878,7 @@
 	pref_flag = ROLE_ABDUCTOR
 	ruleset_flags = RULESET_INVADER
 	weight = 5
+	min_pop = 20
 	min_antag_cap = 2
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	signup_atom_appearance = /obj/item/melee/baton/abductor
@@ -898,12 +895,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
 	)
-	min_pop = list(
-		DYNAMIC_TIER_LOW = 36,
-		DYNAMIC_TIER_LOWMEDIUM = 30,
-		DYNAMIC_TIER_MEDIUMHIGH = 27,
-		DYNAMIC_TIER_HIGH = 25,
-	)
+	min_pop = 30
 	max_antag_cap = 1
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 	signup_atom_appearance = /obj/item/energy_katana
@@ -928,12 +920,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
 	)
-	min_pop = list(
-		DYNAMIC_TIER_LOW = 36,
-		DYNAMIC_TIER_LOWMEDIUM = 30,
-		DYNAMIC_TIER_MEDIUMHIGH = 27,
-		DYNAMIC_TIER_HIGH = 25,
-	)
+	min_pop = 30
 	max_antag_cap = 2 // determines how many eggs spawn
 	min_antag_cap = 0 // eggs will spawn if there are no ghosts around
 
@@ -948,6 +935,7 @@
 	pref_flag = ROLE_REVENANT
 	ruleset_flags = RULESET_INVADER
 	weight = 5
+	min_pop = 10
 	max_antag_cap = 1
 	signup_atom_appearance = /mob/living/basic/revenant
 	/// There must be this many dead mobs on the station for a revenant to spawn (of all mob types, not just humans)
@@ -958,7 +946,7 @@
 	if(!..())
 		return FALSE
 	var/num_station_corpses = 0
-	for(var/mob/deceased in GLOB.dead_mob_list)
+	for(var/mob/deceased as anything in GLOB.dead_mob_list)
 		var/turf/deceased_turf = get_turf(deceased)
 		if(is_station_level(deceased_turf?.z))
 			num_station_corpses++
@@ -993,6 +981,7 @@
 	pref_flag = "Space Pirates"
 	ruleset_flags = RULESET_INVADER
 	weight = 3
+	min_pop = 15
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
 	signup_atom_appearance = /obj/item/clothing/head/costume/pirate
 
@@ -1013,6 +1002,7 @@
 	pref_flag = "Space Pirates"
 	ruleset_flags = RULESET_INVADER
 	weight = 3
+	min_pop = 25
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
 
 /datum/dynamic_ruleset/midround/from_ghosts/pirates/heavy/pirate_pool()
@@ -1026,6 +1016,7 @@
 	jobban_flag = ROLE_CHANGELING
 	ruleset_flags = RULESET_INVADER
 	weight = 5
+	min_pop = 15
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/meteor/meaty/changeling
 
@@ -1039,6 +1030,7 @@
 	pref_flag = ROLE_PARADOX_CLONE
 	ruleset_flags = RULESET_INVADER
 	weight = 5
+	min_pop = 10
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/bluespace_stream
 
@@ -1078,6 +1070,7 @@
 	pref_flag = ROLE_VOIDWALKER
 	ruleset_flags = RULESET_INVADER
 	weight = 5
+	min_pop = 15
 	max_antag_cap = 1
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
 	signup_atom_appearance = /obj/item/clothing/head/helmet/skull/cosmic
@@ -1140,6 +1133,7 @@
 	pref_flag = ROLE_SLEEPER_AGENT
 	jobban_flag = ROLE_TRAITOR
 	weight = 10
+	min_pop = 3
 
 /datum/dynamic_ruleset/midround/from_living/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)
@@ -1156,6 +1150,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
+	min_pop = 30
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai/get_always_blacklisted_roles()
 	return list()
@@ -1178,6 +1173,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
+	min_pop = 30
 
 /datum/dynamic_ruleset/midround/from_living/blob/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/blob/infection)
@@ -1199,6 +1195,7 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 1,
 	)
+	min_pop = 5
 
 /datum/dynamic_ruleset/midround/from_living/obsesed/is_valid_candidate(mob/candidate, client/candidate_client)
 	return ..() && !!candidate.get_organ_by_type(/obj/item/organ/brain)
@@ -1236,6 +1233,7 @@
 	pref_flag = ROLE_SYNDICATE_INFILTRATOR
 	jobban_flag = ROLE_TRAITOR
 	weight = 10
+	min_pop = 3
 
 /datum/dynamic_ruleset/latejoin/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)
@@ -1246,6 +1244,7 @@
 	pref_flag = ROLE_HERETIC_SMUGGLER
 	jobban_flag = ROLE_HERETIC
 	weight = 3
+	min_pop = 15
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE)
 
 /datum/dynamic_ruleset/latejoin/heretic/assign_role(datum/mind/candidate)
@@ -1257,6 +1256,7 @@
 	pref_flag = ROLE_STOWAWAY_CHANGELING
 	jobban_flag = ROLE_CHANGELING
 	weight = 3
+	min_pop = 15
 
 /datum/dynamic_ruleset/latejoin/changeling/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/changeling)
@@ -1267,6 +1267,7 @@
 	pref_flag = ROLE_PROVOCATEUR
 	jobban_flag = ROLE_REV_HEAD
 	weight = 1
+	min_pop = 30
 
 /datum/dynamic_ruleset/latejoin/revolution/can_be_selected(population_size, list/antag_candidates)
 	var/head_check = 0

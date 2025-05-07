@@ -187,8 +187,7 @@ SUBSYSTEM_DEF(dynamic)
 /datum/controller/subsystem/dynamic/proc/pick_roundstart_rulesets(list/antag_candidates)
 	PRIVATE_PROC(TRUE)
 
-	var/roundstart_ruleset_num = rulesets_to_spawn[ROUNDSTART_RANGE]
-	if(roundstart_ruleset_num <= 0)
+	if(rulesets_to_spawn[ROUNDSTART_RANGE] <= 0)
 		return
 
 	var/list/rulesets_weighted = get_roundstart_rulesets(antag_candidates)
@@ -207,12 +206,14 @@ SUBSYSTEM_DEF(dynamic)
 		log_dynamic("Roundstart: Ruleset [picked_ruleset.name] (Chance: [round(rulesets_weighted[picked_ruleset] / total_weight * 100, 0.01)]%)")
 		if(!picked_ruleset.repeatable)
 			rulesets_weighted -= picked_ruleset
-		else if(picked_ruleset.repeatable_weight_decrease)
-			rulesets_weighted[picked_ruleset] -= picked_ruleset.repeatable_weight_decrease
-			total_weight -= picked_ruleset.repeatable_weight_decrease
+			continue
+
+		// Rulesets are not singletons; thus we need to take out the one we picked and replace it with a fresh one
+		rulesets_weighted[new picked_ruleset.type(dynamic_config)] = rulesets_weighted[picked_ruleset] - picked_ruleset.repeatable_weight_decrease
+		rulesets_weighted -= picked_ruleset
+		total_weight -= picked_ruleset.repeatable_weight_decrease
 
 	// clean up unused rulesets
-	rulesets_weighted -= picked_rulesets
 	QDEL_LIST(rulesets_weighted)
 	return picked_rulesets
 
