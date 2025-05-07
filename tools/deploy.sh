@@ -23,7 +23,14 @@ if [ -d ".git" ]; then
   mkdir -p $1/.git/logs
   cp -r .git/logs/* $1/.git/logs/
 fi
+# DOPPLER EDIT ADDITION START - Get all the .dmis and json configs from modular_nova
+mkdir -p \
+		$1/modular_doppler \
+		$1/modular_doppler/modular_cosmetics/GAGS/json_configs
 
+find modular_doppler/ -name \*.dmi -exec cp --parents {} $1 \;
+find modular_nova/modules/GAGS/json_configs -name \*.json -exec cp --parents {} $1 \;
+# DOPPLER EDIT ADDITION END
 cp tgstation.dmb tgstation.rsc $1/
 cp -r _maps/* $1/_maps/
 cp -r code/datums/greyscale/json_configs/* $1/code/datums/greyscale/json_configs/
