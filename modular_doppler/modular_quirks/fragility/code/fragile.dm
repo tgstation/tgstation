@@ -34,11 +34,9 @@
 /datum/preference/numeric/fragile_customization/burn
 	savefile_key = "fragile_burn"
 
-/datum/quirk/fragile/post_add()
-	. = ..()
-
+/datum/quirk/fragile/add_unique(client/client_source)
 	var/mob/living/carbon/human/user = quirk_holder
-	var/datum/preferences/prefs = user.client.prefs
+	var/datum/preferences/prefs = client_source?.prefs
 	var/brutemod = prefs.read_preference(/datum/preference/numeric/fragile_customization/brute)
 	var/burnmod = prefs.read_preference(/datum/preference/numeric/fragile_customization/burn)
 
