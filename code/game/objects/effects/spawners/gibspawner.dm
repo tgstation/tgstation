@@ -20,8 +20,6 @@
 		stack_trace("Gib list dir length mismatch!")
 		return
 
-	var/obj/effect/decal/cleanable/blood/gibs/gib = null
-
 	if(sound_to_play && isnum(sound_vol))
 		playsound(src, sound_to_play, sound_vol, TRUE)
 
@@ -47,7 +45,7 @@
 		if(gibamounts[i])
 			for(var/j in 1 to gibamounts[i])
 				var/gibType = gibtypes[i]
-				gib = new gibType(loc, diseases, dna_to_add)
+				var/obj/effect/decal/cleanable/blood/gibs/gib = new gibType(loc, diseases, dna_to_add)
 
 // These might streak off into space and cause annoying flaky failures with mapping nearstation tests
 #ifndef UNIT_TESTS

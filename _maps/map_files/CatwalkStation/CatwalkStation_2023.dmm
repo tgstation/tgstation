@@ -16351,7 +16351,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
 "eUg" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/maintenance/port)
 "eUh" = (
@@ -32200,7 +32200,7 @@
 "jAX" = (
 /obj/vehicle/sealed/mecha/ripley/paddy/preset,
 /obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/open/floor/iron/small,
@@ -33529,7 +33529,7 @@
 /area/station/science/xenobiology)
 "jWc" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "jWg" = (
@@ -38399,7 +38399,7 @@
 /obj/structure/railing{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -75486,7 +75486,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/small,
 /area/station/security/mechbay)
