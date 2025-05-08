@@ -159,7 +159,10 @@ GLOBAL_VAR_INIT(attempt_corrective_cpu, FALSE)
 // What value are we attempting to correct cpu TO (autoaccounts for lag, ideally)
 GLOBAL_VAR_INIT(corrective_cpu_threshold, 200)
 // What cpu value are we trying to meet safely
-GLOBAL_VAR_INIT(corrective_cpu_target, 90)
+// For reasons I do not yet understand 90 is too high for this on highpop. I think it has to do with
+// maptick being averaged/spikey? unsure.
+GLOBAL_VAR_INIT(corrective_cpu_target, 80)
+GLOBAL_VAR_INIT(corrective_cpu_cost, 0)
 // How far away from the average can we get before discarding a datapoint
 GLOBAL_VAR_INIT(corrective_cpu_ratio, 30)
 // Debug tool, lets us set the floor of cpu consumption
@@ -266,7 +269,8 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		Correction Ideal: <a href='byond://?src=[REF(src)];act=set_corrective_target'>[FORMAT_CPU(GLOB.corrective_cpu_target)]</a>\n\
 		Correction Ratio: <a href='byond://?src=[REF(src)];act=set_corrective_ratio'>[GLOB.corrective_cpu_ratio]</a>%\n\
 		Correction Target: [FORMAT_CPU(GLOB.corrective_cpu_threshold)]\n\
-		Correction Distance: [FORMAT_CPU(90 - cpu_values[last_index])]\n\
+		Correction Distance: [FORMAT_CPU(GLOB.corrective_cpu_target - cpu_values[last_index])]\n\
+		Correction Distance: [FORMAT_CPU(GLOB.corrective_cpu_cost])]\n\
 		Frame Behind CPU: [FORMAT_CPU(cpu_values[last_index])]\n\
 		Frame Behind Pre Tick: [FORMAT_CPU(pre_tick_cpu_usage[last_index])]\n\
 		Frame Behind Tick: [FORMAT_CPU(tick_info.tick_cpu_usage[last_index])]\n\
@@ -464,19 +468,19 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 		if(value != 0)
 			non_zero += 1
 
-	var/first_corrected_average = non_zero_corrected ? corrected_sum / non_zero_corrected : 1
-	var/trimmed_corrected_sum = 0
-	var/corrected_used = 0
 	var/first_capped_average = non_zero ? capped_sum / non_zero : 1
 	var/trimmed_capped_sum = 0
 	var/cap_used = 0
+	var/first_corrected_average = non_zero_corrected ? corrected_sum / non_zero_corrected : 1
+	var/trimmed_corrected_sum = 0
+	var/corrected_used = 0
 	for(var/i in 1 to length(cpu_values))
 		var/value = cpu_values[i]
 		// If we deviate more then 30% above the average (since we care about filtering spikes), skip us over
 		if(value && 1 - (max(value, 100) / first_capped_average) <= 0.3)
 			trimmed_capped_sum += max(value, 100)
 			cap_used += 1
-		if(corrected_ticks[i] && 1 - (max(value, 100) / first_corrected_average) <= GLOB.corrective_cpu_ratio / 100)
+		if(corrected_ticks[i] && 1 - (value / first_corrected_average) <= GLOB.corrective_cpu_ratio / 100)
 			trimmed_corrected_sum += value
 			corrected_used += 1
 
@@ -486,8 +490,10 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 	var/final_corrected_average = trimmed_corrected_sum ? trimmed_corrected_sum / corrected_used : first_corrected_average
 	if(final_corrected_average > GLOB.corrective_cpu_target)
 		GLOB.corrective_cpu_threshold = GLOB.corrective_cpu_target - (final_corrected_average - GLOB.corrective_cpu_target)
+		GLOB.corrective_cpu_cost = final_corrected_average
 	else
 		GLOB.corrective_cpu_threshold = GLOB.corrective_cpu_target
+		GLOB.corrective_cpu_cost = 0
 
 #undef FORMAT_CPU
 #undef WINDOW_SIZE
