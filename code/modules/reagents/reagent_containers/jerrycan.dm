@@ -18,7 +18,7 @@
 #define CAP_GREEN "green"
 #define CAP_BLUE "blue"
 
- /**
+/**
 * The jerrycan is not only a flavourful, setting appropriate way to store reagents, it offers several design benefits due to its unique combination of high roundstart capacity and bulky size.
 
 * It prevents one coworker from hogging a shared reagent container.
