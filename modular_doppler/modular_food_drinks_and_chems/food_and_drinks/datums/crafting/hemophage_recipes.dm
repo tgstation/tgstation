@@ -34,7 +34,7 @@
 		/obj/item/food/hemophage/blood_curd = 1,
 	)
 	result = /obj/item/food/hemophage/blood_noodles/boat_noodles
-	added_foodtypes = RAW
+	added_foodtypes = GRAIN | GORE | BLOODY
 
 /datum/crafting_recipe/food/hemophage/blood_cake
 	name = "Ti Hoeh Koe"

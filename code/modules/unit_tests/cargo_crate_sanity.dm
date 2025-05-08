@@ -16,13 +16,13 @@
 		var/obj/crate_type = allocate(new_crate.crate_type)
 		var/turf/open/floor/testing_floor = get_turf(crate_type)
 		var/datum/export_report/minimum_cost = export_item_and_contents(crate_type, delete_unsold = TRUE, dry_run = TRUE)
-		var/crate_value = counterlist_sum(minimum_cost.total_value)
+	//	var/crate_value = counterlist_sum(minimum_cost.total_value)
 
 		var/obj/results = new_crate.generate(testing_floor)
 		var/datum/export_report/export_log = export_item_and_contents(results, apply_elastic = TRUE, delete_unsold = TRUE, export_market = EXPORT_MARKET_STATION)
 
 		// The value of the crate and all of it's contents.
-		var/value = counterlist_sum(export_log.total_value)
+	//	var/value = counterlist_sum(export_log.total_value)
 	// DOPPLER TEMPORARY EDIT
 		// We're selling the crate and it's contents for more value than it's supply_pack costs.
 	//	if(value > new_crate.get_cost())

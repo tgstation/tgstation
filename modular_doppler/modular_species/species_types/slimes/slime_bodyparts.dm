@@ -91,8 +91,8 @@
 	name = "small puddle of goo"
 	desc = "Its colorful! Who knows what else it could be..."
 	icon = 'icons/effects/blood.dmi'
-	icon_state = "slimepuddle1"
-	random_icon_states = list("slimepuddle1", "slimepuddle2", "slimepuddle3")
+	icon_state = "drip1"
+	random_icon_states = list("drip1", "drip2", "drip3")
 	beauty = -50
 
 /obj/effect/decal/cleanable/goo/Initialize(mapload, list/datum/disease/diseases)
