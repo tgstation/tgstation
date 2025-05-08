@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -7,6 +7,7 @@ import {
   LabeledList,
   Section,
   Stack,
+  StyleableSection,
   Tabs,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
@@ -231,39 +232,45 @@ function RecipeRow(props: RecipeRowProps) {
   const { recipe, shownCategory } = props;
 
   return (
-    <Stack fill>
-      {recipe.previews.map((preview) => (
-        <Stack.Item key={preview.dir}>
-          <ImageButton
-            asset={['pipes32x32', preview.dir + '-' + preview.icon_state]}
-            color="blue"
-            imageSize={32}
-            onClick={() => {
-              act('pipe_type', {
-                pipe_type: recipe.pipe_index,
-                category: shownCategory.cat_name,
-              });
-              act('setdir', {
-                dir: preview.dir,
-                flipped: preview.flipped,
-              });
-            }}
-            selected={preview.selected}
-            tooltip={preview.dir_name}
-            tooltipPosition="bottom"
-          />
-        </Stack.Item>
-      ))}
-      <Stack.Item
-        align="center"
-        color="label"
-        grow
-        textAlign="right"
-        verticalAlign="middle"
-      >
-        {recipe.pipe_name}
-      </Stack.Item>
-    </Stack>
+    <StyleableSection
+      textStyle={{
+        color: 'var(--color-label)',
+        fontSize: '1em',
+        fontWeight: 'normal',
+        textAlign: 'right',
+      }}
+      title={recipe.pipe_name}
+      titleStyle={{
+        borderBottom: '1px solid var(--color-border)',
+        padding: 0,
+      }}
+    >
+      <Stack fill wrap>
+        {recipe.previews.map((preview) => (
+          <Stack.Item key={preview.dir}>
+            <ImageButton
+              asset={['pipes32x32', preview.dir + '-' + preview.icon_state]}
+              color="blue"
+              imageSize={58}
+              assetSize={30}
+              onClick={() => {
+                act('pipe_type', {
+                  pipe_type: recipe.pipe_index,
+                  category: shownCategory.cat_name,
+                });
+                act('setdir', {
+                  dir: preview.dir,
+                  flipped: preview.flipped,
+                });
+              }}
+              selected={preview.selected}
+              tooltip={preview.dir_name}
+              tooltipPosition="bottom"
+            />
+          </Stack.Item>
+        ))}
+      </Stack>
+    </StyleableSection>
   );
 }
 
@@ -291,16 +298,13 @@ function PipeTypeSection(props) {
         ))}
       </Tabs>
       <Section fill scrollable>
-        <Stack fill vertical>
-          {shownCategory?.recipes.map((recipe) => (
-            <Fragment key={recipe.pipe_index}>
-              <Stack.Item>
-                <RecipeRow recipe={recipe} shownCategory={shownCategory} />
-              </Stack.Item>
-              <Stack.Divider />
-            </Fragment>
-          ))}
-        </Stack>
+        {shownCategory?.recipes.map((recipe) => (
+          <RecipeRow
+            key={recipe.pipe_name}
+            recipe={recipe}
+            shownCategory={shownCategory}
+          />
+        ))}
       </Section>
     </Stack>
   );
