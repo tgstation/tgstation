@@ -100,7 +100,7 @@
 		to_chat(user, span_warning("[tool] is full!"))
 		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You scoop up [reagents.total_volume > 0 ? "some of \the " : ""][src] into \the [tool]!"))
+	to_chat(user, span_notice("You scoop up [reagents.total_volume > 0 ? "some of " : ""]\the [src] into \the [tool]!"))
 	if (!reagents.total_volume) //scooped up all of it
 		qdel(src)
 	return ITEM_INTERACT_SUCCESS

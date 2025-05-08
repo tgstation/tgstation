@@ -110,7 +110,7 @@
 	var/list/all_blood_names = list()
 	for(var/dna_sample in blood_DNA)
 		var/datum/blood_type/blood_type = blood_DNA[dna_sample]
-		all_blood_names |= lowertext(blood_type.get_blood_name())
+		all_blood_names |= LOWER_TEXT(blood_type.get_blood_name())
 	return english_list(all_blood_names, nothing_text = "blood")
 
 /obj/effect/decal/cleanable/blood/update_overlays()
