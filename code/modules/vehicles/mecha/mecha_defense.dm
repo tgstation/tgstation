@@ -170,9 +170,15 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
+
+	var/mecha_explodies_vulnerability = (severity * capacitor.rating) //The more severe the EMP, the worse the outcome. The higher the tier of the capacitor, the less severe the outcome.
+
 	if(get_charge())
-		use_energy((cell.charge/3)/(severity*2))
-		take_damage(30 / severity, BURN, ENERGY, 1)
+		use_energy(round((cell.maxcharge / 2) / mecha_explodies_vulnerability, 1))
+
+	var/how_hard_are_we_explodies = rand(MECH_EMP_DAMAGE_LOWER, MECH_EMP_DAMAGE_UPPER)
+	take_damage(how_hard_are_we_explodies / mecha_explodies_vulnerability, BURN)
+
 	log_message("EMP detected", LOG_MECHA, color="red")
 
 	//Mess with the focus of the inbuilt camera if present

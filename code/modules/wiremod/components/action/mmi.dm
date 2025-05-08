@@ -1,4 +1,4 @@
-#define MMI_MESSAGE_COOLDOWN (1 SECONDS)
+#define MMI_MESSAGE_COOLDOWN (0.1 SECONDS)
 
 /**
  * # Man-Machine Interface Component

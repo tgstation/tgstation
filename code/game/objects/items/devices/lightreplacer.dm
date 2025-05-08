@@ -72,10 +72,6 @@
 	// target not in range
 	if(interacting_with.z != user.z)
 		return NONE
-	// target not in view
-	if(!(interacting_with in view(7, get_turf(user))))
-		user.balloon_alert(user, "out of range!")
-		return ITEM_INTERACT_BLOCKING
 
 	//replace lights & stuff
 	return do_action(interacting_with, user) ? ITEM_INTERACT_SUCCESS : NONE
