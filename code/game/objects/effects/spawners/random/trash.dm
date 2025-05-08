@@ -45,6 +45,7 @@
 		/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
 		/obj/effect/spawner/random/engineering/tool = 1,
 		/mob/living/basic/mouse = 1,
+		/mob/living/basic/snail = 1,
 		/obj/item/food/grown/cannabis = 1,
 		/obj/item/reagent_containers/cup/rag = 1,
 		/obj/effect/spawner/random/entertainment/drugs= 1,

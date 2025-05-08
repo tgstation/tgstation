@@ -1496,4 +1496,5 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Makes the mob immune to carpotoxin
 #define TRAIT_CARPOTOXIN_IMMUNE "carpotoxin_immune"
 
-// END TRAIT DEFINES
+/// Trait given when we escape into our shell
+#define TRAIT_SHELL_RETREATED "shell_retreated"

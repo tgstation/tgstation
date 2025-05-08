@@ -409,8 +409,9 @@
  * * object (obj) The object to be moved in to the users hand.
  * * user (mob/living) The user to recive the object
  */
-/obj/machinery/proc/try_put_in_hand(obj/object, mob/living/user)
+/obj/machinery/proc/try_put_in_hand(obj/item/object, mob/living/user)
 	if(!issilicon(user) && in_range(src, user))
+		object.do_pickup_animation(user, src)
 		user.put_in_hands(object)
 	else
 		object.forceMove(drop_location())

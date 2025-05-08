@@ -310,6 +310,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"bt" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weldingtool/experimental,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/admin)
 "bx" = (
 /turf/open/floor/iron/goonplaque{
 	desc = "This is a plaque commemorating the thunderdome and all those who have died at its pearly blast doors."
@@ -1572,10 +1580,6 @@
 /obj/machinery/griddle,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
-"hx" = (
-/obj/machinery/photocopier,
-/turf/open/floor/iron/grimy,
-/area/centcom/central_command_areas/briefing)
 "hz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -3115,13 +3119,6 @@
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/north,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/supply)
-"ou" = (
-/obj/machinery/photocopier,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "ov" = (
@@ -4923,16 +4920,6 @@
 /obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/tdome/administration)
-"wk" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/blood/oil,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/smooth_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "wl" = (
 /obj/machinery/modular_computer/preset/id/centcom{
 	dir = 1
@@ -5543,14 +5530,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
-"za" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/blood/oil,
-/turf/open/floor/iron/smooth_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "zb" = (
 /obj/machinery/computer/records/medical{
 	dir = 4
@@ -6083,14 +6062,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/admin)
-"Bm" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/item/weldingtool/experimental,
-/obj/effect/decal/cleanable/blood/oil,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "Bo" = (
 /obj/effect/turf_decal/tile/green{
@@ -7020,6 +6991,13 @@
 /obj/effect/light_emitter/podbay,
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supplypod/pod_storage)
+"FS" = (
+/obj/machinery/photocopier/prebuilt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/supply)
 "FU" = (
 /turf/closed/indestructible/fakedoor{
 	name = "Thunderdome Admin"
@@ -7342,33 +7320,6 @@
 /obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
-"HY" = (
-/obj/machinery/photocopier,
-/obj/machinery/button/door/indestructible{
-	id = "CCsec3";
-	name = "CC Shutter 3 Control";
-	pixel_y = 24
-	},
-/obj/machinery/button/door/indestructible{
-	id = "CCcustoms2";
-	name = "CC Shutter 2 Control";
-	pixel_x = 9;
-	pixel_y = 32
-	},
-/obj/machinery/button/door/indestructible{
-	id = "CCsec1";
-	name = "CC Shutter 1 Control";
-	pixel_y = 40
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/button/door/indestructible{
-	id = "CCsec4";
-	name = "CC Shutter 4 Control";
-	pixel_x = -9;
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/control)
 "HZ" = (
 /obj/structure/railing{
 	dir = 6
@@ -7588,6 +7539,33 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/briefing)
+"JX" = (
+/obj/machinery/photocopier/prebuilt,
+/obj/machinery/button/door/indestructible{
+	id = "CCsec3";
+	name = "CC Shutter 3 Control";
+	pixel_y = 24
+	},
+/obj/machinery/button/door/indestructible{
+	id = "CCcustoms2";
+	name = "CC Shutter 2 Control";
+	pixel_x = 9;
+	pixel_y = 32
+	},
+/obj/machinery/button/door/indestructible{
+	id = "CCsec1";
+	name = "CC Shutter 1 Control";
+	pixel_y = 40
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/button/door/indestructible{
+	id = "CCsec4";
+	name = "CC Shutter 4 Control";
+	pixel_x = -9;
+	pixel_y = 32
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/control)
 "Kd" = (
 /obj/effect/turf_decal/tile/red/opposingcorners,
 /obj/effect/turf_decal/tile/yellow/opposingcorners{
@@ -10429,6 +10407,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"Xe" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron/grimy,
+/area/centcom/central_command_areas/briefing)
 "Xf" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -10588,6 +10570,14 @@
 "Ya" = (
 /turf/closed/indestructible/riveted,
 /area/centcom/central_command_areas/armory)
+"Yb" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/central_command_areas/evacuation/ship)
 "Yc" = (
 /obj/structure/fireplace,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -10622,6 +10612,16 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/prison)
+"Yl" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/central_command_areas/evacuation/ship)
 "Ym" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
 /obj/structure/flora/bush/fullgrass/style_random,
@@ -36394,7 +36394,7 @@ aa
 KH
 Lt
 KK
-wk
+Yl
 Qt
 Lk
 cP
@@ -41276,7 +41276,7 @@ aa
 aa
 Lt
 fQ
-za
+Yb
 MX
 DL
 ep
@@ -47399,7 +47399,7 @@ On
 Zf
 Zf
 On
-Bm
+bt
 Hz
 Hz
 Hz
@@ -47925,7 +47925,7 @@ wz
 qR
 Rd
 eF
-hx
+Xe
 TE
 az
 eF
@@ -52533,7 +52533,7 @@ kj
 kj
 nm
 iF
-ou
+FS
 iR
 oJ
 lo
@@ -53829,7 +53829,7 @@ Za
 tK
 gL
 io
-HY
+JX
 uc
 kl
 xV
