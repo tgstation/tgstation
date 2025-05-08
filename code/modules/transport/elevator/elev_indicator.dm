@@ -26,15 +26,15 @@
 	/// What specific_transport_id do we link with?
 	var/linked_elevator_id
 	/// 'Floors' for display purposes are by default offset by 1 from their actual z-levels
-	var/lowest_floor_offset = 1
+	var/tmp/lowest_floor_offset = 1
 	/// Weakref to the transport.
-	var/datum/weakref/lift_ref
+	var/tmp/datum/weakref/lift_ref
 	/// The lowest floor number. Determined by transport module init.
-	var/lowest_floor_num = 1
+	var/tmp/lowest_floor_num = 1
 	/// Positive for going up, negative going down, 0 for stopped
-	var/current_lift_direction = 0
+	var/tmp/current_lift_direction = 0
 	/// The elevator's current floor relative to its lowest floor being 1
-	var/current_lift_floor = 1
+	var/tmp/current_lift_floor = 1
 
 /obj/machinery/lift_indicator/post_machine_initialize()
 	. = ..()

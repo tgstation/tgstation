@@ -48,9 +48,12 @@
 	return ..()
 
 /mob/living/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
-	if(!isgroundlessturf(impacted_turf))
+	if(isspaceturf(impacted_turf))
+		// falling into space would not result in damage
+		impact_flags |= ZIMPACT_NO_MESSAGE|ZIMPACT_NO_SPIN
+	else
+		// otherwise we can take damage - this includes impacting openspace itself (as something blocked our fall!)
 		impact_flags |= ZImpactDamage(impacted_turf, levels)
-
 	return ..()
 
 /**
@@ -90,7 +93,7 @@
 			)
 			return . | ZIMPACT_NO_MESSAGE
 
-	var/incoming_damage = (levels * 5) ** 1.5
+	var/incoming_damage = (levels * 7.5) ** 1.5
 	// Smaller mobs with catlike grace can ignore damage (EG: cats)
 	var/small_surface_area = mob_size <= MOB_SIZE_SMALL
 	var/skip_knockdown = FALSE
@@ -105,7 +108,7 @@
 			new /obj/effect/temp_visual/mook_dust/small(impacted_turf)
 			return .
 
-		incoming_damage *= 1.66
+		incoming_damage *= 1.5
 		add_movespeed_modifier(/datum/movespeed_modifier/landed_on_feet)
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob, remove_movespeed_modifier), /datum/movespeed_modifier/landed_on_feet), levels * 2 SECONDS)
 		visible_message(
@@ -115,9 +118,12 @@
 		new /obj/effect/temp_visual/mook_dust(impacted_turf)
 
 	if(body_position == STANDING_UP)
-		var/damage_for_each_leg = round((incoming_damage / 2) * damage_softening_multiplier)
-		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = -2.5 * levels)
-		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = -2.5 * levels)
+		if(prob(60))
+			var/damage_for_each_leg = round((incoming_damage / 2) * damage_softening_multiplier)
+			apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 2.5 * levels)
+			apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 2.5 * levels)
+		else
+			apply_damage(incoming_damage, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), wound_bonus = 5 * levels)
 	else
 		apply_damage(incoming_damage, BRUTE, spread_damage = TRUE)
 

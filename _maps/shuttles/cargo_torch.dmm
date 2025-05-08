@@ -1,0 +1,285 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/supply)
+"b" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"c" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"d" = (
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"e" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"l" = (
+/obj/machinery/door/airlock/survival_pod{
+	name = "Cockpit"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/supply)
+"n" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"p" = (
+/obj/machinery/status_display/supply{
+	pixel_y = 32
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"q" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"r" = (
+/obj/docking_port/mobile/supply,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/machinery/door/airlock/survival_pod,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"s" = (
+/obj/structure/table,
+/obj/item/papercutter,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"t" = (
+/obj/machinery/door/poddoor{
+	name = "Loading Door";
+	id = "loadingdoor_cargo_shuttle"
+	},
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"u" = (
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/supply)
+"v" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"w" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"x" = (
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"y" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/stripes/corner,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"z" = (
+/turf/template_noop,
+/area/template_noop)
+"A" = (
+/obj/structure/rack,
+/obj/item/radio{
+	pixel_y = 2;
+	pixel_x = 3
+	},
+/obj/item/radio,
+/obj/item/multitool,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"F" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"I" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/supply)
+"J" = (
+/obj/structure/table,
+/obj/item/folder/yellow,
+/obj/item/paper,
+/obj/item/pen,
+/obj/machinery/newscaster/directional/south,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/supply)
+"K" = (
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"M" = (
+/obj/structure/rack,
+/obj/machinery/light/small/directional/west,
+/obj/item/rack_parts{
+	pixel_y = 6
+	},
+/obj/item/rack_parts{
+	pixel_y = 3
+	},
+/obj/item/rack_parts,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"N" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/supply)
+"P" = (
+/obj/structure/table,
+/obj/item/stamp/granted{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/stamp/denied{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/paper_bin{
+	pixel_x = 6
+	},
+/obj/item/pen,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"Q" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"U" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"V" = (
+/obj/machinery/computer/old,
+/obj/effect/turf_decal/bot_red,
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/supply)
+"Z" = (
+/obj/machinery/button/door/directional/east{
+	id = "loadingdoor_cargo_shuttle";
+	name = "Loading Doors";
+	req_access = list("cargo")
+	},
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+
+(1,1,1) = {"
+z
+a
+w
+a
+a
+a
+w
+w
+a
+a
+a
+z
+"}
+(2,1,1) = {"
+a
+a
+J
+a
+s
+P
+c
+c
+M
+a
+a
+q
+"}
+(3,1,1) = {"
+w
+V
+N
+a
+p
+u
+u
+u
+u
+d
+F
+U
+"}
+(4,1,1) = {"
+a
+a
+l
+I
+K
+u
+u
+u
+u
+d
+F
+U
+"}
+(5,1,1) = {"
+w
+A
+b
+n
+d
+u
+u
+u
+u
+d
+F
+U
+"}
+(6,1,1) = {"
+a
+a
+x
+y
+Q
+Q
+Z
+d
+e
+a
+a
+v
+"}
+(7,1,1) = {"
+z
+a
+w
+a
+t
+t
+a
+r
+a
+a
+a
+z
+"}

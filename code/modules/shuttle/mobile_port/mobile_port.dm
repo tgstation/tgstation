@@ -591,13 +591,15 @@
 	if(mode == SHUTTLE_STRANDED || mode == SHUTTLE_DISABLED)
 		return "--:--"
 
-	var/timeleft = timeLeft()
+	return time_as_string(timeLeft())
+
+/proc/time_as_string(timeleft)
 	if(timeleft > 1 HOURS)
 		return "--:--"
-	else if(timeleft > 0)
-		return "[add_leading(num2text((timeleft / 60) % 60), 2, "0")]:[add_leading(num2text(timeleft % 60), 2, "0")]"
-	else
+	if(timeleft <= 0)
 		return "00:00"
+	timeleft /= 10
+	return "[add_leading(num2text((timeleft / 60) % 60), 2, "0")]:[add_leading(num2text(timeleft % 60), 2, "0")]"
 
 /**
  * Gets shuttle location status in a form of string for tgui interfaces

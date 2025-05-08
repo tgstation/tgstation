@@ -61,6 +61,9 @@ SUBSYSTEM_DEF(security_level)
 
 	SEND_SIGNAL(src, COMSIG_SECURITY_LEVEL_CHANGED, selected_level.number_level)
 	SSblackbox.record_feedback("tally", "security_level_changes", 1, selected_level.name)
+	if(new_level == SEC_LEVEL_DELTA && !SSshuttle.abandon_ship_state)
+		SSshuttle.requestEvac(null, "Destruction of ship imminent.", "The AI")
+
 
 /**
  * Returns the current security level as a number

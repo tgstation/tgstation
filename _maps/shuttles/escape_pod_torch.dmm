@@ -1,0 +1,66 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/pod_1)
+"h" = (
+/obj/machinery/sleeper/cryo{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/pod_1)
+"k" = (
+/obj/item/radio/intercom/directional/west,
+/obj/item/storage/pod/directional/east,
+/obj/structure/chair/comfy/shuttle,
+/obj/machinery/light/cold/dim/directional/east,
+/turf/open/floor/plating,
+/area/shuttle/pod_1)
+"v" = (
+/obj/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pod_1)
+"E" = (
+/obj/machinery/computer/shuttle/pod{
+	pixel_x = -32;
+	capacity = 3
+	},
+/obj/machinery/status_display/evac/directional/east,
+/obj/structure/chair/comfy/shuttle,
+/turf/open/floor/plating,
+/area/shuttle/pod_1)
+"U" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst{
+	dir = 1
+	},
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/pod_1)
+"Z" = (
+/obj/docking_port/mobile/pod{
+	dir = 2;
+	preferred_direction = 2
+	},
+/obj/machinery/door/airlock/survival_pod,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_1)
+
+(1,1,1) = {"
+U
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+Z
+E
+k
+h
+v
+"}
+(3,1,1) = {"
+U
+a
+a
+a
+a
+"}

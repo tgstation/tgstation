@@ -1,7 +1,16 @@
 /obj/machinery/computer/atmos_control/nocontrol/master
 	name = "station atmospherics monitoring"
 	circuit = /obj/item/circuitboard/computer/atmos_control/nocontrol/master
-	atmos_chambers = list(ATMOS_GAS_MONITOR_DISTRO = "Distribution Loop", ATMOS_GAS_MONITOR_WASTE = "Waste Loop")
+	atmos_chambers = list(
+		ATMOS_GAS_MONITOR_DISTRO = "Distribution Loop",
+		ATMOS_GAS_MONITOR_WASTE = "Waste Loop",
+		ATMOS_GAS_MONITOR_AIR = "Air Supply",
+		ATMOS_GAS_MONITOR_CO2 = "Carbon Dioxide Supply",
+		ATMOS_GAS_MONITOR_N2 = "Nitrogen Supply",
+		ATMOS_GAS_MONITOR_N2O = "Nitrous Oxide Supply",
+		ATMOS_GAS_MONITOR_O2 = "Oxygen Supply",
+		ATMOS_GAS_MONITOR_PLAS = "Plasma Supply",
+	)
 
 /obj/machinery/computer/atmos_control/oxygen_tank
 	name = "Oxygen Supply Control"

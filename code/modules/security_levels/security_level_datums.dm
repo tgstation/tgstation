@@ -93,6 +93,16 @@
 	elevating_to_configuration_key = /datum/config_entry/string/alert_red_upto
 	shuttle_call_time_mod = ALERT_COEFF_RED
 
+/datum/security_level/abandon_ship
+	name = "abandon ship"
+	name_shortform = "ABANDON"
+	announcement_color = "red"
+	sound = 'sound/announcer/alarm/airraid.ogg' // Air alarm to signify importance
+	number_level = SEC_LEVEL_ABANDON_SHIP
+	status_display_icon_state = "deltaalert"
+	fire_alarm_light_color = LIGHT_COLOR_INTENSE_RED
+	shuttle_call_time_mod = ALERT_COEFF_DELTA
+
 /**
  * DELTA
  *

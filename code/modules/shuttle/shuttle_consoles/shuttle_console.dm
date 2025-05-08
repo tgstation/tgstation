@@ -1,11 +1,3 @@
-#define SHUTTLE_CONSOLE_ACCESSDENIED "accessdenied"
-#define SHUTTLE_CONSOLE_ENDGAME "endgame"
-#define SHUTTLE_CONSOLE_RECHARGING "recharging"
-#define SHUTTLE_CONSOLE_INTRANSIT "intransit"
-#define SHUTTLE_CONSOLE_DESTINVALID "destinvalid"
-#define SHUTTLE_CONSOLE_SUCCESS "success"
-#define SHUTTLE_CONSOLE_ERROR "error"
-
 /obj/machinery/computer/shuttle
 	name = "shuttle console"
 	desc = "A shuttle control computer."
@@ -109,6 +101,8 @@
  */
 /obj/machinery/computer/shuttle/proc/launch_check(mob/user)
 	if(!allowed(user)) //Normally this is already checked via interaction code but some cases may skip that so check it explicitly here (illiterates launching randomly)
+		return FALSE
+	if(locked)
 		return FALSE
 	return TRUE
 
@@ -240,11 +234,3 @@
 	shuttleId = port.shuttle_id
 	possible_destinations += ";[port.shuttle_id]_custom"
 	return TRUE
-
-#undef SHUTTLE_CONSOLE_ACCESSDENIED
-#undef SHUTTLE_CONSOLE_ENDGAME
-#undef SHUTTLE_CONSOLE_RECHARGING
-#undef SHUTTLE_CONSOLE_INTRANSIT
-#undef SHUTTLE_CONSOLE_DESTINVALID
-#undef SHUTTLE_CONSOLE_SUCCESS
-#undef SHUTTLE_CONSOLE_ERROR

@@ -341,10 +341,21 @@
 /atom/movable/proc/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!(impact_flags & ZIMPACT_NO_MESSAGE))
-		visible_message(
-			span_danger("[src] crashes into [impacted_turf]!"),
-			span_userdanger("You crash into [impacted_turf]!"),
-		)
+		if(isopenspaceturf(impacted_turf))
+			var/obj/what_saved_us
+			for(var/obj/thing in impacted_turf)
+				if(thing.obj_flags & BLOCK_Z_OUT_DOWN)
+					what_saved_us = thing
+					break
+			visible_message(
+				span_danger("[src] crashes into [what_saved_us || impacted_turf]!"),
+				span_userdanger("You crash into [what_saved_us || impacted_turf]!"),
+			)
+		else
+			visible_message(
+				span_danger("[src] crashes into [impacted_turf]!"),
+				span_userdanger("You crash into [impacted_turf]!"),
+			)
 	if(!(impact_flags & ZIMPACT_NO_SPIN))
 		INVOKE_ASYNC(src, PROC_REF(SpinAnimation), 5, 2)
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_Z_IMPACT, impacted_turf, levels)

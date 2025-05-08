@@ -62,7 +62,7 @@
 	///Multiplier for this light's base brightness during a cascade
 	var/bulb_major_emergency_brightness_mul = 0.75
 	///Colour of the light when major emergency mode is on
-	var/bulb_emergency_colour = "#ff4e4e"
+	var/bulb_emergency_colour = "#da0205"
 	///Multiplier for this light's base brightness in low power power mode
 	var/bulb_low_power_brightness_mul = 0.25
 	///Determines the colour of the light while it's in low power mode

@@ -24,6 +24,8 @@
 	///Message sent when a user enters the machine.
 	var/enter_message = span_boldnotice("You feel cool air surround you. You go numb as your senses turn inward.")
 
+	var/resist_time = 0 SECONDS
+
 	///List of currently available chems.
 	var/list/available_chems = list()
 	///Used when emagged to scramble which chem is used, eg: mutadone -> morphine
@@ -62,6 +64,13 @@
 	update_appearance()
 	reset_chem_buttons()
 
+/obj/machinery/sleeper/on_set_panel_open(old_value)
+	. = ..()
+	if(panel_open)
+		set_machine_stat(machine_stat | MAINT)
+	else
+		set_machine_stat(machine_stat & ~MAINT)
+
 /obj/machinery/sleeper/RefreshParts()
 	. = ..()
 	var/matterbin_rating
@@ -71,9 +80,10 @@
 	min_health = initial(min_health) * matterbin_rating
 
 	available_chems.Cut()
-	for(var/datum/stock_part/servo/servos in component_parts)
-		for(var/i in 1 to servos.tier)
-			available_chems |= possible_chems[i]
+	if(LAZYLEN(possible_chems))
+		for(var/datum/stock_part/servo/servos in component_parts)
+			for(var/i in 1 to servos.tier)
+				available_chems |= possible_chems[i]
 
 	reset_chem_buttons()
 
@@ -82,8 +92,15 @@
 	return ..()
 
 /obj/machinery/sleeper/container_resist_act(mob/living/user)
-	visible_message(span_notice("[occupant] emerges from [src]!"),
-		span_notice("You climb out of [src]!"))
+	if(resist_time > 0)
+		to_chat(user, span_notice("You pull at the release lever."))
+		if(!do_after(user, resist_time, src))
+			return
+	user.visible_message(
+		span_notice("[occupant] emerges from [src]!"),
+		span_notice("You climb out of [src]!"),
+		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+	)
 	open_machine()
 
 /obj/machinery/sleeper/Exited(atom/movable/gone, direction)
@@ -377,3 +394,140 @@
 			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
 		return TRUE
 	return ..()
+
+GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
+
+#define IS_SPAWNING "spawning"
+
+/obj/machinery/sleeper/cryo
+	name = "cryogenic pod"
+	desc = "A cryogenic pod. It is used to freeze people."
+	icon_state = "cryopod"
+	base_icon_state = "cryopod"
+	// circuit = /obj/item/circuitboard/machine/sleeper/cryo
+	enter_message = span_boldnotice("You feel a cold chill as you enter the pod. You feel your body go numb as you enter a state of suspended animation.")
+	possible_chems = null
+	state_open = FALSE
+	density = TRUE
+	resist_time = 0.5 SECONDS
+	/// What job spawns here, JOB_TITLE defines
+	var/roundstart_job
+
+/obj/machinery/sleeper/cryo/Initialize(mapload)
+	. = ..()
+	if(roundstart_job)
+		LAZYADD(GLOB.sleeper_spawnpoints[roundstart_job], src)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_ALL)
+
+/obj/machinery/sleeper/cryo/Destroy()
+	if(roundstart_job)
+		LAZYREMOVE(GLOB.sleeper_spawnpoints[roundstart_job], src)
+	return ..()
+
+/obj/machinery/sleeper/cryo/examine(mob/user)
+	. = ..()
+	if(isliving(occupant) && user != occupant)
+		var/mob/living/occupant_l = occupant
+		var/obj/item/card/id/their_id = occupant_l.get_idcard()
+		. += span_notice("Inside, you can see [occupant][their_id ? ", the [their_id.assignment]" : ""][HAS_TRAIT(occupant, TRAIT_KNOCKEDOUT) ? " - sound asleep" : ""].")
+	if(roundstart_job)
+		if(length(GLOB.sleeper_spawnpoints[roundstart_job]) > 1)
+			. += span_tinynoticeital("This pod belongs to a [roundstart_job].")
+		else
+			. += span_tinynoticeital("This pod belongs to the [roundstart_job].")
+
+/obj/machinery/sleeper/cryo/set_occupant(atom/movable/new_occupant)
+	var/mob/living/old_occupant = occupant
+	. = ..()
+	var/mob/living/new_occupant_l = new_occupant
+	var/skey = REF(src)
+	if(istype(old_occupant))
+		old_occupant.remove_status_effect(/datum/status_effect/grouped/stasis, skey)
+		// REMOVE_TRAIT(old_occupant, TRAIT_KNOCKEDOUT, IS_SPAWNING)
+		REMOVE_TRAIT(old_occupant, TRAIT_MUTE, skey)
+	if(istype(new_occupant_l))
+		new_occupant_l.apply_status_effect(/datum/status_effect/grouped/stasis, skey)
+		ADD_TRAIT(new_occupant_l, TRAIT_MUTE, skey)
+
+/obj/machinery/sleeper/cryo/close_machine(mob/user, density_to_set)
+	. = ..()
+	if(isliving(occupant))
+		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = 0.5)
+
+/obj/machinery/sleeper/cryo/JoinPlayerHere(mob/living/joining_mob, buckle)
+	if(occupant || !ishuman(joining_mob))
+		return ..()
+	if(state_open)
+		close_machine()
+	set_occupant(joining_mob)
+	joining_mob.forceMove(src)
+	ADD_TRAIT(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING)
+	//addtimer(TRAIT_CALLBACK_REMOVE(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING), rand(8, 15) * 1 SECONDS)
+	addtimer(TRAIT_CALLBACK_REMOVE(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING), rand(2, 4) * 1 SECONDS)
+
+/obj/machinery/sleeper/cryo/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
+	return FALSE
+
+/obj/machinery/sleeper/cryo/default_deconstruction_screwdriver(mob/living/user, icon_state, base_icon_state, obj/item/screwdriver)
+	return FALSE
+
+/obj/machinery/sleeper/cryo/default_change_direction_wrench(mob/living/user, obj/item/wrench)
+	return FALSE
+
+/obj/machinery/sleeper/cryo/nap_violation(mob/violator)
+	return
+
+#undef IS_SPAWNING
+
+/obj/machinery/sleeper/stasis
+	name = "stasis pod"
+	desc = "A stasis pod. It is used to freeze people."
+	icon_state = "stasis"
+	base_icon_state = "stasis"
+	/// circuit = /obj/item/circuitboard/machine/sleeper/stasis
+	enter_message = span_boldnotice("You feel a cold chill as you enter the pod. You feel your body go numb as you enter a state of suspended animation.")
+	possible_chems = null
+	resist_time = 1 SECONDS
+
+/obj/machinery/sleeper/stasis/examine(mob/user)
+	. = ..()
+	if(isliving(occupant) && user != occupant)
+		. += span_notice("Inside, you can see [occupant].")
+
+/obj/machinery/sleeper/stasis/close_machine(mob/user, density_to_set)
+	. = ..()
+	if(isliving(occupant))
+		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = 0.5)
+
+/obj/machinery/sleeper/stasis/set_occupant(atom/movable/new_occupant)
+	var/mob/living/old_occupant = occupant
+	. = ..()
+	var/skey = REF(src)
+	var/mob/living/new_occupant_l = new_occupant
+	if(istype(old_occupant))
+		old_occupant.remove_status_effect(/datum/status_effect/grouped/stasis, skey)
+		REMOVE_TRAIT(old_occupant, TRAIT_SOFTSPOKEN, skey)
+	if(istype(new_occupant_l))
+		new_occupant_l.apply_status_effect(/datum/status_effect/grouped/stasis, skey)
+		ADD_TRAIT(new_occupant_l, TRAIT_SOFTSPOKEN, skey)
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/machinery/sleeper/stasis/on_set_is_operational(old_value)
+	. = ..()
+	if(!isliving(occupant))
+		return
+	var/skey = REF(src)
+	var/mob/living/occupant_l = occupant
+	if(is_operational)
+		occupant_l.apply_status_effect(/datum/status_effect/grouped/stasis, skey)
+		ADD_TRAIT(occupant_l, TRAIT_SOFTSPOKEN, skey)
+		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = 0.5)
+	else
+		occupant_l.remove_status_effect(/datum/status_effect/grouped/stasis, skey)
+		REMOVE_TRAIT(occupant_l, TRAIT_SOFTSPOKEN, skey)
+	update_appearance(UPDATE_ICON_STATE)
+
+/obj/machinery/sleeper/stasis/update_icon_state()
+	. = ..()
+	if(isliving(occupant) && is_operational)
+		icon_state = "[base_icon_state]-working"

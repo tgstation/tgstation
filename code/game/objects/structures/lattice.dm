@@ -15,6 +15,7 @@
 	smoothing_groups = SMOOTH_GROUP_LATTICE
 	canSmoothWith = SMOOTH_GROUP_LATTICE + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_OPEN_FLOOR
 	var/number_of_mats = 1
+	var/zfall_break_prob = 50
 	var/build_material = /obj/item/stack/rods
 	var/list/give_turf_traits = list(TRAIT_CHASM_STOPPED, TRAIT_HYPERSPACE_STOPPED)
 
@@ -31,6 +32,26 @@
 	var/area/new_turf_area = get_area(loc)
 	if (istype(new_turf_area, /area/space) && !istype(new_turf_area, /area/space/nearstation))
 		set_turf_to_area(loc, GLOB.areas_by_type[/area/space/nearstation])
+
+/obj/structure/lattice/intercept_zImpact(list/falling_movables, levels)
+	. = ..()
+	if(!prob(zfall_break_prob * levels))
+		return
+
+	. |= FALL_INTERCEPTED
+	for(var/mob/living/guy in falling_movables)
+		guy.apply_damage(rand(5, 10), BRUTE, spread_damage = TRUE)
+		guy.Knockdown(3 SECONDS * levels)
+		if(iscarbon(guy) && number_of_mats >= 1 && prob(50))
+			number_of_mats--
+			var/mob/living/carbon/cguy = guy
+			var/obj/item/stack/rods/rod = new(1)
+			var/obj/item/bodypart/picked = pick(cguy.bodyparts)
+			if(!rod.force_embed(guy, picked))
+				rod.forceMove(loc)
+			cguy.apply_damage(rand(4, 6), BRUTE, picked)
+		to_chat(guy, span_warning("You fall straight through [src]!"))
+	deconstruct()
 
 /datum/armor/structure_lattice
 	melee = 50
@@ -73,7 +94,8 @@
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
 /obj/structure/lattice/atom_deconstruct(disassembled = TRUE)
-	new build_material(get_turf(src), number_of_mats)
+	if(number_of_mats >= 1)
+		new build_material(get_turf(src), number_of_mats)
 
 /obj/structure/lattice/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF)
@@ -119,6 +141,7 @@
 	canSmoothWith = SMOOTH_GROUP_CATWALK
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
 	give_turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_LAVA_STOPPED, TRAIT_CHASM_STOPPED, TRAIT_IMMERSE_STOPPED, TRAIT_HYPERSPACE_STOPPED)
+	zfall_break_prob = 2
 
 /obj/structure/lattice/catwalk/deconstruction_hints(mob/user)
 	return span_notice("The supporting rods look like they could be <b>cut</b>.")

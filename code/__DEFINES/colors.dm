@@ -238,7 +238,7 @@
  * Important note: colors can end up significantly different from the basic html picture, especially when saturated
  */
 /// Bright light used by default in tubes and bulbs
-#define LIGHT_COLOR_DEFAULT "#f3fffa"
+#define LIGHT_COLOR_DEFAULT "#fefefe"
 /// Bright but quickly dissipating neon green. rgb(100, 200, 100)
 #define LIGHT_COLOR_GREEN "#64C864"
 /// Bright, pale "nuclear" green. rgb(120, 255, 120)
@@ -250,7 +250,7 @@
 /// Cold, diluted blue. rgb(100, 150, 250)
 #define LIGHT_COLOR_BLUE "#6496FA"
 /// Faint white blue. rgb(222, 239, 255)
-#define LIGHT_COLOR_FAINT_BLUE "#DEEFFF"
+#define LIGHT_COLOR_FAINT_BLUE "#e0fefe"
 /// Light blueish green. rgb(125, 225, 175)
 #define LIGHT_COLOR_BLUEGREEN "#7DE1AF"
 /// Diluted cyan. rgb(125, 225, 225)

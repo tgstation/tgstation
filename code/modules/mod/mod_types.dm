@@ -140,6 +140,21 @@
 		/obj/item/mod/module/sphere_transform,
 	)
 
+/obj/item/mod/control/pre_equipped/mining/eva
+	applied_skin = "asteroid"
+	applied_modules = list(
+		/obj/item/mod/module/storage/large_capacity,
+		/obj/item/mod/module/gps,
+		/obj/item/mod/module/orebag,
+		/obj/item/mod/module/drill,
+		/obj/item/mod/module/thermal_regulator,
+		/obj/item/mod/module/flashlight,
+	)
+	default_pins = list(
+		/obj/item/mod/module/gps,
+		/obj/item/mod/module/drill,
+	)
+
 /obj/item/mod/control/pre_equipped/medical
 	theme = /datum/mod_theme/medical
 	applied_modules = list(

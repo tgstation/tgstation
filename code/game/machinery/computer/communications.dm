@@ -181,8 +181,29 @@
 			var/reason = trim(params["reason"], MAX_MESSAGE_LEN)
 			if (length(reason) < CALL_SHUTTLE_REASON_LENGTH)
 				return
-			SSshuttle.requestEvac(user, reason)
+			var/confirm = tgui_alert(
+				user,
+				"This action is irreversible. Are you sure?",
+				"Confirm Abandon Ship",
+				list("Yes", "No"),
+				10 SECONDS,
+			)
+			if (confirm != "Yes" || !authenticated(user) || !is_operational || !user.can_perform_action(src))
+				return
+			SSshuttle.requestEvac(user, reason, "The Captain")
 			post_status("shuttle")
+		if("unlockPods")
+			if(!authenticated_as_non_silicon_captain(user))
+				return
+			if(!SSshuttle.abandon_ship_state || SSshuttle.abandon_ship_state != ABANDON_SHIP_UNLOCK)
+				return
+			SSshuttle.unlock_pods()
+		if("launchPods")
+			if(!authenticated_as_non_silicon_captain(user))
+				return
+			if(!SSshuttle.abandon_ship_state || SSshuttle.abandon_ship_state != ABANDON_SHIP_UNLOCK)
+				return
+			SSshuttle.launch_everything()
 		if ("changeSecurityLevel")
 			if (!authenticated_as_silicon_or_captain(user))
 				return
@@ -546,9 +567,14 @@
 				if(syndicate)
 					data["shuttleCanEvacOrFailReason"] = "You cannot summon the shuttle from this console!"
 
+				data["canUnlockPods"] = FALSE
+				data["canLaunchPods"] = FALSE
+
 				if (authenticated_as_non_silicon_captain(user))
-					data["canMessageAssociates"] = TRUE
-					data["canRequestNuke"] = TRUE
+					// 	data["canMessageAssociates"] = TRUE
+					// 	data["canRequestNuke"] = TRUE // melbert todo : put the nuke codes in the captain's memory or something
+					data["canUnlockPods"] = SSshuttle.abandon_ship_state && SSshuttle.abandon_ship_state == ABANDON_SHIP_UNLOCK
+					data["canLaunchPods"] = SSshuttle.abandon_ship_state && SSshuttle.abandon_ship_state != ABANDON_SHIP_ESCAPE
 
 				if (can_send_messages_to_other_sectors(user))
 					data["canSendToSectors"] = TRUE
@@ -573,14 +599,15 @@
 				else if(syndicate)
 					data["canMakeAnnouncement"] = TRUE
 
-				if (SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL)
-					data["shuttleCalled"] = TRUE
-					data["shuttleRecallable"] = SSshuttle.canRecall() || syndicate
+				data["shuttleCalled"] = !!SSshuttle.abandon_ship_state
+				// if (SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL)
+				// 	data["shuttleCalled"] = TRUE
+				// 	data["shuttleRecallable"] = SSshuttle.canRecall() || syndicate
 
-				if (SSshuttle.emergencyCallAmount)
-					data["shuttleCalledPreviously"] = TRUE
-					if (SSshuttle.emergency_last_call_loc)
-						data["shuttleLastCalled"] = format_text(SSshuttle.emergency_last_call_loc.name)
+				// if (SSshuttle.emergencyCallAmount)
+				// 	data["shuttleCalledPreviously"] = TRUE
+				// 	if (SSshuttle.emergency_last_call_loc)
+				// 		data["shuttleLastCalled"] = format_text(SSshuttle.emergency_last_call_loc.name)
 			if (STATE_MESSAGES)
 				data["messages"] = list()
 
@@ -717,10 +744,11 @@
 	return FALSE
 
 /obj/machinery/computer/communications/proc/can_send_messages_to_other_sectors(mob/user)
-	if (!authenticated_as_non_silicon_captain(user))
-		return
+	// if (!authenticated_as_non_silicon_captain(user))
+	// 	return
 
-	return length(CONFIG_GET(keyed_list/cross_server)) > 0
+	// return length(CONFIG_GET(keyed_list/cross_server)) > 0
+	return FALSE
 
 /obj/machinery/computer/communications/proc/make_announcement(mob/living/user)
 	var/is_ai = HAS_SILICON_ACCESS(user)

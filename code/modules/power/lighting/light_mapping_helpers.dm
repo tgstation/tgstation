@@ -11,7 +11,7 @@
 	nightshift_enabled = FALSE
 
 /obj/machinery/light/warm
-	bulb_colour = "#fae5c1"
+	bulb_colour = "#fffee0"
 
 /obj/machinery/light/warm/no_nightlight
 	nightshift_allowed = FALSE

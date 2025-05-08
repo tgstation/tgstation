@@ -453,6 +453,8 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	if(current_map.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
+	else if(current_map.minetype == "asteroid")
+		LoadGroup(FailedZs, "Asteroid", "map_files/Mining", "Asteroid.dmm", default_traits = list(ZTRAIT_MINING = TRUE, ZTRAIT_BOMBCAP_MULTIPLIER = 2))
 	else if (!isnull(current_map.minetype) && current_map.minetype != "none")
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
 #endif

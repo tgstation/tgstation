@@ -365,8 +365,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/list/falling_mov_names
 	for(var/atom/movable/falling_mov as anything in falling_movables)
 		falling_mov_names += falling_mov.name
-	for(var/i in contents)
-		var/atom/thing = i
+	for(var/atom/thing as anything in contents)
+		if(thing == falling)
+			continue
 		flags |= thing.intercept_zImpact(falling_movables, levels)
 		if(flags & FALL_STOP_INTERCEPTING)
 			break

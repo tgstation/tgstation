@@ -1,0 +1,205 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/pod_2)
+"i" = (
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"m" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/light/cold/dim/directional/east,
+/obj/item/storage/pod/directional/east,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"n" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/computer/shuttle/pod{
+	pixel_x = -32;
+	capacity = 9
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"o" = (
+/obj/machinery/sleeper/cryo{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"p" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/status_display/evac/directional/east,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"r" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/obj/machinery/vending/wallmed/directional/west,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/pod_2)
+"v" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/pod_2)
+"x" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/light/cold/dim/directional/east,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/pod_2)
+"z" = (
+/turf/template_noop,
+/area/template_noop)
+"A" = (
+/obj/docking_port/mobile/pod{
+	dir = 4;
+	port_direction = 4;
+	preferred_direction = 2
+	},
+/obj/machinery/door/airlock/survival_pod,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"D" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"F" = (
+/obj/structure/table,
+/obj/item/storage/medkit,
+/obj/item/defibrillator/loaded,
+/obj/item/healthanalyzer,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/pod_2)
+"I" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"J" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"N" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/shuttle/pod_2)
+"O" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/obj/machinery/status_display/evac/directional/west,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"R" = (
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 8
+	},
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/pod_2)
+"S" = (
+/obj/machinery/sleeper/cryo{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"T" = (
+/obj/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/pod_2)
+"U" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/plating,
+/area/shuttle/pod_2)
+"V" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+"Y" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron/white/smooth_large,
+/area/shuttle/pod_2)
+"Z" = (
+/obj/item/radio/intercom/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
+	},
+/turf/open/floor/iron/smooth_large,
+/area/shuttle/pod_2)
+
+(1,1,1) = {"
+z
+N
+N
+N
+A
+N
+N
+N
+N
+N
+"}
+(2,1,1) = {"
+a
+U
+r
+F
+D
+J
+O
+n
+o
+N
+"}
+(3,1,1) = {"
+a
+U
+v
+Y
+V
+i
+i
+i
+i
+T
+"}
+(4,1,1) = {"
+a
+U
+R
+x
+Z
+I
+p
+m
+S
+N
+"}
+(5,1,1) = {"
+z
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}

@@ -415,7 +415,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			return PROCESS_KILL
 
 		if(SD_EMERGENCY)
-			return display_shuttle_status(SSshuttle.emergency)
+			//return display_shuttle_status(SSshuttle.emergency)
+			if(EMERGENCY_PAST_POINT_OF_NO_RETURN)
+				var/line1 = "[SSshuttle.abandon_ship_state] ETA"
+				var/line2 = time_as_string(timeleft(SSshuttle.abandon_ship_timer))
+				set_messages(line1, line2)
+			else
+				set_messages("", "")
+			return null
 
 		if(SD_PICTURE)
 			set_picture(last_picture)

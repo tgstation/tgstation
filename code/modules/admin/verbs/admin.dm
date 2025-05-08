@@ -52,15 +52,33 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "Player Playtime", "View player 
 /client/proc/trigger_centcom_recall()
 	if(!check_rights(R_ADMIN))
 		return
-	var/message = pick(GLOB.admiral_messages)
-	message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as text|null
+	// var/message = pick(GLOB.admiral_messages)
+	// message = input("Enter message from the on-call admiral to be put in the recall report.", "Admiral Message", message) as text|null
 
-	if(!message)
+	// if(!message)
+	// 	return
+
+	// message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
+	// usr.log_message("triggered a CentCom recall, with the message of: [message]", LOG_GAME)
+	// SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
+	if(!SSshuttle.abandon_ship_state)
+		return
+	if(SSshuttle.abandon_ship_state == ABANDON_SHIP_ESCAPE)
 		return
 
-	message_admins("[key_name_admin(usr)] triggered a CentCom recall, with the admiral message of: [message]")
-	usr.log_message("triggered a CentCom recall, with the message of: [message]", LOG_GAME)
-	SSshuttle.centcom_recall(SSshuttle.emergency.timer, message)
+	message_admins("[key_name_admin(usr)] cancelled abandon ship.")
+	log_admin("[key_name(usr)] cancelled abandon ship.")
+
+	SSshuttle.abandon_ship_state = null
+	deltimer(SSshuttle.abandon_ship_timer)
+
+	for(var/obj/machinery/door/airlock/airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock/external))
+		if(airlock.red_alert_access)
+			airlock.bolt()
+
+	for(var/obj/machinery/computer/shuttle/pod/pod as anything in SSmachines.get_machines_by_type(/obj/machinery/computer/shuttle/pod))
+		if(!(pod.obj_flags & EMAGGED))
+			pod.locked = TRUE
 
 /datum/admins/proc/cmd_show_exp_panel(client/client_to_check)
 	if(!check_rights(R_ADMIN))

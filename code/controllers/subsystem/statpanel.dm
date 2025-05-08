@@ -43,10 +43,12 @@ SUBSYSTEM_DEF(statpanels)
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
 		)
 
-		if(SSshuttle.emergency)
-			var/ETA = SSshuttle.emergency.getModeStr()
-			if(ETA)
-				global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
+		// if(SSshuttle.emergency)
+		// 	var/ETA = SSshuttle.emergency.getModeStr()
+		// 	if(ETA)
+		// 		global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
+		if(EMERGENCY_PAST_POINT_OF_NO_RETURN)
+			global_data += "[SSshuttle.abandon_ship_state] ETA: [time_as_string(timeleft(SSshuttle.abandon_ship_timer))]"
 
 		if(SSticker.reboot_timer)
 			var/reboot_time = timeleft(SSticker.reboot_timer)

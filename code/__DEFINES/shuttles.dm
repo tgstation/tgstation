@@ -11,10 +11,10 @@
 #define SHUTTLE_RECHARGING "recharging"
 #define SHUTTLE_PREARRIVAL "landing"
 
-#define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
-#define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
-#define EMERGENCY_AT_LEAST_DOCKED (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_CALL)
-#define EMERGENCY_PAST_POINT_OF_NO_RETURN ((SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_CALL && !SSshuttle.canRecall()) || EMERGENCY_AT_LEAST_DOCKED)
+#define EMERGENCY_IDLE_OR_RECALLED (!(SSshuttle?.abandon_ship_state))//(SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
+#define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.abandon_ship_state == ABANDON_SHIP_ESCAPE) //(SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
+#define EMERGENCY_AT_LEAST_DOCKED (SSshuttle.abandon_ship_state)//(SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_CALL)
+#define EMERGENCY_PAST_POINT_OF_NO_RETURN (SSshuttle.abandon_ship_state) //((SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_CALL && !SSshuttle.canRecall()) || EMERGENCY_AT_LEAST_DOCKED)
 
 // Shuttle return values
 #define SHUTTLE_CAN_DOCK "can_dock"
@@ -149,3 +149,15 @@
 
 #define CUSTOM_ENGINE_POWER_MULTIPLIER 25
 #define CUSTOM_ENGINE_POWER_TURF_COUNT_OFFSET 5
+
+#define SHUTTLE_CONSOLE_ACCESSDENIED "accessdenied"
+#define SHUTTLE_CONSOLE_ENDGAME "endgame"
+#define SHUTTLE_CONSOLE_RECHARGING "recharging"
+#define SHUTTLE_CONSOLE_INTRANSIT "intransit"
+#define SHUTTLE_CONSOLE_DESTINVALID "destinvalid"
+#define SHUTTLE_CONSOLE_SUCCESS "success"
+#define SHUTTLE_CONSOLE_ERROR "error"
+
+#define ABANDON_SHIP_UNLOCK "UNLOCK"
+#define ABANDON_SHIP_LAUNCH "LAUNCH"
+#define ABANDON_SHIP_ESCAPE "ESCAPE"

@@ -21,3 +21,15 @@
 	suffix = "cramped"
 	name = "escape pod (Cramped)"
 	description = "Downgraded escape pod that lacks a window and only has one seat, alongside lacking an emergency safe."
+
+/datum/map_template/shuttle/escape_pod/torch
+	suffix = "torch"
+	name = "escape pod (Torch)"
+
+/datum/map_template/shuttle/escape_pod/torch/big
+	suffix = "torch_big"
+	name = "escape pod (Torch, Big)"
+
+/datum/map_template/shuttle/escape_pod/torch/big/inv
+	suffix = "torch_big_inv"
+	name = "escape pod (Torch, Big, Inverted)"

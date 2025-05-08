@@ -67,6 +67,7 @@ export function CommunicationsConsole(props) {
               icon="key"
               color="good"
               onClick={() => act('requestSafeCodes')}
+              pr={2}
             >
               Request Safe Code
             </Button>

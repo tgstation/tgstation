@@ -149,6 +149,9 @@ SUBSYSTEM_DEF(shuttle)
 	/// List of express consoles that are waiting for pack initialization
 	var/list/obj/machinery/computer/cargo/express/express_consoles = list()
 
+	var/abandon_ship_timer
+	var/abandon_ship_state = ""
+
 /datum/controller/subsystem/shuttle/Initialize()
 	order_number = rand(1, 9000)
 
@@ -325,21 +328,33 @@ SUBSYSTEM_DEF(shuttle)
 /datum/controller/subsystem/shuttle/proc/canEvac()
 	var/shuttle_refuel_delay = CONFIG_GET(number/shuttle_refuel_delay)
 	if(world.time - SSticker.round_start_time < shuttle_refuel_delay)
-		return "The emergency shuttle is refueling. Please wait [DisplayTimeText(shuttle_refuel_delay - (world.time - SSticker.round_start_time))] before attempting to call."
+		//return "The emergency shuttle is refueling. Please wait [DisplayTimeText(shuttle_refuel_delay - (world.time - SSticker.round_start_time))] before attempting to call."
+		return "You cannot call Abandon Ship so soon after awakening the crew. \
+			Please wait at least [DisplayTimeText(shuttle_refuel_delay - (world.time - SSticker.round_start_time))]."
 
-	switch(emergency.mode)
-		if(SHUTTLE_RECALL)
-			return "The emergency shuttle may not be called while returning to CentCom."
-		if(SHUTTLE_CALL)
-			return "The emergency shuttle is already on its way."
-		if(SHUTTLE_DOCKED)
-			return "The emergency shuttle is already here."
-		if(SHUTTLE_IGNITING)
-			return "The emergency shuttle is firing its engines to leave."
-		if(SHUTTLE_ESCAPE)
-			return "The emergency shuttle is moving away to a safe distance."
-		if(SHUTTLE_STRANDED)
-			return "The emergency shuttle has been disabled by CentCom."
+	switch(SSsecurity_level.get_current_level_as_number())
+		if(SEC_LEVEL_DELTA)
+			return "Abandon ship has been called by nature of imminent ship destruction."
+		if(SEC_LEVEL_ABANDON_SHIP)
+			return "Abandon ship has already been called."
+		if(SEC_LEVEL_RED)
+			pass()
+		else
+			return "You must be at red alert to call for abandon ship."
+
+	// switch(emergency.mode)
+	// 	if(SHUTTLE_RECALL)
+	// 		return "The emergency shuttle may not be called while returning to CentCom."
+	// 	if(SHUTTLE_CALL)
+	// 		return "The emergency shuttle is already on its way."
+	// 	if(SHUTTLE_DOCKED)
+	// 		return "The emergency shuttle is already here."
+	// 	if(SHUTTLE_IGNITING)
+	// 		return "The emergency shuttle is firing its engines to leave."
+	// 	if(SHUTTLE_ESCAPE)
+	// 		return "The emergency shuttle is moving away to a safe distance."
+	// 	if(SHUTTLE_STRANDED)
+	// 		return "The emergency shuttle has been disabled by CentCom."
 
 	return TRUE
 
@@ -369,53 +384,137 @@ SUBSYSTEM_DEF(shuttle)
  * * user - The mob that called the shuttle.
  * * call_reason - The reason the shuttle was called, which should be non-html-encoded text.
  */
-/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason)
-	if (!check_backup_emergency_shuttle())
-		return
+/datum/controller/subsystem/shuttle/proc/requestEvac(mob/user, call_reason, caller = "An unknown source")
+//	if (!check_backup_emergency_shuttle())
+//		return
 
 	var/can_evac_or_fail_reason = SSshuttle.canEvac()
-	if(can_evac_or_fail_reason != TRUE)
+	if(user && can_evac_or_fail_reason != TRUE)
 		to_chat(user, span_alert("[can_evac_or_fail_reason]"))
 		return
 
-	if(length(trim(call_reason)) < CALL_SHUTTLE_REASON_LENGTH && SSsecurity_level.get_current_level_as_number() > SEC_LEVEL_GREEN)
+	if(user && length(trim(call_reason)) < CALL_SHUTTLE_REASON_LENGTH)
 		to_chat(user, span_alert("You must provide a reason."))
 		return
 
-	var/area/signal_origin = get_area(user)
-	call_evac_shuttle(call_reason, signal_origin)
+	if(SSshuttle.abandon_ship_state)
+		return
 
-	log_shuttle("[key_name(user)] has called the emergency shuttle.")
-	deadchat_broadcast(" has called the shuttle at [span_name("[signal_origin.name]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
+	var/area/signal_origin = get_area(user)
+//	call_evac_shuttle(call_reason, signal_origin)
+	if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_ABANDON_SHIP)
+		SSsecurity_level.set_level(SEC_LEVEL_ABANDON_SHIP, FALSE)
+	var/announcement = "[caller] has called for abandon ship. \
+		All crew are to report to their nearest escape shuttle or pod in an orderly fashion."
+	if(call_reason)
+		announcement += "\n\nReason: [call_reason]"
+	announcement += "\n\nShuttle controls will unlock in 5 minutes. \
+		Automatic launch will occur in 10 minutes. \
+		Early launch may be authorized by the Captain from the command deck. \
+		Warning: Shuttles will not launch if unoccupied or over capacity."
+
+	priority_announce(
+		text = announcement,
+		title = "Abandon Ship!",
+		sound = ANNOUNCER_SHUTTLECALLED,
+		sender_override = "Abandon Ship Alert",
+		color_override = "orange",
+	)
+
+	if(user)
+		log_shuttle("[key_name(user)] has called for abandon ship.")
+		deadchat_broadcast(" has called for abandon ship at [span_name("[signal_origin.name]")].", span_name("[user.real_name]"), user, message_type=DEADCHAT_ANNOUNCEMENT)
+		message_admins("[ADMIN_LOOKUPFLW(user)] has called for abandon ship. (<A href='byond://?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>FORCE CANCEL</A>)")
+	else
+		log_shuttle("Abandon ship has been auto-called due to delta alert.")
+		deadchat_broadcast(" has been auto-called due to delta alert.", message_type = DEADCHAT_ANNOUNCEMENT)
+		message_admins("Abandon ship has been auto-called due to delta alert.")
 	if(call_reason)
 		SSblackbox.record_feedback("text", "shuttle_reason", 1, "[call_reason]")
 		log_shuttle("Shuttle call reason: [call_reason]")
 		SSticker.emergency_reason = call_reason
-	message_admins("[ADMIN_LOOKUPFLW(user)] has called the shuttle. (<A href='byond://?_src_=holder;[HrefToken()];trigger_centcom_recall=1'>TRIGGER CENTCOM RECALL</A>)")
+	abandon_ship_timer = addtimer(CALLBACK(src, PROC_REF(unlock_pods)), 5 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
+	abandon_ship_state = ABANDON_SHIP_UNLOCK
+
+	for(var/obj/machinery/door/airlock/airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock/external))
+		if(airlock.red_alert_access)
+			airlock.unbolt()
+
+/datum/controller/subsystem/shuttle/proc/unlock_pods()
+	abandon_ship_timer = addtimer(CALLBACK(src, PROC_REF(launch_everything)), 5 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
+	abandon_ship_state = ABANDON_SHIP_LAUNCH
+	for(var/obj/machinery/computer/shuttle/pod/pod as anything in SSmachines.get_machines_by_type(/obj/machinery/computer/shuttle/pod))
+		pod.locked = FALSE
+	priority_announce(
+		text = "Escape shuttles and pods are now unlocked, and may be launched at will. \
+			Automatic launch will occur in 5 minutes. \
+			Warning: Shuttles will not launch if unoccupied or over capacity.",
+		title = "Abandon Ship!",
+		color_override = "orange",
+	)
+
+/datum/controller/subsystem/shuttle/proc/launch_everything()
+	abandon_ship_timer = addtimer(CALLBACK(src, PROC_REF(end_round)), 3 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
+	abandon_ship_state = ABANDON_SHIP_ESCAPE
+	for(var/obj/machinery/computer/shuttle/pod/pod as anything in SSmachines.get_machines_by_type(/obj/machinery/computer/shuttle/pod))
+		pod.send_shuttle()
+	priority_announce(
+		text = "Escape shuttles and pod launch sequence initiated.",
+		title = "Abandon Ship!",
+		color_override = "orange",
+	)
+
+/datum/controller/subsystem/shuttle/proc/manual_unlock_all_pods()
+	if(!abandon_ship_timer || abandon_ship_state != ABANDON_SHIP_UNLOCK)
+		return
+	deltimer(abandon_ship_timer)
+	abandon_ship_timer = addtimer(CALLBACK(src, PROC_REF(unlock_pods)), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+	abandon_ship_state = ABANDON_SHIP_UNLOCK
+	priority_announce(
+		text = "The Captain has authorized manual unlock of all escape shuttles and pods.",
+		title = "Abandon Ship!",
+		color_override = "orange",
+	)
+
+/datum/controller/subsystem/shuttle/proc/manual_launch_all_pods()
+	if(!abandon_ship_timer || !abandon_ship_state || abandon_ship_state == ABANDON_SHIP_ESCAPE)
+		return
+	deltimer(abandon_ship_timer)
+	abandon_ship_timer = addtimer(CALLBACK(src, PROC_REF(launch_everything)), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
+	abandon_ship_state = ABANDON_SHIP_LAUNCH
+	priority_announce(
+		text = "The Captain has authorized a manual launch of all escape shuttles and pods. \
+			All crew have 10 seconds to board or be left behind.",
+		title = "Abandon Ship!",
+		color_override = "orange",
+	)
+
+/datum/controller/subsystem/shuttle/proc/end_round()
+	SSticker.force_ending = TRUE
 
 /// Call the emergency shuttle.
 /// If you are doing this on behalf of a player, use requestEvac instead.
 /// `signal_origin` is fluff occasionally provided to players.
-/datum/controller/subsystem/shuttle/proc/call_evac_shuttle(call_reason, signal_origin)
-	if (!check_backup_emergency_shuttle())
-		return
+// /datum/controller/subsystem/shuttle/proc/call_evac_shuttle(call_reason, signal_origin)
+// 	if (!check_backup_emergency_shuttle())
+// 		return
 
-	call_reason = trim(html_encode(call_reason))
+// 	call_reason = trim(html_encode(call_reason))
 
-	var/emergency_reason = "\n\nNature of emergency:\n[call_reason]"
+// 	var/emergency_reason = "\n\nNature of emergency:\n[call_reason]"
 
-	emergency.request(
-		signal_origin = signal_origin,
-		reason = html_decode(emergency_reason),
-		red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
-	)
+// 	emergency.request(
+// 		signal_origin = signal_origin,
+// 		reason = html_decode(emergency_reason),
+// 		red_alert = (SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
+// 	)
 
-	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
+// 	var/datum/radio_frequency/frequency = SSradio.return_frequency(FREQ_STATUS_DISPLAYS)
 
-	if(frequency)
-		// Start processing shuttle-mode displays to display the timer
-		var/datum/signal/status_signal = new(list("command" = "update"))
-		frequency.post_signal(src, status_signal)
+// 	if(frequency)
+// 		// Start processing shuttle-mode displays to display the timer
+// 		var/datum/signal/status_signal = new(list("command" = "update"))
+// 		frequency.post_signal(src, status_signal)
 
 /datum/controller/subsystem/shuttle/proc/centcom_recall(old_timer, admiral_message)
 	if(emergency.mode != SHUTTLE_CALL || emergency.timer != old_timer)

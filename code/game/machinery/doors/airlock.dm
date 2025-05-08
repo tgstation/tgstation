@@ -73,7 +73,7 @@
 #define DOOR_VISION_DISTANCE 11 ///The maximum distance a door will see out to
 
 /obj/machinery/door/airlock
-	name = "Airlock"
+	name = "airlock"
 	icon = 'icons/obj/doors/airlocks/station/public.dmi'
 	icon_state = "closed"
 	max_integrity = 300
@@ -153,6 +153,7 @@
 	var/shockedby
 	/// How many seconds remain until the door is no longer electrified. -1/MACHINE_ELECTRIFIED_PERMANENT = permanently electrified until someone fixes it.
 	var/secondsElectrified = MACHINE_NOT_ELECTRIFIED
+	var/safety = FALSE
 
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
@@ -2211,7 +2212,7 @@
 	overlays_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	note_overlay_file = 'icons/obj/doors/airlocks/external/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_ext
-
+	safety = TRUE
 	/// Whether or not the airlock can be opened without access from a certain direction while powered, or with bare hands from any direction while unpowered OR pressurized.
 	var/space_dir = null
 
@@ -2226,11 +2227,13 @@
 	. = ..()
 	if(space_dir)
 		unres_sides |= space_dir
+		safety = TRUE
+		update_appearance()
 
-/obj/machinery/door/airlock/external/examine(mob/user)
+/obj/machinery/door/airlock/examine(mob/user)
 	. = ..()
-	if(space_dir)
-		. += span_notice("It has labels indicating that it has an emergency mechanism to open from the [dir2text(space_dir)] side with <b>just your hands</b> even if there's no power.")
+	if(safety)
+		. += span_notice("It has labels indicating that it has an emergency mechanism to with <b>just your hands</b> even if there's no power.")
 
 /obj/machinery/door/airlock/external/cyclelinkairlock()
 	. = ..()
@@ -2239,20 +2242,28 @@
 		cycle_linked_external_airlock.space_dir |= space_dir
 		space_dir |= cycle_linked_external_airlock.space_dir
 
-/obj/machinery/door/airlock/external/try_safety_unlock(mob/user)
-	if(space_dir && density)
-		if(!hasPower())
-			to_chat(user, span_notice("You begin unlocking the airlock safety mechanism..."))
-			if(do_after(user, 15 SECONDS, target = src))
-				try_to_crowbar(null, user, TRUE)
-				return TRUE
-		else
-			// always open from the space side
-			// get_dir(src, user) & space_dir, checked in unresricted_sides
-			var/should_safety_open = shuttledocked || cyclelinkedairlock?.shuttledocked || is_safe_turf(get_step(src, space_dir), TRUE, FALSE)
-			return try_to_activate_door(user, should_safety_open)
+/obj/machinery/door/airlock/try_safety_unlock(mob/user)
+	if(!safety)
+		return FALSE
 
-	return ..()
+	if(!hasPower())
+		to_chat(user, span_notice("You begin unlocking the airlock safety mechanism..."))
+		if(do_after(user, 15 SECONDS, target = src))
+			try_to_crowbar(null, user, TRUE)
+			return TRUE
+
+	return FALSE
+
+/obj/machinery/door/airlock/external/try_safety_unlock(mob/user)
+	if(..())
+		return TRUE
+	if(!space_dir)
+		return FALSE
+
+	// always open from the space side
+	// get_dir(src, user) & space_dir, checked in unresricted_sides
+	var/should_safety_open = shuttledocked || cyclelinkedairlock?.shuttledocked || is_safe_turf(get_step(src, space_dir), TRUE, FALSE)
+	return try_to_activate_door(user, should_safety_open)
 
 // Access free external airlocks
 /obj/machinery/door/airlock/external/ruin

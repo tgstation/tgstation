@@ -248,7 +248,7 @@
 			M.last_bumped = world.time
 			if(HAS_TRAIT(M, TRAIT_HANDS_BLOCKED) && !check_access(null) && !emergency)
 				return
-			if(try_safety_unlock(M))
+			if(density && try_safety_unlock(M))
 				return
 			bumpopen(M)
 			return
@@ -299,7 +299,7 @@
 		return
 	if(try_remove_seal(user))
 		return
-	if(try_safety_unlock(user))
+	if(density && try_safety_unlock(user))
 		return
 	return try_to_activate_door(user)
 

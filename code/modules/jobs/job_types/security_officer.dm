@@ -131,7 +131,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 
 	var/spawn_point = pick(LAZYACCESS(GLOB.department_security_spawns, department))
 
-	if(!CONFIG_GET(flag/sec_start_brig) && (destination || spawn_point))
+	if(!CONFIG_GET(flag/sec_start_brig) && (destination || spawn_point) && isturf(spawning.loc))
 		if(spawn_point)
 			spawning.Move(get_turf(spawn_point))
 		else

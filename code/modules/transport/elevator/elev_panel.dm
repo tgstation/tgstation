@@ -25,17 +25,17 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 	/// Were we instantiated at mapload? Used to determine when we should link / throw errors
-	var/maploaded = FALSE
+	var/tmp/maploaded = FALSE
 
 	/// A weakref to the transport_controller datum we control
-	var/datum/weakref/lift_weakref
+	var/tmp/datum/weakref/lift_weakref
 	/// What specific_transport_id do we link with?
 	var/linked_elevator_id
 
 	/// A list of all possible destinations this elevator can travel.
 	/// Assoc list of "Floor name" to "z level of destination".
 	/// By default the floor names will auto-generate ("Floor 1", "Floor 2", etc).
-	var/list/linked_elevator_destination
+	var/tmp/list/linked_elevator_destination
 	/// If you want to override what each floor is named as, you can do so with this list.
 	/// Make this an assoc list of "z level you want to rename" to "desired name".
 	/// So, if you want the z-level 2 destination to be named "Cargo", you would do list("2" = "Cargo").
@@ -43,14 +43,14 @@
 	var/list/preset_destination_names
 
 	/// What z-level did we move to last? Used for showing the user in the UI which direction we're moving.
-	var/last_move_target
+	var/tmp/last_move_target
 	/// TimerID to our door reset timer, made by emergency opening doors
-	var/door_reset_timerid
+	var/tmp/door_reset_timerid
 	/// The light mask overlay we use
 	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
 	light_range = 1.5
 	light_color = LIGHT_COLOR_DARK_BLUE
-	var/light_mask = "elev-light-mask"
+	var/tmp/light_mask = "elev-light-mask"
 
 /obj/machinery/elevator_control_panel/Initialize(mapload)
 	. = ..()

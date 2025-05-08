@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Flex, Modal, Section } from 'tgui-core/components';
+import { Box, Button, Flex, Modal, Section, Stack } from 'tgui-core/components';
 import { capitalize } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
@@ -30,6 +30,9 @@ export function PageMain(props) {
     shuttleCanEvacOrFailReason,
     shuttleLastCalled,
     shuttleRecallable,
+    //
+    canUnlockPods,
+    canLaunchPods,
   } = data;
 
   const [callingShuttle, setCallingShuttle] = useState(false);
@@ -43,22 +46,18 @@ export function PageMain(props) {
   return (
     <Box>
       {!syndicate && (
-        <Section title="Emergency Shuttle">
+        <Section title="Abandon Ship">
           {shuttleCalled ? (
             <Button.Confirm
               icon="space-shuttle"
               color="bad"
-              disabled={!canRecallShuttles || !shuttleRecallable}
-              tooltip={
-                (canRecallShuttles &&
-                  !shuttleRecallable &&
-                  "It's too late for the emergency shuttle to be recalled.") ||
-                'You do not have permission to recall the emergency shuttle.'
-              }
+              disabled
+              tooltip={'Abandon Ship cannot be cancelled.'}
               tooltipPosition="top"
               onClick={() => act('recallShuttle')}
+              width="100%"
             >
-              Recall Emergency Shuttle
+              Cancel Abandon Ship
             </Button.Confirm>
           ) : (
             <Button
@@ -71,18 +70,60 @@ export function PageMain(props) {
               }
               tooltipPosition="top"
               onClick={() => setCallingShuttle(true)}
+              width="100%"
             >
-              Call Emergency Shuttle
+              Call Abandon Ship
             </Button>
           )}
+
+          <Stack width="100%">
+            <Stack.Item width="49%">
+              <Button
+                icon="unlock"
+                disabled={!canUnlockPods}
+                tooltip={
+                  canUnlockPods && shuttleCalled
+                    ? undefined
+                    : canUnlockPods
+                      ? 'Only the Captain can authorize this.'
+                      : shuttleCalled
+                        ? undefined
+                        : 'Abandon Ship has not been called.'
+                }
+                onClick={() => act('unlockPods')}
+                width="100%"
+              >
+                Unlock Escape Pods
+              </Button>
+            </Stack.Item>
+            <Stack.Item width="50%">
+              <Button
+                icon="rocket"
+                disabled={!canLaunchPods}
+                tooltip={
+                  canLaunchPods && shuttleCalled
+                    ? undefined
+                    : canLaunchPods
+                      ? 'Only the Captain can authorize this.'
+                      : shuttleCalled
+                        ? undefined
+                        : 'Abandon Ship has not been called.'
+                }
+                onClick={() => act('launchPods')}
+                width="100%"
+              >
+                Launch Escape Pods
+              </Button>
+            </Stack.Item>
+          </Stack>
+
           {!!shuttleCalledPreviously &&
             (shuttleLastCalled ? (
               <Box>
-                Most recent shuttle call/recall traced to:{' '}
-                <b>{shuttleLastCalled}</b>
+                Abandon Ship call signal traced to: <b>{shuttleLastCalled}</b>
               </Box>
             ) : (
-              <Box>Unable to trace most recent shuttle/recall signal.</Box>
+              <Box>Unable to trace most recent Abandon Ship call signal.</Box>
             ))}
         </Section>
       )}
@@ -155,7 +196,7 @@ export function PageMain(props) {
           {canBuyShuttles !== 0 && (
             <Button
               icon="shopping-cart"
-              disabled={canBuyShuttles !== 1}
+              disabled
               // canBuyShuttles is a string detailing the fail reason
               // if one can be given
               tooltip={canBuyShuttles !== 1 ? canBuyShuttles : undefined}
@@ -234,7 +275,7 @@ export function PageMain(props) {
         <MessageModal
           label="Nature of emergency"
           icon="space-shuttle"
-          buttonText="Call Shuttle"
+          buttonText="Abandon Ship"
           minLength={callShuttleReasonMinLength}
           onBack={() => setCallingShuttle(false)}
           onSubmit={(reason) => {

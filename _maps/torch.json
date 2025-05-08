@@ -1,0 +1,33 @@
+{
+	"version": 1,
+	"map_name": "NTSC Flashlight",
+	"map_path": "map_files/torch",
+	"map_file": "torch2.dmm",
+	"minetype": "asteroid",
+	"space_ruin_levels": 0,
+	"space_empty_levels": 2,
+	"allow_custom_shuttles": 0,
+	"traits": [
+		{
+			"Linkage": null
+		},
+		{
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": null
+		},
+		{
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": null
+		},
+		{
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": null
+		}
+	],
+	"shuttles": {
+		"cargo": "cargo_torch",
+		"ferry": "ferry_fancy",
+		"whiteship": "whiteship_meta",
+		"emergency": "emergency_meta"
+	}
+}

@@ -473,8 +473,12 @@
 				hangover_landmark.used = TRUE
 				break
 			return hangover_spawn_point || get_latejoin_spawn_point()
+	var/sleeper = find_sleeper_spawn_point()
+	if(sleeper)
+		return sleeper
 	if(length(GLOB.jobspawn_overrides[title]))
 		return pick(GLOB.jobspawn_overrides[title])
+	stack_trace("No spawn point found for job [title] ([type])")
 	var/obj/effect/landmark/start/spawn_point = get_default_roundstart_spawn_point()
 	if(!spawn_point) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 		return get_latejoin_spawn_point()
@@ -496,12 +500,27 @@
 
 /// Finds a valid latejoin spawn point, checking for events and special conditions.
 /datum/job/proc/get_latejoin_spawn_point()
+	var/sleeper = find_sleeper_spawn_point()
+	if(sleeper)
+		return sleeper
 	if(length(GLOB.jobspawn_overrides[title])) //We're doing something special today.
 		return pick(GLOB.jobspawn_overrides[title])
 	if(length(SSjob.latejoin_trackers))
 		return pick(SSjob.latejoin_trackers)
+	stack_trace("No latejoin spawn point found for job [title] ([type])")
 	return SSjob.get_last_resort_spawn_points()
 
+/datum/job/proc/find_sleeper_spawn_point()
+	if(!GLOB.sleeper_spawnpoints[title])
+		return null
+	var/list/obj/sleepers = GLOB.sleeper_spawnpoints[title].Copy()
+	for(var/obj/machinery/sleeper/cryo/sleeper as anything in sleepers)
+		if(sleeper.occupant)
+			sleepers -= sleeper
+	if(length(sleepers))
+		return pick(sleepers)
+	var/obj/some_sleeper = pick(GLOB.sleeper_spawnpoints[title])
+	return get_step(some_sleeper, some_sleeper.dir)
 
 /// Spawns the mob to be played as, taking into account preferences and the desired spawn point.
 /datum/job/proc/get_spawn_mob(client/player_client, atom/spawn_point)

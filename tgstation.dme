@@ -2090,6 +2090,7 @@
 #include "code\game\area\areas\station\service.dm"
 #include "code\game\area\areas\station\solars.dm"
 #include "code\game\area\areas\station\telecomm.dm"
+#include "code\game\area\areas\station\torch.dm"
 #include "code\game\atom\_atom.dm"
 #include "code\game\atom\alternate_appearance.dm"
 #include "code\game\atom\atom_act.dm"

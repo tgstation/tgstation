@@ -78,6 +78,8 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 #define FALL_STOP_INTERCEPTING (1<<2)
 /// Used when the grip on a pulled object shouldn't be broken.
 #define FALL_RETAIN_PULL (1<<3)
+/// Keep falling, but don't call onZImpact
+#define FALL_NO_ON_ZIMPACT (1<<4)
 
 /// Runs check_pulling() by the end of [/atom/movable/proc/zMove] for every movable that's pulling something. Should be kept enabled unless you know what you are doing.
 #define ZMOVE_CHECK_PULLING (1<<0)

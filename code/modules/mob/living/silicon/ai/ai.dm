@@ -256,7 +256,7 @@
 	var/reason = tgui_input_text(
 		src,
 		"What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)",
-		"Confirm Shuttle Call",
+		"Confirm Abandon Ship",
 		max_length = MAX_MESSAGE_LEN,
 		encode = FALSE,
 	)
@@ -264,8 +264,18 @@
 	if(incapacitated)
 		return
 
+	var/confirm = tgui_alert(
+		src,
+		"This action is irreversible. Are you sure?",
+		"Confirm Abandon Ship",
+		list("Yes", "No"),
+		10 SECONDS,
+	)
+	if(confirm != "Yes" || incapacitated)
+		return
+
 	if(trim(reason))
-		SSshuttle.requestEvac(src, reason)
+		SSshuttle.requestEvac(src, reason, "The AI")
 
 	// hack to display shuttle timer
 	if(!EMERGENCY_IDLE_OR_RECALLED)

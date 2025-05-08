@@ -242,7 +242,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			radio_channel = RADIO_CHANNEL_MEDICAL
 		if("science")
 			radio_channel = RADIO_CHANNEL_SCIENCE
-		if("engineering")
+		if("engineering", "atmospherics")
 			radio_channel = RADIO_CHANNEL_ENGINEERING
 		if("security")
 			radio_channel = RADIO_CHANNEL_SECURITY

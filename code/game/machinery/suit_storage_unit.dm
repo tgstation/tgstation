@@ -118,7 +118,8 @@
 /obj/machinery/suit_storage_unit/mining/eva
 	suit_type = null
 	mask_type = /obj/item/clothing/mask/breath
-	mod_type = /obj/item/mod/control/pre_equipped/mining
+	mod_type = /obj/item/mod/control/pre_equipped/mining/eva
+	storage_type = /obj/item/tank/internals/oxygen
 
 /obj/machinery/suit_storage_unit/medical
 	mask_type = /obj/item/clothing/mask/breath/medical
@@ -179,9 +180,9 @@
 	mod_type = /obj/item/mod/control/pre_equipped/loader
 
 /obj/machinery/suit_storage_unit/Initialize(mapload)
+	var/list/base_access = LAZYLISTDUPLICATE(req_access)
 	. = ..()
-
-	set_access()
+	set_access(base_access)
 	set_wires(new /datum/wires/suit_storage_unit(src))
 	if(suit_type)
 		suit = new suit_type(src)

@@ -66,6 +66,9 @@ export type CommsConsoleData = {
   shuttleLastCalled: BooleanLike;
   shuttleRecallable: BooleanLike;
   syndicate: BooleanLike;
+  //
+  canUnlockPods: BooleanLike;
+  canLaunchPods: BooleanLike;
 
   // static_data
   callShuttleReasonMinLength: number;
