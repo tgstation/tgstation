@@ -164,6 +164,9 @@
 
 	if(!isnull(master))
 		return
+	else if(master.on != ACTIVE) // FUCK
+		turn_off()
+		return
 	var/field_len = length(fields)
 	if(field_len)
 		use_energy(active_power_usage * field_len)
