@@ -165,6 +165,8 @@ GLOBAL_VAR_INIT(corrective_cpu_target, 80)
 GLOBAL_VAR_INIT(corrective_cpu_cost, 0)
 // How far away from the average can we get before discarding a datapoint
 GLOBAL_VAR_INIT(corrective_cpu_ratio, 30)
+// How far away from the average can we get before discarding a datapoint
+GLOBAL_VAR_INIT(glide_threshold_ratio, 10)
 // Debug tool, lets us set the floor of cpu consumption
 GLOBAL_VAR_INIT(floor_cpu, 0)
 // Debug tool, lets us set a sometimes used floor for cpu consumption
@@ -211,7 +213,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 #define USAGE_DISPLAY_MC "Before Tick"
 #define USAGE_DISPLAY_POST_TICK "Maptick + Verbs"
 /atom/movable/screen/usage_display
-	screen_loc = "LEFT:8, CENTER-3"
+	screen_loc = "LEFT:8, CENTER-4:20"
 	plane = CPU_DEBUG_PLANE
 	layer = CPU_DISPLAY_LAYER
 	maptext_width = 512
@@ -266,6 +268,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			<a href='byond://?src=[REF(src)];act=set_sustain_chance'>[GLOB.sustain_cpu_chance]%</a>\n\
 		Spike: <a href='byond://?src=[REF(src)];act=set_spike'>[GLOB.spike_cpu]</a>\n\
 		Tick: [FORMAT_CPU(world.time / world.tick_lag)]\n\
+		Glide Ratio: <a href='byond://?src=[REF(src)];act=set_glide_ratio'>[GLOB.glide_threshold_ratio]</a>%\n\
 		Correction Ideal: <a href='byond://?src=[REF(src)];act=set_corrective_target'>[FORMAT_CPU(GLOB.corrective_cpu_target)]</a>\n\
 		Correction Ratio: <a href='byond://?src=[REF(src)];act=set_corrective_ratio'>[GLOB.corrective_cpu_ratio]</a>%\n\
 		Correction Target: [FORMAT_CPU(GLOB.corrective_cpu_threshold)]\n\
@@ -370,6 +373,9 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		if("set_corrective_ratio")
 			var/target_ratio = tgui_input_number(usr, "How tolerant of distance from the average should we be?", "Correct CPU Ratio", max_value = INFINITY, min_value = 0, default = GLOB.corrective_cpu_ratio) || 0
 			GLOB.corrective_cpu_ratio = target_ratio
+		if("set_glide_ratio")
+			var/target_ratio = tgui_input_number(usr, "How tolerant of distance from the average should we be?", "Glide Ratio", max_value = INFINITY, min_value = 0, default = GLOB.glide_threshold_ratio) || 0
+			GLOB.glide_threshold_ratio = target_ratio
 		if("set_floor")
 			var/floor_cpu = tgui_input_number(usr, "How low should we allow the cpu to go?", "Floor CPU", max_value = INFINITY, min_value = 0, default = 0) || 0
 			GLOB.floor_cpu = floor_cpu
@@ -477,10 +483,10 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 	for(var/i in 1 to length(cpu_values))
 		var/value = cpu_values[i]
 		// If we deviate more then 30% above the average (since we care about filtering spikes), skip us over
-		if(value && 1 - (max(value, 100) / first_capped_average) <= 0.3)
+		if(value && max(value, 100) / first_capped_average - 1 <= GLOB.glide_threshold_ratio / 100)
 			trimmed_capped_sum += max(value, 100)
 			cap_used += 1
-		if(corrected_ticks[i] && 1 - (value / first_corrected_average) <= GLOB.corrective_cpu_ratio / 100)
+		if(corrected_ticks[i] && value / first_corrected_average - 1 <= GLOB.corrective_cpu_ratio / 100)
 			trimmed_corrected_sum += value
 			corrected_used += 1
 
