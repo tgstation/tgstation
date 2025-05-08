@@ -19,10 +19,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_display)
 	var/up_dash_space = ICON_SIZE_Y
 	var/right_dash_space = ICON_SIZE_X
 
-/atom/movable/screen/graph_display/Initialize(mapload, datum/hud/hud_owner)
-	. = ..()
-	setup()
-
 /atom/movable/screen/graph_display/Destroy()
 	QDEL_NULL(frame_up)
 	QDEL_NULL(frame_right)
@@ -332,26 +328,62 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	bar_count = 40
 	bar_distance = -1
 	bar_resolution = 6
+	// How much cpu do we want to be able to display discretely
 	var/max_displayable_cpu = 130
+	// What is the graph currently displaying?
+	var/display_mode
 	var/atom/movable/screen/graph_part/span_screen/threshold/overtime_line
 	var/atom/movable/screen/graph_part/span_screen/threshold/mc_overtime_line
+	var/atom/movable/screen/graph_part/span_screen/threshold/consumption_limit_line
 
 /atom/movable/screen/graph_display/bars/cpu_display/setup()
 	. = ..()
 	overtime_line = place_threshold(100)
 	mc_overtime_line = place_threshold(100)
 	mc_overtime_line.color = "#0035c7"
-	mc_overtime_line.alpha = 0
+	consumption_limit_line = place_threshold(100)
+	consumption_limit_line.color = "#b600c7"
 
 /atom/movable/screen/graph_display/bars/cpu_display/Destroy()
 	. = ..()
 	QDEL_NULL(overtime_line)
 	QDEL_NULL(mc_overtime_line)
+	QDEL_NULL(consumption_limit_line)
+
+/atom/movable/screen/graph_display/bars/cpu_display/proc/set_display_mode(new_display_mode)
+	if(display_mode == new_display_mode)
+		return
+	display_mode = new_display_mode
+	mc_overtime_line.alpha = 0
+	consumption_limit_line.alpha = 0
+	switch(display_mode)
+		if(USAGE_DISPLAY_CPU)
+			consumption_limit_line.alpha = 255
+		if(USAGE_DISPLAY_MC)
+			mc_overtime_line.alpha = 255
+	clear_values()
+
+/atom/movable/screen/graph_display/bars/cpu_display/proc/refresh_thresholds()
+	var/datum/tick_holder/tick_info = GLOB.tick_info
+	var/list/cpu_values = tick_info.cpu_values
+	var/list/pre_tick_cpu_usage = tick_info.pre_tick_cpu_usage
+	var/list/tick_cpu_usage = tick_info.tick_cpu_usage
+	var/last_index = tick_info.cpu_index
+	switch(display_mode)
+		if(USAGE_DISPLAY_CPU)
+			push_value(cpu_values[last_index])
+			consumption_limit_line.set_height(GLOB.corrective_cpu_threshold)
+		if(USAGE_DISPLAY_MC)
+			push_value(pre_tick_cpu_usage[last_index])
+			mc_overtime_line.set_height(TICK_LIMIT_RUNNING)
+		if(USAGE_DISPLAY_POST_TICK)
+			push_value(cpu_values[last_index] - tick_cpu_usage[last_index])
 
 /atom/movable/screen/graph_display/bars/cpu_display/proc/set_max_display(max_displayable_cpu)
 	src.max_displayable_cpu = max_displayable_cpu
 	overtime_line.recalculate_position()
 	mc_overtime_line.recalculate_position()
+	consumption_limit_line.recalculate_position()
 	for(var/atom/movable/screen/graph_part/bar/displayed_bar as anything in bars)
 		displayed_bar.update_appearance()
 
