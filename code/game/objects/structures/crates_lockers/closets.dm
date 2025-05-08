@@ -1249,13 +1249,17 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	GLOB.roundstart_station_closets += src
 
 ///Spears deal bonus damages to lockers
-/obj/structure/closet/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/structure/closet/secure_closet/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/spear))
-		take_damage(attacking_item.force * 2, attacking_item.damtype, MELEE, 1, get_dir(src, user))
-		user.visible_message(span_danger("[user] stabs with precision [src]'s electronics with [attacking_item]!"),
-		span_danger("You stab with precision [src]'s electronics with [attacking_item]!"), null, COMBAT_MESSAGE_RANGE)
-		log_combat(user, src, "attacked", attacking_item)
-		return
+		HIDE_ATTACK_MESSAGES(attack_modifiers)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 2)
+		user.visible_message(
+			span_danger("[user] stabs with precision [src]'s electronics with [attacking_item]!"),
+			span_danger("You stab with precision [src]'s electronics with [attacking_item]!"),
+			null,
+			COMBAT_MESSAGE_RANGE,
+		)
+
 	return ..()
 
 #undef LOCKER_FULL
