@@ -45,14 +45,15 @@
 		if(gibamounts[i])
 			for(var/j in 1 to gibamounts[i])
 				var/gibType = gibtypes[i]
-				var/obj/effect/decal/cleanable/blood/gibs/gib = new gibType(loc, diseases, dna_to_add)
-
 // These might streak off into space and cause annoying flaky failures with mapping nearstation tests
 #ifndef UNIT_TESTS
+				var/obj/effect/decal/cleanable/blood/gibs/gib = new gibType(loc, diseases, dna_to_add)
 				var/list/directions = gibdirections[i]
 				if(isturf(loc))
 					if(directions.len)
 						gib.streak(directions, mapload)
+#else
+				new gibType(loc, diseases, dna_to_add)
 #endif
 
 	return INITIALIZE_HINT_QDEL
