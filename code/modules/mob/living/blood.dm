@@ -415,16 +415,7 @@
 		if(!istype(blood_type))
 			continue
 
-		var/list/hopefully_not_a_list = blood_type.get_color()
-		var/list/rgb_blood = null
-		if (islist(hopefully_not_a_list))
-			var/per_row = 3
-			if (length(hopefully_not_a_list) >= 16)
-				per_row = 4
-			rgb_blood = list(hopefully_not_a_list[1], hopefully_not_a_list[per_row + 2], hopefully_not_a_list[per_row * 2 + 3])
-		else
-			rgb_blood = rgb2num(blood_type.get_color())
-
+		var/list/rgb_blood = rgb2num(blood_type.get_color())
 		r_color += rgb_blood[1]
 		g_color += rgb_blood[2]
 		b_color += rgb_blood[3]
@@ -436,15 +427,6 @@
 	r_color /= valid_colors
 	g_color /= valid_colors
 	b_color /= valid_colors
-
-	// Our colors are too vibrant, so we're forced to use matrixes
-	if (r_color > 255 || g_color > 255 || b_color > 255)
-		return list(
-			r_color, 0, 0,
-			0, g_color, 0,
-			0, 0, b_color,
-		)
-
 	return rgb(r_color, g_color, b_color)
 
 /// Checks if any of the passed blood types have certain blood flags

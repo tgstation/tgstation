@@ -1,6 +1,3 @@
-/// The percentage of blood we lose on each step
-#define BLOOD_PERCENT_LOSS_ON_STEP 0.33
-
 /**
  * Component for clothing items that can pick up blood from decals and spread it around everywhere when walking, such as shoes or suits with integrated shoes.
  */
@@ -349,4 +346,28 @@
 /datum/component/bloodysoles/feet/get_blood_dna()
 	return blood_DNA
 
-#undef BLOOD_PERCENT_LOSS_ON_STEP
+/**
+ * Simplified version of the kind applied to carbons for simple/basic mobs, primarily robots
+ */
+/datum/component/bloodysoles/bot
+	max_bloodiness = 150
+	share_mod = 0.75
+
+/datum/component/bloodysoles/bot/Initialize()
+	if(!isliving(parent))
+		return COMPONENT_INCOMPATIBLE
+	wielder = parent
+	RegisterSignal(wielder, COMSIG_STEP_ON_BLOOD, PROC_REF(on_step_blood))
+
+/datum/component/bloodysoles/bot/is_obscured()
+	return FALSE
+
+/datum/component/bloodysoles/bot/is_under_feet_covered()
+	return FALSE
+
+/datum/component/bloodysoles/bot/add_parent_to_footprint(obj/effect/decal/cleanable/blood/footprints/footprint)
+	LAZYSET(footprint.species_types, "bot", TRUE)
+
+/datum/component/bloodysoles/bot/update_icon()
+	// Future idea: Bot blood overlays
+	return

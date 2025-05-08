@@ -28,7 +28,7 @@
 
 	target.data["blood_type"] = blood_type
 	if (blood_type.desc)
-		target.desc = blood_type.desc
+		target.description = blood_type.desc
 	target.color = blood_type.get_color()
 
 	if (!blood_source)

@@ -85,7 +85,7 @@
 	if(dried)
 		return
 
-	if(iscarbon(AM) && bloodiness >= 40)
+	if(isliving(AM) && bloodiness >= 40)
 		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)
 
 /obj/effect/decal/cleanable/blood/update_name(updates)
