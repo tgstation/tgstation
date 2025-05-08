@@ -76,9 +76,11 @@
 		var/datum/sprite_accessory/sprite_accessory = SSaccessories.fluff_list[value]
 		if(icon_exists(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_ADJ"))
 			var/datum/universal_icon/fluff_adj = uni_icon(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_ADJ")
+			fluff_adj.blend_color(COLOR_WEBSAFE_DARK_GRAY, ICON_MULTIPLY)
 			final_icon.blend_icon(fluff_adj, ICON_OVERLAY)
 		if(icon_exists(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_FRONT"))
 			var/datum/universal_icon/fluff_front = uni_icon(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_FRONT")
+			fluff_front.blend_color(COLOR_WEBSAFE_DARK_GRAY, ICON_MULTIPLY)
 			final_icon.blend_icon(fluff_front, ICON_OVERLAY)
 
 	final_icon.crop(10, 18, 22, 30)

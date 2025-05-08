@@ -101,9 +101,11 @@
 	if (sprite_accessory.icon_state != "No Horns")
 		if(icon_exists(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_ADJ"))
 			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_ADJ")
+			accessory_icon.blend_color(COLOR_WEBSAFE_DARK_GRAY, ICON_MULTIPLY)
 			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
-		if(icon_exists(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_ADJ_2"))
-			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_ADJ_2")
+		if(icon_exists(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_FRONT"))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_FRONT")
+			accessory_icon.blend_color(COLOR_WEBSAFE_DARK_GRAY, ICON_MULTIPLY)
 			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
 
 	final_icon.crop(11, 20, 23, 32)
