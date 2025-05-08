@@ -35,6 +35,8 @@
 	return assoc_to_keys_features(SSaccessories.lizard_markings_list)
 
 /datum/preference/choiced/lizard_body_markings/icon_for(value)
+	return uni_icon('icons/effects/crayondecal.dmi', "x")
+	/* TEMPORARY DOPPLER EDIT
 	var/datum/sprite_accessory/sprite_accessory = SSaccessories.lizard_markings_list[value]
 
 	var/datum/universal_icon/final_icon = uni_icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_chest_m")
@@ -52,7 +54,7 @@
 	final_icon.scale(26, 32)
 	final_icon.crop(-2, 1, 29, 32)
 
-	return final_icon
+	return final_icon*/
 
 /datum/preference/choiced/lizard_body_markings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["lizard_markings"] = value
@@ -69,7 +71,9 @@
 	return assoc_to_keys_features(SSaccessories.frills_list)
 
 /datum/preference/choiced/lizard_frills/icon_for(value)
-	return generate_lizard_side_shot(SSaccessories.frills_list[value], "frills")
+	return uni_icon('icons/effects/crayondecal.dmi', "x")
+	// TEMPORARY DOPPLER EDIT
+	//return generate_lizard_side_shot(SSaccessories.frills_list[value], "frills")
 
 /datum/preference/choiced/lizard_frills/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["frills"] = value

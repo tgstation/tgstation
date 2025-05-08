@@ -48,7 +48,29 @@
 /datum/preference/choiced/moth_antennae/create_default_value()
 	return /datum/sprite_accessory/moth_antennae/none::name
 
+/datum/preference/choiced/moth_antennae/icon_for(value)
+	return generate_antennae_icon(SSaccessories.moth_antennae_list[value])
 
+/datum/preference/choiced/proc/generate_antennae_icon(datum/sprite_accessory/sprite_accessory)
+	var/static/datum/universal_icon/body
+	if (isnull(body))
+		body = uni_icon('icons/mob/human/species/moth/bodyparts.dmi', "moth_head")
+		body.blend_icon(uni_icon('icons/mob/human/human_face.dmi', "motheyes_l"), ICON_OVERLAY)
+		body.blend_icon(uni_icon('icons/mob/human/human_face.dmi', "motheyes_r"), ICON_OVERLAY)
+	var/datum/universal_icon/final_icon = body.copy()
+
+	if (sprite_accessory.icon_state != "No Antennae")
+		if(icon_exists(sprite_accessory.icon, "m_moth_antennae_[sprite_accessory.icon_state]_ADJ"))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_moth_antennae_[sprite_accessory.icon_state]_ADJ")
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_moth_antennae_[sprite_accessory.icon_state]_FRONT"))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_moth_antennae_[sprite_accessory.icon_state]_FRONT")
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+
+	final_icon.scale(64, 64)
+	final_icon.crop(15, 64 - 31, 15 + 31, 64)
+
+	return final_icon
 
 /// Overwrite lives here
 //	Moth antennae have their own bespoke RGB code.
