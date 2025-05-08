@@ -80,3 +80,14 @@
 		/obj/item/implantpad = 1,
 	)
 	generate_items_inside(items_inside,src)
+
+//BOX O' IMPLANTS
+/obj/item/storage/box/cyber_implants
+	name = "boxed cybernetic implants"
+	desc = "A sleek, sturdy box."
+	icon_state = "cyber_implants"
+
+/obj/item/storage/box/cyber_implants/PopulateContents()
+	new /obj/item/autosurgeon/syndicate/xray_eyes(src)
+	new /obj/item/autosurgeon/syndicate/anti_stun(src)
+	new /obj/item/autosurgeon/syndicate/reviver(src)

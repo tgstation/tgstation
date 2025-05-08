@@ -322,46 +322,6 @@
 	else
 		return ..()
 
-//Briefcase item that contains the launchpad.
-/obj/item/storage/briefcase/launchpad
-	var/obj/machinery/launchpad/briefcase/pad
-
-/obj/item/storage/briefcase/launchpad/Initialize(mapload)
-	pad = new(null, src) //spawns pad in nullspace to hide it from briefcase contents
-	. = ..()
-
-/obj/item/storage/briefcase/launchpad/Destroy()
-	if(!QDELETED(pad))
-		qdel(pad)
-	pad = null
-	return ..()
-
-/obj/item/storage/briefcase/launchpad/PopulateContents()
-	new /obj/item/pen(src)
-	new /obj/item/launchpad_remote(src, pad)
-
-/obj/item/storage/briefcase/launchpad/attack_self(mob/user)
-	if(!isturf(user.loc)) //no setting up in a locker
-		return
-	add_fingerprint(user)
-	user.visible_message(span_notice("[user] starts setting down [src]..."), span_notice("You start setting up [pad]..."))
-	if(do_after(user, 3 SECONDS, target = user))
-		pad.forceMove(get_turf(src))
-		pad.update_indicator()
-		pad.closed = FALSE
-		user.transferItemToLoc(src, pad, TRUE)
-		atom_storage.close_all()
-
-/obj/item/storage/briefcase/launchpad/tool_act(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/launchpad_remote))
-		return ..()
-	var/obj/item/launchpad_remote/remote = tool
-	if(remote.pad == WEAKREF(src.pad))
-		return ..()
-	remote.pad = WEAKREF(src.pad)
-	to_chat(user, span_notice("You link [pad] to [remote]."))
-	return ITEM_INTERACT_BLOCKING
-
 /obj/item/launchpad_remote
 	name = "folder"
 	desc = "A folder."

@@ -288,7 +288,7 @@
 
 /obj/item/antag_spawner/slaughter_demon/spawn_antag(client/C, turf/T, kind = "", datum/mind/user)
 	var/mob/living/basic/demon/spawned = new demon_type(T)
-	new /obj/effect/dummy/phased_mob(T, spawned)
+	new /obj/effect/dummy/phased_mob/blood(T, spawned)
 
 	spawned.PossessByPlayer(C.key)
 
