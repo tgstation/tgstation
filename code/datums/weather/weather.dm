@@ -432,7 +432,7 @@
 			continue
 		if(hit_thing.invisibility != INVISIBILITY_NONE)
 			continue
-		if(HAS_TRAIT(src, TRAIT_UNDERFLOOR))
+		if(HAS_TRAIT(hit_thing, TRAIT_UNDERFLOOR))
 			continue
 		hit_thing.take_damage(20, BURN, ENERGY, FALSE)
 	playsound(weather_turf, 'sound/effects/magic/lightningbolt.ogg', 100, extrarange = 10, falloff_distance = 10)
