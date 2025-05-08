@@ -428,7 +428,7 @@
 	for(var/obj/hit_thing in weather_turf)
 		if(QDELETED(hit_thing)) // stop, it's already dead
 			continue
-		if(hit_thing.uses_integrity)
+		if(!hit_thing.uses_integrity)
 			continue
 		if(hit_thing.invisibility != INVISIBILITY_NONE)
 			continue
