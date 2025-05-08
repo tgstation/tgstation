@@ -107,9 +107,10 @@
 		//lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW // DOPPLER EDIT REMOVAL
 		// DOPPLER EDIT ADDITION START - NIGHT VISION ADJUSTMENT - adjusts color cutoffs based on chosen quirk color, or left eye colour if not available
 		var/datum/quirk/night_vision/nv_quirk = affected_human.get_quirk(/datum/quirk/night_vision)
-		nv_quirk.nv_color_cutoffs = nv_quirk.calculate_color_cutoffs(nv_quirk.nv_color)
-		color_cutoffs = nv_quirk.nv_color_cutoffs
-		// DOPPLER EDIT ADDITION END// DOPPLER EDIT ADDITION END
+		if(nv_quirk)
+			nv_quirk.nv_color_cutoffs = nv_quirk.calculate_color_cutoffs(nv_quirk.nv_color)
+			color_cutoffs = nv_quirk.nv_color_cutoffs
+		// DOPPLER EDIT ADDITION END
 	if(CONFIG_GET(flag/native_fov) && native_fov)
 		affected_human.add_fov_trait(type, native_fov)
 

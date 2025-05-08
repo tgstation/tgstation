@@ -683,10 +683,6 @@
 	name = "Halfcut Rough"
 	icon_state = "hair_halfcut_rough"
 
-/datum/sprite_accessory/hair/modular/glossy
-	name = "Glossy"
-	icon_state = "hair_glossy"
-
 /datum/sprite_accessory/hair/modular/mia
 	name = "Mia"
 	icon_state = "hair_mia"

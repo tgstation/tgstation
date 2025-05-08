@@ -58,6 +58,8 @@
 	if (ishuman(quirk_holder))
 		var/mob/living/carbon/human/human_holder = quirk_holder
 		var/datum/record/crew/our_record = find_record(human_holder.name)
+		if (isnull(our_record))
+			return
 		if (our_record.security_note)
 			our_record.security_note = replacetext(our_record.security_note, "DO NOT ISSUE WEAPON PERMITS. Subject has suspected links to covert criminal elements, and has been indicated as a priority smuggling suspect.", "")
 		if (!length(our_record.security_note)) // that was the only thing in the notes
