@@ -13,6 +13,7 @@
 	req_one_access = list(ACCESS_EXTERNAL_AIRLOCKS, ACCESS_ENGINE_EQUIP)
 	can_atmos_pass = ATMOS_PASS_PROC
 	power_channel = AREA_USAGE_ENVIRON
+	armor_type = /datum/armor/atmos_shield_gen
 
 	/// are we locked
 	var/locked = FALSE
@@ -24,6 +25,11 @@
 	var/list/fields = list()
 	/// the shield generator we belong to that is actually making shields
 	var/obj/machinery/atmos_shield_gen/master = null
+
+/datum/armor/atmos_shield_gen
+	melee = 50
+	fire = 100
+	acid = 50
 
 /obj/machinery/atmos_shield_gen/Initialize(mapload)
 	. = ..()
