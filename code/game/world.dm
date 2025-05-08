@@ -270,7 +270,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		Correction Ratio: <a href='byond://?src=[REF(src)];act=set_corrective_ratio'>[GLOB.corrective_cpu_ratio]</a>%\n\
 		Correction Target: [FORMAT_CPU(GLOB.corrective_cpu_threshold)]\n\
 		Correction Distance: [FORMAT_CPU(GLOB.corrective_cpu_target - cpu_values[last_index])]\n\
-		Correction Distance: [FORMAT_CPU(GLOB.corrective_cpu_cost)]\n\
+		Correction Cost: [FORMAT_CPU(GLOB.corrective_cpu_cost)]\n\
 		Frame Behind CPU: [FORMAT_CPU(cpu_values[last_index])]\n\
 		Frame Behind Pre Tick: [FORMAT_CPU(pre_tick_cpu_usage[last_index])]\n\
 		Frame Behind Tick: [FORMAT_CPU(tick_info.tick_cpu_usage[last_index])]\n\
