@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import {
   Box,
   Button,
   ColorBox,
+  ImageButton,
   LabeledList,
   Section,
   Stack,
-  Table,
   Tabs,
 } from 'tgui-core/components';
-import { BooleanLike, classes } from 'tgui-core/react';
+import { BooleanLike } from 'tgui-core/react';
 import { capitalizeAll } from 'tgui-core/string';
 
 import { useBackend } from '../backend';
@@ -221,52 +221,49 @@ function LayerSelect(props) {
   );
 }
 
-type PreviewSelectProps = {
-  previews: Preview[];
-  pipe_type: number;
-  category: string;
+type RecipeRowProps = {
+  recipe: Recipe;
+  shownCategory: Category;
 };
 
-function PreviewSelect(props: PreviewSelectProps) {
+function RecipeRow(props: RecipeRowProps) {
   const { act } = useBackend<Data>();
-  const { previews, pipe_type, category } = props;
+  const { recipe, shownCategory } = props;
 
   return (
-    <Box>
-      {previews.map((preview) => (
-        <Button
-          ml={0}
-          key={preview.dir}
-          tooltip={preview.dir_name}
-          selected={preview.selected}
-          style={{
-            width: '40px',
-            height: '40px',
-            padding: '0',
-          }}
-          onClick={() => {
-            act('pipe_type', {
-              pipe_type: pipe_type,
-              category: category,
-            });
-            act('setdir', {
-              dir: preview.dir,
-              flipped: preview.flipped,
-            });
-          }}
-        >
-          <Box
-            className={classes([
-              'pipes32x32',
-              preview.dir + '-' + preview.icon_state,
-            ])}
-            style={{
-              transform: 'scale(1.5) translate(9.5%, 9.5%)',
+    <Stack fill>
+      {recipe.previews.map((preview) => (
+        <Stack.Item key={preview.dir}>
+          <ImageButton
+            asset={['pipes32x32', preview.dir + '-' + preview.icon_state]}
+            color="blue"
+            imageSize={32}
+            onClick={() => {
+              act('pipe_type', {
+                pipe_type: recipe.pipe_index,
+                category: shownCategory.cat_name,
+              });
+              act('setdir', {
+                dir: preview.dir,
+                flipped: preview.flipped,
+              });
             }}
+            selected={preview.selected}
+            tooltip={preview.dir_name}
+            tooltipPosition="bottom"
           />
-        </Button>
+        </Stack.Item>
       ))}
-    </Box>
+      <Stack.Item
+        align="center"
+        color="label"
+        grow
+        textAlign="right"
+        verticalAlign="middle"
+      >
+        {recipe.pipe_name}
+      </Stack.Item>
+    </Stack>
   );
 }
 
@@ -274,6 +271,7 @@ function PipeTypeSection(props) {
   const { data } = useBackend<Data>();
   const { categories = [], selected_category } = data;
   const [categoryName, setCategoryName] = useState(selected_category);
+
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
     categories[0];
@@ -293,26 +291,16 @@ function PipeTypeSection(props) {
         ))}
       </Tabs>
       <Section fill scrollable>
-        <Table>
+        <Stack fill vertical>
           {shownCategory?.recipes.map((recipe) => (
-            <Table.Row
-              key={recipe.pipe_index}
-              style={{ borderBottom: '1px solid #333' }}
-            >
-              <Table.Cell collapsing py="2px" pb="1px">
-                <PreviewSelect
-                  previews={recipe.previews}
-                  pipe_type={recipe.pipe_index}
-                  category={shownCategory.cat_name}
-                />
-              </Table.Cell>
-              <Table.Cell />
-              <Table.Cell style={{ verticalAlign: 'middle' }}>
-                {recipe.pipe_name}
-              </Table.Cell>
-            </Table.Row>
+            <Fragment key={recipe.pipe_index}>
+              <Stack.Item>
+                <RecipeRow recipe={recipe} shownCategory={shownCategory} />
+              </Stack.Item>
+              <Stack.Divider />
+            </Fragment>
           ))}
-        </Table>
+        </Stack>
       </Section>
     </Stack>
   );
