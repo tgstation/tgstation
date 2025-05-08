@@ -249,7 +249,7 @@ function RecipeRow(props: RecipeRowProps) {
         {recipe.previews.map((preview) => (
           <Stack.Item key={preview.dir}>
             <ImageButton
-              asset={['pipes32x32', preview.dir + '-' + preview.icon_state]}
+              asset={['pipes32x32', `${preview.dir}-${preview.icon_state}`]}
               color="blue"
               imageSize={58}
               assetSize={30}
