@@ -553,11 +553,17 @@
 	icon_state = "rust_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
 	armor_type = /datum/armor/eldritch_armor/rust
+	/// If our armor is rusted, used to update the sprite
+	var/rusted = FALSE
+	/// Mutable used as overlay
+	var/mutable_appearance/rust_overlay
+	var/test_layer = 4
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/equipped(mob/living/user, slot)
 	. = ..()
 	if(!(slot_flags & slot))
 		UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
+		// XANTODO Debug rusted = FALSE
 		return
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
@@ -573,9 +579,28 @@
 	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
 		armor_type = /datum/armor/eldritch_armor/rust/on_rust
 		ADD_TRAIT(source, TRAIT_PIERCEIMMUNE, REF(src))
+		if(rusted) // Already rusted, don't update overlay
+			return
+		if(ismob(loc))
+			var/mob/M = loc
+			rusted = TRUE
+			M.update_worn_oversuit()
 	else
 		armor_type = initial(armor_type)
 		REMOVE_TRAIT(source, TRAIT_PIERCEIMMUNE, REF(src))
+		if(!rusted) // Already unrusted, don't update overlay
+			return
+		if(ismob(loc))
+			var/mob/M = loc
+			rusted = FALSE
+			M.update_worn_oversuit()
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/worn_overlays(mutable_appearance/standing, isinhands)
+	. = ..()
+	QDEL_NULL(rust_overlay)
+	if(rusted)
+		rust_overlay = mutable_appearance('icons/mob/clothing/suits/armor.dmi', "[worn_icon_state + "_overlay"]", test_layer)
+		. += rust_overlay
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
 	name = "\improper Salvaged Remains"

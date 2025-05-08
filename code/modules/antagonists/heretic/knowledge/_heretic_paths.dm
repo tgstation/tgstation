@@ -209,10 +209,9 @@ GLOBAL_LIST(heretic_research_tree)
 	var/datum/heretic_knowledge/selected_knowledge = null
 	var/list/draft_blacklist = list()
 	for(var/cycle in 1 to 3)
-		var/chosen_tier = pick_weight(list("1" = 80, "2" = 5, "3" = 5, "4" = 5, "5" = 5))
-		selected_knowledge = pick_n_take(elligible_knowledge[chosen_tier])
-		if(isnull(selected_knowledge))
-			to_chat(world, "Null")
+		while(isnull(selected_knowledge))
+			var/chosen_tier = pick_weight(list("1" = 80, "2" = 5, "3" = 5, "4" = 5, "5" = 5))
+			selected_knowledge = pick_n_take(elligible_knowledge[chosen_tier])
 		heretic_research_tree[knowledge_tier1][HKT_NEXT] += selected_knowledge
 		heretic_research_tree[selected_knowledge][HKT_NEXT] = list()
 		heretic_research_tree[selected_knowledge][HKT_ROUTE] = heretic_path
@@ -220,16 +219,15 @@ GLOBAL_LIST(heretic_research_tree)
 		heretic_research_tree[selected_knowledge][HKT_UI_BGR] = current_path.ui_bgr
 		heretic_research_tree[selected_knowledge][HKT_COST] = 0
 		draft_blacklist += selected_knowledge
+		selected_knowledge = null
 	for(var/blacklist as anything in draft_blacklist)
 		heretic_research_tree[blacklist][HKT_BAN] += (draft_blacklist - blacklist)
 
-	selected_knowledge = null
 	draft_blacklist = list()
 	for(var/cycle in 1 to 3)
-		var/chosen_tier = pick_weight(list("1" = 80, "2" = 5, "3" = 5, "4" = 5, "5" = 5))
-		selected_knowledge = pick_n_take(elligible_knowledge[chosen_tier])
-		if(isnull(selected_knowledge))
-			to_chat(world, "Null")
+		while(isnull(selected_knowledge))
+			var/chosen_tier = pick_weight(list("1" = 80, "2" = 5, "3" = 5, "4" = 5, "5" = 5))
+			selected_knowledge = pick_n_take(elligible_knowledge[chosen_tier])
 		heretic_research_tree[knowledge_tier2][HKT_NEXT] += selected_knowledge
 		heretic_research_tree[selected_knowledge][HKT_NEXT] = list()
 		heretic_research_tree[selected_knowledge][HKT_ROUTE] = heretic_path
@@ -237,10 +235,10 @@ GLOBAL_LIST(heretic_research_tree)
 		heretic_research_tree[selected_knowledge][HKT_UI_BGR] = current_path.ui_bgr
 		heretic_research_tree[selected_knowledge][HKT_COST] = 0
 		draft_blacklist += selected_knowledge
+		selected_knowledge = null
 	for(var/blacklist as anything in draft_blacklist)
 		heretic_research_tree[blacklist][HKT_BAN] += (draft_blacklist - blacklist)
 
-	selected_knowledge = null
 	draft_blacklist = list()
 	for(var/cycle in 1 to 3)
 		while(isnull(selected_knowledge))
@@ -253,10 +251,10 @@ GLOBAL_LIST(heretic_research_tree)
 		heretic_research_tree[selected_knowledge][HKT_UI_BGR] = current_path.ui_bgr
 		heretic_research_tree[selected_knowledge][HKT_COST] = 0
 		draft_blacklist += selected_knowledge
+		selected_knowledge = null
 	for(var/blacklist as anything in draft_blacklist)
 		heretic_research_tree[blacklist][HKT_BAN] += (draft_blacklist - blacklist)
 
-	selected_knowledge = null
 	draft_blacklist = list()
 	for(var/cycle in 1 to 3)
 		while(isnull(selected_knowledge))
@@ -269,6 +267,7 @@ GLOBAL_LIST(heretic_research_tree)
 		heretic_research_tree[selected_knowledge][HKT_UI_BGR] = current_path.ui_bgr
 		heretic_research_tree[selected_knowledge][HKT_COST] = 0
 		draft_blacklist += selected_knowledge
+		selected_knowledge = null
 	for(var/blacklist as anything in draft_blacklist)
 		heretic_research_tree[blacklist][HKT_BAN] += (draft_blacklist - blacklist)
 
