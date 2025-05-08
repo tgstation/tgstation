@@ -15,13 +15,13 @@
 /proc/current_true_cpu()
 	var/static/__current_true_cpu
 #ifndef OPENDREAM_REAL
-	return (__current_true_cpu ||= load_ext(AUXCPU_DLL, "byond:current_true_cpu"))()
+	return call_ext(__current_true_cpu ||= load_ext(AUXCPU_DLL, "byond:current_true_cpu"))()
 #endif
 
 /proc/current_cpu_index()
 	var/static/__current_cpu_index
-	var/actual_index = call_ext(__current_cpu_index ||= load_ext(AUXCPU_DLL, "byond:current_cpu_index"))()
 #ifndef OPENDREAM_REAL
+	var/actual_index = call_ext(__current_cpu_index ||= load_ext(AUXCPU_DLL, "byond:current_cpu_index"))()
 	return WRAP(actual_index + 1, 1, INTERNAL_CPU_SIZE + 1)
 #endif
 
