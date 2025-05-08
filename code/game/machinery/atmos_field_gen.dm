@@ -163,9 +163,8 @@
 		return
 
 	if(!isnull(master))
-		return
-	else if(master.on != ACTIVE) // FUCK
-		turn_off()
+		if(master.on != ACTIVE) // FUCK
+			turn_off()
 		return
 	var/field_len = length(fields)
 	if(field_len)
