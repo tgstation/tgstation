@@ -1,4 +1,0 @@
-author: "throwawayuseless"
-delete-after: True
-changes:
-  - balance: "Massively reduce the MMI component message cooldown."
