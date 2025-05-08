@@ -204,7 +204,7 @@ GLOBAL_VAR_INIT(spike_cpu, 0)
 		cpu_corrected = TRUE
 		CONSUME_UNTIL(GLOB.corrective_cpu_threshold)
 	// or if we HAVE already corrected cpu with the MC (roughly, hard to be exact about this stuff)
-	else if(!GLOB.use_old_mc_limit && GLOB.corrective_cpu_threshold > TICK_USAGE + GLOB.corrective_cpu_threshold * 0.05)
+	else if(!GLOB.use_old_mc_limit && GLOB.corrective_cpu_threshold + GLOB.corrective_cpu_threshold * 0.05 > TICK_USAGE)
 		cpu_corrected = TRUE
 	if(tick_info)
 		tick_info.corrected_ticks[WRAP(tick_info.cpu_index + 1, 1, INTERNAL_CPU_SIZE + 1)] = cpu_corrected
