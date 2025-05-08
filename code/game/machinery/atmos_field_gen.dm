@@ -223,6 +223,7 @@
 
 /obj/machinery/atmos_shield_gen/active
 	on = ACTIVE_WANTPOWER
+	locked = TRUE
 
 /obj/effect/atmos_shield
 	name = ""
