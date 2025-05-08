@@ -306,7 +306,7 @@
 		if(istype(consumed_mob, /mob/living/basic/parrot/poly)) // Dusting Poly creates a power surge
 			force_event(/datum/round_event_control/supermatter_surge/poly, "Poly's revenge")
 			notify_ghosts(
-				"[consumed_mob] has been dusted by [atom_source]!",
+				"[consumed_mob.real_name] has been dusted by [atom_source]!",
 				source = atom_source,
 				header = "Polytechnical Difficulties",
 			)
