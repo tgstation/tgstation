@@ -151,8 +151,10 @@ GLOBAL_VAR(restart_counter)
 
 	RunUnattendedFunctions()
 
-#define FORMAT_CPU(cpu) round(cpu, 0.01)
 #define TICK_INFO_SIZE 30
+#define FORMAT_CPU(cpu) round(cpu, 0.01)
+#define TICK_INFO_TICK2INDEX(tick) ((round(tick, 1) % TICK_INFO_SIZE) + 1)
+#define TICK_INFO_INDEX(...) TICK_INFO_TICK2INDEX(DS2TICKS(world.time))
 
 // Should we intentionally consume cpu time to try to keep SendMaps deltas constant?
 GLOBAL_VAR_INIT(attempt_corrective_cpu, FALSE)
@@ -181,8 +183,9 @@ GLOBAL_VAR_INIT(spike_cpu, 0)
 /world/Tick()
 	// this is for next tick so don't display it yet yeah?
 	var/datum/tick_holder/tick_info = ____tick_info
+	var/next_index = WRAP(world.time + 1, 1, TICK_INFO_SIZE + 1)
 	if(tick_info)
-		tick_info.pre_tick_cpu_usage[WRAP(tick_info.cpu_index + 1, 1, INTERNAL_CPU_SIZE + 1)] = TICK_USAGE
+		tick_info.pre_tick_cpu_usage[next_index] = TICK_USAGE
 
 	refresh_cpu_values()
 	if(GLOB.floor_cpu)
@@ -207,12 +210,12 @@ GLOBAL_VAR_INIT(spike_cpu, 0)
 	else if(!GLOB.use_old_mc_limit && GLOB.corrective_cpu_threshold + GLOB.corrective_cpu_threshold * 0.05 > TICK_USAGE)
 		cpu_corrected = TRUE
 	if(tick_info)
-		tick_info.corrected_ticks[WRAP(tick_info.cpu_index + 1, 1, INTERNAL_CPU_SIZE + 1)] = cpu_corrected
+		tick_info.corrected_ticks[next_index] = cpu_corrected
 
 	GLOB.cpu_tracker.update_display()
 
 	if(tick_info)
-		tick_info.tick_cpu_usage[WRAP(tick_info.cpu_index + 1, 1, INTERNAL_CPU_SIZE + 1)] = TICK_USAGE
+		tick_info.tick_cpu_usage[next_index] = TICK_USAGE
 
 INITIALIZE_IMMEDIATE(/atom/movable/screen/usage_display)
 GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
@@ -254,7 +257,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	var/list/cpu_values = tick_info.cpu_values
 	var/list/verb_cost = tick_info.verb_cost
 	var/list/pre_tick_cpu_usage = tick_info.pre_tick_cpu_usage
-	var/last_index = tick_info.cpu_index
+	var/last_index = TICK_INFO_INDEX()
 	var/full_time = TICKS2DS(TICK_INFO_SIZE) / 10 // convert from ticks to seconds
 
 	maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
@@ -293,7 +296,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 		</div>\
 		<div style=\"color:#0096FF;\">\
 			Min CPU [full_time]s: [FORMAT_CPU(min(cpu_values))]\n\
-			Min Pre Tick: [FORMAT_CPU(min(pre_tick_cpu_usage))]\n\
+			Min Pre Tick [full_time]: [FORMAT_CPU(min(pre_tick_cpu_usage))]\n\
 			Min Tick [full_time]s: [FORMAT_CPU(min(tick_info.tick_cpu_usage))]\n\
 			Min ~Map [full_time]s: [FORMAT_CPU(min(tick_info.map_cpu_usage))]\n\
 			Min ~Verb [full_time]s: [FORMAT_CPU(min(verb_cost))]\
@@ -424,12 +427,12 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 		return
 
 	tick_info.last_cpu_update = world.time
+	var/cpu_index = TICK_INFO_INDEX()
+	tick_info.cpu_index = cpu_index
 	// cache for sonic speed
-	var/list/old_cpu_values = tick_info.cpu_values
-	var/list/avg_cpu_values = tick_info.avg_cpu_values
-	var/cpu_index = current_cpu_index()
+	var/list/cpu_values = tick_info.cpu_values
 	var/avg_cpu = world.cpu
-	tick_info.cpu_values = cpu_values()
+
 	// ok so world.cpu is a 16 entry wide moving average of the actual cpu value
 	// because fuck you
 	// I want the ACTUAL unrolled value, so I need to deaverage it. this is possible because we have access to ALL values and also math
@@ -440,17 +443,17 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 
 	var/calculated_avg = real_cpu
 	for(var/i in 1 to INTERNAL_CPU_SIZE - 1)
-		calculated_avg += old_cpu_values[WRAP(cpu_index - i, 1, INTERNAL_CPU_SIZE + 1)]
+		calculated_avg += cpu_values[WRAP(cpu_index - i, 1, TICK_INFO_SIZE + 1)]
 	var/inbuilt_error = world.cpu * INTERNAL_CPU_SIZE - calculated_avg
 	// (95.7994 * 16) - 1536.35 == -3.3
 	// (a+b+c+d...) / 16 * 16 - (a+b+c+d...) == -g
 	var/tick_and_map = tick_info.tick_cpu_usage[cpu_index] + world.map_cpu
 
-	avg_cpu_values[cpu_index] = avg_cpu
+	cpu_values[cpu_index] = real_cpu
+	tick_info.avg_cpu_values[cpu_index] = avg_cpu
 	tick_info.map_cpu_usage[cpu_index] = world.map_cpu
 	tick_info.verb_cost[cpu_index] = real_cpu - tick_and_map
 	tick_info.cpu_error[cpu_index] = inbuilt_error
-	tick_info.cpu_index = cpu_index
 	if(GLOB)
 		GLOB.cpu_tracker.update_display()
 
@@ -499,6 +502,8 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 		GLOB.corrective_cpu_threshold = GLOB.corrective_cpu_target
 		GLOB.corrective_cpu_cost = 0
 
+#undef TICK_INFO_INDEX
+#undef TICK_INFO_TICK2INDEX(tick)
 #undef FORMAT_CPU
 #undef TICK_INFO_SIZE
 
