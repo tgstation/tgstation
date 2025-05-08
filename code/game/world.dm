@@ -503,7 +503,7 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 		GLOB.corrective_cpu_cost = 0
 
 #undef TICK_INFO_INDEX
-#undef TICK_INFO_TICK2INDEX(tick)
+#undef TICK_INFO_TICK2INDEX
 #undef FORMAT_CPU
 #undef TICK_INFO_SIZE
 
