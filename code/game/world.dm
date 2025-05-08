@@ -308,6 +308,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			graph_display.push_value(cpu_values[last_index])
 		if(USAGE_DISPLAY_MC)
 			graph_display.push_value(pre_tick_cpu_usage[last_index])
+			graph_display.mc_overtime_line.set_height(TICK_LIMIT_RUNNING)
 		if(USAGE_DISPLAY_POST_TICK)
 			graph_display.push_value(cpu_values[last_index] - tick_cpu_usage[last_index])
 
@@ -358,6 +359,11 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 			if(!(mode in graph_options))
 				return
 			display_mode = mode
+			switch(display_mode)
+				if(USAGE_DISPLAY_MC)
+					graph_display.mc_overtime_line.alpha = 255
+				else
+					graph_display.mc_overtime_line.alpha = 0
 			graph_display.clear_values()
 		if("set_graph_scale")
 			var/current_value = graph_display.max_displayable_cpu

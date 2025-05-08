@@ -243,6 +243,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 
 /atom/movable/screen/graph_part/span_screen/threshold/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/graph_display/parent_graph, height_value)
 	. = ..()
+	set_height(height_value)
+
+/atom/movable/screen/graph_part/span_screen/threshold/proc/set_height(height_value)
 	src.height_value = height_value
 	recalculate_position()
 
@@ -331,18 +334,24 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	bar_resolution = 6
 	var/max_displayable_cpu = 130
 	var/atom/movable/screen/graph_part/span_screen/threshold/overtime_line
+	var/atom/movable/screen/graph_part/span_screen/threshold/mc_overtime_line
 
 /atom/movable/screen/graph_display/bars/cpu_display/setup()
 	. = ..()
 	overtime_line = place_threshold(100)
+	mc_overtime_line = place_threshold(100)
+	mc_overtime_line.color = "#0035c7"
+	mc_overtime_line.alpha = 0
 
 /atom/movable/screen/graph_display/bars/cpu_display/Destroy()
 	. = ..()
 	QDEL_NULL(overtime_line)
+	QDEL_NULL(mc_overtime_line)
 
 /atom/movable/screen/graph_display/bars/cpu_display/proc/set_max_display(max_displayable_cpu)
 	src.max_displayable_cpu = max_displayable_cpu
 	overtime_line.recalculate_position()
+	mc_overtime_line.recalculate_position()
 	for(var/atom/movable/screen/graph_part/bar/displayed_bar as anything in bars)
 		displayed_bar.update_appearance()
 
