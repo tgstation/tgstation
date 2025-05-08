@@ -5921,6 +5921,7 @@
 #include "code\modules\reagents\reagent_containers\condiment.dm"
 #include "code\modules\reagents\reagent_containers\dropper.dm"
 #include "code\modules\reagents\reagent_containers\hypospray.dm"
+#include "code\modules\reagents\reagent_containers\jerrycan.dm"
 #include "code\modules\reagents\reagent_containers\medigel.dm"
 #include "code\modules\reagents\reagent_containers\misc.dm"
 #include "code\modules\reagents\reagent_containers\patch.dm"

@@ -185,3 +185,31 @@
   - bugfix: Fixed the error overlay caused by the Tress Shoulder hairstyle
   TealSeer:
   - bugfix: roundstart photocopiers should no longer be empty on some maps
+2025-05-08:
+  Bisar:
+  - image: Animations have been added to inserting/removing items from machines, and
+      to inserting things into containers that are not on your person.
+  LemonInTheDark:
+  - refactor: Reworked a bit of how smoothing functions on the backend. Nothing should
+      change, so if it does please yell at me
+  Y0SH1M4S73R:
+  - bugfix: Shuttle blueprints don't error out when opening them while on non-custom
+      shuttles.
+  - bugfix: Custom shuttles calculate their engine count correctly, no longer lagging
+      behind by one engine (un)installation.
+  - bugfix: Custom shuttle docking consoles are no longer blocked by where the linked
+      shuttle currently is.
+  - qol: Shuttle blueprints now show you how large a shuttle frame is, along with
+      any issues preventing you from building or expanding a shuttle using said frame.
+  necromanceranne:
+  - rscadd: Adds the Exosuit Ablative Insulation armor booster module. Protects the
+      mech from energy-based attacks and its wires from EMPs (only the wires, not
+      the mech). However, the armor booster makes the mech weaker to ballistic and
+      melee weapons.
+  - rscadd: The Dark Gygax and Mauler now come pre-packaged with a special version
+      that has no weakness to ballistic and melee weapons.
+  rageguy505:
+  - bugfix: Hop's office on catwalk now has working disposals and removes a floating
+      camera console from the bridge.
+  throwawayuseless:
+  - balance: Massively reduce the MMI component message cooldown.

@@ -982,6 +982,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/holopad,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "aqD" = (
@@ -6862,9 +6863,6 @@
 	id = "HoPsToy"
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/door/airlock/wood{
-	name = "Kitchen"
-	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "ccc" = (
@@ -9749,12 +9747,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"cTk" = (
-/obj/machinery/computer/security{
-	dir = 4
-	},
-/turf/open/openspace,
-/area/station/command/bridge)
 "cTv" = (
 /obj/effect/turf_decal/trimline/white/line{
 	dir = 8
@@ -27746,9 +27738,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/command/hop,
-/obj/structure/disposalpipe/segment{
-	dir = 10
-	},
+/obj/structure/disposalpipe/segment,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "inU" = (
@@ -177480,7 +177470,7 @@ pML
 miZ
 vzB
 dGv
-cTk
+inh
 oLH
 fro
 tCY
