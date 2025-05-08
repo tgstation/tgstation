@@ -259,8 +259,7 @@
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	update_appearance(UPDATE_OVERLAYS)
 	air_update_turf(TRUE, TRUE)
-	var/static/list/turf_traits = list(TRAIT_FIREDOOR_STOP)
-	AddElement(/datum/element/give_turf_traits, turf_traits)
+	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_FIREDOOR_STOP)))
 
 /obj/effect/atmos_shield/block_superconductivity()
 	return TRUE
