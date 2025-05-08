@@ -56,7 +56,7 @@
 		/datum/reagent/blood = 15, // You should really be cooking those if you want the full amount of blood out of them
 	)
 	tastes = list("blood" = 5, "raw pasta" = 1)
-	foodtypes = GRAIN | GORE | BLOODY | RAW
+	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_0
 
 /obj/item/food/hemophage/blood_noodles/raw/make_microwaveable()
@@ -74,7 +74,7 @@
 		/datum/reagent/blood = 50,
 	)
 	tastes = list("blood" = 5, "congealed blood" = 3, "pasta" = 1)
-	foodtypes = GRAIN | GORE | BLOODY
+	foodtypes = RAW | GRAIN | GORE | BLOODY
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/hemophage/blood_curd
@@ -99,7 +99,7 @@
 		/datum/reagent/blood = 25,
 	)
 	tastes = list("blood" = 5, "crunchy rice" = 2, "peanut butter" = 2)
-	foodtypes = GRAIN | GORE | BLOODY | SUGAR | NUTS
+	foodtypes = GRAIN | BREAKFAST
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /datum/reagent/consumable/nutriment/soup/blood_soup
