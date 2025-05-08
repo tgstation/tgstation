@@ -27,6 +27,7 @@
 /obj/item/folder/Initialize(mapload)
 	update_icon()
 	. = ..()
+	AddElement(/datum/element/burn_on_item_ignition)
 
 /obj/item/folder/Destroy()
 	for(var/obj/important_thing in contents)
@@ -78,9 +79,7 @@
 	paper_overlay = contents[1].color_atom_overlay(paper_overlay)
 	return paper_overlay
 
-/obj/item/folder/attackby(obj/item/weapon, mob/user, params)
-	if(burn_paper_product_attackby_check(weapon, user))
-		return
+/obj/item/folder/attackby(obj/item/weapon, mob/user, list/modifiers)
 	if(is_type_in_typecache(weapon, folder_insertables))
 		//Add paper, photo or documents into the folder
 		if(!user.transferItemToLoc(weapon, src))

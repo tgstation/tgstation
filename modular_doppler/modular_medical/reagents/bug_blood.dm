@@ -6,9 +6,6 @@
 	taste_description = "viscous copper"
 	taste_mult = 5
 	color = "#82fac6" //rgb 130,250,198
-	ph = 7.4
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED | REAGENT_DEAD_PROCESS | REAGENT_IGNORE_STASIS
-
 
 /datum/chemical_reaction/bug_blood
 	results = list(/datum/reagent/bug_blood = 2)

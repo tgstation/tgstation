@@ -139,20 +139,15 @@ ALLOW_LATEJOIN_ANTAGONISTS
 ## Uncomment to enable dynamic ruleset config file.
 DYNAMIC_CONFIG_ENABLED
 
+## Uncomment to enable event editing config file.
+#EVENTS_CONFIG_ENABLED
+
 ## RANDOM EVENTS ###
 ## Comment this out to disable random events during the round.
 ALLOW_RANDOM_EVENTS
 
 ## Uncomment this to disable station traits.
 #FORBID_STATION_TRAITS
-
-## Multiplier for earliest start time of dangerous events.
-## Set to 0 to make dangerous events available from round start.
-EVENTS_MIN_TIME_MUL 1
-
-## Multiplier for minimal player count (players = alive non-AFK humans) for dangerous events to start.
-## Set to 0 to make dangerous events available for all populations.
-EVENTS_MIN_PLAYERS_MUL 1
 
 ## The lower bound, in deciseconds, for how soon another random event can be scheduled.
 ## Defaults to 1500 deciseconds or 2.5 minutes
@@ -569,3 +564,27 @@ MAX_POSITIVE_QUIRKS 6
 # If the value is lower than 1, it'll tend to even out the odds
 # If higher than 1, it'll lean toward common spawns even more.
 RANDOM_LOOT_WEIGHT_MODIFIER 1
+
+## Custom shuttle spam prevention. Changine these numbers allows you to change the maxsize and amount of custom shuttles.
+MAX_SHUTTLE_COUNT 6
+MAX_SHUTTLE_SIZE 300
+
+### Spy config
+## Changes refresh period between bounties - in deciseconds
+SPY_BOUNTY_REFRESH_TIMER 7200
+## Changes amount of easy bounties offered at once. Limit = 8
+SPY_BOUNTY_MAX_EASY 4
+## Changes amount of medium bounties offered at once. Limit = 6
+SPY_BOUNTY_MAX_MEDIUM 2
+## Changes amount of hard bounties offered at once. Limit = 4
+SPY_BOUNTY_MAX_HARD 2
+## Changes amount of refreshes necessary per each hard bounty
+## 1 = A hard bounty is added per refresh (until the max)
+## 0.5 = A hard bounty is added every 2 refreshes (until the max).
+SPY_BOUNTY_HARD_BOUNTIES_PER_REFRESH 1
+## Easy bounties grant uplink rewards that cost this much TC (or lower).
+## Also functions as the lower end for medium bounties.
+SPY_EASY_REWARD_TC_THRESHOLD 5
+## Hard bounties grant uplink rewards that cost this much TC (or higher).
+## Also functions as the upper end for medium bounties.
+SPY_HARD_REWARD_TC_THRESHOLD 15

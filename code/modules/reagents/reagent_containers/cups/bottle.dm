@@ -500,70 +500,82 @@
 	possible_transfer_amounts = list(5, 10)
 	amount_per_transfer_from_this = 5
 	spillable = FALSE
-	///variable to tell if the bottle can be refilled
+	/// Do we currently have our pump cap on?
 	//var/cap_on = TRUE /// DOPPLER SHIFT REMOVAL
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/Initialize(mapload)
+	. = ..()
+	register_context()
 
 /obj/item/reagent_containers/cup/bottle/syrup_bottle/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to toggle the pump cap.")
 	. += span_notice("Use a pen on it to rename it.")
-	return
+
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = (cap_on ? "Remove Pump Cap" : "Add Pump Cap")
+	if(IS_WRITING_UTENSIL(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Write Label"
+	else if(cap_on && held_item.is_refillable())
+		context[SCREENTIP_CONTEXT_LMB] = "Use Pump"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 //when you attack the syrup bottle with a container it refills it
-/obj/item/reagent_containers/cup/bottle/syrup_bottle/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(IS_WRITING_UTENSIL(tool))
+		return writing_utensil_act(user, tool)
+	if(cap_on && tool.is_refillable())
+		return refillable_act(user, tool)
+	return ..()
 
-	if(!cap_on)
-		return ..()
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/writing_utensil_act(mob/user, obj/item/tool)
+	if(!user.can_write(tool))
+		return ITEM_INTERACT_BLOCKING
 
-	if(!check_allowed_items(attacking_item,target_self = TRUE))
-		return
+	var/input_name = tgui_input_text(user, "What would you like to label the syrup bottle?", "Syrup Bottle Labelling", max_length = MAX_NAME_LEN)
+	if(!user.can_perform_action(src))
+		return ITEM_INTERACT_BLOCKING
 
-	if(attacking_item.is_refillable())
-		if(!reagents.total_volume)
-			balloon_alert(user, "bottle empty!")
-			return TRUE
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	if(input_name)
+		name = "[input_name] bottle"
+	else
+		name = initial(name)
+	return ITEM_INTERACT_SUCCESS
 
-		if(attacking_item.reagents.holder_full())
-			balloon_alert(user, "container full!")
-			return TRUE
+/obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/refillable_act(mob/user, obj/item/tool)
+	if(!reagents.total_volume)
+		balloon_alert(user, "bottle empty!")
+		return ITEM_INTERACT_BLOCKING
+	if(tool.reagents.holder_full())
+		balloon_alert(user, "container full!")
+		return ITEM_INTERACT_BLOCKING
 
-		var/transfer_amount = round(reagents.trans_to(attacking_item, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-		balloon_alert(user, "transferred [transfer_amount] unit\s")
-		flick("syrup_anim",src)
-
-	if(IS_WRITING_UTENSIL(attacking_item))
-		rename(user, attacking_item)
-
-	attacking_item.update_appearance()
+	var/transfer_amount = round(reagents.trans_to(tool, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
+	balloon_alert(user, "transferred [transfer_amount] unit\s")
+	flick("syrup_anim",src)
+	tool.update_appearance()
 	update_appearance()
-
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /// DOPPLER SHIFT REMOVAL BEGIN
-/*/obj/item/reagent_containers/cup/bottle/syrup_bottle/click_alt(mob/user)
+/*obj/item/reagent_containers/cup/bottle/syrup_bottle/click_alt(mob/user)
 	cap_on = !cap_on
-	if(!cap_on)
-		icon_state = "syrup_open"
-		balloon_alert(user, "removed pump cap")
-	else
+	if(cap_on)
 		icon_state = "syrup"
+		spillable = FALSE
 		balloon_alert(user, "put pump cap on")
+	else
+		icon_state = "syrup_open"
+		spillable = TRUE
+		balloon_alert(user, "removed pump cap")
+
 	update_icon_state()
 	return CLICK_ACTION_SUCCESS*/
 /// DOPPLER SHIFT REMOVAL END
-
-/obj/item/reagent_containers/cup/bottle/syrup_bottle/proc/rename(mob/user, obj/item/writing_instrument)
-	if(!user.can_write(writing_instrument))
-		return
-
-	var/inputvalue = tgui_input_text(user, "What would you like to label the syrup bottle?", "Syrup Bottle Labelling", max_length = MAX_NAME_LEN)
-
-	if(!inputvalue)
-		return
-
-	if(user.can_perform_action(src))
-		playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-		name = "[(inputvalue ? "[inputvalue]" : null)] bottle"
 
 //types of syrups
 

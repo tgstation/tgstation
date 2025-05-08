@@ -22,24 +22,30 @@ img {
 img.icon {
   height: 1em;
   min-height: 16px;
+  min-width: 16px;
   width: auto;
   vertical-align: bottom;
 }
 
 a {
-  color: hsl(201.7, 48.6%, 43.5%);
+  cursor: var(--cursor-pointer);
+  color: var(--color-hyperlink);
+  transition: color var(--transition-time-medium);
+
+  &:hover {
+    color: hsl(from var(--color-hyperlink) h s calc(l + var(--adjust-hover)));
+  }
 }
 
-a.visited {
-  color: hsl(272.3, 100%, 45.1%);
-}
-
+a.visited,
 a:visited {
-  color: hsl(272.3, 100%, 45.1%);
-}
+  color: var(--color-hyperlink-visited);
 
-a.popt {
-  text-decoration: none;
+  &:hover {
+    color: hsl(
+      from var(--color-hyperlink-visited) h s calc(l + var(--adjust-hover))
+    );
+  }
 }
 
 .center {
@@ -397,6 +403,10 @@ em {
   color: hsl(60, 98%, 59.8%) !important;
 }
 
+.captaincast {
+  color: hsl(157.1, 39.6%, 62.4%);
+}
+
 .yell {
   font-weight: bold;
 }
@@ -579,6 +589,11 @@ em {
 .boldnicegreen {
   color: hsl(132.8, 93.4%, 29.6%);
   font-weight: bold;
+}
+
+.tinynicegreen {
+  color: hsl(132.8, 93.4%, 29.6%);
+  font-size: 85%;
 }
 
 .blob {
@@ -983,36 +998,31 @@ em {
   position: relative;
   max-width: 95%;
   font-size: 120%;
-  padding: 0.2em 0.5em;
-  background: hsl(0, 0%, 8.2%); // Chat background color
-  border: 1px solid;
+  background-color: var(--color-section);
+  padding: var(--space-s) var(--space-m);
   border-color: inherit;
-  border-radius: 0.33em;
   z-index: 0;
 
-  // "Mask" a half of the border
-  // It very rough but it only possible way i see with IE compat
-  // Replace it with normal mask-image when 516 got stable
   &:before {
     content: '';
     position: absolute;
-    left: 0;
-    height: 1.15em;
-    width: 100%;
-    background: hsl(0, 0%, 8.2%); // Chat background color
-    transform: translateY(-50%) scaleX(1.05);
+    inset: 0;
+    border: var(--border-thickness-tiny) solid;
+    border-color: inherit;
+    border-radius: var(--border-radius-medium);
+    mask-image: linear-gradient(to top, black 50%, transparent 50%);
     z-index: -1;
   }
 }
 
 .boxed_message {
   background: hsl(220, 10%, 10%);
-  border: 1em * calc(1px / 12px) solid;
-  border-left: 1em * calc(4px / 12px) solid;
+  border: var(--border-thickness-tiny) solid;
+  border-left: var(--border-thickness-large) solid;
   border-color: hsla(220, 40%, 75%, 0.25);
-  margin: 0.5em 0;
-  padding: 0.5em 0.75em;
-  border-radius: 0.33em;
+  margin: var(--space-m) 0;
+  padding: var(--space-m) var(--space-l);
+  border-radius: var(--border-radius-medium);
 
   &.red_box {
     background: hsl(0, 20%, 10%);
@@ -1035,7 +1045,7 @@ em {
   }
 
   hr {
-    margin: 0.5em -0.75em;
+    margin: var(--space-m) -0.75em;
     border-color: inherit;
   }
 }

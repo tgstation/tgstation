@@ -62,7 +62,7 @@
 			Useful for disrupting headsets, cameras, doors, lockers and borgs during stealth operations. \
 			Attacking a target with this flashlight will direct an EM pulse at it and consumes a charge."
 	item = /obj/item/flashlight/emp
-	cost = 4
+	cost = 2
 	surplus = 30
 
 /datum/uplink_item/stealthy_tools/emplight/New()
@@ -71,10 +71,10 @@
 		cost *= 3
 
 /datum/uplink_item/stealthy_tools/mulligan
-	name = "Mulligan"
-	desc = "Screwed up and have security on your tail? This handy syringe will give you a completely new identity \
-			and appearance."
-	item = /obj/item/reagent_containers/syringe/mulligan
+	name = "Mulligan Kit"
+	desc = "Screwed up and have security on your tail? This handy syringe and set of documents will give you a completely new identity \
+			and appearance, intercepting Nanotrasen communications to announce you as a freshly recruited Assistant."
+	item = /obj/item/storage/box/syndie_kit/mulligan
 	cost = 4
 	surplus = 30
 	purchasable_from = ~(UPLINK_ALL_SYNDIE_OPS)
@@ -83,7 +83,7 @@
 	name = "Radio Jammer"
 	desc = "This device will disrupt any nearby outgoing radio communication when activated. Does not affect binary chat."
 	item = /obj/item/jammer
-	cost = 5
+	cost = 1
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
@@ -131,7 +131,7 @@
 	desc = "When purchased, a virus will be uploaded to the engineering processing servers to force a routine power grid check, forcing all APCs on the station to be temporarily disabled."
 	item = ABSTRACT_UPLINK_ITEM
 	surplus = 0
-	progression_minimum = 20 MINUTES
+	progression_minimum = 15 MINUTES
 	limited_stock = 1
 	cost = 6
 	restricted = TRUE

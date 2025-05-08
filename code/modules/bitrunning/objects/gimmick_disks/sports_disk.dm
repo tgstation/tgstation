@@ -41,24 +41,6 @@
 		/obj/item/storage/cans/sixenergydrink,
 	)
 
-/obj/item/storage/cans/sixenergydrink
-	name = "energy drink bottle ring"
-	desc = "Holds six energy drink cans. Remember to recycle when you're done!"
-
-	/// Pool of energy drinks tm we may add from
-	var/list/energy_drink_options = list(
-		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 50,
-		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 30,
-		/obj/item/reagent_containers/cup/soda_cans/volt_energy = 15,
-		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 5, 
-	)
-
-/obj/item/storage/cans/sixenergydrink/PopulateContents()
-	for(var/i in 1 to 6)
-		var/obj/item/chosen_energy_drink = pick_weight(energy_drink_options)
-		new chosen_energy_drink(src)
-
-
 /datum/bitrunning_gimmick/archer
 	name = "Archer"
 
@@ -69,23 +51,6 @@
 		/obj/item/gun/ballistic/bow/longbow,
 		/obj/item/ammo_casing/arrow/holy/blazing,
 	)
-
-/obj/item/storage/bag/quiver/endless
-	name = "endless quiver"
-	desc = "Holds arrows for your bow. A deep digital void is contained within."
-	max_slots = 1
-
-/obj/item/storage/bag/quiver/endless/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_EXITED, PROC_REF(handle_removed))
-
-/obj/item/storage/bag/quiver/endless/PopulateContents()
-	. = ..()
-	new arrow_path(src)
-
-/obj/item/storage/bag/quiver/endless/proc/handle_removed(datum/source, obj/item/gone)
-	new arrow_path(src)
-
 
 /datum/bitrunning_gimmick/fisher
 	name = "Fisher"
@@ -114,24 +79,6 @@
 		/obj/item/modular_computer/laptop/gamer,
 		/obj/item/storage/cans/sixgamerdrink,
 	)
-
-/obj/item/storage/cans/sixgamerdrink
-	name = "gamer drink bottle ring"
-	desc = "Holds six gamer drink cans. Remember to recycle when you're done!"
-
-	/// Pool of gamer drinks tm we may add from
-	var/list/gamer_drink_options = list(
-		/obj/item/reagent_containers/cup/soda_cans/pwr_game = 55,
-		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind = 15,
-		/obj/item/reagent_containers/cup/soda_cans/monkey_energy = 15,
-		/obj/item/reagent_containers/cup/soda_cans/volt_energy = 10,
-		/obj/item/reagent_containers/cup/soda_cans/thirteenloko = 5, 
-	)
-
-/obj/item/storage/cans/sixgamerdrink/PopulateContents()
-	for(var/i in 1 to 6)
-		var/obj/item/chosen_gamer_drink = pick_weight(gamer_drink_options)
-		new chosen_gamer_drink(src)
 
 /obj/item/modular_computer/laptop/gamer
 	desc = "A high-end laptop often used for metagaming."

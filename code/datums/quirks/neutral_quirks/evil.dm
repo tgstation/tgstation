@@ -11,4 +11,9 @@
 	lose_text = span_notice("You suddenly care more about others and their needs.")
 	medical_record_text = "Patient has passed all our social fitness tests with flying colours, but had trouble on the empathy tests."
 	mail_goodies = list(/obj/item/food/grown/citrus/lemon)
-*/
+
+
+/datum/quirk/evil/post_add()
+	var/evil_policy = get_policy("[type]") || "Please note that while you may be [LOWER_TEXT(name)], this does NOT give you any additional right to attack people or cause chaos."
+	// We shouldn't need this, but it prevents people using it as a dumb excuse in ahelps.
+	to_chat(quirk_holder, span_big(span_info(evil_policy)))*/

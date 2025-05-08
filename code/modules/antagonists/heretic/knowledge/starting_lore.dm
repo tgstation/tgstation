@@ -68,8 +68,8 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	name = "The Living Heart"
 	desc = "Grants you a Living Heart, allowing you to track sacrifice targets. \
 		Should you lose your heart, you can transmute a poppy and a pool of blood \
-		to awaken your heart into a Living Heart. If your heart is cybernetic, \
-		you will additionally require a usable organic heart in the transmutation."
+		to awaken your heart into a Living Heart. If your heart is Cybernetic, \
+		you will be unable to reawaken it."
 	required_atoms = list(
 		/obj/effect/decal/cleanable/blood = 1,
 		/obj/item/food/grown/poppy = 1,
@@ -80,8 +80,6 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "living_heart"
 	research_tree_icon_frame = 1
-	/// The typepath of the organ type required for our heart.
-	var/required_organ_type = /obj/item/organ/heart
 
 /datum/heretic_knowledge/living_heart/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
@@ -108,18 +106,15 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 			// We found a replacement place to put our heart
 			where_to_put_our_heart = look_for_backup
 			our_heretic.living_heart_organ_slot = backup_slot
-			required_organ_type = backup_organs[backup_slot]
 			to_chat(user, span_boldnotice("As your species does not have a heart, your Living Heart is located in your [look_for_backup.name]."))
 			break
 
 	if(where_to_put_our_heart)
 		where_to_put_our_heart.AddComponent(/datum/component/living_heart)
-		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], \
-			allowing you to track sacrifice targets. \
+		desc = "Grants you a Living Heart, tied to your [where_to_put_our_heart.name], allowing you to track sacrifice targets. \
 			Should you lose your [where_to_put_our_heart.name], you can transmute a poppy and a pool of blood \
-			to awaken your replacement [where_to_put_our_heart.name] into a Living Heart. \
-			If your [where_to_put_our_heart.name] is cybernetic, \
-			you will additionally require a usable organic [where_to_put_our_heart.name] in the transmutation."
+			to awaken your [where_to_put_our_heart.name] into a Living Heart. \
+			Cybernetic [where_to_put_our_heart.name]\s will block the ritual!"
 
 	else
 		to_chat(user, span_boldnotice("You don't have a heart, or any chest organs for that matter. You didn't get a Living Heart because of it."))
@@ -138,70 +133,29 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 /datum/heretic_knowledge/living_heart/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	var/obj/item/organ/our_living_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
+	// No heart, nothing to give living heart to
+	if(QDELETED(our_living_heart))
+		loc.balloon_alert(user, "ritual failed, no [our_heretic.living_heart_organ_slot]!")
+		return FALSE
+
 	// For sanity's sake, check if they've got a living heart -
 	// even though it's not invokable if you already have one,
 	// they may have gained one unexpectantly in between now and then
-	if(!QDELETED(our_living_heart))
-		if(HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
-			loc.balloon_alert(user, "ritual failed, already have a living heart!")
-			return FALSE
+	if(HAS_TRAIT(our_living_heart, TRAIT_LIVING_HEART))
+		loc.balloon_alert(user, "ritual failed, already have a living heart!")
+		return FALSE
 
-		// By this point they are making a new heart
-		// If their current heart is organic / not synthetic, we can continue the ritual as normal
-		if(is_valid_heart(our_living_heart))
-			return TRUE
-
-		// If their current heart is not organic / is synthetic, they need an organic replacement
-		// ...But if our organ-to-be-replaced is unremovable, we're screwed
-		if(our_living_heart.organ_flags & ORGAN_UNREMOVABLE)
-			loc.balloon_alert(user, "ritual failed, [our_heretic.living_heart_organ_slot] unremovable!") // "heart unremovable!"
-			return FALSE
-
-	// Otherwise, seek out a replacement in our atoms
-	for(var/obj/item/organ/nearby_organ in atoms)
-		if(!istype(nearby_organ, required_organ_type))
-			continue
-		if(!is_valid_heart(nearby_organ))
-			continue
-
-		selected_atoms += nearby_organ
+	// By this point they are making a new heart
+	// If their current heart is organic / not synthetic, we can continue the ritual as normal
+	if(is_valid_heart(our_living_heart))
 		return TRUE
 
-	loc.balloon_alert(user, "ritual failed, need a replacement [our_heretic.living_heart_organ_slot]!") // "need a replacement heart!"
+	loc.balloon_alert(user, "ritual failed, [our_heretic.living_heart_organ_slot] can't be awakened!") // "heart can't be awakened!"
 	return FALSE
 
 /datum/heretic_knowledge/living_heart/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	var/obj/item/organ/our_new_heart = user.get_organ_slot(our_heretic.living_heart_organ_slot)
-
-	// Our heart is robotic or synthetic - we need to replace it, and we fortunately should have one by here
-	if(!is_valid_heart(our_new_heart))
-		var/obj/item/organ/our_replacement_heart = locate(required_organ_type) in selected_atoms
-		if(!our_replacement_heart)
-			CRASH("[type] required a replacement organic heart in on_finished_recipe, but did not find one.")
-		// Repair the organic heart, if needed, to just below the high threshold
-		if(our_replacement_heart.damage >= our_replacement_heart.high_threshold)
-			our_replacement_heart.set_organ_damage(our_replacement_heart.high_threshold - 1)
-		// And now, put our organic heart in its place
-		our_replacement_heart.Insert(user, TRUE, TRUE)
-		if(our_new_heart)
-			// Throw our current heart out of our chest, violently
-			user.visible_message(span_boldwarning("[user]'s [our_new_heart.name] bursts suddenly out of [user.p_their()] chest!"))
-			INVOKE_ASYNC(user, TYPE_PROC_REF(/mob, emote), "scream")
-			user.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
-			selected_atoms -= our_new_heart // so we don't delete our old heart while we dramatically toss is out
-			our_new_heart.throw_at(get_edge_target_turf(user, pick(GLOB.alldirs)), 2, 2)
-		our_new_heart = our_replacement_heart
-
-	if(!our_new_heart)
-		CRASH("[type] somehow made it to on_finished_recipe without a heart. What?")
-
-	// Snowflakey, but if the user used a heart that wasn't beating
-	// they'll immediately collapse into a heart attack. Funny but not ideal.
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		carbon_user.set_heartattack(FALSE)
-
 	// Don't delete our shiny new heart
 	selected_atoms -= our_new_heart
 	// Make it the living heart
@@ -271,7 +225,7 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	result_atoms = list(/obj/item/codex_cicatrix)
 	cost = 1
 	is_starting_knowledge = TRUE
-	priority = MAX_KNOWLEDGE_PRIORITY - 3 // Least priority out of the starting knowledges, as it's an optional boon.
+	priority = MAX_KNOWLEDGE_PRIORITY - 4 // Least priority out of the starting knowledges, as it's an optional boon.
 	var/static/list/non_mob_bindings = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide, /obj/item/food/deadmouse))
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "book"
@@ -374,3 +328,42 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	var/drain_message = pick_list(HERETIC_INFLUENCE_FILE, "drain_message")
 	to_chat(user, span_hypnophrase(span_big("[drain_message]")))
 	return .
+
+/**
+ * Warren King's Welcome
+ * Ritual available at the start. So that heretics can easily gain access to maintenance airlocks without having to rely on a HoP or having to off some poor assistant.
+ * Gives access to solars since those doors are especially useful to get in or out of space.
+ */
+/datum/heretic_knowledge/bookworm
+	name = "Warren King's Welcome"
+	desc = "Allows you to transmute 5 cable pieces and a piece of paper to infuse any ID with maintenace and external airlock access."
+	gain_text = "Gnawed into vicious-stained fingerbones, my grim invitation snaps my nauseous and clouded mind towards the heavy-set door. \
+	Slowly, the light dances between a crawling darkness, blanketing the fetid promenade with infinite machinations. \
+	But the King will soon take his pound of flesh. Even here, the taxman takes their cut. For there are a thousands mouths to feed."
+	required_atoms = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/paper = 1,
+	)
+	cost = 1
+	is_starting_knowledge = TRUE
+	priority = MAX_KNOWLEDGE_PRIORITY - 3
+	research_tree_icon_path = 'icons/obj/card.dmi'
+	research_tree_icon_state = "eldritch"
+
+/datum/heretic_knowledge/bookworm/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	. = ..()
+	for(var/obj/item/card/id/used_id in atoms)
+		if((ACCESS_MAINT_TUNNELS in used_id.access) && (ACCESS_EXTERNAL_AIRLOCKS in used_id.access)) // If we can't give any access we aren't elligible
+			continue
+		selected_atoms += used_id
+		return TRUE
+
+	user.balloon_alert(user, "ritual failed, no ID lacking access!")
+	return FALSE
+
+/datum/heretic_knowledge/bookworm/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	. = ..()
+	var/obj/item/card/id/improved_id = locate() in selected_atoms
+	improved_id.add_access(list(ACCESS_MAINT_TUNNELS, ACCESS_EXTERNAL_AIRLOCKS), mode = FORCE_ADD_ALL)
+	selected_atoms -= improved_id
+	return TRUE

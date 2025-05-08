@@ -11,6 +11,8 @@ Format:
 	voteweight [number] (How much to count each player vote as, defaults to 1, setting to 0.5 counts each vote as half a vote, 2 as double, etc, Setting to 0 disables the map but allows players to still pick it)
 	disabled (disables the map)
 	votable (is this map votable)
+	feedbacklink (link in-game shown to players to leave feedback for the map)
+	webmap_url (link to the a webmap to see the map in the user's browser)
 endmap
 
 # Production-level maps.
@@ -31,6 +33,11 @@ map icebox
 	votable
 endmap
 
+map catwalkstation
+	minplayers 25
+	votable
+endmap
+
 map pubbystation
 	minplayers 20
 	votable
@@ -40,6 +47,8 @@ map metastation
 	minplayers 25
 	#voteweight 0.5
 	votable
+	#feedbacklink https://www.youtube.com/watch?v=XG8b7WhANNA
+	#webmap_url https://webmap.affectedarc07.co.uk/maps/tgstation/metastation
 endmap
 
 map tramstation

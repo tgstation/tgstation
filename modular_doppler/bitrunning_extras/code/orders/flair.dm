@@ -9,11 +9,12 @@
 	desc = "Empower your gamer instincts and keep your fuel levels topped up!"
 	cost_per_order = 1000
 
+/*
 /datum/orderable_item/bitrunning_flair/transgender_allegory
 	purchase_path = /obj/item/storage/pill_bottle/transgender_allegory
 	desc = "Keep your mind sharp and ready for action!"
 	cost_per_order = 2000
-
+*/
 
 /datum/orderable_item/bitrunning_flair/wheelys
 	purchase_path = /obj/item/clothing/shoes/wheelys

@@ -1,6 +1,3 @@
-/obj/item/organ/cyberimp/arm/surgery/l
-	zone = BODY_ZONE_L_ARM
-
 /obj/item/organ/cyberimp/arm/botany
 	name = "hydroponics toolset implant"
 	desc = "A rather simple arm implant containing tools used in gardening and botanical research."
@@ -13,9 +10,6 @@
 		/obj/item/plant_analyzer,
 		/obj/item/secateurs,
 	)
-
-/obj/item/organ/cyberimp/arm/botany/l
-    zone = BODY_ZONE_L_ARM
 
 /obj/item/implant_mounted_chainsaw
 	name = "integrated chainsaw"
@@ -57,9 +51,6 @@
 		/obj/item/wirebrush,
 		)
 
-/obj/item/organ/cyberimp/arm/janitor/l
-    zone = BODY_ZONE_L_ARM
-
 /obj/item/organ/cyberimp/arm/janitor/emag_act()
 	if(obj_flags & EMAGGED)
 		return FALSE
@@ -79,9 +70,6 @@
 	icon_state = "wolverine"
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
-
-/obj/item/organ/cyberimp/arm/razor_claws/l
-    zone = BODY_ZONE_L_ARM
 
 /datum/action/item_action/organ_action/toggle/razor_claws
 	name = "Extend Claws"
@@ -176,12 +164,8 @@
 	icon = 'modular_doppler/modular_medical/icons/implants.dmi'
 	icon_state = "steel"
 	items_to_create = list(/obj/item/pickaxe/drill/implant)
-	implant_color = null
 	/// The bodypart overlay datum we should apply to whatever mob we are put into's someone's arm
 	var/datum/bodypart_overlay/simple/steel_drill/drill_overlay
-
-/obj/item/organ/cyberimp/arm/mining_drill/l
-    zone = BODY_ZONE_L_ARM
 
 /datum/bodypart_overlay/simple/steel_drill
 	icon = 'modular_doppler/modular_medical/icons/implants_onmob.dmi'

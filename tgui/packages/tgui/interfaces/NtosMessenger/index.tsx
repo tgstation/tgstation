@@ -52,7 +52,7 @@ export const NtosMessenger = (props) => {
     sending_virus,
   } = data;
 
-  let content: JSX.Element;
+  let content: React.JSX.Element;
   if (remote_silicon) {
     content = <AccessDeniedScreen />;
   } else if (open_chat !== null) {
@@ -255,7 +255,7 @@ const ContactsScreen = (props: any) => {
               width="220px"
               placeholder="Search by name or job..."
               value={searchUser}
-              onInput={(_, value) => setSearchUser(value)}
+              onChange={setSearchUser}
             />
           </Stack>
         </Section>
@@ -340,7 +340,7 @@ const SendToAllSection = (props) => {
   const { data, act } = useBackend<NtosMessengerData>();
   const { on_spam_cooldown } = data;
 
-  const [message, setmessage] = useState('');
+  const [message, setMessage] = useState('');
 
   return (
     <>
@@ -355,10 +355,9 @@ const SendToAllSection = (props) => {
               icon="arrow-right"
               disabled={on_spam_cooldown || message === ''}
               tooltip={on_spam_cooldown && 'Wait before sending more messages!'}
-              tooltipPosition="auto-start"
               onClick={() => {
                 act('PDA_sendEveryone', { message: message });
-                setmessage('');
+                setMessage('');
               }}
             >
               Send
@@ -371,7 +370,11 @@ const SendToAllSection = (props) => {
           height={6}
           value={message}
           placeholder="Send message to everyone..."
-          onChange={(event, value: string) => setmessage(value)}
+          onChange={setMessage}
+          selfClear
+          onEnter={() => {
+            act('PDA_sendEveryone', { message: message });
+          }}
         />
       </Section>
     </>

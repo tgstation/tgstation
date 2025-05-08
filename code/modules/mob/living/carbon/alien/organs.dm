@@ -181,45 +181,25 @@
 	icon_state = "stomach-x"
 	w_class = WEIGHT_CLASS_BULKY
 	actions_types = list(/datum/action/cooldown/alien/regurgitate)
-	var/list/atom/movable/stomach_contents = list()
+	organ_traits = list(TRAIT_STRONG_STOMACH)
 
-/obj/item/organ/stomach/alien/Destroy()
-	QDEL_LIST(stomach_contents)
-	return ..()
+/obj/item/organ/stomach/alien/stomach_acid_power(atom/movable/nomnom)
+	return 75
 
-/obj/item/organ/stomach/alien/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/stomach/alien/consume_thing(atom/movable/thing)
 	. = ..()
-	if(!owner || SSmobs.times_fired % 3 != 0)
-		return
-	// Digest the stuff in our stomach, just a bit
-	var/static/list/digestable_cache = typecacheof(list(/mob/living, /obj/item/food, /obj/item/reagent_containers))
-	for(var/atom/movable/thing as anything in stomach_contents)
-		if(!digestable_cache[thing.type])
-			continue
-		thing.acid_act(75, 10)
-
-/obj/item/organ/stomach/alien/proc/consume_thing(atom/movable/thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_MOVED, PROC_REF(content_moved))
-	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(content_deleted))
 	if(isliving(thing))
 		RegisterSignal(thing, COMSIG_LIVING_DEATH, PROC_REF(content_died))
-	stomach_contents += thing
-	thing.forceMove(owner || src) // We assert that if we have no owner, we will not be nullspaced
+
+/obj/item/organ/stomach/alien/content_moved(atom/movable/source)
+	if(source.loc == src || source.loc == owner)
+		return
+	UnregisterSignal(source, COMSIG_LIVING_DEATH)
 
 /obj/item/organ/stomach/alien/proc/content_died(atom/movable/source)
 	SIGNAL_HANDLER
+	// Can fully digest corpses
 	qdel(source)
-
-/obj/item/organ/stomach/alien/proc/content_deleted(atom/movable/source)
-	SIGNAL_HANDLER
-	stomach_contents -= source
-
-/obj/item/organ/stomach/alien/proc/content_moved(atom/movable/source)
-	SIGNAL_HANDLER
-	if(source.loc == src || source.loc == owner) // not in us? out da list then
-		return
-	stomach_contents -= source
-	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 
 /obj/item/organ/stomach/alien/on_mob_insert(mob/living/carbon/stomach_owner, special, movement_flags)
 	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, PROC_REF(something_moved))
@@ -228,15 +208,6 @@
 /obj/item/organ/stomach/alien/on_mob_remove(mob/living/carbon/stomach_owner, special, movement_flags)
 	UnregisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE)
 	return ..()
-
-/obj/item/organ/stomach/alien/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	. = ..()
-	if(loc == null && owner)
-		for(var/atom/movable/thing as anything in contents)
-			thing.forceMove(owner)
-	else if(loc != null)
-		for(var/atom/movable/thing as anything in contents)
-			thing.forceMove(src)
 
 /obj/item/organ/stomach/alien/proc/something_moved(mob/living/source, mob/living/user, direction)
 	SIGNAL_HANDLER
@@ -327,8 +298,17 @@
 		owner.gib(DROP_ALL_REMAINS)
 	qdel(src)
 
-/obj/item/organ/stomach/alien/proc/eject_stomach(list/turf/targets, spit_range, content_speed, particle_delay, particle_count=4)
+/obj/item/organ/stomach/alien/empty_contents(chance = 100, damaging = FALSE, min_amount = 0)
+	// Under high pressure from all the acid!
+	return eject_stomach(border_diamond_range_turfs(get_turf(src), 3), 3, 1, 1, 4)
+
+/obj/item/organ/stomach/alien/on_vomit(mob/living/carbon/vomiter, distance, force)
+	// If you get a xeno to vomit, you may be able to recover your comrades' corpses
+	empty_contents(chance = 100)
+
+/obj/item/organ/stomach/alien/proc/eject_stomach(list/turf/targets, spit_range, content_speed, particle_delay, particle_count = 4)
 	var/atom/spit_as = owner || src
+	var/ejected = length(stomach_contents)
 	// Throw out the stuff in our stomach
 	for(var/atom/movable/thing as anything in stomach_contents)
 		thing.forceMove(spit_as.drop_location())
@@ -345,3 +325,5 @@
 		acid_reagents.my_atom = acid
 		acid_reagents.add_reagent(/datum/reagent/toxin/acid, 30)
 		acid.move_at(my_target, particle_delay, spit_range)
+
+	return ejected

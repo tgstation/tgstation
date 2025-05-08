@@ -139,7 +139,7 @@ GLOBAL_LIST_INIT(strippable_human_items, create_strippable_list(list(
 
 /datum/strippable_item/mob_item_slot/feet/get_alternate_actions(atom/source, mob/user)
 	var/obj/item/clothing/shoes/shoes = get_item(source)
-	if (!istype(shoes) || !shoes.can_be_tied)
+	if (!istype(shoes) || shoes.fastening_type == SHOES_SLIPON)
 		return null
 
 	switch (shoes.tied)

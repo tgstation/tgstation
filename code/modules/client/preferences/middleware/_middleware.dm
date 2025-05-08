@@ -51,11 +51,11 @@
 /datum/preference_middleware/proc/on_new_character(mob/user)
 	return
 
-//DOPPLER EDIT
-/// Called after every update_preference, returns TRUE if this handled it.
+/// Called after every update_preference
 /datum/preference_middleware/proc/post_set_preference(mob/user, preference, value)
-	return FALSE
+	return
 
+//DOPPLER EDIT
 /// Called when applying preferences to the mob.
 /datum/preference_middleware/proc/apply_to_human(mob/living/carbon/human/target, datum/preferences/preferences, visuals_only = FALSE) //DOPPLER EDIT CHANGE
 	SHOULD_NOT_SLEEP(TRUE)

@@ -73,7 +73,7 @@
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/nullrod/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/nullrod/attack(mob/living/target_mob, mob/living/user, list/modifiers)
 	if(!user.mind?.holy_role)
 		return ..()
 	if(!IS_CULTIST(target_mob) || istype(target_mob, /mob/living/carbon/human/cult_ghost))
@@ -189,7 +189,7 @@
 	force = 15
 	menu_description = "An odd sharp blade which provides a low chance of blocking incoming melee attacks and deals a random amount of damage, which can range from almost nothing to very high. Can be worn on the back."
 
-/obj/item/nullrod/claymore/multiverse/melee_attack_chain(mob/user, atom/target, params)
+/obj/item/nullrod/claymore/multiverse/melee_attack_chain(mob/user, atom/target, list/modifiers)
 	var/force_mod = rand(-14, 15)
 	force += force_mod
 	. = ..()
@@ -816,7 +816,7 @@
 	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
-/obj/item/nullrod/nullblade/melee_attack_chain(mob/user, atom/target, params)
+/obj/item/nullrod/nullblade/melee_attack_chain(mob/user, atom/target, list/modifiers)
 	//Track our actual force separately
 	var/old_force = force
 	force = 0
@@ -845,7 +845,7 @@
 	//Reapply our old force.
 	force -= force_diff
 
-/obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, list/modifiers)
 	if(!isliving(target))
 		return
 
@@ -902,7 +902,7 @@
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 
-	else if(IS_HERETIC_MONSTER(living_target) && prob(50)) // IT IS HARD TO SNEAK ATTACK SOMETHING WITH TOO MANY REDUNDANT EVERYTHINGS.
+	else if(HAS_TRAIT(living_target, TRAIT_HERETIC_SUMMON) && prob(50)) // IT IS HARD TO SNEAK ATTACK SOMETHING WITH TOO MANY REDUNDANT EVERYTHINGS.
 		successful_sneak_attack = FALSE
 		sneak_attack_fail_message = TRUE
 

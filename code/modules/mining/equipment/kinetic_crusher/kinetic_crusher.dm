@@ -29,6 +29,7 @@
 	attack_verb_simple = list("smash", "crush", "cleave", "chop", "pulp")
 	sharpness = SHARP_EDGED
 	actions_types = list(/datum/action/item_action/toggle_light)
+	action_slots = ALL
 	obj_flags = UNIQUE_RENAME
 	light_system = OVERLAY_LIGHT
 	light_range = 5
@@ -51,6 +52,8 @@
 	var/current_inhand_icon_state = "crusher"
 	/// Used by retool kits when changing the crusher's projectile sprite
 	var/projectile_icon = "pulse1"
+	/// Wielded damage we deal, aka our "real" damage
+	var/force_wielded = 20
 
 /obj/item/kinetic_crusher/Initialize(mapload)
 	. = ..()
@@ -59,7 +62,7 @@
 		effectiveness = 110, \
 	)
 	//technically it's huge and bulky, but this provides an incentive to use it
-	AddComponent(/datum/component/two_handed, force_unwielded=0, force_wielded=20)
+	update_wielding()
 	register_context()
 
 /obj/item/kinetic_crusher/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -82,12 +85,12 @@
 
 /obj/item/kinetic_crusher/examine(mob/living/user)
 	. = ..()
-	. += span_notice("Mark a large creature with a destabilizing force with right-click, then hit them in melee to do <b>[force + detonation_damage]</b> damage.")
-	. += span_notice("Does <b>[force + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force + detonation_damage]</b>.")
+	. += span_notice("Mark a large creature with a destabilizing force with right-click, then hit them in melee to do <b>[force_wielded + detonation_damage]</b> damage.")
+	. += span_notice("Does <b>[force_wielded + detonation_damage + backstab_bonus]</b> damage if the target is backstabbed, instead of <b>[force_wielded + detonation_damage]</b>.")
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		. += span_notice("It has \a [crusher_trophy] attached, which causes [crusher_trophy.effect_desc()].")
 
-/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(istype(attacking_item, /obj/item/crusher_trophy))
 		var/obj/item/crusher_trophy/crusher_trophy = attacking_item
 		crusher_trophy.add_to(src, user)
@@ -145,7 +148,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, params)
+/obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return TRUE
@@ -158,7 +161,7 @@
 	target.apply_status_effect(/datum/status_effect/crusher_damage)
 	return ..()
 
-/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, clickparams)
+/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, list/modifiers)
 	if(!isliving(target))
 		return
 	// Melee effect
@@ -170,8 +173,6 @@
 	if(!mark)
 		return
 	var/boosted_mark = mark.boosted
-	if(world.time < mark.mark_applied + mark.ready_delay) // Simple way to prevent right+left click at the same time to detonate the mark for free
-		return
 	if(!target.remove_status_effect(mark))
 		return
 	// Detonation effect
@@ -205,6 +206,7 @@
 		balloon_alert(user, "can't aim at yourself!")
 		return ITEM_INTERACT_BLOCKING
 	fire_kinetic_blast(interacting_with, user, modifiers)
+	user.changeNext_move(CLICK_CD_MELEE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/kinetic_crusher/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
@@ -217,7 +219,8 @@
 	if(!isturf(proj_turf))
 		return
 	var/obj/projectile/destabilizer/destabilizer = new(proj_turf)
-	destabilizer.icon_state = "[projectile_icon]"
+	SEND_SIGNAL(src, COMSIG_CRUSHER_FIRED_BLAST, target, user, destabilizer)
+	destabilizer.icon_state = projectile_icon
 	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.aim_projectile(target, user, modifiers)
@@ -242,6 +245,10 @@
 		charged = TRUE
 		update_appearance()
 		playsound(src.loc, 'sound/items/weapons/kinetic_reload.ogg', 60, TRUE)
+
+/// Updates the two handed component with new damage values
+/obj/item/kinetic_crusher/proc/update_wielding()
+	AddComponent(/datum/component/two_handed, force_unwielded = 0, force_wielded = force_wielded)
 
 /obj/item/kinetic_crusher/ui_action_click(mob/user, actiontype)
 	set_light_on(!light_on)
@@ -317,7 +324,7 @@
 		if(QDELETED(hit_mineral))
 			return ..()
 		new /obj/effect/temp_visual/kinetic_blast(hit_mineral)
-		hit_mineral.gets_drilled(firer, TRUE)
+		hit_mineral.gets_drilled(firer, 1)
 		if(!iscarbon(firer))
 			return ..()
 		var/mob/living/carbon/carbon_firer = firer

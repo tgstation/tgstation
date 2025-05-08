@@ -15,7 +15,6 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_WALLS
-	can_be_unanchored = FALSE
 	can_atmos_pass = ATMOS_PASS_DENSITY
 	rad_insulation = RAD_MEDIUM_INSULATION
 	material_flags = MATERIAL_EFFECTS
@@ -42,12 +41,11 @@
 	if(.)
 		return
 
-	opening = TRUE
 	if(!density)
-		var/srcturf = get_turf(src)
-		for(var/mob/living/obstacle in srcturf) //Stop people from using this as a shield
-			opening = FALSE
+		for(var/mob/living/obstacle in get_turf(src)) //Stop people from using this as a shield
 			return
+
+	opening = TRUE
 	update_appearance()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/structure/falsewall, toggle_open)), 0.5 SECONDS)
 
@@ -66,7 +64,6 @@
 
 	if(opening)
 		smoothing_flags = NONE
-		clear_smooth_overlays()
 	else
 		smoothing_flags = SMOOTH_BITMASK
 		QUEUE_SMOOTH(src)
@@ -119,7 +116,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return
 
-/obj/structure/falsewall/attackby(obj/item/W, mob/user, params)
+/obj/structure/falsewall/attackby(obj/item/W, mob/user, list/modifiers)
 	if(!opening)
 		return ..()
 	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
@@ -146,6 +143,10 @@
 /obj/structure/falsewall/examine_status(mob/user) //So you can't detect falsewalls by examine.
 	to_chat(user, span_notice("The outer plating is <b>welded</b> firmly in place."))
 	return null
+
+/obj/structure/falsewall/mouse_drop_receive(mob/living/dropping, mob/user, params)
+	. = ..()
+	LoadComponent(/datum/component/leanable, dropping)
 
 /*
  * False R-Walls
@@ -196,7 +197,7 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ATOM_PROPAGATE_RAD_PULSE, PROC_REF(radiate))
 
-/obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, params)
+/obj/structure/falsewall/uranium/attackby(obj/item/W, mob/user, list/modifiers)
 	radiate()
 	return ..()
 
@@ -431,6 +432,5 @@
 		girder_icon_state += "_[density ? "opening" : "closing"]"
 	else if(!density)
 		girder_icon_state += "_open"
-	var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', girder_icon_state, layer = LOW_OBJ_LAYER-0.01)
-	girder_underlay.appearance_flags = RESET_ALPHA | RESET_COLOR
+	var/mutable_appearance/girder_underlay = mutable_appearance('icons/obj/structures.dmi', girder_icon_state, layer = LOW_OBJ_LAYER-0.01, appearance_flags = RESET_ALPHA | RESET_COLOR | KEEP_APART)
 	underlays += girder_underlay

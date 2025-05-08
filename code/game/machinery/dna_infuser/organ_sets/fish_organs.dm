@@ -171,7 +171,7 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish
 	dna_block = DNA_FISH_TAIL_BLOCK
 	wag_flags = NONE
-	organ_traits = list(TRAIT_FLOPPING)
+	organ_traits = list(TRAIT_FLOPPING, TRAIT_SWIMMER)
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 	// Fishlike reagents, you could serve it raw like fish
@@ -261,6 +261,7 @@
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "gills"
 
+	organ_traits = list(TRAIT_NODROWN)
 	// Seafood instead of meat, because it's a fish organ. Additionally gross for being gills
 	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
 	food_tastes = list("gross fish" = 1)

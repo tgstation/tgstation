@@ -244,6 +244,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	old_area.turfs_to_uncontain_by_zlevel[z] += src
 	new_area.turfs_by_zlevel[z] += src
 	new_area.contents += src
+	SEND_SIGNAL(src, COMSIG_TURF_AREA_CHANGED, old_area)
+	SEND_SIGNAL(new_area, COMSIG_AREA_TURF_ADDED, src, old_area)
+	SEND_SIGNAL(old_area, COMSIG_AREA_TURF_REMOVED, src, new_area)
 
 	//changes to make after turf has moved
 	on_change_area(old_area, new_area)
@@ -392,7 +395,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			C.wiringGuiUpdate(user)
 		C.is_empty(user)
 
-/turf/attackby(obj/item/C, mob/user, params)
+/turf/attackby(obj/item/C, mob/user, list/modifiers)
 	if(..())
 		return TRUE
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
@@ -592,7 +595,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	SET_PLANE(I, GAME_PLANE, src)
 	I.layer = OBJ_LAYER
 	I.appearance = AM.appearance
-	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM
+	I.appearance_flags = RESET_COLOR|RESET_ALPHA|RESET_TRANSFORM|KEEP_APART
 	I.loc = src
 	I.setDir(AM.dir)
 	I.alpha = 128
@@ -790,12 +793,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	return TRUE
 
 /**
- * the following are some hacky fishing-related optimizations to shave off
+ * the following are some fishing-related optimizations to shave off as much
  * time we spend implementing the fishing as possible, even if that means
- * doing hackier code, because we've hundreds of turfs like lava, water etc every round,
+ * hackier code, because we've hundreds of turfs like lava, water etc every round,
  */
 /turf/proc/add_lazy_fishing(fish_source_path)
-	RegisterSignal(src, COMSIG_PRE_FISHING, PROC_REF(add_fishing_spot_comp))
+	RegisterSignal(src, COMSIG_FISHING_ROD_CAST, PROC_REF(add_fishing_spot_comp))
 	RegisterSignal(src, COMSIG_NPC_FISHING, PROC_REF(on_npc_fishing))
 	RegisterSignal(src, COMSIG_FISH_RELEASED_INTO, PROC_REF(on_fish_release_into))
 	RegisterSignal(src, COMSIG_TURF_CHANGE, PROC_REF(remove_lazy_fishing))
@@ -805,7 +808,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /turf/proc/remove_lazy_fishing()
 	SIGNAL_HANDLER
 	UnregisterSignal(src, list(
-		COMSIG_PRE_FISHING,
+		COMSIG_FISHING_ROD_CAST,
 		COMSIG_NPC_FISHING,
 		COMSIG_FISH_RELEASED_INTO,
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
@@ -814,10 +817,11 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	REMOVE_TRAIT(src, TRAIT_FISHING_SPOT, INNATE_TRAIT)
 	fish_source = null
 
-/turf/proc/add_fishing_spot_comp(datum/source)
+/turf/proc/add_fishing_spot_comp(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
-	source.AddComponent(/datum/component/fishing_spot, fish_source)
+	var/datum/component/fishing_spot/spot = source.AddComponent(/datum/component/fishing_spot, fish_source)
 	remove_lazy_fishing()
+	return spot.handle_cast(arglist(args))
 
 /turf/proc/on_npc_fishing(datum/source, list/fish_spot_container)
 	SIGNAL_HANDLER
@@ -825,7 +829,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/proc/on_fish_release_into(datum/source, obj/item/fish/fish, mob/living/releaser)
 	SIGNAL_HANDLER
-	GLOB.preset_fish_sources[fish_source].readd_fish(fish, releaser)
+	GLOB.preset_fish_sources[fish_source].readd_fish(src, fish, releaser)
 
 /turf/examine(mob/user)
 	. = ..()

@@ -40,6 +40,8 @@
 	var/detonation_timer
 	/// When do we beep next?
 	var/next_beep
+	/// If TRUE, more boom wires are added based on the timer set.
+	var/add_boom_wires = TRUE
 	/// Reference to the bomb core inside the bomb, which is the part that actually explodes.
 	var/obj/item/bombcore/payload = /obj/item/bombcore/syndicate
 	/// The countdown that'll show up to ghosts regarding the bomb's timer.
@@ -65,13 +67,7 @@
 
 /obj/machinery/syndicatebomb/process()
 	if(!active)
-		end_processing()
-		detonation_timer = null
-		next_beep = null
-		countdown.stop()
-		if(payload in src)
-			payload.defuse()
-		return
+		return PROCESS_KILL
 
 	if(!isnull(next_beep) && (next_beep <= world.time))
 		var/volume
@@ -193,7 +189,7 @@
 	return TRUE
 
 
-/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, params)
+/obj/machinery/syndicatebomb/attackby(obj/item/I, mob/user, list/modifiers)
 
 	if(is_wire_tool(I) && open_panel)
 		wires.interact(user)
@@ -226,19 +222,46 @@
 	countdown.start()
 	next_beep = world.time + 10
 	detonation_timer = world.time + (timer_set * 10)
-	playsound(loc, 'sound/machines/click.ogg', 30, TRUE)
+	// 2 booms, 0 duds at lowest timer
+	// 12 booms, 6 duds at ~9 minutes
+	var/datum/wires/syndicatebomb/bomb_wires = wires
+	if(add_boom_wires)
+		var/boom_wires = clamp(round(timer_set / 45, 1), 2, 12)
+		var/dud_wires = 0
+		if(boom_wires >= 3)
+			dud_wires = floor(boom_wires / 2)
+			boom_wires -= dud_wires
+		bomb_wires.setup_wires(num_booms = boom_wires, num_duds = dud_wires)
+	else
+		bomb_wires.setup_wires(num_booms = 2, num_duds = 0)
+	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+	update_appearance()
+
+/obj/machinery/syndicatebomb/proc/defuse()
+	active = FALSE
+	delayedlittle = FALSE
+	delayedbig = FALSE
+	examinable_countdown = TRUE
+	end_processing()
+	detonation_timer = null
+	next_beep = null
+	countdown.stop()
+	if(payload in src)
+		payload.defuse()
+	var/datum/wires/syndicatebomb/bomb_wires = wires
+	bomb_wires.setup_wires(num_booms = 2)
 	update_appearance()
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	if(!user.can_perform_action(src, ALLOW_SILICON_REACH) || !user.can_interact_with(src))
 		return
-	var/new_timer = tgui_input_number(user, "Set the timer", "Countdown", timer_set, maximum_timer, minimum_timer)
+	var/new_timer = tgui_input_number(user, "Set the timer[add_boom_wires ? " (the longer the timer, the harder to defuse!)" : ""]", "Countdown", timer_set, maximum_timer, minimum_timer)
 	if(!new_timer || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	timer_set = new_timer
-	loc.visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
+	visible_message(span_notice("[icon2html(src, viewers(src))] timer set for [timer_set] seconds."))
 	var/choice = tgui_alert(user, "Would you like to start the countdown now?", "Bomb Timer", list("Yes","No"))
-	if(choice != "Yes")
+	if(choice != "Yes" || QDELETED(user) || QDELETED(src) || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return
 	if(active)
 		to_chat(user, span_warning("The bomb is already active!"))
@@ -510,7 +533,7 @@
 
 	playsound(loc, 'sound/effects/bamf.ogg', 75, TRUE, 5)
 
-/obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, params)
+/obj/item/bombcore/chemical/attackby(obj/item/I, mob/user, list/modifiers)
 	if(I.tool_behaviour == TOOL_CROWBAR && beakers.len > 0)
 		I.play_tool_sound(src)
 		for (var/obj/item/B in beakers)
@@ -595,6 +618,23 @@
 	chosen_theme = null
 	return ..()
 
+/obj/item/bombcore/dimensional/CheckParts(list/parts_list)
+	. = ..()
+	range_heavy = 13
+	for(var/obj/item/grenade/chem_grenade/nade in src)
+		if(istype(nade, /obj/item/grenade/chem_grenade/large) || istype(nade, /obj/item/grenade/chem_grenade/adv_release))
+			range_heavy += 1
+		for(var/obj/item/thing as anything in nade.beakers) //remove beakers, then delete the grenade.
+			thing.forceMove(drop_location())
+		qdel(nade)
+	var/obj/item/gibtonite/ore = locate() in src
+	switch(ore.quality)
+		if(GIBTONITE_QUALITY_LOW)
+			range_heavy -= 2
+		if(GIBTONITE_QUALITY_HIGH)
+			range_heavy += 4
+	qdel(ore)
+
 /obj/item/bombcore/dimensional/examine(mob/user)
 	. = ..()
 	. += span_notice("Use in hand to change the linked dimension. Current dimension: [chosen_theme?.name || "None, output will be random"].")
@@ -638,9 +678,9 @@
 		if(!theme_to_use.can_convert(affected))
 			continue
 		num_affected++
-		var/skip_sound = TRUE
+		var/skip_sound = FALSE
 		if(num_affected % 5) //makes it play the sound more sparingly
-			skip_sound = FALSE
+			skip_sound = TRUE
 		var/time_mult = round(get_dist_euclidean(get_turf(src), affected)) + 1
 		addtimer(CALLBACK(theme_to_use, TYPE_PROC_REF(/datum/dimension_theme, apply_theme), affected, skip_sound, TRUE), 0.1 SECONDS * time_mult)
 	qdel(src)

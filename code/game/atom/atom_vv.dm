@@ -80,25 +80,30 @@
 	if(href_list[VV_HK_ARMOR_MOD])
 		if(!check_rights(NONE))
 			return
-		var/list/pickerlist = list()
-		var/list/armorlist = get_armor().get_rating_list()
-		for (var/i in armorlist)
-			pickerlist += list(list("value" = armorlist[i], "name" = i))
-		var/list/result = presentpicker(usr, "Modify armor", "Modify armor: [src]", Button1="Save", Button2 = "Cancel", Timeout=FALSE, inputtype = "text", values = pickerlist)
+		var/list/picker_list = list()
+		var/list/armor_list = get_armor().get_rating_list()
+		for (var/rating in armor_list)
+			picker_list += list(list("value" = armor_list[rating], "name" = rating))
+
+		var/list/result = present_picker(usr, "Modify armor", "Modify armor: [src]", button_1 = "Save", button_2 = "Cancel", timeout = FALSE, input_type = "text", values = picker_list)
+		if(!islist(result))
+			return
+		if(result["button"] == 2) // If the user pressed the cancel button
+			return
+
 		var/list/armor_all = ARMOR_LIST_ALL()
-		if(islist(result))
-			if(result["button"] != 2) // If the user pressed the cancel button
-				// text2num conveniently returns a null on invalid values
-				var/list/converted = list()
-				for(var/armor_key in armor_all)
-					converted[armor_key] = text2num(result["values"][armor_key])
-				set_armor(get_armor().generate_new_with_specific(converted))
-				var/message = "[key_name(usr)] modified the armor on [src] ([type]) to: "
-				for(var/armor_key in armor_all)
-					message += "[armor_key]=[get_armor_rating(armor_key)],"
-				message = copytext(message, 1, -1)
-				log_admin(span_notice(message))
-				message_admins(span_notice(message))
+		// text2num conveniently returns a null on invalid values
+		var/list/converted = list()
+		for(var/armor_key in armor_all)
+			converted[armor_key] = text2num(result["values"][armor_key])
+		set_armor(get_armor().generate_new_with_specific(converted))
+
+		var/message = "[key_name(usr)] modified the armor on [src] ([type]) to: "
+		for(var/armor_key in armor_all)
+			message += "[armor_key]=[get_armor_rating(armor_key)],"
+		message = copytext(message, 1, -1)
+		log_admin(span_notice(message))
+		message_admins(span_notice(message))
 
 	if(href_list[VV_HK_ADD_AI])
 		if(!check_rights(R_VAREDIT))
@@ -151,8 +156,8 @@
 			num_spins = -1
 		if(!num_spins)
 			return
-		var/spin_speed = input(usr, "How fast?", "Spin Animation") as null|num
-		if(!spin_speed)
+		var/spins_per_sec = input(usr, "How many spins per second?", "Spin Animation") as null|num
+		if(!spins_per_sec)
 			return
 		var/direction = input(usr, "Which direction?", "Spin Animation") in list("Clockwise", "Counter-clockwise")
 		switch(direction)
@@ -162,7 +167,7 @@
 				direction = 0
 			else
 				return
-		SpinAnimation(spin_speed, num_spins, direction)
+		SpinAnimation(1 SECONDS / spins_per_sec, num_spins, direction)
 
 	if(href_list[VV_HK_STOP_ALL_ANIMATIONS])
 		if(!check_rights(R_VAREDIT))

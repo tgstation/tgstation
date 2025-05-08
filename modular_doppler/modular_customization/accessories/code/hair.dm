@@ -683,10 +683,6 @@
 	name = "Halfcut Rough"
 	icon_state = "hair_halfcut_rough"
 
-/datum/sprite_accessory/hair/modular/glossy
-	name = "Glossy"
-	icon_state = "hair_glossy"
-
 /datum/sprite_accessory/hair/modular/mia
 	name = "Mia"
 	icon_state = "hair_mia"
@@ -694,10 +690,6 @@
 /datum/sprite_accessory/hair/modular/braided_sidetail
 	name = "Braided Sidetail"
 	icon_state = "hair_braided_sidetail"
-
-/datum/sprite_accessory/hair/modular/glamour
-	name = "Glamour"
-	icon_state = "hair_glamour"
 
 /datum/sprite_accessory/hair/modular/hugeafro_eyescovered
 	name = "Huge Afro (Eyes Covered)"

@@ -43,8 +43,8 @@ All ShuttleMove procs go here
 				qdel(thing)
 
 // Called on the old turf to move the turf data
-/turf/proc/onShuttleMove(turf/newT, list/movement_force, move_dir)
-	if(newT == src) // In case of in place shuttle rotation shenanigans.
+/turf/proc/onShuttleMove(turf/new_turf, list/movement_force, move_dir, ignore_area_change = FALSE)
+	if(new_turf == src) // In case of in place shuttle rotation shenanigans.
 		return
 	// Destination turf changes.
 	// Baseturfs is definitely a list or this proc wouldnt be called.
@@ -52,15 +52,15 @@ All ShuttleMove procs go here
 
 	if(!shuttle_depth)
 		CRASH("A turf queued to move via shuttle somehow had no skipover in baseturfs. [src]([type]):[loc]")
-	newT.CopyOnTop(src, 1, shuttle_depth, TRUE)
-	newT.blocks_air = TRUE
-	newT.air_update_turf(TRUE, FALSE)
+	new_turf.CopyOnTop(src, 1, shuttle_depth, TRUE, ignore_area_change ? CHANGETURF_NO_AREA_CHANGE : NONE) // Don't automatically change space area to nearspace if we'll override it later
+	new_turf.blocks_air = TRUE
+	new_turf.air_update_turf(TRUE, FALSE)
 	blocks_air = TRUE
 	air_update_turf(TRUE, TRUE)
-	if(isopenturf(newT))
-		var/turf/open/new_open = newT
+	if(isopenturf(new_turf))
+		var/turf/open/new_open = new_turf
 		new_open.copy_air_with_tile(src)
-	SEND_SIGNAL(src, COMSIG_TURF_ON_SHUTTLE_MOVE, newT)
+	SEND_SIGNAL(src, COMSIG_TURF_ON_SHUTTLE_MOVE, new_turf)
 
 	return TRUE
 
@@ -88,6 +88,11 @@ All ShuttleMove procs go here
 
 
 /////////////////////////////////////////////////////////////////////////////////////
+
+// Return the move_move (based on the old), without any side effects.
+// This is for checking what would be moved if src is on a shuttle being moved.
+/atom/movable/proc/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	return move_mode
 
 // Called on every atom in shuttle turf contents before anything has been moved
 // returns the new move_mode (based on the old)
@@ -141,16 +146,19 @@ All ShuttleMove procs go here
 	return MOVE_AREA
 
 // Called on areas to move their turf between areas
-/area/proc/onShuttleMove(turf/oldT, turf/newT, area/underlying_old_area)
+/area/proc/onShuttleMove(turf/oldT, turf/newT, obj/docking_port/mobile/shuttle, area/fallback_area)
 	if(newT == oldT) // In case of in place shuttle rotation shenanigans.
 		return TRUE
 
-	oldT.change_area(src, underlying_old_area)
+	var/area/underlying_area = shuttle.underlying_areas_by_turf[oldT]
+	oldT.change_area(src, underlying_area || fallback_area)
+	shuttle.underlying_areas_by_turf -= oldT
 	//The old turf has now been given back to the area that turf originaly belonged to
 
 	var/area/old_dest_area = newT.loc
 	parallax_movedir = old_dest_area.parallax_movedir
 	newT.change_area(old_dest_area, src)
+	shuttle.underlying_areas_by_turf[newT] = old_dest_area
 	return TRUE
 
 // Called on areas after everything has been moved
@@ -218,6 +226,11 @@ All ShuttleMove procs go here
 					break
 
 
+/obj/machinery/camera/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
+
 /obj/machinery/camera/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	if(. & MOVE_AREA)
@@ -237,7 +250,7 @@ All ShuttleMove procs go here
 	if(is_mining_level(z)) //Avoids double logging and landing on other Z-levels due to badminnery
 		SSblackbox.record_feedback("associative", "colonies_dropped", 1, list("x" = x, "y" = y, "z" = z))
 
-/obj/machinery/atmospherics/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/machinery/atmospherics/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
 	. = ..()
 	if(pipe_vision_img)
 		pipe_vision_img.loc = loc
@@ -323,7 +336,17 @@ All ShuttleMove procs go here
 
 /************************************Structure move procs************************************/
 
+/obj/structure/grille/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
+
 /obj/structure/grille/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
+
+/obj/structure/lattice/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
 	if(. & MOVE_AREA)
 		. |= MOVE_CONTENTS
@@ -341,6 +364,11 @@ All ShuttleMove procs go here
 	. = ..()
 	Connect_cable(TRUE)
 	propagate_if_no_network()
+
+/obj/machinery/power/shuttle_engine/hypotheticalShuttleMove(move_mode)
+	. = ..()
+	if(. & MOVE_AREA)
+		. |= MOVE_CONTENTS
 
 /obj/machinery/power/shuttle_engine/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
@@ -364,6 +392,11 @@ All ShuttleMove procs go here
 	return ..()
 
 /************************************Misc move procs************************************/
+
+/obj/docking_port/mobile/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	if(moving_dock == src)
+		. |= MOVE_CONTENTS
 
 /obj/docking_port/mobile/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()

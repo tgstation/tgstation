@@ -149,6 +149,9 @@
 	var/datum/point/last_point
 	/// Next forceMove will not create tracer end/start effects
 	var/free_hitscan_forceMove = FALSE
+	// Used to prevent duplicate effects during lag chunking
+	/// If a hitscan muzzle effect has been created for this "path", reset during forceMoves.
+	var/spawned_muzzle = FALSE
 
 	/// Hitscan tracer effect left behind the projectile
 	var/tracer_type
@@ -996,7 +999,8 @@
 				moving_turfs = FALSE
 			// If we've impacted something, we need to animate our movement until the actual hit
 			// Otherwise the projectile visually disappears slightly before the actual impact
-			if (deletion_queued)
+			// Not if we're hitscan, however, microop time!
+			if (deletion_queued && !hitscan)
 				// distance_to_move is how much we have to step to get to the next turf, hypotenuse is how much we need
 				// to move in the next turf to get from entry to impact position
 				delete_distance = distance_to_move + sqrt((impact_x - entry_x) ** 2 + (impact_y - entry_y) ** 2)
@@ -1013,6 +1017,10 @@
 				delete_distance = distance_to_move - (ICON_SIZE_ALL - pixels_moved_last_tile)
 
 		if (deletion_queued)
+			// Hitscans don't need to wait before deleting
+			if (hitscan)
+				return movements_done
+
 			// We moved to the next turf first, then impacted something
 			// This means that we need to offset our visual position back to the previous turf, then figure out
 			// how much we moved on the next turf (or we didn't move at all in which case we both shifts are 0 anyways)
@@ -1089,8 +1097,18 @@
 
 	while (isturf(loc) && !QDELETED(src))
 		process_movement(ICON_SIZE_ALL, hitscan = TRUE)
-		if (TICK_CHECK || paused || QDELETED(src))
+
+		if (QDELETED(src))
 			return
+
+		if (!TICK_CHECK && !paused)
+			continue
+
+		create_hitscan_point()
+		// Create tracers if we get timestopped or lagchunk so there aren't weird delays
+		generate_hitscan_tracers(impact_point = FALSE, impact_visual = FALSE)
+		record_hitscan_start(offset = FALSE)
+		return
 
 /// Creates (or wipes clean) list of tracer keypoints and creates a first point.
 /obj/projectile/proc/record_hitscan_start(offset = TRUE)
@@ -1125,15 +1143,16 @@
 	if (isnull(movement_vector) || free_hitscan_forceMove)
 		return
 	// Create firing VFX and start a new chain because we most likely got teleported
-	generate_hitscan_tracers(impact = FALSE)
+	generate_hitscan_tracers(impact_point = FALSE)
 	original_angle = angle
+	spawned_muzzle = FALSE
 	record_hitscan_start(offset = FALSE)
 
-/obj/projectile/proc/generate_hitscan_tracers(impact = TRUE)
+/obj/projectile/proc/generate_hitscan_tracers(impact_point = TRUE, impact_visual = TRUE)
 	if (!length(beam_points))
 		return
 
-	if (impact)
+	if (impact_point)
 		create_hitscan_point(impact = TRUE)
 
 	if (tracer_type)
@@ -1143,7 +1162,8 @@
 		for (var/beam_point in beam_points)
 			generate_tracer(beam_point, passed_turfs)
 
-	if (muzzle_type)
+	if (muzzle_type && !spawned_muzzle)
+		spawned_muzzle = TRUE
 		var/datum/point/start_point = beam_points[1]
 		var/atom/movable/muzzle_effect = new muzzle_type(loc)
 		start_point.move_atom_to_src(muzzle_effect)
@@ -1154,7 +1174,7 @@
 		muzzle_effect.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override || color)
 		QDEL_IN(muzzle_effect, PROJECTILE_TRACER_DURATION)
 
-	if (impact_type)
+	if (impact_type && impact_visual)
 		var/atom/movable/impact_effect = new impact_type(loc)
 		last_point.move_atom_to_src(impact_effect)
 		var/matrix/matrix = new
@@ -1383,7 +1403,7 @@
 	if (embed_data)
 		return embed_data
 	if (embed_type)
-		embed_data = new embed_type(src)
+		embed_data = new embed_type()
 	return embed_data
 
 /// Sets our embedding datum to a different one. Can also take types

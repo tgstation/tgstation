@@ -24,7 +24,7 @@
 	max_grenades = reset_fantasy_variable("max_syringes", max_grenades)
 	return ..()
 
-/obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, params)
+/obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, list/modifiers)
 
 	if(istype(I, /obj/item/grenade/c4))
 		return
@@ -54,3 +54,4 @@
 	F.icon_state = initial(F.icon_state) + "_active"
 	playsound(user.loc, 'sound/items/weapons/armbomb.ogg', 75, TRUE, -3)
 	addtimer(CALLBACK(F, TYPE_PROC_REF(/obj/item/grenade, detonate)), 1.5 SECONDS)
+	return TRUE

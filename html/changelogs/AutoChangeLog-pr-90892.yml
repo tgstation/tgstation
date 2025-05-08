@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed the error overlay caused by the Tress Shoulder hairstyle"

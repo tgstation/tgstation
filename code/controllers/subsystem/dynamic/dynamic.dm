@@ -247,9 +247,9 @@ SUBSYSTEM_DEF(dynamic)
 		if(!threatadd)
 			return
 		if(threatadd > 0)
-			create_threat(threatadd, threat_log, "[worldtime2text()]: increased by [key_name(usr)]")
+			create_threat(threatadd, threat_log, "[gameTimestamp()]: increased by [key_name(usr)]")
 		else
-			spend_midround_budget(-threatadd, threat_log, "[worldtime2text()]: decreased by [key_name(usr)]")
+			spend_midround_budget(-threatadd, threat_log, "[gameTimestamp()]: decreased by [key_name(usr)]")
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		late_forced_injection = TRUE
@@ -317,8 +317,7 @@ SUBSYSTEM_DEF(dynamic)
 		addtimer(CALLBACK(src, PROC_REF(send_intercept)), 10 SECONDS)
 		return
 
-	//. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]:</i></b><hr>" // ORIGINAL
-	. = "<b><i>Port Authority Department of Intelligence Threat Advisory, Crusoe's Rest, TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]:</i></b><hr>" // DOPPLER EDIT - NT -> PA
+	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD", NO_TIMEZONE)], [CURRENT_STATION_YEAR]:</i></b><hr>"
 	. += generate_advisory_level()
 
 	var/min_threat = 100
@@ -397,7 +396,7 @@ SUBSYSTEM_DEF(dynamic)
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/list/out = list("<TITLE>Threat Log</TITLE><B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [threat_level]<BR>")
+	var/list/out = list("<B><font size='3'>Threat Log</font></B><br><B>Starting Threat:</B> [threat_level]<BR>")
 
 	for(var/entry in threat_log)
 		if(istext(entry))
@@ -405,7 +404,7 @@ SUBSYSTEM_DEF(dynamic)
 
 	out += "<B>Remaining threat/threat_level:</B> [mid_round_budget]/[threat_level]"
 
-	usr << browse(out.Join(), "window=threatlog;size=700x500")
+	usr << browse(HTML_SKELETON_TITLE("Threat Log", out.Join()), "window=threatlog;size=700x500")
 
 /// Generates the threat level using lorentz distribution and assigns peaceful_percentage.
 /datum/controller/subsystem/dynamic/proc/generate_threat()
@@ -515,7 +514,7 @@ SUBSYSTEM_DEF(dynamic)
 		roundstart(roundstart_rules)
 
 	log_dynamic("[round_start_budget] round start budget was left, donating it to midrounds.")
-	threat_log += "[worldtime2text()]: [round_start_budget] round start budget was left, donating it to midrounds."
+	threat_log += "[gameTimestamp()]: [round_start_budget] round start budget was left, donating it to midrounds."
 	mid_round_budget += round_start_budget
 
 	var/starting_rulesets = ""
@@ -719,7 +718,7 @@ SUBSYSTEM_DEF(dynamic)
 	var/added_threat = ruleset.scale_up(roundstart_pop_ready, scaled_times)
 
 	if(ruleset.pre_execute(roundstart_pop_ready))
-		threat_log += "[worldtime2text()]: Roundstart [ruleset.name] spent [ruleset.cost + added_threat]. [ruleset.scaling_cost ? "Scaled up [ruleset.scaled_times]/[scaled_times] times." : ""]"
+		threat_log += "[gameTimestamp()]: Roundstart [ruleset.name] spent [ruleset.cost + added_threat]. [ruleset.scaling_cost ? "Scaled up [ruleset.scaled_times]/[scaled_times] times." : ""]"
 		if(ruleset.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
 		if(ruleset.flags & HIGH_IMPACT_RULESET)
@@ -777,7 +776,7 @@ SUBSYSTEM_DEF(dynamic)
 		new_rule.load_templates()
 		if (new_rule.ready(forced))
 			if (!ignore_cost)
-				spend_midround_budget(new_rule.cost, threat_log, "[worldtime2text()]: Forced rule [new_rule.name]")
+				spend_midround_budget(new_rule.cost, threat_log, "[gameTimestamp()]: Forced rule [new_rule.name]")
 			new_rule.pre_execute(population)
 			if (new_rule.execute()) // This should never fail since ready() returned 1
 				if(new_rule.flags & HIGH_IMPACT_RULESET)

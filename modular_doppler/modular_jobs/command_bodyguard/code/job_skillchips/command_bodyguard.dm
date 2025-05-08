@@ -15,10 +15,10 @@
 
 /obj/item/skillchip/job/command_bodyguard/on_activate(mob/living/carbon/user, silent = FALSE)
 	. = ..()
-	style.teach(user, make_temporary = TRUE)
+	style.teach(user)
 
 /obj/item/skillchip/job/command_bodyguard/on_deactivate(mob/living/carbon/user, silent = FALSE)
-	style.fully_remove(user)
+	style.unlearn(user)
 	return ..()
 
 /// Command bodyguard's martial arts (evil boxing)

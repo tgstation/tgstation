@@ -410,7 +410,6 @@
 		reel(user)
 		return ITEM_INTERACT_BLOCKING
 
-	SEND_SIGNAL(interacting_with, COMSIG_PRE_FISHING)
 	cast_line(interacting_with, user)
 	return ITEM_INTERACT_SUCCESS
 
@@ -433,6 +432,17 @@
 		return
 	if(!COOLDOWN_FINISHED(src, casting_cd))
 		return
+	// Inside of storages, or camera weirdness
+	if(target.z != user.z || !(target in view(user.client?.view || world.view, user)))
+		return
+	COOLDOWN_START(src, casting_cd, 1 SECONDS)
+	// skip firing a projectile if the target is adjacent and can be reached (no order windows in the way),
+	// otherwise it may end up hitting other things on its turf, which is problematic
+	// especially for entities with the profound fisher component, which should only work on
+	// proper fishing spots.
+	if(target.Adjacent(user, null, null, 0))
+		hook_hit(target, user)
+		return
 	casting = TRUE
 	var/obj/projectile/fishing_cast/cast_projectile = new(get_turf(src))
 	cast_projectile.range = get_cast_range(user)
@@ -444,7 +454,6 @@
 	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
 	cast_projectile.aim_projectile(target, user)
 	cast_projectile.fire()
-	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 
 /// Called by hook projectile when hitting things
 /obj/item/fishing_rod/proc/hook_hit(atom/atom_hit_by_hook_projectile, mob/user)
@@ -477,15 +486,13 @@
 	var/line_color = line?.line_color || default_line_color
 	/// Line part by the rod.
 	if(reel_overlay)
-		var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay)
-		reel_appearance.appearance_flags = RESET_COLOR
+		var/mutable_appearance/reel_appearance = mutable_appearance(icon, reel_overlay, appearance_flags = RESET_COLOR|KEEP_APART)
 		reel_appearance.color = line_color
 		. += reel_appearance
 
 	// Line & hook is also visible when only bait is equipped but it uses default appearances then
 	if(hook || bait)
-		var/mutable_appearance/line_overlay = mutable_appearance(icon, "line_overlay")
-		line_overlay.appearance_flags = RESET_COLOR
+		var/mutable_appearance/line_overlay = mutable_appearance(icon, "line_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
 		line_overlay.color = line_color
 		. += line_overlay
 		. += hook?.rod_overlay_icon_state || "hook_overlay"
@@ -506,19 +513,17 @@
 /obj/item/fishing_rod/proc/get_fishing_worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = list()
 	var/line_color = line?.line_color || default_line_color
-	var/mutable_appearance/reel_overlay = mutable_appearance(icon_file, "reel_overlay")
-	reel_overlay.appearance_flags |= RESET_COLOR
+	var/mutable_appearance/reel_overlay = mutable_appearance(icon_file, "reel_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
 	reel_overlay.color = line_color
 	. += reel_overlay
 	/// if we don't have anything hooked show the dangling hook & line
 	if(isinhands && !fishing_line)
-		var/mutable_appearance/line_overlay = mutable_appearance(icon_file, "line_overlay")
-		line_overlay.appearance_flags |= RESET_COLOR
+		var/mutable_appearance/line_overlay = mutable_appearance(icon_file, "line_overlay", appearance_flags = RESET_COLOR|KEEP_APART)
 		line_overlay.color = line_color
 		. += line_overlay
 		. += mutable_appearance(icon_file, "hook_overlay")
 
-/obj/item/fishing_rod/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/fishing_rod/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(slot_check(attacking_item,ROD_SLOT_LINE))
 		use_slot(ROD_SLOT_LINE, user, attacking_item)
 		SStgui.update_uis(src)
@@ -527,16 +532,9 @@
 		use_slot(ROD_SLOT_HOOK, user, attacking_item)
 		SStgui.update_uis(src)
 		return TRUE
-	else if(slot_check(attacking_item,ROD_SLOT_BAIT))
+	else if(slot_check(attacking_item,ROD_SLOT_BAIT) || istype(attacking_item, /obj/item/bait_can)) //Can click on the fishing rod with bait can directly
 		use_slot(ROD_SLOT_BAIT, user, attacking_item)
 		SStgui.update_uis(src)
-		return TRUE
-	else if(istype(attacking_item, /obj/item/bait_can)) //Quicker filling from bait can
-		var/obj/item/bait_can/can = attacking_item
-		var/bait = can.retrieve_bait(user)
-		if(bait)
-			use_slot(ROD_SLOT_BAIT, user, bait)
-			SStgui.update_uis(src)
 		return TRUE
 	. = ..()
 
@@ -591,6 +589,13 @@
 /obj/item/fishing_rod/proc/use_slot(slot, mob/user, obj/item/new_item)
 	if(fishing_line || GLOB.fishing_challenges_by_user[user])
 		return
+	// If the new item is a bait can, try to get bait from it
+	if(slot == ROD_SLOT_BAIT && istype(new_item, /obj/item/bait_can))
+		var/obj/item/bait_can/can = new_item
+		var/bait = can.retrieve_bait(user)
+		if(!bait)
+			return
+		new_item = bait
 	var/obj/item/current_item
 	switch(slot)
 		if(ROD_SLOT_BAIT)

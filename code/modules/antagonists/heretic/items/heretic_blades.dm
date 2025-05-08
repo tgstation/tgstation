@@ -25,6 +25,10 @@
 	attack_verb_continuous = list("attacks", "slashes", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "rend")
 	var/after_use_message = ""
+	/// Tracks how many times attack_self() is called so that breaking a blade while in an arena has to be intentional
+	var/escape_attempts = 0
+	/// Timer that resets your escape_attempts back to 0
+	var/escape_timer
 
 /obj/item/melee/sickly_blade/examine(mob/user)
 	. = ..()
@@ -37,7 +41,7 @@
 /obj/item/melee/sickly_blade/proc/check_usability(mob/living/user)
 	return IS_HERETIC_OR_MONSTER(user)
 
-/obj/item/melee/sickly_blade/pre_attack(atom/A, mob/living/user, params)
+/obj/item/melee/sickly_blade/pre_attack(atom/target, mob/living/user, list/modifiers)
 	. = ..()
 	if(.)
 		return .
@@ -50,8 +54,27 @@
 	return .
 
 /obj/item/melee/sickly_blade/attack_self(mob/user)
+	if(HAS_TRAIT(user, TRAIT_ELDRITCH_ARENA_PARTICIPANT))
+		user.balloon_alert(user, "can't escape!")
+		if(escape_attempts > 2)
+			to_chat(user, span_hypnophrase(span_big("Cowardly sheep will be slaughtered!")))
+			playsound(src, SFX_SHATTER, 70, TRUE)
+			var/obj/item/bodypart/to_remove = user.get_active_hand()
+			to_remove.dismember()
+			deltimer(escape_timer)
+			qdel(src)
+			return
+		escape_attempts++
+		escape_timer = addtimer(CALLBACK(src, PROC_REF(reset_attempts)), 2 SECONDS, TIMER_STOPPABLE)
+		return
+	if(HAS_TRAIT(user, TRAIT_NO_TELEPORT))
+		user.balloon_alert(user, "can't break!")
+		return
 	seek_safety(user)
-	return ..()
+
+/obj/item/melee/sickly_blade/proc/reset_attempts()
+	escape_attempts = 0
+	deltimer(escape_timer)
 
 /// Attempts to teleport the passed mob to somewhere safe on the station, if they can use the blade.
 /obj/item/melee/sickly_blade/proc/seek_safety(mob/user)
@@ -66,7 +89,7 @@
 	playsound(src, SFX_SHATTER, 70, TRUE) //copied from the code for smashing a glass sheet onto the ground to turn it into a shard
 	qdel(src)
 
-/obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, list/modifiers)
 	SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_ATTACK, target, src)
 
 /obj/item/melee/sickly_blade/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -114,7 +137,7 @@
 	AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_left = INFINITY,\
-		blood_dna = list("Unknown DNA" = "X*"),\
+		blood_dna = list("Unknown DNA" = BLOOD_TYPE_XENO),\
 		diseases = null,\
 	)
 
@@ -140,7 +163,7 @@
 	///If our blade is currently infused with the mansus grasp
 	var/infused = FALSE
 
-/obj/item/melee/sickly_blade/dark/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/melee/sickly_blade/dark/afterattack(atom/target, mob/user, list/modifiers)
 	. = ..()
 	if(!infused || target == user || !isliving(target))
 		return
@@ -282,3 +305,14 @@
 		heretic_datum.try_draw_rune(user, target, drawing_time = 14 SECONDS) // Faster than pen, slower than cicatrix
 		return ITEM_INTERACT_BLOCKING
 	return NONE
+
+// Weaker blade variant given to people so they can participate in the heretic arena spell
+/obj/item/melee/sickly_blade/training
+	name = "\improper imperfect blade"
+	desc = "A blade given to those who cannot accept the truth, out of pity. \
+		May it act as a blessing in the short time it remains alongside you."
+	force = 17
+	armour_penetration = 0
+
+/obj/item/melee/sickly_blade/training/check_usability(mob/living/user)
+	return TRUE // If you can hold this, you can use it

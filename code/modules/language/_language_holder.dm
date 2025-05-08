@@ -47,11 +47,17 @@ Key procs
 	/// If true, overrides tongue aforementioned limitations.
 	var/omnitongue = FALSE
 	/// Handles displaying the language menu UI.
-	var/datum/language_menu/language_menu
+	VAR_FINAL/datum/language_menu/language_menu
 	/// Currently spoken language
 	var/selected_language
 	/// Tracks the entity that owns the holder.
-	var/atom/movable/owner
+	VAR_FINAL/atom/movable/owner
+	/// Lazyassoclist of all mutual understanding this holder has
+	/// You generally don't want to access this, you want [best_mutual_languages] instead
+	/// Format: list(language_type = list(source = % of understanding))
+	VAR_PROTECTED/list/mutual_understanding
+	/// Cached form of the mutual language list which only contains the best understanding available to each language
+	VAR_FINAL/list/best_mutual_languages
 
 /// Initializes, and copies in the languages from the current atom if available.
 /datum/language_holder/New(atom/new_owner)
@@ -66,16 +72,48 @@ Key procs
 	// If we have an owner, we'll set a default selected language
 	if(owner)
 		get_selected_language()
+	// Normally this is applied in grant_language, which we bypass
+	for(var/language in understood_languages)
+		gain_partial_understanding_from_language(language)
 
 /datum/language_holder/Destroy()
 	QDEL_NULL(language_menu)
 	owner = null
 	return ..()
 
+/// Helper to get all the partial understanding from the passed language
+/// Does effectively nothing if given a language already understood
+/datum/language_holder/proc/gain_partial_understanding_from_language(language)
+	PRIVATE_PROC(TRUE)
+
+	var/datum/language/prototype = GLOB.language_datum_instances[language]
+	for(var/other_language in prototype.mutual_understanding)
+		grant_partial_language(other_language, prototype.mutual_understanding[other_language], language)
+
+/// Helper to remove all the partial understanding from the passed language
+/datum/language_holder/proc/lose_partial_understanding_from_language(language)
+	PRIVATE_PROC(TRUE)
+
+	var/datum/language/prototype = GLOB.language_datum_instances[language]
+	for(var/other_language in prototype.mutual_understanding)
+		remove_partial_language(other_language, language)
+
+/// Calculates the "best mutual language list"
+/datum/language_holder/proc/calculate_best_mutual_language()
+	best_mutual_languages = list()
+	for(var/language in mutual_understanding)
+		for(var/source in mutual_understanding[language])
+			// if this mutual understanding comes from a language, and that language is blocked, skip it
+			if(LAZYACCESS(blocked_languages, source))
+				continue
+			if(!best_mutual_languages[language] || best_mutual_languages[language] < mutual_understanding[language][source])
+				best_mutual_languages[language] = mutual_understanding[language][source]
+
 /// Grants the supplied language.
 /datum/language_holder/proc/grant_language(language, language_flags = ALL, source = LANGUAGE_MIND)
 	if(language_flags & UNDERSTOOD_LANGUAGE)
 		LAZYORASSOCLIST(understood_languages, language, source)
+		gain_partial_understanding_from_language(language)
 		. = TRUE
 	if(language_flags & SPOKEN_LANGUAGE)
 		LAZYORASSOCLIST(spoken_languages, language, source)
@@ -91,6 +129,14 @@ Key procs
 		omnitongue = TRUE
 	return TRUE
 
+/// Grants partial understanding of the passed language.
+/// Giving 100 understanding is basically equivalent to knowning the language, just with butchered punctuation.
+/datum/language_holder/proc/grant_partial_language(language, amount = 50, source = LANGUAGE_MIND)
+	LAZYINITLIST(mutual_understanding)
+	LAZYSET(mutual_understanding[language], source, amount)
+	calculate_best_mutual_language()
+	return TRUE
+
 /// Removes a single language or source, removing all sources returns the pre-removal state of the language.
 /datum/language_holder/proc/remove_language(language, language_flags = ALL, source = LANGUAGE_ALL)
 	if(language_flags & UNDERSTOOD_LANGUAGE)
@@ -98,6 +144,8 @@ Key procs
 			LAZYREMOVE(understood_languages, language)
 		else
 			LAZYREMOVEASSOC(understood_languages, language, source)
+		if(!LAZYACCESS(understood_languages, language))
+			lose_partial_understanding_from_language(language)
 		. = TRUE
 
 	if(language_flags & SPOKEN_LANGUAGE)
@@ -117,6 +165,30 @@ Key procs
 		omnitongue = FALSE
 	return TRUE
 
+/// Removes partial understanding of the passed language.
+/datum/language_holder/proc/remove_partial_language(language, source = LANGUAGE_MIND)
+	. = FALSE
+	if(source == LANGUAGE_ALL)
+		for(var/other_source in mutual_understanding[language])
+			if(ispath(other_source, /datum/language))
+				continue
+			. = remove_partial_language(language, other_source) || .
+	else if(LAZYACCESSASSOC(mutual_understanding, language, source))
+		LAZYREMOVE(mutual_understanding[language], source)
+		ASSOC_UNSETEMPTY(mutual_understanding, language)
+		UNSETEMPTY(mutual_understanding)
+		. = TRUE
+
+	if(.)
+		calculate_best_mutual_language()
+	return .
+
+/// Removes all partial understandings of all languages.
+/datum/language_holder/proc/remove_all_partial_languages(source = LANGUAGE_MIND)
+	for(var/language in mutual_understanding)
+		remove_partial_language(language, source)
+	return TRUE
+
 /// Adds a single language or list of languages to the blocked language list.
 /datum/language_holder/proc/add_blocked_language(languages, source = LANGUAGE_MIND)
 	if(!islist(languages))
@@ -124,6 +196,7 @@ Key procs
 
 	for(var/language in languages)
 		LAZYORASSOCLIST(blocked_languages, language, source)
+	calculate_best_mutual_language()
 	return TRUE
 
 /// Removes a single language or list of languages from the blocked language list.
@@ -136,7 +209,7 @@ Key procs
 			LAZYREMOVE(blocked_languages, language)
 		else
 			LAZYREMOVEASSOC(blocked_languages, language, source)
-
+	calculate_best_mutual_language()
 	return TRUE
 
 /// Checks if you have the language passed.
@@ -229,6 +302,11 @@ Key procs
 		if(LANGUAGE_MIND in blocked_languages[language])
 			remove_blocked_language(language, LANGUAGE_MIND)
 			to_holder.add_blocked_language(language, LANGUAGE_MIND)
+	for(var/language in mutual_understanding)
+		var/mind_understanding = mutual_understanding[language][LANGUAGE_MIND]
+		if(mind_understanding > 0)
+			remove_partial_language(language, LANGUAGE_MIND)
+			to_holder.grant_partial_language(language, mind_understanding, LANGUAGE_MIND)
 
 	if(owner)
 		get_selected_language()
@@ -379,6 +457,14 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/machine = list(LANGUAGE_ATOM),
 	)
 
+/// For intelligent synthetics like cyborgs and the AI, not for basic baby bots ran on a raspberry pi
+/datum/language_holder/synthetic/silicon
+
+/datum/language_holder/synthetic/silicon/New(atom/new_owner)
+	. = ..()
+	for(var/lang in GLOB.uncommon_roundstart_languages)
+		grant_partial_language(lang, 66, LANGUAGE_ATOM)
+
 /datum/language_holder/moth
 	understood_languages = list(
 		/datum/language/common = list(LANGUAGE_ATOM),
@@ -489,6 +575,26 @@ GLOBAL_LIST_INIT(prototype_language_holders, init_language_holder_prototypes())
 		/datum/language/beachbum = list(LANGUAGE_ATOM),
 	)
 	selected_language = /datum/language/beachbum
+
+/datum/language_holder/spinwarder
+	understood_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/common = list(LANGUAGE_ATOM),
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	selected_language = /datum/language/spinwarder
+
+/datum/language_holder/spinwarder_exclusive
+	understood_languages = list(
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	spoken_languages = list(
+		/datum/language/spinwarder = list(LANGUAGE_ATOM),
+	)
+	selected_language = /datum/language/spinwarder
 
 // Vending machines are extremely well-educated
 /datum/language_holder/speaking_machine

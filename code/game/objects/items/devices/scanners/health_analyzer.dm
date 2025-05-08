@@ -32,6 +32,8 @@
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text
 	var/scanner_busy = FALSE
+	/// Weakref to the last mob scanned by a health analyzer. Used to generate official medical reports.
+	var/datum/weakref/last_healthy_scanned
 
 /obj/item/healthanalyzer/Initialize(mapload)
 	. = ..()
@@ -97,6 +99,10 @@
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
 			last_scan_text = healthscan(user, M, mode, advanced, tochat = readability_check)
+			if((M.health / M.maxHealth) > CLEAN_BILL_OF_HEALTH_RATIO)
+				last_healthy_scanned = WEAKREF(M)
+			else
+				last_healthy_scanned = null
 		if (SCANMODE_WOUND)
 			if(readability_check)
 				woundscan(user, M, src)
@@ -335,11 +341,14 @@
 			render_list += "<hr>"
 			render_list += toReport + "</table></font>" // tables do not need extra linebreak
 
-		// Cybernetics
+		// Cybernetics & mutant
+		var/mutant = HAS_TRAIT(humantarget, TRAIT_HULK)
 		var/list/cyberimps
-		for(var/obj/item/organ/cyberimp/cyberimp in humantarget.organs)
-			if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
-				LAZYADD(cyberimps, cyberimp.examine_title(user))
+		for(var/obj/item/organ/target_organ as anything in humantarget.organs)
+			if(IS_ROBOTIC_ORGAN(target_organ) && !(target_organ.organ_flags & ORGAN_HIDDEN))
+				LAZYADD(cyberimps, target_organ.examine_title(user))
+			if(target_organ.organ_flags & ORGAN_MUTANT)
+				mutant = TRUE
 		if(LAZYLEN(cyberimps))
 			if(!render)
 				render_list += "<hr>"
@@ -352,11 +361,12 @@
 		if(advanced && humantarget.has_dna() && humantarget.dna.stability != initial(humantarget.dna.stability))
 			render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span><br>"
 
-		// Hulk and body temperature
+		//body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
-		var/mutant = HAS_TRAIT(humantarget, TRAIT_HULK)
+		var/disguised = !ishumanbasic(humantarget) && istype(humantarget.head, /obj/item/clothing/head/hooded/human_head) && istype(humantarget.wear_suit, /obj/item/clothing/suit/hooded/bloated_human)
+		var/species_name = "[disguised ? "\"[/datum/species/human::name]\"" : targetspecies.name][mutant ? "-derived mutant" : ""]"
 
-		render_list += "<span class='info ml-1'>Species: [targetspecies.name][mutant ? "-derived mutant" : ""]</span><br>"
+		render_list += "<span class='info ml-1'>Species: [species_name]</span><br>"
 		var/core_temperature_message = "Core temperature: [round(humantarget.coretemperature-T0C, 0.1)] &deg;C ([round(humantarget.coretemperature*1.8-459.67,0.1)] &deg;F)"
 		if(humantarget.coretemperature >= humantarget.get_body_temp_heat_damage_limit())
 			render_list += "<span class='alert ml-1'>☼ [core_temperature_message] ☼</span><br>"
@@ -378,14 +388,13 @@
 	var/blood_id = carbontarget.get_blood_id()
 	if(blood_id)
 		var/blood_percent = round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-		var/blood_type = carbontarget.dna.blood_type
-		if(blood_id != /datum/reagent/blood) // special blood substance
-			var/datum/reagent/real_reagent = GLOB.chemical_reagents_list[blood_id]
-			blood_type = real_reagent?.name || blood_id
+		var/datum/blood_type/blood_type = carbontarget.dna.blood_type
 		if(carbontarget.blood_volume <= BLOOD_VOLUME_SAFE && carbontarget.blood_volume > BLOOD_VOLUME_OKAY)
-			render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent]%, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]<br>"
+			render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent]%, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type.name]")]<br>"
+			render_list += "<span class='alert ml-1'>Recommendation: [blood_type.restoration_chem::name] supplements or blood transfusion.</span><br>"
 		else if(carbontarget.blood_volume <= BLOOD_VOLUME_OKAY)
 			render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_percent]%</b>, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]<br>"
+			render_list += "<span class='alert ml-1'>Recommendation: [blood_type.restoration_chem::name] supplements or blood transfusion.</span><br>"
 		else
 			render_list += "<span class='info ml-1'>Blood level: [blood_percent]%, [carbontarget.blood_volume] cl, type: [blood_type]</span><br>"
 
@@ -434,10 +443,10 @@
 		return
 	scanner_busy = TRUE
 	balloon_alert(user, "printing report...")
-	addtimer(CALLBACK(src, PROC_REF(print_report)), 2 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(print_report), user), 2 SECONDS)
 
 /obj/item/healthanalyzer/proc/print_report(mob/user)
-	var/obj/item/paper/report_paper = new(get_turf(src))
+	var/obj/item/paper/medical_report/report_paper = new(get_turf(src))
 
 	report_paper.color = "#99ccff"
 	report_paper.name = "health scan report - [station_time_timestamp()]"
@@ -447,13 +456,40 @@
 	report_paper.add_raw_text(report_text)
 	report_paper.update_appearance()
 
-	if(ismob(loc))
-		var/mob/printer = loc
-		printer.put_in_hands(report_paper)
-		balloon_alert(printer, "logs cleared")
+	user.put_in_hands(report_paper)
+	balloon_alert(user, "logs cleared")
 
+	resolve_patient_eligibility(report_paper, user)
 	report_text = list()
 	scanner_busy = FALSE
+
+/**
+ * Checks the mob and the medical report that the scanner is trying to print, checks the traits and statuses of the mob, and then resolves by true or false.
+ * Applies traits to the patient if the scanning is eligable to turn in for a bounty, with callbacks to remove after a cooldown.
+ */
+/obj/item/healthanalyzer/proc/resolve_patient_eligibility(obj/item/paper/medical_report/report_paper, mob/scanner)
+	var/mob/living/patient = last_healthy_scanned?.resolve()
+	if(!patient)
+		return FALSE
+
+	if(scanner == patient)
+		return FALSE //You can't just scan yourself.
+
+	if(HAS_TRAIT(patient, TRAIT_RECENTLY_TREATED))
+		return FALSE
+
+	report_paper.last_healthy_scanned_mob = last_healthy_scanned
+	ADD_TRAIT(patient, TRAIT_RECENTLY_TREATED, ANALYZER_TRAIT)
+	addtimer(TRAIT_CALLBACK_REMOVE(patient, RECENTLY_HEALED_COOLDOWN, ANALYZER_TRAIT), RECENTLY_HEALED_COOLDOWN)
+	return TRUE
+
+/obj/item/healthanalyzer/proc/clear_treatment(mob/living/target)
+	if(!target)
+		return
+	if(QDELETED(target))
+		return
+	REMOVE_TRAIT(target, TRAIT_RECENTLY_TREATED, ANALYZER_TRAIT)
+	return TRUE
 
 /proc/chemscan(mob/living/user, mob/living/target)
 	if(user.incapacitated)
@@ -729,6 +765,18 @@
 		to_chat(user, span_notice(render.Join("")))
 		scanner.emotion = AID_EMOTION_WARN
 		playsound(scanner, 'sound/machines/beep/twobeep.ogg', 50, FALSE)
+
+/obj/item/paper/medical_report
+	color = "#99ccff"
+	desc = "An official medical bill of health generated by a computerized medical scanner."
+	/// A reference to a mob's weakref that was last scanned by the medical scanner.
+	var/datum/weakref/last_healthy_scanned_mob
+
+/obj/item/paper/medical_report/examine(mob/user)
+	. = ..()
+	if(last_healthy_scanned_mob)
+		. += span_notice("This medical report is applicable for medical bounties.")
+
 
 #undef SCANMODE_HEALTH
 #undef SCANMODE_WOUND

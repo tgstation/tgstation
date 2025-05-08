@@ -12,11 +12,11 @@
 	power_channel = AREA_USAGE_EQUIP
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_COMMAND, ACCESS_SECURITY) //used to control clamps
 	processing_flags = NONE
-/// The mount's defib
+	/// The mount's defib
 	var/obj/item/defibrillator/defib
-/// if true, and a defib is loaded, it can't be removed without unlocking the clamps
+	/// if true, and a defib is loaded, it can't be removed without unlocking the clamps
 	var/clamps_locked = FALSE
-/// the type of wallframe it 'disassembles' into
+	/// the type of wallframe it 'disassembles' into
 	var/wallframe_type = /obj/item/wallframe/defib_mount
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
@@ -25,8 +25,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
 	find_and_hang_on_wall()
-
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 /obj/machinery/defibrillator_mount/Destroy()
 	QDEL_NULL(defib)
@@ -83,30 +81,30 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		return
 	user.put_in_hands(defib.paddles)
 
-/obj/machinery/defibrillator_mount/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/defibrillator))
+/obj/machinery/defibrillator_mount/attackby(obj/item/item, mob/living/user, list/modifiers)
+	if(istype(item, /obj/item/defibrillator))
 		if(defib)
 			to_chat(user, span_warning("There's already a defibrillator in [src]!"))
 			return
-		var/obj/item/defibrillator/D = I
-		if(!D.get_cell())
+		var/obj/item/defibrillator/new_defib = item
+		if(!new_defib.get_cell())
 			to_chat(user, span_warning("Only defibrilators containing a cell can be hooked up to [src]!"))
 			return
-		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
-			to_chat(user, span_warning("[I] is stuck to your hand!"))
+		if(HAS_TRAIT(new_defib, TRAIT_NODROP) || !user.transferItemToLoc(new_defib, src))
+			to_chat(user, span_warning("[new_defib] is stuck to your hand!"))
 			return
-		user.visible_message(span_notice("[user] hooks up [I] to [src]!"), \
-		span_notice("You press [I] into the mount, and it clicks into place."))
+		user.visible_message(span_notice("[user] hooks up [new_defib] to [src]!"), \
+		span_notice("You press [new_defib] into the mount, and it clicks into place."))
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		// Make sure the defib is set before processing begins.
-		defib = I
+		defib = new_defib
 		begin_processing()
 		update_appearance()
 		return
-	else if(defib && I == defib.paddles)
+	else if(defib && item == defib.paddles)
 		defib.paddles.snap_back()
 		return
-	var/obj/item/card/id = I.GetID()
+	var/obj/item/card/id = item.GetID()
 	if(id)
 		if(check_access(id) || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED) //anyone can toggle the clamps in red alert!
 			if(!defib)
@@ -194,8 +192,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 
 
 /obj/machinery/defibrillator_mount/charging/process(seconds_per_tick)
+	if(isnull(defib))
+		return
 	var/obj/item/stock_parts/power_store/defib_cell = defib.get_cell()
-	if(isnull(defib_cell) || !is_operational)
+	if(isnull(defib_cell)) // Something is very wrong if we hit this, so we should stack trace
+		stack_trace("[src] was set to process with no cell inside its defib")
 		return PROCESS_KILL
 	if(defib_cell.charge < defib_cell.maxcharge)
 		charge_cell(active_power_usage * seconds_per_tick, defib_cell)

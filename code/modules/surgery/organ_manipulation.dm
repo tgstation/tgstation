@@ -91,7 +91,7 @@
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
 		/datum/surgery_step/saw,
-		/datum/surgery_step/manipulate_organs/internal,
+		/datum/surgery_step/manipulate_organs/any,
 		/datum/surgery_step/close,
 	)
 
@@ -183,9 +183,13 @@
 		preop_sound = 'sound/items/handling/surgery/hemostat1.ogg'
 		success_sound = 'sound/items/handling/surgery/organ2.ogg'
 		target_organ = tool
+		if(!target_organ.pre_surgical_insertion(user, target, target_zone, tool))
+			return SURGERY_STEP_FAIL
+
 		if(target_zone != target_organ.zone || target.get_organ_slot(target_organ.slot))
 			to_chat(user, span_warning("There is no room for [target_organ] in [target]'s [target.parse_zone_with_bodypart(target_zone)]!"))
 			return SURGERY_STEP_FAIL
+
 		var/obj/item/organ/meatslab = tool
 		if(!meatslab.useable)
 			to_chat(user, span_warning("[target_organ] seems to have been chewed on, you can't use this!"))
@@ -316,6 +320,13 @@
 ///You can never use this MUHAHAHAHAHAHAH (because its the byond version of abstract)
 /datum/surgery_step/manipulate_organs/proc/can_use_organ(obj/item/organ/organ)
 	return FALSE
+
+/datum/surgery_step/manipulate_organs/any
+	time = 6.4 SECONDS
+	name = "manipulate organs (hemostat/organ)"
+
+/datum/surgery_step/manipulate_organs/any/can_use_organ(obj/item/organ/organ)
+	return TRUE
 
 ///Surgery step for internal organs, like hearts and brains
 /datum/surgery_step/manipulate_organs/internal

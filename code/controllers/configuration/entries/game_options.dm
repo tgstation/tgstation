@@ -62,11 +62,6 @@
 	integer = FALSE
 	min_val = 0
 
-/// Determines the ideal player count for maximum progression per minute.
-/datum/config_entry/number/traitor_ideal_player_count
-	default = 20
-	min_val = 1
-
 /// Determines how fast traitors scale in general.
 /datum/config_entry/number/traitor_scaling_multiplier
 	default = 1
@@ -356,16 +351,6 @@
 
 /datum/config_entry/flag/forbid_station_traits
 
-/datum/config_entry/number/events_min_time_mul // Multipliers for random events minimal starting time and minimal players amounts
-	default = 1
-	min_val = 0
-	integer = FALSE
-
-/datum/config_entry/number/events_min_players_mul
-	default = 1
-	min_val = 0
-	integer = FALSE
-
 /datum/config_entry/number/events_frequency_lower
 	default = 2.5 MINUTES
 	min_val = 0
@@ -425,6 +410,8 @@
 
 /datum/config_entry/flag/dynamic_config_enabled
 
+/datum/config_entry/flag/events_config_enabled
+
 /datum/config_entry/string/drone_required_role
 	default = "Silicon"
 
@@ -461,6 +448,11 @@
 	min_val = 1
 
 /datum/config_entry/str_list/tts_voice_blacklist
+
+/// Maximum timeout for http calls
+/datum/config_entry/number/tts_http_timeout_seconds
+	default = 30
+	min_val = 0
 
 /datum/config_entry/flag/give_tutorials_without_db
 
@@ -499,3 +491,12 @@
 	integer = FALSE
 	default = 1
 	min_val = 0.05
+
+
+//Custom Shuttles
+//Shuttle size limiter
+/datum/config_entry/number/max_shuttle_count
+	default = 6
+
+/datum/config_entry/number/max_shuttle_size
+	default = 250

@@ -28,7 +28,7 @@
 	new /obj/item/reagent_containers/condiment/hotsauce(src)
 
 
-/obj/item/reagent_containers/pill/gamer_pill/red
+/obj/item/reagent_containers/applicator/pill/gamer_pill/red
 	name = "red pill"
 	desc = "An oval-shaped maroon pill; it feels smooth to the touch."
 	list_reagents = list(
@@ -38,12 +38,13 @@
 	)
 	icon_state = "pill4"
 
-/obj/item/reagent_containers/pill/gamer_pill/blue
+/obj/item/reagent_containers/applicator/pill/gamer_pill/blue
 	name = "blue pill"
 	desc = "An oval-shaped blue pill; it has a little ridge in the middle on one side."
 	list_reagents = list(/datum/reagent/medicine/psicodine = 10, /datum/reagent/drug/happiness = 5)
 	icon_state = "pill3"
 
+/*
 /obj/item/storage/pill_bottle/transgender_allegory
 	name = "bottle of gamer pills"
 	desc = "A bottle of pills issued by the Port Authority to ensure a bitrunner's mind stays sharp. \
@@ -57,6 +58,7 @@
 /obj/item/storage/pill_bottle/transgender_allegory/PopulateContents()
 	// Three red pills, two blue pills
 	for(var/i in 1 to 2)
-		new /obj/item/reagent_containers/pill/gamer_pill/red(src)
-		new /obj/item/reagent_containers/pill/gamer_pill/blue(src)
-	new /obj/item/reagent_containers/pill/gamer_pill/red(src)
+		new /obj/item/reagent_containers/applicator/pill/gamer_pill/red(src)
+		new /obj/item/reagent_containers/applicator/pill/gamer_pill/blue(src)
+	new /obj/item/reagent_containers/applicator/pill/gamer_pill/red(src)
+*/

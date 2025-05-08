@@ -25,7 +25,7 @@
 	desc = "It's spicy! Wait... IT'S BURNING ME!!"
 	icon_state = "chilipepper"
 	bite_consumption_mod = 2
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	wine_power = 20
 
 // Ice Chili
@@ -51,7 +51,7 @@
 	desc = "It's a mutant strain of chili."
 	icon_state = "icepepper"
 	bite_consumption_mod = 5
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	wine_power = 30
 
 // Ghost Chili
@@ -78,7 +78,7 @@
 	desc = "It seems to be vibrating gently."
 	icon_state = "ghostchilipepper"
 	bite_consumption_mod = 5
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	wine_power = 50
 
 // Bell Pepper
@@ -103,7 +103,7 @@
 	name = "bell pepper"
 	desc = "A big mild pepper that's good for many things."
 	icon_state = "bell_pepper"
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 
 /obj/item/food/grown/bell_pepper/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/roasted_bell_pepper, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)

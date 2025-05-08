@@ -23,13 +23,13 @@
 	desc = "It's large and scary."
 	icon_state = "pumpkin"
 	bite_consumption_mod = 2
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES
 	juice_typepath = /datum/reagent/consumable/pumpkinjuice
 	wine_power = 20
 	///Which type of lantern this gourd produces when carved.
 	var/carved_type = /obj/item/clothing/head/utility/hardhat/pumpkinhead
 
-/obj/item/food/grown/pumpkin/attackby(obj/item/W as obj, mob/user as mob, params)
+/obj/item/food/grown/pumpkin/attackby(obj/item/W as obj, mob/user as mob, list/modifiers)
 	if(W.get_sharpness())
 		user.show_message(span_notice("You carve a face into [src]!"), MSG_VISUAL)
 		new carved_type(user.loc)
@@ -56,7 +56,6 @@
 	desc = "The pumpkin's toxic sibling."
 	icon_state = "blumpkin"
 	bite_consumption_mod = 3
-	foodtypes = FRUIT
 	juice_typepath = /datum/reagent/consumable/blumpkinjuice
 	wine_power = 50
 	carved_type = /obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin

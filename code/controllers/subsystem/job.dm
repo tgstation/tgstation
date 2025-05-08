@@ -1,6 +1,8 @@
 SUBSYSTEM_DEF(job)
 	name = "Jobs"
-	init_order = INIT_ORDER_JOBS
+	dependencies = list(
+		/datum/controller/subsystem/processing/station,
+	)
 	flags = SS_NO_FIRE
 
 	/// List of all jobs.
@@ -554,6 +556,11 @@ SUBSYSTEM_DEF(job)
 		if (BEOVERFLOW)
 			var/datum/job/overflow_role_datum = get_job_type(overflow_role)
 
+			if((overflow_role_datum.current_positions >= overflow_role_datum.spawn_positions) && overflow_role_datum.spawn_positions != -1)
+				job_debug("HU: Overflow role player cap reached, trying to reject: [player]")
+				try_reject_player(player)
+				return
+
 			if(check_job_eligibility(player, overflow_role_datum, debug_prefix = "HU", add_job_to_log = TRUE) != JOB_AVAILABLE)
 				job_debug("HU: Player cannot be overflow, trying to reject: [player]")
 				try_reject_player(player)
@@ -594,7 +601,7 @@ SUBSYSTEM_DEF(job)
 	job.announce_job(equipping, alt_title) // DOPPLER EDIT: alternative job titles
 
 	if(player_client?.holder)
-		if(CONFIG_GET(flag/auto_deadmin_players) || (player_client.prefs?.toggles & DEADMIN_ALWAYS))
+		if(CONFIG_GET(flag/auto_deadmin_always) || (player_client.prefs?.toggles & DEADMIN_ALWAYS))
 			player_client.holder.auto_deadmin()
 		else
 			handle_auto_deadmin_roles(player_client, job.title)
@@ -902,7 +909,13 @@ SUBSYSTEM_DEF(job)
 	// appear normal from the UI. By passing in JP_ANY, it will return all players that have the overflow job pref (which should be a toggle)
 	// set to any level.
 	var/list/overflow_candidates = find_occupation_candidates(overflow_datum, JP_ANY)
+	job_debug("OVRFLW: Attempting to assign the overflow role to [length(overflow_candidates)] players.")
 	for(var/mob/dead/new_player/player in overflow_candidates)
+		if((overflow_datum.current_positions >= overflow_datum.spawn_positions) && overflow_datum.spawn_positions != -1)
+			job_debug("OVRFLW: Overflow role cap reached, role only assigned to [overflow_datum.current_positions] players.")
+			job_debug("OVRFLW: Overflow Job is now full, Job: [overflow_datum], Positions: [overflow_datum.current_positions], Limit: [overflow_datum.spawn_positions]")
+			return
+
 		// Eligibility checks done as part of find_occupation_candidates, so skip them.
 		assign_role(player, get_job_type(overflow_role), do_eligibility_checks = FALSE)
 		job_debug("OVRFLW: Assigned overflow to player: [player]")

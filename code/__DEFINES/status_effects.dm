@@ -11,6 +11,8 @@
 #define STATUS_EFFECT_PERMANENT -1
 /// Use in status effect "tick_interval" to prevent it from calling tick()
 #define STATUS_EFFECT_NO_TICK -1
+/// Use in status effect "tick_interval" to guarantee that tick() gets called on every process()
+#define STATUS_EFFECT_AUTO_TICK 0
 
 /// Indicates this status effect is an abstract type, ie not instantiated
 /// Doesn't actually do anything in practice, primarily just a marker / used in unit tests,
@@ -60,6 +62,7 @@
 #define STASIS_ADMIN "stasis_admin"
 #define STASIS_LEGION_EATEN "stasis_eaten"
 #define STASIS_SLIME_BZ "stasis_slime_bz"
+#define STASIS_ELDRITCH_ETHER "stasis_eldritch_ether"
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
 

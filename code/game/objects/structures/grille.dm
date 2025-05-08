@@ -40,15 +40,17 @@
 	update_appearance()
 
 /obj/structure/grille/update_appearance(updates)
-	if(QDELETED(src) || broken)
+	if(QDELETED(src))
 		return
-
 	. = ..()
 	if((updates & UPDATE_SMOOTHING) && (smoothing_flags & USES_SMOOTHING))
 		QUEUE_SMOOTH(src)
 
 /obj/structure/grille/update_icon_state()
-	icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
+	if (broken)
+		icon_state = "broken[base_icon_state]"
+	else
+		icon_state = "[base_icon_state][((atom_integrity / max_integrity) <= 0.5) ? "50_[rand(0, 3)]" : null]"
 	return ..()
 
 /obj/structure/grille/examine(mob/user)
@@ -217,7 +219,7 @@
 		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/grille/attackby(obj/item/W, mob/user, params)
+/obj/structure/grille/attackby(obj/item/W, mob/user, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/stack/rods) && broken && do_after(user, 1 SECONDS, target = src))
 		if(shock(user, 90))
@@ -298,24 +300,26 @@
 
 /obj/structure/grille/atom_break()
 	. = ..()
-	if(!broken)
-		icon_state = "brokengrille"
-		set_density(FALSE)
-		atom_integrity = 20
-		broken = TRUE
-		rods_amount = 1
-		var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
-		transfer_fingerprints_to(dropped_rods)
+	if(broken)
+		return
+	set_density(FALSE)
+	atom_integrity = 20
+	broken = TRUE
+	rods_amount = 1
+	var/obj/item/dropped_rods = new rods_type(drop_location(), rods_amount)
+	transfer_fingerprints_to(dropped_rods)
+	update_appearance()
 
 /obj/structure/grille/proc/repair_grille()
-	if(broken)
-		icon_state = "grille"
-		set_density(TRUE)
-		atom_integrity = max_integrity
-		broken = FALSE
-		rods_amount = 2
-		return TRUE
-	return FALSE
+	if(!broken)
+		return FALSE
+
+	set_density(TRUE)
+	atom_integrity = max_integrity
+	broken = FALSE
+	rods_amount = 2
+	update_appearance()
+	return TRUE
 
 // shock user with probability prb (if all connections & power are working)
 // returns 1 if shocked, 0 otherwise

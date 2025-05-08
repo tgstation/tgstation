@@ -28,9 +28,12 @@
 	bare_wound_bonus = 20
 	armour_penetration = 35
 	block_sound = 'sound/items/weapons/parry.ogg'
+	///Reference to a boomerang component we add when a non-cultist throws us.
+	var/datum/component/boomerang/boomerang_component
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 	var/image/silicon_image = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_dagger", silicon_image)
@@ -43,6 +46,10 @@ Striking a noncultist, however, will tear their flesh."}
 
 	AddComponent(/datum/component/cult_ritual_item, span_cult(examine_text))
 
+/obj/item/melee/cultblade/dagger/Destroy(force)
+	QDEL_NULL(boomerang_component)
+	return ..()
+
 /obj/item/melee/cultblade/dagger/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	var/block_message = "[owner] parries [attack_text] with [src]"
 	if(owner.get_active_held_item() != src)
@@ -54,6 +61,26 @@ Striking a noncultist, however, will tear their flesh."}
 		return TRUE
 	else
 		return FALSE
+
+/obj/item/melee/cultblade/dagger/on_thrown(mob/living/carbon/user, atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(IS_CULTIST(user))
+		if(boomerang_component)
+			REMOVE_TRAIT(src, TRAIT_UNCATCHABLE, HELD_ITEM_TRAIT)
+			QDEL_NULL(boomerang_component)
+	else if(isnull(boomerang_component))
+		ADD_TRAIT(src, TRAIT_UNCATCHABLE, HELD_ITEM_TRAIT)
+		boomerang_component = AddComponent(/datum/component/boomerang, throw_range)
+
+///Called when the dagger is impacting someone, we cancel if the person hit isn't the person who threw us, if we're boomeranging.
+/obj/item/melee/cultblade/dagger/proc/on_impact_zone(atom/source, mob/living/hitby, zone, blocked, datum/thrownthing/throwingdatum)
+	SIGNAL_HANDLER
+
+	var/mob/living/thrower = throwingdatum?.get_thrower()
+	if(!isnull(boomerang_component) && hitby != thrower)
+		return MOVABLE_IMPACT_ZONE_OVERRIDE
 
 /obj/item/melee/cultblade
 	name = "eldritch longsword"
@@ -87,8 +114,8 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, \
-	speed = 4 SECONDS, \
-	effectiveness = 100, \
+		speed = 4 SECONDS, \
+		effectiveness = 100, \
 	)
 	alt_continuous = string_list(alt_continuous)
 	alt_simple = string_list(alt_simple)
@@ -371,7 +398,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 	// Get the heretic's new body and antag datum.
 	trapped_entity = trapped_mind?.current
-	trapped_entity.key = trapped_mind?.key
+	trapped_entity.PossessByPlayer(trapped_mind?.key)
 	var/datum/antagonist/heretic/heretic_holder = GET_HERETIC(trapped_entity)
 	if(!heretic_holder)
 		stack_trace("[soul_to_bind] in but not a heretic on the heretic soul blade.")
@@ -540,179 +567,6 @@ Striking a noncultist, however, will tear their flesh."}
 		return
 	. = ..()
 
-
-/obj/item/clothing/head/hooded/cult_hoodie
-	name = "ancient cultist hood"
-	icon = 'icons/obj/clothing/head/helmet.dmi'
-	worn_icon = 'icons/mob/clothing/head/helmet.dmi'
-	icon_state = "culthood"
-	inhand_icon_state = "culthood"
-	desc = "A torn, dust-caked hood. Strange letters line the inside."
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEEARS
-	flags_cover = HEADCOVERSEYES
-	armor_type = /datum/armor/hooded_cult_hoodie
-	cold_protection = HEAD
-	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
-	heat_protection = HEAD
-	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
-
-/datum/armor/hooded_cult_hoodie
-	melee = 40
-	bullet = 30
-	laser = 40
-	energy = 40
-	bomb = 25
-	bio = 10
-	fire = 10
-	acid = 10
-
-/obj/item/clothing/suit/hooded/cultrobes
-	name = "ancient cultist robes"
-	desc = "A ragged, dusty set of robes. Strange letters line the inside."
-	icon_state = "cultrobes"
-	icon = 'icons/obj/clothing/suits/armor.dmi'
-	worn_icon = 'icons/mob/clothing/suits/armor.dmi'
-	inhand_icon_state = "cultrobes"
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/melee/sickly_blade/cursed)
-	armor_type = /datum/armor/hooded_cultrobes
-	flags_inv = HIDEJUMPSUIT
-	cold_protection = CHEST|GROIN|LEGS|ARMS
-	min_cold_protection_temperature = ARMOR_MIN_TEMP_PROTECT
-	heat_protection = CHEST|GROIN|LEGS|ARMS
-	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
-	/// Whether the hood is flipped up
-	var/hood_up = FALSE
-
-/// Called when the hood is worn
-/obj/item/clothing/suit/hooded/cultrobes/on_hood_up(obj/item/clothing/head/hooded/hood)
-	hood_up = TRUE
-
-/// Called when the hood is hidden
-/obj/item/clothing/suit/hooded/cultrobes/on_hood_down(obj/item/clothing/head/hooded/hood)
-	hood_up = FALSE
-
-/datum/armor/hooded_cultrobes
-	melee = 40
-	bullet = 30
-	laser = 40
-	energy = 40
-	bomb = 25
-	bio = 10
-	fire = 10
-	acid = 10
-
-/obj/item/clothing/head/hooded/cult_hoodie/alt
-	name = "cultist hood"
-	desc = "An armored hood worn by the followers of Nar'Sie."
-	icon_state = "cult_hoodalt"
-	inhand_icon_state = null
-
-/obj/item/clothing/suit/hooded/cultrobes/alt
-	name = "cultist robes"
-	desc = "An armored set of robes worn by the followers of Nar'Sie."
-	icon_state = "cultrobesalt"
-	inhand_icon_state = null
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/alt
-
-/obj/item/clothing/suit/hooded/cultrobes/alt/ghost
-	item_flags = DROPDEL
-
-/obj/item/clothing/suit/hooded/cultrobes/alt/ghost/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CULT_TRAIT)
-
-/obj/item/clothing/head/wizard/magus
-	name = "magus helm"
-	icon_state = "magus"
-	inhand_icon_state = null
-	desc = "A helm worn by the followers of Nar'Sie."
-	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDEEARS|HIDEEYES|HIDESNOUT
-	armor_type = /datum/armor/wizard_magus
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
-
-/datum/armor/wizard_magus
-	melee = 50
-	bullet = 30
-	laser = 50
-	energy = 50
-	bomb = 25
-	bio = 10
-	fire = 10
-	acid = 10
-
-/obj/item/clothing/suit/magusred
-	name = "magus robes"
-	desc = "A set of armored robes worn by the followers of Nar'Sie."
-	icon_state = "magusred"
-	icon = 'icons/obj/clothing/suits/wizard.dmi'
-	worn_icon = 'icons/mob/clothing/suits/wizard.dmi'
-	inhand_icon_state = null
-	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	allowed = list(/obj/item/tome, /obj/item/melee/cultblade)
-	armor_type = /datum/armor/suit_magusred
-	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-
-/datum/armor/suit_magusred
-	melee = 50
-	bullet = 30
-	laser = 50
-	energy = 50
-	bomb = 25
-	bio = 10
-	fire = 10
-	acid = 10
-
-/obj/item/clothing/suit/hooded/cultrobes/hardened
-	name = "\improper Nar'Sien hardened armor"
-	desc = "A heavily-armored exosuit worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
-	icon_state = "cult_armor"
-	inhand_icon_state = null
-	w_class = WEIGHT_CLASS_BULKY
-	allowed = list(/obj/item/tome, /obj/item/melee/cultblade, /obj/item/tank/internals)
-	armor_type = /datum/armor/cultrobes_hardened
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/hardened
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL
-	flags_inv = HIDEGLOVES | HIDEJUMPSUIT
-	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
-	resistance_flags = NONE
-
-/datum/armor/cultrobes_hardened
-	melee = 50
-	bullet = 40
-	laser = 50
-	energy = 60
-	bomb = 50
-	bio = 100
-	fire = 100
-	acid = 100
-
-/obj/item/clothing/head/hooded/cult_hoodie/hardened
-	name = "\improper Nar'Sien hardened helmet"
-	desc = "A heavily-armored helmet worn by warriors of the Nar'Sien cult. It can withstand hard vacuum."
-	icon_state = "cult_helmet"
-	inhand_icon_state = null
-	armor_type = /datum/armor/cult_hoodie_hardened
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
-	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	max_heat_protection_temperature = SPACE_HELM_MAX_TEMP_PROTECT
-	flash_protect = FLASH_PROTECTION_WELDER
-	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
-	resistance_flags = NONE
-
-/datum/armor/cult_hoodie_hardened
-	melee = 50
-	bullet = 40
-	laser = 50
-	energy = 60
-	bomb = 50
-	bio = 100
-	fire = 100
-	acid = 100
-
 /obj/item/sharpener/cult
 	name = "eldritch whetstone"
 	desc = "A block, empowered by dark magic. Sharp weapons will be enhanced when used on the stone."
@@ -726,124 +580,6 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/sharpener/cult/update_icon_state()
 	icon_state = "cult_sharpener[(uses == 0) ? "_used" : ""]"
 	return ..()
-
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield
-	name = "empowered cultist armor"
-	desc = "Empowered armor which creates a powerful shield around the user."
-	icon_state = "cult_armor"
-	inhand_icon_state = null
-	w_class = WEIGHT_CLASS_BULKY
-	armor_type = /datum/armor/cultrobes_cult_shield
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/cult_shield
-
-/datum/armor/cultrobes_cult_shield
-	melee = 50
-	bullet = 40
-	laser = 50
-	energy = 50
-	bomb = 50
-	bio = 30
-	fire = 50
-	acid = 60
-
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/Initialize(mapload)
-	. = ..()
-	AddComponent( \
-		/datum/component/shielded, \
-		recharge_start_delay = 0 SECONDS, \
-		shield_icon_file = 'icons/effects/cult.dmi', \
-		shield_icon = "shield-cult", \
-		run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)), \
-	)
-
-/// A proc for callback when the shield breaks, since cult robes are stupid and have different effects
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/proc/shield_damaged(mob/living/wearer, attack_text, new_current_charges)
-	wearer.visible_message(span_danger("[wearer]'s robes neutralize [attack_text] in a burst of blood-red sparks!"))
-	new /obj/effect/temp_visual/cult/sparks(get_turf(wearer))
-	if(new_current_charges == 0)
-		wearer.visible_message(span_danger("The runed shield around [wearer] suddenly disappears!"))
-
-/obj/item/clothing/head/hooded/cult_hoodie/cult_shield
-	name = "empowered cultist helmet"
-	desc = "Empowered helmet which creates a powerful shield around the user."
-	icon_state = "cult_hoodalt"
-	armor_type = /datum/armor/cult_hoodie_cult_shield
-
-/datum/armor/cult_hoodie_cult_shield
-	melee = 50
-	bullet = 40
-	laser = 50
-	energy = 50
-	bomb = 50
-	bio = 30
-	fire = 50
-	acid = 60
-
-/obj/item/clothing/suit/hooded/cultrobes/cult_shield/equipped(mob/living/user, slot)
-	..()
-	if(!IS_CULTIST(user))
-		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
-		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
-		user.dropItemToGround(src, TRUE)
-		user.set_dizzy_if_lower(1 MINUTES)
-		user.Paralyze(100)
-
-/obj/item/clothing/suit/hooded/cultrobes/berserker
-	name = "flagellant's robes"
-	desc = "Blood-soaked robes infused with dark magic; allows the user to move at inhuman speeds, but at the cost of increased damage. Provides an even greater speed boost if its hood is worn."
-	armor_type = /datum/armor/cultrobes_berserker
-	slowdown = -0.3 //the hood gives an additional -0.3 if you have it flipped up, for a total of -0.6
-	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
-
-/datum/armor/cultrobes_berserker
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
-
-/obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
-	name = "flagellant's hood"
-	desc = "A blood-soaked hood infused with dark magic."
-	armor_type = /datum/armor/cult_hoodie_berserkerhood
-	slowdown = -0.3
-
-/datum/armor/cult_hoodie_berserkerhood
-	melee = -45
-	bullet = -45
-	laser = -45
-	energy = -55
-	bomb = -45
-
-/obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
-	..()
-	if(!IS_CULTIST(user))
-		to_chat(user, span_cult_large("\"I wouldn't advise that.\""))
-		to_chat(user, span_warning("An overwhelming sense of nausea overpowers you!"))
-		user.dropItemToGround(src, TRUE)
-		user.set_dizzy_if_lower(1 MINUTES)
-		user.Paralyze(100)
-
-/obj/item/clothing/glasses/hud/health/night/cultblind
-	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
-	flags_cover = GLASSESCOVERSEYES
-	name = "zealot's blindfold"
-	icon_state = "blindfold"
-	inhand_icon_state = "blindfold"
-	flash_protect = FLASH_PROTECTION_WELDER
-	actions_types = null
-	color_cutoffs = list(40, 0, 0) //red
-	glass_colour_type = null
-	forced_glass_color = FALSE
-
-/obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
-	..()
-	if(user.stat != DEAD && !IS_CULTIST(user) && (slot & ITEM_SLOT_EYES))
-		to_chat(user, span_cult_large("\"You want to be blind, do you?\""))
-		user.dropItemToGround(src, TRUE)
-		user.set_dizzy_if_lower(1 MINUTES)
-		user.Paralyze(100)
-		user.adjust_temp_blindness(60 SECONDS)
 
 /obj/item/reagent_containers/cup/beaker/unholywater
 	name = "flask of unholy water"

@@ -25,6 +25,7 @@
 		/datum/reagent/blood = 20,
 	)
 	result = /obj/item/food/hemophage/blood_noodles/raw
+	added_foodtypes = RAW | GORE | BLOODY
 
 /datum/crafting_recipe/food/hemophage/boat_noodles
 	name = "Boat Noodles"
@@ -33,6 +34,7 @@
 		/obj/item/food/hemophage/blood_curd = 1,
 	)
 	result = /obj/item/food/hemophage/blood_noodles/boat_noodles
+	added_foodtypes = GRAIN | GORE | BLOODY
 
 /datum/crafting_recipe/food/hemophage/blood_cake
 	name = "Ti Hoeh Koe"
@@ -42,15 +44,7 @@
 		/datum/reagent/consumable/peanut_butter = 5,
 	)
 	result = /obj/item/food/hemophage/blood_cake
+	added_foodtypes = GORE | BLOODY | SUGAR | NUTS
 
-/datum/crafting_recipe/food/hemophage/blood_soup
-	name = "Dinuguan"
-	reqs = list(
-		/obj/item/food/hemophage/blood_curd = 1,
-		/obj/item/food/grown/chili = 1,
-		/obj/item/food/grown/garlic = 1,
-		/datum/reagent/blood = 20,
-		/datum/reagent/consumable/vinegar = 10,
-		/obj/item/reagent_containers/cup/bowl = 1,
-	)
-	result = /obj/item/food/soup/hemophage/blood_soup
+/datum/crafting_recipe/food/reaction/soup/blood_soup
+	reaction = /datum/chemical_reaction/food/soup/blood_soup

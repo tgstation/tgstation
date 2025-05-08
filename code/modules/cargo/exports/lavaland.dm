@@ -9,6 +9,7 @@
 		/obj/item/book_of_babel,
 		/obj/item/wisp_lantern,
 		/obj/item/organ/cyberimp/arm/shard/katana,
+		/obj/item/clothing/neck/cloak/wolf_coat,
 		/obj/item/clothing/glasses/godeye,
 		/obj/item/clothing/neck/necklace/memento_mori,
 		/obj/item/organ/heart/cursed/wizard,
@@ -25,6 +26,7 @@
 		/obj/item/clothing/gloves/gauntlets,
 		/obj/item/jacobs_ladder,
 		/obj/item/borg/upgrade/modkit/lifesteal,
+		/obj/item/clockwork_alloy,
 	)
 
 /datum/export/lavaland/major //valuable chest/ruin loot, minor megafauna loot
@@ -38,6 +40,8 @@
 		/obj/item/melee/ghost_sword,
 		/obj/item/prisoncube,
 		/obj/item/rod_of_asclepius,
+		/obj/item/knife/hunting/wildhunter,
+		/obj/item/cain_and_abel,
 	)
 
 //Megafauna loot, except for ash drakes
@@ -54,6 +58,12 @@
 		/obj/item/soulscythe,
 		/obj/item/storm_staff,
 		/obj/item/clothing/suit/hooded/hostile_environment,
+		/obj/item/wendigo_blood,
+		/obj/item/wendigo_skull,
+		/obj/item/ice_energy_crystal,
+		/obj/item/resurrection_crystal,
+		/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail,
+		/obj/item/pickaxe/drill/jackhammer/demonic,
 	)
 
 /datum/export/lavaland/megafauna/total_printout(datum/export_report/ex, notes = TRUE) //in the unlikely case a miner feels like selling megafauna loot

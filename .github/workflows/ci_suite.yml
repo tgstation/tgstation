@@ -1,4 +1,5 @@
 name: CI Suite
+
 on:
   push:
     branches:
@@ -30,175 +31,39 @@ jobs:
   run_linters:
     name: Run Linters
     needs: start_gate
-    runs-on: ubuntu-22.04
-    timeout-minutes: 5
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Restore SpacemanDMM cache
-        uses: actions/cache@v4
-        with:
-          path: ~/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-spacemandmm-
-      - name: Setup Node
-        uses: ./.github/actions/setup_node
-        with:
-          restore-yarn-cache: true
-      - name: Restore Bootstrap cache
-        uses: actions/cache@v4
-        with:
-          path: tools/bootstrap/.cache
-          key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-bootstrap-
-      - name: Restore Rust cache
-        uses: actions/cache@v4
-        with:
-          path: ~/.cargo
-          key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
-          restore-keys: |
-            ${{ runner.os }}-rust-
-      - name: Restore Cutter cache
-        uses: actions/cache@v4
-        with:
-          path: tools/icon_cutter/cache
-          key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v4.2.0
-        with:
-          dotnet-version: 9.x
-      - name: Install OpenDream
-        uses: robinraju/release-downloader@v1.11
-        with:
-          repository: "OpenDreamProject/OpenDream"
-          tag: "latest"
-          fileName: "DMCompiler_linux-x64.tar.gz"
-          extract: true
-      - name: Install Tools
-        run: |
-          pip3 install setuptools
-          bash tools/ci/install_spaceman_dmm.sh dreamchecker
-          bash tools/ci/install_ripgrep.sh
-          tools/bootstrap/python -c ''
-      - name: Give Linters A Go
-        id: linter-setup
-        run: ':'
-      - name: Run Grep Checks
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: bash tools/ci/check_grep.sh
-      - name: Ticked File Enforcement
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: |
-          tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json
-          tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json
-          tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/modular_doppler.json # DOPPLER EDIT ADDITION
-      - name: Check Define Sanity
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: tools/bootstrap/python -m define_sanity.check
-      - name: Check Trait Validity
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: tools/bootstrap/python -m trait_validity.check
-      - name: Run DreamChecker
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        shell: bash
-        run: ~/dreamchecker 2>&1 | bash tools/ci/annotate_dm.sh
-      - name: Run OpenDream
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING | bash tools/ci/annotate_od.sh
-      - name: Run Map Checks
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: |
-          tools/bootstrap/python -m mapmerge2.dmm_test
-          tools/bootstrap/python -m tools.maplint.source
-      - name: Check Cutter
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: tools/bootstrap/python -m tools.icon_cutter.check
-      - name: Run DMI Tests
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: tools/bootstrap/python -m dmi.test
-      - name: Check File Directories
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: bash tools/ci/check_filedirs.sh tgstation.dme
-      - name: Check Changelogs
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: bash tools/ci/check_changelogs.sh
-      - name: Check Miscellaneous Files
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: bash tools/ci/check_misc.sh
-      - name: Run TGUI Checks
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: tools/build/build --ci lint tgui-test
-
-  compile_all_maps:
-    name: Compile Maps
-    needs: collect_data
-    runs-on: ubuntu-22.04
-    timeout-minutes: 5
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node
-        uses: ./.github/actions/setup_node
-      - name: Restore BYOND from Cache
-        uses: ./.github/actions/restore_or_install_byond
-      - name: Compile All Maps
-        run: |
-          source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
-      - name: Check client Compatibility
-        uses: tgstation/byond-client-compatibility-check@v3
-        with:
-          dmb-location: tgstation.dmb
-          max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
+    uses: ./.github/workflows/run_linters.yml
 
   collect_data:
     name: Collect data and setup caches for other tasks
     needs: start_gate
-    runs-on: ubuntu-22.04
-    timeout-minutes: 5
-    outputs:
-      maps: ${{ steps.map_finder.outputs.maps }}
-      alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
-      max_required_byond_client: ${{ steps.max_required_byond_client.outputs.max_required_byond_client }}
+    uses: ./.github/workflows/collect_data.yml
 
-    steps:
-      - uses: actions/checkout@v4
-      - name: Find Maps
-        id: map_finder
-        run: |
-          echo "$(ls -mw0 _maps/*.json)" > maps_output.txt
-          sed -i -e s+_maps/+\"+g -e s+.json+\"+g maps_output.txt
-          echo "Maps: $(cat maps_output.txt)"
-          echo "maps={\"paths\":[$(cat maps_output.txt)]}" >> $GITHUB_OUTPUT
-      - name: Find Alternate Tests
-        id: alternate_test_finder
-        run: |
-          ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>[^;]+);?(?<max_client_version>[0-9]+)?$")]' .github/alternate_byond_versions.txt)
-          echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
-      - name: Collect byond client version configuration
-        id: max_required_byond_client
-        #the regex here does not filter out non-numbers because error messages about no input are less helpful then error messages about bad input (which includes the bad input)
-        run: |
-          echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
-      - name: Set up BYOND cache
-        uses: ./.github/actions/restore_or_install_byond
+  compile_all_maps:
+    name: Compile Maps
+    needs: collect_data
+    uses: ./.github/workflows/compile_all_maps.yml
+    with:
+      max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
+
+  setup_build_artifacts:
+    name: Setup build artifacts
+    needs: collect_data
+    uses: ./.github/workflows/setup_build_artifacts.yml
+    with:
+      build_versions: ${{ needs.collect_data.outputs.required_build_versions }}
 
   run_all_tests:
     name: Integration Tests
-    needs: collect_data
-
+    needs: [collect_data, setup_build_artifacts]
     uses: ./.github/workflows/perform_regular_version_tests.yml
     with:
       maps: ${{ needs.collect_data.outputs.maps }}
-      max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
+      max_required_byond_client: ${{ needs.collect_data.outputs.max_required_byond_client }}
 
   run_alternate_tests:
     if: needs.collect_data.outputs.alternate_tests != '[]'
     name: Alternate Tests
-    needs: collect_data
-
+    needs: [collect_data, setup_build_artifacts]
     uses: ./.github/workflows/perform_alternate_version_tests.yml
     with:
       alternate_tests: ${{ needs.collect_data.outputs.alternate_tests }}
@@ -208,61 +73,14 @@ jobs:
     if: needs.collect_data.outputs.alternate_tests == '[]' || needs.run_alternate_tests.result == 'success'
     needs: [ collect_data, run_all_tests, run_alternate_tests ]
     name: Compare Screenshot Tests
-    timeout-minutes: 15
-    runs-on: ubuntu-22.04
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup directory
-        run: mkdir -p artifacts
-      # If we ever add more artifacts, this is going to break, but it'll be obvious.
-      - name: Download screenshot tests
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-      - name: ls -R
-        run: ls -R artifacts
-      - name: Setup screenshot comparison
-        run: npm i
-        working-directory: tools/screenshot-test-comparison
-      - name: Run screenshot comparison
-        run: node tools/screenshot-test-comparison/index.js artifacts code/modules/unit_tests/screenshots artifacts/screenshot_comparisons
-      # workflow_run does not give you the PR it ran on,
-      # even through the thing literally named "matching pull requests".
-      # However, in GraphQL, you can check if the check suite was ran
-      # by a specific PR, so trusting the (user controlled) action here is okay,
-      # as long as we check it later in show_screenshot_test_results
-      - name: Save PR ID
-        if: failure() && github.event.pull_request
-        run: |
-          echo ${{ github.event.pull_request.number }} > artifacts/screenshot_comparisons/pull_request_number.txt
-      - name: Upload bad screenshots
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: bad-screenshots
-          path: artifacts/screenshot_comparisons
+    uses: ./.github/workflows/compare_screenshots.yml
 
   test_windows:
     name: Windows Build
-    needs: [collect_data]
-    runs-on: windows-latest
-    timeout-minutes: 5
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node
-        uses: ./.github/actions/setup_node
-        with:
-          restore-yarn-cache: true
-      - name: Compile
-        run: pwsh tools/ci/build.ps1
-        env:
-          DM_EXE: "C:\\byond\\bin\\dm.exe"
-      - name: Check client Compatibility
-        uses: tgstation/byond-client-compatibility-check@v3
-        with:
-          dmb-location: tgstation.dmb
-          max-required-client-version: ${{needs.collect_data.outputs.max_required_byond_client}}
+    needs: collect_data
+    uses: ./.github/workflows/test_windows.yml
+    with:
+      max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   completion_gate: # Serves as a non-moving target for branch rulesets
     if: always() && !cancelled()

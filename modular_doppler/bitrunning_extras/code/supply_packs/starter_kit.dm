@@ -30,7 +30,7 @@
 	)
 	/// Pool of special items we may add from
 	var/list/special_options = list(
-		/obj/item/storage/pill_bottle/transgender_allegory,
+	//	/obj/item/storage/pill_bottle/transgender_allegory,
 		/obj/item/storage/box/papersack/gamer_lunch,
 		/obj/item/reagent_containers/hypospray/medipen/methamphetamine/gamer,
 	)

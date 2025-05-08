@@ -81,7 +81,7 @@
 		if(tank_volume && (damage_flag == BULLET || damage_flag == LASER))
 			boom()
 
-/obj/structure/reagent_dispensers/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/reagent_dispensers/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(attacking_item.is_refillable())
 		return FALSE //so we can refill them via their afterattack.
 	if(istype(attacking_item, /obj/item/assembly_holder) && accepts_rig)
@@ -100,8 +100,8 @@
 		holder.master = src
 		holder.on_attach()
 		assembliesoverlay = holder
-		assembliesoverlay.pixel_x += 6
-		assembliesoverlay.pixel_y += 1
+		assembliesoverlay.pixel_w += 6
+		assembliesoverlay.pixel_z += 1
 		add_overlay(assembliesoverlay)
 		RegisterSignal(src, COMSIG_IGNITER_ACTIVATE, PROC_REF(rig_boom))
 		log_bomber(user, "attached [holder.name] to ", src)
@@ -293,7 +293,7 @@
 	// if this sucks, feel free to change it, but make sure the damn thing will log. thanks.
 	return ..()
 
-/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/reagent_dispensers/fueltank/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(attacking_item.tool_behaviour != TOOL_WELDER)
 		return ..()
 

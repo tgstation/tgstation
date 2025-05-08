@@ -56,7 +56,7 @@
 		/datum/reagent/blood = 15, // You should really be cooking those if you want the full amount of blood out of them
 	)
 	tastes = list("blood" = 5, "raw pasta" = 1)
-	foodtypes = GRAIN | GORE | BLOODY | RAW
+	foodtypes = RAW | GRAIN | GORE | BLOODY
 	crafting_complexity = FOOD_COMPLEXITY_0
 
 /obj/item/food/hemophage/blood_noodles/raw/make_microwaveable()
@@ -74,7 +74,7 @@
 		/datum/reagent/blood = 50,
 	)
 	tastes = list("blood" = 5, "congealed blood" = 3, "pasta" = 1)
-	foodtypes = GRAIN | GORE | BLOODY
+	foodtypes = RAW | GRAIN | GORE | BLOODY
 	crafting_complexity = FOOD_COMPLEXITY_2
 
 /obj/item/food/hemophage/blood_curd
@@ -99,19 +99,30 @@
 		/datum/reagent/blood = 25,
 	)
 	tastes = list("blood" = 5, "crunchy rice" = 2, "peanut butter" = 2)
-	foodtypes = GRAIN | GORE | BLOODY | SUGAR | NUTS
+	foodtypes = GRAIN | SUGAR | BREAKFAST | NUTS | GORE | BLOODY
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/soup/hemophage/blood_soup
-	name = "dinuguan"
-	desc = "A savory stew normally made of offal or freshly-simmered meat. This version features blood curds instead, while also featuring a rich, spicy and dark gravy made of fresh blood and vinegar. Chili and garlic were also added to enhance the savory flavor of the broth."
+/datum/reagent/consumable/nutriment/soup/blood_soup
+	name = "Dinuguan"
+	description =  "A savory stew normally made of offal or freshly-simmered meat. This version features blood curds instead, while also featuring a rich, spicy and dark gravy made of fresh blood and vinegar. Chili and garlic were also added to enhance the savory flavor of the broth."
+	data = list("blood" = 1)
+	glass_price = FOOD_PRICE_NORMAL
+	color = "#C80000"
+
+/datum/glass_style/has_foodtype/soup/blood_soup
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/blood_soup
 	icon = 'modular_doppler/modular_food_drinks_and_chems/icons/hemophage_food.dmi'
 	icon_state = "blood_soup"
-	max_volume = 90
-	food_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 10,
-		/datum/reagent/blood = 60,
+	drink_type = GORE | BLOODY | VEGETABLES
+
+/datum/chemical_reaction/food/soup/blood_soup
+	required_reagents = list(/datum/reagent/blood = 20)
+	required_ingredients = list(
+		/obj/item/food/hemophage/blood_curd = 1,
+		/obj/item/food/grown/chili = 1,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/vinegar = 10,
 	)
-	tastes = list("blood" = 5, "congealed blood" = 2, "chili" = 3, "vinegar" = 1, "garlic" = 1)
-	foodtypes = GORE | BLOODY | VEGETABLES
-	crafting_complexity = FOOD_COMPLEXITY_4
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/blood_soup = 45,
+	)

@@ -40,7 +40,7 @@
 	mutantstomach = /obj/item/organ/stomach/cybernetic/tier2
 	mutantliver = /obj/item/organ/liver/cybernetic/tier2
 	exotic_blood = /datum/reagent/synth_blood
-	exotic_bloodtype = "R*"
+	exotic_bloodtype = BLOOD_TYPE_SYNTHETIC
 
 	bodytemp_heat_damage_limit = (BODYTEMP_NORMAL + 146) // 456 K / 183 C
 	bodytemp_cold_damage_limit = (BODYTEMP_NORMAL - 80) // 230 K / -43 C

@@ -7,9 +7,7 @@
 	///The upgrade that will be applied to the AI when installed
 	var/datum/ai_module/to_gift = /datum/ai_module
 
-/obj/item/aiupgrade/pre_attack(atom/target, mob/living/user, proximity)
-	if(!proximity)
-		return ..()
+/obj/item/aiupgrade/pre_attack(atom/target, mob/living/user, list/modifiers)
 	if(!isAI(target))
 		return ..()
 	var/mob/living/silicon/ai/AI = target
@@ -53,9 +51,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
-/obj/item/malf_upgrade/pre_attack(atom/A, mob/living/user, proximity)
-	if(!proximity)
-		return ..()
+/obj/item/malf_upgrade/pre_attack(atom/A, mob/living/user, list/modifiers)
 	if(!isAI(A))
 		return ..()
 	var/mob/living/silicon/ai/AI = A

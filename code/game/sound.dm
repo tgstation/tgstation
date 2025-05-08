@@ -1,28 +1,3 @@
-
-///Default override for echo
-/sound
-	echo = list(
-		0, // Direct
-		0, // DirectHF
-		-10000, // Room, -10000 means no low frequency sound reverb
-		-10000, // RoomHF, -10000 means no high frequency sound reverb
-		0, // Obstruction
-		0, // ObstructionLFRatio
-		0, // Occlusion
-		0.25, // OcclusionLFRatio
-		1.5, // OcclusionRoomRatio
-		1.0, // OcclusionDirectRatio
-		0, // Exclusion
-		1.0, // ExclusionLFRatio
-		0, // OutsideVolumeHF
-		0, // DopplerFactor
-		0, // RolloffFactor
-		0, // RoomRolloffFactor
-		1.0, // AirAbsorptionFactor
-		0, // Flags (1 = Auto Direct, 2 = Auto Room, 4 = Auto RoomHF)
-	)
-	environment = SOUND_ENVIRONMENT_NONE //Default to none so sounds without overrides dont get reverb
-
 /**
  * playsound is a proc used to play a 3D sound in a specific range. This uses SOUND_RANGE + extra_range to determine that.
  *
@@ -46,12 +21,14 @@
 	if(islist(soundin))
 		CRASH("playsound(): soundin attempted to pass a list! Consider using pick()")
 
-	var/turf/turf_source = get_turf(source)
-
-	if (!turf_source || !soundin || !vol)
-		return
+	if(!soundin)
+		CRASH("playsound(): no soundin passed")
 
 	if(vol < SOUND_AUDIBLE_VOLUME_MIN) // never let sound go below SOUND_AUDIBLE_VOLUME_MIN or bad things will happen
+		CRASH("playsound(): volume below SOUND_AUDIBLE_VOLUME_MIN. [vol] < [SOUND_AUDIBLE_VOLUME_MIN]")
+
+	var/turf/turf_source = get_turf(source)
+	if (!turf_source)
 		return
 
 	//allocate a channel if necessary now so its the same for everyone
@@ -60,9 +37,11 @@
 	var/sound/S = isdatum(soundin) ? soundin : sound(get_sfx(soundin))
 	var/maxdistance = SOUND_RANGE + extrarange
 	var/source_z = turf_source.z
-	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
 
-	. = list()//output everything that successfully heard the sound
+	if(vary && !frequency)
+		frequency = get_rand_frequency() // skips us having to do it per-sound later. should just make this a macro tbh
+
+	var/list/listeners
 
 	var/turf/above_turf = GET_TURF_ABOVE(turf_source)
 	var/turf/below_turf = GET_TURF_BELOW(turf_source)
@@ -70,25 +49,29 @@
 	var/audible_distance = CALCULATE_MAX_SOUND_AUDIBLE_DISTANCE(vol, maxdistance, falloff_distance, falloff_exponent)
 
 	if(ignore_walls)
+		listeners = get_hearers_in_range(audible_distance, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
 		if(above_turf && istransparentturf(above_turf))
-			listeners += SSmobs.clients_by_zlevel[above_turf.z]
+			listeners += get_hearers_in_range(audible_distance, above_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 		if(below_turf && istransparentturf(turf_source))
-			listeners += SSmobs.clients_by_zlevel[below_turf.z]
+			listeners += get_hearers_in_range(audible_distance, below_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 	else //these sounds don't carry through walls
-		listeners = get_hearers_in_view(audible_distance, turf_source)
+		listeners = get_hearers_in_view(audible_distance, turf_source, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 		if(above_turf && istransparentturf(above_turf))
-			listeners += get_hearers_in_view(audible_distance, above_turf)
+			listeners += get_hearers_in_view(audible_distance, above_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
 
 		if(below_turf && istransparentturf(turf_source))
-			listeners += get_hearers_in_view(audible_distance, below_turf)
+			listeners += get_hearers_in_view(audible_distance, below_turf, RECURSIVE_CONTENTS_CLIENT_MOBS)
+		for(var/mob/listening_ghost as anything in SSmobs.dead_players_by_zlevel[source_z])
+			if(get_dist(listening_ghost, turf_source) <= audible_distance)
+				listeners += listening_ghost
 
-	for(var/mob/listening_mob in listeners | SSmobs.dead_players_by_zlevel[source_z])//observers always hear through walls
-		if(get_dist(listening_mob, turf_source) <= audible_distance)
-			listening_mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb)
-			. += listening_mob
+	for(var/mob/listening_mob in listeners)//had nulls sneak in here, hence the typecheck
+		listening_mob.playsound_local(turf_source, soundin, vol, vary, frequency, falloff_exponent, channel, pressure_affected, S, maxdistance, falloff_distance, 1, use_reverb)
+
+	return listeners
 
 /**
  * Plays a sound with a specific point of origin for src mob
@@ -177,9 +160,10 @@
 			var/area/A = get_area(src)
 			sound_to_use.environment = A.sound_environment
 
-		if(use_reverb && sound_to_use.environment != SOUND_ENVIRONMENT_NONE) //We have reverb, reset our echo setting
-			sound_to_use.echo[3] = 0 //Room setting, 0 means normal reverb
-			sound_to_use.echo[4] = 0 //RoomHF setting, 0 means normal reverb.
+		if(!use_reverb || sound_to_use.environment == SOUND_ENVIRONMENT_NONE)
+			sound_to_use.echo ||= new /list(18)
+			sound_to_use.echo[3] = -10000
+			sound_to_use.echo[4] = -10000
 
 	if(HAS_TRAIT(src, TRAIT_SOUND_DEBUGGED))
 		to_chat(src, span_admin("Max Range-[max_distance] Distance-[distance] Vol-[round(sound_to_use.volume, 0.01)] Sound-[sound_to_use.file]"))
@@ -202,13 +186,13 @@
 	S.status = SOUND_UPDATE
 	SEND_SOUND(src, S)
 
-/client/proc/playtitlemusic(vol = 85)
+/client/proc/playtitlemusic(volume_multiplier = 1)
 	set waitfor = FALSE
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
-	var/volume_modifier = prefs.read_preference(/datum/preference/numeric/sound_lobby_volume)
-	if((prefs && volume_modifier) && !CONFIG_GET(flag/disallow_title_music))
-		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = volume_modifier, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
+	var/music_volume = prefs.read_preference(/datum/preference/numeric/volume/sound_lobby_volume) * volume_multiplier
+	if((prefs && music_volume) && !CONFIG_GET(flag/disallow_title_music))
+		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = music_volume, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
 ///get a random frequency.
 /proc/get_rand_frequency()
@@ -829,4 +813,59 @@
 				'sound/items/handling/cloth/cloth_pickup4.ogg',
 				'sound/items/handling/cloth/cloth_pickup5.ogg',
 			)
+		if(SFX_SUTURE_BEGIN)
+			soundin = pick(
+				'sound/items/suture/suture_begin1.ogg',
+			)
+		if(SFX_SUTURE_CONTINUOUS)
+			soundin = pick(
+				'sound/items/suture/suture_continuous1.ogg',
+				'sound/items/suture/suture_continuous2.ogg',
+				'sound/items/suture/suture_continuous3.ogg',
+			)
+		if(SFX_SUTURE_END)
+			soundin = pick(
+				'sound/items/suture/suture_end1.ogg',
+				'sound/items/suture/suture_end2.ogg',
+				'sound/items/suture/suture_end3.ogg',
+			)
+		if(SFX_SUTURE_PICKUP)
+			soundin = pick(
+				'sound/items/handling/suture/needle_pickup1.ogg',
+				'sound/items/handling/suture/needle_pickup2.ogg',
+			)
+		if(SFX_SUTURE_DROP)
+			soundin = pick(
+				'sound/items/handling/suture/needle_drop1.ogg',
+				'sound/items/handling/suture/needle_drop2.ogg',
+				'sound/items/handling/suture/needle_drop3.ogg',
+			)
+		if(SFX_REGEN_MESH_BEGIN)
+			soundin = pick(
+				'sound/items/regenerative_mesh/regen_mesh_begin1.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_begin2.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_begin3.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_begin4.ogg',
+			)
+		if(SFX_REGEN_MESH_CONTINUOUS)
+			soundin = pick(
+				'sound/items/regenerative_mesh/regen_mesh_continuous1.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_continuous2.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_continuous3.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_continuous4.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_continuous5.ogg',
+			)
+		if(SFX_REGEN_MESH_END)
+			soundin = pick(
+				'sound/items/regenerative_mesh/regen_mesh_end1.ogg',
+				'sound/items/regenerative_mesh/regen_mesh_end2.ogg',
+			)
+		if(SFX_REGEN_MESH_PICKUP)
+			soundin = pick(
+				'sound/items/handling/regenerative_mesh/regen_mesh_pickup1.ogg',
+				'sound/items/handling/regenerative_mesh/regen_mesh_pickup2.ogg',
+				'sound/items/handling/regenerative_mesh/regen_mesh_pickup3.ogg',
+			)
+		if(SFX_REGEN_MESH_DROP)
+			soundin = 'sound/items/regenerative_mesh/regen_mesh_drop1.ogg'
 	return soundin

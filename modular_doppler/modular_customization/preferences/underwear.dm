@@ -64,22 +64,22 @@
 	return assoc_to_keys_features(SSaccessories.bra_list)
 
 /datum/preference/choiced/bra/icon_for(value)
-	var/static/icon/body
+	var/static/datum/universal_icon/body
 	if (isnull(body))
-		body = icon('icons/mob/human/bodyparts_greyscale.dmi', "human_r_arm")
-		body.Blend(icon('icons/mob/human/bodyparts_greyscale.dmi', "human_l_arm"), ICON_OVERLAY)
-		body.Blend(icon('icons/mob/human/bodyparts_greyscale.dmi', "human_r_hand"), ICON_OVERLAY)
-		body.Blend(icon('icons/mob/human/bodyparts_greyscale.dmi', "human_l_hand"), ICON_OVERLAY)
-		body.Blend(icon('icons/mob/human/bodyparts_greyscale.dmi', "human_chest_m"), ICON_OVERLAY)
+		body = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_r_arm")
+		body.blend_icon(uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_l_arm"), ICON_OVERLAY)
+		body.blend_icon(uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_r_hand"), ICON_OVERLAY)
+		body.blend_icon(uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_l_hand"), ICON_OVERLAY)
+		body.blend_icon(uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_chest_m"), ICON_OVERLAY)
 
-	var/icon/icon_with_bra = icon(body)
+	var/datum/universal_icon/icon_with_bra = body.copy()
 
 	if (value != "Nude")
 		var/datum/sprite_accessory/accessory = SSaccessories.bra_list[value]
-		icon_with_bra.Blend(icon(accessory.icon, accessory.icon_state), ICON_OVERLAY)
+		icon_with_bra.blend_icon(uni_icon(accessory.icon, accessory.icon_state), ICON_OVERLAY)
 
-	icon_with_bra.Crop(10, 11, 22, 23)
-	icon_with_bra.Scale(32, 32)
+	icon_with_bra.crop(10, 11, 22, 23)
+	icon_with_bra.scale(32, 32)
 	return icon_with_bra
 
 /datum/preference/choiced/bra/apply_to_human(mob/living/carbon/human/target, value)

@@ -27,10 +27,10 @@
 
 	return ..()
 
-/datum/action/item_action/camouflage/Trigger(trigger_flags)
+/datum/action/item_action/camouflage/do_effect(trigger_flags)
 	. = ..()
 	if(!.)
-		return FALSE
+		return
 
 	if(cloaking)
 		remove_cloaking()
@@ -38,8 +38,6 @@
 		owner.alpha = camouflage_alpha
 		to_chat(owner, span_notice("You activate your camouflage and blend into your surroundings..."))
 		cloaking = TRUE
-
-	return TRUE
 
 /**
  * Returns the owner's alpha value to its initial value,

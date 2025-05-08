@@ -60,6 +60,7 @@
 	flags_inv = NONE
 	clothing_flags = SNUG_FIT
 	flags_cover = NONE
+	dirt_state = null
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -81,6 +82,18 @@
 	desc = "Fuzzy."
 	icon_state = "bearpelt"
 	inhand_icon_state = null
+
+/obj/item/clothing/head/costume/bearpelt/equipped(mob/living/user, slot)
+	..()
+	if(!ishuman(user) || !(slot & ITEM_SLOT_HEAD))
+		return
+
+	var/mob/living/carbon/human/human_user = user
+	var/obj/item/clothing/suit/costume/bear_suit/our_suit = human_user.wear_suit
+	if(!our_suit || !istype(our_suit))
+		return
+
+	our_suit.make_friendly(user, src)
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"

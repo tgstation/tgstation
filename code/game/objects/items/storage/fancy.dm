@@ -103,10 +103,7 @@
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 	custom_premium_price = PAYCHECK_COMMAND * 1.75
 	contents_tag = "donut"
-
-/obj/item/storage/fancy/donut_box/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/food/donut)
+	storage_type = /datum/storage/donut
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
 	. = ..()
@@ -127,7 +124,9 @@
 		if (!istype(donut))
 			continue
 
-		. += image(icon = initial(icon), icon_state = donut.in_box_sprite(), pixel_x = donuts * DONUT_INBOX_SPRITE_WIDTH)
+		var/image/donut_image = image(icon = initial(icon), icon_state = donut.in_box_sprite())
+		donut_image.pixel_w = donuts * DONUT_INBOX_SPRITE_WIDTH
+		. += donut_image
 		donuts += 1
 
 	. += image(icon = initial(icon), icon_state = "[base_icon_state]_top")
@@ -150,10 +149,7 @@
 	spawn_type = /obj/item/food/egg
 	spawn_count = 12
 	contents_tag = "egg"
-
-/obj/item/storage/fancy/egg_box/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/food/egg)
+	storage_type = /datum/storage/egg_box
 
 /*
  * Fertile Egg Box
@@ -183,10 +179,7 @@
 	spawn_count = 5
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	contents_tag = "candle"
-
-/obj/item/storage/fancy/candle_box/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/flashlight/flare/candle)
+	storage_type = /datum/storage/fancy_holder
 
 ////////////
 //CIG PACK//
@@ -207,6 +200,8 @@
 	custom_price = PAYCHECK_CREW
 	age_restricted = TRUE
 	contents_tag = "cigarette"
+	storage_type = /datum/storage/cigarette_box
+
 	///for cigarette overlay
 	var/candy = FALSE
 	/// Does this cigarette packet come with a coupon attached?
@@ -232,8 +227,7 @@
 
 /obj/item/storage/fancy/cigarettes/Initialize(mapload)
 	. = ..()
-	atom_storage.display_contents = FALSE
-	atom_storage.set_holdable(list(/obj/item/cigarette, /obj/item/lighter))
+
 	register_context()
 
 /obj/item/storage/fancy/cigarettes/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -254,19 +248,6 @@
 	else
 		quick_remove_item(/obj/item/cigarette, user)
 	return CLICK_ACTION_SUCCESS
-
-/// Removes an item or puts it in mouth from the packet, if any
-/obj/item/storage/fancy/cigarettes/proc/quick_remove_item(obj/item/grabbies, mob/user, equip_to_mouth =  FALSE)
-	var/obj/item/finger = locate(grabbies) in contents
-	if(finger)
-		if(!equip_to_mouth)
-			if(atom_storage.remove_single(user, finger, drop_location()))
-				user.put_in_hands(finger)
-			return
-		if(user.equip_to_slot_if_possible(finger, ITEM_SLOT_MASK, qdel_on_fail = FALSE, disable_warning = TRUE))
-			finger.forceMove(user)
-			return
-		balloon_alert(user, "mouth is covered!")
 
 /obj/item/storage/fancy/cigarettes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -415,10 +396,7 @@
 	spawn_count = 10
 	custom_price = PAYCHECK_LOWER
 	has_open_closed_states = FALSE
-
-/obj/item/storage/fancy/rollingpapers/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/rollingpaper)
+	storage_type = /datum/storage/fancy_holder
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
@@ -496,11 +474,7 @@
 		/obj/item/food/bonbon/peanut_butter_cup,
 	)
 	spawn_count = 8
-
-/obj/item/storage/fancy/heart_box/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/food/bonbon)
-
+	storage_type = /datum/storage/heart_box
 
 /obj/item/storage/fancy/nugget_box
 	name = "nugget box"
@@ -509,12 +483,10 @@
 	icon_state = "nuggetbox"
 	base_icon_state = "nuggetbox"
 	contents_tag = "nugget"
+	w_class = WEIGHT_CLASS_SMALL
 	spawn_type = /obj/item/food/nugget
 	spawn_count = 6
-
-/obj/item/storage/fancy/nugget_box/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/food/nugget)
+	storage_type = /datum/storage/fancy_holder
 
 /*
  * Jar of pickles
@@ -533,10 +505,7 @@
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
-
-/obj/item/storage/fancy/pickles_jar/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/food/pickle)
+	storage_type = /datum/storage/fancy_holder
 
 /obj/item/storage/fancy/pickles_jar/update_icon_state()
 	. = ..()
@@ -564,16 +533,7 @@
 	foldable_result = /obj/item/stack/sheet/mineral/wood
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
-
-/obj/item/storage/fancy/coffee_condi_display/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = 14
-	atom_storage.set_holdable(list(
-		/obj/item/reagent_containers/condiment/pack/sugar,
-		/obj/item/reagent_containers/condiment/creamer,
-		/obj/item/reagent_containers/condiment/pack/astrotame,
-		/obj/item/reagent_containers/condiment/chocolate,
-	))
+	storage_type = /datum/storage/coffee_condi_display
 
 /obj/item/storage/fancy/coffee_condi_display/update_overlays()
 	. = ..()

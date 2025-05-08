@@ -22,7 +22,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 	is_funmin = check_rights(R_FUN)
 
 /datum/secrets_menu/ui_state(mob/user)
-	return GLOB.admin_state
+	return ADMIN_STATE(R_NONE)
 
 /datum/secrets_menu/ui_close()
 	qdel(src)
@@ -47,7 +47,6 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 		return
 	if((action != "admin_log" || action != "show_admins") && !check_rights(R_ADMIN))
 		return
-	var/datum/round_event/E
 	switch(action)
 		//Generic Buttons anyone can use.
 		if("admin_log")
@@ -419,57 +418,59 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			)
 
 			message_admins("[key_name(holder)] is creating a custom portal storm...")
-			var/list/prefreturn = presentpreflikepicker(holder,"Customize Portal Storm", "Customize Portal Storm", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
+			var/list/pref_return = present_pref_like_picker(holder, "Customize Portal Storm", "Customize Portal Storm", width = 600, timeout = 0, settings = settings)
 
-			if (prefreturn["button"] == 1)
-				var/list/prefs = settings["mainsettings"]
+			if (pref_return["button"] != 1)
+				return
 
-				if (prefs["amount"]["value"] < 1 || prefs["portalnum"]["value"] < 1)
-					to_chat(holder, span_warning("Number of portals and mobs to spawn must be at least 1."), confidential = TRUE)
-					return
+			var/list/prefs = settings["mainsettings"]
 
-				var/mob/pathToSpawn = prefs["typepath"]["value"]
-				if (!ispath(pathToSpawn))
-					pathToSpawn = text2path(pathToSpawn)
+			if (prefs["amount"]["value"] < 1 || prefs["portalnum"]["value"] < 1)
+				to_chat(holder, span_warning("Number of portals and mobs to spawn must be at least 1."), confidential = TRUE)
+				return
 
-				if (!ispath(pathToSpawn))
-					to_chat(holder, span_notice("Invalid path [pathToSpawn]."), confidential = TRUE)
-					return
+			var/mob/path_to_spawn = prefs["typepath"]["value"]
+			if (!ispath(path_to_spawn))
+				path_to_spawn = text2path(path_to_spawn)
 
-				var/list/candidates = list()
+			if (!ispath(path_to_spawn))
+				to_chat(holder, span_notice("Invalid path [path_to_spawn]."), confidential = TRUE)
+				return
 
-				if (prefs["offerghosts"]["value"] == "Yes")
-					candidates = SSpolling.poll_ghost_candidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), check_jobban = ROLE_TRAITOR, alert_pic = pathToSpawn, role_name_text = "portal storm")
+			var/list/candidates = list()
 
-				if (prefs["playersonly"]["value"] == "Yes" && length(candidates) < prefs["minplayers"]["value"])
+			if (prefs["offerghosts"]["value"] == "Yes")
+				candidates = SSpolling.poll_ghost_candidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(path_to_spawn.name)), check_jobban = ROLE_TRAITOR, alert_pic = path_to_spawn, role_name_text = "portal storm")
+				if (length(candidates) < prefs["minplayers"]["value"])
 					message_admins("Not enough players signed up to create a portal storm, the minimum was [prefs["minplayers"]["value"]] and the number of signups [length(candidates)]")
 					return
 
-				if (prefs["announce_players"]["value"] == "Yes")
-					portalAnnounce(prefs["announcement"]["value"], (prefs["playlightning"]["value"] == "Yes" ? TRUE : FALSE))
+			if (prefs["announce_players"]["value"] == "Yes")
+				portal_announce(prefs["announcement"]["value"], (prefs["playlightning"]["value"] == "Yes" ? TRUE : FALSE))
 
-				var/list/storm_appearances = list()
-				for(var/offset in 0 to SSmapping.max_plane_offset)
-					var/mutable_appearance/storm = mutable_appearance('icons/obj/machines/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
-					SET_PLANE_W_SCALAR(storm, ABOVE_GAME_PLANE, offset)
-					storm.color = prefs["color"]["value"]
-					storm_appearances += storm
+			var/list/storm_appearances = list()
+			for(var/offset in 0 to SSmapping.max_plane_offset)
+				var/mutable_appearance/storm = mutable_appearance('icons/obj/machines/engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+				SET_PLANE_W_SCALAR(storm, ABOVE_GAME_PLANE, offset)
+				storm.color = prefs["color"]["value"]
+				storm_appearances += storm
 
-				message_admins("[key_name_admin(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
-				log_admin("[key_name(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [pathToSpawn]")
+			message_admins("[key_name_admin(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [path_to_spawn]")
+			log_admin("[key_name(holder)] has created a customized portal storm that will spawn [prefs["portalnum"]["value"]] portals, each of them spawning [prefs["amount"]["value"]] of [path_to_spawn]")
 
-				var/outfit = prefs["humanoutfit"]["value"]
-				if (!ispath(outfit))
-					outfit = text2path(outfit)
+			var/outfit = prefs["humanoutfit"]["value"]
+			if (!ispath(outfit))
+				outfit = text2path(outfit)
 
-				for (var/i in 1 to prefs["portalnum"]["value"])
-					if (length(candidates)) // if we're spawning players, gotta be a little tricky and also not spawn players on top of NPCs
-						var/ghostcandidates = list()
-						for (var/j in 1 to min(prefs["amount"]["value"], length(candidates)))
-							ghostcandidates += pick_n_take(candidates)
-							addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(doPortalSpawn), get_random_station_turf(), pathToSpawn, length(ghostcandidates), storm_appearances, ghostcandidates, outfit), i*prefs["delay"]["value"])
-					else if (prefs["playersonly"]["value"] != "Yes")
-						addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(doPortalSpawn), get_random_station_turf(), pathToSpawn, prefs["amount"]["value"], storm_appearances, null, outfit), i*prefs["delay"]["value"])
+			for (var/i in 1 to prefs["portalnum"]["value"])
+				if (length(candidates)) // if we're spawning players, gotta be a little tricky and also not spawn players on top of NPCs
+					var/ghostcandidates = list()
+					for (var/j in 1 to min(prefs["amount"]["value"], length(candidates)))
+						ghostcandidates += pick_n_take(candidates)
+						addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(do_portal_spawn), get_random_station_turf(), path_to_spawn, length(ghostcandidates), storm_appearances, ghostcandidates, outfit), i * prefs["delay"]["value"])
+				else if (prefs["playersonly"]["value"] != "Yes")
+					addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(do_portal_spawn), get_random_station_turf(), path_to_spawn, prefs["amount"]["value"], storm_appearances, null, outfit), i * prefs["delay"]["value"])
+
 		if("changebombcap")
 			if(!is_funmin)
 				return
@@ -481,6 +482,26 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 
 			message_admins(span_boldannounce("[key_name_admin(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]"))
 			log_admin("[key_name(holder)] changed the bomb cap to [GLOB.MAX_EX_DEVESTATION_RANGE], [GLOB.MAX_EX_HEAVY_RANGE], [GLOB.MAX_EX_LIGHT_RANGE]")
+		if("department_cooldown_override") //Happens when the button is clicked, creates a value for GLOB.department_cd_override in dept_order.dm
+			if(!is_debugger)
+				return
+			if(isnull(GLOB.department_cd_override))
+				var/set_override = tgui_input_number(usr, "How long would you like the console order cooldown to be?","Cooldown Override", 5)
+				if(isnull(set_override))
+					return //user clicked cancel
+				GLOB.department_cd_override = set_override
+			else
+				var/choice = tgui_alert(usr, "Override is active. You can change the cooldown or end the override.", "You were trying to override...", list("Override", "End Override", "Cancel"))
+				if(choice == "Override")
+					var/set_override = tgui_input_number(usr, "How long would you like the console order cooldown to be?", "Title", 5)
+					GLOB.department_cd_override = set_override
+					return
+				if(choice == "End Override")
+					var/set_override = null
+					GLOB.department_cd_override = set_override
+					return
+				if(!choice || choice == "Cancel")
+					return
 		//buttons that are fun for exactly you and nobody else.
 		if("monkey")
 			if(!is_funmin)
@@ -619,7 +640,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				chosen_candidate = pick(candidates)
 				candidates -= chosen_candidate
 				nerd = new /mob/living/basic/drone/classic(spawnpoint)
-				nerd.key = chosen_candidate.key
+				nerd.PossessByPlayer(chosen_candidate.key)
 				nerd.log_message("has been selected as a Nanotrasen emergency response drone.", LOG_GAME)
 				teamsize--
 
@@ -660,24 +681,12 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			message_admins("[key_name_admin(holder)] healed everyone.")
 			log_admin("[key_name(holder)] healed everyone.")
 
-	if(E)
-		E.processing = FALSE
-		if(E.announce_when>0)
-			switch(tgui_alert(holder, "Would you like to alert the crew?", "Alert", list("Yes", "No", "Cancel")))
-				if("Yes")
-					E.announce_chance = 100
-				if("Cancel")
-					E.kill()
-					return
-				if("No")
-					E.announce_chance = 0
-		E.processing = TRUE
 	if(holder)
 		log_admin("[key_name(holder)] used secret: [action].")
 #undef THUNDERDOME_TEMPLATE_FILE
 #undef HIGHLANDER_DELAY_TEXT
 
-/proc/portalAnnounce(announcement, playlightning)
+/proc/portal_announce(announcement, playlightning)
 	set waitfor = FALSE
 	if (playlightning)
 		sound_to_playing_players('sound/effects/magic/lightning_chargeup.ogg')
@@ -689,14 +698,14 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 
 /// Spawns a portal storm that spawns in sentient/non sentient mobs
 /// portal_appearance is a list in the form (turf's plane offset + 1) -> appearance to use
-/proc/doPortalSpawn(turf/loc, mobtype, numtospawn, list/portal_appearance, players, humanoutfit)
+/proc/do_portal_spawn(turf/loc, mobtype, numtospawn, list/portal_appearance, players, humanoutfit)
 	for (var/i in 1 to numtospawn)
 		var/mob/spawnedMob = new mobtype(loc)
 		if (length(players))
 			var/mob/chosen = players[1]
 			if (chosen.client)
 				chosen.client.prefs.safe_transfer_prefs_to(spawnedMob, is_antag = TRUE)
-				spawnedMob.key = chosen.key
+				spawnedMob.PossessByPlayer(chosen.key)
 			players -= chosen
 		if (ishuman(spawnedMob) && ispath(humanoutfit, /datum/outfit))
 			var/mob/living/carbon/human/H = spawnedMob

@@ -302,7 +302,7 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 /datum/admins/proc/auto_deadmin()
 	if(owner.is_localhost())
 		return FALSE
-	if(owner.prefs.read_preference(/datum/preference/toggle/bypass_deadmin_in_centcom) && is_centcom_level(owner.mob.z))
+	if(owner.prefs.read_preference(/datum/preference/toggle/bypass_deadmin_in_centcom) && is_centcom_level(owner.mob.z) && !istype(owner.mob, /mob/dead/new_player))
 		return FALSE
 
 	to_chat(owner, span_interface("You are now a normal player."), confidential = TRUE)
@@ -471,8 +471,10 @@ ADMIN_VERB(edit_admin_permissions, R_PERMISSIONS, "Permissions Panel", "Edit adm
 		admin_holder.rank_flags(),
 		350,
 		590,
-		allowed_edit_list = usr.client.holder.can_edit_rights_flags(),
+		allowed_edit_field = usr.client.holder.can_edit_rights_flags(),
 	)
+	if(isnull(new_flags))
+		return
 
 	admin_holder.disassociate()
 

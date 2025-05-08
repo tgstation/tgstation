@@ -5,7 +5,6 @@
 /datum/martial_art/breacher_knuckle
 	name = "Breacher Knuckle"
 	id = MARTIALART_BREACHERKNUCKLE
-	allow_temp_override = FALSE
 	help_verb = /mob/living/proc/breacher_knuckle_help
 	display_combos = TRUE
 

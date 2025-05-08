@@ -8,7 +8,7 @@
 	cooldown_time = 10 SECONDS
 	cooldown_reduction_per_rank = 1.25 SECONDS
 
-	invocation = "TARCOL MINTI ZHERI"
+	invocation = "TARCOL MINTI ZHERI!"
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = SPELL_REQUIRES_NO_ANTIMAGIC
 
@@ -59,13 +59,9 @@
 	spell_requirements = SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_MIME_VOW
 	antimagic_flags = NONE
 
-	invocation = ""
-	invocation_type = INVOCATION_EMOTE
+	invocation = span_notice("<b>%CASTER</b> looks as if a blockade is in front of %PRONOUN_them.")
 	invocation_self_message = span_notice("You form a blockade in front of yourself.")
+	invocation_type = INVOCATION_EMOTE
 	spell_max_level = 1
 
 	wall_type = /obj/effect/forcefield/mime/advanced
-
-/datum/action/cooldown/spell/forcewall/mime/before_cast(atom/cast_on)
-	. = ..()
-	invocation = span_notice("<b>[cast_on]</b> looks as if a blockade is in front of [cast_on.p_them()].")

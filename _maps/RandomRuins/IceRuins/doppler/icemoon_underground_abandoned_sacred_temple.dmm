@@ -839,8 +839,7 @@
 /area/ruin/unpowered/abandoned_sacred_temple)
 "PS" = (
 /obj/structure/statue/hearthkin/odin{
-	anchored = 1;
-	can_be_unanchored = 1
+	anchored = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/stone/icemoon,

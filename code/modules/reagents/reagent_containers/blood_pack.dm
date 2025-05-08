@@ -12,30 +12,23 @@
 /obj/item/reagent_containers/blood/Initialize(mapload, vol)
 	. = ..()
 	if(blood_type != null)
-		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
+		reagents.add_reagent(unique_blood ? unique_blood : /datum/reagent/blood, 200, list("viruses"=null,"blood_DNA"=null,"blood_type"=get_blood_type(blood_type),"resistances"=null,"trace_chem"=null))
 		update_appearance()
 
 /// Handles updating the container when the reagents change.
 /obj/item/reagent_containers/blood/on_reagent_change(datum/reagents/holder, ...)
 	var/datum/reagent/blood/new_reagent = holder.has_reagent(/datum/reagent/blood)
 	if(new_reagent && new_reagent.data && new_reagent.data["blood_type"])
-		blood_type = new_reagent.data["blood_type"]
+		var/datum/blood_type/blood_type = new_reagent.data["blood_type"]
+		blood_type = blood_type.name
 	else if(holder.has_reagent(/datum/reagent/consumable/liquidelectricity))
-		blood_type = "LE"
-	/* DOPPLER REMOVAL START
+		blood_type = BLOOD_TYPE_ETHEREAL
 	else if(holder.has_reagent(/datum/reagent/lube))
-		blood_type = "S"
-	DOPPLER REMOVAL END */
+		blood_type = BLOOD_TYPE_SNAIL
 	else if(holder.has_reagent(/datum/reagent/water))
-		blood_type = "H2O"
+		blood_type = BLOOD_TYPE_H2O
 	else if(holder.has_reagent(/datum/reagent/toxin/slimejelly))
-		blood_type = "TOX"
-	// DOPPLER ADDITION START
-	else if(holder.has_reagent(/datum/reagent/synth_blood))
-		blood_type = "R"
-	else if(holder.has_reagent(/datum/reagent/bug_blood))
-		blood_type = "I"
-	// DOPPLER ADDITION END
+		blood_type = BLOOD_TYPE_TOX
 	else
 		blood_type = null
 	return ..()
@@ -51,37 +44,45 @@
 
 /obj/item/reagent_containers/blood/random/Initialize(mapload, vol)
 	icon_state = "bloodpack"
-	blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L", "LE", "R", "I") // DOPPLER EDIT, old code: blood_type = pick("A+", "A-", "B+", "B-", "O+", "O-", "L")
+	blood_type = pick(BLOOD_TYPE_A_PLUS, BLOOD_TYPE_A_MINUS, BLOOD_TYPE_B_PLUS, BLOOD_TYPE_B_MINUS, BLOOD_TYPE_O_PLUS, BLOOD_TYPE_O_MINUS, BLOOD_TYPE_LIZARD, BLOOD_TYPE_INSECTOID, BLOOD_TYPE_SYNTHETIC) // DOPPLER EDIT, old code: blood_type = pick(BLOOD_TYPE_A_PLUS, BLOOD_TYPE_A_MINUS, BLOOD_TYPE_B_PLUS, BLOOD_TYPE_B_MINUS, BLOOD_TYPE_O_PLUS, BLOOD_TYPE_O_MINUS, BLOOD_TYPE_LIZARD)
 	return ..()
 
 /obj/item/reagent_containers/blood/a_plus
-	blood_type = "A+"
+	blood_type = BLOOD_TYPE_A_PLUS
 
 /obj/item/reagent_containers/blood/a_minus
-	blood_type = "A-"
+	blood_type = BLOOD_TYPE_A_MINUS
 
 /obj/item/reagent_containers/blood/b_plus
-	blood_type = "B+"
+	blood_type = BLOOD_TYPE_B_PLUS
 
 /obj/item/reagent_containers/blood/b_minus
-	blood_type = "B-"
+	blood_type = BLOOD_TYPE_B_MINUS
 
 /obj/item/reagent_containers/blood/o_plus
-	blood_type = "O+"
+	blood_type = BLOOD_TYPE_O_PLUS
 
 /obj/item/reagent_containers/blood/o_minus
-	blood_type = "O-"
+	blood_type = BLOOD_TYPE_O_MINUS
 
 /obj/item/reagent_containers/blood/lizard
-	blood_type = "L"
+	blood_type = BLOOD_TYPE_LIZARD
 
 /obj/item/reagent_containers/blood/ethereal
-	blood_type = "LE"
+	blood_type = BLOOD_TYPE_ETHEREAL
 	unique_blood = /datum/reagent/consumable/liquidelectricity
+
+// DOPPLER ADDITION START
+/obj/item/reagent_containers/blood/insectoid
+	blood_type = BLOOD_TYPE_INSECTOID
+
+/obj/item/reagent_containers/blood/synthetic
+	blood_type = BLOOD_TYPE_SYNTHETIC
+// DOPPLER ADDITION END
 
 /* 	DOPPLER REMOVAL START
 /obj/item/reagent_containers/blood/snail
-	blood_type = "S"
+	blood_type = BLOOD_TYPE_SNAIL
 	unique_blood = /datum/reagent/lube
 
 /obj/item/reagent_containers/blood/snail/examine()
@@ -90,7 +91,7 @@
 	DOPPLER REMOVAL END */
 
 /obj/item/reagent_containers/blood/podperson
-	blood_type = "H2O"
+	blood_type = BLOOD_TYPE_H2O
 	unique_blood = /datum/reagent/water
 
 /obj/item/reagent_containers/blood/podperson/examine()
@@ -99,7 +100,7 @@
 
 // for slimepeople
 /obj/item/reagent_containers/blood/toxin
-	blood_type = "TOX"
+	blood_type = BLOOD_TYPE_TOX
 	unique_blood = /datum/reagent/toxin/slimejelly
 
 /obj/item/reagent_containers/blood/toxin/examine()
@@ -107,9 +108,9 @@
 	. += span_notice("There is a toxin warning on the label. This is for slimepeople.")
 
 /obj/item/reagent_containers/blood/universal
-	blood_type = "U"
+	blood_type = BLOOD_TYPE_UNIVERSAL
 
-/obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, params)
+/obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, list/modifiers)
 	if (IS_WRITING_UTENSIL(tool))
 		if(!user.can_write(tool))
 			return

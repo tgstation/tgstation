@@ -20,10 +20,17 @@
 
 /obj/structure/lattice/Initialize(mapload)
 	. = ..()
-	if(length(give_turf_traits))
+	if (length(give_turf_traits))
 		give_turf_traits = string_list(give_turf_traits)
 		AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	AddElement(/datum/element/footstep_override, footstep = FOOTSTEP_CATWALK)
+	// We check for objects in non-nearspace space in both linters and tests, so we can ignore these checks on mapload for performance
+	if (mapload || !isspaceturf(loc))
+		return
+
+	var/area/new_turf_area = get_area(loc)
+	if (istype(new_turf_area, /area/space) && !istype(new_turf_area, /area/space/nearstation))
+		set_turf_to_area(loc, GLOB.areas_by_type[/area/space/nearstation])
 
 /datum/armor/structure_lattice
 	melee = 50
@@ -49,13 +56,13 @@
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT == src)
 			continue
-		stack_trace("multiple lattices found in ([loc.x], [loc.y], [loc.z])")
+		log_mapping("multiple lattices found in ([loc.x], [loc.y], [loc.z], [get_area(LAT)])")
 		return INITIALIZE_HINT_QDEL
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
 
-/obj/structure/lattice/attackby(obj/item/C, mob/user, params)
+/obj/structure/lattice/attackby(obj/item/C, mob/user, list/modifiers)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	if(C.tool_behaviour == TOOL_WIRECUTTER)
@@ -76,22 +83,29 @@
 /obj/structure/lattice/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_TURF)
 		var/design_structure = rcd_data["[RCD_DESIGN_PATH]"]
-		if(design_structure == /turf/open/floor/plating)
+		if(design_structure == /turf/open/floor/plating/rcd)
 			var/turf/T = src.loc
 			if(isgroundlessturf(T))
 				T.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 				qdel(src)
 				return TRUE
 		if(design_structure == /obj/structure/lattice/catwalk)
-			var/turf/turf = loc
-			qdel(src)
-			new /obj/structure/lattice/catwalk(turf)
+			replace_with_catwalk()
 			return TRUE
 	return FALSE
 
 /obj/structure/lattice/singularity_pull(atom/singularity, current_size)
 	if(current_size >= STAGE_FOUR)
 		deconstruct()
+
+/obj/structure/lattice/proc/replace_with_catwalk()
+	var/list/post_replacement_callbacks = list()
+	SEND_SIGNAL(src, COMSIG_LATTICE_PRE_REPLACE_WITH_CATWALK, post_replacement_callbacks)
+	var/turf/turf = loc
+	qdel(src)
+	var/new_catwalk = new /obj/structure/lattice/catwalk(turf)
+	for(var/datum/callback/callback as anything in post_replacement_callbacks)
+		callback.Invoke(new_catwalk)
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"
@@ -160,7 +174,7 @@
 /obj/structure/lattice/lava/deconstruction_hints(mob/user)
 	return span_notice("The rods look like they could be <b>cut</b>, but the <i>heat treatment will shatter off</i>. There's space for a <i>tile</i>.")
 
-/obj/structure/lattice/lava/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/lattice/lava/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	. = ..()
 	if(!ismetaltile(attacking_item))
 		return

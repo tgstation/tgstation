@@ -22,6 +22,7 @@
 // Only ever goes away when dismissed directly.
 #define LANGUAGE_ABSORB "absorb"
 #define LANGUAGE_APHASIA "aphasia"
+#define LANGUAGE_BOUNTYHUNTER "bountyhunter"
 #define LANGUAGE_CULTIST "cultist"
 #define LANGUAGE_CURATOR "curator"
 #define LANGUAGE_GLAND "gland"

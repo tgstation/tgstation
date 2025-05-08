@@ -321,7 +321,7 @@
 	cold_protection = HEAD
 	flags_inv = HIDEEARS|HIDEHAIR
 	flags_1 = IS_PLAYER_COLORABLE_1
-	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
+	hair_mask = /datum/hair_mask/winterhood
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	greyscale_config = /datum/greyscale_config/crop_cold_hoodie_hood
 	greyscale_config_worn = /datum/greyscale_config/crop_cold_hoodie_hood/worn
@@ -365,7 +365,7 @@
 	cold_protection = HEAD
 	flags_inv = HIDEEARS|HIDEHAIR
 	flags_1 = IS_PLAYER_COLORABLE_1
-	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
+	hair_mask = /datum/hair_mask/winterhood
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	greyscale_config = /datum/greyscale_config/big_hoodie_hood
 	greyscale_config_worn = /datum/greyscale_config/big_hoodie_hood/worn
@@ -411,7 +411,7 @@
 	cold_protection = HEAD
 	flags_inv = HIDEEARS|HIDEHAIR
 	flags_1 = IS_PLAYER_COLORABLE_1
-	hair_mask = HAIR_MASK_HIDE_WINTERHOOD
+	hair_mask = /datum/hair_mask/winterhood
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	greyscale_config = /datum/greyscale_config/twee_hoodie_hood
 	greyscale_config_worn = /datum/greyscale_config/twee_hoodie_hood/worn

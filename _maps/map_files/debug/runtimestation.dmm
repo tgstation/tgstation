@@ -321,6 +321,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
+"bV" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/camera/directional/north,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/iron,
+/area/station/construction)
 "bY" = (
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
@@ -356,6 +362,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/bridge)
+"ci" = (
+/obj/item/storage/bag/sheetsnatcher/debug,
+/turf/open/floor/iron,
+/area/station/science)
 "cj" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -642,11 +652,6 @@
 "dV" = (
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
-"dW" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/camera/directional/north,
-/turf/open/floor/iron,
-/area/station/construction)
 "dX" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -1289,14 +1294,6 @@
 /obj/machinery/door/airlock/research,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
-"ou" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
-/turf/open/floor/iron,
-/area/station/construction)
 "oK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -1356,6 +1353,12 @@
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
+"qf" = (
+/obj/machinery/greenscreen_camera{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/construction)
 "qg" = (
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/effect/turf_decal/stripes/full,
@@ -1531,6 +1534,14 @@
 /mob/living/circuit_drone,
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
+"vs" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/poster/greenscreen/directional/north,
+/turf/open/floor/greenscreen,
+/area/station/construction)
 "vv" = (
 /obj/machinery/door/airlock,
 /turf/open/floor/plating,
@@ -1689,11 +1700,25 @@
 	},
 /turf/open/floor/engine,
 /area/station/hallway/secondary/entry)
+"yL" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/status_display/evac/directional/north,
+/turf/open/floor/iron,
+/area/station/construction)
 "yN" = (
 /obj/structure/cable,
 /obj/machinery/power/rtg/debug,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"yV" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron,
+/area/station/construction)
 "zg" = (
 /obj/machinery/door/airlock/public/glass,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2283,10 +2308,6 @@
 /obj/item/disk/tech_disk/debug,
 /turf/open/floor/iron,
 /area/station/science)
-"OZ" = (
-/obj/item/storage/bag/sheetsnatcher/debug,
-/turf/open/floor/iron,
-/area/station/science)
 "Pc" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L13"
@@ -2324,6 +2345,11 @@
 /obj/effect/mapping_helpers/airalarm/unlocked,
 /turf/open/floor/iron/dark,
 /area/station/medical/chemistry)
+"PB" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/poster/greenscreen/directional/north,
+/turf/open/floor/greenscreen,
+/area/station/construction)
 "PJ" = (
 /obj/machinery/airalarm/directional/east,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -2742,6 +2768,14 @@
 "ZP" = (
 /turf/open/floor/iron/dark,
 /area/station/science/explab)
+"ZW" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/poster/greenscreen/directional/north,
+/turf/open/floor/greenscreen,
+/area/station/construction)
 
 (1,1,1) = {"
 aa
@@ -6177,7 +6211,7 @@ XK
 xK
 Mh
 cN
-ou
+yV
 dn
 dn
 dn
@@ -6445,7 +6479,7 @@ Pv
 Xp
 ah
 NZ
-OZ
+ci
 XC
 co
 bA
@@ -6453,7 +6487,7 @@ OS
 QV
 bE
 cN
-dW
+bV
 dn
 dn
 dn
@@ -6545,7 +6579,7 @@ Ef
 QV
 bE
 cN
-cY
+ZW
 dn
 dn
 dn
@@ -6637,8 +6671,8 @@ Hc
 QV
 hp
 cN
-cY
-dn
+PB
+qf
 dn
 dn
 dn
@@ -6729,7 +6763,7 @@ Hc
 QV
 bE
 cN
-cY
+vs
 dn
 dn
 dn
@@ -6821,7 +6855,7 @@ Hc
 QV
 bE
 cN
-cY
+yL
 dn
 dn
 dn

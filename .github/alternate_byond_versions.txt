@@ -7,6 +7,4 @@
 # 500.1337: runtimestation
 # 516.1638: runtimestation;516
 # Lowest supported version
-515.1642: runtimestation
-# Beta version
-516.1648: runtimestation;516
+516.1648: runtimestation

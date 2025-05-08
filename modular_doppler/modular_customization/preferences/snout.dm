@@ -47,6 +47,49 @@
 /datum/preference/choiced/lizard_snout/create_default_value()
 	return /datum/sprite_accessory/snouts/none::name
 
+
+/datum/preference/choiced/lizard_snout/icon_for(value)
+	return generate_snout_icon(SSaccessories.snouts_list[value])
+
+/datum/preference/choiced/proc/generate_snout_icon(datum/sprite_accessory/sprite_accessory)
+	var/static/datum/universal_icon/body
+	if (isnull(body))
+		body = uni_icon('modular_doppler/modular_species/species_types/anthromorph/icons/bodyparts.dmi', "anthromorph_head", EAST)
+	var/datum/universal_icon/final_icon = body.copy()
+
+	if (sprite_accessory.icon_state != "No Snout")
+		if(icon_exists(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_ADJ"))
+			var/datum/universal_icon/accessory_icon_adj = uni_icon(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_ADJ", EAST)
+			accessory_icon_adj.blend_color(COLOR_RED, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon_adj, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_ADJ_2"))
+			var/datum/universal_icon/accessory_icon_adj_2 = uni_icon(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_ADJ_2", EAST)
+			accessory_icon_adj_2.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon_adj_2, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_ADJ_3"))
+			var/datum/universal_icon/accessory_icon_adj_3 = uni_icon(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_ADJ_2", EAST)
+			accessory_icon_adj_3.blend_color(COLOR_BLUE, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon_adj_3, ICON_OVERLAY)
+		///front breaker
+		if(icon_exists(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_FRONT"))
+			var/datum/universal_icon/accessory_icon_front = uni_icon(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_FRONT", EAST)
+			accessory_icon_front.blend_color(COLOR_RED, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon_front, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_FRONT_2"))
+			var/datum/universal_icon/accessory_icon_front_2 = uni_icon(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_FRONT_2", EAST)
+			accessory_icon_front_2.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon_front_2, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_FRONT_3"))
+			var/datum/universal_icon/accessory_icon_front_3 = uni_icon(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_FRONT_3", EAST)
+			accessory_icon_front_3.blend_color(COLOR_BLUE, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon_front_3, ICON_OVERLAY)
+
+	final_icon.crop(11, 20, 23, 32)
+	final_icon.scale(32, 32)
+
+	return final_icon
+
+
 /// Overwrite lives here
 //	This is for the triple color channel
 /datum/bodypart_overlay/mutant/snout

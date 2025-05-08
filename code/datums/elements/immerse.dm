@@ -80,7 +80,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	RegisterSignal(source, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(on_atom_exited))
 	attached_turfs_and_movables += source
 	for(var/atom/movable/movable as anything in source)
-		if(!(movable.flags_1 & INITIALIZED_1))
+		if(!(movable.flags_1 & INITIALIZED_1) || movable.invisibility >= INVISIBILITY_OBSERVER)
 			continue
 		on_init_or_entered(source, movable)
 
@@ -189,13 +189,13 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	var/last_i = width/ICON_SIZE_X
 	for(var/i in -1 to last_i)
 		var/mutable_appearance/underwater = mutable_appearance(icon, icon_state)
-		underwater.pixel_x = ICON_SIZE_X * i - extra_width
-		underwater.pixel_y = -ICON_SIZE_Y - extra_height
+		underwater.pixel_w = ICON_SIZE_X * i - extra_width
+		underwater.pixel_z = -ICON_SIZE_Y - extra_height
 		overlay_appearance.overlays += underwater
 
 		var/mutable_appearance/water_level = is_below_water ? underwater : mutable_appearance(immerse_icon)
-		water_level.pixel_x = ICON_SIZE_X * i - extra_width
-		water_level.pixel_y = -extra_height
+		water_level.pixel_w = ICON_SIZE_X * i - extra_width
+		water_level.pixel_z = -extra_height
 		overlay_appearance.overlays += water_level
 
 

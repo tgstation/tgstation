@@ -4,6 +4,8 @@
 	value = -6
 	medical_record_text = "Patient's body has adapted to low gravity. Sadly low-gravity environments are not conducive to strong bone development."
 	icon = FA_ICON_TIRED
+	var/brute_mod
+	var/burn_mod
 
 /datum/quirk_constant_data/fragile
 	associated_typepath = /datum/quirk/fragile
@@ -34,24 +36,18 @@
 /datum/preference/numeric/fragile_customization/burn
 	savefile_key = "fragile_burn"
 
-/datum/quirk/fragile/post_add()
-	. = ..()
-
+/datum/quirk/fragile/add_unique(client/client_source)
 	var/mob/living/carbon/human/user = quirk_holder
-	var/datum/preferences/prefs = user.client.prefs
-	var/brutemod = prefs.read_preference(/datum/preference/numeric/fragile_customization/brute)
-	var/burnmod = prefs.read_preference(/datum/preference/numeric/fragile_customization/burn)
+	var/datum/preferences/prefs = client_source?.prefs
+	brute_mod = prefs?.read_preference(/datum/preference/numeric/fragile_customization/brute) || 1.25
+	burn_mod = prefs?.read_preference(/datum/preference/numeric/fragile_customization/burn) || 1.25
 
-	user.physiology.brute_mod *= brutemod
-	user.physiology.burn_mod *= burnmod
+	user.physiology.brute_mod *= brute_mod
+	user.physiology.burn_mod *= burn_mod
 
 /datum/quirk/fragile/remove()
 	. = ..()
 
 	var/mob/living/carbon/human/user = quirk_holder
-	var/datum/preferences/prefs = user.client.prefs
-	var/brutemod = prefs.read_preference(/datum/preference/numeric/fragile_customization/brute)
-	var/burnmod = prefs.read_preference(/datum/preference/numeric/fragile_customization/burn)
-	// will cause issues if the user changes this valud before removal, but when the shit are quirks removed aside from qdel
-	user.physiology.brute_mod /= brutemod
-	user.physiology.burn_mod /= burnmod
+	user.physiology.brute_mod /= brute_mod
+	user.physiology.burn_mod /= burn_mod

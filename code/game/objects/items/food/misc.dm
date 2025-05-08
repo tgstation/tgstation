@@ -278,7 +278,7 @@
 	)
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("melon" = 1)
-	foodtypes = FRUIT
+	foodtypes = VEGETABLES|FRUIT|ORANGES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -353,7 +353,7 @@
 		/datum/reagent/consumable/salt = 8,
 	)
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
-	foodtypes = GRAIN | FRUIT | BREAKFAST
+	foodtypes = SUGAR|GRAIN|FRUIT|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -373,7 +373,7 @@
 	if (can_stick)
 		. += span_notice("If you had a rod you could make <b>butter on a stick</b>.")
 
-/obj/item/food/butter/attackby(obj/item/item, mob/user, params)
+/obj/item/food/butter/attackby(obj/item/item, mob/user, list/modifiers)
 	if(!istype(item, /obj/item/stack/rods) || !can_stick)
 		return ..()
 	var/obj/item/stack/rods/rods = item
@@ -510,7 +510,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("juicy meat" = 1, "rice" = 1, "cabbage" = 1)
-	foodtypes = MEAT | VEGETABLES
+	foodtypes = MEAT|VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
@@ -553,7 +553,7 @@
 		/datum/reagent/consumable/nutriment/protein = 4,
 	)
 	tastes = list("granola" = 1, "nuts" = 1, "chocolate" = 1, "raisin" = 1)
-	foodtypes = GRAIN | NUTS | FRUIT | SUGAR | DAIRY
+	foodtypes = GRAIN|NUTS|FRUIT|SUGAR
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 
@@ -567,7 +567,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 	)
 	tastes = list("rice" = 1, "dried seaweed" = 1)
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 
@@ -580,7 +580,7 @@
 	name = "onigiri"
 	desc = "A ball of cooked rice surrounding a filling formed into a triangular shape and wrapped in seaweed."
 	icon_state = "onigiri"
-	foodtypes = VEGETABLES
+	foodtypes = VEGETABLES|GRAIN
 	tastes = list()
 
 /obj/item/food/pacoca
@@ -616,7 +616,7 @@
 
 /obj/item/food/pickle/make_edible()
 	. = ..()
-	AddComponent(/datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, check_liked = CALLBACK(src, PROC_REF(check_liked)))
 
 /obj/item/food/pickle/proc/check_liked(mob/living/carbon/human/consumer)
 	var/obj/item/organ/liver/liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
@@ -689,7 +689,7 @@
 		/datum/reagent/consumable/nutriment/protein = 20,
 	)
 	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
-	foodtypes = MEAT | DAIRY | VEGETABLES
+	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/moussaka/make_processable()
@@ -705,7 +705,7 @@
 		/datum/reagent/consumable/nutriment/protein = 5,
 	)
 	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
-	foodtypes = MEAT | DAIRY | VEGETABLES
+	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
 
 /obj/item/food/candied_pineapple
@@ -718,7 +718,7 @@
 	icon_state = "candied_pineapple_1"
 	base_icon_state = "candied_pineapple"
 	tastes = list("sugar" = 2, "chewy pineapple" = 4)
-	foodtypes = FRUIT | SUGAR
+	foodtypes = SUGAR|FRUIT|PINEAPPLE
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_1

@@ -1,36 +1,25 @@
 /proc/generate_lizard_side_shot(datum/sprite_accessory/sprite_accessory, key, include_snout = TRUE)
-	var/static/icon/lizard
-	var/static/icon/lizard_with_snout
+	var/static/datum/universal_icon/lizard
+	var/static/datum/universal_icon/lizard_with_snout
 
 	if (isnull(lizard))
-		lizard = icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_head", EAST)
-		var/icon/eyes = icon('icons/mob/human/human_face.dmi', "eyes", EAST)
-		eyes.Blend(COLOR_GRAY, ICON_MULTIPLY)
-		lizard.Blend(eyes, ICON_OVERLAY)
+		lizard = uni_icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_head", EAST)
+		var/datum/universal_icon/eyes = uni_icon('icons/mob/human/human_face.dmi', "eyes_l", EAST)
+		eyes.blend_color(COLOR_GRAY, ICON_MULTIPLY)
+		lizard.blend_icon(eyes, ICON_OVERLAY)
 
-		lizard_with_snout = icon(lizard)
-		lizard_with_snout.Blend(icon('icons/mob/human/species/lizard/lizard_misc.dmi', "m_snout_round_ADJ", EAST), ICON_OVERLAY)
+		lizard_with_snout = lizard.copy()
+		lizard_with_snout.blend_icon(uni_icon('icons/mob/human/species/lizard/lizard_misc.dmi', "m_snout_round_ADJ", EAST), ICON_OVERLAY)
 
-	var/icon/final_icon = include_snout ? icon(lizard_with_snout) : icon(lizard)
+	var/datum/universal_icon/final_icon = include_snout ? lizard_with_snout.copy() : lizard.copy()
 
-	if (!isnull(sprite_accessory))
-		var/icon/accessory_icon = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
-		/// DOPPLER SHIFT ADDITION BEGIN
-		accessory_icon.Blend(COLOR_RED, ICON_MULTIPLY)
-		var/icon/accessory_icon_2 = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ_2", EAST)
-		accessory_icon_2.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-		var/icon/accessory_icon_3 = icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ_3", EAST)
-		accessory_icon_3.Blend(COLOR_BLUE, ICON_MULTIPLY)
-		/// DOPPLER SHIFT ADDITION END
-		final_icon.Blend(accessory_icon, ICON_OVERLAY)
-		/// DOPPLER SHIFT ADDITION BEGIN
-		final_icon.Blend(accessory_icon_2, ICON_OVERLAY)
-		final_icon.Blend(accessory_icon_3, ICON_OVERLAY)
-		/// DOPPLER SHIFT ADDITION END
+	if (!isnull(sprite_accessory) && sprite_accessory.icon_state != SPRITE_ACCESSORY_NONE)
+		var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
+		final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
 
-	final_icon.Crop(11, 20, 23, 32)
-	final_icon.Scale(32, 32)
-	//final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY) /// DOPPLER SHIFT REMOVAL
+	final_icon.crop(11, 20, 23, 32)
+	final_icon.scale(32, 32)
+	final_icon.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
 
 	return final_icon
 
@@ -46,37 +35,26 @@
 	return assoc_to_keys_features(SSaccessories.lizard_markings_list)
 
 /datum/preference/choiced/lizard_body_markings/icon_for(value)
+	return uni_icon('icons/effects/crayondecal.dmi', "x")
+	/* TEMPORARY DOPPLER EDIT
 	var/datum/sprite_accessory/sprite_accessory = SSaccessories.lizard_markings_list[value]
 
-	var/icon/final_icon = icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_chest_m")
+	var/datum/universal_icon/final_icon = uni_icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_chest_m")
 
-	if (sprite_accessory.icon_state != "none")
-		/// DOPPLER SHIFT REMOVAL BEGIN
-		/*var/icon/body_markings_icon = icon(
-			'icons/mob/human/species/lizard/lizard_misc.dmi',
+	if (sprite_accessory.icon_state != SPRITE_ACCESSORY_NONE)
+		var/datum/universal_icon/body_markings_icon = uni_icon(
+			sprite_accessory.icon,
 			"male_[sprite_accessory.icon_state]_chest",
 		)
 
-		final_icon.Blend(body_markings_icon, ICON_OVERLAY)*/
-		/// DOPPLER SHIFT REMOVAL END
-		/// DOPPLER SHIFT ADDITION BEGIN
-		var/icon/markings_icon_1 = icon(sprite_accessory.icon, "male_[sprite_accessory.icon_state]_chest")
-		markings_icon_1.Blend(COLOR_RED, ICON_MULTIPLY)
-		var/icon/markings_icon_2 = icon(sprite_accessory.icon, "male_[sprite_accessory.icon_state]_chest_2")
-		markings_icon_2.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-		var/icon/markings_icon_3 = icon(sprite_accessory.icon, "male_[sprite_accessory.icon_state]_chest_3")
-		markings_icon_3.Blend(COLOR_BLUE, ICON_MULTIPLY)
-		final_icon.Blend(markings_icon_1, ICON_OVERLAY)
-		final_icon.Blend(markings_icon_2, ICON_OVERLAY)
-		final_icon.Blend(markings_icon_3, ICON_OVERLAY)
-		/// DOPPLER SHIFT ADDITION END
+		final_icon.blend_icon(body_markings_icon, ICON_OVERLAY)
 
-	//final_icon.Blend(COLOR_VIBRANT_LIME, ICON_MULTIPLY) /// DOPPLER SHIFT REMOVAL
-	final_icon.Crop(10, 8, 22, 23)
-	final_icon.Scale(26, 32)
-	final_icon.Crop(-2, 1, 29, 32)
+	final_icon.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+	final_icon.crop(10, 8, 22, 23)
+	final_icon.scale(26, 32)
+	final_icon.crop(-2, 1, 29, 32)
 
-	return final_icon
+	return final_icon*/
 
 /datum/preference/choiced/lizard_body_markings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["lizard_markings"] = value
@@ -87,12 +65,15 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Frills"
 	should_generate_icons = TRUE
+	relevant_external_organ = /obj/item/organ/frills
 
 /datum/preference/choiced/lizard_frills/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.frills_list)
 
 /datum/preference/choiced/lizard_frills/icon_for(value)
-	return generate_lizard_side_shot(SSaccessories.frills_list[value], "frills")
+	return uni_icon('icons/effects/crayondecal.dmi', "x")
+	// TEMPORARY DOPPLER EDIT
+	//return generate_lizard_side_shot(SSaccessories.frills_list[value], "frills")
 
 /datum/preference/choiced/lizard_frills/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["frills"] = value
@@ -103,6 +84,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Horns"
 	should_generate_icons = TRUE
+	relevant_external_organ = /obj/item/organ/horns
 
 /datum/preference/choiced/lizard_horns/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.horns_list)
@@ -171,6 +153,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Snout"
 	should_generate_icons = TRUE
+	relevant_external_organ = /obj/item/organ/snout
 
 /datum/preference/choiced/lizard_snout/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.snouts_list)

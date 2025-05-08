@@ -141,13 +141,13 @@
 		return
 	return ..()
 
-/obj/item/clothing/shoes/sneakers/orange/pre_attack(atom/movable/attacking_movable, mob/living/user, params)
+/obj/item/clothing/shoes/sneakers/orange/pre_attack(atom/movable/attacking_movable, mob/living/user, list/modifiers)
 	if(attached_cuffs || attacking_movable.type != /obj/item/restraints/handcuffs)
 		return ..()
 	attacking_movable.forceMove(src)
 	return TRUE
 
-/obj/item/clothing/shoes/sneakers/orange/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/clothing/shoes/sneakers/orange/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(attached_cuffs || attacking_item.type != /obj/item/restraints/handcuffs) 	// Note: not using istype here because we want to ignore all subtypes
 		return ..()
 	attacking_item.forceMove(src)
@@ -180,7 +180,7 @@
 	greyscale_config_worn = /datum/greyscale_config/sneakers_marisa/worn
 	strip_delay = 5
 	equip_delay_other = 50
-	can_be_tied = FALSE
+	fastening_type = SHOES_SLIPON
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/shoes/sneakers/cyborg

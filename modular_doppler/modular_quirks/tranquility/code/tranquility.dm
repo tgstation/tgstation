@@ -10,7 +10,7 @@
 	/// Variable that holds the chip, used on removal.
 	var/obj/item/skillchip/installed_chip
 
-/datum/quirk/tranquil/add_to_holder(mob/living/new_holder, quirk_transfer, client/client_source)
+/datum/quirk/tranquil/add_to_holder(mob/living/new_holder, quirk_transfer, client/client_source, unique)
 	installed_chip = /obj/item/skillchip/pacification/unremovable
 	return ..()
 

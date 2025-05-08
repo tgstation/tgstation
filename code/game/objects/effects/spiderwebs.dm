@@ -11,6 +11,7 @@
 /obj/structure/spider/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	ADD_TRAIT(src, TRAIT_INVERTED_DEMOLITION, INNATE_TRAIT)
 
 /obj/structure/spider/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN)//the stickiness of the web mutes all attack sounds except fire damage type
@@ -32,8 +33,8 @@
 	take_damage(5, BURN, 0, 0)
 
 /obj/structure/spider/stickyweb
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
-	layer = MID_TURF_LAYER
 	icon = 'icons/obj/smooth_structures/stickyweb.dmi'
 	base_icon_state = "stickyweb"
 	icon_state = "stickyweb-0"
@@ -140,8 +141,8 @@
 /obj/structure/spider/stickyweb/very_sticky/update_overlays()
 	. = ..()
 	var/mutable_appearance/web_overlay = mutable_appearance(icon = 'icons/effects/web.dmi', icon_state = "sticky_overlay", layer = layer + 1)
-	web_overlay.pixel_x -= pixel_x
-	web_overlay.pixel_y -= pixel_y
+	web_overlay.pixel_w -= pixel_x
+	web_overlay.pixel_z -= pixel_y
 	. += web_overlay
 
 
@@ -248,8 +249,8 @@
 /obj/structure/spider/spikes
 	name = "web spikes"
 	desc = "Silk hardened into small yet deadly spikes."
+	layer = ABOVE_OPEN_TURF_LAYER
 	plane = FLOOR_PLANE
-	layer = MID_TURF_LAYER
 	icon = 'icons/obj/smooth_structures/stickyweb_spikes.dmi'
 	base_icon_state = "stickyweb_spikes"
 	icon_state = "stickyweb_spikes-0"
@@ -275,6 +276,6 @@
 
 /obj/structure/spider/effigy/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/temporary_atom, 1 MINUTES)
+	fade_into_nothing(1 MINUTES)
 
 #undef SPIDER_WEB_TINT

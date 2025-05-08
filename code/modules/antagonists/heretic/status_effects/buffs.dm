@@ -215,7 +215,9 @@
 	if(HAS_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED))
 		return
 
+	SEND_SIGNAL(src, COMSIG_BLADE_BARRIER_TRIGGERED)
 	ADD_TRAIT(source, TRAIT_BEING_BLADE_SHIELDED, TRAIT_STATUS_EFFECT(id))
+	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, TRAIT_STATUS_EFFECT(id)), 0.1 SECONDS)
 
 	var/obj/effect/floating_blade/to_remove = blades[1]
 
@@ -227,8 +229,6 @@
 	)
 
 	qdel(to_remove)
-
-	addtimer(TRAIT_CALLBACK_REMOVE(source, TRAIT_BEING_BLADE_SHIELDED, TRAIT_STATUS_EFFECT(id)), 0.1 SECONDS)
 
 	return SUCCESSFUL_BLOCK
 
@@ -283,12 +283,13 @@
 	var/static/list/caretaking_traits = list(TRAIT_GODMODE, TRAIT_HANDS_BLOCKED, TRAIT_IGNORESLOWDOWN, TRAIT_SECLUDED_LOCATION)
 
 /datum/status_effect/caretaker_refuge/on_apply()
-	animate(owner, alpha = 45,time = 0.5 SECONDS)
+	animate(owner, alpha = 45, time = 0.5 SECONDS)
 	owner.set_density(FALSE)
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ALLOW_HERETIC_CASTING), PROC_REF(on_focus_lost))
 	RegisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(prevent_spell_usage))
 	RegisterSignal(owner, COMSIG_ATOM_HOLYATTACK, PROC_REF(nullrod_handler))
 	RegisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED, PROC_REF(prevent_cuff))
+	RegisterSignal(owner, COMSIG_BEING_STRIPPED, PROC_REF(no_strip))
 	owner.add_traits(caretaking_traits, TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
@@ -300,6 +301,7 @@
 	UnregisterSignal(owner, COMSIG_MOB_BEFORE_SPELL_CAST)
 	UnregisterSignal(owner, COMSIG_ATOM_HOLYATTACK)
 	UnregisterSignal(owner, COMSIG_CARBON_CUFF_ATTEMPTED)
+	UnregisterSignal(owner, COMSIG_BEING_STRIPPED)
 	owner.visible_message(
 		span_warning("The haze around [owner] disappears, leaving them materialized!"),
 		span_notice("You exit the refuge."),
@@ -318,6 +320,11 @@
 	SIGNAL_HANDLER
 	to_chat(owner, span_danger("Without a focus, your refuge weakens and dissipates!"))
 	qdel(src)
+
+/datum/status_effect/caretaker_refuge/proc/no_strip(atom/source, mob/user, obj/item/equipping)
+	SIGNAL_HANDLER
+	to_chat(user, span_warning("You fail to put anything on [source] as they are incorporeal!"))
+	return COMPONENT_CANT_STRIP
 
 /datum/status_effect/caretaker_refuge/proc/prevent_spell_usage(datum/source, datum/spell)
 	SIGNAL_HANDLER

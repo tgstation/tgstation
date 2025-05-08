@@ -21,16 +21,8 @@
 /obj/item/storage/bag
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_BULKY
+	storage_type = /datum/storage/bag
 
-/obj/item/storage/bag/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.allow_quick_empty = TRUE
-	atom_storage.numerical_stacking = TRUE
-
-// -----------------------------
-//          Trash bag
-// -----------------------------
 /obj/item/storage/bag/trash
 	name = "trash bag"
 	desc = "It's the heavy-duty black polymer kind. Time to take out the trash!"
@@ -40,17 +32,13 @@
 	worn_icon_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	storage_type = /datum/storage/trash
+	storage_type = /datum/storage/bag/trash
 	///If true, can be inserted into the janitor cart
 	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.max_total_storage = 30
-	atom_storage.max_slots = 30
-	atom_storage.set_holdable(cant_hold_list = /obj/item/disk/nuclear)
-	atom_storage.supports_smart_equip = FALSE
+
 	RegisterSignal(atom_storage, COMSIG_STORAGE_DUMP_POST_TRANSFER, PROC_REF(post_insertion))
 
 /// If you dump a trash bag into something, anything that doesn't get inserted will spill out onto your feet
@@ -89,8 +77,6 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
 
-/obj/item/storage/bag/trash/filled
-
 /obj/item/storage/bag/trash/filled/PopulateContents()
 	. = ..()
 	for(var/i in 1 to rand(1, 7))
@@ -103,18 +89,10 @@
 	icon_state = "bluetrashbag"
 	inhand_icon_state = "bluetrashbag"
 	item_flags = NO_MAT_REDEMPTION
-
-/obj/item/storage/bag/trash/bluespace/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 60
-	atom_storage.max_slots = 60
+	storage_type = /datum/storage/bag/trash/bluespace
 
 /obj/item/storage/bag/trash/bluespace/cyborg
 	insertable = FALSE
-
-// -----------------------------
-//        Mining Satchel
-// -----------------------------
 
 /obj/item/storage/bag/ore
 	name = "mining satchel"
@@ -124,21 +102,12 @@
 	worn_icon_state = "satchel"
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	w_class = WEIGHT_CLASS_NORMAL
+	storage_type = /datum/storage/bag/ore
 	///If this is TRUE, the holder won't receive any messages when they fail to pick up ore through crossing it
 	var/spam_protection = FALSE
 	var/mob/listeningTo
 	///Cooldown on balloon alerts when picking ore
 	COOLDOWN_DECLARE(ore_bag_balloon_cooldown)
-
-/obj/item/storage/bag/ore/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_HUGE
-	atom_storage.max_total_storage = 50
-	atom_storage.numerical_stacking = TRUE
-	atom_storage.allow_quick_empty = TRUE
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.set_holdable(/obj/item/stack/ore)
-	atom_storage.silent_for_user = TRUE
 
 /obj/item/storage/bag/ore/equipped(mob/user)
 	. = ..()
@@ -218,16 +187,7 @@
 	name = "mining satchel of holding"
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
 	icon_state = "satchel_bspace"
-
-/obj/item/storage/bag/ore/holding/Initialize(mapload)
-	. = ..()
-	atom_storage.max_slots = INFINITY
-	atom_storage.max_specific_storage = INFINITY
-	atom_storage.max_total_storage = INFINITY
-
-// -----------------------------
-//          Plant bag
-// -----------------------------
+	storage_type = /datum/storage/bag/ore/holding
 
 /obj/item/storage/bag/plants
 	name = "plant bag"
@@ -235,19 +195,7 @@
 	icon_state = "plantbag"
 	worn_icon_state = "plantbag"
 	resistance_flags = FLAMMABLE
-
-/obj/item/storage/bag/plants/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 100
-	atom_storage.max_slots = 100
-	atom_storage.set_holdable(list(
-		/obj/item/food/grown,
-		/obj/item/graft,
-		/obj/item/grown,
-		/obj/item/food/honeycomb,
-		/obj/item/seeds,
-	))
+	storage_type = /datum/storage/bag/plants
 
 /obj/item/storage/bag/plants/portaseeder
 	name = "portable seed extractor"
@@ -268,7 +216,6 @@
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Make seeds"
 	return CONTEXTUAL_SCREENTIP_SET
 
-
 /obj/item/storage/bag/plants/portaseeder/examine(mob/user)
 	. = ..()
 	. += span_notice("Ctrl-click to activate seed extraction.")
@@ -281,105 +228,57 @@
 /obj/item/storage/bag/plants/cyborg
 	name = "cyborg plant bag"
 
-// -----------------------------
-//        Sheet Snatcher
-// -----------------------------
-// sorry sayu your sheet snatcher is now OBSOLETE but i'm leaving it because idc
-
 /obj/item/storage/bag/sheetsnatcher
 	name = "sheet snatcher"
 	desc = "A patented Nanotrasen storage system designed for any kind of mineral sheet."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "sheetsnatcher"
 	worn_icon_state = "satchel"
-
-	var/capacity = 300 //the number of sheets it can carry.
-
-/obj/item/storage/bag/sheetsnatcher/Initialize(mapload)
-	. = ..()
-	atom_storage.allow_quick_empty = TRUE
-	atom_storage.allow_quick_gather = TRUE
-	atom_storage.numerical_stacking = TRUE
-	atom_storage.set_holdable(
-		can_hold_list = list(
-			/obj/item/stack/sheet
-		),
-		cant_hold_list = list(
-			/obj/item/stack/sheet/mineral/sandstone,
-			/obj/item/stack/sheet/mineral/wood,
-		),
-	)
-	atom_storage.max_total_storage = capacity / 2
-
-// -----------------------------
-//    Sheet Snatcher (Cyborg)
-// -----------------------------
+	storage_type = /datum/storage/bag/sheet_snatcher
 
 /obj/item/storage/bag/sheetsnatcher/borg
 	name = "sheet snatcher 9000"
 	desc = ""
-	capacity = 500//Borgs get more because >specialization
-
-
-// -----------------------------
-//    Sheet Snatcher (Debug)
-// -----------------------------
+	storage_type = /datum/storage/bag/sheet_snatcher/borg
 
 /obj/item/storage/bag/sheetsnatcher/debug
 	name = "sheet snatcher EXTREME EDITION"
 	desc = "A Nanotrasen storage system designed which has been given post-market alterations to hold any type of sheet. Comes pre-populated with "
 	color = "#ff3737" // I'm too lazy to make a unique sprite
-	capacity = 5000 // Hopefully enough to fit anything you need
 	w_class = WEIGHT_CLASS_TINY
+	storage_type = /datum/storage/bag/sheet_snatcher_debug
 
 // Copy-pasted from the former /obj/item/storage/box/material, w/ small additions like rods, cardboard, plastic.
 // "Only 20 uranium 'cause of radiation"
 /obj/item/storage/bag/sheetsnatcher/debug/PopulateContents()
+	// amount should be null if it should spawn with the type's default amount
 	var/static/items_inside = list(
-		/obj/item/stack/sheet/iron/fifty=1,
-		/obj/item/stack/sheet/glass/fifty=1,
-		/obj/item/stack/sheet/rglass/fifty=1,
-		/obj/item/stack/sheet/plasmaglass/fifty=1,
-		/obj/item/stack/sheet/titaniumglass/fifty=1,
-		/obj/item/stack/sheet/plastitaniumglass/fifty=1,
-		/obj/item/stack/sheet/plasteel/fifty=1,
-		/obj/item/stack/sheet/mineral/titanium/fifty=1,
-		/obj/item/stack/sheet/mineral/gold=50,
-		/obj/item/stack/sheet/mineral/silver=50,
-		/obj/item/stack/sheet/mineral/plasma=50,
-		/obj/item/stack/sheet/mineral/uranium=20,
-		/obj/item/stack/sheet/mineral/diamond=50,
-		/obj/item/stack/sheet/bluespace_crystal=50,
-		/obj/item/stack/sheet/mineral/bananium=50,
-		/obj/item/stack/sheet/mineral/wood/fifty=1,
-		/obj/item/stack/sheet/plastic/fifty=1,
-		/obj/item/stack/sheet/runed_metal/fifty=1,
-		/obj/item/stack/rods/fifty=1,
-		/obj/item/stack/sheet/mineral/plastitanium=50,
-		/obj/item/stack/sheet/mineral/abductor=50,
-		/obj/item/stack/sheet/cardboard/fifty=1,
-		)
-	//This needs to be done here and not in Initialize() because the stacks get merged and fall out when their weight updates if this is set after PopulateContents()
-	atom_storage.allow_big_nesting = TRUE
-	atom_storage.max_slots = 99
-	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
-	atom_storage.max_total_storage = capacity
-	generate_items_inside(items_inside,src)
-
-/obj/item/storage/bag/sheetsnatcher/debug/Initialize(mapload)
-	. = ..()
-	// Overrides so it can hold all possible sheets
-	atom_storage.set_holdable(
-		can_hold_list = list(
-			/obj/item/stack/sheet,
-			/obj/item/stack/sheet/mineral/sandstone,
-			/obj/item/stack/sheet/mineral/wood,
-		)
+		/obj/item/stack/sheet/iron/fifty = null,
+		/obj/item/stack/sheet/glass/fifty = null,
+		/obj/item/stack/sheet/rglass/fifty = null,
+		/obj/item/stack/sheet/plasmaglass/fifty = null,
+		/obj/item/stack/sheet/titaniumglass/fifty = null,
+		/obj/item/stack/sheet/plastitaniumglass/fifty = null,
+		/obj/item/stack/sheet/plasteel/fifty = null,
+		/obj/item/stack/sheet/mineral/titanium/fifty = null,
+		/obj/item/stack/sheet/mineral/gold = 50,
+		/obj/item/stack/sheet/mineral/silver = 50,
+		/obj/item/stack/sheet/mineral/plasma = 50,
+		/obj/item/stack/sheet/mineral/uranium = 20,
+		/obj/item/stack/sheet/mineral/diamond = 50,
+		/obj/item/stack/sheet/bluespace_crystal = 50,
+		/obj/item/stack/sheet/mineral/bananium = 50,
+		/obj/item/stack/sheet/mineral/wood/fifty = null,
+		/obj/item/stack/sheet/plastic/fifty = null,
+		/obj/item/stack/sheet/runed_metal/fifty = null,
+		/obj/item/stack/rods/fifty = null,
+		/obj/item/stack/sheet/mineral/plastitanium = 50,
+		/obj/item/stack/sheet/mineral/abductor = 50,
+		/obj/item/stack/sheet/cardboard/fifty = null,
 	)
-
-// -----------------------------
-//           Book bag
-// -----------------------------
+	for(var/obj/item/stack/stack_type as anything in items_inside)
+		var/amt = items_inside[stack_type]
+		new stack_type(src, amt, FALSE)
 
 /obj/item/storage/bag/books
 	name = "book bag"
@@ -388,21 +287,8 @@
 	icon_state = "bookbag"
 	worn_icon_state = "bookbag"
 	resistance_flags = FLAMMABLE
+	storage_type = /datum/storage/bag/books
 
-/obj/item/storage/bag/books/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 21
-	atom_storage.max_slots = 7
-	atom_storage.set_holdable(list(
-		/obj/item/book,
-		/obj/item/spellbook,
-		/obj/item/poster,
-	))
-
-/*
- * Trays - Agouri
- */
 /obj/item/storage/bag/tray
 	name = "serving tray"
 	icon = 'icons/obj/food/containers.dmi'
@@ -417,34 +303,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 0.6
-
-/obj/item/storage/bag/tray/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_BULKY //Plates are required bulky to keep them out of backpacks
-	atom_storage.set_holdable(
-		can_hold_list = list(
-			/obj/item/cigarette,
-			/obj/item/food,
-			/obj/item/kitchen,
-			/obj/item/lighter,
-			/obj/item/organ,
-			/obj/item/plate,
-			/obj/item/reagent_containers/condiment,
-			/obj/item/reagent_containers/cup,
-			/obj/item/rollingpaper,
-			/obj/item/storage/box/gum,
-			/obj/item/storage/box/matches,
-			/obj/item/storage/fancy,
-			/obj/item/trash,
-		),
-		cant_hold_list = list(
-			/obj/item/plate/oven_tray,
-			/obj/item/reagent_containers/cup/soup_pot,
-		),
-	) //Should cover: Bottles, Beakers, Bowls, Booze, Glasses, Food, Food Containers, Food Trash, Organs, Tobacco Products, Lighters, and Kitchen Tools.
-	atom_storage.insert_preposition = "on"
-	atom_storage.max_slots = 8
-	atom_storage.max_total_storage = 16
+	storage_type = /datum/storage/bag/tray
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()
@@ -500,10 +359,6 @@
 	icon_state = "foodtray"
 	desc = "A cheap metal tray to pile today's meal onto."
 
-/*
- * Chemistry bag
- */
-
 /obj/item/storage/bag/chemistry
 	name = "chemistry bag"
 	icon = 'icons/obj/medical/chemical.dmi'
@@ -511,23 +366,41 @@
 	worn_icon_state = "chembag"
 	desc = "A bag for storing pills, patches, and bottles."
 	resistance_flags = FLAMMABLE
+	storage_type = /datum/storage/bag/chemistry
 
-/obj/item/storage/bag/chemistry/Initialize(mapload)
+/obj/item/storage/bag/money
+	name = "money bag"
+	desc = "A bag for storing your profits."
+	icon_state = "moneybag"
+	worn_icon_state = "moneybag"
+	force = 10
+	throwforce = 0
+	resistance_flags = FLAMMABLE
+	max_integrity = 100
+	w_class = WEIGHT_CLASS_BULKY
+	storage_type = /datum/storage/bag/money
+
+/obj/item/storage/bag/money/Initialize(mapload)
 	. = ..()
-	atom_storage.max_total_storage = 200
-	atom_storage.max_slots = 50
-	atom_storage.set_holdable(list(
-		/obj/item/reagent_containers/chem_pack,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/glass/waterbottle,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/medigel,
-		/obj/item/reagent_containers/pill,
-		/obj/item/reagent_containers/syringe,
-	))
+	if(prob(20))
+		icon_state = "moneybagalt"
 
+/obj/item/storage/bag/money/vault/PopulateContents()
+	new /obj/item/coin/silver(src)
+	new /obj/item/coin/silver(src)
+	new /obj/item/coin/silver(src)
+	new /obj/item/coin/silver(src)
+	new /obj/item/coin/gold(src)
+	new /obj/item/coin/gold(src)
+	new /obj/item/coin/adamantine(src)
+
+///Used in the dutchmen pirate shuttle.
+/obj/item/storage/bag/money/dutchmen/PopulateContents()
+	for(var/iteration in 1 to 9)
+		new /obj/item/coin/silver/doubloon(src)
+	for(var/iteration in 1 to 9)
+		new /obj/item/coin/gold/doubloon(src)
+	new /obj/item/coin/adamantine/doubloon(src)
 
 /obj/item/storage/bag/bio
 	name = "bio bag"
@@ -536,28 +409,7 @@
 	worn_icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other virulent materials."
 	resistance_flags = FLAMMABLE
-
-/obj/item/storage/bag/bio/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 200
-	atom_storage.max_slots = 25
-	atom_storage.set_holdable(list(
-		/obj/item/bodypart,
-		/obj/item/food/monkeycube,
-		/obj/item/healthanalyzer,
-		/obj/item/organ,
-		/obj/item/reagent_containers/blood,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/hypospray/medipen,
-		/obj/item/reagent_containers/syringe,
-	))
-
-/*
- *  Science bag (mostly for xenobiologists)
- */
+	storage_type = /datum/storage/bag/bio
 
 /obj/item/storage/bag/xeno
 	name = "science bag"
@@ -566,29 +418,7 @@
 	worn_icon_state = "xenobag"
 	desc = "A bag for the storage and transport of anomalous materials."
 	resistance_flags = FLAMMABLE
-
-/obj/item/storage/bag/xeno/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 200
-	atom_storage.max_slots = 25
-	atom_storage.set_holdable(list(
-		/obj/item/bodypart,
-		/obj/item/food/deadmouse,
-		/obj/item/food/monkeycube,
-		/obj/item/organ,
-		/obj/item/petri_dish,
-		/obj/item/reagent_containers/dropper,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/reagent_containers/cup/bottle,
-		/obj/item/reagent_containers/cup/tube,
-		/obj/item/reagent_containers/syringe,
-		/obj/item/slime_extract,
-		/obj/item/swab,
-	))
-
-/*
- *  Construction bag (for engineering, holds stock parts and electronics)
- */
+	storage_type = /datum/storage/bag/xeno
 
 /obj/item/storage/bag/construction
 	name = "construction bag"
@@ -598,22 +428,7 @@
 	desc = "A bag for storing small construction components."
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_POCKETS
 	resistance_flags = FLAMMABLE
-
-/obj/item/storage/bag/construction/Initialize(mapload)
-	. = ..()
-	atom_storage.max_total_storage = 100
-	atom_storage.max_slots = 50
-	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
-	atom_storage.set_holdable(list(
-		/obj/item/assembly,
-		/obj/item/circuitboard,
-		/obj/item/electronics,
-		/obj/item/reagent_containers/cup/beaker,
-		/obj/item/stack/cable_coil,
-		/obj/item/stack/ore/bluespace_crystal,
-		/obj/item/stock_parts,
-		/obj/item/wallframe/camera,
-	))
+	storage_type = /datum/storage/bag/construction
 
 /obj/item/storage/bag/harpoon_quiver
 	name = "harpoon quiver"
@@ -622,13 +437,7 @@
 	icon_state = "quiver"
 	inhand_icon_state = null
 	worn_icon_state = "harpoon_quiver"
-
-/obj/item/storage/bag/harpoon_quiver/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
-	atom_storage.max_slots = 40
-	atom_storage.max_total_storage = 100
-	atom_storage.set_holdable(/obj/item/ammo_casing/harpoon)
+	storage_type = /datum/storage/bag/harpoon_quiver
 
 /obj/item/storage/bag/harpoon_quiver/PopulateContents()
 	for(var/i in 1 to 40)
@@ -643,20 +452,7 @@
 	desc = "A oxygen tank cut in half, used for holding sharpened rods for the rebar crossbow."
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE|ITEM_SLOT_NECK
 	resistance_flags = FLAMMABLE
-
-/obj/item/storage/bag/rebar_quiver/Initialize(mapload)
-	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_TINY
-	atom_storage.max_slots = 10
-	atom_storage.max_total_storage = 15
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/rebar,
-		/obj/item/ammo_casing/rebar/syndie,
-		/obj/item/ammo_casing/rebar/healium,
-		/obj/item/ammo_casing/rebar/hydrogen,
-		/obj/item/ammo_casing/rebar/zaukerite,
-		/obj/item/ammo_casing/rebar/paperball,
-		))
+	storage_type = /datum/storage/bag/rebar_quiver
 
 /obj/item/storage/bag/rebar_quiver/syndicate
 	icon_state = "syndie_quiver_0"
@@ -668,11 +464,11 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	actions_types = list(/datum/action/item_action/reload_rebar)
+	action_slots = ALL
+	storage_type = /datum/storage/bag/rebar_quiver/syndicate
 
 /obj/item/storage/bag/rebar_quiver/syndicate/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 20
-	atom_storage.max_total_storage = 20
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/storage/bag/rebar_quiver/syndicate/PopulateContents()
@@ -712,5 +508,47 @@
 
 	var/obj/item/ammo_casing/rebar/ammo_to_load = contents[1]
 	held_crossbow.attackby(ammo_to_load, user)
+
+/obj/item/storage/bag/quiver
+	name = "quiver"
+	desc = "Holds arrows for your bow. Good, because while pocketing arrows is possible, it surely can't be pleasant."
+	icon = 'icons/obj/weapons/bows/quivers.dmi'
+	icon_state = "quiver"
+	inhand_icon_state = null
+	worn_icon_state = "harpoon_quiver"
+	storage_type = /datum/storage/bag/quiver
+
+	/// type of arrow the quivel should hold
+	var/arrow_path = /obj/item/ammo_casing/arrow
+
+/obj/item/storage/bag/quiver/lesser
+	storage_type = /datum/storage/bag/quiver/less
+
+/obj/item/storage/bag/quiver/full/PopulateContents()
+	. = ..()
+	for(var/i in 1 to 10)
+		new arrow_path(src)
+
+/obj/item/storage/bag/quiver/holy
+	name = "divine quiver"
+	desc = "Holds arrows for your divine bow, where they wait to find their target."
+	icon_state = "holyquiver"
+	inhand_icon_state = "holyquiver"
+	worn_icon_state = "holyquiver"
+	arrow_path = /obj/item/ammo_casing/arrow/holy
+
+/obj/item/storage/bag/quiver/holy/PopulateContents()
+	. = ..()
+	for(var/i in 1 to 10)
+		new arrow_path(src)
+
+/obj/item/storage/bag/quiver/endless
+	name = "endless quiver"
+	desc = "Holds arrows for your bow. A deep digital void is contained within."
+	storage_type = /datum/storage/bag/quiver/endless
+
+/obj/item/storage/bag/quiver/endless/PopulateContents()
+	. = ..()
+	new arrow_path(src)
 
 #undef ORE_BAG_BALOON_COOLDOWN

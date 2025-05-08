@@ -3,6 +3,7 @@
 	"map_name": "Tramstation",
 	"map_path": "map_files/tramstation",
 	"map_file": "tramstation.dmm",
+	"give_players_hooks": 1,
 	"shuttles": {
 		"cargo": "cargo_box",
 		"ferry": "ferry_fancy",
@@ -26,5 +27,6 @@
 		"Captain": {
 			"special_charter": "asteroid"
 		}
-	}
+	},
+	"exclude_from_ci": true
 }

@@ -306,7 +306,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(owner)]) to replace antagonist banned player.")
 		log_game("[key_name(chosen_one)] has taken control of ([key_name(owner)]) to replace antagonist banned player.")
 		owner.current.ghostize(FALSE)
-		owner.current.key = chosen_one.key
+		owner.current.PossessByPlayer(chosen_one.key)
 	else
 		log_game("Couldn't find antagonist ban replacement for ([key_name(owner)]).")
 
@@ -559,17 +559,18 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 /**
  * Allows player to replace their objectives with a new one they wrote themselves.
+ * Returns true if they did it successfully.
  * * retain_existing - If true, will just be added as a new objective instead of replacing existing ones.
  * * retain_escape - If true, will retain specifically 'escape alive' objectives (or similar)
  * * force - Skips the check about whether this antagonist is supposed to set its own objectives, for badminning
  */
 /datum/antagonist/proc/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
 	if (isnull(owner) || isnull(owner.current))
-		return
+		return FALSE
 	var/mob/living/owner_mob = owner.current
 	if (!force && !can_assign_self_objectives)
 		owner_mob.balloon_alert(owner_mob, "can't do that!")
-		return
+		return FALSE
 	var/custom_objective_text = tgui_input_text(
 		owner_mob,
 		message = "Specify your new objective.",
@@ -578,7 +579,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 		max_length = CUSTOM_OBJECTIVE_MAX_LENGTH,
 	)
 	if (QDELETED(src) || QDELETED(owner_mob) || isnull(custom_objective_text))
-		return // Some people take a long-ass time to type maybe they got dusted
+		return FALSE // Some people take a long-ass time to type maybe they got dusted
 
 	log_game("[key_name(owner_mob)] [retain_existing ? "" : "opted out of their original objectives and "]chose a custom objective: [custom_objective_text]")
 	message_admins("[ADMIN_LOOKUPFLW(owner_mob)] has chosen a custom antagonist objective: [span_syndradio("[custom_objective_text]")] | [ADMIN_SMITE(owner_mob)] | [ADMIN_SYNDICATE_REPLY(owner_mob)]")
@@ -607,5 +608,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	can_assign_self_objectives = FALSE
 	owner.announce_objectives()
+
+	return TRUE
 
 #undef CUSTOM_OBJECTIVE_MAX_LENGTH

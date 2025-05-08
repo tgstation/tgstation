@@ -64,17 +64,13 @@
 	// DOPPLER EDIT END
 	var/update = NONE
 	for(var/datum/loadout_item/item as anything in loadout_datums)
-		var/obj/item/equipped = locate(item.item_path) in new_contents
-		if(isnull(equipped))
-			continue
 		update |= item.on_equip_item(
-			equipped_item = equipped,
+			equipped_item = locate(item.item_path) in new_contents,
 			preference_source = preference_source,
 			preference_list = preference_list,
 			equipper = src,
 			visuals_only = visuals_only,
 		)
-
 	if(update)
 		update_clothing(update)
 

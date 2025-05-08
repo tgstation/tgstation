@@ -37,10 +37,6 @@
 /obj/item/watertank/ui_action_click(mob/user)
 	toggle_mister(user)
 
-/obj/item/watertank/item_action_slot_check(slot, mob/user)
-	if(slot & user.getBackSlot())
-		return 1
-
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
 	if(!istype(user))
 		return
@@ -100,7 +96,7 @@
 		var/atom/movable/screen/inventory/hand/H = over_object
 		M.putItemFromInventoryInHandIfPossible(src, H.held_index)
 
-/obj/item/watertank/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/watertank/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(attacking_item == noz)
 		remove_noz()
 		return TRUE
@@ -408,10 +404,6 @@
 
 /obj/item/reagent_containers/chemtank/ui_action_click()
 	toggle_injection()
-
-/obj/item/reagent_containers/chemtank/item_action_slot_check(slot, mob/user)
-	if(slot & ITEM_SLOT_BACK)
-		return 1
 
 /obj/item/reagent_containers/chemtank/proc/toggle_injection()
 	var/mob/living/carbon/human/user = usr

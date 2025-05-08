@@ -14,7 +14,7 @@ import {
 } from 'tgui-core/components';
 
 import { useServerPrefs } from '../../useServerPrefs';
-import {
+import type {
   LoadoutCategory,
   LoadoutItem,
   LoadoutManagerData,
@@ -49,12 +49,12 @@ export function LoadoutPage(props) {
           />
         )}
         <Section
+          fitted
           title="&nbsp;"
-          align="center"
           buttons={
             <Input
               width="200px"
-              onInput={(_, value) => setSearchLoadout(value)}
+              onChange={setSearchLoadout}
               placeholder="Search for an item..."
               value={searchLoadout}
             />
@@ -83,7 +83,7 @@ export function LoadoutPage(props) {
           </Tabs>
         </Section>
       </Stack.Item>
-      <Stack.Item>
+      <Stack.Item grow>
         <LoadoutTabs
           loadout_tabs={loadout_tabs}
           currentTab={selectedTabName}
@@ -118,7 +118,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
   const searching = currentSearch.length > 1;
 
   return (
-    <Stack fill height="550px">
+    <Stack fill>
       <Stack.Item align="center" width="250px" height="100%">
         <Stack vertical fill>
           <Stack.Item height="60%">
@@ -136,7 +136,7 @@ function LoadoutTabs(props: LoadoutTabsProps) {
       <Stack.Item grow>
         {searching || activeCategory?.contents ? (
           <Section
-            title={searching ? 'Searching...' : 'Catalog'}
+            title={searching ? 'Search results' : 'Catalog'}
             fill
             scrollable
             buttons={
@@ -248,7 +248,7 @@ function LoadoutSelectedSection(props: LoadoutSelectedSectionProps) {
 
   return (
     <Section
-      title="&nbsp;"
+      title="Selected Items"
       scrollable
       fill
       buttons={
@@ -286,7 +286,7 @@ function LoadoutPreviewSection() {
   return (
     <Section
       fill
-      title="&nbsp;"
+      title="Preview"
       buttons={
         <Button.Checkbox
           align="center"

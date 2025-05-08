@@ -45,15 +45,11 @@
 /// Ensures the blood deficiency quirk updates its mail goodies correctly
 /datum/unit_test/blood_deficiency_mail
 	var/list/species_to_test = list(
+		/datum/species/human = /obj/item/reagent_containers/blood/o_minus,
 		/datum/species/lizard = /obj/item/reagent_containers/blood/lizard,
 		/datum/species/ethereal = /obj/item/reagent_containers/blood/ethereal,
 		/datum/species/skeleton = null, // Anyone with noblood should not get a blood bag
 		/datum/species/jelly = /obj/item/reagent_containers/blood/toxin,
-		/datum/species/human = /obj/item/reagent_containers/blood/o_minus,
-		// DOPPLER ADDITION START
-		/datum/species/android = /obj/item/reagent_containers/blood/robot,
-		/datum/species/insectoid = /obj/item/reagent_containers/blood/bug,
-		// DOPPLER ADDITION END
 	)
 
 /datum/unit_test/blood_deficiency_mail/Run()
@@ -61,10 +57,14 @@
 	dummy.add_quirk(/datum/quirk/blooddeficiency)
 	var/datum/quirk/blooddeficiency/quirk = dummy.get_quirk(/datum/quirk/blooddeficiency)
 
-	TEST_ASSERT((species_to_test[dummy.dna.species.type] in quirk.mail_goodies), "Blood deficiency quirk spawned with no mail goodies!")
+	TEST_ASSERT((species_to_test[dummy.dna.species.type] in quirk.mail_goodies), "Blood deficiency quirk did not get the right blood bag in its mail goodies for [dummy.dna.species.type]! \
+		It should be getting species_to_test[dummy.dna.species.type]." \
+	)
 
 	for(var/species_type in species_to_test)
 		var/last_species = dummy.dna.species.type
+		if(species_type == /datum/species/human) // we already tested this above, and setting species again will cause it to randomize
+			continue
 		dummy.set_species(species_type)
 		// Test that the new species has the correct blood bag
 		if(!isnull(species_to_test[species_type]))
@@ -79,3 +79,36 @@
 		if(!isnull(species_to_test[last_species]))
 			TEST_ASSERT(!(species_to_test[last_species] in quirk.mail_goodies), \
 				"Blood deficiency quirk did not update correctly for [species_type]! ([last_species] did not get its blood bag removed)")
+
+/// Ensures that all quirks correctly initialized when added
+/datum/unit_test/quirk_validity
+
+/datum/unit_test/quirk_validity/Run()
+	// Required for language quirks to function properly
+	// Assigning this manually as config is empty
+	GLOB.uncommon_roundstart_languages = list(/datum/language/uncommon)
+
+	for (var/datum/quirk/quirk_type as anything in subtypesof(/datum/quirk))
+		if (initial(quirk_type.abstract_parent_type) == quirk_type)
+			continue
+
+		var/mob/dead/new_player/abstract_player = allocate(/mob/dead/new_player)
+		var/datum/client_interface/roundstart_mock_client = new()
+		abstract_player.mock_client = roundstart_mock_client
+		roundstart_mock_client.prefs = new(roundstart_mock_client)
+		var/mob/living/carbon/human/new_character = allocate(/mob/living/carbon/human/consistent)
+		new_character.mind_initialize()
+		abstract_player.new_character = new_character
+		if (!new_character.add_quirk(quirk_type, roundstart_mock_client))
+			TEST_FAIL("Failed to initialize quirk [quirk_type] on a roundstart character!")
+
+		var/mob/living/carbon/human/latejoin_character = allocate(/mob/living/carbon/human/consistent)
+		var/datum/client_interface/latejoin_mock_client = new()
+		latejoin_mock_client.prefs = new(latejoin_mock_client)
+		latejoin_character.mock_client = latejoin_mock_client
+		latejoin_character.mind_initialize()
+		if (!latejoin_character.add_quirk(quirk_type, latejoin_mock_client))
+			TEST_FAIL("Failed to initialize quirk [quirk_type] on a latejoin character!")
+
+	// Clean up after ourselves
+	GLOB.uncommon_roundstart_languages.Cut()

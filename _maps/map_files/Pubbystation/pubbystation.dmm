@@ -3040,10 +3040,6 @@
 /area/station/maintenance/department/security/brig)
 "any" = (
 /obj/machinery/light/directional/west,
-/obj/structure/sign/map{
-	icon_state = "map-pubby";
-	pixel_x = -32
-	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
@@ -5090,10 +5086,6 @@
 "avi" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
-	},
-/obj/structure/sign/map{
-	icon_state = "map-pubby";
-	pixel_y = 32
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
@@ -8322,10 +8314,6 @@
 /area/station/command/heads_quarters/hos)
 "aHK" = (
 /obj/machinery/light/directional/north,
-/obj/structure/sign/map{
-	icon_state = "map-pubby";
-	pixel_y = 32
-	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
 "aHL" = (
@@ -13603,10 +13591,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "bgi" = (
-/obj/structure/sign/map{
-	icon_state = "map-pubby";
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
@@ -23350,10 +23334,6 @@
 	},
 /obj/machinery/camera/directional/north{
 	c_tag = "Engineering Port Fore"
-	},
-/obj/structure/sign/map{
-	icon_state = "map-pubby";
-	pixel_y = 32
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

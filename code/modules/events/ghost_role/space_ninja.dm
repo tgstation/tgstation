@@ -27,7 +27,7 @@
 	var/loadme = tgui_alert(chosen_one, "Do you wish to load your character slot?", "Load Character?", list("Yes!", "No, I want to be random!"), timeout = 60 SECONDS)
 	// DOPPLER ADDITION END
 	var/mob/living/carbon/human/ninja = create_space_ninja(spawn_location)
-	ninja.key = chosen_one.key
+	ninja.PossessByPlayer(chosen_one.key)
 	ninja.mind.add_antag_datum(/datum/antagonist/ninja)
 	spawned_mobs += ninja
 	// DOPPLER ADDITION START - Preference Ninjas

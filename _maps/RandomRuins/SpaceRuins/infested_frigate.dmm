@@ -1738,7 +1738,7 @@
 	},
 /obj/item/ammo_casing/spent,
 /obj/effect/decal/cleanable/xenoblood/xgibs{
-	icon_state = "xtracks";
+	icon_state = "tracks";
 	dir = 1
 	},
 /turf/open/floor/mineral/plastitanium,
@@ -2005,7 +2005,7 @@
 /obj/effect/decal/cleanable/blood/gibs{
 	icon_state = "gib6-old"
 	},
-/obj/item/reagent_containers/pill/cyanide{
+/obj/item/reagent_containers/applicator/pill/cyanide{
 	pixel_y = -2;
 	pixel_x = 6
 	},

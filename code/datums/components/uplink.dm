@@ -168,8 +168,7 @@
 	var/list/data = list()
 	data["telecrystals"] = uplink_handler.telecrystals
 	data["progression_points"] = uplink_handler.progression_points
-	data["current_expected_progression"] = SStraitor.current_global_progression
-	data["progression_scaling_deviance"] = SStraitor.progression_scaling_deviance
+	data["joined_population"] = length(GLOB.joined_player_list)
 	data["current_progression_scaling"] = SStraitor.current_progression_scaling
 
 	if(uplink_handler.primary_objectives)
@@ -206,6 +205,7 @@
 			"restricted_roles" = item.restricted_roles,
 			"restricted_species" = item.restricted_species,
 			"progression_minimum" = item.progression_minimum,
+			"population_minimum" = item.population_minimum,
 			"ref" = REF(item),
 		))
 

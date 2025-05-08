@@ -65,14 +65,47 @@
 	if(!COOLDOWN_FINISHED(src, next_apc_scan))
 		return
 
-	COOLDOWN_START(src, next_apc_scan, 1 SECONDS)
+	COOLDOWN_START(src, next_apc_scan, 2 SECONDS)
 
 	var/area/local_area = get_area(src)
-	var/power_controller = local_area.apc
-	if(power_controller)
-		user.balloon_alert(user, "[get_dist(src, power_controller)]m [dir2text(get_dir(src, power_controller))]")
-	else
+	var/obj/machinery/power/apc/power_controller = local_area.apc
+	if(!power_controller)
 		user.balloon_alert(user, "couldn't find apc!")
+		return
+
+	var/dist = get_dist(src, power_controller)
+	var/dir = get_dir(user, power_controller)
+	var/balloon_message
+	var/arrow_color
+
+	switch(dist)
+		if (0)
+			user.balloon_alert(user, "found apc!")
+			return
+		if(1 to 5)
+			arrow_color = COLOR_GREEN
+		if(6 to 10)
+			arrow_color = COLOR_YELLOW
+		if(11 to 15)
+			arrow_color = COLOR_ORANGE
+		else
+			arrow_color = COLOR_RED
+
+	user.balloon_alert(user, balloon_message)
+
+	var/datum/hud/user_hud = user.hud_used
+	if(!user_hud)
+		return
+
+	var/atom/movable/screen/multitool_arrow/arrow = new(null, user_hud)
+	arrow.color = arrow_color
+	arrow.screen_loc = around_player
+	arrow.transform = matrix(dir2angle(dir), MATRIX_ROTATE)
+
+	user_hud.infodisplay += arrow
+	user_hud.show_hud(user_hud.hud_version)
+
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), arrow), 1.5 SECONDS)
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))
@@ -205,7 +238,7 @@
 	var/turf/our_turf = get_turf(src)
 	detect_state = PROXIMITY_NONE
 
-	for(var/mob/eye/camera/ai/AI_eye as anything in GLOB.camera_eyes)
+	for(var/mob/eye/camera/ai/AI_eye in GLOB.camera_eyes)
 		if(!AI_eye.ai_detector_visible)
 			continue
 

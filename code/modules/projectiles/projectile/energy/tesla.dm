@@ -27,6 +27,7 @@
 
 /obj/projectile/energy/tesla_cannon
 	name = "tesla bolt"
+	icon_state = null
 	hitscan = TRUE
 	damage = 5
 	var/shock_damage = 10

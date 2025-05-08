@@ -86,7 +86,7 @@
 	readout += "\n[active ? "It is currently [span_warning("[activated_word]")], and capable of stunning." : "It is [span_warning("not [activated_word]")], and not capable of stunning."]"
 
 	if(stamina_damage <= 0) // The advanced baton actually does have 0 stamina damage so...yeah.
-		readout += "Either is is [span_warning("completely unable to perform a stunning strike")], or it [span_warning("attacks via some unusual method")]."
+		readout += "Either it is [span_warning("completely unable to perform a stunning strike")], or it [span_warning("attacks via some unusual method")]."
 		return readout.Join("\n")
 
 	readout += "It takes [span_warning("[HITS_TO_CRIT(stamina_damage)] strike\s")] to stun an enemy."
@@ -114,9 +114,8 @@
  *
  * TL;DR: [/baton_attack()] -> [/finalize_baton_attack()] -> [/baton_effect()] -> [/set_batoned()]
  */
-/obj/item/melee/baton/attack(mob/living/target, mob/living/user, params)
+/obj/item/melee/baton/attack(mob/living/target, mob/living/user, list/modifiers)
 	add_fingerprint(user)
-	var/list/modifiers = params2list(params)
 	switch(baton_attack(target, user, modifiers))
 		if(BATON_DO_NORMAL_ATTACK)
 			return ..()
@@ -626,7 +625,7 @@
 		tool.play_tool_sound(src)
 	return TRUE
 
-/obj/item/melee/baton/security/attackby(obj/item/item, mob/user, params)
+/obj/item/melee/baton/security/attackby(obj/item/item, mob/user, list/modifiers)
 	if(istype(item, /obj/item/stock_parts/power_store/cell))
 		var/obj/item/stock_parts/power_store/cell/active_cell = item
 		if(cell)
@@ -798,7 +797,7 @@
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
 	if(!. && active && prob(throw_stun_chance) && isliving(hit_atom))
-		finalize_baton_attack(hit_atom, thrownby?.resolve(), in_attack_chain = FALSE)
+		finalize_baton_attack(hit_atom, throwingdatum.get_thrower(), in_attack_chain = FALSE)
 
 /obj/item/melee/baton/security/emp_act(severity)
 	. = ..()
@@ -859,7 +858,7 @@
 	. = ..()
 	sparkler = new (src)
 
-/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, params)//handles sticking a crystal onto a stunprod to make an improved cattleprod
+/obj/item/melee/baton/security/cattleprod/attackby(obj/item/item, mob/user, list/modifiers)//handles sticking a crystal onto a stunprod to make an improved cattleprod
 	if(!istype(item, /obj/item/stack))
 		return ..()
 
@@ -927,7 +926,7 @@
 	if(!active)
 		return ..()
 	var/caught = hit_atom.hitby(src, skipcatch = FALSE, hitpush = FALSE, throwingdatum = throwingdatum)
-	var/mob/thrown_by = thrownby?.resolve()
+	var/mob/thrown_by = throwingdatum.get_thrower()
 	if(isliving(hit_atom) && !iscyborg(hit_atom) && !caught && prob(throw_stun_chance))//if they are a living creature and they didn't catch it
 		finalize_baton_attack(hit_atom, thrown_by, in_attack_chain = FALSE)
 
@@ -985,3 +984,56 @@
 	else
 		stuff_in_hand.forceMove(user.drop_location())
 		stuff_in_hand.loc.visible_message(span_warning("[stuff_in_hand] suddenly appears!"))
+
+
+/obj/item/melee/baton/nunchaku
+	name = "Syndie Fitness Nunchuks"
+	desc = "The most common fitness equipment in the entire syndicate, titanium rods weigh strictly 13 pounds"
+	desc_controls = "Left click to stun, right click to harm. Throw mode counterattack any melee/throwable attacks."
+	icon_state = "nunchaku"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	inhand_icon_state = "nunchaku"
+	worn_icon_state = "nunchaku"
+	attack_verb_continuous = list("beats", "whips", "smashes", "punishes")
+	attack_verb_simple = list("beat", "whip", "smash", "punish")
+	hitsound = 'sound/items/weapons/chainhit.ogg'
+	block_sound = 'sound/items/weapons/block_shield.ogg'
+	slot_flags = ITEM_SLOT_BELT
+	cooldown = CLICK_CD_MELEE
+	knockdown_time = 0.25 SECONDS
+	demolition_mod = 1.5
+	stamina_damage = 30 // 4 hit stamcrit
+	stun_armour_penetration = 30 // bronze-silver telescopic
+	force = 16 // 7 hit crit
+	bare_wound_bonus = 5
+
+/obj/item/melee/baton/nunchaku/proc/randomize_state()
+	icon_state = pick(list("nunchaku", "nunchaku_x", "nunchaku_y"))
+	update_appearance()
+
+/obj/item/melee/baton/nunchaku/after_throw(datum/callback/callback)
+	. = ..()
+	randomize_state()
+
+/obj/item/melee/baton/nunchaku/afterattack(atom/target, mob/user, click_parameters)
+	. = ..()
+	randomize_state()
+
+/obj/item/melee/baton/nunchaku/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text, final_block_chance, damage, attack_type, damage_type)
+	if(attack_type == PROJECTILE_ATTACK || !owner.throw_mode)
+		return ..()
+
+	randomize_state()
+
+	// blocks any melee/throwable attacks
+	owner.adjustStaminaLoss(5)
+	final_block_chance = 100
+
+	// counterattack at melee
+	if(attack_type in list(MELEE_ATTACK, UNARMED_ATTACK, LEAP_ATTACK))
+		var/mob/living/attacker = GET_ASSAILANT(hitby)
+		playsound(src, pick(list('sound/items/weapons/cqchit2.ogg', 'sound/items/weapons/cqchit1.ogg')), 70, FALSE)
+		melee_attack_chain(owner, attacker, LEFT_CLICK)
+
+	return ..()

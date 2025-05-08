@@ -53,6 +53,9 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 		GLOB.bridge_axe = null
 	return ..()
 
+/obj/item/fireaxe/get_demolition_modifier(obj/target)
+	return HAS_TRAIT(src, TRAIT_WIELDED) ? demolition_mod : 0.8
+
 /obj/item/fireaxe/update_icon_state()
 	icon_state = "[base_icon_state]0"
 	return ..()
@@ -61,7 +64,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/fireaxe/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/fireaxe/afterattack(atom/target, mob/user, list/modifiers)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
 		return
 	if(target.resistance_flags & INDESTRUCTIBLE)

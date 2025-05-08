@@ -88,3 +88,27 @@
 
 /datum/preference/choiced/lizard_horns/create_default_value()
 	return /datum/sprite_accessory/horns/none::name
+
+/datum/preference/choiced/lizard_horns/icon_for(value)
+	return generate_horns_icon(SSaccessories.horns_list[value])
+
+/datum/preference/choiced/proc/generate_horns_icon(datum/sprite_accessory/sprite_accessory)
+	var/static/datum/universal_icon/body
+	if (isnull(body))
+		body = uni_icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_head")
+	var/datum/universal_icon/final_icon = body.copy()
+
+	if (sprite_accessory.icon_state != "No Horns")
+		if(icon_exists(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_ADJ"))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_ADJ")
+			accessory_icon.blend_color(COLOR_WEBSAFE_DARK_GRAY, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_FRONT"))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_FRONT")
+			accessory_icon.blend_color(COLOR_WEBSAFE_DARK_GRAY, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+
+	final_icon.crop(11, 20, 23, 32)
+	final_icon.scale(32, 32)
+
+	return final_icon

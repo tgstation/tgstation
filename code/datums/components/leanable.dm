@@ -1,4 +1,4 @@
-/// Things with this component can be leaned onto, optionally exclusive to RMB dragging
+/// Things with this component can be leaned onto
 /datum/component/leanable
 	/// How much will mobs that lean onto this object be offset
 	var/leaning_offset = 11
@@ -40,7 +40,7 @@
 		if(fall)
 			to_chat(leaner, span_danger("You lose balance!"))
 			leaner.Paralyze(0.5 SECONDS)
-	leaning_mobs = null
+	leaning_mobs.Cut()
 
 /datum/component/leanable/proc/on_moved(datum/source)
 	SIGNAL_HANDLER
@@ -105,12 +105,12 @@
 		COMSIG_LIVING_GET_PULLED,
 	), PROC_REF(stop_leaning))
 
-	RegisterSignal(src, COMSIG_MOVABLE_TELEPORTED, PROC_REF(teleport_away_while_leaning))
+	RegisterSignal(src, COMSIG_MOVABLE_POST_TELEPORT, PROC_REF(teleported_away_while_leaning))
 	RegisterSignal(src, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(lean_dir_changed))
 	update_fov()
 
 /// You fall on your face if you get teleported while leaning
-/mob/living/proc/teleport_away_while_leaning()
+/mob/living/proc/teleported_away_while_leaning()
 	SIGNAL_HANDLER
 
 	// Make sure we unregister signal handlers and reset animation
@@ -127,7 +127,7 @@
 		COMSIG_LIVING_DISARM_HIT,
 		COMSIG_LIVING_GET_PULLED,
 		COMSIG_ATOM_POST_DIR_CHANGE,
-		COMSIG_MOVABLE_TELEPORTED,
+		COMSIG_MOVABLE_POST_TELEPORT,
 	))
 	remove_offsets(LEANING_TRAIT)
 	remove_traits(list(TRAIT_UNDENSE, TRAIT_EXPANDED_FOV), LEANING_TRAIT)
