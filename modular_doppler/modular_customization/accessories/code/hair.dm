@@ -695,10 +695,6 @@
 	name = "Braided Sidetail"
 	icon_state = "hair_braided_sidetail"
 
-/datum/sprite_accessory/hair/modular/glamour
-	name = "Glamour"
-	icon_state = "hair_glamour"
-
 /datum/sprite_accessory/hair/modular/hugeafro_eyescovered
 	name = "Huge Afro (Eyes Covered)"
 	y_offset = 6
