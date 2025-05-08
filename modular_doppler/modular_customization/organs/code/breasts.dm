@@ -15,7 +15,8 @@
 
 	bodypart_overlay = /datum/bodypart_overlay/mutant/breasts
 
-/datum/bodypart_overlay/mutant/breasts/can_draw_on_bodypart(mob/living/carbon/human/human)
+/datum/bodypart_overlay/mutant/breasts/can_draw_on_bodypart(obj/item/bodypart/chest/chest)
+	var/mob/living/carbon/human/human = chest.owner
 	if(visibility == ORGAN_VISIBILITY_MODE_NORMAL)
 		if((human.undershirt != "Nude" && !(human.underwear_visibility & UNDERWEAR_HIDE_SHIRT)) || (human.bra != "Nude" && !(human.underwear_visibility & UNDERWEAR_HIDE_BRA)))
 			return FALSE

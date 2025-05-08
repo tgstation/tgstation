@@ -74,10 +74,12 @@
 	var/datum/universal_icon/final_icon = body.copy()
 	if (value != "No Fluff")
 		var/datum/sprite_accessory/sprite_accessory = SSaccessories.fluff_list[value]
-		var/datum/universal_icon/fluff_adj = uni_icon(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_ADJ")
-		var/datum/universal_icon/fluff_front = uni_icon(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_FRONT")
-		final_icon.blend_icon(fluff_adj, ICON_OVERLAY)
-		final_icon.blend_icon(fluff_front, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_ADJ"))
+			var/datum/universal_icon/fluff_adj = uni_icon(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_ADJ")
+			final_icon.blend_icon(fluff_adj, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_FRONT"))
+			var/datum/universal_icon/fluff_front = uni_icon(sprite_accessory.icon, "m_fluff_[sprite_accessory.icon_state]_FRONT")
+			final_icon.blend_icon(fluff_front, ICON_OVERLAY)
 
 	final_icon.crop(10, 18, 22, 30)
 	final_icon.scale(32, 32)
