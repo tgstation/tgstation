@@ -90,10 +90,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		holder = new_holder
 
 /datum/dna/Destroy()
-	remove_all_mutations() // mutations hold a reference to the dna
-	if(holder.dna == src)
-		holder.dna = null
-	holder = null
+	if (holder)
+		remove_all_mutations() // mutations hold a reference to the dna
+		if(holder.dna == src)
+			holder.dna = null
+		holder = null
 
 	QDEL_NULL(species)
 
