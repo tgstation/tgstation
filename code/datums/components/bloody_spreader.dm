@@ -96,11 +96,11 @@
 
 	var/blood_slots = ITEM_SLOT_GLOVES
 	var/blood_lost = 3
-	if (slot & (ITEM_SLOT_LPOCKET | ITEM_SLOT_RPOCKET | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK | ITEM_SLOT_ID))
+	if (slot & (ITEM_SLOT_LPOCKET | ITEM_SLOT_RPOCKET | ITEM_SLOT_ID))
 		blood_slots |= ITEM_SLOT_ICLOTHING
 		blood_lost += 1
-	else if (slot & ITEM_SLOT_SUITSTORE)
-		blood_slots |= ITEM_SLOT_OCLOTHING
+	else if (slot & (ITEM_SLOT_SUITSTORE | ITEM_SLOT_BELT | ITEM_SLOT_BACK | ITEM_SLOT_NECK))
+		blood_slots |= ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING // Will only actually bloody one of these, thus blood_lost is increased by one instead of two
 		blood_lost += 1
 
 	if (!(slot & ITEM_SLOT_HANDS))
