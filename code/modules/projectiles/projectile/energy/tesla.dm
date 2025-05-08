@@ -29,9 +29,7 @@
 	name = "tesla bolt"
 	icon_state = null
 	hitscan = TRUE
-	muzzle_type = /obj/effect/projectile/muzzle/stun
-	tracer_type = /obj/effect/projectile/tracer/stun
-	impact_type = /obj/effect/projectile/impact/stun
+	tracer_type = /obj/effect/projectile/tracer/lightning
 	impact_effect_type = null
 	damage = 5
 	var/shock_damage = 10
