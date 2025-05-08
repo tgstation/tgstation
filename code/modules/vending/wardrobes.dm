@@ -241,10 +241,6 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/storage/backpack/messenger/science = 3,
 		/obj/item/radio/headset/headset_sci = 2,
 	)
-	premium = list(
-		/obj/item/reagent_containers/cup/glass/bottle/whiskey = 1,
-		/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass = 3,
-	)
 	contraband = list(
 		/obj/item/clothing/under/costume/mech_suit = 2,
 		/obj/item/clothing/suit/hooded/techpriest = 2,
