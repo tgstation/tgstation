@@ -85,16 +85,17 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	/// Weighted list of lethal meltdowns
 	var/static/list/fatal_meltdowns = list()
 
-/datum/dna/New(mob/living/carbon/new_holder)
+/datum/dna/New(mob/living/new_holder)
 	if(istype(new_holder))
 		holder = new_holder
 
 /datum/dna/Destroy()
-	if (holder)
+	if (iscarbon(holder))
+		var/mob/living/carbon/as_carbon = holder
 		remove_all_mutations() // mutations hold a reference to the dna
-		if(holder.dna == src)
-			holder.dna = null
-		holder = null
+		if(as_carbon.dna == src)
+			as_carbon.dna = null
+	holder = null
 
 	QDEL_NULL(species)
 
