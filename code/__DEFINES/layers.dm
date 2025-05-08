@@ -326,7 +326,7 @@
 ///cinematics are "below" the splash screen
 #define CINEMATIC_LAYER -1
 
-// CPU_DEBUB_PLANE
+// CPU_DEBUG_PLANE
 
 ///CPU related graph framing
 #define CPU_GRAPH_FRAME_LAYER 1

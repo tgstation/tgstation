@@ -256,7 +256,8 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	GLOB.clients += src
 	GLOB.directory[ckey] = src
 	if(ckey == "lemoninthedark")
-		GLOB.cpu_tracker.toggle_cpu_debug(src)
+		GLOB.attempt_corrective_cpu = TRUE
+		GLOB.use_new_glide = TRUE
 
 	var/reconnecting = FALSE
 	if(GLOB.persistent_clients_by_ckey[ckey])
