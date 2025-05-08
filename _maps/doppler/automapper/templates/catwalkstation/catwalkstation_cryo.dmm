@@ -6,7 +6,7 @@
 /obj/structure/cable,
 /obj/structure/falsewall,
 /turf/open/floor/iron,
-/area/station/commons/cryopods)
+/area/station/commons/storage/art)
 "e" = (
 /obj/structure/sign/directions/dorms{
 	dir = 1;
@@ -58,6 +58,9 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/cryopods)
+"t" = (
+/turf/closed/wall,
+/area/station/commons/storage/art)
 "u" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -111,14 +114,14 @@
 /area/station/commons/cryopods)
 
 (1,1,1) = {"
-J
+t
 J
 N
 J
 J
 "}
 (2,1,1) = {"
-J
+t
 w
 z
 r
@@ -132,7 +135,7 @@ X
 N
 "}
 (4,1,1) = {"
-J
+t
 m
 z
 n
