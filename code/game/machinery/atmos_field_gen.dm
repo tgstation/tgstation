@@ -12,6 +12,7 @@
 	circuit = /obj/item/circuitboard/machine/atmos_shield_gen
 	req_one_access = list(ACCESS_EXTERNAL_AIRLOCKS, ACCESS_ENGINE_EQUIP)
 	can_atmos_pass = ATMOS_PASS_PROC
+	power_channel = AREA_USAGE_ENVIRON
 
 	/// are we locked
 	var/locked = FALSE
@@ -228,7 +229,6 @@
 	base_icon_state = "atmosshield"
 	density = FALSE
 	anchored = TRUE
-	layer = ABOVE_OBJ_LAYER // supposed to be above mobs but ughhhhh layering and i need them to be below blast doors
 	can_atmos_pass = ATMOS_PASS_NO
 	alpha = 80
 	rad_insulation = RAD_LIGHT_INSULATION

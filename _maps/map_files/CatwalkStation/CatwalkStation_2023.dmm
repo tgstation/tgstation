@@ -53648,10 +53648,13 @@
 /area/station/maintenance/hallway/abandoned_recreation)
 "qaG" = (
 /obj/machinery/door/poddoor/massdriver_ordnance,
-/obj/structure/fans/tiny,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/atmos_shield_gen/active,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 1
+	},
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/lesser)
 "qaI" = (
@@ -53811,7 +53814,10 @@
 /area/station/maintenance/starboard/aft)
 "qdJ" = (
 /obj/machinery/door/poddoor/massdriver_trash,
-/obj/structure/fans/tiny,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 1
+	},
+/obj/machinery/atmos_shield_gen/active,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "qdR" = (
@@ -72889,8 +72895,13 @@
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "vQf" = (
-/obj/structure/fans/tiny,
 /obj/machinery/door/poddoor/massdriver_chapel,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 4
+	},
+/obj/machinery/atmos_shield_gen/active{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "vQo" = (

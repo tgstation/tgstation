@@ -2330,7 +2330,10 @@
 /obj/machinery/door/poddoor/massdriver_trash{
 	id = "fortnitedoor"
 	},
-/obj/structure/fans/tiny,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 1
+	},
+/obj/machinery/atmos_shield_gen/active,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "ajc" = (
@@ -38887,7 +38890,12 @@
 /area/station/hallway/secondary/entry)
 "mEH" = (
 /obj/machinery/door/poddoor/massdriver_chapel,
-/obj/structure/fans/tiny,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 4
+	},
+/obj/machinery/atmos_shield_gen/active{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/service/chapel/monastery)
 "mEK" = (
@@ -66136,7 +66144,10 @@
 /area/station/hallway/secondary/entry)
 "wgM" = (
 /obj/machinery/door/poddoor/massdriver_ordnance,
-/obj/structure/fans/tiny,
+/obj/machinery/atmos_shield_gen/active,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
 "wgQ" = (
