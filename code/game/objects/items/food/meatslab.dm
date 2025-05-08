@@ -24,7 +24,6 @@
 		/datum/component/bloody_spreader,\
 		blood_left = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
 		blood_dna = blood_dna_list,\
-		diseases = null,\
 	)
 
 /obj/item/food/meat/slab
