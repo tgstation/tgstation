@@ -211,7 +211,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 #define USAGE_DISPLAY_MC "Before Tick"
 #define USAGE_DISPLAY_POST_TICK "Maptick + Verbs"
 /atom/movable/screen/usage_display
-	screen_loc = "LEFT:8, CENTER-3:14"
+	screen_loc = "LEFT:8, CENTER-3"
 	plane = CPU_DEBUG_PLANE
 	layer = CPU_DISPLAY_LAYER
 	maptext_width = 512
