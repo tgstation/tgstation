@@ -72,7 +72,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/list/temporary_mutations = list()
 	///For temporary name/ui/ue/blood_type modifications
 	var/list/previous = list()
-	var/mob/living/carbon/holder
+	var/mob/living/holder
 	///List of which mutations this carbon has and its assigned block
 	var/mutation_index[DNA_MUTATION_BLOCKS]
 	///List of the default genes from this mutation to allow DNA Scanner highlighting
@@ -130,7 +130,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.features = features.Copy()
 	//if the new DNA has a holder, transform them immediately, otherwise save it
 	if(new_dna.holder)
-		new_dna.holder.set_blood_type(blood_type)
+		if (iscarbon(new_dna.holder))
+			var/mob/living/carbon/as_carbon = new_dna.holder
+			as_carbon.set_blood_type(blood_type)
 		new_dna.holder.set_species(species.type, icon_update = 0)
 	else
 		new_dna.blood_type = blood_type

@@ -17,7 +17,7 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(!istype(human_holder))
 		return
-	update_mail(human_quirk_holder = human_holder, new_blood_type = human_holder.dna.blood_type) // matches the mail goodies blood bag to our blood type
+	update_mail(human_quirk_holder = human_holder, new_blood_type = human_holder.get_bloodtype()) // matches the mail goodies blood bag to our blood type
 	RegisterSignal(quirk_holder, COMSIG_CARBON_CHANGED_BLOOD_TYPE, PROC_REF(update_mail))
 
 /datum/quirk/blooddeficiency/remove()
@@ -45,7 +45,7 @@
 /datum/quirk/blooddeficiency/proc/update_mail(mob/living/carbon/human/human_quirk_holder, datum/blood_type/new_blood_type, update_cached_blood_dna_info)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(human_quirk_holder, TRAIT_NOBLOOD))
+	if(TRAIT_NOBLOOD in human_quirk_holder.dna.species.inherent_traits)
 		mail_goodies.Cut()
 		return
 
