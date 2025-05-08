@@ -36,15 +36,6 @@ required_map = "IceBoxStation.dmm"
 coordinates = [117, 142, 3]
 trait_name = "Station"
 
-# CATWALK MAP EDITS
-# Catwalk Cryo
-[templates.catwalkstation_cryo]
-map_files = ["catwalkstation_cryo.dmm"]
-directory = "_maps/doppler/automapper/templates/catwalkstation/"
-required_map = "CatwalkStation_2023.dmm"
-coordinates = [129, 151, 1]
-trait_name = "Station"
-
 # Icecats Camp Lower Level
 [templates.icebox_icecats_lower]
 map_files = ["icemoon_underground_icewalker_lower.dmm"]

@@ -27,6 +27,10 @@ $_channel_map: (
   'Supp': hsl(33.7, 44.9%, 49.8%),
   'Svc': hsl(88.1, 60.6%, 40.8%),
   'Synd': hsl(359.1, 31.8%, 42.5%),
+  // DOPPLER EDIT ADDITION START
+  'LOOC': hsl(20, 100%, 86%),
+  'Whis': hsl(238, 55%, 67%),
+  'Do': hsl(137, 64%, 60%), // DOPPLER EDIT ADDITION END
 );
 
 $channel_keys: map.keys($_channel_map) !default;
