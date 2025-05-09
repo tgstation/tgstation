@@ -183,9 +183,9 @@ GLOBAL_VAR_INIT(spike_cpu, 0)
 /world/Tick()
 	// this is for next tick so don't display it yet yeah?
 	var/datum/tick_holder/tick_info = ____tick_info
-	var/next_index = WRAP(world.time + 1, 1, TICK_INFO_SIZE + 1)
+	var/current_index = TICK_INFO_INDEX()
 	if(tick_info)
-		tick_info.pre_tick_cpu_usage[next_index] = TICK_USAGE
+		tick_info.pre_tick_cpu_usage[current_index] = TICK_USAGE
 
 	refresh_cpu_values()
 	if(GLOB.floor_cpu)
@@ -210,12 +210,12 @@ GLOBAL_VAR_INIT(spike_cpu, 0)
 	else if(!GLOB.use_old_mc_limit && GLOB.corrective_cpu_threshold + GLOB.corrective_cpu_threshold * 0.05 > TICK_USAGE)
 		cpu_corrected = TRUE
 	if(tick_info)
-		tick_info.corrected_ticks[next_index] = cpu_corrected
+		tick_info.corrected_ticks[current_index] = cpu_corrected
 
 	GLOB.cpu_tracker.update_display()
 
 	if(tick_info)
-		tick_info.tick_cpu_usage[next_index] = TICK_USAGE
+		tick_info.tick_cpu_usage[current_index] = TICK_USAGE
 
 INITIALIZE_IMMEDIATE(/atom/movable/screen/usage_display)
 GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
@@ -257,7 +257,7 @@ GLOBAL_DATUM_INIT(cpu_tracker, /atom/movable/screen/usage_display, new())
 	var/list/cpu_values = tick_info.cpu_values
 	var/list/verb_cost = tick_info.verb_cost
 	var/list/pre_tick_cpu_usage = tick_info.pre_tick_cpu_usage
-	var/last_index = TICK_INFO_INDEX()
+	var/last_index = TICK_INFO_TICK2INDEX(world.time - 1)
 	var/full_time = TICKS2DS(TICK_INFO_SIZE) / 10 // convert from ticks to seconds
 
 	maptext = "<div style=\"background-color:#FFFFFF; color:#000000;\">\
@@ -427,7 +427,8 @@ GLOBAL_DATUM(tick_info, /datum/tick_holder)
 		return
 
 	tick_info.last_cpu_update = world.time
-	var/cpu_index = TICK_INFO_INDEX()
+	// info about the last game tick so it should be logged as the last game tick
+	var/cpu_index = TICK_INFO_TICK2INDEX(world.time - 1)
 	tick_info.cpu_index = cpu_index
 	// cache for sonic speed
 	var/list/cpu_values = tick_info.cpu_values

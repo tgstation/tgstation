@@ -364,6 +364,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	clear_values()
 
 /atom/movable/screen/graph_display/bars/cpu_display/proc/refresh_thresholds()
+	if(freeze)
+		return
 	var/datum/tick_holder/tick_info = GLOB.tick_info
 	var/list/cpu_values = tick_info.cpu_values
 	var/list/pre_tick_cpu_usage = tick_info.pre_tick_cpu_usage
