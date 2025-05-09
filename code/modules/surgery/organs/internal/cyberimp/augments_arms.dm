@@ -1,4 +1,4 @@
-/obj/item/organ/cyberimp/arm/
+/obj/item/organ/cyberimp/arm
 	name = "arm-mounted implant"
 	desc = "An implant that goes in your arm to improve it."
 	zone = BODY_ZONE_R_ARM
@@ -36,7 +36,7 @@
 	SIGNAL_HANDLER
 	if(source != hand || QDELETED(hand))
 		return
-	UnregisterSignal(hand, list(COMSIG_BODYPART_REMOVED, COMSIG_ITEM_ATTACK_SELF))
+	UnregisterSignal(hand, COMSIG_BODYPART_REMOVED)
 	hand = null
 
 /obj/item/organ/cyberimp/arm/toolkit
@@ -92,6 +92,12 @@
 /obj/item/organ/cyberimp/arm/toolkit/on_limb_attached(mob/living/carbon/source, obj/item/bodypart/limb)
 	. = ..()
 	RegisterSignal(limb, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self))
+
+/obj/item/organ/cyberimp/arm/toolkit/on_limb_detached(obj/item/bodypart/source)
+	if(source != hand || QDELETED(hand))
+		return
+	UnregisterSignal(hand, list(COMSIG_BODYPART_REMOVED, COMSIG_ITEM_ATTACK_SELF))
+	hand = null
 
 /obj/item/organ/cyberimp/arm/toolkit/proc/on_item_attack_self()
 	SIGNAL_HANDLER
