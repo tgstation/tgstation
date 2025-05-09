@@ -203,7 +203,8 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		return FALSE
 	if(target_slime.buckled)
 		target_slime.stop_feeding(silent = TRUE)
-	target_slime.visible_message(span_notice("The slime vanishes in a flash of light!"))
+	target_slime.visible_message(span_notice("The slime gets sucked up!"))
+	suck_up(target_slime)
 	target_slime.forceMove(src)
 	stored_slimes += target_slime
 	ADD_TRAIT(target_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
@@ -235,6 +236,7 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	if(!target_mob.stat)
 		return
 
+	suck_up(target_mob)
 	target_mob.visible_message(span_notice("The monkey vanishes as [p_theyre()] reclaimed for recycling!"))
 	connected_recycler.use_energy(500 JOULES)
 	monkeys += connected_recycler.cube_production
