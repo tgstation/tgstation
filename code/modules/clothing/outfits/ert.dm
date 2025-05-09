@@ -175,7 +175,7 @@
 
 	var/obj/item/card/id/W = H.wear_id
 	var/obj/item/modular_computer/pda/heads/pda = H.r_store
-	pda.imprint_id(H.real_name, "CentCom Official", W)
+	pda.imprint_id(H.real_name, "CentCom Official")
 
 	W.registered_name = H.real_name
 	W.update_label()
