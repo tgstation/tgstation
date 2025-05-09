@@ -1,7 +1,7 @@
 /obj/item/clothing/under/color
 	name = "jumpsuit"
 	desc = "A standard issue colored jumpsuit. Variety is the spice of life!"
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/color.dmi'
 	icon_state = "/obj/item/clothing/under/color"
 	post_init_icon_state = "jumpsuit"
 	inhand_icon_state = "jumpsuit"

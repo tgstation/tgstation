@@ -6,7 +6,7 @@
 	icon_angle = -45
 
 	//does the exact thing we want so heck why not
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/ceremonial_blade"
 	post_init_icon_state = "default"
 	greyscale_config = /datum/greyscale_config/ceremonial_blade

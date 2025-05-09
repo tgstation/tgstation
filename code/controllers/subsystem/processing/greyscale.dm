@@ -127,11 +127,14 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 		"clothing/neck" = /obj/item/clothing/neck,
 		"clothing/shoes" = /obj/item/clothing/shoes,
 		"clothing/suit" = /obj/item/clothing/suit,
-		"clothing/under" = /obj/item/clothing/under,
-		"clothing/clothing" = /obj/item/clothing,
+		"clothing/under/color" = /obj/item/clothing/under/color,
+		"clothing/under/costume" = /obj/item/clothing/under/costume,
+		"clothing/under/dress" = /obj/item/clothing/under/dress,
+		"clothing/under/_under" = /obj/item/clothing/under,
+		"clothing/_clothing" = /obj/item/clothing,
 		"items/encryptionkey" = /obj/item/encryptionkey,
 		"items/pda" = /obj/item/modular_computer/pda,
-		"items/item" = /obj/item,
+		"items/_item" = /obj/item,
 		"objects" = /obj,
 )
 
@@ -145,7 +148,7 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 /datum/controller/subsystem/processing/greyscale/proc/ExportMapPreviewsForType(filename, atom/atom_typepath, list/type_blacklist)
 	var/list/handled_types = list()
 	var/list/icons = list()
-	for(var/atom/atom_type as anything in subtypesof(atom_typepath))
+	for(var/atom/atom_type as anything in typesof(atom_typepath))
 		if(type_blacklist && type_blacklist[atom_type])
 			continue
 		handled_types[atom_type] = TRUE

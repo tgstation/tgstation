@@ -9,7 +9,7 @@
 	inhand_icon_state = "pet_carrier"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/pet_carrier"
 	post_init_icon_state = "pet_carrier_open"
 	greyscale_config = /datum/greyscale_config/pet_carrier

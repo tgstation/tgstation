@@ -3,7 +3,7 @@
 	desc = "A simple sleeveless tunic worn over an undersuit, it glows in the dark!"
 	worn_icon = 'icons/mob/clothing/under/ethereal.dmi'
 	greyscale_colors = "#4e7cc7"
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
 	icon_state = "/obj/item/clothing/under/ethereal_tunic"
 	post_init_icon_state = "eth_tunic"
 	greyscale_config = /datum/greyscale_config/eth_tunic

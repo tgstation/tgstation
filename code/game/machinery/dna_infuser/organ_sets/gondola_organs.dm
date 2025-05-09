@@ -20,7 +20,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 	name = "mutated gondola-heart"
 	desc = "Gondola DNA infused into what was once a normal heart."
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/heart/gondola"
 	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -54,7 +54,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 /obj/item/organ/tongue/gondola
 	name = "mutated gondola-tongue"
 	desc = "Gondola DNA infused into what was once a normal tongue."
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/tongue/gondola"
 	post_init_icon_state = "tongue"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -78,7 +78,7 @@ Fluoride Stare: After someone says 5 words, blah blah blah...
 /obj/item/organ/liver/gondola
 	name = "mutated gondola-liver"
 	desc = "Gondola DNA infused into what was once a normal liver."
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/liver/gondola"
 	post_init_icon_state = "liver"
 	greyscale_config = /datum/greyscale_config/mutant_organ

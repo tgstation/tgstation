@@ -1,7 +1,7 @@
 /obj/item/quantum_keycard
 	name = "quantum keycard"
 	desc = "A keycard able to link to a quantum pad's particle signature, allowing other quantum pads to travel there instead of their linked pad."
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/quantum_keycard"
 	post_init_icon_state = "quantum_keycard_gags"
 	greyscale_config = /datum/greyscale_config/quantum_keycard

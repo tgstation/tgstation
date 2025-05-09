@@ -23,7 +23,7 @@
 	safe_oxygen_min = 0
 	safe_oxygen_max = 15
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/lungs/carp"
 	post_init_icon_state = "lungs"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -43,7 +43,7 @@
 
 	say_mod = "gnashes"
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/tongue/carp"
 	post_init_icon_state = "tongue"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -112,7 +112,7 @@
 	name = "mutated carp-brain"
 	desc = "Carp DNA infused into what was once a normal brain."
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/brain/carp"
 	post_init_icon_state = "brain"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -156,7 +156,7 @@
 	name = "mutated carp-heart"
 	desc = "Carp DNA infused into what was once a normal heart."
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/heart/carp"
 	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ

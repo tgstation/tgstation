@@ -22,6 +22,9 @@
 /obj/item/clothing/shoes/sneakers/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	return icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "sneakers_worn")
 
+/obj/item/clothing/shoes/sneakers/random
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1 // same icon/color as base type
+
 /obj/item/clothing/shoes/sneakers/random/Initialize(mapload)
 	. = ..()
 	greyscale_colors = "#" + random_color() + "#" + random_color()
@@ -30,6 +33,7 @@
 /obj/item/clothing/shoes/sneakers/black
 	name = "black shoes"
 	desc = "A pair of black shoes."
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1 // same icon/color as base type
 	custom_price = PAYCHECK_CREW
 
 	cold_protection = FEET

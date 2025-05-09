@@ -16,7 +16,7 @@
 	desc = "Fashion in space."
 	inhand_icon_state = null
 	female_sprite_flags = FEMALE_UNIFORM_FULL
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
 	icon_state = "/obj/item/clothing/under/dress/striped"
 	post_init_icon_state = "stripeddress"
 	greyscale_config = /datum/greyscale_config/striped_dress
@@ -28,7 +28,7 @@
 	name = "sailor dress"
 	desc = "Formal wear for a leading lady."
 	alternate_worn_layer = UNDER_SUIT_LAYER
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
 	icon_state = "/obj/item/clothing/under/dress/sailor"
 	post_init_icon_state = "sailor_dress"
 	greyscale_config = /datum/greyscale_config/sailor_dress
@@ -55,7 +55,7 @@
 	desc = "Fancy dress for space bar singers."
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	inhand_icon_state = null
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
 	icon_state = "/obj/item/clothing/under/dress/eveninggown"
 	post_init_icon_state = "evening_gown"
 	greyscale_config = /datum/greyscale_config/evening_dress
@@ -70,7 +70,7 @@
 /obj/item/clothing/under/dress/skirt
 	name = "cardigan skirt"
 	desc = "A nice skirt with a cute cardigan, very fancy!"
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
 	icon_state = "/obj/item/clothing/under/dress/skirt"
 	post_init_icon_state = "cardiganskirt"
 	greyscale_config = /datum/greyscale_config/cardiganskirt
@@ -97,7 +97,7 @@
 	desc = "A casual turtleneck skirt."
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#cc0000#5f5f5f"
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
 	icon_state = "/obj/item/clothing/under/dress/skirt/turtleskirt"
 	post_init_icon_state = "turtleskirt"
 	greyscale_config = /datum/greyscale_config/turtleskirt
@@ -110,7 +110,7 @@
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#ff0000#1c1c1c"
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
 	icon_state = "/obj/item/clothing/under/dress/tango"
 	post_init_icon_state = "tango"
 	greyscale_config = /datum/greyscale_config/tango
@@ -122,7 +122,7 @@
 	desc = "Makes you want to frolic in a field of daisies."
 	custom_price = PAYCHECK_CREW
 	greyscale_colors = "#FFE60F#9194A5#1F243C"
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/dress.dmi'
 	icon_state = "/obj/item/clothing/under/dress/sundress"
 	post_init_icon_state = "sundress"
 	greyscale_config = /datum/greyscale_config/sundress

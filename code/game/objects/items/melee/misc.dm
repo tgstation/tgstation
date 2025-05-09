@@ -525,7 +525,7 @@
 	worn_icon_state = "default_worn"
 	icon_angle = -45
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/melee/cleric_mace"
 	post_init_icon_state = "default"
 	greyscale_config = /datum/greyscale_config/cleric_mace

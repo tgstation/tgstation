@@ -181,7 +181,7 @@
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
 	name = "blue buttondown suit"
 	worn_icon = 'icons/mob/clothing/under/shorts_pants_shirts.dmi'
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
 	icon_state = "/obj/item/clothing/under/rank/civilian/lawyer/bluesuit"
 	post_init_icon_state = "buttondown_slacks"
 	greyscale_config = /datum/greyscale_config/buttondown_slacks
@@ -192,7 +192,7 @@
 
 /obj/item/clothing/under/rank/civilian/lawyer/bluesuit/skirt
 	name = "blue buttondown suitskirt"
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
 	icon_state = "/obj/item/clothing/under/rank/civilian/lawyer/bluesuit/skirt"
 	post_init_icon_state = "buttondown_skirt"
 	greyscale_config = /datum/greyscale_config/buttondown_skirt

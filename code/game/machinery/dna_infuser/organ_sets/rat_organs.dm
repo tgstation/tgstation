@@ -20,7 +20,7 @@
 	eye_color_right = COLOR_BLACK
 
 	iris_overlay = null
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/eyes/night_vision/rat"
 	post_init_icon_state = "eyes"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -40,7 +40,7 @@
 	desc = "Rat DNA infused into what was once a normal stomach."
 	disgust_metabolism = 3
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/stomach/rat"
 	post_init_icon_state = "stomach"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -56,7 +56,7 @@
 /obj/item/organ/heart/rat
 	name = "mutated rat-heart"
 	desc = "Rat DNA infused into what was once a normal heart."
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/heart/rat"
 	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -93,7 +93,7 @@
 	desc = "Rat DNA infused into what was once a normal tongue."
 	say_mod = "squeaks"
 	modifies_speech = TRUE
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/tongue/rat"
 	post_init_icon_state = "tongue"
 	greyscale_config = /datum/greyscale_config/mutant_organ

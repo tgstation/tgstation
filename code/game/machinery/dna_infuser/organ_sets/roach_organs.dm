@@ -44,7 +44,7 @@
 	desc = "Roach DNA infused into what was once a normal heart."
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/heart/roach"
 	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -162,7 +162,7 @@
 	metabolism_efficiency = 0.033 // Slightly worse at transferring reagents
 	hunger_modifier = 3
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/stomach/roach"
 	post_init_icon_state = "stomach"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -181,7 +181,7 @@
 	toxTolerance = 5 // More tolerance for toxins
 	liver_resistance = 0.25 // But if they manage to get in you're screwed
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/liver/roach"
 	post_init_icon_state = "liver"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -214,7 +214,7 @@
 	desc = "Roach DNA infused into what was once a normal appendix. It could get <i>worse</i>?"
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/appendix/roach"
 	post_init_icon_state = "appendix"
 	greyscale_config = /datum/greyscale_config/mutant_organ

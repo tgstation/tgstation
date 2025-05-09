@@ -19,7 +19,7 @@ do { \
 	name = "black jumpsuit"
 	desc = "It's a plain jumpsuit. It has a small dial on the wrist."
 	greyscale_colors = "#3f3f3f"
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/color.dmi'
 	icon_state = "/obj/item/clothing/under/color"
 	post_init_icon_state = "jumpsuit"
 	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
@@ -254,6 +254,7 @@ do { \
 	BREAK_CHAMELEON_ACTION(src)
 
 /obj/item/clothing/shoes/chameleon/noslip
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	clothing_traits = list(TRAIT_NO_SLIP_WATER)
 	can_be_bloody = FALSE
 
@@ -274,6 +275,7 @@ do { \
 	ADD_TRAIT(src, TRAIT_CONTRABAND_BLOCKER, INNATE_TRAIT)
 
 /obj/item/storage/backpack/chameleon/broken
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/storage/backpack/chameleon/broken/Initialize(mapload)
 	. = ..()

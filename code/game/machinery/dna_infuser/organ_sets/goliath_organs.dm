@@ -17,7 +17,7 @@
 	desc = "goliath DNA infused into what was once some normal eyes."
 
 	iris_overlay = null
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/eyes/night_vision/goliath"
 	post_init_icon_state = "eyes"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -41,7 +41,7 @@
 	name = "mutated goliath-lungs"
 	desc = "goliath DNA infused into what was once some normal lungs."
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/lungs/lavaland/goliath"
 	post_init_icon_state = "lungs"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -57,7 +57,7 @@
 	name = "mutated goliath-brain"
 	desc = "goliath DNA infused into what was once a normal brain."
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/brain/goliath"
 	post_init_icon_state = "brain"
 	greyscale_config = /datum/greyscale_config/mutant_organ
@@ -168,7 +168,7 @@
 	name = "mutated goliath-heart"
 	desc = "goliath DNA infused into what was once a normal heart."
 
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/heart/goliath"
 	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ

@@ -63,7 +63,7 @@
 
 //preset wrapping paper meant to fill the original color configuration
 /obj/item/stack/wrapping_paper/xmas
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/stack/wrapping_paper/xmas"
 	post_init_icon_state = "wrap_paper"
 	greyscale_colors = "#00FF00#FF0000"

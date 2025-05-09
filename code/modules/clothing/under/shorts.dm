@@ -1,7 +1,7 @@
 /obj/item/clothing/under/shorts
 	name = "shorts"
 	desc = "A pair of comfy shorts."
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
 	icon_state = "/obj/item/clothing/under/shorts"
 	post_init_icon_state = "shorts"
 	greyscale_config = /datum/greyscale_config/shorts
@@ -18,7 +18,7 @@
 /obj/item/clothing/under/shorts/jeanshorts
 	name = "jean shorts"
 	desc = "A nondescript pair of tough jean shorts."
-	icon = 'icons/map_icons/clothing/under.dmi'
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
 	icon_state = "/obj/item/clothing/under/shorts/jeanshorts"
 	post_init_icon_state = "jeanshorts"
 	greyscale_config = /datum/greyscale_config/jeanshorts

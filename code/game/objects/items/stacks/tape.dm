@@ -15,7 +15,7 @@
 	var/conferred_embed = /datum/embedding/sticky_tape
 	///The tape type you get when ripping off a piece of tape.
 	var/obj/tape_gag = /obj/item/clothing/mask/muzzle/tape
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/stack/sticky_tape"
 	post_init_icon_state = "tape"
 	greyscale_config = /datum/greyscale_config/tape
@@ -105,7 +105,7 @@
 	prefix = "pointy"
 	conferred_embed = /datum/embedding/pointy_tape
 	merge_type = /obj/item/stack/sticky_tape/pointy
-	icon = 'icons/map_icons/items/item.dmi'
+	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/stack/sticky_tape/pointy"
 	post_init_icon_state = "tape_spikes"
 	greyscale_config = /datum/greyscale_config/tape/spikes
