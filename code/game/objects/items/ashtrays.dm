@@ -59,6 +59,12 @@
 
 	to_chat(user,	span_notice("You can't put it in there."))
 
+/obj/item/ashtray/proc/set_cig_count(new_amount = 0)
+	if(cig_count == new_amount)
+		return
+	cig_count = new_amount
+	update_appearance()
+
 /obj/item/ashtray/update_overlays()
 	. = ..()
 

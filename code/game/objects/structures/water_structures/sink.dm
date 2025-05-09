@@ -216,8 +216,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			return FALSE
 
 		var/obj/item/ashtray/A = O
-		A.cig_count = 0
-		A.update_appearance()
+		A.set_cig_count(new_amount = 0)
 
 		busy = FALSE
 
