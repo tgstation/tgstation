@@ -222,7 +222,7 @@
 		//If our weapon that we are hitting the mech with has armour penetration, we could potentially get a hit in on the occupant
 		var/peeling_the_onion = clamp(weapon.armour_penetration - (get_armor_rating(MELEE)/2), 0, 100)
 
-		if(peeling_the_onion && prob(peeling_the_onion) \
+		if(peeling_the_onion && prob(peeling_the_onion) && !(mecha_flags & CANNOT_OVERPENETRATE) \
 			&& LAZYLEN(occupants) \
 			&& !(mecha_flags & SILICON_PILOT))
 			var/mob/living/hitmob = pick(occupants)

@@ -13,6 +13,8 @@
 #define HAS_LIGHTS (1<<6)
 #define QUIET_STEPS (1<<7)
 #define QUIET_TURNS (1<<8)
+#define CANNOT_OVERPENETRATE (1<<9)
+
 ///blocks using equipment and melee attacking.
 #define CANNOT_INTERACT (1<<9)
 /// posibrains can drive this mecha
