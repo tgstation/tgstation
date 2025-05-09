@@ -66,7 +66,7 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 			return CONTEXTUAL_SCREENTIP_SET
 	else
-		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle"
 		context[SCREENTIP_CONTEXT_RMB] = (locked ? "Unlock" : "Lock")
 		return CONTEXTUAL_SCREENTIP_SET
 
