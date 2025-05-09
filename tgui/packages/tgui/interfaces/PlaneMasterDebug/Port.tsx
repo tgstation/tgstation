@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Box, Button, Stack, Tooltip } from 'tgui-core/components';
+import { Box, Button, Floating, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { PlaneDebugContext } from '.';
@@ -22,7 +22,7 @@ export function Port(props: PortProps) {
     source ? connection.target : connection.source
   ) as Plane;
   return (
-    <Tooltip
+    <Floating
       content={
         <Stack fill vertical>
           <Stack.Item>Connected to {connectedPlane.name}</Stack.Item>
@@ -53,7 +53,8 @@ export function Port(props: PortProps) {
           </Button>
         </Stack>
       }
-      position="bottom"
+      placement="bottom"
+      contentClasses="Tooltip__Port"
     >
       <Box
         className={classes(['ObjectComponent__Port'])}
@@ -102,6 +103,6 @@ export function Port(props: PortProps) {
         </svg>
         <span ref={target_ref} className="ObjectComponent__PortPos" />
       </Box>
-    </Tooltip>
+    </Floating>
   );
 }
