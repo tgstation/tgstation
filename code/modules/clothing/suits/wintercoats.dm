@@ -214,8 +214,13 @@
 	bomb = 10
 	acid = 35
 
+/obj/item/clothing/suit/hooded/wintercoat/hop/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_wintercoat_allowed
+
 /obj/item/clothing/head/hooded/winterhood/hop
 	icon_state = "hood_hop"
+	armor_type =/datum/armor/wintercoat_hop
 
 // Botanist
 /obj/item/clothing/suit/hooded/wintercoat/hydro

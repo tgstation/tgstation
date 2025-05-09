@@ -27,6 +27,18 @@
 	for(var/i in 1 to 7)
 		new /obj/item/clothing/glasses/regular(src)
 
+//it needs to be linked, hence a kit.
+/obj/item/storage/box/rxglasses/spyglasskit
+	name = "spyglass kit"
+	desc = "this box contains <i>cool</i> nerd glasses; with built-in displays to view a linked camera."
+
+/obj/item/storage/box/rxglasses/spyglasskit/PopulateContents()
+	var/obj/item/clothing/accessory/spy_bug/newbug = new(src)
+	var/obj/item/clothing/glasses/sunglasses/spy/newglasses = new(src)
+	newbug.linked_glasses = newglasses
+	newglasses.linked_bug = newbug
+	new /obj/item/paper/fluff/nerddocs(src)
+
 /obj/item/storage/box/tape_wizard
 	name = "Tape Wizard - Episode 23"
 	desc = "A box containing the costume used by legendary entertainment icon 'Super Tape Wizard'. It got a little stuck on its way out."
@@ -241,3 +253,63 @@
 /obj/item/storage/box/collar_bomb/PopulateContents()
 	var/obj/item/collar_bomb_button/button = new(src)
 	new /obj/item/clothing/neck/collar_bomb(src, button)
+
+/obj/item/storage/box/itemset/crusader/blue/PopulateContents()
+	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/blue(src)
+	new /obj/item/clothing/head/helmet/plate/crusader/blue(src)
+	new /obj/item/clothing/gloves/plate/blue(src)
+	new /obj/item/clothing/shoes/plate/blue(src)
+
+/obj/item/storage/box/itemset/crusader/red/PopulateContents()
+	new /obj/item/clothing/suit/chaplainsuit/armor/crusader/red(src)
+	new /obj/item/clothing/head/helmet/plate/crusader/red(src)
+	new /obj/item/clothing/gloves/plate/red(src)
+	new /obj/item/clothing/shoes/plate/red(src)
+
+/obj/item/storage/box/wizard_kit
+	name = "Generic Wizard Cosplay Kit"
+
+/obj/item/storage/box/wizard_kit/PopulateContents()
+	new /obj/item/clothing/head/wizard(src)
+	new /obj/item/clothing/suit/wizrobe(src)
+	new /obj/item/clothing/shoes/sandal(src)
+
+/obj/item/storage/box/wizard_kit/red
+	name = "Evocation Wizard Cosplay Kit"
+
+/obj/item/storage/box/wizard_kit/red/PopulateContents()
+	new /obj/item/clothing/head/wizard/red(src)
+	new /obj/item/clothing/suit/wizrobe/red(src)
+	new /obj/item/clothing/shoes/sandal(src)
+
+/obj/item/storage/box/wizard_kit/yellow
+	name = "Translocation Wizard Cosplay Kit"
+
+/obj/item/storage/box/wizard_kit/yellow/PopulateContents()
+	new /obj/item/clothing/head/wizard/yellow(src)
+	new /obj/item/clothing/suit/wizrobe/yellow(src)
+	new /obj/item/clothing/shoes/sandal(src)
+
+/obj/item/storage/box/wizard_kit/magusred
+	name = "Conjuration Wizard Cosplay Kit"
+
+/obj/item/storage/box/wizard_kit/yellow/PopulateContents()
+	new /obj/item/clothing/head/wizard/magus(src)
+	new /obj/item/clothing/suit/wizrobe/magusred(src)
+	new /obj/item/clothing/shoes/sandal(src)
+
+/obj/item/storage/box/wizard_kit/magusblue
+	name = "Transmutation Wizard Cosplay Kit"
+
+/obj/item/storage/box/wizard_kit/yellow/PopulateContents()
+	new /obj/item/clothing/head/wizard/magus(src)
+	new /obj/item/clothing/suit/wizrobe/magusblue(src)
+	new /obj/item/clothing/shoes/sandal(src)
+
+/obj/item/storage/box/wizard_kit/black
+	name = "Necromancy Wizard Cosplay Kit"
+
+/obj/item/storage/box/wizard_kit/black/PopulateContents()
+	new /obj/item/clothing/head/wizard/black(src)
+	new /obj/item/clothing/suit/wizrobe/black(src)
+	new /obj/item/clothing/shoes/sandal(src)

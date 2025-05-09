@@ -474,7 +474,7 @@
 /area/shuttle/escape)
 "iB" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "iE" = (
