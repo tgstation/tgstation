@@ -213,3 +213,30 @@
       camera console from the bridge.
   throwawayuseless:
   - balance: Massively reduce the MMI component message cooldown.
+2025-05-09:
+  1393F:
+  - qol: Pluoxium, an oxygen substitute, will no longer be scrubbed when setting air
+      alarms to contaminated.
+  Absolucy:
+  - qol: Ghost notifications will now use the real names of mobs when something happens
+      (i.e no more "Unknown has completed an ascension ritual!")
+  Bisar:
+  - qol: Bluespace light replacer no longer has a range limit.
+  Goat:
+  - bugfix: Barometers now properly report if the weather is dangerous or not.
+  Goat-Real:
+  - balance: Ice whelps' fire breath attack has slightly more delay. (0.5 -> 0.6 second
+      startup, 0.75 -> 0.85 decisecond for the speed the fire moves per tile.)
+  Jacquerel:
+  - balance: The supermatter will react negatively to being fed nuclear fissile materials
+  Krysonism:
+  - rscadd: Added a new type of reagent container; the jerrycan.
+  - rscadd: Added some prefilled jerrycans to maint loot.
+  - balance: Botany nutrients now come in bulk packaging.
+  Rhials:
+  - bugfix: Immovable rods self-delete at the icebox world border.
+  TealSeer:
+  - bugfix: fixed the photocopier silently failing if you can't pay the fee
+  necromanceranne:
+  - bugfix: Caps how much eyeblur can be caused by things like projectiles.
+  - bugfix: The tesla cannon now fires actually visible bolts.
