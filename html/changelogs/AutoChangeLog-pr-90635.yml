@@ -1,0 +1,4 @@
+author: "throwawayuseless"
+delete-after: True
+changes:
+  - rscadd: "Robotic voiceboxes now grant Encoded Audio Language. Techpriests and circuit nerds, rejoice!"
