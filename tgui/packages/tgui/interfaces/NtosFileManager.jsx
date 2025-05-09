@@ -72,7 +72,6 @@ const FileTable = (props) => {
               <Button.Input
                 fluid
                 value={file.name}
-                tooltip="Rename"
                 onCommit={(value) => onRename(file.name, value)}
               />
             ) : (
