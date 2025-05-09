@@ -60,6 +60,8 @@
 	to_chat(user,	span_notice("You can't put it in there."))
 
 /obj/item/ashtray/update_overlays()
+	. = ..()
+
 	overlays = list()
 
 	var/image/overlay = null
