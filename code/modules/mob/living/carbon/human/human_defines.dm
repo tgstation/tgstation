@@ -94,3 +94,9 @@
 	VAR_PRIVATE/base_mob_height = HUMAN_HEIGHT_MEDIUM
 	/// Actual height of the mob. Don't touch this one, it is set via update_mob_height()
 	VAR_FINAL/mob_height = HUMAN_HEIGHT_MEDIUM
+
+	// DOPPLER EDIT START - Floating Hands quirk
+	var/obj/effect/abstract/held_tk_effect/left/held_left
+	var/obj/effect/abstract/held_tk_effect/right/held_right
+	var/held_hover_color
+	// DOPPLER EDIT END
