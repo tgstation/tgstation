@@ -13,14 +13,14 @@
 #define HAS_LIGHTS (1<<6)
 #define QUIET_STEPS (1<<7)
 #define QUIET_TURNS (1<<8)
-#define CANNOT_OVERPENETRATE (1<<9)
-
 ///blocks using equipment and melee attacking.
 #define CANNOT_INTERACT (1<<9)
 /// posibrains can drive this mecha
 #define MMI_COMPATIBLE (1<<10)
 /// Can click from any direction and perform stuff
 #define OMNIDIRECTIONAL_ATTACKS (1<<11)
+/// Prevents overpenetrating through the mecha and into the cockpit using an armour penetrating weapon
+#define CANNOT_OVERPENETRATE (1<<12)
 
 #define MECHA_MELEE (1 << 0)
 #define MECHA_RANGED (1 << 1)
