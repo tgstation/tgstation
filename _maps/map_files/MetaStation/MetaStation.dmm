@@ -6440,6 +6440,9 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
 "cpU" = (
@@ -16403,6 +16406,9 @@
 	pixel_y = 6
 	},
 /obj/item/stamp/head/hos,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -14
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "fTn" = (
@@ -19035,6 +19041,7 @@
 /obj/structure/table/wood,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/ashtray,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "gPY" = (
@@ -20278,6 +20285,11 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/mecha_wreckage/ripley,
 /turf/open/floor/iron,
+/area/station/maintenance/port/aft)
+"hnx" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/ashtray,
+/turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "hnG" = (
 /obj/machinery/door/poddoor{
@@ -26428,6 +26440,10 @@
 /obj/item/stack/package_wrap,
 /obj/item/stack/package_wrap,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16;
+	pixel_x = -6
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "jsi" = (
@@ -28231,6 +28247,9 @@
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
 /obj/machinery/light/directional/east,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 12
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "jUW" = (
@@ -30841,6 +30860,14 @@
 /obj/machinery/announcement_system,
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
+"kRp" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 0;
+	pixel_x = 12
+	},
+/turf/open/floor/wood,
+/area/station/commons/lounge)
 "kRA" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /obj/effect/mapping_helpers/broken_floor,
@@ -40364,6 +40391,10 @@
 /area/station/science/xenobiology/hallway)
 "ooG" = (
 /obj/structure/table,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 12;
+	pixel_x = 16
+	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "ooP" = (
@@ -41780,6 +41811,9 @@
 	pixel_x = 1;
 	pixel_y = 5
 	},
+/obj/effect/spawner/random/ashtray{
+	pixel_x = -13
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "oOB" = (
@@ -42747,6 +42781,16 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
+"pgL" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/booze{
+	spawn_random_offset = 1
+	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -16
+	},
+/turf/open/floor/wood,
+/area/station/maintenance/port/aft)
 "pgM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -43171,6 +43215,9 @@
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/entertainment/lighter,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 16
+	},
 /turf/open/floor/iron,
 /area/station/service/bar)
 "pog" = (
@@ -51994,6 +52041,10 @@
 /obj/structure/table,
 /obj/item/binoculars,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 8;
+	pixel_x = -14
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "stL" = (
@@ -52477,6 +52528,10 @@
 /obj/item/pen{
 	pixel_x = -5;
 	pixel_y = 5
+	},
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 12;
+	pixel_y = 4
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
@@ -53178,6 +53233,10 @@
 /obj/item/folder/red,
 /obj/item/hand_labeler,
 /obj/item/camera/detective,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16;
+	pixel_x = 4
+	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "sOn" = (
@@ -60747,6 +60806,9 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 4
+	},
 /turf/open/floor/iron,
 /area/station/service/bar)
 "vrJ" = (
@@ -65009,6 +65071,10 @@
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 4;
+	pixel_x = -4
+	},
 /turf/open/floor/wood,
 /area/station/commons/lounge)
 "wPG" = (
@@ -66857,6 +66923,10 @@
 	},
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /obj/machinery/light/small/directional/south,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 12;
+	pixel_x = -9
+	},
 /turf/open/floor/iron,
 /area/station/science/research)
 "xxU" = (
@@ -83066,10 +83136,10 @@ tYi
 giT
 jUb
 esd
-htr
+hnx
 htr
 dJT
-dbm
+pgL
 dbm
 ruz
 uxS
@@ -104632,7 +104702,7 @@ rac
 nXG
 eoo
 fqD
-qcQ
+kRp
 nsk
 fVC
 fZV

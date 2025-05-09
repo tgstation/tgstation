@@ -202,6 +202,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		qdel(O)
 		return
 
+	if(istype(O, /obj/item/ashtray))
+		if(reagents.total_volume <= 0)
+			to_chat(user, span_notice("\The [src] is dry."))
+			return FALSE
+
+		busy = TRUE
+		user.visible_message(span_notice("[user] starts washing [O] in [src]."), span_notice("You start washing [O] in [src]."))
+
+		if(!do_after(user, 2 SECONDS, src))
+			busy = FALSE
+			to_chat(user, span_warning("You take [O] away from [src] before you're done washing it."))
+			return FALSE
+
+		var/obj/item/ashtray/A = O
+		A.cigCount = 0
+		A.update_appearance()
+
+		busy = FALSE
+
 	if(!istype(O))
 		return
 	if(O.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.

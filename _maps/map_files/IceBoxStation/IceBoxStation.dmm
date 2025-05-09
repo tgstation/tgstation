@@ -5007,6 +5007,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/engineering)
+"brH" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
+	},
+/turf/open/floor/carpet/royalblue,
+/area/station/command/heads_quarters/captain)
 "brJ" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/landmark/event_spawn,
@@ -8275,6 +8282,9 @@
 "ciS" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/trash/cigbutt,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "ciU" = (
@@ -14036,6 +14046,14 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/security/prison/safe)
+"dSA" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 16
+	},
+/turf/open/floor/iron,
+/area/station/service/bar)
 "dSJ" = (
 /obj/machinery/flasher/directional/north{
 	id = "visitorflash"
@@ -25859,6 +25877,7 @@
 	pixel_x = 6;
 	pixel_y = 12
 	},
+/obj/effect/spawner/random/ashtray,
 /turf/open/floor/iron,
 /area/mine/eva)
 "hqx" = (
@@ -33720,6 +33739,9 @@
 /area/icemoon/surface/outdoors/nospawn)
 "jHe" = (
 /obj/structure/table/wood,
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 16
+	},
 /turf/open/floor/wood/parquet,
 /area/station/service/bar/atrium)
 "jHh" = (
@@ -45456,6 +45478,9 @@
 	pixel_y = 10
 	},
 /obj/item/storage/box/matches,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "nae" = (
@@ -48390,6 +48415,9 @@
 	pixel_y = -1
 	},
 /obj/item/clothing/glasses/meson/engine,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -16
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage)
 "nNu" = (
@@ -49338,6 +49366,10 @@
 /obj/machinery/cell_charger,
 /obj/effect/turf_decal/tile/brown/fourcorners,
 /obj/item/radio/intercom/directional/west,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 10;
+	pixel_x = 7
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/lobby)
 "obt" = (
@@ -55258,6 +55290,9 @@
 	pixel_x = 8;
 	pixel_y = -9
 	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
+	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "pEX" = (
@@ -56383,6 +56418,9 @@
 /obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/tile/brown/half/contrasted{
 	dir = 4
+	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 14
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/break_room)
@@ -65035,6 +65073,9 @@
 	pixel_x = 9;
 	pixel_y = -2
 	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
 "srZ" = (
@@ -66735,6 +66776,9 @@
 	pixel_y = 8
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -1
+	},
 /turf/open/floor/iron,
 /area/mine/living_quarters)
 "sQB" = (
@@ -67034,6 +67078,7 @@
 "sUS" = (
 /obj/structure/table/wood,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/ashtray,
 /turf/open/floor/wood,
 /area/station/maintenance/port/aft)
 "sUT" = (
@@ -68559,6 +68604,9 @@
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/cigarette,
 /obj/effect/spawner/random/entertainment/lighter,
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 16
+	},
 /turf/open/floor/wood/parquet,
 /area/station/service/bar/atrium)
 "tsz" = (
@@ -74182,6 +74230,10 @@
 /obj/item/radio/off{
 	pixel_x = -3;
 	pixel_y = 7
+	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -4;
+	pixel_x = -12
 	},
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/hos)
@@ -84417,6 +84469,12 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"yaj" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/spawner/random/ashtray,
+/turf/open/floor/iron,
+/area/station/service/bar)
 "yan" = (
 /obj/structure/sign/warning/electric_shock/directional/north,
 /obj/machinery/door/firedoor{
@@ -247703,7 +247761,7 @@ dOF
 lpM
 djh
 sgZ
-sgZ
+brH
 pZN
 kwu
 uKS
@@ -252318,7 +252376,7 @@ jJA
 jJA
 sRw
 vNU
-vNU
+yaj
 tvt
 peP
 spz
@@ -252832,7 +252890,7 @@ fXw
 abZ
 qfz
 mNP
-vNU
+dSA
 tvt
 pQD
 lsA
@@ -253603,7 +253661,7 @@ bUy
 bUy
 gBJ
 vNU
-vNU
+yaj
 tvt
 ulR
 qjW

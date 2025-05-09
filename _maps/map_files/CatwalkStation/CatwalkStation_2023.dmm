@@ -8409,6 +8409,9 @@
 /obj/structure/table/reinforced,
 /obj/machinery/camera/autoname/directional/west,
 /obj/item/radio/intercom/directional/west,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "czu" = (
@@ -15133,6 +15136,10 @@
 	pixel_x = 7;
 	pixel_y = 10
 	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -3;
+	pixel_x = 6
+	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain/private)
 "eAH" = (
@@ -20624,6 +20631,10 @@
 /obj/item/pen/fountain{
 	pixel_x = -1
 	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 10;
+	pixel_x = 8
+	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "ghm" = (
@@ -23230,6 +23241,10 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 10;
+	pixel_x = -6
+	},
 /turf/open/floor/wood/parquet,
 /area/station/medical/break_room)
 "gWq" = (
@@ -32223,6 +32238,7 @@
 	pixel_x = -11;
 	pixel_y = -2
 	},
+/obj/effect/spawner/random/ashtray,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/lounge)
 "jBW" = (
@@ -39828,6 +39844,10 @@
 /obj/item/stamp/head/hos{
 	pixel_x = 7;
 	pixel_y = 10
+	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 0;
+	pixel_x = -11
 	},
 /turf/open/floor/carpet/royalblack,
 /area/station/command/heads_quarters/hos)
@@ -66193,6 +66213,7 @@
 	pixel_x = -13;
 	pixel_y = 4
 	},
+/obj/effect/spawner/random/ashtray,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
 "tRG" = (
@@ -67170,6 +67191,10 @@
 	pixel_y = 7
 	},
 /obj/item/reagent_containers/dropper,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 13;
+	pixel_x = -7
+	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/pharmacy)
 "ugE" = (
@@ -67636,6 +67661,9 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
+	},
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "umD" = (
@@ -71478,6 +71506,7 @@
 	pixel_x = 6;
 	pixel_y = 15
 	},
+/obj/effect/spawner/random/ashtray,
 /turf/open/floor/carpet,
 /area/station/service/bar)
 "vsh" = (
@@ -73132,6 +73161,9 @@
 /obj/item/toy/cards/deck/wizoff{
 	pixel_x = -4;
 	pixel_y = 5
+	},
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 8
 	},
 /turf/open/floor/iron,
 /area/station/science/breakroom)
@@ -76763,6 +76795,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/ashtray,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "wXr" = (

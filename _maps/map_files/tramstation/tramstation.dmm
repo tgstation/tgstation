@@ -5728,6 +5728,9 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners{
 	dir = 1
 	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 10
+	},
 /turf/open/floor/iron/dark,
 /area/station/medical/break_room)
 "aQH" = (
@@ -9548,6 +9551,9 @@
 	c_tag = "Science - Ordnance Launch Bay"
 	},
 /obj/item/radio/intercom/directional/west,
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 18
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "ckt" = (
@@ -9962,6 +9968,9 @@
 	},
 /obj/effect/mapping_helpers/requests_console/ore_update,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -11
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "csh" = (
@@ -23697,6 +23706,7 @@
 /area/station/medical/break_room)
 "hrF" = (
 /obj/structure/table/wood,
+/obj/effect/spawner/random/ashtray,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
 "hrS" = (
@@ -30694,6 +30704,9 @@
 /obj/structure/plaque/static_plaque/atmos{
 	pixel_x = -32
 	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 15
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "jUO" = (
@@ -31262,6 +31275,7 @@
 "kbM" = (
 /obj/structure/table/wood,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/spawner/random/ashtray,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "kbW" = (
@@ -38422,6 +38436,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
+"mvT" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/ashtray,
+/turf/open/floor/carpet,
+/area/station/hallway/secondary/entry)
 "mwd" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 8
@@ -50526,6 +50545,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/large,
 /area/station/service/theater)
+"qPs" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -8
+	},
+/turf/open/floor/iron,
+/area/station/cargo/miningdock/cafeteria)
 "qPE" = (
 /obj/structure/chair/greyscale{
 	dir = 4
@@ -60084,6 +60111,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
+"ugv" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/ashtray,
+/turf/open/floor/iron/dark,
+/area/station/service/bar)
 "ugC" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/grass,
@@ -65970,6 +66002,9 @@
 /obj/structure/table/glass,
 /obj/machinery/coffeemaker,
 /obj/structure/sign/calendar/directional/east,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 11
+	},
 /turf/open/floor/iron/cafeteria,
 /area/station/science/breakroom)
 "wdx" = (
@@ -66878,6 +66913,9 @@
 	pixel_x = -3;
 	pixel_y = 8;
 	start_on = 0
+	},
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 16
 	},
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hos)
@@ -70384,6 +70422,9 @@
 "xNt" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -11
+	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "xNH" = (
@@ -118108,7 +118149,7 @@ xcU
 sfn
 njK
 xiZ
-nTG
+qPs
 nTG
 taK
 unl
@@ -149747,7 +149788,7 @@ fNV
 aFh
 xQS
 wml
-euI
+mvT
 mWK
 xQS
 aGx
@@ -168495,7 +168536,7 @@ jgn
 crT
 crT
 crT
-crT
+ugv
 oVc
 mzb
 wev
@@ -169518,14 +169559,14 @@ oCx
 vJt
 mHc
 wwK
-crT
+ugv
 kcu
 nBy
 ahq
 bKF
 tXL
 hOh
-crT
+ugv
 hCp
 mHc
 mHc
@@ -170034,7 +170075,7 @@ mHc
 jbx
 xLh
 uyq
-crT
+ugv
 crT
 xpC
 ivn
