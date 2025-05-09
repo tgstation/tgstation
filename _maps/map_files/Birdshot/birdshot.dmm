@@ -26829,7 +26829,7 @@
 /area/station/maintenance/department/engine)
 "iYu" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/aft)
 "iYC" = (
@@ -27065,7 +27065,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/greater)
 "jbV" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "jbX" = (
@@ -39660,7 +39660,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/security/checkpoint/supply)
 "njA" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/structure/sign/poster/official/random/directional/north,
 /obj/machinery/camera/autoname/directional/north,
 /obj/machinery/airalarm/directional/east,
@@ -45502,7 +45502,7 @@
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den/gaming)
 "plJ" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -51461,7 +51461,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/lobby)
 "rhL" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/grimy,
@@ -52720,7 +52720,7 @@
 /turf/open/floor/iron,
 /area/station/maintenance/fore/greater)
 "rEF" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /obj/structure/sign/painting/library{
 	pixel_y = 32
 	},
@@ -52992,7 +52992,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/qm)
 "rJL" = (
@@ -68132,7 +68132,7 @@
 /obj/effect/turf_decal/siding/thinplating_new/light{
 	dir = 8
 	},
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/grimy,
 /area/station/science/cubicle)
 "wwm" = (
