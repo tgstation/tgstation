@@ -52,8 +52,8 @@
 		qdel(C)
 		update_appearance()
 		user.visible_message(
-			span_notice("[user] puts out [C] into [src]."),
-			span_notice("You put out [C] into [src].")
+			span_notice("[user] puts [C] into [src]."),
+			span_notice("You put [C] into [src].")
 		)
 		return
 
