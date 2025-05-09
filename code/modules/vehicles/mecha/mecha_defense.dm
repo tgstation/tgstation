@@ -120,7 +120,7 @@
 	var/kill_the_meat = clamp(hitting_projectile.armour_penetration - get_armor_rating(hitting_projectile.armor_flag), 0, 100)
 
 	//allows bullets to hit the pilot of open-canopy mechs, or if the bullet penetrates to the pilot, or the bullet can pass through structures
-	if((!(mecha_flags & IS_ENCLOSED) || kill_the_meat && prob(kill_the_meat) || hitting_projectile.pass_flags & PASSSTRUCTURE) \
+	if((!(mecha_flags & IS_ENCLOSED) || kill_the_meat && prob(kill_the_meat) && !(mecha_flags & CANNOT_OVERPENETRATE) || hitting_projectile.pass_flags & PASSSTRUCTURE) \
 		&& LAZYLEN(occupants) \
 		&& !(mecha_flags & SILICON_PILOT) \
 		&& (def_zone == BODY_ZONE_HEAD || def_zone == BODY_ZONE_CHEST))
