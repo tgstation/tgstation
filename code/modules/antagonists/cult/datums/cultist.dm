@@ -9,9 +9,6 @@
 	antag_hud_name = "cult"
 	stinger_sound = 'sound/music/antag/bloodcult/bloodcult_gain.ogg'
 
-	///The vote ability Cultists have to elect someone to be the leader.
-	var/datum/action/innate/cult/mastervote/vote_ability
-
 	///Boolean on whether the starting equipment should be given to their inventory.
 	var/give_equipment = FALSE
 	///Reference to the Blood cult team they are part of.
@@ -35,9 +32,6 @@
 
 	var/datum/action/innate/cult/comm/communion = new(owner)
 	communion.Grant(current)
-	if(isnull(cult_team.cult_leader_datum))
-		vote_ability = new(owner)
-		vote_ability.Grant(current)
 	if(ishuman(current))
 		var/datum/action/innate/cult/blood_magic/magic = new(owner)
 		magic.Grant(current)
@@ -50,8 +44,6 @@
 		to_chat(owner.current, span_userdanger("An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant."))
 		owner.current.log_message("has renounced the cult of Nar'Sie!", LOG_ATTACK, color=COLOR_CULT_RED)
 
-	if(vote_ability)
-		QDEL_NULL(vote_ability)
 	for(var/datum/action/innate/cult/cult_buttons in owner.current.actions)
 		qdel(cult_buttons)
 
@@ -185,8 +177,8 @@
 /datum/antagonist/cult/proc/make_cult_leader()
 	if(cult_team.cult_leader_datum)
 		return FALSE
-	cult_team.cult_leader_datum = src
 
+	cult_team.cult_leader_datum = src
 	antag_hud_name = "cultmaster"
 	add_team_hud(owner.current)
 	RegisterSignal(owner.current, COMSIG_MOB_STATCHANGE, PROC_REF(deathrattle))
@@ -198,13 +190,15 @@
 	var/datum/action/innate/cult/master/pulse/throwing = new
 	bloodmark.Grant(owner.current)
 	throwing.Grant(owner.current)
+	if(!cult_team.leader_passed_on)
+		var/datum/action/innate/cult/master/pass_role/pass_role = new
+		pass_role.Grant(owner.current)
 	owner.current.update_mob_action_buttons()
 
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
-		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(/datum/antagonist/cult)
-		cult_datum.vote_ability.Remove(cult_mind.current)
-		to_chat(cult_mind.current, span_cult_large("[owner.current] has won the cult's support and is now their master. \
-			Follow [owner.current.p_their()] orders to the best of your ability!"))
+		if (cult_mind != owner)
+			to_chat(cult_mind.current, span_cult_large("[owner.current] is your cult's Master! \
+				Follow [owner.current.p_their()] orders to the best of your ability!"))
 
 	to_chat(owner.current, span_cult_large("<span class='warningplain'>You are the cult's Master</span>. \
 		As the cult's Master, you have a unique title and loud voice when communicating, are capable of marking \
@@ -215,7 +209,6 @@
 	return TRUE
 
 ///Admin-only helper to demote someone from Cult leader, taking away their HUD, abilities, and deathrattle
-///And gives all cultists from their team back their ability to vote for a new leader.
 /datum/antagonist/cult/proc/demote_from_leader()
 	if(!cult_team.cult_leader_datum)
 		return FALSE
@@ -234,13 +227,11 @@
 	var/datum/action/innate/cult/master/pulse/throwing = locate() in owner.current.actions
 	if(throwing)
 		throwing.Remove(owner.current)
+	var/datum/action/innate/cult/master/pass_role/pass_role = locate() in owner.current.actions
+	if(pass_role)
+		pass_role.Remove(owner.current)
 	owner.current.update_mob_action_buttons()
-	for(var/datum/mind/cult_mind as anything in cult_team.members)
-		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(/datum/antagonist/cult)
-		cult_datum.vote_ability.Grant(cult_mind.current)
-
-	to_chat(owner.current, span_cult_large("You have been demoted from being the cult's Master, you are now an acolyte once more!"))
-
+	to_chat(owner.current, span_cult_large("You have been demoted from being the cult's Master, you are now a mere acolyte!"))
 	return TRUE
 
 ///If dead (and Narsie isn't summoned), will alert all Cultists of their death, sending their location out.
