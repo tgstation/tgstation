@@ -22,12 +22,11 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 /**
  * Electrolyzer reaction.
  * Args:
- * * location: The turf where the electrolysis occurs.
  * * air_mixture: The gas_mixture receiving the electrolysis.
  * * working_power: How much energy to put into the electrolysis, in electrolyzer units. A value of 1 is what a tier 1 electrolyzer would put in.
  * * electrolyzer_args: Additional arguments for alternative methods of electrolysis.
  */
-/datum/electrolyzer_reaction/proc/react(turf/location, datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
+/datum/electrolyzer_reaction/proc/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
 	return
 
 /**
@@ -62,7 +61,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
 
-/datum/electrolyzer_reaction/h2o_conversion/react(turf/location, datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
+/datum/electrolyzer_reaction/h2o_conversion/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
 
 	var/old_heat_capacity = air_mixture.heat_capacity()
 	air_mixture.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
@@ -92,7 +91,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 		return FALSE
 	. = ..()
 
-/datum/electrolyzer_reaction/nob_conversion/react(turf/location, datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
+/datum/electrolyzer_reaction/nob_conversion/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
 	/// The supermatter zap power_level.
 	var/supermatter_power = electrolyzer_args[ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER]
 	var/list/cached_gases = air_mixture.gases
@@ -123,7 +122,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
 
-/datum/electrolyzer_reaction/halon_generation/react(turf/location, datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
+/datum/electrolyzer_reaction/halon_generation/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
 	var/old_heat_capacity = air_mixture.heat_capacity()
 	air_mixture.assert_gases(/datum/gas/bz, /datum/gas/oxygen, /datum/gas/halon)
 	var/reaction_efficency = min(air_mixture.gases[/datum/gas/bz][MOLES] * (1 - NUM_E ** (-0.5 * air_mixture.temperature * working_power / FIRE_MINIMUM_TEMPERATURE_TO_EXIST)), air_mixture.gases[/datum/gas/bz][MOLES])

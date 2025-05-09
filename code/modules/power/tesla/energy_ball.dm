@@ -352,15 +352,8 @@
 	var/turf/target_turf = get_turf(closest_atom)
 	if(target_turf?.return_air())
 		var/datum/gas_mixture/air_mixture = target_turf.return_air()
-		for(var/reaction in GLOB.electrolyzer_reactions)
-			var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
-
-			if(!current_reaction.reaction_check(air_mixture = air_mixture))
-				continue
-
-			current_reaction.react(location = target_turf, air_mixture = air_mixture, working_power = power / 200)
-
-		air_mixture.garbage_collect()
+		air_mixture.electrolyze(working_power = power / 200)
+		target_turf.air_update_turf()
 
 	if(prob(20))//I know I know
 		var/list/shocked_copy = shocked_targets.Copy()

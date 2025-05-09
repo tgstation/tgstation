@@ -1054,15 +1054,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(target_turf?.return_air())
 		var/datum/gas_mixture/air_mixture = target_turf.return_air()
 		pressure = max(1, air_mixture.return_pressure())
-		for(var/reaction in GLOB.electrolyzer_reactions)
-			var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
-
-			if(!current_reaction.reaction_check(air_mixture = air_mixture, electrolyzer_args = list(ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER = power_level)))
-				continue
-
-			current_reaction.react(location = target_turf, air_mixture = air_mixture, working_power = zap_str / 200, electrolyzer_args = list(ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER = power_level)) // Only a portion of the zap_str contributes to working power.
-
-		air_mixture.garbage_collect()
+		air_mixture.electrolyze(working_power = zap_str / 200, electrolyzer_args = list(ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER = power_level))
+		target_turf.air_update_turf()
 	//We get our range with the strength of the zap and the pressure, the higher the former and the lower the latter the better
 	var/new_range = clamp(zap_str / pressure * 10, 2, 7)
 	var/zap_count = 1
