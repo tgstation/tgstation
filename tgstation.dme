@@ -2417,6 +2417,7 @@
 #include "code\game\objects\effects\temporary_visuals\projectiles\tracer.dm"
 #include "code\game\objects\items\airlock_painter.dm"
 #include "code\game\objects\items\apc_frame.dm"
+#include "code\game\objects\items\ashtrays.dm"
 #include "code\game\objects\items\bear_armor.dm"
 #include "code\game\objects\items\binoculars.dm"
 #include "code\game\objects\items\blueprints.dm"
@@ -6643,5 +6644,4 @@
 #include "interface\fonts\spess_font.dm"
 #include "interface\fonts\tiny_unicode.dm"
 #include "interface\fonts\vcr_osd_mono.dm"
-#include "code\game\objects\items\ashtrays.dm"
 // END_INCLUDE
