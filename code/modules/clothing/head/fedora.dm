@@ -49,7 +49,7 @@
 /obj/item/clothing/head/fedora/greyscale
 	inhand_icon_state = null
 	greyscale_colors = "#F0DAB4#794D2E"
-	icon = 'icons/map_icons/clothing/head.dmi'
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
 	icon_state = "/obj/item/clothing/head/fedora/greyscale"
 	post_init_icon_state = "fedora_greyscale"
 	greyscale_config = /datum/greyscale_config/fedora

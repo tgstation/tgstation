@@ -9,7 +9,7 @@
 	worn_icon = 'icons/mob/clothing/head/beanie.dmi'
 	custom_price = PAYCHECK_CREW * 1.2
 	greyscale_colors = "#EEEEEE#EEEEEE"
-	icon = 'icons/map_icons/clothing/head.dmi'
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
 	icon_state = "/obj/item/clothing/head/beanie"
 	post_init_icon_state = "beanie"
 	greyscale_config = /datum/greyscale_config/beanie

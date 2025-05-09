@@ -14,7 +14,7 @@
 	desc = "As elegant as a dancing cactus."
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 	dog_fashion = null
-	icon = 'icons/map_icons/clothing/head.dmi'
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
 	icon_state = "/obj/item/clothing/head/costume/sombrero/green"
 	post_init_icon_state = "sombrero"
 	greyscale_config = /datum/greyscale_config/sombrero
@@ -28,7 +28,7 @@
 	name = "shamebrero"
 	desc = "Once it's on, it never comes off."
 	dog_fashion = null
-	icon = 'icons/map_icons/clothing/head.dmi'
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
 	icon_state = "/obj/item/clothing/head/costume/sombrero/shamebrero"
 	post_init_icon_state = "shamebrero"
 	greyscale_config = /datum/greyscale_config/sombrero

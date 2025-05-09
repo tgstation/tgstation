@@ -194,7 +194,7 @@
 	// Adding TRAIT_NODROP is done when the CTF spawner equips people
 	armor_type = /datum/armor/none
 	allowed = null
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/armor/vest/ctf"
 	post_init_icon_state = "standard"
 	greyscale_config = /datum/greyscale_config/ctf_standard
@@ -228,7 +228,7 @@
 /obj/item/clothing/suit/armor/vest/ctf/light
 	name = "light white shielded vest"
 	desc = "Lightweight vest for playing capture the flag."
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/armor/vest/ctf/light"
 	post_init_icon_state = "light"
 	greyscale_config = /datum/greyscale_config/ctf_light

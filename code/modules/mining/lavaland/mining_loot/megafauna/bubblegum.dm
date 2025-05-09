@@ -27,7 +27,7 @@
 /obj/item/clothing/suit/hooded/hostile_environment
 	name = "H.E.C.K. suit"
 	desc = "Hostile Environment Cross-Kinetic Suit: A suit designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/hooded/hostile_environment"
 	post_init_icon_state = "hostile_env"
 	hoodtype = /obj/item/clothing/head/hooded/hostile_environment
@@ -75,7 +75,7 @@
 /obj/item/clothing/head/hooded/hostile_environment
 	name = "H.E.C.K. helmet"
 	desc = "Hostile Environment Cross-Kinetic Helmet: A helmet designed to withstand the wide variety of hazards from Lavaland. It wasn't enough for its last owner."
-	icon = 'icons/map_icons/clothing/head.dmi'
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
 	icon_state = "/obj/item/clothing/head/hooded/hostile_environment"
 	post_init_icon_state = "hostile_env"
 	worn_icon = 'icons/mob/clothing/head/helmet.dmi'

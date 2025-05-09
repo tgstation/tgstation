@@ -248,6 +248,7 @@ do { \
 	create_storage(storage_type = /datum/storage/pockets/shoes)
 
 /obj/item/clothing/shoes/chameleon/broken
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 
 /obj/item/clothing/shoes/chameleon/broken/Initialize(mapload)
 	. = ..()

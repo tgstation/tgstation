@@ -47,7 +47,7 @@
 	inhand_icon_state = ""
 	body_parts_covered = CHEST|GROIN|LEGS
 	species_exception = list(/datum/species/golem)
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/apron/overalls"
 	post_init_icon_state = "overalls"
 	greyscale_config = /datum/greyscale_config/overalls
@@ -267,7 +267,7 @@
 /obj/item/clothing/suit/toggle/lawyer/greyscale
 	name = "formal suit jacket"
 	inhand_icon_state = ""
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/toggle/lawyer/greyscale"
 	post_init_icon_state = "jacket_lawyer"
 	greyscale_config = /datum/greyscale_config/jacket_lawyer
@@ -284,7 +284,7 @@
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	toggle_noun = "straps"
 	species_exception = list(/datum/species/golem)
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/toggle/suspenders"
 	post_init_icon_state = "suspenders"
 	greyscale_config = /datum/greyscale_config/suspenders

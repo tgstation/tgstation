@@ -37,7 +37,7 @@
 /obj/item/clothing/suit/toggle/jacket/sweater
 	name = "sweater jacket"
 	desc = "A sweater jacket."
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/toggle/jacket/sweater"
 	post_init_icon_state = "sweater"
 	greyscale_config = /datum/greyscale_config/sweater
@@ -48,7 +48,7 @@
 /obj/item/clothing/suit/toggle/jacket/trenchcoat
 	name = "trenchcoat"
 	desc = "A multi-purpose trenchcoat."
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/toggle/jacket/trenchcoat"
 	post_init_icon_state = "trenchcoat"
 	greyscale_config = /datum/greyscale_config/trenchcoat
@@ -61,7 +61,7 @@
 /obj/item/clothing/suit/jacket/blazer
 	name = "blazer jacket"
 	desc = "A blazer jacket."
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/jacket/blazer"
 	post_init_icon_state = "blazer"
 	greyscale_config = /datum/greyscale_config/blazer
@@ -72,7 +72,7 @@
 /obj/item/clothing/suit/jacket/oversized
 	name = "oversized jacket"
 	desc = "An oversized jacket."
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/jacket/oversized"
 	post_init_icon_state = "jacket_oversized"
 	greyscale_config = /datum/greyscale_config/jacket_oversized
@@ -87,7 +87,7 @@
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/jacket/fancy"
 	post_init_icon_state = "fancy_coat"
 	greyscale_config = /datum/greyscale_config/fancy_coat

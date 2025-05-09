@@ -607,7 +607,7 @@
 	name = "hawaiian overshirt"
 	desc = "A cool shirt for chilling on the beach."
 	inhand_icon_state = null
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/costume.dmi'
 	icon_state = "/obj/item/clothing/suit/costume/hawaiian"
 	post_init_icon_state = "hawaiian_shirt"
 	greyscale_config = /datum/greyscale_config/hawaiian_shirt
@@ -624,7 +624,7 @@
 	name = "football protective gear"
 	desc = "Given to members of the football team!"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	icon = 'icons/map_icons/clothing/suit.dmi'
+	icon = 'icons/map_icons/clothing/suit/costume.dmi'
 	icon_state = "/obj/item/clothing/suit/costume/football_armor"
 	post_init_icon_state = "football_armor"
 	greyscale_config = /datum/greyscale_config/football_armor

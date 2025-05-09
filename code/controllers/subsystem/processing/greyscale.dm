@@ -122,11 +122,13 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 		"turfs" = /turf, // None of these yet but it's harmless to be prepared
 		"mobs" = /mob, // Ditto
 		"clothing/accessory" = /obj/item/clothing/accessory,
-		"clothing/head" = /obj/item/clothing/head,
+		"clothing/head/beret" = /obj/item/clothing/head/beret,
+		"clothing/head/_head" = /obj/item/clothing/head,
 		"clothing/mask" = /obj/item/clothing/mask,
 		"clothing/neck" = /obj/item/clothing/neck,
 		"clothing/shoes" = /obj/item/clothing/shoes,
-		"clothing/suit" = /obj/item/clothing/suit,
+		"clothing/suit/costume" = /obj/item/clothing/suit/costume,
+		"clothing/suit/_suit" = /obj/item/clothing/suit,
 		"clothing/under/color" = /obj/item/clothing/under/color,
 		"clothing/under/costume" = /obj/item/clothing/under/costume,
 		"clothing/under/dress" = /obj/item/clothing/under/dress,
