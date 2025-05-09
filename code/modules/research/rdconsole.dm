@@ -196,7 +196,7 @@ Nothing else in the console has ID requirements.
 		var/datum/techweb_node/n = SSresearch.techweb_node_by_id(v)
 		var/enqueued_by_user = FALSE
 
-		if((v in stored_research.research_queue_nodes) && stored_research.research_queue_nodes[v] == user)
+		if((v in stored_research.research_queue_nodes) && stored_research.research_queue_nodes[v]["user"] == user)
 			enqueued_by_user = TRUE
 
 		// Ensure node is supposed to be visible

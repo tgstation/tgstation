@@ -342,7 +342,7 @@
 			return FALSE
 
 	for(var/node_id in research_queue_nodes)
-		if(research_queue_nodes[node_id] == user)
+		if(research_queue_nodes[node_id]["user"] == user)
 			research_queue_nodes.Remove(node_id)
 
 	if (queue_first)
@@ -357,7 +357,7 @@
 /datum/techweb/proc/dequeue_node(id, mob/user)
 	if(!(id in research_queue_nodes))
 		return FALSE
-	if(research_queue_nodes[id] != user)
+	if(research_queue_nodes[id]["user"] != user)
 		return FALSE
 
 	research_queue_nodes.Remove(id)

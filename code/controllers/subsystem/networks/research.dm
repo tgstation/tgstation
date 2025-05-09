@@ -444,7 +444,9 @@ SUBSYSTEM_DEF(research)
 		else if(isidcard(researcher_atom))
 			id_used = researcher_atom
 		if(id_used)
-			log_details["node_researcher"] = "[id_used.name]"
+			log_details["node_researcher"] = "[id_used.registered_name ? id_used.registered_name : "ERR"]\[[id_used.assignment]\]"
+		else
+			log_details["node_researcher"] = "UNSECURED RESEARCH INTERFACE"
 		if(!id_used && isnull(log_details["node_researcher"]))
 			// I don't even know how we got here
 			log_details["node_researcher"] = "ERROR: NULL"
@@ -460,10 +462,13 @@ SUBSYSTEM_DEF(research)
 			researched_at_turf = get_turf(researcher_atom)
 	// And if we did!
 	if(isnull(log_details["node_researcher_location"]))
-		log_details["node_researcher_location"] = "\
-		X[researched_at_turf.x], \
-		Y[researched_at_turf.y], \
-		Z[researched_at_turf.z]"
+		log_details["node_researcher_location"] = text(
+			"[](X[], Y[], Z[])",
+			"[get_area(researched_at_turf)]",
+			"[researched_at_turf.x]",
+			"[researched_at_turf.y]",
+			"[researched_at_turf.z])"
+		)
 	if(queued_time)
 		log_details["node_researched_timestamp"] = "queued at SHIFT TIME \[[queued_time]\]"
 	else
