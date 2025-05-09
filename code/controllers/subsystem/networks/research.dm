@@ -355,3 +355,116 @@ SUBSYSTEM_DEF(research)
 /datum/controller/subsystem/research/proc/increment_existing_anomaly_cores(core_type)
 	var/existing = created_anomaly_types[core_type] || 0
 	created_anomaly_types[core_type] = existing + 1
+
+/// Prefixed with _InCharacter so that it's immediately apparent that this proc forms logs
+/// that are meant to be viewed and parsed from an in-character perspective
+/datum/controller/subsystem/research/proc/_InCharacter_log_research(
+	datum/techweb_node/logged_node,
+	datum/techweb/techweb_logged_to,
+	alist/log_details = null,
+	atom/researcher_atom = null,
+	turf/researcher_location = null,
+	queued_time = null
+	)
+	if(!istype(logged_node))
+		CRASH("Invalid node fed to SSresearch._InCharacter_log_research: [isnull(logged_node) ? "NULL!" : logged_node]")
+	if(!istype(techweb_logged_to))
+		CRASH("Invalid techweb fed to SSresearch._InCharacter_log_research: [isnull(techweb_logged_to) ? "NULL!" : techweb_logged_to]")
+	if(isnull(log_details))
+		if(isnull(researcher_atom))
+			CRASH("SSresearch._InCharacter_log_research received erroneous parameters:\
+			NULL log_details and NULL researcher")
+		log_details = _InCharacter_form_research_logs(
+			researcher_atom = researcher_atom,
+			logged_node = logged_node,
+			techweb_logged_to = techweb_logged_to,
+			researched_at_turf = researcher_location,
+			queued_time = queued_time
+			)
+	if(!islist(log_details))
+		CRASH("SSresearch._InCharacter_log_research received erroneous parameters:\
+		log_details is not a list")
+	techweb_logged_to.research_logs += list(
+		log_details
+	)
+
+/// This does the heavy lifting of forming the actual messages for the in-character logs
+/// Separated into its own proc so we can cleanly differentiate an immediate research node
+/// or a queued node being researched
+/datum/controller/subsystem/research/proc/_InCharacter_form_research_logs(
+	atom/researcher_atom,
+	datum/techweb_node/logged_node,
+	datum/techweb/techweb_logged_to,
+	turf/researched_at_turf = null,
+	queued_time = null,
+	special_budget_consideration = null)
+	if(!istype(logged_node))
+		CRASH("SSresearch._InCharacter_form_research_logs received erroneous parameters:\
+		logged_node is not a valid techweb node")
+	// Initializing everything to null for pretty code patterns and to explicitly outline
+	// the logic that determines the log contents
+	var/alist/log_details = alist(
+		"node_researcher" = null,
+		"node_name" = null,
+		"node_cost" = null,
+		"node_researched_timestamp" = null,
+		"node_researcher_location" = null
+	)
+	. = log_details
+	log_details["node_name"] = logged_node.display_name
+	var/list/resolved_costs = logged_node.get_price(techweb_logged_to)
+	var/resolved_price
+	if(special_budget_consideration)
+		resolved_price = resolved_costs[special_budget_consideration]
+	else
+		resolved_price = resolved_costs[TECHWEB_POINT_TYPE_GENERIC]
+	log_details["node_cost"] = resolved_price
+	// Sometimes researcher_atom may be text instead of an atom
+	if(!istype(researcher_atom))
+		// If we were passed a null, put together an error record for the IC logs
+		// just to salvage this if it happens
+		if(isnull(researcher_atom))
+			log_details["node_researcher"] = "ERROR: NULL"
+			log_details["node_researcher_location"] = "ERROR: NULL"
+			log_details["node_researched_timestamp"] = "ERROR: NULL_POINTER_RESEARCHED at \[[ROUND_TIME()]\]"
+			CRASH("SSresearch._InCharacter_form_research_logs received erroneous parameters:\
+			NULL researcher_atom ; needs to be a mob or a text string")
+		// We were passed a string (likely by a hacker exploiting an unencrypted RAM backdoor)
+		log_details["node_researcher"] = researcher_atom
+	if(isnull(log_details["node_researcher"]))
+		// We weren't passed a string by now, so check if we're an AI or borg
+		var/obj/item/card/id/advanced/id_used
+		if(isAI(researcher_atom))
+			log_details["node_researcher"] = "AI [researcher_atom.name]"
+		else if(iscyborg(researcher_atom))
+			log_details["node_researcher"] = "CYBORG [researcher_atom.name]"
+		else if(isliving(researcher_atom))
+			var/mob/living/casted_researcher = researcher_atom
+			id_used = casted_researcher.get_idcard()
+		else if(isidcard(researcher_atom))
+			id_used = researcher_atom
+		if(id_used)
+			log_details["node_researcher"] = "[id_used.name]"
+		if(!id_used && isnull(log_details["node_researcher"]))
+			// I don't even know how we got here
+			log_details["node_researcher"] = "ERROR: NULL"
+			log_details["node_researcher_location"] = "ERROR: NULL"
+			log_details["node_researched_timestamp"] = "ERROR: NULL_POINTER_RESEARCHED at \[[ROUND_TIME()]\]"
+			CRASH("SSresearch._InCharacter_form_research_logs received erroneous parameters:\
+			Invalid researcher_mob type: [researcher_atom] is not an AI, a cyborg, a mob/living, or text")
+	// If we didn't get passed a research location (bogus or otherwise)
+	if(!istype(researched_at_turf))
+		if(!istype(researcher_atom))
+			log_details["node_researcher_location"] = "ERR: NO LOC"
+		else
+			researched_at_turf = get_turf(researcher_atom)
+	// And if we did!
+	if(isnull(log_details["node_researcher_location"]))
+		log_details["node_researcher_location"] = "\
+		X[researched_at_turf.x], \
+		Y[researched_at_turf.y], \
+		Z[researched_at_turf.z]"
+	if(queued_time)
+		log_details["node_researched_timestamp"] = "queued at SHIFT TIME \[[queued_time]\]"
+	else
+		log_details["node_researched_timestamp"] = "instant research SHIFT TIME\[[ROUND_TIME()]\]"

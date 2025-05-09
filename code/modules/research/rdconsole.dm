@@ -98,11 +98,11 @@ Nothing else in the console has ID requirements.
 		stored_research = tool.buffer
 	return TRUE
 
-/obj/machinery/computer/rdconsole/proc/enqueue_node(id, mob/user)
+/obj/machinery/computer/rdconsole/proc/enqueue_node(id, mob/user, queued_time)
 	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
 		say("Node enqueue failed: Either no techweb is found, node is already researched or is not available!")
 		return FALSE
-	stored_research.enqueue_node(id, user)
+	stored_research.enqueue_node(id, user, queued_time)
 	return TRUE
 
 /obj/machinery/computer/rdconsole/proc/dequeue_node(id, mob/user)
@@ -112,7 +112,7 @@ Nothing else in the console has ID requirements.
 	stored_research.dequeue_node(id, user)
 	return TRUE
 
-/obj/machinery/computer/rdconsole/proc/research_node(id, mob/user)
+/obj/machinery/computer/rdconsole/proc/research_node(id, mob/user, queued_time = null)
 	if(!stored_research || !stored_research.available_nodes[id] || stored_research.researched_nodes[id])
 		say("Node unlock failed: Either no techweb is found, node is already researched or is not available!")
 		return FALSE
@@ -125,30 +125,10 @@ Nothing else in the console has ID requirements.
 		user.investigate_log("researched [id]([json_encode(price)]) on techweb id [stored_research.id].", INVESTIGATE_RESEARCH)
 		if(istype(stored_research, /datum/techweb/science))
 			SSblackbox.record_feedback("associative", "science_techweb_unlock", 1, list("id" = "[id]", "name" = TN.display_name, "price" = "[json_encode(price)]", "time" = ISOtime()))
-		if(stored_research.research_node_id(id, research_source = src))
+		if(stored_research.research_node_id(
+			id = id,
+			researcher = user))
 			say("Successfully researched [TN.display_name].")
-			var/logname = "Unknown"
-			if(HAS_AI_ACCESS(user))
-				logname = "AI [user.name]"
-			if(iscyborg(user))
-				logname = "CYBORG [user.name]"
-			if(iscarbon(user))
-				var/obj/item/card/id/idcard = user.get_active_held_item()
-				if(istype(idcard))
-					logname = "[idcard.registered_name]"
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				var/obj/item/I = H.wear_id
-				if(istype(I))
-					var/obj/item/card/id/ID = I.GetID()
-					if(istype(ID))
-						logname = "[ID.registered_name]"
-			stored_research.research_logs += list(list(
-				"node_name" = TN.display_name,
-				"node_cost" = price[TECHWEB_POINT_TYPE_GENERIC],
-				"node_researcher" = logname,
-				"node_research_location" = "[get_area(src)] ([src.x],[src.y],[src.z])",
-			))
 			return TRUE
 		else
 			say("Failed to research node: Internal database error!")
@@ -352,7 +332,7 @@ Nothing else in the console has ID requirements.
 			return TRUE
 
 		if ("enqueueNode")
-			enqueue_node(params["node_id"], usr)
+			enqueue_node(params["node_id"], usr, ROUND_TIME(), get_turf(src))
 			return TRUE
 
 		if ("dequeueNode")
