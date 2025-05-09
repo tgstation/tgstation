@@ -126,14 +126,14 @@
 		xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 		return
 
-	if(istype(used_item, /obj/item/storage/bag))
-		var/obj/item/storage/storage_bag = used_item
+	if(istype(used_item, /obj/item/storage/bag) || istype(used_item, /obj/item/storage/box/monkeycubes))
+		var/obj/item/storage/storage_container = used_item
 		var/loaded = FALSE
-		for(var/obj/item_in_bag in storage_bag.contents)
-			if(istype(item_in_bag, /obj/item/food/monkeycube))
+		for(var/obj/storage_item in storage_container.contents)
+			if(istype(storage_item, /obj/item/food/monkeycube))
 				loaded = TRUE
 				monkeys++
-				qdel(item_in_bag)
+				qdel(storage_item)
 		if(loaded)
 			to_chat(user, span_notice("You fill [src] with the monkey cubes stored in [used_item]. [src] now has [monkeys] monkey cubes stored."))
 			xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
@@ -181,13 +181,15 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 
 ///Places every slime in storage on target turf
 /obj/machinery/computer/camera_advanced/xenobio/proc/slime_place(turf/open/target_turf)
-	spit_out(stored_slimes, target_turf)
-	for(var/mob/living/basic/slime/stored_slime in stored_slimes)
-		stored_slime.forceMove(target_turf)
-		stored_slime.visible_message(span_notice("[stored_slime] is spat out!"))
-		stored_slimes -= stored_slime
-		REMOVE_TRAIT(stored_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
-	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
+	if(stored_slimes.len > 0)
+		if(stored_slimes.len == 1)
+			target_turf.visible_message(span_notice("The slime is warped in!"))
+		else
+			target_turf.visible_message(span_notice("[stored_slimes.len] slimes are warped in!"))
+		for(var/mob/living/basic/slime/stored_slime in stored_slimes)
+			stored_slime.forceMove(target_turf)
+			stored_slimes -= stored_slime
+			REMOVE_TRAIT(stored_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
 
 ///Places every slime not controlled by a player into the internal storage, respecting its limits
 ///Returns TRUE to signal it hitting the limit, in case its being called from a loop and we want it to stop
@@ -201,8 +203,7 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		return FALSE
 	if(target_slime.buckled)
 		target_slime.stop_feeding(silent = TRUE)
-	target_slime.visible_message(span_notice("[target_slime] gets sucked up!"))
-	suck_up(target_slime)
+	target_slime.visible_message(span_notice("The slime vanishes in a flash of light!"))
 	target_slime.forceMove(src)
 	stored_slimes += target_slime
 	ADD_TRAIT(target_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
@@ -234,8 +235,7 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 	if(!target_mob.stat)
 		return
 
-	suck_up(target_mob)
-	target_mob.visible_message(span_notice("[target_mob] shoots up as [p_theyre()] reclaimed for recycling!"))
+	target_mob.visible_message(span_notice("The monkey vanishes as [p_theyre()] reclaimed for recycling!"))
 	connected_recycler.use_energy(500 JOULES)
 	monkeys += connected_recycler.cube_production
 	monkeys = round(monkeys, 0.1) //Prevents rounding errors
