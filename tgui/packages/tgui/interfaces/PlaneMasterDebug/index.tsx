@@ -1,4 +1,12 @@
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { InfinitePlane } from 'tgui-core/components';
 
 import { resolveAsset } from '../../assets';
@@ -7,6 +15,7 @@ import { Window } from '../../layouts';
 import { Connection, Connections, Position } from './../common/Connections';
 import { ABSOLUTE_Y_OFFSET } from './../IntegratedCircuit/constants';
 import { PlaneMaster } from './PlaneMaster';
+import { PlaneMenus } from './PlaneMenus';
 import {
   Filter,
   Plane,
@@ -14,6 +23,7 @@ import {
   PlaneConnectorElement,
   PlaneConnectorsMap,
   PlaneDebugData,
+  PlaneHighlight,
   PlaneMap,
   PlaneTargetMap,
   Relay,
@@ -143,7 +153,6 @@ export function PlaneMasterDebug(props) {
   const { data, act } = useBackend<PlaneDebugData>();
   const { mob_name, planes } = data;
   const connectionDom = useRef<PlaneConnectorsMap>({});
-  const [connectionData, setConnectionData] = useState<PlaneConnectionsMap>({});
 
   const planesProcessed = useMemo(() => {
     const planeGraph: PlaneMap = {};
@@ -209,6 +218,7 @@ export function PlaneMasterDebug(props) {
           name: filterInfo.name,
           target: plane,
           source: sourcePlane,
+          type: filterInfo.type,
           our_ref: filterInfo.our_ref,
           blend_mode: filterInfo.blend_mode,
           node_color: 'purple',
@@ -393,41 +403,17 @@ export function PlaneMasterDebug(props) {
         plane.position.y = stackHeight;
         stackHeight += height;
       }
-
-      /*
-      let baseY = 0;
-      for (let i = 0; i < stack.length; i++) {
-        const plane: Plane = stack[i];
-        plane.position.x = baseX;
-        plane.position.y = baseY + (maxHeight - heightPerDepth[key]) / 2;
-        baseY += getPlaneHeight(plane);
-      }
-
-      */
     }
-
-    /*
-    const depthPositions: Record<number, number> = {};
-    for (const key in planeGraph) {
-      const plane = planeGraph[key];
-      const depth = planeDepths[plane.plane];
-      if (depthPositions[depth] === undefined) {
-        depthPositions[depth] = 0;
-        for (let i = 1; i < depth; i++) {
-          if (i in widthPerDepth) {
-            depthPositions[depth] -= widthPerDepth[i] + 150;
-          }
-        }
-      }
-      // Plane X is assigned purely on their depth
-      plane.position.x = depthPositions[depth];
-      // Y is a placeholder
-      plane.position.y = plane.plane * 40;
-    }
-    */
 
     return planeGraph;
   }, [planes]);
+
+  const [connectionData, setConnectionData] = useState<PlaneConnectionsMap>({});
+  const [connectionHighlight, setConnectionHighlight] =
+    useState<PlaneHighlight>();
+  // Must be a number as Plane objects are recreated whenever plane data changes
+  const [activePlane, setActivePlane] = useState<number>();
+  const [connectionOpen, setConnectionOpen] = useState<boolean>(false);
 
   useLayoutEffect(() => {
     const doms = connectionDom.current;
@@ -461,8 +447,14 @@ export function PlaneMasterDebug(props) {
         continue;
       }
 
+      const highlighted =
+        (plane.plane === connectionHighlight?.target &&
+          targetPlane.plane === connectionHighlight?.source) ||
+        (targetPlane.plane === connectionHighlight?.target &&
+          plane.plane === connectionHighlight?.source);
+
       connections.push({
-        color: 'purple',
+        color: highlighted ? 'white' : 'purple',
         from: connectionData[filter.our_ref].output,
         to: connectionData[filter.our_ref].input,
         ref: plane.name,
@@ -479,8 +471,14 @@ export function PlaneMasterDebug(props) {
         continue;
       }
 
+      const highlighted =
+        (plane.plane === connectionHighlight?.target &&
+          targetPlane.plane === connectionHighlight?.source) ||
+        (targetPlane.plane === connectionHighlight?.target &&
+          plane.plane === connectionHighlight?.source);
+
       connections.push({
-        color: 'blue',
+        color: highlighted ? 'white' : 'blue',
         from: connectionData[relay.our_ref].output,
         to: connectionData[relay.our_ref].input,
         ref: plane.name,
@@ -489,31 +487,56 @@ export function PlaneMasterDebug(props) {
   }
 
   return (
-    <Window width={1200} height={800} title={'Plane Debugging: ' + mob_name}>
-      <Window.Content
-        style={{
-          backgroundImage: 'none',
-        }}
-      >
-        <InfinitePlane
-          width="100%"
-          height="100%"
-          backgroundImage={resolveAsset('grid_background.png')}
-          imageWidth={900}
-          initialLeft={500}
-          initialTop={-1050}
+    <PlaneDebugContext.Provider
+      value={{
+        connectionHighlight,
+        setConnectionHighlight,
+        activePlane,
+        setActivePlane,
+        connectionOpen,
+        setConnectionOpen,
+        planesProcessed,
+      }}
+    >
+      <Window width={1200} height={800} title={'Plane Debugging: ' + mob_name}>
+        <Window.Content
+          style={{
+            backgroundImage: 'none',
+          }}
         >
-          {planes.map((plane) => (
-            <PlaneMaster
-              key={plane.name}
-              plane={planesProcessed[plane.plane]}
-              connectionData={connectionDom.current}
-              act={act}
-            />
-          ))}
-          <Connections connections={connections} />
-        </InfinitePlane>
-      </Window.Content>
-    </Window>
+          <InfinitePlane
+            width="100%"
+            height="100%"
+            backgroundImage={resolveAsset('grid_background.png')}
+            imageWidth={900}
+            initialLeft={500}
+            initialTop={-1050}
+          >
+            {planes.map((plane) => (
+              <PlaneMaster
+                key={plane.name}
+                plane={planesProcessed[plane.plane]}
+                connectionData={connectionDom.current}
+                act={act}
+              />
+            ))}
+            <Connections connections={connections} />
+          </InfinitePlane>
+          <PlaneMenus act={act} />
+        </Window.Content>
+      </Window>
+    </PlaneDebugContext.Provider>
   );
 }
+
+type Context = {
+  connectionHighlight: PlaneHighlight | undefined;
+  setConnectionHighlight: Dispatch<SetStateAction<PlaneHighlight | undefined>>;
+  activePlane: number | undefined;
+  setActivePlane: Dispatch<SetStateAction<number | undefined>>;
+  connectionOpen: boolean;
+  setConnectionOpen: Dispatch<SetStateAction<boolean>>;
+  planesProcessed: PlaneMap;
+};
+
+export const PlaneDebugContext = createContext({} as Context);

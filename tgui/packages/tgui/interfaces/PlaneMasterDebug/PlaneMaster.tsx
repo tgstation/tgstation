@@ -1,5 +1,8 @@
+import { useContext } from 'react';
 import { Box, Button, Stack } from 'tgui-core/components';
+import { classes } from 'tgui-core/react';
 
+import { PlaneDebugContext } from '.';
 import { Port } from './Port';
 import { Filter, Plane, PlaneConnectorsMap, Relay } from './types';
 
@@ -11,6 +14,13 @@ export type PlaneMasterProps = {
 
 export function PlaneMaster(props: PlaneMasterProps) {
   const { plane, connectionData, act } = props;
+  const {
+    connectionHighlight,
+    activePlane,
+    setActivePlane,
+    setConnectionOpen,
+  } = useContext(PlaneDebugContext);
+
   let incoming_connections: (Filter | Relay)[] = plane.incoming_filters
     .concat(plane.incoming_relays)
     .filter((x: Filter | Relay) => {
@@ -37,6 +47,16 @@ export function PlaneMaster(props: PlaneMasterProps) {
       left={`${plane.position.x}px`}
       top={`${plane.position.y}px`}
       minWidth="150px"
+      style={
+        connectionHighlight?.target === plane.plane ||
+        activePlane === plane.plane
+          ? {
+              outline: '2px outset hsl(0, 0%, 85%)',
+              borderTopLeftRadius: 'var(--border-radius-huge)',
+              borderTopRightRadius: 'var(--border-radius-huge)',
+            }
+          : {}
+      }
     >
       <Box
         backgroundColor={plane.force_hidden ? '#191919' : '#000000'}
@@ -58,18 +78,18 @@ export function PlaneMaster(props: PlaneMasterProps) {
               icon="pager"
               compact
               tooltip="Inspect and edit this plane"
-              onClick={() => act('perform_action')}
+              onClick={() => setActivePlane(plane.plane)}
             />
           </Stack.Item>
         </Stack>
       </Box>
 
       <Box
-        className={
+        className={classes([
           plane.force_hidden
             ? 'ObjectComponent__Greyed_Content'
-            : 'ObjectComponent__Content'
-        }
+            : 'ObjectComponent__Content',
+        ])}
         py={1}
         px={1}
       >
@@ -86,6 +106,7 @@ export function PlaneMaster(props: PlaneMasterProps) {
                       }
                       connectionData[connection.our_ref].input = element;
                     }}
+                    act={act}
                   />
                 </Stack.Item>
               ))}
@@ -98,12 +119,14 @@ export function PlaneMaster(props: PlaneMasterProps) {
                 <Stack.Item key={connection.our_ref} align="flex-end">
                   <Port
                     connection={connection}
+                    source
                     target_ref={(element) => {
                       if (connectionData[connection.our_ref] === undefined) {
                         connectionData[connection.our_ref] = {};
                       }
                       connectionData[connection.our_ref].output = element;
                     }}
+                    act={act}
                   />
                 </Stack.Item>
               ))}
@@ -111,7 +134,10 @@ export function PlaneMaster(props: PlaneMasterProps) {
                 <Button
                   icon="plus"
                   compact
-                  onClick={() => act('')}
+                  onClick={() => {
+                    setConnectionOpen(true);
+                    setActivePlane(plane.plane);
+                  }}
                   tooltip="Connect to another plane"
                 />
               </Stack.Item>

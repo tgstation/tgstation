@@ -40,6 +40,7 @@ export type FilterData = {
   name: string;
   render_source: string;
   our_ref: string;
+  type: string;
   // For layering filters
   blend_mode?: string;
 };
@@ -80,6 +81,7 @@ export type Filter = {
   source?: Plane;
   target?: Plane;
   our_ref: string;
+  type: string;
   // For layering filters
   blend_mode?: string;
   node_color: string;
@@ -93,6 +95,15 @@ export const BlendColors = {
   BLEND_MULTIPLY: 'orange',
   BLEND_INSET_OVERLAY: 'teal',
 };
+
+export enum BlendModes {
+  'BLEND_DEFAULT',
+  'BLEND_OVERLAY',
+  'BLEND_ADD',
+  'BLEND_SUBSTRACT',
+  'BLEND_MULTIPLY',
+  'BLEND_INSET_OVERLAY',
+}
 
 export type PlaneMap = Record<number, Plane>;
 export type PlaneTargetMap = Record<string, Plane>;
@@ -109,4 +120,10 @@ export type PlaneConnection = {
   // Both of these are relay/filter ref -> coordinates for that input/output
   input: Position;
   output: Position;
+};
+
+export type PlaneHighlight = {
+  // Must be numbers as actual Plane objects are constantly regenerated
+  source: number;
+  target: number;
 };

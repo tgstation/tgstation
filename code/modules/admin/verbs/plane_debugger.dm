@@ -335,10 +335,11 @@
 		if("connect_relay")
 			var/source_plane = params["source"]
 			var/target_plane = params["target"]
+			var/blend_mode = text2num(params["mode"])
 			var/atom/movable/screen/plane_master/source = our_planes["[source_plane]"]
 			if(source.get_relay_to(target_plane)) // Fuck off
 				return
-			source.add_relay_to(target_plane)
+			source.add_relay_to(target_plane, blend_mode != BLEND_DEFAULT ? blend_mode : null)
 			return TRUE
 
 		if("disconnect_relay")
