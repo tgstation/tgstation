@@ -25,8 +25,6 @@
 /obj/item/usb_cable/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(src, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(before_shuttle_move))
-	RegisterSignal(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, PROC_REF(after_shuttle_move))
 	var/static/list/connections = list(
 		COMSIG_MOVABLE_MOVED = PROC_REF(on_moved),
 		COMSIG_ATOM_BEFORE_SHUTTLE_MOVE = PROC_REF(before_shuttle_move),
@@ -89,10 +87,18 @@
 		return
 	check_in_range()
 
+/obj/item/usb_cable/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
+	. = ..()
+	before_shuttle_move()
+
 /obj/item/usb_cable/proc/before_shuttle_move()
 	SIGNAL_HANDLER
 
 	defer_range_checks = TRUE
+
+/obj/item/usb_cable/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	. = ..()
+	after_shuttle_move()
 
 /obj/item/usb_cable/proc/after_shuttle_move()
 	SIGNAL_HANDLER
