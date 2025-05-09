@@ -46,7 +46,7 @@
 	remove_from_dart(holder_casing, holder_projectile)
 	UnregisterSignal(parent, COMSIG_ITEM_PRE_ATTACK)
 
-/datum/component/dart_insert/proc/on_preattack(datum/source, atom/target, mob/user, params)
+/datum/component/dart_insert/proc/on_preattack(datum/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	var/obj/item/ammo_casing/foam_dart/dart = target
 	if(!istype(dart))

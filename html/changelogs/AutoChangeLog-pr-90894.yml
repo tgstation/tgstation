@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed explorer masks going invisible when you put on a goliath hood"
+  - qol: "Improved"

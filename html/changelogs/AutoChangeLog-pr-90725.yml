@@ -1,8 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - rscadd: "The big manipulator now supports specifying whether the attached monkey should use either combat mode, right clicking, or even both."
-  - qol: "Ejecting monkeys from the big manipulator now uses a UI button instead."
-  - bugfix: "You can no longer teleport monkeys into impossible areas with big manipulator unbuckling."
-  - bugfix: "You can no longer simultaneously buckle multiple monkeys into the big manipulator."
-  - bugfix: "The big manipulator will now properly clear old refs to former workers."

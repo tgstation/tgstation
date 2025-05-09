@@ -41,6 +41,8 @@
 	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
 	///The sound this container makes when picked up, dropped if there is liquid inside.
 	var/reagent_container_liquid_sound = null
+	///If we want to the contrast of the reagent overlay if the reagent mix color is very dark.
+	var/adjust_color_contrast = FALSE
 
 /obj/item/reagent_containers/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -80,7 +82,7 @@
 	. = ..()
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
-/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, list/modifiers)
 	if (!user.combat_mode)
 		return
 	return ..()
@@ -116,7 +118,7 @@
 	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
 	mode_change_message(user)
 
-/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
+/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, list/modifiers)
 	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
 		return ..()
 	if(!user.combat_mode)
@@ -126,9 +128,9 @@
 
 	return ..()
 
-/// Tries to splash the target. Used on both right-click and normal click when in combat mode.
+/// Tries to splash the target, called when right-clicking with a reagent container.
 /obj/item/reagent_containers/proc/try_splash(mob/user, atom/target)
-	if (!spillable)
+	if (!spillable || reagent_flags & SMART_CAP)
 		return FALSE
 
 	if (!reagents?.total_volume)
@@ -161,11 +163,6 @@
 
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
-
-	var/mob/thrown_by = thrownby?.resolve()
-	if(isturf(target) && reagents.reagent_list.len && thrown_by)
-		log_combat(thrown_by, target, "splashed (thrown) [english_list(reagents.reagent_list)]")
-		message_admins("[ADMIN_LOOKUPFLW(thrown_by)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] at [ADMIN_VERBOSEJMP(target)].")
 
 	reagents.expose(target, TOUCH)
 	log_combat(user, target, "splashed", reagent_text)
@@ -206,22 +203,21 @@
 /obj/item/reagent_containers/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = TRUE)
 	. = ..()
 	if(do_splash)
-		SplashReagents(hit_atom, TRUE)
+		SplashReagents(hit_atom, throwingdatum)
 
-/obj/item/reagent_containers/proc/bartender_check(atom/target)
+/obj/item/reagent_containers/proc/bartender_check(atom/target, mob/thrown_by)
 	. = FALSE
-	var/mob/thrown_by = thrownby?.resolve()
 	if(target.CanPass(src, get_dir(target, src)) && thrown_by && HAS_TRAIT(thrown_by, TRAIT_BOOZE_SLIDER))
 		. = TRUE
 
-/obj/item/reagent_containers/proc/SplashReagents(atom/target, thrown = FALSE, override_spillable = FALSE)
-	if(!reagents || !reagents.total_volume || (!spillable && !override_spillable))
+/obj/item/reagent_containers/proc/SplashReagents(atom/target, datum/thrownthing/throwingdatum, override_spillable = FALSE)
+	if(!reagents || !reagents.total_volume || (!spillable && !override_spillable) || reagent_flags & SMART_CAP)
 		return
-	var/mob/thrown_by = thrownby?.resolve()
+	var/mob/thrown_by = throwingdatum.get_thrower()
 
 	if(ismob(target) && target.reagents)
 		var/splash_multiplier = 1
-		if(thrown)
+		if(throwingdatum)
 			splash_multiplier *= (rand(5,10) * 0.1) //Not all of it makes contact with the target
 		var/mob/M = target
 		var/turf/target_turf = get_turf(target)
@@ -236,7 +232,7 @@
 		reagents.expose(target, TOUCH, splash_multiplier)
 		reagents.expose(target_turf, TOUCH, (1 - splash_multiplier)) // 1 - splash_multiplier because it's what didn't hit the target
 
-	else if(bartender_check(target) && thrown)
+	else if(bartender_check(target, thrown_by) && throwingdatum)
 		visible_message(span_notice("[src] lands onto \the [target] without spilling a single drop."))
 		return
 
@@ -286,7 +282,56 @@
 		if(threshold <= percent && percent < threshold_end)
 			filling.icon_state = "[fill_name][fill_icon_thresholds[i]]"
 
-	filling.color = mix_color_from_reagents(reagents.reagent_list)
+
+	if(!adjust_color_contrast)
+		filling.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling
+		return
+
+	var/list/mix_colors = rgb2num(mix_color_from_reagents(reagents.reagent_list))
+	//reagent color red
+	var/float_r = mix_colors[1] / 255
+	//reagent color green
+	var/float_g = mix_colors[2] / 255
+	//reagent color blue
+	var/float_b = mix_colors[3] / 255
+	//reagent color alpha
+	var/float_a = mix_colors.len > 3 ? mix_colors[4] / 255 : 1
+
+	//value, used to make modifications depending on if our reagent color is light or dark.
+	var/float_v = (float_r + float_g + float_b) / 3
+
+	//max result of float_b - float_v is 0.6666 so we multiply with 1.5 to get something close to 1 at max blueness.
+	var/blue_mod = max(float_b - float_v, 0) * 1.5
+
+	//red multiplier
+	var/red_scale = 1.6
+	//green_multiplier
+	var/green_scale = 1.5
+	//blue scale
+	var/blue_scale = 1.1 * (1 + 0.60 * blue_mod)
+
+	//additive red - modifies red across the board by val * 255
+	var/red_base = -0.07 - (0.035 * float_v)
+	//additive green - modifies green across the board by val * 255
+	var/green_base = -0.06 - (0.03 * float_v)
+	//additive blue - modifies blue across the board by val * 255
+	var/blue_base = 0.10 - (0.050 * float_v) - (0.40 * blue_mod)
+
+	var/list/reagent_color_and_contrast_matrix  = list(
+		//Red - RR, RG, RB, RA
+		float_r * red_scale, 0, 0, 0,
+		//Green - GR - GG - GB - GA
+		0, float_g * green_scale, 0, 0,
+		///Blue - BR, BG, BB, BA
+		0.25 * blue_mod, 0.33 * blue_mod, float_b * blue_scale, 0,
+		//Alpha - AR, AG, AB, AA
+		0, 0, 0, float_a,
+		//Constant - CR, CG, CB, CA
+		red_base, green_base, blue_base, 0)
+
+	filling.color = reagent_color_and_contrast_matrix
+
 	. += filling
 
 /obj/item/reagent_containers/dropped(mob/user, silent)
