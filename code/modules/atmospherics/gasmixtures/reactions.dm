@@ -1201,6 +1201,7 @@
 			continue
 		gas[MOLES] -= reaction_rate * gas[MOLES] / total_not_antinoblium_moles
 	antinoblium[MOLES] += reaction_rate
+	SET_REACTION_RESULTS(reaction_rate)
 	var/new_heat_capacity = air.heat_capacity()
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air.temperature = max(air.temperature * heat_capacity / new_heat_capacity, TCMB)
