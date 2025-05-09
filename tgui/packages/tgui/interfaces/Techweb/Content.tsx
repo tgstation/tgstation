@@ -43,7 +43,7 @@ export function TechwebContent(props) {
                   ? Object.keys(queue_nodes).map((node_id) => (
                       <Button
                         key={node_id}
-                        tooltip={`Added by: ${queue_nodes[node_id]["user"]} at ${queue_nodes[node_id]["time"]}`}
+                        tooltip={`Added by: ${queue_nodes[node_id]['user']} at ${queue_nodes[node_id]['time']}`}
                       >
                         {node_cache[node_id].name}
                       </Button>
