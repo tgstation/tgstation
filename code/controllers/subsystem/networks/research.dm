@@ -467,4 +467,4 @@ SUBSYSTEM_DEF(research)
 	if(queued_time)
 		log_details["node_researched_timestamp"] = "queued at SHIFT TIME \[[queued_time]\]"
 	else
-		log_details["node_researched_timestamp"] = "instant research SHIFT TIME\[[ROUND_TIME()]\]"
+		log_details["node_researched_timestamp"] = "instantly researched at SHIFT TIME \[[ROUND_TIME()]\]"
