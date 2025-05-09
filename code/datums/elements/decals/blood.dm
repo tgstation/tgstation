@@ -58,11 +58,11 @@
 	if (!length(blood_stains))
 		return
 	var/datum/blood_type/blood_type = blood_stains[blood_stains[length(blood_stains)]]
-	var/blood_descriptior = "blood"
+	var/blood_descriptor = "blood"
 	if(istype(blood_type) && blood_type.get_blood_name())
-		blood_descriptior = LOWER_TEXT(blood_type.get_blood_name())
+		blood_descriptor = LOWER_TEXT(blood_type.get_blood_name())
 
-	override[EXAMINE_POSITION_BEFORE] = "[blood_descriptior]-stained"
+	override[EXAMINE_POSITION_BEFORE] = "[blood_descriptor]-stained"
 
 /datum/element/decal/blood/proc/on_color_update(obj/item/source, color_updated)
 	SIGNAL_HANDLER

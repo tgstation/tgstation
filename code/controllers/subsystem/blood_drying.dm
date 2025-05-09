@@ -1,6 +1,6 @@
 /**
  * Blood Drying SS
- * Used as a low priority backround system to handling the drying of blood on the ground
+ * Used as a low priority background system to handling the drying of blood on the ground
  * (basically just handles reducing their bloodiness value over time)
  */
 PROCESSING_SUBSYSTEM_DEF(blood_drying)

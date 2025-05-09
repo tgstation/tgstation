@@ -257,7 +257,7 @@
 			blood_warning = " Patient has [blood_percent <= 60 ? "DANGEROUSLY low" : "low"] [blood_name] levels."
 			var/list/treatments = list()
 			if(blood_percent <= 60)
-				treatments += "[blood_name] trasnfusion"
+				treatments += "[blood_name] transfusion"
 			else if(!HAS_TRAIT(patient, TRAIT_NOHUNGER))
 				treatments += "a large meal"
 			if(blood_type.restoration_chem)
