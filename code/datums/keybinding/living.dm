@@ -12,7 +12,7 @@
 	description = "Break free of your current state. Handcuffed? on fire? Resist!"
 	keybind_signal = COMSIG_KB_LIVING_RESIST_DOWN
 
-/datum/keybinding/living/resist/down(client/user)
+/datum/keybinding/living/resist/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -22,7 +22,7 @@
 		owner.hud_used.resist_icon.icon_state = "[owner.hud_used.resist_icon.base_icon_state]_on"
 	return TRUE
 
-/datum/keybinding/living/resist/up(client/user)
+/datum/keybinding/living/resist/up(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -37,7 +37,7 @@
 	description = "Look up at the next z-level.  Only works if directly below open space."
 	keybind_signal = COMSIG_KB_LIVING_LOOKUP_DOWN
 
-/datum/keybinding/living/look_up/down(client/user)
+/datum/keybinding/living/look_up/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -45,7 +45,7 @@
 	L.look_up()
 	return TRUE
 
-/datum/keybinding/living/look_up/up(client/user)
+/datum/keybinding/living/look_up/up(client/user, turf/target)
 	. = ..()
 	var/mob/living/L = user.mob
 	L.end_look()
@@ -58,7 +58,7 @@
 	description = "Look down at the previous z-level.  Only works if directly above open space."
 	keybind_signal = COMSIG_KB_LIVING_LOOKDOWN_DOWN
 
-/datum/keybinding/living/look_down/down(client/user)
+/datum/keybinding/living/look_down/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -66,7 +66,7 @@
 	L.look_down()
 	return TRUE
 
-/datum/keybinding/living/look_down/up(client/user)
+/datum/keybinding/living/look_down/up(client/user, turf/target)
 	. = ..()
 	var/mob/living/L = user.mob
 	L.end_look()
@@ -79,7 +79,7 @@
 	description = "Lay down, or get up."
 	keybind_signal = COMSIG_KB_LIVING_REST_DOWN
 
-/datum/keybinding/living/rest/down(client/user)
+/datum/keybinding/living/rest/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -95,7 +95,7 @@
 	keybind_signal = COMSIG_KB_LIVING_TOGGLE_COMBAT_DOWN
 
 
-/datum/keybinding/living/toggle_combat_mode/down(client/user)
+/datum/keybinding/living/toggle_combat_mode/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -109,7 +109,7 @@
 	description = "Enable combat mode."
 	keybind_signal = COMSIG_KB_LIVING_ENABLE_COMBAT_DOWN
 
-/datum/keybinding/living/enable_combat_mode/down(client/user)
+/datum/keybinding/living/enable_combat_mode/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -123,7 +123,7 @@
 	description = "Disable combat mode."
 	keybind_signal = COMSIG_KB_LIVING_DISABLE_COMBAT_DOWN
 
-/datum/keybinding/living/disable_combat_mode/down(client/user)
+/datum/keybinding/living/disable_combat_mode/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -137,7 +137,7 @@
 	description = "Held down to cycle to the other move intent, release to cycle back"
 	keybind_signal = COMSIG_KB_LIVING_TOGGLEMOVEINTENT_DOWN
 
-/datum/keybinding/living/toggle_move_intent/down(client/user)
+/datum/keybinding/living/toggle_move_intent/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -145,7 +145,7 @@
 	M.toggle_move_intent()
 	return TRUE
 
-/datum/keybinding/living/toggle_move_intent/up(client/user)
+/datum/keybinding/living/toggle_move_intent/up(client/user, turf/target)
 	. = ..()
 	var/mob/living/M = user.mob
 	M.toggle_move_intent()
@@ -158,7 +158,7 @@
 	description = "Pressing this cycle to the opposite move intent, does not cycle back"
 	keybind_signal = COMSIG_KB_LIVING_TOGGLEMOVEINTENTALT_DOWN
 
-/datum/keybinding/living/toggle_move_intent_alternative/down(client/user)
+/datum/keybinding/living/toggle_move_intent_alternative/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return

@@ -12,7 +12,7 @@
 	description = "Quickly puts an item in the best slot available"
 	keybind_signal = COMSIG_KB_HUMAN_QUICKEQUIP_DOWN
 
-/datum/keybinding/human/quick_equip/down(client/user)
+/datum/keybinding/human/quick_equip/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -31,7 +31,7 @@
 	var/slot_item_name = "belt"
 	keybind_signal = COMSIG_KB_HUMAN_QUICKEQUIPBELT_DOWN
 
-/datum/keybinding/human/quick_equip_belt/down(client/user)
+/datum/keybinding/human/quick_equip_belt/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
