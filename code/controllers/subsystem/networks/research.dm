@@ -444,7 +444,7 @@ SUBSYSTEM_DEF(research)
 		else if(isidcard(researcher_atom))
 			id_used = researcher_atom
 		if(id_used)
-			log_details["node_researcher"] = "[id_used.registered_name ? id_used.registered_name : "ERR"]\[[id_used.assignment]\]"
+			log_details["node_researcher"] = "[id_used.registered_name ? id_used.registered_name : "ERR"]"
 		else
 			log_details["node_researcher"] = "UNSECURED RESEARCH INTERFACE"
 		if(!id_used && isnull(log_details["node_researcher"]))
@@ -467,7 +467,7 @@ SUBSYSTEM_DEF(research)
 			"[get_area(researched_at_turf)]",
 			"[researched_at_turf.x]",
 			"[researched_at_turf.y]",
-			"[researched_at_turf.z])"
+			"[researched_at_turf.z]"
 		)
 	if(queued_time)
 		log_details["node_researched_timestamp"] = "queued at SHIFT TIME \[[queued_time]\]"

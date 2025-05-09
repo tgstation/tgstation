@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Divider,
   NoticeBox,
@@ -126,47 +127,133 @@ const ResearchHistoryView = (props) => {
   const { logs } = data;
 
   return (
-    <Section title="Research History" className="Techweb__Viewport">
+    <Section
+      title={
+        <span
+          style={{
+            fontSize: '1.9em',
+            fontWeight: 'bolder',
+            color: 'var(--color-sedate-grey)',
+            position: 'relative',
+            left: '2.5em',
+            fontFamily: 'var(--font-ternary)',
+          }}
+        >
+          RESEARCH HISTORY
+        </span>
+      }
+      fitted
+      backgroundColor="transparent"
+    >
       {!logs.length ? (
         <NoticeBox mt={2} info>
           No history found.
         </NoticeBox>
       ) : (
-        <Stack vertical fill className="Techweb__HeaderSection">
-          {logs.map((server_log) => (
-            <>
-              <Stack.Item
-                key={server_log.node_name}
-                className="Techweb__HeaderContent"
-              >
-                <Section
-                  title={server_log.node_name}
-                  textAlign="left"
-                  className="Techweb__HeaderSection"
-                >
-                  <Table>
-                    <Table.Row header>
-                      <Table.Cell>Researcher</Table.Cell>
-                      <Table.Cell>Location</Table.Cell>
-                      <Table.Cell>Cost</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                      <Table.Cell>{server_log.node_researcher}</Table.Cell>
-                      <Table.Cell>
-                        {server_log.node_researcher_location}
-                      </Table.Cell>
-                      <Table.Cell>{server_log.node_cost}</Table.Cell>
-                    </Table.Row>
-                    <Table.Row textAlign="center">
-                      <Table.Cell>
-                        {server_log.node_researched_timestamp}
-                      </Table.Cell>
-                    </Table.Row>
-                  </Table>
-                </Section>
-              </Stack.Item>
+        <Stack vertical color="transparent" backgroundColor="transparent">
+          {logs.map((server_log, index = 1) => (
+            <Stack.Item
+              key={index++}
+              align="center"
+              textAlign="center"
+              width="100%"
+            >
               <Divider />
-            </>
+              <Box as="span" align="center" fontSize="1.35em" nowrap>
+                <Button
+                  style={{
+                    textShadow: '5px 5px 35px black',
+                    color: 'var(--color-sedate-grey',
+                    fontFamily: 'var(--font-secondary)',
+                    outline: '2px solid black',
+                    outlineStyle: 'groove',
+                    outlineOffset: '-5px',
+                  }}
+                >
+                  {server_log.node_name}
+                </Button>
+              </Box>
+              <Box width="85%" position="relative" height="1.2em">
+                <Box
+                  as="span"
+                  position="absolute"
+                  left={2}
+                  fontSize="1.2em"
+                  style={{
+                    fontFamily: 'var(--font-secondary)',
+                    textShadow: '0px 0px 10px black',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  Cost
+                </Box>
+                <Box
+                  as="span"
+                  position="absolute"
+                  right={-2}
+                  fontSize="1.2em"
+                  style={{
+                    fontFamily: 'var(--font-secondary)',
+                    textShadow: '0px 0px 10px black',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  Researcher
+                </Box>
+              </Box>
+              <Box width="100%" position="relative" height="1.2em">
+                <Box
+                  as="span"
+                  position="absolute"
+                  left={2}
+                  fontSize="1.2em"
+                  style={{
+                    fontFamily: 'var(--font-ternary)',
+                  }}
+                >
+                  {server_log.node_cost} points
+                </Box>
+                <Box
+                  as="span"
+                  position="absolute"
+                  right={2}
+                  fontSize="1.2em"
+                  style={{
+                    fontFamily: 'var(--font-ternary)',
+                  }}
+                >
+                  {server_log.node_researcher}
+                </Box>
+              </Box>
+              <Box
+                width="50%"
+                position="relative"
+                left={'22.5%'}
+                style={{
+                  textTransform: 'uppercase',
+                  fontSize: '1.1em',
+                  fontFamily: 'var(--font-ternary)',
+                }}
+                mt={1.5}
+              >
+                {server_log.node_researched_timestamp}
+              </Box>
+
+              <Box
+                width="100%"
+                position="relative"
+                left={'0%'}
+                style={{
+                  textTransform: 'uppercase',
+                  fontSize: '1.1em',
+                  fontFamily: 'var(--font-secondary)',
+                }}
+                mt={1.5}
+              >
+                {server_log.node_researcher_location}
+              </Box>
+              <Divider />
+            </Stack.Item>
           ))}
         </Stack>
       )}
@@ -190,10 +277,10 @@ export const ServerControl = (props) => {
     );
   }
   return (
-    <Window width={575} height={400}>
-      <Window.Content scrollable>
-        <Stack vertical fill>
-          <Stack.Item grow>
+    <Window width={575} height={700} theme="ntos_terminal_sci_themed">
+      <Window.Content scrollable backgroundColor="transparent">
+        <Stack vertical backgroundColor="transparent">
+          <Stack.Item grow backgroundColor="transparent">
             <Tabs>
               <Tabs.Tab
                 key="servers"
