@@ -1,0 +1,4 @@
+author: "Maximal08"
+delete-after: True
+changes:
+  - bugfix: "Fixing the arrow display when using the multitool"
