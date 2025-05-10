@@ -23,13 +23,14 @@
 	var/list/known_antag_flags = list()
 
 	for (var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
-		if (isnull(initial(ruleset.antag_datum)))
-			continue
-
 		var/antag_flag = initial(ruleset.pref_flag)
 
+		// null antag flag is valid for rulesets with no associated preferecne
 		if (isnull(antag_flag))
-			TEST_FAIL("[ruleset] has a null antag_flag!")
+			// however if you set preview_antag_datum, it is assumed you do have a preference, and thus should have a flag
+			if (initial(ruleset.preview_antag_datum))
+				TEST_FAIL("[ruleset] sets preview_antag_datum, but has no pref_flag! \
+					If you want to use a preview antag datum, you must set a pref_flag.")
 			continue
 
 		if (antag_flag in known_antag_flags)

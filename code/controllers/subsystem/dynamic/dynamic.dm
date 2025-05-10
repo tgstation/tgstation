@@ -11,10 +11,10 @@ SUBSYSTEM_DEF(dynamic)
 
 	/// Tracks how many of each ruleset category is yet to be spawned
 	var/list/rulesets_to_spawn = list(
-		ROUNDSTART_RANGE = -1,
-		LIGHT_MIDROUND_RANGE = -1,
-		HEAVY_MIDROUND_RANGE = -1,
-		LATEJOIN_RANGE = -1,
+		ROUNDSTART = -1,
+		LIGHT_MIDROUND = -1,
+		HEAVY_MIDROUND = -1,
+		LATEJOIN = -1,
 	)
 
 	/// Cooldown for when we are allowed to spawn light rulesets
@@ -40,11 +40,11 @@ SUBSYSTEM_DEF(dynamic)
 		return
 
 	if(COOLDOWN_FINISHED(src, light_ruleset_start))
-		if(try_spawn_midround(LIGHT_MIDROUND_RANGE))
+		if(try_spawn_midround(LIGHT_MIDROUND))
 			return
 
 	if(COOLDOWN_FINISHED(src, heavy_ruleset_start))
-		if(try_spawn_midround(HEAVY_MIDROUND_RANGE))
+		if(try_spawn_midround(HEAVY_MIDROUND))
 			return
 
 /**
@@ -103,7 +103,7 @@ SUBSYSTEM_DEF(dynamic)
 
 		// Execution actually happens in post_setup
 		queued_rulesets += ruleset
-		rulesets_to_spawn[ROUNDSTART_RANGE] -= 1
+		rulesets_to_spawn[ROUNDSTART] -= 1
 
 	return TRUE
 
@@ -143,8 +143,8 @@ SUBSYSTEM_DEF(dynamic)
 
 	current_tier = new picked_tier(dynamic_config)
 
-	for(var/category in current_tier.ruleset_ranges)
-		var/list/range = current_tier.ruleset_ranges[category] || list()
+	for(var/category in current_tier.ruleset_type_settings)
+		var/list/range = current_tier.ruleset_type_settings[category] || list()
 		var/low_end = range[LOW_END] || 0
 		var/high_end = range[HIGH_END] || 0
 
@@ -155,14 +155,14 @@ SUBSYSTEM_DEF(dynamic)
 
 		rulesets_to_spawn[category] = rand(low_end, high_end)
 
-	COOLDOWN_START(src, light_ruleset_start, current_tier.ruleset_ranges[LIGHT_MIDROUND_RANGE][TIME_THRESHOLD])
-	COOLDOWN_START(src, heavy_ruleset_start, current_tier.ruleset_ranges[HEAVY_MIDROUND_RANGE][TIME_THRESHOLD])
-	COOLDOWN_START(src, latejoin_ruleset_start, current_tier.ruleset_ranges[LATEJOIN_RANGE][TIME_THRESHOLD])
+	COOLDOWN_START(src, light_ruleset_start, current_tier.ruleset_type_settings[LIGHT_MIDROUND][TIME_THRESHOLD])
+	COOLDOWN_START(src, heavy_ruleset_start, current_tier.ruleset_type_settings[HEAVY_MIDROUND][TIME_THRESHOLD])
+	COOLDOWN_START(src, latejoin_ruleset_start, current_tier.ruleset_type_settings[LATEJOIN][TIME_THRESHOLD])
 
-	var/roundstart_spawn = rulesets_to_spawn[ROUNDSTART_RANGE]
-	var/light_midround_spawn = rulesets_to_spawn[LIGHT_MIDROUND_RANGE]
-	var/heavy_midround_spawn = rulesets_to_spawn[HEAVY_MIDROUND_RANGE]
-	var/latejoin_spawn = rulesets_to_spawn[LATEJOIN_RANGE]
+	var/roundstart_spawn = rulesets_to_spawn[ROUNDSTART]
+	var/light_midround_spawn = rulesets_to_spawn[LIGHT_MIDROUND]
+	var/heavy_midround_spawn = rulesets_to_spawn[HEAVY_MIDROUND]
+	var/latejoin_spawn = rulesets_to_spawn[LATEJOIN]
 
 	log_dynamic("Selected tier: [current_tier.tier]")
 	log_dynamic("- Roundstart population: [roundstart_population]")
@@ -200,7 +200,7 @@ SUBSYSTEM_DEF(dynamic)
 /datum/controller/subsystem/dynamic/proc/pick_roundstart_rulesets(list/antag_candidates)
 	PRIVATE_PROC(TRUE)
 
-	if(rulesets_to_spawn[ROUNDSTART_RANGE] <= 0)
+	if(rulesets_to_spawn[ROUNDSTART] <= 0)
 		return
 
 	var/list/rulesets_weighted = get_roundstart_rulesets(antag_candidates)
@@ -212,11 +212,11 @@ SUBSYSTEM_DEF(dynamic)
 		return
 
 	var/list/picked_rulesets = list()
-	while(rulesets_to_spawn[ROUNDSTART_RANGE] > 0)
+	while(rulesets_to_spawn[ROUNDSTART] > 0)
 		if(!length(rulesets_weighted) || total_weight <= 0)
-			log_dynamic("Roundstart: No more rulesets to pick from with [rulesets_to_spawn[ROUNDSTART_RANGE]] left!")
+			log_dynamic("Roundstart: No more rulesets to pick from with [rulesets_to_spawn[ROUNDSTART]] left!")
 			break
-		rulesets_to_spawn[ROUNDSTART_RANGE] -= 1
+		rulesets_to_spawn[ROUNDSTART] -= 1
 		var/datum/dynamic_ruleset/picked_ruleset = pick_weight(rulesets_weighted)
 		picked_rulesets += picked_ruleset
 		log_dynamic("Roundstart: Ruleset [picked_ruleset.config_tag] (Chance: [round(rulesets_weighted[picked_ruleset] / total_weight * 100, 0.01)]%)")
@@ -364,7 +364,7 @@ SUBSYSTEM_DEF(dynamic)
  */
 /datum/controller/subsystem/dynamic/proc/try_spawn_latejoin(mob/living/carbon/human/latejoiner)
 
-	if(rulesets_to_spawn[LATEJOIN_RANGE] <= 0)
+	if(rulesets_to_spawn[LATEJOIN] <= 0)
 		return FALSE
 	var/latejoin_chance = get_latejoin_chance()
 	if(!prob(latejoin_chance))
@@ -392,9 +392,9 @@ SUBSYSTEM_DEF(dynamic)
 	picked_ruleset.execute()
 	// Clean up unused rulesets
 	QDEL_LIST(rulesets_weighted)
-	rulesets_to_spawn[LATEJOIN_RANGE] -= 1
+	rulesets_to_spawn[LATEJOIN] -= 1
 	failed_latejoins = 0
-	COOLDOWN_START(src, latejoin_cooldown, get_ruleset_cooldown(LATEJOIN_RANGE))
+	COOLDOWN_START(src, latejoin_cooldown, get_ruleset_cooldown(LATEJOIN))
 	return TRUE
 
 /// Gets a weighted list of latejoin rulesets
@@ -425,12 +425,12 @@ SUBSYSTEM_DEF(dynamic)
  * Get the cooldown between attempts to spawn a ruleset of the given type
  */
 /datum/controller/subsystem/dynamic/proc/get_ruleset_cooldown(range)
-	if(range == ROUNDSTART_RANGE)
+	if(range == ROUNDSTART)
 		stack_trace("Attempting to get cooldown for roundstart rulesets - this is redundant and is likely an error")
 		return 0
 
-	var/low = current_tier.ruleset_ranges[range][EXECUTION_COOLDOWN_LOW] || 0
-	var/high = current_tier.ruleset_ranges[range][EXECUTION_COOLDOWN_HIGH] || 0
+	var/low = current_tier.ruleset_type_settings[range][EXECUTION_COOLDOWN_LOW] || 0
+	var/high = current_tier.ruleset_type_settings[range][EXECUTION_COOLDOWN_HIGH] || 0
 	return rand(low, high)
 
 /**
@@ -493,6 +493,12 @@ SUBSYSTEM_DEF(dynamic)
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED && !SSticker.news_report)
 		SSticker.news_report = SSshuttle.emergency?.is_hijacked() ? SHUTTLE_HIJACK : STATION_EVACUATED
 
+/// Helper to clear all queued rulesets and stop any other rulesets from naturally spawning
+/datum/controller/subsystem/dynamic/proc/force_extended()
+	for(var/category in rulesets_to_spawn)
+		rulesets_to_spawn[category] = 0
+	QDEL_LIST(queued_rulesets)
+
 #ifdef TESTING
 /// Puts all repo defaults into a dynamic.toml file
 /datum/controller/subsystem/dynamic/proc/build_dynamic_toml()
@@ -507,15 +513,15 @@ SUBSYSTEM_DEF(dynamic)
 		data += "name = \"[tier.name]\"\n"
 		data += "min_pop = [tier.min_pop]\n"
 		data += "advisory_report = \"[tier.advisory_report]\"\n"
-		for(var/range in tier.ruleset_ranges)
-			data += "ruleset_ranges.[range].[LOW_END] = [tier.ruleset_ranges[range]?[LOW_END] || 0]\n"
-			data += "ruleset_ranges.[range].[HIGH_END] = [tier.ruleset_ranges[range]?[HIGH_END] || 0]\n"
-			data += "ruleset_ranges.[range].[HALF_RANGE_POP_THRESHOLD] = [tier.ruleset_ranges[range]?[HALF_RANGE_POP_THRESHOLD] || 0]\n"
-			data += "ruleset_ranges.[range].[FULL_RANGE_POP_THRESHOLD] = [tier.ruleset_ranges[range]?[FULL_RANGE_POP_THRESHOLD] || 0]\n"
-			if(range != ROUNDSTART_RANGE)
-				data += "ruleset_ranges.[range].[TIME_THRESHOLD] = [(tier.ruleset_ranges[range]?[TIME_THRESHOLD] || 0) / 60 / 10]\n"
-				data += "ruleset_ranges.[range].[EXECUTION_COOLDOWN_LOW] = [(tier.ruleset_ranges[range]?[EXECUTION_COOLDOWN_LOW] || 0) / 60 / 10]\n"
-				data += "ruleset_ranges.[range].[EXECUTION_COOLDOWN_HIGH] = [(tier.ruleset_ranges[range]?[EXECUTION_COOLDOWN_HIGH] || 0) / 60 / 10]\n"
+		for(var/range in tier.ruleset_type_settings)
+			data += "ruleset_type_settings.[range].[LOW_END] = [tier.ruleset_type_settings[range]?[LOW_END] || 0]\n"
+			data += "ruleset_type_settings.[range].[HIGH_END] = [tier.ruleset_type_settings[range]?[HIGH_END] || 0]\n"
+			data += "ruleset_type_settings.[range].[HALF_RANGE_POP_THRESHOLD] = [tier.ruleset_type_settings[range]?[HALF_RANGE_POP_THRESHOLD] || 0]\n"
+			data += "ruleset_type_settings.[range].[FULL_RANGE_POP_THRESHOLD] = [tier.ruleset_type_settings[range]?[FULL_RANGE_POP_THRESHOLD] || 0]\n"
+			if(range != ROUNDSTART)
+				data += "ruleset_type_settings.[range].[TIME_THRESHOLD] = [(tier.ruleset_type_settings[range]?[TIME_THRESHOLD] || 0) / 60 / 10]\n"
+				data += "ruleset_type_settings.[range].[EXECUTION_COOLDOWN_LOW] = [(tier.ruleset_type_settings[range]?[EXECUTION_COOLDOWN_LOW] || 0) / 60 / 10]\n"
+				data += "ruleset_type_settings.[range].[EXECUTION_COOLDOWN_HIGH] = [(tier.ruleset_type_settings[range]?[EXECUTION_COOLDOWN_HIGH] || 0) / 60 / 10]\n"
 
 		data += "\n"
 		qdel(tier)

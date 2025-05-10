@@ -1,33 +1,55 @@
+/**
+ * ## Dynamic tier datum
+ *
+ * These datums are essentially used to configure the dynamic system
+ * They serve as a very simple way to see at a glance what dynamic is doing and what it is going to do
+ *
+ * For example, a tier will say "we will spawn 1-2 roundstart antags"
+ */
 /datum/dynamic_tier
+	/// Tier number - A number which determines the severity of the tier - the higher the number, the more antags
 	var/tier = -1
+	/// The human readable name of the tier
 	var/name
 	/// Tag the tier uses for configuring.
 	/// Don't change this unless you know what you're doing.
 	var/config_tag
+	/// The chance this tier will be selected from all tiers
+	/// Keep all tiers added up to 100 weight, keeps things readable
 	var/weight = 0
-
+	/// This tier will not be selected if the population is below this number
 	var/min_pop = 0
 
+	/// String which is sent to the players reporting which tier is active
 	var/advisory_report
 
-	var/list/ruleset_ranges = list(
-		ROUNDSTART_RANGE = list(
-			// Lower end of the range
+	/**
+	 * How Dynamic will select rulesets based on the tier
+	 *
+	 * Every tier configures each of the ruleset types - ie, roundstart, light midround, heavy midround, latejoin
+	 *
+	 * Every type can be configured with the following:
+	 * - LOW_END: The lower for how many of this ruleset type can be selected
+	 * - HIGH_END: The upper for how many of this ruleset type can be selected
+	 * - HALF_RANGE_POP_THRESHOLD: Below this population range, the high end is quartered
+	 * - FULL_RANGE_POP_THRESHOLD: Below this population range, the high end is halved
+	 *
+	 * Non-roundstart ruleset types also have:
+	 * - TIME_THRESHOLD: World time must pass this threshold before dynamic starts running this ruleset type
+	 * - EXECUTION_COOLDOWN_LOW: The lower end for how long to wait before running this ruleset type again
+	 * - EXECUTION_COOLDOWN_HIGH: The upper end for how long to wait before running this ruleset type again
+	 */
+	var/list/ruleset_type_settings = list(
+		ROUNDSTART = list(
 			LOW_END = 0,
-			// Upper end of the range
 			HIGH_END = 0,
-			// Below this # of players, the range is quartered.
 			HALF_RANGE_POP_THRESHOLD = 25,
-			// Below this # of players, the range is halved
 			FULL_RANGE_POP_THRESHOLD = 50,
-			// The round time threshold for which midrounds/latejoins may start (Not used for roundstart)
 			TIME_THRESHOLD = 0 MINUTES,
-			// Lower end for cooldown between ruleset executions (Not used for roundstart)
 			EXECUTION_COOLDOWN_LOW = 0 MINUTES,
-			// Upper end for cooldown between ruleset executions (Not used for roundstart)
 			EXECUTION_COOLDOWN_HIGH = 0 MINUTES,
 		),
-		LIGHT_MIDROUND_RANGE = list(
+		LIGHT_MIDROUND = list(
 			LOW_END = 0,
 			HIGH_END = 0,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -36,7 +58,7 @@
 			EXECUTION_COOLDOWN_LOW = 5 MINUTES,
 			EXECUTION_COOLDOWN_HIGH = 15 MINUTES,
 		),
-		HEAVY_MIDROUND_RANGE = list(
+		HEAVY_MIDROUND = list(
 			LOW_END = 0,
 			HIGH_END = 0,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -45,7 +67,7 @@
 			EXECUTION_COOLDOWN_LOW = 5 MINUTES,
 			EXECUTION_COOLDOWN_HIGH = 15 MINUTES,
 		),
-		LATEJOIN_RANGE = list(
+		LATEJOIN = list(
 			LOW_END = 0,
 			HIGH_END = 0,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -67,15 +89,15 @@
 	switch(nvar)
 		if(NAMEOF(src, tier), NAMEOF(src, config_tag), NAMEOF(src, vars))
 			return FALSE
-		if(NAMEOF(src, ruleset_ranges))
+		if(NAMEOF(src, ruleset_type_settings))
 			for(var/category in nval)
 				for(var/rule in nval[category])
 					if(rule == LOW_END || rule == HIGH_END)
-						ruleset_ranges[category][rule] = max(0, nval[category][rule])
+						ruleset_type_settings[category][rule] = max(0, nval[category][rule])
 					else if(rule == TIME_THRESHOLD || rule == EXECUTION_COOLDOWN_LOW || rule == EXECUTION_COOLDOWN_HIGH)
-						ruleset_ranges[category][rule] = nval[category][rule] * 1 MINUTES
+						ruleset_type_settings[category][rule] = nval[category][rule] * 1 MINUTES
 					else
-						ruleset_ranges[category][rule] = nval[category][rule]
+						ruleset_type_settings[category][rule] = nval[category][rule]
 			return TRUE
 
 	vars[nvar] = nval
@@ -110,14 +132,14 @@
 		Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. \
 		We advise a heightened level of security alongside maintaining vigilance against potential threats."
 
-	ruleset_ranges = list(
-		ROUNDSTART_RANGE = list(
+	ruleset_type_settings = list(
+		ROUNDSTART = list(
 			LOW_END = 1,
 			HIGH_END = 1,
 			HALF_RANGE_POP_THRESHOLD = 25,
 			FULL_RANGE_POP_THRESHOLD = 40,
 		),
-		LIGHT_MIDROUND_RANGE = list(
+		LIGHT_MIDROUND = list(
 			LOW_END = 1,
 			HIGH_END = 2,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -126,7 +148,7 @@
 			EXECUTION_COOLDOWN_LOW = 5 MINUTES,
 			EXECUTION_COOLDOWN_HIGH = 15 MINUTES,
 		),
-		HEAVY_MIDROUND_RANGE = list(
+		HEAVY_MIDROUND = list(
 			LOW_END = 0,
 			HIGH_END = 1,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -135,7 +157,7 @@
 			EXECUTION_COOLDOWN_LOW = 5 MINUTES,
 			EXECUTION_COOLDOWN_HIGH = 15 MINUTES,
 		),
-		LATEJOIN_RANGE = list(
+		LATEJOIN = list(
 			LOW_END = 0,
 			HIGH_END = 1,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -157,14 +179,14 @@
 		on Nanotrasen assets within the Spinward Sector. \
 		Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
 
-	ruleset_ranges = list(
-		ROUNDSTART_RANGE = list(
+	ruleset_type_settings = list(
+		ROUNDSTART = list(
 			LOW_END = 1,
 			HIGH_END = 2,
 			HALF_RANGE_POP_THRESHOLD = 25,
 			FULL_RANGE_POP_THRESHOLD = 40,
 		),
-		LIGHT_MIDROUND_RANGE = list(
+		LIGHT_MIDROUND = list(
 			LOW_END = 1,
 			HIGH_END = 2,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -173,7 +195,7 @@
 			EXECUTION_COOLDOWN_LOW = 5 MINUTES,
 			EXECUTION_COOLDOWN_HIGH = 15 MINUTES,
 		),
-		HEAVY_MIDROUND_RANGE = list(
+		HEAVY_MIDROUND = list(
 			LOW_END = 0,
 			HIGH_END = 1,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -182,7 +204,7 @@
 			EXECUTION_COOLDOWN_LOW = 5 MINUTES,
 			EXECUTION_COOLDOWN_HIGH = 15 MINUTES,
 		),
-		LATEJOIN_RANGE = list(
+		LATEJOIN = list(
 			LOW_END = 1,
 			HIGH_END = 2,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -205,14 +227,14 @@
 		However, information passed to us by GDI suggests a high amount of enemy activity in the sector, \
 		indicative of an impending attack. Remain on high alert and vigilant against any other potential threats."
 
-	ruleset_ranges = list(
-		ROUNDSTART_RANGE = list(
+	ruleset_type_settings = list(
+		ROUNDSTART = list(
 			LOW_END = 2,
 			HIGH_END = 3,
 			HALF_RANGE_POP_THRESHOLD = 25,
 			FULL_RANGE_POP_THRESHOLD = 40,
 		),
-		LIGHT_MIDROUND_RANGE = list(
+		LIGHT_MIDROUND = list(
 			LOW_END = 2,
 			HIGH_END = 3,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -221,7 +243,7 @@
 			EXECUTION_COOLDOWN_LOW = 5 MINUTES,
 			EXECUTION_COOLDOWN_HIGH = 15 MINUTES,
 		),
-		HEAVY_MIDROUND_RANGE = list(
+		HEAVY_MIDROUND = list(
 			LOW_END = 0,
 			HIGH_END = 2,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -230,7 +252,7 @@
 			EXECUTION_COOLDOWN_LOW = 5 MINUTES,
 			EXECUTION_COOLDOWN_HIGH = 15 MINUTES,
 		),
-		LATEJOIN_RANGE = list(
+		LATEJOIN = list(
 			LOW_END = 1,
 			HIGH_END = 3,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -254,14 +276,14 @@
 		is preparing to mount a major concerted offensive on Nanotrasen assets in the Spinward Sector to cripple our foothold there. \
 		All stations should remain on high alert and prepared to defend themselves."
 
-	ruleset_ranges = list(
-		ROUNDSTART_RANGE = list(
+	ruleset_type_settings = list(
+		ROUNDSTART = list(
 			LOW_END = 3,
 			HIGH_END = 4,
 			HALF_RANGE_POP_THRESHOLD = 25,
 			FULL_RANGE_POP_THRESHOLD = 40,
 		),
-		LIGHT_MIDROUND_RANGE = list(
+		LIGHT_MIDROUND = list(
 			LOW_END = 1,
 			HIGH_END = 2,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -270,7 +292,7 @@
 			EXECUTION_COOLDOWN_LOW = 5 MINUTES,
 			EXECUTION_COOLDOWN_HIGH = 15 MINUTES,
 		),
-		HEAVY_MIDROUND_RANGE = list(
+		HEAVY_MIDROUND = list(
 			LOW_END = 1,
 			HIGH_END = 2,
 			HALF_RANGE_POP_THRESHOLD = 25,
@@ -279,7 +301,7 @@
 			EXECUTION_COOLDOWN_LOW = 5 MINUTES,
 			EXECUTION_COOLDOWN_HIGH = 15 MINUTES,
 		),
-		LATEJOIN_RANGE = list(
+		LATEJOIN = list(
 			LOW_END = 2,
 			HIGH_END = 3,
 			HALF_RANGE_POP_THRESHOLD = 25,
