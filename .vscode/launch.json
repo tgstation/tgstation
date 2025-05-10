@@ -32,6 +32,13 @@
 		{
 			"type": "byond",
 			"request": "launch",
+			"name": "Launch DreamSeeker (map testing)",
+			"preLaunchTask": "Build All (map testing)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}"
+		},
+		{
+			"type": "byond",
+			"request": "launch",
 			"name": "Launch DreamDaemon",
 			"preLaunchTask": "Build All",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
@@ -58,6 +65,14 @@
 			"request": "launch",
 			"name": "Launch DreamDaemon (testing + low memory mode)",
 			"preLaunchTask": "Build All (testing + low memory mode)",
+			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
+			"dreamDaemon": true
+		},
+		{
+			"type": "byond",
+			"request": "launch",
+			"name": "Launch DreamDaemon (map testing)",
+			"preLaunchTask": "Build All (map testing)",
 			"dmb": "${workspaceFolder}/${command:CurrentDMB}",
 			"dreamDaemon": true
 		},
