@@ -38,6 +38,8 @@
 
 /obj/item/ashtray/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_ITEM_CAN_BE_WASHED_IN_SINK, PROC_REF(can_be_washed_in_sink))
+	RegisterSignal(src, COMSIG_ITEM_WASHED_IN_SINK, PROC_REF(on_washed_in_sink))	// i have no clue what i'm doing
 	cig_count = rand(0, 3)
 	update_appearance()
 
@@ -123,3 +125,10 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
+
+// washing in sink
+/obj/item/ashtray/proc/can_be_washed_in_sink()
+	return TRUE
+
+/obj/item/ashtray/proc/on_washed_in_sink()
+	set_cig_count(new_amount = 0)

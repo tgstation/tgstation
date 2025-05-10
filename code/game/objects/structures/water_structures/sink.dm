@@ -202,7 +202,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		qdel(O)
 		return
 
-	if(istype(O, /obj/item/ashtray))
+	if(SEND_SIGNAL(O, COMSIG_ITEM_CAN_BE_WASHED_IN_SINK))
 		if(reagents.total_volume <= 0)
 			balloon_alert(user, "it's dry!")
 			return FALSE
@@ -215,8 +215,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			to_chat(user, span_warning("You take [O] away from [src] before you're done washing it."))
 			return FALSE
 
-		var/obj/item/ashtray/A = O
-		A.set_cig_count(new_amount = 0)
+		SEND_SIGNAL(O, COMSIG_ITEM_WASHED_IN_SINK)
 
 		busy = FALSE
 
