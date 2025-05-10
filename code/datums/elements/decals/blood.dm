@@ -35,9 +35,7 @@
 	blood_splatter.color = _color
 	if (uses_filter)
 		blood_splatter.appearance_flags |= KEEP_APART
-		if (!as_item.render_target)
-			as_item.render_target = "blood_target_[REF(as_item)]"
-		blood_splatter.add_filter("blood_cutout", -1, alpha_mask_filter(render_source = as_item.render_target))
+		blood_splatter.add_filter("blood_cutout", -1, alpha_mask_filter(render_source = as_item))
 	pic = blood_splatter
 	return TRUE
 

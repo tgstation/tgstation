@@ -101,6 +101,8 @@
 			var/atom/movable/screen/plane_master/instance = new mytype(null, null, src, plane_offset)
 			plane_masters["[instance.plane]"] = instance
 			prep_plane_instance(instance)
+	if(our_hud)
+		SEND_SIGNAL(our_hud, COMSIG_HUD_PLANES_REBUILT, plane_masters, key)
 
 /// Similarly, exists so subtypes can do unique behavior to planes on creation
 /datum/plane_master_group/proc/prep_plane_instance(atom/movable/screen/plane_master/instance)
