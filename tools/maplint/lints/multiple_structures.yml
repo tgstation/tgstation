@@ -1,0 +1,13 @@
+/obj/effect/spawner/structure:
+  banned_neighbors:
+    - /obj/effect/spawner/structure
+    - /obj/structure
+    - /turf/closed
+  ignore:
+    - /obj/structure/cable
+    - /obj/structure/transit_tube
+    - /obj/structure/disposalpipe
+    - /obj/structure/flora
+    - /obj/structure/sign
+    - /obj/structure/barricade
+    - /obj/structure/curtain
