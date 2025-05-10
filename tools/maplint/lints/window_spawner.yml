@@ -1,9 +1,10 @@
-/obj/effect/spawner/structure:
+/obj/effect/spawner/structure/window:
   banned_neighbors:
-    /obj/structure:
     /turf/closed:
+    STRUCTURE:
+      pattern: ^/obj/structure/(?!.*/directional).*$
     STRUCTURE_SPAWNER:
-      pattern: ^/obj/effect/spawner/structure/(?!.*/hollow).*$
+      pattern: ^/obj/effect/spawner/structure/(?!.*/hollow)(?!.*/directional).*$
   ignore:
     - /obj/structure/cable
     - /obj/structure/transit_tube
@@ -13,7 +14,8 @@
     - /obj/structure/barricade
     - /obj/structure/curtain
     - /obj/effect/spawner/structure/electrified_grille
-    - /obj/structure/structure/railing
-    - /obj/structure/structure/lattice
+    - /obj/structure/railing
+    - /obj/structure/lattice
     - /obj/structure/fans
     - /obj/structure/spacevine
+    - /obj/structure/girder
