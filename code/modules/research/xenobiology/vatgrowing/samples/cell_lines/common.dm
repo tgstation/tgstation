@@ -483,7 +483,7 @@
 /datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/vatgrower/vat)
 	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
 
-	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant/slow, /mob/living/basic/clown/fleshclown))
+	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant, /mob/living/basic/clown/fleshclown))
 
 	new selected_mob(get_turf(vat))
 
