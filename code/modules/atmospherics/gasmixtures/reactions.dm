@@ -1161,4 +1161,50 @@
 		air.temperature = max((temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB)
 	return REACTING
 
+/datum/gas_reaction/antinoblium_replication
+	priority_group = PRIORITY_FORMATION
+	name = "Antinoblium Replication"
+	id = "antinoblium_replication"
+	desc = "Antinoblium breaks down all gases into more of itself."
+
+/datum/gas_reaction/antinoblium_replication/init_reqs()
+	requirements = list(
+		/datum/gas/antinoblium = MINIMUM_MOLE_COUNT * ANTINOBLIUM_CONVERSION_DIVISOR,
+		"MIN_TEMP" = REACTION_OPPRESSION_MIN_TEMP,
+	)
+
+/**
+ * Antinoblium Recplication
+ *
+ * Converts all gases into antinoblium.
+ */
+/datum/gas_reaction/antinoblium_replication/react(datum/gas_mixture/air, datum/holder)
+	. = REACTING
+	var/list/cached_gases = air.gases
+	var/heat_capacity = air.heat_capacity()
+	var/total_moles = air.total_moles()
+	var/antinoblium = cached_gases[/datum/gas/antinoblium]
+	var/antinoblium_moles = antinoblium[MOLES]
+	var/total_not_antinoblium_moles = total_moles - antinoblium_moles
+	var/reaction_rate = min(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR, total_not_antinoblium_moles)
+	if(reaction_rate < MINIMUM_MOLE_COUNT)
+		. = NO_REACTION
+		if(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR < MINIMUM_MOLE_COUNT) // Return early when the reaction is being slow due to insignificant antinoblium quantity.
+			return
+		reaction_rate = total_not_antinoblium_moles // Otherwise, if the reaction is slow due to insignificant remaining gases, just eat the rest of the gases.
+	for(var/id in cached_gases)
+		if(id == /datum/gas/antinoblium)
+			continue
+		var/list/gas = cached_gases[id]
+		if(. == NO_REACTION) // Let the gases get properly cleared while avoiding potential division by 0.
+			gas[MOLES] = 0
+			continue
+		gas[MOLES] -= reaction_rate * gas[MOLES] / total_not_antinoblium_moles
+	antinoblium[MOLES] += reaction_rate
+	SET_REACTION_RESULTS(reaction_rate)
+	var/new_heat_capacity = air.heat_capacity()
+	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+		air.temperature = max(air.temperature * heat_capacity / new_heat_capacity, TCMB)
+
+
 #undef SET_REACTION_RESULTS
