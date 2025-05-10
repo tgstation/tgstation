@@ -98,7 +98,7 @@
 		postmark_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		. += postmark_image
 
-/obj/item/mail/attackby(obj/item/W, mob/user, list/modifiers)
+/obj/item/mail/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	// Destination tagging
 	if(istype(W, /obj/item/dest_tagger))
 		var/obj/item/dest_tagger/destination_tag = W

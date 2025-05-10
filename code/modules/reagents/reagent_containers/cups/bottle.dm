@@ -571,7 +571,7 @@
 		icon_state = "syrup_open"
 		spillable = TRUE
 		balloon_alert(user, "removed pump cap")
-		
+
 	update_icon_state()
 	return CLICK_ACTION_SUCCESS
 

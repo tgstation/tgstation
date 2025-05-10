@@ -97,7 +97,7 @@
 	user.put_in_hands(power_cell)
 	power_cell = null
 
-/obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!panel_open)
 		return ..()
 

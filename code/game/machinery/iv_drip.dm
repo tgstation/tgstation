@@ -179,7 +179,7 @@
 	user.visible_message(span_warning("[user] attaches [src] to [target]."), span_notice("You attach [src] to [target]."))
 	attach_iv(target, user)
 
-/obj/machinery/iv_drip/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/machinery/iv_drip/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(use_internal_storage)
 		return ..()
 

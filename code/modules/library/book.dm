@@ -98,7 +98,7 @@
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
 	display_content(user)
 
-/obj/item/book/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
+/obj/item/book/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(IS_WRITING_UTENSIL(attacking_item))
 		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
 			return

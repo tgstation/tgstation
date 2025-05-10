@@ -72,7 +72,7 @@
 		SSblackbox.record_feedback("tally", "cult_shade_suicided", 1)
 	..()
 
-/mob/living/basic/shade/attackby(obj/item/item, mob/user, list/modifiers)
+/mob/living/basic/shade/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/soulstone))
 		var/obj/item/soulstone/stone = item
 		stone.capture_shade(src, user)

@@ -91,7 +91,7 @@
 
 	return ..()
 
-/obj/item/toy/cards/cardhand/attackby_secondary(obj/item/weapon, mob/user, list/modifiers)
+/obj/item/toy/cards/cardhand/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	attackby(weapon, user, modifiers, flip_card = TRUE)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 

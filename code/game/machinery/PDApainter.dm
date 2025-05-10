@@ -109,7 +109,7 @@
 		power_change()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, list/modifiers)
+/obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(machine_stat & BROKEN)
 		if(O.tool_behaviour == TOOL_WELDER && !user.combat_mode)
 			if(!O.tool_start_check(user, amount=1))

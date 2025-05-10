@@ -164,7 +164,7 @@
 		L.mind.transfer_to(brainmob)
 		to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
 
-/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 
 	if(istype(item, /obj/item/borg/apparatus/organ_storage))

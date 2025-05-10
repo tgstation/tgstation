@@ -97,7 +97,7 @@
 		SSore_generation.processed_vents -= src
 	return ..()
 
-/obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE

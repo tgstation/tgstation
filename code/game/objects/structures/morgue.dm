@@ -554,7 +554,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		to_chat(user, span_warning("That's not connected to anything!"))
 	add_fingerprint(user)
 
-/obj/structure/tray/attackby(obj/P, mob/user, list/modifiers)
+/obj/structure/tray/attackby(obj/P, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(P, /obj/item/riding_offhand))
 		return ..()
 

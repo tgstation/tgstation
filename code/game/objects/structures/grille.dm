@@ -219,7 +219,7 @@
 		span_notice("You [anchored ? "fasten [src] to" : "unfasten [src] from"] the floor."))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/grille/attackby(obj/item/W, mob/user, list/modifiers)
+/obj/structure/grille/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/stack/rods) && broken && do_after(user, 1 SECONDS, target = src))
 		if(shock(user, 90))

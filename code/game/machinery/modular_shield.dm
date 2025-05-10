@@ -143,7 +143,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return TRUE
 
-/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, list/modifiers)
+/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(is_wire_tool(W) && panel_open)
 		wires.interact(user)

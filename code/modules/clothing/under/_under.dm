@@ -112,7 +112,7 @@
 		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
 		. += blood_overlay
 
-/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/obj/item/clothing/under/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(repair_sensors(attacking_item, user))
 		return TRUE
 

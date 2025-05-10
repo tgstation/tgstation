@@ -40,7 +40,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 
 /// Attaching evidences: photo and papers
 
-/obj/structure/detectiveboard/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/structure/detectiveboard/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/paper) || istype(item, /obj/item/photo))
 		if(!cases.len)
 			to_chat(user, "There are no cases!")

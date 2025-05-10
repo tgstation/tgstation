@@ -43,7 +43,7 @@
 	synced_bank_account = null
 	return ..()
 
-/obj/machinery/computer/bank_machine/attackby(obj/item/weapon, mob/user, list/modifiers)
+/obj/machinery/computer/bank_machine/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	var/value = 0
 	if(istype(weapon, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/inserted_cash = weapon

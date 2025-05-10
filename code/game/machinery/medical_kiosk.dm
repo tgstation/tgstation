@@ -117,7 +117,7 @@
 		active_price = board.custom_cost
 	return
 
-/obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, list/modifiers)
+/obj/machinery/medical_kiosk/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", O))
 		return
 	else if(default_deconstruction_crowbar(O))

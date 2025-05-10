@@ -36,7 +36,7 @@
 	if (!check_in_range())
 		return PROCESS_KILL
 
-/obj/item/usb_cable/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/usb_cable/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if (.)
 		return
