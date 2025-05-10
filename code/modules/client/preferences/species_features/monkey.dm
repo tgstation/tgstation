@@ -4,6 +4,7 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_external_organ = /obj/item/organ/tail/monkey
 	can_randomize = FALSE
+	should_update_preview = TRUE
 
 /datum/preference/choiced/monkey_tail/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.tails_list_monkey)

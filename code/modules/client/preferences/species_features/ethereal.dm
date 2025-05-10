@@ -4,6 +4,7 @@
 	category = PREFERENCE_CATEGORY_FEATURES
 	main_feature_name = "Ethereal color"
 	should_generate_icons = TRUE
+	should_update_preview = TRUE
 
 /datum/preference/choiced/ethereal_color/has_relevant_feature(datum/preferences/preferences)
 	// Skips checks for relevant_organ, relevant trait etc. because ethereal color is tied directly to species (atm)

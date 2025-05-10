@@ -5,6 +5,7 @@
 	main_feature_name = "Antennae"
 	should_generate_icons = TRUE
 	relevant_external_organ = /obj/item/organ/antennae
+	should_update_preview = TRUE
 
 /datum/preference/choiced/moth_antennae/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.moth_antennae_list)
@@ -36,6 +37,7 @@
 	main_feature_name = "Body markings"
 	should_generate_icons = TRUE
 	relevant_body_markings = /datum/bodypart_overlay/simple/body_marking/moth
+	should_update_preview = TRUE
 
 /datum/preference/choiced/moth_markings/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.moth_markings_list)
@@ -86,6 +88,7 @@
 	main_feature_name = "Moth wings"
 	should_generate_icons = TRUE
 	relevant_external_organ = /obj/item/organ/wings/moth
+	should_update_preview = TRUE
 
 /datum/preference/choiced/moth_wings/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.moth_wings_list)

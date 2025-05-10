@@ -19,6 +19,7 @@
 	main_feature_name = "Backpack"
 	category = PREFERENCE_CATEGORY_CLOTHING
 	should_generate_icons = TRUE
+	should_update_preview = TRUE
 
 /datum/preference/choiced/backpack/init_possible_values()
 	return list(
@@ -73,6 +74,7 @@
 	main_feature_name = "Jumpsuit"
 	category = PREFERENCE_CATEGORY_CLOTHING
 	should_generate_icons = TRUE
+	should_update_preview = TRUE
 
 /datum/preference/choiced/jumpsuit/init_possible_values()
 	return list(
@@ -100,6 +102,7 @@
 	main_feature_name = "Socks"
 	category = PREFERENCE_CATEGORY_CLOTHING
 	should_generate_icons = TRUE
+	should_update_preview = TRUE
 	can_randomize = FALSE
 
 /datum/preference/choiced/socks/init_possible_values()
@@ -129,6 +132,7 @@
 	main_feature_name = "Undershirt"
 	category = PREFERENCE_CATEGORY_CLOTHING
 	should_generate_icons = TRUE
+	should_update_preview = TRUE
 	can_randomize = FALSE
 
 /datum/preference/choiced/undershirt/init_possible_values()
@@ -177,6 +181,7 @@
 	main_feature_name = "Underwear"
 	category = PREFERENCE_CATEGORY_CLOTHING
 	should_generate_icons = TRUE
+	should_update_preview = TRUE
 	can_randomize = FALSE
 
 /datum/preference/choiced/underwear/init_possible_values()

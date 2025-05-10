@@ -3,6 +3,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "gender"
 	priority = PREFERENCE_PRIORITY_GENDER
+	should_update_preview = TRUE // Updating gender may update body type.
 
 /datum/preference/choiced/gender/init_possible_values()
 	return list(MALE, FEMALE, PLURAL, NEUTER)

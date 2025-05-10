@@ -2,6 +2,7 @@
 	savefile_key = "underwear_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
+	should_update_preview = TRUE
 
 /datum/preference/color/underwear_color/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

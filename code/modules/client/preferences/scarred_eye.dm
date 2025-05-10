@@ -2,6 +2,7 @@
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "scarred_eye"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_update_preview = TRUE
 
 /datum/preference/choiced/scarred_eye/init_possible_values()
 	return GLOB.scarred_eye_choice

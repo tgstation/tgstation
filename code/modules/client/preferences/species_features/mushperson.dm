@@ -3,6 +3,7 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_external_organ = /obj/item/organ/mushroom_cap
+	should_update_preview = TRUE
 
 /datum/preference/choiced/mushroom_cap/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.caps_list)

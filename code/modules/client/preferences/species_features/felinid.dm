@@ -4,6 +4,7 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	can_randomize = FALSE
 	relevant_external_organ = /obj/item/organ/tail/cat
+	should_update_preview = TRUE
 
 /datum/preference/choiced/tail_felinid/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.tails_list_felinid)
@@ -21,6 +22,7 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	can_randomize = FALSE
 	relevant_external_organ = /obj/item/organ/ears/cat
+	should_update_preview = TRUE
 
 /datum/preference/choiced/felinid_ears/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.ears_list)

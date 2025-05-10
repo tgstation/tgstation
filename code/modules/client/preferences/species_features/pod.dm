@@ -5,6 +5,7 @@
 	main_feature_name = "Hairstyle"
 	should_generate_icons = TRUE
 	relevant_external_organ = /obj/item/organ/pod_hair
+	should_update_preview = TRUE
 
 /datum/preference/choiced/pod_hair/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.pod_hair_list)
