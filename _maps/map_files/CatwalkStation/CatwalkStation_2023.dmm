@@ -58959,7 +58959,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/turf/open/space/basic,
+/turf/open/floor/wood,
 /area/station/hallway/secondary/service)
 "rFp" = (
 /obj/machinery/vending/wallmed/directional/west{
@@ -65133,7 +65133,7 @@
 /area/station/security/detectives_office/private_investigators_office)
 "tBc" = (
 /obj/machinery/door/poddoor/shutters{
-	id = "qm_warehouse";
+	id = s;
 	name = "Warehouse Shutters"
 	},
 /obj/effect/turf_decal/stripes/line,
