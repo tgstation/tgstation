@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "If you're staggered, and try to walk down stairs, you'll instead fall down the stairs (stunning and causing damage)."
+  - balance: "Hard crit and dead people will also roll down the stairs."
