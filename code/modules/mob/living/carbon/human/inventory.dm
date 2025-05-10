@@ -220,12 +220,12 @@
 /mob/living/carbon/human/get_equipped_speed_mod_items()
 	return ..() - list(l_store, r_store, s_store)
 
-/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
+/mob/living/carbon/human/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
-	if(!. || !I)
+	if(!. || !item_dropping)
 		return
 	var/not_handled = FALSE //if we actually unequipped an item, this is because we dont want to run this proc twice, once for carbons and once for humans
-	if(I == wear_suit)
+	if(item_dropping == wear_suit)
 		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		if(wear_suit.breakouttime) //when unequipping a straightjacket
@@ -235,7 +235,7 @@
 		wear_suit = null
 		if(!QDELETED(src)) //no need to update we're getting deleted anyway
 			update_worn_oversuit()
-	else if(I == w_uniform)
+	else if(item_dropping == w_uniform)
 		w_uniform = null
 		update_suit_sensors()
 		if(!QDELETED(src))
@@ -249,43 +249,43 @@
 				dropItemToGround(wear_id)
 			if(belt && !can_equip(belt, ITEM_SLOT_BELT, TRUE, ignore_equipped = TRUE))
 				dropItemToGround(belt)
-	else if(I == gloves)
+	else if(item_dropping == gloves)
 		gloves = null
 		if(!QDELETED(src))
 			update_worn_gloves()
-	else if(I == glasses)
+	else if(item_dropping == glasses)
 		glasses = null
-		var/obj/item/clothing/glasses/old_glasses = I
+		var/obj/item/clothing/glasses/old_glasses = item_dropping
 		if(old_glasses.vision_flags || old_glasses.invis_override || old_glasses.invis_view || !isnull(old_glasses.lighting_cutoff))
 			update_sight()
 		if(!QDELETED(src))
 			update_worn_glasses()
-	else if(I == ears)
+	else if(item_dropping == ears)
 		ears = null
 		if(!QDELETED(src))
 			update_worn_ears()
-	else if(I == shoes)
+	else if(item_dropping == shoes)
 		shoes = null
 		if(!QDELETED(src))
 			update_worn_shoes()
-	else if(I == belt)
+	else if(item_dropping == belt)
 		belt = null
 		if(!QDELETED(src))
 			update_worn_belt()
-	else if(I == wear_id)
+	else if(item_dropping == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
 		if(!QDELETED(src))
 			update_worn_id()
-	else if(I == r_store)
+	else if(item_dropping == r_store)
 		r_store = null
 		if(!QDELETED(src))
 			update_pockets()
-	else if(I == l_store)
+	else if(item_dropping == l_store)
 		l_store = null
 		if(!QDELETED(src))
 			update_pockets()
-	else if(I == s_store)
+	else if(item_dropping == s_store)
 		s_store = null
 		if(!QDELETED(src))
 			update_suit_storage()
@@ -293,14 +293,14 @@
 		not_handled = TRUE
 
 	// Send a signal for when we unequip an item that used to cover our feet/shoes. Used for bloody feet
-	if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)
-		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_SHOECOVER, I, force, newloc, no_move, invdrop, silent)
+	if((item_dropping.body_parts_covered & FEET) || (item_dropping.flags_inv | item_dropping.transparent_protection) & HIDESHOES)
+		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_SHOECOVER, item_dropping, force, newloc, no_move, invdrop, silent)
 
 	if(not_handled)
 		return
 
 	update_equipment_speed_mods()
-	update_obscured_slots(I.flags_inv)
+	update_obscured_slots(item_dropping.flags_inv)
 	hud_used?.update_locked_slots()
 
 /mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)
