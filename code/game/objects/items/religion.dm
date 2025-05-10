@@ -293,6 +293,7 @@
 	bomb = 60
 	fire = 60
 	acid = 60
+	wound = 50
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -322,6 +323,7 @@
 	bio = 50
 	fire = 60
 	acid = 60
+	wound = 60
 
 /obj/item/clothing/head/helmet/plate/crusader/prophet/red
 	icon_state = "prophet-red"
@@ -404,6 +406,7 @@
 	bomb = 60
 	fire = 60
 	acid = 60
+	wound = 50
 
 /obj/item/clothing/shoes/plate/red
 	icon_state = "crusader-red"

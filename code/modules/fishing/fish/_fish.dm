@@ -707,7 +707,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	block_chance = initial(block_chance)
 	armour_penetration = initial(armour_penetration)
 	wound_bonus = initial(wound_bonus)
-	bare_wound_bonus = initial(bare_wound_bonus)
+	exposed_wound_bonus = initial(exposed_wound_bonus)
 	toolspeed = initial(toolspeed)
 
 	var/weight_rank = GET_FISH_WEIGHT_RANK(weight)

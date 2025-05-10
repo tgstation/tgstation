@@ -170,9 +170,9 @@
  * * wounding_type: Either WOUND_BLUNT, WOUND_SLASH, or WOUND_PIERCE, basically only matters for the dismember message
  * * wounding_dmg: The damage of the strike that prompted this roll, higher damage = higher chance
  * * wound_bonus: Not actually used right now, but maybe someday
- * * bare_wound_bonus: ditto above
+ * * exposed_wound_bonus: ditto above
  */
-/obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+/obj/item/bodypart/proc/try_dismember(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus)
 	if (!can_dismember())
 		return
 

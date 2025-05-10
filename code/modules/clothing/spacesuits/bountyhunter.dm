@@ -18,3 +18,4 @@
 	bio = 100
 	fire = 100
 	acid = 100
+	wound = 60

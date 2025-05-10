@@ -11,6 +11,7 @@
 	bio = 100
 	fire = 95
 	acid = 95
+	wound = 10
 
 /obj/item/clothing/under/plasmaman/security/detective
 	name = "detective plasma envirosuit"

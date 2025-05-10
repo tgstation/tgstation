@@ -27,7 +27,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 20
+	wound = 30
 
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
@@ -137,7 +137,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 20
+	wound = 30
 
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
@@ -242,6 +242,7 @@
 	bomb = 10
 	fire = 30
 	acid = 40
+	wound = 15
 
 /obj/item/clothing/suit/wizrobe/durathread/fire
 	name = "pyromancer robe"

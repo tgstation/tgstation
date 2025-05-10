@@ -22,3 +22,4 @@
 	bomb = 100
 	fire = 100
 	acid = 30
+	wound = 25

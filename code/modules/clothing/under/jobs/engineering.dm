@@ -9,6 +9,7 @@
 /datum/armor/clothing_under/rank_engineering
 	fire = 60
 	acid = 20
+	wound = 10
 
 /obj/item/clothing/under/rank/engineering/chief_engineer
 	desc = "It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of \"Chief Engineer\". Made from fire resistant materials."
@@ -20,6 +21,7 @@
 /datum/armor/clothing_under/engineering_chief_engineer
 	fire = 80
 	acid = 40
+	wound = 10
 
 /obj/item/clothing/under/rank/engineering/chief_engineer/skirt
 	name = "chief engineer's jumpskirt"

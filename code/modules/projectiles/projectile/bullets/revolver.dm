@@ -20,7 +20,7 @@
 	ricochet_auto_aim_angle = 10
 	ricochet_auto_aim_range = 3
 	wound_bonus = -20
-	bare_wound_bonus = 10
+	exposed_wound_bonus = 10
 	embed_type = /datum/embedding/bullet/c38
 	embed_falloff_tile = -4
 
@@ -74,7 +74,7 @@
 	ricochets_max = 0
 	sharpness = SHARP_EDGED
 	wound_bonus = 20
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	embed_type = /datum/embedding/bullet/c38/dumdum
 	wound_falloff_tile = -5
 	embed_falloff_tile = -15

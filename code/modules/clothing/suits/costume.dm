@@ -85,6 +85,7 @@
 	bomb = 25
 	fire = 50
 	acid = 50
+	wound = 35
 
 /obj/item/clothing/suit/costume/judgerobe
 	name = "judge's robe"
@@ -315,6 +316,7 @@
 	bio = 100
 	fire = 60
 	acid = 75
+	wound = -20
 
 /obj/item/clothing/head/hooded/carp_hood/spaceproof
 	name = "carp helmet"
@@ -336,6 +338,7 @@
 	bio = 100
 	fire = 60
 	acid = 75
+	wound = -20
 
 /obj/item/clothing/head/hooded/carp_hood/spaceproof/Initialize(mapload)
 	. = ..()
@@ -602,6 +605,7 @@
 	bomb = 25
 	fire = 50
 	acid = 50
+	wound = 25
 
 /obj/item/clothing/suit/costume/hawaiian
 	name = "hawaiian overshirt"

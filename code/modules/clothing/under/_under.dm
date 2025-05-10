@@ -47,7 +47,7 @@
 
 /datum/armor/clothing_under
 	bio = 10
-	wound = 5
+	wound = 10
 
 /obj/item/clothing/under/Initialize(mapload)
 	. = ..()

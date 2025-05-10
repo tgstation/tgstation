@@ -79,6 +79,7 @@
 	bomb = 10
 	fire = 30
 	acid = 5
+	wound = 15
 
 /obj/item/clothing/head/beanie/black/dboy/equipped(mob/user, slot)
 	. = ..()

@@ -202,7 +202,7 @@
 	attack_verb_simple = list("attack", "slash", "slice", "tear", "lacerate", "rip", "dice", "cut")
 	sharpness = SHARP_EDGED
 	wound_bonus = 10
-	bare_wound_bonus = 10
+	exposed_wound_bonus = 10
 	armour_penetration = 35
 	var/can_drop = FALSE
 	var/fake = FALSE
@@ -570,6 +570,7 @@
 	bio = 10
 	fire = 90
 	acid = 90
+	wound = 40
 
 /obj/item/clothing/suit/armor/changeling/Initialize(mapload)
 	. = ..()
@@ -595,6 +596,7 @@
 	bio = 10
 	fire = 90
 	acid = 90
+	wound = 40
 
 /obj/item/clothing/head/helmet/changeling/Initialize(mapload)
 	. = ..()
@@ -637,6 +639,7 @@
 	laser = 10
 	energy = 10
 	bio = 50
+	wound = 10
 
 /obj/item/clothing/head/helmet/changeling_hivehead/Initialize(mapload)
 	. = ..()

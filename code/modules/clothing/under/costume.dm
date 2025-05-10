@@ -297,6 +297,7 @@
 	melee = 10
 	fire = 30
 	acid = 30
+	wound = 10
 
 /obj/item/clothing/under/costume/buttondown
 	gender = PLURAL

@@ -29,6 +29,7 @@
 	bio = 10
 	fire = 10
 	acid = 10
+	wound = 40
 
 /obj/item/clothing/head/hooded/cult_hoodie
 	name = "ancient cultist hood"
@@ -135,6 +136,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
+	wound = 50
 
 /obj/item/clothing/suit/hooded/cultrobes/hardened/equipped(mob/living/user, slot)
 	. = ..()
@@ -198,6 +200,7 @@
 	bio = 30
 	fire = 50
 	acid = 60
+	wound = 50
 
 /obj/item/clothing/suit/hooded/cultrobes/cult_shield/Initialize(mapload)
 	. = ..()
@@ -252,6 +255,7 @@
 	laser = -45
 	energy = -55
 	bomb = -45
+	wound = -45 //you are so fucked pal, good luck with all those dismemberments
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	. = ..()

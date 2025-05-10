@@ -24,7 +24,7 @@
 	energy = 10
 	fire = 80
 	acid = 80
-	wound = 20
+	wound = 50
 
 /obj/item/clothing/suit/hooded/chaplainsuit
 	allowed = null
@@ -143,6 +143,7 @@
 	energy = 10
 	fire = 80
 	acid = 80
+	wound = 50
 
 /obj/item/clothing/suit/chaplainsuit/armor/clock
 	name = "forgotten armour"
@@ -175,6 +176,7 @@
 	energy = 10
 	fire = 80
 	acid = 80
+	wound = 50
 
 /obj/item/clothing/suit/chaplainsuit/armor/templar
 	name = "crusader armour"
@@ -255,6 +257,7 @@
 	bomb = 60
 	fire = 60
 	acid = 60
+	wound = 50
 
 /obj/item/clothing/suit/chaplainsuit/armor/crusader/red
 	icon_state = "crusader-red"

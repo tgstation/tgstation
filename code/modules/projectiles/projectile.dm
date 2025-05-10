@@ -262,7 +262,7 @@
 	var/damage_falloff_tile
 	/// How much we want to drop stamina damage (defined by the stamina variable) per tile as it travels through the air
 	var/stamina_falloff_tile
-	/// How much we want to drop both wound_bonus and bare_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
+	/// How much we want to drop both wound_bonus and exposed_wound_bonus (to a minimum of 0 for the latter) per tile, for falloff purposes
 	var/wound_falloff_tile
 	/// How much we want to drop the embed_chance value, if we can embed, per tile, for falloff purposes
 	var/embed_falloff_tile
@@ -301,7 +301,7 @@
 	pixels_moved_last_tile -= ICON_SIZE_ALL
 	if(wound_falloff_tile && wound_bonus != CANT_WOUND)
 		wound_bonus += wound_falloff_tile
-		bare_wound_bonus = max(0, bare_wound_bonus + wound_falloff_tile)
+		exposed_wound_bonus = max(0, exposed_wound_bonus + wound_falloff_tile)
 	if(embed_falloff_tile && get_embed())
 		embed_data.embed_chance += embed_falloff_tile
 	if(damage_falloff_tile && damage >= 0)

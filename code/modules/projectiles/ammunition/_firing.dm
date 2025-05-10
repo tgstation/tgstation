@@ -65,8 +65,8 @@
 
 		loaded_projectile.wound_bonus += gun.projectile_wound_bonus
 		loaded_projectile.wound_bonus *= loaded_projectile.wound_bonus >= 0 ? 1 : 2 - integrity_mult
-		loaded_projectile.bare_wound_bonus += gun.projectile_wound_bonus
-		loaded_projectile.bare_wound_bonus *= loaded_projectile.bare_wound_bonus >= 0 ? 1 : 2 - integrity_mult
+		loaded_projectile.exposed_wound_bonus += gun.projectile_wound_bonus
+		loaded_projectile.exposed_wound_bonus *= loaded_projectile.exposed_wound_bonus >= 0 ? 1 : 2 - integrity_mult
 
 	if(tk_firing(user, fired_from))
 		loaded_projectile.ignore_source_check = TRUE

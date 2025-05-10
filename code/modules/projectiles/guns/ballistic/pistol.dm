@@ -303,9 +303,9 @@
 		span_hear("You can hear sound of plastic shattering."))
 
 	if (poor_sod)
-		poor_sod.receive_damage((damage_to_take - atom_integrity) * 0.5, wound_bonus = -10, bare_wound_bonus = 20, sharpness = SHARP_EDGED, damage_source = src)
+		poor_sod.receive_damage((damage_to_take - atom_integrity) * 0.5, wound_bonus = -10, exposed_wound_bonus = 20, sharpness = SHARP_EDGED, damage_source = src)
 	else
-		user.take_bodypart_damage((damage_to_take - atom_integrity) * 0.5, wound_bonus = -10, bare_wound_bonus = 20, sharpness = SHARP_EDGED)
+		user.take_bodypart_damage((damage_to_take - atom_integrity) * 0.5, wound_bonus = -10, exposed_wound_bonus = 20, sharpness = SHARP_EDGED)
 
 	if (shrapnel_bomb)
 		var/obj/item/shrapnel/plastic/shrapnel = new(user.loc)

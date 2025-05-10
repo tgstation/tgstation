@@ -22,7 +22,7 @@
 	bomb = 25
 	fire = 50
 	acid = 50
-	wound = 10
+	wound = 35
 
 /obj/item/clothing/suit/armor/Initialize(mapload)
 	. = ..()
@@ -91,7 +91,7 @@
 	bio = 100
 	fire = 40
 	acid = 50
-	wound = 20
+	wound = 50
 
 /datum/armor/pmc
 	melee = 40
@@ -101,7 +101,7 @@
 	bomb = 50
 	bio = 100
 	acid = 50
-	wound = 20
+	wound = 50
 
 /obj/item/clothing/suit/armor/vest/marine/security
 	name = "large tactical armor vest"
@@ -168,7 +168,7 @@
 	bomb = 25
 	fire = 70
 	acid = 90
-	wound = 10
+	wound = 30
 
 /obj/item/clothing/suit/armor/hos/trenchcoat
 	name = "armored trenchcoat"
@@ -237,7 +237,7 @@
 	bomb = 20
 	fire = 30
 	acid = 30
-	wound = 5
+	wound = 25
 
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
@@ -267,7 +267,7 @@
 	bomb = 25
 	fire = 100
 	acid = 90
-	wound = 10
+	wound = 50
 
 /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	name = "syndicate captain's vest"
@@ -313,7 +313,7 @@
 	energy = 10
 	fire = 80
 	acid = 80
-	wound = 20
+	wound = 50
 
 /obj/item/clothing/suit/armor/balloon_vest
 	name = "balloon vest"
@@ -332,6 +332,7 @@
 	energy = 10
 	fire = 60
 	acid = 50
+	wound = 10
 
 /obj/item/clothing/suit/armor/balloon_vest/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(isitem(hitby))
@@ -367,7 +368,7 @@
 	bomb = 40
 	fire = 50
 	acid = 50
-	wound = 20
+	wound = 35
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "reflector vest"
@@ -389,6 +390,7 @@
 	energy = 60
 	fire = 100
 	acid = 100
+	wound = 35
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
 	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))) //If not shot where ablative is covering you, you don't get the reflection bonus!
@@ -445,7 +447,7 @@
 	bio = 90
 	fire = 100
 	acid = 100
-	wound = 15
+	wound = 50
 
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
@@ -468,6 +470,7 @@
 	bio = 100
 	fire = 90
 	acid = 90
+	wound = 80
 
 /obj/item/clothing/suit/armor/tdome
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
@@ -486,6 +489,7 @@
 	bio = 100
 	fire = 90
 	acid = 90
+	wound = 80
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "thunderdome suit"
@@ -508,6 +512,7 @@
 /datum/armor/tdome_holosuit
 	melee = 10
 	bullet = 10
+	wound = 10
 
 /obj/item/clothing/suit/armor/tdome/holosuit/red
 	desc = "Reddish armor."
@@ -563,6 +568,7 @@
 	bio = 10
 	fire = 40
 	acid = 40
+	wound = 35
 
 /obj/item/clothing/suit/armor/vest/durathread
 	name = "durathread vest"
@@ -588,6 +594,7 @@
 	bomb = 15
 	fire = 40
 	acid = 50
+	wound = 20
 
 /obj/item/clothing/suit/armor/vest/russian
 	name = "russian vest"
@@ -604,7 +611,7 @@
 	bomb = 10
 	fire = 20
 	acid = 50
-	wound = 10
+	wound = 25
 
 /obj/item/clothing/suit/armor/vest/russian_coat
 	name = "russian battle coat"
@@ -626,7 +633,7 @@
 	bio = 50
 	fire = -10
 	acid = 50
-	wound = 10
+	wound = 25
 
 /obj/item/clothing/suit/armor/elder_atmosian
 	name = "\improper Elder Atmosian Armor"
@@ -654,7 +661,7 @@
 	bio = 10
 	fire = 65
 	acid = 40
-	wound = 15
+	wound = 85
 
 /obj/item/clothing/suit/armor/centcom_formal
 	name = "\improper CentCom formal coat"
@@ -673,6 +680,7 @@
 	bio = 10
 	fire = 10
 	acid = 60
+	wound = 35
 
 /obj/item/clothing/suit/armor/centcom_formal/Initialize(mapload)
 	. = ..()
@@ -704,7 +712,7 @@
 	bomb = 50
 	fire = 40
 	acid = 50
-	wound = 30
+	wound = 50
 
 /obj/item/clothing/suit/armor/vest/military
 	name = "Crude chestplate"
@@ -734,6 +742,7 @@
 	fire = 10
 	acid = 50
 	wound = 20
+	wound = 45
 
 /obj/item/clothing/suit/armor/riot/knight/warlord
 	name = "golden plate armor"
@@ -753,7 +762,7 @@
 	bomb = 40
 	fire = 50
 	acid = 50
-	wound = 30
+	wound = 70
 
 /obj/item/clothing/suit/armor/durability/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	take_damage(1, BRUTE, 0, 0)
@@ -781,7 +790,7 @@
 	bomb = 10
 	fire = 0
 	acid = 25
-	wound = 5
+	wound = 15
 
 /datum/armor/watermelon_fr
 	melee = 15
@@ -790,7 +799,7 @@
 	bomb = 10
 	fire = 15
 	acid = 30
-	wound = 5
+	wound = 15
 
 /obj/item/clothing/suit/armor/durability/holymelon
 	name = "holymelon armor"
@@ -850,7 +859,7 @@
 	bomb = 10
 	fire = 0
 	acid = 35
-	wound = 10
+	wound = 25
 
 /datum/armor/barrelmelon_fr
 	melee = 25
@@ -859,4 +868,4 @@
 	bomb = 10
 	fire = 20
 	acid = 40
-	wound = 10
+	wound = 25
