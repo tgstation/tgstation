@@ -22,9 +22,6 @@
 //Carbon
 #define COMSIG_KB_CARBON_HOLDRUNMOVEINTENT_DOWN "keybinding_carbon_holdrunmoveintent_down"
 #define COMSIG_KB_CARBON_HOLDRUNMOVEINTENT_UP "keybinding_carbon_holdrunmoveintent_up"
-#define COMSIG_KB_CARBON_TOGGLETHROWMODE_DOWN "keybinding_carbon_togglethrowmode_down"
-#define COMSIG_KB_CARBON_HOLDTHROWMODE_DOWN "keybinding_carbon_holdthrowmode_down"
-#define COMSIG_KB_CARBON_GIVEITEM_DOWN "keybinding_carbon_giveitem_down"
 
 //Client
 #define COMSIG_KB_CLIENT_GETHELP_DOWN "keybinding_client_gethelp_down"
@@ -57,6 +54,9 @@
 #define COMSIG_KB_LIVING_DISABLE_COMBAT_DOWN "keybinding_living_disable_combat_down"
 #define COMSIG_KB_LIVING_TOGGLEMOVEINTENT_DOWN "keybinding_mob_togglemoveintent_down"
 #define COMSIG_KB_LIVING_TOGGLEMOVEINTENTALT_DOWN "keybinding_mob_togglemoveintentalt_down"
+#define COMSIG_KB_LIVING_TOGGLETHROWMODE_DOWN "keybinding_living_togglethrowmode_down"
+#define COMSIG_KB_LIVING_HOLDTHROWMODE_DOWN "keybinding_living_holdthrowmode_down"
+#define COMSIG_KB_LIVING_GIVEITEM_DOWN "keybinding_living_giveitem_down"
 #define COMSIG_KB_LIVING_VIEW_PET_COMMANDS "keybinding_living_view_pet_commands"
 
 //Mob

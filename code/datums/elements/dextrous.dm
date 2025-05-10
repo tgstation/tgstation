@@ -4,13 +4,15 @@
  */
 /datum/element/dextrous
 
-/datum/element/dextrous/Attach(datum/target, hands_count = 2, hud_type = /datum/hud/dextrous)
+/datum/element/dextrous/Attach(datum/target, hands_count = 2, hud_type = /datum/hud/dextrous, can_throw = FALSE)
 	. = ..()
 	if (!isliving(target) || iscarbon(target))
 		return ELEMENT_INCOMPATIBLE // Incompatible with the carbon typepath because that already has its own hand handling and doesn't need hand holding
 
 	var/mob/living/mob_parent = target
 	set_available_hands(mob_parent, hands_count)
+	if(can_throw)
+		ADD_TRAIT(target, TRAIT_CAN_THROW_ITEMS, REF(src)) // need to add before hud setup
 	mob_parent.hud_type = hud_type
 	if (mob_parent.hud_used)
 		mob_parent.set_hud_used(new hud_type(target))

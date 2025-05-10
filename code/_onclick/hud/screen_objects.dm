@@ -544,9 +544,9 @@
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/throw_catch/Click()
-	if(iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.toggle_throw_mode()
+	if(isliving(usr))
+		var/mob/living/user = usr
+		user.toggle_throw_mode()
 
 /atom/movable/screen/zone_sel
 	name = "damage zone"
