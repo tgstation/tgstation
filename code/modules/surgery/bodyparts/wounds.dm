@@ -75,7 +75,7 @@
 
 	var/base_roll = rand(1, round(damage * WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
-	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
+	injury_roll = check_woundings_mods(woundtype, injury_roll, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
 	var/list/series_wounding_mods = check_series_wounding_mods()
 
 	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100) && can_dismember())
@@ -242,13 +242,13 @@
  * Once we have everything, we then check if we have acquired any armor. If so, reduce our value by the percentage value of that armour. If not, we add our exposed_wound_bonus as a final bonus to our roll.
  *
  * Arguments:
- * * It's the same ones on [/obj/item/bodypart/proc/receive_damage]
+ * * It's the same ones on [/obj/item/bodypart/proc/receive_damage] except injury_roll, which is fed to this proc.
  */
-/obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
+/obj/item/bodypart/proc/check_woundings_mods(wounding_type, injury_roll, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/armor_ablation = 0
-	var/injury_mod = 0
+	var/injury_mod = injury_roll
 
 	if(owner && ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
