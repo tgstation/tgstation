@@ -445,10 +445,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"ib" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/mineral,
-/area/shuttle/escape)
 "ig" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/tile/red/half/contrasted,
@@ -4591,7 +4587,7 @@ qA
 zE
 Ho
 Ho
-ib
+Ho
 Ho
 Ho
 nr
