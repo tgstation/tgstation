@@ -853,8 +853,8 @@
 	switch(picked_option)
 		if(HACK_PIRATE) // Triggers pirates, which the crew may be able to pay off to prevent
 			var/list/pirate_rulesets = list(
-				/datum/dynamic_ruleset/midround/from_ghosts/pirates,
-				/datum/dynamic_ruleset/midround/from_ghosts/pirates/heavy,
+				/datum/dynamic_ruleset/midround/pirates,
+				/datum/dynamic_ruleset/midround/pirates/heavy,
 			)
 			priority_announce(
 				"Attention crew: sector monitoring reports a massive jump-trace from an enemy vessel destined for your system. Prepare for imminent hostile contact.",

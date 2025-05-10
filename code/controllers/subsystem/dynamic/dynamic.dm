@@ -262,10 +262,11 @@ SUBSYSTEM_DEF(dynamic)
 	if(!prob(midround_chance))
 		log_dynamic("Midround ([range]): Ruleset chance failed ([midround_chance]% chance)")
 		return FALSE
-	var/list/rulesets_weighted = get_midround_rulesets(range)
+	var/player_count = get_active_player_count(afk_check = TRUE)
+	var/list/rulesets_weighted = get_midround_rulesets(player_count, range)
 	var/datum/dynamic_ruleset/midround/picked_ruleset = pick_weight(rulesets_weighted)
 	// NOTE: !! THIS CAN SLEEP !!
-	if(!picked_ruleset.prepare_execution( length(GLOB.alive_player_list), picked_ruleset.collect_candidates() ))
+	if(!picked_ruleset.prepare_execution(player_count, picked_ruleset.collect_candidates() ))
 		log_dynamic("Midround ([range]): Selected ruleset [picked_ruleset.config_tag], but preparation failed!")
 		QDEL_LIST(rulesets_weighted)
 		return FALSE
@@ -284,7 +285,7 @@ SUBSYSTEM_DEF(dynamic)
 	return TRUE
 
 /// Gets a weighted list of midround rulesets
-/datum/controller/subsystem/dynamic/proc/get_midround_rulesets(midround_type)
+/datum/controller/subsystem/dynamic/proc/get_midround_rulesets(player_count, midround_type)
 	PRIVATE_PROC(TRUE)
 
 	var/list/datum/dynamic_ruleset/midround/rulesets = list()
@@ -292,7 +293,7 @@ SUBSYSTEM_DEF(dynamic)
 		if(initial(ruleset_type.midround_type) != midround_type)
 			continue
 		var/datum/dynamic_ruleset/midround/ruleset = new ruleset_type(dynamic_config)
-		rulesets[ruleset] = ruleset.get_weight(length(GLOB.alive_player_list), current_tier.tier)
+		rulesets[ruleset] = ruleset.get_weight(player_count, current_tier.tier)
 
 	return rulesets
 
@@ -315,7 +316,7 @@ SUBSYSTEM_DEF(dynamic)
 		running.max_antag_cap = forced_max_cap
 
 	// NOTE: !! THIS CAN SLEEP !!
-	if(!running.prepare_execution( length(GLOB.alive_player_list), running.collect_candidates() ))
+	if(!running.prepare_execution(get_active_player_count(afk_check = TRUE), running.collect_candidates()))
 		if(alert_admins_on_fail)
 			message_admins("Midround (forced): Forced ruleset [running.config_tag], but preparation failed!")
 		log_dynamic("Midround (forced): Forced ruleset [running.config_tag], but preparation failed!")
@@ -340,7 +341,7 @@ SUBSYSTEM_DEF(dynamic)
 	// because they're generally forced by events or admins (and thus have higher priority)
 	for(var/datum/dynamic_ruleset/latejoin/queued in queued_rulesets)
 		// NOTE: !! THIS CAN SLEEP !!
-		if(!queued.prepare_execution(length(GLOB.alive_player_list), list(latejoiner)))
+		if(!queued.prepare_execution(get_active_player_count(afk_check = TRUE), list(latejoiner)))
 			// melbert todo : add an href to remove it from the queue
 			message_admins("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin.")
 			log_dynamic("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin.")
@@ -371,12 +372,13 @@ SUBSYSTEM_DEF(dynamic)
 		log_dynamic("Latejoin: Ruleset chance failed ([latejoin_chance]% chance)")
 		return FALSE
 
-	var/list/rulesets_weighted = get_latejoin_rulesets(latejoiner)
+	var/player_count = get_active_player_count(afk_check = TRUE)
+	var/list/rulesets_weighted = get_latejoin_rulesets(player_count)
 	// Note, we make no effort to actually pick a valid ruleset here
 	// We pick a ruleset, and they player might not even have that antag selected. And that's fine
 	var/datum/dynamic_ruleset/latejoin/picked_ruleset = pick_weight(rulesets_weighted)
 	// NOTE: !! THIS CAN SLEEP !!
-	if(!picked_ruleset.prepare_execution( length(GLOB.alive_player_list), list(latejoiner) ))
+	if(!picked_ruleset.prepare_execution(player_count, list(latejoiner)))
 		log_dynamic("Latejoin: Selected ruleset [picked_ruleset.name] for [key_name(latejoiner)], but preparation failed! Latejoin chance has increased.")
 		QDEL_LIST(rulesets_weighted)
 		failed_latejoins++
@@ -398,13 +400,13 @@ SUBSYSTEM_DEF(dynamic)
 	return TRUE
 
 /// Gets a weighted list of latejoin rulesets
-/datum/controller/subsystem/dynamic/proc/get_latejoin_rulesets(mob/living/carbon/human/latejoiner)
+/datum/controller/subsystem/dynamic/proc/get_latejoin_rulesets(player_count)
 	PRIVATE_PROC(TRUE)
 
 	var/list/datum/dynamic_ruleset/latejoin/rulesets = list()
 	for(var/ruleset_type in subtypesof(/datum/dynamic_ruleset/latejoin))
 		var/datum/dynamic_ruleset/latejoin/ruleset = new ruleset_type(dynamic_config)
-		rulesets[ruleset] = ruleset.get_weight(length(GLOB.alive_player_list), current_tier.tier)
+		rulesets[ruleset] = ruleset.get_weight(player_count, current_tier.tier)
 
 	return rulesets
 
@@ -440,7 +442,7 @@ SUBSYSTEM_DEF(dynamic)
 	var/chance = 0
 	var/num_antags = length(GLOB.current_living_antags)
 	var/num_dead = length(GLOB.dead_player_list)
-	var/num_alive = length(GLOB.alive_player_list)
+	var/num_alive = get_active_player_count(afk_check = TRUE)
 
 	chance += 100 - (100 * (num_dead / (num_alive + num_dead)))
 	if(num_antags < 0)
@@ -457,7 +459,7 @@ SUBSYSTEM_DEF(dynamic)
 	var/chance = 0
 	var/num_antags = length(GLOB.current_living_antags)
 	var/num_dead = length(GLOB.dead_player_list)
-	var/num_alive = length(GLOB.alive_player_list)
+	var/num_alive = get_active_player_count(afk_check = TRUE)
 
 	chance += 100 - (100 * (num_dead / (num_alive + num_dead)))
 	if(num_antags < 0)

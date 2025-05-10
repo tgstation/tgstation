@@ -1196,7 +1196,7 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 				force_event_async(/datum/round_event_control/meteor_wave, "an apocalypse rune")
 
 			if(51 to 60)
-				force_event_async(/datum/round_event_control/spider_infestation, "an apocalypse rune")
+				SSdynamic.force_run_midround(/datum/dynamic_ruleset/midround/spiders)
 
 			if(61 to 70)
 				force_event_async(/datum/round_event_control/anomaly/anomaly_flux, "an apocalypse rune")

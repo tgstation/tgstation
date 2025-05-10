@@ -1,6 +1,8 @@
 /datum/dynamic_ruleset/midround
 	/// MIDROUND_RULESET_STYLE_LIGHT or MIDROUND_RULESET_STYLE_HEAVY - determines which pool it enters
 	var/midround_type
+	/// If the false alarm event can pick this ruleset to trigger, well, a false alarm
+	var/false_alarm_able = FALSE
 
 /**
  * Collect candidates handles getting the broad pool of players we want to pick from
@@ -9,6 +11,158 @@
  */
 /datum/dynamic_ruleset/midround/proc/collect_candidates()
 	return list()
+
+/**
+ * Called when the ruleset is selected for false alarm
+ */
+/datum/dynamic_ruleset/midround/proc/false_alarm()
+	return
+
+/datum/dynamic_ruleset/midround/spiders
+	name = "Spiders"
+	config_tag = "Spiders"
+	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	false_alarm_able = TRUE
+	pref_flag = ROLE_SPIDER
+	ruleset_flags = RULESET_INVADER
+	weight = list(
+		DYNAMIC_TIER_LOWMEDIUM = 0,
+		DYNAMIC_TIER_MEDIUMHIGH = 1,
+		DYNAMIC_TIER_HIGH = 2,
+	)
+	min_pop = 30
+	min_antag_cap = 0
+	/// Determines how many eggs to create - can take a formula like antag_cap
+	var/egg_count = 2
+
+/datum/dynamic_ruleset/midround/spiders/can_be_selected(population_size)
+	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
+
+/datum/dynamic_ruleset/midround/spiders/execute()
+	var/num_egg = get_antag_cap(length(GLOB.alive_player_list), egg_count)
+	while(num_egg > 0)
+		var/turf/spawn_loc = find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE)
+		if(isnull(spawn_loc))
+			break
+		var/obj/effect/mob_spawn/ghost_role/spider/midwife/new_eggs = new(spawn_loc)
+		new_eggs.amount_grown = 98
+		num_egg--
+
+	addtimer(CALLBACK(src, PROC_REF(announce_spiders)), rand(375, 600) SECONDS)
+
+/datum/dynamic_ruleset/midround/spiders/proc/announce_spiders()
+	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+
+/datum/dynamic_ruleset/midround/spiders/false_alarm()
+	announce_spiders()
+
+/datum/dynamic_ruleset/midround/pirates
+	name = "Pirates"
+	config_tag = "Light Pirates"
+	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	jobban_flag = ROLE_TRAITOR
+	ruleset_flags = RULESET_INVADER
+	weight = 3
+	min_pop = 15
+	min_antag_cap = 0 // ship will spawn if there are no ghosts around
+
+/datum/dynamic_ruleset/midround/pirates/can_be_selected(population_size)
+	return ..() && !SSmapping.is_planetary() && length(pirate_pool()) > 0
+
+// An abornmal ruleset that selects no players, but just spawns a pirate ship
+/datum/dynamic_ruleset/midround/pirates/execute()
+	send_pirate_threat(pirate_pool())
+
+/datum/dynamic_ruleset/midround/pirates/proc/pirate_pool()
+	return GLOB.light_pirate_gangs
+
+/datum/dynamic_ruleset/midround/pirates/heavy
+	name = "Pirates"
+	config_tag = "Heavy Pirates"
+	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	jobban_flag = ROLE_TRAITOR
+	ruleset_flags = RULESET_INVADER
+	weight = 3
+	min_pop = 25
+	min_antag_cap = 0 // ship will spawn if there are no ghosts around
+
+/datum/dynamic_ruleset/midround/pirates/heavy/pirate_pool()
+	return GLOB.heavy_pirate_gangs
+
+/datum/dynamic_ruleset/midround/pirates/proc/send_pirate_threat(list/pirate_selection)
+	var/datum/pirate_gang/chosen_gang = pick_n_take(pirate_selection)
+	///If there was nothing to pull from our requested list, stop here.
+	if(!chosen_gang)
+		message_admins("Error attempting to run the space pirate event, as the given pirate gangs list was empty.")
+		return
+	//set payoff
+	var/payoff = 0
+	var/datum/bank_account/account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(account)
+		payoff = max(PAYOFF_MIN, FLOOR(account.account_balance * 0.80, 1000))
+	var/datum/comm_message/threat = chosen_gang.generate_message(payoff)
+	//send message
+	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
+	threat.answer_callback = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pirates_answered), threat, chosen_gang, payoff, world.time)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_pirates), threat, chosen_gang), RESPONSE_MAX_TIME)
+	GLOB.communications_controller.send_message(threat, unique = TRUE)
+
+/datum/dynamic_ruleset/midround/pirates/proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/chosen_gang, payoff, initial_send_time)
+	if(world.time > initial_send_time + RESPONSE_MAX_TIME)
+		priority_announce(chosen_gang.response_too_late, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
+		return
+	if(!threat?.answered)
+		return
+	if(threat.answered == NEGATIVE_ANSWER)
+		priority_announce(chosen_gang.response_rejected, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
+		return
+
+	var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
+	if(plundered_account)
+		if(plundered_account.adjust_money(-payoff))
+			chosen_gang.paid_off = TRUE
+			priority_announce(chosen_gang.response_received, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
+		else
+			priority_announce(chosen_gang.response_not_enough, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
+
+/datum/dynamic_ruleset/midround/pirates/proc/spawn_pirates(datum/comm_message/threat, datum/pirate_gang/chosen_gang)
+	if(chosen_gang.paid_off)
+		return
+
+	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a [span_notice("pirate crew of [chosen_gang.name]?")]", check_jobban = ROLE_TRAITOR, alert_pic = /obj/item/claymore/cutlass, role_name_text = "pirate crew")
+	shuffle_inplace(candidates)
+
+	var/template_key = "pirate_[chosen_gang.ship_template_id]"
+	var/datum/map_template/shuttle/pirate/ship = SSmapping.shuttle_templates[template_key]
+	var/x = rand(TRANSITIONEDGE,world.maxx - TRANSITIONEDGE - ship.width)
+	var/y = rand(TRANSITIONEDGE,world.maxy - TRANSITIONEDGE - ship.height)
+	var/z = SSmapping.empty_space.z_value
+	var/turf/T = locate(x,y,z)
+	if(!T)
+		CRASH("Pirate event found no turf to load in")
+
+	if(!ship.load(T))
+		CRASH("Loading pirate ship failed!")
+
+	for(var/turf/area_turf as anything in ship.get_affected_turfs(T))
+		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in area_turf)
+			if(candidates.len > 0)
+				var/mob/our_candidate = candidates[1]
+				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
+				candidates -= our_candidate
+				notify_ghosts(
+					"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
+					source = spawned_mob,
+					header = "Pirates!",
+				)
+			else
+				notify_ghosts(
+					"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
+					source = spawner,
+					header = "Pirate Spawn Here!",
+				)
+
+	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
 
 /**
  * ### Ghost rulesets
@@ -28,7 +182,8 @@
 	/// Text shown in the candidate poll. Optional, if unset uses pref_flag. (Though required if pref_flag is unset)
 	var/candidate_role
 
-/datum/dynamic_ruleset/midround/from_ghosts/can_be_selected(population_size, list/antag_candidates)
+
+/datum/dynamic_ruleset/midround/from_ghosts/can_be_selected(population_size)
 	SHOULD_CALL_PARENT(TRUE)
 	return ..() && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT)
 
@@ -179,6 +334,7 @@
 	config_tag = "Blob"
 	preview_antag_datum = /datum/antagonist/blob
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	false_alarm_able = TRUE
 	pref_flag = ROLE_BLOB
 	ruleset_flags = RULESET_INVADER
 	weight = list(
@@ -205,11 +361,15 @@
 
 	return pick(GLOB.blobstart)
 
+/datum/dynamic_ruleset/midround/from_ghosts/blob/false_alarm()
+	priority_announce("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK5)
+
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph
 	name = "Alien Infestation"
 	config_tag = "Xenomorph"
 	preview_antag_datum = /datum/antagonist/xeno
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	false_alarm_able = TRUE
 	pref_flag = ROLE_ALIEN
 	ruleset_flags = RULESET_INVADER
 	weight = list(
@@ -226,8 +386,18 @@
 	. = ..()
 	max_antag_cap += prob(50) // 50% chance to get a second xeno, free!
 
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/can_be_selected(population_size, list/antag_candidates)
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/can_be_selected(population_size)
 	return ..() && length(find_vents()) > 0
+
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(announce_xenos)), rand(375, 600) SECONDS)
+
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/proc/announce_xenos()
+	priority_announce("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert", ANNOUNCER_ALIENS)
+
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/false_alarm()
+	announce_xenos()
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/create_ruleset_body()
 	return new /mob/living/carbon/alien/larva
@@ -270,7 +440,7 @@
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/item/light_eater
 
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/can_be_selected(population_size, list/antag_candidates)
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/can_be_selected(population_size)
 	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/assign_role(datum/mind/candidate)
@@ -284,6 +454,7 @@
 	config_tag = "Space Dragon"
 	preview_antag_datum = /datum/antagonist/space_dragon
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	false_alarm_able = TRUE
 	pref_flag = ROLE_SPACE_DRAGON
 	ruleset_flags = RULESET_INVADER
 	weight = list(
@@ -295,7 +466,7 @@
 	max_antag_cap = 1
 	signup_atom_appearance = /mob/living/basic/space_dragon
 
-/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/can_be_selected(population_size, list/antag_candidates)
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/can_be_selected(population_size)
 	return ..() && !isnull(find_space_spawn())
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/create_ruleset_body()
@@ -308,7 +479,13 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/execute()
 	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(announce_space_dragon)), rand(5, 10) SECONDS)
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/proc/announce_space_dragon()
 	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/false_alarm()
+	announce_space_dragon()
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors
 	name = "Abductors"
@@ -323,7 +500,7 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	signup_atom_appearance = /obj/item/melee/baton/abductor
 
-/datum/dynamic_ruleset/midround/from_ghosts/abductors/can_be_selected(population_size, list/antag_candidates)
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/can_be_selected(population_size)
 	if(!..())
 		return FALSE
 	var/num_abductors = 0
@@ -357,31 +534,18 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 	signup_atom_appearance = /obj/item/energy_katana
 
-/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/can_be_selected(population_size, list/antag_candidates)
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/can_be_selected(population_size)
 	return ..() && !isnull(find_space_spawn())
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/ninja)
-	candidate.current.forceMove(find_space_spawn())
-
-/datum/dynamic_ruleset/midround/from_ghosts/spiders
-	name = "Spiders"
-	config_tag = "Spiders"
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	pref_flag = ROLE_SPIDER
-	ruleset_flags = RULESET_INVADER
-	weight = list(
-		DYNAMIC_TIER_LOWMEDIUM = 0,
-		DYNAMIC_TIER_MEDIUMHIGH = 1,
-		DYNAMIC_TIER_HIGH = 2,
-	)
-	min_pop = 30
-	max_antag_cap = 2 // determines how many eggs spawn
-	min_antag_cap = 0 // eggs will spawn if there are no ghosts around
-
-// An abornmal ruleset that selects no players, but just spawns eggs
-/datum/dynamic_ruleset/midround/from_ghosts/spiders/execute()
-	create_midwife_eggs(get_antag_cap(length(GLOB.alive_player_list), max_antag_cap))
+	var/mob/living/carbon/human/new_ninja = candidate.current
+	randomize_human_normie(new_ninja)
+	var/new_name = "[pick(GLOB.ninja_titles)] [pick(GLOB.ninja_names)]"
+	new_ninja.name = new_name
+	new_ninja.real_name = new_name
+	new_ninja.dna.update_dna_identity()
+	new_ninja.forceMove(find_space_spawn())
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant
 	name = "Revenant"
@@ -398,7 +562,7 @@
 	/// Remember there's usually 2-3 that spawn in the Morgue roundstart, so adjust this accordingly
 	var/required_station_corpses = 10
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/can_be_selected(population_size, list/antag_candidates)
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/can_be_selected(population_size)
 	if(!..())
 		return FALSE
 	var/num_station_corpses = 0
@@ -432,41 +596,6 @@
 
 	return spawn_locs
 
-/datum/dynamic_ruleset/midround/from_ghosts/pirates
-	name = "Pirates"
-	config_tag = "Light Pirates"
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
-	candidate_role = "Pirate"
-	jobban_flag = ROLE_TRAITOR
-	ruleset_flags = RULESET_INVADER
-	weight = 3
-	min_pop = 15
-	min_antag_cap = 0 // ship will spawn if there are no ghosts around
-	signup_atom_appearance = /obj/item/clothing/head/costume/pirate
-
-/datum/dynamic_ruleset/midround/from_ghosts/pirates/can_be_selected(population_size, list/antag_candidates)
-	return ..() && !SSmapping.is_planetary() && length(pirate_pool()) > 0
-
-// An abornmal ruleset that selects no players, but just spawns a pirate ship
-/datum/dynamic_ruleset/midround/from_ghosts/pirates/execute()
-	send_pirate_threat(pirate_pool())
-
-/datum/dynamic_ruleset/midround/from_ghosts/pirates/proc/pirate_pool()
-	return GLOB.light_pirate_gangs
-
-/datum/dynamic_ruleset/midround/from_ghosts/pirates/heavy
-	name = "Pirates"
-	config_tag = "Heavy Pirates"
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
-	jobban_flag = ROLE_TRAITOR
-	ruleset_flags = RULESET_INVADER
-	weight = 3
-	min_pop = 25
-	min_antag_cap = 0 // ship will spawn if there are no ghosts around
-
-/datum/dynamic_ruleset/midround/from_ghosts/pirates/heavy/pirate_pool()
-	return GLOB.heavy_pirate_gangs
-
 /datum/dynamic_ruleset/midround/from_ghosts/space_changeling
 	name = "Space Changeling"
 	config_tag = "Midround Changeling"
@@ -499,7 +628,7 @@
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/bluespace_stream
 
-/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/can_be_selected(population_size, list/antag_candidates)
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/can_be_selected(population_size)
 	return ..() && !isnull(find_clone()) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_ruleset_body()
@@ -544,7 +673,7 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
 	signup_atom_appearance = /obj/item/clothing/head/helmet/skull/cosmic
 
-/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/can_be_selected(population_size, list/antag_candidates)
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/can_be_selected(population_size)
 	return ..() && !SSmapping.is_planetary() && !isnull(find_space_spawn())
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/assign_role(datum/mind/candidate)
@@ -598,6 +727,7 @@
 	config_tag = "Midround Traitor"
 	preview_antag_datum = /datum/antagonist/traitor
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	false_alarm_able = TRUE
 	pref_flag = ROLE_SLEEPER_AGENT
 	jobban_flag = ROLE_TRAITOR
 	weight = 10
@@ -608,6 +738,12 @@
 
 /datum/dynamic_ruleset/midround/from_living/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)
+
+/datum/dynamic_ruleset/midround/from_living/traitor/false_alarm()
+	priority_announce(
+		"Attention crew, it appears that someone on your station has hijacked your telecommunications and broadcasted an unknown signal.",
+		"[command_name()] High-Priority Update",
+	)
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai
 	name = "Malfunctioning AI"

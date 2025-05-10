@@ -69,7 +69,7 @@
 	/// How many heads of staff are required to be on the station for this to be selected
 	var/heads_necessary = 3
 
-/datum/dynamic_ruleset/latejoin/revolution/can_be_selected(population_size, list/antag_candidates)
+/datum/dynamic_ruleset/latejoin/revolution/can_be_selected(population_size)
 	var/head_check = 0
 	for(var/mob/player as anything in GLOB.alive_player_list)
 		if (player.mind.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
