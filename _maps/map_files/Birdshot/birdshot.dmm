@@ -6450,10 +6450,6 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron,
 /area/station/security/prison/rec)
-"cuw" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/station/command/corporate_showroom)
 "cuZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -12306,10 +12302,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security)
-"euz" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/station/hallway/primary/central/aft)
 "euO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
@@ -96591,7 +96583,7 @@ trB
 saz
 lcD
 gCl
-euz
+tYX
 dDB
 dDB
 dDB
@@ -97058,7 +97050,7 @@ jdJ
 xMk
 jYQ
 hcc
-cuw
+xGJ
 bBN
 jwi
 qtd
@@ -98086,7 +98078,7 @@ hoN
 cKV
 dHL
 giU
-cuw
+xGJ
 mID
 jwi
 jwi

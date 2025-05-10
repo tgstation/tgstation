@@ -1114,10 +1114,6 @@
 /obj/item/paper/guides/jobs/security/labor_camp,
 /turf/open/floor/iron,
 /area/station/security/brig)
-"gW" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall/r_wall,
-/area/station/engineering/gravity_generator)
 "hm" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -7945,7 +7941,7 @@ aa
 aa
 aa
 ak
-gW
+ak
 Lb
 aX
 Qi

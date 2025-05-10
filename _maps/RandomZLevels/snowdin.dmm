@@ -4839,7 +4839,7 @@
 "rx" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced/fulltile/ice,
-/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
 "ry" = (
@@ -5549,7 +5549,7 @@
 "uO" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced/fulltile/ice,
-/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern1)
 "uQ" = (
@@ -6703,7 +6703,7 @@
 "zR" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced/fulltile/ice,
-/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "zS" = (
