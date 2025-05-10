@@ -5,14 +5,22 @@ Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be
 The latest database version is 5.28; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 29);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 30);
 ```
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 29);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 30);
 ```
 In any query remember to add a prefix to the table names if you use one.
+-----------------------------------------------------
+Version 5.30, 1 May 2025, by Rengan
+Adds `crime_desc` field to the `citation` table to save the description of the crime.
+
+```sql
+ALTER TABLE `citation`
+ADD COLUMN `crime_desc` TEXT NULL DEFAULT NULL AFTER `crime`;
+```
 -----------------------------------------------------
 Version 5.29, 4 February 2024, by Tiviplus
 Fixed admin rank table flags being capped at 16 in the DB instead of 24 (byond max)
