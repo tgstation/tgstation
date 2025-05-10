@@ -89,7 +89,7 @@
 			. += span_info("It should be [EXAMINE_HINT("wired")] with 5 cables.")
 		if(FRAME_COMPUTER_STATE_WIRED)
 			. += span_notice("Its wires can be [EXAMINE_HINT("cut")].")
-			. += span_info("It should be fitted with 2 [EXAMINE_HINT("glass panels")].")
+			. += span_info("It should be [EXAMINE_HINT("fitted")] with 2 glass panels.")
 		if(FRAME_COMPUTER_STATE_GLASSED)
 			. += span_notice("The screen can be [EXAMINE_HINT("pried")] out.")
 			. += span_info("The monitor should be [EXAMINE_HINT("screwed")] on to complete it.")
