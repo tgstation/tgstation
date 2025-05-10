@@ -4839,7 +4839,7 @@
 "rx" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced/fulltile/ice,
-/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/cavern2)
 "ry" = (
@@ -6703,7 +6703,7 @@
 "zR" = (
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced/fulltile/ice,
-/obj/effect/spawner/structure/electrified_grille,
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "zS" = (
@@ -10163,6 +10163,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main)
+"Rq" = (
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced/fulltile/ice,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/snowdin/post/cavern1)
 "Rs" = (
 /obj/item/stack/cable_coil{
 	amount = 1
@@ -56934,7 +56940,7 @@ eJ
 eJ
 uI
 uZ
-uO
+Rq
 uZ
 uI
 WN
