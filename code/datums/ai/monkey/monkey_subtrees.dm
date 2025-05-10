@@ -1,4 +1,4 @@
-/datum/ai_planning_subtree/monkey_shenanigans/SelectBehaviors(datum/ai_controller/monkey/controller, seconds_per_tick)
+/datum/ai_planning_subtree/monkey_shenanigans/SelectBehaviors(datum/ai_controller/basic_controller/monkey/controller, seconds_per_tick)
 
 	if(prob(5))
 		controller.queue_behavior(/datum/ai_behavior/use_in_hand)
@@ -24,7 +24,7 @@
 	controller.TryFindWeapon()
 
 ///monkey combat subtree.
-/datum/ai_planning_subtree/monkey_combat/SelectBehaviors(datum/ai_controller/monkey/controller, seconds_per_tick)
+/datum/ai_planning_subtree/monkey_combat/SelectBehaviors(datum/ai_controller/basic_controller/monkey/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/enemies = controller.blackboard[BB_MONKEY_ENEMIES]
 
@@ -44,9 +44,6 @@
 		return
 
 	if(!selected_enemy.stat) //He's up, get him!
-		if(living_pawn.health < MONKEY_FLEE_HEALTH) //Time to skeddadle
-			controller.queue_behavior(/datum/ai_behavior/monkey_flee)
-			return SUBTREE_RETURN_FINISH_PLANNING //I'm running fuck you guys
 
 		if(controller.TryFindWeapon()) //Getting a weapon is higher priority if im not fleeing.
 			return SUBTREE_RETURN_FINISH_PLANNING
@@ -69,3 +66,13 @@
 
 	controller.queue_behavior(/datum/ai_behavior/disposal_mob, BB_MONKEY_CURRENT_ATTACK_TARGET, BB_MONKEY_TARGET_DISPOSAL)
 	return SUBTREE_RETURN_FINISH_PLANNING
+
+/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/monkey
+	target_list_key = BB_MONKEY_ENEMIES
+	operational_datums = list() //monkeys do things a bit differently...
+
+/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee/monkey/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/mob/living/living_pawn = controller.pawn
+	if(living_pawn.health > MONKEY_FLEE_HEALTH)
+		return
+	return ..()

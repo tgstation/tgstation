@@ -16,7 +16,7 @@
 		/datum/ai_planning_subtree/thing_boss_melee,
 	)
 
-/datum/ai_planning_subtree/thing_boss_aoe/SelectBehaviors(datum/ai_controller/monkey/controller, seconds_per_tick)
+/datum/ai_planning_subtree/thing_boss_aoe/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/pawn = controller.pawn
 	if(HAS_TRAIT_FROM(pawn, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT) || (controller.blackboard[BB_THETHING_ATTACKMODE] || controller.blackboard[BB_THETHING_NOAOE]))
 		return
@@ -42,7 +42,7 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 
-/datum/ai_planning_subtree/thing_boss_melee/SelectBehaviors(datum/ai_controller/monkey/controller, seconds_per_tick)
+/datum/ai_planning_subtree/thing_boss_melee/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/pawn = controller.pawn
 	if(HAS_TRAIT_FROM(pawn, TRAIT_IMMOBILIZED, MEGAFAUNA_TRAIT))
 		return
