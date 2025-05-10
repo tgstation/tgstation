@@ -115,7 +115,7 @@
 	// turn list(null, 1, 3, null) into list(1, 1, 3, null)
 	for(var/i in 1 to length(tier_list))
 		var/val = tier_list[i]
-		if(isnum(tier_list[val]))
+		if(isnum(val))
 			break
 		for(var/j in i to length(tier_list))
 			var/other_val = tier_list[j]
@@ -135,6 +135,16 @@
 				continue
 			tier_list[i] = other_val
 			break
+
+	// we can assert that tier[1] and tier[4] are not null, but we cannot say the same for tier[2] and tier[3]
+	// this can be happen due to the following setup: list(1, null, null, 4)
+	// this is an invalid config, and should be fixed by the operator
+	if(isnull(tier_list[2]))
+		log_dynamic("Invalid config setup for [src]: Tier 2 is null!")
+		tier_list[2] = tier_list[1]
+	if(isnull(tier_list[3]))
+		log_dynamic("Invalid config setup for [src]: Tier 3 is null!")
+		tier_list[3] = tier_list[4]
 
 	return tier_list
 
@@ -367,7 +377,6 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -429,7 +438,6 @@
 	pref_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER
 	weight = list(
-		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
@@ -506,7 +514,6 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
@@ -646,7 +653,6 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 10
 	min_antag_cap = list("denominator" = 20, "offset" = 1)
@@ -747,7 +753,6 @@
 	jobban_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER
 	weight = list(
-		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
@@ -773,7 +778,6 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
@@ -853,7 +857,6 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -872,7 +875,6 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 5,
-		DYNAMIC_TIER_HIGH = 5,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -944,7 +946,6 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 3,
 		DYNAMIC_TIER_MEDIUMHIGH = 5,
-		DYNAMIC_TIER_HIGH = 5,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -982,7 +983,6 @@
 	pref_flag = ROLE_NINJA
 	ruleset_flags = RULESET_INVADER
 	weight = list(
-		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
@@ -1007,7 +1007,6 @@
 	pref_flag = ROLE_SPIDER
 	ruleset_flags = RULESET_INVADER
 	weight = list(
-		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
@@ -1243,7 +1242,6 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 
@@ -1266,7 +1264,6 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 
@@ -1285,7 +1282,6 @@
 	pref_flag = ROLE_OBSESSED
 	blacklisted_roles = list()
 	weight = list(
-		DYNAMIC_TIER_LOW = 5,
 		DYNAMIC_TIER_LOWMEDIUM = 5,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 1,

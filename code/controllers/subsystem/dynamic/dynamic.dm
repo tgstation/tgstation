@@ -207,10 +207,13 @@ SUBSYSTEM_DEF(dynamic)
 	var/total_weight = 0
 	for(var/ruleset in rulesets_weighted)
 		total_weight += rulesets_weighted[ruleset]
+	if(total_weight <= 0)
+		log_dynamic("Roundstart: No rulesets to pick from!")
+		return
 
 	var/list/picked_rulesets = list()
 	while(rulesets_to_spawn[ROUNDSTART_RANGE] > 0)
-		if(!length(rulesets_weighted))
+		if(!length(rulesets_weighted) || total_weight <= 0)
 			log_dynamic("Roundstart: No more rulesets to pick from with [rulesets_to_spawn[ROUNDSTART_RANGE]] left!")
 			break
 		rulesets_to_spawn[ROUNDSTART_RANGE] -= 1
@@ -537,7 +540,7 @@ SUBSYSTEM_DEF(dynamic)
 		if(length(ruleset.blacklisted_roles))
 			data += "blacklisted_roles = \[\n"
 			for(var/i in ruleset.blacklisted_roles)
-				data += "\t[i],\n"
+				data += "\t\"[i]\",\n"
 			data += "\]\n"
 		else
 			data += "blacklisted_roles = \[\]\n"
