@@ -90,8 +90,8 @@
 		return ITEM_INTERACT_FAILURE
 
 	chair.attach_bomb(src)
+	user.log_message("attached [src] to [chair]", LOG_GAME)
 	return ITEM_INTERACT_SUCCESS
-
 
 /obj/item/transfer_valve/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/tank))
