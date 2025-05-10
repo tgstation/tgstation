@@ -378,14 +378,23 @@
 	if(blood_id)
 		var/blood_percent = round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
 		var/datum/blood_type/blood_type = carbontarget.dna.blood_type
+		var/blood_type_format
+		var/level_format
 		if(carbontarget.blood_volume <= BLOOD_VOLUME_SAFE && carbontarget.blood_volume > BLOOD_VOLUME_OKAY)
-			render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent]%, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type.name]")]<br>"
-			render_list += "<span class='alert ml-1'>Recommendation: [blood_type.restoration_chem::name] supplements or blood transfusion.</span><br>"
+			level_format = conditional_tooltip("LOW [blood_percent]%, [carbontarget.blood_volume] cl", "Recommendation: [blood_type.restoration_chem::name] supplement.", tochat)
 		else if(carbontarget.blood_volume <= BLOOD_VOLUME_OKAY)
-			render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_percent]%</b>, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]<br>"
-			render_list += "<span class='alert ml-1'>Recommendation: [blood_type.restoration_chem::name] supplements or blood transfusion.</span><br>"
+			level_format = conditional_tooltip("<b>CRITICAL [blood_percent]%</b>, [carbontarget.blood_volume] cl", "Recommendation: [blood_type.restoration_chem::name] supplement, [/datum/reagent/medicine/salglu_solution::name], or blood transfusion.", tochat)
 		else
-			render_list += "<span class='info ml-1'>Blood level: [blood_percent]%, [carbontarget.blood_volume] cl, type: [blood_type]</span><br>"
+			level_format = "[blood_percent]%, [carbontarget.blood_volume] cl"
+
+		blood_type_format = "type: [blood_type]"
+		if(tochat && length(blood_type.compatible_types))
+			var/list/compatible_types_readable = list()
+			for(var/datum/blood_type/comp_blood_type as anything in blood_type.compatible_types)
+				compatible_types_readable |= initial(comp_blood_type.name)
+			blood_type_format = span_tooltip("Can receive from types [english_list(compatible_types_readable)].", blood_type_format)
+
+		render_list += "<span class='[carbontarget.blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>Blood level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
 
 	var/blood_alcohol_content = target.get_blood_alcohol_content()
 	if(blood_alcohol_content > 0)
