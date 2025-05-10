@@ -1,0 +1,47 @@
+"a" = (/obj/item/reagent_containers/hypospray/medipen/survival{pixel_y = -18},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"c" = (/obj/structure/flora/grass/brown/style_random,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"f" = (/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"i" = (/obj/effect/decal/cleanable/blood/footprints{dir = 8},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"j" = (/obj/effect/decal/cleanable/blood/tracks{dir = 4},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"l" = (/obj/item/pickaxe/rusted{pixel_y = 16},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"m" = (/turf/template_noop,/area/template_noop)
+"n" = (/obj/effect/decal/cleanable/blood/splatter{pixel_x = 19},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"o" = (/obj/effect/decal/cleanable/blood/footprints{dir = 1; pixel_y = 9},/obj/effect/decal/cleanable/blood/footprints{dir = 1; pixel_x = -9},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"p" = (/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"v" = (/obj/structure/flora/rock/pile/icy,/obj/effect/decal/cleanable/glitter/blue{desc = "It looks like fancy glitter to me."; name = "icy wind"},/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"w" = (/obj/structure/flora/rock/pile/icy/style_2,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"x" = (/obj/item/chair/plastic{pixel_x = -19},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"y" = (/obj/effect/decal/cleanable/glitter/blue{desc = "It looks like fancy glitter to me."; name = "icy wind"},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"A" = (/obj/structure/chair/plastic{dir = 4},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"B" = (/obj/effect/mob_spawn/corpse/human/minesite,/obj/effect/decal/cleanable/blood,/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"C" = (/obj/effect/decal/cleanable/blood/drip,/obj/item/knife/combat/survival{pixel_x = 9; pixel_y = 4},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"D" = (/obj/effect/decal/cleanable/blood/tracks{dir = 8},/obj/effect/decal/cleanable/blood/drip,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"E" = (/obj/effect/decal/cleanable/blood/drip,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"G" = (/obj/effect/decal/cleanable/blood/drip,/obj/effect/decal/cleanable/blood/footprints{dir = 8},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"K" = (/obj/effect/decal/cleanable/glitter/blue{desc = "It looks like fancy glitter to me."; name = "icy wind"},/obj/item/flashlight/seclite{dir = 1; pixel_x = -10},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"L" = (/obj/effect/decal/cleanable/blood/tracks{dir = 8},/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"N" = (/turf/closed/mineral/random/snow,/area/icemoon/surface)
+"P" = (/obj/effect/decal/cleanable/blood/footprints{dir = 8; pixel_x = -9},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"R" = (/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance{dir = 8},/obj/effect/decal/cleanable/grand_remains,/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"T" = (/obj/structure/flora/grass/brown/style_random,/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"W" = (/obj/effect/decal/cleanable/blood/footprints{dir = 1},/obj/effect/decal/cleanable/blood/footprints{dir = 1},/obj/effect/decal/cleanable/blood/footprints{dir = 1},/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"X" = (/obj/structure/bonfire/dense,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"Y" = (/obj/effect/decal/cleanable/blood/drip{pixel_x = 13},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+
+(1,1,1) = {"
+mmNNNmNNmmmm
+mNNNNNNNNNmm
+NNyffYNfpNNm
+NNfpffffffNN
+NNfcTfywyfNN
+NNfclppfcyNN
+mNBiGfRjDLEf
+NNnKffffffNN
+NNffvfyffcNN
+mNCffcWEcNNm
+mNNNccoPfNNm
+mmNNNApXfxNN
+mmmNNfaffpNN
+mmmmNNffNNNm
+mmmmmNNNNNmm
+"}

@@ -1,0 +1,33 @@
+"a" = (/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"b" = (/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant,/area/ruin/unpowered/hierophant)
+"e" = (/turf/closed/indestructible/riveted/hierophant,/area/ruin/unpowered/hierophant)
+"s" = (/obj/effect/light_emitter{set_cap = 3; set_luminosity = 5},/turf/open/indestructible/hierophant/two{initial_gas_mix = "ICEMOON_ATMOS"},/area/ruin/unpowered/hierophant)
+"A" = (/turf/open/indestructible/hierophant/two{initial_gas_mix = "ICEMOON_ATMOS"},/area/ruin/unpowered/hierophant)
+"C" = (/mob/living/simple_animal/hostile/megafauna/hierophant,/turf/open/indestructible/hierophant/two{initial_gas_mix = "ICEMOON_ATMOS"},/area/ruin/unpowered/hierophant)
+"Y" = (/turf/open/indestructible/hierophant{initial_gas_mix = "ICEMOON_ATMOS"},/area/ruin/unpowered/hierophant)
+
+(1,1,1) = {"
+eeeaaaaeeeeeeeeeaaaaeee
+eaaaAAaaaaabaaaaaAAaaae
+eaAassaAaeaAaeaAassaAae
+aaaaaaaaaaaAaaaaaaaaaaa
+aAsaeeasAaabaaAsaeeasAa
+aAsaeeasAaabaaAsaeeasAa
+aaaaaaaaaaaAaaaaaaaaaaa
+eaAassaAaeaAaeaAassaAae
+eaaaAAaaaAabaAaaaAAaaae
+eaeaaaaeAaaaaaAeaaaaeae
+eaaaaaYaaaAAAaaaaaaaaae
+ebAAbbAAbaACAabAAbbAAbe
+eaaaaaaaaaAAAaaaaaaaaae
+eaeaaaaeAaaaaaAeaaaaeae
+eaaaAAaaaAabaAaaaAAaaae
+eaAassaAaeaAaeaAassaAae
+aaaaaaaaaaaAaaaaaaaaaaa
+aAsaeeasAaabaaAsaeeasAa
+aAsaeeasAaabaaAsaeeasAa
+aaaaaaaaaaaAaaaaaaaaaaa
+eaAassaAaeaAaeaAassaAae
+eaaaAAaaaaabaaaaaAAaaae
+eeeaaaaeeeeeeeeeaaaaeee
+"}

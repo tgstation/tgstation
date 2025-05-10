@@ -1,0 +1,41 @@
+"a" = (/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"e" = (/obj/effect/mob_spawn/corpse/goliath,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"g" = (/obj/effect/mob_spawn/corpse/watcher,/obj/effect/decal/cleanable/blood/trails,/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"h" = (/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"i" = (/obj/structure/flora/rock/pile/icy,/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"m" = (/obj/structure/flora/rock/pile/icy,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"n" = (/obj/effect/decal/cleanable/ash/large,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"o" = (/obj/effect/decal/cleanable/blood/old,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"r" = (/obj/structure/flora/rock/pile/icy/style_3,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"s" = (/obj/structure/flora/rock/pile/icy/style_2,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"u" = (/obj/structure/flora/grass/brown/style_random,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"w" = (/obj/effect/decal/cleanable/blood/trails{dir = 8},/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"A" = (/obj/effect/decal/cleanable/blood/trails,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"C" = (/obj/structure/flora/rock/icy,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"F" = (/obj/effect/mob_spawn/corpse/watcher,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"H" = (/obj/effect/mob_spawn/corpse/goliath,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"I" = (/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter,/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"K" = (/obj/effect/decal/cleanable/blood/old,/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"L" = (/obj/effect/decal/cleanable/ash,/turf/open/misc/asteroid/snow/icemoon,/area/icemoon/surface)
+"R" = (/turf/closed/mineral/random/snow,/area/icemoon/surface)
+"S" = (/obj/effect/mob_spawn/corpse/goliath,/turf/open/floor/plating/snowed/smoothed/icemoon,/area/icemoon/surface)
+"Z" = (/turf/template_noop,/area/template_noop)
+
+(1,1,1) = {"
+ZZRRRRRRZZZ
+ZRRsoaaRRZZ
+ZRRaKuaRRZZ
+ZRRRhAaaRRZ
+ZZRRaAuoRRZ
+ZZRRaguaaRR
+ZRRaahaoaRR
+ZRRhrLSasRR
+RRwwFaAaaaR
+RhuaohLauaR
+RhaCeIiaahR
+RRhsaKaaaaR
+RRaaaAauaRR
+ZRRnaAHRRRR
+ZZRRhAaRRZZ
+ZZZRuAmRZZZ
+"}
