@@ -3,7 +3,6 @@
 	savefile_key = "glasses"
 	savefile_identifier = PREFERENCE_CHARACTER
 	should_generate_icons = TRUE
-	should_update_preview = TRUE
 
 /datum/preference/choiced/glasses/create_default_value()
 	return "Random"

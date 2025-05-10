@@ -3,7 +3,6 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	priority = PREFERENCE_PRIORITY_LOADOUT
 	can_randomize = FALSE
-	should_update_preview = TRUE
 	// Loadout preference is an assoc list [item_path] = [loadout item information list]
 	//
 	// it may look something like

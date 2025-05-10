@@ -2,7 +2,6 @@
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	savefile_key = "heterochromatic"
 	savefile_identifier = PREFERENCE_CHARACTER
-	should_update_preview = TRUE
 
 /datum/preference/color/heterochromatic/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

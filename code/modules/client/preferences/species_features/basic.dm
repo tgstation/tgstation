@@ -25,7 +25,6 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_head_flag = HEAD_EYECOLOR
-	should_update_preview = TRUE
 
 /datum/preference/color/eye_color/apply_to_human(mob/living/carbon/human/target, value)
 	var/hetero = target.eye_color_heterochromatic
@@ -58,7 +57,6 @@
 	main_feature_name = "Facial hair"
 	should_generate_icons = TRUE
 	relevant_head_flag = HEAD_FACIAL_HAIR
-	should_update_preview = TRUE
 
 /datum/preference/choiced/facial_hairstyle/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.facial_hairstyles_list)
@@ -99,7 +97,6 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
 	relevant_head_flag = HEAD_FACIAL_HAIR
-	should_update_preview = TRUE
 
 /datum/preference/color/facial_hair_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_facial_haircolor(value, update = FALSE)
@@ -114,7 +111,6 @@
 	savefile_key = "facial_hair_gradient"
 	relevant_head_flag = HEAD_FACIAL_HAIR
 	can_randomize = FALSE
-	should_update_preview = TRUE
 
 /datum/preference/choiced/facial_hair_gradient/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.facial_hair_gradients_list)
@@ -131,7 +127,6 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "facial_hair_gradient_color"
 	relevant_head_flag = HEAD_FACIAL_HAIR
-	should_update_preview = TRUE
 
 /datum/preference/color/facial_hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_facial_hair_gradient_color(new_color = value, update = FALSE)
@@ -147,7 +142,6 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
 	relevant_head_flag = HEAD_HAIR
-	should_update_preview = TRUE
 
 /datum/preference/color/hair_color/has_relevant_feature(datum/preferences/preferences)
 	return ..() || (/datum/quirk/item_quirk/bald::name in preferences.all_quirks)
@@ -166,7 +160,6 @@
 	main_feature_name = "Hairstyle"
 	should_generate_icons = TRUE
 	relevant_head_flag = HEAD_HAIR
-	should_update_preview = TRUE
 
 /datum/preference/choiced/hairstyle/has_relevant_feature(datum/preferences/preferences)
 	return ..() || (/datum/quirk/item_quirk/bald::name in preferences.all_quirks)
@@ -212,7 +205,6 @@
 	savefile_key = "hair_gradient"
 	relevant_head_flag = HEAD_HAIR
 	can_randomize = FALSE
-	should_update_preview = TRUE
 
 /datum/preference/choiced/hair_gradient/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.hair_gradients_list)
@@ -229,7 +221,6 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "hair_gradient_color"
 	relevant_head_flag = HEAD_HAIR
-	should_update_preview = TRUE
 
 /datum/preference/color/hair_gradient/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_hair_gradient_color(new_color = value, update = FALSE)

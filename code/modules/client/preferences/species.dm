@@ -4,7 +4,6 @@
 	savefile_key = "species"
 	priority = PREFERENCE_PRIORITY_SPECIES
 	randomize_by_default = FALSE
-	should_update_preview = TRUE
 
 /datum/preference/choiced/species/deserialize(input, datum/preferences/preferences)
 	return GLOB.species_list[sanitize_inlist(input, get_choices_serialized(), SPECIES_HUMAN)]

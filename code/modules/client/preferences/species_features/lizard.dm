@@ -30,7 +30,6 @@
 	main_feature_name = "Body markings"
 	should_generate_icons = TRUE
 	relevant_body_markings = /datum/bodypart_overlay/simple/body_marking/lizard
-	should_update_preview = TRUE
 
 /datum/preference/choiced/lizard_body_markings/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.lizard_markings_list)
@@ -65,7 +64,6 @@
 	main_feature_name = "Frills"
 	should_generate_icons = TRUE
 	relevant_external_organ = /obj/item/organ/frills
-	should_update_preview = TRUE
 
 /datum/preference/choiced/lizard_frills/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.frills_list)
@@ -83,7 +81,6 @@
 	main_feature_name = "Horns"
 	should_generate_icons = TRUE
 	relevant_external_organ = /obj/item/organ/horns
-	should_update_preview = TRUE
 
 /datum/preference/choiced/lizard_horns/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.horns_list)
@@ -98,7 +95,6 @@
 	savefile_key = "feature_lizard_legs"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	should_update_preview = TRUE
 
 /datum/preference/choiced/lizard_legs/init_possible_values()
 	return list(NORMAL_LEGS, DIGITIGRADE_LEGS)
@@ -141,7 +137,6 @@
 	main_feature_name = "Snout"
 	should_generate_icons = TRUE
 	relevant_external_organ = /obj/item/organ/snout
-	should_update_preview = TRUE
 
 /datum/preference/choiced/lizard_snout/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.snouts_list)
@@ -157,7 +152,6 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_external_organ = /obj/item/organ/spines
-	should_update_preview = TRUE
 
 /datum/preference/choiced/lizard_spines/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.spines_list)
@@ -170,7 +164,6 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	relevant_external_organ = /obj/item/organ/tail/lizard
-	should_update_preview = TRUE
 
 /datum/preference/choiced/lizard_tail/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.tails_list_lizard)

@@ -3,7 +3,6 @@
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "blindfold_color"
 	savefile_identifier = PREFERENCE_CHARACTER
-	should_update_preview = TRUE
 
 /datum/preference/color/blindfold_color/create_default_value()
 	return COLOR_WHITE

@@ -4,7 +4,6 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "preferred_ai_core_display"
 	should_generate_icons = TRUE
-	should_update_preview = TRUE
 
 /datum/preference/choiced/ai_core_display/init_possible_values()
 	return GLOB.ai_core_display_screens - "Portrait"

@@ -101,9 +101,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// Used for when you need to rely on another preference.
 	var/priority = PREFERENCE_PRIORITY_DEFAULT
 
-	/// Whether updating this preference also updates the preview body.
-	var/should_update_preview = FALSE
-
 	/// If set, will be available to randomize, but only if the preference
 	/// is for PREFERENCE_CHARACTER.
 	var/can_randomize = TRUE
@@ -289,7 +286,6 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// This will, for instance, update the character preference view.
 /// Performs sanity checks.
 /datum/preferences/proc/update_preference(datum/preference/preference, preference_value)
-	message_admins("update_preference START -<br>preference: [preference]<br>preference_value: [preference_value]<br>savefile_identifier: [preference.savefile_identifier]<br>should_update_preview: [preference.should_update_preview]")
 	if (!preference.is_accessible(src))
 		return FALSE
 
@@ -304,8 +300,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 	if (preference.savefile_identifier == PREFERENCE_PLAYER)
 		preference.apply_to_client_updated(parent, read_preference(preference.type))
-	else if (preference.should_update_preview)
-		message_admins("update_preference UPDATE YEAHH -<br>preference: [preference]<br>preference_value: [preference_value]")
+	else
 		character_preview_view?.update_body()
 
 	return TRUE
