@@ -82,7 +82,7 @@
 
 /mob/living/basic/snail/update_icon_state()
 	if(stat != DEAD)
-		icon_state = HAS_TRAIT(src, TRAIT_SHELL_RETREATED) ? "[base_icon_state]_shell" : "[base_icon_state]"
+		icon_state = HAS_TRAIT(src, TRAIT_SHELL_RETREATED) ? "snail_shell" : "[base_icon_state]"
 	return ..()
 
 
