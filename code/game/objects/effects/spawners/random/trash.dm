@@ -59,6 +59,7 @@
 		var/turf/location = get_turf(loc)
 		if(location.initial_gas_mix != OPENTURF_DEFAULT_ATMOS && location.initial_gas_mix != OPENTURF_DIRTY_ATMOS)
 			loot -= /mob/living/basic/mouse
+			loot -= /mob/living/basic/snail
 	return ..()
 
 /obj/effect/spawner/random/trash/cigbutt
