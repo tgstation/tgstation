@@ -168,6 +168,7 @@
 								span_userdanger("[src] tears [worn_mask] off of your face!"))
 
 	if(!target.equip_to_slot_if_possible(src, ITEM_SLOT_MASK, 0, 1, 1))
+		log_combat(target, src, "failed facehugged by")
 		return FALSE
 	log_combat(target, src, "was facehugged by")
 	return TRUE // time for a smoke
