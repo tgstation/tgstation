@@ -9,12 +9,11 @@ export type PortProps = {
   connection: Filter | Relay;
   source?: boolean;
   target_ref: (element: HTMLElement) => void;
-  act: Function;
 };
 
 export function Port(props: PortProps) {
-  const { connection, source, target_ref, act } = props;
-  const { setConnectionHighlight } = useContext(PlaneDebugContext);
+  const { connection, source, target_ref } = props;
+  const { setConnectionHighlight, act } = useContext(PlaneDebugContext);
   const sourcePlane: Plane = (
     source ? connection.source : connection.target
   ) as Plane;

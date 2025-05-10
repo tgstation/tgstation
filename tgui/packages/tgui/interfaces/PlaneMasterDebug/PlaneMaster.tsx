@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { Box, Button, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
+import { getWindowPosition, setWindowPosition } from '../../drag';
 import { PlaneDebugContext } from '.';
 import { Port } from './Port';
 import { Filter, Plane, PlaneConnectorsMap, Relay } from './types';
@@ -9,19 +10,22 @@ import { Filter, Plane, PlaneConnectorsMap, Relay } from './types';
 export type PlaneMasterProps = {
   plane: Plane;
   connectionData: PlaneConnectorsMap;
-  act: Function;
 };
 
 export function PlaneMaster(props: PlaneMasterProps) {
-  const { plane, connectionData, act } = props;
+  const { plane, connectionData } = props;
   const {
     connectionHighlight,
     activePlane,
     setActivePlane,
     setConnectionOpen,
+    planeOpen,
+    setPlaneOpen,
   } = useContext(PlaneDebugContext);
 
-  let incoming_connections: (Filter | Relay)[] = plane.incoming_filters
+  const incoming_connections: (Filter | Relay)[] = (
+    plane.incoming_filters as (Filter | Relay)[]
+  )
     .concat(plane.incoming_relays)
     .filter((x: Filter | Relay) => {
       return x.source !== undefined;
@@ -31,7 +35,9 @@ export function PlaneMaster(props: PlaneMasterProps) {
         (a.source as Plane).plane - (b.source as Plane).plane,
     );
 
-  let outgoing_connections: (Filter | Relay)[] = plane.outgoing_filters
+  const outgoing_connections: (Filter | Relay)[] = (
+    plane.outgoing_filters as (Filter | Relay)[]
+  )
     .concat(plane.outgoing_relays)
     .filter((x: Filter | Relay) => {
       return x.target !== undefined;
@@ -78,7 +84,16 @@ export function PlaneMaster(props: PlaneMasterProps) {
               icon="pager"
               compact
               tooltip="Inspect and edit this plane"
-              onClick={() => setActivePlane(plane.plane)}
+              onClick={() => {
+                setActivePlane(plane.plane);
+                if (planeOpen) {
+                  return;
+                }
+                const windowPosition = getWindowPosition();
+                windowPosition[0] -= 150;
+                setWindowPosition(windowPosition);
+                setPlaneOpen(true);
+              }}
             />
           </Stack.Item>
         </Stack>
@@ -106,7 +121,6 @@ export function PlaneMaster(props: PlaneMasterProps) {
                       }
                       connectionData[connection.our_ref].input = element;
                     }}
-                    act={act}
                   />
                 </Stack.Item>
               ))}
@@ -126,7 +140,6 @@ export function PlaneMaster(props: PlaneMasterProps) {
                       }
                       connectionData[connection.our_ref].output = element;
                     }}
-                    act={act}
                   />
                 </Stack.Item>
               ))}
@@ -135,8 +148,8 @@ export function PlaneMaster(props: PlaneMasterProps) {
                   icon="plus"
                   compact
                   onClick={() => {
-                    setConnectionOpen(true);
                     setActivePlane(plane.plane);
+                    setConnectionOpen(true);
                   }}
                   tooltip="Connect to another plane"
                 />

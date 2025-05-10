@@ -7,13 +7,20 @@ import {
   useRef,
   useState,
 } from 'react';
-import { InfinitePlane } from 'tgui-core/components';
+import {
+  Button,
+  Dropdown,
+  InfinitePlane,
+  Stack,
+  Tooltip,
+} from 'tgui-core/components';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { Connection, Connections, Position } from './../common/Connections';
 import { ABSOLUTE_Y_OFFSET } from './../IntegratedCircuit/constants';
+import { PlaneEditor } from './PlaneEditor';
 import { PlaneMaster } from './PlaneMaster';
 import { PlaneMenus } from './PlaneMenus';
 import {
@@ -50,13 +57,8 @@ function isDefined<T>(x: T | undefined): x is T {
 }
 
 function evaluatePlaneDepth(plane: Plane, depth: number) {
-  const childConnections: Plane[] = plane.outgoing_filters
-    .concat(plane.outgoing_relays)
-    .map((connection: Filter | Relay) => connection.target)
-    .filter(isDefined);
-
   let checkDepth = 0;
-  let toCheck = plane.outgoing_filters
+  let toCheck = (plane.outgoing_filters as (Filter | Relay)[])
     .concat(plane.outgoing_relays)
     .map((connection: Filter | Relay) => connection.target);
   const allElems: Plane[] = [];
@@ -76,7 +78,7 @@ function evaluatePlaneDepth(plane: Plane, depth: number) {
 
       allElems.push(checkElem);
       newCheck = newCheck.concat(
-        (checkElem as Plane).outgoing_filters
+        ((checkElem as Plane).outgoing_filters as (Filter | Relay)[])
           .concat(checkElem.outgoing_relays)
           .map((connection: Filter | Relay) => connection.target)
           .filter(isDefined),
@@ -107,7 +109,7 @@ function evaluatePlaneDepth(plane: Plane, depth: number) {
 // Stolen wholesale from fontcode
 function textWidth(text: string, font: string, fontsize: number) {
   // default font height is 12 in tgui
-  font = fontsize + 'px ' + font;
+  font = `${fontsize}px ${font}`;
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d') as CanvasRenderingContext2D;
   ctx.font = font;
@@ -133,8 +135,12 @@ function getDesiredPlanePosition(
 ) {
   const dependents: Plane[] = (
     curStack > tallestStack
-      ? plane.outgoing_filters.concat(plane.outgoing_relays)
-      : plane.incoming_filters.concat(plane.incoming_relays)
+      ? (plane.outgoing_filters as (Filter | Relay)[]).concat(
+          plane.outgoing_relays,
+        )
+      : (plane.incoming_filters as (Filter | Relay)[]).concat(
+          plane.incoming_relays,
+        )
   )
     .map((connection: Filter | Relay) =>
       curStack > tallestStack ? connection.target : connection.source,
@@ -149,9 +155,18 @@ function getDesiredPlanePosition(
   return avgY - getPlaneHeight(plane) / 2;
 }
 
-export function PlaneMasterDebug(props) {
+export function PlaneMasterDebug() {
   const { data, act } = useBackend<PlaneDebugData>();
-  const { mob_name, planes } = data;
+  const {
+    mob_name,
+    planes,
+    tracking_active,
+    mob_ref,
+    our_ref,
+    enable_group_view,
+    our_group,
+    present_groups,
+  } = data;
   const connectionDom = useRef<PlaneConnectorsMap>({});
 
   const planesProcessed = useMemo(() => {
@@ -278,13 +293,17 @@ export function PlaneMasterDebug(props) {
     for (const key in planeStacks) {
       let stack: Plane[] = planeStacks[key];
       stack = stack.sort((first, second) => {
-        const firstChildren: Plane[] = first.outgoing_filters
+        const firstChildren: Plane[] = (
+          first.outgoing_filters as (Filter | Relay)[]
+        )
           .concat(first.outgoing_relays)
           .map((connection: Filter | Relay) => connection.target)
           .filter(isDefined)
           .sort((a, b) => a.plane - b.plane);
 
-        const secondChildren: Plane[] = second.outgoing_filters
+        const secondChildren: Plane[] = (
+          second.outgoing_filters as (Filter | Relay)[]
+        )
           .concat(second.outgoing_relays)
           .map((connection: Filter | Relay) => connection.target)
           .filter(isDefined)
@@ -411,9 +430,6 @@ export function PlaneMasterDebug(props) {
   const [connectionData, setConnectionData] = useState<PlaneConnectionsMap>({});
   const [connectionHighlight, setConnectionHighlight] =
     useState<PlaneHighlight>();
-  // Must be a number as Plane objects are recreated whenever plane data changes
-  const [activePlane, setActivePlane] = useState<number>();
-  const [connectionOpen, setConnectionOpen] = useState<boolean>(false);
 
   useLayoutEffect(() => {
     const doms = connectionDom.current;
@@ -432,7 +448,7 @@ export function PlaneMasterDebug(props) {
       };
     }
     setConnectionData(newConnectionData);
-  }, []);
+  }, [planes]); // Ignore biome's screeching about this, it doesn't recognize ref dependencies
 
   const connections: Connection[] = [];
   for (const key in planesProcessed) {
@@ -486,6 +502,12 @@ export function PlaneMasterDebug(props) {
     }
   }
 
+  // Must be a number as Plane objects are recreated whenever plane data changes
+  const [activePlane, setActivePlane] = useState<number>();
+  const [connectionOpen, setConnectionOpen] = useState<boolean>(false);
+  const [infoOpen, setInfoOpen] = useState<boolean>(false);
+  const [planeOpen, setPlaneOpen] = useState<boolean>(false);
+
   return (
     <PlaneDebugContext.Provider
       value={{
@@ -495,10 +517,81 @@ export function PlaneMasterDebug(props) {
         setActivePlane,
         connectionOpen,
         setConnectionOpen,
+        infoOpen,
+        setInfoOpen,
+        planeOpen,
+        setPlaneOpen,
         planesProcessed,
+        act,
       }}
     >
-      <Window width={1200} height={800} title={'Plane Debugging: ' + mob_name}>
+      <Window
+        width={planeOpen ? 1500 : 1200}
+        height={800}
+        title={`Plane Debugging: ${mob_name}`}
+        buttons={
+          <Stack>
+            {!!enable_group_view && (
+              <Tooltip
+                content="Plane masters are stored in groups, based off where they came from. MAIN is the main group, but if you open something that displays atoms in a new window, it'll show up here."
+                position="right"
+              >
+                <Dropdown
+                  options={present_groups}
+                  selected={our_group}
+                  onSelected={(value) =>
+                    act('set_group', { target_group: value })
+                  }
+                />
+              </Tooltip>
+            )}
+            <Stack.Item>
+              <Button
+                color="transparent"
+                tooltip="Debugger Documentation"
+                icon="question"
+                selected={infoOpen}
+                onClick={() => setInfoOpen(true)}
+              />
+            </Stack.Item>
+            {!!(mob_ref === our_ref) && (
+              <Stack.Item>
+                <Button
+                  color="transparent"
+                  tooltip="Reset Mob Focus"
+                  icon="magnifying-glass"
+                  onClick={() => act('reset_mob')}
+                />
+              </Stack.Item>
+            )}
+            <Stack.Item>
+              <Button
+                color="transparent"
+                tooltip="View Mirroring"
+                icon="eye"
+                selected={tracking_active}
+                onClick={() => act('toggle_mirroring')}
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color="transparent"
+                tooltip="View Mob Variables"
+                icon="pen"
+                onClick={() => act('vv_mob')}
+              />
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color="transparent"
+                tooltip="Rebuild Plane Masters"
+                icon="recycle"
+                onClick={() => act('rebuild')}
+              />
+            </Stack.Item>
+          </Stack>
+        }
+      >
         <Window.Content
           style={{
             backgroundImage: 'none',
@@ -510,19 +603,19 @@ export function PlaneMasterDebug(props) {
             backgroundImage={resolveAsset('grid_background.png')}
             imageWidth={900}
             initialLeft={500}
-            initialTop={-1050}
+            initialTop={-1350}
           >
             {planes.map((plane) => (
               <PlaneMaster
                 key={plane.name}
                 plane={planesProcessed[plane.plane]}
                 connectionData={connectionDom.current}
-                act={act}
               />
             ))}
             <Connections connections={connections} />
           </InfinitePlane>
-          <PlaneMenus act={act} />
+          {!!planeOpen && <PlaneEditor />}
+          <PlaneMenus />
         </Window.Content>
       </Window>
     </PlaneDebugContext.Provider>
@@ -536,7 +629,12 @@ type Context = {
   setActivePlane: Dispatch<SetStateAction<number | undefined>>;
   connectionOpen: boolean;
   setConnectionOpen: Dispatch<SetStateAction<boolean>>;
+  infoOpen: boolean;
+  setInfoOpen: Dispatch<SetStateAction<boolean>>;
+  planeOpen: boolean;
+  setPlaneOpen: Dispatch<SetStateAction<boolean>>;
   planesProcessed: PlaneMap;
+  act: Function;
 };
 
 export const PlaneDebugContext = createContext({} as Context);
