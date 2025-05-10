@@ -364,7 +364,10 @@ Versioning
 		query_report_death.Execute(async = TRUE)
 		qdel(query_report_death)
 
-/datum/controller/subsystem/blackbox/proc/ReportCitation(citation, action, sender, sender_ic, recipient, message, description, fine = 0, paid = 0)
+/datum/controller/subsystem/blackbox/proc/ReportCitation(citation, sender, sender_ic, recipient, message, description, fine = 0, paid = 0)
+	var/action = "Citation Created"
+	if(!fine)
+		action = "Crime Created"
 	var/datum/db_query/query_report_citation = SSdbcore.NewQuery({"INSERT INTO [format_table_name("citation")]
 	(server_ip,
 	server_port,

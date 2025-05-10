@@ -221,7 +221,7 @@
 		var/datum/crime/new_crime = new(name = input_name, details = input_details, author = usr)
 		target.crimes += new_crime
 		investigate_log("New Crime: <strong>[input_name]</strong> | Added to [target.name] by [key_name(user)]. Their previous status was [target.wanted_status]", INVESTIGATE_RECORDS)
-		SSblackbox.ReportCitation(REF(new_crime), "Crime Created", user.ckey, user.real_name, target.name, input_name, input_details)
+		SSblackbox.ReportCitation(REF(new_crime), user.ckey, user.real_name, target.name, input_name, input_details)
 		target.wanted_status = WANTED_ARREST
 
 		update_matching_security_huds(target.name)
@@ -233,7 +233,7 @@
 	target.citations += new_citation
 	new_citation.alert_owner(user, src, target.name, "You have been issued a [params["fine"]]cr citation for [input_name]. Fines are payable at Security.")
 	investigate_log("New Citation: <strong>[input_name]</strong> Fine: [params["fine"]] | Added to [target.name] by [key_name(user)]", INVESTIGATE_RECORDS)
-	SSblackbox.ReportCitation(REF(new_citation), "Citation Created", user.ckey, user.real_name, target.name, input_name, input_details, params["fine"])
+	SSblackbox.ReportCitation(REF(new_citation), user.ckey, user.real_name, target.name, input_name, input_details, params["fine"])
 
 	return TRUE
 
