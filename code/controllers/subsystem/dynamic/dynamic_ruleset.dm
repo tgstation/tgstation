@@ -138,12 +138,10 @@
 
 	// we can assert that tier[1] and tier[4] are not null, but we cannot say the same for tier[2] and tier[3]
 	// this can be happen due to the following setup: list(1, null, null, 4)
-	// this is an invalid config, and should be fixed by the operator
+	// (which is an invalid config, and should be fixed by the operator)
 	if(isnull(tier_list[2]))
-		log_dynamic("Invalid config setup for [src]: Tier 2 is null!")
 		tier_list[2] = tier_list[1]
 	if(isnull(tier_list[3]))
-		log_dynamic("Invalid config setup for [src]: Tier 3 is null!")
 		tier_list[3] = tier_list[4]
 
 	return tier_list
@@ -466,7 +464,6 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
-		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 	blacklisted_roles = list(
