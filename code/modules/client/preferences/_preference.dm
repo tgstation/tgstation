@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	/// Used for when you need to rely on another preference.
 	var/priority = PREFERENCE_PRIORITY_DEFAULT
 
-	/// Whether updating this preference also updates the preview body.
+	/// Whether updating this preference also updates our character preview body.
 	var/should_update_preview = FALSE
 
 	/// If set, will be available to randomize, but only if the preference
