@@ -415,6 +415,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/textured_large,
 /area/mine/living_quarters)
 "cE" = (
@@ -606,6 +607,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "lavaland_public_west"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/textured_large,
 /area/mine/lounge)
 "dz" = (
@@ -830,6 +832,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/structure/disposalpipe/segment,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/mine/laborcamp/security/maintenance)
 "fa" = (
@@ -842,6 +845,20 @@
 /obj/structure/lattice/catwalk/mining,
 /turf/open/lava/smooth/lava_land_surface,
 /area/lavaland/surface/outdoors)
+"fd" = (
+/obj/machinery/door/airlock/external{
+	name = "Mining External Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "lavaland_public_south"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/mine/maintenance/public/south)
 "fe" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1940,6 +1957,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "lavaland_living_east"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/textured_large,
 /area/mine/living_quarters)
 "kJ" = (
@@ -2185,6 +2203,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production)
 "lN" = (
@@ -2925,6 +2944,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating/lavaland_atmos,
 /area/mine/lobby/raptor)
 "oS" = (
@@ -2934,6 +2954,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "lavaland_living_west"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/textured_large,
 /area/mine/cafeteria)
 "oT" = (
@@ -3250,6 +3271,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/laborcamp)
 "qy" = (
@@ -4406,6 +4428,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Lavaland Shuttle Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/textured_large,
 /area/mine/lounge)
 "xO" = (
@@ -4418,6 +4441,18 @@
 	},
 /turf/open/floor/iron/checker,
 /area/mine/cafeteria)
+"xP" = (
+/obj/machinery/door/airlock/external{
+	name = "Mining External Airlock"
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "lavaland_services_north"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/mine/maintenance/service)
 "xQ" = (
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/booze,
@@ -4493,6 +4528,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/laborcamp/security)
 "yj" = (
@@ -4742,6 +4778,7 @@
 	name = "Mining External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/mine/maintenance/service)
 "zO" = (
@@ -4838,6 +4875,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production)
 "Av" = (
@@ -5011,6 +5049,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/mine/maintenance/living/north)
 "BV" = (
@@ -5077,6 +5116,18 @@
 /obj/effect/turf_decal/sand/plating/volcanic,
 /turf/open/floor/plating/lavaland_atmos,
 /area/lavaland/surface/outdoors)
+"Cw" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/external{
+	name = "Mining External Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "lavaland_services_north"
+	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/mine/maintenance/service)
 "Cz" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Infirmary"
@@ -5218,6 +5269,7 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "Labor Camp Shuttle Prisoner Airlock"
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth_large,
 /area/mine/laborcamp)
 "Dl" = (
@@ -5227,6 +5279,7 @@
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/laborcamp)
 "Dn" = (
@@ -5281,6 +5334,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/mine/maintenance/public/north)
 "DV" = (
@@ -5521,6 +5575,7 @@
 	name = "Mining Shuttle Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production)
 "Fs" = (
@@ -5625,6 +5680,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "Gl" = (
@@ -5777,6 +5833,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/structure/fans/tiny,
 /turf/open/floor/plating/lavaland_atmos,
 /area/mine/lounge)
 "Hl" = (
@@ -6353,6 +6410,7 @@
 	cycle_id = "lavaland_mining_north"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production)
 "Kj" = (
@@ -6951,6 +7009,7 @@
 	name = "Mining External Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance/departmental,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/mine/maintenance/living/north)
 "No" = (
@@ -7079,6 +7138,7 @@
 	cycle_id = "lavaland_gulag_monitoring_east"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/security/brig,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/laborcamp/security)
 "NY" = (
@@ -8508,6 +8568,7 @@
 	cycle_id = "lavaland_mining_west"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
+/obj/structure/fans/tiny,
 /turf/open/floor/iron/dark/textured_large,
 /area/mine/production)
 "Wm" = (
@@ -8619,6 +8680,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
+/obj/structure/fans/tiny,
 /turf/open/floor/plating,
 /area/mine/maintenance/living/south)
 "WX" = (
@@ -39692,7 +39754,7 @@ pU
 pU
 pU
 Dx
-cm
+xP
 FL
 cm
 Ao
@@ -39949,7 +40011,7 @@ pU
 pU
 pU
 aD
-cV
+Cw
 fi
 cV
 Jh
@@ -41540,7 +41602,7 @@ ch
 sR
 QH
 eA
-Nv
+fd
 eA
 aj
 aj
