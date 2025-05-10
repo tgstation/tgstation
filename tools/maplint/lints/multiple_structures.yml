@@ -3,7 +3,7 @@
     /obj/structure:
     /turf/closed:
     STRUCTURE_SPAWNER:
-      pattern: ^/obj/effect/spawner/structure/(?!.*/directional).*$
+      pattern: ^/obj/effect/spawner/structure/(?!.*/hollow).*$
   ignore:
     - /obj/structure/cable
     - /obj/structure/transit_tube
@@ -12,7 +12,8 @@
     - /obj/structure/sign
     - /obj/structure/barricade
     - /obj/structure/curtain
-    - /obj/structure/structure/electrified_grille
+    - /obj/effect/spawner/structure/electrified_grille
     - /obj/structure/structure/railing
     - /obj/structure/structure/lattice
     - /obj/structure/fans
+    - /obj/structure/spacevine
