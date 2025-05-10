@@ -114,14 +114,18 @@
 			frequency = rand(MIN_EMOTE_PITCH, MAX_EMOTE_PITCH)
 		playsound(source = user,soundin = tmp_sound,vol = 50, vary = FALSE, ignore_walls = sound_wall_ignore, frequency = frequency)
 
-
+	var/is_runechat = emote_type & EMOTE_RUNECHAT
 	var/is_important = emote_type & EMOTE_IMPORTANT
 	var/is_visual = emote_type & EMOTE_VISIBLE
 	var/is_audible = emote_type & EMOTE_AUDIBLE
 	var/additional_message_flags = get_message_flags(intentional)
 
+	if(is_audible)
+		for(var/obj/item/taperecorder/rec in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, user))
+			rec.hear_non_spoken(msg, user)
+
 	// Emote doesn't get printed to chat, runechat only
-	if(emote_type & EMOTE_RUNECHAT)
+	if(is_runechat)
 		for(var/mob/viewer as anything in viewers(user))
 			if(isnull(viewer.client))
 				continue
