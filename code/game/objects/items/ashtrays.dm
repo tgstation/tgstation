@@ -1,5 +1,3 @@
-#define MAX_CIGS 30
-
 /obj/item/ashtray
 	name = "ashtray"
 	desc = "It's a tray. For ash."
@@ -11,6 +9,7 @@
 
 	appearance_flags = KEEP_APART | LONG_GLIDE | PIXEL_SCALE | TILE_BOUND
 
+	var/max_cigs = 30
 	var/cig_count = 0
 	var/list/allowed_types = list(
 		/obj/item/cigarette,
@@ -43,7 +42,7 @@
 	update_appearance()
 
 /obj/item/ashtray/item_interaction(mob/living/user,	obj/item/C,	list/modifiers)
-	if (cig_count >= MAX_CIGS)
+	if (cig_count >= max_cigs)
 		balloon_alert(user, "it's full!")
 		return
 
@@ -57,7 +56,7 @@
 		)
 		return
 
-	to_chat(user,	span_notice("You can't put it in there."))
+	balloon_alert(user, "wrong item!")
 
 /obj/item/ashtray/proc/set_cig_count(new_amount = 0)
 	if(cig_count == new_amount)
@@ -91,8 +90,8 @@
 			overlay += image("full")
 
 	if (overlay)
-		overlay.appearance_flags = RESET_COLOR | RESET_ALPHA		// applying these flags to further prevent color
-		overlays += overlay											// and alpha from being affected by material
+		overlay.appearance_flags = RESET_COLOR | RESET_ALPHA	// applying these flags to further prevent color
+		overlays += overlay		// and alpha from being affected by material
 
 
 /obj/item/ashtray/update_appearance()
@@ -124,5 +123,3 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_KITCHEN,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
-
-#undef MAX_CIGS

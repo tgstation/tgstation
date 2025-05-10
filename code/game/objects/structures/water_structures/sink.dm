@@ -204,7 +204,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
 	if(istype(O, /obj/item/ashtray))
 		if(reagents.total_volume <= 0)
-			to_chat(user, span_notice("\The [src] is dry."))
+			balloon_alert(user, "it's dry!")
 			return FALSE
 
 		busy = TRUE
