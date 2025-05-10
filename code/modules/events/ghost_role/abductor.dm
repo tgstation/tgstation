@@ -13,7 +13,6 @@
 	role_name = "abductor team"
 	fakeable = FALSE //Nothing to fake here
 
-	var/max_teams = 4
 
 /datum/round_event/ghost_role/abductor/spawn_role()
 	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_ABDUCTOR, role = ROLE_ABDUCTOR, alert_pic = /obj/item/melee/baton/abductor, role_name_text = role_name, amount_to_pick = 2)
@@ -26,8 +25,8 @@
 	var/mob/living/carbon/human/scientist = make_body(pick_n_take(candidates))
 
 	var/datum/team/abductor_team/T = new
-	if(T.team_number > max_teams)
-		return MAP_ERROR
+	// if(T.team_number > max_teams)
+	// 	return MAP_ERROR
 
 	scientist.log_message("has been selected as [T.name] abductor scientist.", LOG_GAME)
 	agent.log_message("has been selected as [T.name] abductor agent.", LOG_GAME)

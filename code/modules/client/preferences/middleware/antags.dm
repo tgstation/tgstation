@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 /**
  * Returns the number of days more the client's account must be to play the passed in antag
  */
-/client/proc/get_days_to_play_antag(antag_flag)
+/client/proc/get_days_to_play_antag(checked_antag_flag)
 	var/static/list/antag_time_limits
 	if(!antag_time_limits)
 		antag_time_limits = list()
@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 
 			antag_time_limits[antag_flag] = min_days
 
-	return get_remaining_days(antag_time_limits[antag_flag] || 0)
+	return get_remaining_days(antag_time_limits[checked_antag_flag] || 0)
 
 /// Sprites generated for the antagonists panel
 /datum/asset/spritesheet/antagonists

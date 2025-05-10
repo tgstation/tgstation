@@ -1,8 +1,6 @@
 /datum/dynamic_ruleset/midround
 	/// MIDROUND_RULESET_STYLE_LIGHT or MIDROUND_RULESET_STYLE_HEAVY - determines which pool it enters
 	var/midround_type
-	/// Text shown in the candidate poll. Optional, if unset uses pref_flag. (Though required if pref_flag is unset)
-	var/candidate_role
 
 /**
  * Collect candidates handles getting the broad pool of players we want to pick from
@@ -12,45 +10,74 @@
 /datum/dynamic_ruleset/midround/proc/collect_candidates()
 	return list()
 
+/**
+ * ### Ghost rulesets
+ *
+ * Rulesets which select an observer/ghost player to play as a new character
+ *
+ * Implementation notes:
+ * - prepare_role will handle making the body for the mob for you. Avoid touching it if not necessary.
+ * - create_ruleset_body is what makes the new /mob for the candidate. It handles putting the player in the body for you.
+ * You can override it entirely for to spawn a different mob type.
+ * You can also override it to spawn nothing, if you're doing special handling in assign_role, but you'll have to handle moving the player yourself.
+ * - assign_role is what gives the player their antag datum.
+ */
 /datum/dynamic_ruleset/midround/from_ghosts
 	///Path of an item to show up in ghost polls for applicants to sign up.
 	var/signup_atom_appearance = /obj/structure/sign/poster/contraband/syndicate_recruitment
+	/// Text shown in the candidate poll. Optional, if unset uses pref_flag. (Though required if pref_flag is unset)
+	var/candidate_role
 
 /datum/dynamic_ruleset/midround/from_ghosts/can_be_selected(population_size, list/antag_candidates)
 	SHOULD_CALL_PARENT(TRUE)
 	return ..() && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT)
 
-/datum/dynamic_ruleset/from_ghosts/get_candidate_mind(mob/dead/candidate)
+/datum/dynamic_ruleset/midround/from_ghosts/get_candidate_mind(mob/dead/candidate)
 	// Ghost roles will always get a fresh mind
 	return new /datum/mind(candidate.key)
 
+/datum/dynamic_ruleset/midround/from_ghosts/prepare_for_role(datum/mind/candidate)
+	var/mob/living/body = create_ruleset_body()
+	if(isnull(body))
+		return
+	candidate.transfer_to(body, force_key_move = TRUE) // yoinks the candidate's client
+	if(ishuman(body))
+		var/mob/living/carbon/human/human_body = body
+		body.client?.prefs.safe_transfer_prefs_to(body)
+		human_body.dna.remove_all_mutations()
+		human_body.dna.update_dna_identity()
+
+/**
+ * Handles making the body for the candidate
+ *
+ * Handling loc is not necessary here - you can do it in assign_role
+ *
+ * Returning null will skip body creation entirely, though you will be expected to do it yourself in assign_role
+ */
+/datum/dynamic_ruleset/midround/from_ghosts/proc/create_ruleset_body()
+	return new /mob/living/carbon/human
+
 /datum/dynamic_ruleset/midround/from_ghosts/collect_candidates()
-	var/poll_role = candidate_role || pref_flag
-	if(isnull(poll_role))
+	var/readable_poll_role = candidate_role || pref_flag
+	if(isnull(readable_poll_role))
 		stack_trace("[config_tag]: No candidate role or pref_flag set, give it a human readable candidate roll at the bare minimum.")
-		poll_role = "Some Midround Antagonist Without A Role Set (Yell At Coders)"
+		readable_poll_role = "Some Midround Antagonist Without A Role Set (Yell At Coders)"
 
 	return SSpolling.poll_ghost_candidates(
-		question = "Looking for volunteers to become [span_notice(poll_role)] for [span_danger(name)]",
+		question = "Looking for volunteers to become [span_notice(readable_poll_role)] for [span_danger(name)]",
 		check_jobban = list(ROLE_SYNDICATE, jobban_flag || pref_flag),
 		role = pref_flag,
 		poll_time = 30 SECONDS,
 		alert_pic = signup_atom_appearance,
-		role_name_text = poll_role,
+		role_name_text = readable_poll_role,
 	)
-
-/// Helper to make a human from a ghost, with their preferences
-/datum/dynamic_ruleset/midround/from_ghosts/proc/make_human(mob/dead/ghost, atom/spawn_loc)
-	var/mob/living/carbon/human/new_character = make_body(ghost)
-	new_character.dna.remove_all_mutations()
-	new_character.forceMove(spawn_loc)
-	return new_character
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard
 	name = "Wizard"
 	config_tag = "Midround Wizard"
 	preview_antag_datum = /datum/antagonist/wizard
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	candidate_role = "Wizard"
 	pref_flag = ROLE_WIZARD_MIDROUND
 	jobban_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER
@@ -65,15 +92,14 @@
 	signup_atom_appearance = /obj/item/clothing/head/wizard
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/assign_role(datum/mind/candidate)
-	var/mob/living/carbon/human/wizard = make_human(candidate.current, pick(GLOB.wizardstart))
-	candidate.transfer_to(wizard, force_key_move = TRUE)
-	candidate.add_antag_datum(/datum/antagonist/wizard)
+	candidate.add_antag_datum(/datum/antagonist/wizard) // moves to lair for us
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies
 	name = "Nuclear Operatives"
 	config_tag = "Midround Nukeops"
 	preview_antag_datum = /datum/antagonist/nukeop
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	candidate_role = "Operative"
 	pref_flag = ROLE_OPERATIVE_MIDROUND
 	jobban_flag = ROLE_NUCLEAR_OPERATIVE
 	ruleset_flags = RULESET_INVADER
@@ -91,12 +117,10 @@
 	return list(new /datum/team/nuclear)
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies/assign_role(datum/mind/candidate, datum/team/nuclear/nuke_team)
-	var/mob/living/carbon/human/new_character = make_human(candidate.current, pick(GLOB.nukeop_start))
-	candidate.transfer_to(new_character, force_key_move = TRUE)
 	if(get_most_experienced(selected_minds, pref_flag) == candidate)
-		candidate.add_antag_datum(/datum/antagonist/nukeop/leader, nuke_team)
+		candidate.add_antag_datum(/datum/antagonist/nukeop/leader, nuke_team) // moves to nuke base for us
 	else
-		candidate.add_antag_datum(/datum/antagonist/nukeop, nuke_team)
+		candidate.add_antag_datum(/datum/antagonist/nukeop, nuke_team) // moves to nuke base for us
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies/round_result()
 	var/datum/antagonist/nukeop/nukie = selected_minds[1].has_antag_datum(/datum/antagonist/nukeop)
@@ -138,18 +162,17 @@
 	name = "Clown Operatives"
 	config_tag = "Midround Clownops"
 	preview_antag_datum = /datum/antagonist/nukeop/clownop
+	candidate_role = "Operative"
 	pref_flag = ROLE_CLOWN_OPERATIVE_MIDROUND
 	jobban_flag = ROLE_CLOWN_OPERATIVE
 	weight = 0
 	signup_atom_appearance = /obj/machinery/nuclearbomb/syndicate/bananium
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies/clown/assign_role(datum/mind/candidate, datum/team/nuclear/nuke_team)
-	var/mob/living/carbon/human/new_character = make_human(candidate.current, pick(GLOB.nukeop_start))
-	candidate.transfer_to(new_character, force_key_move = TRUE)
 	if(get_most_experienced(selected_minds, pref_flag) == candidate)
-		candidate.add_antag_datum(/datum/antagonist/nukeop/leader/clownop, nuke_team)
+		candidate.add_antag_datum(/datum/antagonist/nukeop/leader/clownop, nuke_team) // moves to nuke base for us
 	else
-		candidate.add_antag_datum(/datum/antagonist/nukeop/clownop, nuke_team)
+		candidate.add_antag_datum(/datum/antagonist/nukeop/clownop, nuke_team) // moves to nuke base for us
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob
 	name = "Blob"
@@ -166,9 +189,21 @@
 	min_pop = 30
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/structure/blob/normal
+	/// How many points does the blob spawn with
+	var/starting_points = OVERMIND_STARTING_POINTS
+
+/datum/dynamic_ruleset/midround/from_ghosts/blob/create_ruleset_body()
+	return new /mob/eye/blob(get_blobspawn(), starting_points)
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/assign_role(datum/mind/candidate)
-	candidate.current.become_overmind()
+	return // everything is handled by blob new()
+
+/datum/dynamic_ruleset/midround/from_ghosts/blob/proc/get_blobspawn()
+	if(!length(GLOB.blobstart))
+		var/obj/effect/landmark/observer_start/default = locate() in GLOB.landmarks_list
+		return get_turf(default)
+
+	return pick(GLOB.blobstart)
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph
 	name = "Alien Infestation"
@@ -194,14 +229,16 @@
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/can_be_selected(population_size, list/antag_candidates)
 	return ..() && length(find_vents()) > 0
 
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/create_ruleset_body()
+	return new /mob/living/carbon/alien/larva
+
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/create_execute_args()
 	return list(find_vents())
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/assign_role(datum/mind/candidate, list/vent_list)
+	// xeno login gives antag datums
 	var/obj/vent = length(vent_list) >= 2 ? pick_n_take(vent_list) : vent_list[1]
-	var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
-	candidate.transfer_to(new_xeno, force_key_move = TRUE)
-	new_xeno.move_into_vent(vent)
+	candidate.current.move_into_vent(vent)
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/proc/find_vents()
 	var/list/vents = list()
@@ -237,11 +274,10 @@
 	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/assign_role(datum/mind/candidate)
-	var/mob/living/carbon/human/new_character = make_human(candidate.current, find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
 	candidate.add_antag_datum(/datum/antagonist/nightmare)
-	candidate.transfer_to(new_character)
-	new_character.set_species(/datum/species/shadow/nightmare)
-	playsound(new_character, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	candidate.current.set_species(/datum/species/shadow/nightmare)
+	candidate.current.forceMove(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
+	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon
 	name = "Space Dragon"
@@ -262,11 +298,13 @@
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/can_be_selected(population_size, list/antag_candidates)
 	return ..() && !isnull(find_space_spawn())
 
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/create_ruleset_body()
+	return new /mob/living/basic/space_dragon
+
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/assign_role(datum/mind/candidate)
-	var/mob/living/basic/space_dragon/dragon = new(find_space_spawn())
-	candidate.transfer_to(dragon, force_key_move = TRUE)
 	candidate.add_antag_datum(/datum/antagonist/space_dragon)
-	playsound(dragon, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	candidate.current.forceMove(find_space_spawn())
+	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/execute()
 	. = ..()
@@ -285,7 +323,22 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	signup_atom_appearance = /obj/item/melee/baton/abductor
 
-// melbert todo : where did abductor code go
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/can_be_selected(population_size, list/antag_candidates)
+	if(!..())
+		return FALSE
+	var/num_abductors = 0
+	for(var/datum/team/abductor_team/team in GLOB.antagonist_teams)
+		num_abductors++
+	return num_abductors < 4
+
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/create_execute_args()
+	return list(new /datum/team/abductor_team)
+
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/assign_role(datum/mind/candidate, datum/team/abductor_team/team)
+	if(candidate == selected_minds[1])
+		candidate.add_antag_datum(/datum/antagonist/abductor/scientist, team) // sets species and moves to spawn point
+	else
+		candidate.add_antag_datum(/datum/antagonist/abductor/agent, team) // sets species and moves to spawn point
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja
 	name = "Space Ninja"
@@ -308,9 +361,8 @@
 	return ..() && !isnull(find_space_spawn())
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/assign_role(datum/mind/candidate)
-	var/mob/living/carbon/human/new_character = make_human(candidate.current, find_space_spawn())
-	candidate.transfer_to(new_character, force_key_move = TRUE)
 	candidate.add_antag_datum(/datum/antagonist/ninja)
+	candidate.current.forceMove(find_space_spawn())
 
 /datum/dynamic_ruleset/midround/from_ghosts/spiders
 	name = "Spiders"
@@ -357,9 +409,11 @@
 
 	return num_station_corpses > required_station_corpses
 
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/create_ruleset_body()
+	return new /mob/living/basic/revenant(pick(get_revenant_spawns()))
+
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/assign_role(datum/mind/candidate)
-	var/mob/living/basic/revenant/revenant = new(pick(get_revenant_spawns()))
-	candidate.transfer_to(revenant, force_key_move = TRUE)
+	return // revenant new() handles everything
 
 /datum/dynamic_ruleset/midround/from_ghosts/revenant/proc/get_revenant_spawns()
 	var/list/spawn_locs = list()
@@ -382,13 +436,13 @@
 	name = "Pirates"
 	config_tag = "Light Pirates"
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	candidate_role = "Pirate"
 	jobban_flag = ROLE_TRAITOR
 	ruleset_flags = RULESET_INVADER
 	weight = 3
 	min_pop = 15
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
 	signup_atom_appearance = /obj/item/clothing/head/costume/pirate
-	candidate_role = "Space Pirates"
 
 /datum/dynamic_ruleset/midround/from_ghosts/pirates/can_be_selected(population_size, list/antag_candidates)
 	return ..() && !SSmapping.is_planetary() && length(pirate_pool()) > 0
@@ -418,6 +472,7 @@
 	config_tag = "Midround Changeling"
 	preview_antag_datum = /datum/antagonist/changeling/space
 	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	candidate_role = "Changeling"
 	pref_flag = ROLE_CHANGELING_MIDROUND
 	jobban_flag = ROLE_CHANGELING
 	ruleset_flags = RULESET_INVADER
@@ -425,6 +480,9 @@
 	min_pop = 15
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/meteor/meaty/changeling
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_changeling/create_ruleset_body()
+	return // handled by generate_changeling_meteor() entirely
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_changeling/assign_role(datum/mind/candidate)
 	generate_changeling_meteor(candidate)
@@ -443,6 +501,9 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/can_be_selected(population_size, list/antag_candidates)
 	return ..() && !isnull(find_clone()) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_ruleset_body()
+	return // handled by assign_role() entirely
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/assign_role(datum/mind/candidate)
 	var/mob/living/carbon/human/good_version = find_clone()
@@ -487,12 +548,10 @@
 	return ..() && !SSmapping.is_planetary() && !isnull(find_space_spawn())
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/assign_role(datum/mind/candidate)
-	var/mob/living/carbon/human/new_character = make_human(candidate.current, find_space_spawn())
-	candidate.transfer_to(new_character, force_key_move = TRUE)
 	candidate.add_antag_datum(/datum/antagonist/voidwalker)
 	candidate.current.set_species(/datum/species/voidwalker)
-
-	playsound(new_character, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	candidate.current.forceMove(find_space_spawn())
+	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
 
 /datum/dynamic_ruleset/midround/from_living
 	min_antag_cap = 1

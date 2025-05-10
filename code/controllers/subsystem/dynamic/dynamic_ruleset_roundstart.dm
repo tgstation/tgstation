@@ -101,8 +101,7 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 
 /datum/dynamic_ruleset/roundstart/wizard/assign_role(datum/mind/candidate)
-	var/datum/antagonist/wizard/wiz = candidate.add_antag_datum(/datum/antagonist/wizard)
-	wiz.send_to_lair()
+	candidate.add_antag_datum(/datum/antagonist/wizard) // moves to lair for us
 
 /datum/dynamic_ruleset/roundstart/wizard/round_result()
 	for(var/datum/mind/wiz as anything in selected_minds)

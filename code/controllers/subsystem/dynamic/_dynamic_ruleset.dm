@@ -92,14 +92,14 @@
 		log_dynamic("Erroneous config edit rejected: [nvar]")
 		return FALSE
 	var/static/list/locked_config_values = list(
-		NAMEOF(src, config_tag),
-		NAMEOF(src, jobban_flag),
-		NAMEOF(src, pref_flag),
-		NAMEOF(src, preview_antag_datum),
-		NAMEOF(src, ruleset_flags),
-		NAMEOF(src, ruleset_lazy_templates),
-		NAMEOF(src, selected_minds),
-		NAMEOF(src, vars),
+		NAMEOF_STATIC(src, config_tag),
+		NAMEOF_STATIC(src, jobban_flag),
+		NAMEOF_STATIC(src, pref_flag),
+		NAMEOF_STATIC(src, preview_antag_datum),
+		NAMEOF_STATIC(src, ruleset_flags),
+		NAMEOF_STATIC(src, ruleset_lazy_templates),
+		NAMEOF_STATIC(src, selected_minds),
+		NAMEOF_STATIC(src, vars),
 	)
 
 	if(nvar in locked_config_values)
