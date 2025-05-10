@@ -48,9 +48,9 @@
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
 	keys_held[_key] = world.time
 	var/movement = movement_keys[_key]
-	if(movement)
+	if(movement && !movement_locked)
 		calculate_move_dir()
-		if(!movement_locked && !(next_move_dir_sub & movement))
+		if(!(next_move_dir_sub & movement))
 			next_move_dir_add |= movement
 
 	// Client-level keybindings are ones anyone should be able to do at any time
@@ -94,9 +94,10 @@
 	keys_held -= _key
 
 	var/movement = movement_keys[_key]
-	if(movement)
+	if(movement && !movement_locked)
+		forced_intended_direction &= ~movement
 		calculate_move_dir()
-		if(!movement_locked && !(next_move_dir_add & movement))
+		if(!(next_move_dir_add & movement))
 			next_move_dir_sub |= movement
 
 	// We don't do full key for release, because for mod keys you
@@ -109,3 +110,28 @@
 	mob.focus?.key_up(_key, src)
 	mob.update_mouse_pointer()
 
+
+// These two verbs are necessary for processing the input from the TGUI windows
+// We need them for the correct movement handling when player uses TGUI
+// TGUI windows POTENTIALLY still can cause movement keys stuck issue because of the way they are handled, but let's hope it won't happen
+/client/verb/keyDownTGUI(_key as text)
+	set instant = TRUE
+	set hidden = TRUE
+
+	var/movement = movement_keys[_key]
+	if(movement)
+		forced_intended_direction |= movement
+		return
+
+	keyUp(_key)
+
+/client/verb/keyUpTGUI(_key as text)
+	set instant = TRUE
+	set hidden = TRUE
+
+	var/movement = movement_keys[_key]
+	if(movement)
+		forced_intended_direction &= ~movement
+		return
+
+	keyDown(_key)
