@@ -16242,7 +16242,7 @@
 /area/station/maintenance/port/fore)
 "eAg" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
-/turf/closed/wall,
+/turf/open/floor/plating,
 /area/station/security/prison/toilet)
 "eAh" = (
 /obj/machinery/power/smes,
