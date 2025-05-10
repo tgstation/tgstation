@@ -12308,8 +12308,12 @@
 /area/station/security)
 "euz" = (
 /obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/station/hallway/primary/central/aft)
+/obj/machinery/door/poddoor/preopen{
+	id = "bridge blast";
+	name = "Bridge Blast Door"
+	},
+/turf/open/floor/plating,
+/area/station/command/corporate_showroom)
 "euO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
@@ -96591,7 +96595,7 @@ trB
 saz
 lcD
 gCl
-euz
+tYX
 dDB
 dDB
 dDB
@@ -97058,7 +97062,7 @@ jdJ
 xMk
 jYQ
 hcc
-cuw
+euz
 bBN
 jwi
 qtd
