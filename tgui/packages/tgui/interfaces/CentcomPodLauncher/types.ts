@@ -1,3 +1,5 @@
+import { ComponentProps } from 'react';
+import { Floating } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 export type PodLauncherData = {
@@ -37,7 +39,6 @@ export type PodLauncherData = {
   picking_dropoff_turf: BooleanLike;
   podDesc: string;
   podName: string;
-  renderLighting: BooleanLike;
   rev_delays: Record<string, number>;
   reverse_option_list: Record<string, BooleanLike>;
   shrapnelMagnitude: number;
@@ -64,6 +65,6 @@ export type PodEffect =
       selected?: string;
       soloSelected?: string;
       title: string;
-      tooltipPosition?: string;
+      tooltipPosition?: ComponentProps<typeof Floating>['placement'];
     }
   | { divider: boolean };

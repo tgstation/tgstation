@@ -374,6 +374,8 @@
 	for(var/atom/movable/thing as anything in location)
 		if(thing == src)
 			continue
+		if(thing.invisibility >= INVISIBILITY_ABSTRACT) // Don't smoke landmarks please
+			continue
 		if(location.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(thing, TRAIT_T_RAY_VISIBLE))
 			continue
 		reagents.expose(thing, SMOKE_MACHINE, fraction)

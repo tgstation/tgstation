@@ -19,7 +19,9 @@
 	if(isinhands || !(body_parts_covered & HEAD))
 		return
 	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		. += mutable_appearance('icons/effects/blood.dmi', "maskblood")
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "maskblood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+		. += blood_overlay
 
 /obj/item/clothing/neck/bowtie
 	name = "bow tie"
@@ -523,7 +525,7 @@
 	icon_state = "watcher_wreath"
 	worn_y_offset = 10
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
-	resistance_flags = FIRE_PROOF
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /obj/item/clothing/neck/wreath/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()

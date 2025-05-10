@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(weather)
 	name = "Weather"
 	flags = SS_BACKGROUND
 	dependencies = list(
-		/datum/controller/subsystem/mapping
+		/datum/controller/subsystem/mapping,
 	)
 	wait = 10
 	runlevels = RUNLEVEL_GAME
@@ -17,7 +17,7 @@ SUBSYSTEM_DEF(weather)
 		if(!length(weather_event.subsystem_tasks) || weather_event.stage != MAIN_STAGE)
 			continue
 
-		if(weather_event.currentpart == SSWEATHER_MOBS)
+		if(weather_event.subsystem_tasks[weather_event.task_index] == SSWEATHER_MOBS)
 			if(!resumed)
 				weather_event.current_mobs = GLOB.mob_living_list.Copy()
 			var/list/current_mobs_cache = weather_event.current_mobs // cache for performance
@@ -31,9 +31,9 @@ SUBSYSTEM_DEF(weather)
 				if(MC_TICK_CHECK)
 					return
 			resumed = FALSE
-			weather_event.currentpart = weather_event.subsystem_tasks[WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)]
+			weather_event.task_index = WRAP_UP(weather_event.task_index, weather_event.subsystem_tasks.len)
 
-		if(weather_event.currentpart == SSWEATHER_TURFS)
+		if(weather_event.subsystem_tasks[weather_event.task_index] == SSWEATHER_TURFS)
 			if(!resumed)
 				weather_event.turf_iteration = ROUND_PROB(weather_event.weather_turfs_per_tick)
 			while(weather_event.turf_iteration)
@@ -44,9 +44,9 @@ SUBSYSTEM_DEF(weather)
 				if(MC_TICK_CHECK)
 					return
 			resumed = FALSE
-			weather_event.currentpart = weather_event.subsystem_tasks[WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)]
+			weather_event.task_index = WRAP_UP(weather_event.task_index, weather_event.subsystem_tasks.len)
 
-		if(weather_event.currentpart == SSWEATHER_THUNDER)
+		if(weather_event.subsystem_tasks[weather_event.task_index] == SSWEATHER_THUNDER)
 			if(!resumed)
 				weather_event.thunder_iteration = ROUND_PROB(weather_event.thunder_turfs_per_tick)
 			while(weather_event.thunder_iteration)
@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(weather)
 				if(MC_TICK_CHECK)
 					return
 			resumed = FALSE
-			weather_event.currentpart = weather_event.subsystem_tasks[WRAP_UP(weather_event.currentpart, weather_event.subsystem_tasks.len)]
+			weather_event.task_index = WRAP_UP(weather_event.task_index, weather_event.subsystem_tasks.len)
 
 	// start random weather on relevant levels
 	for(var/z in eligible_zlevels)

@@ -87,7 +87,7 @@ at the cost of risking a vicious bite.**/
 		return
 	to_chat(user, span_warning("You find nothing of value..."))
 
-/obj/structure/moisture_trap/attackby(obj/item/I, mob/user, params)
+/obj/structure/moisture_trap/attackby(obj/item/I, mob/user, list/modifiers)
 	if(iscyborg(user) || isalien(user) || !CanReachInside(user))
 		return ..()
 	add_fingerprint(user)
@@ -131,7 +131,7 @@ at the cost of risking a vicious bite.**/
 	/// Stage of the pants making process
 	var/status = ALTAR_INACTIVE
 
-/obj/structure/destructible/cult/pants_altar/attackby(obj/attacking_item, mob/user, params)
+/obj/structure/destructible/cult/pants_altar/attackby(obj/attacking_item, mob/user, list/modifiers)
 	if(istype(attacking_item, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user) && status)
 		to_chat(user, span_notice("[src] is creating something, you can't move it!"))
 		return

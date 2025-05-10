@@ -153,11 +153,12 @@ function TextHighlightSetting(props) {
         <Stack.Item>
           <ColorBox mr={1} color={highlightColor} />
           <Input
+            expensive
             width="5em"
             monospace
             placeholder="#ffffff"
             value={highlightColor}
-            onInput={(e, value) =>
+            onChange={(value) =>
               dispatch(
                 updateHighlightSetting({
                   id: id,
@@ -169,10 +170,12 @@ function TextHighlightSetting(props) {
         </Stack.Item>
       </Stack>
       <TextArea
+        expensive
+        fluid
         height="3em"
         value={highlightText}
         placeholder="Put words to highlight here. Separate terms with commas, i.e. (term1, term2, term3)"
-        onChange={(e, value) =>
+        onChange={(value) =>
           dispatch(
             updateHighlightSetting({
               id: id,

@@ -99,7 +99,7 @@
  */
 /datum/action/cooldown/mob_cooldown/riot/proc/riot()
 	var/uplifted_mice = FALSE
-	for (var/mob/living/basic/mouse/nearby_mouse in oview(owner, range))
+	for(var/mob/living/basic/mouse/nearby_mouse in oview(owner, range))
 		uplifted_mice = convert_mouse(nearby_mouse) || uplifted_mice
 	if (uplifted_mice)
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
@@ -118,6 +118,13 @@
 		uplifted_frog = convert_frog(nearby_frog, converted_check_list) || uplifted_frog
 	if (uplifted_frog)
 		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into trash frogs!"))
+		return
+
+	var/uplifted_snail = FALSE
+	for(var/mob/living/basic/snail/nearby_snail in oview(owner, range))
+		uplifted_snail = convert_snail(nearby_snail, converted_check_list) || uplifted_snail
+	if(uplifted_snail)
+		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into death snails!"))
 		return
 
 	var/rat_cap = CONFIG_GET(number/ratcap)
@@ -208,6 +215,27 @@
 	nearby_frog.ai_controller = new /datum/ai_controller/basic_controller/frog/trash(nearby_frog)
 	var/crazy_frog_desc = " ...[findtext(nearby_frog.name, "rare") ? "even though" : "perhaps because"] they live in a trash bag."
 	make_minion(nearby_frog, crazy_frog_desc, minion_commands)
+	return TRUE
+
+/datum/action/cooldown/mob_cooldown/riot/proc/convert_snail(mob/living/basic/snail/nearby_snail, list/converted_check_list)
+	// No need to convert when not on the same team.
+	if(faction_check(nearby_snail.faction, converted_check_list) || nearby_snail.stat == DEAD)
+		return FALSE
+
+
+	nearby_snail.icon_state = "[nearby_snail.base_icon_state]_maints"
+	nearby_snail.icon_living = "[nearby_snail.base_icon_state]_maints"
+	nearby_snail.icon_dead = "[nearby_snail.base_icon_state]_maints_dead"
+	nearby_snail.maxHealth += 10
+	nearby_snail.health += 10
+	nearby_snail.melee_damage_lower += 5
+	nearby_snail.melee_damage_upper += 8
+	nearby_snail.can_be_held = FALSE
+	nearby_snail.obj_damage += 8
+	nearby_snail.fully_replace_character_name(nearby_snail.name, "trash [nearby_snail.name]")
+	nearby_snail.ai_controller = new /datum/ai_controller/basic_controller/snail/trash(nearby_snail)
+	make_minion(nearby_snail, " ...This one doesn't look as timid.", mouse_commands)
+	nearby_snail.update_appearance()
 	return TRUE
 
 // Command you can give to a mouse to make it kill someone

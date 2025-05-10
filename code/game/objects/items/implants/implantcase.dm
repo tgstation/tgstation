@@ -35,7 +35,7 @@
 	icon_state = "implantcase-[imp ? imp.implant_color : 0]"
 	return ..()
 
-/obj/item/implantcase/attackby(obj/item/used_item, mob/living/user, params)
+/obj/item/implantcase/attackby(obj/item/used_item, mob/living/user, list/modifiers)
 	if(IS_WRITING_UTENSIL(used_item))
 		if(!user.can_write(used_item))
 			return

@@ -80,7 +80,7 @@
 SUBSYSTEM_DEF(spatial_grid)
 	can_fire = FALSE
 	dependencies = list(
-		/datum/controller/subsystem/mapping
+		/datum/controller/subsystem/mapping,
 	)
 	name = "Spatial Grid"
 

@@ -4,7 +4,7 @@
 	verb_ask = "queries"
 	verb_exclaim = "declares"
 	verb_yell = "alarms"
-	initial_language_holder = /datum/language_holder/synthetic
+	initial_language_holder = /datum/language_holder/synthetic/silicon
 	bubble_icon = "machine"
 	mob_biotypes = MOB_ROBOTIC
 	death_sound = 'sound/mobs/non-humanoids/cyborg/borg_deathsound.ogg'
@@ -93,6 +93,16 @@
 	QDEL_NULL(modularInterface)
 	GLOB.silicon_mobs -= src
 	return ..()
+
+///Sets cyborg gender from preferences. Expects a client.
+/mob/living/silicon/proc/set_gender(client/player_client)
+	var/silicon_pronouns = player_client.prefs.read_preference(/datum/preference/choiced/silicon_gender)
+	if(silicon_pronouns == /datum/preference/choiced/silicon_gender::use_character_gender)
+		gender = player_client.prefs.read_preference(/datum/preference/choiced/gender)
+		return
+	var/silicon_gender = /datum/preference/choiced/silicon_gender::pronouns_to_genders[silicon_pronouns]
+	if(!isnull(silicon_gender))
+		gender = silicon_gender
 
 /mob/living/silicon/proc/on_silicon_shocked(datum/source, shock_damage, shock_source, siemens_coeff, flags)
 	SIGNAL_HANDLER

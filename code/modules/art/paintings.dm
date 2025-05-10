@@ -15,7 +15,7 @@
 	var/obj/item/canvas/painting = null
 
 //Adding canvases
-/obj/structure/easel/attackby(obj/item/I, mob/user, params)
+/obj/structure/easel/attackby(obj/item/I, mob/user, list/modifiers)
 	if(istype(I, /obj/item/canvas))
 		var/obj/item/canvas/canvas = I
 		user.dropItemToGround(canvas)
@@ -135,7 +135,7 @@
 		ui = new(user, src, "Canvas", name)
 		ui.open()
 
-/obj/item/canvas/attackby(obj/item/I, mob/living/user, params)
+/obj/item/canvas/attackby(obj/item/I, mob/living/user, list/modifiers)
 	if(!user.combat_mode)
 		ui_interact(user)
 	else
@@ -214,7 +214,6 @@
 			var/obj/item/painting_implement = user.get_active_held_item()
 			if(!painting_implement)
 				return FALSE
-			to_chat(world, "hello")
 			var/x = text2num(params["x"])
 			var/y = text2num(params["y"])
 			painting_implement.set_painting_tool_color(grid[x][y])
@@ -717,7 +716,7 @@
 	. = ..()
 	SSpersistent_paintings.painting_frames -= src
 
-/obj/structure/sign/painting/attackby(obj/item/I, mob/user, params)
+/obj/structure/sign/painting/attackby(obj/item/I, mob/user, list/modifiers)
 	if(!current_canvas && istype(I, /obj/item/canvas))
 		frame_canvas(user,I)
 	else if(current_canvas && current_canvas.painting_metadata.title == initial(current_canvas.painting_metadata.title) && istype(I,/obj/item/pen))

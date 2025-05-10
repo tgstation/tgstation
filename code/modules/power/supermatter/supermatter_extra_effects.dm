@@ -137,13 +137,13 @@
 				supermatter_zap(src, range = range, zap_str = discharged_energy, zap_flags = flags, zap_cutoff = src.zap_cutoff, power_level = internal_energy, zap_icon = src.zap_icon)
 		last_high_energy_accumulation_perspective_machines = SSmachines.times_fired
 	if(prob(5))
-		supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
+		supermatter_anomaly_gen(get_ranged_target_turf(src, pick(GLOB.cardinals), rand(5, 10)), FLUX_ANOMALY, 3)
 	if(prob(5))
-		supermatter_anomaly_gen(src, HALLUCINATION_ANOMALY, rand(5, 10))
+		supermatter_anomaly_gen(get_ranged_target_turf(src, pick(GLOB.cardinals), rand(5, 10)), HALLUCINATION_ANOMALY, 3)
 	if(internal_energy > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
-		supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, rand(5, 10))
+		supermatter_anomaly_gen(get_ranged_target_turf(src, pick(GLOB.cardinals), rand(5, 10)), GRAVITATIONAL_ANOMALY, 3)
 	if((internal_energy > SEVERE_POWER_PENALTY_THRESHOLD && prob(2)) || (prob(0.3) && internal_energy > POWER_PENALTY_THRESHOLD))
-		supermatter_anomaly_gen(src, PYRO_ANOMALY, rand(5, 10))
+		supermatter_anomaly_gen(get_ranged_target_turf(src, pick(GLOB.cardinals), rand(5, 10)), PYRO_ANOMALY, 3)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 3)
 	playsound(center, 'sound/items/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
@@ -166,17 +166,19 @@
 	switch(type)
 		if(FLUX_ANOMALY)
 			var/explosive = has_changed_lifespan ? FLUX_NO_EXPLOSION : FLUX_LOW_EXPLOSIVE
-			new /obj/effect/anomaly/flux(local_turf, has_changed_lifespan ? rand(250, 350) : null, FALSE, explosive)
+			new /obj/effect/anomaly/flux(local_turf, has_changed_lifespan ? rand(25 SECONDS, 35 SECONDS) : null, FALSE, explosive)
 		if(GRAVITATIONAL_ANOMALY)
-			new /obj/effect/anomaly/grav(local_turf, has_changed_lifespan ? rand(200, 300) : null, FALSE)
+			new /obj/effect/anomaly/grav(local_turf, has_changed_lifespan ? rand(20 SECONDS, 30 SECONDS) : null, FALSE)
 		if(PYRO_ANOMALY)
-			new /obj/effect/anomaly/pyro(local_turf, has_changed_lifespan ? rand(150, 250) : null, FALSE)
+			new /obj/effect/anomaly/pyro(local_turf, has_changed_lifespan ? rand(15 SECONDS, 25 SECONDS) : null, FALSE)
 		if(HALLUCINATION_ANOMALY)
-			new /obj/effect/anomaly/hallucination(local_turf, has_changed_lifespan ? rand(150, 250) : null, FALSE)
+			new /obj/effect/anomaly/hallucination(local_turf, has_changed_lifespan ? rand(15 SECONDS, 25 SECONDS) : null, FALSE)
 		if(VORTEX_ANOMALY)
-			new /obj/effect/anomaly/bhole(local_turf, 20, FALSE)
+			new /obj/effect/anomaly/bhole(local_turf, 2 SECONDS, FALSE)
 		if(BIOSCRAMBLER_ANOMALY)
 			new /obj/effect/anomaly/bioscrambler/docile(local_turf, null, FALSE)
+		if(DIMENSIONAL_ANOMALY)
+			new /obj/effect/anomaly/dimensional(local_turf, null, FALSE)
 
 #undef CHANCE_EQUATION_SLOPE
 #undef INTEGRITY_EXPONENTIAL_DEGREE

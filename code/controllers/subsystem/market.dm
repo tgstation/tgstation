@@ -2,7 +2,7 @@ SUBSYSTEM_DEF(market)
 	name = "Market"
 	flags = SS_BACKGROUND
 	dependencies = list(
-		/datum/controller/subsystem/atoms
+		/datum/controller/subsystem/atoms,
 	)
 
 	/// Descriptions for each shipping methods.

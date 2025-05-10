@@ -150,7 +150,7 @@
 
 	AddComponent(/datum/component/bloody_spreader,\
 		blood_left = INFINITY,\
-		blood_dna = list("meaty DNA" = "MT-"),\
+		blood_dna = list("meaty DNA" = get_blood_type(BLOOD_TYPE_MEAT)),\
 		diseases = null,\
 	)
 

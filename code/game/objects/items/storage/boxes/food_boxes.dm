@@ -7,14 +7,11 @@
 	illustration = null
 	/// What type of donk pocket are we gonna cram into this box?
 	var/donktype = /obj/item/food/donkpocket
+	storage_type = /datum/storage/box/donk_pockets
 
 /obj/item/storage/box/donkpockets/PopulateContents()
 	for(var/i in 1 to 6)
 		new donktype(src)
-
-/obj/item/storage/box/donkpockets/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/food/donkpocket)
 
 /obj/item/storage/box/donkpockets/donkpocketspicy
 	name = "box of spicy-flavoured donk-pockets"
@@ -340,19 +337,38 @@
 	illustration = null
 	foldable_result = null
 	custom_price = PAYCHECK_CREW
+	storage_type = /datum/storage/box/gum
 
 	///Typepath of the type of gum that spawns with this box, this is passed to the wrapper for spawning in.
 	var/spawning_gum_type = /obj/item/food/bubblegum
 
-/obj/item/storage/box/gum/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/storage/bubblegum_wrapper)
-	atom_storage.max_slots = 4
-	atom_storage.allow_big_nesting = TRUE
-
 /obj/item/storage/box/gum/PopulateContents()
 	for(var/i in 1 to 4)
 		new /obj/item/storage/bubblegum_wrapper(src, spawning_gum_type)
+
+/obj/item/storage/box/gum/wake_up
+	name = "\improper Activin 12 Hour medicated gum packet"
+	desc = "Stay awake during long shifts in the maintenance tunnels with Activin! The approval seal of the Mothic Nomad Fleet \
+		is emblazoned on the packaging, alongside a litany of health and safety disclaimers in both Mothic and Galactic Common."
+	icon_state = "bubblegum_wake_up"
+	custom_premium_price = PAYCHECK_CREW * 1.5
+
+/obj/item/storage/box/gum/wake_up/examine_more(mob/user)
+	. = ..()
+	. += span_notice("<i>You read some of the health and safety information...</i>")
+	. += "\t[span_info("For the relief of tiredness and drowsiness while working.")]"
+	. += "\t[span_info("Do not chew more than one strip every 12 hours. Do not use as a complete substitute for sleep.")]"
+	. += "\t[span_info("Do not give to children under 16. Do not exceed the maximum dosage. Do not ingest. Do not take for more than 3 days consecutively. Do not take in conjunction with other medication. May cause adverse reactions in patients with pre-existing heart conditions.")]"
+	. += "\t[span_info("Side effects of Activin use may include twitchy antennae, overactive wings, loss of keratin sheen, loss of setae coverage, arrythmia, blurred vision, and euphoria. Cease taking the medication if side effects occur.")]"
+	. += "\t[span_info("Repeated use may cause addiction.")]"
+	. += "\t[span_info("If the maximum dosage is exceeded, inform a member of your assigned vessel's medical staff immediately. Do not induce vomiting.")]"
+	. += "\t[span_info("Ingredients: each strip contains 500mg of Activin (dextro-methamphetamine). Other ingredients include Green Dye 450 (Verdant Meadow) and artificial herb flavouring.")]"
+	. += "\t[span_info("Storage: keep in a cool dry place. Do not use after the use-by date: 32/4/350.")]"
+	return .
+
+/obj/item/storage/box/gum/wake_up/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/food/bubblegum/wake_up(src)
 
 /obj/item/storage/bubblegum_wrapper
 	name = "bubblegum wrapper"
@@ -559,14 +575,10 @@
 	desc = "A bag containing fresh, dry coffee arabica beans. Ethically sourced and packaged by Waffle Corp."
 	illustration = null
 	icon = 'icons/obj/food/containers.dmi'
+	storage_type = /datum/storage/box/coffee
 	var/beantype = /obj/item/food/grown/coffee
 
-/obj/item/storage/box/coffeepack/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/food/grown/coffee)
-
 /obj/item/storage/box/coffeepack/PopulateContents()
-	atom_storage.max_slots = 5
 	for(var/i in 1 to 5)
 		var/obj/item/food/grown/coffee/bean = new beantype(src)
 		ADD_TRAIT(bean, TRAIT_DRIED, ELEMENT_TRAIT(type))

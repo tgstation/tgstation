@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Fixed accessories getting slowly but surely offset further down-right each time you attached them to an outfit."
