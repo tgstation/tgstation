@@ -17,7 +17,7 @@
 
 /datum/map_template/ruin/icemoon/underground/doppler/blood_drunk_miner
 	name = "Ice-Ruin Blood-Drunk Miner"
-	description = "A strange oily sigil inside, and an insane, beastly miner standing over a the corpse of a companion."
+	description = "A strange cavern, and an insane beastly miner standing inside."
 	suffix = "icemoon_underground_blooddrunk1.dmm"
 	allow_duplicates = FALSE //will only spawn one variant of the ruin
 	cost = 0
