@@ -35,6 +35,14 @@ CREATE TABLE `manifest` (
 ```
 
 -----------------------------------------------------
+Version 5.30, 1 May 2025, by Rengan
+Adds `crime_desc` field to the `citation` table to save the description of the crime.
+
+```sql
+ALTER TABLE `citation`
+ADD COLUMN `crime_desc` TEXT NULL DEFAULT NULL AFTER `crime`;
+```
+-----------------------------------------------------
 Version 5.29, 4 February 2024, by Tiviplus
 Fixed admin rank table flags being capped at 16 in the DB instead of 24 (byond max)
 

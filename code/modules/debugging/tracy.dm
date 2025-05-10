@@ -39,6 +39,7 @@ GLOBAL_REAL(Tracy, /datum/tracy)
 	if(length(init_result) != 0 && init_result[1] == ".") // if first character is ., then it returned the output filename
 		SEND_TEXT(world.log, "byond-tracy initialized (logfile: [init_result])")
 		enabled = TRUE
+		trace_path = init_result
 		return TRUE
 	else if(init_result == "already initialized") // not gonna question it.
 		enabled = TRUE

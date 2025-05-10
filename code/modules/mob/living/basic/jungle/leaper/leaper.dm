@@ -25,7 +25,7 @@
 
 	attack_sound = 'sound/items/weapons/bladeslice.ogg'
 	attack_vis_effect = ATTACK_EFFECT_SLASH
-	status_flags = NONE
+	status_flags = CANSTUN
 	lighting_cutoff_red = 5
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 25
