@@ -122,6 +122,19 @@ Similar to [banned_neighbors](#banned_neighbors), you can specify a regular expr
       allow: { pattern: '^[A-Z].*$' }
 ```
 
+### `ignore`
+If you want to exclude other objects from `banned_neighbors`, you can specify `ignore`.
+
+This is just a list of types that will get skipped. This lint will skip banning the kitten bowl subtypes from being on the same tile as a dog bowl.
+
+```yml
+/obj/bowl/dog:
+  banned_neighbors:
+    - /obj/bowl/cat
+  ignore:
+		- /obj/bowl/cat/kitten
+```
+
 ### `help`
 If you want a custom message to go with your lint, you can specify "help" in the root.
 
