@@ -261,3 +261,8 @@
 #define PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM 6
 /// How much radiation in consumed amount does a nuclear particle take from radiation when proto-nitrate breaks down BZ.
 #define PN_BZASE_NUCLEAR_PARTICLE_RADIATION_ENERGY_CONVERSION 2.5
+
+// Electrolysis:
+// Electrolysis arguments:
+/// Supermatter power argument.
+#define ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER "electrolyzer_supermatter_power"

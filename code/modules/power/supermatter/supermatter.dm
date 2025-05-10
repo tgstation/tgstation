@@ -1050,8 +1050,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//This gotdamn variable is a boomer and keeps giving me problems
 	var/turf/target_turf = get_turf(target)
 	var/pressure = 1
+	// Calculate pressure and do electrolysis.
 	if(target_turf?.return_air())
-		pressure = max(1,target_turf.return_air().return_pressure())
+		var/datum/gas_mixture/air_mixture = target_turf.return_air()
+		pressure = max(1, air_mixture.return_pressure())
+		air_mixture.electrolyze(working_power = zap_str / 200, electrolyzer_args = list(ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER = power_level))
+		target_turf.air_update_turf()
 	//We get our range with the strength of the zap and the pressure, the higher the former and the lower the latter the better
 	var/new_range = clamp(zap_str / pressure * 10, 2, 7)
 	var/zap_count = 1
