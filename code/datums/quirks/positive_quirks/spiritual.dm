@@ -16,5 +16,5 @@
 	)
 
 /datum/quirk/item_quirk/spiritual/add_unique(client/client_source)
-	give_item_to_holder(/obj/item/storage/fancy/candle_box, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
-	give_item_to_holder(/obj/item/storage/box/matches, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(/obj/item/storage/fancy/candle_box, list(LOCATION_BACKPACK, LOCATION_HANDS))
+	give_item_to_holder(/obj/item/storage/box/matches, list(LOCATION_BACKPACK, LOCATION_HANDS))

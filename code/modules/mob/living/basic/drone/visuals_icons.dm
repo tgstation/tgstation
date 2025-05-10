@@ -18,7 +18,7 @@
 		update_worn_mask()
 	if(slot_flags & ITEM_SLOT_HANDS)
 		update_held_items()
-	if(slot_flags & (ITEM_SLOT_HANDS|ITEM_SLOT_BACKPACK|ITEM_SLOT_DEX_STORAGE))
+	if(slot_flags & (ITEM_SLOT_HANDS|ITEM_SLOT_DEX_STORAGE))
 		update_inv_internal_storage()
 
 /mob/living/basic/drone/proc/update_inv_internal_storage()

@@ -17,9 +17,9 @@
 /datum/quirk/item_quirk/scarred_eye/add_unique(client/client_source)
 	if (client_source?.prefs.read_preference(/datum/preference/choiced/scarred_eye) == "Double")
 		give_item_to_holder(new /obj/item/clothing/glasses/blindfold/white(get_turf(quirk_holder)), list(
-			LOCATION_EYES = ITEM_SLOT_EYES,
-			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-			LOCATION_HANDS = ITEM_SLOT_HANDS,
+			LOCATION_EYES,
+			LOCATION_BACKPACK,
+			LOCATION_HANDS,
 		))
 		return
 
@@ -28,9 +28,9 @@
 	if (human_holder.get_eye_scars() & LEFT_EYE_SCAR)
 		eyepatch.flip_eyepatch()
 	give_item_to_holder(eyepatch, list(
-		LOCATION_EYES = ITEM_SLOT_EYES,
-		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-		LOCATION_HANDS = ITEM_SLOT_HANDS,
+		LOCATION_EYES,
+		LOCATION_BACKPACK,
+		LOCATION_HANDS,
 	))
 
 /datum/quirk/item_quirk/scarred_eye/add(client/client_source)

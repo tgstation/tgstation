@@ -62,9 +62,6 @@
 	if(looking_for == back)
 		return ITEM_SLOT_BACK
 
-	if(back && (looking_for in back))
-		return ITEM_SLOT_BACKPACK
-
 	if(looking_for == wear_mask)
 		return ITEM_SLOT_MASK
 
@@ -98,7 +95,6 @@
 		ITEM_SLOT_BACK,
 		ITEM_SLOT_NECK,
 		ITEM_SLOT_HANDS,
-		ITEM_SLOT_BACKPACK,
 		ITEM_SLOT_SUITSTORE,
 		ITEM_SLOT_HANDCUFFED,
 		ITEM_SLOT_LEGCUFFED,
@@ -116,9 +112,27 @@
 	return visible_items
 
 /mob/living/carbon/proc/equip_in_one_of_slots(obj/item/equipping, list/slots, qdel_on_fail = TRUE, indirect_action = FALSE)
+	var/static/list/equip_slots = list(
+		LOCATION_LPOCKET,
+		LOCATION_RPOCKET,
+		LOCATION_HANDS,
+		LOCATION_GLOVES,
+		LOCATION_EYES,
+		LOCATION_HEAD,
+		LOCATION_NECK,
+		LOCATION_ID,
+	)
+	var/static/list/storage_slots = list(
+		LOCATION_BACKPACK,
+	)
+
 	for(var/slot in slots)
-		if(equip_to_slot_if_possible(equipping, slots[slot], disable_warning = TRUE, indirect_action = indirect_action))
-			return slot
+		if(equip_slots[slot])
+			if(equip_to_slot_if_possible(equipping, equip_slots[slot], disable_warning = TRUE, indirect_action = indirect_action))
+				return slot
+		else if (storage_slots[slot])
+			if(equip_to_storage(equipping, storage_slots[slot], indirect_action = indirect_action))
+				return slot
 	if(qdel_on_fail)
 		qdel(equipping)
 	return null
@@ -127,6 +141,7 @@
 /mob/living/carbon/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
 	if(!slot)
 		return
+
 	if(!istype(equipping))
 		return
 
@@ -140,10 +155,12 @@
 	equipping.screen_loc = null
 	if(client)
 		client.screen -= equipping
+
 	if(observers?.len)
 		for(var/mob/dead/observe as anything in observers)
 			if(observe.client)
 				observe.client.screen -= equipping
+
 	equipping.forceMove(src)
 	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
 	equipping.appearance_flags |= NO_CLIENT_COLOR
@@ -164,7 +181,6 @@
 			if(head)
 				return
 			head = equipping
-			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_HAT, equipping)
 			update_worn_head()
 		if(ITEM_SLOT_NECK)
 			if(wear_neck)
@@ -180,9 +196,6 @@
 		if(ITEM_SLOT_HANDS)
 			put_in_hands(equipping)
 			update_held_items()
-		if(ITEM_SLOT_BACKPACK)
-			if(!back || !back.atom_storage?.attempt_insert(equipping, src, override = TRUE, force = indirect_action ? STORAGE_SOFT_LOCKED : STORAGE_NOT_LOCKED))
-				not_handled = TRUE
 		else
 			not_handled = TRUE
 
@@ -191,16 +204,15 @@
 	//in a slot (handled further down inheritance chain, probably living/carbon/human/equip_to_slot
 	if(!not_handled)
 		has_equipped(equipping, slot, initial)
-		hud_used?.update_locked_slots()
 
 	return not_handled
 
+/mob/living/carbon/has_equipped(obj/item/item, slot, initial)
+	. = ..()
+	hud_used?.update_locked_slots()
+
 /mob/living/carbon/get_equipped_speed_mod_items()
 	return ..() + get_equipped_items()
-
-/// This proc is called after an item has been successfully handled and equipped to a slot.
-/mob/living/carbon/proc/has_equipped(obj/item/item, slot, initial = FALSE)
-	return item.on_equipped(src, slot, initial)
 
 /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //Sets the default return value to what the parent returns.
@@ -210,7 +222,6 @@
 	var/not_handled = FALSE //if we actually unequipped an item, this is because we dont want to run this proc twice, once for carbons and once for humans
 	if(I == head)
 		head = null
-		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_HAT, I, force, newloc, no_move, invdrop, silent)
 		if(!QDELETED(src))
 			update_worn_head()
 	else if(I == back)
@@ -522,13 +533,15 @@
 /// in their hands would be a dead giveaway that they are an antagonist.
 /// Returns the human readable name of where it placed the item, or null otherwise.
 /mob/living/carbon/proc/equip_conspicuous_item(obj/item/item, delete_item_if_failed = TRUE)
-	var/list/slots = list (
-		"backpack" = ITEM_SLOT_BACKPACK,
+	var/static/list/pockets = list(
 		"left pocket" = ITEM_SLOT_LPOCKET,
 		"right pocket" = ITEM_SLOT_RPOCKET
 	)
 
-	var/placed_in = equip_in_one_of_slots(item, slots, indirect_action = TRUE)
+	var/placed_in = equip_in_one_of_slots(item, pockets, indirect_action = TRUE)
+
+	if (!placed_in)
+		placed_in = equip_to_storage(item, ITEM_SLOT_BACK, indirect_action = TRUE)
 
 	if (isnull(placed_in) && delete_item_if_failed)
 		qdel(item)

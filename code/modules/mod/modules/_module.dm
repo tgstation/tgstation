@@ -292,9 +292,6 @@
 /obj/item/mod/module/proc/on_uninstall(deleting = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if (deleting)
-		return
-
 	if (mask_worn_overlay)
 		for (var/obj/item/part as anything in mod.get_parts(all = TRUE))
 			UnregisterSignal(part, COMSIG_ITEM_GET_SEPARATE_WORN_OVERLAYS)
