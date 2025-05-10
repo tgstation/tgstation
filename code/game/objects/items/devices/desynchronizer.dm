@@ -99,3 +99,8 @@
 
 /obj/effect/abstract/sync_holder/AllowDrop()
 	return TRUE //no dropping spaghetti out of your spacetime pocket
+
+/obj/item/desynchronizer/syndie
+	name = "expirimental desynchronizer"
+	desc = "An experimental device that can temporarily desynchronize the user from spacetime, effectively making them disappear while it's active."
+	max_duration = 30 SECONDS

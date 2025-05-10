@@ -238,6 +238,12 @@
 	item = /obj/item/grenade/hypnotic
 	cost = 12
 
+/datum/uplink_item/device_tools/desynchronizer
+	name = "Expirimental Desynchronizer"
+	desc = "An experimental device that can temporarily desynchronize the user from spacetime upto 30 seconds, effectively making them disappear while it's active, The cooldown is double the time spent while desynchronized"
+	item = /obj/item/desynchronizer/syndie
+	cost = 6
+
 /datum/uplink_item/device_tools/singularity_beacon
 	name = "Power Beacon"
 	desc = "When screwed to wiring attached to an electric grid and activated, this large device pulls any \
