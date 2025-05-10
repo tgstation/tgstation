@@ -1,8 +1,9 @@
 /obj/effect/spawner/structure:
   banned_neighbors:
-    - /obj/effect/spawner/structure
-    - /obj/structure
-    - /turf/closed
+    /obj/structure:
+    /turf/closed:
+    STRUCTURE_SPAWNER:
+      pattern: ^/obj/effect/spawner/structure/(?!.*/directional).*$
   ignore:
     - /obj/structure/cable
     - /obj/structure/transit_tube
@@ -11,3 +12,4 @@
     - /obj/structure/sign
     - /obj/structure/barricade
     - /obj/structure/curtain
+    - /obj/structure/structure/electrified_grille
