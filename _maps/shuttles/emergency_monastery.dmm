@@ -46,10 +46,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"aR" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/shuttle/escape)
 "bb" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -4594,7 +4590,7 @@ JG
 qA
 zE
 Ho
-ib
+Ho
 ib
 Ho
 Ho
@@ -5480,7 +5476,7 @@ JG
 (22,1,1) = {"
 zE
 zE
-aR
+zE
 LK
 LK
 LK
