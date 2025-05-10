@@ -79,7 +79,6 @@ function GraphNode(props: GraphNodeProps) {
               style={{
                 width: '100%',
                 height: '100%',
-                position: 'absolute',
               }}
               viewBox="0, 0, 100, 100"
             >
@@ -110,7 +109,6 @@ function GraphNode(props: GraphNodeProps) {
               style={{
                 width: '100%',
                 height: '100%',
-                position: 'absolute',
               }}
               viewBox="0, 0, 100, 100"
             >
@@ -213,7 +211,9 @@ export function MCDependencyDebug(props) {
     const subsystemLayer: SubsystemLayer = {};
     for (let i = 0; i < subsystemsGraph.length; i++) {
       const subsystem = subsystemsGraph[i];
-      evaluateSubsystemLayer(subsystem, 1, subsystemLayer);
+      if (subsystem.dependents.length === 0) {
+        evaluateSubsystemLayer(subsystem, 1, subsystemLayer);
+      }
     }
     return subsystemLayer;
   }, [subsystems]);

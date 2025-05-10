@@ -210,7 +210,7 @@
 	name = "Lighting plate"
 	documentation = "Anything on this plane will be <b>multiplied</b> with the plane it's rendered onto (typically the game plane).\
 		<br>That's how lighting functions at base. Because it uses BLEND_MULTIPLY and occasionally color matrixes, it needs a backdrop of blackness.\
-		<br>See <a href=\"https://secure.byond.com/forum/?post=2141928\">This byond post</a>\
+		<br>See <a href=\"https://secure.byond.com/forum/?post=2141928\">this byond post</a>\
 		<br>Lemme see uh, we're masked by the emissive plane so it can actually function (IE: make things glow in the dark).\
 		<br>We're also masked by the overlay lighting plane, which contains all the well overlay lights in the game. It draws to us and also the game plane.\
 		<br>Masks us out so it has the breathing room to apply its effect.\
