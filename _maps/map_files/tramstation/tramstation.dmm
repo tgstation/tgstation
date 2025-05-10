@@ -54775,6 +54775,18 @@
 "soq" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/science)
+"soD" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_y = 14;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/science/robotics/lab)
 "spk" = (
 /obj/machinery/power/terminal{
 	dir = 1
@@ -179320,7 +179332,7 @@ xgO
 muZ
 dzu
 doK
-uJH
+soD
 psa
 eQY
 nns

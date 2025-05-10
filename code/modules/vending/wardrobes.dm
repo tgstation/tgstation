@@ -278,6 +278,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/science_wardrobe
 	payment_department = ACCOUNT_SCI
+
 /obj/item/vending_refill/wardrobe/science_wardrobe
 	machine_name = "SciDrobe"
 
