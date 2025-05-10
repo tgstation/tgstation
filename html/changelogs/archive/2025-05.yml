@@ -240,3 +240,26 @@
   necromanceranne:
   - bugfix: Caps how much eyeblur can be caused by things like projectiles.
   - bugfix: The tesla cannon now fires actually visible bolts.
+2025-05-10:
+  00-Steven:
+  - bugfix: NTos file manager program actually shows the program names, instead of
+      the
+  - qol: Egg boxes can hold chocolate eggs, boiled eggs, and surprise eggs
+  Jacquerel:
+  - balance: The negative effects of a mansus-corrupted liver can be suppressed with
+      holy water, like the other corrupt organs.
+  L1nd:
+  - balance: spiders can't wrap megafauna
+  - bugfix: nonhuman spider cocoons looks accordingly
+  Maximal08:
+  - bugfix: Fixing the arrow display when using the multitool
+  SmArtKar:
+  - bugfix: Fixed explorer masks going invisible when you put on a goliath hood
+  - qol: Improved
+  rageguy505:
+  - bugfix: carpenter and claw hammer can now test for brain health.
+  throwawayuseless:
+  - rscadd: Robotic voiceboxes now grant Encoded Audio Language. Techpriests and circuit
+      nerds, rejoice!
+  - rscadd: Revolutionaries are now weakened by grenadine. Because the pomegranate
+      antioxidants stop free radicals.
