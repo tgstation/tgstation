@@ -109,6 +109,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	fire = 70
 	acid = 60
 
+/obj/structure/closet/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, welded)
+	. += NAMEOF(src, opened)
+	. += NAMEOF(src, locked)
+	. += NAMEOF(src, anchorable)
+	return .
+
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
 

@@ -49,6 +49,14 @@
 	if(!terminal)
 		. += span_warning("This [src] has no power terminal!")
 
+/obj/machinery/power/smes/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, charge)
+	. += NAMEOF(src, capacity)
+	. += NAMEOF(src, input_level)
+	. += NAMEOF(src, output_level)
+	return .
+
 /obj/machinery/power/smes/Initialize(mapload)
 	. = ..()
 	dir_loop:

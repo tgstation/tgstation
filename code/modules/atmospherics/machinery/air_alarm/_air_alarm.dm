@@ -87,6 +87,9 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	fire = 90
 	acid = 30
 
+/obj/machinery/airalarm/get_save_vars()
+	return ..() - NAMEOF(src, name)
+
 /obj/machinery/airalarm/Initialize(mapload, ndir, nbuild)
 	. = ..()
 	set_wires(new /datum/wires/airalarm(src))

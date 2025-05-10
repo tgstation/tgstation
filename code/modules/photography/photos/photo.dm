@@ -15,6 +15,9 @@
 	var/datum/picture/picture
 	var/scribble //Scribble on the back.
 
+/obj/item/photo/get_save_vars()
+	return ..() - NAMEOF(src, icon)
+
 /obj/item/photo/Initialize(mapload, datum/picture/P, datum_name = TRUE, datum_desc = TRUE)
 	set_picture(P, datum_name, datum_desc, TRUE)
 	//Photos are quite rarer than papers, so they're more likely to be added to the queue to make things even.
