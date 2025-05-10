@@ -3298,7 +3298,7 @@
 /area/virtual_domain)
 "Pq" = (
 /obj/structure/table/bronze,
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/condiment/coconut_milk{

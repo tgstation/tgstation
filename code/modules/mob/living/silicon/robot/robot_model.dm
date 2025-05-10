@@ -823,7 +823,7 @@
 		/obj/item/borg/lollipop,
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
 		/obj/item/chisel,
-		/obj/item/reagent_containers/cup/rag,
+		/obj/item/rag,
 		/obj/item/storage/bag/money,
 	)
 	radio_channels = list(RADIO_CHANNEL_SERVICE)

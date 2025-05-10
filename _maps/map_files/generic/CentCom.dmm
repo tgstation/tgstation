@@ -1572,10 +1572,6 @@
 /obj/machinery/griddle,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
-"hx" = (
-/obj/machinery/photocopier/prebuilt,
-/turf/open/floor/iron/grimy,
-/area/centcom/central_command_areas/briefing)
 "hz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -2656,6 +2652,33 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/evacuation/ship)
+"mh" = (
+/obj/machinery/photocopier/prebuilt,
+/obj/machinery/button/door/indestructible{
+	id = "CCsec3";
+	name = "CC Shutter 3 Control";
+	pixel_y = 24
+	},
+/obj/machinery/button/door/indestructible{
+	id = "CCcustoms2";
+	name = "CC Shutter 2 Control";
+	pixel_x = 9;
+	pixel_y = 32
+	},
+/obj/machinery/button/door/indestructible{
+	id = "CCsec1";
+	name = "CC Shutter 1 Control";
+	pixel_y = 40
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/button/door/indestructible{
+	id = "CCsec4";
+	name = "CC Shutter 4 Control";
+	pixel_x = -9;
+	pixel_y = 32
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/control)
 "mi" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
@@ -3115,13 +3138,6 @@
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/north,
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/supply)
-"ou" = (
-/obj/machinery/photocopier/prebuilt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "ov" = (
@@ -4531,6 +4547,13 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
+"uC" = (
+/obj/machinery/photocopier/prebuilt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/supply)
 "uE" = (
 /obj/effect/light_emitter/thunderdome,
 /turf/closed/indestructible/fakeglass,
@@ -5453,6 +5476,10 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
+"yF" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron/grimy,
+/area/centcom/central_command_areas/briefing)
 "yH" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/wood{
@@ -7342,33 +7369,6 @@
 /obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
-"HY" = (
-/obj/machinery/photocopier/prebuilt,
-/obj/machinery/button/door/indestructible{
-	id = "CCsec3";
-	name = "CC Shutter 3 Control";
-	pixel_y = 24
-	},
-/obj/machinery/button/door/indestructible{
-	id = "CCcustoms2";
-	name = "CC Shutter 2 Control";
-	pixel_x = 9;
-	pixel_y = 32
-	},
-/obj/machinery/button/door/indestructible{
-	id = "CCsec1";
-	name = "CC Shutter 1 Control";
-	pixel_y = 40
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/button/door/indestructible{
-	id = "CCsec4";
-	name = "CC Shutter 4 Control";
-	pixel_x = -9;
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/control)
 "HZ" = (
 /obj/structure/railing{
 	dir = 6
@@ -9581,16 +9581,6 @@
 /obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/iron/smooth_edge,
 /area/centcom/central_command_areas/evacuation/ship)
-"Tf" = (
-/obj/structure/table/wood,
-/obj/item/book/manual/wiki/barman_recipes,
-/obj/item/reagent_containers/cup/glass/shaker,
-/obj/item/reagent_containers/cup/rag,
-/obj/machinery/newscaster/directional/south,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/dark,
-/area/centcom/tdome/observation)
 "Tg" = (
 /obj/item/storage/briefcase{
 	pixel_x = -3;
@@ -10573,6 +10563,16 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
+"XO" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/barman_recipes,
+/obj/item/reagent_containers/cup/glass/shaker,
+/obj/item/rag,
+/obj/machinery/newscaster/directional/south,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/observation)
 "XQ" = (
 /obj/machinery/computer/crew{
 	dir = 1
@@ -47925,7 +47925,7 @@ wz
 qR
 Rd
 eF
-hx
+yF
 TE
 az
 eF
@@ -52533,7 +52533,7 @@ kj
 kj
 nm
 iF
-ou
+uC
 iR
 oJ
 lo
@@ -53829,7 +53829,7 @@ Za
 tK
 gL
 io
-HY
+mh
 uc
 kl
 xV
@@ -57200,7 +57200,7 @@ JV
 dG
 ym
 TV
-Tf
+XO
 QC
 dj
 Mf

@@ -257,7 +257,7 @@
 /obj/item/reagent_containers/syringe/epinephrine{
 	pixel_x = -4
 	},
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = 3;
 	pixel_y = 12
 	},
