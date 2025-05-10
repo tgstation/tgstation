@@ -35,7 +35,7 @@
 	)
 	rpg_title = "Royal Advisor"
 	allow_bureaucratic_error = FALSE
-	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
+	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS | JOB_ANTAG_PROTECTED
 
 /datum/job/veteran_advisor/get_default_roundstart_spawn_point()
 	for(var/obj/effect/landmark/start/spawn_point as anything in GLOB.start_landmarks_list)

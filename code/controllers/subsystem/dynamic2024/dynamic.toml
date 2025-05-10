@@ -1,4 +1,4 @@
-[Greenshift]
+["Greenshift"]
 name = "Greenshift"
 min_pop = 0
 advisory_report = "Advisory Level: <b>Green Star</b></center><BR>Your sector's advisory level is Green Star. Surveillance information shows no credible threats to Nanotrasen assets within the Spinward Sector at this time. As always, the Department advises maintaining vigilance against potential threats, regardless of a lack of known threats."
@@ -22,7 +22,7 @@ ruleset_ranges.latejoin.half_range_pop_threshold = 25
 ruleset_ranges.latejoin.full_range_pop_threshold = 40
 ruleset_ranges.latejoin.time_threshold = 0
 
-[Low Chaos]
+["Low Chaos"]
 name = "Low Chaos"
 min_pop = 0
 advisory_report = "Advisory Level: <b>Yellow Star</b></center><BR>Your sector's advisory level is Yellow Star. Surveillance shows a credible risk of enemy attack against our assets in the Spinward Sector. We advise a heightened level of security alongside maintaining vigilance against potential threats."
@@ -46,7 +46,7 @@ ruleset_ranges.latejoin.half_range_pop_threshold = 25
 ruleset_ranges.latejoin.full_range_pop_threshold = 40
 ruleset_ranges.latejoin.time_threshold = 0
 
-[Low-Medium Chaos]
+["Low-Medium Chaos"]
 name = "Low-Medium Chaos"
 min_pop = 0
 advisory_report = "Advisory Level: <b>Red Star</b></center><BR>Your sector's advisory level is Red Star. The Department of Intelligence has decrypted Cybersun communications suggesting a high likelihood of attacks on Nanotrasen assets within the Spinward Sector. Stations in the region are advised to remain highly vigilant for signs of enemy activity and to be on high alert."
@@ -70,7 +70,7 @@ ruleset_ranges.latejoin.half_range_pop_threshold = 25
 ruleset_ranges.latejoin.full_range_pop_threshold = 40
 ruleset_ranges.latejoin.time_threshold = 0
 
-[Medium-High Chaos]
+["Medium-High Chaos"]
 name = "Medium-High Chaos"
 min_pop = 0
 advisory_report = "Advisory Level: <b>Black Orbit</b></center><BR>Your sector's advisory level is Black Orbit. Your sector's local communications network is currently undergoing a blackout, and we are therefore unable to accurately judge enemy movements within the region. However, information passed to us by GDI suggests a high amount of enemy activity in the sector, indicative of an impending attack. Remain on high alert and vigilant against any other potential threats."
@@ -94,7 +94,7 @@ ruleset_ranges.latejoin.half_range_pop_threshold = 25
 ruleset_ranges.latejoin.full_range_pop_threshold = 40
 ruleset_ranges.latejoin.time_threshold = 0
 
-[High Chaos]
+["High Chaos"]
 name = "High Chaos"
 min_pop = 25
 advisory_report = "Advisory Level: <b>Midnight Sun</b></center><BR>Your sector's advisory level is Midnight Sun. Credible information passed to us by GDI suggests that the Syndicate is preparing to mount a major concerted offensive on Nanotrasen assets in the Spinward Sector to cripple our foothold there. All stations should remain on high alert and prepared to defend themselves."
@@ -118,9 +118,9 @@ ruleset_ranges.latejoin.half_range_pop_threshold = 25
 ruleset_ranges.latejoin.full_range_pop_threshold = 40
 ruleset_ranges.latejoin.time_threshold = 0
 
-[Roundstart Traitor]
+["Roundstart Traitor"]
 weight = 10
-min_pop = 0
+min_pop = 3
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap.denominator = 38
@@ -128,12 +128,12 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Roundstart Malfunctioning AI]
+["Roundstart Malfunctioning AI"]
 weight.1 = 0
 weight.2 = 1
 weight.3 = 3
 weight.4 = 3
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap = 1
@@ -141,9 +141,9 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Roundstart Blood Brothers]
+["Roundstart Blood Brothers"]
 weight = 5
-min_pop = 0
+min_pop = 10
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap.denominator = 29
@@ -151,9 +151,9 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Roundstart Changeling]
+["Roundstart Changeling"]
 weight = 3
-min_pop = 0
+min_pop = 15
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap.denominator = 29
@@ -161,9 +161,9 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Roundstart Heretics]
+["Roundstart Heretics"]
 weight = 3
-min_pop = 0
+min_pop = 15
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap.denominator = 24
@@ -171,12 +171,12 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Roundstart Wizard]
+["Roundstart Wizard"]
 weight.1 = 0
 weight.2 = 0
 weight.3 = 1
 weight.4 = 2
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap = 1
@@ -184,12 +184,12 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Roundstart Blood Cult]
+["Roundstart Blood Cult"]
 weight.1 = 0
 weight.2 = 1
 weight.3 = 3
 weight.4 = 3
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap.denominator = 20
 min_antag_cap.offset = 1
@@ -198,12 +198,12 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Roundstart Nukeops]
+["Roundstart Nukeops"]
 weight.1 = 0
 weight.2 = 1
 weight.3 = 3
 weight.4 = 3
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap.denominator = 18
 min_antag_cap.offset = 1
@@ -212,9 +212,9 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Roundstart Clownops]
+["Roundstart Clownops"]
 weight = 0
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap.denominator = 18
 min_antag_cap.offset = 1
@@ -223,12 +223,12 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Roundstart Revolution]
+["Roundstart Revolution"]
 weight.1 = 0
 weight.2 = 1
 weight.3 = 3
 weight.4 = 3
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 3
 # max_antag_cap = null ## defaults to min_antag_cap
@@ -236,21 +236,21 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Roundstart Spies]
+["Roundstart Spies"]
 weight.1 = 0
 weight.2 = 1
 weight.3 = 3
 weight.4 = 3
-min_pop = 0
+min_pop = 10
 blacklisted_roles = []
 min_antag_cap.denominator = 20
 min_antag_cap.offset = 1
 # max_antag_cap = null ## defaults to min_antag_cap
 repeatable_weight_decrease = 2
-repeatable = 1
+repeatable = 0
 minimum_required_age = 0
 
-[Extended]
+["Extended"]
 weight = 0
 min_pop = 0
 blacklisted_roles = []
@@ -260,7 +260,7 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Meteor]
+["Meteor"]
 weight = 0
 min_pop = 0
 blacklisted_roles = []
@@ -270,7 +270,7 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Nations]
+["Nations"]
 weight = 0
 min_pop = 0
 blacklisted_roles = []
@@ -280,12 +280,12 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-[Midround Wizard]
+["Midround Wizard"]
 weight.1 = 0
 weight.2 = 0
 weight.3 = 1
 weight.4 = 2
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap = 1
@@ -293,12 +293,12 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Midround Nukeops]
+["Midround Nukeops"]
 weight.1 = 0
 weight.2 = 1
 weight.3 = 3
 weight.4 = 3
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap.denominator = 18
 min_antag_cap.offset = 1
@@ -307,9 +307,9 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Midround Clownops]
+["Midround Clownops"]
 weight = 0
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap.denominator = 18
 min_antag_cap.offset = 1
@@ -318,15 +318,12 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Blob]
+["Blob"]
 weight.1 = 0
 weight.2 = 1
 weight.3 = 3
 weight.4 = 3
-min_pop.1 = 36
-min_pop.2 = 30
-min_pop.3 = 27
-min_pop.4 = 25
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap = 1
@@ -334,23 +331,20 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Xenomorph]
+["Xenomorph"]
 weight.1 = 0
 weight.2 = 1
 weight.3 = 5
 weight.4 = 5
-min_pop.1 = 36
-min_pop.2 = 30
-min_pop.3 = 27
-min_pop.4 = 25
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 1
-max_antag_cap = 1
+max_antag_cap = 2
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Nightmare]
+["Nightmare"]
 weight = 5
 min_pop = 15
 blacklisted_roles = []
@@ -360,15 +354,12 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Space Dragon]
+["Space Dragon"]
 weight.1 = 0
 weight.2 = 3
 weight.3 = 5
 weight.4 = 5
-min_pop.1 = 36
-min_pop.2 = 30
-min_pop.3 = 27
-min_pop.4 = 25
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap = 1
@@ -376,9 +367,9 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Abductors]
+["Abductors"]
 weight = 5
-min_pop = 0
+min_pop = 20
 blacklisted_roles = []
 min_antag_cap = 2
 # max_antag_cap = null ## defaults to min_antag_cap
@@ -386,15 +377,12 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Space Ninja]
+["Space Ninja"]
 weight.1 = 0
 weight.2 = 0
 weight.3 = 1
 weight.4 = 2
-min_pop.1 = 36
-min_pop.2 = 30
-min_pop.3 = 27
-min_pop.4 = 25
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap = 1
@@ -402,15 +390,12 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Spiders]
+["Spiders"]
 weight.1 = 0
 weight.2 = 0
 weight.3 = 1
 weight.4 = 2
-min_pop.1 = 36
-min_pop.2 = 30
-min_pop.3 = 27
-min_pop.4 = 25
+min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 0
 max_antag_cap = 2
@@ -418,9 +403,9 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Revenant]
+["Revenant"]
 weight = 5
-min_pop = 0
+min_pop = 10
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap = 1
@@ -428,9 +413,9 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Light Pirates]
+["Light Pirates"]
 weight = 3
-min_pop = 0
+min_pop = 15
 blacklisted_roles = []
 min_antag_cap = 0
 # max_antag_cap = null ## defaults to min_antag_cap
@@ -438,9 +423,9 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Heavy Pirates]
+["Heavy Pirates"]
 weight = 3
-min_pop = 0
+min_pop = 25
 blacklisted_roles = []
 min_antag_cap = 0
 # max_antag_cap = null ## defaults to min_antag_cap
@@ -448,9 +433,9 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Midround Changeling]
+["Midround Changeling"]
 weight = 5
-min_pop = 0
+min_pop = 15
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap = 1
@@ -458,9 +443,9 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Paradox Clone]
+["Paradox Clone"]
 weight = 5
-min_pop = 0
+min_pop = 10
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap = 1
@@ -468,9 +453,9 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Voidwalker]
+["Voidwalker"]
 weight = 5
-min_pop = 0
+min_pop = 15
 blacklisted_roles = []
 min_antag_cap = 1
 max_antag_cap = 1
@@ -478,77 +463,75 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Midround Traitor]
+["Midround Traitor"]
 weight = 10
-min_pop = 0
+min_pop = 3
 blacklisted_roles = []
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Midround Malfunctioning AI]
+["Midround Malfunctioning AI"]
 weight.1 = 0
 weight.2 = 1
 weight.3 = 3
 weight.4 = 3
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Midround Blob]
+["Midround Blob"]
 weight.1 = 0
 weight.2 = 1
 weight.3 = 3
 weight.4 = 3
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Midround Obsessed]
+["Midround Obsessed"]
 weight.1 = 5
 weight.2 = 5
 weight.3 = 3
 weight.4 = 1
-min_pop = 0
+min_pop = 5
 blacklisted_roles = []
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Latejoin Traitor]
+["Latejoin Traitor"]
 weight = 10
-min_pop = 0
+min_pop = 3
 blacklisted_roles = []
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Latejoin Heretic]
+["Latejoin Heretic"]
 weight = 3
-min_pop = 0
+min_pop = 15
 blacklisted_roles = []
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Latejoin Changeling]
+["Latejoin Changeling"]
 weight = 3
-min_pop = 0
+min_pop = 15
 blacklisted_roles = []
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-[Latejoin Revolution]
+["Latejoin Revolution"]
 weight = 1
-min_pop = 0
+min_pop = 30
 blacklisted_roles = []
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
-
-

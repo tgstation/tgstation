@@ -13,9 +13,8 @@
 	var/ruleset_flags = NONE
 	/// Antag datum this ruleset applies
 	var/antag_datum
-
 	/// List of all minds selected for this ruleset
-	VAR_FINAL/list/selected_minds = list()
+	VAR_FINAL/list/datum/mind/selected_minds = list()
 
 	/**
 	 * The chance the ruleset is picked when selecting from the pool of rulesets.
@@ -43,6 +42,7 @@
 	var/list/blacklisted_roles = list()
 	/**
 	 * How many candidates are needed for this ruleset to be selected?
+	 * Ie. "We won't even bother attempting to run this ruleset unless at least x players want to be it"
 	 *
 	 * This can either be
 	 * - A number
@@ -53,6 +53,7 @@
 	var/min_antag_cap = 1
 	/**
 	 * How many candidates will be this ruleset try to select?
+	 * Ie. "We have 10 cadidates, but we only want x of them to be antags"
 	 *
 	 * This can either be
 	 * - A number
@@ -69,20 +70,30 @@
 	var/repeatable_weight_decrease = 2
 	/// Players whose account is less than this many days old will be filtered out of the candidate list
 	var/minimum_required_age = 0
-
+	/// Templates necessary for this ruleset to be executed
 	var/list/ruleset_lazy_templates
 
 /datum/dynamic_ruleset/New(list/dynamic_config)
 	for(var/nvar in dynamic_config?[config_tag])
-		if(!(nvar in vars))
-			continue
 		set_config_value(nvar, dynamic_config[config_tag][nvar])
 
 /// Used for parsing config entries to validate them
 /datum/dynamic_ruleset/proc/set_config_value(nvar, nval)
+	if(!(nvar in vars))
+		log_dynamic("Erroneous config edit rejected: [nvar]")
+		return FALSE
 	switch(nvar)
-		if(NAMEOF(src, config_tag), NAMEOF(src, vars))
+		if(NAMEOF(src, config_tag), NAMEOF(src, vars), NAMEOF(src, jobban_flag), NAMEOF(src, pref_flag), NAMEOF(src, ruleset_flags), NAMEOF(src, antag_datum), NAMEOF(src, ruleset_lazy_templates), NAMEOF(src, selected_minds))
+			log_dynamic("Bad config edit rejected: [nvar]")
 			return FALSE
+		if(NAMEOF(src, weight))
+			if(islist(nval))
+				weight = load_tier_list(nval)
+				return TRUE
+		if(NAMEOF(src, min_pop))
+			if(islist(nval))
+				min_pop = load_tier_list(nval)
+				return TRUE
 
 	vars[nvar] = nval
 	return TRUE
@@ -92,22 +103,40 @@
 		return FALSE
 	return ..()
 
-// melbert todo : this isn't gonna work with byond
-/datum/dynamic_ruleset/proc/get_closest_bracket(list/bracket, base_tier)
-	// clamp
-	base_tier = min(length(bracket), base_tier)
-	// go bottom up to find the first non-null bracket
-	for(var/i in base_tier to length(bracket))
-		if(isnull(bracket[i]))
-			continue
-		return bracket[i]
-	// if that failed, go top down
-	for(var/i in base_tier to 1)
-		if(isnull(bracket[i]))
-			continue
-		return bracket[i]
+/// Used to create tier lists for weights and min_pop values
+/datum/dynamic_ruleset/proc/load_tier_list(list/incoming_list)
+	PRIVATE_PROC(TRUE)
 
-	return null
+	var/list/tier_list = new /list(4)
+	// loads a list of list("2" = 1, "3" = 3) into a list(null, 1, 3, null)
+	for(var/tier in incoming_list)
+		tier_list[text2num(tier)] = incoming_list[tier]
+
+	// turn list(null, 1, 3, null) into list(1, 1, 3, null)
+	for(var/i in 1 to length(tier_list))
+		var/val = tier_list[i]
+		if(isnum(tier_list[val]))
+			break
+		for(var/j in i to length(tier_list))
+			var/other_val = tier_list[j]
+			if(!isnum(other_val))
+				continue
+			tier_list[i] = other_val
+			break
+
+	// turn list(1, 1, 3, null) into list(1, 1, 3, 3)
+	for(var/i in length(tier_list) to 1)
+		var/val = tier_list[i]
+		if(isnum(val))
+			break
+		for(var/j in i to 1)
+			var/other_val = tier_list[j]
+			if(!isnum(other_val))
+				continue
+			tier_list[i] = other_val
+			break
+
+	return tier_list
 
 /**
  * Any additional checks to see if this ruleset can be selected
@@ -121,16 +150,16 @@
  *
  * * population_size - How many players are alive
  */
-/datum/dynamic_ruleset/proc/get_weight(population_size = 0)
+/datum/dynamic_ruleset/proc/get_weight(population_size = 0, tier)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(!can_be_selected(population_size))
 		return 0
-	var/final_minpop = islist(min_pop) ? (get_closest_bracket(min_pop, SSdynamic.current_tier.tier) || 0) : min_pop
+	var/final_minpop = islist(min_pop) ? min_pop[tier] : min_pop
 	if(final_minpop > population_size)
 		return 0
 
-	var/final_weight = islist(weight) ? (get_closest_bracket(weight, SSdynamic.current_tier.tier) || 0) : weight
+	var/final_weight = islist(weight) ? weight[tier] : weight
 	for(var/datum/dynamic_ruleset/other_ruleset as anything in SSdynamic.executed_rulesets)
 		if(other_ruleset == src)
 			continue
@@ -194,20 +223,15 @@
 
 /// Returns all the jobs the config says this ruleset cannot select
 /datum/dynamic_ruleset/proc/get_config_blacklisted_roles()
+	SHOULD_NOT_OVERRIDE(TRUE)
 	var/list/blacklist = blacklisted_roles.Copy()
-	if(!CONFIG_GET(flag/protect_roles_from_antagonist))
-		blacklist |= list(
-			JOB_CAPTAIN,
-			JOB_DETECTIVE,
-			JOB_HEAD_OF_SECURITY,
-			JOB_PRISONER,
-			JOB_SECURITY_OFFICER,
-			JOB_WARDEN,
-		)
-	if(!CONFIG_GET(flag/protect_assistant_from_antagonist))
-		blacklisted_roles = list(
-			JOB_ASSISTANT,
-		)
+	for(var/datum/job/job as anything in SSjob.all_occupations)
+		var/protected = (job.job_flags & JOB_ANTAG_PROTECTED)
+		var/blacklisted = (job.job_flags & JOB_ANTAG_BLACKLISTED)
+		if((CONFIG_GET(flag/protect_roles_from_antagonist) && protected) || blacklisted)
+			blacklist |= job.title
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
+		blacklisted_roles |= JOB_ASSISTANT
 	return blacklist
 
 /// Returns a list of roles that are always blacklisted from this ruleset, for mechanical reasons (an AI can't be a changeling)
@@ -288,8 +312,13 @@
  * Prefer to override assign_role() instead of this proc
  */
 /datum/dynamic_ruleset/proc/execute()
+	var/list/execute_args = create_execute_args()
 	for(var/datum/mind/mind as anything in selected_minds)
-		assign_role(mind)
+		assign_role(arglist(list(mind) + execute_args))
+
+/// Allows you to supply extra arguments to assign_role() if needed
+/datum/dynamic_ruleset/proc/create_execute_args()
+	return list()
 
 /**
  * Used by the ruleset to actually assign the role to the player
@@ -432,22 +461,26 @@
 		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
+	blacklisted_roles = list(
+		JOB_HEAD_OF_PERSONNEL,
+	)
 	min_antag_cap = list("denominator" = 20, "offset" = 1)
-	/// Reference to the cult team this ruleset used
-	var/datum/team/cult/main_cult
 	/// Ratio of cultists getting on the shuttle to be considered a minor win
 	var/ratio_to_be_considered_escaped = 0.5
 
 /datum/dynamic_ruleset/roundstart/blood_cult/get_always_blacklisted_roles()
-	return ..() | JOB_CHAPLAIN // Always blacklisted, regardless of config
+	return ..() | JOB_CHAPLAIN
 
-/datum/dynamic_ruleset/roundstart/blood_cult/assign_role(datum/mind/candidate)
-	main_cult ||= new()
-	var/datum/antagonist/cult/cultist = candidate.add_antag_datum(/datum/antagonist/cult, main_cult)
+/datum/dynamic_ruleset/roundstart/blood_cult/create_execute_args()
+	return list(new /datum/team/cult)
+
+/datum/dynamic_ruleset/roundstart/blood_cult/assign_role(datum/mind/candidate, datum/team/cult)
+	var/datum/antagonist/cult/cultist = candidate.add_antag_datum(/datum/antagonist/cult, cult)
 	if(get_most_experienced(selected_minds, pref_flag) == candidate)
 		cultist.make_cult_leader()
 
 /datum/dynamic_ruleset/roundstart/blood_cult/round_result()
+	var/datum/team/cult/main_cult = locate() in GLOB.antagonist_teams
 	if(main_cult.check_cult_victory())
 		SSticker.mode_result = "win - cult win"
 		SSticker.news_report = CULT_SUMMON
@@ -478,17 +511,19 @@
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
-	/// Reference to the nuke team this ruleset used
-	var/datum/team/nuclear/nuke_team
 
-/datum/dynamic_ruleset/roundstart/nukies/assign_role(datum/mind/candidate)
-	nuke_team ||= new()
+/datum/dynamic_ruleset/roundstart/nukies/create_execute_args()
+	return list(new /datum/team/nuclear)
+
+/datum/dynamic_ruleset/roundstart/nukies/assign_role(datum/mind/candidate, datum/team/nuke_team)
 	if(get_most_experienced(selected_minds, pref_flag) == candidate)
 		candidate.add_antag_datum(/datum/antagonist/nukeop/leader, nuke_team)
 	else
 		candidate.add_antag_datum(/datum/antagonist/nukeop, nuke_team)
 
 /datum/dynamic_ruleset/roundstart/nukies/round_result()
+	var/datum/antagonist/nukeop/nukie = selected_minds[1].has_antag_datum(/datum/antagonist/nukeop)
+	var/datum/team/nuclear/nuke_team = nukie.get_team()
 	var/result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
@@ -528,12 +563,11 @@
 	pref_flag = ROLE_CLOWN_OPERATIVE
 	weight = 0
 
-/datum/dynamic_ruleset/roundstart/nukies/clown/assign_role(datum/mind/candidate)
-	nuke_team ||= new()
+/datum/dynamic_ruleset/roundstart/nukies/clown/assign_role(datum/mind/candidate, datum/team/nuke_team)
 	if(get_most_experienced(selected_minds, pref_flag) == candidate)
-		candidate.add_antag_datum(/datum/antagonist/nukeop/leader/clownop, nuke_team)
+		candidate.add_antag_datum(/datum/antagonist/nukeop/leader/clownop)
 	else
-		candidate.add_antag_datum(/datum/antagonist/nukeop/clownop, nuke_team)
+		candidate.add_antag_datum(/datum/antagonist/nukeop/clownop)
 
 /datum/dynamic_ruleset/roundstart/revolution
 	name = "Revolution"
@@ -547,13 +581,24 @@
 	)
 	min_pop = 30
 	min_antag_cap = 3
+	/// How many heads of staff are required to be on the station for this to be selected
+	var/heads_necessary = 3
 
 /datum/dynamic_ruleset/roundstart/revolution/can_be_selected(population_size, list/antag_candidates)
 	var/head_check = 0
 	for(var/mob/player as anything in GLOB.alive_player_list)
 		if (player.mind.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 			head_check++
-	return head_check >= 3
+	return head_check >= heads_necessary
+
+/datum/dynamic_ruleset/roundstart/revolution/get_always_blacklisted_roles()
+	. = ..()
+	for(var/datum/job/job as anything in SSjob.all_occupations)
+		if(job.job_flags & JOB_HEAD_OF_STAFF)
+			. |= job.title
+
+/datum/dynamic_ruleset/roundstart/revolution/is_valid_candidate(mob/candidate, client/candidate_client)
+	return ..() && can_be_headrev(candidate.mind)
 
 /datum/dynamic_ruleset/roundstart/revolution/assign_role(datum/mind/candidate)
 	LAZYADD(candidate.special_roles, "Dormant Head Revolutionary")
@@ -563,6 +608,8 @@
 /datum/dynamic_ruleset/roundstart/revolution/proc/reveal_head(datum/mind/candidate)
 	LAZYREMOVE(candidate.special_roles, "Dormant Head Revolutionary")
 	if(!can_be_headrev(candidate))
+		log_dynamic("[config_tag]: [key_name(candidate)] was not eligible to be a headrev after the timer expired - finding a replacement.")
+		find_another_headrev()
 		return
 	GLOB.revolution_handler ||= new()
 	var/datum/antagonist/rev/head/new_head = new()
@@ -571,6 +618,25 @@
 	new_head.remove_clumsy = TRUE
 	candidate.add_antag_datum(new_head, GLOB.revolution_handler.revs)
 	GLOB.revolution_handler.start_revolution()
+
+/datum/dynamic_ruleset/roundstart/revolution/proc/find_another_headrev()
+	for(var/mob/living/carbon/human/upstanding_citizen in GLOB.player_list)
+		if(!can_be_headrev(upstanding_citizen.mind))
+			continue
+		reveal_head(upstanding_citizen.mind)
+		log_dynamic("[config_tag]: [key_name(upstanding_citizen)] was selected as a replacement headrev.")
+		return
+
+	log_dynamic("[config_tag]: Failed to find a replacement headrev.")
+	addtimer(CALLBACK(src, PROC_REF(revs_execution_failed)), 1 MINUTES, TIMER_UNIQUE|TIMER_DELETE_ME)
+
+/datum/dynamic_ruleset/roundstart/revolution/proc/revs_execution_failed()
+	if(GLOB.revolution_handler)
+		return
+	// Execution is effectively cancelled by this point, but it's not like we can go back and refund it
+	name += " (Canceled)"
+	log_dynamic("[config_tag]: All headrevs were ineligible after the timer expired, and no replacements could be found. Ruleset canceled.")
+	message_admins("[config_tag]: All headrevs were ineligible after the timer expired, and no replacements could be found. Ruleset canceled.")
 
 /datum/dynamic_ruleset/roundstart/spies
 	name = "Spies"
@@ -713,19 +779,21 @@
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	signup_atom_appearance = /obj/machinery/nuclearbomb/syndicate
-	/// Reference to the nuke team this ruleset used
-	var/datum/team/nuclear/nuke_team
 
-/datum/dynamic_ruleset/midround/from_ghosts/nukies/assign_role(datum/mind/candidate)
+/datum/dynamic_ruleset/midround/from_ghosts/nukies/create_execute_args()
+	return list(new /datum/team/nuclear)
+
+/datum/dynamic_ruleset/midround/from_ghosts/nukies/assign_role(datum/mind/candidate, datum/team/nuclear/nuke_team)
 	var/mob/living/carbon/human/new_character = make_human(candidate.current, pick(GLOB.nukeop_start))
 	candidate.transfer_to(new_character, force_key_move = TRUE)
-	nuke_team ||= new()
 	if(get_most_experienced(selected_minds, pref_flag) == candidate)
 		candidate.add_antag_datum(/datum/antagonist/nukeop/leader, nuke_team)
 	else
 		candidate.add_antag_datum(/datum/antagonist/nukeop, nuke_team)
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies/round_result()
+	var/datum/antagonist/nukeop/nukie = selected_minds[1].has_antag_datum(/datum/antagonist/nukeop)
+	var/datum/team/nuclear/nuke_team = nukie.get_team()
 	var/result = nuke_team.get_result()
 	switch(result)
 		if(NUKE_RESULT_FLUKE)
@@ -767,10 +835,9 @@
 	weight = 0
 	signup_atom_appearance = /obj/machinery/nuclearbomb/syndicate/bananium
 
-/datum/dynamic_ruleset/midround/from_ghosts/nukies/clown/assign_role(datum/mind/candidate)
+/datum/dynamic_ruleset/midround/from_ghosts/nukies/clown/assign_role(datum/mind/candidate, datum/team/nuclear/nuke_team)
 	var/mob/living/carbon/human/new_character = make_human(candidate.current, pick(GLOB.nukeop_start))
 	candidate.transfer_to(new_character, force_key_move = TRUE)
-	nuke_team ||= new()
 	if(get_most_experienced(selected_minds, pref_flag) == candidate)
 		candidate.add_antag_datum(/datum/antagonist/nukeop/leader/clownop, nuke_team)
 	else
@@ -819,8 +886,11 @@
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/can_be_selected(population_size, list/antag_candidates)
 	return ..() && length(find_vents()) > 0
 
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/assign_role(datum/mind/candidate)
-	var/obj/vent = pick(find_vents()) // melbert todo : ensure unique vent per candidate
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/create_execute_args()
+	return list(find_vents())
+
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/assign_role(datum/mind/candidate, list/vent_list)
+	var/obj/vent = length(vent_list) >= 2 ? pick_n_take(vent_list) : vent_list[1]
 	var/mob/living/carbon/alien/larva/new_xeno = new(vent.loc)
 	candidate.transfer_to(new_xeno, force_key_move = TRUE)
 	new_xeno.move_into_vent(vent)
@@ -1156,6 +1226,9 @@
 	jobban_flag = ROLE_TRAITOR
 	weight = 10
 	min_pop = 3
+	blacklisted_roles = list(
+		JOB_HEAD_OF_PERSONNEL,
+	)
 
 /datum/dynamic_ruleset/midround/from_living/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)
@@ -1256,6 +1329,9 @@
 	jobban_flag = ROLE_TRAITOR
 	weight = 10
 	min_pop = 3
+	blacklisted_roles = list(
+		JOB_HEAD_OF_PERSONNEL,
+	)
 
 /datum/dynamic_ruleset/latejoin/traitor/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/traitor)
@@ -1268,6 +1344,9 @@
 	weight = 3
 	min_pop = 15
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE)
+	blacklisted_roles = list(
+		JOB_HEAD_OF_PERSONNEL,
+	)
 
 /datum/dynamic_ruleset/latejoin/heretic/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/heretic)
@@ -1279,6 +1358,9 @@
 	jobban_flag = ROLE_CHANGELING
 	weight = 3
 	min_pop = 15
+	blacklisted_roles = list(
+		JOB_HEAD_OF_PERSONNEL,
+	)
 
 /datum/dynamic_ruleset/latejoin/changeling/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/changeling)
@@ -1290,13 +1372,24 @@
 	jobban_flag = ROLE_REV_HEAD
 	weight = 1
 	min_pop = 30
+	/// How many heads of staff are required to be on the station for this to be selected
+	var/heads_necessary = 3
 
 /datum/dynamic_ruleset/latejoin/revolution/can_be_selected(population_size, list/antag_candidates)
 	var/head_check = 0
 	for(var/mob/player as anything in GLOB.alive_player_list)
 		if (player.mind.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 			head_check++
-	return head_check >= 3
+	return head_check >= heads_necessary
+
+/datum/dynamic_ruleset/latejoin/revolution/get_always_blacklisted_roles()
+	. = ..()
+	for(var/datum/job/job as anything in SSjob.all_occupations)
+		if(job.job_flags & JOB_HEAD_OF_STAFF)
+			. |= job.title
+
+/datum/dynamic_ruleset/latejoin/revolution/is_valid_candidate(mob/candidate, client/candidate_client)
+	return ..() && can_be_headrev(candidate.mind)
 
 /datum/dynamic_ruleset/latejoin/revolution/assign_role(datum/mind/candidate)
 	LAZYADD(candidate.special_roles, "Dormant Head Revolutioanry")
@@ -1305,6 +1398,9 @@
 /datum/dynamic_ruleset/latejoin/revolution/proc/reveal_head(datum/mind/candidate)
 	LAZYREMOVE(candidate.special_roles, "Dormant Head Revolutioanry")
 	if(!can_be_headrev(candidate))
+		name += " (Canceled)"
+		log_dynamic("[config_tag]: [key_name(candidate)] was ineligible after the timer expired. Ruleset canceled.")
+		message_admins("[config_tag]: [key_name(candidate)] was ineligible after the timer expired. Ruleset canceled.")
 		return
 	GLOB.revolution_handler ||= new()
 	var/datum/antagonist/rev/head/new_head = new()

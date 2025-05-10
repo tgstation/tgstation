@@ -152,6 +152,8 @@ GLOBAL_DATUM(revolution_handler, /datum/revolution_handler)
 		return FALSE
 	if(candidate.current.is_antag())
 		return FALSE
+	if(candidate.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
+		return FALSE
 	if(HAS_MIND_TRAIT(candidate.current, TRAIT_UNCONVERTABLE))
 		return FALSE
 	return TRUE

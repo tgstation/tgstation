@@ -23,9 +23,12 @@ SUBSYSTEM_DEF(dynamic)
 	COOLDOWN_DECLARE(heavy_ruleset_start)
 	/// Cooldown for when we are allowed to spawn latejoin rulesets
 	COOLDOWN_DECLARE(latejoin_ruleset_start)
-
-	/// Cooldown between spawning any mid-game ruleset (latejoin or midround)
-	COOLDOWN_DECLARE(ruleset_cooldown)
+	/// Tracks how many time we fail to spawn a latejoin (to up the odds next time)
+	var/failed_latejoins = 0
+	/// Cooldown between midround ruleset executions
+	COOLDOWN_DECLARE(midround_cooldown)
+	/// Cooldown between latejoin ruleset executions
+	COOLDOWN_DECLARE(latejoin_cooldown)
 
 	/// List of rulesets that have been executed this round
 	var/list/datum/dynamic_ruleset/executed_rulesets = list()
@@ -33,7 +36,16 @@ SUBSYSTEM_DEF(dynamic)
 	var/list/datum/dynamic_ruleset/queued_rulesets = list()
 
 /datum/controller/subsystem/dynamic/fire(resumed)
-	spawn_midround()
+	if(!COOLDOWN_FINISHED(src, midround_cooldown))
+		return
+
+	if(COOLDOWN_FINISHED(src, light_ruleset_start))
+		if(try_spawn_midround(LIGHT_MIDROUND_RANGE))
+			return
+
+	if(COOLDOWN_FINISHED(src, heavy_ruleset_start))
+		if(try_spawn_midround(HEAVY_MIDROUND_RANGE))
+			return
 
 /**
  * Selects which rulesets are to run at roundstart, and sets them up
@@ -78,15 +90,16 @@ SUBSYSTEM_DEF(dynamic)
 	// and finally, select and run the roundstart rulesets
 	// pick_roundstart_rulesets handles filtering out invalid options for us,
 	// and even handles if we intend to have 0 roundstart rulesets (greenshift)
-	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in pick_roundstart_rulesets(num_real_players))
+	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in pick_roundstart_rulesets(antag_candidates))
 		// NOTE: !! THIS CAN SLEEP !!
 		if(!ruleset.prepare_execution( num_real_players, antag_candidates ))
+			log_dynamic("Roundstart: Selected ruleset [ruleset.config_tag], but preparation failed!")
 			qdel(ruleset)
 			continue
 
 		// Purely for logging
 		for(var/datum/mind/selected as anything in ruleset.selected_minds)
-			log_dynamic("Dynamic: [key_name(selected)] has been selected for [ruleset.name].")
+			log_dynamic("Roundstart: [key_name(selected)] has been selected for [ruleset.config_tag].")
 
 		// Execution actually happens in post_setup
 		queued_rulesets += ruleset
@@ -100,12 +113,10 @@ SUBSYSTEM_DEF(dynamic)
 	if(!CONFIG_GET(flag/dynamic_config_enabled))
 		return
 
-	var/config_file = file("[global.config.directory]/dynamic.toml")
-	if(!fexists(config_file))
-		return
+	var/config_file = "[global.config.directory]/dynamic.toml"
 	var/list/result = rustg_raw_read_toml_file(config_file)
 	if(!result["success"])
-		log_dynamic("Dynamic: Failed to load config file [config_file]")
+		log_dynamic("Failed to load config file! ([config_file])")
 		return
 
 	dynamic_config = json_decode(result["content"])
@@ -153,7 +164,7 @@ SUBSYSTEM_DEF(dynamic)
 	var/heavy_midround_spawn = rulesets_to_spawn[HEAVY_MIDROUND_RANGE]
 	var/latejoin_spawn = rulesets_to_spawn[LATEJOIN_RANGE]
 
-	log_dynamic("Dynamic tier: [current_tier.tier]")
+	log_dynamic("Selected tier: [current_tier.tier]")
 	log_dynamic("- Roundstart population: [roundstart_population]")
 	log_dynamic("- Roundstart ruleset count: [roundstart_spawn]")
 	log_dynamic("- Light midround ruleset count: [light_midround_spawn]")
@@ -174,16 +185,18 @@ SUBSYSTEM_DEF(dynamic)
 		),
 	)
 
+/// Gets a weighted list of roundstart rulesets
 /datum/controller/subsystem/dynamic/proc/get_roundstart_rulesets(list/antag_candidates)
 	PRIVATE_PROC(TRUE)
 
 	var/list/datum/dynamic_ruleset/roundstart/rulesets = list()
 	for(var/ruleset_type in subtypesof(/datum/dynamic_ruleset/roundstart))
 		var/datum/dynamic_ruleset/roundstart/ruleset = new ruleset_type(dynamic_config)
-		rulesets[ruleset] = ruleset.get_weight(length(antag_candidates))
+		rulesets[ruleset] = ruleset.get_weight(length(antag_candidates), current_tier.tier)
 
 	return rulesets
 
+/// Picks as many roundstart rulesets as we are allowed to spawn, returns them
 /datum/controller/subsystem/dynamic/proc/pick_roundstart_rulesets(list/antag_candidates)
 	PRIVATE_PROC(TRUE)
 
@@ -203,7 +216,7 @@ SUBSYSTEM_DEF(dynamic)
 		rulesets_to_spawn[ROUNDSTART_RANGE] -= 1
 		var/datum/dynamic_ruleset/picked_ruleset = pick_weight(rulesets_weighted)
 		picked_rulesets += picked_ruleset
-		log_dynamic("Roundstart: Ruleset [picked_ruleset.name] (Chance: [round(rulesets_weighted[picked_ruleset] / total_weight * 100, 0.01)]%)")
+		log_dynamic("Roundstart: Ruleset [picked_ruleset.config_tag] (Chance: [round(rulesets_weighted[picked_ruleset] / total_weight * 100, 0.01)]%)")
 		if(!picked_ruleset.repeatable)
 			rulesets_weighted -= picked_ruleset
 			continue
@@ -239,22 +252,35 @@ SUBSYSTEM_DEF(dynamic)
  *
  * Returns TRUE if a ruleset was spawned, FALSE otherwise
  */
-/datum/controller/subsystem/dynamic/proc/spawn_midround(mob/living/carbon/human/latejoiner)
-	if(!COOLDOWN_FINISHED(src, ruleset_cooldown))
+/datum/controller/subsystem/dynamic/proc/try_spawn_midround(range)
+	if(rulesets_to_spawn[range] <= 0)
 		return FALSE
+	var/midround_chance = get_midround_chance(range)
+	if(!prob(midround_chance))
+		log_dynamic("Midround ([range]): Ruleset chance failed ([midround_chance]% chance)")
+		return FALSE
+	var/list/rulesets_weighted = get_midround_rulesets(range)
+	var/datum/dynamic_ruleset/midround/picked_ruleset = pick_weight(rulesets_weighted)
+	// NOTE: !! THIS CAN SLEEP !!
+	if(!picked_ruleset.prepare_execution( length(GLOB.alive_player_list), picked_ruleset.collect_candidates() ))
+		log_dynamic("Midround ([range]): Selected ruleset [picked_ruleset.config_tag], but preparation failed!")
+		QDEL_LIST(rulesets_weighted)
+		return FALSE
+	// Purely for logging
+	for(var/datum/mind/selected as anything in picked_ruleset.selected_minds)
+		message_admins("Midround ([range]): [ADMIN_LOOKUPFLW(selected)] has been selected for [picked_ruleset.config_tag].")
+		log_dynamic("Midround ([range]): [key_name(selected)] has been selected for [picked_ruleset.config_tag].")
+	// Run the thing
+	executed_rulesets += picked_ruleset
+	rulesets_weighted -= picked_ruleset
+	picked_ruleset.execute()
+	// Clean up unused rulesets
+	QDEL_LIST(rulesets_weighted)
+	rulesets_to_spawn[range] -= 1
+	COOLDOWN_START(src, midround_cooldown, get_ruleset_cooldown(range))
+	return TRUE
 
-	if(COOLDOWN_FINISHED(src, light_ruleset_start) && rulesets_to_spawn[LIGHT_MIDROUND_RANGE] > 0)
-		if(try_run_light_midround())
-			rulesets_to_spawn[LIGHT_MIDROUND_RANGE] -= 1
-			return TRUE
-
-	if(COOLDOWN_FINISHED(src, heavy_ruleset_start) && rulesets_to_spawn[HEAVY_MIDROUND_RANGE] > 0)
-		if(try_run_heavy_midround())
-			rulesets_to_spawn[HEAVY_MIDROUND_RANGE] -= 1
-			return TRUE
-
-	return FALSE
-
+/// Gets a weighted list of midround rulesets
 /datum/controller/subsystem/dynamic/proc/get_midround_rulesets(midround_type)
 	PRIVATE_PROC(TRUE)
 
@@ -263,146 +289,121 @@ SUBSYSTEM_DEF(dynamic)
 		if(initial(ruleset_type.midround_type) != midround_type)
 			continue
 		var/datum/dynamic_ruleset/midround/ruleset = new ruleset_type(dynamic_config)
-		rulesets[ruleset] = ruleset.get_weight(length(GLOB.alive_player_list))
+		rulesets[ruleset] = ruleset.get_weight(length(GLOB.alive_player_list), current_tier.tier)
 
 	return rulesets
-
-/// Picks a random light midround ruleset, and tries to run it
-/datum/controller/subsystem/dynamic/proc/try_run_light_midround()
-	PRIVATE_PROC(TRUE)
-
-	var/list/rulesets_weighted = get_midround_rulesets(MIDROUND_RULESET_STYLE_LIGHT)
-	var/datum/dynamic_ruleset/midround/picked_ruleset = pick_weight(rulesets_weighted)
-	// NOTE: !! THIS CAN SLEEP !!
-	if(!picked_ruleset.prepare_execution( length(GLOB.alive_player_list), picked_ruleset.collect_candidates() ))
-		QDEL_LIST(rulesets_weighted)
-		return FALSE
-	// Purely for logging
-	for(var/datum/mind/selected as anything in picked_ruleset.selected_minds)
-		message_admins("[ADMIN_LOOKUPFLW(selected)] has been selected for [picked_ruleset.name].")
-		log_dynamic("Dynamic: [key_name(selected)] has been selected for [picked_ruleset.name].")
-	// Run the thing
-	executed_rulesets += picked_ruleset
-	rulesets_weighted -= picked_ruleset
-	picked_ruleset.execute()
-	// Clean up unused rulesets
-	QDEL_LIST(rulesets_weighted)
-	return TRUE
-
-/// Picks a random heavy midround ruleset, and tries to run it
-/datum/controller/subsystem/dynamic/proc/try_run_heavy_midround()
-	PRIVATE_PROC(TRUE)
-
-	var/list/rulesets_weighted = get_midround_rulesets(MIDROUND_RULESET_STYLE_HEAVY)
-	var/datum/dynamic_ruleset/midround/picked_ruleset = pick_weight(rulesets_weighted)
-	// NOTE: !! THIS CAN SLEEP !!
-	if(!picked_ruleset.prepare_execution( length(GLOB.alive_player_list), picked_ruleset.collect_candidates() ))
-		QDEL_LIST(rulesets_weighted)
-		return FALSE
-	// Purely for logging
-	for(var/datum/mind/selected as anything in picked_ruleset.selected_minds)
-		message_admins("[ADMIN_LOOKUPFLW(selected)] has been selected for [picked_ruleset.name].")
-		log_dynamic("Dynamic: [key_name(selected)] has been selected for [picked_ruleset.name].")
-	// Run the thing
-	executed_rulesets += picked_ruleset
-	rulesets_weighted -= picked_ruleset
-	picked_ruleset.execute()
-	// Clean up unused rulesets
-	QDEL_LIST(rulesets_weighted)
-	return TRUE
 
 /**
  * Attempt to run a midround ruleset of the given type
  *
  * * midround_type - The type of midround ruleset to force
- * * * forced_min_cap - Rather than using the ruleset's mid antag cap, use this value
- * * * forced_max_cap - Rather than using the ruleset's max antag cap, use this value
+ * * forced_max_cap - Rather than using the ruleset's max antag cap, use this value
+ * As an example, this allows you to only spawn 1 traitor rather than the ruleset's default of 3
+ * Can't be set to 0 (why are you forcing a ruleset that spawns 0 antags?)
+ * * alert_admins_on_fail - If TRUE, alert admins if the ruleset fails to prepare/execute
  */
-/datum/controller/subsystem/dynamic/proc/run_midround(midround_typepath, forced_min_cap, forced_max_cap)
-	set waitfor = FALSE // prepare_execution can sleep (polling)
+/datum/controller/subsystem/dynamic/proc/force_run_midround(midround_typepath, forced_max_cap, alert_admins_on_fail = FALSE)
 	if(!ispath(midround_typepath, /datum/dynamic_ruleset/midround))
-		CRASH("run_midround() was called with an invalid midround type: [midround_typepath]")
+		CRASH("force_run_midround() was called with an invalid midround type: [midround_typepath]")
 
 	var/datum/dynamic_ruleset/midround/running = new midround_typepath(dynamic_config)
-	if(isnum(forced_min_cap))
-		running.min_antag_cap = forced_min_cap
-	if(isnum(forced_max_cap))
+	if(isnum(forced_max_cap) && forced_max_cap > 0)
+		running.min_antag_cap = min(forced_max_cap, running.min_antag_cap)
 		running.max_antag_cap = forced_max_cap
 
 	// NOTE: !! THIS CAN SLEEP !!
 	if(!running.prepare_execution( length(GLOB.alive_player_list), running.collect_candidates() ))
+		if(alert_admins_on_fail)
+			message_admins("Midround (forced): Forced ruleset [running.config_tag], but preparation failed!")
+		log_dynamic("Midround (forced): Forced ruleset [running.config_tag], but preparation failed!")
 		qdel(running)
-		return
+		return FALSE
 
 	// Purely for logging
 	for(var/datum/mind/selected as anything in running.selected_minds)
-		message_admins("[ADMIN_LOOKUPFLW(selected)] has been selected for [running.name].")
-		log_dynamic("Dynamic: [key_name(selected)] has been selected for [running.name].")
+		message_admins("Midround (forced): [ADMIN_LOOKUPFLW(selected)] has been selected for [running.config_tag].")
+		log_dynamic("Midround (forced): [key_name(selected)] has been selected for [running.config_tag].")
 
 	executed_rulesets += running
 	running.execute()
+	return TRUE
+
+/**
+ * Called when someone latejoins
+ * (This could be a signal in the future)
+ */
+/datum/controller/subsystem/dynamic/proc/on_latejoin(mob/living/carbon/human/latejoiner)
+	// First check queued rulesets - queued rulesets by pass cooldowns and probability checks,
+	// because they're generally forced by events or admins (and thus have higher priority)
+	for(var/datum/dynamic_ruleset/latejoin/queued in queued_rulesets)
+		// NOTE: !! THIS CAN SLEEP !!
+		if(!queued.prepare_execution(length(GLOB.alive_player_list), list(latejoiner)))
+			// melbert todo : add an href to remove it from the queue
+			message_admins("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin.")
+			log_dynamic("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin.")
+			continue
+		message_admins("Latejoin (forced): [ADMIN_LOOKUPFLW(queued)] has been selected for [queued.config_tag].")
+		log_dynamic("Latejoin (forced): [key_name(queued)] has been selected for [queued.config_tag].")
+		queued_rulesets -= queued
+		executed_rulesets += queued
+		queued.execute()
+		return
+
+	if(COOLDOWN_FINISHED(src, latejoin_ruleset_start) && COOLDOWN_FINISHED(src, latejoin_cooldown))
+		if(try_spawn_latejoin(latejoiner))
+			return
 
 /**
  * Invoked by SSdynamic to try to spawn a latejoin ruleset
  * Respects ranges and thresholds
  *
- * Prioritizes queued rulesets first, then selects a random one
- *
  * Returns TRUE if a ruleset was spawned, FALSE otherwise
  */
-/datum/controller/subsystem/dynamic/proc/spawn_latejoin(mob/living/carbon/human/latejoiner)
-	// First check queued rulesets
-	for(var/datum/dynamic_ruleset/latejoin/queued in queued_rulesets)
-		// NOTE: !! THIS CAN SLEEP !!
-		if(!queued.prepare_execution(length(GLOB.alive_player_list), list(latejoiner)))
-			continue
-		queued_rulesets -= queued
-		executed_rulesets += queued
-		queued.execute()
-		return TRUE
+/datum/controller/subsystem/dynamic/proc/try_spawn_latejoin(mob/living/carbon/human/latejoiner)
 
-	// Queued rulesets disregard the time threshold
-	if(!COOLDOWN_FINISHED(src, latejoin_ruleset_start) || !COOLDOWN_FINISHED(src, ruleset_cooldown))
-		return FALSE
 	if(rulesets_to_spawn[LATEJOIN_RANGE] <= 0)
 		return FALSE
-	if(try_run_latejoin(latejoiner))
-		rulesets_to_spawn[LATEJOIN_RANGE] -= 1
-		return TRUE
-	return FALSE
+	var/latejoin_chance = get_latejoin_chance()
+	if(!prob(latejoin_chance))
+		log_dynamic("Latejoin: Ruleset chance failed ([latejoin_chance]% chance)")
+		return FALSE
 
-/datum/controller/subsystem/dynamic/proc/get_latejoin_rulesets(mob/living/carbon/human/latejoiner)
-	PRIVATE_PROC(TRUE)
-
-	var/list/datum/dynamic_ruleset/latejoin/rulesets = list()
-	for(var/ruleset_type in subtypesof(/datum/dynamic_ruleset/latejoin))
-		var/datum/dynamic_ruleset/latejoin/ruleset = new ruleset_type(dynamic_config)
-		rulesets[ruleset] = ruleset.get_weight(length(GLOB.alive_player_list))
-
-	return rulesets
-
-/// Picks a random latejoin ruleset, and tries to run it
-/datum/controller/subsystem/dynamic/proc/try_run_latejoin(mob/living/carbon/human/latejoiner)
-	PRIVATE_PROC(TRUE)
 	var/list/rulesets_weighted = get_latejoin_rulesets(latejoiner)
 	// Note, we make no effort to actually pick a valid ruleset here
 	// We pick a ruleset, and they player might not even have that antag selected. And that's fine
 	var/datum/dynamic_ruleset/latejoin/picked_ruleset = pick_weight(rulesets_weighted)
 	// NOTE: !! THIS CAN SLEEP !!
 	if(!picked_ruleset.prepare_execution( length(GLOB.alive_player_list), list(latejoiner) ))
+		log_dynamic("Latejoin: Selected ruleset [picked_ruleset.name] for [key_name(latejoiner)], but preparation failed! Latejoin chance has increased.")
 		QDEL_LIST(rulesets_weighted)
+		failed_latejoins++
 		return FALSE
 	// Purely for logging
-	for(var/datum/mind/selected as anything in picked_ruleset.selected_minds)
-		message_admins("[ADMIN_LOOKUPFLW(selected)] has been selected for [picked_ruleset.name].")
-		log_dynamic("Dynamic: [key_name(selected)] has been selected for [picked_ruleset.name].")
+	if(!(latejoiner.mind in picked_ruleset.selected_minds))
+		stack_trace("Dynamic: Latejoin [picked_ruleset.type] executed, but the latejoiner was not in its selected minds list!")
+	message_admins("Latejoin: [ADMIN_LOOKUPFLW(latejoiner)] has been selected for [picked_ruleset.config_tag].")
+	log_dynamic("Latejoin: [key_name(latejoiner)] has been selected for [picked_ruleset.config_tag].")
 	// Run the thing
 	executed_rulesets += picked_ruleset
 	rulesets_weighted -= picked_ruleset
 	picked_ruleset.execute()
 	// Clean up unused rulesets
 	QDEL_LIST(rulesets_weighted)
+	rulesets_to_spawn[LATEJOIN_RANGE] -= 1
+	failed_latejoins = 0
+	COOLDOWN_START(src, latejoin_cooldown, get_ruleset_cooldown(LATEJOIN_RANGE))
 	return TRUE
+
+/// Gets a weighted list of latejoin rulesets
+/datum/controller/subsystem/dynamic/proc/get_latejoin_rulesets(mob/living/carbon/human/latejoiner)
+	PRIVATE_PROC(TRUE)
+
+	var/list/datum/dynamic_ruleset/latejoin/rulesets = list()
+	for(var/ruleset_type in subtypesof(/datum/dynamic_ruleset/latejoin))
+		var/datum/dynamic_ruleset/latejoin/ruleset = new ruleset_type(dynamic_config)
+		rulesets[ruleset] = ruleset.get_weight(length(GLOB.alive_player_list), current_tier.tier)
+
+	return rulesets
 
 /**
  * Queues a latejoin ruleset to run on next latejoin which fulfills all requirements
@@ -410,21 +411,58 @@ SUBSYSTEM_DEF(dynamic)
  * For all latejoins until then, it will simply do nothing
  *
  * * latejoin_type - The type of latejoin ruleset to force
- * * forced_min_cap - Rather than using the ruleset's min antag cap, use this value
- * * forced_max_cap - Rather than using the ruleset's max antag cap, use this value
  */
-/datum/controller/subsystem/dynamic/proc/queue_latejoin(latejoin_typepath, forced_min_cap, forced_max_cap)
+/datum/controller/subsystem/dynamic/proc/queue_latejoin(latejoin_typepath)
 	if(!ispath(latejoin_typepath, /datum/dynamic_ruleset/latejoin))
 		CRASH("queue_latejoin() was called with an invalid latejoin type: [latejoin_typepath]")
 
-	var/datum/dynamic_ruleset/latejoin/running = new latejoin_typepath(dynamic_config)
-	if(isnum(forced_min_cap))
-		running.min_antag_cap = forced_min_cap
-	if(isnum(forced_max_cap))
-		running.max_antag_cap = forced_max_cap
-	queued_rulesets += running
+	queued_rulesets += new latejoin_typepath(dynamic_config)
 
-// Set result and news report here
+/**
+ * Get the cooldown between attempts to spawn a ruleset of the given type
+ */
+/datum/controller/subsystem/dynamic/proc/get_ruleset_cooldown(range)
+	if(range == ROUNDSTART_RANGE)
+		stack_trace("Attempting to get cooldown for roundstart rulesets - this is redundant and is likely an error")
+		return 0
+
+	var/low = current_tier.ruleset_ranges[range][EXECUTION_COOLDOWN_LOW] || 0
+	var/high = current_tier.ruleset_ranges[range][EXECUTION_COOLDOWN_HIGH] || 0
+	return rand(low, high)
+
+/**
+ * Gets the chance of a midround ruleset being selected
+ */
+/datum/controller/subsystem/dynamic/proc/get_midround_chance(range)
+	var/chance = 0
+	var/num_antags = length(GLOB.current_living_antags)
+	var/num_dead = length(GLOB.dead_player_list)
+	var/num_alive = length(GLOB.alive_player_list)
+
+	chance += 100 - (100 * (num_dead / (num_alive + num_dead)))
+	if(num_antags < 0)
+		chance += 50
+
+	return chance
+
+/**
+ * Gets the chance of a latejoin ruleset being selected
+ */
+/datum/controller/subsystem/dynamic/proc/get_latejoin_chance()
+	PRIVATE_PROC(TRUE)
+
+	var/chance = 0
+	var/num_antags = length(GLOB.current_living_antags)
+	var/num_dead = length(GLOB.dead_player_list)
+	var/num_alive = length(GLOB.alive_player_list)
+
+	chance += 100 - (100 * (num_dead / (num_alive + num_dead)))
+	if(num_antags < 0)
+		chance += 50
+	chance += (failed_latejoins * 15)
+
+	return chance
+
 /datum/controller/subsystem/dynamic/proc/set_round_result()
 	// If it got to this part, just pick one high impact ruleset if it exists
 	for(var/datum/dynamic_ruleset/rule as anything in executed_rulesets)
@@ -452,7 +490,9 @@ SUBSYSTEM_DEF(dynamic)
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED && !SSticker.news_report)
 		SSticker.news_report = SSshuttle.emergency?.is_hijacked() ? SHUTTLE_HIJACK : STATION_EVACUATED
 
-/proc/build_dynamic_toml()
+#ifdef TESTING
+/// Puts all repo defaults into a dynamic.toml file
+/datum/controller/subsystem/dynamic/proc/build_dynamic_toml()
 	var/data = ""
 	for(var/tier_type in subtypesof(/datum/dynamic_tier))
 		var/datum/dynamic_tier/tier = new tier_type()
@@ -460,7 +500,7 @@ SUBSYSTEM_DEF(dynamic)
 			qdel(tier)
 			continue
 
-		data += "\[[tier.config_tag]\]\n"
+		data += "\[\"[tier.config_tag]\"\]\n"
 		data += "name = \"[tier.name]\"\n"
 		data += "min_pop = [tier.min_pop]\n"
 		data += "advisory_report = \"[tier.advisory_report]\"\n"
@@ -470,7 +510,10 @@ SUBSYSTEM_DEF(dynamic)
 			data += "ruleset_ranges.[range].[HALF_RANGE_POP_THRESHOLD] = [tier.ruleset_ranges[range]?[HALF_RANGE_POP_THRESHOLD] || 0]\n"
 			data += "ruleset_ranges.[range].[FULL_RANGE_POP_THRESHOLD] = [tier.ruleset_ranges[range]?[FULL_RANGE_POP_THRESHOLD] || 0]\n"
 			if(range != ROUNDSTART_RANGE)
-				data += "ruleset_ranges.[range].[TIME_THRESHOLD] = [tier.ruleset_ranges[range]?[TIME_THRESHOLD] || 0]\n"
+				data += "ruleset_ranges.[range].[TIME_THRESHOLD] = [(tier.ruleset_ranges[range]?[TIME_THRESHOLD] || 0) / 60 / 10]\n"
+				data += "ruleset_ranges.[range].[EXECUTION_COOLDOWN_LOW] = [(tier.ruleset_ranges[range]?[EXECUTION_COOLDOWN_LOW] || 0) / 60 / 10]\n"
+				data += "ruleset_ranges.[range].[EXECUTION_COOLDOWN_HIGH] = [(tier.ruleset_ranges[range]?[EXECUTION_COOLDOWN_HIGH] || 0) / 60 / 10]\n"
+
 		data += "\n"
 		qdel(tier)
 
@@ -480,7 +523,7 @@ SUBSYSTEM_DEF(dynamic)
 			qdel(ruleset)
 			continue
 
-		data += "\[[ruleset.config_tag]\]\n"
+		data += "\[\"[ruleset.config_tag]\"\]\n"
 		if(islist(ruleset.weight))
 			for(var/i in 1 to length(ruleset.weight))
 				data += "weight.[i] = [ruleset.weight[i]]\n"
@@ -510,14 +553,15 @@ SUBSYSTEM_DEF(dynamic)
 			else if(!isnull(ruleset.max_antag_cap))
 				data += "max_antag_cap = [ruleset.max_antag_cap]\n"
 			else
-				data += "# max_antag_cap = null ## defaults to min_antag_cap\n"
+				data += "# max_antag_cap = min_antag_cap\n"
 		data += "repeatable_weight_decrease = [ruleset.repeatable_weight_decrease]\n"
 		data += "repeatable = [ruleset.repeatable]\n"
 		data += "minimum_required_age = [ruleset.minimum_required_age]\n"
 		data += "\n"
 		qdel(ruleset)
 
-	var/fp = "code/controllers/subsystem/dynamic2024/dynamic.toml"
-	fdel(file(fp))
-	text2file(data, fp)
+	var/filepath = "[global.config.directory]/dynamic.toml"
+	fdel(file(filepath))
+	text2file(data, filepath)
 	return TRUE
+#endif

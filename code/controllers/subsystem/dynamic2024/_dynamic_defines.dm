@@ -8,6 +8,8 @@
 #define HALF_RANGE_POP_THRESHOLD "half_range_pop_threshold"
 #define FULL_RANGE_POP_THRESHOLD "full_range_pop_threshold"
 #define TIME_THRESHOLD "time_threshold"
+#define EXECUTION_COOLDOWN_LOW "execution_cooldown_low"
+#define EXECUTION_COOLDOWN_HIGH "execution_cooldown_high"
 
 #define DYNAMIC_TIER_GREEN 0
 #define DYNAMIC_TIER_LOW 1
