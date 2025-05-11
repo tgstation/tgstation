@@ -6063,6 +6063,7 @@
 	pixel_x = -13;
 	pixel_y = 7
 	},
+/obj/effect/spawner/random/ashtray,
 /turf/open/floor/wood,
 /area/station/engineering/break_room)
 "byX" = (
@@ -6255,6 +6256,9 @@
 /obj/item/cigarette/cigar{
 	pixel_x = -2;
 	pixel_y = 2
+	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
 	},
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
@@ -10693,6 +10697,10 @@
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/newscaster/directional/south,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 9;
+	pixel_x = -11
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "cCw" = (
@@ -13280,6 +13288,9 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/spawner/random/ashtray{
+	pixel_x = -8
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/testlab)
 "dkH" = (
@@ -15803,6 +15814,9 @@
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 16
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "dQS" = (
@@ -28514,6 +28528,10 @@
 /obj/item/hand_labeler{
 	pixel_y = -11
 	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16;
+	pixel_x = 8
+	},
 /turf/open/floor/carpet,
 /area/station/security/detectives_office)
 "gZU" = (
@@ -40229,6 +40247,9 @@
 	},
 /obj/item/holosign_creator/robot_seat/bar,
 /obj/machinery/door/firedoor,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -16
+	},
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
@@ -44676,6 +44697,9 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -16
+	},
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "ldU" = (
@@ -48233,6 +48257,9 @@
 /obj/item/folder/blue,
 /obj/item/pen/fourcolor,
 /obj/machinery/status_display/evac/directional/west,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
+	},
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain/private)
 "lXW" = (
@@ -49420,6 +49447,9 @@
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/structure/fish_mount/bar/directional/north,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -16
+	},
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "mpk" = (
@@ -50568,6 +50598,9 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = -16
+	},
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "mDt" = (
@@ -52128,6 +52161,9 @@
 	pixel_x = -3
 	},
 /obj/item/cigarette/cigar,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
+	},
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain)
 "mXy" = (
@@ -62606,6 +62642,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/table/wood,
 /obj/machinery/door/firedoor,
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
+	},
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
@@ -64538,6 +64577,10 @@
 /obj/item/toy/figure/paramedic,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
+	},
+/obj/effect/spawner/random/ashtray{
+	pixel_x = 16;
+	pixel_y = 11
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/paramedic)
@@ -75947,6 +75990,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
+	},
+/obj/effect/spawner/random/ashtray{
+	pixel_y = 16
 	},
 /turf/open/floor/iron/dark/side{
 	dir = 10
