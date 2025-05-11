@@ -94,7 +94,7 @@
 /datum/supply_pack/custom_grey/New(purchaser, cost, list/contains)
 	. = ..()
 	name = "[purchaser]'s Supply Order"
-	src.cost = cost
+	src.cost = 0
 	src.contains = contains
 	crate_type = pick(random_crate_types)
 
