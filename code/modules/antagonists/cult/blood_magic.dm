@@ -458,7 +458,7 @@
 	// Heretics have an identical effect on their grasp. The cultist's worse spell preparation is offset by their extra gear and teammates.
 	if(IS_HERETIC(target))
 		target.AdjustKnockdown(0.5 SECONDS)
-		target.adjust_confusion_up_to(1.5 SECONDS, 3 SECONDS)
+		target.adjust_confusion_up_to(5, 15)
 		target.adjust_dizzy_up_to(1.5 SECONDS, 3 SECONDS)
 		ADD_TRAIT(target, TRAIT_NO_SIDE_KICK, REF(src)) // We don't want this to be a good stunning tool, just minor disorientation
 		addtimer(TRAIT_CALLBACK_REMOVE(target, TRAIT_NO_SIDE_KICK, REF(src)), 1 SECONDS)

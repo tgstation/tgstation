@@ -37,6 +37,10 @@
 	var/heal_flag_necessary = HEAL_STATUS
 	/// A particle effect, for things like embers - Should be set on update_particles()
 	VAR_FINAL/obj/effect/abstract/particle_holder/particle_effect
+	///A strength value for scaling the effect, more legacy status effects could probably be adapted to use this._dm_db_new_con()
+	var/strength = 100
+	///For how many seconds we want to prevent decay for strength based status effects
+	var/decay_freeze = 0 SECONDS
 
 /datum/status_effect/New(list/arguments)
 	on_creation(arglist(arguments))
@@ -239,6 +243,20 @@
 
 	if(var_name == NAMEOF(src, show_duration))
 		update_shown_duration()
+
+///Sets the our strength to [set_to].
+/datum/status_effect/proc/set_strength(set_to)
+	if(!isnum(set_to))
+		CRASH("set_strength: called with an invalid value. (Got: [set_to])")
+
+	strength = set_to
+
+///Sets strength unless decay is frozen, otherwise decrease decay_freeze
+/datum/status_effect/proc/decay_strength(decay_to, seconds_per_tick)
+	if(decay_freeze > 0)
+		decay_freeze -= seconds_per_tick
+		return
+	set_strength(decay_to)
 
 /// Alert base type for status effect alerts
 /atom/movable/screen/alert/status_effect

@@ -64,7 +64,7 @@
 				splashed.Stun(1 SECONDS)
 				splashed.Knockdown(2 SECONDS)
 				splashed.set_eye_blur_if_lower(15 SECONDS)
-				splashed.adjust_confusion(4 SECONDS)
+				splashed.adjust_confusion(50)
 
 			// GORE
 			var/obj/item/bodypart/bozopart = bozo.get_bodypart(BODY_ZONE_HEAD)
@@ -93,7 +93,7 @@
 			)
 			// if they're susceptible to electrocution, confuse them
 			if(bozo.electrocute_act(15, bozo, 1, SHOCK_NOGLOVES|SHOCK_NOSTUN))
-				bozo.adjust_confusion(15 SECONDS)
+				bozo.adjust_confusion(50)
 				bozo.set_eye_blur_if_lower(10 SECONDS)
 			// but the rest of the effects will happen either way
 			bozo.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20 - get_integrity())
@@ -129,7 +129,7 @@
 				else
 					particle_path = /particles/smoke/steam/mild
 
-			bozo.adjust_confusion(4 SECONDS)
+			bozo.adjust_confusion(25)
 			bozo.set_eye_blur_if_lower(3 SECONDS)
 
 			particle_effect = new(bozo, particle_path)

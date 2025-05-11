@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 		return
 	C.adjust_eye_blur(12 SECONDS)
 	C.adjustStaminaLoss(15)//the pain from your eyes burning does stamina damage
-	C.adjust_confusion(5 SECONDS)
+	C.adjust_confusion(50)
 	to_chat(C, span_userdanger("\The [src] gets into your eyes! The pain, it burns!"))
 	qdel(src)
 

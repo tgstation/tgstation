@@ -443,7 +443,7 @@
 	do_sparks(8, FALSE, sold_item)
 	playsound(picked_turf, 'sound/items/weapons/emitter2.ogg', 25, TRUE)
 	sold_item.flash_act()
-	sold_item.adjust_confusion(10 SECONDS)
+	sold_item.adjust_confusion(25)
 	sold_item.adjust_dizzy(10 SECONDS)
 	addtimer(CALLBACK(src, PROC_REF(send_back_to_station), sold_item), COME_BACK_FROM_CAPTURE_TIME)
 	to_chat(sold_item, span_hypnophrase("A million voices echo in your head... <i>\"Yaarrr, thanks for the booty, landlubber. \

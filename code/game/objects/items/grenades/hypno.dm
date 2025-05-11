@@ -73,5 +73,5 @@
 			else
 				to_chat(target, span_hypnophrase("The light is so pretty..."))
 				target.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
-				target.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+				target.adjust_confusion_up_to(30, 50)
 				target.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)

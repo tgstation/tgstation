@@ -31,7 +31,7 @@
 		to_chat(owner, span_warning("Their mind doesn't swing open, but neither does yours."))
 		return FALSE
 
-	cast_on.adjust_confusion(10 SECONDS)
+	cast_on.adjust_confusion(30)
 	cast_on.adjustOxyLoss(30)
 	cast_on.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/body), "Mind gate, cast by [owner]")
 	cast_on.cause_hallucination(/datum/hallucination/delusion/preset/heretic/gate, "Caused by mindgate")

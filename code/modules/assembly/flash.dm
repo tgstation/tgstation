@@ -62,7 +62,7 @@
 
 /obj/item/assembly/flash/proc/clown_check(mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		flash_carbon(user, user, confusion_duration = 15 SECONDS, targeted = FALSE)
+		flash_carbon(user, user, confusion_strength = 40, targeted = FALSE)
 		return FALSE
 	return TRUE
 
@@ -84,7 +84,7 @@
 	return TRUE
 
 //BYPASS CHECKS ALSO PREVENTS BURNOUT!
-/obj/item/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, confusion_duration = 5 SECONDS, mob/user)
+/obj/item/assembly/flash/proc/AOE_flash(bypass_checks = FALSE, range = 3, confusion_strength = 15, mob/user)
 	if(!bypass_checks && !try_use_flash())
 		return FALSE
 	var/list/mob/targets = get_flash_targets(get_turf(src), range, FALSE)
@@ -92,7 +92,7 @@
 		targets -= user
 		to_chat(user, span_danger("[src] emits a blinding light!"))
 	for(var/mob/living/carbon/nearby_carbon in targets)
-		flash_carbon(nearby_carbon, user, confusion_duration, targeted = FALSE, generic_message = TRUE)
+		flash_carbon(nearby_carbon, user, confusion_strength, targeted = FALSE, generic_message = TRUE)
 	return TRUE
 
 /obj/item/assembly/flash/proc/get_flash_targets(atom/target_loc, range = 3, override_vision_checks = FALSE)
@@ -132,11 +132,11 @@
  * Arguments:
  * * M - Victim
  * * user - Attacker
- * * confusion_duration - handles the amount of confusion it gives you
+ * * confusion_strength - handles the amount of confusion it gives you
  * * targeted - determines if it was aoe or targeted
  * * generic_message - checks if it should display default message.
  */
-/obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/flashed, mob/user, confusion_duration = 15 SECONDS, targeted = TRUE, generic_message = FALSE)
+/obj/item/assembly/flash/proc/flash_carbon(mob/living/carbon/flashed, mob/user, confusion_strength = 40, targeted = TRUE, generic_message = FALSE)
 	if(!istype(flashed))
 		return
 	if(user)
@@ -167,7 +167,7 @@
 
 	if(targeted)
 		if(flashed.flash_act(1, 1))
-			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
+			flashed.set_confusion_if_lower(confusion_strength * CONFUSION_STACK_MAX_MULTIPLIER)
 			visible_message(span_danger("[user] blinds [flashed] with the flash!"), span_userdanger("[user] blinds you with the flash!"))
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			flashed.adjustStaminaLoss(rand(80, 120) * (1 - (deviation * 0.5)))
@@ -180,7 +180,7 @@
 			to_chat(flashed, span_danger("[src] fails to blind you!"))
 	else
 		if(flashed.flash_act())
-			flashed.set_confusion_if_lower(confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
+			flashed.set_confusion_if_lower(confusion_strength * CONFUSION_STACK_MAX_MULTIPLIER)
 
 /**
  * Handles the directionality of the attack
@@ -238,7 +238,7 @@
 
 	. = TRUE
 	if(iscarbon(M))
-		flash_carbon(M, user, confusion_duration = 5 SECONDS, targeted = TRUE)
+		flash_carbon(M, user, confusion_strength = 15, targeted = TRUE)
 		return
 	if(issilicon(M))
 		var/mob/living/silicon/robot/flashed_borgo = M
@@ -253,7 +253,7 @@
 			else
 				user.visible_message(span_warning("[user] blinds [flashed_borgo] with the flash!"), span_danger("You blind [flashed_borgo] with the flash!"))
 			flashed_borgo.set_temp_blindness_if_lower( (rand(5,15) SECONDS))
-			flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
+			flashed_borgo.set_confusion_if_lower(15 * CONFUSION_STACK_MAX_MULTIPLIER)
 		else
 			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
 		return
@@ -349,7 +349,7 @@
 /obj/item/assembly/flash/hypnotic/burn_out()
 	return
 
-/obj/item/assembly/flash/hypnotic/flash_carbon(mob/living/carbon/M, mob/user, confusion_duration = 15, targeted = TRUE, generic_message = FALSE)
+/obj/item/assembly/flash/hypnotic/flash_carbon(mob/living/carbon/M, mob/user, confusion_strength = 15, targeted = TRUE, generic_message = FALSE)
 	if(!istype(M))
 		return
 	if(user)
@@ -368,7 +368,7 @@
 
 			if(!hypnosis)
 				to_chat(M, span_hypnophrase("The light makes you feel oddly relaxed..."))
-				M.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
+				M.adjust_confusion(50)
 				M.adjust_dizzy_up_to(20 SECONDS, 40 SECONDS)
 				M.adjust_drowsiness_up_to(20 SECONDS, 40 SECONDS)
 				M.adjust_pacifism(10 SECONDS)
@@ -382,7 +382,7 @@
 
 	else if(M.flash_act())
 		to_chat(M, span_notice("Such a pretty light..."))
-		M.adjust_confusion_up_to(4 SECONDS, 20 SECONDS)
+		M.adjust_confusion(25)
 		M.adjust_dizzy_up_to(8 SECONDS, 40 SECONDS)
 		M.adjust_drowsiness_up_to(8 SECONDS, 40 SECONDS)
 		M.adjust_pacifism(4 SECONDS)

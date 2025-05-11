@@ -68,7 +68,7 @@
 			oxyloss_sum += 1
 		if(SPT_PROB(8, seconds_between_ticks))
 			to_chat(owner, span_danger("You feel very weak and dizzy..."))
-			owner.adjust_confusion_up_to(6 SECONDS, 10 SECONDS)
+			owner.adjust_confusion_up_to(15, 30)
 			owner.adjustStaminaLoss(20)
 			owner.emote("cough")
 			oxyloss_sum += 8

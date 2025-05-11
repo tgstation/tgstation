@@ -241,7 +241,7 @@
 		if(carbon_view.can_block_magic(MAGIC_RESISTANCE_MIND)) //Somehow a shitty piece of tinfoil is STILL able to hold out against the power of an ascended heretic.
 			continue
 		new moon_effect(get_turf(carbon_view))
-		carbon_view.adjust_confusion(2 SECONDS)
+		carbon_view.adjust_confusion_linear(2.5, seconds_per_tick)
 		carbon_view.mob_mood.adjust_sanity(-5)
 		var/carbon_sanity = carbon_view.mob_mood.sanity
 		if(carbon_sanity < 30)

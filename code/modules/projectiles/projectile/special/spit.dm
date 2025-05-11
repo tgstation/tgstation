@@ -53,6 +53,6 @@
 		var/datum/status_effect/organ_set_bonus/fish/bonus = living?.has_status_effect(/datum/status_effect/organ_set_bonus/fish)
 		powered_up = bonus?.bonus_active
 	victim.adjust_temp_blindness_up_to((powered_up ? 6.5 : 4.5) SECONDS, 10 SECONDS)
-	victim.adjust_confusion_up_to((powered_up ? 3 : 1.5) SECONDS, 6 SECONDS)
+	victim.adjust_confusion(powered_up ? 60 : 30)
 	if(powered_up)
 		victim.Knockdown(2 SECONDS) //splat!

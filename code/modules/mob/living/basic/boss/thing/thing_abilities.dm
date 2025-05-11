@@ -131,7 +131,7 @@
 	for(var/mob/living/target in range(2, caster))
 		if(target == owner)
 			continue
-		target.set_confusion_if_lower(5 SECONDS)
+		target.set_confusion_if_lower(13)
 		target.set_jitter_if_lower(5 SECONDS)
 		var/mob/living/carbon/carbon_target = target
 		if(istype(carbon_target))

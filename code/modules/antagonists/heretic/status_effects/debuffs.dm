@@ -98,7 +98,7 @@
 			// And definitely don't fully kil brains
 			human_owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20, 190)
 		if(95 to 100)
-			human_owner.adjust_confusion_up_to(12 SECONDS, 24 SECONDS)
+			human_owner.adjust_confusion_up_to(40, 80)
 
 /datum/status_effect/star_mark
 	id = "star_mark"

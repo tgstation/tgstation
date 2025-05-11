@@ -389,7 +389,7 @@ Return to step 11 of normal process."}
 			target.visible_message(span_danger("[user] stuns [target] with [src]!"),
 				span_userdanger("[user] stuns you with [src]!"))
 			target.set_jitter_if_lower(40 SECONDS)
-			target.set_confusion_if_lower(10 SECONDS)
+			target.set_confusion_if_lower(30)
 			target.set_stutter_if_lower(16 SECONDS)
 			SEND_SIGNAL(target, COMSIG_LIVING_MINOR_SHOCK)
 			target.Paralyze(knockdown_time * (HAS_TRAIT(target, TRAIT_BATON_RESISTANCE) ? 0.1 : 1))

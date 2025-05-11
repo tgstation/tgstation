@@ -5,12 +5,12 @@
 	status_type = STATUS_EFFECT_REPLACE // Only one food buff allowed
 	alert_type = /atom/movable/screen/alert/status_effect/food
 	show_duration = TRUE
-	/// Buff power equal to food complexity (1 to 5)
-	var/strength
 
-/datum/status_effect/food/on_creation(mob/living/new_owner, timeout_mod = 1, strength = 1)
+/datum/status_effect/food/on_creation(mob/living/new_owner, timeout_mod = 1, new_strength = 1)
 	. = ..()
-	src.strength = strength
+	if(isnum(new_strength))
+		strength = new_strength
+	// Buff power equal to food complexity (1 to 5)
 	if(isnum(timeout_mod))
 		duration *= timeout_mod
 	if(istype(linked_alert, /atom/movable/screen/alert/status_effect/food))
@@ -21,3 +21,4 @@
 	desc = "Eating it made me feel better."
 	icon_state = "food_buff_1"
 	base_icon_state = "food_buff"
+
