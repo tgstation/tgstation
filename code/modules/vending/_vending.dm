@@ -1465,6 +1465,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		vended_item.set_greyscale(colors=greyscale_colors)
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take [item_record.name] out of the slot."))
+		vended_item.do_pickup_animation(usr, src)
 	else
 		to_chat(usr, span_warning("[capitalize(format_text(item_record.name))] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[item_record.product_path]"))

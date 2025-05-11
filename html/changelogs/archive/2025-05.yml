@@ -173,3 +173,107 @@
   - bugfix: Fixed reinforced plating consuming all air on the tile upon construction
   grungussuss:
   - bugfix: agent ID scanning action is a hidden do_after
+2025-05-07:
+  EuSouAFazer:
+  - bugfix: Catwalk's tcomms machines are no longer scattered around
+  - map: Catwalk's AI sat now has a brand new laundromat and office
+  Iamgoofball:
+  - qol: Heretics can see blessed tiles.
+  Maurukas:
+  - rscdel: Remove an m1911 magazine from a surface ruin
+  SmArtKar:
+  - bugfix: Fixed the error overlay caused by the Tress Shoulder hairstyle
+  TealSeer:
+  - bugfix: roundstart photocopiers should no longer be empty on some maps
+2025-05-08:
+  Bisar:
+  - image: Animations have been added to inserting/removing items from machines, and
+      to inserting things into containers that are not on your person.
+  LemonInTheDark:
+  - refactor: Reworked a bit of how smoothing functions on the backend. Nothing should
+      change, so if it does please yell at me
+  Y0SH1M4S73R:
+  - bugfix: Shuttle blueprints don't error out when opening them while on non-custom
+      shuttles.
+  - bugfix: Custom shuttles calculate their engine count correctly, no longer lagging
+      behind by one engine (un)installation.
+  - bugfix: Custom shuttle docking consoles are no longer blocked by where the linked
+      shuttle currently is.
+  - qol: Shuttle blueprints now show you how large a shuttle frame is, along with
+      any issues preventing you from building or expanding a shuttle using said frame.
+  necromanceranne:
+  - rscadd: Adds the Exosuit Ablative Insulation armor booster module. Protects the
+      mech from energy-based attacks and its wires from EMPs (only the wires, not
+      the mech). However, the armor booster makes the mech weaker to ballistic and
+      melee weapons.
+  - rscadd: The Dark Gygax and Mauler now come pre-packaged with a special version
+      that has no weakness to ballistic and melee weapons.
+  rageguy505:
+  - bugfix: Hop's office on catwalk now has working disposals and removes a floating
+      camera console from the bridge.
+  throwawayuseless:
+  - balance: Massively reduce the MMI component message cooldown.
+2025-05-09:
+  1393F:
+  - qol: Pluoxium, an oxygen substitute, will no longer be scrubbed when setting air
+      alarms to contaminated.
+  Absolucy:
+  - qol: Ghost notifications will now use the real names of mobs when something happens
+      (i.e no more "Unknown has completed an ascension ritual!")
+  Bisar:
+  - qol: Bluespace light replacer no longer has a range limit.
+  Goat:
+  - bugfix: Barometers now properly report if the weather is dangerous or not.
+  Goat-Real:
+  - balance: Ice whelps' fire breath attack has slightly more delay. (0.5 -> 0.6 second
+      startup, 0.75 -> 0.85 decisecond for the speed the fire moves per tile.)
+  Jacquerel:
+  - balance: The supermatter will react negatively to being fed nuclear fissile materials
+  Krysonism:
+  - rscadd: Added a new type of reagent container; the jerrycan.
+  - rscadd: Added some prefilled jerrycans to maint loot.
+  - balance: Botany nutrients now come in bulk packaging.
+  Rhials:
+  - bugfix: Immovable rods self-delete at the icebox world border.
+  TealSeer:
+  - bugfix: fixed the photocopier silently failing if you can't pay the fee
+  necromanceranne:
+  - bugfix: Caps how much eyeblur can be caused by things like projectiles.
+  - bugfix: The tesla cannon now fires actually visible bolts.
+2025-05-10:
+  00-Steven:
+  - bugfix: NTos file manager program actually shows the program names, instead of
+      the
+  - qol: Egg boxes can hold chocolate eggs, boiled eggs, and surprise eggs
+  Jacquerel:
+  - balance: The negative effects of a mansus-corrupted liver can be suppressed with
+      holy water, like the other corrupt organs.
+  L1nd:
+  - balance: spiders can't wrap megafauna
+  - bugfix: nonhuman spider cocoons looks accordingly
+  Maximal08:
+  - bugfix: Fixing the arrow display when using the multitool
+  SmArtKar:
+  - bugfix: Fixed explorer masks going invisible when you put on a goliath hood
+  - qol: Improved
+  rageguy505:
+  - bugfix: carpenter and claw hammer can now test for brain health.
+  throwawayuseless:
+  - rscadd: Robotic voiceboxes now grant Encoded Audio Language. Techpriests and circuit
+      nerds, rejoice!
+  - rscadd: Revolutionaries are now weakened by grenadine. Because the pomegranate
+      antioxidants stop free radicals.
+2025-05-11:
+  Jacquerel:
+  - balance: Most biological mobs are now slowed by taking stamina damage, and can
+      be stunned. Mechanical mobs, mining mobs, and several other special kinds (chiefly
+      those invoked by antagonists) are unaffected. If this seems to effect any mob
+      it probably shouldn't, please report it as a bug.
+  Melbert:
+  - balance: If you're staggered, and try to walk down stairs, you'll instead fall
+      down the stairs (stunning and causing damage).
+  - balance: Hard crit and dead people will also roll down the stairs.
+  Rengan:
+  - server: The crimes are now logging in the database.
+  vinylspiders:
+  - bugfix: stops snails from clogging up CI

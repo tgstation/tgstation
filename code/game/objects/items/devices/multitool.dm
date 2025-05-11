@@ -94,7 +94,7 @@
 	user.balloon_alert(user, balloon_message)
 
 	var/datum/hud/user_hud = user.hud_used
-	if(!user_hud)
+	if(!user_hud || !istype(user_hud, /datum/hud) || !islist(user_hud.infodisplay))
 		return
 
 	var/atom/movable/screen/multitool_arrow/arrow = new(null, user_hud)

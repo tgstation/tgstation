@@ -320,15 +320,14 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(get_paper_count() < paper_use * copies_amount)
 		copies_amount = FLOOR(get_paper_count() / paper_use, 1)
 		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\"")
+	if(copies_amount > 0 && (attempt_charge(src, user, (copies_amount - 1) * PHOTOCOPIER_FEE) & COMPONENT_OBJ_CANCEL_CHARGE))
+		copies_amount = 0
+		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Failed to charge bank account. Aborting.\"")
 
 	copies_left = copies_amount
 
 	if(copies_amount <= 0)
 		to_chat(user, error_message)
-		reset_busy()
-		return
-
-	if(attempt_charge(src, user, (copies_amount - 1) * PHOTOCOPIER_FEE) & COMPONENT_OBJ_CANCEL_CHARGE)
 		reset_busy()
 		return
 
