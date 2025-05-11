@@ -3199,7 +3199,7 @@
 "Ra" = (
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil{
+/obj/effect/decal/cleanable/blood/oil{
 	icon_state = "floor5"
 	},
 /turf/open/floor/iron,

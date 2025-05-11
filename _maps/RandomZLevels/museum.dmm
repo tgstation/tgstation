@@ -3910,7 +3910,7 @@
 "Fw" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	name = "replica blood";
-	should_dry = 0
+	can_dry = 0
 	},
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -5541,7 +5541,7 @@
 "UH" = (
 /obj/structure/mirror/broken/directional/east,
 /obj/structure/sink/directional/west,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/white/small,
 /area/awaymission/museum)
 "UI" = (

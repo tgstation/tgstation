@@ -221,7 +221,7 @@
 /area/ruin/space)
 "jH" = (
 /obj/item/storage/toolbox/mechanical,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "kn" = (
@@ -260,7 +260,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "Bw" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "CO" = (
@@ -331,7 +331,7 @@
 /obj/structure/fluff/bus/dense{
 	icon_state = "frontwallbottom"
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "KK" = (
@@ -366,7 +366,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "Wn" = (
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "WQ" = (

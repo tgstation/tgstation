@@ -2819,7 +2819,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/garage)
 "kl" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "km" = (
@@ -3029,7 +3029,7 @@
 /area/awaymission/snowdin/post/garage)
 "lc" = (
 /obj/vehicle/ridden/atv,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
 "ld" = (
@@ -6616,7 +6616,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_dock)
 "zy" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/minipost)
 "zz" = (
@@ -8254,7 +8254,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "Hd" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "He" = (
@@ -8332,7 +8332,7 @@
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "HA" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "HB" = (
@@ -8397,7 +8397,7 @@
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "HP" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/awaymission/snowdin/post/mining_main/mechbay)
 "HQ" = (
@@ -8519,7 +8519,7 @@
 /obj/vehicle/ridden/atv{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
 "Iy" = (
@@ -8579,7 +8579,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)
 "II" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/mining_main)

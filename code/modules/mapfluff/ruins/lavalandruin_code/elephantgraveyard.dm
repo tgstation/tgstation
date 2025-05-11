@@ -128,7 +128,7 @@
 		return ..()
 
 /obj/structure/sink/oil_well/drop_materials()
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 
 //***Grave mounds.
 /// has no items inside unless you use the filled subtype

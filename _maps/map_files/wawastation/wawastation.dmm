@@ -4089,7 +4089,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/treatment_center)
 "bvJ" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/entertainment/arcade{
@@ -11431,7 +11431,7 @@
 	name = "AI Antechamber turret control";
 	pixel_y = -27
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/iron/dark,
@@ -17217,7 +17217,7 @@
 /area/station/medical/virology)
 "gcD" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/robot_debris/limb,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/limb,
 /obj/item/flashlight/lamp,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse/upper)
@@ -22950,7 +22950,7 @@
 /area/station/medical/virology)
 "hZO" = (
 /obj/structure/table,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/clothing/head/costume/cardborg,
@@ -34429,7 +34429,7 @@
 /area/station/engineering/atmospherics_engine)
 "lXJ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/uppernorth)
@@ -35593,7 +35593,7 @@
 /area/station/security/brig)
 "msE" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse/upper)
@@ -48182,7 +48182,7 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "qNU" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/port/lesser)
@@ -58256,7 +58256,7 @@
 /area/station/cargo/storage)
 "udf" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
@@ -60292,7 +60292,7 @@
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "uNK" = (
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/blood/tracks,
 /turf/open/floor/plating,
@@ -61918,7 +61918,7 @@
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "vvn" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/light/small/directional/west,
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -63602,7 +63602,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry/minisat)
 "vZj" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/item/reagent_containers/spray/cleaner,

@@ -503,7 +503,7 @@
 	name = "TIMEOUT BOX"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "Cf" = (
