@@ -653,6 +653,8 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 			AttemptProfileDump(CONFIG_GET(number/drift_profile_delay))
 		olddrift = newdrift
 
+		update_glide_compensation()
+
 		if (init_stage != init_stage_completed)
 			return MC_LOOP_RTN_NEWSTAGES
 		if (processing <= 0)
@@ -765,7 +767,6 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 #endif
 		CONSUME_UNTIL(overtime_target)
 #endif
-
 		if (init_stage != INITSTAGE_MAX)
 			current_ticklimit = TICK_LIMIT_RUNNING * 2
 		else
@@ -1029,4 +1030,3 @@ ADMIN_VERB(cmd_controller_view_ui, R_SERVER|R_DEBUG, "Controller Overview", "Vie
 		return FALSE
 	last_profiled = REALTIMEOFDAY
 	SSprofiler.DumpFile(allow_yield = FALSE)
-
