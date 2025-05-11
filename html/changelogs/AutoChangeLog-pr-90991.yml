@@ -1,5 +1,0 @@
-author: "L1nd"
-delete-after: True
-changes:
-  - balance: "spiders can't wrap megafauna"
-  - bugfix: "nonhuman spider cocoons looks accordingly"

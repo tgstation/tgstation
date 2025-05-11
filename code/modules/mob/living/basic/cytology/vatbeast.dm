@@ -12,7 +12,7 @@
 	speak_emote = list("roars")
 	health = 250
 	maxHealth = 250
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, STAMINA = 1, OXY = 1)
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	obj_damage = 40
