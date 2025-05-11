@@ -256,6 +256,7 @@ export function FeatureShortTextInput(
       value={value}
       maxLength={serverData?.maximum_length}
       onChange={handleSetValue}
+      expensive
     />
   );
 }
