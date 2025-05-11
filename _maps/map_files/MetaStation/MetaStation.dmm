@@ -18792,7 +18792,12 @@
 /area/station/science/xenobiology/hallway)
 "gLI" = (
 /obj/machinery/door/poddoor/massdriver_ordnance,
-/obj/structure/fans/tiny,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 8
+	},
+/obj/machinery/atmos_shield_gen/active{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/science/ordnance/testlab)
 "gLJ" = (
@@ -29203,7 +29208,10 @@
 /area/station/maintenance/starboard/lesser)
 "kmW" = (
 /obj/machinery/door/poddoor/massdriver_trash,
-/obj/structure/fans/tiny,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 1
+	},
+/obj/machinery/atmos_shield_gen/active,
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "kmZ" = (
@@ -57400,7 +57408,12 @@
 /area/space/nearstation)
 "ulE" = (
 /obj/machinery/door/poddoor/massdriver_chapel,
-/obj/structure/fans/tiny,
+/obj/machinery/atmos_shield_gen/active{
+	dir = 4
+	},
+/obj/machinery/atmos_shield_gen/active{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/service/chapel/funeral)
 "ulR" = (
