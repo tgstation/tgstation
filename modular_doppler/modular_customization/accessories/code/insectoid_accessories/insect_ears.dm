@@ -24,3 +24,12 @@
 /datum/sprite_accessory/ears_more/bug/geniculate
 	name = "Geniculate Antenna"
 	icon_state = "geniculate"
+
+/datum/sprite_accessory/ears_more/bug/bent
+	name = "Bent Antennae"
+	icon_state = "antennae_bent"
+
+
+/datum/sprite_accessory/ears_more/bug/wisteria
+	name = "Wisteria Antennae"
+	icon_state = "antennae_wisteria"
