@@ -89,12 +89,20 @@
 *	SUITS / SUIT JACKETS
 */
 
+/datum/loadout_item/suit/detective_black
+	name = "Noir Trenchcoat"
+	item_path = /obj/item/clothing/suit/toggle/jacket/det_trench/noir
+
 /datum/loadout_item/suit/detective_black_short
 	name = "Noir Suit Jacket"
 	item_path = /obj/item/clothing/suit/jacket/det_suit/noir
 
 /datum/loadout_item/suit/detective_brown
 	name = "Trenchcoat"
+	item_path = /obj/item/clothing/suit/toggle/jacket/det_trench
+
+/datum/loadout_item/suit/detective_brown_short
+	name = "Brown Suit Jacket"
 	item_path = /obj/item/clothing/suit/jacket/det_suit
 
 /datum/loadout_item/suit/its_pronounced_stow_ic_not_stoike
