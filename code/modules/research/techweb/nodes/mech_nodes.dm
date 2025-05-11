@@ -109,6 +109,7 @@
 	design_ids = list(
 		"mech_ccw_armor",
 		"mech_proj_armor",
+		"mech_emp_armor",
 		"paddyupgrade",
 		"mech_hydraulic_claw",
 		"mech_disabler",

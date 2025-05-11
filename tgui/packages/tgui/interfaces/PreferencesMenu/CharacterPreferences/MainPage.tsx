@@ -176,6 +176,10 @@ function ChoicedSelection(props: ChoicedSelectionProps) {
                           image,
                           'centered-image',
                         ])}
+                        style={{
+                          transform:
+                            'translateX(-50%) translateY(-50%) scale(0.8)',
+                        }}
                       />
                     </Button>
                   );

@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/datum/pet_command/move,
 		/datum/pet_command/free,
 		/datum/pet_command/attack,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/fetch,
 	)
 	///things we inherited from our parent

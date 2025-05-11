@@ -53,10 +53,10 @@
 		item_picked.undo_messy(duration = 0)
 
 /// Messes up items when you drop them to the floor
-/mob/living/dropItemToGround(obj/item/item_dropped, force, silent, invdrop)
+/mob/living/dropItemToGround(obj/item/to_drop, force, silent, invdrop, turf/newloc)
 	. = ..()
 	if(combat_mode == FALSE)
 		return
-	if(. && item_dropped)
-		if(!(item_dropped.item_flags & NO_PIXEL_RANDOM_DROP))
-			item_dropped.do_messy(duration = 2)
+	if(. && to_drop)
+		if(!(to_drop.item_flags & NO_PIXEL_RANDOM_DROP))
+			to_drop.do_messy(duration = 2)

@@ -62,12 +62,15 @@ jobs:
         run: ":"
       - name: Run Grep Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: bash tools/ci/check_grep.sh
+        run: |
+          bash tools/ci/check_grep.sh
+          bash modular_doppler/tools/doppler_check_grep.sh # DOPPLER EDIT ADDITION - checking modular_doppler code
       - name: Ticked File Enforcement
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: |
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json
+          tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/modular_doppler.json # DOPPLER EDIT ADDITION - modular tick enforcement
       - name: Check Define Sanity
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m define_sanity.check
