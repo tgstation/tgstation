@@ -27,7 +27,7 @@ jobs:
     # For example, `Run Tests (runtimestation; 515)`.
     name: Run Tests (${{ inputs.major && format('{0}.{1}; ', inputs.major, inputs.minor) || '' }}${{ inputs.map }}; ${{ inputs.max_required_byond_client }})
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25 # DOPPLER EDIT CHANGE - Original: timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - name: Restore BYOND from Cache
