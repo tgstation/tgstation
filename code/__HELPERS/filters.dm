@@ -316,7 +316,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	var/filter
 	for(var/i in 1 to 7)
 		filter = in_atom.get_filter("wibbly-[i]")
-		if(remove_duration == 0)
+		if(remove_duration == 0 || QDELETED(in_atom))
 			animate(filter)
 			in_atom.remove_filter("wibbly-[i]")
 			continue
