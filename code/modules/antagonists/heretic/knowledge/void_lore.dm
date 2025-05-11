@@ -4,9 +4,12 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_void
 	knowledge_tier1 = /datum/heretic_knowledge/spell/void_phase
+	guaranteed_side_tier1 = /datum/heretic_knowledge/void_cloak
 	knowledge_tier2 = /datum/heretic_knowledge/spell/void_prison
+	guaranteed_side_tier2 = /datum/heretic_knowledge/ether
 	robes = /datum/heretic_knowledge/armor/void
 	knowledge_tier3 = /datum/heretic_knowledge/spell/void_pull
+	guaranteed_side_tier3 = /datum/heretic_knowledge/summon/maid_in_mirror
 	blade = /datum/heretic_knowledge/blade_upgrade/void
 	knowledge_tier4 = /datum/heretic_knowledge/spell/void_conduit
 	ascension = /datum/heretic_knowledge/ultimate/void_final

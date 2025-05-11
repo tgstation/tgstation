@@ -4,9 +4,12 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_knock
 	knowledge_tier1 = /datum/heretic_knowledge/key_ring
+	guaranteed_side_tier1 = /datum/heretic_knowledge/painting
 	knowledge_tier2 = /datum/heretic_knowledge/limited_amount/concierge_rite
+	guaranteed_side_tier2 = /datum/heretic_knowledge/spell/opening_blast
 	robes = /datum/heretic_knowledge/armor/lock
 	knowledge_tier3 = /datum/heretic_knowledge/spell/burglar_finesse
+	guaranteed_side_tier3 = /datum/heretic_knowledge/summon/fire_shark
 	blade = /datum/heretic_knowledge/blade_upgrade/flesh/lock
 	knowledge_tier4 = /datum/heretic_knowledge/spell/caretaker_refuge
 	ascension = /datum/heretic_knowledge/ultimate/lock_final

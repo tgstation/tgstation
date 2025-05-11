@@ -4,9 +4,12 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_flesh
 	knowledge_tier1 = /datum/heretic_knowledge/limited_amount/flesh_ghoul
+	guaranteed_side_tier1 = /datum/heretic_knowledge/limited_amount/risen_corpse
 	knowledge_tier2 = /datum/heretic_knowledge/spell/flesh_surgery
+	guaranteed_side_tier2 = /datum/heretic_knowledge/crucible
 	robes = /datum/heretic_knowledge/armor/flesh
 	knowledge_tier3 = /datum/heretic_knowledge/summon/raw_prophet
+	guaranteed_side_tier3 = /datum/heretic_knowledge/spell/crimson_cleave
 	blade = /datum/heretic_knowledge/blade_upgrade/flesh
 	knowledge_tier4 = /datum/heretic_knowledge/summon/stalker
 	ascension = /datum/heretic_knowledge/ultimate/flesh_final

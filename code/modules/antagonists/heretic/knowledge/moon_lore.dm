@@ -4,9 +4,12 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_moon
 	knowledge_tier1 = /datum/heretic_knowledge/spell/mind_gate
+	guaranteed_side_tier1 = /datum/heretic_knowledge/phylactery
 	knowledge_tier2 = /datum/heretic_knowledge/moon_amulet
+	guaranteed_side_tier2 = /datum/heretic_knowledge/codex_morbus
 	robes = /datum/heretic_knowledge/armor/moon
 	knowledge_tier3 = /datum/heretic_knowledge/spell/moon_parade
+	guaranteed_side_tier3 = /datum/heretic_knowledge/unfathomable_curio
 	blade = /datum/heretic_knowledge/blade_upgrade/moon
 	knowledge_tier4 = /datum/heretic_knowledge/spell/moon_ringleader
 	ascension = /datum/heretic_knowledge/ultimate/moon_final

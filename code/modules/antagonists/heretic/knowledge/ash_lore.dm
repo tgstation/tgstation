@@ -4,9 +4,12 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_ash
 	knowledge_tier1 = /datum/heretic_knowledge/spell/ash_passage
+	guaranteed_side_tier1 = /datum/heretic_knowledge/medallion
 	knowledge_tier2 = /datum/heretic_knowledge/spell/fire_blast
+	guaranteed_side_tier2 = /datum/heretic_knowledge/rifle
 	robes = /datum/heretic_knowledge/armor/ash
 	knowledge_tier3 = /datum/heretic_knowledge/mad_mask
+	guaranteed_side_tier3 = /datum/heretic_knowledge/summon/ashy
 	blade = /datum/heretic_knowledge/blade_upgrade/ash
 	knowledge_tier4 = /datum/heretic_knowledge/spell/flame_birth
 	ascension = /datum/heretic_knowledge/ultimate/ash_final

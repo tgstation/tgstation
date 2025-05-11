@@ -4,9 +4,12 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_blade
 	knowledge_tier1 = /datum/heretic_knowledge/spell/realignment
+	guaranteed_side_tier1 = /datum/heretic_knowledge/greaves_of_the_prophet
 	knowledge_tier2 = /datum/heretic_knowledge/duel_stance
+	guaranteed_side_tier2 = /datum/heretic_knowledge/essence
 	robes = /datum/heretic_knowledge/armor/blade
 	knowledge_tier3 = /datum/heretic_knowledge/spell/furious_steel
+	guaranteed_side_tier3 = /datum/heretic_knowledge/rune_carver
 	blade = /datum/heretic_knowledge/blade_upgrade/blade
 	knowledge_tier4 = /datum/heretic_knowledge/spell/wolves_among_sheep
 	ascension = /datum/heretic_knowledge/ultimate/blade_final

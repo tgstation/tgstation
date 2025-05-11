@@ -4,9 +4,12 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	knowledge_tier1 = /datum/heretic_knowledge/spell/cosmic_runes
+	guaranteed_side_tier1 = /datum/heretic_knowledge/eldritch_coin
 	knowledge_tier2 = /datum/heretic_knowledge/spell/star_blast
+	guaranteed_side_tier2 = /datum/heretic_knowledge/spell/space_phase
 	robes = /datum/heretic_knowledge/armor/cosmic
 	knowledge_tier3 = /datum/heretic_knowledge/spell/star_touch
+	guaranteed_side_tier3 = /datum/heretic_knowledge/essence
 	blade = /datum/heretic_knowledge/blade_upgrade/cosmic
 	knowledge_tier4 = /datum/heretic_knowledge/spell/cosmic_expansion
 	ascension = /datum/heretic_knowledge/ultimate/cosmic_final

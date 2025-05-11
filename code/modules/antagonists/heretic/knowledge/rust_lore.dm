@@ -4,9 +4,12 @@
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_rust
 	knowledge_tier1 = /datum/heretic_knowledge/spell/area_conversion
+	guaranteed_side_tier1 = /datum/heretic_knowledge/rust_sower
 	knowledge_tier2 = /datum/heretic_knowledge/spell/rust_construction
+	guaranteed_side_tier2 = /datum/heretic_knowledge/summon/rusty
 	robes = /datum/heretic_knowledge/armor/rust
 	knowledge_tier3 = /datum/heretic_knowledge/spell/entropic_plume
+	guaranteed_side_tier3 = /datum/heretic_knowledge/crucible
 	blade = /datum/heretic_knowledge/blade_upgrade/rust
 	knowledge_tier4 = /datum/heretic_knowledge/spell/rust_charge
 	ascension = /datum/heretic_knowledge/ultimate/rust_final
