@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Most biological mobs are now slowed by taking stamina damage, and can be stunned. Mechanical mobs, mining mobs, and several other special kinds (chiefly those invoked by antagonists) are unaffected. If this seems to effect any mob it probably shouldn't, please report it as a bug."
