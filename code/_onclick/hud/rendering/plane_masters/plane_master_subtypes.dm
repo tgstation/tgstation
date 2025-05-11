@@ -377,7 +377,8 @@
 	SIGNAL_HANDLER
 
 	if(istype(new_eye, /obj/effect/landmark/ai_multicam_room))
-		unhide_plane(source.mymob)
+		if(force_hidden)
+			unhide_plane(source.mymob)
 		return
 
 	if(!iscameramob(new_eye))
