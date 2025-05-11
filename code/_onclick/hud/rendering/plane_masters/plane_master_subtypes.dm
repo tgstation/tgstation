@@ -376,6 +376,10 @@
 /atom/movable/screen/plane_master/camera_static/proc/eye_changed(datum/hud/source, atom/old_eye, atom/new_eye)
 	SIGNAL_HANDLER
 
+	if(istype(new_eye, /obj/effect/landmark/ai_multicam_room))
+		unhide_plane(source.mymob)
+		return
+
 	if(!iscameramob(new_eye))
 		if(!force_hidden)
 			hide_plane(source.mymob)
