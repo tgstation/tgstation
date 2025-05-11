@@ -561,6 +561,18 @@
 /obj/item/organ/tongue/robot/modify_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
 
+/obj/item/organ/tongue/robot/on_mob_insert(mob/living/carbon/receiver)
+	. = ..()
+	receiver.grant_language(/datum/language/machine, source = LANGUAGE_TONGUE)
+	to_chat(receiver, span_boldnotice("You gain a new understanding of [/datum/language/machine::name]."))
+
+/obj/item/organ/tongue/robot/on_mob_remove(mob/living/carbon/owner)
+	. = ..()
+	if(QDELING(owner))
+		return
+	owner.remove_language(/datum/language/machine, source = LANGUAGE_TONGUE)
+	to_chat(owner, span_boldnotice("You're not really sure what beeps and boops mean anymore."))
+
 /obj/item/organ/tongue/snail
 	name = "radula"
 	desc = "A minutely toothed, chitinous ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."

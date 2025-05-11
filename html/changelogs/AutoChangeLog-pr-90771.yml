@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Ice Whelps now switch between their breath attacks depending on the situation"
-  - bugfix: "Ice Whelps will use their breath attacks more than once per encounter"

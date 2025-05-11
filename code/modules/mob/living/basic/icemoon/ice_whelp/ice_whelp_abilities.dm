@@ -7,9 +7,9 @@
 	cooldown_time = 6 SECONDS
 	fire_range = 7
 	fire_damage = 10
-	fire_delay = 0.75 DECISECONDS
+	fire_delay = 0.85 DECISECONDS
 	/// Time to warn people about what we are doing
-	var/forecast_delay = 0.5 SECONDS
+	var/forecast_delay = 0.6 SECONDS
 	/// What turf are we aiming at?
 	var/turf/target_turf
 	/// Overlay we show when we're about to fire

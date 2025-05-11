@@ -17,8 +17,6 @@
 	)
 
 /// Cancel melee attacks when we have our breath weapon
-/datum/ai_planning_subtree/basic_melee_attack_subtree
-
 /datum/ai_planning_subtree/basic_melee_attack_subtree/ice_whelp
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/ice_whelp
 

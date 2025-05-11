@@ -326,3 +326,7 @@
 #define BB_TURTLE_FLORA_TARGET "turtle_flora_target"
 
 #define BB_GUNMIMIC_GUN_EMPTY "BB_GUNMIMIC_GUN_EMPTY"
+
+//snails
+///snails retreat ability
+#define BB_SNAIL_RETREAT_ABILITY "snail_retreat_ability"
