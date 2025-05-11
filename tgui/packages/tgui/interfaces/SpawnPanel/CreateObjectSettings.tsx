@@ -65,6 +65,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       storageKey: 'spawnpanel-object_count',
       setter: setAmount,
     });
+    sendUpdatedSettings({ object_count: value });
   };
 
   const updateCordsType = (value: number) => {
@@ -72,6 +73,9 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       value,
       storageKey: 'spawnpanel-offset_type',
       setter: setCordsType,
+    });
+    sendUpdatedSettings({
+      offset_type: value ? 'Absolute offset' : 'Relative offset',
     });
   };
 
@@ -81,6 +85,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       storageKey: 'spawnpanel-where_dropdown_value',
       setter: setSpawnLocation,
     });
+    sendUpdatedSettings({ where_dropdown_value: value });
   };
 
   const updateDirection = (value: number) => {
@@ -89,6 +94,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       storageKey: 'spawnpanel-direction',
       setter: setDirection,
     });
+    sendUpdatedSettings({ dir: [1, 2, 4, 8][value] });
   };
 
   const updateObjectName = (value: string) => {
@@ -97,6 +103,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       storageKey: 'spawnpanel-object_name',
       setter: setObjectName,
     });
+    sendUpdatedSettings({ object_name: value });
   };
 
   const updateOffset = (value: string) => {
@@ -105,6 +112,25 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
       storageKey: 'spawnpanel-offset',
       setter: setOffset,
     });
+    sendUpdatedSettings({ offset: value });
+  };
+
+  const sendUpdatedSettings = (
+    changedSettings: Partial<Record<string, unknown>> = {},
+  ) => {
+    const currentSettings = {
+      object_count: amount,
+      offset_type: cordsType ? 'Absolute offset' : 'Relative offset',
+      where_dropdown_value: spawnLocation,
+      dir: [1, 2, 4, 8][direction],
+      offset: offset,
+      object_name: objectName,
+      custom_icon: iconSettings.icon,
+      custom_icon_state: iconSettings.iconState,
+      custom_icon_size: iconSettings.iconSize,
+      ...changedSettings,
+    };
+    act('update-settings', currentSettings);
   };
 
   useEffect(() => {
@@ -147,20 +173,20 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   };
 
   const handleSpawn = function (): void {
-    const currentSettings = {
-      object_count: amount,
-      offset_type: cordsType ? 'Absolute offset' : 'Relative offset',
-      where_dropdown_value: spawnLocation,
-      dir: [1, 2, 4, 8][direction],
-      offset,
-      object_name: objectName,
-      custom_icon: iconSettings.icon,
-      custom_icon_state: iconSettings.iconState,
-      custom_icon_size: iconSettings.iconSize,
-    };
-    act('update-settings', currentSettings);
-
     if (!isTargetMode) {
+      const currentSettings = {
+        object_count: amount,
+        offset_type: cordsType ? 'Absolute offset' : 'Relative offset',
+        where_dropdown_value: spawnLocation,
+        dir: [1, 2, 4, 8][direction],
+        offset,
+        object_name: objectName,
+        custom_icon: iconSettings.icon,
+        custom_icon_state: iconSettings.iconState,
+        custom_icon_size: iconSettings.iconSize,
+      };
+      act('update-settings', currentSettings);
+
       if (onCreateObject) {
         onCreateObject(currentSettings);
       } else {
@@ -173,9 +199,6 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
         act('toggle-precise-mode', {
           newPreciseType: 'Target',
           where_dropdown_value: spawnLocation,
-          custom_icon: iconSettings.icon,
-          custom_icon_state: iconSettings.iconState,
-          custom_icon_size: iconSettings.iconSize,
         });
       }
     }

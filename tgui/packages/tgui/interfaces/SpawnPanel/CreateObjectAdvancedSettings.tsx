@@ -22,6 +22,18 @@ export function CreateObjectAdvancedSettings({
 }: CreateObjectAdvancedSettingsProps) {
   const { act, data } = useBackend<SpawnPanelData>();
 
+  const sendUpdatedSettings = (
+    changedSettings: Partial<Record<string, unknown>> = {},
+  ) => {
+    const currentSettings = {
+      custom_icon: iconSettings.icon,
+      custom_icon_state: iconSettings.iconState,
+      custom_icon_size: iconSettings.iconSize,
+      ...changedSettings,
+    };
+    act('update-settings', currentSettings);
+  };
+
   useEffect(() => {
     act('get-icon-states');
   }, []);
@@ -51,6 +63,7 @@ export function CreateObjectAdvancedSettings({
             onClick={() => {
               onIconSettingsChange({ icon: data.icon });
               act('reset-icon');
+              sendUpdatedSettings({ custom_icon: data.icon });
             }}
           />
         </Table.Cell>
@@ -64,6 +77,7 @@ export function CreateObjectAdvancedSettings({
             displayText={iconSettings.iconState || 'Default'}
             onSelected={(value) => {
               onIconSettingsChange({ iconState: value });
+              sendUpdatedSettings({ custom_icon_state: value });
             }}
             width="100%"
           />
@@ -75,6 +89,7 @@ export function CreateObjectAdvancedSettings({
             onClick={() => {
               onIconSettingsChange({ iconState: data.iconState });
               act('reset-icon-state');
+              sendUpdatedSettings({ custom_icon_state: data.iconState });
             }}
           />
         </Table.Cell>
@@ -90,7 +105,7 @@ export function CreateObjectAdvancedSettings({
             stepPixelSize={20}
             onChange={(e, value) => {
               onIconSettingsChange({ iconSize: value });
-              act('set-icon-size', { size: value });
+              sendUpdatedSettings({ custom_icon_size: value });
             }}
           />
         </Table.Cell>
@@ -101,6 +116,7 @@ export function CreateObjectAdvancedSettings({
             onClick={() => {
               onIconSettingsChange({ iconSize: 100 });
               act('reset-icon-size');
+              sendUpdatedSettings({ custom_icon_size: 100 });
             }}
           />
         </Table.Cell>

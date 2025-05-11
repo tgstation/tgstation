@@ -55,6 +55,7 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 /datum/spawnpanel/ui_act(action, params)
 	if(..())
 		return
+
 	switch(action)
 		if("pick-icon")
 			var/icon/new_icon = input("Select a new icon file:", "Icon") as null|icon
@@ -62,6 +63,7 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 				custom_icon = new_icon
 				available_icon_states = icon_states(custom_icon)
 				return TRUE
+
 		if("reset-icon")
 			custom_icon = null
 			custom_icon_state = null
@@ -73,9 +75,11 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 					selected_object_icon_state = initial(temp.icon_state)
 					available_icon_states = icon_states(selected_object_icon)
 			return TRUE
+
 		if("pick-icon-state")
 			custom_icon_state = params["new_state"]
 			return TRUE
+
 		if("reset-icon-state")
 			custom_icon_state = null
 			if(selected_object)
@@ -84,12 +88,15 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 					var/atom/temp = path
 					selected_object_icon_state = initial(temp.icon_state)
 			return TRUE
+
 		if("set-icon-size")
 			custom_icon_size = params["size"]
 			return TRUE
+
 		if("reset-icon-size")
 			custom_icon_size = 100
 			return TRUE
+
 		if("get-icon-states")
 			var/icon_to_use = custom_icon || selected_object_icon
 			if(icon_to_use)
@@ -140,6 +147,12 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 				where_dropdown_value = params["where_dropdown_value"]
 			if(params["offset_type"])
 				offset_type = params["offset_type"]
+			if(params["custom_icon"])
+				custom_icon = params["custom_icon"]
+			if(params["custom_icon_state"])
+				custom_icon_state = params["custom_icon_state"]
+			if(params["custom_icon_size"])
+				custom_icon_size = text2num(params["custom_icon_size"])
 			return TRUE
 
 /datum/spawnpanel/proc/toggle_precise_mode(precise_type)
@@ -197,9 +210,9 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 					"offset_type" = OFFSET_ABSOLUTE,
 					"object_where" = where_dropdown_value,
 					"object_reference" = target,
-					"object_icon" = null,
-					"object_icon_state" = null,
-					"object_icon_size" = null
+					"object_icon" = custom_icon,
+					"object_icon_state" = custom_icon_state,
+					"object_icon_size" = custom_icon_size
 				)
 
 				if(where_dropdown_value == WHERE_TARGETED_LOCATION || where_dropdown_value == WHERE_TARGETED_LOCATION_POD)
