@@ -93,7 +93,7 @@
 	name = "suspicous surgical medkit"
 	desc = "An suspicous coloured medkit full of advanced medical equipment."
 	icon_state = "medkit_tactical_lite"
-	inhand_icon_state = "medkit_tactical_lite"
+	inhand_icon_state = "medkit-tactical-lite"
 	damagetype_healed = HEAL_ALL_DAMAGE
 	storage_type = /datum/storage/medkit/surgery
 
