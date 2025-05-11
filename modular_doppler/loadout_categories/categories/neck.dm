@@ -62,6 +62,38 @@
 	name = "Spiked Collar"
 	item_path = /obj/item/clothing/neck/fashion_collar/spike
 
+/datum/loadout_item/neck/lizard_cape_hand
+	name = "Hand's Cape"
+	item_path = /obj/item/clothing/neck/lizard_cape
+
+/datum/loadout_item/neck/lizard_cape_med
+	name = "Scaler's Cape"
+	item_path = /obj/item/clothing/neck/lizard_cape/med
+
+/datum/loadout_item/neck/lizard_cape_claw
+	name = "Claw's Cape"
+	item_path = /obj/item/clothing/neck/lizard_cape/spec
+
 /datum/loadout_item/neck/bowtie
 	name = "Bowtie (Colorable)"
 	item_path = /obj/item/clothing/neck/bowtie
+
+/datum/loadout_item/neck/taj_cape_holder
+	name = "Holder's Cape"
+	item_path = /obj/item/clothing/neck/tajaran_cape
+
+/datum/loadout_item/neck/taj_cape_medic
+	name = "Healer's Cape"
+	item_path = /obj/item/clothing/neck/tajaran_cape/med
+
+/datum/loadout_item/neck/vulp_cape
+	name = "Skirmisher's Cape"
+	item_path = /obj/item/clothing/neck/vulp_cape
+
+/datum/loadout_item/neck/vulp_medic_cape
+	name = "Medic's Cape"
+	item_path = /obj/item/clothing/neck/vulp_cape/med
+
+/datum/loadout_item/neck/vatcloak
+	name = "Vatcloak"
+	item_path = /obj/item/clothing/neck/vulp_cloak

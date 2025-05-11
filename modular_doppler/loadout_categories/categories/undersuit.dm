@@ -61,6 +61,24 @@
 	name = "Random Doppler Suit w/ Overalls"
 	item_path = /obj/item/clothing/under/misc/doppler_uniform/standard/suit/overalls/colored
 
+/// SPECIES STUFF
+
+/datum/loadout_item/undersuit/tajaran_corset
+	name = "Tajaran Warrior's Corset"
+	item_path = /obj/item/clothing/under/tajaran_corset
+
+/datum/loadout_item/undersuit/vulp_pants
+	name = "Padded Combat Pants"
+	item_path = /obj/item/clothing/under/vulp_pants
+
+/datum/loadout_item/undersuit/lizard_kilt_tan
+	name = "Tizirian Tan War Kilt"
+	item_path = /obj/item/clothing/under/lizard_kilt
+
+/datum/loadout_item/undersuit/lizard_kilt_white
+	name = "Tizirian White War Kilt"
+	item_path = /obj/item/clothing/under/lizard_kilt/white
+
 /*
 *	FANCYPANTS
 */

@@ -34,6 +34,54 @@
 	name = "Frontier Medical Cap"
 	item_path = /obj/item/clothing/head/soft/frontier_colonist/medic
 
+/datum/loadout_item/head/earcap
+	name = "Earcap"
+	item_path = /obj/item/clothing/head/tajaran_hat
+
+/datum/loadout_item/head/tajaran_helmet
+	name = "Tajaran Flophelmet"
+	item_path = /obj/item/clothing/head/helmet/tajaran
+
+/datum/loadout_item/head/tajaran_high_helmet
+	name = "Tajaran High Flophelmet"
+	item_path = /obj/item/clothing/head/helmet/tajaran/contract
+
+/datum/loadout_item/head/flattop
+	name = "Flat-Top"
+	item_path = /obj/item/clothing/head/vulp_hat
+
+/datum/loadout_item/head/vulp_bandana
+	name = "Vulpkanin Bandana"
+	item_path = /obj/item/clothing/head/vulp_hat/headband
+
+/datum/loadout_item/head/vulp_skirmisher
+	name = "Vulpkanin Skirmisher Helmet"
+	item_path = /obj/item/clothing/head/helmet/vulp
+
+/datum/loadout_item/head/peakhat_tan
+	name = "Tan Peak-Cover"
+	item_path = /obj/item/clothing/head/lizard_hat
+
+/datum/loadout_item/head/peakhat_white
+	name = "White Peak-Cover"
+	item_path = /obj/item/clothing/head/lizard_hat/white
+
+/datum/loadout_item/head/lizard_helmet_tan
+	name = "Tan Tizirian Helmet"
+	item_path = /obj/item/clothing/head/helmet/lizard
+
+/datum/loadout_item/head/lizard_helmet_white
+	name = "White Tizirian Helmet"
+	item_path = /obj/item/clothing/head/helmet/lizard/white
+
+/datum/loadout_item/head/lizard_helmet_tan_glass
+	name = "Tan Glassed Tizirian Helmet"
+	item_path = /obj/item/clothing/head/helmet/lizard/glass
+
+/datum/loadout_item/head/lizard_helmet_white_glass
+	name = "White Glassed Tizirian Helmet"
+	item_path = /obj/item/clothing/head/helmet/lizard/white/glass
+
 /datum/loadout_item/head/colonial_cap
 	name = "Colonial Cap"
 	item_path = /obj/item/clothing/head/hats/colonial

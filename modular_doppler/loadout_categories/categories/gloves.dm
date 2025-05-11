@@ -23,6 +23,18 @@
 	name = "Fingerless Gloves"
 	item_path = /obj/item/clothing/gloves/fingerless
 
+/datum/loadout_item/gloves/gold_gauntlets
+	name = "Gold-Plate Gauntlets"
+	item_path = /obj/item/clothing/gloves/tajaran_gloves
+
+/datum/loadout_item/gloves/alloy_gauntlets
+	name = "Alloy Gauntlets"
+	item_path = /obj/item/clothing/gloves/vulp_gloves
+
+/datum/loadout_item/gloves/tizirian_gauntlets
+	name = "Tizirian Gauntlets"
+	item_path = /obj/item/clothing/gloves/lizard_gloves
+
 /datum/loadout_item/gloves/black
 	name = "Black Gloves"
 	item_path = /obj/item/clothing/gloves/color/black

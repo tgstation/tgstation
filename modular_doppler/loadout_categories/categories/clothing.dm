@@ -51,6 +51,40 @@
 	name = "Warm Coat"
 	item_path = /obj/item/clothing/suit/warm_coat
 
+/// SPECIES STUFF
+
+/datum/loadout_item/suit/dressing
+	name = "Regal Dressing"
+	item_path = /obj/item/clothing/suit/tajaran_dressing
+
+/datum/loadout_item/suit/tajaran_plate
+	name = "Tajaran Plate"
+	item_path = /obj/item/clothing/suit/armor/tajaran
+
+/datum/loadout_item/suit/tajaran_high_plate
+	name = "Tajaran High Plate"
+	item_path = /obj/item/clothing/suit/armor/tajaran/gold
+
+/datum/loadout_item/suit/vulpkanin_skirmisher
+	name = "Vulpkanin Skirmisher Armor"
+	item_path = /obj/item/clothing/suit/armor/vulp
+
+/datum/loadout_item/suit/lizard_halftop_tan
+	name = "Tan Halftop"
+	item_path = /obj/item/clothing/suit/lizard_halftop
+
+/datum/loadout_item/suit/lizard_halftop_white
+	name = "White Halftop"
+	item_path = /obj/item/clothing/suit/lizard_halftop/white
+
+/datum/loadout_item/suit/lizard_halftop_black
+	name = "Black Halftop"
+	item_path = /obj/item/clothing/suit/lizard_halftop/black
+
+/datum/loadout_item/suit/tizirian_breast
+	name = "Tizirian Breastplate"
+	item_path = /obj/item/clothing/suit/armor/lizard
+
 /*
 *	SUITS / SUIT JACKETS
 */

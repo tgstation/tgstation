@@ -1,3 +1,11 @@
+/datum/loadout_item/glasses/holo_infohud
+	name = "Holographic Infohud"
+	item_path = /obj/item/clothing/glasses/tajaran_hud
+
+/datum/loadout_item/glasses/solid_infohud
+	name = "Solid Infohud"
+	item_path = /obj/item/clothing/glasses/lizard_hud
+
 /datum/loadout_item/glasses/welding
 	name = "Welding Goggles"
 	item_path = /obj/item/clothing/glasses/welding

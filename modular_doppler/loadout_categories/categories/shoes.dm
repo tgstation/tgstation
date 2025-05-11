@@ -23,6 +23,18 @@
 	name = "Rainbow Sneakers"
 	item_path = /obj/item/clothing/shoes/sneakers/rainbow
 
+/datum/loadout_item/shoes/lizard_shin_guards
+	name = "Tizirian Shin Guards"
+	item_path = /obj/item/clothing/shoes/lizard_shins
+
+/datum/loadout_item/shoes/tajaran_greaves
+	name = "Gold-Plate Greaves"
+	item_path = /obj/item/clothing/shoes/tajaran_shins
+
+/datum/loadout_item/shoes/vulp_greaves
+	name = "Alloy Greaves"
+	item_path = /obj/item/clothing/shoes/vulp_shins
+
 /datum/loadout_item/shoes/jackboots
 	name = "Jackboots"
 	item_path = /obj/item/clothing/shoes/jackboots
