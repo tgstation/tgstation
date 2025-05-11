@@ -1,0 +1,4 @@
+author: "Redbert"
+delete-after: True
+changes:
+  - bugfix: "Fixes issue that causes hypernob reaction to sometimes not work"
