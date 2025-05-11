@@ -16,7 +16,7 @@
 		TRAIT_MUTANT_COLORS,
 	)
 	inherent_biotypes = MOB_HUMANOID | MOB_ORGANIC
-	exotic_bloodtype = "U"
+	exotic_bloodtype = BLOOD_TYPE_HEMOPHAGE
 	mutantheart = /obj/item/organ/heart/hemophage
 	mutantliver = /obj/item/organ/liver/hemophage
 	mutantstomach = /obj/item/organ/stomach/hemophage
@@ -179,5 +179,12 @@
 /datum/species/human/genemod/hemophage/create_pref_biotypes_perks()
 	return
 
+/datum/blood_type/hemophage
+	name = BLOOD_TYPE_HEMOPHAGE
+	color = BLOOD_COLOR_BLACK
+	compatible_types = list()
+
+/datum/blood_type/hemophage/type_key()
+	return subtypesof(/datum/blood_type)
 
 #undef HEMOPHAGE_SPAWN_TEXT

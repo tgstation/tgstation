@@ -54,8 +54,9 @@
 #define BLOOD_TYPE_H2O "H2O"
 #define BLOOD_TYPE_SNAIL "S"
 // DOPPLER ADDITIONS:
-#define BLOOD_TYPE_INSECTOID "I"
-#define BLOOD_TYPE_SYNTHETIC "R"
+#define BLOOD_TYPE_INSECTOID "HMT"
+#define BLOOD_TYPE_SYNTHETIC "CL"
+#define BLOOD_TYPE_HEMOPHAGE "COR"
 
 //Sizes of mobs, used by mob/living/var/mob_size
 #define MOB_SIZE_TINY 0

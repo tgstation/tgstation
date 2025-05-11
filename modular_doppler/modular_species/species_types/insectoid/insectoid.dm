@@ -15,7 +15,6 @@
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_BUG
 	payday_modifier = 1.0
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	exotic_blood = /datum/reagent/bug_blood
 	exotic_bloodtype = BLOOD_TYPE_INSECTOID
 
 	digitigrade_customization = DIGITIGRADE_OPTIONAL

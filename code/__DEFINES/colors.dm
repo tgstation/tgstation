@@ -218,13 +218,13 @@
 
 ///Colors for blood greyscale sprites
 #define BLOOD_COLOR_RED "#FF291E" // This is lighter than the blood reagent itself because for the greyscale to look the same as before it needs to be the lightest parts of the sprite.
-#define BLOOD_COLOR_LIZARD "#047200"
+#define BLOOD_COLOR_LIZARD "#7fe7ce" // DOPPLER EDIT - WAS: #define BLOOD_COLOR_LIZARD "#047200"
 #define BLOOD_COLOR_XENO "#D5FF2C"
 #define BLOOD_COLOR_OIL "#262626"
 #define BLOOD_COLOR_BLACK "#2C0903"
 // DOPPLER ADDITIONS:
-#define BLOOD_COLOR_INSECTOID "#82fac6"
-#define BLOOD_COLOR_SYNTHETIC "#A9FBFB"
+#define BLOOD_COLOR_INSECTOID "#945d9b"
+#define BLOOD_COLOR_SYNTHETIC "#f0bd84"
 
 ///Main colors for UI themes
 #define COLOR_THEME_MIDNIGHT "#6086A0"

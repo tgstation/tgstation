@@ -138,6 +138,7 @@
 /datum/blood_type/lizard
 	name = BLOOD_TYPE_LIZARD
 	color = BLOOD_COLOR_LIZARD
+	restoration_chem = /datum/reagent/copper // DOPPLER ADDITION
 	compatible_types = list(
 		/datum/blood_type/lizard,
 	)
