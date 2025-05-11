@@ -1,6 +1,5 @@
 //Most other defines used in reactions are located in ..\__DEFINES\reactions.dm
 #define SET_REACTION_RESULTS(amount) air.reaction_results[type] = amount
-#define EPSILON 1e-6
 
 /proc/init_gas_reactions()
 	var/list/priority_reactions = list()
@@ -786,8 +785,8 @@
 	var/reduction_factor = clamp(cached_gases[/datum/gas/tritium][MOLES] / (cached_gases[/datum/gas/tritium][MOLES] + cached_gases[/datum/gas/bz][MOLES]), 0.001 , 1) //reduces trit consumption in presence of bz upward to 0.1% reduction
 	var/nob_formed = min((cached_gases[/datum/gas/nitrogen][MOLES] + cached_gases[/datum/gas/tritium][MOLES]) * 0.01, cached_gases[/datum/gas/tritium][MOLES] * INVERSE(5 * reduction_factor), cached_gases[/datum/gas/nitrogen][MOLES] * INVERSE(10))
 
-	//sometimes nob_formed can be an extremely small floating point value instead of 0. comparing with very small value instead of 0 to allow for small errors in floating point arithmetic
-	if (nob_formed <= EPSILON || (cached_gases[/datum/gas/tritium][MOLES] - 5 * nob_formed * reduction_factor < -EPSILON) || (cached_gases[/datum/gas/nitrogen][MOLES] - 10 * nob_formed < -EPSILON))
+	//calling QUANTIZE on results to round very small floating point values.
+	if (QUANTIZE(nob_formed) <= 0 || (QUANTIZE(cached_gases[/datum/gas/tritium][MOLES] - 5 * nob_formed * reduction_factor) < 0) || (QUANTIZE(cached_gases[/datum/gas/nitrogen][MOLES] - 10 * nob_formed) < 0))
 		air.garbage_collect(arglist(asserted_gases))
 		return NO_REACTION
 
@@ -1164,4 +1163,3 @@
 	return REACTING
 
 #undef SET_REACTION_RESULTS
-#undef EPSILON
