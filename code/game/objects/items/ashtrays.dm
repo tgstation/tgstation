@@ -98,7 +98,6 @@
 
 /obj/item/ashtray/update_appearance()
 	. = ..()
-	update_overlays()
 	// appearance_flags &= ~KEEP_TOGETHER		// to keep overlays unaffected by material's color/alpha
 	// TODO: figure out a way to get rid of KEEP_TOGETHER flag
 
