@@ -233,6 +233,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	bio = 100
 	fire = 100
 	acid = 55
+	wound = 10
 
 /obj/item/clothing/mask/gas/welding/attack_self(mob/user)
 	adjust_visor(user)

@@ -60,7 +60,7 @@
 	bomb = 15
 	fire = 50
 	acid = 50
-	wound = 10
+	wound = 15
 
 /obj/item/clothing/head/helmet/perceptomatrix/Initialize(mapload)
 	. = ..()

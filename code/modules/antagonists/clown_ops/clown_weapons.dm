@@ -31,6 +31,7 @@
 	bio = 90
 	fire = 70
 	acid = 50
+	wound = 25
 
 /obj/item/clothing/shoes/clown_shoes/combat/Initialize(mapload)
 	. = ..()
@@ -61,6 +62,7 @@
 	bio = 50
 	fire = 90
 	acid = 50
+	wound = 25
 
 /obj/item/clothing/shoes/clown_shoes/banana_shoes/combat/Initialize(mapload)
 	. = ..()

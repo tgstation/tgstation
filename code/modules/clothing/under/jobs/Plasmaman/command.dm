@@ -11,6 +11,7 @@
 	bio = 100
 	fire = 95
 	acid = 95
+	wound = 10
 
 /obj/item/clothing/under/plasmaman/head_of_personnel
 	name = "head of personnel's plasma envirosuit"
@@ -31,6 +32,7 @@
 	bio = 100
 	fire = 95
 	acid = 95
+	wound = 10
 
 /obj/item/clothing/under/plasmaman/chief_engineer
 	name = "chief engineer's plasma envirosuit"
@@ -43,6 +45,7 @@
 	bio = 100
 	fire = 95
 	acid = 95
+	wound = 10
 
 /obj/item/clothing/under/plasmaman/chief_medical_officer
 	name = "chief medical officer's plasma envirosuit"
@@ -61,3 +64,4 @@
 	bio = 100
 	fire = 95
 	acid = 95
+	wound = 10

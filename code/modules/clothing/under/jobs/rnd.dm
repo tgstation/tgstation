@@ -5,6 +5,7 @@
 
 /datum/armor/clothing_under/science
 	bio = 50
+	wound = 10
 
 /obj/item/clothing/under/rank/rnd/research_director
 	desc = "It's a suit worn by those with the know-how to achieve the position of \"Research Director\". Its fabric provides minor protection from biological contaminants."
@@ -18,6 +19,7 @@
 	bomb = 10
 	bio = 50
 	acid = 35
+	wound = 10
 
 /obj/item/clothing/under/rank/rnd/research_director/doctor_hilbert
 	desc = "A Research Director jumpsuit belonging to the late and great Doctor Hilbert. The suit sensors have long since fizzled out from the stress of the Hilbert's Hotel."

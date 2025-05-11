@@ -166,6 +166,7 @@
 	bomb = 10
 	fire = 20
 	acid = 20
+	wound = 5
 
 /obj/item/clothing/head/costume/irs
 	name = "internal revenue service cap"

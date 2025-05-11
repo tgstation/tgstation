@@ -16,6 +16,7 @@
 	bio = 10
 	fire = 10
 	acid = 10
+	wound = 50
 
 /obj/item/clothing/suit/magusred
 	name = "magus robes"

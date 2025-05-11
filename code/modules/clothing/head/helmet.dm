@@ -25,7 +25,7 @@
 	bomb = 25
 	fire = 50
 	acid = 50
-	wound = 10
+	wound = 35
 
 /obj/item/clothing/head/helmet/Initialize(mapload)
 	. = ..()
@@ -129,7 +129,7 @@
 	bomb = 40
 	fire = 50
 	acid = 50
-	wound = 5
+	wound = 35
 
 /obj/item/clothing/head/helmet/alt/Initialize(mapload)
 	. = ..()
@@ -160,7 +160,7 @@
 	bio = 100
 	fire = 40
 	acid = 50
-	wound = 20
+	wound = 50
 
 /obj/item/clothing/head/helmet/marine/Initialize(mapload)
 	. = ..()
@@ -258,7 +258,7 @@
 	energy = 10
 	fire = 80
 	acid = 80
-	wound = 15
+	wound = 50
 
 /obj/item/clothing/head/helmet/balloon
 	name = "balloon helmet"
@@ -274,6 +274,7 @@
 	melee = 10
 	fire = 60
 	acid = 50
+	wound = 10
 
 /obj/item/clothing/head/helmet/toggleable/justice
 	name = "helmet of justice"
@@ -354,6 +355,7 @@
 	fire = 100
 	acid = 100
 	wound = 15
+	wound = 50
 
 /obj/item/clothing/head/helmet/swat/nanotrasen
 	name = "\improper SWAT helmet"
@@ -391,6 +393,7 @@
 	bio = 100
 	fire = 90
 	acid = 90
+	wound = 100
 
 /obj/item/clothing/head/helmet/thunderdome/holosuit
 	cold_protection = null
@@ -400,6 +403,7 @@
 /datum/armor/thunderdome_holosuit
 	melee = 10
 	bullet = 10
+	wound = 10
 
 /obj/item/clothing/head/helmet/roman
 	name = "\improper Roman helmet"
@@ -420,7 +424,7 @@
 	bomb = 10
 	fire = 100
 	acid = 50
-	wound = 5
+	wound = 25
 
 /obj/item/clothing/head/helmet/roman/fake
 	desc = "An ancient helmet made of plastic and leather."
@@ -461,6 +465,7 @@
 	energy = 10
 	bomb = 20
 	acid = 50
+	wound = 20
 
 /obj/item/clothing/head/helmet/taghelm/red
 	name = "red laser tag helmet"
@@ -498,6 +503,7 @@
 	energy = 10
 	fire = 80
 	acid = 80
+	wound = 50
 
 /obj/item/clothing/head/helmet/knight/blue
 	icon_state = "knight_blue"
@@ -533,7 +539,7 @@
 	bomb = 15
 	fire = 40
 	acid = 50
-	wound = 5
+	wound = 20
 
 /obj/item/clothing/head/helmet/rus_helmet
 	name = "russian helmet"
@@ -553,7 +559,7 @@
 	bomb = 10
 	fire = 20
 	acid = 50
-	wound = 5
+	wound = 25
 
 /obj/item/clothing/head/helmet/rus_helmet/Initialize(mapload)
 	. = ..()
@@ -579,7 +585,7 @@
 	bio = 50
 	fire = -10
 	acid = 50
-	wound = 5
+	wound = 25
 
 /obj/item/clothing/head/helmet/elder_atmosian
 	name = "\improper Elder Atmosian Helmet"
@@ -600,7 +606,7 @@
 	bio = 10
 	fire = 65
 	acid = 40
-	wound = 15
+	wound = 85
 
 /obj/item/clothing/head/helmet/military
 	name = "Crude Helmet"
@@ -626,7 +632,7 @@
 	bomb = 25
 	fire = 10
 	acid = 50
-	wound = 20
+	wound = 45
 
 /obj/item/clothing/head/helmet/military/Initialize(mapload)
 	. = ..()
@@ -651,7 +657,7 @@
 	bomb = 40
 	fire = 50
 	acid = 50
-	wound = 30
+	wound = 70
 
 /obj/item/clothing/head/helmet/durability/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	take_damage(1, BRUTE, 0, 0)
@@ -677,7 +683,7 @@
 	bomb = 10
 	fire = 0
 	acid = 25
-	wound = 5
+	wound = 15
 
 /datum/armor/helmet_watermelon_fr
 	melee = 15
@@ -686,7 +692,7 @@
 	bomb = 10
 	fire = 15
 	acid = 30
-	wound = 5
+	wound = 15
 
 /obj/item/clothing/head/helmet/durability/holymelon
 	name = "holymelon helmet"
@@ -741,7 +747,7 @@
 	bomb = 10
 	fire = 0
 	acid = 35
-	wound = 10
+	wound = 25
 
 /datum/armor/helmet_barrelmelon_fr
 	melee = 25
@@ -750,4 +756,4 @@
 	bomb = 10
 	fire = 20
 	acid = 40
-	wound = 10
+	wound = 25

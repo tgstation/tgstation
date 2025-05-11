@@ -69,6 +69,7 @@
 
 /datum/armor/clothing_under/civilian_hydroponics
 	bio = 50
+	wound = 10
 
 /obj/item/clothing/under/rank/civilian/hydroponics/skirt
 	name = "botanist's jumpskirt"
@@ -89,6 +90,7 @@
 
 /datum/armor/clothing_under/civilian_janitor
 	bio = 10
+	wound = 10
 
 /obj/item/clothing/under/rank/civilian/janitor/skirt
 	name = "janitor's jumpskirt"

@@ -176,7 +176,7 @@
 	bio = 100
 	fire = 25
 	acid = 25
-	wound = 5
+	wound = 10
 
 /datum/mod_theme/civilian
 	name = "civilian"
@@ -434,7 +434,7 @@
 	bio = 100
 	fire = 100
 	acid = 90
-	wound = 10
+	wound = 50
 
 /datum/mod_theme/mining
 	name = "mining"
@@ -544,7 +544,7 @@
 	bio = 100
 	fire = 100
 	acid = 75
-	wound = 15
+	wound = 30
 
 /datum/mod_theme/loader
 	name = "loader"
@@ -611,7 +611,7 @@
 	bio = 10
 	fire = 25
 	acid = 25
-	wound = 10
+	wound = 15
 
 /datum/mod_theme/medical
 	name = "medical"
@@ -719,7 +719,7 @@
 	bio = 100
 	fire = 60
 	acid = 75
-	wound = 5
+	wound = 10
 
 /datum/mod_theme/rescue
 	name = "rescue"
@@ -798,7 +798,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 5
+	wound = 10
 
 /datum/mod_theme/research
 	name = "research"
@@ -869,7 +869,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 15
+	wound = 20
 
 /datum/mod_theme/security
 	name = "security"
@@ -935,7 +935,7 @@
 	bio = 100
 	fire = 75
 	acid = 75
-	wound = 15
+	wound = 25
 
 /datum/mod_theme/safeguard
 	name = "safeguard"
@@ -1001,7 +1001,7 @@
 	bio = 100
 	fire = 100
 	acid = 95
-	wound = 15
+	wound = 40
 
 /datum/mod_theme/magnate
 	name = "magnate"
@@ -1073,7 +1073,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 15
+	wound = 50
 
 /datum/mod_theme/cosmohonk
 	name = "cosmohonk"
@@ -1140,7 +1140,7 @@
 	bio = 100
 	fire = 60
 	acid = 30
-	wound = 5
+	wound = 10
 
 /datum/mod_theme/syndicate
 	name = "syndicate"
@@ -1247,7 +1247,7 @@
 	bio = 100
 	fire = 50
 	acid = 90
-	wound = 25
+	wound = 35
 
 /datum/mod_theme/elite
 	name = "elite"
@@ -1319,7 +1319,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 25
+	wound = 55
 
 /datum/mod_theme/infiltrator
 	name = "infiltrator"
@@ -1390,7 +1390,7 @@
 	bomb = 40
 	fire = 100
 	acid = 100
-	wound = 25
+	wound = 50
 
 /datum/mod_theme/interdyne
 	name = "interdyne"
@@ -1546,7 +1546,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 30
+	wound = 40
 
 /datum/mod_theme/ninja
 	name = "ninja"
@@ -1614,7 +1614,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 10
+	wound = 40
 
 /datum/mod_theme/prototype
 	name = "prototype"
@@ -1684,7 +1684,7 @@
 	bio = 100
 	fire = 100
 	acid = 75
-	wound = 5
+	wound = 50
 
 /datum/mod_theme/glitch
 	name = "glitch"
@@ -1848,7 +1848,7 @@
 	bio = 100
 	fire = 100
 	acid = 90
-	wound = 10
+	wound = 50
 
 /datum/mod_theme/responsory/traitor
 	name = "dark paladin"
@@ -1930,7 +1930,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 25
+	wound = 100
 
 /datum/mod_theme/corporate
 	name = "corporate"
@@ -1998,7 +1998,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 15
+	wound = 65
 
 /datum/mod_theme/chrono
 	name = "chrono"
@@ -2061,7 +2061,7 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 15
+	wound = 60
 
 /datum/mod_theme/debug
 	name = "debug"
