@@ -99,6 +99,7 @@ GLOBAL_LIST_INIT(doppler_cloth_recipes, list(
 	new/datum/stack_recipe("eyepatch wrap", /obj/item/clothing/glasses/eyepatch/wrap, 2, category = CAT_CLOTHING),
 	new/datum/stack_recipe("eyepatch", /obj/item/clothing/glasses/eyepatch, 2, category = CAT_CLOTHING),
 	new/datum/stack_recipe("xenoarch bag", /obj/item/storage/bag/xenoarch, 4, category = CAT_CONTAINERS),
+	new/datum/stack_recipe("saddlebags", /obj/item/storage/backpack/saddlebags, 5, category = CAT_CONTAINERS),
 ))
 
 /obj/item/stack/sheet/cloth/get_main_recipes()
@@ -108,6 +109,10 @@ GLOBAL_LIST_INIT(doppler_cloth_recipes, list(
 // Leather
 
 GLOBAL_LIST_INIT(doppler_leather_recipes, list(
+	new/datum/stack_recipe_list("saddles", list(
+		new/datum/stack_recipe("riding saddle (normal)", /obj/item/riding_saddle/leather, 5, category = CAT_CLOTHING),
+		new/datum/stack_recipe("riding saddle (blue)", /obj/item/riding_saddle/leather/blue, 5, category = CAT_CLOTHING),
+	)),
 ))
 
 GLOBAL_LIST_INIT(doppler_leather_belt_recipes, list(

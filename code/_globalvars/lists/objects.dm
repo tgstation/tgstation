@@ -102,5 +102,6 @@ GLOBAL_LIST_INIT(prototype_organs, typecacheof(list(
 	/obj/item/organ/ears/dullahan,
 	/obj/item/organ/tongue/dullahan,
 	/obj/item/organ/eyes/dullahan,
+	/obj/item/organ/taur_body // DOPPLER SHIFT EDIT - Taurs
 ), only_root_path = TRUE))
 

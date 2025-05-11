@@ -377,6 +377,9 @@ There are several things that need to be remembered:
 		var/icon_file = DEFAULT_SHOES_FILE
 
 		/// DOPPLER SHIFT ADDITION BEGIN
+		if(bodyshape & BODYSHAPE_HIDE_SHOES)
+			return // We just don't want shoes that float if we're not displaying legs (useful for taurs, for now)
+
 		for(var/shape in shoes.supported_bodyshapes)
 			if(bodyshape & shape)
 				icon_file = shoes.bodyshape_icon_files["[shape]"]
@@ -960,9 +963,11 @@ generate/load female uniform sprites matching all previously decided variables
 	/// DOPPLER SHIFT ADDITION BEGIN
 	/// IMPORTANT NOTE: Keep the humie var!
 	var/chosen_worn_icon = worn_icon
+	var/using_taur_variant = FALSE
 	if(ishuman(humie))
 		for(var/shape in supported_bodyshapes)
 			if(humie.bodyshape & shape)
+				using_taur_variant = (shape & BODYSHAPE_TAUR_ALL)
 				chosen_worn_icon = bodyshape_icon_files["[shape]"]
 	//Find a valid icon file from variables+arguments
 	var/file2use = override_file || (isinhands ? null : chosen_worn_icon) || default_icon_file /// DOPPLER SHIFT EDIT END
@@ -999,6 +1004,19 @@ generate/load female uniform sprites matching all previously decided variables
 			greyscale_colors = greyscale_colors,
 		)
 	/// DOPPLER SHIFT ADDITION END
+	/// DOPPLER SHIFT ADDITION START - Taur-friendly uniforms and suits
+	var/shift_pixel_x = 0
+	if (istype(wearer) && wearer.bodyshape & BODYSHAPE_TAUR)
+		if (!using_taur_variant)
+			if (gets_cropped_on_taurs)
+				var/cropping_state = DEFAULT_TAUR_CLIPPING_MASK
+				if (ishuman(humie))
+					var/obj/item/organ/taur_body/taur = humie.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAUR)
+					cropping_state = (taur ? taur.clothing_cropping_state : DEFAULT_TAUR_CLIPPING_MASK)
+				building_icon = wear_taur_version(t_state, building_icon || icon(file2use, t_state), female_uniform, greyscale_colors, cropping_state)
+		else
+			shift_pixel_x = -16 // it doesnt look right otherwise
+	/// DOPPLER SHIFT ADDITION END
 	if(building_icon)
 		draw_target = mutable_appearance(building_icon, layer = -layer2use)
 	else
@@ -1020,6 +1038,7 @@ generate/load female uniform sprites matching all previously decided variables
 		standing.overlays += separate_overlays
 
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
+	standing.pixel_x += shift_pixel_x // DOPPLER SHIFT EDIT ADDITION - Taur-friendly uniforms and suits
 
 	//Worn offsets
 	var/list/offsets = get_worn_offsets(isinhands)

@@ -103,11 +103,21 @@
 
 /obj/item/clothing/suit/hooded/explorer
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
+	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE, BODYSHAPE_TAUR_SNAKE, BODYSHAPE_TAUR_PAW)
+	bodyshape_icon_files = list(
+		BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/suits/utility.dmi',
+		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/suit/suit_digi.dmi',
+		BODYSHAPE_TAUR_SNAKE_T = TAUR_SNAKE_SUIT_FILE,
+		BODYSHAPE_TAUR_PAW_T = TAUR_PAW_SUIT_FILE
+	)
+
+
+/obj/item/clothing/suit/hooded/explorer/syndicate
 	supported_bodyshapes = list(BODYSHAPE_HUMANOID, BODYSHAPE_DIGITIGRADE)
-	bodyshape_icon_files = list(BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/suits/utility.dmi',
-		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/suit/suit_digi.dmi')
-
-
+	bodyshape_icon_files = list(
+		BODYSHAPE_HUMANOID_T = 'icons/mob/clothing/suits/utility.dmi',
+		BODYSHAPE_DIGITIGRADE_T = 'modular_doppler/modular_cosmetics/icons/mob/suit/suit_digi.dmi',
+	)
 
 /// TODO: migrate these into our normal file
 /datum/greyscale_config/labcoat/worn/digi

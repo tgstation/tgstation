@@ -93,6 +93,7 @@
 		/obj/item/clothing/head/cowboy/doppler/flat/cowl = 5,
 		/obj/item/clothing/head/cowboy/doppler/cattleman = 5,
 		/obj/item/clothing/head/cowboy/doppler/cattleman/wide = 5,
+		/obj/item/riding_saddle/leather/blue = 3
 	)
 
 

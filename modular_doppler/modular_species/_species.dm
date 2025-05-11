@@ -19,6 +19,8 @@
 	var/datum/outfit/preview_outfit = /datum/outfit/job/assistant/consistent
 	///Override for the alpha of bodyparts and mutant parts.
 	var/specific_alpha = 255
+	/// A bitfield of exceptions, relating to no_equip_flags. If a mod item is equipped into a blocked slot, and that slot is in this bitfield, it will not be skipped.
+	var/modsuit_slot_exceptions
 
 /// Cybernetic limbs logic here!
 //	Used for most races

@@ -196,9 +196,13 @@
 /datum/component/riding/creature/human/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE)
 	. = ..()
 	var/mob/living/carbon/human/human_parent = parent
-	human_parent.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
+	//human_parent.add_movespeed_modifier(/datum/movespeed_modifier/human_carry) // DOPPLER SHIFT EDIT REMOVAL
+	// DOPPLER SHIFT EDIT ADDITION START - Taur saddles
+	if (!(ride_check_flags & RIDING_TAUR))
+		human_parent.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
+	// DOPPLER SHIFT EDIT ADDITION END
 
-	if(ride_check_flags & RIDER_NEEDS_ARMS) // piggyback
+	if(ride_check_flags & RIDER_NEEDS_ARMS || (ride_check_flags & RIDING_TAUR)) // DOPPLER SHIFT CHANGE - ORIGINAL: if(ride_check_flags & RIDER_NEEDS_ARMS) // piggyback
 		human_parent.buckle_lying = 0
 		// the riding mob is made nondense so they don't bump into any dense atoms the carrier is pulling,
 		// since pulled movables are moved before buckled movables
@@ -268,6 +272,11 @@
 
 /datum/component/riding/creature/human/get_rider_offsets_and_layers(pass_index, mob/offsetter)
 	var/mob/living/carbon/human/seat = parent
+	// DOPPLER EDIT ADDITION BEGIN - Saddles
+	if (ride_check_flags & RIDING_TAUR)
+		var/obj/item/organ/taur_body/taur_body = seat.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAUR)
+		return taur_body.get_riding_offset()
+	// DOPPLER EDIT ADDITION END
 	// fireman carry
 	if(seat.buckle_lying)
 		return list(

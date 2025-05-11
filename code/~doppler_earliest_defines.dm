@@ -4,6 +4,7 @@
 #define DOPPLER_SPRITE_ACCESSORY_NOEARS "No Ears"
 #define DOPPLER_SPRITE_ACCESSORY_NOSNOUT "No Snout"
 #define DOPPLER_SPRITE_ACCESSORY_NOWINGS "No Wings"
+#define DOPPLER_SPRITE_ACCESSORY_NOTAUR "No Taur"
 
 /// Hi!  This file is here to work around some order-of-operations issues consistent humans & a couple other things have.
 /// If our overrides aren't loaded in early enough default TG stuff will end up in the critical [1] slot and break things.
@@ -197,8 +198,16 @@
 	name = "No Horns"
 	icon_state = "none"
 
+// Taur
+/datum/sprite_accessory/taur/none
+	name = DOPPLER_SPRITE_ACCESSORY_NOTAUR
+	dimension_x = 32
+	center = FALSE
+	icon_state = "none"
+
 /// Linter sacrifice.  We only need this in the one file I suppose.
 #undef DOPPLER_SPRITE_ACCESSORY_NOTAIL
 #undef DOPPLER_SPRITE_ACCESSORY_NOEARS
 #undef DOPPLER_SPRITE_ACCESSORY_NOSNOUT
 #undef DOPPLER_SPRITE_ACCESSORY_NOWINGS
+#undef DOPPLER_SPRITE_ACCESSORY_NOTAUR

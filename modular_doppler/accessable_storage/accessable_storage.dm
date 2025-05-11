@@ -44,6 +44,9 @@
 /datum/component/accessable_storage/proc/mob_alt_clicked_on(mob/signal_source, mob/clicker)
 	SIGNAL_HANDLER
 
+	if (!clicker.can_perform_action(signal_source, ALLOW_RESTING | FORBID_TELEKINESIS_REACH)) // it would be funny but storage doesnt allow this for some reaosn
+		return CLICK_ACTION_BLOCKING
+
 	var/obj/item/item_parent = parent
 	if(isorgan(item_parent))
 		var/mob/organ_owner = item_parent.loc.loc

@@ -34,3 +34,16 @@
 /datum/loadout_item/inhand/aac_device
 	name = "AAC Device"
 	item_path = /obj/item/aac_device
+
+/datum/loadout_item/inhand/saddle
+	name = "Riding Saddle"
+	item_path = /obj/item/riding_saddle/leather
+
+/datum/loadout_item/inhand/saddle_blue
+	name = "Riding Saddle (Blue)"
+	item_path = /obj/item/riding_saddle/leather/blue
+
+// not backpack cat, because backpack cat places it on your back ignoring checks
+/datum/loadout_item/inhand/saddlebags
+	name = "Saddlebags"
+	item_path = /obj/item/storage/backpack/saddlebags

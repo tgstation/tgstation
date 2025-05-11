@@ -141,12 +141,27 @@
 
 /// DOPPLER SHIFT ADDITION BEGIN
 // This is where our custom bodyshapes are going to go.  Keeping these in one place is critical for readability.
+
+///The limb fits a taur body
+/// This one is abstract; merely a indicator of a taur body
+#define BODYSHAPE_TAUR (1<<7)
+// Specific taur types
+#define BODYSHAPE_TAUR_SNAKE (1<<8)
+#define BODYSHAPE_TAUR_HOOF (1<<9)
+#define BODYSHAPE_TAUR_PAW (1<<10)
+#define BODYSHAPE_TAUR_ALL (BODYSHAPE_TAUR_SNAKE|BODYSHAPE_TAUR_HOOF|BODYSHAPE_TAUR_PAW)
+/// A bit nasty, but I can't think of another way to do this. Owners of this limb will not render shoes.
+#define BODYSHAPE_HIDE_SHOES (1<<11)
+
 /// BREAKER: Numeric -> text for use in defines
 #define BODYSHAPE_HUMANOID_T "1"
 #define BODYSHAPE_MONKEY_T "2"
 #define BODYSHAPE_DIGITIGRADE_T "4"
 #define BODYSHAPE_SNOUTED_T "8"
-/// DOPPLER SHIFT ADDITIO NEND
+#define BODYSHAPE_TAUR_SNAKE_T "256"
+#define BODYSHAPE_TAUR_HOOF_T "512"
+#define BODYSHAPE_TAUR_PAW_T "1024"
+/// DOPPLER SHIFT ADDITION END
 
 #define BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM | BODYTYPE_PEG)
 #define BODYTYPE_CAN_BE_BIOSCRAMBLED(bodytype) (!(bodytype & BODYTYPE_BIOSCRAMBLE_INCOMPATIBLE))
@@ -721,6 +736,7 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define UNDER_UNIFORM_LAYER 28.5
 /// Bra and socks
 #define BRA_SOCKS_LAYER 28.02
+
 /// Underwear and undershirt
 #define UNDERWEAR_UNDERSHIRT 28.01
 /// DOPPLER SHIFT ADDITION END
@@ -728,6 +744,10 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define UNIFORM_LAYER 28
 /// DOPPLER SHIFT ADDITION BEGIN
 #define BANDAGE_LAYER 27.5
+/// This layer is used for things that shouldn't be over clothes, but should be over mutations
+#define BODY_FRONT_UNDER_CLOTHES_LAYER 27.009
+#define BODY_FRONT_UNDER_CLOTHES_LAYER_2 27.008
+#define BODY_FRONT_UNDER_CLOTHES_LAYER_3 27.007
 /// DOPPLER SHIFT ADDITION END
 /// ID card layer
 #define ID_LAYER 27
@@ -861,6 +881,12 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define EXTERNAL_BEHIND_3 (1 << 8)
 //Hand markings
 #define EXTERNAL_HAND (1 << 9)
+
+//Misc
+#define EXTERNAL_BODY_FRONT_UNDER_CLOTHES (1 << 10)
+#define EXTERNAL_BODY_FRONT_UNDER_CLOTHES_2 (1 << 11)
+#define EXTERNAL_BODY_FRONT_UNDER_CLOTHES_3 (1 << 12)
+
 /// DOPPLER SHIFT ADDITION END
 /// Draws organ on all EXTERNAL layers
 #define ALL_EXTERNAL_OVERLAYS EXTERNAL_FRONT | EXTERNAL_ADJACENT | EXTERNAL_BEHIND

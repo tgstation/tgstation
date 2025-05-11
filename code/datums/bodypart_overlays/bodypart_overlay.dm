@@ -6,9 +6,12 @@
 	///List of all possible layers. Used for looping through in drawing
 	//var/static/list/all_layers = list(EXTERNAL_FRONT, EXTERNAL_ADJACENT, EXTERNAL_BEHIND) /// DOPPLER SHIFT REMOVAL
 	/// DOPPLER SHIFT ADDITION BEGIN
-	var/static/list/all_layers = list(EXTERNAL_FRONT,EXTERNAL_FRONT_2,EXTERNAL_FRONT_3,
-	EXTERNAL_ADJACENT,EXTERNAL_ADJACENT_2,EXTERNAL_ADJACENT_3,
-	EXTERNAL_BEHIND,EXTERNAL_BEHIND_2,EXTERNAL_BEHIND_3, EXTERNAL_HAND)
+	var/static/list/all_layers = list(
+		EXTERNAL_FRONT,EXTERNAL_FRONT_2,EXTERNAL_FRONT_3,
+		EXTERNAL_ADJACENT,EXTERNAL_ADJACENT_2,EXTERNAL_ADJACENT_3,
+		EXTERNAL_BEHIND,EXTERNAL_BEHIND_2,EXTERNAL_BEHIND_3, EXTERNAL_HAND,
+		EXTERNAL_BODY_FRONT_UNDER_CLOTHES, EXTERNAL_BODY_FRONT_UNDER_CLOTHES_2, EXTERNAL_BODY_FRONT_UNDER_CLOTHES_3
+	)
 	/// DOPPLER SHIFT ADDITION END
 
 	///Key of the icon states of all the sprite_datums for easy caching
@@ -81,6 +84,12 @@
 			return "FRONT_3"
 		if(-BODY_HAND_LAYER)
 			return "HAND"
+		if (-BODY_FRONT_UNDER_CLOTHES_LAYER)
+			return "FRONT_UNDER"
+		if (-BODY_FRONT_UNDER_CLOTHES_LAYER_2)
+			return "FRONT_UNDER_2"
+		if (-BODY_FRONT_UNDER_CLOTHES_LAYER_3)
+			return "FRONT_UNDER_3"
 		/// DOPPLER SHIFT ADDITION END
 
 ///Converts a bitflag to the right layer. I'd love to make this a static index list, but byond made an attempt on my life when i did
@@ -107,6 +116,12 @@
 			return -BODY_FRONT_LAYER_3
 		if(EXTERNAL_HAND)
 			return -BODY_HAND_LAYER
+		if(EXTERNAL_BODY_FRONT_UNDER_CLOTHES)
+			return -BODY_FRONT_UNDER_CLOTHES_LAYER
+		if(EXTERNAL_BODY_FRONT_UNDER_CLOTHES_2)
+			return -BODY_FRONT_UNDER_CLOTHES_LAYER_2
+		if(EXTERNAL_BODY_FRONT_UNDER_CLOTHES_3)
+			return -BODY_FRONT_UNDER_CLOTHES_LAYER_3
 		/// DOPPLER SHIFT ADDITION END
 
 ///Check whether we can draw the overlays. You generally don't want lizard snouts to draw over an EVA suit
