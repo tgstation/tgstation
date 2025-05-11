@@ -193,6 +193,17 @@
 		if(EAST)
 			icon_state = "beam_splash_e"
 
+/obj/effect/temp_visual/bsa_impact
+	name = "\improper Bluespace Artillery detonation"
+	desc = "Tearing into conventional space once more, the immense energy of the beam is delivered directly into the target and its surroundings."
+	icon = 'icons/effects/96x160.dmi'
+	icon_state = "bsa_impact_ex"
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
+	pixel_y = -32
+	pixel_x = -32
+	duration = 10
+
 /obj/effect/temp_visual/wizard
 	name = "water"
 	icon = 'icons/mob/simple/mob.dmi'
