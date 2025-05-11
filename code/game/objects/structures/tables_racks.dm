@@ -1139,7 +1139,7 @@
 /obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
 	if (patient)
 		UnregisterSignal(patient, list(COMSIG_MOB_SURGERY_STARTED, COMSIG_MOB_SURGERY_FINISHED))
-		if (patient.external == air_tank)
+		if (patient.external && patient.external == air_tank)
 			patient.close_externals()
 
 	patient = new_patient
@@ -1222,6 +1222,8 @@
 	to_chat(user, span_notice("You detach \the [air_tank] from \the [src]."))
 	if (user.CanReach(air_tank))
 		user.put_in_hands(air_tank)
+	if (patient?.external && patient.external == air_tank)
+		patient.close_externals()
 	air_tank = null
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
