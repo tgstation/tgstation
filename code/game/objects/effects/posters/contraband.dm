@@ -672,3 +672,87 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/singletank_bom
 
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/fake_bombable, 32)
+
+/obj/structure/sign/poster/contraband/dream
+	name = "Dream"
+	desc = "You feel inspired to follow your dreams."
+	icon_state = "dream"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/dream, 32)
+
+/obj/structure/sign/poster/contraband/beekind
+	name = "Bee Kind"
+	desc = "Always bee kind to others!"
+	icon_state = "beekind"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/beekind, 32)
+
+/obj/structure/sign/poster/contraband/heart
+	name = "Heart"
+	desc = "What a heartwarming poster."
+	icon_state = "heart"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/heart, 32)
+
+/obj/structure/sign/poster/contraband/dolphin
+	name = "Dolphin"
+	desc = "A poster of a beautiful dolphin."
+	icon_state = "dolphin"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/dolphin, 32)
+
+/obj/structure/sign/poster/contraband/principles
+	name = "Our Principles"
+	desc = "The makers of this poster purport to live by four principles. Someone has scrawled a fifth one at the bottom."
+	icon_state = "principles"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/principles, 32)
+
+/obj/structure/sign/poster/contraband/trigger
+	name = "Trigger"
+	desc = "Happy trails to you, until we meet again! 1/7."
+	icon_state = "trigger"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/trigger, 32)
+
+/obj/structure/sign/poster/contraband/barbaro
+	name = "Barbaro"
+	desc = "A majestic horse with the heart of a winner. 2/7."
+	icon_state = "barbaro"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/barbaro, 32)
+
+/obj/structure/sign/poster/contraband/seabiscuit
+	name = "Seabiscuit"
+	desc = "The little horse that could. 3/7."
+	icon_state = "seabiscuit"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/seabiscuit, 32)
+
+/obj/structure/sign/poster/contraband/pharlap
+	name = "Phar Lap"
+	desc = "A wonder from down under. 4/7."
+	icon_state = "pharlap"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/pharlap, 32)
+
+/obj/structure/sign/poster/contraband/waradmiral
+	name = "War Admiral"
+	desc = "Some say he was second best, but he still comes first in your heart. 5/7."
+	icon_state = "waradmiral"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/waradmiral, 32)
+
+/obj/structure/sign/poster/contraband/silver
+	name = "Silver"
+	desc = "If he wants to go, he should be free. 6/7."
+	icon_state = "silver"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/silver, 32)
+
+/obj/structure/sign/poster/contraband/jovial
+	name = "Jovial"
+	desc = "All hail the orange horse! 7/7."
+	icon_state = "jovial"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/jovial, 32)
