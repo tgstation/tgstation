@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/list/return_list = zebra_typecacheof(list(
 		/datum/data/vending_product = FISH_ICON_COIN,
 		/mob/living/basic/axolotl = FISH_ICON_CRITTER,
-		/mob/living/basic/frog = FISH_ICON_CRITTER,
+		/obj/effect/spawner/random/frog = FISH_ICON_CRITTER,
 		/mob/living/basic/carp = FISH_ICON_DEF,
 		/mob/living/basic/mining = FISH_ICON_HOSTILE,
 		/mob/living/basic/skeleton = FISH_ICON_BONE,
