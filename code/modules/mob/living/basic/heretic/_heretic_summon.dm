@@ -9,6 +9,7 @@
 	mob_biotypes = NONE
 
 	habitable_atmos = null
+	status_flags = CANPUSH
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	speed = 0
 	melee_attack_cooldown = CLICK_CD_MELEE
