@@ -141,9 +141,9 @@
 		list(
 			// Arms
 			list(
-				/obj/item/organ/cyberimp/arm/combat = 1,
-				/obj/item/organ/cyberimp/arm/surgery = 1000000,
-				/obj/item/organ/cyberimp/arm/toolset = 1500000,
+				/obj/item/organ/cyberimp/arm/toolkit/combat = 1,
+				/obj/item/organ/cyberimp/arm/toolkit/surgery = 1000000,
+				/obj/item/organ/cyberimp/arm/toolkit/toolset = 1500000,
 			) = 15,
 			// Eyes
 			list(
