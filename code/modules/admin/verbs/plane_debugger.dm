@@ -63,8 +63,12 @@
 
 /datum/plane_master_debug/proc/get_target()
 	var/mob/target = mob_ref?.resolve()
-	if(!target?.hud_used)
+	if(!target?.hud_used || target == owner.owner.mob)
 		target = owner.owner.mob
+		if (ismob(target.orbit_target)) // If we're orbiting someone, swap to them if possible
+			var/mob/as_mob = target.orbit_target
+			if (as_mob.hud_used)
+				target = target.orbit_target
 		set_target(target)
 	return target
 

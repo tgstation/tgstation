@@ -554,7 +554,7 @@ export function PlaneMasterDebug() {
                 onClick={() => setInfoOpen(true)}
               />
             </Stack.Item>
-            {!!(mob_ref === our_ref) && (
+            {!!(mob_ref !== our_ref) && (
               <Stack.Item>
                 <Button
                   color="transparent"
@@ -568,7 +568,7 @@ export function PlaneMasterDebug() {
               <Button
                 color="transparent"
                 tooltip="View Mirroring"
-                icon="eye"
+                icon={our_ref !== mob_ref ? 'ghost' : 'eye'}
                 selected={tracking_active}
                 onClick={() => act('toggle_mirroring')}
               />
