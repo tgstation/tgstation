@@ -27,11 +27,12 @@
 /obj/machinery/big_manipulator
 	name = "Big Manipulator"
 	desc = "Operates different objects. Truly, a groundbreaking innovation..."
-	icon = 'icons/obj/machines/big_manipulator_parts/big_manipulator_core.dmi'
-	icon_state = "core"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/big_manipulator
 	greyscale_colors = "#d8ce13"
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/big_manipulator"
+	post_init_icon_state = "core"
 	greyscale_config = /datum/greyscale_config/big_manipulator
 	/// Min time manipulator can have in delay. Changing on upgrade.
 	var/minimal_delay = MIN_DELAY_TIER_1
@@ -819,11 +820,11 @@
 /obj/effect/big_manipulator_arm
 	name = "mechanical claw"
 	desc = "Takes and drops objects."
-	icon = 'icons/obj/machines/big_manipulator_parts/big_manipulator_hand.dmi'
-	icon_state = "hand"
 	layer = LOW_ITEM_LAYER
 	appearance_flags = KEEP_TOGETHER | LONG_GLIDE | TILE_BOUND | PIXEL_SCALE
 	anchored = TRUE
+	icon = 'icons/obj/machines/big_manipulator_parts/big_manipulator_hand.dmi'
+	icon_state = "hand"
 	greyscale_config = /datum/greyscale_config/manipulator_arm
 	pixel_x = -32
 	pixel_y = -32

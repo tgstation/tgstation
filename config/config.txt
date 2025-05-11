@@ -645,3 +645,7 @@ TGUI_MAX_CHUNK_COUNT 32
 
 ## Uncomment and replace with the URL where users can verify their byond accounts
 #FORUM_LINK_URI
+
+## While this is uncommented, server initialization will include some asset generation usually useful for development.
+## It increases initialization time significantly so you'll want to disable this in live environments.
+GENERATE_ASSETS_IN_INIT
