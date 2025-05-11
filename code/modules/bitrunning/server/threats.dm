@@ -134,13 +134,13 @@
 	chosen_forge.setup_particles(angry = TRUE)
 	var/obj/machinery/announcement_system/aas = get_announcement_system(source = src)
 	if (aas)
-		aas.broadcast("QUANTUM SERVER ALERT: Security breach detected. Unauthorized entry sequence in progress...", list(RADIO_CHANNEL_SUPPLY))
+		aas.broadcast("QUANTUM SERVER ALERT: Security breach detected. Unauthorized entry sequence in progress...", list(radio_channel_to_use))
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_STATION_SPAWN)
 
 	var/timeout = 2 SECONDS
 	if(!ishuman(antag))
 		if (aas)
-			aas.broadcast("QUANTUM SERVER ALERT: Fabrication protocols have crashed unexpectedly. Please evacuate the area.", list(RADIO_CHANNEL_SUPPLY))
+			aas.broadcast("QUANTUM SERVER ALERT: Fabrication protocols have crashed unexpectedly. Please evacuate the area.", list(radio_channel_to_use))
 		timeout = 10 SECONDS
 
 	if(!do_after(antag, timeout) || QDELETED(chosen_forge) || QDELETED(antag) || QDELETED(src) || !is_ready || !is_operational)

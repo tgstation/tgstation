@@ -1,0 +1,504 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"b" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/virtual_domain/fullbright)
+"c" = (
+/obj/item/fish/guppy,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"d" = (
+/obj/item/fish/chasm_crab,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"e" = (
+/obj/item/fish/donkfish,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"f" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"g" = (
+/turf/closed/indestructible/iron,
+/area/virtual_domain/fullbright)
+"j" = (
+/obj/item/fish/clownfish/lube,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"k" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"l" = (
+/obj/structure/aquarium/prefilled,
+/turf/open/water/beach,
+/area/virtual_domain/fullbright)
+"o" = (
+/obj/item/fish/angelfish,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"p" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 1
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"s" = (
+/obj/bitrunning/teleporter,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"t" = (
+/obj/item/fish/goldfish,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"u" = (
+/obj/item/fish/zipzap,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"x" = (
+/obj/item/fish/ratfish,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"y" = (
+/obj/structure/marker_beacon/cerulean,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"z" = (
+/obj/item/fish/firefish,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"E" = (
+/obj/item/fish/holo/puffer,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"F" = (
+/obj/structure/closet/crate/secure/bitrunning/encrypted/security,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"H" = (
+/obj/item/fish/greenchromis,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"J" = (
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"L" = (
+/obj/item/fish/sockeye_salmon,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"M" = (
+/obj/item/toy/crayon/spraycan/infinite{
+	pixel_x = -8
+	},
+/obj/item/toy/crayon/spraycan/infinite,
+/obj/item/toy/crayon/spraycan/infinite{
+	pixel_x = 8
+	},
+/obj/structure/rack,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"R" = (
+/obj/item/fish/sand_surfer,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+"U" = (
+/obj/item/fish/clownfish,
+/turf/open/floor/glass,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+f
+"}
+(2,1,1) = {"
+a
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+g
+b
+l
+l
+l
+b
+l
+l
+l
+b
+l
+l
+l
+b
+g
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+g
+l
+s
+o
+s
+l
+s
+J
+s
+l
+s
+H
+s
+l
+g
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+g
+l
+R
+y
+L
+l
+d
+y
+o
+l
+j
+y
+e
+l
+g
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+g
+l
+s
+J
+s
+l
+s
+J
+s
+l
+s
+J
+s
+l
+g
+g
+g
+g
+g
+a
+"}
+(7,1,1) = {"
+a
+g
+b
+l
+l
+l
+b
+l
+l
+l
+b
+l
+l
+l
+b
+g
+l
+M
+l
+g
+a
+"}
+(8,1,1) = {"
+a
+g
+l
+s
+z
+s
+l
+p
+x
+J
+l
+s
+J
+s
+l
+g
+J
+J
+k
+g
+a
+"}
+(9,1,1) = {"
+a
+g
+l
+t
+y
+J
+l
+s
+J
+F
+l
+U
+y
+c
+l
+g
+s
+J
+k
+g
+a
+"}
+(10,1,1) = {"
+a
+g
+l
+s
+H
+s
+l
+p
+u
+J
+l
+s
+J
+s
+l
+g
+J
+J
+k
+g
+a
+"}
+(11,1,1) = {"
+a
+g
+b
+l
+l
+l
+b
+l
+l
+l
+b
+l
+l
+l
+b
+g
+l
+M
+l
+g
+a
+"}
+(12,1,1) = {"
+a
+g
+l
+s
+e
+s
+l
+s
+t
+s
+l
+s
+U
+s
+l
+g
+g
+g
+g
+g
+a
+"}
+(13,1,1) = {"
+a
+g
+l
+J
+y
+J
+l
+c
+y
+d
+l
+J
+y
+J
+l
+g
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+g
+l
+s
+E
+s
+l
+s
+J
+s
+l
+s
+j
+s
+l
+g
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+g
+b
+l
+l
+l
+b
+l
+l
+l
+b
+l
+l
+l
+b
+g
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

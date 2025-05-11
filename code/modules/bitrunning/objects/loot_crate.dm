@@ -22,6 +22,11 @@
 	damage_deflection = 30
 	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
+/obj/structure/closet/crate/secure/bitrunning/encrypted/security
+	desc = "Drop this off at a return point to exit the Torment Nexus."
+	icon_state = "weaponcrate"
+	base_icon_state = "weaponcrate"
+
 /obj/structure/closet/crate/secure/bitrunning/encrypted/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
 	return FALSE
 

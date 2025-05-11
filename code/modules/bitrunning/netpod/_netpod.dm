@@ -26,6 +26,14 @@
 	var/disconnect_damage
 	/// Static list of outfits to select from
 	var/list/cached_outfits = list()
+	/// Determines our ID for what bitrunning machinery we're linked to.
+	var/bitrunning_id = "DEFAULT"
+	/// Is this a trapped pod, ie. doesn't move damage to the host and revives you if you die?
+	var/trapped = FALSE
+	/// If trapped, how long does it take to break out?
+	var/breakout_time = 10 SECONDS
+	/// What account do we pay out to for Security pods?
+	var/datum/bank_account/payout_account
 
 
 /obj/machinery/netpod/post_machine_initialize()
@@ -109,15 +117,38 @@
 /obj/machinery/netpod/mouse_drop_receive(mob/target, mob/user, params)
 	var/mob/living/carbon/player = user
 
-	if(!iscarbon(player) || !is_operational || !state_open || player.buckled)
+	if(!ismob(target) || !iscarbon(player) || !is_operational || !state_open || player.buckled)
 		return
 
+	if(trapped)
+		var/mob/living/carbon/human/prisoner = target
+		var/mob/living/carbon/human/security = user
+		var/obj/machinery/quantum_server/our_server = server_ref?.resolve()
+		if(!isnull(our_server))
+			our_server.radio.talk_into(our_server, "[security] has placed [prisoner] in [src].", our_server.radio_channel_to_use)
+			var/no_payout = FALSE
+			if(prisoner == security)
+				our_server.radio.talk_into(our_server, "ERROR: User entering [src] on their own; no payout will be provided.", our_server.radio_channel_to_use)
+				no_payout = TRUE
+			if(!no_payout && HAS_TRAIT(prisoner, TRAIT_MINDSHIELD))
+				our_server.radio.talk_into(our_server, "ERROR: User entering [src] has a mindshield; no payout will be provided.", our_server.radio_channel_to_use)
+				no_payout = TRUE
+			if(!isnull(GLOB.manifest.general))
+				for(var/datum/record/crew/record as anything in GLOB.manifest.general)
+					if(record.name == target.name)
+						record.wanted_status = WANTED_PRISONER
+						break
+			if(!no_payout)
+				var/datum/bank_account/account = security.get_bank_account()
+				if(isnull(account))
+					return
+				payout_account = account
 	close_machine(target)
 
 
 /obj/machinery/netpod/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(!state_open && user == occupant)
+	if(!state_open && user == occupant && !trapped)
 		container_resist_act(user)
 
 
@@ -135,3 +166,26 @@
 
 
 #undef BASE_DISCONNECT_DAMAGE
+
+/obj/machinery/netpod/prisoner
+	name = "torment nexus pod"
+	desc = "After an unsuccessful commercial launch, Nanotrasen purchased the rights to the Torment Nexus as a form of new workplace behavioral adjustment program for \
+	misbehaving crewmembers. Critics say that this is just like Greg Orville's book, Twenty Five Eighty Four."
+	bitrunning_id = BITRUNNER_DOMAIN_SECURITY
+	trapped = TRUE
+
+/obj/machinery/netpod/prisoner/solo_1
+	name = "torment nexus #1 pod"
+	bitrunning_id = "solo_nexus_1"
+
+/obj/machinery/netpod/prisoner/solo_2
+	name = "torment nexus #2 pod"
+	bitrunning_id = "solo_nexus_2"
+
+/obj/machinery/netpod/prisoner/solo_3
+	name = "torment nexus #3 pod"
+	bitrunning_id = "solo_nexus_3"
+
+/obj/machinery/netpod/prisoner/coop
+	name = "co-operative torment nexus pod"
+	bitrunning_id = "coop_nexus"

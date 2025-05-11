@@ -249,3 +249,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 	icon_state = "noise"
 	color = "#04a8d1"
 	alpha = 80
+
+/atom/movable/screen/fullscreen/static_vision/jumpscare
+	alpha = 255
+	color = "#FFFFFF"

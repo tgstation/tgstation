@@ -44,17 +44,20 @@
 	certificate.add_raw_text(get_completion_certificate(time_difference, grade))
 	certificate.name = "certificate of domain completion"
 	certificate.update_appearance()
+	if(generated_domain.bitrunning_network == BITRUNNER_DOMAIN_SECURITY)
+		var/obj/structure/mystery_box/baton_crate/getting_the_needle_in = new /obj/structure/mystery_box/baton_crate(src)
+		chosen_forge.start_to_spawn(getting_the_needle_in)
+	else
+		var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_cache = new generated_domain.cache_to_spawn(src, generated_domain, bonus)
+		reward_cache.manifest = certificate
+		reward_cache.update_appearance()
 
-	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_cache = new(src, generated_domain, bonus)
-	reward_cache.manifest = certificate
-	reward_cache.update_appearance()
+		if(can_generate_tech_disk(grade))
+			SSblackbox.record_feedback("tally", "bitrunning_bepis_rewarded", 1, generated_domain.key)
+			new /obj/item/disk/design_disk/bepis/remove_tech(reward_cache)
+			generated_domain.disk_reward_spawned = TRUE
 
-	if(can_generate_tech_disk(grade))
-		SSblackbox.record_feedback("tally", "bitrunning_bepis_rewarded", 1, generated_domain.key)
-		new /obj/item/disk/design_disk/bepis/remove_tech(reward_cache)
-		generated_domain.disk_reward_spawned = TRUE
-
-	chosen_forge.start_to_spawn(reward_cache)
+		chosen_forge.start_to_spawn(reward_cache)
 	return TRUE
 
 

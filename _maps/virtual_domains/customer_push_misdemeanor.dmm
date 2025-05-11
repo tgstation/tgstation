@@ -1,0 +1,749 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/obj/item/storage/briefcase{
+	pixel_x = -5;
+	pixel_y = -7
+	},
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"aK" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/grown/bananapeel,
+/obj/item/clothing/head/cone{
+	pixel_x = -2;
+	pixel_y = -13
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"aL" = (
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"aV" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/bitrunning/customer_speech,
+/obj/bitrunning/customer_waiter/west/slow,
+/turf/open/floor/carpet/royalblue,
+/area/virtual_domain/fullbright)
+"ce" = (
+/obj/structure/hedge,
+/obj/structure/sign/clock/directional/east,
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"em" = (
+/obj/structure/fake_stairs/wood/directional/south,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"ep" = (
+/obj/structure/chair/stool/bar/directional/north,
+/obj/bitrunning/customer_destination,
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"eP" = (
+/obj/structure/table/wood/fancy,
+/obj/structure/bedsheetbin/basket,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"ge" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/item/clothing/head/cone{
+	pixel_y = 2;
+	pixel_x = 6
+	},
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"gg" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"gA" = (
+/obj/machinery/button/door/directional/west,
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"gN" = (
+/obj/machinery/button/door/directional/east,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"hp" = (
+/obj/machinery/smartfridge/food,
+/turf/open/floor/iron/kitchen/herringbone,
+/area/virtual_domain/fullbright)
+"hR" = (
+/obj/structure/hedge,
+/obj/structure/sign/poster/random/directional/east,
+/obj/machinery/light/directional/east,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"ke" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"kU" = (
+/turf/open/floor/iron/kitchen/herringbone,
+/area/virtual_domain/fullbright)
+"kV" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 6
+	},
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"ls" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/food/cannoli{
+	pixel_x = 0;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"lv" = (
+/obj/bitrunning/customer_speech,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"mq" = (
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"oN" = (
+/turf/closed/indestructible/wood,
+/area/virtual_domain/fullbright)
+"sd" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"sO" = (
+/obj/structure/table/wood/fancy,
+/obj/item/food/bowled/hua_mulan_congee{
+	pixel_x = 0;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass/waterbottle{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"tF" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "5";
+	pixel_x = 32
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"tJ" = (
+/obj/structure/hedge,
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"uS" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 9
+	},
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"vk" = (
+/obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/public,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"vP" = (
+/obj/structure/fake_stairs/wood/directional/north,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"wV" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/turf/open/floor/carpet/orange,
+/area/virtual_domain/fullbright)
+"yZ" = (
+/obj/bitrunning/customer_speech,
+/obj/item/grown/bananapeel,
+/obj/item/clothing/head/cone{
+	pixel_x = -2;
+	pixel_y = -13
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"zt" = (
+/obj/machinery/button/door/directional/east,
+/obj/item/kirbyplants/random/fullysynthetic,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"zu" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "6";
+	pixel_x = 32
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"zB" = (
+/obj/effect/decal/cleanable/food/plant_smudge,
+/turf/open/floor/iron/kitchen/herringbone,
+/area/virtual_domain/fullbright)
+"zJ" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/food/classic_hard_shell_taco{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"zM" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/food/chipsandsalsa{
+	pixel_x = 0;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"zY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/grown/bananapeel,
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"Aj" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/virtual_domain/fullbright)
+"Ay" = (
+/obj/structure/hedge,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"Bx" = (
+/obj/machinery/button/door/directional/west,
+/obj/structure/flatpack_cart,
+/obj/item/storage/box/tiziran_cans{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/gift{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"Cc" = (
+/obj/bitrunning/customer_speech,
+/obj/bitrunning/customer_waiter/east,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"DQ" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"El" = (
+/obj/machinery/door/airlock/wood,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"Ep" = (
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"Fj" = (
+/obj/machinery/button/door/directional/west,
+/obj/item/kirbyplants/random/fullysynthetic,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"FE" = (
+/obj/bitrunning/boulder_checkpoint,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"HZ" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/kitchen/herringbone,
+/area/virtual_domain/fullbright)
+"Id" = (
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"IG" = (
+/obj/structure/chair/stool/directional/west,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "4";
+	pixel_x = 32
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"Jl" = (
+/obj/machinery/telecomms/relay/preset/auto/bitrunning,
+/turf/closed/indestructible/binary,
+/area/virtual_domain/fullbright)
+"KS" = (
+/obj/structure/table/wood/fancy/black,
+/obj/item/food/cilbir{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/dark/textured_large,
+/area/virtual_domain/fullbright)
+"KZ" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/item/newspaper{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/turf/open/floor/carpet/purple,
+/area/virtual_domain/fullbright)
+"LL" = (
+/obj/effect/decal/cleanable/food/egg_smudge,
+/turf/open/floor/iron/kitchen/herringbone,
+/area/virtual_domain/fullbright)
+"Mp" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/obj/item/newspaper{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/turf/open/floor/carpet/blue,
+/area/virtual_domain/fullbright)
+"Mr" = (
+/obj/machinery/button/door/directional/east,
+/obj/structure/reagent_dispensers/water_cooler,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"MC" = (
+/obj/structure/fake_stairs/wood/directional/south,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"NB" = (
+/obj/machinery/oven/range,
+/turf/open/floor/iron/kitchen/herringbone,
+/area/virtual_domain/fullbright)
+"Oz" = (
+/obj/structure/chair/stool/directional/east,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "2";
+	pixel_x = -31;
+	pixel_y = 0
+	},
+/obj/item/newspaper{
+	pixel_x = 17;
+	pixel_y = -1
+	},
+/obj/item/storage/briefcase{
+	pixel_x = 5;
+	pixel_y = 14
+	},
+/obj/item/storage/briefcase/secure{
+	pixel_x = -5;
+	pixel_y = 11
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"OO" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
+/obj/structure/railing,
+/turf/open/indestructible/bitrunning_transport,
+/area/virtual_domain/fullbright)
+"PY" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 5
+	},
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"Qp" = (
+/obj/structure/fake_stairs/wood/directional/south,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"Ri" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 10
+	},
+/obj/bitrunning/hungry_customer,
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"Rq" = (
+/obj/structure/hedge,
+/obj/structure/noticeboard/directional/west,
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"VY" = (
+/obj/machinery/door/puzzle/keycard/library,
+/turf/open/space/basic,
+/area/virtual_domain/fullbright)
+"Wb" = (
+/obj/effect/landmark/bitrunning/bitrunner_spawn,
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
+/area/virtual_domain/fullbright)
+"Wf" = (
+/obj/bitrunning/customer_speech,
+/obj/bitrunning/customer_waiter/west,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"WS" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "3";
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/obj/structure/flatpack_cart,
+/obj/item/storage/briefcase/secure{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/storage/briefcase{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"Xd" = (
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 4
+	},
+/obj/bitrunning/customer_speech,
+/turf/open/floor/carpet/green,
+/area/virtual_domain/fullbright)
+"Xk" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"Xt" = (
+/obj/machinery/grill,
+/turf/open/floor/iron/kitchen/herringbone,
+/area/virtual_domain/fullbright)
+"Xy" = (
+/obj/structure/fake_stairs/wood/directional/north,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"XO" = (
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "1";
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/obj/item/kirbyplants/random/fullysynthetic,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"YI" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/structure/table/wood/fancy,
+/obj/item/paper_bin,
+/obj/item/pen/fountain,
+/turf/open/floor/carpet/red,
+/area/virtual_domain/fullbright)
+"Zf" = (
+/obj/item/storage/briefcase{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/storage/briefcase/secure{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+"ZN" = (
+/obj/structure/fake_stairs/wood/directional/north,
+/turf/open/floor/wood/parquet,
+/area/virtual_domain/fullbright)
+
+(1,1,1) = {"
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Jl
+"}
+(2,1,1) = {"
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+oN
+oN
+oN
+VY
+oN
+oN
+oN
+VY
+oN
+oN
+oN
+VY
+oN
+oN
+oN
+Ep
+Ep
+"}
+(3,1,1) = {"
+oN
+oN
+vk
+oN
+El
+El
+oN
+Ay
+WS
+Mp
+Fj
+tJ
+Oz
+Xd
+gA
+Rq
+XO
+wV
+Bx
+Ay
+oN
+oN
+oN
+"}
+(4,1,1) = {"
+oN
+hp
+LL
+KS
+aL
+aL
+vP
+FE
+mq
+mq
+mq
+sO
+mq
+lv
+mq
+lv
+mq
+mq
+mq
+FE
+Qp
+DQ
+oN
+"}
+(5,1,1) = {"
+oN
+HZ
+kU
+zM
+ep
+ke
+ZN
+FE
+uS
+ge
+ke
+Cc
+uS
+YI
+ke
+yZ
+uS
+Xk
+Ri
+FE
+em
+Wb
+El
+"}
+(6,1,1) = {"
+oN
+NB
+zB
+zJ
+PY
+kV
+ZN
+FE
+PY
+zY
+kV
+lv
+PY
+aK
+kV
+Wf
+PY
+sd
+ae
+FE
+em
+Wb
+El
+"}
+(7,1,1) = {"
+oN
+Xt
+kU
+ls
+aL
+aL
+Xy
+FE
+mq
+mq
+mq
+yZ
+mq
+lv
+mq
+eP
+Zf
+mq
+mq
+FE
+MC
+gg
+oN
+"}
+(8,1,1) = {"
+oN
+oN
+oN
+oN
+Id
+OO
+oN
+Ay
+gN
+Aj
+zu
+hR
+zt
+aV
+tF
+ce
+Mr
+KZ
+IG
+Ay
+oN
+oN
+oN
+"}
+(9,1,1) = {"
+Ep
+Ep
+Ep
+oN
+oN
+oN
+oN
+oN
+oN
+VY
+oN
+oN
+oN
+VY
+oN
+oN
+oN
+VY
+oN
+oN
+oN
+Ep
+Ep
+"}
+(10,1,1) = {"
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+Ep
+"}
