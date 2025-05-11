@@ -255,6 +255,11 @@
 	name = "Kronkus Vine Seeds"
 	item_path = /obj/item/seeds/kronkus
 
+/datum/loadout_item/pocket_items/ahabs_spear
+	name = "Ahab's Spear Retool Kit"
+	item_path = /obj/item/crusher_trophy/retool_kit/ahab
+	restricted_roles = list(JOB_SHAFT_MINER)
+
 /*
 *	MEDICAL
 */

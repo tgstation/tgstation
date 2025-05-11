@@ -7122,6 +7122,7 @@
 #include "modular_doppler\modular_cosmetics\GAGS\greyscale_configs_under.dm"
 #include "modular_doppler\modular_crafting\code\crafting_extended.dm"
 #include "modular_doppler\modular_crafting\code\sheet_types.dm"
+#include "modular_doppler\modular_crusher_ahabs_spear\code\trophies_misc.dm"
 #include "modular_doppler\modular_customization\accessories\code\hair.dm"
 #include "modular_doppler\modular_customization\accessories\code\aquatic_accessories\aquatic_body_markings.dm"
 #include "modular_doppler\modular_customization\accessories\code\aquatic_accessories\aquatic_ears.dm"
