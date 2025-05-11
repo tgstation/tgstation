@@ -26,7 +26,8 @@
 	highlighted_background = new /mutable_appearance()
 	highlighted_background.icon = 'icons/hud/pic_in_pic.dmi'
 	highlighted_background.icon_state = "background_highlight"
-	highlighted_background.layer = SPACE_LAYER
+	highlighted_background.layer = LOWER_FLOOR_LAYER
+	highlighted_background.appearance_flags = PIXEL_SCALE
 
 /atom/movable/screen/movable/pic_in_pic/ai/add_background()
 	if((width > 0) && (height > 0))
