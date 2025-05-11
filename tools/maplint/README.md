@@ -123,17 +123,17 @@ Similar to [banned_neighbors](#banned_neighbors), you can specify a regular expr
 ```
 
 ### `ignore`
-If you want to exclude other objects from `banned_neighbors`, you can specify `ignore`.
-
-This is just a list of types that will get skipped. This lint will skip banning the kitten bowl subtypes from being on the same tile as a dog bowl.
+If you want to exclude certain objects and subtypes from `banned_neighbors`, you can specify objects in `ignore` that will get skipped from triggering `banned_neighbors`.
 
 ```yml
-/obj/bowl/dog:
+/turf/wall:
   banned_neighbors:
-    - /obj/bowl/cat
+    - /obj/structure
   ignore:
-		- /obj/bowl/cat/kitten
+    - /obj/structure/sign
 ```
+
+This lint stops structures from being put inside solid walls but we make an exception to ignore any signs and all their subtypes like `/obj/structure/sign/poster`.
 
 ### `help`
 If you want a custom message to go with your lint, you can specify "help" in the root.
