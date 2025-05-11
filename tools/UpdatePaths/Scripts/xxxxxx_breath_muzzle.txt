@@ -1,0 +1,1 @@
+/obj/item/clothing/mask/muzzle/breath : /obj/item/clothing/mask/breath/muzzle{@OLD}

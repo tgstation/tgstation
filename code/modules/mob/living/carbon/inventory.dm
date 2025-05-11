@@ -251,20 +251,19 @@
 	update_obscured_slots(I.flags_inv)
 	hud_used?.update_locked_slots()
 
-/// Returns TRUE if an air tank compatible helmet is equipped.
+/// Returns the helmet if an air tank compatible helmet is equipped.
 /mob/living/carbon/proc/can_breathe_helmet()
 	if (isclothing(head) && (head.clothing_flags & HEADINTERNALS))
-		return TRUE
+		return head
 
-/// Returns TRUE if an air tank compatible mask is equipped.
+/// Returns the mask if an air tank compatible mask is equipped.
 /mob/living/carbon/proc/can_breathe_mask()
 	if (isclothing(wear_mask) && (wear_mask.clothing_flags & MASKINTERNALS))
-		return TRUE
+		return wear_mask
 
-/// Returns TRUE if a breathing tube is equipped.
+/// Returns the tube if a breathing tube is equipped.
 /mob/living/carbon/proc/can_breathe_tube()
-	if (get_organ_slot(ORGAN_SLOT_BREATHING_TUBE))
-		return TRUE
+	return get_organ_slot(ORGAN_SLOT_BREATHING_TUBE)
 
 /// Returns TRUE if an air tank compatible mask or breathing tube is equipped.
 /mob/living/carbon/proc/can_breathe_internals()

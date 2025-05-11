@@ -297,26 +297,25 @@
 
 /obj/structure/table/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
+	if (. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
 	if(!istype(user) || !user.can_interact_with(src))
-		return FALSE
+		return
 
 	if(!can_flip)
 		return
 
 	if(!is_flipped)
 		user.balloon_alert_to_viewers("flipping table...")
-		if(!do_after(user, max_integrity * 0.25))
-			return
+		if(do_after(user, max_integrity * 0.25))
+			flip_table(get_dir(user, src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-		flip_table(get_dir(user, src))
-
-		return
-
-	else
-		user.balloon_alert_to_viewers("flipping table upright...")
-		if(do_after(user, max_integrity * 0.25, src))
-			unflip_table()
-			return TRUE
+	user.balloon_alert_to_viewers("flipping table upright...")
+	if(do_after(user, max_integrity * 0.25, src))
+		unflip_table()
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/table/proc/is_able_to_throw(obj/structure/table, atom/movable/movable_entity)
 	if (movable_entity == table) //Thing is not the table
@@ -1036,10 +1035,16 @@
 	canSmoothWith = null
 	can_buckle = TRUE
 	buckle_lying = 90
-	custom_materials = list(/datum/material/silver =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
 	can_flip = FALSE
+	/// Mob currently lying on the table
 	var/mob/living/carbon/patient = null
+	/// Operating computer we're linked to, to sync operations from
 	var/obj/machinery/computer/operating/computer = null
+	/// Tank attached under the table
+	var/obj/item/tank/air_tank = null
+	/// Mask attached *to* the table, doesn't mean its inside the table as it can be worn by the patient
+	var/obj/item/clothing/mask/breath/breath_mask = null
 
 /obj/structure/table/optable/Initialize(mapload, obj/structure/table_frame/frame_used, obj/item/stack/stack_used)
 	. = ..()
@@ -1056,9 +1061,26 @@
 	if(computer && computer.table == src)
 		computer.table = null
 	patient = null
+	QDEL_NULL(air_tank)
+	if (breath_mask.loc == src)
+		QDEL_NULL(breath_mask)
 	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
 	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
 	return ..()
+
+/obj/structure/table/optable/atom_deconstruct(disassembled)
+	. = ..()
+	var/atom/drop_loc = drop_location()
+	if (!drop_loc)
+		return
+	air_tank.forceMove(drop_loc)
+	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
+	if (breath_mask.loc == src)
+		breath_mask.forceMove(drop_loc)
+	else if (breath_mask.loc)
+		UnregisterSignal(breath_mask.loc, COMSIG_MOVABLE_MOVED)
+	air_tank = null
+	breath_mask = null
 
 /obj/structure/table/optable/make_climbable()
 	AddElement(/datum/element/elevation, pixel_shift = 12)
@@ -1098,19 +1120,203 @@
 /// The check is a bit broad so we can find a replacement patient.
 /obj/structure/table/optable/proc/recheck_patient(mob/living/carbon/potential_patient)
 	SIGNAL_HANDLER
+
 	if(patient && patient != potential_patient)
 		return
 
 	if(potential_patient.body_position == LYING_DOWN && potential_patient.loc == loc)
-		patient = potential_patient
+		set_patient(potential_patient)
 		return
 
 	// Find another lying mob as a replacement.
 	for (var/mob/living/carbon/replacement_patient in loc.contents)
 		if(replacement_patient.body_position == LYING_DOWN)
-			patient = replacement_patient
+			set_patient(replacement_patient)
 			return
-	patient = null
+
+	set_patient(null)
+
+/obj/structure/table/optable/proc/set_patient(mob/living/carbon/new_patient)
+	if (patient)
+		UnregisterSignal(patient, list(COMSIG_MOB_SURGERY_STARTED, COMSIG_MOB_SURGERY_FINISHED))
+
+	patient = new_patient
+	RegisterSignal(patient, COMSIG_MOB_SURGERY_STARTED, PROC_REF(on_surgery_change))
+	RegisterSignal(patient, COMSIG_MOB_SURGERY_FINISHED, PROC_REF(on_surgery_change))
+	update_appearance()
+
+/obj/structure/table/optable/proc/on_surgery_change(datum/source)
+	SIGNAL_HANDLER
+	update_appearance()
+
+/obj/structure/table/optable/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (istype(tool, /obj/item/clothing/mask/breath))
+		if (breath_mask && breath_mask != tool)
+			balloon_alert(user, "mask already attached!")
+			return ITEM_INTERACT_BLOCKING
+
+		if (!user.temporarilyRemoveItemFromInventory(tool))
+			return ITEM_INTERACT_BLOCKING
+
+		tool.forceMove(src)
+		if (breath_mask != tool)
+			breath_mask = tool
+			RegisterSignal(breath_mask, COMSIG_MOVABLE_MOVED, PROC_REF(on_mask_moved))
+			RegisterSignal(breath_mask, COMSIG_ITEM_DROPPED, PROC_REF(check_mask_range))
+		balloon_alert(user, "mask attached")
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if (!istype(tool, /obj/item/tank))
+		return NONE
+
+	if (air_tank)
+		balloon_alert(user, "tank already attached!")
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/tank/as_tank = tool
+	if (!as_tank.tank_holder_icon_state)
+		balloon_alert(user, "does not fit!")
+		return ITEM_INTERACT_BLOCKING
+
+	if (!user.temporarilyRemoveItemFromInventory(tool))
+		return ITEM_INTERACT_BLOCKING
+
+	as_tank.forceMove(src)
+	air_tank = as_tank
+	balloon_alert(user, "tank attached")
+	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/optable/screwdriver_act(mob/living/user, obj/item/tool)
+	if (!breath_mask)
+		return NONE
+
+	if (breath_mask.loc != src)
+		return ITEM_INTERACT_BLOCKING
+
+	breath_mask.forceMove(drop_location())
+	tool.play_tool_sound(src, 50)
+	to_chat(user, span_notice("You detach \the [breath_mask] from \the [src]."))
+	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
+	if (user.CanReach(breath_mask))
+		user.put_in_hands(breath_mask)
+	breath_mask = null
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/optable/wrench_act(mob/living/user, obj/item/tool)
+	if (!air_tank)
+		return NONE
+	to_chat(user, span_notice("You begin detaching \the [air_tank] from \the [src]..."))
+	if (!tool.use_tool(src, user, 3 SECONDS))
+		return ITEM_INTERACT_BLOCKING
+	air_tank.forceMove(drop_location())
+	tool.play_tool_sound(src, 50)
+	to_chat(user, span_notice("You detach \the [air_tank] from \the [src]."))
+	if (user.CanReach(air_tank))
+		user.put_in_hands(air_tank)
+	air_tank = null
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/table/optable/attack_hand_secondary(mob/living/user, list/modifiers)
+	. = ..()
+	if (. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+
+	if (detach_mask(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/table/optable/proc/detach_mask(mob/living/user)
+	if (!istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+		return FALSE
+
+	if (!breath_mask)
+		balloon_alert(user, "no mask attached!")
+		return TRUE
+
+	if (!user.put_in_hands(breath_mask))
+		balloon_alert(user, "hands busy!")
+		return TRUE
+
+	to_chat(user, span_notice("You pull out \the [breath_mask] from \the [src]."))
+	update_appearance()
+	return TRUE
+
+/obj/structure/table/optable/mouse_drop_dragged(atom/over, mob/living/user, src_location, over_location, params)
+	if (over != patient || !istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
+		return
+
+	if (!air_tank)
+		balloon_alert(user, "no tank attached!")
+		return
+
+	var/internals = patient.can_breathe_internals()
+	if (!internals)
+		balloon_alert(user, "no internals connector!")
+		return
+
+	to_chat(user, span_notice("You begin connecting [src]'s [air_tank] to [patient]'s [internals]..."))
+	to_chat(patient, span_userdanger("[user] begins connecting [src]'s [air_tank] to your [internals]!"))
+
+	if (!do_after(user, 4 SECONDS, patient))
+		return
+
+	if (!air_tank || patient != over || !patient.can_breathe_internals())
+		return
+
+	patient.open_internals(air_tank, TRUE)
+	to_chat(user, span_notice("You connect [src]'s [air_tank] to [patient]'s [internals]."))
+	to_chat(patient, span_userdanger("[user] connects [src]'s [air_tank] to your [internals]!"))
+
+/obj/structure/table/optable/proc/on_mask_moved(datum/source, atom/oldloc, direction)
+	SIGNAL_HANDLER
+	if (oldloc != src)
+		UnregisterSignal(oldloc, COMSIG_MOVABLE_MOVED)
+	if (breath_mask.loc && breath_mask.loc != src)
+		RegisterSignal(breath_mask.loc, COMSIG_MOVABLE_MOVED, PROC_REF(check_mask_range))
+	check_mask_range()
+
+/obj/structure/table/optable/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if (breath_mask)
+		check_mask_range()
+
+/obj/structure/table/optable/proc/check_mask_range()
+	SIGNAL_HANDLER
+
+	if (breath_mask.loc == src || isturf(breath_mask.loc?.loc) && in_range(breath_mask, src))
+		return
+
+	if(isliving(loc))
+		var/mob/living/user = loc
+		to_chat(user, span_warning("[breath_mask]'s tube overextends and it comes out of your hands!"))
+	else
+		visible_message(span_notice("[breath_mask] snaps back into \the [src]."))
+	snap_mask_back()
+
+/obj/structure/table/optable/proc/snap_mask_back()
+	SIGNAL_HANDLER
+	if (ismob(breath_mask.loc))
+		var/mob/as_mob = breath_mask.loc
+		as_mob.temporarilyRemoveItemFromInventory(breath_mask, force = TRUE)
+	breath_mask.forceMove(src)
+	update_appearance()
+
+/obj/structure/table/optable/update_overlays()
+	. = ..()
+	if (air_tank)
+		. += mutable_appearance(icon, air_tank.tank_holder_icon_state)
+	if (breath_mask?.loc == src)
+		. += mutable_appearance(icon, "mask_[breath_mask.icon_state]")
+	if (!length(patient?.surgeries))
+		return
+	. += mutable_appearance(icon, "[icon_state]_[computer ? "" : "un"]linked")
+	if (computer)
+		. += emissive_appearance(icon, "[icon_state]_linked", src, alpha = 175)
 
 /*
  * Racks
