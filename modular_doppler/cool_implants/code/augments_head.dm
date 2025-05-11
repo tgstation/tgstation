@@ -201,6 +201,8 @@
 	ADD_TRAIT(owner, TRAIT_NICE_SHOT, IMPLANT_TRAIT)
 	ADD_TRAIT(owner, TRAIT_GUNFLIP, IMPLANT_TRAIT)
 	ADD_TRAIT(owner, TRAIT_GUN_NATURAL, IMPLANT_TRAIT)
+	RegisterSignal(owner, COMSIG_MOB_FIRED_GUN, PROC_REF(sharpshooter_fired_gun))
+	RegisterSignal(owner, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE, PROC_REF(apply_ricochet))
 	return ..()
 
 /obj/item/organ/cyberimp/trickshotter/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
@@ -214,7 +216,21 @@
 		REMOVE_TRAIT(organ_owner, TRAIT_NICE_SHOT, IMPLANT_TRAIT)
 		REMOVE_TRAIT(organ_owner, TRAIT_GUNFLIP, IMPLANT_TRAIT)
 		REMOVE_TRAIT(organ_owner, TRAIT_GUN_NATURAL, IMPLANT_TRAIT)
+		UnregisterSignal(organ_owner, COMSIG_MOB_FIRED_GUN)
+		UnregisterSignal(organ_owner, COMSIG_PROJECTILE_FIRER_BEFORE_FIRE)
 	return ..()
+
+/obj/item/organ/cyberimp/trickshotter/proc/sharpshooter_fired_gun(mob/user, obj/item/gun/gun_fired, target, params, zone_override, list/bonus_spread_values)
+	SIGNAL_HANDLER
+	bonus_spread_values[MIN_BONUS_SPREAD_INDEX] -= 20
+	bonus_spread_values[MAX_BONUS_SPREAD_INDEX] -= 10
+
+/obj/item/organ/cyberimp/trickshotter/proc/apply_ricochet(mob/user, obj/projectile/projectile, datum/fired_from, atom/clicked_atom)
+	SIGNAL_HANDLER
+	projectile.ricochets_max += 1
+	projectile.min_ricochets += 1
+	projectile.ricochet_incidence_leeway = 0 //allows the projectile to bounce at any angle.
+	projectile.accuracy_falloff = 0
 
 /obj/item/organ/cyberimp/trickshotter/emp_act(severity)
 	. = ..()
