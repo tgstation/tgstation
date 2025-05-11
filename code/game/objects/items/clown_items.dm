@@ -269,3 +269,60 @@
 	icon_state = "laughter"
 	volume = 50
 	list_reagents = list(/datum/reagent/consumable/laughter = 50)
+
+/obj/item/rubber_chicken
+	name = "rubber chicken"
+	desc = "A robust rubber chicken the size of a Louisiana broiler."
+	icon = 'icons/obj/toys/toy.dmi'
+	icon_state = "rubber_chicken"
+	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
+	inhand_icon_state = "rubber_chicken"
+	force_string = "hilarious"
+	force = 10
+	damtype = STAMINA
+	hitsound = 'sound/items/weapons/genhit1.ogg'  //could use a funnier
+	attack_verb_continuous = list("slaps", "smacks", "gahonks")
+	attack_verb_simple = list("slap", "smack", "gahonk")
+
+/obj/item/rubber_chicken/examine(mob/user)
+	. = ..()
+	. += span_notice("It looks somewhat clammy and exudes somewhat of a rubbery smell.\n\nA small peeling sticker on the chicken's left thigh reads: 'made by Waffle Co.'")
+
+/obj/item/rubber_chicken/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
+	. = ..()
+	if(!isliving(target))
+		return
+	var/mob/living/slapped = target
+	slapped.apply_status_effect(/datum/status_effect/pranked)
+
+/obj/item/rubber_chicken/attack_secondary(mob/living/victim, mob/living/user, params)
+	. = ..()
+
+	if(HAS_TRAIT(user, TRAIT_CLUMSY) || is_clown_job(user.mind?.assigned_role))
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	var/datum/status_effect/pranked/victim_pranked = victim.has_status_effect(/datum/status_effect/pranked)
+	if(!victim_pranked)
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	if(victim.has_status_effect(/datum/status_effect/slapped_silly))
+		return SECONDARY_ATTACK_CALL_NORMAL
+
+	var/slap_power = victim_pranked.prank_counter
+
+	playsound(user, 'sound/items/weapons/punch1.ogg', min(slap_power * 10, 80))
+	user.do_attack_animation(src)
+	var/honk_block = victim.run_armor_check(
+			def_zone = BODY_ZONE_HEAD,
+			attack_flag = MELEE,
+			absorb_text = span_nicegreen("Your helmet has protected your dignity from the clown!"),
+			soften_text = span_warning("Your helmet has softened the impact from the [name]!"),
+			armour_penetration = armour_penetration,
+			weak_against_armour = weak_against_armour)
+
+	victim.apply_damage(force * 0.7 * slap_power, STAMINA, BODY_ZONE_HEAD, blocked = honk_block)
+	victim.apply_status_effect(min(/datum/status_effect/slapped_silly, slap_power * 2 SECONDS, 30 SECONDS))
+	victim.remove_status_effect(/datum/status_effect/pranked)
+	user.visible_message(span_danger("[user] knocks [victim] silly with [src]!"))
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
