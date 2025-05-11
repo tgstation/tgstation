@@ -118,6 +118,7 @@
 
 /obj/item/storage/medkit/surgery_syndie/get_medbot_skin()
 	return "bezerk"
+
 /obj/item/storage/medkit/ancient
 	icon_state = "oldfirstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
