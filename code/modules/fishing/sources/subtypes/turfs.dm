@@ -107,7 +107,7 @@
 		FISHING_DUD = 20,
 		/obj/item/fish/bumpy = 10,
 		/obj/item/fish/sacabambaspis = 10,
-		/mob/living/basic/frog = 2,
+		/obj/effect/spawner/random/frog = 2,
 		/obj/item/fishing_rod/telescopic/master = 1,
 	)
 	fish_counts = list(

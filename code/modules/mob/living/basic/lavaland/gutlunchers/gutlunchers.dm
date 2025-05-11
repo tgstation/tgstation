@@ -122,7 +122,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/attack,
 		/datum/pet_command/breed/gutlunch,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/fetch,
 		/datum/pet_command/mine_walls,
 	)

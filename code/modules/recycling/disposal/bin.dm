@@ -143,21 +143,32 @@
 	king.visible_message(span_warning("[king] starts rummaging through [src]."),span_notice("You rummage through [src]..."))
 	if (!do_after(king, 2 SECONDS, src, interaction_key = "regalrat"))
 		return
+
+	var/cheese = FALSE
 	var/loot = rand(1,100)
 	switch(loot)
 		if(1 to 5)
 			to_chat(king, span_notice("You find some leftover coins. More for the royal treasury!"))
 			var/pickedcoin = pick(GLOB.ratking_coins)
 			for(var/i = 1 to rand(1,3))
-				new pickedcoin(get_turf(king))
+				new pickedcoin(king.drop_location())
 		if(6 to 33)
+			cheese = TRUE
 			king.say(pick("Treasure!","Our precious!","Cheese!"), ignore_spam = TRUE, forced = "regal rat rummaging")
 			to_chat(king, span_notice("Score! You find some cheese!"))
-			new /obj/item/food/cheese/wedge(get_turf(king))
+			new /obj/item/food/cheese/wedge(king.drop_location())
 		else
 			var/pickedtrash = pick(GLOB.ratking_trash)
 			to_chat(king, span_notice("You just find more garbage and dirt. Lovely, but beneath you now."))
-			new pickedtrash(get_turf(king))
+			new pickedtrash(king.drop_location())
+
+	if (cheese)
+		return // We don't want them to eat your reward
+	var/rat_cap = CONFIG_GET(number/ratcap)
+	if (LAZYLEN(SSmobs.cheeserats) < rat_cap && prob(33))
+		var/mob/living/basic/mouse/new_subject = new(king.drop_location())
+		playsound(new_subject, 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg', 100)
+		visible_message(span_warning("[new_subject] climbs out of [src]!"))
 
 /// Moves an item into the diposal bin
 /obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)

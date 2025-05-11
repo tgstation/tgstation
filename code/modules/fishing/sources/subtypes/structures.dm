@@ -89,7 +89,7 @@
 		FISHING_RANDOM_SEED = 16,
 		/obj/item/seeds/grass = 6,
 		/obj/item/seeds/random = 1,
-		/mob/living/basic/frog = 1,
+		/obj/effect/spawner/random/frog = 1,
 		/mob/living/basic/axolotl = 1,
 		/mob/living/basic/turtle = 2,
 	)
@@ -98,7 +98,7 @@
 		/obj/item/seeds/grass = 4,
 		FISHING_RANDOM_SEED = 4,
 		/obj/item/seeds/random = 1,
-		/mob/living/basic/frog = 1,
+		/obj/effect/spawner/random/frog = 1,
 		/mob/living/basic/axolotl = 1,
 	)
 	fishing_difficulty = FISHING_EASY_DIFFICULTY + 5

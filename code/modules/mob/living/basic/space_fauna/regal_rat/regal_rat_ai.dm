@@ -25,3 +25,9 @@
 
 /datum/ai_planning_subtree/use_mob_ability/domain
 	ability_key = BB_DOMAIN_ABILITY
+
+/datum/ai_planning_subtree/use_mob_ability/domain/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	var/datum/action/cooldown/mob_cooldown/domain/domain = controller.blackboard[ability_key]
+	if (!istype(domain) || domain.is_active)
+		return
+	return ..()

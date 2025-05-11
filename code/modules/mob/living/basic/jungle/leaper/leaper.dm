@@ -42,7 +42,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/move,
 		/datum/pet_command/free,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/untargeted_ability/blood_rain,
 		/datum/pet_command/untargeted_ability/summon_toad,
 		/datum/pet_command/attack,

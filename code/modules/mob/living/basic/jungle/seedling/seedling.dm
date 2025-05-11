@@ -52,7 +52,7 @@
 	var/list/seedling_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 	)
 
 /mob/living/basic/seedling/Initialize(mapload)
@@ -213,7 +213,7 @@
 	seedling_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/attack,
 		/datum/pet_command/use_ability/solarbeam,
 		/datum/pet_command/use_ability/rapidseeds,

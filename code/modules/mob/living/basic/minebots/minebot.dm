@@ -49,7 +49,7 @@
 		/datum/pet_command/minebot_ability/dump,
 		/datum/pet_command/automate_mining,
 		/datum/pet_command/free/minebot,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/attack/minebot,
 	)
 	///possible colors the bot can have

@@ -17,3 +17,6 @@
 
 ///Called when a /mob/living/simple_animal/hostile fines a new target: (atom/source, new_target)
 #define COMSIG_HOSTILE_FOUND_TARGET "comsig_hostile_found_target"
+
+///Called when a regal rat uses their riot ability on a mob
+#define COMSIG_REGAL_RAT_RIOTED "comsig_regal_rat_rioted"
