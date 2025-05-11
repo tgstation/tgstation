@@ -542,6 +542,14 @@
 	name = "Space-Ruin Space Sector 13 Local Channel"
 	description = "A local TV station serving areas surrounding Space Sector 13, shows including but not limited to: talk shows, operas, stage plays and more!"
 
+/datum/map_template/ruin/space/dragoon
+	id = "dragoon"
+	suffix = "dragoontomb.dmm"
+	name = "Sky Bulge Tomb"
+	description = "A tomb of a dice-loving dragoon in space. \
+		Turns out he got too good and jumped too high. \
+		Contains the Sky Bulge, which allows the user to jump onto targets."
+
 /datum/map_template/ruin/space/experimental_cloning
 	id = "cloning_facility"
 	suffix = "cloning_facility.dmm"

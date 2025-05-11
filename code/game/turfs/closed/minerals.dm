@@ -675,6 +675,11 @@
 	baseturfs = /turf/open/misc/asteroid/basalt
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 
+/turf/closed/mineral/volcanic/airless
+	turf_type = /turf/open/misc/asteroid/basalt/airless
+	baseturfs = /turf/open/misc/asteroid/basalt/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 /turf/closed/mineral/volcanic/lava_land_surface
 	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
@@ -869,6 +874,11 @@
 	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = TRUE
+
+/turf/closed/mineral/gibtonite/volcanic/airless
+	turf_type = /turf/open/misc/asteroid/basalt
+	baseturfs = /turf/open/misc/asteroid/basalt
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/closed/mineral/gibtonite/ice
 	MAP_SWITCH(, icon_state = "icerock_Gibtonite_inactive")

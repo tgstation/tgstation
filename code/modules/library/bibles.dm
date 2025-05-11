@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	balloon_alert(user, "unpacking bible...")
 	if(!do_after(user, 15 SECONDS, new_altar_area))
 		return
-	new /obj/structure/altar_of_gods(new_altar_area)
+	new /obj/structure/altar/of_gods(new_altar_area)
 	qdel(src)
 
 /obj/item/book/bible/proc/bless(mob/living/blessed, mob/living/user)
