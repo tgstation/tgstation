@@ -29,7 +29,8 @@
 	AddComponent(/datum/component/speechmod, replacements = list("." = "!"), end_string = "!!", uppercase = TRUE)
 
 /datum/mutation/human/hulk/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	for(var/obj/item/bodypart/part as anything in owner.bodyparts)
 		part.add_color_override(bodypart_color, LIMB_COLOR_HULK)

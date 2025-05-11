@@ -6,6 +6,8 @@
 
 /datum/mutation/human/biotechcompat/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
+	if(!.)
+		return
 	owner.adjust_skillchip_complexity_modifier(1)
 
 /datum/mutation/human/biotechcompat/on_losing(mob/living/carbon/human/owner)
@@ -21,7 +23,8 @@
 	text_lose_indication = span_danger("Your mind feels a little bit foggy.")
 
 /datum/mutation/human/clever/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	owner.add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE), GENETIC_MUTATION)
 

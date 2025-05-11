@@ -19,7 +19,8 @@
 	radio.name = "internal antenna"
 
 /datum/mutation/human/antenna/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	var/obj/item/implant/radio/antenna/linked_radio = new(owner)
 	linked_radio.implant(owner, null, TRUE, TRUE)

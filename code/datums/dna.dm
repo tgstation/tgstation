@@ -399,23 +399,26 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 //Please use add_mutation or activate_mutation instead
 /datum/dna/proc/force_give(datum/mutation/human/human_mutation)
-	if(holder && human_mutation)
-		if(human_mutation.class == MUT_NORMAL)
-			set_se(1, human_mutation)
-		. = human_mutation.on_acquiring(holder)
-		if(.)
-			qdel(human_mutation)
-		update_instability()
+	if(!holder || !human_mutation)
+		return
+	if(human_mutation.class == MUT_NORMAL)
+		set_se(1, human_mutation)
+	. = human_mutation.on_acquiring(holder)
+	if(!.)
+		qdel(human_mutation)
+		return
+	human_mutation.setup()
+	update_instability()
 
 //Use remove_mutation instead
 /datum/dna/proc/force_lose(datum/mutation/human/human_mutation)
-	if(holder && (human_mutation in mutations))
-		set_se(0, human_mutation)
-		. = human_mutation.on_losing(holder)
-		if(!(human_mutation in mutations))
-			qdel(human_mutation) // qdel mutations on removal
-			update_instability(FALSE)
+	if(!holder || !(human_mutation in mutations))
 		return
+	set_se(0, human_mutation)
+	. = human_mutation.on_losing(holder)
+	if(!(human_mutation in mutations))
+		qdel(human_mutation) // qdel mutations on removal
+		update_instability(FALSE)
 
 /**
  * Checks if two DNAs are practically the same by comparing their most defining features
