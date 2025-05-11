@@ -268,7 +268,7 @@
 	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -eyes_layer) /// DOPPLER SHIFT EDIT: using eye_icon instead of human_face.dmi, eyes_layer instead of BODY_LAYER
 	var/list/overlays = list(eye_left, eye_right)
 
-	var/obscured = parent.check_obscured_slots(TRUE)
+	var/obscured = parent.check_obscured_slots()
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 		overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -eyes_layer, alpha = eye_left.alpha) //DOPPLER SHIFT EDIT : using eyes_layer instead of BODY_LAYER
 		overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, -eyes_layer, alpha = eye_right.alpha) //DOPPLER SHIFT EDIT : using eyes_layer instead of BODY_LAYER

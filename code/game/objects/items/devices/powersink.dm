@@ -125,7 +125,7 @@
 			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(src)]")
 			user.log_message("activated a powersink", LOG_GAME)
 			notify_ghosts(
-				"[user] has activated a power sink!",
+				"[user.real_name] has activated a power sink!",
 				source = src,
 				header = "Shocking News!",
 			)
