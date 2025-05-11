@@ -578,24 +578,94 @@
 /datum/uplink_item/mech/gygax
 	name = "Dark Gygax Exosuit"
 	desc = "A lightweight exosuit, painted in a dark scheme. Its speed and equipment selection make it excellent \
-		for hit-and-run style attacks. Features a scattershot shotgun, armor boosters against melee and ranged attacks, and ion thrusters."
+		for hit-and-run style attacks. Features ion thrusters."
 	item = /obj/vehicle/sealed/mecha/gygax/dark/loaded
-	cost = 60
+	cost = 30
 
 /datum/uplink_item/mech/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly military-grade exosuit. Features long-range targeting, thrust vectoring \
-		and deployable smoke. Comes equipped with an LMG, scattershot carbine, missile rack, and an antiprojectile armor booster."
+		and deployable smoke."
 	item = /obj/vehicle/sealed/mecha/marauder/mauler/loaded
-	cost = 100
+	cost = 50
+
+// ~~ Mech Equipment ~~
+
+/datum/uplink_category/mech_equipment
+	name = "Mech Equipment"
+	weight = 26
+
+/datum/uplink_item/mech_equipment
+	category = /datum/uplink_category/mech_equipment
+	surplus = 0
+	purchasable_from = UPLINK_SERIOUS_OPS
+	restricted = TRUE
+
+// ~~ Mech Main hands ~~
+
+/datum/uplink_item/mech_equipment/carbine
+	name = "FNX-99 Hades Carbine"
+	desc = "A weapon for combat exosuits. Shoots incendiary bullets."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/carbine
+	cost = 10
+
+/datum/uplink_item/mech_equipment/scattershot
+	name = "LBX AC 10 Scattershot"
+	desc = "A weapon for combat exosuits. Shoots a spread of pellets."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/scattershot
+	cost = 15
+
+/datum/uplink_item/mech_equipment/lmg
+	name = "Ultra AC 2"
+	desc = "A weapon for combat exosuits. Shoots a rapid, three shot burst."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/lmg
+	cost = 10
+
+/datum/uplink_item/mech_equipment/missile_rack_breaching
+	name = "PEP-6 missile rack"
+	desc = "A weapon for combat exosuits. Launches precision explosive projectiles designed to explode only when striking a structured target, including walls, exosuits and cyborgs."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/breaching
+	cost = 15
+
+/datum/uplink_item/mech_equipment/missile_rack
+	name = "SRM-8 missile rack"
+	desc = "A weapon for combat exosuits. Launches short range missiles."
+	item = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack
+	cost = 20
+
+/datum/uplink_item/mech_equipment/rcd
+	name = "mounted RCD"
+	desc = "An exosuit-mounted Rapid Construction Device."
+	item = /obj/item/mecha_parts/mecha_equipment/rcd
+	cost = 15
+
+ // ~~ Mech Utility ~~
+
+/datum/uplink_item/mech_equipment/repair_droid
+	name = "exosuit repair droid"
+	desc = "An automated repair droid for exosuits. Scans for damage and repairs it. Can fix almost all types of external or internal damage."
+	item = /obj/item/mecha_parts/mecha_equipment/repair_droid
+	cost = 10
+
+/datum/uplink_item/mech_equipment/melee_padding
+	name = "Impact Cushion Plates"
+	desc = "Boosts exosuit armor against melee attacks"
+	item = /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
+	cost = 5
+
+/datum/uplink_item/mech_equipment/ranged_padding
+	name = "Projectile Shielding"
+	desc = "Boosts exosuit armor against ranged kinetic and energy projectiles. Completely blocks taser shots."
+	item = /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
+	cost = 5
 
 // ~~ Mech Support ~~
 
 /datum/uplink_item/mech/support_bag
 	name = "Mech Support Kit Bag"
-	desc = "A duffel bag containing ammo for four full reloads of the scattershot carbine which is equipped on standard Dark Gygax and Mauler exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
+	desc = "A duffel bag containing tools to perform maintenance on your mech, which includes, duct tape, full toolbelt, inducer"
 	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
-	cost = 4
+	cost = 2
 	purchasable_from = UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/mech/support_bag/mauler
