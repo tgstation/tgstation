@@ -1,0 +1,289 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"c" = (
+/obj/effect/mob_spawn/corpse/watcher,
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+"d" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface)
+"j" = (
+/turf/template_noop,
+/area/template_noop)
+"l" = (
+/obj/structure/flora/rock/pile/icy/style_2,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"n" = (
+/obj/structure/flora/rock/pile/icy/style_3,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"q" = (
+/obj/effect/mob_spawn/corpse/goliath,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+"u" = (
+/obj/effect/decal/cleanable/blood/trails,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"z" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"A" = (
+/obj/structure/flora/rock/icy,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"B" = (
+/obj/effect/decal/cleanable/ash/large,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"C" = (
+/obj/effect/mob_spawn/corpse/watcher,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"H" = (
+/obj/effect/decal/cleanable/blood/trails{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"I" = (
+/obj/effect/mob_spawn/corpse/goliath,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"J" = (
+/obj/structure/flora/rock/pile/icy,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"L" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"O" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"P" = (
+/obj/effect/mob_spawn/corpse/goliath,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+"R" = (
+/obj/structure/flora/rock/pile/icy,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+"S" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+"X" = (
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+"Z" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+
+(1,1,1) = {"
+j
+j
+j
+j
+j
+j
+j
+j
+d
+d
+d
+d
+d
+j
+j
+j
+"}
+(2,1,1) = {"
+j
+d
+d
+d
+j
+j
+d
+d
+d
+Z
+Z
+d
+d
+d
+j
+j
+"}
+(3,1,1) = {"
+d
+d
+d
+d
+d
+d
+d
+d
+H
+O
+a
+Z
+a
+d
+d
+j
+"}
+(4,1,1) = {"
+d
+l
+a
+d
+d
+d
+a
+Z
+H
+a
+A
+l
+a
+B
+d
+d
+"}
+(5,1,1) = {"
+d
+L
+S
+Z
+a
+a
+a
+n
+C
+L
+P
+a
+a
+a
+Z
+O
+"}
+(6,1,1) = {"
+d
+a
+O
+u
+u
+c
+Z
+z
+a
+Z
+X
+S
+u
+u
+u
+u
+"}
+(7,1,1) = {"
+d
+a
+a
+a
+O
+O
+a
+q
+u
+z
+R
+a
+a
+I
+a
+J
+"}
+(8,1,1) = {"
+d
+d
+d
+a
+L
+a
+L
+a
+a
+a
+a
+a
+O
+d
+d
+d
+"}
+(9,1,1) = {"
+j
+d
+d
+d
+d
+a
+a
+l
+a
+O
+a
+a
+a
+d
+d
+j
+"}
+(10,1,1) = {"
+j
+j
+j
+d
+d
+d
+d
+d
+a
+a
+Z
+a
+d
+d
+j
+j
+"}
+(11,1,1) = {"
+j
+j
+j
+j
+j
+d
+d
+d
+d
+d
+d
+d
+d
+d
+j
+j
+"}

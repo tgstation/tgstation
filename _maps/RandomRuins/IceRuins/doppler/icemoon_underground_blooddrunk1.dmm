@@ -1,0 +1,384 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/mineral/random/snow,
+/area/icemoon/surface)
+"c" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"f" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+"j" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1;
+	pixel_y = 9
+	},
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 1;
+	pixel_x = -9
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"l" = (
+/obj/effect/decal/cleanable/glitter/blue{
+	desc = "It looks like fancy glitter to me.";
+	name = "icy wind"
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"m" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8;
+	pixel_x = -9
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"n" = (
+/obj/structure/flora/rock/pile/icy/style_2,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"o" = (
+/obj/effect/decal/cleanable/blood/drip,
+/obj/item/knife/combat/survival{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"q" = (
+/obj/item/chair/plastic{
+	pixel_x = -19
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"r" = (
+/obj/item/pickaxe/rusted{
+	pixel_y = 16
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"t" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+"u" = (
+/obj/effect/mob_spawn/corpse/human/minesite,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+"w" = (
+/turf/template_noop,
+/area/template_noop)
+"y" = (
+/obj/effect/decal/cleanable/blood/drip{
+	pixel_x = 13
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"A" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"B" = (
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"C" = (
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/grand_remains,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"E" = (
+/obj/item/reagent_containers/hypospray/medipen/survival{
+	pixel_y = -18
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"F" = (
+/obj/structure/flora/rock/pile/icy,
+/obj/effect/decal/cleanable/glitter/blue{
+	desc = "It looks like fancy glitter to me.";
+	name = "icy wind"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"K" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"N" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 8
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"O" = (
+/obj/effect/decal/cleanable/blood/splatter{
+	pixel_x = 19
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"P" = (
+/obj/structure/bonfire/dense,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"Q" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+"R" = (
+/obj/effect/decal/cleanable/glitter/blue{
+	desc = "It looks like fancy glitter to me.";
+	name = "icy wind"
+	},
+/obj/item/flashlight/seclite{
+	dir = 1;
+	pixel_x = -10
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"S" = (
+/obj/structure/flora/grass/brown/style_random,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"U" = (
+/obj/effect/decal/cleanable/blood/drip,
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+"W" = (
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/surface)
+"Y" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/turf/open/misc/asteroid/snow/icemoon,
+/area/icemoon/surface)
+
+(1,1,1) = {"
+w
+w
+a
+a
+a
+a
+w
+a
+a
+w
+w
+w
+w
+w
+w
+"}
+(2,1,1) = {"
+w
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+w
+w
+w
+w
+"}
+(3,1,1) = {"
+a
+a
+l
+B
+B
+B
+u
+O
+B
+o
+a
+a
+w
+w
+w
+"}
+(4,1,1) = {"
+a
+a
+B
+W
+S
+S
+N
+R
+B
+B
+a
+a
+a
+w
+w
+"}
+(5,1,1) = {"
+a
+a
+B
+B
+t
+r
+c
+B
+F
+B
+S
+a
+a
+a
+w
+"}
+(6,1,1) = {"
+w
+a
+y
+B
+B
+W
+B
+B
+B
+S
+S
+Y
+B
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+B
+l
+W
+C
+B
+l
+f
+j
+W
+E
+B
+a
+"}
+(8,1,1) = {"
+a
+a
+B
+B
+n
+B
+K
+B
+B
+U
+m
+P
+B
+B
+a
+"}
+(9,1,1) = {"
+w
+a
+W
+B
+l
+S
+A
+B
+B
+S
+B
+B
+B
+a
+a
+"}
+(10,1,1) = {"
+w
+a
+a
+B
+B
+l
+Q
+B
+S
+a
+a
+q
+W
+a
+a
+"}
+(11,1,1) = {"
+w
+w
+a
+a
+a
+a
+U
+a
+a
+a
+a
+a
+a
+a
+w
+"}
+(12,1,1) = {"
+w
+w
+w
+a
+a
+a
+B
+a
+a
+w
+w
+a
+a
+w
+w
+"}
