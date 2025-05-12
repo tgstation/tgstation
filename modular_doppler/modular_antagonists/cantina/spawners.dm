@@ -14,10 +14,15 @@
 	spawner_job_path = /datum/job/cantina_regular
 	role_ban = ROLE_TRAITOR
 
+/obj/effect/mob_spawn/ghost_role/human/cantina/create(mob/mob_possessor, newname)
+	. = ..()
+	var/mob/living/spawned_mob = .
+	if(istype(spawned_mob))
+		spawned_mob.mind.add_antag_datum(/datum/antagonist/traitor/cantina_regular)
+
 /obj/effect/mob_spawn/ghost_role/human/cantina/special(mob/living/new_spawn)
 	. = ..()
-	new_spawn.mind.add_antag_datum(/datum/antagonist/traitor/cantina_regular)
-	var/datum/bank_account/remote/bank_account = new(new_spawn.real_name, src)
+	var/datum/bank_account/remote/bank_account = new(new_spawn.real_name)
 	bank_account.replaceable = FALSE
 	new_spawn.add_mob_memory(/datum/memory/key/account, remembered_id = bank_account.account_id)
 
@@ -35,6 +40,14 @@
 	spawner_job_path = /datum/job/cantina_bartender
 	role_ban = ROLE_TRAITOR
 
+/obj/effect/mob_spawn/ghost_role/human/cantina_bartender/create(mob/mob_possessor, newname)
+	. = ..()
+	var/mob/living/spawned_mob = .
+	if(istype(spawned_mob))
+		spawned_mob.mind.add_antag_datum(/datum/antagonist/traitor/cantina_bartender)
+
 /obj/effect/mob_spawn/ghost_role/human/cantina_bartender/special(mob/living/new_spawn)
 	. = ..()
-	new_spawn.mind.add_antag_datum(/datum/antagonist/traitor/cantina_bartender)
+	var/datum/bank_account/remote/bank_account = new(new_spawn.real_name)
+	bank_account.replaceable = FALSE
+	new_spawn.add_mob_memory(/datum/memory/key/account, remembered_id = bank_account.account_id)
