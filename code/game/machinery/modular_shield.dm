@@ -388,6 +388,12 @@
 	icon_state = "recharge_port"
 	density = TRUE
 
+	///This var is what determines if performance modules can connect to this module
+	var/allow_boosters = TRUE
+
+	///This var is what determines if we are a booster or a logistic module
+	var/booster = FALSE
+
 	///The shield generator we are connected to if we find one or a node provides us one
 	var/obj/machinery/modular_shield_generator/shield_generator
 
@@ -490,6 +496,12 @@
 
 	if(connected_node)
 
+		//checks if the node allows boosters and if we are a booster
+		if((connected_node.allow_boosters == FALSE) && (booster == TRUE))
+			connected_node = null
+			balloon_alert(user, "cant connect")
+			return
+
 		LAZYOR(connected_node.connected_through_us, (src))
 		shield_generator = connected_node.shield_generator
 		if(shield_generator)
@@ -585,12 +597,26 @@
 		connected.shield_generator = null
 		connected.update_icon_state()
 
+/obj/machinery/modular_shield/module/node/cable
+
+	name = "modular shield cable"
+	desc = "An ankle high mess of cables packed as low as possible at the cost of lacking connection components necessary for anything other than nodes and the generator itself."
+	//icon = 'icons/obj/machines/modular_shield_generator.dmi'
+	//icon_state = "cable_node_off_closed"
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
+	circuit = /obj/item/circuitboard/machine/modular_shield_cable
+	density = FALSE
+	allow_boosters = FALSE
+
+
+
 /obj/machinery/modular_shield/module/charger
 
 	name = "modular shield charger"
 	desc = "A machine that somehow fabricates hardlight using electrons."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "charger_off_closed"
+	booster = TRUE
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_charger
 
@@ -619,6 +645,7 @@
 	desc = "It helps the shield generator project farther out."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "relay_off_closed"
+	booster = TRUE
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_relay
 
@@ -647,6 +674,7 @@
 	desc = "A device used to hold more hardlight for the modular shield generator."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "well_off_closed"
+	booster = TRUE
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_well
 
