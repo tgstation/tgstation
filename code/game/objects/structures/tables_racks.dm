@@ -1068,6 +1068,32 @@
 	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
 	return ..()
 
+/obj/structure/table/optable/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(isnull(held_item))
+		if (breath_mask?.loc == src)
+			context[SCREENTIP_CONTEXT_RMB] = "Take mask"
+			. |= CONTEXTUAL_SCREENTIP_SET
+		return
+
+	if(breath_mask && breath_mask != held_item)
+		if (held_item.tool_behaviour == TOOL_SCREWDRIVER)
+			context[SCREENTIP_CONTEXT_LMB] = "Detach mask"
+			. |= CONTEXTUAL_SCREENTIP_SET
+	else if (istype(held_item, /obj/item/clothing/mask/breath))
+		context[SCREENTIP_CONTEXT_LMB] = "Attach mask"
+		. |= CONTEXTUAL_SCREENTIP_SET
+
+	if(air_tank)
+		if (held_item.tool_behaviour == TOOL_WRENCH)
+			context[SCREENTIP_CONTEXT_LMB] = "Detach tank"
+			. |= CONTEXTUAL_SCREENTIP_SET
+	else if (istype(held_item, /obj/item/tank))
+		var/obj/item/tank/as_tank = held_item
+		if (as_tank.tank_holder_icon_state)
+			context[SCREENTIP_CONTEXT_LMB] = "Attach tank"
+			. |= CONTEXTUAL_SCREENTIP_SET
+
 /obj/structure/table/optable/atom_deconstruct(disassembled)
 	. = ..()
 	var/atom/drop_loc = drop_location()
@@ -1235,6 +1261,21 @@
 
 	if (detach_mask(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/structure/table/optable/examine(mob/user)
+	. = ..()
+	if (air_tank)
+		. += span_notice("It has \a [air_tank] secured to it with a couple of [EXAMINE_HINT("bolts")].")
+		if (patient)
+			. += span_info("You can connect [patient]'s internals to \the [air_tank] by dragging \the [src] onto them.")
+	else
+		. += span_notice("It has an attachment slot for an air tank underneath.")
+	if (breath_mask)
+		. += span_notice("It has \a [breath_mask] attached to its side, the tube secured with a single [EXAMINE_HINT("screw")].")
+		if (breath_mask.loc == src)
+			. += span_info("You can detach the mask by right-clicking \the [src] with an empty hand.")
+	else
+		. += span_notice("There's a port for a breathing mask tube on its side.")
 
 /obj/structure/table/optable/proc/detach_mask(mob/living/user)
 	if (!istype(user) || !user.CanReach(src) || !user.can_interact_with(src))
