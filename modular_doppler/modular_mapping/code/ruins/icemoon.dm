@@ -6,6 +6,36 @@
 	prefix = "_maps/RandomRuins/IceRuins/doppler/"
 
 /*----- Underground -----*/
+/datum/map_template/ruin/icemoon/underground/doppler/icemoon_underground_hierophant
+	name = "Ice-Ruin Hierophant's Arena"
+	id = "hierophant"
+	description = "A strange, square chunk of metal of massive size. Inside awaits only death and many, many squares."
+	prefix = "_maps/RandomRuins/IceRuins/doppler/"
+	suffix = "icemoon_underground_hierophant.dmm"
+	always_place = TRUE
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/icemoon/underground/doppler/blood_drunk_miner
+	name = "Ice-Ruin Blood-Drunk Miner"
+	description = "A strange cavern, and an insane beastly miner standing inside."
+	suffix = "icemoon_underground_blooddrunk1.dmm"
+	allow_duplicates = FALSE //will only spawn one variant of the ruin
+	cost = 0
+
+/datum/map_template/ruin/icemoon/underground/doppler/hunter
+	name = "Ice-Ruin Blood-Drunk Miner (Hunter)"
+	suffix = "icemoon_underground_blooddrunk2.dmm"
+
+/datum/map_template/ruin/icemoon/underground/doppler/random
+	name = "Ice-Ruin Blood-Drunk Miner (Random)"
+	id = "blooddrunk"
+	suffix = null
+	always_place = TRUE
+
+/datum/map_template/ruin/icemoon/underground/doppler/random/New()
+	suffix = pick("icemoon_underground_blooddrunk1.dmm", "icemoon_underground_blooddrunk2.dmm")
+	return ..()
+
 
 /datum/map_template/ruin/icemoon/underground/doppler/magic_hotsprings
 	name = "Magic Hotsprings"
