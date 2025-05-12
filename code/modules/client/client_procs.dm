@@ -139,9 +139,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			if(!SSmapping.current_map.mapping_url)
 				return
 			if(is_station_level(mob.z))
-				src << link("[SSmapping.current_map.mapping_url][LOWER_TEXT(sanitize_css_class_name(SSmapping.current_map.map_name))]/?x=[mob.x]&y=[mob.y]&zoom=6")
+				src << link("[SSmapping.current_map.mapping_url]/?x=[mob.x]&y=[mob.y]&zoom=6")
 			else
-				src << link("[SSmapping.current_map.mapping_url][LOWER_TEXT(sanitize_css_class_name(SSmapping.current_map.map_name))]")
+				src << link("[SSmapping.current_map.mapping_url]")
 	if (hsrc)
 		var/datum/real_src = hsrc
 		if(QDELETED(real_src))

@@ -155,7 +155,7 @@
 	active = TRUE
 	if(detonate_explosion) //doesn't send a notification unless it's a genuine, exploding hot potato.
 		notify_ghosts(
-			"[user] has primed a Hot Potato!",
+			"[user.real_name] has primed a Hot Potato!",
 			source = src,
 			header = "Hot Hot Hot!",
 		)
