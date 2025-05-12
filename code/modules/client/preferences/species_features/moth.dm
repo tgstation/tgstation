@@ -41,8 +41,6 @@
 	return assoc_to_keys_features(SSaccessories.moth_markings_list)
 
 /datum/preference/choiced/moth_markings/icon_for(value)
-	return uni_icon('icons/effects/crayondecal.dmi', "x")
-	/* TEMPORARY DOPPLER EDIT
 	var/static/list/body_parts = list(
 		/obj/item/bodypart/head/moth,
 		/obj/item/bodypart/chest/moth,
@@ -76,7 +74,7 @@
 	icon_with_markings.scale(64, 64)
 	icon_with_markings.crop(15, 64 - 31, 15 + 31, 64)
 
-	return icon_with_markings*/
+	return icon_with_markings
 
 /datum/preference/choiced/moth_markings/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["moth_markings"] = value

@@ -567,68 +567,67 @@
 	var/datum/sprite_accessory/chosen_tail = SSaccessories.tails_list_alien[value]
 	return generate_back_icon(chosen_tail, "tail")
 
-#define WIDTH_WINGS_FILE 45
-#define HEIGHT_WINGS_FILE 34
-#define WIDTH_BIGTAILS_FILE 64
-#define HEIGHT_BIGTAILS_FILE 32
-
 /// Proc to gen that icon
 //	We don't wanna copy paste this
 /datum/preference/choiced/proc/generate_back_icon(datum/sprite_accessory/sprite_accessory, key)
-	return uni_icon('icons/effects/crayondecal.dmi', "x")
-/*
-	var/static/datum/universal_icon/final_icon
-	final_icon = uni_icon('icons/mob/human/bodyparts_greyscale.dmi', "human_chest_m", NORTH)
+	var/static/datum/universal_icon/body
+	if (isnull(body))
+		body = uni_icon('icons/mob/human/human.dmi', "human_basic", NORTH)
+	var/datum/universal_icon/final_icon = body.copy()
 
-	if (sprite_accessory.icon_state != "none")
-		var/datum/universal_icon/markings_icon_1 = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND", NORTH)
-		markings_icon_1.blend_color(COLOR_RED, ICON_MULTIPLY)
-		var/datum/universal_icon/markings_icon_2 = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND_2", NORTH)
-		markings_icon_2.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-		var/datum/universal_icon/markings_icon_3 = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND_3", NORTH)
-		markings_icon_3.blend_color(COLOR_BLUE, ICON_MULTIPLY)
-		// A couple icon files use this plus-size setup; autocrop to generate better icons where possible
-		if(markings_icon_1.scale(WIDTH_WINGS_FILE, HEIGHT_WINGS_FILE))
-			markings_icon_1.crop(8, 2, 39, 33)
-			markings_icon_2.crop(8, 2, 39, 33)
-			markings_icon_3.crop(8, 2, 39, 33)
-		if(markings_icon_1.scale(WIDTH_BIGTAILS_FILE, HEIGHT_BIGTAILS_FILE)) // Plus-size tail files are simpler
-			markings_icon_1.crop(17, 1, 48, 32)
-			markings_icon_2.crop(17, 1, 48, 32)
-			markings_icon_3.crop(17, 1, 48, 32)
-		// finally apply icons
-		markings_icon_1.blend_icon(final_icon, ICON_OVERLAY)
-		markings_icon_2.blend_icon(final_icon, ICON_OVERLAY)
-		markings_icon_3.blend_icon(final_icon, ICON_OVERLAY)
-		final_icon.blend_icon(markings_icon_1, ICON_OVERLAY)
-		final_icon.blend_icon(markings_icon_2, ICON_OVERLAY)
-		final_icon.blend_icon(markings_icon_3, ICON_OVERLAY)
-		/// == front breaker ==
-		var/datum/universal_icon/markings_icon_1_f = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT", NORTH)
-		markings_icon_1_f.blend_color(COLOR_RED, ICON_MULTIPLY)
-		var/datum/universal_icon/markings_icon_2_f = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT_2", NORTH)
-		markings_icon_2_f.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
-		var/datum/universal_icon/markings_icon_3_f = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT_3", NORTH)
-		markings_icon_3_f.blend_color(COLOR_BLUE, ICON_MULTIPLY)
-		// A couple icon files use this plus-size setup; autocrop to generate better icons where possible
-		if(markings_icon_1_f.scale(WIDTH_WINGS_FILE, HEIGHT_WINGS_FILE))
-			markings_icon_1_f.crop(8, 2, 39, 33)
-			markings_icon_2_f.crop(8, 2, 39, 33)
-			markings_icon_3_f.crop(8, 2, 39, 33)
-		else if(markings_icon_1_f.scale(WIDTH_BIGTAILS_FILE, HEIGHT_BIGTAILS_FILE)) // Plus-size tail files are simpler
-			markings_icon_1_f.crop(17, 1, 48, 32)
-			markings_icon_2_f.crop(17, 1, 48, 32)
-			markings_icon_3_f.crop(17, 1, 48, 32)
-		// finally apply icons
-		final_icon.blend_icon(markings_icon_1_f, ICON_OVERLAY)
-		final_icon.blend_icon(markings_icon_2_f, ICON_OVERLAY)
-		final_icon.blend_icon(markings_icon_3_f, ICON_OVERLAY)
+	if(sprite_accessory.icon_state != "none")
+		if(icon_exists(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND", NORTH))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND", NORTH)
+			accessory_icon.shift(NORTH, 0, ICON_SIZE_X, ICON_SIZE_Y)
+			accessory_icon.blend_color(COLOR_RED, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND_2", NORTH))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND_2", NORTH)
+			accessory_icon.shift(NORTH, 0, ICON_SIZE_X, ICON_SIZE_Y)
+			accessory_icon.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND_3", NORTH))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_BEHIND_3", NORTH)
+			accessory_icon.shift(NORTH, 0, ICON_SIZE_X, ICON_SIZE_Y)
+			accessory_icon.blend_color(COLOR_BLUE, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		// adjacent breaker
+		if(icon_exists(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", NORTH))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", NORTH)
+			accessory_icon.shift(NORTH, 0, ICON_SIZE_X, ICON_SIZE_Y)
+			accessory_icon.blend_color(COLOR_RED, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ_2", NORTH))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ_2", NORTH)
+			accessory_icon.shift(NORTH, 0, ICON_SIZE_X, ICON_SIZE_Y)
+			accessory_icon.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ_3", NORTH))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ_3", NORTH)
+			accessory_icon.shift(NORTH, 0, ICON_SIZE_X, ICON_SIZE_Y)
+			accessory_icon.blend_color(COLOR_BLUE, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		// front breaker
+		if(icon_exists(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT", NORTH))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT", NORTH)
+			accessory_icon.shift(NORTH, 0, ICON_SIZE_X, ICON_SIZE_Y)
+			accessory_icon.blend_color(COLOR_RED, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT_2", NORTH))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT_2", NORTH)
+			accessory_icon.shift(NORTH, 0, ICON_SIZE_X, ICON_SIZE_Y)
+			accessory_icon.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		if(icon_exists(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT_3", NORTH))
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_FRONT_3", NORTH)
+			accessory_icon.shift(NORTH, 0, ICON_SIZE_X, ICON_SIZE_Y)
+			accessory_icon.blend_color(COLOR_BLUE, ICON_MULTIPLY)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
 
-	//final_icon.Crop(4, 12, 28, 32)
-	//final_icon.Scale(32, 26)
-	//final_icon.Crop(-2, 1, 29, 32)
+	final_icon.crop(0, 0, 32, 32)
+	final_icon.scale(32, 32)
 
-	return final_icon */
+	return final_icon
 
 /// Overwrite lives here
 //	This is for the triple color channel

@@ -98,13 +98,15 @@
 		body = uni_icon('icons/mob/human/species/lizard/bodyparts.dmi', "lizard_head")
 	var/datum/universal_icon/final_icon = body.copy()
 
-	if (sprite_accessory.icon_state != "No Horns")
+	if(sprite_accessory.icon_state != "none")
 		if(icon_exists(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_ADJ"))
 			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_ADJ")
+			accessory_icon.shift(NORTH, 0, ICON_SIZE_X, ICON_SIZE_Y)
 			accessory_icon.blend_color(COLOR_WEBSAFE_DARK_GRAY, ICON_MULTIPLY)
 			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
 		if(icon_exists(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_FRONT"))
 			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_horns_[sprite_accessory.icon_state]_FRONT")
+			accessory_icon.shift(NORTH, 0, ICON_SIZE_X, ICON_SIZE_Y)
 			accessory_icon.blend_color(COLOR_WEBSAFE_DARK_GRAY, ICON_MULTIPLY)
 			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
 
