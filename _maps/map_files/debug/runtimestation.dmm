@@ -18,7 +18,7 @@
 /obj/structure/lattice,
 /obj/structure/grille,
 /turf/open/space,
-/area/space/nearstation)
+/area/space)
 "af" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -1300,6 +1300,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"pd" = (
+/turf/closed/wall/r_wall,
+/area/space)
 "pe" = (
 /obj/machinery/door/airlock,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2374,6 +2377,10 @@
 	},
 /turf/open/floor/engine,
 /area/station/cargo/miningoffice)
+"Qx" = (
+/obj/machinery/computer/rdservercontrol,
+/turf/open/floor/iron,
+/area/station/science)
 "QM" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2524,6 +2531,10 @@
 "Tt" = (
 /turf/open/floor/plating,
 /area/station/maintenance/aft)
+"TH" = (
+/obj/machinery/rnd/server/master,
+/turf/open/floor/iron,
+/area/station/science)
 "TJ" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -6009,8 +6020,7 @@ aa
 aa
 aa
 aa
-aa
-ah
+pd
 ah
 qb
 ah
@@ -6018,6 +6028,7 @@ ah
 ah
 ah
 ah
+bA
 bA
 bA
 bA
@@ -6101,8 +6112,7 @@ aa
 aa
 aa
 aa
-aa
-ah
+pd
 ut
 aw
 hm
@@ -6111,6 +6121,7 @@ hr
 Kx
 ah
 zS
+TH
 bB
 ca
 If
@@ -6193,8 +6204,7 @@ aa
 aa
 aa
 aa
-aa
-ah
+pd
 am
 EN
 FC
@@ -6202,6 +6212,7 @@ FC
 Nu
 xY
 Ks
+My
 My
 My
 My
@@ -6285,8 +6296,7 @@ aa
 aa
 aa
 aa
-aa
-ah
+pd
 dS
 GC
 aN
@@ -6296,6 +6306,7 @@ zo
 ah
 Yy
 bD
+NZ
 QM
 QM
 rh
@@ -6377,8 +6388,7 @@ aa
 aa
 aa
 aa
-aa
-ah
+pd
 am
 bm
 aO
@@ -6388,6 +6398,7 @@ ZD
 ah
 bF
 OU
+ci
 wc
 Ct
 gd
@@ -6469,8 +6480,7 @@ aa
 aa
 aa
 aa
-aa
-ah
+pd
 XU
 Yt
 FE
@@ -6478,8 +6488,9 @@ FE
 Pv
 Xp
 ah
-NZ
-ci
+Qx
+bD
+bD
 XC
 co
 bA
@@ -6561,13 +6572,13 @@ aa
 aa
 aa
 aa
-aa
+ae
 ah
 ah
-Wh
 Wh
 Wh
 TJ
+Wh
 ah
 ah
 bu
@@ -6653,13 +6664,13 @@ aa
 aa
 aa
 aa
-aa
 ae
 ab
 ab
 ab
 ab
 TT
+ab
 ab
 ab
 bu
@@ -6745,8 +6756,8 @@ aa
 aa
 aa
 aa
-aa
 ae
+ab
 ab
 yN
 yN
@@ -6837,8 +6848,8 @@ aa
 aa
 aa
 aa
-aa
 ae
+ab
 ab
 yN
 an
@@ -6929,8 +6940,8 @@ aa
 aa
 aa
 aa
-aa
 ae
+ab
 ab
 yN
 an
@@ -7021,9 +7032,9 @@ aa
 aa
 aa
 aa
-aa
 ae
-ac
+ab
+ab
 ab
 ab
 ao
@@ -7113,9 +7124,9 @@ aa
 aa
 aa
 aa
-aa
 ae
-ac
+ab
+ab
 ac
 aj
 Kg
@@ -7205,7 +7216,7 @@ aa
 aa
 aa
 aa
-aa
+ae
 aj
 aj
 aj

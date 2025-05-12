@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Divider,
-  NoticeBox,
-  Section,
-  Stack,
-  Table,
-  Tabs,
-} from 'tgui-core/components';
+import { Button, NoticeBox, Section, Table, Tabs } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
@@ -126,136 +117,31 @@ const ResearchHistoryView = (props) => {
   const { act, data } = useBackend<Data>();
   const { logs } = data;
 
+  const HistoryEntry = (server_log: LogData) => {
+    const {
+      node_name,
+      node_cost,
+      node_researcher,
+      node_researcher_location,
+      node_researched_timestamp,
+    } = server_log;
+    return (
+      <Section className="ResearchHistoryEntry" title={node_name}>
+        Testing Text
+      </Section>
+    );
+  };
+
   return (
-    <Section
-      title={
-        <span
-          style={{
-            fontSize: '1.9em',
-            fontWeight: 'bolder',
-            color: 'var(--color-sedate-grey)',
-            position: 'relative',
-            left: '2.5em',
-            fontFamily: 'var(--font-ternary)',
-          }}
-        >
-          RESEARCH HISTORY
-        </span>
-      }
-      fitted
-      backgroundColor="transparent"
-    >
+    <Section title="Research History" align="center" textAlign="center">
       {!logs.length ? (
         <NoticeBox mt={2} info>
-          No history found.
+          No research history found.
         </NoticeBox>
       ) : (
-        <Stack vertical color="transparent" backgroundColor="transparent">
-          {logs.map((server_log, index = 1) => (
-            <Stack.Item
-              key={index++}
-              align="center"
-              textAlign="center"
-              width="100%"
-            >
-              <Divider />
-              <Box as="span" align="center" fontSize="1.35em" nowrap>
-                <Button
-                  style={{
-                    textShadow: '5px 5px 35px black',
-                    color: 'var(--color-sedate-grey',
-                    fontFamily: 'var(--font-secondary)',
-                    outline: '2px solid black',
-                    outlineStyle: 'groove',
-                    outlineOffset: '-5px',
-                  }}
-                >
-                  {server_log.node_name}
-                </Button>
-              </Box>
-              <Box width="85%" position="relative" height="1.2em">
-                <Box
-                  as="span"
-                  position="absolute"
-                  left={2}
-                  fontSize="1.2em"
-                  style={{
-                    fontFamily: 'var(--font-secondary)',
-                    textShadow: '0px 0px 10px black',
-                    textDecoration: 'underline',
-                  }}
-                >
-                  Cost
-                </Box>
-                <Box
-                  as="span"
-                  position="absolute"
-                  right={-2}
-                  fontSize="1.2em"
-                  style={{
-                    fontFamily: 'var(--font-secondary)',
-                    textShadow: '0px 0px 10px black',
-                    textDecoration: 'underline',
-                  }}
-                >
-                  Researcher
-                </Box>
-              </Box>
-              <Box width="100%" position="relative" height="1.2em">
-                <Box
-                  as="span"
-                  position="absolute"
-                  left={2}
-                  fontSize="1.2em"
-                  style={{
-                    fontFamily: 'var(--font-ternary)',
-                  }}
-                >
-                  {server_log.node_cost} points
-                </Box>
-                <Box
-                  as="span"
-                  position="absolute"
-                  right={2}
-                  fontSize="1.2em"
-                  style={{
-                    fontFamily: 'var(--font-ternary)',
-                  }}
-                >
-                  {server_log.node_researcher}
-                </Box>
-              </Box>
-              <Box
-                width="50%"
-                position="relative"
-                left={'22.5%'}
-                style={{
-                  textTransform: 'uppercase',
-                  fontSize: '1.1em',
-                  fontFamily: 'var(--font-ternary)',
-                }}
-                mt={1.5}
-              >
-                {server_log.node_researched_timestamp}
-              </Box>
-
-              <Box
-                width="100%"
-                position="relative"
-                left={'0%'}
-                style={{
-                  textTransform: 'uppercase',
-                  fontSize: '1.1em',
-                  fontFamily: 'var(--font-secondary)',
-                }}
-                mt={1.5}
-              >
-                {server_log.node_researcher_location}
-              </Box>
-              <Divider />
-            </Stack.Item>
-          ))}
-        </Stack>
+        logs.map((server_log, index = 1) => (
+          <HistoryEntry key={index++} {...server_log} />
+        ))
       )}
     </Section>
   );
@@ -277,38 +163,34 @@ export const ServerControl = (props) => {
     );
   }
   return (
-    <Window width={575} height={700} theme="ntos_terminal_sci_themed">
-      <Window.Content scrollable backgroundColor="transparent">
-        <Stack vertical backgroundColor="transparent">
-          <Stack.Item grow backgroundColor="transparent">
-            <Tabs>
-              <Tabs.Tab
-                key="servers"
-                selected={currentTab === 1}
-                onClick={() => setTab(1)}
-              >
-                Active Servers
-              </Tabs.Tab>
-              <Tabs.Tab
-                key="consoles"
-                selected={currentTab === 2}
-                onClick={() => setTab(2)}
-              >
-                Active Consoles
-              </Tabs.Tab>
-              <Tabs.Tab
-                key="research_history"
-                selected={currentTab === 3}
-                onClick={() => setTab(3)}
-              >
-                Research History
-              </Tabs.Tab>
-            </Tabs>
-            {currentTab === 1 && <ServersView />}
-            {currentTab === 2 && <ConsolesView />}
-            {currentTab === 3 && <ResearchHistoryView />}
-          </Stack.Item>
-        </Stack>
+    <Window width={575} height={500} theme="ntos_terminal_sci_themed">
+      <Window.Content scrollable>
+        <Tabs>
+          <Tabs.Tab
+            key="servers"
+            selected={currentTab === 1}
+            onClick={() => setTab(1)}
+          >
+            Active Servers
+          </Tabs.Tab>
+          <Tabs.Tab
+            key="consoles"
+            selected={currentTab === 2}
+            onClick={() => setTab(2)}
+          >
+            Active Consoles
+          </Tabs.Tab>
+          <Tabs.Tab
+            key="research_history"
+            selected={currentTab === 3}
+            onClick={() => setTab(3)}
+          >
+            Research History
+          </Tabs.Tab>
+        </Tabs>
+        {currentTab === 1 && <ServersView />}
+        {currentTab === 2 && <ConsolesView />}
+        {currentTab === 3 && <ResearchHistoryView />}
       </Window.Content>
     </Window>
   );
