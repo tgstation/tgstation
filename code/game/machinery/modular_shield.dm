@@ -407,6 +407,7 @@
 	. = ..()
 
 	connected_turf = get_step(loc, dir)
+	try_connect()
 
 /obj/machinery/modular_shield/module/Destroy()
 
@@ -462,6 +463,7 @@
 		connected_node = null
 
 	connected_turf = get_step(loc, dir)
+	try_connect()
 	return TRUE
 
 /obj/machinery/modular_shield/module/crowbar_act(mob/living/user, obj/item/tool)
@@ -553,6 +555,7 @@
 		connected_node = null
 
 	connected_turf = get_step(loc, dir)
+	try_connect()
 	return TRUE
 
 //after trying to connect to a machine infront of us, we will try to link anything connected to us to a generator
