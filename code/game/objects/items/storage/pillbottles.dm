@@ -194,7 +194,5 @@
 /obj/item/storage/pill_bottle/immunodeficiency
 	name = "bottle of immune boosters"
 	desc = "Contains immune system boosters, used to manage chronic immunodeficiency."
-
-/obj/item/storage/pill_bottle/immunodeficiency/PopulateContents()
-	for(var/i in 1 to 3)
-		new /obj/item/reagent_containers/applicator/pill/spaceacillin(src)
+	spawn_count = 5
+	spawn_type = /obj/item/reagent_containers/applicator/pill/spaceacillin
