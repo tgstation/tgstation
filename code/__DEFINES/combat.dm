@@ -68,7 +68,7 @@
 //Bitflags defining which status effects could be or are inflicted on a mob
 /// If set, this mob can be stunned.
 #define CANSTUN (1<<0)
-/// If set, this mob can be knocked down (or stamcrit)
+/// If set, this mob can be knocked down
 #define CANKNOCKDOWN (1<<1)
 /// If set, this mob can be knocked unconscious via status effect.
 /// NOTE, does not mean immune to sleep. Unconscious and sleep are two different things.
