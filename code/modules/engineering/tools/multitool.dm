@@ -5,5 +5,7 @@
 	pixel_y = -32
 
 /atom/movable/screen/multitool_arrow/Destroy()
-	hud?.infodisplay -= src
+	if(hud)
+		hud.infodisplay -= src
+		INVOKE_ASYNC(hud, TYPE_PROC_REF(/datum/hud, show_hud), hud.hud_version)
 	return ..()
