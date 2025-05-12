@@ -128,7 +128,7 @@
 	preload = FALSE
 
 /obj/item/storage/belt/utility/sapper/PopulateContents() //its just a complete mishmash
-	new /obj/item/screwdriver/omni_drill(src)
+	new /obj/item/wirecutters/caravan(src)
 	new /obj/item/multitool(src)
 	new /obj/item/wrench/combat(src)
 	new /obj/item/construction/rcd/loaded(src)

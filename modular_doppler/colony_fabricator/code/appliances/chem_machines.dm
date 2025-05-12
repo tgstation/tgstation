@@ -18,7 +18,6 @@
 /obj/machinery/plumbing/synthesizer/water_synth/Initialize(mapload, bolt = FALSE, layer)
 	. = ..()
 	dispensable_reagents = synthesizable_reagents
-	AddElement(/datum/element/repackable, repacked_type, 2 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
 
 // Deployable item for cargo for the water synth
@@ -62,7 +61,6 @@
 /obj/machinery/plumbing/synthesizer/colony_hydroponics/Initialize(mapload, bolt = FALSE, layer)
 	. = ..()
 	dispensable_reagents = synthesizable_reagents
-	AddElement(/datum/element/repackable, repacked_type, 2 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
 
 // Deployable item for cargo for the hydro synth

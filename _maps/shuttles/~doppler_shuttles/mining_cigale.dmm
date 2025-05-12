@@ -288,7 +288,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/closet/crate/science,
 /obj/item/circuitboard/machine/mechfab,
-/obj/item/flatpacked_machine/ore_silo,
 /obj/item/circuitboard/machine/circuit_imprinter/department/science,
 /turf/open/floor/iron/smooth,
 /area/shuttle/personally_bought/mining_hub)

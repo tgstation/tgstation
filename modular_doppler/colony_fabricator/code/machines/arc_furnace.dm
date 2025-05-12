@@ -19,8 +19,6 @@
 	light_color = LIGHT_COLOR_BRIGHT_YELLOW
 	light_power = 10
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 10 // This baby consumes so much power
-	/// The item we turn into when repacked
-	var/repacked_type = /obj/item/flatpacked_machine/arc_furnace
 	/// If the furnace is currently working on smelting something
 	var/operating = FALSE
 	/// Image for the radial eject button
@@ -35,25 +33,12 @@
 /obj/machinery/arc_furnace/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, FALSE)
-	AddElement(/datum/element/repackable, repacked_type, 2 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
-	if(!mapload)
-		flick("arc_furnace_deploy", src)
 
 /obj/machinery/arc_furnace/examine(mob/user)
 	. = ..()
 	if(length(contents))
 		. += span_notice("It has <b>[contents[1]]</b> sitting in it.")
-
-// formerly NO_DECONSTRUCTION
-/obj/machinery/arc_furnace/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	return NONE
-
-/obj/machinery/arc_furnace/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	return NONE
-
-/obj/machinery/arc_furnace/default_pry_open(obj/item/crowbar, close_after_pry, open_density, closed_density)
-	return NONE
 
 /obj/machinery/arc_furnace/on_deconstruction(disassembled)
 	eject_contents()
@@ -129,7 +114,7 @@
 
 /// Starts the smelting process, checking if the machine has power or if it's broken at all
 /obj/machinery/arc_furnace/proc/smelt_it_up(mob/user)
-	if(machine_stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN|MAINT))
 		balloon_alert(user, "button doesn't respond")
 		return
 	if(operating)
@@ -152,7 +137,7 @@
 
 /// The smelting loop for checking if we're done smelting or not. If we are, then we succeed smelting. If we have to stop for whatever reason, we stop.
 /obj/machinery/arc_furnace/proc/loop(time)
-	if(machine_stat & (NOPOWER|BROKEN))
+	if(machine_stat & (NOPOWER|BROKEN|MAINT))
 		end_smelting()
 		return
 

@@ -115,3 +115,11 @@
 /datum/design/plasmarglass_alloy/New()
 	. = ..()
 	build_type |= COLONY_FABRICATOR
+
+/datum/design/solar/New()
+	. = ..()
+	build_type |= COLONY_FABRICATOR
+
+/datum/design/tracker_electronics/New()
+	. = ..()
+	build_type |= COLONY_FABRICATOR

@@ -155,3 +155,7 @@
 /datum/design/secateurs/New()
 	. = ..()
 	build_type |= COLONY_FABRICATOR
+
+/datum/design/plasmacutter/New()
+	. = ..()
+	build_type |= COLONY_FABRICATOR // behold, your welder

@@ -27,7 +27,6 @@
 
 /obj/machinery/power/colony_wind_turbine/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/repackable, undeploy_type, 2 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
 	connect_to_network()
 

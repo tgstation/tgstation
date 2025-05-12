@@ -580,7 +580,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/closet/crate/science,
 /obj/item/circuitboard/machine/mechfab,
-/obj/item/flatpacked_machine/ore_silo,
 /obj/item/circuitboard/machine/circuit_imprinter,
 /turf/open/floor/iron/smooth,
 /area/shuttle/personally_bought/do_it_yourself_large)
@@ -721,7 +720,8 @@
 /obj/machinery/light/cold/directional/north,
 /obj/machinery/light_switch/directional/north,
 /obj/item/circuitboard/machine/techfab,
-/obj/item/screwdriver/omni_drill,
+/obj/item/screwdriver,
+/obj/item/wrench,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/personally_bought/do_it_yourself_large)
 "Rf" = (

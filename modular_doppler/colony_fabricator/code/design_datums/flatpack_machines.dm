@@ -13,16 +13,12 @@
 	display_name = "Colony Fabricator Flatpack Designs"
 	description = "Contains all of the colony fabricator's flatpack machine designs."
 	design_ids = list(
-		"flatpack_solar_panel",
-		"flatpack_solar_tracker",
 		"flatpack_arc_furnace",
 		"flatpack_colony_fab",
 		"flatpack_station_battery",
 		"flatpack_station_battery_large",
 		"flatpack_fuel_generator",
 		"flatpack_rtg",
-		"flatpack_thermo",
-		"flatpack_ore_silo",
 		"flatpack_turbine_team_fortress_two",
 		"flatpack_bootleg_teg",
 	)
@@ -53,40 +49,6 @@
 		FABRICATOR_CATEGORY_FLATPACK_MACHINES + FABRICATOR_SUBCATEGORY_MANUFACTURING,
 	)
 	construction_time = 2 MINUTES
-
-// Solar panels and trackers
-
-/datum/design/flatpack_solar_panel
-	name = "Flat-Packed Solar Panel"
-	desc = "A deployable solar panel, able to be repacked after placement for relocation or recycling."
-	id = "flatpack_solar_panel"
-	build_type = COLONY_FABRICATOR
-	materials = list(
-		/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT / 2,
-	)
-	build_path = /obj/item/flatpacked_machine/solar
-	category = list(
-		RND_CATEGORY_INITIAL,
-		FABRICATOR_CATEGORY_FLATPACK_MACHINES + FABRICATOR_SUBCATEGORY_POWER,
-	)
-	construction_time = 5 SECONDS
-
-/datum/design/flatpack_solar_tracker
-	name = "Flat-Packed Solar Tracker"
-	desc = "A deployable solar tracker, able to be repacked after placement for relocation or recycling."
-	id = "flatpack_solar_tracker"
-	build_type = COLONY_FABRICATOR
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
-		/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 3.5,
-	)
-	build_path = /obj/item/flatpacked_machine/solar_tracker
-	category = list(
-		RND_CATEGORY_INITIAL,
-		FABRICATOR_CATEGORY_FLATPACK_MACHINES + FABRICATOR_SUBCATEGORY_POWER,
-	)
-	construction_time = 7 SECONDS
 
 // Arc furance
 
@@ -184,44 +146,6 @@
 		FABRICATOR_CATEGORY_FLATPACK_MACHINES + FABRICATOR_SUBCATEGORY_POWER,
 	)
 	construction_time = 30 SECONDS
-
-// Thermomachine with decent temperature change rate, but a limited max/min temperature
-
-/datum/design/flatpack_thermomachine
-	name = "Flat-Packed Atmospheric Temperature Regulator"
-	desc = "A deployable temperature control device for use with atmospherics pipe systems. \
-		Limited in its temperature range, however comes with a higher than normal heat capacity."
-	id = "flatpack_thermo"
-	build_type = COLONY_FABRICATOR
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 7.5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT,
-	)
-	build_path = /obj/item/flatpacked_machine/thermomachine
-	category = list(
-		RND_CATEGORY_INITIAL,
-		FABRICATOR_CATEGORY_FLATPACK_MACHINES + FABRICATOR_SUBCATEGORY_ATMOS,
-	)
-	construction_time = 20 SECONDS
-
-// Ore silo except it beeps
-
-/datum/design/flatpack_ore_silo
-	name = "Flat-Packed Ore Silo"
-	desc = "An all-in-one materials management solution. Connects resource-using machines \
-		through a network of distrobution systems."
-	id = "flatpack_ore_silo"
-	build_type = COLONY_FABRICATOR
-	materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5,
-	)
-	build_path = /obj/item/flatpacked_machine/ore_silo
-	category = list(
-		RND_CATEGORY_INITIAL,
-		FABRICATOR_CATEGORY_FLATPACK_MACHINES + FABRICATOR_SUBCATEGORY_MATERIALS,
-	)
-	construction_time = 1 MINUTES
 
 // Wind turbine, produces tiny amounts of power when placed outdoors in an atmosphere, but makes significantly more if there's a storm in that area
 

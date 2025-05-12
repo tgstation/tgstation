@@ -17,7 +17,6 @@
 
 /obj/machinery/rnd/production/damage_control_fab/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/repackable, repacked_type, 5 SECONDS)
 	stored_research = locate(/datum/techweb/admin) in SSresearch.techwebs
 	if(!mapload)
 		flick("damage_fab_deploy", src)

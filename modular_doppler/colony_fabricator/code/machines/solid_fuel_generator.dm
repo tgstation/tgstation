@@ -17,25 +17,10 @@
 	power_gen = parent_type::power_gen * 2.5
 	drag_slowdown = 1.5
 	sheet_path = /obj/item/stack/sheet/mineral/plasma
-	/// The item we turn into when repacked
-	var/repacked_type = /obj/item/flatpacked_machine/fuel_generator
 
 /obj/machinery/power/port_gen/pacman/solid_fuel/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/repackable, repacked_type, 1 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
-	if(!mapload)
-		flick("fuel_generator_deploy", src)
-
-// formerly NO_DECONSTRUCTION
-/obj/machinery/power/port_gen/pacman/solid_fuel/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	return NONE
-
-/obj/machinery/power/port_gen/pacman/solid_fuel/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	return NONE
-
-/obj/machinery/power/port_gen/pacman/solid_fuel/default_pry_open(obj/item/crowbar, close_after_pry, open_density, closed_density)
-	return NONE
 
 // We don't need to worry about the board, this machine doesn't have one!
 /obj/machinery/power/port_gen/pacman/solid_fuel/on_construction(mob/user)

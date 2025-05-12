@@ -15,10 +15,6 @@
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
 	AddComponent(/datum/component/stove, container_x = -3, container_y = 14)
 
-/obj/machinery/oven/range_frontier/examine(mob/user)
-	. = ..()
-	. += span_notice("It cannot be repacked, but can be deconstructed normally.")
-
 /obj/machinery/oven/range_frontier/unanchored
 	anchored = FALSE
 

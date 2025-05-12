@@ -24,7 +24,6 @@
 /obj/machinery/biogenerator/foodricator/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
-	AddElement(/datum/element/repackable, repacked_type, 5 SECONDS)
 
 /obj/machinery/biogenerator/foodricator/RefreshParts()
 	. = ..()

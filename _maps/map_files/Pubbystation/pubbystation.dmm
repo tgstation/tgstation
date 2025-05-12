@@ -973,7 +973,7 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/ai_sat_ext_as)
 "aeT" = (
-/obj/machinery/power/tracker/deployable,
+/obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel/airless,
 /area/station/solars/aisat)
@@ -6192,7 +6192,7 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness)
 "azG" = (
-/obj/machinery/power/tracker/deployable,
+/obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel/airless,
 /area/station/solars/port)
@@ -9114,7 +9114,7 @@
 /turf/open/space,
 /area/station/solars/starboard)
 "aMp" = (
-/obj/machinery/power/tracker/deployable,
+/obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel/airless,
 /area/station/solars/starboard)

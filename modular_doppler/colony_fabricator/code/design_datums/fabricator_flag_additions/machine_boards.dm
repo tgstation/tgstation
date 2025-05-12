@@ -18,6 +18,14 @@
 	. = ..()
 	build_type |= COLONY_FABRICATOR
 
+/datum/design/board/ore_silo/New()
+	. = ..()
+	build_type |= COLONY_FABRICATOR
+
+/datum/design/board/thermomachine/New()
+	. = ..()
+	build_type |= COLONY_FABRICATOR
+
 // Turbine Stuff
 
 /datum/design/board/turbine_computer/New()

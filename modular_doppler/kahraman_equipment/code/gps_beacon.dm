@@ -9,7 +9,6 @@
 
 /obj/item/gps/computer/beacon/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/repackable, undeploy_type, 2 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_KAHRAMAN)
 
 /obj/item/flatpacked_machine/gps_beacon

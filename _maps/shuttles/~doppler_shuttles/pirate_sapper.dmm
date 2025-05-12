@@ -239,7 +239,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/pirate/sapper)
 "xf" = (
-/obj/machinery/ore_silo/colony_lathe,
+/obj/machinery/ore_silo,
 /obj/structure/sign/poster/contraband/power/directional/north,
 /obj/effect/turf_decal/stripes/box,
 /obj/effect/decal/cleanable/dirt,

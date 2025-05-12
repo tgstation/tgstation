@@ -19,10 +19,6 @@
 	efficiency = 2
 	vampire_charging_capable = TRUE
 
-/obj/machinery/microwave/frontier_printed/examine(mob/user)
-	. = ..()
-	. += span_notice("It cannot be repacked, but can be deconstructed normally.")
-
 /obj/machinery/microwave/frontier_printed/unanchored
 	anchored = FALSE
 

@@ -6,27 +6,12 @@
 		application."
 	icon = 'modular_doppler/colony_fabricator/icons/machines.dmi'
 	circuit = null
-	power_gen = 1 KILO WATTS
-	/// What we turn into when we are repacked
-	var/repacked_type = /obj/item/flatpacked_machine/rtg
+	power_gen = 2 KILO WATTS
 
 /obj/machinery/power/rtg/portable/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/repackable, repacked_type, 2 SECONDS)
 	AddElement(/datum/element/radioactive)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
-	if(!mapload)
-		flick("rtg_deploy", src)
-
-// formerly NO_DECONSTRUCTION
-/obj/machinery/power/rtg/portable/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	return NONE
-
-/obj/machinery/power/rtg/portable/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	return NONE
-
-/obj/machinery/power/rtg/portable/default_pry_open(obj/item/crowbar, close_after_pry, open_density, closed_density)
-	return NONE
 
 // Item for creating the rtg or carrying it around
 

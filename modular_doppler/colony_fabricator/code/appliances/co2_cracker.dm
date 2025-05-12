@@ -77,7 +77,6 @@ GLOBAL_LIST_INIT(cracker_reactions, cracker_reactions_list())
 /obj/machinery/electrolyzer/co2_cracker/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, FALSE)
-	AddElement(/datum/element/repackable, repacked_type, 2 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
 
 /obj/machinery/electrolyzer/co2_cracker/process_atmos()

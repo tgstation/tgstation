@@ -64,7 +64,6 @@
 /obj/machinery/power/colony_ore_thumper/Initialize(mapload)
 	. = ..()
 	soundloop = new(src, FALSE)
-	AddElement(/datum/element/repackable, undeploy_type, 4 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_KAHRAMAN)
 
 /obj/machinery/power/colony_ore_thumper/add_context(

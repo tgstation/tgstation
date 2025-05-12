@@ -11,17 +11,12 @@
 	light_color = LIGHT_COLOR_BRIGHT_YELLOW
 	light_power = 5
 	allowed_buildtypes = COLONY_FABRICATOR
-	/// The item we turn into when repacked
-	var/repacked_type = /obj/item/flatpacked_machine
 
 /obj/machinery/rnd/production/colony_lathe/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/repackable, repacked_type, 5 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
 	// We don't get new designs but can't print stuff if something's not researched, so we use the web that has everything researched
 	stored_research = locate(/datum/techweb/admin) in SSresearch.techwebs
-	if(!mapload)
-		flick("colony_lathe_deploy", src) // Sick ass deployment animation
 
 // formerly NO_DECONSTRUCTION
 /obj/machinery/rnd/production/colony_lathe/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)

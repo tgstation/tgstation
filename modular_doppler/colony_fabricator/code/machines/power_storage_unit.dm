@@ -5,19 +5,14 @@
 		<b>higher maximum output</b> than some larger units. Most commonly seen being used not for their ability to store \
 		power, but rather for use in regulating power input and output."
 	icon = 'modular_doppler/colony_fabricator/icons/power_storage_unit/small_battery.dmi'
-	capacity = 7.5 * STANDARD_BATTERY_CHARGE
-	input_level_max = 400 KILO WATTS
-	output_level_max = 400 KILO WATTS
+	capacity = 5 * STANDARD_BATTERY_CHARGE
+	input_level_max = 200 KILO WATTS
+	output_level_max = 200 KILO WATTS
 	circuit = null
-	/// The item we turn into when repacked
-	var/repacked_type = /obj/item/flatpacked_machine/station_battery
 
 /obj/machinery/power/smes/battery_pack/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/repackable, repacked_type, 5 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
-	if(!mapload)
-		flick("smes_deploy", src)
 
 /obj/machinery/power/smes/battery_pack/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
 	if(screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
@@ -32,13 +27,6 @@
 		icon_state = icon_state_closed
 		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
 	return TRUE
-
-// formerly NO_DECONSTRUCTION
-/obj/machinery/power/smes/battery_pack/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	return NONE
-
-/obj/machinery/power/smes/battery_pack/default_pry_open(obj/item/crowbar, close_after_pry, open_density, closed_density)
-	return NONE
 
 // We don't care about the parts updates because we don't want them to change
 /obj/machinery/power/smes/battery_pack/RefreshParts()
@@ -81,7 +69,6 @@
 	capacity = 100 * STANDARD_BATTERY_CHARGE
 	input_level_max = 50 KILO WATTS
 	output_level_max = 50 KILO WATTS
-	repacked_type = /obj/item/flatpacked_machine/large_station_battery
 
 // Automatically set themselves to be completely charged on init
 

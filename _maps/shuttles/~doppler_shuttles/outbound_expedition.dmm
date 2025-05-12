@@ -918,7 +918,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/shuttle/personally_bought/mothership)
 "wT" = (
-/obj/machinery/ore_silo/colony_lathe,
+/obj/machinery/ore_silo,
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark/smooth_large,

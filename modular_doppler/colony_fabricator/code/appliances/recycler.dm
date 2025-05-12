@@ -32,7 +32,6 @@
 
 /obj/machinery/colony_recycler/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/repackable, repacked_type, 5 SECONDS)
 	AddElement(/datum/element/manufacturer_examine, COMPANY_FRONTIER)
 	materials = AddComponent( \
 		/datum/component/material_container, \
