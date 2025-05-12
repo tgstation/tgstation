@@ -678,12 +678,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/fake_bombable,
 	desc = "You feel inspired to follow your dreams."
 	icon_state = "dream"
 
+/obj/item/poster/contraband/dream // Rolled poster
+	name = "Dream"
+	poster_type = /obj/structure/sign/poster/contraband/dream
+	icon_state = "rolled_poster"
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/dream, 32)
 
 /obj/structure/sign/poster/contraband/beekind
 	name = "Bee Kind"
 	desc = "Always bee kind to others!"
 	icon_state = "beekind"
+
+/obj/item/poster/contraband/beekind
+	name = "Bee Kind"
+	poster_type = /obj/structure/sign/poster/contraband/beekind
+	icon_state = "rolled_poster"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/beekind, 32)
 
@@ -692,12 +702,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/beekind, 32)
 	desc = "What a heartwarming poster."
 	icon_state = "heart"
 
+/obj/item/poster/contraband/heart
+	name = "Heart"
+	poster_type = /obj/structure/sign/poster/contraband/heart
+	icon_state = "rolled_poster"
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/heart, 32)
 
 /obj/structure/sign/poster/contraband/dolphin
 	name = "Dolphin"
 	desc = "A poster of a beautiful dolphin."
 	icon_state = "dolphin"
+
+/obj/item/poster/contraband/dolphin
+	name = "Dolphin"
+	poster_type = /obj/structure/sign/poster/contraband/dolphin
+	icon_state = "rolled_poster"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/dolphin, 32)
 
@@ -706,12 +726,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/dolphin, 32)
 	desc = "The makers of this poster purport to live by four principles. Someone has scrawled a fifth one at the bottom."
 	icon_state = "principles"
 
+/obj/item/poster/contraband/principles
+	name = "Our Principles"
+	poster_type = /obj/structure/sign/poster/contraband/principles
+	icon_state = "rolled_poster"
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/principles, 32)
 
 /obj/structure/sign/poster/contraband/trigger
 	name = "Trigger"
 	desc = "Happy trails to you, until we meet again! 1/7."
 	icon_state = "trigger"
+
+/obj/item/poster/contraband/trigger
+	name = "Trigger"
+	poster_type = /obj/structure/sign/poster/contraband/trigger
+	icon_state = "rolled_poster"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/trigger, 32)
 
@@ -720,12 +750,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/trigger, 32)
 	desc = "A majestic horse with the heart of a winner. 2/7."
 	icon_state = "barbaro"
 
+/obj/item/poster/contraband/barbaro
+	name = "Barbaro"
+	poster_type = /obj/structure/sign/poster/contraband/barbaro
+	icon_state = "rolled_poster"
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/barbaro, 32)
 
 /obj/structure/sign/poster/contraband/seabiscuit
 	name = "Seabiscuit"
 	desc = "The little horse that could. 3/7."
 	icon_state = "seabiscuit"
+
+/obj/item/poster/contraband/seabiscuit
+	name = "Seabiscuit"
+	poster_type = /obj/structure/sign/poster/contraband/seabiscuit
+	icon_state = "rolled_poster"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/seabiscuit, 32)
 
@@ -734,12 +774,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/seabiscuit, 32
 	desc = "A wonder from down under. 4/7."
 	icon_state = "pharlap"
 
+/obj/item/poster/contraband/pharlap
+	name = "Phar Lap"
+	poster_type = /obj/structure/sign/poster/contraband/pharlap
+	icon_state = "rolled_poster"
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/pharlap, 32)
 
 /obj/structure/sign/poster/contraband/waradmiral
 	name = "War Admiral"
 	desc = "Some say he was second best, but he still comes first in your heart. 5/7."
 	icon_state = "waradmiral"
+
+/obj/item/poster/contraband/waradmiral
+	name = "War Admiral"
+	poster_type = /obj/structure/sign/poster/contraband/waradmiral
+	icon_state = "rolled_poster"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/waradmiral, 32)
 
@@ -748,11 +798,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/waradmiral, 32
 	desc = "If he wants to go, he should be free. 6/7."
 	icon_state = "silver"
 
+/obj/item/poster/contraband/silver
+	name = "Silver"
+	poster_type = /obj/structure/sign/poster/contraband/silver
+	icon_state = "rolled_poster"
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/silver, 32)
 
 /obj/structure/sign/poster/contraband/jovial
 	name = "Jovial"
 	desc = "All hail the orange horse! 7/7."
 	icon_state = "jovial"
+
+/obj/item/poster/contraband/jovial
+	name = "Jovial"
+	poster_type = /obj/structure/sign/poster/contraband/jovial
+	icon_state = "rolled_poster"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/jovial, 32)

@@ -473,3 +473,9 @@
 
 /obj/structure/closet/crate/add_to_roundstart_list()
 	return
+
+/obj/structure/closet/crate/pink
+	name = "pink crate"
+	desc = "A glittery pink crate."
+	icon_state = "pink"
+	base_icon_state = "pink"
