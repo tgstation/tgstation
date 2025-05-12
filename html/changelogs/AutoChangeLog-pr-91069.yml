@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Riggings and toolbelts no longer render through the goliath cloak when worn in your suit slot."

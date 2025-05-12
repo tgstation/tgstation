@@ -277,3 +277,19 @@
   - server: The crimes are now logging in the database.
   vinylspiders:
   - bugfix: stops snails from clogging up CI
+2025-05-12:
+  Jacquerel:
+  - balance: Regal Rats can now grab mice out of disposal bins, and no longer spawn
+      them with the Riot ability.
+  - balance: The Riot ability no longer needs to be used once for each slightly different
+      kind of mob in your radius.
+  - balance: The Regal Rat Domain ability is now toggled on and off.
+  - balance: Several kinds of mob will immediately start following you once tamed.
+  - balance: Rats, hostile frogs, and evil snails can be created via gold slime reaction.
+  JohnFulpWillard:
+  - spellcheck: Updated bruh moments.
+  Redbert:
+  - bugfix: Fixes issue that causes hypernob reaction to sometimes not work
+  SmArtKar:
+  - bugfix: Riggings and toolbelts no longer render through the goliath cloak when
+      worn in your suit slot.
