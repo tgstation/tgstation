@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - qol: "Ghost notifications will now use the real names of mobs when something happens (i.e no more \"Unknown has completed an ascension ritual!\")"
