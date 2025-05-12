@@ -57,7 +57,7 @@
 		body = uni_icon('modular_doppler/modular_species/species_types/anthromorph/icons/bodyparts.dmi', "anthromorph_head", EAST)
 	var/datum/universal_icon/final_icon = body.copy()
 
-	if (sprite_accessory.icon_state != "No Snout")
+	if(sprite_accessory.icon_state != "none")
 		if(icon_exists(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_ADJ"))
 			var/datum/universal_icon/accessory_icon_adj = uni_icon(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_ADJ", EAST)
 			accessory_icon_adj.blend_color(COLOR_RED, ICON_MULTIPLY)
@@ -67,7 +67,7 @@
 			accessory_icon_adj_2.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
 			final_icon.blend_icon(accessory_icon_adj_2, ICON_OVERLAY)
 		if(icon_exists(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_ADJ_3"))
-			var/datum/universal_icon/accessory_icon_adj_3 = uni_icon(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_ADJ_2", EAST)
+			var/datum/universal_icon/accessory_icon_adj_3 = uni_icon(sprite_accessory.icon, "m_snout_[sprite_accessory.icon_state]_ADJ_3", EAST)
 			accessory_icon_adj_3.blend_color(COLOR_BLUE, ICON_MULTIPLY)
 			final_icon.blend_icon(accessory_icon_adj_3, ICON_OVERLAY)
 		///front breaker

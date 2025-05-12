@@ -99,6 +99,10 @@
 	var/datum/sprite_accessory/wings = SSaccessories.wings_list_more[value]
 	return generate_back_icon(wings, "wings")
 
+/datum/preference/choiced/moth_wings/icon_for(value)
+	var/datum/sprite_accessory/wings = SSaccessories.moth_wings_list[value]
+	return generate_back_icon(wings, "moth_wings")
+
 //	Moth Wings
 /datum/preference/choiced/moth_wings
 	category = PREFERENCE_CATEGORY_CLOTHING

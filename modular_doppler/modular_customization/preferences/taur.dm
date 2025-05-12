@@ -57,22 +57,26 @@
 /datum/preference/choiced/taur_type/icon_for(value)
 	var/datum/sprite_accessory/taur/taur_acc = SSaccessories.taur_list[value]
 	// TO THOSE RESEARCHING THIS CODE LATER! This initial blank sprite is ESSENTIAL. It allows to sprite to generate even if the initial ADJ sprite is broken or nonexistant.
-	var/datum/universal_icon/final_icon = uni_icon('modular_doppler/taurs/icons/taur.dmi', "m_taur_none_ADJ", SOUTH)
-	var/datum/universal_icon/accessory_icon = uni_icon(taur_acc.icon, "m_taur_[taur_acc.icon_state]_[taur_acc.primary_layer]", SOUTH)
+	var/datum/universal_icon/final_icon = uni_icon('modular_doppler/taurs/icons/taur.dmi', "m_taur_none_ADJ", EAST)
+	var/datum/universal_icon/accessory_icon = uni_icon(taur_acc.icon, "m_taur_[taur_acc.icon_state]_[taur_acc.primary_layer]", EAST)
+	accessory_icon.blend_color(COLOR_RED, ICON_MULTIPLY)
 	var/datum/universal_icon/accessory_icon_2 = null
 	if (icon_exists(taur_acc.icon, "m_taur_[taur_acc.icon_state]_[taur_acc.primary_layer]_2"))
-		accessory_icon_2 = uni_icon(taur_acc.icon, "m_taur_[taur_acc.icon_state]_[taur_acc.primary_layer]_2", SOUTH)
-		accessory_icon_2.blend_color(COLOR_RED, ICON_MULTIPLY)
+		accessory_icon_2 = uni_icon(taur_acc.icon, "m_taur_[taur_acc.icon_state]_[taur_acc.primary_layer]_2", EAST)
+		accessory_icon_2.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
 	var/datum/universal_icon/accessory_icon_3 = null
 	if (icon_exists(taur_acc.icon, "m_taur_[taur_acc.icon_state]_[taur_acc.primary_layer]_3"))
-		accessory_icon_3 = uni_icon(taur_acc.icon, "m_taur_[taur_acc.icon_state]_[taur_acc.primary_layer]_3", SOUTH)
-		accessory_icon_3.blend_color(COLOR_VIBRANT_LIME, ICON_MULTIPLY)
+		accessory_icon_3 = uni_icon(taur_acc.icon, "m_taur_[taur_acc.icon_state]_[taur_acc.primary_layer]_3", EAST)
+		accessory_icon_3.blend_color(COLOR_BLUE, ICON_MULTIPLY)
 	final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
 	if (istype(accessory_icon_2))
 		final_icon.blend_icon(accessory_icon_2, ICON_OVERLAY)
 	if (istype(accessory_icon_3))
 		final_icon.blend_icon(accessory_icon_3, ICON_OVERLAY)
-	final_icon.scale(32, 32) // otherwise, the taur sprites dont load in the pref menu at all
+
+	final_icon.scale(64, 32)
+	final_icon.shift(EAST, 0, ICON_SIZE_X, ICON_SIZE_Y)
+
 
 	return final_icon
 
