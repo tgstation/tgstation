@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - qol: "Add CI map linter for window and electrified grille spawners"
+  - map: "Fix many duplicate windows, walls, and grilles spawning together or inside each other on a bunch of maps."
