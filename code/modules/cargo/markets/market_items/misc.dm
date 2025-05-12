@@ -184,6 +184,7 @@
 	availability_prob = 90
 
 /datum/market_item/misc/poster/girlypop/spawn_item(loc, datum/market_purchase/purchase)
+	. = ..()
 	var/obj/structure/closet/crate/pink/C = new(loc)
 	for (var/type in list(
 		/obj/item/poster/contraband/dream,
