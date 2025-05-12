@@ -3,3 +3,7 @@
 	icon_state = "multitool_arrow"
 	pixel_x = -32
 	pixel_y = -32
+
+/atom/movable/screen/multitool_arrow/Destroy()
+	hud?.infodisplay -= src
+	return ..()
