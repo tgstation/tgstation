@@ -499,10 +499,11 @@
 	if(connected_node)
 
 		//checks if the node allows boosters and if we are a booster
-		if((connected_node.allow_boosters == FALSE) && (booster == TRUE))
+		if((connected_node.allow_boosters == FALSE) && (booster == TRUE)) {
 			connected_node = null
 			balloon_alert(user, "cant connect")
 			return
+		}
 
 		LAZYOR(connected_node.connected_through_us, (src))
 		shield_generator = connected_node.shield_generator
