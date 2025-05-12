@@ -1,12 +1,14 @@
 import { storage } from 'common/storage';
 import { useEffect, useState } from 'react';
 import {
+  Box,
   Button,
   DmIcon,
   Section,
   Stack,
   VirtualList,
 } from 'tgui-core/components';
+import { useFuzzySearch } from 'tgui-core/fuzzysearch';
 
 import { useBackend } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
@@ -75,6 +77,29 @@ export function CreateObject(props: CreateObjectProps) {
 
   const currentList = (objList?.[currentType] || {}) as CurrentList;
 
+  const allObjects = Object.entries(objList || {}).reduce(
+    (acc, [type, objects]) => {
+      return { ...acc, ...objects };
+    },
+    {},
+  );
+
+  const { query, setQuery, results } = useFuzzySearch({
+    searchArray: Object.keys(allObjects),
+    matchStrategy: 'smart',
+    getSearchString: (key) => (searchBy ? key : allObjects[key]?.name || ''),
+  });
+
+  const validResults = query
+    ? results.filter((obj) => {
+        const item = allObjects[obj];
+        if (!item) return false;
+        if (currentType !== item.type) return false;
+        if (hideMapping && item.mapping) return false;
+        return true;
+      })
+    : [];
+
   useEffect(() => {
     if (data.selected_object) {
       setSelectedObj(data.selected_object);
@@ -132,6 +157,10 @@ export function CreateObject(props: CreateObjectProps) {
 
     loadStoredValues();
   }, []);
+
+  useEffect(() => {
+    setSelectedObj(null);
+  }, [currentType]);
 
   const updateSearchText = (value: string) => {
     setStateAndStorage({
@@ -346,10 +375,8 @@ export function CreateObject(props: CreateObjectProps) {
                 <SearchBar
                   noIcon
                   placeholder={'Search here...'}
-                  query={searchText}
-                  onSearch={(query) => {
-                    updateSearchText(query);
-                  }}
+                  query={query}
+                  onSearch={setQuery}
                 />
               </Stack.Item>
             </Stack>
@@ -359,26 +386,17 @@ export function CreateObject(props: CreateObjectProps) {
 
       <Stack.Item grow>
         <Section fill scrollable>
-          {searchText !== '' && (
+          {query !== '' && (
             <VirtualList>
-              {Object.keys(currentList)
-                .filter((obj: string) => {
-                  if (!hideMapping && Boolean(currentList[obj].mapping)) {
-                    return false;
-                  }
-                  if (searchBy) {
-                    return obj.toLowerCase().includes(searchText.toLowerCase());
-                  }
-                  return currentList[obj].name
-                    ?.toLowerCase()
-                    .includes(searchText.toLowerCase());
-                })
-                .map((obj, index) => (
+              {validResults.length > 0 &&
+              Object.keys(currentList).length > 0 ? (
+                validResults.map((obj, index) => (
                   <Button
                     key={index}
                     color="transparent"
                     tooltip={
-                      (showIcons || tooltipIcon) && (
+                      (showIcons || tooltipIcon) &&
+                      currentList[obj] && (
                         <DmIcon
                           icon={currentList[obj].icon}
                           icon_state={currentList[obj].icon_state}
@@ -406,7 +424,7 @@ export function CreateObject(props: CreateObjectProps) {
                       obj
                     ) : (
                       <>
-                        {currentList[obj].name}
+                        {currentList[obj]?.name}
                         <span
                           className="label label-info"
                           style={{
@@ -420,7 +438,12 @@ export function CreateObject(props: CreateObjectProps) {
                       </>
                     )}
                   </Button>
-                ))}
+                ))
+              ) : (
+                <Box textAlign="center" color="label" mt={2}>
+                  Nothing found
+                </Box>
+              )}
             </VirtualList>
           )}
         </Section>
