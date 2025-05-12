@@ -601,14 +601,16 @@
 
 	name = "modular shield cable"
 	desc = "An ankle high mess of cables packed as low as possible at the cost of lacking connection components necessary for anything other than nodes and the generator itself."
-	//icon = 'icons/obj/machines/modular_shield_generator.dmi'
-	//icon_state = "cable_node_off_closed"
+	icon = 'icons/obj/machines/modular_shield_generator.dmi'
+	icon_state = "cable_node_closed"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	circuit = /obj/item/circuitboard/machine/modular_shield_cable
 	density = FALSE
 	allow_boosters = FALSE
 
-
+/obj/machinery/modular_shield/module/node/cable/update_icon_state()
+	. = ..()
+	icon_state = "cable_node_[panel_open ? "open" : "closed"]"
 
 /obj/machinery/modular_shield/module/charger
 
