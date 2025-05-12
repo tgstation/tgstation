@@ -31,10 +31,17 @@ jobs:
       - name: Find Maps
         id: map_finder
         run: |
-          echo "$(ls -mw0 _maps/*.json)" > maps_output.txt
-          sed -i -e s+_maps/+\"+g -e s+.json+\"+g maps_output.txt
-          echo "Maps: $(cat maps_output.txt)"
-          echo "maps={\"paths\":[$(cat maps_output.txt)]}" >> $GITHUB_OUTPUT
+          > maps_output.txt
+          for file in _maps/*.json; do
+            if ! jq -e '.exclude_from_ci == true' "$file" >/dev/null 2>&1; then
+              echo "\"$(basename "$file" .json)\"" >> maps_output.txt
+            else
+              echo "Excluded: $file"
+            fi
+          done
+          map_list=$(paste -sd, maps_output.txt)
+          echo "Maps: $map_list"
+          echo "maps={\"paths\":[$map_list]}" >> "$GITHUB_OUTPUT"
       - name: Find Alternate Tests
         id: alternate_test_finder
         run: |

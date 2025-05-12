@@ -141,7 +141,7 @@
 /turf/open/indestructible,
 /area/deathmatch)
 "by" = (
-/obj/machinery/photocopier{
+/obj/machinery/photocopier/prebuilt{
 	pixel_y = 3
 	},
 /turf/open/indestructible/dark,
@@ -2604,7 +2604,7 @@
 /turf/open/floor/plating,
 /area/deathmatch)
 "LU" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/indestructible/dark,
 /area/deathmatch)
 "LX" = (
@@ -3039,7 +3039,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
-/obj/machinery/photocopier{
+/obj/machinery/photocopier/prebuilt{
 	pixel_y = 3
 	},
 /turf/open/indestructible/dark,
