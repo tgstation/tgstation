@@ -185,6 +185,10 @@
 		balloon_alert(user, "fully charged!")
 		return ITEM_INTERACT_FAILURE
 
+	if(iscyborg(user) && iscyborg(interacting_with))
+		balloon_alert(user, "can't charge this!")
+		return ITEM_INTERACT_FAILURE
+
 	//begin recharging
 	recharging = TRUE
 	user.visible_message(span_notice("[user] starts recharging [interacting_with] with [src]."), span_notice("You start recharging [interacting_with] with [src]."))
@@ -247,22 +251,9 @@
 	powerdevice = /obj/item/stock_parts/power_store/battery/super
 
 /obj/item/inducer/cyborg
-	name = "internal inducer"
+	name = "modular inducer"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
-	powerdevice = null
-
-/obj/item/inducer/cyborg/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	return NONE
-
-/obj/item/inducer/cyborg/examine_hints(mob/living/user)
-	return list()
-
-/obj/item/inducer/cyborg/get_cell(atom/movable/interface, mob/living/silicon/robot/silicon_friend)
-	return istype(silicon_friend) ? silicon_friend.cell : null
 
 /obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
-	return ITEM_INTERACT_FAILURE
-
-/obj/item/inducer/cyborg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	return ITEM_INTERACT_FAILURE

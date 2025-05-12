@@ -288,10 +288,12 @@
 ///Apparatus allowing Engineer/Sabo borgs to manipulate Machine and Computer circuit boards
 /obj/item/borg/apparatus/circuit
 	name = "circuit manipulation apparatus"
-	desc = "A special apparatus for carrying and manipulating circuit boards."
+	desc = "A special apparatus for carrying and manipulating circuit boards and power cells."
 	icon_state = "borg_hardware_apparatus"
 	storable = list(/obj/item/circuitboard,
-				/obj/item/electronics)
+					/obj/item/electronics,
+					/obj/item/stock_parts/power_store,
+				)
 
 /obj/item/borg/apparatus/circuit/Initialize(mapload)
 	update_appearance()
@@ -305,6 +307,10 @@
 		stored.pixel_z = 0
 		if(!istype(stored, /obj/item/circuitboard))
 			arm.icon_state = "borg_hardware_apparatus_arm2"
+		else if(!istype(stored, /obj/item/circuitboard || /obj/item/stock_parts/power_store))
+			stored.pixel_w = -5
+			stored.pixel_z = -2
+			arm.icon_state = "borg_hardware_apparatus_arm1"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		stored_copy.layer = FLOAT_LAYER
 		stored_copy.plane = FLOAT_PLANE
