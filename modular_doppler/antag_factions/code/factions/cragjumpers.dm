@@ -2,7 +2,6 @@
 	name = "Crag Jumpers"
 	description = "When the working man is sufficiently pressed, the consequences are sometimes explosive. The Crag Jumpers are a blue collar union of 'less-than-licensed' miners trawling the belts and moons in the vicinity of the Nine Lives Promenade, and are not thrilled with the sudden encroachment upon their 'claims' brought by the presence of a new Port Authority vessel.\n\n\
 	Armed with a litany of Xion-era mining tools previously outlawed for their awful safety record and a wide array of industrial explosives, they're certain to make their ire known with a bang."
-	antagonist_types = list(/datum/antagonist/traitor, /datum/antagonist/spy)
 	faction_category = /datum/uplink_category/faction_special/cragjumpers
 	entry_line = span_boldnotice("A staticky voice trails across the sub-band of your implanted comms device: \"Remember, kid. You're a Crag Jumper now, and the union's riding on your efforts out here. Don't let those 9LP scabs drive our comrades in Echoes-Dark-Locations out. We're countin' on you.\"")
 

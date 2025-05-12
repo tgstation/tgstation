@@ -2,7 +2,6 @@
 	name = "Echoes-Dark-Locations"
 	description = "The sister ship of the 9LP. A mix-up led to you two being assigned to the same sector, and a rocky start with a mis-identification led to the two crews using lethal force on each other, believing the other side to be pirates. \
 	The severity of the incident was under-exaggerated by the regional administration so that such a catastrophic fuck-up wouldn't cost all of you your jobs. The Port Authority central office was left oblivious, believing it to be a simple mix-up. To make it worse; the PA has decided the 9LP to be their flagship vessel in the region, and are trying to phase you out. Either hired by EDL, or part of the crew, you don't intend to mess up now.."
-	antagonist_types = list(/datum/antagonist/traitor, /datum/antagonist/spy)
 	faction_category = /datum/uplink_category/faction_special/echoes
 	entry_line = span_boldnotice("You take in a deep breath. Yelling and breach alarms; maybe a flashback to the explanation on why you were hired, maybe a slice of memory. Either way, you know why the hate between the two crews is mutual. Lock in.")
 

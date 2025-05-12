@@ -3,8 +3,6 @@
 	var/name
 	/// A brief overview of the faction.
 	var/description
-	/// The type of antagonist this faction affects.
-	var/list/antagonist_types = list()
 	/// Do we award any bonus TC for traitor/spy-type antags?
 	var/bonus_tc = 0
 	/// A special uplink category for our stuff, if applicable.
