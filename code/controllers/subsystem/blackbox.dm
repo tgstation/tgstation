@@ -439,6 +439,7 @@ Versioning
 		"port" = "[world.port]",
 		"round_id" = GLOB.round_id,
 		"ckey" = ckey,
+		"character" = character,
 		"job" = job,
 		"special" = special,
 		"latejoin" = latejoin
