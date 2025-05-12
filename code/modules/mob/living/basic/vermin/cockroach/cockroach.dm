@@ -34,6 +34,10 @@
 	ai_controller = /datum/ai_controller/basic_controller/cockroach
 
 	var/cockroach_cell_line = CELL_LINE_TABLE_COCKROACH
+	/// What do we turn into if recruited by a regal rat?
+	var/minion_path = /mob/living/basic/cockroach/sewer
+	/// Command list given to minionised cockroaches
+	var/list/minion_commands
 
 /mob/living/basic/cockroach/Initialize(mapload)
 	var/turf/our_turf = get_turf(src)
@@ -57,6 +61,14 @@
 	ADD_TRAIT(src, TRAIT_NUKEIMMUNE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_RADIMMUNE, INNATE_TRAIT)
 
+	if (minion_path)
+		set_pet_commands()
+		AddElement(/datum/element/regal_rat_minion, converted_path = minion_path, success_balloon = "hiss", pet_commands = minion_commands)
+
+/// Decide what this should be able to be told to do
+/mob/living/basic/cockroach/proc/set_pet_commands()
+	minion_commands = GLOB.regal_rat_minion_commands
+
 /mob/living/basic/cockroach/ex_act() //Explosions are a terrible way to handle a cockroach.
 	return FALSE
 
@@ -64,76 +76,22 @@
 /mob/living/basic/cockroach/spawn_gibs()
 	return
 
-/datum/ai_controller/basic_controller/cockroach
-	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
-		BB_OWNER_SELF_HARM_RESPONSES = list(
-			"*me waves its antennae in disapproval.",
-			"*me chitters sadly."
-		)
-	)
-
-	ai_traits = STOP_MOVING_WHEN_PULLED
-	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/insect,
-		/datum/ai_planning_subtree/find_and_hunt_target/roach,
-	)
-
-/obj/projectile/glockroachbullet
-	damage = 10 //same damage as a hivebot
-	damage_type = BRUTE
-
-/obj/item/ammo_casing/glockroach
-	name = "0.9mm bullet casing"
-	desc = "A... 0.9mm bullet casing? What?"
-	projectile_type = /obj/projectile/glockroachbullet
-
-
-/mob/living/basic/cockroach/glockroach
-	name = "glockroach"
-	desc = "HOLY SHIT, THAT COCKROACH HAS A GUN!"
-	icon_state = "glockroach"
-	melee_damage_lower = 2.5
-	melee_damage_upper = 10
-	obj_damage = 10
+/// Roach which tries to ineffectually attack you
+/mob/living/basic/cockroach/sewer
+	name = "sewer roach"
+	icon_state = "cockroach_sewer"
+	desc = "This bug has a really bad attitude."
+	health = 2
+	maxHealth = 2 // Wow!
+	melee_damage_lower = 2
+	melee_damage_upper = 4
+	obj_damage = 5
+	melee_attack_cooldown = 0.8 SECONDS
 	gold_core_spawnable = HOSTILE_SPAWN
-	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
-	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
-	cockroach_cell_line = CELL_LINE_TABLE_GLOCKROACH
-	///number of burst shots
-	var/burst_shots
-	///cooldown between attacks
-	var/ranged_cooldown = 1 SECONDS
+	minion_path = null
+	ai_controller = /datum/ai_controller/basic_controller/cockroach/aggro
 
-/mob/living/basic/cockroach/glockroach/Initialize(mapload)
-	. = ..()
-	AddComponent(\
-		/datum/component/ranged_attacks,\
-		casing_type = /obj/item/ammo_casing/glockroach,\
-		burst_shots = burst_shots,\
-		cooldown_time = ranged_cooldown,\
-	)
-	if (ranged_cooldown <= 1 SECONDS)
-		AddComponent(/datum/component/ranged_mob_full_auto)
-
-/datum/ai_controller/basic_controller/cockroach/glockroach
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/insect,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach, //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target/roach,
-	)
-
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/glockroach
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/glockroach
-
-/datum/ai_behavior/basic_ranged_attack/glockroach //Slightly slower, as this is being made in feature freeze ;)
-	action_cooldown = 1 SECONDS
-
+/// Roach with a spiky hat, like a caltrop
 /mob/living/basic/cockroach/hauberoach
 	name = "hauberoach"
 	desc = "Is that cockroach wearing a tiny yet immaculate replica 19th century Prussian spiked helmet? ...Is that a bad thing?"
@@ -149,8 +107,9 @@
 	attack_vis_effect = ATTACK_EFFECT_SLASH
 	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
 	sharpness = SHARP_POINTY
-	ai_controller = /datum/ai_controller/basic_controller/cockroach/hauberoach
+	ai_controller = /datum/ai_controller/basic_controller/cockroach/aggro
 	cockroach_cell_line = CELL_LINE_TABLE_HAUBEROACH
+	minion_path = /mob/living/basic/cockroach/hauberoach/imperial
 
 /mob/living/basic/cockroach/hauberoach/Initialize(mapload)
 	. = ..()
@@ -173,43 +132,92 @@
 	living_target.visible_message(span_notice("[living_target] squashes [cockroach], not even noticing its spike."), span_notice("You squashed [cockroach], not even noticing its spike."))
 	return FALSE
 
-/datum/ai_controller/basic_controller/cockroach/hauberoach
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/insect,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,  //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target/roach,
-	)
+/// Regal rat royal escort
+/mob/living/basic/cockroach/hauberoach/imperial
+	name = "imperial hauberoach"
+	desc = "This cockroach seems to have found employment as a professional royal guard."
+	health = 2
+	maxHealth = 2
+	melee_damage_lower = 3
+	melee_damage_upper = 12
+	icon_state = "hauberoach_sewer"
+	minion_path = null
+	gold_core_spawnable = NO_SPAWN
 
-/datum/ai_controller/basic_controller/cockroach/sewer
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/insect,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_and_hunt_target/roach,
-	)
+/// Roach with a gun
+/mob/living/basic/cockroach/glockroach
+	name = "glockroach"
+	desc = "HOLY SHIT, THAT COCKROACH HAS A GUN!"
+	icon_state = "glockroach"
+	melee_damage_lower = 2.5
+	melee_damage_upper = 10
+	obj_damage = 10
+	gold_core_spawnable = HOSTILE_SPAWN
+	faction = list(FACTION_HOSTILE, FACTION_MAINT_CREATURES)
+	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
+	cockroach_cell_line = CELL_LINE_TABLE_GLOCKROACH
+	minion_path = /mob/living/basic/cockroach/glockroach/gang
+	///number of burst shots
+	var/burst_shots
+	///cooldown between attacks
+	var/ranged_cooldown = 1 SECONDS
 
+/mob/living/basic/cockroach/glockroach/Initialize(mapload)
+	. = ..()
+	AddComponent(\
+		/datum/component/ranged_attacks,\
+		casing_type = /obj/item/ammo_casing/glockroach,\
+		burst_shots = burst_shots,\
+		cooldown_time = ranged_cooldown,\
+	)
+	if (ranged_cooldown <= 1 SECONDS)
+		AddComponent(/datum/component/ranged_mob_full_auto)
+
+/mob/living/basic/cockroach/glockroach/set_pet_commands()
+	var/static/list/glockroach_commands = list(
+		/datum/pet_command/idle,
+		/datum/pet_command/free,
+		/datum/pet_command/protect_owner/glockroach,
+		/datum/pet_command/follow,
+		/datum/pet_command/attack/glockroach
+	)
+	minion_commands = glockroach_commands
+
+/mob/living/basic/cockroach/glockroach/gang
+	name = "gangroach"
+	desc = "This roach grew up on the wrong side of the streets and has fallen in with the wrong crowd."
+	icon_state = "glockroach_sewer"
+	health = 2
+	maxHealth = 2
+	minion_path = null
+	gold_core_spawnable = NO_SPAWN
+
+/obj/projectile/glockroachbullet
+	damage = 10 //same damage as a hivebot
+	damage_type = BRUTE
+
+/obj/item/ammo_casing/glockroach
+	name = "0.9mm bullet casing"
+	desc = "A... 0.9mm bullet casing? What?"
+	projectile_type = /obj/projectile/glockroachbullet
+
+/// Roach with an SMG
 /mob/living/basic/cockroach/glockroach/mobroach
 	name = "mobroach"
-	desc = "WE'RE FUCKED, THAT GLOCKROACH HAS A TOMMYGUN!"
+	desc = "WE'RE FUCKED, THAT COCKROACH HAS A TOMMYGUN!"
 	icon_state = "mobroach"
-	ai_controller = /datum/ai_controller/basic_controller/cockroach/mobroach
 	burst_shots = 4
 	ranged_cooldown = 2 SECONDS
+	minion_path = /mob/living/basic/cockroach/glockroach/mobroach/goon
 
-/datum/ai_controller/basic_controller/cockroach/mobroach
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/random_speech/insect,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree/mobroach, //If we are attacking someone, this will prevent us from hunting
-		/datum/ai_planning_subtree/find_and_hunt_target/roach,
-	)
+	ai_controller = /datum/ai_controller/basic_controller/cockroach/glockroach
 
-/datum/ai_planning_subtree/basic_ranged_attack_subtree/mobroach
-	ranged_attack_behavior = /datum/ai_behavior/basic_ranged_attack/mobroach
+/mob/living/basic/cockroach/glockroach/mobroach/goon
+	name = "goonroach"
+	desc = "You got it, boss."
+	icon_state = "mobroach_sewer"
+	health = 2
+	maxHealth = 2
+	minion_path = null
+	gold_core_spawnable = NO_SPAWN
 
-/datum/ai_behavior/basic_ranged_attack/mobroach
-	action_cooldown = 2 SECONDS
