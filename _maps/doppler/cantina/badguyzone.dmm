@@ -217,7 +217,7 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/powered)
 "fQ" = (
-/obj/structure/closet/secure_closet/freezer/meat/all_access,
+/obj/structure/closet/secure_closet/freezer/cantina_meat,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered)
 "fS" = (
@@ -315,7 +315,8 @@
 /turf/open/floor/wood/tile,
 /area/ruin/space/has_grav/powered)
 "hu" = (
-/obj/structure/sink/kitchen/directional/south,
+/obj/structure/table,
+/obj/machinery/fax/cantina,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/powered)
 "hH" = (
@@ -639,9 +640,7 @@
 /area/ruin/space/has_grav/powered)
 "nf" = (
 /obj/structure/table,
-/obj/machinery/coffeemaker{
-	pixel_y = 15
-	},
+/obj/machinery/coffeemaker/impressa,
 /obj/item/storage/box/coffeepack{
 	pixel_y = 4;
 	pixel_x = 10
@@ -738,6 +737,7 @@
 "oY" = (
 /obj/structure/table/reinforced,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/reagent_containers/cup/glass/shaker,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/powered)
 "pi" = (
@@ -814,6 +814,13 @@
 /obj/effect/mapping_helpers/airlock/cutaiwire,
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/powered)
+"rx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sink/kitchen/directional/east,
+/turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/powered)
 "rR" = (
 /obj/structure/chair/sofa/corner/maroon{
@@ -1084,8 +1091,12 @@
 /obj/item/storage/belt/military/assault,
 /obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/gloves/color/black,
+/obj/item/lazarus_injector,
 /obj/item/storage/backpack/satchel/leather,
 /obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
+/obj/item/storage/box/cantina_sweeteners,
+/obj/item/storage/box/rxglasses/spyglasskit,
+/obj/item/clothing/glasses/sunglasses/reagent,
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/powered)
 "yE" = (
@@ -1197,6 +1208,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/powered)
+"AU" = (
+/obj/structure/closet/secure_closet/freezer/cantina_eggs,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/has_grav/powered)
 "Ba" = (
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -1224,6 +1239,12 @@
 /obj/structure/sign/poster/contraband/starkist/directional/south,
 /obj/structure/sign/poster/contraband/rebels_unite/directional/west,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/powered)
+"Bg" = (
+/obj/machinery/computer/order_console/cook/cantina{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/powered)
 "Bw" = (
 /turf/open/floor/iron/white,
@@ -1662,6 +1683,7 @@
 "MK" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/powered)
 "MO" = (
@@ -1938,6 +1960,7 @@
 	dir = 8
 	},
 /obj/structure/closet/emcloset,
+/obj/item/storage/medkit/regular,
 /turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/powered)
 "Sy" = (
@@ -2125,7 +2148,7 @@
 /area/ruin/space/has_grav/powered)
 "YB" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/oven,
+/obj/machinery/oven/range,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/powered)
 "YI" = (
@@ -2162,6 +2185,14 @@
 	},
 /obj/structure/tank_frame,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/powered)
+"Zv" = (
+/obj/structure/table,
+/obj/item/paper_bin{
+	pixel_x = 0;
+	pixel_y = 5
+	},
+/turf/open/floor/wood/parquet,
 /area/ruin/space/has_grav/powered)
 "ZC" = (
 /obj/structure/table,
@@ -2483,7 +2514,7 @@ Hd
 Rw
 ng
 Kh
-Wy
+Zv
 pi
 RG
 Ka
@@ -2629,7 +2660,7 @@ bn
 Ov
 ng
 al
-fQ
+AU
 fQ
 ai
 ej
@@ -2690,7 +2721,7 @@ Ro
 ng
 Ag
 Wq
-Yw
+Bg
 ai
 nT
 gN
@@ -2751,7 +2782,7 @@ Tn
 BQ
 UM
 El
-El
+rx
 El
 El
 KE

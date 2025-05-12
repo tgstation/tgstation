@@ -7043,6 +7043,7 @@
 #include "modular_doppler\mining\equipment\trophies_misc.dm"
 #include "modular_doppler\modsuit_pda_app\tap_to_control.dm"
 #include "modular_doppler\modular_antagonists\_dynamic_rulesets.dm"
+#include "modular_doppler\modular_antagonists\cantina\cantina_items.dm"
 #include "modular_doppler\modular_antagonists\cantina\cantina_roles.dm"
 #include "modular_doppler\modular_antagonists\cantina\cantina_ruin.dm"
 #include "modular_doppler\modular_antagonists\cantina\spawners.dm"
