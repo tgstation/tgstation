@@ -173,7 +173,7 @@
 	stock_max = 8
 	availability_prob = 90
 
-/datum/market_item/misc/poster/girlypop
+/datum/market_item/misc/girlypop
 	name = "Girlypop Posters"
 	desc = "A collection of cute and adorable posters. Girl power!"
 	price_min = PAYCHECK_CREW * 2
@@ -183,7 +183,7 @@
 	stock_max = 3
 	availability_prob = 90
 
-/datum/market_item/misc/poster/girlypop/spawn_item(loc, datum/market_purchase/purchase)
+/datum/market_item/misc/girlypop/spawn_item(loc, datum/market_purchase/purchase)
 	. = ..()
 	var/obj/structure/closet/crate/pink/C = new(loc)
 	for (var/type in list(
