@@ -1,0 +1,4 @@
+author: "Hardly"
+delete-after: True
+changes:
+  - rscadd: "Added half-health modifier for deathmatch"
