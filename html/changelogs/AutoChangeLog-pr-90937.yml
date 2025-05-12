@@ -1,0 +1,4 @@
+author: "throwawayuseless"
+delete-after: True
+changes:
+  - rscadd: "Adds new immunodeficiency negative quirk, and sepsisillin, the inverse of spaceacillin. Both have an immune system weakening effect, mitigate-able with spaceacillin."
