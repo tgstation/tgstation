@@ -309,7 +309,7 @@
 			arm.icon_state = "borg_hardware_apparatus_arm2"
 		else if(!istype(stored, /obj/item/circuitboard || /obj/item/stock_parts/power_store))
 			stored.pixel_w = -5
-			stored.pixel_z = -2
+			stored.pixel_z = 2
 			arm.icon_state = "borg_hardware_apparatus_arm1"
 		var/mutable_appearance/stored_copy = new /mutable_appearance(stored)
 		stored_copy.layer = FLOAT_LAYER
