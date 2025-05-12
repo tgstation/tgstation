@@ -91,7 +91,7 @@ export const BlendColors = {
   BLEND_DEFAULT: undefined,
   BLEND_OVERLAY: 'white',
   BLEND_ADD: 'olive',
-  BLEND_SUBSTRACT: 'red',
+  BLEND_SUBTRACT: 'red',
   BLEND_MULTIPLY: 'orange',
   BLEND_INSET_OVERLAY: 'teal',
 };
@@ -100,7 +100,7 @@ export enum BlendModes {
   'BLEND_DEFAULT',
   'BLEND_OVERLAY',
   'BLEND_ADD',
-  'BLEND_SUBSTRACT',
+  'BLEND_SUBTRACT',
   'BLEND_MULTIPLY',
   'BLEND_INSET_OVERLAY',
 }
