@@ -1,0 +1,4 @@
+author: "Derpguy3"
+delete-after: True
+changes:
+  - bugfix: "Several previously missing drinks have been added to the service cyborg's drink synthesizer."
