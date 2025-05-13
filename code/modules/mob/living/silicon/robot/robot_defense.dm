@@ -268,7 +268,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		Stun(40)
 		step(src,get_dir(user,src))
 		visible_message(span_danger("[user] forces back [src]!"), \
-			span_userdanger("[user] forces back [src]!"), null, COMBAT_MESSAGE_RANGE)
+			span_userdanger("[user] forces you back!"), null, COMBAT_MESSAGE_RANGE)
 		log_combat(user, src, "pushed")
 	playsound(loc, 'sound/items/weapons/pierce.ogg', 50, TRUE, -1)
 
