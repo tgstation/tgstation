@@ -3,9 +3,9 @@ import { Box, Button, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { getWindowPosition, setWindowPosition } from '../../drag';
-import { PlaneDebugContext } from '.';
 import { Port } from './Port';
 import { Filter, Plane, PlaneConnectorsMap, Relay } from './types';
+import { PlaneDebugContext } from './usePlaneDebug';
 
 export type PlaneMasterProps = {
   plane: Plane;

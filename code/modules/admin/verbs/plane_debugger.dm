@@ -7,6 +7,9 @@
 	var/current_group = PLANE_GROUP_MAIN
 	/// Weakref to the mob to edit
 	var/datum/weakref/mob_ref
+	/// Has the target been set explicitly (via VV) or implicitly (via orbit)
+	/// Orbit targets will get unset whenever you stop orbiting them
+	var/explicit_mirror = FALSE
 
 	var/datum/visual_data/tracking/stored
 	var/datum/visual_data/mirroring/mirror
@@ -22,7 +25,7 @@
 		owner = null
 	return ..()
 
-/datum/plane_master_debug/proc/set_target(mob/new_mob)
+/datum/plane_master_debug/proc/set_target(mob/new_mob, explicit = TRUE)
 	QDEL_NULL(mirror)
 	QDEL_NULL(stored)
 
@@ -39,10 +42,13 @@
 	RegisterSignal(owner.owner.mob, COMSIG_MOB_LOGOUT, PROC_REF(on_our_logout), override = TRUE)
 	mirror = new()
 	mirror.shadow(new_mob)
+	SStgui.update_uis(owner.owner.mob)
 
 	if(new_mob == owner.owner.mob)
+		explicit_mirror = FALSE
 		return
 
+	explicit_mirror = explicit
 	create_store()
 
 /datum/plane_master_debug/proc/on_our_logout(mob/source)
@@ -62,14 +68,16 @@
 	mirror.set_mirror_target(owner.owner.mob)
 
 /datum/plane_master_debug/proc/get_target()
-	var/mob/target = mob_ref?.resolve()
-	if(!target?.hud_used || target == owner.owner.mob)
+	var/mob/cur_target = mob_ref?.resolve()
+	var/mob/target = cur_target
+	if(!target?.hud_used || !explicit_mirror)
 		target = owner.owner.mob
 		if (ismob(target.orbit_target)) // If we're orbiting someone, swap to them if possible
 			var/mob/as_mob = target.orbit_target
 			if (as_mob.hud_used)
 				target = target.orbit_target
-		set_target(target)
+		if (cur_target != target)
+			set_target(target, FALSE)
 	return target
 
 /// Setter for mirror_target, basically allows for enabling/disabiling viewing through mob's sight
@@ -77,8 +85,8 @@
 	if(value == mirror_target)
 		return
 	mirror_target = value
-	// Refresh our target and mirrors and such
-	set_target(get_target())
+	// Refresh our target and mirrors and such, but keep explicit/implicit mirroring
+	set_target(get_target(), explicit_mirror)
 
 /datum/plane_master_debug/ui_state(mob/user)
 	return ADMIN_STATE(R_DEBUG)

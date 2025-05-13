@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
 import { Button, Dropdown, Modal, Section, Stack } from 'tgui-core/components';
 
-import { PlaneDebugContext } from '.';
 import { BlendModes, Plane } from './types';
+import { PlaneDebugContext } from './usePlaneDebug';
 
 export function PlaneMenus() {
   const { connectionOpen, infoOpen } = useContext(PlaneDebugContext);

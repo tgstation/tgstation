@@ -1,12 +1,4 @@
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import {
   Button,
   Dropdown,
@@ -29,12 +21,14 @@ import {
   PlaneConnectionsMap,
   PlaneConnectorElement,
   PlaneConnectorsMap,
+  PlaneData,
   PlaneDebugData,
   PlaneHighlight,
   PlaneMap,
   PlaneTargetMap,
   Relay,
 } from './types';
+import { PlaneDebugContext } from './usePlaneDebug';
 
 function getPosition(el: HTMLElement | null): Position {
   let xPos = 0;
@@ -155,6 +149,264 @@ function getDesiredPlanePosition(
   return avgY - getPlaneHeight(plane) / 2;
 }
 
+function mapPlanes(planes: PlaneData[]) {
+  const planeGraph: PlaneMap = {};
+  const planeTargets: PlaneTargetMap = {};
+
+  for (let i = 0; i < planes.length; i++) {
+    const planeInfo = planes[i];
+    const plane: Plane = {
+      name: planeInfo.name,
+      documentation: planeInfo.documentation,
+      plane: planeInfo.plane,
+      offset: planeInfo.offset,
+      real_plane: planeInfo.real_plane,
+      renders_onto: [],
+      blend_mode: planeInfo.blend_mode,
+      color: planeInfo.color,
+      alpha: planeInfo.alpha,
+      render_target: planeInfo.render_target,
+      force_hidden: planeInfo.force_hidden,
+      incoming_relays: [],
+      incoming_filters: [],
+      outgoing_relays: [],
+      outgoing_filters: [],
+      position: { x: 0, y: 0 },
+      parents: [],
+      depth: 0,
+    };
+
+    planeGraph[planeInfo.plane] = plane;
+    if (planeInfo.render_target) {
+      planeTargets[planeInfo.render_target] = plane;
+    }
+  }
+
+  for (let i = 0; i < planes.length; i++) {
+    const planeInfo = planes[i];
+    const plane = planeGraph[planeInfo.plane];
+
+    for (let j = 0; j < planeInfo.relays.length; j++) {
+      const relayInfo = planeInfo.relays[j];
+      const targetPlane = planeGraph[relayInfo.target];
+      const relay: Relay = {
+        name: relayInfo.name,
+        source: plane,
+        target: targetPlane,
+        layer: relayInfo.layer,
+        blend_mode: relayInfo.blend_mode,
+        our_ref: relayInfo.our_ref,
+        node_color: 'blue',
+      };
+
+      plane.outgoing_relays.push(relay);
+      if (targetPlane !== undefined) {
+        targetPlane.incoming_relays.push(relay);
+        targetPlane.parents.push(plane);
+      }
+    }
+
+    for (let j = 0; j < planeInfo.filters.length; j++) {
+      const filterInfo = planeInfo.filters[j];
+      const sourcePlane = planeTargets[filterInfo.render_source];
+      const filter: Filter = {
+        name: filterInfo.name,
+        target: plane,
+        source: sourcePlane,
+        type: filterInfo.type,
+        our_ref: filterInfo.our_ref,
+        blend_mode: filterInfo.blend_mode,
+        node_color: 'purple',
+      };
+
+      plane.incoming_filters.push(filter);
+      if (sourcePlane !== undefined) {
+        plane.parents.push(sourcePlane);
+        sourcePlane.outgoing_filters.push(filter);
+      }
+    }
+  }
+
+  // Calculate plane depths to sort them out
+  for (const key in planeGraph) {
+    const plane = planeGraph[key];
+    // Don't recursively evaluate nodes that we know will have some child
+    // to call this on them anyways
+    if (
+      plane.outgoing_filters.length === 0 &&
+      plane.outgoing_relays.length === 0
+    ) {
+      evaluatePlaneDepth(plane, 1);
+    }
+  }
+
+  const widthPerDepth: Record<number, number> = {};
+  const heightPerDepth: Record<number, number> = {};
+  const planeStacks: Record<number, Plane[]> = {};
+  let maxHeight = 0;
+  let tallestStack = 0;
+  for (const key in planeGraph) {
+    const plane = planeGraph[key];
+    widthPerDepth[plane.depth] = Math.max(
+      widthPerDepth[plane.depth] || 0,
+      textWidth(plane.name, 'Verdana, Geneva', 12) + 30,
+    );
+
+    const newHeight =
+      (heightPerDepth[plane.depth] || 0) + getPlaneHeight(plane);
+
+    heightPerDepth[plane.depth] = newHeight;
+    if (newHeight > maxHeight) {
+      maxHeight = newHeight;
+      tallestStack = plane.depth;
+    }
+
+    if (planeStacks[plane.depth] === undefined) {
+      planeStacks[plane.depth] = [];
+    }
+
+    planeStacks[plane.depth].push(plane);
+  }
+
+  // We sort stacks based on planes that the plane bundle renders onto
+  // and the numerical plane value within the actual bundle
+  for (const key in planeStacks) {
+    let stack: Plane[] = planeStacks[key];
+    stack = stack.sort((first, second) => {
+      const firstChildren: Plane[] = (
+        first.outgoing_filters as (Filter | Relay)[]
+      )
+        .concat(first.outgoing_relays)
+        .map((connection: Filter | Relay) => connection.target)
+        .filter(isDefined)
+        .sort((a, b) => a.plane - b.plane);
+
+      const secondChildren: Plane[] = (
+        second.outgoing_filters as (Filter | Relay)[]
+      )
+        .concat(second.outgoing_relays)
+        .map((connection: Filter | Relay) => connection.target)
+        .filter(isDefined)
+        .sort((a, b) => a.plane - b.plane);
+
+      // We have same children or none at all, sort ourselves based on our real planes
+      if (
+        firstChildren.length === 0 ||
+        secondChildren.length === 0 ||
+        firstChildren.map((x) => x.plane).join('-') ===
+          secondChildren.map((x) => x.plane).join('-')
+      ) {
+        return first.plane - second.plane;
+      }
+
+      // planeStacks is a Record and thus automatically sorts itself
+      // so we can always assume that our children have already been sorted
+      const firstAvg =
+        firstChildren
+          .map((x) => planeStacks[x.depth].indexOf(x) || 0)
+          .reduce((a, b) => a + b, 0) / firstChildren.length;
+
+      const secondAvg =
+        secondChildren
+          .map((x) => planeStacks[x.depth].indexOf(x) || 0)
+          .reduce((a, b) => a + b, 0) / secondChildren.length;
+
+      if (firstAvg !== secondAvg) {
+        return firstAvg - secondAvg;
+      }
+
+      // In a scenario where averages of our children's vertical positions match
+      // we want to keep all planes leading to same children grouped together
+      for (
+        let i = 0;
+        i < Math.min(firstChildren.length, secondChildren.length);
+        i++
+      ) {
+        const firstChild: Plane = firstChildren[i] as Plane;
+        const secondChild: Plane = secondChildren[i] as Plane;
+
+        if (firstChild.plane !== secondChild.plane) {
+          return firstChild.plane - secondChild.plane;
+        }
+      }
+
+      return 0;
+    });
+
+    planeStacks[key] = stack;
+  }
+
+  let baseX = 0;
+  for (const key in planeStacks) {
+    const stack: Plane[] = planeStacks[key];
+    for (let i = 0; i < stack.length; i++) {
+      const plane: Plane = stack[i];
+      plane.position.x = baseX;
+    }
+
+    baseX -= widthPerDepth[key] + 150;
+  }
+
+  const stackKeys = Object.keys(planeStacks).sort(
+    (a, b) => Math.abs(+a - tallestStack) - Math.abs(+b - tallestStack),
+  );
+
+  for (let k = 0; k < stackKeys.length; k++) {
+    const key: number = +stackKeys[k];
+    const stack: Plane[] = planeStacks[key];
+
+    let stackHeight = 0;
+    for (let i = 0; i < stack.length; i++) {
+      const plane: Plane = stack[i];
+      const height = getPlaneHeight(plane);
+
+      if (key === tallestStack) {
+        plane.position.y = stackHeight;
+        stackHeight += height;
+        continue;
+      }
+
+      const desiredPos = getDesiredPlanePosition(plane, +key, tallestStack);
+
+      if (i === 0 && desiredPos < stackHeight) {
+        stackHeight = desiredPos;
+      } else if (desiredPos > stackHeight) {
+        let curBottom = desiredPos + height;
+        let pushedPosition = 0;
+
+        if (i < stack.length - 1) {
+          for (let j = i + 1; j < stack.length; j++) {
+            const otherPlane: Plane = stack[j];
+            const otherPos = getDesiredPlanePosition(
+              otherPlane,
+              +key,
+              tallestStack,
+            );
+
+            if (Number.isNaN(otherPos)) {
+              continue;
+            }
+
+            const otherHeight = getPlaneHeight(otherPlane);
+            curBottom += otherHeight;
+            pushedPosition = Math.max(
+              pushedPosition,
+              curBottom - otherPos - otherHeight / 2,
+            );
+          }
+        }
+
+        stackHeight = Math.max(desiredPos - pushedPosition / 2, stackHeight);
+      }
+
+      plane.position.y = stackHeight;
+      stackHeight += height;
+    }
+  }
+
+  return planeGraph;
+}
+
 export function PlaneMasterDebug() {
   const { data, act } = useBackend<PlaneDebugData>();
   const {
@@ -169,263 +421,7 @@ export function PlaneMasterDebug() {
   } = data;
   const connectionDom = useRef<PlaneConnectorsMap>({});
 
-  const planesProcessed = useMemo(() => {
-    const planeGraph: PlaneMap = {};
-    const planeTargets: PlaneTargetMap = {};
-
-    for (let i = 0; i < planes.length; i++) {
-      const planeInfo = planes[i];
-      const plane: Plane = {
-        name: planeInfo.name,
-        documentation: planeInfo.documentation,
-        plane: planeInfo.plane,
-        offset: planeInfo.offset,
-        real_plane: planeInfo.real_plane,
-        renders_onto: [],
-        blend_mode: planeInfo.blend_mode,
-        color: planeInfo.color,
-        alpha: planeInfo.alpha,
-        render_target: planeInfo.render_target,
-        force_hidden: planeInfo.force_hidden,
-        incoming_relays: [],
-        incoming_filters: [],
-        outgoing_relays: [],
-        outgoing_filters: [],
-        position: { x: 0, y: 0 },
-        parents: [],
-        depth: 0,
-      };
-
-      planeGraph[planeInfo.plane] = plane;
-      if (planeInfo.render_target) {
-        planeTargets[planeInfo.render_target] = plane;
-      }
-    }
-
-    for (let i = 0; i < planes.length; i++) {
-      const planeInfo = planes[i];
-      const plane = planeGraph[planeInfo.plane];
-
-      for (let j = 0; j < planeInfo.relays.length; j++) {
-        const relayInfo = planeInfo.relays[j];
-        const targetPlane = planeGraph[relayInfo.target];
-        const relay: Relay = {
-          name: relayInfo.name,
-          source: plane,
-          target: targetPlane,
-          layer: relayInfo.layer,
-          blend_mode: relayInfo.blend_mode,
-          our_ref: relayInfo.our_ref,
-          node_color: 'blue',
-        };
-
-        plane.outgoing_relays.push(relay);
-        if (targetPlane !== undefined) {
-          targetPlane.incoming_relays.push(relay);
-          targetPlane.parents.push(plane);
-        }
-      }
-
-      for (let j = 0; j < planeInfo.filters.length; j++) {
-        const filterInfo = planeInfo.filters[j];
-        const sourcePlane = planeTargets[filterInfo.render_source];
-        const filter: Filter = {
-          name: filterInfo.name,
-          target: plane,
-          source: sourcePlane,
-          type: filterInfo.type,
-          our_ref: filterInfo.our_ref,
-          blend_mode: filterInfo.blend_mode,
-          node_color: 'purple',
-        };
-
-        plane.incoming_filters.push(filter);
-        if (sourcePlane !== undefined) {
-          plane.parents.push(sourcePlane);
-          sourcePlane.outgoing_filters.push(filter);
-        }
-      }
-    }
-
-    // Calculate plane depths to sort them out
-    for (const key in planeGraph) {
-      const plane = planeGraph[key];
-      // Don't recursively evaluate nodes that we know will have some child
-      // to call this on them anyways
-      if (
-        plane.outgoing_filters.length === 0 &&
-        plane.outgoing_relays.length === 0
-      ) {
-        evaluatePlaneDepth(plane, 1);
-      }
-    }
-
-    const widthPerDepth: Record<number, number> = {};
-    const heightPerDepth: Record<number, number> = {};
-    const planeStacks: Record<number, Plane[]> = {};
-    let maxHeight = 0;
-    let tallestStack = 0;
-    for (const key in planeGraph) {
-      const plane = planeGraph[key];
-      widthPerDepth[plane.depth] = Math.max(
-        widthPerDepth[plane.depth] || 0,
-        textWidth(plane.name, 'Verdana, Geneva', 12) + 30,
-      );
-
-      const newHeight =
-        (heightPerDepth[plane.depth] || 0) + getPlaneHeight(plane);
-
-      heightPerDepth[plane.depth] = newHeight;
-      if (newHeight > maxHeight) {
-        maxHeight = newHeight;
-        tallestStack = plane.depth;
-      }
-
-      if (planeStacks[plane.depth] === undefined) {
-        planeStacks[plane.depth] = [];
-      }
-
-      planeStacks[plane.depth].push(plane);
-    }
-
-    // We sort stacks based on planes that the plane bundle renders onto
-    // and the numerical plane value within the actual bundle
-    for (const key in planeStacks) {
-      let stack: Plane[] = planeStacks[key];
-      stack = stack.sort((first, second) => {
-        const firstChildren: Plane[] = (
-          first.outgoing_filters as (Filter | Relay)[]
-        )
-          .concat(first.outgoing_relays)
-          .map((connection: Filter | Relay) => connection.target)
-          .filter(isDefined)
-          .sort((a, b) => a.plane - b.plane);
-
-        const secondChildren: Plane[] = (
-          second.outgoing_filters as (Filter | Relay)[]
-        )
-          .concat(second.outgoing_relays)
-          .map((connection: Filter | Relay) => connection.target)
-          .filter(isDefined)
-          .sort((a, b) => a.plane - b.plane);
-
-        // We have same children or none at all, sort ourselves based on our real planes
-        if (
-          firstChildren.length === 0 ||
-          secondChildren.length === 0 ||
-          firstChildren.map((x) => x.plane).join('-') ===
-            secondChildren.map((x) => x.plane).join('-')
-        ) {
-          return first.plane - second.plane;
-        }
-
-        // planeStacks is a Record and thus automatically sorts itself
-        // so we can always assume that our children have already been sorted
-        const firstAvg =
-          firstChildren
-            .map((x) => planeStacks[x.depth].indexOf(x) || 0)
-            .reduce((a, b) => a + b, 0) / firstChildren.length;
-
-        const secondAvg =
-          secondChildren
-            .map((x) => planeStacks[x.depth].indexOf(x) || 0)
-            .reduce((a, b) => a + b, 0) / secondChildren.length;
-
-        if (firstAvg !== secondAvg) {
-          return firstAvg - secondAvg;
-        }
-
-        // In a scenario where averages of our children's vertical positions match
-        // we want to keep all planes leading to same children grouped together
-        for (
-          let i = 0;
-          i < Math.min(firstChildren.length, secondChildren.length);
-          i++
-        ) {
-          const firstChild: Plane = firstChildren[i] as Plane;
-          const secondChild: Plane = secondChildren[i] as Plane;
-
-          if (firstChild.plane !== secondChild.plane) {
-            return firstChild.plane - secondChild.plane;
-          }
-        }
-
-        return 0;
-      });
-
-      planeStacks[key] = stack;
-    }
-
-    let baseX = 0;
-    for (const key in planeStacks) {
-      const stack: Plane[] = planeStacks[key];
-      for (let i = 0; i < stack.length; i++) {
-        const plane: Plane = stack[i];
-        plane.position.x = baseX;
-      }
-
-      baseX -= widthPerDepth[key] + 150;
-    }
-
-    const stackKeys = Object.keys(planeStacks).sort(
-      (a, b) => Math.abs(+a - tallestStack) - Math.abs(+b - tallestStack),
-    );
-
-    for (let k = 0; k < stackKeys.length; k++) {
-      const key: number = +stackKeys[k];
-      const stack: Plane[] = planeStacks[key];
-
-      let stackHeight = 0;
-      for (let i = 0; i < stack.length; i++) {
-        const plane: Plane = stack[i];
-        const height = getPlaneHeight(plane);
-
-        if (key === tallestStack) {
-          plane.position.y = stackHeight;
-          stackHeight += height;
-          continue;
-        }
-
-        const desiredPos = getDesiredPlanePosition(plane, +key, tallestStack);
-
-        if (i === 0 && desiredPos < stackHeight) {
-          stackHeight = desiredPos;
-        } else if (desiredPos > stackHeight) {
-          let curBottom = desiredPos + height;
-          let pushedPosition = 0;
-
-          if (i < stack.length - 1) {
-            for (let j = i + 1; j < stack.length; j++) {
-              const otherPlane: Plane = stack[j];
-              const otherPos = getDesiredPlanePosition(
-                otherPlane,
-                +key,
-                tallestStack,
-              );
-
-              if (Number.isNaN(otherPos)) {
-                continue;
-              }
-
-              const otherHeight = getPlaneHeight(otherPlane);
-              curBottom += otherHeight;
-              pushedPosition = Math.max(
-                pushedPosition,
-                curBottom - otherPos - otherHeight / 2,
-              );
-            }
-          }
-
-          stackHeight = Math.max(desiredPos - pushedPosition / 2, stackHeight);
-        }
-
-        plane.position.y = stackHeight;
-        stackHeight += height;
-      }
-    }
-
-    return planeGraph;
-  }, [planes]);
+  const planesProcessed = useMemo(() => mapPlanes(planes), [planes]);
 
   const [connectionData, setConnectionData] = useState<PlaneConnectionsMap>({});
   const [connectionHighlight, setConnectionHighlight] =
@@ -448,7 +444,7 @@ export function PlaneMasterDebug() {
       };
     }
     setConnectionData(newConnectionData);
-  }, [planes]); // Ignore biome's screeching about this, it doesn't recognize ref dependencies
+  }, [planes]);
 
   const connections: Connection[] = [];
   for (const key in planesProcessed) {
@@ -621,20 +617,3 @@ export function PlaneMasterDebug() {
     </PlaneDebugContext.Provider>
   );
 }
-
-type Context = {
-  connectionHighlight: PlaneHighlight | undefined;
-  setConnectionHighlight: Dispatch<SetStateAction<PlaneHighlight | undefined>>;
-  activePlane: number | undefined;
-  setActivePlane: Dispatch<SetStateAction<number | undefined>>;
-  connectionOpen: boolean;
-  setConnectionOpen: Dispatch<SetStateAction<boolean>>;
-  infoOpen: boolean;
-  setInfoOpen: Dispatch<SetStateAction<boolean>>;
-  planeOpen: boolean;
-  setPlaneOpen: Dispatch<SetStateAction<boolean>>;
-  planesProcessed: PlaneMap;
-  act: Function;
-};
-
-export const PlaneDebugContext = createContext({} as Context);

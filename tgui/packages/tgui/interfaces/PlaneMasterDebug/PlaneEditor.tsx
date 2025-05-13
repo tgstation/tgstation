@@ -8,8 +8,8 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 
-import { PlaneDebugContext } from '.';
 import { Plane } from './types';
+import { PlaneDebugContext } from './usePlaneDebug';
 
 export function PlaneEditor() {
   const { activePlane, planesProcessed, setPlaneOpen, act } =

@@ -2,8 +2,8 @@ import { useContext } from 'react';
 import { Box, Button, Floating, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
-import { PlaneDebugContext } from '.';
 import { BlendColors, Filter, Plane, Relay } from './types';
+import { PlaneDebugContext } from './usePlaneDebug';
 
 export type PortProps = {
   connection: Filter | Relay;
