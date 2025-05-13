@@ -1,9 +1,9 @@
 import { storage } from 'common/storage';
 import { useEffect, useState } from 'react';
 import {
-  Box,
   Button,
   DmIcon,
+  NoticeBox,
   Section,
   Stack,
   VirtualList,
@@ -14,20 +14,14 @@ import { useBackend } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
 import { listNames, listTypes } from './constants';
 import { CreateObjectSettings } from './CreateObjectSettings';
-import { AtomData, CreateObjectProps } from './types';
+import { AtomData, CreateObjectProps, SpawnPanelPreferences } from './types';
 
 interface SpawnPanelData {
   icon: string;
   iconState: string;
   selected_object?: string;
   copied_type?: string;
-  preferences?: {
-    hide_icons: boolean;
-    hide_mappings: boolean;
-    sort_by: string;
-    search_text: string;
-    search_by: string;
-  };
+  preferences?: SpawnPanelPreferences;
 }
 
 interface SpawnPreferences {
@@ -55,12 +49,14 @@ const setStateAndStorage = async <T extends unknown>({
 };
 
 interface CurrentList {
-  [key: string]: AtomData;
+  Atoms: {
+    [key: string]: AtomData;
+  };
 }
 
 export function CreateObject(props: CreateObjectProps) {
   const { act, data } = useBackend<SpawnPanelData>();
-  const { objList, setAdvancedSettings, iconSettings } = props;
+  const { setAdvancedSettings, iconSettings, objList = { Atoms: {} } } = props;
 
   const [tooltipIcon, setTooltipIcon] = useState(false);
   const [selectedObj, setSelectedObj] = useState<string | null>(null);
@@ -71,18 +67,16 @@ export function CreateObject(props: CreateObjectProps) {
   const [hideMapping, setHideMapping] = useState(false);
   const [showIcons, setshowIcons] = useState(false);
   const [showPreview, setshowPreview] = useState(false);
-  const currentType =
-    Object.entries(listTypes).find(([_, value]) => value === sortBy)?.[0] ||
-    'Objects';
 
-  const currentList = (objList?.[currentType] || {}) as CurrentList;
-
-  const allObjects = Object.entries(objList || {}).reduce(
-    (acc, [type, objects]) => {
+  const allObjects = Object.entries(objList).reduce<Record<string, AtomData>>(
+    (acc, [_, objects]: [string, Record<string, AtomData>]) => {
       return { ...acc, ...objects };
     },
     {},
   );
+
+  const currentList = objList as CurrentList;
+  const currentType = allObjects[data.copied_type ?? '']?.type || 'Objects';
 
   const { query, setQuery, results } = useFuzzySearch({
     searchArray: Object.keys(allObjects),
@@ -90,15 +84,17 @@ export function CreateObject(props: CreateObjectProps) {
     getSearchString: (key) => (searchBy ? key : allObjects[key]?.name || ''),
   });
 
-  const validResults = query
-    ? results.filter((obj) => {
-        const item = allObjects[obj];
-        if (!item) return false;
-        if (currentType !== item.type) return false;
-        if (hideMapping && item.mapping) return false;
-        return true;
-      })
-    : [];
+  useEffect(() => {
+    setQuery(query);
+  }, [searchBy]);
+
+  const filteredResults = results.filter((obj) => {
+    const item = allObjects[obj];
+    if (!item) return false;
+    if (sortBy !== listTypes[item.type]) return false;
+    if (hideMapping && item.mapping) return false;
+    return true;
+  });
 
   useEffect(() => {
     if (data.selected_object) {
@@ -116,19 +112,11 @@ export function CreateObject(props: CreateObjectProps) {
     if (data.copied_type) {
       setSelectedObj(data.copied_type);
       setSearchText(data.copied_type);
-      if (objList.Turfs[data.copied_type]) {
-        setSortBy(listTypes.Turfs);
-      } else if (objList.Mobs[data.copied_type]) {
-        setSortBy(listTypes.Mobs);
-      } else {
-        setSortBy(listTypes.Objects);
-      }
+
+      setSortBy(listTypes[objList[data.copied_type]]);
       setSearchBy(true);
-      const list = objList.Turfs[data.copied_type]
-        ? objList.Turfs
-        : objList.Mobs[data.copied_type]
-          ? objList.Mobs
-          : objList.Objects;
+
+      const list = objList.Atoms;
       if (list[data.copied_type]) {
         props.onIconSettingsChange?.({
           icon: list[data.copied_type].icon,
@@ -230,10 +218,10 @@ export function CreateObject(props: CreateObjectProps) {
     act('selected-object-changed', {
       newObj: obj,
     });
-    if (currentList[obj]) {
+    if (allObjects[obj]) {
       props.onIconSettingsChange?.({
-        icon: currentList[obj].icon,
-        iconState: currentList[obj].icon_state,
+        icon: allObjects[obj].icon,
+        iconState: allObjects[obj].icon_state,
       });
     }
   };
@@ -250,7 +238,7 @@ export function CreateObject(props: CreateObjectProps) {
         </Section>
       </Stack.Item>
 
-      {showPreview && selectedObj && currentList[selectedObj] && (
+      {showPreview && selectedObj && allObjects[selectedObj] && (
         <Stack.Item>
           <Section
             style={{
@@ -272,10 +260,10 @@ export function CreateObject(props: CreateObjectProps) {
                   <DmIcon
                     width="4em"
                     mt="2px"
-                    icon={iconSettings.icon || currentList[selectedObj].icon}
+                    icon={iconSettings.icon || allObjects[selectedObj].icon}
                     icon_state={
                       iconSettings.iconState ||
-                      currentList[selectedObj].icon_state
+                      allObjects[selectedObj].icon_state
                     }
                   />
                 </Button>
@@ -288,13 +276,13 @@ export function CreateObject(props: CreateObjectProps) {
                 }}
               >
                 <Stack vertical>
-                  <Stack.Item>
-                    <b>{currentList[selectedObj].name}</b>
-                  </Stack.Item>
-                  <Stack.Item grow>
-                    <i style={{ color: 'rgba(200, 200, 200, 0.7)' }}>
-                      {currentList[selectedObj].description || 'no description'}
-                    </i>
+                  <Stack.Item bold>{allObjects[selectedObj].name}</Stack.Item>
+                  <Stack.Item
+                    grow
+                    italic
+                    style={{ color: 'rgba(200, 200, 200, 0.7)' }}
+                  >
+                    {allObjects[selectedObj].description || 'no description'}
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
@@ -388,18 +376,17 @@ export function CreateObject(props: CreateObjectProps) {
         <Section fill scrollable>
           {query !== '' && (
             <VirtualList>
-              {validResults.length > 0 &&
-              Object.keys(currentList).length > 0 ? (
-                validResults.map((obj, index) => (
+              {results.length > 0 && Object.keys(currentList).length > 0 ? (
+                filteredResults.map((obj, index) => (
                   <Button
                     key={index}
                     color="transparent"
                     tooltip={
                       (showIcons || tooltipIcon) &&
-                      currentList[obj] && (
+                      allObjects[obj] && (
                         <DmIcon
-                          icon={currentList[obj].icon}
-                          icon_state={currentList[obj].icon_state}
+                          icon={allObjects[obj].icon}
+                          icon_state={allObjects[obj].icon_state}
                         />
                       )
                     }
@@ -424,7 +411,7 @@ export function CreateObject(props: CreateObjectProps) {
                       obj
                     ) : (
                       <>
-                        {currentList[obj]?.name}
+                        {allObjects[obj]?.name}
                         <span
                           className="label label-info"
                           style={{
@@ -440,9 +427,9 @@ export function CreateObject(props: CreateObjectProps) {
                   </Button>
                 ))
               ) : (
-                <Box textAlign="center" color="label" mt={2}>
+                <NoticeBox textAlign="center" color="label" mt={2}>
                   Nothing found
-                </Box>
+                </NoticeBox>
               )}
             </VirtualList>
           )}
