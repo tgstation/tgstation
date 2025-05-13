@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Wheelchair bells can no longer be rang while stunned"
+  - admin: "Detonating a TTV via a wheelchair bell now logs you as the person who touched it last."

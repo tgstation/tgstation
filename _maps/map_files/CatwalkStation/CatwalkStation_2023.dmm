@@ -38471,17 +38471,6 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload_foyer)
-"lyK" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "aicorewindow";
-	name = "AI Core Shutters"
-	},
-/obj/structure/railing/corner/end{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/station/ai_monitored/turret_protected/ai)
 "lyP" = (
 /obj/structure/railing/corner,
 /obj/structure/cable,
@@ -63167,10 +63156,6 @@
 	dir = 8
 	},
 /area/station/science/ordnance/storage)
-"sUp" = (
-/obj/effect/spawner/structure/window,
-/turf/closed/wall,
-/area/station/maintenance/starboard/fore)
 "sUu" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 1
@@ -116291,7 +116276,7 @@ dTL
 dCm
 dCm
 dCm
-sUp
+voV
 rnp
 oUO
 toM
@@ -207525,7 +207510,7 @@ ibI
 kNf
 kNf
 mfi
-lyK
+mfi
 kFi
 qSf
 mfi
