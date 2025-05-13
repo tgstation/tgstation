@@ -219,22 +219,16 @@
 
 /obj/item/organ/tail/fish/proc/check_location(mob/living/carbon/source, atom/movable/old_loc, dir, forced)
 	SIGNAL_HANDLER
-	var/turf/open/current_turf = get_turf(source)
-	var/turf/open/old_turf = get_turf(old_loc)
-	var/was_water = istype(old_turf, /turf/open/water)
-	var/is_water = istype(current_turf, /turf/open/water) && !HAS_TRAIT(current_turf, TRAIT_TURF_IGNORE_SLOWDOWN)
+	var/was_water = istype(old_loc, /turf/open/water)
+	var/is_water = istype(source.loc, /turf/open/water) && !HAS_TRAIT(source.loc, TRAIT_TURF_IGNORE_SLOWDOWN)
 	if(was_water && !is_water)
 		source.remove_movespeed_modifier(/datum/movespeed_modifier/fish_on_water)
 		source.remove_actionspeed_modifier(/datum/actionspeed_modifier/fish_on_water)
 		source.add_traits(list(TRAIT_OFF_BALANCE_TACKLER, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), type)
 	else if(!was_water && is_water)
-		source.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/fish_on_water, multiplicative_slowdown = -current_turf.slowdown)
+		source.add_movespeed_modifier(/datum/movespeed_modifier/fish_on_water)
 		source.add_actionspeed_modifier(/datum/actionspeed_modifier/fish_on_water)
 		source.add_traits(list(TRAIT_OFF_BALANCE_TACKLER, TRAIT_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), type)
-	else if (was_water && is_water)
-		if (current_turf.slowdown != old_turf.slowdown)
-			source.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/fish_on_water, multiplicative_slowdown = -current_turf.slowdown)
-
 
 /datum/bodypart_overlay/mutant/tail/fish
 	feature_key = "fish_tail"
