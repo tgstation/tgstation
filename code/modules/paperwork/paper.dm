@@ -843,10 +843,14 @@
 	)
 
 /obj/item/paper/construction
+	name = "construction paper"
+	icon = 'icons/effects/random_spawners.dmi'
 
 /obj/item/paper/construction/Initialize(mapload)
 	. = ..()
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	color = pick(COLOR_RED, COLOR_LIME, COLOR_LIGHT_ORANGE, COLOR_DARK_PURPLE, COLOR_FADED_PINK, COLOR_BLUE_LIGHT)
+	update_appearance()
 
 /obj/item/paper/natural
 	color = COLOR_OFF_WHITE
