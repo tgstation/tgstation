@@ -1,0 +1,4 @@
+author: "RosSample"
+delete-after: True
+changes:
+  - bugfix: "callouts no longer work while you are incapacitated"

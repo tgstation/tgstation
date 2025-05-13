@@ -286,14 +286,12 @@
 	return TRUE
 
 ///Removes A stored ID card.
-/obj/machinery/computer/piratepad_control/civilian/proc/id_eject(mob/user, obj/target)
+/obj/machinery/computer/piratepad_control/civilian/proc/id_eject(mob/user, obj/item/target)
 	if(!target)
 		to_chat(user, span_warning("That slot is empty!"))
 		return FALSE
 	else
-		target.forceMove(drop_location())
-		if(!issilicon(user) && Adjacent(user))
-			user.put_in_hands(target)
+		try_put_in_hand(target, user)
 		user.visible_message(span_notice("[user] gets \the [target] from \the [src]."), \
 							span_notice("You get \the [target] from \the [src]."))
 		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)

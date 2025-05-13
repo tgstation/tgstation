@@ -334,26 +334,26 @@
  * * If it was, returns the item.
  * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
 */
-/mob/proc/dropItemToGround(obj/item/I, force = FALSE, silent = FALSE, invdrop = TRUE)
-	if (isnull(I))
+/mob/proc/dropItemToGround(obj/item/to_drop, force = FALSE, silent = FALSE, invdrop = TRUE, turf/newloc = null)
+	if(isnull(to_drop))
 		return
 
 	SEND_SIGNAL(src, COMSIG_MOB_DROPPING_ITEM)
-	var/try_uneqip = doUnEquip(I, force, drop_location(), FALSE, invdrop = invdrop, silent = silent)
+	var/try_uneqip = doUnEquip(to_drop, force, newloc ? newloc : drop_location(), FALSE, invdrop = invdrop, silent = silent)
 
-	if(!try_uneqip || !I) //ensure the item exists and that it was dropped properly.
+	if(!try_uneqip || !to_drop) //ensure the item exists and that it was dropped properly.
 		return
 
-	if(!(I.item_flags & NO_PIXEL_RANDOM_DROP))
-		I.pixel_x = I.base_pixel_x + rand(-6, 6)
-		I.pixel_y = I.base_pixel_y + rand(-6, 6)
-	I.do_drop_animation(src)
-	return I
+	if(!(to_drop.item_flags & NO_PIXEL_RANDOM_DROP))
+		to_drop.pixel_x = to_drop.base_pixel_x + rand(-6, 6)
+		to_drop.pixel_y = to_drop.base_pixel_y + rand(-6, 6)
+	to_drop.do_drop_animation(src)
+	return to_drop
 
 //for when the item will be immediately placed in a loc other than the ground
 /mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE)
 	. = doUnEquip(I, force, newloc, FALSE, silent = silent)
-	I.do_drop_animation(src)
+	I.do_pickup_animation(newloc, src)
 
 //visibly unequips I but it is NOT MOVED AND REMAINS IN SRC, newloc is for signal handling checks only which hints where you want to move the object after removal
 //item MUST BE FORCEMOVE'D OR QDEL'D
