@@ -602,15 +602,37 @@
 	name = "modular shield cable"
 	desc = "An ankle high mess of cables packed as low as possible at the cost of lacking connection components necessary for anything other than nodes and the generator itself."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
-	icon_state = "cable_node_closed"
+	icon_state = "cable_node_closed_r_b_l"
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	circuit = /obj/item/circuitboard/machine/modular_shield_cable
 	density = FALSE
 	allow_boosters = FALSE
 
+	//These variables are just for checking if something is connected to us from different angles so we can update our sprite
+	///the turf 90 degrees right from the output
+	var/turf/right_turf
+	///module connected 90 degrees right from the output
+	var/obj/machinery/modular_shield/module/connected_right
+	///the turf 180 degrees right from the output
+	var/turf/back_turf
+	///module connected 180 degrees from the output
+	var/obj/machinery/modular_shield/module/connected_back
+	///the turf 90 degrees left from the output
+	var/turf/left_turf
+	///module connected 90 degrees left from the output
+	var/obj/machinery/modular_shield/module/connected_left
+
 /obj/machinery/modular_shield/module/node/cable/update_icon_state()
 	. = ..()
-	icon_state = "cable_node_[panel_open ? "open" : "closed"]"
+
+	//99% sure this all has to go here to happen after both wrench act and when something else connects to us
+	right_turf = get_step(loc, dir + 1)
+	connected_right = (locate(/obj/machinery/modular_shield/module) in right_turf)
+	back_turf = get_step(loc, dir + 2)
+	connected_back = (locate(/obj/machinery/modular_shield/module) in back_turf)
+	left_turf = get_step(loc, dir + 3)
+	connected_left = (locate(/obj/machinery/modular_shield/module) in left_turf)
+	icon_state = "cable_node_[panel_open ? "open" : "closed"]_[connected_right ? "r" : "nr"]_[connected_back ? "b" : "nb"]_[connected_left ? "l" : "nl"]"
 
 /obj/machinery/modular_shield/module/charger
 	name = "modular shield charger"
