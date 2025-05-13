@@ -405,7 +405,7 @@
 /obj/machinery/modular_shield/module/Initialize(mapload)
 	. = ..()
 
-	connected_turf = get_step(loc, dir)
+	connected_turf = get_step(src, dir)
 	try_connect()
 
 /obj/machinery/modular_shield/module/Destroy()
@@ -461,7 +461,7 @@
 		LAZYREMOVE(connected_node.connected_through_us, (src))
 		connected_node = null
 
-	connected_turf = get_step(loc, dir)
+	connected_turf = get_step(src, dir)
 	try_connect()
 	return TRUE
 
@@ -474,7 +474,7 @@
 
 /obj/machinery/modular_shield/module/setDir(new_dir)
 	. = ..()
-	connected_turf = get_step(loc, dir)
+	connected_turf = get_step(src, dir)
 
 ///checks for a valid machine in front of us and connects to it
 /obj/machinery/modular_shield/module/proc/try_connect(user)
@@ -552,7 +552,7 @@
 		LAZYREMOVE(connected_node.connected_through_us, (src))
 		connected_node = null
 
-	connected_turf = get_step(loc, dir)
+	connected_turf = get_step(src, dir)
 	try_connect()
 	return TRUE
 
@@ -626,11 +626,11 @@
 	. = ..()
 
 	//99% sure this all has to go here to happen after both wrench act and when something else connects to us
-	right_turf = get_step(loc, dir + 1)
+	right_turf = get_step(src, turn(dir, 270))
 	connected_right = (locate(/obj/machinery/modular_shield/module) in right_turf)
-	back_turf = get_step(loc, dir + 2)
+	back_turf = get_step(src, turn(dir, 180))
 	connected_back = (locate(/obj/machinery/modular_shield/module) in back_turf)
-	left_turf = get_step(loc, dir + 3)
+	left_turf = get_step(src, turn(dir, 90))
 	connected_left = (locate(/obj/machinery/modular_shield/module) in left_turf)
 	icon_state = "cable_node_[panel_open ? "open" : "closed"]_[connected_right ? "r" : "nr"]_[connected_back ? "b" : "nb"]_[connected_left ? "l" : "nl"]"
 
