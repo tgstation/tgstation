@@ -415,6 +415,7 @@
 		shield_generator.calculate_boost()
 	if(connected_node)
 		LAZYREMOVE(connected_node.connected_through_us, (src))
+		connected_node.update_icon_state()
 	return ..()
 
 /obj/machinery/modular_shield/module/examine(mob/user)
