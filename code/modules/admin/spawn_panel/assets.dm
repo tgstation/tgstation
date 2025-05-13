@@ -1,5 +1,5 @@
 /datum/asset/json/spawnpanel
-	name = "spawnpanel"
+	name = "spawnpanel_atom_data"
 
 /datum/asset/json/spawnpanel/generate()
 	var/list/data = list()

@@ -25,13 +25,16 @@ export function SpawnPanel() {
   });
 
   useEffect(() => {
-    fetchRetry(resolveAsset('spawnpanel.json'))
+    fetchRetry(resolveAsset('spawnpanel_atom_data.json'))
       .then((response) => response.json())
       .then((data) => {
         setData(data);
       })
       .catch((error) => {
-        logger.log('Failed to fetch spawnpanel.json', error);
+        logger.log(
+          'Failed to fetch spawnpanel_atom_data.json',
+          JSON.stringify(error),
+        );
       });
   }, []);
 
