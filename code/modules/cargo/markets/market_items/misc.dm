@@ -199,6 +199,7 @@
 		/obj/item/poster/contraband/waradmiral,
 		/obj/item/poster/contraband/silver,
 		/obj/item/poster/contraband/jovial,
+		/obj/item/poster/contraband/bojack,
 	))
 		new type(C)
 	return C

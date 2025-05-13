@@ -479,3 +479,9 @@
 	desc = "A glittery pink crate."
 	icon_state = "pink"
 	base_icon_state = "pink"
+
+/obj/structure/closet/crate/lavender
+	name = "lavender crate"
+	desc = "A glittery purple... no, lavender crate."
+	icon_state = "lavender"
+	base_icon_state = "lavender"
