@@ -1,9 +1,8 @@
-import { useContext } from 'react';
 import { Box, Button, Floating, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { BlendColors, Filter, Plane, Relay } from './types';
-import { PlaneDebugContext } from './usePlaneDebug';
+import { usePlaneDebugContext } from './usePlaneDebug';
 
 export type PortProps = {
   connection: Filter | Relay;
@@ -13,7 +12,7 @@ export type PortProps = {
 
 export function Port(props: PortProps) {
   const { connection, source, target_ref } = props;
-  const { setConnectionHighlight, act } = useContext(PlaneDebugContext);
+  const { setConnectionHighlight, act } = usePlaneDebugContext();
   const sourcePlane: Plane = (
     source ? connection.source : connection.target
   ) as Plane;

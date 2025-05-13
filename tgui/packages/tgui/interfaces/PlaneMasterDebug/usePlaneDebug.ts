@@ -1,4 +1,4 @@
-import { createContext, Dispatch, SetStateAction } from 'react';
+import { createContext, Dispatch, SetStateAction, useContext } from 'react';
 
 import { PlaneHighlight, PlaneMap } from './types';
 
@@ -18,3 +18,7 @@ type PlaneDebug = {
 };
 
 export const PlaneDebugContext = createContext({} as PlaneDebug);
+
+export function usePlaneDebugContext() {
+  return useContext(PlaneDebugContext);
+}

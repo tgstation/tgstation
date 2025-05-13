@@ -1,11 +1,13 @@
+import { BooleanLike } from 'tgui-core/react';
+
 import { Position } from './../common/Connections';
 
 export type PlaneDebugData = {
   mob_name: string;
   mob_ref: string;
   our_ref: string;
-  tracking_active: boolean;
-  enable_group_view: boolean;
+  tracking_active: BooleanLike;
+  enable_group_view: BooleanLike;
   our_group: string;
   present_groups: string[];
   planes: PlaneData[];
@@ -22,7 +24,7 @@ export type PlaneData = {
   color: string | number[];
   alpha: number;
   render_target: string;
-  force_hidden: boolean;
+  force_hidden: BooleanLike;
   relays: RelayData[];
   filters: FilterData[];
 };

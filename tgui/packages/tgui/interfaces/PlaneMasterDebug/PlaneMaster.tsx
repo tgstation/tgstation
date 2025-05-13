@@ -1,11 +1,10 @@
-import { useContext } from 'react';
 import { Box, Button, Stack } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 
 import { getWindowPosition, setWindowPosition } from '../../drag';
 import { Port } from './Port';
 import { Filter, Plane, PlaneConnectorsMap, Relay } from './types';
-import { PlaneDebugContext } from './usePlaneDebug';
+import { usePlaneDebugContext } from './usePlaneDebug';
 
 export type PlaneMasterProps = {
   plane: Plane;
@@ -21,7 +20,7 @@ export function PlaneMaster(props: PlaneMasterProps) {
     setConnectionOpen,
     planeOpen,
     setPlaneOpen,
-  } = useContext(PlaneDebugContext);
+  } = usePlaneDebugContext();
 
   const incoming_connections: (Filter | Relay)[] = (
     plane.incoming_filters as (Filter | Relay)[]

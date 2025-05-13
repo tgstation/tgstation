@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import {
   Box,
   Button,
@@ -9,11 +8,11 @@ import {
 } from 'tgui-core/components';
 
 import { Plane } from './types';
-import { PlaneDebugContext } from './usePlaneDebug';
+import { usePlaneDebugContext } from './usePlaneDebug';
 
 export function PlaneEditor() {
   const { activePlane, planesProcessed, setPlaneOpen, act } =
-    useContext(PlaneDebugContext);
+    usePlaneDebugContext();
 
   const currentPlane: Plane = planesProcessed[activePlane as number];
   const doc_html = {

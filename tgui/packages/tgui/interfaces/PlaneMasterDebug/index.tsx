@@ -166,7 +166,7 @@ function mapPlanes(planes: PlaneData[]) {
       color: planeInfo.color,
       alpha: planeInfo.alpha,
       render_target: planeInfo.render_target,
-      force_hidden: planeInfo.force_hidden,
+      force_hidden: !!planeInfo.force_hidden,
       incoming_relays: [],
       incoming_filters: [],
       outgoing_relays: [],

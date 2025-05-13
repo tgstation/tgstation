@@ -1,11 +1,11 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Button, Dropdown, Modal, Section, Stack } from 'tgui-core/components';
 
 import { BlendModes, Plane } from './types';
-import { PlaneDebugContext } from './usePlaneDebug';
+import { usePlaneDebugContext } from './usePlaneDebug';
 
 export function PlaneMenus() {
-  const { connectionOpen, infoOpen } = useContext(PlaneDebugContext);
+  const { connectionOpen, infoOpen } = usePlaneDebugContext();
 
   return (
     <>
@@ -22,7 +22,7 @@ function AddConnectionModal() {
     setConnectionOpen,
     planesProcessed,
     act,
-  } = useContext(PlaneDebugContext);
+  } = usePlaneDebugContext();
   const currentPlane = planesProcessed[activePlane as number];
   const optionMap: Record<string, number> = {};
   const [selectedTarget, setSelectedTarget] = useState<number>();
@@ -109,7 +109,7 @@ function AddConnectionModal() {
 }
 
 function InfoModal() {
-  const { setInfoOpen } = useContext(PlaneDebugContext);
+  const { setInfoOpen } = usePlaneDebugContext();
   return (
     <Modal
       position="absolute"
