@@ -77,6 +77,7 @@ All ShuttleMove procs go here
 
 	if(rotation)
 		shuttleRotate(rotation) //see shuttle_rotate.dm
+	SEND_SIGNAL(src, COMSIG_TURF_AFTER_SHUTTLE_MOVE, oldT)
 
 	return TRUE
 

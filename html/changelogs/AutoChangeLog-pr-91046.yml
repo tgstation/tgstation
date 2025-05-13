@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "You must have both your hands empty before entering a mech. (But items which replace your hand, like the light later or the hand of god, won't prevent you from getting in)"
