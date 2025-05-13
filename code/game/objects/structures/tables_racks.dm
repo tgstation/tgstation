@@ -1062,7 +1062,7 @@
 		computer.table = null
 	patient = null
 	QDEL_NULL(air_tank)
-	if (breath_mask.loc == src)
+	if (breath_mask?.loc == src)
 		QDEL_NULL(breath_mask)
 	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
 	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
