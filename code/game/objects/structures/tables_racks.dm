@@ -1054,8 +1054,14 @@
 			computer.table = src
 			break
 
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(mark_patient))
-	RegisterSignal(loc, COMSIG_ATOM_EXITED, PROC_REF(unmark_patient))
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(mark_patient),
+		COMSIG_ATOM_EXITED = PROC_REF(unmark_patient),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+	for (var/mob/living/carbon/potential_patient in loc)
+		mark_patient(potential_patient)
 
 /obj/structure/table/optable/Destroy()
 	if(computer && computer.table == src)
