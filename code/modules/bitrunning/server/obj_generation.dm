@@ -40,17 +40,19 @@
 /// Generates a new avatar for the bitrunner.
 /obj/machinery/quantum_server/proc/generate_avatar(turf/destination, datum/outfit/netsuit)
 	var/mob/living/carbon/human/avatar = new(destination)
-
+	if(bitrunning_network == BITRUNNER_DOMAIN_SECURITY)
+		avatar.set_species(/datum/species/prisoner)
 	var/outfit_path = generated_domain.forced_outfit || netsuit
 	var/datum/outfit/to_wear = new outfit_path()
 
 	to_wear.belt = /obj/item/bitrunning_host_monitor
-	to_wear.ears = null
+	if(!bitrunning_network == BITRUNNER_DOMAIN_SECURITY) // prisoners get a radio so they aren't completely isolated, and some additional clothes
+		to_wear.ears = null
+		to_wear.gloves = null
+		to_wear.suit = null
 	to_wear.glasses = null
-	to_wear.gloves = null
 	to_wear.l_pocket = null
 	to_wear.r_pocket = null
-	to_wear.suit = null
 	to_wear.suit_store = null
 
 	avatar.equipOutfit(to_wear, visuals_only = TRUE)
@@ -67,15 +69,16 @@
 		for(var/obj/thing in avatar.held_items)
 			qdel(thing)
 
-	var/obj/item/storage/backpack/bag = avatar.back
-	if(istype(bag))
-		QDEL_LIST(bag.contents)
+	if(!bitrunning_network == BITRUNNER_DOMAIN_SECURITY)
+		var/obj/item/storage/backpack/bag = avatar.back
+		if(istype(bag))
+			QDEL_LIST(bag.contents)
 
-		bag.contents += list(
-			new /obj/item/storage/box/survival,
-			new /obj/item/storage/medkit/regular,
-			new /obj/item/flashlight,
-		)
+			bag.contents += list(
+				new /obj/item/storage/box/survival,
+				new /obj/item/storage/medkit/regular,
+				new /obj/item/flashlight,
+			)
 
 	var/obj/item/card/id/outfit_id = avatar.wear_id
 	if(outfit_id)

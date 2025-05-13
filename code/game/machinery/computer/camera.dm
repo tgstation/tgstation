@@ -58,6 +58,7 @@
 		// an audible terminal_on click.
 		if(is_living)
 			concurrent_users += user_ref
+			unique_list(concurrent_users) // clear any dupes
 		// Turn on the console
 		if(length(concurrent_users) == 1 && is_living)
 			playsound(src, 'sound/machines/terminal/terminal_on.ogg', 25, FALSE)
@@ -147,6 +148,7 @@
 	. = ..()
 	var/user_ref = REF(user)
 	var/is_living = isliving(user)
+	unique_list(concurrent_users) // clear any dupes
 	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
 	// Unregister map objects

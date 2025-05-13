@@ -4,3 +4,5 @@
 	end_sound = 'sound/machines/fan/fan_stop.ogg'
 	end_sound = 1.5 SECONDS
 	mid_sounds = 'sound/machines/fan/fan_loop.ogg'
+	volume = 50
+	falloff_exponent = 9

@@ -130,6 +130,7 @@
 	if(timer_id && mid_length_vary && start_time)
 		updatetimedelay(timer_id, mid_length + rand(-mid_length_vary, mid_length_vary), timer_subsystem = SSsound_loops)
 	if(!chance || prob(chance))
+		SEND_SIGNAL(src, COMSIG_SOUND_LOOPED)
 		play(get_sound())
 
 /**
