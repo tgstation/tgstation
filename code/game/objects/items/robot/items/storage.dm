@@ -331,7 +331,7 @@
 // stops them from cell interactions with other borgos
 /obj/item/borg/apparatus/circuit/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
 	if(iscyborg(user) && iscyborg(interacting_with))
-		balloon_alert(user, "Your manipulator isn't dexterous enough to interact with this properly.")
+		balloon_alert(user, "your manipulator isn't dexterous enough to interact with this properly.")
 		return ITEM_INTERACT_FAILURE
 
 /obj/item/borg/apparatus/service
