@@ -1070,8 +1070,6 @@
 	QDEL_NULL(air_tank)
 	if (breath_mask?.loc == src)
 		QDEL_NULL(breath_mask)
-	UnregisterSignal(loc, COMSIG_ATOM_ENTERED)
-	UnregisterSignal(loc, COMSIG_ATOM_EXITED)
 	return ..()
 
 /obj/structure/table/optable/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
