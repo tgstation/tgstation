@@ -185,10 +185,6 @@
 		balloon_alert(user, "fully charged!")
 		return ITEM_INTERACT_FAILURE
 
-	if(iscyborg(user) && iscyborg(interacting_with))
-		balloon_alert(user, "can't charge this!")
-		return ITEM_INTERACT_FAILURE
-
 	//begin recharging
 	recharging = TRUE
 	user.visible_message(span_notice("[user] starts recharging [interacting_with] with [src]."), span_notice("You start recharging [interacting_with] with [src]."))
@@ -255,5 +251,23 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
 
-/obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
-	return ITEM_INTERACT_FAILURE
+/obj/item/inducer/cyborg/examine_hints(mob/living/user)
+	. = list()
+
+	var/obj/item/stock_parts/power_store/our_cell = get_cell(src, user)
+	if(!QDELETED(our_cell))
+		. += span_notice("The cell can be removed with a crowbar.")
+		. += span_notice("Its display shows: [display_energy(our_cell.charge)].")
+		if(opened)
+			. += span_notice("Plasma sheets can be used to recharge the cell.")
+	else
+		. += span_warning("It's missing a power cell.")
+	. += span_notice("Its battery compartment can be [EXAMINE_HINT("screwed")] [opened ? "shut" : "open"].")
+
+/obj/item/inducer/cyborg/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	return NONE
+
+/obj/item/inducer/cyborg/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
+	if(iscyborg(user) && iscyborg(interacting_with))
+		balloon_alert(user, "can't charge this!")
+		return ITEM_INTERACT_FAILURE
