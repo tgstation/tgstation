@@ -616,32 +616,18 @@
 	density = FALSE
 	allow_boosters = FALSE
 
-	//These variables are just for checking if something is connected to us from different angles so we can update our sprite
-	///the turf 90 degrees right from the output
-	var/turf/right_turf
-	///module connected 90 degrees right from the output
-	var/obj/machinery/modular_shield/module/node/connected_right
-	///the turf 180 degrees right from the output
-	var/turf/back_turf
-	///module connected 180 degrees from the output
-	var/obj/machinery/modular_shield/module/node/connected_back
-	///the turf 90 degrees left from the output
-	var/turf/left_turf
-	///module connected 90 degrees left from the output
-	var/obj/machinery/modular_shield/module/node/connected_left
-
 /obj/machinery/modular_shield/module/node/cable/update_icon_state()
 	. = ..()
-	right_turf = get_step(src, turn(dir, 270))
-	connected_right = (locate(/obj/machinery/modular_shield/module/node) in right_turf)
+	var/turf/right_turf = get_step(src, turn(dir, 270))
+	var/obj/machinery/modular_shield/module/node/connected_right = (locate(/obj/machinery/modular_shield/module/node) in right_turf)
 	if(!(connected_right in connected_through_us))
 		connected_right = null
-	back_turf = get_step(src, turn(dir, 180))
-	connected_back = (locate(/obj/machinery/modular_shield/module/node) in back_turf)
+	var/turf/back_turf = get_step(src, turn(dir, 180))
+	var/obj/machinery/modular_shield/module/node/connected_back = (locate(/obj/machinery/modular_shield/module/node) in back_turf)
 	if(!(connected_back in connected_through_us))
 		connected_back = null
-	left_turf = get_step(src, turn(dir, 90))
-	connected_left = (locate(/obj/machinery/modular_shield/module/node) in left_turf)
+	var/turf/left_turf = get_step(src, turn(dir, 90))
+	var/obj/machinery/modular_shield/module/node/connected_left = (locate(/obj/machinery/modular_shield/module/node) in left_turf)
 	if(!(connected_left in connected_through_us))
 		connected_left = null
 	icon_state = "cable_node_[panel_open ? "open" : "closed"]_[connected_right ? "r" : "nr"]_[connected_back ? "b" : "nb"]_[connected_left ? "l" : "nl"]"
