@@ -307,7 +307,7 @@
 		stored.pixel_z = 0
 		if(!istype(stored, /obj/item/circuitboard))
 			arm.icon_state = "borg_hardware_apparatus_arm2"
-		else if(!istype(stored, /obj/item/circuitboard || /obj/item/stock_parts/power_store))
+		else if(istype(stored, /obj/item/circuitboard || /obj/item/stock_parts/power_store))
 			stored.pixel_w = -5
 			stored.pixel_z = 2
 			arm.icon_state = "borg_hardware_apparatus_arm1"
@@ -327,6 +327,12 @@
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
+
+// stops them from cell interactions with other borgos
+/obj/item/borg/apparatus/circuit/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
+	if(iscyborg(user) && iscyborg(interacting_with))
+		balloon_alert(user, "Your manipulator isn't dexterous enough to interact with this properly.")
+		return ITEM_INTERACT_FAILURE
 
 /obj/item/borg/apparatus/service
 	name = "service apparatus"
