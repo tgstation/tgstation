@@ -179,10 +179,21 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			))
 			category_names |= paper_blank["category"]
 
+	var/list/valid_paper_types = list(
+		/obj/item/paper,
+		/obj/item/paper/carbon,
+		/obj/item/paper/construction,
+		/obj/item/paper/natural,
+	)
+	var/list/paper_types = list()
+	for(var/obj/item/paper/paper in papers)
+		valid_paper_types[initial(paper.type)] = paper
+
 	static_data["blanks"] = blank_infos
 	static_data["categories"] = category_names
 	static_data["max_paper_count"] = MAX_PAPER_CAPACITY
 	static_data["max_copies"] = MAX_COPIES_AT_ONCE
+	static_data["paper_categories"] = paper_types
 
 	return static_data
 
@@ -209,6 +220,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	else
 		data["has_toner"] = FALSE
 
+	data["created_paper"] = created_paper
+	data["paper_stack"] = paper_stack
 	data["paper_count"] = get_paper_count()
 
 	return data
@@ -305,6 +318,21 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 				return FALSE
 			var/list/blank = GLOB.paper_blanks[params["code"]]
 			do_copies(CALLBACK(src, PROC_REF(make_blank_print), blank), usr, PAPER_PAPER_USE, PAPER_TONER_USE, num_copies)
+			return TRUE
+		if("select_paper_type")
+			if(check_busy(usr))
+				return FALSE
+
+			var/paper_path = params["paper_type"]
+
+			if(!istype(paper_path, /obj/item/paper))
+				return FALSE
+
+			if(!paper_stack[paper_path])
+				return FALSE
+
+			created_paper = paper_path
+
 			return TRUE
 
 /// Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
@@ -614,8 +642,17 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		balloon_alert(user, "cartridge inserted")
 		return ITEM_INTERACT_SUCCESS
 
+	if(istype(tool, /obj/item/paperplane)
+		balloon_alert(user, "flatten paper first!")
+		return ITEM_INTERACT_FAILURE
+
 	if(istype(tool, /obj/item/paper))
 		var/obj/item/paper/paper = tool
+
+		if(paper.resistance_flags & ON_FIRE)
+			balloon_alert(user, "paper on fire!")
+			return ITEM_INTERACT_FAILURE
+
 		if(paper.is_empty()) // if not empty it gets inserted as an object to be copied
 			if(!is_room_for_paper())
 				balloon_alert(user, "cannot hold more paper!")

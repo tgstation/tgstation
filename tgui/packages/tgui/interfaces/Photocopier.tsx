@@ -91,7 +91,7 @@ type StatusProps = {
 
 const Status = (props: StatusProps) => {
   const { act, data } = useBackend<Data>();
-  const { selectedBlank } = props;
+  const { item, selectedBlank } = props;
   const {
     has_toner,
     copies_left,
@@ -166,6 +166,72 @@ const Status = (props: StatusProps) => {
         <LabeledList.Item label="Blank" textAlign="center">
           <b>{selectedBlank ? selectedBlank : 'Not Selected'}</b>
         </LabeledList.Item>
+
+
+        <LabeledList.Item label="Paper Type" textAlign="center">
+          <b>{selectedBlank ? selectedBlank : 'Not Selected'}</b>
+        </LabeledList.Item>
+
+
+         <ImageButton
+            fluid
+            dmIcon={item.icon}
+            dmIconState={item.icon_state}
+            tooltip={item.name}
+            imageSize={32}
+            color={color}
+            disabled={created_paper == item.type}
+            onClick={() =>
+              act('select_paper_type', {
+                path: item.path,
+              })
+            }
+          ></ImageButton>
+
+  const { active, item, scale = 3 } = props;
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <ImageButton
+        imageSize={scale * 32}
+        color={active ? 'green' : 'default'}
+        style={{ textTransform: 'capitalize', zIndex: '1' }}
+        tooltip={item.name}
+        tooltipPosition={'bottom'}
+        dmIcon={item.icon}
+        dmIconState={item.icon_state}
+        onClick={() =>
+          act('select_item', {
+            path: item.path,
+            deselect: active,
+          })
+        }
+      />
+
+    <ImageButton
+      fluid
+      base64={
+        image
+      } /* Use base64 image if we have it. DmIcon cannot paint grayscale images yet */
+      dmIcon={icon}
+      dmIconState={icon_state}
+      imageSize={32}
+      disabled={!maxMultiplier}
+      buttons={
+        max_res_amount > 1 &&
+        maxMultiplier > 1 && (
+          <Multipliers recipe={recipe} maxMultiplier={maxMultiplier} />
+        )
+      }
+      onClick={() =>
+        act('make', {
+          ref: ref,
+          multiplier: 1,
+        })
+      }
+
+
+
       </LabeledList>
     </Section>
   );
