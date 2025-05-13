@@ -127,7 +127,7 @@ const ResearchHistoryView = (props) => {
     } = server_log;
     return (
       <Section className="ResearchHistoryEntry" title={node_name}>
-        Testing Text
+        Testing my entire being
       </Section>
     );
   };

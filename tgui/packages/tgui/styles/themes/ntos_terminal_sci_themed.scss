@@ -3,11 +3,29 @@
  * SPDX-License-Identifier: MIT
  */
 
-.theme-ntos_terminal_sci_themed:root {
-  --terminal-color: hsl(282, 82%, 53%);
-  --testing-color: hsl()
+@use '../functions.scss' as fn;
 
-  // Base
+$science-purple-hue: 282;
+$science-purple-saturation: 42%;
+$science-purple-lightness: 33%;
+
+$lightness-darkened: fn.qdr($science-purple-lightness, 36);
+
+$science-purple-complementary-hue: fn.lazyComplementary($science-purple-hue);
+$science-purple-complementary-saturation: $science-purple-saturation;
+$science-purple-accessible-contrast: fn.qlr($science-purple-lightness, 6);
+
+.theme-ntos_terminal_sci_themed:root {
+  --terminal-color: hsl(
+    #{$science-purple-hue},
+    #{$science-purple-saturation},
+    #{$science-purple-lightness}
+  );
+  --terminal-color-complementary: hsla(
+    150,
+    70%,
+    #{$science-purple-accessible-contrast}
+  );
   --color-base: hsl(120, 10%, 10%);
   --color-secondary: hsl(
     from var(--terminal-color) calc(h - 25) calc(s + 20) calc(l - 34) / 0.25
@@ -31,54 +49,54 @@
   }
 
   .Window__rest {
-    background-image:
-      repeating-linear-gradient(
-        0deg,
-        hsla(0, 0%, 0%, 0.15),
-        hsla(0, 0%, 0%, 0.15) 1px,
-        transparent 2.5px,
-        transparent 5px
-      ),
-      radial-gradient(
-        hsl(
-          from var(--terminal-color) calc(h - 25) calc(s + 20) calc(l - 34) /
-            0.75
-        ),
-        black 150%
-      );
+    background-image: repeating-linear-gradient(
+      to bottom,
+      hsl(from var(--terminal-color) h s l / 0.2),
+      hsl(from var(--terminal-color) h s 10%) 1px,
+      var(--color-black) 1px,
+      var(--color-black) 4px
+    );
     background-size: 100%, 100%;
     background-position: center, center;
   }
+}
 
-  .Layout__content {
-    background-image: none;
-  }
+.Layout__content {
+  background-image: none;
+}
 
-  .Button:hover {
-    background-color: hsla(146, 82%, 53%, 0.25);
-    transition: 0.1s;
-  }
+.Button:hover {
+  background-color: hsla(146, 82%, 53%, 0.25);
+  transition: 0.1s;
+}
 
-  .Tab,
-  .Section,
-  .Tab--selected {
-    color: var(--terminal-color);
-  }
+.Section {
+  color: var(--color-white);
+  text-shadow: none;
+}
 
-  body,
-  .Table,
-  .Button {
-    text-shadow: 0 0 2px var(--terminal-color);
-  }
+.Tab {
+  color: var(--color-grey);
+  letter-spacing: 2px;
+  font-weight: bold;
+  text-shadow: black 0 0 2px;
+  font-size: 1.2rem;
+  outline: 1px solid hsl(from var(--terminal-color) h s l);
+  background-color: var(--color-black);
+}
+.Tab--selected {
+  color: var(--terminal-color-complementary);
+  text-shadow: black 0 0 2px;
+}
 
-  .ResearchHistoryEntry {
-    .Section__title {
-      --font-size: 1.1rem;
-    }
-  }
+body,
+.Table,
+.Button {
+  text-shadow: 0 0 2px var(--terminal-color);
+}
 
-  ::selection {
-    background: hsl(210, 100%, 50%);
-    text-shadow: none;
+.ResearchHistoryEntry {
+  .Section__title {
+    --font-size: 1.1rem;
   }
 }

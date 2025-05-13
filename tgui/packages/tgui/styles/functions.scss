@@ -1,24 +1,55 @@
-/**
- * Copyright (c) 2020 Aleksej Komarov
- * SPDX-License-Identifier: MIT
- */
-
 @use 'sass:math';
+@use 'sass:meta';
 
-/* Type-casting: Get a unit-less numeric value */
+/**
+ * Type-casting: Get a unit-less numeric value from an input number.
+ * Assumes input relates to a 0-100 scale if it was originally %.
+ */
 @function num($value) {
   @if meta.type-of($value) != number {
     @error 'Could not convert `#{$value}` - must be `type-of number`';
-    @return null;
   }
-  @if math.unit($value) == '%' {
-    @return math.div($value, 100%);
-  }
+  // Simply strip the unit, regardless of what it is.
   @return math.div($value, $value * 0 + 1);
 }
 
-// Multiplies our viewport units by the DPI scaling amount
-// to ensure that they display correctly when using differently-scaled windows
+/**
+ * Multiplies viewport units by DPI scaling.
+ * Outputs a CSS calc() expression.
+ */
 @function vp($viewportUnit) {
-  @return calc(var(--scaling-amount) * $viewportUnit);
+  // Interpolate the value in case it's complex or needs literal output
+  @return calc(var(--scaling-amount) * #{$viewportUnit});
+}
+
+@function quickLighterRatio($dark_base, $ratio) {
+  // Convert to unitless if input has unit
+  $l1: num($dark_base);
+  // Formula: L2 = (L1 * (125 + C) + 25 * C) / (125 - C)
+  $l2: math.div(($l1 * (125 + $ratio) + 25 * $ratio), (125 - $ratio));
+  $l2_clamped: math.clamp(0, $l2, 100);
+  @return $l2_clamped * 1%;
+}
+
+@function qlr($dark_base, $ratio) {
+  @return quickLighterRatio($dark_base, $ratio);
+}
+
+@function quickDarkerRatio($light_base, $ratio) {
+  // Convert to unitless if input has unit
+  $l1: num($light_base);
+  // Formula: L2 = (L1 * (125 - C) - 25 * C) / (125 + C)
+  $l2: math.div(($l1 * (125 - $ratio) - 25 * $ratio), (125 + $ratio));
+  $l2_clamped: math.clamp(0, $l2, 100);
+  @return $l2_clamped * 1%;
+}
+
+@function qdr($light_base, $ratio) {
+  @return quickDarkerRatio($light_base, $ratio);
+}
+
+/** Calculates the complementary hue. Returns a unitless number (0-360). */
+@function lazyComplementary($hue) {
+  // Ensure hue is treated as a number, then calculate. No calc() needed.
+  @return (num($hue) + 180) % 360;
 }
