@@ -63,6 +63,22 @@
 	immerse_added = TRUE
 	return TRUE
 
+/turf/open/water/attackby(obj/item/C, mob/user, list/modifiers)
+	..()
+	if(istype(C, /obj/item/stack/rods/water))
+		var/obj/item/stack/rods/water/R = C
+		var/obj/structure/lattice/water/H = locate(/obj/structure/lattice/water, src)
+		if(H)
+			to_chat(user, span_warning("There is already a lattice here!"))
+			return
+		if(R.use(1))
+			to_chat(user, span_notice("You construct a lattice."))
+			playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
+			new /obj/structure/lattice/water(locate(x, y, z))
+		else
+			to_chat(user, span_warning("You need one rod to build a waterproof lattice."))
+		return
+
 /turf/open/water/Destroy()
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 	return ..()

@@ -181,6 +181,66 @@
 	area_flags = VALID_TERRITORY | UNIQUE_AREA
 
 
+/**********************Water Areas**************************/
+
+/area/icemoon
+	icon = 'icons/area/areas_station.dmi'
+	icon_state = "mining"
+	default_gravity = STANDARD_GRAVITY
+	flags_1 = NONE
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED
+	ambience_index = AMBIENCE_ICEMOON
+	sound_environment = SOUND_AREA_ICEMOON
+	ambient_buzz = 'sound/ambience/lavaland/magma.ogg'
+	allow_shuttle_docking = TRUE
+
+/area/icemoon/surface
+	name = "Icemoon"
+	icon_state = "explored"
+	always_unpowered = TRUE
+	power_environ = FALSE
+	power_equip = FALSE
+	power_light = FALSE
+	requires_power = TRUE
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED
+
+/area/icemoon/surface/outdoors // parent that defines if something is on the exterior of the station.
+	name = "Icemoon Wastes"
+	outdoors = TRUE
+
+/area/icemoon/surface/outdoors/Initialize(mapload)
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_BRIGHT_DAY))
+		base_lighting_alpha = 145
+	return ..()
+
+/// this is the area you use for stuff to not spawn, but if you still want weather.
+/area/icemoon/surface/outdoors/nospawn
+
+// unless you roll forested trait lol (fuck you time green)
+/area/icemoon/surface/outdoors/nospawn/New()
+	. = ..()
+	// this area SOMETIMES does map generation. Often it doesn't at all
+	// so it SHOULD NOT be used with the genturf turf type, as it is not always replaced
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_FORESTED))
+		map_generator = /datum/map_generator/cave_generator/icemoon/surface/forested
+		// flip this on, the generator has already disabled dangerous fauna
+		area_flags = MOB_SPAWN_ALLOWED | FLORA_ALLOWED
+
+/area/icemoon/surface/outdoors/noteleport // for places like the cursed spring water
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED | NOTELEPORT
+
+/area/icemoon/surface/outdoors/noruins // when you want random generation without the chance of getting ruins
+	icon_state = "noruins"
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED
+	map_generator =  /datum/map_generator/cave_generator/icemoon/surface/noruins
+
+/area/icemoon/surface/outdoors/labor_camp
+	name = "Icemoon Labor Camp"
+	area_flags = UNIQUE_AREA
+
+/area/icemoon/surface/outdoors/unexplored //monsters and ruins spawn here
+	icon_state = "unexplored"
+	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED
 
 /**********************Ice Moon Areas**************************/
 

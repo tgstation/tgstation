@@ -143,6 +143,18 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	merge_type = /obj/item/stack/rods/lava
 
+/obj/item/stack/rods/water
+	name = "water resistant rod"
+	desc = "Because regular rods do not support you. Too bad!"
+	singular_name = "water resistant rod"
+	icon_state = "rods"
+	inhand_icon_state = "rods"
+	color = "#5286b9ff"
+	obj_flags = CONDUCTS_ELECTRICITY
+	w_class = WEIGHT_CLASS_NORMAL
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
+	merge_type = /obj/item/stack/rods/water
+
 /obj/item/stack/rods/lava/thirty
 	amount = 30
 
