@@ -89,6 +89,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/list/paper_stack = list()
 	/// Type path to the paper that's created when we're initalized
 	var/created_paper = /obj/item/paper
+	/// Typecache of objects that can be inserted and scanned into the photocopier for copying
+	var/static/list/whitelist_scannable_objects = typecacheof(list(
+		/obj/item/paper,
+		/obj/item/photo,
+		/obj/item/documents,
+		/obj/item/paperwork
+	))
 
 /obj/machinery/photocopier/prebuilt
 	starting_paper = 30
@@ -99,11 +106,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
-	// Creates the paper and inserts it so we can drop it when we get destroyed/deconstructed
-	for(var/i in 1 to starting_paper)
-		paper_stack += new created_paper(src)
 	setup_components()
 	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
+	if(starting_paper)
+		paper_stack[created_paper] = starting_paper
 
 /// Simply adds the necessary components for this to function.
 /obj/machinery/photocopier/proc/setup_components()
@@ -118,14 +124,31 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(gone in paper_stack)
 		paper_stack -= gone
 
+/obj/machinery/photocopier/dump_contents() // are we sure we want to use dump_contents and not something else like deconstruction()?
+	var/dump_location = drop_location()
+	for(var/paper_path in paper_stack)
+		var/paper_amount = paper_stack[paper_path]
+		if(paper_amount <= 0)
+			stack_trace("Detected zero or negative [paper_path] amount inside photocopier. There should be at least 1 or more of paper amount inside the list")
+			continue
+
+		for(var/i in 1 to paper_amount)
+			var/obj/item/paper/new_paper = new paper_path(dump_location)
+			if(!new_paper.pixel_y)
+				new_paper.pixel_y = rand(-3,3)
+			if(!new_paper.pixel_x)
+				new_paper.pixel_x = rand(-3,3)
+
+		paper_stack[paper_amount] = null
+	update_appearance()
+
 /obj/machinery/photocopier/Destroy()
 	// object_copy can be a traitor objective, don't qdel
 	if(object_copy)
 		object_copy.forceMove(drop_location())
 
+	dump_contents()
 	QDEL_NULL(toner_cartridge)
-	QDEL_LIST(paper_stack)
-
 	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
 	return ..()
 
@@ -175,7 +198,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	if(HAS_AI_ACCESS(user))
 		data["isAI"] = TRUE
-		data["can_AI_print"] = toner_cartridge && (toner_cartridge.charges >= PHOTO_TONER_USE) && (get_paper_count() >= PHOTO_PAPER_USE)
+		data["can_AI_print"] = toner_cartridge && (toner_cartridge.charges >= PHOTO_TONER_USE) && (get_paper_count(created_paper) >= PHOTO_PAPER_USE)
 	else
 		data["isAI"] = FALSE
 
@@ -317,8 +340,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	else if(toner_cartridge.charges < toner_use * copies_amount)
 		copies_amount = FLOOR(toner_cartridge.charges / toner_use, 1)
 		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Not enough toner to perform [copies_amount >= 1 ? "full " : ""]operation.\"")
-	if(get_paper_count() < paper_use * copies_amount)
-		copies_amount = FLOOR(get_paper_count() / paper_use, 1)
+	if(get_paper_count(created_paper) < paper_use * copies_amount)
+		copies_amount = FLOOR(get_paper_count(created_paper) / paper_use, 1)
 		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\"")
 	if(copies_amount > 0 && (attempt_charge(src, user, (copies_amount - 1) * PHOTOCOPIER_FEE) & COMPONENT_OBJ_CANCEL_CHARGE))
 		copies_amount = 0
@@ -382,34 +405,49 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	copied_item.pixel_x = copied_item.base_pixel_x + rand(-10, 10)
 	copied_item.pixel_y = copied_item.base_pixel_y + rand(-10, 10)
 
-/// Gets the total amount of paper this printer has stored.
-/obj/machinery/photocopier/proc/get_paper_count()
-	return length(paper_stack) + starting_paper
+/**
+ * Gets the total amount of paper this printer has stored
+ *
+ * Returns the amount of paper stored in the photocopier if passed with no args
+ * If paper_type is supplied will only return the amount of that paper type
+ *
+ * Arguments:
+ * * paper_type - The paper type to check to see quantity stored
+ */
+/obj/machinery/photocopier/proc/get_paper_count(paper_type)
+	if(paper_type)
+		return paper_stack[paper_type] || 0
+
+	var/total_amount = 0
+	for(var/paper_path in paper_stack)
+		var/paper_amount = paper_stack[paper_path]
+		if(paper_amount <= 0)
+			stack_trace("Detected zero or negative [paper_path] amount inside photocopier. There should be at least 1 or more of paper amount inside the list")
+			continue
+
+		total_amount += paper_amount
+
+	return total_amount
 
 /**
  * Returns an empty paper, used for blanks and paper copies.
  * Prioritizes `paper_stack`, creates new paper in case `paper_stack` is empty.
  */
-/obj/machinery/photocopier/proc/get_empty_paper()
-	var/obj/item/paper/new_paper = pop(paper_stack)
-	if(new_paper == null && starting_paper > 0)
-		new_paper = new /obj/item/paper
-		starting_paper--
+/obj/machinery/photocopier/proc/get_empty_paper(paper_type)
+	var/obj/item/paper/new_paper = new paper_type(src) // double check location is correct
 	return new_paper
 
 /**
  * Removes an amount of paper from the printer's storage.
  * This lets us pretend we actually consumed paper when we were actually printing something that wasn't paper.
  */
-/obj/machinery/photocopier/proc/delete_paper(number)
-	if(number > get_paper_count())
+/obj/machinery/photocopier/proc/delete_paper(number, paper_type)
+	if(!paper_stack[paper_type] || (number > paper_stack[paper_type]))
 		CRASH("Trying to delete more paper than is stored in the photocopier")
-	for(var/i in 1 to number)
-		var/to_delete = pop(paper_stack)
-		if(to_delete)
-			qdel(to_delete)
-		else
-			starting_paper--
+
+	paper_stack[paper_type] -= number
+	if(paper_stack[paper_type] <= 0)
+		paper_stack[paper_type] = null
 
 /**
  * Handles the copying of paper. Transfers all the text, stamps and so on from the old paper, to the copy.
@@ -420,7 +458,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(isnull(paper_copy))
 		return null
 
-	var/obj/item/paper/empty_paper = get_empty_paper()
+	var/obj/item/paper/empty_paper = get_empty_paper(created_paper)
 	toner_cartridge.charges -= PAPER_TONER_USE
 
 	var/copy_colour = get_toner_color()
@@ -476,7 +514,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /// Handles the copying of blanks. No mutating state, so this should not fail.
 /obj/machinery/photocopier/proc/make_blank_print(list/blank)
 	var/copy_colour = get_toner_color()
-	var/obj/item/paper/printblank = get_empty_paper()
+	var/obj/item/paper/printblank = get_empty_paper(created_paper)
 
 	var/printname = blank["name"]
 	var/list/printinfo
@@ -546,45 +584,94 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/photocopier/attackby(obj/item/object, mob/user, list/modifiers)
-	if(istype(object, /obj/item/paper) || istype(object, /obj/item/photo) || istype(object, /obj/item/documents))
-		if(istype(object, /obj/item/paper))
-			var/obj/item/paper/paper = object
-			if(paper.is_empty())
-				insert_empty_paper(paper, user)
-				return
-		insert_copy_object(object, user)
+/obj/machinery/photocopier/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	// does this prevent TK?
+	//if(!user.temporarilyRemoveItemFromInventory(tool))
+	//	return ITEM_INTERACT_FAILURE
 
-	else if(istype(object, /obj/item/toner))
+	// No infinite paper chain. You need the original paperwork to make more copies.
+	if(istype(tool, /obj/item/paperwork/photocopy))
+		balloon_alert(user, "too blurry!")
+		to_chat(user, span_warning("The [tool] is far too messy to produce a good copy!"))
+		return ITEM_INTERACT_FAILURE
+
+	if(istype(tool, /obj/item/paper/paperslip))
+		balloon_alert(user, "too small!")
+		return ITEM_INTERACT_FAILURE
+
+	if(istype(tool, /obj/item/blueprints))
+		balloon_alert(user, "too large!")
+		to_chat(user, span_warning("\The [tool] is too large to put into the copier. You need to find something else to record the document."))
+		return ITEM_INTERACT_FAILURE
+
+	if(istype(tool, /obj/item/toner))
 		if(toner_cartridge)
 			balloon_alert(user, "another cartridge inside!")
-			return
-		object.forceMove(src)
-		toner_cartridge = object
+			return ITEM_INTERACT_FAILURE
+
+		tool.forceMove(src)
+		toner_cartridge = tool
 		balloon_alert(user, "cartridge inserted")
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(object, /obj/item/blueprints))
-		to_chat(user, span_warning("\The [object] is too large to put into the copier. You need to find something else to record the document."))
+	if(istype(tool, /obj/item/paper))
+		var/obj/item/paper/paper = tool
+		if(paper.is_empty()) // if not empty it gets inserted as an object to be copied
+			if(!is_room_for_paper())
+				balloon_alert(user, "cannot hold more paper!")
+				return ITEM_INTERACT_FAILURE
 
-	else if(istype(object, /obj/item/paperwork))
-		if(istype(object, /obj/item/paperwork/photocopy)) //No infinite paper chain. You need the original paperwork to make more copies.
-			to_chat(user, span_warning("The [object] is far too messy to produce a good copy!"))
-		else
-			insert_copy_object(object, user)
+			insert_empty_paper(paper.type, user)
+			qdel(paper)
+			return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/paper_bin))
+		var/obj/item/paper_bin/paper_bin = tool
+		var/paper_inserted = 0
+		for(var/obj/item/paper/stacked_paper in paper_bin.paper_stack) // insert all paper that is already initialized
+			if(!stacked_paper.is_empty() || !is_room_for_paper())
+				continue
+
+			insert_empty_paper(stacked_paper.type, user, silent=TRUE)
+			paper_bin.paper_stack -= stacked_paper
+			paper_bin.total_paper -= 1
+			paper_inserted++
+			qdel(stacked_paper)
+
+		if(paper_bin.total_paper) // then insert non-initialized paper that is always considered empty paper
+			var/noninitialized_paper_total = paper_bin.total_paper - length(paper_bin.paper_stack)
+			var/paper_to_take = min(MAX_PAPER_CAPACITY - get_paper_count(), noninitialized_paper_total)
+			if(paper_to_take)
+				insert_empty_paper(paper_bin.papertype, user, paper_to_take, silent=TRUE)
+				paper_inserted += paper_to_take
+				paper_bin.total_paper -= (noninitialized_paper_total - paper_to_take)
+
+		if(!paper_inserted && !is_room_for_paper()) // no paper was inserted because it was full
+			balloon_alert(user, "cannot hold more paper!")
+			return ITEM_INTERACT_FAILURE
+
+		paper_bin.update_appearance()
+		// we use silent for insert_empty_paper() so that we don't spam balloon_alerts and instead condense them into one alert here
+		balloon_alert(user, "[paper_inserted] paper inserted")
+		return ITEM_INTERACT_SUCCESS
+
+	if(is_type_in_typecache(tool, whitelist_scannable_objects))
+		insert_copy_object(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/// Check if there is enough room to insert paper
+/obj/machinery/photocopier/proc/is_room_for_paper(mob/user, amount=1)
+	return get_paper_count() >= MAX_PAPER_CAPACITY
 
 /// Proc that handles insertion of empty paper, useful for copying later.
-/obj/machinery/photocopier/proc/insert_empty_paper(obj/item/paper/paper, mob/user)
-	if(istype(paper, /obj/item/paper/paperslip))
-		balloon_alert(user, "too small!")
-		return
-	if(get_paper_count() >= MAX_PAPER_CAPACITY)
-		balloon_alert(user, "cannot hold more paper!")
-		return
-	if(!user.temporarilyRemoveItemFromInventory(paper))
-		return
-	paper_stack += paper
-	paper.forceMove(src)
-	balloon_alert(user, "paper inserted")
+/obj/machinery/photocopier/proc/insert_empty_paper(paper_type, mob/user, amount=1, silent=FALSE)
+	if(!paper_stack[paper_type])
+		paper_stack[paper_type] = 0
+	paper_stack[paper_type] += amount
+	if(!silent)
+		balloon_alert(user, "paper inserted")
 
 /obj/machinery/photocopier/proc/insert_copy_object(obj/item/object, mob/user)
 	if(!copier_empty())
