@@ -459,6 +459,7 @@
 
 	if(connected_node)
 		LAZYREMOVE(connected_node.connected_through_us, (src))
+		connected_node.update_icon_state()
 		connected_node = null
 
 	connected_turf = get_step(src, dir)
@@ -481,6 +482,7 @@
 
 	if(shield_generator || connected_node)
 		balloon_alert(user, "already connected to something!")
+		update_icon_state()
 		return
 
 	shield_generator = (locate(/obj/machinery/modular_shield_generator) in connected_turf)
@@ -500,11 +502,12 @@
 		//checks if the node allows boosters and if we are a booster
 		if(!connected_node.allow_boosters && is_booster)
 			connected_node = null
+			update_icon_state()
 			balloon_alert(user, "cant connect")
 			return
 
-		connected_node.update_icon_state()
 		LAZYOR(connected_node.connected_through_us, (src))
+		connected_node.update_icon_state()
 		shield_generator = connected_node.shield_generator
 		if(shield_generator)
 			LAZYOR(shield_generator.connected_modules, (src))
@@ -512,8 +515,10 @@
 			update_icon_state()
 			shield_generator.calculate_boost()
 			return
+		update_icon_state()
 		balloon_alert(user, "connected to node")
 		return
+	update_icon_state()
 	balloon_alert(user, "no connection!")
 
 
@@ -551,6 +556,7 @@
 
 	if(connected_node)
 		LAZYREMOVE(connected_node.connected_through_us, (src))
+		connected_node.update_icon_state()
 		connected_node = null
 
 	connected_turf = get_step(src, dir)
@@ -623,18 +629,20 @@
 	///module connected 90 degrees left from the output
 	var/obj/machinery/modular_shield/module/node/connected_left
 
-/obj/machinery/modular_shield/module/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	update_icon_state()
-
 /obj/machinery/modular_shield/module/node/cable/update_icon_state()
 	. = ..()
 	right_turf = get_step(src, turn(dir, 270))
 	connected_right = (locate(/obj/machinery/modular_shield/module/node) in right_turf)
+	if(!(connected_right in connected_through_us))
+		connected_right = null
 	back_turf = get_step(src, turn(dir, 180))
 	connected_back = (locate(/obj/machinery/modular_shield/module/node) in back_turf)
+	if(!(connected_back in connected_through_us))
+		connected_back = null
 	left_turf = get_step(src, turn(dir, 90))
 	connected_left = (locate(/obj/machinery/modular_shield/module/node) in left_turf)
+	if(!(connected_left in connected_through_us))
+		connected_left = null
 	icon_state = "cable_node_[panel_open ? "open" : "closed"]_[connected_right ? "r" : "nr"]_[connected_back ? "b" : "nb"]_[connected_left ? "l" : "nl"]"
 
 /obj/machinery/modular_shield/module/charger
