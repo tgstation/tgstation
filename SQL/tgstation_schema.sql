@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `citation` (
   `sender_ic` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
   `recipient` varchar(64) NOT NULL DEFAULT '' COMMENT 'Longer because this is the character name, not the ckey',
   `crime` text NOT NULL,
-	`crime_desc` text NULL DEFAULT NULL,
+  `crime_desc` text NULL DEFAULT NULL,
   `fine` int(4) DEFAULT NULL,
   `paid` int(4) DEFAULT 0,
   `timestamp` datetime NOT NULL,
