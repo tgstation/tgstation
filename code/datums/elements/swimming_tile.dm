@@ -5,12 +5,14 @@
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY
 	/// How much stamina does it cost to enter this tile?
 	var/stamina_entry_cost
-	/// How much stamina does it cost per second to stay in this tile?
+	/// How much stamina does it cost per tick interval to stay in this tile?
 	var/ticking_stamina_cost
 	/// How fast do we kill people who collapse?
 	var/ticking_oxy_damage
+	/// Probability to exhaust our swimmer
+	var/exhaust_swimmer_prob = 30
 
-/datum/element/swimming_tile/Attach(turf/target, stamina_entry_cost = 25, ticking_stamina_cost = 15, ticking_oxy_damage = 2)
+/datum/element/swimming_tile/Attach(turf/target, stamina_entry_cost = 7, ticking_stamina_cost = 5, ticking_oxy_damage = 2)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE
@@ -47,12 +49,23 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(landlubber, list(SIGNAL_ADDTRAIT(TRAIT_IMMERSED)))
 
-/// When we've validated that someone is actually in the water start drowning them
+/// When we've validated that someone is actually in the water start drowning the-I mean, start swimming!
 /datum/element/swimming_tile/proc/dip_in(mob/living/floater)
 	SIGNAL_HANDLER
-	if (!HAS_TRAIT(floater, TRAIT_SWIMMER) && (isnull(floater.buckled) || (!isvehicle(floater.buckled) && !ismob(floater.buckled))))
-		var/athletics_skill =  (floater.mind?.get_skill_level(/datum/skill/athletics) || 1) - 1
-		floater.apply_damage(stamina_entry_cost - athletics_skill, STAMINA)
+
+	var/effective_stamina_entry_cost = HAS_TRAIT(floater, TRAIT_STRENGTH) ? stamina_entry_cost : (stamina_entry_cost / 2)
+
+	var/gravity_modifier = floater.has_gravity() > STANDARD_GRAVITY ? 1 : 2
+
+	var/obj/item/organ/cyberimp/chest/spine/potential_spine = floater.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(istype(potential_spine))
+		effective_stamina_entry_cost *= potential_spine.athletics_boost_multiplier
+
+	if ((!HAS_TRAIT(floater, TRAIT_SWIMMER) && (isnull(floater.buckled) || (!isvehicle(floater.buckled) && !ismob(floater.buckled))) && prob(exhaust_swimmer_prob)))
+		var/athletics_skill =  (floater.mind?.get_skill_level(/datum/skill/athletics) || 1)
+		floater.apply_damage(clamp((effective_stamina_entry_cost / athletics_skill) * gravity_modifier, 1, 100), STAMINA)
+		floater.mind?.adjust_experience(/datum/skill/athletics, (stamina_entry_cost * gravity_modifier) * 0.1)
+		floater.apply_status_effect(/datum/status_effect/exercised, 15 SECONDS)
 	floater.apply_status_effect(/datum/status_effect/swimming, ticking_stamina_cost, ticking_oxy_damage) // Apply the status anyway for when they stop riding
 
 ///Added by the swimming_tile element. Drains stamina over time until the owner stops being immersed. Starts drowning them if they are prone or small.
@@ -61,15 +74,18 @@
 	alert_type = null
 	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_UNIQUE
-	/// How much damage do we do every second?
-	var/stamina_per_second
-	/// How much oxygen do we lose every second in which we are drowning?
-	var/oxygen_per_second
+	tick_interval = 5 SECONDS
+	/// How much damage do we do every tick interval?
+	var/stamina_per_interval
+	/// How much oxygen do we lose every tick interval in which we are drowning?
+	var/oxygen_per_interval
+	/// Probability that we lose breaths while drowning
+	var/drowning_process_probability = 20
 
-/datum/status_effect/swimming/on_creation(mob/living/new_owner, ticking_stamina_cost = 14, ticking_oxy_damage = 2)
+/datum/status_effect/swimming/on_creation(mob/living/new_owner, ticking_stamina_cost = 7, ticking_oxy_damage = 2)
 	. = ..()
-	stamina_per_second = ticking_stamina_cost
-	oxygen_per_second = ticking_oxy_damage
+	stamina_per_interval = ticking_stamina_cost
+	oxygen_per_interval = ticking_oxy_damage
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_IMMERSED), PROC_REF(stop_swimming))
 
 /datum/status_effect/swimming/on_remove()
@@ -82,13 +98,15 @@
 		if (isvehicle(owner.buckled) || ismob(owner.buckled))
 			return
 
+	var/effective_stamina_per_interval = HAS_TRAIT(owner, TRAIT_STRENGTH) ? stamina_per_interval : (stamina_per_interval / 2)
+
+	var/gravity_modifier = owner.has_gravity() > STANDARD_GRAVITY ? 1 : 2
+
+	var/under_pressure = prob(drowning_process_probability * gravity_modifier)
+
 	if (!HAS_TRAIT(owner, TRAIT_SWIMMER))
 		var/athletics_skill =  (owner.mind?.get_skill_level(/datum/skill/athletics) || 1) - 1
-		owner.apply_damage((stamina_per_second - athletics_skill) * seconds_between_ticks, STAMINA)
-
-	// If you can't move you're not swimming
-	if (!HAS_TRAIT(owner, TRAIT_INCAPACITATED) && !HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
-		owner.mind?.adjust_experience(/datum/skill/athletics, 3)
+		owner.apply_damage(clamp((effective_stamina_per_interval - (athletics_skill / 2)) * gravity_modifier, 1, 100), STAMINA)
 
 	// You might not be swimming but you can breathe
 	if (HAS_TRAIT(owner, TRAIT_NODROWN) || HAS_TRAIT(owner, TRAIT_NOBREATH) || (owner.mob_size >= MOB_SIZE_HUMAN && owner.body_position == STANDING_UP))
@@ -101,8 +119,9 @@
 		var/mob/living/basic/basic_owner = owner
 		if (basic_owner.unsuitable_atmos_damage == 0)
 			return // This mob doesn't "breathe"
-	owner.apply_damage(oxygen_per_second * seconds_between_ticks, OXY)
-	owner.losebreath += seconds_between_ticks
+	owner.apply_damage(oxygen_per_interval * seconds_between_ticks, OXY)
+	if(under_pressure)
+		owner.losebreath += oxygen_per_interval
 
 /// When we're not in the water any more this don't matter
 /datum/status_effect/swimming/proc/stop_swimming()
