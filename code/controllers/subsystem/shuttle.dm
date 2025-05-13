@@ -436,10 +436,6 @@ SUBSYSTEM_DEF(shuttle)
 	abandon_ship_timer = addtimer(CALLBACK(src, PROC_REF(unlock_pods)), 5 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
 	abandon_ship_state = ABANDON_SHIP_UNLOCK
 
-	for(var/obj/machinery/door/airlock/airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock/external))
-		if(airlock.red_alert_access)
-			airlock.unbolt()
-
 /datum/controller/subsystem/shuttle/proc/unlock_pods()
 	abandon_ship_timer = addtimer(CALLBACK(src, PROC_REF(launch_everything)), 5 MINUTES, TIMER_UNIQUE|TIMER_STOPPABLE)
 	abandon_ship_state = ABANDON_SHIP_LAUNCH

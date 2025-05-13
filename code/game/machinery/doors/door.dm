@@ -56,6 +56,8 @@
 	var/real_explosion_block
 	///if TRUE, this door will always open on red alert
 	var/red_alert_access = FALSE
+	/// If set the door will be bolted below this level and unbolted above it
+	var/bolt_sec_level = -1
 	/// Checks to see if this airlock has an unrestricted "sensor" within (will set to TRUE if present).
 	var/unres_sensor = FALSE
 	/// Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
@@ -123,9 +125,14 @@
 	. = ..()
 	if(red_alert_access)
 		if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
-			. += span_notice("Due to a security threat, its access requirements have been lifted!")
+			. += span_notice("Due to [SSsecurity_level.number_level_to_text(SEC_LEVEL_RED)], its access requirements have been lifted!")
 		else
-			. += span_notice("In the event of a red alert, its access requirements will automatically lift.")
+			. += span_notice("On [SSsecurity_level.number_level_to_text(SEC_LEVEL_RED)], its access requirements will automatically lift.")
+	if(bolt_sec_level)
+		if(SSsecurity_level.get_current_level_as_number() >= bolt_sec_level)
+			. += span_notice("Due to [SSsecurity_level.number_level_to_text(bolt_sec_level)], it has automatically unbolted!")
+		else
+			. += span_notice("On [SSsecurity_level.number_level_to_text(bolt_sec_level)], it will automatically unbolt.")
 	if(has_access_panel)
 		. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
 
@@ -210,12 +217,18 @@
 /obj/machinery/door/proc/check_security_level(datum/source, new_level)
 	SIGNAL_HANDLER
 
-	if(new_level <= SEC_LEVEL_BLUE)
-		return
-	if(!red_alert_access)
-		return
-	audible_message(span_notice("[src] whirr[p_s()] as [p_they()] automatically lift[p_s()] access requirements!"))
-	playsound(src, 'sound/machines/airlock/boltsup.ogg', 50, TRUE)
+	if(red_alert_access)
+		if(new_level >= SEC_LEVEL_RED)
+			audible_message(span_notice("[src] whirr[p_s()] as [p_they()] automatically lift[p_s()] access requirements!"))
+			playsound(src, 'sound/machines/airlock/boltsup.ogg', 50, TRUE)
+
+	if(bolt_sec_level != -1)
+		if(new_level >= bolt_sec_level)
+			if(locked)
+				unlock()
+		else
+			if(!locked)
+				lock()
 
 /obj/machinery/door/proc/try_safety_unlock(mob/user)
 	return FALSE

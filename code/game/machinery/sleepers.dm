@@ -401,7 +401,9 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 
 /obj/machinery/sleeper/cryo
 	name = "cryogenic pod"
-	desc = "A cryogenic pod. It is used to freeze people."
+	desc = "A cryogenic pod. This model was developed by Nanotrasen for use in long term space travel. \
+		By use of cryogenic stasis, it is able to keep a person in a state of suspended animation for an indefinite period of time... \
+		Well, so they say. Studies show human bodies would degrade after a few centuries. Good thing our mission is not nearly that long!"
 	icon_state = "cryopod"
 	base_icon_state = "cryopod"
 	// circuit = /obj/item/circuitboard/machine/sleeper/cryo
@@ -452,7 +454,12 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 /obj/machinery/sleeper/cryo/close_machine(mob/user, density_to_set)
 	. = ..()
 	if(isliving(occupant))
-		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = 0.5)
+		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, frequency = 0.5)
+
+/obj/machinery/sleeper/cryo/close_machine(mob/user, density_to_set)
+	. = ..()
+	if(isliving(occupant))
+		playsound(src, 'sound/machines/fan/fan_stop.ogg', 50, TRUE)
 
 /obj/machinery/sleeper/cryo/JoinPlayerHere(mob/living/joining_mob, buckle)
 	if(occupant || !ishuman(joining_mob))
@@ -462,8 +469,12 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 	set_occupant(joining_mob)
 	joining_mob.forceMove(src)
 	ADD_TRAIT(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING)
-	//addtimer(TRAIT_CALLBACK_REMOVE(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING), rand(8, 15) * 1 SECONDS)
-	addtimer(TRAIT_CALLBACK_REMOVE(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING), rand(2, 4) * 1 SECONDS)
+	if(roundstart_job == JOB_CAPTAIN)
+		addtimer(TRAIT_CALLBACK_REMOVE(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING), rand(2, 4) * 1 SECONDS)
+	else if(roundstart_job == JOB_ASSISTANT)
+		addtimer(TRAIT_CALLBACK_REMOVE(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING), rand(12, 30) * 1 SECONDS)
+	else
+		addtimer(TRAIT_CALLBACK_REMOVE(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING), rand(8, 15) * 1 SECONDS)
 
 /obj/machinery/sleeper/cryo/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
 	return FALSE
@@ -481,11 +492,12 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 
 /obj/machinery/sleeper/stasis
 	name = "stasis pod"
-	desc = "A stasis pod. It is used to freeze people."
+	desc = "A stasis pod. This model was developed by DeForest for short term treatment of patients. \
+		Rather than true stasis, as a cryogenic pod would provide, this machine simply slows the metabolism of the patient to a crawl."
 	icon_state = "stasis"
 	base_icon_state = "stasis"
 	/// circuit = /obj/item/circuitboard/machine/sleeper/stasis
-	enter_message = span_boldnotice("You feel a cold chill as you enter the pod. You feel your body go numb as you enter a state of suspended animation.")
+	enter_message = span_boldnotice("You feel a cold chill as you enter the pod.")
 	possible_chems = null
 	resist_time = 1 SECONDS
 
@@ -497,7 +509,12 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 /obj/machinery/sleeper/stasis/close_machine(mob/user, density_to_set)
 	. = ..()
 	if(isliving(occupant))
-		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = 0.5)
+		playsound(src, 'sound/effects/spray.ogg', 5, TRUE, frequency = 0.5)
+
+/obj/machinery/sleeper/stasis/close_machine(mob/user, density_to_set)
+	. = ..()
+	if(isliving(occupant))
+		playsound(src, 'sound/machines/fan/fan_stop.ogg', 10, TRUE)
 
 /obj/machinery/sleeper/stasis/set_occupant(atom/movable/new_occupant)
 	var/mob/living/old_occupant = occupant

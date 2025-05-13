@@ -64,7 +64,6 @@ SUBSYSTEM_DEF(security_level)
 	if(new_level == SEC_LEVEL_DELTA && !SSshuttle.abandon_ship_state)
 		SSshuttle.requestEvac(null, "Destruction of ship imminent.", "The AI")
 
-
 /**
  * Returns the current security level as a number
  */
