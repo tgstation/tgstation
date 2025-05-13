@@ -277,3 +277,40 @@
   - server: The crimes are now logging in the database.
   vinylspiders:
   - bugfix: stops snails from clogging up CI
+2025-05-12:
+  Jacquerel:
+  - balance: Regal Rats can now grab mice out of disposal bins, and no longer spawn
+      them with the Riot ability.
+  - balance: The Riot ability no longer needs to be used once for each slightly different
+      kind of mob in your radius.
+  - balance: The Regal Rat Domain ability is now toggled on and off.
+  - balance: Several kinds of mob will immediately start following you once tamed.
+  - balance: Rats, hostile frogs, and evil snails can be created via gold slime reaction.
+  JohnFulpWillard:
+  - spellcheck: Updated bruh moments.
+  Redbert:
+  - bugfix: Fixes issue that causes hypernob reaction to sometimes not work
+  SmArtKar:
+  - bugfix: Riggings and toolbelts no longer render through the goliath cloak when
+      worn in your suit slot.
+2025-05-13:
+  Ben10Omintrix:
+  - bugfix: fixes a few mining weapons not working on ice whelps, ice demons, and
+      wolves
+  Hardly:
+  - rscadd: Added half-health modifier for deathmatch
+  Melbert:
+  - bugfix: List VV properly differentiates null vs 0
+  necromanceranne:
+  - qol: Being intoxicated enough can potentially beat back the trauma of surgery.
+      It's not reliable.
+  - qol: Robotics on Tram and Metastation have a bottle of whiskey. You know, for
+      taking the edge off.
+  throwawayuseless:
+  - rscadd: Adds new immunodeficiency negative quirk, and sepsisillin, the inverse
+      of spaceacillin. Both have an immune system weakening effect, mitigate-able
+      with spaceacillin.
+  timothymtorres:
+  - qol: Add CI map linter for window and electrified grille spawners
+  - map: Fix many duplicate windows, walls, and grilles spawning together or inside
+      each other on a bunch of maps.
