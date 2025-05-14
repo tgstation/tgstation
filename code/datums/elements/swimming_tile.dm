@@ -54,20 +54,36 @@
 /datum/element/swimming_tile/proc/dip_in(mob/living/floater)
 	SIGNAL_HANDLER
 
-	var/effective_stamina_entry_cost = HAS_TRAIT(floater, TRAIT_STRENGTH) ? stamina_entry_cost : (stamina_entry_cost / 2)
-
-	var/gravity_modifier = floater.has_gravity() > STANDARD_GRAVITY ? 1 : 2
-
-	var/obj/item/organ/cyberimp/chest/spine/potential_spine = floater.get_organ_slot(ORGAN_SLOT_SPINE)
-	if(istype(potential_spine))
-		effective_stamina_entry_cost *= potential_spine.athletics_boost_multiplier
-
 	if ((!HAS_TRAIT(floater, TRAIT_SWIMMER) && (isnull(floater.buckled) || (!isvehicle(floater.buckled) && !ismob(floater.buckled))) && prob(exhaust_swimmer_prob)))
-		var/athletics_skill =  (floater.mind?.get_skill_level(/datum/skill/athletics) || 1)
-		floater.apply_damage(clamp((effective_stamina_entry_cost / athletics_skill) * gravity_modifier, 1, 100), STAMINA)
+
+		//First, we determine our effective stamina entry cost baseline. This includes the value from the water, as well as any heavy clothing being worn. The strength trait halves this value.
+		var/effective_stamina_entry_cost = HAS_TRAIT(floater, TRAIT_STRENGTH) ? (stamina_entry_cost + clothing_weight(floater)) : ((stamina_entry_cost + clothing_weight(floater)) / 2)
+
+		//Being in high gravity doubles our effective stamina cost
+		var/gravity_modifier = floater.has_gravity() > STANDARD_GRAVITY ? 1 : 2
+
+		//If our floater has a specialized spine, include that as a factor.
+		var/obj/item/organ/cyberimp/chest/spine/potential_spine = floater.get_organ_slot(ORGAN_SLOT_SPINE)
+		if(istype(potential_spine))
+			effective_stamina_entry_cost *= potential_spine.athletics_boost_multiplier
+
+		//Finally, we get our athletics skill as a reduction to the stamina cost. This is a direct reduction.
+		var/athletics_skill =  (floater.mind?.get_skill_level(/datum/skill/athletics) || 1) - 1
+
+		floater.apply_damage(clamp((effective_stamina_entry_cost - athletics_skill) * gravity_modifier, 1, 100), STAMINA)
 		floater.mind?.adjust_experience(/datum/skill/athletics, (stamina_entry_cost * gravity_modifier) * 0.1)
 		floater.apply_status_effect(/datum/status_effect/exercised, 15 SECONDS)
+
 	floater.apply_status_effect(/datum/status_effect/swimming, ticking_stamina_cost, ticking_oxy_damage) // Apply the status anyway for when they stop riding
+
+/// The weight of our swimmers clothing, including slowdown, impacts the amount of stamina damage dealt on dipping in.
+/datum/element/swimming_tile/proc/clothing_weight(mob/living/floater)
+	var/extra_stamina_weight = 0
+	for(var/obj/item/equipped_item in floater.get_equipped_items())
+		if(ispath(equipped_item, /obj/item/clothing/under/shorts))
+			continue
+		extra_stamina_weight += (clamp(equipped_item.w_class - 2, 0, 100) + equipped_item.slowdown) //Clothing that speeds us up reduces the stamina drain!
+	return extra_stamina_weight
 
 ///Added by the swimming_tile element. Drains stamina over time until the owner stops being immersed. Starts drowning them if they are prone or small.
 /datum/status_effect/swimming
