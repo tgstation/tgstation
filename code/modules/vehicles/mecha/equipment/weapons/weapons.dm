@@ -189,7 +189,7 @@
 	icon_state = "mecha_pyrogun"
 	projectile = /obj/projectile/energy/inferno
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo/try_attach_part(mob/user, var/obj/vehicle/sealed/mecha/themech, attach_right)
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo/try_attach_part(mob/user, obj/vehicle/sealed/mecha/themech, attach_right)
 	var/has_molten = FALSE
 	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
 		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
@@ -204,7 +204,7 @@
 		equip_cooldown = 8
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno/try_attach_part(mob/user, var/obj/vehicle/sealed/mecha/themech, attach_right)
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno/try_attach_part(mob/user, obj/vehicle/sealed/mecha/themech, attach_right)
 	var/has_cryo = FALSE
 	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
 		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
