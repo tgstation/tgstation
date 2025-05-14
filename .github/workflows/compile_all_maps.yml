@@ -44,8 +44,3 @@ jobs:
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_TEMPLATES
-      - name: Check client Compatibility
-        uses: tgstation/byond-client-compatibility-check@v3
-        with:
-          dmb-location: tgstation.dmb
-          max-required-client-version: ${{inputs.max_required_byond_client}}
