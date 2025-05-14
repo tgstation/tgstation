@@ -97,39 +97,43 @@
 	return ..()
 
 /obj/item/void_eater/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	. = ..()
-	if(istype(interacting_with, /turf/closed/wall))
-		if(!conversions_remaining)
-			balloon_alert(user, "must refresh void eater!")
-			return
+	if(!istype(interacting_with, /turf/closed/wall))
+		return ITEM_INTERACT_BLOCKING
 
-		if(!COOLDOWN_FINISHED(src, wall_conversion))
-			balloon_alert(user, "must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, wall_conversion))]!")
-			return
+	if(!conversions_remaining)
+		balloon_alert(user, "must refresh void eater!")
+		return ITEM_INTERACT_BLOCKING
 
-		var/turf/closed/wall/our_wall = interacting_with
-		if(!check_wall_validity(our_wall, user, silent = FALSE))
-			return
-		playsound(interacting_with, 'sound/effects/magic/blind.ogg', 100, TRUE)
-		new /obj/effect/temp_visual/transmute_tile_flash(interacting_with)
-		balloon_alert(user, "opening window...")
-		if(do_after(user, 8 SECONDS, interacting_with, hidden = TRUE))
-			if(!conversions_remaining)
-				return
-			var/list/target_walls = list()
-			target_walls += our_wall
-			for(var/turf/closed/wall/adjacent_wall in orange(1, interacting_with))
-				if(check_wall_validity(adjacent_wall, user))
-					target_walls += adjacent_wall
+	if(!COOLDOWN_FINISHED(src, wall_conversion))
+		balloon_alert(user, "must wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, wall_conversion))]!")
+		return ITEM_INTERACT_BLOCKING
 
-			for(var/turf/closed/wall/targeted_wall in target_walls)
-				playsound(targeted_wall, 'sound/effects/magic/blind.ogg', 100, TRUE)
-				new /obj/effect/temp_visual/transmute_tile_flash(targeted_wall)
-				targeted_wall.ScrapeAway()
-				new /obj/structure/window/fulltile/voidwalker(targeted_wall)
-				new /obj/structure/grille(targeted_wall)
-			conversions_remaining--
-			COOLDOWN_START(src, wall_conversion, 60 SECONDS)
+	var/turf/closed/wall/our_wall = interacting_with
+	if(!check_wall_validity(our_wall, user, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	playsound(interacting_with, 'sound/effects/magic/blind.ogg', 100, TRUE)
+	new /obj/effect/temp_visual/transmute_tile_flash(interacting_with)
+	balloon_alert(user, "opening window...")
+	if(!do_after(user, 8 SECONDS, interacting_with, hidden = TRUE))
+		return ITEM_INTERACT_BLOCKING
+	if(!conversions_remaining)
+		return ITEM_INTERACT_BLOCKING
+
+	var/list/target_walls = list()
+	target_walls += our_wall
+	for(var/turf/closed/wall/adjacent_wall in orange(1, interacting_with))
+		if(check_wall_validity(adjacent_wall, user))
+			target_walls += adjacent_wall
+
+	for(var/turf/closed/wall/targeted_wall in target_walls)
+		playsound(targeted_wall, 'sound/effects/magic/blind.ogg', 100, TRUE)
+		new /obj/effect/temp_visual/transmute_tile_flash(targeted_wall)
+		targeted_wall.ScrapeAway()
+		new /obj/structure/window/fulltile/voidwalker(targeted_wall)
+		new /obj/structure/grille(targeted_wall)
+	conversions_remaining--
+	COOLDOWN_START(src, wall_conversion, 60 SECONDS)
+	return ITEM_INTERACT_SUCCESS
 
 /// Called when the voidwalker kidnapped someone
 /obj/item/void_eater/proc/refresh(mob/living/carbon/human/voidwalker)
@@ -150,7 +154,7 @@
 
 	for(var/turf/nearby_turf in orange(1, wall_to_check))
 		var/area/nearby_area = get_area(nearby_turf)
-		if(is_nearstation_area(nearby_area))
+		if(is_area_nearby_station(nearby_area))
 			return TRUE
 
 	if(!silent)
