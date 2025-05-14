@@ -260,6 +260,11 @@
 	item_path = /obj/item/crusher_trophy/retool_kit/ahab
 	restricted_roles = list(JOB_SHAFT_MINER)
 
+/datum/loadout_item/pocket_items/crusher_retool_kit
+	name = "Crusher Retool Kit"
+	item_path = /obj/item/crusher_trophy/retool_kit
+	restricted_roles = list(JOB_SHAFT_MINER)
+
 /*
 *	MEDICAL
 */

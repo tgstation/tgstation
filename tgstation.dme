@@ -7441,7 +7441,6 @@
 #include "modular_doppler\modular_weapons\code\gunsets.dm"
 #include "modular_doppler\modular_weapons\code\jousting.dm"
 #include "modular_doppler\modular_weapons\code\melee.dm"
-#include "modular_doppler\modular_weapons\code\proto-kinetic_glaive.dm"
 #include "modular_doppler\modular_weapons\code\weapon_overrides.dm"
 #include "modular_doppler\modular_weapons\code\sec_swords\baton.dm"
 #include "modular_doppler\modular_weapons\code\sec_swords\big_sword.dm"
