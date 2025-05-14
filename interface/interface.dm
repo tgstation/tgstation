@@ -90,7 +90,7 @@
 		var/list/all_tms = list()
 		for(var/entry in testmerge_data)
 			var/datum/tgs_revision_information/test_merge/tm = entry
-			all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
+			all_tms += "- \[[url_encode(tm.title)]\]([githuburl]/pull/[tm.number])"
 		var/all_tms_joined = jointext(all_tms, "%0A") // %0A is a newline for URL encoding because i don't trust \n to not break
 
 		concatable += ("&test-merges=" + all_tms_joined)
