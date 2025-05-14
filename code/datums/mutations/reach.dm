@@ -10,10 +10,10 @@
 	///Typecache of atoms that TK shouldn't interact with
 	var/static/list/blacklisted_atoms = typecacheof(list(/atom/movable/screen))
 
-/*/datum/mutation/human/telekinesis/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
+/datum/mutation/human/telekinesis/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
 	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER)) */ // doppler change, removes glow
+		visual_indicators[type] = list(mutable_appearance('modular_doppler/sprite_swaps/icons/empty.dmi', "telekinesishead", -MUTATIONS_LAYER)) // DOPPLER EDIT, removes overlay - old code: visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "telekinesishead", -MUTATIONS_LAYER))
 
 /datum/mutation/human/telekinesis/on_acquiring(mob/living/carbon/human/homan)
 	. = ..()

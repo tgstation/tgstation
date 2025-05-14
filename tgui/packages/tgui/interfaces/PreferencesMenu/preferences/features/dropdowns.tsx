@@ -67,7 +67,7 @@ export function FeatureDropdownInput(props: DropdownInputProps) {
       displayText={displayText ? capitalizeFirst(displayText) : ''}
       options={dropdownOptions}
       selected={value}
-      width="100%"
+      width="180%" // DOPPLER EDIT
     />
   );
 }
