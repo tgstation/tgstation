@@ -18,7 +18,7 @@
 
 				if (turf_to_check.in_contents_of)
 					var/area/existing = turf_to_check.in_contents_of
-					if (existing == turf_to_check)
+					if (existing == turf_to_check.loc)
 						TEST_FAIL("Found a duplicate turf [turf_to_check.type] inside [area_to_test.type]'s turf listing")
 					else
 						TEST_FAIL("Found a shared turf [turf_to_check.type] between [area_to_test.type] and [existing.type]'s turf listings")
@@ -27,7 +27,7 @@
 				if (turfs_actual_area != area_to_test)
 					TEST_FAIL("Found a turf [turf_to_check.type] which is IN [turfs_actual_area.type], but is registered as being in [area_to_test.type]")
 
-				turf_to_check.in_contents_of = turf_to_check
+				turf_to_check.in_contents_of = turfs_actual_area
 
 	for(var/turf/position in ALL_TURFS())
 		if(!position.in_contents_of)

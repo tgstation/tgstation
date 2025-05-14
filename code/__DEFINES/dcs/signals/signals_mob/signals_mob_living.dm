@@ -96,6 +96,8 @@
 
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
+/// from base of mob/living/updatestamina()
+#define COMSIG_LIVING_STAMINA_UPDATE "living_stamina_update"
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
 
@@ -322,3 +324,6 @@
 
 /// From /obj/item/book/bible/attack() : (mob/living/user, obj/item/book/bible/bible, bless_result)
 #define COMSIG_LIVING_BLESSED "living_blessed"
+
+/// From /mob/living/set_blood_type : (mob/living/user, datum/blood_type, update_cached_blood_dna_info)
+#define COMSIG_LIVING_CHANGED_BLOOD_TYPE "living_set_blood_type"

@@ -10,6 +10,7 @@
 	icon = 'icons/mob/simple/meteor_heart.dmi'
 	icon_state = "heart"
 	icon_living = "heart"
+	status_flags = NONE
 	mob_biotypes = MOB_ORGANIC
 	basic_mob_flags = DEL_ON_DEATH
 	mob_size = MOB_SIZE_HUGE
@@ -27,6 +28,7 @@
 	maximum_survivable_temperature = 1500
 	combat_mode = TRUE
 	move_resist = INFINITY // This mob IS the floor
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 
 	/// Looping heartbeat sound
 	var/datum/looping_sound/heartbeat/soundloop

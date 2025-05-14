@@ -49,9 +49,9 @@
 	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
-	splatter_type = "xsplatter"
+	splatter_type = "splatter"
 
-/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter/Initialize(mapload, set_dir, set_color = GLOB.blood_types[/datum/blood_type/xeno::name])
+/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter/Initialize(mapload, set_dir, set_color = get_blood_type(/datum/blood_type/xeno::name))
 	return ..()
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
@@ -192,6 +192,17 @@
 			icon_state = "beam_splash_w"
 		if(EAST)
 			icon_state = "beam_splash_e"
+
+/obj/effect/temp_visual/bsa_impact
+	name = "\improper Bluespace Artillery detonation"
+	desc = "Tearing into conventional space once more, the immense energy of the beam is delivered directly into the target and its surroundings."
+	icon = 'icons/effects/96x160.dmi'
+	icon_state = "bsa_impact_ex"
+	layer = ABOVE_ALL_MOB_LAYER
+	plane = ABOVE_GAME_PLANE
+	pixel_y = -32
+	pixel_x = -32
+	duration = 10
 
 /obj/effect/temp_visual/wizard
 	name = "water"
@@ -765,3 +776,34 @@
 	duration = 5 MINUTES
 	pixel_x = -16
 	pixel_y = -8 //32
+
+/// Visual effect spawned when the bioscrambler scrambles your bio
+/obj/effect/temp_visual/circle_wave
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "circle_wave"
+	pixel_x = -16
+	pixel_y = -16
+	duration = 0.5 SECONDS
+	color = COLOR_LIME
+	var/max_alpha = 255
+	///How far the effect would scale in size
+	var/amount_to_scale = 2
+
+/obj/effect/temp_visual/circle_wave/Initialize(mapload)
+	transform = matrix().Scale(0.1)
+	animate(src, transform = matrix().Scale(amount_to_scale), time = duration, flags = ANIMATION_PARALLEL)
+	animate(src, alpha = max_alpha, time = duration * 0.6, flags = ANIMATION_PARALLEL)
+	animate(alpha = 0, time = duration * 0.4)
+	apply_wibbly_filters(src)
+	return ..()
+
+/obj/effect/temp_visual/circle_wave/bioscrambler
+	color = COLOR_LIME
+
+/obj/effect/temp_visual/circle_wave/bioscrambler/light
+	max_alpha = 128
+
+/obj/effect/temp_visual/circle_wave/void_conduit
+	color = COLOR_FULL_TONER_BLACK
+	duration = 12 SECONDS
+	amount_to_scale = 12
