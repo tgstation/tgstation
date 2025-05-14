@@ -25,8 +25,8 @@
 /datum/map_generator/cave_generator/rainworld/surface
 	flora_spawn_chance = 3
 	feature_spawn_chance = 0.2
-	initial_closed_chance = 20
-	birth_limit = 5
+	initial_closed_chance = 50
+	birth_limit = 6
 	death_limit = 4
 	smoothing_iterations = 10
 	weighted_mob_spawn_list = list(
