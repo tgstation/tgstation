@@ -1,0 +1,4 @@
+author: "Aliceee2ch"
+delete-after: True
+changes:
+  - rscadd: "Added heavy thermal guns for mechs. Works on the principle of regular hand guns. Can only be purchased in cargo, as they are experimental."

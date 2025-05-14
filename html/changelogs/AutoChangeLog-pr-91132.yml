@@ -1,0 +1,4 @@
+author: "spiders24110"
+delete-after: True
+changes:
+  - bugfix: "fixed fish infused people swimming slow in deep water"
