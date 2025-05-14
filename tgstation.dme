@@ -1716,6 +1716,7 @@
 #include "code\datums\looping_sounds\weather.dm"
 #include "code\datums\mapgen\CaveGenerator.dm"
 #include "code\datums\mapgen\JungleGenerator.dm"
+#include "code\datums\mapgen\OceanGenerator.dm"
 #include "code\datums\mapgen\biomes\_biome.dm"
 #include "code\datums\mapgen\Cavegens\IcemoonCaves.dm"
 #include "code\datums\mapgen\Cavegens\LavalandGenerator.dm"

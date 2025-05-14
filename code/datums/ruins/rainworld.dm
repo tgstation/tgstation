@@ -2,7 +2,7 @@
 	prefix = "_maps/RandomRuins/WaterRuins/"
 	allow_duplicates = FALSE
 	cost = 5
-	ruin_type = ZTRAIT_WATER_RUINS
+	ruin_type = ZTRAIT_OCEAN_RUINS
 	default_area = /area/rainworld/surface/outdoors/unexplored
 
 /datum/map_template/ruin/rainworld/one

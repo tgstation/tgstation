@@ -1,9 +1,10 @@
 {
 	"version": 1,
 	"map_name": "RainStation",
-	"map_path": "custom",
+	"map_path": "map_files/RainStation",
 	"map_file": "RainStation.dmm",
 	"space_ruin_levels": 0,
+	"space_empty_levels": 1,
 	"planetary": 1,
 	"shuttles": {
 		"cargo": "cargo_box",
@@ -14,9 +15,9 @@
 	"traits": [
 		{
 			"Mining": false,
-			"Linkage": null,
+			"Linkage": "Cross",
 			"Gravity": true,
-			"Ice Ruins": false,
+			"Ocean Ruins": true,
 			"Weather_Rainstorm": true,
 			"Baseturf": "/turf/open/water/no_planet_atmos/deep",
 			"No Parallax": true

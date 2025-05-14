@@ -200,8 +200,8 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 /turf/open/misc/asteroid/rainworld
 	name = "wet rocky ground"
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
-	baseturfs = /turf/open/misc/asteroid/wet
-	turf_type = /turf/open/misc/asteroid/wet
+	baseturfs = /turf/open/misc/asteroid/rainworld
+	turf_type = /turf/open/misc/asteroid/rainworld
 	worm_chance = 0
 	icon = 'icons/turf/mining.dmi'
 	damaged_dmi = 'icons/turf/mining.dmi'
@@ -215,7 +215,6 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	damaged_dmi = 'icons/turf/mining.dmi'
 	icon_state = "rockyash"
 	base_icon_state = "rocky_ash"
-	smooth_icon = 'icons/turf/floors/rocky_ash.dmi'
 
 /turf/open/misc/asteroid/snow
 	gender = PLURAL

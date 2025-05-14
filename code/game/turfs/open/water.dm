@@ -97,6 +97,15 @@
 	immerse_overlay = "immerse_deep"
 	baseturfs = /turf/open/water/no_planet_atmos/deep
 
+/turf/open/water/no_planet_atmos/deep/planetary_atmos
+	name = "deep water"
+	desc = "Less shallow water."
+	icon_state = "deep_riverwater_motion"
+	immerse_overlay = "immerse_deep"
+	planetary_atmos = TRUE
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	baseturfs = /turf/open/water/no_planet_atmos/deep/planetary_atmos
+
 /turf/open/water/no_planet_atmos/deep/make_immersed()
 	. = ..()
 	if (!.)

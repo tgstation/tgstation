@@ -1,0 +1,102 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/rainworld/surface/outdoors/nospawn)
+"c" = (
+/turf/closed/wall,
+/area/rainworld/surface/outdoors/nospawn)
+"e" = (
+/obj/structure/lattice,
+/turf/open/water/no_planet_atmos/deep,
+/area/rainworld/surface/outdoors/nospawn)
+"k" = (
+/obj/machinery/vending/cigarette{
+	all_products_free = 0
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/plating/icemoon,
+/area/rainworld/surface/outdoors/nospawn)
+"q" = (
+/obj/structure/lattice,
+/obj/structure/billboard/Phone_booth,
+/turf/open/water/no_planet_atmos/deep,
+/area/rainworld/surface/outdoors/nospawn)
+"v" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/machinery/light/small/directional/north,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/item/gps/spaceruin{
+	gpstag = "Public Holophone"
+	},
+/turf/open/floor/plating/icemoon,
+/area/rainworld/surface/outdoors/nospawn)
+"z" = (
+/obj/machinery/door/window/left/directional/north,
+/obj/machinery/door/window/left/directional/south,
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 1
+	},
+/area/rainworld/surface/outdoors/nospawn)
+"J" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/tank/air/layer4{
+	dir = 8
+	},
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/plating/icemoon,
+/area/rainworld/surface/outdoors/nospawn)
+"M" = (
+/turf/closed/wall/ice,
+/area/rainworld/surface/outdoors/nospawn)
+"R" = (
+/obj/machinery/holopad,
+/obj/machinery/airalarm/directional/north,
+/obj/effect/mapping_helpers/airalarm/all_access,
+/turf/open/floor/iron/dark/smooth_large,
+/area/rainworld/surface/outdoors/nospawn)
+"V" = (
+/obj/machinery/vending/coffee,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/plating/icemoon,
+/area/rainworld/surface/outdoors/nospawn)
+"W" = (
+/turf/open/water/no_planet_atmos/deep,
+/area/rainworld/surface/outdoors/nospawn)
+
+(1,1,1) = {"
+q
+c
+V
+k
+c
+W
+"}
+(2,1,1) = {"
+W
+M
+R
+a
+z
+W
+"}
+(3,1,1) = {"
+e
+c
+v
+J
+c
+W
+"}

@@ -203,6 +203,9 @@
 	power_light = FALSE
 	requires_power = TRUE
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED
+	area_has_base_lighting = 1
+	base_lighting_alpha = 110
+	base_lighting_color = "#66ccff"
 
 /area/rainworld/surface/outdoors // parent that defines if something is on the exterior of the station.
 	name = "Rainworld Ocean"
@@ -223,7 +226,7 @@
 /area/rainworld/surface/outdoors/unexplored //monsters and ruins spawn here
 	icon_state = "unexplored"
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED
-	map_generator = /datum/map_generator/cave_generator/rainworld
+	map_generator = /datum/map_generator/cave_generator/rainworld/surface
 
 /**********************Ice Moon Areas**************************/
 

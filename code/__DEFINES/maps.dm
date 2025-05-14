@@ -82,7 +82,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAIT_LAVA_RUINS "Lava Ruins"
 #define ZTRAIT_ICE_RUINS "Ice Ruins"
 #define ZTRAIT_ICE_RUINS_UNDERGROUND "Ice Ruins Underground"
-#define ZTRAIT_WATER_RUINS "Water Ruins"
+#define ZTRAIT_OCEAN_RUINS "Ocean Ruins"
 #define ZTRAIT_ISOLATED_RUINS "Isolated Ruins" //Placing ruins on z levels with this trait will use turf reservation instead of usual placement.
 
 // boolean - weather types that occur on the level
@@ -133,6 +133,8 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define ZTRAITS_STATION list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_STATION = TRUE)
 ///Z level traits for Deep Space
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
+///Z level traits for Deep Ocean
+#define ZTRAITS_OCEAN list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_OCEAN_RUINS = TRUE)
 ///Z level traits for Lavaland
 #define ZTRAITS_LAVALAND list(\
 	ZTRAIT_MINING = TRUE, \

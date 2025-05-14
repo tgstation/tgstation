@@ -456,15 +456,15 @@
 	)
 
 /turf/closed/mineral/random/snow/wet
-	name = "snowy mountainside"
-	icon = MAP_SWITCH('icons/turf/mining.dmi', 'icons/turf/walls/rock_wall.dmi')
+	name = "wet rocks"
+	icon = MAP_SWITCH('icons/turf/walls/rock_wall.dmi', 'icons/turf/walls/rock_wall.dmi')
 	icon_state = "rock_wall"
 	base_icon_state = "rock_wall"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	defer_change = TRUE
-	turf_type = /turf/open/misc/asteroid/snow/icemoon
-	baseturfs = /turf/open/misc/asteroid/snow/icemoon
+	turf_type = /turf/open/misc/asteroid/rainworld
+	baseturfs = /turf/open/misc/asteroid/rainworld
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	weak_turf = TRUE
 	proximity_based = TRUE
