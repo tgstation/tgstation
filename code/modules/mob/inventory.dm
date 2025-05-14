@@ -359,9 +359,8 @@
 	if(isnull(animated))
 		//if the item's ultimate location is us, we don't animate putting it wherever
 		animated = !(get(newloc, /mob) == src)
-	if(!animated)
-		return
-	I.do_pickup_animation(newloc, src)
+	if(animated)
+		I.do_pickup_animation(newloc, src)
 
 //visibly unequips I but it is NOT MOVED AND REMAINS IN SRC, newloc is for signal handling checks only which hints where you want to move the object after removal
 //item MUST BE FORCEMOVE'D OR QDEL'D
