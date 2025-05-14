@@ -33,21 +33,6 @@ interface CreateObjectSettingsProps {
   iconSettings: IconSettings;
 }
 
-interface StateSetterConfig<T extends unknown> {
-  value: T;
-  storageKey: string;
-  setter: (value: T) => void;
-}
-
-const setStateAndStorage = async <T extends unknown>({
-  value,
-  storageKey,
-  setter,
-}: StateSetterConfig<T>) => {
-  setter(value);
-  await storage.set(storageKey, value);
-};
-
 export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   const { onCreateObject, setAdvancedSettings, iconSettings } = props;
   const { act, data } = useBackend<SpawnPanelData>();
@@ -60,58 +45,40 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   const [offset, setOffset] = useState('');
 
   const updateAmount = (value: number) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-object_count',
-      setter: setAmount,
-    });
+    setAmount(value);
+    storage.set('spawnpanel-object_count', value);
     sendUpdatedSettings({ object_count: value });
   };
 
   const updateCordsType = (value: number) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-offset_type',
-      setter: setCordsType,
-    });
+    setCordsType(value);
+    storage.set('spawnpanel-offset_type', value);
     sendUpdatedSettings({
       offset_type: value ? 'Absolute offset' : 'Relative offset',
     });
   };
 
   const updateSpawnLocation = (value: string) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-where_dropdown_value',
-      setter: setSpawnLocation,
-    });
+    setSpawnLocation(value);
+    storage.set('spawnpanel-where_dropdown_value', value);
     sendUpdatedSettings({ where_dropdown_value: value });
   };
 
   const updateDirection = (value: number) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-direction',
-      setter: setDirection,
-    });
+    setDirection(value);
+    storage.set('spawnpanel-direction', value);
     sendUpdatedSettings({ dir: [1, 2, 4, 8][value] });
   };
 
   const updateObjectName = (value: string) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-object_name',
-      setter: setObjectName,
-    });
+    setObjectName(value);
+    storage.set('spawnpanel-object_name', value);
     sendUpdatedSettings({ object_name: value });
   };
 
   const updateOffset = (value: string) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-offset',
-      setter: setOffset,
-    });
+    setOffset(value);
+    storage.set('spawnpanel-offset', value);
     sendUpdatedSettings({ offset: value });
   };
 
@@ -164,7 +131,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   const isMarkModeActive = data?.precise_mode === 'Mark';
   const isCopyModeActive = data?.precise_mode === 'Copy';
 
-  const disablePreciseMode = function (): void {
+  const disablePreciseMode = () => {
     if (isPreciseModeActive) {
       act('toggle-precise-mode', {
         newPreciseType: 'Off',
@@ -172,7 +139,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
     }
   };
 
-  const handleSpawn = function (): void {
+  const handleSpawn = () => {
     if (!isTargetMode) {
       const currentSettings = {
         object_count: amount,

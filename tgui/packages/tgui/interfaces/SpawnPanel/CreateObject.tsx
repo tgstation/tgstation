@@ -33,21 +33,6 @@ interface SpawnPreferences {
   object_list?: string;
 }
 
-interface StateSetterConfig<T extends unknown> {
-  value: T;
-  storageKey: string;
-  setter: (value: T) => void;
-}
-
-const setStateAndStorage = async <T extends unknown>({
-  value,
-  storageKey,
-  setter,
-}: StateSetterConfig<T>) => {
-  setter(value);
-  await storage.set(storageKey, value);
-};
-
 interface CurrentList {
   Atoms: {
     [key: string]: AtomData;
@@ -60,7 +45,6 @@ export function CreateObject(props: CreateObjectProps) {
 
   const [tooltipIcon, setTooltipIcon] = useState(false);
   const [selectedObj, setSelectedObj] = useState<string | null>(null);
-
   const [searchText, setSearchText] = useState('');
   const [searchBy, setSearchBy] = useState(false);
   const [sortBy, setSortBy] = useState(listTypes.Objects);
@@ -150,52 +134,40 @@ export function CreateObject(props: CreateObjectProps) {
     setSelectedObj(null);
   }, [currentType]);
 
+  const sendUpdatedSettings = (
+    changedSettings: Partial<Record<string, unknown>> = {},
+  ) => {
+    act('update-settings', changedSettings);
+  };
+
   const updateSearchText = (value: string) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-searchText',
-      setter: setSearchText,
-    });
+    setSearchText(value);
+    storage.set('spawnpanel-searchText', value);
   };
 
   const updateSearchBy = (value: boolean) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-searchBy',
-      setter: setSearchBy,
-    });
+    setSearchBy(value);
+    storage.set('spawnpanel-searchBy', value);
   };
 
   const updateSortBy = (value: string) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-sortBy',
-      setter: setSortBy,
-    });
+    setSortBy(value);
+    storage.set('spawnpanel-sortBy', value);
   };
 
   const updateHideMapping = (value: boolean) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-hideMapping',
-      setter: setHideMapping,
-    });
+    setHideMapping(value);
+    storage.set('spawnpanel-hideMapping', value);
   };
 
   const updateShowIcons = (value: boolean) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-showIcons',
-      setter: setshowIcons,
-    });
+    setshowIcons(value);
+    storage.set('spawnpanel-showIcons', value);
   };
 
   const updateShowPreview = (value: boolean) => {
-    setStateAndStorage({
-      value,
-      storageKey: 'spawnpanel-showPreview',
-      setter: setshowPreview,
-    });
+    setshowPreview(value);
+    storage.set('spawnpanel-showPreview', value);
   };
 
   const sendPreferences = (settings: Partial<SpawnPreferences>) => {
@@ -373,64 +345,66 @@ export function CreateObject(props: CreateObjectProps) {
       </Stack.Item>
 
       <Stack.Item grow>
-        <Section fill scrollable>
-          {query !== '' && (
+        <Section fill scrollable={filteredResults.length !== 0 || query !== ''}>
+          {query === '' ? (
+            <NoticeBox textAlign="center" color="blue" width="100%">
+              Begin typing to search...
+            </NoticeBox>
+          ) : !filteredResults.length ? (
+            <NoticeBox textAlign="center" color="blue" width="100%">
+              Nothing found
+            </NoticeBox>
+          ) : (
             <VirtualList>
-              {results.length > 0 && Object.keys(currentList).length > 0 ? (
-                filteredResults.map((obj, index) => (
-                  <Button
-                    key={index}
-                    color="transparent"
-                    tooltip={
-                      (showIcons || tooltipIcon) &&
-                      allObjects[obj] && (
-                        <DmIcon
-                          icon={allObjects[obj].icon}
-                          icon_state={allObjects[obj].icon_state}
-                        />
-                      )
+              {filteredResults.map((obj, index) => (
+                <Button
+                  key={index}
+                  color="transparent"
+                  tooltip={
+                    (showIcons || tooltipIcon) &&
+                    allObjects[obj] && (
+                      <DmIcon
+                        icon={allObjects[obj].icon}
+                        icon_state={allObjects[obj].icon_state}
+                      />
+                    )
+                  }
+                  tooltipPosition="top-start"
+                  fluid
+                  selected={selectedObj === obj}
+                  style={{
+                    backgroundColor:
+                      selectedObj === obj
+                        ? 'rgba(160, 200, 255, 0.1)'
+                        : undefined,
+                    color: selectedObj === obj ? '#fff' : undefined,
+                  }}
+                  onDoubleClick={() => {
+                    if (selectedObj) {
+                      sendPreferences({ object_list: selectedObj });
                     }
-                    tooltipPosition="top-start"
-                    fluid
-                    selected={selectedObj === obj}
-                    style={{
-                      backgroundColor:
-                        selectedObj === obj
-                          ? 'rgba(160, 200, 255, 0.1)'
-                          : undefined,
-                      color: selectedObj === obj ? '#fff' : undefined,
-                    }}
-                    onDoubleClick={() => {
-                      if (selectedObj) {
-                        sendPreferences({ object_list: selectedObj });
-                      }
-                    }}
-                    onClick={() => handleObjectSelect(obj)}
-                  >
-                    {searchBy ? (
-                      obj
-                    ) : (
-                      <>
-                        {allObjects[obj]?.name}
-                        <span
-                          className="label label-info"
-                          style={{
-                            marginLeft: '0.5em',
-                            color: 'rgba(200, 200, 200, 0.5)',
-                            fontSize: '10px',
-                          }}
-                        >
-                          {obj}
-                        </span>
-                      </>
-                    )}
-                  </Button>
-                ))
-              ) : (
-                <NoticeBox textAlign="center" color="label" mt={2}>
-                  Nothing found
-                </NoticeBox>
-              )}
+                  }}
+                  onClick={() => handleObjectSelect(obj)}
+                >
+                  {searchBy ? (
+                    obj
+                  ) : (
+                    <>
+                      {allObjects[obj]?.name}
+                      <span
+                        className="label label-info"
+                        style={{
+                          marginLeft: '0.5em',
+                          color: 'rgba(200, 200, 200, 0.5)',
+                          fontSize: '10px',
+                        }}
+                      >
+                        {obj}
+                      </span>
+                    </>
+                  )}
+                </Button>
+              ))}
             </VirtualList>
           )}
         </Section>
