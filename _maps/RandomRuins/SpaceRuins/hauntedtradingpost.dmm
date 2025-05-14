@@ -672,6 +672,7 @@
 /obj/structure/rack,
 /obj/item/melee/skateboard,
 /obj/machinery/light/small/dim/directional/east,
+/obj/item/toy/plush/monkey/operative,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
 "fZ" = (
