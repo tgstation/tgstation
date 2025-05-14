@@ -725,6 +725,7 @@ SUBSYSTEM_DEF(job)
 	newjob.current_positions = J.current_positions
 
 /atom/proc/JoinPlayerHere(mob/joining_mob, buckle)
+	SHOULD_NOT_SLEEP(TRUE)
 	// By default, just place the mob on the same turf as the marker or whatever.
 	joining_mob.forceMove(get_turf(src))
 

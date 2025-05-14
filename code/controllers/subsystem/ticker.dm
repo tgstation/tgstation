@@ -118,13 +118,14 @@ SUBSYSTEM_DEF(ticker)
 				continue
 		music -= S
 
-	if(!length(music))
-		music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
-		if(length(music) > 1)
-			music -= old_login_music
-		set_lobby_music(pick(music))
-	else
-		set_lobby_music("[global.config.directory]/title_music/sounds/[pick(music)]")
+	// if(!length(music))
+	// 	music = world.file2list(ROUND_START_MUSIC_LIST, "\n")
+	// 	if(length(music) > 1)
+	// 		music -= old_login_music
+	// 	set_lobby_music(pick(music))
+	// else
+	// 	set_lobby_music("[global.config.directory]/title_music/sounds/[pick(music)]")
+	set_lobby_music("sound/music/lobby_music/six_umbrellas_monument.ogg")
 
 	if(!GLOB.syndicate_code_phrase)
 		GLOB.syndicate_code_phrase = generate_code_phrase(return_list=TRUE)

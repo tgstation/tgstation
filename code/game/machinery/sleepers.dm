@@ -401,19 +401,24 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 
 /obj/machinery/sleeper/cryo
 	name = "cryogenic pod"
-	desc = "A cryogenic pod. This model was developed by Nanotrasen for use in long term space travel. \
-		By use of cryogenic stasis, it is able to keep a person in a state of suspended animation for an indefinite period of time... \
-		Well, so they say. Studies show human bodies would degrade after a few centuries. Good thing our mission is not nearly that long!"
+	desc = "A cryogenic pod. This model was developed by Nanotrasen for use in long term space travel."
 	icon_state = "cryopod"
 	base_icon_state = "cryopod"
 	// circuit = /obj/item/circuitboard/machine/sleeper/cryo
-	enter_message = span_boldnotice("You feel a cold chill as you enter the pod. You feel your body go numb as you enter a state of suspended animation.")
+	enter_message = span_boldnotice("You feel a cold chill as you enter the pod. \
+		You feel your body go numb as you enter a state of suspended animation.")
 	possible_chems = null
 	state_open = FALSE
 	density = TRUE
 	resist_time = 0.5 SECONDS
 	/// What job spawns here, JOB_TITLE defines
 	var/roundstart_job
+
+/obj/machinery/sleeper/cryo/examine_more(mob/user)
+	. = ..()
+	. += span_info("By use of cryogenic stasis, it is able to keep a person in a state of suspended animation for an indefinite period of time... \
+		Well, so they say. Studies show human bodies would degrade after a few centuries.")
+	. += span_notice("It's a good thing our mission was only a few years long, right?")
 
 /obj/machinery/sleeper/cryo/Initialize(mapload)
 	. = ..()
@@ -447,6 +452,7 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 		old_occupant.remove_status_effect(/datum/status_effect/grouped/stasis, skey)
 		// REMOVE_TRAIT(old_occupant, TRAIT_KNOCKEDOUT, IS_SPAWNING)
 		REMOVE_TRAIT(old_occupant, TRAIT_MUTE, skey)
+		UnregisterSignal(old_occupant, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
 	if(istype(new_occupant_l))
 		new_occupant_l.apply_status_effect(/datum/status_effect/grouped/stasis, skey)
 		ADD_TRAIT(new_occupant_l, TRAIT_MUTE, skey)
@@ -502,14 +508,18 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 
 /obj/machinery/sleeper/stasis
 	name = "stasis pod"
-	desc = "A stasis pod. This model was developed by DeForest for short term treatment of patients. \
-		Rather than true stasis, as a cryogenic pod would provide, this machine simply slows the metabolism of the patient to a crawl."
+	desc = "A stasis pod. This model was developed by DeForest for short term treatment of patients."
 	icon_state = "stasis"
 	base_icon_state = "stasis"
 	/// circuit = /obj/item/circuitboard/machine/sleeper/stasis
 	enter_message = span_boldnotice("You feel a cold chill as you enter the pod.")
 	possible_chems = null
 	resist_time = 1 SECONDS
+
+/obj/machinery/sleeper/stasis/examine_more(mob/user)
+	. = ..()
+	. += span_info("Rather than true stasis, as a cryogenic pod would provide, \
+		this machine simply slows the metabolism of the patient to a crawl - making it unsuitable for long term use.")
 
 /obj/machinery/sleeper/stasis/examine(mob/user)
 	. = ..()
