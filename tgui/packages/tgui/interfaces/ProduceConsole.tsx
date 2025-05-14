@@ -1,3 +1,4 @@
+import { atom, useAtom } from 'jotai';
 import { useState } from 'react';
 import {
   Box,
@@ -15,19 +16,17 @@ import {
 import { BooleanLike } from 'tgui-core/react';
 import { capitalize, createSearch } from 'tgui-core/string';
 
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-const buttonWidth = 2;
-
 type OrderDatum = {
-  name: string;
-  desc: number;
   cat: string;
-  ref: string;
   cost: number;
-  icon: string;
+  desc: number;
   icon_state: string;
+  icon: string;
+  name: string;
+  ref: string;
 };
 
 type Item = {
@@ -36,45 +35,43 @@ type Item = {
 };
 
 type Data = {
-  credit_type: string;
-  off_cooldown: BooleanLike;
-  points: number;
-  express_tooltip: string;
-  purchase_tooltip: string;
-  forced_express: string;
-  cargo_value: number;
   cargo_cost_multiplier: number;
+  cargo_value: number;
+  credit_type: string;
   express_cost_multiplier: number;
+  express_tooltip: string;
+  forced_express: string;
+  item_amts: Item[];
+  off_cooldown: BooleanLike;
   order_categories: string[];
   order_datums: OrderDatum[];
-  item_amts: Item[];
+  points: number;
+  purchase_tooltip: string;
   total_cost: number;
 };
 
-const TAB2NAME = [
-  {
-    component: () => ShoppingTab,
-  },
-  {
-    component: () => CheckoutTab,
-  },
-];
+const buttonWidth = 2;
 
-const findAmount = (item_amts, name) => {
+const condensedAtom = atom(false);
+
+function findAmount(item_amts: Item[], name: string): number {
   const amount = item_amts.find((item) => item.name === name);
-  return amount.amt;
-};
+  return amount?.amt || 0;
+}
 
-const ShoppingTab = (props) => {
+function ShoppingTab(props) {
   const { data, act } = useBackend<Data>();
   const { credit_type, order_categories, order_datums, item_amts } = data;
+
   const [shopCategory, setShopCategory] = useState(order_categories[0]);
-  const [condensed] = useLocalState('condensed', false);
+  const [condensed] = useAtom(condensedAtom);
   const [searchItem, setSearchItem] = useState('');
+
   const search = createSearch<OrderDatum>(
     searchItem,
     (order_datums) => order_datums.name,
   );
+
   let goods =
     searchItem.length > 0
       ? order_datums.filter((item) => search(item))
@@ -170,7 +167,7 @@ const ShoppingTab = (props) => {
                       }
                     />
                     <NumberInput
-                      value={findAmount(item_amts, item.name) || 0}
+                      value={findAmount(item_amts, item.name)}
                       width="41px"
                       minValue={0}
                       maxValue={20}
@@ -192,9 +189,9 @@ const ShoppingTab = (props) => {
       </Stack.Item>
     </Stack>
   );
-};
+}
 
-const CheckoutTab = (props) => {
+function CheckoutTab(props) {
   const { data, act } = useBackend<Data>();
   const {
     credit_type,
@@ -208,10 +205,13 @@ const CheckoutTab = (props) => {
     express_cost_multiplier,
     item_amts,
   } = data;
+
   const total_cargo_cost = Math.floor(total_cost * cargo_cost_multiplier);
+
   const checkout_list = order_datums.filter(
-    (food) => food && (findAmount(item_amts, food.name) || 0),
+    (food) => food && findAmount(item_amts, food.name),
   );
+
   return (
     <Stack vertical fill>
       <Stack.Item grow>
@@ -231,8 +231,8 @@ const CheckoutTab = (props) => {
               </>
             )}
             <Stack.Item grow>
-              {checkout_list.map((item, key) => (
-                <Stack.Item key={key}>
+              {checkout_list.map((item, index) => (
+                <Stack.Item key={index}>
                   <Stack>
                     <Stack.Item>{capitalize(item.name)}</Stack.Item>
                     <Stack.Item grow color="label" fontSize="10px">
@@ -248,7 +248,7 @@ const CheckoutTab = (props) => {
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
                       <NumberInput
-                        value={findAmount(item_amts, item.name) || 0}
+                        value={findAmount(item_amts, item.name)}
                         width="41px"
                         minValue={0}
                         maxValue={(item.cost > 10 && 50) || 10}
@@ -281,7 +281,6 @@ const CheckoutTab = (props) => {
                 <Button
                   fluid
                   icon="plane-departure"
-                  content="Purchase"
                   disabled={total_cargo_cost < cargo_value}
                   tooltip={
                     total_cargo_cost < cargo_value
@@ -290,7 +289,9 @@ const CheckoutTab = (props) => {
                   }
                   tooltipPosition="top"
                   onClick={() => act('purchase')}
-                />
+                >
+                  Purchase
+                </Button>
               </Stack.Item>
             )}
             <Stack.Item grow textAlign="center">
@@ -298,23 +299,24 @@ const CheckoutTab = (props) => {
                 fluid
                 icon="parachute-box"
                 color="yellow"
-                content="Express"
                 disabled={total_cost <= 0}
                 tooltip={
                   total_cost <= 0 ? 'Order atleast 1 item' : express_tooltip
                 }
                 tooltipPosition="top-start"
                 onClick={() => act('express')}
-              />
+              >
+                Express
+              </Button>
             </Stack.Item>
           </Stack>
         </Section>
       </Stack.Item>
     </Stack>
   );
-};
+}
 
-const OrderSent = (props) => {
+function OrderSent(props) {
   return (
     <Dimmer>
       <Stack vertical>
@@ -327,14 +329,19 @@ const OrderSent = (props) => {
       </Stack>
     </Dimmer>
   );
-};
+}
 
-export const ProduceConsole = (props) => {
+enum Tab {
+  Shopping,
+  Checkout,
+}
+
+export function ProduceConsole(props) {
   const { data } = useBackend<Data>();
   const { credit_type, points, off_cooldown, order_categories } = data;
-  const [tabIndex, setTabIndex] = useState(1);
-  const [condensed, setCondensed] = useLocalState('condensed', false);
-  const TabComponent = TAB2NAME[tabIndex - 1].component();
+
+  const [tabIndex, setTabIndex] = useState(Tab.Shopping);
+  const [condensed, setCondensed] = useAtom(condensedAtom);
 
   return (
     <Window width={Math.max(order_categories.length * 125, 500)} height={400}>
@@ -350,9 +357,10 @@ export const ProduceConsole = (props) => {
                     color="green"
                     lineHeight={buttonWidth}
                     icon="cart-plus"
-                    content="Shopping"
-                    onClick={() => setTabIndex(1)}
-                  />
+                    onClick={() => setTabIndex(Tab.Shopping)}
+                  >
+                    Shopping
+                  </Button>
                 </Stack.Item>
                 <Stack.Item grow>
                   <Button
@@ -360,9 +368,10 @@ export const ProduceConsole = (props) => {
                     color="green"
                     lineHeight={buttonWidth}
                     icon="dollar-sign"
-                    content="Checkout"
-                    onClick={() => setTabIndex(2)}
-                  />
+                    onClick={() => setTabIndex(Tab.Checkout)}
+                  >
+                    Checkout
+                  </Button>
                 </Stack.Item>
               </Stack>
             </Section>
@@ -375,17 +384,19 @@ export const ProduceConsole = (props) => {
               <Stack.Item textAlign="right">
                 <Button
                   color={condensed ? 'green' : 'red'}
-                  content={condensed ? 'Uncondense' : 'Condense'}
                   onClick={() => setCondensed(!condensed)}
-                />
+                >
+                  {condensed ? 'Uncondense' : 'Condense'}
+                </Button>
               </Stack.Item>
             </Stack>
           </Section>
           <Stack.Item grow>
-            <TabComponent />
+            {tabIndex === Tab.Shopping && <ShoppingTab />}
+            {tabIndex === Tab.Checkout && <CheckoutTab />}
           </Stack.Item>
         </Stack>
       </Window.Content>
     </Window>
   );
-};
+}
