@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Fixed another(?) possible case of multitool APC searching causing broken huds"
