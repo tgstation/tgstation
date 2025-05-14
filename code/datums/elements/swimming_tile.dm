@@ -10,9 +10,9 @@
 	/// How fast do we kill people who collapse?
 	var/ticking_oxy_damage
 	/// Probability to exhaust our swimmer
-	var/exhaust_swimmer_prob = 30
+	var/exhaust_swimmer_prob
 
-/datum/element/swimming_tile/Attach(turf/target, stamina_entry_cost = 7, ticking_stamina_cost = 5, ticking_oxy_damage = 2)
+/datum/element/swimming_tile/Attach(turf/target, stamina_entry_cost = 7, ticking_stamina_cost = 5, ticking_oxy_damage = 2, exhaust_swimmer_prob = 30)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE
@@ -20,6 +20,7 @@
 	src.stamina_entry_cost = stamina_entry_cost
 	src.ticking_stamina_cost = ticking_stamina_cost
 	src.ticking_oxy_damage = ticking_oxy_damage
+	src.exhaust_swimmer_prob = exhaust_swimmer_prob
 
 	RegisterSignals(target, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON), PROC_REF(enter_water))
 	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(out_of_water))
