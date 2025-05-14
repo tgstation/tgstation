@@ -7,7 +7,8 @@
 	entered_area(parent, get_area(parent))
 
 /datum/component/planet_allergy/Destroy(force)
-	parent.remove_status_effect(/datum/status_effect/planet_allergy)
+	var/mob/living/as_living = parent
+	as_living.remove_status_effect(/datum/status_effect/planet_allergy)
 	return ..()
 
 /datum/component/planet_allergy/proc/entered_area(mob/living/parent, area/new_area)
