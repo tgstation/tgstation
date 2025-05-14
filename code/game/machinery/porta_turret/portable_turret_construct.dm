@@ -165,6 +165,8 @@
 					//fuck lasertag turrets
 					if(istype(installed_gun, /obj/item/gun/energy/laser/bluetag) || istype(installed_gun, /obj/item/gun/energy/laser/redtag))
 						turret = new/obj/machinery/porta_turret/lasertag(loc)
+					else if(user.faction.Find(FACTION_SAPPERS))
+						turret = new/obj/machinery/porta_turret/sapper(loc) //spawns a turret with faction/access data included
 					else
 						turret = new/obj/machinery/porta_turret(loc)
 					turret.name = finish_name

@@ -922,6 +922,18 @@ DEFINE_BITFIELD(turret_flags, list(
 	stun_projectile = /obj/projectile/kinetic/miner
 	stun_projectile_sound = 'sound/items/weapons/kinetic_accel.ogg'
 
+/obj/machinery/porta_turret/sapper
+	req_access = list(ACCESS_SAPPER_SHIP)
+	faction = list(FACTION_SAPPERS)
+
+/obj/machinery/porta_turret/sapper/assess_perp(mob/living/carbon/human/perp)
+	return 10 //shoot everything not in their faction
+
+/obj/machinery/porta_turret/sapper/shuttle
+	always_up = TRUE
+	use_power = NO_POWER_USE
+	mode = TURRET_STUN
+
 ////////////////////////
 //Turret Control Panel//
 ////////////////////////

@@ -75,6 +75,7 @@
 #define SECHUD_SYNDICATE "hudsyndicate"
 #define SECHUD_SYNDICATE_INTERDYNE "hudsyndicateinterdyne"
 #define SECHUD_SYNDICATE_INTERDYNE_HEAD "hudsyndicateinterdynehead"
+#define SECHUD_SAPPER "hudsapper"
 
 #define SECHUD_ASSISTANT "hudassistant"
 #define SECHUD_ATMOSPHERIC_TECHNICIAN "hudatmospherictechnician"
