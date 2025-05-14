@@ -1,0 +1,5 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - rscadd: "Nuke ops can now buy a keycard to access their new custodial closet!"
+  - map: "Rearranges nuke ordnance room, and adds the custodial closet"
