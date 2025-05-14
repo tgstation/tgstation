@@ -1,4 +1,4 @@
-GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department", "NT Complaint Department", "NT Customer Relations", "Nanotrasen Tech Support", "NT Internal Affairs Dept"))
+// GLOBAL_VAR_INIT(nt_fax_department, pick("NT HR Department", "NT Legal Department", "NT Complaint Department", "NT Customer Relations", "Nanotrasen Tech Support", "NT Internal Affairs Dept"))
 GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 
 /obj/machinery/fax
@@ -57,8 +57,8 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	)
 	/// List with a fake-networks(not a fax actually), for request manager.
 	var/list/special_networks = list(
-		nanotrasen = list(fax_name = "NT HR Department", fax_id = "central_command", color = "teal", emag_needed = FALSE),
-		syndicate = list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_needed = TRUE),
+//		nanotrasen = list(fax_name = "NT HR Department", fax_id = "central_command", color = "teal", emag_needed = FALSE),
+//		syndicate = list(fax_name = "Sabotage Department", fax_id = "syndicate", color = "red", emag_needed = TRUE),
 	)
 
 /obj/machinery/fax/auto_name
@@ -83,10 +83,10 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	name = "CentCom Fax Machine"
 
 /obj/machinery/fax/admin/Initialize(mapload)
-	if (!fax_name)
-		fax_name = "[GLOB.nt_fax_department]"
-	if(!fax_id)
-		fax_id = special_networks["nanotrasen"]["fax_id"]
+	// if (!fax_name)
+	// 	fax_name = "[GLOB.nt_fax_department]"
+	// if(!fax_id)
+	// 	fax_id = special_networks["nanotrasen"]["fax_id"]
 	name = "[fax_name] Fax Machine"
 	visible_to_network = FALSE
 	return ..()
@@ -99,7 +99,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		fax_name = "Unregistered fax " + fax_id
 	set_wires(new /datum/wires/fax(src))
 	register_context()
-	special_networks["nanotrasen"]["fax_name"] = GLOB.nt_fax_department
+	// special_networks["nanotrasen"]["fax_name"] = GLOB.nt_fax_department
 
 /obj/machinery/fax/Destroy()
 	QDEL_NULL(loaded_item_ref)

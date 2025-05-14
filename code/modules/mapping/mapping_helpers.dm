@@ -259,6 +259,18 @@
 		log_mapping("[src] at [AREACOORD(src)] tried to make [airlock] welded but it's already welded closed!")
 	airlock.welded = TRUE
 
+/obj/effect/mapping_helpers/airlock/reinforced
+	name = "airlock greater reinforced helper"
+
+/obj/effect/mapping_helpers/airlock/reinforced/payload(obj/machinery/door/airlock/airlock)
+	airlock.security_level = AIRLOCK_SECURITY_PLASTEEL
+
+/obj/effect/mapping_helpers/airlock/lesser_reinforced
+	name = "airlock lesser reinforced helper"
+
+/obj/effect/mapping_helpers/airlock/lesser_reinforced/payload(obj/machinery/door/airlock/airlock)
+	airlock.security_level = max(airlock.security_level, AIRLOCK_SECURITY_IRON)
+
 /obj/effect/mapping_helpers/airlock/cutaiwire
 	name = "airlock cut ai wire helper"
 	icon_state = "airlock_cutaiwire"

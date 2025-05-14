@@ -128,7 +128,7 @@
 			. += span_notice("Due to [SSsecurity_level.number_level_to_text(SEC_LEVEL_RED)] alert, its access requirements have been lifted!")
 		else
 			. += span_notice("On [SSsecurity_level.number_level_to_text(SEC_LEVEL_RED)] alert, its access requirements will automatically lift.")
-	if(bolt_sec_level)
+	if(bolt_sec_level != -1)
 		if(SSsecurity_level.get_current_level_as_number() >= bolt_sec_level)
 			. += span_notice("Due to [SSsecurity_level.number_level_to_text(bolt_sec_level)] alert, it has automatically unbolted!")
 		else

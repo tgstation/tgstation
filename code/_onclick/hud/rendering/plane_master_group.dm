@@ -106,6 +106,8 @@
 /datum/plane_master_group/proc/prep_plane_instance(atom/movable/screen/plane_master/instance)
 	return
 
+GLOBAL_VAR_INIT(forced_multiz_quality, 1)
+
 // It would be nice to setup parallaxing for stairs and things when doing this
 // So they look nicer. if you can't it's all good, if you think you can sanely look at monster's work
 // It's hard, and potentially expensive. be careful
@@ -133,7 +135,7 @@
 		scale_by = 1
 
 	var/list/offsets = list()
-	var/multiz_boundary = our_mob?.client?.prefs?.read_preference(/datum/preference/numeric/multiz_performance)
+	var/multiz_boundary = isnull(GLOB.forced_multiz_quality) ? our_mob?.client?.prefs?.read_preference(/datum/preference/numeric/multiz_performance) : GLOB.forced_multiz_quality
 
 	// We accept negatives so going down "zooms" away the drop above as it goes
 	for(var/offset in -SSmapping.max_plane_offset to SSmapping.max_plane_offset)
