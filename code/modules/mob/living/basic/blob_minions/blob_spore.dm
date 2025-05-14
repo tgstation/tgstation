@@ -6,6 +6,7 @@
 	desc = "A floating, fragile spore."
 	icon = 'icons/mob/nonhuman-player/blob.dmi'
 	icon_state = "blobpod"
+	base_icon_state = "blobpod"
 	icon_living = "blobpod"
 	health_doll_icon = "blobpod"
 	health = BLOBMOB_SPORE_HEALTH
@@ -16,7 +17,7 @@
 	verb_yell = "psychically screams"
 	melee_damage_lower = BLOBMOB_SPORE_DMG_LOWER
 	melee_damage_upper = BLOBMOB_SPORE_DMG_UPPER
-	obj_damage = 0
+	obj_damage = 10
 	attack_verb_continuous = "batters"
 	attack_verb_simple = "batter"
 	attack_sound = 'sound/items/weapons/genhit1.ogg'
@@ -24,8 +25,7 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	basic_mob_flags = DEL_ON_DEATH
 	ai_controller = /datum/ai_controller/basic_controller/blob_spore
-	/// Size of cloud produced from a dying spore
-	var/death_cloud_size = 1
+	death_cloud_size = BLOBMOB_CLOUD_NORMAL
 	/// Type of mob to create
 	var/mob/living/zombie_type = /mob/living/basic/blob_minion/zombie
 
@@ -33,18 +33,13 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 /mob/living/basic/blob_minion/spore/death(gibbed)
 	. = ..()
-	death_burst()
 
 /mob/living/basic/blob_minion/spore/on_factory_destroyed()
 	death()
-
-/// Create an explosion of spores on death
-/mob/living/basic/blob_minion/spore/proc/death_burst()
-	do_chem_smoke(range = death_cloud_size, holder = src, location = get_turf(src), reagent_type = /datum/reagent/toxin/spore)
-
 
 /mob/living/basic/blob_minion/spore/melee_attack(mob/living/carbon/human/target, list/modifiers, ignore_cooldown)
 	. = ..()
@@ -104,21 +99,35 @@
 	else
 		qdel(GetComponent(/datum/component/ghost_direct_control))
 
-/mob/living/basic/blob_minion/spore/minion/death_burst()
-	return // This behaviour is superseded by the overmind's intervention
-
 
 /// Weakened spore spawned by distributed neurons, can't zombify people and makes a teeny explosion
 /mob/living/basic/blob_minion/spore/minion/weak
 	name = "fragile blob spore"
-	health = 15
-	maxHealth = 15
-	melee_damage_lower = 1
-	melee_damage_upper = 2
-	death_cloud_size = 0
+	health = BLOBMOB_SPORE_HEALTH / 2
+	maxHealth = BLOBMOB_SPORE_HEALTH / 2
+	melee_damage_lower = BLOBMOB_SPORE_DMG_LOWER / 2
+	melee_damage_upper = BLOBMOB_SPORE_DMG_UPPER / 2
+	death_cloud_size = BLOBMOB_CLOUD_SMALL
+	obj_damage = 0
 
 /mob/living/basic/blob_minion/spore/minion/weak/zombify()
 	return
 
 /mob/living/basic/blob_minion/spore/minion/weak/on_strain_updated()
 	return
+
+/// independent spore spawned by cytology, extremely weak and shitty like all spores but exhibits a high degree of sentience in addition to the predatory nature of inherent to blob creatures.
+/mob/living/basic/blob_minion/spore/independent
+	//we hate gold cores
+	gold_core_spawnable = NO_SPAWN
+
+/mob/living/basic/blob_minion/spore/independent/Initialize(mapload)
+	. = ..()
+	//different ignore than sentience since we are not slaved but independent gigachad spore, ban type should probably also be different
+	AddComponent(\
+		/datum/component/ghost_direct_control,\
+		ban_type = ROLE_FREE_BLOB,\
+		poll_candidates = TRUE,\
+		poll_ignore_key = POLL_IGNORE_BLOB,\
+	)
+

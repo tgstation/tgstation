@@ -397,11 +397,11 @@
 	return TRUE
 
 /// Helper to quickly create a cloud of reagent smoke
-/proc/do_chem_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, log = FALSE)
+/proc/do_chem_smoke(range = 0, amount = DIAMOND_AREA(range), atom/holder = null, location = null, reagent_type = /datum/reagent/water, reagent_volume = 10, log = FALSE, datum/effect_system/fluid_spread/smoke/chem/smoke_type = /datum/effect_system/fluid_spread/smoke/chem)
 	var/datum/reagents/smoke_reagents = new/datum/reagents(reagent_volume)
 	smoke_reagents.add_reagent(reagent_type, reagent_volume)
 
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
+	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new smoke_type
 	smoke.attach(location)
 	smoke.set_up(amount = amount, holder = holder, location = location, carry = smoke_reagents, silent = TRUE)
 	smoke.start(log = log)
@@ -470,3 +470,12 @@
 
 /datum/effect_system/fluid_spread/smoke/chem/quick
 	effect_type = /obj/effect/particle_effect/fluid/smoke/chem/quick
+
+/**
+ * A version of chemical smoke with a intermediate lifespan.
+ */
+/obj/effect/particle_effect/fluid/smoke/chem/medium
+	lifetime = 8 SECONDS
+
+/datum/effect_system/fluid_spread/smoke/chem/medium
+	effect_type = /obj/effect/particle_effect/fluid/smoke/chem/medium

@@ -189,13 +189,6 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /// Add something to our list of mobs and wait for it to die
 /mob/eye/blob/proc/register_new_minion(mob/living/minion)
 	blob_mobs |= minion
-	if (!istype(minion, /mob/living/basic/blob_minion/blobbernaut))
-		RegisterSignal(minion, COMSIG_LIVING_DEATH, PROC_REF(on_minion_death))
-
-/// When a spore (or zombie) dies then we do this
-/mob/eye/blob/proc/on_minion_death(mob/living/spore)
-	SIGNAL_HANDLER
-	blobstrain.on_sporedeath(spore)
 
 /mob/eye/blob/proc/victory()
 	sound_to_playing_players('sound/announcer/alarm/nuke_alarm.ogg', 70)

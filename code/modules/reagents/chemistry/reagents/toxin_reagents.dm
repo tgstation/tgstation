@@ -443,6 +443,26 @@
 	ph = 11
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
+/datum/reagent/toxin/spore/on_transfer(atom/A, methods, trans_volume)
+	. = ..()
+	if(!isliving(A))
+		return
+
+	if(!(methods & INHALE))
+		return
+
+	var/mob/living/spore_lung_victim = A
+
+	if(!(spore_lung_victim.mob_biotypes & (MOB_HUMANOID | MOB_BEAST)))
+		return
+
+	world.log << "spore toxin inhaled: [trans_volume]u"
+	if(prob(min(trans_volume * 10, 70)))
+		to_chat(spore_lung_victim, span_danger("[pick("You have a coughing fit!", "You hack and cough!", "Your lungs burn!")]"))
+		spore_lung_victim.Stun(10)
+		spore_lung_victim.emote("cough")
+
+
 /datum/reagent/toxin/spore/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.damageoverlaytemp = 60

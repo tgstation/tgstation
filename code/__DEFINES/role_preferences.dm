@@ -69,6 +69,7 @@
 #define ROLE_SOULTRAPPED_HERETIC "Soultrapped Heretic"
 #define ROLE_SYNDICATE "Syndicate"
 #define ROLE_EXPERIMENTAL_CLONER "Experimental Cloner"
+#define ROLE_FREE_BLOB "Free Blob"
 
 #define ROLE_CLOWN_OPERATIVE "Clown Operative"
 #define ROLE_FREE_GOLEM "Free Golem"

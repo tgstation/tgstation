@@ -331,3 +331,7 @@
 	Move(get_step(src, dir), dir)
 	animate(src, pixel_y = 18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_OUT)
 	animate(pixel_y = -18, time = 0.4 SECONDS, flags = ANIMATION_RELATIVE, easing = CUBIC_EASING|EASE_IN)
+
+///ovverride to add mob specific cytology mutation effects, returns TRUE if we added a mob specific mutation
+/mob/living/basic/proc/mutate()
+	return FALSE

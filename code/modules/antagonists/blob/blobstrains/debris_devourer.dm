@@ -1,4 +1,5 @@
 #define DEBRIS_DENSITY (length(core.contents) / (length(overmind.blobs_legit) * 0.25)) // items per blob
+#define SPORE_TRASH_COUNT 3
 
 // Accumulates junk liberally
 /datum/blobstrain/debris_devourer
@@ -18,9 +19,20 @@
 		debris_attack(L, blob)
 
 /datum/blobstrain/debris_devourer/on_sporedeath(mob/living/spore)
-	var/obj/structure/blob/special/core/core = overmind.blob_core
-	for(var/i in 1 to 3)
-		var/obj/item/I = pick(core.contents)
+	var/list/trash_list = list()
+
+	if(overmind)
+		var/obj/structure/blob/special/core/core = overmind.blob_core
+		for(var/i in 1 to SPORE_TRASH_COUNT)
+			trash_list +=  pick(core.contents)
+	else
+		for(var/i in 1 to SPORE_TRASH_COUNT)
+			new /obj/effect/spawner/random/trash/garbage(spore)
+			trash_list += pick(spore.contents)
+
+
+	for(var/i in 1 to SPORE_TRASH_COUNT)
+		var/obj/item/I = pick_n_take(trash_list)
 		if (I && !QDELETED(I))
 			I.forceMove(get_turf(spore))
 			I.throw_at(get_edge_target_turf(spore,pick(GLOB.alldirs)), 6, 5, spore, TRUE, FALSE, null, 3)
@@ -61,3 +73,4 @@
 				. += span_notice("Absorbed debris is currently reducing incoming damage by a medium amount.")
 
 #undef DEBRIS_DENSITY
+#undef SPORE_TRASH_COUNT

@@ -63,9 +63,8 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	var/blobbernaut_reagentatk_bonus = 0
 
 /datum/blobstrain/New(mob/eye/blob/new_overmind)
-	if (!istype(new_overmind))
-		stack_trace("blobstrain created without overmind")
-	overmind = new_overmind
+	if(new_overmind)
+		overmind = new_overmind
 
 /datum/blobstrain/Destroy()
 	overmind = null

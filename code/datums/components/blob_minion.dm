@@ -57,6 +57,7 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_SPACEMOVE, PROC_REF(on_space_move))
 	RegisterSignal(parent, COMSIG_MOB_TRY_SPEECH, PROC_REF(on_try_speech))
 	RegisterSignal(parent, COMSIG_MOB_CHANGED_TYPE, PROC_REF(on_transformed))
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	living_parent.update_appearance(UPDATE_ICON)
 	GLOB.blob_telepathy_mobs |= parent
 
@@ -92,10 +93,23 @@
 /// When our icon is updated, update our colour too
 /datum/component/blob_minion/proc/on_update_appearance(mob/living/minion)
 	SIGNAL_HANDLER
-	if(isnull(overmind))
+	var/strain_color
+
+	if(overmind)
+		strain_color = overmind.blobstrain.color
+	else if(istype(minion, /mob/living/basic/blob_minion))
+		var/mob/living/basic/blob_minion/colorful_blobber = minion
+		strain_color = colorful_blobber.independent_strain?.color
+		//No strain or overmind? We are on our own and get to enjoy the classic orange look, which frankly, many people are saying is the best!
+		//If I had removed it they'd all be messaging me, people like you wouldn't believe, tough, real tough people, they'd be messaging me with tears in their eyes; "Sir, sir please bring it back!"
+		if(!colorful_blobber.independent_strain)
+			colorful_blobber.icon_state = "[colorful_blobber.base_icon_state]_independent"
+			return
+
+	if(strain_color)
+		minion.add_atom_colour(strain_color, FIXED_COLOUR_PRIORITY)
+	else
 		minion.remove_atom_colour(FIXED_COLOUR_PRIORITY)
-		return
-	minion.add_atom_colour(overmind.blobstrain.color, FIXED_COLOUR_PRIORITY)
 
 /// When our icon is updated, update our colour too
 /datum/component/blob_minion/proc/on_update_status_tab(mob/living/minion, list/status_items)
@@ -153,3 +167,24 @@
 /datum/component/blob_minion/PostTransfer(datum/new_parent)
 	if(!isliving(new_parent))
 		return COMPONENT_INCOMPATIBLE
+
+/datum/component/blob_minion/proc/on_death(mob/living/minion)
+	SIGNAL_HANDLER
+
+	var/cloud_size = BLOBMOB_CLOUD_NORMAL
+
+	if(istype(minion, /mob/living/basic/blob_minion))
+		var/mob/living/basic/blob_minion/dead_blobber = minion
+		//if no cloud size, we should not have any kind of death burst effect
+		if(dead_blobber.death_cloud_size <= BLOBBMOB_CLOUD_NONE)
+			return
+		cloud_size = dead_blobber.death_cloud_size
+
+		if(overmind)
+			overmind.blobstrain.on_sporedeath(dead_blobber)
+			return
+		else if(dead_blobber.independent_strain)
+			dead_blobber.independent_strain.on_sporedeath(dead_blobber)
+			return
+
+	do_chem_smoke(range = cloud_size, holder = minion, location = get_turf(minion), reagent_type = /datum/reagent/toxin/spore, reagent_volume = BLOBMOB_CLOUD_REAGENT_VOLUME, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/medium)

@@ -18,11 +18,20 @@
 	lighting_cutoff_blue = 30
 	initial_language_holder = /datum/language_holder/empty
 	can_buckle_to = FALSE
+	/// Size of cloud produced from a dying spore
+	var/death_cloud_size = BLOBBMOB_CLOUD_NONE
+	///For independant blob minions it is here we store out strain data, does nothing for overmind controlled blobbers.
+	var/datum/blobstrain/independent_strain
+	var/list/loot = list(/obj/item/food/spore_sack)
 
 /mob/living/basic/blob_minion/Initialize(mapload)
 	. = ..()
 	add_traits(list(TRAIT_BLOB_ALLY, TRAIT_MUTE), INNATE_TRAIT)
 	AddComponent(/datum/component/blob_minion, on_strain_changed = CALLBACK(src, PROC_REF(on_strain_updated)))
+
+	if(length(loot))
+		loot = string_list(loot)
+		AddElement(/datum/element/death_drops, loot)
 
 /// Called when our blob overmind changes their variant, update some of our mob properties
 /mob/living/basic/blob_minion/proc/on_strain_updated(mob/eye/blob/overmind, datum/blobstrain/new_strain)
@@ -36,3 +45,18 @@
 /mob/living/basic/blob_minion/proc/on_factory_destroyed()
 	SIGNAL_HANDLER
 	to_chat(src, span_userdanger("Your factory was destroyed! You feel yourself dying!"))
+
+///adds strain and sets strain characteristics for independent blob minions
+/mob/living/basic/blob_minion/proc/independently_strainoflavorize(datum/blobstrain/new_strain)
+	independent_strain = new new_strain
+	name = "[lowertext(independent_strain.name)] [name]"
+	maxHealth *= independent_strain.max_mob_health_multiplier
+	health *= independent_strain.max_mob_health_multiplier
+	update_appearance()
+
+/mob/living/basic/blob_minion/mutate()
+	. = ..()
+	if(independent_strain)
+		return
+	independently_strainoflavorize(pick(GLOB.valid_blobstrains))
+	return TRUE
