@@ -284,6 +284,8 @@
 	if(.)
 		return
 
+	var/obj/item/card/id/advanced/user_card = astype(usr, /mob/living)?.get_idcard()
+
 	switch (action)
 		if("remove_mat")
 			var/datum/material/material = locate(params["ref"])
@@ -303,7 +305,7 @@
 				say("No power to dispense sheets")
 				return
 
-			materials.eject_sheets(material, amount)
+			materials.eject_sheets(material_ref = material, eject_amount = amount, user = usr)
 			return TRUE
 
 		if("build")
@@ -338,7 +340,7 @@
 			var/coefficient = build_efficiency(design.build_path)
 
 			//check for materials
-			if(!materials.can_use_resource())
+			if(!materials.can_use_resource(user = usr))
 				return
 			if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
 				say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
@@ -405,8 +407,7 @@
 		finalize_build()
 		return
 
-	if(!materials.can_use_resource())
-		say("Unable to continue production, materials on hold.")
+	if(!materials.can_use_resource(user = usr))
 		finalize_build()
 		return
 
@@ -416,7 +417,7 @@
 		say("Unable to continue production, missing materials.")
 		finalize_build()
 		return
-	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "built", "[design.name]")
+	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "built", "[design.name]", user = usr)
 
 	var/atom/movable/created
 	if(is_stack)

@@ -1702,13 +1702,13 @@
 			return ITEM_INTERACT_BLOCKING
 
 		var/mob/living/carbon/human/human_target = interacting_with
-		var/list/target_id_cards = human_target.get_all_contents_type(/obj/item/card/id)
+		var/list/target_idcards = human_target.get_all_contents_type(/obj/item/card/id)
 
-		if(!length(target_id_cards))
+		if(!length(target_idcards))
 			interacting_with.balloon_alert(user, "no IDs!")
 			return ITEM_INTERACT_BLOCKING
 
-		var/selected_id = pick(target_id_cards)
+		var/selected_id = pick(target_idcards)
 		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
@@ -1719,17 +1719,17 @@
 
 		interacting_with.balloon_alert(user, "scanning ID card...")
 
-		var/list/target_id_cards = target_item.get_all_contents_type(/obj/item/card/id)
+		var/list/target_idcards = target_item.get_all_contents_type(/obj/item/card/id)
 		var/target_item_id = target_item.GetID()
 
 		if(target_item_id)
-			target_id_cards |= target_item_id
+			target_idcards |= target_item_id
 
-		if(!length(target_id_cards))
+		if(!length(target_idcards))
 			interacting_with.balloon_alert(user, "no IDs!")
 			return ITEM_INTERACT_BLOCKING
 
-		var/selected_id = pick(target_id_cards)
+		var/selected_id = pick(target_idcards)
 		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
 		theft_target = WEAKREF(selected_id)
 		ui_interact(user)
