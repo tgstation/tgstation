@@ -624,7 +624,7 @@
  * Argument:
  * * hand_firsts - boolean that checks the hands of the mob first if TRUE.
  */
-/mob/living/proc/get_idcard(hand_first)
+/mob/living/proc/get_idcard(hand_first) as /obj/item/card/id
 	if(!length(held_items)) //Early return for mobs without hands.
 		return
 	//Check hands
@@ -639,7 +639,7 @@
 /**
  * Returns the access list for this mob
  */
-/mob/living/proc/get_access()
+/mob/living/proc/get_access() as list
 	var/list/access_list = list()
 	SEND_SIGNAL(src, COMSIG_MOB_RETRIEVE_SIMPLE_ACCESS, access_list)
 	var/obj/item/card/id/id = get_idcard()
