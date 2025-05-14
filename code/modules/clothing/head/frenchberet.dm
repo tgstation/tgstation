@@ -7,13 +7,13 @@
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("french_replacement.json", "french"), end_string = list(" Honh honh honh!"," Honh!"," Zut Alors!"), end_string_chance = 3, slots = ITEM_SLOT_HEAD)
 
-/obj/item/clothing/head/beret/frenchberet/equipped(mob/M, slot)
+/obj/item/clothing/head/beret/frenchberet/equipped(mob/user, slot, initial)
 	. = ..()
 	if (slot & ITEM_SLOT_HEAD)
 		ADD_TRAIT(M, TRAIT_GARLIC_BREATH, type)
 	else
 		REMOVE_TRAIT(M, TRAIT_GARLIC_BREATH, type)
 
-/obj/item/clothing/head/beret/frenchberet/dropped(mob/M)
+/obj/item/clothing/head/beret/frenchberet/dropped(mob/user, silent)
 	. = ..()
 	REMOVE_TRAIT(M, TRAIT_GARLIC_BREATH, type)
