@@ -189,42 +189,40 @@
 	icon_state = "mecha_pyrogun"
 	projectile = /obj/projectile/energy/inferno
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right)
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo/try_attach_part(mob/user, var/obj/vehicle/sealed/mecha/themech, attach_right)
 	var/has_molten = FALSE
-	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/I in M.flat_equipment)
-		if (istype(I, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
-			to_chat(user, span_warning("[M] already has [I] installed!"))
+	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
+		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
+			to_chat(user, span_warning("[themech] already has [thegun] installed!"))
 			return FALSE
-		if (istype(I, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
+		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
 			has_molten = TRUE
 	if (has_molten)
-		for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/I in M.flat_equipment)
-			if (istype(I, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
-				I.equip_cooldown = 8
-		src.equip_cooldown = 8
+		for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
+			if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
+				thegun.equip_cooldown = 8
+		equip_cooldown = 8
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right)
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno/try_attach_part(mob/user, var/obj/vehicle/sealed/mecha/themech, attach_right)
 	var/has_cryo = FALSE
-	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/I in M.flat_equipment)
-		if (istype(I, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
-			to_chat(user, span_warning("[M] already has [I] installed!"))
+	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
+		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/inferno))
+			to_chat(user, span_warning("[themech] already has [thegun] installed!"))
 			return FALSE
-		if (istype(I, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
+		if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
 			has_cryo = TRUE
 	if (has_cryo)
-		for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/I in M.flat_equipment)
-			if (istype(I, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
-				I.equip_cooldown = 8
-		src.equip_cooldown = 8
+		for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thegun in themech.flat_equipment)
+			if (istype(thegun, /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/cryo))
+				thegun.equip_cooldown = 8
+		equip_cooldown = 8
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/detach(atom/moveto)
-	var/obj/vehicle/sealed/mecha/M = src.loc
+	for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/thermal_gun in chassis.flat_equipment)
+		thermal_gun.equip_cooldown = 20
 	. = ..()
-	if (istype(M))
-		for (var/obj/item/mecha_parts/mecha_equipment/weapon/energy/thermal/I in M.flat_equipment)
-			I.equip_cooldown = 20
 
 //Exosuit-mounted kinetic accelerator
 /obj/item/mecha_parts/mecha_equipment/weapon/energy/mecha_kineticgun
