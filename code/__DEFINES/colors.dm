@@ -506,3 +506,8 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 #define CLIENT_COLOR_TEMPORARY_PRIORITY 5 // Temporary flashing effects
 #define CLIENT_COLOR_IMPORTANT_PRIORITY 6 // Gameplay important hints signifying antag status or near-death, should be always shown
 #define CLIENT_COLOR_OVERRIDE_PRIORITY 7 // For effects that are meant to mask all others for technical reasons
+
+//Luma coefficients suggested for HDTVs. If you change these, make sure they add up to 1.
+#define LUMA_R 0.213
+#define LUMA_G 0.715
+#define LUMA_B 0.072

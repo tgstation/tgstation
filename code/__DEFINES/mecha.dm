@@ -60,3 +60,7 @@
 #define MECHA_AMMO_PUNCHING_GLOVE "Punching glove"
 #define MECHA_AMMO_BANANA_PEEL "Banana peel"
 #define MECHA_AMMO_MOUSETRAP "Mousetrap"
+
+/// Values to determine the effects on a mech should it suffer an EMP
+#define MECH_EMP_DAMAGE_LOWER 100
+#define MECH_EMP_DAMAGE_UPPER 180

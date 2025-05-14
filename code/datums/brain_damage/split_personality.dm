@@ -275,7 +275,7 @@
 
 	RegisterSignal(owner, COMSIG_ATOM_SPLASHED, PROC_REF(on_splashed))
 	notify_ghosts(
-		"[owner] is blacking out!",
+		"[owner.real_name] is blacking out!",
 		source = owner,
 		header = "Bro I'm not even drunk right now",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,

@@ -1,4 +1,0 @@
-author: "Pepsilawn"
-delete-after: True
-changes:
-  - bugfix: "Fixes bins and chutes that did not have a trunk, and adds a maplint for it."
