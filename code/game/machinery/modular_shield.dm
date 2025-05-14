@@ -175,7 +175,7 @@
 		radius = initial(radius)
 	active = TRUE
 	initiating = TRUE
-
+	var/color_shield = cached_color_filter || color
 	if(radius >= 10) //the shield is large so we are going to use the midpoint formula and clamp it to the lowest full number in order to save processing power
 		LAZYADD(inside_shield, circle_range_turfs(src, radius - 1))//in the future we might want to apply an effect to turfs inside the shield
 		LAZYADD(list_of_turfs, get_perimeter(src, radius))
@@ -189,7 +189,8 @@
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 				deploying_shield.shield_generator = src
 				LAZYADD(deployed_shields, deploying_shield)
-
+				if(color_shield)
+					deploying_shield.add_atom_colour(cached_color_filter || color, FIXED_COLOUR_PRIORITY)
 			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 			calculate_regeneration()
 			return
@@ -200,6 +201,8 @@
 			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 			deploying_shield.shield_generator = src
 			LAZYADD(deployed_shields, deploying_shield)
+			if(color_shield)
+				deploying_shield.add_atom_colour(cached_color_filter || color, FIXED_COLOUR_PRIORITY)
 
 		addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
@@ -218,6 +221,8 @@
 			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 			deploying_shield.shield_generator = src
 			LAZYADD(deployed_shields, deploying_shield)
+			if(color_shield)
+				deploying_shield.add_atom_colour(cached_color_filter || color, FIXED_COLOUR_PRIORITY)
 
 		addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
@@ -231,6 +236,8 @@
 		var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 		deploying_shield.shield_generator = src
 		LAZYADD(deployed_shields, deploying_shield)
+		if(color_shield)
+			deploying_shield.add_atom_colour(cached_color_filter || color, FIXED_COLOUR_PRIORITY)
 
 	addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 	calculate_regeneration()
