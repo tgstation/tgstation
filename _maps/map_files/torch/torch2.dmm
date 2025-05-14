@@ -17410,14 +17410,6 @@
 	},
 /turf/open/space/openspace,
 /area/space)
-"hGb" = (
-/obj/effect/turf_decal/delivery,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "fst_lockdown_shutters";
-	name = "Lockdown Shutters"
-	},
-/turf/open/floor/iron,
-/area/station/hallway/floor1/fore)
 "hGo" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/duct,
@@ -82931,7 +82923,7 @@ aUx
 qCQ
 fnA
 kGD
-hGb
+muo
 cSG
 muo
 sHd

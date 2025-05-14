@@ -125,14 +125,14 @@
 	. = ..()
 	if(red_alert_access)
 		if(SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
-			. += span_notice("Due to [SSsecurity_level.number_level_to_text(SEC_LEVEL_RED)], its access requirements have been lifted!")
+			. += span_notice("Due to [SSsecurity_level.number_level_to_text(SEC_LEVEL_RED)] alert, its access requirements have been lifted!")
 		else
-			. += span_notice("On [SSsecurity_level.number_level_to_text(SEC_LEVEL_RED)], its access requirements will automatically lift.")
+			. += span_notice("On [SSsecurity_level.number_level_to_text(SEC_LEVEL_RED)] alert, its access requirements will automatically lift.")
 	if(bolt_sec_level)
 		if(SSsecurity_level.get_current_level_as_number() >= bolt_sec_level)
-			. += span_notice("Due to [SSsecurity_level.number_level_to_text(bolt_sec_level)], it has automatically unbolted!")
+			. += span_notice("Due to [SSsecurity_level.number_level_to_text(bolt_sec_level)] alert, it has automatically unbolted!")
 		else
-			. += span_notice("On [SSsecurity_level.number_level_to_text(bolt_sec_level)], it will automatically unbolt.")
+			. += span_notice("On [SSsecurity_level.number_level_to_text(bolt_sec_level)] alert, it will automatically unbolt.")
 	if(has_access_panel)
 		. += span_notice("Its maintenance panel is [panel_open ? "open" : "<b>screwed</b> in place"].")
 
