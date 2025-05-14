@@ -10,7 +10,7 @@
 	/// How fast do we kill people who collapse?
 	var/ticking_oxy_damage
 
-/datum/element/swimming_tile/Attach(turf/target, stamina_entry_cost = 25, ticking_stamina_cost = 15, ticking_oxy_damage = 2)
+/datum/element/swimming_tile/Attach(turf/target, stamina_entry_cost = 7, ticking_stamina_cost = 5, ticking_oxy_damage = 2)
 	. = ..()
 	if(!isturf(target))
 		return ELEMENT_INCOMPATIBLE

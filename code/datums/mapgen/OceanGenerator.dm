@@ -5,11 +5,11 @@
 	)
 
 	weighted_flora_spawn_list = list(
-		/obj/structure/flora/bush/reed/style_random = 4,
-		/obj/structure/flora/bush/leavy/style_random = 2,
+		/obj/structure/flora/bush/reed/style_random = 8,
+		/obj/structure/flora/bush/leavy/style_random = 4,
 		/obj/structure/flora/rock/icy/style_random = 1,
-		/obj/structure/flora/rock/pile/icy/style_random = 2,
-		/obj/structure/flora/bush/sparsegrass/style_random = 12,
+		/obj/structure/flora/rock/pile/icy/style_random = 4,
+		/obj/structure/flora/bush/sparsegrass/style_random = 24,
 	)
 
 	///Note that this spawn list is also in the lavaland generator
