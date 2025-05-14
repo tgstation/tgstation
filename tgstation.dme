@@ -1892,6 +1892,7 @@
 #include "code\datums\records\record.dm"
 #include "code\datums\ruins\icemoon.dm"
 #include "code\datums\ruins\lavaland.dm"
+#include "code\datums\ruins\rainworld.dm"
 #include "code\datums\ruins\space.dm"
 #include "code\datums\screentips\atom_context.dm"
 #include "code\datums\screentips\item_context.dm"

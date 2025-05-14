@@ -455,6 +455,20 @@
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
 	)
 
+/turf/closed/mineral/random/snow/wet
+	name = "snowy mountainside"
+	icon = MAP_SWITCH('icons/turf/mining.dmi', 'icons/turf/walls/rock_wall.dmi')
+	icon_state = "rock_wall"
+	base_icon_state = "rock_wall"
+	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
+	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
+	defer_change = TRUE
+	turf_type = /turf/open/misc/asteroid/snow/icemoon
+	baseturfs = /turf/open/misc/asteroid/snow/icemoon
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	weak_turf = TRUE
+	proximity_based = TRUE
+
 /// Near exact same subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
 /turf/closed/mineral/snowmountain/do_not_chasm
 	turf_type = /turf/open/misc/asteroid/snow/icemoon/do_not_chasm
