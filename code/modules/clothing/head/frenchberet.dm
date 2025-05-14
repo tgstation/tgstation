@@ -10,10 +10,10 @@
 /obj/item/clothing/head/beret/frenchberet/equipped(mob/user, slot, initial)
 	. = ..()
 	if (slot & ITEM_SLOT_HEAD)
-		ADD_TRAIT(M, TRAIT_GARLIC_BREATH, type)
+		ADD_TRAIT(user, TRAIT_GARLIC_BREATH, type)
 	else
-		REMOVE_TRAIT(M, TRAIT_GARLIC_BREATH, type)
+		REMOVE_TRAIT(user, TRAIT_GARLIC_BREATH, type)
 
 /obj/item/clothing/head/beret/frenchberet/dropped(mob/user, silent)
 	. = ..()
-	REMOVE_TRAIT(M, TRAIT_GARLIC_BREATH, type)
+	REMOVE_TRAIT(user, TRAIT_GARLIC_BREATH, type)
