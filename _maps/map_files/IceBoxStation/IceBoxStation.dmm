@@ -462,6 +462,22 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/qm)
+"aiU" = (
+/obj/item/book/manual/wiki/barman_recipes{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/obj/item/rag,
+/obj/structure/table/wood,
+/obj/item/holosign_creator/robot_seat/bar{
+	pixel_y = 6
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/box/white/corners{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/bar)
 "aiX" = (
 /turf/open/floor/iron,
 /area/station/security/courtroom)
@@ -3541,17 +3557,6 @@
 /mob/living/simple_animal/bot/secbot/beepsky,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
-"aXr" = (
-/obj/effect/spawner/random/structure/table_fancy,
-/obj/structure/sign/painting/library_secure{
-	pixel_x = 32
-	},
-/obj/machinery/door/window/right/directional/west{
-	name = "Secure Art Exhibition";
-	req_access = list("library")
-	},
-/turf/open/floor/wood,
-/area/station/service/library)
 "aXG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -16231,10 +16236,6 @@
 /obj/item/toy/sword,
 /turf/open/floor/iron/checker,
 /area/station/maintenance/port/fore)
-"eAg" = (
-/obj/effect/spawner/structure/window/reinforced/tinted,
-/turf/closed/wall,
-/area/station/security/prison/toilet)
 "eAh" = (
 /obj/machinery/power/smes,
 /obj/structure/cable,
@@ -20053,6 +20054,19 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
+"fHr" = (
+/obj/structure/table/wood,
+/obj/item/rag,
+/obj/item/clothing/head/collectable/tophat{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/effect/spawner/random/entertainment/gambling{
+	pixel_x = -13
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/wood,
+/area/station/maintenance/fore)
 "fHv" = (
 /obj/effect/spawner/random/structure/tank_holder,
 /obj/effect/decal/cleanable/dirt,
@@ -44435,22 +44449,6 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
-"mIl" = (
-/obj/item/book/manual/wiki/barman_recipes{
-	pixel_x = 5;
-	pixel_y = 6
-	},
-/obj/item/rag,
-/obj/structure/table/wood,
-/obj/item/holosign_creator/robot_seat/bar{
-	pixel_y = 6
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/turf_decal/box/white/corners{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/station/service/bar)
 "mIs" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -47871,14 +47869,6 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/iron/checker,
 /area/station/maintenance/port/fore)
-"nFK" = (
-/obj/machinery/photocopier/prebuilt,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/textured,
-/area/station/security/office)
 "nFL" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/external,
@@ -48130,6 +48120,17 @@
 "nKa" = (
 /turf/closed/wall,
 /area/station/security/checkpoint/medical)
+"nKb" = (
+/obj/effect/spawner/random/structure/table_fancy,
+/obj/structure/sign/painting/library_secure{
+	pixel_x = 32
+	},
+/obj/machinery/door/window/right/directional/west{
+	name = "Secure Art Exhibition";
+	req_access = list("library")
+	},
+/turf/open/floor/wood,
+/area/station/service/library)
 "nKk" = (
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 8
@@ -64564,6 +64565,10 @@
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
+"slS" = (
+/obj/effect/spawner/structure/window/reinforced/tinted,
+/turf/open/floor/plating,
+/area/station/security/prison/toilet)
 "slX" = (
 /obj/structure/fans/tiny,
 /obj/effect/turf_decal/stripes/red/box,
@@ -65670,6 +65675,14 @@
 	},
 /turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"sAj" = (
+/obj/machinery/photocopier/prebuilt,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured,
+/area/station/security/office)
 "sAt" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/snack,
@@ -67205,13 +67218,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/fore/lesser)
-"sXH" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/item/rag,
-/turf/open/floor/iron,
-/area/station/maintenance/starboard/fore)
 "sXK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -73027,19 +73033,6 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
-"uIs" = (
-/obj/structure/table/wood,
-/obj/item/rag,
-/obj/item/clothing/head/collectable/tophat{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/obj/effect/spawner/random/entertainment/gambling{
-	pixel_x = -13
-	},
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/wood,
-/area/station/maintenance/fore)
 "uIx" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
@@ -76479,6 +76472,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/heads_quarters/rd)
+"vKc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/item/rag,
+/turf/open/floor/iron,
+/area/station/maintenance/starboard/fore)
 "vKk" = (
 /obj/machinery/vending/security,
 /turf/open/floor/iron/smooth_edge,
@@ -109117,8 +109117,8 @@ thA
 thA
 thA
 uOb
-eAg
-eAg
+slS
+slS
 yiz
 lBR
 fZq
@@ -109631,8 +109631,8 @@ thA
 thA
 thA
 uOb
-eAg
-eAg
+slS
+slS
 nHs
 lBR
 oWe
@@ -110145,8 +110145,8 @@ thA
 thA
 thA
 uOb
-eAg
-eAg
+slS
+slS
 kXO
 lBR
 jbb
@@ -244561,7 +244561,7 @@ bln
 lbc
 nbp
 jOS
-nFK
+sAj
 dlK
 pbI
 jIm
@@ -249213,7 +249213,7 @@ fhz
 skl
 jVb
 tnP
-uIs
+fHr
 jOQ
 skl
 dnk
@@ -252572,7 +252572,7 @@ gJD
 kKL
 jOC
 uWy
-mIl
+aiU
 byJ
 mNP
 foI
@@ -258476,7 +258476,7 @@ weF
 pEc
 kKL
 moF
-sXH
+vKc
 kKL
 pQa
 wWo
@@ -262336,7 +262336,7 @@ pzV
 uZn
 kKL
 jbz
-aXr
+nKb
 god
 xse
 iQQ

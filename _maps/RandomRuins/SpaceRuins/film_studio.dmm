@@ -80,6 +80,19 @@
 	dir = 8
 	},
 /area/ruin/space/has_grav/film_studio/starboard)
+"bu" = (
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table,
+/obj/item/rag,
+/obj/item/reagent_containers/cup/glass/bottle/beer{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/siding/dark_green{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/film_studio/dorms)
 "bx" = (
 /obj/structure/railing/corner/end/flip,
 /turf/open/floor/iron/white/smooth_large,
@@ -114,10 +127,6 @@
 /obj/machinery/light/dim/directional/east,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
-"cx" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/ruin/space/has_grav/film_studio/solars)
 "cC" = (
 /obj/machinery/door/window/right/directional/west,
 /turf/open/floor/pod/light,
@@ -1937,19 +1946,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/smooth,
 /area/ruin/space/has_grav/film_studio/dorms)
-"HO" = (
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/table,
-/obj/item/rag,
-/obj/item/reagent_containers/cup/glass/bottle/beer{
-	pixel_x = 5;
-	pixel_y = -2
-	},
-/obj/effect/turf_decal/siding/dark_green{
-	dir = 8
-	},
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/film_studio/dorms)
 "HT" = (
 /obj/structure/table,
 /obj/item/modular_computer/laptop,
@@ -2094,10 +2090,6 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/film_studio/starboard)
-"KS" = (
-/obj/machinery/photocopier/prebuilt,
-/turf/open/floor/iron/grimy,
-/area/ruin/space/has_grav/film_studio/director)
 "KV" = (
 /turf/closed/wall,
 /area/ruin/space/has_grav/film_studio)
@@ -2892,6 +2884,10 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/backstage)
+"Xk" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron/grimy,
+/area/ruin/space/has_grav/film_studio/director)
 "Xl" = (
 /obj/structure/rack,
 /obj/item/mop{
@@ -3955,7 +3951,7 @@ MU
 hY
 XK
 tq
-HO
+bu
 XY
 vD
 LG
@@ -5250,7 +5246,7 @@ dd
 dd
 BK
 BK
-cx
+BK
 fu
 uc
 Ei
@@ -5386,7 +5382,7 @@ cY
 YV
 hZ
 RO
-KS
+Xk
 kV
 Ed
 rw

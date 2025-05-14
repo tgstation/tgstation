@@ -1,5 +1,6 @@
 // Add 'walkies' as valid input
 /datum/pet_command/follow/dog
+	activate_on_befriend = TRUE
 	speech_commands = list("heel", "follow", "walkies")
 
 // Add 'good dog' as valid input

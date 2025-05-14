@@ -1,4 +1,0 @@
-author: "Goat-Real"
-delete-after: True
-changes:
-  - balance: "Ice whelps' fire breath attack has slightly more delay. (0.5 -> 0.6 second startup, 0.75 -> 0.85 decisecond for the speed the fire moves per tile.)"
