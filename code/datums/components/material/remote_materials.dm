@@ -63,8 +63,7 @@ handles linking back and forth.
 	if (connect_to_silo)
 		silo = GLOB.ore_silo_default
 		if (silo)
-			silo.ore_connected_machines += src
-			mat_container = silo.materials
+			silo.connect_receptacle(src, parent)
 			if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 				RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 				RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))
@@ -76,7 +75,6 @@ handles linking back and forth.
 	if(silo)
 		allow_standalone = FALSE
 		disconnect_from(silo)
-	mat_container = null
 
 	return ..()
 
@@ -126,9 +124,7 @@ handles linking back and forth.
 		return
 
 	UnregisterSignal(parent, list(COMSIG_ATOM_ITEM_INTERACTION, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY))
-	silo.ore_connected_machines -= src
-	silo = null
-	mat_container = null
+	silo.disconnect_receptacle(src, parent)
 
 	if (allow_standalone)
 		_MakeLocal()
@@ -148,8 +144,7 @@ handles linking back and forth.
 		var/obj/machinery/ore_silo/new_silo = M.buffer
 		var/datum/component/material_container/new_container = new_silo.GetComponent(/datum/component/material_container)
 		if (silo)
-			silo.ore_connected_machines -= src
-			silo.holds -= src
+			silo.disconnect_receptacle(src, parent)
 		else if (mat_container)
 			//transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
 			if(mat_container.total_amount())
@@ -160,9 +155,7 @@ handles linking back and forth.
 					new_container.materials[mat] += mat_amount
 					mat_container.materials[mat] = 0
 			qdel(mat_container)
-		silo = new_silo
-		silo.ore_connected_machines += src
-		mat_container = new_container
+		silo.connect_receptacle(src, parent)
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_insert))
 			RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, PROC_REF(on_secondary_insert))
@@ -216,7 +209,7 @@ handles linking back and forth.
  * Arguments
  * * check_hold - should we check if the silo is on hold
  */
-/datum/component/remote_materials/proc/can_use_resource(check_hold = TRUE)
+/datum/component/remote_materials/proc/can_use_resource(check_hold = TRUE, obj/item/card/id/advanced/user_card)
 	var/atom/movable/movable_parent = parent
 	if (!istype(movable_parent))
 		return FALSE
@@ -225,6 +218,8 @@ handles linking back and forth.
 		return FALSE
 	if(check_hold && on_hold()) //silo on hold
 		movable_parent.say("Mineral access is on hold, please contact the quartermaster.")
+		return FALSE
+	if(SEND_SIGNAL(movable_parent, COMSIG_ORE_SILO_PERMISSION_CHECKED, user_card, movable_parent) & COMPONENT_ORE_SILO_DENY)
 		return FALSE
 	return TRUE
 
@@ -239,7 +234,7 @@ handles linking back and forth.
  * action- For logging only. e.g. build, create, i.e. the action you are trying to perform
  * name- For logging only. the design you are trying to build e.g. matter bin, etc.
  */
-/datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "build", name = "design")
+/datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "build", name = "design", obj/item/card/id/advanced/user_card)
 	if(!can_use_resource())
 		return 0
 
@@ -249,7 +244,7 @@ handles linking back and forth.
 		var/list/scaled_mats = list()
 		for(var/i in mats)
 			scaled_mats[i] = OPTIMAL_COST(OPTIMAL_COST(mats[i] * coefficient) * multiplier)
-		silo.silo_log(parent, action, -multiplier, name, scaled_mats)
+		silo.silo_log(parent, action, -multiplier, name, scaled_mats, user_card)
 
 	return amount_consumed
 
@@ -261,8 +256,8 @@ handles linking back and forth.
  * eject_amount- how many sheets to eject
  * [drop_target][atom]- optional where to drop the sheets. null means it is dropped at this components parent location
  */
-/datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null)
-	if(!can_use_resource())
+/datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null, obj/item/card/id/advanced/user_card)
+	if(!can_use_resource(user_card = user_card))
 		return 0
 
 	var/atom/movable/movable_parent = parent

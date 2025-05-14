@@ -34,6 +34,7 @@ type Log = {
   amount: number;
   time: string;
   noun: string;
+  logged_user: string;
 };
 
 enum Tab {
@@ -244,6 +245,7 @@ const LogEntry = (props: LogProps) => {
         >
           {log.rawMaterials}
         </LabeledList.Item>
+        <LabeledList.Item label="User">{log.logged_user}</LabeledList.Item>
       </LabeledList>
     </Section>
   );
