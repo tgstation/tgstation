@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Advanced camera consoles now shows static when you first open it, rather than only kicking in when you start to look around."
