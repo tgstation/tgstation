@@ -526,36 +526,41 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		return
 	switch(layer_result)
 		if("Layer 1")
+			icon = initial(icon)
+			novariants = FALSE
 			set_cable_color(CABLE_COLOR_RED)
 			target_type = /obj/structure/cable/layer1
 			target_layer = CABLE_LAYER_1
-			novariants = FALSE
 		if("Layer 2")
+			icon = initial(icon)
+			novariants = FALSE
 			set_cable_color(CABLE_COLOR_YELLOW)
 			target_type = /obj/structure/cable
 			target_layer = CABLE_LAYER_2
-			novariants = FALSE
 		if("Layer 3")
+			icon = initial(icon)
+			novariants = FALSE
 			set_cable_color(CABLE_COLOR_BLUE)
 			target_type = /obj/structure/cable/layer3
 			target_layer = CABLE_LAYER_3
-			novariants = FALSE
 		if("Multilayer cable hub")
 			name = "multilayer cable hub"
 			desc = "A multilayer cable hub."
+			icon = 'icons/obj/pipes_n_cables/structures.dmi'
 			icon_state = "cable_bridge"
+			novariants = TRUE
 			set_cable_color(CABLE_COLOR_WHITE)
 			target_type = /obj/structure/cable/multilayer
 			target_layer = CABLE_LAYER_2
-			novariants = TRUE
 		if("Multi Z layer cable hub")
 			name = "multi z layer cable hub"
 			desc = "A multi-z layer cable hub."
+			icon = 'icons/obj/pipes_n_cables/structures.dmi'
 			icon_state = "cablerelay-broken-cable"
+			novariants = TRUE
 			set_cable_color(CABLE_COLOR_WHITE)
 			target_type = /obj/structure/cable/multilayer/multiz
 			target_layer = CABLE_LAYER_2
-			novariants = TRUE
 		if("Cable restraints")
 			if (amount >= CABLE_RESTRAINTS_COST)
 				if(use(CABLE_RESTRAINTS_COST))
