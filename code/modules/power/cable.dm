@@ -468,10 +468,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	. += "<b>Use it in hand</b> to change the layer you are placing on, amongst other things."
 
 /obj/item/stack/cable_coil/update_name()
+	if(novariants)
+		return
 	. = ..()
 	name = "cable [(amount < 3) ? "piece" : "coil"]"
 
 /obj/item/stack/cable_coil/update_desc()
+	if(novariants)
+		return
 	. = ..()
 	desc = "A [(amount < 3) ? "piece" : "coil"] of insulated power cable."
 
