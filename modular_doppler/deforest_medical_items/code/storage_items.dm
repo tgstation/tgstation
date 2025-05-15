@@ -6,6 +6,7 @@
 	icon_state = "painkiller_bottle"
 	custom_price = PAYCHECK_CREW * 1.5
 	spawn_type = /obj/item/reagent_containers/applicator/pill/amollin
+	spawn_count = 7
 
 /obj/item/reagent_containers/applicator/pill/amollin
 	name = "amollin pill"
@@ -25,6 +26,7 @@
 	icon_state = "painkiller_bottle"
 	w_class = WEIGHT_CLASS_TINY // this is fine because we hard limit what can go in this thing
 	spawn_type = /obj/item/reagent_containers/applicator/pill/prescription_stimulant
+	spawn_count = 5
 
 /obj/item/storage/pill_bottle/prescription_stimulant/Initialize(mapload)
 	. = ..()
