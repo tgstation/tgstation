@@ -11,6 +11,8 @@
 	resistance_flags = FREEZE_PROOF
 	var/obj/item/holosign_creator/projector
 	var/use_vis_overlay = TRUE
+	/// Doesn't become invisible when spraypainted
+	flags_1 = UNPAINTABLE_1
 
 /datum/armor/structure_holosign
 	bullet = 50

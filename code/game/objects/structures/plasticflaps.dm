@@ -18,6 +18,8 @@
 	var/flaps_layer = ABOVE_MOB_LAYER
 	/// Alpha of the flaps
 	var/flaps_alpha = 255
+	/// Doesn't become invisible when spraypainted
+	flags_1 = UNPAINTABLE_1
 	/// Limits how much damage from environmental fire we can take per second
 	COOLDOWN_DECLARE(burn_damage_cd)
 
