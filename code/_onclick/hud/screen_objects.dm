@@ -556,6 +556,69 @@
 	var/overlay_icon = 'icons/hud/screen_gen.dmi'
 	var/static/list/hover_overlays_cache = list()
 	var/hovering
+	var/static/list/knees_n_toes = list(
+		"uppermost" = list(
+			BODY_ZONE_HEAD,
+			BODY_ZONE_PRECISE_EYES,
+			BODY_ZONE_PRECISE_MOUTH,
+		),
+		"upper" = list(
+			BODY_ZONE_CHEST,
+			BODY_ZONE_L_ARM,
+			BODY_ZONE_R_ARM,
+		),
+		"lower" = list(
+			BODY_ZONE_PRECISE_GROIN
+		),
+		"lowermost" = list(
+			BODY_ZONE_L_LEG,
+			BODY_ZONE_R_LEG,
+		),
+	)
+	var/static/list/zones_of_zones = list(
+		BODY_ZONE_HEAD = "uppermost",
+		BODY_ZONE_PRECISE_EYES = "uppermost",
+		BODY_ZONE_PRECISE_MOUTH = "uppermost",
+		BODY_ZONE_CHEST = "upper",
+		BODY_ZONE_L_ARM = "upper",
+		BODY_ZONE_R_ARM = "upper",
+		BODY_ZONE_PRECISE_GROIN = "lower",
+		BODY_ZONE_L_LEG = "lowermost",
+		BODY_ZONE_R_LEG = "lowermost",
+		BODY_ZONE_PRECISE_L_FOOT = "lowermost",
+		BODY_ZONE_PRECISE_R_FOOT = "lowermost",
+	)
+
+/atom/movable/screen/zone_sel/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	var/mob/living/my_mob = hud?.mymob
+	RegisterSignal(my_mob, COMSIG_MOUSE_SCROLL_ON, PROC_REF(on_mouse_scroll))
+
+/atom/movable/screen/zone_sel/proc/on_mouse_scroll(mob/living/my_mob, atom/A, delta_x, delta_y, params)
+	SIGNAL_HANDLER
+
+	var/list/current_zone_group = knees_n_toes[zones_of_zones[my_mob.zone_selected]]
+	var/group_length = length(current_zone_group)
+	var/current_zone_group_index = knees_n_toes.Find(zones_of_zones[my_mob.zone_selected])
+	var/list/modifiers = params2list(params)
+	if(delta_y < 0)
+		if(LAZYACCESS(modifiers, CTRL_CLICK))
+			var/current_zone_index = current_zone_group.Find(my_mob.zone_selected)
+			var/new_zone_index = current_zone_index == group_length ? 1 : current_zone_index + 1
+			return set_selected_zone(current_zone_group[new_zone_index], my_mob)
+		var/zone_groups_length = length(knees_n_toes)
+		var/new_zone_index = current_zone_group_index == zone_groups_length ? 1 : current_zone_group_index + 1
+		var/new_zone_group = knees_n_toes[knees_n_toes[new_zone_index]]
+		return set_selected_zone(new_zone_group[1], my_mob)
+	if(delta_y > 0)
+		if(LAZYACCESS(modifiers, CTRL_CLICK))
+			var/current_zone_index = current_zone_group.Find(my_mob.zone_selected)
+			var/new_zone_index = current_zone_index == 1 ? group_length : current_zone_index - 1
+			return set_selected_zone(current_zone_group[new_zone_index], my_mob)
+		var/zone_groups_length = length(knees_n_toes)
+		var/new_zone_index = current_zone_group_index == 1 ? zone_groups_length : current_zone_group_index - 1
+		var/new_zone_group = knees_n_toes[knees_n_toes[new_zone_index]]
+		return set_selected_zone(new_zone_group[1], my_mob)
 
 /atom/movable/screen/zone_sel/Click(location, control,params)
 	if(isobserver(usr))
