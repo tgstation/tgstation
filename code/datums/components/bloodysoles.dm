@@ -285,7 +285,7 @@
 
 	RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_clean))
 	RegisterSignal(parent, COMSIG_STEP_ON_BLOOD, PROC_REF(on_step_blood))
-	RegisterSignals(parent, list(COMSIG_CARBON_UNEQUIP_SHOECOVER, COMSIG_CARBON_EQUIP_SHOECOVER), PROC_REF(shoecover))
+	RegisterSignals(parent, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM), PROC_REF(shoecover))
 
 	if(new_blood)
 		blood_DNA = new_blood
@@ -339,9 +339,10 @@
 	if(wielder.num_legs >= 2)
 		return ..()
 
-/datum/component/bloodysoles/feet/proc/shoecover(datum/source)
+/datum/component/bloodysoles/feet/proc/shoecover(datum/source, obj/item/item)
 	SIGNAL_HANDLER
-	update_icon()
+	if ((item.body_parts_covered & FEET) || (item.flags_inv & HIDESHOES))
+		update_icon()
 
 /datum/component/bloodysoles/feet/get_blood_dna()
 	return blood_DNA

@@ -189,7 +189,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOBREATH "no_breath"
 /// Mob doesn't take oxygen damage in deep water
 #define TRAIT_NODROWN "amphibious"
-/// Mob doesn't take stamina damage from deep water
+/// Mob doesn't take stamina damage from deep water and doesn't get slowdown from swimming
 #define TRAIT_SWIMMER "swimmer"
 /// Mob is currently disguised as something else (like a morph being another mob or an object). Holds a reference to the thing that applied the trait.
 #define TRAIT_DISGUISED "disguised"
