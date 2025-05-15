@@ -113,17 +113,18 @@
 
 /mob/living/carbon/proc/equip_in_one_of_slots(obj/item/equipping, list/slots, qdel_on_fail = TRUE, indirect_action = FALSE)
 	var/static/list/equip_slots = list(
-		LOCATION_LPOCKET,
-		LOCATION_RPOCKET,
-		LOCATION_HANDS,
-		LOCATION_GLOVES,
-		LOCATION_EYES,
-		LOCATION_HEAD,
-		LOCATION_NECK,
-		LOCATION_ID,
+		LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+		LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+		LOCATION_HANDS = ITEM_SLOT_HANDS,
+		LOCATION_GLOVES = ITEM_SLOT_GLOVES,
+		LOCATION_EYES = ITEM_SLOT_EYES,
+		LOCATION_MASK = ITEM_SLOT_MASK,
+		LOCATION_HEAD = ITEM_SLOT_HEAD,
+		LOCATION_NECK = ITEM_SLOT_NECK,
+		LOCATION_ID = ITEM_SLOT_ID,
 	)
 	var/static/list/storage_slots = list(
-		LOCATION_BACKPACK,
+		LOCATION_BACKPACK = ITEM_SLOT_BACK,
 	)
 
 	for(var/slot in slots)
