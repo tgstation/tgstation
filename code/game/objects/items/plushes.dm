@@ -830,6 +830,7 @@
 	to_chat(user, span_notice("You hand over the [nana] to [src] and watch as it eats..."))
 	playsound(src, 'sound/items/eatfood.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(eat), nana), 3 SECONDS)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/plush/monkey/proc/eat(nana)
 	if(istype(nana, /obj/item/food/grown/banana/bluespace))
