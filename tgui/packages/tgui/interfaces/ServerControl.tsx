@@ -163,7 +163,7 @@ export const ServerControl = (props) => {
     );
   }
   return (
-    <Window width={575} height={500} theme="ntos_terminal_sci_themed">
+    <Window width={575} height={500} theme="hackerman">
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
