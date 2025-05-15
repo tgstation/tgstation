@@ -185,3 +185,174 @@
   - bugfix: Fixed the error overlay caused by the Tress Shoulder hairstyle
   TealSeer:
   - bugfix: roundstart photocopiers should no longer be empty on some maps
+2025-05-08:
+  Bisar:
+  - image: Animations have been added to inserting/removing items from machines, and
+      to inserting things into containers that are not on your person.
+  LemonInTheDark:
+  - refactor: Reworked a bit of how smoothing functions on the backend. Nothing should
+      change, so if it does please yell at me
+  Y0SH1M4S73R:
+  - bugfix: Shuttle blueprints don't error out when opening them while on non-custom
+      shuttles.
+  - bugfix: Custom shuttles calculate their engine count correctly, no longer lagging
+      behind by one engine (un)installation.
+  - bugfix: Custom shuttle docking consoles are no longer blocked by where the linked
+      shuttle currently is.
+  - qol: Shuttle blueprints now show you how large a shuttle frame is, along with
+      any issues preventing you from building or expanding a shuttle using said frame.
+  necromanceranne:
+  - rscadd: Adds the Exosuit Ablative Insulation armor booster module. Protects the
+      mech from energy-based attacks and its wires from EMPs (only the wires, not
+      the mech). However, the armor booster makes the mech weaker to ballistic and
+      melee weapons.
+  - rscadd: The Dark Gygax and Mauler now come pre-packaged with a special version
+      that has no weakness to ballistic and melee weapons.
+  rageguy505:
+  - bugfix: Hop's office on catwalk now has working disposals and removes a floating
+      camera console from the bridge.
+  throwawayuseless:
+  - balance: Massively reduce the MMI component message cooldown.
+2025-05-09:
+  1393F:
+  - qol: Pluoxium, an oxygen substitute, will no longer be scrubbed when setting air
+      alarms to contaminated.
+  Absolucy:
+  - qol: Ghost notifications will now use the real names of mobs when something happens
+      (i.e no more "Unknown has completed an ascension ritual!")
+  Bisar:
+  - qol: Bluespace light replacer no longer has a range limit.
+  Goat:
+  - bugfix: Barometers now properly report if the weather is dangerous or not.
+  Goat-Real:
+  - balance: Ice whelps' fire breath attack has slightly more delay. (0.5 -> 0.6 second
+      startup, 0.75 -> 0.85 decisecond for the speed the fire moves per tile.)
+  Jacquerel:
+  - balance: The supermatter will react negatively to being fed nuclear fissile materials
+  Krysonism:
+  - rscadd: Added a new type of reagent container; the jerrycan.
+  - rscadd: Added some prefilled jerrycans to maint loot.
+  - balance: Botany nutrients now come in bulk packaging.
+  Rhials:
+  - bugfix: Immovable rods self-delete at the icebox world border.
+  TealSeer:
+  - bugfix: fixed the photocopier silently failing if you can't pay the fee
+  necromanceranne:
+  - bugfix: Caps how much eyeblur can be caused by things like projectiles.
+  - bugfix: The tesla cannon now fires actually visible bolts.
+2025-05-10:
+  00-Steven:
+  - bugfix: NTos file manager program actually shows the program names, instead of
+      the
+  - qol: Egg boxes can hold chocolate eggs, boiled eggs, and surprise eggs
+  Jacquerel:
+  - balance: The negative effects of a mansus-corrupted liver can be suppressed with
+      holy water, like the other corrupt organs.
+  L1nd:
+  - balance: spiders can't wrap megafauna
+  - bugfix: nonhuman spider cocoons looks accordingly
+  Maximal08:
+  - bugfix: Fixing the arrow display when using the multitool
+  SmArtKar:
+  - bugfix: Fixed explorer masks going invisible when you put on a goliath hood
+  - qol: Improved
+  rageguy505:
+  - bugfix: carpenter and claw hammer can now test for brain health.
+  throwawayuseless:
+  - rscadd: Robotic voiceboxes now grant Encoded Audio Language. Techpriests and circuit
+      nerds, rejoice!
+  - rscadd: Revolutionaries are now weakened by grenadine. Because the pomegranate
+      antioxidants stop free radicals.
+2025-05-11:
+  Jacquerel:
+  - balance: Most biological mobs are now slowed by taking stamina damage, and can
+      be stunned. Mechanical mobs, mining mobs, and several other special kinds (chiefly
+      those invoked by antagonists) are unaffected. If this seems to effect any mob
+      it probably shouldn't, please report it as a bug.
+  Melbert:
+  - balance: If you're staggered, and try to walk down stairs, you'll instead fall
+      down the stairs (stunning and causing damage).
+  - balance: Hard crit and dead people will also roll down the stairs.
+  Rengan:
+  - server: The crimes are now logging in the database.
+  vinylspiders:
+  - bugfix: stops snails from clogging up CI
+2025-05-12:
+  Jacquerel:
+  - balance: Regal Rats can now grab mice out of disposal bins, and no longer spawn
+      them with the Riot ability.
+  - balance: The Riot ability no longer needs to be used once for each slightly different
+      kind of mob in your radius.
+  - balance: The Regal Rat Domain ability is now toggled on and off.
+  - balance: Several kinds of mob will immediately start following you once tamed.
+  - balance: Rats, hostile frogs, and evil snails can be created via gold slime reaction.
+  JohnFulpWillard:
+  - spellcheck: Updated bruh moments.
+  Redbert:
+  - bugfix: Fixes issue that causes hypernob reaction to sometimes not work
+  SmArtKar:
+  - bugfix: Riggings and toolbelts no longer render through the goliath cloak when
+      worn in your suit slot.
+2025-05-13:
+  Ben10Omintrix:
+  - bugfix: fixes a few mining weapons not working on ice whelps, ice demons, and
+      wolves
+  Hardly:
+  - rscadd: Added half-health modifier for deathmatch
+  Melbert:
+  - bugfix: List VV properly differentiates null vs 0
+  necromanceranne:
+  - qol: Being intoxicated enough can potentially beat back the trauma of surgery.
+      It's not reliable.
+  - qol: Robotics on Tram and Metastation have a bottle of whiskey. You know, for
+      taking the edge off.
+  throwawayuseless:
+  - rscadd: Adds new immunodeficiency negative quirk, and sepsisillin, the inverse
+      of spaceacillin. Both have an immune system weakening effect, mitigate-able
+      with spaceacillin.
+  timothymtorres:
+  - qol: Add CI map linter for window and electrified grille spawners
+  - map: Fix many duplicate windows, walls, and grilles spawning together or inside
+      each other on a bunch of maps.
+2025-05-14:
+  Capsandi:
+  - image: new BSA impact animation
+  Derpguy3:
+  - bugfix: Several previously missing drinks have been added to the service cyborg's
+      drink synthesizer.
+  Iajret:
+  - bugfix: fixed bluespace sampling experiment not doing anything
+  JohnFulpWillard:
+  - admin: Fixed a few bad combat logs for basic/simple animals, thrown things, and
+      xenomorph stuff.
+  OnlineGirlfriend:
+  - rscadd: girlypop posters
+  - rscadd: pink crate
+  RosSample:
+  - bugfix: callouts no longer work while you are incapacitated
+  SmArtKar:
+  - bugfix: Wheelchair bells can no longer be rang while stunned
+  - admin: Detonating a TTV via a wheelchair bell now logs you as the person who touched
+      it last.
+  Y0SH1M4S73R:
+  - spellcheck: The invocation for Summon Cheese is sometimes more representative
+      of the realities of life aboard the station.
+  necromanceranne:
+  - bugfix: You must have both your hands empty before entering a mech. (But items
+      which replace your hand, like the light later or the hand of god, won't prevent
+      you from getting in)
+2025-05-15:
+  Aliceee2ch:
+  - rscadd: Added heavy thermal guns for mechs. Works on the principle of regular
+      hand guns. Can only be purchased in cargo, as they are experimental.
+  Ezel:
+  - rscadd: Nuke ops can now buy a keycard to access their new custodial closet!
+  - map: Rearranges nuke ordnance room, and adds the custodial closet
+  FlufflesTheDog:
+  - bugfix: Fixed another(?) possible case of multitool APC searching causing broken
+      huds
+  JohnFulpWillard:
+  - bugfix: Advanced camera consoles now shows static when you first open it, rather
+      than only kicking in when you start to look around.
+  spiders24110:
+  - bugfix: fixed fish infused people swimming slow in deep water
