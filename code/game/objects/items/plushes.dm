@@ -837,12 +837,3 @@
 	qdel(nana) //now it can be deleted
 	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
 	spasm_animation(5 SECONDS)
-
-/obj/item/toy/plush/monkey/operative
-	name = "monkey operative plushie"
-	desc = "Official DONK. CO trademark, not licensed for resale."
-	icon_state = "monkey_operative"
-	squeak_override = list(
-		'sound/effects/whirthunk.ogg' = 2,
-		'sound/machines/beep/triple_beep.ogg' = 1,
-	)
