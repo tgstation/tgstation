@@ -560,16 +560,31 @@
 	/// If our armor is rusted, used to update the sprite
 	var/rusted = FALSE
 	/// Mutable used as overlay
-	var/mutable_appearance/rust_overlay
-	var/test_layer = 4
+	var/obj/effect/overlay/rust_overlay
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/equipped(mob/living/user, slot)
 	. = ..()
 	if(!(slot_flags & slot))
 		UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
-		// XANTODO Debug rusted = FALSE
+		user.vis_contents -= rust_overlay
+		rusted = FALSE
+		QDEL_NULL(rust_overlay)
 		return
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	rust_overlay = new()
+	rust_overlay.icon = 'icons/mob/clothing/suits/armor.dmi'
+	rust_overlay.vis_flags |= VIS_INHERIT_DIR | VIS_INHERIT_LAYER
+	user.vis_contents += rust_overlay // Should be invisible, we just update the sprite as needed
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/Destroy(force)
+	if(!ismob(loc))
+		return ..()
+	var/mob/wearer = loc
+	UnregisterSignal(wearer, list(COMSIG_MOVABLE_MOVED))
+	wearer.vis_contents -= rust_overlay
+	QDEL_NULL(rust_overlay)
+	rusted = FALSE
+	return ..()
 
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].
@@ -585,26 +600,25 @@
 		ADD_TRAIT(source, TRAIT_PIERCEIMMUNE, REF(src))
 		if(rusted) // Already rusted, don't update overlay
 			return
-		if(ismob(loc))
-			var/mob/M = loc
-			rusted = TRUE
-			M.update_worn_oversuit()
+		rusted = TRUE
+		update_rust()
 	else
 		armor_type = initial(armor_type)
 		REMOVE_TRAIT(source, TRAIT_PIERCEIMMUNE, REF(src))
 		if(!rusted) // Already unrusted, don't update overlay
 			return
-		if(ismob(loc))
-			var/mob/M = loc
-			rusted = FALSE
-			M.update_worn_oversuit()
+		rusted = FALSE
+		update_rust()
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/worn_overlays(mutable_appearance/standing, isinhands)
-	. = ..()
-	QDEL_NULL(rust_overlay)
+/// Updates the icon of our overlay and applies the animation
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/update_rust()
+	// Animation + Update the overlay sprite on our armor
 	if(rusted)
-		rust_overlay = mutable_appearance('icons/mob/clothing/suits/armor.dmi', "[worn_icon_state + "_overlay"]", test_layer)
-		. += rust_overlay
+		rust_overlay.icon_state = "[worn_icon_state]" + "_overlay"
+		flick("[worn_icon_state]"+"_on", rust_overlay)
+	else
+		rust_overlay.icon_state = null
+		flick("[worn_icon_state]"+"_off", rust_overlay)
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
 	name = "\improper Salvaged Remains"
