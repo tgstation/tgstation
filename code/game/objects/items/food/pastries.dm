@@ -93,6 +93,7 @@
 	foodtypes = MEAT|GRAIN|DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/soylenviridians
 	name = "\improper Soylent Virdians"
