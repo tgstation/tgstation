@@ -73,7 +73,7 @@
 	name = "Stance of the Torn Champion"
 	desc = "Grants resilience to blood loss from wounds and immunity to having your limbs dismembered. \
 		Additionally, when damaged below 50% of your maximum health, \
-		you gain increased resistance to gaining wounds and resistance to batons."
+		you gain increased resistance to gaining wounds and resistance to slowdown."
 	gain_text = "In time, it was he who stood alone among the bodies of his former comrades, awash in blood, none of it his own. \
 		He was without rival, equal, or purpose."
 	cost = 2
@@ -298,7 +298,7 @@
 
 /datum/heretic_knowledge/ultimate/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	user.add_traits(list(TRAIT_NEVER_WOUNDED, TRAIT_TENACIOUS), type)
+	user.add_traits(list(TRAIT_NEVER_WOUNDED, TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT), type)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(on_eldritch_blade))
 	user.apply_status_effect(/datum/status_effect/protective_blades/recharging, null, 8, 30, 0.25 SECONDS, /obj/effect/floating_blade, 1 MINUTES)
 	user.add_stun_absorption(

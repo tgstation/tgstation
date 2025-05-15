@@ -46,7 +46,7 @@
 		var/mob/living/carbon/carbon_target = target
 		for(var/obj/item/bodypart/robotic_limb in carbon_target.bodyparts)
 			if(robotic_limb.biological_state & BIO_ROBOTIC)
-				robotic_limb.receive_damage(10)
+				robotic_limb.receive_damage(500)
 
 	if(!issilicon(target) && !(target.mob_biotypes & MOB_ROBOTIC))
 		return
@@ -113,10 +113,6 @@
 	cost = 1
 	research_tree_icon_frame = 5
 
-/datum/heretic_knowledge/spell/area_conversion/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	our_heretic.increase_rust_strength(TRUE)
-
 /datum/heretic_knowledge/blade_upgrade/rust
 	name = "Toxic Blade"
 	desc = "Your Rusty Blade now disgusts enemies on attack \ Allows you to rust Titanium and Plastitanium.."
@@ -124,10 +120,6 @@
 		The heavy rust weights it down. You stare deeply into it. The Rusted Hills call for you, now."
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_rust"
-
-/datum/heretic_knowledge/blade_upgrade/rust/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
-	. = ..()
-	our_heretic.increase_rust_strength()
 
 /datum/heretic_knowledge/blade_upgrade/rust/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
 	if(source == target || !isliving(target))
@@ -148,11 +140,6 @@
 	action_to_add = /datum/action/cooldown/spell/cone/staggered/entropic_plume
 	cost = 2
 	drafting_tier = 5
-
-/datum/heretic_knowledge/spell/entropic_plume/on_gain(mob/user)
-	. = ..()
-	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
-	our_heretic.increase_rust_strength(TRUE)
 
 /datum/heretic_knowledge/ultimate/rust_final
 	name = "Rustbringer's Oath"

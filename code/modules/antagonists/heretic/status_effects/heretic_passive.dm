@@ -63,9 +63,8 @@
 //---- Blade Passive
 // Gives you riposte while wielding a heretic blade
 // Cooldown starts at 20 and goes down 5 seconds per level
-// Makes you immune to fall damage/stun
-// Level 1 has a 20 second cooldown
-// Level 2 now counts as block
+// Level 1 has a 20 second cooldown + counts as block
+// Level 2 Makes you immune to fall damage/stun from falling
 // Level 3 only has the cooldown reduction (nothing else added)
 /datum/status_effect/heretic_passive/blade
 	/// The cooldown before we can riposte again
@@ -79,13 +78,16 @@
 /datum/status_effect/heretic_passive/blade/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(on_shield_reaction))
+
+/datum/status_effect/heretic_passive/blade/heretic_level_upgrade()
+	. = ..()
 	RegisterSignal(owner, COMSIG_LIVING_Z_IMPACT, PROC_REF(z_impact_react))
 
 /datum/status_effect/heretic_passive/blade/on_remove()
 	. = ..()
-	UnregisterSignal(owner, COMSIG_LIVING_CHECK_BLOCK)
-	UnregisterSignal(owner, COMSIG_LIVING_Z_IMPACT)
+	UnregisterSignal(owner, list(COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_Z_IMPACT))
 
+/// Blocks the effects from falling
 /datum/status_effect/heretic_passive/blade/proc/z_impact_react(datum/source, levels, turf/fell_on)
 	SIGNAL_HANDLER
 	new /obj/effect/temp_visual/mook_dust(fell_on)
@@ -372,6 +374,7 @@
 	return ..()
 
 //---- Rust Passive
+// Level 2 and 3 will increase our rust strength
 // Level 1 provides healing and baton resist when standing on rust
 // Level 2 will heal wounds when standing on rust
 // Level 3 will restore lost limbs when standing on rust
@@ -383,6 +386,18 @@
 /datum/status_effect/heretic_passive/rust/on_remove()
 	. = ..()
 	UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_LIFE))
+
+/datum/status_effect/heretic_passive/rust/heretic_level_upgrade()
+	. = ..()
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
+	if(heretic_datum.rust_strength < 2)
+		heretic_datum.increase_rust_strength() // Bring us up to 2
+
+/datum/status_effect/heretic_passive/rust/heretic_level_final()
+	. = ..()
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(owner)
+	if(heretic_datum.rust_strength < 3)
+		heretic_datum.increase_rust_strength() // Bring us up to 3
 
 /*
  * Signal proc for [COMSIG_MOVABLE_MOVED].

@@ -2,17 +2,6 @@
  * Tier 4 knowledge: Combat related knowledge
  */
 
-/datum/heretic_knowledge/spell/apetra_vulnera
-	name = "Apetra Vulnera"
-	desc = "Grants you Apetra Vulnera, a spell \
-		which causes heavy bleeding on all bodyparts of the victim that have more than 15 brute damage. \
-		Wounds a random limb if no limb is sufficiently damaged."
-	gain_text = "Flesh opens, and blood spills. My master seeks sacrifice, and I shall appease."
-
-	action_to_add = /datum/action/cooldown/spell/pointed/apetra_vulnera
-	cost = 1
-	drafting_tier = 4
-
 /datum/heretic_knowledge/spell/space_phase
 	name = "Space Phase"
 	desc = "Grants you Space Phase, a spell that allows you to move freely through space. \
@@ -59,32 +48,12 @@
 
 /datum/heretic_knowledge/spell/crimson_cleave
 	name = "Crimson Cleave"
-	desc = "XANTODO DESC"
-	gain_text = "XANTODO GAIN"
+	desc = "Grants you Crimson Cleave, a targeted spell which siphons health in a small AOE. Cleanses all wounds upon casting"
+	gain_text = "At first I didn't understand these instruments of war, but the Priest \
+				told me to use them regardless. Soon, he said, I would know them well."
 	action_to_add = /datum/action/cooldown/spell/pointed/crimson_cleave
 	cost = 1
 	drafting_tier = 4
-
-/* XANTODO Fix this up
-/datum/heretic_knowledge/spell/blood_siphon
-	name = "Blood Siphon"
-	desc = "Grants you Blood Siphon, a spell that drains a victim of blood and health, transferring it to you. \
-		Also has a chance to transfer wounds from you to the victim."
-	gain_text = "\"No matter the man, we bleed all the same.\" That's what the Marshal told me."
-
-	action_to_add = /datum/action/cooldown/spell/pointed/blood_siphon
-	cost = 1
-
-/datum/heretic_knowledge/spell/cleave
-	name = "Blood Cleave"
-	desc = "Grants you Cleave, an area-of-effect targeted spell \
-		that causes heavy bleeding and blood loss to anyone afflicted."
-	gain_text = "At first I didn't understand these instruments of war, but the Priest \
-		told me to use them regardless. Soon, he said, I would know them well."
-
-	action_to_add = /datum/action/cooldown/spell/pointed/cleave
-	cost = 1
-*/
 
 /datum/heretic_knowledge/rifle
 	name = "Lionhunter's Rifle"

@@ -78,6 +78,8 @@
 	body_parts_covered = FULL_BODY
 	heat_protection = FULL_BODY
 	max_heat_protection_temperature = 50000
+	cold_protection = FULL_BODY
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | LAVA_PROOF | FREEZE_PROOF
 	actions_types = list(/datum/action/item_action/toggle/flames)
 	/// If our robes are actively generating flames
@@ -316,9 +318,11 @@
 	if(!ishuman(loc))
 		return ..()
 	var/mob/living/carbon/human/wearer = loc
-	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED, TRAIT_NOGUNS), REF(src))
+	wearer.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_NOGUNS), REF(src))
 	wearer.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 	UnregisterSignal(wearer, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
+	var/obj/item/organ/brain/our_brain = wearer.get_organ_slot(ORGAN_SLOT_BRAIN)
+	REMOVE_TRAIT(our_brain, TRAIT_BRAIN_DAMAGE_NODEATH, REF(src))
 	on_hud_remove(wearer)
 	return ..()
 
@@ -327,7 +331,7 @@
 	if(!ishuman(user))
 		return
 	if(!(slot_flags & slot))
-		user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED, TRAIT_NOGUNS), REF(src))
+		user.remove_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_NOGUNS), REF(src))
 		user.remove_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
 		UnregisterSignal(user, list(COMSIG_MOB_HUD_CREATED, COMSIG_LIVING_CHECK_BLOCK, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, COMSIG_MOB_AFTER_APPLY_DAMAGE, COMSIG_LIVING_DEATH))
 		var/obj/item/organ/brain/our_brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
@@ -345,7 +349,7 @@
 
 	// Gives the traits and effects
 	user.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/equipment_speedmod)
-	user.add_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_NEVER_WOUNDED, TRAIT_NOGUNS), REF(src))
+	user.add_traits(list(TRAIT_BATON_RESISTANCE, TRAIT_STUNIMMUNE, TRAIT_NEVER_WOUNDED, TRAIT_NOGUNS), REF(src))
 	RegisterSignal(user, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(block_checked))
 	RegisterSignals(user, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE, COMSIG_LIVING_ADJUST_OXY_DAMAGE, COMSIG_LIVING_ADJUST_TOX_DAMAGE, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE), PROC_REF(on_damage_adjust))
 	RegisterSignal(user, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_take_damage))
@@ -407,7 +411,7 @@
 	if(!ishuman(wearer))
 		return
 	if(damage <= 0)
-		return FAILED_BLOCK
+		return SUCCESSFUL_BLOCK
 
 	wearer.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage)
 	if(wearer.get_organ_loss(ORGAN_SLOT_BRAIN) >= 200 && !braindead)

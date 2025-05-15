@@ -64,7 +64,7 @@
 	recall.Grant(src)
 	giga_laser = new(src)
 	giga_laser.Grant(src)
-	AddComponent(/datum/component/seethrough_mob, keep_color = TRUE)
+	AddComponent(/datum/component/seethrough_mob)
 	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
 	AddElement(/datum/element/death_drops, death_loot)
 	AddElement(/datum/element/death_explosion, 3, 6, 12)
@@ -108,8 +108,10 @@
 
 // Star gazer attacks everything around itself applies a spooky mark
 /mob/living/basic/heretic_summon/star_gazer/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
+	if(target == summoner?.resolve())
+		return FALSE
 	. = ..()
-	if (!. || !isliving(target) || target == summoner?.resolve())
+	if (!. || !isliving(target))
 		return
 
 	target.apply_status_effect(/datum/status_effect/star_mark)
@@ -151,7 +153,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "gazer_beam_charge"
 	check_flags = NONE
-	cooldown_time = 60 SECONDS
+	cooldown_time = 30 SECONDS
 	/// list of turfs we are hitting while shooting our beam
 	var/list/turf/targets
 	/// The laser beam we generate
@@ -270,6 +272,16 @@
 	transform = transform_matrix
 	flick("gazer_beam_end_opening", src)
 
+/obj/effect/abstract/gazer_beam_filling/proc/pull_victims()
+	for(var/atom/movable/movable_atom in orange(5, src))
+		if((movable_atom.anchored || movable_atom.move_resist >= MOVE_FORCE_EXTREMELY_STRONG))
+			continue
+		if(ismob(movable_atom))
+			var/mob/pulled_mob = movable_atom
+			if(pulled_mob.mob_negates_gravity())
+				continue
+		step_towards(movable_atom, src)
+
 // Visual effect at the end of the beam, has an opening/active/closing state
 /obj/effect/abstract/gazer_beamend
 	icon = 'icons/effects/beam.dmi'
@@ -304,6 +316,11 @@
 /datum/action/cooldown/stargazer_laser/proc/process_beam()
 	if(cycle_tracker > 33)
 		stop_beaming()
+	for(var/obj/effect/abstract/gazer_beam_filling/fillings as anything in beam_fillings)
+		if(prob(98))
+			continue
+		// 2% chance to pull you towards the beam
+		fillings.pull_victims()
 	for(var/turf/target as anything in targets)
 		if(iswallturf(target))
 			var/turf/closed/wall/wall_target = target
