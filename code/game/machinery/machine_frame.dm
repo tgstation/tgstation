@@ -279,7 +279,9 @@
 		return .
 	if(state != FRAME_STATE_BOARD_INSTALLED)
 		return .
-
+	if(locate(circuit.build_path) in loc)
+		balloon_alert(user, "identical machine present!")
+		return ITEM_INTERACT_BLOCKING
 	if(finalize_construction(user, tool))
 		return ITEM_INTERACT_SUCCESS
 
