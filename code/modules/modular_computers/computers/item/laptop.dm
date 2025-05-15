@@ -134,8 +134,8 @@
 /obj/item/modular_computer/laptop/buildable/sleek
 	name = "sleek laptop"
 	desc = "One of those swanky laptops that they give to VIPs. Probably worth more than a crewmember makes in a year. The sheer number of sensors,\
-	buttons, bezels, and ports is dizzying to look at. Its sleek design is doubtlessly the work of thousands of hours of engineering and unpaid\
-	 computer science internship."
+buttons, bezels, and ports is dizzying to look at. Its sleek design is doubtlessly the work of thousands of hours of engineering and unpaid \
+	computer science internship."
 
 	item_flags = NONE
 	w_class = WEIGHT_CLASS_SMALL
