@@ -602,7 +602,7 @@
 		return
 
 	var/obj/item/modular_computer/laptop/buildable/sleek/laptop = new(src)
-	hacker.equip_to_slot_if_possible(laptop, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+	hacker.equip_to_storage(laptop, ITEM_SLOT_BACK, indirect_action = TRUE)
 	if(prob(20))
 		var/obj/item/clothing/mask/russian_balaclava/hacker_disguise = new(src)
 		hacker_disguise.icon_state = "syndicate_balaclava"
