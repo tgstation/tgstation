@@ -70,6 +70,7 @@
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic/gold = 1,
 		/obj/item/station_charter = 1,
+		/obj/item/modular_computer/laptop/buildable/sleek = 1,
 		)
 	belt = /obj/item/modular_computer/pda/heads/captain
 	ears = /obj/item/radio/headset/heads/captain/alt

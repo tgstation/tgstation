@@ -130,3 +130,23 @@
 // Laptop frame, starts empty and closed.
 /obj/item/modular_computer/laptop/buildable
 	start_open = FALSE
+
+/obj/item/modular_computer/laptop/buildable/sleek
+	name = "sleek laptop"
+	desc = "One of those swanky laptops that they give to VIPs. Probably worth more than a crewmember makes in a year. The sheer number of sensors,\
+	buttons, bezels, and ports is dizzying to look at. Its sleek design is doubtlessly the work of thousands of hours of engineering and unpaid\
+	 computer science internship."
+
+	item_flags = NONE
+	w_class = WEIGHT_CLASS_SMALL
+	hardware_flag = PROGRAM_ALL
+
+	slowdown_open = 0
+	w_class_open = WEIGHT_CLASS_NORMAL
+	max_idle_programs = 5
+	internal_cell = /obj/item/stock_parts/power_store/cell/super
+
+	icon_state = "laptop-small-closed"
+	icon_state_powered = "laptop-small"
+	icon_state_unpowered = "laptop-small-off"
+	icon_state_closed = "laptop-small-closed"

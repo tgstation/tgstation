@@ -43,6 +43,7 @@
 	jobtype = /datum/job/quartermaster
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic/bronze = 1,
+		/obj/item/modular_computer/laptop/buildable/sleek = 1,
 	)
 	id_trim = /datum/id_trim/job/quartermaster
 	id = /obj/item/card/id/advanced/silver

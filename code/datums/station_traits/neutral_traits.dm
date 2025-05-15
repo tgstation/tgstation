@@ -565,3 +565,47 @@
 	show_in_report = TRUE
 
 	dynamic_threat_id = "GMM Econ Spotlight"
+
+/datum/station_trait/hack_the_planet
+	name = "Hack the Planet"
+	report_message = "A group of hackers recently infiltrated the station's network and bypassed your CPU cycles. Central Command has responded with compulsory computer\
+	training courses: every crew member has been issued a powerful laptop to help them learn how to bitshift RAM, increase processing to realtime, and prevent GPU backdoors."
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 10
+	cost = STATION_TRAIT_COST_LOW
+	show_in_report = TRUE
+
+	dynamic_threat_id = "Hack the Planet"
+	trait_to_give = STATION_TRAIT_HACK_THE_PLANET
+	var/static/list/already_gaming = list(
+		/datum/job/research_director,
+		/datum/job/chief_engineer,
+		/datum/job/chief_medical_officer,
+		/datum/job/captain,
+		/datum/job/quartermaster,
+		/datum/job/head_of_personnel,
+		/datum/job/head_of_security,
+	)
+
+/datum/station_trait/hack_the_planet/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/hack_the_planet/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
+	SIGNAL_HANDLER
+
+	if(!istype(living_mob, /mob/living/carbon/human))
+		return
+
+	if(already_gaming.Find(job))
+		return
+
+	var/obj/item/modular_computer/laptop/buildable/sleek/laptop = new(src)
+	living_mob.equip_to_slot_if_possible(laptop, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+	if(prob(20))
+		var/obj/item/clothing/mask/russian_balaclava/hacker_disguise = new(src)
+		hacker_disguise.icon_state = "syndicate_balaclava"
+		hacker_disguise.worn_icon_state = "syndicate_balaclava"
+		hacker_disguise.name = "hacker disguise"
+		hacker_disguise.desc = "1024 KB RAM baby, that's all I need to hack the planet."
+		living_mob.equip_to_slot_if_possible(hacker_disguise, ITEM_SLOT_MASK, indirect_action = TRUE)

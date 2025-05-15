@@ -29,6 +29,9 @@
 		/area/station/science,
 	)
 
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_HACK_THE_PLANET))
+		severity += rand(1,3)
+
 	for(var/i in 1 to severity)
 		grey_tide_areas += pick_n_take(potential_areas)
 
