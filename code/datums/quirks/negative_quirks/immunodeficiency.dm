@@ -33,8 +33,8 @@
 
 /datum/quirk/immunodeficiency/is_species_appropriate(datum/species/mob_species)
 	var/datum/species_traits = GLOB.species_prototypes[mob_species].inherent_traits
-	if(!MOB_ORGANIC in GLOB.species_prototypes[mob_species].inherent_biotypes)
+	if(!(MOB_ORGANIC & GLOB.species_prototypes[mob_species].inherent_biotypes))
 		return FALSE
-	if(TRAIT_VIRUS_IMMUNE in species_traits)
+	if(TRAIT_VIRUSIMMUNE in species_traits)
 		return FALSE
 	return ..()
