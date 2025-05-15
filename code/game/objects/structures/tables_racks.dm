@@ -495,15 +495,15 @@
 /obj/structure/table/proc/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(tool.item_flags & ABSTRACT)
 		return NONE
-	if(!user.dropItemToGround(to_drop = tool, silent = FALSE, newloc = get_turf(src)))
+	var/vector_x = 0
+	var/vector_y = 0
+	if(LAZYACCESS(modifiers, ICON_X))
+		vector_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X*0.5), ICON_SIZE_X*0.5)
+	if(LAZYACCESS(modifiers, ICON_Y))
+		vector_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y*0.5), ICON_SIZE_Y*0.5)
+	var/vector/offset_vector = vector(vector_x, vector_y)
+	if(!user.dropItemToGround(to_drop = tool, silent = FALSE, newloc = get_turf(src), offset_vector = offset_vector))
 		return ITEM_INTERACT_BLOCKING
-	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
-	tool.pixel_x = 0
-	tool.pixel_y = 0
-	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))
-		// Clamp it so that the icon never moves more than 16 pixels in either direction (thus leaving the table turf)
-		tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X*0.5), ICON_SIZE_X*0.5)
-		tool.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y*0.5), ICON_SIZE_Y*0.5)
 	AfterPutItemOnTable(tool, user)
 	return ITEM_INTERACT_SUCCESS
 

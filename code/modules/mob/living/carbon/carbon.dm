@@ -1459,7 +1459,13 @@
 
 	return ..()
 
-/mob/living/carbon/dropItemToGround(obj/item/to_drop, force = FALSE, silent = FALSE, invdrop = TRUE, turf/newloc = null)
+/mob/living/carbon/dropItemToGround(
+	obj/item/to_drop,
+	force = FALSE,
+	silent = FALSE,
+	invdrop = TRUE,
+	turf/newloc = null,
+	offset_vector = vector(rand(6, -6), rand(6, -6)))
 	if(to_drop && (organs.Find(to_drop) || bodyparts.Find(to_drop))) //let's not do this, aight?
 		return FALSE
 	return ..()
