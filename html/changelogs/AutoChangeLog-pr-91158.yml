@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Fixes quirks and the scarf trait just dropping items to the ground."
