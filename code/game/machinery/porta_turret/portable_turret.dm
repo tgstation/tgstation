@@ -924,7 +924,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 /obj/machinery/porta_turret/sapper
 	req_access = list(ACCESS_SAPPER_SHIP)
-	faction = list(FACTION_SAPPERS)
+	faction = list(ROLE_SPACE_SAPPER)
 
 /obj/machinery/porta_turret/sapper/assess_perp(mob/living/carbon/human/perp)
 	return 10 //shoot everything not in their faction

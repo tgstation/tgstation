@@ -42,7 +42,7 @@
 	radio_key = /obj/item/encryptionkey/syndicate
 	radio_channel = RADIO_CHANNEL_SYNDICATE
 	damage_type_healer = HEAL_ALL_DAMAGE
-	faction = list(FACTION_SAPPERS)
+	faction = list(FACTION_NEUTRAL, ROLE_SPACE_SAPPER)
 	heal_threshold = 0
 	heal_amount = 5
 
