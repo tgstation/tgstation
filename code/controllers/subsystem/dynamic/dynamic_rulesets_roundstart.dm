@@ -364,6 +364,11 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		M.add_antag_datum(new_cultist)
 		GLOB.pre_setup_antags -= M
 	main_cult.setup_objectives()
+	var/datum/mind/most_experienced = get_most_experienced(assigned, antag_flag)
+	if(!most_experienced)
+		most_experienced = assigned[1]
+	var/datum/antagonist/cult/leader = most_experienced.has_antag_datum(/datum/antagonist/cult)
+	leader.make_cult_leader()
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/bloodcult/round_result()
