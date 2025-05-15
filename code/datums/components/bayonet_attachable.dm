@@ -94,16 +94,16 @@
 	if(removable)
 		examine_list += span_info("[bayonet] looks like it can be <b>unscrewed</b> from [bayonet].")
 
-/datum/component/bayonet_attachable/proc/on_pre_attack(obj/item/source, atom/target, mob/living/user, params)
+/datum/component/bayonet_attachable/proc/on_pre_attack(obj/item/source, atom/target, mob/living/user, list/modifiers)
 	SIGNAL_HANDLER
 
 	if (isnull(bayonet) || !user.combat_mode)
 		return NONE
 
-	INVOKE_ASYNC(bayonet, TYPE_PROC_REF(/obj/item, melee_attack_chain), user, target, params)
+	INVOKE_ASYNC(bayonet, TYPE_PROC_REF(/obj/item, melee_attack_chain), user, target, modifiers)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/datum/component/bayonet_attachable/proc/on_attackby(obj/item/source, obj/item/attacking_item, mob/attacker, params)
+/datum/component/bayonet_attachable/proc/on_attackby(obj/item/source, obj/item/attacking_item, mob/attacker, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(!is_type_in_typecache(attacking_item, valid_bayonets))
