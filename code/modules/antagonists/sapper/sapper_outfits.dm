@@ -9,8 +9,6 @@
 	belt = /obj/item/storage/belt/utility/sapper
 	gloves = /obj/item/clothing/gloves/color/yellow
 	shoes = /obj/item/clothing/shoes/workboots/sapper
-
-	box = /obj/item/storage/box/survival/engineer
 	back = /obj/item/fireaxe
 
 	l_pocket = /obj/item/paper/fluff/sapper_intro
@@ -57,8 +55,9 @@
 /obj/item/clothing/mask/gas/atmos/sapper/IsReflect(def_zone)
 	if(def_zone in list(BODY_ZONE_HEAD))
 		return FALSE
-	if (prob(hit_reflect_chance))
+	if(prob(hit_reflect_chance))
 		return TRUE
+	return FALSE
 
 /obj/item/clothing/under/sapper
 	name = "\improper Sapper Heatsilk slacks"
@@ -76,8 +75,9 @@
 /obj/item/clothing/under/sapper/IsReflect(def_zone)
 	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)))
 		return FALSE
-	if (prob(hit_reflect_chance))
+	if(prob(hit_reflect_chance))
 		return TRUE
+	return
 
 /obj/item/clothing/under/sapper/skirt
 	name = "\improper Sapper Heatsilk skirt"
@@ -96,7 +96,7 @@
 
 /obj/item/clothing/shoes/workboots/sapper/Initialize(mapload)
 	. = ..()
-	contents += new /obj/item/screwdriver
+	new /obj/item/screwdriver(src)
 
 /obj/item/storage/belt/utility/sapper
 	name = "black toolbelt"
