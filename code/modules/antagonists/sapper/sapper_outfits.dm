@@ -49,7 +49,6 @@
 	name = "\improper Sapper Heatsilk gas mask"
 	desc = "A modified black gas mask with a yellow painted bottom and digitally expressive eyes, its framing is <b>laser-reflective</b>."
 	icon_state = "gas_sapper_one"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	var/hit_reflect_chance = 45
 
 /obj/item/clothing/mask/gas/atmos/sapper/partner
@@ -69,7 +68,6 @@
 	icon_state = "sapper_heatsilk"
 	body_parts_covered = CHEST|GROIN|ARMS // The pants or skirt grant no protection, that's what the boots are for
 	inhand_icon_state = "engi_suit"
-	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 	has_sensor = NO_SENSORS
 	armor_type = /datum/armor/clothing_under/rank_security
 	can_adjust = FALSE
