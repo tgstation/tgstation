@@ -286,11 +286,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
  *
  * * regenerate_existing - if TRUE, existing organs will be deleted and replaced with new ones
  */
-/mob/living/carbon/proc/regenerate_organs(regenerate_existing = FALSE)
+/mob/living/carbon/proc/regenerate_organs(regenerate_existing = FALSE, remove_hazardous = FALSE)
 
 	// Delegate to species if possible.
 	if(dna?.species)
-		dna.species.regenerate_organs(src, replace_current = regenerate_existing)
+		dna.species.regenerate_organs(src, replace_current = regenerate_existing, replace_hazardous = remove_hazardous)
 
 		// Species regenerate organs doesn't ALWAYS handle healing the organs because it's dumb
 		for(var/obj/item/organ/organ as anything in organs)
