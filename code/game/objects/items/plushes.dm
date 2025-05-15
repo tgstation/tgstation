@@ -822,49 +822,21 @@
 	attack_verb_continuous = list("Oops", "Eeks")
 	attack_verb_simple = list("Oop", "Eek")
 	squeak_override = list(SFX_SCREECH=1)
-	///are we going ape from nanners??!
-	var/banana_had = FALSE
 
-/obj/item/toy/plush/monkey/attackby(obj/item/food/grown/banana/nana, mob/user, list/modifiers)
+/obj/item/toy/plush/monkey/item_interaction(mob/living/user, obj/item/food/grown/banana/nana, list/modifiers)
 	if(!istype(nana))
 		return ..()
-	if(!banana_had)
-		banana_had = TRUE
-		nana.moveToNullspace() //can't delete it just yet
-		to_chat(user, span_notice("You hand over the [nana] to [src] and watch as it eats..."))
-		playsound(src, 'sound/items/eatfood.ogg', 75, TRUE)
-		addtimer(CALLBACK(src, PROC_REF(eat), nana), 3 SECONDS)
-	else
-		to_chat(user, span_warning("[src] is busy right now!"))
+	nana.moveToNullspace() //can't delete it just yet
+	to_chat(user, span_notice("You hand over the [nana] to [src] and watch as it eats..."))
+	playsound(src, 'sound/items/eatfood.ogg', 75, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(eat), nana), 3 SECONDS)
 
 /obj/item/toy/plush/monkey/proc/eat(nana)
 	if(istype(nana, /obj/item/food/grown/banana/bluespace))
 		do_teleport(src, get_turf(src), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
 	qdel(nana) //now it can be deleted
-	go_ape()
 	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
-	addtimer(CALLBACK(src, PROC_REF(calm_down)), 5 SECONDS)
-
-/obj/item/toy/plush/monkey/proc/go_ape()
-	var/static/list/transforms
-	if(!transforms)
-		var/matrix/M1 = matrix()
-		var/matrix/M2 = matrix()
-		var/matrix/M3 = matrix()
-		var/matrix/M4 = matrix()
-		M1.Translate(-1, 0)
-		M2.Translate(0, 1)
-		M3.Translate(1, 0)
-		M4.Translate(0, -1)
-		transforms = list(M1, M2, M3, M4)
-	animate(src, transform=transforms[1], time=0.2, loop=-1)
-	animate(transform=transforms[2], time=0.1)
-	animate(transform=transforms[3], time=0.2)
-	animate(transform=transforms[4], time=0.3)
-
-/obj/item/toy/plush/monkey/proc/calm_down()
-	banana_had = FALSE
-	animate(src, transform = matrix())
+	spasm_animation(5 SECONDS)
 
 /obj/item/toy/plush/monkey/operative
 	name = "monkey operative plushie"
