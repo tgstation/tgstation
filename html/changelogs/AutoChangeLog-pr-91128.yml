@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "Animations for moving items into other items on your person shouldn't play any more."
