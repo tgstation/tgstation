@@ -327,6 +327,8 @@ GLOBAL_LIST_INIT(tool_items, list(
 #define LOCATION_GLOVES "on your hands"
 /// Items placed in the eye/glasses slot.
 #define LOCATION_EYES "covering your eyes"
+/// Items placed in the mask slot.
+#define LOCATION_MASK "covering your face"
 /// Items placed on the head/hat slot.
 #define LOCATION_HEAD "on your head"
 /// Items placed in the neck slot.
