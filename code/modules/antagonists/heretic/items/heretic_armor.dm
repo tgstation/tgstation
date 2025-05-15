@@ -561,6 +561,8 @@
 	var/rusted = FALSE
 	/// Mutable used as overlay
 	var/obj/effect/overlay/rust_overlay
+	/// Grace period timer before the
+	COOLDOWN_DECLARE(rust_grace_period)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/equipped(mob/living/user, slot)
 	. = ..()
@@ -598,15 +600,26 @@
 	if(HAS_TRAIT(mover_turf, TRAIT_RUSTY))
 		armor_type = /datum/armor/eldritch_armor/rust/on_rust
 		ADD_TRAIT(source, TRAIT_PIERCEIMMUNE, REF(src))
+		COOLDOWN_RESET(src, rust_grace_period)
 		if(rusted) // Already rusted, don't update overlay
 			return
 		rusted = TRUE
 		update_rust()
 	else
-		armor_type = initial(armor_type)
-		REMOVE_TRAIT(source, TRAIT_PIERCEIMMUNE, REF(src))
 		if(!rusted) // Already unrusted, don't update overlay
 			return
+		// Start the timer for the first time we step off rust
+		if(!COOLDOWN_STARTED(src, rust_grace_period))
+			COOLDOWN_START(src, rust_grace_period, 1 SECONDS)
+			return
+		if(!COOLDOWN_FINISHED(src, rust_grace_period))
+			return
+
+		// *Actually* remove the effects after our grace period expires.
+		// Keep in mind since we call updates `on_move` this means you can technically stand still to keep the benefits.
+		COOLDOWN_RESET(src, rust_grace_period)
+		armor_type = /datum/armor/eldritch_armor/rust
+		REMOVE_TRAIT(source, TRAIT_PIERCEIMMUNE, REF(src))
 		rusted = FALSE
 		update_rust()
 
@@ -619,6 +632,14 @@
 	else
 		rust_overlay.icon_state = null
 		flick("[worn_icon_state]"+"_off", rust_overlay)
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/update_slot_icon()
+	. = ..()
+	// Should basically catch toggling the hood on/off while standing on rust
+	if(rusted)
+		rust_overlay.icon_state = "[worn_icon_state]" + "_overlay"
+	else
+		rust_overlay.icon_state = null
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
 	name = "\improper Salvaged Remains"
