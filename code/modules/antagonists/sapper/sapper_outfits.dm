@@ -75,7 +75,7 @@
 	can_adjust = FALSE
 	var/hit_reflect_chance = 65
 
-/obj/item/clothing/under/sapper/sapper/IsReflect(def_zone)
+/obj/item/clothing/under/sapper/IsReflect(def_zone)
 	if(!(def_zone in list(BODY_ZONE_CHEST, BODY_ZONE_PRECISE_GROIN, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)))
 		return FALSE
 	if (prob(hit_reflect_chance))

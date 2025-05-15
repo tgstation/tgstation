@@ -533,7 +533,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/sapper)
 "Yx" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "Zc" = (
 /obj/structure/cable/layer1,
