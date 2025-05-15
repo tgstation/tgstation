@@ -591,21 +591,21 @@
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
-/datum/station_trait/hack_the_planet/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
+/datum/station_trait/hack_the_planet/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/carbon/human/hacker, mob/M, joined_late)
 	SIGNAL_HANDLER
 
-	if(!istype(living_mob, /mob/living/carbon/human))
+	if(!istype(hacker))
 		return
 
 	if(already_gaming.Find(job))
 		return
 
 	var/obj/item/modular_computer/laptop/buildable/sleek/laptop = new(src)
-	living_mob.equip_to_slot_if_possible(laptop, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
+	hacker.equip_to_slot_if_possible(laptop, ITEM_SLOT_BACKPACK, indirect_action = TRUE)
 	if(prob(20))
 		var/obj/item/clothing/mask/russian_balaclava/hacker_disguise = new(src)
 		hacker_disguise.icon_state = "syndicate_balaclava"
 		hacker_disguise.worn_icon_state = "syndicate_balaclava"
 		hacker_disguise.name = "hacker disguise"
 		hacker_disguise.desc = "1024 KB RAM baby, that's all I need to hack the planet."
-		living_mob.equip_to_slot_if_possible(hacker_disguise, ITEM_SLOT_MASK, indirect_action = TRUE)
+		hacker.equip_to_slot_if_possible(hacker_disguise, ITEM_SLOT_MASK, indirect_action = TRUE)
