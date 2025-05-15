@@ -341,3 +341,18 @@
   - bugfix: You must have both your hands empty before entering a mech. (But items
       which replace your hand, like the light later or the hand of god, won't prevent
       you from getting in)
+2025-05-15:
+  Aliceee2ch:
+  - rscadd: Added heavy thermal guns for mechs. Works on the principle of regular
+      hand guns. Can only be purchased in cargo, as they are experimental.
+  Ezel:
+  - rscadd: Nuke ops can now buy a keycard to access their new custodial closet!
+  - map: Rearranges nuke ordnance room, and adds the custodial closet
+  FlufflesTheDog:
+  - bugfix: Fixed another(?) possible case of multitool APC searching causing broken
+      huds
+  JohnFulpWillard:
+  - bugfix: Advanced camera consoles now shows static when you first open it, rather
+      than only kicking in when you start to look around.
+  spiders24110:
+  - bugfix: fixed fish infused people swimming slow in deep water
