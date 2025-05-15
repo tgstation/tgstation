@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -29,6 +30,58 @@ type ManipulatorData = {
   max_delay: number;
 };
 
+const DelayControls = () => {
+  const { act, data } = useBackend<ManipulatorData>();
+  const { delay_step, interaction_delay, min_delay, max_delay } = data;
+  const [currentDelay, SetDelay] = useState<number>(interaction_delay);
+  const AdjustDelay = (value: number) => {
+    let new_delay = Math.min(
+      Math.max(currentDelay + value, min_delay),
+      max_delay,
+    );
+    UpdateDelay(new_delay);
+  };
+  const UpdateDelay = (value: number) => {
+    value === currentDelay
+      ? null
+      : (SetDelay(value),
+        act('changeDelay', {
+          new_delay: value,
+        }))};
+    return (
+      <Section title="Delay">
+        <Stack.Item>
+          {' '}
+          <Button icon="backward-step" onClick={() => UpdateDelay(min_delay)} />
+          <Stack.Item>
+            <Button icon="backward" onClick={() => AdjustDelay(-delay_step)} />
+          </Stack.Item>
+        </Stack.Item>
+        <Stack.Item grow>
+          <Slider
+            style={{ marginTop: '-5px' }}
+            step={delay_step}
+            my={1}
+            value={interaction_delay}
+            minValue={min_delay}
+            maxValue={max_delay}
+            unit="sec."
+            onDrag={(e, value) => UpdateDelay(value)}
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            icon="forward-step"
+            onClick={() => UpdateDelay(max_delay - currentDelay)}
+          />
+        </Stack.Item>
+        <Stack.Item>
+          <Button icon="forward" onClick={() => AdjustDelay(delay_step)} />
+        </Stack.Item>
+      </Section>
+    );
+  };
+
 type PrioritySettings = {
   name: string;
   priority_width: number;
@@ -39,52 +92,15 @@ const MasterControls = () => {
   const { delay_step, interaction_delay, min_delay, max_delay } = data;
   return (
     <Stack>
-      <Stack.Item>Delay:</Stack.Item>
+      <DelayControls />
       <Stack.Item>
         {' '}
         <Button
-          icon="backward-step"
-          onClick={() =>
-            act('changeDelay', {
-              new_delay: min_delay,
-            })
-          }
-        />
-      </Stack.Item>
-      <Stack.Item grow>
-        <Slider
-          style={{ marginTop: '-5px' }}
-          step={delay_step}
-          my={1}
-          value={interaction_delay}
-          minValue={min_delay}
-          maxValue={max_delay}
-          unit="sec."
-          onDrag={(e, value) =>
-            act('changeDelay', {
-              new_delay: value,
-            })
-          }
-        />
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          icon="forward-step"
-          onClick={() =>
-            act('changeDelay', {
-              new_delay: max_delay,
-            })
-          }
-        />
-      </Stack.Item>
-      <Stack.Item>
-        {' '}
-        <Button
-          content="Drop"
           icon="eject"
           tooltip="Disengage the claws, dropping the held item"
           onClick={() => act('drop')}
         />
+        Drop
       </Stack.Item>
     </Stack>
   );
@@ -149,7 +165,7 @@ export const BigManipulator = () => {
 
   return (
     <Window title="Manipulator Interface" width={320} height={410}>
-      <Window.Content>
+      <Window.Content scrollable>
         <Section
           title="Action Panel"
           buttons={
