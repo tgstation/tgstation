@@ -142,7 +142,7 @@
 /obj/item/stack/proc/merge_with_loc()
 	var/list/already_found = list() // change to alist whenever dreamchecker and such finally supports that
 	var/obj/item/other_stack = find_other_stack(already_found)
-	var/sanity = 100 // just in case
+	var/sanity = max_amount // just in case
 	while(other_stack && sanity > 0)
 		sanity--
 		if(merge(other_stack))
