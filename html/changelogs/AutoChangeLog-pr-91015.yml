@@ -1,4 +1,0 @@
-author: "Absolucy, Melbert"
-delete-after: True
-changes:
-  - refactor: "Stack merging has much less potential for causing large amounts of server lag now."
