@@ -165,9 +165,9 @@
 	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
 	var/caffeinated = HAS_TRAIT(owner, TRAIT_STIMULATED)
 	if(owner.move_intent == MOVE_INTENT_RUN)
-		sleep_chance = sleep_chance_running
+		sleep_chance += sleep_chance_running
 	if(drowsy)
-		sleep_chance = sleep_chance_drowsy //stack drowsy ontop of base or running odds with the += operator
+		sleep_chance += sleep_chance_drowsy //stack drowsy ontop of base or running odds with the += operator
 	if(caffeinated)
 		sleep_chance = sleep_chance / 2 //make it harder to fall asleep on caffeine
 
