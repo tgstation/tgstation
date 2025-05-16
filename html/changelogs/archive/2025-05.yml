@@ -341,3 +341,39 @@
   - bugfix: You must have both your hands empty before entering a mech. (But items
       which replace your hand, like the light later or the hand of god, won't prevent
       you from getting in)
+2025-05-15:
+  Aliceee2ch:
+  - rscadd: Added heavy thermal guns for mechs. Works on the principle of regular
+      hand guns. Can only be purchased in cargo, as they are experimental.
+  Ezel:
+  - rscadd: Nuke ops can now buy a keycard to access their new custodial closet!
+  - map: Rearranges nuke ordnance room, and adds the custodial closet
+  FlufflesTheDog:
+  - bugfix: Fixed another(?) possible case of multitool APC searching causing broken
+      huds
+  JohnFulpWillard:
+  - bugfix: Advanced camera consoles now shows static when you first open it, rather
+      than only kicking in when you start to look around.
+  spiders24110:
+  - bugfix: fixed fish infused people swimming slow in deep water
+2025-05-16:
+  00-Steven:
+  - bugfix: Fixes quirks and the scarf trait just dropping items to the ground.
+  Absolucy, Melbert:
+  - refactor: Stack merging has much less potential for causing large amounts of server
+      lag now.
+  Bisar:
+  - bugfix: Things with the behavior for placing on the floor now correctly use the
+      code for placing on the floor.
+  - bugfix: Animations for moving items into other items on your person shouldn't
+      play any more.
+  LT3:
+  - bugfix: You can put sterilizine back in the surgery tray after removing it
+  NeonNik2245:
+  - balance: Plumbers will now give back matter you use for assemble machinery.
+  SmArtKar:
+  - refactor: Refactored how backpack and belt contents are handled in mob inventory
+      code, report any issues with lingering item effects or inability to equip things
+      into them!
+  TealSeer:
+  - bugfix: fixed cross-server newscaster functionality

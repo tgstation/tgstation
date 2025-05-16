@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Power Miners are now ash and snowstorm immune"
+  - bugfix: "Holoparasites no longer take damage from ash storms inside of storm-protected hosts"
