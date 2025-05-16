@@ -67,7 +67,7 @@
 	///This is the lazy list of perimeter turfs that we grab when making large shields of 10 or more radius
 	var/list/list_of_turfs
 
-	var/display_name
+	var/display_name = "Shield Generator"
 
 /obj/machinery/modular_shield_generator/power_change()
 	. = ..()

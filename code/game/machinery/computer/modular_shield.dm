@@ -52,28 +52,27 @@
 			this_generator["name"] = generator.display_name
 			this_generator["id"] = i
 			this_generator["max_strength"] = generator.max_strength
-			this_generator["current_strength"] = generator.max_strength
+			this_generator["current_strength"] = generator.stored_strength
 			this_generator["generator_name"] = generator.display_name
 			this_generator["active"] = generator.active
-			this_generator["recovering}"] = generator.recovering
+			this_generator["recovering"] = generator.recovering || generator.initiating
 			if(generator.machine_stat & NOPOWER)
 				this_generator["inactive"] = TRUE
 			generator_list += list(this_generator)
 		else
 			generators -= get_generator(i)
 	data["generators"] = generator_list
-	data["selected_id"] = selected_id
 	return data
 /obj/machinery/computer/modular_shield/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
-	var/obj/machinery/modular_shield_generator/current_generator = generators[selected_id]
+	var/obj/machinery/modular_shield_generator/selected_generator = get_generator(params["id"])
 	switch(action)
 		if("toggle_shields")
-			current_generator.toggle_shields()
+			selected_generator.toggle_shields()
 			. = TRUE
-		if("select_generator")
-			selected_id = text2num(params["id"])
+		if("rename")
+			selected_generator.display_name = params["name"]
 			. = TRUE
 	. = TRUE

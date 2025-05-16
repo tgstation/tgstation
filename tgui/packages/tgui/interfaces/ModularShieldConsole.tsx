@@ -1,6 +1,15 @@
-import { BooleanLike, Button, ProgressBar, Table } from 'tgui-core/components';
+import {
+  BooleanLike,
+  Button,
+  Input,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Table,
+} from 'tgui-core/components';
 
 import { useBackend } from '../backend';
+import { Window } from '../layouts';
 
 type GeneratorStats = {
   name: string;
@@ -12,15 +21,34 @@ type GeneratorStats = {
 };
 
 type ModularShieldConsoleData = {
-  stats: GeneratorStats[];
+  generators: GeneratorStats[];
 };
 
+export const ModularShieldConsole = () => {
+  const { data } = useBackend<ModularShieldConsoleData>();
+  const { generators } = data;
+  return (
+    <Window title="Modular Shield Console" width={500} height={300}>
+      <Window.Content scrollable>
+        {' '}
+        {generators.length === 0 ? (
+          <NoticeBox>No Generators Connected</NoticeBox>
+        ) : (
+          <Section minHeight="200px">
+            <GeneratorTable />
+          </Section>
+        )}
+      </Window.Content>
+    </Window>
+  );
+};
 const GeneratorTable = () => {
+  const { data } = useBackend<ModularShieldConsoleData>();
+  const { generators } = data;
   return (
     <Table>
       <Table.Row>
         <Table.Cell bold>Name</Table.Cell>
-        <Table.Cell bold collapsing />
         <Table.Cell bold collapsing textAlign="center">
           Status
         </Table.Cell>
@@ -28,6 +56,9 @@ const GeneratorTable = () => {
           Toggle
         </Table.Cell>
       </Table.Row>
+      {generators.map((stat) => (
+        <GeneratorTableEntry generator_data={stat} key={stat.id} />
+      ))}
     </Table>
   );
 };
@@ -45,11 +76,20 @@ const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
   return (
     <Table.Row className="candystripe">
       <Table.Cell>
-        {id}
-        {name}
+        <Input
+          value={name}
+          width="170px"
+          onChange={(value) =>
+            act('rename', {
+              id: id,
+              name: value,
+            })
+          }
+        />
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         <ProgressBar
+          width="170px"
           value={current_strength}
           maxValue={max_strength}
           ranges={{
@@ -61,7 +101,6 @@ const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
           {current_strength}/{max_strength}
         </ProgressBar>
       </Table.Cell>
-      <Table.Cell collapsing textAlign="center" />
       <Table.Cell>
         <Button
           bold
@@ -69,7 +108,7 @@ const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
           selected={active}
           content={active ? 'On' : 'Off'}
           icon="power-off"
-          onClick={() => act('toggle_shields')}
+          onClick={() => act('toggle_shields', { id: id })}
         />
       </Table.Cell>
     </Table.Row>
