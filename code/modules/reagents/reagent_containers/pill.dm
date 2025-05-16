@@ -197,7 +197,7 @@
 
 /obj/item/reagent_containers/applicator/pill/prescription_stimulant
 	name = "prescription stimulant pill"
-	desc = "Used to treat symptoms of drowsiness and sudden loss of consciousness. A warning label reads: <b>Take in moderation</b>."
+	desc = "Used to treat symptoms of drowsiness and sudden loss of consciousness."
 	list_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/synaptizine = 5, /datum/reagent/medicine/modafinil = 3)
 	icon_state = "pill15"
 
