@@ -2186,6 +2186,7 @@
 #include "code\game\machinery\transformer.dm"
 #include "code\game\machinery\washing_machine.dm"
 #include "code\game\machinery\wishgranter.dm"
+#include "code\game\machinery\big_manipulator\big_manipulator_ui.dm"
 #include "code\game\machinery\camera\camera.dm"
 #include "code\game\machinery\camera\camera_construction.dm"
 #include "code\game\machinery\camera\motion.dm"
