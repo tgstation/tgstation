@@ -106,6 +106,7 @@
 	if(times_fired % (1 SECONDS))
 		return
 
+	var/list/batteries = list()
 	for(var/obj/item/stock_parts/power_store/cell in owner.get_all_contents())
 		if(cell.used_charge())
 			batteries += cell
