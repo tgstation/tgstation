@@ -1,0 +1,5 @@
+author: "Holoo-1"
+delete-after: True
+changes:
+  - bugfix: "fixed presets, custom explosion, fall sound in admin supply pod"
+  - admin: "admin supply pod now can have flashy explosion, set it via custom explosion button. Added flash range to admin logs"

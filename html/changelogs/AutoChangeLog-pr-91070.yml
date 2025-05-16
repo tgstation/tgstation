@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed monkeys being weirdly rotated when attached to big manipulators pointing sideways"

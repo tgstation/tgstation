@@ -1,0 +1,4 @@
+author: "Vanilla1040"
+delete-after: True
+changes:
+  - bugfix: "Fixed interdyne MOD using digi sprite on plantigrade"

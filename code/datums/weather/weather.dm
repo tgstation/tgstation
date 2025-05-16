@@ -329,19 +329,21 @@
 	if(!(mob_turf.z in impacted_z_levels))
 		return
 
-	if((immunity_type && HAS_TRAIT(mob_to_check, immunity_type)) || HAS_TRAIT(mob_to_check, TRAIT_WEATHER_IMMUNE))
+	if(!(mob_turf.loc in impacted_areas))
 		return
 
-	var/atom/loc_to_check = mob_to_check.loc
-	while(loc_to_check != mob_turf)
-		if((immunity_type && HAS_TRAIT(loc_to_check, immunity_type)) || HAS_TRAIT(loc_to_check, TRAIT_WEATHER_IMMUNE))
+	var/atom/to_check = mob_to_check
+	while(!isturf(to_check))
+		if(recursive_weather_protection_check(to_check))
 			return
-		loc_to_check = loc_to_check.loc
-
-	if(!(get_area(mob_to_check) in impacted_areas))
-		return
-
+		to_check = to_check.loc
 	return TRUE
+
+/**
+ * Returns TRUE if the atom should protect itself or its contents from weather
+ */
+/datum/weather/proc/recursive_weather_protection_check(atom/to_check)
+	return HAS_TRAIT(to_check, TRAIT_WEATHER_IMMUNE) || (immunity_type && HAS_TRAIT(to_check, immunity_type))
 
 /**
  * Returns TRUE if the turf can be affected by the weather
