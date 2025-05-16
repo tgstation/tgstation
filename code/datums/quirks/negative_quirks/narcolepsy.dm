@@ -7,11 +7,11 @@
 
 /datum/quirk/narcolepsy
 	name = "Narcolepsy"
-	desc = "You may fall asleep at any moment and feel tired often."
+	desc = "You feel drowsy often, and could fall asleep at any moment. Staying caffeinated, walking or even supressing symptoms with stimulants, prescribed or otherwise, can help you get through the shift..."
 	icon = FA_ICON_BED
 	value = -8
 	hardcore_value = 8
-	medical_record_text = "Patient may involuntarily fall asleep during normal activities."
+	medical_record_text = "Patient may involuntarily fall asleep during normal activities, and feel drowsy at any given moment."
 	mail_goodies = list(
 		/obj/item/reagent_containers/cup/glass/coffee,
 		/obj/item/reagent_containers/cup/soda_cans/space_mountain_wind,
@@ -35,7 +35,7 @@
 /datum/brain_trauma/severe/narcolepsy/permanent
 	scan_desc = "chronic narcolepsy"
 
-//similar to parent but slower and can be supressed by medicine and caffeine
+//similar to parent but slower and can be suppressed by medicine and caffeine
 /datum/brain_trauma/severe/narcolepsy/permanent/on_life(seconds_per_tick, times_fired)
 	if(owner.IsSleeping())
 		return
@@ -53,11 +53,11 @@
 	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
 	var/caffeinated = HAS_TRAIT(owner, TRAIT_STIMULATED)
 	if(owner.move_intent == MOVE_INTENT_RUN)
-		sleep_chance = SLEEP_CHANCE_RUNNING
+		sleep_chance = SLEEP_CHANCE_RUNNING //dont stack this one, walking or running should only have a minor impact
 	if(drowsy)
-		sleep_chance = SLEEP_CHANCE_DROWSY
-	if(caffeinated) //make it real hard to fall asleep on caffeine, parent doesn't have this
-		sleep_chance = sleep_chance / 2
+		sleep_chance += SLEEP_CHANCE_DROWSY //stack drowsy ontop of base or running odds with the += operator
+	if(caffeinated)
+		sleep_chance = sleep_chance / 2 //make it real hard to fall asleep on caffeine
 
 	if(!drowsy && SPT_PROB(sleep_chance, seconds_per_tick))
 		to_chat(owner, span_warning("You feel tired..."))
