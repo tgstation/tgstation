@@ -3,7 +3,7 @@
 /// Holds a list of objects that represent starlight. The idea is to render_source them
 /// So modifying starlight requires touching only one place (NOTE: this doesn't work for the area overlays)
 /// In order to modify them you need to use set_starlight. Areas don't work with render sources it looks like
-GLOBAL_LIST_INIT_TYPED(starlight_objects, /obj, list(starlight_object(0)))
+GLOBAL_LIST_INIT_TYPED(starlight_objects, /obj, list())
 /obj/starlight_appearance
 	icon = 'icons/effects/alphacolors.dmi'
 	icon_state = "white"
@@ -17,21 +17,19 @@ GLOBAL_LIST_INIT_TYPED(starlight_objects, /obj, list(starlight_object(0)))
 	glow.layer = LIGHTING_PRIMARY_LAYER
 	glow.blend_mode = BLEND_ADD
 	glow.color = GLOB.starlight_color
-	glow.render_target = SPACE_OVERLAY_RENDER_TARGET(offset)
 	return glow
 
 /// List of plane offset + 1 -> mutable appearance to use
 /// Fills with offsets as they are generated
 /// They mirror their appearance from the starlight objects, which lets us save
 /// time updating them
-GLOBAL_LIST_INIT_TYPED(starlight_overlays, /obj, list(starlight_overlay(0)))
+GLOBAL_LIST_INIT_TYPED(starlight_overlays, /obj, list())
 
 /proc/starlight_overlay(offset)
 	var/mutable_appearance/glow = new /mutable_appearance()
 	SET_PLANE_W_SCALAR(glow, LIGHTING_PLANE, offset)
 	glow.layer = LIGHTING_PRIMARY_LAYER
 	glow.blend_mode = BLEND_ADD
-	glow.render_source = SPACE_OVERLAY_RENDER_TARGET(offset)
 	return glow
 
 /area
