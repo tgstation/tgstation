@@ -118,9 +118,9 @@
 	if(user.mind) //higher cleaning skill can make the duration shorter
 		//offsets the multiplier you get from cleaning skill, but doesn't allow the duration to be longer than the base duration
 		cleaning_duration = (cleaning_duration * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+skill_duration_modifier_offset, 1))
-	/// Assoc list, collects all items being cleaned with its value being any blood on it
+	// Assoc list, collects all items being cleaned with its value being any blood on it
 	var/list/all_cleaned = list()
-	all_cleaned[target] = GET_ATOM_BLOOD_DNA(target)
+	all_cleaned[target] = GET_ATOM_BLOOD_DNA(target) || list()
 	//do the cleaning
 	var/clean_succeeded = FALSE
 	if(do_after(user, cleaning_duration, target = target))

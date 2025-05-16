@@ -177,12 +177,16 @@
 	if(!(clean_types & CLEAN_TYPE_BLOOD))
 		return
 	blood_level = 0
+	update_appearance()
 
 ///Checks whether or not we should clean.
 /obj/item/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	if(cleaner.combat_mode && ismob(atom_to_clean))
 		return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
 	if(blood_level >= 10)
+		// snowflakeeeee check to make it a bit more intuitive when cleaning the rag.
+		if(istype(atom_to_clean, /obj/structure/sink))
+			return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
 		atom_to_clean.balloon_alert(cleaner, "[name] is too dirty!")
 		return CLEAN_BLOCKED
 	if(loc == cleaner)
@@ -194,12 +198,12 @@
 	if(!was_successful)
 		return
 
-	var/list/all_blood = list()
+	var/list/all_blood_dna = list()
 	for(var/atom/movable/cleaned in all_cleaned)
 		if(isturf(clean_target) && !HAS_TRAIT(cleaned, TRAIT_MOPABLE))
 			continue
 		// collect dna FIRST
-		all_blood |= all_cleaned[cleaned]
+		all_blood_dna |= all_cleaned[cleaned]
 		// THEN pass on dna (though in some cases the cleaned item is being deleted)
 		if(blood_level > 0 && !QDELING(cleaned))
 			cleaned.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
@@ -212,7 +216,8 @@
 			fire_act(500, 100)
 
 	// FINALLY add the dna to us
-	add_blood_DNA(all_blood)
+	add_blood_DNA(all_blood_dna)
+	update_appearance()
 	if(blood_level >= 10)
 		to_chat(cleaner, span_warning("[src] is too dirty to clean anything else! Wash it first!"))
 	if(prob(10 * blood_level))
@@ -226,3 +231,16 @@
 		var/obj/effect/decal/cleanable/mess = what
 		return round(mess.bloodiness / 20, 1)
 	return 1
+
+/obj/item/rag/update_appearance(updates)
+	. = ..()
+	// v = green and blue color components (reduced as it gets dirtier)
+	var/v = max(1 - (0.1 * blood_level), 0)
+	var/list/colormatrix = list(
+		1, 0, 0, 0,
+		0, v, 0, 0,
+		0, 0, v, 0,
+		0, 0, 0, 1,
+	)
+
+	add_atom_colour(colormatrix, FIXED_COLOUR_PRIORITY)
