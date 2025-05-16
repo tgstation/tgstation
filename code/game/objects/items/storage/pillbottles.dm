@@ -196,3 +196,9 @@
 	desc = "Contains immune system boosters, used to manage chronic immunodeficiency."
 	spawn_count = 5
 	spawn_type = /obj/item/reagent_containers/applicator/pill/spaceacillin
+
+/obj/item/storage/pill_bottle/prescription_stimulant
+	name = "bottle of prescribed stimulant pills"
+	desc = "A bottle of mild and medicinally approved stimulants to help prevent drowsiness."
+	spawn_count = 7
+	spawn_type = /obj/item/reagent_containers/applicator/pill/prescription_stimulant
