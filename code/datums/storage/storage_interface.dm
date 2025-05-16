@@ -131,22 +131,19 @@
 
 /datum/storage_interface/silicon/New(ui_style, datum/storage/parent_storage, mob/user)
 	. = ..()
-	if(!iscyborg(user) && !isobserver(user))
-		stack_trace("[user] somehow accessed a cyborg storage interface from [parent_storage], this will cause issues.")
 	robot_model = parent_storage.real_location
-	store = new(null, user.hud_used)
+	if(iscyborg(user))
+		store = new(null, user.hud_used)
 
 /datum/storage_interface/silicon/Destroy(force)
 	QDEL_NULL(store)
 	return ..()
 
 /datum/storage_interface/silicon/list_ui_elements(initializing = FALSE)
-	if(initializing)
+	if(initializing || isnull(store))
 		return ..()
-	//we're purposely excluding 'store' from having its icon changed.
-	var/list/ui_list = ..()
-	ui_list += store
-	return ui_list
+	//we're purposely excluding 'store' from having its icon changed from initialization.
+	return ..() + store
 
 /datum/storage_interface/silicon/add_items(
 	screen_start_x,
@@ -179,7 +176,9 @@
 			//Module is currently active
 			continue
 
-		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
+		//we do this on parent, but we don't here so borgs can still select their inventory slot by clicking on the storage UI.
+		//keeping this as a comment so someone doesn't accidentally add this thinking it's an oversight since parent does it.
+		//item.mouse_opacity = MOUSE_OPACITY_OPAQUE
 		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
 		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
 

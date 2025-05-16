@@ -43,11 +43,11 @@
 
 	return put_in_hand(item_module, first_free_slot)
 
-/mob/living/silicon/robot/put_in_hand(obj/item/I, hand_index, forced = FALSE, ignore_anim = TRUE, visuals_only = FALSE)
+/mob/living/silicon/robot/put_in_hand(obj/item/item_module, hand_index, forced = FALSE, ignore_anim = TRUE, visuals_only = FALSE)
 	. = ..()
 	if(!.)
 		return
-	observer_screen_update(I, TRUE)
+	observer_screen_update(item_module, TRUE)
 
 ///Helper for cyborgs unequipping things.
 /mob/living/silicon/robot/proc/deactivate_module(obj/item/item_module)
