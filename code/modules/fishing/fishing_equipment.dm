@@ -324,93 +324,6 @@
 		var/mob/living/living_target = target
 		living_target.apply_status_effect(/datum/status_effect/grouped/hooked/jaws, rod.fishing_line)
 
-/obj/item/storage/toolbox/fishing
-	name = "fishing toolbox"
-	desc = "Contains everything you need for your fishing trip."
-	icon_state = "teal"
-	inhand_icon_state = "toolbox_teal"
-	material_flags = NONE
-	custom_price = PAYCHECK_CREW * 3
-	storage_type = /datum/storage/toolbox/fishing
-
-	///How much holding this affects fishing difficulty
-	var/fishing_modifier = -4
-
-/obj/item/storage/toolbox/fishing/Initialize(mapload)
-	. = ..()
-
-	AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier, ITEM_SLOT_HANDS)
-
-/obj/item/storage/toolbox/fishing/PopulateContents()
-	new /obj/item/bait_can/worm(src)
-	new /obj/item/fishing_rod/unslotted(src)
-	new /obj/item/fishing_hook(src)
-	new /obj/item/fishing_line(src)
-	new /obj/item/paper/paperslip/fishing_tip(src)
-
-/obj/item/storage/toolbox/fishing/small
-	name = "compact fishing toolbox"
-	desc = "Contains everything you need for your fishing trip. Except for the bait."
-	w_class = WEIGHT_CLASS_NORMAL
-	force = 5
-	throwforce = 5
-	storage_type = /datum/storage/toolbox/fishing/small
-
-/obj/item/storage/toolbox/fishing/small/PopulateContents()
-	new /obj/item/fishing_rod/unslotted(src)
-	new /obj/item/fishing_hook(src)
-	new /obj/item/fishing_line(src)
-	new /obj/item/paper/paperslip/fishing_tip(src)
-
-/obj/item/storage/toolbox/fishing/master
-	name = "super fishing toolbox"
-	desc = "Contains (almost) EVERYTHING you need for your fishing trip."
-	icon_state = "gold"
-	inhand_icon_state = "toolbox_gold"
-	fishing_modifier = -10
-
-/obj/item/storage/toolbox/fishing/master/PopulateContents()
-	new /obj/item/fishing_rod/telescopic/master(src)
-	new /obj/item/storage/box/fishing_hooks/master(src)
-	new /obj/item/storage/box/fishing_lines/master(src)
-	new /obj/item/bait_can/super_baits(src)
-	new /obj/item/reagent_containers/cup/fish_feed(src)
-	new /obj/item/aquarium_kit(src)
-	new /obj/item/fish_analyzer(src)
-
-/obj/item/storage/box/fishing_hooks
-	name = "fishing hook set"
-	illustration = "fish"
-	custom_price = PAYCHECK_CREW * 2
-
-/obj/item/storage/box/fishing_hooks/PopulateContents()
-	new /obj/item/fishing_hook/magnet(src)
-	new /obj/item/fishing_hook/shiny(src)
-	new /obj/item/fishing_hook/weighted(src)
-
-/obj/item/storage/box/fishing_hooks/master
-
-/obj/item/storage/box/fishing_hooks/master/PopulateContents()
-	. = ..()
-	new /obj/item/fishing_hook/stabilized(src)
-	new /obj/item/fishing_hook/jaws(src)
-
-/obj/item/storage/box/fishing_lines
-	name = "fishing line set"
-	illustration = "fish"
-	custom_price = PAYCHECK_CREW * 2
-
-/obj/item/storage/box/fishing_lines/PopulateContents()
-	new /obj/item/fishing_line/bouncy(src)
-	new /obj/item/fishing_line/reinforced(src)
-	new /obj/item/fishing_line/cloaked(src)
-
-/obj/item/storage/box/fishing_lines/master
-
-/obj/item/storage/box/fishing_lines/master/PopulateContents()
-	. = ..()
-	new /obj/item/fishing_line/auto_reel(src)
-
 ///Used to give the average player info about fishing stuff that's unknown to many.
 /obj/item/paper/paperslip/fishing_tip
 	name = "fishing tip"
@@ -419,34 +332,6 @@
 /obj/item/paper/paperslip/fishing_tip/Initialize(mapload)
 	default_raw_text = pick(GLOB.fishing_tips)
 	return ..()
-
-///From the fishing mystery box. It's basically a lazarus and a few bottles of strange reagents.
-/obj/item/storage/box/fish_revival_kit
-	name = "fish revival kit"
-	desc = "Become a fish doctor today. A label on the side indicates that fish require two to ten reagent units to be splashed onto them for revival, depending on size."
-	illustration = "fish"
-
-/obj/item/storage/box/fish_revival_kit/PopulateContents()
-	new /obj/item/lazarus_injector(src)
-	new /obj/item/reagent_containers/cup/bottle/fishy_reagent(src)
-	new /obj/item/reagent_containers/cup(src) //to splash the reagents on the fish.
-	new /obj/item/storage/fish_case(src)
-	new /obj/item/storage/fish_case(src)
-
-/obj/item/storage/box/fishing_lures
-	name = "fishing lures set"
-	desc = "A small tackle box containing all the fishing lures you will ever need to curb randomness."
-	icon_state = "plasticbox"
-	foldable_result = null
-	illustration = "fish"
-	custom_price = PAYCHECK_CREW * 9
-	storage_type = /datum/storage/box/fishing_lures
-
-/obj/item/storage/box/fishing_lures/PopulateContents()
-	new /obj/item/paper/lures_instructions(src)
-	var/list/typesof = typesof(/obj/item/fishing_lure)
-	for(var/type in typesof)
-		new type (src)
 
 /obj/item/paper/lures_instructions
 	name = "instructions paper"

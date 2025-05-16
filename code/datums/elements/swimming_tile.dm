@@ -70,9 +70,12 @@
 	. = ..()
 	stamina_per_second = ticking_stamina_cost
 	oxygen_per_second = ticking_oxy_damage
+	if (!HAS_TRAIT(owner, TRAIT_SWIMMER))
+		owner.add_movespeed_modifier(/datum/movespeed_modifier/swimming_deep)
 	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_IMMERSED), PROC_REF(stop_swimming))
 
 /datum/status_effect/swimming/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/swimming_deep)
 	UnregisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_IMMERSED))
 
 /datum/status_effect/swimming/tick(seconds_between_ticks)

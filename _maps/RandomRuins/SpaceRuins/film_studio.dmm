@@ -114,10 +114,6 @@
 /obj/machinery/light/dim/directional/east,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/film_studio/stage)
-"cx" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/ruin/space/has_grav/film_studio/solars)
 "cC" = (
 /obj/machinery/door/window/right/directional/west,
 /turf/open/floor/pod/light,
@@ -2889,7 +2885,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/film_studio/backstage)
 "Xk" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/film_studio/director)
 "Xl" = (
@@ -5250,7 +5246,7 @@ dd
 dd
 BK
 BK
-cx
+BK
 fu
 uc
 Ei

@@ -1,4 +1,0 @@
-author: "hry-gh"
-delete-after: True
-changes:
-  - qol: "the statusbar at the bottom left now properly scales with your display"

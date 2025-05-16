@@ -1,5 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed inconsistent proto-kinetic crusher descriptions"
-  - bugfix: "Fixed Bubblegum and Wendigo crusher trophies sometimes not working."

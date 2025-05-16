@@ -106,9 +106,6 @@ SUBSYSTEM_DEF(mapping)
 		if(!current_map || current_map.defaulted)
 			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to [old_config.map_name]."))
 			current_map = old_config
-	var/mapping_url = config.Get(/datum/config_entry/string/webmap_url)
-	if(mapping_url != "")
-		current_map.mapping_url = mapping_url
 	plane_offset_to_true = list()
 	true_to_offset_planes = list()
 	plane_to_offset = list()

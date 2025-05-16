@@ -79,11 +79,11 @@ SUBSYSTEM_DEF(blackbox)
 //Recorded on subsystem shutdown
 /datum/controller/subsystem/blackbox/proc/FinalFeedback()
 	record_feedback("tally", "ahelp_stats", GLOB.ahelp_tickets.active_tickets.len, "unresolved")
-	for (var/obj/machinery/telecomms/message_server/MS in GLOB.telecomms_list)
-		if (MS.pda_msgs.len)
-			record_feedback("tally", "radio_usage", MS.pda_msgs.len, "PDA")
-		if (MS.rc_msgs.len)
-			record_feedback("tally", "radio_usage", MS.rc_msgs.len, "request console")
+	for (var/obj/machinery/telecomms/message_server/messages in GLOB.telecomm_machines)
+		if (messages.pda_msgs.len)
+			record_feedback("tally", "radio_usage", messages.pda_msgs.len, "PDA")
+		if (messages.rc_msgs.len)
+			record_feedback("tally", "radio_usage", messages.rc_msgs.len, "request console")
 
 	for(var/datum/persistent_client/PC as anything in GLOB.persistent_clients)
 		record_feedback("tally", "client_byond_version", 1, PC.full_byond_version())
@@ -364,7 +364,10 @@ Versioning
 		query_report_death.Execute(async = TRUE)
 		qdel(query_report_death)
 
-/datum/controller/subsystem/blackbox/proc/ReportCitation(citation, sender, sender_ic, recipient, message, fine = 0, paid = 0)
+/datum/controller/subsystem/blackbox/proc/ReportCitation(citation, sender, sender_ic, recipient, message, description, fine = 0, paid = 0)
+	var/action = "Citation Created"
+	if(!fine)
+		action = "Crime Created"
 	var/datum/db_query/query_report_citation = SSdbcore.NewQuery({"INSERT INTO [format_table_name("citation")]
 	(server_ip,
 	server_port,
@@ -375,6 +378,7 @@ Versioning
 	sender_ic,
 	recipient,
 	crime,
+	crime_desc,
 	fine,
 	paid,
 	timestamp) VALUES (
@@ -387,23 +391,59 @@ Versioning
 	:sender_ic,
 	:recipient,
 	:message,
+	:desc,
 	:fine,
 	:paid,
 	NOW()
 	) ON DUPLICATE KEY UPDATE
-	paid = paid + VALUES(paid)"}, list(
+	paid = paid + VALUES(paid),
+	crime = IF(VALUES(crime) IS NOT NULL, VALUES(crime), crime),
+	crime_desc = IF(VALUES(crime_desc) IS NOT NULL, VALUES(crime_desc), crime_desc)"}, list(
 		"server_ip" = world.internet_address || "0",
 		"port" = "[world.port]",
 		"round_id" = GLOB.round_id,
 		"citation" = citation,
-		"action" = "Citation Created",
+		"action" = action,
 		"sender" = sender,
 		"sender_ic" = sender_ic,
 		"recipient" = recipient,
 		"message" = message,
+		"desc" = description,
 		"fine" = fine,
 		"paid" = paid,
 	))
 	if(query_report_citation)
 		query_report_citation.Execute(async = TRUE)
 		qdel(query_report_citation)
+
+/datum/controller/subsystem/blackbox/proc/ReportManifest(ckey, character, job, special, latejoin)
+	var/datum/db_query/query_report_manifest = SSdbcore.NewQuery({"INSERT INTO [format_table_name("manifest")]
+	(server_ip,
+	server_port,
+	round_id,
+	ckey,
+	character,
+	job,
+	special,
+	latejoin) VALUES (
+	INET_ATON(:server_ip,
+	:port,
+	:round_id,
+	:ckey,
+	:character,
+	:job,
+	:special,
+	:latejoin)
+	"}, list(
+		"server_ip" = world.internet_address || "0",
+		"port" = "[world.port]",
+		"round_id" = GLOB.round_id,
+		"ckey" = ckey,
+		"character" = character,
+		"job" = job,
+		"special" = special,
+		"latejoin" = latejoin
+	))
+	if(query_report_manifest)
+		query_report_manifest.Execute(async = TRUE)
+		qdel(query_report_manifest)
