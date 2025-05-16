@@ -1,6 +1,8 @@
-/// Odds per tick the user falls asleep
+/// Odds seconds_per_tick the user falls asleep
 #define SLEEP_CHANCE 0.333
-/// Odds per tick the user falls asleep while drowsy
+/// Odds seconds_per_tick the user falls asleep while running
+#define SLEEP_CHANCE_RUNNING 0.5
+/// Odds seconds_per_tick the user falls asleep while drowsy
 #define SLEEP_CHANCE_DROWSY 1
 
 /datum/quirk/narcolepsy
@@ -33,7 +35,7 @@
 /datum/brain_trauma/severe/narcolepsy/permanent
 	scan_desc = "chronic narcolepsy"
 
-//similar to parent but slower
+//similar to parent but slower and can be supressed by medicine and caffeine
 /datum/brain_trauma/severe/narcolepsy/permanent/on_life(seconds_per_tick, times_fired)
 	if(owner.IsSleeping())
 		return
@@ -42,7 +44,7 @@
 	var/list/immunity_medicine = list(
 		/datum/reagent/medicine/modafinil,
 		/datum/reagent/medicine/synaptizine,
-	)
+	) //unlike parent which only truly gets surpressed by modafinil
 	for(var/datum/reagent/medicine in immunity_medicine)
 		if(owner.reagents.has_reagent(medicine))
 			return
@@ -50,9 +52,11 @@
 	var/sleep_chance = SLEEP_CHANCE
 	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
 	var/caffeinated = HAS_TRAIT(owner, TRAIT_STIMULATED)
+	if(owner.move_intent == MOVE_INTENT_RUN)
+		sleep_chance = SLEEP_CHANCE_RUNNING
 	if(drowsy)
 		sleep_chance = SLEEP_CHANCE_DROWSY
-	if(caffeinated) //make it real hard to fall asleep on caffeine
+	if(caffeinated) //make it real hard to fall asleep on caffeine, parent doesn't have this
 		sleep_chance = sleep_chance / 2
 
 	if(!drowsy && SPT_PROB(sleep_chance, seconds_per_tick))
@@ -64,4 +68,5 @@
 		owner.Sleeping(rand(20 SECONDS, 30 SECONDS))
 
 #undef SLEEP_CHANCE
+#undef SLEEP_CHANCE_RUNNING
 #undef SLEEP_CHANCE_DROWSY
