@@ -5,7 +5,6 @@
 	loot = list(
 		/obj/item/grown/bananapeel = 3,
 		/obj/item/food/grown/banana = 2,
-
 	)
 
 /obj/effect/spawner/random/bananas_or_nothing
@@ -16,7 +15,6 @@
 	loot = list(
 		/obj/item/food/grown/banana/bunch = 6,
 		/obj/item/food/grown/banana = 4,
-
 	)
 
 /obj/effect/spawner/clownana

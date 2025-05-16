@@ -557,7 +557,8 @@
 	loot = list(
 		/obj/effect/gibspawner/human,
 		/obj/item/clothing/mask/gas/clown_hat,
-		/obj/effect/spawner/clownana,
+		/obj/effect/spawner/random/bananas_or_nothing,
+		/obj/effect/spawner/random/peel_or_nana,
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK", "Honk!", "YA-HONK!!!"),
