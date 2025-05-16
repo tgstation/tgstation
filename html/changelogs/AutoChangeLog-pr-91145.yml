@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Icebox artifact exports no longer claim they're from a lava planet"
