@@ -46,10 +46,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"aR" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/shuttle/escape)
 "bb" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -448,10 +444,6 @@
 	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"ib" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/mineral,
 /area/shuttle/escape)
 "ig" = (
 /obj/machinery/light/small/directional/west,
@@ -4594,8 +4586,8 @@ JG
 qA
 zE
 Ho
-ib
-ib
+Ho
+Ho
 Ho
 Ho
 nr
@@ -5480,7 +5472,7 @@ JG
 (22,1,1) = {"
 zE
 zE
-aR
+zE
 LK
 LK
 LK
