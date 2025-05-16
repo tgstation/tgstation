@@ -190,3 +190,9 @@
 	desc = "A bottle containing patches of ondansetron, a drug used to treat nausea and vomiting. May cause drowsiness."
 	spawn_count = 5
 	spawn_type = /obj/item/reagent_containers/applicator/patch/ondansetron
+
+/obj/item/storage/pill_bottle/immunodeficiency
+	name = "bottle of immune boosters"
+	desc = "Contains immune system boosters, used to manage chronic immunodeficiency."
+	spawn_count = 5
+	spawn_type = /obj/item/reagent_containers/applicator/pill/spaceacillin

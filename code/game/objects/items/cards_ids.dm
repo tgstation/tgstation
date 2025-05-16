@@ -174,7 +174,7 @@
 
 /obj/item/card/id/equipped(mob/user, slot)
 	. = ..()
-	if (slot == ITEM_SLOT_ID)
+	if (slot & ITEM_SLOT_ID)
 		RegisterSignal(user, COMSIG_MOVABLE_POINTED, PROC_REF(on_pointed))
 
 /obj/item/card/id/dropped(mob/user)

@@ -54,6 +54,17 @@ $map-keys: colors.$color-map !default;
   inset: 0;
 }
 
+.Tooltip__Port {
+  backdrop-filter: var(--tooltip-blur);
+  background-color: var(--tooltip-background);
+  border-radius: var(--tooltip-border-radius);
+  box-shadow: 0.1em 0.1em 1.25em -0.1em hsla(0, 0%, 0%, 0.5);
+  color: var(--tooltip-color);
+  max-width: base.em(250px);
+  padding: var(--space-m) var(--space-l);
+  text-align: left;
+}
+
 @each $color-name, $color-value in $map-keys {
   .color-stroke-#{$color-name} {
     stroke: hsl(from $color-value h s calc(l + var(--adjust-color))) !important;
