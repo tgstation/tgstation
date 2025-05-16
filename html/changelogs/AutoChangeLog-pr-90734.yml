@@ -1,8 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Syrup bottle pumping interaction actually works."
-  - bugfix: "Syrup bottles can be renamed even with the cap off."
-  - bugfix: "Syrup bottles with the cap removed are actually spillable, meaning they can directly transfer reagents, be drunk from, somesuch."
-  - qol: "Renaming a syrup bottle without an input resets the name instead of just not working."
-  - qol: "Added screentips for syrup bottle interactions."

@@ -2179,7 +2179,7 @@
 /turf/open/floor/wood,
 /area/virtual_domain)
 "rX" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/carpet,
 /area/virtual_domain)
 "sa" = (

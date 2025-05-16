@@ -172,3 +172,34 @@
 	stock_min = 3
 	stock_max = 8
 	availability_prob = 90
+
+/datum/market_item/misc/girlypop
+	name = "Girlypop Posters"
+	desc = "A collection of cute and adorable posters. Girl power!"
+	price_min = PAYCHECK_CREW * 2
+	price_max = PAYCHECK_CREW * 5
+	item = /obj/item/poster/contraband/heart // gives it the rolled poster icon in the menu
+	stock_min = 1
+	stock_max = 3
+	availability_prob = 90
+
+/datum/market_item/misc/girlypop/spawn_item(loc, datum/market_purchase/purchase)
+	. = ..()
+	var/obj/structure/closet/crate/pink/C = new(loc)
+	for (var/type in list(
+		/obj/item/poster/contraband/dream,
+		/obj/item/poster/contraband/beekind,
+		/obj/item/poster/contraband/heart,
+		/obj/item/poster/contraband/dolphin,
+		/obj/item/poster/contraband/principles,
+		/obj/item/poster/contraband/trigger,
+		/obj/item/poster/contraband/barbaro,
+		/obj/item/poster/contraband/seabiscuit,
+		/obj/item/poster/contraband/pharlap,
+		/obj/item/poster/contraband/waradmiral,
+		/obj/item/poster/contraband/silver,
+		/obj/item/poster/contraband/jovial,
+		/obj/item/poster/contraband/bojack,
+	))
+		new type(C)
+	return C

@@ -75,14 +75,7 @@ function CentComName(props) {
         onSelected={sendName}
       />
       {!!custom_name && (
-        <Input
-          expensive
-          fluid
-          mt={1}
-          value={name}
-          // TODO: replace with setName, should send with onBlur
-          onChange={sendName}
-        />
+        <Input fluid mt={1} value={name} onChange={setName} onBlur={sendName} />
       )}
     </Section>
   );
@@ -96,13 +89,11 @@ function SubHeader(props) {
   return (
     <Section title="Set report subheader" textAlign="center">
       <Input
-        expensive
         fluid
         mt={1}
         value={subheader}
         placeholder="Keep blank to not include a subheader"
-        // TODO: replace this with onBlur when added
-        onChange={(value) =>
+        onBlur={(value) =>
           act('set_subheader', {
             new_subheader: value,
           })
