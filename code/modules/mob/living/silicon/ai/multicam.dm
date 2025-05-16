@@ -88,6 +88,8 @@
 	icon = 'icons/hud/pic_in_pic.dmi'
 	icon_state = "room_background"
 	turf_flags = NOJAUNT
+	plane = -19
+	layer = SPACE_LAYER
 
 /turf/open/ai_visible/Initialize(mapload)
 	. = ..()
