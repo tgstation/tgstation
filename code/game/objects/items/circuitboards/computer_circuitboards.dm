@@ -176,11 +176,6 @@
 	name = "Antinoblium Supply Control"
 	build_path = /obj/machinery/computer/atmos_control/antinoblium_tank
 
-/obj/item/circuitboard/computer/modular_shield_console
-	name = "Modular Shield Generator Console"
-	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/computer/modular_shield
-
 /obj/item/circuitboard/computer/auxiliary_base
 	name = "Auxiliary Base Management Console"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -226,6 +221,11 @@
 	name = "Message Monitor"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/message_monitor
+
+/obj/item/circuitboard/computer/modular_shield_console
+	name = "Modular Shield Generator Console"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/computer/modular_shield
 
 /obj/item/circuitboard/computer/powermonitor
 	name = "Power Monitor"  //name fixed 250810
