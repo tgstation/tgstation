@@ -12,16 +12,15 @@
 	)
 
 /datum/quirk/item_quirk/narcolepsy/add_unique(client/client_source)
-	var/mob/living/carbon/human/user = quirk_holder
-	user.gain_trauma(/datum/brain_trauma/severe/narcolepsy/permanent, TRAUMA_RESILIENCE_ABSOLUTE)
+	var/mob/living/carbon/carbon_user = quirk_holder
+	carbon_user.gain_trauma(/datum/brain_trauma/severe/narcolepsy/permanent, TRAUMA_RESILIENCE_ABSOLUTE)
 
-	var/obj/item/storage/pill_bottle/prescription_stimulant/stimmies = new()
 	give_item_to_holder(
-		stimmies,
+		/obj/item/storage/pill_bottle/prescription_stimulant,
 		list(
+			LOCATION_BACKPACK,
 			LOCATION_LPOCKET,
 			LOCATION_RPOCKET,
-			LOCATION_BACKPACK,
 			LOCATION_HANDS,
 		),
 		flavour_text = "Given to you to aid in staying awake this shift...",
