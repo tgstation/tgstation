@@ -1,4 +1,4 @@
-/datum/quirk/narcolepsy
+/datum/quirk/item_quirk/narcolepsy
 	name = "Narcolepsy"
 	desc = "You feel drowsy often, and could fall asleep at any moment. Staying caffeinated, walking or even supressing symptoms with stimulants, prescribed or otherwise, can help you get through the shift..."
 	icon = FA_ICON_BED
@@ -11,16 +11,23 @@
 		/obj/item/storage/pill_bottle/prescription_stimulant,
 	)
 
-/datum/quirk/narcolepsy/post_add()
-	. = ..()
+/datum/quirk/item_quirk/narcolepsy/add_unique(client/client_source)
 	var/mob/living/carbon/human/user = quirk_holder
 	user.gain_trauma(/datum/brain_trauma/severe/narcolepsy/permanent, TRAUMA_RESILIENCE_ABSOLUTE)
 
 	var/obj/item/storage/pill_bottle/prescription_stimulant/stimmies = new()
-	if(quirk_holder.equip_to_storage(stimmies, ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE))
-		to_chat(quirk_holder, span_info("You have been given a bottle of mild stimulants to assist in staying awake this shift..."))
+	give_item_to_holder(
+		stimmies,
+		list(
+			LOCATION_LPOCKET,
+			LOCATION_RPOCKET,
+			LOCATION_BACKPACK,
+			LOCATION_HANDS,
+		),
+		flavour_text = "Given to you to aid in staying awake this shift...",
+	)
 
-/datum/quirk/narcolepsy/remove()
-	. = ..()
-	var/mob/living/carbon/human/user = quirk_holder
-	user?.cure_trauma_type(/datum/brain_trauma/severe/narcolepsy/permanent, TRAUMA_RESILIENCE_ABSOLUTE)
+/datum/quirk/item_quirk/narcolepsy/remove()
+	if(!QDELETED(quirk_holder) && quirk_holder.get_organ_by_type(/obj/item/organ/brain))
+		var/mob/living/carbon/carbon_user = quirk_holder
+		carbon_user?.cure_trauma_type(/datum/brain_trauma/severe/narcolepsy/permanent, TRAUMA_RESILIENCE_ABSOLUTE)

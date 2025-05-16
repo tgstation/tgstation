@@ -146,7 +146,7 @@
 	var/drowsy_time_minimum = 20 SECONDS
 	var/drowsy_time_maximum = 30 SECONDS
 	/// Time values for how long the user will stay asleep
-	var/sleep_time_minimum = 3 SECONDS
+	var/sleep_time_minimum = 6 SECONDS
 	var/sleep_time_maximum = 6 SECONDS
 
 /datum/brain_trauma/severe/narcolepsy/on_life(seconds_per_tick, times_fired)
@@ -154,12 +154,12 @@
 		return
 
 	/// If any of these are in the user's blood, return early
-	var/list/immunity_medicine = list(
+	var/static/list/immunity_medicine = list(
 		/datum/reagent/medicine/modafinil,
 		/datum/reagent/medicine/synaptizine,
 	) //don't add too many, as most stimulant reagents already have a drowsy-removing effect
-	for(var/datum/reagent/medicine in immunity_medicine)
-		if(owner.reagents.has_reagent(medicine))
+	for(var/medicine in immunity_medicine)
+		if(owner.reagents.has_reagent(text2path(medicine)))
 			return
 
 	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
@@ -175,13 +175,15 @@
 	if(!drowsy && SPT_PROB(sleep_chance, seconds_per_tick))
 		to_chat(owner, span_warning("You feel tired..."))
 		owner.adjust_drowsiness(rand(drowsy_time_minimum, drowsy_time_maximum))
-		if(rand(0,1) == 1)
+		if(prob(50))
 			owner.emote("yawn")
+		else if(prob(33)) //rarest message is a custom emote
+			owner.visible_message("rubs [owner.p_their()] eyes.", visible_message_flags = EMOTE_MESSAGE)
 	//if drowsy, fall asleep. you've had your chance to remedy it
 	else if(drowsy && SPT_PROB(sleep_chance, seconds_per_tick))
 		to_chat(owner, span_warning("You fall asleep."))
 		owner.Sleeping(rand(sleep_time_minimum, sleep_time_maximum))
-		if(rand(0,1) == 1)
+		if(prob(50) && owner.IsSleeping())
 			owner.emote("snore")
 
 /datum/brain_trauma/severe/narcolepsy/permanent
