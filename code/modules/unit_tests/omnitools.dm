@@ -6,10 +6,6 @@
 	//transform to engiborg
 	borg.model.transform_to(/obj/item/robot_model/engineering, forced = TRUE, transform = FALSE)
 	var/obj/item/borg/cyborg_omnitool/engineering/omnitool = locate() in borg.model.modules
-	for(var/obj/item/borg/tool as anything in borg.model.modules)
-		if(istype(tool, /obj/item/borg/cyborg_omnitool/engineering))
-			omnitool = tool
-			break
 	TEST_ASSERT_NOTNULL(omnitool, "Could not find /obj/item/borg/cyborg_omnitool/engineering in borg inbuilt modules!")
 	borg.shown_robot_modules = TRUE //stops hud from updating which would runtime cause our mob does not have one
 	borg.equip_module_to_slot(omnitool, 1)
