@@ -59,10 +59,11 @@
 	if(caffeinated)
 		sleep_chance = sleep_chance / 2 //make it real hard to fall asleep on caffeine
 
+	//if not drowsy, don't fall asleep but make them drowsy. this is unlike parent, but telegraphing a potential snooze is more fun for the player
 	if(!drowsy && SPT_PROB(sleep_chance, seconds_per_tick))
 		to_chat(owner, span_warning("You feel tired..."))
 		owner.adjust_drowsiness(rand(30 SECONDS, 60 SECONDS))
-
+	//if drowsy, fall asleep. you've had your chance to remedy it
 	else if(drowsy && SPT_PROB(sleep_chance, seconds_per_tick))
 		to_chat(owner, span_warning("You fall asleep."))
 		owner.Sleeping(rand(20 SECONDS, 30 SECONDS))
