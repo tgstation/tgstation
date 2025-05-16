@@ -153,9 +153,8 @@
 
 	return ..()
 
-/obj/machinery/launchpad/multitool_act(mob/living/user, obj/item/multitool/multi)
+/obj/machinery/modular_shield_generator/multitool_act(mob/living/user, obj/item/multitool/multi)
 	. = NONE
-
 	multi.set_buffer(src)
 	balloon_alert(user, "saved to buffer")
 	return ITEM_INTERACT_SUCCESS

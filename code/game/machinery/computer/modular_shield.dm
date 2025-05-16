@@ -1,6 +1,6 @@
 /obj/machinery/computer/modular_shield
 	name = "modular shield control console"
-	desc = "Used to remotely toggle shield generators."
+	desc = "Used to remotely monitor and toggle modular shield generators."
 	circuit = /obj/item/circuitboard/computer/modular_shield_console
 
 	var/selected_id
@@ -35,7 +35,7 @@
 	var/obj/machinery/modular_shield_generator/generator = generators[number]
 	return generator
 
-/obj/machinery/modular_shield_generator/ui_interact(mob/user, datum/tgui/ui)
+/obj/machinery/computer/modular_shield/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
@@ -51,6 +51,11 @@
 			var/list/this_generator = list()
 			this_generator["name"] = generator.display_name
 			this_generator["id"] = i
+			this_generator["max_strength"] = generator.max_strength
+			this_generator["current_strength"] = generator.max_strength
+			this_generator["generator_name"] = generator.display_name
+			this_generator["active"] = generator.active
+			this_generator["recovering}"] = generator.recovering
 			if(generator.machine_stat & NOPOWER)
 				this_generator["inactive"] = TRUE
 			generator_list += list(this_generator)
@@ -58,14 +63,6 @@
 			generators -= get_generator(i)
 	data["generators"] = generator_list
 	data["selected_id"] = selected_id
-	if(selected_id)
-		var/obj/machinery/modular_shield_generator/current_generator = generators[selected_id]
-		data["max_strength"] = current_generator.max_strength
-		data["current_strength"] = current_generator.max_strength
-		data["generator_name"] = current_generator.display_name
-		data["active"] = current_generator.active
-		data["selected_generator"] = current_generator
-		data["recovering}"] = current_generator.recovering
 	return data
 /obj/machinery/computer/modular_shield/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
