@@ -84,13 +84,13 @@
 	innate_strength = initial(innate_strength)
 
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
-		innate_strength += new_capacitor.tier * 10
+		innate_strength += new_capacitor.tier * 20
 
 	for(var/datum/stock_part/servo/new_servo in component_parts)
-		innate_regen += new_servo.tier
+		innate_regen += new_servo.tier * 2
 
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
-		innate_radius += new_laser.tier * 0.25
+		innate_radius += new_laser.tier * 0.5
 
 	calculate_regeneration()
 	calculate_max_strength()
@@ -608,7 +608,7 @@
 	. = ..()
 	charge_boost = initial(charge_boost)
 	for(var/datum/stock_part/servo/new_servo in component_parts)
-		charge_boost += new_servo.tier
+		charge_boost += new_servo.tier * 1.5
 
 	if(shield_generator)
 		shield_generator.calculate_boost()
@@ -636,7 +636,7 @@
 	. = ..()
 	range_boost = initial(range_boost)
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
-		range_boost += new_laser.tier * 0.25
+		range_boost += new_laser.tier * 0.5
 
 	if(shield_generator)
 		shield_generator.calculate_boost()
@@ -657,7 +657,7 @@
 	. = ..()
 	strength_boost = initial(strength_boost)
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
-		strength_boost += new_capacitor.tier * 10
+		strength_boost += new_capacitor.tier * 20
 
 	if(shield_generator)
 		shield_generator.calculate_boost()
@@ -717,4 +717,4 @@
 		qdel(src)
 		return
 
-	shield_generator.shield_drain(15 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the number if not enough damage
+	shield_generator.shield_drain(40 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the number if not enough damage
