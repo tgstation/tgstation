@@ -356,3 +356,24 @@
       than only kicking in when you start to look around.
   spiders24110:
   - bugfix: fixed fish infused people swimming slow in deep water
+2025-05-16:
+  00-Steven:
+  - bugfix: Fixes quirks and the scarf trait just dropping items to the ground.
+  Absolucy, Melbert:
+  - refactor: Stack merging has much less potential for causing large amounts of server
+      lag now.
+  Bisar:
+  - bugfix: Things with the behavior for placing on the floor now correctly use the
+      code for placing on the floor.
+  - bugfix: Animations for moving items into other items on your person shouldn't
+      play any more.
+  LT3:
+  - bugfix: You can put sterilizine back in the surgery tray after removing it
+  NeonNik2245:
+  - balance: Plumbers will now give back matter you use for assemble machinery.
+  SmArtKar:
+  - refactor: Refactored how backpack and belt contents are handled in mob inventory
+      code, report any issues with lingering item effects or inability to equip things
+      into them!
+  TealSeer:
+  - bugfix: fixed cross-server newscaster functionality
