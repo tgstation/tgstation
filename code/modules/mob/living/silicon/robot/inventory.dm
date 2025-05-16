@@ -47,7 +47,7 @@
 	. = ..()
 	if(!.)
 		return
-	observer_screen_update(item_module, TRUE)
+	observer_screen_update(item_module)
 
 ///Helper for cyborgs unequipping things.
 /mob/living/silicon/robot/proc/deactivate_module(obj/item/item_module)
@@ -337,12 +337,15 @@
 	return (I && (I in model.modules)) //Only if it's part of our model.
 
 /**
- * Updates the observers's screens with cyborg itemss.
- * Arguments
- * * item_module - the item being added or removed from the screen
- * * add - whether or not the item is being added, or removed.
+ * ## Please do not use
+ * Updates the observers's screens with cyborg items.
+ * Currently inventory code handling for observers is tied to carbon (get_held_overlays), meaning this snowflake code for borgs is
+ * necessary so observers watching borgs don't bug out. Once that's moved to the living, replace this with it.
+ * Removing from the screen is handled by 'doUnEquip'
+ * Arg:
+ * * item_module - the item being added to the screen.
  */
-/mob/living/silicon/robot/proc/observer_screen_update(obj/item/item_module, add = TRUE)
+/mob/living/silicon/robot/proc/observer_screen_update(obj/item/item_module)
 	if(!observers?.len)
 		return
 	for(var/mob/dead/observe as anything in observers)
@@ -351,7 +354,4 @@
 			if(!observers.len)
 				observers = null
 				return
-		if(add)
-			observe.client.screen += item_module
-		else
-			observe.client.screen -= item_module
+		observe.client.screen += item_module
