@@ -5,7 +5,7 @@
 
 	//transform to engiborg
 	borg.model.transform_to(/obj/item/robot_model/engineering, forced = TRUE, transform = FALSE)
-	var/obj/item/borg/cyborg_omnitool/omnitool = null
+	var/obj/item/borg/cyborg_omnitool/engineering/omnitool = locate() in borg.model.modules
 	for(var/obj/item/borg/tool as anything in borg.model.modules)
 		if(istype(tool, /obj/item/borg/cyborg_omnitool/engineering))
 			omnitool = tool
