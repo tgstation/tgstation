@@ -285,11 +285,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * organ_holder - carbon, the owner of the species datum AKA whoever we're regenerating organs in
  * * old_species - datum, used when regenerate organs is called in a switching species to remove old mutant organs.
  * * replace_current - boolean, forces all old organs to get deleted whether or not they pass the species' ability to keep that organ
- * * replace_hazardous - boolean, forces all hazardous organs to deleted, if it is not the default for the species
  * * excluded_zones - list, add zone defines to block organs inside of the zones from getting handled. see headless mutation for an example
  * * visual_only - boolean, only load organs that change how the species looks. Do not use for normal gameplay stuff
  */
-/datum/species/proc/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current = TRUE, replace_hazardous = TRUE, list/excluded_zones, visual_only = FALSE)
+/datum/species/proc/regenerate_organs(mob/living/carbon/organ_holder, datum/species/old_species, replace_current = TRUE, list/excluded_zones, visual_only = FALSE)
 	for(var/slot in get_all_slots())
 		var/obj/item/organ/existing_organ = organ_holder.get_organ_slot(slot)
 		var/obj/item/organ/new_organ = get_mutant_organ_type_for_slot(slot)
@@ -297,16 +296,14 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		// if we have an extra organ that before changing that the species didnt have, remove it
 		if(!new_organ)
-			if(existing_organ && (old_organ_type == existing_organ.type \
-			|| replace_current) \
-			|| replace_hazardous && (existing_organ && existing_organ?.organ_flags & ORGAN_HAZARDOUS))
+			if(existing_organ && (old_organ_type == existing_organ.type || replace_current))
 				existing_organ.Remove(organ_holder)
 				qdel(existing_organ)
 			continue
 
 		if(existing_organ)
 			// we dont want to remove organs that were not from the old species (such as from freak surgery or prosthetics)
-			if(existing_organ.type != old_organ_type && !replace_current && !(replace_hazardous && existing_organ.organ_flags & ORGAN_HAZARDOUS))
+			if(existing_organ.type != old_organ_type && !replace_current)
 				continue
 
 			// we don't want to remove organs that are the same as the new one
