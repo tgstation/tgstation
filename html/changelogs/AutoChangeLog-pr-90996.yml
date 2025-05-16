@@ -1,0 +1,4 @@
+author: "Retrino"
+delete-after: True
+changes:
+  - qol: "renames some door remotes to their department names"
