@@ -384,6 +384,7 @@
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
+	///Tracks how many total foods we have eaten, used for calculating when we should gain max health.
 	var/foods_eaten = 0
 
 	loot = list(
