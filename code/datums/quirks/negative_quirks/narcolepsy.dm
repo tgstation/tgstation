@@ -6,7 +6,7 @@
 /datum/quirk/narcolepsy
 	name = "Narcolepsy"
 	desc = "You may fall asleep at any moment and feel tired often."
-	icon = FA_ICON_CLOUD_MOON_RAIN
+	icon = FA_ICON_BED
 	value = -8
 	hardcore_value = 8
 	medical_record_text = "Patient may involuntarily fall asleep during normal activities."
@@ -31,7 +31,7 @@
 	user?.cure_trauma_type(/datum/brain_trauma/severe/narcolepsy/permanent, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/brain_trauma/severe/narcolepsy/permanent
-	scan_desc = "narcolepsy"
+	scan_desc = "chronic narcolepsy"
 
 //similar to parent but slower
 /datum/brain_trauma/severe/narcolepsy/permanent/on_life(seconds_per_tick, times_fired)
