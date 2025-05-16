@@ -141,10 +141,11 @@
 	return ..()
 
 /datum/storage_interface/silicon/list_ui_elements(initializing = FALSE)
+	if(initializing)
+		return ..()
 	//we're purposely excluding 'store' from having its icon changed.
-	var/list/ui_list = list(cells, corner_top_left, corner_top_right, corner_bottom_left, corner_bottom_right, rowjoin_left, rowjoin_right, closer)
-	if(!initializing)
-		ui_list += store
+	var/list/ui_list = ..()
+	ui_list += store
 	return ui_list
 
 /datum/storage_interface/silicon/add_items(
