@@ -1266,5 +1266,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	spear.throwforce *= 2
 	. = ..()
 	spear.throwforce /= 2
+	return .
 
 #undef LOCKER_FULL
