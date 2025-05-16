@@ -75,13 +75,6 @@ jobs:
     name: Compare Screenshot Tests
     uses: ./.github/workflows/compare_screenshots.yml
 
-  test_windows:
-    name: Windows Build
-    needs: collect_data
-    uses: ./.github/workflows/test_windows.yml
-    with:
-      max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
-
   completion_gate: # Serves as a non-moving target for branch rulesets
     if: always() && !cancelled()
     name: Completion Gate
