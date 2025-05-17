@@ -27,8 +27,7 @@
 	return !QDELETED(generator)
 
 /obj/machinery/computer/modular_shield/proc/get_generator(number)
-	var/obj/machinery/modular_shield_generator/generator = generators[number]
-	return generator
+	return generators[number]
 
 /obj/machinery/computer/modular_shield/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
