@@ -60,7 +60,7 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 
 /datum/controller/subsystem/processing/greyscale/PostInit()
 	. = ..()
-#ifndef UNIT_TESTS // We want this to run during unit tests
+#ifndef UNIT_TESTS // We want this to run during unit tests regardless of the config
 	if(!CONFIG_GET(flag/generate_assets_in_init))
 		return
 #endif
