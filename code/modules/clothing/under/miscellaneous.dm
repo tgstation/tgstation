@@ -127,6 +127,7 @@
 	melee = 5
 	fire = 30
 	acid = 30
+	wound = 5
 
 /obj/item/clothing/under/misc/coordinator
 	name = "coordinator jumpsuit"

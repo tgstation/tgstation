@@ -396,6 +396,7 @@
 	melee = 10
 	fire = 75
 	acid = 50
+	wound = 10
 
 /obj/item/reagent_containers/cup/bucket/wooden
 	name = "wooden bucket"
@@ -408,6 +409,7 @@
 /datum/armor/bucket_wooden
 	melee = 10
 	acid = 50
+	wound = 10
 
 /obj/item/reagent_containers/cup/bucket/attackby(obj/O, mob/user, list/modifiers)
 	if(istype(O, /obj/item/mop))

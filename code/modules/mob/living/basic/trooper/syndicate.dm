@@ -231,7 +231,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	wound_bonus = -10
-	bare_wound_bonus = 20
+	exposed_wound_bonus = 20
 	sharpness = SHARP_EDGED
 	obj_damage = 0
 	attack_verb_continuous = "cuts"

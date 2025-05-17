@@ -19,6 +19,7 @@
 	bio = 90
 	fire = 70
 	acid = 50
+	wound = 50
 
 /obj/item/clothing/shoes/combat/Initialize(mapload)
 	. = ..()
@@ -40,6 +41,7 @@
 	bio = 100
 	fire = 90
 	acid = 50
+	wound = 50
 
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
@@ -128,6 +130,7 @@
 	bio = 50
 	fire = 50
 	acid = 10
+	wound = 10
 
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
@@ -205,3 +208,4 @@
 	bio = 90
 	fire = 70
 	acid = 50
+	wound = 50

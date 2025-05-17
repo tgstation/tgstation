@@ -37,6 +37,7 @@
 	bio = 30
 	fire = 60
 	acid = 75
+	wound = 30
 
 /obj/item/clothing/head/costume/pirate/captain
 	name = "pirate captain hat"
@@ -63,3 +64,4 @@
 	bio = 30
 	fire = 60
 	acid = 75
+	wound = 30

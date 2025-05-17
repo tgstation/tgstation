@@ -113,7 +113,7 @@
 	bomb = 25
 	fire = 50
 	acid = 50
-	wound = 5
+	wound = 25
 
 /obj/item/clothing/head/hats/caphat/parade
 	name = "captain's parade cap"
@@ -147,6 +147,7 @@
 	bomb = 25
 	fire = 50
 	acid = 50
+	wound = 25
 
 /obj/item/clothing/head/chaplain/nun_hood
 	name = "nun hood"
@@ -190,8 +191,7 @@
 	energy = 35
 	fire = 30
 	acid = 50
-	wound = 5
-
+	wound = 25
 
 /obj/item/clothing/head/fedora/det_hat/Initialize(mapload)
 	. = ..()
@@ -426,7 +426,7 @@
 	bio = 10
 	fire = 50
 	acid = 60
-	wound = 10
+	wound = 40
 
 /obj/item/clothing/head/hats/hos/cap/syndicate
 	name = "syndicate cap"
@@ -474,7 +474,7 @@
 	bomb = 25
 	fire = 30
 	acid = 60
-	wound = 6
+	wound = 40
 
 /obj/item/clothing/head/hats/warden/police
 	name = "police officer's hat"
@@ -575,7 +575,7 @@
 	bomb = 25
 	fire = 20
 	acid = 50
-	wound = 4
+	wound = 30
 
 /obj/item/clothing/head/beret/sec/navywarden
 	name = "warden's beret"
@@ -784,7 +784,7 @@
 	bomb = 10
 	fire = 30
 	acid = 5
-	wound = 4
+	wound = 15
 
 /obj/item/clothing/head/beret/highlander
 	desc = "That was white fabric. <i>Was.</i>"
@@ -820,7 +820,7 @@
 	bio = 100
 	fire = 100
 	acid = 90
-	wound = 10
+	wound = 80
 
 //Independant Militia
 /obj/item/clothing/head/beret/militia
