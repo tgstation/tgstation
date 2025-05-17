@@ -48,6 +48,12 @@
 /datum/blood_type/proc/get_blood_name()
 	return capitalize(LOWER_TEXT(reagent_type::name))
 
+/// Type string of this bloodtype. Used to prevent "Oil type: Oil" scenarios
+/datum/blood_type/proc/get_type()
+	if (reagent_type != /datum/reagent/blood)
+		return null
+	return name
+
 /// Returns blood color or color matrix
 /// Useful when you want to have a blood color with values out of normal hex bounds for that acidic look
 /// set dynamic to TRUE to redo the matrix each time (e.g. for clown blood dynamically shifting each time)

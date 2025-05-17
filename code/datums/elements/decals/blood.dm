@@ -59,7 +59,7 @@
 		return
 	var/datum/blood_type/blood_type = blood_stains[blood_stains[length(blood_stains)]]
 	var/blood_descriptor = "blood"
-	if(istype(blood_type) && blood_type.get_blood_name())
+	if(istype(blood_type))
 		blood_descriptor = LOWER_TEXT(blood_type.get_blood_name())
 
 	override[EXAMINE_POSITION_BEFORE] = "[blood_descriptor]-stained"

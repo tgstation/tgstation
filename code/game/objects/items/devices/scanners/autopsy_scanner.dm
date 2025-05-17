@@ -92,9 +92,9 @@
 		var/datum/blood_type/blood_type = scanned.get_bloodtype()
 		if(blood_type)
 			var/blood_percent = round((scanned.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-			if (!blood_type.get_blood_name())
-				autopsy_information += "Blood Type: [blood_type.name]<br>"
-			autopsy_information += "[blood_type.get_blood_name() || "Blood"] Volume: [scanned.blood_volume] cl ([blood_percent]%) <br>"
+			if (blood_type.get_type())
+				autopsy_information += "[blood_type.get_blood_name()] Type: [blood_type.get_type()]<br>"
+			autopsy_information += "[blood_type.get_blood_name()] Volume: [scanned.blood_volume] cl ([blood_percent]%) <br>"
 
 	for(var/datum/disease/diseases as anything in scanned.diseases)
 		autopsy_information += "Name: [diseases.name] | Type: [diseases.spread_text]<br>"

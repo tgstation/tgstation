@@ -249,7 +249,7 @@
 			sickness_data = "\nName: [D.name].\nType: [D.spread_text].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure_text]"
 
 	if(patient.can_bleed()) //Blood levels Information
-		blood_name = LOWER_TEXT(blood_type.get_blood_name()) || "blood"
+		blood_name = LOWER_TEXT(blood_type.get_blood_name())
 		if(patient.is_bleeding())
 			bleed_status = " Patient is currently bleeding!"
 
@@ -271,7 +271,7 @@
 			if (blood_percent <= 60)
 				blood_warning += " Ignoring treatment may lead to death!"
 
-		blood_status = "Patient [blood_name] levels are currently reading [blood_percent]%.[blood_type.get_blood_name() ? "" : " Patient has [blood_type.name] type blood."][blood_warning]"
+		blood_status = "Patient [blood_name] levels are currently reading [blood_percent]%.[blood_type.get_type() ? " Patient has [blood_type.get_type()] type [blood_name]." : ""][blood_warning]"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
 	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)
