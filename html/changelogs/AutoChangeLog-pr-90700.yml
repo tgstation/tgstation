@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - balance: "Damp Rags can now get dirty when using them to clean blood, passing blood DNA along."
-  - rscadd: "Gauze now gets dirty when apply it to actively bleeding wounds. Doesn't spread disease or anything, just passes blood DNA. It can be cleaned in a sink."
-  - rscdel: "Removed cloth on sink / gauze on sink interaction to make rags. Just use the crafting menu"
