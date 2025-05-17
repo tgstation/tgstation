@@ -54,8 +54,6 @@
 	var/static/list/indigestible_seeds = typecacheof(list(
 		/obj/item/seeds/random,
 	))
-	///Are we currently processing food?
-	var/currently_processing = FALSE
 
 /mob/living/basic/turtle/Initialize(mapload)
 	. = ..()
@@ -226,10 +224,6 @@
 /mob/living/basic/turtle/proc/pre_eat_food(datum/source, obj/item/seeds/potential_food)
 	SIGNAL_HANDLER
 
-	if(currently_processing)
-		balloon_alert_to_viewers("already full!")
-		return COMSIG_MOB_CANCEL_EAT
-
 	if(!istype(potential_food))
 		return NONE
 
@@ -259,7 +253,6 @@
 		movable_food.forceMove(drop_location())
 
 	balloon_alert_to_viewers("spits out some food")
-	currently_processing = FALSE
 
 /mob/living/basic/turtle/death(gibbed)
 	. = ..()

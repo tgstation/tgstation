@@ -17,21 +17,12 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/find_food/turtle,
+		/datum/ai_planning_subtree/find_food,
 		/datum/ai_planning_subtree/express_happiness,
 		/datum/ai_planning_subtree/use_mob_ability/turtle_tree,
 		/datum/ai_planning_subtree/find_and_hunt_target/headbutt_people, //playfully headbutt people's legs
 		/datum/ai_planning_subtree/find_and_hunt_target/sniff_flora, //mmm the aroma
 	)
-
-
-/datum/ai_planning_subtree/find_food/turtle
-
-/datum/ai_planning_subtree/find_food/turtle/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/basic/turtle/our_turtle = controller.pawn
-	if(our_turtle.currently_processing)
-		return
-	return ..()
 
 /datum/ai_planning_subtree/use_mob_ability/turtle_tree
 	ability_key = BB_TURTLE_TREE_ABILITY
