@@ -79,7 +79,6 @@
 	desc = "Less shallow water."
 	icon_state = "deep_riverwater_motion"
 	immerse_overlay = "immerse_deep"
-	slowdown = 8
 	baseturfs = /turf/open/water/no_planet_atmos/deep
 
 /turf/open/water/no_planet_atmos/deep/make_immersed()
@@ -107,7 +106,6 @@
 /turf/open/water/deep_beach
 	name = "deep water"
 	desc = "Don't forget your life jacket."
-	slowdown = 8
 	immerse_overlay = "immerse_deep"
 	icon = 'icons/turf/beach.dmi'
 	icon_state = "deepwater"
