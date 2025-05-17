@@ -4,6 +4,17 @@
 /// IconForge also does not support the color matrix layer type or the 'or' blend_mode, however both are currently unused.
 #define USE_RUSTG_ICONFORGE_GAGS
 
+/// If we are in unit tests OR if we are not using iconforge, then we should make sure the icons we are using are valid.
+/// There's no || for these preprocessor macro checks so that's why this is a little weird.
+#ifndef USE_RUSTG_ICONFORGE_GAGS
+	#define CHECK_SPRITESHEET_ICON_VALIDITY
+#endif
+#ifdef UNIT_TESTS
+	#ifndef CHECK_SPRITESHEET_ICON_VALIDITY
+		#define CHECK_SPRITESHEET_ICON_VALIDITY
+	#endif
+#endif
+
 PROCESSING_SUBSYSTEM_DEF(greyscale)
 	name = "Greyscale"
 	flags = SS_BACKGROUND
@@ -158,14 +169,21 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 		var/greyscale_colors = atom_type::greyscale_colors
 		if(!greyscale_config || !greyscale_colors || atom_type::flags_1 & NO_NEW_GAGS_PREVIEW_1)
 			continue
+	#ifdef CHECK_SPRITESHEET_ICON_VALIDITY
 		var/icon/map_icon = icon(GetColoredIconByType(greyscale_config, greyscale_colors))
 		if((map_icon.Height() > 32) || (map_icon.Width() > 32)) // No large icons, use icon_preview and icon_preview_state instead.
+			stack_trace("GAGS configuration is trying to generate a map preview graphic for '[atom_type]', which has a large icon. This is not suppoorted; implement icon_preview instead.")
 			continue
 		if(!(atom_type::post_init_icon_state in map_icon.IconStates()))
-			stack_trace("GAGS configuration missing icon state needed to generate mapping tool graphic for '[atom_type]'. Make sure the right greyscale_config is set up.")
+			stack_trace("GAGS configuration missing icon state needed to generate map preview graphic for '[atom_type]'. Make sure the right greyscale_config is set up.")
 			continue
 		map_icon = icon(map_icon, atom_type::post_init_icon_state)
 		icons["[atom_type]"] = map_icon
+	#else // will be updated to use iconforge's new .dmi spritesheet generation instead
+		var/icon/map_icon = icon(GetColoredIconByType(greyscale_config, greyscale_colors))
+		map_icon = icon(map_icon, atom_type::post_init_icon_state)
+		icons["[atom_type]"] = map_icon
+	#endif
 
 	var/icon/holder = icon('icons/testing/greyscale_error.dmi')
 	for(var/state in icons)
