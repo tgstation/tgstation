@@ -622,7 +622,7 @@
 			for(var/obj/item/chromosome/chromosome in stored_chromosomes)
 				if(chromosome.can_apply(mutation) && (chromosome.name == params["chromo"]))
 					stored_chromosomes -= mutation
-					mutation.setup(chromosome)
+					chromosome.apply(mutation)
 			if(connected_scanner)
 				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else

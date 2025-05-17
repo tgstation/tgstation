@@ -9,7 +9,7 @@
 	instability = POSITIVE_INSTABILITY_MODERATE
 	synchronizer_coeff = 1
 
-/datum/mutation/human/olfaction/setup(obj/item/chromosome/chromosome)
+/datum/mutation/human/olfaction/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/olfaction/to_modify = .
 	if(!istype(to_modify)) // null or invalid

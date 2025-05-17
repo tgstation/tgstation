@@ -80,8 +80,6 @@
 	var/can_chromosome = CHROMOSOME_NONE
 	/// Name of the chromosome
 	var/chromosome_name
-	/// Has the chromosome been modified
-	var/modified = FALSE //ugly but we really don't want chromosomes and on_acquiring to overlap and apply double the powers
 	/// Is this mutation mutadone proof
 	var/mutadone_proof = FALSE
 
@@ -196,32 +194,16 @@
 			apply_overlay(mutation.layer_used)
 
 /**
- * Called after on_aquiring, or when a chromosome is applied so we can
- * properly update some stats without having to remove and reapply the mutation from someone
+ * Called after on_aquiring, or when a chromosome is applied.
  * returns the instance of 'power_path' for children calls to use without calling locate() again.
  */
-/datum/mutation/human/proc/setup(obj/item/chromosome/chromosome)
-	if(modified || !power_path || QDELETED(owner))
+/datum/mutation/human/proc/setup()
+	if(!power_path || QDELETED(owner))
 		return
-
-	if(chromosome)
-		if(stabilizer_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE)
-			stabilizer_coeff = chromosome.stabilizer_coeff
-		if(synchronizer_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE)
-			synchronizer_coeff = chromosome.synchronizer_coeff
-		if(power_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE)
-			power_coeff = chromosome.power_coeff
-		if(energy_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE)
-			energy_coeff = chromosome.energy_coeff
-		can_chromosome = CHROMOSOME_USED
-		chromosome_name = chromosome.name
-		modified = TRUE
-		qdel(chromosome)
-
 	var/datum/action/cooldown/modified_power = locate(power_path) in owner.actions
 	if(!modified_power)
 		CRASH("Genetic mutation [type] called setup(), but could not find a action to modify!")
-	modified_power.cooldown_time *= GET_MUTATION_ENERGY(src) // Doesn't do anything for mutations with energy_coeff unset
+	modified_power.cooldown_time = initial(modified_power.cooldown_time) * GET_MUTATION_ENERGY(src)
 	return modified_power
 
 /datum/mutation/human/proc/copy_mutation(datum/mutation/human/mutation_to_copy)

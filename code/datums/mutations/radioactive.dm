@@ -24,7 +24,7 @@
 	var/datum/component/radioactive_emitter/radioactivity_source = make_radioactive(acquirer)
 	radioactivity_source_ref = WEAKREF(radioactivity_source)
 
-/datum/mutation/human/radioactive/setup(obj/item/chromosome/chromosome)
+/datum/mutation/human/radioactive/setup()
 	. = ..()
 	if(!QDELETED(owner))
 		make_radioactive(owner)
