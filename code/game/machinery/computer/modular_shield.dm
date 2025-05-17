@@ -6,7 +6,6 @@
 	///the list of generators that are linked to us
 	var/list/obj/machinery/modular_shield_generator/generators = list()
 
-
 //lets monkeys randomly mash buttons to toggle the generators
 /obj/machinery/computer/modular_shield/attack_paw(mob/user, list/modifiers)
 	balloon_alert(user, "mashing buttons")
