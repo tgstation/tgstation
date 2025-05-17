@@ -135,6 +135,11 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 			stack_trace("path [path] found in the 'fish_counts' list but not in the 'fish_table'")
 	if(wait_time_range && length(wait_time_range) != 2)
 		stack_trace("wait_time_range for [type] is set but has length different than two")
+	if (!fish_count_regen) //we make sure there is always a list of fish_count_regen in case people forget to add it.
+		fish_count_regen = list()
+	for(var/path in fish_counts) //we give anything unique an auto 30 min regen, that way if the round is extended you still get content.
+		if (!(path in fish_count_regen))
+			fish_count_regen[path] = 30 MINUTES
 
 /datum/fish_source/Destroy()
 	if(explosive_fishing_score)
@@ -345,10 +350,11 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 /// Returns the fish table, with with the unavailable items from fish_counts removed.
 /datum/fish_source/proc/get_fish_table(atom/location, from_explosion = FALSE)
 	var/list/table = fish_table.Copy()
-	//message bottles cannot spawn from explosions. They're meant to be one-time messages (rarely) and photos from past rounds
-	//and it would suck if the pool of bottle messages were constantly being emptied by explosive fishing.
+	//message bottles and special unique rewards cannot spawn from explosions. They're meant to be one-time messages (rarely) and photos from past rounds
+	//and it would suck if the pool of bottle messages, and unique rewards, were constantly being emptied by explosive fishing.
 	if(from_explosion)
 		table -= /obj/effect/spawner/message_in_a_bottle
+		table -= fish_counts
 	for(var/result in table)
 		if(!isnull(fish_counts[result]) && fish_counts[result] <= 0)
 			table -= result
@@ -374,6 +380,10 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 
 	if(HAS_TRAIT(rod, TRAIT_ROD_REMOVE_FISHING_DUD))
 		final_table -= FISHING_DUD
+
+	if(!fisherman.client)
+		final_table -= fish_counts // avoids npc's to get rare stuff. Fish for it!
+		final_table -= /obj/effect/spawner/message_in_a_bottle // avoids npc's to get messages in a bottle. Fish for them!
 
 	for(var/result in final_table)
 		final_table[result] *= rod.hook.get_hook_bonus_multiplicative(result)
