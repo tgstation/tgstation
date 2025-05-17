@@ -2,12 +2,14 @@
 /obj/item/clothing/accessory/waistcoat
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
-	icon_state = "waistcoat"
 	inhand_icon_state = "wcoat"
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
 	minimize_when_attached = FALSE
 	attachment_slot = NONE
+	icon = 'icons/map_icons/clothing/accessory.dmi'
+	icon_state = "/obj/item/clothing/accessory/waistcoat"
+	post_init_icon_state = "waistcoat"
 	greyscale_config = /datum/greyscale_config/waistcoat
 	greyscale_config_worn = /datum/greyscale_config/waistcoat/worn
 	greyscale_colors = "#414344"
