@@ -4,7 +4,7 @@
 	circuit = /obj/item/circuitboard/computer/modular_shield_console
 
 	var/selected_id
-	var/list/obj/machinery/modular_shield_generator/generators
+	var/list/obj/machinery/modular_shield_generator/generators = list()
 
 /obj/machinery/computer/modular_shield/Initialize(mapload)
 	generators = list()
