@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - refactor: "Refactored how backpack and belt contents are handled in mob inventory code, report any issues with lingering item effects or inability to equip things into them!"

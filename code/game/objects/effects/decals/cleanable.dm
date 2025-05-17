@@ -89,7 +89,7 @@
 
 /obj/effect/decal/cleanable/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Why are rags cups???
-	if (!istype(tool, /obj/item/reagent_containers/cup) || istype(tool, /obj/item/reagent_containers/cup/rag))
+	if (!istype(tool, /obj/item/reagent_containers/cup) || istype(tool, /obj/item/rag))
 		return NONE
 
 	if (!lazy_init_reagents())

@@ -376,22 +376,44 @@
 	var/datum/blood_type/blood_type = target.get_bloodtype()
 	if(blood_type)
 		var/blood_percent = round((target.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
+		var/blood_type_format
+		var/level_format
 		if(target.blood_volume <= BLOOD_VOLUME_SAFE && target.blood_volume > BLOOD_VOLUME_OKAY)
-			render_list += "<span class='alert ml-1'>[blood_type.get_blood_name() || "Blood"] level: LOW [blood_percent]%, [target.blood_volume] cl,</span>[blood_type.get_blood_name() ? "" : span_info(" type: [blood_type.name]")]<br>"
-			render_list += "<span class='alert ml-1'>Recommendation: [blood_type.restoration_chem::name] supplements or blood transfusion.</span><br>"
+			level_format = "LOW [blood_percent]%, [target.blood_volume] cl"
+			if (blood_type.restoration_chem)
+				level_format = conditional_tooltip(level_format, "Recommendation: [blood_type.restoration_chem::name] supplement.", tochat)
 		else if(target.blood_volume <= BLOOD_VOLUME_OKAY)
-			render_list += "<span class='alert ml-1'>[blood_type.get_blood_name() || "Blood"] level: <b>CRITICAL [blood_percent]%</b>, [target.blood_volume] cl,</span> [span_info("type: [blood_type]")]<br>"
-			render_list += "<span class='alert ml-1'>Recommendation: [blood_type.restoration_chem::name] supplements or blood transfusion.</span><br>"
+			level_format = "<b>CRITICAL [blood_percent]%</b>, [target.blood_volume] cl"
+			var/recommendation = list()
+			if (blood_type.restoration_chem)
+				recommendation += "[blood_type.restoration_chem::name] supplement"
+			if (blood_type.restoration_chem == /datum/reagent/iron)
+				recommendation += "[/datum/reagent/medicine/salglu_solution::name]"
+			if (length(recommendation))
+				recommendation += "[blood_type.get_blood_name()] transufion"
+			else
+				recommendation += "immediate [blood_type.get_blood_name()] transufion"
+			level_format = conditional_tooltip(level_format, "Recommendation: [english_list(recommendation, and_text = " or ")].", tochat)
 		else
-			render_list += "<span class='info ml-1'>[blood_type.get_blood_name() || "Blood"] level: [blood_percent]%, [target.blood_volume] cl, type: [blood_type]</span><br>"
+			level_format = "[blood_percent]%, [target.blood_volume] cl"
+
+		if (blood_type.get_type())
+			blood_type_format = "type: [blood_type.get_type()]"
+			if(tochat && length(blood_type.compatible_types))
+				var/list/compatible_types_readable = list()
+				for(var/datum/blood_type/comp_blood_type as anything in blood_type.compatible_types)
+					compatible_types_readable |= initial(comp_blood_type.name)
+				blood_type_format = span_tooltip("Can receive from types [english_list(compatible_types_readable)].", blood_type_format)
+
+		render_list += "<span class='[target.blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>[blood_type.get_blood_name()] level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
 
 	var/blood_alcohol_content = target.get_blood_alcohol_content()
 	if(blood_alcohol_content > 0)
 		if(blood_alcohol_content >= 0.24)
 			// "Oil alcohol content" is kinda funny if you think about it from a technical standpoint
-			render_list += "<span class='alert ml-1'>[blood_type.get_blood_name() || "Blood"] alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span><br>"
+			render_list += "<span class='alert ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span><br>"
 		else
-			render_list += "<span class='info ml-1'>[blood_type.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content]%</span><br>"
+			render_list += "<span class='info ml-1'>[blood_type?.get_blood_name() || "Blood"] alcohol content: [blood_alcohol_content]%</span><br>"
 
 	//Diseases
 	var/disease_hr = FALSE

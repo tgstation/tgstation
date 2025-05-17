@@ -13,7 +13,7 @@
 	category = CATEGORY_CARBON
 	keybind_signal = COMSIG_KB_CARBON_TOGGLETHROWMODE_DOWN
 
-/datum/keybinding/carbon/toggle_throw_mode/down(client/user)
+/datum/keybinding/carbon/toggle_throw_mode/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -29,14 +29,14 @@
 	category = CATEGORY_CARBON
 	keybind_signal = COMSIG_KB_CARBON_HOLDTHROWMODE_DOWN
 
-/datum/keybinding/carbon/hold_throw_mode/down(client/user)
+/datum/keybinding/carbon/hold_throw_mode/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
 	var/mob/living/carbon/carbon_user = user.mob
 	carbon_user.throw_mode_on(THROW_MODE_HOLD)
 
-/datum/keybinding/carbon/hold_throw_mode/up(client/user)
+/datum/keybinding/carbon/hold_throw_mode/up(client/user, turf/target)
 	. = ..()
 	if(.)
 		return
@@ -49,7 +49,7 @@
 	description = "Give the item you're currently holding"
 	keybind_signal = COMSIG_KB_CARBON_GIVEITEM_DOWN
 
-/datum/keybinding/carbon/give/down(client/user)
+/datum/keybinding/carbon/give/down(client/user, turf/target)
 	. = ..()
 	if(.)
 		return

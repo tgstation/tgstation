@@ -10,7 +10,7 @@
 	/// Shown color of the blood type.
 	var/color = BLOOD_COLOR_RED
 	/// Blood types that are safe to use with people that have this blood type (for blood transfusions)
-	var/compatible_types = list()
+	var/list/compatible_types = list()
 	/// What reagent is represented by this blood type?
 	var/datum/reagent/reagent_type = /datum/reagent/blood
 	/// What chem is used to restore this blood type (outside of itself, of course)?

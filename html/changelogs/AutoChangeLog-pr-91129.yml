@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - bugfix: "Things with the behavior for placing on the floor now correctly use the code for placing on the floor."
