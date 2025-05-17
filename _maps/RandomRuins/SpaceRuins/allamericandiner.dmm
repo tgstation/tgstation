@@ -286,7 +286,6 @@
 /area/ruin/space/has_grav/allamericandiner)
 "ob" = (
 /obj/effect/spawner/structure/window,
-/obj/structure/grille,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/allamericandiner)
 "og" = (

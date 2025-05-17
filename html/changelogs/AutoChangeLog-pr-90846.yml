@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "Dark Gygaxes and Maulers (and admin mechs like the Seraph) cannot be slapped with tracker beacons."
