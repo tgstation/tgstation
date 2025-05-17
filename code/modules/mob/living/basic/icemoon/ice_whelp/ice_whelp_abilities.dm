@@ -8,6 +8,7 @@
 	fire_range = 7
 	fire_damage = 10
 	fire_delay = 0.85 DECISECONDS
+	fire_temperature = ICE_WHELP_FIRE_TEMP
 	/// Time to warn people about what we are doing
 	var/forecast_delay = 0.6 SECONDS
 	/// What turf are we aiming at?
@@ -44,16 +45,6 @@
 	fire_line(target_turf)
 	target_turf = null
 
-/datum/action/cooldown/mob_cooldown/fire_breath/ice/burn_turf(turf/fire_turf, list/hit_list, atom/source)
-	var/obj/effect/hotspot/fire_hotspot = ..()
-	fire_hotspot.add_atom_colour(COLOR_BLUE_LIGHT, FIXED_COLOUR_PRIORITY) // You're blue now, that's my attack
-	return fire_hotspot
-
-/datum/action/cooldown/mob_cooldown/fire_breath/ice/on_burn_mob(mob/living/barbecued, mob/living/source)
-	barbecued.apply_status_effect(/datum/status_effect/ice_block_talisman, 2 SECONDS)
-	to_chat(barbecued, span_userdanger("You're frozen solid by [source]'s icy breath!"))
-	barbecued.adjustFireLoss(fire_damage)
-
 /// Breathe really cold fire in a plus shape, like bomberman
 /datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption
 	name = "Ice Eruption"
@@ -84,3 +75,8 @@
 		for (var/turf/open/kindling as anything in nearby_turfs["[i]"])
 			burn_turf(kindling, hit_list, owner)
 		sleep(fire_delay)
+
+///Fire subtype for ash whelps
+/datum/action/cooldown/mob_cooldown/fire_breath/ice/eruption/fire
+	name = "Eruption"
+	fire_temperature = /datum/action/cooldown/mob_cooldown/fire_breath::fire_temperature
