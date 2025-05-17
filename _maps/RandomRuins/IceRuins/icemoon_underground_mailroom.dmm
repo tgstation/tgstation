@@ -207,7 +207,7 @@
 /turf/closed/indestructible/reinforced,
 /area/ruin/powered/mailroom)
 "vV" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "wc" = (
@@ -433,7 +433,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/ruin/powered/mailroom)
 "TN" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/machinery/door/puzzle/keycard/icebox/office,
 /turf/open/floor/iron/white,
 /area/ruin/powered/mailroom)

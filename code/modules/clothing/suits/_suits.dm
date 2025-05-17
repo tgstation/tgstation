@@ -38,11 +38,10 @@
 
 /obj/item/clothing/suit/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
 	. = ..()
-	if(isinhands)
+	if (isinhands)
 		return
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "[blood_overlay_type]blood")
-		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
+	var/blood_overlay = get_blood_overlay(blood_overlay_type)
+	if (blood_overlay)
 		. += blood_overlay
 
 /obj/item/clothing/suit/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)

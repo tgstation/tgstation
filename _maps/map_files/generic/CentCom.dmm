@@ -1163,6 +1163,16 @@
 /obj/effect/light_emitter/thunderdome,
 /turf/open/floor/iron,
 /area/centcom/tdome/arena)
+"fg" = (
+/obj/structure/table/wood,
+/obj/item/book/manual/wiki/barman_recipes,
+/obj/item/reagent_containers/cup/glass/shaker,
+/obj/item/rag,
+/obj/machinery/newscaster/directional/south,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/observation)
 "fh" = (
 /obj/item/kirbyplants/organic/plant22,
 /obj/effect/turf_decal/tile/green/half/contrasted,
@@ -1200,6 +1210,14 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/centcom/central_command_areas/evacuation)
+"fu" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/item/weldingtool/experimental,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/admin)
 "fw" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -1252,6 +1270,16 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/evacuation/ship)
+"fJ" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/smooth_large,
 /area/centcom/central_command_areas/evacuation/ship)
 "fM" = (
 /obj/structure/filingcabinet/medical,
@@ -1572,6 +1600,10 @@
 /obj/machinery/griddle,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
+"hx" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/iron/grimy,
+/area/centcom/central_command_areas/briefing)
 "hz" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -2652,33 +2684,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood/tile,
 /area/centcom/central_command_areas/evacuation/ship)
-"mh" = (
-/obj/machinery/photocopier/prebuilt,
-/obj/machinery/button/door/indestructible{
-	id = "CCsec3";
-	name = "CC Shutter 3 Control";
-	pixel_y = 24
-	},
-/obj/machinery/button/door/indestructible{
-	id = "CCcustoms2";
-	name = "CC Shutter 2 Control";
-	pixel_x = 9;
-	pixel_y = 32
-	},
-/obj/machinery/button/door/indestructible{
-	id = "CCsec1";
-	name = "CC Shutter 1 Control";
-	pixel_y = 40
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/button/door/indestructible{
-	id = "CCsec4";
-	name = "CC Shutter 4 Control";
-	pixel_x = -9;
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/control)
 "mi" = (
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 1
@@ -3138,6 +3143,13 @@
 /obj/item/hand_labeler,
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/north,
+/turf/open/floor/iron,
+/area/centcom/central_command_areas/supply)
+"ou" = (
+/obj/machinery/photocopier/prebuilt,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/supply)
 "ov" = (
@@ -4547,13 +4559,6 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
-"uC" = (
-/obj/machinery/photocopier/prebuilt,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/turf/open/floor/iron,
-/area/centcom/central_command_areas/supply)
 "uE" = (
 /obj/effect/light_emitter/thunderdome,
 /turf/closed/indestructible/fakeglass,
@@ -4577,6 +4582,14 @@
 	},
 /turf/open/floor/iron,
 /area/centcom/central_command_areas/evacuation)
+"uK" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/central_command_areas/evacuation/ship)
 "uM" = (
 /obj/machinery/chem_master/condimaster{
 	name = "HoochMaster 2000"
@@ -4946,16 +4959,6 @@
 /obj/structure/flora/bush/pointy/style_random,
 /turf/open/floor/grass,
 /area/centcom/tdome/administration)
-"wk" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/effect/turf_decal/stripes/line{
-	dir = 6
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/smooth_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "wl" = (
 /obj/machinery/modular_computer/preset/id/centcom{
 	dir = 1
@@ -5476,10 +5479,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/control)
-"yF" = (
-/obj/machinery/photocopier/prebuilt,
-/turf/open/floor/iron/grimy,
-/area/centcom/central_command_areas/briefing)
 "yH" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/wood{
@@ -5570,14 +5569,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/tdome/observation)
-"za" = (
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/structure/cable,
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/iron/smooth_large,
-/area/centcom/central_command_areas/evacuation/ship)
 "zb" = (
 /obj/machinery/computer/records/medical{
 	dir = 4
@@ -6110,14 +6101,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/admin)
-"Bm" = (
-/obj/structure/reagent_dispensers/fueltank,
-/obj/item/weldingtool/experimental,
-/obj/effect/decal/cleanable/oil,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/iron,
 /area/centcom/central_command_areas/admin)
 "Bo" = (
 /obj/effect/turf_decal/tile/green{
@@ -7369,6 +7352,33 @@
 /obj/structure/closet/secure_closet/quartermaster,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/supply)
+"HY" = (
+/obj/machinery/photocopier/prebuilt,
+/obj/machinery/button/door/indestructible{
+	id = "CCsec3";
+	name = "CC Shutter 3 Control";
+	pixel_y = 24
+	},
+/obj/machinery/button/door/indestructible{
+	id = "CCcustoms2";
+	name = "CC Shutter 2 Control";
+	pixel_x = 9;
+	pixel_y = 32
+	},
+/obj/machinery/button/door/indestructible{
+	id = "CCsec1";
+	name = "CC Shutter 1 Control";
+	pixel_y = 40
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/button/door/indestructible{
+	id = "CCsec4";
+	name = "CC Shutter 4 Control";
+	pixel_x = -9;
+	pixel_y = 32
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/control)
 "HZ" = (
 /obj/structure/railing{
 	dir = 6
@@ -10563,16 +10573,6 @@
 	},
 /turf/open/floor/iron/grimy,
 /area/centcom/central_command_areas/admin)
-"XO" = (
-/obj/structure/table/wood,
-/obj/item/book/manual/wiki/barman_recipes,
-/obj/item/reagent_containers/cup/glass/shaker,
-/obj/item/rag,
-/obj/machinery/newscaster/directional/south,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/dark,
-/area/centcom/tdome/observation)
 "XQ" = (
 /obj/machinery/computer/crew{
 	dir = 1
@@ -36394,7 +36394,7 @@ aa
 KH
 Lt
 KK
-wk
+fJ
 Qt
 Lk
 cP
@@ -41276,7 +41276,7 @@ aa
 aa
 Lt
 fQ
-za
+uK
 MX
 DL
 ep
@@ -47399,7 +47399,7 @@ On
 Zf
 Zf
 On
-Bm
+fu
 Hz
 Hz
 Hz
@@ -47925,7 +47925,7 @@ wz
 qR
 Rd
 eF
-yF
+hx
 TE
 az
 eF
@@ -52533,7 +52533,7 @@ kj
 kj
 nm
 iF
-uC
+ou
 iR
 oJ
 lo
@@ -53829,7 +53829,7 @@ Za
 tK
 gL
 io
-mh
+HY
 uc
 kl
 xV
@@ -57200,7 +57200,7 @@ JV
 dG
 ym
 TV
-XO
+fg
 QC
 dj
 Mf

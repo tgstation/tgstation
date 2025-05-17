@@ -136,9 +136,7 @@
 
 	AddComponent(
 		/datum/component/bloody_spreader,\
-		blood_left = INFINITY,\
-		blood_dna = list("Unknown DNA" = BLOOD_TYPE_XENO),\
-		diseases = null,\
+		blood_dna = list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)),\
 	)
 
 // Path of Void's blade
