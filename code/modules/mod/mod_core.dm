@@ -513,8 +513,9 @@
 /obj/item/mod/core/soul
 	name = "MOD soul shard core"
 	desc = "A soul shard haphazardly jammed into a hand-crafted MOD core frame."
-	icon_state = "mod-core-soul"
-	icon_state_preview = "mod-core-soul-preview"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/mod/core/soul"
+	post_init_icon_state = "mod-core-soul"
 	var/base_desc
 	var/theme = THEME_CULT
 	greyscale_config = /datum/greyscale_config/mod_core_soul
@@ -673,4 +674,5 @@
 	timeout = 10 SECONDS
 
 /obj/item/mod/core/soul/wizard
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	theme = THEME_WIZARD
