@@ -800,7 +800,7 @@
 /area/awaymission/cabin)
 "ev" = (
 /obj/structure/table/wood/fancy,
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "ew" = (

@@ -22,6 +22,7 @@
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	health = 25
 	maxHealth = 25
+	max_stamina = 120
 	pressure_resistance = 200
 	combat_mode = TRUE
 	obj_damage = 50

@@ -9,8 +9,10 @@
 	maxHealth = 300
 	melee_damage_lower = 15
 	melee_damage_upper = 30
+	status_flags = CANPUSH
 	sentience_type = SENTIENCE_ARTIFICIAL
 	ai_controller = /datum/ai_controller/basic_controller/stares_at_people
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	/// the path to a fake item we will hold in our right hand
 	var/obj/item/held_item
 	/// the path to a fake hat we will wear

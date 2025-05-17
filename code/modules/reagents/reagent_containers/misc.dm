@@ -116,32 +116,49 @@
 	mug_glow.alpha = 255 * intensity
 	. += mug_glow
 
-/obj/item/reagent_containers/cup/rag
+/obj/item/rag
 	name = "damp rag"
 	desc = "For cleaning up messes, you suppose."
 	w_class = WEIGHT_CLASS_TINY
 	icon = 'icons/obj/toys/toy.dmi'
 	icon_state = "rag"
 	item_flags = NOBLUDGEON
-	reagent_flags = OPENCONTAINER
-	amount_per_transfer_from_this = 5
-	has_variable_transfer_amount = FALSE
-	volume = 5
-	spillable = FALSE
-	reagent_container_liquid_sound = null
+	resistance_flags = FLAMMABLE
+	/// How bloody is this rag?
+	var/blood_level = 0
 
-/obj/item/reagent_containers/cup/rag/Initialize(mapload)
+/obj/item/rag/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/cleaner, 3 SECONDS, pre_clean_callback=CALLBACK(src, PROC_REF(should_clean)))
+	create_reagents(5, OPENCONTAINER)
+	AddComponent(/datum/component/cleaner, 3 SECONDS, \
+		pre_clean_callback = CALLBACK(src, PROC_REF(should_clean)), \
+		on_cleaned_callback = CALLBACK(src, PROC_REF(on_cleaned)), \
+	)
+	AddElement(/datum/element/reagents_exposed_on_fire)
+	AddElement(/datum/element/reagents_item_heatable)
 
-/obj/item/reagent_containers/cup/rag/suicide_act(mob/living/user)
+/obj/item/rag/pickup(mob/user)
+	. = ..()
+	if(prob(5 * blood_level))
+		bloody_holder(user)
+
+/obj/item/rag/proc/bloody_holder(mob/living/holder)
+	var/obj/item/clothing/gloves/gloves = holder.get_item_by_slot(ITEM_SLOT_GLOVES)
+	if(gloves)
+		gloves.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
+		holder.update_worn_gloves()
+	else
+		holder.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
+
+/obj/item/rag/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is smothering [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
-/obj/item/reagent_containers/cup/rag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/rag/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!iscarbon(interacting_with) || !reagents?.total_volume)
 		return ..()
 	var/mob/living/carbon/carbon_target = interacting_with
+	carbon_target.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
 	var/reagentlist = pretty_string_from_reagent_list(reagents.reagent_list)
 	var/log_object = "containing [reagentlist]"
 	if(!carbon_target.is_mouth_covered())
@@ -155,10 +172,75 @@
 		log_combat(user, carbon_target, "touched", src, log_object)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/rag/wash(clean_types)
+	. = ..()
+	if(!(clean_types & CLEAN_TYPE_BLOOD))
+		return
+	blood_level = 0
+	update_appearance()
+
 ///Checks whether or not we should clean.
-/obj/item/reagent_containers/cup/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
+/obj/item/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
 	if(cleaner.combat_mode && ismob(atom_to_clean))
 		return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
+	if(blood_level >= 10)
+		// snowflakeeeee check to make it a bit more intuitive when cleaning the rag.
+		if(istype(atom_to_clean, /obj/structure/sink))
+			return CLEAN_BLOCKED|CLEAN_DONT_BLOCK_INTERACTION
+		atom_to_clean.balloon_alert(cleaner, "[name] is too dirty!")
+		return CLEAN_BLOCKED
 	if(loc == cleaner)
 		return CLEAN_ALLOWED
 	return CLEAN_ALLOWED|CLEAN_NO_XP
+
+///On cleaning, get the rag dirty
+/obj/item/rag/proc/on_cleaned(datum/cleaning_source, atom/clean_target, mob/living/cleaner, was_successful, list/all_cleaned)
+	if(!was_successful)
+		return
+
+	var/list/all_blood_dna = list()
+	for(var/atom/movable/cleaned in all_cleaned)
+		if(isturf(clean_target) && !HAS_TRAIT(cleaned, TRAIT_MOPABLE))
+			continue
+		// collect dna FIRST
+		all_blood_dna |= all_cleaned[cleaned]
+		// THEN pass on dna (though in some cases the cleaned item is being deleted)
+		if(blood_level > 0 && !QDELING(cleaned))
+			cleaned.add_blood_DNA(GET_ATOM_BLOOD_DNA(src))
+		// THEN increment blood level
+		if(length(all_cleaned[cleaned]))
+			blood_level += get_blood_level_of_movable(cleaned)
+		// you didn't think you could "clean" a burning person and escape scot-free did you?
+		var/mob/living/living_cleaned = cleaned
+		if((cleaned.resistance_flags & ON_FIRE) || (istype(living_cleaned) && living_cleaned.on_fire))
+			fire_act(500, 100)
+
+	// FINALLY add the dna to us
+	add_blood_DNA(all_blood_dna)
+	update_appearance()
+	if(blood_level >= 10)
+		to_chat(cleaner, span_warning("[src] is too dirty to clean anything else! Wash it first!"))
+	if(prob(10 * blood_level))
+		bloody_holder(cleaner)
+
+/obj/item/rag/proc/get_blood_level_of_movable(atom/movable/what)
+	if(istype(what, /obj/item/rag))
+		var/obj/item/rag/friend_rag = what
+		return friend_rag.blood_level
+	if(istype(what, /obj/effect/decal/cleanable))
+		var/obj/effect/decal/cleanable/mess = what
+		return round(mess.bloodiness / 20, 1)
+	return 1
+
+/obj/item/rag/update_appearance(updates)
+	. = ..()
+	// v = green and blue color components (reduced as it gets dirtier)
+	var/v = max(1 - (0.1 * blood_level), 0)
+	var/list/colormatrix = list(
+		1, 0, 0, 0,
+		0, v, 0, 0,
+		0, 0, v, 0,
+		0, 0, 0, 1,
+	)
+
+	add_atom_colour(colormatrix, FIXED_COLOUR_PRIORITY)
