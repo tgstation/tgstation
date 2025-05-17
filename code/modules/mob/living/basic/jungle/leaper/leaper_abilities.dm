@@ -239,7 +239,7 @@
 	overlay_icon_state = "bg_revenant_border"
 	spell_requirements = NONE
 	cooldown_time = 30 SECONDS
-	summon_type = list(/mob/living/basic/frog/frog_suicide)
+	summon_type = list(/mob/living/basic/frog/suicide)
 	summon_radius = 2
 	summon_amount = 2
 	max_summons = 2

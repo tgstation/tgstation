@@ -94,20 +94,6 @@
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
-	if(istype(attacking_item, /obj/item/stack/medical/gauze))
-		var/obj/item/stack/medical/gauze/G = attacking_item
-		new /obj/item/reagent_containers/cup/rag(loc)
-		to_chat(user, span_notice("You tear off a strip of gauze and make a rag."))
-		G.use(1)
-		return
-
-	if(istype(attacking_item, /obj/item/stack/sheet/cloth))
-		var/obj/item/stack/sheet/cloth/cloth = attacking_item
-		new /obj/item/reagent_containers/cup/rag(loc)
-		to_chat(user, span_notice("You tear off a strip of cloth and make a rag."))
-		cloth.use(1)
-		return
-
 	if(istype(attacking_item, /obj/item/stack/ore/glass))
 		new /obj/item/stack/sheet/sandblock(loc)
 		to_chat(user, span_notice("You wet the sand and form it into a block."))

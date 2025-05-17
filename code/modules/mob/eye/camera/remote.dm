@@ -70,6 +70,8 @@
 		var/client/new_user_client = GetViewerClient()
 		if(user_image && new_user_client)
 			new_user_client.images += user_image
+		if(use_visibility)
+			update_visibility()
 
 /**
  * Sets the camera's user image to this icon and state.

@@ -263,3 +263,165 @@
       nerds, rejoice!
   - rscadd: Revolutionaries are now weakened by grenadine. Because the pomegranate
       antioxidants stop free radicals.
+2025-05-11:
+  Jacquerel:
+  - balance: Most biological mobs are now slowed by taking stamina damage, and can
+      be stunned. Mechanical mobs, mining mobs, and several other special kinds (chiefly
+      those invoked by antagonists) are unaffected. If this seems to effect any mob
+      it probably shouldn't, please report it as a bug.
+  Melbert:
+  - balance: If you're staggered, and try to walk down stairs, you'll instead fall
+      down the stairs (stunning and causing damage).
+  - balance: Hard crit and dead people will also roll down the stairs.
+  Rengan:
+  - server: The crimes are now logging in the database.
+  vinylspiders:
+  - bugfix: stops snails from clogging up CI
+2025-05-12:
+  Jacquerel:
+  - balance: Regal Rats can now grab mice out of disposal bins, and no longer spawn
+      them with the Riot ability.
+  - balance: The Riot ability no longer needs to be used once for each slightly different
+      kind of mob in your radius.
+  - balance: The Regal Rat Domain ability is now toggled on and off.
+  - balance: Several kinds of mob will immediately start following you once tamed.
+  - balance: Rats, hostile frogs, and evil snails can be created via gold slime reaction.
+  JohnFulpWillard:
+  - spellcheck: Updated bruh moments.
+  Redbert:
+  - bugfix: Fixes issue that causes hypernob reaction to sometimes not work
+  SmArtKar:
+  - bugfix: Riggings and toolbelts no longer render through the goliath cloak when
+      worn in your suit slot.
+2025-05-13:
+  Ben10Omintrix:
+  - bugfix: fixes a few mining weapons not working on ice whelps, ice demons, and
+      wolves
+  Hardly:
+  - rscadd: Added half-health modifier for deathmatch
+  Melbert:
+  - bugfix: List VV properly differentiates null vs 0
+  necromanceranne:
+  - qol: Being intoxicated enough can potentially beat back the trauma of surgery.
+      It's not reliable.
+  - qol: Robotics on Tram and Metastation have a bottle of whiskey. You know, for
+      taking the edge off.
+  throwawayuseless:
+  - rscadd: Adds new immunodeficiency negative quirk, and sepsisillin, the inverse
+      of spaceacillin. Both have an immune system weakening effect, mitigate-able
+      with spaceacillin.
+  timothymtorres:
+  - qol: Add CI map linter for window and electrified grille spawners
+  - map: Fix many duplicate windows, walls, and grilles spawning together or inside
+      each other on a bunch of maps.
+2025-05-14:
+  Capsandi:
+  - image: new BSA impact animation
+  Derpguy3:
+  - bugfix: Several previously missing drinks have been added to the service cyborg's
+      drink synthesizer.
+  Iajret:
+  - bugfix: fixed bluespace sampling experiment not doing anything
+  JohnFulpWillard:
+  - admin: Fixed a few bad combat logs for basic/simple animals, thrown things, and
+      xenomorph stuff.
+  OnlineGirlfriend:
+  - rscadd: girlypop posters
+  - rscadd: pink crate
+  RosSample:
+  - bugfix: callouts no longer work while you are incapacitated
+  SmArtKar:
+  - bugfix: Wheelchair bells can no longer be rang while stunned
+  - admin: Detonating a TTV via a wheelchair bell now logs you as the person who touched
+      it last.
+  Y0SH1M4S73R:
+  - spellcheck: The invocation for Summon Cheese is sometimes more representative
+      of the realities of life aboard the station.
+  necromanceranne:
+  - bugfix: You must have both your hands empty before entering a mech. (But items
+      which replace your hand, like the light later or the hand of god, won't prevent
+      you from getting in)
+2025-05-15:
+  Aliceee2ch:
+  - rscadd: Added heavy thermal guns for mechs. Works on the principle of regular
+      hand guns. Can only be purchased in cargo, as they are experimental.
+  Ezel:
+  - rscadd: Nuke ops can now buy a keycard to access their new custodial closet!
+  - map: Rearranges nuke ordnance room, and adds the custodial closet
+  FlufflesTheDog:
+  - bugfix: Fixed another(?) possible case of multitool APC searching causing broken
+      huds
+  JohnFulpWillard:
+  - bugfix: Advanced camera consoles now shows static when you first open it, rather
+      than only kicking in when you start to look around.
+  spiders24110:
+  - bugfix: fixed fish infused people swimming slow in deep water
+2025-05-16:
+  00-Steven:
+  - bugfix: Fixes quirks and the scarf trait just dropping items to the ground.
+  Absolucy, Melbert:
+  - refactor: Stack merging has much less potential for causing large amounts of server
+      lag now.
+  Bisar:
+  - bugfix: Things with the behavior for placing on the floor now correctly use the
+      code for placing on the floor.
+  - bugfix: Animations for moving items into other items on your person shouldn't
+      play any more.
+  LT3:
+  - bugfix: You can put sterilizine back in the surgery tray after removing it
+  NeonNik2245:
+  - balance: Plumbers will now give back matter you use for assemble machinery.
+  SmArtKar:
+  - refactor: Refactored how backpack and belt contents are handled in mob inventory
+      code, report any issues with lingering item effects or inability to equip things
+      into them!
+  TealSeer:
+  - bugfix: fixed cross-server newscaster functionality
+2025-05-17:
+  Absolucy:
+  - bugfix: False walls properly smooth with objects now, such as other false walls.
+  Holoo-1:
+  - bugfix: fixed presets, custom explosion, fall sound in admin supply pod
+  - admin: admin supply pod now can have flashy explosion, set it via custom explosion
+      button. Added flash range to admin logs
+  Maurukas:
+  - qol: Some additional lighting has been added to Catwalkstation recycling
+  - bugfix: Mail delivery has been fixed for the theater, medbay and chemistry on
+      Catwalkstation
+  - qol: Cargo has received a microwave and supply of donk pockets on Catwalkstation
+  - bugfix: Shutter controls have been added to the Catwalkstation cargo warehouse
+  Melbert:
+  - balance: Damp Rags can now get dirty when using them to clean blood, passing blood
+      DNA along.
+  - rscadd: Gauze now gets dirty when apply it to actively bleeding wounds. Doesn't
+      spread disease or anything, just passes blood DNA. It can be cleaned in a sink.
+  - rscdel: Removed cloth on sink / gauze on sink interaction to make rags. Just use
+      the crafting menu
+  - qol: Health Analyzer tells you what type of blood your target can accept.
+  Retrino:
+  - qol: renames some door remotes to their department names
+  SmArtKar:
+  - bugfix: Fixed monkeys being weirdly rotated when attached to big manipulators
+      pointing sideways
+  - bugfix: Icebox artifact exports no longer claim they're from a lava planet
+  - bugfix: Fixed tactical medkits not giving medibots a bezerk skin
+  - bugfix: Fixed fireplace particle positioning
+  - bugfix: Fixed flaggelant's robe spamming your chat with gravity messages
+  - refactor: Refactored the planemaster debugger tool
+  - balance: Power Miners are now ash and snowstorm immune
+  - bugfix: Holoparasites no longer take damage from ash storms inside of storm-protected
+      hosts
+  Vanilla1040:
+  - bugfix: Fixed interdyne MOD using digi sprite on plantigrade
+  grungussuss:
+  - qol: added some line breaks for the admin player panel for readibility
+  jlsnow301:
+  - bugfix: 'Paper, a UI of dizzying complexity, has once again been beaten into submission:
+      You should be able to type into forms again. For now.'
+  - bugfix: Fixed an uncommon bluescreen in the rapid pipe dispenser UI.
+  moocowswag:
+  - bugfix: You can no longer finish a machine frame if it is on the same tile as
+      a machine that it would become.
+  necromanceranne:
+  - balance: Reduces rubbershot stamina damage from 11 damage per pellet to 10 damage
+      per pellet.
