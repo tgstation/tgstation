@@ -1266,4 +1266,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return
 	return ..()
 
+/obj/structure/closet/secure_closet/hitby(atom/movable/hit_by, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	if(!istype(hit_by, /obj/item/spear))
+		return ..()
+	// We have to manually tweak throwforce for now
+	var/obj/item/spear = hit_by
+	spear.throwforce *= 2
+	. = ..()
+	spear.throwforce /= 2
+	return .
+
 #undef LOCKER_FULL
