@@ -1826,6 +1826,7 @@
 #include "code\datums\quirks\negative_quirks\insanity.dm"
 #include "code\datums\quirks\negative_quirks\light_drinker.dm"
 #include "code\datums\quirks\negative_quirks\mute.dm"
+#include "code\datums\quirks\negative_quirks\narcolepsy.dm"
 #include "code\datums\quirks\negative_quirks\nearsighted.dm"
 #include "code\datums\quirks\negative_quirks\non_violent.dm"
 #include "code\datums\quirks\negative_quirks\numb.dm"

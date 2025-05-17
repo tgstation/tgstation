@@ -195,6 +195,12 @@
 	icon_state = "pill19"
 	list_reagents = list(/datum/reagent/medicine/ephedrine = 10, /datum/reagent/medicine/antihol = 10, /datum/reagent/consumable/coffee = 30)
 
+/obj/item/reagent_containers/applicator/pill/prescription_stimulant
+	name = "prescription stimulant pill"
+	desc = "Used to treat symptoms of drowsiness and sudden loss of consciousness."
+	list_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/synaptizine = 5, /datum/reagent/medicine/modafinil = 3)
+	icon_state = "pill15"
+
 /obj/item/reagent_containers/applicator/pill/salbutamol
 	name = "salbutamol pill"
 	desc = "Used to treat oxygen deprivation."
