@@ -1,4 +1,11 @@
-import { Button, NoticeBox, Section, Table, Tabs } from 'tgui-core/components';
+import {
+  Button,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+  Tabs,
+} from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend, useSharedState } from '../backend';
@@ -125,23 +132,36 @@ const ResearchHistoryView = (props) => {
       node_researcher_location,
       node_researched_timestamp,
     } = server_log;
+
     return (
-      <Section className="ResearchHistoryEntry" title={node_name}>
-        Testing my entire being
-      </Section>
+      <Stack.Item>
+        <Section
+          className="HistoryTab__HistoryEntry"
+          align="center"
+          textAlign="center"
+          title={node_name}
+        />
+      </Stack.Item>
     );
   };
 
   return (
-    <Section title="Research History" align="center" textAlign="center">
+    <Section
+      title="Research History"
+      align="center"
+      textAlign="center"
+      className="ServerControl__HistoryTab"
+    >
       {!logs.length ? (
         <NoticeBox mt={2} info>
           No research history found.
         </NoticeBox>
       ) : (
-        logs.map((server_log, index = 1) => (
-          <HistoryEntry key={index++} {...server_log} />
-        ))
+        <Stack vertical>
+          {logs.map((server_log, index) => (
+            <HistoryEntry key={index} {...server_log} />
+          ))}
+        </Stack>
       )}
     </Section>
   );
@@ -149,49 +169,42 @@ const ResearchHistoryView = (props) => {
 
 export const ServerControl = (props) => {
   const { act, data } = useBackend<Data>();
-  const { server_connected, servers, consoles, logs } = data;
+  const { server_connected, servers, consoles, logs } = data; // Assuming 'servers', 'consoles', and 'logs' are used by the child components
   const [currentTab, setTab] = useSharedState('tab', 1);
-  if (!server_connected) {
+  const TitlesAndTabs = [['Active Servers', ], ['Active Consoles', ], ['Research History', ]];
+
+  // Define the helper component with PascalCase and corrected 'className'
+  const ServerControlWindow = (componentProps) => {
+    // Renamed props to avoid conflict with outer props
     return (
-      <Window width={575} height={450}>
-        <Window.Content>
+      <Window width={575} height={500} theme="hackerman">
+        <Window.Content
+          className="ServerControl__"
+          scrollable
+          {...componentProps}
+        />
+      </Window>
+    );
+    const ServerControlTabs = (componentProps) => {
+      return (
+        <Tabs
+          className="ServerControl__Tabs"
+          selected={currentTab}
+          onSelect={(tab) => setTab(tab)}
+          {...componentProps}
+        />
+      );
+    };
+    return (
+      <ServerControlWindow>
+        {!server_connected ? (
           <NoticeBox textAlign="center" danger>
             Not connected to a Server. Please sync one using a multitool.
           </NoticeBox>
-        </Window.Content>
-      </Window>
+        ) : (
+          <Tabs />
+        )}
+      </ServerControlWindow>
     );
-  }
-  return (
-    <Window width={575} height={500} theme="hackerman">
-      <Window.Content scrollable>
-        <Tabs>
-          <Tabs.Tab
-            key="servers"
-            selected={currentTab === 1}
-            onClick={() => setTab(1)}
-          >
-            Active Servers
-          </Tabs.Tab>
-          <Tabs.Tab
-            key="consoles"
-            selected={currentTab === 2}
-            onClick={() => setTab(2)}
-          >
-            Active Consoles
-          </Tabs.Tab>
-          <Tabs.Tab
-            key="research_history"
-            selected={currentTab === 3}
-            onClick={() => setTab(3)}
-          >
-            Research History
-          </Tabs.Tab>
-        </Tabs>
-        {currentTab === 1 && <ServersView />}
-        {currentTab === 2 && <ConsolesView />}
-        {currentTab === 3 && <ResearchHistoryView />}
-      </Window.Content>
-    </Window>
-  );
+  };
 };
