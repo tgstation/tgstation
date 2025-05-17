@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "PDA notepad app no longer always shows a blank field upon being opened."
