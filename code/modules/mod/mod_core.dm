@@ -523,7 +523,7 @@
 /obj/item/mod/core/soul/Initialize(mapload)
 	. = ..()
 	base_desc = desc
-	update_desc()
+	update_appearance(UPDATE_DESC)
 
 /obj/item/mod/core/soul/update_desc(updates)
 	. = ..()
@@ -550,7 +550,7 @@
 			greyscale_colors = "#ff00ff"
 		if(THEME_HERETIC)
 			greyscale_colors = "#00ff00"
-	. = ..()
+	return ..()
 
 /obj/item/mod/core/soul/CheckParts(list/parts_list, datum/crafting_recipe/current_recipe)
 	var/obj/item/soulstone/stone = locate() in parts_list
@@ -560,7 +560,7 @@
 		shade.visible_message(span_warning("[shade] is ejected from [stone] as it is inserted into [src]!"), span_warning("You are ejected from [stone] as it is inserted into [src]!"))
 	parts_list -= stone
 	qdel(stone)
-	..()
+	return ..()
 
 /obj/item/mod/core/soul/proc/set_theme(new_theme)
 	theme = new_theme
