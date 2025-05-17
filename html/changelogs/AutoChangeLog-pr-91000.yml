@@ -1,0 +1,11 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - rscadd: "banana gluttons gain max health and heal by eating foods! And they can smash doors."
+  - balance: "clown mobs no longer get nuked by bad atmos."
+  - balance: "blown mobs have new death drops."
+  - balance: "most clown more are now faster!"
+  - balance: "clownanas are now plants and are immune to carbon dioxide."
+  - balance: "living lube is now a slime and highly brute resistant."
+  - balance: "longfaces now hit decently hard."
+  - bugfix: "clownanas and longfaces can now be biopsied."

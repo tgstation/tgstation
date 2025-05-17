@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix `map_export` admin verb not properly saving a massive amount of objects."

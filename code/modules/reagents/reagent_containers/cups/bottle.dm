@@ -518,7 +518,7 @@
 	context[SCREENTIP_CONTEXT_ALT_LMB] = (cap_on ? "Remove Pump Cap" : "Add Pump Cap")
 	if(IS_WRITING_UTENSIL(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Write Label"
-	else if(cap_on && held_item.is_refillable())
+	else if(cap_on && held_item?.is_refillable())
 		context[SCREENTIP_CONTEXT_LMB] = "Use Pump"
 
 	return CONTEXTUAL_SCREENTIP_SET

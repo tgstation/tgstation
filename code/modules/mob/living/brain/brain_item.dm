@@ -558,7 +558,7 @@
 //Direct trauma gaining proc. Necessary to assign a trauma to its brain. Avoid using directly.
 /obj/item/organ/brain/proc/brain_gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
 	if(!can_gain_trauma(trauma, resilience))
-		return FALSE
+		return null
 
 	var/datum/brain_trauma/actual_trauma
 	if(ispath(trauma))
@@ -571,17 +571,17 @@
 
 	if(actual_trauma.brain) //we don't accept used traumas here
 		WARNING("gain_trauma was given an already active trauma.")
-		return FALSE
+		return null
 
 	add_trauma_to_traumas(actual_trauma)
 	if(owner)
 		actual_trauma.owner = owner
 		if(SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma, resilience) & COMSIG_CARBON_BLOCK_TRAUMA)
 			qdel(actual_trauma)
-			return FALSE
+			return null
 		if(!actual_trauma.on_gain())
 			qdel(actual_trauma)
-			return FALSE
+			return null
 		log_game("[key_name_and_tag(owner)] has gained the following brain trauma: [trauma.type]")
 	if(resilience)
 		actual_trauma.resilience = resilience

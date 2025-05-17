@@ -243,7 +243,7 @@
 "ks" = (
 /obj/structure/sign/warning/fire/directional/north,
 /obj/structure/reagent_dispensers/fueltank/large{
-	anchored = 1;
+	anchored = 1
 	},
 /obj/structure/railing{
 	dir = 8
@@ -379,7 +379,7 @@
 "qO" = (
 /obj/structure/sign/warning/fire/directional/south,
 /obj/structure/reagent_dispensers/fueltank/large{
-	anchored = 1;
+	anchored = 1
 	},
 /obj/structure/railing{
 	dir = 8

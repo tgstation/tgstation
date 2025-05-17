@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - bugfix: "fixed cable coil going invisible when you select the two cable hub options"

@@ -40,7 +40,7 @@
 	var/static/list/pet_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/perform_trick_sequence,
 	)
 
@@ -85,6 +85,8 @@
 	else
 		var/static/list/food_types = list(/obj/item/food/cheese)
 		AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 100)
+
+	AddElement(/datum/element/regal_rat_minion, converted_path = /mob/living/basic/mouse/rat, pet_commands = GLOB.regal_rat_minion_commands)
 
 /mob/living/basic/mouse/Destroy()
 	SSmobs.cheeserats -= src
@@ -300,7 +302,7 @@
 	name = "rat"
 	desc = "They're a nasty, ugly, evil, disease-ridden rodent with anger issues."
 
-	gold_core_spawnable = NO_SPAWN
+	gold_core_spawnable = HOSTILE_SPAWN
 	melee_damage_lower = 3
 	melee_damage_upper = 5
 	obj_damage = 5

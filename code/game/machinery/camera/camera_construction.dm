@@ -189,9 +189,9 @@
 						ai.last_tablet_note_seen = "<HTML><HEAD><TITLE>[itemname]</TITLE></HEAD><BODY><TT>[info]</TT></BODY></HTML>"
 
 						if(user.name == "Unknown")
-							to_chat(ai, "[span_name(user)] holds <a href='byond://?_src_=usr;show_tablet=1;'>\a [itemname]</a> up to one of your cameras ...")
+							to_chat(ai, "[span_name(user)] holds <a href='byond://?_src_=usr;show_tablet_note=1;'>\a [itemname]</a> up to one of your cameras ...")
 						else
-							to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='byond://?_src_=usr;last_shown_paper=1;'>\a [itemname]</a> up to one of your cameras ...")
+							to_chat(ai, "<b><a href='byond://?src=[REF(ai)];track=[html_encode(user.name)]'>[user]</a></b> holds <a href='byond://?_src_=usr;show_tablet_note=1;'>\a [itemname]</a> up to one of your cameras ...")
 						continue
 
 					if (potential_viewer.client?.eye == src)

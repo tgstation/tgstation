@@ -10,10 +10,6 @@
 /obj/structure/girder/reinforced,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/prison_shuttle)
-"d" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/turf/closed/mineral/random/stationside/asteroid,
-/area/ruin/space/prison_shuttle)
 "e" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/carpet/red/airless,
@@ -261,7 +257,7 @@ F
 E
 Y
 Y
-d
+Y
 E
 j
 q
@@ -280,7 +276,7 @@ a
 E
 Y
 Y
-d
+Y
 K
 m
 r

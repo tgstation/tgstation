@@ -2157,18 +2157,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
-"ahq" = (
-/obj/structure/table/wood,
-/obj/machinery/reagentgrinder{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = -5;
-	pixel_y = 8
-	},
-/turf/open/floor/iron/dark,
-/area/station/service/bar)
 "ahr" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random/structure/girder,
@@ -10467,23 +10455,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
-"cAJ" = (
-/obj/structure/table,
-/obj/item/razor,
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = 8;
-	pixel_y = 15
-	},
-/obj/item/reagent_containers/cup/bottle{
-	name = "Barber's Aid bottle";
-	desc = "A small bottle of Barber's Aid.";
-	pixel_x = 10;
-	pixel_y = 3;
-	list_reagents = list(/datum/reagent/barbers_aid=30)
-	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/east,
-/turf/open/floor/wood/large,
-/area/station/service/barber)
 "cAK" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
@@ -20190,6 +20161,18 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security/checkpoint/escape)
+"gbT" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/rag{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/service/bar)
 "gbW" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -23643,26 +23626,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
-"hqp" = (
-/obj/structure/table,
-/obj/item/razor{
-	pixel_x = 9;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = -6;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/cup/bottle{
-	name = "Barber's Aid bottle";
-	desc = "A small bottle of Barber's Aid.";
-	pixel_x = -2;
-	pixel_y = 10;
-	list_reagents = list(/datum/reagent/barbers_aid=30)
-	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/east,
-/turf/open/floor/wood/large,
-/area/station/service/barber)
 "hqN" = (
 /obj/structure/weightmachine/weightlifter,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -34055,6 +34018,18 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"kWg" = (
+/obj/structure/table/wood/fancy/royalblack,
+/obj/item/reagent_containers/cup/glass/bottle/whiskey{
+	pixel_y = 14;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/station/science/robotics/lab)
 "kWp" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line,
 /obj/machinery/power/terminal{
@@ -37721,26 +37696,6 @@
 "mgS" = (
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
-"mgZ" = (
-/obj/structure/table,
-/obj/machinery/requests_console/directional/west{
-	name = "Kitchen Requests Console";
-	department = "Kitchen"
-	},
-/obj/effect/mapping_helpers/requests_console/supplies,
-/obj/effect/mapping_helpers/requests_console/assistance,
-/obj/machinery/reagentgrinder{
-	pixel_x = -5;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/turf/open/floor/iron/white/side{
-	dir = 4
-	},
-/area/station/service/kitchen)
 "mhl" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -54353,6 +54308,23 @@
 	dir = 4
 	},
 /area/station/service/theater)
+"siC" = (
+/obj/structure/table,
+/obj/item/razor,
+/obj/item/rag{
+	pixel_x = 8;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/cup/bottle{
+	name = "Barber's Aid bottle";
+	desc = "A small bottle of Barber's Aid.";
+	pixel_x = 10;
+	pixel_y = 3;
+	list_reagents = list(/datum/reagent/barbers_aid=30)
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/east,
+/turf/open/floor/wood/large,
+/area/station/service/barber)
 "siE" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -55128,6 +55100,26 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/tram/right)
+"stR" = (
+/obj/structure/table,
+/obj/machinery/requests_console/directional/west{
+	name = "Kitchen Requests Console";
+	department = "Kitchen"
+	},
+/obj/effect/mapping_helpers/requests_console/supplies,
+/obj/effect/mapping_helpers/requests_console/assistance,
+/obj/machinery/reagentgrinder{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/rag{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/white/side{
+	dir = 4
+	},
+/area/station/service/kitchen)
 "stU" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -60923,6 +60915,26 @@
 "usY" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/department/cargo)
+"usZ" = (
+/obj/structure/table,
+/obj/item/razor{
+	pixel_x = 9;
+	pixel_y = 5
+	},
+/obj/item/rag{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/cup/bottle{
+	name = "Barber's Aid bottle";
+	desc = "A small bottle of Barber's Aid.";
+	pixel_x = -2;
+	pixel_y = 10;
+	list_reagents = list(/datum/reagent/barbers_aid=30)
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/east,
+/turf/open/floor/wood/large,
+/area/station/service/barber)
 "utc" = (
 /obj/machinery/camera{
 	dir = 9;
@@ -107327,11 +107339,11 @@ aaa
 abM
 abM
 mGw
-cAJ
+siC
 sYl
 mYc
 sYl
-hqp
+usZ
 mGw
 aaa
 aaa
@@ -167967,7 +167979,7 @@ aaa
 eSx
 eSx
 bgL
-mgZ
+stR
 fqU
 uGa
 nrV
@@ -169521,7 +169533,7 @@ wwK
 crT
 kcu
 nBy
-ahq
+gbT
 bKF
 tXL
 hOh
@@ -179320,7 +179332,7 @@ xgO
 muZ
 dzu
 doK
-uJH
+kWg
 psa
 eQY
 nns

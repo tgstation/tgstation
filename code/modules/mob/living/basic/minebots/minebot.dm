@@ -31,6 +31,7 @@
 	light_on = FALSE
 	combat_mode = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	///the gun we use to kill
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun
 	///our normal overlay
@@ -48,7 +49,7 @@
 		/datum/pet_command/minebot_ability/dump,
 		/datum/pet_command/automate_mining,
 		/datum/pet_command/free/minebot,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/attack/minebot,
 	)
 	///possible colors the bot can have
