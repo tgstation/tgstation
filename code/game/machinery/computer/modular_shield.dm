@@ -63,6 +63,8 @@
 	if(.)
 		return
 	var/obj/machinery/modular_shield_generator/selected_generator = get_generator(params["id"])
+	if(QDELETED(selected_generator))
+		return
 	switch(action)
 		if("toggle_shields")
 			selected_generator.toggle_shields()
