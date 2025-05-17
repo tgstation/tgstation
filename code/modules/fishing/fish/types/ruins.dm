@@ -103,6 +103,9 @@
 
 /obj/item/fish/soul/proc/good_ending(mob/living/user)
 	var/mob/living/basic/spaceman/soulman = new(get_turf(user))
+	soulman.fully_replace_character_name(user.real_name)
+	addtimer(CALLBACK(soulman, TYPE_PROC_REF(/atom, visible_message), span_notice("[soulman] was too pure for this world...")), 5 SECONDS, TIMER_DELETE_ME)
+	addtimer(CALLBACK(soulman, TYPE_PROC_REF(/mob/living, death)), 5 SECONDS, TIMER_DELETE_ME)
 	if(prob(80)) // the percentage is important.
 		soulman.PossessByPlayer(user.ckey)
 		to_chat(soulman, span_notice("You finally feel at peace."))
@@ -121,12 +124,7 @@
 	soulbox.throw_at(get_edge_target_turf(get_turf(user), yeet_direction), yeet_distance, 2, user, spin = TRUE)
 	soulbox.AddElement(/datum/element/haunted, haunt_color = "#124CD5")
 	if(prob(86)) // 1 in 7 chance to stay
-		addtimer(CALLBACK(src, PROC_REF(soul_gone), soulbox), 1 SECONDS * iteration)
-
-/obj/item/fish/soul/proc/soul_gone(obj/soulbox)
-	soulbox.visible_message("[soulbox] disappears, as if it was never there to begin with...")
-	new /obj/effect/temp_visual/mook_dust(get_turf(soulbox))
-	qdel(soulbox)
+		soulbox.fade_into_nothing(1 SECONDS * iteration, 0.5 SECONDS)
 
 ///From the cursed spring
 /obj/item/fish/skin_crab
