@@ -39,3 +39,8 @@
 	unit_name = "vending refill canister"
 	message = "Thank you for restocking the station!"
 	export_types = list(/obj/item/vending_refill)
+
+/datum/export/laptop
+	cost = CARGO_CRATE_VALUE * 20
+	unit_name = "high-end modular personal computer"
+	export_types = list(/obj/item/modular_computer/laptop/buildable/sleek)
