@@ -165,10 +165,9 @@
 		if(!HAS_TRAIT(offered, TRAIT_CAN_HOLD_ITEMS))
 			to_chat(src, span_warning("[offered.p_They()] can't hold anything you offer!"))
 			return
-	else
-		if(!(locate(/mob/living) in orange(1, src)))
-			to_chat(src, span_warning("There's nobody beside you to take it!"))
-			return
+	else if(!(locate(/mob/living) in orange(1, src)))
+		to_chat(src, span_warning("There's nobody beside you to take it!"))
+		return
 
 	if(offered_item.on_offered(src)) // see if the item interrupts with its own behavior
 		return
