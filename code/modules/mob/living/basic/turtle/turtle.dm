@@ -4,6 +4,7 @@
 #define REQUIRED_TREE_GROWTH 250
 #define UPPER_BOUND_VOLUME 50
 #define LOWER_BOUND_VOLUME 10
+#define FOOD_PROCESS_TIME 2 MINUTES
 
 /mob/living/basic/turtle
 	name = "turtle"
@@ -53,6 +54,8 @@
 	var/static/list/indigestible_seeds = typecacheof(list(
 		/obj/item/seeds/random,
 	))
+	///Are we currently processing food?
+	var/currently_processing = FALSE
 
 /mob/living/basic/turtle/Initialize(mapload)
 	. = ..()
@@ -223,6 +226,10 @@
 /mob/living/basic/turtle/proc/pre_eat_food(datum/source, obj/item/seeds/potential_food)
 	SIGNAL_HANDLER
 
+	if(currently_processing)
+		balloon_alert_to_viewers("already full!")
+		return COMSIG_MOB_CANCEL_EAT
+
 	if(!istype(potential_food))
 		return NONE
 
@@ -230,12 +237,13 @@
 
 /mob/living/basic/turtle/proc/post_eat(datum/source, obj/item/seeds/potential_food)
 	SIGNAL_HANDLER
+	currently_processing = TRUE
 	if(is_type_in_typecache(potential_food, indigestible_seeds))
 		potential_food.forceMove(src)
 		addtimer(CALLBACK(src, PROC_REF(process_food), potential_food), 20 SECONDS)
 		return COMSIG_MOB_TERMINATE_EAT
 
-	addtimer(CALLBACK(src, PROC_REF(process_food), potential_food.product), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(process_food), potential_food.product), FOOD_PROCESS_TIME)
 	return NONE
 
 /mob/living/basic/turtle/proc/process_food(potential_food)
@@ -243,13 +251,15 @@
 		return
 
 	if(ispath(potential_food))
-		new potential_food(drop_location())
+		var/atom/new_food = new potential_food(drop_location())
+		ADD_TRAIT(new_food, TRAIT_SYNTHETIC_FRUIT, INNATE_TRAIT)
 
 	else if((!isnull(potential_food)) && (potential_food in contents))
 		var/atom/movable/movable_food = potential_food
 		movable_food.forceMove(drop_location())
 
 	balloon_alert_to_viewers("spits out some food")
+	currently_processing = FALSE
 
 /mob/living/basic/turtle/death(gibbed)
 	. = ..()
