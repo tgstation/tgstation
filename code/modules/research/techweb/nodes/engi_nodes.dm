@@ -220,6 +220,7 @@
 		"holodisk",
 		"modular_shield_generator",
 		"modular_shield_node",
+		"modular_shield_cable",
 		"modular_shield_relay",
 		"modular_shield_charger",
 		"modular_shield_well",
