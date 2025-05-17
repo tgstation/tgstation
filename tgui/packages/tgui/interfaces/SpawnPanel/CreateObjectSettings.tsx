@@ -1,5 +1,5 @@
 import { storage } from 'common/storage';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Button,
   Dropdown,
@@ -18,12 +18,12 @@ import {
   spawnLocationOptions,
 } from './constants';
 import { IconSettings } from './index';
-import { SpawnPreferences } from './types';
 
 export interface SpawnPanelData {
   icon: string;
   iconState: string;
-  preferences?: SpawnPreferences;
+  iconStates: string[];
+  selected_object?: string;
   precise_mode: string;
 }
 
@@ -149,9 +149,11 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
         offset,
         object_name: objectName,
         custom_icon: iconSettings.icon,
-        custom_icon_state: iconSettings.iconState,
+        custom_icon_state: iconSettings.iconState || data.iconState || 'none',
         custom_icon_size: iconSettings.iconSize,
+        object_list: data.selected_object,
       };
+
       act('update-settings', currentSettings);
 
       if (onCreateObject) {

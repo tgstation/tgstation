@@ -381,7 +381,7 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 		created_atom.flags_1 |= ADMIN_SPAWNED_1
 
 		if(spawn_params["custom_icon"])
-			created_atom.icon = spawn_params["custom_icon"]
+			created_atom.icon = file(spawn_params["custom_icon"])
 		if(spawn_params["custom_icon_state"])
 			created_atom.icon_state = spawn_params["custom_icon_state"]
 		if(spawn_params["custom_icon_size"])

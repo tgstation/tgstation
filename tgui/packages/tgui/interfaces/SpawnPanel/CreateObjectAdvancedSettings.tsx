@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Button, Dropdown, Slider, Table } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';

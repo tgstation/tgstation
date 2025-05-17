@@ -16,7 +16,7 @@ import { listNames, listTypes } from './constants';
 import { CreateObjectSettings } from './CreateObjectSettings';
 import { AtomData, CreateObjectProps, SpawnPanelPreferences } from './types';
 
-interface SpawnPanelData {
+interface spawnPanelData {
   icon: string;
   iconState: string;
   selected_object?: string;
@@ -24,7 +24,7 @@ interface SpawnPanelData {
   preferences?: SpawnPanelPreferences;
 }
 
-interface SpawnPreferences {
+interface spawnPreferences {
   hide_icons: boolean;
   hide_mappings: boolean;
   sort_by: string;
@@ -33,14 +33,14 @@ interface SpawnPreferences {
   object_list?: string;
 }
 
-interface CurrentList {
+interface currentList {
   Atoms: {
     [key: string]: AtomData;
   };
 }
 
 export function CreateObject(props: CreateObjectProps) {
-  const { act, data } = useBackend<SpawnPanelData>();
+  const { act, data } = useBackend<spawnPanelData>();
   const { setAdvancedSettings, iconSettings, objList = { Atoms: {} } } = props;
 
   const [tooltipIcon, setTooltipIcon] = useState(false);
@@ -59,7 +59,7 @@ export function CreateObject(props: CreateObjectProps) {
     {},
   );
 
-  const currentList = objList as CurrentList;
+  const currentList = objList as currentList;
   const currentType = allObjects[data.copied_type ?? '']?.type || 'Objects';
 
   const { query, setQuery, results } = useFuzzySearch({
@@ -170,7 +170,7 @@ export function CreateObject(props: CreateObjectProps) {
     storage.set('spawnpanel-showPreview', value);
   };
 
-  const sendPreferences = (settings: Partial<SpawnPreferences>) => {
+  const sendPreferences = (settings: Partial<spawnPreferences>) => {
     const prefsToSend = {
       hide_icons: showIcons,
       hide_mappings: hideMapping,
