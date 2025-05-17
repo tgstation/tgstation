@@ -1187,9 +1187,10 @@
 	var/antinoblium = cached_gases[/datum/gas/antinoblium]
 	var/antinoblium_moles = antinoblium[MOLES]
 	var/total_not_antinoblium_moles = total_moles - antinoblium_moles
-	var/reaction_rate = min(max(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR, MINIMUM_MOLE_COUNT), total_not_antinoblium_moles)
-	if(reaction_rate < MINIMUM_MOLE_COUNT) // This will only occur if there aren't enough gases that aren't antinoblium.
+	var/reaction_rate = min(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR, total_not_antinoblium_moles)
+	if(total_not_antinoblium_moles < MINIMUM_MOLE_COUNT) // Clear up the remaining gases if this condition is met.
 		. = NO_REACTION
+		reaction_rate = total_not_antinoblium_moles
 	for(var/id in cached_gases)
 		if(id == /datum/gas/antinoblium)
 			continue
