@@ -130,6 +130,7 @@ multiple modular subtrees with behaviors
 	SHOULD_CALL_PARENT(TRUE)
 	if(pawn) //Reset any old signals
 		UnpossessPawn(FALSE)
+		return FALSE
 
 	if(istype(new_pawn.ai_controller)) //Existing AI, kill it.
 		QDEL_NULL(new_pawn.ai_controller)
@@ -159,6 +160,7 @@ multiple modular subtrees with behaviors
 	set_new_cells()
 
 	RegisterSignal(pawn, COMSIG_MOVABLE_MOVED, PROC_REF(update_grid))
+	return TRUE
 
 /datum/ai_controller/proc/update_grid(datum/source, datum/spatial_grid_cell/new_cell)
 	SIGNAL_HANDLER

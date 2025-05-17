@@ -1040,7 +1040,7 @@
 	return eye_color
 
 /mob/living/carbon/human/monkeybrain
-	ai_controller = /datum/ai_controller/monkey
+	ai_controller = /datum/ai_controller/basic_controller/monkey
 
 /mob/living/carbon/human/species
 	var/race = null

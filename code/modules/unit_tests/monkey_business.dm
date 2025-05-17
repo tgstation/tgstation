@@ -20,8 +20,8 @@
 		monkey.set_name("Monkey [monkey_id]")
 		if(monkey_id % monkey_angry_nth == 0) // BLOOD FOR THE BLOOD GODS
 			monkey.put_in_active_hand(new /obj/item/knife/shiv)
-			new /datum/ai_controller/monkey/angry(monkey)
+			new /datum/ai_controller/basic_controller/monkey/angry(monkey)
 		else
-			new /datum/ai_controller/monkey(monkey)
+			new /datum/ai_controller/basic_controller/monkey(monkey)
 		monkey.ai_controller.set_blackboard_key(BB_MONKEY_TARGET_MONKEYS, TRUE)
 	sleep(monkey_timer)

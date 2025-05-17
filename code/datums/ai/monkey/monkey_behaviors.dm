@@ -107,27 +107,6 @@
 	controller.set_blackboard_key(BB_MONKEY_PICKPOCKETING, FALSE)
 	controller.clear_blackboard_key(BB_MONKEY_PICKUPTARGET)
 
-/datum/ai_behavior/monkey_flee
-
-/datum/ai_behavior/monkey_flee/perform(seconds_per_tick, datum/ai_controller/controller)
-	var/mob/living/living_pawn = controller.pawn
-
-	if(living_pawn.health >= MONKEY_FLEE_HEALTH) //we're back in bussiness
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
-	var/mob/living/target = null
-
-	// flee from anyone who attacked us and we didn't beat down
-	for(var/mob/living/L in view(living_pawn, MONKEY_FLEE_VISION))
-		if(controller.blackboard[BB_MONKEY_ENEMIES][L] && L.stat == CONSCIOUS)
-			target = L
-			break
-
-	if(target)
-		GLOB.move_manager.move_away(living_pawn, target, max_dist=MONKEY_ENEMY_VISION, delay=5)
-		return AI_BEHAVIOR_DELAY
-	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
-
 /datum/ai_behavior/monkey_attack_mob
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_MOVE_AND_PERFORM | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION //performs to increase frustration
 
@@ -234,7 +213,7 @@
 	if(!target)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
-	if(target.pulledby != living_pawn && !HAS_AI_CONTROLLER_TYPE(target.pulledby, /datum/ai_controller/monkey)) //Dont steal from my fellow monkeys.
+	if(target.pulledby != living_pawn && !HAS_AI_CONTROLLER_TYPE(target.pulledby, /datum/ai_controller/basic_controller/monkey)) //Dont steal from my fellow monkeys.
 		if(living_pawn.Adjacent(target) && isturf(target.loc))
 			target.grabbedby(living_pawn)
 		return AI_BEHAVIOR_DELAY //Do the rest next turn
@@ -268,7 +247,7 @@
 	var/mob/living/living_pawn = controller.pawn
 
 	for(var/mob/living/nearby_monkey in view(living_pawn, MONKEY_ENEMY_VISION))
-		if(QDELETED(nearby_monkey) || !HAS_AI_CONTROLLER_TYPE(nearby_monkey, /datum/ai_controller/monkey))
+		if(QDELETED(nearby_monkey) || !HAS_AI_CONTROLLER_TYPE(nearby_monkey, /datum/ai_controller/basic_controller/monkey))
 			continue
 		if(!SPT_PROB(MONKEY_RECRUIT_PROB, seconds_per_tick))
 			continue
