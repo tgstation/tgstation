@@ -30,9 +30,9 @@ You can also see the errors on the "Files Changed" tab of your pull request.
 
 Linter failures are usually very easy to fix, and will hopefully be clear from the message alone.
 
-## Compile Maps / Windows Build
+## Compile Maps
 
-These two check nothing more than that your code actually compiles, with slightly different requirements. Compile Maps forces all maps (including space ruins etc) to be compiled in, to make sure all of them are valid, and Windows Build makes sure your code actually compiles on Windows. If these tests pass, but other tests fail, it means your code *compiles* but not necessarily that it *works*.
+This checks nothing more than that your code actually compiles, with slightly different requirements. Compile Maps forces all maps (including space ruins etc) to be compiled in, to make sure all of them are valid. If these tests pass, but other tests fail, it means your code *compiles* but not necessarily that it *works*.
 
 ## Integration Tests
 
