@@ -447,6 +447,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	else
 		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
 
+	model.rebuild_modules()
+
 	INVOKE_ASYNC(src, PROC_REF(borg_emag_end), user)
 	return TRUE
 
