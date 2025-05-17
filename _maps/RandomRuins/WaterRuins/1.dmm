@@ -55,9 +55,6 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/plating/icemoon,
 /area/rainworld/surface/outdoors/nospawn)
-"M" = (
-/turf/closed/wall/ice,
-/area/rainworld/surface/outdoors/nospawn)
 "R" = (
 /obj/machinery/holopad,
 /obj/machinery/airalarm/directional/north,
@@ -86,7 +83,7 @@ W
 "}
 (2,1,1) = {"
 W
-M
+c
 R
 a
 z

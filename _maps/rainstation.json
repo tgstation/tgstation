@@ -3,8 +3,8 @@
 	"map_name": "RainStation",
 	"map_path": "map_files/RainStation",
 	"map_file": "RainStation.dmm",
-	"space_ruin_levels": 5,
-	"space_empty_levels": 1,
+	"space_ruin_levels": 0,
+	"space_empty_levels": 0,
 	"planetary": 1,
 	"shuttles": {
 		"cargo": "cargo_box",
@@ -15,7 +15,7 @@
 	"traits": [
 		{
 			"Mining": false,
-			"Linkage": "Cross",
+			"Linkage": "Self",
 			"Gravity": true,
 			"Ocean Ruins": true,
 			"Weather_Rainstorm": true,
@@ -23,7 +23,7 @@
 			"No Parallax": true
 		}
 	],
-	"minetype": "none",
+	"minetype": "ocean",
 	"job_changes": {
 		"Cook": {
 			"additional_cqc_areas": ["/area/station/service/bar", "/area/station/commons/lounge"]

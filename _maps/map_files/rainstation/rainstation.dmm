@@ -12902,7 +12902,6 @@
 "aOK" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table/wood,
-/obj/item/reagent_containers/cup/rag,
 /obj/item/holosign_creator/robot_seat/bar{
 	pixel_y = 6
 	},
@@ -25828,8 +25827,11 @@
 /turf/open/floor/plating,
 /area/station/cargo/miningdock)
 "bJc" = (
-/turf/open/floor/noslip,
-/area/station/cargo/miningdock)
+/obj/docking_port/stationary/mining_home{
+	dir = 8
+	},
+/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/area/rainworld/surface/outdoors/nospawn)
 "bJd" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -30590,7 +30592,6 @@
 	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/broken_flooring/corner/directional/south,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "cbx" = (
@@ -30827,7 +30828,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
-/obj/structure/broken_flooring/side/directional/east,
 /obj/structure/railing{
 	dir = 4
 	},
@@ -31526,13 +31526,11 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/disposal/incinerator)
 "cgh" = (
-/obj/vehicle/ridden/lavaboat,
-/obj/vehicle/ridden/lavaboat,
-/obj/vehicle/ridden/lavaboat,
-/obj/vehicle/ridden/lavaboat,
-/obj/vehicle/ridden/lavaboat,
-/turf/open/floor/noslip,
-/area/station/cargo/miningdock)
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/obj/structure/table/wood,
+/obj/item/rag,
+/turf/open/floor/iron/smooth,
+/area/station/service/bar)
 "cgj" = (
 /turf/open/water/no_planet_atmos/deep,
 /area/rainworld/surface/outdoors)
@@ -36569,10 +36567,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
-"deW" = (
-/obj/structure/fans/tiny,
-/turf/open/floor/noslip,
-/area/station/cargo/miningdock)
 "dfx" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
@@ -40290,10 +40284,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"gqq" = (
-/obj/machinery/light/floor,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/cargo/miningdock)
 "gqB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/siding/dark_green,
@@ -41048,17 +41038,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
-"gVr" = (
-/obj/vehicle/ridden/lavaboat,
-/obj/vehicle/ridden/lavaboat,
-/obj/vehicle/ridden/lavaboat,
-/obj/vehicle/ridden/lavaboat,
-/obj/vehicle/ridden/lavaboat,
-/obj/vehicle/ridden/lavaboat,
-/obj/vehicle/ridden/lavaboat,
-/obj/vehicle/ridden/lavaboat,
-/turf/open/floor/noslip,
-/area/station/hallway/secondary/entry)
 "gVZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -42629,10 +42608,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
-"isc" = (
-/obj/machinery/light/floor,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/hallway/secondary/entry)
 "isp" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/machinery/airalarm/directional/south,
@@ -42935,10 +42910,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/lobby)
-"iHa" = (
-/obj/structure/fans/tiny,
-/turf/open/floor/noslip,
-/area/station/hallway/secondary/entry)
 "iHP" = (
 /obj/structure/chair{
 	dir = 8
@@ -47427,10 +47398,6 @@
 /obj/structure/broken_flooring/side/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"mwv" = (
-/obj/vehicle/ridden/lavaboat,
-/turf/open/floor/noslip,
-/area/station/hallway/secondary/entry)
 "mxf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -51156,7 +51123,6 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/broken_flooring/corner/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "pJG" = (
@@ -57145,9 +57111,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"vcV" = (
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/hallway/secondary/entry)
 "vdl" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -58826,8 +58789,11 @@
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/fore)
 "wCV" = (
-/turf/open/floor/noslip,
-/area/station/hallway/secondary/entry)
+/obj/docking_port/stationary/mining_home/common{
+	dir = 8
+	},
+/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/area/rainworld/surface/outdoors/nospawn)
 "wDn" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -60171,10 +60137,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
-"xOo" = (
-/obj/vehicle/ridden/lavaboat,
-/turf/open/floor/noslip,
-/area/station/cargo/miningdock)
 "xOq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/carpet,
@@ -68266,13 +68228,13 @@ cqq
 cqq
 cqq
 cqq
-asE
-iHa
-iHa
-iHa
-iHa
-iHa
-asE
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
 cqq
 cqq
 xpY
@@ -68523,13 +68485,13 @@ cqq
 cqq
 cqq
 cqq
-awW
-mwv
-isc
-vcV
-isc
-mwv
-awW
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
 cqq
 cqq
 cqq
@@ -68780,13 +68742,13 @@ cqq
 cqq
 cqq
 cqq
-awW
-mwv
-vcV
-vcV
-vcV
-mwv
-awW
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
 cqq
 cqq
 cqq
@@ -69037,13 +68999,13 @@ cqq
 cqq
 cqq
 cqq
-awW
-gVr
+cqq
+cqq
+cqq
 wCV
-wCV
-wCV
-gVr
-awW
+cqq
+cqq
+cqq
 cqq
 cqq
 cqq
@@ -69294,13 +69256,13 @@ cqq
 cqq
 cqq
 cqq
+cqq
 asE
-asE
-asE
+awW
 xzN
+awW
 asE
-asE
-asE
+jPY
 cqq
 cqq
 cqq
@@ -80371,13 +80333,13 @@ biD
 biE
 cqq
 cqq
-bxy
-deW
-deW
-deW
-deW
-deW
-bxy
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
 cqq
 bLv
 bRc
@@ -80628,13 +80590,13 @@ biE
 biE
 atS
 cqq
-bGi
-xOo
-gqq
-lAB
-gqq
-xOo
-bGi
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
 cqq
 bLv
 xID
@@ -80885,13 +80847,13 @@ bWI
 nmS
 ggy
 cqq
-bGi
-xOo
-lAB
-lAB
-lAB
-xOo
-bGi
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
+cqq
 cqq
 bLv
 xID
@@ -81142,13 +81104,13 @@ fJP
 tty
 aTH
 cqq
-bGi
-cgh
+cqq
+cqq
+cqq
 bJc
-bJc
-bJc
-cgh
-bGi
+cqq
+cqq
+cqq
 cqq
 bLv
 xID
@@ -81399,13 +81361,13 @@ pDt
 bKl
 aTH
 cqq
-bxy
+cqq
 bGi
 bGi
 bJb
 bGi
 bGi
-bxy
+cqq
 cqq
 bCq
 xID
@@ -96787,7 +96749,7 @@ aNI
 aJC
 aOK
 oKB
-oKB
+cgh
 oKB
 acN
 jRv
