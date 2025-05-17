@@ -4,7 +4,7 @@
 #define REQUIRED_TREE_GROWTH 250
 #define UPPER_BOUND_VOLUME 50
 #define LOWER_BOUND_VOLUME 10
-#define FOOD_PROCESS_TIME 2 MINUTES
+#define FOOD_PROCESS_TIME 1 MINUTES
 
 /mob/living/basic/turtle
 	name = "turtle"
