@@ -381,7 +381,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	obj_damage = 50
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
 	///Tracks how many total foods we have eaten, used for calculating when we should gain max health.

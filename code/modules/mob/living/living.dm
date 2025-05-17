@@ -428,6 +428,7 @@
 				M.visible_message(span_warning("[src] grabs [M] [grabbed_by_hands ? "by their hands":"passively"]!"), \
 								span_warning("[src] grabs you [grabbed_by_hands ? "by your hands":"passively"]!"), null, null, src)
 				to_chat(src, span_notice("You grab [M] [grabbed_by_hands ? "by their hands":"passively"]!"))
+				grabbed_human.share_blood_on_touch(src, grabbed_by_hands ? ITEM_SLOT_GLOVES : ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 			else
 				M.visible_message(span_warning("[src] grabs [M] passively!"), \
 								span_warning("[src] grabs you passively!"), null, null, src)
@@ -1100,7 +1101,7 @@
 
 		trail.existing_dirs += newdir
 		trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-		trail.transfer_mob_blood_dna(src)
+		trail.add_mob_blood(src)
 		trail.bloodiness = min(trail.bloodiness + bleed_amount, BLOOD_POOL_MAX)
 		found_trail = TRUE
 		break
@@ -1112,14 +1113,14 @@
 	trail.blood_state = trail_blood_type
 	trail.existing_dirs += newdir
 	trail.add_overlay(image('icons/effects/blood.dmi', trail_type, dir = newdir))
-	trail.transfer_mob_blood_dna(src)
+	trail.add_mob_blood(src)
 	trail.bloodiness = min(bleed_amount, BLOOD_POOL_MAX)
 
 /mob/living/proc/get_trail_blood()
 	return BLOOD_STATE_HUMAN
 
 /mob/living/carbon/human/makeTrail(turf/T)
-	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || HAS_TRAIT(src, TRAIT_NOBLOOD))
+	if(HAS_TRAIT(src, TRAIT_NOBLOOD) || !is_bleeding() || dna.blood_type.no_bleed_overlays)
 		return
 	..()
 
@@ -1482,6 +1483,7 @@
 	return TRUE
 
 /mob/living/proc/update_stamina()
+	SEND_SIGNAL(src, COMSIG_LIVING_STAMINA_UPDATE)
 	update_stamina_hud()
 
 /mob/living/carbon/alien/update_stamina()
@@ -2297,22 +2299,42 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	invisibility = INVISIBILITY_MAXIMUM
 	///the direction we are operating in
 	var/look_direction
-	///owner we are showing this view to
+	///actual atom on the turf, usually the owner
+	var/atom/movable/container
+	///the actual owner who is "looking"
 	var/mob/living/owner
 
 /atom/movable/looking_holder/Initialize(mapload, mob/living/owner, direction)
 	. = ..()
 	look_direction = direction
 	src.owner = owner
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(mirror_move))
+	update_container()
 
 /atom/movable/looking_holder/Destroy()
 	owner = null
 	return ..()
 
+/atom/movable/looking_holder/proc/update_container()
+	SIGNAL_HANDLER
+	var/new_container = get_atom_on_turf(owner)
+	if(new_container == container)
+		return
+	if(container != owner)
+		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	if(container)
+		UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
+
+	container = new_container
+
+	RegisterSignal(new_container, COMSIG_MOVABLE_MOVED, PROC_REF(mirror_move))
+	if(new_container != owner)
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(update_container))
+
 /atom/movable/looking_holder/proc/mirror_move(mob/living/source, atom/oldloc, direction, Forced, old_locs)
 	SIGNAL_HANDLER
-	set_glide_size(source.glide_size)
+	if(!isturf(owner.loc))
+		update_container()
+	set_glide_size(container.glide_size)
 	var/turf/looking_turf = owner.get_looking_turf(look_direction)
 	if(!looking_turf)
 		owner.end_look()
@@ -3032,3 +3054,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(HAS_TRAIT(src, TRAIT_ANALGESIA) && !force)
 		return
 	INVOKE_ASYNC(src, PROC_REF(emote), "scream")
+
+/// Setter for changing a mob's blood type
+/mob/living/proc/set_blood_type(datum/blood_type/new_blood_type, update_cached_blood_dna_info)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_LIVING_CHANGED_BLOOD_TYPE, new_blood_type, update_cached_blood_dna_info)

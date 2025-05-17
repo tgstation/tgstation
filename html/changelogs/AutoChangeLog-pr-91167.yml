@@ -1,0 +1,5 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - bugfix: "fixed medical stacks producing far too few items."
+  - qol: "medical stack recipes are more granular."

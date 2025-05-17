@@ -578,7 +578,7 @@
 		/datum/reagent/toxin = -1)
 
 	virus_suspectibility = 0.5
-	resulting_atom = /mob/living/basic/frog
+	resulting_atom = /obj/effect/spawner/random/frog
 
 /datum/micro_organism/cell_line/axolotl
 	desc = "caudata amphibian cells"

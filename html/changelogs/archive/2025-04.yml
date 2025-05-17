@@ -670,3 +670,188 @@
   SmArtKar:
   - bugfix: Fixed "shit be fucked" errors and missing lighting on shuttle ceilings
       docked to bottom z levels of multiz maps
+2025-04-23:
+  Bisar:
+  - rscadd: The big manipulator now supports specifying whether the attached monkey
+      should use either combat mode, right clicking, or even both.
+  - qol: Ejecting monkeys from the big manipulator now uses a UI button instead.
+  - bugfix: You can no longer teleport monkeys into impossible areas with big manipulator
+      unbuckling.
+  - bugfix: You can no longer simultaneously buckle multiple monkeys into the big
+      manipulator.
+  - bugfix: The big manipulator will now properly clear old refs to former workers.
+  Goat:
+  - bugfix: The megacarp (shark) will now be able to fly through space when ridden
+      like its smaller carp siblings.
+  Saukykouko:
+  - rscadd: Added pony to the uplink!
+  necromanceranne:
+  - rscadd: Duct tape! Right-click objects and cyborgs with duct tape to repair them
+      if they have been damaged! Wrap objects in duct tape to make it completely incapable
+      of embedding! Find them in your nearest Part-Mart or Engi-Vend vending machines
+      today!
+  - balance: Part-Mart vending machines now have mousetraps, spare screwdrivers and
+      rifle stocks in their contraband section.
+2025-04-24:
+  Ghommie:
+  - qol: You can now interact with held mobs in more ways beside wearing them.
+  - bugfix: Fixed moonfish eggs appearing like huge errors inside aquariums.
+  - bugfix: Fixed starfish suicide sometimes not deleting you.
+  Jacquerel:
+  - bugfix: You can now bleed or vomit onto people below you rather than creating
+      puddles of substance hovering in mid-air.
+  SmArtKar:
+  - bugfix: Fixed AI not getting creampie face decals
+  jlsnow301:
+  - bugfix: Inputs in tgui windows (not tgui-say) have been reworked, hopefully making
+      them FAST. Report if they are not FAST.
+  - bugfix: Fixed a bluescreen caused when moving a tgui window with a tooltip open.
+2025-04-25:
+  Cirrial:
+  - qol: Added some help for abductors if they get a weird half-machine test subject
+      in their ship.
+  Jacquerel:
+  - bugfix: Floating motionless and face down in the water doesn't count as a workout
+  Pepsilawn:
+  - bugfix: Tramstation, fixes a mop that happened to be grabbable while being 2 tiles
+      above its location in an entirely different room
+  RandomDudeFromTheRim:
+  - rscadd: Added a Rimworld reference
+  - rscdel: Removed a potential harmful stereotype
+  loganuk:
+  - map: Added Boulder Retrieval Matrix (BRM) to Delta Station
+2025-04-26:
+  BurgerBB:
+  - bugfix: Fixes a taser runtime.
+  - bugfix: Fixes a Beepsky runtime.
+  Goat:
+  - bugfix: Cain and Abel (the colossus drop) now require you to hold them to be able
+      to swing them around
+  Jacquerel:
+  - rscadd: Emagging a fishing spot pod from the black market can create pools of
+      water deep enough to drown people in.
+  - bugfix: If you are turned into a monkey via the DNA scanner, mutadone can once
+      again turn you back. If you are a monkey turned into a human via the DNA scanner,
+      mutadone can also turn you back.
+  - bugfix: If you are lucky enough to have the opportunity to be a monkey as a roundstart
+      species, the species info box will not lie to you about mutadone.
+  LT3:
+  - bugfix: Fixed supermatter anomaly generation, hallucination is based on distance
+      and delam explosion size
+  LemonInTheDark:
+  - code_imp: Brought browser code up to standard with the rest of the codebase
+  - admin: Hey lads, I cleaned up how non TGUI windows work on the backend, please
+      let me know if anything is broken! PING ME MOTHERFUCKER
+  Melbert:
+  - qol: Moneybots round to the nearest 1 credit.
+  - qol: Moneybots have a 0.5 second cooldown between being able to dispense credits.
+  - qol: Moneybots won't dispense more than 50 credits on a tile.
+  - bugfix: Losing Farsight or Rock Absorber mutations will properly drop their effects
+      as well
+  - balance: Heretics with Cybernetic Hearts can no longer complete the Living Heart
+      ritual with an organic heart to automatically have their heart replaced - you
+      will need to get it replaced surgically first, the hard way.
+  SmArtKar:
+  - bugfix: Fixes burdened trauma not granting/losing burden levels when its added/lost
+  - bugfix: Fixed inconsistent proto-kinetic crusher descriptions
+  - bugfix: Fixed Bubblegum and Wendigo crusher trophies sometimes not working.
+  hry-gh:
+  - qol: the statusbar at the bottom left now properly scales with your display
+  necromanceranne:
+  - bugfix: The grenade launcher of the M-90gl can be reloaded once again.
+  - bugfix: Duct tape properly updates the various icons and visuals of mechs, windows
+      and clothing that it repairs.
+  timothymtorres:
+  - rscadd: Allow boats to travel over water
+  zxaber:
+  - bugfix: Fixed a visual bug with cyborg tools that are able to carry items.
+2025-04-27:
+  Cirrial:
+  - bugfix: Made it so minebot commands don't talk about dumping ore when you're toggling
+      the lights.
+  Ghommie:
+  - bugfix: examining fishing spots twice with sufficient skill level while holding
+      a rod should work more reliably.
+  Jacquerel:
+  - bugfix: Space carp will no longer get distracted by repeatedly entering their
+      own portals instead of chasing you.
+  - bugfix: Holding a two-handed weapon in both hands will now once again appropriately
+      modify its attack power.
+  Melbert:
+  - bugfix: 'Furious Steel now tracks consumed knives better: Using all three knives
+      to block no longer results in a 0 second cooldown, firing a single knife no
+      longer results in a 60 second cooldown.'
+  SmArtKar:
+  - bugfix: Fixed MODpaint menu bluescreening
+  SyncIt21:
+  - code_imp: cleans up teleportation code. `check_teleport_valid` is now a pure function
+      with no side effects
+  TiviPlus:
+  - bugfix: Look up/down now track with the thing you're inside instead of staying
+      in one spot
+2025-04-28:
+  EuSouAFazer:
+  - rscadd: Adds CatwalkStation
+  - code_imp: Multi-Z maps now can toggle on or off having grappling hooks in people's
+      bags
+  Ezel:
+  - map: Rewired Centcom Checkpoint buttons to be more accurate
+2025-04-29:
+  00-Steven:
+  - rscadd: Certain items can now be placed directly on the floor in the clicked on
+      location. This currently includes warning cones, wet floor signs, candles, action
+      figures, plushies, mech toys, and a list of other toys.
+  - sound: Warning cones now use plastic pickup/drop sounds.
+  - sound: Wet floor signs now use plastic pickup/drop sounds.
+  Bisar:
+  - image: Handing someone something now plays an animation.
+  Ezel/Improvedname, JohnFulpWillard:
+  - balance: Players who use the DNA Infuser are now "derived mutants" of their original
+      species, meaning humans are no longer human after infusing themselves.
+  Ghommie:
+  - rscadd: Aquariums can now be switched between three different modes (Manual/Assisted/Stasis)
+      to replace the old Safe Mode toggle.
+  - bugfix: Examining a fishing lures box twice no longer says it can hold just artificial
+      minnows.
+  LemonInTheDark:
+  - bugfix: Tcomms machines will interoperate across z levels in the same "stack"
+      as expected now
+  OrionTheFox:
+  - bugfix: fixed Fingerless Gloves not getting their fishing difficulty modifier,
+      and not being slap-craftable into improvised grippers
+  SmArtKar:
+  - bugfix: Fixed items in storages sometimes lingering in observer UI
+  TealSeer:
+  - bugfix: fixed a runtime related to pea bullet impacts
+  vinylspiders:
+  - bugfix: fixes a lot of instances of gibs, bodyparts/organs, and blood decals not
+      getting the right forensics data attached to them
+  - refactor: blood types are now datums, in support of a more robust blood system
+  - image: all blood decals and overlays have been greyscaled, so ethereals will have
+      green blood now for instance. fundamentally evil quirk havers get black blood
+  - admin: new smite type, 'Clownify blood'. It pretty much does what you might expect.
+2025-04-30:
+  Jacquerel:
+  - rscadd: Out somewhere in space you may find experimental cloning technology.
+  Pepsilawn:
+  - bugfix: Fixes bins and chutes that did not have a trunk, and adds a maplint for
+      it.
+  Rhials:
+  - rscadd: Bears are now butchered for space bear hides, which can be used to craft
+      a pelt hat and suit. Wearing this suit/hat combo will make you friendly to bears!
+  - rscadd: 'New Gimmick Assistants station trait costume: Bear!'
+  SmArtKar:
+  - bugfix: Fixed a disposals loop on Catwalk's bridge
+  Wallem:
+  - rscadd: Xenobio consoles now work off a tube system instead of sudden teleportation
+  - qol: Xenobio consoles have a new HUD to show monkey/slime amounts, and slime processors
+      can now suck up more than 1 slime at a time depending on their matter bin
+  - image: Added some stripes to the monkey recycler to make it a little more obvious
+      it's not a meat grinder
+  grungussuss:
+  - rscadd: Lizard blood is now green
+  necromanceranne:
+  - balance: Reduces the embed probabilities of flechette rounds, they can fall out
+      naturally. Donk spikes still maintain their high embed chance and inability
+      to fall out naturally. Macroplastics launched straight into your body, as sponsored
+      by the Donk Corporation.

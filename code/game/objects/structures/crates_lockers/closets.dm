@@ -109,6 +109,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	fire = 70
 	acid = 60
 
+/obj/structure/closet/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, welded)
+	. += NAMEOF(src, opened)
+	. += NAMEOF(src, locked)
+	. += NAMEOF(src, anchorable)
+	return .
+
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
 
@@ -638,7 +646,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		req_access = accesses
 		req_one_access = null
 
-/obj/structure/closet/attackby(obj/item/W, mob/user, params)
+/obj/structure/closet/attackby(obj/item/W, mob/user, list/modifiers)
 	if(user in src)
 		return
 	if(src.tool_interact(W,user))

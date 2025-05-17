@@ -105,7 +105,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 	user.visible_message(span_notice("[user] washes [user.p_their()] [washing_face ? "face" : "hands"] using [src]."), \
 						span_notice("You wash your [washing_face ? "face" : "hands"] using [src]."))
 
-/obj/structure/sink/attackby(obj/item/O, mob/living/user, params)
+/obj/structure/sink/attackby(obj/item/O, mob/living/user, list/modifiers)
 	if(busy)
 		to_chat(user, span_warning("Someone's already washing here!"))
 		return
@@ -164,14 +164,14 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 
 	if(istype(O, /obj/item/stack/medical/gauze))
 		var/obj/item/stack/medical/gauze/G = O
-		new /obj/item/reagent_containers/cup/rag(src.loc)
+		new /obj/item/rag(src.loc)
 		to_chat(user, span_notice("You tear off a strip of gauze and make a rag."))
 		G.use(1)
 		return
 
 	if(istype(O, /obj/item/stack/sheet/cloth))
 		var/obj/item/stack/sheet/cloth/cloth = O
-		new /obj/item/reagent_containers/cup/rag(loc)
+		new /obj/item/rag(loc)
 		to_chat(user, span_notice("You tear off a strip of cloth and make a rag."))
 		cloth.use(1)
 		return
@@ -278,7 +278,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/structure/sinkframe/attackby(obj/item/tool, mob/living/user, params)
+/obj/structure/sinkframe/attackby(obj/item/tool, mob/living/user, list/modifiers)
 	if(istype(tool, /obj/item/stock_parts/water_recycler))
 		qdel(tool)
 		var/obj/structure/sink/greyscale/new_sink = new(loc, REVERSE_DIR(dir), TRUE)

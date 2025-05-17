@@ -1,0 +1,427 @@
+2025-05-01:
+  Ezel/Improvedname, JohnFulpWillard:
+  - balance: Cult daggers boomerang back to non-cultists who throw it.
+  - balance: Flagellant's robes crushes non-cultists with gravity instead of forcing
+      you to drop it on the floor.
+  - balance: Zealot's blindfolds now rapidly causes eye damage to non cultists who
+      try to wear it, instead of dropping it on the floor and giving a minute of temporary
+      eye damage.
+  FlufflesTheDog:
+  - bugfix: Health analyzers properly function on patients with cybernetics
+  Hatterhat:
+  - qol: Shoving a rechargeable magazine into a recharger now has refill speed scale
+      with part tier/recharge efficiency. This probably doesn't matter very much because
+      no regularly-available gun uses rechargeable magazines.
+  - spellcheck: Examining magazines should no longer have two instances of "The" prefixing
+      a casing. Maybe. Probably.
+  Holoo-1:
+  - bugfix: fixed ampcheck in smes room computer, some overlapping cables and cameras
+      on CatwalkStation. Also replaced bridges with pumps in atmos
+  Jacquerel:
+  - map: Adds some bots to Catwalkstation
+  - bugfix: Standard Holoparasites will once again yell their battlecry and can rapidly
+      punch windows.
+  JohnFulpWillard:
+  - admin: People throwing boomeranged items and hitting themselves now logs it as
+      them hitting themselves (rather than being hit by the air).
+  NecromancerAnne (Code, Mild Sprite Edits) Michiyamenotehifunana (Sprites):
+  - image: Replaces the decrepit DRAGnet sprite with something newer and more interesting.
+  - balance: Completely reworks the DRAGnet. They are now bulky energy guns.
+  - balance: Snare is now a single shot bolt that deals 30 stamina force, staggers
+      the target and lays out a net of teleportation fields that can transport anyone
+      standing on them for too long to a DRAGnet beacon.
+  - balance: Net has been replaced with a scattershot disabler round.
+  SmArtKar:
+  - bugfix: You can no longer fish for things in storages, or that you are unable
+      to see
+  SyncIt21:
+  - code_imp: improved performance of stack based reactions
+  TiviPlus:
+  - bugfix: fixed some vv issues
+  grungussuss:
+  - bugfix: throwing items on the same tile as you will make a sound again
+  - bugfix: fixes bane element not working if it was used by a weapon without a wielder
+2025-05-02:
+  ArrisFairburne:
+  - code_imp: removed non-functional ID saving functions
+  Goat:
+  - balance: More megafauna loot is worth something to export. Notably the demonic
+      frost miner's and the wendigo's drops are now actually worth something.
+  Rhials:
+  - bugfix: The grassland hunt domain no longer auto-completes just by closing the
+      domain.
+2025-05-03:
+  00-Steven:
+  - bugfix: Syrup bottle pumping interaction actually works.
+  - bugfix: Syrup bottles can be renamed even with the cap off.
+  - bugfix: Syrup bottles with the cap removed are actually spillable, meaning they
+      can directly transfer reagents, be drunk from, somesuch.
+  - qol: Renaming a syrup bottle without an input resets the name instead of just
+      not working.
+  - qol: Added screentips for syrup bottle interactions.
+  Chestlet:
+  - bugfix: Removed eyelids from dummies to make all TGUI windows in which they appear
+      more optimized.
+  GoblinBackwards:
+  - bugfix: Fixed being unable to create keybinds to the spacebar.
+  JohnFulpWillard:
+  - bugfix: Four handed wizards now have a drop button & open inventory above their
+      hands.
+  - image: You can now turn potty the plant's light off.
+  NamelessFairy:
+  - bugfix: Wizard spawned demons can now leave their blood crawls and are not stuck
+      in the blood realm forever.
+  SmArtKar:
+  - bugfix: Fixed broken formatting in fryfish examine text
+  SyncIt21:
+  - code_imp: organized storage subtypes under the same files & folders
+  grungussuss:
+  - bugfix: fixed rust heretic hand not being able to destroy windows or windoors
+  tonty:
+  - admin: Admins no longer need to hit enter to update custom command report names
+2025-05-04:
+  00-Steven:
+  - rscadd: When performing a custom emote, `+|_` emphasis formatting applies to the
+      text chat message instead of just the runechat message.
+  - qol: Intentional emotes don't trip your own highlights.
+  - qol: Sign language tone messages don't trip your own highlights.
+  A.C.M.O.:
+  - rscadd: Adds an option for picking silicon gender to secondary character preferences.
+      Matches the main gender preference by default.
+  - rscadd: Adds gender pronouns in cyborg/AI examine text.
+  Bisar:
+  - balance: Construction bags can now carry stacks of material up to size 'small',
+      and can now also carry RCD ammo.
+  Hardly:
+  - sound: added new sounds for the computer printer when paper is inserted.
+  Hardly, sprites by Lutowski:
+  - image: Resprites Long Emo hairstyle
+  Maximal08:
+  - qol: Notification that the ninja has completed the task of hacking the airlock.
+  Pickle-Coding:
+  - bugfix: PRevents an erroneous temperature share when the air falls below superconductionr
+      equirements.
+  Rhials:
+  - code_imp: The Dice Servant role will now re-poll itself until a candidate is found.
+  arcanemusic, Wallem:
+  - image: Entertainment monitors are now on actual tv screens
+  necromanceranne:
+  - balance: Rather than rolling for internal damage whenever they suffer 15 or more
+      damage, they instead must suffer an attack that deals at least 10% of its max
+      integrity in a single blow before it rolls for internal damage.
+  - bugfix: Dark Gygaxes and Maulers (and admin mechs like the Seraph) cannot be slapped
+      with tracker beacons.
+  - bugfix: Weapons that cannot fit into turrets also cannot fit into emitters.
+  - bugfix: The HoP's winter coat now uses the correct suit storage options (like
+      the HoP's firearm). The hood now also shares the chest piece's armor values.
+2025-05-05:
+  Aliceee2ch:
+  - bugfix: huge fix of various mapping mistakes on Catwalk station
+  - map: small additions for Catwalk station (such as missed buttons, shutters and
+      few decals)
+  Ezel/Improvedname, JohnFulpWillard:
+  - balance: Only holy roles can use bibles to their full extent now.
+  - balance: Non-Honorbound chaplains now have a one-time use rite to turn someone
+      into a Deacon, allowing them to use Chaplain equipment.
+  Jacquerel:
+  - balance: Ice Whelps now switch between their breath attacks depending on the situation
+  - bugfix: Ice Whelps will use their breath attacks more than once per encounter
+  Rhials:
+  - bugfix: Revenants can no longer be fake-eaten by the recycler.
+  SmArtKar:
+  - rscadd: Cult Master is now assigned to the player with most hours as a cultist
+      upon roundstart, instead of being votable.
+  - rscadd: Cult Masters can transfer their role once.
+  - balance: Mark Target now gives all cultists a noticable directional indicator,
+      similar to heretics' living hearbeat
+  - bugfix: Fixed cult master's broken speech spans
+  - bugfix: Fixed Eldritch Pulse not working
+  - rscdel: Fundamentally Evil people no longer get black blood
+  - rscadd: Dagger-blaster and harpoon crusher skins have received unique attack animations.
+  - rscadd: Four base crusher retool kits have been merged into one item.
+  - image: Resprited crusher skins and the crusher retool kit
+  - bugfix: Fixed attack animations being offset when attacking large objects or mobs.
+  jlsnow301:
+  - bugfix: 'We''re no strangers to bugs: Playing protected audio shouldn''t crash
+      the server anymore!'
+  necromanceranne:
+  - balance: Mechs are considerably more vulnerable to EMPs than they were previously.
+  - balance: The tier of capacitor inside a mech will substantially improve a mech's
+      defenses against EMP damage. Having only tier 1 capacitors will result in your
+      mech rapidly destroyed from repeat EMPs.
+  - balance: Mechs suffer more power loss from EMPs. It can take upwards of 8 heavy
+      strength EMPs to deplete a mechs cell if it has a tier 4 capacitor. It takes
+      only two if it has a tier 1.
+  - balance: Mechs suffer more integrity loss from EMPs. A durand can withstand around
+      8 heavy strength EMPs before being destroyed if it has a tier 4 capacitor. It
+      won't survive more than two or three if it has a tier 1.
+  tonty:
+  - admin: Cancelling an ERT summon will now say so instead of saying there were no
+      candidates
+2025-05-06:
+  Ben10Omintrix:
+  - rscadd: adds snails to the game. (keep them away from salt!)
+  Maximal08:
+  - qol: Replaces the text description for the APC multitool search function with
+      directional arrows similar to Heretic.
+  - image: Sprite for multitool arrow
+  Melbert:
+  - balance: Rock Absorber duration reduced by 90%
+  - config: Spy Bounties are configurable
+  SmArtKar:
+  - bugfix: Fixed detective's revolver not being able to misfire
+  - bugfix: Fixed reinforced plating consuming all air on the tile upon construction
+  grungussuss:
+  - bugfix: agent ID scanning action is a hidden do_after
+2025-05-07:
+  EuSouAFazer:
+  - bugfix: Catwalk's tcomms machines are no longer scattered around
+  - map: Catwalk's AI sat now has a brand new laundromat and office
+  Iamgoofball:
+  - qol: Heretics can see blessed tiles.
+  Maurukas:
+  - rscdel: Remove an m1911 magazine from a surface ruin
+  SmArtKar:
+  - bugfix: Fixed the error overlay caused by the Tress Shoulder hairstyle
+  TealSeer:
+  - bugfix: roundstart photocopiers should no longer be empty on some maps
+2025-05-08:
+  Bisar:
+  - image: Animations have been added to inserting/removing items from machines, and
+      to inserting things into containers that are not on your person.
+  LemonInTheDark:
+  - refactor: Reworked a bit of how smoothing functions on the backend. Nothing should
+      change, so if it does please yell at me
+  Y0SH1M4S73R:
+  - bugfix: Shuttle blueprints don't error out when opening them while on non-custom
+      shuttles.
+  - bugfix: Custom shuttles calculate their engine count correctly, no longer lagging
+      behind by one engine (un)installation.
+  - bugfix: Custom shuttle docking consoles are no longer blocked by where the linked
+      shuttle currently is.
+  - qol: Shuttle blueprints now show you how large a shuttle frame is, along with
+      any issues preventing you from building or expanding a shuttle using said frame.
+  necromanceranne:
+  - rscadd: Adds the Exosuit Ablative Insulation armor booster module. Protects the
+      mech from energy-based attacks and its wires from EMPs (only the wires, not
+      the mech). However, the armor booster makes the mech weaker to ballistic and
+      melee weapons.
+  - rscadd: The Dark Gygax and Mauler now come pre-packaged with a special version
+      that has no weakness to ballistic and melee weapons.
+  rageguy505:
+  - bugfix: Hop's office on catwalk now has working disposals and removes a floating
+      camera console from the bridge.
+  throwawayuseless:
+  - balance: Massively reduce the MMI component message cooldown.
+2025-05-09:
+  1393F:
+  - qol: Pluoxium, an oxygen substitute, will no longer be scrubbed when setting air
+      alarms to contaminated.
+  Absolucy:
+  - qol: Ghost notifications will now use the real names of mobs when something happens
+      (i.e no more "Unknown has completed an ascension ritual!")
+  Bisar:
+  - qol: Bluespace light replacer no longer has a range limit.
+  Goat:
+  - bugfix: Barometers now properly report if the weather is dangerous or not.
+  Goat-Real:
+  - balance: Ice whelps' fire breath attack has slightly more delay. (0.5 -> 0.6 second
+      startup, 0.75 -> 0.85 decisecond for the speed the fire moves per tile.)
+  Jacquerel:
+  - balance: The supermatter will react negatively to being fed nuclear fissile materials
+  Krysonism:
+  - rscadd: Added a new type of reagent container; the jerrycan.
+  - rscadd: Added some prefilled jerrycans to maint loot.
+  - balance: Botany nutrients now come in bulk packaging.
+  Rhials:
+  - bugfix: Immovable rods self-delete at the icebox world border.
+  TealSeer:
+  - bugfix: fixed the photocopier silently failing if you can't pay the fee
+  necromanceranne:
+  - bugfix: Caps how much eyeblur can be caused by things like projectiles.
+  - bugfix: The tesla cannon now fires actually visible bolts.
+2025-05-10:
+  00-Steven:
+  - bugfix: NTos file manager program actually shows the program names, instead of
+      the
+  - qol: Egg boxes can hold chocolate eggs, boiled eggs, and surprise eggs
+  Jacquerel:
+  - balance: The negative effects of a mansus-corrupted liver can be suppressed with
+      holy water, like the other corrupt organs.
+  L1nd:
+  - balance: spiders can't wrap megafauna
+  - bugfix: nonhuman spider cocoons looks accordingly
+  Maximal08:
+  - bugfix: Fixing the arrow display when using the multitool
+  SmArtKar:
+  - bugfix: Fixed explorer masks going invisible when you put on a goliath hood
+  - qol: Improved
+  rageguy505:
+  - bugfix: carpenter and claw hammer can now test for brain health.
+  throwawayuseless:
+  - rscadd: Robotic voiceboxes now grant Encoded Audio Language. Techpriests and circuit
+      nerds, rejoice!
+  - rscadd: Revolutionaries are now weakened by grenadine. Because the pomegranate
+      antioxidants stop free radicals.
+2025-05-11:
+  Jacquerel:
+  - balance: Most biological mobs are now slowed by taking stamina damage, and can
+      be stunned. Mechanical mobs, mining mobs, and several other special kinds (chiefly
+      those invoked by antagonists) are unaffected. If this seems to effect any mob
+      it probably shouldn't, please report it as a bug.
+  Melbert:
+  - balance: If you're staggered, and try to walk down stairs, you'll instead fall
+      down the stairs (stunning and causing damage).
+  - balance: Hard crit and dead people will also roll down the stairs.
+  Rengan:
+  - server: The crimes are now logging in the database.
+  vinylspiders:
+  - bugfix: stops snails from clogging up CI
+2025-05-12:
+  Jacquerel:
+  - balance: Regal Rats can now grab mice out of disposal bins, and no longer spawn
+      them with the Riot ability.
+  - balance: The Riot ability no longer needs to be used once for each slightly different
+      kind of mob in your radius.
+  - balance: The Regal Rat Domain ability is now toggled on and off.
+  - balance: Several kinds of mob will immediately start following you once tamed.
+  - balance: Rats, hostile frogs, and evil snails can be created via gold slime reaction.
+  JohnFulpWillard:
+  - spellcheck: Updated bruh moments.
+  Redbert:
+  - bugfix: Fixes issue that causes hypernob reaction to sometimes not work
+  SmArtKar:
+  - bugfix: Riggings and toolbelts no longer render through the goliath cloak when
+      worn in your suit slot.
+2025-05-13:
+  Ben10Omintrix:
+  - bugfix: fixes a few mining weapons not working on ice whelps, ice demons, and
+      wolves
+  Hardly:
+  - rscadd: Added half-health modifier for deathmatch
+  Melbert:
+  - bugfix: List VV properly differentiates null vs 0
+  necromanceranne:
+  - qol: Being intoxicated enough can potentially beat back the trauma of surgery.
+      It's not reliable.
+  - qol: Robotics on Tram and Metastation have a bottle of whiskey. You know, for
+      taking the edge off.
+  throwawayuseless:
+  - rscadd: Adds new immunodeficiency negative quirk, and sepsisillin, the inverse
+      of spaceacillin. Both have an immune system weakening effect, mitigate-able
+      with spaceacillin.
+  timothymtorres:
+  - qol: Add CI map linter for window and electrified grille spawners
+  - map: Fix many duplicate windows, walls, and grilles spawning together or inside
+      each other on a bunch of maps.
+2025-05-14:
+  Capsandi:
+  - image: new BSA impact animation
+  Derpguy3:
+  - bugfix: Several previously missing drinks have been added to the service cyborg's
+      drink synthesizer.
+  Iajret:
+  - bugfix: fixed bluespace sampling experiment not doing anything
+  JohnFulpWillard:
+  - admin: Fixed a few bad combat logs for basic/simple animals, thrown things, and
+      xenomorph stuff.
+  OnlineGirlfriend:
+  - rscadd: girlypop posters
+  - rscadd: pink crate
+  RosSample:
+  - bugfix: callouts no longer work while you are incapacitated
+  SmArtKar:
+  - bugfix: Wheelchair bells can no longer be rang while stunned
+  - admin: Detonating a TTV via a wheelchair bell now logs you as the person who touched
+      it last.
+  Y0SH1M4S73R:
+  - spellcheck: The invocation for Summon Cheese is sometimes more representative
+      of the realities of life aboard the station.
+  necromanceranne:
+  - bugfix: You must have both your hands empty before entering a mech. (But items
+      which replace your hand, like the light later or the hand of god, won't prevent
+      you from getting in)
+2025-05-15:
+  Aliceee2ch:
+  - rscadd: Added heavy thermal guns for mechs. Works on the principle of regular
+      hand guns. Can only be purchased in cargo, as they are experimental.
+  Ezel:
+  - rscadd: Nuke ops can now buy a keycard to access their new custodial closet!
+  - map: Rearranges nuke ordnance room, and adds the custodial closet
+  FlufflesTheDog:
+  - bugfix: Fixed another(?) possible case of multitool APC searching causing broken
+      huds
+  JohnFulpWillard:
+  - bugfix: Advanced camera consoles now shows static when you first open it, rather
+      than only kicking in when you start to look around.
+  spiders24110:
+  - bugfix: fixed fish infused people swimming slow in deep water
+2025-05-16:
+  00-Steven:
+  - bugfix: Fixes quirks and the scarf trait just dropping items to the ground.
+  Absolucy, Melbert:
+  - refactor: Stack merging has much less potential for causing large amounts of server
+      lag now.
+  Bisar:
+  - bugfix: Things with the behavior for placing on the floor now correctly use the
+      code for placing on the floor.
+  - bugfix: Animations for moving items into other items on your person shouldn't
+      play any more.
+  LT3:
+  - bugfix: You can put sterilizine back in the surgery tray after removing it
+  NeonNik2245:
+  - balance: Plumbers will now give back matter you use for assemble machinery.
+  SmArtKar:
+  - refactor: Refactored how backpack and belt contents are handled in mob inventory
+      code, report any issues with lingering item effects or inability to equip things
+      into them!
+  TealSeer:
+  - bugfix: fixed cross-server newscaster functionality
+2025-05-17:
+  Absolucy:
+  - bugfix: False walls properly smooth with objects now, such as other false walls.
+  Holoo-1:
+  - bugfix: fixed presets, custom explosion, fall sound in admin supply pod
+  - admin: admin supply pod now can have flashy explosion, set it via custom explosion
+      button. Added flash range to admin logs
+  Maurukas:
+  - qol: Some additional lighting has been added to Catwalkstation recycling
+  - bugfix: Mail delivery has been fixed for the theater, medbay and chemistry on
+      Catwalkstation
+  - qol: Cargo has received a microwave and supply of donk pockets on Catwalkstation
+  - bugfix: Shutter controls have been added to the Catwalkstation cargo warehouse
+  Melbert:
+  - balance: Damp Rags can now get dirty when using them to clean blood, passing blood
+      DNA along.
+  - rscadd: Gauze now gets dirty when apply it to actively bleeding wounds. Doesn't
+      spread disease or anything, just passes blood DNA. It can be cleaned in a sink.
+  - rscdel: Removed cloth on sink / gauze on sink interaction to make rags. Just use
+      the crafting menu
+  - qol: Health Analyzer tells you what type of blood your target can accept.
+  Retrino:
+  - qol: renames some door remotes to their department names
+  SmArtKar:
+  - bugfix: Fixed monkeys being weirdly rotated when attached to big manipulators
+      pointing sideways
+  - bugfix: Icebox artifact exports no longer claim they're from a lava planet
+  - bugfix: Fixed tactical medkits not giving medibots a bezerk skin
+  - bugfix: Fixed fireplace particle positioning
+  - bugfix: Fixed flaggelant's robe spamming your chat with gravity messages
+  - refactor: Refactored the planemaster debugger tool
+  - balance: Power Miners are now ash and snowstorm immune
+  - bugfix: Holoparasites no longer take damage from ash storms inside of storm-protected
+      hosts
+  Vanilla1040:
+  - bugfix: Fixed interdyne MOD using digi sprite on plantigrade
+  grungussuss:
+  - qol: added some line breaks for the admin player panel for readibility
+  jlsnow301:
+  - bugfix: 'Paper, a UI of dizzying complexity, has once again been beaten into submission:
+      You should be able to type into forms again. For now.'
+  - bugfix: Fixed an uncommon bluescreen in the rapid pipe dispenser UI.
+  moocowswag:
+  - bugfix: You can no longer finish a machine frame if it is on the same tile as
+      a machine that it would become.
+  necromanceranne:
+  - balance: Reduces rubbershot stamina damage from 11 damage per pellet to 10 damage
+      per pellet.

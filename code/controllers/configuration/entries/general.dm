@@ -785,7 +785,3 @@
 
 // If set, enables the "Link forum account" OOC verb
 /datum/config_entry/string/forum_link_uri
-
-/datum/config_entry/string/webmap_url
-	//ex: "https://webmap.affectedarc07.co.uk/maps/tgstation/"
-	default = ""
