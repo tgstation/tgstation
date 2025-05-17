@@ -1,0 +1,4 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - qol: "Notes on airlocks now tell you how they can be removed on examine"

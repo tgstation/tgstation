@@ -1,7 +1,0 @@
-author: "Maurukas"
-delete-after: True
-changes:
-  - qol: "Some additional lighting has been added to Catwalkstation recycling"
-  - bugfix: "Mail delivery has been fixed for the theater, medbay and chemistry on Catwalkstation"
-  - qol: "Cargo has received a microwave and supply of donk pockets on Catwalkstation"
-  - bugfix: "Shutter controls have been added to the Catwalkstation cargo warehouse"
