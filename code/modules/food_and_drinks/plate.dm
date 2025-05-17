@@ -24,7 +24,7 @@
 	if(fragile)
 		AddElement(/datum/element/can_shatter)
 
-/obj/item/plate/attackby(obj/item/I, mob/user, list/modifiers)
+/obj/item/plate/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(!IS_EDIBLE(I))
 		balloon_alert(user, "not food!")
 		return
@@ -45,7 +45,7 @@
 	else
 		return ..()
 
-/obj/item/plate/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/plate/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!iscarbon(target))
 		return
 	if(!contents.len)

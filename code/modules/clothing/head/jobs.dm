@@ -312,7 +312,7 @@
 
 	return .
 
-/obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(LAZYLEN(contents) >= max_items)

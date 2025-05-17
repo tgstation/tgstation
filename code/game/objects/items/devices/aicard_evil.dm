@@ -95,7 +95,7 @@
 	max_capacity = 1000
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/computer_disk/syndie_ai_upgrade/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/computer_disk/syndie_ai_upgrade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	var/mob/living/silicon/ai/AI
 	if(isAI(target))
 		AI = target

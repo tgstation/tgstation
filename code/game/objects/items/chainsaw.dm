@@ -87,7 +87,7 @@
 		myhead.dismember()
 	return BRUTELOSS
 
-/obj/item/chainsaw/attack(mob/living/target_mob, mob/living/user, list/modifiers)
+/obj/item/chainsaw/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (target_mob.stat != DEAD)
 		return ..()
 

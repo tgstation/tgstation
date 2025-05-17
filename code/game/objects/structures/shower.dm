@@ -128,7 +128,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	to_chat(user, span_notice("The water temperature seems to be [current_temperature]."))
 	return TRUE
 
-/obj/machinery/shower/attackby(obj/item/tool, mob/user, list/modifiers)
+/obj/machinery/shower/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(tool, /obj/item/stock_parts/water_recycler))
 		if(has_water_reclaimer)
 			to_chat(user, span_warning("There is already has a water recycler installed."))
@@ -378,7 +378,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
 
-/obj/structure/showerframe/attackby(obj/item/tool, mob/living/user, list/modifiers)
+/obj/structure/showerframe/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(tool, /obj/item/stock_parts/water_recycler))
 		qdel(tool)
 		var/obj/machinery/shower/shower = new(loc, REVERSE_DIR(dir), TRUE)

@@ -75,7 +75,7 @@
 	balloon_alert(user, "saved to buffer")
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/launchpad/attackby(obj/item/weapon, mob/user, list/modifiers)
+/obj/machinery/launchpad/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(!stationary)
 		return ..()
 
@@ -312,7 +312,7 @@
 			closed = TRUE
 			update_indicator()
 
-/obj/machinery/launchpad/briefcase/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/machinery/launchpad/briefcase/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/launchpad_remote))
 		var/obj/item/launchpad_remote/launch = item
 		if(launch.pad == WEAKREF(src)) //do not attempt to link when already linked

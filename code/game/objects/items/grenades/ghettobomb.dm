@@ -217,7 +217,7 @@
 	else
 		. += span_notice("The wires are just dangling from it, you need some sort of <i> activating assembly</i>.")
 
-/obj/item/sliced_pipe/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/item/sliced_pipe/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!wires_are_in)
 		// here we can stuff in additional objects for a cooler effect
 		if(is_type_in_typecache(item, allowed) && contents.len < MAX_STUFFINGS)
