@@ -231,7 +231,7 @@
 
 /mob/living/basic/turtle/proc/post_eat(datum/source, obj/item/seeds/potential_food)
 	SIGNAL_HANDLER
-	currently_processing = TRUE
+
 	if(is_type_in_typecache(potential_food, indigestible_seeds))
 		potential_food.forceMove(src)
 		addtimer(CALLBACK(src, PROC_REF(process_food), potential_food), 20 SECONDS)
