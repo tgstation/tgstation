@@ -64,10 +64,10 @@
 	},
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "te" = (
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "uz" = (
 /obj/structure/tank_dispenser,
@@ -87,7 +87,7 @@
 	},
 /obj/vehicle/ridden/lavaboat,
 /obj/item/oar,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "wJ" = (
 /obj/structure/sink/directional/south,
@@ -108,7 +108,7 @@
 	},
 /obj/vehicle/ridden/lavaboat,
 /obj/item/oar,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "zi" = (
 /obj/machinery/suit_storage_unit,
@@ -128,14 +128,14 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "zz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "Cr" = (
 /obj/structure/table/reinforced/rglass,
@@ -155,7 +155,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "Et" = (
 /obj/effect/turf_decal/stripes/line{
@@ -169,14 +169,14 @@
 	pixel_y = 22;
 	req_access = list("research")
 	},
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "FP" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "Gl" = (
 /obj/effect/decal/cleanable/dirt,
@@ -192,14 +192,14 @@
 	},
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "GQ" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/grille,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "HT" = (
 /obj/structure/closet/wardrobe/grey,
@@ -213,7 +213,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "Kh" = (
 /obj/effect/turf_decal/stripes/line{
@@ -222,7 +222,7 @@
 /obj/machinery/light/small/built/directional/south,
 /obj/vehicle/ridden/lavaboat,
 /obj/item/oar,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "Ly" = (
 /turf/open/water/no_planet_atmos/deep/planetary_atmos,
@@ -249,7 +249,7 @@
 	},
 /obj/vehicle/ridden/lavaboat,
 /obj/item/oar,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "Qj" = (
 /obj/effect/turf_decal/box/corners,
@@ -261,7 +261,7 @@
 	pixel_y = 2
 	},
 /obj/item/screwdriver,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "RK" = (
 /obj/machinery/door/poddoor/shutters/window/preopen{
@@ -272,7 +272,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "SK" = (
 /obj/effect/turf_decal/stripes/line,
@@ -285,13 +285,13 @@
 /obj/structure/grille,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "Vq" = (
 /obj/effect/turf_decal/box/corners{
 	dir = 8
 	},
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "VN" = (
 /obj/structure/frame/computer{
@@ -313,7 +313,7 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/grille,
-/turf/open/floor/plating/icemoon,
+/turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 
 (1,1,1) = {"

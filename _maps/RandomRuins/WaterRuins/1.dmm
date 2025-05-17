@@ -10,7 +10,7 @@
 /area/rainworld/surface/outdoors/nospawn)
 "e" = (
 /obj/structure/lattice,
-/turf/open/water/no_planet_atmos/deep,
+/turf/open/water/no_planet_atmos/deep/planetary_atmos,
 /area/rainworld/surface/outdoors/nospawn)
 "k" = (
 /obj/machinery/vending/cigarette{
@@ -25,7 +25,7 @@
 "q" = (
 /obj/structure/lattice,
 /obj/structure/billboard/Phone_booth,
-/turf/open/water/no_planet_atmos/deep,
+/turf/open/water/no_planet_atmos/deep/planetary_atmos,
 /area/rainworld/surface/outdoors/nospawn)
 "v" = (
 /obj/structure/window/reinforced/spawner/directional/west,
@@ -70,7 +70,7 @@
 /turf/open/floor/plating/icemoon,
 /area/rainworld/surface/outdoors/nospawn)
 "W" = (
-/turf/open/water/no_planet_atmos/deep,
+/turf/open/water/no_planet_atmos/deep/planetary_atmos,
 /area/rainworld/surface/outdoors/nospawn)
 
 (1,1,1) = {"

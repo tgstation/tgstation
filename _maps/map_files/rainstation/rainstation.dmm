@@ -133,7 +133,11 @@
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
 "aaH" = (
-/turf/open/floor/plating,
+/obj/effect/landmark/carpspawn,
+/obj/docking_port/stationary/syndicate/northwest{
+	dir = 4
+	},
+/turf/open/water/no_planet_atmos/deep/planetary_atmos,
 /area/rainworld/surface/outdoors/nospawn)
 "aaK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -29009,7 +29013,7 @@
 /area/rainworld/surface/outdoors/nospawn)
 "bVx" = (
 /obj/machinery/atmospherics/components/unary/passive_vent,
-/turf/open/floor/plating,
+/turf/open/floor/plating/lowpressure,
 /area/station/maintenance/port/aft)
 "bVy" = (
 /obj/structure/disposalpipe/segment{
@@ -30037,7 +30041,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/lowpressure,
 /area/rainworld/surface/outdoors/nospawn)
 "bZr" = (
 /obj/machinery/status_display/evac,
@@ -44243,13 +44247,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/smooth,
 /area/station/security/prison)
-"jTk" = (
-/obj/effect/landmark/carpspawn,
-/obj/docking_port/stationary/syndicate/northwest{
-	dir = 4
-	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
-/area/rainworld/surface/outdoors/nospawn)
 "jTD" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/landmark/start/hangover,
@@ -59299,7 +59296,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
-/turf/open/floor/plating,
+/turf/open/floor/plating/lowpressure,
 /area/station/maintenance/port/aft)
 "xbN" = (
 /obj/structure/disposalpipe/segment{
@@ -70983,7 +70980,7 @@ xpY
 xpY
 xpY
 cqq
-jTk
+aaH
 cqq
 cqq
 xpY
@@ -83716,7 +83713,7 @@ cqq
 cqq
 asC
 yiW
-aaH
+asC
 cqq
 cqq
 cqq
@@ -83973,7 +83970,7 @@ cqq
 cqq
 lwj
 asC
-aaH
+asC
 cqq
 jPY
 jPY

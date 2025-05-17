@@ -1,27 +1,29 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/open/misc/ashplanet/wateryrock/rainworld,
-/area/icemoon/surface/outdoors)
+/area/rainworld/surface/outdoors/nospawn)
 "b" = (
 /turf/closed/mineral/random/snow/rainworld,
-/area/icemoon/surface/outdoors/unexplored)
+/area/rainworld/surface/outdoors/nospawn)
 "c" = (
-/turf/open/water/hot_spring/cursed,
-/area/icemoon/surface/outdoors/noteleport)
+/turf/open/water/hot_spring/cursed{
+	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	},
+/area/rainworld/surface/outdoors/nospawn)
 "d" = (
 /obj/item/paper/crumpled{
 	default_raw_text = "When one falls into this hot spring, they shall forever be turned into..."
 	},
 /turf/open/misc/ashplanet/wateryrock/rainworld,
-/area/icemoon/surface/outdoors)
+/area/rainworld/surface/outdoors/nospawn)
 "l" = (
 /obj/structure/chair/plastic,
 /turf/open/misc/ashplanet/wateryrock/rainworld,
-/area/icemoon/surface/outdoors)
+/area/rainworld/surface/outdoors/nospawn)
 "G" = (
 /obj/item/storage/toolbox/fishing,
 /turf/open/misc/ashplanet/wateryrock/rainworld,
-/area/icemoon/surface/outdoors)
+/area/rainworld/surface/outdoors/nospawn)
 
 (1,1,1) = {"
 b
