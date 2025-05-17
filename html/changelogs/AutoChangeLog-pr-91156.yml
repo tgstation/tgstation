@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Holding your PDA to the nearest camera lets the AI see your notepad contents again."
