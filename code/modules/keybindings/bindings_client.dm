@@ -71,9 +71,6 @@
 
 	var/list/click_data = get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, src)
 
-	var/turf/test = click_data[1]
-	test.add_atom_colour(COLOR_RED, ADMIN_COLOUR_PRIORITY)
-
 	var/keycount = 0
 	for(var/kb_name in prefs.key_bindings_by_key[full_key])
 		keycount++
