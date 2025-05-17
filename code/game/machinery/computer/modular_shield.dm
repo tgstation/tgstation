@@ -68,8 +68,7 @@
 	switch(action)
 		if("toggle_shields")
 			selected_generator.toggle_shields()
-			. = TRUE
+			return TRUE
 		if("rename")
 			selected_generator.display_name = params["name"]
-			. = TRUE
-	. = TRUE
+			return TRUE
