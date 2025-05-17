@@ -26,6 +26,8 @@
 	var/hearing_range = 1
 	/// String containing the last piece of logging data relating to when this signaller has received a signal.
 	var/last_receive_signal_log
+	/// Signal range, see /datum/radio_frequency/proc/post_signal
+	var/range = 0 //Everywhere
 
 /obj/item/assembly/signaler/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] eats \the [src]! If it is signaled, [user.p_they()] will die!"))
@@ -153,7 +155,7 @@
 	add_to_signaler_investigate_log(logging_data)
 
 	var/datum/signal/signal = new(list("code" = code), logging_data = logging_data)
-	radio_connection.post_signal(src, signal)
+	radio_connection.post_signal(src, signal, range = range)
 
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
 	. = FALSE
@@ -203,3 +205,8 @@
 	if(ispAI(user))
 		return TRUE
 	. = ..()
+
+/obj/item/assembly/signaler/low_range
+	name = "low-power remote signaling device"
+	desc = "Used to remotely activate devices, within a small range of 9 tiles. Allows for syncing when using a secure signaler on another."
+	range = 9
