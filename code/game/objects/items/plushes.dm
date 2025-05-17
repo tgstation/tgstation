@@ -813,3 +813,28 @@
 		'sound/mobs/humanoids/human/scream/malescream_2.ogg' = 10, //10% chance to scream, rare but not abysmal
 		'sound/items/weapons/smash.ogg' = 90,
 		)
+
+/obj/item/toy/plush/monkey
+	name = "monkey plushie"
+	desc = "Its tag reads: 'Oop eek! I'm a chimpanzee!', with 'Now in JUMBO SIZE!' on the flipside."
+	icon_state = "monkey"
+	inhand_icon_state = null
+	attack_verb_continuous = list("Oops", "Eeks")
+	attack_verb_simple = list("Oop", "Eek")
+	squeak_override = list(SFX_SCREECH=1)
+
+/obj/item/toy/plush/monkey/item_interaction(mob/living/user, obj/item/food/grown/banana/nana, list/modifiers)
+	if(!istype(nana))
+		return ..()
+	nana.moveToNullspace() //can't delete it just yet
+	to_chat(user, span_notice("You hand over the [nana] to [src] and watch as it eats..."))
+	playsound(src, 'sound/items/eatfood.ogg', 75, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(eat), nana), 3 SECONDS)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/toy/plush/monkey/proc/eat(nana)
+	if(istype(nana, /obj/item/food/grown/banana/bluespace))
+		do_teleport(src, get_turf(src), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+	qdel(nana) //now it can be deleted
+	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
+	spasm_animation(5 SECONDS)
