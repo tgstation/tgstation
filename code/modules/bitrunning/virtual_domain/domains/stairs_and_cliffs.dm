@@ -15,11 +15,11 @@
 
 /turf/open/cliff/snowrock/virtual_domain
 	name = "icy cliff"
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 
 /turf/open/lava/plasma/virtual_domain
 	name = "plasma lake"
-	initial_gas_mix = "o2=22;n2=82;TEMP=180"
+	initial_gas_mix = FROZEN_ATMOS
 
 /datum/outfit/job/virtual_domain_iceclimber
 	name = "Ice Climber"
