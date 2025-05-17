@@ -1170,7 +1170,7 @@
 
 /datum/gas_reaction/antinoblium_replication/init_reqs()
 	requirements = list(
-		/datum/gas/antinoblium = MINIMUM_MOLE_COUNT * ANTINOBLIUM_CONVERSION_DIVISOR,
+		/datum/gas/antinoblium = MOLES_GAS_VISIBLE,
 		"MIN_TEMP" = REACTION_OPPRESSION_MIN_TEMP,
 	)
 
@@ -1187,12 +1187,9 @@
 	var/antinoblium = cached_gases[/datum/gas/antinoblium]
 	var/antinoblium_moles = antinoblium[MOLES]
 	var/total_not_antinoblium_moles = total_moles - antinoblium_moles
-	var/reaction_rate = min(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR, total_not_antinoblium_moles)
-	if(reaction_rate < MINIMUM_MOLE_COUNT)
+	var/reaction_rate = min(max(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR, MINIMUM_MOLE_COUNT), total_not_antinoblium_moles)
+	if(reaction_rate < MINIMUM_MOLE_COUNT) // This will only occur if there aren't enough gases that aren't antinoblium.
 		. = NO_REACTION
-		if(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR < MINIMUM_MOLE_COUNT) // Return early when the reaction is being slow due to insignificant antinoblium quantity.
-			return
-		reaction_rate = total_not_antinoblium_moles // Otherwise, if the reaction is slow due to insignificant remaining gases, just eat the rest of the gases.
 	for(var/id in cached_gases)
 		if(id == /datum/gas/antinoblium)
 			continue
