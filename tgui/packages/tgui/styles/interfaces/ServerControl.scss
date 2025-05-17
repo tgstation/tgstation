@@ -1,11 +1,26 @@
 .ServerControl__Content {
-  --tab-color: var(--color-grey);
+  font-family: monospace;
   .SeverControl__History {
-    color: var(--color-grey);
     .ServerControl__History_Entry {
+      .Stack {
+        padding-bottom: 0.5rem;
+      }
+      .Stack__item {
+        padding-inline: 3rem;
+      }
+      .EntryHeader {
+        text-decoration: underline;
+        font-size: 1.1em;
+        padding-bottom: 0rem;
+      }
+      .EntryTimestamp {
+        text-transform: uppercase;
+        outline: solid var(--color-primary);
+        outline-style: groove;
+        background-color: var(--color-primary);
+        color: var(--color-black);
+        padding: 0.1em;
+      }
     }
   }
-}
-.ServerControl__History_Entry {
-  --tab-color: var(--color-grey);
 }

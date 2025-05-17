@@ -1,5 +1,7 @@
+import { useMemo } from 'react';
 import {
   Button,
+  Collapsible,
   NoticeBox,
   Section,
   Stack,
@@ -120,30 +122,65 @@ export const ConsolesView = (props) => {
   );
 };
 
-const ResearchHistoryView = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { logs } = data;
+const HistoryEntry = (server_log: LogData) => {
+  const {
+    node_name,
+    node_cost,
+    node_researcher,
+    node_researcher_location,
+    node_researched_timestamp,
+  } = server_log;
 
-  const HistoryEntry = (server_log: LogData) => {
-    const {
-      node_name,
-      node_cost,
-      node_researcher,
-      node_researcher_location,
-      node_researched_timestamp,
-    } = server_log;
-
-    return (
+  return (
+    <Collapsible title={node_name}>
       <Stack.Item>
         <Section
           align="center"
           textAlign="center"
           title={node_name}
           className="ServerControl__History_Entry"
-        />
+        >
+          <Stack vertical inline justify="space-between">
+            <Stack justify="space-between" className="EntryHeader">
+              <Stack.Item>RESEARCHER</Stack.Item>
+              <Stack.Item>COST</Stack.Item>
+            </Stack>
+            <Stack justify="space-between">
+              <Stack.Item>{node_researcher}</Stack.Item>
+              <Stack.Item>{node_cost} points</Stack.Item>
+            </Stack>
+          </Stack>
+          <Stack
+            vertical
+            align="center"
+            textAlign="center"
+            className="EntryHeader"
+          >
+            <Stack.Item>CONSOLE LOCATION</Stack.Item>
+          </Stack>
+          <Stack vertical align="center" textAlign="center">
+            <Stack.Item>{node_researcher_location}</Stack.Item>
+          </Stack>
+          <Stack vertical align="center" textAlign="center">
+            <Stack.Item shrink className="EntryTimestamp">
+              {node_researched_timestamp}
+            </Stack.Item>
+          </Stack>
+        </Section>
       </Stack.Item>
-    );
-  };
+    </Collapsible>
+  );
+};
+
+const ResearchHistoryView = (props) => {
+  const { data } = useBackend<Data>();
+  const { logs } = data;
+
+  const historyEntries = useMemo(() => {
+    return logs.map((server_log, index) => (
+      <HistoryEntry key={index} {...server_log} />
+    ));
+  }, [logs]);
 
   return (
     <Section
@@ -157,11 +194,7 @@ const ResearchHistoryView = (props) => {
           No research history found.
         </NoticeBox>
       ) : (
-        <Stack vertical>
-          {logs.map((server_log, index) => (
-            <HistoryEntry key={index} {...server_log} />
-          ))}
-        </Stack>
+        <Stack vertical>{historyEntries}</Stack>
       )}
     </Section>
   );
