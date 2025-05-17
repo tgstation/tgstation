@@ -24,9 +24,7 @@
 
 /obj/machinery/computer/modular_shield/proc/generator_exists(number)
 	var/obj/machinery/modular_shield_generator/generator = generators[number]
-	if(QDELETED(generator))
-		return FALSE
-	return TRUE
+	return !QDELETED(generator)
 
 /obj/machinery/computer/modular_shield/proc/get_generator(number)
 	var/obj/machinery/modular_shield_generator/generator = generators[number]
