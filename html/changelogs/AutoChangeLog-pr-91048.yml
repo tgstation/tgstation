@@ -1,0 +1,6 @@
+author: "Pickle-Coding"
+delete-after: True
+changes:
+  - rscadd: "Supermatter and tesla zaps can trigger electrolyzer reactions."
+  - balance: "Hypernoblium to antinoblium electrolysis requires supermatter zaps above 5 GeV."
+  - balance: "Hypernoblium is converted to antinoblium 1:1 during electrolysis."
