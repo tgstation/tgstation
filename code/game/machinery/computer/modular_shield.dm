@@ -63,6 +63,7 @@
 			generators -= get_generator(i)
 	data["generators"] = generator_list
 	return data
+
 /obj/machinery/computer/modular_shield/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
