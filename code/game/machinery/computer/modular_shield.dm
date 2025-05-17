@@ -3,7 +3,7 @@
 	desc = "Used to remotely monitor and toggle modular shield generators."
 	circuit = /obj/item/circuitboard/computer/modular_shield_console
 
-	var/selected_id
+	///the list of generators that are linked to us
 	var/list/obj/machinery/modular_shield_generator/generators = list()
 
 
@@ -22,10 +22,12 @@
 	to_chat(user, span_notice("You upload the data from the [tool] buffer."))
 	return ITEM_INTERACT_SUCCESS
 
+///checks if the generator in the list based on index number still exists
 /obj/machinery/computer/modular_shield/proc/generator_exists(number)
 	var/obj/machinery/modular_shield_generator/generator = generators[number]
 	return !QDELETED(generator)
 
+///grabs a generator in the list based on index number
 /obj/machinery/computer/modular_shield/proc/get_generator(number)
 	return generators[number]
 
