@@ -11,7 +11,7 @@
 /world
 	mob = /mob/dead/new_player
 	turf = /turf/open/space/basic
-	area = /area/space
+	area = /area/rainworld/surface/outdoors/unexplored
 	view = "15x15"
 	hub = "Exadv1.spacestation13"
 	hub_password = "kMZy3U5jJHSiBQjr"

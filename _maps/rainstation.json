@@ -3,7 +3,7 @@
 	"map_name": "RainStation",
 	"map_path": "map_files/RainStation",
 	"map_file": "RainStation.dmm",
-	"space_ruin_levels": 0,
+	"space_ruin_levels": 5,
 	"space_empty_levels": 1,
 	"planetary": 1,
 	"shuttles": {
@@ -19,7 +19,7 @@
 			"Gravity": true,
 			"Ocean Ruins": true,
 			"Weather_Rainstorm": true,
-			"Baseturf": "/turf/open/water/no_planet_atmos/deep",
+			"Baseturf": "/turf/open/water/no_planet_atmos/deep/planetary_atmos",
 			"No Parallax": true
 		}
 	],
