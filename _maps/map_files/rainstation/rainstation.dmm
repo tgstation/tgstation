@@ -44243,6 +44243,13 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron/smooth,
 /area/station/security/prison)
+"jTk" = (
+/obj/effect/landmark/carpspawn,
+/obj/docking_port/stationary/syndicate/northwest{
+	dir = 4
+	},
+/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/area/rainworld/surface/outdoors/nospawn)
 "jTD" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/effect/landmark/start/hangover,
@@ -70718,10 +70725,10 @@ aoV
 xpY
 xpY
 xpY
-xpY
-xpY
-xpY
-xpY
+cqq
+cqq
+cqq
+cqq
 xpY
 xpY
 xpY
@@ -70975,10 +70982,10 @@ aoV
 xpY
 xpY
 xpY
-xpY
-qFC
-xpY
-xpY
+cqq
+jTk
+cqq
+cqq
 xpY
 xpY
 xpY
@@ -71232,10 +71239,10 @@ aoV
 xpY
 xpY
 xpY
-xpY
-xpY
-xpY
-xpY
+cqq
+cqq
+cqq
+cqq
 xpY
 xpY
 xpY
@@ -96527,7 +96534,7 @@ nNa
 bzs
 dUG
 aiB
-bzs
+bPn
 jPY
 xPw
 bOh
@@ -96784,7 +96791,7 @@ nyq
 eqw
 iob
 aHo
-bzs
+bPn
 jPY
 xPw
 bOh
@@ -97041,7 +97048,7 @@ sQR
 bzs
 bzs
 aHo
-bzs
+bPn
 jPY
 xPw
 bOh

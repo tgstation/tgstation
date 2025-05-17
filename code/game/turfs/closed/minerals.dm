@@ -455,7 +455,7 @@
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
 	)
 
-/turf/closed/mineral/random/snow/wet
+/turf/closed/mineral/random/snow/rainworld
 	name = "wet rocks"
 	icon = MAP_SWITCH('icons/turf/walls/rock_wall.dmi', 'icons/turf/walls/rock_wall.dmi')
 	icon_state = "rock_wall"
@@ -463,8 +463,8 @@
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 	defer_change = TRUE
-	turf_type = /turf/open/misc/asteroid/rainworld
-	baseturfs = /turf/open/misc/asteroid/rainworld
+	turf_type = /turf/open/misc/ashplanet/wateryrock/rainworld
+	baseturfs = /turf/open/misc/ashplanet/wateryrock/rainworld
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	weak_turf = TRUE
 	proximity_based = TRUE

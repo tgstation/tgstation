@@ -137,15 +137,6 @@ SUBSYSTEM_DEF(mapping)
 		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
 		++space_levels_so_far
 
-	// Create ocean ruin levels
-	while (space_levels_so_far < current_map.space_ruin_levels)
-		add_new_zlevel("Ruin Area [space_levels_so_far+1]", ZTRAITS_OCEAN)
-		++space_levels_so_far
-	// Create empty ocean levels
-	while (space_levels_so_far < current_map.space_empty_levels + current_map.space_ruin_levels)
-		empty_space = add_new_zlevel("Empty Area [space_levels_so_far+1]", list(ZTRAIT_LINKAGE = CROSSLINKED))
-		++space_levels_so_far
-
 	// Pick a random away mission.
 	if(CONFIG_GET(flag/roundstart_away))
 		createRandomZlevel(prob(CONFIG_GET(number/config_gateway_chance)))
@@ -276,8 +267,7 @@ SUBSYSTEM_DEF(mapping)
 
 	var/list/ocean_ruins = levels_by_trait(ZTRAIT_OCEAN_RUINS)
 	if (ocean_ruins.len)
-		var/proportional_budget = round(CONFIG_GET(number/space_budget) * (ocean_ruins.len / DEFAULT_SPACE_RUIN_LEVELS))
-		seedRuins(ocean_ruins, proportional_budget, list(/area/rainworld/surface/outdoors/unexplored), themed_ruins[ZTRAIT_OCEAN_RUINS], mineral_budget = 0, ruins_type = ZTRAIT_OCEAN_RUINS)
+		seedRuins(ocean_ruins, CONFIG_GET(number/lavaland_budget), list(/area/rainworld/surface/outdoors/unexplored), themed_ruins[ZTRAIT_OCEAN_RUINS], clear_below = TRUE, mineral_budget = 15, mineral_budget_update = OREGEN_PRESET_LAVALAND, ruins_type = ZTRAIT_OCEAN_RUINS)
 
 /// Sets up rivers, and things that behave like rivers. So lava/plasma rivers, and chasms
 /// It is important that this happens AFTER generating mineral walls and such, since we rely on them for river logic
@@ -464,6 +454,8 @@ Used by the AI doomsday and the self-destruct nuke.
 
 	if(current_map.minetype == MINETYPE_LAVALAND)
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
+	if(current_map.minetype == MINETYPE_OCEAN)
+		LoadGroup(FailedZs, "Ocean", "map_files/Mining", "Ocean.dmm", default_traits = ZTRAITS_OCEAN)
 	else if (!isnull(current_map.minetype) && current_map.minetype != MINETYPE_NONE && current_map.minetype != MINETYPE_ICE)
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
 #endif

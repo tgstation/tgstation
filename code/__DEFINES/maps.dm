@@ -134,7 +134,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 ///Z level traits for Deep Space
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 ///Z level traits for Deep Ocean
-#define ZTRAITS_OCEAN list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_OCEAN_RUINS = TRUE)
+#define ZTRAITS_OCEAN list(ZTRAIT_LINKAGE = SELFLOOPING, ZTRAIT_OCEAN_RUINS = TRUE, ZTRAIT_NOPARALLAX = TRUE, ZTRAIT_RAINSTORM = TRUE, ZTRAIT_BASETURF = /turf/open/water/no_planet_atmos/deep/planetary_atmos)
 ///Z level traits for Lavaland
 #define ZTRAITS_LAVALAND list(\
 	ZTRAIT_MINING = TRUE, \
@@ -250,3 +250,4 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define MINETYPE_NONE "none"
 #define MINETYPE_LAVALAND "lavaland"
 #define MINETYPE_ICE "ice"
+#define MINETYPE_OCEAN "ocean"

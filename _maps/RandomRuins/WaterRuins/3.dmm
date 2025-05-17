@@ -37,7 +37,6 @@
 	pixel_x = 5;
 	pixel_y = -6
 	},
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "di" = (
 /obj/effect/turf_decal/siding/wood{
@@ -113,7 +112,6 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/comms_agent)
 "he" = (
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "hl" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -131,7 +129,7 @@
 /area/ruin/comms_agent)
 "ig" = (
 /obj/effect/turf_decal/siding/wood,
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "ij" = (
 /obj/effect/turf_decal/siding/wideplating/light/corner{
@@ -147,7 +145,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "jc" = (
 /obj/structure/table/reinforced,
@@ -168,7 +166,6 @@
 /area/ruin/comms_agent)
 "ka" = (
 /obj/machinery/seed_extractor,
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "kp" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -180,7 +177,7 @@
 "kA" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/structure/fluff/fokoff_sign,
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "kB" = (
 /obj/structure/cable,
@@ -260,7 +257,7 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 4
 	},
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "nL" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -277,13 +274,13 @@
 /area/ruin/comms_agent)
 "oE" = (
 /obj/item/tape/frozen,
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "pg" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 8
 	},
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "pV" = (
 /obj/machinery/light/small/directional/south,
@@ -314,7 +311,7 @@
 /area/ruin/comms_agent)
 "sB" = (
 /obj/structure/flora/rock/pile/icy/style_random,
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "tb" = (
 /obj/machinery/power/port_gen/pacman,
@@ -322,7 +319,7 @@
 /turf/open/floor/plating,
 /area/ruin/comms_agent/maint)
 "tl" = (
-/turf/closed/mineral/random/snow/wet,
+/turf/closed/mineral/random/snow/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "tp" = (
 /obj/effect/turf_decal/siding/wood/corner{
@@ -348,7 +345,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "uk" = (
 /obj/structure/cable,
@@ -408,7 +404,6 @@
 /area/ruin/comms_agent)
 "xi" = (
 /obj/machinery/hydroponics/soil,
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "xs" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -455,7 +450,6 @@
 /area/ruin/comms_agent)
 "zJ" = (
 /obj/machinery/biogenerator,
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "Ac" = (
 /obj/effect/turf_decal/siding/wideplating/light{
@@ -500,7 +494,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "BZ" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -575,11 +569,6 @@
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
-"FZ" = (
-/obj/effect/baseturf_helper/reinforced_plating/ceiling,
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/ruin/comms_agent)
 "Gn" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /obj/machinery/door/airlock/centcom{
@@ -615,7 +604,6 @@
 /obj/item/seeds/coffee/robusta,
 /obj/item/seeds/wheat,
 /obj/effect/spawner/random/food_or_drink/seed,
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "GQ" = (
 /obj/structure/table,
@@ -638,7 +626,7 @@
 /area/ruin/comms_agent/maint)
 "GY" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "HX" = (
 /obj/structure/cable,
@@ -648,7 +636,7 @@
 /area/ruin/comms_agent)
 "Ie" = (
 /obj/effect/turf_decal/siding/wood/corner,
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "IJ" = (
 /obj/machinery/griddle,
@@ -713,7 +701,7 @@
 /turf/open/floor/wood/parquet,
 /area/ruin/comms_agent)
 "KQ" = (
-/turf/open/misc/asteroid/rainworld/rocky,
+/turf/open/misc/ashplanet/rocky/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "KR" = (
 /obj/structure/sign/poster/contraband/random/directional/west,
@@ -727,7 +715,6 @@
 /obj/structure/cable,
 /obj/item/cultivator/rake,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "Ll" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -770,7 +757,6 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "LP" = (
 /turf/closed/wall/r_wall,
@@ -837,7 +823,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "NJ" = (
 /obj/item/storage/medkit/regular,
@@ -853,14 +838,13 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "Oy" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "OB" = (
 /turf/open/water/no_planet_atmos/deep/planetary_atmos,
@@ -889,14 +873,13 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "PX" = (
 /obj/item/storage/toolbox/fishing{
 	pixel_y = -9;
 	pixel_x = 11
 	},
-/turf/open/misc/asteroid/rainworld,
 /area/ruin/comms_agent)
 "Qn" = (
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -958,7 +941,7 @@
 /turf/open/floor/wood/tile,
 /area/ruin/comms_agent)
 "TV" = (
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "Uv" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
@@ -1717,7 +1700,7 @@ TV
 TV
 TV
 TV
-KQ
+TV
 TV
 TV
 TV
@@ -1827,7 +1810,7 @@ TV
 TV
 TV
 TV
-KQ
+TV
 KQ
 KQ
 KQ
@@ -2162,7 +2145,7 @@ OB
 OB
 OB
 OB
-OB
+TV
 TV
 TV
 TV
@@ -2514,7 +2497,7 @@ nP
 un
 zG
 mb
-FZ
+eE
 zi
 in
 bt
@@ -3248,7 +3231,7 @@ OB
 OB
 OB
 OB
-OB
+TV
 TV
 kA
 Lz

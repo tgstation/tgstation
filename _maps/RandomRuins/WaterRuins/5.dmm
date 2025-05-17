@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/icemoon/surface/outdoors)
 "b" = (
-/turf/closed/mineral/random/snow/wet,
+/turf/closed/mineral/random/snow/rainworld,
 /area/icemoon/surface/outdoors/unexplored)
 "c" = (
 /turf/open/water/hot_spring/cursed,
@@ -12,15 +12,15 @@
 /obj/item/paper/crumpled{
 	default_raw_text = "When one falls into this hot spring, they shall forever be turned into..."
 	},
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/icemoon/surface/outdoors)
 "l" = (
 /obj/structure/chair/plastic,
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/icemoon/surface/outdoors)
 "G" = (
 /obj/item/storage/toolbox/fishing,
-/turf/open/misc/asteroid/rainworld,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/icemoon/surface/outdoors)
 
 (1,1,1) = {"
