@@ -381,19 +381,23 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(old_species.type != type)
 		replace_body(human_who_gained_species, src)
 
+	if(!human_who_gained_species.dna.blood_type.is_species_universal) // Clown blood is forever.
+		//Assigns exotic blood type if the species has one
+		if(exotic_bloodtype && human_who_gained_species.dna.blood_type != exotic_bloodtype)
+			human_who_gained_species.set_blood_type(get_blood_type(exotic_bloodtype))
+			// updates the cached organ blood types in case our blood type changed
+			human_who_gained_species.update_cached_blood_dna_info()
+		//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
+		//(why the fuck is blood type not tied to a fucking DNA block?)
+		else if(old_species.exotic_bloodtype && isnull(exotic_bloodtype))
+			human_who_gained_species.set_blood_type(random_human_blood_type())
+			human_who_gained_species.update_cached_blood_dna_info()
+
 	regenerate_organs(human_who_gained_species, old_species, replace_current = FALSE, visual_only = human_who_gained_species.visual_only_organs)
 	// Update locked slots AFTER all organ and body stuff is handled
 	human_who_gained_species.hud_used?.update_locked_slots()
 	// Drop the items the new species can't wear
 	INVOKE_ASYNC(src, PROC_REF(worn_items_fit_body_check), human_who_gained_species, TRUE)
-
-	//Assigns exotic blood type if the species has one
-	if(exotic_bloodtype && human_who_gained_species.dna.blood_type != exotic_bloodtype)
-		human_who_gained_species.dna.blood_type = exotic_bloodtype
-	//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
-	//(why the fuck is blood type not tied to a fucking DNA block?)
-	else if(old_species.exotic_bloodtype && !exotic_bloodtype)
-		human_who_gained_species.dna.blood_type = random_blood_type()
 
 	//Resets blood if it is excessively high so they don't gib
 	normalize_blood(human_who_gained_species)
@@ -608,7 +612,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// Anything that's small or smaller can fit into a pocket by default
 		if((slot & (ITEM_SLOT_RPOCKET|ITEM_SLOT_LPOCKET)) && I.w_class <= POCKET_WEIGHT_CLASS)
 			excused = TRUE
-		else if(slot & (ITEM_SLOT_SUITSTORE|ITEM_SLOT_BACKPACK|ITEM_SLOT_BELTPACK|ITEM_SLOT_HANDS))
+		else if(slot & (ITEM_SLOT_SUITSTORE|ITEM_SLOT_HANDS))
 			excused = TRUE
 		if(!excused)
 			return FALSE
@@ -643,16 +647,11 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_BELT)
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
-
 			if(!H.w_uniform && !HAS_TRAIT(H, TRAIT_NO_JUMPSUIT) && (!O || IS_ORGANIC_LIMB(O)))
 				if(!disable_warning)
 					to_chat(H, span_warning("You need a jumpsuit before you can attach this [I.name]!"))
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
-		if(ITEM_SLOT_BELTPACK)
-			if(H.belt && H.belt.atom_storage?.can_insert(I, H, messages = TRUE, force = indirect_action ? STORAGE_SOFT_LOCKED : STORAGE_NOT_LOCKED))
-				return TRUE
-			return FALSE
 		if(ITEM_SLOT_EYES)
 			if(!H.get_bodypart(BODY_ZONE_HEAD))
 				return FALSE
@@ -733,10 +732,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(H.num_legs < 2)
 				return FALSE
 			return TRUE
-		if(ITEM_SLOT_BACKPACK)
-			if(H.back && H.back.atom_storage?.can_insert(I, H, messages = TRUE, force = indirect_action ? STORAGE_SOFT_LOCKED : STORAGE_NOT_LOCKED))
-				return TRUE
-			return FALSE
 	return FALSE //Unsupported slot
 
 /datum/species/proc/equip_delay_self_check(obj/item/I, mob/living/carbon/human/H, bypass_equip_delay_self)
@@ -760,10 +755,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
  **/
 /datum/species/proc/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
 	SHOULD_CALL_PARENT(TRUE)
-	if(chem.type == exotic_blood)
-		affected.blood_volume = min(affected.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-		affected.reagents.del_reagent(chem.type)
-		return COMSIG_MOB_STOP_REAGENT_CHECK
+	if(!istype(chem, /datum/reagent/blood)) // the blood reagent handles this itself, this is for exotic blood types
+		var/datum/blood_type/blood_type = affected.dna.blood_type
+		if(chem.type == blood_type?.reagent_type)
+			affected.blood_volume = min(affected.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
+			affected.reagents.del_reagent(chem.type)
+			return COMSIG_MOB_STOP_REAGENT_CHECK
+		if(chem.type == blood_type?.restoration_chem && affected.blood_volume < BLOOD_VOLUME_NORMAL)
+			affected.blood_volume += BLOOD_REGEN_FACTOR * seconds_per_tick
+			affected.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
+			return COMSIG_MOB_STOP_REAGENT_CHECK
 	if(!chem.overdosed && chem.overdose_threshold && chem.volume >= chem.overdose_threshold && !HAS_TRAIT(affected, TRAIT_OVERDOSEIMMUNE))
 		chem.overdosed = TRUE
 		chem.overdose_start(affected)

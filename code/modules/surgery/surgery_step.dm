@@ -174,8 +174,13 @@
 		CRASH("Not passed a target, how did we get here?")
 	if(!surgery_effects_mood)
 		return
-	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
-		target.clear_mood_event(SURGERY_MOOD_CATEGORY) //incase they gained the trait mid-surgery. has the added side effect that if someone has a bad surgical memory/mood and gets drunk & goes back to surgery, they'll forget they hated it, which is kinda funny imo.
+	// Determine how drunk our patient is
+	var/drunken_patient = target.get_drunk_amount()
+	// Create a probability to ignore the pain based on drunkenness level
+	var/drunken_ignorance_probability = clamp(drunken_patient, 0, 90)
+
+	if(HAS_TRAIT(target, TRAIT_ANALGESIA) || drunken_patient && prob(drunken_ignorance_probability))
+		target.clear_mood_event(SURGERY_MOOD_CATEGORY) //incase they gained the trait mid-surgery (or became drunk). has the added side effect that if someone has a bad surgical memory/mood and gets drunk & goes back to surgery, they'll forget they hated it, which is kinda funny imo.
 		return
 	if(target.stat >= UNCONSCIOUS)
 		var/datum/mood_event/surgery/target_mood_event = target.mob_mood?.mood_events[SURGERY_MOOD_CATEGORY]
@@ -224,6 +229,11 @@
 			span_notice("[user] succeeds!"),
 			span_notice("[user] finishes."),
 		)
+	if(ishuman(user))
+		var/mob/living/carbon/human/surgeon = user
+		surgeon.add_blood_DNA_to_items(target.get_blood_dna_list(), ITEM_SLOT_GLOVES)
+	else
+		user.add_mob_blood(target)
 	return TRUE
 
 /datum/surgery_step/proc/play_success_sound(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -315,8 +325,13 @@
  * * mechanical_surgery - Boolean flag that represents if a surgery step is done on a mechanical limb (therefore does not force scream)
  */
 /datum/surgery_step/proc/display_pain(mob/living/target, pain_message, mechanical_surgery = FALSE)
+	// Determine how drunk our patient is
+	var/drunken_patient = target.get_drunk_amount()
+	// Create a probability to ignore the pain based on drunkenness level
+	var/drunken_ignorance_probability = clamp(drunken_patient, 0, 90)
+
 	if(target.stat < UNCONSCIOUS)
-		if(HAS_TRAIT(target, TRAIT_ANALGESIA))
+		if(HAS_TRAIT(target, TRAIT_ANALGESIA) || drunken_patient && prob(drunken_ignorance_probability))
 			if(!pain_message)
 				return
 			to_chat(target, span_notice("You feel a dull, numb sensation as your body is surgically operated on."))

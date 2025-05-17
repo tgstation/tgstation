@@ -31,7 +31,7 @@
 	/// Autopopulated by `desired_items`
 	var/list/desired_items_typecache
 	/// Lists of rites by type. Converts itself into a list of rites with "name - desc (favor_cost)" = type
-	var/list/rites_list
+	var/list/rites_list = list()
 	/// Changes the Altar of Gods icon
 	var/altar_icon
 	/// Changes the Altar of Gods icon_state
@@ -47,6 +47,8 @@
 	. = ..()
 	if(desired_items)
 		desired_items_typecache = typecacheof(desired_items)
+	if(!locate(/datum/religion_rites/deaconize) in rites_list)
+		rites_list += list(/datum/religion_rites/deaconize)
 	on_select()
 
 /// Activates once selected
@@ -384,10 +386,10 @@
 
 	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
 		if(target.blood_volume < BLOOD_VOLUME_SAFE)
-			var/target_blood_data = target.get_blood_data(target.get_blood_id())
-			var/chaplain_blood_data = chaplain.get_blood_data(chaplain.get_blood_id())
+			var/datum/blood_type/target_blood_data = target.dna.blood_type
+			var/datum/blood_type/chaplain_blood_data = chaplain.dna.blood_type
 			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
-			if(transferred_blood_amount && (chaplain_blood_data["blood_type"] in get_safe_blood(target_blood_data["blood_type"])))
+			if(transferred_blood_amount && (chaplain_blood_data.type_key() in target_blood_data.compatible_types))
 				transferred = TRUE
 				chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
 		if(target.blood_volume > BLOOD_VOLUME_EXCESS)
@@ -416,22 +418,7 @@
 	tgui_icon = "scroll"
 	altar_icon_state = "convertaltar-white"
 	alignment = ALIGNMENT_GOOD
-	rites_list = list(/datum/religion_rites/deaconize, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
-	///people who have agreed to join the crusade, and can be deaconized
-	var/list/possible_crusaders = list()
-	///people who have been offered an invitation, they haven't finished the alert though.
-	var/list/currently_asking = list()
-
-/**
- * Called by deaconize rite, this async'd proc waits for a response on joining the sect.
- * If yes, the deaconize rite can now recruit them instead of just offering invites
- */
-/datum/religion_sect/honorbound/proc/invite_crusader(mob/living/carbon/human/invited)
-	currently_asking += invited
-	var/ask = tgui_alert(invited, "Join [GLOB.deity]? You will be bound to a code of honor.", "Invitation", list("Yes", "No"), 60 SECONDS)
-	currently_asking -= invited
-	if(ask == "Yes")
-		possible_crusaders += invited
+	rites_list = list(/datum/religion_rites/deaconize/crusader, /datum/religion_rites/forgive, /datum/religion_rites/summon_rules)
 
 /datum/religion_sect/honorbound/on_conversion(mob/living/carbon/new_convert)
 	..()
