@@ -82,6 +82,11 @@
 	fire = 80
 	acid = 70
 
+/obj/machinery/door/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, welded)
+	return .
+
 /obj/machinery/door/Initialize(mapload)
 	AddElement(/datum/element/blocks_explosives)
 	. = ..()
@@ -118,6 +123,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/can_barricade)
+	update_appearance()
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()

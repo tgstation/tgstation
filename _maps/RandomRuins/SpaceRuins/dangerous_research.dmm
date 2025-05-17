@@ -455,7 +455,6 @@
 /area/ruin/space/has_grav/dangerous_research/maint)
 "gl" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/dangerous_research/maint)

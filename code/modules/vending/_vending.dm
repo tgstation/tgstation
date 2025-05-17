@@ -1050,7 +1050,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 					carbon_target.visible_message(span_danger("[carbon_head] explodes in a shower of gore beneath [src]!"),	span_userdanger("Oh f-"))
 					carbon_head.drop_organs()
 					qdel(carbon_head)
-					new /obj/effect/gibspawner/human/bodypartless(get_turf(carbon_target))
+					new /obj/effect/gibspawner/human/bodypartless(get_turf(carbon_target), carbon_target)
 			return TRUE
 
 	return FALSE
@@ -1460,6 +1460,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		vended_item.set_greyscale(colors=greyscale_colors)
 	if(usr.CanReach(src) && usr.put_in_hands(vended_item))
 		to_chat(usr, span_notice("You take [item_record.name] out of the slot."))
+		vended_item.do_pickup_animation(usr, src)
 	else
 		to_chat(usr, span_warning("[capitalize(format_text(item_record.name))] falls onto the floor!"))
 	SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[item_record.product_path]"))

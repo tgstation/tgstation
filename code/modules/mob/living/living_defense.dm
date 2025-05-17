@@ -219,13 +219,11 @@
 		return ..()
 
 	var/obj/item/thrown_item = AM
-	if(thrown_item.thrownby == WEAKREF(src)) //No throwing stuff at yourself to trigger hit reactions
-		return ..()
-
-	if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
-		hitpush = FALSE
-		skipcatch = TRUE
-		blocked = TRUE
+	if(throwingdatum.get_thrower() != src) //No throwing stuff at yourself to trigger hit reactions
+		if(check_block(AM, thrown_item.throwforce, "\the [thrown_item.name]", THROWN_PROJECTILE_ATTACK, 0, thrown_item.damtype))
+			hitpush = FALSE
+			skipcatch = TRUE
+			blocked = TRUE
 
 	var/zone = get_random_valid_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 	var/nosell_hit = (SEND_SIGNAL(thrown_item, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, blocked, throwingdatum) & MOVABLE_IMPACT_ZONE_OVERRIDE) // TODO: find a better way to handle hitpush and skipcatch for humans
@@ -236,24 +234,40 @@
 	if(blocked)
 		return SUCCESSFUL_BLOCK
 
-	var/mob/thrown_by = thrown_item.thrownby?.resolve()
-	if(thrown_by)
-		log_combat(thrown_by, src, "threw and hit", thrown_item)
-	else
-		log_combat(thrown_item, src, "hit ")
 	if(nosell_hit)
+		log_hit_combat(throwingdatum.get_thrower(), thrown_item)
 		return ..()
-	visible_message(span_danger("[src] is hit by [thrown_item]!"), \
-					span_userdanger("You're hit by [thrown_item]!"))
+
+	visible_message(span_danger("[src] is hit by [thrown_item]!"),
+		span_userdanger("You're hit by [thrown_item]!"))
 	if(!thrown_item.throwforce)
+		log_hit_combat(throwingdatum.get_thrower(), thrown_item)
 		return
-	var/armor = run_armor_check(zone, MELEE, "Your armor has protected your [parse_zone_with_bodypart(zone)].", "Your armor has softened hit to your [parse_zone_with_bodypart(zone)].", thrown_item.armour_penetration, "", FALSE, thrown_item.weak_against_armour)
+
+	var/armor = run_armor_check(
+		zone,
+		MELEE,
+		"Your armor has protected your [parse_zone_with_bodypart(zone)].",
+		"Your armor has softened hit to your [parse_zone_with_bodypart(zone)].",
+		thrown_item.armour_penetration,
+		"",
+		FALSE,
+		thrown_item.weak_against_armour,
+	)
 	apply_damage(thrown_item.throwforce, thrown_item.damtype, zone, armor, sharpness = thrown_item.get_sharpness(), wound_bonus = (nosell_hit * CANT_WOUND), attacking_item = thrown_item)
+	log_hit_combat(throwingdatum.get_thrower(), thrown_item)
+
 	if(QDELETED(src)) //Damage can delete the mob.
 		return
 	if(body_position == LYING_DOWN) // physics says it's significantly harder to push someone by constantly chucking random furniture at them if they are down on the floor.
 		hitpush = FALSE
+
 	return ..()
+
+/mob/living/proc/log_hit_combat(mob/thrown_by, obj/item/thrown_item)
+	if(thrown_by)
+		return log_combat(thrown_by, src, "threw and hit", thrown_item)
+	return log_combat(thrown_item, src, "hit ")
 
 /mob/living/proc/create_splatter(splatter_dir)
 	new /obj/effect/temp_visual/dir_setting/bloodsplatter(get_turf(src), splatter_dir)
@@ -420,7 +434,6 @@
 	var/armor_block = run_armor_check(user.zone_selected, MELEE, armour_penetration = user.armour_penetration)
 
 	to_chat(user, span_danger("You [user.attack_verb_simple] [src]!"))
-	log_combat(user, src, "attacked")
 	var/damage_done = apply_damage(
 		damage = damage,
 		damagetype = user.melee_damage_type,
@@ -431,6 +444,7 @@
 		sharpness = user.sharpness,
 		attack_direction = get_dir(user, src),
 	)
+	log_combat(user, src, "attacked")
 	return damage_done
 
 /mob/living/attack_hand(mob/living/carbon/human/user, list/modifiers)

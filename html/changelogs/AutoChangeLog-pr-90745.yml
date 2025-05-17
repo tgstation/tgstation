@@ -1,0 +1,5 @@
+author: "Artemchik542"
+delete-after: True
+changes:
+  - bugfix: "Quirk \"quadruple amputee\" now will return your original limbs back if you off it"
+  - qol: "Quirk \"prosthetic limb\" now resets more correctly"
