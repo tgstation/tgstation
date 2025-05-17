@@ -1,4 +1,6 @@
+/// Range checking is being deferred because the component's parent is being moved by a shuttle
 #define PARENT_DEFERRED (1<<0)
+/// Range checking is being deferred because the circuit shell being tracked is being moved by a shuttle
 #define PHYSICAL_OBJECT_DEFERRED (1<<1)
 
 /// Opens up a USB port that can be connected to by circuits, creating registerable circuit components
