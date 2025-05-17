@@ -60,12 +60,16 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 
 /datum/controller/subsystem/processing/greyscale/PostInit()
 	. = ..()
-	if(CONFIG_GET(flag/generate_assets_in_init))
-		var/start_time = REALTIMEOFDAY
-		ExportMapPreviews()
-		var/message = "Finished GAGS map icon generation in [(REALTIMEOFDAY - start_time)/10]s!"
-		to_chat(world, span_boldannounce("[message]"), MESSAGE_TYPE_DEBUG)
-		log_world(message)
+#ifndef UNIT_TESTS // We want this to run during unit tests
+	if(!CONFIG_GET(flag/generate_assets_in_init))
+		return
+#endif
+
+	var/start_time = REALTIMEOFDAY
+	ExportMapPreviews()
+	var/message = "Finished GAGS map icon generation in [(REALTIMEOFDAY - start_time)/10]s!"
+	to_chat(world, span_boldannounce("[message]"), MESSAGE_TYPE_DEBUG)
+	log_world(message)
 
 #ifdef USE_RUSTG_ICONFORGE_GAGS
 /datum/controller/subsystem/processing/greyscale/proc/jobs_completed(list/job_ids)
