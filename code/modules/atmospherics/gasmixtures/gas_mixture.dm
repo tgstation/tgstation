@@ -732,12 +732,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/to_string()
 	var/list/cached_gases = gases
 	var/rounded_temp = round(temperature, 0.01)
+
+	var/list/atmos_contents = list()
 	var/temperature_str = "TEMP=[num2text(rounded_temp)]"
 
 	if(!length(cached_gases) || total_moles() < 0.01)
 		return temperature_str
-
-	var/gas_mixture_str = ""
 
 	for(var/gas_path in cached_gases)
 		var/gas_moles = cached_gases[gas_path][MOLES]
@@ -745,6 +745,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 		gas_moles = round(gas_moles, 0.01)
 		if(gas_moles >= 0.01)
-			gas_mixture_str += "[gas_id]=[num2text(gas_moles)];"
+			atmos_contents += "[gas_id]=[num2text(gas_moles)];"
 
-	return gas_mixture_str + temperature_str
+	atmos_contents += temperature_str
+	return atmos_contents.Join()
