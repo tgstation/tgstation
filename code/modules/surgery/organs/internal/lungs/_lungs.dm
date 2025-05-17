@@ -961,6 +961,13 @@
 	. = ..()
 	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
+/obj/item/organ/lungs/ghost
+	name = "ghost lungs"
+	desc = "No one knows what this is even supposed to breathe."
+	icon_state = "lungs-ghost"
+	movement_type = PHASING
+	organ_flags = parent_type::organ_flags | ORGAN_GHOST
+
 /obj/item/organ/lungs/lavaland
 	name = "blackened frilled lungs" // blackened from necropolis exposure
 	desc = "Exposure to the necropolis has mutated these lungs to breathe the air of Indecipheres, the lava-covered moon."
