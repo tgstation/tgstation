@@ -14,7 +14,6 @@
 	for(var/obj/machinery/modular_shield_generator/generator in generators)
 		if(prob(50))
 			generator.toggle_shields()
-	return
 
 /obj/machinery/computer/modular_shield/multitool_act(mob/living/user, obj/item/multitool/tool)
 	. = NONE
