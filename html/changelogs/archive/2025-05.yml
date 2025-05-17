@@ -356,3 +356,72 @@
       than only kicking in when you start to look around.
   spiders24110:
   - bugfix: fixed fish infused people swimming slow in deep water
+2025-05-16:
+  00-Steven:
+  - bugfix: Fixes quirks and the scarf trait just dropping items to the ground.
+  Absolucy, Melbert:
+  - refactor: Stack merging has much less potential for causing large amounts of server
+      lag now.
+  Bisar:
+  - bugfix: Things with the behavior for placing on the floor now correctly use the
+      code for placing on the floor.
+  - bugfix: Animations for moving items into other items on your person shouldn't
+      play any more.
+  LT3:
+  - bugfix: You can put sterilizine back in the surgery tray after removing it
+  NeonNik2245:
+  - balance: Plumbers will now give back matter you use for assemble machinery.
+  SmArtKar:
+  - refactor: Refactored how backpack and belt contents are handled in mob inventory
+      code, report any issues with lingering item effects or inability to equip things
+      into them!
+  TealSeer:
+  - bugfix: fixed cross-server newscaster functionality
+2025-05-17:
+  Absolucy:
+  - bugfix: False walls properly smooth with objects now, such as other false walls.
+  Holoo-1:
+  - bugfix: fixed presets, custom explosion, fall sound in admin supply pod
+  - admin: admin supply pod now can have flashy explosion, set it via custom explosion
+      button. Added flash range to admin logs
+  Maurukas:
+  - qol: Some additional lighting has been added to Catwalkstation recycling
+  - bugfix: Mail delivery has been fixed for the theater, medbay and chemistry on
+      Catwalkstation
+  - qol: Cargo has received a microwave and supply of donk pockets on Catwalkstation
+  - bugfix: Shutter controls have been added to the Catwalkstation cargo warehouse
+  Melbert:
+  - balance: Damp Rags can now get dirty when using them to clean blood, passing blood
+      DNA along.
+  - rscadd: Gauze now gets dirty when apply it to actively bleeding wounds. Doesn't
+      spread disease or anything, just passes blood DNA. It can be cleaned in a sink.
+  - rscdel: Removed cloth on sink / gauze on sink interaction to make rags. Just use
+      the crafting menu
+  - qol: Health Analyzer tells you what type of blood your target can accept.
+  Retrino:
+  - qol: renames some door remotes to their department names
+  SmArtKar:
+  - bugfix: Fixed monkeys being weirdly rotated when attached to big manipulators
+      pointing sideways
+  - bugfix: Icebox artifact exports no longer claim they're from a lava planet
+  - bugfix: Fixed tactical medkits not giving medibots a bezerk skin
+  - bugfix: Fixed fireplace particle positioning
+  - bugfix: Fixed flaggelant's robe spamming your chat with gravity messages
+  - refactor: Refactored the planemaster debugger tool
+  - balance: Power Miners are now ash and snowstorm immune
+  - bugfix: Holoparasites no longer take damage from ash storms inside of storm-protected
+      hosts
+  Vanilla1040:
+  - bugfix: Fixed interdyne MOD using digi sprite on plantigrade
+  grungussuss:
+  - qol: added some line breaks for the admin player panel for readibility
+  jlsnow301:
+  - bugfix: 'Paper, a UI of dizzying complexity, has once again been beaten into submission:
+      You should be able to type into forms again. For now.'
+  - bugfix: Fixed an uncommon bluescreen in the rapid pipe dispenser UI.
+  moocowswag:
+  - bugfix: You can no longer finish a machine frame if it is on the same tile as
+      a machine that it would become.
+  necromanceranne:
+  - balance: Reduces rubbershot stamina damage from 11 damage per pellet to 10 damage
+      per pellet.
