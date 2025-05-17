@@ -39,7 +39,6 @@
 	add_lightning_overlay(30 SECONDS)
 	playsound(organ_owner, 'sound/items/eshield_recharge.ogg', 40)
 	organ_owner.AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
-	organ_owner.apply_status_effect(/datum/status_effect/stabilized/yellow, src)
 	RegisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(activate_survival))
 	RegisterSignal(organ_owner, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
@@ -49,7 +48,6 @@
 		return
 	UnregisterSignal(organ_owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION))
 	organ_owner.RemoveElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_PROTECT_CONTENTS)
-	organ_owner.remove_status_effect(/datum/status_effect/stabilized/yellow)
 	tesla_zap(source = organ_owner, zap_range = 20, power = 2.5e5, cutoff = 1e3)
 	qdel(src)
 
@@ -98,10 +96,26 @@
 	. = ..()
 	if(!core)
 		return
+
 	if(owner.blood_volume <= BLOOD_VOLUME_NORMAL)
 		owner.blood_volume += 5 * seconds_per_tick
+
 	if(owner.health <= owner.crit_threshold)
 		activate_survival(owner)
+
+	if(times_fired % (1 SECONDS))
+		return
+
+	var/list/batteries = list()
+	for(var/obj/item/stock_parts/power_store/cell in owner.get_all_contents())
+		if(cell.used_charge())
+			batteries += cell
+
+	if(!length(batteries))
+		return
+
+	var/obj/item/stock_parts/power_store/cell = pick(batteries)
+	cell.give(cell.max_charge() * 0.1)
 
 ///Does a few things to try to help you live whatever you may be going through
 /obj/item/organ/heart/cybernetic/anomalock/proc/activate_survival(mob/living/carbon/organ_owner)
