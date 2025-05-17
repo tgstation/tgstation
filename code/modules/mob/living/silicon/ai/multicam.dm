@@ -26,7 +26,8 @@
 	highlighted_background = new /mutable_appearance()
 	highlighted_background.icon = 'icons/hud/pic_in_pic.dmi'
 	highlighted_background.icon_state = "background_highlight"
-	highlighted_background.layer = SPACE_LAYER
+	highlighted_background.layer = LOWER_FLOOR_LAYER
+	highlighted_background.appearance_flags = PIXEL_SCALE
 
 /atom/movable/screen/movable/pic_in_pic/ai/add_background()
 	if((width > 0) && (height > 0))
@@ -87,6 +88,8 @@
 	icon = 'icons/hud/pic_in_pic.dmi'
 	icon_state = "room_background"
 	turf_flags = NOJAUNT
+	plane = -19
+	layer = SPACE_LAYER
 
 /turf/open/ai_visible/Initialize(mapload)
 	. = ..()
@@ -148,7 +151,11 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		..()
 
 /mob/eye/camera/ai/pic_in_pic/setLoc(turf/destination, force_update = FALSE)
-	. = ..()
+	if (destination)
+		abstract_move(destination)
+	else
+		moveToNullspace()
+	update_visibility()
 	update_camera_telegraphing()
 	update_ai_detect_hud()
 
@@ -215,6 +222,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	C.set_view_size(3, 3, FALSE)
 	C.set_view_center(get_turf(eyeobj))
 	C.set_ai(src)
+	C.aiEye.name = "[name] (Secondary AI Eye)"
 	if(!silent)
 		to_chat(src, span_notice("Added new multicamera window."))
 	return C
