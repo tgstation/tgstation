@@ -87,7 +87,11 @@ const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
           }
         />
       </Table.Cell>
-      <Table.Cell collapsing textAlign="center">
+      <Table.Cell
+        collapsing
+        textAlign="center"
+        color={recovering ? 'red' : 'white'}
+      >
         <ProgressBar
           width="170px"
           value={current_strength}
