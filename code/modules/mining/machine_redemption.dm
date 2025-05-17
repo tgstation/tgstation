@@ -310,7 +310,7 @@
 		if("Release")
 			if(!mat_container)
 				return
-			if(!materials.can_use_resource(user = usr))
+			if(!materials.can_use_resource(user_identity_atom = usr))
 				return
 			else if(!allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, span_warning("Required access not found."))
@@ -327,7 +327,7 @@
 
 				var/desired = text2num(params["sheets"])
 				var/sheets_to_remove = round(min(desired, 50, stored_amount))
-				materials.eject_sheets(mat, sheets_to_remove, get_step(src, output_dir), user = usr)
+				materials.eject_sheets(mat, sheets_to_remove, get_step(src, output_dir), user_identity_atom = usr)
 			return TRUE
 		if("Smelt")
 			if(!mat_container)

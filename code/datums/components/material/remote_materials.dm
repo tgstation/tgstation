@@ -204,7 +204,7 @@ handles linking back and forth.
  * Arguments
  * * check_hold - should we check if the silo is on hold
  */
-/datum/component/remote_materials/proc/can_use_resource(check_hold = TRUE, obj/item/card/id/advanced/user_card)
+/datum/component/remote_materials/proc/can_use_resource(check_hold = TRUE, mob/living/user_identity_atom)
 	var/atom/movable/movable_parent = parent
 	if (!istype(movable_parent))
 		return FALSE
@@ -214,7 +214,7 @@ handles linking back and forth.
 	if(check_hold && on_hold()) //silo on hold
 		movable_parent.say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
-	if(SEND_SIGNAL(movable_parent, COMSIG_ORE_SILO_PERMISSION_CHECKED, user_card, movable_parent) & COMPONENT_ORE_SILO_DENY)
+	if(SEND_SIGNAL(movable_parent, COMSIG_ORE_SILO_PERMISSION_CHECKED, user_identity_atom, movable_parent) & COMPONENT_ORE_SILO_DENY)
 		return FALSE
 	return TRUE
 
@@ -229,8 +229,8 @@ handles linking back and forth.
  * action- For logging only. e.g. build, create, i.e. the action you are trying to perform
  * name- For logging only. the design you are trying to build e.g. matter bin, etc.
  */
-/datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "build", name = "design", obj/item/card/id/advanced/user_card)
-	if(!can_use_resource())
+/datum/component/remote_materials/proc/use_materials(list/mats, coefficient = 1, multiplier = 1, action = "build", name = "design", mob/living/user_identity_atom)
+	if(!can_use_resource(user_identity_atom = user_identity_atom))
 		return 0
 
 	var/amount_consumed = mat_container.use_materials(mats, coefficient, multiplier)
@@ -239,7 +239,7 @@ handles linking back and forth.
 		var/list/scaled_mats = list()
 		for(var/i in mats)
 			scaled_mats[i] = OPTIMAL_COST(OPTIMAL_COST(mats[i] * coefficient) * multiplier)
-		silo.silo_log(parent, action, -multiplier, name, scaled_mats, user_card)
+		silo.silo_log(parent, action, -multiplier, name, scaled_mats, user_identity_atom)
 
 	return amount_consumed
 
@@ -251,8 +251,8 @@ handles linking back and forth.
  * eject_amount- how many sheets to eject
  * [drop_target][atom]- optional where to drop the sheets. null means it is dropped at this components parent location
  */
-/datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null, obj/item/card/id/advanced/user_card)
-	if(!can_use_resource(user_card = user_card))
+/datum/component/remote_materials/proc/eject_sheets(datum/material/material_ref, eject_amount, atom/drop_target = null, mob/living/user_identity_atom)
+	if(!can_use_resource(user_identity_atom = user_identity_atom))
 		return 0
 
 	var/atom/movable/movable_parent = parent
