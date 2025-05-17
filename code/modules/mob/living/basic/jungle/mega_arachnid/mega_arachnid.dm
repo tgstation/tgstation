@@ -22,7 +22,7 @@
 	environment_smash = ENVIRONMENT_SMASH_WALLS
 	minimum_survivable_temperature = T0C
 	maximum_survivable_temperature = T0C + 450
-	status_flags = NONE
+	status_flags = CANSTUN
 	lighting_cutoff_red = 5
 	lighting_cutoff_green = 20
 	lighting_cutoff_blue = 25

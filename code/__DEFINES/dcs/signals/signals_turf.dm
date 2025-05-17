@@ -52,5 +52,11 @@
 ///from /turf/proc/change_area() : (area/old_area)
 #define COMSIG_TURF_AREA_CHANGED "turf_area_changed"
 
-///from /proc/create_shuttle() and /obj/docking_port/mobile/proc/add_turf() : (obj/docking_port/mobile/shuttle)
+///from /proc/create_shuttle() and /proc/expand_shuttle() : (obj/docking_port/mobile/shuttle)
 #define COMSIG_TURF_ADDED_TO_SHUTTLE "turf_added_to_shuttle"
+
+///from /proc/clear_empty_shuttle_turfs() : (obj/docking_port/mobile/shuttle)
+#define COMSIG_TURF_REMOVED_FROM_SHUTTLE "turf_removed_from_shuttle"
+
+///from /turf/proc/afterShuttleMove() : (/turf/old_turf)
+#define COMSIG_TURF_AFTER_SHUTTLE_MOVE "turf_after_shuttle_move"

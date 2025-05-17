@@ -72,7 +72,7 @@
 	eyeballies.Remove(target)
 	eyeballies.forceMove(get_turf(target))
 	notify_ghosts(
-		"[target] has just had their eyes snatched!",
+		"[target.real_name] has just had their eyes snatched!",
 		source = target,
 		header = "Ouch!",
 	)

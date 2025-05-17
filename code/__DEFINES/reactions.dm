@@ -267,3 +267,8 @@
 // Antinoblium:
 /// The divisor for the maximum antinoblium conversion rate. (1/90 of the antinoblium converts other gases to antinoblium in one reaction tick.)
 #define ANTINOBLIUM_CONVERSION_DIVISOR 90
+
+// Electrolysis:
+// Electrolysis arguments:
+/// Supermatter power argument.
+#define ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER "electrolyzer_supermatter_power"
