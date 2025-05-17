@@ -7,10 +7,16 @@
 	var/list/obj/machinery/modular_shield_generator/generators = list()
 
 
-//maybe let monkeys do a do_after to just spam buttons and toggle shields randomly?
+//lets monkeys randomly mash buttons to toggle the generators
 /obj/machinery/computer/modular_shield/attack_paw(mob/user, list/modifiers)
-	to_chat(user, span_warning("You are too primitive to use this computer!"))
+	balloon_alert(user, "mashing buttons")
+	if(!do_after(user, 4 SECONDS, target = src))
+		return
+	for(var/obj/machinery/modular_shield_generator/generator in generators)
+		if(prob(50))
+			generator.toggle_shields()
 	return
+
 
 /obj/machinery/computer/modular_shield/multitool_act(mob/living/user, obj/item/multitool/tool)
 	. = NONE
