@@ -2535,6 +2535,7 @@
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_CLOSE, forced)
 	set_density(TRUE)
 	operating = FALSE
+	update_appearance()
 	return TRUE
 
 /obj/machinery/door/airlock/instant/glass
