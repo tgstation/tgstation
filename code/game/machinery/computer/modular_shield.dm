@@ -6,9 +6,6 @@
 	var/selected_id
 	var/list/obj/machinery/modular_shield_generator/generators = list()
 
-/obj/machinery/computer/modular_shield/Initialize(mapload)
-	generators = list()
-	. = ..()
 
 //maybe let monkeys do a do_after to just spam buttons and toggle shields randomly?
 /obj/machinery/computer/modular_shield/attack_paw(mob/user, list/modifiers)
