@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes:
+  - refactor: "Added the possibility for keybindings to report the turf they clicked on."
