@@ -2,9 +2,11 @@
 #define MAPTICK_MC_MIN_RESERVE 70
 #define MAPTICK_LAST_INTERNAL_TICK_USAGE (world.map_cpu)
 
-/// Tick limit while running normally
 #define TICK_BYOND_RESERVE 2
-#define TICK_LIMIT_RUNNING (max(100 - TICK_BYOND_RESERVE - MAPTICK_LAST_INTERNAL_TICK_USAGE, MAPTICK_MC_MIN_RESERVE))
+#define TICK_VERB_RESERVE 4
+#define TICK_EXPECTED_SAFE_MAX (100 - TICK_BYOND_RESERVE - TICK_VERB_RESERVE - MAPTICK_LAST_INTERNAL_TICK_USAGE)
+/// Tick limit while running normally
+#define TICK_LIMIT_RUNNING (max(GLOB.use_old_mc_limit ? TICK_EXPECTED_SAFE_MAX : GLOB.corrective_cpu_threshold, MAPTICK_MC_MIN_RESERVE))
 /// Tick limit used to resume things in stoplag
 #define TICK_LIMIT_TO_RUN 70
 /// Tick limit for MC while running
@@ -29,3 +31,10 @@
 #define TICK_CHECK_HIGH_PRIORITY ( TICK_USAGE > 95 )
 /// runs stoplag if tick_usage is above 95, for high priority usage
 #define CHECK_TICK_HIGH_PRIORITY ( TICK_CHECK_HIGH_PRIORITY? stoplag() : 0 )
+
+/// Size of the moving average byond stores {map_)cpu values in
+#define INTERNAL_CPU_SIZE 16
+
+#define USAGE_DISPLAY_CPU "CPU"
+#define USAGE_DISPLAY_MC "Before Tick"
+#define USAGE_DISPLAY_POST_TICK "Maptick + Verbs"
