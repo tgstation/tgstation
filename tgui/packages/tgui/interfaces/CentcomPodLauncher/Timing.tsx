@@ -20,7 +20,7 @@ export function Timing(props) {
             tooltip={`
             Reset all pod
             timings/delays`}
-            tooltipPosition="bottom-end"
+            tooltipPosition="bottom-start"
           />
           <Button
             color="transparent"
@@ -33,7 +33,7 @@ export function Timing(props) {
             Note: Top set is
             normal delays, bottom set
             is reversing pod's delays`}
-            tooltipPosition="bottom-end"
+            tooltipPosition="bottom"
           />
         </>
       }

@@ -313,6 +313,8 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 		animate(offset = random_roll - 1, time = rand() * 20 + 10)
 
 /proc/remove_wibbly_filters(atom/in_atom, remove_duration = 0)
+	if(QDELETED(in_atom))
+		return
 	var/filter
 	for(var/i in 1 to 7)
 		filter = in_atom.get_filter("wibbly-[i]")

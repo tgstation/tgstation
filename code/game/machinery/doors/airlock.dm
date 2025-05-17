@@ -157,6 +157,12 @@
 	flags_1 = HTML_USE_INITAL_ICON_1
 	rad_insulation = RAD_MEDIUM_INSULATION
 
+/obj/machinery/door/airlock/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state) // airlocks ignore icon_state and instead use get_airlock_overlay()
+	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
+	return .
+
 /obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
 
@@ -648,6 +654,7 @@
 		else
 			. += "There's a [note.name] pinned to the front..."
 			. += note.examine(user)
+		. += span_notice("The attached [note.name] can be taken down with some [EXAMINE_HINT("wirecutters")].")
 	if(seal)
 		. += "It's been braced with \a [seal]."
 	if(welded)
