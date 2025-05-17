@@ -136,10 +136,10 @@ const ResearchHistoryView = (props) => {
     return (
       <Stack.Item>
         <Section
-          className="HistoryTab__HistoryEntry"
           align="center"
           textAlign="center"
           title={node_name}
+          className="ServerControl__History_Entry"
         />
       </Stack.Item>
     );
@@ -150,7 +150,7 @@ const ResearchHistoryView = (props) => {
       title="Research History"
       align="center"
       textAlign="center"
-      className="ServerControl__HistoryTab"
+      className="SeverControl__History"
     >
       {!logs.length ? (
         <NoticeBox mt={2} info>
@@ -171,40 +171,47 @@ export const ServerControl = (props) => {
   const { act, data } = useBackend<Data>();
   const { server_connected, servers, consoles, logs } = data; // Assuming 'servers', 'consoles', and 'logs' are used by the child components
   const [currentTab, setTab] = useSharedState('tab', 1);
-  const TitlesAndTabs = [['Active Servers', ], ['Active Consoles', ], ['Research History', ]];
+  const TitlesAndTabs = [
+    { title: 'Active Servers', component: ServersView },
+    { title: 'Active Consoles', component: ConsolesView },
+    { title: 'Research History', component: ResearchHistoryView },
+  ];
 
-  // Define the helper component with PascalCase and corrected 'className'
-  const ServerControlWindow = (componentProps) => {
-    // Renamed props to avoid conflict with outer props
+  const ServerControlTabs = (componentProps) => {
     return (
-      <Window width={575} height={500} theme="hackerman">
-        <Window.Content
-          className="ServerControl__"
-          scrollable
-          {...componentProps}
-        />
-      </Window>
-    );
-    const ServerControlTabs = (componentProps) => {
-      return (
-        <Tabs
-          className="ServerControl__Tabs"
-          selected={currentTab}
-          onSelect={(tab) => setTab(tab)}
-          {...componentProps}
-        />
-      );
-    };
-    return (
-      <ServerControlWindow>
-        {!server_connected ? (
-          <NoticeBox textAlign="center" danger>
-            Not connected to a Server. Please sync one using a multitool.
-          </NoticeBox>
-        ) : (
-          <Tabs />
-        )}
-      </ServerControlWindow>
+      <Tabs
+        className="ServerControl__Tabs"
+        onSelect={(tab) => setTab(tab)}
+        {...componentProps}
+      >
+        {TitlesAndTabs.map((tab, index) => (
+          <Tabs.Tab
+            key={index}
+            selected={currentTab === index + 1}
+            onClick={() => setTab(index + 1)}
+          >
+            {tab.title}
+          </Tabs.Tab>
+        ))}
+      </Tabs>
     );
   };
+  return !server_connected ? (
+    <Window width={400} height={500} theme="hackerman">
+      <Window.Content scrollable className="ServerControl__Content">
+        <NoticeBox textAlign="center" danger>
+          Not connected to a Server. Please sync one using a multitool.
+        </NoticeBox>
+      </Window.Content>
+    </Window>
+  ) : (
+    <Window width={400} height={500} theme="hackerman">
+      <Window.Content scrollable className="ServerControl__Content">
+        <ServerControlTabs />
+        {TitlesAndTabs.map((tab, index) =>
+          currentTab === index + 1 ? <tab.component key={index} /> : null,
+        )}
+      </Window.Content>
+    </Window>
+  );
 };

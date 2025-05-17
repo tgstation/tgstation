@@ -1,2 +1,11 @@
-
-
+.ServerControl__Content {
+  --tab-color: var(--color-grey);
+  .SeverControl__History {
+    color: var(--color-grey);
+    .ServerControl__History_Entry {
+    }
+  }
+}
+.ServerControl__History_Entry {
+  --tab-color: var(--color-grey);
+}
