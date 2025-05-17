@@ -333,7 +333,7 @@ export const NtosNotepad = (props) => {
   const { note } = data;
   const [documentName, setDocumentName] = useState(DEFAULT_DOCUMENT_NAME);
   const [originalText, setOriginalText] = useState(note);
-  const [text, setText] = useState('');
+  const [text, setText] = useState(note);
   const [statuses, setStatuses] = useState<Statuses>({
     line: 0,
     column: 0,
