@@ -172,6 +172,10 @@
 		loc.balloon_alert(user, "ritual failed, missing components!")
 		// Then let them know what they're missing
 		to_chat(user, span_hierophant_warning("You are missing [english_list(what_are_we_missing)] in order to complete the ritual \"[ritual.name]\"."))
+		for(var/obj/item/stack/stack in selected_atoms)
+			var/obj/item/stack/possible_original_stack = (locate(stack.type) in stack.loc) || (locate(stack.type) in atoms_in_range)
+			if(possible_original_stack?.can_merge(stack))
+				possible_original_stack.merge(stack)
 		return FALSE
 
 	// If we made it here, the ritual had all necessary components, and we can try to cast it.
