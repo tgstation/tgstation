@@ -106,6 +106,7 @@
 	if(prob(80)) // the percentage is important.
 		soulman.PossessByPlayer(user.ckey)
 		to_chat(soulman, span_notice("You finally feel at peace."))
+		soulman.death()
 	user.gib()
 	qdel(src)
 
