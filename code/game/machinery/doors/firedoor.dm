@@ -297,7 +297,7 @@
 			return
 
 	var/turf/checked_turf = source
-	if(!(checked_turf.flags_1 & INITIALIZED_1)) // if the turf is uninitialized, skip it.
+	if(!(checked_turf.flags_1 & INITIALIZED_1)) // uninitialized turfs won't have atmos setup anyways, so check_atmos would just complain and not work
 		return
 	var/result = check_atmos(checked_turf)
 
