@@ -303,7 +303,7 @@
 				say("No power to dispense sheets")
 				return
 
-			materials.eject_sheets(material_ref = material, eject_amount = amount, user_identity_atom = usr)
+			materials.eject_sheets(material_ref = material, eject_amount = amount, user_data = ID_DATA(usr))
 			return TRUE
 
 		if("build")
@@ -338,7 +338,7 @@
 			var/coefficient = build_efficiency(design.build_path)
 
 			//check for materials
-			if(!materials.can_use_resource(user_identity_atom = usr))
+			if(!materials.can_use_resource(ID_DATA(usr)))
 				return
 			if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
 				say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
@@ -364,7 +364,7 @@
 					target_location = get_turf(src)
 			else
 				target_location = get_turf(src)
-			addtimer(CALLBACK(src, PROC_REF(do_make_item), design, print_quantity, build_time_per_item, coefficient, charge_per_item, target_location, usr), build_time_per_item)
+			addtimer(CALLBACK(src, PROC_REF(do_make_item), design, print_quantity, build_time_per_item, coefficient, charge_per_item, target_location, ID_DATA(usr)), build_time_per_item)
 
 			return TRUE
 
@@ -387,8 +387,7 @@
  		material_cost_coefficient,
  		charge_per_item,
  		turf/target,
-		mob/living/user_atom
-		)
+		alist/user_data)
 	PROTECTED_PROC(TRUE)
 
 	if(!items_remaining) // how
@@ -414,7 +413,7 @@
 		finalize_build()
 		return
 
-	if(!materials.can_use_resource(user_identity_atom = user_atom))
+	if(!materials.can_use_resource(user_data = user_data))
 		finalize_build()
 		return
 
@@ -424,7 +423,7 @@
 		say("Unable to continue production, missing materials.")
 		finalize_build()
 		return
-	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "built", "[design.name]", user_identity_atom = user_atom)
+	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "built", "[design.name]", user_data = user_data)
 
 	var/atom/movable/created
 	if(is_stack)
@@ -458,7 +457,7 @@
 	if(!items_remaining)
 		finalize_build()
 		return
-	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, items_remaining, build_time_per_item, material_cost_coefficient, charge_per_item, target, usr), build_time_per_item)
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, items_remaining, build_time_per_item, material_cost_coefficient, charge_per_item, target, user_data), build_time_per_item)
 
 /// Resets the busy flag
 /// Called at the end of do_make_item's timer loop

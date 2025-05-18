@@ -233,8 +233,8 @@
 
 	var/alist/queue_record = queue[1]
 	var/datum/design/D = queue_record["design"]
-	var/obj/item/card/id/advanced/user_card = queue_record["user"]
-	if(build_part(D, verbose, user_card))
+	var/alist/user_data = queue_record["user"]
+	if(build_part(D, verbose, user_data))
 		remove_from_queue(1)
 		return TRUE
 
@@ -248,7 +248,7 @@
  * * D - Design datum to attempt to print.
  * * verbose - Whether the machine should use say() procs. Set to FALSE to disable the machine saying reasons for failure to build.
  */
-/obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE, obj/item/card/id/advanced/user_card)
+/obj/machinery/mecha_part_fabricator/proc/build_part(datum/design/D, verbose = TRUE, alist/user_data)
 	if(!D || length(D.reagents_list))
 		return FALSE
 
@@ -257,14 +257,14 @@
 		if(verbose)
 			say("No access to material storage, please contact the quartermaster.")
 		return FALSE
-	if (!rmat.can_use_resource(user_card))
+	if (!rmat.can_use_resource(user_data = user_data))
 		return FALSE
 	if(!materials.has_materials(D.materials, component_coeff))
 		if(verbose)
 			say("Not enough resources. Processing stopped.")
 		return FALSE
 
-	rmat.use_materials(D.materials, component_coeff, 1, "built", "[D.name]", user_card)
+	rmat.use_materials(D.materials, component_coeff, 1, "built", "[D.name]", user_data)
 	being_built = D
 	build_finish = world.time + get_construction_time_w_coeff(initial(D.construction_time))
 	build_start = world.time
@@ -333,12 +333,12 @@
  * Returns TRUE if successful and FALSE if the design was not added to the queue.
  * * D - Datum design to add to the queue.
  */
-/obj/machinery/mecha_part_fabricator/proc/add_to_queue(datum/design/D, mob/living/user)
+/obj/machinery/mecha_part_fabricator/proc/add_to_queue(datum/design/D, alist/user_data)
 	if(!istype(queue))
 		queue = list()
 
 	if(D)
-		queue[++queue.len] = alist("design" = D, "user" = user)
+		queue[++queue.len] = alist("design" = D, "user" = user_data)
 		return TRUE
 
 	return FALSE
@@ -446,6 +446,8 @@
 
 	switch(action)
 		if("build")
+			if(!rmat.can_use_resource(user_data = ID_DATA(usr)))
+				return
 			var/designs = params["designs"]
 
 			if(!islist(designs))
@@ -463,7 +465,7 @@
 				if(!(design.build_type & MECHFAB) || design.id != design_id)
 					continue
 
-				add_to_queue(design, usr)
+				add_to_queue(design, ID_DATA(usr))
 
 			if(params["now"])
 				if(process_queue)
