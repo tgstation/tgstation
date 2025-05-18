@@ -41,6 +41,7 @@ export const ModularShieldConsole = () => {
     </Window>
   );
 };
+
 const GeneratorTable = () => {
   const { data } = useBackend<ModularShieldConsoleData>();
   const { generators } = data;
