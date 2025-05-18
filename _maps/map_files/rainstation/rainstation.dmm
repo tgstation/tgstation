@@ -288,18 +288,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hos)
-"abs" = (
-/obj/machinery/power/tracker,
-/obj/structure/cable,
-/turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
-	},
-/area/station/solars/starboard/aft{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
 "abv" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -954,21 +942,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/security/office)
-"ads" = (
-/obj/machinery/power/solar{
-	id = "auxsolareast";
-	name = "Port Auxiliary Solar Array"
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
-	},
-/area/station/solars/port/fore{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
 "adt" = (
 /turf/open/floor/glass,
 /area/station/engineering/lobby)
@@ -1146,25 +1119,6 @@
 /obj/machinery/ticket_machine/directional/south,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/hallway/primary/central)
-"adT" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
-/area/station/solars/port/aft{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
-"adU" = (
-/obj/structure/lattice/catwalk,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
-/area/station/solars/starboard/aft{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
 "adW" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/door/airlock/engineering{
@@ -3158,16 +3112,6 @@
 "ajn" = (
 /turf/open/floor/iron/smooth,
 /area/station/security/courtroom)
-"ajo" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
-/area/station/solars/starboard/aft{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
 "ajp" = (
 /turf/open/floor/iron/dark/herringbone,
 /area/station/security/courtroom)
@@ -4691,12 +4635,7 @@
 /turf/open/floor/iron/solarpanel{
 	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
 	},
-/area/station/solars/starboard/fore{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
+/area/rainworld/surface/outdoors/nospawn)
 "anG" = (
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /turf/open/floor/plating,
@@ -4947,18 +4886,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/fore)
-"aow" = (
-/obj/machinery/power/tracker,
-/obj/structure/cable,
-/turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
-	},
-/area/station/solars/port/fore{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
 "aox" = (
 /obj/machinery/camera/directional/south{
 	c_tag = "Fore Primary Hallway West"
@@ -6613,15 +6540,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/station/commons/dorms)
-"auz" = (
-/obj/structure/lattice/catwalk,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
-/area/station/solars/port/fore{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
 "auA" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -29083,15 +29001,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/port/aft)
-"bVI" = (
-/obj/structure/lattice/catwalk,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
-/area/station/solars/starboard/fore{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
 "bVJ" = (
 /turf/closed/wall/r_wall,
 /area/station/tcommsat/computer)
@@ -30752,12 +30661,7 @@
 /turf/open/floor/iron/solarpanel{
 	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
 	},
-/area/station/solars/port/aft{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
+/area/rainworld/surface/outdoors/nospawn)
 "cce" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -35991,12 +35895,7 @@
 /turf/open/floor/iron/solarpanel{
 	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
 	},
-/area/station/solars/starboard/aft{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
+/area/rainworld/surface/outdoors/nospawn)
 "cNL" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -49687,15 +49586,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /turf/closed/wall/r_wall,
 /area/station/maintenance/disposal/incinerator)
-"oAe" = (
-/obj/structure/lattice/catwalk,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
-/area/station/solars/port/aft{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
 "oAm" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -51526,18 +51416,6 @@
 	},
 /turf/open/floor/iron/checker,
 /area/station/command/heads_quarters/ce)
-"pYi" = (
-/obj/machinery/power/tracker,
-/obj/structure/cable,
-/turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
-	},
-/area/station/solars/starboard/fore{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
 "pYA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -58978,16 +58856,6 @@
 /obj/structure/broken_flooring/pile,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
-"wLh" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
-/area/station/solars/port/fore{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
 "wLn" = (
 /obj/structure/window/spawner/directional/east,
 /obj/structure/lattice/water,
@@ -75393,17 +75261,17 @@ xpY
 xpY
 aaS
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
 aaS
 jPY
@@ -75650,17 +75518,17 @@ xpY
 xpY
 aaS
 jPY
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 jPY
 jPY
 cqq
@@ -75756,7 +75624,7 @@ cca
 cca
 cca
 cqq
-oAe
+aag
 cqq
 cca
 cca
@@ -75907,17 +75775,17 @@ xpY
 xpY
 aaS
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 jPY
-ads
-wLh
-ads
+anE
+fFa
+anE
 jPY
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
 jPY
 cqq
@@ -76007,19 +75875,19 @@ cqq
 cqq
 aaS
 cqq
-adT
-adT
-adT
-adT
-adT
-adT
-oAe
-adT
-adT
-adT
-adT
-adT
-adT
+fFa
+fFa
+fFa
+fFa
+fFa
+fFa
+aag
+fFa
+fFa
+fFa
+fFa
+fFa
+fFa
 cqq
 aaS
 cqq
@@ -76164,17 +76032,17 @@ xpY
 xpY
 jPY
 jPY
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 jPY
 jPY
 jPY
@@ -76270,7 +76138,7 @@ cca
 cca
 cca
 cqq
-oAe
+aag
 cqq
 cca
 cca
@@ -76421,17 +76289,17 @@ aaS
 aaS
 aaS
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
 jPY
 cqq
@@ -76527,7 +76395,7 @@ jPY
 cqq
 cqq
 cqq
-oAe
+aag
 cqq
 cqq
 cqq
@@ -76679,15 +76547,15 @@ jPY
 cqq
 cqq
 cqq
-wLh
+fFa
 cqq
 cqq
 cqq
-wLh
+fFa
 cqq
 cqq
 cqq
-wLh
+fFa
 cqq
 cqq
 ajV
@@ -76784,7 +76652,7 @@ cca
 cca
 cca
 cqq
-oAe
+aag
 cqq
 cca
 cca
@@ -76932,21 +76800,21 @@ xpY
 xpY
 aaS
 jPY
-aow
-wLh
-wLh
-auz
-auz
-auz
-auz
-auz
-auz
-auz
-auz
-auz
-auz
-auz
-wLh
+xci
+fFa
+fFa
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+fFa
 ajW
 akB
 alh
@@ -77035,19 +76903,19 @@ cqq
 jPY
 aaS
 cqq
-adT
-adT
-adT
-adT
-adT
-adT
-oAe
-adT
-adT
-adT
-adT
-adT
-adT
+fFa
+fFa
+fFa
+fFa
+fFa
+fFa
+aag
+fFa
+fFa
+fFa
+fFa
+fFa
+fFa
 cqq
 aaS
 cqq
@@ -77193,15 +77061,15 @@ jPY
 cqq
 cqq
 cqq
-wLh
+fFa
 cqq
 cqq
 cqq
-wLh
+fFa
 cqq
 cqq
 cqq
-wLh
+fFa
 cqq
 cqq
 ajV
@@ -77298,7 +77166,7 @@ cca
 cca
 cca
 cqq
-oAe
+aag
 cqq
 cca
 cca
@@ -77449,17 +77317,17 @@ aaS
 aaS
 aaS
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
 jPY
 cqq
@@ -77555,7 +77423,7 @@ jPY
 cqq
 cqq
 cqq
-oAe
+aag
 cqq
 cqq
 cqq
@@ -77706,17 +77574,17 @@ xpY
 xpY
 jPY
 jPY
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 jPY
 jPY
 cqq
@@ -77812,7 +77680,7 @@ cca
 cca
 cca
 cqq
-oAe
+aag
 cqq
 cca
 cca
@@ -77963,17 +77831,17 @@ xpY
 xpY
 aaS
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 jPY
-ads
-wLh
-ads
+anE
+fFa
+anE
 jPY
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
 jPY
 jPY
@@ -78063,19 +77931,19 @@ cqq
 cqq
 aaS
 cqq
-adT
-adT
-adT
-adT
-adT
-adT
-oAe
-adT
-adT
-adT
-adT
-adT
-adT
+fFa
+fFa
+fFa
+fFa
+fFa
+fFa
+aag
+fFa
+fFa
+fFa
+fFa
+fFa
+fFa
 cqq
 aaS
 cqq
@@ -78220,17 +78088,17 @@ xpY
 xpY
 aaS
 jPY
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 jPY
 jPY
 cqq
@@ -78326,7 +78194,7 @@ cca
 cca
 cca
 cqq
-oAe
+aag
 cqq
 cca
 cca
@@ -78477,17 +78345,17 @@ xpY
 xpY
 aaS
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
-ads
-wLh
-ads
+anE
+fFa
+anE
 cqq
 aaS
 cqq
@@ -78583,7 +78451,7 @@ cqq
 jPY
 cqq
 cqq
-oAe
+aag
 cqq
 cqq
 jPY
@@ -78840,7 +78708,7 @@ jPY
 jPY
 jPY
 jPY
-adT
+fFa
 jPY
 jPY
 jPY
@@ -100323,15 +100191,15 @@ cqq
 aaS
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 aaS
@@ -100580,15 +100448,15 @@ cqq
 aaS
 jPY
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 jPY
 aaS
@@ -100837,15 +100705,15 @@ cqq
 aaS
 cqq
 anE
-nls
+fFa
 anE
 jPY
 anE
-nls
+fFa
 anE
 jPY
 anE
-nls
+fFa
 anE
 cqq
 aaS
@@ -101094,15 +100962,15 @@ cqq
 jPY
 jPY
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 jPY
 aaS
@@ -101351,15 +101219,15 @@ aaS
 aaS
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 jPY
@@ -101608,15 +101476,15 @@ jPY
 cqq
 cqq
 cqq
-nls
+fFa
 cqq
 cqq
 cqq
-nls
+fFa
 cqq
 cqq
 cqq
-nls
+fFa
 cqq
 cqq
 jPY
@@ -101861,20 +101729,20 @@ cqq
 cqq
 aaS
 jPY
-pYi
-nls
-nls
-bVI
-bVI
-bVI
-bVI
-bVI
-bVI
-bVI
-bVI
-bVI
-bVI
-bVI
+xci
+fFa
+fFa
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
 nls
 nls
 nls
@@ -102122,15 +101990,15 @@ jPY
 cqq
 cqq
 cqq
-nls
+fFa
 cqq
 cqq
 cqq
-nls
+fFa
 cqq
 cqq
 cqq
-nls
+fFa
 cqq
 cqq
 jPY
@@ -102379,15 +102247,15 @@ aaS
 bbT
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 jPY
@@ -102636,15 +102504,15 @@ cqq
 jPY
 jPY
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 jPY
 aaS
@@ -102893,15 +102761,15 @@ cqq
 aaS
 cqq
 anE
-nls
+fFa
 anE
 jPY
 anE
-nls
+fFa
 anE
 jPY
 anE
-nls
+fFa
 anE
 cqq
 aaS
@@ -103150,15 +103018,15 @@ cqq
 aaS
 jPY
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 jPY
 aaS
@@ -103407,15 +103275,15 @@ cqq
 aaS
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 anE
-nls
+fFa
 anE
 cqq
 aaS
@@ -109175,15 +109043,15 @@ cqq
 aaS
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 aaS
@@ -109432,15 +109300,15 @@ cqq
 aaS
 jPY
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 jPY
 aaS
@@ -109689,15 +109557,15 @@ cqq
 aaS
 cqq
 cMQ
-ajo
+fFa
 cMQ
 jPY
 cMQ
-ajo
+fFa
 cMQ
 jPY
 cMQ
-ajo
+fFa
 cMQ
 cqq
 aaS
@@ -109946,15 +109814,15 @@ jPY
 aaS
 jPY
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 jPY
 jPY
@@ -110203,15 +110071,15 @@ cqq
 jPY
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 aaS
@@ -110460,15 +110328,15 @@ cqq
 jPY
 cqq
 cqq
-ajo
-dbr
-dbr
-dbr
-ajo
+fFa
 cqq
 cqq
 cqq
-ajo
+fFa
+cqq
+cqq
+cqq
+fFa
 cqq
 cqq
 cqq
@@ -110712,24 +110580,24 @@ cks
 cnk
 cks
 cyU
-ajo
-ajo
-ajo
-ajo
-adU
-adU
-adU
-adU
-adU
-adU
-adU
-adU
-adU
-adU
-adU
-ajo
-ajo
-abs
+fFa
+fFa
+fFa
+fFa
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+aag
+fFa
+fFa
+xci
 jPY
 aaS
 cqq
@@ -110974,15 +110842,15 @@ cqq
 jPY
 cqq
 cqq
-ajo
+fFa
 cqq
 cqq
 cqq
-ajo
+fFa
 cqq
 cqq
 cqq
-ajo
+fFa
 cqq
 cqq
 cqq
@@ -111231,15 +111099,15 @@ cqq
 jPY
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 aaS
@@ -111488,15 +111356,15 @@ jPY
 aaS
 jPY
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 jPY
 jPY
@@ -111745,15 +111613,15 @@ cqq
 aaS
 cqq
 cMQ
-ajo
+fFa
 cMQ
 jPY
 cMQ
-ajo
+fFa
 cMQ
 jPY
 cMQ
-ajo
+fFa
 cMQ
 cqq
 aaS
@@ -112002,15 +111870,15 @@ jPY
 aaS
 jPY
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 jPY
 aaS
@@ -112259,15 +112127,15 @@ cqq
 aaS
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 cMQ
-ajo
+fFa
 cMQ
 cqq
 aaS
