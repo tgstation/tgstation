@@ -146,7 +146,6 @@
 	icon_state = "eye_medalion"
 	w_class = WEIGHT_CLASS_SMALL
 
-
 // The amulet conversion tool used by moon heretics
 /obj/item/clothing/neck/heretic_focus/moon_amulet
 	name = "moonlight amulet"

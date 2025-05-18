@@ -71,6 +71,7 @@
 
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/do_jaunt(mob/living/cast_on)
 	jaunt_duration = (empowered_cast ? 1.5 SECONDS : initial(jaunt_duration))
+	return ..()
 
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/ash/do_steam_effects()
 	return
