@@ -73,17 +73,17 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/ore_silo/proc/on_item_consumed(datum/component/material_container/container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context, mob/living/user)
+/obj/machinery/ore_silo/proc/on_item_consumed(datum/component/material_container/container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context, alist/user_data)
 	SIGNAL_HANDLER
 
-	silo_log(context, "deposited", amount_inserted, item_inserted.name, mats_consumed, user)
+	silo_log(context, "deposited", amount_inserted, item_inserted.name, mats_consumed, user_data)
 
 	SEND_SIGNAL(context, COMSIG_SILO_ITEM_CONSUMED, container, item_inserted, last_inserted_id, mats_consumed, amount_inserted)
 
-/obj/machinery/ore_silo/proc/log_sheets_ejected(datum/component/material_container/container, obj/item/stack/sheet/sheets, atom/context, mob/living/user)
+/obj/machinery/ore_silo/proc/log_sheets_ejected(datum/component/material_container/container, obj/item/stack/sheet/sheets, atom/context, alist/user_data)
 	SIGNAL_HANDLER
 
-	silo_log(context, "ejected", -sheets.amount, "[sheets.singular_name]", sheets.custom_materials, user)
+	silo_log(context, "ejected", -sheets.amount * SHEET_MATERIAL_AMOUNT, "[sheets.singular_name]", sheets.custom_materials, user_data)
 
 /obj/machinery/ore_silo/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -113,36 +113,22 @@
 	holds -= receptacle
 	UnregisterSignal(physical_receptacle, COMSIG_ORE_SILO_PERMISSION_CHECKED)
 
-/obj/machinery/ore_silo/proc/check_permitted(datum/source, mob/living/user, atom/movable/physical_receptacle)
+/obj/machinery/ore_silo/proc/check_permitted(datum/source, alist/user_data, atom/movable/physical_receptacle)
 	SIGNAL_HANDLER
 
 	if(!ID_required)
 		return COMPONENT_ORE_SILO_ALLOW
-	if(!user)
-		physical_receptacle.say("Ore silo error: NULL USR.")
-		return COMPONENT_ORE_SILO_DENY
-	if(HAS_SILICON_ACCESS(user) || user.get_access().Find(ACCESS_QM))
+	if(!islist(user_data))
+		// Just allow to salvage the situation
+		. = COMPONENT_ORE_SILO_ALLOW
+		CRASH("Invalid data passed to check_permitted")
+	if(user_data[SILICON_OVERRIDE] || user_data[CHAMELEON_OVERRIDE] || astype(user_data["Accesses"], /list)?.Find(ACCESS_QM))
 		return COMPONENT_ORE_SILO_ALLOW
-	var/obj/item/card/id/id = user.get_idcard()
-	if(isnull(id))
-		physical_receptacle.say("Ore silo error: NO ID.")
+	if(!user_data["Account ID"])
+		physical_receptacle.say("SILO ERR: No account ID found. Please contact a banker.")
 		return COMPONENT_ORE_SILO_DENY
-	if(!istype(id, /obj/item/card/id/advanced))
-		physical_receptacle.say("Ore silo error: LEGACY ID, CONTACT HEAD OF PERSONNEL.")
-		return COMPONENT_ORE_SILO_DENY
-	// Goddamnit they're pwning us like a bunch of goddamn n00bz!!!
-	if(istype(id, /obj/item/card/id/advanced/chameleon))
-		// Chameleon ID users bypass any restrictions but have a 10% chance for the machine to notify those around
-		// about them being granted access. It doesn't do this normally, so it'd be a "spot-the-thread" moment.
-		if(prob(10))
-			physical_receptacle.say("ACCESS GRANTED.")
-		return COMPONENT_ORE_SILO_ALLOW
-	if(isnull(id.registered_account))
-		physical_receptacle.say("Ore silo error: ID NULL BANK ACCOUNT.")
-		return COMPONENT_ORE_SILO_DENY
-	var/user_name = id.registered_account.account_holder
-	if(banned_users.Find(user_name))
-		physical_receptacle.say("Ore silo error: [user_name] BANNED.")
+	if(banned_users.Find(user_data["Account ID"]))
+		physical_receptacle.say("SILO ERR: You are banned from using this ore silo.")
 		return COMPONENT_ORE_SILO_DENY
 	return COMPONENT_ORE_SILO_ALLOW
 
@@ -188,7 +174,7 @@
 				"amount" = entry.amount,
 				"time" = entry.timestamp,
 				"noun" = entry.noun,
-				"logged_user" = entry.logged_user,
+				"user_data" = entry.user_data,
 			)
 		)
 
@@ -245,7 +231,7 @@
 			if(isnull(amount))
 				return
 
-			materials.retrieve_sheets(amount, ejecting, drop_location())
+			materials.retrieve_sheets(amount, ejecting, drop_location(), user_data = ID_DATA(usr))
 			return TRUE
 
 /**
@@ -258,11 +244,11 @@
  * - noun: Name of the object the action was performed with (sheet, units, ore...)
  * - [mats][list]: Assoc list in format (material datum = amount of raw materials). Wants the actual amount of raw (iron, glass...) materials involved in this action. If you have 10 metal sheets each worth 100 iron you would pass a list with the iron material datum = 1000
  */
-/obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats, obj/item/card/id/advanced/user_card)
+/obj/machinery/ore_silo/proc/silo_log(obj/machinery/M, action, amount, noun, list/mats, alist/user_data)
 	if (!length(mats))
 		return
 
-	var/datum/ore_silo_log/entry = new(M, action, amount, noun, mats, user_card)
+	var/datum/ore_silo_log/entry = new(M, action, amount, noun, mats, user_data)
 	var/list/datum/ore_silo_log/logs = GLOB.silo_access_logs[REF(src)]
 	if(!LAZYLEN(logs))
 		GLOB.silo_access_logs[REF(src)] = logs = list(entry)
@@ -287,9 +273,9 @@
 	var/amount
 	///List of individual materials used in the action
 	var/list/materials
-	var/logged_user
+	var/alist/user_data
 
-/datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list(), mob/living/user)
+/datum/ore_silo_log/New(obj/machinery/M, _action, _amount, _noun, list/mats=list(), alist/user_data)
 	timestamp = station_time_timestamp()
 	machine_name = M.name
 	area_name = get_area_name(M, TRUE)
@@ -297,6 +283,7 @@
 	amount = _amount
 	noun = _noun
 	materials = mats.Copy()
+	src.user_data = user_data
 	var/list/data = list(
 		"machine_name" = machine_name,
 		"area_name" = AREACOORD(M),
@@ -305,11 +292,11 @@
 		"noun" = noun,
 		"raw_materials" = get_raw_materials(""),
 		"direction" = amount < 0 ? "withdrawn" : "deposited",
-		"logged_user" = user,
+		"user_data" = user_data,
 	)
 	logger.Log(
 		LOG_CATEGORY_SILO,
-		"[machine_name] in \[[AREACOORD(M)]\] [action] [abs(amount)]x [noun] | [get_raw_materials("")] | [logged_user]",
+		"[machine_name] in \[[AREACOORD(M)]\] [action] [abs(amount)]x [noun] | [get_raw_materials("")] | [user_data["Name"]]",
 		data,
 	)
 

@@ -34,7 +34,7 @@ type Log = {
   amount: number;
   time: string;
   noun: string;
-  logged_user: string;
+  user_data: Record<string, string | number | null>;
 };
 
 enum Tab {
@@ -214,7 +214,7 @@ const LogsList = (props: LogsListProps) => {
     <Section fill scrollable pr={1} height="100%">
       <VirtualList>
         {logs.map((log, index) => (
-          <LogEntry key={index} log={log} />
+          <LogEntry key={index} {...log} />
         ))}
       </VirtualList>
     </Section>
@@ -223,29 +223,61 @@ const LogsList = (props: LogsListProps) => {
   );
 };
 
-type LogProps = {
-  log: Log;
+type AmountFormatting = (amount: number) => string;
+
+const EntryTitle = (log: Log) => {
+  const { action, amount, noun } = log;
+
+  const Verb = (
+    <Box as="span" className="actionPart">
+      {action}
+    </Box>
+  );
+
+  const formatAmount = (amount: number) => {
+    const rawAmount = Math.abs(amount);
+    const proportionalAmount = rawAmount / 100;
+    return ` ${proportionalAmount} sheets `;
+  };
+
+  const Noun = (
+    <Box as="span" className="nounPart">
+      {noun}
+    </Box>
+  );
+
+  return (
+    <>
+      {Verb} {formatAmount(amount)} {Noun}
+    </>
+  );
 };
 
-const LogEntry = (props: LogProps) => {
-  const { log } = props;
+const LogEntry = (props: Log) => {
+  const {
+    rawMaterials,
+    machineName,
+    areaName,
+    action,
+    amount,
+    time,
+    noun,
+    user_data,
+  } = props;
   return (
-    <Section
-      title={`${capitalize(log.action)}: x${Math.abs(log.amount)} ${log.noun}`}
-    >
+    <Section title={EntryTitle(props)}>
       <LabeledList>
-        <LabeledList.Item label="Time">{log.time}</LabeledList.Item>
+        <LabeledList.Item label="Time">{time}</LabeledList.Item>
         <LabeledList.Item label="Machine">
-          {capitalize(log.machineName)}
+          {capitalize(machineName)}
         </LabeledList.Item>
-        <LabeledList.Item label="Location">{log.areaName}</LabeledList.Item>
-        <LabeledList.Item
-          label="Materials"
-          color={log.amount > 0 ? 'good' : 'bad'}
-        >
-          {log.rawMaterials}
+        <LabeledList.Item label="Location">{areaName}</LabeledList.Item>
+        <LabeledList.Item label="Materials" color={amount > 0 ? 'good' : 'bad'}>
+          {rawMaterials}
         </LabeledList.Item>
-        <LabeledList.Item label="User">{log.logged_user}</LabeledList.Item>
+        <LabeledList.Item label="User">
+          {user_data['Name']} {user_data['Assignment']}
+        </LabeledList.Item>
       </LabeledList>
     </Section>
   );

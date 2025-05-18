@@ -297,7 +297,7 @@
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
 			if(isnull(user_id_card))
-				to_chat(usr, span_warning("No valid ID detected."))
+				say("No ID card found.")
 				return FALSE
 
 			//we have points
@@ -310,7 +310,7 @@
 		if("Release")
 			if(!mat_container)
 				return
-			if(!materials.can_use_resource(user_identity_atom = usr))
+			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
 				return
 			else if(!allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, span_warning("Required access not found."))
@@ -327,12 +327,12 @@
 
 				var/desired = text2num(params["sheets"])
 				var/sheets_to_remove = round(min(desired, 50, stored_amount))
-				materials.eject_sheets(mat, sheets_to_remove, get_step(src, output_dir), user_identity_atom = usr)
+				materials.eject_sheets(mat, sheets_to_remove, get_step(src, output_dir), user_data = ID_DATA(usr))
 			return TRUE
 		if("Smelt")
 			if(!mat_container)
 				return
-			if(!materials.can_use_resource(user = usr))
+			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
 				return
 			var/alloy_id = params["id"]
 			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
@@ -344,7 +344,7 @@
 				var/amount = round(min(text2num(params["sheets"]), 50, can_smelt_alloy(alloy)))
 				if(amount < 1) //no negative mats
 					return
-				materials.use_materials(alloy.materials, multiplier = amount, action = "released", name = "sheets", user = usr)
+				materials.use_materials(alloy.materials, multiplier = amount, action = "released", name = "sheets", user_data = ID_DATA(usr))
 				var/output
 				if(ispath(alloy.build_path, /obj/item/stack/sheet))
 					output = new alloy.build_path(src, amount)
