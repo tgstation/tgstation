@@ -413,7 +413,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		COLOR_BLACK,
 	)
 
-/datum/holiday/bee/getStationPrefix()
+/datum/holiday/goth/getStationPrefix()
 	return pick("Goth", "Sanguine", "Tenebris", "Lacrimosa", "Umbra", "Noctis")
 
 // JUNE
