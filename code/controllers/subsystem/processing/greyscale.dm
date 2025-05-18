@@ -5,14 +5,8 @@
 #define USE_RUSTG_ICONFORGE_GAGS
 
 /// If we are in unit tests OR if we are not using iconforge, then we should make sure the icons we are using are valid.
-/// There's no || for these preprocessor macro checks so that's why this is a little weird.
-#ifndef USE_RUSTG_ICONFORGE_GAGS
+#if !defined(USE_RUSTG_ICONFORGE_GAGS) || defined(UNIT_TESTS)
 	#define CHECK_SPRITESHEET_ICON_VALIDITY
-#endif
-#ifdef UNIT_TESTS
-	#ifndef CHECK_SPRITESHEET_ICON_VALIDITY
-		#define CHECK_SPRITESHEET_ICON_VALIDITY
-	#endif
 #endif
 
 PROCESSING_SUBSYSTEM_DEF(greyscale)
