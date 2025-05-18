@@ -566,7 +566,7 @@
 
 /obj/projectile/kiss/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/parriable_projectile)
+	AddComponent(/datum/component/parriable_projectile, parry_trait = TRAIT_CAN_HOLD_ITEMS)
 
 /obj/projectile/kiss/fire(angle, atom/direct_target)
 	if(firer && !silent_blown)
