@@ -828,11 +828,11 @@
 /obj/effect/big_manipulator_arm
 	name = "mechanical claw"
 	desc = "Takes and drops objects."
+	icon = 'icons/obj/machines/big_manipulator_parts/big_manipulator_hand.dmi'
+	icon_state = "hand"
 	layer = LOW_ITEM_LAYER
 	appearance_flags = KEEP_TOGETHER | LONG_GLIDE | TILE_BOUND | PIXEL_SCALE
 	anchored = TRUE
-	icon = 'icons/obj/machines/big_manipulator_parts/big_manipulator_hand.dmi'
-	icon_state = "hand"
 	greyscale_config = /datum/greyscale_config/manipulator_arm
 	pixel_x = -32
 	pixel_y = -32

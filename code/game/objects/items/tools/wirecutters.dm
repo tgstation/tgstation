@@ -1,13 +1,13 @@
 /obj/item/wirecutters
 	name = "wirecutters"
 	desc = "This cuts wires."
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "cutters_map"
 	worn_icon_state = "cutters"
 	inhand_icon_state = "cutters"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 
-	icon = 'icons/obj/tools.dmi'
-	icon_state = "cutters_map"
 	greyscale_config = /datum/greyscale_config/wirecutters
 	greyscale_config_belt = /datum/greyscale_config/wirecutters_belt_overlay
 	greyscale_config_inhand_left = /datum/greyscale_config/wirecutter_inhand_left

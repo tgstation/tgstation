@@ -1,22 +1,21 @@
 /obj/item/clothing/head/costume/sombrero
 	name = "sombrero"
-	inhand_icon_state = "sombrero"
 	desc = "You can practically taste the fiesta."
+	icon = 'icons/obj/clothing/head/sombrero.dmi'
+	icon_state = "sombrero"
+	inhand_icon_state = "sombrero"
 	flags_inv = HIDEHAIR
 
 	dog_fashion = /datum/dog_fashion/head/sombrero
 
-	icon = 'icons/obj/clothing/head/sombrero.dmi'
-	icon_state = "sombrero"
-
 /obj/item/clothing/head/costume/sombrero/green
 	name = "green sombrero"
 	desc = "As elegant as a dancing cactus."
-	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
-	dog_fashion = null
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
 	icon_state = "/obj/item/clothing/head/costume/sombrero/green"
 	post_init_icon_state = "sombrero"
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+	dog_fashion = null
 	greyscale_config = /datum/greyscale_config/sombrero
 	greyscale_config_worn = /datum/greyscale_config/sombrero/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/sombrero/lefthand
@@ -27,10 +26,10 @@
 /obj/item/clothing/head/costume/sombrero/shamebrero
 	name = "shamebrero"
 	desc = "Once it's on, it never comes off."
-	dog_fashion = null
 	icon = 'icons/map_icons/clothing/head/_head.dmi'
 	icon_state = "/obj/item/clothing/head/costume/sombrero/shamebrero"
 	post_init_icon_state = "shamebrero"
+	dog_fashion = null
 	greyscale_config = /datum/greyscale_config/sombrero
 	greyscale_config_worn = /datum/greyscale_config/sombrero/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/sombrero/lefthand

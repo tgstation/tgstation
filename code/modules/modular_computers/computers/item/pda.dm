@@ -1,10 +1,10 @@
 /obj/item/modular_computer/pda
 	name = "pda"
-	worn_icon_state = "nothing"
-	base_icon_state = "tablet"
 	icon = 'icons/map_icons/items/pda.dmi'
 	icon_state = "/obj/item/modular_computer/pda"
 	post_init_icon_state = "pda"
+	worn_icon_state = "nothing"
+	base_icon_state = "tablet"
 	greyscale_config = /datum/greyscale_config/tablet
 	greyscale_colors = "#999875#a92323"
 

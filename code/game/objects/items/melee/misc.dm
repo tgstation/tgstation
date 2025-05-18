@@ -521,13 +521,13 @@
 /obj/item/melee/cleric_mace
 	name = "cleric mace"
 	desc = "The grandson of the club, yet the grandfather of the baseball bat. Most notably used by holy orders in days past."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/melee/cleric_mace"
+	post_init_icon_state = "default"
 	inhand_icon_state = "default"
 	worn_icon_state = "default_worn"
 	icon_angle = -45
 
-	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/melee/cleric_mace"
-	post_init_icon_state = "default"
 	greyscale_config = /datum/greyscale_config/cleric_mace
 	greyscale_config_inhand_left = /datum/greyscale_config/cleric_mace_lefthand
 	greyscale_config_inhand_right = /datum/greyscale_config/cleric_mace_righthand

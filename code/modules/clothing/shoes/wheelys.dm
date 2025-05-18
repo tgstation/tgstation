@@ -1,16 +1,16 @@
 /obj/item/clothing/shoes/wheelys
 	name = "Wheely-Heels"
 	desc = "Uses patented retractable wheel technology. Never sacrifice speed for style - not that this provides much of either." //Thanks Fel
-	worn_icon_state = "wheelys"
-	inhand_icon_state = "sneakers_back"
-	greyscale_colors = "#545454#ffffff"
 	icon = 'icons/map_icons/clothing/shoes.dmi'
+	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
 	icon_state = "/obj/item/clothing/shoes/wheelys"
 	post_init_icon_state = "sneakers"
+	worn_icon_state = "wheelys"
+	inhand_icon_state = "sneakers_back"
 	greyscale_config = /datum/greyscale_config/sneakers_wheelys
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
-	worn_icon = 'icons/mob/large-worn-icons/64x64/feet.dmi'
+	greyscale_colors = "#545454#ffffff"
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 	clothing_flags = parent_type::clothing_flags | LARGE_WORN_ICON

@@ -1,12 +1,15 @@
 #define THERMOMACHINE_POWER_CONVERSION 0.01
 
 /obj/machinery/atmospherics/components/unary/thermomachine
+	name = "Temperature control unit"
+	desc = "Heats or cools gas in connected pipes."
+
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine"
+	post_init_icon_state = "thermo_base"
 	plane = GAME_PLANE
 
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
-
-	name = "Temperature control unit"
-	desc = "Heats or cools gas in connected pipes."
 
 	density = TRUE
 	max_integrity = 300
@@ -18,9 +21,6 @@
 	vent_movement = NONE
 	pipe_flags = PIPING_ONE_PER_TURF
 
-	icon = 'icons/map_icons/objects.dmi'
-	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine"
-	post_init_icon_state = "thermo_base"
 	greyscale_config = /datum/greyscale_config/thermomachine
 	greyscale_colors = COLOR_VIBRANT_LIME
 
@@ -348,10 +348,10 @@
 	piping_layer = 5
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on
-	on = TRUE
 	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on"
 	post_init_icon_state = "thermo_1"
 	flags_1 = /obj/machinery/atmospherics/components/unary/thermomachine::flags_1 // we want this one to generate a preview
+	on = TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on/Initialize(mapload)
 	. = ..()
@@ -383,8 +383,8 @@
 	piping_layer = 5
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/on
-	on = TRUE
 	icon_state = "/obj/machinery/atmospherics/components/unary/thermomachine/freezer/on" // same icon as the freezer
 	post_init_icon_state = "thermo_1"
+	on = TRUE
 
 #undef THERMOMACHINE_POWER_CONVERSION

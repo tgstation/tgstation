@@ -1,4 +1,10 @@
 /obj/item/clothing/mask/bandana
+	name = "bandana"
+	desc = "A fine bandana with nanotech lining."
+	icon = 'icons/map_icons/clothing/mask.dmi'
+	icon_state = "/obj/item/clothing/mask/bandana"
+	post_init_icon_state = "bandana"
+	inhand_icon_state = "greyscale_bandana"
 	w_class = WEIGHT_CLASS_TINY
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
@@ -9,12 +15,7 @@
 	species_exception = list(/datum/species/golem)
 	dying_key = DYE_REGISTRY_BANDANA
 	flags_1 = IS_PLAYER_COLORABLE_1
-	name = "bandana"
-	desc = "A fine bandana with nanotech lining."
-	inhand_icon_state = "greyscale_bandana"
-	icon = 'icons/map_icons/clothing/mask.dmi'
-	icon_state = "/obj/item/clothing/mask/bandana"
-	post_init_icon_state = "bandana"
+
 	greyscale_config = /datum/greyscale_config/bandana
 	greyscale_config_worn = /datum/greyscale_config/bandana/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/bandana/inhands_left

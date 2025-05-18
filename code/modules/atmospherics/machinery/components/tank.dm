@@ -1,10 +1,13 @@
 #define TANK_PLATING_SHEETS 12
 
 /obj/machinery/atmospherics/components/tank
-	base_icon_state = "canister"
-
 	name = "pressure tank"
 	desc = "A large vessel containing pressurized gas."
+
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/atmospherics/components/tank"
+	post_init_icon_state = "canister-0"
+	base_icon_state = "canister"
 
 	max_integrity = 800
 	integrity_failure = 0.2
@@ -24,9 +27,6 @@
 	canSmoothWith = SMOOTH_GROUP_GAS_TANK
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 
-	icon = 'icons/map_icons/objects.dmi'
-	icon_state = "/obj/machinery/atmospherics/components/tank"
-	post_init_icon_state = "canister-0"
 	greyscale_config = /datum/greyscale_config/stationary_canister
 	greyscale_colors = "#ffffff"
 	var/overlay_greyscale_config = /datum/greyscale_config/stationary_canister_overlays

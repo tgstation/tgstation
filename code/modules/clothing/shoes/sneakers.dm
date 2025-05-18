@@ -1,16 +1,16 @@
 /obj/item/clothing/shoes/sneakers
 	dying_key = DYE_REGISTRY_SNEAKERS
-	inhand_icon_state = "sneakers_back"
-	lefthand_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
-	greyscale_colors = "#2d2d33#ffffff"
 	icon = 'icons/map_icons/clothing/shoes.dmi'
 	icon_state = "/obj/item/clothing/shoes/sneakers"
 	post_init_icon_state = "sneakers"
+	inhand_icon_state = "sneakers_back"
+	lefthand_file = 'icons/mob/inhands/clothing/shoes_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing/shoes_righthand.dmi'
 	greyscale_config = /datum/greyscale_config/sneakers
 	greyscale_config_worn = /datum/greyscale_config/sneakers/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers/inhand_right
+	greyscale_colors = "#2d2d33#ffffff"
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	flags_1 = IS_PLAYER_COLORABLE_1
 	interaction_flags_mouse_drop = NEED_HANDS
@@ -103,7 +103,6 @@
 
 /obj/item/clothing/shoes/sneakers/orange
 	name = "orange shoes"
-	greyscale_colors = "#d15b1b#ffffff"
 	icon = 'icons/map_icons/clothing/shoes.dmi'
 	icon_state = "/obj/item/clothing/shoes/sneakers/orange"
 	post_init_icon_state = "sneakers"
@@ -111,6 +110,7 @@
 	greyscale_config_worn = /datum/greyscale_config/sneakers_orange/worn
 	greyscale_config_inhand_left = /datum/greyscale_config/sneakers_orange/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/sneakers_orange/inhand_right
+	greyscale_colors = "#d15b1b#ffffff"
 	flags_1 = NONE
 	var/obj/item/restraints/handcuffs/attached_cuffs
 
@@ -190,12 +190,12 @@
 /obj/item/clothing/shoes/sneakers/marisa
 	desc = "A pair of magic black shoes."
 	name = "magic shoes"
-	greyscale_colors = "#2d2d33#ffffff"
 	icon = 'icons/map_icons/clothing/shoes.dmi'
 	icon_state = "/obj/item/clothing/shoes/sneakers/marisa"
 	post_init_icon_state = "sneakers"
 	greyscale_config = /datum/greyscale_config/sneakers_marisa
 	greyscale_config_worn = /datum/greyscale_config/sneakers_marisa/worn
+	greyscale_colors = "#2d2d33#ffffff"
 	strip_delay = 5
 	equip_delay_other = 50
 	fastening_type = SHOES_SLIPON

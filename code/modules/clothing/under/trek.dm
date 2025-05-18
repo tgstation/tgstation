@@ -22,10 +22,10 @@
 /obj/item/clothing/under/trek/engsec
 	name = "engsec uniform"
 	desc = "An outdated uniform worn by engineering/security officers."
-	inhand_icon_state = "r_suit"
 	icon = 'icons/map_icons/clothing/under/_under.dmi'
 	icon_state = "/obj/item/clothing/under/trek/engsec"
 	post_init_icon_state = "trek_tos_sec"
+	inhand_icon_state = "r_suit"
 	greyscale_config = /datum/greyscale_config/trek
 	greyscale_config_worn = /datum/greyscale_config/trek/worn
 	greyscale_colors = "#B72B2F"
@@ -33,10 +33,10 @@
 /obj/item/clothing/under/trek/medsci
 	name = "medsci uniform"
 	desc = "An outdated worn by medical/science officers."
-	inhand_icon_state = "b_suit"
 	icon = 'icons/map_icons/clothing/under/_under.dmi'
 	icon_state = "/obj/item/clothing/under/trek/medsci"
 	post_init_icon_state = "trek_tos"
+	inhand_icon_state = "b_suit"
 	greyscale_config = /datum/greyscale_config/trek
 	greyscale_config_worn = /datum/greyscale_config/trek/worn
 	greyscale_colors = "#5FA4CC"

@@ -1,15 +1,15 @@
 /obj/machinery/meter
 	name = "gas flow meter"
 	desc = "It measures something."
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/meter"
+	post_init_icon_state = "meter"
 	layer = HIGH_PIPE_LAYER
 	power_channel = AREA_USAGE_ENVIRON
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.03
 	max_integrity = 150
 	armor_type = /datum/armor/machinery_meter
-	icon = 'icons/map_icons/objects.dmi'
-	icon_state = "/obj/machinery/meter"
-	post_init_icon_state = "meter"
 	greyscale_config = /datum/greyscale_config/meter
 	greyscale_colors = COLOR_GRAY
 	///The pipe we are attaching to

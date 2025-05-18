@@ -224,7 +224,6 @@
 /obj/item/modular_computer/pda/chemist
 	name = "chemist PDA"
 	icon_state = "/obj/item/modular_computer/pda/chemist"
-
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#FAFAFA#355FAC#EA6400"
 
@@ -322,10 +321,10 @@
 
 /obj/item/modular_computer/pda/clown
 	name = "clown PDA"
-	inserted_disk = /obj/item/computer_disk/virus/clown
 	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda-clown"
 	post_init_icon_state = null
+	inserted_disk = /obj/item/computer_disk/virus/clown
 	greyscale_config = null
 	greyscale_colors = null
 	inserted_item = /obj/item/toy/crayon/rainbow
@@ -443,8 +442,8 @@
 	name = "modular interface"
 	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda-silicon-human"
-	base_icon_state = "pda-silicon-human"
 	post_init_icon_state = null
+	base_icon_state = "pda-silicon-human"
 	greyscale_config = null
 	greyscale_colors = null
 

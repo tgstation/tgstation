@@ -149,10 +149,10 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 		"objects" = /obj,
 )
 
-//#ifdef UNIT_TESTS
+#ifdef UNIT_TESTS
 	if(!check_map_previews_filepath_order(types_that_get_their_own_file))
 		CRASH("The list 'types_that_get_their_own_file', used by ExportMapPreviews, is invalid. Please ensure that subtypes come BEFORE parent types in the list order.")
-//#endif
+#endif
 
 	var/list/handled_types = list()
 	for(var/filename in types_that_get_their_own_file)

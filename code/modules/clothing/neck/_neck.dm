@@ -206,7 +206,7 @@
 	name = "horrific necktie"
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "eldritch_tie"
-	post_init_icon_state = null	
+	post_init_icon_state = null
 	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."
 	clip_on = TRUE
 	greyscale_config = null
@@ -366,12 +366,12 @@
 /obj/item/clothing/neck/scarf
 	name = "scarf"
 	desc = "A stylish scarf. The perfect winter accessory for those with a keen fashion sense, and those who just can't handle a cold breeze on their necks."
-	w_class = WEIGHT_CLASS_TINY
-	custom_price = PAYCHECK_CREW
-	greyscale_colors = "#EEEEEE#EEEEEE"
 	icon = 'icons/map_icons/clothing/neck.dmi'
 	icon_state = "/obj/item/clothing/neck/scarf"
 	post_init_icon_state = "scarf"
+	w_class = WEIGHT_CLASS_TINY
+	custom_price = PAYCHECK_CREW
+	greyscale_colors = "#EEEEEE#EEEEEE"
 	greyscale_config = /datum/greyscale_config/scarf
 	greyscale_config_worn = /datum/greyscale_config/scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
@@ -433,14 +433,14 @@
 
 /obj/item/clothing/neck/large_scarf
 	name = "large scarf"
-	w_class = WEIGHT_CLASS_TINY
-	custom_price = PAYCHECK_CREW
-	greyscale_colors = "#C6C6C6#EEEEEE"
 	icon = 'icons/map_icons/clothing/neck.dmi'
 	icon_state = "/obj/item/clothing/neck/large_scarf"
 	post_init_icon_state = "large_scarf"
+	w_class = WEIGHT_CLASS_TINY
+	custom_price = PAYCHECK_CREW
 	greyscale_config = /datum/greyscale_config/scarf
 	greyscale_config_worn = /datum/greyscale_config/scarf/worn
+	greyscale_colors = "#C6C6C6#EEEEEE"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/neck/large_scarf/red
@@ -467,12 +467,12 @@
 
 /obj/item/clothing/neck/infinity_scarf
 	name = "infinity scarf"
-	w_class = WEIGHT_CLASS_TINY
-	custom_price = PAYCHECK_CREW
-	greyscale_colors = COLOR_VERY_LIGHT_GRAY
 	icon = 'icons/map_icons/clothing/neck.dmi'
 	icon_state = "/obj/item/clothing/neck/infinity_scarf"
 	post_init_icon_state = "infinity_scarf"
+	w_class = WEIGHT_CLASS_TINY
+	custom_price = PAYCHECK_CREW
+	greyscale_colors = COLOR_VERY_LIGHT_GRAY
 	greyscale_config = /datum/greyscale_config/infinity_scarf
 	greyscale_config_worn = /datum/greyscale_config/infinity_scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
