@@ -23,7 +23,8 @@
 	text_lose_indication = span_notice("The off sensation passes.")
 
 /datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
@@ -46,7 +47,8 @@
 	locked = TRUE
 
 /datum/mutation/human/heckacious/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(handle_caps))
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
@@ -140,7 +142,8 @@
 	text_lose_indication = span_danger("You feel able to speak freely again.")
 
 /datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
 
@@ -158,7 +161,8 @@
 	text_lose_indication = span_danger("Your mind feels more clear.")
 
 /datum/mutation/human/unintelligible/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
 
@@ -223,7 +227,9 @@
 	text_lose_indication = span_notice("You feel like you have a better sense of time.")
 
 /datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
-	..()
+	. = ..()
+	if(!.)
+		return
 	owner.grant_language(/datum/language/beachbum, source = LANGUAGE_STONER)
 	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
@@ -241,7 +247,8 @@
 	text_lose_indication = span_notice("You no longer feel like seeking anything.")
 
 /datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
@@ -282,7 +289,8 @@
 	text_lose_indication = span_notice("The off sensation passes.")
 
 /datum/mutation/human/piglatin/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 

@@ -115,7 +115,7 @@
 		return TRUE
 	return default_deconstruction_screwdriver(user, "navbeacon1","navbeacon0",tool)
 
-/obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, params)
+/obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	var/turf/our_turf = loc
 	if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return // prevent intraction when T-scanner revealed

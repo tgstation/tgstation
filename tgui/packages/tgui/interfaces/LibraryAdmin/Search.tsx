@@ -57,10 +57,11 @@ export function SearchAndDisplay(props) {
           <Stack>
             <Stack.Item>
               <Input
-                value={book_id}
+                value={book_id?.toString()}
                 placeholder={book_id === null ? 'ID' : String(book_id)}
                 width="70px"
-                onChange={(e, value) =>
+                expensive
+                onChange={(value) =>
                   act('set_search_id', {
                     id: value,
                   })
@@ -83,7 +84,8 @@ export function SearchAndDisplay(props) {
                 value={title}
                 placeholder={title || 'Title'}
                 mt={0.5}
-                onChange={(e, value) =>
+                expensive
+                onChange={(value) =>
                   act('set_search_title', {
                     title: value,
                   })
@@ -95,7 +97,8 @@ export function SearchAndDisplay(props) {
                 value={author}
                 placeholder={author || 'Author'}
                 mt={0.5}
-                onChange={(e, value) =>
+                expensive
+                onChange={(value) =>
                   act('set_search_author', {
                     author: value,
                   })
@@ -107,7 +110,8 @@ export function SearchAndDisplay(props) {
                 value={author_ckey}
                 placeholder={author_ckey || 'Ckey'}
                 mt={0.5}
-                onChange={(e, value) =>
+                expensive
+                onChange={(value) =>
                   act('set_search_ckey', {
                     ckey: value,
                   })

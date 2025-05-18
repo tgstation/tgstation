@@ -34,7 +34,7 @@
 		to_chat(user, span_warning("It seems that the blackbox is missing..."))
 		return
 
-/obj/machinery/blackbox_recorder/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/blackbox_recorder/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
 	if(istype(attacking_item, /obj/item/blackbox))
 		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
 			to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
@@ -95,7 +95,8 @@
 	/// passed and the machine works.
 	/// Basically, if it's not 0, it's calibrating and therefore non-functional.
 	var/calibrating = 15 MINUTES
-
+	/// List of all the computers monitoring this server
+	var/list/obj/machinery/computer/message_monitor/listening_computers = list()
 
 #define MESSAGE_SERVER_FUNCTIONING_MESSAGE "This is an automated message. The messaging system is functioning correctly."
 
@@ -109,10 +110,10 @@
 		pda_msgs += new /datum/data_tablet_msg("System Administrator", "system", MESSAGE_SERVER_FUNCTIONING_MESSAGE)
 
 /obj/machinery/telecomms/message_server/Destroy()
-	for(var/obj/machinery/computer/message_monitor/monitor in GLOB.telecomms_list)
-		if(monitor.linkedServer && monitor.linkedServer == src)
-			monitor.linkedServer = null
-	. = ..()
+	for(var/obj/machinery/computer/message_monitor/monitor in listening_computers)
+		monitor.set_linked_server(null)
+	listening_computers = null
+	return ..()
 
 /obj/machinery/telecomms/message_server/examine(mob/user)
 	. = ..()

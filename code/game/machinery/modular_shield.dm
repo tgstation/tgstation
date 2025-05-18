@@ -143,7 +143,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return TRUE
 
-/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, params)
+/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, list/modifiers)
 
 	if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
@@ -246,6 +246,9 @@
 
 /obj/machinery/modular_shield_generator/Destroy()
 	QDEL_LIST(deployed_shields)
+	for(var/obj/machinery/modular_shield/module/disconnecting in connected_modules)
+		disconnecting.shield_generator = null
+		disconnecting.update_icon_state()
 	return ..()
 
 /obj/machinery/modular_shield_generator/update_icon_state()

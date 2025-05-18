@@ -216,6 +216,8 @@
 		if(!ninja_antag)
 			return NONE
 		var/datum/objective/door_jack/objective = locate() in ninja_antag.objectives
+		if(objective && objective.doors_required == hacking_module.door_hack_counter)
+			ninja.balloon_alert(ninja, "all doors hacked")
 		if(objective && objective.doors_required <= hacking_module.door_hack_counter)
 			objective.completed = TRUE
 	return COMPONENT_CANCEL_ATTACK_CHAIN

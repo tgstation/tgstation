@@ -1,4 +1,0 @@
-author: "Goku"
-delete-after: True
-changes:
-  - bugfix: "All surgery initiator items can now be used while laying down (bedsheets, cloaks, towels...), and not just surgery drapes (fixes the surgery UI showing as not-interactable)."

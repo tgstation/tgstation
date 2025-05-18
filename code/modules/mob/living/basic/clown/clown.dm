@@ -23,13 +23,10 @@
 	basic_mob_flags = DEL_ON_DEATH
 	initial_language_holder = /datum/language_holder/clown
 	habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
-	minimum_survivable_temperature = T0C
+	minimum_survivable_temperature = (T0C - 10)
 	maximum_survivable_temperature = (T0C + 100)
-	unsuitable_atmos_damage = 10
-	unsuitable_heat_damage = 15
 	faction = list(FACTION_CLOWN)
 	ai_controller = /datum/ai_controller/basic_controller/clown
-	speed = 1.4 //roughly close to simpleanimal clowns
 	///list of stuff we drop on death
 	var/list/loot = list(/obj/effect/mob_spawn/corpse/human/clown)
 	///blackboard emote list
@@ -72,10 +69,14 @@
 	desc = "A puddle of lube brought to life by the honkmother."
 	icon_state = "lube"
 	icon_living = "lube"
+	maxHealth = 50
+	health = 50
 	response_help_continuous = "dips a finger into"
 	response_help_simple = "dip a finger into"
 	response_disarm_continuous = "gently scoops and pours aside"
 	response_disarm_simple = "gently scoop and pour aside"
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SLIME
+	damage_coeff = list(BRUTE = 0.25, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK", "Honk!", "Welcome to clown planet!"),
 		BB_EMOTE_HEAR = list("bubbles", "oozes"),
@@ -95,16 +96,16 @@
 	desc = "A divine being sent by the Honkmother to spread joy. It's not dangerous, but it's a bit of a nuisance."
 	icon_state = "honkling"
 	icon_living = "honkling"
-	speed = 1.1
+	speed = -0.5
 	melee_damage_lower = 1
 	melee_damage_upper = 1
 	attack_verb_continuous = "cheers up"
 	attack_verb_simple = "cheer up"
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	loot = list(
 		/obj/item/clothing/mask/gas/clown_hat,
 		/obj/effect/gibspawner/human,
-		/obj/item/soap,
-		/obj/item/seeds/banana/bluespace,
+		/obj/item/grown/bananapeel/bluespace,
 	)
 
 /mob/living/basic/clown/honkling/Initialize(mapload)
@@ -132,7 +133,7 @@
 	response_harm_simple = "cleanse the world of"
 	maxHealth = 140
 	health = 140
-	speed = 1
+	speed = -0.5
 	melee_damage_upper = 15
 	attack_verb_continuous = "limply slaps"
 	attack_verb_simple = "limply slap"
@@ -140,8 +141,8 @@
 	loot = list(
 		/obj/effect/gibspawner/human,
 		/obj/item/clothing/mask/gas/clown_hat,
-		/obj/item/soap,
-		/obj/item/clothing/suit/hooded/bloated_human,
+		/obj/item/food/meatclown,
+		/obj/item/stack/sheet/animalhide/human,
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list(
@@ -178,13 +179,13 @@
 	health = 150
 	pixel_x = -16
 	base_pixel_x = -16
-	speed = 3
-	melee_damage_lower = 5
+	speed = 1.5
+	melee_damage_upper = 20
 	attack_verb_continuous = "YA-HONKs"
 	attack_verb_simple = "YA-HONK"
 	loot = list(
 		/obj/effect/gibspawner/human,
-		/obj/item/soap,
+		/obj/item/grown/bananapeel,
 		/obj/item/clothing/mask/gas/clown_hat,
 	)
 	emotes = list(
@@ -192,6 +193,10 @@
 		BB_EMOTE_HEAR = list("honks", "squeaks"),
 		BB_SPEAK_CHANCE = 60,
 	)
+
+/mob/living/basic/clown/longface/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_LONGFACE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/basic/clown/clownhulk
 	name = "Honk Hulk"
@@ -210,7 +215,7 @@
 	health = 400
 	pixel_x = -16
 	base_pixel_x = -16
-	speed = 2
+	speed = 1.5
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	attack_verb_continuous = "pummels"
@@ -243,7 +248,6 @@
 	response_harm_simple = "make a weak beta attack at"
 	maxHealth = 500
 	health = 500
-	speed = -2 //ridicilously fast but i dont even know what this is used for
 	armour_penetration = 20
 	attack_verb_continuous = "steals the girlfriend of"
 	attack_verb_simple = "steal the girlfriend of"
@@ -251,7 +255,7 @@
 	loot = list(
 		/obj/effect/gibspawner/human,
 		/obj/effect/spawner/foam_starter/small,
-		/obj/item/soap,
+		/obj/item/grown/bananapeel,
 		/obj/item/clothing/mask/gas/clown_hat,
 	)
 	emotes = list(
@@ -271,16 +275,14 @@
 	response_disarm_simple = "push the unwieldy frame of"
 	maxHealth = 200
 	health = 200
-	speed = 1
-	melee_damage_lower = 5
-	melee_damage_upper = 10
+	melee_damage_upper = 15
 	attack_verb_continuous = "ferociously mauls"
 	attack_verb_simple = "ferociously maul"
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	loot = list(
 		/obj/effect/gibspawner/xeno/bodypartless,
 		/obj/effect/spawner/foam_starter/small,
-		/obj/item/soap,
+		/obj/item/grown/bananapeel/mimanapeel,
 		/obj/item/clothing/mask/gas/clown_hat,
 	)
 	emotes = list(
@@ -309,7 +311,7 @@
 	response_harm_continuous = "bounces off of"
 	maxHealth = 400
 	health = 400
-	speed = 5
+	speed = 1.5
 	melee_damage_lower = 20
 	melee_damage_upper = 40
 	armour_penetration = 30
@@ -321,7 +323,7 @@
 	loot = list(
 		/obj/effect/gibspawner/human,
 		/obj/effect/spawner/foam_starter/small,
-		/obj/item/soap,
+		/obj/item/grown/bananapeel,
 		/obj/item/clothing/mask/gas/clown_hat,
 	)
 	emotes = list(
@@ -347,7 +349,7 @@
 	health = 130
 	pixel_x = -16
 	base_pixel_x = -16
-	speed = -5
+	speed = 1.5
 	melee_damage_lower = 10
 	melee_damage_upper = 20
 	attack_verb_continuous = "awkwardly flails at"
@@ -358,7 +360,7 @@
 		/obj/effect/gibspawner/human,
 		/obj/effect/gibspawner/human/bodypartless,
 		/obj/effect/gibspawner/xeno/bodypartless,
-		/obj/item/soap,
+		/obj/item/grown/bananapeel/gros_michel,
 		/obj/item/clothing/mask/gas/clown_hat,
 	)
 	emotes = list(
@@ -367,8 +369,6 @@
 		BB_SPEAK_CHANCE = 10,
 	)
 
-/mob/living/basic/clown/mutant/slow
-	speed = 20
 
 /mob/living/basic/clown/mutant/glutton
 	name = "banana glutton"
@@ -380,14 +380,19 @@
 	speed = 1
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	obj_damage = 50
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
+	///Tracks how many total foods we have eaten, used for calculating when we should gain max health.
+	var/foods_eaten = 0
+
 	loot = list(
 		/obj/effect/gibspawner/generic,
 		/obj/effect/gibspawner/generic/animal,
 		/obj/effect/gibspawner/human/bodypartless,
 		/obj/effect/gibspawner/xeno/bodypartless,
+		/obj/effect/spawner/random/chance_for_freedom,
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list("hey, buddy", "HONK!!!", "H-h-h-H-HOOOOONK!!!!", "HONKHONKHONK!!!", "HEY, BUCKO, GET BACK HERE!!!", "HOOOOOOOONK!!!"),
@@ -401,7 +406,6 @@
 /mob/living/basic/clown/mutant/glutton/Initialize(mapload)
 	. = ..()
 	GRANT_ACTION(/datum/action/cooldown/regurgitate)
-
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	var/static/list/food_types = list(
 		/obj/item/food/cheesiehonkers,
@@ -447,6 +451,7 @@
 		/obj/item/food/pie/cream,
 		/obj/item/food/grown/tomato,
 		/obj/item/food/meatclown,
+		/obj/item/food/ink_sac,
 	)
 
 	visible_message(span_warning("[src] eats [eaten_atom]!"), span_notice("You eat [eaten_atom]."))
@@ -455,11 +460,18 @@
 		prank_pouch += eaten_atom
 
 	else
+		//Encourage gluttony RP by giving a litle bonus for each obj eaten.
+		foods_eaten++
+		if(!(foods_eaten % 5) && foods_eaten <= 100)
+			balloon_alert(src, "weight gained!")
+			maxHealth += 10
+			health += 10
 		if(istype(eaten_atom, /obj/item/food/grown/banana))
 			var/obj/item/food/grown/banana/banana_morsel = eaten_atom
-			adjustBruteLoss(-banana_morsel.seed.potency * 0.25)
+			adjustBruteLoss(-(banana_morsel.seed.potency / 100 ) * maxHealth * 0.2)
 			prank_pouch += banana_morsel.generate_trash(src)
-
+		else
+			adjustBruteLoss(-maxHealth * 0.1)
 		qdel(eaten_atom)
 
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
@@ -534,6 +546,7 @@
 	desc = "A fusion of clown and banana DNA birthed from a botany experiment gone wrong."
 	icon_state = "banana tree"
 	icon_living = "banana tree"
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_PLANT
 	response_disarm_continuous = "peels"
 	response_disarm_simple = "peel"
 	response_harm_continuous = "peels"
@@ -541,11 +554,12 @@
 	maxHealth = 120
 	health = 120
 	speed = -1
+	habitable_atmos = list("min_oxy" = 1, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	loot = list(
 		/obj/effect/gibspawner/human,
-		/obj/item/seeds/banana,
-		/obj/item/soap,
 		/obj/item/clothing/mask/gas/clown_hat,
+		/obj/effect/spawner/random/bananas_or_nothing,
+		/obj/effect/spawner/random/peel_or_nana,
 	)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK", "Honk!", "YA-HONK!!!"),
@@ -555,12 +569,13 @@
 
 /mob/living/basic/clown/banana/Initialize(mapload)
 	. = ..()
-
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CLOWNANA, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	var/static/list/innate_actions = list(
 		/datum/action/cooldown/exquisite_bunch,
 		/datum/action/cooldown/rustle,
 	)
 	grant_actions_by_list(innate_actions)
+
 
 ///drops peels around the mob when activated
 /datum/action/cooldown/rustle

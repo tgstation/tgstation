@@ -283,7 +283,7 @@
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(module.part_activated || !module.has_required_parts(mod_parts, need_active = TRUE))
 				continue
-				module.on_part_activation()
+			module.on_part_activation()
 			module.part_activated = TRUE
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
@@ -304,14 +304,19 @@
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(!module.part_activated && module.has_required_parts(mod_parts, need_active = TRUE))
 				module.on_part_activation()
+				module.part_activated = TRUE
 	else
 		for(var/obj/item/mod/module/module as anything in modules)
 			if(!module.part_activated)
 				continue
 			module.on_part_deactivation()
+			module.part_activated = FALSE
 	update_charge_alert()
 	update_appearance(UPDATE_ICON_STATE)
-	wearer.update_clothing()
+	var/updated_slots = slot_flags
+	for (var/slot_key in mod_parts)
+		updated_slots |= text2num(slot_key)
+	wearer.update_clothing(updated_slots)
 
 /// Quickly deploys all the suit parts and if successful, seals them and turns on the suit. Intended mostly for outfits.
 /obj/item/mod/control/proc/quick_activation()

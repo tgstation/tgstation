@@ -12,7 +12,7 @@ const noticestyle = {
 
 export const AntagInfoVoidwalker = (props) => {
   return (
-    <Window width={620} height={410}>
+    <Window width={620} height={470}>
       <Window.Content backgroundColor="#0d0d0d">
         <Stack fill>
           <Stack.Item width="46.2%">
@@ -54,7 +54,8 @@ export const AntagInfoVoidwalker = (props) => {
                 </LabeledList.Item>
                 <LabeledList.Item label="Void Eater">
                   Your divine appendage; it allows you to incapacitate the loud
-                  ones and instantly break windows.
+                  ones and instantly break windows, or convert soft walls into
+                  windows for you to pass through.
                 </LabeledList.Item>
                 <LabeledList.Item label="Cosmic Physiology">
                   Your natural camouflage makes you nearly invisible in space,

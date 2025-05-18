@@ -29,6 +29,7 @@
 	attack_vis_effect = ATTACK_EFFECT_CLAW
 	melee_attack_cooldown = 1 SECONDS
 
+	status_flags = CANPUSH
 	faction = list(FACTION_STATUE)
 	speak_emote = list("screams")
 	death_message = "falls apart into a fine dust."
@@ -50,6 +51,7 @@
 	move_resist = MOVE_FORCE_EXTREMELY_STRONG
 	pull_force = MOVE_FORCE_EXTREMELY_STRONG
 
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	ai_controller = /datum/ai_controller/basic_controller/statue
 
 /mob/living/basic/statue/Initialize(mapload)
