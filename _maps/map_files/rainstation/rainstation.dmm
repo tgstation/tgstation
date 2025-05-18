@@ -48052,16 +48052,6 @@
 /obj/structure/sign/warning/secure_area/directional/west,
 /turf/open/floor/engine,
 /area/station/science/explab)
-"nls" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/cable,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
-/area/station/solars/starboard/fore{
-	area_has_base_lighting = 1;
-	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff";
-	default_gravity = 1
-	})
 "nmM" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/white,
@@ -101743,10 +101733,10 @@ aag
 aag
 aag
 aag
-nls
-nls
-nls
-nls
+fFa
+fFa
+fFa
+fFa
 amv
 ane
 cxN
