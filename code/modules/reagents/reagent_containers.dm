@@ -117,15 +117,13 @@
 	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
 	mode_change_message(user)
 
-/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, list/modifiers)
-	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
-		return ..()
+/obj/item/reagent_containers/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!user.combat_mode)
-		return ..()
-	if (try_splash(user, target))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return NONE // non-combat-mode-rmb allows for stuff like opening containers or attacking (bottle breaking)
+	if(try_splash(user, interacting_with))
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /// Tries to splash the target, called when right-clicking with a reagent container.
 /obj/item/reagent_containers/proc/try_splash(mob/user, atom/target)
@@ -137,7 +135,6 @@
 
 	var/punctuation = ismob(target) ? "!" : "."
 
-	var/reagent_text
 	user.visible_message(
 		span_danger("[user] splashes the contents of [src] onto [target][punctuation]"),
 		span_danger("You splash the contents of [src] onto [target][punctuation]"),
@@ -232,7 +229,7 @@
 		target.visible_message(span_danger("[M] is splashed with something!"), \
 						span_userdanger("[M] is splashed with something!"))
 		if(splasher)
-			log_combat(splasher, M, "splashed", reagents.get_reagent_log_string())
+			log_combat(splasher, M, "splashed", src, "containing [reagents.get_reagent_log_string()] [was_thrown ? "(thrown)" : ""]")
 		reagents.expose(target, TOUCH, splash_multiplier)
 		reagents.expose(target_turf, TOUCH, (1 - splash_multiplier)) // 1 - splash_multiplier because it's what didn't hit the target
 
@@ -241,9 +238,8 @@
 		return
 
 	else
-		if(isturf(target) && reagents.reagent_list.len && splasher)
-			log_combat(splasher, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
-			splasher.log_message("splashed (thrown) [english_list(reagents.reagent_list)] on [target].", LOG_ATTACK)
+		if(isturf(target) && length(reagents.reagent_list) && splasher)
+			log_combat(splasher, target, "splashed [english_list(reagents.reagent_list)]", src, "in [AREACOORD(target)] [was_thrown ? "(thrown)" : ""]")
 			message_admins("[ADMIN_LOOKUPFLW(splasher)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
 		visible_message(span_notice("[src] spills its contents all over [target]."))
 		reagents.expose(target, TOUCH)
@@ -343,3 +339,35 @@
 	. = ..()
 	if(!initial && (slot & ITEM_SLOT_HANDS) && reagent_container_liquid_sound && reagents.total_volume > 0)
 		playsound(src, reagent_container_liquid_sound, LIQUID_SLOSHING_SOUND_VOLUME, vary = TRUE, ignore_walls = FALSE)
+
+/obj/item/reagent_containers/proc/try_refill(atom/target, mob/living/user)
+	if(!reagents.total_volume)
+		to_chat(user, span_warning("[src] is empty!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(target.reagents.holder_full())
+		to_chat(user, span_warning("[target] is full."))
+		return ITEM_INTERACT_BLOCKING
+
+	var/trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
+	playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
+	to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
+	SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
+	target.update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/proc/try_drain(atom/target, mob/living/user)
+	if(!target.reagents.total_volume)
+		to_chat(user, span_warning("[target] is empty and can't be refilled!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(reagents.holder_full())
+		to_chat(user, span_warning("[src] is full."))
+		return ITEM_INTERACT_BLOCKING
+
+	var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
+	playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
+	to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
+	SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
+	target.update_appearance()
+	return ITEM_INTERACT_SUCCESS

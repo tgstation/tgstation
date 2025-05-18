@@ -10,7 +10,8 @@
 	resistance_flags = NONE
 
 	isGlass = TRUE
-
+	attack_verb_continuous = list("smashes", "bashes")
+	attack_verb_simple = list("smash", "bash")
 
 /obj/item/reagent_containers/cup/glass/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = TRUE)
 	. = ..()
@@ -25,7 +26,7 @@
 		return
 	if(bartender_check(target, thrower) && throwingdatum)
 		return
-	splash_reagents(target, throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
+	splash_reagents(target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
 	var/obj/item/broken_bottle/B = new (loc)
 	B.mimic_broken(src, target, break_top)
 	qdel(src)
@@ -350,7 +351,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/juice/smallcarton/smash(atom/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
 	if(bartender_check(target, thrower) && throwingdatum)
 		return
-	splash_reagents(target, throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
+	splash_reagents(target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
 	var/obj/item/broken_bottle/bottle_shard = new(drop_location())
 	bottle_shard.mimic_broken(src, target)
 	qdel(src)

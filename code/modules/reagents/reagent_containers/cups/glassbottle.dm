@@ -125,7 +125,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
 	if(bartender_check(target, thrower) && throwingdatum)
 		return FALSE
-	splash_reagents(target, throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
+	splash_reagents(target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
 	var/obj/item/broken_bottle/broken = new(drop_location())
 	if(!throwingdatum && thrower)
 		thrower.put_in_hands(broken)
@@ -138,68 +138,41 @@
 	target.Bumped(broken)
 	return TRUE
 
-/obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/living/user, atom/target)
-
-	if(!target || !isliving(target))
-		return ..()
-
+/obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/user, atom/target)
 	if(!isGlass)
 		return ..()
+	return FALSE // instead of splashing, hit them with the bottle!
 
-	if(HAS_TRAIT(user, TRAIT_PACIFISM))
-		to_chat(user, span_warning("You don't want to harm [target]!"))
-		return FALSE
+/obj/item/reagent_containers/cup/glass/bottle/afterattack(atom/target, mob/user, list/modifiers)
+	if(!isGlass)
+		return
 
-	var/mob/living/living_target = target
-	var/obj/item/bodypart/affecting = user.zone_selected //Find what the player is aiming at
+	var/head_hitter = user.zone_selected == BODY_ZONE_HEAD && isliving(target)
 
-	var/armor_block = 0 //Get the target's armor values for normal attack damage.
-	var/knockdown_effectiveness = 0 //The more force the bottle has, the longer the duration.
+	// An attack that targets the head of a living mob will attempt to knock them down
+	if(head_hitter)
+		var/mob/living/living_target = target
+		var/knockdown_effectiveness = 0
+		if(!HAS_TRAIT(target, TRAIT_HEAD_INJURY_BLOCKED))
+			knockdown_effectiveness = bottle_knockdown_duration + ((force / 10) * 1 SECONDS) - living_target.getarmor(BODY_ZONE_HEAD, MELEE)
+		if(prob(knockdown_effectiveness))
+			living_target.Knockdown(min(knockdown_effectiveness, 20 SECONDS))
 
-	//Calculating duration and calculating damage.
-	if(ishuman(target))
-
-		var/mob/living/carbon/human/H = target
-		var/headarmor = 0 // Target's head armor
-		armor_block = H.run_armor_check(affecting, MELEE, "", "", armour_penetration) // For normal attack damage
-
-		//If they have a hat/helmet and the user is targeting their head.
-		if(istype(H.head, /obj/item/clothing/head) && affecting == BODY_ZONE_HEAD)
-			headarmor = H.head.get_armor_rating(MELEE)
-		//Calculate the knockdown duration for the target.
-		knockdown_effectiveness = (bottle_knockdown_duration - headarmor) + force
+	// Displays a custom message which follows the attack
+	if(target == user)
+		target.visible_message(
+			span_warning("[user] smashes [src] [head_hitter ? "over [user.p_their()] head" : "against [user.p_them()]selves"]!"),
+			span_warning("You smash [src] [head_hitter ? "over your head" : "against yourself"]!"),
+		)
 
 	else
-		//Only humans can have armor, right?
-		armor_block = living_target.run_armor_check(affecting, MELEE)
-		if(affecting == BODY_ZONE_HEAD)
-			knockdown_effectiveness = bottle_knockdown_duration + force
-	//Apply the damage!
-	armor_block = min(90,armor_block)
-	living_target.apply_damage(force, BRUTE, affecting, armor_block)
+		target.visible_message(
+			span_warning("[user] smashes [src] [head_hitter ? "over [target]'s head" : "against [target]"]!"),
+			span_warning("[user] smashes [src] [head_hitter ? "over your head" : "against you"]!"),
+		)
 
-	// You are going to knock someone down for longer if they are not wearing a helmet.
-	var/head_attack_message = ""
-	if(affecting == BODY_ZONE_HEAD && iscarbon(target) && !HAS_TRAIT(target, TRAIT_HEAD_INJURY_BLOCKED))
-		head_attack_message = " on the head"
-		if(knockdown_effectiveness && prob(knockdown_effectiveness))
-			living_target.apply_effect(min(knockdown_effectiveness, 200) , EFFECT_KNOCKDOWN)
-
-	//Display an attack message.
-	if(target != user)
-		target.visible_message(span_danger("[user] hits [target][head_attack_message] with a bottle of [src.name]!"), \
-				span_userdanger("[user] hits you [head_attack_message] with a bottle of [src.name]!"))
-	else
-		target.visible_message(span_danger("[target] hits [target.p_them()]self with a bottle of [src.name][head_attack_message]!"), \
-				span_userdanger("You hit yourself with a bottle of [src.name][head_attack_message]!"))
-
-	//Attack logs
-	log_combat(user, target, "attacked", src)
-
-	//Finally, smash the bottle. This kills (del) the bottle.
+	// Finally, smash the bottle. This kills (del) the bottle and also does all the logging for us
 	smash(target, user)
-
-	return TRUE
 
 /*
  * Proc to make the bottle spill some of its contents out in a froth geyser of varying intensity/height

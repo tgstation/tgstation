@@ -105,39 +105,10 @@
 		AddComponent(/datum/component/infective, diseases_to_add)
 	return .
 
-/obj/item/reagent_containers/proc/try_refill(atom/target, mob/living/user)
-	if(!reagents.total_volume)
-		to_chat(user, span_warning("[src] is empty!"))
-		return ITEM_INTERACT_BLOCKING
-
-	if(target.reagents.holder_full())
-		to_chat(user, span_warning("[target] is full."))
-		return ITEM_INTERACT_BLOCKING
-
-	var/trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-	playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
-	to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
-	SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, target)
-	target.update_appearance()
-	return ITEM_INTERACT_SUCCESS
-
-/obj/item/reagent_containers/proc/try_drain(atom/target, mob/living/user)
-	if(!target.reagents.total_volume)
-		to_chat(user, span_warning("[target] is empty and can't be refilled!"))
-		return ITEM_INTERACT_BLOCKING
-
-	if(reagents.holder_full())
-		to_chat(user, span_warning("[src] is full."))
-		return ITEM_INTERACT_BLOCKING
-
-	var/trans = round(target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
-	playsound(target.loc, SFX_LIQUID_POUR, 50, TRUE)
-	to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
-	SEND_SIGNAL(src, COMSIG_REAGENTS_CUP_TRANSFER_FROM, target)
-	target.update_appearance()
-	return ITEM_INTERACT_SUCCESS
-
 /obj/item/reagent_containers/cup/interact_with_atom(atom/target, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 	if(!is_open_container())
 		return NONE
 
@@ -153,8 +124,9 @@
 	return NONE
 
 /obj/item/reagent_containers/cup/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
-	if(user.combat_mode) // allows splashing
-		return ITEM_INTERACT_SKIP_TO_ATTACK
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 	if(!is_open_container())
 		return NONE
 
