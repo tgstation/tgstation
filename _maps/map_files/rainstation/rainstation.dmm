@@ -297,7 +297,8 @@
 /area/station/solars/starboard/aft{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "abv" = (
 /obj/effect/turf_decal/stripes/line{
@@ -965,7 +966,8 @@
 /area/station/solars/port/fore{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "adt" = (
 /turf/open/floor/glass,
@@ -1151,7 +1153,8 @@
 /area/station/solars/port/aft{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "adU" = (
 /obj/structure/lattice/catwalk,
@@ -1159,7 +1162,8 @@
 /area/station/solars/starboard/aft{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "adW" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -3161,7 +3165,8 @@
 /area/station/solars/starboard/aft{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "ajp" = (
 /turf/open/floor/iron/dark/herringbone,
@@ -4689,7 +4694,8 @@
 /area/station/solars/starboard/fore{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "anG" = (
 /obj/structure/sign/warning/vacuum/external/directional/north,
@@ -4950,7 +4956,8 @@
 /area/station/solars/port/fore{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "aox" = (
 /obj/machinery/camera/directional/south{
@@ -6612,7 +6619,8 @@
 /area/station/solars/port/fore{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "auA" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -29081,7 +29089,8 @@
 /area/station/solars/starboard/fore{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "bVJ" = (
 /turf/closed/wall/r_wall,
@@ -30746,7 +30755,8 @@
 /area/station/solars/port/aft{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "cce" = (
 /obj/structure/disposalpipe/segment{
@@ -35984,7 +35994,8 @@
 /area/station/solars/starboard/aft{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "cNL" = (
 /obj/structure/cable,
@@ -48149,7 +48160,8 @@
 /area/station/solars/starboard/fore{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "nmM" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -49681,7 +49693,8 @@
 /area/station/solars/port/aft{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "oAm" = (
 /obj/structure/disposalpipe/segment,
@@ -51522,7 +51535,8 @@
 /area/station/solars/starboard/fore{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "pYA" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -58971,7 +58985,8 @@
 /area/station/solars/port/fore{
 	area_has_base_lighting = 1;
 	base_lighting_alpha = 110;
-	base_lighting_color = "#66ccff"
+	base_lighting_color = "#66ccff";
+	default_gravity = 1
 	})
 "wLn" = (
 /obj/structure/window/spawner/directional/east,
@@ -76931,7 +76946,7 @@ auz
 auz
 auz
 auz
-fFa
+wLh
 ajW
 akB
 alh
