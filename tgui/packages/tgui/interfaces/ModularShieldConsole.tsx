@@ -42,7 +42,6 @@ export const ModularShieldConsole = () => {
   );
 };
 
-
 const GeneratorTable = () => {
   const { data } = useBackend<Data>();
   const { generators } = data;
