@@ -100,12 +100,12 @@
 
 /obj/item/stack/sticky_tape/pointy
 	name = "pointy tape"
-	singular_name = "pointy tape"
-	desc = "Used for sticking to things for sticking said things inside people."
-	prefix = "pointy"
 	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/stack/sticky_tape/pointy"
 	post_init_icon_state = "tape_spikes"
+	singular_name = "pointy tape"
+	desc = "Used for sticking to things for sticking said things inside people."
+	prefix = "pointy"
 	conferred_embed = /datum/embedding/pointy_tape
 	merge_type = /obj/item/stack/sticky_tape/pointy
 	greyscale_config = /datum/greyscale_config/tape/spikes
