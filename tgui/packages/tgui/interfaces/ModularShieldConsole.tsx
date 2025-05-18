@@ -112,7 +112,7 @@ const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
           selected={active}
           content={active ? 'On' : 'Off'}
           icon="power-off"
-          onClick={() => act('toggle_shields', { id: id })}
+          onClick={() => act('toggle_shields', { id })}
         />
       </Table.Cell>
     </Table.Row>
