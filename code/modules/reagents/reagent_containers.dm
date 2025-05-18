@@ -229,7 +229,7 @@
 		reagents.expose(target, TOUCH, splash_multiplier)
 		reagents.expose(target_turf, TOUCH, (1 - splash_multiplier)) // 1 - splash_multiplier because it's what didn't hit the target
 
-	else if(bartender_check(target, thrown_by) && throwingdatum)
+	else if(throwingdatum && bartender_check(target, thrown_by))
 		visible_message(span_notice("[src] lands onto \the [target] without spilling a single drop."))
 		return
 
