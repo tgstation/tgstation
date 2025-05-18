@@ -338,7 +338,7 @@
 			var/coefficient = build_efficiency(design.build_path)
 
 			//check for materials
-			if(!materials.can_use_resource(ID_DATA(usr)))
+			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
 				return
 			if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
 				say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")

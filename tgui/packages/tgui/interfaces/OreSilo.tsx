@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Box,
+  Collapsible,
   Icon,
   Image,
   LabeledList,
@@ -223,10 +224,8 @@ const LogsList = (props: LogsListProps) => {
   );
 };
 
-type AmountFormatting = (amount: number) => string;
-
 const EntryTitle = (log: Log) => {
-  const { action, amount, noun } = log;
+  const { action, amount, noun, user_data, areaName } = log;
 
   const Verb = (
     <Box as="span" className="actionPart">
@@ -234,10 +233,14 @@ const EntryTitle = (log: Log) => {
     </Box>
   );
 
-  const formatAmount = (amount: number) => {
+  const formatAmount = (action: string, amount: number) => {
+    const isSheetAction = action === 'EJECT' || action === 'DEPOSIT';
     const rawAmount = Math.abs(amount);
+    if (!isSheetAction) {
+      return rawAmount;
+    }
     const proportionalAmount = rawAmount / 100;
-    return ` ${proportionalAmount} sheets `;
+    return ` ${proportionalAmount} `;
   };
 
   const Noun = (
@@ -248,7 +251,27 @@ const EntryTitle = (log: Log) => {
 
   return (
     <>
-      {Verb} {formatAmount(amount)} {Noun}
+      {
+        <Box as="span" style={{ textTransform: 'uppercase' }}>
+          {Verb}
+        </Box>
+      }{' '}
+      {formatAmount(action, amount)} {Noun}
+      {', '}
+      {'['}
+      {user_data.Name}
+      {' | '}
+      {
+        <Box
+          as="span"
+          style={{
+            textTransform: 'uppercase',
+          }}
+        >
+          {user_data.Assignment}
+        </Box>
+      }
+      {']'}
     </>
   );
 };
@@ -265,20 +288,25 @@ const LogEntry = (props: Log) => {
     user_data,
   } = props;
   return (
-    <Section title={EntryTitle(props)}>
-      <LabeledList>
-        <LabeledList.Item label="Time">{time}</LabeledList.Item>
-        <LabeledList.Item label="Machine">
-          {capitalize(machineName)}
-        </LabeledList.Item>
-        <LabeledList.Item label="Location">{areaName}</LabeledList.Item>
-        <LabeledList.Item label="Materials" color={amount > 0 ? 'good' : 'bad'}>
-          {rawMaterials}
-        </LabeledList.Item>
-        <LabeledList.Item label="User">
-          {user_data['Name']} {user_data['Assignment']}
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
+    <Collapsible title={EntryTitle(props)}>
+      <Section>
+        <LabeledList>
+          <LabeledList.Item label="Time">{time}</LabeledList.Item>
+          <LabeledList.Item label="Machine">
+            {capitalize(machineName)}
+          </LabeledList.Item>
+          <LabeledList.Item label="Location">{areaName}</LabeledList.Item>
+          <LabeledList.Item
+            label="Materials"
+            color={amount > 0 ? 'good' : 'bad'}
+          >
+            {rawMaterials}
+          </LabeledList.Item>
+          <LabeledList.Item label="User">
+            {user_data['Name']} {user_data['Assignment']}
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
+    </Collapsible>
   );
 };

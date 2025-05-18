@@ -76,14 +76,14 @@
 /obj/machinery/ore_silo/proc/on_item_consumed(datum/component/material_container/container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context, alist/user_data)
 	SIGNAL_HANDLER
 
-	silo_log(context, "deposited", amount_inserted, item_inserted.name, mats_consumed, user_data)
+	silo_log(context, "DEPOSIT", amount_inserted, item_inserted.name, mats_consumed, user_data)
 
 	SEND_SIGNAL(context, COMSIG_SILO_ITEM_CONSUMED, container, item_inserted, last_inserted_id, mats_consumed, amount_inserted)
 
 /obj/machinery/ore_silo/proc/log_sheets_ejected(datum/component/material_container/container, obj/item/stack/sheet/sheets, atom/context, alist/user_data)
 	SIGNAL_HANDLER
 
-	silo_log(context, "ejected", -sheets.amount * SHEET_MATERIAL_AMOUNT, "[sheets.singular_name]", sheets.custom_materials, user_data)
+	silo_log(context, "EJECT", -sheets.amount * SHEET_MATERIAL_AMOUNT, "[sheets.singular_name]", sheets.custom_materials, user_data)
 
 /obj/machinery/ore_silo/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -140,7 +140,7 @@
 /obj/machinery/ore_silo/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "OreSilo")
+		ui = new(user, src, "OreSilo", "Ore Silo Control")
 		ui.open()
 
 /obj/machinery/ore_silo/ui_static_data(mob/user)
