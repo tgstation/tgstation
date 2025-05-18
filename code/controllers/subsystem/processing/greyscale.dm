@@ -159,7 +159,7 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 
 	ExportMapPreviewsForType("unsorted", /atom, handled_types)
 
-/// Checks that we do not have any parent types coming before subtypes in the list (which is an assoc list (filepath, typepath))
+/// Checks that we do not have any parent types coming before subtypes in the types_that_get_their_own_file list (which is an assoc list (filepath, typepath))
 /datum/controller/subsystem/processing/greyscale/proc/check_map_previews_filepath_order(list/our_list)
 	var/list/type_paths_to_check = list()
 	for(var/filepath in our_list)
