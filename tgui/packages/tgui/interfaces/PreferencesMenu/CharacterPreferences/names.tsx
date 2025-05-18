@@ -154,7 +154,7 @@ export function NameInput(props: NameInputProps) {
             <Input
               autoSelect
               expensive
-              onChange={updateName}
+              onEnter={updateName}
               onEscape={() => {
                 setLastNameBeforeEdit(null);
               }}
