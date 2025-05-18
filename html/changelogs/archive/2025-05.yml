@@ -377,3 +377,108 @@
       into them!
   TealSeer:
   - bugfix: fixed cross-server newscaster functionality
+2025-05-17:
+  Absolucy:
+  - bugfix: False walls properly smooth with objects now, such as other false walls.
+  Holoo-1:
+  - bugfix: fixed presets, custom explosion, fall sound in admin supply pod
+  - admin: admin supply pod now can have flashy explosion, set it via custom explosion
+      button. Added flash range to admin logs
+  Maurukas:
+  - qol: Some additional lighting has been added to Catwalkstation recycling
+  - bugfix: Mail delivery has been fixed for the theater, medbay and chemistry on
+      Catwalkstation
+  - qol: Cargo has received a microwave and supply of donk pockets on Catwalkstation
+  - bugfix: Shutter controls have been added to the Catwalkstation cargo warehouse
+  Melbert:
+  - balance: Damp Rags can now get dirty when using them to clean blood, passing blood
+      DNA along.
+  - rscadd: Gauze now gets dirty when apply it to actively bleeding wounds. Doesn't
+      spread disease or anything, just passes blood DNA. It can be cleaned in a sink.
+  - rscdel: Removed cloth on sink / gauze on sink interaction to make rags. Just use
+      the crafting menu
+  - qol: Health Analyzer tells you what type of blood your target can accept.
+  Retrino:
+  - qol: renames some door remotes to their department names
+  SmArtKar:
+  - bugfix: Fixed monkeys being weirdly rotated when attached to big manipulators
+      pointing sideways
+  - bugfix: Icebox artifact exports no longer claim they're from a lava planet
+  - bugfix: Fixed tactical medkits not giving medibots a bezerk skin
+  - bugfix: Fixed fireplace particle positioning
+  - bugfix: Fixed flaggelant's robe spamming your chat with gravity messages
+  - refactor: Refactored the planemaster debugger tool
+  - balance: Power Miners are now ash and snowstorm immune
+  - bugfix: Holoparasites no longer take damage from ash storms inside of storm-protected
+      hosts
+  Vanilla1040:
+  - bugfix: Fixed interdyne MOD using digi sprite on plantigrade
+  grungussuss:
+  - qol: added some line breaks for the admin player panel for readibility
+  jlsnow301:
+  - bugfix: 'Paper, a UI of dizzying complexity, has once again been beaten into submission:
+      You should be able to type into forms again. For now.'
+  - bugfix: Fixed an uncommon bluescreen in the rapid pipe dispenser UI.
+  moocowswag:
+  - bugfix: You can no longer finish a machine frame if it is on the same tile as
+      a machine that it would become.
+  necromanceranne:
+  - balance: Reduces rubbershot stamina damage from 11 damage per pellet to 10 damage
+      per pellet.
+2025-05-18:
+  00-Steven:
+  - bugfix: Holding your PDA to the nearest camera lets the AI see your notepad contents
+      again.
+  - bugfix: PDA notepad app no longer always shows a blank field upon being opened.
+  Artemchik542:
+  - bugfix: Quirk "quadruple amputee" now will return your original limbs back if
+      you off it
+  - qol: Quirk "prosthetic limb" now resets more correctly
+  Krysonism:
+  - rscadd: banana gluttons gain max health and heal by eating foods! And they can
+      smash doors.
+  - balance: clown mobs no longer get nuked by bad atmos.
+  - balance: blown mobs have new death drops.
+  - balance: most clown more are now faster!
+  - balance: clownanas are now plants and are immune to carbon dioxide.
+  - balance: living lube is now a slime and highly brute resistant.
+  - balance: longfaces now hit decently hard.
+  - bugfix: clownanas and longfaces can now be biopsied.
+  - bugfix: fixed medical stacks producing far too few items.
+  - qol: medical stack recipes are more granular.
+  Majkl-J:
+  - qol: Notes on airlocks now tell you how they can be removed on examine
+  Melbert:
+  - bugfix: Spear 2x damage multiplier to secure lockers is now also applied on thrown
+      hit.
+  Pickle-Coding:
+  - rscadd: Supermatter and tesla zaps can trigger electrolyzer reactions.
+  - balance: Hypernoblium to antinoblium electrolysis requires supermatter zaps above
+      5 GeV.
+  - balance: Hypernoblium is converted to antinoblium 1:1 during electrolysis.
+  Rhials:
+  - rscadd: Voidwalkers can now convert soft walls into void windows, using the right-click
+      of their Void Eater.
+  - balance: Voidwalkers can now walk full-speed on nearstation tiles.
+  SmArtKar:
+  - bugfix: Fixed anomalock heart constnatly runtiming
+  - bugfix: Fixed mech bounty runtimes
+  - bugfix: Fixed syrup bottle runtimes
+  SyncIt21:
+  - code_imp: borg omnitool unit test is much faster
+  TealSeer:
+  - bugfix: fixed cable coil going invisible when you select the two cable hub options
+  TiviPlus:
+  - refactor: Added the possibility for keybindings to report the turf they clicked
+      on.
+  Y0SH1M4S73R:
+  - rscadd: Rumor has it the Wizard Federation has started using soul shards to craft
+      MOD cores powered by the wearer's soul. Maybe taking a close look at a soul
+      shard would tell you if there's any truth to this rumor.
+  - bugfix: The movement of shuttles will no longer detach usb cables attached to
+      something on the same shuttle.
+  moocowswag:
+  - bugfix: Modular shield generator modules no longer remember or miss their generator
+      when its destroyed
+  timothymtorres:
+  - bugfix: Fix `map_export` admin verb not properly saving a massive amount of objects.
