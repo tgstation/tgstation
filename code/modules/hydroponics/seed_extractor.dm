@@ -21,6 +21,10 @@
 
 	//generate a random multiplier if value is not specified
 	var/list/seeds = list()
+
+	if(HAS_TRAIT(object, TRAIT_SYNTHETIC_FRUIT))
+		t_max = 0
+
 	if(t_max == -1)
 		if(extractor)
 			t_max = rand(1,4) * extractor.seed_multiplier
