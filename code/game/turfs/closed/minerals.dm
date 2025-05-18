@@ -467,7 +467,7 @@
 	baseturfs = /turf/open/misc/ashplanet/wateryrock/rainworld
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	weak_turf = TRUE
-	proximity_based = TRUE
+	mineralChance = 15
 
 /// Near exact same subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
 /turf/closed/mineral/snowmountain/do_not_chasm

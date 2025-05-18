@@ -15570,6 +15570,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/light/floor,
 /turf/open/floor/iron/smooth_corner,
 /area/station/hallway/secondary/exit/departure_lounge)
 "aXI" = (
@@ -15929,6 +15930,17 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "aZk" = (
 /obj/structure/table/reinforced/plastitaniumglass,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
 /obj/item/oar,
 /obj/item/oar,
 /obj/item/oar,
@@ -27051,7 +27063,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/corner,
+/turf/open/floor/iron/dark/textured_corner,
 /area/station/hallway/primary/aft)
 "bNP" = (
 /obj/structure/disposalpipe/segment{
@@ -27309,7 +27321,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/hangover,
-/turf/open/floor/iron/smooth,
+/turf/open/floor/iron/dark/textured_corner,
 /area/station/hallway/primary/aft)
 "bOR" = (
 /obj/structure/disposalpipe/segment{
@@ -27680,7 +27692,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/iron/checker,
+/turf/open/floor/iron/dark/textured_corner,
 /area/station/hallway/primary/aft)
 "bQg" = (
 /turf/open/floor/iron/smooth,
@@ -27877,7 +27889,7 @@
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/corner,
+/turf/open/floor/iron/dark/textured_corner,
 /area/station/hallway/primary/aft)
 "bRb" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -27947,11 +27959,11 @@
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/engineering)
 "bRq" = (
-/obj/effect/turf_decal/tile/yellow{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/corner,
-/area/station/hallway/primary/aft)
+/obj/structure/lattice/water,
+/obj/vehicle/ridden/lavaboat,
+/obj/item/oar,
+/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/area/rainworld/surface/outdoors/nospawn)
 "bRr" = (
 /obj/structure/chair{
 	dir = 8
@@ -28732,7 +28744,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
 /area/station/engineering/atmos)
@@ -28758,7 +28770,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/dark/corner,
+/turf/open/floor/iron/dark/textured_corner,
 /area/station/engineering/atmos)
 "bUJ" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
@@ -28992,7 +29004,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/turf/open/floor/iron/dark/corner{
+/turf/open/floor/iron/dark/textured_corner{
 	dir = 1
 	},
 /area/station/engineering/atmos)
@@ -29017,7 +29029,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 8
 	},
-/turf/open/floor/iron/dark/corner,
+/turf/open/floor/iron/dark/textured_corner,
 /area/station/engineering/atmos)
 "bVS" = (
 /obj/structure/sign/warning/secure_area,
@@ -40865,7 +40877,7 @@
 	dir = 4
 	},
 /obj/machinery/firealarm/directional/east,
-/turf/open/floor/iron/dark/corner,
+/turf/open/floor/iron/dark/textured_corner,
 /area/station/hallway/primary/aft)
 "gSu" = (
 /obj/structure/disposalpipe/segment{
@@ -51519,6 +51531,15 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"qdo" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/hallway/primary/aft)
 "qdq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/brown/visible/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
@@ -54538,6 +54559,10 @@
 /obj/machinery/vending/wardrobe/coroner_wardrobe,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
+"sRw" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "sRK" = (
 /obj/structure/table,
 /obj/machinery/cell_charger{
@@ -58878,10 +58903,8 @@
 /turf/open/floor/iron/dark,
 /area/station/science/breakroom)
 "wNR" = (
-/obj/machinery/door/airlock/external{
-	name = "Escape Airlock"
-	},
 /obj/structure/fans/tiny,
+/obj/machinery/door/airlock/external/glass,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/exit/departure_lounge)
 "wOb" = (
@@ -89945,13 +89968,13 @@ bzs
 bJq
 bzs
 bQU
-bRq
+bQf
 gSg
 bNO
 bOQ
 bQf
-bRq
-bNO
+bQf
+qdo
 bTK
 bUE
 bWM
@@ -101283,7 +101306,7 @@ jKO
 mDB
 oNZ
 cNW
-atS
+cNW
 cNW
 mjd
 dgZ
@@ -101796,7 +101819,7 @@ ccV
 cac
 cvO
 auf
-cOe
+sRw
 cOe
 aqW
 etp
@@ -102310,8 +102333,8 @@ hzF
 xfn
 vXe
 cNW
-aUO
-aUO
+cOT
+cOT
 cNW
 mjd
 dgZ
@@ -109435,7 +109458,7 @@ sel
 cqq
 cqq
 cqq
-jPY
+bRq
 rrY
 wte
 hZS

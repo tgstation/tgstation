@@ -56,10 +56,9 @@
 /turf/open/floor/iron/white,
 /area/ruin/comms_agent)
 "ds" = (
-/obj/structure/bed/maint,
-/obj/item/bedsheet/syndie,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/tile,
+/obj/machinery/computer/operating,
+/turf/open/floor/plastic,
 /area/ruin/comms_agent)
 "dP" = (
 /obj/structure/closet/crate/secure/freezer/commsagent,
@@ -251,7 +250,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/wood/tile,
+/turf/open/floor/plastic,
 /area/ruin/comms_agent)
 "nm" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
@@ -287,7 +286,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/turf/open/floor/wood/tile,
+/turf/open/floor/plastic,
 /area/ruin/comms_agent)
 "qE" = (
 /obj/item/pickaxe,
@@ -367,10 +366,9 @@
 /turf/open/floor/wood,
 /area/ruin/comms_agent)
 "uY" = (
-/obj/effect/mapping_helpers/broken_floor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood/tile,
+/turf/open/floor/plastic,
 /area/ruin/comms_agent)
 "vK" = (
 /obj/effect/turf_decal/siding/wideplating/light,
@@ -563,14 +561,21 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
-/turf/open/floor/wood/tile,
+/turf/open/floor/plastic,
+/area/ruin/comms_agent)
+"Fu" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/plastic,
 /area/ruin/comms_agent)
 "FL" = (
-/obj/structure/table/wood,
 /obj/item/multitool,
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
-/turf/open/floor/wood/tile,
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
+/obj/structure/table,
+/turf/open/floor/plastic,
 /area/ruin/comms_agent)
 "Gn" = (
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
@@ -673,7 +678,8 @@
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/m9mm,
 /obj/item/clothing/head/costume/ushanka,
-/turf/open/floor/wood/tile,
+/obj/item/disk/surgery/brainwashing,
+/turf/open/floor/plastic,
 /area/ruin/comms_agent)
 "JY" = (
 /obj/structure/cable,
@@ -860,9 +866,8 @@
 /turf/open/floor/circuit/red,
 /area/ruin/comms_agent)
 "Pj" = (
-/obj/structure/bed/maint,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood/tile,
+/obj/structure/table/optable,
+/turf/open/floor/plastic,
 /area/ruin/comms_agent)
 "PB" = (
 /obj/machinery/computer/message_monitor{
@@ -1705,7 +1710,7 @@ TV
 TV
 TV
 TV
-TV
+KQ
 KQ
 KQ
 TV
@@ -1762,9 +1767,9 @@ KQ
 KQ
 KQ
 nm
-KQ
-KQ
-KQ
+tl
+tl
+tl
 KQ
 TV
 TV
@@ -1822,7 +1827,7 @@ QU
 nP
 nP
 tl
-KQ
+tl
 KQ
 TV
 TV
@@ -1880,7 +1885,7 @@ vV
 nP
 tl
 tl
-KQ
+tl
 TV
 TV
 TV
@@ -2156,7 +2161,7 @@ KQ
 KQ
 nP
 Pj
-HX
+Fu
 Fm
 WR
 Lr
@@ -2835,7 +2840,7 @@ TV
 TV
 KQ
 KQ
-KQ
+tl
 nP
 nP
 Uv
@@ -2892,8 +2897,8 @@ TV
 TV
 TV
 TV
-KQ
-KQ
+tl
+tl
 nP
 nP
 nP
@@ -2906,7 +2911,7 @@ xi
 xi
 WR
 WR
-KQ
+tl
 KQ
 TV
 TV
@@ -2950,20 +2955,20 @@ TV
 TV
 TV
 KQ
-KQ
-KQ
-KQ
-KQ
-KQ
-KQ
+tl
+tl
+tl
+tl
+tl
+tl
 KQ
 tl
 WR
 WR
 WR
 WR
-KQ
-KQ
+tl
+tl
 KQ
 TV
 TV
@@ -3016,10 +3021,10 @@ KQ
 KQ
 tl
 tl
-KQ
-KQ
-KQ
-KQ
+tl
+tl
+tl
+tl
 TV
 sB
 TV
