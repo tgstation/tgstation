@@ -3,7 +3,7 @@
 /turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "b" = (
-/turf/closed/mineral/random/snow/rainworld,
+/turf/closed/mineral/random/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "c" = (
 /turf/open/water/hot_spring/cursed{

@@ -1830,7 +1830,7 @@
 /turf/open/water/no_planet_atmos/deep/planetary_atmos,
 /area/mine/production)
 "QJ" = (
-/turf/closed/mineral/random/snow/rainworld,
+/turf/closed/mineral/random/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "Rl" = (
 /obj/effect/decal/cleanable/dirt,

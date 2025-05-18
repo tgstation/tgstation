@@ -455,7 +455,7 @@
 		/turf/closed/mineral/gibtonite/ice/icemoon = 4,
 	)
 
-/turf/closed/mineral/random/snow/rainworld
+/turf/closed/mineral/random/rainworld
 	name = "wet rocks"
 	icon = MAP_SWITCH('icons/turf/walls/rock_wall.dmi', 'icons/turf/walls/rock_wall.dmi')
 	icon_state = "rock_wall"
@@ -467,7 +467,19 @@
 	baseturfs = /turf/open/misc/ashplanet/wateryrock/rainworld
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
 	weak_turf = TRUE
-	mineralChance = 15
+	mineralChance = 35
+
+/turf/closed/mineral/random/rainworld/mineral_chances()
+	return list(
+		/obj/item/stack/ore/bluespace_crystal = 1,
+		/obj/item/stack/ore/diamond = 1,
+		/obj/item/stack/ore/gold = 4,
+		/obj/item/stack/ore/iron = 20,
+		/obj/item/stack/ore/plasma = 7,
+		/obj/item/stack/ore/silver = 6,
+		/obj/item/stack/ore/titanium = 4,
+		/obj/item/stack/ore/uranium = 2,
+	)
 
 /// Near exact same subtype as parent, just used in ruins to prevent other ruins/chasms from spawning on top of it.
 /turf/closed/mineral/snowmountain/do_not_chasm

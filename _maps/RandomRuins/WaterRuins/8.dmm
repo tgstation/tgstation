@@ -861,7 +861,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/syndielab)
 "Xt" = (
-/turf/closed/mineral/random/snow/rainworld,
+/turf/closed/mineral/random/rainworld,
 /area/icemoon/underground/explored)
 "YH" = (
 /obj/item/storage/medkit,
