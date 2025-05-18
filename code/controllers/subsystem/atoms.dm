@@ -158,7 +158,7 @@ SUBSYSTEM_DEF(atoms)
 			initialized_state.Cut(i, i+1)
 			break
 
-	if(!length(initialized_state)) // Something caused atom initialization to happen before SSatoms, revert to type def
+	if(!length(initialized_state))
 		initialized = base_initialized
 		base_initialized = INITIALIZATION_INNEW_REGULAR
 		return
