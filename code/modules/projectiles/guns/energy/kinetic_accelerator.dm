@@ -292,7 +292,7 @@
 	//Most modkits are supposed to allow duplicates. The ones that don't should be blocked by PKA code anyways.
 	allow_duplicates = TRUE
 	var/denied_type = null
-	var/maximum_of_type = 99
+	var/maximum_of_type = 1
 	var/cost = 30
 	var/modifier = 1 //For use in any mod kit that has numerical modifiers
 	var/minebot_upgrade = TRUE
@@ -369,6 +369,7 @@
 	desc = "Increases the range of a kinetic accelerator when installed."
 	modifier = 1
 	cost = 25
+	maximum_of_type = 99
 
 /obj/item/borg/upgrade/modkit/range/modify_projectile(obj/projectile/kinetic/K)
 	K.range += modifier
@@ -379,6 +380,7 @@
 	name = "damage increase"
 	desc = "Increases the damage of kinetic accelerator when installed."
 	modifier = 10
+	maximum_of_type = 99
 
 /obj/item/borg/upgrade/modkit/damage/modify_projectile(obj/projectile/kinetic/K)
 	K.damage += modifier
@@ -390,6 +392,7 @@
 	desc = "Decreases the cooldown of a kinetic accelerator. Not rated for minebot use."
 	modifier = 3.2
 	minebot_upgrade = FALSE
+	maximum_of_type = 99
 
 // Recalculate recharge time after adding or removing cooldown mods.
 /obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
@@ -419,7 +422,6 @@
 	icon_state = "door_electronics"
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	denied_type = /obj/item/borg/upgrade/modkit/cooldown/minebot
-	maximum_of_type = 1
 	modifier = 10
 	cost = 0
 	minebot_upgrade = TRUE
@@ -431,7 +433,6 @@
 	modifier = 0
 	cost = 10
 	denied_type = /obj/item/borg/upgrade/modkit/aoe
-	maximum_of_type = 1
 	var/turf_aoe = FALSE
 	var/stats_stolen = FALSE
 
@@ -496,7 +497,6 @@
 	name = "minebot passthrough"
 	desc = "Causes kinetic accelerator shots to pass through minebots."
 	denied_type = /obj/item/borg/upgrade/modkit/human_passthrough
-	maximum_of_type = 1
 	cost = 0
 
 /obj/item/borg/upgrade/modkit/minebot_passthrough/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user, transfer_to_loc)
@@ -511,7 +511,6 @@
 	name = "human passthrough"
 	desc = "Causes kinetic accelerator shots to pass through humans, good for preventing friendly fire."
 	denied_type = /obj/item/borg/upgrade/modkit/minebot_passthrough
-	maximum_of_type = 1
 	cost = 0
 
 /obj/item/borg/upgrade/modkit/human_passthrough/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user, transfer_to_loc)
@@ -527,7 +526,6 @@
 	name = "rapid repeater"
 	desc = "Quarters the kinetic accelerator's cooldown on striking a living target, but greatly increases the base cooldown."
 	denied_type = /obj/item/borg/upgrade/modkit/cooldown/repeater
-	maximum_of_type = 1
 	modifier = -14 //Makes the cooldown 3 seconds(with no cooldown mods) if you miss. Don't miss.
 	cost = 50
 
@@ -563,7 +561,6 @@
 	name = "resonator blast"
 	desc = "Causes kinetic accelerator shots to leave and detonate resonator blasts."
 	denied_type = /obj/item/borg/upgrade/modkit/resonator_blasts
-	maximum_of_type = 1
 	cost = 30
 	modifier = 0.25 //A bonus 15 damage if you burst the field on a target, 60 if you lure them into it.
 
@@ -580,7 +577,6 @@
 	name = "death syphon"
 	desc = "Killing or assisting in killing a creature permanently increases your damage against that type of creature."
 	denied_type = /obj/item/borg/upgrade/modkit/bounty
-	maximum_of_type = 1
 	modifier = 1.25
 	cost = 30
 	var/maximum_bounty = 25
@@ -635,7 +631,6 @@
 	desc = "Allows creatures normally incapable of firing guns to operate the weapon when installed."
 	cost = 20
 	denied_type = /obj/item/borg/upgrade/modkit/trigger_guard
-	maximum_of_type = 1
 
 /obj/item/borg/upgrade/modkit/trigger_guard/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
@@ -654,7 +649,6 @@
 	desc = "Makes your KA yellow. All the fun of having a more powerful KA without actually having a more powerful KA."
 	cost = 0
 	denied_type = /obj/item/borg/upgrade/modkit/chassis_mod
-	maximum_of_type = 1
 	var/chassis_icon = "kineticgun_u"
 	var/chassis_name = "super-kinetic accelerator"
 
@@ -688,7 +682,6 @@
 	desc = "Causes kinetic accelerator bolts to have a white tracer trail and explosion."
 	cost = 0
 	denied_type = /obj/item/borg/upgrade/modkit/tracer
-	maximum_of_type = 1
 	var/bolt_color = COLOR_WHITE
 
 /obj/item/borg/upgrade/modkit/tracer/modify_projectile(obj/projectile/kinetic/K)
