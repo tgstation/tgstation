@@ -1,8 +1,8 @@
 {
 	"version": 1,
 	"map_name": "RainStation",
-	"map_path": "map_files/RainStation",
-	"map_file": "RainStation.dmm",
+	"map_path": "map_files/rainstation",
+	"map_file": "rainstation.dmm",
 	"space_ruin_levels": 0,
 	"space_empty_levels": 0,
 	"planetary": 1,
