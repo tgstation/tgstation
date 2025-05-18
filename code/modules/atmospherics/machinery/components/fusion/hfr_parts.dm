@@ -51,7 +51,7 @@
 	if(tool.use_tool(src, user, 10 SECONDS, volume=30))
 		balloon_alert(user, "repaired")
 		cracked = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/crowbar_act(mob/living/user, obj/item/tool)
 	return crowbar_deconstruction_act(user, tool)

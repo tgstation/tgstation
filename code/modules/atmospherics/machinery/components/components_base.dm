@@ -65,7 +65,7 @@
 		REMOVE_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
 	else
 		ADD_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()

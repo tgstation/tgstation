@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 
 	GLOB.bluespace_senders += src
 
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	register_context()
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/Destroy()
@@ -147,7 +147,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	if(!..())
 		return FALSE
 	set_init_directions()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/click_ctrl(mob/user)
@@ -155,7 +155,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return CLICK_ACTION_SUCCESS
 	return NONE
 
@@ -207,7 +207,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 		if("power")
 			on = !on
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
-			update_appearance()
+			update_appearance(UPDATE_ICON)
 			. = TRUE
 
 		if("rate")
