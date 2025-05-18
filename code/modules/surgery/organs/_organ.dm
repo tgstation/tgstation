@@ -297,7 +297,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			// Species regenerate organs doesn't ALWAYS handle healing the organs because it's dumb
 			organ.set_organ_damage(0)
 
-		dna.species.regenerate_organs(src)
+		dna.species.regenerate_organs(src, replace_current = FALSE)
 		set_heartattack(FALSE)
 
 		// Ears have aditional vаr "deaf", need to update it too
