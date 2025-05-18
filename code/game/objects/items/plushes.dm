@@ -813,3 +813,17 @@
 		'sound/mobs/humanoids/human/scream/malescream_2.ogg' = 10, //10% chance to scream, rare but not abysmal
 		'sound/items/weapons/smash.ogg' = 90,
 		)
+
+/obj/item/toy/plush/horse
+	name = "horse plushie"
+	desc = "A squishy soft horse plushie. This one is bay with white socks."
+	icon_state = "horse"
+	attack_verb_continuous = list("whinnies", "gallops", "prances", "horses")  // Yes I'm using horse as a verb
+	attack_verb_simple = list("whinny", "gallop", "prance", "horse")
+
+/obj/item/toy/plush/unicorn
+	name = "unicorn plushie"
+	desc = "A squishy soft unicorn plushie. It has a magical aura."
+	icon_state = "unicorn"
+	attack_verb_continuous = list("whinnies", "gallops", "prances", "magicks")
+	attack_verb_simple = list("whinny", "gallop", "prance", "magick")
