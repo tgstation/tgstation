@@ -30,7 +30,6 @@ export const ModularShieldConsole = () => {
   return (
     <Window title="Modular Shield Console" width={500} height={300}>
       <Window.Content scrollable>
-        {' '}
         {generators.length === 0 ? (
           <NoticeBox>No Generators Connected</NoticeBox>
         ) : (
