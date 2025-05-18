@@ -257,6 +257,7 @@
 #include "required_map_items.dm"
 #include "resist.dm"
 #include "say.dm"
+#include "screenshot_airlocks.dm"
 #include "screenshot_antag_icons.dm"
 #include "screenshot_basic.dm"
 #include "screenshot_digi.dm"
