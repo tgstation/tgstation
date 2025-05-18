@@ -55,12 +55,7 @@
 			SEND_SIGNAL(target, COMSIG_MOB_REAGENTS_DROPPED_INTO_EYES, user, src, reagents, fraction)
 			reagents.expose(target, TOUCH, fraction)
 			var/mob/M = target
-			var/R
-			if(reagents)
-				for(var/datum/reagent/A in src.reagents.reagent_list)
-					R += "[A] ([num2text(A.volume)]),"
-
-			log_combat(user, M, "squirted", R)
+			log_combat(user, M, "squirted", reagents.get_reagent_log_string())
 
 		trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))

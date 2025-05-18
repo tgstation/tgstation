@@ -100,15 +100,15 @@
 /obj/item/reagent_containers/blood/universal
 	blood_type = BLOOD_TYPE_UNIVERSAL
 
-/obj/item/reagent_containers/blood/attackby(obj/item/tool, mob/user, list/modifiers)
+/obj/item/reagent_containers/blood/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (IS_WRITING_UTENSIL(tool))
 		if(!user.can_write(tool))
-			return
+			return NONE
 		var/custom_label = tgui_input_text(user, "What would you like to label the blood pack?", "Blood Pack", name, max_length = MAX_NAME_LEN)
 		if(!user.can_perform_action(src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(user.get_active_held_item() != tool)
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(custom_label)
 			labelled = TRUE
 			name = "blood pack - [custom_label]"
@@ -117,5 +117,6 @@
 		else
 			labelled = FALSE
 			update_name()
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()

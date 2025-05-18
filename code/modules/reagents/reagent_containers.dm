@@ -13,7 +13,7 @@
 	/// The maximum amount of reagents this container can hold
 	var/volume = 30
 	/// Reagent flags, a few examples being if the container is open or not, if its transparent, if you can inject stuff in and out of the container, and so on
-	var/reagent_flags
+	VAR_PROTECTED/reagent_flags
 	/// A list of what initial reagents this container should spawn with
 	var/list/list_reagents = null
 	/// The purity of the spawned reagents in list_reagents. Default purity if `null`
@@ -83,18 +83,16 @@
 	. = ..()
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
-/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, list/modifiers)
-	if (!user.combat_mode)
-		return
-	return ..()
-
 /obj/item/reagent_containers/proc/add_initial_reagents()
 	if(list_reagents)
 		reagents.add_reagent_list(list_reagents, added_purity = list_reagents_purity)
 
 /obj/item/reagent_containers/attack_self(mob/user)
+	if(reagents.flags & SEALED_CONTAINER)
+		return TRUE
 	if(has_variable_transfer_amount)
 		change_transfer_amount(user, FORWARD)
+		return TRUE
 
 /obj/item/reagent_containers/attack_self_secondary(mob/user)
 	if(has_variable_transfer_amount)
@@ -131,7 +129,7 @@
 
 /// Tries to splash the target, called when right-clicking with a reagent container.
 /obj/item/reagent_containers/proc/try_splash(mob/user, atom/target)
-	if (!spillable || reagent_flags & SMART_CAP)
+	if (!is_open_container() || (reagent_flags & NO_SPLASH))
 		return FALSE
 
 	if (!reagents?.total_volume)
@@ -162,17 +160,17 @@
 	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
 	target.flick_overlay_view(splash_animation, 1 SECONDS)
 
-	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
-		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
-
 	reagents.expose(target, TOUCH)
-	log_combat(user, target, "splashed", reagent_text)
+	log_combat(user, target, "splashed", reagents.get_reagent_log_string())
 	reagents.clear_reagents()
 
 	return TRUE
 
 /obj/item/reagent_containers/proc/canconsume(mob/eater, mob/user)
 	if(!iscarbon(eater))
+		return FALSE
+	if(!reagents || !reagents.total_volume)
+		to_chat(user, span_warning("[src] is empty!"))
 		return FALSE
 	var/mob/living/carbon/as_carbon = eater
 	var/covered = ""
@@ -185,6 +183,14 @@
 		to_chat(user, span_warning("You have to remove [who] [covered] first!"))
 		return FALSE
 	return TRUE
+
+/// Toggle certain flags on the reagent container
+/obj/item/reagent_containers/proc/update_container_flags(new_flags)
+	reagents.flags = new_flags
+
+/// Resets to base flags
+/obj/item/reagent_containers/proc/reset_container_flags()
+	reagents.flags = reagent_flags
 
 /*
  * On accidental consumption, transfer a portion of the reagents to the eater and the item it's in, then continue to the base proc (to deal with shattering glass containers)
@@ -200,44 +206,45 @@
 /obj/item/reagent_containers/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = TRUE)
 	. = ..()
 	if(do_splash)
-		SplashReagents(hit_atom, throwingdatum)
+		splash_reagents(hit_atom, throwingdatum?.get_thrower(), was_thrown = TRUE, allow_closed_splash = FALSE)
 
 /obj/item/reagent_containers/proc/bartender_check(atom/target, mob/thrown_by)
 	. = FALSE
 	if(target.CanPass(src, get_dir(target, src)) && thrown_by && HAS_TRAIT(thrown_by, TRAIT_BOOZE_SLIDER))
 		. = TRUE
 
-/obj/item/reagent_containers/proc/SplashReagents(atom/target, datum/thrownthing/throwingdatum, override_spillable = FALSE)
-	if(!reagents || !reagents.total_volume || (!spillable && !override_spillable) || reagent_flags & SMART_CAP)
+/**
+ * Attempts to splash the reagents in the container onto the target.
+ *
+ * * target - The target to splash the reagents onto.
+ * * throwingdatum - The throwingdatum behind the throw if the
+ */
+/obj/item/reagent_containers/proc/splash_reagents(atom/target, mob/splasher, was_thrown = FALSE, allow_closed_splash = FALSE)
+	if(!reagents || !reagents.total_volume || (!is_open_container() && !allow_closed_splash) || (reagent_flags & NO_SPLASH))
 		return
-	var/mob/thrown_by = throwingdatum.get_thrower()
 
 	if(ismob(target) && target.reagents)
 		var/splash_multiplier = 1
-		if(throwingdatum)
+		if(was_thrown)
 			splash_multiplier *= (rand(5,10) * 0.1) //Not all of it makes contact with the target
 		var/mob/M = target
 		var/turf/target_turf = get_turf(target)
-		var/R
 		target.visible_message(span_danger("[M] is splashed with something!"), \
 						span_userdanger("[M] is splashed with something!"))
-		for(var/datum/reagent/A in reagents.reagent_list)
-			R += "[A.type]  ([num2text(A.volume)]),"
-
-		if(thrown_by)
-			log_combat(thrown_by, M, "splashed", R)
+		if(splasher)
+			log_combat(splasher, M, "splashed", reagents.get_reagent_log_string())
 		reagents.expose(target, TOUCH, splash_multiplier)
 		reagents.expose(target_turf, TOUCH, (1 - splash_multiplier)) // 1 - splash_multiplier because it's what didn't hit the target
 
-	else if(bartender_check(target, thrown_by) && throwingdatum)
+	else if(bartender_check(target, splasher) && was_thrown)
 		visible_message(span_notice("[src] lands onto \the [target] without spilling a single drop."))
 		return
 
 	else
-		if(isturf(target) && reagents.reagent_list.len && thrown_by)
-			log_combat(thrown_by, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
-			thrown_by.log_message("splashed (thrown) [english_list(reagents.reagent_list)] on [target].", LOG_ATTACK)
-			message_admins("[ADMIN_LOOKUPFLW(thrown_by)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
+		if(isturf(target) && reagents.reagent_list.len && splasher)
+			log_combat(splasher, target, "splashed (thrown) [english_list(reagents.reagent_list)]", "in [AREACOORD(target)]")
+			splasher.log_message("splashed (thrown) [english_list(reagents.reagent_list)] on [target].", LOG_ATTACK)
+			message_admins("[ADMIN_LOOKUPFLW(splasher)] splashed (thrown) [english_list(reagents.reagent_list)] on [target] in [ADMIN_VERBOSEJMP(target)].")
 		visible_message(span_notice("[src] spills its contents all over [target]."))
 		reagents.expose(target, TOUCH)
 		if(QDELETED(src))
