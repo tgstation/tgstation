@@ -5,7 +5,6 @@
 	icon = 'icons/obj/aquarium/supplies.dmi'
 	icon_state = "fish_feed"
 	w_class = WEIGHT_CLASS_TINY
-	// spillable = FALSE
 	volume = 5
 	amount_per_transfer_from_this = 2.5
 	has_variable_transfer_amount = FALSE

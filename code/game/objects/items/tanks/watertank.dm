@@ -397,7 +397,6 @@
 	var/injection_amount = 0.5
 	amount_per_transfer_from_this = 5
 	reagent_flags = TRANSPARENT
-	// spillable = FALSE
 	possible_transfer_amounts = list(5,10,15)
 	fill_icon_thresholds = list(0, 15, 60)
 	fill_icon_state = "backpack"
