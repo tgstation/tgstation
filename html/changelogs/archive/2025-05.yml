@@ -425,3 +425,60 @@
   necromanceranne:
   - balance: Reduces rubbershot stamina damage from 11 damage per pellet to 10 damage
       per pellet.
+2025-05-18:
+  00-Steven:
+  - bugfix: Holding your PDA to the nearest camera lets the AI see your notepad contents
+      again.
+  - bugfix: PDA notepad app no longer always shows a blank field upon being opened.
+  Artemchik542:
+  - bugfix: Quirk "quadruple amputee" now will return your original limbs back if
+      you off it
+  - qol: Quirk "prosthetic limb" now resets more correctly
+  Krysonism:
+  - rscadd: banana gluttons gain max health and heal by eating foods! And they can
+      smash doors.
+  - balance: clown mobs no longer get nuked by bad atmos.
+  - balance: blown mobs have new death drops.
+  - balance: most clown more are now faster!
+  - balance: clownanas are now plants and are immune to carbon dioxide.
+  - balance: living lube is now a slime and highly brute resistant.
+  - balance: longfaces now hit decently hard.
+  - bugfix: clownanas and longfaces can now be biopsied.
+  - bugfix: fixed medical stacks producing far too few items.
+  - qol: medical stack recipes are more granular.
+  Majkl-J:
+  - qol: Notes on airlocks now tell you how they can be removed on examine
+  Melbert:
+  - bugfix: Spear 2x damage multiplier to secure lockers is now also applied on thrown
+      hit.
+  Pickle-Coding:
+  - rscadd: Supermatter and tesla zaps can trigger electrolyzer reactions.
+  - balance: Hypernoblium to antinoblium electrolysis requires supermatter zaps above
+      5 GeV.
+  - balance: Hypernoblium is converted to antinoblium 1:1 during electrolysis.
+  Rhials:
+  - rscadd: Voidwalkers can now convert soft walls into void windows, using the right-click
+      of their Void Eater.
+  - balance: Voidwalkers can now walk full-speed on nearstation tiles.
+  SmArtKar:
+  - bugfix: Fixed anomalock heart constnatly runtiming
+  - bugfix: Fixed mech bounty runtimes
+  - bugfix: Fixed syrup bottle runtimes
+  SyncIt21:
+  - code_imp: borg omnitool unit test is much faster
+  TealSeer:
+  - bugfix: fixed cable coil going invisible when you select the two cable hub options
+  TiviPlus:
+  - refactor: Added the possibility for keybindings to report the turf they clicked
+      on.
+  Y0SH1M4S73R:
+  - rscadd: Rumor has it the Wizard Federation has started using soul shards to craft
+      MOD cores powered by the wearer's soul. Maybe taking a close look at a soul
+      shard would tell you if there's any truth to this rumor.
+  - bugfix: The movement of shuttles will no longer detach usb cables attached to
+      something on the same shuttle.
+  moocowswag:
+  - bugfix: Modular shield generator modules no longer remember or miss their generator
+      when its destroyed
+  timothymtorres:
+  - bugfix: Fix `map_export` admin verb not properly saving a massive amount of objects.
