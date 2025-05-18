@@ -27,12 +27,12 @@
 /obj/machinery/big_manipulator
 	name = "Big Manipulator"
 	desc = "Operates different objects. Truly, a groundbreaking innovation..."
-	density = TRUE
-	circuit = /obj/item/circuitboard/machine/big_manipulator
-	greyscale_colors = "#d8ce13"
 	icon = 'icons/map_icons/objects.dmi'
 	icon_state = "/obj/machinery/big_manipulator"
 	post_init_icon_state = "core"
+	density = TRUE
+	circuit = /obj/item/circuitboard/machine/big_manipulator
+	greyscale_colors = "#d8ce13"
 	greyscale_config = /datum/greyscale_config/big_manipulator
 	/// Min time manipulator can have in delay. Changing on upgrade.
 	var/minimal_delay = MIN_DELAY_TIER_1
