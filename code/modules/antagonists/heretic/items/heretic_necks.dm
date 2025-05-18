@@ -153,19 +153,42 @@
 	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "moon_amulette"
 	w_class = WEIGHT_CLASS_SMALL
-	// How much damage does this item do to the targets sanity?
+	actions_types = list(/datum/action/item_action/toggle)
+	/// If the amulet is toggled, on by default
+	var/currently_channeling = TRUE
+	/// How much damage does this item do to the targets sanity?
 	var/sanity_damage = 20
+
+/obj/item/clothing/neck/heretic_focus/moon_amulet/attack_self(mob/user, modifiers)
+	. = ..()
+	if(!IS_HERETIC(user))
+		return
+	currently_channeling = !currently_channeling
+	if(!currently_channeling)
+		balloon_alert(user, "disabled")
+		on_amulet_deactivate(user)
+	else
+		balloon_alert(user, "enabled")
+		if(!(slot_flags & user.get_slot_by_item(src))) // You can toggle the amulet without wearing it
+			return
+		on_amulet_activate(user)
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/equipped(mob/living/user, slot)
 	. = ..()
-	if(!IS_HERETIC(user))
-		channel_amulet(user) // Putting it on will give you the mood debuff
-		return
+	if(!IS_HERETIC(user) && (slot_flags & slot))
+		channel_amulet(user)
+		return // Equipping the amulet as a non-heretic will give you a fat mood debuff and nothing else
+
 	if(!(slot_flags & slot))
-		// Make sure to restore the values of any blades we might be holding when our amulet is removed
-		on_dropped_item(user, user.get_active_held_item())
-		on_dropped_item(user, user.get_inactive_held_item())
+		on_amulet_deactivate(user)
 		return
+	if(currently_channeling)
+		on_amulet_activate(user)
+	else
+		on_amulet_deactivate(user)
+
+/// Modifies any blades you hold/pickup/drop when the amulet is enabled
+/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_amulet_activate(mob/living/user)
 	RegisterSignal(user, COMSIG_HERETIC_BLADE_ATTACK, PROC_REF(channel_amulet))
 	RegisterSignal(user, COMSIG_MOB_EQUIPPED_ITEM, PROC_REF(on_equip_item))
 	RegisterSignal(user, COMSIG_MOB_DROPPED_ITEM, PROC_REF(on_dropped_item))
@@ -173,9 +196,23 @@
 	on_equip_item(user, user.get_active_held_item(), ITEM_SLOT_HANDS)
 	on_equip_item(user, user.get_inactive_held_item(), ITEM_SLOT_HANDS)
 
-/obj/item/clothing/neck/heretic_focus/moon_amulet/dropped(mob/living/user)
-	. = ..()
+/// Modifies any blades you hold/pickup/drop when the amulet is disabled
+/obj/item/clothing/neck/heretic_focus/moon_amulet/proc/on_amulet_deactivate(mob/living/user)
+	// Make sure to restore the values of any blades we might be holding when our amulet is deactivated
+	on_dropped_item(user, user.get_active_held_item())
+	on_dropped_item(user, user.get_inactive_held_item())
 	UnregisterSignal(user, list(COMSIG_HERETIC_BLADE_ATTACK, COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_DROPPED_ITEM))
+
+/obj/item/clothing/neck/heretic_focus/moon_amulet/dropped(mob/living/user)
+	on_amulet_deactivate(user)
+	return ..()
+
+/obj/item/clothing/neck/heretic_focus/moon_amulet/Destroy()
+	if(!ismob(loc))
+		return ..()
+	var/mob/user = loc
+	on_amulet_deactivate(user)
+	return ..()
 
 /obj/item/clothing/neck/heretic_focus/moon_amulet/attack(mob/living/target, mob/living/user, list/modifiers)
 	if(channel_amulet(user, target))
@@ -185,6 +222,7 @@
 /// Makes whoever the target is a bit more insane. If they are insane enough, they will be zombified into a moon zombie
 /obj/item/clothing/neck/heretic_focus/moon_amulet/proc/channel_amulet(mob/user, atom/target)
 	SIGNAL_HANDLER
+
 	if(!isliving(user))
 		return
 	var/mob/living/living_user = user
@@ -193,6 +231,7 @@
 		living_user.add_mood_event("Moon Amulet Insanity", /datum/mood_event/amulet_insanity)
 		living_user.mob_mood.adjust_sanity(-50)
 		return FALSE
+
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/human_target = target

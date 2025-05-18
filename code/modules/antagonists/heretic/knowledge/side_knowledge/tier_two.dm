@@ -38,7 +38,7 @@
 
 /datum/heretic_knowledge/greaves_of_the_prophet
 	name = "Greaves Of The Prophet"
-	desc = "Allows you to combine a pair of Jackboots and 2 sheets of Titanium into a pair of Armored Greaves, they confer to the user fully immunity to slips."
+	desc = "Allows you to combine a pair of shoes and 2 sheets of titanium or silver into a pair of Armored Greaves, they confer to the user fully immunity to slips."
 	gain_text = " \
 		Gristle churns into joint, a pop, and the fool twists a blackened foot from the \
 		jaws of another. At their game for centuries, this mangled tree of limbs twists, \
@@ -48,8 +48,8 @@
 		I must press on all the same. Their rhythms keep the feud fresh with indifference \
 		to barrier or border. Pulling more into their turmoil as they waltz."
 	required_atoms = list(
-		/obj/item/clothing/shoes/jackboots = 1,
-		/obj/item/stack/sheet/mineral/titanium = 2,
+		/obj/item/clothing/shoes = 1,
+		list(/obj/item/stack/sheet/mineral/titanium = 2, /obj/item/stack/sheet/mineral/silver = 2)
 	)
 	result_atoms = list(/obj/item/clothing/shoes/greaves_of_the_prophet)
 	cost = 1
