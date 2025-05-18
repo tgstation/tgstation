@@ -34,9 +34,6 @@
 		CALLBACK(src, PROC_REF(get_dart_var_modifiers))\
 	)
 
-/obj/item/reagent_containers/syringe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	return NONE
-
 /obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user)
 	if(!target.reagents)
 		return FALSE
