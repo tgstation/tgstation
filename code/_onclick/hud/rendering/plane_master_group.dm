@@ -21,7 +21,6 @@
 	. = ..()
 	src.key = key
 	src.map = map
-	build_plane_masters(0, SSmapping.max_plane_offset)
 
 /datum/plane_master_group/Destroy()
 	set_hud(null)
@@ -50,6 +49,7 @@
 	set_hud(viewing_hud)
 	our_hud.master_groups[key] = src
 	show_hud()
+	build_plane_masters(0, SSmapping.max_plane_offset)
 	build_planes_offset(our_hud, active_offset)
 
 /// Well, refresh our group, mostly useful for plane specific updates
