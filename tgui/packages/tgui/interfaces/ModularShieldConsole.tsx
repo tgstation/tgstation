@@ -81,7 +81,7 @@ const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
           width="170px"
           onChange={(value) =>
             act('rename', {
-              id: id,
+              id,
               name: value,
             })
           }
