@@ -456,7 +456,7 @@ Used by the AI doomsday and the self-destruct nuke.
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND)
 	if(current_map.minetype == MINETYPE_OCEAN)
 		LoadGroup(FailedZs, "Ocean", "map_files/Mining", "Ocean.dmm", default_traits = ZTRAITS_OCEAN)
-	else if (!isnull(current_map.minetype) && current_map.minetype != MINETYPE_NONE && current_map.minetype != MINETYPE_ICE current_map.minetype != MINETYPE_LAVALAND)
+	else if (!isnull(current_map.minetype) && current_map.minetype != MINETYPE_NONE && current_map.minetype != MINETYPE_ICE && current_map.minetype != MINETYPE_LAVALAND)
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[current_map.minetype]' was set! This is being ignored! Update the maploader code!")
 #endif
 
