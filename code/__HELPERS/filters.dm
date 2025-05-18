@@ -141,7 +141,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 
 //Helpers to generate lists for filter helpers
 //This is the only practical way of writing these that actually produces sane lists
-/proc/alpha_mask_filter(x, y, icon/icon, atom/render_source, flags)
+/proc/alpha_mask_filter(x, y, icon/icon, render_source, flags)
 	. = list("type" = "alpha")
 	if(!isnull(x))
 		.["x"] = x
@@ -169,7 +169,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	if(!isnull(space))
 		.["space"] = space
 
-/proc/displacement_map_filter(icon, atom/render_source, x, y, size = ICON_SIZE_ALL)
+/proc/displacement_map_filter(icon, render_source, x, y, size = ICON_SIZE_ALL)
 	. = list("type" = "displace")
 	if(!isnull(icon))
 		.["icon"] = icon
@@ -200,7 +200,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	if(!isnull(size))
 		.["size"] = size
 
-/proc/layering_filter(icon, atom/render_source, x, y, flags, color, transform, blend_mode)
+/proc/layering_filter(icon, render_source, x, y, flags, color, transform, blend_mode)
 	. = list("type" = "layer")
 	if(!isnull(icon))
 		.["icon"] = icon

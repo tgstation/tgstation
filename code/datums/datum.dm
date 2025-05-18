@@ -325,7 +325,7 @@
 	if(renderer)
 		renderer.relay_render_to(src, draw_original)
 
-/datum/filter_data/Destroy(force, ...)
+/datum/filter_data/Destroy(force)
 	owner = null
 	return ..()
 
