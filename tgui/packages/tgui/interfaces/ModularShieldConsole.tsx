@@ -20,15 +20,15 @@ type GeneratorStats = {
   recovering: BooleanLike;
 };
 
-type ModularShieldConsoleData = {
+type Data = {
   generators: GeneratorStats[];
 };
 
 export const ModularShieldConsole = () => {
-  const { data } = useBackend<ModularShieldConsoleData>();
+  const { data } = useBackend<Data>();
   const { generators } = data;
   return (
-    <Window title="Modular Shield Console" width={500} height={300}>
+    <Window title="Modular Shield Console" width={450} height={300}>
       <Window.Content scrollable>
         {generators.length === 0 ? (
           <NoticeBox>No Generators Connected</NoticeBox>
@@ -43,7 +43,7 @@ export const ModularShieldConsole = () => {
 };
 
 const GeneratorTable = () => {
-  const { data } = useBackend<ModularShieldConsoleData>();
+  const { data } = useBackend<Data>();
   const { generators } = data;
   return (
     <Table>
@@ -57,21 +57,21 @@ const GeneratorTable = () => {
         </Table.Cell>
       </Table.Row>
       {generators.map((stat) => (
-        <GeneratorTableEntry generator_data={stat} key={stat.id} />
+        <GeneratorTableEntry GeneratorData={stat} key={stat.id} />
       ))}
     </Table>
   );
 };
 
 type GeneratorTableEntryProps = {
-  generator_data: GeneratorStats;
+  GeneratorData: GeneratorStats;
 };
 
 const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
-  const { act, data } = useBackend<ModularShieldConsoleData>();
-  const { generator_data } = props;
+  const { act, data } = useBackend<Data>();
+  const { GeneratorData } = props;
   const { name, id, max_strength, current_strength, active, recovering } =
-    generator_data;
+    GeneratorData;
 
   return (
     <Table.Row className="candystripe">
@@ -79,7 +79,7 @@ const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
         <Input
           value={name}
           width="170px"
-          onChange={(value) =>
+          onBlur={(value) =>
             act('rename', {
               id,
               name: value,
