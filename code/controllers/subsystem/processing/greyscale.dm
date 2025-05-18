@@ -148,13 +148,34 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 		"items/_item" = /obj/item,
 		"objects" = /obj,
 )
-
+#ifdef UNIT_TESTS
+	if(!check_map_previews_filepath_order(types_that_get_their_own_file))
+		CRASH("The list 'types_that_get_their_own_file', used by ExportMapPreviews, is invalid. Please ensure that subtypes come BEFORE parent types in the list order.")
+#endif
 	var/list/handled_types = list()
 	for(var/filename in types_that_get_their_own_file)
 		var/type_to_export = types_that_get_their_own_file[filename]
 		handled_types += ExportMapPreviewsForType(filename, type_to_export, handled_types)
 
 	ExportMapPreviewsForType("unsorted", /atom, handled_types)
+
+/// Checks that we do not have any parent types coming before subtypes in the list (which is an assoc list (filepath, typepath))
+/datum/controller/subsystem/processing/greyscale/proc/check_map_previews_filepath_order(list/our_list)
+	var/list/type_paths_to_check = list()
+	for(var/filepath in our_list)
+		type_paths_to_check += our_list[filepath]
+
+	if(!length(type_paths_to_check))
+		return TRUE
+
+	for(var/i = 1 to length(type_paths_to_check))
+		var/path_i = type_paths_to_check[i]
+		for(var/j = i+1 to length(type_paths_to_check))
+			var/path_j = type_paths_to_check[j]
+			if(ispath(path_j, path_i))
+				stack_trace("Error: [path_j] (index [j]) is a subtype of [path_i] (index [i]) but appears after it.")
+				return FALSE
+	return TRUE
 
 /datum/controller/subsystem/processing/greyscale/proc/ExportMapPreviewsForType(filename, atom/atom_typepath, list/type_blacklist)
 	var/list/handled_types = list()
