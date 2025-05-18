@@ -762,7 +762,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 		gas_moles = round(gas_moles, 0.01)
 		if(gas_moles >= 0.01)
-			atmos_contents += "[gas_id]=[num2text(gas_moles)];"
+			atmos_contents += "[gas_id]=[num2text(gas_moles)]"
 
 	atmos_contents += temperature_str
-	return atmos_contents.Join()
+	return atmos_contents.Join(";")
