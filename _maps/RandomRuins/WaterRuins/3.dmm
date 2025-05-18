@@ -37,6 +37,7 @@
 	pixel_x = 5;
 	pixel_y = -6
 	},
+/turf/open/floor/plating,
 /area/ruin/comms_agent)
 "di" = (
 /obj/effect/turf_decal/siding/wood{
@@ -111,8 +112,6 @@
 	},
 /turf/open/floor/wood/parquet,
 /area/ruin/comms_agent)
-"he" = (
-/area/ruin/comms_agent)
 "hl" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/directional/west,
@@ -166,6 +165,7 @@
 /area/ruin/comms_agent)
 "ka" = (
 /obj/machinery/seed_extractor,
+/turf/open/floor/plating,
 /area/ruin/comms_agent)
 "kp" = (
 /obj/effect/spawner/structure/window/reinforced,
@@ -345,6 +345,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/turf/open/floor/plating,
 /area/ruin/comms_agent)
 "uk" = (
 /obj/structure/cable,
@@ -404,6 +405,7 @@
 /area/ruin/comms_agent)
 "xi" = (
 /obj/machinery/hydroponics/soil,
+/turf/open/floor/plating,
 /area/ruin/comms_agent)
 "xs" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -450,6 +452,7 @@
 /area/ruin/comms_agent)
 "zJ" = (
 /obj/machinery/biogenerator,
+/turf/open/floor/plating,
 /area/ruin/comms_agent)
 "Ac" = (
 /obj/effect/turf_decal/siding/wideplating/light{
@@ -604,6 +607,7 @@
 /obj/item/seeds/coffee/robusta,
 /obj/item/seeds/wheat,
 /obj/effect/spawner/random/food_or_drink/seed,
+/turf/open/floor/plating,
 /area/ruin/comms_agent)
 "GQ" = (
 /obj/structure/table,
@@ -715,6 +719,7 @@
 /obj/structure/cable,
 /obj/item/cultivator/rake,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/plating,
 /area/ruin/comms_agent)
 "Ll" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -757,6 +762,7 @@
 	pixel_x = 7;
 	pixel_y = 4
 	},
+/turf/open/floor/plating,
 /area/ruin/comms_agent)
 "LP" = (
 /turf/closed/wall/r_wall,
@@ -823,6 +829,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/turf/open/floor/plating,
 /area/ruin/comms_agent)
 "NJ" = (
 /obj/item/storage/medkit/regular,
@@ -840,12 +847,6 @@
 	},
 /turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
-"Oy" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/area/ruin/comms_agent)
 "OB" = (
 /turf/open/water/no_planet_atmos/deep/planetary_atmos,
 /area/rainworld/surface/outdoors/nospawn)
@@ -880,6 +881,7 @@
 	pixel_y = -9;
 	pixel_x = 11
 	},
+/turf/open/floor/plating,
 /area/ruin/comms_agent)
 "Qn" = (
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -2728,7 +2730,7 @@ gY
 Wm
 hl
 nP
-Oy
+ag
 Lh
 ud
 GI
@@ -2786,7 +2788,7 @@ nP
 bk
 nP
 Ny
-he
+zi
 cI
 zJ
 WR
