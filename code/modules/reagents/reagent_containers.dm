@@ -66,6 +66,7 @@
 		var/list/data = list("viruses"= list(F))
 		reagents.add_reagent(/datum/reagent/blood, disease_amount, data)
 	add_initial_reagents()
+	AddElement(/datum/element/reagents_exposed_on_fire)
 
 /obj/item/reagent_containers/examine(mob/user)
 	. = ..()
@@ -196,10 +197,6 @@
 
 	return ..()
 
-/obj/item/reagent_containers/fire_act(exposed_temperature, exposed_volume)
-	reagents.expose_temperature(exposed_temperature)
-	..()
-
 /obj/item/reagent_containers/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum, do_splash = TRUE)
 	. = ..()
 	if(do_splash)
@@ -255,10 +252,6 @@
 	target.flick_overlay_view(splash_animation, 1.0 SECONDS)
 
 	reagents.clear_reagents()
-
-/obj/item/reagent_containers/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
-	reagents.expose_temperature(1000)
-	return ..() | COMPONENT_MICROWAVE_SUCCESS
 
 /// Updates the icon of the container when the reagents change. Eats signal args
 /obj/item/reagent_containers/proc/on_reagent_change(datum/reagents/holder, ...)

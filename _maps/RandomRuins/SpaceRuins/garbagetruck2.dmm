@@ -673,7 +673,7 @@
 /obj/structure/sinkframe,
 /obj/structure/broken_flooring/pile,
 /obj/effect/decal/cleanable/blood/gibs/old,
-/obj/item/reagent_containers/cup/rag{
+/obj/item/rag{
 	pixel_x = 6;
 	pixel_y = -3
 	},

@@ -257,6 +257,9 @@
 	damagetype_healed = HEAL_ALL_DAMAGE
 	storage_type = /datum/storage/medkit/tactical
 
+/obj/item/storage/medkit/tactical/get_medbot_skin()
+	return "bezerk"
+
 /obj/item/storage/medkit/tactical/PopulateContents()
 	if(empty)
 		return
