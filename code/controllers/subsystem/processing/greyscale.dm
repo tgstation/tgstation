@@ -28,8 +28,8 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 #endif
 
 /datum/controller/subsystem/processing/greyscale/Initialize()
-	for(var/datum/greyscale_layer/atom_type_type as anything in subtypesof(/datum/greyscale_layer))
-		layer_types[initial(atom_type_type.layer_type)] = atom_type_type
+	for(var/datum/greyscale_layer/atom_type as anything in subtypesof(/datum/greyscale_layer))
+		layer_types[initial(atom_type.layer_type)] = atom_type
 
 	for(var/greyscale_type in subtypesof(/datum/greyscale_config))
 		var/datum/greyscale_config/config = new greyscale_type()
