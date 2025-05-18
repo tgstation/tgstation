@@ -315,8 +315,8 @@
 /obj/machinery/space_heater/improvised_chem_heater
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "sheater-off"
-	name = "Improvised chem heater"
-	desc = "A space heater hacked to reroute heating to a water bath on the top."
+	name = "improvised chem heater"
+	desc = "A space heater fashioned to reroute heating to a water bath on top."
 	panel_open = TRUE //This is always open - since we've injected wires in the panel
 	//We inherit the cell from the heater prior
 	cell = null
