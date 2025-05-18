@@ -389,8 +389,6 @@
 	desc = "Decreases the cooldown of a kinetic accelerator. Not rated for minebot use."
 	modifier = 3.2
 	minebot_upgrade = FALSE
-	denied_type = /obj/item/borg/upgrade/modkit/cooldown
-	maximum_of_type = 3
 
 // Recalculate recharge time after adding or removing cooldown mods.
 /obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
@@ -430,6 +428,7 @@
 /obj/item/borg/upgrade/modkit/aoe
 	modifier = 0
 	cost = 10
+	denied_type = /obj/item/borg/upgrade/modkit/aoe
 	maximum_of_type = 1
 	var/turf_aoe = FALSE
 	var/stats_stolen = FALSE
@@ -478,15 +477,12 @@
 /obj/item/borg/upgrade/modkit/aoe/turfs
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
-	denied_type = /obj/item/borg/upgrade/modkit/aoe/turfs
 	turf_aoe = TRUE
 
 /obj/item/borg/upgrade/modkit/aoe/mobs
 	name = "offensive explosion"
 	desc = "Causes the kinetic accelerator to damage mobs in an AoE."
 	modifier = 1
-	denied_type = /obj/item/borg/upgrade/modkit/aoe/mobs
-	maximum_of_type = 1
 
 /obj/item/borg/upgrade/modkit/aoe/mobs/andturfs
 	name = "offensive mining explosion"
