@@ -15020,7 +15020,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "eyg" = (
@@ -24587,7 +24586,6 @@
 "hri" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/vending/snackvend,
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/construction)
 "hrk" = (
@@ -57208,7 +57206,6 @@
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/green/filled/line,
-/obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "rhp" = (
@@ -65558,7 +65555,6 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/starboard/aft)
 "tHn" = (
