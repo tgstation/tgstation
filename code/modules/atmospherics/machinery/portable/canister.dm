@@ -54,17 +54,14 @@
 	. += NAMEOF(src, release_pressure)
 	return .
 
-/obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
+/obj/machinery/portable_atmospherics/canister/Initialize(mapload)
 	. = ..()
 
 	if(mapload)
 		internal_cell = new /obj/item/stock_parts/power_store/cell/high(src)
 
 	if(!initial_gas_mix)
-		if(existing_mixture) // this arg has never been used anywhere
-			air_contents.copy_from(existing_mixture)
-		else
-			create_gas()
+		create_gas()
 
 	if(ispath(gas_type, /datum/gas))
 		desc = "[GLOB.meta_gas_info[gas_type][META_GAS_NAME]]. [GLOB.meta_gas_info[gas_type][META_GAS_DESC]]"
