@@ -1260,7 +1260,7 @@
 		. = UPDATE_MOB_HEALTH
 
 	// If our mob's currently dizzy from anything else, we will also gain confusion
-	var/mob_dizziness = affected_mob.get_timed_status_effect_duration(/datum/status_effect/confusion)
+	var/mob_dizziness = affected_mob.get_timed_status_effect_duration(/datum/status_effect/dizziness)
 	if(mob_dizziness > 0)
 		// Gain confusion equal to about half the duration of our current dizziness
 		affected_mob.set_confusion(mob_dizziness / 2)
