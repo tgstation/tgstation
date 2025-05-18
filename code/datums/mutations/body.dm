@@ -30,7 +30,8 @@
 	owner.set_jitter(20 SECONDS)
 
 /datum/mutation/human/epilepsy/on_acquiring(mob/living/carbon/human/acquirer)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_FLASHED, PROC_REF(get_flashed_nerd))
 
@@ -57,7 +58,8 @@
 	locked = TRUE
 
 /datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	to_chat(owner, text_gain_indication)
 	var/mob/new_mob
@@ -121,7 +123,8 @@
 	locked = TRUE // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
@@ -142,7 +145,8 @@
 	conflicts = list(/datum/mutation/human/dwarfism)
 
 /datum/mutation/human/acromegaly/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows tall!"), span_notice("You feel a small strange urge to fight small men with slingshots. Or maybe play some basketball."))
@@ -178,7 +182,8 @@
 	conflicts = list(/datum/mutation/human/dwarfism)
 
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 	owner.update_transform(1.25)
@@ -247,7 +252,7 @@
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	if(ismonkey(owner))
 		return
@@ -282,14 +287,13 @@
 
 /datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	glow_color = get_glow_color()
 	glow = owner.mob_light()
-	modify()
 
 // Override modify here without a parent call, because we don't actually give an action.
-/datum/mutation/human/glow/modify()
+/datum/mutation/human/glow/setup()
 	if(!glow)
 		return
 
@@ -362,7 +366,8 @@
 		owner.ignite_mob()
 
 /datum/mutation/human/fire/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	owner.physiology.burn_mod *= 0.5
 
@@ -432,7 +437,8 @@
 	difficulty = 16
 
 /datum/mutation/human/spastic/on_acquiring()
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	owner.apply_status_effect(/datum/status_effect/spasms)
 
@@ -452,7 +458,7 @@
 
 /datum/mutation/human/extrastun/on_acquiring()
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
@@ -484,8 +490,8 @@
 
 /datum/mutation/human/martyrdom/on_acquiring()
 	. = ..()
-	if(.)
-		return TRUE
+	if(!.)
+		return
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(bloody_shower))
 
 /datum/mutation/human/martyrdom/on_losing()
@@ -531,8 +537,8 @@
 
 /datum/mutation/human/headless/on_acquiring()
 	. = ..()
-	if(.)//cant add
-		return TRUE
+	if(!.)
+		return
 
 	var/obj/item/organ/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
@@ -597,7 +603,7 @@
 
 /datum/mutation/human/bloodier/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	if(!physiology_modified)
 		owner.physiology.bleed_mod *= bleed_rate
@@ -613,7 +619,7 @@
 		owner.physiology.blood_regen_mod /= blood_regen_rate
 		physiology_modified = FALSE // just in case
 
-/datum/mutation/human/bloodier/modify()
+/datum/mutation/human/bloodier/setup()
 	if(owner && physiology_modified)
 		owner.physiology.bleed_mod /= bleed_rate
 		owner.physiology.blood_regen_mod /= blood_regen_rate
@@ -652,6 +658,13 @@
 	conflicts = list(/datum/mutation/human/rock_eater)
 	locked = TRUE
 
+/datum/mutation/human/rock_absorber/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(. || QDELING(owner) || HAS_TRAIT(owner, TRAIT_ROCK_METAMORPHIC))
+		return
+	owner.remove_status_effect(/datum/status_effect/golem)
+	owner.remove_status_effect(/datum/status_effect/golem_lightbulb)
+
 // Soft crit is disabed
 /datum/mutation/human/inexorable
 	name = "Inexorable"
@@ -667,7 +680,7 @@
 
 /datum/mutation/human/inexorable/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	RegisterSignal(acquirer, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
 	check_health()

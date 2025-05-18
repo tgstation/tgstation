@@ -29,7 +29,7 @@ type MarkdownRendererProps = {
 export const MarkdownRenderer = (props: MarkdownRendererProps) => {
   let { content, sanitize } = props;
 
-  content = marked(content);
+  content = marked(content, { async: false });
   if (sanitize) {
     content = sanitizeText(content, /* advHtml = */ false);
   }

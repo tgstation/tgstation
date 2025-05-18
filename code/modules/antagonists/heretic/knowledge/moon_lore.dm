@@ -209,11 +209,11 @@
 	lunatic.set_master(user.mind, user)
 	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet = new(convertee.drop_location())
 	var/static/list/slots = list(
-		"neck" = ITEM_SLOT_NECK,
-		"hands" = ITEM_SLOT_HANDS,
-		"backpack" = ITEM_SLOT_BACKPACK,
-		"right pocket" = ITEM_SLOT_RPOCKET,
-		"left pocket" = ITEM_SLOT_RPOCKET,
+		LOCATION_NECK,
+		LOCATION_HANDS,
+		LOCATION_RPOCKET,
+		LOCATION_LPOCKET,
+		LOCATION_BACKPACK,
 	)
 	convertee.equip_in_one_of_slots(amulet, slots, qdel_on_fail = FALSE)
 	INVOKE_ASYNC(convertee, TYPE_PROC_REF(/mob, emote), "laugh")

@@ -96,7 +96,7 @@
 		to_chat(user, span_boldwarning("The [emag_card] falls into the toilet. You fish it back out. Looks like you broke the toilet."))
 	return TRUE
 
-/obj/structure/toiletbong/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/toiletbong/attackby(obj/item/attacking_item, mob/user, list/modifiers)
 	if(istype(attacking_item, /obj/item/card/emag))
 		return
 	return ..()

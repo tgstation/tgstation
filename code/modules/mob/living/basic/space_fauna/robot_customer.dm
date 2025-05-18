@@ -11,6 +11,7 @@
 	icon_living = "amerifat"
 
 	max_grab = GRAB_AGGRESSIVE
+	status_flags = CANPUSH
 	basic_mob_flags = DEL_ON_DEATH
 	mob_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	sentience_type = SENTIENCE_ARTIFICIAL
@@ -20,6 +21,7 @@
 	maximum_survivable_temperature = T0C + 1000
 
 	ai_controller = /datum/ai_controller/robot_customer
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 
 	/// The clothes that we draw on this tourist.
 	var/clothes_set = "amerifat_clothes"

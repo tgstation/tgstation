@@ -7,13 +7,14 @@
 	icon_dead = "bear_dead"
 	icon_gib = "bear_gib"
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
-	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/clothing/head/costume/bearpelt = 1)
+	butcher_results = list(/obj/item/food/meat/slab/bear = 5, /obj/item/stack/sheet/animalhide/bear = 2)
 
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 
+	max_stamina = 120
 	maxHealth = 60
 	health = 60
 	speed = 0
@@ -31,7 +32,7 @@
 	friendly_verb_continuous = "bear hugs"
 	friendly_verb_simple = "bear hug"
 
-	faction = list(FACTION_RUSSIAN)
+	faction = list(FACTION_RUSSIAN, FACTION_BEAR)
 
 	habitable_atmos = null
 	minimum_survivable_temperature = TCMB
@@ -88,7 +89,7 @@
 	maxHealth = 250
 	health = 250
 	faction = list(FACTION_NEUTRAL)
-	status_flags = CANPUSH
+	status_flags = CANPUSH | CANSTUN
 
 /mob/living/basic/bear/snow/ancient
 	name = "ancient polar bear"

@@ -66,22 +66,27 @@
 	if(blade_effect)
 		stack_trace("[type] had an existing blade effect in on_activation. This might be an exploit, and should be investigated.")
 		UnregisterSignal(blade_effect, COMSIG_QDELETING)
+		UnregisterSignal(blade_effect, COMSIG_BLADE_BARRIER_TRIGGERED)
 		QDEL_NULL(blade_effect)
 
 	var/mob/living/living_user = on_who
 	blade_effect = living_user.apply_status_effect(/datum/status_effect/protective_blades, null, projectile_amount, 25, 0.66 SECONDS, projectile_effect)
 	RegisterSignal(blade_effect, COMSIG_QDELETING, PROC_REF(on_status_effect_deleted))
+	RegisterSignal(blade_effect, COMSIG_BLADE_BARRIER_TRIGGERED, PROC_REF(on_status_effect_triggered))
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/on_deactivation(mob/on_who, refund_cooldown = TRUE)
 	. = ..()
-	QDEL_NULL(blade_effect)
+	if(blade_effect)
+		UnregisterSignal(blade_effect, COMSIG_QDELETING)
+		UnregisterSignal(blade_effect, COMSIG_BLADE_BARRIER_TRIGGERED)
+		QDEL_NULL(blade_effect)
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/before_cast(atom/cast_on)
-	if(isnull(blade_effect) || !length(blade_effect.blades))
-		unset_click_ability(owner, refund_cooldown = TRUE)
+	if(isnull(blade_effect) || !current_amount)
+		unset_click_ability(owner, refund_cooldown = FALSE)
 		return SPELL_CANCEL_CAST
 
-	return ..()
+	return ..() | SPELL_NO_IMMEDIATE_COOLDOWN // all CD handling will be done by the status effect being deleted
 
 /datum/action/cooldown/spell/pointed/projectile/furious_steel/fire_projectile(mob/living/user, atom/target)
 	. = ..()
@@ -96,7 +101,18 @@
 	SIGNAL_HANDLER
 
 	blade_effect = null
-	on_deactivation()
+	var/blades_remaining = current_amount
+	// Which scales the cooldown according to projectiles remaining
+	unset_click_ability(owner, refund_cooldown = FALSE)
+	// Snowflake because it does not handle cooldown if we used every projectile
+	if(blades_remaining <= 0)
+		StartCooldown()
+
+/// Reduce our projectile amount when our blade status effect is triggered
+/datum/action/cooldown/spell/pointed/projectile/furious_steel/proc/on_status_effect_triggered(datum/status_effect/protective_blades/source, atom/target)
+	SIGNAL_HANDLER
+
+	current_amount--
 
 /obj/projectile/floating_blade
 	name = "blade"

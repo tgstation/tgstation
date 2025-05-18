@@ -14,7 +14,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 	var/list/return_list = zebra_typecacheof(list(
 		/datum/data/vending_product = FISH_ICON_COIN,
 		/mob/living/basic/axolotl = FISH_ICON_CRITTER,
-		/mob/living/basic/frog = FISH_ICON_CRITTER,
+		/obj/effect/spawner/random/frog = FISH_ICON_CRITTER,
 		/mob/living/basic/carp = FISH_ICON_DEF,
 		/mob/living/basic/mining = FISH_ICON_HOSTILE,
 		/mob/living/basic/skeleton = FISH_ICON_BONE,
@@ -491,7 +491,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, generate_specific_fish_icons())
 			var/percent_rod_weight = rod_weights[reward] / total_rod_weight
 			var/obj/item/fish/prototype = reward
 			var/init_name = initial(prototype.name)
-			var/ratio = percent_weight/percent_rod_weight
+			var/ratio = percent_rod_weight ? percent_weight/percent_rod_weight : INFINITY
 			if(ratio < 0.9)
 				init_name = span_bold(init_name)
 				if(ratio < 0.3)

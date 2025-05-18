@@ -28,7 +28,7 @@
 	UnregisterSignal(target, COMSIG_MOB_PRE_JAUNT)
 	return TRUE
 
-/// Signal for COMSIG_MOVABLE_TELEPORTED that blocks teleports and stuns the would-be-teleportee.
+/// Signal for COMSIG_MOVABLE_TELEPORTING that blocks teleports and stuns the would-be-teleportee.
 /obj/item/implant/teleport_blocker/proc/on_teleport(mob/living/teleportee, atom/destination, channel)
 	SIGNAL_HANDLER
 
@@ -38,7 +38,7 @@
 	var/datum/effect_system/spark_spread/quantum/spark_system = new()
 	spark_system.set_up(5, TRUE, teleportee)
 	spark_system.start()
-	return COMPONENT_BLOCK_TELEPORT
+	return TRUE
 
 /// Signal for COMSIG_MOB_PRE_JAUNT that prevents a user from entering a jaunt.
 /obj/item/implant/teleport_blocker/proc/on_jaunt(mob/living/jaunter)

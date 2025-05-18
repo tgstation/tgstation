@@ -124,7 +124,7 @@
 			balloon_alert(user, "flask is full!")
 			return ITEM_INTERACT_SUCCESS
 		to_fill.reagents.add_reagent(/datum/reagent/eldritch, 50)
-		do_item_attack_animation(src, used_item = tool)
+		do_item_attack_animation(src, used_item = tool, animation_type = ATTACK_ANIMATION_BLUNT)
 		current_mass--
 		balloon_alert(user, "refilled flask")
 		return ITEM_INTERACT_SUCCESS
