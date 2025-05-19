@@ -151,6 +151,8 @@
 		. += span_cult("The captured soul can be placed into a construct shell to produce a construct, or released from the stone as a shade.")
 		if(spent)
 			. += span_cult("This shard is spent; it is now just a creepy rock.")
+	if(IS_CULTIST(user))
+		. += span_cult("The [name] can be corrupted using the [EXAMINE_HINT("Twisted Construction")] spell.")
 
 /obj/item/soulstone/examine_more(mob/user)
 	. = ..()

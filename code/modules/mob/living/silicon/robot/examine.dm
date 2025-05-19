@@ -47,4 +47,7 @@
 		if(DEAD)
 			. += span_deadsay("[p_They()] look[p_s()] like its system is corrupted and requires a reset.")
 
+	if(IS_CULTIST(user))
+		. += span_cult("[p_They()] can be turned into a construct using the [EXAMINE_HINT("Twisted Construction")] spell.")
+
 	. += ..()

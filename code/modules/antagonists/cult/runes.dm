@@ -446,20 +446,6 @@ structure_check() searches for nearby cultist structures required for the invoca
 	animate(new_blade, alpha = 255, transform = blade_matrix_on_spawn, time = 2 SECONDS, easing = BOUNCE_EASING, flags = ANIMATION_PARALLEL)
 	addtimer(VARSET_CALLBACK(new_blade, anchored, FALSE), 2 SECONDS)
 
-/obj/effect/rune/empower
-	cultist_name = "Empower"
-	cultist_desc = "allows cultists to prepare greater amounts of blood magic at far less of a cost."
-	invocation = "H'drak v'loso, mir'kanas verbot!"
-	icon_state = "3"
-	color = RUNE_COLOR_TALISMAN
-	construct_invoke = FALSE
-
-/obj/effect/rune/empower/invoke(list/invokers)
-	. = ..()
-	var/mob/living/user = invokers[1] //the first invoker is always the user
-	for(var/datum/action/innate/cult/blood_magic/BM in user.actions)
-		BM.Activate()
-
 /obj/effect/rune/teleport
 	cultist_name = "Teleport"
 	cultist_desc = "warps everything above it to another chosen teleport rune."
