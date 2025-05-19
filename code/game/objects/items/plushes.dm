@@ -825,6 +825,7 @@
 	attack_verb_continuous = list("Oops", "Eeks")
 	attack_verb_simple = list("Oop", "Eek")
 	squeak_override = list(SFX_SCREECH=1)
+	var/french = FALSE
 
 /obj/item/toy/plush/monkey/item_interaction(mob/living/user, obj/item/food/grown/banana/nana, list/modifiers)
 	if(!istype(nana))
@@ -838,9 +839,15 @@
 /obj/item/toy/plush/monkey/proc/eat(obj/item/food/grown/banana/nana)
 	if(istype(nana, /obj/item/food/grown/banana/bluespace))
 		do_teleport(src, get_turf(src), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+	else if(istype(nana, /obj/item/food/grown/banana/mime) && !french)
+		name = "singe en peluche"
+		desc = "Son étiquette indique: 'Oop eek! Je suis un chimpanzé!', avec  'Maintenant en TAILLE JUMBO!' sur l'autre face."
+		french = TRUE
+	// throw the peel at a random mob, or a random turf if there are none
 	var/obj/item/grown/peel = new nana.trash_type(get_turf(src))
-	var/mob/living/throw_at = LAZYLEN(oviewers(src)) ? pick(oviewers(src)) : null
-	peel.throw_at(throw_at || get_ranged_target_turf(src, peel.throw_range, peel.throw_speed), peel.throw_range, peel.throw_speed, quickstart = FALSE)
-	qdel(nana) //now it can be deleted
+	var/list/oviewers = oviewers(src)
+	var/mob/living/throw_at = LAZYLEN(oviewers) ? pick(oviewers) : null
+	peel.throw_at(throw_at || get_ranged_target_turf(src, pick(GLOB.alldirs), peel.throw_range), peel.throw_range, peel.throw_speed, quickstart = FALSE)
 	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
 	spasm_animation(5 SECONDS)
+	qdel(nana)
