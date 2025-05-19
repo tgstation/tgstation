@@ -42039,10 +42039,9 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison/mess)
 "hVn" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/grille,
 /obj/structure/grille,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/genetics)
 "hVK" = (
@@ -46643,9 +46642,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/effect/mapping_helpers/airlock/access/all/science/research,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard)
@@ -50494,10 +50490,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
-"ppZ" = (
-/obj/effect/turf_decal/tile/neutral/diagonal_edge,
-/turf/open/genturf/blue,
-/area/rainworld/surface/outdoors/noruinsnomonsters)
 "pqw" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -57605,12 +57597,6 @@
 	},
 /turf/open/floor/iron/smooth_large,
 /area/station/hallway/primary/central)
-"vGb" = (
-/obj/structure/lattice/water,
-/obj/structure/grille,
-/obj/structure/grille,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
-/area/rainworld/surface/outdoors/nospawn)
 "vGD" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/brown{
@@ -67560,7 +67546,7 @@ jPY
 cqq
 cqq
 cqq
-vGb
+aaT
 cqq
 cqq
 cqq
@@ -116657,7 +116643,7 @@ xpY
 xpY
 xpY
 xpY
-ppZ
+xpY
 xpY
 xpY
 xpY

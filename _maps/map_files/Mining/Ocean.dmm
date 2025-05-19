@@ -581,7 +581,7 @@
 	},
 /obj/item/gps/computer{
 	pixel_y = 0;
-	gpstag = "Base0"
+	gpstag = "BASE0"
 	},
 /turf/open/floor/iron/smooth_large,
 /area/mine/production)
@@ -1605,6 +1605,12 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
+"KR" = (
+/obj/machinery/light/directional/north,
+/obj/structure/closet/crate/cardboard,
+/obj/item/stack/sheet/mineral/wood/fifty,
+/turf/open/floor/iron/smooth_large,
+/area/mine/production)
 "KV" = (
 /turf/open/genturf,
 /area/rainworld/surface/outdoors/unexplored)
@@ -1707,12 +1713,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
-"NT" = (
-/obj/machinery/light/directional/north,
-/obj/structure/closet/crate/cardboard,
-/obj/item/stack/sheet/mineral/wood/fifty,
-/turf/open/floor/iron/smooth_large,
-/area/mine/production)
 "NW" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Showers"
@@ -42472,7 +42472,7 @@ zd
 zd
 li
 gs
-NT
+KR
 EU
 gs
 nI
