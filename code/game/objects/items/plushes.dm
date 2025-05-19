@@ -835,9 +835,12 @@
 	addtimer(CALLBACK(src, PROC_REF(eat), nana), 3 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/toy/plush/monkey/proc/eat(nana)
+/obj/item/toy/plush/monkey/proc/eat(obj/item/food/grown/banana/nana)
 	if(istype(nana, /obj/item/food/grown/banana/bluespace))
 		do_teleport(src, get_turf(src), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+	var/obj/item/grown/peel = new nana.trash_type(get_turf(src))
+	var/mob/living/throw_at = oviewers(src)[1] //the closest mob
+	peel.throw_at(throw_at || get_ranged_target_turf(src, peel.throw_range, peel.throw_speed), peel.throw_range, peel.throw_speed, quickstart = FALSE)
 	qdel(nana) //now it can be deleted
 	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
 	spasm_animation(5 SECONDS)
