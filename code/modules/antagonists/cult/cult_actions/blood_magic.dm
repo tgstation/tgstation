@@ -7,7 +7,7 @@
 /datum/action/innate/cult/blood_magic
 	name = "Prepare Blood Magic"
 	button_icon_state = "carve"
-	desc = "Prepare blood magic by carving runes into your flesh."
+	desc = "Prepare blood magic by carving runes into your flesh. Works better if standing near a rune."
 	default_button_position = DEFAULT_BLOODSPELLS
 	var/list/spells = list()
 	var/channeling = FALSE
