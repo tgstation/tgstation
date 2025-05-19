@@ -817,6 +817,9 @@
 /obj/item/toy/plush/monkey
 	name = "monkey plushie"
 	desc = "Its tag reads: 'Oop eek! I'm a chimpanzee!', with 'Now in JUMBO SIZE!' on the flipside."
+	w_class = WEIGHT_CLASS_BULKY
+	throw_range = 2
+	throw_speed = 1
 	icon_state = "monkey"
 	inhand_icon_state = null
 	attack_verb_continuous = list("Oops", "Eeks")
