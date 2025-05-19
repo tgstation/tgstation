@@ -289,15 +289,8 @@
 			offand_force_decrement += 2
 			hits_to_crit_on_average = ROUND_UP(100 / (blade.force * 2 - offand_force_decrement))
 
-	// Save the force as our last weapon force
-	last_weapon_force = blade.force
-	// Subtract the decrement, but only if the target is living
-	if(isliving(target))
-		blade.force -= offand_force_decrement
 	// Perform the offhand attack
-	blade.melee_attack_chain(source, target)
-	// Restore the force.
-	blade.force = last_weapon_force
+	blade.melee_attack_chain(source, target, null, list(FORCE_MODIFIER = -offand_force_decrement))
 
 ///Modifies our blade demolition modifier so we can take down doors with it
 /datum/heretic_knowledge/blade_upgrade/blade/proc/on_blade_equipped(mob/user, obj/item/equipped, slot)
