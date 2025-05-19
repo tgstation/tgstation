@@ -96,9 +96,9 @@
 	if(extra_unregistration_callback)
 		if(istype(extra_unregistration_callback, /datum/callback))
 			var/datum/callback/callback = extra_unregistration_callback
-			callback.Invoke()
+			callback.Invoke(src)
 		else
-			call(parent, extra_unregistration_callback)()
+			call(parent, extra_unregistration_callback)(src)
 
 	unregister_circuit_signals()
 	unregister_physical_signals()
