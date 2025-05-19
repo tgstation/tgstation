@@ -55,6 +55,7 @@
 			this_generator["generator_name"] = generator.display_name
 			this_generator["active"] = generator.active
 			this_generator["recovering"] = generator.recovering || generator.initiating
+			this_generator["current_regeneration"] = generator.current_regeneration
 			if(generator.machine_stat & NOPOWER)
 				this_generator["inactive"] = TRUE
 			generator_list += list(this_generator)

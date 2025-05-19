@@ -18,6 +18,7 @@ type GeneratorStats = {
   current_strength: number;
   active: BooleanLike;
   recovering: BooleanLike;
+  current_regeneration: number;
 };
 
 type Data = {
@@ -70,8 +71,15 @@ type GeneratorTableEntryProps = {
 const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
   const { act, data } = useBackend<Data>();
   const { GeneratorData } = props;
-  const { name, id, max_strength, current_strength, active, recovering } =
-    GeneratorData;
+  const {
+    name,
+    id,
+    max_strength,
+    current_strength,
+    active,
+    recovering,
+    current_regeneration,
+  } = GeneratorData;
 
   return (
     <Table.Row className="candystripe">
@@ -102,7 +110,7 @@ const GeneratorTableEntry = (props: GeneratorTableEntryProps) => {
             bad: [0, max_strength * 0.25],
           }}
         >
-          {current_strength}/{max_strength}
+          {current_strength}/{max_strength} + {current_regeneration}
         </ProgressBar>
       </Table.Cell>
       <Table.Cell>
