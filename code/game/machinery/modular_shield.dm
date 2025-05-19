@@ -190,7 +190,7 @@
 				deploying_shield.shield_generator = src
 				LAZYADD(deployed_shields, deploying_shield)
 				if(color_shield)
-					deploying_shield.add_atom_colour(cached_color_filter || color, FIXED_COLOUR_PRIORITY)
+					deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
 			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 			calculate_regeneration()
 			return
