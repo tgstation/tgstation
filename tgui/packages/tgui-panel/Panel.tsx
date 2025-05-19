@@ -12,7 +12,7 @@ import { ChatPanel, ChatTabs } from './chat';
 import { useGame } from './game';
 import { Notifications } from './Notifications';
 import { PingIndicator } from './ping';
-import { ReconnectButton } from './reconnect';
+import { ReconnectButton, ReconnectMenu } from './reconnect';
 import { SettingsPanel, useSettings } from './settings';
 
 export const Panel = (props) => {
@@ -35,6 +35,9 @@ export const Panel = (props) => {
             <Stack mr={1} align="center">
               <Stack.Item grow overflowX="auto">
                 <ChatTabs />
+              </Stack.Item>
+              <Stack.Item>
+                <ReconnectButton />
               </Stack.Item>
               <Stack.Item>
                 <PingIndicator />
@@ -82,7 +85,7 @@ export const Panel = (props) => {
             </Pane.Content>
             <Notifications>
               {game.connectionLostAt && (
-                <Notifications.Item rightSlot={<ReconnectButton />}>
+                <Notifications.Item rightSlot={<ReconnectMenu />}>
                   You are either AFK, experiencing lag or the connection has
                   closed.
                 </Notifications.Item>
