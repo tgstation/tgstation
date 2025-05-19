@@ -58,7 +58,7 @@
 	maptext_y = 0
 
 	/// Time to wait between messages
-	VAR_PRIVATE/time_per_message = 0.12 SECONDS
+	VAR_PRIVATE/time_per_message = 0.15 SECONDS
 	/// Messages shown in sequence on the HUD
 	/// More messages = longer animation. Keep under 30
 	VAR_PRIVATE/list/messages = list(
@@ -114,7 +114,7 @@
 				cyborg.clear_fullscreen(type)
 			return
 
-	sleep(1 SECONDS)
+	sleep(0.5 SECONDS)
 	if(QDELETED(src))
 		if(!QDELETED(cyborg))
 			cyborg.clear_fullscreen(type, 1.5 SECONDS)
@@ -122,7 +122,7 @@
 
 	invisibility = INVISIBILITY_ABSTRACT
 	cyborg.overlay_fullscreen(type, /atom/movable/screen/fullscreen/blind/cyborg)
-	sleep(1 SECONDS)
+	sleep(1.5 SECONDS)
 	if(!QDELETED(cyborg))
 		cyborg.clear_fullscreen(type)
 
