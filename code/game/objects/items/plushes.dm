@@ -846,8 +846,7 @@
 	// throw the peel at a random mob, or a random turf if there are none
 	var/obj/item/grown/peel = new nana.trash_type(get_turf(src))
 	var/list/oviewers = oviewers(src)
-	var/mob/living/throw_at = LAZYLEN(oviewers) ? pick(oviewers) : null
-	peel.throw_at(throw_at || get_ranged_target_turf(src, pick(GLOB.alldirs), peel.throw_range), peel.throw_range, peel.throw_speed, quickstart = FALSE)
+	peel.throw_at(oviewers.len == 0 ? get_ranged_target_turf(src, pick(GLOB.alldirs), peel.throw_range) : pick(oviewers), peel.throw_range, peel.throw_speed, quickstart = FALSE)
 	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
 	spasm_animation(5 SECONDS)
 	qdel(nana)
