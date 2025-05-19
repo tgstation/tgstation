@@ -64,7 +64,7 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/infecting_human = src
 
-		if(HAS_TRAIT(infecting_human, TRAIT_VIRUS_RESISTANCE) && prob(75))
+		if(HAS_TRAIT(infecting_human, TRAIT_VIRUS_RESISTANCE) && !HAS_TRAIT(infecting_human, TRAIT_IMMUNODEFICIENCY) && prob(75))
 			return
 
 		switch(target_zone)
@@ -166,7 +166,7 @@
 	if(losebreath >= 1)
 		return FALSE
 	// Spaceacillin for infection resistance
-	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && prob(75))
+	if(HAS_TRAIT(src, TRAIT_VIRUS_RESISTANCE) && !HAS_TRAIT(src, TRAIT_IMMUNODEFICIENCY) && prob(75))
 		return FALSE
 	// Bio check for head AND mask
 	// Meaning if we're masked up and wearing a dome, we are very likely never getting sick
