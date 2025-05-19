@@ -9,7 +9,7 @@
 	power_coeff = 1
 	power_path = /datum/action/cooldown/spell/farsight
 
-/datum/mutation/human/farsight/modify()
+/datum/mutation/human/farsight/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/farsight/to_modify = .
 	if(istype(to_modify))

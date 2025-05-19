@@ -1,0 +1,7 @@
+author: "moocowswag"
+delete-after: True
+changes:
+  - rscadd: "Adds modular shield cables, greatly enabling shield generator setups to be more flexible within a room."
+  - rscadd: "Spray painting or coloring the modular shield generator now has it color its shields on next activation."
+  - qol: "Modular shield machines now automatically attempt to connect to something on initialize and on being rotated via wrench, making it easy to use for maps and helps reduce confusion."
+  - image: "Modular shield cable sprites that adapt to orientation and make the whole system look cleaner"
