@@ -86,13 +86,6 @@
 		hovered = FALSE
 		tooltip_text
 
-/atom/movable/screen/escape_menu/lobby_button/small
-	icon = 'icons/hud/escape_menu_icons.dmi'
-	font_size = 9
-	maptext_width = 48
-	maptext_x = -5
-	maptext_y = -14
-
 /atom/movable/screen/escape_menu/lobby_button/Initialize(
 	mapload,
 	datum/hud/hud_owner,
@@ -139,3 +132,35 @@
 
 	hovered = FALSE
 	closeToolTip(usr)
+
+/atom/movable/screen/escape_menu/lobby_button/small
+	icon = 'icons/hud/escape_menu_icons.dmi'
+	font_size = 9
+	maptext_width = 48
+	maptext_x = -5
+	maptext_y = -14
+
+#define COLLAPSIBLE_BUTTON_DURATION (0.4 SECONDS)
+
+/atom/movable/screen/escape_menu/lobby_button/small/Initialize(
+	mapload,
+	datum/hud/hud_owner,
+	button_text,
+	tooltip_text,
+	list/pixel_offset,
+	on_click_callback,
+	button_overlay,
+	end_point,
+)
+	. = ..()
+	if(end_point)
+		animate(src, transform = transform.Translate(x = end_point, y = 0), time = COLLAPSIBLE_BUTTON_DURATION, easing = CUBIC_EASING|EASE_IN)
+
+/atom/movable/screen/escape_menu/lobby_button/small/proc/collapse()
+	if(MC_RUNNING()) //during init, qdel_in doesn't work, so we'll just qdel normally without anim during setup.
+		animate(src, transform = matrix(), time = COLLAPSIBLE_BUTTON_DURATION, easing = CUBIC_EASING|EASE_OUT)
+		QDEL_IN(src, COLLAPSIBLE_BUTTON_DURATION)
+	else
+		qdel(src)
+
+#undef COLLAPSIBLE_BUTTON_DURATION
