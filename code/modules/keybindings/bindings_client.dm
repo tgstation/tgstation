@@ -69,7 +69,10 @@
 			else
 				full_key = _key
 
-	var/list/click_data = get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, src)
+	var/list/click_data
+	// this runtimes in cases where we have set a conflicting macro already set otherwise
+	if(mousepos_x && mousepos_y)
+		click_data = get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, src)
 
 	var/keycount = 0
 	for(var/kb_name in prefs.key_bindings_by_key[full_key])
@@ -101,13 +104,15 @@
 		calculate_move_dir()
 		if(!movement_locked && !(next_move_dir_add & movement))
 			next_move_dir_sub |= movement
-
-	var/list/click_data = get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, src)
+	var/list/click_data
+	// this runtimes in cases where we have set a conflicting macro already set keys otherwise
+	if(mousepos_x && mousepos_y)
+		click_data = get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, src)
 	// We don't do full key for release, because for mod keys you
 	// can hold different keys and releasing any should be handled by the key binding specifically
 	for (var/kb_name in prefs.key_bindings_by_key[_key])
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
-		if(kb.can_use(src) && kb.up(src, click_data[1]))
+		if(kb.can_use(src) && kb.up(src, click_data?[1]))
 			break
 	holder?.key_up(_key, src)
 	mob.focus?.key_up(_key, src)
