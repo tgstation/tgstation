@@ -44,14 +44,12 @@
 	set name = "github"
 	set desc = "Visit Github"
 	set hidden = TRUE
+
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
-		if(tgui_alert(src, "This will open the Github repository in your browser. Are you sure?",, list("Yes","No"))!="Yes")
-			return
-		src << link(githuburl)
-	else
-		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
-	return
+		DIRECT_OUTPUT(src, link(githuburl))
+		return
+	to_chat(src, span_danger("The Github URL is not set in the server configuration."))
 
 /client/verb/reportissue()
 	set name = "report-issue"

@@ -53,6 +53,30 @@
 		)
 	)
 
+	var/githuburl = CONFIG_GET(string/githuburl)
+	if(githuburl)
+		page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+			null,
+			/* hud_owner = */ null,
+			"Github",
+			"Open the repository for the game",
+			/* pixel_offset = */ list(250, -190),
+			CALLBACK(client, TYPE_VERB_REF(/client, github)),
+			/* button_overlay = */ "github",
+		))
+
+	var/rulesurl = CONFIG_GET(string/rulesurl)
+	if(rulesurl)
+		page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+			null,
+			/* hud_owner = */ null,
+			"Rules",
+			"View the server rules",
+			/* pixel_offset = */ list(200, 190),
+			CALLBACK(client, TYPE_VERB_REF(/client, rules)),
+			/* button_overlay = */ "rules",
+		))
+
 /datum/escape_menu/proc/home_resume()
 	qdel(src)
 
