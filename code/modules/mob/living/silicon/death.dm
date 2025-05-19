@@ -101,7 +101,7 @@
 		var/msg_formatted = MAPTEXT_PIXELLARI(msg)
 		if(findtext(msg, "ERROR"))
 			msg_formatted = "<font color='red'>[msg_formatted]</font>"
-		else if(findtext(msg, "WARNING"))
+		else if(findtext(msg, "WARN"))
 			msg_formatted = "<font color='yellow'>[msg_formatted]</font>"
 		else if(!findtext(msg, "font"))
 			msg_formatted = "<font color='green'>[msg_formatted]</font>"
