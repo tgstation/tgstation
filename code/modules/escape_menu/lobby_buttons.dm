@@ -100,9 +100,6 @@
 	src.on_click_callback = on_click_callback
 	src.tooltip_text = tooltip_text
 
-	if(length(button_text) > 6) //more than 6 characters, lets bump the maptext down a bit.
-		maptext_y -= 12
-
 	add_overlay(button_overlay)
 
 	maptext = MAPTEXT_VCR_OSD_MONO("<b style='font-size: [font_size]px; text-align: center'>[button_text]</b>")
@@ -140,6 +137,7 @@
 	maptext_x = -5
 	maptext_y = -14
 
+///Amount of time between animations when we fade in and out.
 #define COLLAPSIBLE_BUTTON_DURATION (0.4 SECONDS)
 
 /atom/movable/screen/escape_menu/lobby_button/small/Initialize(
@@ -153,11 +151,15 @@
 	end_point,
 )
 	. = ..()
+	//more than 6 characters, lets bump the maptext down a bit, because we're smaller buttons we would be overlaying over the icon itself otherwise.
+	if(length(button_text) > 6)
+		maptext_y -= 12
+
 	if(end_point)
 		animate(src, transform = transform.Translate(x = end_point, y = 0), time = COLLAPSIBLE_BUTTON_DURATION, easing = CUBIC_EASING|EASE_IN)
 
 /atom/movable/screen/escape_menu/lobby_button/small/proc/collapse()
-	if(MC_RUNNING()) //during init, qdel_in doesn't work, so we'll just qdel normally without anim during setup.
+	if(MC_RUNNING()) //qdel_in is delayed until MC is done, so we'll just qdel during setup so it doesn't look weird.
 		animate(src, transform = matrix(), time = COLLAPSIBLE_BUTTON_DURATION, easing = CUBIC_EASING|EASE_OUT)
 		QDEL_IN(src, COLLAPSIBLE_BUTTON_DURATION)
 	else
