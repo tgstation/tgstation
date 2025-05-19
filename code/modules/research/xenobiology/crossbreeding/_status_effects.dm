@@ -463,7 +463,7 @@
 	if(isnull(linked_extract))
 		qdel(src)
 		return
-	if(istype(linked_extract) || linked_extract.get_held_mob() == owner)
+	if(linked_extract.get_held_mob() == owner)
 		return
 	owner.balloon_alert(owner, "[colour] extract faded!")
 	if(!QDELETED(linked_extract))
