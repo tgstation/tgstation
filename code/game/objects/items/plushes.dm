@@ -841,7 +841,7 @@
 		do_teleport(src, get_turf(src), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
 	else if(istype(nana, /obj/item/food/grown/banana/mime) && !french)
 		name = "singe en peluche"
-		desc = "Son étiquette indique: 'Oop eek! Je suis un chimpanzé!', avec  'Maintenant en TAILLE JUMBO!' sur l'autre face."
+		desc = "Son étiquette indique: 'Oop eek! Je suis un chimpanzé!', avec 'Maintenant en TAILLE JUMBO!' sur l'autre face."
 		french = TRUE
 	// throw the peel at a random mob, or a random turf if there are none
 	var/obj/item/grown/peel = new nana.trash_type(get_turf(src))
