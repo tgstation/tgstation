@@ -566,6 +566,12 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
 /area/mine/laborcamp)
+"mC" = (
+/obj/machinery/light/directional/north,
+/obj/structure/closet/crate/cardboard,
+/obj/item/stack/sheet/mineral/wood/fifty,
+/turf/open/floor/iron/smooth_large,
+/area/mine/production)
 "mM" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -918,6 +924,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
+"uE" = (
+/obj/structure/ore_box,
+/turf/open/floor/iron/smooth_large,
+/area/mine/production)
 "uI" = (
 /obj/machinery/power/port_gen/pacman{
 	anchored = 1
@@ -1179,6 +1189,7 @@
 /area/mine/laborcamp)
 "Bs" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/ore_box,
 /turf/open/floor/plating/lavaland_atmos,
 /area/mine/production)
 "Bx" = (
@@ -1420,7 +1431,9 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "EU" = (
-/obj/structure/ore_box,
+/obj/machinery/computer/shuttle/mining{
+	dir = 4
+	},
 /turf/open/floor/iron/smooth_large,
 /area/mine/production)
 "Fc" = (
@@ -1605,12 +1618,6 @@
 	},
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
-"KR" = (
-/obj/machinery/light/directional/north,
-/obj/structure/closet/crate/cardboard,
-/obj/item/stack/sheet/mineral/wood/fifty,
-/turf/open/floor/iron/smooth_large,
-/area/mine/production)
 "KV" = (
 /turf/open/genturf,
 /area/rainworld/surface/outdoors/unexplored)
@@ -2188,8 +2195,9 @@
 /area/mine/laborcamp/security)
 "Zm" = (
 /obj/machinery/light/floor,
-/obj/structure/table,
-/obj/item/storage/toolbox/fishing,
+/obj/machinery/computer/shuttle/mining/common{
+	dir = 1
+	},
 /turf/open/floor/pod,
 /area/mine/production)
 "Zu" = (
@@ -42215,7 +42223,7 @@ zd
 zd
 CS
 gs
-EU
+uE
 EU
 gs
 Sq
@@ -42472,8 +42480,8 @@ zd
 zd
 li
 gs
-KR
-EU
+mC
+Cn
 gs
 nI
 rX
