@@ -111,11 +111,14 @@
 	resistance_flags = FREEZE_PROOF
 	isGlass = FALSE
 	drink_type = BREAKFAST
-	var/lid_open = 0
+
+	/// Is our lid currently removed?
+	var/lid_open = FALSE
 
 /obj/item/reagent_containers/cup/glass/coffee/no_lid
 	icon_state = "coffee_empty"
 	list_reagents = null
+	lid_open = TRUE
 
 /obj/item/reagent_containers/cup/glass/coffee/examine(mob/user)
 	. = ..()
