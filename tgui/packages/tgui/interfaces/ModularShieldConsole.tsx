@@ -29,7 +29,7 @@ export const ModularShieldConsole = () => {
   const { data } = useBackend<Data>();
   const { generators } = data;
   return (
-    <Window title="Modular Shield Console" width={450} height={300}>
+    <Window title="Modular Shield Console" width={450} height={275}>
       <Window.Content scrollable>
         {generators.length === 0 ? (
           <NoticeBox>No Generators Connected</NoticeBox>
