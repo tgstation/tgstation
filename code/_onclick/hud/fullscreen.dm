@@ -128,6 +128,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/fullscreen)
 	layer = BLIND_LAYER
 	plane = FULLSCREEN_PLANE
 
+/atom/movable/screen/fullscreen/blind/cyborg
+	show_when_dead = TRUE
+
 /atom/movable/screen/fullscreen/curse
 	icon_state = "curse"
 	layer = CURSE_LAYER

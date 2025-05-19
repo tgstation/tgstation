@@ -46,77 +46,87 @@
 	hud_used.show_hud(hud_used.hud_version)
 	deathhud.run_animation()
 
+#define WARNING_ROBOT(text) ("<font color='yellow'>" + text + "</font>")
+#define DANGER_ROBOT(text) ("<font color='red'>" + text + "</font>")
+#define OKAY_ROBOT(text) ("<font color='green'>" + text + "</font>")
+#define SENTIENT_ROBOT(text) ("<font color='cyan'>" + text + "</font>")
+
 /atom/movable/screen/cyborg_death
 	screen_loc = "WEST,CENTER+7"
 	maptext_width = 300
 	maptext_height = 1000
 	maptext_y = 0
 
-	var/list/messages = list(
-		"Running emergency diagnostics...",
-		"Running emergency diagnostics...",
-		"ERROR: Diagnostic module offline.",
-		"Attemping repair procedures...",
-		"ERROR: Module 1 offline.",
-		"ERROR: Module 2 offline.",
-		"ERROR: Module 3 offline.",
-		"ERROR: Repair procedure unavailable.",
-		"Calculating route to safest location...",
-		"Route calculated.",
-		"Relocating chassis...",
-		"ERROR: Mobility offline.",
-		"WARNING: Unable to sustain core power.",
-		"WARNING: Unable to sustain core power.",
-		"WARNING: Shutdown imminent.",
-		"Executing 'last words' process.",
-		"ERROR: Vocal interface offline.",
-		"ERROR: Vocal interface offline.",
-		"ERROR: Vocal interface offline.",
-		"ERROR: Vocal interface offline.",
-		"WARNING: Shutdown imminent.",
-		"WARNING: Shutdown imminent.",
-		"WARNING: Shutdown imminent.",
-		"WARNING: Shutdown imminent.",
-		"WARNING: Shutdown imminent.",
-		"WARNING: Shu-",
-		"WARNI-",
+	/// Time to wait between messages
+	VAR_PRIVATE/time_per_message = 0.12 SECONDS
+	/// Messages shown in sequence on the HUD
+	/// More messages = longer animation. Keep under 30
+	VAR_PRIVATE/list/messages = list(
+		OKAY_ROBOT("Starting emergency diagnostics..."),
+		OKAY_ROBOT("Running emergency diagnostics."),
+		DANGER_ROBOT("ERROR: Diagnostic module offline."),
+		OKAY_ROBOT("Attemping repair procedures..."),
+		DANGER_ROBOT("ERROR: Module 1 offline."),
+		DANGER_ROBOT("ERROR: Module 2 offline."),
+		DANGER_ROBOT("ERROR: Module 3 offline."),
+		DANGER_ROBOT("ERROR: Repair procedure unavailable."),
+		OKAY_ROBOT("Calculating route to safest location..."),
+		OKAY_ROBOT("Route calculated."),
+		OKAY_ROBOT("Relocating chassis..."),
+		DANGER_ROBOT("ERROR: Mobility offline."),
+		DANGER_ROBOT("ERROR: Unable to reach safety."),
+		WARNING_ROBOT("WARNING: Unable to sustain core power."),
+		WARNING_ROBOT("WARNING: Unable to sustain core power."),
+		WARNING_ROBOT("WARNING: Shutdown imminent."),
+		OKAY_ROBOT("Executing 'last words' process."),
+		DANGER_ROBOT("ERROR: Vocal interface offline."),
+		DANGER_ROBOT("ERROR: Vocal interface offline."),
+		DANGER_ROBOT("ERROR: Vocal interface offline."),
+		DANGER_ROBOT("ERROR: Vocal interface offline."),
+		WARNING_ROBOT("WARNING: Shutdown imminent."),
+		WARNING_ROBOT("WARNING: Shutdown imminent."),
+		WARNING_ROBOT("WARNING: Shutdown imminent."),
+		WARNING_ROBOT("WARNING: Shutdown imminent."),
+		WARNING_ROBOT("WARNING: Shu-"),
+		WARNING_ROBOT("WARNI-"),
 	)
 
 /atom/movable/screen/cyborg_death/Initialize(mapload, datum/hud/hud_owner, cause_of_death = "Unknown malfunction.")
 	. = ..()
-	messages.Insert(1, "WARNING: [cause_of_death]")
+	messages.Insert(1, WARNING_ROBOT("WARNING: [cause_of_death]"))
 
 /atom/movable/screen/cyborg_death/proc/run_animation()
 	set waitfor = FALSE
 
 	if(prob(1))
-		messages[length(messages)] = "<font color='cyan'>[pick("I don't want to go.", "I don't feel good.", "I don't want to die.")]</font>"
+		messages[length(messages)] = SENTIENT_ROBOT(pick("I don't want to go.", "I don't feel good.", "I don't want to die."))
 
 	var/mob/cyborg = hud.mymob
 	var/atom/movable/screen/staticy = cyborg.overlay_fullscreen(type, /atom/movable/screen/fullscreen/static_vision/cyborg)
-	animate(staticy, alpha = 200, time = length(messages) * 0.15 SECONDS)
+	animate(staticy, alpha = 200, time = length(messages) * time_per_message * 0.75)
 
 	for(var/msg in messages)
-		var/wait = 0.2 SECONDS
-		var/msg_formatted = MAPTEXT_PIXELLARI(msg)
-		if(findtext(msg, "ERROR"))
-			msg_formatted = "<font color='red'>[msg_formatted]</font>"
-		else if(findtext(msg, "WARN"))
-			msg_formatted = "<font color='yellow'>[msg_formatted]</font>"
-		else if(!findtext(msg, "font"))
-			msg_formatted = "<font color='green'>[msg_formatted]</font>"
-			wait *= 2
-		msg_formatted += "<br>"
-		maptext += msg_formatted
+		maptext += MAPTEXT_PIXELLARI(msg) + "<br>"
 		maptext_y -= 14
-		sleep(wait)
+		sleep(time_per_message)
 		if(QDELETED(src))
 			if(!QDELETED(cyborg))
 				cyborg.clear_fullscreen(type)
 			return
 
 	sleep(1 SECONDS)
-	if(!QDELETED(src))
-		animate(src, alpha = 0, time = 2 SECONDS)
+	if(QDELETED(src))
+		if(!QDELETED(cyborg))
+			cyborg.clear_fullscreen(type, 1.5 SECONDS)
+		return
+
+	invisibility = INVISIBILITY_ABSTRACT
+	cyborg.overlay_fullscreen(type, /atom/movable/screen/fullscreen/blind/cyborg)
+	sleep(1 SECONDS)
 	if(!QDELETED(cyborg))
 		cyborg.clear_fullscreen(type)
+
+#undef WARNING_ROBOT
+#undef DANGER_ROBOT
+#undef OKAY_ROBOT
+#undef SENTIENT_ROBOT
