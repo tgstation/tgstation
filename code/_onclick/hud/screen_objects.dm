@@ -470,6 +470,26 @@
 	icon_state = "[base_icon_state][user.resting ? "_on" : null]"
 	return ..()
 
+/atom/movable/screen/sleep
+	name = "sleep"
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "act_sleep"
+	base_icon_state = "act_sleep"
+	plane = HUD_PLANE
+	mouse_over_pointer = MOUSE_HAND_POINTER
+
+/atom/movable/screen/sleep/Click()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		L.SetSleeping(400)
+
+/atom/movable/screen/rest/update_icon_state()
+	var/mob/living/user = hud?.mymob
+	if(!istype(user))
+		return ..()
+	icon_state = "[base_icon_state][user.resting ? "_on" : null]"
+	return ..()
+
 /atom/movable/screen/storage
 	name = "storage"
 	icon = 'icons/hud/screen_midnight.dmi'
