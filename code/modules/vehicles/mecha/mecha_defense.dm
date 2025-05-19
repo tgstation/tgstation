@@ -226,7 +226,9 @@
 			&& LAZYLEN(occupants) \
 			&& !(mecha_flags & SILICON_PILOT))
 			var/mob/living/hitmob = pick(occupants)
-			weapon.melee_attack_chain(user, hitmob, modifiers) //Perform an extra attack on the occupant if all the above conditions pass
+			var/list/passed_attack_modifiers = attack_modifiers
+			MODIFY_ATTACK_FORCE_MULTIPLIER(passed_attack_modifiers, (peeling_the_onion/100))
+			weapon.melee_attack_chain(user, hitmob, modifiers, passed_attack_modifiers) //Perform an extra attack on the occupant if all the above conditions pass
 		return ..()
 	if(istype(weapon, /obj/item/mmi))
 		if(mmi_move_inside(weapon,user))
