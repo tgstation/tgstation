@@ -90,7 +90,8 @@
 	icon = 'icons/hud/escape_menu_icons.dmi'
 	font_size = 9
 	maptext_width = 48
-	maptext_y = -16
+	maptext_x = -5
+	maptext_y = -14
 
 /atom/movable/screen/escape_menu/lobby_button/Initialize(
 	mapload,
@@ -105,6 +106,9 @@
 
 	src.on_click_callback = on_click_callback
 	src.tooltip_text = tooltip_text
+
+	if(length(button_text) > 6) //more than 6 characters, lets bump the maptext down a bit.
+		maptext_y -= 12
 
 	add_overlay(button_overlay)
 

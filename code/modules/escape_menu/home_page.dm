@@ -53,29 +53,105 @@
 		)
 	)
 
-	var/githuburl = CONFIG_GET(string/githuburl)
-	if(githuburl)
+	//Bottom right buttons, from right to left, starting with the button to open the list.
+	page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+		null,
+		/* hud_owner = */ null,
+		"Resources",
+		"Open/Close list of resources",
+		/* pixel_offset = */ list(260, -190),
+		CALLBACK(src, PROC_REF(toggle_resources)),
+		/* button_overlay = */ show_resources ? "close" : "open",
+	))
+
+	//list of offsets we give, so missing icons don't leave a random gap.
+	var/list/offset_order = list(
+		200,
+		140,
+		80,
+		20,
+		-40,
+		-100,
+		-160,
+		-220,
+	)
+	if(show_resources)
+		var/githuburl = CONFIG_GET(string/githuburl)
+		if(githuburl)
+			page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+				null,
+				/* hud_owner = */ null,
+				"Report Bug",
+				"Report a bug/issue",
+				/* pixel_offset = */ list(offset_order[1], -190),
+				CALLBACK(client, TYPE_VERB_REF(/client, reportissue)),
+				/* button_overlay = */ "rules",
+			))
+			offset_order -= offset_order[1]
+
+			page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+				null,
+				/* hud_owner = */ null,
+				"Github",
+				"Open the repository for the game",
+				/* pixel_offset = */ list(offset_order[1], -190),
+				CALLBACK(client, TYPE_VERB_REF(/client, github)),
+				/* button_overlay = */ "github",
+			))
+			offset_order -= offset_order[1]
+
+		var/forumurl = CONFIG_GET(string/forumurl)
+		if(forumurl)
+			page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+				null,
+				/* hud_owner = */ null,
+				"Forums",
+				"Visit the server's forums",
+				/* pixel_offset = */ list(offset_order[1], -190),
+				CALLBACK(client, TYPE_VERB_REF(/client, forum)),
+				/* button_overlay = */ "forums",
+			))
+			offset_order -= offset_order[1]
+
+		var/rulesurl = CONFIG_GET(string/rulesurl)
+		if(rulesurl)
+			page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+				null,
+				/* hud_owner = */ null,
+				"Rules",
+				"View the server rules",
+				/* pixel_offset = */ list(offset_order[1], -190),
+				CALLBACK(client, TYPE_VERB_REF(/client, rules)),
+				/* button_overlay = */ "rules",
+			))
+			offset_order -= offset_order[1]
+
+		var/wikiurl = CONFIG_GET(string/wikiurl)
+		if(wikiurl)
+			page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+				null,
+				/* hud_owner = */ null,
+				"Wiki",
+				"See the wiki for the game",
+				/* pixel_offset = */ list(offset_order[1], -190),
+				CALLBACK(client, TYPE_VERB_REF(/client, wiki)),
+				/* button_overlay = */ "wiki",
+			))
+			offset_order -= offset_order[1]
+
 		page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
 			null,
 			/* hud_owner = */ null,
-			"Github",
-			"Open the repository for the game",
-			/* pixel_offset = */ list(250, -190),
-			CALLBACK(client, TYPE_VERB_REF(/client, github)),
-			/* button_overlay = */ "github",
+			"Change Log",
+			"See all changes to the server",
+			/* pixel_offset = */ list(offset_order[1], -190),
+			CALLBACK(client, TYPE_VERB_REF(/client, changelog)),
+			/* button_overlay = */ "changelog",
 		))
 
-	var/rulesurl = CONFIG_GET(string/rulesurl)
-	if(rulesurl)
-		page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
-			null,
-			/* hud_owner = */ null,
-			"Rules",
-			"View the server rules",
-			/* pixel_offset = */ list(200, 190),
-			CALLBACK(client, TYPE_VERB_REF(/client, rules)),
-			/* button_overlay = */ "rules",
-		))
+/datum/escape_menu/proc/toggle_resources()
+	show_resources = !show_resources
+	show_page()
 
 /datum/escape_menu/proc/home_resume()
 	qdel(src)
