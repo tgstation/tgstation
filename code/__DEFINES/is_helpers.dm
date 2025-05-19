@@ -323,7 +323,6 @@ GLOBAL_LIST_INIT(book_types, typecacheof(list(
 	/obj/item/infuser_book,
 	/obj/item/codex_cicatrix,
 	/obj/item/toy/eldritch_book,
-	/obj/item/book/codex_gigas,
 	/obj/item/toy/talking/codex_gigas,
 )))
 
