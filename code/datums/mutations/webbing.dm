@@ -8,7 +8,7 @@
 	power_path = /datum/action/cooldown/mob_cooldown/lay_web/genetic
 	energy_coeff = 1
 
-/datum/mutation/human/webbing/modify()
+/datum/mutation/human/webbing/setup()
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/lay_web/genetic/to_modify = .
 
@@ -21,7 +21,8 @@
 	to_modify.webbing_time = 2 SECONDS // Spin webs faster but not more often
 
 /datum/mutation/human/webbing/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_WEB_WEAVER, GENETIC_MUTATION)
 
