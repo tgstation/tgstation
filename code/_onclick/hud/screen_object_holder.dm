@@ -42,6 +42,7 @@
 	screen_objects -= screen_object
 	protected_screen_objects -= screen_object
 	client?.screen -= screen_object
+	qdel(screen_object)
 
 /datum/screen_object_holder/proc/clear()
 	client?.screen -= screen_objects

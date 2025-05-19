@@ -57,7 +57,7 @@
 	page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
 		null,
 		/* hud_owner = */ null,
-		"Web Tools",
+		"Resources",
 		"Open/Close list of resources",
 		/* pixel_offset = */ list(260, -190),
 		CALLBACK(src, PROC_REF(toggle_resources)),
@@ -68,8 +68,8 @@
 	show_resources = !show_resources
 	if(!show_resources)
 		//collapsing it
-		for(var/atom/movable/screen/escape_menu/lobby_button/small/button as anything in resource_panels)
-			button.collapse()
+		for(var/atom/movable/screen/escape_menu/lobby_button/small/collapsible/button as anything in resource_panels)
+			button.collapse(page_holder)
 		resource_panels.Cut()
 		return
 	//list of offsets we give, so missing icons don't leave a random gap.
@@ -87,7 +87,7 @@
 
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(githuburl)
-		resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+		resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small/collapsible(
 			null,
 			/* hud_owner = */ null,
 			"Report Bug",
@@ -98,7 +98,7 @@
 			/* end_point */ offset_order[1],
 		))
 		offset_order -= offset_order[1]
-		resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+		resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small/collapsible(
 			null,
 			/* hud_owner = */ null,
 			"Github",
@@ -112,7 +112,7 @@
 
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(forumurl)
-		resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+		resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small/collapsible(
 			null,
 			/* hud_owner = */ null,
 			"Forums",
@@ -126,7 +126,7 @@
 
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(rulesurl)
-		resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+		resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small/collapsible(
 			null,
 			/* hud_owner = */ null,
 			"Rules",
@@ -140,7 +140,7 @@
 
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(wikiurl)
-		resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+		resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small/collapsible(
 			null,
 			/* hud_owner = */ null,
 			"Wiki",
@@ -152,7 +152,7 @@
 		))
 		offset_order -= offset_order[1]
 
-	resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+	resource_panels += page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small/collapsible(
 		null,
 		/* hud_owner = */ null,
 		"Change Log",

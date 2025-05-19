@@ -1206,7 +1206,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set_fullscreen()
 
 /client/proc/set_fullscreen(logging_in = FALSE)
-	var/fullscreen = prefs.read_preference(/datum/preference/toggle/fullscreen_mode)
+	var/fullscreen = prefs?.read_preference(/datum/preference/toggle/fullscreen_mode)
 	//no need to set every login to not fullscreen, they already aren't.
 	//we also dont need to call attempt_auto_fit_viewport, Login does that for us.
 	if(logging_in)
