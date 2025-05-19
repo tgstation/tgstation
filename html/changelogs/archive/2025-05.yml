@@ -482,3 +482,16 @@
       when its destroyed
   timothymtorres:
   - bugfix: Fix `map_export` admin verb not properly saving a massive amount of objects.
+2025-05-19:
+  Jacquerel:
+  - balance: when you kill yourself with a soulfish, it will now kill you
+  - bugfix: also the toolboxes the soulfish suicide spawns will despawn as intended
+  Krysonism:
+  - bugfix: Bungotoxins secondary effect that sets the victims confusion depending
+      on their dizziness now works again.
+  SmArtKar:
+  - bugfix: Fixed airlocks starting without their glass overlays
+  subject217:
+  - config: The minimum age on all Nanotrasen research stations is now 18.
+  timothymtorres:
+  - qol: Remove dead code from gas canisters

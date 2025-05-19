@@ -83,7 +83,7 @@
 	. = ..()
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(on_reagent_change))
 
-/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (!user.combat_mode)
 		return
 	return ..()
@@ -119,7 +119,7 @@
 	balloon_alert(user, "transferring [amount_per_transfer_from_this]u")
 	mode_change_message(user)
 
-/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, list/modifiers)
+/obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
 		return ..()
 	if(!user.combat_mode)

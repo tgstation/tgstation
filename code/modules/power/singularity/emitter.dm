@@ -335,7 +335,7 @@
 	locked = !locked
 	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
 
-/obj/machinery/power/emitter/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/machinery/power/emitter/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(item.GetID())
 		togglelock(user)
 		return
