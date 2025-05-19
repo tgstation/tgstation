@@ -96,6 +96,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		/obj/item/documents,
 		/obj/item/paperwork
 	))
+	/// Typecache of objects that can be inserted and scanned into the photocopier for copying
+	var/static/list/valid_paper_types = list(
+		/obj/item/paper,
+		/obj/item/paper/carbon,
+		/obj/item/paper/construction,
+		/obj/item/paper/natural,
+	)
 
 /obj/machinery/photocopier/prebuilt
 	starting_paper = 30
@@ -121,8 +128,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		object_copy = null
 	if(gone == toner_cartridge)
 		toner_cartridge = null
-	if(gone in paper_stack)
-		paper_stack -= gone
 
 /obj/machinery/photocopier/dump_contents() // are we sure we want to use dump_contents and not something else like deconstruction()?
 	var/dump_location = drop_location()
@@ -179,21 +184,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			))
 			category_names |= paper_blank["category"]
 
-	var/list/valid_paper_types = list(
-		/obj/item/paper,
-		/obj/item/paper/carbon,
-		/obj/item/paper/construction,
-		/obj/item/paper/natural,
-	)
-	var/list/paper_types = list()
-	for(var/obj/item/paper/paper in papers)
-		valid_paper_types[initial(paper.type)] = paper
-
 	static_data["blanks"] = blank_infos
 	static_data["categories"] = category_names
 	static_data["max_paper_count"] = MAX_PAPER_CAPACITY
 	static_data["max_copies"] = MAX_COPIES_AT_ONCE
-	static_data["paper_categories"] = paper_types
 
 	return static_data
 
@@ -223,6 +217,17 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	data["created_paper"] = created_paper
 	data["paper_stack"] = paper_stack
 	data["paper_count"] = get_paper_count()
+
+	var/list/paper_types = list()
+	for(var/obj/item/paper/paper as anything in valid_paper_types)
+		paper_types += list(list(
+			name = paper::name,
+			icon = paper::icon,
+			icon_state = paper::icon_state,
+			amount = paper_stack[paper::type] || 0,
+			type = paper::type,
+		))
+	data["paper_types"] = paper_types
 
 	return data
 
@@ -323,16 +328,18 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			if(check_busy(usr))
 				return FALSE
 
-			var/paper_path = params["paper_type"]
+			// i wish there was an easier way to convert a path string to an obj
+			var/obj/item/paper/paper
 
-			if(!istype(paper_path, /obj/item/paper))
+			var/paper_path = text2path(params["created_paper"])
+
+			if(!ispath(paper_path, /obj/item/paper))
 				return FALSE
 
 			if(!paper_stack[paper_path])
 				return FALSE
 
 			created_paper = paper_path
-
 			return TRUE
 
 /// Returns the color used for the printing operation. If the color is below TONER_LOW_PERCENTAGE, it returns a gray color.
@@ -349,6 +356,16 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	update_use_power(ACTIVE_POWER_USE)
 	// fucking god proc
 	INVOKE_ASYNC(src, PROC_REF(do_copy_loop), copy_cb, user, paper_use, toner_use, copies_amount)
+
+/obj/machinery/photocopier/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+
+	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	visible_message(span_warning("Sparks fly out of [src]!"))
+	balloon_alert(user, "payment system shorted")
+	return TRUE
 
 /**
  * Will invoke the passed in `copy_cb` callback in 4 second intervals, and charge the user 5 credits for each copy made.
@@ -371,7 +388,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(get_paper_count(created_paper) < paper_use * copies_amount)
 		copies_amount = FLOOR(get_paper_count(created_paper) / paper_use, 1)
 		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\"")
-	if(copies_amount > 0 && (attempt_charge(src, user, (copies_amount - 1) * PHOTOCOPIER_FEE) & COMPONENT_OBJ_CANCEL_CHARGE))
+	if(!(obj_flags % EMAGGED) && (copies_amount > 0) && (attempt_charge(src, user, (copies_amount - 1) * PHOTOCOPIER_FEE) & COMPONENT_OBJ_CANCEL_CHARGE))
 		copies_amount = 0
 		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Failed to charge bank account. Aborting.\"")
 
@@ -469,13 +486,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Removes an amount of paper from the printer's storage.
  * This lets us pretend we actually consumed paper when we were actually printing something that wasn't paper.
  */
-/obj/machinery/photocopier/proc/delete_paper(number, paper_type)
-	if(!paper_stack[paper_type] || (number > paper_stack[paper_type]))
+/obj/machinery/photocopier/proc/delete_paper(number) //, paper_type)
+	if(!paper_stack[created_paper] || (number > paper_stack[created_paper]))
 		CRASH("Trying to delete more paper than is stored in the photocopier")
 
-	paper_stack[paper_type] -= number
-	if(paper_stack[paper_type] <= 0)
-		paper_stack[paper_type] = null
+	paper_stack[created_paper] -= number
+	if(paper_stack[created_paper] <= 0)
+		paper_stack[created_paper] = null
 
 /**
  * Handles the copying of paper. Transfers all the text, stamps and so on from the old paper, to the copy.
@@ -487,6 +504,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return null
 
 	var/obj/item/paper/empty_paper = get_empty_paper(created_paper)
+	delete_paper(PAPER_PAPER_USE)
 	toner_cartridge.charges -= PAPER_TONER_USE
 
 	var/copy_colour = get_toner_color()
@@ -642,7 +660,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		balloon_alert(user, "cartridge inserted")
 		return ITEM_INTERACT_SUCCESS
 
-	if(istype(tool, /obj/item/paperplane)
+	if(istype(tool, /obj/item/paperplane))
 		balloon_alert(user, "flatten paper first!")
 		return ITEM_INTERACT_FAILURE
 
@@ -664,9 +682,16 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	if(istype(tool, /obj/item/paper_bin))
 		var/obj/item/paper_bin/paper_bin = tool
+
+		if(!paper_bin.total_paper)
+			balloon_alert(user, "paper bin empty!")
+			return ITEM_INTERACT_FAILURE
+
 		var/paper_inserted = 0
 		for(var/obj/item/paper/stacked_paper in paper_bin.paper_stack) // insert all paper that is already initialized
-			if(!stacked_paper.is_empty() || !is_room_for_paper())
+			var/is_empty = stacked_paper.is_empty()
+			var/is_room = is_room_for_paper()
+			if(!is_empty || !is_room)
 				continue
 
 			insert_empty_paper(stacked_paper.type, user, silent=TRUE)
@@ -681,7 +706,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			if(paper_to_take)
 				insert_empty_paper(paper_bin.papertype, user, paper_to_take, silent=TRUE)
 				paper_inserted += paper_to_take
-				paper_bin.total_paper -= (noninitialized_paper_total - paper_to_take)
+				paper_bin.total_paper -= (paper_to_take)
 
 		if(!paper_inserted && !is_room_for_paper()) // no paper was inserted because it was full
 			balloon_alert(user, "cannot hold more paper!")
@@ -700,7 +725,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /// Check if there is enough room to insert paper
 /obj/machinery/photocopier/proc/is_room_for_paper(mob/user, amount=1)
-	return get_paper_count() >= MAX_PAPER_CAPACITY
+	return get_paper_count() < MAX_PAPER_CAPACITY
 
 /// Proc that handles insertion of empty paper, useful for copying later.
 /obj/machinery/photocopier/proc/insert_empty_paper(paper_type, mob/user, amount=1, silent=FALSE)

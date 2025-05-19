@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Button,
+  ImageButton,
   Input,
   LabeledList,
   ProgressBar,
@@ -30,6 +31,16 @@ type Data = {
   paper_count: number;
   max_paper_count: number;
   blanks: Blank[];
+  paper_types: Paper[];
+  created_paper: string;
+};
+
+type Paper = {
+  name: string;
+  icon: string;
+  icon_state: string;
+  amount: number;
+  type: string;
 };
 
 type Blank = {
@@ -91,7 +102,7 @@ type StatusProps = {
 
 const Status = (props: StatusProps) => {
   const { act, data } = useBackend<Data>();
-  const { item, selectedBlank } = props;
+  const { selectedBlank } = props;
   const {
     has_toner,
     copies_left,
@@ -100,6 +111,8 @@ const Status = (props: StatusProps) => {
     max_toner,
     paper_count,
     max_paper_count,
+    paper_types,
+    created_paper,
   } = data;
 
   const average_toner = max_toner * 0.66;
@@ -167,71 +180,30 @@ const Status = (props: StatusProps) => {
           <b>{selectedBlank ? selectedBlank : 'Not Selected'}</b>
         </LabeledList.Item>
 
-
         <LabeledList.Item label="Paper Type" textAlign="center">
-          <b>{selectedBlank ? selectedBlank : 'Not Selected'}</b>
+          <Stack align="center">
+            {paper_types.map((paper) => (
+              <Stack.Item grow key={paper}>
+                <ImageButton
+                  fluid
+                  dmIcon={paper.icon}
+                  dmIconState={paper.icon_state}
+                  tooltip={paper.name + ' amount is ' + paper.amount}
+                  imageSize={32}
+                  verticalAlignContent="center"
+                  iconPosition="center"
+                  disabled={!paper.amount}
+                  selected={created_paper === paper.type && paper.amount}
+                  onClick={() =>
+                    act('select_paper_type', {
+                      created_paper: paper.type,
+                    })
+                  }
+                />
+              </Stack.Item>
+            ))}
+          </Stack>
         </LabeledList.Item>
-
-
-         <ImageButton
-            fluid
-            dmIcon={item.icon}
-            dmIconState={item.icon_state}
-            tooltip={item.name}
-            imageSize={32}
-            color={color}
-            disabled={created_paper == item.type}
-            onClick={() =>
-              act('select_paper_type', {
-                path: item.path,
-              })
-            }
-          ></ImageButton>
-
-  const { active, item, scale = 3 } = props;
-
-  return (
-    <div style={{ position: 'relative' }}>
-      <ImageButton
-        imageSize={scale * 32}
-        color={active ? 'green' : 'default'}
-        style={{ textTransform: 'capitalize', zIndex: '1' }}
-        tooltip={item.name}
-        tooltipPosition={'bottom'}
-        dmIcon={item.icon}
-        dmIconState={item.icon_state}
-        onClick={() =>
-          act('select_item', {
-            path: item.path,
-            deselect: active,
-          })
-        }
-      />
-
-    <ImageButton
-      fluid
-      base64={
-        image
-      } /* Use base64 image if we have it. DmIcon cannot paint grayscale images yet */
-      dmIcon={icon}
-      dmIconState={icon_state}
-      imageSize={32}
-      disabled={!maxMultiplier}
-      buttons={
-        max_res_amount > 1 &&
-        maxMultiplier > 1 && (
-          <Multipliers recipe={recipe} maxMultiplier={maxMultiplier} />
-        )
-      }
-      onClick={() =>
-        act('make', {
-          ref: ref,
-          multiplier: 1,
-        })
-      }
-
-
-
       </LabeledList>
     </Section>
   );
