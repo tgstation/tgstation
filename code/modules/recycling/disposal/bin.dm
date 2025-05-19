@@ -111,7 +111,7 @@
 	air_contents.merge(removed)
 	trunk_check()
 
-/obj/machinery/disposal/attackby(obj/item/I, mob/living/user, list/modifiers)
+/obj/machinery/disposal/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(!pressure_charging && !full_pressure && !flush)
 		if(I.tool_behaviour == TOOL_SCREWDRIVER)
@@ -378,7 +378,7 @@
 	var/obj/item/dest_tagger/mounted_tagger
 
 // attack by item places it in to disposal
-/obj/machinery/disposal/bin/attackby(obj/item/weapon, mob/user, list/modifiers)
+/obj/machinery/disposal/bin/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/storage/bag/trash)) //Not doing component overrides because this is a specific type.
 		var/obj/item/storage/bag/trash/bag = weapon
 		to_chat(user, span_warning("You empty the bag."))
@@ -388,7 +388,7 @@
 		return ..()
 // handle machine interaction
 
-/obj/machinery/disposal/bin/attackby_secondary(obj/item/weapon, mob/user, list/modifiers)
+/obj/machinery/disposal/bin/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/dest_tagger))
 		var/obj/item/dest_tagger/new_tagger = weapon
 		if(mounted_tagger)

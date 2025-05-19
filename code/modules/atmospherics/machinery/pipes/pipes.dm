@@ -89,7 +89,7 @@
 		return air_temporary.remove(amount)
 	return parent.air.remove(amount)
 
-/obj/machinery/atmospherics/pipe/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/machinery/atmospherics/pipe/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/pipe_meter))
 		var/obj/item/pipe_meter/meter = item
 		user.dropItemToGround(meter)
