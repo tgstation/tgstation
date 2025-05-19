@@ -604,7 +604,7 @@
 
 /obj/item/mod/core/soul/get_chargebar_string()
 	var/mob/living/wearer = mod.wearer
-	if(wearer || HAS_TRAIT(wearer, TRAIT_NO_SOUL))
+	if(!wearer || HAS_TRAIT(wearer, TRAIT_NO_SOUL))
 		return "No power source detected."
 	if(CONFIG_GET(flag/disable_human_mood))
 		return "Infinite"
