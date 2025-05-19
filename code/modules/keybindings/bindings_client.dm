@@ -69,10 +69,7 @@
 			else
 				full_key = _key
 
-	var/list/click_data
-	// this runtimes in cases where we have set a conflicting macro already set otherwise
-	if(mousepos_x && mousepos_y)
-		click_data = get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, src)
+	var/list/click_data = get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, src)
 
 	var/keycount = 0
 	for(var/kb_name in prefs.key_bindings_by_key[full_key])
@@ -105,7 +102,7 @@
 		if(!movement_locked && !(next_move_dir_add & movement))
 			next_move_dir_sub |= movement
 	var/list/click_data
-	// this runtimes in cases where we have set a conflicting macro already set keys otherwise
+	//manual calls of keyup
 	if(mousepos_x && mousepos_y)
 		click_data = get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, src)
 	// We don't do full key for release, because for mod keys you
