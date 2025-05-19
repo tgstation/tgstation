@@ -68,8 +68,13 @@
 
 /turf/open/misc/ashplanet/rocky/rainworld
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	slowdown = 0
+	baseturfs = /turf/open/misc/ashplanet/wateryrock/rainworld
+
 /turf/open/misc/ashplanet/wateryrock/rainworld
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	slowdown = 0
+	baseturfs = /turf/open/misc/ashplanet/wateryrock/rainworld
 
 /turf/open/misc/ashplanet/wateryrock/Initialize(mapload)
 	icon_state = "[icon_state][rand(1, 9)]"
