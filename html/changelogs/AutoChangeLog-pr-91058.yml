@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Spear 2x damage multiplier to secure lockers is now also applied on thrown hit."

@@ -1,5 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - rscadd: "Voidwalkers can now convert soft walls into void windows, using the right-click of their Void Eater."
-  - balance: "Voidwalkers can now walk full-speed on nearstation tiles."

@@ -468,7 +468,7 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	tool.play_tool_sound(src, 10)
 	return TRUE
 
-/obj/item/radio/headset/attackby(obj/item/W, mob/user, list/modifiers)
+/obj/item/radio/headset/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/encryptionkey))
 		if(keyslot && keyslot2)
 			to_chat(user, span_warning("The headset can't hold another key!"))

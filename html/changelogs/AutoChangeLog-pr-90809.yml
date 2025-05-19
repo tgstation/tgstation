@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - refactor: "Batons have been refactored again. Baton stuns now properly count as an attack, when before it was a nothing. Report any oddities, particularly in regards to harmbatonning vs normal batonning."
+  - refactor: "The method of adjusting item damage mid-attack has been refactored - some affected items include the Nullblade and knives. Report any strange happenings with damage numbers."
+  - refactor: "A few objects have been moved to the new interaction chain - records consoles, mawed crucible, alien weeds and space vines, hedges, restaurant portals,  and some mobs - to name a few."
+  - bugfix: "Spears only deal bonus damage against secure lockers, not all closet types (including crates)"
