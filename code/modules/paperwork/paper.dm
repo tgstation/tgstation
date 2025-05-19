@@ -853,6 +853,7 @@
 	update_appearance()
 
 /obj/item/paper/natural
+	name = "natural paper"
 	color = COLOR_OFF_WHITE
 
 /obj/item/paper/crumpled
