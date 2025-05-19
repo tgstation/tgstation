@@ -47,6 +47,7 @@
 	. = ..()
 	if(!.)
 		return
+	item_module.mouse_opacity = initial(item_module.mouse_opacity)
 	observer_screen_update(item_module)
 
 ///Helper for cyborgs unequipping things.
@@ -66,6 +67,7 @@
 	. = ..()
 	if(!.)
 		return
+	item_dropping.mouse_opacity = MOUSE_OPACITY_OPAQUE
 	//this is the cyborg equivalent of dropped(), though we call that too in doUnEquip.
 	item_dropping.cyborg_unequip(src)
 	deselect_module(module_num)

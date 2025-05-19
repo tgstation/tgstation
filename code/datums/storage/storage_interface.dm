@@ -176,9 +176,7 @@
 			//Module is currently active
 			continue
 
-		//we do this on parent, but we don't here so borgs can still select their inventory slot by clicking on the storage UI.
-		//keeping this as a comment so someone doesn't accidentally add this thinking it's an oversight since parent does it.
-		//item.mouse_opacity = MOUSE_OPACITY_OPAQUE
+		item.mouse_opacity = MOUSE_OPACITY_OPAQUE
 		SET_PLANE(item, ABOVE_HUD_PLANE, our_turf)
 		item.screen_loc = "[current_x]:[screen_pixel_x],[current_y]:[screen_pixel_y]"
 
