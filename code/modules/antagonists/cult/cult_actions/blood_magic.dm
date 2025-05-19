@@ -45,6 +45,10 @@
 			blood_spell.positioned = first_available_slot
 
 /datum/action/innate/cult/blood_magic/Activate()
+	var/rune = FALSE
+	for(var/obj/effect/rune/any_runes in range(1, owner))
+		rune = TRUE
+		break
 	var/limit = magic_enhanced ? ENHANCED_BLOODCHARGE : MAX_BLOODCHARGE
 	if(length(spells) >= limit)
 		to_chat(owner, span_cult_italic("You cannot store more than [limit] spells. <b>Pick a spell to remove.</b>"))
@@ -77,13 +81,13 @@
 	else
 		to_chat(owner, span_cult_italic("You are already invoking blood magic!"))
 		return
-	var/spell_carving_timer = magic_enhanced ? 3 SECONDS : 6 SECONDS
+	var/spell_carving_timer = rune ? 4 SECONDS : 10 SECONDS
 	if(magic_enhanced)
 		spell_carving_timer *= 0.5
 	if(do_after(owner, spell_carving_timer, target = owner))
 		if(ishuman(owner))
 			var/mob/living/carbon/human/human_owner = owner
-			human_owner.bleed(magic_enhanced ? 6 : 15)
+			human_owner.bleed(rune ? 8 : 20)
 		var/datum/action/innate/cult/blood_spell/new_spell = new BS(owner.mind)
 		new_spell.Grant(owner, src)
 		spells += new_spell
