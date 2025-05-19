@@ -137,6 +137,17 @@
 	AddElement(/datum/element/reagents_exposed_on_fire)
 	AddElement(/datum/element/reagents_item_heatable)
 
+/obj/item/rag/examine(mob/user)
+	. = ..()
+	. += span_notice("Adding [/datum/reagent/water::name] or [/datum/reagent/space_cleaner::name] to it would make it a fair bit better at scrubbing.")
+	switch(blood_level)
+		if(1 to 4)
+			. += span_info("The [name] is a bit dirty, but it should still be good for cleaning.")
+		if(5 to 9)
+			. += span_warning("This [name] is dirty! But it still probably has a few wipes left in it.")
+		if(10 to INFINITY)
+			. += span_warning("This [name] is filthy! I couldn't clean a thing with it!")
+
 /obj/item/rag/pickup(mob/user)
 	. = ..()
 	if(prob(5 * blood_level))
