@@ -24,7 +24,7 @@
 	max_grenades = reset_fantasy_variable("max_syringes", max_grenades)
 	return ..()
 
-/obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, list/modifiers)
+/obj/item/gun/grenadelauncher/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(istype(I, /obj/item/grenade/c4))
 		return

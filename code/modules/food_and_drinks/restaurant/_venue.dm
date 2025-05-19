@@ -223,15 +223,14 @@
 	linked_venue.toggle_open()
 	update_icon()
 
-/obj/machinery/restaurant_portal/attacked_by(obj/item/I, mob/living/user)
-	if(!istype(I,  /obj/item/card/id))
-		return ..()
+/obj/machinery/restaurant_portal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/card/id/used_id = tool.GetID()
+	if(!istype(used_id))
+		return NONE
 
-	var/obj/item/card/id/used_id = I
-
-	if(!(linked_venue.req_access in used_id.GetAccess()))
-		to_chat(user, span_warning("This card lacks the access to change this venues status."))
-		return
+	if(!check_access(used_id))
+		balloon_alert(user, "insufficient access!")
+		return ITEM_INTERACT_BLOCKING
 
 	var/list/radial_items = list()
 	var/list/radial_results = list()
@@ -244,7 +243,7 @@
 	var/choice = show_radial_menu(user, src, radial_items, null, require_near = TRUE)
 
 	if(!choice)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/venue_type = radial_results[choice]
 	var/obj/item/circuitboard/machine/restaurant_portal/board = circuit
@@ -253,11 +252,7 @@
 
 	turned_on_portal = WEAKREF(user)
 
-	if(!(chosen_venue.req_access in used_id.GetAccess()))
-		to_chat(user, span_warning("This card lacks the access to change this venues status."))
-		return
-
-	to_chat(user, span_notice("You change the portal's linked venue."))
+	balloon_alert(user, "venue changed to [chosen_venue.name]")
 
 	if(linked_venue && (src in linked_venue.restaurant_portals)) //We're already linked, unlink us.
 		linked_venue.restaurant_portals -= src
@@ -267,6 +262,7 @@
 
 	linked_venue = chosen_venue
 	linked_venue.restaurant_portals += src
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/restaurant_portal/screwdriver_act(mob/user, obj/item/tool)
 	if (default_deconstruction_screwdriver(user, "[base_icon_state]-open", base_icon_state, tool))
