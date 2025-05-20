@@ -658,9 +658,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/photocopier/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	//if(!user.temporarilyRemoveItemFromInventory(tool))
-	//	return ITEM_INTERACT_FAILURE
-
 	// No infinite paper chain. You need the original paperwork to make more copies.
 	if(istype(tool, /obj/item/paperwork/photocopy))
 		balloon_alert(user, "too blurry!")
