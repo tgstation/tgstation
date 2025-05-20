@@ -68,17 +68,31 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/reagent_containers/condiment/interact_with_atom(atom/target, mob/living/user, list/modifiers)
-	//A dispenser. Transfer FROM it TO us.
-	if(target.is_drainable())
-		return try_drain(target, user)
+	if(!is_open_container())
+		return NONE
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
 	if(target.is_refillable() || IS_EDIBLE(target))
 		return try_refill(target, user)
-
+	//A dispenser. Transfer FROM it TO us.
+	if(target.is_drainable())
+		return try_drain(target, user)
 	//Eating directly from the ketchup packet
 	if(isliving(target))
 		return try_eat(target, user)
+
+	return NONE
+
+
+/obj/item/reagent_containers/condiment/interact_with_atom_secondary(atom/target, mob/living/user, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!is_open_container())
+		return NONE
+	//A dispenser. Transfer FROM it TO us.
+	if(target.is_drainable())
+		return try_drain(target, user)
 
 	return NONE
 
