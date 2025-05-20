@@ -479,6 +479,11 @@
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/sleep/Click()
+	if(HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
+		return
+	flick("[base_icon_state]_flick", src)
+
+/atom/movable/screen/sleep/DblClick(location, control, params)
 	if(isliving(usr))
 		var/mob/living/L = usr
 		L.SetSleeping(400)

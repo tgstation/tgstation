@@ -764,7 +764,7 @@
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!hud_used.sleep_icon)
+	if(!hud_used.sleep_icon || HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
 		return TRUE
 	if(resting)
 		hud_used.static_inventory += hud_used.sleep_icon
