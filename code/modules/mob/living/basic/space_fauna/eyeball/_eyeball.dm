@@ -77,7 +77,7 @@
 		qdel(attack_target)
 		return TRUE
 
-/mob/living/basic/eyeball/attackby(obj/item/weapon, mob/living/carbon/human/user, list/modifiers)
+/mob/living/basic/eyeball/attackby(obj/item/weapon, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!weapon.force && !user.combat_mode)
 		return

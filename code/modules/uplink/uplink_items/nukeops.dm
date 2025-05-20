@@ -855,6 +855,14 @@
 	cost = 5
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
 
+/datum/uplink_item/base_keys/custodial_key
+	name = "Syndicate Custodial Access Card"
+	desc = "Your workplace dirty? No problem! with this card you gain access to the custodial. Containing a janitorial cart \
+	with some janitorial supplies and an canister of water vapour."
+	item = /obj/item/keycard/syndicate_custodial
+	cost = 10
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+
 // Hats
 // It is fundamental for the game's health for there to be a hat crate for nuclear operatives.
 

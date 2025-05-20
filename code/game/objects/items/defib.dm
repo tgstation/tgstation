@@ -437,7 +437,7 @@
 	forceMove(defib)
 	defib.update_power()
 
-/obj/item/shockpaddles/attack(mob/M, mob/living/user, list/modifiers)
+/obj/item/shockpaddles/attack(mob/M, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(busy)
 		return
 	defib?.update_power()
