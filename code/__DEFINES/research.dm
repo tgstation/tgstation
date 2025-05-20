@@ -46,6 +46,8 @@
 #define CELL_LINE_TABLE_VATBEAST "cell_line_vatbeast_table"
 #define CELL_LINE_TABLE_NETHER "cell_line_nether_table"
 #define CELL_LINE_TABLE_GLUTTON "cell_line_glutton_table"
+#define CELL_LINE_TABLE_CLOWNANA "cell_line_clownana_table"
+#define CELL_LINE_TABLE_LONGFACE "cell_line_longface_table"
 #define CELL_LINE_TABLE_FROG	"cell_line_frog_table"
 #define CELL_LINE_TABLE_AXOLOTL	"cell_line_axolotl_table"
 #define CELL_LINE_TABLE_WALKING_MUSHROOM "cell_line_walking_mushroom_table"
