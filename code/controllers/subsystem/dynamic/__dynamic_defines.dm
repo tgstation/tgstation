@@ -44,3 +44,11 @@
 // Ruleset flags
 /// Ruleset denotes that it involves an outside force spawning in to attack the station
 #define RULESET_INVADER (1<<0)
+
+/// Href for cancelling midround rulesets before execution
+#define MIDROUND_CANCEL_HREF(...) "(<a href='byond://?src=[REF(src)];admin_cancel_midround=[REF(picked_ruleset)]'>CANCEL</a>)"
+/// Href for rerolling midround rulesets before execution
+#define MIDROUND_REROLL_HREF(rulesets) "[length(rulesets) \
+	? "(<a href='byond://?src=[REF(src)];admin_reroll=[REF(picked_ruleset)]'>SOMETHING ELSE</a>)" \
+	: "([span_tooltip("There are no more rulesets to pick from!", "NOTHING ELSE")])"\
+]"

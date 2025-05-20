@@ -6,8 +6,8 @@
 
 /**
  * Collect candidates handles getting the broad pool of players we want to pick from
- * This differs from trim candidates which filters the pool of players down to just people who want the antag (and are eligible)
- * You can sleep in this, say, if you wanted to poll players.
+ *
+ * You can sleep in this - say, if you wanted to poll players.
  */
 /datum/dynamic_ruleset/midround/proc/collect_candidates()
 	return list()
@@ -23,7 +23,6 @@
 	config_tag = "Spiders"
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
 	false_alarm_able = TRUE
-	pref_flag = ROLE_SPIDER
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOWMEDIUM = 0,
@@ -36,7 +35,7 @@
 	var/egg_count = 2
 
 /datum/dynamic_ruleset/midround/spiders/can_be_selected(population_size)
-	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
+	return ..() && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
 
 /datum/dynamic_ruleset/midround/spiders/execute()
 	var/num_egg = get_antag_cap(length(GLOB.alive_player_list), egg_count)
@@ -67,7 +66,7 @@
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
 
 /datum/dynamic_ruleset/midround/pirates/can_be_selected(population_size)
-	return ..() && !SSmapping.is_planetary() && length(pirate_pool()) > 0
+	return ..() && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && !SSmapping.is_planetary() && length(pirate_pool()) > 0
 
 // An abornmal ruleset that selects no players, but just spawns a pirate ship
 /datum/dynamic_ruleset/midround/pirates/execute()
@@ -89,6 +88,10 @@
 /datum/dynamic_ruleset/midround/pirates/heavy/pirate_pool()
 	return GLOB.heavy_pirate_gangs
 
+#define NO_ANSWER 0
+#define POSITIVE_ANSWER 1
+#define NEGATIVE_ANSWER 2
+
 /datum/dynamic_ruleset/midround/pirates/proc/send_pirate_threat(list/pirate_selection)
 	var/datum/pirate_gang/chosen_gang = pick_n_take(pirate_selection)
 	///If there was nothing to pull from our requested list, stop here.
@@ -103,8 +106,8 @@
 	var/datum/comm_message/threat = chosen_gang.generate_message(payoff)
 	//send message
 	priority_announce("Incoming subspace communication. Secure channel opened at all communication consoles.", "Incoming Message", SSstation.announcer.get_rand_report_sound())
-	threat.answer_callback = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pirates_answered), threat, chosen_gang, payoff, world.time)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(spawn_pirates), threat, chosen_gang), RESPONSE_MAX_TIME)
+	threat.answer_callback = CALLBACK(src, PROC_REF(pirates_answered), threat, chosen_gang, payoff, world.time)
+	addtimer(CALLBACK(src, PROC_REF(spawn_pirates), threat, chosen_gang), RESPONSE_MAX_TIME)
 	GLOB.communications_controller.send_message(threat, unique = TRUE)
 
 /datum/dynamic_ruleset/midround/pirates/proc/pirates_answered(datum/comm_message/threat, datum/pirate_gang/chosen_gang, payoff, initial_send_time)
@@ -164,6 +167,9 @@
 
 	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
 
+#undef NO_ANSWER
+#undef POSITIVE_ANSWER
+#undef NEGATIVE_ANSWER
 /**
  * ### Ghost rulesets
  *
@@ -181,7 +187,6 @@
 	var/signup_atom_appearance = /obj/structure/sign/poster/contraband/syndicate_recruitment
 	/// Text shown in the candidate poll. Optional, if unset uses pref_flag. (Though required if pref_flag is unset)
 	var/candidate_role
-
 
 /datum/dynamic_ruleset/midround/from_ghosts/can_be_selected(population_size)
 	SHOULD_CALL_PARENT(TRUE)
@@ -218,10 +223,11 @@
 		stack_trace("[config_tag]: No candidate role or pref_flag set, give it a human readable candidate roll at the bare minimum.")
 		readable_poll_role = "Some Midround Antagonist Without A Role Set (Yell At Coders)"
 
-	return SSpolling.poll_ghost_candidates(
+	return SSpolling.poll_candidates(
+		group = trim_candidates(GLOB.dead_player_list | GLOB.current_observers_list),
 		question = "Looking for volunteers to become [span_notice(readable_poll_role)] for [span_danger(name)]",
-		check_jobban = list(ROLE_SYNDICATE, jobban_flag || pref_flag),
-		role = pref_flag,
+		// check_jobban = list(ROLE_SYNDICATE, jobban_flag || pref_flag),
+		// role = pref_flag,
 		poll_time = 30 SECONDS,
 		alert_pic = signup_atom_appearance,
 		role_name_text = readable_poll_role,
@@ -681,6 +687,221 @@
 	candidate.current.set_species(/datum/species/voidwalker)
 	candidate.current.forceMove(find_space_spawn())
 	playsound(candidate.current, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
+
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives
+	name = "Fugitive"
+	config_tag = "Fugitives"
+	preview_antag_datum = /datum/antagonist/fugitive
+	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	pref_flag = ROLE_FUGITIVE
+	ruleset_flags = RULESET_INVADER
+	weight = 3
+	min_pop = 20
+	max_antag_cap = 4
+	min_antag_cap = 3
+	signup_atom_appearance = /obj/item/card/id/advanced/prisoner
+	/// What backstory is the fugitive(s)?
+	VAR_FINAL/fugitive_backstory
+	/// What backstory is the hunter(s)?
+	VAR_FINAL/hunter_backstory
+
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/can_be_selected(population_size)
+	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+
+// If less than a certain number of candidates accept the poll, it varies how many antags are spawned
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/collect_candidates()
+	. = ..()
+	if(length(.) <= 1 || prob(30 - (length(.) * 2)))
+		min_antag_cap = 1
+		max_antag_cap = 1
+
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/create_execute_args()
+	return list(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/execute()
+	if(length(selected_minds) == 1)
+		fugitive_backstory = pick(
+			FUGITIVE_BACKSTORY_INVISIBLE,
+			FUGITIVE_BACKSTORY_WALDO,
+		)
+	else
+		fugitive_backstory = pick(
+			FUGITIVE_BACKSTORY_CULTIST,
+			FUGITIVE_BACKSTORY_PRISONER,
+			FUGITIVE_BACKSTORY_SYNTH,
+		)
+
+	hunter_backstory = pick(
+		HUNTER_PACK_COPS,
+		HUNTER_PACK_RUSSIAN,
+		HUNTER_PACK_BOUNTY,
+		HUNTER_PACK_PSYKER,
+		HUNTER_PACK_MI13,
+	)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), hunter_backstory, 10 MINUTES), 1 MINUTES)
+
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/assign_role(datum/mind/candidate, turf/team_spawn)
+	candidate.current.forceMove(team_spawn)
+	equip_fugitive(candidate.current)
+	if(length(selected_minds) > 1 && candidate == selected_minds[1])
+		equip_fugitive_leader(candidate.current)
+	playsound(candidate.current, 'sound/items/weapons/emitter.ogg', 50, TRUE)
+
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/equip_fugitive(mob/living/carbon/human/fugitive)
+	fugitive.mind.set_assigned_role(SSjob.get_job_type(/datum/job/fugitive))
+	var/datum/antagonist/fugitive/antag = fugitive.mind.add_antag_datum(/datum/antagonist/fugitive)
+	antag.greet(fugitive_backstory)
+
+	switch(fugitive_backstory)
+		if(FUGITIVE_BACKSTORY_PRISONER)
+			fugitive.equipOutfit(/datum/outfit/prisoner)
+		if(FUGITIVE_BACKSTORY_CULTIST)
+			fugitive.equipOutfit(/datum/outfit/yalp_cultist)
+		if(FUGITIVE_BACKSTORY_WALDO)
+			fugitive.equipOutfit(/datum/outfit/waldo)
+		if(FUGITIVE_BACKSTORY_SYNTH)
+			fugitive.equipOutfit(/datum/outfit/synthetic)
+		if(FUGITIVE_BACKSTORY_INVISIBLE)
+			fugitive.equipOutfit(/datum/outfit/invisible_man)
+
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/equip_fugitive_leader(mob/living/carbon/human/fugitive)
+	var/turf/leader_turf = get_turf(fugitive)
+	var/obj/item/choice_beacon/augments/augment_beacon = new(leader_turf)
+	fugitive.put_in_hands(augment_beacon)
+	new /obj/item/autosurgeon(leader_turf)
+	new /obj/item/storage/toolbox/mechanical(leader_turf)
+
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/check_spawn_hunters(remaining_time)
+	//if the emergency shuttle has been called, spawn hunters now to give them a chance
+	if(remaining_time == 0 || !EMERGENCY_IDLE_OR_RECALLED)
+		spawn_hunters()
+		return
+	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), remaining_time - 1 MINUTES), 1 MINUTES)
+
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/spawn_hunters()
+	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a group of [span_notice(hunter_backstory)]?", check_jobban = list(ROLE_FUGITIVE_HUNTER, ROLE_SYNDICATE), alert_pic = /obj/machinery/sleeper, role_name_text = hunter_backstory)
+	shuffle_inplace(candidates)
+
+	var/datum/map_template/shuttle/hunter/ship
+	switch(hunter_backstory)
+		if(HUNTER_PACK_COPS)
+			ship = new /datum/map_template/shuttle/hunter/space_cop
+		if(HUNTER_PACK_RUSSIAN)
+			ship = new /datum/map_template/shuttle/hunter/russian
+		if(HUNTER_PACK_BOUNTY)
+			ship = new /datum/map_template/shuttle/hunter/bounty
+		if(HUNTER_PACK_PSYKER)
+			ship = new /datum/map_template/shuttle/hunter/psyker
+		if(HUNTER_PACK_MI13)
+			ship = new/datum/map_template/shuttle/hunter/mi13_foodtruck
+
+	var/x = rand(TRANSITIONEDGE, world.maxx - TRANSITIONEDGE - ship.width)
+	var/y = rand(TRANSITIONEDGE, world.maxy - TRANSITIONEDGE - ship.height)
+	var/z = SSmapping.empty_space.z_value
+	var/turf/placement_turf = locate(x, y ,z)
+	if(!placement_turf)
+		CRASH("Fugitive Hunters (Created from fugitive event) found no turf to load in")
+	if(!ship.load(placement_turf))
+		CRASH("Loading [hunter_backstory] ship failed!")
+
+	for(var/turf/shuttle_turf in ship.get_affected_turfs(placement_turf))
+		for(var/obj/effect/mob_spawn/ghost_role/human/fugitive/spawner in shuttle_turf)
+			if(length(candidates))
+				var/mob/our_candidate = candidates[1]
+				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
+				candidates -= our_candidate
+				notify_ghosts(
+					"[spawner.prompt_name] has awoken: [spawned_mob]!",
+					source = spawned_mob,
+					header = "Come look!",
+				)
+			else
+				notify_ghosts(
+					"[spawner.prompt_name] spawner has been created!",
+					source = spawner,
+					header = "Spawn Here!",
+				)
+
+	var/list/announcement_text_list = list()
+	var/announcement_title = ""
+	switch(hunter_backstory)
+		if(HUNTER_PACK_COPS)
+			announcement_text_list += "Attention Crew of [station_name()], this is the Police. A wanted criminal has been reported taking refuge on your station."
+			announcement_text_list += "We have a warrant from the SSC authorities to take them into custody. Officers have been dispatched to your location."
+			announcement_text_list += "We demand your cooperation in bringing this criminal to justice."
+			announcement_title += "Spacepol Command"
+		if(HUNTER_PACK_RUSSIAN)
+			announcement_text_list += "Zdraviya zhelaju, [station_name()] crew. We are coming to your station."
+			announcement_text_list += "There is a criminal aboard. We will arrest them and return them to the gulag. That's good, yes?"
+			announcement_title += "Russian Freighter"
+		if(HUNTER_PACK_BOUNTY)
+			announcement_text_list += "[station_name()]. One of our bounty marks has ended up on your station. We will be arriving to collect shortly."
+			announcement_text_list += "Let's make this quick. If you don't want trouble, stay the hell out of our way."
+			announcement_title += "Unregistered Signal"
+		if(HUNTER_PACK_PSYKER)
+			announcement_text_list += "HEY, CAN YOU HEAR US? We're coming to your station. There's a bad guy down there, really bad guy. We need to arrest them."
+			announcement_text_list += "We're also offering fortune telling services out of the front door if you have paying customers."
+			announcement_title += "Fortune-Telling Entertainment Shuttle"
+		if(HUNTER_PACK_MI13)
+			announcement_text_list += "Illegal intrusion detected in the crew monitoring network. Central Command has been informed."
+			announcement_text_list += "Please report any suspicious individuals or behaviour to your local security team."
+			announcement_title += "Nanotrasen Intrusion Countermeasures Electronics"
+
+	if(!length(announcement_text_list))
+		announcement_text_list += "Unidentified ship detected near the station."
+		stack_trace("Fugitive hunter announcement was unable to generate an announcement text based on backstory: [hunter_backstory]")
+
+	if(!length(announcement_title))
+		announcement_title += "Unknown Signal"
+		stack_trace("Fugitive hunter announcement was unable to generate an announcement title based on backstory: [hunter_backstory]")
+
+	priority_announce(jointext(announcement_text_list, " "), announcement_title)
+
+/datum/dynamic_ruleset/midround/from_ghosts/morph
+	name = "Morph"
+	config_tag = "Morph"
+	preview_antag_datum = /datum/antagonist/morph
+	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	candidate_role = "Morphling"
+	jobban_flag = ROLE_ALIEN
+	ruleset_flags = RULESET_INVADER
+	weight = 0
+	max_antag_cap = 1
+	signup_atom_appearance = /mob/living/basic/morph
+
+/datum/dynamic_ruleset/midround/from_ghosts/morph/can_be_selected(population_size)
+	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+
+/datum/dynamic_ruleset/midround/from_ghosts/morph/create_ruleset_body()
+	return new /mob/living/basic/morph(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+
+/datum/dynamic_ruleset/midround/from_ghosts/morph/assign_role(datum/mind/candidate)
+	candidate.set_assigned_role(SSjob.get_job_type(/datum/job/morph))
+	candidate.add_antag_datum(/datum/antagonist/morph)
+
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon
+	name = "Slaughter Demon"
+	config_tag = "Slaughter Demon"
+	preview_antag_datum = /datum/antagonist/slaughter
+	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	jobban_flag = ROLE_ALIEN
+	ruleset_flags = RULESET_INVADER
+	weight = 0
+	min_pop = 20
+	max_antag_cap = 1
+	signup_atom_appearance = /mob/living/basic/demon/slaughter
+
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/can_be_selected(population_size)
+	return ..() && !isnull(find_space_spawn())
+
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/create_ruleset_body()
+	var/turf/spawnloc = find_space_spawn()
+	. = new /mob/living/basic/demon/slaughter(spawnloc)
+	new /obj/effect/dummy/phased_mob/blood(spawnloc, .)
+
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/assign_role(datum/mind/candidate)
+	return // handled by new() entirely
 
 /datum/dynamic_ruleset/midround/from_living
 	min_antag_cap = 1

@@ -105,15 +105,8 @@
 	if(nvar in locked_config_values)
 		log_dynamic("Bad config edit rejected: [nvar]")
 		return FALSE
-	switch(nvar)
-		if(NAMEOF(src, weight))
-			if(islist(nval))
-				weight = load_tier_list(nval)
-				return TRUE
-		if(NAMEOF(src, min_pop))
-			if(islist(nval))
-				min_pop = load_tier_list(nval)
-				return TRUE
+	if(islist(nval) && (nvar == NAMEOF(src, weight) || nvar == NAMEOF(src, min_pop)))
+		nval = load_tier_list(nval)
 
 	vars[nvar] = nval
 	return TRUE
@@ -273,8 +266,6 @@
 /// Don't touch this proc if you need to trim candidates further - override is_valid_candidate() instead
 /datum/dynamic_ruleset/proc/trim_candidates(list/mob/antag_candidates)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	//.SHOULD_BE_PURE(TRUE)
-	PRIVATE_PROC(TRUE)
 
 	var/list/valid_candidates = list()
 	for(var/mob/candidate as anything in antag_candidates)

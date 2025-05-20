@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(dynamic)
 	name = "Dynamic"
 	flags = SS_NO_INIT
-	wait = 1 MINUTES
+	wait = 2.5 MINUTES
 
 	/// Reference to a dynamic tier datum, the tier picked for this round
 	var/datum/dynamic_tier/current_tier
@@ -29,6 +29,10 @@ SUBSYSTEM_DEF(dynamic)
 	COOLDOWN_DECLARE(midround_cooldown)
 	/// Cooldown between latejoin ruleset executions
 	COOLDOWN_DECLARE(latejoin_cooldown)
+
+	COOLDOWN_DECLARE(midround_admin_cancel_period)
+	var/tmp/midround_admin_cancel = FALSE
+	var/tmp/midround_admin_reroll = FALSE
 
 	/// List of rulesets that have been executed this round
 	var/list/datum/dynamic_ruleset/executed_rulesets = list()
@@ -87,13 +91,17 @@ SUBSYSTEM_DEF(dynamic)
 	// now select a tier.
 	// this also calculates the number of rulesets to spawn
 	pick_tier(num_real_players)
-	// and finally, select and run the roundstart rulesets
-	// pick_roundstart_rulesets handles filtering out invalid options for us,
-	// and even handles if we intend to have 0 roundstart rulesets (greenshift)
-	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in pick_roundstart_rulesets(antag_candidates))
+	// put rulesets in the queue
+	// if we already have a queue, that implies admin forced - so don't add more
+	if(!length(queued_rulesets))
+		queued_rulesets += pick_roundstart_rulesets(antag_candidates)
+	// finally, run through the queue and prepare rulesets for execution
+	// (actual execution, ie assigning antags, will happen after job assignment)
+	for(var/datum/dynamic_ruleset/roundstart/ruleset in queued_rulesets)
 		// NOTE: !! THIS CAN SLEEP !!
 		if(!ruleset.prepare_execution( num_real_players, antag_candidates ))
 			log_dynamic("Roundstart: Selected ruleset [ruleset.config_tag], but preparation failed!")
+			queued_rulesets -= ruleset
 			qdel(ruleset)
 			continue
 
@@ -101,8 +109,6 @@ SUBSYSTEM_DEF(dynamic)
 		for(var/datum/mind/selected as anything in ruleset.selected_minds)
 			log_dynamic("Roundstart: [key_name(selected)] has been selected for [ruleset.config_tag].")
 
-		// Execution actually happens in post_setup
-		queued_rulesets += ruleset
 		rulesets_to_spawn[ROUNDSTART] -= 1
 
 	return TRUE
@@ -262,11 +268,35 @@ SUBSYSTEM_DEF(dynamic)
 	if(!prob(midround_chance))
 		log_dynamic("Midround ([range]): Ruleset chance failed ([midround_chance]% chance)")
 		return FALSE
+
+	midround_admin_cancel = FALSE
+	midround_admin_reroll = FALSE
+	COOLDOWN_RESET(src, midround_admin_cancel_period)
+
 	var/player_count = get_active_player_count(afk_check = TRUE)
 	var/list/rulesets_weighted = get_midround_rulesets(player_count, range)
 	var/datum/dynamic_ruleset/midround/picked_ruleset = pick_weight(rulesets_weighted)
+	message_admins("Midround ([range]): Executing [picked_ruleset.config_tag] \
+		[MIDROUND_CANCEL_HREF()] [MIDROUND_REROLL_HREF(rulesets_weighted)]")
+	// if we have admins online, we have a waiting period before execution to allow them to cancel or reroll
+	if(length(GLOB.admins))
+		COOLDOWN_START(src, midround_admin_cancel_period, 15 SECONDS)
+		while(!COOLDOWN_FINISHED(src, midround_admin_cancel_period))
+			if(midround_admin_cancel)
+				QDEL_LIST(rulesets_weighted)
+				return FALSE
+			if(midround_admin_reroll && length(rulesets_weighted) >= 2)
+				midround_admin_reroll = FALSE
+				COOLDOWN_START(src, midround_admin_cancel_period, 15 SECONDS)
+				rulesets_weighted -= picked_ruleset
+				qdel(picked_ruleset)
+				picked_ruleset = pick_weight(rulesets_weighted)
+				message_admins("Rerolling Midround ([range]): Executing [picked_ruleset.config_tag] - \
+					[length(rulesets_weighted) - 1] remaining rulesets in pool. [MIDROUND_CANCEL_HREF()] [MIDROUND_REROLL_HREF(rulesets_weighted)]")
+			stoplag()
+
 	// NOTE: !! THIS CAN SLEEP !!
-	if(!picked_ruleset.prepare_execution(player_count, picked_ruleset.collect_candidates() ))
+	if(!picked_ruleset.prepare_execution(player_count, picked_ruleset.collect_candidates()))
 		log_dynamic("Midround ([range]): Selected ruleset [picked_ruleset.config_tag], but preparation failed!")
 		QDEL_LIST(rulesets_weighted)
 		return FALSE
@@ -342,8 +372,7 @@ SUBSYSTEM_DEF(dynamic)
 	for(var/datum/dynamic_ruleset/latejoin/queued in queued_rulesets)
 		// NOTE: !! THIS CAN SLEEP !!
 		if(!queued.prepare_execution(get_active_player_count(afk_check = TRUE), list(latejoiner)))
-			// melbert todo : add an href to remove it from the queue
-			message_admins("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin.")
+			message_admins("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin. (<a href='byond://?src=[REF(src)];admin_dequeue=[REF(queued)]'>REMOVE FROM QUEUE</a>)")
 			log_dynamic("Latejoin (forced): Queued ruleset [queued.config_tag] failed to prepare! It remains queued for next latejoin.")
 			continue
 		message_admins("Latejoin (forced): [ADMIN_LOOKUPFLW(queued)] has been selected for [queued.config_tag].")
@@ -418,6 +447,8 @@ SUBSYSTEM_DEF(dynamic)
  * * latejoin_type - The type of latejoin ruleset to force
  */
 /datum/controller/subsystem/dynamic/proc/queue_latejoin(latejoin_typepath)
+	if(!SSticker.HasRoundStarted())
+		return
 	if(!ispath(latejoin_typepath, /datum/dynamic_ruleset/latejoin))
 		CRASH("queue_latejoin() was called with an invalid latejoin type: [latejoin_typepath]")
 
@@ -500,6 +531,42 @@ SUBSYSTEM_DEF(dynamic)
 	for(var/category in rulesets_to_spawn)
 		rulesets_to_spawn[category] = 0
 	QDEL_LIST(queued_rulesets)
+
+/datum/controller/subsystem/dynamic/Topic(href, list/href_list)
+	. = ..()
+	if(href_list["admin_dequeue"])
+		if(!check_rights(R_ADMIN))
+			return
+		var/datum/dynamic_ruleset/to_remove = locate(href_list["admin_dequeue"]) in queued_rulesets
+		if(!istype(to_remove))
+			return
+		queued_rulesets -= to_remove
+		qdel(to_remove)
+		message_admins(span_adminnotice("[key_name_admin(usr)] [to_remove.config_tag] from the latejoin queue."))
+		log_admin("[key_name(usr)] removed [to_remove.config_tag] from the latejoin queue.")
+		return
+
+	if(href_list["admin_reroll"])
+		if(!check_rights(R_ADMIN) || midround_admin_reroll)
+			return
+		if(COOLDOWN_FINISHED(src, midround_admin_cancel_period))
+			to_chat(usr, span_alert("Too late!"))
+			return
+		midround_admin_reroll = TRUE
+		message_admins(span_adminnotice("[key_name_admin(usr)] rerolled the queued midround ruleset."))
+		log_admin("[key_name(usr)] rerolled the queued midround ruleset.")
+		return
+
+	if(href_list["admin_cancel"])
+		if(!check_rights(R_ADMIN) || midround_admin_cancel)
+			return
+		if(COOLDOWN_FINISHED(src, midround_admin_cancel_period))
+			to_chat(usr, span_alert("Too late!"))
+			return
+		midround_admin_cancel = TRUE
+		message_admins(span_adminnotice("[key_name_admin(usr)] cancelled the queued midround ruleset."))
+		log_admin("[key_name(usr)] cancelled the queued midround ruleset.")
+		return
 
 #ifdef TESTING
 /// Puts all repo defaults into a dynamic.toml file

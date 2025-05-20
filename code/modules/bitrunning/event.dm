@@ -6,7 +6,6 @@
 	)
 	category = EVENT_CATEGORY_INVASION
 	description = "Causes a short term antagonist to spawn in the virtual domain."
-	dynamic_should_hijack = FALSE
 	min_players = 1
 	max_occurrences = 0
 	typepath = /datum/round_event/ghost_role/bitrunning_glitch

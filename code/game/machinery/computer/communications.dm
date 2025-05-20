@@ -856,10 +856,6 @@
 				/datum/dynamic_ruleset/midround/pirates,
 				/datum/dynamic_ruleset/midround/pirates/heavy,
 			)
-			priority_announce(
-				"Attention crew: sector monitoring reports a massive jump-trace from an enemy vessel destined for your system. Prepare for imminent hostile contact.",
-				"[command_name()] High-Priority Update",
-			)
 			SSdynamic.force_run_midround(pick(pirate_rulesets))
 
 		if(HACK_FUGITIVES) // Triggers fugitives, which can cause confusion / chaos as the crew decides which side help
@@ -867,15 +863,13 @@
 				"Attention crew: sector monitoring reports a jump-trace from an unidentified vessel destined for your system. Prepare for probable contact.",
 				"[command_name()] High-Priority Update",
 			)
-
-			force_event_after(/datum/round_event_control/fugitives, "[hacker] hacking a communications console", rand(20 SECONDS, 1 MINUTES))
+			SSdynamic.force_run_midround(/datum/dynamic_ruleset/midround/from_ghosts/fugitives)
 
 		if(HACK_SLEEPER) // Trigger one or multiple sleeper agents with the crew (or for latejoining crew)
 			priority_announce(
 				"Attention crew, it appears that someone on your station has hijacked your telecommunications and broadcasted an unknown signal.",
 				"[command_name()] High-Priority Update",
 			)
-
 			var/max_number_of_sleepers = clamp(round(length(GLOB.alive_player_list) / 40), 1, 3)
 			if(!SSdynamic.force_run_midround(/datum/dynamic_ruleset/midround/from_living/traitor, forced_max_cap = max_number_of_sleepers))
 				SSdynamic.queue_latejoin(/datum/dynamic_ruleset/latejoin/traitor)

@@ -34,7 +34,7 @@
 */
 	if(SSticker.IsRoundInProgress())
 		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
-		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
+		// dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
 		dat += "<hr/>"
 	dat += {"
 		<A href='byond://?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>

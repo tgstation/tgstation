@@ -32,9 +32,6 @@
 
 	var/triggering //admin cancellation
 
-	/// Whether or not dynamic should hijack this event
-	var/dynamic_should_hijack = FALSE
-
 	/// Datum that will handle admin options for forcing the event.
 	/// If there are no options, just leave it as an empty list.
 	var/list/datum/event_admin_setup/admin_setup = list()
