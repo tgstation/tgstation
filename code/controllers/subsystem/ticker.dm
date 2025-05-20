@@ -761,3 +761,21 @@ SUBSYSTEM_DEF(ticker)
 
 #undef ROUND_START_MUSIC_LIST
 #undef SS_TICKER_TRAIT
+
+// I use this to load the map
+/proc/config_help()
+	var/datum/map_config/help = new()
+	help.config_filename = "_maps/torch.json"
+	help.map_name = "Flashlight"
+	help.map_path = "map_files/torch2"
+	help.map_file = "torch.dmmm"
+	help.shuttles["cargo"] = "cargo_torch"
+	help.config_min_users = 1
+	help.config_max_users = 999
+	config.maplist += help
+
+// I use this to do all the setup for me
+/proc/setup_event()
+	CONFIG_SET(number/movedelay/run_delay, 1.75)
+	CONFIG_SET(number/damage_multiplier, 0.75)
+	GLOB.dynamic_forced_extended = TRUE
