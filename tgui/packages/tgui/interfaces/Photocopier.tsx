@@ -183,7 +183,7 @@ const Status = (props: StatusProps) => {
         <LabeledList.Item label="Paper Type">
           <Stack align="center">
             {paper_types.map((paper) => (
-              <Stack.Item grow key={paper}>
+              <Stack.Item grow key={paper.type}>
                 <ImageButton
                   fluid
                   dmIcon={paper.icon}
