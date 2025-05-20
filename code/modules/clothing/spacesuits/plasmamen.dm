@@ -191,7 +191,7 @@
 		smiley.color = smile_color
 		. += smiley
 
-/obj/item/clothing/head/helmet/space/plasmaman/wash(clean_types)
+/obj/item/clothing/head/helmet/space/plasmaman/wash(clean_types, updating_clothing)
 	. = ..()
 	if(smile && (clean_types & CLEAN_TYPE_HARD_DECAL))
 		smile = FALSE

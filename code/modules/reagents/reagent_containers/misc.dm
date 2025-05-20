@@ -172,7 +172,7 @@
 		log_combat(user, carbon_target, "touched", src, log_object)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/rag/wash(clean_types)
+/obj/item/rag/wash(clean_types, updating_clothing)
 	. = ..()
 	if(!(clean_types & CLEAN_TYPE_BLOOD))
 		return

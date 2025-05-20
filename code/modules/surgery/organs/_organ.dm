@@ -135,7 +135,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/on_find(mob/living/finder)
 	return
 
-/obj/item/organ/wash(clean_types)
+/obj/item/organ/wash(clean_types, updating_clothing)
 	. = ..()
 
 	// always add the original dna to the organ after it's washed

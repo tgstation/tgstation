@@ -373,7 +373,7 @@
 	else
 		set_opacity(initial(opacity))
 
-/obj/structure/window/wash(clean_types)
+/obj/structure/window/wash(clean_types, updating_clothing)
 	. = ..()
 	if(!(clean_types & CLEAN_SCRUB))
 		return

@@ -593,7 +593,7 @@
 		return FALSE
 
 	if(gloves)
-		if(gloves.wash(clean_types))
+		if(gloves.wash(clean_types, updating_clothing))
 			update_worn_gloves()
 	else if((clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0)
 		blood_in_hands = 0
@@ -607,19 +607,26 @@
  */
 /mob/living/carbon/human/proc/clean_face(datum/source, clean_types)
 	SIGNAL_HANDLER
+	/// If we have any clothing slots to update
+	var/slots_to_update
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
 
-	if(glasses && !is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
+	if(glasses && !is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types, updating_clothing = FALSE))
+		slots_to_update |= glasses.slot_flags
 		. = TRUE
 
-	if(wear_mask && !(check_covered_slots() & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
+	if(wear_mask && !(check_covered_slots() & ITEM_SLOT_MASK) && wear_mask.wash(clean_types, updating_clothing = FALSE))
+		slots_to_update |= glasses.slot_flags
 		. = TRUE
+
+	if(slots_to_update)
+		update_clothing(slots_to_update)
 
 /**
  * Called when this human should be washed
  */
-/mob/living/carbon/human/wash(clean_types)
+/mob/living/carbon/human/wash(clean_types, updating_clothing)
 	. = ..()
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE

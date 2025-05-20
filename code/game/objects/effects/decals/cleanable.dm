@@ -120,7 +120,7 @@
 		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)
 		update_appearance()
 
-/obj/effect/decal/cleanable/wash(clean_types)
+/obj/effect/decal/cleanable/wash(clean_types, updating_clothing)
 	. = ..()
 	if (. || (clean_types & clean_type))
 		qdel(src)

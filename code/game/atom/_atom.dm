@@ -564,7 +564,7 @@
  * Arguments:
  * * clean_types: any of the CLEAN_ constants
  */
-/atom/proc/wash(clean_types)
+/atom/proc/wash(clean_types, updating_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 	if(SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types) & COMPONENT_CLEANED)
 		return TRUE

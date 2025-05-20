@@ -1238,11 +1238,14 @@
 	if(mob_mood.sanity < SANITY_UNSTABLE)
 		return TRUE
 
-/mob/living/carbon/wash(clean_types)
+/mob/living/carbon/wash(clean_types, updating_clothing = TRUE)
 	. = ..()
+	/// Bitflag for what clothing to update at the end
+	var/slots_to_update
 	// Wash equipped stuff that cannot be covered
 	for(var/obj/item/held_thing in held_items)
-		if(held_thing.wash(clean_types))
+		if(held_thing.wash(clean_types, updating_clothing = FALSE))
+			slots_to_update |= ITEM_SLOT_HANDS
 			. = TRUE
 
 	// Check and wash stuff that isn't covered
@@ -1254,7 +1257,12 @@
 			continue
 		if(!(covered & slot))
 			// /obj/item/wash() already updates our clothing slot
-			. ||= worn.wash(clean_types)
+			var/was_washed = worn.wash(clean_types, updating_clothing = FALSE)
+			if(was_washed)
+				slots_to_update |= slot
+				. = TRUE
+	if(slots_to_update && updating_clothing)
+		update_clothing(slots_to_update)
 
 /// if any of our bodyparts are bleeding
 /mob/living/carbon/proc/is_bleeding()
