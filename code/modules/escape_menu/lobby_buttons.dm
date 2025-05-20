@@ -151,6 +151,7 @@
 /atom/movable/screen/escape_menu/lobby_button/small/collapsible
 	maptext_width = 48
 	maptext_x = -5
+	maptext_y = -44 //we change this during animation to bring it up
 	layer = parent_type::layer - 0.01
 
 	///Reference point we animate the x from during the animation we play on its creation.
@@ -170,16 +171,39 @@
 	return ..()
 
 /atom/movable/screen/escape_menu/lobby_button/small/collapsible/add_maptext(button_text)
-	if(end_point)
-		animate(src, transform = transform.Translate(x = end_point, y = 0), time = COLLAPSIBLE_BUTTON_DURATION, easing = CUBIC_EASING|EASE_OUT)
 	//more than 6 characters, lets bump the maptext down a bit, because we're smaller buttons we would be overlaying over the icon itself otherwise.
 	if(length(button_text) > 6)
 		maptext_y -= 12
-	return ..()
+	//let's take the icons out
+	animate(src,
+		transform = transform.Translate(x = end_point, y = 0),
+		time = COLLAPSIBLE_BUTTON_DURATION,
+		easing = CUBIC_EASING|EASE_OUT,
+	)
+	. = ..()
+	//now we'll pull out the maptext
+	animate(src,
+		maptext_y = (maptext_y + 30),
+		time = (COLLAPSIBLE_BUTTON_DURATION / 2),
+		easing = CUBIC_EASING|EASE_IN,
+		flags = ANIMATION_CONTINUE,
+	)
 
 /atom/movable/screen/escape_menu/lobby_button/small/collapsible/proc/collapse(datum/screen_object_holder/page_holder)
-	if(MC_RUNNING()) //qdel_in is delayed until MC is done, so we'll just qdel during setup so it doesn't look weird.
-		animate(src, transform = matrix(), time = COLLAPSIBLE_BUTTON_DURATION, easing = CUBIC_EASING|EASE_OUT)
+	//timers are delayed until MC is done, so we'll directly qdel during setup so it doesn't freeze on players.
+	if(MC_RUNNING())
+		animate(src,
+			maptext_y = (maptext_y -30),
+			time = (COLLAPSIBLE_BUTTON_DURATION / 2),
+			easing = CUBIC_EASING|EASE_IN,
+		)
+		animate(src,
+			transform = matrix(),
+			maptext = null,
+			time = COLLAPSIBLE_BUTTON_DURATION,
+			easing = CUBIC_EASING|EASE_OUT,
+			flags = ANIMATION_CONTINUE,
+		)
 		addtimer(CALLBACK(page_holder, TYPE_PROC_REF(/datum/screen_object_holder, remove_screen_object), src), COLLAPSIBLE_BUTTON_DURATION)
 	else
 		page_holder.remove_screen_object(src)
