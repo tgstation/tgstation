@@ -1864,6 +1864,7 @@
 	name = "Robotics Operating Table"
 	},
 /obj/effect/landmark/event_spawn,
+/obj/machinery/newscaster/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "ayd" = (
@@ -20213,12 +20214,8 @@
 	},
 /area/station/medical/morgue)
 "fJF" = (
-/obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/item/mmi,
-/obj/item/mmi,
-/obj/item/mmi,
-/obj/machinery/newscaster/directional/north,
+/obj/structure/sink/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "fJL" = (
@@ -28527,9 +28524,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "icI" = (
-/obj/structure/table,
-/obj/item/retractor,
 /obj/machinery/status_display/evac/directional/north,
+/obj/structure/table,
+/obj/item/mmi,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "icK" = (
@@ -30058,6 +30055,7 @@
 /obj/item/scalpel{
 	pixel_y = 12
 	},
+/obj/item/retractor,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "iBe" = (
