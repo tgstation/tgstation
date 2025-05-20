@@ -159,7 +159,7 @@
 		/datum/reagent/medicine/synaptizine,
 	) //don't add too many, as most stimulant reagents already have a drowsy-removing effect
 	for(var/medicine in immunity_medicine)
-		if(owner.reagents.has_reagent(text2path(medicine)))
+		if(owner.reagents.has_reagent(medicine))
 			return
 
 	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
