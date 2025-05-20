@@ -97,9 +97,10 @@
 		if(identity[VISIBLE_NAME_FORCED])
 			return identity[VISIBLE_NAME_FACE] // to return forced names when unknown, instead of ID
 	else
-		. = astype(wear_id, /obj/item/card/id) \
+		var/obj/item/card/id/id = astype(wear_id, /obj/item/card/id) \
 			|| astype(wear_id, /obj/item/storage/wallet)?.front_id \
-			|| astype(wear_id, /obj/item/modular_computer)?.computer_id_slot?.registered_name
+			|| astype(wear_id, /obj/item/modular_computer)?.computer_id_slot
+		. = id?.registered_name
 	if(!.)
 		. = if_no_id //to prevent null-names making the mob unclickable
 
