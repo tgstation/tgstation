@@ -495,3 +495,28 @@
   - config: The minimum age on all Nanotrasen research stations is now 18.
   timothymtorres:
   - qol: Remove dead code from gas canisters
+2025-05-20:
+  Aliceee2ch:
+  - map: Minor Catwalk fixes
+  Melbert:
+  - refactor: Batons have been refactored again. Baton stuns now properly count as
+      an attack, when before it was a nothing. Report any oddities, particularly in
+      regards to harmbatonning vs normal batonning.
+  - refactor: The method of adjusting item damage mid-attack has been refactored -
+      some affected items include the Nullblade and knives. Report any strange happenings
+      with damage numbers.
+  - refactor: A few objects have been moved to the new interaction chain - records
+      consoles, mawed crucible, alien weeds and space vines, hedges, restaurant portals,  and
+      some mobs - to name a few.
+  - bugfix: Spears only deal bonus damage against secure lockers, not all closet types
+      (including crates)
+  moocowswag:
+  - rscadd: Adds modular shield cables, greatly enabling shield generator setups to
+      be more flexible within a room.
+  - rscadd: Spray painting or coloring the modular shield generator now has it color
+      its shields on next activation.
+  - qol: Modular shield machines now automatically attempt to connect to something
+      on initialize and on being rotated via wrench, making it easy to use for maps
+      and helps reduce confusion.
+  - image: Modular shield cable sprites that adapt to orientation and make the whole
+      system look cleaner
