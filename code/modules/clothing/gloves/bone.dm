@@ -23,4 +23,3 @@
 	energy = 15
 	bomb = 20
 	bio = 10
-	wound = 15

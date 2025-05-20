@@ -36,7 +36,7 @@
 	bio = 50
 	fire = 100
 	acid = 50
-	wound = 15
+	wound = 10
 
 /obj/item/clothing/head/utility/hardhat/Initialize(mapload)
 	. = ..()

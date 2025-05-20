@@ -98,7 +98,6 @@
 	bio = 50
 	fire = 50
 	acid = 20
-	wound = 10
 
 /obj/item/clothing/suit/hooded/wintercoat/eva/Initialize(mapload)
 	. = ..()
@@ -122,7 +121,6 @@
 	bio = 50
 	fire = 50
 	acid = 20
-	wound = 10
 
 /obj/item/clothing/suit/hooded/wintercoat/centcom
 	name = "centcom winter coat"
@@ -141,7 +139,6 @@
 	bio = 10
 	fire = 10
 	acid = 60
-	wound = 35
 
 /obj/item/clothing/suit/hooded/wintercoat/centcom/Initialize(mapload)
 	. = ..()
@@ -161,7 +158,6 @@
 	bio = 10
 	fire = 10
 	acid = 60
-	wound = 35
 
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's winter coat"
@@ -180,7 +176,6 @@
 	energy = 40
 	bomb = 25
 	acid = 50
-	wound = 25
 
 /obj/item/clothing/suit/hooded/wintercoat/captain/Initialize(mapload)
 	. = ..()
@@ -198,7 +193,6 @@
 	energy = 40
 	bomb = 25
 	acid = 50
-	wound = 25
 
 /obj/item/clothing/suit/hooded/wintercoat/hop
 	name = "head of personnel's winter coat"
@@ -219,7 +213,6 @@
 	energy = 25
 	bomb = 10
 	acid = 35
-	wound = 10
 
 /obj/item/clothing/suit/hooded/wintercoat/hop/Initialize(mapload)
 	. = ..()
@@ -280,7 +273,6 @@
 	energy = 40
 	bomb = 25
 	acid = 45
-	wound = 25
 
 /obj/item/clothing/suit/hooded/wintercoat/security/Initialize(mapload)
 	. = ..()
@@ -299,7 +291,6 @@
 	energy = 40
 	bomb = 25
 	acid = 45
-	wound = 25
 
 /obj/item/clothing/suit/hooded/wintercoat/medical
 	name = "medical winter coat"
@@ -456,7 +447,6 @@
 /datum/armor/wintercoat_science
 	bomb = 10
 	fire = 20
-	wound = 10
 
 /obj/item/clothing/head/hooded/winterhood/science
 	desc = "A white winter coat hood. This one will keep your brain warm. About as much as the others, really."
@@ -467,7 +457,6 @@
 /datum/armor/winterhood_science
 	bomb = 10
 	fire = 20
-	wound = 10
 
 /obj/item/clothing/suit/hooded/wintercoat/science/rd
 	name = "research director's winter coat"
@@ -480,7 +469,6 @@
 /datum/armor/science_rd
 	bomb = 20
 	fire = 30
-	wound = 20
 
 /obj/item/clothing/suit/hooded/wintercoat/science/rd/Initialize(mapload)
 	. = ..()
@@ -656,7 +644,6 @@
 
 /datum/armor/wintercoat_miner
 	melee = 10
-	wound = 10
 
 /obj/item/clothing/head/hooded/winterhood/miner
 	desc = "A dusty winter coat hood."
@@ -665,7 +652,6 @@
 
 /datum/armor/winterhood_miner
 	melee = 10
-	wound = 10
 
 /obj/item/clothing/suit/hooded/wintercoat/custom
 	name = "tailored winter coat"

@@ -32,7 +32,6 @@
 	energy = 5
 	fire = 60
 	acid = 60
-	wound = 40
 
 /// hood
 /obj/item/clothing/head/hooded/chaplain_hood/divine_archer

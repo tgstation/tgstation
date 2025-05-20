@@ -570,7 +570,6 @@
 	bio = 10
 	fire = 90
 	acid = 90
-	wound = 40
 
 /obj/item/clothing/suit/armor/changeling/Initialize(mapload)
 	. = ..()
@@ -596,7 +595,6 @@
 	bio = 10
 	fire = 90
 	acid = 90
-	wound = 40
 
 /obj/item/clothing/head/helmet/changeling/Initialize(mapload)
 	. = ..()
@@ -639,7 +637,6 @@
 	laser = 10
 	energy = 10
 	bio = 50
-	wound = 10
 
 /obj/item/clothing/head/helmet/changeling_hivehead/Initialize(mapload)
 	. = ..()

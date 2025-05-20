@@ -37,7 +37,7 @@
 	bio = 60
 	fire = 100
 	acid = 100
-	wound = 70
+	wound = 10
 
 /obj/item/clothing/suit/hooded/cloak/drake/Initialize(mapload)
 	. = ..()

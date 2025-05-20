@@ -381,7 +381,6 @@
 	laser = 2
 	energy = 2
 	bomb = 4
-	wound = 4
 
 /obj/item/mod/module/ash_accretion/Initialize(mapload)
 	. = ..()

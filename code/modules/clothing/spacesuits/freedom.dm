@@ -21,7 +21,6 @@
 	bio = 100
 	fire = 80
 	acid = 80
-	wound = 50
 
 /obj/item/clothing/suit/space/freedom
 	name = "eagle suit"

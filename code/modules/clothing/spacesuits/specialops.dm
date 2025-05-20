@@ -26,7 +26,6 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 100
 
 /obj/item/clothing/suit/space/officer
 	name = "CentCom officer's coat"
@@ -55,4 +54,3 @@
 	bio = 100
 	fire = 100
 	acid = 100
-	wound = 100

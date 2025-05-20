@@ -52,7 +52,6 @@
 	bio = 50
 	fire = 100
 	acid = 50
-	wound = 20
 
 /obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
@@ -119,7 +118,6 @@
 	bio = 50
 	fire = 80
 	acid = 50
-	wound = 20
 
 /obj/item/clothing/suit/utility/bomb_suit
 	name = "bomb suit"
@@ -152,7 +150,6 @@
 	bio = 50
 	fire = 80
 	acid = 50
-	wound = 20
 
 /obj/item/clothing/head/utility/bomb_hood/security
 	icon_state = "bombsuit_sec"

@@ -16,7 +16,6 @@
 	energy = 60
 	fire = 100
 	acid = 100
-	wound = 35
 
 /obj/item/clothing/head/hooded/ablative/IsReflect(def_zone)
 	if(def_zone != BODY_ZONE_HEAD) //If not shot where ablative is covering you, you don't get the reflection bonus!

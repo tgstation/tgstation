@@ -27,7 +27,7 @@
 	bomb = 50
 	fire = 50
 	acid = 50
-	wound = 30
+	wound = 10
 
 /obj/item/clothing/head/hooded/explorer
 	name = "explorer hood"
@@ -74,7 +74,7 @@
 	bio = 50
 	fire = 20
 	acid = 40
-	wound = 10
+	wound = 5
 
 /obj/item/clothing/mask/gas/explorer/plasmaman
 	starting_filter_type = /obj/item/gas_filter/plasmaman
@@ -135,7 +135,7 @@
 	bomb = 50
 	fire = 50
 	acid = 50
-	wound = 60
+	wound = 10
 
 /obj/item/clothing/suit/hooded/cloak/goliath/click_alt(mob/user)
 	if(!iscarbon(user))
@@ -236,7 +236,7 @@
 	bomb = 50
 	fire = 60
 	acid = 60
-	wound = 30
+	wound = 10
 
 /obj/item/clothing/head/hooded/explorer/syndicate
 	name = "syndicate explorer hood"

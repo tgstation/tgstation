@@ -18,7 +18,6 @@
 	bio = 30
 	fire = 60
 	acid = 75
-	wound = 30
 
 /obj/item/clothing/head/helmet/space/pirate/bandana
 	icon_state = "spacebandana"

@@ -29,7 +29,7 @@
 	bio = 50
 	fire = 100
 	acid = 100
-	wound = 50
+	wound = 10
 
 /obj/item/clothing/suit/hooded/cloak/godslayer/Initialize(mapload)
 	. = ..()

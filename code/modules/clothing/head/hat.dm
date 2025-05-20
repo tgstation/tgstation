@@ -19,7 +19,6 @@
 	bomb = 25
 	fire = 50
 	acid = 50
-	wound = 30
 
 /obj/item/clothing/head/costume/constable
 	name = "constable helmet"
@@ -141,7 +140,6 @@
 	bullet = 5
 	laser = 5
 	energy = 15
-	wound = 5
 
 /// Bounty hunter's hat, very likely to intercept bullets
 /obj/item/clothing/head/cowboy/bounty
@@ -282,7 +280,6 @@
 	bomb = 25
 	fire = 50
 	acid = 50
-	wound = 25
 
 /obj/item/clothing/head/costume/jackbros
 	name = "frosty hat"
@@ -313,7 +310,6 @@
 	bomb = 25
 	fire = 50
 	acid = 50
-	wound = 30
 
 /obj/item/clothing/head/fedora/human_leather
 	name = "human skin hat"

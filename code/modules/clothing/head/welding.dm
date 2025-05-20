@@ -27,7 +27,6 @@
 	melee = 10
 	fire = 100
 	acid = 60
-	wound = 10
 
 /obj/item/clothing/head/utility/welding/attack_self(mob/user)
 	adjust_visor(user)

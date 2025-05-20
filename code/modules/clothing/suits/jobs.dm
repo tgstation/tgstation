@@ -130,7 +130,6 @@
 	laser = 25
 	energy = 35
 	acid = 45
-	wound = 25
 
 /obj/item/clothing/suit/toggle/jacket/det_trench/Initialize(mapload)
 	. = ..()
@@ -382,7 +381,6 @@
 	laser = 25
 	energy = 35
 	acid = 45
-	wound = 25
 
 //Robotocist
 /obj/item/clothing/suit/hooded/techpriest

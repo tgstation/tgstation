@@ -33,14 +33,13 @@
 	bio = 60
 	fire = 100
 	acid = 100
-	wound = 50
+	wound = 10
 
 /datum/armor/drake_empowerment
 	melee = 35
 	laser = 30
 	energy = 20
 	bomb = 20
-	wound = 20
 
 /obj/item/clothing/suit/hooded/berserker/Initialize(mapload)
 	. = ..()

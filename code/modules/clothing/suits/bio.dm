@@ -81,7 +81,6 @@
 	bio = 100
 	fire = 30
 	acid = 100
-	wound = 25
 
 /obj/item/clothing/suit/bio_suit/security
 	armor_type = /datum/armor/bio_suit_security
@@ -96,7 +95,6 @@
 	bio = 100
 	fire = 30
 	acid = 100
-	wound = 25
 
 /obj/item/clothing/suit/bio_suit/security/Initialize(mapload)
 	. = ..()

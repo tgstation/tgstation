@@ -125,7 +125,6 @@
 	energy = 10
 	bomb = 25
 	acid = 50
-	wound = 40
 
 /obj/item/storage/backpack/snail/dropped(mob/user, silent)
 	. = ..()

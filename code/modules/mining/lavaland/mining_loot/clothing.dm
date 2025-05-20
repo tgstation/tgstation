@@ -113,7 +113,6 @@
 	bomb = 100
 	fire = 100
 	acid = 30
-	wound = 15
 
 /obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
 	. = ..()

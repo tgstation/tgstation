@@ -52,7 +52,6 @@
 	bomb = 50
 	fire = 100
 	acid = 100
-	wound = 70
 
 /obj/item/clothing/suit/hooded/hostile_environment/Initialize(mapload)
 	. = ..()

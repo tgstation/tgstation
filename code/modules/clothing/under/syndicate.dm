@@ -138,7 +138,6 @@
 
 /datum/armor/clothing_under/syndicate_soviet
 	melee = 10
-	wound = 10
 
 /obj/item/clothing/under/syndicate/combat
 	name = "combat uniform"
@@ -158,7 +157,6 @@
 
 /datum/armor/clothing_under/syndicate_rus_army
 	melee = 5
-	wound = 10
 
 /obj/item/clothing/under/syndicate/scrubs
 	name = "tactical scrubs"
@@ -179,7 +177,6 @@
 	bio = 50
 	fire = 50
 	acid = 40
-	wound = 10
 
 /obj/item/clothing/under/plasmaman/syndicate
 	name = "tacticool envirosuit"

@@ -15,7 +15,6 @@
 	bio = 30
 	fire = 80
 	acid = 85
-	wound = 40
 
 // Don't blame me, blame whoever added this many variations
 GLOBAL_LIST_INIT(syndicate_space_suits_to_helmets,list(

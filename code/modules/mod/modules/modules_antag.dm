@@ -33,7 +33,6 @@
 	bullet = 30
 	laser = 15
 	energy = 15
-	wound = 10
 
 /obj/item/mod/module/armor_booster/on_part_activation()
 	RegisterSignal(mod, COMSIG_MOD_UPDATE_SPEED, PROC_REF(on_update_speed))

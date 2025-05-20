@@ -16,7 +16,6 @@
 
 /datum/armor/armor_plate
 	melee = 10
-	wound = 10
 
 /datum/component/armor_plate/Initialize(maxamount, obj/item/upgrade_item, datum/armor/armor_mod, upgrade_prefix = "reinforced")
 	if(!isobj(parent))
