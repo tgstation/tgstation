@@ -47,7 +47,7 @@
 
 /obj/item/folder/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	if(is_type_in_typecache(target, folder_insertables))
-		// As this is show on the paper, we clarify we are picking it up.
+		// As this is shown on the paper, we clarify we are picking it up.
 		context[SCREENTIP_CONTEXT_LMB] = "Insert Into [folder_type_name]"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
