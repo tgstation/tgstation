@@ -358,7 +358,7 @@
  */
 /proc/offer_control(mob/M)
 	if(isdead(M))
-		to_chat(usr, "You can't ghosts control of a ghost.")
+		to_chat(usr, "You can't give ghosts control of a ghost. They're already ghosts.")
 		return FALSE
 
 	to_chat(M, "Control of your mob has been offered to dead players.")
