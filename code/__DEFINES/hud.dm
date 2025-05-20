@@ -141,6 +141,7 @@
 #define ui_alien_storage_r "CENTER+1:18,SOUTH:5"
 #define ui_alien_language_menu "EAST-4:20,SOUTH:5"
 #define ui_alien_navigate_menu "EAST-4:4,SOUTH:5"
+#define ui_alien_floor_change "EAST-3:24, SOUTH:24"
 
 //AI
 #define ui_ai_core "BOTTOM:6,RIGHT-4"
