@@ -593,8 +593,7 @@
 		return FALSE
 
 	if(gloves)
-		if(gloves.wash(clean_types, updating_clothing))
-			update_worn_gloves()
+		gloves.wash(clean_types)
 	else if((clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0)
 		blood_in_hands = 0
 		update_worn_gloves()
