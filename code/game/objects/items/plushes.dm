@@ -827,16 +827,16 @@
 	squeak_override = list(SFX_SCREECH=1)
 	var/french = FALSE
 
-/obj/item/toy/plush/monkey/item_interaction(mob/living/user, obj/item/food/grown/banana/nana, list/modifiers)
+/obj/item/toy/plush/monkey/item_interaction(mob/living/feeder, obj/item/food/grown/banana/nana, list/modifiers)
 	if(!istype(nana))
 		return ..()
 	nana.moveToNullspace() //can't delete it just yet
-	to_chat(user, span_notice("You hand over the [nana] to [src] and watch as it eats..."))
+	to_chat(feeder, span_notice("You hand over the [nana] to [src] and watch as it eats..."))
 	playsound(src, 'sound/items/eatfood.ogg', 75, TRUE)
-	addtimer(CALLBACK(src, PROC_REF(eat), nana), 3 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(eat), feeder, nana), 3 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/toy/plush/monkey/proc/eat(obj/item/food/grown/banana/nana)
+/obj/item/toy/plush/monkey/proc/eat(mob/living/feeder, obj/item/food/grown/banana/nana)
 	if(istype(nana, /obj/item/food/grown/banana/bluespace))
 		do_teleport(src, get_turf(src), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
 	else if(istype(nana, /obj/item/food/grown/banana/mime) && !french)
@@ -845,7 +845,7 @@
 		french = TRUE
 	// throw the peel at a random mob, or a random turf if there are none
 	var/obj/item/grown/peel = new nana.trash_type(get_turf(src))
-	var/list/oviewers = oviewers(src)
+	var/list/oviewers = feeder ? oviewers(feeder) : null // scan from feeder pov to avoid throwing at feeder
 	peel.throw_at(oviewers.len == 0 ? get_ranged_target_turf(src, pick(GLOB.alldirs), peel.throw_range) : pick(oviewers), peel.throw_range, peel.throw_speed, quickstart = FALSE)
 	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
 	spasm_animation(5 SECONDS)
