@@ -1,0 +1,4 @@
+author: "Krysonism"
+delete-after: True
+changes:
+  - bugfix: "fixed bungo pits not inheriting genes and stats from the fruit."
