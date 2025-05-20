@@ -142,36 +142,32 @@
 		update_appearance(UPDATE_OVERLAYS)
 	return TRUE
 
-/obj/item/reagent_containers/cup/soup_pot/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/reagent_containers/cup/soup_pot/item_interaction(mob/living/user, obj/item/item, list/modifiers)
 	. = ..()
-	if(.)
-		return
-
-	if(!can_add_ingredient(attacking_item))
-		return FALSE
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(!can_add_ingredient(item))
+		return ITEM_INTERACT_BLOCKING
 
 	// Too many ingredients
 	if(LAZYLEN(added_ingredients) >= max_ingredients)
 		balloon_alert(user, "too many ingredients!")
-		return TRUE
-	if(!user.transferItemToLoc(attacking_item, src))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(item, src))
 		balloon_alert(user, "can't add that!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	// Ensures that faceatom works correctly, since we can can often be in another atom's loc (a stove)
 	var/atom/movable/balloon_loc = ismovable(loc) ? loc : src
 	balloon_loc.balloon_alert(user, "ingredient added")
 	user.face_atom(balloon_loc)
 
-	LAZYADD(added_ingredients, attacking_item)
+	LAZYADD(added_ingredients, item)
 	update_appearance(UPDATE_OVERLAYS)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/reagent_containers/cup/soup_pot/item_interaction(mob/living/user, obj/item/item, list/modifiers)
-	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		return NONE
-
-	return transfer_from_container_to_pot(item, user)
+/obj/item/reagent_containers/cup/soup_pot/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	return transfer_from_container_to_pot(tool, user)
 
 /obj/item/reagent_containers/cup/soup_pot/attack_hand_secondary(mob/user, list/modifiers)
 	if(!LAZYLEN(added_ingredients))
