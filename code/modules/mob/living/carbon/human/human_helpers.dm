@@ -95,15 +95,13 @@
 		var/list/identity = list(null, null, null)
 		SEND_SIGNAL(src, COMSIG_HUMAN_GET_FORCED_NAME, identity)
 		if(identity[VISIBLE_NAME_FORCED])
-			. = identity[VISIBLE_NAME_FACE] // to return forced names when unknown, instead of ID
-			return
+			return identity[VISIBLE_NAME_FACE] // to return forced names when unknown, instead of ID
 	else
 		. = astype(wear_id, /obj/item/card/id) \
 			|| astype(wear_id, /obj/item/storage/wallet)?.front_id \
 			|| astype(wear_id, /obj/item/modular_computer)?.computer_id_slot?.registered_name
 	if(!.)
 		. = if_no_id //to prevent null-names making the mob unclickable
-	return
 
 /mob/living/carbon/human/get_idcard(hand_first = TRUE)
 	. = ..()
