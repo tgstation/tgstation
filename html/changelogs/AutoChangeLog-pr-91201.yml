@@ -1,0 +1,5 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - balance: "Chem/Xeno/Custodial Nukie Keycard lowered to 5"
+  - balance: "Ordnance Nukie Keycard increased to 30"
