@@ -794,8 +794,8 @@
 
 
 /obj/structure/emergency_shield/modular/Initialize(mapload)
-	. = ..()
 	AddElement(/datum/element/blocks_explosives)
+	. = ..()
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
 /obj/structure/emergency_shield/modular/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
