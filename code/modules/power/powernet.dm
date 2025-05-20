@@ -13,7 +13,8 @@
 	var/netexcess = 0 // excess power on the powernet (typically avail-load)///////
 	var/delayedload = 0 // load applied to powernet between power ticks.
 
-	var/flickering = FALSE
+	/// If a run of propagate_light_flicker is ongoing
+	VAR_PRIVATE/flickering = FALSE
 
 /datum/powernet/New()
 	SSmachines.powernets += src
