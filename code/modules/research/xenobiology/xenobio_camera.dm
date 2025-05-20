@@ -181,15 +181,16 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 
 ///Places every slime in storage on target turf
 /obj/machinery/computer/camera_advanced/xenobio/proc/slime_place(turf/open/target_turf)
-	if(stored_slimes.len > 0)
-		if(stored_slimes.len == 1)
-			target_turf.visible_message(span_notice("The slime is warped in!"))
-		else
-			target_turf.visible_message(span_notice("[stored_slimes.len] slimes are warped in!"))
-		for(var/mob/living/basic/slime/stored_slime in stored_slimes)
-			stored_slime.forceMove(target_turf)
-			stored_slimes -= stored_slime
-			REMOVE_TRAIT(stored_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
+	if(stored_slimes.len <= 0)
+		return
+	if(stored_slimes.len == 1)
+		target_turf.visible_message(span_notice("The slime is warped in!"))
+	else
+		target_turf.visible_message(span_notice("[stored_slimes.len] slimes are warped in!"))
+	for(var/mob/living/basic/slime/stored_slime in stored_slimes)
+		stored_slime.forceMove(target_turf)
+		stored_slimes -= stored_slime
+		REMOVE_TRAIT(stored_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
 
 ///Places every slime not controlled by a player into the internal storage, respecting its limits
 ///Returns TRUE to signal it hitting the limit, in case its being called from a loop and we want it to stop
