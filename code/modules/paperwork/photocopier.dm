@@ -358,9 +358,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			if(check_busy(usr))
 				return FALSE
 
-			// i wish there was an easier way to convert a path string to an obj
-			var/obj/item/paper/paper
-
 			var/paper_path = text2path(params["created_paper"])
 
 			if(!ispath(paper_path, /obj/item/paper))
