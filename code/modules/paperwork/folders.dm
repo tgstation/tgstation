@@ -120,13 +120,13 @@
 		return interact_with_insertables(interacting_with, user)
 
 /obj/item/folder/proc/interact_with_insertables(obj/item/interacting_with, mob/living/user)
-	if(interacting_with.loc == user) // Make sure to update the user's inventory
-		if(!user.dropItemToGround(interacting_with, silent = TRUE))
+	if(interacting_with.loc == user)
+		if(!user.transferItemToLoc(interacting_with, src, silent = TRUE))
 			return ITEM_INTERACT_BLOCKING
 	else
 		interacting_with.do_pickup_animation(src)
+		interacting_with.forceMove(src)
 
-	interacting_with.forceMove(src)
 	playsound(src, interacting_with.pickup_sound, PICKUP_SOUND_VOLUME, interacting_with.sound_vary, ignore_walls = FALSE)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
