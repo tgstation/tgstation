@@ -1,0 +1,8 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Swimming is no longer so hyper lethal, and also benefits from athletics boosters."
+  - balance: "By default, swimming through deep water does a somewhat low but mounting quantity of stamina damage. Reduced by athletics skill and athletics boosters."
+  - balance: "Your total carried equipment weight (and their slowdowns, if any) contribute to your stamina loss while swimming. If you fell into deep water, best start stripping items."
+  - balance: "Floating is slightly less lethal, especially if you are starting to drown."
+  - bugfix: "Fixes a runtime caused by the exercised status effect."
