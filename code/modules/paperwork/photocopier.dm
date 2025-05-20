@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		/obj/item/documents,
 		/obj/item/paperwork
 	))
-	/// Typecache of objects that can be inserted and scanned into the photocopier for copying
+	/// List of paper types that can be inserted as blank paper
 	var/static/list/valid_paper_types = list(
 		/obj/item/paper,
 		/obj/item/paper/carbon,
