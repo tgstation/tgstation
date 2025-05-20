@@ -955,3 +955,34 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(queue_tracy)
 ADMIN_VERB(debug_mc_dependencies, R_DEBUG, "Debug MC Dependencies", "Debug MC dependencies.", ADMIN_CATEGORY_DEBUG)
 	var/datum/mc_dependency_ui/data = new /datum/mc_dependency_ui()
 	data.ui_interact(usr)
+
+ADMIN_VERB(show_powernets, R_DEBUG, "Color Powernet Runs", "Colors every node and cable of every powernet in a different color.", ADMIN_CATEGORY_DEBUG)
+	var/removing = FALSE
+	for(var/obj/effect/abstract/marker/powernet/marker in GLOB.all_abstract_markers)
+		qdel(marker)
+		removing = TRUE
+
+	if(removing)
+		return
+
+	var/list/colors = GLOB.carp_colors.Copy()
+
+	for(var/datum/powernet/net as anything in SSmachines.powernets)
+		if(!length(colors))
+			colors = GLOB.carp_colors.Copy()
+			message_admins("More powernets exist than colors, so some will be the same color.")
+
+		var/selected_color = pick_n_take(colors)
+		for(var/atom/component as anything in net.nodes + net.cables)
+			var/turf/component_turf = get_turf(component)
+			var/existing = FALSE
+			for(var/obj/effect/abstract/marker/powernet/existing_marker in component_turf)
+				if(existing_marker.powernet_owner != REF(net))
+					continue
+				existing = TRUE
+				break
+			if(existing)
+				continue
+			var/obj/effect/abstract/marker/powernet/marker = new(component_turf)
+			marker.color = selected_color
+			marker.powernet_owner = REF(net)
