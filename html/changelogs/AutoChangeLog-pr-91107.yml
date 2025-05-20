@@ -1,0 +1,4 @@
+author: "improvedname"
+delete-after: True
+changes:
+  - balance: "Splits surgery dufflebag into two items the dufflebag itself and the medkit"
