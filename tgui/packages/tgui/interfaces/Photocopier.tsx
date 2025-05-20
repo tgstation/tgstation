@@ -56,7 +56,7 @@ export const Photocopier = (props) => {
   return (
     <Window
       title="Photocopier"
-      width={selectedCategory ? 550 : 225}
+      width={selectedCategory ? 550 : 325}
       height={525}
     >
       <Window.Content>
@@ -180,7 +180,7 @@ const Status = (props: StatusProps) => {
           <b>{selectedBlank ? selectedBlank : 'Not Selected'}</b>
         </LabeledList.Item>
 
-        <LabeledList.Item label="Paper Type" textAlign="center">
+        <LabeledList.Item label="Paper Type">
           <Stack align="center">
             {paper_types.map((paper) => (
               <Stack.Item grow key={paper}>
@@ -190,8 +190,6 @@ const Status = (props: StatusProps) => {
                   dmIconState={paper.icon_state}
                   tooltip={paper.name + ' amount is ' + paper.amount}
                   imageSize={32}
-                  verticalAlignContent="center"
-                  iconPosition="center"
                   disabled={!paper.amount}
                   selected={created_paper === paper.type && paper.amount}
                   onClick={() =>
