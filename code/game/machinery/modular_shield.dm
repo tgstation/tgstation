@@ -68,7 +68,7 @@
 	var/list/list_of_turfs
 
 	///This decides if we get nerfed by projecting on internal turfs with floors and stuff
-	var/internal_regen_penalty = TRUE
+	var/internal_penalty = TRUE
 
 	///What machine we are for the purpose of updating icon state
 	var/icon_type = "gen"
@@ -90,10 +90,10 @@
 	innate_strength = initial(innate_strength)
 
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
-		innate_strength += new_capacitor.tier * 10
+		innate_strength += new_capacitor.tier * 20
 
 	for(var/datum/stock_part/servo/new_servo in component_parts)
-		innate_regen += new_servo.tier
+		innate_regen += new_servo.tier * 2
 
 	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
 		innate_radius += new_laser.tier * 0.25
@@ -309,6 +309,7 @@
 
 		if ("toggle_exterior")
 			exterior_only = !exterior_only
+			calculate_radius()
 
 ///calculations for the stats supplied by the network of machines that boost us
 /obj/machinery/modular_shield_generator/proc/calculate_boost()
@@ -335,10 +336,14 @@
 /obj/machinery/modular_shield_generator/proc/calculate_radius()
 
 	max_radius = innate_radius + radius_boost
+	if((!exterior_only) & internal_penalty)
+		max_radius = max(3,max_radius * 0.5)
 
 	if(radius > max_radius)//the generator can no longer function at this capacity
 		deactivate_shields()
 		radius = max_radius
+		return
+	calculate_regeneration()
 
 ///Calculates the max strength or health of the forcefield, modifiers go here
 /obj/machinery/modular_shield_generator/proc/calculate_max_strength()
@@ -363,7 +368,7 @@
 	//of the max radius we can support we get a very small bonus multiplier
 	current_regeneration = (max_regeneration / (0.5 + (radius * 2)/max_radius))
 
-	if((!exterior_only) & internal_regen_penalty)
+	if((!exterior_only) & internal_penalty)
 		current_regeneration *= 0.5
 
 ///Reduces the strength of the shield based on the given integer
@@ -396,7 +401,7 @@
 	icon_state = "gate_recovering_closed"
 	density = FALSE
 	circuit = /obj/item/circuitboard/machine/modular_shield_generator/gate
-	internal_regen_penalty = FALSE
+	internal_penalty = FALSE
 	layer = GIB_LAYER
 	icon_type = "gate"
 
@@ -715,7 +720,7 @@
 	. = ..()
 	charge_boost = initial(charge_boost)
 	for(var/datum/stock_part/servo/new_servo in component_parts)
-		charge_boost += new_servo.tier
+		charge_boost += new_servo.tier * 2
 
 	if(shield_generator)
 		shield_generator.calculate_boost()
@@ -764,7 +769,7 @@
 	. = ..()
 	strength_boost = initial(strength_boost)
 	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
-		strength_boost += new_capacitor.tier * 10
+		strength_boost += new_capacitor.tier * 20
 
 	if(shield_generator)
 		shield_generator.calculate_boost()
