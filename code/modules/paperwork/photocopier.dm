@@ -32,8 +32,8 @@
 /// How much paper is used for making a copy of paperwork.
 #define PAPERWORK_PAPER_USE 10
 
-/// Maximum capacity of a photocopier
-#define MAX_PAPER_CAPACITY 60
+/// Paper capacity of a matter bin
+#define MATTER_BIN_PAPER_CAPACITY 30
 /// The maximum amount of copies you can make with one press of the copy button.
 #define MAX_COPIES_AT_ONCE 10
 
@@ -69,6 +69,12 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	interaction_flags_mouse_drop = NEED_DEXTERITY | ALLOW_RESTING
 	circuit = /obj/item/circuitboard/machine/photocopier
 
+	/// The max paper capacity this photocopier can store
+	var/max_paper_capacity
+	/// How long it takes to print something in seconds
+	var/time_to_print
+	/// How efficent our toner is when printing
+	var/toner_efficiency
 	/// A reference to a mob on top of the photocopier trying to copy their ass. Null if there is no mob.
 	var/mob/living/ass
 	/// A reference to the toner cartridge that's inserted into the copier. Null if there is no cartridge.
@@ -85,7 +91,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	var/copies_left = 0
 	/// The amount of paper this photocoper starts with.
 	var/starting_paper = 0
-	/// A stack for all the empty paper we have newly inserted (LIFO)
+	/// The paper loaded into the machine
 	var/list/paper_stack = list()
 	/// Type path to the paper that's created when we're initalized
 	var/created_paper = /obj/item/paper
@@ -111,8 +117,14 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	toner_cartridge = new(src)
 	return ..()
 
+/obj/machinery/photocopier/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, paper_stack)
+	return .
+
 /obj/machinery/photocopier/Initialize(mapload)
 	. = ..()
+	RefreshParts()
 	setup_components()
 	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
 	if(starting_paper)
@@ -121,6 +133,20 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /// Simply adds the necessary components for this to function.
 /obj/machinery/photocopier/proc/setup_components()
 	AddComponent(/datum/component/payment, PHOTOCOPIER_FEE, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
+
+/obj/machinery/photocopier/RefreshParts()
+	. = ..()
+	max_paper_capacity = 0
+	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
+		max_paper_capacity += MATTER_BIN_PAPER_CAPACITY * matter_bin.tier
+
+	toner_efficiency = 1
+	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+		toner_efficiency += micro_laser.tier
+
+	time_to_print = 5 SECONDS
+	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
+		time_to_print -= (scanning_module.tier SECONDS)
 
 /obj/machinery/photocopier/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -144,7 +170,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			if(!new_paper.pixel_x)
 				new_paper.pixel_x = rand(-3,3)
 
-		paper_stack[paper_amount] = null
+		paper_stack.Remove(paper_path)
+	if(toner_cartridge)
+		toner_cartridge.forceMove(dump_location)
+		toner_cartridge = null
 	update_appearance()
 
 /obj/machinery/photocopier/Destroy()
@@ -154,6 +183,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	dump_contents()
 	QDEL_NULL(toner_cartridge)
+	QDEL_LIST(paper_stack)
 	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
 	return ..()
 
@@ -186,7 +216,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	static_data["blanks"] = blank_infos
 	static_data["categories"] = category_names
-	static_data["max_paper_count"] = MAX_PAPER_CAPACITY
+	static_data["max_paper_count"] = max_paper_capacity
 	static_data["max_copies"] = MAX_COPIES_AT_ONCE
 
 	return static_data
@@ -276,7 +306,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		// Remove the paper/photo/document from the photocopier.
 		if("remove")
 			if(object_copy)
-				remove_photocopy(object_copy, usr)
+				remove_photocopy(usr, object_copy)
 				object_copy = null
 			else if(check_ass())
 				to_chat(ass, span_notice("You feel a slight pressure on your ass."))
@@ -355,7 +385,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	busy = TRUE
 	update_use_power(ACTIVE_POWER_USE)
 	// fucking god proc
-	INVOKE_ASYNC(src, PROC_REF(do_copy_loop), copy_cb, user, paper_use, toner_use, copies_amount)
+	INVOKE_ASYNC(src, PROC_REF(do_copy_loop), user, copy_cb, paper_use, toner_use, copies_amount)
 
 /obj/machinery/photocopier/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -371,13 +401,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Will invoke the passed in `copy_cb` callback in 4 second intervals, and charge the user 5 credits for each copy made.
  *
  * Arguments:
- * * copy_cb - a callback for which proc to call. Should only be one of the `make_x_copy()` procs, such as `make_paper_copy()`.
  * * user - the mob who clicked copy.
+ * * copy_cb - a callback for which proc to call. Should only be one of the `make_x_copy()` procs, such as `make_paper_copy()`.
  * * paper_use - the amount of paper used in this operation
  * * toner_use - the amount of toner used in this operation
  * * copies_amount - the amount of copies we should make
  */
-/obj/machinery/photocopier/proc/do_copy_loop(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)
+/obj/machinery/photocopier/proc/do_copy_loop(mob/user, datum/callback/copy_cb, paper_use, toner_use, copies_amount)
 	var/error_message = null
 	if(!toner_cartridge)
 		copies_amount = 0
@@ -416,7 +446,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			break
 
 		playsound(src, 'sound/machines/printer.ogg', 50, vary = FALSE)
-		sleep(4 SECONDS)
+		sleep(time_to_print)
 
 		// reveal our copied item
 		copied_obj.forceMove(drop_location())
@@ -486,13 +516,13 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Removes an amount of paper from the printer's storage.
  * This lets us pretend we actually consumed paper when we were actually printing something that wasn't paper.
  */
-/obj/machinery/photocopier/proc/delete_paper(number) //, paper_type)
+/obj/machinery/photocopier/proc/delete_paper(number)
 	if(!paper_stack[created_paper] || (number > paper_stack[created_paper]))
 		CRASH("Trying to delete more paper than is stored in the photocopier")
 
 	paper_stack[created_paper] -= number
 	if(paper_stack[created_paper] <= 0)
-		paper_stack[created_paper] = null
+		paper_stack.Remove(created_paper)
 
 /**
  * Handles the copying of paper. Transfers all the text, stamps and so on from the old paper, to the copy.
@@ -505,7 +535,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	var/obj/item/paper/empty_paper = get_empty_paper(created_paper)
 	delete_paper(PAPER_PAPER_USE)
-	toner_cartridge.charges -= PAPER_TONER_USE
+	toner_cartridge.charges -= PAPER_TONER_USE / toner_efficiency
 
 	var/copy_colour = get_toner_color()
 
@@ -523,7 +553,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return null
 	var/obj/item/photo/copied_pic = new(src, photo.Copy(photo_color == PHOTO_GREYSCALE ? TRUE : FALSE))
 	delete_paper(PHOTO_PAPER_USE)
-	toner_cartridge.charges -= PHOTO_TONER_USE
+	toner_cartridge.charges -= PHOTO_TONER_USE / toner_efficiency
 	return copied_pic
 
 /**
@@ -536,7 +566,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return null
 	var/obj/item/documents/photocopy/copied_doc = new(src, document_copy)
 	delete_paper(DOCUMENT_PAPER_USE)
-	toner_cartridge.charges -= DOCUMENT_TONER_USE
+	toner_cartridge.charges -= DOCUMENT_TONER_USE / toner_efficiency
 	return copied_doc
 
 /**
@@ -554,7 +584,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		copied_paperwork.stamp_icon = "paper_stamp-pc" //Override with the photocopy overlay sprite
 		copied_paperwork.add_stamp()
 	delete_paper(PAPERWORK_PAPER_USE)
-	toner_cartridge.charges -= PAPERWORK_TONER_USE
+	toner_cartridge.charges -= PAPERWORK_TONER_USE / toner_efficiency
 	return copied_paperwork
 
 /// Handles the copying of blanks. No mutating state, so this should not fail.
@@ -571,7 +601,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	printblank.add_raw_text(printinfo, color = copy_colour)
 	printblank.update_appearance()
 
-	toner_cartridge.charges -= PAPER_TONER_USE
+	toner_cartridge.charges -= PAPER_TONER_USE / toner_efficiency
 	return printblank
 
 /**
@@ -592,7 +622,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	toEmbed.psize_y = 128
 	copied_ass.set_picture(toEmbed, TRUE, TRUE)
 	delete_paper(ASS_PAPER_USE)
-	toner_cartridge.charges -= ASS_TONER_USE
+	toner_cartridge.charges -= ASS_TONER_USE / toner_efficiency
 	return copied_ass
 
 /**
@@ -605,7 +635,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * * object - the item we're trying to remove.
  * * user - the user removing the item.
  */
-/obj/machinery/photocopier/proc/remove_photocopy(obj/item/object, mob/user)
+/obj/machinery/photocopier/proc/remove_photocopy(mob/user, obj/item/object)
 	if(issilicon(user))
 		object.forceMove(drop_location())
 		return
@@ -676,7 +706,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 				balloon_alert(user, "cannot hold more paper!")
 				return ITEM_INTERACT_FAILURE
 
-			insert_empty_paper(paper.type, user)
+			insert_empty_paper(user, paper.type)
 			qdel(paper)
 			return ITEM_INTERACT_SUCCESS
 
@@ -694,7 +724,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			if(!is_empty || !is_room)
 				continue
 
-			insert_empty_paper(stacked_paper.type, user, silent=TRUE)
+			insert_empty_paper(user, stacked_paper.type, silent=TRUE)
 			paper_bin.paper_stack -= stacked_paper
 			paper_bin.total_paper -= 1
 			paper_inserted++
@@ -702,9 +732,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 		if(paper_bin.total_paper) // then insert non-initialized paper that is always considered empty paper
 			var/noninitialized_paper_total = paper_bin.total_paper - length(paper_bin.paper_stack)
-			var/paper_to_take = min(MAX_PAPER_CAPACITY - get_paper_count(), noninitialized_paper_total)
+			var/paper_to_take = min(max_paper_capacity - get_paper_count(), noninitialized_paper_total)
 			if(paper_to_take)
-				insert_empty_paper(paper_bin.papertype, user, paper_to_take, silent=TRUE)
+				insert_empty_paper(user, paper_bin.papertype, paper_to_take, silent=TRUE)
 				paper_inserted += paper_to_take
 				paper_bin.total_paper -= (paper_to_take)
 
@@ -718,24 +748,24 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return ITEM_INTERACT_SUCCESS
 
 	if(is_type_in_typecache(tool, whitelist_scannable_objects))
-		insert_copy_object(tool, user)
+		insert_copy_object(user, tool)
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
 
 /// Check if there is enough room to insert paper
 /obj/machinery/photocopier/proc/is_room_for_paper(mob/user, amount=1)
-	return get_paper_count() < MAX_PAPER_CAPACITY
+	return get_paper_count() < max_paper_capacity
 
 /// Proc that handles insertion of empty paper, useful for copying later.
-/obj/machinery/photocopier/proc/insert_empty_paper(paper_type, mob/user, amount=1, silent=FALSE)
+/obj/machinery/photocopier/proc/insert_empty_paper(mob/user, paper_type, amount=1, silent=FALSE)
 	if(!paper_stack[paper_type])
 		paper_stack[paper_type] = 0
 	paper_stack[paper_type] += amount
 	if(!silent)
 		balloon_alert(user, "paper inserted")
 
-/obj/machinery/photocopier/proc/insert_copy_object(obj/item/object, mob/user)
+/obj/machinery/photocopier/proc/insert_copy_object(mob/user, obj/item/object)
 	if(!copier_empty())
 		balloon_alert(user, "scanner tray occupied!")
 		return
@@ -862,7 +892,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 #undef DOCUMENT_PAPER_USE
 #undef ASS_PAPER_USE
 #undef PAPERWORK_PAPER_USE
-#undef MAX_PAPER_CAPACITY
+#undef MATTER_BIN_PAPER_CAPACITY
 #undef TONER_CHARGE_LOW_AMOUNT
 #undef PHOTO_GREYSCALE
 #undef PHOTO_COLOR
