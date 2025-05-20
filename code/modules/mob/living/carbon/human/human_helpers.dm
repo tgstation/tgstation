@@ -90,9 +90,6 @@
 	return
 
 /mob/living/carbon/human/get_id_name(if_no_id = "Unknown")
-	var/obj/item/storage/wallet/wallet = wear_id
-	var/obj/item/modular_computer/pda = wear_id
-	var/obj/item/card/id/id = wear_id
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
 		var/list/identity = list(null, null, null)
@@ -100,12 +97,10 @@
 		if(identity[VISIBLE_NAME_FORCED])
 			. = identity[VISIBLE_NAME_FACE] // to return forced names when unknown, instead of ID
 			return
-	if(istype(wallet))
-		id = wallet.front_id
-	if(istype(id))
-		. = id.registered_name
-	else if(istype(pda) && pda.computer_id_slot)
-		. = pda.computer_id_slot.registered_name
+	else
+		. = astype(wear_id, /obj/item/card/id) \
+			|| astype(wear_id, /obj/item/storage/wallet)?.front_id \
+			|| astype(wear_id, /obj/item/modular_computer)?.computer_id_slot?.registered_name
 	if(!.)
 		. = if_no_id //to prevent null-names making the mob unclickable
 	return
