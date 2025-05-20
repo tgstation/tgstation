@@ -850,7 +850,7 @@
 	bomb = 10
 	fire = 0
 	acid = 35
-	wound = 5
+	wound = 10
 
 /datum/armor/barrelmelon_fr
 	melee = 25

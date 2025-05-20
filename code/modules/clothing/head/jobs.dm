@@ -425,7 +425,7 @@
 	bio = 10
 	fire = 50
 	acid = 60
-	wound = 5
+	wound = 10
 
 /obj/item/clothing/head/hats/hos/cap/syndicate
 	name = "syndicate cap"

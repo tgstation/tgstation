@@ -36,7 +36,7 @@
 	bio = 20
 	fire = 20
 	acid = 20
-	wound = 10
+	wound = 20
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/on_hood_up(obj/item/clothing/head/hooded/hood)
 	hood_up = TRUE
@@ -100,7 +100,7 @@
 	laser = 30
 	energy = 30
 	bomb = 15
-	wound = 30
+	wound = 10
 
 /obj/item/clothing/suit/hooded/cultrobes/void/Initialize(mapload)
 	. = ..()
