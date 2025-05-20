@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - bugfix: "The name input for the character preferences should be functional again."
