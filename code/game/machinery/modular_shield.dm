@@ -395,7 +395,7 @@
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "gate_recovering_closed"
 	density = FALSE
-	circuit = /obj/item/circuitboard/machine/modular_shield_gate
+	circuit = /obj/item/circuitboard/machine/modular_shield_generator/gate
 	internal_regen_penalty = FALSE
 	layer = GIB_LAYER
 	icon_type = "gate"

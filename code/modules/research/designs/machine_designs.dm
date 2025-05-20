@@ -201,7 +201,7 @@
 	name = "Modular Shield Gate Board"
 	desc = "The circuit board for a modular shield gate."
 	id = "modular_shield_generator"
-	build_path = /obj/item/circuitboard/machine/modular_shield_gate
+	build_path = /obj/item/circuitboard/machine/modular_shield_generator/gate
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 		)

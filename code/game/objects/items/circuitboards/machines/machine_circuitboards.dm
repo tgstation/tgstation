@@ -173,10 +173,10 @@
 	req_components = list(/datum/stock_part/capacitor = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/modular_shield_gate
+/obj/item/circuitboard/machine/modular_shield_generator/gate
 	name = "Modular Shield Gate"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/modular_shield_gate
+	build_path = /obj/machinery/modular_shield_generator/gate
 	req_components = list(
 		/datum/stock_part/servo = 1,
 		/datum/stock_part/micro_laser = 1,
