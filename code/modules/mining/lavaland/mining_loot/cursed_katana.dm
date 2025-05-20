@@ -99,7 +99,7 @@
 	if(isturf(loc))
 		qdel(src)
 
-/obj/item/cursed_katana/attack(mob/living/target, mob/user, list/modifiers)
+/obj/item/cursed_katana/attack(mob/living/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(target.stat < DEAD && target != user)
 		drew_blood = TRUE
 		if(ismining(target))
