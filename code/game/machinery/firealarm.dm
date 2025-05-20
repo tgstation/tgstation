@@ -178,7 +178,7 @@
 		if(my_area?.fire_detect) //If this is false, someone disabled it. Leave the light missing, a good hint to anyone paying attention.
 			if(is_station_level(z))
 				var/current_level = SSsecurity_level.get_current_level_as_number()
-				. += mutable_appearance(icon, "fire_[current_level]")
+				. += mutable_appearance(icon, "fire_[min(current_level, 3)]")
 				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
 				set_light(l_color = SSsecurity_level?.current_security_level?.fire_alarm_light_color || LIGHT_COLOR_BLUEGREEN)
 			else

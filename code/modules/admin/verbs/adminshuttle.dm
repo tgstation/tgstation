@@ -42,7 +42,8 @@ ADMIN_VERB(call_shuttle, R_ADMIN, "Call Shuttle", "Force a shuttle call with add
 			SSshuttle.admin_emergency_no_recall = TRUE
 			SSshuttle.emergency.mode = SHUTTLE_IDLE
 
-	SSshuttle.emergency.request()
+	// SSshuttle.emergency.request()
+	SSshuttle.requestEvac(caller = "The automated safety system") // ass
 	BLACKBOX_LOG_ADMIN_VERB("Call Shuttle")
 	log_admin("[key_name(user)] admin-called the emergency shuttle.")
 	message_admins(span_adminnotice("[key_name_admin(user)] admin-called the emergency shuttle[confirm == "Yes (No Recall)" ? " (non-recallable)" : ""]."))

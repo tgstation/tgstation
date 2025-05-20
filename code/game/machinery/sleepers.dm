@@ -450,6 +450,15 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 	if(istype(new_occupant_l))
 		new_occupant_l.apply_status_effect(/datum/status_effect/grouped/stasis, skey)
 		ADD_TRAIT(new_occupant_l, TRAIT_MUTE, skey)
+		RegisterSignal(new_occupant_l, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(early_move_check))
+
+/obj/machinery/sleeper/cryo/proc/early_move_check(mob/living/mob_occupant, new_loc, direct)
+	SIGNAL_HANDLER
+
+	if(INCAPACITATED_IGNORING(mob_occupant, INCAPABLE_STASIS) || DOING_INTERACTION_WITH_TARGET(mob_occupant, src))
+		return NONE
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/atom, relaymove), mob_occupant, direct)
+	return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE
 
 /obj/machinery/sleeper/cryo/close_machine(mob/user, density_to_set)
 	. = ..()
@@ -475,6 +484,7 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 		addtimer(TRAIT_CALLBACK_REMOVE(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING), rand(12, 30) * 1 SECONDS)
 	else
 		addtimer(TRAIT_CALLBACK_REMOVE(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING), rand(8, 15) * 1 SECONDS)
+	joining_mob.apply_status_effect(/datum/status_effect/cryo_sickness)
 
 /obj/machinery/sleeper/cryo/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
 	return FALSE

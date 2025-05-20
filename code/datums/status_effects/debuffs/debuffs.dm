@@ -1079,3 +1079,62 @@
 #undef HEALING_SLEEP_DEFAULT
 #undef HEALING_SLEEP_ORGAN_MULTIPLIER
 #undef SLEEP_QUALITY_WORKOUT_MULTIPLER
+
+/datum/status_effect/cryo_sickness
+	id = "cryo_sickness"
+	alert_type = null
+	tick_interval = 1 SECONDS
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	var/apply_time
+	var/severity = -1
+	var/effect_drops = -1
+
+/datum/status_effect/cryo_sickness/on_apply()
+	owner.add_movespeed_modifier(/datum/movespeed_modifier/cryo_sickness)
+	owner.add_mood_event(id, /datum/mood_event/cryo_sickness)
+	apply_time = world.time
+	severity = text2num(pick_weight(list(
+		"0" = 20,
+		"1" = 60,
+		"2" = 15,
+		"3" = 5,
+	)))
+	effect_drops = rand(3, 5) + severity
+	return TRUE
+
+/datum/status_effect/cryo_sickness/on_remove()
+	owner.remove_movespeed_modifier(/datum/movespeed_modifier/cryo_sickness)
+	owner.clear_mood_event(id)
+
+/datum/status_effect/cryo_sickness/tick(seconds_between_ticks)
+	if(owner.stat == DEAD || severity <= 0)
+		return
+	var/minutes_since_apply = round((world.time - apply_time) / 10 / 60, 1)
+	if(minutes_since_apply >= effect_drops)
+		STOP_PROCESSING(SSprocessing, src)
+		return
+
+	var/mob/living/carbon/carbowner = owner
+	var/cap = (severity >= 2 ? DISGUST_LEVEL_VERYGROSS : DISGUST_LEVEL_GROSS) + 5 - (minutes_since_apply * 6)
+	if(istype(carbowner) && carbowner.disgust < cap)
+		owner.adjust_disgust(1 * seconds_between_ticks)
+	if(severity >= 3 && SPT_PROB(10, seconds_between_ticks))
+		owner.set_dizzy_if_lower(5 SECONDS)
+
+/datum/movespeed_modifier/cryo_sickness
+	multiplicative_slowdown = 0.15
+
+/datum/mood_event/cryo_sickness
+	mood_change = -3
+	description = ""
+
+/datum/mood_event/cryo_sickness/New(mob/living/emotional_mob, ...)
+	. = ..()
+	description = pick(
+		"Your body feels heavy",
+		"Your body feels sluggish",
+		"Your bones ache",
+		"Your brain feels foggy",
+		"Your muscles feel stiff",
+	)
+	description += "- Cryosleep'll do that to you..."

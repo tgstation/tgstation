@@ -77,7 +77,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/psychology, 32)
 	name = "\improper Virology sign"
 	sign_change_name = "Department - Medbay: Virology"
 	desc = "A sign labelling an area where the virologist's laboratory is located."
-	icon_state = "pharmacy"
+	icon_state = "viro"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/departments/virology, 32)
 

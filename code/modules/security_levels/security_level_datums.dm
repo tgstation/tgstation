@@ -103,6 +103,11 @@
 	fire_alarm_light_color = LIGHT_COLOR_INTENSE_RED
 	shuttle_call_time_mod = ALERT_COEFF_DELTA
 
+	elevating_to_announcement = "Lifeboat controls will unlock in 5 minutes.<br>\
+		Automatic launch will occur in 10 minutes.<br>\
+		Early launch may be authorized by the Captain from the command deck.<br>\
+		Warning: Lifeboats will not launch if unoccupied or over capacity."
+
 /**
  * DELTA
  *

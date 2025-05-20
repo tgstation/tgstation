@@ -402,22 +402,15 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/area/signal_origin = get_area(user)
 //	call_evac_shuttle(call_reason, signal_origin)
-	if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_ABANDON_SHIP)
-		SSsecurity_level.set_level(SEC_LEVEL_ABANDON_SHIP, FALSE)
 	var/announcement = "[caller] has called for abandon ship. \
-		All crew are to report to their nearest escape shuttle or pod in an orderly fashion."
+		All crew are to report to their nearest lifeboat or escape pod in an orderly fashion."
 	if(call_reason)
 		announcement += "\n\nReason: [call_reason]"
-	announcement += "\n\nShuttle controls will unlock in 5 minutes. \
-		Automatic launch will occur in 10 minutes. \
-		Early launch may be authorized by the Captain from the command deck. \
-		Warning: Shuttles will not launch if unoccupied or over capacity."
-
+	if(SSsecurity_level.get_current_level_as_number() < SEC_LEVEL_ABANDON_SHIP)
+		SSsecurity_level.set_level(SEC_LEVEL_ABANDON_SHIP, TRUE)
 	priority_announce(
 		text = announcement,
-		title = "Abandon Ship!",
-		sound = ANNOUNCER_SHUTTLECALLED,
-		sender_override = "Abandon Ship Alert",
+		title = "Abandon Ship",
 		color_override = "orange",
 	)
 
@@ -442,10 +435,10 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/obj/machinery/computer/shuttle/pod/pod as anything in SSmachines.get_machines_by_type(/obj/machinery/computer/shuttle/pod))
 		pod.locked = FALSE
 	priority_announce(
-		text = "Escape shuttles and pods are now unlocked, and may be launched at will. \
+		text = "Lifeboats and escape pod controls are now unlocked, and may be launched at will. \
 			Automatic launch will occur in 5 minutes. \
-			Warning: Shuttles will not launch if unoccupied or over capacity.",
-		title = "Abandon Ship!",
+			Warning: Lifeboats will not launch if unoccupied or over capacity.",
+		title = "Abandon Ship",
 		color_override = "orange",
 	)
 
@@ -455,8 +448,8 @@ SUBSYSTEM_DEF(shuttle)
 	for(var/obj/machinery/computer/shuttle/pod/pod as anything in SSmachines.get_machines_by_type(/obj/machinery/computer/shuttle/pod))
 		pod.send_shuttle()
 	priority_announce(
-		text = "Escape shuttles and pod launch sequence initiated.",
-		title = "Abandon Ship!",
+		text = "Lifeboats and escape pod launch sequence initiated.",
+		title = "Abandon Ship",
 		color_override = "orange",
 	)
 
@@ -465,10 +458,9 @@ SUBSYSTEM_DEF(shuttle)
 		return
 	deltimer(abandon_ship_timer)
 	abandon_ship_timer = addtimer(CALLBACK(src, PROC_REF(unlock_pods)), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
-	abandon_ship_state = ABANDON_SHIP_UNLOCK
 	priority_announce(
-		text = "The Captain has authorized manual unlock of all escape shuttles and pods.",
-		title = "Abandon Ship!",
+		text = "The Captain has authorized manual unlock of all lifeboats and escape pods.",
+		title = "Abandon Ship",
 		color_override = "orange",
 	)
 
@@ -479,9 +471,9 @@ SUBSYSTEM_DEF(shuttle)
 	abandon_ship_timer = addtimer(CALLBACK(src, PROC_REF(launch_everything)), 10 SECONDS, TIMER_UNIQUE|TIMER_STOPPABLE)
 	abandon_ship_state = ABANDON_SHIP_LAUNCH
 	priority_announce(
-		text = "The Captain has authorized a manual launch of all escape shuttles and pods. \
+		text = "The Captain has authorized a manual launch of all lifeboats and escape pods. \
 			All crew have 10 seconds to board or be left behind.",
-		title = "Abandon Ship!",
+		title = "Abandon Ship",
 		color_override = "orange",
 	)
 

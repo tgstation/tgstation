@@ -197,13 +197,13 @@
 				return
 			if(!SSshuttle.abandon_ship_state || SSshuttle.abandon_ship_state != ABANDON_SHIP_UNLOCK)
 				return
-			SSshuttle.unlock_pods()
+			SSshuttle.manual_unlock_all_pods()
 		if("launchPods")
 			if(!authenticated_as_non_silicon_captain(user))
 				return
 			if(!SSshuttle.abandon_ship_state || SSshuttle.abandon_ship_state != ABANDON_SHIP_UNLOCK)
 				return
-			SSshuttle.launch_everything()
+			SSshuttle.manual_launch_all_pods()
 		if ("changeSecurityLevel")
 			if (!authenticated_as_silicon_or_captain(user))
 				return
