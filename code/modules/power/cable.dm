@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 /obj/structure/cable/run_atom_armor(damage_amount, damage_type, damage_flag, attack_dir, armour_penetration)
 	if(damage_flag == BOMB && HAS_TRAIT(src, TRAIT_UNDERFLOOR))
-		damage_amount *= 0.1
+		damage_amount *= 0.25
 	return ..()
 
 ///////////////////////////////////
