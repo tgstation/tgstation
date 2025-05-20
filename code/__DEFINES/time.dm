@@ -7,11 +7,16 @@
 ///Returns the time that has passed since the game started
 #define STATION_TIME_PASSED(...) (world.time - SSticker.round_start_time)
 
-/// Define that just has the current in-universe year for use in whatever context you might want to display that in. (For example, 2022 -> 2562 given a 540 year offset)
-#define CURRENT_STATION_YEAR (GLOB.year_integer + STATION_YEAR_OFFSET)
+// What year the crew thinks it is in canon
+#define EXPECTED_STATION_YEAR (GLOB.year_integer + GLOB.expected_year_offset)
+// What year it actually is in canon
+#define CURRENT_STATION_YEAR (EXPECTED_STATION_YEAR + GLOB.real_year_offset)
 
 /// In-universe, SS13 is set 540 years in the future from the real-world day, hence this number for determining the year-offset for the in-game year.
-#define STATION_YEAR_OFFSET 540
+#define STATION_YEAR_OFFSET GLOB.real_year_offset
+
+GLOBAL_VAR_INIT(real_year_offset, 0)
+GLOBAL_VAR_INIT(expected_year_offset, 540)
 
 #define JANUARY 1
 #define FEBRUARY 2

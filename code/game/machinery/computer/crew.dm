@@ -183,12 +183,14 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	. = list(
 		"sensors" = update_data(z),
 		"link_allowed" = HAS_AI_ACCESS(user),
+		"blue_alert" = SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE,
 	)
 
 /datum/crewmonitor/proc/update_data(z)
 	if(data_by_z["[z]"] && last_update["[z]"] && world.time <= last_update["[z]"] + SENSORS_UPDATE_PERIOD)
 		return data_by_z["[z]"]
 
+	var/blue_alert = SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_BLUE
 	var/list/results = list()
 	for(var/tracked_mob in GLOB.suit_sensors_list)
 		if(!tracked_mob)
@@ -273,7 +275,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			)
 
 		// Location
-		if (sensor_mode >= SENSOR_COORDS)
+		if (sensor_mode >= SENSOR_COORDS && blue_alert)
 			entry["area"] = get_area_name(tracked_living_mob, format_text = TRUE)
 
 		// Trackability

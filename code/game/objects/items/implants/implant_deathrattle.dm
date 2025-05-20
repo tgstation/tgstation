@@ -1,6 +1,8 @@
 /datum/deathrattle_group
 	var/name
 	var/list/implants = list()
+	var/verbose = FALSE
+	var/station_only = FALSE
 
 /datum/deathrattle_group/New(name)
 	if(name)
@@ -61,17 +63,23 @@
 	)
 
 
-	for(var/_implant in implants)
-		var/obj/item/implant/deathrattle/implant = _implant
-
+	var/turf/death_loc = get_turf(owner)
+	for(var/obj/item/implant/deathrattle/implant as anything in implants)
 		// Skip the unfortunate soul, and any unimplanted implants
-		if(implant.imp_in == owner || !implant.imp_in)
+		if(implant.imp_in == owner || isnull(implant.imp_in) || implant.imp_in.stat == DEAD)
+			continue
+		var/turf/hear_loc = get_turf(implant.imp_in)
+		if(station_only && is_station_level(hear_loc.z) != is_station_level(death_loc.z))
 			continue
 
 		// Deliberately the same message framing as ghost deathrattle
-		var/mob/living/recipient = implant.imp_in
-		to_chat(recipient, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died at <b>[area]</b>.")]\"")
-		recipient.playsound_local(get_turf(recipient), sound, vol = 75, vary = FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+		if(verbose)
+			to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died at <b>[area]</b>.")]\"")
+		else if(is_station_level(death_loc.z))
+			to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died on deck <b>[death_loc.z - 1]</b>.")]\"")
+		else
+			to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died.")]\"")
+		implant.imp_in.playsound_local(hear_loc, sound, vol = 75, vary = FALSE, pressure_affected = FALSE, use_reverb = FALSE)
 
 /obj/item/implant/deathrattle
 	name = "deathrattle implant"

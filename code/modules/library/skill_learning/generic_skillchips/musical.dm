@@ -11,7 +11,7 @@
 
 /obj/item/skillchip/musical/Initialize(mapload, is_removable)
 	. = ..()
-	name = replacetext(name, "Old", round(CURRENT_STATION_YEAR - pick(50, 100, 150, 200, 250), 5))
+	name = replacetext(name, "Old", round(EXPECTED_STATION_YEAR - pick(50, 100, 150, 200, 250), 5))
 
 /obj/item/skillchip/musical/on_activate(mob/living/carbon/user, silent = FALSE)
 	. = ..()

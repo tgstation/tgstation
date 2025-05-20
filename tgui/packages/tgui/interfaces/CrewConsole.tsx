@@ -1,5 +1,14 @@
 import { useState } from 'react';
-import { Box, Button, Icon, Input, Section, Table } from 'tgui-core/components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Input,
+  NoticeBox,
+  Section,
+  Table,
+} from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
@@ -26,7 +35,7 @@ const SORT_NAMES = {
 const STAT_LIVING = 0;
 const STAT_DEAD = 4;
 
-const SORT_OPTIONS = ['health', 'ijob', 'name', 'area'];
+const SORT_OPTIONS = ['ijob', 'health', 'name', 'area'];
 
 const jobIsHead = (jobId: number) => jobId % 10 === 0;
 
@@ -140,6 +149,7 @@ type CrewSensor = {
 type CrewConsoleData = {
   sensors: CrewSensor[];
   link_allowed: BooleanLike;
+  blue_alert: BooleanLike;
 };
 
 const CrewTable = () => {
@@ -176,21 +186,36 @@ const CrewTable = () => {
   return (
     <Section
       title={
-        <>
-          <Button onClick={cycleSortBy}>{SORT_NAMES[sortBy]}</Button>
-          <Button onClick={() => setSortAsc(!sortAsc)}>
-            <Icon
-              style={{ marginLeft: '2px' }}
-              name={sortAsc ? 'chevron-up' : 'chevron-down'}
+        <Flex align="center" height="12px">
+          <Flex.Item width="15%">
+            <Button width="100%" onClick={cycleSortBy}>
+              {SORT_NAMES[sortBy]}
+            </Button>
+          </Flex.Item>
+          <Flex.Item>
+            <Button onClick={() => setSortAsc(!sortAsc)}>
+              <Icon
+                style={{ marginLeft: '2px' }}
+                name={sortAsc ? 'chevron-up' : 'chevron-down'}
+              />
+            </Button>
+          </Flex.Item>
+          <Flex.Item>
+            <Input
+              placeholder="Search for name..."
+              onChange={setSearchQuery}
+              expensive
+              value={searchQuery}
             />
-          </Button>
-          <Input
-            placeholder="Search for name..."
-            onChange={setSearchQuery}
-            expensive
-            value={searchQuery}
-          />
-        </>
+          </Flex.Item>
+          {!data.blue_alert && (
+            <Flex.Item grow>
+              <NoticeBox color="blue" align="center" height="24px" mt={1}>
+                Position tracking disabled on blue alert.
+              </NoticeBox>
+            </Flex.Item>
+          )}
+        </Flex>
       }
     >
       <Table>
@@ -280,11 +305,15 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
           'Dead'
         )}
       </Table.Cell>
-      <Table.Cell>
-        {area !== '~' && area !== undefined ? (
+      <Table.Cell align="center">
+        {area !== '~' && area !== undefined && data.blue_alert ? (
           area
         ) : (
-          <Icon name="question" color="#ffffff" size={1} />
+          <Icon
+            name={data.blue_alert ? 'question' : 'times'}
+            color={data.blue_alert ? '#ffffff' : '#801308'}
+            size={1}
+          />
         )}
       </Table.Cell>
       {!!link_allowed && (
