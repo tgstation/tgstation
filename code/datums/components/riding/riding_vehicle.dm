@@ -140,6 +140,7 @@
 /datum/component/riding/vehicle/lavaboat
 	ride_check_flags = NONE // not sure
 	keytype = /obj/item/oar
+	rider_traits = list(TRAIT_MOVE_FLOATING, TRAIT_NO_FLOATING_ANIM)
 	/// The turfs we can move on.
 	var/allowed_turfs = list(/turf/open/lava, /turf/open/water)
 
