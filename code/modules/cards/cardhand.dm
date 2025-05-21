@@ -69,7 +69,7 @@
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
 	return isliving(user) && !user.incapacitated
 
-/obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, params, flip_card = FALSE)
+/obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, list/params, list/attack_modifier, flip_card = FALSE)
 	var/obj/item/toy/singlecard/card
 
 	if(istype(weapon, /obj/item/toy/singlecard))
