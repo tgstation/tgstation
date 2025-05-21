@@ -430,6 +430,8 @@
 		if((!isopenturf(target_tile)) || (locate(/obj/structure/emergency_shield/modular) in target_tile))
 			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 			calculate_regeneration()
+			if(radius == 0)//we couldnt even generate a single tile somehow
+				deactivate_shields()
 			return
 		var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 		deploying_shield.shield_generator = (src)
