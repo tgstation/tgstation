@@ -383,7 +383,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			if(istype(victim, /mob/living/basic/pet))
 				victim.forceMove(src)
 				update_appearance()
-			if(istype(victim, /mob/living/carbon/human))
+			else if(ishuman(victim))
 				if(user.grab_state < GRAB_AGGRESSIVE)
 					balloon_alert(user, "grab harder!")
 					return
@@ -391,7 +391,6 @@ GLOBAL_LIST_INIT(dye_registry, list(
 				victim.visible_message(span_danger("[user] is trying to force [victim] into the washing machine!"))
 				log_game("[key_name_and_tag(user)] is forcing [key_name_and_tag(victim)] into a washing machine")
 				if(!do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM))
-					victim = null
 					return
 				victim.forceMove(src)
 				update_appearance()
