@@ -163,7 +163,6 @@
  * Any additional checks to see if this ruleset can be selected
  */
 /datum/dynamic_ruleset/proc/can_be_selected(population_size)
-	//SHOULD_CALL_PARENT(TRUE)
 	return TRUE
 
 /**
@@ -290,7 +289,6 @@
 /// Returns a list of players picked for this ruleset
 /datum/dynamic_ruleset/proc/select_candidates(list/mob/antag_candidates, num_candidates = 0)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	//SHOULD_BE_PURE(TRUE)
 	PRIVATE_PROC(TRUE)
 
 	if(num_candidates <= 0)
@@ -315,7 +313,6 @@
  * Any additional checks to see if this player is a valid candidate for this ruleset
  */
 /datum/dynamic_ruleset/proc/is_valid_candidate(mob/candidate, client/candidate_client)
-	//SHOULD_CALL_PARENT(TRUE)
 	return TRUE
 
 /**

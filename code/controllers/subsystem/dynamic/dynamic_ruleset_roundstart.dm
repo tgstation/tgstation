@@ -330,7 +330,8 @@
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/roundstart/extended/execute()
-	SSdynamic.force_extended()
+	for(var/category in rulesets_to_spawn)
+		rulesets_to_spawn[category] = 0
 
 /datum/dynamic_ruleset/roundstart/meteor
 	name = "Meteor"
@@ -351,7 +352,8 @@
 	repeatable = FALSE
 
 /datum/dynamic_ruleset/roundstart/nations/execute()
-	SSdynamic.force_extended()
+	for(var/category in rulesets_to_spawn)
+		rulesets_to_spawn[category] = 0
 
 	//notably assistant is not in this list to prevent the round turning into BARBARISM instantly, and silicon is in this list for UN
 	var/list/department_types = list(

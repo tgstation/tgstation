@@ -104,9 +104,7 @@ SUBSYSTEM_DEF(dynamic)
 	// put rulesets in the queue (if admins didn't)
 	// this will even handle the case in which the tier wants 0 roundstart rulesets
 	if(!length(queued_rulesets))
-		var/list/picked_rulesets = pick_roundstart_rulesets(antag_candidates)
-		if(length(picked_rulesets))
-			queued_rulesets += picked_rulesets
+		queued_rulesets += pick_roundstart_rulesets(antag_candidates)
 	// finally, run through the queue and prepare rulesets for execution
 	// (actual execution, ie assigning antags, will happen after job assignment)
 	for(var/datum/dynamic_ruleset/roundstart/ruleset in queued_rulesets)
@@ -222,7 +220,7 @@ SUBSYSTEM_DEF(dynamic)
 	PRIVATE_PROC(TRUE)
 
 	if(rulesets_to_spawn[ROUNDSTART] <= 0)
-		return
+		return list()
 
 	var/list/rulesets_weighted = get_roundstart_rulesets(antag_candidates)
 	var/total_weight = 0
@@ -230,7 +228,7 @@ SUBSYSTEM_DEF(dynamic)
 		total_weight += rulesets_weighted[ruleset]
 	if(total_weight <= 0)
 		log_dynamic("Roundstart: No rulesets to pick from!")
-		return
+		return list()
 
 	var/list/picked_rulesets = list()
 	while(rulesets_to_spawn[ROUNDSTART] > 0)
