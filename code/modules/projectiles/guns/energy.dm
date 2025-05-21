@@ -10,6 +10,8 @@
 	/// What type of power cell this uses
 	var/obj/item/stock_parts/power_store/cell
 	var/cell_type = /obj/item/stock_parts/power_store/cell
+	/// If we need a cell to function. If TRUE, should it get deleted somehow, we resinsert a new cell.
+	var/cell_madnatory = TRUE
 	///if the weapon has custom icons for individual ammo types it can switch between. ie disabler beams, taser, laser/lethals, ect.
 	var/modifystate = FALSE
 	var/list/ammo_type = list(/obj/item/ammo_casing/energy)
@@ -164,6 +166,15 @@
 		cell = null
 		update_appearance()
 
+	if(!QDELING(src) && cell_madnatory)
+		if(cell_type)
+			cell = new cell_type(src)
+		else
+			cell = new(src)
+		cell.use(cell.maxcharge)
+		update_appearance()
+		stack_trace("Cell deleted somehow???")
+
 /obj/item/gun/energy/process(seconds_per_tick)
 	if(selfcharge && cell && cell.percent() < 100)
 		charge_timer += seconds_per_tick
@@ -306,19 +317,6 @@
 		user.visible_message(span_suicide("[user] is pretending to melt [user.p_their()] face off with [src]! It looks like [user.p_theyre()] trying to commit suicide!</b>"))
 		playsound(src, dry_fire_sound, 30, TRUE)
 		return OXYLOSS
-
-///Used to restore an energy gun's cell if it, for whatever reason, no longer exists. This is mostly only useful for admins fixing energy weapons.
-/obj/item/gun/energy/proc/debrick_this_bitch()
-	if(cell) //We have a cell? Don't run.
-		return FALSE
-
-	if(cell_type)
-		cell = new cell_type(src)
-	else
-		cell = new(src)
-	cell.use(cell.maxcharge)
-	update_appearance()
-	return TRUE
 
 /obj/item/gun/energy/vv_edit_var(var_name, var_value)
 	switch(var_name)
