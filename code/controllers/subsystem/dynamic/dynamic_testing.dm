@@ -6,21 +6,37 @@ ADMIN_VERB(dynamic_tester, R_DEBUG, "Dynamic Tester", "See dynamic probabilities
 	tgui.ui_interact(user.mob)
 
 /datum/dynamic_tester
+	/// Instances of every roundstart ruleset
 	var/list/roundstart_rulesets = list()
+	/// Instances of every midround ruleset
+	var/list/midround_rulesets = list()
 
-	var/list/ruleset_report = list()
+	/// A formatted report of the weights of each roundstart ruleset, refreshed occasionally and sent to the UI.
+	var/list/roundstart_ruleset_report = list()
+	/// A formatted report of the weights of each midround ruleset, refreshed occasionally and sent to the UI.
+	var/list/midround_ruleset_report = list()
 
+	/// What is the tier we are testing?
 	var/tier = 1
+	/// How many players are we testing with?
 	var/num_players = 10
 
 /datum/dynamic_tester/New()
-	for(var/rtype in subtypesof(/datum/dynamic_ruleset/roundstart))
-		var/datum/dynamic_ruleset/roundstart/created = new rtype()
+	for(var/datum/dynamic_ruleset/rtype as anything in subtypesof(/datum/dynamic_ruleset/roundstart))
+		if(!initial(rtype.config_tag))
+			continue
+		var/datum/dynamic_ruleset/roundstart/created = new rtype(SSdynamic.get_config())
 		roundstart_rulesets += created
-
+		// snowflake so we can see headrev stats
 		if(istype(created, /datum/dynamic_ruleset/roundstart/revolution))
 			var/datum/dynamic_ruleset/roundstart/revolution/revs = created
 			revs.heads_necessary = 0
+
+	for(var/datum/dynamic_ruleset/rtype as anything in subtypesof(/datum/dynamic_ruleset/midround))
+		if(!initial(rtype.config_tag))
+			continue
+		var/datum/dynamic_ruleset/midround/created = new rtype(SSdynamic.get_config())
+		midround_rulesets += created
 
 	update_reports()
 
@@ -41,7 +57,8 @@ ADMIN_VERB(dynamic_tester, R_DEBUG, "Dynamic Tester", "See dynamic probabilities
 
 	data["tier"] = tier
 	data["num_players"] = num_players
-	data["ruleset_report"] = flatten_list(ruleset_report)
+	data["roundstart_ruleset_report"] = flatten_list(roundstart_ruleset_report)
+	data["midround_ruleset_report"] = flatten_list(midround_ruleset_report)
 
 	return data
 
@@ -66,19 +83,29 @@ ADMIN_VERB(dynamic_tester, R_DEBUG, "Dynamic Tester", "See dynamic probabilities
 			return TRUE
 
 /datum/dynamic_tester/proc/update_reports()
-	ruleset_report.Cut()
+	roundstart_ruleset_report.Cut()
 	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in roundstart_rulesets)
-
 		var/comment = ""
 		if(istype(ruleset, /datum/dynamic_ruleset/roundstart/revolution))
 			var/datum/dynamic_ruleset/roundstart/revolution/revs = ruleset
 			comment = " (Assuming [initial(revs.heads_necessary)] heads of staff)"
 
-		ruleset_report[ruleset] = list(
+		roundstart_ruleset_report[ruleset] = list(
 			"name" = ruleset.name,
 			"weight" = ruleset.get_weight(num_players, tier),
 			"max_candidates" = ruleset.get_antag_cap(num_players, ruleset.max_antag_cap || ruleset.min_antag_cap),
 			"min_candidates" = ruleset.get_antag_cap(num_players, ruleset.min_antag_cap),
 			"comment" = comment,
 		)
+
+	midround_ruleset_report.Cut()
+	for(var/datum/dynamic_ruleset/midround/ruleset as anything in midround_rulesets)
+		midround_ruleset_report[ruleset] = list(
+			"name" = ruleset.name,
+			"weight" = ruleset.get_weight(num_players, tier),
+			"max_candidates" = ruleset.get_antag_cap(num_players, ruleset.max_antag_cap || ruleset.min_antag_cap),
+			"min_candidates" = ruleset.get_antag_cap(num_players, ruleset.min_antag_cap),
+			"comment" = ruleset.midround_type,
+		)
+
 	update_static_data_for_all_viewers()

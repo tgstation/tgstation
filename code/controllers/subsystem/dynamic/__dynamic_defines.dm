@@ -35,6 +35,11 @@
 /// Tier 4, maximum amount of antags
 #define DYNAMIC_TIER_HIGH 4
 
+#define DYNAMIC_TIER_LOW_STRING ("" + DYNAMIC_TIER_LOW)
+#define DYNAMIC_TIER_LOWMEDIUM_STRING ("" + DYNAMIC_TIER_LOWMEDIUM)
+#define DYNAMIC_TIER_MEDIUMHIGH_STRING ("" + DYNAMIC_TIER_MEDIUMHIGH)
+#define DYNAMIC_TIER_HIGH_STRING ("" + DYNAMIC_TIER_HIGH)
+
 // Midround types
 /// This is a "heavy" midround ruleset, and should be run later into the round
 #define MIDROUND_RULESET_STYLE_HEAVY "Heavy"

@@ -1,9 +1,11 @@
+import { useState } from 'react';
 import {
   Box,
   NumberInput,
   Section,
   Stack,
   Table,
+  Tabs,
   Tooltip,
 } from 'tgui-core/components';
 
@@ -21,12 +23,30 @@ type RulesetReport = {
 type Data = {
   tier: number;
   num_players: number;
-  ruleset_report: RulesetReport[];
+  roundstart_ruleset_report: RulesetReport[];
+  midround_ruleset_report: RulesetReport[];
 };
+
+enum TABS {
+  Roundstart = 'Roundstart',
+  Midrounds = 'Midrounds',
+}
 
 export const DynamicTester = () => {
   const { data, act } = useBackend<Data>();
-  const { tier, num_players, ruleset_report } = data;
+  const {
+    tier,
+    num_players,
+    roundstart_ruleset_report,
+    midround_ruleset_report,
+  } = data;
+
+  const [tab, setTab] = useState(TABS.Roundstart);
+
+  const ruleset_report =
+    tab === TABS.Roundstart
+      ? roundstart_ruleset_report
+      : midround_ruleset_report;
 
   const total_weight = ruleset_report.reduce(
     (acc, report) => acc + report.weight,
@@ -41,25 +61,40 @@ export const DynamicTester = () => {
   });
 
   return (
-    <Window width={500} height={400}>
+    <Window width={500} height={400} title="Dynamic Weight Tester">
       <Window.Content>
         <Section scrollable height="100%" width="100%">
           <Stack vertical fill>
             <Stack.Item>
-              Tier:{' '}
+              Tier:
               <NumberInput
+                ml={0.5}
                 value={tier}
                 onChange={(e) => act('set_tier', { tier: e })}
               />
             </Stack.Item>
             <Stack.Item>
-              Number of players:{' '}
+              Number of players:
               <NumberInput
+                ml={0.5}
                 value={num_players}
                 onChange={(e) => act('set_num_players', { num_players: e })}
               />
             </Stack.Item>
             <Stack.Divider />
+            <Stack.Item>
+              <Tabs>
+                {Object.keys(TABS).map((tabName) => (
+                  <Tabs.Tab
+                    key={tabName}
+                    selected={tab === tabName}
+                    onClick={() => setTab(tabName)}
+                  >
+                    {tabName}
+                  </Tabs.Tab>
+                ))}
+              </Tabs>
+            </Stack.Item>
             <Stack.Item>
               <Table>
                 <Table.Row header>

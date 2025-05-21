@@ -35,7 +35,7 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 	for(var/category in SSdynamic.rulesets_to_spawn)
 		data["ruleset_count"][category] = "[max(SSdynamic.rulesets_to_spawn[category], 0)] / [SSdynamic.base_rulesets_to_spawn[category]]"
 
-	data["full_config"] = length(SSdynamic.dynamic_config) ? SSdynamic.dynamic_config : list("N/A" = list("No config found" = "The config is either empty or has not loaded yet."))
+	data["full_config"] = SSdynamic.get_config()
 	data["config_even_enabled"] = CONFIG_GET(flag/dynamic_config_enabled)
 
 	data["queued_rulesets"] = list()

@@ -67,6 +67,11 @@ SUBSYSTEM_DEF(dynamic)
 		if(try_spawn_midround(HEAVY_MIDROUND))
 			return
 
+/datum/controller/subsystem/dynamic/proc/get_config()
+	if(!length(dynamic_config))
+		load_config()
+	return dynamic_config
+
 /**
  * Selects which rulesets are to run at roundstart, and sets them up
  *
