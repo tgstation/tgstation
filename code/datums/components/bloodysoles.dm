@@ -265,6 +265,9 @@
 		return NONE
 
 	reset_bloody_shoes()
+	var/obj/item/shoes/parent_shoes = parent
+	if(!istype(parent_shoes)) // if we are wearing shoes, wash() will already be calling update_worn_shoes() so we don't have to do it twice
+		update_icon()
 	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /**
