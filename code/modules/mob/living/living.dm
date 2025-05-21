@@ -766,8 +766,8 @@
 		return FALSE
 	if(!hud_used.sleep_icon || HAS_TRAIT(src, TRAIT_SLEEPIMMUNE))
 		return TRUE
-	if(resting)
-		hud_used.static_inventory += hud_used.sleep_icon
+	if(resting || HAS_TRAIT(src, TRAIT_FLOORED))
+		hud_used.static_inventory |= hud_used.sleep_icon
 	else
 		hud_used.static_inventory -= hud_used.sleep_icon
 	hud_used.show_hud(hud_used.hud_version)
@@ -2650,6 +2650,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		on_lying_down()
 	else // From lying down to standing up.
 		on_standing_up()
+	update_rest_hud_icon()
 
 
 /// Proc to append behavior to the condition of being floored. Called when the condition starts.
