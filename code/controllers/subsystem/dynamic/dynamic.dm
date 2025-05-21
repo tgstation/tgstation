@@ -306,10 +306,10 @@ SUBSYSTEM_DEF(dynamic)
 
 	var/player_count = get_active_player_count(afk_check = TRUE)
 	var/list/rulesets_weighted = get_midround_rulesets(player_count, range)
-	if(!length(rulesets_weighted))
+	var/datum/dynamic_ruleset/midround/picked_ruleset = pick_weight(rulesets_weighted)
+	if(isnull(picked_ruleset))
 		log_dynamic("Midround ([range]): No rulesets to pick from!")
 		return FALSE
-	var/datum/dynamic_ruleset/midround/picked_ruleset = pick_weight(rulesets_weighted)
 	message_admins("Midround ([range]): Executing [picked_ruleset.config_tag] \
 		[MIDROUND_CANCEL_HREF()] [MIDROUND_REROLL_HREF(rulesets_weighted)]")
 	// if we have admins online, we have a waiting period before execution to allow them to cancel or reroll
@@ -325,6 +325,11 @@ SUBSYSTEM_DEF(dynamic)
 				rulesets_weighted -= picked_ruleset
 				qdel(picked_ruleset)
 				picked_ruleset = pick_weight(rulesets_weighted)
+				if(isnull(picked_ruleset))
+					log_dynamic("Midround ([range]): No rulesets to pick from!")
+					message_admins("Rerolling Midround ([range]): Failed to pick a new ruleset, cancelling instead!")
+					midround_admin_cancel = TRUE
+					continue
 				message_admins("Rerolling Midround ([range]): Executing [picked_ruleset.config_tag] - \
 					[length(rulesets_weighted) - 1] remaining rulesets in pool. [MIDROUND_CANCEL_HREF()] [MIDROUND_REROLL_HREF(rulesets_weighted)]")
 			stoplag()
@@ -608,7 +613,7 @@ SUBSYSTEM_DEF(dynamic)
 		log_admin("[key_name(usr)] rerolled the queued midround ruleset.")
 		return
 
-	if(href_list["admin_cancel"])
+	if(href_list["admin_cancel_midround"])
 		if(!check_rights(R_ADMIN) || midround_admin_cancel)
 			return
 		if(COOLDOWN_FINISHED(src, midround_admin_cancel_period))
