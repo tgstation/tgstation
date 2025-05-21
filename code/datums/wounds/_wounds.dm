@@ -190,9 +190,9 @@
 		qdel(src)
 		return FALSE
 
-	if(isitem(wound_source))
-		var/obj/item/wound_item = wound_source
-		src.wound_source = wound_item.name
+	if(isatom(wound_source))
+		var/atom/wound_atom = wound_source
+		src.wound_source = wound_atom.name
 	else
 		src.wound_source = wound_source
 
