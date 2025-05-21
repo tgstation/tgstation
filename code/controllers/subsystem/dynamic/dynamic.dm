@@ -306,6 +306,9 @@ SUBSYSTEM_DEF(dynamic)
 
 	var/player_count = get_active_player_count(afk_check = TRUE)
 	var/list/rulesets_weighted = get_midround_rulesets(player_count, range)
+	if(!length(rulesets_weighted))
+		log_dynamic("Midround ([range]): No rulesets to pick from!")
+		return FALSE
 	var/datum/dynamic_ruleset/midround/picked_ruleset = pick_weight(rulesets_weighted)
 	message_admins("Midround ([range]): Executing [picked_ruleset.config_tag] \
 		[MIDROUND_CANCEL_HREF()] [MIDROUND_REROLL_HREF(rulesets_weighted)]")
@@ -438,6 +441,9 @@ SUBSYSTEM_DEF(dynamic)
 
 	var/player_count = get_active_player_count(afk_check = TRUE)
 	var/list/rulesets_weighted = get_latejoin_rulesets(player_count)
+	if(!length(rulesets_weighted))
+		log_dynamic("Latejoin: No rulesets to pick from!")
+		return FALSE
 	// Note, we make no effort to actually pick a valid ruleset here
 	// We pick a ruleset, and they player might not even have that antag selected. And that's fine
 	var/datum/dynamic_ruleset/latejoin/picked_ruleset = pick_weight(rulesets_weighted)
