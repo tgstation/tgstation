@@ -118,7 +118,7 @@
 			user.hud_used.show_hud(user.hud_used.hud_version)
 	return ..()
 
-/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/used_item, mob/user, list/modifiers)
+/obj/machinery/computer/camera_advanced/xenobio/attackby(obj/item/used_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(used_item, /obj/item/food/monkeycube))
 		monkeys++
 		to_chat(user, span_notice("You feed [used_item] to [src]. It now has [monkeys] monkey cubes stored."))

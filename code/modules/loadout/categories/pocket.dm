@@ -102,6 +102,10 @@
 	ui_icon_state = "plushie_snake"
 	item_path = /obj/item/toy/plush/snakeplushie
 
+/datum/loadout_item/pocket_items/plush/horse
+	name = "Plush (Horse)"
+	item_path = /obj/item/toy/plush/horse
+
 /datum/loadout_item/pocket_items/dice
 	group = "Dice"
 	abstract_type = /datum/loadout_item/pocket_items/dice

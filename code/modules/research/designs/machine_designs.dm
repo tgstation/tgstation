@@ -217,6 +217,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/modular_shield_cable
+	name = "Modular Shield Cable Board"
+	desc = "The circuit board for a modular shield cable."
+	id = "modular_shield_cable"
+	build_path = /obj/item/circuitboard/machine/modular_shield_cable
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/modular_shield_relay
 	name = "Modular Shield Relay Board"
 	desc = "The circuit board for a modular shield relay."
