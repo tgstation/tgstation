@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adding Space Cleaner or Water to a rag will consume it as you clean to keep the rag fresher for longer."
+  - rscadd: "You can spray a rag with a spray bottle directly to transfer reagents over."

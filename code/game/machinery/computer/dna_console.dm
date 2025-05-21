@@ -172,7 +172,7 @@
 		genetic_damage_pulse()
 		return
 
-/obj/machinery/computer/scan_consolenew/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/machinery/computer/scan_consolenew/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	// Store chromosomes in the console if there's room
 	if (istype(item, /obj/item/chromosome))
 		item.forceMove(src)
@@ -611,18 +611,18 @@
 
 			// GUARD CHECK - Only search occupant for this specific ref, since your
 			//  can only apply chromosomes to mutations occupants.
-			var/datum/mutation/human/HM = get_mut_by_ref(bref, SEARCH_OCCUPANT)
+			var/datum/mutation/human/mutation = get_mut_by_ref(bref, SEARCH_OCCUPANT)
 
 			// GUARD CHECK - This should not be possible. Unexpected result
-			if(!HM)
+			if(!mutation)
 				return
 
 			// Look through our stored chromos and compare names to find a
 			// stored chromo we can apply.
-			for(var/obj/item/chromosome/CM in stored_chromosomes)
-				if(CM.can_apply(HM) && (CM.name == params["chromo"]))
-					stored_chromosomes -= CM
-					CM.apply(HM)
+			for(var/obj/item/chromosome/chromosome in stored_chromosomes)
+				if(chromosome.can_apply(mutation) && (chromosome.name == params["chromo"]))
+					stored_chromosomes -= mutation
+					chromosome.apply(mutation)
 			if(connected_scanner)
 				connected_scanner.use_energy(connected_scanner.active_power_usage)
 			else

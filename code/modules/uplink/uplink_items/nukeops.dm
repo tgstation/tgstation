@@ -818,7 +818,7 @@
 	category = /datum/uplink_category/base_keys
 	surplus = 0
 	purchasable_from = UPLINK_NUKE_OPS
-	cost = 15
+	cost = 5
 	cant_discount = TRUE
 
 /datum/uplink_item/base_keys/bomb_key
@@ -826,6 +826,7 @@
 	desc = "Do you fancy yourself an explosives expert? If so, then consider yourself lucky! With this special Authorization Key, \
 		you can blow those corpo suits away with your very own home-made explosive devices. Made in your local firebase's \
 		very own Ordnance Laboratory! *The Syndicate is not responsible for injuries or deaths sustained while utilizing the lab."
+	cost = 30
 	item = /obj/item/keycard/syndicate_bomb
 
 /datum/uplink_item/base_keys/bio_key
@@ -852,7 +853,13 @@
 		pocket during this morning's briefing. He's been looking for it since. Take it, get into the fridge, and cook up whatever \
 		you need before he gets back. And remember: DON'T TELL ANYONE! -M.T"
 	item = /obj/item/keycard/syndicate_fridge
-	cost = 5
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+
+/datum/uplink_item/base_keys/custodial_key
+	name = "Syndicate Custodial Access Card"
+	desc = "Your workplace dirty? No problem! with this card you gain access to the custodial. Containing a janitorial cart \
+	with some janitorial supplies and an canister of water vapour."
+	item = /obj/item/keycard/syndicate_custodial
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
 
 // Hats

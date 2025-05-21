@@ -5,7 +5,6 @@
 	icon_state = "whitewolf"
 	icon_living = "whitewolf"
 	icon_dead = "whitewolf_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	speak_emote = list("howls")
 	friendly_verb_continuous = "howls at"
