@@ -131,6 +131,8 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   const isMarkModeActive = data?.precise_mode === 'Mark';
   const isCopyModeActive = data?.precise_mode === 'Copy';
 
+  const isAnyPreciseModeActive = !(data?.precise_mode === 'Off');
+
   const disablePreciseMode = () => {
     if (isPreciseModeActive) {
       act('toggle-precise-mode', {
@@ -140,22 +142,21 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
   };
 
   const handleSpawn = () => {
+    const currentSettings = {
+      object_count: amount,
+      offset_type: cordsType ? 'Absolute offset' : 'Relative offset',
+      where_dropdown_value: spawnLocation,
+      dir: [1, 2, 4, 8][direction],
+      offset,
+      object_name: objectName,
+      custom_icon: iconSettings.icon,
+      custom_icon_state: iconSettings.iconState || data.iconState || 'none',
+      custom_icon_size: iconSettings.iconSize,
+      object_list: data.selected_object,
+    };
+    act('update-settings', currentSettings);
+
     if (!isTargetMode) {
-      const currentSettings = {
-        object_count: amount,
-        offset_type: cordsType ? 'Absolute offset' : 'Relative offset',
-        where_dropdown_value: spawnLocation,
-        dir: [1, 2, 4, 8][direction],
-        offset,
-        object_name: objectName,
-        custom_icon: iconSettings.icon,
-        custom_icon_state: iconSettings.iconState || data.iconState || 'none',
-        custom_icon_size: iconSettings.iconSize,
-        object_list: data.selected_object,
-      };
-
-      act('update-settings', currentSettings);
-
       if (onCreateObject) {
         onCreateObject(currentSettings);
       } else {
@@ -200,6 +201,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       step={1}
                       value={amount}
                       onChange={(value) => updateAmount(value)}
+                      disabled={isAnyPreciseModeActive}
                     />
                   </Stack.Item>
                   <Stack.Item>Dir:</Stack.Item>
@@ -215,6 +217,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                         const nextIndex = (currentIndex + 1) % 4;
                         updateDirection(nextIndex);
                       }}
+                      disabled={isAnyPreciseModeActive}
                     />
                   </Stack.Item>
                   <Stack.Item grow>
@@ -229,6 +232,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                         return values[value].toString();
                       }}
                       onChange={(e, value) => updateDirection(value)}
+                      disabled={isAnyPreciseModeActive}
                     />
                   </Stack.Item>
                 </Stack>
@@ -252,7 +256,9 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       tooltip={cordsType ? 'Absolute' : 'Relative'}
                       tooltipPosition="top"
                       disabled={
-                        isTargetMode || spawnLocation === 'At a marked object'
+                        isTargetMode ||
+                        spawnLocation === 'At a marked object' ||
+                        isAnyPreciseModeActive
                       }
                     />
                   </Stack.Item>
@@ -263,7 +269,9 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       onChange={(value: string) => updateOffset(value)}
                       width="100%"
                       disabled={
-                        isTargetMode || spawnLocation === 'At a marked object'
+                        isTargetMode ||
+                        spawnLocation === 'At a marked object' ||
+                        isAnyPreciseModeActive
                       }
                     />
                   </Stack.Item>
@@ -280,6 +288,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                   value={objectName}
                   width="100%"
                   placeholder="leave empty for initial"
+                  disabled={isAnyPreciseModeActive}
                 />
               </Table.Cell>
             </Table.Row>
@@ -300,6 +309,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                     }}
                     tooltip="Advanced settings"
                     tooltipPosition="top"
+                    disabled={isAnyPreciseModeActive}
                   />
                 </Stack.Item>
                 <Stack.Item>
@@ -312,6 +322,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                     }}
                     tooltip="Reset advanced settings"
                     tooltipPosition="top"
+                    disabled={isAnyPreciseModeActive}
                   />
                 </Stack.Item>
                 <Stack.Item>
@@ -343,6 +354,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                         : 'Copy atom path'
                     }
                     tooltipPosition="top"
+                    disabled={isTargetMode}
                   />
                 </Stack.Item>
               </Stack>

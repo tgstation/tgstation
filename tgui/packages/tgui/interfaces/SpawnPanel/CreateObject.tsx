@@ -345,7 +345,7 @@ export function CreateObject(props: CreateObjectProps) {
       </Stack.Item>
 
       <Stack.Item grow>
-        <Section fill scrollable={filteredResults.length !== 0 || query !== ''}>
+        <Section fill scrollable={filteredResults.length !== 0}>
           {query === '' ? (
             <NoticeBox textAlign="center" color="blue" width="100%">
               Begin typing to search...
