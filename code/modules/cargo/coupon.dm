@@ -116,7 +116,7 @@
 	if(!istype(attacked_obj, /obj/machinery/computer/cargo))
 		return ..()
 	if(discount_pct_off == COUPON_OMEN)
-		to_chat(user, span_warning("\The [O] validates the coupon as authentic, but refuses to accept it..."))
+		to_chat(user, span_warning("\The [attacked_obj] validates the coupon as authentic, but refuses to accept it..."))
 		attacked_obj.say("Coupon fulfillment already in progress...")
 		return
 
