@@ -409,8 +409,8 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(!toner_cartridge)
 		copies_amount = 0
 		error_message = span_warning("An error message flashes across \the [src]'s screen: \"No toner cartridge found. Aborting.\"")
-	else if(toner_cartridge.charges < toner_use * copies_amount)
-		copies_amount = FLOOR(toner_cartridge.charges / toner_use, 1)
+	else if(toner_cartridge.charges < (toner_use / toner_efficiency) * copies_amount)
+		copies_amount = FLOOR(toner_cartridge.charges / (toner_use / toner_efficiency), 1)
 		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Not enough toner to perform [copies_amount >= 1 ? "full " : ""]operation.\"")
 	if(get_paper_count(created_paper) < paper_use * copies_amount)
 		copies_amount = FLOOR(get_paper_count(created_paper) / paper_use, 1)
@@ -532,7 +532,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	var/obj/item/paper/empty_paper = get_empty_paper(created_paper)
 	delete_paper(PAPER_PAPER_USE)
-	toner_cartridge.charges -= PAPER_TONER_USE / toner_efficiency
+	use_toner(PAPER_TONER_USE)
 
 	var/copy_colour = get_toner_color()
 
@@ -550,7 +550,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return null
 	var/obj/item/photo/copied_pic = new(src, photo.Copy(photo_color == PHOTO_GREYSCALE ? TRUE : FALSE))
 	delete_paper(PHOTO_PAPER_USE)
-	toner_cartridge.charges -= PHOTO_TONER_USE / toner_efficiency
+	use_toner(PHOTO_TONER_USE)
 	return copied_pic
 
 /**
@@ -563,7 +563,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return null
 	var/obj/item/documents/photocopy/copied_doc = new(src, document_copy)
 	delete_paper(DOCUMENT_PAPER_USE)
-	toner_cartridge.charges -= DOCUMENT_TONER_USE / toner_efficiency
+	use_toner(DOCUMENT_TONER_USE)
 	return copied_doc
 
 /**
@@ -581,7 +581,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		copied_paperwork.stamp_icon = "paper_stamp-pc" //Override with the photocopy overlay sprite
 		copied_paperwork.add_stamp()
 	delete_paper(PAPERWORK_PAPER_USE)
-	toner_cartridge.charges -= PAPERWORK_TONER_USE / toner_efficiency
+	use_toner(PAPERWORK_TONER_USE)
 	return copied_paperwork
 
 /// Handles the copying of blanks. No mutating state, so this should not fail.
@@ -597,8 +597,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	printblank.name = "paper - '[printname]'"
 	printblank.add_raw_text(printinfo, color = copy_colour)
 	printblank.update_appearance()
-
-	toner_cartridge.charges -= PAPER_TONER_USE / toner_efficiency
+	use_toner(PAPER_TONER_USE)
 	return printblank
 
 /**
@@ -619,7 +618,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	toEmbed.psize_y = 128
 	copied_ass.set_picture(toEmbed, TRUE, TRUE)
 	delete_paper(ASS_PAPER_USE)
-	toner_cartridge.charges -= ASS_TONER_USE / toner_efficiency
+	use_toner(ASS_TONER_USE)
 	return copied_ass
 
 /**
@@ -828,6 +827,12 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		if(AM.density)
 			return TRUE
 	return FALSE
+
+/**
+ * Removes a certain amount of toner that is affected by the efficiency of stock parts
+ */
+/obj/machinery/photocopier/proc/use_toner(amount)
+	toner_cartridge.charges -= (amount / toner_efficiency)
 
 /**
  * Checks if there is an item inserted into the copier or a mob sitting on top of it.
