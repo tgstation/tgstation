@@ -86,7 +86,7 @@
  */
 /datum/species/spirit/ghost
 	name = "Ghost"
-	id = SPECIES_GHOST_PHASING
+	id = SPECIES_GHOST
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_NEVER_WOUNDED,
