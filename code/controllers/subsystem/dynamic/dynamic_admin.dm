@@ -35,11 +35,8 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 	for(var/category in SSdynamic.rulesets_to_spawn)
 		data["ruleset_count"][category] = "[max(SSdynamic.rulesets_to_spawn[category], 0)] / [SSdynamic.base_rulesets_to_spawn[category]]"
 
-	var/use_config = CONFIG_GET(flag/dynamic_config_enabled)
-	if(use_config && !length(SSdynamic.dynamic_config))
-		SSdynamic.load_config()
-	data["full_config"] = SSdynamic.dynamic_config
-	data["config_even_enabled"] = use_config
+	data["full_config"] = length(SSdynamic.dynamic_config) ? SSdynamic.dynamic_config : list("N/A" = list("No config found" = "The config is either empty or has not loaded yet."))
+	data["config_even_enabled"] = CONFIG_GET(flag/dynamic_config_enabled)
 
 	data["queued_rulesets"] = list()
 	for(var/i in 1 to length(SSdynamic.queued_rulesets))
@@ -75,6 +72,12 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 	data["latejoin_chance"] = SSdynamic.get_latejoin_chance()
 
 	data["roundstarted"] = SSticker.HasRoundStarted()
+
+	data["light_chance_maxxed"] = SSdynamic.admin_forcing_next_light
+	data["heavy_chance_maxxed"] = SSdynamic.admin_forcing_next_heavy
+	data["latejoin_chance_maxxed"] = SSdynamic.admin_forcing_next_latejoin
+
+	data["next_dynamic_tick"] = SSdynamic.next_fire - world.time
 
 	return data
 
@@ -176,4 +179,28 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 			var/picked = tgui_input_list(ui.user, "Pick a dynamic tier before the game starts", "Pick tier", tiers, ui_state = ADMIN_STATE(R_ADMIN))
 			if(picked && !SSdynamic.current_tier)
 				SSdynamic.set_tier(tiers[picked])
+			return TRUE
+		if("max_light_chance")
+			SSdynamic.admin_forcing_next_light = !SSdynamic.admin_forcing_next_light
+			return TRUE
+		if("max_heavy_chance")
+			SSdynamic.admin_forcing_next_heavy = !SSdynamic.admin_forcing_next_heavy
+			return TRUE
+		if("max_latejoin_chance")
+			SSdynamic.admin_forcing_next_latejoin = !SSdynamic.admin_forcing_next_latejoin
+			return TRUE
+		if("light_start_now")
+			COOLDOWN_RESET(SSdynamic, light_ruleset_start)
+			return TRUE
+		if("heavy_start_now")
+			COOLDOWN_RESET(SSdynamic, heavy_ruleset_start)
+			return TRUE
+		if("latejoin_start_now")
+			COOLDOWN_RESET(SSdynamic, latejoin_ruleset_start)
+			return TRUE
+		if("reset_midround_cooldown")
+			COOLDOWN_RESET(SSdynamic, midround_cooldown)
+			return TRUE
+		if("reset_latejoin_cooldown")
+			COOLDOWN_RESET(SSdynamic, latejoin_cooldown)
 			return TRUE

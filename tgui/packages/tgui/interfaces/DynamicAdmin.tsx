@@ -62,6 +62,10 @@ type Data = {
   latejoin_chance: number;
   roundstarted: BooleanLike;
   config_even_enabled: BooleanLike;
+  light_chance_maxxed: BooleanLike;
+  heavy_chance_maxxed: BooleanLike;
+  latejoin_chance_maxxed: BooleanLike;
+  next_dynamic_tick: number;
 };
 
 function formatTime(seconds: number): string {
@@ -118,6 +122,10 @@ const StatusPanel = () => {
     heavy_midround_chance,
     latejoin_chance,
     roundstarted,
+    light_chance_maxxed,
+    heavy_chance_maxxed,
+    latejoin_chance_maxxed,
+    next_dynamic_tick,
   } = data;
 
   if (!current_tier) {
@@ -180,14 +188,22 @@ const StatusPanel = () => {
         ))}
       {time_until_lights > 0 ? (
         <LabeledList.Item label="Light Midround Start">
-          {formatTime(time_until_lights)}
+          <Box>{formatTime(time_until_lights)}</Box>
+          <Button ml={1} onClick={() => act('light_start_now')}>
+            Start Now
+          </Button>
         </LabeledList.Item>
       ) : (
         <>
           <LabeledList.Item label="Light Midround Cooldown">
-            {time_until_next_midround > 0
-              ? formatTime(time_until_next_midround)
-              : 'Next dynamic tick!'}
+            <Box>
+              {time_until_next_midround > 0
+                ? formatTime(time_until_next_midround)
+                : `Next dynamic tick (${formatTime(next_dynamic_tick)})`}
+            </Box>
+            <Button ml={1} onClick={() => act('reset_midround_cooldown')}>
+              Reset Cooldown
+            </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Light Midround Chance">
             <Box
@@ -200,19 +216,30 @@ const StatusPanel = () => {
                 {light_midround_chance}%
               </Tooltip>
             </Box>
+            <Button ml={1} onClick={() => act('max_light_chance')}>
+              {light_chance_maxxed ? 'Reset' : 'Set to 100%'}
+            </Button>
           </LabeledList.Item>
         </>
       )}
       {time_until_heavies > 0 ? (
         <LabeledList.Item label="Heavy Midround Start">
-          {formatTime(time_until_heavies)}
+          <Box>{formatTime(time_until_heavies)}</Box>
+          <Button ml={1} onClick={() => act('heavy_start_now')}>
+            Start Now
+          </Button>
         </LabeledList.Item>
       ) : (
         <>
           <LabeledList.Item label="Heavy Midround Cooldown">
-            {time_until_next_midround > 0
-              ? formatTime(time_until_next_midround)
-              : 'Next dynamic tick!'}
+            <Box>
+              {time_until_next_midround > 0
+                ? formatTime(time_until_next_midround)
+                : `Next dynamic tick (${formatTime(next_dynamic_tick)})`}
+            </Box>
+            <Button ml={1} onClick={() => act('reset_midround_cooldown')}>
+              Reset Cooldown
+            </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Heavy Midround Chance">
             <Box
@@ -225,19 +252,30 @@ const StatusPanel = () => {
                 {heavy_midround_chance}%
               </Tooltip>
             </Box>
+            <Button ml={1} onClick={() => act('max_heavy_chance')}>
+              {heavy_chance_maxxed ? 'Reset' : 'Set to 100%'}
+            </Button>
           </LabeledList.Item>
         </>
       )}
       {time_until_latejoins > 0 ? (
         <LabeledList.Item label="Latejoin Start">
-          {formatTime(time_until_latejoins)}
+          <Box>{formatTime(time_until_latejoins)}</Box>
+          <Button ml={1} onClick={() => act('latejoin_start_now')}>
+            Start Now
+          </Button>
         </LabeledList.Item>
       ) : (
         <>
           <LabeledList.Item label="Latejoin Cooldown">
-            {time_until_next_latejoin
-              ? formatTime(time_until_next_latejoin)
-              : 'Next latejoin!'}
+            <Box>
+              {time_until_next_latejoin
+                ? formatTime(time_until_next_latejoin)
+                : 'Next latejoin'}
+            </Box>
+            <Button ml={1} onClick={() => act('reset_latejoin_cooldown')}>
+              Reset Cooldown
+            </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Latejoin Chance">
             <Box
@@ -254,6 +292,9 @@ const StatusPanel = () => {
                 {latejoin_chance}% ({failed_latejoins} failed attempts)
               </Tooltip>
             </Box>
+            <Button ml={1} onClick={() => act('max_latejoin_chance')}>
+              {latejoin_chance_maxxed ? 'Reset' : 'Set to 100%'}
+            </Button>
           </LabeledList.Item>
         </>
       )}

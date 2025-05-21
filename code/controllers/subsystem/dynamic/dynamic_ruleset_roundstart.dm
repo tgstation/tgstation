@@ -1,7 +1,12 @@
 /datum/dynamic_ruleset/roundstart
-	repeatable = TRUE // We can pick multiple of a roundstart ruleset to "scale up" (spawn more of the same type of antag)
+	// We can pick multiple of a roundstart ruleset to "scale up" (spawn more of the same type of antag)
+	// Set this to FALSE if you DON'T want this ruleset to "scale up"
+	repeatable = TRUE
+	/// If TRUE, the ruleset will be the only one selected for roundstart
+	var/solo = FALSE
 
 /datum/dynamic_ruleset/roundstart/is_valid_candidate(mob/candidate, client/candidate_client)
+	// Checks that any other roundstart ruleset hasn't already picked this guy
 	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in SSdynamic.queued_rulesets)
 		if(candidate.mind in ruleset.selected_minds)
 			return FALSE
@@ -328,10 +333,12 @@
 	weight = 0
 	min_antag_cap = 0
 	repeatable = FALSE
+	solo = TRUE
 
 /datum/dynamic_ruleset/roundstart/extended/execute()
-	for(var/category in rulesets_to_spawn)
-		rulesets_to_spawn[category] = 0
+	// No midrounds no latejoins
+	for(var/category in SSdynamic.rulesets_to_spawn)
+		SSdynamic.rulesets_to_spawn[category] = 0
 
 /datum/dynamic_ruleset/roundstart/meteor
 	name = "Meteor"
@@ -350,10 +357,12 @@
 	weight = 0
 	min_antag_cap = 0
 	repeatable = FALSE
+	solo = TRUE
 
 /datum/dynamic_ruleset/roundstart/nations/execute()
-	for(var/category in rulesets_to_spawn)
-		rulesets_to_spawn[category] = 0
+	// No midrounds no latejoins
+	for(var/category in SSdynamic.rulesets_to_spawn)
+		SSdynamic.rulesets_to_spawn[category] = 0
 
 	//notably assistant is not in this list to prevent the round turning into BARBARISM instantly, and silicon is in this list for UN
 	var/list/department_types = list(

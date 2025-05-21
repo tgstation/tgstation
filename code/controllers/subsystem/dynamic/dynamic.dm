@@ -3,12 +3,27 @@ SUBSYSTEM_DEF(dynamic)
 	flags = SS_NO_INIT
 	wait = 2.5 MINUTES
 
+	// These vars just exist for admins interfacing with dynamic
+	/// Cooldown between "we're going to spawn a midround" and "we're actually spawning a midround", to give admins a chance to cancel
+	COOLDOWN_DECLARE(midround_admin_cancel_period)
+	/// Set to TRUE by hrefs if admins cancel a midround
+	var/tmp/midround_admin_cancel = FALSE
+	/// Set to TRUE by hrefs if admins reroll a midround
+	var/tmp/midround_admin_reroll = FALSE
+	/// Set to TRUE by admin panels if they want to max out the chance of a light ruleset spawning
+	var/tmp/admin_forcing_next_light = FALSE
+	/// Set to TRUE by admin panels if they want to max out the chance of a heavy ruleset spawning
+	var/tmp/admin_forcing_next_heavy = FALSE
+	/// Set to TRUE by admin panels if they want to max out the chance of a latejoin ruleset spawning
+	var/tmp/admin_forcing_next_latejoin = FALSE
+	/// List of ruleset typepaths that admins have explicitly disabled
+	var/tmp/list/admin_disabled_rulesets = list()
+
+	// Dynamic vars
 	/// Reference to a dynamic tier datum, the tier picked for this round
 	var/datum/dynamic_tier/current_tier
-
 	/// The config for dynamic loaded from the toml file
 	var/list/dynamic_config = list()
-
 	/// Tracks how many of each ruleset category is yet to be spawned
 	var/list/rulesets_to_spawn = list(
 		ROUNDSTART = -1,
@@ -16,14 +31,13 @@ SUBSYSTEM_DEF(dynamic)
 		HEAVY_MIDROUND = -1,
 		LATEJOIN = -1,
 	)
-	/// Tracks the number of rulesets to spawn at roundstart (for admin reference)
+	/// Tracks the number of rulesets to spawn at game start (for admin reference)
 	var/list/base_rulesets_to_spawn = list(
 		ROUNDSTART = 0,
 		LIGHT_MIDROUND = 0,
 		HEAVY_MIDROUND = 0,
 		LATEJOIN = 0,
 	)
-
 	/// Cooldown for when we are allowed to spawn light rulesets
 	COOLDOWN_DECLARE(light_ruleset_start)
 	/// Cooldown for when we are allowed to spawn heavy rulesets
@@ -36,17 +50,10 @@ SUBSYSTEM_DEF(dynamic)
 	COOLDOWN_DECLARE(midround_cooldown)
 	/// Cooldown between latejoin ruleset executions
 	COOLDOWN_DECLARE(latejoin_cooldown)
-
-	COOLDOWN_DECLARE(midround_admin_cancel_period)
-	var/tmp/midround_admin_cancel = FALSE
-	var/tmp/midround_admin_reroll = FALSE
-
 	/// List of rulesets that have been executed this round
 	var/list/datum/dynamic_ruleset/executed_rulesets = list()
 	/// List of rulesets that have been set up to run, but not yet executed
 	var/list/datum/dynamic_ruleset/queued_rulesets = list()
-	/// List of ruleset typepaths that admins have explicitly disabled
-	var/list/admin_disabled_rulesets = list()
 
 /datum/controller/subsystem/dynamic/fire(resumed)
 	if(!COOLDOWN_FINISHED(src, midround_cooldown) || EMERGENCY_PAST_POINT_OF_NO_RETURN)
@@ -236,17 +243,23 @@ SUBSYSTEM_DEF(dynamic)
 			log_dynamic("Roundstart: No more rulesets to pick from with [rulesets_to_spawn[ROUNDSTART]] left!")
 			break
 		rulesets_to_spawn[ROUNDSTART] -= 1
-		var/datum/dynamic_ruleset/picked_ruleset = pick_weight(rulesets_weighted)
-		picked_rulesets += picked_ruleset
+		var/datum/dynamic_ruleset/roundstart/picked_ruleset = pick_weight(rulesets_weighted)
 		log_dynamic("Roundstart: Ruleset [picked_ruleset.config_tag] (Chance: [round(rulesets_weighted[picked_ruleset] / total_weight * 100, 0.01)]%)")
+		if(picked_ruleset.solo)
+			log_dynamic("Roundstart: Ruleset is a solo ruleset. Cancelling other picks.")
+			QDEL_LIST(picked_rulesets)
+			rulesets_weighted -= picked_ruleset
+			picked_rulesets += picked_ruleset
+			break
 		if(!picked_ruleset.repeatable)
 			rulesets_weighted -= picked_ruleset
+			picked_rulesets += picked_ruleset
 			continue
 
-		// Rulesets are not singletons; thus we need to take out the one we picked and replace it with a fresh one
-		rulesets_weighted[new picked_ruleset.type(dynamic_config)] = rulesets_weighted[picked_ruleset] - picked_ruleset.repeatable_weight_decrease
-		rulesets_weighted -= picked_ruleset
+		rulesets_weighted[picked_ruleset] -= picked_ruleset.repeatable_weight_decrease
 		total_weight -= picked_ruleset.repeatable_weight_decrease
+		// Rulesets are not singletons. We need to to make a new one
+		picked_rulesets += new picked_ruleset.type(dynamic_config)
 
 	// clean up unused rulesets
 	QDEL_LIST(rulesets_weighted)
@@ -324,6 +337,10 @@ SUBSYSTEM_DEF(dynamic)
 	// Clean up unused rulesets
 	QDEL_LIST(rulesets_weighted)
 	rulesets_to_spawn[range] -= 1
+	if(range == LIGHT_MIDROUND)
+		admin_forcing_next_light = FALSE
+	if(range == HEAVY_MIDROUND)
+		admin_forcing_next_heavy = FALSE
 	COOLDOWN_START(src, midround_cooldown, get_ruleset_cooldown(range))
 	return TRUE
 
@@ -438,6 +455,7 @@ SUBSYSTEM_DEF(dynamic)
 	QDEL_LIST(rulesets_weighted)
 	rulesets_to_spawn[LATEJOIN] -= 1
 	failed_latejoins = 0
+	admin_forcing_next_latejoin = FALSE
 	COOLDOWN_START(src, latejoin_cooldown, get_ruleset_cooldown(LATEJOIN))
 	return TRUE
 
@@ -482,6 +500,11 @@ SUBSYSTEM_DEF(dynamic)
  * Gets the chance of a midround ruleset being selected
  */
 /datum/controller/subsystem/dynamic/proc/get_midround_chance(range)
+	if(admin_forcing_next_light && range == LIGHT_MIDROUND)
+		return 100
+	if(admin_forcing_next_heavy && range == HEAVY_MIDROUND)
+		return 100
+
 	var/chance = 0
 	var/num_antags = length(GLOB.current_living_antags)
 	var/num_dead = length(GLOB.dead_player_list)
@@ -499,6 +522,9 @@ SUBSYSTEM_DEF(dynamic)
  * Gets the chance of a latejoin ruleset being selected
  */
 /datum/controller/subsystem/dynamic/proc/get_latejoin_chance()
+	if(admin_forcing_next_latejoin)
+		return 100
+
 	var/chance = 0
 	var/num_antags = length(GLOB.current_living_antags)
 	var/num_dead = length(GLOB.dead_player_list)
