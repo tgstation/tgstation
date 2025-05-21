@@ -33,6 +33,7 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
+		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -128,6 +129,7 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
+		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 	blacklisted_roles = list(
@@ -176,6 +178,7 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
+		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
@@ -319,6 +322,7 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
+		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 10
 	min_antag_cap = list("denominator" = 20, "offset" = 1)

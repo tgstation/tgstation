@@ -270,6 +270,7 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
+		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
@@ -349,6 +350,7 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
+		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -384,6 +386,7 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 5,
+		DYNAMIC_TIER_HIGH = 5,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -469,6 +472,7 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 3,
 		DYNAMIC_TIER_MEDIUMHIGH = 5,
+		DYNAMIC_TIER_HIGH = 5,
 	)
 	min_pop = 30
 	max_antag_cap = 1
@@ -981,6 +985,7 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
+		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 
@@ -1004,6 +1009,7 @@
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
+		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
 
