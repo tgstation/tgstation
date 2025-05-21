@@ -153,7 +153,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
             autoFocus
             autoSelect
             fluid
-            onBlur={() => {
+            onEnter={() => {
               act('submit', { entry: filteredItems[selected] });
             }}
             onChange={onSearch}
