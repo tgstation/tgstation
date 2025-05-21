@@ -149,6 +149,7 @@
 
 /obj/item/gun/energy/Destroy()
 	if (cell)
+		cell_mandatory = FALSE
 		QDEL_NULL(cell)
 	STOP_PROCESSING(SSobj, src)
 
