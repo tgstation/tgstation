@@ -1,7 +1,7 @@
 ///Spirit mob that lacks legs but still roams the station as part of the unliving.
 /datum/species/spirit
 	name = "Spirit"
-	id = SPECIES_GHOST
+	id = SPECIES_SPIRIT
 	inherent_traits = list(
 		TRAIT_GENELESS,
 		TRAIT_NEVER_WOUNDED,
