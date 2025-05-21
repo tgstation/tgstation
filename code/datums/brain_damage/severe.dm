@@ -171,16 +171,19 @@
 	if(caffeinated)
 		sleep_chance = sleep_chance / 2 //make it harder to fall asleep on caffeine
 
+	if (!SPT_PROB(sleep_chance, seconds_per_tick))
+		return
+
 	//if not drowsy, don't fall asleep but make them drowsy
-	if(!drowsy && SPT_PROB(sleep_chance, seconds_per_tick))
+	if(!drowsy)
 		to_chat(owner, span_warning("You feel tired..."))
 		owner.adjust_drowsiness(rand(drowsy_time_minimum, drowsy_time_maximum))
 		if(prob(50))
 			owner.emote("yawn")
 		else if(prob(33)) //rarest message is a custom emote
 			owner.visible_message("rubs [owner.p_their()] eyes.", visible_message_flags = EMOTE_MESSAGE)
-	//if drowsy, fall asleep. you've had your chance to remedy it
-	else if(drowsy && SPT_PROB(sleep_chance, seconds_per_tick))
+	//drowsy, so fall asleep. you've had your chance to remedy it
+	else
 		to_chat(owner, span_warning("You fall asleep."))
 		owner.Sleeping(rand(sleep_time_minimum, sleep_time_maximum))
 		if(prob(50) && owner.IsSleeping())
