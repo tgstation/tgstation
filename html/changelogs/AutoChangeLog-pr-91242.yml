@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "The medical notes input box actually takes up the full window, instead of only half of it."

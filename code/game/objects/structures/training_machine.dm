@@ -360,7 +360,7 @@
 	///Number of hits made since the Lap button (alt-click) was last pushed
 	var/lap_hits = 0
 
-/obj/item/training_toolbox/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/training_toolbox/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return .

@@ -1,0 +1,6 @@
+author: "carpotoxin"
+delete-after: True
+changes:
+  - rscadd: "Adds Narcolepsy as a -8 negative quirk!"
+  - refactor: "Slightly adjusts the logic of the narcolepsy trauma"
+  - balance: "The narcolepsy trauma its symptoms can now be softened by being caffeinated, and modafinil or synaptizine suppress it entirely"

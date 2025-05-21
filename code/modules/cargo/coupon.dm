@@ -112,7 +112,7 @@
 	visible_message(span_warning("[src] burns up in a sinister flash, taking an evil energy with it..."))
 	burn()
 
-/obj/item/coupon/attack_atom(obj/attacked_obj, mob/living/user, list/modifiers)
+/obj/item/coupon/attack_atom(obj/attacked_obj, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(attacked_obj, /obj/machinery/computer/cargo))
 		return ..()
 	if(discount_pct_off == COUPON_OMEN)
