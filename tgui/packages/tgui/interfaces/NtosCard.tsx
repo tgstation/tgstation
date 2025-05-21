@@ -187,8 +187,7 @@ const IdCardPage = (props) => {
               <Input
                 width="100%"
                 value={id_owner}
-                expensive
-                onChange={(value) =>
+                onBlur={(value) =>
                   act('PRG_edit', {
                     name: value,
                   })
@@ -217,8 +216,7 @@ const IdCardPage = (props) => {
                 fluid
                 mt={1}
                 value={id_rank}
-                expensive
-                onChange={(value) =>
+                onBlur={(value) =>
                   act('PRG_assign', {
                     assignment: value,
                   })

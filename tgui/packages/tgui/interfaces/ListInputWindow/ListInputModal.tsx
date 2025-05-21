@@ -154,7 +154,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
             autoSelect
             fluid
             expensive
-            onEnter={() => {
+            onBlur={() => {
               act('submit', { entry: filteredItems[selected] });
             }}
             onChange={onSearch}

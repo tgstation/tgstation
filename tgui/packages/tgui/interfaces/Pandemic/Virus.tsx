@@ -50,8 +50,7 @@ const Info = (props) => {
           <Input
             placeholder="Input a name"
             value={name === 'Unknown' ? '' : name}
-            expensive
-            onChange={(value) =>
+            onBlur={(value) =>
               act('rename_disease', {
                 index: index,
                 name: value,

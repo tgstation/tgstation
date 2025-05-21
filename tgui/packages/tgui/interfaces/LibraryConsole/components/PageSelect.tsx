@@ -32,8 +32,7 @@ export function PageSelect(props) {
       <Stack.Item>
         <Input
           placeholder={current_page + '/' + page_count}
-          expensive
-          onChange={(value) => {
+          onBlur={(value) => {
             if (value !== '') {
               call_on_change(value);
               setPage(value);

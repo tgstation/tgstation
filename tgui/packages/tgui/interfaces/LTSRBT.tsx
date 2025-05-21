@@ -33,8 +33,7 @@ export const LTSRBT = (props) => {
               width="80%"
               value={name}
               placeholder="Insert a name"
-              expensive
-              onChange={(value) =>
+              onBlur={(value) =>
                 act('change_name', {
                   value: value,
                 })
@@ -74,8 +73,7 @@ export const LTSRBT = (props) => {
               fluid
               value={desc}
               placeholder="Insert a description (or don't)"
-              expensive
-              onChange={(value) =>
+              onBlur={(value) =>
                 act('change_desc', {
                   value: value,
                 })
