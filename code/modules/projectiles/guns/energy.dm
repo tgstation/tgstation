@@ -93,6 +93,8 @@
 		cell = new(src)
 	if(!dead_cell)
 		cell.give(cell.maxcharge)
+	if(cell && resistance_flags & INDESTRUCTIBLE)
+		cell.resistance_flags |= INDESTRUCTIBLE
 	update_ammo_types()
 	recharge_newshot(TRUE)
 	if(selfcharge)
