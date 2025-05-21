@@ -12944,7 +12944,13 @@
 /obj/structure/table/glass,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/item/storage/box/monkeycubes,
-/turf/open/floor/iron/white,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/turf/open/floor/iron,
 /area/station/science/xenobiology)
 "dAm" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -25190,7 +25196,6 @@
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "hfL" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/structure/closet/l3closet/scientist,
 /obj/item/clothing/mask/gas{
 	pixel_x = -8;
@@ -25209,7 +25214,7 @@
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/turf/open/floor/iron,
+/turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "hgc" = (
 /obj/structure/table,
@@ -32278,11 +32283,13 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "jiB" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/north,
 /obj/structure/sign/warning/biohazard/directional/north,
 /obj/machinery/smartfridge/extract/preloaded,
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "jjk" = (
@@ -42828,8 +42835,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "mjO" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/machinery/computer/camera_advanced/xenobio,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "mjQ" = (
@@ -62726,11 +62733,11 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
 "rKZ" = (
+/obj/structure/cable,
+/obj/machinery/processor/slime,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/cable,
-/obj/machinery/processor/slime,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "rLc" = (
