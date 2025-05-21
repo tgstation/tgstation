@@ -48,8 +48,8 @@
 	if(atom_integrity < 90)
 		Die()
 
-/obj/item/clothing/mask/facehugger/attackby(obj/attacked_obj, mob/user, list/modifiers)
-	return attacked_obj.attack_atom(src, user, modifiers)
+/obj/item/clothing/mask/facehugger/attackby(obj/item/attacked_item, mob/user, list/modifiers)
+	return attacked_item.attack_atom(src, user, modifiers)
 
 /obj/item/clothing/mask/facehugger/proc/react_to_mob(datum/source, mob/user)
 	SIGNAL_HANDLER
