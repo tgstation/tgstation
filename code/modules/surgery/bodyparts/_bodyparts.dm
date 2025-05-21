@@ -1017,11 +1017,15 @@
 /// Called when limb's current owner gets washed
 /obj/item/bodypart/proc/on_owner_clean(mob/living/carbon/source, clean_types)
 	SIGNAL_HANDLER
-	wash(clean_types)
+
+	. = NONE
+	if(wash(clean_types))
+		return COMPONENT_CLEANED
 
 /obj/item/bodypart/wash(clean_types, updating_clothing)
 	. = ..()
-
+	if(!.) // Already clean. Nothing to do here.
+		return
 	// always add the original dna to the organ after it's washed
 	if(IS_ORGANIC_LIMB(src) && (clean_types & CLEAN_TYPE_BLOOD))
 		add_blood_DNA(blood_dna_info)

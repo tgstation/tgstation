@@ -70,7 +70,6 @@
 	var/obj/item/parent_item = parent
 	parent_item.update_slot_icon()
 
-
 /datum/component/bloodysoles/proc/reset_bloody_shoes()
 	bloody_shoes = list(BLOOD_STATE_HUMAN = 0, BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 	on_changed_bloody_shoes(BLOOD_STATE_NOT_BLOODY)
@@ -266,9 +265,7 @@
 		return NONE
 
 	reset_bloody_shoes()
-	update_icon()
-	return COMPONENT_CLEANED
-
+	return COMPONENT_CLEANED | COMPONENT_CLEANED_GAIN_XP
 
 /**
  * Like its parent but can be applied to carbon mobs instead of clothing items
