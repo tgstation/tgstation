@@ -108,7 +108,7 @@
 		return
 	if(isstack(result)) //it doesn't have hands to pick up stacks so let's try to merge them instead
 		var/obj/item/stack/stack = result
-		stack.merge_with_stacks_on_same_loc()
+		stack.merge_with_loc()
 	var/list/diff = get_overfloor_objects() - prediff
 	for(var/atom/movable/diff_result as anything in diff)
 		if(iseffect(diff_result) || ismob(diff_result)) // PLEASE dont stuff cats (or other mobs) into the cat grinder 9000

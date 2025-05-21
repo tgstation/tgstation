@@ -1,0 +1,6 @@
+author: "Pickle-Coding"
+delete-after: True
+changes:
+  - rscadd: "Antinoblium converts other gases into antinoblium when above 20 Kelvin."
+  - balance: "Firelocks close when they detect antinoblium."
+  - balance: "Antinoblium irradiates people upon skin contact."

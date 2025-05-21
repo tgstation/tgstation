@@ -36,6 +36,14 @@
 	light_power = 1.2
 	light_color = "#ffff66"
 	light_on = FALSE
+	/// The sound that plays when the light is turned off/on
+	var/toggle_light_sound = 'sound/items/weapons/empty.ogg'
+	/// The sound that plays when we fire a kinetic blast
+	var/fire_kinetic_blast_sound = 'sound/items/weapons/plasma_cutter.ogg'
+	/// The sound that plays when we recharge the projectile
+	var/projectile_recharge_sound = 'sound/items/weapons/kinetic_reload.ogg'
+	// The sound that plays when we successfully perform a backstab
+	var/backstab_sound = 'sound/items/weapons/kinetic_accel.ogg'
 	/// List of all crusher trophies attached to this.
 	var/list/obj/item/crusher_trophy/trophies = list()
 	/// If our crusher is ready to fire a projectile (FALSE means it's on cooldown)
@@ -50,8 +58,10 @@
 	var/backstab_bonus = 30
 	/// Used by retool kits when changing the crusher's appearance
 	var/current_inhand_icon_state = "crusher"
+	/// The file in which our projectile icon resides
+	var/projectile_icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	/// Used by retool kits when changing the crusher's projectile sprite
-	var/projectile_icon = "pulse1"
+	var/projectile_icon_state = "pulse1"
 	/// Wielded damage we deal, aka our "real" damage
 	var/force_wielded = 20
 
@@ -90,7 +100,7 @@
 	for(var/obj/item/crusher_trophy/crusher_trophy as anything in trophies)
 		. += span_notice("It has \a [crusher_trophy] attached, which causes [crusher_trophy.effect_desc()].")
 
-/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/obj/item/kinetic_crusher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/crusher_trophy))
 		var/obj/item/crusher_trophy/crusher_trophy = attacking_item
 		crusher_trophy.add_to(src, user)
@@ -148,7 +158,7 @@
 		return FALSE
 	return TRUE
 
-/obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, list/modifiers)
+/obj/item/kinetic_crusher/pre_attack(atom/A, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE
@@ -161,7 +171,7 @@
 	target.apply_status_effect(/datum/status_effect/crusher_damage)
 	return ..()
 
-/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, list/modifiers)
+/obj/item/kinetic_crusher/afterattack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!isliving(target))
 		return
 	// Melee effect
@@ -192,7 +202,7 @@
 	if(check_behind(user, target) || boosted_mark)
 		backstabbed = TRUE
 		combined_damage += backstab_bonus
-		playsound(user, 'sound/items/weapons/kinetic_accel.ogg', 100, TRUE) //Seriously who spelled it wrong
+		playsound(user, backstab_sound, 100, TRUE) //Seriously who spelled it wrong
 	if(!QDELETED(crusher_damage_effect))
 		crusher_damage_effect.total_damage += combined_damage
 	SEND_SIGNAL(user, COMSIG_LIVING_CRUSHER_DETONATE, target, src, backstabbed)
@@ -220,13 +230,14 @@
 		return
 	var/obj/projectile/destabilizer/destabilizer = new(proj_turf)
 	SEND_SIGNAL(src, COMSIG_CRUSHER_FIRED_BLAST, target, user, destabilizer)
-	destabilizer.icon_state = projectile_icon
+	destabilizer.icon = projectile_icon
+	destabilizer.icon_state = projectile_icon_state
 	for(var/obj/item/crusher_trophy/attached_trophy as anything in trophies)
 		attached_trophy.on_projectile_fire(destabilizer, user)
 	destabilizer.aim_projectile(target, user, modifiers)
 	destabilizer.firer = user
 	destabilizer.fired_from = src
-	playsound(user, 'sound/items/weapons/plasma_cutter.ogg', 100, TRUE)
+	playsound(user, fire_kinetic_blast_sound, 100, TRUE)
 	destabilizer.fire()
 	charged = FALSE
 	update_appearance()
@@ -244,7 +255,7 @@
 	if(!charged)
 		charged = TRUE
 		update_appearance()
-		playsound(src.loc, 'sound/items/weapons/kinetic_reload.ogg', 60, TRUE)
+		playsound(src.loc, projectile_recharge_sound, 60, TRUE)
 
 /// Updates the two handed component with new damage values
 /obj/item/kinetic_crusher/proc/update_wielding()
@@ -252,13 +263,13 @@
 
 /obj/item/kinetic_crusher/ui_action_click(mob/user, actiontype)
 	set_light_on(!light_on)
-	playsound(user, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	playsound(user, toggle_light_sound, 100, TRUE)
 	update_appearance()
 
 /obj/item/kinetic_crusher/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
 	set_light_on(FALSE)
-	playsound(src, 'sound/items/weapons/empty.ogg', 100, TRUE)
+	playsound(src, toggle_light_sound, 100, TRUE)
 	return TRUE
 
 /obj/item/kinetic_crusher/update_icon_state()
@@ -335,4 +346,3 @@
 			used_crusher.attempt_recharge_projectile(used_crusher.charge_time * skill_modifier) //If you hit a mineral, you might get a quicker reload. epic gamer style.
 
 	return ..()
-
