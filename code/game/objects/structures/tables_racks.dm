@@ -495,7 +495,7 @@
 /obj/structure/table/proc/table_place_act(mob/living/user, obj/item/tool, list/modifiers)
 	if(tool.item_flags & ABSTRACT)
 		return NONE
-	if(!user.transferItemToLoc(tool, drop_location(), silent = FALSE))
+	if(!user.dropItemToGround(to_drop = tool, silent = FALSE, newloc = get_turf(src)))
 		return ITEM_INTERACT_BLOCKING
 	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available
 	if(LAZYACCESS(modifiers, ICON_X) && LAZYACCESS(modifiers, ICON_Y))

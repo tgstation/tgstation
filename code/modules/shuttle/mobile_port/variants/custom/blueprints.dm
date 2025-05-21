@@ -265,7 +265,7 @@
 				self_msg += ", but there's no christening fluid in [bottle]!"
 			else if(!has_blueprints)
 				msg += ", but [user.p_have()] no right to do so!"
-				msg += ", but have no right to do so!"
+				self_msg += ", but have no right to do so!"
 			user.do_attack_animation(attacked, used_item = hitting_implement)
 			if(hitting_implement && !bottle)
 				if(hitting_implement.force)
@@ -338,14 +338,23 @@
 	var/turf/current_turf = get_turf(user)
 	var/obj/docking_port/mobile/custom/linked_shuttle = shuttle_ref?.resolve()
 	var/linked_to_shuttle = istype(linked_shuttle)
+	var/on_shuttle_frame = HAS_TRAIT(current_turf, TRAIT_SHUTTLE_CONSTRUCTION_TURF)
+	var/datum/shuttle_frame/frame = GLOB.shuttle_frames_by_turf[current_turf]
 	data["linkedShuttle"] = linked_to_shuttle && shuttle_ref.reference
 	data["visualizing"] = visualize_frame_turfs
-	data["onShuttleFrame"] = HAS_TRAIT(current_turf, TRAIT_SHUTTLE_CONSTRUCTION_TURF)
+	data["onShuttleFrame"] = on_shuttle_frame
+	if(on_shuttle_frame)
+		data["maxShuttleSize"] = CONFIG_GET(number/max_shuttle_size)
 	if(!linked_to_shuttle)
 		var/obj/docking_port/mobile/custom/loc_shuttle = SSshuttle.get_containing_shuttle(current_turf)
 		data["tooManyShuttles"] = length(SSshuttle.custom_shuttles) >= CONFIG_GET(number/max_shuttle_count)
-		data["onCustomShuttle"] = istype(loc_shuttle)
-		data["masterExists"] = loc_shuttle?.master_blueprint?.resolve()
+		var/on_custom_shuttle = istype(loc_shuttle)
+		data["onCustomShuttle"] = on_custom_shuttle
+		if(on_custom_shuttle)
+			data["masterExists"] = loc_shuttle?.master_blueprint?.resolve()
+		else if(on_shuttle_frame)
+			data["size"] = length(frame.turfs) - length(frame.shuttle_covered_turfs)
+			data["problems"] = shuttle_build_check(current_turf)
 	else
 		var/obj/item/shuttle_blueprints/master = linked_shuttle.master_blueprint?.resolve()
 		data["masterExists"] = master
@@ -361,6 +370,9 @@
 			apcs[REF(area)] = !!area.apc
 		data["apcs"] = apcs
 		data["idle"] = linked_shuttle.mode == SHUTTLE_IDLE
+		if(on_shuttle_frame)
+			data["size"] = length(frame.turfs) - length(frame.shuttle_covered_turfs) + linked_shuttle.turf_count
+			data["problems"] = shuttle_expand_check(current_turf)
 	return data
 
 /obj/item/shuttle_blueprints/proc/link_to_shuttle(obj/docking_port/mobile/custom/shuttle, is_master = FALSE)
@@ -681,58 +693,7 @@
 			var/obj/item/shuttle_blueprints/master = shuttle.master_blueprint?.resolve()
 			if(master && master != src)
 				balloon_alert(usr, "not master blueprints!")
-			var/shuttle_z = shuttle.z
-			var/bounds_need_recalculation
-			var/docking_port_needs_relocated
-			var/list/bounds = shuttle.return_coords()
-			var/x0 = bounds[1]
-			var/y0 = bounds[2]
-			var/x1 = bounds[3]
-			var/y1 = bounds[4]
-			for(var/area/area as anything in shuttle.shuttle_areas)
-				var/list/turfs = area.get_turfs_by_zlevel(shuttle_z)
-				turfs = turfs.Copy()
-				for(var/turf/turf as anything in turfs)
-					var/move_mode = turf.fromShuttleMove(move_mode = MOVE_AREA)
-					if(move_mode & (MOVE_TURF | MOVE_CONTENTS))
-						continue
-					for(var/atom/movable/movable as anything in turf.contents)
-						//CHECK_TICK
-						if(movable.loc != turf)
-							continue
-						if(movable == shuttle)
-							continue
-						move_mode = movable.hypotheticalShuttleMove(0, move_mode, shuttle)
-					if(move_mode & (MOVE_TURF | MOVE_CONTENTS))
-						continue
-					if(shuttle.loc == turf)
-						docking_port_needs_relocated = TRUE
-						bounds_need_recalculation = TRUE
-					var/area/new_area = shuttle.underlying_areas_by_turf[turf]
-					if(!istype(new_area))
-						new_area = GLOB.areas_by_type[SHUTTLE_DEFAULT_UNDERLYING_AREA]
-					if(!istype(new_area))
-						new_area = new SHUTTLE_DEFAULT_UNDERLYING_AREA(null)
-					shuttle.underlying_areas_by_turf -= turf
-					shuttle.turf_count--
-					turfs -= turf
-					turf.change_area(area, new_area)
-					if(bounds_need_recalculation)
-						continue
-					if(turf.x == x0 || turf.x == x1 || turf.y == y0 || turf.y == y1)
-						bounds_need_recalculation = TRUE
-				if((area != shuttle.default_area) && !length(turfs))
-					shuttle.shuttle_areas -= area
-					qdel(area)
-			if(!shuttle.turf_count)
-				qdel(shuttle.default_area)
-				qdel(shuttle)
-				return
-			if(docking_port_needs_relocated)
-				shuttle.forceMove(pick(shuttle.underlying_areas_by_turf))
-			if(bounds_need_recalculation)
-				QDEL_NULL(shuttle.assigned_transit)
-				shuttle.calculate_docking_port_information()
+			clear_empty_shuttle_turfs(shuttle)
 
 /obj/item/shuttle_blueprints/crude
 	name = "crude shuttle blueprints"
@@ -819,258 +780,3 @@
 
 /obj/item/shuttle_blueprints/borg/get_linked_name(obj/docking_port/mobile/shuttle)
 	name = "shuttle blueprint database ([shuttle.name])"
-
-/proc/custom_shuttle_room_check(obj/docking_port/mobile/custom/shuttle, list/neighboring_areas = list(), turf/check_turf)
-	if(SSshuttle.get_containing_shuttle(check_turf) != shuttle)
-		return EXTRA_ROOM_CHECK_SKIP
-	var/area/check_area = check_turf.loc
-	if(check_area != shuttle.default_area)
-		neighboring_areas[check_area] = TRUE
-		return EXTRA_ROOM_CHECK_SKIP
-	var/move_mode = MOVE_AREA
-	move_mode = check_turf.fromShuttleMove(move_mode = move_mode)
-	if(move_mode & (MOVE_CONTENTS | MOVE_TURF))
-		return
-	for(var/atom/movable/movable as anything in check_turf.contents)
-		CHECK_TICK
-		if(movable.loc != check_turf)
-			continue
-		move_mode = movable.hypotheticalShuttleMove(0, move_mode, shuttle)
-	if(!(move_mode & (MOVE_CONTENTS | MOVE_TURF)))
-		return EXTRA_ROOM_CHECK_SKIP
-
-/proc/get_connected_shuttle_frame_turfs(turf/starting_turf, max_size = INFINITY, list/adjacent_shuttles)
-	. = list()
-	var/list/check_turfs = list(starting_turf)
-	while(length(check_turfs))
-		var/turf/check_turf = check_turfs[1]
-		check_turfs.Cut(1,2)
-		.[check_turf] = TRUE
-		if(length(.) > max_size)
-			return
-		for(var/check_dir in GLOB.cardinals)
-			var/turf/neighbor = get_step(check_turf, check_dir)
-			if(neighbor)
-				if(HAS_TRAIT(neighbor, TRAIT_SHUTTLE_CONSTRUCTION_TURF) && !.[neighbor])
-					check_turfs[neighbor] = TRUE
-				else if(islist(adjacent_shuttles))
-					var/obj/docking_port/mobile/custom/shuttle = SSshuttle.get_containing_shuttle(neighbor)
-					if(istype(shuttle))
-						adjacent_shuttles |= shuttle
-
-/proc/shuttle_build_check(turf/origin, list/turfs, list/areas)
-	var/z = origin.z
-	var/skip_flood_fill = !!length(turfs)
-	if(skip_flood_fill && !(turfs[origin]))
-		. |= ORIGIN_NOT_ON_SHUTTLE
-	if(length(SSshuttle.custom_shuttles) >= CONFIG_GET(number/max_shuttle_count))
-		. |= TOO_MANY_SHUTTLES
-	var/max_turfs = CONFIG_GET(number/max_shuttle_size)
-	if(!skip_flood_fill)
-		turfs += get_connected_shuttle_frame_turfs(origin, max_turfs)
-	var/turf_count = length(turfs)
-	if(!skip_flood_fill && !(turfs[origin]))
-		. |= ORIGIN_NOT_ON_SHUTTLE
-	if(turf_count > max_turfs)
-		. |= ABOVE_MAX_SHUTTLE_SIZE
-	. |= shuttle_area_check(turfs.Copy(), areas, z)
-
-/proc/shuttle_expand_check(turf/origin, obj/docking_port/mobile/shuttle, list/turfs, list/areas)
-	var/z = origin.z
-	var/skip_flood_fill = !!length(turfs)
-	if(skip_flood_fill && !(turfs[origin]))
-		. |= ORIGIN_NOT_ON_SHUTTLE
-	var/max_turfs = CONFIG_GET(number/max_shuttle_size) - shuttle.turf_count
-	var/list/adjacent_shuttles = list()
-	if(!skip_flood_fill)
-		turfs += get_connected_shuttle_frame_turfs(origin, max_turfs, adjacent_shuttles)
-	var/turf_count = length(turfs)
-	if(!skip_flood_fill && !(turfs[origin]))
-		. |= ORIGIN_NOT_ON_SHUTTLE
-	if(turf_count > max_turfs)
-		. |= ABOVE_MAX_SHUTTLE_SIZE
-	if(!adjacent_shuttles.Find(shuttle))
-		. |= FRAME_NOT_ADJACENT_TO_LINKED_SHUTTLE
-	. |= shuttle_area_check(turfs.Copy(), areas, z)
-
-/*
- * Check to see if the following conditions are met:
- * 1. All turfs in the region are within whitelisted areas
- * 2. The region does not contain the APC of a non-custom area
- * 3. If the region contains the APC of a custom area, it contains the entire area
- */
-/proc/shuttle_area_check(list/turfs, list/areas, z)
-	for(var/area/custom_area as anything in GLOB.custom_areas)
-		var/list/area_turfs = custom_area.get_turfs_by_zlevel(z)
-		var/turf_count = length(area_turfs)
-		if(!turf_count)
-			continue
-		var/list/turfs_not_in_frame = area_turfs - turfs
-		var/turfs_not_in_frame_count = length(turfs_not_in_frame)
-		if(turfs_not_in_frame_count == turf_count)
-			continue
-		if(turfs_not_in_frame_count)
-			if(custom_area.apc)
-				var/obj/machinery/power/apc/apc = custom_area.apc
-				var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
-				if(turfs[get_turf(apc)] || turfs[wallmount_comp.hanging_wall_turf])
-					. |= CUSTOM_AREA_NOT_COMPLETELY_CONTAINED
-		else
-			areas[custom_area] = area_turfs - turfs_not_in_frame
-		turfs -= area_turfs
-	while(length(turfs))
-		var/turf/checked_turf = pick(turfs)
-		var/area/checked_area = checked_turf.loc
-		var/list/area_turfs = checked_area.get_turfs_by_zlevel(z)
-		if(!checked_area.allow_shuttle_docking)
-			. |= INTERSECTS_NON_WHITELISTED_AREA
-		if(checked_area.apc)
-			var/obj/machinery/power/apc/apc = checked_area.apc
-			var/datum/component/wall_mounted/wallmount_comp = apc.GetComponent(/datum/component/wall_mounted)
-			if(turfs[get_turf(apc)] || turfs[wallmount_comp.hanging_wall_turf])
-				. |= CONTAINS_APC_OF_NON_CUSTOM_AREA
-		turfs -= area_turfs
-
-/proc/convert_areas_to_shuttle_areas(list/turfs, list/in_areas, list/out_areas, list/underlying_areas, area_type = /area/shuttle/custom)
-	for(var/area/area as anything in in_areas)
-		var/area/new_area = new area_type()
-		new_area.setup(area.name)
-		out_areas += new_area
-		var/list/area_turfs = in_areas[area]
-		var/datum/component/custom_area/custom_area = area.GetComponent(/datum/component/custom_area)
-		if(custom_area)
-			underlying_areas += (custom_area.previous_areas & area_turfs)
-		set_turfs_to_area(area_turfs, new_area)
-		turfs -= area_turfs
-		new_area.reg_in_areas_in_z()
-		new_area.create_area_lighting_objects()
-		new_area.power_change()
-		for(var/obj/machinery/door/firedoor/firelock as anything in area.firedoors)
-			firelock.CalculateAffectingAreas()
-		if(!area.has_contained_turfs())
-			qdel(area)
-
-/proc/create_shuttle(mob/user, turf/origin, list/turfs, list/areas, shuttle_dir, port_dir = NORTH, area_type = /area/shuttle/custom, docking_port_type = /obj/docking_port/mobile/custom, obj/docking_port/stationary/dock_at, name, id, replace, custom = TRUE, force)
-	if(!ispath(docking_port_type, /obj/docking_port/mobile))
-		CRASH("docking_port_type must be /obj/docking_port/mobile or a subpath")
-	if(!ispath(area_type, /area/shuttle))
-		CRASH("area_type must be /area/shuttle or a subpath")
-	var/list/default_area_turfs = turfs.Copy()
-	// Convert each custom area into a shuttle area, then remove the affected turfs from the list of turfs to add to the default area
-	var/list/shuttle_areas = list()
-	var/list/underlying_areas = list()
-	convert_areas_to_shuttle_areas(default_area_turfs, areas, shuttle_areas, underlying_areas, area_type)
-	for(var/turf/turf as anything in default_area_turfs)
-		underlying_areas[turf] = turf.loc
-
-	// Merge the remaining frame turfs into a default shuttle area
-	var/list/affected_areas = list()
-	var/area/default_area = new area_type()
-	default_area.setup(name)
-	set_turfs_to_area(default_area_turfs, default_area, affected_areas)
-	default_area.reg_in_areas_in_z()
-	default_area.create_area_lighting_objects()
-	default_area.power_change()
-	for(var/area_name in affected_areas)
-		var/area/merged_area = affected_areas[area_name]
-		for(var/obj/machinery/door/firedoor/firelock as anything in merged_area.firedoors)
-			firelock.CalculateAffectingAreas()
-		if(!merged_area.has_contained_turfs())
-			qdel(merged_area)
-	shuttle_areas.Insert(1, default_area)
-
-	var/obj/docking_port/mobile/mobile_port = new docking_port_type(origin, shuttle_areas)
-	mobile_port.underlying_areas_by_turf += underlying_areas
-	mobile_port.name = name
-	mobile_port.shuttle_id = id
-	mobile_port.port_direction = REVERSE_DIR(shuttle_dir)
-	mobile_port.dir = port_dir
-	mobile_port.calculate_docking_port_information()
-	mobile_port.turf_count = length(turfs)
-
-	for(var/turf/turf as anything in turfs)
-		turf.stack_below_baseturf(/turf/open/floor/plating, /turf/baseturf_skipover/shuttle)
-		SEND_SIGNAL(turf, COMSIG_TURF_ADDED_TO_SHUTTLE, mobile_port)
-		if(!turf.depth_to_find_baseturf(/turf/baseturf_skipover/shuttle))
-			continue
-		var/turf/new_ceiling = get_step_multiz(turf, UP) // check if a ceiling is needed
-		if(new_ceiling)
-			// generate ceiling
-			if(!(istype(new_ceiling, /turf/open/floor/engine/hull/ceiling) || new_ceiling.depth_to_find_baseturf(/turf/open/floor/engine/hull/ceiling)))
-				if(istype(new_ceiling, /turf/open/openspace) || istype(new_ceiling, /turf/open/space/openspace))
-					new_ceiling.place_on_top(/turf/open/floor/engine/hull/ceiling)
-				else
-					new_ceiling.stack_ontop_of_baseturf(/turf/open/openspace, /turf/open/floor/engine/hull/ceiling)
-					new_ceiling.stack_ontop_of_baseturf(/turf/open/space/openspace, /turf/open/floor/engine/hull/ceiling)
-
-	if(!istype(dock_at))
-		dock_at = new(origin)
-		var/area/origin_area = get_area(origin)
-		dock_at.name = origin_area.name
-		dock_at.dir = port_dir
-
-	mobile_port.register(replace, custom)
-
-	message_admins("[key_name(user)] has created a shuttle at [ADMIN_VERBOSEJMP(origin)].")
-	log_shuttle("[key_name(user)] has created a shuttle at [get_area(origin)].")
-
-	return mobile_port
-
-/proc/expand_shuttle(mob/user, obj/docking_port/mobile/shuttle, list/turfs, list/areas)
-	var/list/default_area_turfs = turfs.Copy()
-	// Convert each custom area into a shuttle area, then remove the affected turfs from the list of turfs to add to the default area
-	var/list/shuttle_areas = list()
-	var/list/underlying_areas = list()
-	convert_areas_to_shuttle_areas(default_area_turfs, areas, shuttle_areas, underlying_areas, shuttle.area_type)
-	for(var/turf/turf as anything in default_area_turfs)
-		underlying_areas[turf] = turf.loc
-
-	var/list/affected_areas = list()
-	var/area/default_area = shuttle.shuttle_areas[1]
-	set_turfs_to_area(default_area_turfs, default_area, affected_areas)
-	default_area.power_change()
-
-	for(var/area_name in affected_areas)
-		var/area/merged_area = affected_areas[area_name]
-		for(var/obj/machinery/door/firedoor/firelock as anything in merged_area.firedoors)
-			firelock.CalculateAffectingAreas()
-		if(!merged_area.has_contained_turfs())
-			qdel(merged_area)
-
-	for(var/area/shuttle_area as anything in shuttle_areas)
-		shuttle.shuttle_areas[shuttle_area] = TRUE
-
-	var/list/bounds = shuttle.return_coords()
-	var/x0 = bounds[1]
-	var/y0 = bounds[2]
-	var/x1 = bounds[3]
-	var/y1 = bounds[4]
-	var/bounds_need_recalculation
-	for(var/turf/turf as anything in turfs)
-		turf.stack_below_baseturf(/turf/open/floor/plating, /turf/baseturf_skipover/shuttle)
-		SEND_SIGNAL(turf, COMSIG_TURF_ADDED_TO_SHUTTLE, shuttle)
-		if(turf.depth_to_find_baseturf(/turf/baseturf_skipover/shuttle))
-			var/turf/new_ceiling = get_step_multiz(turf, UP) // check if a ceiling is needed
-			if(new_ceiling)
-				// generate ceiling
-				if(!(istype(new_ceiling, /turf/open/floor/engine/hull/ceiling) || new_ceiling.depth_to_find_baseturf(/turf/open/floor/engine/hull/ceiling)))
-					if(istype(new_ceiling, /turf/open/openspace) || istype(new_ceiling, /turf/open/space/openspace))
-						new_ceiling.place_on_top(/turf/open/floor/engine/hull/ceiling)
-					else
-						new_ceiling.stack_ontop_of_baseturf(/turf/open/openspace, /turf/open/floor/engine/hull/ceiling)
-						new_ceiling.stack_ontop_of_baseturf(/turf/open/space/openspace, /turf/open/floor/engine/hull/ceiling)
-		if(bounds_need_recalculation)
-			continue
-		if(!(ISINRANGE(turf.x, x0, x1) && ISINRANGE(turf.y, y0, y1)))
-			bounds_need_recalculation = TRUE
-
-	shuttle.turf_count += length(turfs)
-	shuttle.underlying_areas_by_turf += underlying_areas
-	SEND_SIGNAL(shuttle, COMSIG_SHUTTLE_EXPANDED, turfs)
-	if(bounds_need_recalculation)
-		QDEL_NULL(shuttle.assigned_transit)
-		shuttle.calculate_docking_port_information()
-	shuttle.initiate_docking(shuttle.get_docked(), force = TRUE)
-
-	message_admins("[key_name(user)] has expanded [shuttle] at [ADMIN_VERBOSEJMP(user)].")
-	log_shuttle("[key_name(user)] expanded [shuttle] at [get_area(user)].")

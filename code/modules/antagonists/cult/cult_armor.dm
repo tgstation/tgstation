@@ -268,12 +268,17 @@
 	var/mob/living/carbon/wearer = loc
 	if(!istype(wearer))
 		return ..()
-	if(IS_CULTIST(wearer) && gave_gravity)
+
+	if(IS_CULTIST(wearer))
+		if (!gave_gravity)
+			return
 		wearer.RemoveElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
 		gave_gravity = FALSE
 		return
+
 	if(gave_gravity)
 		return
+
 	gave_gravity = TRUE
 	wearer.AddElement(/datum/element/forced_gravity, gravity = 6, ignore_turf_gravity = TRUE, can_override = FALSE)
 	to_chat(wearer, span_warning("As you equip [src], everything begins to feel a whole lot heavier!"))

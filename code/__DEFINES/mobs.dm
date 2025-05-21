@@ -430,7 +430,7 @@
 #define OFFSET_HELD "held"
 
 //MINOR TWEAKS/MISC
-#define AGE_MIN 17 //youngest a character can be
+#define AGE_MIN 18 //youngest a character can be
 #define AGE_MAX 85 //oldest a character can be
 #define AGE_MINOR 20 //legal age of space drinking and smoking
 #define WIZARD_AGE_MIN 30 //youngest a wizard can be
@@ -1010,3 +1010,11 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 /// Distance which you can see someone's ID card
 /// Short enough that you can inspect over tables (bartender checking age)
 #define ID_EXAMINE_DISTANCE 3
+
+GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
+	/datum/pet_command/idle,
+	/datum/pet_command/free,
+	/datum/pet_command/protect_owner,
+	/datum/pet_command/follow,
+	/datum/pet_command/attack/mouse
+))
