@@ -528,7 +528,7 @@
 					dna.previous.Remove("blood_type")
 				dna.temporary_mutations.Remove(mut)
 				continue
-	for(var/datum/mutation/human/HM in dna.mutations)
+	for(var/datum/mutation/HM in dna.mutations)
 		if(HM?.timeout)
 			dna.remove_mutation(HM.type)
 

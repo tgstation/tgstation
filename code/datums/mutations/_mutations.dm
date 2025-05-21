@@ -21,7 +21,7 @@
 /datum/mutation
 	var/name
 
-/datum/mutation/human
+/datum/mutation
 	name = "mutation"
 	/// Description of the mutation
 	var/desc = "A mutation."
@@ -61,8 +61,8 @@
 	var/alias
 	/// Whether we can read it if it's active. To avoid cheesing with mutagen
 	var/scrambled = FALSE
-	/// The class of mutation (MUT_NORMAL, MUT_EXTRA, MUT_OTHER)
-	var/class
+	/// The sources of the mutation (found in defines/dna.dm)
+	var/list/sources = list()
 	/**
 	 * any mutations that might conflict.
 	 * put mutation typepath defines in here.
@@ -80,8 +80,6 @@
 	var/can_chromosome = CHROMOSOME_NONE
 	/// Name of the chromosome
 	var/chromosome_name
-	/// Is this mutation mutadone proof
-	var/mutadone_proof = FALSE
 
 	//Chromosome stuff - set to -1 to prevent people from changing it. Example: It'd be a waste to decrease cooldown on mutism
 	/// genetic stability coeff
@@ -97,23 +95,35 @@
 	/// List of traits that are added or removed by the mutation with GENETIC_TRAIT source.
 	var/list/mutation_traits
 
-/datum/mutation/human/New(class = MUT_OTHER, timer, datum/mutation/human/copymut)
+/datum/mutation/New()
 	. = ..()
-	src.class = class
-	if(timer)
-		addtimer(CALLBACK(src, PROC_REF(remove)), timer)
-		timeout = timer
-	if(copymut && istype(copymut, /datum/mutation/human))
-		copy_mutation(copymut)
-	update_valid_chromosome_list()
 
-/datum/mutation/human/Destroy()
+/datum/mutation/Destroy()
 	power_path = null
 	dna = null
 	owner = null
 	return ..()
 
-/datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/acquirer)
+/datum/mutation/proc/make_copy(list/new_sources = list(MUT_EXTRA))
+	if(!islist(new_sources))
+		new_sources = list(new_sources)
+
+	var/datum/mutation/copy = new type
+
+	copy.chromosome_name = chromosome_name
+	copy.stabilizer_coeff = stabilizer_coeff
+	copy.synchronizer_coeff = synchronizer_coeff
+	copy.power_coeff = power_coeff
+	copy.energy_coeff = energy_coeff
+	copy.mutadone_proof = mutadone_proof
+	can_chromosome = can_chromosome
+	copy.valid_chrom_list = valid_chrom_list
+	copy.sources = new_sources
+	update_valid_chromosome_list()
+
+	return copy
+
+/datum/mutation/proc/on_acquiring(mob/living/carbon/human/acquirer)
 	if(!acquirer || !istype(acquirer) || acquirer.stat == DEAD || (src in acquirer.dna.mutations))
 		return FALSE
 	if(species_allowed && !species_allowed.Find(acquirer.dna.species.id))
@@ -122,7 +132,7 @@
 		return FALSE
 	if(limb_req && !acquirer.get_bodypart(limb_req))
 		return FALSE
-	for(var/datum/mutation/human/mewtayshun as anything in acquirer.dna.mutations) //check for conflicting powers
+	for(var/datum/mutation/mewtayshun as anything in acquirer.dna.mutations) //check for conflicting powers
 		if(!(mewtayshun.type in conflicts) && !(type in mewtayshun.conflicts))
 			continue
 		to_chat(acquirer, span_warning("You feel your genes resisting something."))
@@ -146,13 +156,13 @@
 		owner.add_traits(mutation_traits, GENETIC_MUTATION)
 	return TRUE
 
-/datum/mutation/human/proc/get_visual_indicator()
+/datum/mutation/proc/get_visual_indicator()
 	return
 
-/datum/mutation/human/proc/on_life(seconds_per_tick, times_fired)
+/datum/mutation/proc/on_life(seconds_per_tick, times_fired)
 	return
 
-/datum/mutation/human/proc/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/proc/on_losing(mob/living/carbon/human/owner)
 	if(!istype(owner) || !(owner.dna.mutations.Remove(src)))
 		return TRUE
 	. = FALSE
@@ -175,7 +185,7 @@
 	return
 
 /mob/living/carbon/human/update_mutations_overlay()
-	for(var/datum/mutation/human/mutation in dna.mutations)
+	for(var/datum/mutation/mutation in dna.mutations)
 		if(mutation.species_allowed && !mutation.species_allowed.Find(dna.species.id))
 			dna.force_lose(mutation) //shouldn't have that mutation at all
 			continue
@@ -197,7 +207,7 @@
  * Called after on_aquiring, or when a chromosome is applied.
  * returns the instance of 'power_path' for children calls to use without calling locate() again.
  */
-/datum/mutation/human/proc/setup()
+/datum/mutation/proc/setup()
 	if(!power_path || QDELETED(owner))
 		return
 	var/datum/action/cooldown/modified_power = locate(power_path) in owner.actions
@@ -206,19 +216,7 @@
 	modified_power.cooldown_time = initial(modified_power.cooldown_time) * GET_MUTATION_ENERGY(src)
 	return modified_power
 
-/datum/mutation/human/proc/copy_mutation(datum/mutation/human/mutation_to_copy)
-	if(!mutation_to_copy)
-		return
-	chromosome_name = mutation_to_copy.chromosome_name
-	stabilizer_coeff = mutation_to_copy.stabilizer_coeff
-	synchronizer_coeff = mutation_to_copy.synchronizer_coeff
-	power_coeff = mutation_to_copy.power_coeff
-	energy_coeff = mutation_to_copy.energy_coeff
-	mutadone_proof = mutation_to_copy.mutadone_proof
-	can_chromosome = mutation_to_copy.can_chromosome
-	valid_chrom_list = mutation_to_copy.valid_chrom_list
-
-/datum/mutation/human/proc/remove_chromosome()
+/datum/mutation/proc/remove_chromosome()
 	stabilizer_coeff = initial(stabilizer_coeff)
 	synchronizer_coeff = initial(synchronizer_coeff)
 	power_coeff = initial(power_coeff)
@@ -227,13 +225,13 @@
 	can_chromosome = initial(can_chromosome)
 	chromosome_name = null
 
-/datum/mutation/human/proc/remove()
+/datum/mutation/proc/remove()
 	if(dna)
 		dna.force_lose(src)
 	else
 		qdel(src)
 
-/datum/mutation/human/proc/grant_power()
+/datum/mutation/proc/grant_power()
 	if(!ispath(power_path) || !owner)
 		return FALSE
 
@@ -250,7 +248,7 @@
 
 // Runs through all the coefficients and uses this to determine which chromosomes the
 // mutation can take. Stores these as text strings in a list.
-/datum/mutation/human/proc/update_valid_chromosome_list()
+/datum/mutation/proc/update_valid_chromosome_list()
 	valid_chrom_list.Cut()
 
 	if(can_chromosome == CHROMOSOME_NEVER)

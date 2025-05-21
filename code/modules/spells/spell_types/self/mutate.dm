@@ -46,7 +46,7 @@
 	invocation = "BIRUZ BENNAR!"
 	invocation_type = INVOCATION_SHOUT
 
-	mutations_to_add = list(/datum/mutation/human/laser_eyes, /datum/mutation/human/hulk/wizardly, /datum/mutation/human/gigantism)
+	mutations_to_add = list(/datum/mutation/laser_eyes, /datum/mutation/hulk/wizardly, /datum/mutation/gigantism)
 	mutation_duration = 30 SECONDS
 
 /datum/action/cooldown/spell/apply_mutations/mutate/cast(mob/living/carbon/human/cast_on)

@@ -112,7 +112,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
 	var/fixed_mut_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
-	var/inert_mutation = /datum/mutation/human/dwarfism
+	var/inert_mutation = /datum/mutation/dwarfism
 	///Used to set the mob's death_sound upon species change
 	var/death_sound
 	///Special sound for grabbing

@@ -1122,8 +1122,8 @@
 		/datum/action/cooldown/spell/smoke/lesser
 	)
 	mutations_to_add = list(
-		/datum/mutation/human/medieval,
-		/datum/mutation/human/lay_on_hands, // useless, but fun
+		/datum/mutation/medieval,
+		/datum/mutation/lay_on_hands, // useless, but fun
 	)
 
 // Rat'var Apostate

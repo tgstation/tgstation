@@ -18,7 +18,7 @@
 	///The chance of a specific mutation of being generated compared to others when generate_chromosome() is called.
 	var/weight = 5
 
-/obj/item/chromosome/proc/can_apply(datum/mutation/human/mutation)
+/obj/item/chromosome/proc/can_apply(datum/mutation/mutation)
 	if(!mutation || QDELETED(mutation.owner) || mutation.can_chromosome != CHROMOSOME_NONE)
 		return FALSE
 	if(!isnull(stabilizer_coeff) && (mutation.stabilizer_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE))
@@ -30,7 +30,7 @@
 	if(!isnull(energy_coeff) && (mutation.energy_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE))
 		return TRUE
 
-/obj/item/chromosome/proc/apply(datum/mutation/human/mutation)
+/obj/item/chromosome/proc/apply(datum/mutation/mutation)
 	if(mutation.stabilizer_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE)
 		mutation.stabilizer_coeff = stabilizer_coeff
 	if(mutation.synchronizer_coeff != MUTATION_COEFFICIENT_UNMODIFIABLE)

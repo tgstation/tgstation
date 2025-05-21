@@ -697,7 +697,7 @@
 
 /mob/living/carbon/human/fully_heal(heal_flags = HEAL_ALL)
 	if(heal_flags & HEAL_NEGATIVE_MUTATIONS)
-		for(var/datum/mutation/human/existing_mutation in dna.mutations)
+		for(var/datum/mutation/existing_mutation in dna.mutations)
 			if(existing_mutation.quality != POSITIVE && existing_mutation.remove_on_aheal)
 				dna.remove_mutation(existing_mutation)
 
@@ -759,8 +759,8 @@
 		if(!check_rights(R_SPAWN))
 			return
 		var/list/options = list("Clear"="Clear")
-		for(var/x in subtypesof(/datum/mutation/human))
-			var/datum/mutation/human/mut = x
+		for(var/x in subtypesof(/datum/mutation))
+			var/datum/mutation/mut = x
 			var/name = initial(mut.name)
 			options[dna.check_mutation(mut) ? "[name] (Remove)" : "[name] (Add)"] = mut
 		var/result = input(usr, "Choose mutation to add/remove","Mutation Mod") as null|anything in sort_list(options)
@@ -1060,12 +1060,9 @@
 /mob/living/carbon/human/proc/crewlike_monkify()
 	if(!ismonkey(src))
 		set_species(/datum/species/monkey)
-	dna.add_mutation(/datum/mutation/human/clever)
 	// Can't make them human or nonclever. At least not with the easy and boring way out.
-	for(var/datum/mutation/human/mutation as anything in dna.mutations)
-		mutation.mutadone_proof = TRUE
-		mutation.instability = 0
-		mutation.class = MUT_OTHER
+	dna.add_mutation(/datum/mutation/clever, MUT_OTHER)
+	dna.add_mutation(/datum/mutation/monky, MUT_OTHER)
 
 	add_traits(list(TRAIT_NO_DNA_SCRAMBLE, TRAIT_BADDNA, TRAIT_BORN_MONKEY), SPECIES_TRAIT)
 

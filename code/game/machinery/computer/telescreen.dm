@@ -101,7 +101,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	var/can_range = FALSE
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		if(carbon_user.dna?.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(user, src))
+		if(carbon_user.dna?.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(user, src))
 			can_range = TRUE
 	if(HAS_SILICON_ACCESS(user) || (user.interaction_range && user.interaction_range >= get_dist(user, src)))
 		can_range = TRUE

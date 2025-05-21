@@ -587,14 +587,14 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!affected_carbon.dna)
 		return
 	var/list/speech_options = list(
-		/datum/mutation/human/swedish,
-		/datum/mutation/human/unintelligible,
-		/datum/mutation/human/stoner,
-		/datum/mutation/human/medieval,
-		/datum/mutation/human/wacky,
-		/datum/mutation/human/piglatin,
-		/datum/mutation/human/nervousness,
-		/datum/mutation/human/mute,
+		/datum/mutation/swedish,
+		/datum/mutation/unintelligible,
+		/datum/mutation/stoner,
+		/datum/mutation/medieval,
+		/datum/mutation/wacky,
+		/datum/mutation/piglatin,
+		/datum/mutation/nervousness,
+		/datum/mutation/mute,
 		)
 	speech_options = shuffle(speech_options)
 	for(var/option in speech_options)

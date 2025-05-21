@@ -200,8 +200,8 @@
 			if("monkey")
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					H.dna.add_mutation(/datum/mutation/human/race, MUT_NORMAL)
-					H.dna.activate_mutation(/datum/mutation/human/race)
+					H.dna.add_mutation(/datum/mutation/race, MUT_NORMAL)
+					H.dna.activate_mutation(/datum/mutation/race)
 				else
 					M.change_mob_type( /mob/living/carbon/human/species/monkey , null, null, delmob )
 			if("robot")
