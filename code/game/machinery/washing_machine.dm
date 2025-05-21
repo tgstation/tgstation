@@ -385,7 +385,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 				update_appearance()
 			if(istype(L, /mob/living/carbon/human))
 				if(user.grab_state < GRAB_AGGRESSIVE)
-					to_chat(user, span_warning("You need a tighter grip!"))
+					balloon_alert(user, "grab harder!")
 					return
 
 				L.visible_message(span_danger("[user] is trying to force [L] into the washing machine!"))
