@@ -50,7 +50,7 @@
 		if(!seen)
 			P.mobs_seen -= seen_ref
 			continue
-		if(!isobserver(seen) && !isghostspecies(seen))
+		if(!isobserver(seen) && !isspirit(seen))
 			continue
 		set_custom_materials(list(/datum/material/hauntium =SHEET_MATERIAL_AMOUNT))
 		grind_results = list(/datum/reagent/hauntium = 20)

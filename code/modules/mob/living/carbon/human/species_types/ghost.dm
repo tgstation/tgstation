@@ -1,6 +1,6 @@
-///Spirit mob that lacks legs but spooks around the station.
-/datum/species/ghost
-	name = "Ghost"
+///Spirit mob that lacks legs but still roams the station as part of the unliving.
+/datum/species/spirit
+	name = "Spirit"
 	id = SPECIES_GHOST
 	inherent_traits = list(
 		TRAIT_GENELESS,
@@ -13,17 +13,15 @@
 		TRAIT_UNHUSKABLE,
 		TRAIT_NO_FLOATING_ANIM,
 		TRAIT_MOVE_FLYING,
-		TRAIT_SEE_BLESSED_TILES,
 	)
 	inherent_biotypes = MOB_SPIRIT
 	no_equip_flags = ITEM_SLOT_FEET
-	changesource_flags = MIRROR_BADMIN | MIRROR_PRIDE | MIRROR_MAGIC
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | SLIME_EXTRACT
 	sexes = FALSE
 	meat = /obj/item/ectoplasm
 
 	mutantheart = null
 	mutantappendix = null
-
 	mutantears = /obj/item/organ/ears/ghost
 	mutantstomach = /obj/item/organ/stomach/ghost
 	mutantliver = /obj/item/organ/liver/ghost
@@ -38,36 +36,82 @@
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/ghost,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/ghost,
 	)
-	///Innate passthrough ability given to ghosts that allows them to phase but drops their stuff.
-	var/datum/action/innate/toggle_passthrough/passthrough_ability
 
-/datum/species/ghost/check_roundstart_eligible()
-	if(check_holidays(HALLOWEEN))
+	///Boolean on whether this species type is available at roundstart during halloween, used to deny subtypes.
+	var/halloween_exclusive = TRUE
+
+/datum/species/spirit/check_roundstart_eligible()
+	if(check_holidays(HALLOWEEN) && halloween_exclusive)
 		return TRUE
 	return ..()
 
-/datum/species/ghost/on_species_gain(mob/living/carbon/human/new_ghost, datum/species/old_species, pref_load, regenerate_icons)
-	. = ..()
-	passthrough_ability = new(src)
-	passthrough_ability.Grant(new_ghost)
-	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
-		blessed_hud.check_hud(new_ghost)
+/datum/species/spirit/get_physical_attributes()
+	return "Spirits are the spiritual remains of long-passed entities. They lack legs, can fly, but still eat, breathe, hear and see."
 
-/datum/species/ghost/on_species_loss(mob/living/carbon/human/former_ghost, datum/species/new_species, pref_load)
-	. = ..()
-	QDEL_NULL(passthrough_ability)
-	//this has to be called after parent so inherent traits is cleared before we update our HUDs
-	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
-		blessed_hud.check_hud(former_ghost)
+/datum/species/spirit/get_species_description()
+	return "Spirits are spirits of long-dead creatures whom, for one reason or another, still roam around."
 
-/datum/species/ghost/get_physical_attributes()
+/datum/species/spirit/get_species_lore()
+	return list(
+		"Spirits are the non-physical remains that linger onto their mortal coil. \
+		They still need their protein and organs to keep themselves \"alive\", \
+		which leads to many of them still believing they are still part of the living, \
+		whether or not they are is a very open-ended debate between philosophers.",
+	)
+
+/datum/species/spirit/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = "body",
+		SPECIES_PERK_NAME = "Leg-less",
+		SPECIES_PERK_DESC = "Ghosts lack legs and float, preventing you from falling into holes in the ground.",
+	))
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+		SPECIES_PERK_ICON = "shoe-prints",
+		SPECIES_PERK_NAME = "No Feet",
+		SPECIES_PERK_DESC = "You lack feet, therefore the ability to wear any shoes!",
+	))
+
+	return to_add
+
+/**
+ * Ghost subtype
+ * This is the type of ghost that can actually phase through walls,
+ * exclusive to magic mirrors & admins, as roundstart-ability to phase anywhere
+ * is not something that is generally fun to play against.
+ */
+/datum/species/spirit/ghost
+	name = "Ghost"
+	id = SPECIES_GHOST_PHASING
+	inherent_traits = list(
+		TRAIT_GENELESS,
+		TRAIT_NEVER_WOUNDED,
+		TRAIT_NOBLOOD,
+		TRAIT_NODISMEMBER,
+		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_PLASMA_TRANSFORM,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_UNHUSKABLE,
+		TRAIT_NO_FLOATING_ANIM,
+		TRAIT_MOVE_FLYING,
+		//ghost-unique
+		TRAIT_SEE_BLESSED_TILES,
+	)
+	changesource_flags = MIRROR_BADMIN | MIRROR_PRIDE | MIRROR_MAGIC
+	halloween_exclusive = FALSE
+
+	///Innate passthrough ability given to ghosts that allows them to phase but drops their stuff.
+	var/datum/action/innate/toggle_passthrough/passthrough_ability
+
+/datum/species/spirit/ghost/get_physical_attributes()
 	return "Ghosts are the spiritual remains of long-passed entities. They lack legs, can fly, can choose at will to become opaque, \
 		but still eat, breathe, hear and see."
 
-/datum/species/ghost/get_species_description()
-	return "Ghosts are spirits of long-dead creatures whom, for one reason or another, still roam around."
-
-/datum/species/ghost/get_species_lore()
+/datum/species/spirit/ghost/get_species_lore()
 	return list(
 		"Ghosts are one of the spookiest creatures known in the galaxy. \
 		While they still need their protein to sustain themselves, they are able to control their own bodies, \
@@ -76,8 +120,22 @@
 		to keep it private.",
 	)
 
-/datum/species/ghost/create_pref_unique_perks()
-	var/list/to_add = list()
+/datum/species/spirit/ghost/on_species_gain(mob/living/carbon/human/new_ghost, datum/species/old_species, pref_load, regenerate_icons)
+	. = ..()
+	passthrough_ability = new(src)
+	passthrough_ability.Grant(new_ghost)
+	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+		blessed_hud.check_hud(new_ghost)
+
+/datum/species/spirit/ghost/on_species_loss(mob/living/carbon/human/former_ghost, datum/species/new_species, pref_load)
+	. = ..()
+	QDEL_NULL(passthrough_ability)
+	//this has to be called after parent so inherent traits is cleared before we update our HUDs
+	for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+		blessed_hud.check_hud(former_ghost)
+
+/datum/species/spirit/ghost/create_pref_unique_perks()
+	var/list/to_add = ..()
 
 	to_add += list(list(
 		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
@@ -85,13 +143,6 @@
 		SPECIES_PERK_NAME = "Incorporeal",
 		SPECIES_PERK_DESC = "Ghost are able to control their body to the extent where you can willingly make yourself able \
 			to phase through anything, including your own equipment.",
-	))
-
-	to_add += list(list(
-		SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
-		SPECIES_PERK_ICON = "shoe-prints",
-		SPECIES_PERK_NAME = "No Feet",
-		SPECIES_PERK_DESC = "You lack feet, therefore the ability to wear any shoes!",
 	))
 
 	return to_add
