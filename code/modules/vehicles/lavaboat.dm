@@ -11,6 +11,7 @@
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
 	can_buckle = TRUE
 	key_type = /obj/item/oar
+	movement_type = FLOATING
 
 /obj/vehicle/ridden/lavaboat/Initialize(mapload)
 	. = ..()
