@@ -153,7 +153,6 @@ export const ListInputModal = (props: ListInputModalProps) => {
             autoFocus
             autoSelect
             fluid
-            expensive
             onBlur={() => {
               act('submit', { entry: filteredItems[selected] });
             }}
