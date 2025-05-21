@@ -214,11 +214,11 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		update_appearance()
 		. = TRUE
 
-/obj/machinery/washing_machine/proc/wash_cycle()
+/obj/machinery/washing_machine/proc/wash_cycle(mob/user)
 	for(var/X in contents)
 		var/atom/movable/AM = X
 		AM.wash(CLEAN_WASH)
-		AM.machine_wash(src)
+		AM.machine_wash(src, user)
 
 	//if we had the ability to brainwash, remove that now
 	REMOVE_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
@@ -280,6 +280,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	washer.bloody_mess = TRUE
 	investigate_log("has been gibbed by a washing machine.", INVESTIGATE_DEATHS)
 	gib()
+
+/mob/living/carbon/human/machine_wash(obj/machinery/washing_machine/washer, mob/user)
+	adjust_wet_stacks(8)
+	adjust_disgust(40, DISGUST_LEVEL_VERYDISGUSTED)
+	adjustOxyLoss(12)
+	log_combat(user, src, "machine washed (oxy)")
 
 /obj/item/machine_wash(obj/machinery/washing_machine/washer)
 	if(washer.color_source)
@@ -377,6 +383,18 @@ GLOBAL_LIST_INIT(dye_registry, list(
 			if(istype(L, /mob/living/basic/pet))
 				L.forceMove(src)
 				update_appearance()
+			if(istype(L, /mob/living/carbon/human))
+				if(user.grab_state < GRAB_AGGRESSIVE)
+					to_chat(user, span_warning("You need a tighter grip!"))
+					return
+
+				L.visible_message(span_danger("[user] is trying to force [L] into the washing machine!"))
+				log_game("[key_name_and_tag(user)] is forcing [key_name_and_tag(L)] into a washing machine")
+				if(!do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM))
+					L = null
+					return
+				L.forceMove(src)
+				update_appearance()
 		return
 
 	if(!state_open)
@@ -405,7 +423,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(HAS_TRAIT(user, TRAIT_BRAINWASHING))
 		ADD_TRAIT(src, TRAIT_BRAINWASHING, SKILLCHIP_TRAIT)
 	update_appearance()
-	addtimer(CALLBACK(src, PROC_REF(wash_cycle)), 20 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(wash_cycle), user), 20 SECONDS)
 	START_PROCESSING(SSfastprocess, src)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
