@@ -82,17 +82,17 @@
 /// Empties the blood_DNA list
 /datum/forensics/proc/wipe_blood_DNA()
 	if(isnull(blood_DNA))
-		return FALSE
+		return NONE
 
-	blood_DNA = NONE
+	blood_DNA = null
 	return COMPONENT_CLEANED
 
 /// Empties the fibers list
 /datum/forensics/proc/wipe_fibers()
 	if(isnull(fibers))
-		return FALSE
+		return NONE
 
-	fibers = NONE
+	fibers = null
 	return COMPONENT_CLEANED
 
 /// Handles cleaning up the various forensic types
