@@ -52,9 +52,9 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 	for(var/ruleset_type in subtypesof(/datum/dynamic_ruleset/midround))
 		var/datum/dynamic_ruleset/midround/midround = ruleset_type
 		switch(initial(midround.midround_type))
-			if(MIDROUND_RULESET_STYLE_HEAVY)
+			if(HEAVY_MIDROUND)
 				data["all_rulesets"][HEAVY_MIDROUND] += list(ruleset_to_data(ruleset_type))
-			if(MIDROUND_RULESET_STYLE_LIGHT)
+			if(LIGHT_MIDROUND)
 				data["all_rulesets"][LIGHT_MIDROUND] += list(ruleset_to_data(ruleset_type))
 	for(var/ruleset_type in subtypesof(/datum/dynamic_ruleset/latejoin))
 		data["all_rulesets"][LATEJOIN] += list(ruleset_to_data(ruleset_type))

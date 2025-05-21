@@ -13,8 +13,8 @@
 
 	for (var/datum/dynamic_ruleset/midround/ruleset as anything in subtypesof(/datum/dynamic_ruleset/midround))
 		var/midround_ruleset_style = initial(ruleset.midround_type)
-		if (midround_ruleset_style != MIDROUND_RULESET_STYLE_HEAVY && midround_ruleset_style != MIDROUND_RULESET_STYLE_LIGHT)
-			TEST_FAIL("[ruleset] has an invalid midround_ruleset_style, it should be MIDROUND_RULESET_STYLE_HEAVY or MIDROUND_RULESET_STYLE_LIGHT")
+		if (midround_ruleset_style != HEAVY_MIDROUND && midround_ruleset_style != LIGHT_MIDROUND)
+			TEST_FAIL("[ruleset] has an invalid midround_ruleset_style, it should be HEAVY_MIDROUND or LIGHT_MIDROUND")
 
 /// Verifies that dynamic rulesets have unique antag_flag.
 /datum/unit_test/dynamic_unique_antag_flags

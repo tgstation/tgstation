@@ -35,12 +35,6 @@
 /// Tier 4, maximum amount of antags
 #define DYNAMIC_TIER_HIGH 4
 
-// Midround types
-/// This is a "heavy" midround ruleset, and should be run later into the round
-#define MIDROUND_RULESET_STYLE_HEAVY "Heavy"
-/// This is a "light" midround ruleset, and should be run early into the round
-#define MIDROUND_RULESET_STYLE_LIGHT "Light"
-
 // Ruleset flags
 /// Ruleset denotes that it involves an outside force spawning in to attack the station
 #define RULESET_INVADER (1<<0)

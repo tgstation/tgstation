@@ -1,5 +1,5 @@
 /datum/dynamic_ruleset/midround
-	/// MIDROUND_RULESET_STYLE_LIGHT or MIDROUND_RULESET_STYLE_HEAVY - determines which pool it enters
+	/// LIGHT_MIDROUND or HEAVY_MIDROUND - determines which pool it enters
 	var/midround_type
 	/// If the false alarm event can pick this ruleset to trigger, well, a false alarm
 	var/false_alarm_able = FALSE
@@ -21,7 +21,7 @@
 /datum/dynamic_ruleset/midround/spiders
 	name = "Spiders"
 	config_tag = "Spiders"
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	midround_type = HEAVY_MIDROUND
 	false_alarm_able = TRUE
 	ruleset_flags = RULESET_INVADER
 	weight = list(
@@ -59,7 +59,7 @@
 /datum/dynamic_ruleset/midround/pirates
 	name = "Pirates"
 	config_tag = "Light Pirates"
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	midround_type = LIGHT_MIDROUND
 	jobban_flag = ROLE_TRAITOR
 	ruleset_flags = RULESET_INVADER
 	weight = 3
@@ -79,7 +79,7 @@
 /datum/dynamic_ruleset/midround/pirates/heavy
 	name = "Pirates"
 	config_tag = "Heavy Pirates"
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	midround_type = HEAVY_MIDROUND
 	jobban_flag = ROLE_TRAITOR
 	ruleset_flags = RULESET_INVADER
 	weight = 3
@@ -238,7 +238,7 @@
 	name = "Wizard"
 	config_tag = "Midround Wizard"
 	preview_antag_datum = /datum/antagonist/wizard
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	midround_type = HEAVY_MIDROUND
 	candidate_role = "Wizard"
 	pref_flag = ROLE_WIZARD_MIDROUND
 	jobban_flag = ROLE_WIZARD
@@ -261,7 +261,7 @@
 	name = "Nuclear Operatives"
 	config_tag = "Midround Nukeops"
 	preview_antag_datum = /datum/antagonist/nukeop
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	midround_type = HEAVY_MIDROUND
 	candidate_role = "Operative"
 	pref_flag = ROLE_OPERATIVE_MIDROUND
 	jobban_flag = ROLE_NUCLEAR_OPERATIVE
@@ -342,7 +342,7 @@
 	name = "Blob"
 	config_tag = "Blob"
 	preview_antag_datum = /datum/antagonist/blob
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	midround_type = HEAVY_MIDROUND
 	false_alarm_able = TRUE
 	pref_flag = ROLE_BLOB
 	ruleset_flags = RULESET_INVADER
@@ -378,7 +378,7 @@
 	name = "Alien Infestation"
 	config_tag = "Xenomorph"
 	preview_antag_datum = /datum/antagonist/xeno
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	midround_type = HEAVY_MIDROUND
 	false_alarm_able = TRUE
 	pref_flag = ROLE_ALIEN
 	ruleset_flags = RULESET_INVADER
@@ -443,7 +443,7 @@
 	name = "Nightmare"
 	config_tag = "Nightmare"
 	preview_antag_datum = /datum/antagonist/nightmare
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_NIGHTMARE
 	ruleset_flags = RULESET_INVADER
 	weight = 5
@@ -464,7 +464,7 @@
 	name = "Space Dragon"
 	config_tag = "Space Dragon"
 	preview_antag_datum = /datum/antagonist/space_dragon
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	midround_type = HEAVY_MIDROUND
 	false_alarm_able = TRUE
 	pref_flag = ROLE_SPACE_DRAGON
 	ruleset_flags = RULESET_INVADER
@@ -503,7 +503,7 @@
 	name = "Abductors"
 	config_tag = "Abductors"
 	preview_antag_datum = /datum/antagonist/abductor
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_ABDUCTOR
 	ruleset_flags = RULESET_INVADER
 	weight = 5
@@ -533,7 +533,7 @@
 	name = "Space Ninja"
 	config_tag = "Space Ninja"
 	preview_antag_datum = /datum/antagonist/ninja
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	midround_type = HEAVY_MIDROUND
 	pref_flag = ROLE_NINJA
 	ruleset_flags = RULESET_INVADER
 	weight = list(
@@ -564,7 +564,7 @@
 	name = "Revenant"
 	config_tag = "Revenant"
 	preview_antag_datum = /datum/antagonist/revenant
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_REVENANT
 	ruleset_flags = RULESET_INVADER
 	weight = 5
@@ -613,7 +613,7 @@
 	name = "Space Changeling"
 	config_tag = "Midround Changeling"
 	preview_antag_datum = /datum/antagonist/changeling/space
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	midround_type = LIGHT_MIDROUND
 	candidate_role = "Changeling"
 	pref_flag = ROLE_CHANGELING_MIDROUND
 	jobban_flag = ROLE_CHANGELING
@@ -633,7 +633,7 @@
 	name = "Paradox Clone"
 	config_tag = "Paradox Clone"
 	preview_antag_datum = /datum/antagonist/paradox_clone
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_PARADOX_CLONE
 	ruleset_flags = RULESET_INVADER
 	weight = 5
@@ -677,7 +677,7 @@
 	name = "Voidwalker"
 	config_tag = "Voidwalker"
 	preview_antag_datum = /datum/antagonist/voidwalker
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_VOIDWALKER
 	ruleset_flags = RULESET_INVADER
 	weight = 5
@@ -699,7 +699,7 @@
 	name = "Fugitive"
 	config_tag = "Fugitives"
 	preview_antag_datum = /datum/antagonist/fugitive
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_FUGITIVE
 	ruleset_flags = RULESET_INVADER
 	weight = 3
@@ -869,7 +869,7 @@
 	name = "Morph"
 	config_tag = "Morph"
 	preview_antag_datum = /datum/antagonist/morph
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	midround_type = LIGHT_MIDROUND
 	candidate_role = "Morphling"
 	jobban_flag = ROLE_ALIEN
 	ruleset_flags = RULESET_INVADER
@@ -892,7 +892,7 @@
 	config_tag = "Slaughter Demon"
 	candidate_role = "Slaughter Demon"
 	preview_antag_datum = /datum/antagonist/slaughter
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	midround_type = HEAVY_MIDROUND
 	jobban_flag = ROLE_ALIEN
 	ruleset_flags = RULESET_INVADER
 	weight = 0
@@ -955,7 +955,7 @@
 	name = "Traitor"
 	config_tag = "Midround Traitor"
 	preview_antag_datum = /datum/antagonist/traitor
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	midround_type = LIGHT_MIDROUND
 	false_alarm_able = TRUE
 	pref_flag = ROLE_SLEEPER_AGENT
 	jobban_flag = ROLE_TRAITOR
@@ -978,7 +978,7 @@
 	name = "Malfunctioning AI"
 	config_tag = "Midround Malfunctioning AI"
 	preview_antag_datum = /datum/antagonist/malf_ai
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	midround_type = HEAVY_MIDROUND
 	pref_flag = ROLE_MALF_MIDROUND
 	jobban_flag = ROLE_MALF
 	weight = list(
@@ -1002,7 +1002,7 @@
 	name = "Blob Infection"
 	config_tag = "Midround Blob"
 	preview_antag_datum = /datum/antagonist/blob/infection
-	midround_type = MIDROUND_RULESET_STYLE_HEAVY
+	midround_type = HEAVY_MIDROUND
 	pref_flag = ROLE_BLOB_INFECTION
 	jobban_flag = ROLE_BLOB
 	weight = list(
@@ -1025,7 +1025,7 @@
 	name = "Obsessed"
 	config_tag = "Midround Obsessed"
 	preview_antag_datum = /datum/antagonist/obsessed
-	midround_type = MIDROUND_RULESET_STYLE_LIGHT
+	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_OBSESSED
 	blacklisted_roles = list()
 	weight = list(
