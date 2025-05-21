@@ -207,3 +207,10 @@
 		"Nuclear Particles" = "This reaction emits extremely high energy nuclear particles, up to [2 * PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM] per second per unique gas mixture.",
 		"Temperature" = "Can only occur between [PN_BZASE_MIN_TEMP] - [PN_BZASE_MAX_TEMP] kelvin.",
 	)
+
+/datum/gas_reaction/antinoblium_replication/init_factors()
+	factor = list(
+		/datum/gas/antinoblium = "[MOLES_GAS_VISIBLE] moles of antinoblium is needed to replicate itself. Requires other gases to be converted to antinoblium.",
+		"Temperature" = "Can only occur above [REACTION_OPPRESSION_MIN_TEMP] Kelvin."
+	)
+
