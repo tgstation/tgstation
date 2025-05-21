@@ -1,0 +1,6 @@
+author: "OrbisAnima"
+delete-after: True
+changes:
+  - rscadd: "To future proof and in case we get long rounds, all limited fishing items regenerate after 30 minutes if they dont have a regeneration time."
+  - rscadd: "Skeleton keys, Tendril chests, Runite can be found in Lava and Plasma lakes now, although they are rare!"
+  - balance: "Explosions and NPC's no longer nets you uniques from fishing... Fish if you want them!"
