@@ -193,8 +193,10 @@
 	if(isatom(wound_source))
 		var/atom/wound_atom = wound_source
 		src.wound_source = wound_atom.name
-	else
+	else if(istext(wound_source))
 		src.wound_source = wound_source
+	else
+		src.wound_source = "Unknown"
 
 	set_victim(L.owner)
 	set_limb(L, replacing)
