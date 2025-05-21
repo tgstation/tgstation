@@ -341,7 +341,7 @@
 
 	if(radius > max_radius)//the generator can no longer function at this capacity
 		deactivate_shields()
-		radius = max_radius
+		radius = round(max_radius)
 		return
 	calculate_regeneration()
 
