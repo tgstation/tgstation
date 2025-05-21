@@ -39,8 +39,12 @@
 /// When something enters the water set up to start drowning it
 /datum/element/swimming_tile/proc/enter_water(atom/source, mob/living/swimmer)
 	SIGNAL_HANDLER
-	if (!istype(swimmer))
+
+	if(!istype(swimmer))
 		return
+	if(swimmer.movement_type & (VENTCRAWLING|FLOATING|FLYING))
+		return
+
 	RegisterSignal(swimmer, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
 	if(HAS_TRAIT(swimmer, TRAIT_IMMERSED))
 		dip_in(swimmer)
@@ -48,6 +52,7 @@
 /// When something exits the water it probably shouldn't drowning
 /datum/element/swimming_tile/proc/out_of_water(atom/source, mob/living/landlubber)
 	SIGNAL_HANDLER
+
 	UnregisterSignal(landlubber, list(SIGNAL_ADDTRAIT(TRAIT_IMMERSED)))
 
 /// When we've validated that someone is actually in the water start drowning the-I mean, start swimming!
