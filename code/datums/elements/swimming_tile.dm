@@ -42,7 +42,7 @@
 
 	if(!istype(swimmer))
 		return
-	if(swimmer.movement_type & (VENTCRAWLING|FLOATING|FLYING))
+	if(swimmer.movement_type & (VENTCRAWLING|MOVETYPES_NOT_TOUCHING_GROUND))
 		return
 
 	RegisterSignal(swimmer, SIGNAL_ADDTRAIT(TRAIT_IMMERSED), PROC_REF(dip_in))
