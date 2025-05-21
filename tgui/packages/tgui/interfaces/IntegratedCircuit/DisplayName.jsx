@@ -23,7 +23,7 @@ export const DisplayName = (props) => {
     <Box {...rest}>
       <Flex direction="column">
         <Flex.Item textAlign={isOutput ? 'right' : 'left'}>
-          {(hasInput && (
+          {hasInput ? (
             <InputComponent
               setValue={(val, extraParams) =>
                 act('set_component_input', {
@@ -38,27 +38,27 @@ export const DisplayName = (props) => {
               value={port.current_data}
               extraData={port.datatype_data}
             />
-          )) ||
-            (isOutput && (
-              <Button
-                compact
-                color="transparent"
-                onClick={() =>
-                  act('get_component_value', {
-                    component_id: componentId,
-                    port_id: portIndex,
-                  })
-                }
-              >
-                <Box color="white">{port.name}</Box>
-              </Button>
-            )) ||
-            port.name}
+          ) : isOutput ? (
+            <Button
+              compact
+              color="transparent"
+              onClick={() =>
+                act('get_component_value', {
+                  component_id: componentId,
+                  port_id: portIndex,
+                })
+              }
+            >
+              <Box color="white">{port.name}</Box>
+            </Button>
+          ) : (
+            port.name
+          )}
         </Flex.Item>
         <Flex.Item>
           <Box
             fontSize={0.75}
-            opacity={0.25}
+            opacity={0.5}
             textAlign={isOutput ? 'right' : 'left'}
           >
             {displayType || 'unknown'}

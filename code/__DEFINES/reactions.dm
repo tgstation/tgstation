@@ -174,6 +174,8 @@
 
 /// The number of moles of hyper-noblium required to prevent reactions.
 #define REACTION_OPPRESSION_THRESHOLD 5
+/// Minimum temperature required for hypernoblium to prevent reactions.
+#define REACTION_OPPRESSION_MIN_TEMP 20
 
 // Halon:
 /// Energy released per mole of BZ consumed during halon formation.
@@ -261,3 +263,12 @@
 #define PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM 6
 /// How much radiation in consumed amount does a nuclear particle take from radiation when proto-nitrate breaks down BZ.
 #define PN_BZASE_NUCLEAR_PARTICLE_RADIATION_ENERGY_CONVERSION 2.5
+
+// Antinoblium:
+/// The divisor for the maximum antinoblium conversion rate. (1/90 of the antinoblium converts other gases to antinoblium in one reaction tick.)
+#define ANTINOBLIUM_CONVERSION_DIVISOR 90
+
+// Electrolysis:
+// Electrolysis arguments:
+/// Supermatter power argument.
+#define ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER "electrolyzer_supermatter_power"

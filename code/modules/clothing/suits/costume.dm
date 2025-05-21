@@ -23,7 +23,7 @@
 
 /obj/item/clothing/head/hooded/flashsuit/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/flash_hood, ITEM_SLOT_HEAD, forced = TRUE)
+	AddElement(/datum/element/wearable_client_colour, /datum/client_colour/flash_hood, ITEM_SLOT_HEAD, HELMET_TRAIT, forced = TRUE)
 
 /obj/item/clothing/suit/costume/pirate
 	name = "pirate coat"
@@ -459,7 +459,6 @@
 	inhand_icon_state = "labcoat"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	allowed = list()
-	actions_types = list(/datum/action/item_action/toggle_human_head)
 	hoodtype = /obj/item/clothing/head/hooded/human_head
 	species_exception = list(/datum/species/golem) //Finally, flesh
 
@@ -679,3 +678,44 @@
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
+/obj/item/clothing/suit/costume/bear_suit
+	name = "bear suit"
+	desc = "A suit of 100% bear fur. Would probably be a lot more convincing without that HUGE zipper on the front."
+	icon_state = "bear"
+	worn_icon_state = "bear"
+	inhand_icon_state = null
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	///Are we friendly with bears (wearing the full head/suit combo)?
+	var/full_suit = FALSE
+
+/obj/item/clothing/suit/costume/bear_suit/equipped(mob/living/user, slot)
+	..()
+	if(slot & ITEM_SLOT_OCLOTHING)
+		var/mob/living/carbon/human/human_user = user
+		make_friendly(user, human_user.head)
+
+/obj/item/clothing/suit/costume/bear_suit/dropped(mob/living/user)
+	..()
+	if (!full_suit)
+		return
+	full_suit = FALSE
+	var/mob/living/carbon/human/human_user = user
+	UnregisterSignal(human_user.head, COMSIG_ITEM_DROPPED)
+	user.faction -= FACTION_BEAR
+
+/obj/item/clothing/suit/costume/bear_suit/proc/make_friendly(mob/living/carbon/human/human_user, obj/item/clothing/head/costume/bearpelt/bear_head)
+	if(!istype(human_user))
+		return
+	if(!bear_head || !istype(bear_head))
+		return
+	RegisterSignal(bear_head, COMSIG_ITEM_DROPPED, PROC_REF(helmet_drop))
+	full_suit = TRUE
+	human_user.faction |= FACTION_BEAR
+
+/obj/item/clothing/suit/costume/bear_suit/proc/helmet_drop(datum/source, mob/living/user)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
+	full_suit = FALSE
+	user.faction -= FACTION_BEAR

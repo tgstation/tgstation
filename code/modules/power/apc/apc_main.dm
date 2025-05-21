@@ -151,6 +151,26 @@
 	fire = 90
 	acid = 50
 
+/obj/machinery/power/apc/get_save_vars()
+	. = ..()
+	if(!auto_name)
+		. -= NAMEOF(src, name)
+	. += NAMEOF(src, opened)
+	. += NAMEOF(src, coverlocked)
+	. += NAMEOF(src, lighting)
+	. += NAMEOF(src, equipment)
+	. += NAMEOF(src, environ)
+
+	. += NAMEOF(src, cell_type)
+	if(cell_type)
+		start_charge = cell.charge / cell.maxcharge // only used in Initialize() so direct edit is fine
+		. += NAMEOF(src, start_charge)
+
+	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
+	//. += NAMEOF(src, shorted)
+	//. += NAMEOF(src, locked)
+	return .
+
 /obj/machinery/power/apc/Initialize(mapload, ndir)
 	. = ..()
 	//APCs get added to their own processing tasks for the machines subsystem.
@@ -174,8 +194,11 @@
 			offset_old = pixel_x
 			pixel_x = -APC_PIXEL_OFFSET
 
+	var/image/hud_image = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked")
+	hud_image.pixel_w = pixel_x
+	hud_image.pixel_z = pixel_y
 	hud_list = list(
-		MALF_APC_HUD = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked", pixel_x = src.pixel_x, pixel_y = src.pixel_y)
+		MALF_APC_HUD = hud_image
 	)
 
 	//Assign it to its area. If mappers already assigned an area string fast load the area from it else get the current area
@@ -209,7 +232,8 @@
 		if(cell_type)
 			cell = new cell_type(src)
 			cell.charge = start_charge * cell.maxcharge / 100 // (convert percentage to actual value)
-		make_terminal()
+		if(!locate(/obj/machinery/power/terminal) in loc)
+			make_terminal()
 		///This is how we test to ensure that mappers use the directional subtypes of APCs, rather than use the parent and pixel-shift it themselves.
 		if(abs(offset_old) != APC_PIXEL_OFFSET)
 			log_mapping("APC: ([src]) at [AREACOORD(src)] with dir ([dir] | [uppertext(dir2text(dir))]) has pixel_[dir & (WEST|EAST) ? "x" : "y"] value [offset_old] - should be [dir & (SOUTH|EAST) ? "-" : ""][APC_PIXEL_OFFSET]. Use the directional/ helpers!")

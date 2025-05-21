@@ -121,7 +121,7 @@
 	var/health_consumed = butchered.maxHealth * 0.1
 	user.heal_ordered_damage(health_consumed, list(BRUTE, BURN, TOX))
 	to_chat(user, span_notice("You heal from the corpse of [butchered]."))
-	var/datum/client_colour/color_effect = user.add_client_colour(/datum/client_colour/bloodlust)
+	var/datum/client_colour/color_effect = user.add_client_colour(/datum/client_colour/bloodlust, HELMET_TRAIT)
 	QDEL_IN(color_effect, 1 SECONDS)
 
 // Soulscythe
@@ -172,7 +172,7 @@
 	. = ..()
 	. += soul.ckey ? span_nicegreen("There is a soul inhabiting it.") : span_danger("It's dormant.")
 
-/obj/item/soulscythe/attack(mob/living/attacked, mob/living/user, params)
+/obj/item/soulscythe/attack(mob/living/attacked, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(attacked.stat != DEAD)
 		give_blood(10)
@@ -266,15 +266,15 @@
 	return TRUE
 
 /obj/item/soulscythe/proc/use_blood(amount = 0, message = TRUE)
-	if(amount > soul.blood_level)
+	if(amount > soul.blood_volume)
 		if(message)
 			to_chat(soul, span_warning("Not enough blood!"))
 		return FALSE
-	soul.blood_level -= amount
+	soul.blood_volume -= amount
 	return TRUE
 
 /obj/item/soulscythe/proc/give_blood(amount)
-	soul.blood_level = min(MAX_BLOOD_LEVEL, soul.blood_level + amount)
+	soul.blood_volume = min(MAX_BLOOD_LEVEL, soul.blood_volume + amount)
 
 /obj/item/soulscythe/proc/on_resist(mob/living/user)
 	SIGNAL_HANDLER
@@ -334,7 +334,7 @@
 		var/mob/living/attacked_mob = attacked_atom
 		if(attacked_mob.stat != DEAD)
 			give_blood(15)
-		attacked_mob.apply_damage(damage = force * (ishostile(attacked_mob) ? 2 : 1), sharpness = SHARP_EDGED, bare_wound_bonus = 5)
+		attacked_mob.apply_damage(damage = force * (ismining(attacked_mob) ? 2 : 1), sharpness = SHARP_EDGED, bare_wound_bonus = 5)
 		to_chat(attacked_mob, span_userdanger("You're slashed by [src]!"))
 	else if((ismachinery(attacked_atom) || isstructure(attacked_atom)) && use_blood(5))
 		var/obj/attacked_obj = attacked_atom
@@ -384,17 +384,13 @@
 	mob_biotypes = MOB_SPIRIT
 	faction = list()
 	weather_immunities = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE)
-	/// Blood level, used for movement and abilities in a soulscythe
-	var/blood_level = MAX_BLOOD_LEVEL
-
-/mob/living/simple_animal/soulscythe/get_status_tab_items()
-	. = ..()
-	. += "Blood: [blood_level]/[MAX_BLOOD_LEVEL]"
+	blood_volume = MAX_BLOOD_LEVEL
+	hud_type = /datum/hud/soulscythe
 
 /mob/living/simple_animal/soulscythe/Life(seconds_per_tick, times_fired)
 	. = ..()
 	if(!stat)
-		blood_level = min(MAX_BLOOD_LEVEL, blood_level + round(1 * seconds_per_tick))
+		blood_volume = min(MAX_BLOOD_LEVEL, blood_volume + round(1 * seconds_per_tick))
 
 /obj/projectile/soulscythe
 	name = "soulslash"
@@ -406,8 +402,10 @@
 	light_color = LIGHT_COLOR_BLOOD_MAGIC
 
 /obj/projectile/soulscythe/on_hit(atom/target, blocked = 0, pierce_hit)
-	if(ishostile(target))
-		damage *= 2
+	if (isliving(target))
+		var/mob/living/as_living = target
+		if (ismining(as_living))
+			damage *= 2
 	return ..()
 
 #undef MAX_BLOOD_LEVEL

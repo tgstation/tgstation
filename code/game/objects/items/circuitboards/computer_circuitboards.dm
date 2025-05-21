@@ -405,6 +405,11 @@
 	greyscale_colors = CIRCUIT_COLOR_MEDICAL
 	build_path = /obj/machinery/computer/pandemic
 
+/obj/item/circuitboard/computer/experimental_cloner
+	name = "Experimental Cloner Control Console"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/computer/experimental_cloner
+
 //Science
 
 /obj/item/circuitboard/computer/aifixer

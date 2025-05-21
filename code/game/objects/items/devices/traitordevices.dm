@@ -327,7 +327,14 @@ effective or pretty fucking useless.
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
+
+	/// The range of devices to disable while active
 	var/range = 12
+
+	/// The range of the disruptor wave, disabling radios
+	var/disruptor_range = 7
+
+	/// The delay between using the disruptor wave
 	var/jam_cooldown_duration = 15 SECONDS
 	COOLDOWN_DECLARE(jam_cooldown)
 
@@ -348,7 +355,7 @@ effective or pretty fucking useless.
 
 	user.balloon_alert(user, "disruptor wave released!")
 	to_chat(user, span_notice("You release a disruptor wave, disabling all nearby radio devices."))
-	for (var/atom/potential_owner in view(7, user))
+	for (var/atom/potential_owner in view(disruptor_range, user))
 		disable_radios_on(potential_owner, ignore_syndie = TRUE)
 	COOLDOWN_START(src, jam_cooldown, jam_cooldown_duration)
 
@@ -372,7 +379,7 @@ effective or pretty fucking useless.
 	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return
 
-	if (!(interacting_with in view(7, user)))
+	if (!(interacting_with in view(disruptor_range, user)))
 		user.balloon_alert(user, "out of reach!")
 		return
 
@@ -392,57 +399,15 @@ effective or pretty fucking useless.
 	GLOB.active_jammers -= src
 	return ..()
 
-/obj/item/storage/toolbox/emergency/turret
-	desc = "You feel a strange urge to hit this with a wrench."
+/obj/item/jammer/makeshift
+	name = "makeshift radio jammer"
+	desc = "A jury-rigged device that disrupts nearby radio communication. Its crude construction provides a significantly smaller area of effect compared to its Syndicate counterpart."
+	range = 5
+	disruptor_range = 3
 
-/obj/item/storage/toolbox/emergency/turret/PopulateContents()
-	new /obj/item/screwdriver(src)
-	new /obj/item/wrench/combat(src)
-	new /obj/item/weldingtool(src)
-	new /obj/item/crowbar(src)
-	new /obj/item/analyzer(src)
-	new /obj/item/wirecutters(src)
-
-/obj/item/storage/toolbox/emergency/turret/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/wrench/combat))
-		return NONE
-	if(!user.combat_mode)
-		return NONE
-	if(!tool.toolspeed)
-		return ITEM_INTERACT_BLOCKING
-	balloon_alert(user, "constructing...")
-	if(!tool.use_tool(src, user, 2 SECONDS, volume = 20))
-		return ITEM_INTERACT_BLOCKING
-
-	balloon_alert(user, "constructed!")
-	user.visible_message(
-		span_danger("[user] bashes [src] with [tool]!"),
-		span_danger("You bash [src] with [tool]!"),
-		null,
-		COMBAT_MESSAGE_RANGE,
-	)
-
-	playsound(src, 'sound/items/tools/drill_use.ogg', 80, TRUE, -1)
-	var/obj/machinery/porta_turret/syndicate/toolbox/turret = new(get_turf(loc))
-	set_faction(turret, user)
-	turret.toolbox = src
-	forceMove(turret)
-	return ITEM_INTERACT_SUCCESS
-
-
-/obj/item/storage/toolbox/emergency/turret/proc/set_faction(obj/machinery/porta_turret/turret, mob/user)
-	turret.faction = list("[REF(user)]")
-
-/obj/item/storage/toolbox/emergency/turret/nukie/set_faction(obj/machinery/porta_turret/turret, mob/user)
-	turret.faction = list(ROLE_SYNDICATE)
-
-/obj/machinery/porta_turret/syndicate/toolbox
-	icon_state = "toolbox_off"
-	base_icon_state = "toolbox"
-
-/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
+/obj/item/jammer/makeshift/Initialize(mapload)
 	. = ..()
-	underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
 
 /obj/machinery/porta_turret/syndicate/toolbox
 	integrity_failure = 0
@@ -452,8 +417,14 @@ effective or pretty fucking useless.
 	lethal_projectile = /obj/projectile/bullet/toolbox_turret
 	subsystem_type = /datum/controller/subsystem/processing/projectiles
 	ignore_faction = TRUE
+	icon_state = "toolbox_off"
+	base_icon_state = "toolbox"
 	/// The toolbox we store.
 	var/obj/item/toolbox
+
+/obj/machinery/porta_turret/syndicate/toolbox/Initialize(mapload)
+	. = ..()
+	underlays += image(icon = icon, icon_state = "[base_icon_state]_frame")
 
 /obj/machinery/porta_turret/syndicate/toolbox/examine(mob/user)
 	. = ..()
@@ -470,7 +441,7 @@ effective or pretty fucking useless.
 
 	return TRUE
 
-/obj/machinery/porta_turret/syndicate/toolbox/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/porta_turret/syndicate/toolbox/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(attacking_item, /obj/item/wrench/combat))
 		return ..()
 

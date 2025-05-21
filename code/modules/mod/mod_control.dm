@@ -114,13 +114,10 @@
 	if(core)
 		QDEL_NULL(core)
 	QDEL_NULL(mod_link)
-	for(var/datum/mod_part/part_datum as anything in get_part_datums(all = TRUE))
-		var/obj/item/part_item = part_datum.part_item
-		part_datum.part_item = null
-		part_datum.overslotting = null
-		mod_parts -= part_datum
-		if(!QDELING(part_item))
-			qdel(part_item)
+	for(var/part_key in mod_parts)
+		var/datum/mod_part/part_datum = mod_parts[part_key]
+		mod_parts -= part_key
+		qdel(part_datum)
 	return ..()
 
 /obj/item/mod/control/atom_destruction(damage_flag)
@@ -217,15 +214,19 @@
 /obj/item/mod/control/allow_attack_hand_drop(mob/user)
 	if(user != wearer)
 		return ..()
+
 	if(active)
 		balloon_alert(wearer, "unit active!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 		return
+
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
 			balloon_alert(user, "parts extended!")
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
+
+	return ..()
 
 /obj/item/mod/control/mouse_drop_dragged(atom/over_object, mob/user)
 	if(user != wearer || !istype(over_object, /atom/movable/screen/inventory/hand))
@@ -332,7 +333,6 @@
 
 			paint_kit.proxy_view.appearance = paint_kit.editing_mod.appearance
 			paint_kit.proxy_view.color = null
-			paint_kit.proxy_view.display_to(user)
 			paint_kit.ui_interact(user)
 			return ITEM_INTERACT_SUCCESS
 		else // Left click
@@ -444,11 +444,14 @@
 	CRASH("get_part_datum called with incorrect item [part] passed.")
 
 /obj/item/mod/control/proc/get_part_from_slot(slot)
-	var/datum/mod_part/part = mod_parts["[slot]"]
-	return part?.part_item
+	RETURN_TYPE(/obj/item)
+	return get_part_datum_from_slot(slot)?.part_item
 
 /obj/item/mod/control/proc/get_part_datum_from_slot(slot)
-	return mod_parts["[slot]"]
+	RETURN_TYPE(/datum/mod_part)
+	for (var/part_key in mod_parts)
+		if (text2num(part_key) & slot)
+			return mod_parts[part_key]
 
 /obj/item/mod/control/proc/set_wearer(mob/living/carbon/human/user)
 	if(wearer == user)
@@ -481,21 +484,6 @@
 			continue
 		covered_slots |= part.slot_flags
 	return covered_slots
-
-/obj/item/mod/control/proc/generate_suit_mask()
-	var/list/parts = get_parts(all = TRUE)
-	var/covered_slots = get_sealed_slots(parts)
-	if(GLOB.mod_masks[skin])
-		if(GLOB.mod_masks[skin]["[covered_slots]"])
-			return GLOB.mod_masks[skin]["[covered_slots]"]
-	else
-		GLOB.mod_masks[skin] = list()
-	var/icon/slot_mask = icon('icons/blanks/32x32.dmi', "nothing")
-	for(var/obj/item/part as anything in parts)
-		slot_mask.Blend(icon(part.worn_icon, part.icon_state), ICON_OVERLAY)
-	slot_mask.Blend("#fff", ICON_ADD)
-	GLOB.mod_masks[skin]["[covered_slots]"] = slot_mask
-	return GLOB.mod_masks[skin]["[covered_slots]"]
 
 /obj/item/mod/control/proc/clean_up()
 	if(QDELING(src))
@@ -603,7 +591,6 @@
 	modules += new_module
 	complexity += new_module.complexity
 	new_module.mod = src
-	new_module.RegisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS, TYPE_PROC_REF(/obj/item/mod/module, add_module_overlay))
 	new_module.on_install()
 	if(wearer)
 		new_module.on_equip()
@@ -623,7 +610,6 @@
 		old_module.on_part_deactivation(deleting = deleting)
 		if(old_module.active)
 			old_module.deactivate(display_message = !deleting, deleting = deleting)
-	old_module.UnregisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS)
 	old_module.on_uninstall(deleting = deleting)
 	QDEL_LIST_ASSOC_VAL(old_module.pinned_to)
 	old_module.mod = null
@@ -684,9 +670,19 @@
 	wearer.update_spacesuit_hud_icon(state_to_use || "0")
 
 /obj/item/mod/control/proc/update_speed()
-	for(var/obj/item/part as anything in get_parts(all = TRUE))
-		part.slowdown = slowdown_deployed / length(mod_parts)
-		var/datum/mod_part/part_datum = get_part_datum(part)
+	var/total_slowdown = 0
+	var/prevent_slowdown = HAS_TRAIT(src, TRAIT_SPEED_POTIONED)
+	if (!prevent_slowdown)
+		total_slowdown += slowdown_deployed
+
+	var/list/module_slowdowns = list()
+	SEND_SIGNAL(src, COMSIG_MOD_UPDATE_SPEED, module_slowdowns, prevent_slowdown)
+	for (var/module_slow in module_slowdowns)
+		total_slowdown += module_slow
+
+	for(var/datum/mod_part/part_datum as anything in get_part_datums(all = TRUE))
+		var/obj/item/part = part_datum.part_item
+		part.slowdown = total_slowdown / length(mod_parts)
 		if (!part_datum.sealed)
 			part.slowdown = max(part.slowdown, 0)
 	wearer?.update_equipment_speed_mods()
@@ -747,15 +743,17 @@
 /obj/item/mod/control/proc/on_potion(atom/movable/source, obj/item/slimepotion/speed/speed_potion, mob/living/user)
 	SIGNAL_HANDLER
 
-	if(slowdown_deployed <= 0)
+	if(HAS_TRAIT(src, TRAIT_SPEED_POTIONED))
 		to_chat(user, span_warning("[src] has already been coated with red, that's as fast as it'll go!"))
 		return SPEED_POTION_STOP
+
 	if(active)
 		to_chat(user, span_warning("It's too dangerous to smear [speed_potion] on [src] while it's active!"))
 		return SPEED_POTION_STOP
+
 	to_chat(user, span_notice("You slather the red gunk over [src], making it faster."))
 	set_mod_color(color_transition_filter(COLOR_RED))
-	slowdown_deployed = 0
+	ADD_TRAIT(src, TRAIT_SPEED_POTIONED, SLIME_POTION_TRAIT)
 	update_speed()
 	qdel(speed_potion)
 	return SPEED_POTION_STOP

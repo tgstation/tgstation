@@ -58,28 +58,22 @@
 	attack_self(user)
 	return BRUTELOSS
 
-/obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, params)
+/obj/item/melee/cleaving_saw/melee_attack_chain(mob/user, atom/target, list/modifiers)
 	. = ..()
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.changeNext_move(CLICK_CD_MELEE * 0.5) //when closed, it attacks very rapidly
 
-/obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user)
+/obj/item/melee/cleaving_saw/attack(mob/living/target, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	var/is_open = HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 	if(!is_open || swiping || !target.density || get_turf(target) == get_turf(user))
-		if(!is_open)
-			faction_bonus_force = 0
-		var/is_nemesis_faction = FALSE
 		for(var/found_faction in target.faction)
-			if(found_faction in nemesis_factions)
-				is_nemesis_faction = TRUE
-				force += faction_bonus_force
-				nemesis_effects(user, target)
-				break
+			if(!(found_faction in nemesis_factions))
+				continue
+			if(is_open)
+				MODIFY_ATTACK_FORCE(attack_modifiers, faction_bonus_force)
+			nemesis_effects(user, target)
+			break
 		. = ..()
-		if(is_nemesis_faction)
-			force -= faction_bonus_force
-		if(!is_open)
-			faction_bonus_force = initial(faction_bonus_force)
 		return
 
 	var/turf/user_turf = get_turf(user)
@@ -121,3 +115,45 @@
 		balloon_alert(user, "[active ? "opened" : "closed"] [src]")
 	playsound(src, 'sound/effects/magic/clockwork/fellowship_armory.ogg', 35, TRUE, frequency = 90000 - (active * 30000))
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+// Wildhunter's butchering knife
+
+/obj/item/knife/hunting/wildhunter
+	name = "wildhunter's butchering knife"
+	desc = "A magical knife made out of ashen stone. It was used to butcher local fauna by best hunters. Cuts everything to the simplest."
+	icon = 'icons/obj/weapons/stabby_wide.dmi'
+	inhand_icon_state = "wildhuntingknife"
+	icon_state = "wildhuntingknife"
+	icon_angle = 180
+	force = 20
+	wound_bonus = 15
+	w_class = WEIGHT_CLASS_NORMAL
+	sharpness = SHARP_EDGED
+	attack_verb_continuous = list("slices", "hunts", "butchers", "pierces")
+	attack_verb_simple = list("slice", "hunt", "butcher", "pierce")
+
+//best butchering tool
+/obj/item/knife/hunting/wildhunter/set_butchering()
+	AddComponent(\
+		/datum/component/butchering, \
+		speed = 1.5 SECONDS , \
+		effectiveness = 110, \
+		bonus_modifier = 0, \
+	)
+
+/obj/item/knife/hunting/wildhunter/make_stabby()
+	return
+
+//cut those trophies
+/obj/item/knife/hunting/wildhunter/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!istype(interacting_with, /obj/item/crusher_trophy))
+		return NONE
+	var/obj/item/crusher_trophy/trophy = interacting_with
+	if(isnull(trophy.wildhunter_drop))
+		return NONE
+	balloon_alert(user, "cutting trophy...")
+	if(!do_after(user, 4 SECONDS, trophy))
+		return ITEM_INTERACT_BLOCKING
+	new trophy.wildhunter_drop(trophy.drop_location())
+	qdel(trophy)
+	return ITEM_INTERACT_SUCCESS

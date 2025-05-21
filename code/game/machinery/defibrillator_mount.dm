@@ -26,8 +26,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 	defib = new/obj/item/defibrillator/loaded(src)
 	find_and_hang_on_wall()
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
-
 /obj/machinery/defibrillator_mount/Destroy()
 	QDEL_NULL(defib)
 	return ..()
@@ -83,7 +81,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount, 28)
 		return
 	user.put_in_hands(defib.paddles)
 
-/obj/machinery/defibrillator_mount/attackby(obj/item/item, mob/living/user, params)
+/obj/machinery/defibrillator_mount/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(item, /obj/item/defibrillator))
 		if(defib)
 			to_chat(user, span_warning("There's already a defibrillator in [src]!"))

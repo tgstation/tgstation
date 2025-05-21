@@ -2,13 +2,17 @@
 /obj/item/organ/eyes/corrupt
 	name = "corrupt orbs"
 	desc = "These eyes have seen something they shouldn't have."
+	icon_state = "eyes_voidwalker"
+	iris_overlay = null
+	eye_color_left = COLOR_VOID_PURPLE
+	eye_color_right = COLOR_VOID_PURPLE
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// The override images we are applying
 	var/list/hallucinations
 
 /obj/item/organ/eyes/corrupt/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/corrupted_organ)
+	AddElement(/datum/element/corrupted_organ, FALSE)
 	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes have wide dilated pupils, and no iris. Something is moving in the darkness.", BODY_ZONE_PRECISE_EYES)
 
 /obj/item/organ/eyes/corrupt/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
@@ -96,15 +100,17 @@
 	UnregisterSignal(organ_owner, COMSIG_ATOM_EXPOSE_REAGENTS)
 
 /// If we drank something, add a little extra
-/obj/item/organ/liver/corrupt/proc/on_drank(atom/source, list/reagents, datum/reagents/source_reagents, methods)
+/obj/item/organ/liver/corrupt/proc/on_drank(mob/living/carbon/human, list/reagents, datum/reagents/source_reagents, methods)
 	SIGNAL_HANDLER
 	if (!(methods & INGEST))
 		return
+	if (human.has_reagent(/datum/reagent/water/holywater) || locate(/datum/reagent/water/holywater) in reagents)
+		return
 	var/datum/reagents/extra_reagents = new()
 	extra_reagents.add_reagent(pick(extra_ingredients), amount_added)
-	extra_reagents.trans_to(source, amount_added, transferred_by = src, methods = INJECT)
+	extra_reagents.trans_to(human, amount_added, transferred_by = src, methods = INJECT)
 	if (prob(20))
-		to_chat(source, span_warning("As you take a sip, you feel something bubbling in your stomach..."))
+		to_chat(human, span_warning("As you take a sip, you feel something bubbling in your stomach..."))
 
 
 /// Rapidly become hungry if you are not digesting blood

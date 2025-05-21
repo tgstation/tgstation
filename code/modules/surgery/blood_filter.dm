@@ -80,7 +80,7 @@
 	var/obj/item/blood_filter/bloodfilter = tool
 	if(target.reagents?.total_volume)
 		for(var/datum/reagent/chem as anything in target.reagents.reagent_list)
-			if(!length(bloodfilter.whitelist) || (chem.type in bloodfilter.whitelist))
+			if(!length(bloodfilter.whitelist) || !(chem.type in bloodfilter.whitelist))
 				target.reagents.remove_reagent(chem.type, clamp(round(chem.volume * 0.22, 0.2), 0.4, 10))
 	display_results(
 		user,

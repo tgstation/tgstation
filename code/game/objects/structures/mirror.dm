@@ -250,8 +250,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	var/new_eye_color = input(user, "Choose your eye color", "Eye Color", user.eye_color_left) as color|null
 	if(isnull(new_eye_color))
 		return TRUE
-	user.eye_color_left = sanitize_hexcolor(new_eye_color)
-	user.eye_color_right = sanitize_hexcolor(new_eye_color)
+	user.set_eye_color(sanitize_hexcolor(new_eye_color))
 	user.dna.update_ui_block(DNA_EYE_COLOR_LEFT_BLOCK)
 	user.dna.update_ui_block(DNA_EYE_COLOR_RIGHT_BLOCK)
 	user.update_body()
@@ -277,14 +276,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		return CONTEXTUAL_SCREENTIP_SET
 	return .
 
-/obj/structure/mirror/attacked_by(obj/item/I, mob/living/user)
-	if(broken || !istype(user) || !I.force)
-		return ..()
-
+/obj/structure/mirror/attacked_by(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
-	if(broken) // breaking a mirror truly gets you bad luck!
-		to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
-		user.AddComponent(/datum/component/omen, incidents_left = 7)
+	if(broken || !.) // breaking a mirror truly gets you bad luck!
+		return
+	to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
+	user.AddComponent(/datum/component/omen, incidents_left = 7)
 
 /obj/structure/mirror/bullet_act(obj/projectile/proj)
 	if(broken || !isliving(proj.firer) || !proj.damage)

@@ -364,8 +364,8 @@
 		return FALSE
 
 	marked_underlay = new()
-	marked_underlay.pixel_x = -owner.pixel_x
-	marked_underlay.pixel_y = -owner.pixel_y
+	marked_underlay.pixel_w = -owner.pixel_x
+	marked_underlay.pixel_z = -owner.pixel_y
 	marked_underlay.transform *= 0.5
 	owner.vis_contents += marked_underlay
 	animate(marked_underlay, ready_delay, transform = matrix() * 1.2, flags = CIRCULAR_EASING | EASE_IN)
@@ -386,7 +386,7 @@
 	name = "Crusher mark underlay"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield"
-	appearance_flags = TILE_BOUND|LONG_GLIDE|RESET_COLOR|PIXEL_SCALE
+	appearance_flags = TILE_BOUND|LONG_GLIDE|RESET_COLOR|PIXEL_SCALE|KEEP_APART
 	vis_flags = VIS_UNDERLAY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
@@ -574,7 +574,7 @@
 		return FALSE
 	RegisterSignal(owner, COMSIG_MOVABLE_HEAR, PROC_REF(hypnotize))
 	ADD_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
-	owner.add_client_colour(/datum/client_colour/monochrome/trance)
+	owner.add_client_colour(/datum/client_colour/monochrome, REF(src))
 	owner.visible_message("[stun ? span_warning("[owner] stands still as [owner.p_their()] eyes seem to focus on a distant point.") : ""]", \
 	span_warning(pick("You feel your thoughts slow down...", "You suddenly feel extremely dizzy...", "You feel like you're in the middle of a dream...","You feel incredibly relaxed...")))
 	return TRUE
@@ -588,7 +588,7 @@
 	UnregisterSignal(owner, COMSIG_MOVABLE_HEAR)
 	REMOVE_TRAIT(owner, TRAIT_MUTE, TRAIT_STATUS_EFFECT(id))
 	owner.remove_status_effect(/datum/status_effect/dizziness)
-	owner.remove_client_colour(/datum/client_colour/monochrome/trance)
+	owner.remove_client_colour(REF(src))
 	to_chat(owner, span_warning("You snap out of your trance!"))
 
 /datum/status_effect/trance/get_examine_text()
@@ -725,22 +725,36 @@
 	. = ..()
 	direction = pick(NORTH, SOUTH, EAST, WEST)
 	new_owner.setDir(direction)
+	owner.add_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), TRAIT_STATUS_EFFECT(id)) //I believe I can fly!
 
 /datum/status_effect/go_away/tick(seconds_between_ticks)
 	owner.AdjustStun(1, ignore_canstun = TRUE)
-	var/turf/T = get_step(owner, direction)
-	owner.forceMove(T)
+	var/turf/turf = get_step(owner, direction)
+	if(!turf)
+		qdel(src)
+		return
+	owner.forceMove(turf)
 
+/datum/status_effect/go_away/on_remove()
+	. = ..()
+	owner.remove_traits(list(TRAIT_NO_FLOATING_ANIM, TRAIT_MOVE_FLYING), TRAIT_STATUS_EFFECT(id))
+
+///Subtype of the go away effect (phases the mob in one direction) that deletes the owner on z-level change or when the time's up.
 /datum/status_effect/go_away/deletes_mob
 	id = "go_away_deletes_mob"
-	duration = INFINITY
+	duration = 30 SECONDS
 
-/datum/status_effect/go_away/deluxe/on_creation(mob/living/new_owner, set_duration)
+/datum/status_effect/go_away/deletes_mob/on_creation(mob/living/new_owner, set_duration)
 	. = ..()
 	RegisterSignal(new_owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(wipe_bozo))
 
-/datum/status_effect/go_away/deluxe/proc/wipe_bozo()
-	qdel(owner)
+/datum/status_effect/go_away/deletes_mob/proc/wipe_bozo()
+	qdel(src)
+
+/datum/status_effect/go_away/deletes_mob/on_remove()
+	. = ..()
+	if(!QDELETED(owner))
+		qdel(owner)
 
 /atom/movable/screen/alert/status_effect/go_away
 	name = "TO THE STARS AND BEYOND!"

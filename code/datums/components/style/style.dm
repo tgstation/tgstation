@@ -293,7 +293,7 @@
 			return "#364866"
 
 /// A proc that lets a user, when their rank >= `hotswap_rank`, swap items in storage with what's in their hands, simply by clicking on the stored item with a held item
-/datum/component/style/proc/hotswap(mob/living/source, atom/target, obj/item/weapon, click_parameters)
+/datum/component/style/proc/hotswap(mob/living/source, atom/target, obj/item/weapon, list/modifiers)
 	SIGNAL_HANDLER
 
 	if((rank < hotswap_rank) || !isitem(target) || !(target in source.get_all_contents()))
@@ -341,7 +341,7 @@
 
 	add_action(ACTION_MELEED, 50 * (ismegafauna(attacked) ? 1.5 : 1))
 
-/datum/component/style/proc/on_mine(datum/source, turf/closed/mineral/rock, give_exp)
+/datum/component/style/proc/on_mine(datum/source, turf/closed/mineral/rock, exp_multiplier)
 	SIGNAL_HANDLER
 
 	if(istype(rock, /turf/closed/mineral/gibtonite))
@@ -360,11 +360,11 @@
 				return
 
 	if(rock.mineralType)
-		if(give_exp)
+		if(exp_multiplier)
 			add_action(ACTION_ORE_MINED, 40)
 		rock.mineralAmt = ROUND_UP(rock.mineralAmt * (1 + ((rank * 0.1) - 0.3))) // You start out getting 20% less ore, but it goes up to 20% more at S-tier
 
-	else if(give_exp)
+	else if(exp_multiplier)
 		add_action(ACTION_ROCK_MINED, 25)
 
 /datum/component/style/proc/on_resonator_burst(datum/source, mob/creator, mob/living/hit_living)

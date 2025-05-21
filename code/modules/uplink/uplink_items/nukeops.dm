@@ -86,6 +86,21 @@
 	item = /obj/item/ammo_box/magazine/m12g/slug
 	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
 
+/datum/uplink_item/ammo_nuclear/basic/flechette
+	name = "12g Flechette Shells (Bulldog)"
+	desc = "An alternative 8-round flechette magazine for use in the Bulldog shotgun. \
+		Getting stopped by armor? Why not flechette? Turn meat and kevlar to tatters!"
+	item = /obj/item/ammo_box/magazine/m12g/flechette
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+
+/datum/uplink_item/ammo_nuclear/basic/donk
+	name = "12g Donk Co. 'Donk Spike' Flechette Magazine Box (Bulldog)"
+	desc = "A whole box of 8-round Donk Co. 'Donk Spike' flechette magazines for use in the \
+		Bulldog shotgun. Sponsored by the Donk Corporation! A whole box of these magazines for \
+		the price of one purchase! WARNING: DO NOT SNIFF THE MAGAZINES!"
+	item = /obj/item/storage/box/syndie_kit/shotgun_surplus
+	purchasable_from = parent_type::purchasable_from | UPLINK_SPY
+
 /datum/uplink_item/ammo_nuclear/incendiary/dragon
 	name = "12g Dragon's Breath Drum (Bulldog)"
 	desc = "An alternative 8-round dragon's breath magazine for use in the Bulldog shotgun. \
@@ -803,7 +818,7 @@
 	category = /datum/uplink_category/base_keys
 	surplus = 0
 	purchasable_from = UPLINK_NUKE_OPS
-	cost = 15
+	cost = 5
 	cant_discount = TRUE
 
 /datum/uplink_item/base_keys/bomb_key
@@ -811,6 +826,7 @@
 	desc = "Do you fancy yourself an explosives expert? If so, then consider yourself lucky! With this special Authorization Key, \
 		you can blow those corpo suits away with your very own home-made explosive devices. Made in your local firebase's \
 		very own Ordnance Laboratory! *The Syndicate is not responsible for injuries or deaths sustained while utilizing the lab."
+	cost = 30
 	item = /obj/item/keycard/syndicate_bomb
 
 /datum/uplink_item/base_keys/bio_key
@@ -837,7 +853,13 @@
 		pocket during this morning's briefing. He's been looking for it since. Take it, get into the fridge, and cook up whatever \
 		you need before he gets back. And remember: DON'T TELL ANYONE! -M.T"
 	item = /obj/item/keycard/syndicate_fridge
-	cost = 5
+	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+
+/datum/uplink_item/base_keys/custodial_key
+	name = "Syndicate Custodial Access Card"
+	desc = "Your workplace dirty? No problem! with this card you gain access to the custodial. Containing a janitorial cart \
+	with some janitorial supplies and an canister of water vapour."
+	item = /obj/item/keycard/syndicate_custodial
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
 
 // Hats

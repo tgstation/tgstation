@@ -94,7 +94,7 @@
 	)
 	junkiness = 20
 	tastes = list("salt" = 1, "crisps" = 1)
-	foodtypes = JUNKFOOD | FRIED
+	foodtypes = VEGETABLES|JUNKFOOD|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/food/chips/make_leave_trash()

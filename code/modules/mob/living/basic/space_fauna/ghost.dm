@@ -10,6 +10,7 @@
 	response_help_simple = "pass through"
 	combat_mode = TRUE
 	basic_mob_flags = DEL_ON_DEATH
+	status_flags = CANPUSH
 	maxHealth = 40
 	health = 40
 	melee_damage_lower = 15
@@ -26,6 +27,7 @@
 	light_range = 2.5 // same glowing as visible player ghosts
 	light_power = 0.6
 	ai_controller = /datum/ai_controller/basic_controller/ghost
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 
 	///What hairstyle will this ghost have
 	var/ghost_hairstyle
@@ -75,7 +77,7 @@
 		ghost_hair = mutable_appearance('icons/mob/human/human_face.dmi', "[hair_style.icon_state]", -HAIR_LAYER)
 		ghost_hair.alpha = 200
 		ghost_hair.color = ghost_hair_color
-		ghost_hair.pixel_y = hair_style.y_offset
+		ghost_hair.pixel_z = hair_style.y_offset
 		add_overlay(ghost_hair)
 
 	if(!isnull(ghost_facial_hairstyle) && ghost_facial_hairstyle != "Shaved")

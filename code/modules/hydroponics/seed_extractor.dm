@@ -93,7 +93,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/seed_extractor/attackby(obj/item/attacking_item, mob/living/user, params)
+/obj/machinery/seed_extractor/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!isliving(user) || user.combat_mode)
 		return ..()
 
@@ -125,7 +125,7 @@
 
 	var/list/generated_seeds = seedify(attacking_item, -1, src, user)
 	if(!isnull(generated_seeds))
-		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		if(LAZYACCESS(modifiers, RIGHT_CLICK))
 			//find all seeds lying on the turf and add them to the machine
 			for(var/obj/item/seeds/seed as anything in generated_seeds)
 				//machine is full

@@ -1,19 +1,17 @@
 // This file contains defines allowing targeting byond versions newer than the supported
 
 //Update this whenever you need to take advantage of more recent byond features
-#define MIN_COMPILER_VERSION 515
-#define MIN_COMPILER_BUILD 1642
+#define MIN_COMPILER_VERSION 516
+#define MIN_COMPILER_BUILD 1648
 #if (DM_VERSION < MIN_COMPILER_VERSION || DM_BUILD < MIN_COMPILER_BUILD) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
 //Don't forget to update this part
 #error Your version of BYOND is too out-of-date to compile this project. Go to https://secure.byond.com/download and update.
-#error You need version 515.1642 or higher
+#error You need version 516.1648 or higher
 #endif
 
-// Unable to compile this version thanks to mutable appearance changes
-#if (DM_VERSION == 515 && DM_BUILD == 1643)
-#error This specific version of BYOND (515.1643) cannot compile this project.
-#error If 515.1643 IS NOT the latest version of BYOND, then you should simply update as normal.
-#error But if 515.1643 IS the latest version of BYOND, i.e. you can't update, then you MUST visit www.byond.com/download/build and downgrade to 515.1642.
+// 516.1660 broke (x in vars), which breaks a lot of things.
+#if (DM_VERSION == 516 && DM_BUILD == 1660)
+#error This version of BYOND (516.1660) has a bug which prevents this codebase from loading properly. If possible, update your BYOND version. Otherwise, visit www.byond.com/download/build to download an older release.
 #endif
 
 // Keep savefile compatibilty at minimum supported level

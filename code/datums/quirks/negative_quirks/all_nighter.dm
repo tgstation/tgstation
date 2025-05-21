@@ -3,7 +3,7 @@
 /datum/quirk/all_nighter
 	name = "All Nighter"
 	desc = "You didn't get any sleep last night, and people can tell! You'll constantly be in a bad mood and will have a tendency to sleep longer. Stimulants or a nap might help, though."
-	icon = FA_ICON_BED
+	icon = FA_ICON_MOON
 	value = -4
 	mob_trait = TRAIT_HEAVY_SLEEPER
 	gain_text = span_danger("You feel exhausted.")
@@ -80,6 +80,7 @@
 /datum/quirk/all_nighter/process(seconds_per_tick)
 	var/happy_camper = TRUE
 	var/beauty_sleep = TRUE
+	var/all_nighter = quirk_holder.mob_mood?.get_mood_event("all_nighter")
 
 	if(quirk_holder.IsSleeping())
 		five_more_minutes += SLEEP_BANK_MULTIPLIER * seconds_per_tick
@@ -93,9 +94,9 @@
 			happy_camper = FALSE
 
 	//adjusts the mood event accordingly
-	if(("all_nighter" in quirk_holder.mob_mood?.mood_events) && happy_camper)
+	if(all_nighter && happy_camper)
 		quirk_holder.clear_mood_event("all_nighter", /datum/mood_event/all_nighter)
-	if(!("all_nighter" in quirk_holder.mob_mood?.mood_events) && !happy_camper)
+	if(!all_nighter && !happy_camper)
 		quirk_holder.add_mood_event("all_nighter", /datum/mood_event/all_nighter)
 		to_chat(quirk_holder, span_danger("You start feeling tired again."))
 

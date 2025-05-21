@@ -30,7 +30,8 @@
 	owner.set_jitter(20 SECONDS)
 
 /datum/mutation/human/epilepsy/on_acquiring(mob/living/carbon/human/acquirer)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_FLASHED, PROC_REF(get_flashed_nerd))
 
@@ -57,7 +58,8 @@
 	locked = TRUE
 
 /datum/mutation/human/bad_dna/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	to_chat(owner, text_gain_indication)
 	var/mob/new_mob
@@ -121,7 +123,8 @@
 	locked = TRUE // Default intert species for now, so locked from regular pool.
 
 /datum/mutation/human/dwarfism/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_DWARF, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly shrinks!"), span_notice("Everything around you seems to grow.."))
@@ -142,7 +145,8 @@
 	conflicts = list(/datum/mutation/human/dwarfism)
 
 /datum/mutation/human/acromegaly/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_TOO_TALL, GENETIC_MUTATION)
 	owner.visible_message(span_danger("[owner] suddenly grows tall!"), span_notice("You feel a small strange urge to fight small men with slingshots. Or maybe play some basketball."))
@@ -178,7 +182,8 @@
 	conflicts = list(/datum/mutation/human/dwarfism)
 
 /datum/mutation/human/gigantism/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_GIANT, GENETIC_MUTATION)
 	owner.update_transform(1.25)
@@ -198,17 +203,7 @@
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_danger("You feel lightheaded.")
-
-/datum/mutation/human/clumsy/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	ADD_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
-
-/datum/mutation/human/clumsy/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	REMOVE_TRAIT(owner, TRAIT_CLUMSY, GENETIC_MUTATION)
-
+	mutation_traits = list(TRAIT_CLUMSY)
 
 //Tourettes causes you to randomly stand in place and shout.
 /datum/mutation/human/tourettes
@@ -239,17 +234,7 @@
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = span_danger("You can't seem to hear anything.")
-
-/datum/mutation/human/deaf/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	ADD_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
-
-/datum/mutation/human/deaf/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	REMOVE_TRAIT(owner, TRAIT_DEAF, GENETIC_MUTATION)
-
+	mutation_traits = list(TRAIT_DEAF)
 
 //Monified turns you into a monkey.
 /datum/mutation/human/race
@@ -267,7 +252,7 @@
 
 /datum/mutation/human/race/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	if(ismonkey(owner))
 		return
@@ -302,14 +287,13 @@
 
 /datum/mutation/human/glow/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	glow_color = get_glow_color()
 	glow = owner.mob_light()
-	modify()
 
 // Override modify here without a parent call, because we don't actually give an action.
-/datum/mutation/human/glow/modify()
+/datum/mutation/human/glow/setup()
 	if(!glow)
 		return
 
@@ -344,19 +328,7 @@
 	text_gain_indication = span_notice("You feel strong.")
 	instability = POSITIVE_INSTABILITY_MINI
 	difficulty = 16
-
-/datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
-	. = ..()
-	if(.)
-		return
-	ADD_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
-
-/datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
-	. = ..()
-	if(.)
-		return
-	REMOVE_TRAIT(owner, TRAIT_STRENGTH, GENETIC_MUTATION)
-
+	mutation_traits = list(TRAIT_STRENGTH)
 
 /datum/mutation/human/stimmed
 	name = "Stimmed"
@@ -365,18 +337,7 @@
 	instability = POSITIVE_INSTABILITY_MINI
 	text_gain_indication = span_notice("You feel stimmed.")
 	difficulty = 16
-
-/datum/mutation/human/stimmed/on_acquiring(mob/living/carbon/human/owner)
-	. = ..()
-	if(.)
-		return
-	ADD_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
-
-/datum/mutation/human/stimmed/on_losing(mob/living/carbon/human/owner)
-	. = ..()
-	if(.)
-		return
-	REMOVE_TRAIT(owner, TRAIT_STIMMED, GENETIC_MUTATION)
+	mutation_traits = list(TRAIT_STIMMED)
 
 /datum/mutation/human/insulated
 	name = "Insulated"
@@ -386,16 +347,7 @@
 	text_lose_indication = span_notice("Your fingertips regain feeling.")
 	difficulty = 16
 	instability = POSITIVE_INSTABILITY_MODERATE
-
-/datum/mutation/human/insulated/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
-
-/datum/mutation/human/insulated/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	REMOVE_TRAIT(owner, TRAIT_SHOCKIMMUNE, GENETIC_MUTATION)
+	mutation_traits = list(TRAIT_SHOCKIMMUNE)
 
 /datum/mutation/human/fire
 	name = "Fiery Sweat"
@@ -414,7 +366,8 @@
 		owner.ignite_mob()
 
 /datum/mutation/human/fire/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	owner.physiology.burn_mod *= 0.5
 
@@ -484,7 +437,8 @@
 	difficulty = 16
 
 /datum/mutation/human/spastic/on_acquiring()
-	if(..())
+	. = ..()
+	if(!.)
 		return
 	owner.apply_status_effect(/datum/status_effect/spasms)
 
@@ -504,7 +458,7 @@
 
 /datum/mutation/human/extrastun/on_acquiring()
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
@@ -536,8 +490,8 @@
 
 /datum/mutation/human/martyrdom/on_acquiring()
 	. = ..()
-	if(.)
-		return TRUE
+	if(!.)
+		return
 	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(bloody_shower))
 
 /datum/mutation/human/martyrdom/on_losing()
@@ -583,8 +537,8 @@
 
 /datum/mutation/human/headless/on_acquiring()
 	. = ..()
-	if(.)//cant add
-		return TRUE
+	if(!.)
+		return
 
 	var/obj/item/organ/brain/brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(brain)
@@ -627,3 +581,132 @@
 
 	if(istype(new_limb, /obj/item/bodypart/head))
 		return COMPONENT_NO_ATTACH
+
+// You bleed faster but regenerate blood faster
+/datum/mutation/human/bloodier
+	name = "Hypermetabolic Blood"
+	desc = "The subject's blood is hypermetabolic, causing it to be produced at a much faster rate."
+	quality = POSITIVE
+	instability = POSITIVE_INSTABILITY_MINOR
+	text_gain_indication = span_notice("You can feel your heartbeat pick up.")
+	text_lose_indication = span_notice("You heartbeat slows back down.")
+	difficulty = 16
+	synchronizer_coeff = 1
+	power_coeff = 1
+
+	/// Modifies the bleed rate of the owner
+	var/bleed_rate = 1.5
+	/// Modifies the blood regeneration rate of the owner
+	var/blood_regen_rate = 6
+	/// Tracks if we've modified the physiology of the owner
+	VAR_PRIVATE/physiology_modified = FALSE
+
+/datum/mutation/human/bloodier/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(!.)
+		return
+	if(!physiology_modified)
+		owner.physiology.bleed_mod *= bleed_rate
+		owner.physiology.blood_regen_mod *= blood_regen_rate
+		physiology_modified = TRUE
+
+/datum/mutation/human/bloodier/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	if(physiology_modified)
+		owner.physiology.bleed_mod /= bleed_rate
+		owner.physiology.blood_regen_mod /= blood_regen_rate
+		physiology_modified = FALSE // just in case
+
+/datum/mutation/human/bloodier/setup()
+	if(owner && physiology_modified)
+		owner.physiology.bleed_mod /= bleed_rate
+		owner.physiology.blood_regen_mod /= blood_regen_rate
+		physiology_modified = FALSE
+
+	bleed_rate = clamp(initial(bleed_rate) * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src), 1, 2)
+	blood_regen_rate = clamp(initial(blood_regen_rate) * GET_MUTATION_POWER(src), 4, 12)
+
+	if(owner && !physiology_modified) // redundant but just in case
+		owner.physiology.bleed_mod *= bleed_rate
+		owner.physiology.blood_regen_mod *= blood_regen_rate
+		physiology_modified = TRUE
+	return TRUE
+
+// You eat rocks
+/datum/mutation/human/rock_eater
+	name = "Rock Eater"
+	desc = "The subject's body is able to digest rocks and minerals."
+	quality = POSITIVE
+	instability = POSITIVE_INSTABILITY_MINI
+	text_gain_indication = span_notice("You feel a craving for rocks.")
+	text_lose_indication = span_notice("You could go for a normal meal.")
+	difficulty = 12
+	mutation_traits = list(TRAIT_ROCK_EATER)
+	conflicts = list(/datum/mutation/human/rock_absorber)
+
+// You eat rock but also get buffs from them
+/datum/mutation/human/rock_absorber
+	name = "Rock Absorber"
+	desc = "The subject's body is able to digest rocks and minerals, taking on their properties."
+	quality = POSITIVE
+	instability = POSITIVE_INSTABILITY_MAJOR
+	text_gain_indication = span_notice("You feel a supreme craving for rocks.")
+	text_lose_indication = span_notice("You could go for a normal meal.")
+	mutation_traits = list(TRAIT_ROCK_EATER, TRAIT_ROCK_METAMORPHIC)
+	conflicts = list(/datum/mutation/human/rock_eater)
+	locked = TRUE
+
+/datum/mutation/human/rock_absorber/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(. || QDELING(owner) || HAS_TRAIT(owner, TRAIT_ROCK_METAMORPHIC))
+		return
+	owner.remove_status_effect(/datum/status_effect/golem)
+	owner.remove_status_effect(/datum/status_effect/golem_lightbulb)
+
+// Soft crit is disabed
+/datum/mutation/human/inexorable
+	name = "Inexorable"
+	desc = "Your body can push on beyond the limits of normal human endurance. \
+		However, pushing it too far can cause severe damage to your body."
+	quality = POSITIVE
+	instability = POSITIVE_INSTABILITY_MODERATE
+	text_gain_indication = span_notice("You feel inexorable.")
+	text_lose_indication = span_notice("You suddenly feel more human.")
+	difficulty = 24
+	synchronizer_coeff = 1
+	mutation_traits = list(TRAIT_NOSOFTCRIT, TRAIT_ANALGESIA)
+
+/datum/mutation/human/inexorable/on_acquiring(mob/living/carbon/human/acquirer)
+	. = ..()
+	if(!.)
+		return
+	RegisterSignal(acquirer, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
+	check_health()
+
+/datum/mutation/human/inexorable/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	UnregisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE)
+	REMOVE_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+
+/datum/mutation/human/inexorable/proc/check_health(...)
+	SIGNAL_HANDLER
+	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS)
+		REMOVE_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+	else
+		ADD_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+
+/datum/mutation/human/inexorable/on_life(seconds_per_tick, times_fired)
+	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS || HAS_TRAIT(owner, TRAIT_STASIS))
+		return
+	// Gives you 30 seconds of being in soft crit... give or take
+	if(HAS_TRAIT(owner, TRAIT_TOXIMMUNE) || HAS_TRAIT(owner, TRAIT_TOXINLOVER))
+		owner.adjustBruteLoss(1 * seconds_per_tick * GET_MUTATION_SYNCHRONIZER(src), forced = TRUE)
+	else
+		owner.adjustToxLoss(0.5 * seconds_per_tick * GET_MUTATION_SYNCHRONIZER(src), forced = TRUE)
+		owner.adjustBruteLoss(0.5 * seconds_per_tick * GET_MUTATION_SYNCHRONIZER(src), forced = TRUE)
+	// Offsets suffocation but not entirely
+	owner.adjustOxyLoss(-0.5 * seconds_per_tick, forced = TRUE)

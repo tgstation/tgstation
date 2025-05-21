@@ -639,7 +639,7 @@
 
 	return TRUE
 
-/obj/machinery/suit_storage_unit/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/suit_storage_unit/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = TRUE
 	var/obj/item/card/id/id = null
 	if(istype(weapon, /obj/item/stock_parts/card_reader) && can_install_card_reader(user))

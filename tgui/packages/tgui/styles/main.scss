@@ -9,6 +9,7 @@
 
 // Core styles
 @include meta.load-css('./reset.scss');
+@include meta.load-css('./css-variables.scss');
 
 // Atomic classes
 @include meta.load-css('./atomic/candystripe.scss');
@@ -27,7 +28,6 @@
 @include meta.load-css('./interfaces/Emojipedia.scss');
 @include meta.load-css('./interfaces/ExperimentConfigure.scss');
 @include meta.load-css('./interfaces/Fabricator.scss');
-@include meta.load-css('./interfaces/Fishing.scss');
 @include meta.load-css('./interfaces/HellishRunes.scss');
 @include meta.load-css('./interfaces/HotKeysHelp.scss');
 @include meta.load-css('./interfaces/Hypertorus.scss');
@@ -41,16 +41,13 @@
 @include meta.load-css('./interfaces/NuclearBomb.scss');
 @include meta.load-css('./interfaces/Orbit.scss');
 @include meta.load-css('./interfaces/Paper.scss');
-@include meta.load-css('./interfaces/PersonalCrafting.scss');
 @include meta.load-css('./interfaces/PreferencesMenu.scss');
 @include meta.load-css('./interfaces/RequestManager.scss');
 @include meta.load-css('./interfaces/Roulette.scss');
 @include meta.load-css('./interfaces/Safe.scss');
-@include meta.load-css('./interfaces/TachyonArray.scss');
 @include meta.load-css('./interfaces/Techweb.scss');
 @include meta.load-css('./interfaces/Trophycase.scss');
 @include meta.load-css('./interfaces/Uplink.scss');
-@include meta.load-css('./interfaces/UtilityModulesPane.scss');
 @include meta.load-css('./interfaces/DetectiveBoard.scss');
 
 // Layouts
@@ -68,4 +65,9 @@
   background-size: 70% 70%;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+// A default, in case someone uses the vp() function outside of a <Window>
+:root {
+  --scaling-amount: 1;
 }

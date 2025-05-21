@@ -41,7 +41,7 @@
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
-	new /obj/item/door_remote/civilian(src)
+	new /obj/item/door_remote/head_of_personnel(src)
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/hop(src)
 	new /obj/item/storage/lockbox/medal/hop(src)
@@ -201,7 +201,7 @@
 	. = ..()
 	. += span_notice("<b>Right-click</b> with a Security-level ID to reset [src]'s registered ID.")
 
-/obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/user_id, mob/user, params)
+/obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/user_id, mob/user, list/modifiers, list/attack_modifiers)
 	if(!secure || !istype(user_id))
 		return ..()
 
@@ -217,7 +217,7 @@
 	name = initial(name)
 	update_appearance()
 
-/obj/structure/closet/secure_closet/brig/genpop/attackby_secondary(obj/item/card/id/advanced/used_id, mob/user, params)
+/obj/structure/closet/secure_closet/brig/genpop/attackby_secondary(obj/item/card/id/advanced/used_id, mob/user, list/modifiers, list/attack_modifiers)
 	if(!secure || !istype(used_id))
 		return ..()
 

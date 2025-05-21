@@ -66,7 +66,7 @@
  * * new_holder - The mob to add this quirk to.
  * * quirk_transfer - If this is being added to the holder as part of a quirk transfer. Quirks can use this to decide not to spawn new items or apply any other one-time effects.
  */
-/datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source)
+/datum/quirk/proc/add_to_holder(mob/living/new_holder, quirk_transfer = FALSE, client/client_source, unique = TRUE)
 	if(!new_holder)
 		CRASH("Quirk attempted to be added to null mob.")
 
@@ -100,7 +100,8 @@
 	if(!quirk_transfer)
 		if(gain_text)
 			to_chat(quirk_holder, gain_text)
-		add_unique(client_source)
+		if (unique)
+			add_unique(client_source)
 
 		if(quirk_holder.client)
 			post_add()
@@ -125,7 +126,7 @@
 	if(!quirk_transfer && lose_text)
 		to_chat(quirk_holder, lose_text)
 
-	if(mob_trait)
+	if(mob_trait && !QDELETED(quirk_holder))
 		REMOVE_TRAIT(quirk_holder, mob_trait, QUIRK_TRAIT)
 
 	if(quirk_flags & QUIRK_PROCESSES)
@@ -196,6 +197,12 @@
 	SIGNAL_HANDLER
 	update_process()
 
+/// If a quirk is able to be selected for the mob's species
+/datum/quirk/proc/is_species_appropriate(datum/species/mob_species)
+	if(mob_trait in GLOB.species_prototypes[mob_species].inherent_traits)
+		return FALSE
+	return TRUE
+
 /// Subtype quirk that has some bonus logic to spawn items for the player.
 /datum/quirk/item_quirk
 	/// Lazylist of strings describing where all the quirk items have been spawned.
@@ -210,7 +217,7 @@
  * If no valid slot is available for an item, the item is left at the mob's feet.
  * Arguments:
  * * quirk_item - The item to give to the quirk holder. If the item is a path, the item will be spawned in first on the player's turf.
- * * valid_slots - Assoc list of descriptive location strings to item slots that is fed into [/mob/living/carbon/proc/equip_in_one_of_slots]. list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK)
+ * * valid_slots - List of LOCATION_X that is fed into [/mob/living/carbon/proc/equip_in_one_of_slots].
  * * flavour_text - Optional flavour text to append to the where_items_spawned string after the item's location.
  * * default_location - If the item isn't possible to equip in a valid slot, this is a description of where the item was spawned.
  * * notify_player - If TRUE, adds strings to where_items_spawned list to be output to the player in [/datum/quirk/item_quirk/post_add()]

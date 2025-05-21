@@ -28,7 +28,7 @@ export const NoteKeeper = (props) => {
 
   const [writing, setWriting] = useLocalState('note', false);
 
-  const addNote = (event, value: string) => {
+  const addNote = (value: string) => {
     act('add_note', {
       crew_ref: crew_ref,
       content: value,
@@ -49,6 +49,7 @@ export const NoteKeeper = (props) => {
     <Section buttons={<NoteTabs />} fill scrollable title="Notes">
       {writing && (
         <TextArea
+          fluid
           height="100%"
           maxLength={1024}
           onEnter={addNote}

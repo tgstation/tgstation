@@ -42,7 +42,7 @@
 /turf/open/floor/plating/abductor2/burn_tile()
 	return //unburnable
 
-/turf/open/floor/plating/abductor2/try_replace_tile(obj/item/stack/tile/T, mob/user, params)
+/turf/open/floor/plating/abductor2/try_replace_tile(obj/item/stack/tile/T, mob/user, list/modifiers)
 	return
 
 /turf/open/floor/plating/snowed
@@ -52,7 +52,7 @@
 	icon_state = "snowplating"
 	base_icon_state = "snowplating"
 	initial_gas_mix = FROZEN_ATMOS
-	temperature = 180
+	temperature = ICEBOX_MIN_TEMPERATURE
 	attachment_holes = FALSE
 	planetary_atmos = TRUE
 	footstep = FOOTSTEP_SAND
@@ -91,7 +91,7 @@
 
 //Used in SnowCabin.dm
 /turf/open/floor/plating/snowed/snow_cabin
-	temperature = 180
+	temperature = ICEBOX_MIN_TEMPERATURE
 
 /turf/open/floor/plating/snowed/smoothed/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS

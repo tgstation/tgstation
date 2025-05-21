@@ -83,9 +83,6 @@
 #define COMSIG_ATOM_PROCESSED "atom_processed"
 ///called when teleporting into a possibly protected turf: (channel, turf/origin, turf/destination)
 #define COMSIG_ATOM_INTERCEPT_TELEPORTING "intercept_teleporting"
-///called after teleporting into a protected turf: (channel, turf/origin)
-#define COMSIG_ATOM_INTERCEPT_TELEPORTED "intercept_teleported"
-	#define COMPONENT_BLOCK_TELEPORT (1<<0)
 ///called when an atom is added to the hearers on get_hearers_in_view(): (list/processing_list, list/hearers)
 #define COMSIG_ATOM_HEARER_IN_VIEW "atom_hearer_in_view"
 ///called when an atom starts orbiting another atom: (atom)
@@ -151,3 +148,12 @@
 
 /// From /datum/component/tether/UnregisterFromParent()
 #define COMSIG_ATOM_TETHER_SNAPPED "atom_tether_snapped"
+
+/// From /atom/proc/update_atom_colour() : (color_changed)
+#define COMSIG_ATOM_COLOR_UPDATED "atom_color_updated"
+	/// Cancels update_appearance call in case you are somehow forced to call it manually to prevent dupe calls
+	#define COMPONENT_CANCEL_COLOR_APPEARANCE_UPDATE (1<<0)
+
+/// From /obj/item/organ/stomach/on_life() : (obj/item/organ/stomach/stomach, mob/living/carbon/owner, seconds_per_tick)
+#define COMSIG_ATOM_STOMACH_DIGESTED "atom_stomach_digested"
+	#define COMPONENT_CANCEL_DIGESTION (1<<0)

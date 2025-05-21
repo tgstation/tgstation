@@ -97,8 +97,8 @@
 
 	if(minimize_when_attached)
 		transform *= 0.5
-		pixel_x += 8
-		pixel_y += (-8 + LAZYLEN(attach_to.attached_accessories) * 2)
+		pixel_w += 8
+		pixel_z += (-8 + LAZYLEN(attach_to.attached_accessories) * 2)
 
 	RegisterSignal(attach_to, COMSIG_ITEM_EQUIPPED, PROC_REF(on_uniform_equipped))
 	RegisterSignal(attach_to, COMSIG_ITEM_DROPPED, PROC_REF(on_uniform_dropped))
@@ -143,6 +143,9 @@
 
 	if(minimize_when_attached)
 		transform *= 2
+		// Reset our applied offset
+		pixel_w = 0
+		pixel_z = 0
 		// just randomize position
 		pixel_x = rand(4, -4)
 		pixel_y = rand(4, -4)
@@ -155,10 +158,8 @@
 /obj/item/clothing/accessory/proc/on_uniform_equipped(obj/item/clothing/under/source, mob/living/user, slot)
 	SIGNAL_HANDLER
 
-	if(!(slot & source.slot_flags))
-		return
-
-	accessory_equipped(source, user)
+	if(slot & source.slot_flags)
+		accessory_equipped(source, user)
 
 /// Signal proc for [COMSIG_ITEM_DROPPED] on the uniform we're pinned to
 /obj/item/clothing/accessory/proc/on_uniform_dropped(obj/item/clothing/under/source, mob/living/user)

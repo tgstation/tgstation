@@ -1,5 +1,6 @@
 // Add 'walkies' as valid input
 /datum/pet_command/follow/dog
+	activate_on_befriend = TRUE
 	speech_commands = list("heel", "follow", "walkies")
 
 // Add 'good dog' as valid input
@@ -103,7 +104,7 @@
 	attack_verb_continuous = list("attacks", "bashes", "batters", "bludgeons", "whacks")
 	attack_verb_simple = list("attack", "bash", "batter", "bludgeon", "whack")
 
-/obj/item/dog_bone/pre_attack(atom/target, mob/living/user, params)
+/obj/item/dog_bone/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (!isdog(target) || user.combat_mode)
 		return ..()
 	var/mob/living/basic/pet/dog/dog_target = target

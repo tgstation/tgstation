@@ -143,6 +143,9 @@
 	category = PREFERENCE_CATEGORY_SUPPLEMENTAL_FEATURES
 	relevant_head_flag = HEAD_HAIR
 
+/datum/preference/color/hair_color/has_relevant_feature(datum/preferences/preferences)
+	return ..() || (/datum/quirk/item_quirk/bald::name in preferences.all_quirks)
+
 /datum/preference/color/hair_color/apply_to_human(mob/living/carbon/human/target, value)
 	target.set_haircolor(value, update = FALSE)
 
@@ -157,6 +160,9 @@
 	main_feature_name = "Hairstyle"
 	should_generate_icons = TRUE
 	relevant_head_flag = HEAD_HAIR
+
+/datum/preference/choiced/hairstyle/has_relevant_feature(datum/preferences/preferences)
+	return ..() || (/datum/quirk/item_quirk/bald::name in preferences.all_quirks)
 
 /datum/preference/choiced/hairstyle/init_possible_values()
 	return assoc_to_keys_features(SSaccessories.hairstyles_list)

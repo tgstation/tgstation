@@ -78,7 +78,7 @@
 		Noncompliance and removal of this implant is not recommended, and remember to smile for the cameras!"))
 
 	return ..()
-	
+
 /datum/antagonist/survivalist/battle_royale/on_removal()
 	if (isnull(owner.current))
 		return ..()
@@ -86,7 +86,7 @@
 	if (owner.current.stat == DEAD)
 		return ..()
 	to_chat(owner, span_notice("Your body is flooded with relief. Against all the odds, you've made it out alive."))
-	owner.current?.mob_mood.add_mood_event("battle_royale", /datum/mood_event/royale_survivor)
+	owner.current?.add_mood_event("battle_royale", /datum/mood_event/royale_survivor)
 	return ..()
 
 /// Add an objective to go to a specific place.

@@ -2,6 +2,8 @@
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
+///from base of atom/movable/Moved(): (/atom, newloc, direction)
+#define COMSIG_MOVABLE_ATTEMPTED_MOVE "movable_attempted_move"
 ///from base of atom/movable/Moved(): (/atom)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
 	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE (1<<0)
@@ -86,8 +88,6 @@
 #define COMSIG_MOVABLE_CHANGE_DUCT_LAYER "movable_change_duct_layer"
 ///Called before a movable is being teleported from `check_teleport_valid()`: (destination, channel)
 #define COMSIG_MOVABLE_TELEPORTING "movable_teleporting"
-///Called when a movable is being teleported from `do_teleport()`: (destination, channel)
-#define COMSIG_MOVABLE_TELEPORTED "movable_teleported"
 ///Called after a movable is teleported from `do_teleport()`: ()
 #define COMSIG_MOVABLE_POST_TELEPORT "movable_post_teleport"
 /// from /mob/living/can_z_move, sent to whatever the mob is buckled to. Only ridable movables should be ridden up or down btw.
@@ -136,4 +136,3 @@
 #define COMSIG_MOVABLE_BUMP_PUSHED "movable_bump_pushed"
 	/// Stop it from moving
 	#define COMPONENT_NO_PUSH (1<<0)
-

@@ -112,7 +112,7 @@
 	COOLDOWN_START(src, summon_cooldown, 60 SECONDS)
 	to_chat(user, span_notice("You call out for aid, attempting to summon spirits to your side."))
 	notify_ghosts(
-		"[user] is raising [user.p_their()] [name], calling for your help!",
+		"[user.real_name] is raising [user.p_their()] [name], calling for your help!",
 		source = user,
 		ignore_key = POLL_IGNORE_SPECTRAL_BLADE,
 		header = "Spectral blade",
@@ -183,8 +183,7 @@
 				"lizard_markings" = "Dark Tiger Body",
 				"legs" = DIGITIGRADE_LEGS,
 			)
-			consumer.eye_color_left = "#FEE5A3"
-			consumer.eye_color_right = "#FEE5A3"
+			consumer.set_eye_color("#FEE5A3")
 			consumer.set_species(/datum/species/lizard)
 		if(2)
 			to_chat(user, span_danger("Your flesh begins to melt! Miraculously, you seem fine otherwise."))

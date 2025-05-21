@@ -46,14 +46,15 @@
 	opacity = FALSE
 	max_integrity = 80
 
-/obj/structure/hedge/attacked_by(obj/item/I, mob/living/user)
-	if(opacity && HAS_TRAIT(user, TRAIT_BONSAI) && I.get_sharpness())
-		to_chat(user,span_notice("You start trimming \the [src]."))
-		if(do_after(user, 3 SECONDS,target=src))
-			to_chat(user,span_notice("You finish trimming \the [src]."))
-			opacity = FALSE
-	else
-		return ..()
+/obj/structure/hedge/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!opacity || !HAS_TRAIT(user, TRAIT_BONSAI) || !tool.get_sharpness())
+		return NONE
+	balloon_alert(user, "trimming...")
+	if(!do_after(user, 3 SECONDS, target=src))
+		return ITEM_INTERACT_BLOCKING
+	opacity = FALSE
+	return ITEM_INTERACT_SUCCESS
+
 /**
  * useful for mazes and such
  */

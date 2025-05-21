@@ -8,7 +8,7 @@
 /obj/item/dyespray/attack_self(mob/user)
 	dye(user, user)
 
-/obj/item/dyespray/pre_attack(atom/target, mob/living/user, params)
+/obj/item/dyespray/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	dye(target, user)
 	return ..()
 

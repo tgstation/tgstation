@@ -19,12 +19,15 @@
 
 /datum/mutation/human/radioactive/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
+	if(!.)
+		return
 	var/datum/component/radioactive_emitter/radioactivity_source = make_radioactive(acquirer)
 	radioactivity_source_ref = WEAKREF(radioactivity_source)
 
-/datum/mutation/human/radioactive/modify()
+/datum/mutation/human/radioactive/setup()
 	. = ..()
-	make_radioactive(owner)
+	if(!QDELETED(owner))
+		make_radioactive(owner)
 
 /**
  * Makes the passed mob radioactive, or if they're already radioactive,

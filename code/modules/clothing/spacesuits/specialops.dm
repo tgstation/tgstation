@@ -7,14 +7,13 @@
 	inhand_icon_state = null
 	greyscale_colors = "#397F3F#FFCE5B"
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
-	slowdown = 0
 	flags_inv = 0
 	armor_type = /datum/armor/space_beret
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	fishing_modifier = 0
-	hair_mask = HAIR_MASK_HIDE_ABOVE_45_DEG_MEDIUM
+	hair_mask = /datum/hair_mask/standard_hat_middle
 	visor_dirt = null
 
 /datum/armor/space_beret

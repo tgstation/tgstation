@@ -19,8 +19,8 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	products = list(
 		/obj/item/reagent_containers/syringe = 4,
 		/obj/item/healthanalyzer = 4,
-		/obj/item/reagent_containers/pill/patch/libital = 5,
-		/obj/item/reagent_containers/pill/patch/aiuri = 5,
+		/obj/item/reagent_containers/applicator/patch/libital = 5,
+		/obj/item/reagent_containers/applicator/patch/aiuri = 5,
 		/obj/item/reagent_containers/cup/bottle/multiver = 1,
 		/obj/item/reagent_containers/cup/bottle/syriniver = 1,
 		/obj/item/reagent_containers/cup/bottle/epinephrine = 3,
@@ -88,14 +88,6 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /obj/structure/fluff/empty_sleeper/syndicate/captain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/gps, "Old Encrypted Signal")
-
-/obj/item/storage/box/firingpins/syndicate
-	name = "box of syndicate firing pins"
-	desc = "A box full of special syndicate firing pins which allow only syndicate operatives to use weapons with those firing pins."
-
-/obj/item/storage/box/firingpins/syndicate/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/firing_pin/implant/pindicate(src)
 
 /////////// AI Laws
 

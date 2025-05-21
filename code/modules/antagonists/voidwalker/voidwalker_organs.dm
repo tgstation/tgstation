@@ -2,9 +2,10 @@
 /obj/item/organ/eyes/voidwalker
 	name = "blackened orbs"
 	desc = "These orbs will withstand the light of the sun, yet still see within the darkest voids."
+	icon_state = "eyes_voidwalker"
 	eye_icon_state = null
 	blink_animation = FALSE
-	iris_overlays = FALSE
+	iris_overlay = null
 	pepperspray_protect = TRUE
 	flash_protect = FLASH_PROTECTION_WELDER
 	color_cutoffs = list(20, 10, 40)
@@ -85,7 +86,8 @@
 	var/turf/new_turf = entering
 
 	//apply debufs for being in gravity
-	if(new_turf.has_gravity())
+	var/area/local_area = get_area(new_turf)
+	if(new_turf.has_gravity() && !is_area_nearby_station(local_area))
 		organ_owner.add_movespeed_modifier(speed_modifier)
 	//remove debufs for not being in gravity
 	else

@@ -65,7 +65,6 @@
 	)
 
 	AddComponent(/datum/component/ai_target_timer)
-	AddComponent(/datum/component/basic_mob_attack_telegraph)
 	AddComponentFrom(INNATE_TRAIT, /datum/component/shovel_hands)
 	if (tameable)
 		AddComponent(/datum/component/tameable, tame_chance = 10, bonus_tame_chance = 5)
@@ -103,7 +102,7 @@
 	if (tentacles.cooldown_time > 1 SECONDS)
 		tentacles.cooldown_time -= 1 SECONDS
 
-/mob/living/basic/mining/goliath/attackby(obj/item/attacking_item, mob/living/user, params)
+/mob/living/basic/mining/goliath/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if (!istype(attacking_item, /obj/item/goliath_saddle))
 		return ..()
 	if (!tameable)

@@ -177,7 +177,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 			maptext_x = 4
 	maptext = MAPTEXT(current_number) //Finally, apply the maptext
 
-/obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, params)
+/obj/machinery/ticket_machine/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	..()
 	if(istype(I, /obj/item/hand_labeler_refill))
 		if(!(ticket_number >= max_number))
@@ -253,6 +253,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 		name += " #[num]"
 		saved_maptext = MAPTEXT(num)
 		maptext = saved_maptext
+	AddElement(/datum/element/burn_on_item_ignition)
 
 /obj/item/ticket_machine_ticket/examine(mob/user)
 	. = ..()
@@ -264,12 +265,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/ticket_machine, 32)
 /obj/item/ticket_machine_ticket/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	maptext = saved_maptext //For some reason, storage code removes all maptext off objs, this stops its number from being wiped off when taken out of storage.
-
-/obj/item/ticket_machine_ticket/attackby(obj/item/P, mob/living/carbon/human/user, params) //Stolen from papercode
-	if(burn_paper_product_attackby_check(P, user))
-		return
-
-	return ..()
 
 /obj/item/ticket_machine_ticket/Destroy()
 	if(source)

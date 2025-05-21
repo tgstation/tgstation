@@ -23,12 +23,28 @@
 	var/immerse_overlay_color = "#5AAA88"
 	///The transparency of the immerse element's overlay
 	var/immerse_overlay_alpha = 180
+	///Icon state to use for the immersion mask
+	var/immerse_overlay = "immerse"
 
 	/// Fishing element for this specific water tile
 	var/datum/fish_source/fishing_datum = /datum/fish_source/river
 
 	/// Whether the immerse element has been added yet or not
 	var/immerse_added = FALSE
+
+	/**
+	 * Variables used for the swimming tile element. If TRUE, we pass these values to the element.
+	 * - is_swimming_tile: Whether or not we add the element to this tile.
+	 * - stamina_entry_cost: how much stamina it costs to enter the swimming tile, and for each move into a tile
+	 * - ticking_stamina_cost: How much stamina is lost for staying in the water.
+	 * - ticking_oxy_damage: How much oxygen is lost per tick when drowning in water. Also determines how many breathes are lost.
+	 * - exhaust_swimmer_prob: The likelihood that someone suffers stamina damage when entering a swimming tile.
+	 */
+	var/is_swimming_tile = FALSE
+	var/stamina_entry_cost = 7
+	var/ticking_stamina_cost = 5
+	var/ticking_oxy_damage = 2
+	var/exhaust_swimmer_prob = 30
 
 /turf/open/water/Initialize(mapload)
 	. = ..()
@@ -42,14 +58,7 @@
 /turf/open/water/proc/on_atom_inited(datum/source, atom/movable/movable)
 	SIGNAL_HANDLER
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
-	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
-		return
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
-	immerse_added = TRUE
-
-/turf/open/water/Destroy()
-	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
-	return ..()
+	make_immersed(movable)
 
 /**
  * turf/Initialize() calls Entered on its contents too, however
@@ -58,16 +67,44 @@
  */
 /turf/open/water/Entered(atom/movable/arrived)
 	. = ..()
-	if(immerse_added || is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
-		return
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
+	make_immersed(arrived)
+
+///Makes this turf immersable, return true if we actually did anything so child procs don't have to repeat our checks
+/turf/open/water/proc/make_immersed(atom/movable/triggering_atom)
+	if(immerse_added || is_type_in_typecache(triggering_atom, GLOB.immerse_ignored_movable))
+		return FALSE
+	AddElement(/datum/element/immerse, icon, icon_state, immerse_overlay, immerse_overlay_color, alpha = immerse_overlay_alpha)
 	immerse_added = TRUE
+	if(is_swimming_tile)
+		AddElement(/datum/element/swimming_tile, stamina_entry_cost, ticking_stamina_cost, ticking_oxy_damage, exhaust_swimmer_prob)
+	return TRUE
+
+/turf/open/water/Destroy()
+	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
+	return ..()
+
 
 /turf/open/water/jungle
 
 /turf/open/water/no_planet_atmos
 	baseturfs = /turf/open/water/no_planet_atmos
 	planetary_atmos = FALSE
+
+/turf/open/water/no_planet_atmos/deep
+	name = "deep water"
+	desc = "Less shallow water."
+	icon_state = "deep_riverwater_motion"
+	immerse_overlay = "immerse_deep"
+	baseturfs = /turf/open/water/no_planet_atmos/deep
+	is_swimming_tile = TRUE
+
+/turf/open/water/no_planet_atmos/deep/lethal
+	name = "treacherous water"
+	desc = "Less shallow, very dangerous water. You feel like it would be a very bad idea to enter this water."
+	stamina_entry_cost = 25
+	ticking_stamina_cost = 15
+	ticking_oxy_damage = 2
+	exhaust_swimmer_prob = 100
 
 /turf/open/water/beach
 	planetary_atmos = FALSE
@@ -83,6 +120,23 @@
 /turf/open/water/beach/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_MESSAGE_IN_A_BOTTLE_LOCATION, INNATE_TRAIT)
+
+/// Deep water drains stamina and starts drowning you
+/turf/open/water/deep_beach
+	name = "deep water"
+	desc = "Don't forget your life jacket."
+	immerse_overlay = "immerse_deep"
+	icon = 'icons/turf/beach.dmi'
+	icon_state = "deepwater"
+	base_icon_state = "deepwater"
+	baseturfs = /turf/open/water/deep_beach
+	immerse_overlay_color = "#57707c"
+	fishing_datum = /datum/fish_source/ocean
+	is_swimming_tile = TRUE
+
+/turf/open/water/deep_beach/lethal
+	name = "treacherous water"
+	desc = "You think entering this water would probably go extremely badly."
 
 /turf/open/water/lavaland_atmos
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
@@ -109,8 +163,6 @@
 	immerse_overlay_color = "#A0E2DE"
 	immerse_overlay_alpha = 190
 	fishing_datum = /datum/fish_source/hot_spring
-	/// Holder for the steam particles
-	var/obj/effect/abstract/particle_holder/cached/particle_effect
 
 /turf/open/water/hot_spring/Initialize(mapload)
 	. = ..()
@@ -118,21 +170,22 @@
 	// we don't want to end up with 4 different immerse elements, which would cause
 	// the immerse trait to be repeatedly removed and readded as someone moves within the pool,
 	// replacing the status effect over and over, which can be seen through the status effect alert icon.
-	AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
-	immerse_added = TRUE
+	if(!immerse_added)
+		AddElement(/datum/element/immerse, icon, icon_state, "immerse", immerse_overlay_color, alpha = immerse_overlay_alpha)
+		immerse_added = TRUE
 	icon_state = "pool_[rand(1, 4)]"
-	particle_effect = new(src, /particles/hotspring_steam, 4)
-	//render the steam over mobs and objects on the game plane
-	particle_effect.vis_flags &= ~VIS_INHERIT_PLANE
-	//And be unaffected by ambient occlusions, which would render the steam grey
-	particle_effect.plane = MUTATE_PLANE(MASSIVE_OBJ_PLANE, src)
+	var/obj/effect/abstract/shared_particle_holder/holder = add_shared_particles(/particles/hotspring_steam, "hot_springs_[GET_TURF_PLANE_OFFSET(src)]", pool_size = 4)
+	// Render the steam over mobs and objects on the game plane
+	holder.vis_flags &= ~VIS_INHERIT_PLANE
+	// And be unaffected by ambient occlusions, which would render the steam grey
+	holder.plane = MUTATE_PLANE(MASSIVE_OBJ_PLANE, src)
 	add_filter("hot_spring_waves", 1, wave_filter(y = 1, size = 1, offset = 0, flags = WAVE_BOUNDED))
 	var/filter = get_filter("hot_spring_waves")
 	animate(filter, offset = 1, time = 3 SECONDS, loop = -1, easing = SINE_EASING|EASE_IN|EASE_OUT)
 	animate(offset = 0, time = 3 SECONDS, easing = SINE_EASING|EASE_IN|EASE_OUT)
 
 /turf/open/water/hot_spring/Destroy()
-	QDEL_NULL(particle_effect)
+	remove_shared_particles("hot_springs_[GET_TURF_PLANE_OFFSET(src)]")
 	remove_filter("hot_spring_waves")
 	for(var/atom/movable/movable as anything in contents)
 		exit_hot_spring(movable)

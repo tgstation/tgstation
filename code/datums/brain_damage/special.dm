@@ -25,7 +25,7 @@
 
 /datum/brain_trauma/special/godwoken/on_gain()
 	ADD_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/special/godwoken/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_HOLY, TRAUMA_TRAIT)
@@ -241,19 +241,17 @@
 	scan_desc = "violent psychosis"
 	gain_text = span_warning("You feel unhinged...")
 	lose_text = span_notice("You feel more balanced.")
+	/// The martial art we teach
 	var/datum/martial_art/psychotic_brawling/psychotic_brawling
 
 /datum/brain_trauma/special/psychotic_brawling/on_gain()
-	..()
-	psychotic_brawling = new()
-	psychotic_brawling.allow_temp_override = FALSE
-	if(!psychotic_brawling.teach(owner, TRUE))
-		to_chat(owner, span_notice("But your martial knowledge keeps you grounded."))
-		qdel(src)
+	. = ..()
+	psychotic_brawling = new(src)
+	psychotic_brawling.locked_to_use = TRUE
+	psychotic_brawling.teach(owner)
 
 /datum/brain_trauma/special/psychotic_brawling/on_lose()
-	..()
-	psychotic_brawling.fully_remove(owner)
+	. = ..()
 	QDEL_NULL(psychotic_brawling)
 
 /datum/brain_trauma/special/psychotic_brawling/bath_salts
@@ -268,7 +266,7 @@
 
 /datum/brain_trauma/special/tenacity/on_gain()
 	owner.add_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/special/tenacity/on_lose()
 	owner.remove_traits(list(TRAIT_NOSOFTCRIT, TRAIT_NOHARDCRIT, TRAIT_ANALGESIA), TRAUMA_TRAIT)
@@ -465,7 +463,7 @@
 	owner.add_mood_event("combat_ptsd", /datum/mood_event/desentized)
 	owner.mob_mood?.mood_modifier -= 1 //Basically nothing can change your mood
 	owner.mob_mood?.sanity_level = SANITY_DISTURBED //Makes sanity on a unstable level unless cured
-	..()
+	. = ..()
 
 /datum/brain_trauma/special/ptsd/on_lose()
 	owner.clear_mood_event("combat_ptsd")
@@ -587,18 +585,18 @@
 		to_chat(owner, span_warning("You start having a bad feeling..."))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 		return
-		
+
 	if(!isarea(axe_location))
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_gone)
 		return
-		
+
 	if(istype(axe_location, /area/station/command))
 		to_chat(owner, span_notice("You feel a sense of relief..."))
 		if(istype(GLOB.bridge_axe.loc, /obj/structure/fireaxecabinet))
 			return
 		owner.add_mood_event("fireaxe", /datum/mood_event/axe_neutral)
 		return
-		
+
 	to_chat(owner, span_warning("You start having a bad feeling..."))
 	owner.add_mood_event("fireaxe", /datum/mood_event/axe_missing)
 
@@ -685,7 +683,7 @@
 	else
 		examine_strings += span_warning("It's a simulacra, a fake axe made to fool the masses.")
 
-/datum/brain_trauma/special/axedoration/proc/on_axe_attack(obj/item/axe, atom/target, mob/user, click_parameters)
+/datum/brain_trauma/special/axedoration/proc/on_axe_attack(obj/item/axe, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	if(user != owner)
 		return

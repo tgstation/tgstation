@@ -1,6 +1,3 @@
-///Time before being allowed to select a new cult leader again
-#define CULT_POLL_WAIT (240 SECONDS)
-
 /// Returns either the error landmark or the location of the room. Needless to say, if this is used, it means things have gone awry.
 #define GET_ERROR_ROOM ((locate(/obj/effect/landmark/error) in GLOB.landmarks_list) || locate(4,4,1))
 
@@ -230,11 +227,12 @@
 	return atom_to_find
 
 ///Send a message in common radio when a player arrives
-/proc/announce_arrival(mob/living/carbon/human/character, rank)
+/proc/announce_arrival(mob/living/carbon/human/character, rank, announce_to_ghosts = TRUE)
 	if(!SSticker.IsRoundInProgress() || QDELETED(character))
 		return
-	var/area/player_area = get_area(character)
-	deadchat_broadcast(span_game(" has arrived at the station at [span_name(player_area.name)]."), span_game("[span_name(character.real_name)] ([rank])"), follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
+	if (announce_to_ghosts)
+		var/area/player_area = get_area(character)
+		deadchat_broadcast(span_game(" has arrived at the station at [span_name(player_area.name)]."), span_game("[span_name(character.real_name)] ([rank])"), follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if(character.mind && (character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
 		aas_config_announce(/datum/aas_config_entry/arrival, list("PERSON" = character.real_name,"RANK" = rank))
 

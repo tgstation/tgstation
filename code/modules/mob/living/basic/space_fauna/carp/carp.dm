@@ -22,6 +22,7 @@
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST | MOB_AQUATIC
 	health = 25
 	maxHealth = 25
+	max_stamina = 120
 	pressure_resistance = 200
 	combat_mode = TRUE
 	obj_damage = 50
@@ -185,6 +186,10 @@
 	basic_mob_flags = DEL_ON_DEATH
 	cell_line = NONE
 	regenerate_colour = "#ffffff"
+
+/mob/living/basic/carp/holographic/Initialize(mapload, mob/tamer)
+	. = ..()
+	AddComponent(/datum/component/holographic_nature)
 
 /// Holocarp don't eat food
 /mob/living/basic/carp/holographic/setup_eating()

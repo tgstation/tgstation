@@ -56,6 +56,10 @@
 		option.info = span_boldnotice("[initial(dressup.name)]") // no desc..
 		display_classes[dressup] = option
 
+	if(!length(display_classes))
+		to_chat(human_user, span_warning("There are no available outfits!"))
+		return
+
 	sort_list(display_classes)
 	var/choice = show_radial_menu(human_user, src, display_classes, radius = 38, require_near = TRUE)
 	if(!choice)
@@ -67,13 +71,11 @@
 	playsound(human_user, 'sound/items/zip/un_zip.ogg', 33)
 	playsound(src, 'sound/machines/closet/wooden_closet_open.ogg', 25)
 	icon_state = "fullcabinet_open"
-	if(!do_after(human_user, 3 SECONDS))
+	if(!do_after(human_user, 3 SECONDS) || selectable_outfits_to_amount[choice] == 0)
 		playsound(src, 'sound/machines/closet/wooden_closet_close.ogg', 50)
 		icon_state = base_icon_state
 		return
-	// If not inf, reduce amount by one
-	if(selectable_outfits_to_amount[choice] != INFINITY)
-		selectable_outfits_to_amount[choice]--
+	selectable_outfits_to_amount[choice]--
 	playsound(src, 'sound/machines/closet/wooden_closet_close.ogg', 50)
 	icon_state = base_icon_state
 	playsound(human_user, 'sound/items/zip/zip_up.ogg', 33)

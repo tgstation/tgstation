@@ -45,7 +45,7 @@
 		if(iscarbon(player))
 			var/mob/living/carbon/speaker = player
 			if(speaker.get_organ_slot(ORGAN_SLOT_ADAMANTINE_RESONATOR))
-				to_chat(speaker, msg)
-		if(isobserver(player))
+				to_chat(speaker, msg, type = MESSAGE_TYPE_RADIO, avoid_highlighting = speaker == owner)
+		else if(isobserver(player))
 			var/link = FOLLOW_LINK(player, owner)
-			to_chat(player, "[link] [msg]")
+			to_chat(player, "[link] [msg]", type = MESSAGE_TYPE_RADIO)

@@ -1,4 +1,0 @@
-author: "adamsong"
-delete-after: True
-changes:
-  - rscadd: "Added the ability for borgs to pathfind into and through restricted areas."

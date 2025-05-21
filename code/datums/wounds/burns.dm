@@ -6,6 +6,7 @@
 // TODO: well, a lot really, but specifically I want to add potential fusing of clothing/equipment on the affected area, and limb infections, though those may go in body part code
 /datum/wound/burn
 	name = "Burn Wound"
+	undiagnosed_name = "Burns"
 	a_or_from = "from"
 	sound_effect = 'sound/effects/wounds/sizzle1.ogg'
 
@@ -53,7 +54,11 @@
 
 	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
 		sanitization += 0.9
-
+	if(HAS_TRAIT(victim, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
+		infestation += 0.05
+		sanitization = max(sanitization - 0.15, 0)
+		if(infestation_rate <= 0.15 && prob(50))
+			infestation_rate += 0.001
 	if(limb.current_gauze)
 		limb.seep_gauze(WOUND_BURN_SANITIZATION_RATE * seconds_per_tick)
 

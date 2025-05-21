@@ -31,6 +31,7 @@
 	light_on = FALSE
 	combat_mode = FALSE
 	ai_controller = /datum/ai_controller/basic_controller/minebot
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	///the gun we use to kill
 	var/obj/item/gun/energy/recharge/kinetic_accelerator/minebot/stored_gun
 	///our normal overlay
@@ -48,7 +49,7 @@
 		/datum/pet_command/minebot_ability/dump,
 		/datum/pet_command/automate_mining,
 		/datum/pet_command/free/minebot,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/attack/minebot,
 	)
 	///possible colors the bot can have
@@ -125,9 +126,9 @@
 		user.balloon_alert(user, "successfully repaired!")
 	return TRUE
 
-/mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, params)
+/mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)
 	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
-		item_used.melee_attack_chain(user, stored_gun, params)
+		item_used.melee_attack_chain(user, stored_gun, modifiers)
 		return
 
 	return ..()

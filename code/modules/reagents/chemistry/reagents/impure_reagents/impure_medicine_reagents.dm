@@ -496,6 +496,8 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)
 	. = ..()
+	if (HAS_TRAIT(affected_mob, TRAIT_SUICIDED))
+		return
 	var/obj/item/organ/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(!heart || heart.organ_flags & ORGAN_FAILING)
 		return
@@ -923,3 +925,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/rezadone/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/phobia/fish, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/reagent/inverse/spaceacillin
+	name = "Sepsisillin"
+	description = "Weakens the immune system, acclerating the effects of bacteria, viruses, and parasites while negating the effects of immunity boosters." //it's like spacacillin but evil muahaha
+	color = "#002f06" //Gross green-black. Seemed fitting.
+	ph = 8.1
+	metabolization_rate = 0.1 * REM
+	tox_damage = 0
+	metabolized_traits = list(TRAIT_IMMUNODEFICIENCY)
