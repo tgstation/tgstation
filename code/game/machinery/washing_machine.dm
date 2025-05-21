@@ -390,7 +390,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 
 				victim.visible_message(span_danger("[user] is trying to force [victim] into the washing machine!"))
 				log_game("[key_name_and_tag(user)] is forcing [key_name_and_tag(victim)] into a washing machine")
-				if(!do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM))
+				if(!do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM, extra_checks = CALLBACK(src, PROC_REF(check_aggro_grab), user)))
 					return
 				victim.forceMove(src)
 				update_appearance()
@@ -401,6 +401,10 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	else
 		state_open = FALSE //close the door
 		update_appearance()
+
+/obj/machinery/washing_machine/proc/check_aggro_grab(mob/living/user)
+	if (user.grab_state >= GRAB_AGGRESSIVE)
+		return TRUE
 
 /obj/machinery/washing_machine/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
