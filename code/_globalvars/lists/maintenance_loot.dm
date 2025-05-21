@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/lead_pipe = 1,
 		/obj/item/reagent_containers/cup/beaker = 1,
 		/obj/item/reagent_containers/cup/bottle/random_buffer = 2,
-		/obj/item/reagent_containers/cup/rag = 1,
+		/obj/item/rag = 1,
 		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/stock_parts/power_store/cell/lead = 1,
@@ -219,22 +219,28 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/stack/medical/mesh = 1,
 			/obj/item/stack/medical/suture = 1,
 			/obj/item/stack/medical/bandage = 1,
-			) = 1,
+			) = 4,
 		list(//medical chems
 			/obj/item/reagent_containers/cup/bottle/multiver = 1,
 			/obj/item/reagent_containers/hypospray/medipen = 1,
 			/obj/item/reagent_containers/syringe/convermol = 1,
-			) = 1,
+			) = 4,
 		list(//drinks
 			/obj/item/reagent_containers/cup/glass/bottle/vodka = 1,
 			/obj/item/reagent_containers/cup/glass/drinkingglass/filled/nuka_cola = 1,
 			/obj/item/reagent_containers/cup/soda_cans/grey_bull = 1,
-			) = 1,
+			) = 4,
 		list(//sprayers
 			/obj/item/reagent_containers/spray = 1,
 			/obj/item/watertank = 1,
 			/obj/item/watertank/janitor = 1,
-			) = 1,
+			) = 4,
+		list(//other chems
+			/obj/item/reagent_containers/cup/jerrycan/oil = 2, //Not the most exciting reagent, but a staple. And you get a cool can for your pyrotechnics.
+			/obj/item/reagent_containers/cup/jerrycan/space_cleaner = 2, //If you can't find the janitor, the medbay might also appreciate some readymade cleaner.
+			/obj/item/reagent_containers/cup/jerrycan/sus = 1, //what assitant wouldn't like a vibrant jug o' phlog?
+			/obj/item/reagent_containers/cup/jerrycan/diethylamine = 1, //Im sure the botanist would appreciate it, but it is also really cool for maintenance science projects.
+			) = 2,
 		) = 8,
 
 	list(//food

@@ -901,6 +901,7 @@
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "inserted paper")
 	qdel(new_paper)
+	playsound(src, 'sound/machines/computer/paper_insert.ogg', 40, vary = TRUE)
 	stored_paper++
 	return ITEM_INTERACT_SUCCESS
 
@@ -917,6 +918,7 @@
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "inserted paper")
 	to_chat(user, span_notice("Added in [papers_added] new sheets. You now have [stored_paper] / [max_paper] printing paper stored."))
+	playsound(src, 'sound/machines/computer/paper_insert.ogg', 40, vary = TRUE)
 	bin.update_appearance()
 	return ITEM_INTERACT_SUCCESS
 

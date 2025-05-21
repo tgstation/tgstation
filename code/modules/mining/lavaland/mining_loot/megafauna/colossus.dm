@@ -123,7 +123,7 @@
 		return
 	ActivationReaction(user, ACTIVATE_TOUCH)
 
-/obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, list/modifiers)
+/obj/machinery/anomalous_crystal/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.get_temperature())
 		ActivationReaction(user, ACTIVATE_HEAT)
 	else

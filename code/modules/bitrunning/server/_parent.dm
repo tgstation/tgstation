@@ -123,7 +123,7 @@
 	return ..()
 
 
-/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, list/modifiers)
+/obj/machinery/quantum_server/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	if(!istype(weapon, /obj/item/bitrunning_debug))

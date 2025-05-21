@@ -56,6 +56,10 @@
 		enemies_list += potential_target
 
 	if(!length(enemies_list))
+
+		if(existing_target)
+			controller.clear_blackboard_key(target_key)
+
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/atom/new_target = pick_final_target(controller, enemies_list)

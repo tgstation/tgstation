@@ -183,13 +183,3 @@
 	desc = "A very small plastic treaure chest, with nothing inside. You could put this in an aquarium, and it'll look like very small pirates hid treasure in there. Wouldn't that be nice?"
 	icon_state = "treasure"
 	layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
-
-/obj/item/storage/box/aquarium_props
-	name = "aquarium props box"
-	desc = "All you need to make your aquarium look good."
-	illustration = "fish"
-	custom_price = PAYCHECK_LOWER
-
-/obj/item/storage/box/aquarium_props/PopulateContents()
-	for(var/prop_type in subtypesof(/obj/item/aquarium_prop))
-		new prop_type(src)
