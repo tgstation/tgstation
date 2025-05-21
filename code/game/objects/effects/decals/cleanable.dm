@@ -120,12 +120,14 @@
 		SEND_SIGNAL(AM, COMSIG_STEP_ON_BLOOD, src)
 		update_appearance()
 
-/obj/effect/decal/cleanable/wash(clean_types, updating_clothing)
+/obj/effect/decal/cleanable/wash(clean_types)
 	. = ..()
-	if (. || (clean_types & clean_type))
+	if(.)
 		qdel(src)
-		return TRUE
-	return .
+		return
+	if (clean_types & clean_type)
+		qdel(src)
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /**
  * Checks if this decal is a valid decal that can be blood crawled in.

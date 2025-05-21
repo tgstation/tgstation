@@ -373,19 +373,25 @@
 	else
 		set_opacity(initial(opacity))
 
-/obj/structure/window/wash(clean_types, updating_clothing)
+/obj/structure/window/wash(clean_types)
 	. = ..()
 	if(!(clean_types & CLEAN_SCRUB))
 		return
-	set_opacity(initial(opacity))
-	remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
+	var/initial_opacity = initial(opacity)
+	if(opacity != initial_opacity)
+		set_opacity(initial_opacity)
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 	for(var/atom/movable/cleanables as anything in src)
 		if(cleanables == src)
 			continue
-		if(!cleanables.wash(clean_types))
+		var/cleanable_washed = cleanables.wash(clean_types)
+		if(!cleanable_washed)
 			continue
+		. |= cleanable_washed
 		vis_contents -= cleanables
-	bloodied = FALSE
+	if(bloodied)
+		bloodied = FALSE
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /obj/structure/window/Destroy()
 	set_density(FALSE)

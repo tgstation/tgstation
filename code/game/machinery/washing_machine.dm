@@ -207,12 +207,12 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		M.Translate(rand(-3, 3), rand(-1, 3))
 		animate(src, transform=M, time=2)
 
-/obj/machinery/washing_machine/wash(clean_types, updating_clothing)
+/obj/machinery/washing_machine/wash(clean_types)
 	. = ..()
 	if(!busy && bloody_mess && (clean_types & CLEAN_TYPE_BLOOD))
 		bloody_mess = FALSE
 		update_appearance()
-		. = TRUE
+		. |= COMPONENT_CLEANED
 
 /obj/machinery/washing_machine/proc/wash_cycle()
 	for(var/X in contents)

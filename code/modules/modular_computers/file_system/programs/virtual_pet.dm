@@ -180,7 +180,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	happiness = min(happiness + PET_CLEAN_BONUS, max_happiness)
 	COOLDOWN_START(src, on_clean_cooldown, 1 MINUTES)
 	START_PROCESSING(SSprocessing, src)
-	return COMPONENT_CLEANED | COMPONENT_CLEANED_GAIN_XP
+	. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 ///manage the pet's hat offsets when he changes direction
 /datum/computer_file/program/virtual_pet/proc/on_change_dir(datum/source, old_dir, new_dir)

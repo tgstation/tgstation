@@ -146,4 +146,4 @@
 		if(!isnull(wearer))
 			wearer.update_tint()
 
-		return COMPONENT_CLEANED | COMPONENT_CLEANED_GAIN_XP
+		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP

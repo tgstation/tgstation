@@ -1019,10 +1019,11 @@
 	SIGNAL_HANDLER
 
 	. = NONE
-	if(wash(clean_types))
-		return COMPONENT_CLEANED
 
-/obj/item/bodypart/wash(clean_types, updating_clothing)
+	if(wash(clean_types))
+		. |= COMPONENT_CLEANED
+
+/obj/item/bodypart/wash(clean_types)
 	. = ..()
 	if(!.) // Already clean. Nothing to do here.
 		return

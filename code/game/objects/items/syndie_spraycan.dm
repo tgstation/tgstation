@@ -221,9 +221,9 @@
 			clean_proof = TRUE
 			protected_timer = addtimer(CALLBACK(src, PROC_REF(set_stage), RUNE_STAGE_REMOVABLE), 5 MINUTES)
 
-/obj/effect/decal/cleanable/traitor_rune/wash(clean_types, updating_clothing)
+/obj/effect/decal/cleanable/traitor_rune/wash(clean_types)
 	if (clean_proof)
-		return FALSE
+		return NONE
 
 	return ..()
 

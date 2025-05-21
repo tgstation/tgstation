@@ -869,7 +869,7 @@
 	. = NONE
 
 	if(owner.remove_status_effect(/datum/status_effect/ants))
-		return COMPONENT_CLEANED | COMPONENT_CLEANED_GAIN_XP
+		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /datum/status_effect/ants/get_examine_text()
 	return span_warning("[owner.p_They()] [owner.p_are()] covered in ants!")

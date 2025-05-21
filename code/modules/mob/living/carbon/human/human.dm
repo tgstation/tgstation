@@ -606,35 +606,28 @@
  */
 /mob/living/carbon/human/proc/clean_face(datum/source, clean_types)
 	SIGNAL_HANDLER
-	/// If we have any clothing slots to update
-	var/slots_to_update
 	if(!is_mouth_covered() && clean_lips())
 		. = TRUE
 
-	if(glasses && !is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types, updating_clothing = FALSE))
-		slots_to_update |= glasses.slot_flags
+	if(glasses && !is_eyes_covered(ITEM_SLOT_MASK|ITEM_SLOT_HEAD) && glasses.wash(clean_types))
 		. = TRUE
 
-	if(wear_mask && !(check_covered_slots() & ITEM_SLOT_MASK) && wear_mask.wash(clean_types, updating_clothing = FALSE))
-		slots_to_update |= glasses.slot_flags
+	if(wear_mask && !(check_covered_slots() & ITEM_SLOT_MASK) && wear_mask.wash(clean_types))
 		. = TRUE
-
-	if(slots_to_update)
-		update_clothing(slots_to_update)
 
 /**
  * Called when this human should be washed
  */
-/mob/living/carbon/human/wash(clean_types, updating_clothing)
+/mob/living/carbon/human/wash(clean_types)
 	. = ..()
 	if(!is_mouth_covered() && clean_lips())
-		. = TRUE
+		. |= COMPONENT_CLEANED
 
 	// Wash hands if exposed
 	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(check_covered_slots() & ITEM_SLOT_GLOVES))
 		blood_in_hands = 0
 		update_worn_gloves()
-		. = TRUE
+		. |= COMPONENT_CLEANED
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!

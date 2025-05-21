@@ -89,7 +89,7 @@
 		location.visible_message(span_warning("[src] crumble[p_s()] away into nothing.")) // just like my dreams after working with .dm
 		qdel(src)
 
-	return COMPONENT_CLEANED
+	. |= COMPONENT_CLEANED
 
 /obj/item/clothing/gloves/color/fyellow                             //Cheap Chinese Crap
 	desc = "These gloves are cheap knockoffs of the coveted ones - no way this can end badly."

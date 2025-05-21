@@ -64,7 +64,7 @@
 	name = initial(name)
 	desc = initial(desc)
 	update_appearance(UPDATE_NAME | UPDATE_DESC)
-	return COMPONENT_CLEANED | COMPONENT_CLEANED_GAIN_XP
+	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //

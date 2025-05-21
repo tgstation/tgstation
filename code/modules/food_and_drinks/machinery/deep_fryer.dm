@@ -256,4 +256,4 @@ GLOBAL_LIST_INIT(oilfry_blacklisted_items, typecacheof(list(
 
 	grease_level = 0
 	update_appearance(UPDATE_OVERLAYS)
-	return COMPONENT_CLEANED | COMPONENT_CLEANED_GAIN_XP
+	. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP

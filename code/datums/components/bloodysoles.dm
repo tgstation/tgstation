@@ -265,7 +265,7 @@
 		return NONE
 
 	reset_bloody_shoes()
-	return COMPONENT_CLEANED | COMPONENT_CLEANED_GAIN_XP
+	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /**
  * Like its parent but can be applied to carbon mobs instead of clothing items
