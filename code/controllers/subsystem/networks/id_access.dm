@@ -590,3 +590,5 @@ SUBSYSTEM_DEF(id_access)
 		.["Account Holder"] = id_account.account_holder
 		.["Account Assignment"] = id_account.account_job?.title || "Unassigned"
 		return .
+	else
+		. = ID_DATA(null)
