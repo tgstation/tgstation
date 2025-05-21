@@ -520,3 +520,35 @@
       and helps reduce confusion.
   - image: Modular shield cable sprites that adapt to orientation and make the whole
       system look cleaner
+2025-05-21:
+  Bisar:
+  - bugfix: The name input for the character preferences should be functional again.
+  Ezel:
+  - balance: Chem/Xeno/Custodial Nukie Keycard lowered to 5
+  - balance: Ordnance Nukie Keycard increased to 30
+  Krysonism:
+  - bugfix: fixed bungo pits not inheriting genes and stats from the fruit.
+  OnlineGirlfriend:
+  - rscadd: horse and unicorn plushies
+  Retrino:
+  - qol: more sinks available near surgical areas to wash your gross little hands
+  SmArtKar:
+  - bugfix: Fixed space suit helmets slowing you down
+  SyncIt21:
+  - bugfix: fixes runtimes with splashing reagents
+  TealSeer:
+  - bugfix: fixed express consoles taking your money and sending nothing when you
+      ordered goodies
+  improvedname:
+  - balance: Splits surgery dufflebag into two items the dufflebag itself and the
+      medkit
+  necromanceranne:
+  - balance: Swimming is no longer so hyper lethal, and also benefits from athletics
+      boosters.
+  - balance: By default, swimming through deep water does a somewhat low but mounting
+      quantity of stamina damage. Reduced by athletics skill and athletics boosters.
+  - balance: Your total carried equipment weight (and their slowdowns, if any) contribute
+      to your stamina loss while swimming. If you fell into deep water, best start
+      stripping items.
+  - balance: Floating is slightly less lethal, especially if you are starting to drown.
+  - bugfix: Fixes a runtime caused by the exercised status effect.
