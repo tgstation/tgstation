@@ -63,6 +63,7 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 				custom_icon = new_icon
 				available_icon_states = icon_states(custom_icon)
 				return TRUE
+			SStgui.update_uis(src)
 
 		if("reset-icon")
 			custom_icon = null
@@ -74,10 +75,12 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 					selected_object_icon = initial(temp.icon)
 					selected_object_icon_state = initial(temp.icon_state)
 					available_icon_states = icon_states(selected_object_icon)
+			SStgui.update_uis(src)
 			return TRUE
 
 		if("pick-icon-state")
 			custom_icon_state = params["new_state"]
+			SStgui.update_uis(src)
 			return TRUE
 
 		if("reset-icon-state")
@@ -87,21 +90,26 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 				if(path)
 					var/atom/temp = path
 					selected_object_icon_state = initial(temp.icon_state)
+			SStgui.update_uis(src)
 			return TRUE
 
 		if("set-icon-size")
 			custom_icon_size = params["size"]
+			SStgui.update_uis(src)
 			return TRUE
 
 		if("reset-icon-size")
 			custom_icon_size = 100
+			SStgui.update_uis(src)
 			return TRUE
 
 		if("get-icon-states")
 			var/icon_to_use = custom_icon || selected_object_icon
 			if(icon_to_use)
 				available_icon_states = icon_states(icon_to_use)
+			SStgui.update_uis(src)
 			return TRUE
+
 		if("selected-object-changed")
 			selected_object = params?["newObj"]
 			if(selected_object)
@@ -113,6 +121,7 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 					if(!custom_icon)
 						available_icon_states = icon_states(selected_object_icon)
 			return TRUE
+
 		if("create-object-action")
 			spawn_item(list(
 				object_list = selected_object,
@@ -128,12 +137,15 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 				),
 				usr
 			)
+			return TRUE
+
 		if("toggle-precise-mode")
 			var/precise_type = params["newPreciseType"]
 			if(precise_type == PRECISE_MODE_TARGET && params["where_dropdown_value"])
 				where_dropdown_value = params["where_dropdown_value"]
 			toggle_precise_mode(precise_type)
 			return TRUE
+
 		if("update-settings")
 			if(params["object_count"])
 				object_count = text2num(params["object_count"])

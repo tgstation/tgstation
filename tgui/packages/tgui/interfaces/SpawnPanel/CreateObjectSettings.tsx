@@ -354,7 +354,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                         : 'Copy atom path'
                     }
                     tooltipPosition="top"
-                    disabled={isTargetMode}
+                    disabled={isAnyPreciseModeActive && !isMarkModeActive}
                   />
                 </Stack.Item>
               </Stack>

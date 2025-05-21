@@ -45,7 +45,6 @@ export function CreateObject(props: CreateObjectProps) {
 
   const [tooltipIcon, setTooltipIcon] = useState(false);
   const [selectedObj, setSelectedObj] = useState<string | null>(null);
-  const [searchText, setSearchText] = useState('');
   const [searchBy, setSearchBy] = useState(false);
   const [sortBy, setSortBy] = useState(listTypes.Objects);
   const [hideMapping, setHideMapping] = useState(false);
@@ -67,10 +66,6 @@ export function CreateObject(props: CreateObjectProps) {
     matchStrategy: 'smart',
     getSearchString: (key) => (searchBy ? key : allObjects[key]?.name || ''),
   });
-
-  useEffect(() => {
-    setQuery(query);
-  }, [searchBy]);
 
   const filteredResults = results.filter((obj) => {
     const item = allObjects[obj];
@@ -95,9 +90,10 @@ export function CreateObject(props: CreateObjectProps) {
   useEffect(() => {
     if (data.copied_type) {
       setSelectedObj(data.copied_type);
-      setSearchText(data.copied_type);
+      setQuery(data.copied_type);
 
-      setSortBy(listTypes[objList[data.copied_type]]);
+      const copiedAtom: AtomData = objList.Atoms[data.copied_type];
+      setSortBy(listTypes[copiedAtom.type]);
       setSearchBy(true);
 
       const list = objList.Atoms;
@@ -119,7 +115,7 @@ export function CreateObject(props: CreateObjectProps) {
       const storedShowIcons = await storage.get('spawnpanel-showIcons');
       const storedShowPreview = await storage.get('spawnpanel-showPreview');
 
-      if (storedSearchText) setSearchText(storedSearchText);
+      if (storedSearchText) setQuery(storedSearchText);
       if (storedSearchBy !== undefined) setSearchBy(storedSearchBy);
       if (storedSortBy) setSortBy(storedSortBy);
       if (storedHideMapping !== undefined) setHideMapping(storedHideMapping);
@@ -141,7 +137,7 @@ export function CreateObject(props: CreateObjectProps) {
   };
 
   const updateSearchText = (value: string) => {
-    setSearchText(value);
+    setQuery(value);
     storage.set('spawnpanel-searchText', value);
   };
 
@@ -177,7 +173,7 @@ export function CreateObject(props: CreateObjectProps) {
       sort_by:
         Object.keys(listTypes).find((key) => listTypes[key] === sortBy) ||
         'Objects',
-      search_text: searchText,
+      search_text: query,
       search_by: searchBy ? 'type' : 'name',
       ...settings,
     };
@@ -328,6 +324,14 @@ export function CreateObject(props: CreateObjectProps) {
                 >
                   Preview
                 </Button.Checkbox>
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  height="1.7em"
+                  color="transparent"
+                  icon="close"
+                  onClick={() => setQuery('')}
+                />
               </Stack.Item>
             </Stack>
             <Stack>
