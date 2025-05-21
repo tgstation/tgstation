@@ -310,7 +310,7 @@
 ///Used to restore an energy gun's cell if it, for whatever reason, no longer exists. This is mostly only useful for admins fixing energy weapons.
 /obj/item/gun/energy/proc/debrick_this_bitch()
 	if(cell) //We have a cell? Don't run.
-		return
+		return FALSE
 
 	if(cell_type)
 		cell = new cell_type(src)
@@ -318,6 +318,7 @@
 		cell = new(src)
 	cell.use(cell.maxcharge)
 	update_appearance()
+	return TRUE
 
 /obj/item/gun/energy/vv_edit_var(var_name, var_value)
 	switch(var_name)
