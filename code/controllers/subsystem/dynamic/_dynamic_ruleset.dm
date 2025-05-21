@@ -138,11 +138,11 @@
 			break
 
 	// turn list(1, 1, 3, null) into list(1, 1, 3, 3)
-	for(var/i in length(tier_list) to 1)
+	for(var/i in length(tier_list) to 1 step -1)
 		var/val = tier_list[i]
 		if(isnum(val))
 			break
-		for(var/j in i to 1)
+		for(var/j in i to 1 step -1)
 			var/other_val = tier_list[j]
 			if(!isnum(other_val))
 				continue

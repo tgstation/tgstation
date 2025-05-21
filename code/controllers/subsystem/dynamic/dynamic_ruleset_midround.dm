@@ -945,7 +945,7 @@
 
 /// Checks if the candidate is an antag - most of the time you don't want to double dip. (Return FALSE to mark the candidate invalid)
 /datum/dynamic_ruleset/midround/from_living/proc/antag_check(mob/candidate)
-	return candidate.is_antag()
+	return !candidate.is_antag()
 
 /datum/dynamic_ruleset/midround/from_living/traitor
 	name = "Traitor"

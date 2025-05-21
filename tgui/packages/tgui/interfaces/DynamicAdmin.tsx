@@ -188,113 +188,191 @@ const StatusPanel = () => {
         ))}
       {time_until_lights > 0 ? (
         <LabeledList.Item label="Light Midround Start">
-          <Box>{formatTime(time_until_lights)}</Box>
-          <Button ml={1} onClick={() => act('light_start_now')}>
-            Start Now
-          </Button>
+          <Flex>
+            <Flex.Item>
+              <Box>{formatTime(time_until_lights)}</Box>
+            </Flex.Item>
+            <Flex.Item>
+              <Button ml={1} onClick={() => act('light_start_now')}>
+                Start Now
+              </Button>
+            </Flex.Item>
+          </Flex>
         </LabeledList.Item>
       ) : (
         <>
           <LabeledList.Item label="Light Midround Cooldown">
-            <Box>
-              {time_until_next_midround > 0
-                ? formatTime(time_until_next_midround)
-                : `Next dynamic tick (${formatTime(next_dynamic_tick)})`}
-            </Box>
-            <Button ml={1} onClick={() => act('reset_midround_cooldown')}>
-              Reset Cooldown
-            </Button>
+            <Flex>
+              <Flex.Item>
+                <Box>
+                  {time_until_next_midround > 0
+                    ? formatTime(time_until_next_midround)
+                    : `Next dynamic tick (${formatTime(next_dynamic_tick)})`}
+                </Box>
+              </Flex.Item>
+              <Flex.Item>
+                <Button
+                  ml={1}
+                  disabled={time_until_next_midround <= 0}
+                  onClick={() => act('reset_midround_cooldown')}
+                >
+                  Reset Cooldown
+                </Button>
+              </Flex.Item>
+            </Flex>
           </LabeledList.Item>
           <LabeledList.Item label="Light Midround Chance">
-            <Box
-              inline
-              style={{
-                borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
-              }}
-            >
-              <Tooltip content="Chance of a light midround ruleset being selected on next dynamic tick">
-                {light_midround_chance}%
-              </Tooltip>
-            </Box>
-            <Button ml={1} onClick={() => act('max_light_chance')}>
-              {light_chance_maxxed ? 'Reset' : 'Set to 100%'}
-            </Button>
+            <Flex>
+              <Flex.Item>
+                <Box
+                  inline
+                  style={{
+                    borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+                  }}
+                >
+                  <Tooltip content="Chance of a light midround ruleset being selected on next dynamic tick">
+                    {light_midround_chance}%
+                  </Tooltip>
+                </Box>
+              </Flex.Item>
+              <Flex.Item>
+                <Button
+                  ml={1}
+                  disabled={latejoin_chance >= 100}
+                  onClick={() => act('max_light_chance')}
+                >
+                  {light_chance_maxxed ? 'Reset' : 'Set to 100%'}
+                </Button>
+              </Flex.Item>
+            </Flex>
           </LabeledList.Item>
         </>
       )}
       {time_until_heavies > 0 ? (
         <LabeledList.Item label="Heavy Midround Start">
-          <Box>{formatTime(time_until_heavies)}</Box>
-          <Button ml={1} onClick={() => act('heavy_start_now')}>
-            Start Now
-          </Button>
+          <Flex>
+            <Flex.Item>
+              <Box>{formatTime(time_until_heavies)}</Box>
+            </Flex.Item>
+            <Flex.Item>
+              <Button ml={1} onClick={() => act('heavy_start_now')}>
+                Start Now
+              </Button>
+            </Flex.Item>
+          </Flex>
         </LabeledList.Item>
       ) : (
         <>
           <LabeledList.Item label="Heavy Midround Cooldown">
-            <Box>
-              {time_until_next_midround > 0
-                ? formatTime(time_until_next_midround)
-                : `Next dynamic tick (${formatTime(next_dynamic_tick)})`}
-            </Box>
-            <Button ml={1} onClick={() => act('reset_midround_cooldown')}>
-              Reset Cooldown
-            </Button>
+            <Flex>
+              <Flex.Item>
+                <Box>
+                  {time_until_next_midround > 0
+                    ? formatTime(time_until_next_midround)
+                    : `Next dynamic tick (${formatTime(next_dynamic_tick)})`}
+                </Box>
+              </Flex.Item>
+              <Flex.Item>
+                <Button
+                  ml={1}
+                  disabled={time_until_next_midround <= 0}
+                  onClick={() => act('reset_midround_cooldown')}
+                >
+                  Reset Cooldown
+                </Button>
+              </Flex.Item>
+            </Flex>
           </LabeledList.Item>
           <LabeledList.Item label="Heavy Midround Chance">
-            <Box
-              inline
-              style={{
-                borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
-              }}
-            >
-              <Tooltip content="Chance of a heavy midround ruleset being selected on next dynamic tick">
-                {heavy_midround_chance}%
-              </Tooltip>
-            </Box>
-            <Button ml={1} onClick={() => act('max_heavy_chance')}>
-              {heavy_chance_maxxed ? 'Reset' : 'Set to 100%'}
-            </Button>
+            <Flex>
+              <Flex.Item>
+                <Box
+                  inline
+                  style={{
+                    borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+                  }}
+                >
+                  <Tooltip content="Chance of a heavy midround ruleset being selected on next dynamic tick">
+                    {heavy_midround_chance}%
+                  </Tooltip>
+                </Box>
+              </Flex.Item>
+              <Flex.Item>
+                <Button
+                  ml={1}
+                  disabled={latejoin_chance >= 100}
+                  onClick={() => act('max_heavy_chance')}
+                >
+                  {heavy_chance_maxxed ? 'Reset' : 'Set to 100%'}
+                </Button>
+              </Flex.Item>
+            </Flex>
           </LabeledList.Item>
         </>
       )}
       {time_until_latejoins > 0 ? (
         <LabeledList.Item label="Latejoin Start">
-          <Box>{formatTime(time_until_latejoins)}</Box>
-          <Button ml={1} onClick={() => act('latejoin_start_now')}>
-            Start Now
-          </Button>
+          <Flex>
+            <Flex.Item>
+              <Box>{formatTime(time_until_latejoins)}</Box>
+            </Flex.Item>
+            <Flex.Item>
+              <Button ml={1} onClick={() => act('latejoin_start_now')}>
+                Start Now
+              </Button>
+            </Flex.Item>
+          </Flex>
         </LabeledList.Item>
       ) : (
         <>
           <LabeledList.Item label="Latejoin Cooldown">
-            <Box>
-              {time_until_next_latejoin
-                ? formatTime(time_until_next_latejoin)
-                : 'Next latejoin'}
-            </Box>
-            <Button ml={1} onClick={() => act('reset_latejoin_cooldown')}>
-              Reset Cooldown
-            </Button>
+            <Flex>
+              <Flex.Item>
+                <Box>
+                  {time_until_next_latejoin
+                    ? formatTime(time_until_next_latejoin)
+                    : 'Next latejoin'}
+                </Box>
+              </Flex.Item>
+              <Flex.Item>
+                <Button
+                  ml={1}
+                  disabled={time_until_next_latejoin <= 0}
+                  onClick={() => act('reset_latejoin_cooldown')}
+                >
+                  Reset Cooldown
+                </Button>
+              </Flex.Item>
+            </Flex>
           </LabeledList.Item>
           <LabeledList.Item label="Latejoin Chance">
-            <Box
-              inline
-              style={{
-                borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
-              }}
-            >
-              <Tooltip
-                content="Chance the next person who joins the game will selected for a latejoin ruleset.
+            <Flex>
+              <Flex.Item>
+                <Box
+                  inline
+                  style={{
+                    borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+                  }}
+                >
+                  <Tooltip
+                    content="Chance the next person who joins the game will selected for a latejoin ruleset.
               Note this does not GUARANTEE a latejoin ruleset is ran - if it fails,
               the chance will increase for the next player who joins."
-              >
-                {latejoin_chance}% ({failed_latejoins} failed attempts)
-              </Tooltip>
-            </Box>
-            <Button ml={1} onClick={() => act('max_latejoin_chance')}>
-              {latejoin_chance_maxxed ? 'Reset' : 'Set to 100%'}
-            </Button>
+                  >
+                    {latejoin_chance}% ({failed_latejoins} failed attempts)
+                  </Tooltip>
+                </Box>
+              </Flex.Item>
+              <Flex.Item>
+                <Button
+                  ml={1}
+                  disabled={latejoin_chance >= 100}
+                  onClick={() => act('max_latejoin_chance')}
+                >
+                  {latejoin_chance_maxxed ? 'Reset' : 'Set to 100%'}
+                </Button>
+              </Flex.Item>
+            </Flex>
           </LabeledList.Item>
         </>
       )}
