@@ -46,6 +46,7 @@
 
 		if(ballistic_gun_to_fix.misfire_probability > initial(ballistic_gun_to_fix.misfire_probability))
 			ballistic_gun_to_fix.misfire_probability = initial(ballistic_gun_to_fix.misfire_probability)
+			use_charge = TRUE
 
 		if(istype(ballistic_gun_to_fix, /obj/item/gun/ballistic/rifle/boltaction))
 			var/obj/item/gun/ballistic/rifle/boltaction/rifle_to_fix = ballistic_gun_to_fix
@@ -53,7 +54,13 @@
 				rifle_to_fix.jammed = FALSE
 				rifle_to_fix.unjam_chance = initial(rifle_to_fix.unjam_chance)
 				rifle_to_fix.jamming_chance = initial(rifle_to_fix.jamming_chance)
-		use_charge = TRUE
+				use_charge = TRUE
+
+	if(istype(gun_to_fix, /obj/item/gun/energy)) //Granted, this is NOT meant to be possible, but it will come up while an admin isn't around, and this is the most straightforward way for a player to get this resolved IC.
+		var/obj/item/gun/energy/energy_gun_to_fix = gun_to_fix
+
+		if(energy_gun_to_fix.debrick_this_bitch()) //Granted, this is NOT meant to be possible, but it could come up while an admin isn't around, and this is the most straightforward way for a player to get this resolved IC.
+			use_charge = TRUE
 
 	if(!use_charge)
 		balloon_alert(user, "no need for repair!")
