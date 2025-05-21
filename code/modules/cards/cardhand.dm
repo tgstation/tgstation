@@ -19,14 +19,19 @@
 
 /obj/item/toy/cards/cardhand/examine(mob/user)
 	. = ..()
+	var/broadcast_check = FALSE
 	for(var/obj/item/toy/singlecard/card in fetch_card_atoms())
 		if(user.is_holding(src) || card.flipped)
 			. += span_notice("The hand contains a: [card.cardname]")
+			if(!card.flipped)
+				broadcast_check = TRUE
 		else if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
 			. += span_notice("You scan the cardhand with your x-ray vision and there is a: [card.cardname]")
 		var/marked_color = card.getMarkedColor(user)
 		if(marked_color)
 			. += span_notice("There is a [marked_color] mark on the corner of a card in the cardhand!")
+	if(broadcast_check)
+		user.visible_message(span_notice("[user] checks [user.p_their()] cards."))
 
 
 /obj/item/toy/cards/cardhand/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
