@@ -376,24 +376,24 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		return
 
 	if(user.pulling && isliving(user.pulling))
-		var/mob/living/L = user.pulling
-		if(L.buckled || L.has_buckled_mobs())
+		var/mob/living/victim = user.pulling
+		if(victim.buckled || victim.has_buckled_mobs())
 			return
 		if(state_open)
-			if(istype(L, /mob/living/basic/pet))
-				L.forceMove(src)
+			if(istype(victim, /mob/living/basic/pet))
+				victim.forceMove(src)
 				update_appearance()
-			if(istype(L, /mob/living/carbon/human))
+			if(istype(victim, /mob/living/carbon/human))
 				if(user.grab_state < GRAB_AGGRESSIVE)
 					balloon_alert(user, "grab harder!")
 					return
 
-				L.visible_message(span_danger("[user] is trying to force [L] into the washing machine!"))
-				log_game("[key_name_and_tag(user)] is forcing [key_name_and_tag(L)] into a washing machine")
+				victim.visible_message(span_danger("[user] is trying to force [victim] into the washing machine!"))
+				log_game("[key_name_and_tag(user)] is forcing [key_name_and_tag(victim)] into a washing machine")
 				if(!do_after(user, 3 SECONDS, target = src, timed_action_flags = IGNORE_HELD_ITEM))
-					L = null
+					victim = null
 					return
-				L.forceMove(src)
+				victim.forceMove(src)
 				update_appearance()
 		return
 
