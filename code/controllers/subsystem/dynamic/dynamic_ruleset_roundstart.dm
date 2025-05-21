@@ -23,6 +23,7 @@
 	name = "Malfunctioning AI"
 	config_tag = "Roundstart Malfunctioning AI"
 	pref_flag = ROLE_MALF
+	ruleset_flags = RULESET_HIGH_IMPACT
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
@@ -90,8 +91,9 @@
 	config_tag = "Roundstart Wizard"
 	preview_antag_datum = /datum/antagonist/wizard
 	pref_flag = ROLE_WIZARD
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
 	weight = list(
+		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
@@ -116,6 +118,7 @@
 	config_tag = "Roundstart Blood Cult"
 	preview_antag_datum = /datum/antagonist/cult
 	pref_flag = ROLE_CULTIST
+	ruleset_flags = RULESET_HIGH_IMPACT
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
@@ -163,7 +166,7 @@
 	config_tag = "Roundstart Nukeops"
 	preview_antag_datum = /datum/antagonist/nukeop
 	pref_flag = ROLE_NUCLEAR_OPERATIVE
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,
@@ -236,6 +239,7 @@
 	config_tag = "Roundstart Revolution"
 	preview_antag_datum = /datum/antagonist/rev/head
 	pref_flag = ROLE_REV_HEAD
+	ruleset_flags = RULESET_HIGH_IMPACT
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 1,

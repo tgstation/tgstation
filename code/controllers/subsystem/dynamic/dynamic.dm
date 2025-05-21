@@ -16,6 +16,13 @@ SUBSYSTEM_DEF(dynamic)
 		HEAVY_MIDROUND = -1,
 		LATEJOIN = -1,
 	)
+	/// Tracks the number of rulesets to spawn at roundstart (for admin reference)
+	var/list/base_rulesets_to_spawn = list(
+		ROUNDSTART = 0,
+		LIGHT_MIDROUND = 0,
+		HEAVY_MIDROUND = 0,
+		LATEJOIN = 0,
+	)
 
 	/// Cooldown for when we are allowed to spawn light rulesets
 	COOLDOWN_DECLARE(light_ruleset_start)
@@ -38,9 +45,11 @@ SUBSYSTEM_DEF(dynamic)
 	var/list/datum/dynamic_ruleset/executed_rulesets = list()
 	/// List of rulesets that have been set up to run, but not yet executed
 	var/list/datum/dynamic_ruleset/queued_rulesets = list()
+	/// List of ruleset typepaths that admins have explicitly disabled
+	var/list/admin_disabled_rulesets = list()
 
 /datum/controller/subsystem/dynamic/fire(resumed)
-	if(!COOLDOWN_FINISHED(src, midround_cooldown))
+	if(!COOLDOWN_FINISHED(src, midround_cooldown) || EMERGENCY_PAST_POINT_OF_NO_RETURN)
 		return
 
 	if(COOLDOWN_FINISHED(src, light_ruleset_start))
@@ -88,13 +97,16 @@ SUBSYSTEM_DEF(dynamic)
 	SSjob.reset_occupations()
 
 	var/num_real_players = length(antag_candidates)
-	// now select a tier.
+	// now select a tier (if admins didn't)
 	// this also calculates the number of rulesets to spawn
-	pick_tier(num_real_players)
-	// put rulesets in the queue
-	// if we already have a queue, that implies admin forced - so don't add more
+	if(!current_tier)
+		pick_tier(num_real_players)
+	// put rulesets in the queue (if admins didn't)
+	// this will even handle the case in which the tier wants 0 roundstart rulesets
 	if(!length(queued_rulesets))
-		queued_rulesets += pick_roundstart_rulesets(antag_candidates)
+		var/list/picked_rulesets = pick_roundstart_rulesets(antag_candidates)
+		if(length(picked_rulesets))
+			queued_rulesets += picked_rulesets
 	// finally, run through the queue and prepare rulesets for execution
 	// (actual execution, ie assigning antags, will happen after job assignment)
 	for(var/datum/dynamic_ruleset/roundstart/ruleset in queued_rulesets)
@@ -110,6 +122,10 @@ SUBSYSTEM_DEF(dynamic)
 			log_dynamic("Roundstart: [key_name(selected)] has been selected for [ruleset.config_tag].")
 
 		rulesets_to_spawn[ROUNDSTART] -= 1
+	// and start ticking
+	COOLDOWN_START(src, light_ruleset_start, current_tier.ruleset_type_settings[LIGHT_MIDROUND][TIME_THRESHOLD])
+	COOLDOWN_START(src, heavy_ruleset_start, current_tier.ruleset_type_settings[HEAVY_MIDROUND][TIME_THRESHOLD])
+	COOLDOWN_START(src, latejoin_ruleset_start, current_tier.ruleset_type_settings[LATEJOIN][TIME_THRESHOLD])
 
 	return TRUE
 
@@ -122,10 +138,27 @@ SUBSYSTEM_DEF(dynamic)
 	var/config_file = "[global.config.directory]/dynamic.toml"
 	var/list/result = rustg_raw_read_toml_file(config_file)
 	if(!result["success"])
-		log_dynamic("Failed to load config file! ([config_file])")
+		log_dynamic("Failed to load config file! ([config_file] - [result["content"]])")
 		return
 
 	dynamic_config = json_decode(result["content"])
+
+/// Sets the tier to the typepath passed in
+/datum/controller/subsystem/dynamic/proc/set_tier(picked_tier, population = length(GLOB.player_list))
+	current_tier = new picked_tier(dynamic_config)
+
+	for(var/category in current_tier.ruleset_type_settings)
+		var/list/range = current_tier.ruleset_type_settings[category] || list()
+		var/low_end = range[LOW_END] || 0
+		var/high_end = range[HIGH_END] || 0
+
+		if(population <= (range[HALF_RANGE_POP_THRESHOLD] || 0))
+			high_end = max(low_end, ceil(high_end * 0.25))
+		else if(population <= (range[FULL_RANGE_POP_THRESHOLD] || 0))
+			high_end = max(low_end, ceil(high_end * 0.5))
+
+		rulesets_to_spawn[category] = rand(low_end, high_end)
+		base_rulesets_to_spawn[category] = rulesets_to_spawn[category]
 
 /// Picks what tier we are going to use for this round and sets up all the corresponding variables and ranges
 /datum/controller/subsystem/dynamic/proc/pick_tier(roundstart_population = 0)
@@ -145,25 +178,7 @@ SUBSYSTEM_DEF(dynamic)
 
 		tier_weighted[tier_datum] = tier_weight
 
-	var/picked_tier = pick_weight(tier_weighted)
-
-	current_tier = new picked_tier(dynamic_config)
-
-	for(var/category in current_tier.ruleset_type_settings)
-		var/list/range = current_tier.ruleset_type_settings[category] || list()
-		var/low_end = range[LOW_END] || 0
-		var/high_end = range[HIGH_END] || 0
-
-		if(roundstart_population <= (range[HALF_RANGE_POP_THRESHOLD] || 0))
-			high_end = max(low_end, ceil(high_end * 0.25))
-		else if(roundstart_population <= (range[FULL_RANGE_POP_THRESHOLD] || 0))
-			high_end = max(low_end, ceil(high_end * 0.5))
-
-		rulesets_to_spawn[category] = rand(low_end, high_end)
-
-	COOLDOWN_START(src, light_ruleset_start, current_tier.ruleset_type_settings[LIGHT_MIDROUND][TIME_THRESHOLD])
-	COOLDOWN_START(src, heavy_ruleset_start, current_tier.ruleset_type_settings[HEAVY_MIDROUND][TIME_THRESHOLD])
-	COOLDOWN_START(src, latejoin_ruleset_start, current_tier.ruleset_type_settings[LATEJOIN][TIME_THRESHOLD])
+	set_tier(pick_weight(tier_weighted), roundstart_population)
 
 	var/roundstart_spawn = rulesets_to_spawn[ROUNDSTART]
 	var/light_midround_spawn = rulesets_to_spawn[LIGHT_MIDROUND]
@@ -440,19 +455,18 @@ SUBSYSTEM_DEF(dynamic)
 	return rulesets
 
 /**
- * Queues a latejoin ruleset to run on next latejoin which fulfills all requirements
+ * Queues a ruleset to run on roundstart or next latejoin which fulfills all requirements
+ *
  * For example, if you queue a latejoin revolutionary, it'll only run when population gets large enough and there are enough heads of staff
  * For all latejoins until then, it will simply do nothing
  *
  * * latejoin_type - The type of latejoin ruleset to force
  */
-/datum/controller/subsystem/dynamic/proc/queue_latejoin(latejoin_typepath)
-	if(!SSticker.HasRoundStarted())
-		return
-	if(!ispath(latejoin_typepath, /datum/dynamic_ruleset/latejoin))
-		CRASH("queue_latejoin() was called with an invalid latejoin type: [latejoin_typepath]")
+/datum/controller/subsystem/dynamic/proc/queue_ruleset(ruleset_typepath)
+	if(!ispath(ruleset_typepath, /datum/dynamic_ruleset/latejoin) && !ispath(ruleset_typepath, /datum/dynamic_ruleset/roundstart))
+		CRASH("queue_ruleset() was called with an invalid type: [ruleset_typepath]")
 
-	queued_rulesets += new latejoin_typepath(dynamic_config)
+	queued_rulesets += new ruleset_typepath(dynamic_config)
 
 /**
  * Get the cooldown between attempts to spawn a ruleset of the given type
@@ -474,6 +488,8 @@ SUBSYSTEM_DEF(dynamic)
 	var/num_antags = length(GLOB.current_living_antags)
 	var/num_dead = length(GLOB.dead_player_list)
 	var/num_alive = get_active_player_count(afk_check = TRUE)
+	if(num_dead + num_alive <= 0)
+		return 0
 
 	chance += 100 - (100 * (num_dead / (num_alive + num_dead)))
 	if(num_antags < 0)
@@ -485,12 +501,12 @@ SUBSYSTEM_DEF(dynamic)
  * Gets the chance of a latejoin ruleset being selected
  */
 /datum/controller/subsystem/dynamic/proc/get_latejoin_chance()
-	PRIVATE_PROC(TRUE)
-
 	var/chance = 0
 	var/num_antags = length(GLOB.current_living_antags)
 	var/num_dead = length(GLOB.dead_player_list)
 	var/num_alive = get_active_player_count(afk_check = TRUE)
+	if(num_dead + num_alive <= 0)
+		return 0
 
 	chance += 100 - (100 * (num_dead / (num_alive + num_dead)))
 	if(num_antags < 0)

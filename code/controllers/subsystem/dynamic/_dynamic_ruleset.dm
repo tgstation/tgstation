@@ -174,6 +174,8 @@
 /datum/dynamic_ruleset/proc/get_weight(population_size = 0, tier)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	if(type in SSdynamic.admin_disabled_rulesets)
+		return 0
 	if(!can_be_selected(population_size))
 		return 0
 	var/final_minpop = islist(min_pop) ? min_pop[tier] : min_pop
@@ -184,6 +186,8 @@
 	for(var/datum/dynamic_ruleset/other_ruleset as anything in SSdynamic.executed_rulesets)
 		if(other_ruleset == src)
 			continue
+		if((ruleset_flags & RULESET_HIGH_IMPACT) && (other_ruleset.ruleset_flags & RULESET_HIGH_IMPACT))
+			return 0
 		if(!istype(other_ruleset, type))
 			continue
 		if(!repeatable)

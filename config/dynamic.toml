@@ -201,7 +201,7 @@ repeatable = 1
 minimum_required_age = 0
 
 ["Roundstart Wizard"]
-weight = 
+weight = 1
 min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 1
@@ -307,7 +307,7 @@ repeatable = 1
 minimum_required_age = 0
 
 ["Midround Wizard"]
-weight = 
+weight = 1
 min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 1
@@ -397,7 +397,7 @@ repeatable = 0
 minimum_required_age = 0
 
 ["Space Ninja"]
-weight = 
+weight = 1
 min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 1
@@ -407,7 +407,7 @@ repeatable = 0
 minimum_required_age = 0
 
 ["Spiders"]
-weight = 
+weight = 1
 min_pop = 30
 blacklisted_roles = []
 min_antag_cap = 0
@@ -507,7 +507,7 @@ repeatable = 0
 minimum_required_age = 0
 
 ["Midround Obsessed"]
-weight = 
+weight = 1
 min_pop = 5
 blacklisted_roles = []
 repeatable_weight_decrease = 2
@@ -551,5 +551,3 @@ blacklisted_roles = []
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
-
-

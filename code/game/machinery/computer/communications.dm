@@ -872,7 +872,7 @@
 			)
 			var/max_number_of_sleepers = clamp(round(length(GLOB.alive_player_list) / 40), 1, 3)
 			if(!SSdynamic.force_run_midround(/datum/dynamic_ruleset/midround/from_living/traitor, forced_max_cap = max_number_of_sleepers))
-				SSdynamic.queue_latejoin(/datum/dynamic_ruleset/latejoin/traitor)
+				SSdynamic.queue_ruleset(/datum/dynamic_ruleset/latejoin/traitor)
 
 #undef HACK_PIRATE
 #undef HACK_FUGITIVES

@@ -44,6 +44,8 @@
 // Ruleset flags
 /// Ruleset denotes that it involves an outside force spawning in to attack the station
 #define RULESET_INVADER (1<<0)
+/// Multiple high impact rulesets cannot be selected unless we're at the highest tier
+#define RULESET_HIGH_IMPACT (1<<1)
 
 /// Href for cancelling midround rulesets before execution
 #define MIDROUND_CANCEL_HREF(...) "(<a href='byond://?src=[REF(src)];admin_cancel_midround=[REF(picked_ruleset)]'>CANCEL</a>)"

@@ -25,6 +25,7 @@
 	false_alarm_able = TRUE
 	ruleset_flags = RULESET_INVADER
 	weight = list(
+		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
@@ -35,7 +36,7 @@
 	var/egg_count = 2
 
 /datum/dynamic_ruleset/midround/spiders/can_be_selected(population_size)
-	return ..() && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
+	return ..() && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
 
 /datum/dynamic_ruleset/midround/spiders/execute()
 	var/num_egg = get_antag_cap(length(GLOB.alive_player_list), egg_count)
@@ -66,7 +67,7 @@
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
 
 /datum/dynamic_ruleset/midround/pirates/can_be_selected(population_size)
-	return ..() && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && !SSmapping.is_planetary() && length(pirate_pool()) > 0
+	return ..() && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && !SSmapping.is_planetary() && length(pirate_pool()) > 0
 
 // An abornmal ruleset that selects no players, but just spawns a pirate ship
 /datum/dynamic_ruleset/midround/pirates/execute()
@@ -190,7 +191,7 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/can_be_selected(population_size)
 	SHOULD_CALL_PARENT(TRUE)
-	return ..() && !(GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT)
+	return ..() && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT)
 
 /datum/dynamic_ruleset/midround/from_ghosts/get_candidate_mind(mob/dead/candidate)
 	// Ghost roles will always get a fresh mind
@@ -243,6 +244,7 @@
 	jobban_flag = ROLE_WIZARD
 	ruleset_flags = RULESET_INVADER
 	weight = list(
+		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
@@ -531,6 +533,7 @@
 	pref_flag = ROLE_NINJA
 	ruleset_flags = RULESET_INVADER
 	weight = list(
+		DYNAMIC_TIER_LOW = 0,
 		DYNAMIC_TIER_LOWMEDIUM = 0,
 		DYNAMIC_TIER_MEDIUMHIGH = 1,
 		DYNAMIC_TIER_HIGH = 2,
@@ -883,6 +886,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon
 	name = "Slaughter Demon"
 	config_tag = "Slaughter Demon"
+	candidate_role = "Slaughter Demon"
 	preview_antag_datum = /datum/antagonist/slaughter
 	midround_type = MIDROUND_RULESET_STYLE_HEAVY
 	jobban_flag = ROLE_ALIEN
@@ -935,13 +939,13 @@
 		return FALSE
 	return TRUE
 
-/// Checks if the candidate is a valid job for this ruleset - by default you probably only want crew members
+/// Checks if the candidate is a valid job for this ruleset - by default you probably only want crew members. (Return FALSE to mark the candidate invalid)
 /datum/dynamic_ruleset/midround/from_living/proc/job_check(mob/candidate)
-	return !(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER)
+	return (candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER)
 
-/// Checks if the candidate is an antag - most of the time you don't want to double dip
+/// Checks if the candidate is an antag - most of the time you don't want to double dip. (Return FALSE to mark the candidate invalid)
 /datum/dynamic_ruleset/midround/from_living/proc/antag_check(mob/candidate)
-	return !candidate.is_antag()
+	return candidate.is_antag()
 
 /datum/dynamic_ruleset/midround/from_living/traitor
 	name = "Traitor"
@@ -1019,6 +1023,7 @@
 	pref_flag = ROLE_OBSESSED
 	blacklisted_roles = list()
 	weight = list(
+		DYNAMIC_TIER_LOW = 5,
 		DYNAMIC_TIER_LOWMEDIUM = 5,
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 1,

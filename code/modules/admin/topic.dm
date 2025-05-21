@@ -66,13 +66,8 @@
 	else if(href_list["editrights"])
 		edit_rights_topic(href_list)
 
-/*
-	// melbert todo
 	else if(href_list["gamemode_panel"])
-		if(!check_rights(R_ADMIN))
-			return
-		SSdynamic.admin_panel()
-*/
+		dynamic_panel(usr)
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
