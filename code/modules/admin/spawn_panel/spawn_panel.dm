@@ -210,9 +210,9 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 					"offset_type" = OFFSET_ABSOLUTE,
 					"object_where" = where_dropdown_value,
 					"object_reference" = target,
-					"object_icon" = custom_icon,
-					"object_icon_state" = custom_icon_state,
-					"object_icon_size" = custom_icon_size
+					"custom_icon" = custom_icon,
+					"custom_icon_state" = custom_icon_state,
+					"custom_icon_size" = custom_icon_size
 				)
 
 				if(where_dropdown_value == WHERE_TARGETED_LOCATION || where_dropdown_value == WHERE_TARGETED_LOCATION_POD)
