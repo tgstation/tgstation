@@ -403,8 +403,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		update_appearance()
 
 /obj/machinery/washing_machine/proc/check_aggro_grab(mob/living/user)
-	if (user.grab_state >= GRAB_AGGRESSIVE)
-		return TRUE
+	return user.grab_state >= GRAB_AGGRESSIVE
 
 /obj/machinery/washing_machine/attack_hand_secondary(mob/user, modifiers)
 	. = ..()
