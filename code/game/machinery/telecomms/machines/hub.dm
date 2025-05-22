@@ -35,17 +35,16 @@
 
 /obj/machinery/telecomms/hub/update_power()
 	var/old_on = on
-
-	if (!toggled)
-		on = FALSE
-		soundloop.stop()
-	else if (machine_stat & (BROKEN | NOPOWER | EMPED))
-		on = FALSE
-		soundloop.stop()
+	if(toggled)
+		if(machine_stat & (BROKEN|NOPOWER|EMPED))
+			on = FALSE
+			soundloop.stop()
+		else
+			on = TRUE
+			soundloop.start()
 	else
-		on = TRUE
-		soundloop.start()
-	if (old_on != on)
+		on = FALSE
+	if(old_on != on)
 		update_appearance()
 
 /obj/machinery/telecomms/hub/Initialize(mapload)
