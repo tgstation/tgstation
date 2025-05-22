@@ -166,7 +166,7 @@
 		cell = null
 		update_appearance()
 
-	if(!QDELING(src) && cell_madnatory)
+	if(!QDELING(src) && cell_madnatory && !cell)
 		if(cell_type)
 			cell = new cell_type(src)
 		else
