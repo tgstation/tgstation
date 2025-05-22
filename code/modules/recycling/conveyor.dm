@@ -116,6 +116,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 /obj/machinery/conveyor/auto/Initialize(mapload, newdir)
 	. = ..()
+	last_command = TRUE
 	set_operating(TRUE)
 
 /obj/machinery/conveyor/auto/update()
