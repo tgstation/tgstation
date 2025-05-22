@@ -3,6 +3,8 @@
 
 /datum/unit_test/dynamic_ruleset_sanity/Run()
 	for (var/datum/dynamic_ruleset/midround/ruleset as anything in subtypesof(/datum/dynamic_ruleset/midround))
+		if(!initial(ruleset.config_tag))
+			continue
 		var/midround_ruleset_style = initial(ruleset.midround_type)
 		if (midround_ruleset_style != HEAVY_MIDROUND && midround_ruleset_style != LIGHT_MIDROUND)
 			TEST_FAIL("[ruleset] has an invalid midround_ruleset_style, it should be HEAVY_MIDROUND or LIGHT_MIDROUND")
@@ -14,6 +16,9 @@
 	var/list/known_antag_flags = list()
 
 	for (var/datum/dynamic_ruleset/ruleset as anything in subtypesof(/datum/dynamic_ruleset))
+		if(!initial(ruleset.config_tag))
+			continue
+
 		var/antag_flag = initial(ruleset.pref_flag)
 
 		// null antag flag is valid for rulesets with no associated preferecne

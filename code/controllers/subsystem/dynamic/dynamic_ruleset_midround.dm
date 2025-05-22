@@ -868,7 +868,7 @@
 /datum/dynamic_ruleset/midround/from_ghosts/morph
 	name = "Morph"
 	config_tag = "Morph"
-	preview_antag_datum = /datum/antagonist/morph
+	// preview_antag_datum = /datum/antagonist/morph
 	midround_type = LIGHT_MIDROUND
 	candidate_role = "Morphling"
 	jobban_flag = ROLE_ALIEN
@@ -891,7 +891,7 @@
 	name = "Slaughter Demon"
 	config_tag = "Slaughter Demon"
 	candidate_role = "Slaughter Demon"
-	preview_antag_datum = /datum/antagonist/slaughter
+	// preview_antag_datum = /datum/antagonist/slaughter
 	midround_type = HEAVY_MIDROUND
 	jobban_flag = ROLE_ALIEN
 	ruleset_flags = RULESET_INVADER
