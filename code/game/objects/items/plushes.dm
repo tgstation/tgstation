@@ -858,11 +858,21 @@
 		desc = "Son étiquette indique: 'Oop eek! Je suis un chimpanzé!', avec 'Maintenant en TAILLE JUMBO!' sur l'autre face."
 		french = TRUE
 	// throw the peel at a random mob, or a random turf if there are none
-	var/obj/item/grown/peel = new nana.trash_type(get_turf(src))
-	var/list/oviewers = src ? oviewers(src) : null
+	/// list of targets
+	var/list/oviewers
+	/// who is the source of the throw? if a player holds the plushie it will be the player
+	var/throw_src
+	if(istype(loc, /mob/living))
+		oviewers = loc ? oviewers(loc) : null
+		throw_src = loc
+	else
+		oviewers = src ? oviewers(src) : null
+		throw_src = src
 	if(length(oviewers) && locate(feeder) in oviewers)
 		oviewers -= feeder // remove feeder from targetables
-	peel.throw_at(!length(oviewers) ? get_ranged_target_turf(src, pick(GLOB.alldirs), peel.throw_range) : pick(oviewers), peel.throw_range, peel.throw_speed, quickstart = FALSE)
+	// do the throwing of the peel
+	var/obj/item/grown/peel = new nana.trash_type(get_turf(src))
+	peel.throw_at(!length(oviewers) ? get_ranged_target_turf(throw_src, pick(GLOB.alldirs), peel.throw_range) : pick(oviewers), peel.throw_range, peel.throw_speed, quickstart = FALSE)
 	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
 	spasm_animation(5 SECONDS)
 	qdel(nana)
