@@ -363,10 +363,7 @@
 	return MARTIAL_ATTACK_FAIL
 
 
-/mob/living/proc/CQC_help()
-	set name = "Remember The Basics"
-	set desc = "You try to remember some of the basics of CQC."
-	set category = "CQC"
+DEFINE_PROC_VERB(/mob/living, CQC_help, "Remember The Basics", "You try to remember some of the basics of CQC.", FALSE, "CQC")
 	to_chat(usr, "<b><i>You try to remember some of the basics of CQC.</i></b>")
 
 	to_chat(usr, "[span_notice("Slam")]: Grab Punch. Slam opponent into the ground, knocking them down.")

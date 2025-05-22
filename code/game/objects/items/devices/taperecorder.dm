@@ -125,10 +125,7 @@
 	return FALSE
 
 
-/obj/item/taperecorder/verb/ejectverb()
-	set name = "Eject Tape"
-	set category = "Object"
-
+DEFINE_VERB(/obj/item/taperecorder, ejectverb, "Eject Tape", "", FALSE, "Object")
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
 		return
@@ -162,10 +159,7 @@
 	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.GetVoice()]: [raw_message]"
 
 
-/obj/item/taperecorder/verb/record()
-	set name = "Start Recording"
-	set category = "Object"
-
+DEFINE_VERB(/obj/item/taperecorder, record, "Start Recording", "", FALSE, "Object")
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
 		return
@@ -205,10 +199,7 @@
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 
 
-/obj/item/taperecorder/verb/stop()
-	set name = "Stop"
-	set category = "Object"
-
+DEFINE_VERB(/obj/item/taperecorder, stop, "Stop", "", FALSE, "Object")
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
 		return
@@ -226,10 +217,7 @@
 	update_appearance()
 	update_sound()
 
-/obj/item/taperecorder/verb/play()
-	set name = "Play Tape"
-	set category = "Object"
-
+DEFINE_VERB(/obj/item/taperecorder, play, "Play Tape", "", FALSE, "Object")
 	if(!can_use(usr))
 		balloon_alert(usr, "can't use!")
 		return
@@ -299,10 +287,7 @@
 			if("Eject")
 				eject(user)
 
-/obj/item/taperecorder/verb/print_transcript()
-	set name = "Print Transcript"
-	set category = "Object"
-
+DEFINE_VERB(/obj/item/taperecorder, print_transcript, "Print Transcript", "", FALSE, "Object")
 	var/list/transcribed_info = mytape.storedinfo
 	if(!length(transcribed_info))
 		balloon_alert(usr, "tape is empty!")

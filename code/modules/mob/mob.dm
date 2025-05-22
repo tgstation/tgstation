@@ -197,12 +197,9 @@
 		set_hud_image_active(hud, update_huds = FALSE) //by default everything is active. but dont add it to huds to keep control.
 
 /**
- * Some kind of debug verb that gives atmosphere environment details
+ * Some kind of debug verb that gives atmosphere environment details. Sovl
  */
-/mob/proc/Cell()
-	set category = "Admin"
-	set hidden = TRUE
-
+DEFINE_PROC_VERB(/mob, Cell, "Cell", "", TRUE, "Admin")
 	if(!loc)
 		return
 
@@ -524,10 +521,8 @@
  * [this byond forum post](https://secure.byond.com/forum/?post=1326139&page=2#comment8198716)
  * for why this isn't atom/verb/examine()
  */
-/mob/verb/examinate(atom/examinify as mob|obj|turf in view()) //It used to be oview(12), but I can't really say why
-	set name = "Examine"
-	set category = "IC"
-
+//It used to be oview(12), but I can't really say why
+DEFINE_VERB(/mob, examinate, "Examine", "", FALSE, "IC", atom/examinify as mob|obj|turf in view())
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(run_examinate), examinify))
 
 /mob/proc/run_examinate(atom/examinify)
@@ -728,11 +723,8 @@
  *
  * Calls attack self on the item and updates the inventory hud for hands
  */
-/mob/verb/mode()
-	set name = "Activate Held Object"
-	set category = "Object"
+DEFINE_VERB(/mob, mode, "Activate Held Object", "", FALSE, "Object")
 	set src = usr
-
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
 
 ///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called
@@ -758,10 +750,7 @@
  *
  * Only works if flag/allow_respawn is allowed in config
  */
-/mob/verb/abandon_mob()
-	set name = "Respawn"
-	set category = "OOC"
-
+DEFINE_VERB(/mob, abandon_mob, "Respawn", "", FALSE, "OOC")
 	switch(CONFIG_GET(flag/allow_respawn))
 		if(RESPAWN_FLAG_NEW_CHARACTER)
 			if(tgui_alert(usr, "Note, respawning is only allowed as another character. If you don't have another free slot you may not be able to respawn.", "Respawn", list("Ok", "Nevermind")) != "Ok")
@@ -826,22 +815,17 @@
 /**
  * Sometimes helps if the user is stuck in another perspective or camera
  */
-/mob/verb/cancel_camera()
-	set name = "Cancel Camera View"
-	set category = "OOC"
+DEFINE_VERB(/mob, cancel_camera, "Cancel Camera View", "", FALSE, "OOC")
+	actually_cancel_camera()
+
+/mob/proc/actually_cancel_camera()
 	reset_perspective(null)
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
-/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
-	set name = ".click"
-	set hidden = TRUE
-	set category = null
+DEFINE_VERB(/mob, DisClick, ".click", "", TRUE, null, argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
 	return
 
-/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)
-	set name = ".dblclick"
-	set hidden = TRUE
-	set category = null
+DEFINE_VERB(/mob, DisDblClick, ".dblclick", "", TRUE, null, argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
 	return
 
 /// Adds this list to the output to the stat browser
@@ -1447,10 +1431,7 @@
 	fully_replace_character_name(real_name, new_name)
 
 ///Show the language menu for this mob
-/mob/verb/open_language_menu_verb()
-	set name = "Open Language Menu"
-	set category = "IC"
-
+DEFINE_VERB(/mob, open_language_menu_verb, "Open Language Menu", "", FALSE, "IC")
 	get_language_holder().open_language_menu(usr)
 
 ///Adjust the nutrition of a mob
@@ -1579,10 +1560,7 @@
 	canon_client = null
 
 ///Shows a tgui window with memories
-/mob/verb/memory()
-	set name = "Memories"
-	set category = "IC"
-	set desc = "View your character's memories."
+DEFINE_VERB(/mob, memory, "Memories", "View your character's memories.", FALSE, "IC")
 	if(!mind)
 		var/fail_message = "You have no mind!"
 		if(isobserver(src))
@@ -1633,10 +1611,7 @@
 	data["memories"] = memories
 	return data
 
-/mob/verb/view_skills()
-	set category = "IC"
-	set name = "View Skills"
-
+DEFINE_VERB(/mob, view_skills, "View Skills", "", FALSE, "IC")
 	mind?.print_levels(src)
 
 /mob/key_down(key, client/client, full_key)

@@ -1,11 +1,7 @@
 //Speech verbs.
 
 ///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
-/mob/verb/say_verb(message as text)
-	set name = "Say"
-	set category = "IC"
-	set instant = TRUE
-
+DEFINE_INSTANT_VERB(/mob, say_verb, "Say", "", FALSE, "IC", message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -16,11 +12,7 @@
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
 ///Whisper verb
-/mob/verb/whisper_verb(message as text)
-	set name = "Whisper"
-	set category = "IC"
-	set instant = TRUE
-
+DEFINE_INSTANT_VERB(/mob, whisper_verb, "Whisper", "", FALSE, "IC", message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
@@ -39,11 +31,7 @@
 	say(message, language = language)
 
 ///The me emote verb
-/mob/verb/me_verb(message as text)
-	set name = "Me"
-	set category = "IC"
-	set desc = "Perform a custom emote. Leave blank to pick between an audible or a visible emote (Defaults to visible)."
-
+DEFINE_VERB(/mob, me_verb, "Me", "Perform a custom emote. Leave blank to pick between an audible or a visible emote (Defaults to visible).", FALSE, "IC", message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return

@@ -346,10 +346,7 @@
 
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
-/obj/structure/windoor_assembly/verb/flip()
-	set name = "Flip Windoor Assembly"
-	set category = "Object"
-	set src in oview(1)
+DEFINE_WORLD_OBJECT_VERB(/obj/structure/windoor_assembly, flip, oview(1), "Flip Windoor Assembly", "", FALSE, "Object")
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 

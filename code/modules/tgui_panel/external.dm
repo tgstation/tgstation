@@ -8,9 +8,7 @@
 /**
  * tgui panel / chat troubleshooting verb
  */
-/client/verb/fix_tgui_panel()
-	set name = "Fix chat"
-	set category = "OOC"
+DEFINE_VERB(/client, fix_tgui_panel, "Fix chat", "", FALSE, "OOC")
 	var/action
 	log_tgui(src, "Started fixing.", context = "verb/fix_tgui_panel")
 
@@ -33,10 +31,7 @@
 	// Force show the panel to see if there are any errors
 	winset(src, "output_selector.legacy_output_selector", "left=output_browser")
 
-/client/verb/refresh_tgui()
-	set name = "Refresh TGUI"
-	set category = "OOC"
-
+DEFINE_VERB(/client, refresh_tgui, "Refresh TGUI", "", FALSE, "OOC")
 	for(var/window_id in tgui_windows)
 		var/datum/tgui_window/window = tgui_windows[window_id]
 		window.reinitialize()

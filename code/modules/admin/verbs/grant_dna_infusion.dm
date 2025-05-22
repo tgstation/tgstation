@@ -3,10 +3,7 @@
  * Returns the entry if all organs were successfully replaced.
  * If no infusion was picked, the infusion had no organs, or if one or more organs could not be granted, returns FALSE
 */
-/client/proc/grant_dna_infusion(mob/living/carbon/human/target in world)
-	set name = "Apply DNA Infusion"
-	set category = "Debug"
-
+DEFINE_PROC_VERB(/client, grant_dna_infusion, "Apply DNA Infusion", "", FALSE, "Debug", mob/living/carbon/human/target in world)
 	var/list/infusions = list()
 	for(var/datum/infuser_entry/path as anything in subtypesof(/datum/infuser_entry))
 		var/str = "[initial(path.name)] ([path])"

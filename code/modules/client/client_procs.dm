@@ -30,12 +30,48 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 //the undocumented 4th argument is for ?[0x\ref] style topic links. hsrc is set to the reference and anything after the ] gets put into hsrc_command
 /client/Topic(href, href_list, hsrc, hsrc_command)
+	var/starting_usage = TICK_USAGE
+	if(caller)
+		var/topic_return = __Topic(href, href_list, hsrc, hsrc_command)
+		if(topic_return == TRUE)
+			switch(href_list["_src_"])
+				if("holder")
+					hsrc = holder
+				if("usr")
+					hsrc = mob
+			. = ..()
+		else if(topic_return == FALSE)
+			. = null
+		else
+			. = topic_return
+	else
+		var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(starting_usage, callee)
+		ASYNC
+			var/topic_return = __Topic(href, href_list, hsrc, hsrc_command)
+			if(topic_return == TRUE)
+				switch(href_list["_src_"])
+					if("holder")
+						hsrc = holder
+					if("usr")
+						hsrc = mob
+				. = ..()
+			else if(topic_return == FALSE)
+				. = null
+			else
+				. = topic_return
+
+		store_cost?.usage_at_end = TICK_USAGE
+		store_cost?.finished_on = world.time
+
+/// Wrapper around click content
+/// Returns TRUE if successful, FALSE if blocked, if anything else is returned it will be returned in the parent
+/client/proc/__Topic(href, href_list, hsrc, hsrc_command)
 	if(!usr || usr != mob) //stops us calling Topic for somebody else's client. Also helps prevent usr=null
-		return
+		return FALSE
 
 #ifndef TESTING
 	if (LOWER_TEXT(hsrc_command) == "_debug") //disable the integrated byond vv in the client side debugging tools since it doesn't respect vv read protections
-		return
+		return FALSE
 #endif
 
 	// asset_cache
@@ -43,7 +79,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(href_list["asset_cache_confirm_arrival"])
 		asset_cache_job = asset_cache_confirm_arrival(href_list["asset_cache_confirm_arrival"])
 		if (!asset_cache_job)
-			return
+			return FALSE
 
 	// Rate limiting
 	var/mtl = CONFIG_GET(number/minute_topic_limit)
@@ -63,7 +99,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				log_game("[key_name(src)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute topic limit of [mtl] topic calls in a given game minute")
 			to_chat(src, span_danger("[msg]"))
-			return
+			return FALSE
 
 	var/stl = CONFIG_GET(number/second_topic_limit)
 	if (!holder && stl && href_list["window_id"] != "statbrowser")
@@ -76,11 +112,11 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		topiclimiter[SECOND_COUNT] += 1
 		if (topiclimiter[SECOND_COUNT] > stl)
 			to_chat(src, span_danger("Your previous action was ignored because you've done too many in a second"))
-			return
+			return FALSE
 
 	// Tgui Topic middleware
 	if(tgui_Topic(href_list))
-		return
+		return FALSE
 	if(href_list["reload_tguipanel"])
 		nuke_chat()
 	if(href_list["reload_statbrowser"])
@@ -92,43 +128,39 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if (asset_cache_job && (asset_cache_job in completed_asset_jobs))
 		to_chat(src, span_danger("An error has been detected in how your client is receiving resources. Attempting to correct.... (If you keep seeing these messages you might want to close byond and reconnect)"))
 		src << browse("...", "window=asset_cache_browser")
-		return
+		return FALSE
 	if (href_list["asset_cache_preload_data"])
 		asset_cache_preload_data(href_list["asset_cache_preload_data"])
-		return
+		return FALSE
 
 	// Admin PM
 	if(href_list["priv_msg"])
 		cmd_admin_pm(href_list["priv_msg"],null)
-		return
+		return FALSE
 	if (href_list["player_ticket_panel"])
 		view_latest_ticket()
-		return
+		return FALSE
 	// Admin message
 	if(href_list["messageread"])
 		var/message_id = round(text2num(href_list["messageread"]), 1)
 		if(!isnum(message_id))
-			return
+			return FALSE
 		var/datum/db_query/query_message_read = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE targetckey = :player_key AND id = :id",
 			list("id" = message_id, "player_key" = usr.ckey)
 		)
 		query_message_read.warn_execute()
-		return
+		return FALSE
 
 	// TGUIless adminhelp
 	if(href_list["tguiless_adminhelp"])
 		no_tgui_adminhelp(input(src, "Enter your ahelp", "Ahelp") as null|message)
-		return
+		return FALSE
 
 	if(href_list["commandbar_typing"])
 		handle_commandbar_typing(href_list)
 
 	switch(href_list["_src_"])
-		if("holder")
-			hsrc = holder
-		if("usr")
-			hsrc = mob
 		if("vars")
 			return view_var_Topic(href,href_list,hsrc)
 
@@ -137,25 +169,32 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			src << link(href_list["link"])
 		if("openWebMap")
 			if(!SSmapping.current_map.mapping_url)
-				return
+				return FALSE
 			if(is_station_level(mob.z))
 				src << link("[SSmapping.current_map.mapping_url]/?x=[mob.x]&y=[mob.y]&zoom=6")
 			else
 				src << link("[SSmapping.current_map.mapping_url]")
+
+	switch(href_list["_src_"])
+		if("holder")
+			hsrc = holder
+		if("usr")
+			hsrc = mob
+
 	if (hsrc)
 		var/datum/real_src = hsrc
 		if(QDELETED(real_src))
-			return
+			return FALSE
 
 	//fun fact: Topic() acts like a verb and is executed at the end of the tick like other verbs. So we have to queue it if the server is
 	//overloaded
-	if(hsrc && hsrc != holder && DEFAULT_TRY_QUEUE_VERB(VERB_CALLBACK(src, PROC_REF(_Topic), hsrc, href, href_list)))
-		return
-	..() //redirect to hsrc.Topic()
+	if(hsrc && hsrc != holder && DEFAULT_TRY_QUEUE_VERB(VERB_CALLBACK(src, PROC_REF(_WrapSrcTopic), hsrc, href, href_list)))
+		return FALSE
+	return TRUE //redirect to hsrc.Topic()
 
 ///dumb workaround because byond doesnt seem to recognize the Topic() typepath for /datum/proc/Topic() from the client Topic,
 ///so we cant queue it without this
-/client/proc/_Topic(datum/hsrc, href, list/href_list)
+/client/proc/_WrapSrcTopic(datum/hsrc, href, list/href_list)
 	return hsrc.Topic(href, href_list)
 
 /client/proc/is_content_unlocked()
@@ -229,7 +268,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return FALSE
 
 //This stops files larger than UPLOAD_LIMIT being sent from client to server via input(), client.Import() etc.
-/client/AllowUpload(filename, filelength)
+OVERRIDE_INTERNAL_VERB(/client, AllowUpload, filename, filelength)
 	var/client_max_file_size = CONFIG_GET(number/upload_limit)
 	if (holder)
 		var/admin_max_file_size = CONFIG_GET(number/upload_limit_admin)
@@ -834,10 +873,26 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	create_message("note", key, system_ckey, message, null, null, 0, 0, null, 0, 0)
 
 /client/Click(atom/object, atom/location, control, params)
+	var/starting_usage = TICK_USAGE
+	if(caller)
+		if(__Click(object, location, control, params))
+			. = ..()
+	else
+		var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(starting_usage, callee)
+		ASYNC
+			if(__Click(object, location, control, params))
+				. = ..()
+
+		store_cost?.usage_at_end = TICK_USAGE
+		store_cost?.finished_on = world.time
+
+/// Wrapper around click content
+/// Returns TRUE if successful, FALSE if blocked
+/client/proc/__Click(atom/object, atom/location, control, params)
 	if(click_intercept_time)
 		if(click_intercept_time >= world.time)
 			click_intercept_time = 0 //Reset and return. Next click should work, but not this one.
-			return
+			return FALSE
 		click_intercept_time = 0 //Just reset. Let's not keep re-checking forever.
 
 	var/ab = FALSE
@@ -847,7 +902,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	var/dragged = LAZYACCESS(modifiers, DRAG)
 	if(dragged && button_clicked != dragged)
-		return
+		return FALSE
 
 	if (object && IS_WEAKREF_OF(object, middle_drag_atom_ref) && button_clicked == LEFT_CLICK)
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
@@ -878,7 +933,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 				log_game("[key_name(src)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 				message_admins("[ADMIN_LOOKUPFLW(usr)] [ADMIN_KICK(usr)] Has hit the per-minute click limit of [mcl] clicks in a given game minute")
 			to_chat(src, span_danger("[msg]"))
-			return
+			return FALSE
 
 	var/scl = CONFIG_GET(number/second_click_limit)
 	if (!holder && scl)
@@ -894,12 +949,12 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 		if (clicklimiter[SECOND_COUNT] > scl)
 			to_chat(src, span_danger("Your previous click was ignored because you've done too many in a second"))
-			return
+			return FALSE
 
 	//check if the server is overloaded and if it is then queue up the click for next tick
 	//yes having it call a wrapping proc on the subsystem is fucking stupid glad we agree unfortunately byond insists its reasonable
 	if(!QDELETED(object) && TRY_QUEUE_VERB(VERB_CALLBACK(object, TYPE_PROC_REF(/atom, _Click), location, control, params), VERB_HIGH_PRIORITY_QUEUE_THRESHOLD, SSinput, control))
-		return
+		return FALSE
 
 	if (hotkeys)
 		// If hotkey mode is enabled, then clicking the map will automatically
@@ -909,8 +964,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		winset(src, null, "input.focus=true")
 
 	SEND_SIGNAL(src, COMSIG_CLIENT_CLICK, object, location, control, params, usr)
-
-	..()
+	return TRUE
 
 /client/proc/add_verbs_from_config()
 	if (interviewee)
@@ -1191,27 +1245,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/mob/dead/observer/observer = mob
 	observer.ManualFollow(target)
 
-/client/verb/stop_client_sounds()
-	set name = "Stop Sounds"
-	set category = "OOC"
-	set desc = "Stop Current Sounds"
+DEFINE_VERB(/client, stop_client_sounds, "Stop Sounds", "Stop Current Sounds", FALSE, "OOC")
 	SEND_SOUND(usr, sound(null))
 	tgui_panel?.stop_music()
 	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Stop Self Sounds"))
 
-/client/verb/toggle_fullscreen()
-	set name = "Toggle Fullscreen"
-	set category = "OOC"
-
+DEFINE_VERB(/client, toggle_fullscreen, "Toggle Fullscreen", "", FALSE, "OOC")
 	fullscreen = !fullscreen
 
 	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
 	attempt_auto_fit_viewport()
 
-/client/verb/toggle_status_bar()
-	set name = "Toggle Status Bar"
-	set category = "OOC"
-
+DEFINE_VERB(/client, toggle_status_bar, "Toggle Status Bar", "", FALSE, "OOC")
 	show_status_bar = !show_status_bar
 
 	if (show_status_bar)

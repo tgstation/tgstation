@@ -1,9 +1,5 @@
 // Verb to toggle restart notifications
-/client/verb/notify_restart()
-	set category = "OOC"
-	set name = "Notify Restart"
-	set desc = "Notifies you on Discord when the server restarts."
-
+DEFINE_VERB(/client, notify_restart, "Notify Restart", "Notifies you on Discord when the server restarts.", FALSE, "OOC")
 	// Safety checks
 	if(!CONFIG_GET(flag/sql_enabled))
 		to_chat(src, span_warning("This feature requires the SQL backend to be running."))
@@ -25,10 +21,10 @@
 	var/stored_mention = "<@[stored_id]>"
 	for(var/member in SSdiscord.notify_members) // If they are in the list, take them out
 		if(member == stored_mention)
-			SSdiscord.notify_members -= stored_mention 
+			SSdiscord.notify_members -= stored_mention
 			to_chat(src, span_notice("You will no longer be notified when the server restarts"))
 			return // This is necassary so it doesnt get added again, as it relies on the for loop being unsuccessful to tell us if they are in the list or not
 
 	// If we got here, they arent in the list. Chuck 'em in!
 	to_chat(src, span_notice("You will now be notified when the server restarts"))
-	SSdiscord.notify_members += "[stored_mention]" 
+	SSdiscord.notify_members += "[stored_mention]"

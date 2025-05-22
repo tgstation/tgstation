@@ -31,10 +31,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 #define SERVER_HOPPER_TRAIT "server_hopper"
 
-/mob/dead/proc/server_hop()
-	set category = "OOC"
-	set name = "Server Hop"
-	set desc= "Jump to the other server"
+DEFINE_PROC_VERB(/mob/dead, server_hop, "Server Hop", "Jump to the other server", FALSE, "OOC")
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM)) // in case the round is ending and a cinematic is already playing we don't wanna clash with that (yes i know)
 		return
 	var/list/our_id = CONFIG_GET(string/cross_comms_name)

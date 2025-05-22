@@ -26,17 +26,11 @@
 /mob/eye/canUseStorage()
 	return FALSE
 
-/mob/eye/up()
-	set name = "Move Upwards"
-	set category = "IC"
-
+/mob/eye/do_up()
 	if(zMove(UP, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move upwards."))
 
-/mob/eye/down()
-	set name = "Move Down"
-	set category = "IC"
-
+/mob/eye/do_down()
 	if(zMove(DOWN, z_move_flags = ZMOVE_FEEDBACK))
 		to_chat(src, span_notice("You move down."))
 

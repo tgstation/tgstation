@@ -175,10 +175,7 @@
 	processing = FALSE
 	visible_message(span_notice("\The [src] finishes processing."))
 
-/obj/machinery/processor/verb/eject()
-	set category = "Object"
-	set name = "Eject Contents"
-	set src in oview(1)
+DEFINE_WORLD_OBJECT_VERB(/obj/machinery/processor, eject, oview(1), "Eject Contents", "", FALSE, "Object")
 	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(!usr.can_perform_action(src))
