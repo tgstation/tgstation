@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "The produce console's layout has been adjusted a bit for an improved ordering experience."
