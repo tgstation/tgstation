@@ -1,5 +1,5 @@
 #define GENERATOR_INACTIVE 0 // off
-#define GENERATOR_WANTPOWER 1 // waiting for power, will activate and do things if powered
+#define GENERATOR_WANTPOWER 1 // waiting for power/retrying, will activate and do things if powered
 #define GENERATOR_ACTIVE 2 // active
 /obj/machinery/atmos_shield_gen
 	name = "Atmospheric Shield Generator"
@@ -9,7 +9,7 @@
 	icon_state = "atmosshield"
 	density = FALSE
 	layer = ABOVE_MOB_LAYER
-	active_power_usage = BASE_MACHINE_GENERATOR_ACTIVE_CONSUMPTION
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	circuit = /obj/item/circuitboard/machine/atmos_shield_gen
 	req_one_access = list(ACCESS_EXTERNAL_AIRLOCKS, ACCESS_ENGINE_EQUIP)
 	can_atmos_pass = ATMOS_PASS_PROC
@@ -193,8 +193,7 @@
 				break
 		current_turf = get_step(current_turf, dir) // advance
 		if(isclosedturf(current_turf) || !isnull(locate(/obj/effect/atmos_shield) in current_turf)) // we were blocked by a wall or something
-			on = GENERATOR_WANTPOWER
-			update_appearance(UPDATE_OVERLAYS)
+			turn_off(power_failure = TRUE)
 			return
 
 	if(isnull(found_slave))
