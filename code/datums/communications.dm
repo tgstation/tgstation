@@ -67,13 +67,17 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 /datum/communciations_controller/proc/queue_roundstart_report()
 	addtimer(CALLBACK(src, PROC_REF(send_roundstart_report)), rand(waittime_l, waittime_h))
 
-/datum/communciations_controller/proc/send_roundstart_report(greenshift = TRUE)
+/datum/communciations_controller/proc/send_roundstart_report(greenshift)
 	if(block_command_report) //If we don't want the report to be printed just yet, we put it off until it's ready
 		addtimer(CALLBACK(src, PROC_REF(send_roundstart_report), greenshift), 10 SECONDS)
 		return
 
+	var/dynamic_report = SSdynamic.get_advisory_report()
+	if(isnull(greenshift)) // if we're not forced to be greenshift or not - check if we are an actual greenshift
+		greenshift = SSdynamic.current_tier.tier == 0 && dynamic_report == /datum/dynamic_tier/greenshift::advisory_report
+
 	. = "<b><i>Nanotrasen Department of Intelligence Threat Advisory, Spinward Sector, TCD [time2text(world.realtime, "DDD, MMM DD")], [CURRENT_STATION_YEAR]:</i></b><hr>"
-	. += SSdynamic.get_advisory_report()
+	. += dynamic_report
 
 	SSstation.generate_station_goals(greenshift ? INFINITY : CONFIG_GET(number/station_goal_budget))
 
