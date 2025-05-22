@@ -80,6 +80,7 @@ GLOBAL_LIST_INIT(autodrobe_entretainers_items, list(
 	/obj/item/clothing/mask/gas/sexymime = 3,
 	/obj/item/clothing/under/rank/civilian/mime/sexy = 3,
 	/obj/item/clothing/under/rank/civilian/mime/skirt = 3,
+	/obj/item/clothing/mask/gas/mime/utopia = 3,
 	/obj/item/clothing/under/rank/civilian/clown/jester = 3,
 	/obj/item/clothing/head/costume/jester = 3,
 	/obj/item/clothing/shoes/jester_shoes = 3,
