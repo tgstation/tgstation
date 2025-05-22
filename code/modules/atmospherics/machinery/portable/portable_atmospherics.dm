@@ -13,6 +13,8 @@
 
 	///Stores the gas mixture of the portable component. Don't access this directly, use return_air() so you support the temporary processing it provides
 	var/datum/gas_mixture/air_contents
+	///Stores the gas mixture in string form for map loading and saving
+	var/initial_gas_mix
 	///Stores the reference of the connecting port
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 	///Stores the reference of the tank the machine is holding
@@ -42,11 +44,21 @@
 	fire = 60
 	acid = 30
 
+/obj/machinery/portable_atmospherics/get_save_vars()
+	. = ..()
+	var/datum/gas_mixture/gasmix = air_contents
+	initial_gas_mix = gasmix.to_string()
+	. += NAMEOF(src, initial_gas_mix)
+	return .
+
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
-	air_contents = new
+	if(initial_gas_mix)
+		air_contents = SSair.parse_gas_string(initial_gas_mix)
+	else
+		air_contents = new
+		air_contents.temperature = T20C
 	air_contents.volume = volume
-	air_contents.temperature = T20C
 	SSair.start_processing_machine(src)
 	AddElement(/datum/element/climbable, climb_time = 3 SECONDS, climb_stun = 3 SECONDS)
 	AddElement(/datum/element/elevation, pixel_shift = 8)
