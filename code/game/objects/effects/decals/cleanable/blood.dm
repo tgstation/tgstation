@@ -131,9 +131,11 @@
 		var/datum/blood_type/blood_type = blood_DNA[dna_sample]
 		reagents_to_add += blood_type.reagent_type
 
+	create_reagents(round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER, CHEMICAL_VOLUME_ROUNDING))
 	var/num_reagents = length(reagents_to_add)
 	for(var/reagent_type in reagents_to_add)
 		reagents.add_reagent(reagent_type, round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER / num_reagents, CHEMICAL_VOLUME_ROUNDING))
+	return reagents
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/merger)
 	if(merger.dried) // New blood will lie on dry blood

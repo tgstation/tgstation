@@ -384,6 +384,9 @@
 		return BLEED_SPLATTER
 
 	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
+		return BLEED_NONE
+
 	if (blood_type.blood_flags & bleed_flag)
 		return BLEED_SPLATTER
 

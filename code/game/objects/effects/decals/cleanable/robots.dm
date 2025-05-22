@@ -5,6 +5,7 @@
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 	has_overlay = FALSE
 	squishy = FALSE
+	color = null
 
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/get_default_blood_type()
 	return get_blood_type(BLOOD_TYPE_OIL)
@@ -25,7 +26,7 @@
 
 // Doesn't have overlay support as of now
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/update_blood_color()
-	return
+	color = null
 
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/limb
 	icon_state = "gibarm"
