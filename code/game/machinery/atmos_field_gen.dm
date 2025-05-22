@@ -180,21 +180,18 @@
 	var/turf/current_turf = get_turf(src)
 	var/found_slave = null
 	for(var/i in 1 to max_range)
+		if(isclosedturf(current_turf)) // we were blocked by a closed turf
+			return
 		if(isnull(found_slave))
 			for(var/obj/machinery/atmos_shield_gen/generator in current_turf)
 				if(generator == src || !generator.powered() || generator.dir != REVERSE_DIR(dir) || !isnull(generator.master) || !generator.anchored)
 					continue
 				found_slave = generator
-				generator.on = GENERATOR_ACTIVE
-				generator.update_appearance(UPDATE_OVERLAYS)
-				generator.master = src
+				generator.change_master(src)
 				break
 			if(!isnull(found_slave))
 				break
 		current_turf = get_step(current_turf, dir) // advance
-		if(isclosedturf(current_turf) || !isnull(locate(/obj/effect/atmos_shield) in current_turf)) // we were blocked by a wall or something
-			turn_off(power_failure = TRUE)
-			return
 
 	if(isnull(found_slave))
 		on = GENERATOR_WANTPOWER
@@ -222,10 +219,42 @@
 		playsound(src, 'sound/machines/cryo_warning.ogg', 65)
 	on = power_failure ? GENERATOR_WANTPOWER : GENERATOR_INACTIVE
 	master?.turn_off(power_failure)
-	master = null
+	change_master(null)
 	if(!power_failure) // so that it will get cleaned up on the next process so they can react
 		QDEL_LIST(fields)
 	update_appearance(UPDATE_OVERLAYS)
+
+/// Changes our master variable and (un)registers signals. Does not check whether active and stuff. Will activate generator if new_master is not null
+/obj/machinery/atmos_shield_gen/proc/change_master(new_master)
+	if(master == new_master)
+		return
+	if(!isnull(master) && master != new_master)
+		UnregisterSignal(master, COMSIG_QDELETING)
+	if(isnull(new_master))
+		master = null
+		on = GENERATOR_INACTIVE
+		update_appearance(UPDATE_OVERLAYS)
+		return
+	master = new_master
+	RegisterSignal(master, COMSIG_QDELETING, PROC_REF(master_deleted))
+	on = GENERATOR_ACTIVE
+	update_appearance(UPDATE_OVERLAYS)
+
+/obj/machinery/atmos_shield_gen/proc/master_deleted(datum/source)
+	SIGNAL_HANDLER
+	turn_off()
+
+/obj/machinery/atmos_shield_gen/attack_ai(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/atmos_shield_gen/attack_ai_secondary(mob/user)
+	return attack_hand_secondary(user)
+
+/obj/machinery/atmos_shield_gen/attack_robot(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/atmos_shield_gen/attack_robot_secondary(mob/user)
+	return attack_hand_secondary(user)
 
 /obj/machinery/atmos_shield_gen/active
 	on = GENERATOR_WANTPOWER
@@ -259,6 +288,7 @@
 	QUEUE_SMOOTH_NEIGHBORS(src)
 	update_appearance(UPDATE_OVERLAYS)
 	air_update_turf(TRUE, TRUE)
+	RegisterSignal(loc, COMSIG_TURF_CHANGE, PROC_REF(turf_changed)) // Wont ever be spawned inside something hopefully
 	AddElement(/datum/element/give_turf_traits, string_list(list(TRAIT_FIREDOOR_STOP)))
 
 /obj/effect/atmos_shield/block_superconductivity()
@@ -283,6 +313,11 @@
 /obj/effect/atmos_shield/singularity_act()
 	owner?.turn_off()
 	qdel(src)
+
+/obj/effect/atmos_shield/proc/turf_changed(datum/source, path, new_baseturfs, flags, post_change_callback)
+	SIGNAL_HANDLER
+	if(ispath(path, /turf/closed))
+		atom_destruction(ENERGY)
 
 #undef GENERATOR_ACTIVE
 #undef GENERATOR_WANTPOWER
