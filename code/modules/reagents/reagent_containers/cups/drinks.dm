@@ -111,16 +111,28 @@
 	resistance_flags = FREEZE_PROOF
 	isGlass = FALSE
 	drink_type = BREAKFAST
-	var/lid_open = 0
+
+	/// Is our lid currently removed?
+	var/lid_open = FALSE
 
 /obj/item/reagent_containers/cup/glass/coffee/no_lid
 	icon_state = "coffee_empty"
 	list_reagents = null
+	lid_open = TRUE
+
+/obj/item/reagent_containers/cup/glass/coffee/Initialize(mapload)
+	. = ..()
+	register_context()
 
 /obj/item/reagent_containers/cup/glass/coffee/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to toggle cup lid.")
 	return
+
+/obj/item/reagent_containers/cup/glass/coffee/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "[lid_open ? "Add" : "Remove"] Lid"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/reagent_containers/cup/glass/coffee/click_alt(mob/user)
 	lid_open = !lid_open

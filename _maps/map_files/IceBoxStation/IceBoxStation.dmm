@@ -1820,6 +1820,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/structure/reagent_dispensers/watertank,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "axF" = (
@@ -3646,6 +3647,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "aZo" = (
@@ -12937,8 +12939,18 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/science/research)
 "dAl" = (
-/obj/machinery/smartfridge/extract/preloaded,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table/glass,
 /obj/structure/window/reinforced/spawner/directional/east,
+/obj/item/storage/box/monkeycubes,
+/obj/effect/turf_decal/stripes/line{
+	dir = 6
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "dAm" = (
@@ -20497,6 +20509,7 @@
 /obj/structure/cable,
 /obj/item/wrench,
 /obj/structure/sign/warning/electric_shock/directional/north,
+/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "fNa" = (
@@ -25180,9 +25193,25 @@
 /turf/open/floor/iron/dark,
 /area/station/tcommsat/computer)
 "hfL" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/structure/closet/l3closet/scientist,
-/turf/open/floor/iron,
+/obj/item/clothing/mask/gas{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/science{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/clothing/glasses/science{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "hgc" = (
 /obj/structure/table,
@@ -26109,12 +26138,9 @@
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "huq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/computer/camera_advanced/xenobio{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/station/science/xenobiology)
+/obj/machinery/door_buttons/access_button,
+/turf/closed/wall/r_wall,
+/area/station/maintenance/aft/lesser)
 "huB" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -26825,20 +26851,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "hEP" = (
-/obj/structure/table/glass,
-/obj/item/paper_bin{
-	pixel_y = 4
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
 	},
-/obj/item/folder/white{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/pen{
-	pixel_x = -4
-	},
-/obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/iron,
+/turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "hEW" = (
 /obj/machinery/disposal/bin,
@@ -28532,6 +28548,7 @@
 "icK" = (
 /obj/machinery/firealarm/directional/east,
 /obj/structure/railing,
+/obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/white/side{
 	dir = 9
 	},
@@ -32264,20 +32281,13 @@
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "jiB" = (
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas{
-	pixel_x = -8;
-	pixel_y = 4
-	},
-/obj/structure/table,
-/obj/machinery/door_buttons/access_button,
-/obj/item/clothing/mask/gas{
-	pixel_x = 6;
-	pixel_y = 2
-	},
-/obj/effect/turf_decal/stripes/line,
 /obj/machinery/light/directional/north,
 /obj/structure/sign/warning/biohazard/directional/north,
+/obj/machinery/smartfridge/extract/preloaded,
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "jjk" = (
@@ -42823,16 +42833,8 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
 "mjO" = (
+/obj/machinery/computer/camera_advanced/xenobio,
 /obj/effect/turf_decal/stripes/line,
-/obj/structure/table/reinforced,
-/obj/item/clothing/glasses/science{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/clothing/glasses/science{
-	pixel_x = 4;
-	pixel_y = -4
-	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "mjQ" = (
@@ -43060,11 +43062,6 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/mine/eva/lower)
-"mns" = (
-/obj/structure/lattice/catwalk,
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/openspace,
-/area/station/science/xenobiology)
 "mnu" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -50245,10 +50242,13 @@
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
 "ooo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/processor/slime,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/iron,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/obj/effect/landmark/start/scientist,
+/turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "oot" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -50786,7 +50786,15 @@
 "ouP" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
-/obj/machinery/portable_atmospherics/canister,
+/obj/structure/rack,
+/obj/item/storage/box/syringes{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/storage/box/beakers{
+	pixel_x = 2;
+	pixel_y = 8
+	},
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "ouU" = (
@@ -61638,10 +61646,11 @@
 /turf/open/floor/wood,
 /area/station/security/courtroom)
 "rtn" = (
-/obj/structure/chair/comfy/black,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/start/scientist,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "rtp" = (
 /obj/machinery/door/airlock/maintenance{
@@ -62722,12 +62731,11 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/atmos)
 "rKZ" = (
-/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/structure/cable,
+/obj/machinery/processor/slime,
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
-/obj/structure/cable,
-/obj/machinery/portable_atmospherics/canister,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "rLc" = (
@@ -79409,12 +79417,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/science/explab)
-"wGt" = (
-/obj/structure/table/glass,
-/obj/item/storage/box/monkeycubes,
-/obj/structure/window/reinforced/spawner/directional/east,
-/turf/open/floor/iron,
-/area/station/science/xenobiology)
 "wGv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
@@ -194525,7 +194527,7 @@ alM
 jCr
 ffe
 fMZ
-pMF
+hEP
 mqe
 hRC
 euM
@@ -195039,7 +195041,7 @@ alM
 oxO
 ffe
 mjO
-llw
+ooo
 wPd
 nWK
 qWS
@@ -195296,7 +195298,7 @@ alM
 oxO
 ffe
 jiB
-vHq
+dAl
 aZk
 iwQ
 pMF
@@ -195551,7 +195553,7 @@ iDt
 iDt
 alM
 jOp
-ffe
+huq
 hfL
 vHq
 obZ
@@ -260329,9 +260331,9 @@ ehd
 ehd
 ehd
 ehd
-ooo
 rtn
-huq
+rtn
+rtn
 vDu
 lva
 lva
@@ -260585,10 +260587,10 @@ wve
 hfc
 hfc
 hfc
-mns
-hEP
-wGt
-dAl
+hfc
+hfc
+hfc
+hfc
 hWt
 ocJ
 mBs
