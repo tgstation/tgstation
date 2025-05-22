@@ -155,7 +155,7 @@
 	//if we attack with paper and the grown is a mushroom, create a spore print.
 	if(istype(attacking_item, /obj/item/paper) && seed?.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
 		qdel(attacking_item)
-		seed.name = "[lowertext(seed.plantname)] spore print"
+		seed.name = "[LOWER_TEXT(seed.plantname)] spore print"
 		seed.icon_state = "spore_print[pick(1,2,3)]"
 		seed.forceMove(drop_location())
 		playsound(user, 'sound/items/paper_flip.ogg', 20)
