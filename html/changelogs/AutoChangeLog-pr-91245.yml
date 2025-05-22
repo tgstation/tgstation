@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Lidless coffee cups from the impressa coffeemaker or somesuch no longer take two clicks to put a lid on them."
+  - qol: "Added screentips for toggling coffee cup lids."
