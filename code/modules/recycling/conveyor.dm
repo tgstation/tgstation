@@ -115,8 +115,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	processing_flags = START_PROCESSING_ON_INIT
 
 /obj/machinery/conveyor/auto/Initialize(mapload, newdir)
+	last_command = CONVEYOR_FORWARD
 	. = ..()
-	last_command = TRUE
 	set_operating(TRUE)
 
 /obj/machinery/conveyor/auto/update()
