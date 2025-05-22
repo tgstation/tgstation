@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Prosopagnosia no longer allows you to somehow recognize people in infiltrator modsuits."
