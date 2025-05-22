@@ -59008,7 +59008,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /obj/machinery/camera/autoname/directional/north{
-	network = list(""ss13","medbay"");
+	network = list("ss13","medbay");
 	c_tag = "Medbay - Lower Cryo"
 	},
 /obj/structure/extinguisher_cabinet/directional/north,
