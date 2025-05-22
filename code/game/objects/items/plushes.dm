@@ -871,7 +871,7 @@
 	if(length(oviewers) && locate(feeder) in oviewers)
 		oviewers -= feeder // remove feeder from targetables
 	// do the throwing of the peel
-	var/obj/item/grown/peel = new nana.trash_type(get_turf(src))
+	var/obj/item/grown/peel = new nana.trash_type(get_turf(throw_src))
 	peel.throw_at(!length(oviewers) ? get_ranged_target_turf(throw_src, pick(GLOB.alldirs), peel.throw_range) : pick(oviewers), peel.throw_range, peel.throw_speed, quickstart = FALSE)
 	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
 	spasm_animation(5 SECONDS)
