@@ -732,20 +732,21 @@
 
 /**
  * Splits amount items from stack, attempts to place new stack in user's hands.
- * Returns TRUE or FALSE depending on success.
+ * Returns the new stack.
  * Arguments:
  * * [user][/mob] - Mob performing the split, non-nullable
  * * amount - Number of units to split from this stack
  */
 /obj/item/stack/proc/split_n_take(mob/user, amount)
 	if(!user)
-		return FALSE
+		return null
 	add_fingerprint(user)
 	var/obj/item/stack/new_stack = split_stack(amount)
 	if(isnull(new_stack))
-		return FALSE
+		return null
 	new_stack.add_fingerprint(user)
-	return user.put_in_hands(new_stack, merge_stacks = FALSE)
+	user.put_in_hands(new_stack, merge_stacks = FALSE)
+	return new_stack
 
 /obj/item/stack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(can_merge(W, inhand = TRUE))
