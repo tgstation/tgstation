@@ -75,7 +75,8 @@
 /obj/item/weldingtool/update_overlays()
 	. = ..()
 	if(change_icons)
-		var/ratio = get_fuel() / max_fuel
+		var/realFuelNoClickbait = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
+		var/ratio = (get_fuel() + realFuelNoClickbait) / max_fuel
 		ratio = CEILING(ratio*4, 1) * 25
 		. += "[initial(icon_state)][ratio]"
 	if(welding)
