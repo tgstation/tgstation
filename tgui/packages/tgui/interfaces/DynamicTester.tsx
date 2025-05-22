@@ -41,7 +41,7 @@ export const DynamicTester = () => {
     midround_ruleset_report,
   } = data;
 
-  const [tab, setTab] = useState(TABS.Roundstart);
+  const [tab, setTab] = useState(Object.keys(TABS)[0]);
 
   const ruleset_report =
     tab === TABS.Roundstart
@@ -70,6 +70,9 @@ export const DynamicTester = () => {
               <NumberInput
                 ml={0.5}
                 value={tier}
+                minValue={0}
+                maxValue={4}
+                step={1}
                 onChange={(e) => act('set_tier', { tier: e })}
               />
             </Stack.Item>
@@ -78,6 +81,9 @@ export const DynamicTester = () => {
               <NumberInput
                 ml={0.5}
                 value={num_players}
+                minValue={0}
+                maxValue={200}
+                step={1}
                 onChange={(e) => act('set_num_players', { num_players: e })}
               />
             </Stack.Item>
