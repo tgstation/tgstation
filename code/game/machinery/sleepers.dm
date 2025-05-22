@@ -64,17 +64,20 @@
 
 /obj/machinery/sleeper/RefreshParts()
 	. = ..()
-	var/matterbin_rating
-	for(var/datum/stock_part/matter_bin/matterbins in component_parts)
-		matterbin_rating += matterbins.tier
+	var/matterbin_rating = 0
+	available_chems.Cut()
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/matter_bin))
+			var/datum/stock_part/matter_bin/matter_bin = stock_part
+			matterbin_rating += matter_bin.tier
+		else if(istype(stock_part, /datum/stock_part/servo))
+			var/datum/stock_part/servo/servo = stock_part
+			for(var/i in 1 to servo.tier)
+				available_chems |= possible_chems[i]
+
 	efficiency = initial(efficiency) * matterbin_rating
 	min_health = initial(min_health) * matterbin_rating
-
-	available_chems.Cut()
-	for(var/datum/stock_part/servo/servos in component_parts)
-		for(var/i in 1 to servos.tier)
-			available_chems |= possible_chems[i]
-
 	reset_chem_buttons()
 
 /obj/machinery/sleeper/update_icon_state()

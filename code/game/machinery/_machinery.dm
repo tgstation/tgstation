@@ -849,11 +849,13 @@
 		return
 	var/parts_energy_rating = 0
 
-	for(var/datum/stock_part/part in component_parts)
-		parts_energy_rating += part.energy_rating()
-
-	for(var/obj/item/stock_parts/part in component_parts)
-		parts_energy_rating += part.energy_rating
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part))
+			var/datum/stock_part/part = stock_part
+			parts_energy_rating += part.energy_rating()
+		else if(istype(stock_part, /obj/item/stock_parts))
+			var/obj/item/stock_parts/part = stock_part
+			parts_energy_rating += part.energy_rating
 
 	idle_power_usage = initial(idle_power_usage) * (1 + parts_energy_rating)
 	active_power_usage = initial(active_power_usage) * (1 + parts_energy_rating)

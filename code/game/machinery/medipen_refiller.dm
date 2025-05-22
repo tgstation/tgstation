@@ -55,8 +55,12 @@
 /obj/machinery/medipen_refiller/RefreshParts()
 	. = ..()
 	var/new_volume = 100
-	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
-		new_volume += (100 * matter_bin.tier)
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/matter_bin))
+			var/datum/stock_part/matter_bin/matter_bin = stock_part
+			new_volume += (100 * matter_bin.tier)
+
 	if(!reagents)
 		create_reagents(new_volume, TRANSPARENT)
 	reagents.maximum_volume = new_volume

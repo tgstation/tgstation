@@ -293,12 +293,15 @@
 /obj/machinery/limbgrower/RefreshParts()
 	. = ..()
 	reagents.maximum_volume = 0
-	for(var/obj/item/reagent_containers/cup/our_beaker in component_parts)
-		reagents.maximum_volume += our_beaker.volume
-		our_beaker.reagents.trans_to(src, our_beaker.reagents.total_volume)
 	production_coefficient = 1.25
-	for(var/datum/stock_part/servo/our_servo in component_parts)
-		production_coefficient -= our_servo.tier * 0.25
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /obj/item/reagent_containers/cup))
+			var/obj/item/reagent_containers/cup/cup = stock_part
+			reagents.maximum_volume += cup.volume
+			cup.reagents.trans_to(src, cup.reagents.total_volume)
+		else if(istype(stock_part, /datum/stock_part/servo))
+			var/datum/stock_part/servo/servo = stock_part
+			production_coefficient -= servo.tier * 0.25
 	production_coefficient = clamp(production_coefficient, 0, 1) // coefficient goes from 1 -> 0.75 -> 0.5 -> 0.25
 
 /obj/machinery/limbgrower/examine(mob/user)

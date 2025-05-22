@@ -71,12 +71,17 @@
 	. = ..()
 	recharge_speed = 0
 	repairs = 0
-	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		recharge_speed += 5e-3 * capacitor.tier
-	for(var/datum/stock_part/servo/servo in component_parts)
-		repairs += servo.tier - 1
-	for(var/obj/item/stock_parts/power_store/cell in component_parts)
-		recharge_speed *= cell.maxcharge
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/capacitor))
+			var/datum/stock_part/capacitor/capacitor = stock_part
+			recharge_speed += 5e-3 * capacitor.tier
+		else if(istype(stock_part, /datum/stock_part/servo))
+			var/datum/stock_part/servo/servo = stock_part
+			repairs += servo.tier - 1
+		else if(istype(stock_part, /obj/item/stock_parts/power_store))
+			var/obj/item/stock_parts/power_store/cell = stock_part
+			recharge_speed *= cell.maxcharge
 
 /obj/machinery/recharge_station/examine(mob/user)
 	. = ..()

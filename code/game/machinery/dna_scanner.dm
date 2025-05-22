@@ -23,12 +23,17 @@
 	scan_level = 0
 	damage_coeff = 0
 	precision_coeff = 0
-	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
-		scan_level += scanning_module.tier
-	for(var/datum/stock_part/matter_bin/matter_bin in component_parts)
-		precision_coeff = matter_bin.tier
-	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
-		damage_coeff = micro_laser.tier
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/scanning_module))
+			var/datum/stock_part/scanning_module/scanning_module = stock_part
+			scan_level += scanning_module.tier
+		else if(istype(stock_part, /datum/stock_part/matter_bin))
+			var/datum/stock_part/matter_bin/matter_bin = stock_part
+			precision_coeff = matter_bin.tier
+		else if(istype(stock_part, /datum/stock_part/micro_laser))
+			var/datum/stock_part/micro_laser/micro_laser = stock_part
+			damage_coeff = micro_laser.tier
 
 /obj/machinery/dna_scannernew/examine(mob/user)
 	. = ..()

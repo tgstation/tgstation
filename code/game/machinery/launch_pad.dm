@@ -46,10 +46,12 @@
 /obj/machinery/launchpad/RefreshParts()
 	. = ..()
 	var/max_range_multiplier = 0
-	for(var/datum/stock_part/servo/servo in component_parts)
-		max_range_multiplier += servo.tier
-	range = initial(range)
-	range *= max_range_multiplier
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/servo))
+			var/datum/stock_part/servo/servo = stock_part
+			max_range_multiplier += servo.tier
+	range = initial(range) * max_range_multiplier
 
 /obj/machinery/launchpad/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
 	if(same_z_layer && !QDELETED(src))
