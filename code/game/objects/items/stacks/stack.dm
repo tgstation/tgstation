@@ -695,7 +695,7 @@
 	if(user.get_inactive_held_item() == src)
 		if(is_zero_amount(delete_if_zero = TRUE))
 			return
-		return split_stack(user, 1)
+		return split_n_take(user, 1)
 	else
 		. = ..()
 
@@ -712,7 +712,7 @@
 	var/stackmaterial = tgui_input_number(user, "How many sheets do you wish to take out of this stack?", "Stack Split", max_value = max)
 	if(!stackmaterial || QDELETED(user) || QDELETED(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	split_stack(user, stackmaterial)
+	split_n_take(user, stackmaterial)
 	to_chat(user, span_notice("You take [stackmaterial] sheets out of the stack."))
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 

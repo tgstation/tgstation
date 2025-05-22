@@ -121,7 +121,7 @@
 		if(!our_sheet.can_merge(potential_stack))
 			user?.balloon_alert(user, "not suitable!")
 			return
-		var/atom/movable/to_move = potential_stack.split_stack(user, min(our_sheet.max_amount - our_sheet.amount, potential_stack.amount))
+		var/atom/movable/to_move = potential_stack.split_n_take(user, min(our_sheet.max_amount - our_sheet.amount, potential_stack.amount))
 		if(!user.transferItemToLoc(to_move, src))
 			user.balloon_alert(user, "stuck to your hand!")
 			return

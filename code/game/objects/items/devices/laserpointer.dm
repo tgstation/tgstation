@@ -142,7 +142,7 @@
 				crystal_stack.use_tool(src, user, amount = 1) //use only one if we were installing from a stack of crystals
 			return
 		//the single crystal that we actually install
-		var/obj/item/stack/ore/bluespace_crystal/single_crystal = crystal_stack.split_stack(null, 1)
+		var/obj/item/stack/ore/bluespace_crystal/single_crystal = crystal_stack.split_stack(1)
 		if(isnull(single_crystal))
 			return
 		if(!user.transferItemToLoc(single_crystal, src))
