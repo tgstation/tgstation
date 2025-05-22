@@ -145,8 +145,7 @@
 		var/obj/item/stack/ore/bluespace_crystal/single_crystal = crystal_stack.split_stack(1)
 		if(isnull(single_crystal))
 			return
-		if(!user.transferItemToLoc(single_crystal, src))
-			return
+		single_crystal.forceMove(src)
 		crystal_lens = single_crystal
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 30)
 		balloon_alert(user, "installed \the [crystal_lens.name]")
