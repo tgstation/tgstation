@@ -12964,10 +12964,6 @@
 /obj/structure/table/reinforced,
 /obj/machinery/newscaster/directional/east,
 /obj/structure/cable,
-/obj/machinery/computer/security/telescreen/rd/directional/east{
-	pixel_x = 3;
-	pixel_y = 3
-	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "dTJ" = (
@@ -19526,7 +19522,8 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
-	name = "Security Maintenance"
+	name = "Security Maintenance";
+	aiControlDisabled = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/structure/barricade/wooden/crude,
@@ -21954,10 +21951,6 @@
 /area/station/maintenance/hallway/abandoned_recreation)
 "gAZ" = (
 /obj/structure/table/wood,
-/obj/machinery/computer/security/telescreen/cmo/directional/east{
-	pixel_x = 0;
-	pixel_y = 3
-	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/cmo)
 "gBf" = (
@@ -26460,10 +26453,10 @@
 "hRx" = (
 /obj/machinery/door/airlock/grunge{
 	aiControlDisabled = 1;
-	name = "Prison Maintenance"
+	name = "Prisoner Education Chamber"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /turf/open/floor/plating,
 /area/station/security/execution/education)
 "hRD" = (
@@ -34452,6 +34445,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/computer/security/telescreen/rd/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "kkM" = (
@@ -45215,7 +45209,8 @@
 /area/space/nearstation)
 "nxH" = (
 /obj/machinery/door/airlock/security{
-	aiControlDisabled = 1
+	aiControlDisabled = 1;
+	name = "Prisoner Education Chamber"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/armory,
 /turf/open/floor/plating,
@@ -69707,7 +69702,6 @@
 "uOH" = (
 /obj/structure/chair,
 /obj/effect/decal/cleanable/blood/old,
-/obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/plating,
 /area/station/security/interrogation)
 "uOR" = (
@@ -71709,6 +71703,7 @@
 /obj/structure/chair/office/light{
 	dir = 4
 	},
+/obj/machinery/computer/security/telescreen/cmo/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/cmo)
 "vtc" = (
@@ -79408,7 +79403,6 @@
 "xLX" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
-/obj/machinery/camera/autoname/directional/west,
 /turf/open/floor/plating,
 /area/station/security/execution/education)
 "xLY" = (
