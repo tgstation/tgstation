@@ -1,5 +1,6 @@
-#define ACTIVE_WANTPOWER 1
-#define ACTIVE 2
+#define GENERATOR_INACTIVE 0 // off
+#define GENERATOR_WANTPOWER 1 // waiting for power, will activate and do things if powered
+#define GENERATOR_ACTIVE 2 // active
 /obj/machinery/atmos_shield_gen
 	name = "Atmospheric Shield Generator"
 	desc = "Produces an atmos shield in a line between itself and another generator with both facing the other, while active. Powered by APC. Field must not be obstructed by wall, or an atmos shield field. Will turn on after gaining power if turned off due to power loss."
@@ -8,7 +9,7 @@
 	icon_state = "atmosshield"
 	density = FALSE
 	layer = ABOVE_MOB_LAYER
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
+	active_power_usage = BASE_MACHINE_GENERATOR_ACTIVE_CONSUMPTION
 	circuit = /obj/item/circuitboard/machine/atmos_shield_gen
 	req_one_access = list(ACCESS_EXTERNAL_AIRLOCKS, ACCESS_ENGINE_EQUIP)
 	can_atmos_pass = ATMOS_PASS_PROC
@@ -18,7 +19,7 @@
 	/// are we locked
 	var/locked = FALSE
 	/// are we on
-	var/on = FALSE
+	var/on = GENERATOR_INACTIVE
 	/// Max tiles between this generator and another generator. 0 would mean the generator can only do its thing if both are on the same tile.
 	var/max_range = 2
 	/// our shields
@@ -98,8 +99,8 @@
 		return
 	if(!on)
 		return
-	. += (on == ACTIVE ? "active" : "wantpower")
-	. += emissive_appearance(icon, on == ACTIVE ? "active" : "wantpower", src, alpha = src.alpha)
+	. += (on == GENERATOR_ACTIVE ? "active" : "wantpower")
+	. += emissive_appearance(icon, on == GENERATOR_ACTIVE ? "active" : "wantpower", src, alpha = src.alpha)
 
 /obj/machinery/atmos_shield_gen/screwdriver_act(mob/user, obj/item/tool)
 	if(!panel_open && locked)
@@ -157,19 +158,19 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmos_shield_gen/process_early()
-	if(on == ACTIVE && !powered())
+	if(on == GENERATOR_ACTIVE && !powered())
 		turn_off(power_failure = TRUE)
-	else if(on == ACTIVE_WANTPOWER && powered())
-		on = ACTIVE
+	else if(on == GENERATOR_WANTPOWER && powered())
+		on = GENERATOR_ACTIVE
 		update_appearance(UPDATE_OVERLAYS)
 
-	if(on != ACTIVE)
+	if(on != GENERATOR_ACTIVE)
 		if(length(fields))
 			QDEL_LIST(fields)
 		return
 
 	if(!isnull(master))
-		if(master.on != ACTIVE) // FUCK
+		if(master.on != GENERATOR_ACTIVE) // FUCK
 			turn_off()
 		return
 	var/field_len = length(fields)
@@ -184,7 +185,7 @@
 				if(generator == src || !generator.powered() || generator.dir != REVERSE_DIR(dir) || !isnull(generator.master) || !generator.anchored)
 					continue
 				found_slave = generator
-				generator.on = ACTIVE
+				generator.on = GENERATOR_ACTIVE
 				generator.update_appearance(UPDATE_OVERLAYS)
 				generator.master = src
 				break
@@ -192,12 +193,12 @@
 				break
 		current_turf = get_step(current_turf, dir) // advance
 		if(isclosedturf(current_turf) || !isnull(locate(/obj/effect/atmos_shield) in current_turf)) // we were blocked by a wall or something
-			on = ACTIVE_WANTPOWER
+			on = GENERATOR_WANTPOWER
 			update_appearance(UPDATE_OVERLAYS)
 			return
 
 	if(isnull(found_slave))
-		on = ACTIVE_WANTPOWER
+		on = GENERATOR_WANTPOWER
 		update_appearance(UPDATE_OVERLAYS)
 		return
 
@@ -209,7 +210,7 @@
 	if(on)
 		turn_off()
 	else
-		on = ACTIVE_WANTPOWER
+		on = GENERATOR_WANTPOWER
 		update_appearance(UPDATE_OVERLAYS)
 	if(!isnull(user))
 		balloon_alert(user, "turned [on ? "on" : "off"]")
@@ -220,7 +221,7 @@
 	if(power_failure)
 		balloon_alert_to_viewers("no power!")
 		playsound(src, 'sound/machines/cryo_warning.ogg', 65)
-	on = power_failure ? ACTIVE_WANTPOWER : FALSE
+	on = power_failure ? GENERATOR_WANTPOWER : GENERATOR_INACTIVE
 	master?.turn_off(power_failure)
 	master = null
 	if(!power_failure) // so that it will get cleaned up on the next process so they can react
@@ -228,7 +229,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/atmos_shield_gen/active
-	on = ACTIVE_WANTPOWER
+	on = GENERATOR_WANTPOWER
 	locked = TRUE
 
 /obj/effect/atmos_shield
@@ -280,10 +281,10 @@
 	owner?.turn_off()
 	qdel(src)
 
-
 /obj/effect/atmos_shield/singularity_act()
 	owner?.turn_off()
 	qdel(src)
 
-#undef ACTIVE
-#undef ACTIVE_WANTPOWER
+#undef GENERATOR_ACTIVE
+#undef GENERATOR_WANTPOWER
+#undef GENERATOR_INACTIVE
