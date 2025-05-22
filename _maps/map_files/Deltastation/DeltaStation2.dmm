@@ -16347,6 +16347,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "dYL" = (
@@ -17008,13 +17009,12 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "eif" = (
-/obj/item/kirbyplants/random,
-/obj/machinery/firealarm/directional/north,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/structure/sink/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "eio" = (
@@ -80287,6 +80287,7 @@
 /obj/machinery/computer/operating,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/bot_white,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
 "ubL" = (
