@@ -226,7 +226,7 @@
 			if(isstack(item))
 				var/obj/item/stack/as_stack = item
 				to_put = as_stack.split_stack(1)
-				as_stack.merge_type = null //prevent them from merging inside for contents.len
+				to_put.merge_type = null //prevent them from merging inside for contents.len
 			to_put.forceMove(src)
 			return
 
