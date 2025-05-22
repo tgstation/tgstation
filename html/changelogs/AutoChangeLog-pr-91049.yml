@@ -1,0 +1,5 @@
+author: "Cirrial"
+delete-after: True
+changes:
+  - rscadd: "Gorillas can now throw things and offer items to players."
+  - refactor: "Moved throwing and offering item code to be based on living mobs, not just carbon mobs."
