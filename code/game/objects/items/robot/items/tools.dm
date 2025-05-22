@@ -224,6 +224,8 @@
 
 	//if all else fails just make a new one from scratch
 	tool = new reference(user)
+	//the internal tool is considered part of the tool itself.
+	tool.item_flags |= ABSTRACT
 	atoms[reference] = tool
 	return tool
 
