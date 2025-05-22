@@ -844,7 +844,7 @@
 /obj/item/toy/plush/monkey/item_interaction(mob/living/feeder, obj/item/food/grown/banana/nana, list/modifiers)
 	if(!istype(nana))
 		return ..()
-	nana.moveToNullspace() //can't delete it just yet
+	nana.forceMove(src) // go into the cotton stomach
 	to_chat(feeder, span_notice("You hand over the [nana] to [src] and watch as it eats..."))
 	playsound(src, 'sound/items/eatfood.ogg', 75, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(eat), feeder, nana), 3 SECONDS)
@@ -854,12 +854,14 @@
 	if(istype(nana, /obj/item/food/grown/banana/bluespace))
 		do_teleport(src, get_turf(src), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
 	else if(istype(nana, /obj/item/food/grown/banana/mime) && !french)
-		name = "singe en peluche"
+		name = "peluche de singe"
 		desc = "Son étiquette indique: 'Oop eek! Je suis un chimpanzé!', avec 'Maintenant en TAILLE JUMBO!' sur l'autre face."
 		french = TRUE
 	// throw the peel at a random mob, or a random turf if there are none
 	var/obj/item/grown/peel = new nana.trash_type(get_turf(src))
-	var/list/oviewers = feeder ? oviewers(feeder) : null // scan from feeder pov to avoid throwing at feeder
+	var/list/oviewers = src ? oviewers(src) : null
+	if(length(oviewers) && locate(feeder) in oviewers)
+		oviewers -= feeder // remove feeder from targetables
 	peel.throw_at(!length(oviewers) ? get_ranged_target_turf(src, pick(GLOB.alldirs), peel.throw_range) : pick(oviewers), peel.throw_range, peel.throw_speed, quickstart = FALSE)
 	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
 	spasm_animation(5 SECONDS)
