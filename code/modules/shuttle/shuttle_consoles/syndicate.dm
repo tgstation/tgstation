@@ -64,7 +64,7 @@
 	view_range = 5.5
 	x_offset = 7 //flip both offsets because the shuttle is mapped in facing SOUTH, not NORTH; the docking port is also rotated
 	y_offset = 1
-	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral, /turf/open/openspace, /turf/open/misc)
+	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral, /turf/open/openspace, /turf/open/misc, /turf/open/water)
 	see_hidden = TRUE
 	circuit = /obj/item/circuitboard/computer/syndicate_shuttle_docker
 
