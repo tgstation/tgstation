@@ -19,6 +19,7 @@
 
 /obj/item/toy/cards/cardhand/examine(mob/user)
 	. = ..()
+	. += span_notice("There are [count_cards()] cards.")
 	var/broadcast_check = FALSE
 	for(var/obj/item/toy/singlecard/card in fetch_card_atoms())
 		if(user.is_holding(src) || card.flipped)
