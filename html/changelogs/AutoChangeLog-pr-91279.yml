@@ -1,0 +1,5 @@
+author: "NamelessFairy"
+delete-after: True
+changes:
+  - qol: "Inspecting a hand of cards now tells you what cards you can see in it."
+  - bugfix: "Adding cards to a hand no longer automatically flips them."
