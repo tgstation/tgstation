@@ -474,6 +474,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/carpenter_hammer/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/kneejerk)
 	AddComponent(/datum/component/item_killsound, \
 	allowed_mobs = list(/mob/living/carbon/human), \
 	killsound = 'sound/items/weapons/hammer_death_scream.ogg', \
@@ -1005,7 +1006,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	thrown_datums.Cut()
 	return ..()
 
-/obj/item/melee/baseball_bat/pre_attack(atom/movable/target, mob/living/user, list/modifiers)
+/obj/item/melee/baseball_bat/pre_attack(atom/movable/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	var/turf/target_turf = get_turf(target)
 	if(!target_turf)
 		return ..()
@@ -1131,7 +1132,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		))
 
 
-/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/melee/flyswatter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_typecache(target, splattable))
 		to_chat(user, span_warning("You easily splat [target]."))
 		if(isliving(target))
@@ -1168,7 +1169,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "\improper ACME Extendo-Hand"
 	desc = "A novelty extendo-hand produced by the ACME corporation. Originally designed to knock out roadrunners."
 
-/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user, list/modifiers)
+/obj/item/extendohand/attack(atom/M, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
 	var/dist = get_dist(M, user)
 	if(dist < min_reach)
 		to_chat(user, span_warning("[M] is too close to use [src] on."))
@@ -1280,7 +1281,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return TRUE
 	return FALSE
 
-/obj/item/highfrequencyblade/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/highfrequencyblade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return .

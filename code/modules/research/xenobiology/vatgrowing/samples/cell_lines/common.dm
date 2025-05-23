@@ -483,7 +483,7 @@
 /datum/micro_organism/cell_line/clown/fuck_up_growing(obj/machinery/vatgrower/vat)
 	vat.visible_message(span_warning("The biological sample in [vat] seems to have created something horrific!"))
 
-	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant/slow, /mob/living/basic/clown/fleshclown))
+	var/mob/selected_mob = pick(list(/mob/living/basic/clown/mutant, /mob/living/basic/clown/fleshclown))
 
 	new selected_mob(get_turf(vat))
 
@@ -578,7 +578,7 @@
 		/datum/reagent/toxin = -1)
 
 	virus_suspectibility = 0.5
-	resulting_atom = /mob/living/basic/frog
+	resulting_atom = /obj/effect/spawner/random/frog
 
 /datum/micro_organism/cell_line/axolotl
 	desc = "caudata amphibian cells"

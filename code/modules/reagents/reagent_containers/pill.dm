@@ -183,11 +183,23 @@
 	list_reagents = list(/datum/reagent/medicine/morphine = 30)
 	rename_with_volume = TRUE
 
+/obj/item/reagent_containers/applicator/pill/spaceacillin
+	name = "spaceacillin pill"
+	desc = "Increases resistance to viruses, bacteria, and parasites."
+	icon_state = "pill17"
+	list_reagents = list(/datum/reagent/medicine/spaceacillin = 1.5) //1 minute since 0.05 every tick.
+
 /obj/item/reagent_containers/applicator/pill/stimulant
 	name = "stimulant pill"
 	desc = "Often taken by overworked employees, athletes, and the inebriated. You'll snap to attention immediately!"
 	icon_state = "pill19"
 	list_reagents = list(/datum/reagent/medicine/ephedrine = 10, /datum/reagent/medicine/antihol = 10, /datum/reagent/consumable/coffee = 30)
+
+/obj/item/reagent_containers/applicator/pill/prescription_stimulant
+	name = "prescription stimulant pill"
+	desc = "Used to treat symptoms of drowsiness and sudden loss of consciousness."
+	list_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/synaptizine = 5, /datum/reagent/medicine/modafinil = 3)
+	icon_state = "pill15"
 
 /obj/item/reagent_containers/applicator/pill/salbutamol
 	name = "salbutamol pill"
