@@ -151,11 +151,12 @@
 
 	return reagents?.trans_to(target_holder, reagents.total_volume, transferred_by = user)
 
-/obj/item/food/grown/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/food/grown/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	//if we attack with paper and the grown is a mushroom, create a spore print.
-	if(istype(attacking_item, /obj/item/paper) && seed?.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
-		qdel(attacking_item)
+	if(istype(tool, /obj/item/paper) && seed?.get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
+		qdel(tool)
 		seed.name = "[LOWER_TEXT(seed.plantname)] spore print"
+		seed.desc = "A dusting of [LOWER_TEXT(seed.plantname)] spores have been deposited in a beautiful pattern on the surface of the paper. "
 		seed.icon_state = "spore_print[pick(1,2,3)]"
 		seed.forceMove(drop_location())
 		playsound(user, 'sound/items/paper_flip.ogg', 20)
