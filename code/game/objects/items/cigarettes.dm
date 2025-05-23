@@ -646,11 +646,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
     . = ..()
     reagents?.add_reagent(/datum/reagent/drug/nicotine, 15)
 
-    if(prob(20))
+    if(prob(30))
         var/list/chems = list(
             /datum/reagent/toxin/fentanyl = 3,
             /datum/reagent/drug/aranesp = 3,
-            /datum/reagent/pax = 3,
+            /datum/reagent/pax = 1,
             /datum/reagent/medicine/insulin = 3,
             /datum/reagent/drug/maint/powder = 2,
             /datum/reagent/drug/maint/sludge = 2,
