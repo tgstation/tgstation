@@ -125,7 +125,7 @@
 	else
 		to_chat(user, span_notice("You try to pet [src], but it has no stuffing. Aww..."))
 
-/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, list/modifiers)
+/obj/item/toy/plush/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(I.get_sharpness())
 		if(!grenade)
 			if(!stuffed)
@@ -677,7 +677,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/item/toy/plush/goatplushie/attackby(obj/item/cigarette/rollie/fat_dart, mob/user, list/modifiers)
+/obj/item/toy/plush/goatplushie/attackby(obj/item/cigarette/rollie/fat_dart, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(fat_dart))
 		return ..()
 	if(splat)
@@ -813,3 +813,17 @@
 		'sound/mobs/humanoids/human/scream/malescream_2.ogg' = 10, //10% chance to scream, rare but not abysmal
 		'sound/items/weapons/smash.ogg' = 90,
 		)
+
+/obj/item/toy/plush/horse
+	name = "horse plushie"
+	desc = "A squishy soft horse plushie. This one is bay with white socks."
+	icon_state = "horse"
+	attack_verb_continuous = list("whinnies", "gallops", "prances", "horses")  // Yes I'm using horse as a verb
+	attack_verb_simple = list("whinny", "gallop", "prance", "horse")
+
+/obj/item/toy/plush/unicorn
+	name = "unicorn plushie"
+	desc = "A squishy soft unicorn plushie. It has a magical aura."
+	icon_state = "unicorn"
+	attack_verb_continuous = list("whinnies", "gallops", "prances", "magicks")
+	attack_verb_simple = list("whinny", "gallop", "prance", "magick")
