@@ -111,19 +111,16 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 		return
 	if(is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
 		return
-	if(movable.movement_type & (VENTCRAWLING|MOVETYPES_NOT_TOUCHING_GROUND) && !movable.has_gravity())
-		return
 
 	var/atom/movable/buckled
 	if(isliving(movable))
 		var/mob/living/living_mob = movable
-		RegisterSignal(living_mob, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
+		RegisterSignal(living_mob, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled), override = TRUE)
 		buckled = living_mob.buckled
 
 	try_immerse(movable, buckled)
-	RegisterSignal(movable, COMSIG_QDELETING, PROC_REF(on_movable_qdel))
+	RegisterSignal(movable, COMSIG_QDELETING, PROC_REF(on_movable_qdel), override = TRUE)
 	LAZYADD(attached_turfs_and_movables[source], movable)
-	ADD_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 
 /datum/element/immerse/proc/on_movable_qdel(atom/movable/source)
 	SIGNAL_HANDLER
@@ -173,6 +170,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	movable.vis_contents |= vis_overlay
 
 	LAZYSET(immersed_movables, movable, vis_overlay)
+	ADD_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 
 ///Initializes and caches a new visual overlay given parameters such as width, height and whether it should appear fully underwater.
 /datum/element/immerse/proc/generate_vis_overlay(width, height, is_below_water)
@@ -222,6 +220,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 		UnregisterSignal(movable, list(COMSIG_ATOM_SPIN_ANIMATION, COMSIG_LIVING_POST_UPDATE_TRANSFORM, COMSIG_QDELETING))
 		if(!QDELETED(vis_overlay))
 			qdel(vis_overlay)
+	REMOVE_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 /**
  * Called by init_or_entered() and on_set_buckled().
  * This applies the overlay if neither the movable or whatever is buckled to (exclusive to living mobs) are flying
@@ -229,13 +228,20 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
  */
 /datum/element/immerse/proc/try_immerse(atom/movable/movable, atom/movable/buckled)
 	var/atom/movable/to_check = buckled || movable
-	if(!(to_check.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && !movable.throwing && to_check.has_gravity())
-		add_immerse_overlay(movable)
 	if(!buckled)
-		RegisterSignal(movable, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_move_flag_enabled))
-		RegisterSignal(movable, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_move_flag_disabled))
-		RegisterSignal(movable, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_throw))
-		RegisterSignal(movable, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(on_throw_landed))
+		RegisterSignal(movable, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_move_flag_enabled), override = TRUE)
+		RegisterSignal(movable, COMSIG_MOVETYPE_FLAG_DISABLED, PROC_REF(on_move_flag_disabled), override = TRUE)
+		RegisterSignal(movable, COMSIG_MOVABLE_POST_THROW, PROC_REF(on_throw), override = TRUE)
+		RegisterSignal(movable, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(on_throw_landed), override = TRUE)
+
+	if(to_check.movement_type & (VENTCRAWLING|MOVETYPES_NOT_TOUCHING_GROUND))
+		return
+	if(movable.throwing)
+		return
+	if(!to_check.has_gravity())
+		return
+
+	add_immerse_overlay(movable)
 
 /**
  * Called by on_set_buckled() and remove_from_element().
@@ -243,10 +249,17 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
  */
 /datum/element/immerse/proc/try_unimmerse(atom/movable/movable, atom/movable/buckled)
 	var/atom/movable/to_check = buckled || movable
-	if(!(to_check.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && !movable.throwing && to_check.has_gravity())
-		remove_immerse_overlay(movable)
 	if(!buckled)
 		UnregisterSignal(movable, list(COMSIG_MOVETYPE_FLAG_ENABLED, COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_THROW_LANDED))
+
+	if(to_check.movement_type & (VENTCRAWLING|MOVETYPES_NOT_TOUCHING_GROUND))
+		return
+	if(movable.throwing)
+		return
+	if(!to_check.has_gravity())
+		return
+
+	remove_immerse_overlay(movable)
 
 /datum/element/immerse/proc/on_set_buckled(mob/living/source, atom/movable/new_buckled)
 	SIGNAL_HANDLER
@@ -256,19 +269,15 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 ///Removes the overlay from mob and bucklees is flying.
 /datum/element/immerse/proc/on_move_flag_enabled(atom/movable/source, flag, old_movement_type)
 	SIGNAL_HANDLER
-	if(!(flag & MOVETYPES_NOT_TOUCHING_GROUND) || (old_movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || source.throwing)
+	if(!(flag & (VENTCRAWLING|MOVETYPES_NOT_TOUCHING_GROUND)))
+		return
+	if(old_movement_type & (VENTCRAWLING|MOVETYPES_NOT_TOUCHING_GROUND))
+		return
+	if(source.throwing)
 		return
 	if(!source.has_gravity())
 		return
-	remove_immerse_overlay(source)
-	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
-		remove_immerse_overlay(buckled_mob)
 
-///Works just like on_move_flag_enabled, except it only has to check that movable isn't flying
-/datum/element/immerse/proc/on_throw(atom/movable/source)
-	SIGNAL_HANDLER
-	if(source.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
-		return
 	remove_immerse_overlay(source)
 	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
 		remove_immerse_overlay(buckled_mob)
@@ -276,19 +285,39 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 ///Readds the overlay to the mob and bucklees if no longer flying.
 /datum/element/immerse/proc/on_move_flag_disabled(atom/movable/source, flag, old_movement_type)
 	SIGNAL_HANDLER
-	if(!(flag & MOVETYPES_NOT_TOUCHING_GROUND) || (source.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || source.throwing)
+	if(!(flag & (VENTCRAWLING|MOVETYPES_NOT_TOUCHING_GROUND)))
+		return
+	if(source.movement_type & (VENTCRAWLING|MOVETYPES_NOT_TOUCHING_GROUND))
+		return
+	if(source.throwing)
 		return
 	if(!source.has_gravity())
 		return
+
 	add_immerse_overlay(source)
 	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
 		add_immerse_overlay(buckled_mob)
+
+///Works just like on_move_flag_enabled, except it only has to check that movable isn't flying
+/datum/element/immerse/proc/on_throw(atom/movable/source)
+	SIGNAL_HANDLER
+	if(source.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
+		return
+	if(!source.has_gravity())
+		return
+
+	remove_immerse_overlay(source)
+	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
+		remove_immerse_overlay(buckled_mob)
 
 ///Works just like on_move_flag_disabled, except it only has to check that movable isn't flying
 /datum/element/immerse/proc/on_throw_landed(atom/movable/source)
 	SIGNAL_HANDLER
 	if(source.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return
+	if(!source.has_gravity())
+		return
+
 	add_immerse_overlay(source)
 	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
 		add_immerse_overlay(buckled_mob)
