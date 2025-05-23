@@ -337,22 +337,23 @@
 	possible_types = list(/obj/vehicle/sealed/mecha)
 	total_requirement = 1
 
-/datum/experiment/scanning/modular_shield/strength
+/datum/experiment/scanning/points/modular_shield_strength
 	name = "Modular Shields: Holographic Resilience Test"
-	description = "We need evidence that holographic images can be made exceptionally durable in order to secure more funding for the field, scan a generator with 500 or more maximum strength."
+	description = "We need evidence that holographic images can be made exceptionally durable in order to secure more funding for the field, scan a generator with 500 or more maximum shield strength."
+	required_points = 1
 	required_atoms = list(
-		/obj/machinery/modular_shield_generator
+		/obj/machinery/modular_shield_generator = 1,
 	)
-	var/maximum_strength = 500
+	var/maximum_strength_goal = 500
 
-/datum/experiment/scanning/points/modular_shield/strength/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
+/datum/experiment/scanning/points/modular_shield_strength/final_contributing_index_checks(datum/component/experiment_handler/experiment_handler, atom/target, typepath)
 	. = ..()
 	if(!.)
 		return FALSE
 	var/obj/machinery/modular_shield_generator/generator = target
-	if(generator.max_strength >= 500)
+	if(generator.max_strength >= maximum_strength_goal)
 		return TRUE
-	experiment_handler.announce_message("Scanned generator lacking enough maximum strength. Expected 500 or more maximum shield strength.")
+	experiment_handler.announce_message("Scanned generator lacking enough maximum shield strength. Expected 500 or more maximum shield strength.")
 	return FALSE
 
 /// Scan a person with any mutation

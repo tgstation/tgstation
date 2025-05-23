@@ -236,7 +236,7 @@
 		"modular_shield_densifier",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
-	discount_experiments = list(/datum/experiment/scanning/points/modular_shield/strength = TECHWEB_TIER_3_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/modular_shield_strength = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/hud
 	id = TECHWEB_NODE_HUD
