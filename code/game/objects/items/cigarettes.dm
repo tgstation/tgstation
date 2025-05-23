@@ -638,38 +638,47 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Robust brand cigarette."
 
 /obj/item/cigarette/greytide
-    name = "thin grey cigarette"
-    desc = "Hand rolled by the people, for the people."
+    name = "thin grey ciggy"
+    desc = "Made by hand, with a funky smell."
     list_reagents = null
 
 /obj/item/cigarette/greytide/Initialize(mapload)
     . = ..()
     reagents?.add_reagent(/datum/reagent/drug/nicotine, 15)
+    reagents?.add_reagent(/datum/reagent/medicine/oculine, 2) //Should do only just a little bit given cig transfer rate.
 
-    if(prob(30))
+    if(prob(40))
         var/list/chems = list(
             /datum/reagent/toxin/fentanyl = 3,
-            /datum/reagent/drug/aranesp = 3,
+            /datum/reagent/drug/aranesp = 2,
             /datum/reagent/pax = 1,
-            /datum/reagent/medicine/insulin = 3,
+            /datum/reagent/medicine/insulin = 2,
             /datum/reagent/drug/maint/powder = 2,
             /datum/reagent/drug/maint/sludge = 2,
+            /datum/reagent/toxin/staminatoxin = 2,
+            /datum/reagent/toxin/leadacetate = 2,
+            /datum/reagent/drug/space_drugs = 2,
             /datum/reagent/drug/pumpup = 2,
             /datum/reagent/drug/kronkaine = 2,
             /datum/reagent/consumable/laughter = 3,
             /datum/reagent/glitter = 3
         )
-        var/tot = 0
-        for(var/d in chems) tot += chems[d]
-        var/r = rand(1, tot)
-        var/cum = 0
+
+        var/total_weight = 0 //This shit just rolls for those chems if it hits that 40%.
+        for (var/chem in chems)
+            total_weight += chems[chem]
+
+        var/random_roll = rand(1, total_weight)
+        var/cumulative = 0
         var/chosen = null
-        for(var/d in chems)
-            cum += chems[d]
-            if(r <= cum)
-                chosen = d
+
+        for (var/chem in chems)
+            cumulative += chems[chem]
+            if (random_roll <= cumulative)
+                chosen = chem
                 break
-        reagents?.add_reagent(chosen, rand(3, 10))
+
+        reagents?.add_reagent(chosen, rand(5, 10)) //Doses are high due to slow cig chem transfer rate.
 
 /obj/item/cigarette/robustgold
 	desc = "A Robust Gold brand cigarette."
