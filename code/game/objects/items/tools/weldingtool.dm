@@ -195,7 +195,6 @@
 
 /// Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
-	var/realFuelNoClickbait = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
 	return reagents.get_reagent_amount(/datum/reagent/fuel) + reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
 
 /// Uses fuel from the welding tool.
