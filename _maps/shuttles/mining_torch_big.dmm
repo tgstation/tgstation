@@ -15,6 +15,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/shuttle/mining_ship/eva)
 "bq" = (
@@ -73,6 +76,14 @@
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/mining_ship/atmos_maintenance)
+"cW" = (
+/obj/effect/turf_decal/box,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/ore_box,
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/mining_ship/storage)
 "dp" = (
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/machinery/light/small/directional/north,
@@ -93,6 +104,9 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/survival_pod,
+/obj/effect/mapping_helpers/airlock/access/any/supply/qm,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/eva)
 "et" = (
@@ -112,22 +126,20 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron/textured,
 /area/shuttle/mining_ship/storage)
 "gi" = (
 /turf/open/floor/iron,
 /area/shuttle/mining_ship/cockpit)
 "gD" = (
-/obj/machinery/suit_storage_unit/mining/eva{
-	access_locked = 1;
-	req_access = list("mining");
-	locked = 1
-	},
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/light/warm/directional/north,
 /obj/machinery/camera/autoname/directional/north{
 	network = list("mine")
 	},
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/storage)
 "gH" = (
@@ -150,6 +162,16 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/mining_ship/eva)
+"gR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/conveyor{
+	id = "mining_away_gc"
+	},
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/plating,
+/area/shuttle/mining_ship/storage)
 "hb" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -165,9 +187,9 @@
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/medbay)
 "hy" = (
-/obj/structure/ore_box,
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/turf_decal/box,
+/obj/structure/closet/crate/internals,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/storage)
 "hE" = (
@@ -183,11 +205,15 @@
 /obj/machinery/cell_charger,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/item/stock_parts/power_store/cell/high/empty,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/power_maintenance)
 "hQ" = (
 /obj/structure/disposalpipe/segment{
 	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/eva)
@@ -226,10 +252,14 @@
 	dir = 8
 	},
 /obj/machinery/light/warm/dim/directional/east,
-/obj/machinery/digital_clock/directional/east,
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/shuttle/mining_ship/eva)
 "iI" = (
@@ -247,6 +277,9 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 2
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/shuttle/mining_ship/eva)
@@ -271,12 +304,15 @@
 /obj/structure/table,
 /obj/machinery/recharger{
 	pixel_y = 3;
-	pixel_x = -4
+	pixel_x = -6
 	},
 /obj/item/gps{
 	pixel_y = 5;
 	gpstag = "Mining FOB Ship";
-	pixel_x = 4
+	pixel_x = 7
+	},
+/obj/item/radio{
+	pixel_x = 6
 	},
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/cockpit)
@@ -299,7 +335,8 @@
 "kK" = (
 /obj/machinery/button/door/directional/south{
 	id = "mining_away_shutters_s";
-	name = "Space Shutter Control"
+	name = "Space Shutter Control";
+	req_one_access = list("qm","command","mining")
 	},
 /obj/machinery/computer/station_alert{
 	dir = 4
@@ -313,17 +350,6 @@
 /area/shuttle/mining_ship/eva)
 "lp" = (
 /obj/structure/tank_dispenser/oxygen,
-/obj/item/clothing/glasses/meson{
-	pixel_y = 10;
-	pixel_x = 4
-	},
-/obj/item/clothing/glasses/meson{
-	pixel_y = 10;
-	pixel_x = -3
-	},
-/obj/item/clothing/glasses/meson{
-	pixel_y = 8
-	},
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/storage)
 "ls" = (
@@ -342,6 +368,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
+/obj/effect/mapping_helpers/airlock/access/any/supply/qm,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron/textured,
 /area/shuttle/mining_ship/storage)
 "mr" = (
@@ -364,6 +396,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/power/floodlight,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/storage)
 "mB" = (
@@ -373,6 +406,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/supply/qm,
 /turf/open/floor/iron/textured,
 /area/shuttle/mining_ship/medbay)
 "mH" = (
@@ -474,6 +509,8 @@
 "qR" = (
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /obj/machinery/door/airlock/survival_pod,
+/obj/effect/mapping_helpers/airlock/access/any/supply/qm,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/eva)
 "rn" = (
@@ -490,6 +527,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/storage)
 "rQ" = (
@@ -511,11 +549,7 @@
 /area/shuttle/mining_ship/engine_maintenance)
 "sS" = (
 /obj/machinery/newscaster/directional/north,
-/obj/machinery/suit_storage_unit/mining/eva{
-	access_locked = 1;
-	req_access = list("mining");
-	locked = 1
-	},
+/obj/machinery/suit_storage_unit/standard_unit,
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/storage)
 "sU" = (
@@ -543,6 +577,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
 /obj/machinery/door/airlock/survival_pod,
+/obj/effect/mapping_helpers/airlock/access/any/supply/qm,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/eva)
 "tK" = (
@@ -552,11 +588,24 @@
 /obj/structure/table,
 /obj/item/radio/intercom/directional/south,
 /obj/machinery/light/small/directional/south,
-/obj/item/stock_parts/power_store/battery,
-/obj/item/stack/cable_coil/thirty,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
 /obj/machinery/camera/autoname/directional/south{
 	network = list("mine")
+	},
+/obj/item/flashlight/flare{
+	pixel_y = 11;
+	pixel_x = -2
+	},
+/obj/item/flashlight/flare{
+	pixel_y = 9;
+	pixel_x = -2
+	},
+/obj/item/flashlight/flare{
+	pixel_y = 7;
+	pixel_x = -2
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 2
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/power_maintenance)
@@ -588,6 +637,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/external,
 /obj/effect/mapping_helpers/airlock/access/any/engineering/maintenance,
 /obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/any/supply/qm,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/eva)
 "vm" = (
@@ -595,6 +647,7 @@
 /obj/item/defibrillator/loaded{
 	pixel_y = 4
 	},
+/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/medbay)
 "vr" = (
@@ -610,6 +663,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/any/supply/qm,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron/textured,
 /area/shuttle/mining_ship/cockpit)
 "vP" = (
@@ -638,6 +694,7 @@
 /obj/effect/turf_decal/box/white/corners{
 	dir = 1
 	},
+/obj/structure/sign/poster/official/random/directional/west,
 /turf/open/floor/iron/dark,
 /area/shuttle/mining_ship/atmos_maintenance)
 "wO" = (
@@ -649,7 +706,10 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/mining_ship/cockpit)
 "xn" = (
-/obj/machinery/computer/shuttle/mining/big,
+/obj/machinery/computer/shuttle/mining/big{
+	req_access = null;
+	req_one_access = list("qm","command","mining","mining_station")
+	},
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/cockpit)
 "xz" = (
@@ -667,10 +727,10 @@
 /turf/open/floor/iron,
 /area/shuttle/mining_ship/medbay)
 "yc" = (
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/firealarm/directional/west,
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/eva)
 "yj" = (
@@ -687,7 +747,12 @@
 	},
 /obj/docking_port/mobile{
 	dir = 8;
-	shuttle_id = "mining_big"
+	shuttle_id = "mining_big";
+	port_direction = 4;
+	ignitionTime = 100;
+	callTime = 1200;
+	rechargeTime = 2400;
+	prearrivalTime = 50
 	},
 /turf/open/floor/engine,
 /area/shuttle/mining_ship/eva)
@@ -735,7 +800,7 @@
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/medbay)
 "Cs" = (
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/mining_ship/eva)
 "Cz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -857,11 +922,12 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/mining_ship/power_maintenance)
 "Gp" = (
-/obj/structure/ore_box,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 10
 	},
 /obj/effect/turf_decal/box,
+/obj/machinery/digital_clock/directional/south,
+/obj/machinery/power/floodlight,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/storage)
 "Gq" = (
@@ -883,6 +949,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/autoname,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
+/obj/effect/mapping_helpers/airlock/access/any/supply/qm,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron/textured,
 /area/shuttle/mining_ship/cockpit)
 "HD" = (
@@ -936,6 +1006,7 @@
 /obj/effect/turf_decal/box/white,
 /obj/item/stack/rods/fifty,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
+/obj/structure/sign/poster/official/random/directional/east,
 /turf/open/floor/iron/dark,
 /area/shuttle/mining_ship/engine_maintenance)
 "JF" = (
@@ -955,13 +1026,16 @@
 "Ka" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
-/obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining_station,
+/obj/effect/mapping_helpers/airlock/access/any/medical/general,
 /obj/machinery/door/airlock/survival_pod,
+/obj/effect/mapping_helpers/airlock/access/any/supply/qm,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/eva)
 "Kn" = (
@@ -988,7 +1062,7 @@
 /area/shuttle/mining_ship/eva)
 "LN" = (
 /obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/mining_ship/power_maintenance)
 "LQ" = (
 /obj/machinery/power/apc/auto_name/directional/east,
@@ -1028,6 +1102,9 @@
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/any/supply/qm,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/power_maintenance)
 "Nj" = (
@@ -1088,6 +1165,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/rack,
+/obj/item/stock_parts/power_store/battery,
+/obj/item/stack/cable_coil/thirty,
+/obj/item/stack/cable_coil/thirty,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/storage)
 "Ro" = (
@@ -1098,6 +1179,9 @@
 	},
 /turf/open/floor/engine/airless,
 /area/shuttle/mining_ship/atmos_maintenance)
+"Rt" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/mining_ship/power_maintenance)
 "Sc" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/door/poddoor/preopen{
@@ -1160,6 +1244,7 @@
 "TY" = (
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/box/white,
+/obj/item/flashlight/lantern,
 /turf/open/floor/iron/dark,
 /area/shuttle/mining_ship/engine_maintenance)
 "Uy" = (
@@ -1316,12 +1401,21 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/mining_ship/cockpit)
 "XL" = (
-/obj/machinery/power/floodlight,
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/siding/thinplating/dark{
 	dir = 6
 	},
 /obj/effect/turf_decal/box,
+/obj/structure/sign/warning/deathsposal/directional/east,
+/obj/structure/rack,
+/obj/item/storage/toolbox/emergency,
+/obj/item/clothing/glasses/meson{
+	pixel_y = 3
+	},
+/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/meson{
+	pixel_y = -3
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/storage)
 "XQ" = (
@@ -1339,14 +1433,14 @@
 /area/shuttle/mining_ship/engine_maintenance)
 "Yj" = (
 /obj/structure/sign/nanotrasen,
-/turf/closed/wall/mineral/plastitanium,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/shuttle/mining_ship/eva)
 "Zi" = (
-/obj/structure/ore_box,
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/light/warm/directional/south,
 /obj/effect/turf_decal/siding/thinplating/dark,
 /obj/effect/turf_decal/box,
+/obj/structure/ore_box,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/storage)
 "Zk" = (
@@ -1374,11 +1468,15 @@
 /obj/structure/disposalpipe/segment{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/any/supply/qm,
+/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
+/obj/effect/mapping_helpers/airlock/access/any/command/general,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/atmos_maintenance)
 "ZR" = (
 /obj/machinery/recharge_station,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/power_maintenance)
 "ZS" = (
@@ -1416,9 +1514,9 @@ ZS
 ZS
 Iw
 eI
-uh
-uh
-uh
+Pj
+Pj
+Pj
 uh
 Sf
 "}
@@ -1450,17 +1548,17 @@ DG
 wR
 Zk
 kK
-oc
+vv
 bB
 vr
 vr
 vr
 vm
-Si
+Rt
 Ve
 mr
 hH
-Si
+Rt
 mH
 nC
 Dl
@@ -1473,17 +1571,17 @@ Sc
 xn
 JS
 Xb
-oc
+vv
 pz
 bw
 BK
 xZ
 ON
-Si
+Rt
 FY
 pu
 tM
-Si
+Rt
 ls
 ZX
 SZ
@@ -1496,17 +1594,17 @@ Sc
 jZ
 tQ
 Ol
-oc
+vv
 DC
 py
 Bo
 LQ
 Uy
-Si
+Rt
 pd
 EQ
 ZR
-Si
+Rt
 rQ
 qF
 iI
@@ -1519,22 +1617,22 @@ XC
 jG
 vI
 jG
-oc
-oc
-oc
+vv
+vv
+vv
 mB
-oc
-oc
-Si
-Si
+vv
+vv
+Rt
+Rt
 ML
 Si
-Si
+Rt
 ZI
-uh
-uh
-uh
-uh
+Pj
+Pj
+Pj
+Pj
 Pz
 "}
 (7,1,1) = {"
@@ -1588,7 +1686,7 @@ XC
 Xp
 UQ
 KQ
-oE
+rs
 lp
 XQ
 LX
@@ -1611,11 +1709,11 @@ Sc
 Xp
 VM
 Wk
-oE
+rs
 gD
 XQ
 Ms
-Qu
+cW
 Zi
 Cs
 JF
@@ -1634,7 +1732,7 @@ Sc
 sU
 gi
 gi
-oE
+rs
 sS
 XQ
 Ms
@@ -1657,7 +1755,7 @@ DG
 wR
 bV
 Co
-oE
+rs
 mR
 tz
 AL
@@ -1681,7 +1779,7 @@ DG
 Sc
 Sc
 rs
-kh
+gR
 kh
 kh
 hZ
@@ -1715,9 +1813,9 @@ yD
 mO
 UT
 gH
-tK
-tK
-tK
+jX
+jX
+jX
 tK
 Sf
 "}

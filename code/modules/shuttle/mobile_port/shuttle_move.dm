@@ -181,7 +181,7 @@
 		if(old_ceiling) // check if a ceiling was generated previously
 			// remove old ceiling
 			if(istype(old_ceiling, /turf/open/floor/engine/hull/ceiling))
-				old_ceiling.ScrapeAway()
+				old_ceiling.ScrapeAway(null, CHANGETURF_INHERIT_AIR)
 			else
 				old_ceiling.remove_baseturfs_from_typecache(list(/turf/open/floor/engine/hull/ceiling = TRUE))
 		if(!(old_move_mode & MOVE_TURF))

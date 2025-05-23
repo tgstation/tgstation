@@ -590,6 +590,8 @@
 /obj/docking_port/mobile/proc/getTimerStr()
 	if(mode == SHUTTLE_STRANDED || mode == SHUTTLE_DISABLED)
 		return "--:--"
+	if(mode == SHUTTLE_IDLE)
+		return "00:00"
 
 	return time_as_string(timeLeft())
 
@@ -598,7 +600,6 @@
 		return "--:--"
 	if(timeleft <= 0)
 		return "00:00"
-	timeleft /= 10
 	return "[add_leading(num2text((timeleft / 60) % 60), 2, "0")]:[add_leading(num2text(timeleft % 60), 2, "0")]"
 
 /**

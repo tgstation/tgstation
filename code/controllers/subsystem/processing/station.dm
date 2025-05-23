@@ -123,15 +123,15 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
-	var/positive_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/positive_station_traits)))
-	var/neutral_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/neutral_station_traits)))
-	var/negative_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/negative_station_traits)))
+// 	var/positive_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/positive_station_traits)))
+// 	var/neutral_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/neutral_station_traits)))
+// 	var/negative_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/negative_station_traits)))
 
-#ifdef MAP_TEST
+// #ifdef MAP_TEST
 	positive_trait_budget = 0
 	neutral_trait_budget = 0
 	negative_trait_budget = 0
-#endif
+// #endif
 
 	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_budget)
 	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_budget)

@@ -62,7 +62,8 @@
 /obj/docking_port/mobile/pod{
 	dir = 4;
 	port_direction = 4;
-	preferred_direction = 2
+	preferred_direction = 2;
+	ignitionTime = 80
 	},
 /obj/machinery/door/airlock/survival_pod,
 /turf/open/floor/iron/smooth_large,

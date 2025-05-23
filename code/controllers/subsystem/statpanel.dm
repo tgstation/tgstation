@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(statpanels)
 		// 	if(ETA)
 		// 		global_data += "[ETA] [SSshuttle.emergency.getTimerStr()]"
 		if(EMERGENCY_PAST_POINT_OF_NO_RETURN)
-			global_data += "[SSshuttle.abandon_ship_state] ETA: [time_as_string(timeleft(SSshuttle.abandon_ship_timer))]"
+			global_data += "[SSshuttle.abandon_ship_state] ETA: [time_as_string(timeleft(SSshuttle.abandon_ship_timer) / 10)]"
 
 		if(SSticker.reboot_timer)
 			var/reboot_time = timeleft(SSticker.reboot_timer)

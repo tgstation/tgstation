@@ -107,6 +107,9 @@
 		return TRUE
 	return FALSE
 
+/turf/open/openspace/RemoveLattice()
+	return
+
 /turf/open/openspace/proc/CanCoverUp()
 	return can_cover_up
 

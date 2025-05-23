@@ -491,6 +491,17 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 	else
 		addtimer(TRAIT_CALLBACK_REMOVE(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING), rand(8, 15) * 1 SECONDS)
 	joining_mob.apply_status_effect(/datum/status_effect/cryo_sickness)
+	addtimer(CALLBACK(src, PROC_REF(inform_sleeper), joining_mob), 1 SECONDS)
+
+/obj/machinery/sleeper/cryo/proc/inform_sleeper(mob/living/sleeping)
+	if(sleeping != occupant)
+		return
+	to_chat(sleeping, span_info("You will wake up shortly. Once awake, <b>resist</b> or <b>move</b> to exit the pod."))
+	sleep(1 SECONDS)
+	if(sleeping != occupant)
+		return
+	to_chat(sleeping, span_warning("Coming out of cryosleep, you may feel nauseous or disoriented. \
+		This is a natural side effect of the process - it will last for some time."))
 
 /obj/machinery/sleeper/cryo/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
 	return FALSE

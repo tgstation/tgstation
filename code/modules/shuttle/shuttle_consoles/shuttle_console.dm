@@ -64,7 +64,7 @@
 	data["locations"] = list()
 	data["locked"] = locked
 	data["authorization_required"] = admin_controlled
-	data["timer_str"] = mobile_docking_port ? mobile_docking_port.getTimerStr() : "00:00"
+	data["timer_str"] = mobile_docking_port ? mobile_docking_port.getTimerStr() : "--:--"
 	data["destination"] = destination
 	if(!mobile_docking_port)
 		data["status"] = "Missing"

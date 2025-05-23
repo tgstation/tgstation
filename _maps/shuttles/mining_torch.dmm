@@ -97,15 +97,18 @@
 "z" = (
 /obj/docking_port/mobile{
 	dir = 2;
-	shuttle_id = "mining_public"
+	shuttle_id = "mining_public";
+	ignitionTime = 80;
+	callTime = 1000;
+	rechargeTime = 1200;
+	prearrivalTime = 50
 	},
 /obj/machinery/door/airlock/survival_pod,
 /turf/open/floor/vault,
 /area/shuttle/mining/large)
 "B" = (
 /obj/machinery/door/window/survival_pod/left/directional/south{
-	name = "Cockpit";
-	req_access = list("mining")
+	name = "Cockpit"
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/mineral/titanium/white,
@@ -171,16 +174,12 @@
 "S" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
 /obj/structure/table,
-/obj/item/storage/medkit/emergency,
-/obj/item/radio{
-	pixel_y = 2;
-	pixel_x = 3
-	},
 /obj/item/gps{
 	pixel_y = 4;
-	gpstag = "Mining Shuttle"
+	gpstag = "Public Mining Shuttle"
 	},
-/obj/item/radio,
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/medkit/emergency,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/mining/large)
 "U" = (

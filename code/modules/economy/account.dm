@@ -233,7 +233,7 @@
 			if(!card_holder.client || (!(get_chat_toggles(card_holder.client) & CHAT_BANKCARD) && !force))
 				return
 
-			if(card_holder.can_hear())
+			if(card_holder.can_hear() && !HAS_TRAIT(card_holder, TRAIT_KNOCKEDOUT))
 				card_holder.playsound_local(get_turf(card_holder), 'sound/machines/beep/twobeep_high.ogg', 50, TRUE)
 				to_chat(card_holder, "[icon2html(icon_source, card_holder)] [span_notice("[message]")]")
 		else if(isturf(card.loc)) //If on the ground

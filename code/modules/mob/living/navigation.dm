@@ -32,7 +32,8 @@
 			continue
 		var/destination_name = GLOB.navigate_destinations[destination]
 		if(destination.z != z && (can_go_down || can_go_up)) // up or down is just a good indicator "we're on the station", we don't need to check specifics
-			destination_name += ((get_dir_multiz(src, destination) & UP) ? " (Above)" : " (Below)")
+			//destination_name += ((get_dir_multiz(src, destination) & UP) ? " (Above)" : " (Below)")
+			destination_name += (destination.z > z ? " (Above)" : " (Below)")
 
 		destination_list[destination_name] = destination
 
@@ -59,7 +60,8 @@
 		// (so we can decide to move to another destination right off the bat, rather than needing to wait)
 		COOLDOWN_START(src, navigate_cooldown, 5 SECONDS)
 		var/direction_name = isatom(navigate_target) ? "there" : (navigate_target == UP ? "up" : "down")
-		var/nav_dir = isatom(navigate_target) ? (get_dir_multiz(src, navigate_target) & (UP|DOWN)) : navigate_target
+		//var/nav_dir = isatom(navigate_target) ? (get_dir_multiz(src, navigate_target) & (UP|DOWN)) : navigate_target
+		var/nav_dir = isatom(navigate_target) ? (z > navigate_target.z ? DOWN : UP) : navigate_target
 		var/atom/new_target = find_nearest_stair_or_ladder(nav_dir)
 
 		if(!new_target)
