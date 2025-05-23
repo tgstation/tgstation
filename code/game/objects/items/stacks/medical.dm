@@ -475,12 +475,15 @@
 		)
 		if(heal_end_sound)
 			playsound(patient, heal_end_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+
+	if(limb.get_modified_bleed_rate())
+		add_mob_blood(patient)
 	limb.apply_gauze(src)
 
 /obj/item/stack/medical/gauze/twelve
 	amount = 12
 
-/obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, list/modifiers)
+/obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
 		if(get_amount() < 2)
 			balloon_alert(user, "not enough gauze!")

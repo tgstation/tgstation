@@ -2049,9 +2049,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react@npm:^0.27.6":
-  version: 0.27.7
-  resolution: "@floating-ui/react@npm:0.27.7"
+"@floating-ui/react@npm:^0.27.8":
+  version: 0.27.8
+  resolution: "@floating-ui/react@npm:0.27.8"
   dependencies:
     "@floating-ui/react-dom": "npm:^2.1.2"
     "@floating-ui/utils": "npm:^0.2.9"
@@ -2059,7 +2059,7 @@ __metadata:
   peerDependencies:
     react: ">=17.0.0"
     react-dom: ">=17.0.0"
-  checksum: 10c0/bb79c89a63dfb44917f1583548905437adb7ba3fc9ece27c45b12532a60423425f8ae9fde8a54b10711e6449585ffde0951aa70a4f13f99eaeacd5006d7d69e5
+  checksum: 10c0/901317ca85ed0b80231edc1ded1f67e685cd736ed52949b3b7ce2fa4bb52635a5676b035996e6d98f675f60891869b312beb1a2572001758d0ee2cce0efb1a77
   languageName: node
   linkType: hard
 
@@ -2807,6 +2807,13 @@ __metadata:
     "@nodelib/fs.scandir": "npm:2.1.5"
     fastq: "npm:^1.6.0"
   checksum: 10c0/db9de047c3bb9b51f9335a7bb46f4fcfb6829fb628318c12115fbaf7d369bfce71c15b103d1fc3b464812d936220ee9bc1c8f762d032c9f6be9acc99249095b1
+  languageName: node
+  linkType: hard
+
+"@nozbe/microfuzz@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@nozbe/microfuzz@npm:1.0.0"
+  checksum: 10c0/16ce1b36b521f3990b83b08d2a6d1f6eb43fe240d0ebfb600e8f469187a1303c6aa576925b6c0bebee8a8df2f8e8e768e12b1c67d4ac50133468b7a02c46efa9
   languageName: node
   linkType: hard
 
@@ -3915,13 +3922,6 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: 10c0/6bf5337bc447b706bb5b4431d37686aa2ea6d07cfd6f79cc31de80170d6ff9b1c7384a9c0ccbc45b3f512bae9e9f75c2e12109806a15331dc94e8a8db6dbb4ac
-  languageName: node
-  linkType: hard
-
-"@types/marked@npm:4.3.2":
-  version: 4.3.2
-  resolution: "@types/marked@npm:4.3.2"
-  checksum: 10c0/6f44d28da5c940a719d6c6aca41e33f49c5fe957f7972939cc1cbb47d045951f4d969f382d655345d0463e47db1994635d2862018716fcef2fa85ceeceb116e7
   languageName: node
   linkType: hard
 
@@ -13824,12 +13824,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "marked@npm:4.3.0"
+"marked-base-url@npm:^1.1.6":
+  version: 1.1.6
+  resolution: "marked-base-url@npm:1.1.6"
+  peerDependencies:
+    marked: ">= 4 < 16"
+  checksum: 10c0/346b8f3a912ab5192caec896d8e923b83113f81312eb4838ec9773aca620088cd3ed4d9fce773f3251d71c72f271c3df8554f025c1146cea3e76845b29e5be42
+  languageName: node
+  linkType: hard
+
+"marked-smartypants@npm:^1.1.9":
+  version: 1.1.9
+  resolution: "marked-smartypants@npm:1.1.9"
+  dependencies:
+    smartypants: "npm:^0.2.2"
+  peerDependencies:
+    marked: ">=4 <16"
+  checksum: 10c0/50a9f9ddeb67045933c26abdd8acf997368d96920990048b6d432c4d2374a513152c639b46c16c74934483b7a1df6093f8f26461f2409b9bf1e58f8ac759391f
+  languageName: node
+  linkType: hard
+
+"marked@npm:^15.0.11":
+  version: 15.0.11
+  resolution: "marked@npm:15.0.11"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/0013463855e31b9c88d8bb2891a611d10ef1dc79f2e3cbff1bf71ba389e04c5971298c886af0be799d7fa9aa4593b086a136062d59f1210b0480b026a8c5dc47
+  checksum: 10c0/d532db4955c1f2ac6efc65a644725e9e12e7944cb6af40c7148baecfd3b3c2f3564229b3daf12d2125635466448fb9b367ce52357be3aea0273e3d152efdbdcf
   languageName: node
   linkType: hard
 
@@ -18699,6 +18719,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"smartypants@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "smartypants@npm:0.2.2"
+  bin:
+    smartypants: bin/smartypants.js
+    smartypantsu: bin/smartypantsu.js
+  checksum: 10c0/29b46df6acaed9ad6271624e26e055d6360c9da7f79433b7a83ebd40b50bd6b554d8f3793932f42be07e5badce889f547c89378fda77cb1f935b09a902c4527b
+  languageName: node
+  linkType: hard
+
 "snake-case@npm:^3.0.4":
   version: 3.0.4
   resolution: "snake-case@npm:3.0.4"
@@ -19783,19 +19813,20 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     tgui: "workspace:*"
-    tgui-core: "npm:^3.1.4"
+    tgui-core: "npm:^4.0.1"
   languageName: unknown
   linkType: soft
 
-"tgui-core@npm:^3.1.4":
-  version: 3.1.4
-  resolution: "tgui-core@npm:3.1.4"
+"tgui-core@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "tgui-core@npm:4.0.1"
   dependencies:
-    "@floating-ui/react": "npm:^0.27.6"
+    "@floating-ui/react": "npm:^0.27.8"
+    "@nozbe/microfuzz": "npm:^1.0.0"
   peerDependencies:
     react: ^19.1.0
     react-dom: ^19.1.0
-  checksum: 10c0/1f0caef121de74275c08dceef926d4d1e6260eaee32cbe1ee5614456d339de4c887ce13b7b2774674feba37b56bd99204519d3eadcc57b0df3f172aa37644704
+  checksum: 10c0/dc15e1f615395fb62dc7445a68b5bb5b1a102993f5fbf2efe38c190e2608c13da7e78246e328bd5461059f554471ecd08e72719c7d409e5a79f8e2e96ddb81b3
   languageName: node
   linkType: hard
 
@@ -19823,7 +19854,7 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     tgui: "workspace:*"
-    tgui-core: "npm:^3.1.4"
+    tgui-core: "npm:^4.0.1"
     tgui-dev-server: "workspace:*"
   languageName: unknown
   linkType: soft
@@ -19838,7 +19869,7 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     tgui: "workspace:*"
-    tgui-core: "npm:^3.1.4"
+    tgui-core: "npm:^4.0.1"
     vitest: "npm:^3.1.1"
   languageName: unknown
   linkType: soft
@@ -19885,7 +19916,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "tgui@workspace:packages/tgui"
   dependencies:
-    "@types/marked": "npm:4.3.2"
     "@types/react": "npm:^19.1.0"
     "@types/react-dom": "npm:^19.1.2"
     common: "workspace:*"
@@ -19895,10 +19925,12 @@ __metadata:
     highlight.js: "npm:^11.11.1"
     jest: "npm:^29.7.0"
     js-yaml: "npm:^4.1.0"
-    marked: "npm:^4.3.0"
+    marked: "npm:^15.0.11"
+    marked-base-url: "npm:^1.1.6"
+    marked-smartypants: "npm:^1.1.9"
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
-    tgui-core: "npm:^3.1.4"
+    tgui-core: "npm:^4.0.1"
     tgui-dev-server: "workspace:*"
     vitest: "npm:^3.1.1"
   languageName: unknown

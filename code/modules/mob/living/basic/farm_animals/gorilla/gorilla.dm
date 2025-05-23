@@ -57,7 +57,7 @@
 	. = ..()
 	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_CHUNKYFINGERS), ROUNDSTART_TRAIT)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
-	AddElement(/datum/element/dextrous)
+	AddElement(/datum/element/dextrous, can_throw = TRUE)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)
 	AddElement(/datum/element/basic_eating, heal_amt = 10, food_types = gorilla_food)
 	AddComponent(

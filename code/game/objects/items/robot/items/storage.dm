@@ -61,7 +61,7 @@
 	stored.forceMove(user.drop_location())
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, list/modifiers)
+/obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
 		return ..() // Borgs should not be grabbing their own modules
 
@@ -92,7 +92,7 @@
 	update_appearance()
 	return NONE
 
-/obj/item/borg/apparatus/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/item/borg/apparatus/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(stored)
 		item.melee_attack_chain(user, stored, modifiers)
 		return
@@ -317,7 +317,7 @@
 		. += "The apparatus currently has [stored] secured."
 	. += span_notice(" <i>Alt-click</i> will drop the currently stored circuit. ")
 
-/obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, list/modifiers)
+/obj/item/borg/apparatus/circuit/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning("This circuit board doesn't seem to have standard robot apparatus pin holes. You're unable to pick it up."))
 	return ..()
