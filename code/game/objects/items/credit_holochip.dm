@@ -95,14 +95,16 @@
 	else
 		return 0
 
-/obj/item/holochip/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	..()
-	if(istype(I, /obj/item/holochip))
-		var/obj/item/holochip/H = I
-		credits += H.credits
-		to_chat(user, span_notice("You insert the credits into [src]."))
-		update_appearance()
-		qdel(H)
+/obj/item/holochip/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/holochip))
+		return NONE
+
+	var/obj/item/holochip/merged_holochip = tool
+	credits += merged_holochip.credits
+	balloon_alert(user, "merged!")
+	update_appearance()
+	qdel(merged_holochip)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/holochip/click_alt(mob/user)
 	if(loc != user)
