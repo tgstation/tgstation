@@ -640,14 +640,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/cigarette/greytide
     name = "thin grey ciggy"
     desc = "Made by hand, with a funky smell."
+    lung_harm = 2.5
     list_reagents = null
 
 /obj/item/cigarette/greytide/Initialize(mapload)
     . = ..()
     reagents?.add_reagent(/datum/reagent/drug/nicotine, 15)
-    reagents?.add_reagent(/datum/reagent/medicine/oculine, 2) //Should do only just a little bit given cig transfer rate.
+    reagents?.add_reagent(/datum/reagent/medicine/oculine, 1.5)
 
-    if(prob(40))
+    if (prob(40))
         var/list/chems = list(
             /datum/reagent/toxin/fentanyl = 3,
             /datum/reagent/drug/aranesp = 2,
@@ -664,7 +665,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
             /datum/reagent/glitter = 3
         )
 
-        var/total_weight = 0 //This shit just rolls for those chems if it hits that 40%.
+        var/total_weight = 0
         for (var/chem in chems)
             total_weight += chems[chem]
 
@@ -678,7 +679,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
                 chosen = chem
                 break
 
-        reagents?.add_reagent(chosen, rand(5, 10)) //Doses are high due to slow cig chem transfer rate.
+        reagents?.add_reagent(chosen, rand(10, 15))
 
 /obj/item/cigarette/robustgold
 	desc = "A Robust Gold brand cigarette."
@@ -814,6 +815,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "roach"
 	desc = "A manky old roach, or for non-stoners, a used rollup."
 	icon_state = "roach"
+
+/obj/item/cigbutt/greycigbutt
+    name = "grey cigarette butt"
+    desc = "It's low tide, now."
+    icon_state = "greycigbutt"
 
 /obj/item/cigbutt/roach/Initialize(mapload)
 	. = ..()
