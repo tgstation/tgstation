@@ -201,7 +201,8 @@
 
 /obj/item/fish/tadpole/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
-	AddComponent(/datum/component/fish_growth, /mob/living/basic/frog, rand(2 MINUTES, 3 MINUTES))
+	var/output_path = prob(99) ? /mob/living/basic/frog : /mob/living/basic/frog/rare
+	AddComponent(/datum/component/fish_growth, output_path, rand(2 MINUTES, 3 MINUTES))
 	RegisterSignal(src, COMSIG_FISH_BEFORE_GROWING, PROC_REF(growth_checks))
 	RegisterSignal(src, COMSIG_FISH_FINISH_GROWING, PROC_REF(on_growth))
 
@@ -252,7 +253,7 @@
 /obj/item/fish/tadpole/proc/gestation(mob/living/user)
 	if(QDELETED(user) || QDELETED(src))
 		return
-	new /mob/living/basic/frog(user)
+	new /obj/effect/spawner/random/frog(user.drop_location())
 	user.gib()
 	qdel(src)
 

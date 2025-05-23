@@ -100,16 +100,3 @@
 
 	return return_flags
 
-
-/**
- * Base container used for gimmick disks.
- */
-/obj/item/storage/briefcase/secure/digital_storage
-	name = "digi-case"
-	desc = "It's made of AUTHENTIC digital leather and has a price-tag still attached. Its owner must be a real professional."
-	icon_state = "secure"
-	base_icon_state = "secure"
-	inhand_icon_state = "sec-case"
-
-/obj/item/storage/briefcase/secure/digital_storage/PopulateContents()
-	return

@@ -40,7 +40,7 @@ export const getWindowSize = (): [number, number] => [
 ];
 
 // Set window position
-const setWindowPosition = (vec: [number, number]) => {
+export const setWindowPosition = (vec: [number, number]) => {
   const byondPos = vecAdd(vec, screenOffset);
   return Byond.winset(Byond.windowId, {
     pos: byondPos[0] + ',' + byondPos[1],

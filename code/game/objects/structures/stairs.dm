@@ -142,8 +142,34 @@
 
 /obj/structure/stairs/intercept_zImpact(list/falling_movables, levels = 1)
 	. = ..()
-	if(levels == 1 && isTerminator()) // Stairs won't save you from a steep fall.
-		. |= FALL_INTERCEPTED | FALL_NO_MESSAGE | FALL_RETAIN_PULL
+	// falling from a higher z level onto stairs
+	if(levels != 1 || !isTerminator())
+		return
+	for(var/mob/living/guy in falling_movables)
+		if(!can_fall_down_stairs(guy))
+			continue
+		to_chat(guy, span_warning("You fall down [src]!"))
+		on_fall(guy)
+	. |= FALL_INTERCEPTED | FALL_NO_MESSAGE | FALL_RETAIN_PULL
+
+/// Will the passed mob tumble down the stairs instead of walking?
+/obj/structure/stairs/proc/can_fall_down_stairs(mob/living/falling)
+	if(falling.buckled || falling.pulledby)
+		return FALSE
+	if(falling.stat >= UNCONSCIOUS) // if you shove someone unconscious down the stairs, they'd probably roll
+		return TRUE
+	if(falling.has_status_effect(/datum/status_effect/staggered)) // off balance
+		return TRUE
+	return FALSE
+
+/// What happens when a mob tumbles down the stairs
+/obj/structure/stairs/proc/on_fall(mob/living/falling)
+	falling.AdjustParalyzed(2 SECONDS)
+	falling.adjust_staggered(2 SECONDS)
+	falling.AdjustKnockdown(5 SECONDS)
+	falling.spin(1 SECONDS, 0.25 SECONDS)
+	falling.apply_damage(rand(4, 8), BRUTE, spread_damage = TRUE)
+	GLOB.move_manager.move_towards(falling, get_ranged_target_turf(src, REVERSE_DIR(dir), 2), delay = 0.4 SECONDS, timeout = 1 SECONDS)
 
 /obj/structure/stairs/proc/isTerminator() //If this is the last stair in a chain and should move mobs up
 	if(terminator_mode != STAIR_TERMINATOR_AUTOMATIC)
@@ -212,7 +238,7 @@
 /obj/structure/stairs_frame/atom_deconstruct(disassembled = TRUE)
 	new frame_stack(get_turf(src), frame_stack_amount)
 
-/obj/structure/stairs_frame/attackby(obj/item/attacked_by, mob/user, params)
+/obj/structure/stairs_frame/attackby(obj/item/attacked_by, mob/user, list/modifiers, list/attack_modifiers)
 	if(!isstack(attacked_by))
 		return ..()
 	if(!anchored)

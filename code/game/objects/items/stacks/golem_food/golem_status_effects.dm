@@ -95,11 +95,14 @@
 	return TRUE
 
 /datum/status_effect/golem/on_creation(mob/living/new_owner)
+	if(!isgolem(new_owner))
+		duration *= 0.1
+	var/buff_duration = duration
 	. = ..()
 	if (!.)
-		return FALSE
+		return .
 	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert
-	status_alert?.update_details(buff_time = initial(duration))
+	status_alert?.update_details(buff_time = buff_duration)
 
 /datum/status_effect/golem/on_remove()
 	to_chat(owner, span_warning("The effect of the [mineral_name] fades."))
@@ -450,6 +453,11 @@
 	var/glow_power = 1
 	var/glow_color = LIGHT_COLOR_DEFAULT
 	var/obj/effect/dummy/lighting_obj/moblight/lightbulb
+
+/datum/status_effect/golem_lightbulb/on_creation(mob/living/new_owner, ...)
+	if(!isgolem(new_owner))
+		duration *= 0.3
+	return ..()
 
 /datum/status_effect/golem_lightbulb/on_apply()
 	. = ..()

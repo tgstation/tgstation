@@ -31,7 +31,7 @@
 	var/planetary = FALSE
 
 	///The type of mining Z-level that should be loaded.
-	var/minetype = "lavaland"
+	var/minetype = MINETYPE_LAVALAND
 	///If no minetype is set, this will be the blacklist file used
 	var/blacklist_file
 
@@ -49,6 +49,9 @@
 	var/library_areas = list()
 	/// Boolean - if TRUE, the "Up" and "Down" traits are automatically distributed to the map's z-levels. If FALSE; they're set via JSON.
 	var/height_autosetup = TRUE
+
+	/// Boolean - if TRUE, players spawn with grappling hooks in their bags
+	var/give_players_hooks = FALSE
 
 	/// List of unit tests that are skipped when running this map
 	var/list/skipped_tests
@@ -197,6 +200,9 @@
 
 	if ("load_all_away_missions" in json)
 		load_all_away_missions = json["load_all_away_missions"]
+
+	if ("give_players_hooks" in json)
+		give_players_hooks = json["give_players_hooks"]
 
 	allow_custom_shuttles = json["allow_custom_shuttles"] != FALSE
 

@@ -43,7 +43,7 @@
 	qdel(src)
 
 ///ensures that the syndicrate can only be unlocked by opening it with a syndicrate_key
-/obj/structure/closet/crate/secure/syndicrate/attackby(obj/item/item, mob/user, params)
+/obj/structure/closet/crate/secure/syndicrate/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(item, /obj/item/syndicrate_key) || created_items)
 		return ..()
 	created_items = TRUE
@@ -67,7 +67,7 @@
 	)
 	update_appearance()
 
-/obj/structure/closet/crate/secure/syndicrate/attackby_secondary(obj/item/weapon, mob/user, params)
+/obj/structure/closet/crate/secure/syndicrate/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/syndicrate_key

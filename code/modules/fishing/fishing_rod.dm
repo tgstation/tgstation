@@ -432,12 +432,15 @@
 		return
 	if(!COOLDOWN_FINISHED(src, casting_cd))
 		return
+	// Inside of storages, or camera weirdness
+	if(target.z != user.z || !(target in view(user.client?.view || world.view, user)))
+		return
 	COOLDOWN_START(src, casting_cd, 1 SECONDS)
 	// skip firing a projectile if the target is adjacent and can be reached (no order windows in the way),
 	// otherwise it may end up hitting other things on its turf, which is problematic
 	// especially for entities with the profound fisher component, which should only work on
 	// proper fishing spots.
-	if(user.CanReach(target, src))
+	if(target.Adjacent(user, null, null, 0))
 		hook_hit(target, user)
 		return
 	casting = TRUE
@@ -520,7 +523,7 @@
 		. += line_overlay
 		. += mutable_appearance(icon_file, "hook_overlay")
 
-/obj/item/fishing_rod/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/fishing_rod/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(slot_check(attacking_item,ROD_SLOT_LINE))
 		use_slot(ROD_SLOT_LINE, user, attacking_item)
 		SStgui.update_uis(src)

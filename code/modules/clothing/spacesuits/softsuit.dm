@@ -52,7 +52,7 @@
 	. = ..()
 	. += span_notice("You can start constructing a critter sized mecha with a [span_bold("cyborg leg")].")
 
-/obj/item/clothing/head/helmet/space/eva/attackby(obj/item/attacked_with, mob/user, params)
+/obj/item/clothing/head/helmet/space/eva/attackby(obj/item/attacked_with, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return

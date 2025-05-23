@@ -19,12 +19,21 @@
 
 /obj/item/toy/cards/cardhand/examine(mob/user)
 	. = ..()
+	. += span_notice("There are [count_cards()] cards.")
+	var/broadcast_check = FALSE
 	for(var/obj/item/toy/singlecard/card in fetch_card_atoms())
-		if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
+		if(user.is_holding(src) || card.flipped)
+			. += span_notice("The hand contains a: [card.cardname]")
+			if(!card.flipped)
+				broadcast_check = TRUE
+		else if(HAS_TRAIT(user, TRAIT_XRAY_VISION))
 			. += span_notice("You scan the cardhand with your x-ray vision and there is a: [card.cardname]")
 		var/marked_color = card.getMarkedColor(user)
 		if(marked_color)
 			. += span_notice("There is a [marked_color] mark on the corner of a card in the cardhand!")
+	if(broadcast_check)
+		user.visible_message(span_notice("[user] checks [user.p_their()] cards."))
+
 
 /obj/item/toy/cards/cardhand/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(istype(held_item, /obj/item/toy/cards/deck))
@@ -69,7 +78,7 @@
 /obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
 	return isliving(user) && !user.incapacitated
 
-/obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, params, flip_card = FALSE)
+/obj/item/toy/cards/cardhand/attackby(obj/item/weapon, mob/living/user, list/params, list/attack_modifier, flip_card = FALSE)
 	var/obj/item/toy/singlecard/card
 
 	if(istype(weapon, /obj/item/toy/singlecard))
@@ -91,8 +100,8 @@
 
 	return ..()
 
-/obj/item/toy/cards/cardhand/attackby_secondary(obj/item/weapon, mob/user, params)
-	attackby(weapon, user, params, flip_card = TRUE)
+/obj/item/toy/cards/cardhand/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
+	attackby(weapon, user, modifiers, flip_card = TRUE)
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 #define CARDS_MAX_DISPLAY_LIMIT 5 // the amount of cards that are displayed in a hand

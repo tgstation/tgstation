@@ -67,7 +67,7 @@
 	. = ..()
 	. += span_notice("You could probably attach some <b>wires</b> to it...")
 
-/obj/item/mod/construction/lavalandcore/attackby(obj/item/weapon, mob/user, params)
+/obj/item/mod/construction/lavalandcore/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(weapon, /obj/item/stack/cable_coil))
 		return ..()
 	if(!weapon.tool_start_check(user, amount=2))
@@ -155,7 +155,7 @@
 			display_text = "All it's missing is <b>external plating</b>..."
 	. += span_notice(display_text)
 
-/obj/item/mod/construction/shell/attackby(obj/item/part, mob/user, params)
+/obj/item/mod/construction/shell/attackby(obj/item/part, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	switch(step)
 		if(START_STEP)

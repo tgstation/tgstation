@@ -242,7 +242,7 @@
 	SEND_SIGNAL(src, COMSIG_PEN_ROTATED, deg, user)
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/pen/attack(mob/living/M, mob/user, params)
+/obj/item/pen/attack(mob/living/M, mob/user, list/modifiers, list/attack_modifiers)
 	if(force) // If the pen has a force value, call the normal attack procs. Used for e-daggers and captain's pen mostly.
 		return ..()
 	if(!M.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE))
@@ -266,7 +266,7 @@
  * Sleepypens
  */
 
-/obj/item/pen/sleepy/attack(mob/living/M, mob/user, params)
+/obj/item/pen/sleepy/attack(mob/living/M, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!.)
 		return

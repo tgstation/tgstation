@@ -785,7 +785,8 @@
 	var/reduction_factor = clamp(cached_gases[/datum/gas/tritium][MOLES] / (cached_gases[/datum/gas/tritium][MOLES] + cached_gases[/datum/gas/bz][MOLES]), 0.001 , 1) //reduces trit consumption in presence of bz upward to 0.1% reduction
 	var/nob_formed = min((cached_gases[/datum/gas/nitrogen][MOLES] + cached_gases[/datum/gas/tritium][MOLES]) * 0.01, cached_gases[/datum/gas/tritium][MOLES] * INVERSE(5 * reduction_factor), cached_gases[/datum/gas/nitrogen][MOLES] * INVERSE(10))
 
-	if (nob_formed <= 0 || (cached_gases[/datum/gas/tritium][MOLES] - 5 * nob_formed * reduction_factor < 0) || (cached_gases[/datum/gas/nitrogen][MOLES] - 10 * nob_formed < 0))
+	//calling QUANTIZE on results to round very small floating point values.
+	if (QUANTIZE(nob_formed) <= 0 || (QUANTIZE(cached_gases[/datum/gas/tritium][MOLES] - 5 * nob_formed * reduction_factor) < 0) || (QUANTIZE(cached_gases[/datum/gas/nitrogen][MOLES] - 10 * nob_formed) < 0))
 		air.garbage_collect(arglist(asserted_gases))
 		return NO_REACTION
 
@@ -1160,5 +1161,49 @@
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air.temperature = max((temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB)
 	return REACTING
+
+/datum/gas_reaction/antinoblium_replication
+	priority_group = PRIORITY_FORMATION
+	name = "Antinoblium Replication"
+	id = "antinoblium_replication"
+	desc = "Antinoblium breaks down all gases into more of itself."
+
+/datum/gas_reaction/antinoblium_replication/init_reqs()
+	requirements = list(
+		/datum/gas/antinoblium = MOLES_GAS_VISIBLE,
+		"MIN_TEMP" = REACTION_OPPRESSION_MIN_TEMP,
+	)
+
+/**
+ * Antinoblium Recplication
+ *
+ * Converts all gases into antinoblium.
+ */
+/datum/gas_reaction/antinoblium_replication/react(datum/gas_mixture/air, datum/holder)
+	. = REACTING
+	var/list/cached_gases = air.gases
+	var/heat_capacity = air.heat_capacity()
+	var/total_moles = air.total_moles()
+	var/antinoblium = cached_gases[/datum/gas/antinoblium]
+	var/antinoblium_moles = antinoblium[MOLES]
+	var/total_not_antinoblium_moles = total_moles - antinoblium_moles
+	var/reaction_rate = min(antinoblium_moles / ANTINOBLIUM_CONVERSION_DIVISOR, total_not_antinoblium_moles)
+	if(total_not_antinoblium_moles < MINIMUM_MOLE_COUNT) // Clear up the remaining gases if this condition is met.
+		. = NO_REACTION
+		reaction_rate = total_not_antinoblium_moles
+	for(var/id in cached_gases)
+		if(id == /datum/gas/antinoblium)
+			continue
+		var/list/gas = cached_gases[id]
+		if(. == NO_REACTION) // Let the gases get properly cleared while avoiding potential division by 0.
+			gas[MOLES] = 0
+			continue
+		gas[MOLES] -= reaction_rate * gas[MOLES] / total_not_antinoblium_moles
+	antinoblium[MOLES] += reaction_rate
+	SET_REACTION_RESULTS(reaction_rate)
+	var/new_heat_capacity = air.heat_capacity()
+	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+		air.temperature = max(air.temperature * heat_capacity / new_heat_capacity, TCMB)
+
 
 #undef SET_REACTION_RESULTS

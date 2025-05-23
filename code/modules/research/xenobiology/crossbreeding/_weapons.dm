@@ -27,7 +27,7 @@ Slimecrossing Weapons
 	throwforce = 15
 	damtype = BRUTE
 
-/obj/item/knife/rainbowknife/afterattack(atom/target, mob/user, params)
+/obj/item/knife/rainbowknife/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(isliving(target))
 		damtype = pick(BRUTE, BURN, TOX, OXY)
 	switch(damtype)

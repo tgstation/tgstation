@@ -71,7 +71,7 @@
 	balloon_alert(user, "no quantum pad data found!")
 	return NONE
 
-/obj/machinery/quantumpad/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/quantumpad/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "qpad-idle-open", "qpad-idle", weapon))
 		return
 
@@ -242,5 +242,3 @@
 			failed.set_output(COMPONENT_SIGNAL)
 			return
 		attached_pad.doteleport(target_pad = attached_pad.linked_pad)
-
-
