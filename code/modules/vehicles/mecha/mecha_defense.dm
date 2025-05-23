@@ -118,10 +118,11 @@
 	//allows bullets to hit the pilot of open-canopy mechs
 	if(!(mecha_flags & IS_ENCLOSED) \
 		&& LAZYLEN(occupants) \
-		&& !(mecha_flags & SILICON_PILOT) \
 		&& (def_zone == BODY_ZONE_HEAD || def_zone == BODY_ZONE_CHEST))
 		var/mob/living/hitmob = pick(occupants)
-		return hitmob.projectile_hit(hitting_projectile, def_zone, piercing_hit) //If the sides are open, the occupant can be hit
+		if(ishuman(hitmob))
+			return hitmob.projectile_hit(hitting_projectile, def_zone, piercing_hit) //If the sides are open, the occupant can be hit
+		hitting_projectile.damage = hitting_projectile.damage * 3 //no organic blocking the shot means we hit the juicy unarmored internals
 
 	. = ..()
 
