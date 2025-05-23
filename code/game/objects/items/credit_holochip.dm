@@ -20,11 +20,18 @@
 		return INITIALIZE_HINT_QDEL
 	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD), INNATE_TRAIT)
 	update_appearance()
+	register_context()
 
 /obj/item/holochip/examine(mob/user)
 	. = ..()
 	. += "[span_notice("It's loaded with [credits] credit[( credits > 1 ) ? "s" : ""]")]\n"+\
 	span_notice("Alt-Click to split.")
+
+/obj/item/holochip/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(istype(held_item, /obj/item/holochip))
+		context[SCREENTIP_CONTEXT_LMB] = "Merge Into"
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Extract Credits"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/holochip/get_item_credit_value()
 	return credits
