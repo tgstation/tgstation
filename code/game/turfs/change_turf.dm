@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if(above)
 			if(!(istype(above, /turf/open/floor/engine/hull/ceiling) || above.depth_to_find_baseturf(/turf/open/floor/engine/hull/ceiling)))
 				if(istype(above, /turf/open/openspace) || istype(above, /turf/open/space/openspace))
-					above.place_on_top(/turf/open/floor/engine/hull/ceiling)
+					above.place_on_top(/turf/open/floor/engine/hull/ceiling, CHANGETURF_INHERIT_AIR)
 				else
 					above.stack_ontop_of_baseturf(/turf/open/openspace, /turf/open/floor/engine/hull/ceiling)
 					above.stack_ontop_of_baseturf(/turf/open/space/openspace, /turf/open/floor/engine/hull/ceiling)

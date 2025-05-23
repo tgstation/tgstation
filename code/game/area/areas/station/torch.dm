@@ -128,33 +128,94 @@
 	name = "\improper Starboard Docking Bay Storage"
 
 /area/station/cargo/mining_breakroom/storage
-	name = "\improper Mining Storage Room"
+	name = "\improper Mining Storage"
+
+/area/station/cargo/mining_breakroom/eva
+	name = "\improper Mining EVA Storage"
 
 /area/station/medical/emergency_infirmary
 	name = "\improper Emergency Infimary"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
-/area/mine/ship
+/area/shuttle/ship
 	name = "\improper Mining FOB Ship"
 	ambient_buzz = 'sound/ambience/general/shipambience.ogg'
 
-/area/mine/ship/cockpit
+/area/shuttle/mining_ship/cockpit
 	name = "\improper Mining FOB Ship Cockpit"
 
-/area/mine/ship/eva
+/area/shuttle/mining_ship/eva
 	name = "\improper Mining FOB Ship EVA"
 
-/area/mine/ship/power_maintenance
+/area/shuttle/mining_ship/power_maintenance
 	name = "\improper Mining FOB Ship Power Maintenance"
 
-/area/mine/ship/atmos_maintenance
+/area/shuttle/mining_ship/atmos_maintenance
 	name = "\improper Mining FOB Ship Atmospherics Maintenance"
 
-/area/mine/ship/engine_maintenance
+/area/shuttle/mining_ship/engine_maintenance
 	name = "\improper Mining FOB Ship Engine Maintenance"
 
-/area/mine/ship/medbay
+/area/shuttle/mining_ship/medbay
 	name = "\improper Mining FOB Ship Medbay"
 
-/area/mine/ship/storage
+/area/shuttle/mining_ship/storage
 	name = "\improper Mining FOB Ship Cargo Hold"
+
+/area/station/maintenance/floor5
+	name = "\improper 5th Floor Maint"
+
+/area/station/maintenance/floor5/port
+	name = "\improper 5th Floor Central Port Maint"
+	icon_state = "maintcentral"
+
+/area/station/maintenance/floor5/port/fore
+	name = "\improper 5th Floor Fore Port Maint"
+	icon_state = "maintfore"
+
+/area/station/maintenance/floor5/port/aft
+	name = "\improper 5th Floor Aft Port Maint"
+	icon_state = "maintaft"
+
+/area/station/maintenance/floor5/starboard
+	name = "\improper 5th Floor Central Starboard Maint"
+	icon_state = "maintcentral"
+
+/area/station/maintenance/floor5/starboard/fore
+	name = "\improper 5th Floor Fore Starboard Maint"
+	icon_state = "maintfore"
+
+/area/station/maintenance/floor5/starboard/aft
+	name = "\improper 5th Floor Aft Starboard Maint"
+	icon_state = "maintaft"
+
+/area/station/hallway/floor5
+	name = "\improper Fifth Floor Hallway"
+
+/area/station/hallway/floor5/aft
+	name = "\improper Fifth Floor Aft Hallway"
+	icon_state = "4_aft"
+
+/area/station/hallway/floor5/fore
+	name = "\improper Fifth Floor Fore Hallway"
+	icon_state = "4_fore"
+
+/area/station/cargo/hanger
+	name = "\improper Hanger Bay"
+	icon_state = "cargo_hanger"
+	sound_environment = SOUND_ENVIRONMENT_HANGAR
+
+/area/station/cargo/hanger/fuel
+	name = "\improper Hanger Fuel Storage"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/cargo/hanger/heavy_storage
+	name = "\improper Hanger Heavy Machinery Storage"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/cargo/hanger/pump_storage
+	name = "\improper Hanger Pumping Room"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/commons/storage/mining/eva
+	name = "\improper Public Mining EVA Storage"

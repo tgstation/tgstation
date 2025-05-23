@@ -64,8 +64,8 @@
 
 /obj/structure/closet/secure_closet/miner/PopulateContents()
 	..()
-	new /obj/item/stack/sheet/mineral/sandbags(src, 5)
-	new /obj/item/storage/box/emptysandbags(src)
+	// new /obj/item/stack/sheet/mineral/sandbags(src, 5)
+	// new /obj/item/storage/box/emptysandbags(src)
 	new /obj/item/card/mining_point_card(src)
 	new /obj/item/shovel(src)
 	new /obj/item/pickaxe/mini(src)
@@ -79,7 +79,7 @@
 		new /obj/item/survivalcapsule/bathroom(src)
 	else
 		new /obj/item/survivalcapsule(src)
-	new /obj/item/assault_pod/mining(src)
+	// new /obj/item/assault_pod/mining(src)
 
 
 /obj/structure/closet/secure_closet/miner/populate_contents_immediate()
@@ -122,6 +122,14 @@
 	circuit = /obj/item/circuitboard/computer/mining_shuttle/common
 	shuttleId = "mining_common"
 	possible_destinations = "commonmining_home;lavaland_common_away;landing_zone_dock;mining_public"
+
+/obj/machinery/computer/shuttle/mining/big
+	shuttleId = "mining_big"
+	possible_destinations = "mining_home;mining_away"
+
+/obj/machinery/computer/shuttle/mining/public
+	shuttleId = "mining_public"
+	possible_destinations = "mining_public_home;mining_public_away"
 
 /obj/docking_port/stationary/mining_home
 	name = "SS13: Mining Dock"

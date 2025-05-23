@@ -22,6 +22,10 @@
 		{
 			"Baseturf": "/turf/open/openspace",
 			"Linkage": null
+		},
+		{
+			"Baseturf": "/turf/open/openspace",
+			"Linkage": null
 		}
 	],
 	"shuttles": {

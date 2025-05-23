@@ -1,17 +1,17 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/effect/turf_decal/box/red,
 /obj/machinery/status_display/ai/directional/west,
-/obj/machinery/suit_storage_unit/mining/eva{
-	access_locked = 1;
-	req_access = list("mining");
-	locked = 1
-	},
-/turf/open/floor/mineral/titanium/yellow,
+/obj/machinery/power/smes/full,
+/obj/structure/cable,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/mining/large)
 "b" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 4
+	},
 /turf/open/floor/plating/airless,
 /area/shuttle/mining/large)
 "d" = (
@@ -20,25 +20,36 @@
 /area/shuttle/mining/large)
 "e" = (
 /obj/machinery/light/small/directional/east,
-/obj/structure/rack,
-/obj/item/storage/toolbox/emergency,
-/obj/item/pickaxe,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/item/gps/mining,
-/obj/item/gps/mining{
-	pixel_x = -4;
-	pixel_y = -2
-	},
 /obj/machinery/requests_console/auto_name/directional/east,
-/turf/open/floor/mineral/titanium/yellow,
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/mining/large)
+"g" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/structure/chair/comfy/shuttle{
+	dir = 8
+	},
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/mineral/titanium,
 /area/shuttle/mining/large)
 "k" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/mineral/titanium/yellow,
+/obj/machinery/atmospherics/components/binary/passive_gate{
+	hide = 1;
+	dir = 4
+	},
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/mining/large)
 "n" = (
 /turf/template_noop,
@@ -46,33 +57,37 @@
 "p" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/mining/large)
+"q" = (
+/obj/structure/ore_box,
+/obj/effect/turf_decal/box,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/mining/large)
 "r" = (
-/obj/structure/rack,
-/obj/item/storage/toolbox/emergency,
-/obj/item/pickaxe,
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/item/gps/mining,
-/obj/item/gps/mining{
-	pixel_x = -4;
-	pixel_y = -2
-	},
-/turf/open/floor/mineral/titanium/yellow,
+/obj/machinery/recharge_station,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/mining/large)
 "s" = (
-/obj/effect/turf_decal/box/red,
-/obj/machinery/suit_storage_unit/mining/eva{
-	access_locked = 1;
-	req_access = list("mining");
-	locked = 1
+/obj/effect/turf_decal/box,
+/obj/machinery/power/terminal{
+	dir = 8
 	},
-/turf/open/floor/mineral/titanium/yellow,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/shuttle/mining/large)
 "t" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/mining/large)
+"x" = (
+/obj/item/radio/intercom/directional/west,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/mining/large)
 "y" = (
@@ -81,30 +96,38 @@
 /area/shuttle/mining/large)
 "z" = (
 /obj/docking_port/mobile{
-	dir = 2
+	dir = 2;
+	shuttle_id = "mining_public"
 	},
 /obj/machinery/door/airlock/survival_pod,
-/obj/effect/mapping_helpers/airlock/autoname,
-/obj/effect/mapping_helpers/airlock/access/any/engineering/external,
-/obj/effect/mapping_helpers/airlock/access/any/medical/general,
-/obj/effect/mapping_helpers/airlock/access/any/supply/mining,
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/vault,
 /area/shuttle/mining/large)
 "B" = (
 /obj/machinery/door/window/survival_pod/left/directional/south{
 	name = "Cockpit";
 	req_access = list("mining")
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/mining/large)
+"C" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/mining/large)
 "D" = (
-/obj/structure/tank_dispenser/oxygen,
 /obj/machinery/status_display/evac/directional/east,
-/turf/open/floor/mineral/titanium/yellow,
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/mining/large)
 "E" = (
-/obj/item/radio/intercom/directional/west,
 /obj/machinery/light/small/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/obj/machinery/status_display/shuttle{
+	pixel_x = -32;
+	shuttle_id = "mining_public"
+	},
+/obj/machinery/camera/autoname/directional/west{
+	network = list("mine")
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/mining/large)
 "G" = (
@@ -115,12 +138,34 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium,
+/area/shuttle/mining/large)
+"L" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/obj/effect/turf_decal/box,
+/obj/machinery/holopad,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/mining/large)
+"M" = (
+/obj/effect/turf_decal/box,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor/iron_dark,
+/area/shuttle/mining/large)
+"O" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
+/turf/open/floor/iron/dark/textured,
 /area/shuttle/mining/large)
 "Q" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/mining/large)
 "S" = (
@@ -139,7 +184,7 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/mining/large)
 "U" = (
-/obj/machinery/computer/shuttle/mining,
+/obj/machinery/computer/shuttle/mining/public,
 /obj/item/radio/intercom/directional/east,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/mineral/titanium/white,
@@ -150,7 +195,21 @@
 	dir = 1
 	},
 /obj/machinery/newscaster/directional/west,
-/turf/open/floor/mineral/titanium/yellow,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/tank/plasma{
+	dir = 4;
+	name = "pressure tank (plasma)"
+	},
+/turf/open/floor/iron/dark/textured,
+/area/shuttle/mining/large)
+"X" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
 /area/shuttle/mining/large)
 "Y" = (
 /obj/structure/chair/comfy/shuttle{
@@ -159,6 +218,8 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/mining/large)
 "Z" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
+/obj/structure/cable,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/mining/large)
 
@@ -175,9 +236,9 @@ n
 "}
 (2,1,1) = {"
 z
-Z
+x
 E
-Z
+L
 Z
 W
 a
@@ -186,14 +247,14 @@ y
 "}
 (3,1,1) = {"
 p
-G
+g
 G
 G
 Q
 k
 s
-b
-y
+q
+C
 "}
 (4,1,1) = {"
 d
@@ -201,10 +262,10 @@ U
 Y
 B
 t
-k
-s
-b
-y
+O
+M
+q
+C
 "}
 (5,1,1) = {"
 p
@@ -214,7 +275,7 @@ S
 r
 e
 D
-b
+X
 y
 "}
 (6,1,1) = {"

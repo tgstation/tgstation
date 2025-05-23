@@ -193,7 +193,7 @@
 			// generate ceiling
 			if(!(istype(new_ceiling, /turf/open/floor/engine/hull/ceiling) || new_ceiling.depth_to_find_baseturf(/turf/open/floor/engine/hull/ceiling)))
 				if(istype(new_ceiling, /turf/open/openspace) || istype(new_ceiling, /turf/open/space/openspace))
-					new_ceiling.place_on_top(/turf/open/floor/engine/hull/ceiling)
+					new_ceiling.place_on_top(/turf/open/floor/engine/hull/ceiling, CHANGETURF_INHERIT_AIR)
 				else
 					new_ceiling.stack_ontop_of_baseturf(/turf/open/openspace, /turf/open/floor/engine/hull/ceiling)
 					new_ceiling.stack_ontop_of_baseturf(/turf/open/space/openspace, /turf/open/floor/engine/hull/ceiling)

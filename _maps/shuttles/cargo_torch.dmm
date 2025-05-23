@@ -3,14 +3,16 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/supply)
 "b" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
+/obj/effect/turf_decal/bot_red,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
+/turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/supply)
 "c" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 4
+/obj/structure/table,
+/obj/item/papercutter,
+/obj/item/folder{
+	pixel_x = 4;
+	pixel_y = 2
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
@@ -19,6 +21,14 @@
 /area/shuttle/supply)
 "e" = (
 /obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"i" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
+/obj/structure/rack,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "l" = (
@@ -28,101 +38,9 @@
 /obj/effect/mapping_helpers/airlock/access/all/supply/general,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/supply)
-"n" = (
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"p" = (
-/obj/machinery/status_display/supply{
-	pixel_y = 32
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"q" = (
-/obj/machinery/power/shuttle_engine/propulsion/burst/left,
-/turf/open/floor/plating/airless,
-/area/shuttle/supply)
-"r" = (
-/obj/docking_port/mobile/supply,
-/obj/effect/mapping_helpers/airlock/access/all/supply/general,
-/obj/machinery/door/airlock/survival_pod,
-/obj/effect/mapping_helpers/airlock/autoname,
-/turf/open/floor/plating,
-/area/shuttle/supply)
-"s" = (
-/obj/structure/table,
-/obj/item/papercutter,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"t" = (
-/obj/machinery/door/poddoor{
-	name = "Loading Door";
-	id = "loadingdoor_cargo_shuttle"
-	},
-/turf/open/floor/plating,
-/area/shuttle/supply)
-"u" = (
-/obj/effect/turf_decal/bot_red,
-/turf/open/floor/mineral/titanium/yellow,
-/area/shuttle/supply)
-"v" = (
-/obj/machinery/power/shuttle_engine/propulsion/burst/right,
-/turf/open/floor/plating/airless,
-/area/shuttle/supply)
-"w" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/shuttle/supply)
-"x" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"y" = (
-/obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/stripes/corner,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"z" = (
-/turf/template_noop,
-/area/template_noop)
-"A" = (
+"o" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
 /obj/structure/rack,
-/obj/item/radio{
-	pixel_y = 2;
-	pixel_x = 3
-	},
-/obj/item/radio,
-/obj/item/multitool,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"F" = (
-/obj/machinery/power/shuttle_engine/heater,
-/obj/structure/window/reinforced/plasma/spawner/directional/north,
-/turf/open/floor/plating/airless,
-/area/shuttle/supply)
-"I" = (
-/turf/closed/wall/mineral/plastitanium/nodiagonal,
-/area/shuttle/supply)
-"J" = (
-/obj/structure/table,
-/obj/item/folder/yellow,
-/obj/item/paper,
-/obj/item/pen,
-/obj/machinery/newscaster/directional/south,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/supply)
-"K" = (
-/obj/item/radio/intercom/directional/north,
-/turf/open/floor/mineral/titanium,
-/area/shuttle/supply)
-"M" = (
-/obj/structure/rack,
-/obj/machinery/light/small/directional/west,
 /obj/item/rack_parts{
 	pixel_y = 6
 	},
@@ -132,14 +50,7 @@
 /obj/item/rack_parts,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
-"N" = (
-/obj/machinery/light/small/directional/south,
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/supply)
-"P" = (
+"p" = (
 /obj/structure/table,
 /obj/item/stamp/granted{
 	pixel_x = -7;
@@ -153,7 +64,107 @@
 	pixel_x = 6
 	},
 /obj/item/pen,
+/obj/machinery/newscaster/directional/west,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"q" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/left,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"r" = (
+/obj/docking_port/mobile/supply,
+/obj/effect/mapping_helpers/airlock/access/all/supply/general,
+/obj/machinery/door/airlock/survival_pod,
+/obj/effect/mapping_helpers/airlock/autoname,
+/turf/open/floor/vault,
+/area/shuttle/supply)
+"t" = (
+/obj/machinery/computer/old{
+	name = "resupply shuttle console";
+	desc = "Can be used to pilot in emergency situations, but normally controlled by a simple-minded AI."
+	},
+/obj/effect/turf_decal/bot_red,
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/supply)
+"u" = (
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/mineral/titanium/yellow,
+/area/shuttle/supply)
+"v" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst/right,
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"w" = (
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/turf/open/floor/plating,
+/area/shuttle/supply)
+"y" = (
+/obj/machinery/status_display/supply{
+	pixel_y = 32
+	},
+/obj/machinery/atmospherics/components/binary/passive_gate{
+	hide = 1;
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"z" = (
+/turf/template_noop,
+/area/template_noop)
+"A" = (
+/obj/item/radio/intercom/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/purple/hidden,
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"F" = (
+/obj/machinery/power/shuttle_engine/heater,
+/obj/structure/window/reinforced/plasma/spawner/directional/north,
+/obj/machinery/atmospherics/components/unary/portables_connector{
+	dir = 1
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/supply)
+"I" = (
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/shuttle/supply)
+"J" = (
+/obj/structure/table,
+/obj/item/folder/yellow,
+/obj/item/paper,
+/obj/item/pen,
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/supply)
+"K" = (
+/obj/machinery/light/small/directional/east,
+/obj/effect/turf_decal/stripes/corner,
+/obj/machinery/button/door/directional/east{
+	id = "loadingdoor_cargo_shuttle";
+	name = "Loading Doors";
+	req_access = list("cargo")
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"M" = (
 /obj/machinery/light/small/directional/west,
+/obj/structure/chair/comfy/shuttle{
+	dir = 4
+	},
+/turf/open/floor/mineral/titanium,
+/area/shuttle/supply)
+"N" = (
+/obj/machinery/light/small/directional/south,
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/supply)
+"P" = (
+/obj/machinery/light/small/directional/west,
+/obj/machinery/atmospherics/components/tank/plasma{
+	dir = 4;
+	name = "pressure tank (plasma)"
+	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
 "Q" = (
@@ -166,23 +177,13 @@
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/supply)
-"V" = (
-/obj/machinery/computer/old,
-/obj/effect/turf_decal/bot_red,
-/obj/item/radio/intercom/directional/east,
-/turf/open/floor/mineral/titanium/white,
-/area/shuttle/supply)
 "Z" = (
-/obj/machinery/button/door/directional/east{
-	id = "loadingdoor_cargo_shuttle";
-	name = "Loading Doors";
-	req_access = list("cargo")
+/obj/machinery/door/poddoor{
+	name = "Loading Door";
+	id = "loadingdoor_cargo_shuttle"
 	},
-/obj/machinery/light/small/directional/east,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/vault,
 /area/shuttle/supply)
 
 (1,1,1) = {"
@@ -192,7 +193,6 @@ w
 a
 a
 a
-w
 w
 a
 a
@@ -204,9 +204,8 @@ a
 a
 J
 a
-s
 P
-c
+p
 c
 M
 a
@@ -215,70 +214,52 @@ q
 "}
 (3,1,1) = {"
 w
-V
+t
 N
 a
-p
+y
 u
 u
 u
-u
-d
+i
 F
 U
 "}
 (4,1,1) = {"
 a
-a
+I
 l
 I
-K
-u
-u
-u
-u
-d
+A
+b
+b
+b
+o
 F
 U
 "}
 (5,1,1) = {"
-w
-A
-b
-n
-d
-u
-u
-u
-u
-d
-F
-U
-"}
-(6,1,1) = {"
 a
-a
-x
-y
+I
+d
+K
 Q
 Q
-Z
-d
 e
+d
 a
 a
 v
 "}
-(7,1,1) = {"
+(6,1,1) = {"
 z
 a
 w
 a
-t
-t
+Z
+Z
 a
 r
-a
 a
 a
 z

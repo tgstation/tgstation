@@ -9,6 +9,9 @@
 /turf/open/floor/engine/hull/ceiling
 	name = "shuttle ceiling plating"
 
+/turf/open/floor/engine/hull/ceiling/RemoveLattice()
+	return
+
 /turf/open/floor/engine/hull/reinforced
 	name = "exterior reinforced hull plating"
 	desc = "Extremely sturdy exterior hull plating that separates you from the uncaring vacuum of space."

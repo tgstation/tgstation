@@ -56,6 +56,10 @@
 	suffix = "torch"
 	name = "mining shuttle (Torch)"
 
+/datum/map_template/shuttle/mining/torch/big
+	suffix = "torch_big"
+	name = "mining shuttle (Torch Big)"
+
 // MINING COMMON SHUTTLES
 /datum/map_template/shuttle/mining_common
 	port_id = "mining_common"

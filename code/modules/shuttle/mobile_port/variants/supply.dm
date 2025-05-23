@@ -50,6 +50,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	port_direction = EAST
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 
+	// Items in the shuttle at round start won't be sold so me (the mapper) can put decorations on it
+	var/has_saved_items = FALSE
+	var/list/saved_items_refs
+
 /obj/docking_port/mobile/supply/register()
 	. = ..()
 	SSshuttle.supply = src
@@ -127,7 +131,28 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	if(. != DOCKING_SUCCESS)
 		return
 	if(getDockedId() == "cargo_away") // Sell when we get home
+		if(!has_saved_items)
+			save_items()
+			has_saved_items = TRUE
 		sell()
+
+/obj/docking_port/mobile/supply/proc/get_exporting_items()
+	. = list()
+	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
+		for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
+			for(var/turf/shuttle_turf as anything in zlevel_turfs)
+				for(var/atom/movable/exporting_atom in shuttle_turf)
+					if(iseyemob(exporting_atom))
+						continue
+					if(exporting_atom.anchored)
+						continue
+					if(REF(exporting_atom) in saved_items_refs)
+						continue
+					. += exporting_atom
+
+/obj/docking_port/mobile/supply/proc/save_items()
+	for(var/atom/movable/exporting_atom as anything in get_exporting_items())
+		LAZYADD(saved_items_refs, REF(exporting_atom))
 
 /obj/docking_port/mobile/supply/proc/buy()
 	SEND_SIGNAL(SSshuttle, COMSIG_SUPPLY_SHUTTLE_BUY)
@@ -275,15 +300,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/datum/export_report/report = new
 
-	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for (var/list/zlevel_turfs as anything in shuttle_area.get_zlevel_turf_lists())
-			for(var/turf/shuttle_turf as anything in zlevel_turfs)
-				for(var/atom/movable/exporting_atom in shuttle_turf)
-					if(iseyemob(exporting_atom))
-						continue
-					if(exporting_atom.anchored)
-						continue
-					export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)
+	for(var/atom/movable/exporting_atom as anything in get_exporting_items())
+		export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)
 
 	if(report.exported_atoms)
 		report.exported_atoms += "." //ugh

@@ -120,10 +120,10 @@
 	if(body_position == STANDING_UP)
 		if(prob(60))
 			var/damage_for_each_leg = round((incoming_damage / 2) * damage_softening_multiplier)
-			apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 2.5 * levels)
-			apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 2.5 * levels)
+			apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = 10 * levels)
+			apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = 10 * levels)
 		else
-			apply_damage(incoming_damage, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), wound_bonus = 5 * levels)
+			apply_damage(incoming_damage, BRUTE, pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG), wound_bonus = 15 * levels)
 	else
 		apply_damage(incoming_damage, BRUTE, spread_damage = TRUE)
 
