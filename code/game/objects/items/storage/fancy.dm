@@ -320,6 +320,13 @@
 	base_icon_state = "robustg"
 	spawn_type = /obj/item/cigarette/robustgold
 
+/obj/item/storage/fancy/cigarettes/cigpack_greytide
+	name = "\improper Grey Menthols"
+	desc = "A cultured pack of thin, grey smokes."
+	icon_state = "greytide"
+	base_icon_state = "greytide"
+	spawn_type = /obj/item/cigarette/greytide
+
 /obj/item/storage/fancy/cigarettes/cigpack_carp
 	name = "\improper Carp Classic packet"
 	desc = "Since 2313."
