@@ -93,8 +93,7 @@
 		cell = new(src)
 	if(!dead_cell)
 		cell.give(cell.maxcharge)
-	if(cell && resistance_flags & INDESTRUCTIBLE)
-		cell.resistance_flags |= INDESTRUCTIBLE
+	cell.resistance_flags |= BOMB_PROOF
 	update_ammo_types()
 	recharge_newshot(TRUE)
 	if(selfcharge)
