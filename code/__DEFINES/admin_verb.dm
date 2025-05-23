@@ -38,6 +38,7 @@
 	}\
 	__store_cost.usage_at_end = TICK_USAGE; \
 	__store_cost.finished_on = world.time; \
+	__store_cost.enter_average(); \
 }; \
 \
 /datum/admin_verb/##verb_path_name/__avd_do_verb(client/user, ##verb_args)

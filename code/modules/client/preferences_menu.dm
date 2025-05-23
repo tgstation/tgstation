@@ -13,6 +13,7 @@
 			__open_preferences_window(PREFERENCE_TAB_CHARACTER_PREFERENCES)
 		__store_cost.usage_at_end = TICK_USAGE
 		__store_cost.finished_on = world.time
+		__store_cost.enter_average()
 
 /datum/verbs/menu/Preferences/verb/open_game_preferences()
 	set name = "Open Game Preferences"
@@ -27,6 +28,7 @@
 			__open_preferences_window(PREFERENCE_TAB_GAME_PREFERENCES)
 		__store_cost.usage_at_end = TICK_USAGE
 		__store_cost.finished_on = world.time
+		__store_cost.enter_average()
 
 // I am sorry. I am so sorry.
 /proc/__open_preferences_window(preference_tab)

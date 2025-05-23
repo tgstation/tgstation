@@ -174,6 +174,7 @@ OVERRIDE_INTERNAL_VERB(/client, MouseUp, datum/object, location, control, params
 
 		store_cost?.usage_at_end = TICK_USAGE
 		store_cost?.finished_on = world.time
+		store_cost?.enter_average()
 
 /client/proc/__MouseDrag(atom/src_object, atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
 	var/list/modifiers = params2list(params)
@@ -216,6 +217,7 @@ OVERRIDE_INTERNAL_VERB(/client, MouseUp, datum/object, location, control, params
 
 		store_cost?.usage_at_end = TICK_USAGE
 		store_cost?.finished_on = world.time
+		store_cost?.enter_average()
 
 #undef LENIENCY_DISTANCE
 #undef LENIENCY_TIME

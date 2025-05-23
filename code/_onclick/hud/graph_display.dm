@@ -85,7 +85,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_display)
 
 /atom/movable/screen/graph_display/bars
 	/// The "root atom" of each bar in our pool. ordered first to last
-	var/list/atom/movable/screen/graph_part/bar/bars = list()
+	var/list/atom/movable/screen/graph_part/bar/bars
+	/// The type of bar to generate
+	var/bar_type = /atom/movable/screen/graph_part/bar/single_segment
 	/// Mask atom that is used to cut out our displayed bars
 	var/atom/movable/screen/graph_part/bar_mask/global_mask
 	/// The render source used to mask out the bars on this graph
@@ -96,20 +98,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_display)
 	var/bar_distance = 0
 	/// How wide each bar should be, options depend on sprites (2, 6, 8)
 	var/bar_resolution = 2
-	/// Freeze the graph, preventing any changes to our bars
-	var/freeze = FALSE
+	/// Is our graph frozen, preventing any changes to our bars
+	var/frozen = FALSE
 
 /atom/movable/screen/graph_display/bars/setup()
 	. = ..()
 	bar_mask_source = "*graph_[REF(src)]_mask"
-	if(bar_count == -1)
-		bar_count = ROUND_UP(width / bar_distance)
-	if(bar_distance == -1)
-		bar_distance = ROUND_UP(width / bar_count)
-	for(var/i in 1 to bar_count)
-		var/atom/movable/screen/graph_part/bar/lad = generate_bar(i, bar_count)
-		position_root_bar(lad, i, bar_count)
-		bars += lad
+	setup_bars()
 
 	global_mask = new(null, null, src, height + 2)
 	global_mask.render_target = bar_mask_source
@@ -122,14 +117,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_display)
 
 /// Clears our values to nothing, resets the graph
 /atom/movable/screen/graph_display/bars/proc/clear_values()
-	if(freeze)
+	if(frozen)
 		return
 	for(var/atom/movable/screen/graph_part/bar/root_bar as anything in bars)
-		root_bar.refresh_bar(0)
+		root_bar.make_default()
 
 /// Pushes a value onto the bar stack
+/// Returns the bar pushed forward
 /atom/movable/screen/graph_display/bars/proc/push_value(value)
-	if(freeze)
+	if(frozen)
 		return
 	var/atom/movable/screen/graph_part/bar/bring_forward = bars[length(bars)]
 	bars.Remove(bring_forward)
@@ -139,26 +135,33 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_display)
 		var/atom/movable/screen/graph_part/bar/redraw = bars[i]
 		position_root_bar(redraw, i, length(bars))
 	bring_forward.refresh_bar(value)
+	return bring_forward
 
 /atom/movable/screen/graph_display/bars/proc/position_root_bar(atom/movable/screen/graph_part/bar/place, count, total)
 	place.pixel_x = bar_distance * count
-	place.pixel_y = GRAPH_EDGE_SIZE
+
+/atom/movable/screen/graph_display/bars/proc/setup_bars()
+	if(length(bars))
+		wipe_bars()
+	bars = list()
+	if(bar_count == -1)
+		bar_count = ROUND_UP(width / bar_distance)
+	if(bar_distance == -1)
+		bar_distance = ROUND_UP(width / bar_count)
+	for(var/i in 1 to bar_count)
+		var/atom/movable/screen/graph_part/bar/lad = generate_bar(i, bar_count)
+		position_root_bar(lad, i, bar_count)
+		lad.make_default()
+		bars += lad
+	set_frozen(frozen)
+
+/atom/movable/screen/graph_display/bars/proc/wipe_bars()
+	QDEL_LIST(bars)
 
 /atom/movable/screen/graph_display/bars/proc/generate_bar(count, total)
-	var/atom/movable/screen/graph_part/bar/bar_up = new(null, null, src, bar_resolution, height, bar_mask_source)
+	var/atom/movable/screen/graph_part/bar/bar_up = new bar_type(null, null, src, bar_resolution, height, bar_mask_source)
 	src.vis_contents += bar_up
 	bar_up.setDir(NORTH)
-
-	var/static/list/test_gradient = list(
-		0.0, "#FF0000",
-		0.2, "#FF8000",
-		0.4, "#f0f000",
-		0.6, "#00FF00",
-		0.8, "#46daff",
-		1.0, "#2A72AA",
-	)
-	var/new_color = gradient(test_gradient, clamp(count / total, 0, 1))
-	bar_up.refresh_bar(LERP(10, height, count / total), new_color)
 	return bar_up
 
 /// Places a right (east to west) threshold. It will stick itself some distance up, and then extend to the right
@@ -168,6 +171,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_display)
 	cutoff.pixel_x = GRAPH_EDGE_SIZE
 	cutoff.setDir(WEST)
 	return cutoff
+
+/atom/movable/screen/graph_display/bars/proc/set_frozen(frozen)
+	if(src.frozen == frozen)
+		return FALSE
+	src.frozen = frozen
+	if(!src.frozen)
+		clear_values()
+		closeToolTip(usr)
+	return TRUE
 
 INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 /atom/movable/screen/graph_part
@@ -251,6 +263,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 /atom/movable/screen/graph_part/bar
 	icon_state = null
 	appearance_flags = KEEP_TOGETHER
+	pixel_y = GRAPH_EDGE_SIZE
 	/// Cached MA holding all the bars in our display, please don't copy this pattern
 	var/mutable_appearance/bar_chain
 	/// Cached MA holding all the borders in our display, please don't copy this pattern
@@ -258,17 +271,11 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 
 	/// Resolution of the bar to display (Current options: 2, 6, 8)
 	var/resolution = 2
-	/// The value this bar is currently holding
-	var/bar_value
-	/// What render source are we alpha masking against?
-	var/filter_source
 
 /atom/movable/screen/graph_part/bar/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/graph_display/parent_graph, resolution, graph_height, filter_source)
 	. = ..()
 	if(resolution)
 		src.resolution = resolution
-	src.filter_source = filter_source
-	add_filter("top_mask", 1, alpha_mask_filter(y = graph_height, render_source = filter_source, flags = MASK_INVERSE))
 	build_chains(graph_height)
 	update_appearance()
 
@@ -284,19 +291,198 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 		outer_nut.pixel_y = i * ICON_SIZE_Y
 		border_chain.overlays += outer_nut
 
-/atom/movable/screen/graph_part/bar/proc/refresh_bar(bar_value)
-	src.bar_value = bar_value
-	update_appearance()
+/atom/movable/screen/graph_part/bar/proc/refresh_bar(value)
+	return
 
-/atom/movable/screen/graph_part/bar/update_icon(updates)
+/atom/movable/screen/graph_part/bar/proc/make_default()
+	return
+
+/atom/movable/screen/graph_part/bar/proc/get_tooltip_title()
+	return ""
+
+/atom/movable/screen/graph_part/bar/proc/get_tooltip_content()
+	return ""
+
+/atom/movable/screen/graph_part/bar/proc/openTip(control, params, user)
+	var/screen_location = LAZYACCESS(params2list(params), "screen-loc") || "CENTER,CENTER"
+	var/title = get_tooltip_title()
+	var/content = get_tooltip_content()
+	openToolTip(user, screen_location, params, title = title, content = content, theme = "")
+
+/atom/movable/screen/graph_part/bar/MouseEntered(location, control, params)
 	. = ..()
-	modify_filter("top_mask", alpha_mask_filter(y = parent_graph.value_to_height(bar_value)))
+	if(usr.client.prefs.read_preference(/datum/preference/toggle/enable_tooltips))
+		openTip(control, params, usr)
+
+/atom/movable/screen/graph_part/bar/MouseExited()
+	closeToolTip(usr)
+	return ..()
 
 /atom/movable/screen/graph_part/bar/update_overlays()
 	. = ..()
-	bar_chain.color = parent_graph.value_to_color(bar_value)
 	. += bar_chain
 	. += border_chain
+
+/atom/movable/screen/graph_part/bar/single_segment
+	/// The value this bar is currently holding
+	var/bar_value
+	/// What render source are we alpha masking against?
+	var/filter_source
+
+/atom/movable/screen/graph_part/bar/single_segment/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/graph_display/parent_graph, resolution, graph_height, filter_source)
+	. = ..()
+	src.filter_source = filter_source
+	add_filter("top_mask", 1, alpha_mask_filter(y = graph_height, render_source = filter_source, flags = MASK_INVERSE))
+	update_appearance()
+
+/atom/movable/screen/graph_part/bar/single_segment/refresh_bar(value)
+	src.bar_value = value
+	update_appearance()
+
+/atom/movable/screen/graph_part/bar/single_segment/make_default()
+	refresh_bar(0)
+
+/atom/movable/screen/graph_part/bar/single_segment/update_icon(updates)
+	. = ..()
+	modify_filter("top_mask", alpha_mask_filter(y = parent_graph.value_to_height(bar_value)))
+
+/atom/movable/screen/graph_part/bar/single_segment/update_overlays()
+	bar_chain.color = parent_graph.value_to_color(bar_value)
+	return ..()
+
+/atom/movable/screen/graph_part/bar/single_segment/mc
+	var/list/subsystem_info = list()
+
+/atom/movable/screen/graph_part/bar/single_segment/mc/refresh_bar(list/value)
+	subsystem_info = value[2]
+	return ..(value[1])
+
+/atom/movable/screen/graph_part/bar/single_segment/mc/make_default()
+	refresh_bar(list(0, list()))
+
+/atom/movable/screen/graph_part/bar/single_segment/mc/get_tooltip_title()
+	return "Subsystem Cost Breakdown"
+
+/atom/movable/screen/graph_part/bar/single_segment/mc/get_tooltip_content()
+	var/list/visual_output = list()
+	var/summed_usage = 0
+	var/misc_usage = 0
+	for(var/subsystem_path as anything in subsystem_info)
+		var/subsystem_usage = subsystem_info[subsystem_path]
+		summed_usage += subsystem_usage
+		if(subsystem_usage >= 1)
+			var/trimmed_path = replacetext("[subsystem_path]", "/datum/controller/subsystem/", "")
+			visual_output += "<b>[trimmed_path]</b> -> ([subsystem_usage * world.tick_lag]ms)"
+		else
+			misc_usage += subsystem_usage
+	visual_output += "<b>Misc</b> -> ([misc_usage * world.tick_lag]ms)"
+	visual_output += "<b>Internal</b> -> ([(bar_value - summed_usage) * world.tick_lag]ms)"
+	return visual_output.Join("<br>")
+
+/atom/movable/screen/graph_part/bar/multi_segment
+	/// List of list(floor, celing) segments for this bar
+	var/list/bar_boundaries = list()
+	/// Source atom we will use to hold all our masks
+	var/atom/movable/screen/graph_part/bar_mask/holder_mask
+	/// Render source for our holder mask
+	var/bar_mask_source
+
+/atom/movable/screen/graph_part/bar/multi_segment/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/graph_display/parent_graph, resolution, graph_height, filter_source)
+	bar_mask_source = "*segment_[REF(src)]_mask"
+	holder_mask = new(null, null, src, 0)
+	holder_mask.icon_state = ""
+	holder_mask.render_target = bar_mask_source
+	// For consistent positioning? unsure
+	parent_graph.vis_contents += holder_mask
+	// Need to shift things down for... some reason, unsure why
+	add_filter("segment_masks", 1, alpha_mask_filter(y = -16, render_source = bar_mask_source))
+	return ..()
+
+/atom/movable/screen/graph_part/bar/multi_segment/Destroy()
+	QDEL_NULL(holder_mask)
+	return ..()
+
+/atom/movable/screen/graph_part/bar/multi_segment/refresh_bar(list/value)
+	bar_boundaries = value.Copy()
+	update_appearance()
+
+/atom/movable/screen/graph_part/bar/multi_segment/make_default()
+	refresh_bar(list())
+
+/atom/movable/screen/graph_part/bar/multi_segment/update_icon(updates)
+	// hackneed warning wee wooo weeee wooo
+	var/list/new_masks = list()
+	var/total_cost = 0
+	for(var/list/boundary in bar_boundaries)
+		var/boundary_cost = boundary[2] - boundary[1]
+		total_cost += boundary_cost
+		var/floor = parent_graph.value_to_height(boundary[1])
+		var/height = parent_graph.value_to_height(boundary_cost)
+		// For visibility, so small entries do not go unnoticed
+		height = max(height, 3)
+		var/matrix/mask_transform = matrix()
+		mask_transform.Scale(1, height / ICON_SIZE_Y)
+		var/mutable_appearance/mask_piece = mutable_appearance(icon, holder_mask::icon_state)
+		mask_piece.transform = mask_transform
+		mask_piece.pixel_y = floor + height / 2 // scale needs to be shifted up by half
+		new_masks += mask_piece
+	holder_mask.overlays = new_masks
+	bar_chain.color = parent_graph.value_to_color(total_cost)
+	return ..()
+
+/atom/movable/screen/graph_part/bar/multi_segment/verbs
+	var/list/verb_info = list()
+
+/atom/movable/screen/graph_part/bar/multi_segment/verbs/refresh_bar(list/value)
+	verb_info = value[2]
+	return ..(value[1])
+
+/atom/movable/screen/graph_part/bar/multi_segment/verbs/make_default()
+	refresh_bar(list(list(), list()))
+
+/atom/movable/screen/graph_part/bar/multi_segment/verbs/update_icon()
+	var/total_cost = 0
+	for(var/list/boundary in bar_boundaries)
+		var/verb_cost = boundary[2] - boundary[1]
+		total_cost += verb_cost
+	bar_chain.color = parent_graph.value_to_color(total_cost)
+	return ..()
+
+/atom/movable/screen/graph_part/bar/multi_segment/verbs/get_tooltip_title()
+	return "Verb Cost Breakdown"
+
+/atom/movable/screen/graph_part/bar/multi_segment/verbs/get_tooltip_content()
+	var/list/visual_output = list()
+	for(var/proc_path as anything in verb_info)
+		visual_output += "<b>[proc_path]</b> -> ([verb_info[proc_path] * world.tick_lag]ms)"
+	return visual_output.Join("<br>")
+
+/atom/movable/screen/graph_part/bar/multi_segment/tick
+	var/list/tick_segments = list()
+
+/atom/movable/screen/graph_part/bar/multi_segment/tick/refresh_bar(list/value)
+	tick_segments = value[2]
+	return ..(value[1])
+
+/atom/movable/screen/graph_part/bar/multi_segment/tick/make_default()
+	refresh_bar(list(list(), list()))
+
+/atom/movable/screen/graph_part/bar/multi_segment/tick/update_icon()
+	var/max_cost = 0
+	for(var/list/boundary in bar_boundaries)
+		var/cost = boundary[2] - boundary[1]
+		max_cost = max(cost, max_cost)
+	bar_chain.color = parent_graph.value_to_color(max_cost)
+	return ..()
+
+/atom/movable/screen/graph_part/bar/multi_segment/tick/get_tooltip_title()
+	return "Full Tick Breakdown"
+
+/atom/movable/screen/graph_part/bar/multi_segment/tick/get_tooltip_content()
+	var/list/visual_output = list()
+	for(var/segment as anything in tick_segments)
+		visual_output += "<b>[segment]</b> -> ([tick_segments[segment] * world.tick_lag]ms)"
+	return visual_output.Join("<br>")
 
 /atom/movable/screen/graph_part/bar_mask
 	icon_state = "bar_mask"
@@ -356,30 +542,65 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	display_mode = new_display_mode
 	mc_overtime_line.alpha = 0
 	consumption_limit_line.alpha = 0
+	bar_type = /atom/movable/screen/graph_part/bar/single_segment
 	switch(display_mode)
-		if(USAGE_DISPLAY_CPU)
-			consumption_limit_line.alpha = 255
 		if(USAGE_DISPLAY_MC)
 			mc_overtime_line.alpha = 255
-	clear_values()
+			bar_type = /atom/movable/screen/graph_part/bar/single_segment/mc
+		if(USAGE_DISPLAY_PRE_TICK)
+			mc_overtime_line.alpha = 255
+		if(USAGE_DISPLAY_PRE_VERBS)
+			consumption_limit_line.alpha = 255
+		if(USAGE_DISPLAY_VERB_TIMING)
+			consumption_limit_line.alpha = 255
+			bar_type = /atom/movable/screen/graph_part/bar/multi_segment/verbs
+		if(USAGE_DISPLAY_COMPLETE_CPU)
+			consumption_limit_line.alpha = 255
+			bar_type = /atom/movable/screen/graph_part/bar/multi_segment/tick
+	setup_bars()
+	set_frozen(FALSE)
 
 /atom/movable/screen/graph_display/bars/cpu_display/proc/refresh_thresholds()
-	if(freeze)
+	if(frozen)
 		return
 	var/datum/tick_holder/tick_info = GLOB.tick_info
-	var/list/cpu_values = tick_info.cpu_values
-	var/list/pre_tick_cpu_usage = tick_info.pre_tick_cpu_usage
-	var/list/tick_cpu_usage = tick_info.tick_cpu_usage
 	var/last_index = tick_info.cpu_index
 	switch(display_mode)
-		if(USAGE_DISPLAY_CPU)
-			push_value(cpu_values[last_index])
-			consumption_limit_line.set_height(GLOB.corrective_cpu_threshold)
+		if(USAGE_DISPLAY_EARLY_SLEEPERS)
+			push_value(tick_info.mc_start_usage[last_index])
 		if(USAGE_DISPLAY_MC)
-			push_value(pre_tick_cpu_usage[last_index])
+			push_value(list(tick_info.mc_usage[last_index], tick_info.last_subsystem_usages.Copy()))
+			mc_overtime_line.set_height(TICK_LIMIT_RUNNING - tick_info.mc_start_usage[last_index])
+		if(USAGE_DISPLAY_LATE_SLEEPERS)
+			push_value(tick_info.post_mc_usage[last_index])
+		if(USAGE_DISPLAY_SLEEPERS)
+			push_value(tick_info.mc_start_usage[last_index] + tick_info.post_mc_usage[last_index])
+		if(USAGE_DISPLAY_PRE_TICK)
+			push_value(tick_info.pre_tick_cpu_usage[last_index])
 			mc_overtime_line.set_height(TICK_LIMIT_RUNNING)
-		if(USAGE_DISPLAY_POST_TICK)
-			push_value(cpu_values[last_index] - tick_cpu_usage[last_index])
+		if(USAGE_DISPLAY_MAPTICK)
+			push_value(tick_info.maptick_usage[last_index])
+		if(USAGE_DISPLAY_PRE_VERBS)
+			push_value(tick_info.cpu_values[last_index])
+			consumption_limit_line.set_height(GLOB.corrective_cpu_threshold)
+		if(USAGE_DISPLAY_VERBS)
+			push_value(tick_info.verb_cost[last_index])
+		if(USAGE_DISPLAY_VERB_TIMING)
+			push_value(tick_info.verb_timings[last_index])
+			consumption_limit_line.set_height(GLOB.corrective_cpu_threshold)
+		if(USAGE_DISPLAY_COMPLETE_CPU)
+			var/list/breakdown_info = list()
+			var/list/boundaries = list()
+			boundaries += list(list(0, tick_info.cpu_values[last_index]))
+			boundaries += tick_info.verb_timings[last_index][1]
+			breakdown_info["Early Sleepers"] = tick_info.mc_start_usage[last_index]
+			breakdown_info["MC"] = tick_info.mc_usage[last_index]
+			breakdown_info["Late Sleepers"] = tick_info.post_mc_usage[last_index]
+			breakdown_info["Tick() Usage"] = tick_info.tick_cpu_usage[last_index] - tick_info.pre_tick_cpu_usage[last_index]
+			breakdown_info["Maptick"] = tick_info.maptick_usage[last_index]
+			breakdown_info["Verbs"] = tick_info.verb_cost[last_index]
+			push_value(list(boundaries, breakdown_info))
+			consumption_limit_line.set_height(GLOB.corrective_cpu_threshold)
 
 /atom/movable/screen/graph_display/bars/cpu_display/proc/set_max_display(max_displayable_cpu)
 	src.max_displayable_cpu = max_displayable_cpu
@@ -388,6 +609,17 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	consumption_limit_line.recalculate_position()
 	for(var/atom/movable/screen/graph_part/bar/displayed_bar as anything in bars)
 		displayed_bar.update_appearance()
+
+/atom/movable/screen/graph_display/bars/cpu_display/set_frozen(frozen)
+	. = ..()
+	if(src.frozen)
+		for(var/atom/movable/screen/graph_part/bar/displayed_bar as anything in bars)
+			displayed_bar.mouse_opacity = MOUSE_OPACITY_ICON
+			displayed_bar.appearance_flags |= KEEP_APART
+	else
+		for(var/atom/movable/screen/graph_part/bar/displayed_bar as anything in bars)
+			displayed_bar.mouse_opacity = displayed_bar::mouse_opacity
+			displayed_bar.appearance_flags &= ~KEEP_APART
 
 /atom/movable/screen/graph_display/bars/cpu_display/value_to_height(value)
 	return LERP(0, height, clamp(value / max_displayable_cpu, 0, 1))

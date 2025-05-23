@@ -62,6 +62,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 		store_cost?.usage_at_end = TICK_USAGE
 		store_cost?.finished_on = world.time
+		store_cost?.enter_average()
 
 /// Wrapper around click content
 /// Returns TRUE if successful, FALSE if blocked, if anything else is returned it will be returned in the parent
@@ -885,6 +886,7 @@ OVERRIDE_INTERNAL_VERB(/client, AllowUpload, filename, filelength)
 
 		store_cost?.usage_at_end = TICK_USAGE
 		store_cost?.finished_on = world.time
+		store_cost?.enter_average()
 
 /// Wrapper around click content
 /// Returns TRUE if successful, FALSE if blocked

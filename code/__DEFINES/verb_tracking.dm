@@ -17,6 +17,7 @@
 		}\
 		__store_cost.usage_at_end = TICK_USAGE; \
 		__store_cost.finished_on = world.time; \
+		__store_cost.enter_average(); \
 	} \
 }; \
 \
@@ -52,6 +53,7 @@
 		}\
 		__store_cost.usage_at_end = TICK_USAGE; \
 		__store_cost.finished_on = world.time; \
+		__store_cost.enter_average(); \
 	} \
 }; \
 \
@@ -64,7 +66,6 @@
 	set desc = ##verb_desc; \
 	set hidden = ##verb_hidden;  \
 	set category = ##verb_category; \
-	SHOULD_NOT_OVERRIDE(TRUE); \
 	if(caller) { \
 		__##verb_proc_name(arglist(args)); \
 	} else { \
@@ -74,6 +75,7 @@
 		}\
 		__store_cost.usage_at_end = TICK_USAGE; \
 		__store_cost.finished_on = world.time; \
+		__store_cost.enter_average(); \
 	} \
 }; \
 \
@@ -91,31 +93,31 @@
 		}\
 		__store_cost.usage_at_end = TICK_USAGE; \
 		__store_cost.finished_on = world.time; \
+		__store_cost.enter_average(); \
 	} \
 }; \
 \
 ##parent_path/proc/__##verb_proc_name(##verb_args)
 
+/// List of verb path -> a running average of its cost
+GLOBAL_LIST_EMPTY(average_verb_cost)
+
 GLOBAL_LIST_EMPTY(verb_trackers_this_tick)
 
 /datum/verb_cost_tracker
 	var/proc_name
-	var/proc_type
-	var/file
-	var/line
-	var/string_args
-	var/datum/weakref/detector_weakref
 	var/useage_at_start = 0
 	var/usage_at_end = 0
 	var/invoked_on = -1
 	var/finished_on = -1
 
 /datum/verb_cost_tracker/New(useage_at_start, callee/proc_info)
-	src.useage_at_start = useage_at_start
 	proc_name = proc_info.proc
-	proc_type = proc_info.type
-	file = proc_info.file
-	line = proc_info.line
+	src.useage_at_start = useage_at_start
 	invoked_on = world.time
-	string_args = json_encode(proc_info.args)
 	GLOB.verb_trackers_this_tick += src
+
+/datum/verb_cost_tracker/proc/enter_average(category)
+	if(!category)
+		category = proc_name
+	GLOB.average_verb_cost[proc_name] = MC_AVERAGE(GLOB.average_verb_cost[category], usage_at_end - useage_at_start)

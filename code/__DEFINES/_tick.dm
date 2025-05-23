@@ -6,7 +6,7 @@
 #define TICK_VERB_RESERVE 4
 #define TICK_EXPECTED_SAFE_MAX (100 - TICK_BYOND_RESERVE - TICK_VERB_RESERVE - MAPTICK_LAST_INTERNAL_TICK_USAGE)
 /// Tick limit while running normally
-#define TICK_LIMIT_RUNNING (max(GLOB.use_old_mc_limit ? TICK_EXPECTED_SAFE_MAX : GLOB.corrective_cpu_threshold, MAPTICK_MC_MIN_RESERVE))
+#define TICK_LIMIT_RUNNING (max(GLOB.use_new_mc_limit ? GLOB.corrective_cpu_threshold : TICK_EXPECTED_SAFE_MAX, MAPTICK_MC_MIN_RESERVE))
 /// Tick limit used to resume things in stoplag
 #define TICK_LIMIT_TO_RUN 70
 /// Tick limit for MC while running
@@ -35,6 +35,18 @@
 /// Size of the moving average byond stores {map_)cpu values in
 #define INTERNAL_CPU_SIZE 16
 
-#define USAGE_DISPLAY_CPU "CPU"
-#define USAGE_DISPLAY_MC "Before Tick"
-#define USAGE_DISPLAY_POST_TICK "Maptick + Verbs"
+#define TICK_INFO_SIZE 30
+#define FORMAT_CPU(cpu) round(cpu, 0.01)
+#define TICK_INFO_TICK2INDEX(tick) ((round(tick, 1) % TICK_INFO_SIZE) + 1)
+#define TICK_INFO_INDEX(...) TICK_INFO_TICK2INDEX(DS2TICKS(world.time))
+
+#define USAGE_DISPLAY_EARLY_SLEEPERS "Early Sleep"
+#define USAGE_DISPLAY_MC "MC"
+#define USAGE_DISPLAY_LATE_SLEEPERS "Late Sleep"
+#define USAGE_DISPLAY_SLEEPERS "Total Sleep"
+#define USAGE_DISPLAY_PRE_TICK "Before Tick"
+#define USAGE_DISPLAY_MAPTICK "Maptick"
+#define USAGE_DISPLAY_PRE_VERBS "Normal CPU"
+#define USAGE_DISPLAY_VERBS "Verbs"
+#define USAGE_DISPLAY_VERB_TIMING "Verb Timing"
+#define USAGE_DISPLAY_COMPLETE_CPU "Complete CPU"
