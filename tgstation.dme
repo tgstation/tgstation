@@ -4165,6 +4165,7 @@
 #include "code\modules\events\dust.dm"
 #include "code\modules\events\earthquake.dm"
 #include "code\modules\events\electrical_storm.dm"
+#include "code\modules\events\fake_assault.dm"
 #include "code\modules\events\fake_virus.dm"
 #include "code\modules\events\false_alarm.dm"
 #include "code\modules\events\gravity_generator_blackout.dm"
