@@ -1175,7 +1175,7 @@
 		return .
 	if((tool.item_flags & ABSTRACT) || (user.combat_mode && !(tool.item_flags & NOBLUDGEON)))
 		return NONE
-	if(user.transferItemToLoc(tool, drop_location(), silent = FALSE))
+	if(user.transfer_item_to_turf(tool, get_turf(src), silent = FALSE))
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
