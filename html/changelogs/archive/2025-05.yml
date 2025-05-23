@@ -552,3 +552,65 @@
       stripping items.
   - balance: Floating is slightly less lethal, especially if you are starting to drown.
   - bugfix: Fixes a runtime caused by the exercised status effect.
+2025-05-22:
+  00-Steven:
+  - bugfix: The medical notes input box actually takes up the full window, instead
+      of only half of it.
+  - bugfix: NTNRC chat input actually works.
+  JohnFulpWillard:
+  - bugfix: Toy Cicatrix, Toy Gigas and the Codex Cicatrix itself all now fits on
+      bookshelves.
+  LT3:
+  - image: Tram information plate is mounted properly on the wall again
+  Melbert:
+  - rscadd: Adding Space Cleaner or Water to a rag will consume it as you clean to
+      keep the rag fresher for longer.
+  - rscadd: You can spray a rag with a spray bottle directly to transfer reagents
+      over.
+  - admin: VV stops you from offering control of a ghost to ghosts
+  OrbisAnima:
+  - rscadd: To future proof and in case we get long rounds, all limited fishing items
+      regenerate after 30 minutes if they dont have a regeneration time.
+  - rscadd: Skeleton keys, Tendril chests, Runite can be found in Lava and Plasma
+      lakes now, although they are rare!
+  - balance: Explosions and NPC's no longer nets you uniques from fishing... Fish
+      if you want them!
+  Pickle-Coding:
+  - rscadd: Antinoblium converts other gases into antinoblium when above 20 Kelvin.
+  - balance: Firelocks close when they detect antinoblium.
+  - balance: Antinoblium irradiates people upon skin contact.
+  carpotoxin:
+  - rscadd: Adds Narcolepsy as a -8 negative quirk!
+  - refactor: Slightly adjusts the logic of the narcolepsy trauma
+  - balance: The narcolepsy trauma its symptoms can now be softened by being caffeinated,
+      and modafinil or synaptizine suppress it entirely
+2025-05-23:
+  00-Steven:
+  - qol: Added screentips for shredding gauze into cloth
+  - bugfix: Lidless coffee cups from the impressa coffeemaker or somesuch no longer
+      take two clicks to put a lid on them.
+  - qol: Added screentips for toggling coffee cup lids.
+  Absolucy:
+  - bugfix: Prosopagnosia no longer allows you to somehow recognize people in infiltrator
+      modsuits.
+  Aliceee2ch:
+  - bugfix: Now if you are not near the console the disk will drop in its place instead
+      of your location
+  Cirrial:
+  - rscadd: Gorillas can now throw things and offer items to players.
+  - refactor: Moved throwing and offering item code to be based on living mobs, not
+      just carbon mobs.
+  Melbert:
+  - bugfix: You (can't) baton furniture
+  NamelessFairy:
+  - qol: Inspecting a hand of cards now tells you what cards you can see in it.
+  - bugfix: Adding cards to a hand no longer automatically flips them.
+  Retrino:
+  - qol: moved some xenobiology equipment downstairs on icebox
+  Sothanforax:
+  - rscadd: Added the ability to jam your coworkers into washing machines
+  jlsnow301:
+  - bugfix: The produce console's layout has been adjusted a bit for an improved ordering
+      experience.
+  sqnztb:
+  - rscadd: 'New holiday for May 22: Goth Day.'

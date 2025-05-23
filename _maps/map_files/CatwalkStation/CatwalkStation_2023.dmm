@@ -18395,6 +18395,10 @@
 /area/station/medical/virology)
 "fAH" = (
 /obj/structure/table,
+/obj/item/dragnet_beacon{
+	pixel_x = 7;
+	pixel_y = 10
+	},
 /obj/item/gun/energy/e_gun/dragnet{
 	pixel_x = -4;
 	pixel_y = 8
@@ -76090,10 +76094,13 @@
 /obj/machinery/button/door/directional/west{
 	id = "hosprivacy";
 	name = "Privacy Shutters Control";
-	pixel_x = 0;
-	pixel_y = 24
+	pixel_x = 8;
+	pixel_y = 25
 	},
 /obj/machinery/holopad/secure,
+/obj/machinery/keycard_auth/wall_mounted/directional/north{
+	pixel_x = -6
+	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hos)
 "wMc" = (

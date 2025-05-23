@@ -393,6 +393,10 @@
 	drop_sound = SFX_CLOTH_DROP
 	pickup_sound = SFX_CLOTH_PICKUP
 
+/obj/item/stack/medical/gauze/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+	register_context()
+
 /obj/item/stack/medical/gauze/Destroy(force)
 	. = ..()
 
@@ -406,6 +410,14 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Apply Gauze"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
+
+/obj/item/stack/medical/gauze/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+	if(isnull(held_item))
+		return
+	if(held_item.tool_behaviour == TOOL_WIRECUTTER || held_item.get_sharpness())
+		context[SCREENTIP_CONTEXT_LMB] = "Shred Into Cloth"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/stack/medical/gauze/try_heal_checks(mob/living/patient, mob/living/user, healed_zone, silent = FALSE)
 	var/obj/item/bodypart/limb = patient.get_bodypart(healed_zone)
