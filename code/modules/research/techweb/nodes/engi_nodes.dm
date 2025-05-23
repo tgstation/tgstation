@@ -227,8 +227,8 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
-/datum/techweb_node/advanced_holographics
-	id = TECHWEB_NODE_ADVANCED_HOLOGRAPHICS
+/datum/techweb_node/holographics_advanced
+	id = TECHWEB_NODE_HOLOGRAPHICS_ADVANCED
 	display_name = "Advanced Holographics"
 	description = "More advanced holographic technology that allows for more precise or efficient methods of manipulation"
 	prereq_ids = list(TECHWEB_NODE_HOLOGRAPHICS)
@@ -236,6 +236,7 @@
 		"modular_shield_densifier",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
+	discount_experiments = list(/datum/experiment/scanning/points/modular_shield/strength = TECHWEB_TIER_3_POINTS)
 
 /datum/techweb_node/hud
 	id = TECHWEB_NODE_HUD
