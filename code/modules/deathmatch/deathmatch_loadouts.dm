@@ -31,7 +31,7 @@
 		new_ability.Grant(user)
 
 	for(var/mutation in mutations_to_add)
-		user.dna.add_mutation(mutation)
+		user.dna.add_mutation(mutation, MUTATION_SOURCE_GHOST_ROLE)
 
 /datum/outfit/deathmatch_loadout/naked
 	name = "Deathmatch: Naked"

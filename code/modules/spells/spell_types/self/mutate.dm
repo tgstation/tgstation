@@ -25,7 +25,7 @@
 /datum/action/cooldown/spell/apply_mutations/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 	for(var/mutation in mutations_to_add)
-		cast_on.dna.add_mutation(mutation)
+		cast_on.dna.add_mutation(mutation, MUTATION_SOURCE_SPELL)
 	addtimer(CALLBACK(src, PROC_REF(remove_mutations), cast_on), mutation_duration, TIMER_DELETE_ME)
 
 /// Removes the mutations we added from casting our spell
@@ -34,7 +34,7 @@
 		return
 
 	for(var/mutation in mutations_to_add)
-		cast_on.dna.remove_mutation(mutation)
+		cast_on.dna.remove_mutation(mutation, MUTATION_SOURCE_SPELL)
 
 /datum/action/cooldown/spell/apply_mutations/mutate
 	name = "Mutate"

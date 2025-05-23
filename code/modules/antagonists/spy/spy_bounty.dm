@@ -429,7 +429,7 @@
 		/obj/machinery/computer/prisoner/management,
 		/obj/machinery/computer/rdconsole,
 		/obj/machinery/computer/records/security,
-		/obj/machinery/computer/scan_consolenew,
+		/obj/machinery/computer/dna_console,
 		/obj/machinery/computer/security, // Requires breaking into a sec checkpoint, but not too hard, many are never visited
 		/obj/machinery/dna_scannernew,
 		/obj/machinery/mecha_part_fabricator,

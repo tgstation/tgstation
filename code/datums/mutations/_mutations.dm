@@ -55,8 +55,6 @@
 	var/blocks = 4
 	/// Amount of missing sequences. Sometimes it removes an entire pair for 2 points
 	var/difficulty = 8
-	/// Time between mutation creation and removal. If this exists, we have a timer
-	var/timeout
 	/// 'Mutation #49', decided every round to get some form of distinction between undiscovered mutations
 	var/alias
 	/// Whether we can read it if it's active. To avoid cheesing with mutagen
@@ -94,6 +92,7 @@
 	var/list/valid_chrom_list = list()
 	/// List of traits that are added or removed by the mutation with GENETIC_TRAIT source.
 	var/list/mutation_traits
+	var/mutadone_proof = FALSE
 
 /datum/mutation/New()
 	. = ..()
@@ -104,10 +103,7 @@
 	owner = null
 	return ..()
 
-/datum/mutation/proc/make_copy(list/new_sources = list(MUT_EXTRA))
-	if(!islist(new_sources))
-		new_sources = list(new_sources)
-
+/datum/mutation/proc/make_copy()
 	var/datum/mutation/copy = new type
 
 	copy.chromosome_name = chromosome_name
@@ -115,10 +111,8 @@
 	copy.synchronizer_coeff = synchronizer_coeff
 	copy.power_coeff = power_coeff
 	copy.energy_coeff = energy_coeff
-	copy.mutadone_proof = mutadone_proof
 	can_chromosome = can_chromosome
 	copy.valid_chrom_list = valid_chrom_list
-	copy.sources = new_sources
 	update_valid_chromosome_list()
 
 	return copy
@@ -187,7 +181,7 @@
 /mob/living/carbon/human/update_mutations_overlay()
 	for(var/datum/mutation/mutation in dna.mutations)
 		if(mutation.species_allowed && !mutation.species_allowed.Find(dna.species.id))
-			dna.force_lose(mutation) //shouldn't have that mutation at all
+			dna.remove_mutation(mutation, mutation.sources) //shouldn't have that mutation at all
 			continue
 		if(mutation.visual_indicators.len == 0)
 			continue
@@ -221,15 +215,8 @@
 	synchronizer_coeff = initial(synchronizer_coeff)
 	power_coeff = initial(power_coeff)
 	energy_coeff = initial(energy_coeff)
-	mutadone_proof = initial(mutadone_proof)
 	can_chromosome = initial(can_chromosome)
 	chromosome_name = null
-
-/datum/mutation/proc/remove()
-	if(dna)
-		dna.force_lose(src)
-	else
-		qdel(src)
 
 /datum/mutation/proc/grant_power()
 	if(!ispath(power_path) || !owner)

@@ -178,8 +178,8 @@
 	if(plant_dna.len >= plants_max && animal_dna.len >= animals_max && human_dna.len >= dna_max)
 		completed = TRUE
 
-/obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/H, upgrade_type)
-	var/datum/weakref/human_weakref = WEAKREF(H)
+/obj/machinery/dna_vault/proc/upgrade(mob/living/carbon/human/target, upgrade_type)
+	var/datum/weakref/human_weakref = WEAKREF(target)
 	var/static/list/associated_mutation = list(
 		"Breathless" = /datum/mutation/breathless,
 		"Dextrous" = /datum/mutation/dextrous,
@@ -189,9 +189,9 @@
 		"Quick Recovery" = /datum/mutation/quick_recovery,
 		"Tough" = /datum/mutation/tough,
 	)
-	if(!(associated_mutation[upgrade_type] in power_lottery[human_weakref])	||	(HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
+	if(!(associated_mutation[upgrade_type] in power_lottery[human_weakref]) || (HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
 		return
-	H.dna.add_mutation(associated_mutation[upgrade_type], MUT_OTHER, 0)
+	target.dna.add_mutation(associated_mutation[upgrade_type], MUTATION_SOURCE_DNA_VAULT)
 	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
 	power_lottery[human_weakref] = list()
 	use_energy(active_power_usage)

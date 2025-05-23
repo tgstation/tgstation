@@ -44,14 +44,14 @@
 	if(!target.can_mutate())
 		return FALSE
 	for(var/removed_mutation in remove_mutations)
-		target.dna.remove_mutation(removed_mutation)
+		target.dna.remove_mutation(removed_mutation, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
 	for(var/added_mutation in add_mutations)
 		if(added_mutation == /datum/mutation/race)
 			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with \the [src] [span_danger("(MONKEY)")]")
 		if(target.dna.mutation_in_sequence(added_mutation))
 			target.dna.activate_mutation(added_mutation)
 		else
-			target.dna.add_mutation(added_mutation, MUT_EXTRA)
+			target.dna.add_mutation(added_mutation, MUTATION_SOURCE_MUTATOR)
 	if(fields)
 		if(fields["name"] && fields["UE"] && fields["blood_type"])
 			target.real_name = fields["name"]
@@ -100,7 +100,7 @@
 	update_appearance()
 
 /obj/item/dnainjector/timed
-	var/duration = 600
+	var/duration = 60 SECONDS
 
 /obj/item/dnainjector/timed/inject(mob/living/carbon/target, mob/user)
 	if(target.stat == DEAD) //prevents dead people from having their DNA changed
@@ -110,20 +110,14 @@
 		return FALSE
 	var/endtime = world.time + duration
 	for(var/mutation in remove_mutations)
-		if(mutation == /datum/mutation/race)
-			if(!ismonkey(target))
-				continue
-			target.dna.remove_mutation(mutation)
-		else
-			target.dna.remove_mutation(mutation)
+		target.dna.remove_mutation(mutation, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
 	for(var/mutation in add_mutations)
 		if(target.dna.get_mutation(mutation))
 			continue //Skip permanent mutations we already have.
 		if(mutation == /datum/mutation/race && !ismonkey(target))
 			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with \the [src] [span_danger("(MONKEY)")]")
-			target.dna.add_mutation(mutation, MUT_OTHER, endtime)
-		else
-			target.dna.add_mutation(mutation, MUT_OTHER, endtime)
+		target.dna.add_mutation(mutation, MUTATION_SOURCE_TIMED_INJECTOR)
+		addtimer(CALLBACK(target.dna, TYPE_PROC_REF(/datum/mutation, remove_mutation), mutation, MUTATION_SOURCE_TIMED_INJECTOR), duration)
 	if(fields)
 		if(fields["name"] && fields["UE"] && fields["blood_type"])
 			if(!target.dna.previous["name"])
@@ -178,7 +172,7 @@
 			mutation = added_mutation.type
 		if(!target.dna.activate_mutation(added_mutation))
 			if(force_mutate)
-				target.dna.add_mutation(added_mutation, MUT_EXTRA)
+				target.dna.add_mutation(added_mutation, MUTATION_SOURCE_MUTATOR)
 		else if(research && target.client)
 			filled = TRUE
 		for(var/datum/disease/advance/disease in target.diseases)

@@ -64,4 +64,4 @@
 	if(avatar.dna.mutation_in_sequence(/datum/mutation/shock))
 		avatar.dna.activate_mutation(/datum/mutation/shock)
 	else
-		avatar.dna.add_mutation(/datum/mutation/shock, MUT_EXTRA)
+		avatar.dna.add_mutation(/datum/mutation/shock, MUTATION_SOURCE_MUTATOR)

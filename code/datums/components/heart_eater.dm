@@ -104,7 +104,7 @@
 	if(isnull(new_mutation))
 		healing_heart(eater)
 		return
-	eater.dna.add_mutation(new_mutation)
+	eater.dna.add_mutation(new_mutation, MUTATION_SOURCE_HEART_EATER)
 	healing_heart(eater)
 	to_chat(eater, span_warning("This heart is not right for you. You now have [new_mutation.name] mutation."))
 
