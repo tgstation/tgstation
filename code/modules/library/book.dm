@@ -59,11 +59,11 @@
 	if(IS_WRITING_UTENSIL(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Vandalize"
 		if(is_carving_tool(held_item))
-			context[SCREENTIP_CONTEXT_RMB] = "Carve Out"
+			context[SCREENTIP_CONTEXT_RMB] = "Carve out"
 		return CONTEXTUAL_SCREENTIP_SET
 
 	if(is_carving_tool(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Carve Out"
+		context[SCREENTIP_CONTEXT_LMB] = "Carve out"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 

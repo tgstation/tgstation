@@ -23,14 +23,14 @@
 
 	switch(scan_mode)
 		if(BARCODE_SCANNER_CHECKIN)
-			context[SCREENTIP_CONTEXT_LMB] = "Check In"
+			context[SCREENTIP_CONTEXT_LMB] = "Check in"
 		if(BARCODE_SCANNER_INVENTORY)
-			context[SCREENTIP_CONTEXT_LMB] = "Add To Inventory"
+			context[SCREENTIP_CONTEXT_LMB] = "Add to inventory"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/barcodescanner/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item == src)
-		context[SCREENTIP_CONTEXT_LMB] = "Toggle Scanning Mode"
+		context[SCREENTIP_CONTEXT_LMB] = "Toggle scanning mode"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 

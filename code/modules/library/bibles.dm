@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 
 /obj/item/book/bible/get_attack_self_context(mob/living/user)
 	if(can_set_bible_skin(user))
-		return "Select Bible Skin"
+		return "Select bible skin"
 
 /obj/item/book/bible/proc/curse_heathen(datum/source, mob/living/user, obj/item/burning_tool)
 	SIGNAL_HANDLER
