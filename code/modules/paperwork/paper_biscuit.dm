@@ -9,7 +9,7 @@
 	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
 	contents_hidden = TRUE
 	paper_overlay_state = "paperbiscuit_paper"
-	folder_type_name = "Biscuit"
+	folder_type_name = "biscuit"
 	/// Is biscuit cracked open or not?
 	var/cracked = FALSE
 	/// The paper slip inside, if there is one
@@ -64,7 +64,7 @@
 /obj/item/folder/biscuit/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 	if((held_item == src) && !cracked)
-		context[SCREENTIP_CONTEXT_LMB] = "Crack Open"
+		context[SCREENTIP_CONTEXT_LMB] = "Crack open"
 		return CONTEXTUAL_SCREENTIP_SET
 
 //The next few checks are done to prevent you from reaching the contents or putting anything inside when it's not cracked open

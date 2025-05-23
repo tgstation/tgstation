@@ -20,7 +20,7 @@
 	/// icon_state of overlay for papers inside of this folder
 	var/paper_overlay_state = "folder_paper"
 	/// Name to display for use-on-item screentips, to avoid overly long screentips.
-	var/folder_type_name = "Folder"
+	var/folder_type_name = "folder"
 
 /obj/item/folder/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins filing an imaginary death warrant! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -48,7 +48,7 @@
 /obj/item/folder/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	if(is_type_in_typecache(target, folder_insertables))
 		// As this is shown on the paper, we clarify we are picking it up.
-		context[SCREENTIP_CONTEXT_LMB] = "Insert Into [folder_type_name]"
+		context[SCREENTIP_CONTEXT_LMB] = "Insert into [folder_type_name]"
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
