@@ -383,7 +383,7 @@
 	return doUnEquip(I, force, newloc, TRUE, idrop, silent = TRUE)
 
 //DO NOT CALL THIS PROC
-//use one of the above 3 helper procs
+//use one of the above 4 helper procs
 //you may override it, but do not modify the args
 /mob/proc/doUnEquip(obj/item/I, force, atom/newloc, no_move, invdrop = TRUE, silent = FALSE) //Force overrides TRAIT_NODROP for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
