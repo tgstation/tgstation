@@ -1,0 +1,9 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - map: "Gives CE/CMO/RD their proper camera monitors"
+  - map: "Medbay Camera's is now its own proper network"
+  - map: "Removes a camera from Prison maintenance and Security closet"
+  - map: "Disables AI control on Prison Maintenance Door"
+  - bugfix: "Minisat Camera's now use the proper network"
+  - bugfix: "Engine Camera's now use the proper network"
