@@ -233,6 +233,7 @@ SUBSYSTEM_DEF(ticker)
 	to_chat(world, span_boldannounce("Starting game..."))
 	var/init_start = world.timeofday
 
+	setup_event()
 	CHECK_TICK
 	//Configure mode and assign player to antagonists
 	var/can_continue = FALSE
