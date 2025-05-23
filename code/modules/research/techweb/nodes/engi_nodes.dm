@@ -228,10 +228,10 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 
 /datum/techweb_node/advanced_holographics
-	id = TECHWEB_NODE_HOLOGRAPHICS
+	id = TECHWEB_NODE_ADVANCED_HOLOGRAPHICS
 	display_name = "Advanced Holographics"
 	description = "More advanced holographic technology that allows for more precise or efficient methods of manipulation"
-	prereq_ids = list(TECHWEB_NODE_ENERGY_MANIPULATION)
+	prereq_ids = list(TECHWEB_NODE_HOLOGRAPHICS)
 	design_ids = list(
 		"modular_shield_densifier",
 	)
