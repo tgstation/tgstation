@@ -128,9 +128,9 @@ PROCESSING_SUBSYSTEM_DEF(station)
 // 	var/negative_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/negative_station_traits)))
 
 // #ifdef MAP_TEST
-	positive_trait_budget = 0
-	neutral_trait_budget = 0
-	negative_trait_budget = 0
+	var/positive_trait_budget = 0
+	var/neutral_trait_budget = 0
+	var/negative_trait_budget = 0
 // #endif
 
 	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_budget)
