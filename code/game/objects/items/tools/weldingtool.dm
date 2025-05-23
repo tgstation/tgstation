@@ -75,8 +75,7 @@
 /obj/item/weldingtool/update_overlays()
 	. = ..()
 	if(change_icons)
-		var/realFuelNoClickbait = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
-		var/ratio = (get_fuel() + realFuelNoClickbait) / max_fuel
+		var/ratio = get_fuel() / max_fuel
 		ratio = CEILING(ratio*4, 1) * 25
 		. += "[initial(icon_state)][ratio]"
 	if(welding)
@@ -196,7 +195,8 @@
 
 /// Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount(/datum/reagent/fuel)
+	var/realFuelNoClickbait = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
+	return reagents.get_reagent_amount(/datum/reagent/fuel) + realFuelNoClickbait
 
 /// Uses fuel from the welding tool.
 /obj/item/weldingtool/use(used = 0)
