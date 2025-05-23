@@ -22,6 +22,7 @@
 	area_type = /area
 	target_trait = ZTRAIT_RAINSTORM
 	immunity_type = TRAIT_RAINSTORM_IMMUNE
+	turf_thunder_chance = THUNDER_CHANCE_RARE
 	probability = 90
 
 	weather_flags = (WEATHER_TURFS | WEATHER_MOBS | WEATHER_THUNDER | WEATHER_BAROMETER)

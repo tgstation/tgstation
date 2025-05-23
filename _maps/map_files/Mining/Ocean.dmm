@@ -39,7 +39,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "bs" = (
 /obj/effect/decal/cleanable/dirt,
@@ -51,7 +51,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bE" = (
 /obj/structure/table,
@@ -269,7 +269,7 @@
 /area/mine/laborcamp)
 "gf" = (
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "gr" = (
 /obj/structure/chair/stool/directional/west,
@@ -290,7 +290,7 @@
 "gE" = (
 /obj/structure/sign/warning/electric_shock/directional/north,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "gH" = (
 /obj/machinery/door/airlock/medical/glass{
@@ -384,7 +384,7 @@
 /obj/structure/marker_beacon/yellow,
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "iK" = (
 /obj/structure/table,
@@ -540,7 +540,7 @@
 /area/mine/laborcamp)
 "ma" = (
 /obj/structure/sign/warning/directional/north,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "mi" = (
 /obj/structure/table,
@@ -608,7 +608,7 @@
 /area/mine/laborcamp)
 "nr" = (
 /obj/structure/sign/warning/docking/directional/north,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "nu" = (
 /obj/structure/closet/secure_closet/labor_camp_security,
@@ -694,14 +694,14 @@
 	dir = 4
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "ou" = (
 /turf/open/floor/iron/freezer,
 /area/mine/laborcamp)
 "oy" = (
 /obj/structure/barricade/wooden,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "oB" = (
 /obj/structure/bookcase,
@@ -819,7 +819,7 @@
 	dir = 1
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "sy" = (
 /obj/structure/table,
@@ -868,7 +868,7 @@
 /area/mine/laborcamp)
 "tF" = (
 /obj/structure/lattice/catwalk/mining,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "tG" = (
 /obj/machinery/suit_storage_unit/mining,
@@ -898,7 +898,7 @@
 /area/mine/maintenance/service)
 "ul" = (
 /obj/item/crowbar/large/emergency,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/noruinsnomonsters)
 "uo" = (
 /obj/structure/railing,
@@ -973,7 +973,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "wd" = (
 /obj/machinery/porta_turret/centcom_shuttle/weak/mining,
@@ -1130,7 +1130,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/mine/production)
 "zg" = (
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "zr" = (
 /obj/structure/cable,
@@ -1227,7 +1227,7 @@
 /area/mine/production)
 "BR" = (
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "BS" = (
 /turf/open/misc/ashplanet/wateryrock/rainworld,
@@ -1443,7 +1443,7 @@
 	dir = 1
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "FF" = (
 /obj/machinery/light/small/directional/south,
@@ -1466,7 +1466,7 @@
 /area/rainworld/surface/outdoors/nospawn)
 "Gl" = (
 /obj/item/reagent_containers/cup/glass/colocup,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/noruinsnomonsters)
 "Gt" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
@@ -1644,7 +1644,7 @@
 /obj/structure/marker_beacon/teal,
 /obj/effect/turf_decal/stripes/corner,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "Lp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1785,7 +1785,7 @@
 /area/mine/laborcamp)
 "Pp" = (
 /obj/item/toy/beach_ball,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/noruinsnomonsters)
 "PQ" = (
 /obj/structure/table,
@@ -1864,7 +1864,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "QJ" = (
 /turf/closed/mineral/random/rainworld,
@@ -1919,7 +1919,7 @@
 "Sq" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "Sw" = (
 /obj/machinery/suit_storage_unit/mining,
@@ -1968,7 +1968,7 @@
 	dir = 1
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "TH" = (
 /obj/machinery/conveyor{
@@ -1985,7 +1985,7 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp/security)
 "Ui" = (
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/noruinsnomonsters)
 "Uj" = (
 /obj/structure/cable,
@@ -2021,7 +2021,7 @@
 	pixel_x = -5;
 	pixel_y = -3
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/noruinsnomonsters)
 "Vh" = (
 /obj/structure/cable,
@@ -2111,7 +2111,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/mine/production)
 "WS" = (
 /obj/docking_port/stationary{

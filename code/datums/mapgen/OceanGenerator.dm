@@ -1,5 +1,5 @@
 /datum/map_generator/cave_generator/rainworld
-	weighted_open_turf_types = list(/turf/open/water/no_planet_atmos/deep/planetary_atmos = 100)
+	weighted_open_turf_types = list(/turf/open/water/no_planet_atmos/deep/rainworld = 100)
 	weighted_closed_turf_types = list(
 		/turf/closed/mineral/random/rainworld = 1,
 	)

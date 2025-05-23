@@ -225,7 +225,7 @@
 /turf/open/floor/plating/lowpressure,
 /area/ruin/powered/shuttle)
 "Ly" = (
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "MS" = (
 /obj/effect/turf_decal/siding/wood{

@@ -689,6 +689,92 @@
 /obj/item/mod/module/plasma_stabilizer/on_unequip()
 	REMOVE_TRAIT(mod.wearer, TRAIT_HEAD_ATMOS_SEALED, REF(src))
 
+/obj/item/mod/module/diving
+	name = "MOD diving module"
+	desc = "Allows the user to swim while wearing the modsuit"
+	complexity = 1
+	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
+	incompatible_modules = list(/obj/item/mod/module/plasma_stabilizer)
+	required_slots = list(ITEM_SLOT_HEAD)
+	icon_state = "ash_accretion"
+	incompatible_modules = list(/obj/item/mod/module/diving, /obj/item/mod/module/plasma_stabilizer)
+	overlay_state_inactive = "module_ash"
+	use_mod_colors = TRUE
+	var/max_traveled_tiles = 10
+	var/traveled_tiles = 0
+	var/speed_added = -1
+	var/static/list/accretion_turfs
+	var/static/list/keep_turfs
+
+/obj/item/mod/module/diving/Initialize(mapload)
+	. = ..()
+	if(!accretion_turfs)
+		accretion_turfs = typecacheof(list(
+			/turf/open/water/no_planet_atmos/deep/rainworld,
+		))
+	if(!keep_turfs)
+		keep_turfs = typecacheof(list(
+			/turf/open/water/no_planet_atmos/deep/rainworld,
+			/turf/open/misc/ashplanet/rocky/rainworld,
+			/turf/open/misc/ashplanet/wateryrock/rainworld,
+		))
+
+/obj/item/mod/module/diving/on_part_activation()
+	mod.wearer.add_traits(list(TRAIT_SWIMMER, TRAIT_RAINSTORM_IMMUNE), REF(src))
+	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	RegisterSignal(mod, COMSIG_MOD_UPDATE_SPEED, PROC_REF(on_update_speed))
+
+/obj/item/mod/module/diving/on_part_deactivation(deleting = FALSE)
+	mod.wearer.remove_traits(list(TRAIT_SWIMMER, TRAIT_RAINSTORM_IMMUNE), REF(src))
+	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
+	if(!traveled_tiles)
+		return
+	if(traveled_tiles == max_traveled_tiles)
+		mod.update_speed()
+	traveled_tiles = 0
+
+/obj/item/mod/module/diving/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
+	overlay_state_inactive = "[initial(overlay_state_inactive)]-[mod.skin]"
+	return ..()
+
+/obj/item/mod/module/diving/proc/on_update_speed(datum/source, list/module_slowdowns, prevent_slowdown)
+	SIGNAL_HANDLER
+	if (traveled_tiles == max_traveled_tiles)
+		module_slowdowns += speed_added
+
+/obj/item/mod/module/diving/generate_worn_overlay(obj/item/source, mutable_appearance/standing)
+	. = ..()
+	if (!.)
+		return
+
+	var/mutable_appearance/visor_overlay = mod.get_visor_overlay(standing)
+	visor_overlay.appearance_flags |= RESET_COLOR
+	visor_overlay.color = LIGHT_COLOR_FAINT_CYAN
+	. += visor_overlay
+
+/obj/item/mod/module/diving/proc/on_move(atom/source, atom/oldloc, dir, forced)
+	if(!isturf(mod.wearer.loc))
+		return
+	if(is_type_in_typecache(mod.wearer.loc, accretion_turfs))
+		if(traveled_tiles >= max_traveled_tiles)
+			return
+		traveled_tiles++
+		if(traveled_tiles >= max_traveled_tiles)
+			balloon_alert(mod.wearer, "fully submerged")
+			animate(mod.wearer, 1 SECONDS, color = null, flags = ANIMATION_PARALLEL)
+			playsound(src, 'sound/effects/sparks/sparks1.ogg', 100, TRUE)
+			mod.update_speed()
+	else if(is_type_in_typecache(mod.wearer.loc, keep_turfs))
+		return
+	else
+		if(traveled_tiles <= 0)
+			return
+		traveled_tiles--
+		if(traveled_tiles == max_traveled_tiles - 1)
+			mod.update_speed()
+		if(traveled_tiles <= 0)
+			balloon_alert(mod.wearer, "dried up!")
 
 //Finally, https://pipe.miroware.io/5b52ba1d94357d5d623f74aa/mspfa/Nuke%20Ops/Panels/0648.gif can be real:
 ///Hat Stabilizer - Allows displaying a hat over the MOD-helmet, à la plasmamen helmets.

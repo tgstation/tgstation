@@ -4073,6 +4073,7 @@
 #include "code\modules\clothing\suits\bio.dm"
 #include "code\modules\clothing\suits\cloaks.dm"
 #include "code\modules\clothing\suits\costume.dm"
+#include "code\modules\clothing\suits\diving.dm"
 #include "code\modules\clothing\suits\ethereal.dm"
 #include "code\modules\clothing\suits\ghostsheet.dm"
 #include "code\modules\clothing\suits\jacket.dm"

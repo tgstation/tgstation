@@ -19,7 +19,7 @@
 			"Gravity": true,
 			"Ocean Ruins": true,
 			"Weather_Rainstorm": true,
-			"Baseturf": "/turf/open/water/no_planet_atmos/deep/planetary_atmos",
+			"Baseturf": "/turf/open/water/no_planet_atmos/deep/rainworld",
 			"No Parallax": true
 		}
 	],

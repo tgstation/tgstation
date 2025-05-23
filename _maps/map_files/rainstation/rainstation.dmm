@@ -51,7 +51,7 @@
 /area/rainworld/surface/outdoors/nospawn)
 "aag" = (
 /obj/structure/lattice/catwalk,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "aai" = (
 /turf/closed/wall/r_wall,
@@ -106,7 +106,7 @@
 /area/station/maintenance/starboard/fore)
 "aaz" = (
 /obj/structure/sign/warning/secure_area/directional/east,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "aaE" = (
 /obj/structure/table,
@@ -137,7 +137,7 @@
 /obj/docking_port/stationary/syndicate/northwest{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "aaK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -154,12 +154,12 @@
 "aaS" = (
 /obj/structure/lattice/water,
 /obj/effect/spawner/random/structure/grille,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "aaT" = (
 /obj/structure/lattice/water,
 /obj/structure/grille,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "aaW" = (
 /obj/structure/cable,
@@ -504,7 +504,7 @@
 /area/station/command/heads_quarters/hos)
 "abY" = (
 /obj/structure/grille,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "abZ" = (
 /obj/structure/disposalpipe/segment,
@@ -666,7 +666,7 @@
 "acy" = (
 /obj/structure/lattice/water,
 /obj/item/stack/cable_coil,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "acA" = (
 /obj/machinery/airalarm/directional/north,
@@ -1378,7 +1378,7 @@
 "aeR" = (
 /obj/structure/lattice/water,
 /obj/structure/window/spawner/directional/east,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "aeS" = (
 /obj/machinery/shower/directional/east,
@@ -1542,7 +1542,7 @@
 /obj/docking_port/stationary/escape_pod{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "afr" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -2979,7 +2979,7 @@
 /area/station/security/brig)
 "aiS" = (
 /obj/item/stack/rods,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "aiT" = (
 /turf/closed/wall,
@@ -3179,7 +3179,7 @@
 "ajy" = (
 /obj/structure/lattice/water,
 /obj/structure/window/spawner/directional/north,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "ajz" = (
 /obj/machinery/computer/security/telescreen/interrogation{
@@ -4682,7 +4682,7 @@
 /obj/docking_port/stationary/laborcamp_home{
 	dir = 8
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "anP" = (
 /obj/machinery/door/firedoor,
@@ -5459,7 +5459,7 @@
 	shuttle_id = "pod_4_lavaland";
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "aqJ" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
@@ -6336,7 +6336,7 @@
 "atR" = (
 /obj/effect/landmark/carpspawn,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "atS" = (
 /turf/closed/wall,
@@ -9654,7 +9654,7 @@
 /obj/structure/transit_tube/crossing/horizontal,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /obj/structure/lattice/catwalk,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "aFu" = (
 /turf/closed/wall,
@@ -13338,7 +13338,6 @@
 "aQw" = (
 /obj/structure/altar_of_gods,
 /obj/effect/landmark/start/hangover,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "aQA" = (
@@ -14671,10 +14670,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
-"aUJ" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/service/chapel)
 "aUM" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "Arrivals Bay 2"
@@ -16728,7 +16723,7 @@
 /obj/structure/lattice/water,
 /obj/item/stack/cable_coil,
 /obj/effect/spawner/random/structure/grille,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bbU" = (
 /obj/structure/disposalpipe/segment{
@@ -17006,7 +17001,7 @@
 /area/station/cargo/warehouse)
 "bcU" = (
 /obj/item/stack/tile/iron/base,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bcY" = (
 /obj/item/hand_labeler,
@@ -20124,7 +20119,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bmV" = (
 /obj/effect/turf_decal/trimline/blue/filled/warning,
@@ -22597,7 +22592,7 @@
 /area/station/command/heads_quarters/rd)
 "bwS" = (
 /obj/structure/window/spawner/directional/west,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bwT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -25749,7 +25744,7 @@
 /obj/docking_port/stationary/mining_home{
 	dir = 8
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bJd" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -27962,7 +27957,7 @@
 /obj/structure/lattice/water,
 /obj/vehicle/ridden/lavaboat,
 /obj/item/oar,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bRr" = (
 /obj/structure/chair{
@@ -28073,7 +28068,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
 	dir = 8
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bRN" = (
 /turf/closed/wall,
@@ -28151,7 +28146,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 9
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bSc" = (
 /obj/effect/turf_decal/tile/red{
@@ -28924,7 +28919,7 @@
 "bVv" = (
 /obj/structure/lattice/water,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "bVx" = (
 /obj/machinery/atmospherics/components/unary/passive_vent,
@@ -30530,7 +30525,7 @@
 "cbE" = (
 /obj/structure/lattice/water,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cbF" = (
 /obj/item/cigbutt,
@@ -32384,6 +32379,7 @@
 	dir = 1
 	},
 /obj/machinery/suit_storage_unit/engine,
+/obj/item/mod/module/diving,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
@@ -32425,7 +32421,7 @@
 "ckQ" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "ckS" = (
 /obj/structure/closet/cardboard,
@@ -32768,7 +32764,7 @@
 "cna" = (
 /obj/structure/lattice/water,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cnd" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
@@ -32964,7 +32960,7 @@
 	shuttle_id = "pod_lavaland";
 	dir = 8
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cpg" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -33036,12 +33032,12 @@
 "cpN" = (
 /obj/structure/transit_tube/horizontal,
 /obj/structure/lattice/catwalk,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cpP" = (
 /obj/structure/lattice/water,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cpQ" = (
 /obj/machinery/button/ignition/incinerator/atmos,
@@ -33173,7 +33169,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "cqq" = (
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cqr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -33433,14 +33429,14 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "crJ" = (
 /obj/structure/lattice/water,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "crK" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
@@ -33482,14 +33478,14 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "crU" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "crW" = (
 /obj/machinery/light/small/directional/west,
@@ -33506,14 +33502,14 @@
 	dir = 4
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "csb" = (
 /obj/structure/lattice/water,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 9
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "csd" = (
 /turf/open/floor/iron/dark,
@@ -33544,7 +33540,7 @@
 "css" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "csu" = (
 /obj/structure/closet/firecloset,
@@ -33554,7 +33550,7 @@
 "csx" = (
 /obj/structure/lattice/water,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "csy" = (
 /obj/structure/table,
@@ -33766,7 +33762,7 @@
 	shuttle_id = "pod_2_lavaland";
 	dir = 8
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cwZ" = (
 /obj/item/radio/intercom/directional/east,
@@ -33798,7 +33794,7 @@
 "cxn" = (
 /obj/structure/lattice/water,
 /obj/effect/landmark/carpspawn,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cxs" = (
 /obj/structure/cable,
@@ -33826,7 +33822,7 @@
 	shuttle_id = "ferry_home";
 	width = 5
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cxG" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -33926,7 +33922,7 @@
 	shuttle_id = "whiteship_home";
 	width = 35
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cyg" = (
 /obj/effect/turf_decal/trimline/neutral/corner{
@@ -34066,7 +34062,7 @@
 	shuttle_id = "cargo_home";
 	width = 12
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cyU" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -34634,7 +34630,7 @@
 /area/station/engineering/storage)
 "cBP" = (
 /obj/structure/window/spawner/directional/south,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cBR" = (
 /obj/effect/turf_decal/stripes/line{
@@ -35009,7 +35005,7 @@
 	dir = 6
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cEr" = (
 /obj/effect/turf_decal/stripes/line{
@@ -35101,7 +35097,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 5
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cEL" = (
 /obj/effect/turf_decal/stripes/line{
@@ -35191,21 +35187,21 @@
 "cFm" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cFn" = (
 /obj/structure/lattice/water,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 6
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cFo" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 10
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cFu" = (
 /obj/effect/turf_decal/stripes/line{
@@ -35768,7 +35764,7 @@
 	shuttle_id = "arrival_stationary";
 	width = 7
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cIh" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -35957,7 +35953,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "cOw" = (
 /obj/machinery/door/airlock/maintenance,
@@ -36230,7 +36226,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/machinery/portable_atmospherics/pump,
+/obj/structure/table,
 /turf/open/floor/iron/dark/smooth_half{
 	dir = 1
 	},
@@ -36428,7 +36424,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "dbr" = (
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/noruinsnomonsters)
 "dbC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -36769,7 +36765,7 @@
 	shuttle_id = "emergency_home";
 	width = 32
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "dsl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -36840,7 +36836,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "duV" = (
 /obj/structure/railing{
@@ -37009,7 +37005,7 @@
 	network = list("minisat");
 	start_active = 1
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "dBk" = (
 /obj/structure/closet/crate,
@@ -37272,7 +37268,7 @@
 	network = list("minisat");
 	start_active = 1
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "dKQ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -37354,7 +37350,6 @@
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "dPj" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern{
 	pixel_y = 7
@@ -37547,7 +37542,7 @@
 	network = list("minisat");
 	start_active = 1
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "dWh" = (
 /obj/structure/disposalpipe/segment,
@@ -37600,7 +37595,7 @@
 "dZq" = (
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "dZy" = (
 /obj/structure/disposalpipe/segment,
@@ -37888,7 +37883,7 @@
 "enS" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "eok" = (
 /obj/structure/table,
@@ -38651,7 +38646,7 @@
 /obj/docking_port/stationary/escape_pod{
 	dir = 8
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "eXp" = (
 /obj/structure/table/glass,
@@ -39435,7 +39430,7 @@
 "fFa" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "fFq" = (
 /obj/machinery/camera/directional/north{
@@ -39547,21 +39542,6 @@
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
-"fKl" = (
-/obj/machinery/gravity_generator/main,
-/obj/effect/turf_decal/bot_white,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/station/engineering/gravity_generator)
 "fKv" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/red,
@@ -41139,13 +41119,10 @@
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/service)
 "hcj" = (
-/obj/machinery/door/airlock/engineering/glass{
-	name = "Gravity Generator"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/iron/dark,
 /area/station/engineering/gravity_generator)
 "hcs" = (
@@ -41338,7 +41315,7 @@
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /obj/structure/cable,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "hmt" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -41355,7 +41332,7 @@
 "hnK" = (
 /obj/structure/lattice/water,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "hnW" = (
 /obj/effect/spawner/structure/window/reinforced{
@@ -41517,7 +41494,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 10
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "hvl" = (
 /obj/structure/cable,
@@ -42313,9 +42290,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "ijU" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/chapel,
-/area/station/service/chapel)
+/obj/effect/spawner/random/techstorage/custom_shuttle,
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/station/engineering/storage/tech)
 "ika" = (
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer1{
 	dir = 10
@@ -42325,7 +42303,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "ikl" = (
 /obj/machinery/light/small/directional/south,
@@ -42421,7 +42399,7 @@
 "inG" = (
 /obj/structure/transit_tube/crossing/horizontal,
 /obj/structure/lattice/catwalk,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "inP" = (
 /obj/machinery/atmospherics/components/tank,
@@ -44040,7 +44018,7 @@
 "jOi" = (
 /obj/structure/lattice/water,
 /obj/vehicle/ridden/lavaboat,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "jOX" = (
 /obj/machinery/airalarm/directional/west,
@@ -44052,7 +44030,7 @@
 /area/station/medical/storage)
 "jPY" = (
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "jQC" = (
 /obj/structure/broken_flooring/side/directional/north,
@@ -44247,13 +44225,11 @@
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "jXq" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Gravity Generator"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/hallway/primary/central)
 "jYf" = (
@@ -44644,7 +44620,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 9
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "kmx" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -44927,7 +44903,7 @@
 /obj/structure/transit_tube/curved{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "kzL" = (
 /turf/open/floor/wood,
@@ -45253,7 +45229,7 @@
 "kMo" = (
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "kMs" = (
 /obj/structure/cable,
@@ -45934,7 +45910,6 @@
 /area/station/maintenance/starboard)
 "lqJ" = (
 /obj/structure/table/wood,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "lqO" = (
@@ -46492,7 +46467,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer1,
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "lMv" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -46530,7 +46505,7 @@
 /obj/vehicle/ridden/lavaboat,
 /obj/vehicle/ridden/lavaboat,
 /obj/vehicle/ridden/lavaboat,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "lOG" = (
 /obj/structure/cable,
@@ -48016,7 +47991,7 @@
 /obj/structure/lattice/water,
 /obj/structure/window/spawner/directional/east,
 /obj/structure/window/spawner/directional/north,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "nkS" = (
 /turf/closed/wall,
@@ -49592,7 +49567,7 @@
 "oBj" = (
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "oBl" = (
 /obj/structure/table,
@@ -49823,7 +49798,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "oMw" = (
 /obj/effect/decal/cleanable/dirt,
@@ -49992,12 +49967,6 @@
 "oUq" = (
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
-"oUE" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/chapel{
-	dir = 8
-	},
-/area/station/service/chapel)
 "oUU" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 8
@@ -50146,7 +50115,7 @@
 "oYB" = (
 /obj/structure/lattice/water,
 /obj/machinery/camera/directional/south,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "oYI" = (
 /obj/effect/turf_decal/stripes/line,
@@ -50353,7 +50322,7 @@
 "pjz" = (
 /obj/structure/lattice/water,
 /obj/structure/marker_beacon/olive,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "pjA" = (
 /obj/effect/turf_decal/tile/yellow{
@@ -50969,7 +50938,6 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "pIz" = (
-/obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/wood,
 /obj/item/flashlight/lantern{
 	pixel_y = 7
@@ -52263,7 +52231,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "qOm" = (
 /obj/structure/sign/warning/secure_area/directional/west,
@@ -52760,7 +52728,7 @@
 	dir = 4
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "rlx" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -53418,7 +53386,7 @@
 	dir = 10
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "rPT" = (
 /obj/structure/disposalpipe/segment{
@@ -54516,7 +54484,7 @@
 	start_active = 1
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "sNK" = (
 /obj/effect/turf_decal/siding/thinplating_new/corner{
@@ -58142,7 +58110,7 @@
 /area/station/maintenance/port/aft)
 "wdx" = (
 /obj/effect/landmark/carpspawn,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "wes" = (
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -58338,7 +58306,7 @@
 /area/station/engineering/transit_tube)
 "wmq" = (
 /obj/structure/window/spawner/directional/east,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "wmH" = (
 /obj/structure/table,
@@ -58654,7 +58622,7 @@
 /obj/docking_port/stationary/mining_home/common{
 	dir = 8
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "wDn" = (
 /obj/effect/turf_decal/siding/wood{
@@ -58763,7 +58731,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 5
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "wIR" = (
 /obj/machinery/power/apc/auto_name/directional/north,
@@ -58825,7 +58793,7 @@
 "wLn" = (
 /obj/structure/window/spawner/directional/east,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "wLz" = (
 /obj/effect/turf_decal/stripes/line,
@@ -58896,7 +58864,7 @@
 "wOb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "wOo" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/dark/visible{
@@ -59081,7 +59049,7 @@
 /obj/vehicle/ridden/lavaboat,
 /obj/vehicle/ridden/lavaboat,
 /obj/vehicle/ridden/lavaboat,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "wYV" = (
 /obj/structure/chair{
@@ -59481,7 +59449,7 @@
 	start_active = 1
 	},
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "xpI" = (
 /obj/structure/cable,
@@ -59494,13 +59462,11 @@
 /turf/open/genturf/blue,
 /area/rainworld/surface/outdoors/noruinsnomonsters)
 "xqr" = (
-/obj/machinery/door/airlock/engineering{
-	name = "Gravity Generator"
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/engineering/construction,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/gravity_generator)
 "xqL" = (
@@ -59831,7 +59797,7 @@
 /area/station/medical/treatment_center)
 "xGM" = (
 /obj/structure/lattice/water,
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface)
 "xGS" = (
 /obj/machinery/firealarm/directional/east,
@@ -60015,7 +59981,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "xPE" = (
 /obj/structure/closet/crate/bin,
@@ -88661,7 +88627,7 @@ bSR
 aDe
 baX
 aCG
-bAL
+ijU
 lee
 lee
 qdu
@@ -89418,7 +89384,7 @@ bfv
 fla
 fxP
 fla
-fKl
+fxP
 gny
 hcj
 aeE
@@ -106877,7 +106843,7 @@ aJV
 aqf
 aFz
 aqf
-aUJ
+adL
 pIz
 aQu
 ain
@@ -107134,7 +107100,7 @@ aID
 aqf
 aMM
 aqf
-oUE
+cpd
 lqJ
 gyQ
 gyQ
@@ -107391,7 +107357,7 @@ tXF
 aqf
 aqf
 aqf
-ijU
+aQu
 aQw
 pyW
 gyQ
@@ -107648,7 +107614,7 @@ kXs
 kul
 wTy
 aht
-aUJ
+adL
 dPj
 cpd
 svk

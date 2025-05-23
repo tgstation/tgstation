@@ -43,7 +43,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "dn" = (
 /obj/effect/decal/cleanable/dirt,
@@ -102,7 +102,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "gY" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -324,7 +324,7 @@
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
 	},
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "tu" = (
 /obj/structure/table,
@@ -854,7 +854,7 @@
 /turf/open/misc/ashplanet/wateryrock/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "OB" = (
-/turf/open/water/no_planet_atmos/deep/planetary_atmos,
+/turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "OM" = (
 /obj/structure/sign/warning/explosives/alt/directional/north,

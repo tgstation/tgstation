@@ -133,20 +133,18 @@
 	ticking_oxy_damage = 2
 	exhaust_swimmer_prob = 100
 
-/turf/open/water/no_planet_atmos/deep/planetary_atmos
+/turf/open/water/no_planet_atmos/deep/rainworld
 	name = "deep water"
 	desc = "Less shallow water."
 	icon_state = "deep_riverwater_motion"
 	immerse_overlay = "immerse_deep"
 	planetary_atmos = TRUE
 	initial_gas_mix = OPENTURF_LOW_PRESSURE
-	baseturfs = /turf/open/water/no_planet_atmos/deep/planetary_atmos
-
-/turf/open/water/no_planet_atmos/deep/make_immersed()
-	. = ..()
-	if (!.)
-		return
-	AddElement(/datum/element/swimming_tile)
+	baseturfs = /turf/open/water/no_planet_atmos/deep/rainworld
+	stamina_entry_cost = 15
+	ticking_stamina_cost = 10
+	ticking_oxy_damage = 4
+	exhaust_swimmer_prob = 50
 
 /turf/open/water/beach
 	planetary_atmos = FALSE
