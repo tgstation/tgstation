@@ -2085,6 +2085,7 @@
 /obj/machinery/light/small/directional/north,
 /obj/structure/closet/firecloset,
 /obj/effect/turf_decal/box,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/large,
 /area/station/hallway/floor1/fore)
 "aSM" = (
@@ -2545,6 +2546,7 @@
 /obj/machinery/portable_atmospherics/scrubber/huge/movable/cargo,
 /obj/machinery/atmospherics/components/unary/portables_connector,
 /obj/effect/turf_decal/siding/thinplating_new/dark/corner,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/storage)
 "bbX" = (
@@ -3670,6 +3672,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "bAE" = (
@@ -7756,20 +7759,6 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/east,
 /turf/open/floor/iron,
 /area/station/commons/fitness)
-"dcs" = (
-/obj/structure/table/wood,
-/obj/effect/turf_decal/siding/yellow{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/obj/item/reagent_containers/cup/rag,
-/obj/machinery/door/poddoor/shutters{
-	id = "bar_counters";
-	name = "Bar Shutters";
-	dir = 4
-	},
-/turf/open/floor/iron/grimy,
-/area/station/service/bar)
 "dcx" = (
 /obj/structure/lattice,
 /obj/structure/railing,
@@ -12259,6 +12248,11 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
+"eNQ" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/floor3/aft)
 "eOi" = (
 /obj/structure/ladder,
 /obj/effect/turf_decal/delivery,
@@ -24322,9 +24316,6 @@
 	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = -4
-	},
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "joX" = (
@@ -28822,6 +28813,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/evac)
+"kRc" = (
+/obj/effect/turf_decal/tile/dark_green/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron,
+/area/station/hallway/floor3/aft)
 "kRB" = (
 /obj/machinery/camera/autoname/directional/south,
 /obj/structure/lattice/catwalk,
@@ -48273,7 +48271,6 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/floor3/port/aft)
 "saa" = (
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -49721,6 +49718,7 @@
 "sAd" = (
 /obj/machinery/light/warm/dim/directional/east,
 /obj/structure/cable,
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
 "sAt" = (
@@ -55164,11 +55162,6 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/cup/rag,
-/obj/item/reagent_containers/cup/rag{
-	pixel_y = -3;
-	pixel_x = 1
-	},
 /obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron/textured,
 /area/station/service/janitor)
@@ -59345,6 +59338,12 @@
 /obj/structure/closet/firecloset,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/department/engine/atmos)
+"wiF" = (
+/obj/structure/sink/directional/east,
+/obj/structure/mirror/directional/west,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/iron/freezer,
+/area/station/commons/toilet/fitroom)
 "wiJ" = (
 /obj/structure/cable,
 /obj/machinery/firealarm/directional/east{
@@ -61548,6 +61547,7 @@
 	pixel_y = 6
 	},
 /obj/structure/table,
+/obj/item/rag,
 /turf/open/floor/iron/dark,
 /area/station/service/bar)
 "wYs" = (
@@ -218171,7 +218171,7 @@ wMW
 xTC
 sWQ
 jlb
-jlb
+wiF
 vnz
 pOE
 jOM
@@ -224862,7 +224862,7 @@ hxG
 dRl
 vTw
 vHx
-dcs
+vTw
 vTw
 vTw
 jof
@@ -230007,7 +230007,7 @@ ohD
 ohD
 lTT
 hxa
-dKU
+kRc
 bTv
 kpf
 erw
@@ -235663,7 +235663,7 @@ bQH
 vNh
 dKU
 kFN
-jTV
+eNQ
 tFc
 iPq
 kWF
