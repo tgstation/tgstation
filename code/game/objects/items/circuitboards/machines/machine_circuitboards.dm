@@ -228,6 +228,16 @@
 		/obj/item/stack/sheet/plasteel = 2,
 	)
 
+/obj/item/circuitboard/machine/modular_shield_densifier
+	name = "Modular Shield Densifier"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/densifier
+	req_components = list(
+		/datum/stock_part/scanning_module = 1,
+		/obj/item/stack/sheet/mineral/uranium = 2,
+		/obj/item/stack/sheet/plasteel = 2,
+	)
+
 /obj/item/circuitboard/machine/cell_charger
 	name = "Cell Charger"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

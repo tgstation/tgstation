@@ -67,6 +67,12 @@
 	///This is the lazy list of perimeter turfs that we grab when making large shields of 10 or more radius
 	var/list/list_of_turfs
 
+	///This is the lazy list of atoms that a connected densifier is telling us to let through the shield
+	var/list/allowed_atoms
+
+	///How fast we can let living atoms through the shield
+	var/pass_delay = 2
+
 /obj/machinery/modular_shield_generator/power_change()
 	. = ..()
 	if(!(machine_stat & NOPOWER))
@@ -310,23 +316,35 @@
 ///calculations for the stats supplied by the network of machines that boost us
 /obj/machinery/modular_shield_generator/proc/calculate_boost()
 
+	allowed_atoms = null
+	for(var/obj/machinery/modular_shield/module/densifier/new_densifier in connected_modules)
+		LAZYADD(allowed_atoms, new_densifier.scanned_atoms)
+	calculate_pass_delay()
+
 	regen_boost = initial(regen_boost)
-	for (var/obj/machinery/modular_shield/module/charger/new_charger in connected_modules)
+	for(var/obj/machinery/modular_shield/module/charger/new_charger in connected_modules)
 		regen_boost += new_charger.charge_boost
 
 	calculate_regeneration()
 
 	max_strength_boost = initial(max_strength_boost)
-	for (var/obj/machinery/modular_shield/module/well/new_well in connected_modules)
+	for(var/obj/machinery/modular_shield/module/well/new_well in connected_modules)
 		max_strength_boost += new_well.strength_boost
 
 	calculate_max_strength()
 
 	radius_boost = initial(radius_boost)
-	for (var/obj/machinery/modular_shield/module/relay/new_relay in connected_modules)
+	for(var/obj/machinery/modular_shield/module/relay/new_relay in connected_modules)
 		radius_boost += new_relay.range_boost
 
 	calculate_radius()
+
+/obj/machinery/modular_shield_generator/proc/calculate_pass_delay()
+	var/total_pass_delay_reduction = 0
+	pass_delay = initial(pass_delay)
+	for(var/obj/machinery/modular_shield/module/densifier/new_densifier in connected_modules)
+		total_pass_delay_reduction += new_densifier.pass_delay_reduction
+	pass_delay = pass_delay / total_pass_delay_reduction
 
 ///Calculates the max radius the shield generator can support, modifiers go here
 /obj/machinery/modular_shield_generator/proc/calculate_radius()
@@ -341,6 +359,8 @@
 /obj/machinery/modular_shield_generator/proc/calculate_max_strength()
 
 	max_strength = innate_strength + max_strength_boost
+	if(allowed_atoms)
+		max_strength *= 0.75
 	begin_processing()
 
 ///Calculates the regeneration based on the status of the generator and boosts from network, modifiers go here
@@ -362,6 +382,9 @@
 
 	if(!exterior_only)
 		current_regeneration *= 0.5
+
+	if(allowed_atoms)
+		current_regeneration *= 0.75
 
 ///Reduces the strength of the shield based on the given integer
 /obj/machinery/modular_shield_generator/proc/shield_drain(damage_amount)
@@ -726,6 +749,50 @@
 		return
 	icon_state = "well_on_[panel_open ? "open" : "closed"]"
 
+/obj/machinery/modular_shield/module/densifier
+	name = "modular shield densifier"
+	desc = "A hardlight manipulator with a built in scanner for radioactive dating, it helps the main generator detect and allow matter trying to pass through the shield, loss of this machine requires the shield to reset"
+	is_booster = TRUE
+	///The atoms currently scanned into this module
+	var/list/scanned_atoms
+	///The amount of time reduction to allow accepted atoms through a connected shield
+	var/pass_delay_reduction = 0
+
+	circuit = /obj/item/circuitboard/machine/modular_shield_densifier
+
+/obj/machinery/modular_shield/module/examine(mob/user)
+	. = ..()
+	. +="it can be activated up close to scan the user to later allow their molecules to pass through the shield"
+
+//to-do eventually add an alt attack that allows the player to take out the scanner and scan objects with limited range, similar to wall mounted defibs
+/obj/machinery/modular_shield/module/densifier/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(!user || !Adjacent(user))
+		return
+	if(user in scanned_atoms)
+		balloon_alert(user, "already scanned")
+		return
+	balloon_alert(user, "scanning")
+	if(do_after(user, 2 SECONDS))
+		LAZYOR(scanned_atoms, user)
+		balloon_alert(user, "success")
+		if(shield_generator)
+			shield_generator.calculate_boost()
+
+/obj/machinery/modular_shield/module/densifier/Destroy()
+	. = ..()
+	if(shield_generator)
+		LAZYREMOVE(shield_generator.allowed_atoms, scanned_atoms)
+		if(shield_generator.active)
+			shield_generator.deactivate_shields()
+
+/obj/machinery/modular_shield/module/densifier/RefreshParts()
+	. = ..()
+	pass_delay_reduction = initial(pass_delay_reduction)
+	for(var/datum/stock_part/scanning_module/new_scanner in component_parts)
+		pass_delay_reduction = new_scanner.tier * 1
+	if(shield_generator)
+		shield_generator.calculate_pass_delay()
 
 //The shield itself
 /obj/structure/emergency_shield/modular
@@ -775,3 +842,12 @@
 		return
 
 	shield_generator.shield_drain(15 / severity) //Light is 2 heavy is 1, note emp is usually a large aoe, tweak the number if not enough damage
+
+/obj/structure/emergency_shield/modular/Bumped(atom/movable/AM)
+	. = ..()
+	if(isnull(shield_generator))
+		qdel(src)
+	if(AM in shield_generator.allowed_atoms)
+		if(ismob(AM))
+			if(do_after(AM, shield_generator.pass_delay SECONDS, src))
+				AM.forceMove(loc)
