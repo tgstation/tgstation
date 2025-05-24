@@ -135,11 +135,6 @@
 /datum/controller/subsystem/proc/PreInit()
 	return
 
-// Called after the system has successfully been initialized
-/datum/controller/subsystem/proc/PostInit()
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_SUBSYSTEM_POST_INITIALIZE)
-
 ///This is used so the mc knows when the subsystem sleeps. do not override.
 /datum/controller/subsystem/proc/ignite(resumed = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
