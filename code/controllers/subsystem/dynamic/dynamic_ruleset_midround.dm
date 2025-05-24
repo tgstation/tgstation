@@ -941,7 +941,7 @@
 		return FALSE
 	if(SEND_SIGNAL(candidate, COMSIG_MOB_MIND_BEFORE_MIDROUND_ROLL, src, pref_flag) & CANCEL_ROLL)
 		return FALSE
-	return TRUE
+	return ..()
 
 /// Checks if the candidate is a valid job for this ruleset - by default you probably only want crew members. (Return FALSE to mark the candidate invalid)
 /datum/dynamic_ruleset/midround/from_living/proc/job_check(mob/candidate)
