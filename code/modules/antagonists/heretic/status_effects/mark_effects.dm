@@ -220,8 +220,7 @@
 
 /datum/status_effect/eldritch/cosmic/on_effect()
 	new teleport_effect(get_turf(owner))
-	for(var/turf/spawn_turf in range(1, get_turf(owner)))
-		create_cosmic_field(get_turf(owner), owner)
+	create_cosmic_field(get_turf(owner), owner)
 	do_teleport(
 		owner,
 		get_turf(cosmic_diamond),
@@ -229,8 +228,7 @@
 		channel = TELEPORT_CHANNEL_MAGIC,
 	)
 	new teleport_effect(get_turf(owner))
-	for(var/turf/spawn_turf in range(1, get_turf(owner)))
-		create_cosmic_field(get_turf(owner), owner)
+	owner.Paralyze(2 SECONDS)
 	return ..()
 
 // MARK OF LOCK
