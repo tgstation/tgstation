@@ -830,7 +830,7 @@
 
 /obj/item/toy/plush/monkey
 	name = "monkey plushie"
-	desc = "Its tag reads: 'Oop eek! I'm a chimpanzee!', with 'Now in JUMBO SIZE!' on the flipside."
+	desc = "The tag reads: 'Oop eek! I'm a chimpanzee!', with 'Now in JUMBO SIZE!' on the flipside."
 	w_class = WEIGHT_CLASS_BULKY
 	throw_range = 2
 	throw_speed = 1
@@ -839,6 +839,7 @@
 	attack_verb_continuous = list("Oops", "Eeks")
 	attack_verb_simple = list("Oop", "Eek")
 	squeak_override = list(SFX_SCREECH=1)
+	/// if the monkey ate a mimana and has changed nationality
 	var/french = FALSE
 
 /obj/item/toy/plush/monkey/item_interaction(mob/living/feeder, obj/item/food/grown/banana/nana, list/modifiers)
@@ -855,17 +856,17 @@
 		do_teleport(src, get_turf(src), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
 	else if(istype(nana, /obj/item/food/grown/banana/mime) && !french)
 		name = "peluche de singe"
-		desc = "Son étiquette indique: 'Oop eek! Je suis un chimpanzé!', avec 'Maintenant en TAILLE JUMBO!' sur l'autre face."
+		desc = "L'étiquette indique: 'Oop eek! Je suis un chimpanzé!', avec 'Maintenant en TAILLE JUMBO!' sur l'autre face."
 		french = TRUE
 	// throw the peel at a random mob, or a random turf if there are none
 	var/obj/item/grown/bananapeel/peel = new nana.trash_type(get_turf(src))
 	var/list/oviewers = oviewers(peel.throw_range, src)
 	var/throw_src = src
 	// if a player holds the plushie, the throw source will be the player
-	if(istype(loc, /mob/living))
+	if(isliving(loc))
 		oviewers = oviewers(loc)
 		throw_src = loc
-	if(oviewers.len > 0 && locate(feeder) in oviewers)
+	if(oviewers.len > 0 && (locate(feeder) in oviewers))
 		oviewers -= feeder // remove feeder from targetables
 	peel.throw_at(oviewers.len == 0 ? get_ranged_target_turf(throw_src, pick(GLOB.alldirs), peel.throw_range) : pick(oviewers), peel.throw_range, peel.throw_speed, quickstart = FALSE)
 	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
