@@ -321,8 +321,8 @@
 	spawn_type = /obj/item/cigarette/robustgold
 
 /obj/item/storage/fancy/cigarettes/cigpack_greytide
-	name = "\improper Grey Mainthols"
-	desc = "A cultured pack of smokes."
+	name = "\improper Grey Mainthol packet"
+	desc = "The thin grey line."
 	icon_state = "greytide"
 	base_icon_state = "greytide"
 	spawn_type = /obj/item/cigarette/greytide

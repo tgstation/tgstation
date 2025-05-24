@@ -638,17 +638,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Robust brand cigarette."
 
 /obj/item/cigarette/greytide
-    name = "thin grey ciggy"
-    desc = "Made by hand, with a funky smell."
+    name = "grey mainthol"
+    desc = "Made by hand, has a funky smell."
     lung_harm = 2.5
     list_reagents = null
 
 /obj/item/cigarette/greytide/Initialize(mapload)
     . = ..()
     reagents?.add_reagent(/datum/reagent/drug/nicotine, 15)
-    reagents?.add_reagent(/datum/reagent/medicine/oculine, 1.5)
+    reagents?.add_reagent(/datum/reagent/medicine/oculine, 1) // Very small so the healing is almost imperceptible.
 
-    if (prob(40))
+    if (prob(40)) //This rolls a 40% chance to include one of these chems for each cigarette in a pack.
         var/list/chems = list(
             /datum/reagent/toxin/fentanyl = 3,
             /datum/reagent/drug/aranesp = 2,
