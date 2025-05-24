@@ -9,7 +9,7 @@
 
 	sound = 'sound/effects/magic/cosmic_expansion.ogg'
 	school = SCHOOL_FORBIDDEN
-	cooldown_time = 35 SECONDS
+	cooldown_time = 30 SECONDS
 
 	invocation = "C'SM'S 'XP'ND!"
 	invocation_type = INVOCATION_SHOUT
