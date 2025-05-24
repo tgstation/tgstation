@@ -141,5 +141,25 @@ SUBSYSTEM_DEF(persistence)
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 
+///Returns the path to persistence maps directory based on current timestamp
+/datum/controller/subsystem/persistence/proc/get_current_persistence_map_directory()
+	var/realtime = world.realtime
+	var/texttime = time2text(realtime, "YYYY/MM/DD", TIMEZONE_UTC)
+	var/map_directory = "_maps/persistence/[texttime]/round-"
+	var/timestamp = replacetext(time_stamp(), ":", ".")
+	map_directory += "[timestamp]"
+	return map_directory
+
+/datum/controller/subsystem/persistence/proc/save_persistent_maps()
+	var/map_save_directory = get_current_persistence_map_directory()
+
+	//for(var/z in 2 to world.maxz) // try to disable centcomm (z_level = 1) but ignore it for now
+	var/map = write_map(1, 1, 2, world.maxx, world.maxy, 4) // keep in mind, multi-z maps like planets need to save their map from start_z to end_z
+	var/file_path = "[map_save_directory]/2.dmm"
+	rustg_file_write(map, file_path)
+
+ADMIN_VERB(map_export_all, R_DEBUG, "Map Export All", "Select a part of the map by coordinates and download it.", ADMIN_CATEGORY_DEBUG)
+	SSpersistence.save_persistent_maps()
+
 #undef FILE_RECENT_MAPS
 #undef KEEP_ROUNDS_MAP
