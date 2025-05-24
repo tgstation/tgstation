@@ -488,10 +488,11 @@
 		return NONE
 	if (!is_type_in_typecache(interacting_with, ovens))
 		return NONE
-	if (istype(interacting_with, /obj/singularity) && get_dist(user, interacting_with) < 10)
+	if (istype(interacting_with, /obj/singularity) || istype(interacting_with, /obj/energy_ball) && get_dist(user, interacting_with) < 10)
 		to_chat(user, span_notice("You send [held_sausage] towards [interacting_with]."))
 		playsound(src, 'sound/items/tools/rped.ogg', 50, TRUE)
 		beam = user.Beam(interacting_with, icon_state = "rped_upgrade", time = 10 SECONDS)
+		finish_roasting(user, interacting_with)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
