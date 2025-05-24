@@ -796,7 +796,7 @@
 	if(shield_generator)
 		shield_generator.calculate_pass_delay()
 
-/obj/machinery/modular_shield/module/well/update_icon_state()
+/obj/machinery/modular_shield/module/densifier/update_icon_state()
 	. = ..()
 	if(isnull(shield_generator) || (machine_stat & NOPOWER))
 		icon_state = "densifier_off_[panel_open ? "open" : "closed"]"
