@@ -819,7 +819,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/cigbutt/greycigbutt
 	name = "butt"
 	desc = "It's low tide, now."
-		icon_state = "cigbutt"
+	icon_state = "cigbutt"
 
 /obj/item/cigbutt/roach/Initialize(mapload)
 	. = ..()
