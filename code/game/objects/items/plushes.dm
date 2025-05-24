@@ -857,7 +857,9 @@
 		name = "peluche de singe"
 		desc = "Son étiquette indique: 'Oop eek! Je suis un chimpanzé!', avec 'Maintenant en TAILLE JUMBO!' sur l'autre face."
 		french = TRUE
-	var/list/oviewers = oviewers(src)
+	// throw the peel at a random mob, or a random turf if there are none
+	var/obj/item/grown/bananapeel/peel = new nana.trash_type(get_turf(src))
+	var/list/oviewers = oviewers(peel.throw_range, src)
 	var/throw_src = src
 	// if a player holds the plushie, the throw source will be the player
 	if(istype(loc, /mob/living))
@@ -865,8 +867,6 @@
 		throw_src = loc
 	if(oviewers.len > 0 && locate(feeder) in oviewers)
 		oviewers -= feeder // remove feeder from targetables
-	// throw the peel at a random mob, or a random turf if there are none
-	var/obj/item/grown/peel = new nana.trash_type(get_turf(throw_src))
 	peel.throw_at(oviewers.len == 0 ? get_ranged_target_turf(throw_src, pick(GLOB.alldirs), peel.throw_range) : pick(oviewers), peel.throw_range, peel.throw_speed, quickstart = FALSE)
 	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
 	spasm_animation(5 SECONDS)
