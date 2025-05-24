@@ -642,7 +642,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "Made by hand, has a funky smell."
 	lung_harm = 2.5
 	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/medicine/oculine = 1)
-	var/list/static/possible_reagents = list(
+	var/static/list/possible_reagents = list(
 		/datum/reagent/toxin/fentanyl = 2,
 		/datum/reagent/glitter = 2,
 		/datum/reagent/drug/aranesp = 2,
