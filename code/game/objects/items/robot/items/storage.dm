@@ -291,9 +291,9 @@
 	desc = "A special apparatus for carrying and manipulating circuit boards and power cells."
 	icon_state = "borg_hardware_apparatus"
 	storable = list(/obj/item/circuitboard,
-					/obj/item/electronics,
-					/obj/item/stock_parts/power_store,
-				)
+		/obj/item/electronics,
+		/obj/item/stock_parts/power_store,
+	)
 
 /obj/item/borg/apparatus/circuit/Initialize(mapload)
 	update_appearance()
