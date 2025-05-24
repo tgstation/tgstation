@@ -2,8 +2,8 @@
 	name = "heavy diving helmet"
 	icon = 'icons/obj/clothing/head/spacehelm.dmi'
 	worn_icon = 'icons/mob/clothing/head/spacehelm.dmi'
-	icon_state = "spaceold"
-	inhand_icon_state = "space_helmet"
+	icon_state = "diving"
+	inhand_icon_state = null
 	desc = "A waterproof helmet with UV shielding to protect your eyes from nearby lightning strikes."
 	clothing_flags = THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
@@ -38,7 +38,7 @@
 /obj/item/clothing/suit/diving
 	name = "heavy diving suit"
 	desc = "A waterproof suit that allows the user to navigate depths efficiently."
-	icon_state = "spaceold"
+	icon_state = "diving"
 	icon = 'icons/obj/clothing/suits/spacesuit.dmi'
 	lefthand_file = 'icons/mob/inhands/clothing/suits_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing/suits_righthand.dmi'
@@ -98,6 +98,6 @@
 /datum/element/diving_gear/proc/on_drop(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(user, TRAIT_SWIMMER, ELEMENT_TRAIT(source))
-	if (!HAS_TRAIT(user, TRAIT_SWIMMER))
+	if (!HAS_TRAIT(user, TRAIT_SWIMMER) && istype(user.loc, /turf/open/water) && !HAS_TRAIT(user.loc, TRAIT_IMMERSE_STOPPED))
 		user.add_movespeed_modifier(/datum/movespeed_modifier/swimming_deep)
 
