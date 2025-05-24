@@ -231,7 +231,7 @@
 	for(var/mob/candidate as anything in selected_candidates)
 		var/datum/mind/candidate_mind = get_candidate_mind(candidate)
 		prepare_for_role(candidate_mind)
-		LAZYADDASSOCLIST(SSjob.prevented_occupations, candidate_mind, get_blacklisted_roles()) // this is what makes sure you can't roll traitor as a sec-off
+		LAZYADDASSOC(SSjob.prevented_occupations, candidate_mind, get_blacklisted_roles()) // this is what makes sure you can't roll traitor as a sec-off
 		selected_minds += candidate_mind
 		antag_candidates -= candidate
 
@@ -273,7 +273,7 @@
 	var/list/valid_candidates = list()
 	for(var/mob/candidate as anything in antag_candidates)
 		var/client/candidate_client = GET_CLIENT(candidate)
-		if(!candidate_client || !candidate.mind)
+		if(isnull(candidate_client))
 			continue
 		if(candidate_client.get_remaining_days(minimum_required_age) > 0)
 			continue
@@ -313,6 +313,7 @@
  * Any additional checks to see if this player is a valid candidate for this ruleset
  */
 /datum/dynamic_ruleset/proc/is_valid_candidate(mob/candidate, client/candidate_client)
+	SHOULD_CALL_PARENT(TRUE)
 	return TRUE
 
 /**

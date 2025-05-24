@@ -6,11 +6,15 @@
 	var/solo = FALSE
 
 /datum/dynamic_ruleset/roundstart/is_valid_candidate(mob/candidate, client/candidate_client)
+	if(isnull(candidate.mind))
+		return FALSE
 	// Checks that any other roundstart ruleset hasn't already picked this guy
 	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in SSdynamic.queued_rulesets)
 		if(candidate.mind in ruleset.selected_minds)
 			return FALSE
-	return TRUE
+	if(candidate.mind.assigned_role.title in get_blacklisted_roles())
+		return FALSE
+	return ..()
 
 /datum/dynamic_ruleset/roundstart/traitor
 	name = "Traitors"

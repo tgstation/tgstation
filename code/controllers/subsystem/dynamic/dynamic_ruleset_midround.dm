@@ -929,7 +929,7 @@
 	return GLOB.alive_player_list
 
 /datum/dynamic_ruleset/midround/from_living/is_valid_candidate(mob/candidate, client/candidate_client)
-	if(candidate.stat == DEAD)
+	if(candidate.stat == DEAD || isnull(candidate.mind))
 		return FALSE
 	// only pick members of the crew
 	if(!job_check(candidate))
@@ -945,7 +945,11 @@
 
 /// Checks if the candidate is a valid job for this ruleset - by default you probably only want crew members. (Return FALSE to mark the candidate invalid)
 /datum/dynamic_ruleset/midround/from_living/proc/job_check(mob/candidate)
-	return (candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER)
+	if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
+		return FALSE
+	if(candidate.mind.assigned_role.title in get_blacklisted_roles())
+		return FALSE
+	return TRUE
 
 /// Checks if the candidate is an antag - most of the time you don't want to double dip. (Return FALSE to mark the candidate invalid)
 /datum/dynamic_ruleset/midround/from_living/proc/antag_check(mob/candidate)

@@ -12,6 +12,13 @@
 		return FALSE
 	return ..()
 
+/datum/dynamic_ruleset/latejoin/is_valid_candidate(mob/candidate, client/candidate_client)
+	if(isnull(candidate.mind))
+		return FALSE
+	if(candidate.mind.assigned_role.title in get_blacklisted_roles())
+		return FALSE
+	return ..()
+
 /datum/dynamic_ruleset/latejoin/traitor
 	name = "Traitor"
 	config_tag = "Latejoin Traitor"

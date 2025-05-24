@@ -15,6 +15,7 @@
 
 /datum/antagonist/brother/create_team(datum/team/brother_team/new_team)
 	if(!new_team)
+		team = new()
 		return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
