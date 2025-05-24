@@ -323,14 +323,15 @@
 	else if(istype(KA.loc, /mob/living/basic/mining_drone))
 		to_chat(user, span_notice("The modkit you're trying to install is not rated for minebot use."))
 		return FALSE
-	if(denied_type)
-		var/number_of_denied = 0
-		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
-			if(istype(modkit_upgrade, denied_type))
-				number_of_denied++
-			if(number_of_denied >= maximum_of_type)
-				. = FALSE
-				break
+	if(!denied_type)
+		denied_type = src
+	var/number_of_denied = 0
+	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
+		if(istype(modkit_upgrade, denied_type))
+			number_of_denied++
+		if(number_of_denied >= maximum_of_type)
+			. = FALSE
+			break
 	if(KA.get_remaining_mod_capacity() >= cost)
 		if(.)
 			if(transfer_to_loc && !user.transferItemToLoc(src, KA))
@@ -368,6 +369,7 @@
 	desc = "Increases the range of a kinetic accelerator when installed."
 	modifier = 1
 	cost = 25
+	maximum_of_type = 99
 
 /obj/item/borg/upgrade/modkit/range/modify_projectile(obj/projectile/kinetic/K)
 	K.range += modifier
@@ -378,6 +380,7 @@
 	name = "damage increase"
 	desc = "Increases the damage of kinetic accelerator when installed."
 	modifier = 10
+	maximum_of_type = 99
 
 /obj/item/borg/upgrade/modkit/damage/modify_projectile(obj/projectile/kinetic/K)
 	K.damage += modifier
@@ -389,6 +392,7 @@
 	desc = "Decreases the cooldown of a kinetic accelerator. Not rated for minebot use."
 	modifier = 3.2
 	minebot_upgrade = FALSE
+	maximum_of_type = 99
 
 // Recalculate recharge time after adding or removing cooldown mods.
 /obj/item/borg/upgrade/modkit/cooldown/proc/get_recharge_time(obj/item/gun/energy/recharge/kinetic_accelerator/KA)
@@ -417,7 +421,6 @@
 	desc = "Decreases the cooldown of a kinetic accelerator. Only rated for minebot use."
 	icon_state = "door_electronics"
 	icon = 'icons/obj/devices/circuitry_n_data.dmi'
-	denied_type = /obj/item/borg/upgrade/modkit/cooldown/minebot
 	modifier = 10
 	cost = 0
 	minebot_upgrade = TRUE
@@ -428,7 +431,7 @@
 /obj/item/borg/upgrade/modkit/aoe
 	modifier = 0
 	cost = 10
-	maximum_of_type = 1
+	denied_type = /obj/item/borg/upgrade/modkit/aoe
 	var/turf_aoe = FALSE
 	var/stats_stolen = FALSE
 
@@ -476,7 +479,6 @@
 /obj/item/borg/upgrade/modkit/aoe/turfs
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
-	denied_type = /obj/item/borg/upgrade/modkit/aoe/turfs
 	turf_aoe = TRUE
 
 /obj/item/borg/upgrade/modkit/aoe/mobs
@@ -522,7 +524,6 @@
 /obj/item/borg/upgrade/modkit/cooldown/repeater
 	name = "rapid repeater"
 	desc = "Quarters the kinetic accelerator's cooldown on striking a living target, but greatly increases the base cooldown."
-	denied_type = /obj/item/borg/upgrade/modkit/cooldown/repeater
 	modifier = -14 //Makes the cooldown 3 seconds(with no cooldown mods) if you miss. Don't miss.
 	cost = 50
 
@@ -557,7 +558,6 @@
 /obj/item/borg/upgrade/modkit/resonator_blasts
 	name = "resonator blast"
 	desc = "Causes kinetic accelerator shots to leave and detonate resonator blasts."
-	denied_type = /obj/item/borg/upgrade/modkit/resonator_blasts
 	cost = 30
 	modifier = 0.25 //A bonus 15 damage if you burst the field on a target, 60 if you lure them into it.
 
@@ -573,7 +573,6 @@
 /obj/item/borg/upgrade/modkit/bounty
 	name = "death syphon"
 	desc = "Killing or assisting in killing a creature permanently increases your damage against that type of creature."
-	denied_type = /obj/item/borg/upgrade/modkit/bounty
 	modifier = 1.25
 	cost = 30
 	var/maximum_bounty = 25
@@ -614,7 +613,6 @@
 	name = "decrease pressure penalty"
 	desc = "A syndicate modification kit that increases the damage a kinetic accelerator does in high pressure environments."
 	modifier = 2
-	denied_type = /obj/item/borg/upgrade/modkit/indoors
 	maximum_of_type = 2
 	cost = 35
 
@@ -627,7 +625,6 @@
 	name = "modified trigger guard"
 	desc = "Allows creatures normally incapable of firing guns to operate the weapon when installed."
 	cost = 20
-	denied_type = /obj/item/borg/upgrade/modkit/trigger_guard
 
 /obj/item/borg/upgrade/modkit/trigger_guard/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()
