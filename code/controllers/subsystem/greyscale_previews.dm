@@ -5,6 +5,7 @@
 
 SUBSYSTEM_DEF(greyscale_previews)
 	name = "Greyscale Previews"
+	flags = SS_NO_FIRE
 	init_stage = INITSTAGE_EARLY
 	dependencies = list(
 		/datum/controller/subsystem/processing/greyscale,
