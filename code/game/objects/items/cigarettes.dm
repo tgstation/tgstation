@@ -651,8 +651,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if (prob(40)) //This rolls a 40% chance to include one of these chems for each cigarette in a pack.
 		var/list/chems = list(
 			/datum/reagent/toxin/fentanyl = 3,
+			/datum/reagent/glitter = 3,
 			/datum/reagent/drug/aranesp = 2,
-			/datum/reagent/pax = 1,
+			/datum/reagent/consumable/laughter = 2,
 			/datum/reagent/medicine/insulin = 2,
 			/datum/reagent/drug/maint/powder = 2,
 			/datum/reagent/drug/maint/sludge = 2,
@@ -661,8 +662,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			/datum/reagent/drug/space_drugs = 2,
 			/datum/reagent/drug/pumpup = 2,
 			/datum/reagent/drug/kronkaine = 2,
-			/datum/reagent/consumable/laughter = 3,
-			/datum/reagent/glitter = 3
+			/datum/reagent/consumable/mintextract = 2,
+			/datum/reagent/pax = 1
 		)
 
 		var/total_weight = 0
