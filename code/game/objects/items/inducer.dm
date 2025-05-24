@@ -256,7 +256,6 @@
 
 	var/obj/item/stock_parts/power_store/our_cell = get_cell(src, user)
 	if(!QDELETED(our_cell))
-		. += span_notice("The cell can be removed with a crowbar.")
 		. += span_notice("Its display shows: [display_energy(our_cell.charge)].")
 		if(opened)
 			. += span_notice("Plasma sheets can be used to recharge the cell.")
