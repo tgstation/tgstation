@@ -641,46 +641,29 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "grey mainthol"
 	desc = "Made by hand, has a funky smell."
 	lung_harm = 2.5
-	list_reagents = null
+	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/medicine/oculine = 1)
+	var/list/static/possible_reagents = list(
+		/datum/reagent/toxin/fentanyl = 3,
+		/datum/reagent/glitter = 3,
+		/datum/reagent/drug/aranesp = 2,
+		/datum/reagent/consumable/laughter = 2,
+		/datum/reagent/medicine/insulin = 2,
+		/datum/reagent/drug/maint/powder = 2,
+		/datum/reagent/drug/maint/sludge = 2,
+		/datum/reagent/toxin/staminatoxin = 2,
+		/datum/reagent/toxin/leadacetate = 2,
+		/datum/reagent/drug/space_drugs = 2,
+		/datum/reagent/drug/pumpup = 2,
+		/datum/reagent/drug/kronkaine = 2,
+		/datum/reagent/consumable/mintextract = 2,
+		/datum/reagent/pax = 1
+	)
 
 /obj/item/cigarette/greytide/Initialize(mapload)
 	. = ..()
-	reagents?.add_reagent(/datum/reagent/drug/nicotine, 15)
-	reagents?.add_reagent(/datum/reagent/medicine/oculine, 1) // Very small so the healing is almost imperceptible.
 
-	if (prob(40)) //This rolls a 40% chance to include one of these chems for each cigarette in a pack.
-		var/list/chems = list(
-			/datum/reagent/toxin/fentanyl = 3,
-			/datum/reagent/glitter = 3,
-			/datum/reagent/drug/aranesp = 2,
-			/datum/reagent/consumable/laughter = 2,
-			/datum/reagent/medicine/insulin = 2,
-			/datum/reagent/drug/maint/powder = 2,
-			/datum/reagent/drug/maint/sludge = 2,
-			/datum/reagent/toxin/staminatoxin = 2,
-			/datum/reagent/toxin/leadacetate = 2,
-			/datum/reagent/drug/space_drugs = 2,
-			/datum/reagent/drug/pumpup = 2,
-			/datum/reagent/drug/kronkaine = 2,
-			/datum/reagent/consumable/mintextract = 2,
-			/datum/reagent/pax = 1
-		)
-
-		var/total_weight = 0
-		for (var/chem in chems)
-			total_weight += chems[chem]
-
-		var/random_roll = rand(1, total_weight)
-		var/cumulative = 0
-		var/chosen = null
-
-		for (var/chem in chems)
-			cumulative += chems[chem]
-			if (random_roll <= cumulative)
-				chosen = chem
-				break
-
-		reagents?.add_reagent(chosen, rand(10, 15))
+	if(prob(40))
+		reagents.add_reagent(pick_weight(possible_reagents), rand(10, 15))
 
 /obj/item/cigarette/robustgold
 	desc = "A Robust Gold brand cigarette."
