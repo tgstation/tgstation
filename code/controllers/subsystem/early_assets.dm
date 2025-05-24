@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(early_assets)
 	name = "Early Assets"
 	dependencies = list(
 		/datum/controller/subsystem/processing/reagents,
-		/datum/controller/subsystem/processing/greyscale,
+		/datum/controller/subsystem/greyscale_previews,
 	)
 	dependents = list(
 		/datum/controller/subsystem/mapping,
