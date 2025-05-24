@@ -22,6 +22,7 @@
 	melee_damage_upper = 40
 	speed = 5
 	move_to_delay = 3
+	ranged = TRUE
 	pixel_x = -16
 	base_pixel_x = -16
 	crusher_loot = list(/obj/structure/closet/crate/necropolis/dragon/crusher)
