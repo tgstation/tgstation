@@ -13108,6 +13108,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jotai@npm:^2.12.4":
+  version: 2.12.4
+  resolution: "jotai@npm:2.12.4"
+  peerDependencies:
+    "@types/react": ">=17.0.0"
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 10c0/b03cbfe1f5b6a1065bf0f73aba1aaa0dc46843f4bfc1a54aa9cc24ca1c9416535c40c1de143f67c8de77622f6f24298dd47286557bd52f94af2109b4120d3bb3
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -19924,6 +19939,7 @@ __metadata:
     file-extension-icon-js: "npm:^1.1.6"
     highlight.js: "npm:^11.11.1"
     jest: "npm:^29.7.0"
+    jotai: "npm:^2.12.4"
     js-yaml: "npm:^4.1.0"
     marked: "npm:^15.0.11"
     marked-base-url: "npm:^1.1.6"

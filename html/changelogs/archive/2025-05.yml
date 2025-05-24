@@ -584,3 +584,47 @@
   - refactor: Slightly adjusts the logic of the narcolepsy trauma
   - balance: The narcolepsy trauma its symptoms can now be softened by being caffeinated,
       and modafinil or synaptizine suppress it entirely
+2025-05-23:
+  00-Steven:
+  - qol: Added screentips for shredding gauze into cloth
+  - bugfix: Lidless coffee cups from the impressa coffeemaker or somesuch no longer
+      take two clicks to put a lid on them.
+  - qol: Added screentips for toggling coffee cup lids.
+  Absolucy:
+  - bugfix: Prosopagnosia no longer allows you to somehow recognize people in infiltrator
+      modsuits.
+  Aliceee2ch:
+  - bugfix: Now if you are not near the console the disk will drop in its place instead
+      of your location
+  Cirrial:
+  - rscadd: Gorillas can now throw things and offer items to players.
+  - refactor: Moved throwing and offering item code to be based on living mobs, not
+      just carbon mobs.
+  Melbert:
+  - bugfix: You (can't) baton furniture
+  NamelessFairy:
+  - qol: Inspecting a hand of cards now tells you what cards you can see in it.
+  - bugfix: Adding cards to a hand no longer automatically flips them.
+  Retrino:
+  - qol: moved some xenobiology equipment downstairs on icebox
+  Sothanforax:
+  - rscadd: Added the ability to jam your coworkers into washing machines
+  jlsnow301:
+  - bugfix: The produce console's layout has been adjusted a bit for an improved ordering
+      experience.
+  sqnztb:
+  - rscadd: 'New holiday for May 22: Goth Day.'
+2025-05-24:
+  Ezel:
+  - bugfix: Adds missing dragnet beacon to catwalk
+  - bugfix: Adds missing HoS office authenication device.
+  - map: Gives CE/CMO/RD their proper camera monitors
+  - map: Medbay Camera's is now its own proper network
+  - map: Removes a camera from Prison maintenance and Security closet
+  - map: Disables AI control on Prison Maintenance Door
+  - bugfix: Minisat Camera's now use the proper network
+  - bugfix: Engine Camera's now use the proper network
+  OnlineGirlfriend:
+  - image: update sprite for Screwdriver (drink)
+  SmArtKar:
+  - bugfix: Fixed ampersands in TM titles breaking the in-game issue report button
