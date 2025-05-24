@@ -1,0 +1,5 @@
+author: "Zergspower"
+delete-after: True
+changes:
+  - qol: "cyborg circuit upgrade can now handle cells as well, reduction in borg related rage from building APC's down by 400%"
+  - bugfix: "fixes borg inducers instantly depleting their cells, moves the inducer cell act to be to an internal cell to compensate for power differences"
