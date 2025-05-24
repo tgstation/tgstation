@@ -482,6 +482,13 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 	if(state_open)
 		close_machine()
 	set_occupant(joining_mob)
+	// // Jobs that hold stuff protection
+	// for(var/obj/item/thing in joining_mob.held_items)
+	// 	if(!joining_mob.equip_to_storage(thing, ITEM_SLOT_BACK, indirect_action = TRUE))
+	// 		thing.forceMove(loc)
+	// // Wheelchair protection
+	// joining_mob.buckled?.forceMove(loc)
+	// joining_mob.buckled?.unbuckle_all_mobs()
 	joining_mob.forceMove(src)
 	ADD_TRAIT(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING)
 	if(roundstart_job == JOB_CAPTAIN)

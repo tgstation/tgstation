@@ -6,14 +6,14 @@
 /obj/machinery/sleeper/cryo{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/reinforced,
 /area/shuttle/pod_1)
 "k" = (
 /obj/item/radio/intercom/directional/west,
 /obj/item/storage/pod/directional/east,
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/light/cold/dim/directional/east,
-/turf/open/floor/plating,
+/turf/open/floor/plating/reinforced,
 /area/shuttle/pod_1)
 "v" = (
 /obj/structure/window/reinforced/plasma/plastitanium,
@@ -26,7 +26,7 @@
 	},
 /obj/machinery/status_display/evac/directional/east,
 /obj/structure/chair/comfy/shuttle,
-/turf/open/floor/plating,
+/turf/open/floor/plating/reinforced,
 /area/shuttle/pod_1)
 "U" = (
 /obj/machinery/power/shuttle_engine/propulsion/burst{
@@ -37,7 +37,7 @@
 "Z" = (
 /obj/docking_port/mobile/pod{
 	dir = 2;
-	preferred_direction = 2
+	port_direction = 2
 	},
 /obj/machinery/door/airlock/survival_pod,
 /turf/open/floor/iron/smooth_large,

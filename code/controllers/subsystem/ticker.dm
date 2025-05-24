@@ -774,7 +774,7 @@ SUBSYSTEM_DEF(ticker)
 	help.shuttles["cargo"] = "cargo_torch"
 	help.config_min_users = 1
 	help.config_max_users = 999
-	config.maplist += help
+	config.maplist["NTSC Flashlight"] = help
 
 // I use this to do all the setup for me
 /proc/setup_event()

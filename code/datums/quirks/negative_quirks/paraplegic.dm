@@ -14,6 +14,10 @@
 	customization_options = list(/datum/preference/choiced/paraplegic)
 
 /datum/quirk/paraplegic/add_unique(client/client_source)
+	if(!isturf(quirk_holder.loc))
+		quirk_holder.equip_to_storage(new /obj/item/wheelchair, ITEM_SLOT_BACK, TRUE, TRUE, TRUE)
+		return
+
 	if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
 		quirk_holder.buckled.unbuckle_mob(quirk_holder)
 

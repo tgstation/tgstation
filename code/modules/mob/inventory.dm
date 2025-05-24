@@ -183,12 +183,12 @@
 	return hand_index
 
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_l_hand(obj/item/I, visuals_only = FALSE)
-	return put_in_hand(I, get_empty_held_index_for_side(LEFT_HANDS), visuals_only = visuals_only)
+/mob/proc/put_in_l_hand(obj/item/I, visuals_only = FALSE, forced = FALSE)
+	return put_in_hand(I, get_empty_held_index_for_side(LEFT_HANDS), visuals_only = visuals_only, forced = forced)
 
 //Puts the item into the first available right hand if possible and calls all necessary triggers/updates. returns 1 on success.
-/mob/proc/put_in_r_hand(obj/item/I, visuals_only = FALSE)
-	return put_in_hand(I, get_empty_held_index_for_side(RIGHT_HANDS), visuals_only = visuals_only)
+/mob/proc/put_in_r_hand(obj/item/I, visuals_only = FALSE, forced = FALSE)
+	return put_in_hand(I, get_empty_held_index_for_side(RIGHT_HANDS), visuals_only = visuals_only, forced = forced)
 
 /mob/proc/put_in_hand_check(obj/item/I)
 	return FALSE //nonliving mobs don't have hands
