@@ -752,7 +752,9 @@
 /obj/machinery/modular_shield/module/densifier
 	name = "modular shield densifier"
 	desc = "A hardlight manipulator with a built in scanner for radioactive dating, it helps the main generator detect and allow matter trying to pass through the shield, loss of this machine requires the shield to reset"
+	icon_state = "densifier_off_closed"
 	is_booster = TRUE
+
 	///The atoms currently scanned into this module
 	var/list/scanned_atoms
 	///The amount of time reduction to allow accepted atoms through a connected shield
@@ -793,6 +795,13 @@
 		pass_delay_reduction = new_scanner.tier * 1
 	if(shield_generator)
 		shield_generator.calculate_pass_delay()
+
+/obj/machinery/modular_shield/module/well/update_icon_state()
+	. = ..()
+	if(isnull(shield_generator) || (machine_stat & NOPOWER))
+		icon_state = "densifier_off_[panel_open ? "open" : "closed"]"
+		return
+	icon_state = "densifier_on_[panel_open ? "open" : "closed"]"
 
 //The shield itself
 /obj/structure/emergency_shield/modular
