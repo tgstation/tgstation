@@ -16,8 +16,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor belt."
 	layer = BELOW_OPEN_DOOR_LAYER
 	processing_flags = NONE
-	/// The current state of the switch.
+	/// The current state of the conveyor.
 	var/operating = CONVEYOR_OFF
+	/// The state a switch last told us to be in
+	var/last_command = CONVEYOR_OFF
 	/// This is the default (forward) direction, set by the map dir.
 	var/forwards
 	/// The opposite of forwards. It's set in a special var for corner belts, which aren't using the opposite direction when in reverse.
@@ -40,6 +42,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/wire_mode = FALSE
 	/// weakref to attached cable if wire mode
 	var/datum/weakref/attached_wire_ref
+	/// remembers if a wire is powering us or not
+	var/powered_wire = FALSE
 
 /obj/machinery/conveyor/Initialize(mapload, new_dir, new_id)
 	. = ..()
@@ -111,6 +115,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	processing_flags = START_PROCESSING_ON_INIT
 
 /obj/machinery/conveyor/auto/Initialize(mapload, newdir)
+	last_command = CONVEYOR_FORWARD
 	. = ..()
 	set_operating(TRUE)
 
@@ -242,7 +247,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(machine_stat & NOPOWER)
 		set_operating(FALSE)
 		return FALSE
-
+	if(operating != last_command)
+		set_operating(last_command)
 	update_appearance()
 	// If we're on, start conveying so moveloops on our tile can be refreshed if they stopped for some reason
 	if(operating != CONVEYOR_OFF)
@@ -386,8 +392,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return
 	if(powered())
 		powernet.load += active_power_usage
+		if(!powered_wire)
+			powered_wire = TRUE
+			power_change()
 	else
 		power_change()
+		powered_wire = FALSE
 
 
 /obj/machinery/conveyor/proc/update_cable()
@@ -488,6 +498,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /// Updates all conveyor belts that are linked to this switch, and tells them to start processing.
 /obj/machinery/conveyor_switch/proc/update_linked_conveyors()
 	for(var/obj/machinery/conveyor/belt in GLOB.conveyors_by_id[id])
+		belt.last_command = position
 		belt.set_operating(position)
 		belt.speed = conveyor_speed
 		CHECK_TICK
