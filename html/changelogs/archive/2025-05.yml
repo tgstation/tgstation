@@ -614,3 +614,17 @@
       experience.
   sqnztb:
   - rscadd: 'New holiday for May 22: Goth Day.'
+2025-05-24:
+  Ezel:
+  - bugfix: Adds missing dragnet beacon to catwalk
+  - bugfix: Adds missing HoS office authenication device.
+  - map: Gives CE/CMO/RD their proper camera monitors
+  - map: Medbay Camera's is now its own proper network
+  - map: Removes a camera from Prison maintenance and Security closet
+  - map: Disables AI control on Prison Maintenance Door
+  - bugfix: Minisat Camera's now use the proper network
+  - bugfix: Engine Camera's now use the proper network
+  OnlineGirlfriend:
+  - image: update sprite for Screwdriver (drink)
+  SmArtKar:
+  - bugfix: Fixed ampersands in TM titles breaking the in-game issue report button
