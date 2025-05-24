@@ -367,16 +367,19 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 	var/list/visual_output = list()
 	var/summed_usage = 0
 	var/misc_usage = 0
+	var/misc_count = 0
 	for(var/subsystem_path as anything in subsystem_info)
 		var/subsystem_usage = subsystem_info[subsystem_path]
 		summed_usage += subsystem_usage
 		if(subsystem_usage >= 1)
 			var/trimmed_path = replacetext("[subsystem_path]", "/datum/controller/subsystem/", "")
-			visual_output += "<b>[trimmed_path]</b> -> ([subsystem_usage * world.tick_lag]ms)"
+			visual_output += "<b>[trimmed_path]</b> -> ([subsystem_usage]%)"
 		else
 			misc_usage += subsystem_usage
-	visual_output += "<b>Misc</b> -> ([misc_usage * world.tick_lag]ms)"
-	visual_output += "<b>Internal</b> -> ([(bar_value - summed_usage) * world.tick_lag]ms)"
+			misc_count += 1
+	if(misc_count)
+		visual_output += "<b>Misc [misc_count]x</b> -> ([misc_usage]%)"
+	visual_output += "<b>Internal</b> -> ([bar_value - summed_usage]%)"
 	return visual_output.Join("<br>")
 
 /atom/movable/screen/graph_part/bar/multi_segment
@@ -454,7 +457,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 /atom/movable/screen/graph_part/bar/multi_segment/verbs/get_tooltip_content()
 	var/list/visual_output = list()
 	for(var/proc_path as anything in verb_info)
-		visual_output += "<b>[proc_path]</b> -> ([verb_info[proc_path] * world.tick_lag]ms)"
+		visual_output += "<b>[proc_path]</b> -> ([verb_info[proc_path]]%)"
 	return visual_output.Join("<br>")
 
 /atom/movable/screen/graph_part/bar/multi_segment/tick
@@ -481,7 +484,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/graph_part)
 /atom/movable/screen/graph_part/bar/multi_segment/tick/get_tooltip_content()
 	var/list/visual_output = list()
 	for(var/segment as anything in tick_segments)
-		visual_output += "<b>[segment]</b> -> ([tick_segments[segment] * world.tick_lag]ms)"
+		visual_output += "<b>[segment]</b> -> ([tick_segments[segment]]%)"
 	return visual_output.Join("<br>")
 
 /atom/movable/screen/graph_part/bar_mask
