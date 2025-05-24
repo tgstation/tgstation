@@ -8,10 +8,10 @@
 
 import fs from 'fs';
 import https from 'https';
-import { env } from 'process';
 import Juke from './juke/index.js';
 import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond.js';
 import { yarn } from './lib/yarn.js';
+import { bun } from './lib/bun.js';
 
 const TGS_MODE = process.env.CBT_BUILD_MODE === 'TGS';
 
@@ -319,6 +319,43 @@ export const AutowikiTarget = new Juke.Target({
   },
 })
 
+export const BunInstallTarget = new Juke.Target({
+  onlyWhen: () => {
+    const files = Juke.glob('./tools/build/node_modules/.bin/bun');
+    return files.length == 0;
+  },
+  inputs: [
+    'tools/build/package.json',
+    'tools/build/package-lock.json',
+  ],
+  outputs: [
+    'tools/build/node_modules/.bin/bun',
+  ],
+  executes: async () => {
+    Juke.logger.info('Bun not found, installing...');
+    const result = await Juke.exec('npm', ['install'], {
+      cwd: './tools/build',
+      shell: true,
+    });
+    if (!result || result.code !== 0) {
+      Juke.logger.error(`bun install failed with code ${result.code}`);
+      throw new Juke.ExitCode(1);
+    }
+    Juke.logger.info('Bun installed successfully');
+  },
+});
+
+export const BunTarget = new Juke.Target({
+  dependsOn: [BunInstallTarget],
+  parameters: [CiParameter],
+  inputs: [
+    'tgui/**/package.json',
+  ],
+  executes: ({ get }) => {
+    return bun('install', get(CiParameter));
+  },
+})
+
 export const YarnTarget = new Juke.Target({
   parameters: [CiParameter],
   inputs: [
@@ -333,9 +370,8 @@ export const YarnTarget = new Juke.Target({
 });
 
 export const TgFontTarget = new Juke.Target({
-  dependsOn: [YarnTarget],
+  dependsOn: [BunTarget],
   inputs: [
-    'tgui/.yarn/install-target',
     'tgui/packages/tgfont/**/*.+(js|mjs|svg)',
     'tgui/packages/tgfont/package.json',
   ],
@@ -344,7 +380,7 @@ export const TgFontTarget = new Juke.Target({
     'tgui/packages/tgfont/dist/tgfont.woff2',
   ],
   executes: async () => {
-    await yarn('tgfont:build');
+    await bun('tgfont:build');
     fs.mkdirSync('tgui/packages/tgfont/static', { recursive: true });
     fs.copyFileSync('tgui/packages/tgfont/dist/tgfont.css', 'tgui/packages/tgfont/static/tgfont.css');
     fs.copyFileSync('tgui/packages/tgfont/dist/tgfont.woff2', 'tgui/packages/tgfont/static/tgfont.woff2');
@@ -352,9 +388,8 @@ export const TgFontTarget = new Juke.Target({
 });
 
 export const TguiTarget = new Juke.Target({
-  dependsOn: [YarnTarget],
+  dependsOn: [BunTarget],
   inputs: [
-    'tgui/.yarn/install-target',
     'tgui/rspack.config.cjs',
     'tgui/**/package.json',
     'tgui/packages/**/*.+(js|cjs|ts|tsx|jsx|scss)',
@@ -367,7 +402,7 @@ export const TguiTarget = new Juke.Target({
     'tgui/public/tgui-say.bundle.css',
     'tgui/public/tgui-say.bundle.js',
   ],
-  executes: () => yarn('tgui:build'),
+  executes: () => bun('tgui:build'),
 });
 
 export const TguiEslintTarget = new Juke.Target({

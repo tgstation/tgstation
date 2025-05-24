@@ -59,7 +59,6 @@ module.exports = (env = {}, argv) => {
       assetModuleFilename: '[name][ext]',
     },
     resolve: {
-      pnp: true,
       extensions: ['.tsx', '.ts', '.js', '.jsx'],
       alias: {
         tgui: path.resolve(__dirname, './packages/tgui'),
