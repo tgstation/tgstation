@@ -752,6 +752,7 @@
 /obj/machinery/modular_shield/module/densifier
 	name = "modular shield densifier"
 	desc = "A hardlight manipulator with a built in scanner for radioactive dating, it helps the main generator detect and allow matter trying to pass through the shield, loss of this machine requires the shield to reset"
+	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "densifier_off_closed"
 	is_booster = TRUE
 
