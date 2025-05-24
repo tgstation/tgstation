@@ -70,11 +70,13 @@
 /obj/item/clothing/shoes/glow
 	name = "glow shoes"
 	desc = "t3h c00L3st sh03z j00'LL 3v3r f1nd."
-	icon_state = "glow_shoes"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	icon_state = "/obj/item/clothing/shoes/glow"
+	post_init_icon_state = "glow_shoes"
 	inhand_icon_state = null
-	greyscale_colors = "#4A3A40#8EEEEE"
 	greyscale_config = /datum/greyscale_config/glow_shoes
 	greyscale_config_worn = /datum/greyscale_config/glow_shoes/worn
+	greyscale_colors = "#4A3A40#8EEEEE"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/glow/Initialize(mapload)
@@ -100,11 +102,13 @@
 /obj/item/clothing/shoes/jester_shoes
 	name = "jester shoes"
 	desc = "Shoes that jingle with every step!!"
-	icon_state = "jester_map"
+	icon = 'icons/map_icons/clothing/shoes.dmi'
+	icon_state = "/obj/item/clothing/shoes/jester_shoes"
+	post_init_icon_state = "jester_map"
 	inhand_icon_state = null
-	greyscale_colors = "#00ff00#ff0000"
 	greyscale_config = /datum/greyscale_config/jester_shoes
 	greyscale_config_worn = /datum/greyscale_config/jester_shoes/worn
+	greyscale_colors = "#00ff00#ff0000"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/shoes/jester_shoes/Initialize(mapload)

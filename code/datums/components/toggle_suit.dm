@@ -18,7 +18,7 @@
 	atom_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
 	src.toggle_noun = toggle_noun
-	src.base_icon_state = atom_parent.base_icon_state || atom_parent.icon_state
+	src.base_icon_state = atom_parent.base_icon_state || atom_parent.post_init_icon_state || atom_parent.icon_state
 
 /datum/component/toggle_icon/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
