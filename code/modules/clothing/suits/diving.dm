@@ -80,6 +80,7 @@
 		var/mob/wearer = item_target.loc
 		if(!item_target.slot_flags || wearer.get_item_by_slot(item_target.slot_flags) == item_target)
 			ADD_TRAIT(wearer, TRAIT_SWIMMER, ELEMENT_TRAIT(target))
+			wearer.remove_movespeed_modifier(/datum/movespeed_modifier/swimming_deep)
 
 /datum/element/diving_gear/Detach(obj/item/source)
 	. = ..()
@@ -87,6 +88,9 @@
 
 	if(isliving(source.loc))
 		REMOVE_TRAIT(source.loc, TRAIT_SWIMMER, ELEMENT_TRAIT(source))
+		var/mob/wearer = source.loc
+		if (!HAS_TRAIT(wearer, TRAIT_SWIMMER) && istype(wearer.loc, /turf/open/water) && !HAS_TRAIT(wearer.loc, TRAIT_IMMERSE_STOPPED))
+			wearer.add_movespeed_modifier(/datum/movespeed_modifier/swimming_deep)
 
 /datum/element/diving_gear/proc/on_equip(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER

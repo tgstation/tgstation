@@ -228,6 +228,15 @@
 	area_flags = UNIQUE_AREA | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | CAVES_ALLOWED
 	map_generator = /datum/map_generator/cave_generator/rainworld/surface
 
+/area/rainworld/surface/outdoors/mining
+	icon_state = "unexplored"
+	area_flags = CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
+	map_generator = /datum/map_generator/cave_generator/rainworld/surface/mining
+
+/area/rainworld/surface/outdoors/mining/allow_megafauna
+	icon_state = "danger"
+	area_flags = CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED | MEGAFAUNA_SPAWN_ALLOWED
+
 /**********************Ice Moon Areas**************************/
 
 /area/icemoon

@@ -177,6 +177,22 @@
 	maximum_survivable_temperature = T0C + 40
 	held_state = "spacecat"
 
+/mob/living/basic/pet/cat/space/slugcat
+	name = "slugcat"
+	desc = "They're a cat... and slug!"
+	icon = 'icons/mob/simple/slugcat/slugcat.dmi'
+	held_lh = 'icons/mob/simple/slugcat/slugcat_held_lh.dmi'
+	held_rh = 'icons/mob/simple/slugcat/slugcat_held_rh.dmi'
+	held_state = "spacecat"
+	maxHealth = 40
+	health = 40
+
+/mob/living/basic/pet/cat/space/slugcat/Initialize(mapload)
+	. = ..()
+	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER, TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_CAN_THROW_ITEMS), INNATE_TRAIT)
+	AddComponent(/datum/component/regenerator)
+	AddElement(/datum/element/dextrous)
+
 /mob/living/basic/pet/cat/breadcat
 	name = "bread cat"
 	desc = "They're a cat... with a bread!"

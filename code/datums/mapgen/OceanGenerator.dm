@@ -24,6 +24,7 @@
 
 /datum/map_generator/cave_generator/rainworld/surface
 	flora_spawn_chance = 3
+	mob_spawn_chance = 4
 	feature_spawn_chance = 0.2
 	initial_closed_chance = 50
 	birth_limit = 6
@@ -35,6 +36,18 @@
 		/mob/living/basic/mining/basilisk = 20,
 		/mob/living/basic/lightgeist = 5,
 		/mob/living/basic/turtle = 1,
+		/mob/living/basic/frog = 1,
+		/mob/living/basic/axolotl = 1,
 	)
+
+/datum/map_generator/cave_generator/rainworld/surface/mining
+	mob_spawn_chance = 6
+	weighted_mob_spawn_list = list(
+		/mob/living/basic/mining/lobstrosity = 25,
+		/mob/living/basic/mining/hivelord = 10,
+		/mob/living/basic/mining/basilisk = 20,
+		/mob/living/basic/lightgeist = 3,
+	)
+	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/colossus = 9, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = 1)
 
 /datum/map_generator/cave_generator/rainworld/surface/noruins //use this for when you don't want ruins to spawn in a certain area

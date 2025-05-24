@@ -720,14 +720,16 @@
 		))
 
 /obj/item/mod/module/diving/on_part_activation()
-	mod.wearer.add_traits(list(TRAIT_SWIMMER, TRAIT_RAINSTORM_IMMUNE), REF(src))
+	mod.wearer.add_traits(list(TRAIT_RAINSTORM_IMMUNE), REF(src))
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(mod, COMSIG_MOD_UPDATE_SPEED, PROC_REF(on_update_speed))
+	mod.AddElement(/datum/element/diving_gear)
 
 /obj/item/mod/module/diving/on_part_deactivation(deleting = FALSE)
-	mod.wearer.remove_traits(list(TRAIT_SWIMMER, TRAIT_RAINSTORM_IMMUNE), REF(src))
+	mod.wearer.remove_traits(list(TRAIT_RAINSTORM_IMMUNE), REF(src))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(mod, COMSIG_MOD_UPDATE_SPEED)
+	mod.RemoveElement(/datum/element/diving_gear)
 	if(!traveled_tiles)
 		return
 	if(traveled_tiles == max_traveled_tiles)
