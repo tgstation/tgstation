@@ -8,9 +8,9 @@
 	desc = "A scavenger that eats raw ores, often found alongside ash walkers. Produces a thick, nutritious milk."
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "gutlunch"
-	combat_mode = FALSE
 	icon_living = "gutlunch"
 	icon_dead = "gutlunch"
+	combat_mode = FALSE
 	mob_biotypes = MOB_ORGANIC|MOB_BUG|MOB_MINING
 	basic_mob_flags = DEL_ON_DEATH
 	speak_emote = list("warbles", "quavers")

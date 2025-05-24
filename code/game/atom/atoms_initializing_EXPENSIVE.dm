@@ -132,6 +132,9 @@
 	if (light_system == COMPLEX_LIGHT && light_power && light_range)
 		update_light()
 
+	if(post_init_icon_state)
+		icon_state = post_init_icon_state
+
 	SETUP_SMOOTHING()
 
 	if(uses_integrity)

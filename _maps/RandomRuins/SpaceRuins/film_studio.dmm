@@ -2050,7 +2050,7 @@
 /turf/open/floor/iron/showroomfloor,
 /area/ruin/space/has_grav/film_studio/dorms)
 "Ki" = (
-/obj/item/clothing/head/frenchberet{
+/obj/item/clothing/head/beret/frenchberet{
 	pixel_x = 15
 	},
 /turf/open/floor/plating,
