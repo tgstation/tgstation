@@ -189,7 +189,7 @@
 
 /mob/living/basic/pet/cat/space/slugcat/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER, TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_CAN_THROW_ITEMS), INNATE_TRAIT)
+	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER, TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_CAN_THROW_ITEMS, TRAIT_CHUNKYFINGERS), INNATE_TRAIT)
 	AddComponent(/datum/component/regenerator)
 	AddElement(/datum/element/dextrous)
 

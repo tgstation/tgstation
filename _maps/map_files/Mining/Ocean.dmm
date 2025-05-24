@@ -1415,9 +1415,9 @@
 /turf/open/floor/iron,
 /area/mine/laborcamp)
 "EK" = (
-/obj/structure/lattice/water,
-/turf/closed/wall/mineral/titanium/survival/pod,
-/area/mine/production)
+/mob/living/simple_animal/hostile/megafauna/serpent,
+/turf/open/water/no_planet_atmos/deep/rainworld,
+/area/rainworld/surface/outdoors/nospawn)
 "ER" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/mineral/labor_points_checker{
@@ -16833,9 +16833,9 @@ rD
 rD
 rD
 rD
-rD
 zg
-rD
+zg
+zg
 rD
 rD
 rD
@@ -17090,9 +17090,9 @@ rD
 rD
 rD
 rD
-rD
 zg
-rD
+EK
+zg
 rD
 rD
 rD
@@ -17347,9 +17347,9 @@ rD
 rD
 rD
 rD
-rD
-rD
-rD
+zg
+zg
+zg
 rD
 rD
 rD
@@ -41970,8 +41970,8 @@ zd
 zd
 CS
 gs
-EK
-EK
+nI
+nI
 gs
 Sq
 rX
