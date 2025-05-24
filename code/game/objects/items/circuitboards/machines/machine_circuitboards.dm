@@ -193,6 +193,14 @@
 		/obj/item/stack/sheet/plasteel = 2,
 	)
 
+/obj/item/circuitboard/machine/modular_shield_cable
+	name = "Modular Shield Cable"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/node/cable
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 1,
+	)
+
 /obj/item/circuitboard/machine/modular_shield_well
 	name = "Modular Shield Well"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING

@@ -316,6 +316,7 @@
 	. = ..()
 	if (!new_splat)
 		return
+	blood.can_dry = FALSE
 	// Replace only the default description
 	if (blood.desc == /obj/effect/decal/cleanable/blood::desc)
 		blood.desc = "It's green and acidic. It looks like... <i>blood?</i>"

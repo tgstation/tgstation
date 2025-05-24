@@ -495,3 +495,136 @@
   - config: The minimum age on all Nanotrasen research stations is now 18.
   timothymtorres:
   - qol: Remove dead code from gas canisters
+2025-05-20:
+  Aliceee2ch:
+  - map: Minor Catwalk fixes
+  Melbert:
+  - refactor: Batons have been refactored again. Baton stuns now properly count as
+      an attack, when before it was a nothing. Report any oddities, particularly in
+      regards to harmbatonning vs normal batonning.
+  - refactor: The method of adjusting item damage mid-attack has been refactored -
+      some affected items include the Nullblade and knives. Report any strange happenings
+      with damage numbers.
+  - refactor: A few objects have been moved to the new interaction chain - records
+      consoles, mawed crucible, alien weeds and space vines, hedges, restaurant portals,  and
+      some mobs - to name a few.
+  - bugfix: Spears only deal bonus damage against secure lockers, not all closet types
+      (including crates)
+  moocowswag:
+  - rscadd: Adds modular shield cables, greatly enabling shield generator setups to
+      be more flexible within a room.
+  - rscadd: Spray painting or coloring the modular shield generator now has it color
+      its shields on next activation.
+  - qol: Modular shield machines now automatically attempt to connect to something
+      on initialize and on being rotated via wrench, making it easy to use for maps
+      and helps reduce confusion.
+  - image: Modular shield cable sprites that adapt to orientation and make the whole
+      system look cleaner
+2025-05-21:
+  Bisar:
+  - bugfix: The name input for the character preferences should be functional again.
+  Ezel:
+  - balance: Chem/Xeno/Custodial Nukie Keycard lowered to 5
+  - balance: Ordnance Nukie Keycard increased to 30
+  Krysonism:
+  - bugfix: fixed bungo pits not inheriting genes and stats from the fruit.
+  OnlineGirlfriend:
+  - rscadd: horse and unicorn plushies
+  Retrino:
+  - qol: more sinks available near surgical areas to wash your gross little hands
+  SmArtKar:
+  - bugfix: Fixed space suit helmets slowing you down
+  SyncIt21:
+  - bugfix: fixes runtimes with splashing reagents
+  TealSeer:
+  - bugfix: fixed express consoles taking your money and sending nothing when you
+      ordered goodies
+  improvedname:
+  - balance: Splits surgery dufflebag into two items the dufflebag itself and the
+      medkit
+  necromanceranne:
+  - balance: Swimming is no longer so hyper lethal, and also benefits from athletics
+      boosters.
+  - balance: By default, swimming through deep water does a somewhat low but mounting
+      quantity of stamina damage. Reduced by athletics skill and athletics boosters.
+  - balance: Your total carried equipment weight (and their slowdowns, if any) contribute
+      to your stamina loss while swimming. If you fell into deep water, best start
+      stripping items.
+  - balance: Floating is slightly less lethal, especially if you are starting to drown.
+  - bugfix: Fixes a runtime caused by the exercised status effect.
+2025-05-22:
+  00-Steven:
+  - bugfix: The medical notes input box actually takes up the full window, instead
+      of only half of it.
+  - bugfix: NTNRC chat input actually works.
+  JohnFulpWillard:
+  - bugfix: Toy Cicatrix, Toy Gigas and the Codex Cicatrix itself all now fits on
+      bookshelves.
+  LT3:
+  - image: Tram information plate is mounted properly on the wall again
+  Melbert:
+  - rscadd: Adding Space Cleaner or Water to a rag will consume it as you clean to
+      keep the rag fresher for longer.
+  - rscadd: You can spray a rag with a spray bottle directly to transfer reagents
+      over.
+  - admin: VV stops you from offering control of a ghost to ghosts
+  OrbisAnima:
+  - rscadd: To future proof and in case we get long rounds, all limited fishing items
+      regenerate after 30 minutes if they dont have a regeneration time.
+  - rscadd: Skeleton keys, Tendril chests, Runite can be found in Lava and Plasma
+      lakes now, although they are rare!
+  - balance: Explosions and NPC's no longer nets you uniques from fishing... Fish
+      if you want them!
+  Pickle-Coding:
+  - rscadd: Antinoblium converts other gases into antinoblium when above 20 Kelvin.
+  - balance: Firelocks close when they detect antinoblium.
+  - balance: Antinoblium irradiates people upon skin contact.
+  carpotoxin:
+  - rscadd: Adds Narcolepsy as a -8 negative quirk!
+  - refactor: Slightly adjusts the logic of the narcolepsy trauma
+  - balance: The narcolepsy trauma its symptoms can now be softened by being caffeinated,
+      and modafinil or synaptizine suppress it entirely
+2025-05-23:
+  00-Steven:
+  - qol: Added screentips for shredding gauze into cloth
+  - bugfix: Lidless coffee cups from the impressa coffeemaker or somesuch no longer
+      take two clicks to put a lid on them.
+  - qol: Added screentips for toggling coffee cup lids.
+  Absolucy:
+  - bugfix: Prosopagnosia no longer allows you to somehow recognize people in infiltrator
+      modsuits.
+  Aliceee2ch:
+  - bugfix: Now if you are not near the console the disk will drop in its place instead
+      of your location
+  Cirrial:
+  - rscadd: Gorillas can now throw things and offer items to players.
+  - refactor: Moved throwing and offering item code to be based on living mobs, not
+      just carbon mobs.
+  Melbert:
+  - bugfix: You (can't) baton furniture
+  NamelessFairy:
+  - qol: Inspecting a hand of cards now tells you what cards you can see in it.
+  - bugfix: Adding cards to a hand no longer automatically flips them.
+  Retrino:
+  - qol: moved some xenobiology equipment downstairs on icebox
+  Sothanforax:
+  - rscadd: Added the ability to jam your coworkers into washing machines
+  jlsnow301:
+  - bugfix: The produce console's layout has been adjusted a bit for an improved ordering
+      experience.
+  sqnztb:
+  - rscadd: 'New holiday for May 22: Goth Day.'
+2025-05-24:
+  Ezel:
+  - bugfix: Adds missing dragnet beacon to catwalk
+  - bugfix: Adds missing HoS office authenication device.
+  - map: Gives CE/CMO/RD their proper camera monitors
+  - map: Medbay Camera's is now its own proper network
+  - map: Removes a camera from Prison maintenance and Security closet
+  - map: Disables AI control on Prison Maintenance Door
+  - bugfix: Minisat Camera's now use the proper network
+  - bugfix: Engine Camera's now use the proper network
+  OnlineGirlfriend:
+  - image: update sprite for Screwdriver (drink)
+  SmArtKar:
+  - bugfix: Fixed ampersands in TM titles breaking the in-game issue report button
