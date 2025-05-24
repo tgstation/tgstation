@@ -118,6 +118,12 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 		RegisterSignal(living_mob, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled), override = TRUE)
 		buckled = living_mob.buckled
 
+	RegisterSignals(movable, list(SIGNAL_ADDTRAIT(TRAIT_MOVE_UPSIDE_DOWN), SIGNAL_REMOVETRAIT(TRAIT_MOVE_UPSIDE_DOWN)), PROC_REF(on_gravity_update), override = TRUE)
+	RegisterSignals(movable, list(SIGNAL_ADDTRAIT(TRAIT_MOVE_FLOATING), SIGNAL_REMOVETRAIT(TRAIT_MOVE_FLOATING)), PROC_REF(on_gravity_update), override = TRUE)
+	RegisterSignals(movable, list(SIGNAL_ADDTRAIT(TRAIT_NEGATES_GRAVITY), SIGNAL_REMOVETRAIT(TRAIT_NEGATES_GRAVITY)), PROC_REF(on_gravity_update), override = TRUE)
+	RegisterSignals(movable, list(SIGNAL_ADDTRAIT(TRAIT_IGNORING_GRAVITY), SIGNAL_REMOVETRAIT(TRAIT_IGNORING_GRAVITY)), PROC_REF(on_gravity_update), override = TRUE)
+	RegisterSignals(movable, list(SIGNAL_ADDTRAIT(TRAIT_FORCED_GRAVITY), SIGNAL_REMOVETRAIT(TRAIT_FORCED_GRAVITY)), PROC_REF(on_gravity_update), override = TRUE)
+
 	try_immerse(movable, buckled)
 	RegisterSignal(movable, COMSIG_QDELETING, PROC_REF(on_movable_qdel), override = TRUE)
 	LAZYADD(attached_turfs_and_movables[source], movable)
@@ -261,6 +267,28 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 
 	remove_immerse_overlay(movable)
 
+/datum/element/immerse/proc/on_gravity_update(atom/movable/movable)
+	SIGNAL_HANDLER
+
+	var/atom/movable/buckled
+	if(isliving(movable))
+		var/mob/living/living_mob = movable
+		buckled = living_mob.buckled
+
+	var/atom/movable/to_check = buckled || movable
+
+	remove_immerse_overlay(movable)
+
+	if(to_check.movement_type & (VENTCRAWLING|MOVETYPES_NOT_TOUCHING_GROUND))
+		return
+	if(movable.throwing)
+		return
+	if(!to_check.has_gravity())
+		return
+
+	add_immerse_overlay(movable)
+
+
 /datum/element/immerse/proc/on_set_buckled(mob/living/source, atom/movable/new_buckled)
 	SIGNAL_HANDLER
 	try_unimmerse(source, source.buckled)
@@ -344,6 +372,12 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 
 	LAZYREMOVE(attached_turfs_and_movables[source], movable)
 	UnregisterSignal(movable, list(COMSIG_LIVING_SET_BUCKLED, COMSIG_QDELETING))
+	UnregisterSignal(movable, list(SIGNAL_ADDTRAIT(TRAIT_NEGATES_GRAVITY), SIGNAL_REMOVETRAIT(TRAIT_NEGATES_GRAVITY)))
+	UnregisterSignal(movable, list(SIGNAL_ADDTRAIT(TRAIT_IGNORING_GRAVITY), SIGNAL_REMOVETRAIT(TRAIT_IGNORING_GRAVITY)))
+	UnregisterSignal(movable, list(SIGNAL_ADDTRAIT(TRAIT_FORCED_GRAVITY), SIGNAL_REMOVETRAIT(TRAIT_FORCED_GRAVITY)))
+	UnregisterSignal(movable, list(SIGNAL_ADDTRAIT(TRAIT_MOVE_UPSIDE_DOWN), SIGNAL_REMOVETRAIT(TRAIT_MOVE_UPSIDE_DOWN)))
+	UnregisterSignal(movable, list(SIGNAL_ADDTRAIT(TRAIT_MOVE_FLOATING), SIGNAL_REMOVETRAIT(TRAIT_MOVE_FLOATING)))
+
 	REMOVE_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 
 /// A band-aid to keep the (unique) visual overlay from scaling and rotating along with its owner. I'm sorry.
