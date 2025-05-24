@@ -44,10 +44,14 @@
 	mob_spawn_chance = 6
 	weighted_mob_spawn_list = list(
 		SPAWN_MEGAFAUNA = 1,
-		/mob/living/basic/mining/lobstrosity = 25,
-		/mob/living/basic/mining/hivelord = 10,
-		/mob/living/basic/mining/basilisk = 20,
-		/mob/living/basic/lightgeist = 3,
+		/mob/living/basic/mining/lobstrosity = 100,
+		/mob/living/basic/mining/hivelord = 60,
+		/mob/living/basic/mining/basilisk = 80,
+		/mob/living/basic/lightgeist = 10,
+
+		/obj/structure/spawner/ice_moon/demonic_portal/lobstrocity = 4,
+		/obj/structure/spawner/ice_moon/demonic_portal/hivelord = 4,
+		/obj/structure/spawner/ice_moon/demonic_portal/basilisk = 4,
 	)
 	weighted_megafauna_spawn_list = list(/mob/living/simple_animal/hostile/megafauna/serpent = 25, /mob/living/simple_animal/hostile/megafauna/colossus = 5, /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = 1)
 
