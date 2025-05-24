@@ -257,6 +257,16 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/modular_shield_console
+	name = "Modular Shield Console Board"
+	desc = "The circuit board for a modular shield console."
+	id = "modular_shield_console"
+	build_path = /obj/item/circuitboard/computer/modular_shield_console
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/teleconsole
 	name = "Teleporter Console Board"
 	desc = "Allows for the construction of circuit boards used to build a teleporter control console."
