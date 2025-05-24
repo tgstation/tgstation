@@ -59,7 +59,7 @@
 	if(client)
 		return
 
-	if(prob(8))
+	if(prob(12))
 		dash.Trigger(target = target)
 		return
 
@@ -67,7 +67,7 @@
 		lightning_strike.cast(target = target)
 		return
 
-	if(prob(15))
+	if(prob(18))
 		thunderstorm.Trigger(target = target)
 		return
 
