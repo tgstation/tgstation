@@ -213,12 +213,9 @@
 /obj/structure/sign/departments/science,
 /turf/closed/wall,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
-"B" = (
-/turf/open/floor/iron,
-/area/template_noop)
 "C" = (
 /turf/open/floor/plating/lowpressure,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/ancient_shuttle)
 "D" = (
 /obj/structure/chair/comfy{
 	dir = 8
@@ -264,14 +261,6 @@
 /obj/machinery/door/airlock/research/glass,
 /turf/open/floor/iron/airless,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
-"M" = (
-/obj/structure/broken_flooring{
-	dir = 8;
-	icon_state = "plating";
-	name = "broken plating"
-	},
-/turf/template_noop,
-/area/template_noop)
 "N" = (
 /obj/item/book/random,
 /turf/open/floor/iron,
@@ -319,9 +308,6 @@
 /obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/powered/ancient_shuttle)
-"V" = (
-/turf/closed/wall/r_wall/rust,
-/area/template_noop)
 "W" = (
 /obj/machinery/experimental_cloner_scanner,
 /turf/open/floor/iron/white,
@@ -329,7 +315,7 @@
 "X" = (
 /obj/item/gps/spaceruin,
 /turf/open/floor/plating/lowpressure,
-/area/template_noop)
+/area/ruin/space/has_grav/powered/ancient_shuttle)
 
 (1,1,1) = {"
 a
@@ -536,7 +522,7 @@ o
 E
 p
 X
-V
+d
 a
 a
 "}
@@ -547,7 +533,7 @@ p
 p
 C
 C
-M
+a
 a
 a
 "}
@@ -557,7 +543,7 @@ d
 q
 C
 C
-M
+a
 a
 a
 a
@@ -566,8 +552,8 @@ a
 a
 a
 b
-B
-M
+E
+a
 a
 a
 a

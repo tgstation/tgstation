@@ -93,7 +93,7 @@
 		return
 
 	if (SSmapping.current_map.minetype == MINETYPE_OCEAN)
-		target_area = /area/rainworld/surface/outdoors/mining
+		target_area = /area/rainworld/surface/outdoors/unexplored/mining
 
 	var/list/turfs = get_area_turfs(target_area)
 	var/original_len = turfs.len
