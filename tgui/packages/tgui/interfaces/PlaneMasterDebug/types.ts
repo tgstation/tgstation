@@ -1,6 +1,6 @@
 import { BooleanLike } from 'tgui-core/react';
 
-import { Position } from './../common/Connections';
+import { Position } from '../common/Connections';
 
 export type PlaneDebugData = {
   mob_name: string;
@@ -99,12 +99,12 @@ export const BlendColors = {
 };
 
 export enum BlendModes {
-  'BLEND_DEFAULT',
-  'BLEND_OVERLAY',
-  'BLEND_ADD',
-  'BLEND_SUBTRACT',
-  'BLEND_MULTIPLY',
-  'BLEND_INSET_OVERLAY',
+  BLEND_DEFAULT,
+  BLEND_OVERLAY,
+  BLEND_ADD,
+  BLEND_SUBTRACT,
+  BLEND_MULTIPLY,
+  BLEND_INSET_OVERLAY,
 }
 
 export type PlaneMap = Record<number, Plane>;
