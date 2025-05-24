@@ -38,6 +38,11 @@
 	target.apply_status_effect(/datum/status_effect/star_mark, source)
 	create_cosmic_field(get_turf(source), source)
 
+	var/datum/status_effect/eldritch/cosmic/mark = target.has_status_effect(/datum/status_effect/eldritch/cosmic)
+	if(!istype(mark))
+		return FALSE
+	mark.heretic = WEAKREF(source)
+
 /datum/heretic_knowledge/spell/cosmic_runes
 	name = "Cosmic Runes"
 	desc = "Grants you Cosmic Runes, a spell that creates two runes linked with each other for easy teleportation. \
