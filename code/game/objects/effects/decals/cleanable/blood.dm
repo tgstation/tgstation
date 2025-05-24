@@ -231,7 +231,7 @@
 	var/list/starting_color = rgb2num(base_color)
 
 	if (!starting_color)
-		starting_color = list(255, 255, 255, alpha)
+		starting_color = list(255, 255, 255)
 
 	// We want a fixed offset for a fixed drop in color intensity, plus a scaling offset based on our strongest color
 	// The scaling offset helps keep dark colors from turning black, while also ensurse bright colors don't stay super bright
@@ -253,7 +253,6 @@
 		clamp(starting_color[1] - red_offset, 0, 255),
 		clamp(starting_color[2] - green_offset, 0, 255),
 		clamp(starting_color[3] - blue_offset, 0, 255),
-		length(starting_color) >= 4 ? starting_color[4] : alpha, // maintain alpha! (if it has it)
 	)
 
 /obj/effect/decal/cleanable/blood/old
