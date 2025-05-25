@@ -384,7 +384,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	options["Blanc"] = "mime"
 	options["Triste"] = "sadmime"
 	options["Effrayé"] = "scaredmime"
-	options["Excité"] ="sexymime"
+	options["Excité"] = "sexymime"
 
 	var/choice = show_radial_menu(user,src, mimemask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 	if(!choice)
@@ -395,6 +395,55 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		user.update_worn_mask()
 		update_item_action_buttons()
 		to_chat(user, span_notice("Your Mime Mask has now morphed into [choice]!"))
+		return TRUE
+
+/obj/item/clothing/mask/gas/mime/utopia
+	name = "stage mask"
+	desc = "A classic stage mask used by the masters of pantomime."
+	clothing_flags = MASKINTERNALS
+	icon_state = "utopiatragedy"
+	inhand_icon_state = null
+	w_class = WEIGHT_CLASS_SMALL
+	flags_cover = MASKCOVERSEYES
+	resistance_flags = FLAMMABLE
+	actions_types = list(/datum/action/item_action/adjust_style)
+	species_exception = list(/datum/species/golem)
+	fishing_modifier = 0
+	var/list/utopiamask_designs = list()
+
+/obj/item/clothing/mask/gas/mime/utopia/plasmaman
+	starting_filter_type = /obj/item/gas_filter/plasmaman
+
+/obj/item/clothing/mask/gas/mime/utopia/Initialize(mapload)
+	.=..()
+	utopiamask_designs = list(
+		"Tragedy" = image(icon = src.icon, icon_state = "utopiatragedy"),
+		"Comedy" = image(icon = src.icon, icon_state = "utopiacomedy"),
+		"Anger" = image(icon = src.icon, icon_state = "utopiaanger"),
+		"Cluelessness" = image(icon = src.icon, icon_state = "utopiaclueless"),
+		"Emotionlessness" = image(icon = src.icon, icon_state = "utopiaemotionless")
+		)
+
+/obj/item/clothing/mask/gas/mime/utopia/ui_action_click(mob/user)
+	if(!istype(user) || user.incapacitated)
+		return
+
+	var/list/options = list()
+	options["Tragedy"] = "utopiatragedy"
+	options["Comedy"] = "utopiacomedy"
+	options["Anger"] = "utopiaanger"
+	options["Cluelessness"] = "utopiaclueless"
+	options["Emotionlessness"] = "utopiaemotionless"
+
+	var/choice = show_radial_menu(user, src, utopiamask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+	if(!choice)
+		return FALSE
+
+	if(src && choice && !user.incapacitated && in_range(user,src))
+		icon_state = options[choice]
+		user.update_worn_mask()
+		update_item_action_buttons()
+		to_chat(user, span_notice("Your Stage Mask has now morphed into [choice]!"))
 		return TRUE
 
 /obj/item/clothing/mask/gas/monkeymask
