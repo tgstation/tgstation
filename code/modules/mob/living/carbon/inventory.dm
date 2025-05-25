@@ -450,7 +450,7 @@
 		"right pocket" = ITEM_SLOT_RPOCKET
 	)
 
-	var/placed_in = equip_in_one_of_slots(item, pockets, indirect_action = TRUE)
+	var/placed_in = equip_in_one_of_slots(item, pockets, qdel_on_fail = FALSE, indirect_action = TRUE)
 
 	if (!placed_in)
 		placed_in = equip_to_storage(item, ITEM_SLOT_BACK, indirect_action = TRUE)
