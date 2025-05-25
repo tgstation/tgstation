@@ -6,6 +6,7 @@
 	icon_angle = -135
 	force = 1
 	throwforce = 1
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.75, /datum/material/plastic=SMALL_MATERIAL_AMOUNT*0.5)
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("tests", "jerks", "bonks", "taps")
 	attack_verb_simple = list("test", "jerk", "bonk", "tap")
