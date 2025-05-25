@@ -78,7 +78,7 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 	var/cached_file = gags_cache[uid]
 	if(cached_file)
 		return cached_file
-	var/output_path = "tmp/gags/gags-[uid].dmi"
+	var/output_path = "tmp/gags/icons/gags-[uid].dmi"
 	var/iconforge_output = rustg_iconforge_gags(type, colors, output_path)
 	// Handle errors from IconForge
 	if(iconforge_output != "OK")
