@@ -217,9 +217,8 @@
 
 /obj/item/clothing/mask/bandana/skull/black
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
-	icon_state = "/obj/item/clothing/mask/bandana/skull/black"
 	greyscale_colors = "#2e2e2e#C6C6C6"
-	flags_1 = NO_NEW_GAGS_PREVIEW_1
+	flags_1 = NO_NEW_GAGS_PREVIEW_1 // same as the basetype
 
 /obj/item/clothing/mask/facescarf
 	name = "facescarf"
