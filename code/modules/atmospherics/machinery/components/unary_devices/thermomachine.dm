@@ -43,7 +43,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/Initialize(mapload)
 	. = ..()
 	RefreshParts()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	register_context()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -159,7 +159,7 @@
 
 	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "temperature reset to [target_temperature] K")
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS
 
 /// Performs heat calculation for the freezer.
@@ -172,7 +172,7 @@
 
 	if(!is_operational || !local_turf)
 		on = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return
 
 	// The gas we want to cool/heat
@@ -207,7 +207,7 @@
 		balloon_alert(user, "anchor!")
 		return ITEM_INTERACT_SUCCESS
 	if(default_deconstruction_screwdriver(user, "thermo-open", "thermo-0", tool))
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/tool)
@@ -224,7 +224,7 @@
 	to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
 	if(anchored)
 		reconnect_nodes()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/thermomachine/multitool_act_secondary(mob/living/user, obj/item/tool)
@@ -237,7 +237,7 @@
 	to_chat(user, span_notice("You set [src]'s pipe color to [GLOB.pipe_color_name[pipe_color]]."))
 	if(anchored)
 		reconnect_nodes()
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/thermomachine/proc/check_pipe_on_turf()
@@ -312,7 +312,7 @@
 				target_temperature = clamp(target, min_temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/click_ctrl(mob/user)
 	if(!anchored)
@@ -326,7 +326,7 @@
 	on = !on
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_layer()
