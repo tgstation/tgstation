@@ -1,5 +1,7 @@
 // Disposal bin and Delivery chute.
+GLOBAL_VAR_INIT(animals_spawned, 0)
 #define CONTAINS_ANIMAL_CHANCE 5
+#define MAXIMUM_ANIMAL_SPAWNS 1
 #define ANIMAL_SHAKE_CHANCE 10
 #define SEND_PRESSURE (0.05*ONE_ATMOSPHERE)
 
@@ -708,17 +710,19 @@
 	playsound(broom.loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
 /obj/machinery/disposal/proc/spawn_contained_animal()
-	if(!prob(CONTAINS_ANIMAL_CHANCE))
+	if(!prob(CONTAINS_ANIMAL_CHANCE) || GLOB.animals_spawned >= MAXIMUM_ANIMAL_SPAWNS)
 		return
 	contained_animal = pick_weight(weighted_animal_list)
+	GLOB.animals_spawned++
 
 /obj/machinery/disposal/bin/proc/release_animal()
 	var/list/open_turfs = get_adjacent_open_turfs(src)
 	var/turf/final_turf = length(open_turfs) ? pick(open_turfs) : drop_location()
 	var/mob/living/startled_animal = new contained_animal(final_turf)
-	visible_message(span_notice("[startled_animal] jumps out of [src] all startled!"))
+	visible_message(span_notice("A startled [startled_animal] jumps out of [src]"))
 
 
 #undef SEND_PRESSURE
 #undef CONTAINS_ANIMAL_CHANCE
 #undef ANIMAL_SHAKE_CHANCE
+#undef MAXIMUM_ANIMAL_SPAWNS

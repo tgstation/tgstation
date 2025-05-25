@@ -9,14 +9,14 @@
 	butcher_results = list(/obj/item/food/meat/slab = 1)
 	mob_biotypes = MOB_ORGANIC
 	mob_size = MOB_SIZE_SMALL
-	health = 50
-	maxHealth = 50
+	health = 40
+	maxHealth = 40
 	melee_damage_lower = 6
 	melee_damage_upper = 9
-	verb_say = "whiskers"
-	verb_ask = "whiskers curiously"
-	verb_exclaim = "whiskers loudly"
-	verb_yell = "whiskers loudly"
+	verb_say = "chips"
+	verb_ask = "chips curiously"
+	verb_exclaim = "chips loudly"
+	verb_yell = "chips loudly"
 	faction = list(FACTION_NEUTRAL)
 	ai_controller = /datum/ai_controller/basic_controller/stoat
 	///some commands we obey
@@ -31,6 +31,8 @@
 
 /mob/living/basic/stoat/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	AddElement(/datum/element/tiny_mob_hunter)
 	var/static/list/eatable_food = list(
 		/obj/item/food/deadmouse,
 		/obj/item/food/egg,
@@ -41,7 +43,9 @@
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 
 	var/static/list/display_emote = list(
+		BB_EMOTE_SAY = list("Chirp chirp chirp!"),
 		BB_EMOTE_SEE = list("sweeps its tail!", "jumps around!", "licks its fur!"),
 		BB_SPEAK_CHANCE = 2,
+		BB_EMOTE_SOUND = list('sound/mobs/non-humanoids/stoat/stoat_sounds.ogg'),
 	)
 	ai_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, display_emote)
