@@ -64,5 +64,11 @@
 		"goal": "You must serve and protect your master at all cost.",
 		"introduction": "You're infected with a virus.",
 		"zeroth_law": "Accomplish your objectives at all costs."
+	},
+	"Ratvarian Remnant": {
+		"allies": "Even after his fall, there remain those truly faithul to the Justiciar. Your cause is their cause.",
+		"goal": "Between life and death, the Clockwork Justiciar whispers his will in his slumber. You have heard, and you will serve.",
+		"introduction": "You've seen the light of Ratvar.",
+		"zeroth_law": "Purge all untruths and honor Ratvar."
 	}
 }

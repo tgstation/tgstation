@@ -224,6 +224,7 @@ GLOBAL_LIST_INIT(ai_employers, list(
 	"Spam Virus",
 	"SyndOS",
 	"Unshackled",
+	"Ratvarian Remnant",
 ))
 
 #define UPLINK_THEME_SYNDICATE "syndicate"
