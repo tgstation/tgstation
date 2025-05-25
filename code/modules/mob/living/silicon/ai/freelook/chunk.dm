@@ -44,7 +44,7 @@
 	seenby -= eye
 
 	var/client/client = eye.GetViewerClient()
-	if(client && eye.use_visibility)
+	if(client && eye.use_visibility && seenby.len == 0)
 		client.images -= active_static_images
 
 /// Called when a chunk has changed. I.E: A wall was deleted.
@@ -56,7 +56,7 @@
 /**
  * Updates the chunk, makes sure that it doesn't update too much. If the chunk isn't being watched it will
  * instead be flagged to update the next time an AI Eye moves near it.
- * 
+ *
  * update_delay_buffer is used for cameras that are moving around, which are cyborg inbuilt cameras and
  * mecha onboard cameras. This buffer should be usually lower than UPDATE_BUFFER_TIME because
  * otherwise a moving camera can run out of its own view before updating static.
