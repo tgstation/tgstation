@@ -387,7 +387,6 @@
 	if(!accretion_turfs)
 		accretion_turfs = typecacheof(list(
 			/turf/open/misc/asteroid,
-			/turf/open/misc/ashplanet,
 			/turf/open/misc/dirt,
 		))
 	if(!keep_turfs)

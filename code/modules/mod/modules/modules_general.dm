@@ -694,8 +694,7 @@
 	desc = "Allows the user to swim while wearing the modsuit"
 	complexity = 1
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
-	incompatible_modules = list(/obj/item/mod/module/plasma_stabilizer)
-	required_slots = list(ITEM_SLOT_HEAD)
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET)
 	icon_state = "ash_accretion"
 	incompatible_modules = list(/obj/item/mod/module/diving, /obj/item/mod/module/plasma_stabilizer)
 	overlay_state_inactive = "module_ash"

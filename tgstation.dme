@@ -1183,6 +1183,7 @@
 #include "code\datums\components\infective.dm"
 #include "code\datums\components\interaction_booby_trap.dm"
 #include "code\datums\components\irradiated.dm"
+#include "code\datums\components\item_blacklist.dm"
 #include "code\datums\components\item_equipped_movement_rustle.dm"
 #include "code\datums\components\item_killsound.dm"
 #include "code\datums\components\itembound.dm"

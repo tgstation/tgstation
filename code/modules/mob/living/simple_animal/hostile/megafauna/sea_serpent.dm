@@ -77,14 +77,14 @@
 	return ..()
 
 /datum/action/cooldown/spell/pointed/lightning_strike/serpent
-	cooldown_time = 2 SECONDS
+	cooldown_time = 1 SECONDS
 
 /datum/action/cooldown/mob_cooldown/thunderstorm
 	name = "Thunderstorm"
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "sniper_zoom"
 	desc = "Allows you to thunderstorm around yourself."
-	cooldown_time = 5 SECONDS
+	cooldown_time = 4 SECONDS
 
 /datum/action/cooldown/mob_cooldown/thunderstorm/Activate(atom/target_atom)
 	disable_cooldown_actions()

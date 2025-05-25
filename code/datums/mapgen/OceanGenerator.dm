@@ -10,6 +10,7 @@
 		/obj/structure/flora/rock/icy/style_random = 1,
 		/obj/structure/flora/rock/pile/icy/style_random = 4,
 		/obj/structure/flora/bush/sparsegrass/style_random = 24,
+		/obj/structure/flora/ash/seraka = 6,
 	)
 
 	///Note that this spawn list is also in the lavaland generator

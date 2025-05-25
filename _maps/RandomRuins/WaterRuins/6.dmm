@@ -377,6 +377,10 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/dark/side,
 /area/ruin/space/has_grav/abandonedzoo)
+"Cs" = (
+/mob/living/basic/pet/cat/space/slugcat,
+/turf/open/misc/ashplanet/wateryrock/rainworld,
+/area/ruin/space/has_grav/abandonedzoo)
 "Ep" = (
 /obj/structure/table/reinforced,
 /obj/item/surgicaldrill,
@@ -580,7 +584,7 @@ aL
 aD
 py
 py
-py
+Cs
 py
 ac
 aa
