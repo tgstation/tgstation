@@ -2623,7 +2623,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/book/bible,
-/obj/structure/altar_of_gods,
+/obj/structure/altar/of_gods,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "aLz" = (

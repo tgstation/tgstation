@@ -39617,7 +39617,7 @@
 /area/station/commons/vacant_room)
 "mVo" = (
 /obj/item/book/bible,
-/obj/structure/altar_of_gods,
+/obj/structure/altar/of_gods,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
 "mVp" = (

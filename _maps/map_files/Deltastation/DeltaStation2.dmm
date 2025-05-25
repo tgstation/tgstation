@@ -94565,7 +94565,7 @@
 /area/station/science/xenobiology)
 "xDd" = (
 /obj/item/book/bible,
-/obj/structure/altar_of_gods,
+/obj/structure/altar/of_gods,
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel)
 "xDf" = (
