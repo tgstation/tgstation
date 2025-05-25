@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - code_imp: "Refactored holochip merging. Please report any issues."
+  - qol: "Holochips now have usage screentips."

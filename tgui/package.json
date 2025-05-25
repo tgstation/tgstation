@@ -38,8 +38,7 @@
     "sass": "^1.80.6",
     "sass-embedded": "^1.85.1",
     "sass-loader": "^16.0.3",
-    "typescript": "^5.8.3",
-    "url-loader": "^4.1.1"
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
