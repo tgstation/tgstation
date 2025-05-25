@@ -186,6 +186,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 /obj/item/stack/sheet/iron/examine(mob/user)
 	. = ..()
 	. += span_notice("You can build a wall girder (unanchored) by right clicking on an empty floor.")
+	if(IS_CULTIST(user))
+		. += span_cult("This can be turned into a construct shell using the [EXAMINE_HINT("Twisted Construction")] spell.")
 
 /obj/item/stack/sheet/iron/narsie_act()
 	new /obj/item/stack/sheet/runed_metal(loc, amount)
@@ -296,6 +298,11 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	table_type = /obj/structure/table/reinforced
 	material_flags = NONE
 	matter_amount = 12
+
+/obj/item/stack/sheet/plasteel/examine(mob/user)
+	. = ..()
+	if(IS_CULTIST(user))
+		. += span_cult("This can be turned into runed metal using the [EXAMINE_HINT("Twisted Construction")] spell.")
 
 /datum/armor/sheet_plasteel
 	fire = 100

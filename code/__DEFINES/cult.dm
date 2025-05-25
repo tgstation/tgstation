@@ -12,7 +12,6 @@
 /// The maximum number of cult spell slots each cultist is allowed to scribe at once.
 #define ENHANCED_BLOODCHARGE 5
 #define MAX_BLOODCHARGE 4
-#define RUNELESS_MAX_BLOODCHARGE 1
 /// percent before rise
 #define CULT_RISEN 0.2
 /// percent before ascend
