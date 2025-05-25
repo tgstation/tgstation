@@ -195,6 +195,9 @@
 	var/static/list/scug_bad_items = typecacheof(list(
 		/obj/item/gun,
 		/obj/item/melee/baton,
+		/obj/item/grenade,
+		/obj/item/transfer_valve,
+		/obj/item/aicard,
 	))
 
 

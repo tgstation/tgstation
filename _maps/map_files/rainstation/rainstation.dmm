@@ -1536,6 +1536,7 @@
 /area/rainworld/surface/outdoors/nospawn)
 "afr" = (
 /obj/machinery/holopad/secure,
+/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/gravity_generator)
 "afs" = (
@@ -14334,10 +14335,10 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "aTN" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/effect/landmark/start/cook,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
 "aTO" = (
@@ -21386,7 +21387,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/structure/cable,
 /obj/item/wrench/caravan,
 /obj/structure/rack,
 /obj/machinery/light/small/directional/south,
@@ -33651,7 +33651,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/cable,
 /obj/machinery/camera/directional/east{
 	c_tag = "Gravity Generator Room"
 	},
@@ -34320,7 +34319,6 @@
 	dir = 9
 	},
 /obj/machinery/firealarm/directional/west,
-/obj/structure/cable,
 /obj/structure/table,
 /obj/item/clothing/under/color/white{
 	pixel_x = 5
@@ -38389,7 +38387,6 @@
 /turf/open/floor/wood,
 /area/station/commons/dorms)
 "eJx" = (
-/obj/structure/cable,
 /obj/machinery/portable_atmospherics/canister/water_vapor,
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
@@ -41220,7 +41217,6 @@
 "hla" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
-/obj/structure/cable,
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/rainworld/surface/outdoors/nospawn)
 "hmt" = (
@@ -42819,7 +42815,7 @@
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "iNT" = (
 /obj/structure/flora/bush/jungle/a/style_random,
@@ -45790,7 +45786,7 @@
 "loA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "loS" = (
 /obj/machinery/ai_slipper{
@@ -52134,7 +52130,7 @@
 "qOm" = (
 /obj/structure/sign/warning/secure_area/directional/west,
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "qOs" = (
 /obj/effect/turf_decal/siding/wideplating_new/dark{
@@ -54504,7 +54500,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/hallway)
 "sWJ" = (
 /obj/structure/table/glass,
@@ -55580,7 +55576,7 @@
 "tRU" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "tSC" = (
 /obj/effect/turf_decal/stripes/line,
@@ -59610,7 +59606,7 @@
 /area/station/hallway/primary/central)
 "xzr" = (
 /obj/structure/cable,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "xzN" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -89069,7 +89065,7 @@ ftD
 gny
 gWK
 hDI
-jaN
+bsc
 shV
 mzQ
 crC
@@ -89583,7 +89579,7 @@ ftD
 gny
 gWK
 hDI
-bsc
+jaN
 bsf
 mzQ
 nPr
@@ -97610,7 +97606,7 @@ cqq
 cpN
 aag
 kMo
-fFa
+aag
 aag
 cqq
 cqq
