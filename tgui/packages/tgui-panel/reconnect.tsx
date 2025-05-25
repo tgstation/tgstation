@@ -11,7 +11,7 @@ setInterval(() => {
   });
 }, 5000);
 
-export const ReconnectButton = () => {
+export const ReconnectMenu = () => {
   if (!url) {
     return null;
   }
@@ -36,5 +36,18 @@ export const ReconnectButton = () => {
         }}
       />
     </>
+  );
+};
+
+export const ReconnectButton = () => {
+  return (
+    <Button.Confirm
+      color="red"
+      icon="power-off"
+      tooltip="Reconnects your game"
+      onClick={() => {
+        Byond.command('.reconnect');
+      }}
+    />
   );
 };
