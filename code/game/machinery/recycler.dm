@@ -51,8 +51,10 @@
 /obj/machinery/recycler/RefreshParts()
 	. = ..()
 	var/amt_made = 0
-	for(var/datum/stock_part/servo/servo in component_parts)
-		amt_made = 12.5 * servo.tier //% of materials salvaged
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/servo))
+			var/datum/stock_part/servo/servo = stock_part
+			amt_made = 12.5 * servo.tier //% of materials salvaged
 	amount_produced = min(50, amt_made) + 50
 	var/datum/component/butchering/butchering = GetComponent(/datum/component/butchering/recycler)
 	butchering.effectiveness = amount_produced

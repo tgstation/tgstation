@@ -22,14 +22,17 @@
 
 /obj/machinery/piratepad/civilian/RefreshParts()
 	. = ..()
-	var/T = -2
-	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
-		T += micro_laser.tier
+	var/total_tier_level = -2
 
-	for(var/datum/stock_part/scanning_module/scanning_module in component_parts)
-		T += scanning_module.tier
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/micro_laser))
+			var/datum/stock_part/micro_laser/micro_laser = stock_part
+			total_tier_level += micro_laser.tier
+		else if(istype(stock_part, /datum/stock_part/scanning_module))
+			var/datum/stock_part/scanning_module/scanning_module = stock_part
+			total_tier_level += scanning_module.tier
 
-	cooldown_reduction = T * (30 SECONDS)
+	cooldown_reduction = total_tier_level * (30 SECONDS)
 
 /obj/machinery/piratepad/civilian/proc/get_cooldown_reduction()
 	return cooldown_reduction

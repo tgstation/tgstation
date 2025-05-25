@@ -41,17 +41,21 @@
 
 /obj/machinery/quantumpad/RefreshParts()
 	. = ..()
-	var/E = 0
-	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		E += capacitor.tier
-	power_efficiency = E
-	E = 0
-	for(var/datum/stock_part/servo/servo in component_parts)
-		E += servo.tier
+	var/teleporter_efficiency = 0
+	power_efficiency = 0
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/capacitor))
+			var/datum/stock_part/capacitor/capacitor = stock_part
+			power_efficiency += capacitor.tier
+		else if(istype(stock_part, /datum/stock_part/servo))
+			var/datum/stock_part/servo/servo = stock_part
+			teleporter_efficiency += servo.tier
+
 	teleport_speed = initial(teleport_speed)
-	teleport_speed -= (E*10)
+	teleport_speed -= (teleporter_efficiency * 10)
 	teleport_cooldown = initial(teleport_cooldown)
-	teleport_cooldown -= (E * 100)
+	teleport_cooldown -= (teleporter_efficiency * 100)
 
 /obj/machinery/quantumpad/multitool_act(mob/living/user, obj/item/multitool/multi_tool)
 	if(panel_open)

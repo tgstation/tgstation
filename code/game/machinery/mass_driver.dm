@@ -70,8 +70,10 @@
 
 /obj/machinery/mass_driver/RefreshParts()
 	. = ..()
-	for(var/datum/stock_part/servo/new_servo in component_parts)
-		drive_range += new_servo.tier * 10
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/servo))
+			var/datum/stock_part/servo/servo = stock_part
+			drive_range += servo.tier * 10
 
 /obj/machinery/mass_driver/emp_act(severity)
 	. = ..()

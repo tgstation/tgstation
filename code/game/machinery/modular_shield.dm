@@ -83,14 +83,16 @@
 	innate_radius = initial(innate_radius)
 	innate_strength = initial(innate_strength)
 
-	for(var/datum/stock_part/capacitor/new_capacitor in component_parts)
-		innate_strength += new_capacitor.tier * 10
-
-	for(var/datum/stock_part/servo/new_servo in component_parts)
-		innate_regen += new_servo.tier
-
-	for(var/datum/stock_part/micro_laser/new_laser in component_parts)
-		innate_radius += new_laser.tier * 0.25
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/capacitor))
+			var/datum/stock_part/capacitor/capacitor = stock_part
+			innate_strength += capacitor.tier * 10
+		else if(istype(stock_part, /datum/stock_part/servo))
+			var/datum/stock_part/servo/servo = stock_part
+			innate_regen += servo.tier
+		else if(istype(stock_part, /datum/stock_part/micro_laser))
+			var/datum/stock_part/micro_laser/micro_laser = stock_part
+			innate_radius += micro_laser.tier * 0.25
 
 	calculate_regeneration()
 	calculate_max_strength()

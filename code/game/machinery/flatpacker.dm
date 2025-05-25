@@ -97,16 +97,21 @@
 	. = ..()
 
 	var/mat_capacity = 0
-	for(var/datum/stock_part/matter_bin/new_matter_bin in component_parts)
-		mat_capacity += new_matter_bin.tier * 25 * SHEET_MATERIAL_AMOUNT
-	materials.max_amount = mat_capacity
-
-	var/datum/stock_part/servo/servo = locate() in component_parts
-	max_part_tier = servo.tier
-	flatpack_time = initial(flatpack_time) - servo.tier / 2 // T4 = 2 seconds off
 	var/efficiency = initial(creation_efficiency)
-	for(var/datum/stock_part/micro_laser/laser in component_parts)
-		efficiency -= laser.tier * 0.2
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/matter_bin))
+			var/datum/stock_part/matter_bin/matter_bin = stock_part
+			mat_capacity += matter_bin.tier * 25 * SHEET_MATERIAL_AMOUNT
+		else if(istype(stock_part, /datum/stock_part/servo))
+			var/datum/stock_part/servo/servo = stock_part
+			max_part_tier = servo.tier
+			flatpack_time = initial(flatpack_time) - servo.tier / 2 // T4 = 2 seconds off
+		else if(istype(stock_part, /datum/stock_part/micro_laser))
+			var/datum/stock_part/micro_laser/laser = stock_part
+			efficiency -= laser.tier * 0.2
+
+	materials.max_amount = mat_capacity
 	creation_efficiency = max(1.2, efficiency)
 
 /obj/machinery/flatpacker/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)

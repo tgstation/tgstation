@@ -472,14 +472,16 @@
 /obj/machinery/autolathe/RefreshParts()
 	. = ..()
 	var/mat_capacity = 0
-	for(var/datum/stock_part/matter_bin/new_matter_bin in component_parts)
-		mat_capacity += new_matter_bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
+	var/efficiency = 1.8
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/matter_bin))
+			var/datum/stock_part/matter_bin/matter_bin = stock_part
+			mat_capacity += matter_bin.tier * (37.5*SHEET_MATERIAL_AMOUNT)
+		else if(istype(stock_part, /datum/stock_part/servo))
+			var/datum/stock_part/servo/servo = stock_part
+			efficiency -= servo.tier * 0.2
 	materials.max_amount = mat_capacity
-
-	var/efficiency=1.8
-	for(var/datum/stock_part/servo/new_servo in component_parts)
-		efficiency -= new_servo.tier * 0.2
-	creation_efficiency = max(1,efficiency) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of servo efficiency
+	creation_efficiency = max(1, efficiency) // creation_efficiency goes 1.6 -> 1.4 -> 1.2 -> 1 per level of servo efficiency
 
 /**
  * Cut a wire in the autolathe

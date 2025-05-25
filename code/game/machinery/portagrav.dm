@@ -77,12 +77,17 @@
 /obj/machinery/power/portagrav/RefreshParts()
 	. = ..()
 	var/power_usage = initial(draw_per_range)
-	for(var/datum/stock_part/micro_laser/laser in component_parts)
-		power_usage -= BASE_MACHINE_ACTIVE_CONSUMPTION / 10 * (laser.tier - 1)
-	draw_per_range = power_usage
 	var/new_range = 4
-	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		new_range += capacitor.tier
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/micro_laser))
+			var/datum/stock_part/micro_laser/micro_laser = stock_part
+			power_usage -= BASE_MACHINE_ACTIVE_CONSUMPTION / 10 * (micro_laser.tier - 1)
+		else if(istype(stock_part, /datum/stock_part/capacitor))
+			var/datum/stock_part/capacitor/capacitor = stock_part
+			new_range += capacitor.tier
+
+	draw_per_range = power_usage
 	max_range = new_range
 	update_field()
 

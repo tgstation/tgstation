@@ -176,10 +176,14 @@
 	. = ..()
 	var/laser = 0
 	var/cap = 0
-	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
-		laser += micro_laser.tier
-	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		cap += capacitor.tier
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/micro_laser))
+			var/datum/stock_part/micro_laser/micro_laser = stock_part
+			laser += micro_laser.tier
+		else if(istype(stock_part, /datum/stock_part/capacitor))
+			var/datum/stock_part/capacitor/capacitor = stock_part
+			cap += capacitor.tier
 
 	heating_energy = laser * initial(heating_energy)
 
@@ -480,10 +484,14 @@
 	. = ..()
 	var/lasers_rating = 0
 	var/capacitors_rating = 0
-	for(var/datum/stock_part/micro_laser/laser in component_parts)
-		lasers_rating += laser.tier
-	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		capacitors_rating += capacitor.tier
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/micro_laser))
+			var/datum/stock_part/micro_laser/micro_laser = stock_part
+			lasers_rating += micro_laser.tier
+		else if(istype(stock_part, /datum/stock_part/capacitor))
+			var/datum/stock_part/capacitor/capacitor = stock_part
+			capacitors_rating += capacitor.tier
 
 	heating_energy = lasers_rating * initial(heating_energy)
 

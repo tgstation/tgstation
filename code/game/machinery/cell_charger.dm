@@ -126,8 +126,11 @@
 /obj/machinery/cell_charger/RefreshParts()
 	. = ..()
 	charge_rate = 0.25 * STANDARD_CELL_RATE
-	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		charge_rate *= capacitor.tier
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/capacitor))
+			var/datum/stock_part/capacitor/capacitor = stock_part
+			charge_rate *= capacitor.tier
 
 /obj/machinery/cell_charger/process(seconds_per_tick)
 	if(!charging || charging.percent() >= 100 || !anchored || !is_operational)

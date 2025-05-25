@@ -220,8 +220,11 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/RefreshParts()
 	. = ..()
 	var/holograph_range = 4
-	for(var/datum/stock_part/capacitor/capacitor in component_parts)
-		holograph_range += 1 * capacitor.tier
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/capacitor))
+			var/datum/stock_part/capacitor/capacitor = stock_part
+			holograph_range += 1 * capacitor.tier
 	holo_range = holograph_range
 
 /obj/machinery/holopad/examine(mob/user)

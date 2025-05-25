@@ -39,8 +39,12 @@
 /obj/machinery/fat_sucker/RefreshParts()
 	. = ..()
 	var/rating = 0
-	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
-		rating += micro_laser.tier
+
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/micro_laser))
+			var/datum/stock_part/micro_laser/micro_laser = stock_part
+			rating += micro_laser.tier
+
 	bite_size = initial(bite_size) + rating * 2.5
 	nutrient_to_meat = initial(nutrient_to_meat) - rating * 5
 

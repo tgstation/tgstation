@@ -101,22 +101,25 @@
 /obj/machinery/dish_drive/RefreshParts()
 	. = ..()
 	suck_distance = 0
-	for(var/datum/stock_part/servo/servo in component_parts)
-		suck_distance = servo.tier
-	// Lowers power use for total tier
-	var/total_rating = 0
-	for(var/datum/stock_part/stock_part in component_parts)
-		total_rating += stock_part.tier
+	var/total_rating = 0 // Lowers power use for total tier
+	for(var/stock_part in component_parts)
+		if(istype(stock_part, /datum/stock_part/servo))
+			var/datum/stock_part/servo/servo = stock_part
+			suck_distance = servo.tier
+		else if(istype(stock_part, /obj/item/circuitboard/machine/dish_drive))
+			var/obj/item/circuitboard/machine/dish_drive/board = stock_part
+			suction_enabled = board.suction
+			transmit_enabled = board.transmit
+
+		if(istype(stock_part, /datum/stock_part))
+			var/datum/stock_part/part = stock_part
+			total_rating += part.tier
+
 	if(total_rating >= 9)
 		update_mode_power_usage(ACTIVE_POWER_USE, 0)
 	else
 		update_mode_power_usage(IDLE_POWER_USE, max(0, initial(idle_power_usage) - total_rating))
 		update_mode_power_usage(ACTIVE_POWER_USE, max(0, initial(active_power_usage) - total_rating))
-	// Board options
-	var/obj/item/circuitboard/machine/dish_drive/board = locate() in component_parts
-	if(board)
-		suction_enabled = board.suction
-		transmit_enabled = board.transmit
 
 /obj/machinery/dish_drive/process()
 	if(COOLDOWN_FINISHED(src, time_since_dishes) && transmit_enabled)
