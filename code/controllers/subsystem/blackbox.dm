@@ -340,7 +340,7 @@ Versioning
 		"name" = L.real_name,
 		"key" = L.ckey,
 		"job" = L.mind.assigned_role.title,
-		"special" = L.mind.special_role,
+		"special" = jointext(L.mind.get_special_roles(), " | "),
 		"pod" = get_area_name(L, TRUE),
 		"laname" = L.lastattacker,
 		"lakey" = L.lastattackerckey,
