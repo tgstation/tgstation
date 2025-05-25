@@ -23,7 +23,7 @@
 /turf/open/misc/asteroid,
 /area/centcom/heretic_sacrifice/void)
 "dX" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;
@@ -160,7 +160,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 9
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/ashplanet/wateryrock{
 	initial_gas_mix = "o2=22;n2=82;TEMP=293.15";
 	planetary_atmos = 0;

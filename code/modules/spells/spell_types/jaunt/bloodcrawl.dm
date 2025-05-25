@@ -145,8 +145,8 @@
 	playsound(landing_turf, 'sound/effects/magic/exit_blood.ogg', 50, TRUE, -1)
 
 	// Make the mob have the color of the blood pool it came out of
-	var/obj/effect/decal/cleanable/came_from = locate() in landing_turf
-	var/new_color = came_from?.get_blood_color()
+	var/obj/effect/decal/cleanable/blood/came_from = locate() in landing_turf
+	var/new_color = came_from?.color
 	if(!new_color)
 		return
 

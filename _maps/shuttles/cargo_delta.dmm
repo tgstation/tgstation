@@ -63,7 +63,7 @@
 /turf/open/floor/plating,
 /area/shuttle/supply)
 "l" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/shuttle/supply)
