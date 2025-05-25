@@ -41,6 +41,7 @@
 	)
 	min_pop = 30
 	max_antag_cap = 1
+	repeatable = FALSE
 
 /datum/dynamic_ruleset/roundstart/malf_ai/get_always_blacklisted_roles()
 	return list()
@@ -111,6 +112,7 @@
 	max_antag_cap = 1
 	min_pop = 30
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
+	repeatable = FALSE
 
 /datum/dynamic_ruleset/roundstart/wizard/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/wizard) // moves to lair for us
@@ -140,6 +142,7 @@
 		JOB_HEAD_OF_PERSONNEL,
 	)
 	min_antag_cap = list("denominator" = 20, "offset" = 1)
+	repeatable = FALSE
 	/// Ratio of cultists getting on the shuttle to be considered a minor win
 	var/ratio_to_be_considered_escaped = 0.5
 
@@ -187,6 +190,7 @@
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
+	repeatable = FALSE
 
 /datum/dynamic_ruleset/roundstart/nukies/create_execute_args()
 	return list(new /datum/team/nuclear)
@@ -260,6 +264,7 @@
 	)
 	min_pop = 30
 	min_antag_cap = 3
+	repeatable = FALSE
 	/// How many heads of staff are required to be on the station for this to be selected
 	var/heads_necessary = 3
 
@@ -331,7 +336,6 @@
 	)
 	min_pop = 10
 	min_antag_cap = list("denominator" = 20, "offset" = 1)
-	repeatable = FALSE
 
 /datum/dynamic_ruleset/roundstart/spies/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/spy)

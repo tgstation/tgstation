@@ -1,6 +1,7 @@
 /datum/dynamic_ruleset/latejoin
 	min_antag_cap = 1
 	max_antag_cap = 1
+	repeatable = TRUE
 
 /datum/dynamic_ruleset/latejoin/set_config_value(nvar, nval)
 	if(nvar == NAMEOF(src, min_antag_cap) || nvar == NAMEOF(src, max_antag_cap))
@@ -73,6 +74,7 @@
 	jobban_flag = ROLE_REV_HEAD
 	weight = 1
 	min_pop = 30
+	repeatable = FALSE
 	/// How many heads of staff are required to be on the station for this to be selected
 	var/heads_necessary = 3
 

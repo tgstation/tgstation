@@ -1,4 +1,6 @@
 /datum/dynamic_ruleset/midround
+	repeatable = TRUE
+	repeatable_weight_decrease = 2
 	/// LIGHT_MIDROUND or HEAVY_MIDROUND - determines which pool it enters
 	var/midround_type
 	/// If the false alarm event can pick this ruleset to trigger, well, a false alarm
@@ -274,6 +276,7 @@
 	)
 	min_pop = 30
 	min_antag_cap = list("denominator" = 18, "offset" = 1)
+	repeatable = FALSE
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	signup_atom_appearance = /obj/machinery/nuclearbomb/syndicate
 
@@ -354,6 +357,7 @@
 	)
 	min_pop = 30
 	max_antag_cap = 1
+	repeatable_weight_decrease = 3
 	signup_atom_appearance = /obj/structure/blob/normal
 	/// How many points does the blob spawn with
 	var/starting_points = OVERMIND_STARTING_POINTS
@@ -391,6 +395,7 @@
 	min_pop = 30
 	max_antag_cap = 1
 	min_antag_cap = 1
+	repeatable_weight_decrease = 3
 	signup_atom_appearance = /mob/living/basic/alien
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/New(list/dynamic_config)
@@ -476,6 +481,7 @@
 	)
 	min_pop = 30
 	max_antag_cap = 1
+	repeatable_weight_decrease = 3
 	signup_atom_appearance = /mob/living/basic/space_dragon
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/can_be_selected(population_size)
@@ -509,6 +515,7 @@
 	weight = 5
 	min_pop = 20
 	min_antag_cap = 2
+	repeatable_weight_decrease = 3
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	signup_atom_appearance = /obj/item/melee/baton/abductor
 
@@ -544,6 +551,7 @@
 	)
 	min_pop = 30
 	max_antag_cap = 1
+	repeatable = FALSE
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 	signup_atom_appearance = /obj/item/energy_katana
 
@@ -570,6 +578,7 @@
 	weight = 5
 	min_pop = 10
 	max_antag_cap = 1
+	repeatable = FALSE
 	signup_atom_appearance = /mob/living/basic/revenant
 	/// There must be this many dead mobs on the station for a revenant to spawn (of all mob types, not just humans)
 	/// Remember there's usually 2-3 that spawn in the Morgue roundstart, so adjust this accordingly
@@ -706,6 +715,7 @@
 	min_pop = 20
 	max_antag_cap = 4
 	min_antag_cap = 3
+	repeatable = FALSE
 	signup_atom_appearance = /obj/item/card/id/advanced/prisoner
 	/// What backstory is the fugitive(s)?
 	VAR_FINAL/fugitive_backstory
@@ -914,6 +924,7 @@
 /datum/dynamic_ruleset/midround/from_living
 	min_antag_cap = 1
 	max_antag_cap = 1
+	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_living/set_config_value(nvar, nval)
 	if(nvar == NAMEOF(src, min_antag_cap) || nvar == NAMEOF(src, max_antag_cap))
@@ -992,6 +1003,7 @@
 		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
+	repeatable = FALSE
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai/get_always_blacklisted_roles()
 	return list()
@@ -1016,6 +1028,7 @@
 		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
+	repeatable_weight_decrease = 3
 
 /datum/dynamic_ruleset/midround/from_living/blob/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/blob/infection)
