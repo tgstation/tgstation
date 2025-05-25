@@ -53,6 +53,7 @@
 #define TECHWEB_NODE_GAS_COMPRESSION "gas_compression"
 #define TECHWEB_NODE_GENE_ENGINEERING "gene_engineering"
 #define TECHWEB_NODE_HOLOGRAPHICS "holographics"
+#define TECHWEB_NODE_HOLOGRAPHICS_ADVANCED "advanced holographics"
 #define TECHWEB_NODE_HUD "hud"
 #define TECHWEB_NODE_HYDROPONICS "hydroponics"
 #define TECHWEB_NODE_INTERGRATED_TOOLSETS "intergrated_toolsets"
