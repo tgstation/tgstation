@@ -518,3 +518,77 @@ SUBSYSTEM_DEF(id_access)
 			tally++
 
 	return tally
+
+/**
+ * Helper proc for creating a copy of the in-character information you could render from scanning for an ID card.
+ * Accounts for chameleon cards, silicons, and ID read failures.
+ * Pertinently, it also returns relevant information for their bank account (if they have one).
+ * To return bank account info for a chameleon card, bypass_chameleon must be set to TRUE. Otherwise it returns
+ * a bogey record.
+ * datum/source -
+ */
+/datum/controller/subsystem/id_access/proc/__in_character_record_id_information(
+	atom/movable/target_of_record,
+	bypass_chameleon = FALSE
+	) as /alist
+
+	var/alist/returned_record = alist(
+		"Name" = null,
+		"Age" = null,
+		"Assignment" = null,
+		"Account ID" = null,
+		"Account Holder" = null,
+		"Account Assignment" = null,
+		"Accesses" = null,
+	)
+	. = returned_record
+	if(isnull(target_of_record))
+		.["Name"] = ID_READ_FAILURE
+		.["Age"] = ID_READ_FAILURE
+		.["Assignment"] = ID_READ_FAILURE
+		.["Account ID"] = ID_READ_FAILURE
+		.["Account Holder"] = ID_READ_FAILURE
+		.["Account Assignment"] = ID_READ_FAILURE
+		.[ID_READ_FAILURE] = ID_READ_FAILURE
+		return .
+	var/mob/living/target = astype(target_of_record, /mob/living)
+	if(target)
+		if(!issilicon(target))
+			. = __in_character_record_id_information(astype(target.get_idcard(), /obj/item/card/id/advanced))
+			return .
+		.["Name"] = target.name
+		.["Age"] = "INSPECT MANUFACTURER MANIFEST"
+		.["Account ID"] = 0
+		.["Account Holder"] = "NO ACCOUNT."
+		.["Account Assignment"] = "NO ACCOUNT."
+		.["Bank Account"] = "N/A"
+		.["Assignment"] = target.mind?.assigned_role?.title
+		.[SILICON_OVERRIDE] = SILICON_OVERRIDE
+		return .
+	var/obj/item/card/id/advanced/id_card = astype(target_of_record, /obj/item/card/id/advanced)
+	if(id_card)
+		.["Name"] = id_card.registered_name || "Unknown"
+		.["Age"] = id_card.registered_age || "Unknown"
+		.["Assignment"] = id_card.assignment || "Unassigned"
+		.["Accesses"] = id_card.access
+		var/datum/bank_account/id_account = id_card.registered_account
+		if(istype(id_card, /obj/item/card/id/advanced/chameleon) && !bypass_chameleon)
+			// Generate a bogey record based only on the ID card
+			// Generates a random bank account number every time as a 'spot the thread' for anyone who
+			// went through records for this entry for whatever reason.
+			.["Account ID"] = rand(111111, 999999)
+			.["Account Holder"] = .["Name"]
+			.["Account Assignment"] = .["Assignment"]
+			.[CHAMELEON_OVERRIDE] = CHAMELEON_OVERRIDE
+			return .
+		if(!id_account)
+			.["Account ID"] = 0
+			.["Account Holder"] = "NO ACCOUNT."
+			.["Account Assignment"] = "NO ACCOUNT."
+			return .
+		.["Account ID"] = id_account.account_id
+		.["Account Holder"] = id_account.account_holder
+		.["Account Assignment"] = id_account.account_job?.title || "Unassigned"
+		return .
+	else
+		. = ID_DATA(null)
