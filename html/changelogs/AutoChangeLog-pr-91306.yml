@@ -1,0 +1,5 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - bugfix: "fixed being able to add seemingly infinite refined bluespace crystals to pipe bombs"
+  - refactor: "/obj/item/stack/split_stack no longer tries to move the stack into the user's hands, use /obj/item/stack/split_n_take for that"
