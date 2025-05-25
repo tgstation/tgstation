@@ -19,6 +19,7 @@
 	new /obj/item/storage/photo_album/ce(src)
 	new /obj/item/storage/box/skillchips/engineering(src)
 	new /obj/item/storage/box/stickers/chief_engineer(src)
+	new /obj/item/modular_computer/laptop/buildable/sleek(src)
 
 /obj/structure/closet/secure_closet/engineering_chief/populate_contents_immediate()
 	. = ..()
