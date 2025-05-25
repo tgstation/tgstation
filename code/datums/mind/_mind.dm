@@ -139,6 +139,9 @@
 		if(NAMEOF(src, assigned_role))
 			set_assigned_role(var_value)
 			. = TRUE
+		if(NAMEOF(src, holy_role))
+			set_holy_role(var_value)
+			. = TRUE
 	if(!isnull(.))
 		datum_flags |= DF_VAR_EDITED
 		return
@@ -500,6 +503,22 @@
 		CRASH("set_assigned_role called with invalid role: [isnull(new_role) ? "null" : new_role]")
 	. = assigned_role
 	assigned_role = new_role
+
+///Sets your holy role, giving/taking away traits related to if you're gaining/losing it.
+/datum/mind/proc/set_holy_role(new_holy_role)
+	if(holy_role == new_holy_role)
+		return
+	var/was_holy = holy_role
+	holy_role = new_holy_role
+	if(holy_role)
+		ADD_TRAIT(src, TRAIT_SEE_BLESSED_TILES, HOLY_TRAIT)
+	else
+		REMOVE_TRAIT(src, TRAIT_SEE_BLESSED_TILES, HOLY_TRAIT)
+	SEND_SIGNAL(current, COMSIG_MOB_MIND_SET_HOLY_ROLE, new_holy_role)
+	//the signal stops tracking when losing holy roles, but since we're gaining it, give us our HUDs if we're becoming holy.
+	if(!was_holy && holy_role)
+		for(var/datum/atom_hud/alternate_appearance/basic/blessed_aware/blessed_hud in GLOB.active_alternate_appearances)
+			blessed_hud.check_hud(current)
 
 /// Sets us to the passed job datum, then greets them to their new job.
 /// Use this one for when you're assigning this mind to a new job for the first time,
