@@ -290,6 +290,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 /// Checks if the given mob is a spy!
 #define IS_SPY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/spy))
 
+/// Checks if the given mob a sapper from space
+#define IS_SPACE_SAPPER(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/sapper))
+
 /// List of human antagonist types which don't spawn directly on the space station
 GLOBAL_LIST_INIT(human_invader_antagonists, list(
 	/datum/antagonist/abductor,
@@ -299,6 +302,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 	/datum/antagonist/nukeop,
 	/datum/antagonist/pirate,
 	/datum/antagonist/wizard,
+	/datum/antagonist/sapper,
 ))
 
 /// Returns true if the given mob has an antag datum which is assigned to a human antagonist who doesn't spawn on the space station
