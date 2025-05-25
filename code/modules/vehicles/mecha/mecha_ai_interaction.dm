@@ -93,6 +93,9 @@
 			if(!AI)
 				to_chat(user, span_warning("There is no AI currently installed on this device."))
 				return
+			if(!(mecha_flags & AI_COMPATIBLE)) //If the mech isn't compatible with an AI transfer, early return.
+				to_chat(user, span_warning("An AI cannot be installed into [src]."))
+				return
 			if(AI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				AI.disconnect_shell()
 			if(AI.stat || !AI.client)
