@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - refactor: "preview icons for greyscale items are now automatically generated, meaning you can see GAGS as they actually appear ingame while mapping or viewing the loadout menu."
