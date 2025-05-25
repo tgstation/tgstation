@@ -226,6 +226,9 @@ aux*.dll
 libaux*.so
 *.pdb
 
+# I hate you yoshi
+!auxcpu_byondapi.dll
+
 # byond-tracy, we intentionally do not ship this and do not want to maintain it
 # https://github.com/mafemergency/byond-tracy/
 prof.dll

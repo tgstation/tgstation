@@ -1,8 +1,4 @@
-/client/proc/makepAI(turf/target in GLOB.mob_list)
-	set category = "Admin.Fun"
-	set name = "Make pAI"
-	set desc = "Specify a location to spawn a pAI device, then specify a key to play that pAI"
-
+DEFINE_PROC_VERB(/client, makepAI, "Make pAI", "Specify a location to spawn a pAI device, then specify a key to play that pAI", FALSE, "Admin.Fun", turf/target in GLOB.mob_list)
 	var/list/available = list()
 	for(var/mob/player as anything in GLOB.player_list)
 		if(player.client && player.key)

@@ -120,7 +120,7 @@
 
 	return TRUE
 
-/client/MouseDown(datum/object, location, control, params)
+OVERRIDE_INTERNAL_VERB(/client, MouseDown, datum/object, location, control, params)
 	if(QDELETED(object)) //Yep, you can click on qdeleted things before they have time to nullspace. Fun.
 		return
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDOWN, object, location, control, params)
@@ -134,7 +134,7 @@
 			Click(selected_target[1], location, control, selected_target[2])
 			sleep(delay)
 
-/client/MouseUp(object, location, control, params)
+OVERRIDE_INTERNAL_VERB(/client, MouseUp, datum/object, location, control, params)
 	if(SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEUP, object, location, control, params) & COMPONENT_CLIENT_MOUSEUP_INTERCEPT)
 		click_intercept_time = world.time
 	if(mouse_up_icon)
@@ -161,7 +161,22 @@
 /atom/movable/screen/click_catcher/IsAutoclickable()
 	return TRUE
 
-/client/MouseDrag(src_object,atom/over_object,src_location,over_location,src_control,over_control,params)
+/client/MouseDrag(atom/src_object, atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
+	var/starting_usage = TICK_USAGE
+	if(caller)
+		__MouseDrag(src_object, over_object, src_location, over_location, src_control, over_control, params)
+		. = ..()
+	else
+		var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(starting_usage, callee)
+		ASYNC
+			__MouseDrag(src_object, over_object, src_location, over_location, src_control, over_control, params)
+			. = ..()
+
+		store_cost?.usage_at_end = TICK_USAGE
+		store_cost?.finished_on = world.time
+		store_cost?.enter_average()
+
+/client/proc/__MouseDrag(atom/src_object, atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
 	var/list/modifiers = params2list(params)
 	if (LAZYACCESS(modifiers, MIDDLE_CLICK))
 		if (src_object && src_location != over_location)
@@ -180,17 +195,29 @@
 		selected_target[1] = over_object
 		selected_target[2] = params
 	SEND_SIGNAL(src, COMSIG_CLIENT_MOUSEDRAG, src_object, over_object, src_location, over_location, src_control, over_control, params)
-	return ..()
 
 /client/MouseDrop(atom/src_object, atom/over_object, atom/src_location, atom/over_location, src_control, over_control, params)
-	SHOULD_NOT_OVERRIDE(TRUE)
+	var/starting_usage = TICK_USAGE
+	if(caller)
+		if (IS_WEAKREF_OF(src_object, middle_drag_atom_ref))
+			middragtime = 0
+			middle_drag_atom_ref = null
+		..()
+		drag_start = 0
+		drag_details = null
+	else
+		var/datum/verb_cost_tracker/store_cost = new /datum/verb_cost_tracker(starting_usage, callee)
+		ASYNC
+			if (IS_WEAKREF_OF(src_object, middle_drag_atom_ref))
+				middragtime = 0
+				middle_drag_atom_ref = null
+			..()
+			drag_start = 0
+			drag_details = null
 
-	if (IS_WEAKREF_OF(src_object, middle_drag_atom_ref))
-		middragtime = 0
-		middle_drag_atom_ref = null
-	..()
-	drag_start = 0
-	drag_details = null
+		store_cost?.usage_at_end = TICK_USAGE
+		store_cost?.finished_on = world.time
+		store_cost?.enter_average()
 
 #undef LENIENCY_DISTANCE
 #undef LENIENCY_TIME
