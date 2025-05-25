@@ -30,6 +30,8 @@ GLOBAL_LIST_EMPTY(escape_menus)
 
 		atom/movable/plane_master_controller/plane_master_controller
 
+		list/resource_panels
+		show_resources = FALSE
 		menu_page = PAGE_HOME
 
 /datum/escape_menu/New(client/client)
