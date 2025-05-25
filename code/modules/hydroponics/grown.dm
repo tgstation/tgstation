@@ -162,7 +162,7 @@
 		playsound(user, 'sound/items/paper_flip.ogg', 20)
 		seed = null
 		qdel(src)
-
+		return ITEM_INTERACT_SUCCESS
 	else
 		return ..()
 
