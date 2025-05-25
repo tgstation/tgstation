@@ -933,5 +933,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	color = "#002f06" //Gross green-black. Seemed fitting.
 	ph = 8.1
 	metabolization_rate = 0.1 * REM
+	taste_mult = 0
 	tox_damage = 0
 	metabolized_traits = list(TRAIT_IMMUNODEFICIENCY)
