@@ -74,12 +74,39 @@
 	var/list/custom_spawns = list()
 	/// Set TRUE if you want reusable custom spawners
 	var/keep_custom_spawns = FALSE
+	/// The domain must have this many ghost candidates willing to join as entities, or else it will not load.
+	var/mission_min_candidates = 0
+	/// Maximum amount possible of above.
+	var/mission_max_candidates = 0
+	/// Ghosts that will be spawned as, presumably, an antagonist in the map.
+	var/list/chosen_ghosts
+	/// List of spawners used for candidates.
+	var/list/obj/effect/mob_spawn/ghost_role/ghost_spawners
+	/// Current domain mobs being held by ghosts
+	var/list/mob/living/ghost_mobs
+	/// The role that ghosts will get. Only used for poll text.
+	var/spawner_role = "Antagonist"
 
+/datum/lazy_template/virtual_domain/Destroy(force)
+	QDEL_NULL(ghost_spawners)
+	QDEL_NULL(ghost_mobs)
+	. = ..()
 
 /// Sends a point to any loot signals on the map
-/datum/lazy_template/virtual_domain/proc/add_points(points_to_add)
+/datum/lazy_template/virtual_domain/proc/add_points(points_to_add = 1)
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_GOAL_POINT, points_to_add)
 
+/// Loads the ghost candidates.
+/datum/lazy_template/virtual_domain/proc/load_advanced_npcs(list/mob/lucky_ghosts)
+	for(var/mob/lucky_ghost as anything in lucky_ghosts)
+		var/obj/effect/mob_spawn/ghost_role/ghost_spawner = pick(ghost_spawners)
+		LAZYREMOVE(ghost_spawners, ghost_spawner)
+
+		var/mob/new_mob = ghost_spawner.create(lucky_ghost, lucky_ghost.real_name)
+		LAZYADD(ghost_mobs, new_mob)
+
+		var/ghostname = lucky_ghost.name
+		notify_ghosts("[ghostname] has been selected to be a [ghost_spawner.prompt_name]!", source = new_mob, header = "001010110")
 
 /// Overridable proc to be called after the map is loaded.
 /datum/lazy_template/virtual_domain/proc/setup_domain(list/created_atoms)
