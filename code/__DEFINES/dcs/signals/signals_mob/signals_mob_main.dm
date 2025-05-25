@@ -276,3 +276,6 @@
 
 ///from /obj/item/crusher_trophy/on_mark_activate(): (trophy, user)
 #define COMSIG_MOB_TROPHY_ACTIVATED(identifier) "COMSIG_MOB_TROPHY_ACTIVATED[identifier]"
+
+/// from /mob/eye/camera/remote/assign_user(): (mob/living/new_user, mob/living/old_user)
+#define COMSIG_REMOTE_CAMERA_ASSIGN_USER "remote_camera_assign_user"
