@@ -2008,6 +2008,7 @@
 #include "code\datums\storage\subtypes\others\cards.dm"
 #include "code\datums\storage\subtypes\others\carpskin_bag.dm"
 #include "code\datums\storage\subtypes\others\extract_inventory.dm"
+#include "code\datums\storage\subtypes\others\fancy_storage.dm"
 #include "code\datums\storage\subtypes\others\fish_case.dm"
 #include "code\datums\storage\subtypes\others\misc.dm"
 #include "code\datums\storage\subtypes\others\pod.dm"

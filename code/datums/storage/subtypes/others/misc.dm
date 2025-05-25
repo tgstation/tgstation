@@ -142,68 +142,6 @@
 /datum/storage/briefcase
 	max_total_storage = 21
 
-//=======================Fancy storages======================
-///Donut box
-/datum/storage/donut/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
-	. = ..()
-	set_holdable(/obj/item/food/donut)
-
-///Egg box
-/datum/storage/egg_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
-	. = ..()
-	set_holdable(list(
-		/obj/item/food/egg,
-		/obj/item/food/chocolateegg,
-		/obj/item/food/boiledegg,
-		/obj/item/food/scotchegg,
-		/obj/item/food/grown/eggy,
-		/obj/item/surprise_egg,
-	))
-
-///Generic fancy holder
-/datum/storage/fancy_holder/New(obj/item/storage/fancy/candle_box/parent, max_slots, max_specific_storage, max_total_storage)
-	. = ..()
-	set_holdable(parent.spawn_type)
-
-///Heart box
-/datum/storage/heart_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
-	. = ..()
-	set_holdable(/obj/item/food/bonbon)
-
-///Cigrate boxes
-/datum/storage/cigarette_box
-	display_contents = FALSE
-
-/datum/storage/cigarette_box/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
-	. = ..()
-	set_holdable(list(
-		/obj/item/cigarette,
-		/obj/item/lighter,
-	))
-
-///Coffee condiment display
-/datum/storage/coffee_condi_display
-	max_slots = 14
-
-/datum/storage/coffee_condi_display/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
-	. = ..()
-	set_holdable(list(
-		/obj/item/reagent_containers/condiment/pack/sugar,
-		/obj/item/reagent_containers/condiment/creamer,
-		/obj/item/reagent_containers/condiment/pack/astrotame,
-		/obj/item/reagent_containers/condiment/chocolate,
-	))
-
-///Coffee cart rack
-/datum/storage/coffee_cart_rack
-	max_slots = 4
-
-/datum/storage/coffee_cart_rack/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
-	. = ..()
-	set_holdable(/obj/item/coffee_cartridge)
-
-//=================================================
-
 ///Pill bottle
 /datum/storage/pillbottle
 	allow_quick_gather = TRUE
@@ -216,7 +154,6 @@
 		/obj/item/reagent_containers/applicator,
 		/obj/item/food/bait/natural,
 	))
-
 
 ///Six pack beer
 /datum/storage/sixcan
