@@ -488,6 +488,11 @@
 	spawn_count = 6
 	storage_type = /datum/storage/fancy_holder
 
+/obj/item/storage/fancy/nugget_box/Initialize(mapload)
+	. = ..()
+	// It's a safe place for the Fryish/Fritterish
+	AddElement(/datum/element/fish_safe_storage)
+
 /*
  * Jar of pickles
  */
