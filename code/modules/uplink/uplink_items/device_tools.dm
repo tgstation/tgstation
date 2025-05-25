@@ -279,3 +279,9 @@
 	desc = "High-tech rope, a refined hook structure, the peak of climbing technology. Only useful for climbing up holes, provided the operation site has any."
 	item = /obj/item/climbing_hook/syndicate
 	cost = 1
+
+/datum/uplink_item/special/autosurgeon
+	name = "Syndicate Autosurgeon"
+	desc = "A multi-use autosurgeon for implanting whatever you want into yourself. Rip that station apart and make it part of you."
+	item = /obj/item/autosurgeon/syndicate
+	cost = 5
