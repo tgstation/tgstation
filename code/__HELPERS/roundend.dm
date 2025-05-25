@@ -360,7 +360,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
 
 	parts += "[FOURSPACES]Round: [SSdynamic.current_tier.name]"
-	for(var/datum/dynamic_ruleset/rule as anything in SSdynamic.executed_rulesets)
+	for(var/datum/dynamic_ruleset/rule as anything in SSdynamic.executed_rulesets - SSdynamic.unreported_rulesets)
 		parts += "[FOURSPACES][FOURSPACES]- <b>[rule.name]</b>"
 
 	return parts.Join("<br>")

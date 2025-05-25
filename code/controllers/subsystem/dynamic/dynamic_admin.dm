@@ -95,6 +95,7 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 			data["selected_players"] += list(list(
 				"key" = player.key,
 			))
+			data["hidden"] = (ruleset in SSdynamic.unreported_rulesets)
 	return data
 
 /datum/dynamic_panel/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -143,9 +144,11 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 			log_admin("[key_name_admin(ui.user)] set the [category] ruleset category to [count].")
 			return TRUE
 		if("execute_ruleset")
-			var/ruleset_path = text2path(params["ruleset_type"])
+			var/datum/dynamic_ruleset/ruleset_path = text2path(params["ruleset_type"])
 			if(!ruleset_path)
 				return
+			message_admins("[key_name_admin(ui.user)] executed the ruleset [initial(ruleset_path.config_tag)].")
+			log_admin("[key_name_admin(ui.user)] executed the ruleset [initial(ruleset_path.config_tag)].")
 			ASYNC
 				SSdynamic.force_run_midround(ruleset_path, alert_admins_on_fail = TRUE)
 			return TRUE
@@ -176,31 +179,65 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 			var/list/tiers = list()
 			for(var/datum/dynamic_tier/tier as anything in subtypesof(/datum/dynamic_tier))
 				tiers[initial(tier.name)] = tier
-			var/picked = tgui_input_list(ui.user, "Pick a dynamic tier before the game starts", "Pick tier", tiers, ui_state = ADMIN_STATE(R_ADMIN))
+			var/datum/dynamic_tier/picked = tgui_input_list(ui.user, "Pick a dynamic tier before the game starts", "Pick tier", tiers, ui_state = ADMIN_STATE(R_ADMIN))
 			if(picked && !SSdynamic.current_tier)
 				SSdynamic.set_tier(tiers[picked])
+				message_admins("[key_name_admin(ui.user)] set the dynamic tier to [initial(picked.tier)].")
+				log_admin("[key_name_admin(ui.user)] set the dynamic tier to [initial(picked.tier)].")
 			return TRUE
 		if("max_light_chance")
 			SSdynamic.admin_forcing_next_light = !SSdynamic.admin_forcing_next_light
+			message_admins("[key_name_admin(ui.user)] [SSdynamic.admin_forcing_next_light ? "forced" : "reset"] the next light ruleset chance.")
+			log_admin("[key_name_admin(ui.user)] [SSdynamic.admin_forcing_next_light ? "forced" : "reset"] the next light ruleset chance.")
 			return TRUE
 		if("max_heavy_chance")
 			SSdynamic.admin_forcing_next_heavy = !SSdynamic.admin_forcing_next_heavy
+			message_admins("[key_name_admin(ui.user)] [SSdynamic.admin_forcing_next_heavy ? "forced" : "reset"] the next heavy ruleset chance.")
+			log_admin("[key_name_admin(ui.user)] [SSdynamic.admin_forcing_next_heavy ? "forced" : "reset"] the next heavy ruleset chance.")
 			return TRUE
 		if("max_latejoin_chance")
 			SSdynamic.admin_forcing_next_latejoin = !SSdynamic.admin_forcing_next_latejoin
+			message_admins("[key_name_admin(ui.user)] [SSdynamic.admin_forcing_next_latejoin ? "forced" : "reset"] the next latejoin ruleset chance.")
+			log_admin("[key_name_admin(ui.user)] [SSdynamic.admin_forcing_next_latejoin ? "forced" : "reset"] the next latejoin ruleset chance.")
 			return TRUE
 		if("light_start_now")
 			COOLDOWN_RESET(SSdynamic, light_ruleset_start)
+			message_admins("[key_name_admin(ui.user)] reset the light ruleset start cooldown.")
+			log_admin("[key_name_admin(ui.user)] reset the light ruleset start cooldown.")
 			return TRUE
 		if("heavy_start_now")
 			COOLDOWN_RESET(SSdynamic, heavy_ruleset_start)
+			message_admins("[key_name_admin(ui.user)] reset the heavy ruleset start cooldown.")
+			log_admin("[key_name_admin(ui.user)] reset the heavy ruleset start cooldown.")
 			return TRUE
 		if("latejoin_start_now")
 			COOLDOWN_RESET(SSdynamic, latejoin_ruleset_start)
+			message_admins("[key_name_admin(ui.user)] reset the latejoin ruleset start cooldown.")
+			log_admin("[key_name_admin(ui.user)] reset the latejoin ruleset start cooldown.")
 			return TRUE
 		if("reset_midround_cooldown")
 			COOLDOWN_RESET(SSdynamic, midround_cooldown)
+			message_admins("[key_name_admin(ui.user)] reset the midround cooldown.")
+			log_admin("[key_name_admin(ui.user)] reset the midround cooldown.")
 			return TRUE
 		if("reset_latejoin_cooldown")
 			COOLDOWN_RESET(SSdynamic, latejoin_cooldown)
+			message_admins("[key_name_admin(ui.user)] reset the latejoin cooldown.")
+			log_admin("[key_name_admin(ui.user)] reset the latejoin cooldown.")
+			return TRUE
+		if("hide_ruleset")
+			var/index = params["ruleset_index"]
+			if(length(SSdynamic.executed_rulesets) < index)
+				return
+			var/datum/dynamic_ruleset/ruleset = SSdynamic.executed_rulesets[index]
+			if(!ruleset)
+				return
+			if(ruleset in SSdynamic.unreported_rulesets)
+				SSdynamic.unreported_rulesets -= ruleset
+				message_admins("[key_name_admin(ui.user)] hid [ruleset] from the roundend report.")
+				log_admin("[key_name_admin(ui.user)] hid [ruleset] from the roundend report.")
+			else
+				SSdynamic.unreported_rulesets += ruleset
+				message_admins("[key_name_admin(ui.user)] unhid [ruleset] from the roundend report.")
+				log_admin("[key_name_admin(ui.user)] unhid [ruleset] from the roundend report.")
 			return TRUE

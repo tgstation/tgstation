@@ -54,6 +54,8 @@ SUBSYSTEM_DEF(dynamic)
 	var/list/datum/dynamic_ruleset/executed_rulesets = list()
 	/// List of rulesets that have been set up to run, but not yet executed
 	var/list/datum/dynamic_ruleset/queued_rulesets = list()
+	/// Rulesets in this list will be excluded from the roundend report
+	var/list/datum/dynamic_ruleset/unreported_rulesets = list()
 
 /datum/controller/subsystem/dynamic/fire(resumed)
 	if(!COOLDOWN_FINISHED(src, midround_cooldown) || EMERGENCY_PAST_POINT_OF_NO_RETURN)

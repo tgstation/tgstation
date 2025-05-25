@@ -313,6 +313,7 @@
 	if(GLOB.revolution_handler)
 		return
 	// Execution is effectively cancelled by this point, but it's not like we can go back and refund it
+	SSdynamic.unreported_rulesets += src
 	name += " (Canceled)"
 	log_dynamic("[config_tag]: All headrevs were ineligible after the timer expired, and no replacements could be found. Ruleset canceled.")
 	message_admins("[config_tag]: All headrevs were ineligible after the timer expired, and no replacements could be found. Ruleset canceled.")

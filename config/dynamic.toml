@@ -415,7 +415,7 @@ repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
 
-["Midround Blob"]
+["Blob Infection"]
 weight.1 = 0
 weight.2 = 1
 weight.3 = 3
@@ -595,5 +595,3 @@ min_antag_cap = 0
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
-
-

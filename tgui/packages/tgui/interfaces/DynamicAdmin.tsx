@@ -32,6 +32,7 @@ type Player = {
 type RulesetReport = RulesetType & {
   index: number;
   selected_players: Player[];
+  hidden: BooleanLike;
 };
 
 type RulesetType = {
@@ -496,7 +497,29 @@ const RulesetsPanel = () => {
             ) : (
               active_rulesets.map((ruleset) => (
                 <Stack.Item key={ruleset.id}>
-                  {ruleset.name} ({ruleset.id})
+                  <Flex>
+                    <Flex.Item
+                      style={
+                        ruleset.hidden
+                          ? { textDecoration: 'line-through' }
+                          : undefined
+                      }
+                    >
+                      {ruleset.name} ({ruleset.id})
+                    </Flex.Item>
+                    <Flex.Item ml={1}>
+                      <Button.Checkbox
+                        checked={ruleset.hidden}
+                        icon="times"
+                        tooltip={`${ruleset.hidden ? 'Unhide' : 'Hide'} from roundend report`}
+                        onClick={() =>
+                          act('hide_ruleset', {
+                            ruleset_index: ruleset.index,
+                          })
+                        }
+                      />
+                    </Flex.Item>
+                  </Flex>
                   <BlockQuote>
                     Selected: {getPlayerString(ruleset.selected_players)}
                   </BlockQuote>

@@ -1004,7 +1004,7 @@
 
 /datum/dynamic_ruleset/midround/from_living/blob
 	name = "Blob Infection"
-	config_tag = "Midround Blob"
+	config_tag = "Blob Infection"
 	preview_antag_datum = /datum/antagonist/blob/infection
 	midround_type = HEAVY_MIDROUND
 	pref_flag = ROLE_BLOB_INFECTION
