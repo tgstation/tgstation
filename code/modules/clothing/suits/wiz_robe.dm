@@ -296,7 +296,7 @@
 
 	var/mob/living/stickman = new /mob/living/basic/stickman/lesser(get_turf(summoner))
 
-	stickman.faction += summoner.faction
+	stickman.faction |= summoner.faction - FACTION_NEUTRAL //These bad boys shouldn't inherit the neutral faction from the crew
 
 	COOLDOWN_START(src, summoning_cooldown, 3 SECONDS)
 
