@@ -323,7 +323,7 @@
 	maximum_survivable_temperature = 700
 	unsuitable_cold_damage = 0
 	wound_bonus = 25
-	bare_wound_bonus = 50
+	exposed_wound_bonus = 50
 	sharpness = SHARP_EDGED
 	obj_damage = 60
 	web_speed = 0.25
