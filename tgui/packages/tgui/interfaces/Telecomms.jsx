@@ -58,8 +58,7 @@ export const Telecomms = (props) => {
                 <Input
                   width={13}
                   value={id}
-                  expensive
-                  onChange={(value) => act('id', { value })}
+                  onBlur={(value) => act('id', { value })}
                 />
               }
             />
@@ -69,9 +68,8 @@ export const Telecomms = (props) => {
                 <Input
                   width={10}
                   value={network}
-                  expensive
                   placeholder="tcommsat"
-                  onChange={(value) => act('network', { value })}
+                  onBlur={(value) => act('network', { value })}
                 />
               }
             />

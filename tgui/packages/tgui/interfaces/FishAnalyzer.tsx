@@ -89,7 +89,6 @@ export const FishAnalyzer = (props) => {
                   value={searchText}
                   onChange={setSearchText}
                   fluid
-                  expensive
                 />
               </Section>
             </Stack.Item>

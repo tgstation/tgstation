@@ -301,6 +301,7 @@ function MaterialSearchHeader(props: SearchProps) {
         </Stack.Item>
         <Stack.Item>
           <SearchBar
+            expensive
             style={{ height: '23px' }}
             query={searchItem}
             placeholder="Search Material..."

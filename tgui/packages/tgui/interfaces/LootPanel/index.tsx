@@ -63,7 +63,6 @@ export function LootPanel(props) {
             onChange={setSearchText}
             placeholder="Search items..."
             value={searchText}
-            expensive
           />
           <Button
             m={0}

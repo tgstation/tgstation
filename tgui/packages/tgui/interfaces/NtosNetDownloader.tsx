@@ -144,7 +144,6 @@ export const NtosNetDownloader = (props) => {
             fluid
             value={searchItem}
             onChange={setSearchItem}
-            expensive
           />
         </Section>
         <Stack>

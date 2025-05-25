@@ -125,6 +125,7 @@ export const StackCrafting = (_props) => {
           title={'Amount: ' + amount}
           buttons={
             <SearchBar
+              expensive
               style={{ width: '15em' }}
               query={searchText}
               onSearch={(value) => setSearchText(value)}

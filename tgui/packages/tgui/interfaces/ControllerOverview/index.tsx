@@ -69,7 +69,6 @@ export function ControllerContent(props) {
                     onChange={(value) =>
                       dispatch({ type: FilterAction.Query, payload: value })
                     }
-                    expensive
                     placeholder="By name"
                     value={state.query}
                     width="85%"

@@ -85,10 +85,9 @@ const FilterTextEntry = (props) => {
 
   return (
     <Input
-      expensive
       value={value}
       width="250px"
-      onChange={(value) =>
+      onBlur={(value) =>
         act('modify_filter_value', {
           name: filterName,
           new_data: {
@@ -115,10 +114,9 @@ const FilterColorEntry = (props) => {
       />
       <ColorBox color={value} mr={0.5} />
       <Input
-        expensive
         value={value}
         width="90px"
-        onChange={(value) =>
+        onBlur={(value) =>
           act('transition_filter_value', {
             name: filterName,
             new_data: {
