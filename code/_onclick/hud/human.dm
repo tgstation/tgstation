@@ -256,6 +256,10 @@
 	rest_icon.update_appearance()
 	static_inventory += rest_icon
 
+	sleep_icon = new /atom/movable/screen/sleep(null, src)
+	sleep_icon.icon = ui_style
+	sleep_icon.screen_loc = ui_above_throw
+
 	spacesuit = new /atom/movable/screen/spacesuit(null, src)
 	infodisplay += spacesuit
 
