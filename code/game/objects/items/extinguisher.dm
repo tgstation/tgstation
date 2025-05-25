@@ -187,8 +187,8 @@
 	else
 		return ..()
 
-/obj/item/extinguisher/attack_atom(obj/O, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(AttemptRefill(O, user))
+/obj/item/extinguisher/attack_atom(obj/attacked_obj, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(AttemptRefill(attacked_obj, user))
 		refilling = TRUE
 		return FALSE
 	else

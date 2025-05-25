@@ -133,6 +133,8 @@
 
 /datum/component/clothing_dirt/proc/on_clean(datum/source, clean_types)
 	SIGNAL_HANDLER
+	. = NONE
+
 	var/obj/item/clothing/clothing = parent
 	var/mob/living/carbon/wearer
 	if(iscarbon(clothing.loc))
@@ -143,3 +145,5 @@
 		dirtiness = 0
 		if(!isnull(wearer))
 			wearer.update_tint()
+
+		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP

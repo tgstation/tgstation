@@ -204,8 +204,10 @@
 	. = ..()
 	if(!(clean_types & CLEAN_TYPE_BLOOD))
 		return
-	blood_level = 0
-	update_appearance()
+	if(blood_level)
+		blood_level = 0
+		update_appearance()
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 ///Checks whether or not we should clean.
 /obj/item/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)

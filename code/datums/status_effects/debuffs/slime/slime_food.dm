@@ -29,7 +29,10 @@
 ///Handles the source of the pheromones getting deleted, or the owner getting washed
 /datum/status_effect/slime_food/proc/on_feeder_deleted(datum/source)
 	SIGNAL_HANDLER
+
+	. = NONE
 	qdel(src)
+	return COMPONENT_CLEANED
 
 ///Gaze upon the target
 /datum/status_effect/slime_food/proc/on_examine(datum/source, mob/user, list/examine_list)
