@@ -1365,3 +1365,13 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SERVICE
+
+/datum/design/board/atmosshieldgen
+	name = "Atmospherics Shield Generator Board"
+	desc = "The circuit board for an atmospherics shield generator."
+	id = "atmosshieldgen"
+	build_path = /obj/item/circuitboard/machine/atmos_shield_gen
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
