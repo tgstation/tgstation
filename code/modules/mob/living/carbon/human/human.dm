@@ -766,12 +766,13 @@
 		var/result = input(usr, "Choose mutation to add/remove","Mutation Mod") as null|anything in sort_list(options)
 		if(result)
 			if(result == "Clear")
-				dna.remove_all_mutations(TRUE)
+				for(var/datum/mutation/mutation as anything in dna.mutations)
+					dna.remove_mutation(mutation, mutation.sources)
 			else
 				var/mut = options[result]
 				if(dna.check_mutation(mut))
 					var/datum/mutation/mutation = dna.get_mutation(mut)
-					dna.remove_mutation(mut, mut.sources)
+					dna.remove_mutation(mut, mutation.sources)
 				else
 					dna.add_mutation(mut, MUTATION_SOURCE_VV)
 

@@ -32,6 +32,8 @@ GLOBAL_LIST_INIT(features_block_lengths, list(
  */
 GLOBAL_LIST_INIT(total_ui_len_by_block, populate_total_ui_len_by_block())
 
+GLOBAL_LIST_INIT(standard_mutation_sources, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR, MUTATION_SOURCE_TIMED_INJECTOR))
+
 /proc/populate_total_ui_len_by_block()
 	. = list()
 	var/total_block_len = 1
@@ -124,11 +126,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		new_dna.blood_type = blood_type
 		if(transfer_flags & COPY_DNA_SPECIES)
 			new_dna.species = new species.type
-	if(transfer_flags & COPY_DNA_MUTATIONS)
+	if(transfer_flags & COPY_DNA_MUTATIONS && holder?.can_mutate())
 		// Mutations aren't gc managed, but they still aren't templates
 		// Let's do a proper copy
 		for(var/datum/mutation/mutation in mutations)
-			var/list/valid_sources = mutation.sources & list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR)
+			var/list/valid_sources = mutation.sources & GLOB.standard_mutation_sources
 			if(!length(valid_sources))
 				continue
 			new_dna.add_mutation(mutation, valid_sources)
@@ -141,16 +143,17 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		sources = list(sources)
 
 	var/datum/mutation/actual_mutation = get_mutation(mutation_to_add)
+	var/list/sources_to_add = sources.Copy() //make sure not to modify the original if it's stored in a variable outside this proc
 	if(!actual_mutation)
 		if(istype(mutation_to_add, /datum/mutation))
 			var/datum/mutation/mutation_instance
 			actual_mutation = mutation_instance.make_copy()
 		else
 			actual_mutation = new mutation_to_add
-		SEND_SIGNAL(holder, COMSIG_CARBON_GAIN_MUTATION, actual_mutation.type, sources)
+		SEND_SIGNAL(holder, COMSIG_CARBON_GAIN_MUTATION, actual_mutation.type, sources_to_add)
 	else
-		sources -= actual_mutation.sources
-		if(!length(sources)) //no new sources to add, don't do anything.
+		sources_to_add -= actual_mutation.sources
+		if(!length(sources_to_add)) //no new sources to add, don't do anything.
 			return
 
 	if(!length(actual_mutation.sources))
@@ -191,11 +194,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /datum/dna/proc/check_mutation(mutation_type)
 	return get_mutation(mutation_type)
 
-/datum/dna/proc/remove_all_mutations(sources = list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
+/datum/dna/proc/remove_all_mutations(sources = GLOB.standard_mutation_sources)
 	remove_mutation_group(mutations, sources)
 	scrambled = FALSE
 
-/datum/dna/proc/remove_mutation_group(list/group, sources = list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
+/datum/dna/proc/remove_mutation_group(list/group, sources = GLOB.standard_mutation_sources)
 	if(!group)
 		return
 	for(var/datum/mutation/mutation in group)
@@ -441,7 +444,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/old_stability = stability
 	stability = 100
 	for(var/datum/mutation/mutation in mutations)
-		if(length(mutation.sources - MUTATION_SOURCE_ACTIVATED) || mutation.instability < 0)
+		if((MUTATION_SOURCE_MUTATOR in mutation.sources) || mutation.instability < 0)
 			stability -= mutation.instability * GET_MUTATION_STABILIZER(mutation)
 	if(holder)
 		var/message
@@ -577,7 +580,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 
 /// Sets the DNA of the mob to the given DNA.
 /mob/living/carbon/human/proc/hardset_dna(unique_identity, list/mutation_index, list/default_mutation_genes, newreal_name, newblood_type, datum/species/mrace, newfeatures, list/mutations, force_transfer_mutations)
-//Do not use force_transfer_mutations for stuff like cloners without some precautions, otherwise some conditional mutations could break (timers, drill hat etc)
 	if(newfeatures)
 		dna.features = newfeatures
 		dna.generate_unique_features()
@@ -610,9 +612,11 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		update_body(is_creating = TRUE)
 		update_mutations_overlay()
 
-	if(LAZYLEN(mutations) && force_transfer_mutations)
+	if(LAZYLEN(mutations) && force_transfer_mutations && can_mutate())
 		for(var/datum/mutation/mutation as anything in mutations)
-			dna.add_mutation(mutation, mutation.sources)
+			var/list/allowed_sources = mutation.sources & GLOB.standard_mutation_sources
+			if(allowed_sources)
+				dna.add_mutation(mutation, allowed_sources)
 
 /mob/living/carbon/proc/create_dna()
 	dna = new /datum/dna(src)

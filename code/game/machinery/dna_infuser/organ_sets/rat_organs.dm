@@ -58,7 +58,6 @@
 	icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
-	organ_mutations = list(/datum/mutation/dwarfism)
 
 /obj/item/organ/heart/rat/Initialize(mapload)
 	. = ..()

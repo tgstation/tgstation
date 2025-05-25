@@ -63,4 +63,4 @@
 	if(!no_reset)
 		var/mob/living/carbon/M = A.affected_mob
 		if(M.has_dna())
-			M.dna.remove_all_mutations(list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR), FALSE)
+			M.dna.remove_all_mutations()

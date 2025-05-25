@@ -11,7 +11,7 @@
 
 // 516.1660 broke (x in vars), which breaks a lot of things.
 #if (DM_VERSION == 516 && DM_BUILD == 1660)
-//#error This version of BYOND (516.1660) has a bug which prevents this codebase from loading properly. If possible, update your BYOND version. Otherwise, visit www.byond.com/download/build to download an older release.
+#error This version of BYOND (516.1660) has a bug which prevents this codebase from loading properly. If possible, update your BYOND version. Otherwise, visit www.byond.com/download/build to download an older release.
 #endif
 
 // Keep savefile compatibilty at minimum supported level

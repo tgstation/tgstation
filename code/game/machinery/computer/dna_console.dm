@@ -450,7 +450,7 @@
 			if(!can_modify_occupant() || !(scramble_ready < world.time) || HAS_TRAIT(scanner_occupant, TRAIT_NO_DNA_SCRAMBLE))
 				return
 
-			scanner_occupant.dna.remove_all_mutations(list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
+			scanner_occupant.dna.remove_all_mutations()
 			scanner_occupant.dna.generate_dna_blocks()
 			scramble_ready = world.time + SCRAMBLE_TIMEOUT
 			to_chat(usr,span_notice("DNA scrambled."))

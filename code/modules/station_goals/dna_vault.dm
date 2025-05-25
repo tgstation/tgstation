@@ -189,10 +189,10 @@
 		"Quick Recovery" = /datum/mutation/quick_recovery,
 		"Tough" = /datum/mutation/tough,
 	)
-	if(!(associated_mutation[upgrade_type] in power_lottery[human_weakref]) || (HAS_TRAIT(H, TRAIT_USED_DNA_VAULT)))
+	if(!(associated_mutation[upgrade_type] in power_lottery[human_weakref]) || (HAS_TRAIT(target, TRAIT_USED_DNA_VAULT)))
 		return
 	target.dna.add_mutation(associated_mutation[upgrade_type], MUTATION_SOURCE_DNA_VAULT)
-	ADD_TRAIT(H, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
+	ADD_TRAIT(target, TRAIT_USED_DNA_VAULT, DNA_VAULT_TRAIT)
 	power_lottery[human_weakref] = list()
 	use_energy(active_power_usage)
 

@@ -117,7 +117,7 @@
 		if(mutation == /datum/mutation/race && !ismonkey(target))
 			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with \the [src] [span_danger("(MONKEY)")]")
 		target.dna.add_mutation(mutation, MUTATION_SOURCE_TIMED_INJECTOR)
-		addtimer(CALLBACK(target.dna, TYPE_PROC_REF(/datum/mutation, remove_mutation), mutation, MUTATION_SOURCE_TIMED_INJECTOR), duration)
+		addtimer(CALLBACK(target.dna, TYPE_PROC_REF(/datum/dna, remove_mutation), mutation, MUTATION_SOURCE_TIMED_INJECTOR), duration)
 	if(fields)
 		if(fields["name"] && fields["UE"] && fields["blood_type"])
 			if(!target.dna.previous["name"])
