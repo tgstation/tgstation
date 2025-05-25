@@ -361,7 +361,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 	parts += "[FOURSPACES]Round: [SSdynamic.current_tier.name]"
 	for(var/datum/dynamic_ruleset/rule as anything in SSdynamic.executed_rulesets - SSdynamic.unreported_rulesets)
-		parts += "[FOURSPACES][FOURSPACES]- <b>[rule.name]</b>"
+		parts += "[FOURSPACES][FOURSPACES]- <b>[rule.name]</b> ([rule.config_tag])"
 
 	return parts.Join("<br>")
 

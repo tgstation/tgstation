@@ -51,7 +51,7 @@
 	candidate.add_antag_datum(/datum/antagonist/heretic)
 
 /datum/dynamic_ruleset/latejoin/changeling
-	name = "Changelings"
+	name = "Changeling"
 	config_tag = "Latejoin Changeling"
 	preview_antag_datum = /datum/antagonist/changeling
 	pref_flag = ROLE_STOWAWAY_CHANGELING

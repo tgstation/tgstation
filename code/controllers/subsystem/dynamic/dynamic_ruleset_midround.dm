@@ -1026,7 +1026,7 @@
 	)
 
 /datum/dynamic_ruleset/midround/from_living/obsesed
-	name = "Obsessed"
+	name = "Obsession"
 	config_tag = "Midround Obsessed"
 	preview_antag_datum = /datum/antagonist/obsessed
 	midround_type = LIGHT_MIDROUND
