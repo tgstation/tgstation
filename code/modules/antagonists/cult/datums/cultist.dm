@@ -149,11 +149,11 @@
 	if(!where)
 		to_chat(mob, span_userdanger("Unfortunately, you weren't able to get [item]. This is very bad and you should adminhelp immediately (press F1)."))
 		return FALSE
-	else
-		to_chat(mob, span_danger("You have [item] in your [where]."))
-		if(where == "backpack")
-			mob.back.atom_storage?.show_contents(mob)
-		return TRUE
+
+	to_chat(mob, span_danger("You have [item] in your [where]."))
+	if(where == "backpack")
+		mob.back.atom_storage?.show_contents(mob)
+	return TRUE
 
 /datum/antagonist/cult/proc/admin_give_dagger(mob/admin)
 	if(!equip_cultist(metal = FALSE))
