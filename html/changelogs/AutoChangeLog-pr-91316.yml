@@ -1,0 +1,9 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - balance: "Egg boxes' storage UI is now 6 slots wide, such that it contains an even dozen slots when full."
+  - balance: "The storage UIs for heart-shaped chocolate boxes, pickle jars, and rolling paper packs are now 4, 5, and 5 slots wide respectively, such that they fill the whole storage UI when full."
+  - balance: "Fryish and its fried snack cousins can now be stored in nugget boxes."
+  - bugfix: "Pickle jars can actually hold the ten pickles they spawn with."
+  - bugfix: "Fertile egg boxes, coffee condiment displays, and coffee cart racks have the right amount of slots."
+  - bugfix: "Coffee cart racks spawn with the sprite for holding 1 cartridge like they do, rather than looking like they're holding 4 cartridges."

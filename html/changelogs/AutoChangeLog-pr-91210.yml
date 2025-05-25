@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Stickmen summoned by the papier-mache robe are once again hostile."

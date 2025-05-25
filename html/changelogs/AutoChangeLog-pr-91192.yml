@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "removed a camera from the deathmatch meta brig map, disciple of pete has low-range signalers, deathmatch bolt of possession deals brain damage instead, split personality may not roll in deathmatch"

@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed cultists, blood brothers and headrevs sometimes not getting their roundstart items"

@@ -614,3 +614,38 @@
       experience.
   sqnztb:
   - rscadd: 'New holiday for May 22: Goth Day.'
+2025-05-24:
+  Ezel:
+  - bugfix: Adds missing dragnet beacon to catwalk
+  - bugfix: Adds missing HoS office authenication device.
+  - map: Gives CE/CMO/RD their proper camera monitors
+  - map: Medbay Camera's is now its own proper network
+  - map: Removes a camera from Prison maintenance and Security closet
+  - map: Disables AI control on Prison Maintenance Door
+  - bugfix: Minisat Camera's now use the proper network
+  - bugfix: Engine Camera's now use the proper network
+  OnlineGirlfriend:
+  - image: update sprite for Screwdriver (drink)
+  SmArtKar:
+  - bugfix: Fixed ampersands in TM titles breaking the in-game issue report button
+2025-05-25:
+  Hardly:
+  - image: resprited the modern hairstyle to look modern
+  Sprite by Crumpaloo, commissioned by me!:
+  - rscadd: Adds a jumbo monkey plushie, go feed it bananas!
+  TealSeer:
+  - bugfix: fixed being able to add seemingly infinite refined bluespace crystals
+      to pipe bombs
+  - refactor: /obj/item/stack/split_stack no longer tries to move the stack into the
+      user's hands, use /obj/item/stack/split_n_take for that
+  Zergspower:
+  - qol: cyborg circuit upgrade can now handle cells as well, reduction in borg related
+      rage from building APC's down by 400%
+  - bugfix: fixes borg inducers instantly depleting their cells, moves the inducer
+      cell act to be to an internal cell to compensate for power differences
+  throwawayuseless:
+  - balance: Nooartrium no longer applies its side effects at double speed.
+  vinylspiders:
+  - refactor: preview icons for greyscale items are now automatically generated, meaning
+      you can see GAGS as they actually appear ingame while mapping or viewing the
+      loadout menu.
