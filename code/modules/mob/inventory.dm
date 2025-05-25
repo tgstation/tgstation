@@ -334,7 +334,13 @@
  * * If it was, returns the item.
  * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
 */
-/mob/proc/dropItemToGround(obj/item/to_drop, force = FALSE, silent = FALSE, invdrop = TRUE, turf/newloc = null)
+/mob/proc/dropItemToGround(
+	obj/item/to_drop,
+	force = FALSE,
+	silent = FALSE,
+	invdrop = TRUE,
+	turf/newloc = null,
+	vector/offset_vector = vector(rand(-6, 6), rand(-6, 6)))
 	if(isnull(to_drop))
 		return
 
@@ -345,8 +351,8 @@
 		return
 
 	if(!(to_drop.item_flags & NO_PIXEL_RANDOM_DROP))
-		to_drop.pixel_x = to_drop.base_pixel_x + rand(-6, 6)
-		to_drop.pixel_y = to_drop.base_pixel_y + rand(-6, 6)
+		to_drop.pixel_x = to_drop.base_pixel_x + offset_vector.x
+		to_drop.pixel_y = to_drop.base_pixel_y + offset_vector.y
 	to_drop.do_drop_animation(src)
 	return to_drop
 
