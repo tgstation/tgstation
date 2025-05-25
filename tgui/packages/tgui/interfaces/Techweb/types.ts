@@ -62,7 +62,7 @@ export type TechWebData = {
   point_types_abbreviations: Record<string, string>;
   points_last_tick: Record<string, number>;
   points: Record<string, number>;
-  queue_nodes: Record<string, string>[];
+  queue_nodes: Record<string, string[]>[];
   researched_designs: StoredDesigns;
   sec_protocols: BooleanLike;
   static_data: StaticData;
