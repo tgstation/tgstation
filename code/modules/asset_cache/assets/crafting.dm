@@ -55,7 +55,7 @@
 	var/list/tool_icons = list(
 		TOOL_CROWBAR = uni_icon('icons/obj/tools.dmi', "crowbar"),
 		TOOL_MULTITOOL = uni_icon('icons/obj/devices/tool.dmi', "multitool"),
-		TOOL_SCREWDRIVER = uni_icon('icons/obj/tools.dmi', "screwdriver_map"),
+		TOOL_SCREWDRIVER = uni_icon('icons/map_icons/items/_item.dmi', "/obj/item/screwdriver"),
 		TOOL_WIRECUTTER = uni_icon('icons/obj/tools.dmi', "cutters_map"),
 		TOOL_WRENCH = uni_icon('icons/obj/tools.dmi', "wrench"),
 		TOOL_WELDER = uni_icon('icons/obj/tools.dmi', "welder"),
