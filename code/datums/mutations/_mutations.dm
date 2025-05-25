@@ -92,7 +92,6 @@
 	var/list/valid_chrom_list = list()
 	/// List of traits that are added or removed by the mutation with GENETIC_TRAIT source.
 	var/list/mutation_traits
-	var/mutadone_proof = FALSE
 
 /datum/mutation/New()
 	. = ..()

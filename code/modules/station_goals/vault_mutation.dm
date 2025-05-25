@@ -5,7 +5,6 @@
 	text_gain_indication = span_notice("Your lungs feel great.")
 	text_lose_indication = span_warning("Your lungs feel normal again.")
 	locked = TRUE
-	mutadone_proof = TRUE
 
 /datum/mutation/breathless/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
@@ -21,7 +20,6 @@
 	text_gain_indication = span_notice("Your legs feel faster and stronger.")
 	text_lose_indication = span_warning("Your legs feel weaker and slower.")
 	locked = TRUE
-	mutadone_proof = TRUE
 
 /datum/mutation/quick/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
@@ -37,7 +35,6 @@
 	text_gain_indication = span_notice("Your skin feels tougher.")
 	text_lose_indication = span_warning("Your skin feels weaker.")
 	locked = TRUE
-	mutadone_proof = TRUE
 
 /datum/mutation/tough/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
@@ -55,7 +52,6 @@
 	text_gain_indication = span_notice("Your limbs feel more dextrous and responsive.")
 	text_lose_indication = span_warning("Your limbs feel less dextrous and responsive.")
 	locked = TRUE
-	mutadone_proof = TRUE
 
 /datum/mutation/dextrous/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
@@ -71,7 +67,6 @@
 	text_gain_indication = span_notice("Your body feels like it can withstand fire.")
 	text_lose_indication = span_warning("Your body feels vulnerable to fire again.")
 	locked = TRUE
-	mutadone_proof = TRUE
 
 /datum/mutation/fire_immunity/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
@@ -89,7 +84,6 @@
 	text_gain_indication = span_notice("You feel like you can recover from a fall easier.")
 	text_lose_indication = span_warning("You feel like recovering from a fall is a challenge again.")
 	locked = TRUE
-	mutadone_proof = TRUE
 
 /datum/mutation/quick_recovery/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
@@ -105,7 +99,6 @@
 	text_gain_indication = span_notice("Your lungs feel resistant to airborne contaminant.")
 	text_lose_indication = span_warning("Your lungs feel vulnerable to airborne contaminant again.")
 	locked = TRUE
-	mutadone_proof = TRUE
 
 /datum/mutation/plasmocile/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()

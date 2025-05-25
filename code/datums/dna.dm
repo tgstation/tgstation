@@ -795,9 +795,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/mutation = pick(candidates)
 	. = dna.add_mutation(mutation, MUTATION_SOURCE_MUTATOR)
 
-/mob/living/carbon/proc/easy_random_mutate(quality = POSITIVE + NEGATIVE + MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, exclude_monkey = TRUE, resilient = NONE)
+///Returns a random mutation based on the given arguments. By default, all available mutations in the dna sequence but the monkey one.
+/mob/living/carbon/proc/get_random_possible_mutation(quality = POSITIVE|NEGATIVE|MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, list/excluded_mutations = list(/datum/mutation/race))
 	if(!has_dna())
-		CRASH("[src] does not have DNA")
+		return null
 	var/list/mutations = list()
 	if(quality & POSITIVE)
 		mutations += GLOB.good_mutations
@@ -806,21 +807,21 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(quality & MINOR_NEGATIVE)
 		mutations += GLOB.not_good_mutations
 	var/list/possible = list()
-	for(var/datum/mutation/A in mutations)
-		if((!sequence || dna.mutation_in_sequence(A.type)) && !dna.get_mutation(A.type))
-			possible += A.type
-	if(exclude_monkey)
-		possible.Remove(/datum/mutation/race)
-	if(LAZYLEN(possible))
-		var/mutation = pick(possible)
-		. = dna.activate_mutation(mutation)
-		if(scrambled)
-			var/datum/mutation/HM = dna.get_mutation(mutation)
-			if(HM)
-				HM.scrambled = TRUE
-				if(HM.quality & resilient)
-					HM.mutadone_proof = TRUE
-		return TRUE
+	for(var/datum/mutation/mutation in mutations)
+		if((!sequence || dna.mutation_in_sequence(mutation.type)) && !dna.get_mutation(mutation.type))
+			possible += mutation.type
+	possible -= excluded_mutations
+	return pick(possible)
+
+///Gives the mob a random mutation based on the given arguments.
+/mob/living/carbon/proc/easy_random_mutate(quality = POSITIVE|NEGATIVE|MINOR_NEGATIVE, scrambled = TRUE, sequence = TRUE, list/excluded_mutations = list(/datum/mutation/race))
+	var/mutation_path = get_random_mutation(quality, scrambled, sequence, excluded_mutations)
+	dna.add_mutation(mutation_path, MUTATION_SOURCE_ACTIVATED)
+	if(!scrambled)
+		return
+	var/datum/mutation/mutation = dna.get_mutation(mutation_path)
+	if(mutation)
+		mutation.scrambled = TRUE
 
 /mob/living/carbon/proc/random_mutate_unique_identity()
 	if(!has_dna())
