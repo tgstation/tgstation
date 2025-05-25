@@ -4,9 +4,13 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 /proc/dynamic_panel(mob/user)
 	if(!check_rights(R_ADMIN))
 		return
-	BLACKBOX_LOG_ADMIN_VERB("Dynamic Panel")
 	var/datum/dynamic_panel/tgui = new()
 	tgui.ui_interact(user)
+
+	log_admin("[key_name(user)] opened the Dynamic Panel.")
+	if(!isobserver(user))
+		message_admins("[key_name_admin(user)] opened the Dynamic Panel.")
+	BLACKBOX_LOG_ADMIN_VERB("Dynamic Panel")
 
 /datum/dynamic_panel
 
