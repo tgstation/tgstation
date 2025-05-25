@@ -388,7 +388,9 @@
 /obj/item/toy/plush/carpplushie
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
-	icon_state = "map_plushie_carp"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/carpplushie"
+	post_init_icon_state = "map_plushie_carp"
 	greyscale_config = /datum/greyscale_config/plush_carp
 	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
@@ -531,10 +533,16 @@
 // Preset lizard plushie that uses the original lizard plush green. (Or close to it)
 /obj/item/toy/plush/lizard_plushie/green
 	desc = "An adorable stuffed toy that resembles a green lizardperson. This one fills you with nostalgia and soul."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/lizard_plushie/green"
+	post_init_icon_state = "map_plushie_lizard"
 	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/lizard_plushie/greyscale
 	desc = "An adorable stuffed toy that resembles a lizardperson. This one has been custom made."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/lizard_plushie/greyscale"
+	post_init_icon_state = "map_plushie_lizard"
 	greyscale_colors = "#d3d3d3#000000"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
@@ -549,12 +557,17 @@
 
 /obj/item/toy/plush/lizard_plushie/space/green
 	desc = "An adorable stuffed toy that resembles a very determined spacefaring green lizardperson. To infinity and beyond, little guy. This one fills you with nostalgia and soul."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/lizard_plushie/space/green"
+	post_init_icon_state = "map_plushie_spacelizard"
 	greyscale_colors = "#66ff33#000000"
 
 /obj/item/toy/plush/snakeplushie
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
-	icon_state = "map_plushie_snake"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/snakeplushie"
+	post_init_icon_state = "map_plushie_snake"
 	greyscale_config = /datum/greyscale_config/plush_snake
 	greyscale_colors = "#99ff99#000000"
 	inhand_icon_state = null
@@ -583,7 +596,9 @@
 /obj/item/toy/plush/slimeplushie
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
-	icon_state = "map_plushie_slime"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/toy/plush/slimeplushie"
+	post_init_icon_state = "map_plushie_slime"
 	greyscale_config = /datum/greyscale_config/plush_slime
 	greyscale_colors = "#aaaaff#000000"
 	inhand_icon_state = null
@@ -827,3 +842,48 @@
 	icon_state = "unicorn"
 	attack_verb_continuous = list("whinnies", "gallops", "prances", "magicks")
 	attack_verb_simple = list("whinny", "gallop", "prance", "magick")
+
+/obj/item/toy/plush/monkey
+	name = "monkey plushie"
+	desc = "The tag reads: 'Oop eek! I'm a chimpanzee!', with 'Now in JUMBO SIZE!' on the flipside."
+	w_class = WEIGHT_CLASS_BULKY
+	throw_range = 2
+	throw_speed = 1
+	icon_state = "monkey"
+	inhand_icon_state = null
+	attack_verb_continuous = list("Oops", "Eeks")
+	attack_verb_simple = list("Oop", "Eek")
+	squeak_override = list(SFX_SCREECH=1)
+	/// if the monkey ate a mimana and has changed nationality
+	var/french = FALSE
+
+/obj/item/toy/plush/monkey/item_interaction(mob/living/feeder, obj/item/food/grown/banana/nana, list/modifiers)
+	if(!istype(nana))
+		return ..()
+	nana.forceMove(src) // go into the cotton stomach
+	to_chat(feeder, span_notice("You hand over the [nana] to [src] and watch as it eats..."))
+	playsound(src, 'sound/items/eatfood.ogg', 75, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(eat), feeder, nana), 3 SECONDS)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/toy/plush/monkey/proc/eat(mob/living/feeder, obj/item/food/grown/banana/nana)
+	if(istype(nana, /obj/item/food/grown/banana/bluespace))
+		do_teleport(src, get_turf(src), 15, channel = TELEPORT_CHANNEL_BLUESPACE)
+	else if(istype(nana, /obj/item/food/grown/banana/mime) && !french)
+		name = "peluche de singe"
+		desc = "L'étiquette indique: 'Oop eek! Je suis un chimpanzé!', avec 'Maintenant en TAILLE JUMBO!' sur l'autre face."
+		french = TRUE
+	// throw the peel at a random mob, or a random turf if there are none
+	var/obj/item/grown/bananapeel/peel = new nana.trash_type(get_turf(src))
+	var/list/oviewers = oviewers(peel.throw_range, src)
+	var/throw_src = src
+	// if a player holds the plushie, the throw source will be the player
+	if(isliving(loc))
+		oviewers = oviewers(loc)
+		throw_src = loc
+	if(oviewers.len > 0 && (locate(feeder) in oviewers))
+		oviewers -= feeder // remove feeder from targetables
+	peel.throw_at(oviewers.len == 0 ? get_ranged_target_turf(throw_src, pick(GLOB.alldirs), peel.throw_range) : pick(oviewers), peel.throw_range, peel.throw_speed, quickstart = FALSE)
+	playsound(src, 'sound/mobs/non-humanoids/gorilla/gorilla.ogg', 100, FALSE)
+	spasm_animation(5 SECONDS)
+	qdel(nana)

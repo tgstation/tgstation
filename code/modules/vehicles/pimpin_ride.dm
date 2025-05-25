@@ -192,6 +192,9 @@
 /obj/item/janicart_upgrade/buffer
 	name = "floor buffer upgrade"
 	desc = "An upgrade for mobile janicarts which adds a floor buffer functionality."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/janicart_upgrade/buffer"
+	post_init_icon_state = "janicart_upgrade"
 	greyscale_colors = "#ffffff#6aa3ff#a2a2a2#d1d15f"
 
 /obj/item/janicart_upgrade/buffer/install(obj/vehicle/ridden/janicart/installee)
@@ -203,6 +206,9 @@
 /obj/item/janicart_upgrade/vacuum
 	name = "vacuum upgrade"
 	desc = "An upgrade for mobile janicarts which adds a vacuum functionality."
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/janicart_upgrade/vacuum"
+	post_init_icon_state = "janicart_upgrade"
 	greyscale_colors = "#ffffff#ffea6a#a2a2a2#d1d15f"
 
 /obj/item/janicart_upgrade/vacuum/install(obj/vehicle/ridden/janicart/installee)

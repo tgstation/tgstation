@@ -109,16 +109,7 @@ module.exports = (env = {}, argv) => {
         },
         {
           test: /\.(png|jpg)$/,
-          use: [
-            {
-              loader: require.resolve('url-loader'),
-              options: {
-                esModule: false,
-                outputPath: 'assets/',
-                publicPath: '/assets/',
-              },
-            },
-          ],
+          type: 'asset/resource',
         },
         {
           test: /\.svg$/,
@@ -128,16 +119,7 @@ module.exports = (env = {}, argv) => {
               type: 'asset/inline',
             },
             {
-              use: [
-                {
-                  loader: require.resolve('url-loader'),
-                  options: {
-                    esModule: false,
-                    outputPath: 'assets/',
-                    publicPath: '/assets/',
-                  },
-                },
-              ],
+              type: 'asset/resource',
             },
           ],
         },

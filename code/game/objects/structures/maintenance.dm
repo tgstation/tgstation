@@ -231,6 +231,7 @@ at the cost of risking a vicious bite.**/
 /obj/item/clothing/under/pants/slacks/altar
 	name = "strange pants"
 	desc = "A pair of pants. They do not look or feel natural, and smell like fresh blood."
+	icon_state = "/obj/item/clothing/under/pants/slacks/altar"
 	greyscale_colors = "#ffffff#ffffff#ffffff"
 	flags_1 = NONE //If IS_PLAYER_COLORABLE gets added color-changing support (i.e. spraycans), these won't end up getting it too. Plus, it already has its own recolor.
 
