@@ -186,7 +186,8 @@
 		DREAMLUAU_CLEAR_REF_USERDATA(overlays)
 		DREAMLUAU_CLEAR_REF_USERDATA(underlays)
 #endif
-
+	if(length(filter_data))
+		clear_filters()
 	return ..()
 
 /atom/proc/handle_ricochet(obj/projectile/ricocheting_projectile)

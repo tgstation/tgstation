@@ -52,23 +52,20 @@
 		RemoveCracks(source, current_cracks - cracks)
 
 /datum/component/cracked/proc/AddCracks(obj/source, count)
+	var/current_cracks = length(applied_cracks)
 	for(var/i in 1 to count)
 		var/rand_x = rand(0, 20) - 10
 		var/rand_y = rand(0, 20) - 10
 		var/mutable_appearance/new_crack_overlay = new(pick(crack_appearances))
-		// Now that we have our overlay, we need to give it a unique render source so we can use a filter against it
-		var/static/uuid = 0
-		uuid++
-		// * so it doesn't render on its own
-		new_crack_overlay.render_target = "*cracked_overlay_[uuid]"
-		var/render_source = new_crack_overlay.render_target
+		// Now that we have our overlay, we need to make sure it has a unique filter name
+		var/new_name = "cracked_overlay_[current_cracks+i]"
 
-		var/list/new_filter_data = alpha_mask_filter(render_source=render_source, x=rand_x, y=rand_y, flags=MASK_INVERSE)
-		applied_cracks[render_source] = new_crack_overlay
+		var/list/new_filter_data = alpha_mask_filter(render_source=new_crack_overlay, x=rand_x, y=rand_y, flags=MASK_INVERSE)
+		applied_cracks[new_name] = new_crack_overlay
 
 		// We need to add it as an overlay so the render target from the filter knows what to point at
 		source.add_overlay(new_crack_overlay)
-		source.add_filter(render_source, 1, new_filter_data)
+		source.add_filter(new_name, 1, new_filter_data)
 
 /datum/component/cracked/proc/RemoveCracks(obj/source, count)
 	for(var/i in 1 to count)

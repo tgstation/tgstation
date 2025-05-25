@@ -68,7 +68,6 @@
 
 	icon = ladder.icon
 	icon_state = "[ladder.base_icon_state]_hole"
-	render_target = "*[SOURCE_LADDER(ladder)]"
 
 	ADD_KEEP_TOGETHER(loc, SOURCE_LADDER(ladder))
 	ADD_TURF_TRANSPARENCY(loc, SOURCE_LADDER(ladder))
@@ -77,7 +76,7 @@
 	loc.add_filter(SOURCE_LADDER(ladder), 1, alpha_mask_filter(
 		x = ladder.pixel_x + ladder.pixel_w,
 		y = ladder.pixel_y + ladder.pixel_z,
-		render_source = "*[SOURCE_LADDER(ladder)]",
+		render_source = src,
 		flags = MASK_INVERSE,
 	))
 	loc.update_appearance(UPDATE_OVERLAYS)

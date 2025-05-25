@@ -45,8 +45,6 @@ SUBSYSTEM_DEF(mapping)
 	var/list/plane_to_offset
 	/// List of planes that do not allow for offsetting
 	var/list/plane_offset_blacklist
-	/// List of render targets that do not allow for offsetting
-	var/list/render_offset_blacklist
 	/// List of plane masters that are of critical priority
 	var/list/critical_planes
 	/// The largest plane offset we've generated so far
@@ -117,9 +115,13 @@ SUBSYSTEM_DEF(mapping)
 	plane_offset_blacklist = list()
 	// You aren't allowed to offset a floatplane that'll just fuck it all up
 	plane_offset_blacklist["[FLOAT_PLANE]"] = TRUE
-	render_offset_blacklist = list()
 	critical_planes = list()
 	create_plane_offsets(0, 0)
+	var/obj/starlight_appearance/object = starlight_object(0)
+	var/mutable_appearance/glow = starlight_overlay(0)
+	object.relay_render_to(glow, FALSE)
+	GLOB.starlight_objects += object
+	GLOB.starlight_overlays += glow
 	initialize_biomes()
 	loadWorld()
 	determine_fake_sale()
@@ -799,8 +801,11 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 /datum/controller/subsystem/mapping/proc/generate_offset_lists(gen_from, new_offset)
 	create_plane_offsets(gen_from, new_offset)
 	for(var/offset in gen_from to new_offset)
-		GLOB.starlight_objects += starlight_object(offset)
-		GLOB.starlight_overlays += starlight_overlay(offset)
+		var/obj/starlight_appearance/object = starlight_object(offset)
+		var/mutable_appearance/glow = starlight_overlay(offset)
+		object.relay_render_to(glow, FALSE)
+		GLOB.starlight_objects += object
+		GLOB.starlight_overlays += glow
 
 	for(var/datum/gas/gas_type as anything in GLOB.meta_gas_info)
 		var/list/gas_info = GLOB.meta_gas_info[gas_type]
@@ -818,10 +823,6 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 
 			if(initial(master_type.offsetting_flags) & BLOCKS_PLANE_OFFSETTING)
 				plane_offset_blacklist[string_plane] = TRUE
-				var/render_target = initial(master_type.render_target)
-				if(!render_target)
-					render_target = get_plane_master_render_base(initial(master_type.name))
-				render_offset_blacklist[render_target] = TRUE
 				if(plane_offset != 0)
 					continue
 
