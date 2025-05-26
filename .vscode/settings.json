@@ -1,6 +1,5 @@
 {
 	"eslint.workingDirectories": ["./tgui"],
-  	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"search.exclude": {
 		"**/node_modules": true,
 	},
