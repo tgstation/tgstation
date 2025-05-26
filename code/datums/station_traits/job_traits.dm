@@ -121,6 +121,7 @@
 	show_in_report = TRUE
 	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/bridge_assistant
+	force = TRUE
 
 /datum/station_trait/job/bridge_assistant/New()
 	. = ..()
@@ -175,6 +176,7 @@
 	show_in_report = TRUE
 	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/veteran_advisor
+	force = TRUE
 
 /datum/station_trait/job/veteran_advisor/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
@@ -183,7 +185,7 @@
 /datum/station_trait/job/human_ai
 	name = "Human AI"
 	button_desc = "Sign up to become the \"AI\"."
-	weight = 1
+	weight = 0
 	trait_flags = parent_type::trait_flags | STATION_TRAIT_REQUIRES_AI
 	report_message = "Our recent technological advancements in machine Artificial Intelligence has proven futile. In the meantime, we're sending an Intern to help out."
 	show_in_report = TRUE

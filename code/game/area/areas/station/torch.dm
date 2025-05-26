@@ -100,6 +100,15 @@
 	icon_state = "checkpoint_3" // lol
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
+/area/station/security/checkpoint/fifth
+	name = "5th Floor Security Post"
+	icon_state = "checkpoint_3"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/security/checkpoint/sixth
+	name = "6th Floor Security Post"
+	icon_state = "checkpoint_3"
+
 /area/station/science/robotics/office
 	name = "\improper Robotics Office"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
@@ -189,6 +198,31 @@
 	name = "\improper 5th Floor Aft Starboard Maint"
 	icon_state = "maintaft"
 
+/area/station/maintenance/floor6
+	name = "\improper 6th Floor Maint"
+
+/area/station/maintenance/floor6/port
+	name = "\improper 6th Floor Central Port Maint"
+
+/area/station/maintenance/floor6/port/fore
+	name = "\improper 6th Floor Fore Port Maint"
+	icon_state = "maintfore"
+
+/area/station/maintenance/floor6/port/aft
+	name = "\improper 6th Floor Aft Port Maint"
+	icon_state = "maintaft"
+
+/area/station/maintenance/floor6/starboard
+	name = "\improper 6th Floor Central Starboard Maint"
+
+/area/station/maintenance/floor6/starboard/fore
+	name = "\improper 6th Floor Fore Starboard Maint"
+	icon_state = "maintfore"
+
+/area/station/maintenance/floor6/starboard/aft
+	name = "\improper 6th Floor Aft Starboard Maint"
+	icon_state = "maintaft"
+
 /area/station/hallway/floor5
 	name = "\improper Fifth Floor Hallway"
 
@@ -199,6 +233,25 @@
 /area/station/hallway/floor5/fore
 	name = "\improper Fifth Floor Fore Hallway"
 	icon_state = "4_fore"
+
+/area/station/hallway/floor6
+	name = "\improper Sixth Floor Hallway"
+
+/area/station/hallway/floor6/aft
+	name = "\improper Sixth Floor Aft Hallway"
+	icon_state = "5_aft"
+
+/area/station/hallway/floor6/fore
+	name = "\improper Sixth Floor Fore Hallway"
+	icon_state = "5_fore"
+
+/area/station/command/bridge_office
+	name = "\improper Bridge Office"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
+/area/station/ai_monitored/command/storage/eva/command
+	name = "\improper Command EVA Storage"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
 /area/station/cargo/hanger
 	name = "\improper Hanger Bay"
@@ -219,3 +272,13 @@
 
 /area/station/commons/storage/mining/eva
 	name = "\improper Public Mining EVA Storage"
+
+/area/station/maintenance/radshelter/command
+	name = "\improper Command Radstorm Shelter"
+
+/area/station/ai_monitored/security/armory/restricted
+	name = "\improper Restricted Armory"
+
+/area/station/ai_monitored/security/armory/restricted/desk
+	name = "\improper Restricted Armory Desk"
+	icon_state = "armory_desk"
