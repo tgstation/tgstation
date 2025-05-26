@@ -31,7 +31,7 @@
 	var/picked_trigger = forced_type
 	var/list/event_pool = get_potential_false_alarm()
 
-	while(length(event_pool))
+	while(length(event_pool) && isnull(picked_trigger))
 		var/potential_trigger = pick_n_take(event_pool)
 		if(istype(potential_trigger, /datum/round_event_control))
 			var/datum/round_event_control/event_control = potential_trigger
