@@ -317,8 +317,5 @@
 /// Trait acquired from being painted a certain color
 #define ATOM_COLOR_TRAIT "atom_color"
 
-/// Trait aquired from a client color
-#define CLIENT_COLOR_TRAIT "client_color"
-
 /// Permanent trait from an overdose effect
 #define OVERDOSE_TRAIT "overdose"
