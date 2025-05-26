@@ -345,7 +345,7 @@
 		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
 		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
 	var/whomst = span_danger(M.real_name)
-	if(!is_unassigned_job(M.mind?.assigned_role))
+	if(M.mind && !is_unassigned_job(M.mind?.assigned_role))
 		whomst += "Job: [span_notice(M.mind.assigned_role.title)]."
 	if(length(M.mind?.get_special_roles()))
 		whomst += "Status: [span_boldnotice(english_list(M.mind?.get_special_roles()))]."
