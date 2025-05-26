@@ -140,7 +140,7 @@
 
 /obj/item/food/moonfish_eggs/Initialize(mapload)
 	. = ..()
-	//Moonfish can lay eggs (unaffected by breeding, so think of them as unfertilizard)
+	//Moonfish can lay eggs inside aquariums (unaffected by breeding, so think of them as unfertilizard)
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_GENERATE_APPEARANCE, PROC_REF(generate_aquarium_appearance))
 	RegisterSignal(src, COMSIG_AQUARIUM_CONTENT_RANDOMIZE_POSITION, PROC_REF(randomize_aquarium_position))
 	AddComponent(/datum/component/aquarium_content)

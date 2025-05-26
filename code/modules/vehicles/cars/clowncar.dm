@@ -103,14 +103,14 @@
 		foam.set_up(4, holder = src, location = loc, carry = foamreagent)
 		foam.start()
 
-/obj/vehicle/sealed/car/clowncar/attacked_by(obj/item/I, mob/living/user)
-	. = ..()
-	if(!istype(I, /obj/item/food/grown/banana))
+/obj/vehicle/sealed/car/clowncar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/food/grown/banana))
 		return
-	var/obj/item/food/grown/banana/banana = I
-	atom_integrity += min(banana.seed.potency, max_integrity-atom_integrity)
-	to_chat(user, span_danger("You use the [banana] to repair [src]!"))
+	var/obj/item/food/grown/banana/banana = tool
+	repair_damage(banana.seed.potency)
+	to_chat(user, span_danger("You use [banana] to repair [src]!"))
 	qdel(banana)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
 	. = ..()
@@ -134,7 +134,10 @@
 					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 
 			hittarget_living.adjustBruteLoss(200)
-			new /obj/effect/decal/cleanable/blood/splatter(get_turf(hittarget_living))
+			var/obj/effect/decal/cleanable/blood/splatter/blood_splatter = new /obj/effect/decal/cleanable/blood/splatter(get_turf(hittarget_living))
+			if(iscarbon(hittarget_living))
+				var/mob/living/carbon/carbon_target = hittarget_living
+				blood_splatter.add_mob_blood(carbon_target)
 
 			log_combat(src, hittarget_living, "rammed into", null, "injuring all passengers and killing the [hittarget_living]")
 			dump_mobs(TRUE)

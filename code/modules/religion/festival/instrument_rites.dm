@@ -58,7 +58,7 @@
 	desc = "this is a prototype."
 	ritual_length = 10 SECONDS
 	favor_cost = 10
-	auto_delete = FALSE
+	rite_flags = NONE
 	///if repeats count as continuations instead of a song's end, TRUE
 	var/repeats_okay = TRUE
 	///personal message sent to the chaplain as feedback for their chosen song
@@ -142,7 +142,7 @@
 
 /datum/religion_rites/song_tuner/light/Destroy()
 	QDEL_NULL(performer_light_obj)
-	. = ..()
+	return ..()
 
 /datum/religion_rites/song_tuner/light/finish_effect(mob/living/carbon/human/listener, atom/song_source)
 	listener.apply_status_effect(/datum/status_effect/song/light)

@@ -65,7 +65,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		stored_extinguisher = null
 		update_appearance(UPDATE_ICON)
 
-/obj/structure/extinguisher_cabinet/attackby(obj/item/used_item, mob/living/user, params)
+/obj/structure/extinguisher_cabinet/attackby(obj/item/used_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(used_item.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
 		user.balloon_alert(user, "deconstructing cabinet...")
 		used_item.play_tool_sound(src)

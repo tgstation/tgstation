@@ -70,9 +70,9 @@
 		message += "<br>The following experimental changes are active and are probably the cause of any new or sudden issues you may experience. If possible, please try to find a specific thread for your issue instead of posting to the general issue tracker:<br>"
 		message += GLOB.revdata.GetTestMergeInfo(FALSE)
 
-	// We still use tgalert here because some people were concerned that if someone wanted to report that tgui wasn't working
+	// We still use tg_alert here because some people were concerned that if someone wanted to report that tgui wasn't working
 	// then the report issue button being tgui-based would be problematic.
-	if(tgalert(src, message, "Report Issue","Yes","No") != "Yes")
+	if(tg_alert(src, message, "Report Issue", "Yes", "No") != "Yes")
 		return
 
 	var/base_link = githuburl + "/issues/new?template=bug_report_form.yml"
@@ -91,9 +91,9 @@
 		for(var/entry in testmerge_data)
 			var/datum/tgs_revision_information/test_merge/tm = entry
 			all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
-		var/all_tms_joined = jointext(all_tms, "%0A") // %0A is a newline for URL encoding because i don't trust \n to not break
+		var/all_tms_joined = jointext(all_tms, "\n")
 
-		concatable += ("&test-merges=" + all_tms_joined)
+		concatable += ("&test-merges=" + url_encode(all_tms_joined))
 
 	DIRECT_OUTPUT(src, link(jointext(concatable, "")))
 

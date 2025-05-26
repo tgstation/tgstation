@@ -32,14 +32,21 @@ class RspackCompiler {
     const requireFromRoot = createRequire(import.meta.dirname + '/../../..');
     /** @type {typeof import('@rspack/core')} */
     const rspack = await requireFromRoot('@rspack/core');
+
     const createConfig = await requireFromRoot('./rspack.config.cjs');
+    const createDevConfig = await requireFromRoot('./rspack.config-dev.cjs');
+
     const config = createConfig({}, options);
+    const devConfig = createDevConfig({}, options);
+
+    const mergedConfig = { ...config, ...devConfig };
+
     // Inject the HMR plugin into the config if we're using it
     if (options.hot) {
-      config.plugins.push(new rspack.HotModuleReplacementPlugin());
+      mergedConfig.plugins.push(new rspack.HotModuleReplacementPlugin());
     }
     this.rspack = rspack;
-    this.config = config;
+    this.config = mergedConfig;
     this.bundleDir = config.output.path;
   }
 

@@ -50,9 +50,9 @@
  * Handles sending this signal to every available receiver and mainframe.
  */
 /datum/signal/subspace/proc/send_to_receivers()
-	for(var/obj/machinery/telecomms/receiver/receiver in GLOB.telecomms_list)
+	for(var/obj/machinery/telecomms/receiver/receiver in GLOB.telecomm_machines)
 		receiver.receive_signal(src)
-	for(var/obj/machinery/telecomms/allinone/all_in_one_receiver in GLOB.telecomms_list)
+	for(var/obj/machinery/telecomms/allinone/all_in_one_receiver in GLOB.telecomm_machines)
 		all_in_one_receiver.receive_signal(src)
 
 /// Handles broadcasting this signal out, to be implemented by subtypes.

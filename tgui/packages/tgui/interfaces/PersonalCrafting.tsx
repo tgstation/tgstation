@@ -271,7 +271,7 @@ export const PersonalCrafting = (props) => {
                       (mode === MODE.cooking ? ' recipes...' : ' designs...')
                     }
                     value={searchText}
-                    onInput={(e, value) => {
+                    onChange={(value) => {
                       setPages(1);
                       setSearchText(value);
                     }}

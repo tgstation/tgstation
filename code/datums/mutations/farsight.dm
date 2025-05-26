@@ -9,7 +9,7 @@
 	power_coeff = 1
 	power_path = /datum/action/cooldown/spell/farsight
 
-/datum/mutation/human/farsight/modify()
+/datum/mutation/human/farsight/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/farsight/to_modify = .
 	if(istype(to_modify))
@@ -59,3 +59,10 @@
 
 /datum/action/cooldown/spell/farsight/is_action_active(atom/movable/screen/movable/action_button/current_button)
 	return active
+
+/datum/action/cooldown/spell/farsight/Remove(mob/living/remove_from)
+	. = ..()
+	if(active)
+		remove_from.client?.view_size.resetToDefault()
+		active = FALSE
+		cooldown_time *= 2

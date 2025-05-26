@@ -561,6 +561,7 @@
 
 /obj/item/flashlight/flare/candle/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/floor_placeable)
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /**

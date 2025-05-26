@@ -77,7 +77,8 @@ const ConfigDisplay = (props) => {
           <Button icon="cogs" onClick={() => act('select_config')} />
           <Input
             value={data.greyscale_config}
-            onChange={(_, value) =>
+            expensive
+            onChange={(value) =>
               act('load_config_from_string', { config_string: value })
             }
           />
@@ -101,7 +102,8 @@ const ColorDisplay = (props) => {
           />
           <Input
             value={colors.map((item) => item.value).join('')}
-            onChange={(_, value) =>
+            expensive
+            onChange={(value) =>
               act('recolor_from_string', { color_string: value })
             }
           />
@@ -126,7 +128,8 @@ const ColorDisplay = (props) => {
             <Input
               value={item.value}
               width={7}
-              onChange={(_, value) =>
+              expensive
+              onChange={(value) =>
                 act('recolor', { color_index: item.index, new_color: value })
               }
             />

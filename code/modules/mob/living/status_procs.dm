@@ -450,14 +450,14 @@
  *
  * Returns TRUE on success, FALSE on failure (already has the quirk, etc)
  */
-/mob/living/proc/add_quirk(datum/quirk/quirktype, client/override_client)
+/mob/living/proc/add_quirk(datum/quirk/quirktype, client/override_client, add_unique = TRUE)
 	if(has_quirk(quirktype))
 		return FALSE
 	var/qname = initial(quirktype.name)
 	if(!SSquirks || !SSquirks.quirks[qname])
 		return FALSE
 	var/datum/quirk/quirk = new quirktype()
-	if(quirk.add_to_holder(new_holder = src, client_source = override_client))
+	if(quirk.add_to_holder(new_holder = src, client_source = override_client, unique = add_unique))
 		return TRUE
 	qdel(quirk)
 	return FALSE

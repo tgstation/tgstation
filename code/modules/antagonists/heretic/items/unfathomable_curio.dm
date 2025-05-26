@@ -8,6 +8,8 @@
 	content_overlays = FALSE
 	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
 	pickup_sound = 'sound/items/handling/toolbelt_pickup.ogg'
+	storage_type = /datum/storage/unfathomable_curio
+
 	//Vars used for the shield component
 	var/heretic_shield_icon = "unfathomable_shield"
 	var/max_charges = 1
@@ -17,24 +19,6 @@
 
 /obj/item/storage/belt/unfathomable_curio/Initialize(mapload)
 	. = ..()
-	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
-	atom_storage.max_total_storage = 21
-	atom_storage.set_holdable(list(
-		/obj/item/ammo_box/strilka310/lionhunter,
-		/obj/item/heretic_labyrinth_handbook,
-		/obj/item/bodypart, // Bodyparts are often used in rituals.
-		/obj/item/clothing/neck/eldritch_amulet,
-		/obj/item/clothing/neck/heretic_focus,
-		/obj/item/codex_cicatrix,
-		/obj/item/eldritch_potion,
-		/obj/item/food/grown/poppy, // Used to regain a Living Heart.
-		/obj/item/food/grown/harebell, // Used to reroll targets
-		/obj/item/melee/rune_carver,
-		/obj/item/melee/sickly_blade,
-		/obj/item/organ, // Organs are also often used in rituals.
-		/obj/item/reagent_containers/cup/beaker/eldritch,
-		/obj/item/stack/sheet/glass, // Glass is often used by moon heretics
-	))
 
 	AddComponent(/datum/component/shielded, max_charges = max_charges, recharge_start_delay = recharge_start_delay, charge_increment_delay = charge_increment_delay, \
 	charge_recovery = charge_recovery, shield_icon = heretic_shield_icon, run_hit_callback = CALLBACK(src, PROC_REF(shield_damaged)))

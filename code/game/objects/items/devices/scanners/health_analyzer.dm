@@ -330,11 +330,14 @@
 			render_list += "<hr>"
 			render_list += toReport + "</table></font>" // tables do not need extra linebreak
 
-		// Cybernetics
+		// Cybernetics & mutant
+		var/mutant = HAS_TRAIT(humantarget, TRAIT_HULK)
 		var/list/cyberimps
-		for(var/obj/item/organ/cyberimp/cyberimp in humantarget.organs)
-			if(IS_ROBOTIC_ORGAN(cyberimp) && !(cyberimp.organ_flags & ORGAN_HIDDEN))
-				LAZYADD(cyberimps, cyberimp.examine_title(user))
+		for(var/obj/item/organ/target_organ as anything in humantarget.organs)
+			if(IS_ROBOTIC_ORGAN(target_organ) && !(target_organ.organ_flags & ORGAN_HIDDEN))
+				LAZYADD(cyberimps, target_organ.examine_title(user))
+			if(target_organ.organ_flags & ORGAN_MUTANT)
+				mutant = TRUE
 		if(LAZYLEN(cyberimps))
 			if(!render)
 				render_list += "<hr>"
@@ -347,9 +350,8 @@
 		if(advanced && humantarget.has_dna() && humantarget.dna.stability != initial(humantarget.dna.stability))
 			render_list += "<span class='info ml-1'>Genetic Stability: [humantarget.dna.stability]%.</span><br>"
 
-		// Hulk and body temperature
+		//body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
-		var/mutant = HAS_TRAIT(humantarget, TRAIT_HULK)
 		var/disguised = !ishumanbasic(humantarget) && istype(humantarget.head, /obj/item/clothing/head/hooded/human_head) && istype(humantarget.wear_suit, /obj/item/clothing/suit/hooded/bloated_human)
 		var/species_name = "[disguised ? "\"[/datum/species/human::name]\"" : targetspecies.name][mutant ? "-derived mutant" : ""]"
 
@@ -375,16 +377,24 @@
 	var/blood_id = carbontarget.get_blood_id()
 	if(blood_id)
 		var/blood_percent = round((carbontarget.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-		var/blood_type = carbontarget.dna.blood_type
-		if(blood_id != /datum/reagent/blood) // special blood substance
-			var/datum/reagent/real_reagent = GLOB.chemical_reagents_list[blood_id]
-			blood_type = real_reagent?.name || blood_id
+		var/datum/blood_type/blood_type = carbontarget.dna.blood_type
+		var/blood_type_format
+		var/level_format
 		if(carbontarget.blood_volume <= BLOOD_VOLUME_SAFE && carbontarget.blood_volume > BLOOD_VOLUME_OKAY)
-			render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent]%, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]<br>"
+			level_format = conditional_tooltip("LOW [blood_percent]%, [carbontarget.blood_volume] cl", "Recommendation: [blood_type.restoration_chem::name] supplement.", tochat)
 		else if(carbontarget.blood_volume <= BLOOD_VOLUME_OKAY)
-			render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_percent]%</b>, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]<br>"
+			level_format = conditional_tooltip("<b>CRITICAL [blood_percent]%</b>, [carbontarget.blood_volume] cl", "Recommendation: [blood_type.restoration_chem::name] supplement, [/datum/reagent/medicine/salglu_solution::name], or blood transfusion.", tochat)
 		else
-			render_list += "<span class='info ml-1'>Blood level: [blood_percent]%, [carbontarget.blood_volume] cl, type: [blood_type]</span><br>"
+			level_format = "[blood_percent]%, [carbontarget.blood_volume] cl"
+
+		blood_type_format = "type: [blood_type]"
+		if(tochat && length(blood_type.compatible_types))
+			var/list/compatible_types_readable = list()
+			for(var/datum/blood_type/comp_blood_type as anything in blood_type.compatible_types)
+				compatible_types_readable |= initial(comp_blood_type.name)
+			blood_type_format = span_tooltip("Can receive from types [english_list(compatible_types_readable)].", blood_type_format)
+
+		render_list += "<span class='[carbontarget.blood_volume < BLOOD_VOLUME_SAFE ? "alert" : "info"] ml-1'>Blood level: [level_format],</span> <span class='info'>[blood_type_format]</span><br>"
 
 	var/blood_alcohol_content = target.get_blood_alcohol_content()
 	if(blood_alcohol_content > 0)

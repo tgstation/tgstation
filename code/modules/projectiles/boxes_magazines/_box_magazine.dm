@@ -220,13 +220,13 @@
 /obj/item/ammo_box/examine(mob/user)
 	. = ..()
 	var/shells_left = LAZYLEN(stored_ammo)
-	var/top_round = get_round()
+	var/obj/item/ammo_casing/top_round = get_round()
 	if(!top_round)
 		return
 	. += "It has <b>[shells_left]</b> [casing_phrasing]\s remaining."
 	// this is kind of awkward phrasing, but it's the top/ready ammo in the box
 	// intended for people who have like three mislabeled magazines
-	. += span_notice("The [top_round] is ready in [src].")
+	. += span_notice("\A <b>[top_round]</b> is ready.")
 
 /obj/item/ammo_box/update_icon_state()
 	. = ..()

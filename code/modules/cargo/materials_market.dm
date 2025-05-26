@@ -55,7 +55,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/materials_market/attackby(obj/item/markable_object, mob/user, params)
+/obj/machinery/materials_market/attackby(obj/item/markable_object, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_list(markable_object, exportable_material_items))
 		if(machine_stat & NOPOWER)
 			balloon_alert(user, "no power!")

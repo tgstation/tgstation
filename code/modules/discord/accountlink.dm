@@ -32,7 +32,7 @@
 		message = "Your one time token is: [one_time_token]. Assuming you have the required living minutes in game, you can now verify yourself on Discord by using the command: <span class='code user-select'>[prefix]verify [one_time_token]</span>"
 
 	//Now give them a browse window so they can't miss whatever we told them
-	var/datum/browser/window = new/datum/browser(usr, "discordverification", "Discord Verification")
+	var/datum/browser/window = new /datum/browser(usr, "discordverification", "Discord Verification")
 	window.set_content("<div>[message]</div>")
 	window.open()
 

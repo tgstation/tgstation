@@ -11,7 +11,7 @@
 	bare_wound_bonus = 15
 	sharpness = SHARP_EDGED
 
-/obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/mutant_hand/zombie/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(ishuman(target))
 		try_to_zombie_infect(target, user, user.zone_selected)
 	else if(isliving(target))
@@ -29,7 +29,7 @@
 		return
 
 	// spaceacillin has a 75% chance to block infection
-	if(HAS_TRAIT(target, TRAIT_VIRUS_RESISTANCE) && prob(75))
+	if(HAS_TRAIT(target, TRAIT_VIRUS_RESISTANCE) && !HAS_TRAIT(target, TRAIT_IMMUNODEFICIENCY) && prob(75))
 		return
 
 	var/obj/item/bodypart/actual_limb = target.get_bodypart(def_zone)

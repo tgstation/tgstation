@@ -83,7 +83,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 		main_part = null
 	return ..()
 
-/obj/machinery/gravity_generator/part/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/gravity_generator/part/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(!main_part)
 		return
 	return main_part.attackby(weapon, user)
@@ -235,7 +235,7 @@ GLOBAL_LIST_EMPTY(gravity_generators)
 			. += span_notice("The new plating just needs to be <b>bolted</b> into place now.")
 
 // Fixing the gravity generator.
-/obj/machinery/gravity_generator/main/attackby(obj/item/weapon, mob/user, params)
+/obj/machinery/gravity_generator/main/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(machine_stat & BROKEN)
 		switch(broken_state)
 			if(GRAV_NEEDS_SCREWDRIVER)

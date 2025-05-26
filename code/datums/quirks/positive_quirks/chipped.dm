@@ -21,7 +21,7 @@
 	associated_typepath = /datum/quirk/chipped
 	customization_options = list(/datum/preference/choiced/chipped)
 
-/datum/quirk/chipped/add_to_holder(mob/living/new_holder, quirk_transfer, client/client_source)
+/datum/quirk/chipped/add_to_holder(mob/living/new_holder, quirk_transfer, client/client_source, unique = TRUE)
 	var/chip_pref = client_source?.prefs?.read_preference(/datum/preference/choiced/chipped)
 
 	if(isnull(chip_pref))

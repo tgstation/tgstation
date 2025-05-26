@@ -66,7 +66,7 @@
 			var/obj/item/documents/photocopy/C = copy
 			copy_type = C.copy_type
 
-/obj/item/documents/photocopy/attackby(obj/item/O, mob/user, params)
+/obj/item/documents/photocopy/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/toy/crayon/red) || istype(O, /obj/item/toy/crayon/blue))
 		if (forgedseal)
 			to_chat(user, span_warning("You have already forged a seal on [src]!"))

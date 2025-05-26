@@ -1631,10 +1631,6 @@
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/ammo_box/magazine/m45{
-	pixel_x = 8;
-	pixel_y = 0
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 10
 	},

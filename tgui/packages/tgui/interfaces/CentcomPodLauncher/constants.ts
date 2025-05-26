@@ -108,7 +108,7 @@ export const SOUNDS = [
   {
     title: 'Fall',
     act: 'fallingSound',
-    tooltip: 'Plays while pod falls, timed\nto end when pod lands',
+    tooltip: 'Plays during fall, ends on land',
   },
   {
     title: 'Land',

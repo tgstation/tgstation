@@ -681,7 +681,7 @@
 
 /obj/item/food/meatbun
 	name = "meat bun"
-	desc = "Has the potential to not be dog."
+	desc = "Has the potential to not be human."
 	icon = 'icons/obj/food/meat.dmi'
 	icon_state = "meatbun"
 	food_reagents = list(

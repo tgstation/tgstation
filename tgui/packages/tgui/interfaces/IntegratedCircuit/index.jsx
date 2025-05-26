@@ -462,7 +462,8 @@ export class IntegratedCircuit extends Component {
               <Input
                 placeholder="Name"
                 value={display_name}
-                onChange={(e, value) =>
+                expensive
+                onChange={(value) =>
                   act('set_display_name', { display_name: value })
                 }
               />

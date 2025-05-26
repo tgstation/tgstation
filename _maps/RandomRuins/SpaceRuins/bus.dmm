@@ -244,7 +244,7 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "uO" = (
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "wc" = (

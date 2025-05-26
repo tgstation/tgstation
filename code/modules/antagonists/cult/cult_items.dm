@@ -28,9 +28,12 @@
 	bare_wound_bonus = 20
 	armour_penetration = 35
 	block_sound = 'sound/items/weapons/parry.ogg'
+	///Reference to a boomerang component we add when a non-cultist throws us.
+	var/datum/component/boomerang/boomerang_component
 
 /obj/item/melee/cultblade/dagger/Initialize(mapload)
 	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 	var/image/silicon_image = image(icon = 'icons/effects/blood.dmi' , icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "cult_dagger", silicon_image)
@@ -43,6 +46,10 @@ Striking a noncultist, however, will tear their flesh."}
 
 	AddComponent(/datum/component/cult_ritual_item, span_cult(examine_text))
 
+/obj/item/melee/cultblade/dagger/Destroy(force)
+	QDEL_NULL(boomerang_component)
+	return ..()
+
 /obj/item/melee/cultblade/dagger/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	var/block_message = "[owner] parries [attack_text] with [src]"
 	if(owner.get_active_held_item() != src)
@@ -54,6 +61,26 @@ Striking a noncultist, however, will tear their flesh."}
 		return TRUE
 	else
 		return FALSE
+
+/obj/item/melee/cultblade/dagger/on_thrown(mob/living/carbon/user, atom/target)
+	. = ..()
+	if(!.)
+		return
+	if(IS_CULTIST(user))
+		if(boomerang_component)
+			REMOVE_TRAIT(src, TRAIT_UNCATCHABLE, HELD_ITEM_TRAIT)
+			QDEL_NULL(boomerang_component)
+	else if(isnull(boomerang_component))
+		ADD_TRAIT(src, TRAIT_UNCATCHABLE, HELD_ITEM_TRAIT)
+		boomerang_component = AddComponent(/datum/component/boomerang, throw_range)
+
+///Called when the dagger is impacting someone, we cancel if the person hit isn't the person who threw us, if we're boomeranging.
+/obj/item/melee/cultblade/dagger/proc/on_impact_zone(atom/source, mob/living/hitby, zone, blocked, datum/thrownthing/throwingdatum)
+	SIGNAL_HANDLER
+
+	var/mob/living/thrower = throwingdatum?.get_thrower()
+	if(!isnull(boomerang_component) && hitby != thrower)
+		return MOVABLE_IMPACT_ZONE_OVERRIDE
 
 /obj/item/melee/cultblade
 	name = "eldritch longsword"
@@ -87,8 +114,8 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/melee/cultblade/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/butchering, \
-	speed = 4 SECONDS, \
-	effectiveness = 100, \
+		speed = 4 SECONDS, \
+		effectiveness = 100, \
 	)
 	alt_continuous = string_list(alt_continuous)
 	alt_simple = string_list(alt_simple)
@@ -553,27 +580,6 @@ Striking a noncultist, however, will tear their flesh."}
 /obj/item/sharpener/cult/update_icon_state()
 	icon_state = "cult_sharpener[(uses == 0) ? "_used" : ""]"
 	return ..()
-
-/obj/item/clothing/glasses/hud/health/night/cultblind
-	desc = "May Nar'Sie guide you through the darkness and shield you from the light."
-	flags_cover = GLASSESCOVERSEYES
-	name = "zealot's blindfold"
-	icon_state = "blindfold"
-	inhand_icon_state = "blindfold"
-	flash_protect = FLASH_PROTECTION_WELDER
-	actions_types = null
-	color_cutoffs = list(40, 0, 0) //red
-	glass_colour_type = null
-	forced_glass_color = FALSE
-
-/obj/item/clothing/glasses/hud/health/night/cultblind/equipped(mob/living/user, slot)
-	..()
-	if(user.stat != DEAD && !IS_CULTIST(user) && (slot & ITEM_SLOT_EYES))
-		to_chat(user, span_cult_large("\"You want to be blind, do you?\""))
-		user.dropItemToGround(src, TRUE)
-		user.set_dizzy_if_lower(1 MINUTES)
-		user.Paralyze(100)
-		user.adjust_temp_blindness(60 SECONDS)
 
 /obj/item/reagent_containers/cup/beaker/unholywater
 	name = "flask of unholy water"

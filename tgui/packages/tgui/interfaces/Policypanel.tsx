@@ -44,7 +44,7 @@ export const Policypanel = () => {
                 <Input
                   placeholder="Search..."
                   fluid
-                  onEnter={(e, value) => {
+                  onEnter={(value) => {
                     const results = searchForPolicy(policy, value);
                     if (results.length === 1) {
                       setCurrentPolicy(results[0]);

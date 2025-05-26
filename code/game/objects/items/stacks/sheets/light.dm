@@ -18,7 +18,7 @@
 	. = ..()
 	. += span_warning("\The [src] looks unfinished, add <b>iron</b> to complete it.")
 
-/obj/item/stack/light_w/attackby(obj/item/O, mob/user, params)
+/obj/item/stack/light_w/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/stack/sheet/iron))
 		var/obj/item/stack/sheet/iron/M = O
 		if (M.use(1))

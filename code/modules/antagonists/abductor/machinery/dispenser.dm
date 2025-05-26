@@ -61,7 +61,7 @@
 			Dispense(gland_id)
 			return TRUE
 
-/obj/machinery/abductor/gland_dispenser/attackby(obj/item/W, mob/user, params)
+/obj/machinery/abductor/gland_dispenser/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(W, /obj/item/organ/heart/gland))
 		if(!user.transferItemToLoc(W, src))
 			return

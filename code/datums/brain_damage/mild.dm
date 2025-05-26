@@ -79,7 +79,7 @@
 
 /datum/brain_trauma/mild/speech_impediment/on_gain()
 	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
-	..()
+	. = ..()
 
 /datum/brain_trauma/mild/speech_impediment/on_lose()
 	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, TRAUMA_TRAIT)
@@ -167,7 +167,7 @@
 
 /datum/brain_trauma/mild/muscle_spasms/on_gain()
 	owner.apply_status_effect(/datum/status_effect/spasms)
-	..()
+	. = ..()
 
 /datum/brain_trauma/mild/muscle_spasms/on_lose()
 	owner.remove_status_effect(/datum/status_effect/spasms)

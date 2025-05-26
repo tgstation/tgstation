@@ -21,7 +21,8 @@ export const MechpadControl = (props) => {
         <Input
           value={pad_name}
           width="200px"
-          onChange={(e, value) =>
+          expensive
+          onChange={(value) =>
             act('rename', {
               name: value,
             })

@@ -32,8 +32,13 @@
 
 /datum/component/bloody_spreader/proc/spread_yucky_blood(atom/parent, atom/bloody_fool)
 	SIGNAL_HANDLER
-	bloody_fool.add_blood_DNA(blood_dna, diseases)
-	blood_left--
+	if(ishuman(bloody_fool))
+		var/mob/living/carbon/human/bloody_fool_human = bloody_fool
+		bloody_fool_human.add_blood_DNA_to_items(blood_dna, ITEM_SLOT_GLOVES)
+		blood_left -= 3
+	else
+		bloody_fool.add_blood_DNA(blood_dna, diseases)
+		blood_left -= 1
 	if(blood_left <= 0)
 		qdel(src)
 

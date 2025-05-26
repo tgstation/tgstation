@@ -44,7 +44,7 @@
  * if the special attack could not be attempted, performing the ordinary attack procs instead - Or cancelling the attack chain if
  * the attack can be started.
  */
-/datum/element/kneecapping/proc/try_kneecap_target(obj/item/source, mob/living/carbon/target, mob/attacker, params)
+/datum/element/kneecapping/proc/try_kneecap_target(obj/item/source, mob/living/carbon/target, mob/attacker, list/modifiers)
 	SIGNAL_HANDLER
 
 	if((attacker.zone_selected != BODY_ZONE_L_LEG) && (attacker.zone_selected != BODY_ZONE_R_LEG))

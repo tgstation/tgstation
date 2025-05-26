@@ -521,13 +521,14 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!back_from_the_dead)
 		return
 	//Following is for those brought back from the dead only
+	var/creation_impurity = 1 - creation_purity
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
 	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
-		iter_wound.adjust_blood_flow(1-creation_purity)
+		iter_wound.adjust_blood_flow(creation_impurity * REM * seconds_per_tick)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjustBruteLoss(5 * (1-creation_purity) * seconds_per_tick, required_bodytype = affected_bodytype)
-	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, (1 + (1-creation_purity)) * seconds_per_tick, required_organ_flag = affected_organ_flags)
+	need_mob_update = affected_mob.adjustBruteLoss(5 * creation_impurity * REM * seconds_per_tick, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, ((1 + creation_impurity) * REM * seconds_per_tick), required_organ_flag = affected_organ_flags)
 	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)
@@ -925,3 +926,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/rezadone/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/phobia/fish, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/reagent/inverse/spaceacillin
+	name = "Sepsisillin"
+	description = "Weakens the immune system, acclerating the effects of bacteria, viruses, and parasites while negating the effects of immunity boosters." //it's like spacacillin but evil muahaha
+	color = "#002f06" //Gross green-black. Seemed fitting.
+	ph = 8.1
+	metabolization_rate = 0.1 * REM
+	tox_damage = 0
+	metabolized_traits = list(TRAIT_IMMUNODEFICIENCY)

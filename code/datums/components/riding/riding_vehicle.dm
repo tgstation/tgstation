@@ -140,12 +140,12 @@
 /datum/component/riding/vehicle/lavaboat
 	ride_check_flags = NONE // not sure
 	keytype = /obj/item/oar
-	/// The one turf we can move on.
-	var/allowed_turf = /turf/open/lava
+	/// The turfs we can move on.
+	var/allowed_turfs = list(/turf/open/lava, /turf/open/water)
 
 /datum/component/riding/vehicle/lavaboat/Initialize(mob/living/riding_mob, force, ride_check_flags, potion_boost)
 	. = ..()
-	allowed_turf_typecache = typecacheof(allowed_turf)
+	allowed_turf_typecache = typecacheof(allowed_turfs)
 
 /datum/component/riding/vehicle/lavaboat/get_parent_offsets_and_layers()
 	return list(

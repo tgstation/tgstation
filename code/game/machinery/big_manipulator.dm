@@ -14,8 +14,10 @@
 #define MIN_DELAY_TIER_3 0.8
 #define MIN_DELAY_TIER_4 0.2
 
-#define STATUS_BUSY TRUE
-#define STATUS_IDLE FALSE
+#define STATUS_BUSY "busy"
+#define STATUS_IDLE "idle"
+#define STATUS_INSTALLING_WORKER "installing_worker"
+#define STATUS_UNINSTALLING_WORKER "uninstalling_worker"
 
 #define WORKER_SINGLE_USE "single"
 #define WORKER_EMPTY_USE "empty"
@@ -25,8 +27,9 @@
 /obj/machinery/big_manipulator
 	name = "Big Manipulator"
 	desc = "Operates different objects. Truly, a groundbreaking innovation..."
-	icon = 'icons/obj/machines/big_manipulator_parts/big_manipulator_core.dmi'
-	icon_state = "core"
+	icon = 'icons/map_icons/objects.dmi'
+	icon_state = "/obj/machinery/big_manipulator"
+	post_init_icon_state = "core"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/big_manipulator
 	greyscale_colors = "#d8ce13"
@@ -63,6 +66,12 @@
 	var/datum/weakref/filter_obj
 	/// The poor monkey that needs to use mode works.
 	var/datum/weakref/monkey_worker
+	/// Whether the monkey is set to use combat mode for interaction
+	var/worker_combat_mode = FALSE
+	/// Whether the worker will use right click instead of left click interaction
+	var/worker_alt_mode = FALSE
+	/// A list to denote the above alt mode, to avoid making a new list on every single interaction
+	var/list/resolved_modifiers = list("button" = "left")
 	/// weakref to id that locked this manipualtor.
 	var/datum/weakref/locked_by_this_id
 	/// Is manipulator locked by identity id.
@@ -140,31 +149,34 @@
 
 /obj/machinery/big_manipulator/Destroy(force)
 	. = ..()
+	manipulator_arm.vis_contents.Cut()
 	qdel(manipulator_arm)
 	if(!isnull(containment_obj))
 		var/obj/containment_resolve = containment_obj?.resolve()
 		containment_resolve?.forceMove(get_turf(containment_resolve))
+		containment_obj = null
 	if(!isnull(filter_obj))
 		var/obj/filter_resolve = filter_obj?.resolve()
 		filter_resolve?.forceMove(get_turf(filter_resolve))
-	var/mob/monkey_resolve = monkey_worker?.resolve()
+		filter_obj = null
+	var/mob/living/carbon/human/monkey_resolve = monkey_worker?.resolve()
 	if(!isnull(monkey_resolve))
 		monkey_resolve.forceMove(get_turf(monkey_resolve))
+		monkey_resolve.remove_offsets("[src]")
+		monkey_resolve = null
 	locked_by_this_id = null
 
 /obj/machinery/big_manipulator/Exited(atom/movable/gone, direction)
-	if(isnull(monkey_worker))
-		return
-	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
-	if(gone != poor_monkey)
-		return
-	if(!is_type_in_list(poor_monkey, manipulator_arm.vis_contents))
-		return
-	manipulator_arm.vis_contents -= poor_monkey
-	if(interaction_mode == INTERACT_USE)
-		change_mode()
-	poor_monkey.remove_offsets(type)
-	monkey_worker = null
+	if(gone == monkey_worker?.resolve())
+		var/mob/living/carbon/human/poor_monkey = monkey_worker.resolve()
+		REMOVE_TRAIT(poor_monkey, TRAIT_AI_PAUSED, "[src]")
+		monkey_worker = null
+		poor_monkey.remove_offsets("[src]")
+		if(interaction_mode == INTERACT_USE)
+			change_mode()
+	if(manipulator_arm.vis_contents.Find(gone))
+		manipulator_arm.vis_contents.Cut(gone)
+	..()
 
 /obj/machinery/big_manipulator/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -233,47 +245,67 @@
 
 	manipulator_lvl()
 
-/obj/machinery/big_manipulator/mouse_drop_dragged(atom/drop_point, mob/user, src_location, over_location, params)
+/obj/machinery/big_manipulator/proc/eject_worker(mob/user)
 	if(isnull(monkey_worker))
 		return
 	if(status == STATUS_BUSY)
 		balloon_alert(user, "turn it off first!")
 		return
-	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey_worker.resolve()
-	if(isnull(poor_monkey))
+	if(status == STATUS_UNINSTALLING_WORKER)
+		balloon_alert(user, "already uninstalling worker, please wait")
 		return
-	balloon_alert(user, "trying unbuckle...")
+
+	var/mob/living/carbon/human/poor_monkey = monkey_worker.resolve()
+	if(!ismonkey(poor_monkey))
+		if(!QDELETED(poor_monkey))
+			poor_monkey.drop_all_held_items()
+			poor_monkey.set_lying_angle(0)
+			poor_monkey.forceMove(get_turf(src))
+		monkey_worker = null
+		return
+
+	status = STATUS_UNINSTALLING_WORKER
+	balloon_alert(user, "uninstalling monkey worker...")
 	if(!do_after(user, 3 SECONDS, src))
 		balloon_alert(user, "interrupted")
 		return
-	balloon_alert(user, "unbuckled")
+	balloon_alert(user, "monkey worker uninstalled")
 	poor_monkey.drop_all_held_items()
-	poor_monkey.forceMove(drop_point)
+	poor_monkey.set_lying_angle(0)
+	poor_monkey.forceMove(get_turf(src))
+	status = STATUS_IDLE
 
 /obj/machinery/big_manipulator/mouse_drop_receive(atom/monkey, mob/user, params)
-	if(!ismonkey(monkey))
-		return
-	if(!isnull(monkey_worker))
+	if(!ismonkey(monkey) || !isnull(monkey_worker))
 		return
 	if(status == STATUS_BUSY)
 		balloon_alert(user, "turn it off first!")
 		return
-	var/mob/living/carbon/human/species/monkey/poor_monkey = monkey
-	if(poor_monkey.mind)
-		balloon_alert(user, "too smart!")
+	if(status == STATUS_INSTALLING_WORKER)
+		balloon_alert(user, "already installing worker, please wait")
 		return
-	poor_monkey.balloon_alert(user, "trying buckle...")
+	var/mob/living/carbon/human/poor_monkey = monkey
+	if(poor_monkey.mind)
+		balloon_alert(user, "too smart! might demand pay!")
+		return
+	poor_monkey.balloon_alert(user, "installing monkey worker...")
+	status = STATUS_INSTALLING_WORKER
 	if(!do_after(user, 3 SECONDS, poor_monkey))
 		poor_monkey.balloon_alert(user, "interrupted")
+		status = STATUS_IDLE
 		return
-	balloon_alert(user, "buckled")
+	balloon_alert(user, "monkey worker installed")
 	monkey_worker = WEAKREF(poor_monkey)
+	ADD_TRAIT(poor_monkey, TRAIT_AI_PAUSED, "[src]")
 	poor_monkey.drop_all_held_items()
 	poor_monkey.forceMove(src)
+	poor_monkey.set_combat_mode(worker_combat_mode)
+	status = STATUS_IDLE
 	manipulator_arm.vis_contents += poor_monkey
 	poor_monkey.dir = manipulator_arm.dir
+	poor_monkey.set_lying_angle(dir2angle(manipulator_arm.dir))
 	poor_monkey.add_offsets(
-		type,
+		"[src]",
 		x_add = 32 + manipulator_arm.calculate_item_offset(TRUE, pixels_to_offset = 16),
 		y_add = 32 + manipulator_arm.calculate_item_offset(FALSE, pixels_to_offset = 16)
 	)
@@ -468,7 +500,7 @@
 	if(isnull(obj_resolve))
 		finish_manipulation()
 		return
-	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
+	var/mob/living/carbon/human/monkey_resolve = monkey_worker?.resolve()
 	if(isnull(monkey_resolve))
 		finish_manipulation()
 		return
@@ -489,13 +521,13 @@
 	monkey_resolve.put_in_active_hand(im_item)
 	if(im_item.GetComponent(/datum/component/two_handed)) /// Using two-handed items in two hands.
 		im_item.attack_self(monkey_resolve)
-	im_item.melee_attack_chain(monkey_resolve, type_to_use)
+	im_item.melee_attack_chain(monkey_resolve, type_to_use, resolved_modifiers)
 	do_attack_animation(drop_turf)
 	manipulator_arm.do_attack_animation(drop_turf)
 	check_end_of_use(im_item, item_was_used = TRUE)
 
 /obj/machinery/big_manipulator/proc/use_thing_with_empty_hand()
-	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
+	var/mob/living/carbon/human/monkey_resolve = monkey_worker?.resolve()
 	if(isnull(monkey_resolve))
 		finish_manipulation()
 		return
@@ -503,7 +535,7 @@
 	if(isnull(type_to_use))
 		check_end_of_use_for_use_with_empty_hand()
 		return
-	/// We don't do unarmed attack on item because we will take it so we just attack self it like if we wanna to on/off table lamp.
+	/// For empty hand on an item, we use the item in-hand
 	if(isitem(type_to_use))
 		var/obj/item/interact_with_item = type_to_use
 		var/resolve_loc = interact_with_item.loc
@@ -511,7 +543,7 @@
 		interact_with_item.attack_self(monkey_resolve)
 		interact_with_item.forceMove(resolve_loc)
 	else
-		monkey_resolve.UnarmedAttack(type_to_use)
+		monkey_resolve.UnarmedAttack(type_to_use, modifiers = resolved_modifiers)
 	do_attack_animation(drop_turf)
 	manipulator_arm.do_attack_animation(drop_turf)
 	check_end_of_use_for_use_with_empty_hand()
@@ -685,7 +717,10 @@
 	data["item_as_filter"] = filter_obj?.resolve()
 	data["selected_type"] = selected_type.name
 	data["interaction_mode"] = interaction_mode
+	data["has_worker"] = !isnull(monkey_worker)
 	data["worker_interaction"] = worker_interaction
+	data["worker_combat_mode"] = worker_combat_mode
+	data["worker_alt_mode"] = worker_alt_mode
 	data["highest_priority"] = override_priority
 	data["throw_range"] = manipulator_throw_range
 	var/list/priority_list = list()
@@ -713,6 +748,9 @@
 	switch(action)
 		if("on")
 			try_press_on(ui.user)
+			return TRUE
+		if("eject_worker")
+			eject_worker(ui.user)
 			return TRUE
 		if("drop")
 			drop_held_object()
@@ -747,6 +785,19 @@
 			return TRUE
 		if("worker_interaction_change")
 			cycle_worker_interaction()
+			return TRUE
+		if("worker_combat_mode_change")
+			worker_combat_mode = !worker_combat_mode
+			var/mob/living/carbon/human/monkey_resolve = monkey_worker?.resolve()
+			monkey_resolve?.set_combat_mode(worker_combat_mode)
+			return TRUE
+		if("worker_alt_mode_change")
+			worker_alt_mode = !worker_alt_mode
+			resolved_modifiers["button"] = (worker_alt_mode ? "right" : "left")
+			if(resolved_modifiers["button"] == "right")
+				resolved_modifiers["right"] = TRUE
+			else
+				resolved_modifiers.Remove("right")
 			return TRUE
 		if("change_priority")
 			var/new_priority_number = params["priority"]
@@ -906,6 +957,8 @@
 
 #undef STATUS_IDLE
 #undef STATUS_BUSY
+#undef STATUS_INSTALLING_WORKER
+#undef STATUS_UNINSTALLING_WORKER
 
 #undef MIN_DELAY_TIER_1
 #undef MIN_DELAY_TIER_2

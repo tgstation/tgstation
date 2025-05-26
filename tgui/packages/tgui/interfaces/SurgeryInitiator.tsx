@@ -75,7 +75,7 @@ class SurgeryInitiatorInner extends Component<
 
     return (
       <Window width={400} height={350} title={`Surgery on ${target_name}`}>
-        <Window.Content>
+        <Window.Content scrollable>
           <Stack fill height="100%">
             <Stack.Item width="30%">
               <BodyZoneSelector

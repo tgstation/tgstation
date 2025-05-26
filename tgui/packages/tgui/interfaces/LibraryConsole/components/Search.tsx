@@ -46,7 +46,8 @@ function SearchTabs(props) {
                 placeholder={book_id === null ? 'ID' : book_id}
                 mt={0.5}
                 width="70px"
-                onChange={(e, value) =>
+                expensive
+                onChange={(value) =>
                   act('set_search_id', {
                     id: value,
                   })
@@ -70,7 +71,8 @@ function SearchTabs(props) {
                 value={title}
                 placeholder={title || 'Title'}
                 mt={0.5}
-                onChange={(e, value) =>
+                expensive
+                onChange={(value) =>
                   act('set_search_title', {
                     title: value,
                   })
@@ -82,7 +84,8 @@ function SearchTabs(props) {
                 value={author}
                 placeholder={author || 'Author'}
                 mt={0.5}
-                onChange={(e, value) =>
+                expensive
+                onChange={(value) =>
                   act('set_search_author', {
                     author: value,
                   })

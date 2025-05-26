@@ -152,6 +152,48 @@
 		if(spent)
 			. += span_cult("This shard is spent; it is now just a creepy rock.")
 
+/obj/item/soulstone/examine_more(mob/user)
+	. = ..()
+	if(!isliving(user) || isnull(user.mind))
+		return
+	if(!user.mind.has_crafting_recipe(/datum/crafting_recipe/mod_core_soul))
+		. += span_notice("You know... there might be <a href='byond://?src=[REF(src)];learn_soul_core_recipe=1'>alternate uses</a> for something like this.")
+
+/obj/item/soulstone/Topic(href, list/href_list)
+	. = ..()
+
+	if(href_list["learn_soul_core_recipe"])
+		learn_soul_core_recipe(usr)
+
+/obj/item/soulstone/proc/learn_soul_core_recipe(mob/user)
+	if(user.mind?.has_crafting_recipe(/datum/crafting_recipe/mod_core_soul))
+		return
+	if(!soul_core_learning_check(user))
+		return
+	var/list/remarks = list(
+		"You begin brainstorming...",
+		"Are constructs <i>powered</i> by souls?",
+		"Then wouldn't that mean...",
+		"Can that energy be turned into electricity?",
+		"You have an idea...",
+	)
+	for(var/remark in remarks)
+		to_chat(user, span_notice("[remark]"))
+		if(!do_after(
+			user,
+			5 SECONDS,
+			timed_action_flags = IGNORE_USER_LOC_CHANGE | IGNORE_HELD_ITEM,
+			extra_checks = CALLBACK(src, PROC_REF(soul_core_learning_check), user),
+			interaction_key = "soul_core_learn",
+			max_interact_count = 1
+			))
+			return
+	user.mind?.teach_crafting_recipe(/datum/crafting_recipe/mod_core_soul)
+	to_chat(user, span_notice("You learned to craft [/obj/item/mod/core/soul::name]."))
+
+/obj/item/soulstone/proc/soul_core_learning_check(mob/user)
+	return user.is_holding(src) || (user.loc == loc) || (isturf(loc) && user.Adjacent(loc))
+
 /obj/item/soulstone/Destroy() //Stops the shade from being qdel'd immediately and their ghost being sent back to the arrival shuttle.
 	for(var/mob/living/basic/shade/shade in src)
 		INVOKE_ASYNC(shade, TYPE_PROC_REF(/mob/living, death))
@@ -271,7 +313,7 @@
 	if(IS_CULTIST(user) || HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) || user.stat == DEAD)
 		. += extra_desc
 
-/obj/structure/constructshell/attackby(obj/item/O, mob/user, params)
+/obj/structure/constructshell/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(O, /obj/item/soulstone))
 		var/obj/item/soulstone/SS = O
 		if(!IS_CULTIST(user) && !HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && !SS.theme == THEME_HOLY)

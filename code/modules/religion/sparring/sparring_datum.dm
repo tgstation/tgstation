@@ -118,12 +118,14 @@
 
 /datum/sparring_match/proc/thrown_interference(datum/source, atom/movable/thrown_movable, skipcatch = FALSE, hitpush = TRUE, blocked = FALSE, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
-	if(isitem(thrown_movable))
-		var/mob/living/honorbound = source
-		var/obj/item/thrown_item = thrown_movable
-		var/mob/thrown_by = thrown_item.thrownby?.resolve()
-		if(thrown_item.throwforce < honorbound.health && ishuman(thrown_by))
-			INVOKE_ASYNC(src, PROC_REF(flub), thrown_by)
+
+	if(!isitem(thrown_movable))
+		return
+	var/mob/living/honorbound = source
+	var/obj/item/thrown_item = thrown_movable
+	var/mob/thrown_by = throwingdatum.get_thrower()
+	if(thrown_item.throwforce < honorbound.health && ishuman(thrown_by))
+		INVOKE_ASYNC(src, PROC_REF(flub), thrown_by)
 
 /datum/sparring_match/proc/projectile_interference(datum/participant, obj/projectile/proj)
 	SIGNAL_HANDLER

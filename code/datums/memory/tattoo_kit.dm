@@ -17,7 +17,7 @@
 		. += span_notice("This kit has enough ink for [uses] use\s.")
 	. += span_boldnotice("You can use a toner cartridge to refill this.")
 
-/obj/item/tattoo_kit/attackby(obj/item/toner/ink_cart, mob/living/tattoo_artist, params)
+/obj/item/tattoo_kit/attackby(obj/item/toner/ink_cart, mob/living/tattoo_artist, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(ink_cart))
 		return
@@ -29,7 +29,7 @@
 	qdel(ink_cart)
 	balloon_alert(tattoo_artist, "added tattoo ink")
 
-/obj/item/tattoo_kit/attack(mob/living/tattoo_holder, mob/living/tattoo_artist, params)
+/obj/item/tattoo_kit/attack(mob/living/tattoo_holder, mob/living/tattoo_artist, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return TRUE

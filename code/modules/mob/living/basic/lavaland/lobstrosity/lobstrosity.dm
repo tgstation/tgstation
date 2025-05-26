@@ -42,6 +42,7 @@
 
 /mob/living/basic/mining/lobstrosity/Initialize(mapload)
 	. = ..()
+	add_traits(list(TRAIT_NODROWN, TRAIT_SWIMMER), INNATE_TRAIT)
 	AddComponent(/datum/component/profound_fisher)
 	AddElement(/datum/element/mob_grabber)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
@@ -75,7 +76,7 @@
 		/datum/pet_command/move,
 		/datum/pet_command/attack,
 		charge_command,
-		/datum/pet_command/follow,
+		/datum/pet_command/follow/start_active,
 		/datum/pet_command/fish,
 	)
 	AddComponent(/datum/component/happiness)

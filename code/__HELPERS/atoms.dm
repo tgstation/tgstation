@@ -379,3 +379,6 @@ rough example of the "cone" made by the 3 dirs checked
 		"x" = icon_width > ICON_SIZE_X && pixel_x != 0 ? (icon_width - ICON_SIZE_X) * 0.5 : 0,
 		"y" = icon_height > ICON_SIZE_Y && pixel_y != 0 ? (icon_height - ICON_SIZE_Y) * 0.5 : 0,
 	)
+
+/// Helper for easily adding blood from INSIDE a mob to an atom (NOT blood ON the mob)
+#define add_mob_blood(from_who) add_blood_DNA(from_who.get_blood_dna_list())

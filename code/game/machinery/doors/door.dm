@@ -82,6 +82,11 @@
 	fire = 80
 	acid = 70
 
+/obj/machinery/door/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, welded)
+	return .
+
 /obj/machinery/door/Initialize(mapload)
 	AddElement(/datum/element/blocks_explosives)
 	. = ..()
@@ -118,6 +123,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/can_barricade)
+	update_appearance()
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
@@ -361,7 +367,7 @@
 	try_to_crowbar(tool, user, forced_open)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/door/attackby(obj/item/weapon, mob/living/user, params)
+/obj/machinery/door/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(weapon, /obj/item/access_key))
 		var/obj/item/access_key/key = weapon
 		return key.attempt_open_door(user, src)

@@ -9,7 +9,7 @@
 	cold_protection = ARMS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
-	resistance_flags = NONE
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 	armor_type = /datum/armor/gloves_bracer
 
 /obj/item/clothing/gloves/bracer/Initialize(mapload)

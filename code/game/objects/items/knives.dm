@@ -88,7 +88,7 @@
 	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
 
-/obj/item/knife/bloodletter/afterattack(atom/target, mob/user, click_parameters)
+/obj/item/knife/bloodletter/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(!isliving(target))
 		return
 	var/mob/living/M = target
@@ -335,4 +335,3 @@
 	inhand_icon_state = "rootshiv"
 	icon_angle = -45
 	custom_materials = null
-

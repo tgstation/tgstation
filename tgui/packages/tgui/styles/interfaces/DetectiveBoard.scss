@@ -167,11 +167,8 @@
   padding: var(--space-m);
   overflow: hidden;
   height: 95%;
-  background-image: radial-gradient(
-      circle,
-      rgba(0, 0, 0, 0.1) 1px,
-      transparent 1px
-    ),
+  background-image:
+    radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px),
     radial-gradient(circle, rgba(0, 0, 0, 0.1) 1px, transparent 1px);
   background-size: 16px 16px;
   background-position:

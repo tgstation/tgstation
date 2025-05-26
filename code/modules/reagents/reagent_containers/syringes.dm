@@ -34,7 +34,7 @@
 		CALLBACK(src, PROC_REF(get_dart_var_modifiers))\
 	)
 
-/obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, params)
+/obj/item/reagent_containers/syringe/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/item/reagent_containers/syringe/proc/try_syringe(atom/target, mob/user)

@@ -156,7 +156,7 @@
 	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources.<br>\
 	Caveat emptor.")
 
-/obj/item/gun/energy/recharge/fisher/attack(mob/living/target_mob, mob/living/user, params)
+/obj/item/gun/energy/recharge/fisher/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return

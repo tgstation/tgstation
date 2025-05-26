@@ -26,7 +26,7 @@
 		var/datum/micro_organism/MO = i
 		. += MO.get_details()
 
-/obj/item/petri_dish/pre_attack(atom/A, mob/living/user, params)
+/obj/item/petri_dish/pre_attack(atom/A, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!sample || !istype(A, /obj/structure/sink))
 		return FALSE

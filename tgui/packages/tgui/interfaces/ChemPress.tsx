@@ -102,9 +102,9 @@ export const ChemPress = (props) => {
             )}
             <LabeledList.Item label="Name">
               <Input
+                expensive
                 value={product_name}
-                placeholder={product_name}
-                onChange={(e, value) =>
+                onChange={(value) =>
                   act('change_product_name', {
                     name: value,
                   })

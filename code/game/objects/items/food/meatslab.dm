@@ -6,7 +6,7 @@
 	var/subjectjob = null
 	var/blood_decal_type = /obj/effect/decal/cleanable/blood
 
-/obj/item/food/meat/Initialize(mapload)
+/obj/item/food/meat/Initialize(mapload, blood_dna_list = list("meaty DNA" = get_blood_type(BLOOD_TYPE_MEAT)))
 	. = ..()
 
 	if(!blood_decal_type)
@@ -16,13 +16,14 @@
 		/datum/component/blood_walk,\
 		blood_type = blood_decal_type,\
 		blood_spawn_chance = 45,\
+		transfer_blood_dna = TRUE,\
 		max_blood = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
 	)
 
 	AddComponent(
 		/datum/component/bloody_spreader,\
 		blood_left = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
-		blood_dna = list("meaty DNA" = "MT-"),\
+		blood_dna = blood_dna_list,\
 		diseases = null,\
 	)
 

@@ -85,10 +85,10 @@
 /obj/structure/aquarium/donkfish
 	name = "office aquarium"
 	desc = "A home for captive fish. This one has 'DONK CO' engraved on the glass."
+	init_mode = AQUARIUM_MODE_SAFE
 
 /obj/structure/aquarium/donkfish/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_STOP_FISH_REPRODUCTION_AND_GROWTH, AQUARIUM_TRAIT)
 	new /obj/item/aquarium_prop/rocks(src)
 	new /obj/item/aquarium_prop/seaweed(src)
 	new /obj/item/fish/donkfish(src)

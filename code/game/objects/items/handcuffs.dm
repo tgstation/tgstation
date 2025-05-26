@@ -261,6 +261,7 @@
 	cable_color = null
 	custom_materials = null
 	color = null
+	resistance_flags = FIRE_PROOF | LAVA_PROOF
 
 /**
  * Red cable restraints

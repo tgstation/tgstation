@@ -177,7 +177,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	icon_state = dir_string
 	return ..()
 
-/obj/structure/cable/proc/handlecable(obj/item/W, mob/user, params)
+/obj/structure/cable/proc/handlecable(obj/item/W, mob/user, list/modifiers)
 	var/turf/T = get_turf(src)
 	if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
 		return
@@ -207,8 +207,8 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 //   - Wirecutters : cut it duh !
 //   - Multitool : get the power currently passing through the cable
 //
-/obj/structure/cable/attackby(obj/item/W, mob/user, params)
-	handlecable(W, user, params)
+/obj/structure/cable/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+	handlecable(item, user, modifiers)
 
 
 // shock the user with probability prb
@@ -468,10 +468,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	. += "<b>Use it in hand</b> to change the layer you are placing on, amongst other things."
 
 /obj/item/stack/cable_coil/update_name()
+	if(novariants)
+		return
 	. = ..()
 	name = "cable [(amount < 3) ? "piece" : "coil"]"
 
 /obj/item/stack/cable_coil/update_desc()
+	if(novariants)
+		return
 	. = ..()
 	desc = "A [(amount < 3) ? "piece" : "coil"] of insulated power cable."
 
@@ -526,36 +530,41 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 		return
 	switch(layer_result)
 		if("Layer 1")
+			icon = initial(icon)
+			novariants = FALSE
 			set_cable_color(CABLE_COLOR_RED)
 			target_type = /obj/structure/cable/layer1
 			target_layer = CABLE_LAYER_1
-			novariants = FALSE
 		if("Layer 2")
+			icon = initial(icon)
+			novariants = FALSE
 			set_cable_color(CABLE_COLOR_YELLOW)
 			target_type = /obj/structure/cable
 			target_layer = CABLE_LAYER_2
-			novariants = FALSE
 		if("Layer 3")
+			icon = initial(icon)
+			novariants = FALSE
 			set_cable_color(CABLE_COLOR_BLUE)
 			target_type = /obj/structure/cable/layer3
 			target_layer = CABLE_LAYER_3
-			novariants = FALSE
 		if("Multilayer cable hub")
 			name = "multilayer cable hub"
 			desc = "A multilayer cable hub."
+			icon = 'icons/obj/pipes_n_cables/structures.dmi'
 			icon_state = "cable_bridge"
+			novariants = TRUE
 			set_cable_color(CABLE_COLOR_WHITE)
 			target_type = /obj/structure/cable/multilayer
 			target_layer = CABLE_LAYER_2
-			novariants = TRUE
 		if("Multi Z layer cable hub")
 			name = "multi z layer cable hub"
 			desc = "A multi-z layer cable hub."
+			icon = 'icons/obj/pipes_n_cables/structures.dmi'
 			icon_state = "cablerelay-broken-cable"
+			novariants = TRUE
 			set_cable_color(CABLE_COLOR_WHITE)
 			target_type = /obj/structure/cable/multilayer/multiz
 			target_layer = CABLE_LAYER_2
-			novariants = TRUE
 		if("Cable restraints")
 			if (amount >= CABLE_RESTRAINTS_COST)
 				if(use(CABLE_RESTRAINTS_COST))

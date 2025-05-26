@@ -52,7 +52,7 @@
 	if(is_ready())
 		teleport(AM)
 
-/obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, params)
+/obj/machinery/teleport/hub/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "tele-o", "tele0", W))
 		if(power_station?.engaged)
 			power_station.engaged = 0 //hub with panel open is off, so the station must be informed.
@@ -179,7 +179,7 @@
 		balloon_alert(user, "data uploaded from buffer")
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/teleport/station/attackby(obj/item/W, mob/user, params)
+/obj/machinery/teleport/station/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "controller-o", "controller", W))
 		update_appearance()
 		return

@@ -23,7 +23,7 @@
 	. = ..()
 	UnregisterSignal(target, list(COMSIG_ITEM_AFTERATTACK, COMSIG_ITEM_TOOL_ACTED))
 
-/datum/element/easily_fragmented/proc/on_afterattack(datum/source, atom/target, mob/user, click_parameters)
+/datum/element/easily_fragmented/proc/on_afterattack(datum/source, atom/target, mob/user, list/modifiers)
 	SIGNAL_HANDLER
 	try_break(source, user)
 

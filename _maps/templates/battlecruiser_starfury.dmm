@@ -2255,7 +2255,7 @@
 	pixel_x = 5;
 	pixel_y = -2
 	},
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /obj/structure/table/reinforced/plastitaniumglass,
 /obj/effect/turf_decal/siding/dark{
 	dir = 1

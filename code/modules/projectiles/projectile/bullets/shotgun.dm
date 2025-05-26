@@ -104,7 +104,7 @@
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"
 	damage = 3
-	stamina = 11
+	stamina = 10
 	sharpness = NONE
 	embed_type = null
 	speed = 0.8
@@ -144,14 +144,14 @@
 	embed_type = /datum/embedding/bullet/flechette
 
 /datum/embedding/bullet/flechette
-	embed_chance = 100
-	fall_chance = 0
+	embed_chance = 25
+	fall_chance = 10
 	jostle_chance = 20
 	ignore_throwspeed_threshold = TRUE
 	pain_stam_pct = 0.1
 	pain_mult = 0.5
 	jostle_pain_mult = 1.5
-	rip_time = 1 SECONDS
+	rip_time = 0.5 SECONDS
 
 /obj/projectile/bullet/pellet/flechette/donk
 	name = "\improper Donk Co. 'Donk Spike' flechette"
@@ -172,7 +172,7 @@
 	ignore_throwspeed_threshold = TRUE
 	pain_mult = 1
 	jostle_pain_mult = 1
-	rip_time = 0.5 SECONDS
+	rip_time = 1 SECONDS
 
 // Mech Scattershot
 

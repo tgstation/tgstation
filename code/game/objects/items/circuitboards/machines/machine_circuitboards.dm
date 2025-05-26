@@ -193,6 +193,14 @@
 		/obj/item/stack/sheet/plasteel = 2,
 	)
 
+/obj/item/circuitboard/machine/modular_shield_cable
+	name = "Modular Shield Cable"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/modular_shield/module/node/cable
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 1,
+	)
+
 /obj/item/circuitboard/machine/modular_shield_well
 	name = "Modular Shield Well"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
@@ -1147,6 +1155,28 @@
 		/datum/stock_part/matter_bin = 1,
 		/datum/stock_part/micro_laser = 1,
 		/obj/item/stack/cable_coil = 2,
+	)
+
+/obj/item/circuitboard/machine/experimental_cloner_scanner
+	name = "Experimental Cloning Scanner"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/experimental_cloner_scanner
+	req_components = list(
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/micro_laser = 1,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/cable_coil = 2
+	)
+
+/obj/item/circuitboard/machine/experimental_cloner
+	name = "Experimental Cloning Pod"
+	greyscale_colors = CIRCUIT_COLOR_MEDICAL
+	build_path = /obj/machinery/experimental_cloner
+	req_components = list(
+		/datum/stock_part/matter_bin = 1,
+		/obj/item/stack/cable_coil = 1,
+		/obj/item/stack/sheet/glass = 4
 	)
 
 /obj/item/circuitboard/machine/mechpad

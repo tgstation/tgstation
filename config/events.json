@@ -1,0 +1,355 @@
+{
+	"Space Pirates": {
+		"min_players": 20,
+		"weight": 10
+	},
+	"Spawn Bitrunning Glitch": {
+		"min_players": 1,
+		"weight": 100
+	},
+	"Aurora Caelus": {
+		"min_players": 0,
+		"weight": 1,
+		"earliest_start": 3000
+	},
+	"Spontaneous Brain Trauma": {
+		"min_players": 13,
+		"weight": 25
+	},
+	"Brand Intelligence": {
+		"min_players": 20,
+		"weight": 5
+	},
+	"Bureaucratic Error": {
+		"min_players": 0,
+		"weight": 5
+	},
+	"Camera Failure": {
+		"min_players": 0,
+		"weight": 100
+	},
+	"Carp Migration": {
+		"min_players": 12,
+		"weight": 15,
+		"earliest_start": 6000
+	},
+	"Disease Outbreak: Classic": {
+		"min_players": 10,
+		"weight": 5
+	},
+	"Disease Outbreak: Advanced": {
+		"min_players": 35,
+		"weight": 15,
+		"earliest_start": 9000
+	},
+	"Space Dust: Minor": {
+		"min_players": 0,
+		"weight": 200,
+		"earliest_start": 0
+	},
+	"Electrical Storm": {
+		"min_players": 5,
+		"weight": 20,
+		"earliest_start": 6000
+	},
+	"Fake Virus": {
+		"min_players": 0,
+		"weight": 20
+	},
+	"False Alarm": {
+		"min_players": 0,
+		"weight": 20
+	},
+	"Gravity Generator Blackout": {
+		"min_players": 0,
+		"weight": 30
+	},
+	"Grey Tide": {
+		"min_players": 5,
+		"weight": 10
+	},
+	"Grid Check": {
+		"min_players": 0,
+		"weight": 10
+	},
+	"Random Heart Attack": {
+		"min_players": 40,
+		"weight": 20
+	},
+	"Ion Storm": {
+		"min_players": 2,
+		"weight": 15
+	},
+	"Market Crash": {
+		"min_players": 0,
+		"weight": 10
+	},
+	"Mass Hallucination": {
+		"min_players": 1,
+		"weight": 10
+	},
+	"Mice Migration": {
+		"min_players": 0,
+		"weight": 10
+	},
+	"Portal Storm: Syndicate Shocktroops": {
+		"min_players": 15,
+		"weight": 2,
+		"earliest_start": 18000
+	},
+	"Portal Storm: Constructs": {
+		"min_players": 0,
+		"weight": 0
+	},
+	"Processor Overload": {
+		"min_players": 20,
+		"weight": 15
+	},
+	"Radiation Leak": {
+		"min_players": 0,
+		"weight": 15
+	},
+	"Radiation Storm": {
+		"min_players": 0,
+		"weight": 10
+	},
+	"Sandstorm: Directional": {
+		"min_players": 35,
+		"weight": 10,
+		"earliest_start": 21000
+	},
+	"Sandstorm: Classic": {
+		"min_players": 0,
+		"weight": 0,
+		"earliest_start": 0
+	},
+	"Scrubber Overflow: Normal": {
+		"min_players": 10,
+		"weight": 10
+	},
+	"Scrubber Overflow: Threatening": {
+		"min_players": 25,
+		"weight": 4,
+		"earliest_start": 21000
+	},
+	"Scrubber Overflow: Catastrophic": {
+		"min_players": 35,
+		"weight": 2,
+		"earliest_start": 27000
+	},
+	"Scrubber Overflow: Every Vent": {
+		"min_players": 10,
+		"weight": 0
+	},
+	"Shuttle Catastrophe": {
+		"min_players": 0,
+		"weight": 10
+	},
+	"Shuttle Insurance": {
+		"min_players": 0,
+		"weight": 10
+	},
+	"Spider Infestation": {
+		"min_players": 20,
+		"weight": 10
+	},
+	"Stray Cargo Pod": {
+		"min_players": 0,
+		"weight": 20,
+		"earliest_start": 6000
+	},
+	"Stray Syndicate Cargo Pod": {
+		"min_players": 0,
+		"weight": 6,
+		"earliest_start": 18000
+	},
+	"Supermatter Surge": {
+		"min_players": 0,
+		"weight": 15
+	},
+	"Supermatter Surge: Poly's Revenge": {
+		"min_players": 0,
+		"weight": 0
+	},
+	"Tram Malfunction": {
+		"min_players": 0,
+		"weight": 30,
+		"earliest_start": 9000
+	},
+	"Ventilation Clog: Minor": {
+		"min_players": 0,
+		"weight": 25,
+		"earliest_start": 3000
+	},
+	"Ventilation Clog: Major": {
+		"min_players": 0,
+		"weight": 10,
+		"earliest_start": 6000
+	},
+	"Ventilation Clog: Critical": {
+		"min_players": 15,
+		"weight": 8,
+		"earliest_start": 15000
+	},
+	"Ventilation Clog: Strange": {
+		"min_players": 0,
+		"weight": 5,
+		"earliest_start": 3000
+	},
+	"Wisdom Cow": {
+		"min_players": 0,
+		"weight": 20
+	},
+	"Wormholes": {
+		"min_players": 2,
+		"weight": 1
+	},
+	"Anomaly: Energetic Flux": {
+		"min_players": 1,
+		"weight": 15
+	},
+	"Anomaly: Bioscrambler": {
+		"min_players": 10,
+		"weight": 20
+	},
+	"Anomaly: Bluespace": {
+		"min_players": 1,
+		"weight": 15
+	},
+	"Anomaly: Dimensional": {
+		"min_players": 10,
+		"weight": 20
+	},
+	"Anomaly: Ectoplasmic Outburst": {
+		"min_players": 30,
+		"weight": 4
+	},
+	"Anomaly: Hyper-Energetic Flux": {
+		"min_players": 10,
+		"weight": 20
+	},
+	"Anomaly: Gravitational": {
+		"min_players": 1,
+		"weight": 25
+	},
+	"Anomaly: Gravitational (High Intensity)": {
+		"min_players": 1,
+		"weight": 15
+	},
+	"Anomaly: Hallucination": {
+		"min_players": 10,
+		"weight": 20
+	},
+	"Anomaly: Pyroclastic": {
+		"min_players": 1,
+		"weight": 20
+	},
+	"Anomaly: Vortex": {
+		"min_players": 20,
+		"weight": 10
+	},
+	"Abductors": {
+		"min_players": 20,
+		"weight": 10
+	},
+	"Alien Infestation": {
+		"min_players": 10,
+		"weight": 5
+	},
+	"Blob": {
+		"min_players": 20,
+		"weight": 10
+	},
+	"Changeling Meteor": {
+		"min_players": 20,
+		"weight": 8
+	},
+	"Spawn Fugitives": {
+		"min_players": 20,
+		"weight": 10,
+		"earliest_start": 18000
+	},
+	"Spawn Morph": {
+		"min_players": 0,
+		"weight": 0
+	},
+	"Spawn Nightmare": {
+		"min_players": 20,
+		"weight": 10
+	},
+	"Lone Operative": {
+		"min_players": 0,
+		"weight": 0
+	},
+	"Spawn Revenant": {
+		"min_players": 5,
+		"weight": 7
+	},
+	"Random Human-level Intelligence": {
+		"min_players": 0,
+		"weight": 10
+	},
+	"Station-wide Human-level Intelligence": {
+		"min_players": 0,
+		"weight": 0
+	},
+	"Spawn Slaughter Demon": {
+		"min_players": 20,
+		"weight": 1,
+		"earliest_start": 36000
+	},
+	"Spawn Space Dragon": {
+		"min_players": 20,
+		"weight": 7
+	},
+	"Spawn Space Ninja": {
+		"min_players": 20,
+		"weight": 10
+	},
+	"Immovable Rod": {
+		"min_players": 15,
+		"weight": 10
+	},
+	"Dark Matt-eor": {
+		"min_players": 0,
+		"weight": 0
+	},
+	"Meteor Wave: Normal": {
+		"min_players": 15,
+		"weight": 4,
+		"earliest_start": 15000
+	},
+	"Meteor Wave: Threatening": {
+		"min_players": 20,
+		"weight": 5,
+		"earliest_start": 21000
+	},
+	"Meteor Wave: Catastrophic": {
+		"min_players": 25,
+		"weight": 7,
+		"earliest_start": 27000
+	},
+	"Meteor Wave: Meaty": {
+		"min_players": 15,
+		"weight": 2,
+		"earliest_start": 15000
+	},
+	"Major Space Dust": {
+		"min_players": 15,
+		"weight": 14,
+		"earliest_start": 9000
+	},
+	"Stray Meteor": {
+		"min_players": 15,
+		"weight": 15
+	},
+	"Shuttle Loan": {
+		"min_players": 0,
+		"weight": 10,
+		"earliest_start": 4200
+	},
+	"Space Vines": {
+		"min_players": 10,
+		"weight": 15
+	}
+}

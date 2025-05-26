@@ -60,12 +60,7 @@ export const FishingCalculator = (props) => {
               onSelected={(e) => setLine(e)}
               width="100%"
             />
-            <Input
-              value={bait}
-              placeholder="Bait"
-              onChange={(_, value) => setBait(value)}
-              width="100%"
-            />
+            <Input value={bait} placeholder="Bait" onChange={setBait} fluid />
             <Button
               onClick={() =>
                 act('recalc', {

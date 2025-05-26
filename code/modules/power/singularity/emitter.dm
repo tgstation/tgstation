@@ -335,7 +335,7 @@
 	locked = !locked
 	to_chat(user, span_notice("You [src.locked ? "lock" : "unlock"] the controls."))
 
-/obj/machinery/power/emitter/attackby(obj/item/item, mob/user, params)
+/obj/machinery/power/emitter/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(item.GetID())
 		togglelock(user)
 		return
@@ -353,6 +353,9 @@
 	if(!istype(energy_gun, /obj/item/gun/energy))
 		return
 	if(!user.transferItemToLoc(energy_gun, src))
+		return
+	if(energy_gun.gun_flags & TURRET_INCOMPATIBLE)
+		user.balloon_alert(user, "[energy_gun] won't fit!")
 		return
 	gun = energy_gun
 	gun_properties = gun.get_turret_properties()

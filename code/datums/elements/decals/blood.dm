@@ -23,7 +23,7 @@
 		REMOVE_KEEP_TOGETHER(source_item, type)
 	return ..()
 
-/datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color, _alpha, _smoothing, source)
+/datum/element/decal/blood/generate_appearance(_icon, _icon_state, _dir, _plane, _layer, _color = BLOOD_COLOR_RED, _alpha, _smoothing, source)
 	var/obj/item/as_item = source
 	ADD_KEEP_TOGETHER(as_item, type)
 	var/icon/icon_for_size = icon(as_item.icon, as_item.icon_state)

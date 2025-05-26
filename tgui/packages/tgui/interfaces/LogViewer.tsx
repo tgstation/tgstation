@@ -99,7 +99,7 @@ const CategoryBar = (props: CategoryBarProps) => {
         <Input
           placeholder="Search"
           value={categorySearch}
-          onChange={(_, value) => setCategorySearch(value)}
+          onChange={setCategorySearch}
         />
       }
     >
@@ -175,7 +175,8 @@ const CategoryViewer = (props: CategoryViewerProps) => {
           <Input
             placeholder="Search"
             value={search}
-            onInput={(_, value) => setSearch(value)}
+            onChange={setSearch}
+            expensive
           />
           <Button
             icon="code"

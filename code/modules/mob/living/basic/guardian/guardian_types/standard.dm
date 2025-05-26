@@ -23,17 +23,19 @@
 
 /mob/living/basic/guardian/standard/do_attack_animation(atom/attacked_atom, visual_effect_icon, used_item, no_effect)
 	. = ..()
-	if (!isliving(attacked_atom) || !isclosedturf(attacked_atom))
+	if (!isliving(attacked_atom) && !isclosedturf(attacked_atom))
 		return
 	var/msg = ""
 	for(var/i in 1 to 9)
 		msg += battlecry
 	say("[msg]!!", ignore_spam = TRUE)
 	for(var/sounds in 1 to 4)
-		addtimer(CALLBACK(src, PROC_REF(do_attack_sound), attacked_atom.loc), sounds DECISECONDS, TIMER_DELETE_ME)
+		addtimer(CALLBACK(src, PROC_REF(do_attack_sound), attacked_atom), sounds DECISECONDS, TIMER_DELETE_ME)
 
 /// Echo our punching sounds
 /mob/living/basic/guardian/standard/proc/do_attack_sound(atom/playing_from)
+	if (QDELETED(playing_from))
+		return
 	playsound(playing_from, attack_sound, 50, TRUE, TRUE)
 
 /// Action to change our battlecry

@@ -69,7 +69,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, params)
+/obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(scanning_mode == SCAN_SALES_TAG && isidcard(attacking_item))
 		var/obj/item/card/id/potential_acc = attacking_item

@@ -236,6 +236,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(toggleable_inventory)
 	QDEL_LIST(hotkeybuttons)
 	throw_icon = null
+	resist_icon = null
 	QDEL_LIST(infodisplay)
 
 	healths = null
@@ -509,6 +510,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		var/hand_ind = RIGHT_HANDS
 		if (num_of_swaps > 1)
 			hand_ind = IS_RIGHT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
+		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
+		hand_num += 1
+	hand_num = 1
+	for(var/atom/movable/screen/drop/swap_hands in static_inventory)
+		var/hand_ind = LEFT_HANDS
+		if (num_of_swaps > 1)
+			hand_ind = IS_LEFT_INDEX(hand_num) ? LEFT_HANDS : RIGHT_HANDS
 		swap_hands.screen_loc = ui_swaphand_position(mymob, hand_ind)
 		hand_num += 1
 

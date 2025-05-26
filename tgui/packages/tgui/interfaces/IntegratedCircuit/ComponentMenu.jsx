@@ -131,7 +131,8 @@ export class ComponentMenu extends Component {
               placeholder="Search.."
               value={currentSearch}
               fluid
-              onChange={(e, val) =>
+              expensive
+              onChange={(val) =>
                 this.setState({
                   currentSearch: val,
                   selectedTab: 'All',

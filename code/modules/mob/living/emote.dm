@@ -729,6 +729,10 @@
 
 	return TRUE
 
+/datum/emote/living/custom/get_message_flags(intentional)
+	. = ..()
+	return .|WITH_EMPHASIS_MESSAGE
+
 /datum/emote/living/custom/proc/get_custom_emote_from_user()
 	return copytext(sanitize(input("Choose an emote to display.") as text|null), 1, MAX_MESSAGE_LEN)
 

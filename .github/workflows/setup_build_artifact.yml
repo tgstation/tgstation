@@ -1,0 +1,42 @@
+on:
+  workflow_call:
+    inputs:
+      major:
+        required: true
+        type: string
+      minor:
+        required: true
+        type: string
+
+jobs:
+  setup_build_artifact:
+    name: Setup build artifact (${{ format('{0}.{1}', inputs.major, inputs.minor) }})
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup_node
+      - name: Restore BYOND from Cache
+        uses: ./.github/actions/restore_or_install_byond
+        with:
+          major: ${{ inputs.major }}
+          minor: ${{ inputs.minor }}
+      - name: Compile
+        run: |
+          source $HOME/BYOND/byond/bin/byondsetup
+          tools/build/build --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
+      - name: Setup variable for output path
+        run: |
+          OUTPUT_DIR="target"
+          echo "OUTPUT_DIR=$OUTPUT_DIR" >> $GITHUB_ENV
+      - name: Copy output files
+        run: |
+          bash tools/ci/copy_build_output.sh $OUTPUT_DIR
+      - name: Upload artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact-${{ inputs.major }}-${{ inputs.minor }}
+          path: ${{ env.OUTPUT_DIR }}
+          retention-days: 1

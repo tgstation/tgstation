@@ -10,7 +10,7 @@
 	merge_type = /obj/item/stack/tile/light
 	var/state = 0
 
-/obj/item/stack/tile/light/attackby(obj/item/O, mob/user, params)
+/obj/item/stack/tile/light/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
 	if(O.tool_behaviour == TOOL_CROWBAR)
 		new/obj/item/stack/sheet/iron(user.loc)
 		amount--

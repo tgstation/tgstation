@@ -92,11 +92,8 @@
 		var/blood_id = scanned.get_blood_id()
 		if(blood_id)
 			var/blood_percent = round((scanned.blood_volume / BLOOD_VOLUME_NORMAL) * 100)
-			var/blood_type = scanned.dna.blood_type
-			if(blood_id != /datum/reagent/blood)
-				var/datum/reagent/reagents = GLOB.chemical_reagents_list[blood_id]
-				blood_type = reagents?.name || blood_id
-			autopsy_information += "Blood Type: [blood_type]<br>"
+			var/datum/blood_type/blood_type = scanned.dna.blood_type
+			autopsy_information += "Blood Type: [blood_type.name]<br>"
 			autopsy_information += "Blood Volume: [scanned.blood_volume] cl ([blood_percent]%) <br>"
 
 	for(var/datum/disease/diseases as anything in scanned.diseases)

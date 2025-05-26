@@ -857,7 +857,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(obsessed)] has been made Obsessed by the midround ruleset.")
 	log_game("[key_name(obsessed)] was made Obsessed by the midround ruleset.")
 	notify_ghosts(
-		"[obsessed] has developed an obsession with someone!",
+		"[obsessed.real_name] has developed an obsession with someone!",
 		source = obsessed,
 		header = "Love Can Bloom",
 	)

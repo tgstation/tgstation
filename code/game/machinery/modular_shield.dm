@@ -143,7 +143,7 @@
 	if(default_deconstruction_crowbar(tool))
 		return TRUE
 
-/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, params)
+/obj/machinery/modular_shield_generator/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 
 	if(is_wire_tool(W) && panel_open)
 		wires.interact(user)
@@ -175,7 +175,7 @@
 		radius = initial(radius)
 	active = TRUE
 	initiating = TRUE
-
+	var/color_shield = cached_color_filter || color
 	if(radius >= 10) //the shield is large so we are going to use the midpoint formula and clamp it to the lowest full number in order to save processing power
 		LAZYADD(inside_shield, circle_range_turfs(src, radius - 1))//in the future we might want to apply an effect to turfs inside the shield
 		LAZYADD(list_of_turfs, get_perimeter(src, radius))
@@ -189,7 +189,8 @@
 				var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 				deploying_shield.shield_generator = src
 				LAZYADD(deployed_shields, deploying_shield)
-
+				if(color_shield)
+					deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
 			addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 			calculate_regeneration()
 			return
@@ -200,6 +201,8 @@
 			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 			deploying_shield.shield_generator = src
 			LAZYADD(deployed_shields, deploying_shield)
+			if(color_shield)
+				deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
 
 		addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
@@ -218,6 +221,8 @@
 			var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 			deploying_shield.shield_generator = src
 			LAZYADD(deployed_shields, deploying_shield)
+			if(color_shield)
+				deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
 
 		addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 		calculate_regeneration()
@@ -231,6 +236,8 @@
 		var/obj/structure/emergency_shield/modular/deploying_shield = new(target_tile)
 		deploying_shield.shield_generator = src
 		LAZYADD(deployed_shields, deploying_shield)
+		if(color_shield)
+			deploying_shield.add_atom_colour(color_shield, FIXED_COLOUR_PRIORITY)
 
 	addtimer(CALLBACK(src, PROC_REF(finish_field)), 2 SECONDS)
 	calculate_regeneration()
@@ -246,6 +253,9 @@
 
 /obj/machinery/modular_shield_generator/Destroy()
 	QDEL_LIST(deployed_shields)
+	for(var/obj/machinery/modular_shield/module/disconnecting in connected_modules)
+		disconnecting.shield_generator = null
+		disconnecting.update_icon_state()
 	return ..()
 
 /obj/machinery/modular_shield_generator/update_icon_state()
@@ -381,12 +391,17 @@
 //Start of other machines
 ///The general code used for machines that want to connect to the network
 /obj/machinery/modular_shield/module
-
 	name = "modular shield debugger" //Filler name and sprite for testing
 	desc = "This is filler for testing you shouldn't see this."
 	icon = 'icons/obj/machines/mech_bay.dmi'
 	icon_state = "recharge_port"
 	density = TRUE
+
+	///This var is what determines if boosters, such as charger or well, can connect to this module
+	var/allow_boosters = TRUE
+
+	///This var is what determines if we are a booster or a logistic module
+	var/is_booster = FALSE
 
 	///The shield generator we are connected to if we find one or a node provides us one
 	var/obj/machinery/modular_shield_generator/shield_generator
@@ -400,7 +415,8 @@
 /obj/machinery/modular_shield/module/Initialize(mapload)
 	. = ..()
 
-	connected_turf = get_step(loc, dir)
+	connected_turf = get_step(src, dir)
+	try_connect()
 
 /obj/machinery/modular_shield/module/Destroy()
 
@@ -409,6 +425,7 @@
 		shield_generator.calculate_boost()
 	if(connected_node)
 		LAZYREMOVE(connected_node.connected_through_us, (src))
+		connected_node.update_icon_state()
 	return ..()
 
 /obj/machinery/modular_shield/module/examine(mob/user)
@@ -453,9 +470,11 @@
 
 	if(connected_node)
 		LAZYREMOVE(connected_node.connected_through_us, (src))
+		connected_node.update_icon_state()
 		connected_node = null
 
-	connected_turf = get_step(loc, dir)
+	connected_turf = get_step(src, dir)
+	try_connect()
 	return TRUE
 
 /obj/machinery/modular_shield/module/crowbar_act(mob/living/user, obj/item/tool)
@@ -467,13 +486,14 @@
 
 /obj/machinery/modular_shield/module/setDir(new_dir)
 	. = ..()
-	connected_turf = get_step(loc, dir)
+	connected_turf = get_step(src, dir)
 
 ///checks for a valid machine in front of us and connects to it
 /obj/machinery/modular_shield/module/proc/try_connect(user)
 
 	if(shield_generator || connected_node)
 		balloon_alert(user, "already connected to something!")
+		update_icon_state()
 		return
 
 	shield_generator = (locate(/obj/machinery/modular_shield_generator) in connected_turf)
@@ -490,7 +510,15 @@
 
 	if(connected_node)
 
+		//checks if the node allows boosters and if we are a booster
+		if(!connected_node.allow_boosters && is_booster)
+			connected_node = null
+			update_icon_state()
+			balloon_alert(user, "cant connect")
+			return
+
 		LAZYOR(connected_node.connected_through_us, (src))
+		connected_node.update_icon_state()
 		shield_generator = connected_node.shield_generator
 		if(shield_generator)
 			LAZYOR(shield_generator.connected_modules, (src))
@@ -498,14 +526,15 @@
 			update_icon_state()
 			shield_generator.calculate_boost()
 			return
+		update_icon_state()
 		balloon_alert(user, "connected to node")
 		return
+	update_icon_state()
 	balloon_alert(user, "no connection!")
 
 
 
 /obj/machinery/modular_shield/module/node
-
 	name = "modular shield node"
 	desc = "A waist high mess of humming pipes and wires that extend the modular shield network."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
@@ -538,9 +567,11 @@
 
 	if(connected_node)
 		LAZYREMOVE(connected_node.connected_through_us, (src))
+		connected_node.update_icon_state()
 		connected_node = null
 
-	connected_turf = get_step(loc, dir)
+	connected_turf = get_step(src, dir)
+	try_connect()
 	return TRUE
 
 //after trying to connect to a machine infront of us, we will try to link anything connected to us to a generator
@@ -585,12 +616,38 @@
 		connected.shield_generator = null
 		connected.update_icon_state()
 
-/obj/machinery/modular_shield/module/charger
+/obj/machinery/modular_shield/module/node/cable
+	name = "modular shield cable"
+	desc = "An ankle high mess of cables packed as low as possible at the cost of lacking connection components necessary for anything other than nodes and the generator itself."
+	icon = 'icons/obj/machines/modular_shield_generator.dmi'
+	icon_state = "cable_node_closed_r_b_l"
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
+	circuit = /obj/item/circuitboard/machine/modular_shield_cable
+	density = FALSE
+	allow_boosters = FALSE
 
+/obj/machinery/modular_shield/module/node/cable/update_icon_state()
+	. = ..()
+	var/turf/right_turf = get_step(src, turn(dir, 270))
+	var/obj/machinery/modular_shield/module/node/connected_right = (locate(/obj/machinery/modular_shield/module/node) in right_turf)
+	if(!(connected_right in connected_through_us))
+		connected_right = null
+	var/turf/back_turf = get_step(src, turn(dir, 180))
+	var/obj/machinery/modular_shield/module/node/connected_back = (locate(/obj/machinery/modular_shield/module/node) in back_turf)
+	if(!(connected_back in connected_through_us))
+		connected_back = null
+	var/turf/left_turf = get_step(src, turn(dir, 90))
+	var/obj/machinery/modular_shield/module/node/connected_left = (locate(/obj/machinery/modular_shield/module/node) in left_turf)
+	if(!(connected_left in connected_through_us))
+		connected_left = null
+	icon_state = "cable_node_[panel_open ? "open" : "closed"]_[connected_right ? "r" : "nr"]_[connected_back ? "b" : "nb"]_[connected_left ? "l" : "nl"]"
+
+/obj/machinery/modular_shield/module/charger
 	name = "modular shield charger"
 	desc = "A machine that somehow fabricates hardlight using electrons."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "charger_off_closed"
+	is_booster = TRUE
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_charger
 
@@ -614,11 +671,11 @@
 		shield_generator.calculate_boost()
 
 /obj/machinery/modular_shield/module/relay
-
 	name = "modular shield relay"
 	desc = "It helps the shield generator project farther out."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "relay_off_closed"
+	is_booster = TRUE
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_relay
 
@@ -642,11 +699,11 @@
 		shield_generator.calculate_boost()
 
 /obj/machinery/modular_shield/module/well
-
 	name = "modular shield well"
 	desc = "A device used to hold more hardlight for the modular shield generator."
 	icon = 'icons/obj/machines/modular_shield_generator.dmi'
 	icon_state = "well_off_closed"
+	is_booster = TRUE
 
 	circuit = /obj/item/circuitboard/machine/modular_shield_well
 

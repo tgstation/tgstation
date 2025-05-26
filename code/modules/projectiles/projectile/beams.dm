@@ -145,6 +145,17 @@
 /obj/projectile/beam/disabler/weak
 	damage = 15
 
+/obj/projectile/beam/disabler/scatter
+	name = "scatter disabler"
+	icon_state = "scatterdisabler"
+	damage = 5.5
+	damage_falloff_tile = -0.5
+	speed = 1.2
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
+	tracer_type = /obj/effect/projectile/tracer/xray
+	muzzle_type = /obj/effect/projectile/muzzle/xray
+	impact_type = /obj/effect/projectile/impact/xray
+
 /obj/projectile/beam/disabler/smoothbore
 	name = "unfocused disabler beam"
 	weak_against_armour = TRUE

@@ -95,12 +95,12 @@
 	max_capacity = 1000
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/computer_disk/syndie_ai_upgrade/pre_attack(atom/A, mob/living/user, params)
+/obj/item/computer_disk/syndie_ai_upgrade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	var/mob/living/silicon/ai/AI
-	if(isAI(A))
-		AI = A
+	if(isAI(target))
+		AI = target
 	else
-		AI = locate() in A
+		AI = locate() in target
 	if(!AI || AI.interaction_range == INFINITY)
 		playsound(src,'sound/machines/buzz/buzz-sigh.ogg',50,FALSE)
 		to_chat(user, span_notice("Error! Incompatible object!"))
