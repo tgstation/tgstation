@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix shuttle engines built from a circuit board having it's `anchored` state not matching the correct `engine_state`. This would consider the engine to be anchored already when it was not and allow someone to weld it despite it being able to be dragged and moved around."
