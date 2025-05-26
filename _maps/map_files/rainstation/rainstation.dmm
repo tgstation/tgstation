@@ -12132,6 +12132,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
+/obj/machinery/food_cart,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/kitchen)
 "aMG" = (
@@ -12807,6 +12808,7 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
 	},
+/obj/machinery/icecream_vat,
 /turf/open/floor/iron/showroomfloor,
 /area/station/service/kitchen)
 "aON" = (
@@ -28443,6 +28445,13 @@
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
 	},
+/obj/structure/closet,
+/obj/item/clothing/suit/jacket/straight_jacket,
+/obj/item/clothing/suit/jacket/straight_jacket,
+/obj/item/clothing/suit/jacket/straight_jacket,
+/obj/item/clothing/mask/muzzle,
+/obj/item/clothing/mask/muzzle,
+/obj/item/clothing/mask/muzzle,
 /turf/open/floor/iron/dark,
 /area/station/medical/morgue)
 "bTo" = (
@@ -29084,12 +29093,10 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 8
 	},
-/obj/effect/turf_decal/loading_area{
-	dir = 4
-	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 8
 	},
+/obj/structure/closet/secure_closet/cytology,
 /turf/open/floor/iron/white/herringbone,
 /area/station/science/xenobiology)
 "bWn" = (
@@ -29639,6 +29646,7 @@
 /obj/machinery/door/airlock/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "bYs" = (
@@ -50461,6 +50469,9 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
 	},
+/obj/effect/turf_decal/loading_area{
+	dir = 4
+	},
 /turf/open/floor/iron/white/herringbone,
 /area/station/science/xenobiology)
 "puy" = (
@@ -54303,6 +54314,15 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/service/theater)
+"sJX" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/effect/mapping_helpers/airlock/unres{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "sJZ" = (
 /obj/effect/spawner/random/maintenance,
 /obj/effect/spawner/random/structure/crate_loot,
@@ -110931,7 +110951,7 @@ cNW
 cNW
 cNW
 cNW
-cTI
+sJX
 cNW
 cOT
 cOT
