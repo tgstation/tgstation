@@ -19,8 +19,6 @@ jobs:
             ${{ runner.os }}-spacemandmm-
       - name: Setup Node
         uses: ./.github/actions/setup_node
-        with:
-          restore-yarn-cache: true
       - name: Restore Bootstrap cache
         uses: actions/cache@v4
         with:
