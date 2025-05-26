@@ -170,8 +170,10 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	update_instability()
 
 /datum/dna/proc/remove_mutation(mutation_to_remove, list/sources)
-	if(!sources)
-		CRASH("remove_mutation() called without set source(s)")
+	if(!islist(sources))
+		if(!sources)
+			CRASH("remove_mutation() called without set source(s)")
+		sources = list(sources)
 
 	var/datum/mutation/actual_mutation = get_mutation(mutation_to_remove)
 
