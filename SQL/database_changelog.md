@@ -42,6 +42,7 @@ Adds `crime_desc` field to the `citation` table to save the description of the c
 ALTER TABLE `citation`
 ADD COLUMN `crime_desc` TEXT NULL DEFAULT NULL AFTER `crime`;
 ```
+
 -----------------------------------------------------
 Version 5.29, 4 February 2024, by Tiviplus
 Fixed admin rank table flags being capped at 16 in the DB instead of 24 (byond max)
@@ -52,6 +53,7 @@ ALTER TABLE `admin_ranks`
 	MODIFY COLUMN `exclude_flags` mediumint(5) unsigned NOT NULL,
 	MODIFY COLUMN `can_edit_flags` mediumint(5) unsigned NOT NULL;
 ```
+
 -----------------------------------------------------
 Version 5.28, 1 November 2024, by Ghommie
 Added `fish_progress` as the first 'progress' subtype of 'datum/award/scores'
@@ -64,6 +66,7 @@ CREATE TABLE `fish_progress` (
   PRIMARY KEY (`ckey`,`progress_entry`)
 ) ENGINE=InnoDB;
 ```
+
 -----------------------------------------------------
 Version 5.27, 26 April 2024, by zephyrtfa
 Add the ip intel whitelist table
@@ -78,6 +81,7 @@ CREATE TABLE `ipintel_whitelist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 ```
+
 -----------------------------------------------------
 Version 5.26, 03 December 2023, by distributivgesetz
 Set the default value of cloneloss to 0, as it's obsolete and it won't be set by blackbox anymore.
