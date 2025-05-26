@@ -460,5 +460,4 @@
 	current_sound_loc = sound_turf
 
 #undef MIN_SIZE_SOUND
-#undef CHECK_COLD_FIRE
 #undef INSUFFICIENT
