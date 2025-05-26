@@ -233,6 +233,14 @@
 	var/turf/open/our_turf = get_turf(breather)
 	our_turf.assume_air(mix_to_spawn)
 
+/obj/item/organ/lungs/corrupt/hear_breath_noise(/mob/living/hearer)
+	hearer.playsound_local(src, 'sound/effects/magic/voidblink.ogg', 75, FALSE)
+	if(!IS_HERETIC_OR_MONSTER(hearer))
+		hearer.emote("scream")
+		hearer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+		var/obj/item/organ/ears/regret = hearer.get_organ_slot(ORGAN_SLOT_EARS)
+		regret.adjustEarDamage(10,20)
+	return span_hypnophrase("SECRET SONGS OF THE BREAKING OF THE MAKING OF THE WAKING OF THE-")
 
 /// It's full of worms
 /obj/item/organ/appendix/corrupt
