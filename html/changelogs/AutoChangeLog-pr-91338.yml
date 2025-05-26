@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - qol: "Slimes will no longer have a chance to move when being put in BZ enviroments via the xenobiology console"
