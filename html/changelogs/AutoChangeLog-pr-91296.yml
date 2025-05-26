@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "recycler won't spit out indestructible items if its indirectly stored on the mob"

@@ -649,3 +649,44 @@
   - refactor: preview icons for greyscale items are now automatically generated, meaning
       you can see GAGS as they actually appear ingame while mapping or viewing the
       loadout menu.
+2025-05-26:
+  00-Steven:
+  - balance: Egg boxes' storage UI is now 6 slots wide, such that it contains an even
+      dozen slots when full.
+  - balance: The storage UIs for heart-shaped chocolate boxes, pickle jars, and rolling
+      paper packs are now 4, 5, and 5 slots wide respectively, such that they fill
+      the whole storage UI when full.
+  - balance: Fryish and its fried snack cousins can now be stored in nugget boxes.
+  - bugfix: Pickle jars can actually hold the ten pickles they spawn with.
+  - bugfix: Fertile egg boxes, coffee condiment displays, and coffee cart racks have
+      the right amount of slots.
+  - bugfix: Coffee cart racks spawn with the sprite for holding 1 cartridge like they
+      do, rather than looking like they're holding 4 cartridges.
+  - code_imp: Refactored holochip merging. Please report any issues.
+  - qol: Holochips now have usage screentips.
+  Aliceee2ch:
+  - bugfix: Now the telecomm hub does not turn on with a multitool after EMP
+  - bugfix: Lockboxes now correctly use the closed icon_state when first spawned
+  Ben10Omintrix:
+  - rscadd: snails are now growable from cytology. u can swab snails or watering cans
+      for samples
+  Ghommie:
+  - bugfix: Stickmen summoned by the papier-mache robe are once again hostile.
+  Krysonism:
+  - rscadd: Added the ability to create a spore print seed by using paper on mushrooms.
+  SmArtKar:
+  - bugfix: Fixed cultists, blood brothers and headrevs sometimes not getting their
+      roundstart items
+  SyncIt21:
+  - bugfix: recycler won't spit out indestructible items if its indirectly stored
+      on the mob
+  TheRealSpriteMan1337:
+  - spellcheck: Makes the computer and machine frame building tips consistent, decapitalizes
+      the improvised chem heater's name and change its description.
+  mc-oofert:
+  - bugfix: removed a camera from the deathmatch meta brig map, disciple of pete has
+      low-range signalers, deathmatch bolt of possession deals brain damage instead,
+      split personality may not roll in deathmatch
+  throwawayuseless:
+  - bugfix: Plasma now contributes to the fuel gauge of rigged welders, making them
+      less extremely obvious.
