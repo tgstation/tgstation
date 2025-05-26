@@ -95,11 +95,11 @@
 	return ..() && can_be_headrev(candidate.mind)
 
 /datum/dynamic_ruleset/latejoin/revolution/assign_role(datum/mind/candidate)
-	LAZYADD(candidate.special_roles, "Dormant Head Revolutioanry")
+	LAZYADD(candidate.special_roles, "Dormant Head Revolutionary")
 	addtimer(CALLBACK(src, PROC_REF(reveal_head), candidate), 1 MINUTES, TIMER_DELETE_ME)
 
 /datum/dynamic_ruleset/latejoin/revolution/proc/reveal_head(datum/mind/candidate)
-	LAZYREMOVE(candidate.special_roles, "Dormant Head Revolutioanry")
+	LAZYREMOVE(candidate.special_roles, "Dormant Head Revolutionary")
 	if(!can_be_headrev(candidate))
 		SSdynamic.unreported_rulesets += src
 		name += " (Canceled)"
