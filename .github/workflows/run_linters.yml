@@ -26,6 +26,10 @@ jobs:
           key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-bootstrap-
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
       - name: Restore Rust cache
         uses: actions/cache@v4
         with:
