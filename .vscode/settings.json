@@ -1,10 +1,10 @@
 {
 	"eslint.workingDirectories": ["./tgui"],
-	"search.exclude": {
-		"**/node_modules/**": true,
-	},
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit"
+	},
+	"search.exclude": {
+		"**/node_modules/**": true,
 	},
 	"files.eol": "\n",
 	"files.insertFinalNewline": true,
