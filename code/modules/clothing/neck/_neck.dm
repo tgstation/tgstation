@@ -235,9 +235,14 @@
 	var/mob/living/carbon/carbon_patient = target
 	var/body_part = carbon_patient.parse_zone_with_bodypart(user.zone_selected)
 	var/oxy_loss = carbon_patient.getOxyLoss()
+	var/tox_loss = carbon_patient.getToxLoss()
 
 	var/heart_strength
 	var/pulse_pressure
+
+	var/breath_sound
+	var/beat_sound
+	var/heart_noises = TRUE
 
 	var/obj/item/organ/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
 	var/obj/item/organ/lungs/lungs = carbon_patient.get_organ_slot(ORGAN_SLOT_LUNGS)
@@ -257,6 +262,7 @@
 				render_list += span_info("You place [src] against [carbon_patient]'s [body_part]:\n")
 
 			//assess breathing
+			var/lung_noises = TRUE
 			if(isnull(lungs) \
 				|| carbon_patient.stat == DEAD \
 				|| (HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)) \
@@ -264,13 +270,17 @@
 				|| carbon_patient.failed_last_breath \
 				|| carbon_patient.losebreath)//If pt is dead or otherwise not breathing
 				render_list += "<span class='danger ml-1'>[target.p_Theyre()] not breathing!</span>\n"
+				lung_noises = FALSE
+
 			else if(lungs.damage > 10)//if breathing, check for lung damage
 				render_list += "<span class='danger ml-1'>You hear fluid in [target.p_their()] lungs!</span>\n"
 			else if(oxy_loss > 10)//if they have suffocation damage
 				render_list += "<span class='danger ml-1'>[target.p_Theyre()] breathing heavily!</span>\n"
 			else
 				render_list += "<span class='notice ml-1'>[target.p_Theyre()] breathing normally.</span>\n"//they're okay :D
-
+			if(lung_noises)
+				breath_sound = lungs.hear_breath_noise(user)
+				render_list += "<span class='notice ml-1'>Their lungs produce [breath_sound]. </span>\n"
 			//assess heart
 			if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
 				if(isnull(heart) || !heart.is_beating() || carbon_patient.stat == DEAD)
