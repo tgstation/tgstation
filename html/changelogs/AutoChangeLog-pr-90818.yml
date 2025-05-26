@@ -1,0 +1,4 @@
+author: "throwawayuseless"
+delete-after: True
+changes:
+  - rscadd: "New chemistry catalysts! Combine phenol, unstable mutagen, and plasma in a 1:3:1 competitive reaction, similar to tempomyocin and purity tester. Adding stable plasma to either of the two precursors will create the new catalysts, one regulating pH, and the other temperature. If you're having trouble getting the one you want, you can optionally add gold to the beaker as the competitive reaction progresses, which will cause the pH precursor to form more quickly."
