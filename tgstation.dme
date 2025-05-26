@@ -2499,6 +2499,7 @@
 #include "code\game\objects\items\pneumaticCannon.dm"
 #include "code\game\objects\items\powerfist.dm"
 #include "code\game\objects\items\puzzle_pieces.dm"
+#include "code\game\objects\items\reflex_hammer.dm"
 #include "code\game\objects\items\religion.dm"
 #include "code\game\objects\items\rollertable_dock.dm"
 #include "code\game\objects\items\scrolls.dm"
