@@ -37,7 +37,7 @@
 /obj/item/barcodescanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(interacting_with, /obj/item/book))
 		return interact_with_book(interacting_with, user)
-
+	return NONE
 /obj/item/barcodescanner/proc/interact_with_book(obj/item/book/target_book, mob/living/user)
 	var/obj/machinery/computer/libraryconsole/bookmanagement/linked_computer = computer_ref?.resolve()
 	if(isnull(linked_computer))
