@@ -49,13 +49,20 @@
 	fire = 80
 	acid = 50
 
+/obj/machinery/portable_atmospherics/canister/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, valve_open)
+	. += NAMEOF(src, release_pressure)
+	return .
+
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload)
 	. = ..()
 
 	if(mapload)
 		internal_cell = new /obj/item/stock_parts/power_store/cell/high(src)
 
-	create_gas()
+	if(!initial_gas_mix)
+		create_gas()
 
 	if(ispath(gas_type, /datum/gas))
 		desc = "[GLOB.meta_gas_info[gas_type][META_GAS_NAME]]. [GLOB.meta_gas_info[gas_type][META_GAS_DESC]]"
