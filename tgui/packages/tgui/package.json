@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "tgui",
   "version": "6.0.0",
   "dependencies": {
@@ -18,9 +17,8 @@
     "tgui-core": "^4.0.1",
     "tgui-dev-server": "workspace:*"
   },
+  "private": true,
   "devDependencies": {
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.2",
-    "vitest": "^3.1.1"
+    "@types/node": "^22.15.21"
   }
 }

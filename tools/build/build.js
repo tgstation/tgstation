@@ -415,7 +415,7 @@ export const TguiTscTarget = new Juke.Target({
 export const TguiTestTarget = new Juke.Target({
   parameters: [CiParameter],
   dependsOn: [BunTarget],
-  executes: ({ get }) => bun(`tgui:test-${get(CiParameter) ? 'ci' : 'simple'}`),
+  executes: () => bun('tgui:test'),
 });
 
 export const TguiLintTarget = new Juke.Target({

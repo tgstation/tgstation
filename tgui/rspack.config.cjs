@@ -35,7 +35,7 @@ module.exports = (env = {}, argv) => {
         type: 'persistent',
         storage: {
           type: 'filesystem',
-          directory: path.resolve(__dirname, '.yarn/rspack'),
+          directory: 'node_modules/.cache/rspack',
         },
       },
       css: true,
