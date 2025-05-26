@@ -1,0 +1,4 @@
+author: "moocowswag"
+delete-after: True
+changes:
+  - bugfix: "conveyors now remember what they should be doing after losing and regaining power."

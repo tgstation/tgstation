@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - qol: "`map_export` admin verb can now save atmos for turfs and air canisters"

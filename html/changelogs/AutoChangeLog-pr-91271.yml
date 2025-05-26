@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Tgui inputs have been tweaked again to fix issues and seem more responsive."

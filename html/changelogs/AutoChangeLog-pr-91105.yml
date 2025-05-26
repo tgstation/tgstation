@@ -1,0 +1,4 @@
+author: "Holoo-1"
+delete-after: True
+changes:
+  - bugfix: "fixed camera static not being drawn for AI in multicamera mode. Also fixes secondary AI cameras not existing and gives them their AI name"

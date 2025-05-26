@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "If an energy weapon is indestructible, so is the cell within the weapon."
+  - bugfix: "Cells inside of energy guns are bomb proof so as to not brick a gun that somehow survives being bombed."

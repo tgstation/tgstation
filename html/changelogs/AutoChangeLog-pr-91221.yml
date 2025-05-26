@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Firelocks now skip checking uninitialized turfs, which caused errors with the holodeck."

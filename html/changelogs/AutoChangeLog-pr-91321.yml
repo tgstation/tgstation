@@ -1,0 +1,7 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - qol: "Added screentips for inserting cash into and recolouring ID cards."
+  - qol: "Added screentips for copying access directly from a card using a chameleon ID card."
+  - qol: "Added screentips for setting prisoner ID sentence time."
+  - qol: "Added screentips for forging cardboard ID cards."
