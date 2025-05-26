@@ -281,12 +281,10 @@
 
 /datum/brain_trauma/mild/color_blindness/on_gain()
 	owner.add_client_colour(/datum/client_colour/monochrome, TRAUMA_TRAIT)
-	ADD_TRAIT(owner, TRAIT_COLORBLIND, TRAUMA_TRAIT)
 	return ..()
 
 /datum/brain_trauma/mild/color_blindness/on_lose(silent)
 	owner.remove_client_colour(TRAUMA_TRAIT)
-	REMOVE_TRAIT(owner, TRAIT_COLORBLIND, TRAUMA_TRAIT)
 	return ..()
 
 /datum/brain_trauma/mild/possessive

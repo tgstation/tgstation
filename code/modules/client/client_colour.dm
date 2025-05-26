@@ -197,6 +197,14 @@
 	fade_in = 2 SECONDS
 	fade_out = 2 SECONDS
 
+/datum/client_colour/monochrome/New(mob/owner)
+	. = ..()
+	ADD_TRAIT(owner, TRAIT_COLORBLIND, CLIENT_COLOR_TRAIT)
+
+/datum/client_colour/monochrome/Destroy()
+	REMOVE_TRAIT(owner, TRAIT_COLORBLIND, CLIENT_COLOR_TRAIT)
+	return ..()
+
 /datum/client_colour/monochrome/glasses
 	priority = CLIENT_COLOR_GLASSES_PRIORITY
 
