@@ -351,7 +351,7 @@ export const BunTarget = new Juke.Target({
     'tgui/**/package.json',
   ],
   executes: ({ get }) => {
-    Juke.logger.info('Installing TGUI dependencies for the first time, this might take a while...');
+    Juke.logger.info('Installing TGUI dependencies, this might take a while...');
     return bun('install', '--ignore-scripts', get(CiParameter));
   },
 })
