@@ -1,0 +1,4 @@
+author: "Arturlang"
+delete-after: True
+changes:
+  - balance: "Full heals no longer replace all organs, though they still replace any hazardous organs and re-add missing ones and heal the rest."
