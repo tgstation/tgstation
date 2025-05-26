@@ -233,7 +233,7 @@
 	var/turf/open/our_turf = get_turf(breather)
 	our_turf.assume_air(mix_to_spawn)
 
-/obj/item/organ/lungs/corrupt/hear_breath_noise(/mob/living/hearer)
+/obj/item/organ/lungs/corrupt/hear_breath_noise(mob/living/hearer)
 	hearer.playsound_local(src, 'sound/effects/magic/voidblink.ogg', 75, FALSE)
 	if(!IS_HERETIC_OR_MONSTER(hearer))
 		hearer.emote("scream")

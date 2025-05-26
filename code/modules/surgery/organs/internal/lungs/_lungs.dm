@@ -103,6 +103,8 @@
 	var/heat_damage_type = BURN
 
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
+
+	var/breath_noise = "steady in- and exhalation"
 // assign the respiration_type
 /obj/item/organ/lungs/Initialize(mapload)
 	. = ..()
@@ -865,7 +867,7 @@
 		return span_boldwarning("Your lungs feel extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
 	return span_boldwarning("It feels extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
 
-/obj/item/organ/lungs/hear_breath_noise(mob/living/hearer)
+/obj/item/organ/lungs/proc/hear_breath_noise(mob/living/hearer)
 	return span_notice(breath_noise)
 
 #define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
