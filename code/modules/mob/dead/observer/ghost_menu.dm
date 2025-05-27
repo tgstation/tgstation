@@ -3,9 +3,9 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 /datum/ghost_menu
 	///Static list of all types of lightings ghosts can use.
 	var/static/list/ghost_lightings = list(
-		"[LIGHTING_CUTOFF_VISIBLE]" = "Visible Lighting",
-		"[LIGHTING_CUTOFF_MEDIUM]" = "Medium Lighting",
-		"[LIGHTING_CUTOFF_HIGH]" = "High Lighting",
+		"[LIGHTING_CUTOFF_VISIBLE]" = "Mob Vision",
+		"[LIGHTING_CUTOFF_MEDIUM]" = "Slight Night Vision",
+		"[LIGHTING_CUTOFF_HIGH]" = "Night Vision",
 		"[LIGHTING_CUTOFF_FULLBRIGHT]" = "Fullbright",
 	)
 
