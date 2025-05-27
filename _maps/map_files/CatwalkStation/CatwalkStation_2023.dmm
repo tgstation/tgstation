@@ -16835,7 +16835,7 @@
 "fdE" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "fdI" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper{
@@ -21986,7 +21986,7 @@
 	c_tag = "Science - Xenobiology Big Pen"
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gBE" = (
 /obj/structure/chair/sofa/right/brown{
 	dir = 8
@@ -23169,7 +23169,7 @@
 "gVn" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gVs" = (
 /obj/machinery/computer/teleporter{
 	dir = 4
@@ -31904,7 +31904,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jxI" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /obj/machinery/camera/autoname/directional/west,
@@ -51397,6 +51397,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/surgery)
+"pph" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/door/window/brigdoor/left/directional/north{
+	name = "Maximum Security Test Chamber";
+	req_access = list("xenobiology")
+	},
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "ppi" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -73471,6 +73479,10 @@
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/station/science/research)
+"vTM" = (
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "vTV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -80025,6 +80037,9 @@
 /obj/item/radio/intercom/directional/south,
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
+"xVm" = (
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "xVq" = (
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron/dark,
@@ -118601,10 +118616,10 @@ arT
 quE
 bnP
 lav
-mJp
-wps
-wps
-wps
+vTM
+xVm
+xVm
+xVm
 arT
 uRz
 qfr
@@ -118858,10 +118873,10 @@ arT
 eEL
 eEL
 lqK
-mJp
-wps
-wps
-wps
+vTM
+xVm
+xVm
+xVm
 arT
 hFi
 tXs
@@ -119115,10 +119130,10 @@ arT
 vKg
 vKg
 xAs
-xAs
+pph
 jxC
-wps
-wps
+xVm
+xVm
 arT
 gnR
 qfr
@@ -119372,10 +119387,10 @@ rvn
 jYp
 vKg
 lqK
-mJp
-wps
-wps
-wps
+vTM
+xVm
+xVm
+xVm
 arT
 hFi
 qfr
@@ -119629,9 +119644,9 @@ hAs
 kzg
 eUa
 rRd
-mJp
-wps
-wps
+vTM
+xVm
+xVm
 gBA
 arT
 lim
@@ -119886,8 +119901,8 @@ arT
 jYp
 vKg
 rLi
-mJp
-wps
+vTM
+xVm
 fdE
 gVn
 arT
@@ -120143,10 +120158,10 @@ arT
 jXj
 vKg
 kBs
-mJp
-wps
-wps
-wps
+vTM
+xVm
+xVm
+xVm
 oaQ
 hFi
 eIh
@@ -120400,10 +120415,10 @@ arT
 qeG
 gYG
 lav
-mJp
-wps
-wps
-wps
+vTM
+xVm
+xVm
+xVm
 arT
 gnR
 eIh

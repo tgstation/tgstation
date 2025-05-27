@@ -2741,7 +2741,7 @@
 	},
 /obj/machinery/light/cold/directional/east,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "aYw" = (
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Three";
@@ -10232,7 +10232,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "dLn" = (
 /obj/structure/rack,
 /obj/item/wrench/medical,
@@ -18041,7 +18041,7 @@
 "gyK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gyO" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -27912,7 +27912,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jQM" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -28590,7 +28590,7 @@
 /area/station/command/bridge)
 "kcu" = (
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "kcF" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -38682,7 +38682,7 @@
 "nJr" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "nJu" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/tile/red/half/contrasted{

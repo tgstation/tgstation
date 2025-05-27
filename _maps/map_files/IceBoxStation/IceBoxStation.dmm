@@ -17965,7 +17965,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "eZK" = (
 /obj/machinery/recycler{
 	dir = 8
@@ -36613,7 +36613,7 @@
 "kuT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "kuV" = (
 /obj/effect/turf_decal/arrows/red,
 /obj/effect/turf_decal/tile/purple/half{
@@ -51627,7 +51627,7 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "oEE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -56267,7 +56267,7 @@
 "pUX" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "pVg" = (
 /obj/structure/railing{
 	dir = 8
@@ -58502,7 +58502,7 @@
 /area/station/engineering/atmos)
 "qCu" = (
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "qCA" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -63900,7 +63900,7 @@
 "sbP" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "sbU" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/dark,
@@ -83337,7 +83337,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "xJv" = (
 /obj/structure/rack,
 /obj/item/screwdriver,

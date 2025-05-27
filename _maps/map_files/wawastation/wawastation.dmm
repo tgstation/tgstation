@@ -3286,7 +3286,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "bga" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -10463,7 +10463,7 @@
 /obj/item/radio/intercom/directional/east,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "dKp" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -13187,7 +13187,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "eFK" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -15113,7 +15113,7 @@
 	icon_state = "gib3-old"
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "fsZ" = (
 /obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Research Director Observation";
@@ -21807,7 +21807,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "hFO" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
@@ -26838,7 +26838,7 @@
 "jvV" = (
 /obj/structure/sign/warning/biohazard/directional/east,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jwa" = (
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
@@ -29082,7 +29082,7 @@
 	icon_state = "gib5-old"
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "khL" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/machinery/status_display/evac/directional/south,
@@ -33553,7 +33553,7 @@
 "lHp" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "lHx" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Auxiliary Base Construction"
@@ -42777,7 +42777,7 @@
 	},
 /obj/structure/sign/warning/biohazard/directional/east,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "oVX" = (
 /obj/structure/table,
 /obj/structure/window/spawner/directional/east,
@@ -47709,7 +47709,7 @@
 "qEr" = (
 /obj/machinery/light/floor,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "qEC" = (
 /obj/effect/turf_decal/stripes{
 	dir = 1
@@ -53310,7 +53310,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "suo" = (
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	id = "ordstorage"
@@ -56588,7 +56588,7 @@
 	},
 /obj/effect/decal/cleanable/blood/drip,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tBF" = (
 /obj/structure/closet/secure_closet/chief_medical,
 /obj/item/screwdriver,
@@ -67289,7 +67289,7 @@
 /area/station/maintenance/disposal/incinerator)
 "xna" = (
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "xnc" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Bridge"

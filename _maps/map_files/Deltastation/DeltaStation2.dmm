@@ -17560,7 +17560,7 @@
 /obj/machinery/status_display/ai/directional/west,
 /obj/machinery/light/cold/directional/west,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "eqU" = (
 /turf/open/space,
 /area/space)
@@ -17839,7 +17839,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "etw" = (
 /obj/structure/lattice,
 /obj/structure/sign/nanotrasen{
@@ -26785,7 +26785,7 @@
 /area/station/hallway/secondary/exit)
 "gCt" = (
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gCB" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -35047,7 +35047,7 @@
 "iJw" = (
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "iJE" = (
 /obj/structure/table/wood/fancy,
 /obj/machinery/door/window/left/directional/east,
@@ -57940,7 +57940,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ozE" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/decal/cleanable/dirt,
@@ -62687,7 +62687,7 @@
 "pJz" = (
 /obj/effect/decal/remains/xeno,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "pJI" = (
 /obj/effect/turf_decal/trimline/neutral/mid_joiner{
 	dir = 4
@@ -72655,7 +72655,7 @@
 "sfE" = (
 /obj/effect/decal/cleanable/xenoblood,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "sfH" = (
 /obj/effect/landmark/start/hangover,
 /obj/effect/turf_decal/tile/neutral{
@@ -92456,7 +92456,7 @@
 	},
 /obj/structure/sign/warning/gas_mask/directional/north,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "xdA" = (
 /obj/effect/spawner/random/decoration/carpet,
 /obj/effect/spawner/random/structure/furniture_parts,

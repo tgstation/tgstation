@@ -104,8 +104,8 @@
 /datum/techweb_node/xenomorph_research
 	id = TECHWEB_NODE_XENOMORPH_RESEARCH
 	prereq_ids = list(TECHWEB_NODE_FUNDIMENTAL_SCI)
-	display_name = "Xenomorph Biology"
-	description = "We have to investigate the properties of the xenomorph hive node. Please send us a scan of one."
+	display_name = "Xenomorph Biology                    "
+	description = "There is a lot we still have to learn about xenomorph biology. Complete some research for us."
 	design_ids = list(
 			"artificial_hive_node",
 	)

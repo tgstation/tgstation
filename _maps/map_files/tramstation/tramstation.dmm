@@ -10460,7 +10460,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/light/directional/north,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "cBo" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -33001,7 +33001,7 @@
 	},
 /obj/structure/disposalpipe/trunk,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "kGA" = (
 /obj/structure/railing,
 /obj/machinery/door/firedoor/border_only,
@@ -38873,7 +38873,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "mFo" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -57911,7 +57911,7 @@
 "ttj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tto" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/trimline/green/line{
@@ -58400,7 +58400,7 @@
 /area/station/science/xenobiology)
 "tBo" = (
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tBu" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/airlock/external{
@@ -58565,7 +58565,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/xenobio,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tED" = (
 /obj/effect/turf_decal/tile/neutral/tram,
 /obj/effect/turf_decal/stripes/white/line,

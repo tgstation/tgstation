@@ -28,6 +28,10 @@
 	name = "\improper Xenobiology Hallway"
 	icon_state = "xenobio_hall"
 
+/area/station/science/xenobiology/cell
+	name = "\improper Xenobiology Cell"
+	icon_state = "xenobio"
+
 /area/station/science/cytology
 	name = "\improper Cytology Lab"
 	icon_state = "cytology"

@@ -1170,7 +1170,7 @@
 	id = "Xenobio"
 	},
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "axP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -15194,7 +15194,7 @@
 /obj/item/electropack,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "fvL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -15958,7 +15958,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "fGT" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -18057,7 +18057,7 @@
 	name = "Nanners"
 	},
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gpA" = (
 /obj/effect/turf_decal/siding/thinplating/terracotta,
 /obj/effect/decal/cleanable/dirt,
@@ -20077,7 +20077,7 @@
 /obj/effect/spawner/random/medical/two_percent_xeno_egg_spawner,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gWk" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -37563,7 +37563,7 @@
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "mwN" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral{
@@ -42874,7 +42874,7 @@
 	pixel_y = -1
 	},
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "orC" = (
 /obj/structure/cable,
 /turf/open/floor/iron/smooth,
@@ -47213,7 +47213,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "pPt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/siding/blue/corner{
@@ -53372,7 +53372,7 @@
 "rQw" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rQC" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -58976,7 +58976,7 @@
 "tGp" = (
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "tGq" = (
 /turf/closed/wall,
 /area/station/service/kitchen/coldroom)
@@ -70358,7 +70358,7 @@
 	},
 /obj/item/stock_parts/power_store/cell/high,
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "xed" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -70924,7 +70924,7 @@
 /area/station/science/xenobiology)
 "xlP" = (
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "xlU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -74107,7 +74107,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "yeO" = (
 /obj/structure/cable,
 /obj/structure/window/reinforced/spawner/directional/south,
@@ -74217,7 +74217,7 @@
 	network = list("ss13","rd","xeno")
 	},
 /turf/open/floor/engine/bz,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "ygu" = (
 /turf/open/floor/iron/white,
 /area/station/hallway/primary/starboard)

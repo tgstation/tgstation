@@ -362,7 +362,7 @@ SUBSYSTEM_DEF(research)
 	var/datum/team/xeno/xeno_team = locate(/datum/team/xeno) in GLOB.antagonist_teams
 	if(xeno_team)
 		for(var/datum/mind/alien in xeno_team.members)
-			if(istype(get_area(alien.current), /area/station/science/xenobiology)  && alien.current.stat != DEAD)
+			if(istype(get_area(alien.current), /area/station/science/xenobiology/cell)  && alien.current.stat != DEAD)
 				xeno_count++
 				if(!alien.has_antag_datum(/datum/antagonist/xeno/captive))
 					alien.add_antag_datum(/datum/antagonist/xeno/captive)
