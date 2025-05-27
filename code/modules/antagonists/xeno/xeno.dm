@@ -155,11 +155,10 @@
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	if(!mind.has_antag_datum(/datum/antagonist/xeno))
-		if(GLOB.communications_controller.xenomorph_egg_delivered && istype(get_area(src), GLOB.communications_controller.captivity_area))
-			mind.add_antag_datum(/datum/antagonist/xeno/captive)
-		else
-			mind.add_antag_datum(/datum/antagonist/xeno)
-
+		//if(GLOB.communications_controller.xenomorph_egg_delivered && istype(get_area(src), GLOB.communications_controller.captivity_area))
+		//mind.add_antag_datum(/datum/antagonist/xeno/captive)
+		// handled whenever a xeno specimen is in the xenobiology area in research.dm
+		mind.add_antag_datum(/datum/antagonist/xeno)
 		mind.set_assigned_role(SSjob.get_job_type(/datum/job/xenomorph))
 		mind.special_role = ROLE_ALIEN
 

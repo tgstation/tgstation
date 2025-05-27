@@ -519,3 +519,9 @@
 		/obj/machinery = 1
 	)
 	required_tier = 3
+
+/datum/experiment/scanning/hive_node
+	name = "Hive Node Scanning Experiment"
+	description = "We need to gather data on the hive node and its properties. Scan the hive node to help us understand its structure and function."
+	exp_tag = "Scan"
+	required_atoms = list(/obj/item/organ/alien/hivenode = 1)

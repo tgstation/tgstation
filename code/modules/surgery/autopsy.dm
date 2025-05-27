@@ -19,6 +19,18 @@
 		/datum/surgery_step/mechanic_close,
 	)
 
+/datum/surgery/autopsy/alien
+	name = "Alien Autopsy"
+	possible_locs = list(BODY_ZONE_CHEST)
+	target_mobtypes = list(/mob/living/carbon/alien/adult)
+	steps = list(
+		/datum/surgery_step/saw,
+		/datum/surgery_step/incise,
+		/datum/surgery_step/retract_skin,
+		/datum/surgery_step/autopsy,
+		/datum/surgery_step/close,
+	)
+
 /datum/surgery/autopsy/can_start(mob/user, mob/living/patient)
 	if(!..())
 		return FALSE
@@ -64,3 +76,4 @@
 		span_warning("[user] screws up!"),
 	)
 	target.adjustBruteLoss(5)
+

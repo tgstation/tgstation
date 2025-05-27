@@ -99,7 +99,7 @@ SUBSYSTEM_DEF(research)
 			var/income_time_difference = world.time - techweb_list.last_income
 			techweb_list.last_bitcoins = bitcoins  // Doesn't take tick drift into account
 			for(var/i in bitcoins)
-				bitcoins[i] *= (income_time_difference / 10) * techweb_list.income_modifier
+				bitcoins[i] *= (income_time_difference / 10) * techweb_list.income_modifier *checkxenos()
 			techweb_list.add_point_list(bitcoins)
 
 		techweb_list.last_income = world.time
@@ -355,3 +355,20 @@ SUBSYSTEM_DEF(research)
 /datum/controller/subsystem/research/proc/increment_existing_anomaly_cores(core_type)
 	var/existing = created_anomaly_types[core_type] || 0
 	created_anomaly_types[core_type] = existing + 1
+
+/datum/controller/subsystem/research/proc/checkxenos()
+	var/xeno_count = 1
+	//var/datum/antagonist/xeno/alien in GLOB.antagonists
+	var/datum/team/xeno/xeno_team = locate(/datum/team/xeno) in GLOB.antagonist_teams
+	if(xeno_team)
+		for(var/datum/mind/alien in xeno_team.members)
+			if(istype(get_area(alien.current), /area/station/science/xenobiology)  && alien.current.stat != DEAD)
+				xeno_count++
+				if(!alien.has_antag_datum(/datum/antagonist/xeno/captive))
+					alien.add_antag_datum(/datum/antagonist/xeno/captive)
+			else //make sure if they arent in xenobiology that they dont have the captive datum
+				if(alien.has_antag_datum(/datum/antagonist/xeno/captive))
+					alien.remove_antag_datum(/datum/antagonist/xeno/captive)
+			xeno_team.add_member(alien) //ensure the alien remains a part of the xeno team
+
+	return xeno_count

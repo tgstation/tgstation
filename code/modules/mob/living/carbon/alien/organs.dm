@@ -102,10 +102,13 @@
 /obj/item/organ/alien/hivenode/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
+	organ_owner.grant_language(/datum/language/xenocommon, ALL, LANGUAGE_GLAND)
 
 /obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	if(organ_owner)
 		organ_owner.faction -= ROLE_ALIEN
+		if(!QDELING(organ_owner))
+			organ_owner.remove_language(/datum/language/xenocommon, ALL, LANGUAGE_GLAND)
 	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
@@ -142,6 +145,9 @@
 	owner.clear_alert(ALERT_XENO_NOQUEEN)
 
 #undef QUEEN_DEATH_DEBUFF_DURATION
+
+/obj/item/organ/alien/hivenode/artificial //exactly the same as a regular hive node. but. artificial.
+	name = "artificial hive node"
 
 /obj/item/organ/alien/resinspinner
 	name = "resin spinner"
@@ -327,3 +333,4 @@
 		acid.move_at(my_target, particle_delay, spit_range)
 
 	return ejected
+

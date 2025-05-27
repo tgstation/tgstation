@@ -100,3 +100,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/anomalies = TECHWEB_TIER_5_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
+
+/datum/techweb_node/xenomorph_research
+	id = TECHWEB_NODE_XENOMORPH_RESEARCH
+	prereq_ids = list(TECHWEB_NODE_FUNDIMENTAL_SCI)
+	display_name = "Xenomorph Biology"
+	description = "We have to investigate the properties of the xenomorph hive node. Please send us a scan of one."
+	design_ids = list(
+			"artificial_hive_node",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
+	required_experiments = list(/datum/experiment/scanning/hive_node)
+	discount_experiments = list(/datum/experiment/autopsy/xenomorph_queen = TECHWEB_TIER_5_POINTS)
