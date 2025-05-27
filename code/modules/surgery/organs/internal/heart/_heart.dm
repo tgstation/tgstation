@@ -183,7 +183,7 @@
 
 	qdel(accursed.GetComponent(/datum/component/manual_heart))
 
-/obj/item/organ/heart/cursed/proc/hear_beat_noise(mob/living/hearer)
+/obj/item/organ/heart/cursed/hear_beat_noise(mob/living/hearer)
 	return span_danger(beat_noise)
 
 /obj/item/organ/heart/cybernetic
