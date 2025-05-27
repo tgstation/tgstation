@@ -498,13 +498,9 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 	else
 		addtimer(TRAIT_CALLBACK_REMOVE(joining_mob, TRAIT_KNOCKEDOUT, IS_SPAWNING), rand(8, 15) * 1 SECONDS)
 	joining_mob.apply_status_effect(/datum/status_effect/cryo_sickness)
-	addtimer(CALLBACK(src, PROC_REF(inform_sleeper), joining_mob), 1 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(inform_sleeper), joining_mob), 2 SECONDS)
 
 /obj/machinery/sleeper/cryo/proc/inform_sleeper(mob/living/sleeping)
-	if(sleeping != occupant)
-		return
-	to_chat(sleeping, span_info("You will wake up shortly. Once awake, <b>resist</b> or <b>move</b> to exit the pod."))
-	sleep(2 SECONDS)
 	if(sleeping != occupant)
 		return
 	var/msg = ""
@@ -514,7 +510,11 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 	msg += span_danger("Coming out of cryosleep, you may feel nauseous or disoriented. \
 		This is a natural side effect of the process - it will last for some time.")
 	msg += "<br><br>"
-	if(roundstart_job == JOB_CAPTAIN)
+
+	if(world.time - SSticker.round_start_time >= 10 MINUTES)
+		msg += span_notice("You woke up late, missing the crew briefing. \
+			Collect yourself and check in with your head of staff (or the Captain) to get up to speed on the situation.")
+	else if(roundstart_job == JOB_CAPTAIN)
 		msg += span_notice("The autopilot will brief you as to why you were awakened shortly. \
 			Afterwards, it is your duty to gather the crew in the briefing room and inform them of the situation.")
 	else

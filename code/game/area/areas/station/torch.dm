@@ -11,16 +11,16 @@
 /area/station/commons/lower_cryo/on_joining_game(mob/living/new_character)
 
 /area/station/commons/storage/emergency/first
-	name = "\improper 1st Floor Emergency Storage"
+	name = "\improper 2st Floor Emergency Storage"
 
 /area/station/commons/storage/emergency/second
-	name = "\improper 2nd Floor Emergency Storage"
+	name = "\improper 3nd Floor Emergency Storage"
 
 /area/station/commons/storage/emergency/third
-	name = "\improper 3rd Floor Emergency Storage"
+	name = "\improper 4rd Floor Emergency Storage"
 
 /area/station/commons/storage/emergency/fourth
-	name = "\improper 4th Floor Emergency Storage"
+	name = "\improper 5th Floor Emergency Storage"
 
 /area/station/commons/toilet/fitroom
 	name = "\improper Fitness Room Restroom"
