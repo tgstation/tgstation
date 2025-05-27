@@ -213,6 +213,7 @@
 	name = "corrupt lungs"
 	desc = "Some things SHOULD be drowned in tar."
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
+	breath_noise = "SECRET SONGS OF THE BREAKING OF THE MAKING OF THE WAKING OF THE-"
 	/// How likely are we not to cough every time we take a breath?
 	var/cough_chance = 15
 	/// How much gas to emit?
@@ -249,7 +250,7 @@
 		hearer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 		var/obj/item/organ/ears/regret = hearer.get_organ_slot(ORGAN_SLOT_EARS)
 		regret?.adjustEarDamage(10,20)
-	return span_hypnophrase("SECRET SONGS OF THE BREAKING OF THE MAKING OF THE WAKING OF THE-")
+	return span_hypnophrase(breath_noise)
 
 /// It's full of worms
 /obj/item/organ/appendix/corrupt

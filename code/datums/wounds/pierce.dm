@@ -352,8 +352,8 @@
 /datum/wound/pierce/bleed/severe/magicalearpain //what happens if you try to listen to the heartbeat of a corrupt heart while not a heretic
 	name = "Bleeding Ears"
 	desc = "Patient's ears are bleeding heavily as blood seeps through the inner flesh of the ear through some unknown means."
-	examine_desc = "is covered in blood, black-purple fluid flowing from the ears."
-	occur_text = "is soaked as two spurts of black liquid spray from the ears."
+	examine_desc = "is covered in blood, black-purple fluid flowing from its ears"
+	occur_text = "is soaked as two spurts of black liquid spray from its ears"
 	internal_bleeding_chance = 0 // just your ears
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture/magicalearpain

@@ -149,6 +149,7 @@
 		return span_warning("[self_aware ? "Your heart hurts." : "It hurts, and your heart rate feels irregular."]")
 	return span_boldwarning("[self_aware ? "Your heart seriously hurts!" : "It seriously hurts, and your heart rate is all over the place."]")
 
+/// by default, returns the hearts beat_noise var as a notice span. May do other things when overridden, such as eldritch insanity or electrocution. Whatever you want, really.
 /obj/item/organ/heart/proc/hear_beat_noise(mob/living/hearer)
 	return span_notice(beat_noise)
 
@@ -298,7 +299,7 @@
 	icon_state = "heart-c-s-on"
 	base_icon_state = "heart-c-s"
 	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
-	beat_noise = "a concerningly irregular whirring hum. You <b>shouldn't touch this</b> while it's running"
+	beat_noise = "a concerningly irregular hydraulic hum. You <b>shouldn't touch this</b> while it's running"
 	emp_vulnerability = 100
 
 //surplus organs are so awful that they explode when removed, unless failing
