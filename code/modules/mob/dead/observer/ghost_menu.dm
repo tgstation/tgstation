@@ -89,6 +89,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 /datum/ghost_menu/ui_data(mob/dead/observer/user)
 	var/list/data = list()
 
+	data["can_boo"] = COOLDOWN_FINISHED(user, bootime)
 	data["body_name"] = user.can_reenter_corpse ? user.mind.current.real_name : FALSE
 	data["current_darkness"] = ghost_lightings["[user.lighting_cutoff]"]
 	data["notification_data"] = list()

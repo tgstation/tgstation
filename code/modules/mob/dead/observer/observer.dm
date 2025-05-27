@@ -501,11 +501,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		client.rescale_view(input, 0, ((max_view * 2) + 1) - 15)
 
 /mob/dead/observer/proc/boo()
-	if(bootime > world.time)
+	if(!COOLDOWN_FINISHED(src, bootime))
 		return
 	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
 	if(L?.flicker())
-		bootime = world.time + 600
+		COOLDOWN_START(src, bootime, 60 SECONDS)
 	//Maybe in the future we can add more <i>spooky</i> code here!
 
 /mob/dead/observer/update_sight()

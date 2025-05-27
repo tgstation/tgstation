@@ -5,6 +5,7 @@ import {
   Dropdown,
   NumberInput,
   Section,
+  Stack,
 } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
@@ -12,6 +13,7 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
+  can_boo: BooleanLike;
   hud_info: HudInfo[];
   has_fun: BooleanLike;
   lag_switch_on: BooleanLike;
@@ -37,40 +39,53 @@ type NotificationData = {
 
 export const GhostMenu = (props) => {
   const { act, data } = useBackend<Data>();
-  const { has_fun, lag_switch_on } = data;
+  const { has_fun, can_boo } = data;
   return (
-    <Window title="Ghost Menu" width={500} height={700}>
-      <Window.Content scrollable>
-        {!!has_fun && (
-          <Section title="Fun Buttons">
-            <FunSection />
-          </Section>
-        )}
-        <Section title="Player & Round Info">
-          <RoundSection />
-        </Section>
-        <Section title="HUDs">
-          <HudSection />
-        </Section>
-        <Section title="Ghost Settings">
-          <GhostSettingsSection />
-        </Section>
-        {!!lag_switch_on && <Section>Lag Switch enabled!</Section>}
-        <Section title="Ghost Role Notifications">
-          <NotificationPreferences />
-        </Section>
+    <Window
+      title="Ghost Menu"
+      width={700}
+      height={700}
+      buttons={
+        !!has_fun && (
+          <>
+            <Button
+              disabled={can_boo}
+              tooltip="Haunts things near you"
+              onClick={() => act('boo')}
+            >
+              Boo!
+            </Button>
+            <Button
+              tooltip="Allows you to possess any non-sentient mob"
+              onClick={() => act('possess')}
+            >
+              Possess
+            </Button>
+          </>
+        )
+      }
+    >
+      <Window.Content>
+        <Stack fill>
+          <Stack.Item>
+            <Section title="Player & Round Info">
+              <RoundSection />
+            </Section>
+            <Section title="HUDs">
+              <HudSection />
+            </Section>
+            <Section title="Ghost Settings">
+              <GhostSettingsSection />
+            </Section>
+          </Stack.Item>
+          <Stack.Item width="70%">
+            <Section scrollable fill title="Ghost Role Notifications">
+              <NotificationPreferences />
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
-  );
-};
-
-const FunSection = (props) => {
-  const { act } = useBackend<Data>();
-  return (
-    <>
-      <Button onClick={() => act('boo')}>Boo!</Button>
-      <Button onClick={() => act('possess')}>Possess</Button>
-    </>
   );
 };
 
@@ -124,7 +139,7 @@ const HudSection = (props) => {
           {individual_hud.name}
         </Button>
       ))}
-      {!!lag_switch_on && (
+      {!lag_switch_on && (
         <Button
           tooltip="Performs a t-ray scan where you are."
           onClick={() => act('tray_scan')}
@@ -160,7 +175,7 @@ const GhostSettingsSection = (props) => {
       >
         Restore Ghost Character
       </Button>
-      {!!lag_switch_on && (
+      {!lag_switch_on && (
         <Box>
           Extra View size:
           <NumberInput
