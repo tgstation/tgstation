@@ -46,7 +46,7 @@
 	flick(icon_state + "_anim", src)
 
 /atom/movable/screen/ghost/settings/Click()
-	GLOB.ghost_menu.show(usr)
+	GLOB.ghost_menu.ui_interact(usr)
 
 /atom/movable/screen/ghost/minigames_menu
 	name ="Minigames"

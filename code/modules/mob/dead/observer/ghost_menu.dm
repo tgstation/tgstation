@@ -1,7 +1,7 @@
 GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 
 /datum/ghost_menu
-	///Static list of all types of lightings ghosts can use.
+	///Static assoc list of all types of lightings ghosts can use & names shown in the UI.
 	var/static/list/ghost_lightings = list(
 		"[LIGHTING_CUTOFF_VISIBLE]" = "Mob Vision",
 		"[LIGHTING_CUTOFF_MEDIUM]" = "Slight Night Vision",
@@ -11,10 +11,6 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 
 /datum/ghost_menu/ui_state(mob/user)
 	return GLOB.observer_state
-
-///Shows the UI to the person in the args.
-/datum/ghost_menu/proc/show(mob/dead/observer/user)
-	ui_interact(user)
 
 /datum/ghost_menu/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
