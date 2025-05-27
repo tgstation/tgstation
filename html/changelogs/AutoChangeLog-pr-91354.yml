@@ -1,0 +1,4 @@
+author: "throwawayuseless"
+delete-after: True
+changes:
+  - bugfix: "Wavelength is now the main factor in how long your microlaser takes to activate, rather than intensity for some reason."
