@@ -76,11 +76,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /mob/dead/observer/Initialize(mapload)
 	set_invisibility(GLOB.observer_default_invisibility)
 
-	add_verb(src, list(
-		/mob/dead/observer/proc/dead_tele,
-		/mob/dead/observer/proc/open_spawners_menu,
-		/mob/dead/observer/proc/open_minigames_menu))
-
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
 	else
