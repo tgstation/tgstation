@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - rscadd: "Advanced camera consoles now have usb ports. Connected circuits can get the position the camera is viewing, get the location of targeted entities, and provide the console with actions that the user can activate."

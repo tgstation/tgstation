@@ -1,4 +1,0 @@
-author: "Bisar"
-delete-after: True
-changes:
-  - bugfix: "Atmos machines should no longer remove labels when you adjust their settings."
