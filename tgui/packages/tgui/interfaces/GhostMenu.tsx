@@ -17,6 +17,7 @@ type Data = {
   lag_switch_on: BooleanLike;
   notification_data: NotificationData[];
   max_extra_view: number;
+  body_name: string;
   current_darkness: string;
   darkness_levels: string[];
 };
@@ -38,13 +39,16 @@ export const GhostMenu = (props) => {
   const { act, data } = useBackend<Data>();
   const { has_fun, lag_switch_on } = data;
   return (
-    <Window title="Ghost Menu" width={500} height={360}>
+    <Window title="Ghost Menu" width={500} height={700}>
       <Window.Content scrollable>
         {!!has_fun && (
           <Section title="Fun Buttons">
             <FunSection />
           </Section>
         )}
+        <Section title="Player & Round Info">
+          <RoundSection />
+        </Section>
         <Section title="HUDs">
           <HudSection />
         </Section>
@@ -66,6 +70,33 @@ const FunSection = (props) => {
     <>
       <Button onClick={() => act('boo')}>Boo!</Button>
       <Button onClick={() => act('possess')}>Possess</Button>
+    </>
+  );
+};
+
+const RoundSection = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { body_name } = data;
+  return (
+    <>
+      {!!body_name && (
+        <Box>
+          {body_name}
+          <Button
+            tooltip="Returns you into your corpse."
+            onClick={() => act('return_to_body')}
+          >
+            Enter Body
+          </Button>
+          <Button.Confirm
+            tooltip="Become unable to be resusitated, permanently leaving your corpse behind."
+            onClick={() => act('DNR')}
+          >
+            Leave Body
+          </Button.Confirm>
+        </Box>
+      )}
+      <Button onClick={() => act('crew_manifest')}>View Crew Manifest</Button>
     </>
   );
 };
@@ -115,6 +146,12 @@ const GhostSettingsSection = (props) => {
           }
         />
       </Box>
+      <Button
+        tooltip="Restores your ghost character's appearance and username to that in your character preferences."
+        onClick={() => act('restore_appearance')}
+      >
+        Restore Ghost Character
+      </Button>
       <Box>
         Extra View size:
         <NumberInput

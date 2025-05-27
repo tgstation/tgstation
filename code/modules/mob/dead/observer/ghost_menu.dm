@@ -29,10 +29,13 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 
 	var/mob/dead/observer/dead_user = ui.user
 	switch(action)
-		if("DNR") //NOT IMPLEMENTED
+		if("DNR")
 			dead_user.stay_dead()
 			return TRUE
-		if("restore_appearance") //NOT IMPLEMENTED
+		if("return_to_body")
+			dead_user.reenter_corpse()
+			return TRUE
+		if("restore_appearance")
 			restore_ghost_appearance(dead_user)
 			return TRUE
 		if("change_notification")
@@ -58,7 +61,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 				return
 			toggle_hud_type(dead_user, to_toggle)
 			return TRUE
-		if("crew_manifest") //NOT IMPLEMENTED
+		if("crew_manifest")
 			GLOB.manifest.ui_interact(dead_user)
 			return TRUE
 		if("view_range")
@@ -83,6 +86,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 /datum/ghost_menu/ui_data(mob/dead/observer/user)
 	var/list/data = list()
 
+	data["body_name"] = user.can_reenter_corpse ? user.mind.current.real_name : FALSE
 	data["current_darkness"] = ghost_lightings["[user.lighting_cutoff]"]
 	data["notification_data"] = list()
 	for(var/key in GLOB.poll_ignore_desc)
