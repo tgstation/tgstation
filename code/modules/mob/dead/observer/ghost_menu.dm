@@ -43,6 +43,9 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 			if(key && islist(GLOB.poll_ignore[key]))
 				GLOB.poll_ignore[key] ^= list(dead_user.ckey)
 			return TRUE
+		if("signup_pai")
+			SSpai.recruit_window(dead_user)
+			return TRUE
 		if("tray_scan")
 			tray_view(dead_user)
 			return TRUE

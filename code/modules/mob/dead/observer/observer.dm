@@ -363,9 +363,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(new_area != ambience_tracked_area)
 		update_ambience_area(new_area)
 
-/mob/dead/observer/verb/reenter_corpse()
-	set category = "Ghost"
-	set name = "Re-enter Corpse"
+/mob/dead/observer/proc/reenter_corpse()
 	if(!client)
 		return
 	if(!mind || QDELETED(mind.current))
@@ -428,9 +426,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		SEND_SOUND(src, sound(sound))
 
 /mob/dead/observer/proc/dead_tele()
-	set category = "Ghost"
-	set name = "Teleport"
-	set desc= "Teleport to a location"
 	if(!isobserver(usr))
 		to_chat(usr, span_warning("Not when you're not dead!"))
 		return
@@ -455,20 +450,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 
 	usr.abstract_move(pick(L))
-
-/mob/dead/observer/verb/follow()
-	set category = "Ghost"
-	set name = "Orbit" // "Haunt"
-	set desc = "Follow and orbit a mob."
-
-	GLOB.orbit_menu.show(src)
-
-/mob/dead/observer/verb/ghost_menu()
-	set category = "Ghost"
-	set name = "Ghost Menu" // "Haunt"
-	set desc = "Open the Ghost menu."
-
-	GLOB.ghost_menu.show(src)
 
 // This is the ghost's follow verb with an argument
 /mob/dead/observer/proc/ManualFollow(atom/movable/target)
@@ -506,37 +487,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	// if we were autoobserving, reset perspective
 	if (!isnull(client) && !isnull(client.eye))
 		reset_perspective(null)
-
-/mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
-	set category = "Ghost"
-	set name = "Jump to Mob"
-	set desc = "Teleport to a mob"
-
-	if(!isobserver(usr)) //Make sure they're an observer!
-		return
-
-	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
-	var/target = null
-
-	target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", possible_destinations)
-	if(isnull(target))
-		return
-	if (!isobserver(usr))
-		return
-
-	var/mob/destination_mob = possible_destinations[target] //Destination mob
-
-	// During the break between opening the input menu and selecting our target, has this become an invalid option?
-	if(!SSpoints_of_interest.is_valid_poi(destination_mob))
-		return
-
-	var/mob/source_mob = src  //Source mob
-	var/turf/destination_turf = get_turf(destination_mob) //Turf of the destination mob
-
-	if(isturf(destination_turf))
-		source_mob.abstract_move(destination_turf)
-	else
-		to_chat(source_mob, span_danger("This mob is not located in the game world."))
 
 /mob/dead/observer/verb/add_view_range(input as num)
 	set name = "Add View Range"
@@ -759,37 +709,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		hide_other_mob_action_buttons(target)
 		LAZYREMOVE(target.observers, src)
 
-/mob/dead/observer/verb/observe()
-	set name = "Observe"
-	set category = "Ghost"
-
-	if(!isobserver(usr) || HAS_TRAIT(src, TRAIT_NO_OBSERVE)) //Make sure they're an observer!
-		return
-
-	reset_perspective(null)
-
-	var/list/possible_destinations = SSpoints_of_interest.get_mob_pois()
-	var/target = null
-
-	target = tgui_input_list(usr, "Please, select a player!", "Jump to Mob", possible_destinations)
-	if(isnull(target))
-		return
-	if (!isobserver(usr))
-		return
-
-	reset_perspective(null) // Reset again for sanity
-
-	var/mob/chosen_target = possible_destinations[target]
-
-	// During the break between opening the input menu and selecting our target, has this become an invalid option?
-	if(!SSpoints_of_interest.is_valid_poi(chosen_target))
-		return
-
-	if (chosen_target == usr)
-		return
-
-	do_observe(chosen_target)
-
 /mob/dead/observer/proc/do_observe(mob/mob_eye)
 	if(isnewplayer(mob_eye))
 		stack_trace("/mob/dead/new_player: \[[mob_eye]\] is being observed by [key_name(src)]. This should never happen and has been blocked.")
@@ -825,40 +744,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		set_sight(null) //we dont want ghosts to see through walls in secret areas
 	else
 		set_sight(initial(sight))
-
-/mob/dead/observer/verb/register_pai_candidate()
-	set category = "Ghost"
-	set name = "pAI Setup"
-	set desc = "Upload a fragment of your personality to the global pAI databanks"
-
-	register_pai()
-
-/mob/dead/observer/proc/register_pai()
-	if(isobserver(src))
-		SSpai.recruit_window(src)
-	else
-		to_chat(usr, span_warning("Can't become a pAI candidate while not dead!"))
-
-/mob/dead/observer/proc/open_ghost_ui()
-
-
-/mob/dead/observer/verb/mafia_game_signup()
-	set category = "Ghost"
-	set name = "Signup for Mafia"
-	set desc = "Sign up for a game of Mafia to pass the time while dead."
-
-	mafia_signup()
-
-/mob/dead/observer/proc/mafia_signup()
-	if(!client)
-		return
-	if(!isobserver(src))
-		to_chat(usr, span_warning("You must be a ghost to join mafia!"))
-		return
-	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
-	if(!game)
-		game = create_mafia_game()
-	game.ui_interact(usr)
 
 /mob/dead/observer/AltClickOn(atom/target)
 	client.loot_panel.open(get_turf(target))
@@ -902,18 +787,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	GLOB.observer_default_invisibility = amount
 
 /mob/dead/observer/proc/open_spawners_menu()
-	set name = "Spawners Menu"
-	set desc = "See all currently available spawners"
-	set category = "Ghost"
 	if(!spawners_menu)
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
 
 /mob/dead/observer/proc/open_minigames_menu()
-	set name = "Minigames Menu"
-	set desc = "See all currently available minigames"
-	set category = "Ghost"
 	if(!client)
 		return
 	if(!isobserver(src))

@@ -96,7 +96,12 @@ const RoundSection = (props) => {
           </Button.Confirm>
         </Box>
       )}
-      <Button onClick={() => act('crew_manifest')}>View Crew Manifest</Button>
+      <Box>
+        <Button onClick={() => act('crew_manifest')}>View Crew Manifest</Button>
+      </Box>
+      <Box>
+        <Button onClick={() => act('signup_pai')}>Signup as pAI</Button>
+      </Box>
     </>
   );
 };
