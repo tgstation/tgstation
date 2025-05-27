@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import {
-  Box,
   Button,
   Dropdown,
+  ImageButton,
   NumberInput,
   Section,
   Stack,
@@ -43,8 +43,8 @@ export const GhostMenu = (props) => {
   return (
     <Window
       title="Ghost Menu"
-      width={700}
-      height={700}
+      width={600}
+      height={650}
       buttons={
         !!has_fun && (
           <>
@@ -78,7 +78,7 @@ export const GhostMenu = (props) => {
               <GhostSettingsSection />
             </Section>
           </Stack.Item>
-          <Stack.Item width="70%">
+          <Stack.Item width="65%">
             <Section scrollable fill title="Ghost Role Notifications">
               <NotificationPreferences />
             </Section>
@@ -95,28 +95,42 @@ const RoundSection = (props) => {
   return (
     <>
       {!!body_name && (
-        <Box>
-          {body_name}
-          <Button
-            tooltip="Returns you into your corpse."
-            onClick={() => act('return_to_body')}
-          >
-            Enter Body
-          </Button>
-          <Button.Confirm
-            tooltip="Become unable to be resusitated, permanently leaving your corpse behind."
-            onClick={() => act('DNR')}
-          >
-            Leave Body
-          </Button.Confirm>
-        </Box>
+        <ImageButton
+          fluid
+          dmIcon="icons/mob/simple/mob.dmi"
+          dmIconState="ghost"
+          tooltip="Click to re-enter your corpse."
+          onClick={() => act('return_to_body')}
+          fontSize="11px"
+          buttons={
+            <Button.Confirm
+              icon="ghost"
+              tooltip="Become unable to be resusitated, permanently leaving your corpse behind."
+              onClick={() => act('DNR')}
+            />
+          }
+        >
+          Re-enter {body_name}
+        </ImageButton>
       )}
-      <Box>
-        <Button onClick={() => act('crew_manifest')}>View Crew Manifest</Button>
-      </Box>
-      <Box>
-        <Button onClick={() => act('signup_pai')}>Signup as pAI</Button>
-      </Box>
+      <ImageButton
+        fluid
+        dmIcon="icons/obj/machines/wallmounts.dmi"
+        dmIconState="newscaster_off"
+        onClick={() => act('crew_manifest')}
+        fontSize="11px"
+      >
+        View Crew Manifest
+      </ImageButton>
+      <ImageButton
+        fluid
+        dmIcon="icons/obj/aicards.dmi"
+        dmIconState="pai"
+        onClick={() => act('signup_pai')}
+        fontSize="11px"
+      >
+        Signup as pAI
+      </ImageButton>
     </>
   );
 };
@@ -125,19 +139,21 @@ const HudSection = (props) => {
   const { act, data } = useBackend<Data>();
   const { hud_info, lag_switch_on } = data;
   return (
-    <>
+    <Stack vertical>
       {hud_info.map((individual_hud) => (
-        <Button
-          key={individual_hud.name}
-          icon={individual_hud.enabled ? 'check' : 'times'}
-          color={individual_hud.enabled ? 'good' : 'bad'}
-          tooltip={individual_hud.tooltip}
-          onClick={() =>
-            act('toggle_visibility', { toggling: individual_hud.flag })
-          }
-        >
-          {individual_hud.name}
-        </Button>
+        <Stack.Item key={individual_hud.name}>
+          <Button
+            fluid
+            icon={individual_hud.enabled ? 'check' : 'times'}
+            color={individual_hud.enabled ? 'good' : 'bad'}
+            tooltip={individual_hud.tooltip}
+            onClick={() =>
+              act('toggle_visibility', { toggling: individual_hud.flag })
+            }
+          >
+            {individual_hud.name}
+          </Button>
+        </Stack.Item>
       ))}
       {!lag_switch_on && (
         <Button
@@ -147,7 +163,7 @@ const HudSection = (props) => {
           T-ray Scan
         </Button>
       )}
-    </>
+    </Stack>
   );
 };
 
@@ -157,8 +173,8 @@ const GhostSettingsSection = (props) => {
   const { current_darkness, darkness_levels, max_extra_view, lag_switch_on } =
     data;
   return (
-    <>
-      <Box>
+    <Stack vertical>
+      <Stack.Item>
         <Dropdown
           options={darkness_levels}
           selected={current_darkness}
@@ -168,15 +184,17 @@ const GhostSettingsSection = (props) => {
             })
           }
         />
-      </Box>
-      <Button
-        tooltip="Restores your ghost character's appearance and username to that in your character preferences."
-        onClick={() => act('restore_appearance')}
-      >
-        Restore Ghost Character
-      </Button>
+      </Stack.Item>
+      <Stack.Item>
+        <Button
+          tooltip="Restores your ghost character's appearance and username to that in your character preferences."
+          onClick={() => act('restore_appearance')}
+        >
+          Restore Ghost Character
+        </Button>
+      </Stack.Item>
       {!lag_switch_on && (
-        <Box>
+        <Stack.Item>
           Extra View size:
           <NumberInput
             width="30px"
@@ -191,9 +209,9 @@ const GhostSettingsSection = (props) => {
               })
             }
           />
-        </Box>
+        </Stack.Item>
       )}
-    </>
+    </Stack>
   );
 };
 
