@@ -183,6 +183,7 @@
 /obj/item/organ/heart/corrupt
 	name = "corrupt heart"
 	desc = "What corruption is this spreading along with the blood?"
+	beat_noise = "THE THUMPTHUMPTHUMPING OF THE CHISEL ON THE GLASS. OPEN THE FUTURE SHATTER THE PAST"
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// How long until the next heart?
 	COOLDOWN_DECLARE(hand_cooldown)
@@ -198,6 +199,14 @@
 	fire_curse_hand(owner)
 	COOLDOWN_START(src, hand_cooldown, rand(6 SECONDS, 45 SECONDS)) // Wide variance to put you off guard
 
+/obj/item/organ/heart/corrupt/hear_beat_noise(mob/living/hearer)
+	hearer.playsound_local(src, 'sound/effects/magic/hereticknock.ogg', 75, FALSE)
+	if(!IS_HERETIC_OR_MONSTER(hearer))
+		hearer.emote("scream")
+		hearer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+		var/obj/item/bodypart/head/regret = hearer.get_bodypart(BODY_ZONE_HEAD)
+		regret?.force_wound_upwards(/datum/wound/pierce/bleed/severe/magicalearpain, wound_source = "stethoscoped a corrupted heart")
+	return span_hypnophrase(beat_noise)
 
 /// Sometimes cough out some kind of dangerous gas
 /obj/item/organ/lungs/corrupt
@@ -239,7 +248,7 @@
 		hearer.emote("scream")
 		hearer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 		var/obj/item/organ/ears/regret = hearer.get_organ_slot(ORGAN_SLOT_EARS)
-		regret.adjustEarDamage(10,20)
+		regret?.adjustEarDamage(10,20)
 	return span_hypnophrase("SECRET SONGS OF THE BREAKING OF THE MAKING OF THE WAKING OF THE-")
 
 /// It's full of worms
