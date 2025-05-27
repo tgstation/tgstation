@@ -92,8 +92,55 @@
 	. = ..()
 	upgradeMotion()
 
+///////////////////////////////////////
+// Normal Camera Presets below here. //
+///////////////////////////////////////
 
-//Departmental Presets
+//Departmental Cameras
+/obj/machinery/camera/preset/medbay
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_MEDBAY)
+
+/obj/machinery/camera/preset/cargo
+	network = list(CAMERANET_NETWORK_SS13, CAMERA_NETWORK_CARGO)
+
+/obj/machinery/camera/preset/science
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_RD)
+
+/obj/machinery/camera/preset/engineering
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ENGINEERING)
+
+/obj/machinery/camera/preset/security
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_SECURITY)
+
+/obj/machinery/camera/preset/service
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_SECURITY)
+
+/obj/machinery/camera/preset/engine
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ENGINE)
+
+/obj/machinery/camera/preset/xenobiology
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_XENOBIOLOGY)
+
+//Vault preset
+/obj/machinery/camera/preset/vault
+	network = list(CAMERANET_NETWORK_VAULT)
+
+//AI satalite preset
+/obj/machinery/camera/preset/minisat
+	network = list(CAMERANET_NETWORK_MINISAT)
+
+/obj/machinery/camera/preset/telecomms
+	network = list(CAMERANET_NETWORK_TELECOMMS)
+
+/obj/machinery/camera/preset/aiupload
+	network = list(CAMERANET_NETWORK_AI_UPLOAD)
+
+/obj/machinery/camera/preset/aicore
+	network = list(CAMERANET_NETWORK_AI_CORE)
+
+////////////////////////////////////////
+// Autoname camera presets below here.//
+////////////////////////////////////////
 /obj/machinery/camera/autoname/preset/medbay
 	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_MEDBAY)
 
@@ -121,11 +168,11 @@
 /obj/machinery/camera/autoname/preset/ordnance
 	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ORDNANCE)
 
-// Vault
+//Vault preset
 /obj/machinery/camera/autoname/preset/vault
 	network = list(CAMERANET_NETWORK_VAULT)
 
-// AI satalite
+//AI satalite preset
 /obj/machinery/camera/autoname/preset/minisat
 	network = list(CAMERANET_NETWORK_MINISAT)
 
