@@ -91,7 +91,7 @@
 		WARNING_ROBOT("WARNI-"),
 	)
 
-/atom/movable/screen/cyborg_death/Initialize(mapload, datum/hud/hud_owner, cause_of_death = "Unknown malfunction.")
+/atom/movable/screen/cyborg_death/Initialize(mapload, datum/hud/hud_owner, cause_of_death = "Unidentified kernel error.")
 	. = ..()
 	messages.Insert(1, WARNING_ROBOT("WARNING: [cause_of_death]"))
 
