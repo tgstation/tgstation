@@ -38,7 +38,7 @@
 	if (!isnull(attached_circuit))
 		. += span_notice("It is attached to [attached_circuit.shell || attached_circuit].")
 
-/obj/item/usb_cable/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/usb_cable/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if (.)
 		return

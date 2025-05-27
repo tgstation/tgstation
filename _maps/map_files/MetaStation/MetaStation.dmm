@@ -44060,13 +44060,10 @@
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "pFg" = (
-/obj/machinery/camera/directional/east{
-	c_tag = "Medbay Surgery Aft";
-	network = list("ss13","medbay")
-	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 4
 	},
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
 "pFt" = (
@@ -48322,6 +48319,10 @@
 /obj/item/book/manual/wiki/medicine{
 	pixel_x = 2;
 	pixel_y = 3
+	},
+/obj/machinery/camera/directional/east{
+	c_tag = "Medbay Surgery Aft";
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/aft)
@@ -60563,6 +60564,12 @@
 	dir = 4
 	},
 /area/station/medical/morgue)
+"voE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/sink/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/science/robotics/lab)
 "voQ" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -98512,7 +98519,7 @@ eut
 xhO
 kiy
 qDy
-reL
+voE
 deH
 eut
 kwy

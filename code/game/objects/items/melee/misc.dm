@@ -243,7 +243,7 @@
 		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
 	return ..()
 
-/obj/item/melee/beesword/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/melee/beesword/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
 		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 4)
@@ -292,7 +292,7 @@
 		if(!isspaceturf(turf))
 			consume_turf(turf)
 
-/obj/item/melee/supermatter_sword/pre_attack(atom/target, mob/living/user, list/modifiers)
+/obj/item/melee/supermatter_sword/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(.)
 		return .
@@ -386,7 +386,7 @@
 	attack_verb_simple = list("flog", "whip", "lash", "discipline")
 	hitsound = 'sound/items/weapons/whip.ogg'
 
-/obj/item/melee/curator_whip/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/melee/curator_whip/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		human_target.drop_all_held_items()
@@ -488,10 +488,11 @@
 		return NONE
 	if (!is_type_in_typecache(interacting_with, ovens))
 		return NONE
-	if (istype(interacting_with, /obj/singularity) && get_dist(user, interacting_with) < 10)
+	if (istype(interacting_with, /obj/singularity) || istype(interacting_with, /obj/energy_ball) && get_dist(user, interacting_with) < 10)
 		to_chat(user, span_notice("You send [held_sausage] towards [interacting_with]."))
 		playsound(src, 'sound/items/tools/rped.ogg', 50, TRUE)
 		beam = user.Beam(interacting_with, icon_state = "rped_upgrade", time = 10 SECONDS)
+		finish_roasting(user, interacting_with)
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
@@ -521,8 +522,9 @@
 /obj/item/melee/cleric_mace
 	name = "cleric mace"
 	desc = "The grandson of the club, yet the grandfather of the baseball bat. Most notably used by holy orders in days past."
-	icon = 'icons/obj/weapons/cleric_mace.dmi'
-	icon_state = "default"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/melee/cleric_mace"
+	post_init_icon_state = "default"
 	inhand_icon_state = "default"
 	worn_icon_state = "default_worn"
 	icon_angle = -45

@@ -64,7 +64,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
-/obj/item/fireaxe/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/fireaxe/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED)) //destroys windows and grilles in one hit
 		return
 	if(target.resistance_flags & INDESTRUCTIBLE)

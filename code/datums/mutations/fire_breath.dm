@@ -11,7 +11,7 @@
 	energy_coeff = 1
 	power_coeff = 1
 
-/datum/mutation/human/firebreath/modify()
+/datum/mutation/human/firebreath/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/cone/staggered/fire_breath/to_modify = .
 	if(!istype(to_modify)) // null or invalid

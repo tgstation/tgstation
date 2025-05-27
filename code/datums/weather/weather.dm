@@ -428,6 +428,14 @@
 		hit_mob.electrocute_act(50, "thunder", flags = SHOCK_TESLA|SHOCK_NOGLOVES)
 
 	for(var/obj/hit_thing in weather_turf)
+		if(QDELETED(hit_thing)) // stop, it's already dead
+			continue
+		if(!hit_thing.uses_integrity)
+			continue
+		if(hit_thing.invisibility != INVISIBILITY_NONE)
+			continue
+		if(HAS_TRAIT(hit_thing, TRAIT_UNDERFLOOR))
+			continue
 		hit_thing.take_damage(20, BURN, ENERGY, FALSE)
 	playsound(weather_turf, 'sound/effects/magic/lightningbolt.ogg', 100, extrarange = 10, falloff_distance = 10)
 	weather_turf.visible_message(span_danger("A thunderbolt strikes [weather_turf]!"))

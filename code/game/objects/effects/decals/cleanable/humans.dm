@@ -293,6 +293,9 @@
 	dryname = "dried footprints"
 	drydesc = "HMM... SOMEONE WAS HERE!"
 
+/obj/effect/decal/cleanable/blood/footprints/get_save_vars()
+	return ..() - NAMEOF(src, icon_state)
+
 /obj/effect/decal/cleanable/blood/footprints/Initialize(mapload, footprint_sprite)
 	src.footprint_sprite = footprint_sprite
 	. = ..()

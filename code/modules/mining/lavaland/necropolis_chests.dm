@@ -16,7 +16,7 @@
 	/// var to check if it got opened by a key
 	var/spawned_loot = FALSE
 
-/obj/structure/closet/crate/necropolis/tendril/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/structure/closet/crate/necropolis/tendril/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
 		return ..()
 	var/loot = rand(1,21)

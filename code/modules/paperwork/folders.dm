@@ -79,7 +79,7 @@
 	paper_overlay = contents[1].color_atom_overlay(paper_overlay)
 	return paper_overlay
 
-/obj/item/folder/attackby(obj/item/weapon, mob/user, list/modifiers)
+/obj/item/folder/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(is_type_in_typecache(weapon, folder_insertables))
 		//Add paper, photo or documents into the folder
 		if(!user.transferItemToLoc(weapon, src))
