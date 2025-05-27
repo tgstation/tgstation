@@ -107,7 +107,7 @@
 	display_name = "Xenomorph Biology                    "
 	description = "There is a lot we still have to learn about xenomorph biology. Complete some research for us."
 	design_ids = list(
-			"artificial_hive_node",
+		"artificial_hive_node",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	required_experiments = list(/datum/experiment/scanning/hive_node, /datum/experiment/autopsy/xenomorph_queen)
