@@ -1,6 +1,13 @@
 GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 
 /datum/ghost_menu
+	///Static list of all types of lightings ghosts can use.
+	var/static/list/ghost_lightings = list(
+		"[LIGHTING_CUTOFF_VISIBLE]" = "Visible Lighting",
+		"[LIGHTING_CUTOFF_MEDIUM]" = "Medium Lighting",
+		"[LIGHTING_CUTOFF_HIGH]" = "High Lighting",
+		"[LIGHTING_CUTOFF_FULLBRIGHT]" = "Fullbright",
+	)
 
 /datum/ghost_menu/ui_state(mob/user)
 	return GLOB.observer_state
@@ -33,15 +40,18 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 			if(key && islist(GLOB.poll_ignore[key]))
 				GLOB.poll_ignore[key] ^= list(dead_user.ckey)
 			return TRUE
-		if("tray_scan") //NOT IMPLEMENTED
+		if("tray_scan")
 			tray_view(dead_user)
 			return TRUE
-		if("darkness") //NOT IMPLEMENTED
-			var/darkness_type = params["darkness"]
-			if(!(darkness_type in LIGHTING_CUTOFF_GHOST_LIST))
+		if("darkness")
+			var/darkness_type = params["darkness_level"]
+			if(isnull(darkness_type))
 				return FALSE
-			toggle_darkness(dead_user, darkness_type)
-			return TRUE
+			for(var/lighting_types in ghost_lightings)
+				if(darkness_type != ghost_lightings[lighting_types])
+					continue
+				toggle_darkness(dead_user, lighting_types)
+				return TRUE
 		if("toggle_visibility")
 			var/to_toggle = params["toggling"]
 			if(!(to_toggle in ALL_GHOST_FLAGS))
@@ -73,6 +83,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 /datum/ghost_menu/ui_data(mob/dead/observer/user)
 	var/list/data = list()
 
+	data["current_darkness"] = ghost_lightings["[user.lighting_cutoff]"]
 	data["notification_data"] = list()
 	for(var/key in GLOB.poll_ignore_desc)
 		data["notification_data"] += list(list(
@@ -86,26 +97,31 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 			"name" = "Data HUDs",
 			"enabled" = (user.ghost_hud_flags & GHOST_DATA_HUDS),
 			"flag" = GHOST_DATA_HUDS,
+			"tooltip" = "Grants you Med/Sec/Diag HUDs.",
 		),
 		list(
 			"name" = "Ghost Vision",
 			"enabled" = (user.ghost_hud_flags & GHOST_VISION),
 			"flag" = GHOST_VISION,
+			"tooltip" = "Allows you to see things that regular players can't (ex: smuggler satchels).",
 		),
 		list(
 			"name" = "Health Scanner",
 			"enabled" = (user.ghost_hud_flags & GHOST_HEALTH),
 			"flag" = GHOST_HEALTH,
+			"tooltip" = "Allows you to perform a health scan by clicking on someone.",
 		),
 		list(
 			"name" = "Chemical Scanner",
 			"enabled" = (user.ghost_hud_flags & GHOST_CHEM),
 			"flag" = GHOST_CHEM,
+			"tooltip" = "Allows you to perform a chemical scan by clicking on someone.",
 		),
 		list(
 			"name" = "Gas Scanner",
 			"enabled" = (user.ghost_hud_flags & GHOST_GAS),
 			"flag" = GHOST_GAS,
+			"tooltip" = "Allows you to perform a gas scan by clicking on a tile/atmos machine.",
 		),
 	)
 
@@ -113,6 +129,9 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 
 /datum/ghost_menu/ui_static_data(mob/dead/observer/user)
 	var/list/data = list()
+	data["darkness_levels"] = list()
+	for(var/level in ghost_lightings)
+		data["darkness_levels"] += ghost_lightings[level]
 	data["has_fun"] = user.fun_verbs
 	data["lag_switch_on"] = !!(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !user.client?.holder)
 	return data
@@ -126,7 +145,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 /datum/ghost_menu/proc/toggle_darkness(mob/dead/observer/user, darkness_type)
 	if(user.lighting_cutoff == darkness_type)
 		return
-	user.lighting_cutoff = darkness_type
+	user.lighting_cutoff = text2num(darkness_type)
 	user.update_sight()
 
 /datum/ghost_menu/proc/toggle_hud_type(mob/dead/observer/user, hud_type)

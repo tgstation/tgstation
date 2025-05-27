@@ -1,4 +1,4 @@
-import { Button, Section } from 'tgui-core/components';
+import { Box, Button, Dropdown, Section } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
@@ -9,12 +9,15 @@ type Data = {
   has_fun: BooleanLike;
   lag_switch_on: BooleanLike;
   notification_data: NotificationData[];
+  current_darkness: string;
+  darkness_levels: string[];
 };
 
 type HudInfo = {
   name: string;
   enabled: BooleanLike;
   flag: string;
+  tooltip: string;
 };
 
 type NotificationData = {
@@ -58,15 +61,15 @@ const FunSection = (props) => {
 
 const HudSection = (props) => {
   const { act, data } = useBackend<Data>();
-  const { hud_info } = data;
+  const { hud_info, current_darkness, darkness_levels } = data;
   return (
     <>
       {hud_info.map((individual_hud) => (
         <Button
-          fluid
           key={individual_hud.name}
           icon={individual_hud.enabled ? 'check' : 'times'}
           color={individual_hud.enabled ? 'good' : 'bad'}
+          tooltip={individual_hud.tooltip}
           onClick={() =>
             act('toggle_visibility', { toggling: individual_hud.flag })
           }
@@ -74,6 +77,23 @@ const HudSection = (props) => {
           {individual_hud.name}
         </Button>
       ))}
+      <Button
+        tooltip="Performs a t-ray scan where you are."
+        onClick={() => act('tray_scan')}
+      >
+        T-ray Scan
+      </Button>
+      <Box>
+        <Dropdown
+          options={darkness_levels}
+          selected={current_darkness}
+          onSelected={(value) =>
+            act('darkness', {
+              darkness_level: value,
+            })
+          }
+        />
+      </Box>
     </>
   );
 };
