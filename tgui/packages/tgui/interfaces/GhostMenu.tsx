@@ -1,4 +1,11 @@
-import { Box, Button, Dropdown, Section } from 'tgui-core/components';
+import { useState } from 'react';
+import {
+  Box,
+  Button,
+  Dropdown,
+  NumberInput,
+  Section,
+} from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
@@ -9,6 +16,7 @@ type Data = {
   has_fun: BooleanLike;
   lag_switch_on: BooleanLike;
   notification_data: NotificationData[];
+  max_extra_view: number;
   current_darkness: string;
   darkness_levels: string[];
 };
@@ -40,6 +48,9 @@ export const GhostMenu = (props) => {
         <Section title="HUDs">
           <HudSection />
         </Section>
+        <Section title="Ghost Settings">
+          <GhostSettingsSection />
+        </Section>
         {!!lag_switch_on && <Section>Lag Switch enabled!</Section>}
         <Section title="Ghost Role Notifications">
           <NotificationPreferences />
@@ -61,7 +72,7 @@ const FunSection = (props) => {
 
 const HudSection = (props) => {
   const { act, data } = useBackend<Data>();
-  const { hud_info, current_darkness, darkness_levels } = data;
+  const { hud_info } = data;
   return (
     <>
       {hud_info.map((individual_hud) => (
@@ -83,6 +94,16 @@ const HudSection = (props) => {
       >
         T-ray Scan
       </Button>
+    </>
+  );
+};
+
+const GhostSettingsSection = (props) => {
+  const [viewNumber, setviewNumber] = useState<number>(0);
+  const { act, data } = useBackend<Data>();
+  const { current_darkness, darkness_levels, max_extra_view } = data;
+  return (
+    <>
       <Box>
         <Dropdown
           options={darkness_levels}
@@ -90,6 +111,22 @@ const HudSection = (props) => {
           onSelected={(value) =>
             act('darkness', {
               darkness_level: value,
+            })
+          }
+        />
+      </Box>
+      <Box>
+        Extra View size:
+        <NumberInput
+          width="30px"
+          step={1}
+          value={viewNumber}
+          minValue={0}
+          maxValue={max_extra_view}
+          onDrag={(newValue) => setviewNumber(newValue)}
+          onChange={(new_range) =>
+            act('view_range', {
+              new_view_range: new_range,
             })
           }
         />

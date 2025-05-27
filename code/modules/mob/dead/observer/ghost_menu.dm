@@ -61,8 +61,8 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 		if("crew_manifest") //NOT IMPLEMENTED
 			GLOB.manifest.ui_interact(dead_user)
 			return TRUE
-		if("view_range") //NOT IMPLEMENTED
-			var/setting_to = params["new_view_range"]
+		if("view_range")
+			var/setting_to = text2num(params["new_view_range"]) + GHOST_MIN_VIEW_RANGE
 			if(!isnum(setting_to))
 				return FALSE
 			set_view(dead_user, setting_to)
@@ -129,6 +129,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 
 /datum/ghost_menu/ui_static_data(mob/dead/observer/user)
 	var/list/data = list()
+	data["max_extra_view"] = (user.client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT) - GHOST_MIN_VIEW_RANGE
 	data["darkness_levels"] = list()
 	for(var/level in ghost_lightings)
 		data["darkness_levels"] += ghost_lightings[level]
