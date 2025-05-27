@@ -138,6 +138,20 @@
 /obj/machinery/camera/preset/aicore
 	network = list(CAMERANET_NETWORK_AI_CORE)
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/medbay, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/engineering, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/cargo, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/service, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/science, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/security, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/xenobiology, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/engine, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/vault, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/minisat, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/telecomms, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/aiupload, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/aicore, 0)
+
 ////////////////////////////////////////
 // Autoname camera presets below here.//
 ////////////////////////////////////////
@@ -165,9 +179,6 @@
 /obj/machinery/camera/autoname/preset/xenobiology
 	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_XENOBIOLOGY)
 
-/obj/machinery/camera/autoname/preset/ordnance
-	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ORDNANCE)
-
 //Vault preset
 /obj/machinery/camera/autoname/preset/vault
 	network = list(CAMERANET_NETWORK_VAULT)
@@ -184,6 +195,20 @@
 
 /obj/machinery/camera/autoname/preset/aicore
 	network = list(CAMERANET_NETWORK_AI_CORE)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/medbay, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/engineering, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/cargo, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/service, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/science, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/security, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/xenobiology, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/engine, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/vault, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/minisat, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/telecomms, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/aiupload, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autonamepreset/aicore, 0)
 
 /**
  * Bomb preset
