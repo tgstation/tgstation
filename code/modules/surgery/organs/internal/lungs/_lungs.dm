@@ -969,7 +969,7 @@
 	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
 /obj/item/organ/lungs/cybernetic/surplus/hear_breath_noise(mob/living/hearer)
-	return span_danger("a concerningly unstable scratchy whirr. You <b>shouldn't touch this</b> while it's running.")
+	return span_danger(breath_noise)
 
 /obj/item/organ/lungs/lavaland
 	name = "blackened frilled lungs" // blackened from necropolis exposure
