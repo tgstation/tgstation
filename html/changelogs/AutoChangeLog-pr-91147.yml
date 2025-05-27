@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Neruwhine can no longer roll voidwalker traumas."
+  - bugfix: "Fixed the planetary gravity damage status effect not clearing itself when you lose the voided trauma."
