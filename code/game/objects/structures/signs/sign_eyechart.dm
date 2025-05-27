@@ -29,9 +29,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/eyechart, 32)
 		return
 
 	var/colorblind = HAS_TRAIT(user, TRAIT_COLORBLIND)
-	if(isdog(user) || iscat(user))
-		colorblind = TRUE // i know these pets are not colorblind in the conventional sense, but it's an easter egg, ok?
-
 	var/obj/item/organ/eyes/eye = user.get_organ_slot(ORGAN_SLOT_EYES)
 	// eye null checks here are for mobs without eyes.
 	// humans missing eyes will be caught by the is_blind check above.
