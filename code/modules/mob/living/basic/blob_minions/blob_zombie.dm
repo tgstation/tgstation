@@ -26,6 +26,8 @@
 	death_cloud_size = BLOBMOB_CLOUD_NORMAL
 	/// The dead body we have inside
 	var/mob/living/carbon/human/corpse
+	///Our head overlay
+	var/mutable_appearance/blob_head_overlay
 
 /mob/living/basic/blob_minion/zombie/Initialize(mapload)
 	. = ..()
@@ -51,14 +53,18 @@
 	. = ..()
 	death()
 
-//Sets up our appearance
-/mob/living/basic/blob_minion/zombie/proc/set_up_zombie_appearance()
-	copy_overlays(corpse, TRUE)
-	var/strain_color = LAZYACCESS(atom_colours, FIXED_COLOUR_PRIORITY)
-	var/mutable_appearance/blob_head_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', strain_color ? base_icon_state : "[base_icon_state]_independent")
-	blob_head_overlay.color = strain_color || COLOR_WHITE
-	color = initial(color) // reversing what our component did lol, but we needed the value for the overlay
-	overlays += blob_head_overlay
+/mob/living/basic/blob_minion/zombie/on_strain_updated(mob/eye/blob/overmind, datum/blobstrain/new_strain)
+	. = ..()
+	update_appearance()
+	color = initial(color)
+	blob_head_overlay?.icon_state = "blob_head"
+	blob_head_overlay?.color = new_strain ? new_strain.color : COLOR_WHITE
+
+/mob/living/basic/blob_minion/zombie/update_overlays()
+	. = ..()
+	if(!blob_head_overlay)
+		blob_head_overlay = mutable_appearance('icons/mob/nonhuman-player/blob.dmi', "blob_head_independent")
+	. += blob_head_overlay
 
 /// Store a body so that we can drop it on death
 /mob/living/basic/blob_minion/zombie/proc/consume_corpse(mob/living/carbon/human/new_corpse)
@@ -69,8 +75,8 @@
 	new_corpse.set_hairstyle("Bald", update = TRUE)
 	new_corpse.forceMove(src)
 	corpse = new_corpse
+	copy_overlays(corpse, TRUE)
 	update_appearance(UPDATE_ICON)
-	set_up_zombie_appearance()
 	RegisterSignal(corpse, COMSIG_LIVING_REVIVE, PROC_REF(on_corpse_revived))
 
 /// Dynamic changeling reentry

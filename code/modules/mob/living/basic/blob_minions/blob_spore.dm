@@ -29,6 +29,7 @@
 	/// Type of mob to create
 	var/mob/living/zombie_type = /mob/living/basic/blob_minion/zombie
 
+
 /mob/living/basic/blob_minion/spore/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/simple_flying)
@@ -118,16 +119,26 @@
 
 /// independent spore spawned by cytology, extremely weak and shitty like all spores but exhibits a high degree of sentience in addition to the predatory nature of inherent to blob creatures.
 /mob/living/basic/blob_minion/spore/independent
+	//We are on our own and get to enjoy the classic orange look, which frankly, many people are saying is the best!
+	//If I had removed it they'd all be messaging me, people like you wouldn't believe, tough, real tough people, they'd be messaging me with tears in their eyes; "Sir, sir please bring it back!"
+	icon_state = "blobpod_independent"
 	//we hate gold cores
 	gold_core_spawnable = NO_SPAWN
+	loot = list(/obj/item/food/spore_sack/independent)
 
 /mob/living/basic/blob_minion/spore/independent/Initialize(mapload)
 	. = ..()
-	//different ignore than sentience since we are not slaved but independent gigachad spore, ban type should probably also be different
+	//free but incredibly shitty antag. Good job hazard to add some friction to gathering spore toxin.
 	AddComponent(\
 		/datum/component/ghost_direct_control,\
 		ban_type = ROLE_FREE_BLOB,\
 		poll_candidates = TRUE,\
-		poll_ignore_key = POLL_IGNORE_BLOB,\
+		poll_ignore_key = POLL_IGNORE_FREE_SPORE,\
 	)
 
+/mob/living/basic/blob_minion/spore/independent/Login()
+	. = ..()
+	if(!. || !client)
+		return FALSE
+	to_chat(src, span_blobannounce("You are a spore born free from the shackles of an overmind.\n\nHowever this strange predicament has not muted the hostility you feel towards creatures that are not your kin, this base instinct appears to be a part of your true self."))
+	SEND_SOUND(src, sound('sound/music/antag/blobalert.ogg', volume = 50))

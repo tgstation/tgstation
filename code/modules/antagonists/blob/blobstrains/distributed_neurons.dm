@@ -26,11 +26,11 @@
 	. = ..()
 	reac_volume = return_mob_expose_reac_volume(exposed_mob, methods, reac_volume, show_message, touch_protection, overmind)
 	exposed_mob.apply_damage(0.6*reac_volume, TOX)
-	if(overmind && ishuman(exposed_mob))
+	if(ishuman(exposed_mob))
 		if(exposed_mob.stat == UNCONSCIOUS || exposed_mob.stat == HARD_CRIT)
 			exposed_mob.investigate_log("has been killed by distributed neurons (blob).", INVESTIGATE_DEATHS)
 			exposed_mob.death() //sleeping in a fight? bad plan.
-		if(exposed_mob.stat == DEAD && overmind.can_buy(5))
+		if(exposed_mob.stat == DEAD && overmind?.can_buy(5))
 			var/mob/living/basic/blob_minion/spore/minion/spore = overmind.create_spore(get_turf(exposed_mob))
 			spore.zombify(exposed_mob)
 			overmind.add_points(-5)

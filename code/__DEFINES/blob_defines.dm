@@ -106,8 +106,8 @@
 #define BLOBMOB_BLOBBERNAUT_HEALING_NODE 0.025 // Same, but for a nearby node
 #define BLOBMOB_BLOBBERNAUT_HEALTH_DECAY 0.0125 // Percentage multiplier HP lost when not near blob tiles or without factory
 
-/// For blobmobs that you don't want to have a deathburst effect
-#define BLOBBMOB_CLOUD_NONE -1
+/// For blobmobs that you don't want to have a deathburst effect. (radius)
+#define BLOBMOB_CLOUD_NONE -1
 /// For blobmobs with small single tile clouds
 #define BLOBMOB_CLOUD_SMALL 0
 /// For normal 3x3 sized clouds

@@ -268,7 +268,6 @@
 
 	virus_suspectibility = 0
 	resulting_atom = /mob/living/basic/blob_minion/spore/independent
-	resulting_atom_count = 1
 
 /datum/micro_organism/cell_line/blobbernaut
 	desc = "Blobular myocytes"
@@ -287,7 +286,7 @@
 	suppressive_reagents = list(/datum/reagent/consumable/tinlux = -6)
 
 	virus_suspectibility = 0
-	resulting_atom = /mob/living/basic/blob_minion/blobbernaut
+	resulting_atom = /mob/living/basic/blob_minion/blobbernaut/independent
 
 /datum/micro_organism/cell_line/gelatinous_cube
 	desc = "Cubic ooze particles"

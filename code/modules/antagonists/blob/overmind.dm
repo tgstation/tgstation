@@ -179,12 +179,8 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 /// Create a blob spore and link it to us
 /mob/eye/blob/proc/create_spore(turf/spore_turf, spore_type = /mob/living/basic/blob_minion/spore/minion)
 	var/mob/living/basic/blob_minion/spore/spore = new spore_type(spore_turf)
-	assume_direct_control(spore)
+	spore.AddComponent(/datum/component/blob_minion, src)
 	return spore
-
-/// Give our new minion the properties of a minion
-/mob/eye/blob/proc/assume_direct_control(mob/living/minion)
-	minion.AddComponent(/datum/component/blob_minion, src)
 
 /// Add something to our list of mobs and wait for it to die
 /mob/eye/blob/proc/register_new_minion(mob/living/minion)

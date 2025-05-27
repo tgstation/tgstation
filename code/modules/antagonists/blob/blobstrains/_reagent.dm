@@ -19,13 +19,9 @@
 	var/mob_protection = living_attacking.getarmor(null, BIO) * 0.01
 	reagent.expose_mob(living_attacking, VAPOR, BLOBMOB_BLOBBERNAUT_REAGENTATK_VOL+blobbernaut_reagentatk_bonus, FALSE, mob_protection, overmind)//this will do between 10 and 20 damage(reduced by mob protection), depending on chemical, plus 4 from base brute damage.
 
-/datum/blobstrain/reagent/on_sporedeath(mob/living/dead_minion)
-	var/cloud_size = BLOBMOB_CLOUD_NORMAL
-
-	if(istype(dead_minion, /mob/living/basic/blob_minion))
-		var/mob/living/basic/blob_minion/dead_blobber = dead_minion
-		cloud_size = max(BLOBMOB_CLOUD_SMALL, dead_blobber.death_cloud_size)
-	do_chem_smoke(range = cloud_size, holder = dead_minion, location = get_turf(dead_minion), reagent_type = reagent.type, reagent_volume = BLOBMOB_CLOUD_REAGENT_VOLUME, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/medium)
+/datum/blobstrain/reagent/on_sporedeath(mob/living/dead_minion, death_cloud_size)
+	do_chem_smoke(range = death_cloud_size, holder = dead_minion, location = get_turf(dead_minion), reagent_type = reagent.type, reagent_volume = BLOBMOB_CLOUD_REAGENT_VOLUME, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/medium)
+	playsound(dead_minion, 'sound/mobs/non-humanoids/blobmob/blob_spore_burst.ogg', vol = 100, vary = TRUE)
 
 // These can only be applied by blobs. They are what (reagent) blobs are made out of.
 /datum/reagent/blob
@@ -34,7 +30,6 @@
 	color = COLOR_WHITE
 	taste_description = "bad code and slime"
 	chemical_flags = NONE
-	penetrates_skin = NONE
 
 
 /datum/reagent/blob/New()

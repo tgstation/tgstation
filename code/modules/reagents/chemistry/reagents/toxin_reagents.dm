@@ -441,6 +441,8 @@
 	color = "#9ACD32"
 	toxpwr = 1
 	ph = 11
+	liver_damage_multiplier = 0.7
+	taste_description = "spores"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED|REAGENT_NO_RANDOM_RECIPE
 
 /datum/reagent/toxin/spore/on_transfer(atom/A, methods, trans_volume)
@@ -456,7 +458,6 @@
 	if(!(spore_lung_victim.mob_biotypes & (MOB_HUMANOID | MOB_BEAST)))
 		return
 
-	world.log << "spore toxin inhaled: [trans_volume]u"
 	if(prob(min(trans_volume * 10, 70)))
 		to_chat(spore_lung_victim, span_danger("[pick("You have a coughing fit!", "You hack and cough!", "Your lungs burn!")]"))
 		spore_lung_victim.Stun(10)

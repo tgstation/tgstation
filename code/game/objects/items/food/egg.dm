@@ -351,8 +351,9 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	desc = "A spore sack. blobby and gooey!"
 	icon = 'icons/obj/food/egg.dmi'
 	icon_state = "spore_sack"
+	base_icon_state = "spore_sack"
 	inhand_icon_state = "egg"
-	food_reagents = list(/datum/reagent/consumable/eggyolk = 4, /datum/reagent/consumable/eggwhite = 2, /datum/reagent/toxin/spore = 4)
+	food_reagents = list(/datum/reagent/consumable/eggyolk = 4,  /datum/reagent/toxin/spore = 4, /datum/reagent/consumable/eggwhite = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("sliminess" = 4, "blob" = 2)
 	foodtypes = MEAT | RAW | TOXIC
 	w_class = WEIGHT_CLASS_TINY
@@ -362,7 +363,9 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 /obj/item/food/spore_sack/Initialize(mapload)
 	. = ..()
 	if(prob(50))
-		icon_state = "spore_sack2"
+		icon_state = "[base_icon_state]2"
+
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/item/food/spore_sack/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/machinery/griddle))
@@ -386,6 +389,10 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	qdel(src)
 	return ITEM_INTERACT_BLOCKING
 
+/obj/item/food/spore_sack/independent
+	icon_state = "spore_sack_independent"
+	base_icon_state = "spore_sack_independent"
+
 /obj/item/food/friedegg/spore
 	name = "fried spore"
 	desc = "A fried blob spore. Would go well with a dab of cold sauce."
@@ -393,7 +400,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	//superior healing and cyto reagents to compensate for rarity and mild poison effect.
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/peptides = 2,
-		/datum/reagent/consumable/nutriment/vitamin = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 1,
 	)
 	tastes = list("blob" = 4, "level 5 biohazard" = 2)
 
@@ -402,6 +409,10 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	desc = "Is this the ant egg everyone is always talking about? Better fried."
 	icon_state = "burstspore"
 	tastes = list("sliminess" = 4, "blob" = 2)
+
+/obj/item/food/rawegg/spore/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/item/food/rawegg/spore/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/friedegg/spore, rand(15 SECONDS, 25 SECONDS), TRUE, FALSE)
