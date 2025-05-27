@@ -199,10 +199,12 @@
 
 /datum/client_colour/monochrome/New(mob/owner)
 	. = ..()
-	ADD_TRAIT(owner, TRAIT_COLORBLIND, type)
+	if (owner)
+		ADD_TRAIT(owner, TRAIT_COLORBLIND, type)
 
 /datum/client_colour/monochrome/Destroy()
-	REMOVE_TRAIT(owner, TRAIT_COLORBLIND, type)
+	if (owner)
+		REMOVE_TRAIT(owner, TRAIT_COLORBLIND, type)
 	return ..()
 
 /datum/client_colour/monochrome/glasses
