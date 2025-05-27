@@ -867,6 +867,7 @@
 		return span_boldwarning("Your lungs feel extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
 	return span_boldwarning("It feels extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
 
+/// by default, returns the lungs' breath_noise var as a notice. called when stethoscope is used on chest, uses the return as a message for stethoscope user.
 /obj/item/organ/lungs/proc/hear_breath_noise(mob/living/hearer)
 	return span_notice(breath_noise)
 
