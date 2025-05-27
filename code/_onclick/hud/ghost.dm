@@ -41,6 +41,10 @@
 	name = "Ghost Settings"
 	icon_state = "settings"
 
+/atom/movable/screen/ghost/settings/MouseEntered(location, control, params)
+	. = ..()
+	flick(icon_state + "_anim", src)
+
 /atom/movable/screen/ghost/settings/Click()
 	GLOB.ghost_menu.show(usr)
 
