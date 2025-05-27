@@ -22,15 +22,24 @@
 	)
 
 // ===== RESEARCH CONSOLE =====
-/obj/machinery/modular_computer/preset/research
-	name = "research director's console"
-	desc = "A stationary computer. This one comes preloaded with research programs."
+/obj/machinery/modular_computer/preset/research_generic
+	name = "research console"
 	starting_programs = list(
-		/datum/computer_file/program/ntnetmonitor,
-		/datum/computer_file/program/chatclient,
-		/datum/computer_file/program/ai_restorer,
-		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/science,
 		/datum/computer_file/program/scipaper_program,
+	)
+
+/obj/machinery/modular_computer/preset/research
+	name = "\proper research director's console"
+	starting_programs = list(
+		/datum/computer_file/program/ai_restorer,
+		/datum/computer_file/program/card_mod,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/ntnetmonitor,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/science,
+		/datum/computer_file/program/scipaper_program,
+		/datum/computer_file/program/status,
 	)
 
 /obj/machinery/modular_computer/preset/research/away
@@ -51,6 +60,90 @@
 	starting_programs = list(
 		/datum/computer_file/program/chatclient,
 		/datum/computer_file/program/card_mod,
+	)
+
+/obj/machinery/modular_computer/preset/qm
+	name = "\proper quartermaster's console"
+	starting_programs = list(
+		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/card_mod,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/restock_tracker,
+	)
+
+/obj/machinery/modular_computer/preset/hop_records
+	name = "\proper head of personnel's records console"
+	starting_programs = list(
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/secureye,
+		/datum/computer_file/program/status,
+	)
+
+/obj/machinery/modular_computer/preset/hop_id
+	name = "\proper head of personnel's identification console"
+	starting_programs = list(
+		/datum/computer_file/program/card_mod,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/job_management,
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/records/security,
+	)
+
+/obj/machinery/modular_computer/preset/ce
+	name = "\proper chief engineer's console"
+	starting_programs = list(
+		/datum/computer_file/program/ai_restorer,
+		/datum/computer_file/program/alarm_monitor,
+		/datum/computer_file/program/card_mod,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/power_monitor,
+		/datum/computer_file/program/secureye,
+		/datum/computer_file/program/supermatter_monitor,
+		/datum/computer_file/program/status,
+	)
+
+/obj/machinery/modular_computer/preset/captain
+	name = "\proper captain's console"
+	starting_programs = list(
+		/datum/computer_file/program/card_mod,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/job_management,
+		/datum/computer_file/program/ntnetmonitor,
+		/datum/computer_file/program/secureye,
+		/datum/computer_file/program/status,
+	)
+
+/obj/machinery/modular_computer/preset/captain/records
+	name = "\proper captain's records console"
+	starting_programs = list(
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/ntnetmonitor,
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/secureye,
+		/datum/computer_file/program/status,
+	)
+
+/obj/machinery/modular_computer/preset/hos
+	name = "\proper head of security's console"
+	starting_programs = list(
+		/datum/computer_file/program/card_mod,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/secureye,
+		/datum/computer_file/program/status,
+	)
+
+/obj/machinery/modular_computer/preset/cmo
+	name = "\proper chief medical officer's console"
+	starting_programs = list(
+		/datum/computer_file/program/card_mod,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/records/medical,
+		/datum/computer_file/program/secureye,
+		/datum/computer_file/program/status,
 	)
 
 // ===== IDENTIFICATION CONSOLE =====

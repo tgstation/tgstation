@@ -486,6 +486,9 @@
 	if(.)
 		return
 
+	if(!allowed(ui.user))
+		return
+
 	var/mob/user = ui.user
 	switch(action)
 		if("frequency")

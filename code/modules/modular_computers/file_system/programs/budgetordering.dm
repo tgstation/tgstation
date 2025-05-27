@@ -5,7 +5,7 @@
 	program_open_overlay = "request"
 	extended_desc = "Nanotrasen Internal Requisition Network interface for supply purchasing using a department budget account."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
-	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
+	can_run_on_flags = ALL
 	size = 10
 	tgui_id = "NtosCargo"
 	program_icon = FA_ICON_CART_FLATBED

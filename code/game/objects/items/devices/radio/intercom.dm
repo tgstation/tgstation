@@ -218,6 +218,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/item/radio/intercom, 27)
 	freerange = TRUE
 	command = TRUE
 	icon_off = "intercom_command-p"
+	req_access = list(ACCESS_COMMAND)
 
 /obj/item/radio/intercom/syndicate
 	name = "syndicate intercom"

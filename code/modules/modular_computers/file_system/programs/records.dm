@@ -7,7 +7,7 @@
 	program_open_overlay = "crew"
 	tgui_id = "NtosRecords"
 	size = 4
-	can_run_on_flags = PROGRAM_PDA | PROGRAM_LAPTOP
+	can_run_on_flags = ALL
 	program_flags = NONE
 	detomatix_resistance = DETOMATIX_RESIST_MINOR
 

@@ -8,7 +8,7 @@
 	size = 10
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
-	run_access = list(ACCESS_COMMAND, ACCESS_RESEARCH)
+	// run_access = list(ACCESS_COMMAND, ACCESS_RESEARCH)
 	download_access = list(ACCESS_RESEARCH)
 	/// Reference to global science techweb
 	var/datum/techweb/stored_research
