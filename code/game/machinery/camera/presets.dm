@@ -208,7 +208,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/vault, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/minisat, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/telecomms, 0)
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/aiupload, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autonamepreset/aicore, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/aicore, 0)
 
 /**
  * Bomb preset
@@ -224,6 +224,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autonamepreset/aicore, 0)
 	resistance_flags = parent_type::resistance_flags | INDESTRUCTIBLE
 	light_range = 10
 	start_active = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/ordnance, 0)
 
 ///The internal camera object for exosuits, applied by the camera upgrade
 /obj/machinery/camera/exosuit
