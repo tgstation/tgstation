@@ -231,3 +231,5 @@
 	generated_domain = null
 	mutation_candidate_refs.Cut()
 	spawned_threat_refs.Cut()
+
+#undef POLLING_COOLDOWN_TIME
