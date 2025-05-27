@@ -49,14 +49,14 @@ export const GhostMenu = (props) => {
         !!has_fun && (
           <>
             <Button
-              disabled={can_boo}
-              tooltip="Haunts things near you"
+              disabled={!can_boo}
+              tooltip="Haunts things near you, with a cooldown."
               onClick={() => act('boo')}
             >
               Boo!
             </Button>
             <Button
-              tooltip="Allows you to possess any non-sentient mob"
+              tooltip="Allows you to possess any non-sentient mob."
               onClick={() => act('possess')}
             >
               Possess

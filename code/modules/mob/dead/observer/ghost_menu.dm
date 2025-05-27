@@ -90,6 +90,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 	var/list/data = list()
 
 	data["can_boo"] = COOLDOWN_FINISHED(user, bootime)
+	data["has_fun"] = user.fun_verbs
 	data["body_name"] = user.can_reenter_corpse ? user.mind.current.real_name : FALSE
 	data["current_darkness"] = ghost_lightings["[user.lighting_cutoff]"]
 	data["notification_data"] = list()
@@ -141,7 +142,6 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 	data["darkness_levels"] = list()
 	for(var/level in ghost_lightings)
 		data["darkness_levels"] += ghost_lightings[level]
-	data["has_fun"] = user.fun_verbs
 	data["lag_switch_on"] = !!(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !user.client?.holder)
 	return data
 
