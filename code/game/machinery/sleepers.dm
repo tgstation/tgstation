@@ -504,11 +504,24 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 	if(sleeping != occupant)
 		return
 	to_chat(sleeping, span_info("You will wake up shortly. Once awake, <b>resist</b> or <b>move</b> to exit the pod."))
-	sleep(1 SECONDS)
+	sleep(2 SECONDS)
 	if(sleeping != occupant)
 		return
-	to_chat(sleeping, span_warning("Coming out of cryosleep, you may feel nauseous or disoriented. \
-		This is a natural side effect of the process - it will last for some time."))
+	var/msg = ""
+
+	msg += span_info("You will wake up shortly. Once awake, <b>resist</b> or <b>move</b> to exit the pod.")
+	msg += "<br><br>"
+	msg += span_danger("Coming out of cryosleep, you may feel nauseous or disoriented. \
+		This is a natural side effect of the process - it will last for some time.")
+	msg += "<br><br>"
+	if(roundstart_job == JOB_CAPTAIN)
+		msg += span_notice("The autopilot will brief you as to why you were awakened shortly. \
+			Afterwards, it is your duty to gather the crew in the briefing room and inform them of the situation.")
+	else
+		msg += span_notice("You should collect yourself and get familiar with your department. \
+			Afterwards, report to the staff meeting room on deck 6 - the Captain will brief you on the situation.")
+
+	to_chat(sleeping, boxed_message(msg))
 
 /obj/machinery/sleeper/cryo/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
 	return FALSE

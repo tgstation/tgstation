@@ -128,6 +128,7 @@
 		scanline.icon = icon
 		scanline.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 		scanline.layer = layer
+		scanline.setDir(dir)
 	deltimer(scanline_timer)
 	if (isnull(scanline_type))
 		if(duration)

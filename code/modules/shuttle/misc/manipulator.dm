@@ -23,15 +23,15 @@
 	. = ..()
 	if(is_operational)
 		var/mutable_appearance/hologram = mutable_appearance(icon, "hologram_on", appearance_flags = KEEP_APART|RESET_COLOR)
-		hologram.pixel_z += 24
+		hologram.pixel_z += 20
 		. += hologram
 		var/mutable_appearance/hologram_emissive = emissive_appearance(icon, "hologram_on", src)
-		hologram_emissive.pixel_z += 24
+		hologram_emissive.pixel_z += 20
 		. += hologram_emissive
 
 		var/mutable_appearance/hologram_whiteship = mutable_appearance(icon, "hologram_whiteship", appearance_flags = KEEP_APART|RESET_COLOR)
-		hologram_whiteship.pixel_z += 24
+		hologram_whiteship.pixel_z += 20
 		. += hologram_whiteship
 		var/mutable_appearance/hologram_whiteship_emissive = emissive_appearance(icon, "hologram_whiteship", src)
-		hologram_whiteship_emissive.pixel_z += 24
+		hologram_whiteship_emissive.pixel_z += 20
 		. += hologram_whiteship_emissive

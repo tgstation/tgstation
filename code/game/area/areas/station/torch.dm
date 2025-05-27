@@ -80,6 +80,10 @@
 	name = "\improper Medbay Auxiliary Storage"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 
+/area/station/cargo/storage/auxiliary
+	name = "\improper Cargo Auxiliary Storage"
+	sound_environment = SOUND_AREA_SMALL_ENCLOSED
+
 /area/station/security/checkpoint/first/alt
 	name = "1st Floor Security Post"
 	icon_state = "checkpoint_1"
@@ -276,9 +280,18 @@
 /area/station/maintenance/radshelter/command
 	name = "\improper Command Radstorm Shelter"
 
+/area/station/maintenance/radshelter/engineering
+	name = "\improper Engineering Radstorm Shelter"
+
 /area/station/ai_monitored/security/armory/restricted
 	name = "\improper Restricted Armory"
 
 /area/station/ai_monitored/security/armory/restricted/desk
 	name = "\improper Restricted Armory Desk"
 	icon_state = "armory_desk"
+
+/area/station/command/teleporter/deck_five
+	name = "\improper Deck Five Teleporter Room"
+
+/area/station/command/teleporter/deck_three
+	name = "\improper Deck Three Teleporter Room"

@@ -56,3 +56,11 @@
 	new /obj/item/mecha_parts/mecha_tracking(src)
 	new /obj/item/mecha_parts/mecha_tracking(src)
 	new /obj/item/mecha_parts/mecha_tracking(src)
+
+/obj/item/storage/box/flares
+	name = "flare box"
+	desc = "A box containing a variety of flares, for all your signaling needs."
+
+/obj/item/storage/box/flares/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/flashlight/flare(src)

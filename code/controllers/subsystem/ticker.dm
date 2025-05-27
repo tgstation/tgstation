@@ -781,3 +781,4 @@ SUBSYSTEM_DEF(ticker)
 	CONFIG_SET(number/movedelay/run_delay, 1.75)
 	CONFIG_SET(number/damage_multiplier, 0.75)
 	GLOB.dynamic_forced_extended = TRUE
+	GLOB.communications_controller.block_command_report += 1
