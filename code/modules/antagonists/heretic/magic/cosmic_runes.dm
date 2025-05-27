@@ -139,7 +139,6 @@
 		if(person_on_rune.has_status_effect(/datum/status_effect/star_mark))
 			do_teleport(person_on_rune, get_turf(linked_rune_resolved), no_effects = TRUE, channel = TELEPORT_CHANNEL_MAGIC)
 	if(!IS_HERETIC(user))
-		user.apply_status_effect(/datum/status_effect/eldritch/cosmic)
 		user.apply_status_effect(/datum/status_effect/star_mark)
 	new rune_effect(get_turf(linked_rune_resolved))
 

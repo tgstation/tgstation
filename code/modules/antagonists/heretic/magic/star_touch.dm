@@ -99,7 +99,17 @@
 	new /obj/effect/temp_visual/cosmic_rune_fade(get_turf(target))
 	var/datum/action/cooldown/spell/touch/star_touch/star_touch_spell = spell_which_made_us?.resolve()
 	star_touch_spell?.spell_feedback(user)
-	remove_hand_with_no_refund(user)
+	if(!QDELETED(star_touch_spell))
+		qdel(star_touch_spell)
+	var/datum/action/cooldown/spell/cosmic_rune/rune_spell = locate() in user.actions
+	var/obj/effect/cosmic_rune/first_rune = rune_spell.first_rune.resolve()
+	var/obj/effect/cosmic_rune/second_rune = rune_spell.second_rune.resolve()
+	if(!QDELETED(first_rune))
+		new /obj/effect/temp_visual/cosmic_rune_fade(get_turf(first_rune))
+		QDEL_NULL(first_rune)
+	if(!QDELETED(second_rune))
+		new /obj/effect/temp_visual/cosmic_rune_fade(get_turf(second_rune))
+		QDEL_NULL(second_rune)
 
 /obj/item/melee/touch_attack/star_touch/ignition_effect(atom/to_light, mob/user)
 	. = span_rose("[user] effortlessly snaps [user.p_their()] fingers near [to_light], igniting it with cosmic energies. Fucking badass!")
