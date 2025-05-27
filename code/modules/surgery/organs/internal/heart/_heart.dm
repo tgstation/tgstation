@@ -306,7 +306,7 @@
 	. = ..()
 	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
-/obj/item/organ/heart/cybernetic/surplus/proc/hear_beat_noise(mob/living/hearer)
+/obj/item/organ/heart/cybernetic/surplus/hear_beat_noise(mob/living/hearer)
 	return span_danger(beat_noise)
 
 /obj/item/organ/heart/freedom
