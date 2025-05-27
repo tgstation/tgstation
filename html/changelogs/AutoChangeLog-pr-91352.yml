@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "The BR-38 no longer has a completely unintended accuracy malus built in."
