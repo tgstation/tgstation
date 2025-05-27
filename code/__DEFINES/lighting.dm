@@ -51,6 +51,14 @@
 #define LIGHTING_CUTOFF_HIGH 30
 #define LIGHTING_CUTOFF_FULLBRIGHT 100
 
+///List of all lighting cutoff defines above that can be accessed by ghosts.
+#define LIGHTING_CUTOFF_GHOST_LIST list( \
+	LIGHTING_CUTOFF_VISIBLE, \
+	LIGHTING_CUTOFF_MEDIUM, \
+	LIGHTING_CUTOFF_HIGH, \
+	LIGHTING_CUTOFF_FULLBRIGHT, \
+)
+
 /// What counts as being able to see in the dark
 #define LIGHTING_NIGHTVISION_THRESHOLD 7
 

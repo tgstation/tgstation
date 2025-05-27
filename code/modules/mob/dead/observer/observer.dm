@@ -31,12 +31,12 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/fun_verbs = FALSE
 	var/image/ghostimage_default = null //this mobs ghost image without accessories and dirs
 	var/image/ghostimage_simple = null //this mob with the simple white ghost sprite
-	var/ghostvision = 1 //is the ghost able to see things humans can't?
 	var/mob/observetarget = null //The target mob that the ghost is observing. Used as a reference in logout()
-	var/data_huds_on = 0 //Are data HUDs currently enabled?
-	var/health_scan = FALSE //Are health scans currently enabled?
-	var/chem_scan = FALSE //Are chem scans currently enabled?
-	var/gas_scan = FALSE //Are gas scans currently enabled?
+
+	///Flags of huds the ghost currently has enabled, data huds & ghost vision by default.
+	///Selection: GHOST_DATA_HUDS | GHOST_VISION | GHOST_HEALTH | GHOST_CHEM | GHOST_GAS
+	var/ghost_hud_flags = GHOST_DATA_HUDS | GHOST_VISION
+	///The shape the ghost will make while orbiting mobs.
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
 	//These variables store hair data if the ghost originates from a species with head and/or facial hair.
@@ -76,7 +76,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	add_verb(src, list(
 		/mob/dead/observer/proc/dead_tele,
 		/mob/dead/observer/proc/open_spawners_menu,
-		/mob/dead/observer/proc/tray_view,
 		/mob/dead/observer/proc/open_minigames_menu))
 
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
@@ -146,7 +145,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	grant_all_languages()
 	setup_hud_traits()
 	show_data_huds()
-	data_huds_on = 1
 
 	SSpoints_of_interest.make_point_of_interest(src)
 	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, ref(src))
@@ -162,7 +160,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 1 SECONDS)
 
 /mob/dead/observer/Destroy()
-	if(data_huds_on)
+	if(ghost_hud_flags & GHOST_DATA_HUDS)
 		remove_data_huds()
 
 	// Update our old body's medhud since we're abandoning it
@@ -564,7 +562,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(client)
 		ghost_others = client.prefs.read_preference(/datum/preference/choiced/ghost_others) //A quick update just in case this setting was changed right before calling the proc
 
-	if (!ghostvision)
+	if(!(ghost_hud_flags & GHOST_VISION))
 		set_invis_see(SEE_INVISIBLE_LIVING)
 	else
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
@@ -591,7 +589,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			if(GHOST_OTHERS_SIMPLE)
 				client?.images -= GLOB.ghost_images_simple
 	lastsetting = client?.prefs.read_preference(/datum/preference/choiced/ghost_others)
-	if(!ghostvision)
+	if(!(ghost_hud_flags & GHOST_VISION))
 		return
 	if(lastsetting != GHOST_OTHERS_THEIR_SETTING)
 		switch(lastsetting)

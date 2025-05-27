@@ -5,6 +5,10 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 /datum/ghost_menu/ui_state(mob/user)
 	return GLOB.observer_state
 
+///Shows the UI to the person in the args.
+/datum/ghost_menu/proc/show(mob/dead/observer/user)
+	ui_interact(user)
+
 /datum/ghost_menu/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
@@ -18,10 +22,10 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 
 	var/mob/dead/observer/dead_user = ui.user
 	switch(action)
-		if("DNR")
+		if("DNR") //NOT IMPLEMENTED
 			dead_user.stay_dead()
 			return TRUE
-		if("restore_appearance")
+		if("restore_appearance") //NOT IMPLEMENTED
 			restore_ghost_appearance(dead_user)
 			return TRUE
 		if("change_notification")
@@ -29,41 +33,38 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 			if(key && islist(GLOB.poll_ignore[key]))
 				GLOB.poll_ignore[key] ^= list(dead_user.ckey)
 			return TRUE
+		if("tray_scan") //NOT IMPLEMENTED
+			tray_view(dead_user)
+			return TRUE
+		if("darkness") //NOT IMPLEMENTED
+			var/darkness_type = params["darkness"]
+			if(!(darkness_type in LIGHTING_CUTOFF_GHOST_LIST))
+				return FALSE
+			toggle_darkness(dead_user, darkness_type)
+			return TRUE
 		if("toggle_visibility")
 			var/to_toggle = params["toggling"]
-			switch(to_toggle)
-				if("tray_scan")
-					tray_view(dead_user)
-				if("chem_scan")
-					toggle_chem_scan(dead_user)
-				if("health_scan")
-					toggle_health_scan(dead_user)
-				if("gas_scan")
-					toggle_gas_scan(dead_user)
-				if("darkness")
-					toggle_darkness(dead_user)
-				if("hud")
-					toggle_data_huds(dead_user)
-				if("ghost_vision")
-					toggle_ghost_vision(dead_user)
+			if(!(to_toggle in ALL_GHOST_FLAGS))
+				return
+			toggle_hud_type(dead_user, to_toggle)
 			return TRUE
-		if("crew_manifest")
+		if("crew_manifest") //NOT IMPLEMENTED
 			GLOB.manifest.ui_interact(dead_user)
 			return TRUE
-		if("view_range")
+		if("view_range") //NOT IMPLEMENTED
 			var/setting_to = params["new_view_range"]
 			if(!isnum(setting_to))
-				return TRUE
+				return FALSE
 			set_view(dead_user, setting_to)
 			return TRUE
 		if("boo")
 			if(!dead_user.fun_verbs)
-				return TRUE
+				return FALSE
 			dead_user.boo()
 			return TRUE
 		if("possess")
 			if(!dead_user.fun_verbs)
-				return TRUE
+				return FALSE
 			dead_user.possess()
 			return TRUE
 
@@ -72,24 +73,49 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 /datum/ghost_menu/ui_data(mob/dead/observer/user)
 	var/list/data = list()
 
-	data["has_fun"] = user.fun_verbs
 	data["notification_data"] = list()
 	for(var/key in GLOB.poll_ignore_desc)
 		data["notification_data"] += list(list(
 			"key" = key,
-			"enabled" = (user.ckey in GLOB.poll_ignore[key]),
+			"enabled" = !!(user.ckey in GLOB.poll_ignore[key]),
 			"desc" = GLOB.poll_ignore_desc[key],
 		))
 
+	data["hud_info"] = list(
+		list(
+			"name" = "Data HUDs",
+			"enabled" = (user.ghost_hud_flags & GHOST_DATA_HUDS),
+			"flag" = GHOST_DATA_HUDS,
+		),
+		list(
+			"name" = "Ghost Vision",
+			"enabled" = (user.ghost_hud_flags & GHOST_VISION),
+			"flag" = GHOST_VISION,
+		),
+		list(
+			"name" = "Health Scanner",
+			"enabled" = (user.ghost_hud_flags & GHOST_HEALTH),
+			"flag" = GHOST_HEALTH,
+		),
+		list(
+			"name" = "Chemical Scanner",
+			"enabled" = (user.ghost_hud_flags & GHOST_CHEM),
+			"flag" = GHOST_CHEM,
+		),
+		list(
+			"name" = "Gas Scanner",
+			"enabled" = (user.ghost_hud_flags & GHOST_GAS),
+			"flag" = GHOST_GAS,
+		),
+	)
+
 	return data
 
-
-/datum/ghost_menu/ui_static_data(mob/user)
-	return ..()
-
-///Shows the UI to the person in the args.
-/datum/ghost_menu/proc/show(mob/user)
-	ui_interact(user)
+/datum/ghost_menu/ui_static_data(mob/dead/observer/user)
+	var/list/data = list()
+	data["has_fun"] = user.fun_verbs
+	data["lag_switch_on"] = !!(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !user.client?.holder)
+	return data
 
 /datum/ghost_menu/proc/tray_view(mob/dead/observer/user)
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !user.client?.holder)
@@ -97,66 +123,33 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 		return
 	t_ray_scan(user)
 
-/datum/ghost_menu/proc/toggle_ghost_vision(mob/dead/observer/user)
-	user.ghostvision = !user.ghostvision
+/datum/ghost_menu/proc/toggle_darkness(mob/dead/observer/user, darkness_type)
+	if(user.lighting_cutoff == darkness_type)
+		return
+	user.lighting_cutoff = darkness_type
 	user.update_sight()
 
-/datum/ghost_menu/proc/toggle_darkness(mob/dead/observer/user)
-	switch(user.lighting_cutoff)
-		if (LIGHTING_CUTOFF_VISIBLE)
-			user.lighting_cutoff = LIGHTING_CUTOFF_MEDIUM
-		if (LIGHTING_CUTOFF_MEDIUM)
-			user.lighting_cutoff = LIGHTING_CUTOFF_HIGH
-		if (LIGHTING_CUTOFF_HIGH)
-			user.lighting_cutoff = LIGHTING_CUTOFF_FULLBRIGHT
-		else
-			user.lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
-
-	user.update_sight()
-
-/datum/ghost_menu/proc/toggle_data_huds(mob/dead/observer/user)
-	if(user.data_huds_on)
-		user.remove_data_huds()
-		to_chat(user, span_notice("Data HUDs disabled."))
-		user.data_huds_on = FALSE
-	else
-		user.show_data_huds()
-		to_chat(user, span_notice("Data HUDs enabled."))
-		user.data_huds_on = TRUE
-
-/datum/ghost_menu/proc/toggle_health_scan(mob/dead/observer/user)
-	if(user.health_scan)
-		to_chat(user, span_notice("Health scan disabled."))
-		user.health_scan = FALSE
-	else
-		to_chat(user, span_notice("Health scan enabled."))
-		user.health_scan = TRUE
-
-/datum/ghost_menu/proc/toggle_chem_scan(mob/dead/observer/user)
-	if(user.chem_scan)
-		to_chat(user, span_notice("Chem scan disabled."))
-		user.chem_scan = FALSE
-	else
-		to_chat(user, span_notice("Chem scan enabled."))
-		user.chem_scan = TRUE
-
-/datum/ghost_menu/proc/toggle_gas_scan(mob/dead/observer/user)
-	if(user.gas_scan)
-		to_chat(user, span_notice("Gas scan disabled."))
-		user.gas_scan = FALSE
-	else
-		to_chat(user, span_notice("Gas scan enabled."))
-		user.gas_scan = TRUE
+/datum/ghost_menu/proc/toggle_hud_type(mob/dead/observer/user, hud_type)
+	user.ghost_hud_flags ^= hud_type
+	//special aftereffects for specific flags.
+	switch(hud_type)
+		if(GHOST_VISION)
+			user.update_sight()
+		if(GHOST_DATA_HUDS)
+			if(user.ghost_hud_flags & GHOST_DATA_HUDS)
+				user.show_data_huds()
+			else
+				user.remove_data_huds()
 
 /datum/ghost_menu/proc/restore_ghost_appearance(mob/dead/observer/user)
 	user.set_ghost_appearance()
 	if(!user.client?.prefs)
 		return
-	var/real_name = user.client.prefs.read_preference(/datum/preference/name/real_name)
-	user.deadchat_name = user.real_name
+	var/real_name_pref = user.client.prefs.read_preference(/datum/preference/name/real_name)
+	user.deadchat_name = real_name_pref
 	if(user.mind)
-		user.mind.ghostname = user.real_name
-	user.name = user.real_name
+		user.mind.ghostname = real_name_pref
+	user.name = real_name_pref
 
 /datum/ghost_menu/proc/set_view(mob/dead/observer/user, new_view)
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !user.client?.holder)

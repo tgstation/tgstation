@@ -58,3 +58,18 @@
 #define CAMERA_SEE_GHOSTS_BASIC 1
 /// Pictures taken by a camera will display ghosts and their orbits
 #define CAMERA_SEE_GHOSTS_ORBIT 2 // this doesn't do anything right now as of Jan 2022
+
+
+#define GHOST_DATA_HUDS (1<<0)
+#define GHOST_VISION (1<<1)
+#define GHOST_HEALTH (1<<2)
+#define GHOST_CHEM (1<<3)
+#define GHOST_GAS (1<<4)
+
+#define ALL_GHOST_FLAGS list( \
+	GHOST_DATA_HUDS, \
+	GHOST_VISION, \
+	GHOST_HEALTH, \
+	GHOST_CHEM, \
+	GHOST_GAS, \
+)
