@@ -557,12 +557,20 @@
 	icon_state = "rust_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
 	armor_type = /datum/armor/eldritch_armor/rust
-	/// If our armor is rusted, used to update the sprite
-	var/rusted = FALSE
-	/// Mutable used as overlay
-	var/obj/effect/overlay/rust_overlay
 	/// Grace period timer before the
 	COOLDOWN_DECLARE(rust_grace_period)
+	/// If our armor is rusted, used to update the sprite
+	var/rusted = FALSE
+	/// Atom used to animate our overlay
+	var/atom/movable/rust_overlay
+	/// The mutable that is actually overlayed on the mob
+	var/mutable_appearance/rust_appearance
+	/// identifier for the overlay
+	var/static/overlay_id = 0
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/Initialize(mapload)
+	. = ..()
+	overlay_id++
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/equipped(mob/living/user, slot)
 	. = ..()
@@ -571,12 +579,18 @@
 		user.vis_contents -= rust_overlay
 		rusted = FALSE
 		QDEL_NULL(rust_overlay)
+		QDEL_NULL(rust_appearance)
 		return
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	rust_overlay = new()
 	rust_overlay.icon = 'icons/mob/clothing/suits/armor.dmi'
-	rust_overlay.vis_flags |= VIS_INHERIT_DIR | VIS_INHERIT_LAYER
+	rust_overlay.render_target = "*rust_overlay_[overlay_id]"
+	rust_overlay.vis_flags |= VIS_INHERIT_DIR | VIS_INHERIT_LAYER | VIS_INHERIT_ID
 	user.vis_contents += rust_overlay // Should be invisible, we just update the sprite as needed
+
+	rust_appearance = new /mutable_appearance()
+	rust_appearance.render_source = "*rust_overlay_[overlay_id]"
+	update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/Destroy(force)
 	if(!ismob(loc))
@@ -585,6 +599,7 @@
 	UnregisterSignal(wearer, list(COMSIG_MOVABLE_MOVED))
 	wearer.vis_contents -= rust_overlay
 	QDEL_NULL(rust_overlay)
+	QDEL_NULL(rust_appearance)
 	rusted = FALSE
 	return ..()
 
@@ -633,13 +648,14 @@
 		rust_overlay.icon_state = null
 		flick("[worn_icon_state]"+"_off", rust_overlay)
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/update_slot_icon()
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	// Should basically catch toggling the hood on/off while standing on rust
 	if(rusted)
 		rust_overlay.icon_state = "[worn_icon_state]" + "_overlay"
 	else
 		rust_overlay.icon_state = null
+	. += rust_appearance
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
 	name = "\improper Salvaged Remains"
