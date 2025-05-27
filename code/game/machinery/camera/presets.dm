@@ -92,6 +92,52 @@
 	. = ..()
 	upgradeMotion()
 
+
+//Departmental Presets
+/obj/machinery/camera/autoname/preset/medbay
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_MEDBAY)
+
+/obj/machinery/camera/autoname/preset/cargo
+	network = list(CAMERANET_NETWORK_SS13, CAMERA_NETWORK_CARGO)
+
+/obj/machinery/camera/autoname/preset/science
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_RD)
+
+/obj/machinery/camera/autoname/preset/engineering
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ENGINEERING)
+
+/obj/machinery/camera/autoname/preset/security
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_SECURITY)
+
+/obj/machinery/camera/autoname/preset/service
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_SECURITY)
+
+/obj/machinery/camera/autoname/preset/engine
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ENGINE)
+
+/obj/machinery/camera/autoname/preset/xenobiology
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_XENOBIOLOGY)
+
+/obj/machinery/camera/autoname/preset/ordnance
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ORDNANCE)
+
+// Vault
+/obj/machinery/camera/autoname/preset/vault
+	network = list(CAMERANET_NETWORK_VAULT)
+
+// AI satalite
+/obj/machinery/camera/autoname/preset/minisat
+	network = list(CAMERANET_NETWORK_MINISAT)
+
+/obj/machinery/camera/autoname/preset/telecomms
+	network = list(CAMERANET_NETWORK_TELECOMMS)
+
+/obj/machinery/camera/autoname/preset/aiupload
+	network = list(CAMERANET_NETWORK_AI_UPLOAD)
+
+/obj/machinery/camera/autoname/preset/aicore
+	network = list(CAMERANET_NETWORK_AI_CORE)
+
 /**
  * Bomb preset
  * Can't be disabled, sees further, doesn't cost power, can be seen by ordnance
