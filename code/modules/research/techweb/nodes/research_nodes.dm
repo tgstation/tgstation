@@ -110,5 +110,4 @@
 			"artificial_hive_node",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
-	required_experiments = list(/datum/experiment/scanning/hive_node)
-	discount_experiments = list(/datum/experiment/autopsy/xenomorph_queen = TECHWEB_TIER_5_POINTS)
+	required_experiments = list(/datum/experiment/scanning/hive_node, /datum/experiment/autopsy/xenomorph_queen)
