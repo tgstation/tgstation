@@ -858,12 +858,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 	if(atk_effect == ATTACK_EFFECT_BITE)
-		if(user.is_mouth_covered(ITEM_SLOT_MASK)) //In the event we can't bite, emergency swap to attacking hand.
+		if(!user.is_mouth_covered(ITEM_SLOT_MASK))
+			biting = TRUE
+		else if(user.get_active_hand()) //In the event we can't bite, emergency swap to see if we can attack with a hand.
 			attacking_bodypart = user.get_active_hand()
 			atk_verb = pick(attacking_bodypart.unarmed_attack_verbs)
 			atk_effect = attacking_bodypart.unarmed_attack_effect
-		else
-			biting = TRUE
+		else  //Nothing? Okay. Fail.
+			user.balloon_alert(user, "can't attack!")
+			return FALSE
 
 	user.do_attack_animation(target, atk_effect)
 
@@ -973,7 +976,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		log_combat(user, target, "punched")
 
 	if(biting && target.mob_biotypes & MOB_ORGANIC) //Good for you. You probably just ate someone alive.
-		user.reagents.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
+		var/datum/reagents/tasty_meal = new()
+		tasty_meal.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
+		tasty_meal.trans_to(user, tasty_meal.total_volume, transferred_by = user, methods = INGEST)
 
 	SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting, final_armor_block, kicking, limb_sharpness)
 
