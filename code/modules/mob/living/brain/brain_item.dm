@@ -483,14 +483,11 @@
 
 // Sometimes, felinids go a bit haywire and bite people. Based entirely on mania and hunger.
 /obj/item/organ/brain/felinid/get_attacking_limb(mob/living/carbon/human/target)
-	if(owner.mob_mood)
-		var/starving_cat_bonus = owner.nutrition <= NUTRITION_LEVEL_HUNGRY ? 1 : 10
-		var/crazy_feral_cat = clamp((starving_cat_bonus * owner.mob_mood.sanity_level), 0, 100)
-		if(prob(crazy_feral_cat))
-			var/obj/item/bodypart/crazy_feral_cat_brain_container = owner.get_bodypart(BODY_ZONE_HEAD)
-			if(crazy_feral_cat_brain_container)
-				return crazy_feral_cat_brain_container
-	. = ..()
+	var/starving_cat_bonus = owner.nutrition <= NUTRITION_LEVEL_HUNGRY ? 1 : 10
+	var/crazy_feral_cat = clamp((starving_cat_bonus * owner.mob_mood?.sanity_level), 0, 100)
+	if(prob(crazy_feral_cat))
+		return owner.get_bodypart(BODY_ZONE_HEAD) || ..()
+	return ..()
 
 /obj/item/organ/brain/lizard
 	name = "lizard brain"
