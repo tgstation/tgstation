@@ -108,7 +108,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 			"name" = "Ghost Vision",
 			"enabled" = (user.ghost_hud_flags & GHOST_VISION),
 			"flag" = GHOST_VISION,
-			"tooltip" = "Allows you to see things that regular players can't (ex: smuggler satchels).",
+			"tooltip" = "Allows you to see ghost-only things (ex: smuggler satchels, countdowns, camera eyes).",
 		),
 		list(
 			"name" = "Health Scanner",
