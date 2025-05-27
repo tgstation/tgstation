@@ -239,7 +239,7 @@
 		hearer.emote("scream")
 		hearer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 		var/obj/item/organ/ears/regret = hearer.get_organ_slot(ORGAN_SLOT_EARS)
-		regret.adjustEarDamage(10,20)
+		regret?.adjustEarDamage(10,20)
 	return span_hypnophrase("SECRET SONGS OF THE BREAKING OF THE MAKING OF THE WAKING OF THE-")
 
 /// It's full of worms
