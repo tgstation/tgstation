@@ -108,7 +108,7 @@ const RoundSection = (props) => {
 
 const HudSection = (props) => {
   const { act, data } = useBackend<Data>();
-  const { hud_info } = data;
+  const { hud_info, lag_switch_on } = data;
   return (
     <>
       {hud_info.map((individual_hud) => (
@@ -124,12 +124,14 @@ const HudSection = (props) => {
           {individual_hud.name}
         </Button>
       ))}
-      <Button
-        tooltip="Performs a t-ray scan where you are."
-        onClick={() => act('tray_scan')}
-      >
-        T-ray Scan
-      </Button>
+      {!!lag_switch_on && (
+        <Button
+          tooltip="Performs a t-ray scan where you are."
+          onClick={() => act('tray_scan')}
+        >
+          T-ray Scan
+        </Button>
+      )}
     </>
   );
 };
@@ -137,7 +139,8 @@ const HudSection = (props) => {
 const GhostSettingsSection = (props) => {
   const [viewNumber, setviewNumber] = useState<number>(0);
   const { act, data } = useBackend<Data>();
-  const { current_darkness, darkness_levels, max_extra_view } = data;
+  const { current_darkness, darkness_levels, max_extra_view, lag_switch_on } =
+    data;
   return (
     <>
       <Box>
@@ -157,22 +160,24 @@ const GhostSettingsSection = (props) => {
       >
         Restore Ghost Character
       </Button>
-      <Box>
-        Extra View size:
-        <NumberInput
-          width="30px"
-          step={1}
-          value={viewNumber}
-          minValue={0}
-          maxValue={max_extra_view}
-          onDrag={(newValue) => setviewNumber(newValue)}
-          onChange={(new_range) =>
-            act('view_range', {
-              new_view_range: new_range,
-            })
-          }
-        />
-      </Box>
+      {!!lag_switch_on && (
+        <Box>
+          Extra View size:
+          <NumberInput
+            width="30px"
+            step={1}
+            value={viewNumber}
+            minValue={0}
+            maxValue={max_extra_view}
+            onDrag={(newValue) => setviewNumber(newValue)}
+            onChange={(new_range) =>
+              act('view_range', {
+                new_view_range: new_range,
+              })
+            }
+          />
+        </Box>
+      )}
     </>
   );
 };
