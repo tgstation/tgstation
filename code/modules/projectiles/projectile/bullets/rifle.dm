@@ -231,3 +231,24 @@
 	desc = "doink!"
 	damage_type = BRUTE
 	icon_state = "paperball"
+
+//Big Ballista Mounted gun Spear
+/obj/projectile/bullet/Large_Ballista_Spear
+	name = "Spear"
+	icon_state = "rebar"
+	damage = 80
+	speed = 4
+	dismemberment = 2
+	embed_type = null
+	armour_penetration = 10
+	wound_bonus = -15
+	bare_wound_bonus = 15
+	damage_type = BRUTE
+	shrapnel_type = /obj/item/spear
+
+/obj/projectile/bullet/Large_Ballista_Spear/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/projectile_drop, /obj/item/spear)
+	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
+
+/obj/projectile/bullet/Large_Ballista_Spear/proc/handle_drop(datum/source, /obj/item/spear/spear)

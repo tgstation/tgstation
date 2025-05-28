@@ -13,8 +13,18 @@
 	max_integrity = 300
 	///whether the cannon can be unwrenched from the ground. Anchorable_cannon equivalent.
 	var/anchorable_gun = TRUE
+	/// does this thing need ammo at all or does it just make ammo?
+	var/uses_ammo= TRUE
+	/// does this thing need to be lit, like a cannon?
+	var/needs_ignition = TRUE
 	///Max shots per firing of the gun.
 	var/max_shots_per_fire = 1
+	///Is there a do_after when loading the gun?
+	var/has_loading_delay = FALSE
+	///Delay it takes to load the gun. Set to 0 if none.
+	var/load_delay = 0
+	///Message displayed when loading gun
+	var/loading_message = "You Loaded The Gun."
 	///Shots currently loaded. Should never be more than max_shots_per_fire.
 	var/shots_in_gun = 1
 	///shots added to gun, per piece of ammo loaded.
@@ -37,7 +47,8 @@
 	var/fire_sound = 'sound/items/weapons/gun/general/mountedgun.ogg'
 	///sound of firing for last shot
 	var/last_fire_sound = 'sound/items/weapons/gun/general/mountedgunend.ogg'
-
+	///So you can't reload it mid-firing
+	var/is_firing = FALSE
 /obj/structure/mounted_gun/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!anchorable_gun) /// Can't anchor an unanchorable gun.
@@ -46,15 +57,23 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///Covers Reloading and lighting of the gun
-/obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, list/modifiers, list/attack_modifiers)
-	var/ignition_message = used_item.ignition_effect(src, user) // Checks if item used can ignite stuff.
-	if(istype(used_item, ammo_type))
+/obj/structure/mounted_gun/attackby(obj/item/ammo_casing/used_item, mob/user, params)
+
+	var/ignition_message = used_item.ignition_effect(src, user)
+	if(is_firing)
+		balloon_alert(user, "the gun is in the middle of firing!")
+		return
+	if(istype(used_item, ammo_type) && (uses_ammo == TRUE)) //see if the gun needs to be loaded in some way.
 		if(fully_loaded_gun)
 			balloon_alert(user, "already fully loaded!")
 			return
-		else
-			shots_in_gun = shots_in_gun + shots_per_load //Add one to the shots in the gun
 
+		else
+			if(has_loading_delay == TRUE)
+				if(!do_after(user, load_delay, target = src))
+					return
+			shots_in_gun = shots_in_gun + shots_per_load //Add one to the shots in the gun
+			balloon_alert(user, loading_message)
 			loaded_gun = TRUE // Make sure it registers theres ammo in there, so it can fire.
 			QDEL_NULL(used_item)
 			if(shots_in_gun >= max_shots_per_fire)
@@ -62,21 +81,23 @@
 				fully_loaded_gun = TRUE //So you cant load extra.
 			return
 
-	else if(ignition_message) // if item the player used ignites, light the gun!
-		visible_message(ignition_message)
+	else if((needs_ignition == TRUE) && (!ignition_message))
+		balloon_alert(user, "Gun needs to be lit to fire!")
+		return
+	else
 		user.log_message("fired a cannon", LOG_ATTACK)
 		log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
 		addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
 		return
-	..()
 
 /obj/structure/mounted_gun/proc/fire()
 	if (!loaded_gun)
 		balloon_alert_to_viewers("gun is not loaded!","",2)
 		return
+	is_firing = TRUE
 	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++) //The normal DM for loop structure since the times it has fired is changing in the loop itself.
 		for(var/mob/shaken_mob in urange(10, src))
-			if(shaken_mob.stat == CONSCIOUS && firing_shakes_camera == TRUE)
+			if(shaken_mob.stat == CONSCIOUS && firing_shakes_camera == TRUE) //is the mob awake to feel the shaking?
 				shake_camera(shaken_mob, 3, 1)
 			icon_state = icon_state_fire
 		if(loaded_gun)
@@ -84,24 +105,27 @@
 			if (times_fired < shots_in_gun)
 				playsound(src, fire_sound, 50, FALSE, 5)
 			else
-				playsound(src, last_fire_sound, 50, TRUE, 5)
+				playsound(src, last_fire_sound, 50, TRUE, 5) //for the empty fire sound
 			var/obj/projectile/fired_projectile = new projectile_type(get_turf(src))
 			fired_projectile.firer = src
 			fired_projectile.fired_from = src
 			fired_projectile.fire(dir2angle(dir))
 		sleep(shot_delay)
-	loaded_gun = FALSE
-	shots_in_gun = 0
-	fully_loaded_gun = FALSE
+	if(uses_ammo == TRUE)
+		loaded_gun = FALSE
+		shots_in_gun = 0
+		fully_loaded_gun = FALSE
+		is_firing = FALSE
 	icon_state = icon_state_base
 
-/obj/structure/mounted_gun/pipe
+/obj/structure/mounted_gun/organ_gun
 
 	name = "Pipe Organ Gun"
 	desc = "To become master over one who has killed, one must become a better killer. This engine of destruction is one of many things made to that end."
 	icon_state = "pipeorgangun"
 	icon_state_base = "pipeorgangun"
 	icon_state_fire = "pipeorgangun_fire"
+	loading_message = "You loaded the Pipe Organ Gun."
 	anchored = FALSE
 	anchorable_gun = TRUE
 	max_shots_per_fire = 8
@@ -115,7 +139,7 @@
 	shot_delay = 2
 	firing_shakes_camera = FALSE
 
-/obj/structure/mounted_gun/pipe/examine_more(mob/user)
+/obj/structure/mounted_gun/organ_gun/examine_more(mob/user)
 	. = ..()
 	. += span_notice("<b><i>Looking down at \the [src], you recall a tale told to you in some distant memory...</i></b>")
 
@@ -125,7 +149,7 @@
 	. += span_info("As such, the man who ended another's life with a stone, was in turn smote himself by another wielding a spear. After spears, bows. Swords. Guns. Tanks. Missiles. And on and on Vengeance fed. Growing stronger. Growing Worse.")
 	. += span_info("Vengeance persists to this day. It sometimes may slumber, seemingly content with having gorged itself, but in the end, its ceaseless hunger can be neither numbed nor sated.")
 
-/obj/structure/mounted_gun/pipe/fire()
+/obj/structure/mounted_gun/organ_gun/fire()
 	if (!loaded_gun)
 		balloon_alert_to_viewers("Gun is not loaded!","",2)
 		return
@@ -165,6 +189,7 @@
 	icon_state = "canister_gatling"
 	icon_state_base = "canister_gatling"
 	icon_state_fire = "canister_gatling_fire"
+	loading_message = "You dump a bucket of canister shot into the gatling."
 	anchored = FALSE
 	anchorable_gun = TRUE
 	max_shots_per_fire = 50
@@ -185,3 +210,105 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 0
 	w_class = WEIGHT_CLASS_BULKY
+
+/obj/structure/mounted_gun/ratvarian_repeater
+
+	name = "Ratvarian Repeater"
+	desc = "''Brains? Bronze? Why not both?''"
+	icon_state = "ratvarian_repeater"
+	icon_state_base = "ratvarian_repeater"
+	icon_state_fire = "ratvarian_repeater_fire"
+	loading_message = "You finish cranking up the spring mechanism on the repeater, reading it to fire."
+	anchored = FALSE
+	anchorable_gun = TRUE
+	uses_ammo = FALSE
+	needs_ignition = FALSE
+	has_loading_delay = TRUE
+	load_delay = 20
+	max_shots_per_fire = 10
+	shots_per_load = 10
+	shots_in_gun = 10
+	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
+	last_fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
+	projectile_type = /obj/projectile/beam/laser/musket/prime
+	loaded_gun = TRUE
+	fully_loaded_gun = TRUE
+	fire_delay = 1
+	shot_delay = 2
+	firing_shakes_camera = FALSE
+
+/obj/structure/mounted_gun/ratvarian_repeater/attack_hand(mob/user, params) //the repeater is weird so has to have its own code since it takes no ammo.
+
+	if(is_firing)
+		balloon_alert(user, "the gun is in the middle of firing!")
+		return
+
+	if(!fully_loaded_gun)
+		if(!do_after(user, load_delay, target = src))
+			return
+		shots_in_gun = shots_in_gun+shots_per_load //Add one to the shots in the gun
+		balloon_alert(user, "Clockwork Mechanism Wound.")
+		playsound(src, 'sound/items/weapons/laser_crank.ogg', 50, FALSE, 5)
+		loaded_gun = TRUE // Make sure it registers theres ammo in there, so it can fire.
+		if(shots_in_gun >= max_shots_per_fire)
+			shots_in_gun = max_shots_per_fire // in case of somehow firing only some of a guns shots, and reloading, you still cant get above the maximum ammo size.
+			fully_loaded_gun = TRUE //So you cant load extra.
+		return
+
+	else
+		user.log_message("fired a cannon", LOG_ATTACK)
+		log_game("[key_name(user)] fired a cannon in [AREACOORD(src)]")
+		addtimer(CALLBACK(src, PROC_REF(fire)), fire_delay) //uses fire proc as shown below to shoot the gun
+		return
+
+/obj/structure/mounted_gun/ratvarian_repeater/fire()
+	if (!loaded_gun)
+		balloon_alert_to_viewers("Clockwork Mechanism not wound!","",2)
+		return
+	is_firing = TRUE
+	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++) //The normal DM for loop structure since the times it has fired is changing in the loop itself.
+		if(loaded_gun)
+
+			if (times_fired < shots_in_gun)
+				playsound(src, fire_sound, 50, FALSE, 5)
+			else
+				playsound(src, last_fire_sound, 50, TRUE, 5) //for the empty fire sound
+			var/obj/projectile/fired_projectile = new projectile_type(get_turf(src))
+			fired_projectile.firer = src
+			fired_projectile.fired_from = src
+			fired_projectile.fire(dir2angle(dir))
+		if(times_fired % 2 != 1)//Burst Fire.
+			sleep(shot_delay)
+		sleep(shot_delay)
+	loaded_gun = FALSE
+	shots_in_gun = 0
+	fully_loaded_gun = FALSE
+	is_firing = FALSE
+	icon_state = icon_state_base
+
+/obj/structure/mounted_gun/large_ballista
+
+	name = "Improvised Ballista"
+	desc = "''Engineers like to solve problems. If there are no problems handily available, they will create their own problems.''"
+	icon_state = "falconet_patina"
+	icon_state_base = "falconet_patina"
+	icon_state_fire = "falconet_patina_fire"
+	loading_message = "You finish loading the ballista with a spear."
+	anchored = FALSE
+	anchorable_gun = TRUE
+	uses_ammo = TRUE
+	needs_ignition = FALSE
+	has_loading_delay = TRUE
+	load_delay = 10
+	max_shots_per_fire = 1
+	shots_per_load = 1
+	shots_in_gun = 1
+	fire_sound = 'sound/items/xbow_lock.ogg'
+	last_fire_sound = 'sound/items/xbow_lock.ogg'
+	ammo_type = /obj/item/spear
+	projectile_type = /obj/projectile/bullet/Large_Ballista_Spear
+	loaded_gun = TRUE
+	fully_loaded_gun = TRUE
+	fire_delay = 1
+	shot_delay = 1
+	firing_shakes_camera = FALSE
