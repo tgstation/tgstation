@@ -21,6 +21,7 @@ jobs:
         uses: ./.github/actions/restore_or_install_byond
       - name: Compile All Maps
         run: |
+          chmod +x tools/build/build.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build.sh --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
       - name: Check client Compatibility
@@ -42,5 +43,6 @@ jobs:
         uses: ./.github/actions/restore_or_install_byond
       - name: Compile All Maps
         run: |
+          chmod +x tools/build/build.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build.sh --ci dm -DCIBUILDING -DCITESTING -DALL_TEMPLATES
