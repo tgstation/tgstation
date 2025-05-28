@@ -32,6 +32,8 @@
 
 	/// Heretic knowledge tree
 	var/list/heretic_knowledge_tree
+	/// List of side-knowledge, used for the UI
+	var/list/side_knowledges = null
 	/// Whether we give this antagonist objectives on gain.
 	var/give_objectives = TRUE
 	/// Whether we've ascended! (Completed one of the final rituals)
@@ -182,6 +184,17 @@
 		tiers[heretic_knowledge_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
 
 	data["knowledge_tiers"] = tiers
+
+
+	var/list/shop_knowledge = list()
+	// this means that using a for loop gives us the value, instead, no key, that means, the listnowledges)
+	for(var/list/list_tier as anything in side_knowledges)
+		for(var/datum/heretic_knowledge/knowledge as anything in list_tier)
+			var/list/knowledge_data = get_knowledge_data(knowledge, FALSE)
+			// no nodes here, just knowledge_data in a list, inside another list
+			shop_knowledge += list(knowledge_data)
+
+	data["knowledge_shop"] = shop_knowledge
 
 	return data
 

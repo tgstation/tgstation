@@ -222,6 +222,12 @@ GLOBAL_LIST(heretic_research_tree)
 			continue
 		elligible_knowledge["[potential_knowledge.drafting_tier]"] += potential_knowledge
 
+	// Once we've selected the path, let's let them know what to put in the knowledge shop
+	our_heretic.side_knowledges = list()
+	for(var/key in elligible_knowledge)
+		var/list/copy_list = elligible_knowledge[key]
+		our_heretic.side_knowledges += list(copy_list.Copy())
+
 	var/selected_knowledge = null
 	var/list/draft_blacklist = list()
 	for(var/cycle in 1 to 3)
