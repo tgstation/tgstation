@@ -648,7 +648,7 @@
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer)
 
 /datum/antagonist/heretic/proc/adjust_knowledge_points(amount)
-	knowledge_points += min(0, amount) // Don't allow negative knowledge points
+	knowledge_points += max(0, amount) // Don't allow negative knowledge points
 	update_static_data_for_all_viewers()
 
 /datum/antagonist/heretic/roundend_report()
