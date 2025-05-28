@@ -9,7 +9,7 @@ import { inspect } from 'node:util';
 import * as WebSocket from 'ws';
 
 import { createLogger, directLog } from '../logging.js';
-import { loadSourceMaps, retrace } from './retrace.js';
+import { loadSourceMaps, retrace } from './retrace';
 
 const logger = createLogger('link');
 

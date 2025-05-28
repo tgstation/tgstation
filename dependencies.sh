@@ -30,3 +30,6 @@ export CUTTER_REPO=spacestation13/hypnagogic
 
 #hypnagogic git tag
 export CUTTER_VERSION=v4.0.0
+
+# Bun version
+export BUN_VERSION=1.2.14

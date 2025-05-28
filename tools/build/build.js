@@ -14,24 +14,7 @@ import { bun } from './lib/bun.js';
 
 const TGS_MODE = process.env.CBT_BUILD_MODE === 'TGS';
 
-Juke.chdir('../..', import.meta.url);
-Juke.setup({ file: import.meta.url }).then((code) => {
-  // We're using the currently available quirk in Juke Build, which
-  // prevents it from exiting on Windows, to wait on errors.
-  if (code !== 0 && process.argv.includes('--wait-on-error')) {
-    Juke.logger.error('Please inspect the error and close the window.');
-    return;
-  }
 
-  if (TGS_MODE) {
-    // workaround for ESBuild process lingering
-    // Once https://github.com/privatenumber/esbuild-loader/pull/354 is merged and updated to, this can be removed
-    setTimeout(() => process.exit(code), 10000);
-  }
-  else {
-    process.exit(code);
-  }
-});
 
 const DME_NAME = 'tgstation';
 
@@ -318,40 +301,12 @@ export const AutowikiTarget = new Juke.Target({
   },
 })
 
-export const BunInstallTarget = new Juke.Target({
-  onlyWhen: () => {
-    const files = Juke.glob('./tools/build/node_modules/.bin/bun');
-    return files.length == 0;
-  },
-  inputs: [
-    'tools/build/package.json',
-    'tools/build/package-lock.json',
-  ],
-  outputs: [
-    'tools/build/node_modules/.bin/bun',
-  ],
-  executes: async () => {
-    Juke.logger.info('Bun not found, installing...');
-    const result = await Juke.exec('npm', ['install'], {
-      cwd: './tools/build',
-      shell: true,
-    });
-    if (!result || result.code !== 0) {
-      Juke.logger.error(`bun install failed with code ${result.code}`);
-      throw new Juke.ExitCode(1);
-    }
-    Juke.logger.info('Bun installed successfully');
-  },
-});
-
 export const BunTarget = new Juke.Target({
-  dependsOn: [BunInstallTarget],
   parameters: [CiParameter],
   inputs: [
     'tgui/**/package.json',
   ],
   executes: ({ get }) => {
-    Juke.logger.info('Installing TGUI dependencies, this might take a while...');
     return bun('install', '--ignore-scripts', get(CiParameter));
   },
 })
@@ -513,6 +468,25 @@ export const TgsTarget = new Juke.Target({
     Juke.logger.info('Prepending TGS define');
     prependDefines('TGS');
   },
+});
+
+Juke.chdir('../..', import.meta.url);
+Juke.setup({ file: import.meta.url }).then((code) => {
+  // We're using the currently available quirk in Juke Build, which
+  // prevents it from exiting on Windows, to wait on errors.
+  if (code !== 0 && process.argv.includes('--wait-on-error')) {
+    Juke.logger.error('Please inspect the error and close the window.');
+    return;
+  }
+
+  if (TGS_MODE) {
+    // workaround for ESBuild process lingering
+    // Once https://github.com/privatenumber/esbuild-loader/pull/354 is merged and updated to, this can be removed
+    setTimeout(() => process.exit(code), 10000);
+  }
+  else {
+    process.exit(code);
+  }
 });
 
 

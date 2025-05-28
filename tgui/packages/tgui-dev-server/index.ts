@@ -4,7 +4,9 @@
  * @license MIT
  */
 
-import { reloadByondCache } from './reloader.js';
+import { mkdirSync } from 'node:fs';
+
+import { reloadByondCache } from './reloader';
 import { createCompiler } from './webpack.js';
 
 const noHot = process.argv.includes('--no-hot');
@@ -12,6 +14,8 @@ const noTmp = process.argv.includes('--no-tmp');
 const reloadOnce = process.argv.includes('--reload');
 
 async function setupServer() {
+  mkdirSync('./public/.tmp', { recursive: true });
+
   const compiler = await createCompiler({
     hot: !noHot,
     useTmpFolder: !noTmp,

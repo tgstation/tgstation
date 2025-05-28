@@ -4,18 +4,17 @@
  * @license MIT
  */
 
-import fs from 'node:fs';
-import { basename } from 'node:path';
+import path from 'node:path';
 
 import { SourceMapConsumer } from 'source-map';
 import { parse as parseStackTrace } from 'stacktrace-parser';
 
 import { createLogger } from '../logging.js';
-import { resolveGlob } from '../util.js';
+import { resolveGlob } from '../util';
 
 const logger = createLogger('retrace');
 
-const sourceMaps = [];
+const sourceMaps: any[] = [];
 
 export async function loadSourceMaps(bundleDir) {
   // Destroy and garbage collect consumers
@@ -24,13 +23,13 @@ export async function loadSourceMaps(bundleDir) {
     consumer.destroy();
   }
   // Load new sourcemaps
-  const paths = await resolveGlob(bundleDir, '*.map');
-  for (let path of paths) {
+  const files = await resolveGlob(bundleDir, '*.map');
+  for (let file of files) {
     try {
-      const file = basename(path).replace('.map', '');
-      const consumer = await new SourceMapConsumer(
-        JSON.parse(fs.readFileSync(path, 'utf8')),
-      );
+      const loc = path.resolve(bundleDir, file);
+      const parsed = await Bun.file(loc).json();
+      const consumer = new SourceMapConsumer(parsed);
+
       sourceMaps.push({ file, consumer });
     } catch (err) {
       logger.error(err);
@@ -52,7 +51,7 @@ export function retrace(stack) {
       }
       // Find the correct source map
       const sourceMap = sourceMaps.find((sourceMap) => {
-        return frame.file.includes(sourceMap.file);
+        return frame.file!.includes(sourceMap.file);
       });
       if (!sourceMap) {
         return frame;
@@ -60,7 +59,7 @@ export function retrace(stack) {
       // Map the frame
       const { consumer } = sourceMap;
       const mappedFrame = consumer.originalPositionFor({
-        source: basename(frame.file),
+        source: path.basename(frame.file),
         line: frame.lineNumber,
         column: frame.column,
       });

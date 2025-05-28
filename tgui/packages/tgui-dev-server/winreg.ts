@@ -13,13 +13,11 @@ import { createLogger } from './logging.js';
 
 const logger = createLogger('winreg');
 
-/**
- * Query a registry key.
- * @param {string} path
- * @param {string} key
- * @return {Promise<string>}
- */
-export async function regQuery(path, key) {
+/** Query a registry key. */
+export async function regQuery(
+  path: string,
+  key: string,
+): Promise<string | undefined> {
   if (process.platform !== 'win32') {
     return;
   }

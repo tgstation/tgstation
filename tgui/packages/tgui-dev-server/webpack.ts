@@ -9,29 +9,33 @@ import { createRequire } from 'node:module';
 
 import { loadSourceMaps, setupLink } from './link/server.js';
 import { createLogger } from './logging.js';
-import { reloadByondCache } from './reloader.js';
-import { resolveGlob } from './util.js';
+import { reloadByondCache } from './reloader';
+import { resolveGlob } from './util';
 
 const logger = createLogger('rspack');
 
-/**
- * @param {any} config
- * @return {RspackCompiler}
- */
-export async function createCompiler(options) {
+export async function createCompiler(
+  options: Record<string, any>,
+): Promise<RspackCompiler> {
   const compiler = new RspackCompiler();
   await compiler.setup(options);
 
   return compiler;
 }
 
+type RspackImport = typeof import('@rspack/core');
+
 class RspackCompiler {
-  async setup(options) {
+  public rspack: RspackImport;
+  public config: Record<string, any>;
+  public bundleDir: string;
+
+  async setup(options: Record<string, any>): Promise<void> {
     // Create a require context that is relative to project root
     // and retrieve all necessary dependencies.
     const requireFromRoot = createRequire(import.meta.dirname + '/../../..');
-    /** @type {typeof import('@rspack/core')} */
-    const rspack = await requireFromRoot('@rspack/core');
+
+    const rspack: RspackImport = await requireFromRoot('@rspack/core');
 
     const createConfig = await requireFromRoot('./rspack.config.cjs');
     const createDevConfig = await requireFromRoot('./rspack.config-dev.cjs');
