@@ -168,7 +168,7 @@
 /atom/movable/screen/memories
 	name = "Memories"
 	icon = 'icons/hud/screen_midnight.dmi'
-	icon_state = "talk_wheel" //temp
+	icon_state = "memories"
 	screen_loc = ui_memories_menu
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
