@@ -152,7 +152,7 @@
 		if(HAS_TRAIT(patient, TRAIT_XRAY_VISION))
 			. += span_danger("[patient.p_Their()] pupils give an eerie glow!\n")//mob has X-ray vision
 		if(braaaainz)
-			. =+ span_danger("<b>[patient.p_Their()] eyeballs are webbed by fiberous black tendrils!\n</b>")
+			. += span_danger("<b>[patient.p_Their()] eyeballs are webbed by fiberous black tendrils!\n</b>")
 
 	return .
 
@@ -179,7 +179,7 @@
 			organ_list += (organ_to_display.gender == "plural" ? organ_to_display.name : "\an [organ_to_display.name]")
 
 	var/pill_count = 0
-	for(var/datum/action/item_action/activate_pill/AP in M.actions)
+	for(var/datum/action/item_action/activate_pill/AP in patient.actions)
 		pill_count++
 
 	if(patient == user)//if we're looking on our own mouth
