@@ -43,8 +43,8 @@ export const GhostMenu = (props) => {
   return (
     <Window
       title="Ghost Menu"
-      width={600}
-      height={650}
+      width={500}
+      height={630}
       buttons={
         !!has_fun && (
           <>
@@ -67,7 +67,7 @@ export const GhostMenu = (props) => {
     >
       <Window.Content>
         <Stack fill>
-          <Stack.Item>
+          <Stack.Item width="40%">
             <Section title="Player & Round Info">
               <RoundSection />
             </Section>
@@ -78,7 +78,7 @@ export const GhostMenu = (props) => {
               <GhostSettingsSection />
             </Section>
           </Stack.Item>
-          <Stack.Item width="65%">
+          <Stack.Item width="60%">
             <Section scrollable fill title="Ghost Role Notifications">
               <NotificationPreferences />
             </Section>
