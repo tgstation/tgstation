@@ -748,3 +748,24 @@
   vinylspiders:
   - qol: Slimes will no longer have a chance to move when being put in BZ enviroments
       via the xenobiology console
+2025-05-28:
+  Ben10Omintrix:
+  - rscadd: added stoats to the game
+  Melbert:
+  - bugfix: Cargorilla is back
+  - rscadd: Silicons get a HUD animation when they perish.
+  SmArtKar:
+  - balance: Neruwhine can no longer roll voidwalker traumas.
+  - bugfix: Fixed the planetary gravity damage status effect not clearing itself when
+      you lose the voided trauma.
+  Y0SH1M4S73R:
+  - rscadd: Advanced camera consoles now have usb ports. Connected circuits can get
+      the position the camera is viewing, get the location of targeted entities, and
+      provide the console with actions that the user can activate.
+  necromanceranne:
+  - bugfix: The BR-38 no longer has a completely unintended accuracy malus built in.
+  throwawayuseless:
+  - bugfix: Wavelength is now the main factor in how long your microlaser takes to
+      activate, rather than intensity for some reason.
+  timothymtorres:
+  - code_imp: Properly document circuitboard vars
