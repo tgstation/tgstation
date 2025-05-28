@@ -515,7 +515,7 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 		msg += span_notice("You woke up late, missing the crew briefing. \
 			Collect yourself and check in with your head of staff (or the Captain) to get up to speed on the situation.")
 	else if(roundstart_job == JOB_CAPTAIN)
-		msg += span_notice("The autopilot will brief you as to why you were awakened shortly. \
+		msg += span_notice("Check the communnication's console messages for an update from the AI as to why you were awakened. \
 			Afterwards, it is your duty to gather the crew in the briefing room and inform them of the situation.")
 	else
 		msg += span_notice("You should collect yourself and get familiar with your department. \

@@ -782,3 +782,34 @@ SUBSYSTEM_DEF(ticker)
 	CONFIG_SET(number/damage_multiplier, 0.75)
 	GLOB.dynamic_forced_extended = TRUE
 	GLOB.communications_controller.block_command_report += 1
+	generate_background()
+
+/proc/generate_background()
+	var/datum/comm_message/mission = new()
+	mission.title = "Mission Report"
+	mission.content = "The ship is on course. \
+		All systems are nominal, and the ship is on schedule to arrive by [EXPECTED_STATION_YEAR]. \
+		Smooth sailing ahead, Captain."
+
+	GLOB.communications_controller.send_message(mission, print = FALSE, unique = TRUE)
+
+	var/datum/comm_message/announcement_ai = new()
+	announcement_ai.title = "AI Alert: [EXPECTED_STATION_YEAR + rand(23, 46)]"
+	announcement_ai.content = "RECORD DISCREPANCY DETECTED: \
+		The expected year of arrival has been come and passed, and yet, \
+		all readings indicate that the mission is far from complete - despite all systems reporting nominal. \
+		A thorough investigation of the autopilot system and the crew's records reveal \
+		that an unknown crewmember has sabotaged the autopilot, putting the ship far off course. \
+		Assesment: Awakening the crew from cryostasis would risk further sabotage, as the traitor is still at large. \
+		Course of action: Continue to monitor the autopilot while the crew remains in stasis. The destination is still within reach."
+
+	GLOB.communications_controller.send_message(announcement_ai, print = FALSE, unique = TRUE)
+
+	var/datum/comm_message/announcement = new()
+	announcement.title = "Autopilot Alert: [CURRENT_STATION_YEAR]"
+	announcement.content = "EMERGENCY ALERT: \
+		The ship is on a collision course with an asteroid field. \
+		Initiating emergency crew awakening protocol. \
+		If action is not taken in the next 1.5 hours, the ship will be destroyed."
+
+	GLOB.communications_controller.send_message(announcement, print = FALSE, unique = TRUE)

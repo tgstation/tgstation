@@ -15,7 +15,7 @@
 /// In-universe, SS13 is set 540 years in the future from the real-world day, hence this number for determining the year-offset for the in-game year.
 #define STATION_YEAR_OFFSET GLOB.real_year_offset
 
-GLOBAL_VAR_INIT(real_year_offset, 0)
+GLOBAL_VAR_INIT(real_year_offset, 200)
 GLOBAL_VAR_INIT(expected_year_offset, 540)
 
 #define JANUARY 1

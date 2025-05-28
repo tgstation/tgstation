@@ -108,6 +108,8 @@ GLOBAL_LIST_EMPTY(antagonists)
 	antagpanel_category = "Custom"
 	show_name_in_check_antagonists = TRUE //They're all different
 	var/datum/team/custom_team
+	var/hello
+	var/goodbye
 
 /datum/antagonist/custom/create_team(datum/team/team)
 	custom_team = team
@@ -120,7 +122,39 @@ GLOBAL_LIST_EMPTY(antagonists)
 	if(!custom_name)
 		return
 	name = custom_name
-	..()
+	var/custom_obj = stripped_input(admin, "Default objective?", "Custom antag", "Cause chaos.")
+	if(custom_obj)
+		objectives += new /datum/objective/custom(custom_obj)
+	hello = stripped_input(admin, "Custom greeting message (leave empty for default):", "Custom antag", "")
+	return ..()
+
+/datum/antagonist/custom/admin_remove(mob/user)
+	goodbye = stripped_input(user, "Custom farewell message (leave empty for default):", "Custom antag", "")
+	return ..()
+
+/datum/antagonist/custom/greet()
+	if(hello)
+		to_chat(owner, span_big(hello))
+	else
+		. = ..()
+	owner.announce_objectives()
+
+/datum/antagonist/custom/farewell()
+	if(goodbye)
+		to_chat(owner, span_big(goodbye))
+	else
+		. = ..()
+
+/datum/antagonist/custom/roundend_report()
+	if(isnull(owner))
+		CRASH("Antagonist datum without owner")
+
+	var/list/report = list()
+
+	report += printplayer(owner)
+	report += printobjectives(objectives)
+
+	return jointext(report, "<br>")
 
 ///ANTAGONIST UI STUFF
 
@@ -438,7 +472,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 ///Called when removing antagonist using admin tools
 /datum/antagonist/proc/admin_remove(mob/user)
-	if(!user)
+	if(!user || !owner)
 		return
 	message_admins("[key_name_admin(user)] has removed [name] antagonist status from [key_name_admin(owner)].")
 	log_admin("[key_name(user)] has removed [name] antagonist status from [key_name(owner)].")
