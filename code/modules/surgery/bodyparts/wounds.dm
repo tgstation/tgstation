@@ -73,7 +73,7 @@
 	if(HAS_TRAIT(owner, TRAIT_EASYBLEED) && !HAS_TRAIT(owner, TRAIT_NOBLOOD) && ((woundtype == WOUND_PIERCE) || (woundtype == WOUND_SLASH)))
 		damage *= 1.5
 
-	var/base_roll = rand(1, round(damage * WOUND_DAMAGE_EXPONENT))
+	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
 	injury_roll = check_woundings_mods(woundtype, injury_roll, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
 	var/list/series_wounding_mods = check_series_wounding_mods()
