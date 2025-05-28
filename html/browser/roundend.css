@@ -21,15 +21,18 @@
 }
 
 .marooned {
-	color: rgb(109, 109, 255); font-weight: bold;
+	color: rgb(109, 109, 255);
+	font-weight: bold;
 }
 
 .service {
-	color: #6eaa2c; font-weight: bold;
+	color: #6eaa2c;
+	font-weight: bold;
 }
 
 .header {
-	font-size: 24px; font-weight: bold;
+	font-size: 24px;
+	font-weight: bold;
 }
 
 .big {
@@ -41,7 +44,7 @@
 }
 
 .codephrase {
-	color : #ef2f3c;
+	color: #ef2f3c;
 }
 
 .redborder {
@@ -53,7 +56,7 @@
 }
 
 .clockborder {
-	border-bottom: 2px solid #B18B25;
+	border-bottom: 2px solid #b18b25;
 }
 
 .stationborder {
@@ -88,12 +91,12 @@ body {
 	z-index: 1;
 	width: 220px;
 	font-size: 14px;
-    border-width: 4px;
+	border-width: 4px;
 	border-style: solid;
 	border-color: #272727;
-    background: #363636;
-    color: white;
-    top: 100%;
+	background: #363636;
+	color: white;
+	top: 100%;
 	left: 30px;
 }
 

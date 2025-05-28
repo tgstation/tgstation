@@ -9,7 +9,10 @@ const empty_pr = {
 		mergeable: true,
 	},
 };
-const empty_label_set = await get_updated_label_set({ github: null, context: { payload: empty_pr } });
+const empty_label_set = await get_updated_label_set({
+	github: null,
+	context: { payload: empty_pr },
+});
 assert.equal(empty_label_set.length, 0, "No labels should be added");
 
 const cl = `
@@ -19,7 +22,7 @@ My Awesome PR
 add: Adds Awesome Stuff
 refactor: refactored some code
 :/cl:
-`
+`;
 const cl_pr = {
 	action: "opened",
 	pull_request: {
@@ -28,10 +31,19 @@ const cl_pr = {
 		mergeable: false,
 	},
 };
-const cl_label_set = await get_updated_label_set({ github: null, context: { payload: cl_pr } });
-assert.ok(cl_label_set.includes("Merge Conflict"), "Merge Conflict label should be added");
+const cl_label_set = await get_updated_label_set({
+	github: null,
+	context: { payload: cl_pr },
+});
+assert.ok(
+	cl_label_set.includes("Merge Conflict"),
+	"Merge Conflict label should be added",
+);
 assert.ok(cl_label_set.includes("Feature"), "Feature label should be added");
-assert.ok(!cl_label_set.includes("Refactor"), "Refactor label should not be added");
+assert.ok(
+	!cl_label_set.includes("Refactor"),
+	"Refactor label should not be added",
+);
 
 const title_pr = {
 	action: "opened",
@@ -40,5 +52,8 @@ const title_pr = {
 		mergeable: true,
 	},
 };
-const title_label_set = await get_updated_label_set({ github: null, context: { payload: title_pr } });
+const title_label_set = await get_updated_label_set({
+	github: null,
+	context: { payload: title_pr },
+});
 assert.ok(title_label_set.includes("Logging"), "Logging label should be added");

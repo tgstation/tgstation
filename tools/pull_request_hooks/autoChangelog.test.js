@@ -10,12 +10,12 @@ assert.equal(
 			add: Adds new stuff
 			add: Adds more stuff
 			/:cl:
-		`)
+		`),
 	),
 
 	`author: "DenverCoder9"
 delete-after: True
 changes:
   - rscadd: "Adds new stuff"
-  - rscadd: "Adds more stuff"`
+  - rscadd: "Adds more stuff"`,
 );

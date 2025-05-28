@@ -31,7 +31,6 @@ h3 {
 	border-bottom: 0.1667em solid;
 }
 
-
 img {
 	-ms-interpolation-mode: nearest-neighbor;
 	image-rendering: pixelated;
@@ -156,7 +155,7 @@ img {
 	background-color: #ececec;
 }
 
-.grid-item:active .grid-item-text  {
+.grid-item:active .grid-item-text {
 	background-color: #dfdfdf;
 }
 
@@ -239,7 +238,7 @@ body.dark {
 	background-color: #252525;
 }
 
-.dark .button.active  {
+.dark .button.active {
 	background-color: #313131;
 	color: #d4dfec;
 	border-bottom-color: #d4dfec;
@@ -250,7 +249,7 @@ body.dark {
 	background-color: #202020;
 }
 
-.dark .grid-item{
+.dark .grid-item {
 	color: #b2c4dd;
 }
 

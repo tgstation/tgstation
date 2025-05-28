@@ -6,7 +6,7 @@ This guide is going to assume you already know roughly how tgui-next works, how 
 
 Backend in almost every case does not require any changes. In particularly heavy ui cases, something to be aware of is the new `ui_static_data()` proc. This proc allows you to split some data sent to the interface off into data that will only be sent on ui initialize and when manually updated by elsewhere in the code. Useful for things like cargo where you have a very large set of mostly identical code.
 
-Keep in mind that for uis where *all* data doesn't need to be live updating, you can just toggle off autoupdate for the ui instead of messing with static data.
+Keep in mind that for uis where _all_ data doesn't need to be live updating, you can just toggle off autoupdate for the ui instead of messing with static data.
 
 ## Frontend
 
@@ -23,7 +23,9 @@ Ractive has a fairly different templating syntax from React.
 You likely already know that React data inserts look like this
 
 ```jsx
-{data.example_data}
+{
+  data.example_data;
+}
 ```
 
 Ractive looks very similar, the only real difference is that React uses one paranthesis instead of two.
@@ -37,7 +39,7 @@ However, you may occasionally come across data inserts that instead of referenci
 `AnimatedNumber` is used like this
 
 ```jsx
-<AnimatedNumber value={data.example_data}/>
+<AnimatedNumber value={data.example_data} />
 ```
 
 Make sure you don't forget to import it.
@@ -57,9 +59,9 @@ A ractive `if` (only render if result of expression is true) looks like this
 The equivalent React would be
 
 ```jsx
-{!!data.condition && (
-  <Fragment>Example Render</Fragment>
-)}
+{
+  !!data.condition && <Fragment>Example Render</Fragment>;
+}
 ```
 
 This might look a bit intimidating compared to the reactive part but it's not as complicated as it seems:
@@ -73,6 +75,7 @@ This might look a bit intimidating compared to the reactive part but it's not as
 You don't really need to know all this to understand how to use it, but I find it helps with understanding when things go wrong.
 
 Ractive conditionals can have an `else` as well
+
 ```ractive
 {{#if data.condition}}
   value
@@ -85,30 +88,28 @@ Similarly to the previous example, just add a `||` operator to handle the
 "falsy" condition:
 
 ```jsx
-{!!data.condition && (
-  <Fragment>
-    value
-  </Fragment>
-) || (
-  <Fragment>
-    other value
-  </Fragment>
-)}
+{
+  (!!data.condition && <Fragment>value</Fragment>) || (
+    <Fragment>other value</Fragment>
+  );
+}
 ```
 
 There's also our good old friend - the ternary:
 
 ```jsx
-{data.condition ? 'value' : 'other value'}
+{
+  data.condition ? 'value' : 'other value';
+}
 ```
 
 Keep in mind you can also use tags here like the conditional example,
 and you can mix string literals, values, and tags as well.
 
 ```jsx
-{data.is_robot ? (
-  <Button content="Robot Button"/>
-) : 'Not a robot'}
+{
+  data.is_robot ? <Button content="Robot Button" /> : 'Not a robot';
+}
 ```
 
 ### Loops
@@ -135,6 +136,7 @@ Objects are represented by `{}`, arrays by `[]`
 `list("bla", "blo")` would become `["bla", "blo"]` and `list("foo" = 1, "bar" = 2)` would become `{"foo": 1, "bar": 2}`
 
 First things first, above the `return` of the function you're making the interface in, you're going to want to add something like this
+
 ```jsx
 const things = data.things || [];
 ```
@@ -142,12 +144,11 @@ const things = data.things || [];
 This ensures that you'll never be reading a null entry by mistake. Substitute `{}` for objects as appropriate.
 
 If it's an array, you'll want to do this in the template
+
 ```jsx
-{things.map(thing => (
-  <Fragment>
-    Thing {thing.number} is here!
-  </Fragment>
-))}
+{
+  things.map((thing) => <Fragment>Thing {thing.number} is here!</Fragment>);
+}
 ```
 
 `map` is a function that calls a passed function (a lambda) on each entry, and returns the value. You should already know that returned tags and values (except `false`) get rendered, so that's how it's rendering each time.
@@ -161,11 +162,13 @@ This is quite a bit higher concept than ractive's each statements, so feel free 
 Now for objects, there's a genuinely pretty gross syntax here. We apoligize, it's related to ie8 compatibility nonsense.
 
 ```jsx
-{map((value, key) => (
-  <Fragment>
-    Key is {key}, value is {value}
-  </Fragment>
-))(fooObject)}
+{
+  map((value, key) => (
+    <Fragment>
+      Key is {key}, value is {value}
+    </Fragment>
+  ))(fooObject);
+}
 ```
 
 Again, sorry for this syntax. `fooObject` would be the object being iterated on, value would be the value of the iterated entry on the list, and key would be the key. the naming of value and key isn't important here, but knowing that it goes `value`, `key` in that order is important.
@@ -200,12 +203,12 @@ This would iterate using the first contents each time, or display the second opt
 To do a similar thing in JSX, just check if array is empty like this:
 
 ```jsx
-{fooArray.length === 0 && 'fooArray is empty.'}
-{fooArray.map(foo => (
-  <Fragment>
-    Foo is {foo}
-  </Fragment>
-))}
+{
+  fooArray.length === 0 && 'fooArray is empty.';
+}
+{
+  fooArray.map((foo) => <Fragment>Foo is {foo}</Fragment>);
+}
 ```
 
 ### Extra Stuff
@@ -229,9 +232,7 @@ Equivalent of `<ui-display>` is `<Section>`
 becomes
 
 ```jsx
-<Section title="Status">
-  Contents
-</Section>
+<Section title="Status">Contents</Section>
 ```
 
 A feature sometimes used is if `ui-display` has the `button` property, it will contain a `partial` command. This becomes the `buttons` property on `Section`:
@@ -248,11 +249,7 @@ A feature sometimes used is if `ui-display` has the `button` property, it will c
 becomes
 
 ```jsx
-<Section
-  title="Status"
-  buttons={(
-    <Button />
-  )}>
+<Section title="Status" buttons={<Button />}>
   Contents
 </Section>
 ```
@@ -276,12 +273,8 @@ becomes
 
 ```jsx
 <LabeledList>
-  <LabeledList.Item label="power">
-    No Power
-  </LabeledList.Item>
-  <LabeledList.Item label="connection">
-    No Connection
-  </LabeledList.Item>
+  <LabeledList.Item label="power">No Power</LabeledList.Item>
+  <LabeledList.Item label="connection">No Connection</LabeledList.Item>
 </LabeledList>
 ```
 
@@ -302,9 +295,7 @@ Also good to know that if you need the contents of a `LabeledList.Item` to be co
 becomes
 
 ```jsx
-<NoticeBox>
-  Notice stuff!
-</NoticeBox>
+<NoticeBox>Notice stuff!</NoticeBox>
 ```
 
 ### `ui-button`
@@ -326,7 +317,10 @@ becomes
 <Button
   content="Click"
   disabled={data.condition}
-  onClick={() => act('ui_action', {
-    param: value,
-  })}/>
+  onClick={() =>
+    act('ui_action', {
+      param: value,
+    })
+  }
+/>
 ```

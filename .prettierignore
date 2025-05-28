@@ -1,3 +1,10 @@
 node_modules
 public
 .tmp
+changelogs
+font-awesome
+jquery
+juke
+package-lock.json
+.yarn
+yarn.lock

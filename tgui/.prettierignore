@@ -6,7 +6,6 @@
 /yarn.lock
 /.pnp.*
 
-.swcrc
 /docs
 /packages/tgui-polyfill
 /packages/tgfont/static
