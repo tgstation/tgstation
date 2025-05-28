@@ -17,8 +17,8 @@ jobs:
           key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
           restore-keys: |
             ${{ runner.os }}-spacemandmm-
-      - name: Setup Node
-        uses: ./.github/actions/setup_node
+      - name: Setup Bun
+        uses: ./.github/actions/setup_bun
       - name: Restore Bootstrap cache
         uses: actions/cache@v4
         with:
@@ -26,10 +26,6 @@ jobs:
           key: ${{ runner.os }}-bootstrap-${{ hashFiles('tools/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-bootstrap-
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.2.14
       - name: Restore Rust cache
         uses: actions/cache@v4
         with:

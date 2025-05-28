@@ -33,7 +33,7 @@ const SEARCH_LOCATIONS = [
 
 let cacheRoot: string;
 
-export async function findCacheRoot() {
+export async function findCacheRoot(): Promise<string | undefined> {
   if (cacheRoot) {
     return cacheRoot;
   }
@@ -45,18 +45,16 @@ export async function findCacheRoot() {
       continue;
     }
 
-    try {
-      const paths = await resolveGlob(pattern);
-      if (!paths) {
-        continue;
-      }
+    const paths = await resolveGlob(pattern);
+    if (!paths) {
+      continue;
+    }
 
-      if (paths.length > 0) {
-        cacheRoot = paths[0];
-        onCacheRootFound(cacheRoot);
-        return cacheRoot;
-      }
-    } catch (err) {}
+    if (paths.length > 0) {
+      cacheRoot = paths[0];
+      onCacheRootFound(cacheRoot);
+      return cacheRoot;
+    }
   }
 
   // Query the Windows Registry
@@ -106,7 +104,7 @@ export async function reloadByondCache(bundleDir: string): Promise<void> {
       continue;
     }
     for (let file of garbage) {
-      Bun.file(file).delete();
+      await Bun.file(file).delete();
     }
 
     try {
