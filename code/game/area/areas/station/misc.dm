@@ -12,6 +12,8 @@
 	name = "Station Areas"
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "station"
+	parallax_movedir = WEST
+	parallax_speed_mod = 0.1
 
 /*
 * Tramstation unique areas

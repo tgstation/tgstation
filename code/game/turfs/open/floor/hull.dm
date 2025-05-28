@@ -5,6 +5,7 @@
 	icon_state = "regular_hull"
 	initial_gas_mix = AIRLESS_ATMOS
 	temperature = TCMB
+	slowdown = 1
 
 /turf/open/floor/engine/hull/air
 	name = "interior hull plating"

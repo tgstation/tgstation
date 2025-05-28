@@ -149,7 +149,7 @@ type CrewSensor = {
 type CrewConsoleData = {
   sensors: CrewSensor[];
   link_allowed: BooleanLike;
-  blue_alert: BooleanLike;
+  green_alert: BooleanLike;
 };
 
 const CrewTable = () => {
@@ -208,10 +208,10 @@ const CrewTable = () => {
               value={searchQuery}
             />
           </Flex.Item>
-          {!data.blue_alert && (
+          {!data.green_alert && (
             <Flex.Item grow>
-              <NoticeBox color="blue" align="center" height="24px" mt={1}>
-                Position tracking disabled on blue alert.
+              <NoticeBox color="green" align="center" height="24px" mt={1}>
+                Position tracking disabled on green alert.
               </NoticeBox>
             </Flex.Item>
           )}
@@ -306,12 +306,12 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
         )}
       </Table.Cell>
       <Table.Cell align="center">
-        {area !== '~' && area !== undefined && data.blue_alert ? (
+        {area !== '~' && area !== undefined && data.green_alert ? (
           area
         ) : (
           <Icon
-            name={data.blue_alert ? 'question' : 'times'}
-            color={data.blue_alert ? '#ffffff' : '#801308'}
+            name={data.green_alert ? 'question' : 'times'}
+            color={data.green_alert ? '#ffffff' : '#801308'}
             size={1}
           />
         )}

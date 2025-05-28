@@ -61,6 +61,8 @@
 	///How many turfs this shuttle has. Used to check against max shuttle size when expanding expandable shuttles.
 	var/turf_count = 0
 
+	COOLDOWN_DECLARE(move_sound)
+
 /obj/docking_port/mobile/Initialize(mapload, list/areas)
 	. = ..()
 
@@ -439,6 +441,24 @@
 	if(mode == SHUTTLE_IGNITING)
 		check_transit_zone()
 
+	switch(mode)
+		if(SHUTTLE_CALL)
+			if(COOLDOWN_FINISHED(src, move_sound))
+				if(!prearrivalTime && timeLeft(1) <= HYPERSPACE_END_TIME)
+					hyperspace_sound(HYPERSPACE_END)
+					COOLDOWN_START(src, move_sound, 5 SECONDS)
+				else
+					hyperspace_sound(HYPERSPACE_LAUNCH, volume = 50)
+					COOLDOWN_START(src, move_sound, 4 SECONDS)
+		if(SHUTTLE_PREARRIVAL)
+			if(COOLDOWN_FINISHED(src, move_sound))
+				hyperspace_sound(HYPERSPACE_END)
+				COOLDOWN_START(src, move_sound, prearrivalTime * 1.2)
+		if(SHUTTLE_IGNITING)
+			if(COOLDOWN_FINISHED(src, move_sound))
+				hyperspace_sound(HYPERSPACE_WARMUP)
+				COOLDOWN_START(src, move_sound, ignitionTime * 1.2)
+
 	if(timeLeft(1) > 0)
 		return
 	// If we can't dock or we don't have a transit slot, wait for 20 ds,
@@ -498,9 +518,8 @@
 /obj/docking_port/mobile/proc/parallax_slowdown()
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
-		shuttle_area.parallax_movedir = FALSE
-	if(assigned_transit?.assigned_area)
-		assigned_transit.assigned_area.parallax_movedir = FALSE
+		shuttle_area.parallax_movedir = WEST
+	assigned_transit.assigned_area?.parallax_movedir = WEST
 	var/list/L0 = return_ordered_turfs(x, y, z, dir)
 	for (var/thing in L0)
 		var/turf/T = thing
@@ -663,7 +682,7 @@
 			return shuttle_computer
 	return null
 
-/obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas)
+/obj/docking_port/mobile/proc/hyperspace_sound(phase, list/areas, volume = 100)
 	var/selected_sound
 	switch(phase)
 		if(HYPERSPACE_WARMUP)
@@ -694,7 +713,7 @@
 	for(var/mob/zlevel_mobs as anything in SSmobs.clients_by_zlevel[z])
 		var/dist_far = get_dist(zlevel_mobs, distant_source)
 		if(dist_far <= long_range && dist_far > range)
-			zlevel_mobs.playsound_local(distant_source, "sound/runtime/hyperspace/[selected_sound]_distance.ogg", 100)
+			zlevel_mobs.playsound_local(distant_source, "sound/runtime/hyperspace/[selected_sound]_distance.ogg", volume)
 		else if(dist_far <= range)
 			var/source
 			if(!engine_list.len)
@@ -706,7 +725,7 @@
 					if(dist_near < closest_dist)
 						source = engines
 						closest_dist = dist_near
-			zlevel_mobs.playsound_local(source, "sound/runtime/hyperspace/[selected_sound].ogg", 100)
+			zlevel_mobs.playsound_local(source, "sound/runtime/hyperspace/[selected_sound].ogg", volume)
 
 // Losing all initial engines should get you 2
 // Adding another set of engines at 0.5 time

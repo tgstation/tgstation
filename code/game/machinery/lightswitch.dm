@@ -75,6 +75,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 /obj/machinery/light_switch/interact(mob/user)
 	. = ..()
 	set_lights(!area.lightswitch)
+	playsound(src, 'sound/event/switch.ogg', 50, FALSE, SHORT_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 
 /obj/machinery/light_switch/screwdriver_act(mob/living/user, obj/item/tool)
 	user.visible_message(span_notice("[user] starts unscrewing [src]..."), span_notice("You start unscrewing [src]..."))

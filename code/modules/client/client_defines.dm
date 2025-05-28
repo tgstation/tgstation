@@ -203,6 +203,8 @@
 	var/dont_animate_parallax
 	/// Direction our current area wants to move parallax
 	var/parallax_movedir = 0
+	/// Movespeed mod of our current area
+	var/parallax_speed_mod = 1
 	/// How many parallax layers to show our client
 	var/parallax_layers_max = 4
 	/// Timers for the area directional animation, one for each layer

@@ -19,10 +19,11 @@
 		C.parallax_layers_cached = list()
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_1(null, src)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_2(null, src)
-		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, src)
+		// C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/planet(null, src)
 		if(SSparallax.random_layer)
 			C.parallax_layers_cached += new SSparallax.random_layer.type(null, src, FALSE, SSparallax.random_layer)
 		C.parallax_layers_cached += new /atom/movable/screen/parallax_layer/layer_3(null, src)
+
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
 
@@ -109,11 +110,11 @@
 	update_parallax(screen_mob)
 
 // This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)
-/datum/hud/proc/set_parallax_movedir(new_parallax_movedir = NONE, skip_windups, mob/viewmob)
+/datum/hud/proc/set_parallax_movedir(new_parallax_movedir = NONE, skip_windups, mob/viewmob, parallax_speed_mod = 1)
 	. = FALSE
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
-	if(new_parallax_movedir == C.parallax_movedir)
+	if(new_parallax_movedir == C.parallax_movedir && parallax_speed_mod == C.parallax_speed_mod)
 		return
 
 	var/animation_dir = new_parallax_movedir || C.parallax_movedir
@@ -133,9 +134,9 @@
 		deltimer(C.parallax_animate_timers[key])
 	C.parallax_animate_timers = list()
 	for(var/atom/movable/screen/parallax_layer/layer as anything in C.parallax_layers)
-		var/scaled_time = PARALLAX_LOOP_TIME / layer.speed
+		var/scaled_time = PARALLAX_LOOP_TIME / (layer.speed * parallax_speed_mod)
 		if(new_parallax_movedir == NONE) // If we're stopping, we need to stop on the same dime, yeah?
-			scaled_time = PARALLAX_LOOP_TIME
+			scaled_time = PARALLAX_LOOP_TIME / min(1, parallax_speed_mod)
 		longest_timer = max(longest_timer, scaled_time)
 
 		if(skip_windups)
@@ -153,6 +154,7 @@
 
 	C.dont_animate_parallax = world.time + min(longest_timer, PARALLAX_LOOP_TIME)
 	C.parallax_movedir = new_parallax_movedir
+	C.parallax_speed_mod = parallax_speed_mod
 
 /datum/hud/proc/update_parallax_motionblur(client/C, atom/movable/screen/parallax_layer/layer, new_parallax_movedir, matrix/new_transform)
 	if(!C)
@@ -178,7 +180,7 @@
 
 	var/area/areaobj = posobj.loc
 	// Update the movement direction of the parallax if necessary (for shuttles)
-	set_parallax_movedir(areaobj.parallax_movedir, FALSE, screenmob)
+	set_parallax_movedir(areaobj.parallax_movedir, FALSE, screenmob, areaobj.parallax_speed_mod)
 
 	var/force = FALSE
 	if(!C.previous_turf || (C.previous_turf.z != posobj.z))
@@ -248,7 +250,7 @@
 /mob/proc/update_parallax_teleport() //used for arrivals shuttle
 	if(client?.eye && hud_used && length(client.parallax_layers))
 		var/area/areaobj = get_area(client.eye)
-		hud_used.set_parallax_movedir(areaobj.parallax_movedir, TRUE)
+		hud_used.set_parallax_movedir(areaobj.parallax_movedir, TRUE, null, areaobj.parallax_speed_mod)
 
 // Root object for parallax, all parallax layers are drawn onto this
 INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_home)
@@ -262,7 +264,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_home)
 // We need parallax to always pass its args down into initialize, so we immediate init it
 INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer
-	icon = 'icons/effects/parallax.dmi'
+	// icon = 'icons/effects/parallax.dmi'
+	icon = 'icons/effects/parallax_alt.dmi'
 	var/speed = 1
 	var/offset_x = 0
 	var/offset_y = 0
@@ -320,17 +323,20 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 
 /atom/movable/screen/parallax_layer/layer_1
 	icon_state = "layer1"
-	speed = 0.6
+	// speed = 0.6
+	speed = 0.1
 	layer = 1
 
 /atom/movable/screen/parallax_layer/layer_2
 	icon_state = "layer2"
-	speed = 1
+	// speed = 1
+	speed = 0.05
 	layer = 2
 
 /atom/movable/screen/parallax_layer/layer_3
 	icon_state = "layer3"
-	speed = 1.4
+	// speed = 1.4
+	speed = 0.25
 	layer = 3
 
 /atom/movable/screen/parallax_layer/planet

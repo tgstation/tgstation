@@ -157,11 +157,11 @@
 
 
 /obj/docking_port/mobile/proc/cleanup_runway(obj/docking_port/stationary/new_dock, list/old_turfs, list/new_turfs, list/areas_to_move, list/underlying_areas, list/moved_atoms, rotation, movement_direction, area/fallback_area)
-	fallback_area.afterShuttleMove(0)
+	fallback_area.afterShuttleMove(WEST)
 	for(var/i in 1 to underlying_areas.len)
 		CHECK_TICK
 		var/area/underlying_area = underlying_areas[i]
-		underlying_area.afterShuttleMove(0)
+		underlying_area.afterShuttleMove(WEST)
 
 	// Parallax handling
 	// This needs to be done before the atom after move

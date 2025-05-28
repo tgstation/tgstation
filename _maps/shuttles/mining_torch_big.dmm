@@ -39,7 +39,10 @@
 "bB" = (
 /obj/structure/chair/comfy/shuttle,
 /obj/machinery/digital_clock/directional/north,
-/turf/open/floor/iron/large,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 1
+	},
+/turf/open/floor/iron/half,
 /area/shuttle/mining_ship/medbay)
 "bQ" = (
 /obj/machinery/status_display/evac/directional/south,
@@ -87,13 +90,14 @@
 "dp" = (
 /obj/structure/sign/warning/vacuum/external/directional/north,
 /obj/machinery/light/small/directional/north,
-/obj/structure/chair/comfy/shuttle,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 1
-	},
 /obj/machinery/camera/autoname/directional/north{
 	network = list("mine")
 	},
+/obj/effect/turf_decal/box/white,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/closet/emcloset/anchored,
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/eva)
 "dY" = (
@@ -127,7 +131,10 @@
 	dir = 2
 	},
 /obj/effect/turf_decal/stripes/corner,
-/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor/preopen{
+	id = "mining_away_realfake_firedoors";
+	name = "Manual Firedoors"
+	},
 /turf/open/floor/iron/textured,
 /area/shuttle/mining_ship/storage)
 "gi" = (
@@ -314,7 +321,10 @@
 /obj/item/radio{
 	pixel_x = 6
 	},
-/turf/open/floor/iron/large,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 1
+	},
+/turf/open/floor/iron/half,
 /area/shuttle/mining_ship/cockpit)
 "kh" = (
 /obj/effect/turf_decal/stripes/line{
@@ -341,7 +351,12 @@
 /obj/machinery/computer/station_alert{
 	dir = 4
 	},
-/turf/open/floor/iron/large,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 8
+	},
+/turf/open/floor/iron/half{
+	dir = 8
+	},
 /area/shuttle/mining_ship/cockpit)
 "kV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -373,7 +388,10 @@
 /obj/effect/mapping_helpers/airlock/access/any/supply/qm,
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
-/obj/machinery/door/firedoor/heavy,
+/obj/machinery/door/poddoor/preopen{
+	id = "mining_away_realfake_firedoors";
+	name = "Manual Firedoors"
+	},
 /turf/open/floor/iron/textured,
 /area/shuttle/mining_ship/storage)
 "mr" = (
@@ -493,7 +511,10 @@
 /obj/structure/chair/comfy/shuttle,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/light/cold/dim/directional/north,
-/turf/open/floor/iron/large,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 1
+	},
+/turf/open/floor/iron/half,
 /area/shuttle/mining_ship/medbay)
 "qF" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -527,7 +548,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm/directional/west,
+/obj/machinery/button/door/directional/west{
+	id = "mining_away_realfake_firedoors";
+	name = "Manual Firedoor Control"
+	},
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/storage)
 "rQ" = (
@@ -710,7 +734,10 @@
 	req_access = null;
 	req_one_access = list("qm","command","mining","mining_station")
 	},
-/turf/open/floor/iron/large,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 1
+	},
+/turf/open/floor/iron/half,
 /area/shuttle/mining_ship/cockpit)
 "xz" = (
 /obj/machinery/pipedispenser,
@@ -730,7 +757,10 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/firealarm/directional/west,
+/obj/machinery/button/door/directional/west{
+	id = "mining_away_realfake_firedoors";
+	name = "Manual Firedoor Control"
+	},
 /turf/open/floor/iron/large,
 /area/shuttle/mining_ship/eva)
 "yj" = (
@@ -797,7 +827,10 @@
 /obj/machinery/sleeper/stasis{
 	dir = 4
 	},
-/turf/open/floor/iron/large,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 1
+	},
+/turf/open/floor/iron/half,
 /area/shuttle/mining_ship/medbay)
 "Cs" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
@@ -854,7 +887,10 @@
 /obj/machinery/sleeper/cryo{
 	dir = 8
 	},
-/turf/open/floor/iron/large,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 1
+	},
+/turf/open/floor/iron/half,
 /area/shuttle/mining_ship/medbay)
 "DG" = (
 /turf/closed/wall/mineral/plastitanium,
@@ -1449,7 +1485,12 @@
 	},
 /obj/structure/cable,
 /obj/machinery/requests_console/auto_name/directional/north,
-/turf/open/floor/iron/large,
+/obj/effect/turf_decal/tile/blue/half{
+	dir = 8
+	},
+/turf/open/floor/iron/half{
+	dir = 8
+	},
 /area/shuttle/mining_ship/cockpit)
 "ZF" = (
 /obj/structure/reagent_dispensers/fueltank,

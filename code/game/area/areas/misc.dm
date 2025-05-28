@@ -6,7 +6,8 @@
 	always_unpowered = TRUE
 	static_lighting = FALSE
 	base_lighting_alpha = 255
-	base_lighting_color = COLOR_STARLIGHT
+	// base_lighting_color = COLOR_STARLIGHT
+	base_lighting_color = COLOR_WHITE
 	power_light = FALSE
 	power_equip = FALSE
 	power_environ = FALSE
@@ -17,6 +18,8 @@
 	sound_environment = SOUND_AREA_SPACE
 	ambient_buzz = null //Space is deafeningly quiet
 	allow_shuttle_docking = TRUE
+	parallax_movedir = WEST
+	parallax_speed_mod = 0.1
 
 /area/space/nearstation
 	icon_state = "space_near"

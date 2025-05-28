@@ -84,6 +84,7 @@
 	var/default_gravity = ZERO_GRAVITY
 
 	var/parallax_movedir = 0
+	var/parallax_speed_mod = 1
 
 	var/ambience_index = AMBIENCE_GENERIC
 	///A list of sounds to pick from every so often to play to clients.

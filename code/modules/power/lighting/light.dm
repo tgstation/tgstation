@@ -247,6 +247,7 @@
 					burn_out()
 			else
 				use_power = ACTIVE_POWER_USE
+				playsound(src, 'sound/event/lightson.ogg', 50, FALSE, MEDIUM_RANGE_SOUND_EXTRARANGE, ignore_walls = FALSE)
 				set_light(
 					l_range = brightness_set,
 					l_power = power_set,
