@@ -10,7 +10,7 @@
     "tgui:analyze": "rspack --analyze",
     "tgui:bench": "rspack --env TGUI_BENCH=1 && bun packages/tgui-bench/index.js",
     "tgui:build": "rspack build",
-    "tgui:dev": "bun packages/tgui-dev-server/index.js",
+    "tgui:dev": "bun packages/tgui-dev-server/index.ts",
     "tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
     "tgui:prettier": "prettier --check .",
     "tgui:sonar": "eslint packages -c .eslintrc-sonar.yml",
