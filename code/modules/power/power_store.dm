@@ -207,7 +207,7 @@
 /obj/item/stock_parts/power_store/proc/on_reagent_change(datum/reagents/holder)
 	SIGNAL_HANDLER
 
-	rigged = corrupted || !!holder.has_reagent(/datum/reagent/toxin/plasma, 5) //has_reagent returns the reagent datum
+	rigged = corrupted || holder.has_reagent(/datum/reagent/toxin/plasma, 5) //has_reagent returns the reagent datum
 
 /obj/item/stock_parts/power_store/proc/explode()
 	if(!charge)
