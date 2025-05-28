@@ -217,7 +217,7 @@
 		else
 			. += span_notice("[patient] doesn't have any organs in [patient.p_their()] mouth.\n")
 		if(pill_count)
-			. += span_notice("[patient] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [patient.p_their()] teeth.\n"
+			. += span_notice("[patient] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [patient.p_their()] teeth.\n")
 
 	//assess any suffocation damage
 	var/hypoxia_status = patient.getOxyLoss() > 20
