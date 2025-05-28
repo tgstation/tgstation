@@ -6,14 +6,14 @@
  * https://github.com/stylemistake/juke-build
  */
 
-import { bun } from "./lib/bun.js";
-import { downloadFile } from "./lib/download.js";
-import { DreamDaemon, DreamMaker, NamedVersionFile } from "./lib/byond.js";
+import { bun } from "./lib/bun";
+import { downloadFile } from "./lib/download";
+import { DreamDaemon, DreamMaker, NamedVersionFile } from "./lib/byond";
 import Bun from "bun";
 import fs from "node:fs";
 import Juke from "./juke/index.js";
-import { formatDeps } from "./lib/helpers.js";
-import { prependDefines } from "./lib/tgs.js";
+import { formatDeps } from "./lib/helpers";
+import { prependDefines } from "./lib/tgs";
 
 export const TGS_MODE = process.env.CBT_BUILD_MODE === "TGS";
 
