@@ -251,7 +251,6 @@
 	var/mob/living/carbon/carbon_patient = target
 	var/body_part = carbon_patient.parse_zone_with_bodypart(user.zone_selected)
 	var/oxy_loss = carbon_patient.getOxyLoss()
-	var/tox_loss = carbon_patient.getToxLoss()
 
 	var/heart_strength
 	var/pulse_pressure
@@ -289,14 +288,14 @@
 				lung_noises = FALSE
 
 			else if(lungs.damage > 10)//if breathing, check for lung damage
-				render_list += "<span class='danger ml-1'>You hear fluid in [target.p_their()] lungs!</span>\n"
+				render_list += "<span class='notice ml-1'>You hear fluid in [target.p_their()] lungs!</span>\n")
 			else if(oxy_loss > 10)//if they have suffocation damage
 				render_list += "<span class='danger ml-1'>[target.p_Theyre()] breathing heavily!</span>\n"
 			else
 				render_list += "<span class='notice ml-1'>[target.p_Theyre()] breathing normally.</span>\n"//they're okay :D
 			if(lung_noises)
 				breath_sound = lungs.hear_breath_noise(user)
-				render_list += "<span class='notice ml-1'>Their lungs produce [breath_sound]. </span>\n"
+				render_list += "<span class='notice ml-1'>[target.p_Their()] lungs produce [breath_sound].</span>\n"
 			//assess heart
 			if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
 				if(isnull(heart) || !heart.is_beating() || carbon_patient.stat == DEAD)

@@ -110,7 +110,9 @@
 		return SHAME
 	user.visible_message(span_suicide("[user] is putting [src] close to [user.p_their()] eyes and turning it on! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return FIRELOSS
-
+#define span_notice_ml(text) "<span class='notice ml-1'>[text]</span>"
+#define span_danger_ml(text) "<span class='danger ml-1'>[text]</span>"
+#define span_info_ml(text) "<span class='info ml-1'>[text]</span>"
 /obj/item/flashlight/proc/eye_examine(mob/living/carbon/human/patient, mob/living/user)
 	. = list()
 	if((patient.head && patient.head.flags_cover & HEADCOVERSEYES) || (patient.wear_mask && patient.wear_mask.flags_cover & MASKCOVERSEYES) || (patient.glasses && patient.glasses.flags_cover & GLASSESCOVERSEYES))
@@ -120,9 +122,7 @@
 	var/obj/item/organ/eyes/eyes = patient.get_organ_slot(ORGAN_SLOT_EYES)
 	var/obj/item/organ/brain = patient.get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/organ/zombie_infection/tumor = patient.get_organ_slot(ORGAN_SLOT_ZOMBIE) //this slot only ever holds zombie tumors, so we can just check if this exists
-	var/braaaainz = FALSE
-	if(tumor && tumor.causes_damage) //only damage causing zombie given infections. no detecting stealthy romerol poisoning unless you've got a scanner gate, silly.
-		braaaainz = TRUE
+	var/braaaainz = tumor?.causes_damage //prevents steath tumors (admin bullshittery or romerol) from showing up to preserve stealthiness
 	if(!eyes)
 		to_chat(user, span_warning("[patient] doesn't have any eyes!"))
 		return
@@ -134,25 +134,25 @@
 		. += span_info("You direct [src] to into your eyes:\n")
 
 		if(patient.is_blind())
-			. += span_notice("You're not entirely certain what you were expecting...\n")
+			. += span_notice_ml("You're not entirely certain what you were expecting...\n")
 		else
-			. += span_notice("Trippy!\n")
+			. += span_notice_ml("Trippy!\n")
 
 	else
 		user.visible_message(span_warning("[user] directs [src] to [patient]'s eyes."), ignored_mobs = user)
 		. += span_info("You direct [src] to [patient]'s eyes:\n")
 
 		if(patient.stat == DEAD || patient.is_blind() || patient.get_eye_protection() >= FLASH_PROTECTION_WELDER) //this used to be just > but literally nothing accessable in the game gave greater than welder without also covering eyes
-			. += span_danger("[patient.p_Their()] pupils don't react to the light!\n")//mob is dead
+			. += span_danger_ml("[patient.p_Their()] pupils don't react to the light!\n")//mob is dead
 		else if(brain.damage > 20)
-			. += span_danger("[patient.p_Their()] pupils contract unevenly!\n")//mob has sustained damage to their brain
+			. += span_danger_ml("[patient.p_Their()] pupils contract unevenly!\n")//mob has sustained damage to their brain
 		else
-			. += span_notice("[patient.p_Their()] pupils narrow.\n")//they're okay :D
+			. += span_notice_ml("[patient.p_Their()] pupils narrow.\n")//they're okay :D
 
 		if(HAS_TRAIT(patient, TRAIT_XRAY_VISION))
-			. += span_danger("[patient.p_Their()] pupils give an eerie glow!\n")//mob has X-ray vision
+			. += span_danger_ml("[patient.p_Their()] pupils give an eerie glow!\n")//mob has X-ray vision
 		if(braaaainz)
-			. += span_danger("<b>[patient.p_Their()] eyeballs are webbed by fiberous black tendrils!\n</b>")
+			. += span_danger_ml("<b>[patient.p_Their()] eyeballs are webbed by fiberous black tendrils!\n</b>")
 
 	return .
 
@@ -198,53 +198,57 @@
 						can_use_mirror = mirror.pixel_x < 0
 
 		patient.visible_message(span_notice("[patient] directs [src] to [patient.p_their()] mouth."), ignored_mobs = user)
-		. += span_info("You point [src] into your mouth:\n")
+		. += span_info_ml("You point [src] into your mouth:\n")
 		if(!can_use_mirror)
 			to_chat(user, span_notice("You can't see anything without a mirror."))
 			return
 		if(organ_count)
-			. += span_notice("Inside your mouth [organ_count > 1 ? "are" : "is"] [organ_list].\n")
+			. += span_notice_ml("Inside your mouth [organ_count > 1 ? "are" : "is"] [organ_list].\n")
 		else
-			. += span_notice("There's nothing inside your mouth.\n")
+			. += span_notice_ml("There's nothing inside your mouth.\n")
 		if(pill_count)
-			. += span_notice("You have [pill_count] implanted pill[pill_count > 1 ? "s" : ""].\n")
+			. += span_notice_ml("You have [pill_count] implanted pill[pill_count > 1 ? "s" : ""].\n")
 
 	else //if we're looking in someone elses mouth
 		user.visible_message(span_notice("[user] directs [src] to [patient]'s mouth."), ignored_mobs = user)
-		. += span_info("You point [src] into [patient]'s mouth:\n")
+		. += span_info_ml("You point [src] into [patient]'s mouth:\n")
 		if(organ_count)
-			. += span_notice("Inside [patient.p_their()] mouth [organ_count > 1 ? "are" : "is"] [organ_list].\n")
+			. += span_notice_ml("Inside [patient.p_their()] mouth [organ_count > 1 ? "are" : "is"] [organ_list].\n")
 		else
-			. += span_notice("[patient] doesn't have any organs in [patient.p_their()] mouth.\n")
+			. += span_notice_ml("[patient] doesn't have any organs in [patient.p_their()] mouth.\n")
 		if(pill_count)
-			. += span_notice("[patient] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [patient.p_their()] teeth.\n")
+			. += span_notice_ml("[patient] has [pill_count] pill[pill_count > 1 ? "s" : ""] implanted in [patient.p_their()] teeth.\n")
 
 	//assess any suffocation damage
 	var/hypoxia_status = patient.getOxyLoss() > 20
 
 	if(patient == user)
 		if(hypoxia_status)
-			. += span_danger("Your lips appear blue!\n")//you have suffocation damage
+			. += span_danger_ml("Your lips appear blue!\n")//you have suffocation damage
 		else
-			. += span_notice("Your lips appear healthy.\n")//you're okay!
+			. += span_notice_ml("Your lips appear healthy.\n")//you're okay!
 	else
 		if(hypoxia_status)
-			. += span_danger("[patient.p_Their()] lips appear blue!\n")//they have suffocation damage
+			. += span_danger_ml("[patient.p_Their()] lips appear blue!\n")//they have suffocation damage
 		else
-			. += span_notice("[patient.p_Their()] lips appear healthy.\n")//they're okay!
+			. += span_notice_ml("[patient.p_Their()] lips appear healthy.\n")//they're okay!
 
 	//assess blood level
 	if(patient == user)
-		. += span_info("You press a finger to your gums:\n")
+		. += span_info_ml("You press a finger to your gums:\n")
 	else
-		. += span_info("You press a finger to [patient.p_their()] gums:\n")
+		. += span_info_ml("You press a finger to [patient.p_their()] gums:\n")
 
 	if(patient.blood_volume <= BLOOD_VOLUME_SAFE && patient.blood_volume > BLOOD_VOLUME_OKAY)
-		. += span_danger("Color returns slowly!\n")//low blood
+		. += span_danger_ml("Color returns slowly!\n")//low blood
 	else if(patient.blood_volume <= BLOOD_VOLUME_OKAY)
-		. += span_danger("Color does not return!\n")//critical blood
+		. += span_danger_ml("Color does not return!\n")//critical blood
 	else
-		. += span_notice("Color returns quickly.\n")//they're okay :D
+		. += span_notice_ml("Color returns quickly.\n")//they're okay :D
+
+#undef span_notice_ml
+#undef span_danger_ml
+#undef span_info_ml
 
 /obj/item/flashlight/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!ishuman(interacting_with))
