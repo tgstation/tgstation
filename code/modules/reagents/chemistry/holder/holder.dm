@@ -717,8 +717,10 @@
 	// that could possibly eat up a lot of memory needlessly
 	// if most data lists are read-only.
 	if(trans_data["viruses"])
-		var/list/v = trans_data["viruses"]
-		trans_data["viruses"] = v.Copy()
+		var/list/viruses = list()
+		for (var/datum/disease/disease as anything in trans_data["viruses"])
+			viruses += disease.Copy()
+		trans_data["viruses"] = viruses
 
 	return trans_data
 
