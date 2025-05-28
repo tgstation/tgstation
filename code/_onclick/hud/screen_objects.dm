@@ -481,9 +481,17 @@
 /atom/movable/screen/sleep/Click()
 	if(HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
 		return
-	flick("[base_icon_state]_flick", src)
+	if(usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
+		var/tgui_answer = tgui_alert(usr, "You sure you want to sleep for a while?", "Sleeping", list("Yes", "No"))
+		if(tgui_answer == "Yes")
+			var/mob/living/L = usr
+			L.SetSleeping(400)
+	else
+		flick("[base_icon_state]_flick", src)
 
 /atom/movable/screen/sleep/DblClick(location, control, params)
+	if(usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
+		return
 	if(isliving(usr))
 		var/mob/living/L = usr
 		L.SetSleeping(400)
