@@ -2,7 +2,6 @@
   "private": true,
   "type": "module",
   "devDependencies": {
-    "@types/bun": "^1.2.14",
-    "@types/node": "^22.15.24"
+    "@types/bun": "^1.2.15"
   }
 }
