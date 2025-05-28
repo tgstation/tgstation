@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   DmIcon,
-  Flex,
   Section,
   Stack,
   Tabs,
@@ -82,11 +81,11 @@ type Info = {
   objectives: Objective[];
   can_change_objective: BooleanLike;
   paths: Paths[];
-  knowledge_shop: Knowledge[];
+  knowledge_shop: Knowledge[][];
 };
 
 const IntroductionSection = (props) => {
-  const { data, act } = useBackend<Info>();
+  const { data } = useBackend<Info>();
   const { objectives, ascended, can_change_objective } = data;
 
   return (
@@ -210,7 +209,7 @@ const GuideSection = () => {
   );
 };
 
-const InformationSection = (props) => {
+const InformationSection = () => {
   const { data } = useBackend<Info>();
   const { charges, total_sacrifices, ascended } = data;
   return (
@@ -260,77 +259,16 @@ const KnowledgeTree = (props) => {
           ? 'None!'
           : knowledge_tiers.map((tier, i) => (
               <Stack.Item key={i}>
-                <Flex
+                <Stack
                   justify="center"
                   align="center"
                   backgroundColor="transparent"
                   wrap="wrap"
                 >
                   {tier.nodes.map((node) => (
-                    <Flex.Item key={node.name}>
-                      <Button
-                        color="transparent"
-                        tooltip={`${node.name}:
-                          ${node.desc}`}
-                        onClick={
-                          node.disabled || node.finished
-                            ? undefined
-                            : () => act('research', { path: node.path })
-                        }
-                        width={node.ascension ? '192px' : '64px'}
-                        height={node.ascension ? '192px' : '64px'}
-                        m="8px"
-                        style={{
-                          borderRadius: '50%',
-                        }}
-                      >
-                        <DmIcon
-                          icon="icons/ui_icons/antags/heretic/knowledge.dmi"
-                          icon_state={
-                            node.disabled
-                              ? 'node_locked'
-                              : node.finished
-                                ? 'node_finished'
-                                : node.bgr
-                          }
-                          height={node.ascension ? '192px' : '64px'}
-                          width={node.ascension ? '192px' : '64px'}
-                          top="0px"
-                          left="0px"
-                          position="absolute"
-                        />
-                        <DmIcon
-                          icon={node.icon_params.icon}
-                          icon_state={node.icon_params.state}
-                          frame={node.icon_params.frame}
-                          direction={node.icon_params.dir}
-                          movement={node.icon_params.moving}
-                          height={node.ascension ? '152px' : '64px'}
-                          width={node.ascension ? '152px' : '64px'}
-                          top={node.ascension ? '20px' : '0px'}
-                          left={node.ascension ? '20px' : '0px'}
-                          position="absolute"
-                        />
-                        <Box
-                          position="absolute"
-                          top="0px"
-                          left="0px"
-                          backgroundColor="black"
-                          textColor="white"
-                          bold
-                        >
-                          {!node.finished &&
-                            (node.cost > 0 ? node.cost : 'FREE')}
-                        </Box>
-                      </Button>
-                      {!!node.ascension && (
-                        <Box textAlign="center" fontSize="32px">
-                          <span style={hereticPurple}>DUSK</span>
-                        </Box>
-                      )}
-                    </Flex.Item>
+                    <KnowledgeNode key={node.path} node={node} />
                   ))}
-                </Flex>
+                </Stack>
                 <hr />
               </Stack.Item>
             ))}
@@ -339,64 +277,136 @@ const KnowledgeTree = (props) => {
   );
 };
 
-const KnowledgeShop = (props) => {
-  const { data, act } = useBackend<Info>();
-  const { knowledge_shop } = data;
+type KnowledgeNodeProps = {
+  node: Knowledge;
+};
 
-  const knowledges = () => {
-    if (!knowledge_shop.length) {
-      return 'None!';
-    }
-    return knowledge_shop?.map((knowledge, index) => (
-      <Stack.Item key="notOnlyAIndex(fillItIn)">
-        Tier {index + 1}
-        <hr />
-      </Stack.Item>
-    ));
-  };
+const KnowledgeNode = ({ node }: KnowledgeNodeProps) => {
+  const { act } = useBackend();
+  return (
+    <Stack.Item key={node.name}>
+      <Button
+        color="transparent"
+        tooltip={`${node.name}:
+          ${node.desc}`}
+        onClick={
+          node.disabled || node.finished
+            ? undefined
+            : () => act('research', { path: node.path })
+        }
+        width={node.ascension ? '192px' : '64px'}
+        height={node.ascension ? '192px' : '64px'}
+        m="8px"
+        style={{
+          borderRadius: '50%',
+        }}
+      >
+        <DmIcon
+          icon="icons/ui_icons/antags/heretic/knowledge.dmi"
+          icon_state={
+            node.disabled
+              ? 'node_locked'
+              : node.finished
+                ? 'node_finished'
+                : node.bgr
+          }
+          height={node.ascension ? '192px' : '64px'}
+          width={node.ascension ? '192px' : '64px'}
+          top="0px"
+          left="0px"
+          position="absolute"
+        />
+        <DmIcon
+          icon={node.icon_params?.icon}
+          icon_state={node.icon_params?.state}
+          frame={node.icon_params?.frame}
+          direction={node.icon_params?.dir}
+          movement={node.icon_params?.moving}
+          height={node.ascension ? '152px' : '64px'}
+          width={node.ascension ? '152px' : '64px'}
+          top={node.ascension ? '20px' : '0px'}
+          left={node.ascension ? '20px' : '0px'}
+          position="absolute"
+        />
+        <Box
+          position="absolute"
+          top="0px"
+          left="0px"
+          backgroundColor="black"
+          textColor="white"
+          bold
+        >
+          {!node.finished && (node.cost > 0 ? node.cost : 'FREE')}
+        </Box>
+      </Button>
+      {!!node.ascension && (
+        <Box textAlign="center" fontSize="32px">
+          <span style={hereticPurple}>DUSK</span>
+        </Box>
+      )}
+    </Stack.Item>
+  );
+};
+
+const KnowledgeShop = () => {
+  const { data } = useBackend<Info>();
+  const { knowledge_shop } = data;
 
   return (
     <Section title="Knowledge Shop" fill scrollable>
       <Stack vertical fill>
-        <hr />
-        <Stack.Item>Tier 2</Stack.Item>
-        <hr />
-        <Stack.Item>Tier 3</Stack.Item>
-        <hr />
-        <Stack.Item>Tier 4</Stack.Item>
-        <hr />
-        <Stack.Item>Tier 5</Stack.Item>
-        <hr />
+        <Knowledges />
       </Stack>
     </Section>
   );
+
+  function Knowledges() {
+    if (!knowledge_shop.length) {
+      return 'None!';
+    }
+    return knowledge_shop?.map((tier, index) => (
+      <Stack.Item key={`tier-${index}`}>
+        Tier {index + 1}
+        <Stack fill scrollable wrap="wrap">
+          {tier.map((knowledge) => (
+            <Stack.Item key={`knowledge-${knowledge.path}`}>
+              <KnowledgeNode node={knowledge} />
+            </Stack.Item>
+          ))}
+        </Stack>
+        <hr />
+      </Stack.Item>
+    ));
+  }
 };
 
-const ResearchInfo = (props) => {
+const ResearchInfo = () => {
   const { data } = useBackend<Info>();
   const { charges } = data;
 
   return (
-    <Stack vertical fill>
-      <Stack.Item fontSize="20px" textAlign="center">
+    <>
+      <Stack.Item mb={1.5} fontSize="20px" textAlign="center">
         You have <b>{charges || 0}</b>&nbsp;
         <span style={hereticBlue}>
           knowledge point{charges !== 1 ? 's' : ''}
         </span>{' '}
         to spend.
       </Stack.Item>
-      <Stack.Item grow>
-        <KnowledgeTree />
-      </Stack.Item>
-      <Stack.Item grow>
-        <KnowledgeShop />
-      </Stack.Item>
-    </Stack>
+      <Stack fill>
+        <Stack.Item grow>
+          <KnowledgeTree />
+        </Stack.Item>
+        <Stack.Item grow>
+          <KnowledgeShop />
+        </Stack.Item>
+      </Stack>
+    </>
   );
 };
 
-const PathInfo = (props) => {
-  const { data, act } = useBackend<Info>();
+const PathInfo = () => {
+  const { data } = useBackend<Info>();
   const { charges } = data;
 
   return (
@@ -413,7 +423,7 @@ const PathInfo = (props) => {
   );
 };
 
-export const AntagInfoHeretic = (props) => {
+export const AntagInfoHeretic = () => {
   const { data } = useBackend<Info>();
   const { ascended } = data;
 

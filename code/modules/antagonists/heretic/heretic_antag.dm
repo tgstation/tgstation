@@ -151,8 +151,21 @@
 
 	return knowledge_data
 
-/datum/antagonist/heretic/ui_data(mob/user)
+
+/datum/antagonist/heretic/ui_interact(mob/user, datum/tgui/ui)
+	. = ..()
+	ui?.set_autoupdate(FALSE)
+
+/datum/antagonist/heretic/ui_static_data(mob/user)
 	var/list/data = list()
+
+	data["objectives"] = get_objectives()
+	data["can_change_objective"] = can_assign_self_objectives
+
+	var/list/path_routes = list("path" = list())
+	for(var/datum/heretic_knowledge_tree_column/path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
+		path_routes["path"] += path.route
+	data["paths"] = heretic_path == PATH_START ? path_routes : list("path" = heretic_path)
 
 	data["charges"] = knowledge_points
 	data["total_sacrifices"] = total_sacrifices
@@ -164,7 +177,7 @@
 	// has to update its disabled state based on whether all objectives are complete,
 	// makes this very difficult. I'll figure it out one day maybe
 	for(var/datum/heretic_knowledge/knowledge as anything in researched_knowledge)
-		var/list/knowledge_data = get_knowledge_data(knowledge,TRUE)
+		var/list/knowledge_data = get_knowledge_data(knowledge, TRUE)
 
 		while(heretic_knowledge_tree[knowledge][HKT_DEPTH] > tiers.len)
 			tiers += list(list("nodes"=list()))
@@ -172,7 +185,7 @@
 		tiers[heretic_knowledge_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
 
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
-		var/list/knowledge_data = get_knowledge_data(knowledge,FALSE)
+		var/list/knowledge_data = get_knowledge_data(knowledge, FALSE)
 
 		// Final knowledge can't be learned until all objectives are complete.
 		if(ispath(knowledge, /datum/heretic_knowledge/ultimate))
@@ -185,29 +198,15 @@
 
 	data["knowledge_tiers"] = tiers
 
-
 	var/list/shop_knowledge = list()
 	// this means that using a for loop gives us the value, instead, no key, that means, the listnowledges)
-	for(var/list/list_tier as anything in side_knowledges)
-		for(var/datum/heretic_knowledge/knowledge as anything in list_tier)
+	for(var/index in 1 to length(side_knowledges))
+		shop_knowledge += list(list())
+		for(var/datum/heretic_knowledge/knowledge as anything in side_knowledges[index])
 			var/list/knowledge_data = get_knowledge_data(knowledge, FALSE)
-			// no nodes here, just knowledge_data in a list, inside another list
-			shop_knowledge += list(knowledge_data)
+			shop_knowledge[index] += list(knowledge_data)
 
 	data["knowledge_shop"] = shop_knowledge
-
-	return data
-
-/datum/antagonist/heretic/ui_static_data(mob/user)
-	var/list/data = list()
-
-	data["objectives"] = get_objectives()
-	data["can_change_objective"] = can_assign_self_objectives
-
-	var/list/path_routes = list("path" = list())
-	for(var/datum/heretic_knowledge_tree_column/path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
-		path_routes["path"] += path.route
-	data["paths"] = heretic_path == PATH_START ? path_routes : list("path" = heretic_path)
 
 	return data
 
@@ -643,10 +642,14 @@
  * Used in callbacks for passive gain over time.
  */
 /datum/antagonist/heretic/proc/passive_influence_gain()
-	knowledge_points++
+	adjust_knowledge_points(1)
 	if(owner.current.stat <= SOFT_CRIT)
 		to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer)
+
+/datum/antagonist/heretic/proc/adjust_knowledge_points(amount)
+	knowledge_points += min(0, amount) // Don't allow negative knowledge points
+	update_static_data_for_all_viewers()
 
 /datum/antagonist/heretic/roundend_report()
 	var/list/parts = list()
@@ -771,7 +774,7 @@
 	if(!change_num || QDELETED(src))
 		return
 
-	knowledge_points += change_num
+	adjust_knowledge_points(change_num)
 
 /**
  * Admin proc for giving a heretic a focus.

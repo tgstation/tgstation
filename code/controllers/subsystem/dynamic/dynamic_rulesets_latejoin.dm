@@ -217,7 +217,7 @@
 	new_heretic.knowledge_points += round((world.time - SSticker.round_start_time) / new_heretic.passive_gain_timer)
 	// BUT let's not give smugglers a million points on arrival.
 	// Limit it to four missed passive gain cycles (4 points).
-	new_heretic.knowledge_points = min(new_heretic.knowledge_points, 5)
+	new_heretic.adjust_knowledge_points(min(new_heretic.knowledge_points, 5))
 
 	return TRUE
 
