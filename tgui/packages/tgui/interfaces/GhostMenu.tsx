@@ -79,9 +79,7 @@ export const GhostMenu = (props) => {
             </Section>
           </Stack.Item>
           <Stack.Item width="60%">
-            <Section scrollable fill title="Ghost Role Notifications">
-              <NotificationPreferences />
-            </Section>
+            <NotificationPreferences />
           </Stack.Item>
         </Stack>
       </Window.Content>
@@ -195,7 +193,7 @@ const GhostSettingsSection = (props) => {
         </Button>
       </Stack.Item>
       {!lag_switch_on && (
-        <Stack.Item>
+        <Stack.Item mx={1}>
           Extra View Distance:
           <NumberInput
             width="30px"
@@ -236,7 +234,27 @@ const NotificationPreferences = (props) => {
   });
 
   return (
-    <>
+    <Section
+      scrollable
+      fill
+      title="Ghost Role Notifications"
+      buttons={
+        <>
+          <Button
+            icon="check"
+            color="good"
+            tooltip="Enable all notifications."
+            onClick={() => act('turn_all_on')}
+          />
+          <Button
+            icon="times"
+            color="bad"
+            tooltip="Disable all notifications."
+            onClick={() => act('turn_all_off')}
+          />
+        </>
+      }
+    >
       {ignores.map((ignore) => (
         <Button
           fluid
@@ -248,6 +266,6 @@ const NotificationPreferences = (props) => {
           {ignore.desc}
         </Button>
       ))}
-    </>
+    </Section>
   );
 };
