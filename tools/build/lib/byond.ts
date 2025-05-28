@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import Juke from "../juke/index.js";
 import { regQuery } from "./winreg";
+import Bun from "bun";
 
 /** Cached path to DM compiler */
 let dmPath;

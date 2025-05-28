@@ -25,7 +25,7 @@ jobs:
       - name: Compile
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build_shell --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
+          tools/build/build.sh --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
       - name: Setup variable for output path
         run: |
           OUTPUT_DIR="target"
