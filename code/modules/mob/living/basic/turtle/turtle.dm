@@ -4,6 +4,7 @@
 #define REQUIRED_TREE_GROWTH 250
 #define UPPER_BOUND_VOLUME 50
 #define LOWER_BOUND_VOLUME 10
+#define FOOD_PROCESS_TIME 1 MINUTES
 
 /mob/living/basic/turtle
 	name = "turtle"
@@ -230,12 +231,13 @@
 
 /mob/living/basic/turtle/proc/post_eat(datum/source, obj/item/seeds/potential_food)
 	SIGNAL_HANDLER
+
 	if(is_type_in_typecache(potential_food, indigestible_seeds))
 		potential_food.forceMove(src)
 		addtimer(CALLBACK(src, PROC_REF(process_food), potential_food), 20 SECONDS)
 		return COMSIG_MOB_TERMINATE_EAT
 
-	addtimer(CALLBACK(src, PROC_REF(process_food), potential_food.product), 30 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(process_food), potential_food.product), FOOD_PROCESS_TIME)
 	return NONE
 
 /mob/living/basic/turtle/proc/process_food(potential_food)
@@ -243,7 +245,8 @@
 		return
 
 	if(ispath(potential_food))
-		new potential_food(drop_location())
+		var/atom/new_food = new potential_food(drop_location())
+		ADD_TRAIT(new_food, TRAIT_SYNTHETIC_FRUIT, INNATE_TRAIT)
 
 	else if((!isnull(potential_food)) && (potential_food in contents))
 		var/atom/movable/movable_food = potential_food
@@ -261,3 +264,4 @@
 #undef REQUIRED_TREE_GROWTH
 #undef UPPER_BOUND_VOLUME
 #undef LOWER_BOUND_VOLUME
+#undef FOOD_PROCESS_TIME
