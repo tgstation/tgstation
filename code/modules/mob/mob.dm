@@ -1593,6 +1593,18 @@
 		mind.memory_panel = new(usr, mind)
 	mind.memory_panel.ui_interact(usr)
 
+///Shows a tgui window with memories
+/mob/proc/open_memory_panel()
+	if(!mind)
+		var/fail_message = "You have no mind!"
+		if(isobserver(src))
+			fail_message += " You have to be in the current round at some point to have one."
+		to_chat(src, span_warning(fail_message))
+		return
+	if(!mind.memory_panel)
+		mind.memory_panel = new(usr, mind)
+	mind.memory_panel.ui_interact(usr)
+
 /datum/memory_panel
 	var/datum/mind/mind_reference
 	var/client/holder //client of whoever is using this datum

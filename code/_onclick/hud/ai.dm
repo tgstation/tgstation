@@ -247,6 +247,11 @@
 	using.screen_loc = ui_ai_language_menu
 	static_inventory += using
 
+// Memories
+	using = new /atom/movable/screen/memories(null, src)
+	using.screen_loc = ui_ai_memories_menu
+	static_inventory += using
+
 // Z-level floor change
 	using = new /atom/movable/screen/ai/floor_indicator(null, src) //These come with their own predefined screen locs
 	static_inventory += using

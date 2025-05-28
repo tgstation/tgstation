@@ -88,6 +88,11 @@
 	using.screen_loc = ui_borg_navigate_menu
 	static_inventory += using
 
+// Memories
+	using = new /atom/movable/screen/memories(null, src)
+	using.screen_loc = ui_borg_memories_menu
+	static_inventory += using
+
 //Radio
 	using = new /atom/movable/screen/robot/radio(null, src)
 	using.screen_loc = ui_borg_radio
