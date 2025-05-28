@@ -7,6 +7,19 @@ GLOBAL_LIST(heretic_research_tree)
 /datum/heretic_knowledge_tree_column
 	///Route that symbolizes what path this is
 	var/route
+	var/icon_state = "dark_blade"
+	var/difficulty = "Insane"
+	var/description = "A heretic knowledge tree column, used to define a path of knowledge."
+	var/list/icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "dark_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	var/list/pros = list("Is bad", "Is very bad", "Is extremely bad")
+	var/list/cons = list("Smells bad", "Looks bad", "Tastes bad")
+	var/list/tips = list("Don't use it", "Don't touch it", "Don't look at it")
 	///Used to determine if this is a side path or a main path
 	var/abstract_parent_type = /datum/heretic_knowledge_tree_column
 	///UI background

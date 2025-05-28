@@ -162,10 +162,18 @@
 	data["objectives"] = get_objectives()
 	data["can_change_objective"] = can_assign_self_objectives
 
-	var/list/path_routes = list("path" = list())
 	for(var/datum/heretic_knowledge_tree_column/path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
-		path_routes["path"] += path.route
-	data["paths"] = heretic_path == PATH_START ? path_routes : list("path" = heretic_path)
+		path = new path()
+		data["paths"] += list(list(
+			"route" = path.route,
+			"icon" = path.icon.Copy(),
+			"difficulty" = path.difficulty,
+			"description" = path.description,
+			"pros" = path.pros.Copy(),
+			"cons" = path.cons.Copy(),
+			"tips" = path.tips.Copy(),
+		))
+		qdel(path)
 
 	data["charges"] = knowledge_points
 	data["total_sacrifices"] = total_sacrifices

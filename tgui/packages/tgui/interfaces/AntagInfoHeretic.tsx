@@ -70,8 +70,13 @@ type KnowledgeTier = {
   nodes: Knowledge[];
 };
 
-type Paths = {
-  path: string;
+type HereticPath = {
+  route: string;
+  difficulty: string;
+  description: string;
+  pros: string[];
+  cons: string[];
+  tips: string[];
 };
 
 type Info = {
@@ -80,7 +85,7 @@ type Info = {
   ascended: BooleanLike;
   objectives: Objective[];
   can_change_objective: BooleanLike;
-  paths: Paths[];
+  paths: HereticPath[];
   knowledge_shop: Knowledge[][];
 };
 
@@ -407,19 +412,68 @@ const ResearchInfo = () => {
 
 const PathInfo = () => {
   const { data } = useBackend<Info>();
-  const { charges } = data;
+  const { paths } = data;
+  const [currentTab, setCurrentTab] = useState(0);
 
   return (
-    <Stack>
-      <Stack.Item fontSize="20px" textAlign="center">
-        You have <b>{charges || 0}</b>&nbsp;
-        <span style={hereticBlue}>
-          knowledge point{charges !== 1 ? 's' : ''}
-        </span>{' '}
-        to spend.
+    <Stack fill>
+      <Stack.Item>
+        <Tabs fluid vertical>
+          {paths.map((path, index) => (
+            <Tabs.Tab
+              key={index}
+              icon="info"
+              selected={currentTab === index}
+              onClick={() => setCurrentTab(index)}
+            >
+              {path.route}
+            </Tabs.Tab>
+          ))}
+        </Tabs>
       </Stack.Item>
-      Hello!
+      <Stack.Item grow>
+        <TabContent path={paths[currentTab]} />
+      </Stack.Item>
     </Stack>
+  );
+};
+
+const TabContent = ({ path }: { path: HereticPath }) => {
+  return (
+    <Section title={path.route} fill scrollable>
+      <Stack vertical>
+        <Stack.Item>
+          <b>Difficulty:</b> {path.difficulty}
+        </Stack.Item>
+        <Stack.Item>
+          <b>Description:</b> {path.description}
+        </Stack.Item>
+        <Stack.Item>
+          <b>Pros:</b>
+          <ul>
+            {path.pros.map((pro, index) => (
+              <li key={index}>{pro}</li>
+            ))}
+          </ul>
+        </Stack.Item>
+        <Stack.Item>
+          <b>Cons:</b>
+          <ul>
+            {path.cons.map((con, index) => (
+              <li key={index}>{con}</li>
+            ))}
+          </ul>
+        </Stack.Item>
+        <Stack.Item>
+          <b>Tips:</b>
+          <ul>
+            {path.tips.map((tip, index) => (
+              <li key={index}>{tip}</li>
+            ))}
+          </ul>
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 
@@ -427,7 +481,7 @@ export const AntagInfoHeretic = () => {
   const { data } = useBackend<Info>();
   const { ascended } = data;
 
-  const [currentTab, setTab] = useState(0);
+  const [currentTab, setTab] = useState(2);
 
   return (
     <Window width={750} height={635}>
