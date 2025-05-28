@@ -187,6 +187,7 @@ const GhostSettingsSection = (props) => {
       </Stack.Item>
       <Stack.Item>
         <Button
+          fluid
           tooltip="Restores your ghost character's appearance and username to that in your character preferences."
           onClick={() => act('restore_appearance')}
         >
@@ -195,7 +196,7 @@ const GhostSettingsSection = (props) => {
       </Stack.Item>
       {!lag_switch_on && (
         <Stack.Item>
-          Extra View size:
+          Extra View Distance:
           <NumberInput
             width="30px"
             step={1}
