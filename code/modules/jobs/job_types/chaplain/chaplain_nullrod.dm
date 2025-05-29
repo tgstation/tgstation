@@ -45,7 +45,7 @@
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
 		//special non-nullrod subtyped shit
 		rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
-		rods[/obj/item/organ/cyberimp/arm/shard/scythe] = "A shard that implants itself into your arm, \
+		rods[/obj/item/organ/cyberimp/arm/toolkit/shard/scythe] = "A shard that implants itself into your arm, \
 									allowing you to conjure forth a vorpal scythe. \
 									Allows you to behead targets for empowered strikes. \
 									Harms you if you dismiss the scythe without first causing harm to a creature. \
@@ -578,8 +578,9 @@
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
-	icon = 'icons/obj/toys/plushes.dmi'
-	icon_state = "map_plushie_carp"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/nullrod/carp"
+	post_init_icon_state = "map_plushie_carp"
 	greyscale_config = /datum/greyscale_config/plush_carp
 	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"

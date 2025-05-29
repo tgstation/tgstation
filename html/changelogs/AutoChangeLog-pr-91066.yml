@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Melee weapons with sufficient armour penetration can potentially overpenetrate and hit the pilot if you attack it while in combat mode."

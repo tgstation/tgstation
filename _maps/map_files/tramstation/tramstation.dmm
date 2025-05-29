@@ -56284,6 +56284,7 @@
 	dir = 5
 	},
 /obj/structure/sign/clock/directional/east,
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "sPK" = (

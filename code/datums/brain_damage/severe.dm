@@ -136,25 +136,66 @@
 	scan_desc = "traumatic narcolepsy"
 	gain_text = span_warning("You have a constant feeling of drowsiness...")
 	lose_text = span_notice("You feel awake and aware again.")
+	/// Odds seconds_per_tick the user falls asleep
+	var/sleep_chance = 1
+	/// Odds seconds_per_tick the user falls asleep while running
+	var/sleep_chance_running = 2
+	/// Odds seconds_per_tick the user falls asleep while drowsy
+	var/sleep_chance_drowsy = 3
+	/// Time values for how long the user will stay drowsy
+	var/drowsy_time_minimum = 20 SECONDS
+	var/drowsy_time_maximum = 30 SECONDS
+	/// Time values for how long the user will stay asleep
+	var/sleep_time_minimum = 6 SECONDS
+	var/sleep_time_maximum = 6 SECONDS
 
 /datum/brain_trauma/severe/narcolepsy/on_life(seconds_per_tick, times_fired)
 	if(owner.IsSleeping())
 		return
 
-	var/sleep_chance = 1
+	/// If any of these are in the user's blood, return early
+	var/static/list/immunity_medicine = list(
+		/datum/reagent/medicine/modafinil,
+		/datum/reagent/medicine/synaptizine,
+	) //don't add too many, as most stimulant reagents already have a drowsy-removing effect
+	for(var/medicine in immunity_medicine)
+		if(owner.reagents.has_reagent(medicine))
+			return
+
 	var/drowsy = !!owner.has_status_effect(/datum/status_effect/drowsiness)
+	var/caffeinated = HAS_TRAIT(owner, TRAIT_STIMULATED)
 	if(owner.move_intent == MOVE_INTENT_RUN)
-		sleep_chance += 2
+		sleep_chance += sleep_chance_running
 	if(drowsy)
-		sleep_chance += 3
+		sleep_chance += sleep_chance_drowsy //stack drowsy ontop of base or running odds with the += operator
+	if(caffeinated)
+		sleep_chance = sleep_chance / 2 //make it harder to fall asleep on caffeine
 
-	if(SPT_PROB(0.5 * sleep_chance, seconds_per_tick))
-		to_chat(owner, span_warning("You fall asleep."))
-		owner.Sleeping(6 SECONDS)
+	if (!SPT_PROB(sleep_chance, seconds_per_tick))
+		return
 
-	else if(!drowsy && SPT_PROB(sleep_chance, seconds_per_tick))
+	//if not drowsy, don't fall asleep but make them drowsy
+	if(!drowsy)
 		to_chat(owner, span_warning("You feel tired..."))
-		owner.adjust_drowsiness(20 SECONDS)
+		owner.adjust_drowsiness(rand(drowsy_time_minimum, drowsy_time_maximum))
+		if(prob(50))
+			owner.emote("yawn")
+		else if(prob(33)) //rarest message is a custom emote
+			owner.visible_message("rubs [owner.p_their()] eyes.", visible_message_flags = EMOTE_MESSAGE)
+	//drowsy, so fall asleep. you've had your chance to remedy it
+	else
+		to_chat(owner, span_warning("You fall asleep."))
+		owner.Sleeping(rand(sleep_time_minimum, sleep_time_maximum))
+		if(prob(50) && owner.IsSleeping())
+			owner.emote("snore")
+
+/datum/brain_trauma/severe/narcolepsy/permanent
+	scan_desc = "chronic narcolepsy" //less odds to fall asleep than parent, but sleeps for longer
+	sleep_chance = 0.333
+	sleep_chance_running = 0.333
+	sleep_chance_drowsy = 1
+	sleep_time_minimum = 20 SECONDS
+	sleep_time_maximum = 30 SECONDS
 
 /datum/brain_trauma/severe/monophobia
 	name = "Monophobia"

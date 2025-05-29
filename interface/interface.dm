@@ -91,9 +91,9 @@
 		for(var/entry in testmerge_data)
 			var/datum/tgs_revision_information/test_merge/tm = entry
 			all_tms += "- \[[tm.title]\]([githuburl]/pull/[tm.number])"
-		var/all_tms_joined = jointext(all_tms, "%0A") // %0A is a newline for URL encoding because i don't trust \n to not break
+		var/all_tms_joined = jointext(all_tms, "\n")
 
-		concatable += ("&test-merges=" + all_tms_joined)
+		concatable += ("&test-merges=" + url_encode(all_tms_joined))
 
 	DIRECT_OUTPUT(src, link(jointext(concatable, "")))
 
