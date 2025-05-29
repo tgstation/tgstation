@@ -4,6 +4,8 @@
 #define ASSEMBLY_BOMB_COEFFICIENT 0.5
 /// Base of the logarithmic function used to calculate assembly bomb explosion size
 #define ASSEMBLY_BOMB_BASE 2.7
+/// Threshold pressure thats required to suicide gib with tanks
+#define TANK_PRESSURE_THRESHOLD 1266
 
 /**
  * # Gas Tank
@@ -192,7 +194,7 @@
 	var/mob/living/carbon/human/human_user = user
 	user.visible_message(span_suicide("[user] is putting [src]'s valve to [user.p_their()] lips! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
-	if(!QDELETED(human_user) && air_contents && air_contents.return_pressure() >= 1266)
+	if(!QDELETED(human_user) && air_contents && air_contents.return_pressure() >= TANK_PRESSURE_THRESHOLD)
 		ADD_TRAIT(human_user, TRAIT_DISFIGURED, TRAIT_GENERIC)
 		human_user.inflate_gib()
 		return MANUAL_SUICIDE
@@ -576,3 +578,4 @@
 #undef ASSEMBLY_BOMB_BASE
 #undef ASSEMBLY_BOMB_COEFFICIENT
 #undef ASSUME_AIR_DT_FACTOR
+#undef TANK_PRESSURE_THRESHOLD
