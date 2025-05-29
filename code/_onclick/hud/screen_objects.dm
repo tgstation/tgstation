@@ -483,7 +483,7 @@
 		return
 	if(usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
 		var/tgui_answer = tgui_alert(usr, "You sure you want to sleep for a while?", "Sleeping", list("Yes", "No"))
-		if(tgui_answer == "Yes")
+		if(tgui_answer == "Yes" && !HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
 			var/mob/living/L = usr
 			L.SetSleeping(400)
 	else
