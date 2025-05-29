@@ -1,6 +1,37 @@
 /datum/heretic_knowledge_tree_column/ash
 	route = PATH_ASH
 	ui_bgr = "node_ash"
+	icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "ash_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	description = list(
+		"The Path of Ash revolves around fire, mobility and brutal crowd control against single opponents.",
+		"Play this path if you are new to Heretic, or really enjoy hit and run playstyles."
+	)
+	pros = list(
+		"Very potent even from the beginning of the path.",
+		"Easy access to a mobility spells and expanded vision.",
+		"Very powerful mark effect."
+	)
+	cons = list(
+		"Has less power than most heretics beyond their starting abilities.",
+		"Lacks durability in long conflicts.",
+		"Reliant on hitting fast and hard before their opponents can mount proper countermeasures."
+	)
+	tips = list(
+		"Your Mansus Grasp applies a short blind and a mark that puts your opponent into stamina crit when triggered by your blade. The mark can spread to nearby opponents.",
+		"Selecting this path makes you immune to high temperature damage. Remember, however, that your clothes can still burn! If you want to protect yourself from your own fire, wear a Scorched Mantle.",
+		"Your Scorched Mantle will cause you to generate firestacks on your own body (Make sure you toggle the effect!). Upon reaching 5 fire stacks, your ashen spells will be  empowered (indicated by your spells being highlighted in green).",
+		"Your Ashen passage is a short cooldown jaunt capable of removing restraints. If empowered, it gains a longer jaunt time, and also will remove stuns and stamina crit.",
+		"Volcano blast can make short work of your enemies, should they be foolish enough to stick close to each other. If empowered, it will have no cast time and generate twice the amount of firestacks. Burn the heathens to ashes!",
+		"Do not neglect the Mask of Madness. It will slowly sap the stamina of your enemies and make them hallucinate.",
+		"Make sure to set as many enemies on fire as you possibly can! Nightwatcher's Rebirth will heal you and have its cooldown reduced based on how many mobs you siphon.",
+		"Your ascension grants you complete immunity to environmental hazards, including bombs! But you are still vulnerable to more conventional weaponry. Do not become overconfident."
+	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_ash
 	knowledge_tier1 = /datum/heretic_knowledge/spell/ash_passage

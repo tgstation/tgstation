@@ -167,8 +167,8 @@
 		data["paths"] += list(list(
 			"route" = path.route,
 			"icon" = path.icon.Copy(),
-			"difficulty" = path.difficulty,
-			"description" = path.description,
+			"complexity" = path.complexity,
+			"description" = path.description.Copy(),
 			"pros" = path.pros.Copy(),
 			"cons" = path.cons.Copy(),
 			"tips" = path.tips.Copy(),
@@ -235,12 +235,12 @@
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn ascension knowledge without completing objectives!")
 				CRASH("Heretic attempted to learn a final knowledge despite not being able to ascend!")
 			if(initial(researched_path.cost) > knowledge_points)
-				return TRUE
+				return FALSE
 			if(!gain_knowledge(researched_path))
-				return TRUE
+				return FALSE
 
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
-			knowledge_points -= initial(researched_path.cost)
+			adjust_knowledge_points(initial(researched_path.cost))
 			return TRUE
 
 /datum/antagonist/heretic/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)

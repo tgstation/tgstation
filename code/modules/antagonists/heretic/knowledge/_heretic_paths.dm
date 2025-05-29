@@ -8,8 +8,8 @@ GLOBAL_LIST(heretic_research_tree)
 	///Route that symbolizes what path this is
 	var/route
 	var/icon_state = "dark_blade"
-	var/difficulty = "Insane"
-	var/description = "A heretic knowledge tree column, used to define a path of knowledge."
+	var/complexity = "Insane"
+	var/list/description = list("A heretic knowledge tree column, used to define a path of knowledge.")
 	var/list/icon = list(
 		"icon" = 'icons/obj/weapons/khopesh.dmi',
 		"state" = "dark_blade",

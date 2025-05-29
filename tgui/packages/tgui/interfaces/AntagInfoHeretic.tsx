@@ -72,8 +72,8 @@ type KnowledgeTier = {
 
 type HereticPath = {
   route: string;
-  difficulty: string;
-  description: string;
+  complexity: string;
+  description: string[];
   pros: string[];
   cons: string[];
   tips: string[];
@@ -443,10 +443,13 @@ const TabContent = ({ path }: { path: HereticPath }) => {
     <Section title={path.route} fill scrollable>
       <Stack vertical>
         <Stack.Item>
-          <b>Difficulty:</b> {path.difficulty}
+          <b>Complexity:</b> {path.complexity}
         </Stack.Item>
         <Stack.Item>
-          <b>Description:</b> {path.description}
+          <b>Description:</b>{' '}
+          {path.description.map((line, index) => (
+            <div key={index}>{line}</div>
+          ))}
         </Stack.Item>
         <Stack.Item>
           <b>Pros:</b>
@@ -464,14 +467,14 @@ const TabContent = ({ path }: { path: HereticPath }) => {
             ))}
           </ul>
         </Stack.Item>
-        <Stack.Item>
+        {/* <Stack.Item>
           <b>Tips:</b>
           <ul>
             {path.tips.map((tip, index) => (
               <li key={index}>{tip}</li>
             ))}
           </ul>
-        </Stack.Item>
+        </Stack.Item> */}
       </Stack>
     </Section>
   );
