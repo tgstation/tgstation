@@ -195,9 +195,7 @@
 
 	update_power()
 
-/obj/item/defibrillator/proc/toggle_paddles()
-	set name = "Toggle Paddles"
-	set category = "Object"
+DEFINE_PROC_VERB(/obj/item/defibrillator, toggle_paddles, "Toggle Paddles", "", FALSE, "Object")
 	on = !on
 
 	var/mob/living/carbon/user = usr

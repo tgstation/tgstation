@@ -1,6 +1,5 @@
 /// Collect user input for the scroll and feed it to Assemble()
-/mob/verb/Create_Scroll()
-
+DEFINE_VERB(/mob, Create_Scroll, "Create_Scroll", "", FALSE, "")
 	//Background to construct the scrolling image from
 	var/background_dmi = input("Pick background DMI:", "Icon") as null|icon
 

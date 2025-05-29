@@ -4,12 +4,7 @@ However, /tg/station and derivative codebases have been granted the right to use
 The original authors are: cogwerks, pistoleer, spyguy, angriestibm, marquesas, and stuntwaffle.
 If you make a derivative work from this code, you must include this notification header alongside it.
 */
-
-/mob/living/proc/wrestling_help()
-	set name = "Recall Teachings"
-	set desc = "Remember how to wrestle."
-	set category = "Wrestling"
-
+DEFINE_PROC_VERB(/mob/living, wrestling_help, "Recall Teachings", "Remember how to wrestle.", FALSE, "Wrestling")
 	to_chat(usr, "<b><i>You flex your muscles and have a revelation...</i></b>")
 	to_chat(usr, "[span_notice("Clinch")]: Grab. Passively gives you a chance to immediately aggressively grab someone. Not always successful.")
 	to_chat(usr, "[span_notice("Suplex")]: Shove someone you are grabbing. Suplexes your target to the floor. Greatly injures them and leaves both you and your target on the floor.")
@@ -18,6 +13,7 @@ If you make a derivative work from this code, you must include this notification
 /datum/martial_art/wrestling
 	name = "Wrestling"
 	id = MARTIALART_WRESTLING
+	help_verb = /mob/living/proc/wrestling_help
 	VAR_PRIVATE/datum/action/slam/slam
 	VAR_PRIVATE/datum/action/throw_wrassle/throw_wrassle
 	VAR_PRIVATE/datum/action/kick/kick

@@ -210,10 +210,7 @@
 	else
 		eyeobj.RemoveInvisibility(type)
 
-/mob/living/silicon/ai/verb/toggle_acceleration()
-	set category = "AI Commands"
-	set name = "Toggle Camera Acceleration"
-
+DEFINE_VERB(/mob/living/silicon/ai, toggle_acceleration, "Toggle Camera Acceleration", "", FALSE, "AI Commands")
 	if(incapacitated)
 		return
 	acceleration = !acceleration

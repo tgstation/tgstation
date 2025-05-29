@@ -20,10 +20,7 @@
 	flipped = FALSE
 	..()
 
-/obj/item/clothing/head/soft/verb/flipcap()
-	set category = "Object"
-	set name = "Flip cap"
-
+DEFINE_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", "", FALSE, "Object")
 	flip(usr)
 
 

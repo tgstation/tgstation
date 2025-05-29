@@ -5,10 +5,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(debug_variables, R_NONE, "View Variables", "View the
 	user.debug_variables(thing)
 // This is kept as a separate proc because admins are able to show VV to non-admins
 
-/client/proc/debug_variables(datum/thing in world)
-	set category = "Debug"
-	set name = "View Variables"
-	//set src in world
+DEFINE_PROC_VERB(/client, debug_variables, "View Variables", "", FALSE, "Debug", datum/thing in world)
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
 	if(!usr.client || !usr.client.holder) //This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
