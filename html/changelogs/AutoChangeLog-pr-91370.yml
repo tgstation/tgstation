@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Added a 'Ghost settings' button, taking the spot of the pAI candidate button and replacing the \"Ghost\" tab of the Stat panel. This button contains buttons pertinent to your time as an Observer."
