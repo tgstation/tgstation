@@ -140,17 +140,19 @@
 
 	else
 		user.visible_message(span_warning("[user] directs [src] to [patient]'s eyes."), ignored_mobs = user)
-		. += span_info("You direct [src] to [patient]'s eyes:\n")
+		. += span_info_ml("You direct [src] to [patient]'s eyes:\n")
 
 		if(patient.stat == DEAD || patient.is_blind() || patient.get_eye_protection() >= FLASH_PROTECTION_WELDER) //this used to be just > but literally nothing accessable in the game gave greater than welder without also covering eyes
-			. += span_danger_ml("[patient.p_Their()] pupils don't react to the light!\n")//mob is dead
+			. += span_danger_ml("[patient.p_Their()] [eyes.exam_blind_react]\n")//mob is dead
 		else if(brain.damage > 20)
-			. += span_danger_ml("[patient.p_Their()] pupils contract unevenly!\n")//mob has sustained damage to their brain
+			. += span_danger_ml("[patient.p_Their()] [eyes.exam_braindamaged_react]\n")//mob has sustained damage to their brain
 		else
-			. += span_notice_ml("[patient.p_Their()] pupils narrow.\n")//they're okay :D
+			. += span_notice_ml("[patient.p_Their()] [eyes.exam_healthy_react]\n")//they're okay :D
 
 		if(HAS_TRAIT(patient, TRAIT_XRAY_VISION))
 			. += span_danger_ml("[patient.p_Their()] pupils give an eerie glow!\n")//mob has X-ray vision
+		if(eyes.penlight_message != "useless default please report")
+			. += span_notice_ml("[patient.p_Their()] eyes [eyes.penlight_examine()].")
 		if(braaaainz)
 			. += span_danger_ml("<b>[patient.p_Their()] eyeballs are webbed by fiberous black tendrils!\n</b>")
 
