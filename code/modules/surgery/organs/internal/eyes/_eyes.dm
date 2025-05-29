@@ -60,7 +60,7 @@
 	var/scarring = NONE
 
 	/// The (custom) message we get when we use a flashlight or penlight on these eyes.
-	var/penlight_message = "if you can see this i fucked up please report it"
+	var/penlight_message = "unused default message please report if seen"
 /obj/item/organ/eyes/Initialize(mapload)
 	. = ..()
 	if (blink_animation)
