@@ -225,8 +225,9 @@
 			var/atom/movable/to_put = item
 			if(isstack(item))
 				var/obj/item/stack/as_stack = item
-				to_put = as_stack.split_stack(user = null, amount = 1)
-				as_stack.merge_type = null //prevent them from merging inside for contents.len
+				var/obj/item/stack/new_stack = as_stack.split_stack(1)
+				new_stack.merge_type = null //prevent them from merging inside for contents.len
+				to_put = new_stack
 			to_put.forceMove(src)
 			return
 

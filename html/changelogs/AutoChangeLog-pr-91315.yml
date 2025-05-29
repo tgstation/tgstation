@@ -1,0 +1,5 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Colorblind people can no longer see wire colors"
+  - bugfix: "Fixed eyecharts not considering people with monochromacy colorblind"
