@@ -101,13 +101,13 @@
 		if (PARALLAX_DISABLE)
 			return FALSE
 
-/datum/hud/proc/update_parallax_pref(mob/viewmob)
+/datum/hud/proc/update_parallax_pref(mob/viewmob, login = FALSE)
 	var/mob/screen_mob = viewmob || mymob
 	if(!screen_mob.client)
 		return
 	remove_parallax(screen_mob)
 	create_parallax(screen_mob)
-	update_parallax(screen_mob)
+	update_parallax(screen_mob, login)
 
 // This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)
 /datum/hud/proc/set_parallax_movedir(new_parallax_movedir = NONE, skip_windups, mob/viewmob, parallax_speed_mod = 1)
@@ -171,7 +171,7 @@
 	animate(layer, transform = new_transform, time = 0, loop = -1, flags = ANIMATION_END_NOW)
 	animate(transform = matrix(), time = scaled_time)
 
-/datum/hud/proc/update_parallax(mob/viewmob)
+/datum/hud/proc/update_parallax(mob/viewmob, login = FALSE)
 	var/mob/screenmob = viewmob || mymob
 	var/client/C = screenmob.client
 	var/turf/posobj = get_turf(C.eye)
@@ -180,7 +180,7 @@
 
 	var/area/areaobj = posobj.loc
 	// Update the movement direction of the parallax if necessary (for shuttles)
-	set_parallax_movedir(areaobj.parallax_movedir, FALSE, screenmob, areaobj.parallax_speed_mod)
+	set_parallax_movedir(areaobj.parallax_movedir, login, screenmob, areaobj.parallax_speed_mod)
 
 	var/force = FALSE
 	if(!C.previous_turf || (C.previous_turf.z != posobj.z))
@@ -324,7 +324,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer/layer_1
 	icon_state = "layer1"
 	// speed = 0.6
-	speed = 0.1
+	speed = 0.075
 	layer = 1
 
 /atom/movable/screen/parallax_layer/layer_2

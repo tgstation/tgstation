@@ -519,7 +519,9 @@
 	for(var/place in shuttle_areas)
 		var/area/shuttle/shuttle_area = place
 		shuttle_area.parallax_movedir = WEST
+		shuttle_area.parallax_speed_mod = 0.1
 	assigned_transit.assigned_area?.parallax_movedir = WEST
+	assigned_transit.assigned_area?.parallax_speed_mod = 0.1
 	var/list/L0 = return_ordered_turfs(x, y, z, dir)
 	for (var/thing in L0)
 		var/turf/T = thing

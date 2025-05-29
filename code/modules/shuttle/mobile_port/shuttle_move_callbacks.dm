@@ -160,13 +160,15 @@ All ShuttleMove procs go here
 
 	var/area/old_dest_area = newT.loc
 	parallax_movedir = old_dest_area.parallax_movedir
+	parallax_speed_mod = old_dest_area.parallax_speed_mod
 	newT.change_area(old_dest_area, src)
 	shuttle.underlying_areas_by_turf[newT] = old_dest_area
 	return TRUE
 
 // Called on areas after everything has been moved
-/area/proc/afterShuttleMove(new_parallax_dir)
+/area/proc/afterShuttleMove(new_parallax_dir, new_parallax_speed_mod)
 	parallax_movedir = new_parallax_dir
+	parallax_speed_mod = new_parallax_speed_mod
 	return TRUE
 
 /area/proc/lateShuttleMove()

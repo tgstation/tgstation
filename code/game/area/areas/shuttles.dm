@@ -16,7 +16,7 @@
 	area_limited_icon_smoothing = /area/shuttle
 	sound_environment = SOUND_ENVIRONMENT_ROOM
 	parallax_movedir = WEST
-	parallax_speed_mod = 6
+	parallax_speed_mod = 0.1
 
 /area/shuttle/place_on_top_react(list/new_baseturfs, turf/added_layer, flags)
 	. = ..()

@@ -157,21 +157,21 @@
 
 
 /obj/docking_port/mobile/proc/cleanup_runway(obj/docking_port/stationary/new_dock, list/old_turfs, list/new_turfs, list/areas_to_move, list/underlying_areas, list/moved_atoms, rotation, movement_direction, area/fallback_area)
-	fallback_area.afterShuttleMove(WEST)
+	fallback_area.afterShuttleMove(WEST, 0.1)
 	for(var/i in 1 to underlying_areas.len)
 		CHECK_TICK
 		var/area/underlying_area = underlying_areas[i]
-		underlying_area.afterShuttleMove(WEST)
+		underlying_area.afterShuttleMove(WEST, 0.1)
 
 	// Parallax handling
 	// This needs to be done before the atom after move
-	var/new_parallax_dir = FALSE
+	var/new_parallax_dir = WEST
 	if(istype(new_dock, /obj/docking_port/stationary/transit))
 		new_parallax_dir = preferred_direction
 	for(var/i in 1 to areas_to_move.len)
 		CHECK_TICK
 		var/area/internal_area = areas_to_move[i]
-		internal_area.afterShuttleMove(new_parallax_dir) //areas
+		internal_area.afterShuttleMove(new_parallax_dir, istype(underlying_areas[1], /area/shuttle/transit) ? 0.1 : 6) //areas
 
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK

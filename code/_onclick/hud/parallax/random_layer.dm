@@ -2,7 +2,7 @@
 /atom/movable/screen/parallax_layer/random
 	blend_mode = BLEND_OVERLAY
 	// speed = 2
-	speed = 0.25
+	speed = 0.03
 	layer = 3
 
 /atom/movable/screen/parallax_layer/random/Initialize(mapload, datum/hud/hud_owner, template, atom/movable/screen/parallax_layer/random/twin)

@@ -310,7 +310,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
  * * version - denotes which style should be displayed. blank or 0 means "next version"
  * * viewmob - what mob to show the hud to. Can be this hud's mob, can be another mob, can be null (will use this hud's mob if so)
  */
-/datum/hud/proc/show_hud(version = 0, mob/viewmob)
+/datum/hud/proc/show_hud(version = 0, mob/viewmob, login = FALSE)
 	if(!ismob(mymob))
 		return FALSE
 	var/mob/screenmob = viewmob || mymob
@@ -391,9 +391,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	screenmob.reload_fullscreen()
 
 	if(screenmob == mymob)
-		update_parallax_pref(screenmob)
+		update_parallax_pref(screenmob, login)
 	else
-		viewmob.hud_used.update_parallax_pref()
+		viewmob.hud_used.update_parallax_pref(null, login)
 
 	update_reuse(screenmob)
 
