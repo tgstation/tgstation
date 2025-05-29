@@ -1,5 +1,0 @@
-author: "Goat"
-delete-after: True
-changes:
-  - bugfix: "Strongarm implant no longer gives the text about being broken when you use your empty hand."
-  - code_imp: "Toolset arms are now a subtype of arm implants instead of all arm implants being treated like toolset arms."
