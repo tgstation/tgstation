@@ -114,7 +114,7 @@
 #define ui_human_navigate "EAST-3:7,SOUTH+1:7"
 #define ui_human_language "EAST-3:7,SOUTH+1:24"
 #define ui_human_area "EAST-3:24,SOUTH+1:24"
-#define ui_human_memories_area "EAST-4:23,SOUTH+1:7"
+#define ui_human_memories_area "EAST-4:22,SOUTH+1:7"
 
 //Drones
 #define ui_drone_drop "CENTER+1:18,SOUTH:5"
