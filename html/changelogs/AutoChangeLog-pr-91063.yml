@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Projectiles that have armour penetration, or can pass straight through structures, can potentially hit a pilot inside of a mech."
