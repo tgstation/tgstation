@@ -59,6 +59,8 @@
 	/// Scarring on this organ
 	var/scarring = NONE
 
+	/// The (custom) message we get when we use a flashlight or penlight on these eyes.
+	var/penlight_message = "if you can see this i fucked up please report it"
 /obj/item/organ/eyes/Initialize(mapload)
 	. = ..()
 	if (blink_animation)
@@ -523,6 +525,10 @@
 #undef BLINK_DURATION
 #undef BLINK_LOOPS
 #undef ASYNC_BLINKING_BRAIN_DAMAGE
+
+/// by default, returns the eyes' penlight_message var as a notice span. May do other things when overridden, such as eldritch insanity, or eye damage, or whatnot. Whatever you want, really.
+/obj/item/organ/eyes/proc/penlight_examine(mob/living/viewer, obj/item/examtool)
+	return span_notice(penlight_message)
 
 #define NIGHTVISION_LIGHT_OFF 0
 #define NIGHTVISION_LIGHT_LOW 1
