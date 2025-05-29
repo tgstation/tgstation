@@ -746,6 +746,8 @@
 	eye_color_left = "#353845"
 	eye_color_right = "#353845"
 	flash_protect = FLASH_PROTECTION_WELDER
+	pupils_name = "flash shields"
+	penlight_message = "have polarized cybernetic lenses, blocking bright lights"
 
 /obj/item/organ/eyes/robotic/shield/Initialize(mapload)
 	. = ..()
@@ -1037,7 +1039,7 @@
 	eye_icon_state = "motheyes_cyber"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	pupils_name = "aperture clusters"
-	penlight_message = "are metallic bulbs, resembling insect eyes"
+	penlight_message = "are metal hemispheres, resembling insect eyes"
 
 /obj/item/organ/eyes/robotic/basic/moth
 	name = "basic robotic moth eyes"
@@ -1047,6 +1049,8 @@
 	eye_color_right = "#65686f"
 	blink_animation = FALSE
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	pupils_name = "aperture clusters"
+	penlight_message = "are metal hemispheres, resembling insect eyes"
 
 /obj/item/organ/eyes/robotic/xray/moth
 	name = "moth x-ray eyes"
@@ -1057,6 +1061,7 @@
 	eye_color_right = "#3c4e52"
 	blink_animation = FALSE
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	pupils_name = "aperture clusters"
 
 /obj/item/organ/eyes/robotic/shield/moth
 	name = "shielded robotic moth eyes"
@@ -1065,6 +1070,8 @@
 	eye_color_left = "#353845"
 	eye_color_right = "#353845"
 	blink_animation = FALSE
+	pupils_name = "aperture clusters"
+	penlight_message = "have shutters, protecting insectoid compound eyes."
 
 /obj/item/organ/eyes/robotic/glow/moth
 	name = "high luminosity moth eyes"
@@ -1075,6 +1082,8 @@
 	blink_animation = FALSE
 	base_eye_state = "eyes_mothglow"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	penlight_message = "are bulbous clusters of LEDs and cameras"
+	pupils_name = "aperture clusters"
 
 /obj/item/organ/eyes/robotic/thermals/moth //we inherit flash weakness from thermals
 	name = "thermal moth eyes"
@@ -1083,6 +1092,8 @@
 	eye_color_left = "#901f38"
 	eye_color_right = "#901f38"
 	blink_animation = FALSE
+	pupils_name = "sensor clusters"
+	penlight_message = "are two clustered hemispheres of thermal sensors"
 
 /obj/item/organ/eyes/snail
 	name = "snail eyes"
@@ -1090,6 +1101,8 @@
 	icon_state = "eyes_snail"
 	eye_icon_state = "snail_eyes"
 	blink_animation = FALSE
+	pupils_name = "eyestalks" //many species of snails can retract their eyes into their face! (my lame science excuse for not having better writing here)
+	penlight_message = "are sat upon retractable tentacles"	
 
 /obj/item/organ/eyes/jelly
 	name = "jelly eyes"
@@ -1098,12 +1111,16 @@
 	eye_icon_state = "jelleyes"
 	blink_animation = FALSE
 	iris_overlay = null
+	pupils_name = "lensing bubbles" //imagine a water lens physics demo but with goo. thats how these work.
+	penlight_message = "are three bubbles of refractive jelly"
 
 /obj/item/organ/eyes/lizard
 	name = "reptile eyes"
 	desc = "A pair of reptile eyes with thin vertical slits for pupils."
 	icon_state = "lizard_eyes"
 	synchronized_blinking = FALSE
+	pupils_name = "slit pupils"
+	penlight_message = "have vertically slit pupils and tinted whites"
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted
 	name = "adapted eyes"
@@ -1118,6 +1135,10 @@
 	low_light_cutoff = list(5, 12, 20)
 	medium_light_cutoff = list(15, 20, 30)
 	high_light_cutoff = list(30, 35, 50)
+	penlight_message = "glow a foggy red, sizzling under the light"
+
+/obj/item/organ/eyes/night_vision/maintenance_adapted/penlight_examine(mob/living/viewer, obj/item/examtool)
+	return span_danger(penlight_message)
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/on_mob_insert(mob/living/carbon/eye_owner)
 	. = ..()
