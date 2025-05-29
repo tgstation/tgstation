@@ -405,7 +405,6 @@
 
 	playsound(mob_doing_effects, 'sound/effects/explosion/explosion1.ogg', 40, 1)
 	var/obj/item/skybulge_item = target
-	skybulge_item.force *= 2 //we hit for double damage.
 
 	for(var/atom/thing as anything in landed_on)
 		if(thing == mob_doing_effects)
@@ -416,11 +415,10 @@
 			continue
 
 		if(isliving(thing))
+			skybulge_item.melee_attack_chain(owner, thing, list("[FORCE_MULTIPLIER]" = 2))
 			skybulge_item.attack(thing, owner)
 			var/mob/living/living_target = thing
 			living_target.SetKnockdown(1 SECONDS)
-
-	skybulge_item.force /= 2
 
 ///Called when the person holding us is trying to attack something mid-jump.
 ///You're technically in mid-air, so block any attempts at getting extra hits in.
