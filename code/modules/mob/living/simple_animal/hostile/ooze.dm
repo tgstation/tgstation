@@ -43,13 +43,15 @@
 
 	grant_actions_by_list(get_innate_actions())
 
-/mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
-	if(!eat_atom(I, TRUE))
-		return ..()
+/mob/living/simple_animal/hostile/ooze/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(eat_atom(tool, TRUE))
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
-/mob/living/simple_animal/hostile/ooze/AttackingTarget(atom/attacked_target)
-	if(!eat_atom(attacked_target))
-		return ..()
+/mob/living/simple_animal/hostile/ooze/resolve_unarmed_attack(atom/attack_target, list/modifiers)
+	if(eat_atom(attack_target))
+		return ITEM_INTERACT_SUCCESS
+	return ..()
 
 ///Handles nutrition gain/loss of mob and also makes it take damage if it's too low on nutrition, only happens for sentient mobs.
 /mob/living/simple_animal/hostile/ooze/Life(seconds_per_tick = SSMOBS_DT, times_fired)
@@ -88,12 +90,13 @@
 ///Tries to transfer the atoms reagents then delete it
 /mob/living/simple_animal/hostile/ooze/proc/eat_atom(atom/eat_target, silent)
 	if(isnull(eat_target))
-		return
+		return FALSE
 	if(SEND_SIGNAL(eat_target, COMSIG_OOZE_EAT_ATOM, src, edible_food_types) & COMPONENT_ATOM_EATEN)
-		return
+		return TRUE
 	if(silent || !isitem(eat_target)) //Don't bother reporting it for everything
-		return
+		return FALSE
 	to_chat(src, span_warning("[eat_target] cannot be eaten!"))
+	return FALSE
 
 ///Updates the display that shows the mobs nutrition
 /mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()

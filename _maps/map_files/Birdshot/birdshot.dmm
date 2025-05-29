@@ -5569,6 +5569,21 @@
 	dir = 8
 	},
 /area/station/service/janitor)
+"ceM" = (
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/rag{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/turf/open/floor/iron/dark/small,
+/area/station/maintenance/department/science/xenobiology)
 "ceN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -6450,10 +6465,6 @@
 /obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron,
 /area/station/security/prison/rec)
-"cuw" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/station/command/corporate_showroom)
 "cuZ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -12306,10 +12317,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/security)
-"euz" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/station/hallway/primary/central/aft)
 "euO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
@@ -29618,6 +29625,38 @@
 	},
 /turf/open/floor/iron/small,
 /area/station/hallway/primary/central/fore)
+"jSu" = (
+/obj/structure/table/wood,
+/obj/item/rag{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 5;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/machinery/barsign{
+	chosen_sign = "thecavern";
+	icon_state = "thecavern";
+	pixel_y = 32
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/station/service/bar)
 "jSw" = (
 /obj/structure/railing,
 /turf/open/floor/catwalk_floor,
@@ -32122,21 +32161,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
-"kHY" = (
-/obj/effect/turf_decal/trimline/dark/line{
-	dir = 4
-	},
-/obj/structure/table/wood,
-/obj/machinery/reagentgrinder{
-	pixel_x = 3;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/turf/open/floor/iron/dark/small,
-/area/station/maintenance/department/science/xenobiology)
 "kIj" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -34004,38 +34028,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/construction)
-"lnD" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 10;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 5;
-	pixel_y = 16
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/cup/glass/shaker{
-	pixel_x = -7;
-	pixel_y = 15
-	},
-/obj/effect/turf_decal/siding/wood/end{
-	dir = 8
-	},
-/obj/machinery/barsign{
-	chosen_sign = "thecavern";
-	icon_state = "thecavern";
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark/diagonal,
-/area/station/service/bar)
 "lnI" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/structure/ore_box,
@@ -66741,19 +66733,6 @@
 /obj/effect/turf_decal/tile/red/fourcorners,
 /turf/open/floor/iron,
 /area/station/security/courtroom)
-"vZK" = (
-/obj/structure/table/wood,
-/obj/machinery/light/small/directional/north,
-/obj/machinery/reagentgrinder{
-	pixel_x = -13;
-	pixel_y = 14
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/turf/open/floor/stone,
-/area/station/service/abandoned_gambling_den)
 "vZS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -69906,6 +69885,19 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"wWI" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small/directional/north,
+/obj/machinery/reagentgrinder{
+	pixel_x = -13;
+	pixel_y = 14
+	},
+/obj/item/rag{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/turf/open/floor/stone,
+/area/station/service/abandoned_gambling_den)
 "wWN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
@@ -96591,7 +96583,7 @@ trB
 saz
 lcD
 gCl
-euz
+tYX
 dDB
 dDB
 dDB
@@ -97058,7 +97050,7 @@ jdJ
 xMk
 jYQ
 hcc
-cuw
+xGJ
 bBN
 jwi
 qtd
@@ -98086,7 +98078,7 @@ hoN
 cKV
 dHL
 giU
-cuw
+xGJ
 mID
 jwi
 jwi
@@ -101452,7 +101444,7 @@ jVM
 jVM
 jVM
 jVM
-lnD
+jSu
 fzw
 bKO
 qhR
@@ -108933,7 +108925,7 @@ ldq
 ldq
 dUY
 pIM
-kHY
+ceM
 oAS
 ufd
 hMa
@@ -115831,7 +115823,7 @@ wOp
 wny
 bua
 wOp
-vZK
+wWI
 dTd
 ghX
 kgw

@@ -21,10 +21,12 @@
 #define AI_COMPATIBLE (1<<11)
 /// Can click from any direction and perform stuff
 #define OMNIDIRECTIONAL_ATTACKS (1<<12)
+/// Prevents overpenetrating through the mecha and into the cockpit using an armour penetrating weapon
+#define CANNOT_OVERPENETRATE (1<<13)
 /// Can have a tracking beacon placed into the mech
-#define BEACON_TRACKABLE (1<<13)
+#define BEACON_TRACKABLE (1<<14)
 /// Can have an AI control beacon placed into the mech
-#define BEACON_CONTROLLABLE (1<<14)
+#define BEACON_CONTROLLABLE (1<<15)
 
 #define MECHA_MELEE (1 << 0)
 #define MECHA_RANGED (1 << 1)

@@ -5,7 +5,6 @@
 	icon_state = "ice_whelp"
 	icon_living = "ice_whelp"
 	icon_dead = "ice_whelp_dead"
-	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	mouse_opacity = MOUSE_OPACITY_ICON
 	butcher_results = list(
 		/obj/item/stack/ore/diamond = 3,

@@ -46,10 +46,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
-"aR" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/shuttle/escape)
 "bb" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -448,10 +444,6 @@
 	pixel_y = 4
 	},
 /turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"ib" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/mineral,
 /area/shuttle/escape)
 "ig" = (
 /obj/machinery/light/small/directional/west,
@@ -2687,6 +2679,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
+"NG" = (
+/obj/structure/closet/crate/bin,
+/obj/item/rag,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape)
 "NJ" = (
 /obj/structure/table,
 /obj/item/storage/crayons,
@@ -3572,12 +3570,6 @@
 "XI" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/shuttle/escape)
-"XK" = (
-/obj/structure/closet/crate/bin,
-/obj/item/reagent_containers/cup/rag,
-/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "XL" = (
@@ -4594,8 +4586,8 @@ JG
 qA
 zE
 Ho
-ib
-ib
+Ho
+Ho
 Ho
 Ho
 nr
@@ -5480,7 +5472,7 @@ JG
 (22,1,1) = {"
 zE
 zE
-aR
+zE
 LK
 LK
 LK
@@ -7082,7 +7074,7 @@ by
 Nt
 Nt
 LU
-XK
+NG
 yc
 Ho
 Ho

@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - spellcheck: "The header for RD consoles now says what type of points it's counting."

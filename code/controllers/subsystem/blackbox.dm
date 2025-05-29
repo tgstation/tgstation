@@ -426,7 +426,7 @@ Versioning
 	job,
 	special,
 	latejoin) VALUES (
-	INET_ATON(:server_ip,
+	INET_ATON(:server_ip),
 	:port,
 	:round_id,
 	:ckey,
@@ -439,6 +439,7 @@ Versioning
 		"port" = "[world.port]",
 		"round_id" = GLOB.round_id,
 		"ckey" = ckey,
+		"character" = character,
 		"job" = job,
 		"special" = special,
 		"latejoin" = latejoin

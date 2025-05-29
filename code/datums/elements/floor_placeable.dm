@@ -30,7 +30,7 @@
 		return NONE
 	if(source.item_flags & ABSTRACT)
 		return NONE
-	if(!user.transferItemToLoc(source, interacting_with, silent = FALSE))
+	if(!user.dropItemToGround(to_drop = source, silent = FALSE, newloc = interacting_with))
 		return ITEM_INTERACT_BLOCKING
 
 	// Items are centered by default, but we move them if click ICON_X and ICON_Y are available

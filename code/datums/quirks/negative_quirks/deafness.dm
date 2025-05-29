@@ -11,4 +11,4 @@
 	mail_goodies = list(/obj/item/clothing/mask/whistle)
 
 /datum/quirk/item_quirk/deafness/add_unique(client/client_source)
-	give_item_to_holder(/obj/item/clothing/accessory/deaf_pin, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(/obj/item/clothing/accessory/deaf_pin, list(LOCATION_BACKPACK, LOCATION_HANDS))

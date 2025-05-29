@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Added a new sleep HUD element when you're resting."
+  - rscadd: "Xenos' HUD looks a little closer to human ones, with the rest button on the right side."
+  - qol: "Added a new accessibility setting for users who get inconsistent double clicks."

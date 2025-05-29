@@ -164,7 +164,7 @@
 		L.mind.transfer_to(brainmob)
 		to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
 
-/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
 
 	if(istype(item, /obj/item/borg/apparatus/organ_storage))
@@ -481,6 +481,14 @@
 /obj/item/organ/brain/felinid //A bit smaller than average
 	brain_size = 0.8
 
+// Sometimes, felinids go a bit haywire and bite people. Based entirely on mania and hunger.
+/obj/item/organ/brain/felinid/get_attacking_limb(mob/living/carbon/human/target)
+	var/starving_cat_bonus = owner.nutrition <= NUTRITION_LEVEL_HUNGRY ? 1 : 10
+	var/crazy_feral_cat = clamp((starving_cat_bonus * owner.mob_mood?.sanity_level), 0, 100)
+	if(prob(crazy_feral_cat))
+		return owner.get_bodypart(BODY_ZONE_HEAD) || ..()
+	return ..()
+
 /obj/item/organ/brain/lizard
 	name = "lizard brain"
 	desc = "This juicy piece of meat has a oversized brain stem and cerebellum, with not much of a limbic system to speak of at all. You would expect its owner to be pretty cold blooded."
@@ -558,7 +566,7 @@
 //Direct trauma gaining proc. Necessary to assign a trauma to its brain. Avoid using directly.
 /obj/item/organ/brain/proc/brain_gain_trauma(datum/brain_trauma/trauma, resilience, list/arguments)
 	if(!can_gain_trauma(trauma, resilience))
-		return FALSE
+		return null
 
 	var/datum/brain_trauma/actual_trauma
 	if(ispath(trauma))
@@ -571,17 +579,17 @@
 
 	if(actual_trauma.brain) //we don't accept used traumas here
 		WARNING("gain_trauma was given an already active trauma.")
-		return FALSE
+		return null
 
 	add_trauma_to_traumas(actual_trauma)
 	if(owner)
 		actual_trauma.owner = owner
 		if(SEND_SIGNAL(owner, COMSIG_CARBON_GAIN_TRAUMA, trauma, resilience) & COMSIG_CARBON_BLOCK_TRAUMA)
 			qdel(actual_trauma)
-			return FALSE
+			return null
 		if(!actual_trauma.on_gain())
 			qdel(actual_trauma)
-			return FALSE
+			return null
 		log_game("[key_name_and_tag(owner)] has gained the following brain trauma: [trauma.type]")
 	if(resilience)
 		actual_trauma.resilience = resilience

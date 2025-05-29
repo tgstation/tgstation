@@ -105,7 +105,7 @@
 	user_hud.infodisplay += arrow
 	user_hud.show_hud(user_hud.hud_version)
 
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(qdel), arrow), 1.5 SECONDS)
+	QDEL_IN(arrow, 1.5 SECONDS)
 
 /obj/item/multitool/suicide_act(mob/living/carbon/user)
 	user.visible_message(span_suicide("[user] puts the [src] to [user.p_their()] chest. It looks like [user.p_theyre()] trying to pulse [user.p_their()] heart off!"))

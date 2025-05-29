@@ -201,3 +201,18 @@
 		/obj/item/reagent_containers/syringe = 1,
 	)
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/mod_core_soul
+	name = "MOD core (Soul)"
+	result = /obj/item/mod/core/soul
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/soulstone = 1,
+	)
+	parts = list(/obj/item/soulstone = 1)
+	category = CAT_ROBOT
+	crafting_flags = parent_type::crafting_flags | CRAFT_MUST_BE_LEARNED

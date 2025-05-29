@@ -80,7 +80,7 @@
 		update_appearance()
 		SStgui.update_uis(src)
 
-/obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, list/modifiers)
+/obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, list/modifiers, list/attack_modifiers)
 	//Advanced science! Precision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
 	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
 		if(!beaker)

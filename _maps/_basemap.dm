@@ -15,9 +15,8 @@
 		#include "map_files\CatwalkStation\CatwalkStation_2023.dmm"
 		#include "map_files\NebulaStation\NebulaStation.dmm"
 		#include "map_files\wawastation\wawastation.dmm"
-
-		#ifdef CIBUILDING
-			#include "templates.dm"
-		#endif
+	#endif
+	#ifdef ALL_TEMPLATES
+		#include "templates.dm"
 	#endif
 #endif

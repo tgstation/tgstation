@@ -8,7 +8,8 @@ on:
         type: string
 
 jobs:
-  compile_all_maps:
+  compile_all_stations:
+    name: Compile All Station Maps
     runs-on: ubuntu-22.04
     timeout-minutes: 5
 
@@ -27,3 +28,19 @@ jobs:
         with:
           dmb-location: tgstation.dmb
           max-required-client-version: ${{inputs.max_required_byond_client}}
+
+  compile_all_templates:
+    name: Compile All Templates
+    runs-on: ubuntu-22.04
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: ./.github/actions/setup_node
+      - name: Restore BYOND from Cache
+        uses: ./.github/actions/restore_or_install_byond
+      - name: Compile All Maps
+        run: |
+          source $HOME/BYOND/byond/bin/byondsetup
+          tools/build/build --ci dm -DCIBUILDING -DCITESTING -DALL_TEMPLATES

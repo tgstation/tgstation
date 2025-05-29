@@ -122,6 +122,19 @@ Similar to [banned_neighbors](#banned_neighbors), you can specify a regular expr
       allow: { pattern: '^[A-Z].*$' }
 ```
 
+### `ignore`
+If you want to exclude certain objects and subtypes from `banned_neighbors`, you can specify objects in `ignore` that will get skipped from triggering `banned_neighbors`.
+
+```yml
+/turf/wall:
+  banned_neighbors:
+    - /obj/structure
+  ignore:
+    - /obj/structure/sign
+```
+
+This lint stops structures from being put inside solid walls but we make an exception to ignore any signs and all their subtypes like `/obj/structure/sign/poster`.
+
 ### `help`
 If you want a custom message to go with your lint, you can specify "help" in the root.
 

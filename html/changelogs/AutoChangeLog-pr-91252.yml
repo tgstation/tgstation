@@ -1,0 +1,8 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - refactor: "Refactored the folder/biscuit interaction chain. Please report any issues."
+  - bugfix: "Picking up paper into a folder/biscuit by clicking on the paper with it is now less prone to inventory jank."
+  - qol: "Picking up paper into a folder/biscuit now plays the pickup animation, consistent with inserting it otherwise."
+  - qol: "Folders and biscuit cards now have screentips."
+  - sound: "Inserting paper into a folder now plays the pickup/drop sounds, consistent with taking it out."
