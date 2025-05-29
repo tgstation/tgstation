@@ -1138,6 +1138,9 @@
 	penlight_message = "glow a foggy red, sizzling under the light"
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/penlight_examine(mob/living/viewer, obj/item/examtool)
+	if(!owner.is_blind())
+		to_chat(owner, span_danger("Your eyes sizzle agonizingly as light is shone on them!"))
+		apply_organ_damage(20 * examtool.lightpower) //that's 0.5 lightpower for a penlight, so one penlight shining is equivalent to two seconds in a lit area 
 	return span_danger(penlight_message)
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/on_mob_insert(mob/living/carbon/eye_owner)
@@ -1165,3 +1168,4 @@
 	eye_color_right = "#375846"
 	iris_overlay = null
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
+	penlight_message = "are green and plant-like"
