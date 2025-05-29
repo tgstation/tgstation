@@ -76,20 +76,20 @@
 	/// Players whose account is less than this many days old will be filtered out of the candidate list
 	var/minimum_required_age = 0
 	/// Templates necessary for this ruleset to be executed
-	var/list/ruleset_lazy_templates
+	VAR_PROTECTED/list/ruleset_lazy_templates
 
 /datum/dynamic_ruleset/New(list/dynamic_config)
-	for(var/nvar in dynamic_config?[config_tag])
-		set_config_value(nvar, dynamic_config[config_tag][nvar])
+	for(var/new_var in dynamic_config?[config_tag])
+		set_config_value(new_var, dynamic_config[config_tag][new_var])
 
 /datum/dynamic_ruleset/Destroy()
 	selected_minds = null
 	return ..()
 
 /// Used for parsing config entries to validate them
-/datum/dynamic_ruleset/proc/set_config_value(nvar, nval)
-	if(!(nvar in vars))
-		log_dynamic("Erroneous config edit rejected: [nvar]")
+/datum/dynamic_ruleset/proc/set_config_value(new_var, new_val)
+	if(!(new_var in vars))
+		log_dynamic("Erroneous config edit rejected: [new_var]")
 		return FALSE
 	var/static/list/locked_config_values = list(
 		NAMEOF_STATIC(src, config_tag),
@@ -102,13 +102,13 @@
 		NAMEOF_STATIC(src, vars),
 	)
 
-	if(nvar in locked_config_values)
-		log_dynamic("Bad config edit rejected: [nvar]")
+	if(new_var in locked_config_values)
+		log_dynamic("Bad config edit rejected: [new_var]")
 		return FALSE
-	if(islist(nval) && (nvar == NAMEOF(src, weight) || nvar == NAMEOF(src, min_pop)))
-		nval = load_tier_list(nval)
+	if(islist(new_val) && (new_var == NAMEOF(src, weight) || new_var == NAMEOF(src, min_pop)))
+		new_val = load_tier_list(new_val)
 
-	vars[nvar] = nval
+	vars[new_var] = new_val
 	return TRUE
 
 /datum/dynamic_ruleset/vv_edit_var(var_name, var_value)
@@ -151,7 +151,7 @@
 
 	// we can assert that tier[1] and tier[4] are not null, but we cannot say the same for tier[2] and tier[3]
 	// this can be happen due to the following setup: list(1, null, null, 4)
-	// (which is an invalid config, and should be fixed by the operator)
+	// (which is an inew_valid config, and should be fixed by the operator)
 	if(isnull(tier_list[2]))
 		tier_list[2] = tier_list[1]
 	if(isnull(tier_list[3]))

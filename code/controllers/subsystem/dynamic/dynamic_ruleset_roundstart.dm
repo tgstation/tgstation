@@ -152,8 +152,15 @@
 /datum/dynamic_ruleset/roundstart/blood_cult/create_execute_args()
 	return list(new /datum/team/cult)
 
-/datum/dynamic_ruleset/roundstart/blood_cult/assign_role(datum/mind/candidate, datum/team/cult)
-	var/datum/antagonist/cult/cultist = candidate.add_antag_datum(/datum/antagonist/cult, cult)
+/datum/dynamic_ruleset/roundstart/blood_cult/execute()
+	. = ..()
+	var/datum/team/cult/main_cult = locate() in GLOB.antagonist_teams
+	main_cult.setup_objectives()
+
+/datum/dynamic_ruleset/roundstart/blood_cult/assign_role(datum/mind/candidate, datum/team/cult/cult)
+	var/datum/antagonist/cult/cultist = new()
+	cultist.give_equipment = TRUE
+	candidate.add_antag_datum(cultist, cult)
 	if(get_most_experienced(selected_minds, pref_flag) == candidate)
 		cultist.make_cult_leader()
 

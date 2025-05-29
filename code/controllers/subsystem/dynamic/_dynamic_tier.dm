@@ -79,28 +79,28 @@
 	)
 
 /datum/dynamic_tier/New(list/dynamic_config)
-	for(var/nvar in dynamic_config?[config_tag])
-		if(!(nvar in vars))
+	for(var/new_var in dynamic_config?[config_tag])
+		if(!(new_var in vars))
 			continue
-		set_config_value(nvar, dynamic_config[config_tag][nvar])
+		set_config_value(new_var, dynamic_config[config_tag][new_var])
 
 /// Used for parsing config entries to validate them
-/datum/dynamic_tier/proc/set_config_value(nvar, nval)
-	switch(nvar)
+/datum/dynamic_tier/proc/set_config_value(new_var, new_val)
+	switch(new_var)
 		if(NAMEOF(src, tier), NAMEOF(src, config_tag), NAMEOF(src, vars))
 			return FALSE
 		if(NAMEOF(src, ruleset_type_settings))
-			for(var/category in nval)
-				for(var/rule in nval[category])
+			for(var/category in new_val)
+				for(var/rule in new_val[category])
 					if(rule == LOW_END || rule == HIGH_END)
-						ruleset_type_settings[category][rule] = max(0, nval[category][rule])
+						ruleset_type_settings[category][rule] = max(0, new_val[category][rule])
 					else if(rule == TIME_THRESHOLD || rule == EXECUTION_COOLDOWN_LOW || rule == EXECUTION_COOLDOWN_HIGH)
-						ruleset_type_settings[category][rule] = nval[category][rule] * 1 MINUTES
+						ruleset_type_settings[category][rule] = new_val[category][rule] * 1 MINUTES
 					else
-						ruleset_type_settings[category][rule] = nval[category][rule]
+						ruleset_type_settings[category][rule] = new_val[category][rule]
 			return TRUE
 
-	vars[nvar] = nval
+	vars[new_var] = new_val
 	return TRUE
 
 /datum/dynamic_tier/vv_edit_var(var_name, var_value)
