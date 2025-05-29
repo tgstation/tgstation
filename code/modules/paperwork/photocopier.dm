@@ -746,7 +746,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return NONE
 
 /// Check if there is enough room to insert paper
-/obj/machinery/photocopier/proc/is_room_for_paper(mob/user, amount=1)
+/obj/machinery/photocopier/proc/is_room_for_paper(mob/user, amount = 1)
 	return get_paper_count() < max_paper_capacity
 
 /// Proc that handles insertion of empty paper, useful for copying later.
