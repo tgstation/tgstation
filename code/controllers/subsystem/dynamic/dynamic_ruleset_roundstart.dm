@@ -154,6 +154,7 @@
 
 /datum/dynamic_ruleset/roundstart/blood_cult/execute()
 	. = ..()
+	// future todo, find a cleaner way to get this from execute args
 	var/datum/team/cult/main_cult = locate() in GLOB.antagonist_teams
 	main_cult.setup_objectives()
 
