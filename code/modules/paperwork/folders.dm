@@ -93,6 +93,7 @@
 		return insertables_act(user, tool)
 	if(IS_WRITING_UTENSIL(tool))
 		return writing_utensil_act(user, tool)
+	return NONE
 
 /obj/item/folder/proc/insertables_act(mob/living/user, obj/item/tool)
 	if(!user.transferItemToLoc(tool, src, silent = FALSE))
