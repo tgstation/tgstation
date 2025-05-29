@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Felinids, when sufficiently manic and starving, will sometimes take a chunk out of their fellow spessman. With their teeth."
+  - balance: "Carp-infused mutants have pointy teeth."
