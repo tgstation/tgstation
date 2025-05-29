@@ -1,0 +1,4 @@
+author: "ocan4214"
+delete-after: True
+changes:
+  - bugfix: "fixed Civilian Bounty Terminal not filling rest of the window when opened first time."
