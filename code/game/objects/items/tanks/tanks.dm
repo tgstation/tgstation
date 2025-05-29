@@ -98,7 +98,7 @@
 /obj/item/tank/proc/after_internals_closed(mob/living/carbon/carbon_target)
 	breathing_mob = null
 	playsound(loc, 'sound/items/internals/internals_off.ogg', 15, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	volume_bar.end_progress()
+	QDEL_NULL(volume_bar)
 
 /// Attempts to toggle the mob's internals on or off using this tank. Returns TRUE if successful.
 /obj/item/tank/proc/toggle_internals(mob/living/carbon/mob_target)
@@ -136,6 +136,7 @@
 	STOP_PROCESSING(SSobj, src)
 	air_contents = null
 	QDEL_NULL(tank_assembly)
+	QDEL_NULL(volume_bar)
 	return ..()
 
 /obj/item/tank/update_overlays()
