@@ -2,11 +2,11 @@
 root = true
 
 [*]
-indent_style = space
-end_of_line = lf
 charset = utf-8
-trim_trailing_whitespace = true
+end_of_line = lf
+indent_style = space
 insert_final_newline = true
+trim_trailing_whitespace = true
 
-[*.dm]
+[*.{dm,json,md}]
 indent_style = tab

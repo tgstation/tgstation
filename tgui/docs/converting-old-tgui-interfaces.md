@@ -24,7 +24,7 @@ You likely already know that React data inserts look like this
 
 ```jsx
 {
-  data.example_data;
+	data.example_data;
 }
 ```
 
@@ -60,7 +60,7 @@ The equivalent React would be
 
 ```jsx
 {
-  !!data.condition && <Fragment>Example Render</Fragment>;
+	!!data.condition && <Fragment>Example Render</Fragment>;
 }
 ```
 
@@ -89,9 +89,9 @@ Similarly to the previous example, just add a `||` operator to handle the
 
 ```jsx
 {
-  (!!data.condition && <Fragment>value</Fragment>) || (
-    <Fragment>other value</Fragment>
-  );
+	(!!data.condition && <Fragment>value</Fragment>) || (
+		<Fragment>other value</Fragment>
+	);
 }
 ```
 
@@ -99,7 +99,7 @@ There's also our good old friend - the ternary:
 
 ```jsx
 {
-  data.condition ? 'value' : 'other value';
+	data.condition ? 'value' : 'other value';
 }
 ```
 
@@ -108,7 +108,7 @@ and you can mix string literals, values, and tags as well.
 
 ```jsx
 {
-  data.is_robot ? <Button content="Robot Button" /> : 'Not a robot';
+	data.is_robot ? <Button content="Robot Button" /> : 'Not a robot';
 }
 ```
 
@@ -147,7 +147,7 @@ If it's an array, you'll want to do this in the template
 
 ```jsx
 {
-  things.map((thing) => <Fragment>Thing {thing.number} is here!</Fragment>);
+	things.map((thing) => <Fragment>Thing {thing.number} is here!</Fragment>);
 }
 ```
 
@@ -163,11 +163,11 @@ Now for objects, there's a genuinely pretty gross syntax here. We apoligize, it'
 
 ```jsx
 {
-  map((value, key) => (
-    <Fragment>
-      Key is {key}, value is {value}
-    </Fragment>
-  ))(fooObject);
+	map((value, key) => (
+		<Fragment>
+			Key is {key}, value is {value}
+		</Fragment>
+	))(fooObject);
 }
 ```
 
@@ -178,7 +178,7 @@ the big return statement, like this:
 
 ```jsx
 const fooArray = map((value, key) => {
-  return { key, value };
+	return { key, value };
 })(fooObject);
 ```
 
@@ -204,10 +204,10 @@ To do a similar thing in JSX, just check if array is empty like this:
 
 ```jsx
 {
-  fooArray.length === 0 && 'fooArray is empty.';
+	fooArray.length === 0 && 'fooArray is empty.';
 }
 {
-  fooArray.map((foo) => <Fragment>Foo is {foo}</Fragment>);
+	fooArray.map((foo) => <Fragment>Foo is {foo}</Fragment>);
 }
 ```
 
@@ -250,7 +250,7 @@ becomes
 
 ```jsx
 <Section title="Status" buttons={<Button />}>
-  Contents
+	Contents
 </Section>
 ```
 
@@ -273,8 +273,8 @@ becomes
 
 ```jsx
 <LabeledList>
-  <LabeledList.Item label="power">No Power</LabeledList.Item>
-  <LabeledList.Item label="connection">No Connection</LabeledList.Item>
+	<LabeledList.Item label="power">No Power</LabeledList.Item>
+	<LabeledList.Item label="connection">No Connection</LabeledList.Item>
 </LabeledList>
 ```
 
@@ -315,12 +315,12 @@ becomes
 
 ```jsx
 <Button
-  content="Click"
-  disabled={data.condition}
-  onClick={() =>
-    act('ui_action', {
-      param: value,
-    })
-  }
+	content="Click"
+	disabled={data.condition}
+	onClick={() =>
+		act('ui_action', {
+			param: value,
+		})
+	}
 />
 ```

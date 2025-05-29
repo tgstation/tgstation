@@ -128,27 +128,27 @@ import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 export const SampleInterface = (props, context) => {
-  const { act, data } = useBackend(context);
-  // Extract `health` and `color` variables from the `data` object.
-  const { health, color } = data;
-  return (
-    <Window resizable>
-      <Window.Content scrollable>
-        <Section title="Health status">
-          <LabeledList>
-            <LabeledList.Item label="Health">{health}</LabeledList.Item>
-            <LabeledList.Item label="Color">{color}</LabeledList.Item>
-            <LabeledList.Item label="Button">
-              <Button
-                content="Dispatch a 'test' action"
-                onClick={() => act('test')}
-              />
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-      </Window.Content>
-    </Window>
-  );
+	const { act, data } = useBackend(context);
+	// Extract `health` and `color` variables from the `data` object.
+	const { health, color } = data;
+	return (
+		<Window resizable>
+			<Window.Content scrollable>
+				<Section title="Health status">
+					<LabeledList>
+						<LabeledList.Item label="Health">{health}</LabeledList.Item>
+						<LabeledList.Item label="Color">{color}</LabeledList.Item>
+						<LabeledList.Item label="Button">
+							<Button
+								content="Dispatch a 'test' action"
+								onClick={() => act('test')}
+							/>
+						</LabeledList.Item>
+					</LabeledList>
+				</Section>
+			</Window.Content>
+		</Window>
+	);
 };
 ```
 
@@ -188,11 +188,11 @@ After compiling the code above, this is what it becomes:
 
 ```js
 createElement(
-  'div',
-  { className: 'color-' + status },
-  'You are in ',
-  status,
-  ' condition!',
+	'div',
+	{ className: 'color-' + status },
+	'You are in ',
+	status,
+	' condition!',
 );
 ```
 
@@ -227,11 +227,11 @@ and builds a new array based on what was returned by that function.
 
 ```jsx
 <LabeledList>
-  {items.map((item) => (
-    <LabeledList.Item key={item.id} label={item.label}>
-      {item.content}
-    </LabeledList.Item>
-  ))}
+	{items.map((item) => (
+		<LabeledList.Item key={item.id} label={item.label}>
+			{item.content}
+		</LabeledList.Item>
+	))}
 </LabeledList>
 ```
 
@@ -250,27 +250,27 @@ import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 export const SampleInterface = (props, context) => {
-  return (
-    <Window resizable>
-      <Window.Content scrollable>
-        <HealthStatus user="Jerry" />
-      </Window.Content>
-    </Window>
-  );
+	return (
+		<Window resizable>
+			<Window.Content scrollable>
+				<HealthStatus user="Jerry" />
+			</Window.Content>
+		</Window>
+	);
 };
 
 const HealthStatus = (props, context) => {
-  const { act, data } = useBackend(context);
-  const { user } = props;
-  const { health, color } = data;
-  return (
-    <Section title={'Health status of: ' + user}>
-      <LabeledList>
-        <LabeledList.Item label="Health">{health}</LabeledList.Item>
-        <LabeledList.Item label="Color">{color}</LabeledList.Item>
-      </LabeledList>
-    </Section>
-  );
+	const { act, data } = useBackend(context);
+	const { user } = props;
+	const { health, color } = data;
+	return (
+		<Section title={'Health status of: ' + user}>
+			<LabeledList>
+				<LabeledList.Item label="Health">{health}</LabeledList.Item>
+				<LabeledList.Item label="Color">{color}</LabeledList.Item>
+			</LabeledList>
+		</Section>
+	);
 };
 ```
 
@@ -312,26 +312,26 @@ import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 export const SampleInterface = (props, context) => {
-  const { act, data } = useBackend(context);
-  // Extract `health` and `color` variables from the `data` object.
-  const { health, color } = data;
-  return (
-    <Window resizable>
-      <Window.Content scrollable>
-        <Section title="Health status">
-          <LabeledList>
-            <LabeledList.Item label="Health">{health}</LabeledList.Item>
-            <LabeledList.Item label="Color">{color}</LabeledList.Item>
-            <LabeledList.Item label="Button">
-              <Button
-                content="Dispatch a 'test' action"
-                onClick={() => act('test')}
-              />
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-      </Window.Content>
-    </Window>
-  );
+	const { act, data } = useBackend(context);
+	// Extract `health` and `color` variables from the `data` object.
+	const { health, color } = data;
+	return (
+		<Window resizable>
+			<Window.Content scrollable>
+				<Section title="Health status">
+					<LabeledList>
+						<LabeledList.Item label="Health">{health}</LabeledList.Item>
+						<LabeledList.Item label="Color">{color}</LabeledList.Item>
+						<LabeledList.Item label="Button">
+							<Button
+								content="Dispatch a 'test' action"
+								onClick={() => act('test')}
+							/>
+						</LabeledList.Item>
+					</LabeledList>
+				</Section>
+			</Window.Content>
+		</Window>
+	);
 };
 ```

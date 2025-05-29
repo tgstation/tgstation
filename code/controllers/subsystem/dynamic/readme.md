@@ -115,32 +115,32 @@ The format of this file is:
 
 ```json
 {
-  "Dynamic": {
-    /* Configuration in here will directly override `/datum/controller/subsystem/dynamic` itself. */
-    /* Keys are variable names, values are their new values. */
-  },
+	"Dynamic": {
+		/* Configuration in here will directly override `/datum/controller/subsystem/dynamic` itself. */
+		/* Keys are variable names, values are their new values. */
+	},
 
-  "Roundstart": {
-    /* Configuration in here will apply to `/datum/dynamic_ruleset/roundstart` instances. */
-    /* Keys are the ruleset names, values are another associative list with keys being variable names and values being new values. */
-    "Wizard": {
-      /* I, a head admin, have died to wizard, and so I made it cost a lot more threat than it does in the codebase. */
-      "cost": 80
-    }
-  },
+	"Roundstart": {
+		/* Configuration in here will apply to `/datum/dynamic_ruleset/roundstart` instances. */
+		/* Keys are the ruleset names, values are another associative list with keys being variable names and values being new values. */
+		"Wizard": {
+			/* I, a head admin, have died to wizard, and so I made it cost a lot more threat than it does in the codebase. */
+			"cost": 80
+		}
+	},
 
-  "Midround": {
-    /* Same as "Roundstart", but for `/datum/dynamic_ruleset/midround` instead. */
-  },
+	"Midround": {
+		/* Same as "Roundstart", but for `/datum/dynamic_ruleset/midround` instead. */
+	},
 
-  "Latejoin": {
-    /* Same as "Roundstart", but for `/datum/dynamic_ruleset/latejoin` instead. */
-  },
+	"Latejoin": {
+		/* Same as "Roundstart", but for `/datum/dynamic_ruleset/latejoin` instead. */
+	},
 
-  "Station": {
-    /* Special threat reductions for dangerous station traits. Traits are selected before dynamic, so traits will always  */
-    /* reduce threat even if there's no threat for it available. Only "cost" can be modified */
-  }
+	"Station": {
+		/* Special threat reductions for dangerous station traits. Traits are selected before dynamic, so traits will always  */
+		/* reduce threat even if there's no threat for it available. Only "cost" can be modified */
+	}
 }
 ```
 

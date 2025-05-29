@@ -8,13 +8,13 @@ TgChat handles sending messages from the server to the client through the use of
 
 ```json
 {
-  "sequence": 0,
-  "content": {
-    "type": ". . .", // ?optional
-    "text": ". . .", // ?optional !atleast-one
-    "html": ". . .", // ?optional !atleast-one
-    "avoidHighlighting": 0 // ?optional
-  }
+	"sequence": 0,
+	"content": {
+		"type": ". . .", // ?optional
+		"text": ". . .", // ?optional !atleast-one
+		"html": ". . .", // ?optional !atleast-one
+		"avoidHighlighting": 0 // ?optional
+	}
 }
 ```
 

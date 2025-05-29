@@ -1,27 +1,27 @@
 {
-  "generic": ["general disfigurement"],
+	"generic": ["general disfigurement"],
 
-  "dislocate": [
-    "the bone equivalent of a faded bruise",
-    "a series of tiny chip marks"
-  ],
+	"dislocate": [
+		"the bone equivalent of a faded bruise",
+		"a series of tiny chip marks"
+	],
 
-  "bluntmoderate": [
-    "the bone equivalent of a faded bruise",
-    "a series of tiny chip marks"
-  ],
+	"bluntmoderate": [
+		"the bone equivalent of a faded bruise",
+		"a series of tiny chip marks"
+	],
 
-  "bluntsevere": ["a series of faded hairline cracks", "a small bone dent"],
+	"bluntsevere": ["a series of faded hairline cracks", "a small bone dent"],
 
-  "bluntcritical": [
-    "large streaks of refilled cracks",
-    "a fractal of reformed stress marks",
-    "a cluster of calluses"
-  ],
+	"bluntcritical": [
+		"large streaks of refilled cracks",
+		"a fractal of reformed stress marks",
+		"a cluster of calluses"
+	],
 
-  "dismember": [
-    "is slightly misaligned",
-    "has clearly been dropped recently",
-    "has a damaged socket"
-  ]
+	"dismember": [
+		"is slightly misaligned",
+		"has clearly been dropped recently",
+		"has a damaged socket"
+	]
 }

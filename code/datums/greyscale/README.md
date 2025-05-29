@@ -35,27 +35,27 @@ The json is made up of some metadata and a list of layers used while creating th
 
 ```json
 {
-  "icon_state_name": [
-    {
-      "type": "reference",
-      "reference_type": "/datum/greyscale_config/some_other_config",
-      "blend_mode": "overlay",
-      "color_ids": [1]
-    },
-    [
-      {
-        "type": "icon_state",
-        "icon_state": "highlights",
-        "blend_mode": "overlay",
-        "color_ids": [2]
-      },
-      {
-        "type": "reference",
-        "reference_type": "/datum/greyscale_config/sparkle_effect",
-        "blend_mode": "add"
-      }
-    ]
-  ]
+	"icon_state_name": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/some_other_config",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		[
+			{
+				"type": "icon_state",
+				"icon_state": "highlights",
+				"blend_mode": "overlay",
+				"color_ids": [2]
+			},
+			{
+				"type": "reference",
+				"reference_type": "/datum/greyscale_config/sparkle_effect",
+				"blend_mode": "add"
+			}
+		]
+	]
 }
 ```
 
@@ -75,25 +75,25 @@ Thus, **this will be the most common layout**:
 
 ```json
 {
-  "full_icon_state_name": [
-    {
-      "type": "icon_state",
-      "icon_state": "component_state_1",
-      "blend_mode": "overlay",
-      "color_ids": [1]
-    },
-    {
-      "type": "icon_state",
-      "icon_state": "component_state_2",
-      "blend_mode": "overlay",
-      "color_ids": [2]
-    },
-    {
-      "type": "icon_state",
-      "icon_state": "non_colorable_component_state",
-      "blend_mode": "overlay"
-    }
-  ]
+	"full_icon_state_name": [
+		{
+			"type": "icon_state",
+			"icon_state": "component_state_1",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "component_state_2",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "non_colorable_component_state",
+			"blend_mode": "overlay"
+		}
+	]
 }
 ```
 

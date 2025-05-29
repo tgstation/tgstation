@@ -23,14 +23,14 @@ From here, you will want to write code resembling:
 import { Feature } from "../base";
 
 export const savefile_key_here: Feature<T> = {
-  name: "Preference Name Here",
-  component: Component,
+	name: "Preference Name Here",
+	component: Component,
 
-  // Necessary for game preferences, unused for others
-  category: "CATEGORY",
+	// Necessary for game preferences, unused for others
+	category: "CATEGORY",
 
-  // Optional, shown as a tooltip
-  description: "This preference will blow your mind!",
+	// Optional, shown as a tooltip
+	description: "This preference will blow your mind!",
 };
 ```
 
@@ -60,8 +60,8 @@ Your `.tsx` file would look like:
 import { Feature, FeatureNumberInput } from "../base";
 
 export const legs: Feature<number> = {
-  name: "Legs",
-  component: FeatureNumberInput,
+	name: "Legs",
+	component: FeatureNumberInput,
 };
 ```
 
@@ -85,8 +85,8 @@ Your `.tsx` file would look like:
 import { CheckboxInput, FeatureToggle } from "../base";
 
 export const enable_breathing: FeatureToggle = {
-  name: "Enable breathing",
-  component: CheckboxInput,
+	name: "Enable breathing",
+	component: CheckboxInput,
 };
 ```
 
@@ -120,8 +120,8 @@ Your `.tsx` file would then look like:
 import { FeatureChoiced, FeatureDropdownInput } from "../base";
 
 export const favorite_drink: FeatureChoiced = {
-  name: "Favorite drink",
-  component: FeatureDropdownInput,
+	name: "Favorite drink",
+	component: FeatureDropdownInput,
 };
 ```
 
@@ -158,8 +158,8 @@ Then, change your `.tsx` file to look like:
 import { FeatureChoiced, FeatureIconnedDropdownInput } from "../base";
 
 export const favorite_drink: FeatureChoiced = {
-  name: "Favorite drink",
-  component: FeatureIconnedDropdownInput,
+	name: "Favorite drink",
+	component: FeatureIconnedDropdownInput,
 };
 ```
 
@@ -202,8 +202,8 @@ Your `.tsx` file would look like:
 import { FeatureColorInput, Feature } from "../base";
 
 export const eyeliner_color: Feature<string> = {
-  name: "Eyeliner color",
-  component: FeatureColorInput,
+	name: "Eyeliner color",
+	component: FeatureColorInput,
 };
 ```
 
@@ -342,16 +342,16 @@ For a basic example of how this can look, observe `CheckboxInput`:
 
 ```tsx
 export const CheckboxInput = (
-  props: FeatureValueProps<BooleanLike, boolean>,
+	props: FeatureValueProps<BooleanLike, boolean>,
 ) => {
-  return (
-    <Button.Checkbox
-      checked={!!props.value}
-      onClick={() => {
-        props.handleSetValue(!props.value);
-      }}
-    />
-  );
+	return (
+		<Button.Checkbox
+			checked={!!props.value}
+			onClick={() => {
+				props.handleSetValue(!props.value);
+			}}
+		/>
+	);
 };
 ```
 
@@ -432,20 +432,20 @@ import { Antagonist, Category } from "../base";
 import { multiline } from "common/string";
 
 const Changeling: Antagonist = {
-  key: "changeling", // This must be the same as your filename
-  name: "Changeling",
-  description: [
-    multiline`
+	key: "changeling", // This must be the same as your filename
+	name: "Changeling",
+	description: [
+		multiline`
       A highly intelligent alien predator that is capable of altering their
       shape to flawlessly resemble a human.
     `,
 
-    multiline`
+		multiline`
       Transform yourself or others into different identities, and buy from an
       arsenal of biological weaponry with the DNA you collect.
     `,
-  ],
-  category: Category.Roundstart, // Category.Roundstart, Category.Midround, or Category.Latejoin
+	],
+	category: Category.Roundstart, // Category.Roundstart, Category.Midround, or Category.Latejoin
 };
 
 export default Changeling;

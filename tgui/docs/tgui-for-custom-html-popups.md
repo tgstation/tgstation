@@ -64,8 +64,8 @@ Finally, you can use the `Byond` API object to load JS and CSS files directly vi
 
 ```html
 <script>
-  Byond.loadJs('https://example.com/bundle.js');
-  Byond.loadCss('https://example.com/bundle.css');
+	Byond.loadJs('https://example.com/bundle.js');
+	Byond.loadCss('https://example.com/bundle.css');
 </script>
 ```
 
@@ -138,9 +138,9 @@ Finally, message can contain custom properties, and how you use them is _complet
 
 ```js
 Byond.sendMessage({
-  type: 'click',
-  payload: { buttonId: 1 },
-  popup_section: 'left',
+	type: 'click',
+	payload: { buttonId: 1 },
+	popup_section: 'left',
 });
 ```
 
@@ -160,15 +160,15 @@ To receive it in JS, you have two different syntaxes. First one is the most verb
 
 ```js
 Byond.subscribe(function (type, payload) {
-  if (type === 'alert') {
-    window.alert(payload.text);
-    return;
-  }
-  if (type === 'other') {
-    // ...
-    return;
-  }
-  // ...
+	if (type === 'alert') {
+		window.alert(payload.text);
+		return;
+	}
+	if (type === 'other') {
+		// ...
+		return;
+	}
+	// ...
 });
 ```
 
@@ -176,7 +176,7 @@ Second one is more compact, because it already filters messages by type and pass
 
 ```js
 Byond.subscribeTo('alert', function (payload) {
-  window.alert(payload.text);
+	window.alert(payload.text);
 });
 ```
 
@@ -186,7 +186,7 @@ To send a message from JS, you can use the `Byond.sendMessage()` function.
 
 ```js
 Byond.sendMessage('click', {
-  button: 'explode-mech',
+	button: 'explode-mech',
 });
 ```
 
@@ -209,8 +209,8 @@ You can send messages with custom fields in case if you want to bypass JSON seri
 
 ```js
 Byond.sendMessage({
-  type: 'something',
-  ref: '[0x12345678]',
+	type: 'something',
+	ref: '[0x12345678]',
 });
 ```
 
@@ -244,7 +244,7 @@ Id of the current tgui window can be accessed via `Byond.windowId`, and below in
 
 ```js
 Byond.winset(Byond.windowId, {
-  size: '1280x640',
+	size: '1280x640',
 });
 ```
 
@@ -255,10 +255,10 @@ Little known feature, but you can also get non-UI parameters on the client by us
 ```js
 // Fetch URL of a server client is currently connected to
 Byond.winget(null, 'url').then((serverUrl) => {
-  // Connect to this server
-  Byond.call(serverUrl);
-  // Close our client because it is now connecting in background
-  Byond.command('.quit');
+	// Connect to this server
+	Byond.call(serverUrl);
+	// Close our client because it is now connecting in background
+	Byond.command('.quit');
 });
 ```
 

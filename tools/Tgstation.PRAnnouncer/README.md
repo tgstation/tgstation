@@ -24,42 +24,42 @@ Here's an example config:
 
 ```json
 {
-  "Settings": {
-    "CommsKey": "<COMMS_KEY config setting>",
-    "GitHubSecret": "<GitHub webhook secret>",
-    "GameServerHealthCheckSeconds": 30, // How often this service will ping game servers
-    "Servers": [
-      {
-        "Address": "blockmoths.tg.lan", // DNS/IP address of game server
-        "Port": 3336, // Game server port
-        "InterestedRepoSlugs": [
-          "tgstation/tgstation" // List of GitHub owner/repos that notifications should be delivered for
-        ]
-      },
-      {
-        "Address": "tgsatan.tg.lan",
-        "Port": 1337,
-        "InterestedRepoSlugs": ["tgstation/tgstation"]
-      },
-      {
-        "Address": "tgsatan.tg.lan",
-        "Port": 1447,
-        "InterestedRepoSlugs": ["tgstation/tgstation"]
-      },
-      {
-        "Address": "tgsatan.tg.lan",
-        "Port": 5337,
-        "InterestedRepoSlugs": ["tgstation/TerraGov-Marine-Corps"]
-      }
-    ]
-  },
-  "Kestrel": {
-    "Endpoints": {
-      "Http": {
-        "Url": "http://0.0.0.0:11337" // This is the address the service will be hosted on.
-      }
-    }
-  }
+	"Settings": {
+		"CommsKey": "<COMMS_KEY config setting>",
+		"GitHubSecret": "<GitHub webhook secret>",
+		"GameServerHealthCheckSeconds": 30, // How often this service will ping game servers
+		"Servers": [
+			{
+				"Address": "blockmoths.tg.lan", // DNS/IP address of game server
+				"Port": 3336, // Game server port
+				"InterestedRepoSlugs": [
+					"tgstation/tgstation" // List of GitHub owner/repos that notifications should be delivered for
+				]
+			},
+			{
+				"Address": "tgsatan.tg.lan",
+				"Port": 1337,
+				"InterestedRepoSlugs": ["tgstation/tgstation"]
+			},
+			{
+				"Address": "tgsatan.tg.lan",
+				"Port": 1447,
+				"InterestedRepoSlugs": ["tgstation/tgstation"]
+			},
+			{
+				"Address": "tgsatan.tg.lan",
+				"Port": 5337,
+				"InterestedRepoSlugs": ["tgstation/TerraGov-Marine-Corps"]
+			}
+		]
+	},
+	"Kestrel": {
+		"Endpoints": {
+			"Http": {
+				"Url": "http://0.0.0.0:11337" // This is the address the service will be hosted on.
+			}
+		}
+	}
 }
 ```
 
