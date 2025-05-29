@@ -67,7 +67,7 @@
 
 	chosen_class = choice
 
-	human_user.balloon_alert(human_user, lowertext(chosen_class.name))
+	human_user.balloon_alert(human_user, LOWER_TEXT(chosen_class.name))
 	playsound(human_user, 'sound/items/zip/un_zip.ogg', 33)
 	playsound(src, 'sound/machines/closet/wooden_closet_open.ogg', 25)
 	icon_state = "fullcabinet_open"
