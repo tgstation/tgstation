@@ -363,16 +363,16 @@
 			SStgui.update_uis(src_object)
 		if("renderByondUi")
 			var/byond_ui_id = payload["byondUiId"]
-			if(!byond_ui_id || LAZYLEN(byond_ui_elements) > TGUI_MANAGED_BYONDUI_LIMIT)
+			if(!byond_ui_id || LAZYLEN(open_byondui_elements) > TGUI_MANAGED_BYONDUI_LIMIT)
 				return
 
-			LAZYOR(byond_ui_elements, byond_ui_id)
+			LAZYOR(open_byondui_elements, byond_ui_id)
 		if("unmountByondUi")
 			var/byond_ui_id = payload["byondUiId"]
 			if(!byond_ui_id)
 				return
 
-			LAZYREMOVE(byond_ui_elements, byond_ui_id)
+			LAZYREMOVE(open_byondui_elements, byond_ui_id)
 
 /// Wrapper for behavior to potentially wait until the next tick if the server is overloaded
 /datum/tgui/proc/on_act_message(act_type, payload, state)
