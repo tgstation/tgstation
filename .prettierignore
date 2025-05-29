@@ -1,9 +1,19 @@
+# Directories
 changelogs
 data
 font-awesome
 jquery
 juke
-package-lock.json
-.pnp.*
-.yarn
+
+## Tgui
 node_modules
+.yarn
+# Avoid running on any bundles.
+tgui/public
+# Running it on tgui.html is fine, however.
+!/tgui/public/tgui.html
+# Specific files
+package-lock.json
+# File names / types
+*.min.*
+*.pnp.*

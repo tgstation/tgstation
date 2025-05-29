@@ -655,7 +655,7 @@ Consider the previously mentioned non-hygienic macro:
 #define GET_HEALTH(health_percent) ((##health_percent) * max_health)
 ```
 
-This relies on "max_health", but it is not obviously clear what the source is. This will also become worse if we _do_ want to change where we get the source from. This would be preferential as:
+This relies on "max*health", but it is not obviously clear what the source is. This will also become worse if we \_do* want to change where we get the source from. This would be preferential as:
 
 ```dm
 #define GET_HEALTH(source, health_percent) ((##health_percent) * (##source).max_health)

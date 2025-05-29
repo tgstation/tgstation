@@ -42,7 +42,7 @@ For example, this lint will ban `/mob/dog` and all subtypes:
 
 If you want to ban other objects being on the same tile as another, you can specify `banned_neighbors`.
 
-This takes a few forms. The simplest is just a list of types to not be next to. This lint will ban either cat_toy _or_ cat_food (or their subtypes) from being on the same tile as a dog.
+This takes a few forms. The simplest is just a list of types to not be next to. This lint will ban either cat*toy \_or* cat_food (or their subtypes) from being on the same tile as a dog.
 
 ```yml
 /mob/dog:
