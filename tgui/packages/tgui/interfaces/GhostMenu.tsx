@@ -127,7 +127,7 @@ const RoundSection = (props) => {
         onClick={() => act('signup_pai')}
         fontSize="11px"
       >
-        Signup as pAI
+        Sign up as pAI
       </ImageButton>
     </>
   );
