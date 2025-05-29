@@ -750,7 +750,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return get_paper_count() < max_paper_capacity
 
 /// Proc that handles insertion of empty paper, useful for copying later.
-/obj/machinery/photocopier/proc/insert_empty_paper(mob/user, paper_type, amount=1, silent=FALSE)
+/obj/machinery/photocopier/proc/insert_empty_paper(mob/user, paper_type, amount = 1, silent = FALSE)
 	if(!paper_stack[paper_type])
 		paper_stack[paper_type] = 0
 	paper_stack[paper_type] += amount
