@@ -1,12 +1,9 @@
-node_modules
-public
-.tmp
 changelogs
+data
 font-awesome
 jquery
 juke
 package-lock.json
+.pnp.*
 .yarn
-yarn.lock
-data
-*.pnp.*
+node_modules

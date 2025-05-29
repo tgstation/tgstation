@@ -1,5 +1,6 @@
-/packages/tgui-polyfill
-/packages/tgfont/static
+.pnp.*
+.yarn
+node_modules
 
 # Avoid running on any bundles.
 /public/**/*
