@@ -1,17 +1,5 @@
-## NPM
-/**/node_modules
-
-## Yarn
-/.yarn
-/yarn.lock
-/.pnp.*
-
-/docs
 /packages/tgui-polyfill
 /packages/tgfont/static
-**/*.json
-**/*.yml
-**/*.md
 
 # Avoid running on any bundles.
 /public/**/*
