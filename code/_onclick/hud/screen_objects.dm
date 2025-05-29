@@ -479,7 +479,7 @@
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
 /atom/movable/screen/sleep/Click()
-	if(HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
+	if(!isliving(usr) || HAS_TRAIT(usr, TRAIT_KNOCKEDOUT))
 		return
 	if(usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
 		var/tgui_answer = tgui_alert(usr, "You sure you want to sleep for a while?", "Sleeping", list("Yes", "No"))
@@ -490,7 +490,7 @@
 		flick("[base_icon_state]_flick", src)
 
 /atom/movable/screen/sleep/DblClick(location, control, params)
-	if(usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
+	if(!isliving(usr) || usr.client?.prefs.read_preference(/datum/preference/toggle/remove_double_click))
 		return
 	if(isliving(usr))
 		var/mob/living/L = usr
