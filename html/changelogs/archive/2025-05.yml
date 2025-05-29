@@ -769,3 +769,15 @@
       activate, rather than intensity for some reason.
   timothymtorres:
   - code_imp: Properly document circuitboard vars
+2025-05-29:
+  Goat:
+  - bugfix: Strongarm implant no longer gives the text about being broken when you
+      use your empty hand.
+  - code_imp: Toolset arms are now a subtype of arm implants instead of all arm implants
+      being treated like toolset arms.
+  SmArtKar:
+  - rscadd: Colorblind people can no longer see wire colors
+  - bugfix: Fixed eyecharts not considering people with monochromacy colorblind
+  Y0SH1M4S73R:
+  - spellcheck: Stations in the Spinward Sector have reported malfunctioning AIs swearing
+      fealty to the dead god Ratvar.
