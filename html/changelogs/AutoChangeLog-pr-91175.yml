@@ -1,0 +1,6 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - balance: "You can now examine things through advanced camera consoles."
+  - balance: "You can now examine things while in a holopad call."
+  - balance: "You can now examine things while looking up or down."

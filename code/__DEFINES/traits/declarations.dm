@@ -1501,4 +1501,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait given when we escape into our shell
 #define TRAIT_SHELL_RETREATED "shell_retreated"
+
+/// Trait given to colorblind mobs
+#define TRAIT_COLORBLIND "colorblind"
+
 // END TRAIT DEFINES
