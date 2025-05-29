@@ -59,8 +59,15 @@
 	/// Scarring on this organ
 	var/scarring = NONE
 
-	/// The (custom) message we get when we use a flashlight or penlight on these eyes.
-	var/penlight_message = "unused default message please report if seen"
+	/// The (custom, sometimes) messages we get when we use a flashlight or penlight on these eyes.
+	/// Completely optional but good if you wanna be FANCY
+
+	/// this message should never show up for default eyes, do not change on default eyes.
+	var/penlight_message = "useless default please report"
+	/// what are the pupils called? eg. pupils, apertures, etc. 
+	var/pupils_name = "pupils"
+	/// do these eyes have pupils (or equivalent) that react to light when penlighted.
+	var/light_reactive = TRUE
 /obj/item/organ/eyes/Initialize(mapload)
 	. = ..()
 	if (blink_animation)
@@ -527,7 +534,7 @@
 #undef ASYNC_BLINKING_BRAIN_DAMAGE
 
 /// by default, returns the eyes' penlight_message var as a notice span. May do other things when overridden, such as eldritch insanity, or eye damage, or whatnot. Whatever you want, really.
-/obj/item/organ/eyes/proc/penlight_examine(mob/living/viewer, obj/item/examtool)
+/obj/item/organ/eyes/proc/penlight_examine(mob/living/viewer)
 	return span_notice(penlight_message)
 
 #define NIGHTVISION_LIGHT_OFF 0
@@ -582,11 +589,16 @@
 	low_light_cutoff = list(0, 15, 20)
 	medium_light_cutoff = list(0, 20, 35)
 	high_light_cutoff = list(0, 40, 50)
-
+	pupils_name = "photosensory openings"
+	penlight_message = "are attached to fungal stalks"
 /obj/item/organ/eyes/zombie
 	name = "undead eyes"
 	desc = "Somewhat counterintuitively, these half-rotten eyes actually have superior vision to those of a living human."
 	color_cutoffs = list(25, 35, 5)
+	penlight_message = "are rotted and decaying"
+
+/obj/item/organ/eyes/zombie/penlight_examine(mob/living/viewer, obj/item/examtool)
+	return span_danger(penlight_message)
 
 /obj/item/organ/eyes/alien
 	name = "alien eyes"
@@ -606,6 +618,8 @@
 	organ_flags = ORGAN_MINERAL
 	color_cutoffs = list(10, 15, 5)
 	actions_types = list(/datum/action/cooldown/golem_ore_sight)
+	penlight_message = "glimmer, their crystaline structure refracting light inwards"
+	pupils_name = "lensing gems" ///given it says these are a "mineral lattice" that collects light i assume they work like artifical ruby laser foci
 
 /// Send an ore detection pulse on a cooldown
 /datum/action/cooldown/golem_ore_sight
@@ -628,7 +642,8 @@
 	icon_state = "eyes_cyber"
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
-
+	pupils_name = "apertures"
+	penlight_message = "are cybernetic, click-whirring as they refocus"
 /obj/item/organ/eyes/robotic/emp_act(severity)
 	. = ..()
 	if((. & EMP_PROTECT_SELF) || !owner)
@@ -646,7 +661,7 @@
 	eye_color_left = "#2f3032"
 	eye_color_right = "#2f3032"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
-
+	penlight_message = "are low grade cybernetics, poorly compensating for the light"
 /obj/item/organ/eyes/robotic/basic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
@@ -665,7 +680,7 @@
 	eye_color_left = "#3cb8a5"
 	eye_color_right = "#3cb8a5"
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
-
+	penlight_message = "replaced by small radiation emitters and detectors"
 /obj/item/organ/eyes/robotic/xray/on_mob_insert(mob/living/carbon/eye_owner)
 	. = ..()
 	ADD_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
@@ -685,6 +700,8 @@
 	color_cutoffs = list(25, 8, 5)
 	sight_flags = SEE_MOBS
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	pupils_name = "slit aperatures"
+	penlight_message = "are cybernetic, with vertically slit metalic lenses."
 
 /obj/item/organ/eyes/robotic/flashlight
 	name = "flashlight eyes"
@@ -696,6 +713,9 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = INFINITY
 	var/obj/item/flashlight/eyelight/eye
+	light_reactive = FALSE
+	pupils_name = "flashlights"
+	penlight_message = "are actually two flashlights taped together. ...why"
 
 /obj/item/organ/eyes/robotic/flashlight/Initialize(mapload)
 	. = ..()
@@ -757,6 +777,7 @@
 	var/left_eye_color_string
 	/// The custom selected eye color for the right eye. Defaults to the mob's natural eye color
 	var/right_eye_color_string
+	penlight_message = "shine back with cybernetic LEDs"
 
 /obj/item/organ/eyes/robotic/glow/Initialize(mapload)
 	. = ..()
@@ -1006,6 +1027,8 @@
 	blink_animation = FALSE
 	iris_overlay = null
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	pupils_name = "ommatidia" //yes i know compound eyes have no pupils shut up
+	penlight_message = "are bulbous and insectoid"
 
 /obj/item/organ/eyes/robotic/moth
 	name = "robotic moth eyes"
@@ -1013,6 +1036,8 @@
 	icon_state = "eyes_moth_cyber"
 	eye_icon_state = "motheyes_cyber"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+	pupils_name = "aperture clusters"
+	penlight_message = "are metallic bulbs, resembling insect eyes"
 
 /obj/item/organ/eyes/robotic/basic/moth
 	name = "basic robotic moth eyes"
