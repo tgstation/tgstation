@@ -4148,7 +4148,6 @@
 #include "code\modules\engineering\tools\multitool.dm"
 #include "code\modules\error_handler\error_handler.dm"
 #include "code\modules\error_handler\error_viewer.dm"
-#include "code\modules\escape_menu\admin_page.dm"
 #include "code\modules\escape_menu\details.dm"
 #include "code\modules\escape_menu\dimmer.dm"
 #include "code\modules\escape_menu\escape_menu.dm"
