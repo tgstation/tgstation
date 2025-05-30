@@ -166,7 +166,7 @@
 		/obj/item/cigarette/robust = 2,
 		/obj/item/cigarette/carp = 1,
 		/obj/item/cigarette/robustgold = 1,
-		/obj/item/cigarette/greytide = 3
+		/obj/item/cigarette/greytide = 3,
 	)
 
 /obj/effect/spawner/random/entertainment/cigar
