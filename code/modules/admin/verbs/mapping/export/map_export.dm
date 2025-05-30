@@ -1,3 +1,21 @@
+///Id ref for an exported object
+GLOBAL_VAR_INIT(object_export_id, 1)
+///Area coords
+GLOBAL_LIST_INIT(save_file_chars, list(
+	"a","b","c","d","e",
+	"f","g","h","i","j",
+	"k","l","m","n","o",
+	"p","q","r","s","t",
+	"u","v","w","x","y",
+	"z","A","B","C","D",
+	"E","F","G","H","I",
+	"J","K","L","M","N",
+	"O","P","Q","R","S",
+	"T","U","V","W","X",
+	"Y","Z",
+))
+
+
 ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coordinates and download it.", ADMIN_CATEGORY_DEBUG)
 	var/user_x = user.mob.x
 	var/user_y = user.mob.y
@@ -43,26 +61,6 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 			index = findtext(text, char, index + length(char))
 	return text
 
-/**
- * A procedure for saving non-standard properties of an object.
- * For example, saving ore into a silo, and further spavn by coordinates of metal stacks objects
- */
-/obj/proc/on_object_saved()
-	return null
-
-// Save resources in silo
-/obj/machinery/ore_silo/on_object_saved()
-	var/data
-	var/datum/component/material_container/material_holder = GetComponent(/datum/component/material_container)
-	for(var/each in material_holder.materials)
-		var/amount = material_holder.materials[each] / 100
-		var/datum/material/material_datum = each
-		while(amount > 0)
-			var/amount_in_stack = max(1, min(50, amount))
-			amount -= amount_in_stack
-			data += "[data ? ",\n" : ""][material_datum.sheet_type]{\n\tamount = [amount_in_stack]\n\t}"
-	return data
-
 /**Map exporter
 * Inputting a list of turfs into convert_map_to_tgm() will output a string
 * with the turfs and their objects / areas on said turf into the TGM mapping format
@@ -73,87 +71,7 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 * elsewhere in code if you ever need to get a file in the .dmm format
 **/
 
-/atom/proc/get_save_vars()
-	. = list()
-	. += NAMEOF(src, color)
-	. += NAMEOF(src, dir)
-	. += NAMEOF(src, icon)
-	. += NAMEOF(src, icon_state)
-	. += NAMEOF(src, name)
-	. += NAMEOF(src, pixel_x)
-	. += NAMEOF(src, pixel_y)
-	. += NAMEOF(src, density)
-	. += NAMEOF(src, opacity)
-
-	if(uses_integrity)
-		if(atom_integrity != max_integrity) // Only save if atom_integrity differs from max_integrity to avoid redundant saving
-			. += NAMEOF(src, atom_integrity)
-		. += NAMEOF(src, max_integrity)
-		. += NAMEOF(src, integrity_failure)
-		. += NAMEOF(src, damage_deflection)
-		. += NAMEOF(src, resistance_flags)
-
-	return .
-
-/atom/movable/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, anchored)
-	return .
-
-/turf/open/get_save_vars()
-	. = ..()
-	var/datum/gas_mixture/turf_gasmix = return_air()
-	initial_gas_mix = turf_gasmix.to_string()
-	. += NAMEOF(src, initial_gas_mix)
-	return .
-
-/obj/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, req_access)
-	. += NAMEOF(src, id_tag)
-	return .
-
-/obj/item/stack/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, amount)
-	return .
-
-/obj/docking_port/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, dheight)
-	. += NAMEOF(src, dwidth)
-	. += NAMEOF(src, height)
-	. += NAMEOF(src, shuttle_id)
-	. += NAMEOF(src, width)
-	return .
-
-/obj/machinery/atmospherics/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, piping_layer)
-	. += NAMEOF(src, pipe_color)
-	return .
-
-/obj/item/pipe/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, piping_layer)
-	. += NAMEOF(src, pipe_color)
-	return .
-
-GLOBAL_LIST_INIT(save_file_chars, list(
-	"a","b","c","d","e",
-	"f","g","h","i","j",
-	"k","l","m","n","o",
-	"p","q","r","s","t",
-	"u","v","w","x","y",
-	"z","A","B","C","D",
-	"E","F","G","H","I",
-	"J","K","L","M","N",
-	"O","P","Q","R","S",
-	"T","U","V","W","X",
-	"Y","Z",
-))
-
-/proc/to_list_string(list/build_from)
+/proc/to_list_string(list/build_from, list/obj/obj_refs)
 	var/list/build_into = list()
 	build_into += "list("
 	var/first_entry = TRUE
@@ -161,16 +79,16 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		CHECK_TICK
 		if(!first_entry)
 			build_into += ", "
-		if(isnum(item) || !build_from[item])
-			build_into += "[tgm_encode(item)]"
+		if(isnum(item) || isnull(build_from[item]))
+			build_into += "[tgm_encode(item, obj_refs)]"
 		else
-			build_into += "[tgm_encode(item)] = [tgm_encode(build_from[item])]"
+			build_into += "[tgm_encode(item, obj_refs)] = [tgm_encode(build_from[item], obj_refs)]"
 		first_entry = FALSE
 	build_into += ")"
 	return build_into.Join("")
 
 /// Takes a constant, encodes it into a TGM valid string
-/proc/tgm_encode(value)
+/proc/tgm_encode(value, list/obj/obj_refs)
 	if(istext(value))
 		//Prevent symbols from being because otherwise you can name something
 		// [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.
@@ -178,17 +96,22 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	if(isnum(value) || ispath(value))
 		return "[value]"
 	if(islist(value))
-		return to_list_string(value)
+		return to_list_string(value, obj_refs)
 	if(isnull(value))
 		return "null"
 	if(isicon(value) || isfile(value))
 		return "'[value]'"
+	if(isobj(value))
+		var/ref_id = "%[GLOB.object_export_id]%"
+		obj_refs[ref_id] = value
+		GLOB.object_export_id += 1
+		return ref_id
 	// not handled:
 	// - pops: /obj{name="foo"}
 	// - new(), newlist(), icon(), matrix(), sound()
 
 	// fallback: string
-	return tgm_encode("[value]")
+	return tgm_encode("[value]", obj_refs)
 
 /**
  *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
@@ -204,6 +127,8 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	shuttle_area_flag = SAVE_SHUTTLEAREA_DONTCARE,
 	list/obj_blacklist = typesof(/obj/effect),
 )
+	GLOB.object_export_id = 0
+
 	var/width = maxx - minx
 	var/height = maxy - miny
 	var/depth = maxz - minz
@@ -271,39 +196,50 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 				current_header += "(\n"
 				//Add objects to the header file
 				var/empty = TRUE
-				//====SAVING OBJECTS====
-				if(save_flag & SAVE_OBJECTS)
-					for(var/obj/thing in pull_from)
-						CHECK_TICK
+				var/list/stuff = pull_from.contents.Copy(1)
+				var/list/obj/obj_refs = list()
+				while(stuff.len)
+					var/ref = stuff[1]
+					stuff -= ref
+
+					var/atom/thing = ref
+					if(istext(thing))
+						thing = obj_refs[thing]
+
+					//====SAVING OBJECTS====
+					if(isobj(thing))
+						var/obj/obj_thing = thing
+						if(!(save_flag & SAVE_OBJECTS))
+							continue
 						if(obj_blacklist[thing.type])
 							continue
 						if(thing.flags_1 & HOLOGRAM_1)
 							continue
-						if(is_multi_tile_object(thing) && (thing.loc != pull_from))
+						if((thing in pull_from.contents) && is_multi_tile_object(obj_thing) && (thing.loc != pull_from))
 							continue
-
-						var/metadata = generate_tgm_metadata(thing)
-						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
-						empty = FALSE
-						//====SAVING SPECIAL DATA====
-						//This is what causes lockers and machines to save stuff inside of them
-						if(save_flag & SAVE_OBJECT_PROPERTIES)
-							var/custom_data = thing.on_object_saved()
-							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
-				//====SAVING MOBS====
-				if(save_flag & SAVE_MOBS)
-					for(var/mob/living/thing in pull_from)
-						CHECK_TICK
+					//====SAVING MOBS====
+					else
+						if(!isliving(thing))
+							continue
 						if(istype(thing, /mob/living/carbon)) //Ignore people, but not animals
 							continue
-						var/metadata = generate_tgm_metadata(thing)
-						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
-						empty = FALSE
+						if(!(save_flag & SAVE_MOBS))
+							continue
+
+					//generate metadata
+					var/list/obj/local_refs = list()
+					current_header += "[empty ? "" : ",\n"][istext(ref) ? ref : ""][thing.type][generate_tgm_metadata(thing, local_refs)]"
+					empty = FALSE
+
+					//save any object references on the object
+					for(var/obj_id in local_refs)
+						obj_refs[obj_id] = local_refs[obj_id]
+						stuff += obj_id
+
 				current_header += "[empty ? "" : ",\n"][place]"
 				//====SAVING ATMOS====
 				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_ATMOS) && !isspaceturf(pull_from))
-					var/metadata = generate_tgm_metadata(pull_from)
-					current_header += "[metadata]"
+					current_header += "[generate_tgm_metadata(pull_from)]"
 				current_header += ",\n[location])\n"
 				//====Fill the contents file====
 				var/textiftied_header = current_header.Join()
@@ -318,26 +254,40 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 			contents += "\"}"
 	return "//[DMM2TGM_MESSAGE]\n[header.Join()][contents.Join()]"
 
-/proc/generate_tgm_metadata(atom/object)
+/proc/generate_tgm_metadata(atom/object, list/obj/obj_refs)
 	var/list/data_to_add = list()
 	var/list/vars_to_save = object.get_save_vars()
 
 	for(var/variable in vars_to_save)
 		CHECK_TICK
-		var/value = object.vars[variable]
-		if(value == initial(object.vars[variable]) || !issaved(object.vars[variable]))
-			continue
+
+		var/value
+		if(islist(variable)) //custom var to be restored
+			var/list/custom_attribute = variable
+			variable = custom_attribute[1]
+			value = custom_attribute[variable]
+			variable = "#[variable]" //# tells the map reader its a custom var & must be parsed differently
+		else
+			value = object.vars[variable]
+			if(value == initial(object.vars[variable]) || !issaved(object.vars[variable]))
+				continue
+
 		if(variable == "icon_state" && object.smoothing_flags)
 			continue
 		if(variable == "icon" && object.smoothing_flags)
 			continue
+		if(variable == "contents")
+			value = object.contents.Copy(1) //otherwise this would error in tgm_encode_list() with bad index cause its protected
+		else if(islist(value))
+			if(locate(/atom) in value) //no list that contains atoms is allowed except the contents list cause we can't keep track of their locs
+				continue
 
-		var/text_value = tgm_encode(value)
+		var/text_value = tgm_encode(value, obj_refs)
 		if(!text_value)
 			continue
 		data_to_add += "[variable] = [text_value]"
 
-	if(!length(data_to_add))
+	if(!data_to_add.len)
 		return
 	return "{\n\t[data_to_add.Join(";\n\t")]\n\t}"
 

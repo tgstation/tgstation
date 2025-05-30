@@ -167,6 +167,7 @@
 	var/list/turf_blacklist = list()
 	update_blacklist(T, turf_blacklist)
 
+	var/list/init_atom_refs = list()
 	UNSETEMPTY(turf_blacklist)
 	parsed.turf_blacklist = turf_blacklist
 	if(!parsed.load(
@@ -176,6 +177,7 @@
 		crop_map = TRUE,
 		no_changeturf = (SSatoms.initialized == INITIALIZATION_INSSATOMS),
 		place_on_top = should_place_on_top,
+		atom_refs = init_atom_refs
 	))
 		return
 
@@ -187,6 +189,9 @@
 
 	//initialize things that are normally initialized after map load
 	initTemplateBounds(bounds)
+	for(var/atom/movable/thing in init_atom_refs)
+		for(var/list/attribute_value in init_atom_refs[thing])
+			thing.restore_saved_value(attribute_value[1], attribute_value[2])
 
 	if(has_ceiling)
 		var/affected_turfs = get_affected_turfs(T, FALSE)

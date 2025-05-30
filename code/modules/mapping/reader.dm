@@ -102,7 +102,7 @@
 	/// Matches key formats in TMG (IE: newline after the \()
 	var/static/regex/matches_tgm = new(@'^"[A-z]*"[\s]*=[\s]*\([\s]*\n', "m")
 	/// Pulls out key value pairs for TGM
-	var/static/regex/var_edits_tgm = new(@'^\t([A-z]*) = (.*?);?$')
+	var/static/regex/var_edits_tgm = new(@'^\t(#?[A-z]*) = (.*?);?$')
 	/// Pulls out model paths for DMM
 	var/static/regex/model_path = new(@'(\/[^\{]*?(?:\{.*?\})?)(?:,|$)', "g")
 
@@ -305,10 +305,10 @@
 	return filtered_sets
 
 /// Load the parsed map into the world. You probably want [/proc/load_map]. Keep the signature the same.
-/datum/parsed_map/proc/load(x_offset = 0, y_offset = 0, z_offset = 0, crop_map = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, z_lower = -INFINITY, z_upper = INFINITY, place_on_top = FALSE, new_z = FALSE)
+/datum/parsed_map/proc/load(x_offset = 0, y_offset = 0, z_offset = 0, crop_map = FALSE, no_changeturf = FALSE, x_lower = -INFINITY, x_upper = INFINITY, y_lower = -INFINITY, y_upper = INFINITY, z_lower = -INFINITY, z_upper = INFINITY, place_on_top = FALSE, new_z = FALSE, list/atom_refs)
 	//How I wish for RAII
 	Master.StartLoadingMap()
-	. = _load_impl(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
+	. = _load_impl(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z, atom_refs)
 	Master.StopLoadingMap()
 
 #define MAPLOADING_CHECK_TICK \
@@ -323,7 +323,7 @@
 	}
 
 // Do not call except via load() above.
-/datum/parsed_map/proc/_load_impl(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
+/datum/parsed_map/proc/_load_impl(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z, atom_refs)
 	PRIVATE_PROC(TRUE)
 	// Tell ss atoms that we're doing maploading
 	// We'll have to account for this in the following tick_checks so it doesn't overflow
@@ -336,9 +336,9 @@
 	var/sucessful = FALSE
 	switch(map_format)
 		if(MAP_TGM)
-			sucessful = _tgm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
+			sucessful = _tgm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z, atom_refs)
 		else
-			sucessful = _dmm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
+			sucessful = _dmm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z, atom_refs)
 
 	// And we are done lads, call it off
 	SSatoms.map_loader_stop(REF(src))
@@ -371,7 +371,7 @@
 // In the tgm format, each gridset contains 255 lines, each line representing one tile, with 255 total gridsets
 // In the dmm format, each gridset contains 255 lines, each line representing one row of tiles, containing 255 * line length characters, with one gridset per z
 // You can think of dmm as storing maps in rows, whereas tgm stores them in columns
-/datum/parsed_map/proc/_tgm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
+/datum/parsed_map/proc/_tgm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z, list/atom_refs)
 	// setup
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
@@ -499,7 +499,8 @@
 			if(!cache)
 				SSatoms.map_loader_stop(REF(src))
 				CRASH("Undefined model key in DMM: [gset.gridLines[i]]")
-			build_coordinate(cache, locate(true_xcrd, ycrd, zcrd), no_afterchange, place_on_top, new_z)
+
+			build_coordinate(cache, locate(true_xcrd, ycrd, zcrd), no_afterchange, place_on_top, new_z, atom_refs)
 
 			// only bother with bounds that actually exist
 			if(!first_found)
@@ -523,7 +524,7 @@
 /// Stanrdard loading, not used in production
 /// Doesn't take advantage of any tgm optimizations, which makes it slower but also more general
 /// Use this if for some reason your map format is messy
-/datum/parsed_map/proc/_dmm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z)
+/datum/parsed_map/proc/_dmm_load(x_offset, y_offset, z_offset, crop_map, no_changeturf, x_lower, x_upper, y_lower, y_upper, z_lower, z_upper, place_on_top, new_z, list/atom_refs)
 	// setup
 	var/list/modelCache = build_cache(no_changeturf)
 	var/space_key = modelCache[SPACE_KEY]
@@ -655,7 +656,8 @@
 				if(!cache)
 					SSatoms.map_loader_stop(REF(src))
 					CRASH("Undefined model key in DMM: [model_key]")
-				build_coordinate(cache, locate(xcrd, ycrd, zcrd), no_afterchange, place_on_top, new_z)
+
+				build_coordinate(cache, locate(xcrd, ycrd, zcrd), no_afterchange, place_on_top, new_z, atom_refs)
 
 				// only bother with bounds that actually exist
 				if(!first_found)
@@ -768,6 +770,18 @@ GLOBAL_LIST_EMPTY(map_model_default)
 					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's. so we'll just set this to the default list
 					path_to_init = line
 
+			// check path to see if its member attribute value
+			// its format is %<number>%/<actual object path>
+			if(path_to_init[1] == "%")
+				var/last_index = findlasttext(path_to_init, "%")
+				if(last_index)
+					last_index += 1
+					if(members_attributes[members_attributes.len] == default_list) //for a path with no attributes we have to add it manually
+						members_attributes.Cut(members_attributes.len)
+						members_attributes += list(list("obj_ref_id" = copytext(path_to_init, 1, last_index)))
+					else if(!current_attributes["obj_ref_id"]) //if the path has attributes then we can append it there directly
+						current_attributes["obj_ref_id"] = copytext(path_to_init, 1, last_index)
+					path_to_init = copytext(path_to_init, last_index)
 
 			// Alright, if we've gotten to this point, our string is a path
 			// Oh and we don't trim it, because we require no padding for these
@@ -818,7 +832,8 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	var/set_space = FALSE
 	// Use where a list is needed, but where it will not be modified
 	// Used here to remove the cost of needing to make a new list for each fields entry when it's set manually later
-	var/static/list/default_list = list(GLOB.map_model_default)
+	var/static/list/default_list = GLOB.map_model_default
+	var/static/list/wrapped_default_list = list(default_list)
 	for(var/model_key in grid_models)
 		//will contain all members (paths) in model (in our example : /turf/unsimulated/wall)
 		var/list/members = list()
@@ -841,6 +856,16 @@ GLOBAL_LIST_EMPTY(map_model_default)
 				variables_start = findtext(member_string, "{")
 
 			var/path_text = trim(copytext(member_string, 1, variables_start))
+			// check path to see if its member attribute value
+			// its format is %<number>%/<actual object path>
+			if(path_text[1] == "%")
+				var/last_index = findlasttext(path_text, "%")
+				if(last_index)
+					last_index += 1
+					members_attributes += list(list("obj_ref_id" = copytext(path_text, 1, last_index)))
+					path_text = copytext(path_text, last_index)
+
+
 			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
 
 			if(!ispath(atom_def, /atom)) // Skip the item if the path does not exist.  Fix your crap, mappers!
@@ -852,7 +877,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			//transform the variables in text format into a list (e.g {var1="derp"; var2; var3=7} => list(var1="derp", var2, var3=7))
 			// OF NOTE: this could be made faster by replacing readlist with a progressive regex
 			// I'm just too much of a bum to do it rn, especially since we mandate tgm format for any maps in repo
-			var/list/fields = default_list
+			var/list/fields = wrapped_default_list
 			if(variables_start)//if there's any variable
 				member_string = copytext(member_string, variables_start + length(member_string[variables_start]), -length(copytext_char(member_string, -1))) //removing the last '}'
 				fields = list(readlist(member_string, ";"))
@@ -889,7 +914,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		.[model_key] = list(members, members_attributes)
 	return .
 
-/datum/parsed_map/proc/build_coordinate(list/model, turf/crds, no_changeturf as num, placeOnTop as num, new_z)
+/datum/parsed_map/proc/build_coordinate(list/model, turf/crds, no_changeturf as num, placeOnTop as num, new_z, list/init_atom_refs)
 	// If we don't have a turf, nothing we will do next will actually acomplish anything, so just go back
 	// Note, this would actually drop area vvs in the tile, but like, why tho
 	if(!crds)
@@ -964,16 +989,114 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	MAPLOADING_CHECK_TICK
 
 	//finally instance all remainings objects/mobs
+	var/obj_ref_id
+	var/list/atom/atom_refs = list()
+	var/list/retained_ref_attributes = list()
 	for(var/atom_index in 1 to index-1)
+		obj_ref_id = ""
+		var/list/atom_member_attributes = members_attributes[atom_index]
+		var/list/atom_data
+		if(atom_member_attributes.len)
+			//find member attributes that references another atom. we retain them to replace with their pointed value
+			retained_ref_attributes.Cut()
+			for(var/attribute in atom_member_attributes)
+				var/value = atom_member_attributes[attribute]
+
+				//this atom could be a value stored inside another atom so parse its id
+				if(attribute == "obj_ref_id")
+					obj_ref_id = value
+					atom_member_attributes -= "obj_ref_id"
+					continue
+
+				//the only protected list of atoms which we will load from cause we know they are in the atom
+				if(attribute == "contents")
+					retained_ref_attributes["contents"] = value
+					continue
+
+				//custom attribute
+				if(attribute[1] == "#")
+					retained_ref_attributes[attribute] = value
+					continue
+
+				if(istext(value))
+					var/length = length(value)
+					if(length && value[1] == "%" && length > 2 && value[length] == "%") //its an ref to another atom
+						retained_ref_attributes[attribute] = value
+
+			//if we have ref attributes then form the map to decode it later
+			if(retained_ref_attributes.len)
+				//store atoms to substitute their ref memebr vars later
+				var/list/atoms = atom_refs["-1"]
+				if(!atoms)
+					atoms = list()
+				atom_data = list(instance, retained_ref_attributes.Copy(1))
+				atoms += list(atom_data)
+				atom_refs["-1"] = atoms
+
+		// setup preloader
 		if(members_attributes[atom_index] != default_list)
-			world.preloader_setup(members_attributes[atom_index], members[atom_index])
+			var/list/final_member_attributes = atom_member_attributes
+			if(retained_ref_attributes.len) //ref attributes
+				final_member_attributes = final_member_attributes.Copy(1) //ref attributes are loaded differently so filter them out
+				for(var/ref_attribute in retained_ref_attributes)
+					final_member_attributes -= ref_attribute
 
-		// We make the assertion that only /atom s will be in this portion of the code. if that isn't true, this will fail
-		instance = create_atom(members[atom_index], crds)//first preloader pass
+			world.preloader_setup(final_member_attributes , members[atom_index])
 
-		if(GLOB.use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
+		// first preloader pass
+		instance = create_atom(members[atom_index], crds) // We make the assertion that only /atom s will be in this portion of the code. if that isn't true, this will fail
+		if(obj_ref_id)
+			atom_refs[obj_ref_id] = instance
+		if(atom_data)
+			atom_data[1] = instance
+
+		//second preloader pass, for those atoms that don't ..() in New()
+		if(GLOB.use_preloader && instance)
 			world.preloader_load(instance)
 		MAPLOADING_CHECK_TICK
+
+	//Here we convert the refs in the format %<some id>% into the actual atom it was referencing and restore that variable value
+	//Because loading map templates don't init atoms immediatly we can store that resolved refs to be set later after SSAtoms is loaded
+	//Else we restore the saved value immediatly
+	if(atom_refs.len)
+		var/list/atom/turf_atoms = atom_refs["-1"]
+		for(var/list/instance_attributes in turf_atoms)
+			instance = instance_attributes[1]
+			if(QDELETED(instance))
+				continue
+
+			//convert refs to solid atoms. We only set their values after atom init which isn't done here
+			var/list/resolved_members = list()
+			var/list/ref_attributes = instance_attributes[2]
+			for(var/attribute in ref_attributes)
+				var/value = ref_attributes[attribute]
+				if(attribute == "contents") //the only protected list of atoms that may be loaded
+					var/list/resolved_contents = list()
+					for(var/ref in value)
+						var/atom/movable/thing = atom_refs[ref]
+						if(ismovable(thing) && !QDELETED(thing))
+							resolved_contents += thing
+					if(isnull(init_atom_refs))
+						instance.restore_saved_value("contents", resolved_contents)
+					else
+						resolved_members += list(list(attribute, resolved_contents))
+				else
+					var/resolved_value
+					if(attribute[1] == "#")
+						attribute = copytext(attribute, 2)
+						resolved_value = value
+					else if(istext(value))
+						resolved_value = atom_refs[value]
+					if(!resolved_value)
+						continue
+
+					if(isnull(init_atom_refs))
+						instance.restore_saved_value(attribute, resolved_value)
+					else
+						resolved_members += list(list(attribute, resolved_value))
+			if(resolved_members.len && !isnull(init_atom_refs))
+				init_atom_refs[instance] = resolved_members
+
 
 ////////////////
 //Helpers procs

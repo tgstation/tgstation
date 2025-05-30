@@ -13,7 +13,6 @@
 		"Turf Saving" = SAVE_TURFS,
 		"Area Saving" = SAVE_AREAS,
 		"Space Turf Saving" = SAVE_SPACE,
-		"Object Property Saving" = SAVE_OBJECT_PROPERTIES,
 		"Atmos Saving" = SAVE_ATMOS,
 	)
 	var/what_to_change = tgui_input_list(builder, "What export setting would you like to toggle?", "Map Exporter", options)
