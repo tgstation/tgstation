@@ -80,7 +80,7 @@
 
 /atom/movable/screen/escape_menu/lobby_button/small/collapsible
 	maptext_width = 48
-	maptext_x = -5
+	maptext_x = -4
 	maptext_y = -44 //we change this during animation to bring it up
 	layer = parent_type::layer - 0.01
 
