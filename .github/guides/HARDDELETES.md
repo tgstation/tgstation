@@ -2,9 +2,9 @@
 
 > Garbage collection is pretty gothic when you think about it.
 >
->An object in code is like a ghost, clinging to its former life, and especially to the people it knew. It can only pass on and truly die when it has dealt with its unfinished business. And only when its been forgotten by everyone who ever knew it. If even one other object remembers it, it has a connection to the living world that lets it keep hanging on
+> An object in code is like a ghost, clinging to its former life, and especially to the people it knew. It can only pass on and truly die when it has dealt with its unfinished business. And only when its been forgotten by everyone who ever knew it. If even one other object remembers it, it has a connection to the living world that lets it keep hanging on
 >
->There is a kind of sombre tone to fixing GC errors too, its almost shamanistic, making sure all these little objects clear up their final affairs in life before they die, to ensure they don't become ghosts
+> There is a kind of sombre tone to fixing GC errors too, its almost shamanistic, making sure all these little objects clear up their final affairs in life before they die, to ensure they don't become ghosts
 >
 > -- <cite>Nanako</cite>
 
@@ -15,7 +15,6 @@
 3. [Detecting hard deletes](#detecting-hard-deletes)
 4. [Techniques for fixing hard deletes](#techniques-for-fixing-hard-deletes)
 5. [Help my code is erroring how fix](#help-my-code-is-erroring-how-fix)
-
 
 ## What is Hard Deletion
 
@@ -93,15 +92,15 @@ Now that you know the theory, let's go over what can actually cause hard deletes
 
 The BYOND reference has a list [Here](https://secure.byond.com/docs/ref/#/DM/garbage), but it's not a complete one
 
-* Stored in a var
-* An item in a list, or associated with a list item
-* Has a tag
-* Is on the map (always true for turfs)
-* Inside another atom's contents
-* Inside an atom's vis_contents
-* A temporary value in a still-running proc
-* Is a mob with a key
-* Is an image object attached to an atom
+- Stored in a var
+- An item in a list, or associated with a list item
+- Has a tag
+- Is on the map (always true for turfs)
+- Inside another atom's contents
+- Inside an atom's vis_contents
+- A temporary value in a still-running proc
+- Is a mob with a key
+- Is an image object attached to an atom
 
 Let's briefly go over the more painful ones yeah?
 
@@ -284,6 +283,6 @@ If this fails, you're just gonna have to read over this doc. You can skip the th
 > -- <cite>Armhulenn</cite>
 
 - The reference tracker, while powerful, is incredibly easy to break<br>
-If it weren't for those unit tests we'd still be missing list["a"] = list(ref)
+  If it weren't for those unit tests we'd still be missing list["a"] = list(ref)
 - Everyone but me sucks, because everyone but me keeps adding new hard deletes
 - Garbage collection is a spook, best practice is to use a random reference in place of null, it scares the compiler demons

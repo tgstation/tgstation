@@ -110,7 +110,7 @@ with the `as` property. Let's say you want to use a `<span>` instead:
 
 ```jsx
 <Box as="span" m={1}>
-  <Button />
+	<Button />
 </Box>
 ```
 
@@ -382,10 +382,10 @@ to the left, and certain elements to the right:
 
 ```jsx
 <Flex>
-  <Flex.Item grow={1}>Button description</Flex.Item>
-  <Flex.Item>
-    <Button>Perform an action</Button>
-  </Flex.Item>
+	<Flex.Item grow={1}>Button description</Flex.Item>
+	<Flex.Item>
+		<Button>Perform an action</Button>
+	</Flex.Item>
 </Flex>
 ```
 
@@ -474,12 +474,12 @@ Example:
 
 ```jsx
 <Grid>
-  <Grid.Column>
-    <Section title="Section 1">Hello world!</Section>
-  </Grid.Column>
-  <Grid.Column size={2}>
-    <Section title="Section 2">Hello world!</Section>
-  </Grid.Column>
+	<Grid.Column>
+		<Section title="Section 1">Hello world!</Section>
+	</Grid.Column>
+	<Grid.Column size={2}>
+		<Section title="Section 2">Hello world!</Section>
+	</Grid.Column>
 </Grid>
 ```
 
@@ -524,8 +524,8 @@ Renders children icons on top of each other in order to make your own icon.
 
 ```jsx
 <Icon.Stack>
-  <Icon name="pen" />
-  <Icon name="slash" />
+	<Icon name="pen" />
+	<Icon name="slash" />
 </Icon.Stack>
 ```
 
@@ -621,7 +621,7 @@ column is labels, and second column is content.
 
 ```jsx
 <LabeledList>
-  <LabeledList.Item label="Item">Content</LabeledList.Item>
+	<LabeledList.Item label="Item">Content</LabeledList.Item>
 </LabeledList>
 ```
 
@@ -630,9 +630,9 @@ to perform some sort of action), there is a way to do that:
 
 ```jsx
 <LabeledList>
-  <LabeledList.Item label="Item" buttons={<Button>Click me!</Button>}>
-    Content
-  </LabeledList.Item>
+	<LabeledList.Item label="Item" buttons={<Button>Click me!</Button>}>
+		Content
+	</LabeledList.Item>
 </LabeledList>
 ```
 
@@ -669,8 +669,8 @@ Example:
 
 ```jsx
 <LabeledList>
-  <LabeledList.Item label="Foo">Content</LabeledList.Item>
-  <LabeledList.Divider size={1} />
+	<LabeledList.Item label="Foo">Content</LabeledList.Item>
+	<LabeledList.Divider size={1} />
 </LabeledList>
 ```
 
@@ -753,12 +753,12 @@ Usage of `ranges` prop:
 
 ```jsx
 <ProgressBar
-  ranges={{
-    good: [0.5, Infinity],
-    average: [0.25, 0.5],
-    bad: [-Infinity, 0.25],
-  }}
-  value={0.6}
+	ranges={{
+		good: [0.5, Infinity],
+		average: [0.25, 0.5],
+		bad: [-Infinity, 0.25],
+	}}
+	value={0.6}
 />
 ```
 
@@ -784,17 +784,17 @@ The RoundGauge component provides a visual representation of a single metric, as
 
 ```jsx
 <RoundGauge
-  size={1.75}
-  value={tankPressure}
-  minValue={0}
-  maxValue={pressureLimit}
-  alertAfter={pressureLimit * 0.7}
-  ranges={{
-    good: [0, pressureLimit * 0.7],
-    average: [pressureLimit * 0.7, pressureLimit * 0.85],
-    bad: [pressureLimit * 0.85, pressureLimit],
-  }}
-  format={formatPressure}
+	size={1.75}
+	value={tankPressure}
+	minValue={0}
+	maxValue={pressureLimit}
+	alertAfter={pressureLimit * 0.7}
+	ranges={{
+		good: [0, pressureLimit * 0.7],
+		average: [pressureLimit * 0.7, pressureLimit * 0.85],
+		bad: [pressureLimit * 0.85, pressureLimit],
+	}}
+	format={formatPressure}
 />
 ```
 
@@ -831,7 +831,7 @@ If you want to have a button on the right side of an section title
 
 ```jsx
 <Section title="Cargo" buttons={<Button>Send shuttle</Button>}>
-  Here you can order supply crates.
+	Here you can order supply crates.
 </Section>
 ```
 
@@ -896,10 +896,10 @@ Stacks can be vertical by adding a `vertical` property.
 
 ```jsx
 <Stack>
-  <Stack.Item grow>Button description</Stack.Item>
-  <Stack.Item>
-    <Button>Perform an action</Button>
-  </Stack.Item>
+	<Stack.Item grow>Button description</Stack.Item>
+	<Stack.Item>
+		<Button>Perform an action</Button>
+	</Stack.Item>
 </Stack>
 ```
 
@@ -910,25 +910,25 @@ Make sure to use the `fill` property.
 
 ```jsx
 <Window>
-  <Window.Content>
-    <Stack fill>
-      <Stack.Item>
-        <Section fill>Sidebar</Section>
-      </Stack.Item>
-      <Stack.Item grow>
-        <Stack fill vertical>
-          <Stack.Item grow>
-            <Section fill scrollable>
-              Main content
-            </Section>
-          </Stack.Item>
-          <Stack.Item>
-            <Section>Bottom pane</Section>
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
-    </Stack>
-  </Window.Content>
+	<Window.Content>
+		<Stack fill>
+			<Stack.Item>
+				<Section fill>Sidebar</Section>
+			</Stack.Item>
+			<Stack.Item grow>
+				<Stack fill vertical>
+					<Stack.Item grow>
+						<Section fill scrollable>
+							Main content
+						</Section>
+					</Stack.Item>
+					<Stack.Item>
+						<Section>Bottom pane</Section>
+					</Stack.Item>
+				</Stack>
+			</Stack.Item>
+		</Stack>
+	</Window.Content>
 </Window>
 ```
 
@@ -954,12 +954,12 @@ Example:
 
 ```jsx
 <Table>
-  <Table.Row>
-    <Table.Cell bold>Hello world!</Table.Cell>
-    <Table.Cell collapsing color="label">
-      Label
-    </Table.Cell>
-  </Table.Row>
+	<Table.Row>
+		<Table.Cell bold>Hello world!</Table.Cell>
+		<Table.Cell collapsing color="label">
+			Label
+		</Table.Cell>
+	</Table.Row>
 </Table>
 ```
 
@@ -1019,12 +1019,12 @@ Tabs also support a vertical configuration. This is usually paired with
 
 ```jsx
 <Stack>
-  <Stack.Item>
-    <Tabs vertical>...</Tabs>
-  </Stack.Item>
-  <Stack.Item grow={1} basis={0}>
-    Tab content.
-  </Stack.Item>
+	<Stack.Item>
+		<Tabs vertical>...</Tabs>
+	</Stack.Item>
+	<Stack.Item grow={1} basis={0}>
+		Tab content.
+	</Stack.Item>
 </Stack>
 ```
 
@@ -1034,8 +1034,8 @@ component:
 
 ```jsx
 <Section fill fitted scrollable width="128px">
-  <Tabs vertical>...</Tabs>
-  ... other things ...
+	<Tabs vertical>...</Tabs>
+	... other things ...
 </Section>
 ```
 
@@ -1076,7 +1076,7 @@ Usage:
 
 ```jsx
 <Tooltip position="bottom" content="Box tooltip">
-  <Box position="relative">Sample text.</Box>
+	<Box position="relative">Sample text.</Box>
 </Tooltip>
 ```
 
@@ -1098,7 +1098,7 @@ Example:
 
 ```jsx
 <Window theme="hackerman">
-  <Window.Content scrollable>Hello, world!</Window.Content>
+	<Window.Content scrollable>Hello, world!</Window.Content>
 </Window>
 ```
 
