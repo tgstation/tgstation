@@ -1,0 +1,5 @@
+author: "Ezel/Improvedname, Toriate, JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Re-added the Dragoon Tomb lair, now has a Skybulge spear and Drachen armor."
+  - balance: "Ice whelps now spit out cold fire."
