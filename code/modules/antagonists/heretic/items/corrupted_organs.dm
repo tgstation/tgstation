@@ -7,6 +7,8 @@
 	eye_color_left = COLOR_VOID_PURPLE
 	eye_color_right = COLOR_VOID_PURPLE
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
+	pupils_name = span_hypnophrase("pierced realities") //teeny tiny mansus portals, IN YOUR EYEBALLS (known to cause cancer in the state of california)
+	penlight_message = "ARE THE LOCK, THE LIGHT IS THE KEY! THE HIGHER I RISE, THE MORE I-"
 	/// The override images we are applying
 	var/list/hallucinations
 
@@ -39,6 +41,16 @@
 	organ_owner.client?.images -= hallucinations
 	QDEL_NULL(hallucinations)
 
+/obj/item/organ/eyes/corrupt/penlight_examine(mob/living/viewer, obj/item/examtool)
+	viewer.playsound_local(src, 'sound/effects/magic/magic_block_mind.ogg', 75, FALSE)
+	if(!viewer.is_blind() && !IS_HERETIC_OR_MONSTER(viewer))
+		to_chat(viewer, span_danger("Your eyes sizzle in their sockets as eldritch energies assault them!"))
+		viewer.emote("scream")
+		viewer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+		viewer.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
+		var/obj/item/organ/eyes/parboiled = viewer.get_organ_slot(ORGAN_SLOT_EYES)
+		parboiled?.apply_organ_damage(40) //enough to blind, so not spammable, but not enough to blind *permanently* so will slowly fix with time
+	return span_hypnophrase(penlight_message)
 
 /// Sometimes speak in incomprehensible tongues
 /obj/item/organ/tongue/corrupt
@@ -204,6 +216,7 @@
 	if(!IS_HERETIC_OR_MONSTER(hearer))
 		hearer.emote("scream")
 		hearer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
+		hearer.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		var/obj/item/bodypart/head/regret = hearer.get_bodypart(BODY_ZONE_HEAD)
 		regret?.force_wound_upwards(/datum/wound/pierce/bleed/severe/magicalearpain, wound_source = "stethoscoped a corrupted heart")
 	return span_hypnophrase(beat_noise)
@@ -246,6 +259,7 @@
 /obj/item/organ/lungs/corrupt/hear_breath_noise(mob/living/hearer)
 	hearer.playsound_local(src, 'sound/effects/magic/voidblink.ogg', 75, FALSE)
 	if(!IS_HERETIC_OR_MONSTER(hearer))
+		hearer.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		hearer.emote("scream")
 		hearer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 		var/obj/item/organ/ears/regret = hearer.get_organ_slot(ORGAN_SLOT_EARS)

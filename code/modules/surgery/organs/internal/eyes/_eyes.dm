@@ -64,7 +64,7 @@
 
 	/// this message should never show up for default eyes, do not change on default eyes.
 	var/penlight_message = "useless default please report"
-	/// what are the pupils called? eg. pupils, apertures, etc. 
+	/// what are the pupils called? eg. pupils, apertures, etc.
 	var/pupils_name = "pupils"
 	/// do these eyes have pupils (or equivalent) that react to light when penlighted.
 	var/light_reactive = TRUE
@@ -1102,7 +1102,7 @@
 	eye_icon_state = "snail_eyes"
 	blink_animation = FALSE
 	pupils_name = "eyestalks" //many species of snails can retract their eyes into their face! (my lame science excuse for not having better writing here)
-	penlight_message = "are sat upon retractable tentacles"	
+	penlight_message = "are sat upon retractable tentacles"
 
 /obj/item/organ/eyes/jelly
 	name = "jelly eyes"
@@ -1140,7 +1140,7 @@
 /obj/item/organ/eyes/night_vision/maintenance_adapted/penlight_examine(mob/living/viewer, obj/item/examtool)
 	if(!owner.is_blind())
 		to_chat(owner, span_danger("Your eyes sizzle agonizingly as light is shone on them!"))
-		apply_organ_damage(20 * examtool.lightpower) //that's 0.5 lightpower for a penlight, so one penlight shining is equivalent to two seconds in a lit area 
+		apply_organ_damage(20 * examtool.light_power) //that's 0.5 lightpower for a penlight, so one penlight shining is equivalent to two seconds in a lit area
 	return span_danger(penlight_message)
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/on_mob_insert(mob/living/carbon/eye_owner)
