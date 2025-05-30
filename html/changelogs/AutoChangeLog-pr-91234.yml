@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Info buttons previously at the top right of your screen (Changelog, wiki, forums) is now in the Escape menu."
+  - qol: "Fullscreen is now a preferences and will follow you through rounds."
