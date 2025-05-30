@@ -99,10 +99,6 @@ export async function reloadByondCache(bundleDir: string): Promise<void> {
   for (let cacheDir of cacheDirs) {
     // Clear garbage
     const garbage = await resolveGlob(cacheDir, bundleGlob);
-    if (garbage.length === 0) {
-      logger.log(`no garbage found in '${cacheDir}'`);
-      continue;
-    }
     for (let file of garbage) {
       await Bun.file(file).delete();
     }

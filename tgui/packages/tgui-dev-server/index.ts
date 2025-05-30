@@ -7,7 +7,7 @@
 import { mkdirSync } from 'node:fs';
 
 import { reloadByondCache } from './reloader';
-import { createCompiler } from './webpack.js';
+import { createCompiler } from './webpack';
 
 const noHot = process.argv.includes('--no-hot');
 const noTmp = process.argv.includes('--no-tmp');
