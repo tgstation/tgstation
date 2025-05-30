@@ -76,4 +76,3 @@
 		span_warning("[user] screws up!"),
 	)
 	target.adjustBruteLoss(5)
-
