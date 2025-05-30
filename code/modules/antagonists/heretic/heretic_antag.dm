@@ -712,7 +712,7 @@
 
 	if(tgui_alert(admin, "Let them know their targets have been updated?", "Whispers of the Mansus", list("Yes", "No")) == "Yes")
 		to_chat(owner.current, span_danger("The Mansus has modified your targets. Go find them!"))
-		to_chat(owner.current, span_danger("[new_target.real_name], the [new_target.mind?.assigned_role?.title || "human"]."))
+		to_chat(owner.current, span_danger("[new_target.real_name], the [new_target.mind?.assigned_role.get_title() || "human"]."))
 
 	add_sacrifice_target(new_target)
 
@@ -787,7 +787,7 @@
 	. += "<i><b>Current Targets:</b></i><br>"
 	if(LAZYLEN(sac_targets))
 		for(var/mob/living/carbon/human/target as anything in sac_targets)
-			. += " - <b>[target.real_name]</b>, the [target.mind?.assigned_role?.title || "human"].<br>"
+			. += " - <b>[target.real_name]</b>, the [target.mind?.assigned_role.get_title() || "human"].<br>"
 
 	else
 		. += "<i>None!</i><br>"

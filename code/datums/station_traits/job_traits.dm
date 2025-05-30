@@ -123,9 +123,9 @@
 	job_to_add = /datum/job/bridge_assistant
 	force = TRUE
 
-/datum/station_trait/job/bridge_assistant/New()
-	. = ..()
-	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(add_coffeemaker))
+// /datum/station_trait/job/bridge_assistant/New()
+// 	. = ..()
+// 	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(add_coffeemaker))
 
 /datum/station_trait/job/bridge_assistant/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()

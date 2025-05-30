@@ -38,7 +38,7 @@
 	return COMPONENT_TABLET_NO_DETONATE
 
 /obj/item/modular_computer/pda/heads/hop
-	name = "head of personnel PDA"
+	name = "executive officer PDA"
 	icon_state = "/obj/item/modular_computer/pda/heads/hop"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#374f7e#a52f29#a52f29"
@@ -241,7 +241,7 @@
  */
 
 /obj/item/modular_computer/pda/cargo
-	name = "cargo technician PDA"
+	name = "hanger technician PDA"
 	icon_state = "/obj/item/modular_computer/pda/cargo"
 	greyscale_colors = "#8b4c31#2c2e32"
 	stored_paper = 20
@@ -422,7 +422,7 @@
 	)
 
 /obj/item/modular_computer/pda/bridge_assistant
-	name = "bridge assistant PDA"
+	name = "bridge officer PDA"
 	greyscale_colors = "#374f7e#a92323"
 	starting_programs = list(
 		/datum/computer_file/program/status,

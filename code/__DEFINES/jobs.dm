@@ -272,7 +272,7 @@ DEFINE_BITFIELD(job_flags, list(
 #define SUPERVISOR_CAPTAIN "the Captain"
 #define SUPERVISOR_CE "the Chief Engineer"
 #define SUPERVISOR_CMO "the Chief Medical Officer"
-#define SUPERVISOR_HOP "the Head of Personnel"
+#define SUPERVISOR_HOP "the Executive Officer"
 #define SUPERVISOR_HOS "the Head of Security"
 #define SUPERVISOR_QM "the Quartermaster"
 #define SUPERVISOR_RD "the Research Director"

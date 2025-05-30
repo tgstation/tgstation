@@ -35,9 +35,11 @@
 	rpg_title = "Merchantman"
 	job_flags = STATION_JOB_FLAGS
 
+/datum/job/cargo_technician/get_title()
+	return "Hanger Technician"
 
 /datum/outfit/job/cargo_tech
-	name = "Cargo Technician"
+	name = "Hanger Technician"
 	jobtype = /datum/job/cargo_technician
 
 	backpack_contents = list(
@@ -51,7 +53,7 @@
 	l_hand = /obj/item/universal_scanner
 
 /datum/outfit/job/cargo_tech/mod
-	name = "Cargo Technician (MODsuit)"
+	name = "Hanger Technician (MODsuit)"
 
 	back = /obj/item/mod/control/pre_equipped/loader
 	suit = null

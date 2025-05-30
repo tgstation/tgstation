@@ -167,7 +167,7 @@
 
 /// Accepts a mind to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
-	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
+	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.get_title()])"
 	recipient_ref = WEAKREF(recipient)
 
 	var/mob/living/body = recipient.current

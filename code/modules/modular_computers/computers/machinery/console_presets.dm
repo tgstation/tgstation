@@ -72,7 +72,7 @@
 	)
 
 /obj/machinery/modular_computer/preset/hop_records
-	name = "\proper head of personnel's records console"
+	name = "\proper executive officer's records console"
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/records/medical,
@@ -82,7 +82,7 @@
 	)
 
 /obj/machinery/modular_computer/preset/hop_id
-	name = "\proper head of personnel's identification console"
+	name = "\proper executive officer's identification console"
 	starting_programs = list(
 		/datum/computer_file/program/card_mod,
 		/datum/computer_file/program/crew_manifest,

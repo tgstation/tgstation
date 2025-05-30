@@ -95,21 +95,23 @@
 	var/static/list/config_songs
 	if(isnull(config_songs))
 		config_songs = list()
-		var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
-		for(var/track_file in tracks)
-			var/datum/track/new_track = new()
-			new_track.song_path = file("[global.config.directory]/jukebox_music/sounds/[track_file]")
-			var/list/track_data = splittext(track_file, "+")
-			if(length(track_data) < 3)
-				continue
-			new_track.song_name = track_data[1]
-			new_track.song_length = text2num(track_data[2])
-			new_track.song_beat = text2num(track_data[3])
-			config_songs[new_track.song_name] = new_track
+		// Commented out to reduce midround lag from loading songs from cdn
+		// var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
+		// for(var/track_file in tracks)
+		// 	var/datum/track/new_track = new()
+		// 	new_track.song_path = file("[global.config.directory]/jukebox_music/sounds/[track_file]")
+		// 	var/list/track_data = splittext(track_file, "+")
+		// 	if(length(track_data) < 3)
+		// 		continue
+		// 	new_track.song_name = track_data[1]
+		// 	new_track.song_length = text2num(track_data[2])
+		// 	new_track.song_beat = text2num(track_data[3])
+		// 	config_songs[new_track.song_name] = new_track
 
 		if(!length(config_songs))
-			var/datum/track/default/default_track = new()
-			config_songs[default_track.song_name] = default_track
+			for(var/datum/track/default_track as anything in subtypesof(/datum/track))
+				var/datum/track/track = new default_track()
+				config_songs[track.song_name] = track
 
 	// returns a copy so it can mutate if desired.
 	return config_songs.Copy()
@@ -402,8 +404,32 @@
 	var/song_beat = 0
 
 // Default track supplied for testing and also because it's a banger
-/datum/track/default
+/datum/track/title_three
 	song_path = 'sound/music/lobby_music/title3.ogg'
 	song_name = "Tintin on the Moon"
 	song_length = 3 MINUTES + 52 SECONDS
 	song_beat = 1 SECONDS
+
+/datum/track/title_two
+	song_path = 'sound/music/lobby_music/title2.ogg'
+	song_name = "Robocop"
+	song_length = 2 MINUTES
+	song_beat = 1 SECONDS
+
+/datum/track/title_one
+	song_path = 'sound/music/lobby_music/title1.mod'
+	song_name = "Flip Flap"
+	song_length = 2 MINUTES + 30 SECONDS
+	song_beat = 0.5 SECONDS
+
+/datum/track/title_zero
+	song_path = 'sound/music/lobby_music/title0.ogg'
+	song_name = "Endless Space"
+	song_length = 3 MINUTES + 33 SECONDS
+	song_beat = 1 SECONDS
+
+/datum/track/lobby
+	song_path = 'sound/music/lobby_music/six_umbrellas_monument.ogg'
+	song_name = "Monument"
+	song_length = 5 MINUTES + 24 SECONDS
+	song_beat = 0.5 SECONDS

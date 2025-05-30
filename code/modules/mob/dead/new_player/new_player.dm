@@ -221,7 +221,7 @@
 		if(SSshuttle.arrivals)
 			SSshuttle.arrivals.QueueAnnounce(humanc, rank)
 		else
-			announce_arrival(humanc, rank)
+			announce_arrival(humanc, job.get_title())
 		AddEmploymentContract(humanc)
 
 		humanc.increment_scar_slot()

@@ -28,14 +28,14 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel
-	desc = "A slick uniform worn by those to earn the position of \"Head of Personnel\"."
-	name = "head of personnel's uniform"
+	desc = "A slick uniform worn by those to earn the position of \"Executive Officer\"."
+	name = "executive officer's uniform"
 	icon_state = "hop"
 	inhand_icon_state = "b_suit"
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/skirt
-	name = "head of personnel's skirt"
-	desc = "A slick uniform and skirt combo worn by those to earn the position of \"Head of Personnel\"."
+	name = "executive officer's skirt"
+	desc = "A slick uniform and skirt combo worn by those to earn the position of \"Executive Officer\"."
 	icon_state = "hop_skirt"
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
@@ -44,7 +44,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
 /obj/item/clothing/under/rank/civilian/head_of_personnel/suit
-	name = "head of personnel's suit"
+	name = "executive officer's suit"
 	desc = "A teal suit and yellow necktie. An authoritative yet tacky ensemble."
 	icon_state = "teal_suit"
 	inhand_icon_state = "g_suit"

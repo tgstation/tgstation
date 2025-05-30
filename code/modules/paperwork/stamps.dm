@@ -45,7 +45,7 @@
 	dye_color = DYE_CAPTAIN
 
 /obj/item/stamp/head/hop
-	name = "head of personnel's rubber stamp"
+	name = "executive officer's rubber stamp"
 	icon_state = "stamp-hop"
 	dye_color = DYE_HOP
 

@@ -19,13 +19,13 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/cargo/tech
-	name = "cargo technician's uniform"
+	name = "hanger technician's uniform"
 	desc = "A brown sweater and black jeans, because, honestly, who likes shorts?"
 	icon_state = "cargotech"
 	inhand_icon_state = "lb_suit"
 
 /obj/item/clothing/under/rank/cargo/tech/alt
-	name = "cargo technician's shorts"
+	name = "hanger technician's shorts"
 	desc = "I like shooooorts! They're comfy and easy to wear!"
 	icon_state = "cargotech_alt"
 	inhand_icon_state = "lb_suit"
@@ -33,7 +33,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION
 
 /obj/item/clothing/under/rank/cargo/tech/skirt
-	name = "cargo technician's skirt"
+	name = "hanger technician's skirt"
 	desc = "A brown sweater and a black skirt to match."
 	icon_state = "cargo_skirt"
 	inhand_icon_state = "lb_suit"
@@ -43,7 +43,7 @@
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 
 /obj/item/clothing/under/rank/cargo/tech/skirt/alt
-	name = "cargo technician's shortskirt"
+	name = "hanger technician's shortskirt"
 	desc = "I like skiiiiirts! They're comfy and easy to wear!"
 	icon_state = "cargo_skirt_alt"
 

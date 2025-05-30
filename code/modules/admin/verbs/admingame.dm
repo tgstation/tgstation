@@ -284,7 +284,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 			GLOB.manifest.inject(new_character)
 
 		if(tgui_alert(new_character,"Would you like an active AI to announce this character?",,list("No","Yes")) == "Yes")
-			announce_arrival(new_character, new_character.mind.assigned_role.title)
+			announce_arrival(new_character, new_character.mind.assigned_role.get_title())
 
 	var/msg = span_adminnotice("[admin] has respawned [player_key] as [new_character.real_name].")
 	message_admins(msg)

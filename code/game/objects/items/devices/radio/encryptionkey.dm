@@ -206,7 +206,7 @@
 	greyscale_colors = "#ebebeb#2b2793"
 
 /obj/item/encryptionkey/heads/hop
-	name = "\proper the head of personnel's encryption key"
+	name = "\proper the executive officer's encryption key"
 	icon = 'icons/map_icons/items/encryptionkey.dmi'
 	icon_state = "/obj/item/encryptionkey/heads/hop"
 	post_init_icon_state = "cypherkey_cube"

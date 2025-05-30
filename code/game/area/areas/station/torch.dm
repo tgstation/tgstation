@@ -11,16 +11,16 @@
 /area/station/commons/lower_cryo/on_joining_game(mob/living/new_character)
 
 /area/station/commons/storage/emergency/first
-	name = "\improper 2st Floor Emergency Storage"
+	name = "\improper 3st Floor Emergency Storage"
 
 /area/station/commons/storage/emergency/second
-	name = "\improper 3nd Floor Emergency Storage"
+	name = "\improper 4nd Floor Emergency Storage"
 
 /area/station/commons/storage/emergency/third
-	name = "\improper 4rd Floor Emergency Storage"
+	name = "\improper 5rd Floor Emergency Storage"
 
 /area/station/commons/storage/emergency/fourth
-	name = "\improper 5th Floor Emergency Storage"
+	name = "\improper 6th Floor Emergency Storage"
 
 /area/station/commons/toilet/fitroom
 	name = "\improper Fitness Room Restroom"
@@ -30,22 +30,22 @@
 	sound_environment = SOUND_ENVIRONMENT_LIVINGROOM
 
 /area/station/commons/toilet/lower_cryo
-	name = "\improper 2nd Floor Primary Restroom"
+	name = "\improper 3nd Floor Primary Restroom"
 	area_flags = UNIQUE_AREA | EVENT_PROTECTED
 
 /area/station/commons/toilet/upper_cryo
-	name = "\improper 4th Floor Primary Restroom"
+	name = "\improper 5th Floor Primary Restroom"
 	area_flags = UNIQUE_AREA | EVENT_PROTECTED
 
 /area/station/commons/toilet/evac
-	name = "\improper 1st Floor Primary Restroom"
+	name = "\improper 2nd Floor Primary Restroom"
 	area_flags = UNIQUE_AREA | EVENT_PROTECTED
 
 /area/station/command/heads_quarters/hop/line
 	name = "\improper Access Line"
 
 /area/station/command/heads_quarters/hop/quarters
-	name = "\improper Head of Personnel's Quarters"
+	name = "\improper Executive Officer's Quarters"
 
 /area/station/command/heads_quarters/hos/quarters
 	name = "\improper Head of Security's Quarters"

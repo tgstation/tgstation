@@ -46,13 +46,15 @@
 
 	voice_of_god_power = 1.4 //Command staff has authority
 
+/datum/job/head_of_personnel/get_title()
+	return "Executive Officer"
 
 /datum/job/head_of_personnel/get_captaincy_announcement(mob/living/captain)
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
 
 
 /datum/outfit/job/hop
-	name = "Head of Personnel"
+	name = "Executive Officer"
 	jobtype = /datum/job/head_of_personnel
 
 	id = /obj/item/card/id/advanced/platinum

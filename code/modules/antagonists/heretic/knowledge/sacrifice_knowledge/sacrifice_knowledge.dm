@@ -179,7 +179,7 @@
 	for(var/datum/mind/chosen_mind as anything in final_targets)
 		heretic_datum.add_sacrifice_target(chosen_mind.current)
 		if(!silent)
-			to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role?.title]."))
+			to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role.get_title()]."))
 
 	return TRUE
 

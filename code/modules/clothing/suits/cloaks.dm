@@ -50,8 +50,8 @@
 	icon_state = "capcloak"
 
 /obj/item/clothing/neck/cloak/hop
-	name = "head of personnel's cloak"
-	desc = "Worn by the Head of Personnel. It smells faintly of bureaucracy."
+	name = "executive officer's cloak"
+	desc = "Worn by the Executive Officer. It smells faintly of bureaucracy."
 	icon_state = "hopcloak"
 
 /obj/item/clothing/neck/cloak/skill_reward
@@ -86,4 +86,3 @@
 	desc = "Worn by the wisest of veteran employees, this legendary cloak is only attainable by maintaining a living employment agreement with Nanotrasen for over <b>five thousand hours</b>. This status symbol represents a being is better than you in nearly every quantifiable way, simple as that."
 	icon_state = "playercloak"
 	element_type = /datum/element/skill_reward/veteran
-

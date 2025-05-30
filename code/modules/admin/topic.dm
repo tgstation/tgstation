@@ -793,7 +793,7 @@
 
 		//Job + antagonist
 		if(subject.mind)
-			special_role_description = "Role: <b>[subject.mind.assigned_role.title]</b>; Antagonist: <font color='red'><b>"
+			special_role_description = "Role: <b>[subject.mind.assigned_role.get_title()]</b>; Antagonist: <font color='red'><b>"
 
 			if(subject.mind.antag_datums)
 				var/iterable = 0

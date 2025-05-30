@@ -301,13 +301,13 @@
 /datum/job/proc/get_spawn_message_information()
 	SHOULD_CALL_PARENT(TRUE)
 	var/list/info = list()
-	info += "<b>You are the [title].</b>\n"
+	info += "<b>You are the [get_title()].</b>\n"
 	var/related_policy = get_policy(policy_override || title)
 	var/radio_info = get_radio_information()
 	if(related_policy)
 		info += related_policy
 	if(supervisors)
-		info += "As the [title] you answer directly to [supervisors]. Special circumstances may change this."
+		info += "As the [get_title()] you answer directly to [supervisors]. Special circumstances may change this."
 	if(radio_info)
 		info += radio_info
 	if(req_admin_notify)
@@ -416,7 +416,7 @@
 	var/obj/item/modular_computer/pda/pda = equipped.get_item_by_slot(pda_slot)
 
 	if(istype(pda))
-		pda.imprint_id(equipped.real_name, equipped_job.title)
+		pda.imprint_id(equipped.real_name, equipped_job.get_title())
 		pda.update_ringtone(equipped_job.job_tone)
 		pda.UpdateDisplay()
 
@@ -570,7 +570,7 @@
 			if(HUMAN_AUTHORITY_ENFORCED)
 				require_human = TRUE
 
-	src.job = job.title
+	src.job = job.get_title()
 
 	if(fully_randomize)
 		player_client.prefs.apply_prefs_to(src)
@@ -659,3 +659,6 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
+
+/datum/job/proc/get_title()
+	return title

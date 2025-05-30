@@ -66,7 +66,7 @@ GLOBAL_DATUM(rpgtitle_controller, /datum/rpgtitle_controller)
 	var/maptext_title = ""
 
 	if(!isanimal_or_basicmob(new_crewmember))
-		maptext_title = job.rpg_title || job.title
+		maptext_title = job.rpg_title || job.get_title()
 	else
 		//this following code can only be described as bitflag black magic. ye be warned. i tried to comment excessively to explain what the fuck is happening
 		var/list/applicable_biotypes = list()

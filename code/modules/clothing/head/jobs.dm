@@ -134,7 +134,7 @@
 
 //Head of Personnel
 /obj/item/clothing/head/hats/hopcap
-	name = "head of personnel's cap"
+	name = "executive officer's cap"
 	icon_state = "hopcap"
 	desc = "The symbol of true bureaucratic micromanagement."
 	armor_type = /datum/armor/hats_hopcap

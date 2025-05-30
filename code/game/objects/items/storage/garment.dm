@@ -20,8 +20,8 @@
 	desc = "A bag for storing extra clothes and shoes. This one belongs to the warden."
 
 /obj/item/storage/bag/garment/hop
-	name = "head of personnel's garment bag"
-	desc = "A bag for storing extra clothes and shoes. This one belongs to the head of personnel."
+	name = "executive officer's garment bag"
+	desc = "A bag for storing extra clothes and shoes. This one belongs to the executive officer."
 
 /obj/item/storage/bag/garment/research_director
 	name = "research director's garment bag"
@@ -47,12 +47,12 @@
 	new /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal(src)
 	new /obj/item/clothing/suit/hooded/wintercoat/captain(src)
 	new /obj/item/clothing/suit/jacket/capjacket(src)
-	new /obj/item/clothing/glasses/sunglasses/gar/giga(src)
+	// new /obj/item/clothing/glasses/sunglasses/gar/giga(src)
 	new /obj/item/clothing/gloves/captain(src)
 	new /obj/item/clothing/head/costume/crown/fancy(src)
 	new /obj/item/clothing/head/hats/caphat(src)
 	new /obj/item/clothing/head/hats/caphat/parade(src)
-	new /obj/item/clothing/neck/cloak/cap(src)
+	// new /obj/item/clothing/neck/cloak/cap(src)
 	new /obj/item/clothing/shoes/laceup(src)
 
 /obj/item/storage/bag/garment/hop/PopulateContents()
@@ -62,7 +62,7 @@
 	new /obj/item/clothing/suit/hooded/wintercoat/hop(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/head/hats/hopcap(src)
-	new /obj/item/clothing/neck/cloak/hop(src)
+	// new /obj/item/clothing/neck/cloak/hop(src)
 	new /obj/item/clothing/shoes/laceup(src)
 
 /obj/item/storage/bag/garment/hos/PopulateContents()
@@ -77,12 +77,12 @@
 	new /obj/item/clothing/suit/armor/hos/hos_formal(src)
 	new /obj/item/clothing/suit/armor/hos/trenchcoat/winter(src)
 	new /obj/item/clothing/suit/armor/vest/leather(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
-	new /obj/item/clothing/glasses/hud/security/sunglasses/gars/giga(src)
+	// new /obj/item/clothing/glasses/hud/security/sunglasses/eyepatch(src)
+	// new /obj/item/clothing/glasses/hud/security/sunglasses/gars/giga(src)
 	new /obj/item/clothing/head/hats/hos/beret(src)
 	new /obj/item/clothing/head/hats/hos/cap(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)
-	new /obj/item/clothing/neck/cloak/hos(src)
+	// new /obj/item/clothing/neck/cloak/hos(src)
 
 /obj/item/storage/bag/garment/warden/PopulateContents()
 	new /obj/item/clothing/suit/armor/vest/warden(src)
@@ -106,7 +106,7 @@
 	new /obj/item/clothing/suit/hooded/wintercoat/science/rd(src)
 	new /obj/item/clothing/head/beret/science/rd(src)
 	new /obj/item/clothing/gloves/color/black(src)
-	new /obj/item/clothing/neck/cloak/rd(src)
+	// new /obj/item/clothing/neck/cloak/rd(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 
 /obj/item/storage/bag/garment/chief_medical/PopulateContents()
@@ -120,7 +120,7 @@
 	new /obj/item/clothing/gloves/latex/nitrile(src)
 	new /obj/item/clothing/head/beret/medical/cmo(src)
 	new /obj/item/clothing/head/utility/surgerycap/cmo(src)
-	new /obj/item/clothing/neck/cloak/cmo(src)
+	// new /obj/item/clothing/neck/cloak/cmo(src)
 	new /obj/item/clothing/shoes/sneakers/blue (src)
 
 /obj/item/storage/bag/garment/engineering_chief/PopulateContents()
@@ -133,7 +133,7 @@
 	new /obj/item/clothing/gloves/chief_engineer(src)
 	new /obj/item/clothing/head/utility/hardhat/white(src)
 	new /obj/item/clothing/head/utility/hardhat/welding/white(src)
-	new /obj/item/clothing/neck/cloak/ce(src)
+	// new /obj/item/clothing/neck/cloak/ce(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)
 
 /obj/item/storage/bag/garment/quartermaster/PopulateContents()
@@ -145,5 +145,5 @@
 	new /obj/item/clothing/suit/jacket/quartermaster(src)
 	new /obj/item/clothing/head/soft(src)
 	new /obj/item/clothing/mask/gas(src)
-	new /obj/item/clothing/neck/cloak/qm(src)
+	// new /obj/item/clothing/neck/cloak/qm(src)
 	new /obj/item/clothing/shoes/sneakers/brown(src)

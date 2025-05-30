@@ -596,7 +596,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	location = "Bridge"
 
 /obj/effect/landmark/navigate_destination/hop
-	location = "Head of Personnel's Office"
+	location = "Executive Officer's Office"
 
 /obj/effect/landmark/navigate_destination/vault
 	location = "Vault"

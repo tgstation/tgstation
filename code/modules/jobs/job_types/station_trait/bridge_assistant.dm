@@ -35,6 +35,9 @@
 	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
 	human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED
 
+/datum/job/bridge_assistant/get_title()
+	return "Bridge Officer"
+
 /datum/job/bridge_assistant/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
 	var/mob/living/carbon/bridgie = spawned
@@ -62,7 +65,7 @@
 	return ..() //if the bridge has no turfs, spawn on the arrivals shuttle
 
 /datum/outfit/job/bridge_assistant
-	name = "Bridge Assistant"
+	name = "Bridge Officer"
 	jobtype = /datum/job/bridge_assistant
 
 	id_trim = /datum/id_trim/job/bridge_assistant

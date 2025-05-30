@@ -234,7 +234,7 @@
 	job = /datum/job/botanist
 
 /datum/id_trim/job/bridge_assistant
-	assignment = JOB_BRIDGE_ASSISTANT
+	assignment = "Bridge Officer"
 	trim_state = "trim_assistant"
 	department_color = COLOR_COMMAND_BLUE
 	subdepartment_color = COLOR_COMMAND_BLUE
@@ -285,7 +285,7 @@
 	return ..()
 
 /datum/id_trim/job/cargo_technician
-	assignment = JOB_CARGO_TECHNICIAN
+	assignment = "Hanger Technician"
 	trim_state = "trim_cargotechnician"
 	department_color = COLOR_CARGO_BROWN
 	subdepartment_color = COLOR_CARGO_BROWN
@@ -616,8 +616,8 @@
 	job = /datum/job/geneticist
 
 /datum/id_trim/job/head_of_personnel
-	assignment = JOB_HEAD_OF_PERSONNEL
-	intern_alt_name = "Head of Personnel-in-Training"
+	assignment = "Executive Officer"
+	intern_alt_name = "Executive Officer-in-Training"
 	trim_state = "trim_headofpersonnel"
 	department_color = COLOR_COMMAND_BLUE
 	subdepartment_color = COLOR_SERVICE_LIME

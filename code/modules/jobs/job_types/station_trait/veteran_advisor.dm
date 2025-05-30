@@ -1,7 +1,7 @@
 /datum/job/veteran_advisor
 	title = JOB_VETERAN_ADVISOR
-	description = "Advise HoS, and Captain on matters of Security. Train green Officers. \
-		Lay back in your wheelchair and say \"I told you\" to the HoS when all of the station collapses."
+	description = "Advise on matters of Security. Train green Officers. \
+		Say \"I told you\" to the HoS when order collapses."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list(JOB_HEAD_OF_SECURITY)
 	faction = FACTION_STATION
@@ -54,7 +54,7 @@
 /datum/job/veteran_advisor/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
 	var/mob/living/carbon/veteran = spawned
-	spawned.add_quirk(/datum/quirk/paraplegic) //Even in 2300s veterans are getting it bad
+	// spawned.add_quirk(/datum/quirk/paraplegic) //Even in 2300s veterans are getting it bad
 	if(veteran)
 		veteran.gain_trauma(/datum/brain_trauma/special/ptsd) //War, war never changes...
 

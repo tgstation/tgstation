@@ -367,7 +367,7 @@
 		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
 	var/poll_message = "Do you want to play as [span_danger(M.real_name)]?"
 	if(M.mind)
-		poll_message = "[poll_message] Job: [span_notice(M.mind.assigned_role.title)]."
+		poll_message = "[poll_message] Job: [span_notice(M.mind.assigned_role.get_title())]."
 		if(M.mind.special_role)
 			poll_message = "[poll_message] Status: [span_boldnotice(M.mind.special_role)]."
 		else

@@ -513,7 +513,8 @@ GLOBAL_LIST_INIT_TYPED(sleeper_spawnpoints, /list, list())
 
 	if(world.time - SSticker.round_start_time >= 10 MINUTES)
 		msg += span_notice("You woke up late, missing the crew briefing. \
-			Collect yourself and check in with your head of staff (or the Captain) to get up to speed on the situation.")
+			You should collect yourself and check in with your head of staff \
+			(or the Captain / Executive Officer) to get up to speed on the situation.")
 	else if(roundstart_job == JOB_CAPTAIN)
 		msg += span_notice("Check the communnication's console messages for an update from the AI as to why you were awakened. \
 			Afterwards, it is your duty to gather the crew in the briefing room and inform them of the situation.")

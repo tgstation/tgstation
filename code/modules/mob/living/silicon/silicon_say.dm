@@ -9,7 +9,7 @@
 		designation = trim_left(player.designation + " " + player.job)
 
 	if(HAS_TRAIT(mind, TRAIT_DISPLAY_JOB_IN_BINARY))
-		designation = mind.assigned_role.title
+		designation = mind.assigned_role.get_title()
 
 	if(HAS_TRAIT(src, TRAIT_LOUD_BINARY))
 		// AIs are loud and ugly
