@@ -19,7 +19,7 @@ export const TGS_MODE = process.env.CBT_BUILD_MODE === "TGS";
 
 export const DME_NAME = "tgstation";
 
-const dependencies: Record<string, any> = await Bun.file("dependencies.sh")
+const dependencies: Record<string, any> = await Bun.file("./dependencies.sh")
   .text()
   .then(formatDeps)
   .catch((err) => {
