@@ -1,6 +1,6 @@
 # Preferences (by Mothblocks)
 
-This does not contain all the information on specific values--you can find those as doc-comments in relevant paths, such as `/datum/preference`. Rather, this gives you an overview for creating *most* preferences, and getting your foot in the door to create more advanced ones.
+This does not contain all the information on specific values--you can find those as doc-comments in relevant paths, such as `/datum/preference`. Rather, this gives you an overview for creating _most_ preferences, and getting your foot in the door to create more advanced ones.
 
 ## Anatomy of a preference (A.K.A. how do I make one?)
 
@@ -10,6 +10,7 @@ Most preferences consist of two parts:
 2. A tgui representation in a TypeScript file.
 
 Every `/datum/preference` requires these three values be set:
+
 1. `category` - See [Categories](#Categories).
 2. `savefile_key` - The value which will be saved in the savefile. This will also be the identifier for tgui.
 3. `savefile_identifier` - Whether or not this is a character specific preference (`PREFERENCE_CHARACTER`) or one that affects the player (`PREFERENCE_PLAYER`). As an example: hair color is `PREFERENCE_CHARACTER` while your UI settings are `PREFERENCE_PLAYER`, since they do not change between characters.
@@ -22,15 +23,15 @@ From here, you will want to write code resembling:
 import { Feature } from "../base";
 
 export const savefile_key_here: Feature<T> = {
-  name: "Preference Name Here",
-  component: Component,
+	name: "Preference Name Here",
+	component: Component,
 
-  // Necessary for game preferences, unused for others
-  category: "CATEGORY",
+	// Necessary for game preferences, unused for others
+	category: "CATEGORY",
 
-  // Optional, shown as a tooltip
-  description: "This preference will blow your mind!",
-}
+	// Optional, shown as a tooltip
+	description: "This preference will blow your mind!",
+};
 ```
 
 `T` and `Component` depend on the type of preference you're making. Here are all common examples...
@@ -59,9 +60,9 @@ Your `.tsx` file would look like:
 import { Feature, FeatureNumberInput } from "../base";
 
 export const legs: Feature<number> = {
-  name: "Legs",
-  component: FeatureNumberInput,
-}
+	name: "Legs",
+	component: FeatureNumberInput,
+};
 ```
 
 ## Toggle preferences
@@ -84,12 +85,13 @@ Your `.tsx` file would look like:
 import { CheckboxInput, FeatureToggle } from "../base";
 
 export const enable_breathing: FeatureToggle = {
-  name: "Enable breathing",
-  component: CheckboxInput,
-}
+	name: "Enable breathing",
+	component: CheckboxInput,
+};
 ```
 
 ## Choiced preferences
+
 A choiced preference is one where the only options are in a distinct few amount of choices. Examples include skin tone, shirt, and UI style.
 
 To create one, derive from `/datum/preference/choiced`.
@@ -118,14 +120,15 @@ Your `.tsx` file would then look like:
 import { FeatureChoiced, FeatureDropdownInput } from "../base";
 
 export const favorite_drink: FeatureChoiced = {
-  name: "Favorite drink",
-  component: FeatureDropdownInput,
+	name: "Favorite drink",
+	component: FeatureDropdownInput,
 };
 ```
 
 This will create a dropdown input for your preference.
 
 ### Choiced preferences - Icons
+
 Choiced preferences can generate icons. This is how the clothing/species preferences work, for instance. However, if we just want a basic dropdown input with icons, it would look like this:
 
 ```dm
@@ -155,12 +158,13 @@ Then, change your `.tsx` file to look like:
 import { FeatureChoiced, FeatureIconnedDropdownInput } from "../base";
 
 export const favorite_drink: FeatureChoiced = {
-  name: "Favorite drink",
-  component: FeatureIconnedDropdownInput,
+	name: "Favorite drink",
+	component: FeatureIconnedDropdownInput,
 };
 ```
 
 ### Choiced preferences - Display names
+
 Sometimes the values you want to save in code aren't the same as the ones you want to display. You can specify display names to change this.
 
 The only thing you will add is "compiled data".
@@ -182,7 +186,8 @@ The only thing you will add is "compiled data".
 Your `.tsx` file does not change. The UI will figure it out for you!
 
 ## Color preferences
-These refer to colors, such as your OOC color. When read, these values will be given as 6 hex digits, *without* the pound sign.
+
+These refer to colors, such as your OOC color. When read, these values will be given as 6 hex digits, _without_ the pound sign.
 
 ```dm
 /datum/preference/color/eyeliner_color
@@ -197,12 +202,13 @@ Your `.tsx` file would look like:
 import { FeatureColorInput, Feature } from "../base";
 
 export const eyeliner_color: Feature<string> = {
-  name: "Eyeliner color",
-  component: FeatureColorInput,
+	name: "Eyeliner color",
+	component: FeatureColorInput,
 };
 ```
 
 ## Name preferences
+
 These refer to an alternative name. Examples include AI names and backup human names.
 
 These exist in `code/modules/client/preferences/names.dm`.
@@ -255,6 +261,7 @@ If your preference is `PREFERENCE_CHARACTER`, it MUST override `apply_to_human`,
 You can also read preferences directly with `prefs.read_preference(/datum/preference/type/here)`, which will return the stored value.
 
 ## Categories
+
 Every preference needs to be in a `category`. These can be found in `code/__DEFINES/preferences.dm`.
 
 ```dm
@@ -306,7 +313,7 @@ Compiled data is sent to the `serverData` field in the `FeatureValueProps`.
 
 If you have good knowledge with tgui (especially TypeScript), you'll be able to create your own component to represent preferences.
 
-The `component` field in a feature accepts __any__ component that accepts `FeatureValueProps<TReceiving, TSending = TReceiving, TServerData = undefined>`.
+The `component` field in a feature accepts **any** component that accepts `FeatureValueProps<TReceiving, TSending = TReceiving, TServerData = undefined>`.
 
 This will give you the fields:
 
@@ -335,18 +342,21 @@ For a basic example of how this can look, observe `CheckboxInput`:
 
 ```tsx
 export const CheckboxInput = (
-  props: FeatureValueProps<BooleanLike, boolean>
+	props: FeatureValueProps<BooleanLike, boolean>,
 ) => {
-  return (<Button.Checkbox
-    checked={!!props.value}
-    onClick={() => {
-      props.handleSetValue(!props.value);
-    }}
-  />);
+	return (
+		<Button.Checkbox
+			checked={!!props.value}
+			onClick={() => {
+				props.handleSetValue(!props.value);
+			}}
+		/>
+	);
 };
 ```
 
 ## Advanced - Middleware
+
 A `/datum/preference_middleware` is a way to inject your own data at specific points, as well as hijack actions.
 
 Middleware can hijack actions by specifying `action_delegations`:
@@ -422,20 +432,20 @@ import { Antagonist, Category } from "../base";
 import { multiline } from "common/string";
 
 const Changeling: Antagonist = {
-  key: "changeling", // This must be the same as your filename
-  name: "Changeling",
-  description: [
-    multiline`
+	key: "changeling", // This must be the same as your filename
+	name: "Changeling",
+	description: [
+		multiline`
       A highly intelligent alien predator that is capable of altering their
       shape to flawlessly resemble a human.
     `,
 
-    multiline`
+		multiline`
       Transform yourself or others into different identities, and buy from an
       arsenal of biological weaponry with the DNA you collect.
     `,
-  ],
-  category: Category.Roundstart, // Category.Roundstart, Category.Midround, or Category.Latejoin
+	],
+	category: Category.Roundstart, // Category.Roundstart, Category.Midround, or Category.Latejoin
 };
 
 export default Changeling;
@@ -453,4 +463,4 @@ If `antag_preference` is set, it will refer to that preference instead of `antag
 
 ## Updating special_roles
 
-In `code/__DEFINES/role_preferences.dm` (the same place you'll need to make your ROLE_\* defined), simply add your antagonist to the `special_roles` assoc list. The key is your ROLE, the value is the number of days since your first game in order to play as that antagonist.
+In `code/__DEFINES/role_preferences.dm` (the same place you'll need to make your ROLE\_\* defined), simply add your antagonist to the `special_roles` assoc list. The key is your ROLE, the value is the number of days since your first game in order to play as that antagonist.

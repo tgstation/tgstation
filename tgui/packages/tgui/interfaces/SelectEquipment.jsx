@@ -76,7 +76,6 @@ export const SelectEquipment = (props) => {
                   placeholder="Search"
                   value={searchText}
                   onChange={setSearchText}
-                  expensive
                 />
               </Stack.Item>
               <Stack.Item>

@@ -247,22 +247,26 @@
 	powerdevice = /obj/item/stock_parts/power_store/battery/super
 
 /obj/item/inducer/cyborg
-	name = "internal inducer"
+	name = "modular inducer"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
-	powerdevice = null
+
+/obj/item/inducer/cyborg/examine_hints(mob/living/user)
+	. = list()
+
+	var/obj/item/stock_parts/power_store/our_cell = get_cell(src, user)
+	if(!QDELETED(our_cell))
+		. += span_notice("Its display shows: [display_energy(our_cell.charge)].")
+		if(opened)
+			. += span_notice("Plasma sheets can be used to recharge the cell.")
+	else
+		. += span_warning("It's missing a power cell.")
+	. += span_notice("Its battery compartment can be [EXAMINE_HINT("screwed")] [opened ? "shut" : "open"].")
 
 /obj/item/inducer/cyborg/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	return NONE
 
-/obj/item/inducer/cyborg/examine_hints(mob/living/user)
-	return list()
-
-/obj/item/inducer/cyborg/get_cell(atom/movable/interface, mob/living/silicon/robot/silicon_friend)
-	return istype(silicon_friend) ? silicon_friend.cell : null
-
-/obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
-	return ITEM_INTERACT_FAILURE
-
-/obj/item/inducer/cyborg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	return ITEM_INTERACT_FAILURE
+/obj/item/inducer/cyborg/interact_with_atom(atom/movable/interacting_with, mob/living/user, list/modifiers)
+	if(iscyborg(user) && iscyborg(interacting_with))
+		balloon_alert(user, "can't charge this!")
+		return ITEM_INTERACT_FAILURE

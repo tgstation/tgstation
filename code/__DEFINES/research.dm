@@ -43,6 +43,7 @@
 #define CELL_LINE_TABLE_PUG "cell_line_pug_table"
 #define CELL_LINE_TABLE_SLIME "cell_line_slime_table"
 #define CELL_LINE_TABLE_SNAKE "cell_line_snake_table"
+#define CELL_LINE_TABLE_SNAIL "cell_line_snail_table"
 #define CELL_LINE_TABLE_VATBEAST "cell_line_vatbeast_table"
 #define CELL_LINE_TABLE_NETHER "cell_line_nether_table"
 #define CELL_LINE_TABLE_GLUTTON "cell_line_glutton_table"
