@@ -54,7 +54,7 @@ mv target/i686-unknown-linux-gnu/release/libdreamluau.so "$1/libdreamluau.so"
 cd ..
 
 # Get unzip
-sudo apt-get install -y unzip
+apt-get install -y unzip
 
 # compile tgui
 echo "Compiling tgui..."
