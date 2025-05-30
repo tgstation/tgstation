@@ -29,7 +29,7 @@ import './styles/themes/admin.scss';
 import { perf } from 'common/perf';
 import { setupGlobalEvents } from 'tgui-core/events';
 import { setupHotKeys } from 'tgui-core/hotkeys';
-import { setupHotReloading } from 'tgui-dev-server/link/client';
+import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
 import { App } from './App';
 import { setGlobalStore } from './backend';

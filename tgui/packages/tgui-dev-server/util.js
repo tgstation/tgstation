@@ -10,11 +10,14 @@ import { Glob } from 'bun';
 
 export const resolvePath = path.resolve;
 
-/** Combines path.resolve with glob patterns. */
-export async function resolveGlob(
-  directory: string,
-  pattern = '*',
-): Promise<string[]> {
+/**
+ * Combines path.resolve with glob patterns.
+ *
+ * @param {string} directory - The directory to resolve the glob pattern against.
+ * @param {string} [pattern='*'] - The glob pattern to match files against. Defaults to '*', which matches all files in the directory.
+ * @returns {Promise<string[]>} - A promise that resolves to an array of matched file paths.
+ */
+export async function resolveGlob(directory, pattern = '*') {
   // If no pattern is supplied, just return the directory if it exists
   if (pattern === '*') {
     try {
@@ -30,7 +33,8 @@ export async function resolveGlob(
 
   // Otherwise, use glob logic
   const glob = new Glob(pattern);
-  const results: string[] = [];
+  /** @type string[] */
+  const results = [];
 
   for await (const match of glob.scan({ onlyFiles: false, cwd: directory })) {
     results.push(path.resolve(directory, match));

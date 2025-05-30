@@ -7,33 +7,35 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
 
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios from 'axios';
 
-import { createLogger } from './logging';
-
-type Entry = {
-  addr: string;
-  pid: number;
-};
+import { createLogger } from './logging.js';
 
 const logger = createLogger('dreamseeker');
 
 const instanceByPid = new Map();
 
 export class DreamSeeker {
-  public pid: number;
-  public addr: string;
-  public client: AxiosInstance;
-
-  constructor(pid: number, addr: string) {
+  /**
+   * @param {number} pid
+   * @param {string} addr
+   */
+  constructor(pid, addr) {
+    /** @type {number} */
     this.pid = pid;
+    /** @type {string} */
     this.addr = addr;
+    /** @type {import('axios').AxiosInstance} */
     this.client = axios.create({
       baseURL: `http://${addr}`,
     });
   }
 
-  topic(params: Record<string, any> = {}): Promise<AxiosResponse> {
+  /**
+   * @param {Object} params
+   * @returns {Promise<Response>}
+   */
+  topic(params = {}) {
     const query = Object.keys(params)
       .map(
         (key) =>
@@ -46,9 +48,15 @@ export class DreamSeeker {
     return this.client.get('/dummy.htm?' + query);
   }
 
-  static async getInstancesByPids(pids: number[]): Promise<DreamSeeker[]> {
-    const instances: DreamSeeker[] = [];
-    const pidsToResolve: number[] = [];
+  /**
+   * @param {number[]} pids
+   * @returns {Promise<DreamSeeker[]>}
+   */
+  static async getInstancesByPids(pids) {
+    /** @type {DreamSeeker[]} */
+    const instances = [];
+    /** @type {number[]} */
+    const pidsToResolve = [];
 
     for (let pid of pids) {
       const instance = instanceByPid.get(pid);
@@ -73,7 +81,7 @@ export class DreamSeeker {
 
       // Line format:
       // proto addr mask mode pid
-      const entries: Entry[] = [];
+      const entries = [];
       const lines = stdout.split('\r\n');
 
       for (let line of lines) {
@@ -81,7 +89,7 @@ export class DreamSeeker {
         if (!words || words.length === 0) {
           continue;
         }
-        const entry: Entry = {
+        const entry = {
           addr: words[1],
           pid: parseInt(words[4], 10),
         };
@@ -110,6 +118,6 @@ export class DreamSeeker {
   }
 }
 
-function plural(word: string, n: number): string {
+function plural(word, n) {
   return n !== 1 ? word + 's' : word;
 }

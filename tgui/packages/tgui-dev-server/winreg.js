@@ -9,15 +9,17 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
 
-import { createLogger } from './logging';
+import { createLogger } from './logging.js';
 
 const logger = createLogger('winreg');
 
-/** Query a registry key. */
-export async function regQuery(
-  path: string,
-  key: string,
-): Promise<string | undefined> {
+/**
+ * Query a registry key.
+ * @param {string} path
+ * @param {string} key
+ * @return {Promise<string>}
+ */
+export async function regQuery(path, key) {
   if (process.platform !== 'win32') {
     return;
   }

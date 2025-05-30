@@ -4,19 +4,14 @@
  * @license MIT
  */
 
-type Messenger = (msg: any) => void;
+let socket;
+const queue = [];
+const subscribers = [];
 
-let socket: WebSocket;
-const queue: string[] = [];
-const subscribers: Messenger[] = [];
-
-function ensureConnection(): void {
+function ensureConnection() {
   if (process.env.NODE_ENV === 'production') return;
 
   if (socket && socket.readyState !== WebSocket.CLOSED) return;
-
-  sendLogEntry(0, null, 'ensuring connection');
-  sendLogEntry(0, null, 'using WebSocket', window.WebSocket);
 
   if (!window.WebSocket) return;
 
@@ -28,9 +23,7 @@ function ensureConnection(): void {
     // Empty the message queue
     while (queue.length !== 0) {
       const msg = queue.shift();
-      if (msg) {
-        socket.send(msg);
-      }
+      socket.send(msg);
     }
   };
 
@@ -41,14 +34,14 @@ function ensureConnection(): void {
     }
   };
 
-  window.addEventListener('unload', () => socket?.close());
+  window.onunload = () => socket?.close();
 }
 
-export function subscribe(fn: Messenger): void {
+export function subscribe(fn) {
   subscribers.push(fn);
 }
 
-function primitiveReviver(value: unknown): any {
+function primitiveReviver(value) {
   if (typeof value === 'number' && !Number.isFinite(value)) {
     return {
       __number__: String(value),
@@ -62,11 +55,13 @@ function primitiveReviver(value: unknown): any {
   return value;
 }
 
-/** A json serializer which handles circular references and other junk. */
-function serializeObject(obj: Record<string, any>): string {
-  let refs: string[] = [];
+/**
+ * A json serializer which handles circular references and other junk.
+ */
+function serializeObject(obj) {
+  let refs = [];
 
-  function objectReviver(key: string, value: any) {
+  function objectReviver(key, value) {
     if (typeof value !== 'object') {
       return primitiveReviver(value);
     }
@@ -98,12 +93,12 @@ function serializeObject(obj: Record<string, any>): string {
   }
 
   const json = JSON.stringify(obj, objectReviver);
-  refs = [];
+  refs = null;
   return json;
 }
 
-export function sendMessage(msg: Record<string, any>): void {
-  if (process.env.NODE_ENV === 'production' || !socket) return;
+export function sendMessage(msg) {
+  if (process.env.NODE_ENV === 'production') return;
 
   const json = serializeObject(msg);
   // Send message using WebSocket
@@ -121,26 +116,22 @@ export function sendMessage(msg: Record<string, any>): void {
   }
 }
 
-export function sendLogEntry(
-  level: number,
-  ns: string | null = 'client',
-  ...args: any[]
-): void {
-  if (process.env.NODE_ENV === 'production') return;
-
-  try {
-    sendMessage({
-      type: 'log',
-      payload: {
-        level,
-        ns,
-        args,
-      },
-    });
-  } catch (err) {}
+export function sendLogEntry(level, ns, ...args) {
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      sendMessage({
+        type: 'log',
+        payload: {
+          level,
+          ns: ns || 'client',
+          args,
+        },
+      });
+    } catch (err) {}
+  }
 }
 
-export function setupHotReloading(): void {
+export function setupHotReloading() {
   if (
     process.env.NODE_ENV === 'production' ||
     !process.env.WEBPACK_HMR_ENABLED ||
@@ -148,9 +139,7 @@ export function setupHotReloading(): void {
   ) {
     return;
   }
-
-  const hot = import.meta.webpackHot;
-  if (!hot) return;
+  if (!import.meta.webpackHot) return;
 
   ensureConnection();
   sendLogEntry(0, null, 'setting up hot reloading');
@@ -158,14 +147,14 @@ export function setupHotReloading(): void {
     sendLogEntry(0, null, 'received', type);
     if (type !== 'hotUpdate') return;
 
-    const status = hot.status();
+    const status = import.meta.webpackHot.status();
     if (status !== 'idle') {
       sendLogEntry(0, null, 'hot reload status:', status);
       return;
     }
 
-    hot
-      .apply({
+    import.meta.webpackHot
+      .check({
         ignoreUnaccepted: true,
         ignoreDeclined: true,
         ignoreErrored: true,

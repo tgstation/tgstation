@@ -8,8 +8,8 @@ import { inspect } from 'node:util';
 
 import * as WebSocket from 'ws';
 
-import { createLogger, directLog } from '../logging';
-import { loadSourceMaps, retrace } from './retrace';
+import { createLogger, directLog } from '../logging.js';
+import { loadSourceMaps, retrace } from './retrace.js';
 
 const logger = createLogger('link');
 
@@ -17,28 +17,27 @@ const DEBUG = process.argv.includes('--debug');
 
 export { loadSourceMaps };
 
-export function setupLink(): LinkServer {
+export function setupLink() {
   return new LinkServer();
 }
 
 class LinkServer {
-  wss: WebSocket.Server | null;
-
   constructor() {
     logger.log('setting up');
+    /** @type {WebSocket.Server | null} */
     this.wss = null;
     this.setupWebSocketLink();
   }
 
   // WebSocket-based client link
-  setupWebSocketLink(): void {
+  setupWebSocketLink() {
     const port = 3000;
     this.wss = new WebSocket.WebSocketServer({ port });
 
     this.wss.on('connection', (ws) => {
       logger.log('client connected');
       ws.on('message', (json) => {
-        const msg = deserializeObject(json.toString());
+        const msg = deserializeObject(json);
         this.handleLinkMessage(ws, msg);
       });
       ws.on('close', () => {
@@ -48,7 +47,11 @@ class LinkServer {
     logger.log(`listening on port ${port} (WebSocket)`);
   }
 
-  handleLinkMessage(ws: WebSocket.WebSocket, msg: any): void {
+  /**
+   * @param {WebSocket.Client} ws
+   * @param {WebSocket.MessageEvent} msg
+   */
+  handleLinkMessage(ws, msg) {
     const { type, payload } = msg;
     if (type === 'log') {
       const { level, ns, args } = payload;
@@ -87,15 +90,18 @@ class LinkServer {
     logger.log('unhandled message', msg);
   }
 
-  sendMessage(ws: WebSocket.WebSocket, msg: any): void {
+  sendMessage(ws, msg) {
     ws.send(JSON.stringify(msg));
   }
 
-  broadcastMessage(msg: any): void {
-    if (!this.wss) return;
-
+  broadcastMessage(msg) {
+    if (!this.wss) {
+      return;
+    }
     const clients = [...this.wss.clients];
-
+    if (clients.length === 0) {
+      return;
+    }
     logger.log(`broadcasting ${msg.type} to ${clients.length} clients`);
     for (let client of clients) {
       const json = JSON.stringify(msg);
@@ -104,25 +110,26 @@ class LinkServer {
   }
 }
 
-function deserializeObject(str: string): any {
-  return JSON.parse(str, (_key: string, value: any) => {
-    if (typeof value !== 'object' || value === null) return value;
-
-    if (value.__undefined__) {
-      // NOTE: You should not rely on deserialized object's undefined,
-      // this is purely for inspection purposes.
-      return {
-        [inspect.custom]: () => undefined,
-      };
-    }
-    if (value.__number__) {
-      return parseFloat(value.__number__);
-    }
-    if (value.__error__) {
-      if (!value.stack) {
-        return value.string;
+function deserializeObject(str) {
+  return JSON.parse(str, (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (value.__undefined__) {
+        // NOTE: You should not rely on deserialized object's undefined,
+        // this is purely for inspection purposes.
+        return {
+          [inspect.custom]: () => undefined,
+        };
       }
-      return retrace(value.stack);
+      if (value.__number__) {
+        return parseFloat(value.__number__);
+      }
+      if (value.__error__) {
+        if (!value.stack) {
+          return value.string;
+        }
+        return retrace(value.stack);
+      }
+      return value;
     }
     return value;
   });

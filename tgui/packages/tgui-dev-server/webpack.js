@@ -4,39 +4,37 @@
  * @license MIT
  */
 
+import fs from 'node:fs';
 import { createRequire } from 'node:module';
 
-import { loadSourceMaps, setupLink } from './link/server';
-import { createLogger } from './logging';
-import { reloadByondCache } from './reloader';
-import { resolveGlob } from './util';
+import { loadSourceMaps, setupLink } from './link/server.js';
+import { createLogger } from './logging.js';
+import { reloadByondCache } from './reloader.js';
+import { resolveGlob } from './util.js';
 
 const logger = createLogger('rspack');
 
-export async function createCompiler(
-  options: Record<string, any>,
-): Promise<RspackCompiler> {
+/**
+ * @param {any} config
+ * @return {RspackCompiler}
+ */
+export async function createCompiler(options) {
   const compiler = new RspackCompiler();
   await compiler.setup(options);
 
   return compiler;
 }
 
-type RspackImport = typeof import('@rspack/core');
-
 class RspackCompiler {
-  public rspack: RspackImport;
-  public config: Record<string, any>;
-  public bundleDir: string;
-
-  async setup(options: Record<string, any>): Promise<void> {
+  async setup(options) {
     // Create a require context that is relative to project root
     // and retrieve all necessary dependencies.
     const requireFromRoot = createRequire(import.meta.dirname + '/../../..');
+    /** @type {typeof import('@rspack/core')} */
+    const rspack = await requireFromRoot('@rspack/core');
 
-    const rspack: RspackImport = requireFromRoot('@rspack/core');
-    const createConfig = requireFromRoot('./rspack.config.cjs');
-    const createDevConfig = requireFromRoot('./rspack.config-dev.cjs');
+    const createConfig = await requireFromRoot('./rspack.config.cjs');
+    const createDevConfig = await requireFromRoot('./rspack.config-dev.cjs');
 
     const config = createConfig({}, options);
     const devConfig = createDevConfig({}, options);
@@ -52,7 +50,7 @@ class RspackCompiler {
     this.bundleDir = config.output.path;
   }
 
-  async watch(): Promise<void> {
+  async watch() {
     logger.log('setting up');
     // Setup link
     const link = setupLink();
@@ -60,10 +58,10 @@ class RspackCompiler {
     const compiler = this.rspack.rspack(this.config);
     // Clear garbage before compiling
     compiler.hooks.watchRun.tapPromise('tgui-dev-server', async () => {
-      const files = await resolveGlob(this.bundleDir, '*.hot-update.*');
+      const files = await resolveGlob(this.bundleDir, './*.hot-update.*');
       logger.log(`clearing garbage (${files.length} files)`);
       for (let file of files) {
-        await Bun.file(file).delete();
+        fs.unlinkSync(file);
       }
       logger.log('compiling');
     });
