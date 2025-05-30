@@ -1345,7 +1345,7 @@
 	SIGNAL_HANDLER
 
 	// Check if the mask is inside of us, or if its being *directly held* by someone and not in their backpack
-	if (breath_mask.loc == src || isturf(breath_mask.loc?.loc) && in_range(breath_mask, src))
+	if (breath_mask.loc == src || (isturf(breath_mask.loc?.loc) && in_range(breath_mask, src)))
 		return
 
 	if(isliving(loc))
