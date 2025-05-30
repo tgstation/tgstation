@@ -20,20 +20,6 @@ BunExe="$HOME/.bun/bin/bun"
 # If Bun is not present, install using the official installer.
 if [ ! -f "$BunExe" ]; then
     echo "Bun not found, installing with official installer..."
-    # Ensure unzip is installed
-    if ! command -v unzip >/dev/null 2>&1; then
-        echo "'unzip' not found. Attempting to install..."
-        if command -v apt-get >/dev/null 2>&1; then
-            sudo apt-get update && sudo apt-get install -y unzip
-        elif command -v yum >/dev/null 2>&1; then
-            sudo yum install -y unzip
-        elif command -v pacman >/dev/null 2>&1; then
-            sudo pacman -Sy unzip
-        else
-            echo "Please install 'unzip' manually."
-            exit 1
-        fi
-    fi
     curl -fsSL https://bun.sh/install | bash -s $BunFullVersion
     if [ ! -f "$BunExe" ]; then
         echo "Bun installation failed or not found at $BunExe."
