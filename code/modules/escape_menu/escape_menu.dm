@@ -16,7 +16,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	new /datum/escape_menu(src)
 
 #define PAGE_HOME "PAGE_HOME"
-#define PAGE_ADMIN "ADMIN_PAGE"
 #define PAGE_LEAVE_BODY "PAGE_LEAVE_BODY"
 
 /datum/escape_menu
@@ -94,8 +93,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	switch (menu_page)
 		if (PAGE_HOME)
 			show_home_page()
-		if (PAGE_ADMIN)
-			show_admin_page()
 		if (PAGE_LEAVE_BODY)
 			show_leave_body_page()
 		else
@@ -113,12 +110,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	menu_page = PAGE_HOME
 	show_page()
 
-/datum/escape_menu/proc/open_admin_page()
-	PRIVATE_PROC(TRUE)
-
-	menu_page = PAGE_ADMIN
-	show_page()
-
 /datum/escape_menu/proc/open_leave_body()
 	PRIVATE_PROC(TRUE)
 
@@ -133,5 +124,4 @@ GLOBAL_LIST_EMPTY(escape_menus)
 INITIALIZE_IMMEDIATE(/atom/movable/screen/escape_menu)
 
 #undef PAGE_HOME
-#undef PAGE_ADMIN
 #undef PAGE_LEAVE_BODY
