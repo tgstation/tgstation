@@ -10,13 +10,13 @@ export function downloadFile(url: string, file: string): Promise<string> {
         if (response.statusCode === 302 && response.headers.location) {
           file_stream.close();
           downloadFile(response.headers.location, file).then(() =>
-            resolve("ok")
+            resolve("ok"),
           );
           return;
         }
         if (response.statusCode !== 200) {
           Juke.logger.error(
-            `Failed to download ${url}: Status ${response.statusCode}`
+            `Failed to download ${url}: Status ${response.statusCode}`,
           );
           file_stream.close();
           reject();

@@ -13,7 +13,7 @@ import { promisify } from "node:util";
 
 export async function regQuery(
   path: string,
-  key: string
+  key: string,
 ): Promise<string | string[] | undefined> {
   if (process.platform !== "win32") {
     return;
