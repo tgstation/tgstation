@@ -106,8 +106,8 @@
 
 /obj/item/organ/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
 	if(organ_owner)
-		organ_owner.faction -= ROLE_ALIEN
-		if(!QDELING(organ_owner))
+		if(!QDELETED(organ_owner))
+			organ_owner.faction -= ROLE_ALIEN
 			organ_owner.remove_language(/datum/language/xenocommon, ALL, LANGUAGE_GLAND)
 	return ..()
 

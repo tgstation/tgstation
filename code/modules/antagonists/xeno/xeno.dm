@@ -48,6 +48,8 @@
 	return finish_preview_icon(icon('icons/mob/nonhuman-player/alien.dmi', "alienh"))
 
 /datum/antagonist/xeno/forge_objectives()
+	if(locate(/datum/objective/advance_hive) in objectives) //prevents duplicate and stacking objectives
+		return
 	var/datum/objective/advance_hive/objective = new
 	objective.owner = owner
 	objectives += objective
@@ -56,6 +58,10 @@
 	name = "\improper Captive Xenomorph"
 	///Our associated antagonist team for captive xenomorphs
 	var/datum/team/xeno/captive/captive_team
+
+/datum/antagonist/xeno/captive/on_gain()
+	forge_objectives()
+	. = ..()
 
 /datum/antagonist/xeno/captive/create_team(datum/team/xeno/captive/new_team)
 	if(!new_team)
@@ -75,6 +81,8 @@
 	return captive_team
 
 /datum/antagonist/xeno/captive/forge_objectives()
+	if(locate(/datum/objective/escape_captivity) in objectives)
+		return
 	var/datum/objective/escape_captivity/objective = new
 	objective.owner = owner
 	objectives += objective
@@ -103,6 +111,7 @@
 	name = "\improper Captive Aliens"
 	///The first member of this team, presumably the queen.
 	var/datum/mind/progenitor
+	var/xenobio_cell_occupant_count = 0
 
 /datum/team/xeno/captive/roundend_report()
 	var/list/parts = list()
@@ -154,13 +163,28 @@
 //XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
-	if(!mind.has_antag_datum(/datum/antagonist/xeno))
-		//if(GLOB.communications_controller.xenomorph_egg_delivered && istype(get_area(src), GLOB.communications_controller.captivity_area))
-		//mind.add_antag_datum(/datum/antagonist/xeno/captive)
-		// handled whenever a xeno specimen is in the xenobiology area in research.dm
-		mind.add_antag_datum(/datum/antagonist/xeno)
-		mind.set_assigned_role(SSjob.get_job_type(/datum/job/xenomorph))
-		mind.special_role = ROLE_ALIEN
+	if(mind.has_antag_datum(/datum/antagonist/xeno)|| mind.has_antag_datum(/datum/antagonist/xeno/captive))
+		return //already has an antag datum, no need to add it again)
+	mind.add_antag_datum(/datum/antagonist/xeno)
+	mind.set_assigned_role(SSjob.get_job_type(/datum/job/xenomorph))
+	mind.special_role = ROLE_ALIEN
+	var/area/xenocell = locate(/area/station/science/xenobiology/cell)
+	if(xenocell)
+		RegisterSignal(xenocell, COMSIG_AREA_ENTERED, PROC_REF(on_xenobio_cell_occupancy_changed))
+		RegisterSignal(xenocell, COMSIG_AREA_EXITED, PROC_REF(on_xenobio_cell_occupancy_changed))
+
+/mob/living/carbon/alien/proc/on_xenobio_cell_occupancy_changed()
+	var/datum/team/xeno/xeno_team = locate(/datum/team/xeno) in GLOB.antagonist_teams
+	if(xeno_team)
+		for(var/datum/mind/alien in xeno_team.members)
+			if(istype(get_area(alien.current), /area/station/science/xenobiology/cell)  && alien.current.stat != DEAD)
+				if(!alien.has_antag_datum(/datum/antagonist/xeno/captive))
+					alien.add_antag_datum(/datum/antagonist/xeno/captive)
+			else //make sure if they arent in xenobiology that they dont have the captive datum
+				if(alien.has_antag_datum(/datum/antagonist/xeno/captive))
+					alien.remove_antag_datum(/datum/antagonist/xeno/captive)
+			xeno_team.add_member(alien) //ensure the alien remains a part of the xeno team
+	return
 
 /mob/living/carbon/alien/on_wabbajacked(mob/living/new_mob)
 	. = ..()

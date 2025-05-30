@@ -1,6 +1,6 @@
 /datum/techweb_node/oldstation_surgery
 	id = TECHWEB_NODE_OLDSTATION_SURGERY
-	display_name = "Experimental Dissection"
+	display_name = "r"
 	description = "Grants access to experimental dissections, which allows generation of research points."
 	prereq_ids = list(TECHWEB_NODE_MEDBAY_EQUIP)
 	design_ids = list(
