@@ -32,7 +32,6 @@ jobs:
       - name: Compile and generate Autowiki files
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         run: |
-          chmod +x tools/build/build.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build.sh --ci autowiki
       - name: Run Autowiki

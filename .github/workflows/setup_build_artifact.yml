@@ -24,7 +24,6 @@ jobs:
           minor: ${{ inputs.minor }}
       - name: Compile
         run: |
-          chmod +x tools/build/build.sh
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build.sh --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
       - name: Setup variable for output path

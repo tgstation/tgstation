@@ -99,9 +99,6 @@ jobs:
       - name: Check Miscellaneous Files
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: bash tools/ci/check_misc.sh
-      - name: Grant Execute Permissions
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: chmod +x tools/build/build.sh
       - name: Run TGUI Checks
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/build/build.sh --ci lint tgui-test
