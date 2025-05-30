@@ -169,8 +169,19 @@
 	//you cannot unassign from an area we never were assigned to
 	if(isnull(target_area) || assigned_area != target_area)
 		return
+	if(src in assigned_area.excluded_vents)
+		assigned_area.excluded_vents -= src
 	assigned_area.air_vents -= src
 	assigned_area = null
+
+/obj/machinery/atmospherics/components/unary/vent_pump/proc/toggle_automation()
+	var/area/target_area = get_area(src)
+	if(isnull(target_area) || assigned_area != target_area)
+		return
+	if(src in assigned_area.excluded_vents)
+		assigned_area.excluded_vents -= src
+		return
+	assigned_area.excluded_vents += src
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on_exit_area(datum/source, area/area_to_unregister)
 	. = ..()

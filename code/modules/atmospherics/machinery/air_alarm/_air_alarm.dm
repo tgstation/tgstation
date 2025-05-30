@@ -326,7 +326,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				"external" = vent.external_pressure_bound,
 				"internal" = vent.internal_pressure_bound,
 				"extdefault" = (vent.external_pressure_bound == ONE_ATMOSPHERE),
-				"intdefault" = (vent.internal_pressure_bound == 0)
+				"intdefault" = (vent.internal_pressure_bound == 0),
+				"allow_automation" = !(vent in my_area.excluded_vents),
 			))
 		data["scrubbers"] = list()
 		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in my_area.air_scrubbers)
@@ -341,6 +342,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				"scrubbing" = scrubber.scrubbing,
 				"widenet" = scrubber.widenet,
 				"filter_types" = filter_types,
+				"allow_automation" = !(scrubber in my_area.excluded_scrubbers),
 			))
 
 		data["selectedModePath"] = selected_mode.type
@@ -473,6 +475,15 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 				return TRUE
 
 			scrubber.toggle_filters(params["val"])
+		if ("automation")
+			if (!isnull(vent))
+				vent.toggle_automation()
+				return TRUE
+
+			if (!isnull(scrubber))
+				scrubber.toggle_automation()
+				return TRUE
+
 		if ("mode")
 			select_mode(user, text2path(params["mode"]))
 			investigate_log("was turned to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
