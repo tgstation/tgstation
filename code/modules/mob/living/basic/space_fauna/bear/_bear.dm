@@ -14,6 +14,7 @@
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 
+	max_stamina = 120
 	maxHealth = 60
 	health = 60
 	speed = 0
@@ -88,7 +89,7 @@
 	maxHealth = 250
 	health = 250
 	faction = list(FACTION_NEUTRAL)
-	status_flags = CANPUSH
+	status_flags = CANPUSH | CANSTUN
 
 /mob/living/basic/bear/snow/ancient
 	name = "ancient polar bear"

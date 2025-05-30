@@ -9,8 +9,10 @@
 	maxHealth = 300
 	melee_damage_lower = 15
 	melee_damage_upper = 30
+	status_flags = CANPUSH
 	sentience_type = SENTIENCE_ARTIFICIAL
 	ai_controller = /datum/ai_controller/basic_controller/stares_at_people
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	/// the path to a fake item we will hold in our right hand
 	var/obj/item/held_item
 	/// the path to a fake hat we will wear
@@ -23,9 +25,9 @@
 /mob/living/basic/statue/mannequin/update_overlays()
 	. = ..()
 	if(held_item)
-		. += mutable_appearance(initial(held_item.righthand_file), initial(held_item.inhand_icon_state))
+		. += mutable_appearance(held_item::righthand_file, held_item::inhand_icon_state)
 	if(hat)
-		. += mutable_appearance(initial(hat.worn_icon), initial(hat.worn_icon_state) || initial(hat.icon_state))
+		. += mutable_appearance(hat::worn_icon, hat::worn_icon_state || hat::post_init_icon_state || hat::icon_state)
 
 /datum/ai_controller/basic_controller/stares_at_people
 	blackboard = list(

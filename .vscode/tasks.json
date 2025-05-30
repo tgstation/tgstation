@@ -12,11 +12,7 @@
 					"DM_EXE": "${config:dreammaker.byondPath}"
 				}
 			},
-			"problemMatcher": [
-				"$dreammaker",
-				"$tsc",
-				"$eslint-stylish"
-			],
+			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
 			"group": {
 				"kind": "build",
 				"isDefault": true
@@ -37,11 +33,7 @@
 					"DM_EXE": "${config:dreammaker.byondPath}"
 				}
 			},
-			"problemMatcher": [
-				"$dreammaker",
-				"$tsc",
-				"$eslint-stylish"
-			],
+			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
 			"group": {
 				"kind": "build"
 			},
@@ -49,11 +41,91 @@
 			"label": "Build All (low memory mode)"
 		},
 		{
+			"type": "process",
+			"command": "tools/build/build",
+			"args": [
+				"-DTESTING",
+				"-DREAGENTS_TESTING",
+				"-DTIMER_DEBUG",
+				"-DREFERENCE_DOING_IT_LIVE"
+			],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat",
+				"args": [
+					"-DTESTING",
+					"-DREAGENTS_TESTING",
+					"-DTIMER_DEBUG",
+					"-DREFERENCE_DOING_IT_LIVE"
+				]
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Build All (testing)"
+		},
+		{
+			"type": "process",
+			"command": "tools/build/build",
+			"args": [
+				"-DLOWMEMORYMODE",
+				"-DTESTING",
+				"-DREAGENTS_TESTING",
+				"-DTIMER_DEBUG",
+				"-DREFERENCE_DOING_IT_LIVE"
+			],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat",
+				"args": [
+					"-DLOWMEMORYMODE",
+					"-DTESTING",
+					"-DREAGENTS_TESTING",
+					"-DTIMER_DEBUG",
+					"-DREFERENCE_DOING_IT_LIVE"
+				]
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Build All (testing + low memory mode)"
+		},
+		{
+			"type": "process",
+			"command": "tools/build/build",
+			"args": ["-DTESTING", "-DMAP_TEST"],
+			"windows": {
+				"command": ".\\tools\\build\\build.bat",
+				"args": ["-DTESTING", "-DMAP_TEST"]
+			},
+			"options": {
+				"env": {
+					"DM_EXE": "${config:dreammaker.byondPath}"
+				}
+			},
+			"problemMatcher": ["$dreammaker", "$tsc", "$eslint-stylish"],
+			"group": {
+				"kind": "build"
+			},
+			"dependsOn": "dm: reparse",
+			"label": "Build All (map testing)"
+		},
+		{
 			"type": "dreammaker",
 			"dme": "tgstation.dme",
-			"problemMatcher": [
-				"$dreammaker"
-			],
+			"problemMatcher": ["$dreammaker"],
 			"group": "build",
 			"label": "dm: build - tgstation.dme"
 		},
@@ -68,10 +140,7 @@
 			"windows": {
 				"command": ".\\bin\\tgui-build.cmd"
 			},
-			"problemMatcher": [
-				"$tsc",
-				"$eslint-stylish"
-			],
+			"problemMatcher": ["$tsc", "$eslint-stylish"],
 			"group": "build",
 			"label": "tgui: build"
 		},
@@ -81,10 +150,7 @@
 			"windows": {
 				"command": ".\\bin\\tgui-dev.cmd"
 			},
-			"problemMatcher": [
-				"$tsc",
-				"$eslint-stylish"
-			],
+			"problemMatcher": ["$tsc", "$eslint-stylish"],
 			"group": "build",
 			"label": "tgui: dev server"
 		},
@@ -94,10 +160,7 @@
 			"windows": {
 				"command": ".\\bin\\tgui-bench.cmd"
 			},
-			"problemMatcher": [
-				"$tsc",
-				"$eslint-stylish"
-			],
+			"problemMatcher": ["$tsc", "$eslint-stylish"],
 			"group": "build",
 			"label": "tgui: bench"
 		},
@@ -107,10 +170,7 @@
 			"windows": {
 				"command": ".\\bin\\tgui-sonar.cmd"
 			},
-			"problemMatcher": [
-				"$tsc",
-				"$eslint-stylish"
-			],
+			"problemMatcher": ["$tsc", "$eslint-stylish"],
 			"group": "build",
 			"label": "tgui: sonar"
 		},
@@ -120,10 +180,7 @@
 			"windows": {
 				"command": ".\\bin\\tgfont.cmd"
 			},
-			"problemMatcher": [
-				"$tsc",
-				"$eslint-stylish"
-			],
+			"problemMatcher": ["$tsc", "$eslint-stylish"],
 			"group": "build",
 			"label": "tgui: rebuild tgfont"
 		}

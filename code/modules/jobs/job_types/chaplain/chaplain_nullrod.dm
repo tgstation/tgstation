@@ -45,7 +45,7 @@
 			rods[nullrod_type] = initial(nullrod_type.menu_description)
 		//special non-nullrod subtyped shit
 		rods[/obj/item/gun/ballistic/bow/divine/with_quiver] = "A divine bow and 10 quivered holy arrows."
-		rods[/obj/item/organ/cyberimp/arm/shard/scythe] = "A shard that implants itself into your arm, \
+		rods[/obj/item/organ/cyberimp/arm/toolkit/shard/scythe] = "A shard that implants itself into your arm, \
 									allowing you to conjure forth a vorpal scythe. \
 									Allows you to behead targets for empowered strikes. \
 									Harms you if you dismiss the scythe without first causing harm to a creature. \
@@ -73,7 +73,7 @@
 	user.visible_message(span_suicide("[user] is killing [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to get closer to god!"))
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/nullrod/attack(mob/living/target_mob, mob/living/user, list/modifiers)
+/obj/item/nullrod/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!user.mind?.holy_role)
 		return ..()
 	if(!IS_CULTIST(target_mob) || istype(target_mob, /mob/living/carbon/human/cult_ghost))
@@ -189,11 +189,9 @@
 	force = 15
 	menu_description = "An odd sharp blade which provides a low chance of blocking incoming melee attacks and deals a random amount of damage, which can range from almost nothing to very high. Can be worn on the back."
 
-/obj/item/nullrod/claymore/multiverse/melee_attack_chain(mob/user, atom/target, list/modifiers)
-	var/force_mod = rand(-14, 15)
-	force += force_mod
-	. = ..()
-	force -= force_mod
+/obj/item/nullrod/claymore/multiverse/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	SET_ATTACK_FORCE(attack_modifiers, rand(max(force - 15, 1), force + 15))
+	return ..()
 
 /obj/item/nullrod/claymore/saber
 	name = "light energy sword"
@@ -580,8 +578,9 @@
 /obj/item/nullrod/carp
 	name = "carp-sie plushie"
 	desc = "An adorable stuffed toy that resembles the god of all carp. The teeth look pretty sharp. Activate it to receive the blessing of Carp-Sie."
-	icon = 'icons/obj/toys/plushes.dmi'
-	icon_state = "map_plushie_carp"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/nullrod/carp"
+	post_init_icon_state = "map_plushie_carp"
 	greyscale_config = /datum/greyscale_config/plush_carp
 	greyscale_colors = "#cc99ff#000000"
 	inhand_icon_state = "carp_plushie"
@@ -816,36 +815,20 @@
 	alt_simple = string_list(alt_simple)
 	AddComponent(/datum/component/alternative_sharpness, SHARP_POINTY, alt_continuous, alt_simple)
 
-/obj/item/nullrod/nullblade/melee_attack_chain(mob/user, atom/target, list/modifiers)
-	//Track our actual force separately
-	var/old_force = force
-	force = 0
-	//Potential dice roll for our baseline force
-	force += roll("1d6")
-
-	//Now we can check for our user's potential 'strength' value. As a baseline, we'll use a default value of 4 for the sake of nonhuman users.
+/obj/item/nullrod/nullblade/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	//Check for our user's potential 'strength' value. As a baseline, we'll use a default value of 4 for the sake of nonhuman users.
 	var/strength_value = 4
-
-	//We can use our human wielder's arm strength to determine their 'strength'. We add unarmed lower and upper, then divide by four.
-	//This isn't how strength works in dnd but who fucking cares.
+	// We can use our human wielder's arm strength to determine their 'strength'. We add unarmed lower and upper, then divide by four.
+	// This isn't how strength works in dnd but who fucking cares.
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/obj/item/bodypart/wielding_bodypart = human_user.get_active_hand()
 		strength_value = round((wielding_bodypart.unarmed_damage_low + wielding_bodypart.unarmed_damage_high) * 0.25, 1)
+	// Our force becomes 1d6 + strength + some modifier (based on force - base force) to account for whetstones and other things.
+	SET_ATTACK_FORCE(attack_modifiers, roll("1d6") + strength_value + (force - initial(force)))
+	return ..()
 
-	force += strength_value
-
-	//If our old_force is higher than our initial force, add the difference to this calculation.
-	//We do this because our force could have been changed by things like whetstones and RPG stats.
-	force += old_force - initial(force)
-
-	//Record change to our force in case something modifies it down the chain
-	var/force_diff = force - old_force
-	. = ..()
-	//Reapply our old force.
-	force -= force_diff
-
-/obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/nullrod/nullblade/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(!isliving(target))
 		return
 

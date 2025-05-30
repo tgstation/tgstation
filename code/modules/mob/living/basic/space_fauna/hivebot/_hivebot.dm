@@ -32,6 +32,7 @@
 	habitable_atmos = null
 	minimum_survivable_temperature = TCMB
 	ai_controller = /datum/ai_controller/basic_controller/hivebot
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	///does this type do range attacks?
 	var/ranged_attacker = FALSE
 	/// How often can we shoot?

@@ -167,15 +167,18 @@
 	fuel_added = 0
 	update_appearance()
 	adjust_light()
-	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/burning)
+	var/obj/effect/abstract/shared_particle_holder/smoke_particles = add_shared_particles(/particles/smoke/burning, "fireplace_[dir]")
 
 	switch(dir)
 		if(SOUTH)
-			smoke_particles.particles.position = list(0, 29, 0)
+			smoke_particles.pixel_w = 16
+			smoke_particles.pixel_z = 45
 		if(EAST)
-			smoke_particles.particles.position = list(-20, 9, 0)
+			smoke_particles.pixel_w = -4
+			smoke_particles.pixel_z = 25
 		if(WEST)
-			smoke_particles.particles.position = list(20, 9, 0)
+			smoke_particles.pixel_w = 36
+			smoke_particles.pixel_z = 25
 		if(NORTH) // there is no icon state for SOUTH
 			remove_shared_particles(/particles/smoke/burning)
 

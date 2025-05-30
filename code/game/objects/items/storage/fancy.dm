@@ -30,11 +30,6 @@
 	/// Whether it supports open and closed state icons.
 	var/has_open_closed_states = TRUE
 
-/obj/item/storage/fancy/Initialize(mapload)
-	. = ..()
-
-	atom_storage.max_slots = spawn_count
-
 /obj/item/storage/fancy/PopulateContents()
 	if(!spawn_type)
 		return
@@ -103,7 +98,7 @@
 	appearance_flags = KEEP_TOGETHER|LONG_GLIDE
 	custom_premium_price = PAYCHECK_COMMAND * 1.75
 	contents_tag = "donut"
-	storage_type = /datum/storage/donut
+	storage_type = /datum/storage/donut_box
 
 /obj/item/storage/fancy/donut_box/PopulateContents()
 	. = ..()
@@ -179,7 +174,7 @@
 	spawn_count = 5
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	contents_tag = "candle"
-	storage_type = /datum/storage/fancy_holder
+	storage_type = /datum/storage/candle_box
 
 ////////////
 //CIG PACK//
@@ -396,7 +391,7 @@
 	spawn_count = 10
 	custom_price = PAYCHECK_LOWER
 	has_open_closed_states = FALSE
-	storage_type = /datum/storage/fancy_holder
+	storage_type = /datum/storage/rolling_paper_pack
 
 /obj/item/storage/fancy/rollingpapers/update_overlays()
 	. = ..()
@@ -415,14 +410,11 @@
 	base_icon_state = "cigarcase"
 	w_class = WEIGHT_CLASS_NORMAL
 	contents_tag = "premium cigar"
+	storage_type = /datum/storage/cigar_box
 	spawn_type = /obj/item/cigarette/cigar/premium
 	spawn_count = 5
 	spawn_coupon = FALSE
 	display_cigs = FALSE
-
-/obj/item/storage/fancy/cigarettes/cigars/Initialize(mapload)
-	. = ..()
-	atom_storage.set_holdable(/obj/item/cigarette/cigar)
 
 /obj/item/storage/fancy/cigarettes/cigars/update_icon_state()
 	. = ..()
@@ -486,7 +478,12 @@
 	w_class = WEIGHT_CLASS_SMALL
 	spawn_type = /obj/item/food/nugget
 	spawn_count = 6
-	storage_type = /datum/storage/fancy_holder
+	storage_type = /datum/storage/nugget_box
+
+/obj/item/storage/fancy/nugget_box/Initialize(mapload)
+	. = ..()
+	// It's a safe place for the Fryish/Fritterish
+	AddElement(/datum/element/fish_safe_storage)
 
 /*
  * Jar of pickles
@@ -505,7 +502,7 @@
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE
-	storage_type = /datum/storage/fancy_holder
+	storage_type = /datum/storage/pickles_jar
 
 /obj/item/storage/fancy/pickles_jar/update_icon_state()
 	. = ..()

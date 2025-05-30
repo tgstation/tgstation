@@ -1,14 +1,31 @@
 //Tendril chest artifacts and ruin loot.
 //Consumable or one-use items like the magic D20 and gluttony's blessing are omitted
+/datum/export/lavaland
+	unit_name = "lava planet artifact"
+	/// Prefix to add to our unit name after generation
+	var/prefix = null
+
+/datum/export/lavaland/New()
+	. = ..()
+	switch (SSmapping.current_map.minetype)
+		if (MINETYPE_NONE)
+			unit_name = "unknown artifact"
+		if (MINETYPE_LAVALAND)
+			unit_name = "lava planet artifact"
+		if (MINETYPE_ICE)
+			unit_name = "ice moon artifact"
+
+	if (prefix)
+		unit_name = "[prefix] [unit_name]"
 
 /datum/export/lavaland/minor
 	cost = CARGO_CRATE_VALUE * 20
-	unit_name = "minor lava planet artifact"
+	prefix = "minor"
 	export_types = list(
 		/obj/item/immortality_talisman,
 		/obj/item/book_of_babel,
 		/obj/item/wisp_lantern,
-		/obj/item/organ/cyberimp/arm/shard/katana,
+		/obj/item/organ/cyberimp/arm/toolkit/shard/katana,
 		/obj/item/clothing/neck/cloak/wolf_coat,
 		/obj/item/clothing/glasses/godeye,
 		/obj/item/clothing/neck/necklace/memento_mori,
@@ -31,7 +48,6 @@
 
 /datum/export/lavaland/major //valuable chest/ruin loot, minor megafauna loot
 	cost = CARGO_CRATE_VALUE * 40
-	unit_name = "lava planet artifact"
 	export_types = list(
 		/obj/item/dragons_blood,
 		/obj/item/guardian_creator/miner,
@@ -48,7 +64,7 @@
 
 /datum/export/lavaland/megafauna
 	cost = CARGO_CRATE_VALUE * 80
-	unit_name = "major lava planet artifact"
+	prefix = "major"
 	export_types = list(
 		/obj/item/hierophant_club,
 		/obj/item/melee/cleaving_saw,

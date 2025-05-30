@@ -14,7 +14,7 @@
 	var/obj/item/clothing/gloves/gloves_type = /obj/item/clothing/gloves/radio
 	if(isplasmaman(quirk_holder))
 		gloves_type = /obj/item/clothing/gloves/color/plasmaman/radio
-	give_item_to_holder(gloves_type, list(LOCATION_GLOVES = ITEM_SLOT_GLOVES, LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(gloves_type, list(LOCATION_GLOVES, LOCATION_HANDS))
 
 /datum/quirk/item_quirk/signer/remove()
 	qdel(quirk_holder.GetComponent(/datum/component/sign_language))

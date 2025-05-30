@@ -19,6 +19,18 @@
 	///Handles whether the custom reconcilation handling should be used
 	var/custom_reconcilation = FALSE
 
+/obj/machinery/atmospherics/components/get_save_vars()
+	. = ..()
+	if(!override_naming)
+		// Prevents saving the dynamic name with \proper due to it converting to "???"
+		. -= NAMEOF(src, name)
+	. += NAMEOF(src, welded)
+	return .
+
+/obj/machinery/atmospherics/components/Initialize(mapload)
+	. = ..()
+	update_appearance()
+
 /obj/machinery/atmospherics/components/New()
 	parents = new(device_type)
 	airs = new(device_type)
@@ -53,7 +65,7 @@
 		REMOVE_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
 	else
 		ADD_TRAIT(src, TRAIT_UNDERFLOOR, REF(src))
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()
