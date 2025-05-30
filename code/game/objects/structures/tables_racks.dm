@@ -1069,7 +1069,8 @@
 	patient = null
 	QDEL_NULL(air_tank)
 	if (breath_mask?.loc == src)
-		QDEL_NULL(breath_mask)
+		qdel(breath_mask)
+	breath_mask = null
 	return ..()
 
 /obj/structure/table/optable/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
@@ -1103,13 +1104,18 @@
 	var/atom/drop_loc = drop_location()
 	if (!drop_loc)
 		return
-	air_tank.forceMove(drop_loc)
+
+	if (air_tank)
+		air_tank.forceMove(drop_loc)
+		air_tank = null
+
+	if (!breath_mask)
+		return
 	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
 	if (breath_mask.loc == src)
 		breath_mask.forceMove(drop_loc)
 	else if (breath_mask.loc)
 		UnregisterSignal(breath_mask.loc, COMSIG_MOVABLE_MOVED)
-	air_tank = null
 	breath_mask = null
 
 /obj/structure/table/optable/make_climbable()
@@ -1189,14 +1195,14 @@
 			balloon_alert(user, "mask already attached!")
 			return ITEM_INTERACT_BLOCKING
 
-		if (!user.temporarilyRemoveItemFromInventory(tool))
+		if (!user.transferItemToLoc(tool, src))
 			return ITEM_INTERACT_BLOCKING
 
-		tool.forceMove(src)
 		if (breath_mask != tool)
 			breath_mask = tool
 			RegisterSignal(breath_mask, COMSIG_MOVABLE_MOVED, PROC_REF(on_mask_moved))
 			RegisterSignal(breath_mask, COMSIG_ITEM_DROPPED, PROC_REF(check_mask_range))
+
 		balloon_alert(user, "mask attached")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		update_appearance()
@@ -1214,10 +1220,9 @@
 		balloon_alert(user, "does not fit!")
 		return ITEM_INTERACT_BLOCKING
 
-	if (!user.temporarilyRemoveItemFromInventory(tool))
+	if (!user.transferItemToLoc(tool, src))
 		return ITEM_INTERACT_BLOCKING
 
-	as_tank.forceMove(src)
 	air_tank = as_tank
 	balloon_alert(user, "tank attached")
 	playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -1233,7 +1238,7 @@
 
 	breath_mask.forceMove(drop_location())
 	tool.play_tool_sound(src, 50)
-	to_chat(user, span_notice("You detach \the [breath_mask] from \the [src]."))
+	balloon_alert(user, "mask detached")
 	UnregisterSignal(breath_mask, list(COMSIG_MOVABLE_MOVED, COMSIG_ITEM_DROPPED))
 	if (user.CanReach(breath_mask))
 		user.put_in_hands(breath_mask)
@@ -1244,12 +1249,12 @@
 /obj/structure/table/optable/wrench_act(mob/living/user, obj/item/tool)
 	if (!air_tank)
 		return NONE
-	to_chat(user, span_notice("You begin detaching \the [air_tank] from \the [src]..."))
+	balloon_alert(user, "detaching the tank...")
 	if (!tool.use_tool(src, user, 3 SECONDS))
 		return ITEM_INTERACT_BLOCKING
 	air_tank.forceMove(drop_location())
 	tool.play_tool_sound(src, 50)
-	to_chat(user, span_notice("You detach \the [air_tank] from \the [src]."))
+	balloon_alert(user, "tank detached")
 	if (user.CanReach(air_tank))
 		user.put_in_hands(air_tank)
 	if (patient?.external && patient.external == air_tank)
@@ -1310,7 +1315,7 @@
 		balloon_alert(user, "no internals connector!")
 		return
 
-	to_chat(user, span_notice("You begin connecting [src]'s [air_tank] to [patient]'s [internals]..."))
+	user.visible_message(span_notice("[user] begins connecting [src]'s [air_tank] to [patient]'s [internals]."), span_notice("You begin connecting [src]'s [air_tank] to [patient]'s [internals]..."), ignored_mobs = patient)
 	to_chat(patient, span_userdanger("[user] begins connecting [src]'s [air_tank] to your [internals]!"))
 
 	if (!do_after(user, 4 SECONDS, patient))
@@ -1319,7 +1324,7 @@
 	if (!air_tank || patient != over || !patient.can_breathe_internals())
 		return
 
-	patient.open_internals(air_tank, TRUE)
+	patient.open_internals(air_tank, is_external = TRUE)
 	to_chat(user, span_notice("You connect [src]'s [air_tank] to [patient]'s [internals]."))
 	to_chat(patient, span_userdanger("[user] connects [src]'s [air_tank] to your [internals]!"))
 
@@ -1339,6 +1344,7 @@
 /obj/structure/table/optable/proc/check_mask_range()
 	SIGNAL_HANDLER
 
+	// Check if the mask is inside of us, or if its being *directly held* by someone and not in their backpack
 	if (breath_mask.loc == src || isturf(breath_mask.loc?.loc) && in_range(breath_mask, src))
 		return
 

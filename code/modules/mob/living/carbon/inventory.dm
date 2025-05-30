@@ -265,7 +265,7 @@
 /mob/living/carbon/proc/can_breathe_tube()
 	return get_organ_slot(ORGAN_SLOT_BREATHING_TUBE)
 
-/// Returns TRUE if an air tank compatible mask or breathing tube is equipped.
+/// Returns the object that allows us to breathe internals - tube implant, mask or helmet
 /mob/living/carbon/proc/can_breathe_internals()
 	return can_breathe_tube() || can_breathe_mask() || can_breathe_helmet()
 
