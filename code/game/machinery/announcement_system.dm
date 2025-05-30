@@ -275,10 +275,11 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 /datum/aas_config_entry/arrival
 	name = "Arrival Announcement"
 	announcement_lines_map = list(
-		"Message" = "%PERSON has signed up as %RANK")
+		"Message" = "%PERSON, %RANK, has awokened from cryogenic stasis in %AREA.")
 	vars_and_tooltips_map = list(
 		"PERSON" = "will be replaced with their name.",
-		"RANK" = "with their job."
+		"RANK" = "with their job.",
+		"AREA" = "with the area they arrived in.",
 	)
 
 /datum/aas_config_entry/arrival/act_up()

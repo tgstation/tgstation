@@ -234,7 +234,7 @@
 		var/area/player_area = get_area(character)
 		deadchat_broadcast(span_game(" has arrived at the station at [span_name(player_area.name)]."), span_game("[span_name(character.real_name)] ([rank])"), follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if(character.mind && (character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
-		aas_config_announce(/datum/aas_config_entry/arrival, list("PERSON" = character.real_name,"RANK" = rank))
+		aas_config_announce(/datum/aas_config_entry/arrival, list("PERSON" = character.real_name, "RANK" = rank, "AREA" = get_area_name(character, TRUE)))
 
 ///Check if the turf pressure allows specialized equipment to work
 /proc/lavaland_equipment_pressure_check(turf/turf_to_check)

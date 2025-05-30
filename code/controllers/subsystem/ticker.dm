@@ -159,7 +159,8 @@ SUBSYSTEM_DEF(ticker)
 				start_at = world.time + (CONFIG_GET(number/lobby_countdown) * 10)
 			for(var/client/C in GLOB.clients)
 				window_flash(C, ignorepref = TRUE) //let them know lobby has opened up.
-			to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
+			// to_chat(world, span_notice("<b>Welcome to [station_name()]!</b>"))
+			to_chat(world, span_notice("<b>Welcome to the NTSC Flashlight, exploratory vessel!</b>"))
 			for(var/channel_tag in CONFIG_GET(str_list/channel_announce_new_game))
 				send2chat(new /datum/tgs_message_content("New round starting on [SSmapping.current_map.map_name]!"), channel_tag)
 			current_state = GAME_STATE_PREGAME
@@ -285,8 +286,9 @@ SUBSYSTEM_DEF(ticker)
 	log_world("Game start took [(world.timeofday - init_start)/10]s")
 	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore,SetRoundStart))
 
-	to_chat(world, span_notice(span_bold("Welcome to [station_name()], enjoy your stay!")))
-	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
+	// to_chat(world, span_notice(span_bold("Welcome to [station_name()], enjoy your stay!")))
+	to_chat(world, span_green("[icon2html('icons/obj/machines/wallmounts.dmi', world, "intercom")] <b><i>Emergency crew wake-up sequence initiated.</i></b>"))
+	// SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
@@ -814,7 +816,7 @@ SUBSYSTEM_DEF(ticker)
 	announcement.title = "Autopilot Alert: [CURRENT_STATION_YEAR]"
 	announcement.content = "EMERGENCY ALERT: \
 		The ship is on a collision course with an asteroid field. \
-		Initiating emergency crew awakening protocol. \
+		Initiating emergency crew wake-up sequence. \
 		If action is not taken in the next 1.5 hours, the ship will be destroyed."
 
 	GLOB.communications_controller.send_message(announcement, print = FALSE, unique = TRUE)
