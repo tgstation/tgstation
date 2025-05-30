@@ -9,36 +9,44 @@ import path from 'node:path';
 import { SourceMapConsumer } from 'source-map';
 import { parse as parseStackTrace } from 'stacktrace-parser';
 
-import { createLogger } from '../logging.js';
+import { createLogger } from '../logging';
 import { resolveGlob } from '../util';
+
+type SourceMap = {
+  file: string;
+  consumer: SourceMapConsumer;
+};
 
 const logger = createLogger('retrace');
 
-const sourceMaps: any[] = [];
+const sourceMaps: SourceMap[] = [];
 
-export async function loadSourceMaps(bundleDir) {
+export async function loadSourceMaps(bundleDir: string): Promise<void> {
   // Destroy and garbage collect consumers
   while (sourceMaps.length !== 0) {
-    const { consumer } = sourceMaps.shift();
-    consumer.destroy();
+    const map = sourceMaps.shift();
+    if (!map?.consumer) continue;
+    map.consumer.destroy();
   }
+
   // Load new sourcemaps
   const files = await resolveGlob(bundleDir, '*.map');
   for (let file of files) {
     try {
       const loc = path.resolve(bundleDir, file);
       const parsed = await Bun.file(loc).json();
-      const consumer = new SourceMapConsumer(parsed);
+      const consumer = await new SourceMapConsumer(parsed);
 
       sourceMaps.push({ file, consumer });
     } catch (err) {
       logger.error(err);
     }
   }
+
   logger.log(`loaded ${sourceMaps.length} source maps`);
 }
 
-export function retrace(stack) {
+export function retrace(stack: string): string | undefined {
   if (typeof stack !== 'string') {
     logger.log('ERROR: Stack is not a string!', stack);
     return stack;
@@ -59,9 +67,8 @@ export function retrace(stack) {
       // Map the frame
       const { consumer } = sourceMap;
       const mappedFrame = consumer.originalPositionFor({
-        source: path.basename(frame.file),
-        line: frame.lineNumber,
-        column: frame.column,
+        line: frame.lineNumber || 0,
+        column: frame.column || 0,
       });
       return {
         ...frame,
@@ -82,5 +89,6 @@ export function retrace(stack) {
       return `  at ${methodName} (${compactPath}:${lineNumber})`;
     })
     .join('\n');
+
   return header + '\n' + mappedStack;
 }

@@ -7,8 +7,8 @@
 import fs from 'node:fs';
 import { createRequire } from 'node:module';
 
-import { loadSourceMaps, setupLink } from './link/server.js';
-import { createLogger } from './logging.js';
+import { loadSourceMaps, setupLink } from './link/server';
+import { createLogger } from './logging';
 import { reloadByondCache } from './reloader';
 import { resolveGlob } from './util';
 
@@ -54,7 +54,7 @@ class RspackCompiler {
     this.bundleDir = config.output.path;
   }
 
-  async watch() {
+  async watch(): Promise<void> {
     logger.log('setting up');
     // Setup link
     const link = setupLink();

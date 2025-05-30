@@ -9,7 +9,7 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
 
-import { createLogger } from './logging.js';
+import { createLogger } from './logging';
 
 const logger = createLogger('winreg');
 

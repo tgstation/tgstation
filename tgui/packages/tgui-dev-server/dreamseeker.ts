@@ -9,7 +9,7 @@ import { promisify } from 'node:util';
 
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 
-import { createLogger } from './logging.js';
+import { createLogger } from './logging';
 
 type Entry = {
   addr: string;

@@ -13,7 +13,7 @@ const noHot = process.argv.includes('--no-hot');
 const noTmp = process.argv.includes('--no-tmp');
 const reloadOnce = process.argv.includes('--reload');
 
-async function setupServer() {
+async function setupServer(): Promise<void> {
   mkdirSync('./public/.tmp', { recursive: true });
 
   const compiler = await createCompiler({
