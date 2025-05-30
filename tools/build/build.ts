@@ -19,7 +19,9 @@ export const TGS_MODE = process.env.CBT_BUILD_MODE === "TGS";
 
 export const DME_NAME = "tgstation";
 
-const dependencies: Record<string, any> = await Bun.file("./dependencies.sh")
+Juke.chdir("../..", import.meta.url);
+
+const dependencies: Record<string, any> = await Bun.file("dependencies.sh")
   .text()
   .then(formatDeps)
   .catch((err) => {
@@ -442,7 +444,6 @@ export const TgsTarget = new Juke.Target({
   },
 });
 
-Juke.chdir("../..", import.meta.url);
 Juke.setup({ file: import.meta.url }).then((code) => {
   // We're using the currently available quirk in Juke Build, which
   // prevents it from exiting on Windows, to wait on errors.
