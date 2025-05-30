@@ -67,6 +67,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
+/// Gets the context to add for clicking the book inhand. Returns null if none.
 /obj/item/book/proc/get_attack_self_context(mob/living/user)
 	return "Read"
 
@@ -127,6 +128,7 @@
 	display_content(user)
 
 /obj/item/book/proc/is_carving_tool(obj/item/tool)
+	PRIVATE_PROC(TRUE)
 	if(tool.get_sharpness() & SHARP_EDGED)
 		return TRUE
 	if(tool.tool_behaviour == TOOL_WIRECUTTER)
@@ -159,12 +161,14 @@
 		return writing_utensil_act(user, tool)
 	if(is_carving_tool(tool))
 		return carving_act(user, tool)
+	return NONE
 
 /obj/item/book/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	if(is_carving_tool(tool))
 		return carving_act(user, tool)
 	if(IS_WRITING_UTENSIL(tool))
 		return writing_utensil_act(user, tool)
+	return NONE
 
 /// Called when user clicks on the book with a writing utensil. Attempts to vandalize the book.
 /obj/item/book/proc/writing_utensil_act(mob/living/user, obj/item/tool)
@@ -184,6 +188,8 @@
 			return vandalize_contents(user, tool)
 		if("Author")
 			return vandalize_author(user, tool)
+
+	return NONE
 
 /obj/item/book/proc/vandalize_title(mob/living/user, obj/item/tool)
 	var/newtitle = reject_bad_text(tgui_input_text(user, "Write a new title", "Book Title", max_length = 30))

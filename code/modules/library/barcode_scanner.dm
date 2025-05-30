@@ -69,6 +69,8 @@
 			playsound(src, 'sound/items/barcodebeep.ogg', 20, FALSE)
 			return ITEM_INTERACT_SUCCESS
 
+	return NONE
+
 /obj/item/barcodescanner/attack_self(mob/user)
 	. = ..()
 	if(.)
