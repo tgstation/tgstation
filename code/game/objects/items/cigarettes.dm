@@ -658,6 +658,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		/datum/reagent/consumable/mintextract = 2,
 		/datum/reagent/pax = 1
 	)
+
 /obj/item/cigarette/greytide/Initialize(mapload)
 	. = ..()
 	if(prob(40))
