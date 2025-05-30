@@ -397,11 +397,21 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		to_chat(user, span_notice("Your Mime Mask has now morphed into [choice]!"))
 		return TRUE
 
+/**
+ * # Stage Mask
+ *
+ * Mime stage mask
+ *
+ * A subtype of the regular mime mask with style choices
+ *
+ */
+
 /obj/item/clothing/mask/gas/mime/utopia
 	name = "stage mask"
 	desc = "A classic stage mask used by the masters of pantomime."
 	clothing_flags = MASKINTERNALS
-	icon_state = "utopiatragedy"
+	base_icon_state = "utopia"
+	icon_state = "utopia_tragedy"
 	inhand_icon_state = null
 	w_class = WEIGHT_CLASS_SMALL
 	flags_cover = MASKCOVERSEYES
@@ -409,37 +419,38 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	actions_types = list(/datum/action/item_action/adjust_style)
 	species_exception = list(/datum/species/golem)
 	fishing_modifier = 0
+	/// List of icons for choosing our mask style
 	var/list/utopiamask_designs = list()
 
-/obj/item/clothing/mask/gas/mime/utopia/plasmaman
-	starting_filter_type = /obj/item/gas_filter/plasmaman
-
 /obj/item/clothing/mask/gas/mime/utopia/Initialize(mapload)
-	.=..()
+	. = ..()
 	utopiamask_designs = list(
-		"Tragedy" = image(icon = src.icon, icon_state = "utopiatragedy"),
-		"Comedy" = image(icon = src.icon, icon_state = "utopiacomedy"),
-		"Anger" = image(icon = src.icon, icon_state = "utopiaanger"),
-		"Cluelessness" = image(icon = src.icon, icon_state = "utopiaclueless"),
-		"Emotionlessness" = image(icon = src.icon, icon_state = "utopiaemotionless")
-		)
+		"Tragedy" = image(icon = src.icon, icon_state = "utopia_tragedy"),
+		"Comedy" = image(icon = src.icon, icon_state = "utopia_comedy"),
+		"Anger" = image(icon = src.icon, icon_state = "utopia_anger"),
+		"Cluelessness" = image(icon = src.icon, icon_state = "utopia_clueless"),
+		"Emotionlessness" = image(icon = src.icon, icon_state = "utopia_emotionless"),
+	)
+	// society
+	if(prob(50))
+		icon_state = "utopia_comedy"
 
 /obj/item/clothing/mask/gas/mime/utopia/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated)
 		return
 
 	var/list/options = list()
-	options["Tragedy"] = "utopiatragedy"
-	options["Comedy"] = "utopiacomedy"
-	options["Anger"] = "utopiaanger"
-	options["Cluelessness"] = "utopiaclueless"
-	options["Emotionlessness"] = "utopiaemotionless"
+	options["Tragedy"] = "[base_icon_state]_tragedy"
+	options["Comedy"] = "[base_icon_state]_comedy"
+	options["Anger"] = "[base_icon_state]_anger"
+	options["Cluelessness"] = "[base_icon_state]_clueless"
+	options["Emotionlessness"] = "[base_icon_state]_emotionless"
 
 	var/choice = show_radial_menu(user, src, utopiamask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
 
-	if(src && choice && !user.incapacitated && in_range(user,src))
+	if(user.can_perform_action(src, ALLOW_RESTING))
 		icon_state = options[choice]
 		user.update_worn_mask()
 		update_item_action_buttons()
