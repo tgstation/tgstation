@@ -25,23 +25,6 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space)
-"ao" = (
-/obj/structure/rack,
-/obj/machinery/camera/motion{
-	c_tag = "Armory - Internal";
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/machinery/light/directional/west,
-/obj/item/reagent_containers/cup/bucket,
-/turf/open/indestructible/dark,
-/area/deathmatch)
 "aw" = (
 /obj/structure/extinguisher_cabinet/directional/east,
 /turf/closed/indestructible/reinforced,
@@ -135,6 +118,12 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/indestructible,
+/area/deathmatch)
+"by" = (
+/obj/machinery/photocopier/prebuilt{
+	pixel_y = 3
+	},
+/turf/open/indestructible/dark,
 /area/deathmatch)
 "bA" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -267,18 +256,6 @@
 	},
 /turf/open/indestructible/dark,
 /area/deathmatch)
-"es" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/machinery/photocopier/prebuilt{
-	pixel_y = 3
-	},
-/turf/open/indestructible/dark,
-/area/deathmatch)
 "ew" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
@@ -403,6 +380,10 @@
 	},
 /turf/open/indestructible/dark,
 /area/deathmatch)
+"gG" = (
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/turf/open/indestructible,
+/area/deathmatch)
 "gI" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/grimy,
@@ -438,10 +419,6 @@
 /obj/effect/turf_decal/tile/red,
 /turf/open/indestructible/dark,
 /area/deathmatch)
-"hy" = (
-/obj/effect/decal/cleanable/blood/oil/slippery,
-/turf/open/floor/iron/grimy,
-/area/deathmatch)
 "hG" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/cigarettes/cigpack_syndicate,
@@ -459,6 +436,16 @@
 	dir = 5
 	},
 /turf/open/floor/iron/white,
+/area/deathmatch)
+"hM" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/turf/open/indestructible,
 /area/deathmatch)
 "hS" = (
 /obj/structure/table/wood,
@@ -890,6 +877,19 @@
 	},
 /turf/open/indestructible,
 /area/deathmatch)
+"oh" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/obj/item/reagent_containers/cup/bucket,
+/turf/open/indestructible/dark,
+/area/deathmatch)
 "os" = (
 /obj/structure/sign/warning/pods{
 	pixel_x = 32
@@ -1025,11 +1025,6 @@
 	},
 /turf/open/floor/plating,
 /area/deathmatch)
-"pt" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/blood/oil/slippery,
-/turf/open/indestructible,
-/area/deathmatch)
 "pC" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -1154,12 +1149,6 @@
 	},
 /obj/structure/disposalpipe/segment,
 /turf/open/indestructible,
-/area/deathmatch)
-"rS" = (
-/obj/machinery/photocopier/prebuilt{
-	pixel_y = 3
-	},
-/turf/open/indestructible/dark,
 /area/deathmatch)
 "sb" = (
 /obj/structure/closet{
@@ -1887,11 +1876,6 @@
 /obj/item/poster/random_official,
 /turf/open/indestructible/dark,
 /area/deathmatch)
-"BW" = (
-/obj/effect/turf_decal/trimline/red/filled/corner,
-/obj/effect/decal/cleanable/blood/oil/slippery,
-/turf/open/indestructible/dark,
-/area/deathmatch)
 "Cc" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/left/directional/north{
@@ -2125,6 +2109,10 @@
 	},
 /obj/item/reagent_containers/cup/bucket,
 /turf/open/indestructible/dark,
+/area/deathmatch)
+"ER" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
+/turf/open/floor/plating,
 /area/deathmatch)
 "EX" = (
 /obj/machinery/light/directional/east,
@@ -2467,10 +2455,6 @@
 /obj/item/soap/nanotrasen,
 /turf/open/indestructible/dark,
 /area/deathmatch)
-"JR" = (
-/obj/effect/decal/cleanable/blood/oil/slippery,
-/turf/open/indestructible,
-/area/deathmatch)
 "JU" = (
 /obj/structure/table,
 /obj/item/folder/red,
@@ -2553,6 +2537,10 @@
 	},
 /turf/open/indestructible,
 /area/deathmatch)
+"Ks" = (
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/turf/open/floor/iron/grimy,
+/area/deathmatch)
 "Ku" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
@@ -2594,16 +2582,6 @@
 	},
 /turf/open/indestructible,
 /area/deathmatch)
-"Lq" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 8
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/blood/oil/slippery,
-/turf/open/indestructible,
-/area/deathmatch)
 "Ls" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
@@ -2623,6 +2601,10 @@
 "LL" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
+/area/deathmatch)
+"LU" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/indestructible/dark,
 /area/deathmatch)
 "LX" = (
 /obj/item/paper_bin{
@@ -2992,10 +2974,6 @@
 /obj/structure/cable,
 /turf/closed/indestructible/reinforced,
 /area/deathmatch)
-"Ru" = (
-/obj/machinery/photocopier/prebuilt,
-/turf/open/indestructible/dark,
-/area/deathmatch)
 "Rv" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -3052,6 +3030,18 @@
 "St" = (
 /obj/effect/turf_decal/delivery,
 /turf/open/indestructible,
+/area/deathmatch)
+"Sz" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/photocopier/prebuilt{
+	pixel_y = 3
+	},
+/turf/open/indestructible/dark,
 /area/deathmatch)
 "SA" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
@@ -3202,6 +3192,11 @@
 /obj/effect/spawner/random/contraband/armory,
 /turf/open/indestructible/dark,
 /area/deathmatch)
+"UO" = (
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/turf/open/indestructible/dark,
+/area/deathmatch)
 "UQ" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -3283,10 +3278,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/deathmatch)
-"VV" = (
-/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
-/turf/open/floor/plating,
-/area/deathmatch)
 "Wd" = (
 /obj/machinery/door/airlock/command{
 	name = "Head of Security's Office"
@@ -3331,6 +3322,11 @@
 	name = "Security Airlock"
 	},
 /turf/open/indestructible/dark,
+/area/deathmatch)
+"WH" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/turf/open/indestructible,
 /area/deathmatch)
 "WI" = (
 /obj/structure/cable,
@@ -3716,7 +3712,7 @@ Zq
 IJ
 fO
 ZF
-VV
+ER
 XI
 WI
 WX
@@ -3763,7 +3759,7 @@ GR
 Zr
 Qz
 kj
-JR
+gG
 eC
 IJ
 "}
@@ -3866,7 +3862,7 @@ Et
 FQ
 IS
 An
-es
+Sz
 IU
 Sg
 WI
@@ -4001,7 +3997,7 @@ Ui
 OF
 UD
 CP
-ao
+oh
 pe
 SR
 Yh
@@ -4028,7 +4024,7 @@ Yh
 Ux
 Vg
 TY
-BW
+UO
 TY
 Vg
 Gm
@@ -4148,7 +4144,7 @@ YW
 yy
 SA
 RY
-Lq
+hM
 Ls
 zu
 sr
@@ -4278,7 +4274,7 @@ Ef
 ct
 lV
 sG
-pt
+WH
 Ni
 ob
 ob
@@ -4363,7 +4359,7 @@ kU
 XK
 pe
 Ma
-rS
+by
 Qe
 CS
 aB
@@ -4452,7 +4448,7 @@ Ux
 Ux
 MN
 GO
-pt
+WH
 Km
 qd
 XI
@@ -4620,7 +4616,7 @@ Wg
 mJ
 hi
 XK
-hy
+Ks
 ZC
 LL
 Ux
@@ -4696,7 +4692,7 @@ Yh
 fL
 gC
 gE
-Ru
+LU
 Yh
 Yh
 Zq

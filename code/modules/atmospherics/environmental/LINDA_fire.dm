@@ -103,6 +103,8 @@
 		volume = starting_volume
 	if(!isnull(starting_temperature))
 		temperature = starting_temperature
+		if(temperature <= FREON_MAXIMUM_BURN_TEMPERATURE)
+			cold_fire = TRUE
 
 	var/turf/open/our_turf = loc
 	//on creation we check adjacent turfs for hot spot to start grouping, if surrounding do not have hot spots we create our own
@@ -142,6 +144,7 @@
 
 	// Remove just_spawned protection if no longer processing the parent cell
 	just_spawned = (our_turf.current_cycle < SSair.times_fired)
+	update_color()
 
 /obj/effect/hotspot/set_smoothed_icon_state(new_junction)
 

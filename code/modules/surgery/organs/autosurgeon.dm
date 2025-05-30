@@ -169,7 +169,7 @@
 /obj/item/autosurgeon/syndicate/laser_arm
 	desc = "A single use autosurgeon that contains a combat arms-up laser augment. A screwdriver can be used to remove it, but implants can't be placed back in."
 	uses = 1
-	starting_organ = /obj/item/organ/cyberimp/arm/gun/laser
+	starting_organ = /obj/item/organ/cyberimp/arm/toolkit/gun/laser
 
 /obj/item/autosurgeon/syndicate/thermal_eyes
 	starting_organ = /obj/item/organ/eyes/robotic/thermals
@@ -205,7 +205,7 @@
 	organ_whitelist += /obj/item/organ/tongue
 
 /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset
-	starting_organ = /obj/item/organ/cyberimp/arm/surgery/emagged
+	starting_organ = /obj/item/organ/cyberimp/arm/toolkit/surgery/emagged
 
 /obj/item/autosurgeon/syndicate/emaggedsurgerytoolset/single_use
 	uses = 1

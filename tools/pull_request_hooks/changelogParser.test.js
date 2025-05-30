@@ -27,8 +27,8 @@ assert.equal(multiLineChangelog.author, undefined);
 assert.equal(multiLineChangelog.changes.length, 1);
 assert.equal(multiLineChangelog.changes[0].type.changelogKey, "rscadd");
 assert.equal(
-	multiLineChangelog.changes[0].description,
-	"Adds new stuff\nto the game"
+  multiLineChangelog.changes[0].description,
+  "Adds new stuff\nto the game",
 );
 
 // Placeholders

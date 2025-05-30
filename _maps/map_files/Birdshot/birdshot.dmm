@@ -1728,6 +1728,19 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
+"aHG" = (
+/obj/structure/altar/of_gods,
+/obj/item/book/bible,
+/obj/effect/landmark/start/hangover,
+/obj/item/flashlight/lantern/on,
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 8
+	},
+/turf/open/floor/stone,
+/area/station/service/chapel)
 "aHJ" = (
 /obj/structure/window/spawner/directional/north,
 /obj/machinery/hydroponics/soil,
@@ -5569,6 +5582,21 @@
 	dir = 8
 	},
 /area/station/service/janitor)
+"ceM" = (
+/obj/effect/turf_decal/trimline/dark/line{
+	dir = 4
+	},
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/rag{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/turf/open/floor/iron/dark/small,
+/area/station/maintenance/department/science/xenobiology)
 "ceN" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
@@ -18986,38 +19014,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/recreation)
-"gFn" = (
-/obj/structure/table/wood,
-/obj/item/rag{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 10;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 5;
-	pixel_y = 16
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/cup/glass/shaker{
-	pixel_x = -7;
-	pixel_y = 15
-	},
-/obj/effect/turf_decal/siding/wood/end{
-	dir = 8
-	},
-/obj/machinery/barsign{
-	chosen_sign = "thecavern";
-	icon_state = "thecavern";
-	pixel_y = 32
-	},
-/turf/open/floor/iron/dark/diagonal,
-/area/station/service/bar)
 "gFs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -19624,11 +19620,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
 /turf/open/floor/engine/co2,
 /area/station/engineering/atmos)
-"gNi" = (
-/obj/effect/decal/cleanable/blood/oil/slippery,
-/obj/item/stack/sheet/cardboard,
-/turf/open/floor/iron,
-/area/station/maintenance/department/engine/atmos)
 "gNl" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/effect/turf_decal/delivery,
@@ -19785,17 +19776,6 @@
 /obj/effect/turf_decal/delivery/white,
 /turf/open/floor/iron/dark/side,
 /area/station/cargo/sorting)
-"gPS" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/dirt,
-/obj/structure/broken_flooring/singular/directional/south,
-/obj/effect/decal/cleanable/blood/gibs/robot_debris,
-/obj/item/crowbar,
-/obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/plating,
-/area/station/hallway/secondary/dock)
 "gPY" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/turf_decal/stripes/white/line{
@@ -26301,12 +26281,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/commons/dorms)
-"iQE" = (
-/obj/effect/decal/cleanable/blood/oil,
-/obj/machinery/byteforge,
-/obj/effect/turf_decal/box,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/cargo/bitrunning/den)
 "iQM" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/purple/filled/line{
@@ -26380,6 +26354,17 @@
 /obj/structure/flora/bush/flowers_yw,
 /turf/open/floor/grass,
 /area/station/service/chapel)
+"iRM" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/broken_flooring/singular/directional/south,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/obj/item/crowbar,
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/station/hallway/secondary/dock)
 "iRQ" = (
 /obj/effect/turf_decal/weather/snow,
 /obj/structure/closet/secure_closet/freezer/fridge,
@@ -29653,6 +29638,38 @@
 	},
 /turf/open/floor/iron/small,
 /area/station/hallway/primary/central/fore)
+"jSu" = (
+/obj/structure/table/wood,
+/obj/item/rag{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 10;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 5;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/effect/turf_decal/siding/wood/end{
+	dir = 8
+	},
+/obj/machinery/barsign{
+	chosen_sign = "thecavern";
+	icon_state = "thecavern";
+	pixel_y = 32
+	},
+/turf/open/floor/iron/dark/diagonal,
+/area/station/service/bar)
 "jSw" = (
 /obj/structure/railing,
 /turf/open/floor/catwalk_floor,
@@ -33876,19 +33893,6 @@
 	},
 /turf/open/floor/circuit,
 /area/station/tcommsat/server)
-"lkw" = (
-/obj/structure/table/wood,
-/obj/machinery/light/small/directional/north,
-/obj/machinery/reagentgrinder{
-	pixel_x = -13;
-	pixel_y = 14
-	},
-/obj/item/rag{
-	pixel_x = 7;
-	pixel_y = 7
-	},
-/turf/open/floor/stone,
-/area/station/service/abandoned_gambling_den)
 "lkJ" = (
 /obj/structure/flora/rock/pile/jungle/style_4,
 /turf/open/floor/grass,
@@ -50766,6 +50770,11 @@
 /obj/machinery/status_display/ai/directional/east,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/ai_monitored/command/nuke_storage)
+"qYm" = (
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/obj/item/stack/sheet/cardboard,
+/turf/open/floor/iron,
+/area/station/maintenance/department/engine/atmos)
 "qYn" = (
 /obj/machinery/door/airlock/external{
 	name = "Tram Maintenance"
@@ -51070,6 +51079,12 @@
 /obj/effect/mapping_helpers/airlock/access/any/security/general,
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
+"rbY" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/byteforge,
+/obj/effect/turf_decal/box,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/cargo/bitrunning/den)
 "rce" = (
 /obj/machinery/camera{
 	c_tag = "Xenobiology - Cell 3";
@@ -53580,21 +53595,6 @@
 /obj/item/assembly/mousetrap/armed,
 /turf/open/floor/stone,
 /area/station/service/abandoned_gambling_den)
-"rUs" = (
-/obj/effect/turf_decal/trimline/dark/line{
-	dir = 4
-	},
-/obj/structure/table/wood,
-/obj/machinery/reagentgrinder{
-	pixel_x = 3;
-	pixel_y = 6
-	},
-/obj/item/rag{
-	pixel_y = 4;
-	pixel_x = -6
-	},
-/turf/open/floor/iron/dark/small,
-/area/station/maintenance/department/science/xenobiology)
 "rUI" = (
 /obj/item/radio/intercom/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -58174,19 +58174,6 @@
 "ttb" = (
 /obj/structure/flora/grass/jungle/b/style_random,
 /turf/open/floor/grass,
-/area/station/service/chapel)
-"tts" = (
-/obj/structure/altar_of_gods,
-/obj/item/book/bible,
-/obj/effect/landmark/start/hangover,
-/obj/item/flashlight/lantern/on,
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/wood/corner{
-	dir = 8
-	},
-/turf/open/floor/stone,
 /area/station/service/chapel)
 "ttD" = (
 /obj/effect/turf_decal/stripes/red/line{
@@ -69898,6 +69885,19 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"wWI" = (
+/obj/structure/table/wood,
+/obj/machinery/light/small/directional/north,
+/obj/machinery/reagentgrinder{
+	pixel_x = -13;
+	pixel_y = 14
+	},
+/obj/item/rag{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/turf/open/floor/stone,
+/area/station/service/abandoned_gambling_den)
 "wWN" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/poddoor/shutters{
@@ -87033,7 +87033,7 @@ hfc
 nFo
 hNv
 iJp
-iQE
+rbY
 nyf
 ejq
 oEL
@@ -87572,7 +87572,7 @@ bBh
 qzP
 krF
 sOi
-tts
+aHG
 dRn
 keL
 iSD
@@ -88808,7 +88808,7 @@ knv
 rcQ
 nQs
 yfN
-gNi
+qYm
 uSa
 hpe
 rHE
@@ -101444,7 +101444,7 @@ jVM
 jVM
 jVM
 jVM
-gFn
+jSu
 fzw
 bKO
 qhR
@@ -108925,7 +108925,7 @@ ldq
 ldq
 dUY
 pIM
-rUs
+ceM
 oAS
 ufd
 hMa
@@ -115823,7 +115823,7 @@ wOp
 wny
 bua
 wOp
-lkw
+wWI
 dTd
 ghX
 kgw
@@ -124885,7 +124885,7 @@ bFW
 hyE
 blb
 grm
-gPS
+iRM
 ppm
 grm
 dDB
