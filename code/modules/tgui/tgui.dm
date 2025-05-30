@@ -361,14 +361,14 @@
 			LAZYINITLIST(src_object.tgui_shared_states)
 			src_object.tgui_shared_states[href_list["key"]] = href_list["value"]
 			SStgui.update_uis(src_object)
-		if("renderByondUi")
-			var/byond_ui_id = payload["byondUiId"]
+		if(TGUI_MANAGED_BYONDUI_TYPE_RENDER)
+			var/byond_ui_id = payload[TGUI_MANAGED_BYONDUI_PAYLOAD_ID]
 			if(!byond_ui_id || LAZYLEN(open_byondui_elements) > TGUI_MANAGED_BYONDUI_LIMIT)
 				return
 
 			LAZYOR(open_byondui_elements, byond_ui_id)
-		if("unmountByondUi")
-			var/byond_ui_id = payload["byondUiId"]
+		if(TGUI_MANAGED_BYONDUI_TYPE_UNMOUNT)
+			var/byond_ui_id = payload[TGUI_MANAGED_BYONDUI_PAYLOAD_ID]
 			if(!byond_ui_id)
 				return
 
