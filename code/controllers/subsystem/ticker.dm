@@ -784,6 +784,11 @@ SUBSYSTEM_DEF(ticker)
 	GLOB.communications_controller.block_command_report += 1
 	generate_background()
 
+	var/datum/deathrattle_group/deathrattle_group = new("ship group")
+	deathrattle_group.verbose = FALSE
+	deathrattle_group.station_only = TRUE
+	deathrattle_group.RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, TYPE_PROC_REF(/datum/deathrattle_group, on_job_after_spawn))
+
 /proc/generate_background()
 	var/datum/comm_message/mission = new()
 	mission.title = "Mission Report"

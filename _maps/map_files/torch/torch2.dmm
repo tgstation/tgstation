@@ -3180,6 +3180,9 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "Solar Array Access"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "bgN" = (
@@ -3656,6 +3659,7 @@
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/lesser_reinforced,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/hop)
 "bpX" = (
@@ -3781,6 +3785,7 @@
 /obj/machinery/door/airlock/external{
 	name = "EVA Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/floor6/aft)
 "brB" = (
@@ -4523,6 +4528,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/any/engineering/external,
 /obj/effect/mapping_helpers/airlock/reinforced,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/floor4/starboard/fore)
 "bCW" = (
@@ -5438,9 +5444,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/commons/lower_cryo)
-"bSp" = (
-/turf/closed/wall/r_wall,
-/area/station/hallway/floor4/aft)
 "bSt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 8
@@ -6231,6 +6234,9 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "EVA Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/floor4/starboard/fore)
 "che" = (
@@ -6264,6 +6270,9 @@
 /obj/effect/mapping_helpers/airlock/access/any/engineering/external,
 /obj/machinery/door/airlock/external/glass{
 	name = "Solar Array Access"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
@@ -7139,6 +7148,9 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "Solar Array Access"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "cxm" = (
@@ -7360,6 +7372,8 @@
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/access/any/command/general,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/radshelter/command)
 "cAK" = (
@@ -10475,6 +10489,7 @@
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/lesser_reinforced,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/captain)
 "dBK" = (
@@ -14639,6 +14654,8 @@
 	name = "Lockdown Shutters";
 	id = "bridge_top_deck_big_lockdown_s"
 	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/turf_decal/tile/blue/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/maintenance/radshelter/command)
 "eQG" = (
@@ -20975,6 +20992,7 @@
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/mining_breakroom/storage)
 "gWT" = (
@@ -21747,6 +21765,9 @@
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/effect/mapping_helpers/airlock/access/any/supply/mining,
 /obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/cargo/mining_breakroom/eva)
 "hjG" = (
@@ -25360,6 +25381,7 @@
 /obj/structure/closet/crate/nakamura,
 /obj/item/clothing/gloves/color/fyellow,
 /obj/item/kitchen/fork,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/floor4/starboard/aft)
 "irC" = (
@@ -25509,7 +25531,7 @@
 /obj/machinery/door/airlock/grunge{
 	bolt_sec_level = 1;
 	hackProof = 1;
-	desc = "Behind this door lies a plethora of supplied intended for use only in the most dire of circumstances. Thus, it is locked until the Captain calls for its use."
+	desc = "Behind this door lies a plethora of supplies intended for use only in the most dire of circumstances. Thus, it is locked until the Captain calls for its use."
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
@@ -32344,6 +32366,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/lesser_reinforced,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/smooth,
 /area/station/command/heads_quarters/captain)
 "kxV" = (
@@ -34349,6 +34372,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/commons/storage/tools)
 "leh" = (
@@ -38293,6 +38317,9 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Aft Docking Port"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/floor6/aft)
@@ -45995,6 +46022,9 @@
 /obj/machinery/door/airlock/external/glass{
 	name = "Solar Array Access"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "oIo" = (
@@ -47414,6 +47444,7 @@
 	id = "bridge_top_deck_big_lockdown_s"
 	},
 /obj/effect/mapping_helpers/airlock/lesser_reinforced,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/smooth,
 /area/station/command/meeting_room/council)
 "pgx" = (
@@ -49373,6 +49404,7 @@
 "pNI" = (
 /obj/machinery/power/floodlight,
 /obj/structure/sign/warning/secure_area/directional/north,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/floor4/starboard/aft)
 "pNQ" = (
@@ -52184,7 +52216,8 @@
 /obj/effect/mapping_helpers/airlock/access/any/supply/general,
 /obj/machinery/door/firedoor,
 /obj/effect/mapping_helpers/airlock/autoname,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/delivery,
+/turf/open/floor/iron/large,
 /area/station/cargo/warehouse)
 "qRv" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted,
@@ -52839,7 +52872,8 @@
 	name = "Head of Personnel's Desk";
 	req_access = list("hop");
 	pixel_x = 2;
-	layer = 3.29
+	layer = 3.29;
+	closingLayer = 3.29
 	},
 /obj/machinery/door/poddoor{
 	id = "hop_coward_protection_s";
@@ -52897,6 +52931,9 @@
 	},
 /obj/machinery/door/airlock/external/glass{
 	name = "Aft Docking Port"
+	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/floor6/aft)
@@ -60649,6 +60686,13 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
+"tyV" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/spawner/random/structure/grille,
+/turf/open/floor/engine/airless,
+/area/station/engineering/supermatter/room)
 "tyW" = (
 /obj/effect/turf_decal/tile/dark_red/half/contrasted{
 	dir = 8
@@ -65774,10 +65818,13 @@
 /obj/structure/railing{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/valve/on{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/binary/passive_gate{
+	dir = 4;
+	pipe_color = "#FFFF00";
+	on = 1;
+	target_pressure = 600
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor1/starboard/fore)
 "vjd" = (
@@ -65998,6 +66045,10 @@
 /obj/effect/turf_decal/tile/brown/half/contrasted,
 /turf/open/floor/iron,
 /area/station/cargo/warehouse)
+"vmw" = (
+/obj/structure/floodlight_frame,
+/turf/open/floor/iron/dark/textured,
+/area/station/maintenance/floor4/starboard)
 "vmG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -68671,7 +68722,7 @@
 /area/station/maintenance/floor1/port/fore)
 "wjt" = (
 /obj/effect/turf_decal/siding/dark,
-/obj/structure/grille,
+/obj/effect/spawner/random/structure/grille,
 /turf/open/floor/engine/airless,
 /area/station/engineering/supermatter/room)
 "wjv" = (
@@ -73519,6 +73570,9 @@
 /obj/machinery/door/airlock/external{
 	name = "EVA Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/hallway/floor6/aft)
 "xPw" = (
@@ -74337,6 +74391,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/effect/mapping_helpers/airlock/lesser_reinforced,
+/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/smooth,
 /area/station/command/bridge_office)
 "yek" = (
@@ -302416,7 +302471,7 @@ xiK
 dGV
 eet
 vZr
-pyw
+vmw
 uXd
 gSQ
 gSQ
@@ -303714,7 +303769,7 @@ gSQ
 gSQ
 gSQ
 tiu
-bSp
+pUO
 cfG
 cfG
 cfG
@@ -315780,7 +315835,7 @@ gCS
 gCS
 xbk
 xbk
-wDx
+tyV
 mhJ
 nmz
 aFB
@@ -316318,7 +316373,7 @@ auS
 xuT
 nmz
 mhJ
-wVZ
+wjt
 xbk
 xbk
 gCS

@@ -75,11 +75,21 @@
 		// Deliberately the same message framing as ghost deathrattle
 		if(verbose)
 			to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died at <b>[area]</b>.")]\"")
-		else if(is_station_level(death_loc.z))
-			to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died on deck <b>[death_loc.z - 1]</b>.")]\"")
+		else if(death_loc && is_station_level(death_loc.z) && istype(get_area(death_loc), /area/station))
+			to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died on <b>deck [death_loc.z - 1]</b>.")]\"")
 		else
-			to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died.")]\"")
+			to_chat(implant.imp_in, "<i>You hear a strange, robotic voice in your head...</i> \"[span_robot("<b>[name]</b> has died in an <b>unknown location</b>.")]\"")
 		implant.imp_in.playsound_local(hear_loc, sound, vol = 75, vary = FALSE, pressure_affected = FALSE, use_reverb = FALSE)
+
+/datum/deathrattle_group/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+
+	if(!(job.job_flags & JOB_CREW_MEMBER))
+		return
+
+	var/obj/item/implant/deathrattle/implant_to_give = new()
+	register(implant_to_give)
+	implant_to_give.implant(spawned, spawned, TRUE, TRUE)
 
 /obj/item/implant/deathrattle
 	name = "deathrattle implant"

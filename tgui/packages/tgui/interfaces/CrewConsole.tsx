@@ -186,7 +186,7 @@ const CrewTable = () => {
   return (
     <Section
       title={
-        <Flex align="center" height="12px">
+        <Flex align="center" height="14px">
           <Flex.Item width="15%">
             <Button width="100%" onClick={cycleSortBy}>
               {SORT_NAMES[sortBy]}
@@ -202,15 +202,16 @@ const CrewTable = () => {
           </Flex.Item>
           <Flex.Item>
             <Input
-              placeholder="Search for name..."
+              height="22px"
+              placeholder="Search name..."
               onChange={setSearchQuery}
               expensive
               value={searchQuery}
             />
           </Flex.Item>
-          {!data.green_alert && (
+          {!!data.green_alert && (
             <Flex.Item grow>
-              <NoticeBox color="green" align="center" height="24px" mt={1}>
+              <NoticeBox color="green" align="center" height="22px" mt={1}>
                 Position tracking disabled on green alert.
               </NoticeBox>
             </Flex.Item>
@@ -306,12 +307,12 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
         )}
       </Table.Cell>
       <Table.Cell align="center">
-        {area !== '~' && area !== undefined && data.green_alert ? (
+        {area !== '~' && area !== undefined && !data.green_alert ? (
           area
         ) : (
           <Icon
-            name={data.green_alert ? 'question' : 'times'}
-            color={data.green_alert ? '#ffffff' : '#801308'}
+            name={!data.green_alert ? 'question' : 'times'}
+            color={!data.green_alert ? '#ffffff' : '#801308'}
             size={1}
           />
         )}
