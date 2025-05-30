@@ -1,0 +1,1 @@
+/obj/structure/altar_of_gods : /obj/structure/altar/of_gods{@OLD}

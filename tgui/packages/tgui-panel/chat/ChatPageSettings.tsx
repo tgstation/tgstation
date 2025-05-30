@@ -50,9 +50,8 @@ export function ChatPageSettings(props) {
         <Stack.Item grow ml={0.5}>
           <Input
             fluid
-            expensive
             value={page.name}
-            onChange={(value) =>
+            onBlur={(value) =>
               dispatch(
                 updateChatPage({
                   pageId: page.id,

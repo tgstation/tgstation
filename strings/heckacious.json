@@ -24,7 +24,7 @@
 		"angle": "angel",
 		"drink": "pour",
 		"the": "thef",
-		"backward": [ "back ward", "awayways" ],
+		"backward": ["back ward", "awayways"],
 		"god damn": "GOD DAMN",
 		"goddamn": "GOD DAMN",
 		"trick": "dunk",
@@ -46,7 +46,7 @@
 		"god": "gog",
 		"bible": "bibble",
 		"jesus": "jescus",
-		"christ": [ "chris", "dick" ],
+		"christ": ["chris", "dick"],
 		"sigh": "sign",
 		"bathroom": "banthroom",
 		"remember": "remender",
@@ -88,11 +88,11 @@
 		"this": "thits",
 		"then": "than",
 		"quick": "soon",
-		"bro": [ "brah", "bro" ],
-		"dude": [ "duge", "bro", "brah" ],
-		"'": [ "'", "" ],
-		"i'm": [ "im", "i am" ],
-		"shit": [ "balls warmed oveur", "shit" ],
-		"he's": [ "hes", "he is", "he'ss" ]
+		"bro": ["brah", "bro"],
+		"dude": ["duge", "bro", "brah"],
+		"'": ["'", ""],
+		"i'm": ["im", "i am"],
+		"shit": ["balls warmed oveur", "shit"],
+		"he's": ["hes", "he is", "he'ss"]
 	}
 }

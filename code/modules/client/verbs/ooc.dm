@@ -418,7 +418,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 
 /// Attempt to automatically fit the viewport, assuming the user wants it
 /client/proc/attempt_auto_fit_viewport()
-	if (!prefs.read_preference(/datum/preference/toggle/auto_fit_viewport))
+	if (!prefs?.read_preference(/datum/preference/toggle/auto_fit_viewport))
 		return
 	if(fully_created)
 		INVOKE_ASYNC(src, VERB_REF(fit_viewport))

@@ -17,6 +17,7 @@
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
 	light_color = LIGHT_COLOR_PINK
+	add_usb_port = FALSE
 	///Area that the eyeobj will be constrained to. If null, eyeobj will be able to build and move anywhere.
 	var/area/allowed_area
 	///Assoc. list ("structure_name" : count) that keeps track of the number of special structures that can't be built with an RCD, for example, tiny fans or turrets.

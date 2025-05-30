@@ -118,8 +118,7 @@ export function AirLockMainSection(props) {
                 fluid
                 maxLength={30}
                 value={passedName}
-                expensive
-                onChange={(value) =>
+                onBlur={(value) =>
                   act('passedName', {
                     passedName: value,
                   })
@@ -131,8 +130,7 @@ export function AirLockMainSection(props) {
                 fluid
                 maxLength={30}
                 value={passedCycleId}
-                expensive
-                onChange={(value) =>
+                onBlur={(value) =>
                   act('passedCycleId', {
                     passedCycleId: value,
                   })

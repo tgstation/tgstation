@@ -57,6 +57,27 @@
 	/// Lazy assoc list of refs to mobs to refs to photos they have studied for wires
 	var/list/studied_photos
 
+	/// Assoc list of possible wire colors -> their greyscale variants
+	var/static/list/default_possible_colors = list(
+		"blue" = "dim grey",
+		"brown" = "dim grey",
+		"crimson" = "grey",
+		"cyan" = "light grey",
+		"gold" = "grey",
+		"green" = "grey",
+		"grey" = "grey",
+		"lime" = "light grey",
+		"magenta" = "grey",
+		"orange" = "grey",
+		"pink" = "grey",
+		"purple" = "grey",
+		"red" = "grey",
+		"silver" = "light grey",
+		"violet" = "grey",
+		"white" = "white",
+		"yellow" = "light grey",
+	)
+
 /datum/wires/New(atom/holder)
 	..()
 	if(!istype(holder, holder_type))
@@ -103,26 +124,6 @@
 	qdel(src)
 
 /datum/wires/proc/randomize()
-	var/static/list/default_possible_colors = list(
-		"blue",
-		"brown",
-		"crimson",
-		"cyan",
-		"gold",
-		"green",
-		"grey",
-		"lime",
-		"magenta",
-		"orange",
-		"pink",
-		"purple",
-		"red",
-		"silver",
-		"violet",
-		"white",
-		"yellow",
-	)
-
 	if(length(wires) > length(default_possible_colors))
 		stack_trace("Wire type [type] has more wires than possible colors, consider adding more colors or removing wires.")
 
@@ -355,10 +356,12 @@
 	var/list/data = list()
 	var/list/payload = list()
 	var/reveal_wires = can_reveal_wires(user)
+	var/colorblind = HAS_TRAIT(user, TRAIT_COLORBLIND)
 
 	for(var/color in colors)
 		payload.Add(list(list(
 			"color" = color,
+			"shownColor" = colorblind ? default_possible_colors[color] : color,
 			"wire" = (((reveal_wires || always_reveal_wire(color)) && !is_dud_color(color)) ? get_wire(color) : null),
 			"cut" = is_color_cut(color),
 			"attached" = is_attached(color)

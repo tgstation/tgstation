@@ -3,7 +3,7 @@
 // All signals send the source datum of the signal as the first argument
 
 ///Subsystem signals
-///From base of datum/controller/subsystem/Initialize
+///From base of /datum/controller/master/init_subsystem()
 #define COMSIG_SUBSYSTEM_POST_INITIALIZE "subsystem_post_initialize"
 
 ///Called when the ticker enters the pre-game phase

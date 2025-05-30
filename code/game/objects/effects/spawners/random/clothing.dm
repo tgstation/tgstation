@@ -216,7 +216,7 @@
 		/obj/item/clothing/head/costume/deckers,
 		/obj/item/clothing/head/costume/yuri,
 		/obj/item/clothing/head/costume/allies,
-		/obj/item/clothing/head/frenchberet,
+		/obj/item/clothing/head/beret/frenchberet,
 		/obj/item/clothing/head/costume/crown,
 		/obj/item/clothing/head/fedora,
 		/obj/item/clothing/head/beanie/red,

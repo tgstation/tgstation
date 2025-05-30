@@ -74,6 +74,7 @@ If you do not want any variable edits to carry over, you can simply skip adding 
 ```txt
 /obj/structure/door/airlock/science/closed/rd : /obj/structure/door/airlock/science/rd/closed
 ```
+
 On this example map key:
 
 ```dm
@@ -85,8 +86,8 @@ On this example map key:
 /turf/open/floor/iron,
 /area/science/rd),
 ```
-You will then result the following:
 
+You will then result the following:
 
 ```dm
 "a" = (
@@ -134,11 +135,12 @@ Presto, like it never existed. Note how both the "a" and "b" files were able to 
 
 ### Multiple Path Output
 
-UpdatePaths has the powerful ability to output multiple paths from a single input path. Let's say that you have a snowflake turf (`/turf/open/floor/iron/i_like_spawning_mobs`) with some behavior that you atomize out into some spawner `/obj/mob_spawner` that can work on every single turf. So, let's script that out. 
+UpdatePaths has the powerful ability to output multiple paths from a single input path. Let's say that you have a snowflake turf (`/turf/open/floor/iron/i_like_spawning_mobs`) with some behavior that you atomize out into some spawner `/obj/mob_spawner` that can work on every single turf. So, let's script that out.
 
 ```txt
 /turf/open/floor/iron/i_like_spawning_mobs : /obj/mob_spawner, /turf/open/floor/iron
 ```
+
 So, now when you have the following example map keys:
 
 ```dm
@@ -155,6 +157,7 @@ Running the script will mutate this into:
 /turf/open/floor/iron,
 /area/station/kitchen),
 ```
+
 Remember that this is a kind of silly example, but this is one of the things that UpdatePaths was built to do- help coders fix shitty code without having to bug out over how maps don't compile.
 
 ### Subtype Handling
@@ -196,7 +199,6 @@ Running the script will update this into:
 ```
 
 Note how since you kept in `{@OLD}`, it was able to retain the re-named variables of the subtypes.
-
 
 ### Old Path Variable Filtering
 
@@ -256,6 +258,7 @@ That's cool, but let's say you have this same example, but let's say that you do
 ```txt
 /mob/living/basic/mouse{name="Tom"} : /mob/living/basic/mouse/tom{pixel_x = @OLD}
 ```
+
 The following is also supported, but it's not recommended since it's harder to read because it doesn't really mesh with the TGM format:
 
 ```txt
@@ -341,6 +344,7 @@ You would then get the following output:
 Note how we keep the "Money Hole" intact, while still managing to extrapolate the `dir` variable to 1 on the sink that had absolutely no variables set on it. This is useful for when you want to change a variable that is not shown in the map editor, but you want to keep the rest of the variables intact.
 
 #### Methods: Any Value Fits All and Naming Conventions
+
 But what if you just want to rename the variable `maxHealth` to `good_boy_points` for all instances of `/mob/living/github_user`? Using the `@ANY` parameter after a variable name, you can capture any instance that has it edited in a map. While, to set the value of the newly named `good_boy_points` to that of the old `maxHealth`, we can use `@OLD:maxHealth`, put after the name of the new variable to achieve that. The result'll be something like this:
 
 ```txt
@@ -400,6 +404,7 @@ All of the examples provided within are not mutually exclusive! They can be mixe
 ## Why should I care?
 
 UpdatePaths is an incredible valuable tool to the following populations:
+
 - Mappers who have mapping PRs that take a long time to create, and that will need to be updated as progression goes on. Having an UpdatePaths file makes it much more simple to get them to compile their map properly, and not lose paths.
 - Downstreams who have additional maps to the ones we have. You obviously can't Search & Replace fix for a whole downstream, but you can give them the ammunition (UpdatePaths script) for them to quickly and easily resolve that problem.
 - You! As you've seen, you can do a lot of clever and powerful tools that respect the TGM format, from Old Path Filtering to Multiple Path Output- and you can do it all with a simple text file! Otherwise, you would be stuck in absolute RegEx hell, and still end up missing on several potential edge cases. UpdatePaths is built on the same framework that builds the TGM format, so it's incredibly reliable in finding and replacing paths.

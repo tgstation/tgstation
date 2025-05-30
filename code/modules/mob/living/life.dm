@@ -61,8 +61,6 @@
 
 		handle_gravity(seconds_per_tick, times_fired)
 
-	handle_wounds(seconds_per_tick, times_fired)
-
 	if(living_flags & QUEUE_NUTRITION_UPDATE)
 		mob_mood?.update_nutrition_moodlets()
 		hud_used?.hunger?.update_hunger_bar()
@@ -79,9 +77,6 @@
 	return
 
 /mob/living/proc/handle_diseases(seconds_per_tick, times_fired)
-	return
-
-/mob/living/proc/handle_wounds(seconds_per_tick, times_fired)
 	return
 
 // Base mob environment handler for body temperature

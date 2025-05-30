@@ -1,5 +1,0 @@
-author: "Ezel"
-delete-after: True
-changes:
-  - bugfix: "Adds missing dragnet beacon to catwalk"
-  - bugfix: "Adds missing HoS office authenication device."

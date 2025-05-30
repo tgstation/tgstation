@@ -13,24 +13,24 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Generate App Token
-      id: app-token-generation
-      uses: actions/create-github-app-token@v2
-      if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
-      with:
-        app-id: ${{ secrets.APP_ID }}
-        private-key: ${{ secrets.APP_PRIVATE_KEY }}
-      env:
-        APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
-        APP_ID: ${{ secrets.APP_ID }}
+      - name: Generate App Token
+        id: app-token-generation
+        uses: actions/create-github-app-token@v2
+        if: env.APP_PRIVATE_KEY != '' && env.APP_ID != ''
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+        env:
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+          APP_ID: ${{ secrets.APP_ID }}
 
-    - name: Run auto changelog
-      uses: actions/github-script@v7
-      with:
-        script: |
-          const { processAutoChangelog } = await import('${{ github.workspace }}/tools/pull_request_hooks/autoChangelog.js')
-          await processAutoChangelog({ github, context })
-        github-token: ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }}
+      - name: Run auto changelog
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { processAutoChangelog } = await import('${{ github.workspace }}/tools/pull_request_hooks/autoChangelog.js')
+            await processAutoChangelog({ github, context })
+          github-token: ${{ steps.app-token-generation.outputs.token || secrets.GITHUB_TOKEN }}

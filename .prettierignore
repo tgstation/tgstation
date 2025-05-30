@@ -1,5 +1,19 @@
-# We don't want prettier to run on anything outside of the TGUI folder, so we have to do this.
-/*
+# Directories
+changelogs
+data
+font-awesome
+jquery
+juke
 
-# We want it to run into the TGUI folder, however.
-!/tgui
+## Tgui
+node_modules
+.yarn
+# Avoid running on any bundles.
+tgui/public
+# Running it on tgui.html is fine, however.
+!/tgui/public/tgui.html
+# Specific files
+package-lock.json
+# File names / types
+*.min.*
+*.pnp.*

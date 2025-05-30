@@ -825,7 +825,7 @@
 		regenerate_limbs()
 
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ORGANS))
-		regenerate_organs(regenerate_existing = (heal_flags & HEAL_REFRESH_ORGANS))
+		regenerate_organs(remove_hazardous = !!(heal_flags & HEAL_REFRESH_ORGANS))
 
 	if(heal_flags & HEAL_TRAUMAS)
 		cure_all_traumas(TRAUMA_RESILIENCE_MAGIC)

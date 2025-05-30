@@ -254,7 +254,8 @@
 		/obj/item/toy/plush/moth,
 		/obj/item/toy/plush/pkplush,
 		/obj/item/toy/plush/horse,
-		/obj/item/toy/plush/maddie, // Troutstation edit
+		/obj/item/toy/plush/monkey,
+		/obj/item/toy/plush/maddie, // Troutstation edit		
 	)
 
 /obj/effect/spawner/random/entertainment/plushie_delux
@@ -281,6 +282,7 @@
 		/obj/item/toy/plush/abductor/agent = 3,
 		/obj/item/toy/plush/shark = 3,
 		/obj/item/toy/plush/unicorn = 3,
+		/obj/item/toy/plush/monkey = 3,
 		/obj/item/toy/plush/maddie = 3, // Troutstation edit
 		// super rare plushies
 		/obj/item/toy/plush/bubbleplush = 2,

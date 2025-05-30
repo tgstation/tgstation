@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "jumpsuit",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",

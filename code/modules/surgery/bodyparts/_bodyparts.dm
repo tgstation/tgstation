@@ -186,6 +186,8 @@
 	var/unarmed_effectiveness = 10
 	/// Multiplier applied to effectiveness and damage when attacking a grabbed target.
 	var/unarmed_pummeling_bonus = 1
+	/// The 'sharpness' of the limb. Could indicate claws, teeth or spines. Should default to NONE, or blunt.
+	var/unarmed_sharpness = NONE
 
 	/// Traits that are given to the holder of the part. This does not update automatically on life(), only when the organs are initially generated or inserted!
 	var/list/bodypart_traits = list()

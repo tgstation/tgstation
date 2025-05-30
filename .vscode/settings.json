@@ -3,7 +3,7 @@
 	"eslint.workingDirectories": ["./tgui"],
 	"prettier.prettierPath": "./tgui/.yarn/sdks/prettier/index.cjs",
 	"typescript.tsdk": "./tgui/.yarn/sdks/typescript/lib",
-  	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"search.exclude": {
 		"**/.yarn": true,
 		"**/.pnp.*": true

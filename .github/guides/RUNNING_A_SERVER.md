@@ -1,4 +1,5 @@
 # INSTALLATION
+
 First-time installation should be fairly straightforward. First, you'll need
 BYOND installed. You can get it from https://www.byond.com/download. Once you've done
 that, extract the game files to wherever you want to keep them. This is a
@@ -56,7 +57,7 @@ as these store your server configuration, player preferences and banlist.
 Then, extract the new files (preferably into a clean directory, but updating in
 place should work fine), copy your /config and /data folders back into the new
 install, overwriting when prompted except if we've specified otherwise, and
-recompile the game.  Once you start the server up again, you should be running
+recompile the game. Once you start the server up again, you should be running
 the new version.
 
 ## HOSTING
@@ -68,15 +69,15 @@ https://github.com/tgstation/tgstation-server
 If you decide to go this route, here are /tg/ specific details on hosting with TGS.
 
 - We have two directories which should be setup in the instance's `Configuration/GameStaticFiles` directory:
-	- `config` should be where you place your production configuration. Overwrites the default contents of the repo's [config](../../config) directory.
-	- `data` should be initially created as an empty directory. The game stores persistent data here.
+  - `config` should be where you place your production configuration. Overwrites the default contents of the repo's [config](../../config) directory.
+  - `data` should be initially created as an empty directory. The game stores persistent data here.
 - You should incorporate our [custom build scripts for TGS](../../tools/tgs_scripts) in the instance's `Configuration/EventScripts` directory. These handle including TGUI in the build and setting up rust-g on Linux.
 - Deployment security level must be set to `Trusted` or it will likely fail due to our native library usage.
 - We highly recommend using the BYOND version specified in [dependencies.sh](../../dependencies.sh) to avoid potential unrecorded issues.
 
 ## SQL SETUP
 
-The SQL backend requires a Mariadb server running 10.2 or later. Mysql is not supported but Mariadb is a drop in replacement for mysql. SQL is required for the library, stats tracking, admin notes, and job-only bans, among other features, mostly related to server administration. Your server details go in /config/dbconfig.txt, and the SQL schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes.  More detailed setup instructions are located here: https://tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
+The SQL backend requires a Mariadb server running 10.2 or later. Mysql is not supported but Mariadb is a drop in replacement for mysql. SQL is required for the library, stats tracking, admin notes, and job-only bans, among other features, mostly related to server administration. Your server details go in /config/dbconfig.txt, and the SQL schema is in /SQL/tgstation_schema.sql and /SQL/tgstation_schema_prefix.sql depending on if you want table prefixes. More detailed setup instructions are located here: https://tgstation13.org/wiki/Downloading_the_source_code#Setting_up_the_database
 
 If you are hosting a testing server on windows you can use a standalone version of MariaDB pre load with a blank (but initialized) tgdb database. Find them here: https://tgstation13.download/database/ Just unzip and run for a working (but insecure) database server. Includes a zipped copy of the data folder for easy resetting back to square one.
 
@@ -86,12 +87,13 @@ Web delivery of game resources makes it quicker for players to join and reduces 
 
 1. Edit compile_options.dm to set the `PRELOAD_RSC` define to `0`
 1. Add a url to config/external_rsc_urls pointing to a .zip file containing the .rsc.
-    * If you keep up to date with /tg/ you could reuse /tg/'s rsc cdn at http://tgstation13.download/byond/tgstation.zip. Otherwise you can use cdn services like CDN77 or cloudflare (requires adding a page rule to enable caching of the zip), or roll your own cdn using route 53 and vps providers.
-	* Regardless even offloading the rsc to a website without a CDN will be a massive improvement over the in game system for transferring files.
+   - If you keep up to date with /tg/ you could reuse /tg/'s rsc cdn at http://tgstation13.download/byond/tgstation.zip. Otherwise you can use cdn services like CDN77 or cloudflare (requires adding a page rule to enable caching of the zip), or roll your own cdn using route 53 and vps providers.
+   - Regardless even offloading the rsc to a website without a CDN will be a massive improvement over the in game system for transferring files.
 
 ### All In One Amazon Web Services Hosting and Content delivery network.
+
 **Important Note**
-It is very Importat to note that since AWS is all highly integrated its "easier" than some solutions. However the Price to ***Performance Ratio is terrible***.
+It is very Importat to note that since AWS is all highly integrated its "easier" than some solutions. However the Price to **_Performance Ratio is terrible_**.
 
 /tg/ Using around 7TB of bandwidth a month. These costs add up. So AWS is probly only a solution for low to mid pop servers
 
@@ -103,16 +105,18 @@ This guide is also assuming you are setting up a production server and not a ser
 It is highly recommended to reference AWS support documentation while reading this guide. This guide is not a How to AWS.
 
 **Required AWS Services**
+
 1. Elastic Computer 2 (EC2)
-	* What size and class is up to you but 4GB of RAM is a minimum.
+   - What size and class is up to you but 4GB of RAM is a minimum.
 1. Route53
-	* Domain registration and assigning "Elastic" IP addresses to said web addresses
+   - Domain registration and assigning "Elastic" IP addresses to said web addresses
 1. S3
-	* This will be your storage point and distrobution point for your .RSC file
+   - This will be your storage point and distrobution point for your .RSC file
 1. Identity and Access Management (IAM)
-	* Required for EC2 to S3 file transfers
+   - Required for EC2 to S3 file transfers
 
 **Required Software**
+
 1. Microsoft Windows
 1. MariaDB
 1. tgstation-server (TGS)
@@ -120,30 +124,32 @@ It is highly recommended to reference AWS support documentation while reading th
 1. AWS Command Line V2
 
 **Instructions**
+
 1. After you go through setting up an AWS account you will need to create an IAM role and an IAM user. the IAM user will be made for debug testing. The IAM role will be used as an internal credential for the EC2 instance to talk with S3
-	* The role and user creation are almost identical. give them names, select programatic access, then you will click atatych existing policey, Here you can use admin access or S3 full access. both can be found via search. the difference for roles is that you will on the first step declare it for use with EC2 and this one will need full admin access
+   - The role and user creation are almost identical. give them names, select programatic access, then you will click atatych existing policey, Here you can use admin access or S3 full access. both can be found via search. the difference for roles is that you will on the first step declare it for use with EC2 and this one will need full admin access
 1. Create your Amazon EC2 instance. There will be a config option asking for an IAM role. use the IAM role created in the previous step.
-	* A blank Windows Server is recommended
-	* You will also need to define a security policey. 3 are recommended. a Remote Desktop Protocol Policey, a Maria DB Policey, and an SS13 policey. the Latter will use the port(s) of your dream demon settings. Make sure the SS13 policey whitelists all IP addresses.
+   - A blank Windows Server is recommended
+   - You will also need to define a security policey. 3 are recommended. a Remote Desktop Protocol Policey, a Maria DB Policey, and an SS13 policey. the Latter will use the port(s) of your dream demon settings. Make sure the SS13 policey whitelists all IP addresses.
 1. Creat your S3 bucket. this is a very simple process. only thing you need to edit is making the bucket public and making sure its in the same region as your EC2 instance.
 1. In the EC2 control panel, go to Elastic IP's. get one and assign it to your EC2 instance. This will result in the server IP address not changing and is required for joining the game via url instead of ip address
 1. In Route 53 you will register a domain name. The you will create a hosted zone and tell your domain to use the IP address you used for your EC2 instance.
 1. Install the required software
-	* AWSCL2 you will need to run the configuration using the IAM User you created above.
-	* TGS: Make sure the scripts from /tools/tgs_scripts are installed per instructions after you have set up your repository and done your first fetch. You will need to Also install a batch file similar to what i have provided into the event scripts folder. You can manually run the batch file to test connection to your S3 bucket.
-	* Copy `compile_options.dm` into code overrides preserving the directory structure and altering the code as mentioned in the above CDN instructions.
-	* Filename: DeploymentComplete.bat
+   - AWSCL2 you will need to run the configuration using the IAM User you created above.
+   - TGS: Make sure the scripts from /tools/tgs_scripts are installed per instructions after you have set up your repository and done your first fetch. You will need to Also install a batch file similar to what i have provided into the event scripts folder. You can manually run the batch file to test connection to your S3 bucket.
+   - Copy `compile_options.dm` into code overrides preserving the directory structure and altering the code as mentioned in the above CDN instructions.
+   - Filename: DeploymentComplete.bat
+
 ```Batch
 @echo off
 cd "C:\Program Files\Amazon\AWSCLIV2"
 aws s3 cp "C:\Instance_Path\Game\Live\tgstation.rsc" s3://BucketName/tgstation.rsc --acl public-read
 ```
 
-7. In your TGS's instance's static config files edit resources.txt to point to the resource file uploaded by the batch file. it should resemble `http://BucketName.s3.AWSRegion.amazonaws.com/tgstation.rsc` You can get this url from the S3 object management page after its been uploaded for the first time. *Make sure you do not use use HTTPS. Byond can not do encryption*
-7. Tell TGS to fetch and deploy. If everything goes according to plan, your server will be compiled and the resource uploaded automatically to amazon S3. You can verify that by checking on the file your bucket via aws web management.
-7. Test your client side connection.
-	* Tell TGS to run the compiled server
-	* Attempt to log in. AWS has a stupid fast transfer speed. you should download client side data faster than you can recognize it happened.
+7. In your TGS's instance's static config files edit resources.txt to point to the resource file uploaded by the batch file. it should resemble `http://BucketName.s3.AWSRegion.amazonaws.com/tgstation.rsc` You can get this url from the S3 object management page after its been uploaded for the first time. _Make sure you do not use use HTTPS. Byond can not do encryption_
+8. Tell TGS to fetch and deploy. If everything goes according to plan, your server will be compiled and the resource uploaded automatically to amazon S3. You can verify that by checking on the file your bucket via aws web management.
+9. Test your client side connection.
+   - Tell TGS to run the compiled server
+   - Attempt to log in. AWS has a stupid fast transfer speed. you should download client side data faster than you can recognize it happened.
 
 ## IRC BOT SETUP
 

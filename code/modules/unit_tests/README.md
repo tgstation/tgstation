@@ -7,6 +7,7 @@ Unit tests are automated code to verify that parts of the game work exactly as t
 On their most basic level, when `UNIT_TESTS` is defined, all subtypes of `/datum/unit_test` will have their `Run` proc executed. From here, if `Fail` is called at any point, then the tests will report as failed.
 
 ## How do I write one?
+
 1. Find a relevant file.
 
 All unit test related code is in `code/modules/unit_tests`. If you are adding a new test for a surgery, for example, then you'd open `surgeries.dm`. If a relevant file does not exist, simply create one in this folder, then `#include` it in `_unit_tests.dm`.
@@ -47,12 +48,11 @@ There are 3 ways to run unit tests
 
 - Use VS Code Tgstation Test Explorer Extension. This allows you to run tests without launching the game & can also run focused tests(either a single or a selected group)
 
-
 ## How to think about tests
 
-Unit tests exist to prevent bugs that would happen in a real game. Thus, they should attempt to emulate the game world wherever possible.  For example, the [quick swap sanity test](https://github.com/tgstation/tgstation/blob/e416283f162b86345a8623125ab866839b1ac40d/code/modules/unit_tests/quick_swap_sanity.dm) emulates a *real* scenario of the bug it fixed occurring by creating a character and giving it real items. The unrecommended alternative would be to create special test-only items. This isn't a hard rule, the [reagent method exposure tests](https://github.com/tgstation/tgstation/blob/e416283f162b86345a8623125ab866839b1ac40d/code/modules/unit_tests/reagent_mod_expose.dm) create a test-only reagent for example, but do keep it in mind.
+Unit tests exist to prevent bugs that would happen in a real game. Thus, they should attempt to emulate the game world wherever possible. For example, the [quick swap sanity test](https://github.com/tgstation/tgstation/blob/e416283f162b86345a8623125ab866839b1ac40d/code/modules/unit_tests/quick_swap_sanity.dm) emulates a _real_ scenario of the bug it fixed occurring by creating a character and giving it real items. The unrecommended alternative would be to create special test-only items. This isn't a hard rule, the [reagent method exposure tests](https://github.com/tgstation/tgstation/blob/e416283f162b86345a8623125ab866839b1ac40d/code/modules/unit_tests/reagent_mod_expose.dm) create a test-only reagent for example, but do keep it in mind.
 
-Unit tests should also be just that--testing *units* of code. For example, instead of having one massive test for reagents, there are instead several smaller tests for testing exposure, metabolization, etc.
+Unit tests should also be just that--testing _units_ of code. For example, instead of having one massive test for reagents, there are instead several smaller tests for testing exposure, metabolization, etc.
 
 ## The unit testing API
 
@@ -74,10 +74,10 @@ You can find more information about all of these from their respective doc comme
 
 `TEST_ASSERT_NOTEQUAL(a, b, message)` - Same as `TEST_ASSERT_EQUAL`, but reversed.
 
-`TEST_FOCUS(test_path)` - *Only* run the test provided within the parameters. Useful for reducing noise. For example, if we only want to run our example square test, we can add `TEST_FOCUS(/datum/unit_test/square)`. Should *never* be pushed in a pull request--you will be laughed at.
+`TEST_FOCUS(test_path)` - _Only_ run the test provided within the parameters. Useful for reducing noise. For example, if we only want to run our example square test, we can add `TEST_FOCUS(/datum/unit_test/square)`. Should _never_ be pushed in a pull request--you will be laughed at.
 
 ## Final Notes
 
-- Writing tests before you attempt to fix the bug can actually speed up development a lot! It means you don't have to go in game and folllow the same exact steps manually every time. This process is known as "TDD" (test driven development). Write the test first, make sure it fails, *then* start work on the fix/feature, and you'll know you're done when your tests pass. If you do try this, do make sure to confirm in a non-testing environment just to double check.
+- Writing tests before you attempt to fix the bug can actually speed up development a lot! It means you don't have to go in game and folllow the same exact steps manually every time. This process is known as "TDD" (test driven development). Write the test first, make sure it fails, _then_ start work on the fix/feature, and you'll know you're done when your tests pass. If you do try this, do make sure to confirm in a non-testing environment just to double check.
 - Make sure that your tests don't accidentally call RNG functions like `prob`. Since RNG is seeded during tests, you may not realize you have until someone else makes a PR and the tests fail!
 - Do your best not to change the behavior of non-testing code during tests. While it may sometimes be necessary in the case of situations such as the above, it is still a slippery slope that can lead to the code you're testing being too different from the production environment to be useful.

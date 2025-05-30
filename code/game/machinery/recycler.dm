@@ -160,7 +160,7 @@
 			continue
 
 		if (thing.resistance_flags & INDESTRUCTIBLE)
-			if (!isturf(thing.loc) && !isliving(thing.loc))
+			if (!isturf(thing.loc) && !recursive_loc_check(thing, /mob/living))
 				thing.forceMove(loc)
 			not_eaten += 1
 			continue

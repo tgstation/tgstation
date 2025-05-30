@@ -1,4 +1,4 @@
-name: 'New PR Notification'
+name: "New PR Notification"
 on:
   pull_request_target:
     types: [opened, closed]

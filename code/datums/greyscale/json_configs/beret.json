@@ -4,7 +4,7 @@
 			"type": "icon_state",
 			"icon_state": "beret",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"beret_flat": [
@@ -12,7 +12,7 @@
 			"type": "icon_state",
 			"icon_state": "beret_flat",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }

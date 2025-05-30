@@ -1,4 +1,4 @@
 help: "Please don't put fridges into walls."
 /obj/machinery/smartfridge:
   banned_neighbors:
-  - /turf/closed
+    - /turf/closed

@@ -159,7 +159,7 @@
 					/obj/item/clothing/shoes/sneakers/black,
 					/obj/item/clothing/gloves/color/white,
 					/obj/item/clothing/mask/gas/mime,
-					/obj/item/clothing/head/frenchberet,
+					/obj/item/clothing/head/beret/frenchberet,
 					/obj/item/clothing/suit/toggle/suspenders,
 					/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
 					/obj/item/storage/backpack/mime,

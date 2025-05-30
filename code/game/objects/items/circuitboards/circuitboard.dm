@@ -68,12 +68,14 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 
 /obj/item/circuitboard/machine
 	name_extension = "(Machine Board)"
-	var/needs_anchored = TRUE // Whether this machine must be anchored to be constructed.
-	var/list/req_components // Components required by the machine.
-							// Example: list(/obj/item/stock_parts/matter_bin = 5)
-
-	var/list/def_components // Default replacements for req_components, to be used in apply_default_parts instead of req_components types
-							// Example: list(/obj/item/stock_parts/matter_bin = /obj/item/stock_parts/matter_bin/super)
+	/// Whether this machine must be anchored to be constructed.
+	var/needs_anchored = TRUE
+	/// Components required by the machine.
+	/// Example: list(/obj/item/stock_parts/matter_bin = 5)
+	var/list/req_components
+	/// Default replacements for req_components, to be used in apply_default_parts instead of req_components types
+	/// Example: list(/obj/item/stock_parts/matter_bin = /obj/item/stock_parts/matter_bin/super)
+	var/list/def_components
 
 // Applies the default parts defined by the circuit board when the machine is created
 /obj/item/circuitboard/machine/apply_default_parts(obj/machinery/machine)

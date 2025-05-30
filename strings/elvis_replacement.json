@@ -1,5 +1,5 @@
 {
-    "elvis": {
+	"elvis": {
 		"i'm not ": "I ain't ",
 		" girl ": [" honey ", " baby ", " baby doll "],
 		" man ": [" son ", " buddy ", " brother ", " pal ", " friendo "],
@@ -9,5 +9,5 @@
 		" what are you": " whatcha ",
 		" yes": [" sure ", " yea "],
 		" muh valids ": " my kicks "
-		}
+	}
 }

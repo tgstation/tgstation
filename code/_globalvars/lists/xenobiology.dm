@@ -59,6 +59,7 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 	CELL_LINE_TABLE_PUG = list(/datum/micro_organism/cell_line/pug = 1),
 	CELL_LINE_TABLE_SLIME = list(/datum/micro_organism/cell_line/slime = 1),
 	CELL_LINE_TABLE_SNAKE = list(/datum/micro_organism/cell_line/snake = 1),
+	CELL_LINE_TABLE_SNAIL = list(/datum/micro_organism/cell_line/snail = 1),
 	CELL_LINE_TABLE_VATBEAST = list(/datum/micro_organism/cell_line/vat_beast = 1),
 	CELL_LINE_TABLE_NETHER = list(/datum/micro_organism/cell_line/netherworld = 1),
 	CELL_LINE_TABLE_CLOWN = list(

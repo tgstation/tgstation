@@ -61,8 +61,8 @@
 /obj/item/clothing/mask/gas/mime,
 /obj/item/clothing/under/rank/civilian/mime,
 /obj/item/clothing/under/rank/civilian/mime,
-/obj/item/clothing/head/frenchberet,
-/obj/item/clothing/head/frenchberet,
+/obj/item/clothing/head/beret/frenchberet,
+/obj/item/clothing/head/beret/frenchberet,
 /obj/item/storage/backpack/mime,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)

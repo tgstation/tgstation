@@ -486,7 +486,7 @@
 	name = "coffeemaker cartridge rack"
 	desc = "A small rack for storing coffeemaker cartridges."
 	icon = 'icons/obj/food/containers.dmi'
-	icon_state = "coffee_cartrack4"
+	icon_state = "coffee_cartrack1"
 	base_icon_state = "coffee_cartrack"
 	contents_tag = "coffee cartridge"
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN

@@ -235,8 +235,8 @@ class WhenCondition(ConditionalRule):
                 # If something is a float (number), check it as an int and a float
                 # Hack for integer value parsing
                 if var_edits[var_name] % 1 == 0:
-                    return str(int(var_edits[var_name])).strip() != expected_value.strip()
-            return str(var_edits[var_name]).strip() != expected_value.strip()
+                    return str(int(var_edits[var_name])).strip() != unexpected_value.strip()
+            return str(var_edits[var_name]).strip() != unexpected_value.strip()
 
         elif self.match_like is not None:
             var_name = self.match_like.group(1)

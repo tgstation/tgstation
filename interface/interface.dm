@@ -1,62 +1,64 @@
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
-/client/verb/wiki(query as text)
+/client/verb/wiki()
 	set name = "wiki"
-	set desc = "Type what you want to know about.  This will open the wiki in your web browser. Type nothing to go to the main page."
+	set desc = "Brings you to the Wiki"
 	set hidden = TRUE
+
 	var/wikiurl = CONFIG_GET(string/wikiurl)
-	if(wikiurl)
-		if(query)
-			var/output = wikiurl + "/index.php?title=Special%3ASearch&profile=default&search=" + query
-			src << link(output)
-		else if (query != null)
-			src << link(wikiurl)
-	else
+	if(!wikiurl)
 		to_chat(src, span_danger("The wiki URL is not set in the server configuration."))
-	return
+		return
+
+	var/query = tgui_input_text(src,
+		"Type what you want to know about. This will open the wiki in your web browser. Type nothing to go to the main page.",
+		"Wiki",
+		max_length = MAX_MESSAGE_LEN,
+	)
+	if(isnull(query)) //cancelled out
+		return
+	var/output = wikiurl
+	if(query != "")
+		output += "?title=Special%3ASearch&profile=default&search=[query]"
+	DIRECT_OUTPUT(src, link(output))
 
 /client/verb/forum()
 	set name = "forum"
 	set desc = "Visit the forum."
 	set hidden = TRUE
+
 	var/forumurl = CONFIG_GET(string/forumurl)
-	if(forumurl)
-		if(tgui_alert(src, "This will open the forum in your browser. Are you sure?",, list("Yes","No"))!="Yes")
-			return
-		src << link(forumurl)
-	else
+	if(!forumurl)
 		to_chat(src, span_danger("The forum URL is not set in the server configuration."))
-	return
+		return
+	DIRECT_OUTPUT(src, link(forumurl))
 
 /client/verb/rules()
 	set name = "rules"
 	set desc = "Show Server Rules."
 	set hidden = TRUE
+
 	var/rulesurl = CONFIG_GET(string/rulesurl)
-	if(rulesurl)
-		if(tgui_alert(src, "This will open the rules in your browser. Are you sure?",, list("Yes","No"))!="Yes")
-			return
-		src << link(rulesurl)
-	else
+	if(!rulesurl)
 		to_chat(src, span_danger("The rules URL is not set in the server configuration."))
-	return
+		return
+	DIRECT_OUTPUT(src, link(rulesurl))
 
 /client/verb/github()
 	set name = "github"
 	set desc = "Visit Github"
 	set hidden = TRUE
+
 	var/githuburl = CONFIG_GET(string/githuburl)
-	if(githuburl)
-		if(tgui_alert(src, "This will open the Github repository in your browser. Are you sure?",, list("Yes","No"))!="Yes")
-			return
-		src << link(githuburl)
-	else
+	if(!githuburl)
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
-	return
+		return
+	DIRECT_OUTPUT(src, link(githuburl))
 
 /client/verb/reportissue()
 	set name = "report-issue"
 	set desc = "Report an issue"
 	set hidden = TRUE
+
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)
 		to_chat(src, span_danger("The Github URL is not set in the server configuration."))
@@ -97,10 +99,10 @@
 
 	DIRECT_OUTPUT(src, link(jointext(concatable, "")))
 
-
 /client/verb/changelog()
 	set name = "Changelog"
 	set category = "OOC"
+
 	if(!GLOB.changelog_tgui)
 		GLOB.changelog_tgui = new /datum/changelog()
 

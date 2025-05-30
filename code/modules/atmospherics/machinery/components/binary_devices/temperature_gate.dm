@@ -32,7 +32,7 @@
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return CLICK_ACTION_SUCCESS
 	return CLICK_ACTION_BLOCKING
 
@@ -43,7 +43,7 @@
 	target_temperature = max_temperature
 	investigate_log("was set to [target_temperature] K by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "target temperature set to [target_temperature] K")
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS
 
 
@@ -127,7 +127,7 @@
 			if(.)
 				target_temperature = clamp(minimum_temperature, temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/can_unwrench(mob/user)
 	. = ..()

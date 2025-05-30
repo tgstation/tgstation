@@ -1,8 +1,7 @@
 # dmdoc
+
 [DOCUMENTATION]: http://codedocs.tgstation13.org
-
 [BYOND]: https://secure.byond.com/
-
 [DMDOC]: https://github.com/SpaceManiac/SpacemanDMM/tree/master/crates/dmdoc
 
 [DMDOC] is a documentation generator for DreamMaker, the scripting language
@@ -16,6 +15,7 @@ This gives new developers a clickable reference [DOCUMENTATION] they can browse 
 gain understanding of the /tg/station codebase structure and api reference.
 
 ## Documenting code on /tg/station
+
 We use block comments to document procs and classes, and we use `///` line comments
 when documenting individual variables.
 
@@ -25,22 +25,24 @@ We also require that when you touch older code, you must document the functions 
 have touched in the process of updating that code
 
 ### Required
-A class *must* always be autodocumented, and all public functions *must* be documented
 
-All class level defined variables *must* be documented
+A class _must_ always be autodocumented, and all public functions _must_ be documented
 
-Internal functions *should* be documented, but may not be
+All class level defined variables _must_ be documented
+
+Internal functions _should_ be documented, but may not be
 
 A public function is any function that a developer might reasonably call while using
 or interacting with your object. Internal functions are helper functions that your
 public functions rely on to implement logic
 
-
 ### Documenting a proc
+
 When documenting a proc, we give a short one line description (as this is shown
 next to the proc definition in the list of all procs for a type or global
 namespace), then a longer paragraph which will be shown when the user clicks on
 the proc to jump to its definition
+
 ```
 /**
  * Short description of the proc
@@ -54,12 +56,14 @@ the proc to jump to its definition
 ```
 
 ### Documenting a class
+
 We first give the name of the class as a header, this can be omitted if the name is
 just going to be the typepath of the class, as dmdoc uses that by default
 
 Then we give a short oneline description of the class
 
 Finally we give a longer multi paragraph description of the class and its details
+
 ```
 /**
  * # Classname (Can be omitted if it's just going to be the typepath)
@@ -74,13 +78,16 @@ Finally we give a longer multi paragraph description of the class and its detail
 ```
 
 ### Documenting a variable/define
+
 Give a short explanation of what the variable, in the context of the class, or define is.
+
 ```
 /// Type path of item to go in suit slot
 var/suit = null
 ```
 
 ## Module level description of code
+
 Modules are the best way to describe the structure/intent of a package of code
 where you don't want to be tied to the formal layout of the class structure.
 
@@ -92,7 +99,9 @@ you would like.
 [Here is a representative example of what you might write](http://codedocs.tgstation13.org/code/modules/keybindings/readme.html)
 
 ## Special variables
+
 You can use certain special template variables in DM DOC comments and they will be expanded
+
 ```
     [DEFINE_NAME] - Expands to a link to the define definition if documented
     [/mob] - Expands to a link to the docs for the /mob class

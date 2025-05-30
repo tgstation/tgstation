@@ -1,30 +1,30 @@
 {
-    "bandstriped": [
-        {
-            "type": "icon_state",
-            "icon_state": "bandana_cloth",
-            "blend_mode": "overlay",
-            "color_ids": [ 1 ]
-        },
+	"bandstriped": [
 		{
-            "type": "icon_state",
-            "icon_state": "bandana_stripe",
-            "blend_mode": "overlay",
-            "color_ids": [ 2 ]
-        }
-    ],
+			"type": "icon_state",
+			"icon_state": "bandana_cloth",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bandana_stripe",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		}
+	],
 	"bandstriped_up": [
-        {
-            "type": "icon_state",
-            "icon_state": "bandana_cloth_up",
-            "blend_mode": "overlay",
-            "color_ids": [ 1 ]
-        },
 		{
-            "type": "icon_state",
-            "icon_state": "bandana_stripe_up",
-            "blend_mode": "overlay",
-            "color_ids": [ 2 ]
-        }
-    ]
+			"type": "icon_state",
+			"icon_state": "bandana_cloth_up",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "bandana_stripe_up",
+			"blend_mode": "overlay",
+			"color_ids": [2]
+		}
+	]
 }

@@ -8,7 +8,7 @@
 	take_damage(damage_taken, BRUTE, MELEE, 1, get_dir(src, hit_by))
 
 /obj/ex_act(severity, target)
-	if(resistance_flags & INDESTRUCTIBLE)
+	if(resistance_flags & (INDESTRUCTIBLE|BOMB_PROOF))
 		return FALSE
 
 	. = ..() //contents explosion

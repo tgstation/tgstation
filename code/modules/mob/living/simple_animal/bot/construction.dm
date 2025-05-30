@@ -248,8 +248,7 @@
 			repair.set_color(toolbox_color)
 			to_chat(user, span_notice("You add [item] to [src]. Boop beep!"))
 			var/obj/item/stack/crafting_stack = item
-			var/atom/used_belt = crafting_stack.split_stack(user, 1)
-			qdel(used_belt)
+			crafting_stack.use(1)
 			qdel(src)
 
 

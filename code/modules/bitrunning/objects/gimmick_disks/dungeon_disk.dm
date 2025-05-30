@@ -122,6 +122,7 @@
 
 /obj/item/clothing/mask/facescarf/rogue
 	name = "cloth of DOOM"
+	icon_state = "/obj/item/clothing/mask/facescarf/rogue"
 	greyscale_colors = "#292929"
 
 /obj/item/clothing/glasses/eyepatch

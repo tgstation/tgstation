@@ -269,6 +269,7 @@ export const DesignBrowser = <T extends Design = Design>(
             <Stack.Item>
               <Section>
                 <SearchBar
+                  expensive
                   query={searchText}
                   onSearch={setSearchText}
                   placeholder={'Search all designs...'}

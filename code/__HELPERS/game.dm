@@ -201,7 +201,14 @@
 		return
 	winset(flashed_client, "mainwindow", "flash=5")
 
-///Recursively checks if an item is inside a given type/atom, even through layers of storage. Returns the atom if it finds it.
+/**
+ * Recursively checks if an item is inside a given type/atom, even through layers of storage.
+ * Returns the atom if it finds it.
+ *
+ * Arguments
+ * * atom/movable/target - the atom whos loc we are checking for
+ * * type - the location(typepath or solid atom) the target maybe stored in
+ */
 /proc/recursive_loc_check(atom/movable/target, type)
 	var/atom/atom_to_find = null
 

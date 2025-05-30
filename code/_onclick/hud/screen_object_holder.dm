@@ -25,6 +25,7 @@
 
 	screen_objects += screen_object
 	client?.screen += screen_object
+	return screen_object
 
 /// Gives the screen object to the client, but does not qdel it when it's cleared
 /datum/screen_object_holder/proc/give_protected_screen_object(atom/screen_object)
@@ -32,6 +33,7 @@
 
 	protected_screen_objects += screen_object
 	client?.screen += screen_object
+	return screen_object
 
 /datum/screen_object_holder/proc/remove_screen_object(atom/screen_object)
 	ASSERT(istype(screen_object))
@@ -40,6 +42,7 @@
 	screen_objects -= screen_object
 	protected_screen_objects -= screen_object
 	client?.screen -= screen_object
+	qdel(screen_object)
 
 /datum/screen_object_holder/proc/clear()
 	client?.screen -= screen_objects

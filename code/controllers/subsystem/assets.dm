@@ -3,7 +3,7 @@ SUBSYSTEM_DEF(assets)
 	dependencies = list(
 		/datum/controller/subsystem/atoms,
 		/datum/controller/subsystem/persistent_paintings,
-		/datum/controller/subsystem/processing/greyscale,
+		/datum/controller/subsystem/greyscale_previews,
 	)
 	flags = SS_NO_FIRE
 	var/list/datum/asset_cache_item/cache = list()

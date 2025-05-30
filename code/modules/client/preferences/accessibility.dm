@@ -11,3 +11,10 @@
 	default_value = FALSE
 	savefile_key = "screen_shake_darken"
 	savefile_identifier = PREFERENCE_PLAYER
+
+/// When toggled, removes some double-click reliant actions.
+/datum/preference/toggle/remove_double_click
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	default_value = FALSE
+	savefile_key = "remove_double_click"
+	savefile_identifier = PREFERENCE_PLAYER

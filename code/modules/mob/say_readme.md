@@ -1,6 +1,7 @@
 # Say code basics
 
 This document is a little dated but I believe it's accurate mostly (oranges 2019)
+
 # MIAUW'S SAY REWRITE
 
 This is a basic explanation of how say() works. Read this if you don't understand something.
@@ -16,7 +17,9 @@ To have things react when other things speak around them, add the HEAR_1 flag to
 override their Hear() proc.
 
 # PROCS & VARIABLES
+
 Here follows a list of say()-related procs and variables.
+
 ```
 global procs
 	get_radio_span(freq)
@@ -142,6 +145,7 @@ global procs
 		Intercepts say() after it's done all of it's message building.
 		If this returns true we stop say(), if it returns false we keep going
 ```
+
 # RADIOS
 
 I did not want to interfere with radios too much, but I sort of had to.
@@ -159,8 +163,10 @@ To add a radio, simply use add_radio(radio, frequency). To remove a radio, use r
 To remove a radio from ALL frequencies, use remove_radio_all(radio).
 
 ## VIRTUAL SPEAKERS:
+
 Virtual speakers are simply atom/movables with a few extra variables.
 If radio_freq is not null, the code will rely on the fact that the speaker is virtual. This means that several procs will return something:
+
 ```
 	(all of these procs are defined at the atom/movable level and return "" at that level.)
 	GetJob()
@@ -172,6 +178,7 @@ If radio_freq is not null, the code will rely on the fact that the speaker is vi
 	GetRadio()
 		Returns the radio that was spoken through by the source. Needed for AI tracking.
 ```
+
 This is fairly hacky, but it means that I can advoid using istypes. It's mainly relevant for AI tracking and AI job display.
 
 That's all, folks!

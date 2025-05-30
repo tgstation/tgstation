@@ -20,7 +20,7 @@ export const CivCargoHoldTerminal = (props) => {
     <Window width={580} height={375}>
       <Window.Content scrollable>
         <Flex>
-          <Flex.Item>
+          <Flex.Item grow>
             <NoticeBox color={!id_inserted ? 'default' : 'blue'}>
               {id_inserted ? in_text : out_text}
             </NoticeBox>

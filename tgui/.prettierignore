@@ -1,18 +1,6 @@
-## NPM
-/**/node_modules
-
-## Yarn
-/.yarn
-/yarn.lock
-/.pnp.*
-
-.swcrc
-/docs
-/packages/tgui-polyfill
-/packages/tgfont/static
-**/*.json
-**/*.yml
-**/*.md
+.pnp.*
+.yarn
+node_modules
 
 # Avoid running on any bundles.
 /public/**/*

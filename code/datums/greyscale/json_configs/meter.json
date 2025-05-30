@@ -21,7 +21,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure0",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -39,7 +39,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure1_1",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -57,7 +57,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure1_2",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -75,7 +75,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure1_3",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -93,7 +93,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure1_4",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -111,7 +111,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure1_5",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -129,7 +129,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure1_6",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -147,7 +147,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure2_1",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -165,7 +165,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure2_2",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -183,7 +183,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure2_3",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -201,7 +201,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure2_4",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -219,7 +219,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure2_5",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -237,7 +237,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure2_6",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -255,7 +255,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure3_1",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -273,7 +273,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure3_2",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -291,7 +291,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure3_3",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -309,7 +309,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure3_4",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -327,7 +327,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure3_5",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -345,7 +345,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure3_6",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -363,7 +363,7 @@
 			"type": "icon_state",
 			"icon_state": "pressure4",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",

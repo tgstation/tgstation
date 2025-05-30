@@ -17,8 +17,8 @@ PROCESSING_SUBSYSTEM_DEF(greyscale)
 #endif
 
 /datum/controller/subsystem/processing/greyscale/Initialize()
-	for(var/datum/greyscale_layer/fake_type as anything in subtypesof(/datum/greyscale_layer))
-		layer_types[initial(fake_type.layer_type)] = fake_type
+	for(var/datum/greyscale_layer/greyscale_layer as anything in subtypesof(/datum/greyscale_layer))
+		layer_types[initial(greyscale_layer.layer_type)] = greyscale_layer
 
 	for(var/greyscale_type in subtypesof(/datum/greyscale_config))
 		var/datum/greyscale_config/config = new greyscale_type()

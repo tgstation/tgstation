@@ -114,8 +114,7 @@ export function SettingsGeneral(props) {
                 <Input
                   fluid
                   value={fontFamily}
-                  expensive
-                  onChange={(value) =>
+                  onBlur={(value) =>
                     dispatch(
                       updateSettings({
                         fontFamily: value,
