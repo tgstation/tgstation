@@ -21508,7 +21508,7 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "hzC" = (
-/obj/structure/altar_of_gods,
+/obj/structure/altar/of_gods,
 /obj/effect/turf_decal/siding/dark{
 	dir = 8
 	},

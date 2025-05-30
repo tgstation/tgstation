@@ -11233,7 +11233,7 @@
 	},
 /area/station/hallway/secondary/service)
 "drE" = (
-/obj/structure/altar_of_gods,
+/obj/structure/altar/of_gods,
 /obj/structure/noticeboard/directional/north,
 /turf/open/floor/iron/chapel{
 	dir = 4
