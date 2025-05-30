@@ -10,9 +10,10 @@
 	)
 	tastes = list("ice cream" = 1)
 	foodtypes = GRAIN | DAIRY | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD|FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	crafting_complexity = FOOD_COMPLEXITY_2
 	crafted_food_buff = /datum/status_effect/food/chilling
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/strawberryicecreamsandwich
 	name = "strawberry ice cream sandwich"
@@ -26,9 +27,10 @@
 	)
 	tastes = list("ice cream" = 2, "berry" = 2)
 	foodtypes = GRAIN|FRUIT|DAIRY|SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD|FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	crafting_complexity = FOOD_COMPLEXITY_3
 	crafted_food_buff = /datum/status_effect/food/chilling
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/spacefreezy
 	name = "space freezy"
@@ -45,6 +47,8 @@
 	foodtypes = GRAIN|FRUIT|DAIRY|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 	crafted_food_buff = /datum/status_effect/food/chilling
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/spacefreezy/make_edible()
 	. = ..()
@@ -65,6 +69,8 @@
 	foodtypes = GRAIN|FRUIT|DAIRY|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_3
 	crafted_food_buff = /datum/status_effect/food/chilling
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/sundae/make_edible()
 	. = ..()
@@ -85,6 +91,8 @@
 	foodtypes = GRAIN|FRUIT|DAIRY|SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
 	crafted_food_buff = /datum/status_effect/food/chilling
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/honkdae/make_edible()
 	. = ..()
@@ -106,9 +114,10 @@
 	) // We dont get food for water/juices
 	tastes = list("ice" = 1, "water" = 1)
 	foodtypes = SUGAR //We use SUGAR as a base line to act in as junkfood, other wise we use fruit
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD|FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	crafting_complexity = FOOD_COMPLEXITY_2
 	crafted_food_buff = /datum/status_effect/food/chilling
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/snowcones/lime
 	name = "lime snowcone"
@@ -333,9 +342,10 @@
 	trash_type = /obj/item/popsicle_stick
 	w_class = WEIGHT_CLASS_SMALL
 	foodtypes = DAIRY | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD|FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	crafting_complexity = FOOD_COMPLEXITY_3
 	crafted_food_buff = /datum/status_effect/food/chilling
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 	var/overlay_state = "creamsicle_o" //This is the edible part of the popsicle.
 	var/bite_states = 4 //This value value is used for correctly setting the bite_consumption to ensure every bite changes the sprite. Do not set to zero.
@@ -441,6 +451,8 @@
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	crafted_food_buff = /datum/status_effect/food/chilling
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/popsicle/meatsicle
 	name = "Meatsicle"
@@ -454,3 +466,4 @@
 	overlay_state = "meatsicle"
 	foodtypes = RAW | MEAT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_FINGER_FOOD // Troutstation edit, make sure this ISN'T snout-edible

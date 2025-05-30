@@ -13,6 +13,9 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_2
 	venue_value = FOOD_PRICE_CHEAP
+	food_flags = FOOD_TINY_SNOUT_EDIBLE
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK
+
 
 /obj/item/food/space_shuttle_jelly/Initialize(mapload)
 	. = ..()
@@ -33,7 +36,8 @@
 	foodtypes = RAW|GRAIN|MEAT|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD|FOOD_TINY_SNOUT_EDIBLE
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH
 
 /obj/item/food/raw_dim_sim/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/dim_sim)
@@ -53,7 +57,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 	venue_value = FOOD_PRICE_CHEAP
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD|FOOD_TINY_SNOUT_EDIBLE
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT
 
 /obj/item/food/dim_sim/Initialize(mapload)
 	. = ..()
@@ -76,7 +81,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 	venue_value = FOOD_PRICE_CHEAP
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD|FOOD_TINY_SNOUT_EDIBLE
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT
 
 
 /obj/item/food/democracy_sausage/Initialize(mapload)
@@ -98,6 +104,8 @@
 	foodtypes = GRAIN|DAIRY|SUGAR|FRUIT
 	crafting_complexity = FOOD_COMPLEXITY_2
 	w_class = WEIGHT_CLASS_NORMAL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE
 
 /obj/item/food/lamington/Initialize(mapload)
 	. = ..()
@@ -123,6 +131,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	food_flags = FOOD_FINGER_FOOD
 	venue_value = FOOD_PRICE_CHEAP
+	food_flags = FOOD_TINY_SNOUT_EDIBLE
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE
 
 /obj/item/food/lamington_slice/Initialize(mapload)
 	. = ..()
@@ -145,6 +155,8 @@
 	foodtypes = GRAIN|DAIRY|SUGAR|FRUIT
 	crafting_complexity = FOOD_COMPLEXITY_2
 	w_class = WEIGHT_CLASS_NORMAL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE
 
 /obj/item/food/JC_lamington/Initialize(mapload)
 	. = ..()
@@ -171,6 +183,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	food_flags = FOOD_FINGER_FOOD
 	venue_value = FOOD_PRICE_CHEAP
+	food_flags = FOOD_TINY_SNOUT_EDIBLE
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE
 
 /obj/item/food/JC_lamington_slice/Initialize(mapload)
 	. = ..()

@@ -6,6 +6,8 @@
 	foodtypes = NONE
 	eatverbs = list("slurp", "sip", "inhale", "drink")
 	venue_value = FOOD_PRICE_CHEAP
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/bowled/make_germ_sensitive(mapload)
 	return // It's in a bowl

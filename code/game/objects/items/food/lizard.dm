@@ -16,6 +16,8 @@
 	foodtypes = MEAT|RAW
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/raw_tiziran_sausage/Initialize(mapload)
 	. = ..()
@@ -35,6 +37,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 	custom_price = PAYCHECK_CREW
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/raw_headcheese
 	name = "raw headcheese block"
@@ -84,6 +88,8 @@
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 /obj/item/food/shredded_lungs
 	name = "crispy shredded lung stirfry"
@@ -100,6 +106,8 @@
 	trash_type = /obj/item/reagent_containers/cup/bowl
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/tsatsikh
 	name = "tsatsikh"
@@ -122,6 +130,8 @@
 	foodtypes = MEAT|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/moonfish_eggs
 	name = "moonfish eggs"
@@ -137,6 +147,8 @@
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/moonfish_eggs/Initialize(mapload)
 	. = ..()
@@ -180,6 +192,8 @@
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/lizard_escargot
 	name = "desert snail cocleas"
@@ -196,6 +210,8 @@
 	foodtypes = MEAT|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/fried_blood_sausage
 	name = "fried blood sausage"
@@ -212,6 +228,8 @@
 	foodtypes = MEAT|NUTS|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 //Why does like, every language on the planet besides English call them pommes? Who knows, who cares- the lizards call them it too, because funny.
 /obj/item/food/lizard_fries
@@ -230,6 +248,8 @@
 	foodtypes = MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/brain_pate
 	name = "eyeball-and-brain pate"
@@ -244,6 +264,8 @@
 	foodtypes = MEAT | VEGETABLES | GORE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/crispy_headcheese
 	name = "crispy breaded headcheese"
@@ -275,6 +297,8 @@
 	foodtypes = VEGETABLES|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 /obj/item/food/nectar_larvae
 	name = "nectar larvae"
@@ -290,6 +314,8 @@
 	foodtypes = MEAT|VEGETABLES|BUGS|GORE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/mushroomy_stirfry
 	name = "mushroomy stirfry"
@@ -304,6 +330,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit
 
 //Fish Dishes
 /obj/item/food/grilled_moonfish
@@ -434,6 +462,8 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 	var/bread_type = /obj/item/food/bread/root
 	var/flat_type = /obj/item/food/flatrootdough
 
@@ -458,6 +488,8 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 	var/process_type = /obj/item/food/rootdoughslice
 	var/grill_type = /obj/item/food/root_flatbread
 
@@ -482,6 +514,8 @@
 	tastes = list("potato" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 	var/process_type = /obj/item/food/spaghetti/nizaya
 	var/bake_type = /obj/item/food/rootroll
 
@@ -507,6 +541,8 @@
 	tastes = list("bread" = 1, "earthy heat" = 1)
 	foodtypes = VEGETABLES | NUTS
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE // Troutstation edit
 
 /obj/item/food/root_flatbread/egg
 	foodtypes = parent_type::foodtypes | MEAT
@@ -713,9 +749,10 @@
 	)
 	tastes = list("bread" = 1, "honey" = 1, "fruit" = 1)
 	foodtypes = VEGETABLES | NUTS | FRUIT
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD|FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 //Egg Dishes
 /obj/item/food/black_eggs
@@ -731,6 +768,8 @@
 	foodtypes = MEAT | BREAKFAST | GORE
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/patzikula
 	name = "patzikula"
@@ -747,6 +786,8 @@
 	foodtypes = VEGETABLES | MEAT | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 //Cakes/Sweets
 
@@ -805,6 +846,7 @@
 	foodtypes = SUGAR | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+
 //Misc Dishes
 /obj/item/food/sauerkraut
 	name = "sauerkraut"
@@ -816,6 +858,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/lizard_dumplings
 	name = "\improper Tiziran dumplings"
@@ -830,6 +874,8 @@
 	foodtypes = VEGETABLES | NUTS
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 /obj/item/food/steeped_mushrooms
 	name = "steeped seraka mushrooms"
@@ -844,6 +890,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/canned/jellyfish
 	name = "canned gunner jellyfish"
@@ -858,6 +906,8 @@
 	tastes = list("slime" = 1, "burning" = 1, "salt" = 1)
 	foodtypes = SEAFOOD | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/canned/desert_snails
 	name = "canned desert snails"
@@ -871,6 +921,8 @@
 	tastes = list("snails" = 1)
 	foodtypes = MEAT | GORE
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/canned/larvae
 	name = "canned bee larva"
@@ -884,6 +936,8 @@
 	tastes = list("sweet bugs" = 1)
 	foodtypes = MEAT | GORE | BUGS
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/rootbread_peanut_butter_jelly
 	name = "peanut butter and jelly rootwich"
@@ -1019,3 +1073,5 @@
 	foodtypes = NUTS | MEAT | VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit

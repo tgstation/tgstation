@@ -13,6 +13,8 @@
 	///Used as a base name while generating the icon states when stacked
 	var/stack_name = "pancakes"
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/pancakes/raw
 	name = "goopy pancake"

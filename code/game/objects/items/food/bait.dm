@@ -8,6 +8,8 @@
 	var/rod_overlay_icon_state
 	/// Is this included in the autowiki?
 	var/show_on_wiki = TRUE
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP  // Troutstation edit
 
 /obj/item/food/bait/Initialize(mapload)
 	. = ..()

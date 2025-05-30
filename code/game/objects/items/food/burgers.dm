@@ -691,3 +691,5 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit

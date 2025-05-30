@@ -50,6 +50,8 @@
 	tastes = list("beans" = 1)
 	foodtypes = VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_IN_CONTAINER | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/canned/peaches
 	name = "canned peaches"
@@ -63,6 +65,8 @@
 	)
 	tastes = list("peaches" = 7, "tin" = 1)
 	foodtypes = FRUIT | SUGAR
+	food_flags = FOOD_IN_CONTAINER | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/canned/peaches/maint
 	name = "Maintenance Peaches"
@@ -83,6 +87,8 @@
 	)
 	tastes = list("tomato" = 7, "tin" = 1)
 	foodtypes = VEGETABLES //fuck you, real life!
+	food_flags = FOOD_IN_CONTAINER | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/canned/pine_nuts
 	name = "canned pine nuts"
@@ -93,6 +99,8 @@
 	tastes = list("pine nuts" = 1)
 	foodtypes = NUTS
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_IN_CONTAINER | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/canned/envirochow
 	name = "dog eat dog envirochow"
@@ -106,6 +114,8 @@
 	tastes = list("dog food" = 5, "狗肉" = 3)
 	foodtypes = MEAT | GROSS
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_IN_CONTAINER | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/canned/envirochow/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	if(!check_buffability(user))
@@ -155,6 +165,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/salt = 5)
 	tastes = list("seafood" = 7, "tin" = 1)
 	foodtypes = SEAFOOD
+	food_flags = FOOD_IN_CONTAINER | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/canned/squid_ink/open_can(mob/user)
 	. = ..()
@@ -198,6 +210,8 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 /obj/item/food/chapslice/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_chapslice, rand(20 SECONDS, 40 SECONDS), TRUE, TRUE)
@@ -213,6 +227,8 @@
 	tastes = list("meat" = 1)
 	foodtypes = MEAT
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 // DONK DINNER: THE INNOVATIVE WAY TO GET YOUR DAILY RECOMMENDED ALLOWANCE OF SALT... AND THEN SOME!
 /obj/item/food/ready_donk
@@ -223,8 +239,9 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	tastes = list("food?" = 2, "laziness" = 1)
 	foodtypes = MEAT | JUNKFOOD
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit
 
 	/// What type of ready-donk are we warmed into?
 	var/warm_type = /obj/item/food/ready_donk/warm
@@ -368,6 +385,8 @@
 		/datum/reagent/consumable/nutriment/stabilized = 10,
 		/datum/reagent/consumable/nutriment = 2,
 	) //Won't make you fat. Will make you question your sanity.
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 ///Override for checkliked callback
 /obj/item/food/rationpack/make_edible()

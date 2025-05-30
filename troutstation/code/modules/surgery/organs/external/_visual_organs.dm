@@ -16,7 +16,6 @@
 
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
 
-
 /datum/bodypart_overlay/mutant/snout/anteater
 	feature_key = "anteater_snout"
 
@@ -24,32 +23,12 @@
 	return SSaccessories.anteater_snouts_list
 
 // let's violate the whole "visual organ" thing and add some extra functionality
-
 /obj/item/organ/anteater_snout/on_mob_insert(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	RegisterSignal(owner, COMSIG_CARBON_ATTEMPT_EAT, PROC_REF(try_eating))
+	organ_owner.add_traits(list(TRAIT_TINY_SNOUT), ORGAN_TRAIT)
 
 /obj/item/organ/anteater_snout/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	UnregisterSignal(organ_owner, COMSIG_CARBON_ATTEMPT_EAT)
+	organ_owner.remove_traits(list(TRAIT_TINY_SNOUT), ORGAN_TRAIT)
 
-/obj/item/organ/anteater_snout/proc/try_eating(mob/living/carbon/source, atom/eating)
-	SIGNAL_HANDLER
-	// handle regular food items
-	if(istype(eating, /obj/item/food))
-		var/obj/item/food/food = eating
-		if(food.w_class <= WEIGHT_CLASS_TINY)
-			return
-		if(food.food_flags & FOOD_FINGER_FOOD)
-			return
-	// maybe it has an edible component?
-	if(istype(eating, /obj/item))
-		var/obj/item/maybe_edible = eating
-		var/datum/component/edible/edible = maybe_edible.GetComponent(/datum/component/edible)
-		if(edible)
-			if(maybe_edible.w_class <= WEIGHT_CLASS_TINY)
-				return
-			if(edible.food_flags & FOOD_FINGER_FOOD)
-				return
-	source.balloon_alert(source, "won't fit in your snout!")
-	return COMSIG_CARBON_BLOCK_EAT
+

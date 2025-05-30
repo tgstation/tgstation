@@ -24,6 +24,10 @@
 	var/list/tastes
 	///Verbs used when eating this food in the to_chat messages
 	var/list/eatverbs
+	// Troutstation edit start
+	///Snout message category to retrieve from file
+	var/snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP
+	// Troutstation edit end
 	///How much reagents per bite
 	var/bite_consumption
 	///Type of atom thats spawned after eating this item

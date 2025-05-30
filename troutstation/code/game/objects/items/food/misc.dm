@@ -17,3 +17,4 @@
 	crafting_complexity = FOOD_COMPLEXITY_5
 	venue_value = FOOD_PRICE_EXOTIC
 	trash_type = /obj/item/reagent_containers/cup/glass/drinkingglass
+	food_flags = FOOD_TINY_SNOUT_EDIBLE

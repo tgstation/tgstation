@@ -717,6 +717,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Cannot be targeted by watcher overwatch
 #define TRAIT_OVERWATCH_IMMUNE "overwatch_immune"
 
+/// Troutstation mob traits!
+/// Trait given by having a tiny snout (so if you're an anteater or a horrible abomination with a tiny snout)
+#define TRAIT_TINY_SNOUT "tiny_snout"
+
 //non-mob traits
 /// Used for limb-based paralysis, where replacing the limb will fix it.
 #define TRAIT_PARALYSIS "paralysis"

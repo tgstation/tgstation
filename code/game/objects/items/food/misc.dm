@@ -12,9 +12,10 @@
 	)
 	tastes = list("watermelon" = 1)
 	foodtypes = FRUIT
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	juice_typepath = /datum/reagent/consumable/watermelonjuice
 	w_class = WEIGHT_CLASS_SMALL
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/watermelonmush
 	name = "watermelon mush"
@@ -28,9 +29,10 @@
 	)
 	tastes = list("watermelon" = 1)
 	foodtypes = FRUIT
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	juice_typepath = /datum/reagent/consumable/watermelonjuice
 	w_class = WEIGHT_CLASS_SMALL
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/holymelonslice
 	name = "holymelon slice"
@@ -44,9 +46,10 @@
 	)
 	tastes = list("holymelon" = 1)
 	foodtypes = FRUIT
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	juice_typepath = /datum/reagent/water/holywater
 	w_class = WEIGHT_CLASS_SMALL
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/holymelonmush
 	name = "holymelon mush"
@@ -60,9 +63,10 @@
 	)
 	tastes = list("holymelon" = 1)
 	foodtypes = FRUIT
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	juice_typepath = /datum/reagent/water/holywater
 	w_class = WEIGHT_CLASS_SMALL
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/barrelmelonslice
 	name = "barrelmelon slice"
@@ -76,9 +80,10 @@
 	)
 	tastes = list("beer" = 1)
 	foodtypes = FRUIT
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	juice_typepath = /datum/reagent/consumable/ethanol/beer
 	w_class = WEIGHT_CLASS_SMALL
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/barrelmelonmush
 	name = "barrelmelon mush"
@@ -92,9 +97,10 @@
 	)
 	tastes = list("beer" = 1)
 	foodtypes = FRUIT
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	juice_typepath = /datum/reagent/consumable/ethanol/beer
 	w_class = WEIGHT_CLASS_SMALL
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 
 /obj/item/food/appleslice
@@ -109,9 +115,10 @@
 	)
 	tastes = list("apple" = 1)
 	foodtypes = FRUIT
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	juice_typepath = /datum/reagent/consumable/applejuice
 	w_class = WEIGHT_CLASS_SMALL
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/hugemushroomslice
 	name = "huge mushroom slice"
@@ -125,6 +132,8 @@
 	tastes = list("mushroom" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 /obj/item/food/hugemushroomslice/Initialize(mapload)
 	. = ..()
@@ -141,6 +150,8 @@
 	foodtypes = JUNKFOOD
 	eatverbs = list("bite", "nibble", "gnaw", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/popcorn/salty
 	name = "salty popcorn"
@@ -244,6 +255,8 @@
 	tastes = list("cobwebs" = 1)
 	foodtypes = MEAT | TOXIC | BUGS
 	w_class = WEIGHT_CLASS_TINY
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/spidereggs/processed
 	name = "processed spider eggs"
@@ -254,6 +267,8 @@
 	foodtypes = MEAT | BUGS
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/spiderling
 	name = "spiderling"
@@ -267,6 +282,8 @@
 	tastes = list("cobwebs" = 1, "guts" = 2)
 	foodtypes = MEAT | TOXIC | BUGS
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 /obj/item/food/melonfruitbowl
 	name = "melon fruit bowl"
@@ -281,6 +298,8 @@
 	foodtypes = VEGETABLES|FRUIT|ORANGES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/melonkeg
 	name = "melon keg"
@@ -296,6 +315,8 @@
 	tastes = list("grain alcohol" = 1, "fruit" = 1)
 	foodtypes = FRUIT | ALCOHOL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/melonkeg/CheckParts(list/parts_list)
 	. = ..()
@@ -315,9 +336,10 @@
 	)
 	tastes = list("oats" = 3, "nuts" = 2, "honey" = 1)
 	foodtypes = GRAIN | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/powercrepe
 	name = "Powercrepe"
@@ -356,6 +378,8 @@
 	foodtypes = SUGAR|GRAIN|FRUIT|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/butter
 	name = "stick of butter"
@@ -367,6 +391,8 @@
 	w_class = WEIGHT_CLASS_SMALL
 	dog_fashion = /datum/dog_fashion/head/butter
 	var/can_stick = TRUE
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/butter/examine(mob/user)
 	. = ..()
@@ -393,9 +419,10 @@
 	desc = "delicious, golden, fatty goodness on a stick."
 	icon_state = "butteronastick"
 	trash_type = /obj/item/stack/rods
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	venue_value = FOOD_PRICE_CHEAP
 	can_stick = FALSE
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/butter/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/butterslice, 3, 3 SECONDS, table_required = TRUE, screentip_verb = "Slice")
@@ -408,6 +435,8 @@
 	tastes = list("butter" = 1)
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/onionrings
 	name = "onion rings"
@@ -428,6 +457,8 @@
 	tastes = list("pineapple" = 1)
 	foodtypes = FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_TINY
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/crab_rangoon
 	name = "crab rangoon"
@@ -454,6 +485,8 @@
 	foodtypes = VEGETABLES | DAIRY | NUTS
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/tomato_sauce
 	name = "tomato sauce"
@@ -464,6 +497,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/bechamel_sauce
 	name = "béchamel sauce"
@@ -474,6 +509,8 @@
 	foodtypes = DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/roasted_bell_pepper
 	name = "roasted bell pepper"
@@ -500,6 +537,8 @@
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/stuffed_cabbage
 	name = "stuffed cabbage"
@@ -525,6 +564,8 @@
 	tastes = list("seaweed" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 /obj/item/food/seaweedsheet/Initialize(mapload)
 	. = ..()
@@ -556,6 +597,8 @@
 	foodtypes = GRAIN|NUTS|FRUIT|SUGAR
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/onigiri
 	name = "onigiri"
@@ -570,6 +613,8 @@
 	foodtypes = VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/onigiri/Initialize(mapload)
 	. = ..()
@@ -637,6 +682,8 @@
 	foodtypes = GRAIN | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/cheese_pierogi
 	name = "cheese pierogi"
@@ -650,6 +697,8 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/meat_pierogi
 	name = "meat pierogi"
@@ -664,6 +713,8 @@
 	foodtypes = GRAIN | VEGETABLES | MEAT
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/stuffed_eggplant
 	name = "stuffed eggplant"
@@ -707,6 +758,8 @@
 	tastes = list("cooked eggplant" = 5, "potato" = 1, "baked veggies" = 2, "meat" = 4, "bechamel sauce" = 3)
 	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/candied_pineapple
 	name = "candied pineapple"
@@ -719,9 +772,10 @@
 	base_icon_state = "candied_pineapple"
 	tastes = list("sugar" = 2, "chewy pineapple" = 4)
 	foodtypes = SUGAR|FRUIT|PINEAPPLE
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_1
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/candied_pineapple/Initialize(mapload)
 	. = ..()
@@ -740,6 +794,8 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE // Troutstation edit
 
 /obj/item/food/raw_pita_bread/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/pita_bread, rand(15 SECONDS, 30 SECONDS), TRUE, TRUE)
@@ -760,6 +816,8 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE // Troutstation edit
 
 /obj/item/food/tzatziki_sauce
 	name = "tzatziki sauce"
@@ -773,6 +831,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/tzatziki_and_pita_bread
 	name = "tzatziki and pita bread"
@@ -786,6 +846,8 @@
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE // Troutstation edit
 
 /obj/item/food/grilled_beef_gyro
 	name = "grilled beef gyro"
@@ -800,6 +862,8 @@
 	foodtypes = VEGETABLES | GRAIN | MEAT
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit
 
 /obj/item/food/vegetarian_gyro
 	name = "vegetarian gyro"
@@ -822,6 +886,8 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/salt = 5)
 	tastes = list("seafood" = 3)
 	foodtypes = SEAFOOD|RAW
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/ink_sac/Initialize(mapload)
 	. = ..()

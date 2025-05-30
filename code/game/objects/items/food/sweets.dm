@@ -59,9 +59,10 @@
 	)
 	tastes = list("candy" = 1, "insects" = 1)
 	foodtypes = JUNKFOOD | SUGAR | BUGS
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_1
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 // Chocolates
 /obj/item/food/chocolatebar
@@ -203,6 +204,8 @@
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
 	w_class = WEIGHT_CLASS_TINY
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 /obj/item/food/bubblegum/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] swallows [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -346,6 +349,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	slot_flags = ITEM_SLOT_MASK
 	crafting_complexity = FOOD_COMPLEXITY_1
+
 
 /obj/item/food/spiderlollipop/Initialize(mapload)
 	. = ..()

@@ -9,9 +9,11 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/sugar = 2, /datum/reagent/consumable/coco = 2, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("chocolate" = 4, "sweetness" = 1)
 	foodtypes = JUNKFOOD | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD|FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_2
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
+
 
 /// Counter for number of chicks hatched by throwing eggs, minecraft style. Chicks will not emerge from thrown eggs if this value exceeds the MAX_CHICKENS define.
 GLOBAL_VAR_INIT(chicks_from_eggs, 0)
@@ -28,6 +30,8 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	ant_attracting = FALSE
 	decomp_type = /obj/item/food/egg/rotten
 	decomp_req_handle = TRUE //so laid eggs can actually become chickens
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 	/// How likely is it that a chicken will come out of here if we throw it?
 	var/chick_throw_prob = 13
 
@@ -223,6 +227,8 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	eatverbs = list("gulp down")
 	foodtypes = MEAT | RAW
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/rawegg/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/friedegg, rand(20 SECONDS, 35 SECONDS), TRUE, FALSE)
@@ -255,6 +261,8 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	tastes = list("egg" = 4, "meat" = 4)
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit
 
 /obj/item/food/boiledegg/rotten
 	food_reagents = list(/datum/reagent/consumable/eggrot = 10)
@@ -277,6 +285,8 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	foodtypes = MEAT | BREAKFAST | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE // Troutstation edit
 
 /obj/item/food/omelette/Initialize(mapload)
 	. = ..()
@@ -315,6 +325,8 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	foodtypes = MEAT|BREAKFAST|GRAIN|FRIED
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit
 
 /obj/item/food/eggwrap
 	name = "egg wrap"
@@ -330,6 +342,8 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	foodtypes = MEAT|VEGETABLES|FRIED
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/chawanmushi
 	name = "chawanmushi"
@@ -345,3 +359,6 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	foodtypes = MEAT | VEGETABLES
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
+

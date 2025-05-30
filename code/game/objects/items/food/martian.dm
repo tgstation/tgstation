@@ -12,6 +12,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/inferno_kimchi
 	name = "inferno kimchi"
@@ -26,6 +28,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/garlic_kimchi
 	name = "garlic kimchi"
@@ -41,6 +45,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/surimi
 	name = "surimi"
@@ -55,6 +61,8 @@
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/surimi/Initialize(mapload)
 	. = ..()
@@ -96,6 +104,8 @@
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_TINY
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/sambal
 	name = "sambal"
@@ -111,6 +121,8 @@
 	foodtypes = VEGETABLES|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/katsu_fillet
 	name = "katsu fillet"
@@ -138,6 +150,8 @@
 	tastes = list("rice" = 1)
 	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/rice_dough/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/bread/reispan, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -518,6 +532,8 @@
 	foodtypes = SEAFOOD | GRAIN | FRIED | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 /obj/item/food/takoyaki/russian
 	name = "Russian takoyaki"
@@ -562,6 +578,8 @@
 	foodtypes = GRAIN|FRIED|VEGETABLES|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Cargo stuff and batter.
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 //hey, the name literally means "grilled how you like it", it'd be crazy to not make it customisable
 /obj/item/food/okonomiyaki/Initialize(mapload)
@@ -583,6 +601,8 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/tonkatsuwurst
 	name = "tonkatsuwurst"
@@ -598,6 +618,8 @@
 	foodtypes = MEAT|VEGETABLES|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Cargo ingredients and a few steps.
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/kebab/ti_hoeh_koe
 	name = "ti hoeh koe skewer"
@@ -628,6 +650,8 @@
 	foodtypes = GRAIN | FRIED | VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/epok_epok
 	name = "epok-epok"
@@ -642,6 +666,8 @@
 	foodtypes = GRAIN | MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/roti_john
 	name = "roti john"
@@ -657,6 +683,8 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/izakaya_fries
 	name = "izakaya fries"
@@ -673,6 +701,8 @@
 	foodtypes = VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3 //Extra complexity due to cargo ingredient.
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/kurry_ok_subsando
 	name = "kurry-ok subsando"
@@ -702,6 +732,8 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/wild_duck_fries
 	name = "wild duck fries"
@@ -718,6 +750,8 @@
 	foodtypes = MEAT | VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4 //Requires a complex 3 as an ingredient.
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/little_hawaii_hotdog
 	name = "\improper Little Hawaii hotdog"
@@ -750,6 +784,8 @@
 	foodtypes = VEGETABLES | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/grilled_octopus
 	name = "grilled octopus tentacle"
@@ -764,6 +800,8 @@
 	foodtypes = SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/steak_croquette
 	name = "steak croquette"
@@ -778,6 +816,8 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 /obj/item/food/chapsilog
 	name = "chapsilog"
@@ -794,6 +834,8 @@
 	foodtypes = MEAT|GRAIN|FRIED|BREAKFAST|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit
 
 /obj/item/food/chap_hash
 	name = "chap hash"
@@ -809,6 +851,8 @@
 	foodtypes = MEAT | VEGETABLES | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/salad/agedashi_tofu
 	name = "agedashi tofu"
@@ -871,7 +915,8 @@
 	foodtypes = MEAT | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
-
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 /obj/item/food/salad/galinha_de_cabidela
 	name = "galinha de cabidela"
@@ -980,6 +1025,8 @@
 	foodtypes = MEAT|VEGETABLES|DAIRY|FRIED|BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/peking_duck_crepes
 	name = "\improper Peking duck crepes a l'orange"
@@ -1054,6 +1101,8 @@
 	foodtypes = GRAIN|FRUIT|DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/boh_loh_yah
 	name = "boh loh yah"
@@ -1068,6 +1117,8 @@
 	foodtypes = DAIRY | GRAIN | PINEAPPLE //it's funny
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/banana_fritter
 	name = "banana fritter"
@@ -1083,6 +1134,8 @@
 	foodtypes = GRAIN|FRUIT|FRIED|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3 //Fried goodness, oil scawy.
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/pineapple_fritter
 	name = "pineapple fritter"
@@ -1098,6 +1151,8 @@
 	foodtypes = GRAIN|FRUIT|FRIED|PINEAPPLE|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/kebab/kasei_dango
 	name = "kasei dango"
@@ -1131,6 +1186,8 @@
 	foodtypes = NUTS | GRAIN | DAIRY | SUGAR
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/popsicle/pineapple_pop
 	name = "frozen pineapple pop"
@@ -1229,6 +1286,8 @@
 	foodtypes = VEGETABLES|GRAIN|FRIED|SEAFOOD
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3 //batter and cargo stuff.
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/raw_ballpark_pretzel
 	name = "raw pretzel"
@@ -1243,6 +1302,8 @@
 	foodtypes = GRAIN | RAW
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/raw_ballpark_pretzel/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/ballpark_pretzel, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -1263,6 +1324,8 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_UNWIND // Troutstation edit
 
 /obj/item/food/kebab/raw_ballpark_tsukune
 	name = "raw tsukune"
@@ -1316,6 +1379,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2 //If it comes straight from cargo, should be worth paying for.
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 // 24-Volt Energy
 /obj/item/food/volt_fish

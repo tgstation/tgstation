@@ -9,7 +9,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/sugar = 3)
 	tastes = list("donut" = 1)
 	foodtypes = GRAIN|DAIRY|JUNKFOOD|SUGAR|FRIED|BREAKFAST
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD|FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
 	var/decorated_icon = "donut_homer"
@@ -17,6 +17,7 @@
 	var/extra_reagent = null
 	var/decorated_adjective = "sprinkled"
 	crafting_complexity = FOOD_COMPLEXITY_2
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_UNWIND // Troutstation edit
 
 /obj/item/food/donut/Initialize(mapload)
 	. = ..()

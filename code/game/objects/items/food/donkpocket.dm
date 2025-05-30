@@ -10,9 +10,10 @@
 	)
 	tastes = list("umami" = 2, "dough" = 2, "laziness" = 1)
 	foodtypes = GRAIN
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD|FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 	/// What type of donk pocket we're warmed into via baking or microwaving.
 	var/warm_type = /obj/item/food/donkpocket/warm

@@ -363,6 +363,8 @@
 	tastes = list("bacon" = 1)
 	foodtypes = RAW | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 /obj/item/food/meat/rawbacon/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/meat/bacon, rand(25 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -380,6 +382,8 @@
 	foodtypes = MEAT | BREAKFAST
 	crafting_complexity = FOOD_COMPLEXITY_1
 	blood_decal_type = null
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_ROLL // Troutstation edit
 
 /obj/item/food/meat/slab/gondola
 	name = "gondola meat"

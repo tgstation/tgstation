@@ -15,6 +15,8 @@
 	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/grilled_cheese
 	name = "grilled cheese"
@@ -30,6 +32,8 @@
 	foodtypes = DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/mothic_salad
 	name = "mothic salad"
@@ -41,6 +45,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit
 
 /obj/item/food/toasted_seeds
 	name = "toasted seeds"
@@ -53,6 +59,8 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/engine_fodder
 	name = "engine fodder"
@@ -70,6 +78,8 @@
 	foodtypes = JUNKFOOD|GRAIN|FRIED|NUTS|VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit
 
 /obj/item/food/mothic_pizza_dough
 	name = "mothic pizza dough"
@@ -81,6 +91,8 @@
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 //Entrees: categorising food that is 90% cheese and salad is not easy
 /obj/item/food/squeaking_stir_fry
@@ -97,6 +109,8 @@
 	foodtypes = DAIRY|VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/sweet_chili_cabbage_wrap
 	name = "sweet chili cabbage wrap"
@@ -129,6 +143,8 @@
 	foodtypes = VEGETABLES|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_5
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/baked_cheese
 	name = "baked cheese wheel"
@@ -223,6 +239,8 @@
 	foodtypes = VEGETABLES | GRAIN | RAW
 	w_class = WEIGHT_CLASS_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/raw_baked_rice/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/big_baked_rice, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -241,6 +259,8 @@
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/big_baked_rice/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
@@ -258,6 +278,8 @@
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_5
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/oven_baked_corn
 	name = "oven-baked corn"
@@ -303,6 +325,8 @@
 	foodtypes = VEGETABLES|JUNKFOOD|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 
 /obj/item/food/raw_ratatouille
 	name = "raw ratatouille" //rawtatouille?
@@ -318,6 +342,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/raw_ratatouille/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/ratatouille, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -336,6 +362,8 @@
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_LICK // Troutstation edit
 
 /obj/item/food/mozzarella_sticks
 	name = "mozzarella sticks"
@@ -350,6 +378,8 @@
 	foodtypes = GRAIN|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/raw_stuffed_peppers
 	name = "raw voltölpaprik" //voltöl = stuffed (vol = full, töl = push), paprik (from German paprika) = bell pepper
@@ -412,6 +442,8 @@
 	foodtypes = DAIRY | VEGETABLES | FRIED | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/sustenance_bar
 	name = "surplus fleet PSB"
@@ -425,6 +457,8 @@
 	tastes = list("herbs" = 1)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 /obj/item/food/sustenance_bar/neapolitan
 	name = "surplus fleet PSB- neapolitan flavour"
@@ -505,6 +539,8 @@
 	foodtypes = DAIRY | VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT // Troutstation edit
 
 /obj/item/food/salad/fleet_salad
 	name = "lörtonknusksolt" //lörton = fleet, knusksolt = salad (knusk = crisp, solt = bowl)
@@ -855,6 +891,8 @@
 	foodtypes = SUGAR | FRIED | DAIRY | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/cake/mothmallow
 	name = "mothmallow tray"
@@ -870,6 +908,7 @@
 	slice_type = /obj/item/food/cakeslice/mothmallow
 	yield = 6
 	crafting_complexity = FOOD_COMPLEXITY_2
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/cakeslice/mothmallow
 	name = "mothmallow"
@@ -883,6 +922,7 @@
 	tastes = list("vanilla" = 1, "clouds" = 1, "chocolate" = 1)
 	foodtypes = VEGETABLES | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_2
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 //misc food
 /obj/item/food/bubblegum/wake_up

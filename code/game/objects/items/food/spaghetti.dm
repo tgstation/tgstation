@@ -8,6 +8,8 @@
 	foodtypes = GRAIN
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT // Troutstation edit
 
 // Why are you putting cooked spaghetti in your pockets?
 /obj/item/food/spaghetti/make_microwaveable()

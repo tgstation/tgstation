@@ -6,12 +6,13 @@
 	food_reagents = list(/datum/reagent/monkey_powder = 30)
 	tastes = list("the jungle" = 1, "bananas" = 1)
 	foodtypes = MEAT | SUGAR
-	food_flags = FOOD_FINGER_FOOD
+	food_flags = FOOD_FINGER_FOOD | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	w_class = WEIGHT_CLASS_TINY
 	/// Mob typepath to spawn when expanding
 	var/spawned_mob = /mob/living/carbon/human/species/monkey
 	/// Whether we've been wetted and are expanding
 	var/expanding = FALSE
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SHOVE // Troutstation edit
 
 /obj/item/food/monkeycube/attempt_pickup(mob/user)
 	if(expanding)

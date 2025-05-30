@@ -9,6 +9,8 @@
 	tastes = list("dough" = 1)
 	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_0
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/dough/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/bread/plain, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -58,6 +60,8 @@
 	tastes = list("dough" = 1)
 	foodtypes = GRAIN
 	crafting_complexity = FOOD_COMPLEXITY_0
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/doughslice/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/bun, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -89,6 +93,8 @@
 	tastes = list("batter" = 1)
 	foodtypes = GRAIN | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/cakebatter/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/cake/plain, rand(70 SECONDS, 90 SECONDS), TRUE, TRUE)
@@ -105,6 +111,8 @@
 	tastes = list("dough" = 1)
 	foodtypes = GRAIN | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/piedough/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pie/plain, rand(30 SECONDS, 45 SECONDS), TRUE, TRUE)
@@ -122,6 +130,8 @@
 	tastes = list("raw pastry" = 1)
 	foodtypes = GRAIN | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_1
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SMUSH // Troutstation edit
 
 /obj/item/food/rawpastrybase/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/pastrybase, rand(20 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -136,3 +146,6 @@
 	tastes = list("pastry" = 1)
 	foodtypes = GRAIN | DAIRY
 	crafting_complexity = FOOD_COMPLEXITY_2
+	food_flags = FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
+	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE // Troutstation edit
+

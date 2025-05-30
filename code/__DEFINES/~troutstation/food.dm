@@ -1,0 +1,16 @@
+#define SNOUT_EAT_MESSAGE_CATEGORY_SLURP "snout_eat_slurp"
+#define SNOUT_EAT_MESSAGE_CATEGORY_LICK "snout_eat_lick"
+#define SNOUT_EAT_MESSAGE_CATEGORY_SMUSH "snout_eat_smush"
+#define SNOUT_EAT_MESSAGE_CATEGORY_CRUMBLE "snout_eat_crumble"
+#define SNOUT_EAT_MESSAGE_CATEGORY_UNWIND "snout_eat_unwind"
+#define SNOUT_EAT_MESSAGE_CATEGORY_SHOVE "snout_eat_shove"
+#define SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT "snout_eat_neat_fit"
+#define SNOUT_EAT_MESSAGE_CATEGORY_DECONSTRUCT "snout_eat_deconstruct"
+#define SNOUT_EAT_MESSAGE_CATEGORY_ROLL "snout_eat_roll"
+
+#define SNOUT_EAT_MESSAGE_BROADCAST_SUFFIX "_broadcast"
+
+#define SNOUT_EAT_QUIETLY_LIST list( \
+	SNOUT_EAT_MESSAGE_CATEGORY_SLURP, \
+	SNOUT_EAT_MESSAGE_CATEGORY_NEAT_FIT \
+)

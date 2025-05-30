@@ -177,12 +177,17 @@ GLOBAL_LIST_INIT(food_buffs, list(
 #define FOOD_NO_EXAMINE (1<<2)
 /// This food item doesn't track bitecounts, use responsibly.
 #define FOOD_NO_BITECOUNT (1<<3)
+// Troutstation edit start
+/// This food can be eaten by tiny snouts (so, by anteaters)
+#define FOOD_TINY_SNOUT_EDIBLE (1<<4)
+// Troutstation edit end
 
 DEFINE_BITFIELD(food_flags, list(
 	"FOOD_FINGER_FOOD" = FOOD_FINGER_FOOD,
 	"FOOD_IN_CONTAINER" = FOOD_IN_CONTAINER,
 	"FOOD_NO_EXAMINE" = FOOD_NO_EXAMINE,
 	"FOOD_NO_BITECOUNT" = FOOD_NO_BITECOUNT,
+	"FOOD_TINY_SNOUT_EDIBLE" = FOOD_TINY_SNOUT_EDIBLE,
 ))
 
 ///Define for return value of the after_eat callback that will call OnConsume if it hasn't already.

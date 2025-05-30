@@ -1,0 +1,117 @@
+{
+	"snout_eat_slurp": [
+		"You slurp up %FOOD into your @pick(snout).",
+		"You casually slurp up %FOOD into your @pick(snout).",
+		"You discreetly slurp up %FOOD."
+	],
+	"snout_eat_slurp_broadcast": [
+		"slurps up %FOOD into %PRONOUN_their @pick(snout).",
+		"slurps up %FOOD into %PRONOUN_their @pick(snout) surprisingly quietly."
+	],
+
+	"snout_eat_lick": [
+		"You awkwardly slurp up %FOOD.",
+		"You very obviously lick up %FOOD."
+	],
+	"snout_eat_lick_broadcast": [
+		"licks up %FOOD.",
+		"pokes their tongue around %FOOD."
+	],
+
+	"snout_eat_smush": [
+		"You smush %FOOD into your @pick(snout).",
+		"You awkwardly smush %FOOD into your @pick(snout)."
+	],
+	"snout_eat_smush_broadcast": [
+		"smushes %FOOD into %PRONOUN_their @pick(snout).",
+		"smushes %FOOD into %PRONOUN_their @pick(snout) without much grace."
+	],
+
+	"snout_eat_crumble": [
+		"You crumble bits off %FOOD and lick them up.",
+		"You awkwardly crumble %FOOD and lick it up."
+	],
+	"snout_eat_crumble_broadcast": [
+		"crumbles %FOOD and licks it a bunch.",
+		"awkwardly crumbles %FOOD and licks it up."
+	],
+
+	"snout_eat_unwind": [
+		"You unwind %FOOD and push it into your @pick(snout).",
+		"You delicately unwind %FOOD and tuck it into your @pick(snout)."
+	],
+	"snout_eat_unwind_broadcast": [
+		"unwinds %FOOD and pushes it into %PRONOUN_their @pick(snout).",
+		"unwinds %FOOD and tucks it into %PRONOUN_their @pick(snout)."
+	],
+
+	"snout_eat_shove": [
+		"You awkwardly shove %FOOD up your @pick(snout).",
+		"You wince as you shove %FOOD up your @pick(snout).",
+		"You shove %FOOD up your @pick(snout)."
+	],
+	"snout_eat_shove_broadcast": [
+		"awkwardly shoves %FOOD up %PRONOUN_their @pick(snout).",
+		"shoves %FOOD up %PRONOUN_their @pick(snout) and it barely fits."
+	],
+
+	"snout_eat_neat_fit": [
+		"You note %FOOD is surprisingly well-proportioned for your @pick(snout) as you poke it in.",
+		"You easily slide %FOOD into your @pick(snout).",
+		"Amazingly, %FOOD fits perfectly into your @pick(snout)."
+	],
+	"snout_eat_neat_fit_broadcast": [
+		"easily slides %FOOD into %PRONOUN_their @pick(snout).",
+		"has a surprisingly easy time sliding %FOOD into %PRONOUN_their @pick(snout).",
+		"slides %FOOD into %PRONOUN_their @pick(snout) with ease."
+	],
+
+	"snout_eat_deconstruct": [
+		"You tear %FOOD apart, awkwardly shoving bits of it into your @pick(snout).",
+		"You pull apart %FOOD to fit it into your @pick(snout)."
+	],
+	"snout_eat_deconstruct_broadcast": [
+		"tears %FOOD apart, awkwardly shoving bits of it into %PRONOUN_their @pick(snout).",
+		"awkwardly tears %FOOD apart, shoving bits of it into %PRONOUN_their @pick(snout).",
+		"pulls apart %FOOD to fit it into %PRONOUN_their @pick(snout)."
+	],
+
+	"snout_eat_roll": [
+		"You roll %FOOD up and shove it into your @pick(snout).",
+		"You roll %FOOD up and shove it into your @pick(snout), and it just fits."
+	],
+	"snout_eat_roll_broadcast": [
+		"rolls %FOOD up and shoves it into %PRONOUN_their @pick(snout)."
+	],
+
+	"snout": [
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snout",
+		"snoofter",
+		"rostrum",
+		"snooter",
+		"probiscis",
+		"honker",
+		"snuffler",
+		"snoot",
+		"sniffer"
+	]
+}
