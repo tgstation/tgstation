@@ -47,7 +47,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_greytide = 1,
 		/obj/item/storage/box/matches = 10,
 		/obj/item/lighter/greyscale = 4,
-		/obj/item/storage/fancy/rollingpapers = 5
+		/obj/item/storage/fancy/rollingpapers = 5,
 	)
 	initial_language_holder = /datum/language_holder/syndicate
 
