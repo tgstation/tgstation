@@ -82,6 +82,7 @@ SUBSYSTEM_DEF(research)
 	new /datum/techweb/oldstation
 	autosort_categories()
 	error_design = new
+	error_node = new
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/research/fire()
@@ -362,5 +363,4 @@ SUBSYSTEM_DEF(research)
 		for(var/datum/mind/alien in xeno_team.members)
 			if(istype(get_area(alien.current), /area/station/science/xenobiology/cell)  && alien.current.stat != DEAD)
 				xeno_count++
-	priority_announce(xeno_count)
 	return xeno_count
