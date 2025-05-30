@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - qol: "Replace hardcoded atmos values for virtual domain turfs"
