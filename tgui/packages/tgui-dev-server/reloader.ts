@@ -74,9 +74,8 @@ async function onCacheRootFound(cacheRoot: string): Promise<void> {
 
 export async function reloadByondCache(bundleDir: string): Promise<void> {
   const cacheRoot = await findCacheRoot();
-  if (!cacheRoot) {
-    return;
-  }
+  if (!cacheRoot) return;
+
   // Find tmp folders in cache
   const cacheDirs = await resolveGlob(cacheRoot, 'tmp*');
   if (cacheDirs.length === 0) {

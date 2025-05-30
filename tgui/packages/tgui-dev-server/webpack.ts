@@ -4,7 +4,6 @@
  * @license MIT
  */
 
-import fs from 'node:fs';
 import { createRequire } from 'node:module';
 
 import { loadSourceMaps, setupLink } from './link/server';
@@ -35,10 +34,9 @@ class RspackCompiler {
     // and retrieve all necessary dependencies.
     const requireFromRoot = createRequire(import.meta.dirname + '/../../..');
 
-    const rspack: RspackImport = await requireFromRoot('@rspack/core');
-
-    const createConfig = await requireFromRoot('./rspack.config.cjs');
-    const createDevConfig = await requireFromRoot('./rspack.config-dev.cjs');
+    const rspack: RspackImport = requireFromRoot('@rspack/core');
+    const createConfig = requireFromRoot('./rspack.config.cjs');
+    const createDevConfig = requireFromRoot('./rspack.config-dev.cjs');
 
     const config = createConfig({}, options);
     const devConfig = createDevConfig({}, options);
@@ -62,10 +60,10 @@ class RspackCompiler {
     const compiler = this.rspack.rspack(this.config);
     // Clear garbage before compiling
     compiler.hooks.watchRun.tapPromise('tgui-dev-server', async () => {
-      const files = await resolveGlob(this.bundleDir, './*.hot-update.*');
+      const files = await resolveGlob(this.bundleDir, '*.hot-update.*');
       logger.log(`clearing garbage (${files.length} files)`);
       for (let file of files) {
-        fs.unlinkSync(file);
+        await Bun.file(file).delete();
       }
       logger.log('compiling');
     });
