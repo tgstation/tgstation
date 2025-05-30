@@ -43,16 +43,32 @@
 		)
 	)
 
-///Opens your latest admin ticket.
-/datum/escape_menu/proc/view_latest_ticket()
-	client?.view_latest_ticket()
-
-///Checks for any admin notices.
-/datum/escape_menu/proc/admin_notice()
-	client?.admin_notice()
+	if(CONFIG_GET(flag/see_own_notes))
+		page_holder.give_screen_object(
+			new /atom/movable/screen/escape_menu/home_button(
+				null,
+				/* hud_owner = */ null,
+				src,
+				/* button_text = */ "See Admin Remarks",
+				/* offset = */ 4,
+				CALLBACK(src, PROC_REF(see_remarks)),
+			)
+		)
 
 /datum/escape_menu/proc/create_ticket()
 	if(!(/client/verb/adminhelp in client?.verbs))
 		return
 	client?.adminhelp()
+	qdel(src)
+
+/datum/escape_menu/proc/view_latest_ticket()
+	client?.view_latest_ticket()
+	qdel(src)
+
+/datum/escape_menu/proc/admin_notice()
+	client?.admin_notice()
+	qdel(src)
+
+/datum/escape_menu/proc/see_remarks()
+	client?.self_notes()
 	qdel(src)
