@@ -6,12 +6,12 @@
  * https://github.com/stylemistake/juke-build
  */
 
-import { bun } from "./lib/bun";
-import { downloadFile } from "./lib/download";
-import { DreamDaemon, DreamMaker, NamedVersionFile } from "./lib/byond";
 import Bun from "bun";
 import fs from "node:fs";
 import Juke from "./juke/index.js";
+import { bun } from "./lib/bun";
+import { DreamDaemon, DreamMaker, NamedVersionFile } from "./lib/byond";
+import { downloadFile } from "./lib/download";
 import { formatDeps } from "./lib/helpers";
 import { prependDefines } from "./lib/tgs";
 
@@ -97,7 +97,7 @@ export const CutterTarget = new Juke.Target({
 export const IconCutterTarget = new Juke.Target({
   parameters: [ForceRecutParameter],
   dependsOn: () => [CutterTarget],
-  inputs: ({ get }) => {
+  inputs: () => {
     const standard_inputs = [
       `icons/**/*.png.toml`,
       `icons/**/*.dmi.toml`,
