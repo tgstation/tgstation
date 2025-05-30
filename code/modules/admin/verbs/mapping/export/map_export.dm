@@ -125,7 +125,7 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 	maxz,
 	save_flag = ALL,
 	shuttle_area_flag = SAVE_SHUTTLEAREA_DONTCARE,
-	list/obj_blacklist = typesof(/obj/effect),
+	list/obj_blacklist = typecacheof(/obj/effect),
 )
 	GLOB.object_export_id = 0
 
@@ -137,9 +137,9 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 		CRASH("Non-list being used as object blacklist for map writing")
 
 	// we want to keep crayon writings, blood splatters, cobwebs, etc.
-	obj_blacklist -= typesof(/obj/effect/decal)
-	obj_blacklist -= typesof(/obj/effect/turf_decal)
-	obj_blacklist -= typesof(/obj/effect/landmark) // most landmarks get deleted except for latejoin arrivals shuttle
+	obj_blacklist -= typecacheof(/obj/effect/decal)
+	obj_blacklist -= typecacheof(/obj/effect/turf_decal)
+	obj_blacklist -= typecacheof(/obj/effect/landmark) // most landmarks get deleted except for latejoin arrivals shuttle
 
 	//Step 0: Calculate the amount of letters we need (26 ^ n > turf count)
 	var/turfs_needed = width * height
