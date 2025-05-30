@@ -158,7 +158,7 @@
 	if(!tool.tool_behaviour)
 		return ..()
 	// Only antags are given the training and knowledge to disassemble this thing.
-	if(!is_special_character(user))
+	if(!user.is_antag())
 		if(user.combat_mode)
 			return ITEM_INTERACT_SKIP_TO_ATTACK
 		balloon_alert(user, "you can't find an obvious maintenance hatch!")

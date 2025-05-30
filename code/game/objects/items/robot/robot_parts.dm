@@ -321,7 +321,7 @@
 			brainmob.mind.transfer_to(O)
 			playsound(O.loc, 'sound/mobs/non-humanoids/cyborg/liveagain.ogg', 75, TRUE)
 
-			if(O.mind && O.mind.special_role)
+			if(O.is_antag())
 				to_chat(O, span_userdanger("You have been robotized!"))
 				to_chat(O, span_danger("You must obey your silicon laws and master AI above all else. Your objectives will consider you to be dead."))
 

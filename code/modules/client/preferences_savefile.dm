@@ -418,7 +418,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	var/list/output = list()
 
 	for (var/role in input_be_special)
-		if (role in GLOB.special_roles)
+		if (role in get_all_antag_flags())
 			output += role
 
 	return output.len == input_be_special.len ? input_be_special : output

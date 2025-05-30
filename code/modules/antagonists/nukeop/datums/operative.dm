@@ -2,7 +2,7 @@
 	name = ROLE_NUCLEAR_OPERATIVE
 	roundend_category = "syndicate operatives" //just in case
 	antagpanel_category = ANTAG_GROUP_SYNDICATE
-	job_rank = ROLE_OPERATIVE
+	pref_flag = ROLE_OPERATIVE
 	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	show_to_ghosts = TRUE
@@ -16,6 +16,8 @@
 	var/always_new_team = FALSE
 	/// Should the user be moved to default spawnpoint after being granted this datum.
 	var/send_to_spawnpoint = TRUE
+
+	var/job_type = /datum/job/nuclear_operative
 	/// The DEFAULT outfit we will give to players granted this datum
 	var/nukeop_outfit = /datum/outfit/syndicate
 
@@ -23,6 +25,7 @@
 
 	/// In the preview icon, the nukies who are behind the leader
 	var/preview_outfit_behind = /datum/outfit/nuclear_operative
+
 	/// In the preview icon, a nuclear fission explosive device, only appearing if there's an icon state for it.
 	var/nuke_icon_state = "nuclearbomb_base"
 
@@ -40,6 +43,7 @@
 	give_alias()
 	forge_objectives()
 	. = ..()
+	owner.set_assigned_role(SSjob.get_job_type(job_type))
 	equip_op()
 	if(send_to_spawnpoint)
 		move_to_spawnpoint()
@@ -95,7 +99,6 @@
 	nuke_team = new_team
 
 /datum/antagonist/nukeop/admin_add(datum/mind/new_owner,mob/admin)
-	new_owner.set_assigned_role(SSjob.get_job_type(/datum/job/nuclear_operative))
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has nuke op'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has nuke op'ed [key_name(new_owner)].")
@@ -212,3 +215,8 @@
 		team_number = nuke_team.members.Find(owner)
 
 	return GLOB.nukeop_start[((team_number - 1) % GLOB.nukeop_start.len) + 1]
+
+/datum/antagonist/nukeop/on_respawn(mob/new_character)
+	new_character.forceMove(pick(GLOB.nukeop_start))
+	equip_op()
+	return TRUE
