@@ -1,6 +1,5 @@
 /datum/escape_menu/proc/show_home_page()
 	page_holder.give_protected_screen_object(give_escape_menu_title())
-	page_holder.give_protected_screen_object(give_escape_menu_details())
 	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/home_button(
 			null,

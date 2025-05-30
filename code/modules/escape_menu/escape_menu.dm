@@ -105,6 +105,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	PRIVATE_PROC(TRUE)
 
 	base_holder.give_protected_screen_object(dim_screen)
+	base_holder.give_protected_screen_object(give_escape_menu_details())
 
 /datum/escape_menu/proc/open_home_page()
 	PRIVATE_PROC(TRUE)
