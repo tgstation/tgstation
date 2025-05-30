@@ -171,7 +171,7 @@
 	for(var/i in 1 to areas_to_move.len)
 		CHECK_TICK
 		var/area/internal_area = areas_to_move[i]
-		internal_area.afterShuttleMove(new_parallax_dir, istype(underlying_areas[1], /area/shuttle/transit) ? 0.1 : 6) //areas
+		internal_area.afterShuttleMove(new_parallax_dir, istype(fallback_area, /area/shuttle/transit) ? 0.1 : 6) //areas
 
 	for(var/i in 1 to old_turfs.len)
 		CHECK_TICK

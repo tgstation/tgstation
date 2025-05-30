@@ -44168,7 +44168,8 @@
 /obj/effect/mapping_helpers/airlock/autoname,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/textured,
 /area/station/maintenance/radshelter/civil)
 "ofm" = (
 /obj/structure/chair/pew/left,
@@ -60181,7 +60182,8 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/landmark/navigate_destination{
-	location = "Mining Office"
+	location = "Mining Office";
+	pixel_x = -2
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 2
@@ -64657,6 +64659,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 2
 	},
+/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/miningoffice)
 "uQb" = (

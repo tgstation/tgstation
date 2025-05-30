@@ -230,11 +230,8 @@ All ShuttleMove procs go here
 					INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), ONE_ATMOSPHERE)
 					break
 				// Snowflake to get landing in space working
-				if(is_mining_level(local_turf.z))
+				if(is_mining_level(local_turf.z) || is_reserved_level(local_turf.z))
 					cycle_pump.docked_side_pressure = 0
-				// Snowflake to get landing in hanger working
-				if(is_station_level(local_turf.z))
-					INVOKE_ASYNC(cycle_pump, TYPE_PROC_REF(/obj/machinery/atmospherics/components/unary/airlock_pump, on_dock_request), ONE_ATMOSPHERE)
 
 /obj/machinery/camera/hypotheticalShuttleMove(rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()
