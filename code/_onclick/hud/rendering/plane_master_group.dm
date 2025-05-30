@@ -106,7 +106,7 @@
 /datum/plane_master_group/proc/prep_plane_instance(atom/movable/screen/plane_master/instance)
 	return
 
-GLOBAL_VAR_INIT(forced_multiz_quality, 1)
+GLOBAL_VAR_INIT(forced_multiz_quality, 2)
 
 // It would be nice to setup parallaxing for stairs and things when doing this
 // So they look nicer. if you can't it's all good, if you think you can sanely look at monster's work

@@ -3313,6 +3313,14 @@
 	},
 /turf/open/floor/iron/cafeteria,
 /area/station/command/heads_quarters/cmo)
+"bjU" = (
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters";
+	dir = 1
+	},
+/turf/open/floor/plating/reinforced,
+/area/station/engineering/supermatter)
 "bkc" = (
 /obj/machinery/computer/operating,
 /obj/effect/turf_decal/tile/yellow,
@@ -20776,6 +20784,11 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 4
 	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "gUh" = (
@@ -23107,6 +23120,11 @@
 /area/station/maintenance/floor3/starboard/aft)
 "hEn" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "hEo" = (
@@ -60336,6 +60354,11 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/junction{
 	dir = 4
 	},
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters";
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "tro" = (
@@ -65788,6 +65811,10 @@
 "vic" = (
 /obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible,
 /obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/machinery/door/poddoor/shutters/radiation/preopen{
+	id = "engsm";
+	name = "Radiation Chamber Shutters"
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/floor4/port/aft)
 "vie" = (
@@ -313016,7 +313043,7 @@ uua
 uDN
 srs
 uyz
-uqp
+bjU
 abR
 mZK
 wKY
@@ -313530,7 +313557,7 @@ pkJ
 sst
 kAy
 jmW
-uqp
+bjU
 bLC
 mZK
 hrr
@@ -316341,12 +316368,12 @@ auS
 xbk
 xbk
 xbk
-gCS
-gCS
-gCS
-gCS
-gCS
-gCS
+xbk
+xbk
+xbk
+xbk
+xbk
+xbk
 xbk
 xbk
 wDx
@@ -316376,12 +316403,12 @@ mhJ
 wjt
 xbk
 xbk
-gCS
-gCS
-gCS
-gCS
-gCS
-gCS
+xbk
+xbk
+xbk
+xbk
+xbk
+xbk
 xbk
 xbk
 xbk
@@ -447410,6 +447437,16 @@ auS
 auS
 auS
 auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
 xbk
 xbk
 xbk
@@ -447437,26 +447474,16 @@ xbk
 xbk
 xbk
 xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
 auS
 auS
 auS
@@ -447667,6 +447694,17 @@ auS
 auS
 auS
 auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
 xbk
 xbk
 xbk
@@ -447692,28 +447730,17 @@ xbk
 xbk
 xbk
 xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
 auS
 auS
 auS
@@ -447925,6 +447952,27 @@ auS
 auS
 auS
 auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+auS
+xbk
+xbk
+xbk
+xbk
 xbk
 xbk
 xbk
@@ -447942,34 +447990,13 @@ auS
 auS
 auS
 auS
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
 auS
 auS
 auS
 auS
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
-xbk
+auS
+auS
+auS
 auS
 auS
 auS
