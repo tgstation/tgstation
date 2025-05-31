@@ -1,4 +1,4 @@
-/atom/movable/screen/escape_menu/home_button/admin_help
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help
 	VAR_PRIVATE
 		current_blink = FALSE
 		is_blinking = FALSE
@@ -6,13 +6,14 @@
 
 		blink_interval = 0.4 SECONDS
 
-/atom/movable/screen/escape_menu/home_button/admin_help/Initialize(
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/Initialize(
 	mapload,
 	datum/hud/hud_owner,
 	datum/escape_menu/escape_menu,
 	button_text,
 	offset,
 	on_click_callback,
+	pixel_x,
 )
 	. = ..()
 
@@ -25,7 +26,7 @@
 		if (!current_ticket?.player_replied)
 			begin_processing()
 
-/atom/movable/screen/escape_menu/home_button/admin_help/Click(location, control, params)
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/Click(location, control, params)
 	if (!enabled())
 		return
 
@@ -38,7 +39,7 @@
 	else
 		client?.adminhelp()
 
-/atom/movable/screen/escape_menu/home_button/admin_help/proc/has_open_adminhelp()
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/proc/has_open_adminhelp()
 	var/client/client = escape_menu.client
 
 	var/datum/admin_help/current_ticket = client?.current_ticket
@@ -55,18 +56,18 @@
 
 	return TRUE
 
-/atom/movable/screen/escape_menu/home_button/admin_help/proc/on_admin_help_received()
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/proc/on_admin_help_received()
 	SIGNAL_HANDLER
 
 	begin_processing()
 
-/atom/movable/screen/escape_menu/home_button/admin_help/proc/on_client_verb_changed(client/source, list/verbs_changed)
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/proc/on_client_verb_changed(client/source, list/verbs_changed)
 	SIGNAL_HANDLER
 
 	if (/client/verb/adminhelp in verbs_changed)
 		home_button_text.update_text()
 
-/atom/movable/screen/escape_menu/home_button/admin_help/proc/begin_processing()
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/proc/begin_processing()
 	if (is_blinking)
 		return
 
@@ -75,7 +76,7 @@
 	START_PROCESSING(SSescape_menu, src)
 	home_button_text.update_text()
 
-/atom/movable/screen/escape_menu/home_button/admin_help/proc/end_processing()
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/proc/end_processing()
 	if (!is_blinking)
 		return
 
@@ -84,17 +85,17 @@
 	STOP_PROCESSING(SSescape_menu, src)
 	home_button_text.update_text()
 
-/atom/movable/screen/escape_menu/home_button/admin_help/proc/connect_ticket(datum/admin_help/admin_help)
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/proc/connect_ticket(datum/admin_help/admin_help)
 	ASSERT(istype(admin_help))
 
 	RegisterSignal(admin_help, COMSIG_ADMIN_HELP_REPLIED, PROC_REF(on_admin_help_replied))
 
-/atom/movable/screen/escape_menu/home_button/admin_help/proc/on_admin_help_replied()
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/proc/on_admin_help_replied()
 	SIGNAL_HANDLER
 
 	end_processing()
 
-/atom/movable/screen/escape_menu/home_button/admin_help/enabled()
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/enabled()
 	if (!..())
 		return FALSE
 
@@ -103,7 +104,7 @@
 
 	return TRUE
 
-/atom/movable/screen/escape_menu/home_button/admin_help/process(seconds_per_tick)
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/process(seconds_per_tick)
 	if (world.time - last_blink_time < blink_interval)
 		return
 
@@ -111,19 +112,19 @@
 	last_blink_time = world.time
 	home_button_text.update_text()
 
-/atom/movable/screen/escape_menu/home_button/admin_help/text_color()
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/text_color()
 	if (!enabled())
 		return ..()
 
 	return current_blink ? "red" : ..()
 
-/atom/movable/screen/escape_menu/home_button/admin_help/MouseEntered(location, control, params)
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/MouseEntered(location, control, params)
 	. = ..()
 
 	if (is_blinking)
 		openToolTip(usr, src, params, content = "An admin is trying to talk to you!")
 
-/atom/movable/screen/escape_menu/home_button/admin_help/MouseExited(location, control, params)
+/atom/movable/screen/escape_menu/home_button/ordered/admin_help/MouseExited(location, control, params)
 	. = ..()
 
 	closeToolTip(usr)

@@ -1,7 +1,7 @@
 /datum/escape_menu/proc/show_home_page()
 	page_holder.give_protected_screen_object(give_escape_menu_title())
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/home_button(
+		new /atom/movable/screen/escape_menu/home_button/ordered(
 			null,
 			/* hud_owner = */ null,
 			src,
@@ -12,7 +12,7 @@
 	)
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/home_button(
+		new /atom/movable/screen/escape_menu/home_button/ordered(
 			null,
 			/* hud_owner = */ null,
 			src,
@@ -23,7 +23,7 @@
 	)
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/home_button(
+		new /atom/movable/screen/escape_menu/home_button/ordered(
 			null,
 			/* hud_owner = */ null,
 			src,
@@ -34,7 +34,7 @@
 	)
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/home_button/admin_help(
+		new /atom/movable/screen/escape_menu/home_button/ordered/admin_help(
 			null,
 			/* hud_owner = */ null,
 			src,
@@ -44,12 +44,23 @@
 	)
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/home_button/leave_body(
+		new /atom/movable/screen/escape_menu/home_button/ordered(
+			null,
+			/* hud_owner = */ null,
+			src,
+			"Player List",
+			/* offset = */ 5,
+			CALLBACK(src, PROC_REF(open_player_list)),
+		)
+	)
+
+	page_holder.give_screen_object(
+		new /atom/movable/screen/escape_menu/home_button/ordered/leave_body(
 			null,
 			/* hud_owner = */ null,
 			src,
 			"Leave Body",
-			/* offset = */ 5,
+			/* offset = */ 6,
 			CALLBACK(src, PROC_REF(open_leave_body)),
 		)
 	)
