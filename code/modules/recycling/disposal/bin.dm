@@ -1,5 +1,8 @@
 // Disposal bin and Delivery chute.
-
+GLOBAL_VAR_INIT(animals_spawned, 0)
+#define CONTAINS_ANIMAL_CHANCE 5
+#define MAXIMUM_ANIMAL_SPAWNS 1
+#define ANIMAL_SHAKE_CHANCE 10
 #define SEND_PRESSURE (0.05*ONE_ATMOSPHERE)
 
 /obj/machinery/disposal
@@ -32,6 +35,12 @@
 	var/last_sound = 0
 	/// The stored disposal construction pipe
 	var/obj/structure/disposalconstruct/stored
+	///a weighted list of all the possible animals we can have
+	var/static/list/weighted_animal_list = list(
+		/mob/living/basic/stoat = 1,
+	)
+	/// do we contain an animal?
+	var/contained_animal
 
 /datum/armor/machinery_disposal
 	melee = 25
@@ -67,6 +76,8 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
+	if(mapload)
+		spawn_contained_animal()
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /// Checks if there a connecting trunk diposal pipe under the disposal
@@ -505,10 +516,17 @@
 	else
 		return ..()
 
+/obj/machinery/disposal/bin/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(contained_animal)
+		release_animal()
+
 /obj/machinery/disposal/bin/flush()
 	..()
 	full_pressure = FALSE
 	pressure_charging = TRUE
+	if(contained_animal)
+		release_animal()
 	update_appearance()
 
 /obj/machinery/disposal/bin/update_overlays()
@@ -548,6 +566,10 @@
 //timed process
 //charge the gas reservoir and perform flush if ready
 /obj/machinery/disposal/bin/process(seconds_per_tick)
+
+	if(contained_animal)
+		Shake(duration = 2 SECONDS)
+
 	if(machine_stat & BROKEN) //nothing can happen if broken
 		return
 
@@ -698,4 +720,20 @@
 	to_chat(user, span_notice("You sweep the pile of garbage into [src]."))
 	playsound(broom.loc, 'sound/items/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
+/obj/machinery/disposal/proc/spawn_contained_animal()
+	if(!prob(CONTAINS_ANIMAL_CHANCE) || GLOB.animals_spawned >= MAXIMUM_ANIMAL_SPAWNS)
+		return
+	contained_animal = pick_weight(weighted_animal_list)
+	GLOB.animals_spawned++
+
+/obj/machinery/disposal/bin/proc/release_animal()
+	var/list/open_turfs = get_adjacent_open_turfs(src)
+	var/turf/final_turf = length(open_turfs) ? pick(open_turfs) : drop_location()
+	var/mob/living/startled_animal = new contained_animal(final_turf)
+	visible_message(span_notice("A startled [startled_animal] jumps out of [src]"))
+
+
 #undef SEND_PRESSURE
+#undef CONTAINS_ANIMAL_CHANCE
+#undef ANIMAL_SHAKE_CHANCE
+#undef MAXIMUM_ANIMAL_SPAWNS

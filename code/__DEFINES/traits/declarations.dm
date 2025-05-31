@@ -60,6 +60,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLUMSY "clumsy"
 /// Trait that means you are capable of holding items in some form
 #define TRAIT_CAN_HOLD_ITEMS "can_hold_items"
+/// Trait that means you're capable of throwing things
+#define TRAIT_CAN_THROW_ITEMS "can_throw_items"
 /// Trait which lets you clamber over a barrier
 #define TRAIT_FENCE_CLIMBER "can_climb_fences"
 /// means that you can't use weapons with normal trigger guards.
@@ -1497,4 +1499,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait given when we escape into our shell
 #define TRAIT_SHELL_RETREATED "shell_retreated"
+
+/// Trait given to colorblind mobs
+#define TRAIT_COLORBLIND "colorblind"
+
 // END TRAIT DEFINES

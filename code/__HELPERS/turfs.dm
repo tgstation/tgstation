@@ -305,6 +305,8 @@ Turf and target are separate in case you want to teleport some distance from a t
  *   but using ratios (as implemented in the proc) is the recommended approach
  */
 /proc/get_loc_from_mousepos(mousepos_x, mousepos_y, sizex, sizey, client/viewing_client)
+	if(sizex == 0 || sizey == 0) //contexts where this information is not availible should return 0 in size, aka tgui passthrough
+		return list(null, 0, 0)
 	var/turf/baseloc = get_turf(viewing_client.eye)
 	var/list/actual_view = getviewsize(viewing_client ? viewing_client.view : world.view)
 

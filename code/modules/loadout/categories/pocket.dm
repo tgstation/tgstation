@@ -55,14 +55,10 @@
 
 /datum/loadout_item/pocket_items/plush/carp
 	name = "Plush (Carp)"
-	ui_icon = 'icons/obj/fluff/previews.dmi'
-	ui_icon_state = "plushie_carp"
 	item_path = /obj/item/toy/plush/carpplushie
 
 /datum/loadout_item/pocket_items/plush/lizard_greyscale
 	name = "Plush (Lizard, Colorable)"
-	ui_icon = 'icons/obj/fluff/previews.dmi'
-	ui_icon_state = "plushie_lizard"
 	item_path = /obj/item/toy/plush/lizard_plushie/greyscale
 
 /datum/loadout_item/pocket_items/plush/lizard_random
@@ -98,9 +94,11 @@
 
 /datum/loadout_item/pocket_items/plush/snake
 	name = "Plush (Snake)"
-	ui_icon = 'icons/obj/fluff/previews.dmi'
-	ui_icon_state = "plushie_snake"
 	item_path = /obj/item/toy/plush/snakeplushie
+
+/datum/loadout_item/pocket_items/plush/horse
+	name = "Plush (Horse)"
+	item_path = /obj/item/toy/plush/horse
 
 /datum/loadout_item/pocket_items/dice
 	group = "Dice"

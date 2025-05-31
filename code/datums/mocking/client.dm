@@ -58,3 +58,6 @@
 
 /datum/client_interface/proc/get_award_status(achievement_type, mob/user, value = 1)
 	return FALSE
+
+/datum/client_interface/proc/set_fullscreen(logging_in = FALSE)
+	return TRUE
