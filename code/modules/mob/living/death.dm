@@ -110,8 +110,8 @@
 /atom/movable/proc/dust_animation(atom/anim_loc = src.loc)
 	if(isnull(anim_loc)) // the effect breaks if we have a null loc
 		return
-	var/obj/effect/temp_visual/dust_animation_filter/dustfx = new(anim_loc, REF(src))
-	add_filter("dust_animation", 1, displacement_map_filter(render_source = dustfx.render_target, size = 256))
+	var/obj/effect/temp_visual/dust_animation_filter/dustfx = new(anim_loc)
+	add_filter("dust_animation", 1, displacement_map_filter(render_source = dustfx, size = 256))
 	add_filter("dust_color", 1, color_matrix_filter())
 	transition_filter("dust_color", color_matrix_filter(COLOR_MATRIX_GRAYSCALE), DUST_ANIMATION_TIME - 0.3 SECONDS)
 	animate(src, alpha = 0, time = DUST_ANIMATION_TIME - 0.1 SECONDS, easing = SINE_EASING | EASE_IN)
@@ -123,7 +123,7 @@
 	duration = DUST_ANIMATION_TIME
 	randomdir = FALSE
 
-/obj/effect/temp_visual/dust_animation_filter/Initialize(mapload, anim_id = "random_default_anti_collision_text")
+/obj/effect/temp_visual/dust_animation_filter/Initialize(mapload)
 	. = ..()
 	// we manually animate this, rather than just using an animated icon state or flick, to work around byond animated state memes
 	// (normally, all animated icon states are synced to the same time, which would bad here)
@@ -133,7 +133,6 @@
 		animate(src, time = 1, icon_state = "dust.[i]", flags = ANIMATION_CONTINUE)
 	if(PERFORM_ALL_TESTS(focus_only/runtime_icon_states) && icon_exists(icon, "dust.[duration + 1]"))
 		stack_trace("Extra dust animation icon state: dust.[duration + 1]")
-	render_target = "*dust-[anim_id]"
 
 #undef DUST_ANIMATION_TIME
 

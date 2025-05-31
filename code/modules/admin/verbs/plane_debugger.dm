@@ -155,7 +155,8 @@
 			relays += list(this_relay)
 
 		for (var/filter_id in plane.filter_data)
-			var/list/filter = plane.filter_data[filter_id]
+			var/datum/filter_data/filt_data = plane.filter_data[filter_id]
+			var/list/filter = filt_data.arguments
 			if(!filter["render_source"])
 				continue
 
