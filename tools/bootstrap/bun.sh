@@ -15,17 +15,16 @@ cd "$(dirname "$0")/../.."
 cd "$OldPWD"
 BunVersion="$BUN_VERSION"
 BunFullVersion="bun-v$BunVersion"
-BunExe="$HOME/.bun/bin/bun"
 
 # If Bun is not present, install using the official installer.
-if [ ! -f "$BunExe" ]; then
+if ! command -v bun >/dev/null 2>&1; then
     echo "Bun not found, installing with official installer..."
     curl -fsSL https://bun.sh/install | bash -s $BunFullVersion
-    if [ ! -f "$BunExe" ]; then
-        echo "Bun installation failed or not found at $BunExe."
+    if ! command -v bun >/dev/null 2>&1; then
+        echo "Bun installation failed or bun not found in PATH."
         exit 1
     fi
 fi
 
-echo "Using Bun $($BunExe --version)"
-exec "$BunExe" "$@"
+echo "Using Bun $(bun --version)"
+exec bun "$@"
