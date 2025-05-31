@@ -2,6 +2,8 @@
 /// to easily remove from later.
 /datum/screen_object_holder
 	VAR_PRIVATE
+		///Used for menus with a scrollwheel, this is how much we've scrolled.
+		amount_scrolled = 0
 		client/client
 		list/screen_objects = list()
 		list/protected_screen_objects = list()
@@ -64,3 +66,19 @@
 
 	clear()
 	client = null
+
+/datum/screen_object_holder/proc/scroll(up, lowest_point)
+	if(up)
+		//going up at highest point.
+		if(amount_scrolled == 0)
+			return
+		for(var/atom/movable/screen/escape_menu/text/screen_atom in screen_objects + protected_screen_objects)
+			screen_atom.scroll_up()
+		amount_scrolled += 60
+		return
+	//scrolling down to rock bottom, plus two scrolls up so they don't just get rid of the UI
+	else if(amount_scrolled < (lowest_point + 120))
+		return
+	for(var/atom/movable/screen/escape_menu/text/screen_atom in screen_objects + protected_screen_objects)
+		screen_atom.scroll_down()
+	amount_scrolled -= 60

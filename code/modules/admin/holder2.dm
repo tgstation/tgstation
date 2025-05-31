@@ -160,7 +160,7 @@ GLOBAL_PROTECT(href_token)
 
 	for(var/i in 1 to 12)
 		GLOB.admins |= new /datum/client_interface()
-	for(var/i in 1 to 24)
+	for(var/i in 1 to 64)
 		GLOB.clients |= new /datum/client_interface()
 
 	try_give_profiling()
