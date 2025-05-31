@@ -123,3 +123,8 @@
 /datum/orderable_item/mining/grapple_gun
 	purchase_path = /obj/item/grapple_gun
 	cost_per_order = 3000
+
+/datum/orderable_item/mining/mod_thermal
+    purchase_path = /obj/item/mod/module/thermal_regulator
+    desc = "A MODsuit module that helps regulate the user's body temperature in extreme environments."
+    cost_per_order = 1200
