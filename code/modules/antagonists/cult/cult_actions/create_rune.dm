@@ -81,7 +81,7 @@
 			cooldown = 0
 			owner.update_mob_action_buttons()
 
-//teleport rune
+//special one-spell only subtypes for constructs
 /datum/action/innate/cult/create_rune/tele
 	name = "Summon Teleport Rune"
 	desc = "Summons a teleport rune to your location, as though it has been there all along..."

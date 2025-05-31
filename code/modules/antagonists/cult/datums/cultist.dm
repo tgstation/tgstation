@@ -250,6 +250,10 @@
 		SEND_SOUND(cult_mind, sound('sound/effects/hallucinations/veryfar_noise.ogg'))
 		to_chat(cult_mind, span_cult_large("The Cult's Master, [owner.current.name], has fallen in \the [current_area]!"))
 
+/datum/antagonist/cult/proc/reckon(mob/living/summoner, turf/destination)
+	new /obj/effect/temp_visual/cult/blood/out(get_turf(summoner))
+	summoner.forceMove(destination)
+
 /datum/antagonist/cult/get_preview_icon()
 	var/icon/icon = render_preview_outfit(preview_outfit)
 

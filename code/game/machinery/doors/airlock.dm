@@ -686,6 +686,9 @@
 		. += span_notice("Alt-click [src] to [ secondsElectrified ? "un-electrify" : "permanently electrify"] it.")
 		. += span_notice("Ctrl-Shift-click [src] to [ emergency ? "disable" : "enable"] emergency access.")
 
+	if(IS_CULTIST(user))
+		. += span_cult("This can be turned into a cult door using the [EXAMINE_HINT("Twisted Construction")] spell.")
+
 /obj/machinery/door/airlock/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
