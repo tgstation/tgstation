@@ -591,3 +591,8 @@
 #define FORCE_ADD_ALL 2
 /// Used in ID card access adding procs. Will stack trace on fail.
 #define ERROR_ON_FAIL 3
+
+#define ID_DATA(T) SSid_access.__in_character_record_id_information(T)
+#define SILICON_OVERRIDE "silicon_override"
+#define CHAMELEON_OVERRIDE "chameleon_override"
+#define ID_READ_FAILURE "id_read_failure"
