@@ -2546,6 +2546,10 @@
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/security/detectives_office/private_investigators_office)
+"aPU" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "aPV" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -4044,7 +4048,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "bnV" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/warning,
 /obj/effect/turf_decal/trimline/dark_blue/filled/shrink_cw{
@@ -6906,6 +6910,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/maintenance/starboard/aft)
+"ccF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured,
+/area/station/science/xenobiology/cell)
 "ccH" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -13082,6 +13091,12 @@
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
+"dVf" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark/textured,
+/area/station/science/xenobiology/cell)
 "dVm" = (
 /obj/effect/turf_decal/stripes/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -15375,7 +15390,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "eEN" = (
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
@@ -16329,7 +16344,7 @@
 	name = "Test Chamber Monitor"
 	},
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "eUg" = (
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/iron/dark/smooth_large,
@@ -17535,6 +17550,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
+"fof" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark/textured,
+/area/station/science/xenobiology/cell)
 "foj" = (
 /obj/effect/spawner/random/structure/steam_vent,
 /turf/open/floor/plating,
@@ -22746,6 +22768,14 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
+"gOV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/science/xenobiology/cell)
 "gPb" = (
 /obj/structure/transit_tube/curved{
 	dir = 8
@@ -23402,7 +23432,7 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "gYI" = (
 /obj/effect/spawner/random/maintenance/no_decals,
 /turf/open/floor/plating/airless,
@@ -25226,8 +25256,12 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/light_switch/directional/east,
+/obj/machinery/door/airlock/research/glass{
+	name = "Xenobiology Containment Cell"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "hAt" = (
 /obj/machinery/computer/security/telescreen/minisat/directional/west{
 	name = "Minisat Monitor"
@@ -32625,6 +32659,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
+"jGJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/turf/open/floor/iron/dark/textured,
+/area/station/science/xenobiology/cell)
 "jGK" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	dir = 4
@@ -33641,7 +33679,7 @@
 "jXj" = (
 /obj/structure/ladder,
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "jXm" = (
 /obj/structure/ladder,
 /obj/machinery/light/small/directional/south,
@@ -35547,6 +35585,7 @@
 /area/station/hallway/primary/central)
 "kzg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
 "kzi" = (
@@ -35678,7 +35717,7 @@
 "kBs" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "kBx" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/iron,
@@ -37107,7 +37146,7 @@
 /obj/machinery/power/shieldwallgen/xenobiologyaccess,
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "lax" = (
 /obj/structure/ladder,
 /obj/effect/turf_decal/siding/dark{
@@ -38067,6 +38106,7 @@
 "lqG" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/newscaster/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
 "lqH" = (
@@ -47150,7 +47190,7 @@
 	dir = 10
 	},
 /turf/closed/wall/r_wall,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "obi" = (
 /obj/structure/railing{
 	dir = 4
@@ -54013,7 +54053,7 @@
 "qeG" = (
 /obj/structure/tank_holder/extinguisher,
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "qeK" = (
 /obj/machinery/telecomms/server/presets/medical,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -54975,7 +55015,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/bz,
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "quJ" = (
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
@@ -58351,8 +58391,11 @@
 "rvn" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/airalarm/directional/west,
+/obj/machinery/door/airlock/research/glass{
+	name = "Xenobiology Containment Cell"
+	},
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rvs" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wood{
@@ -59486,7 +59529,7 @@
 /obj/structure/table/reinforced,
 /obj/item/wrench,
 /turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rLj" = (
 /obj/effect/turf_decal/siding/wood/corner,
 /obj/effect/decal/cleanable/dirt,
@@ -59822,7 +59865,7 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rRf" = (
 /obj/machinery/modular_computer/preset/engineering{
 	dir = 8
@@ -72757,8 +72800,10 @@
 /area/station/maintenance/starboard/lesser)
 "vKg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/textured,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "vKi" = (
 /obj/structure/table/wood,
 /obj/structure/disposalpipe/segment,
@@ -78674,13 +78719,8 @@
 /turf/open/floor/iron/freezer,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "xAs" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
-/obj/machinery/door/window/brigdoor/left/directional/north{
-	name = "Maximum Security Test Chamber";
-	req_access = list("xenobiology")
-	},
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "xAu" = (
 /turf/closed/wall,
 /area/station/medical/chemistry)
@@ -79649,6 +79689,9 @@
 /obj/item/wrench,
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
+"xPD" = (
+/turf/open/floor/iron/dark/textured,
+/area/station/science/xenobiology/cell)
 "xPU" = (
 /obj/structure/table,
 /obj/effect/spawner/random/food_or_drink/booze{
@@ -80122,6 +80165,9 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
+"xVP" = (
+/turf/closed/wall,
+/area/station/science/xenobiology/cell)
 "xVZ" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing,
@@ -118355,15 +118401,15 @@ lKK
 mJp
 qxI
 wps
-arT
-vFA
-vFA
-vFA
-arT
-arT
-arT
-arT
-arT
+xAs
+xVP
+xVP
+xVP
+xAs
+xAs
+xAs
+xAs
+xAs
 ecB
 tXs
 fuu
@@ -118612,7 +118658,7 @@ lKK
 mJp
 nHL
 xsv
-arT
+xAs
 quE
 bnP
 lav
@@ -118620,7 +118666,7 @@ vTM
 xVm
 xVm
 xVm
-arT
+xAs
 uRz
 qfr
 esC
@@ -118869,15 +118915,15 @@ lKK
 wde
 kTL
 wps
-arT
+xAs
+fof
 eEL
-eEL
-lqK
+aPU
 vTM
 xVm
 xVm
 xVm
-arT
+xAs
 hFi
 tXs
 yla
@@ -119126,15 +119172,15 @@ lqK
 lqK
 wbR
 lqK
-arT
-vKg
-vKg
 xAs
+vKg
+gOV
+pph
 pph
 jxC
 xVm
 xVm
-arT
+xAs
 gnR
 qfr
 vSq
@@ -119384,14 +119430,14 @@ jYp
 jYp
 jYp
 rvn
-jYp
-vKg
-lqK
+ccF
+jGJ
+aPU
 vTM
 xVm
 xVm
 xVm
-arT
+xAs
 hFi
 qfr
 sQJ
@@ -119641,14 +119687,14 @@ kzg
 kzg
 kzg
 hAs
-kzg
+dVf
 eUa
 rRd
 vTM
 xVm
 xVm
 gBA
-arT
+xAs
 lim
 efJ
 rvs
@@ -119897,15 +119943,15 @@ lqK
 lqK
 sEn
 lqK
-arT
-jYp
-vKg
+xAs
+xPD
+jGJ
 rLi
 vTM
 xVm
 fdE
 gVn
-arT
+xAs
 cse
 nXi
 ivu
@@ -120154,9 +120200,9 @@ lKK
 dPP
 fcC
 wps
-arT
+xAs
 jXj
-vKg
+jGJ
 kBs
 vTM
 xVm
@@ -120411,7 +120457,7 @@ lKK
 mJp
 nHL
 xsv
-arT
+xAs
 qeG
 gYG
 lav
@@ -120419,7 +120465,7 @@ vTM
 xVm
 xVm
 xVm
-arT
+xAs
 gnR
 eIh
 hjG
@@ -120668,15 +120714,15 @@ lKK
 mJp
 bix
 wps
-arT
-arT
-arT
-arT
-arT
-arT
-arT
-arT
-arT
+xAs
+xAs
+xAs
+xAs
+xAs
+xAs
+xAs
+xAs
+xAs
 nLp
 lDo
 vyF
