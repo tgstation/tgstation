@@ -1,4 +1,4 @@
-/datum/mutation/human/olfaction
+/datum/mutation/olfaction
 	name = "Transcendent Olfaction"
 	desc = "Your sense of smell is comparable to that of a canine."
 	quality = POSITIVE
@@ -9,7 +9,7 @@
 	instability = POSITIVE_INSTABILITY_MODERATE
 	synchronizer_coeff = 1
 
-/datum/mutation/human/olfaction/setup()
+/datum/mutation/olfaction/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/olfaction/to_modify = .
 	if(!istype(to_modify)) // null or invalid

@@ -6,23 +6,23 @@
 	/// Remember last heart we ate and reset bites_taken counter if we start eat new one
 	var/datum/weakref/last_heart_we_ate
 	/// List of all mutations allowed to get.
-	var/static/list/datum/mutation/human/mutations_list = list(
-		/datum/mutation/human/adaptation/cold,
-		/datum/mutation/human/adaptation/heat,
-		/datum/mutation/human/adaptation/pressure,
-		/datum/mutation/human/adaptation/thermal,
-		/datum/mutation/human/chameleon,
-		/datum/mutation/human/cryokinesis,
-		/datum/mutation/human/pyrokinesis,
-		/datum/mutation/human/dwarfism,
-		/datum/mutation/human/cindikinesis,
-		/datum/mutation/human/insulated,
-		/datum/mutation/human/telekinesis,
-		/datum/mutation/human/telepathy,
-		/datum/mutation/human/thermal,
-		/datum/mutation/human/tongue_spike,
-		/datum/mutation/human/webbing,
-		/datum/mutation/human/xray,
+	var/static/list/datum/mutation/mutations_list = list(
+		/datum/mutation/adaptation/cold,
+		/datum/mutation/adaptation/heat,
+		/datum/mutation/adaptation/pressure,
+		/datum/mutation/adaptation/thermal,
+		/datum/mutation/chameleon,
+		/datum/mutation/cryokinesis,
+		/datum/mutation/pyrokinesis,
+		/datum/mutation/dwarfism,
+		/datum/mutation/cindikinesis,
+		/datum/mutation/insulated,
+		/datum/mutation/telekinesis,
+		/datum/mutation/telepathy,
+		/datum/mutation/thermal,
+		/datum/mutation/tongue_spike,
+		/datum/mutation/webbing,
+		/datum/mutation/xray,
 	)
 
 /datum/component/heart_eater/Initialize(...)
@@ -94,8 +94,8 @@
 
 ///Not Perfect heart give random mutation.
 /datum/component/heart_eater/proc/not_perfect_heart(mob/living/carbon/human/eater)
-	var/datum/mutation/human/new_mutation
-	var/list/datum/mutation/human/shuffle_mutation_list = shuffle(mutations_list)
+	var/datum/mutation/new_mutation
+	var/list/datum/mutation/shuffle_mutation_list = shuffle(mutations_list)
 	for(var/mutation_in_list in shuffle_mutation_list)
 		if(is_type_in_list(mutation_in_list, eater.dna.mutations))
 			continue
@@ -104,7 +104,7 @@
 	if(isnull(new_mutation))
 		healing_heart(eater)
 		return
-	eater.dna.add_mutation(new_mutation)
+	eater.dna.add_mutation(new_mutation, MUTATION_SOURCE_HEART_EATER)
 	healing_heart(eater)
 	to_chat(eater, span_warning("This heart is not right for you. You now have [new_mutation.name] mutation."))
 

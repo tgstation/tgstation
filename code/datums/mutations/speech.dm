@@ -3,18 +3,18 @@
 // no they arent bro
 
 
-/datum/mutation/human/nervousness
+/datum/mutation/nervousness
 	name = "Nervousness"
 	desc = "Causes the holder to stutter."
 	instability = NEGATIVE_STABILITY_MINI
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_danger("You feel nervous.")
 
-/datum/mutation/human/nervousness/on_life(seconds_per_tick, times_fired)
+/datum/mutation/nervousness/on_life(seconds_per_tick, times_fired)
 	if(SPT_PROB(5, seconds_per_tick))
 		owner.set_stutter_if_lower(20 SECONDS)
 
-/datum/mutation/human/wacky
+/datum/mutation/wacky
 	name = "Wacky"
 	desc = "You are not a clown. You are the entire circus."
 	instability = NEGATIVE_STABILITY_MINI
@@ -22,23 +22,23 @@
 	text_gain_indication = span_sans(span_notice("You feel an off sensation in your voicebox."))
 	text_lose_indication = span_notice("The off sensation passes.")
 
-/datum/mutation/human/wacky/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/wacky/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/mutation/human/wacky/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/wacky/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/wacky/proc/handle_speech(datum/source, list/speech_args)
+/datum/mutation/wacky/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	speech_args[SPEECH_SPANS] |= SPAN_SANS
 
-/datum/mutation/human/heckacious
+/datum/mutation/heckacious
 	name = "heckacious larincks"
 	desc = "duge what is WISH your words man..........."
 	quality = MINOR_NEGATIVE
@@ -46,23 +46,23 @@
 	text_lose_indication = span_notice("The demonic entity possessing your larynx has finally released its grasp.")
 	locked = TRUE
 
-/datum/mutation/human/heckacious/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/heckacious/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_LIVING_TREAT_MESSAGE, PROC_REF(handle_caps))
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/mutation/human/heckacious/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/heckacious/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	UnregisterSignal(owner, list(COMSIG_LIVING_TREAT_MESSAGE, COMSIG_MOB_SAY))
 
-/datum/mutation/human/heckacious/proc/handle_caps(atom/movable/source, list/message_args)
+/datum/mutation/heckacious/proc/handle_caps(atom/movable/source, list/message_args)
 	SIGNAL_HANDLER
 	message_args[TREAT_CAPITALIZE_MESSAGE] = FALSE
 
-/datum/mutation/human/heckacious/proc/handle_speech(datum/source, list/speech_args)
+/datum/mutation/heckacious/proc/handle_speech(datum/source, list/speech_args)
 
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(!message)
@@ -133,7 +133,7 @@
 
 	speech_args[SPEECH_MESSAGE] = message
 
-/datum/mutation/human/mute
+/datum/mutation/mute
 	name = "Mute"
 	desc = "Completely inhibits the vocal section of the brain."
 	instability = NEGATIVE_STABILITY_MAJOR
@@ -141,18 +141,18 @@
 	text_gain_indication = span_danger("You feel unable to express yourself at all.")
 	text_lose_indication = span_danger("You feel able to speak freely again.")
 
-/datum/mutation/human/mute/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/mute/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
 
-/datum/mutation/human/mute/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/mute/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
 
-/datum/mutation/human/unintelligible
+/datum/mutation/unintelligible
 	name = "Unintelligible"
 	desc = "Partially inhibits the vocal center of the brain, severely distorting speech."
 	instability = NEGATIVE_STABILITY_MODERATE
@@ -160,18 +160,18 @@
 	text_gain_indication = span_danger("You can't seem to form any coherent thoughts!")
 	text_lose_indication = span_danger("Your mind feels more clear.")
 
-/datum/mutation/human/unintelligible/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/unintelligible/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
 
-/datum/mutation/human/unintelligible/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/unintelligible/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_UNINTELLIGIBLE_SPEECH, GENETIC_MUTATION)
 
-/datum/mutation/human/swedish
+/datum/mutation/swedish
 	name = "Swedish"
 	desc = "A horrible mutation originating from the distant past. Thought to be eradicated after the incident in 2037."
 	instability = NEGATIVE_STABILITY_MINI
@@ -180,11 +180,11 @@
 	text_lose_indication = span_notice("The feeling of Swedishness passes.")
 	var/static/list/language_mutilation = list("w" = "v", "j" = "y", "bo" = "bjo", "a" = list("å","ä","æ","a"), "o" = list("ö","ø","o"))
 
-/datum/mutation/human/swedish/New(class, timer, datum/mutation/human/copymut)
+/datum/mutation/swedish/New(datum/mutation/copymut)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = language_mutilation, end_string = list("",", bork",", bork, bork"), end_string_chance = 30)
 
-/datum/mutation/human/chav
+/datum/mutation/chav
 	name = "Chav"
 	desc = "Unknown"
 	instability = NEGATIVE_STABILITY_MINI
@@ -192,11 +192,11 @@
 	text_gain_indication = span_notice("Ye feel like a reet prat like, innit?")
 	text_lose_indication = span_notice("You no longer feel like being rude and sassy.")
 
-/datum/mutation/human/chav/New(class, timer, datum/mutation/human/copymut)
+/datum/mutation/chav/New(datum/mutation/copymut)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("chav_replacement.json", "chav"), end_string = ", mate", end_string_chance = 30)
 
-/datum/mutation/human/elvis
+/datum/mutation/elvis
 	name = "Elvis"
 	desc = "A terrifying mutation named after its 'patient-zero'."
 	instability = NEGATIVE_STABILITY_MINI
@@ -204,11 +204,11 @@
 	text_gain_indication = span_notice("You feel pretty good, honeydoll.")
 	text_lose_indication = span_notice("You feel a little less conversation would be great.")
 
-/datum/mutation/human/chav/New(class, timer, datum/mutation/human/copymut)
+/datum/mutation/chav/New(datum/mutation/copymut)
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("elvis_replacement.json", "elvis"))
 
-/datum/mutation/human/elvis/on_life(seconds_per_tick, times_fired)
+/datum/mutation/elvis/on_life(seconds_per_tick, times_fired)
 	switch(pick(1,2))
 		if(1)
 			if(SPT_PROB(7.5, seconds_per_tick))
@@ -219,26 +219,26 @@
 			if(SPT_PROB(7.5, seconds_per_tick))
 				owner.visible_message("<b>[owner]</b> [pick("jiggles their hips", "rotates their hips", "gyrates their hips", "taps their foot", "dances to an imaginary song", "jiggles their legs", "snaps their fingers")]!")
 
-/datum/mutation/human/stoner
+/datum/mutation/stoner
 	name = "Stoner"
 	desc = "A common mutation that severely decreases intelligence."
 	quality = NEGATIVE
 	text_gain_indication = span_notice("You feel...totally chill, man!")
 	text_lose_indication = span_notice("You feel like you have a better sense of time.")
 
-/datum/mutation/human/stoner/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/stoner/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	owner.grant_language(/datum/language/beachbum, source = LANGUAGE_STONER)
 	owner.add_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
-/datum/mutation/human/stoner/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/stoner/on_losing(mob/living/carbon/human/owner)
 	..()
 	owner.remove_language(/datum/language/beachbum, source = LANGUAGE_STONER)
 	owner.remove_blocked_language(subtypesof(/datum/language) - /datum/language/beachbum, LANGUAGE_STONER)
 
-/datum/mutation/human/medieval
+/datum/mutation/medieval
 	name = "Medieval"
 	desc = "A horrible mutation originating from the distant past, thought to have once been a common gene in all of old world Europe."
 	instability = NEGATIVE_STABILITY_MINI
@@ -246,18 +246,18 @@
 	text_gain_indication = span_notice("You feel like seeking the holy grail!")
 	text_lose_indication = span_notice("You no longer feel like seeking anything.")
 
-/datum/mutation/human/medieval/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/medieval/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/mutation/human/medieval/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/medieval/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/medieval/proc/handle_speech(datum/source, list/speech_args)
+/datum/mutation/medieval/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	var/message = speech_args[SPEECH_MESSAGE]
@@ -280,7 +280,7 @@
 
 		speech_args[SPEECH_MESSAGE] = message
 
-/datum/mutation/human/piglatin
+/datum/mutation/piglatin
 	name = "Pig Latin"
 	desc = "Historians say back in the 2020's humanity spoke entirely in this mystical language."
 	instability = NEGATIVE_STABILITY_MINI
@@ -288,18 +288,18 @@
 	text_gain_indication = span_notice("Omethingsay eelsfay offyay.")
 	text_lose_indication = span_notice("The off sensation passes.")
 
-/datum/mutation/human/piglatin/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/piglatin/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	RegisterSignal(owner, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
-/datum/mutation/human/piglatin/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/piglatin/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	UnregisterSignal(owner, COMSIG_MOB_SAY)
 
-/datum/mutation/human/piglatin/proc/handle_speech(datum/source, list/speech_args)
+/datum/mutation/piglatin/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
 	var/spoken_message = speech_args[SPEECH_MESSAGE]
