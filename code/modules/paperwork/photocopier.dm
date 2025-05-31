@@ -157,6 +157,10 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /obj/machinery/photocopier/dump_contents()
 	var/dump_location = drop_location()
+
+	// object_copy can be a traitor objective, don't qdel
+	object_copy?.forceMove(dump_location)
+
 	for(var/paper_path in paper_stack)
 		var/paper_amount = paper_stack[paper_path]
 		if(paper_amount <= 0)
@@ -178,8 +182,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /obj/machinery/photocopier/Destroy()
 	// object_copy can be a traitor objective, don't qdel
-	if(object_copy)
-		object_copy.forceMove(drop_location())
+	object_copy?.forceMove(drop_location())
 
 	QDEL_NULL(toner_cartridge)
 	QDEL_LIST(paper_stack)
