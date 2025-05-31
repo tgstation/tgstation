@@ -31,6 +31,7 @@
 /area/station/science/xenobiology/cell
 	name = "\improper Xenobiology Cell"
 	icon_state = "xenobio"
+	requires_power = FALSE
 
 /area/station/science/cytology
 	name = "\improper Cytology Lab"
