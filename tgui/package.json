@@ -40,7 +40,6 @@
 	"devDependencies": {
 		"@happy-dom/global-registrator": "^17.4.7",
 		"@types/bun": "^1.2.14",
-		"@types/node": "^22.14.0",
 		"@types/react": "^19.1.5",
 		"@types/react-dom": "^19.1.5",
 		"@types/webpack-env": "^1.18.8",

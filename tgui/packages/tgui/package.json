@@ -16,8 +16,5 @@
 		"tgui-core": "^4.0.1",
 		"tgui-dev-server": "workspace:*"
 	},
-	"private": true,
-	"devDependencies": {
-		"@types/node": "^22.15.21"
-	}
+	"private": true
 }
