@@ -607,6 +607,11 @@
 		. = L[1]
 		L.Cut(1,2)
 
+/proc/popkey(list/L, key)
+	. = L[key]
+	if(!isnull(.))
+		L -= key
+
 /proc/sorted_insert(list/L, thing, comparator)
 	var/pos = L.len
 	while(pos > 0 && call(comparator)(thing, L[pos]) > 0)

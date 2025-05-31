@@ -199,8 +199,7 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 				var/list/stuff = pull_from.contents.Copy(1)
 				var/list/obj/obj_refs = list()
 				while(stuff.len)
-					var/ref = stuff[1]
-					stuff -= ref
+					var/ref = popleft(stuff)
 
 					var/atom/thing = ref
 					if(istext(thing))
@@ -275,6 +274,9 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 		if(variable == "icon_state" && object.smoothing_flags)
 			continue
 		if(variable == "icon" && object.smoothing_flags)
+			continue
+		if(variable == REF_ATTRIBUTES)
+			stack_trace("[REF_ATTRIBUTES] is a protected variable name and cannot be exported")
 			continue
 		if(variable == "contents")
 			value = object.contents.Copy(1) //otherwise this would error in tgm_encode_list() with bad index cause its protected

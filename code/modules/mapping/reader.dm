@@ -63,6 +63,10 @@
 #define MAP_TGM "tgm"
 #define MAP_UNKNOWN "unknown"
 
+//local defines for special variables
+#define OBJ_REF_ID "obj_ref_id"
+#define NULL_REF_ID "-1"
+
 /datum/grid_set
 	var/xcrd
 	var/ycrd
@@ -686,6 +690,20 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		return tgm_build_cache(no_changeturf, bad_paths)
 	return dmm_build_cache(no_changeturf, bad_paths)
 
+/datum/parsed_map/proc/record_special_attributes(attribute, value, list/ref_attributes)
+	//the only protected list of atoms which we will load from cause we know they are in the atom
+	if(attribute == "contents")
+		ref_attributes["contents"] = value
+	//custom attribute
+	else if(attribute[1] == "#")
+		ref_attributes[attribute] = value
+	//ref value
+	else if(istext(value))
+		var/length = length(value)
+		if(length && value[1] == "%" && length > 2 && value[length] == "%") //its an ref to another atom
+			ref_attributes[attribute] = value
+	return attribute
+
 /datum/parsed_map/proc/tgm_build_cache(no_changeturf, bad_paths=null)
 	if(modelCache && !bad_paths)
 		return modelCache
@@ -717,6 +735,8 @@ GLOBAL_LIST_EMPTY(map_model_default)
 		var/list/members = list()
 		//will contain lists filled with corresponding variables, if any (in our example : list(icon_state = "rock") and list())
 		var/list/members_attributes = list()
+		//will contain ref attributes which are corresponding variables whos values will be resolved into atoms later on
+		var/list/ref_attributes = list()
 
 		/////////////////////////////////////////////////////////
 		//Constructing members and corresponding variables lists
@@ -736,17 +756,22 @@ GLOBAL_LIST_EMPTY(map_model_default)
 					var/value = parse_constant(var_edits.group[2])
 					if(istext(value))
 						value = apply_text_macros(value)
-					current_attributes[var_edits.group[1]] = value
+					current_attributes[record_special_attributes(var_edits.group[1], value, ref_attributes)] = value
 					continue // Keep on keeping on brother
-				if("{") // Start of an edit, and so also the start of a path
+				if("{") // Start of an edit, and so also the start of a path with attributes
 					editing = TRUE
 					current_attributes = list() // Init the list we'll be filling
 					members_attributes += list(current_attributes)
 					path_to_init = copytext(line, 1, -1)
 				if(",") // Either the end of a path, or the end of an edit
-					if(editing) // it was the end of a path
+					if(editing) // it was the end of a path which had attributes
 						editing = FALSE
-						continue
+						//store special attributes
+						if(ref_attributes.len)
+							current_attributes[REF_ATTRIBUTES] = ref_attributes.Copy()
+							ref_attributes.Cut()
+						continue // Keep on keeping on brother
+
 					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's. so we'll just set this to the default list
 					// Drop the last char mind
 					path_to_init = copytext(line, 1, -1)
@@ -764,7 +789,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 						var/value = parse_constant(var_edits.group[2])
 						if(istext(value))
 							value = apply_text_macros(value)
-						current_attributes[var_edits.group[1]] = value
+						current_attributes[record_special_attributes(var_edits.group[1], value, ref_attributes)] = value
 						continue // Keep on keeping on brother
 
 					members_attributes += wrapped_default_list // We know this is a path, and we also know it has no vv's. so we'll just set this to the default list
@@ -773,14 +798,15 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			// check path to see if its member attribute value
 			// its format is %<number>%/<actual object path>
 			if(path_to_init[1] == "%")
-				var/last_index = findlasttext(path_to_init, "%")
+				var/last_index = findlasttext_char(path_to_init, "%")
 				if(last_index)
 					last_index += 1
-					if(members_attributes[members_attributes.len] == default_list) //for a path with no attributes we have to add it manually
+					var/obj_ref_id = copytext(path_to_init, 1, last_index)
+					if(members_attributes[members_attributes.len] == default_list) //a path with no attributes mean we have to assign the ref attributes manually
 						members_attributes.Cut(members_attributes.len)
-						members_attributes += list(list("obj_ref_id" = copytext(path_to_init, 1, last_index)))
-					else if(!current_attributes["obj_ref_id"]) //if the path has attributes then we can append it there directly
-						current_attributes["obj_ref_id"] = copytext(path_to_init, 1, last_index)
+						members_attributes += list(list(REF_ATTRIBUTES = list(OBJ_REF_ID = obj_ref_id)))
+					else //we wait for the parser to assign the attributes at the end of the edit
+						ref_attributes[OBJ_REF_ID] = obj_ref_id
 					path_to_init = copytext(path_to_init, last_index)
 
 			// Alright, if we've gotten to this point, our string is a path
@@ -858,13 +884,13 @@ GLOBAL_LIST_EMPTY(map_model_default)
 			var/path_text = trim(copytext(member_string, 1, variables_start))
 			// check path to see if its member attribute value
 			// its format is %<number>%/<actual object path>
+			var/list/ref_attributes = list()
 			if(path_text[1] == "%")
-				var/last_index = findlasttext(path_text, "%")
+				var/last_index = findlasttext_char(path_text, "%")
 				if(last_index)
 					last_index += 1
-					members_attributes += list(list("obj_ref_id" = copytext(path_text, 1, last_index)))
+					ref_attributes[OBJ_REF_ID] = copytext(path_text, 1, last_index)
 					path_text = copytext(path_text, last_index)
-
 
 			var/atom_def = text2path(path_text) //path definition, e.g /obj/foo/bar
 
@@ -884,9 +910,12 @@ GLOBAL_LIST_EMPTY(map_model_default)
 				for(var/I in fields)
 					var/value = fields[I]
 					if(istext(value))
-						fields[I] = apply_text_macros(value)
+						value = apply_text_macros(value)
+						fields[record_special_attributes(I, value, ref_attributes)] = value
 
 			//then fill the members_attributes list with the corresponding variables
+			if(ref_attributes.len)
+				fields[REF_ATTRIBUTES] = ref_attributes
 			members_attributes += fields
 			MAPLOADING_CHECK_TICK
 
@@ -989,55 +1018,37 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	MAPLOADING_CHECK_TICK
 
 	//finally instance all remainings objects/mobs
-	var/obj_ref_id
 	var/list/atom/atom_refs = list()
-	var/list/retained_ref_attributes = list()
 	for(var/atom_index in 1 to index-1)
-		obj_ref_id = ""
-		var/list/atom_member_attributes = members_attributes[atom_index]
+		var/obj_ref_id
+		var/has_ref_attributes
 		var/list/atom_data
+		var/list/retained_ref_attributes
+		var/list/atom_member_attributes = members_attributes[atom_index]
+
 		if(atom_member_attributes.len)
 			//find member attributes that references another atom. we retain them to replace with their pointed value
-			retained_ref_attributes.Cut()
-			for(var/attribute in atom_member_attributes)
-				var/value = atom_member_attributes[attribute]
-
-				//this atom could be a value stored inside another atom so parse its id
-				if(attribute == "obj_ref_id")
-					obj_ref_id = value
-					atom_member_attributes -= "obj_ref_id"
-					continue
-
-				//the only protected list of atoms which we will load from cause we know they are in the atom
-				if(attribute == "contents")
-					retained_ref_attributes["contents"] = value
-					continue
-
-				//custom attribute
-				if(attribute[1] == "#")
-					retained_ref_attributes[attribute] = value
-					continue
-
-				if(istext(value))
-					var/length = length(value)
-					if(length && value[1] == "%" && length > 2 && value[length] == "%") //its an ref to another atom
-						retained_ref_attributes[attribute] = value
+			retained_ref_attributes = popkey(atom_member_attributes, REF_ATTRIBUTES)
+			has_ref_attributes = length(retained_ref_attributes)
+			if(has_ref_attributes)
+				obj_ref_id = retained_ref_attributes[OBJ_REF_ID]
+				if(obj_ref_id)
+					retained_ref_attributes -= OBJ_REF_ID
+					has_ref_attributes = retained_ref_attributes.len
 
 			//if we have ref attributes then form the map to decode it later
-			if(retained_ref_attributes.len)
-				//store atoms to substitute their ref memebr vars later
-				var/list/atoms = atom_refs["-1"]
+			if(has_ref_attributes)
+				var/list/atoms = atom_refs[NULL_REF_ID]
 				if(!atoms)
 					atoms = list()
-				atom_data = list(instance, retained_ref_attributes.Copy(1))
+				atom_data = list(instance, retained_ref_attributes)
 				atoms += list(atom_data)
-				atom_refs["-1"] = atoms
+				atom_refs[NULL_REF_ID] = atoms
 
 		// setup preloader
 		if(members_attributes[atom_index] != default_list)
 			var/list/final_member_attributes = atom_member_attributes
-			if(retained_ref_attributes.len) //ref attributes
-				final_member_attributes = final_member_attributes.Copy(1) //ref attributes are loaded differently so filter them out
+			if(has_ref_attributes) //ref attributes are loaded differently so filter them out
 				for(var/ref_attribute in retained_ref_attributes)
 					final_member_attributes -= ref_attribute
 
@@ -1059,7 +1070,7 @@ GLOBAL_LIST_EMPTY(map_model_default)
 	//Because loading map templates don't init atoms immediatly we can store that resolved refs to be set later after SSAtoms is loaded
 	//Else we restore the saved value immediatly
 	if(atom_refs.len)
-		var/list/atom/turf_atoms = atom_refs["-1"]
+		var/list/atom/turf_atoms = atom_refs[NULL_REF_ID]
 		for(var/list/instance_attributes in turf_atoms)
 			instance = instance_attributes[1]
 			if(QDELETED(instance))
@@ -1202,4 +1213,6 @@ GLOBAL_LIST_EMPTY(map_model_default)
 #undef MAP_DMM
 #undef MAP_TGM
 #undef MAP_UNKNOWN
+#undef OBJ_REF_ID
+#undef NULL_REF_ID
 #undef MAPLOADING_CHECK_TICK
