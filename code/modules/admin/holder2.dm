@@ -158,18 +158,10 @@ GLOBAL_PROTECT(href_token)
 	owner.update_special_keybinds()
 	GLOB.admins |= client
 
-	GLOB.clients |= new /datum/client_interface("Regular Player")
-	GLOB.clients |= new /datum/client_interface("Second Player")
-	GLOB.clients |= new /datum/client_interface("Third Player")
-	GLOB.clients |= new /datum/client_interface("Greytider")
-	GLOB.clients |= new /datum/client_interface("Security Officer")
-	GLOB.clients |= new /datum/client_interface("Antagonist")
-	GLOB.clients |= new /datum/client_interface("Atmosian")
-	GLOB.clients |= new /datum/client_interface("Quartermasater")
-	GLOB.clients |= new /datum/client_interface("Head of Security")
-	GLOB.clients |= new /datum/client_interface("Deadmin")
-	GLOB.clients |= new /datum/client_interface("Lizardcircles")
-	GLOB.clients |= new /datum/client_interface("Literally who?")
+	for(var/i in 1 to 12)
+		GLOB.admins |= new /datum/client_interface()
+	for(var/i in 1 to 24)
+		GLOB.clients |= new /datum/client_interface()
 
 	try_give_profiling()
 

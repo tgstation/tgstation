@@ -14,7 +14,6 @@
 	offset,
 	on_click_callback,
 	font_size,
-	pixel_x,
 )
 	. = ..()
 
@@ -26,7 +25,6 @@
 		/* hud_owner = */ src,
 		button_text,
 		/* maptext_font_size = */ font_size,
-		/* pixel_x = */ pixel_x,
 	)
 
 	vis_contents += home_button_text
@@ -56,7 +54,6 @@
 	button_text,
 	offset,
 	on_click_callback,
-	pixel_x,
 )
 	. = ..()
 	screen_loc = "NORTH:-[100 + (32 * offset)],WEST:110"
@@ -78,11 +75,9 @@
 	datum/hud/hud_owner,
 	button_text,
 	maptext_font_size = "24px",
-	pixel_x = -80
 )
 	. = ..()
 
-	src.pixel_x = pixel_x
 	src.maptext_font_size = maptext_font_size
 	src.button_text = button_text
 	update_text()

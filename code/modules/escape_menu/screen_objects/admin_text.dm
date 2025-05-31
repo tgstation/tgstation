@@ -13,7 +13,6 @@
 	button_text,
 	offset,
 	on_click_callback,
-	pixel_x,
 )
 	. = ..()
 
