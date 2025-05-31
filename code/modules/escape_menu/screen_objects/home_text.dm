@@ -74,7 +74,7 @@
 	mapload,
 	datum/hud/hud_owner,
 	button_text,
-	maptext_font_size = "24px",
+	maptext_font_size = 24,
 )
 	. = ..()
 
@@ -93,7 +93,7 @@
 /atom/movable/screen/escape_menu/home_button_text/proc/update_text()
 	var/atom/movable/screen/escape_menu/escape_menu_loc = loc
 
-	maptext = MAPTEXT_PIXELLARI("<span style='font-size: [maptext_font_size]; color: [istype(escape_menu_loc) ? escape_menu_loc.text_color() : "white"]'>[button_text]</span>")
+	maptext = MAPTEXT_PIXELLARI("<span style='font-size: [maptext_font_size]px; color: [istype(escape_menu_loc) ? escape_menu_loc.text_color() : "white"]'>[button_text]</span>")
 
 	if (hovered)
 		maptext = "<u>[maptext]</u>"
