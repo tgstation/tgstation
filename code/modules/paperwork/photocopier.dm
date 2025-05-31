@@ -512,7 +512,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
  * Prioritizes `paper_stack`, creates new paper in case `paper_stack` is empty.
  */
 /obj/machinery/photocopier/proc/get_empty_paper(paper_type)
-	var/obj/item/paper/new_paper = new paper_type(loc)
+	var/obj/item/paper/new_paper = new paper_type()
 	return new_paper
 
 /**
