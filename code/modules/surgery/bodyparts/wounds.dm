@@ -1,5 +1,5 @@
 /// Allows us to roll for and apply a wound without actually dealing damage. Used for aggregate wounding power with pellet clouds
-/obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, sharpness=NONE, wound_clothing)
+/obj/item/bodypart/proc/painless_wound_roll(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus, sharpness=NONE, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(!owner || wounding_dmg <= WOUND_MINIMUM_DAMAGE || wound_bonus == CANT_WOUND || HAS_TRAIT(owner, TRAIT_GODMODE))
@@ -32,9 +32,9 @@
 			if(wounding_type == WOUND_PIERCE && !easy_dismember)
 				wounding_dmg *= 0.75 // piercing weapons pass along 75% of their wounding damage to the bone since it's more concentrated
 			wounding_type = WOUND_BLUNT
-		if ((dismemberable_by_wound() || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus))
+		if ((dismemberable_by_wound() || dismemberable_by_total_damage()) && try_dismember(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus))
 			return
-	return check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus, wound_clothing)
+	return check_wounding(wounding_type, wounding_dmg, wound_bonus, exposed_wound_bonus, wound_clothing)
 
 /**
  * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
@@ -46,10 +46,10 @@
  * * woundtype- Either WOUND_BLUNT, WOUND_SLASH, WOUND_PIERCE, or WOUND_BURN based on the attack type.
  * * damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)
  * * wound_bonus- The wound_bonus of an attack
- * * bare_wound_bonus- The bare_wound_bonus of an attack
+ * * exposed_wound_bonus- The exposed_wound_bonus of an attack
  * * wound_clothing- If this should damage clothing.
  */
-/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus, attack_direction, damage_source, wound_clothing)
+/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, exposed_wound_bonus, attack_direction, damage_source, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/datum/wound)
 
@@ -75,7 +75,7 @@
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
-	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus, wound_clothing)
+	injury_roll = check_woundings_mods(woundtype, injury_roll, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
 	var/list/series_wounding_mods = check_series_wounding_mods()
 
 	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100) && can_dismember())
@@ -88,14 +88,14 @@
 		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[type]
 		if (pregen_data.can_be_applied_to(src, list(woundtype), random_roll = TRUE))
 			possible_wounds[type] = pregen_data.get_weight(src, woundtype, damage, attack_direction, damage_source)
-	// quick re-check to see if bare_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
+	// quick re-check to see if exposed_wound_bonus applies, for the benefit of log_wound(), see about getting the check from check_woundings_mods() somehow
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_wearer = owner
 		var/list/clothing = human_wearer.get_clothing_on_part(src)
 		for(var/obj/item/clothing/clothes_check as anything in clothing)
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			if(clothes_check.get_armor_rating(WOUND))
-				bare_wound_bonus = 0
+				exposed_wound_bonus = 0
 				break
 
 	for (var/datum/wound/iterated_path as anything in possible_wounds)
@@ -149,7 +149,7 @@
 			new_wound = replaced_wound.replace_wound(new_wound, attack_direction = attack_direction)
 		else
 			new_wound.apply_wound(src, attack_direction = attack_direction, wound_source = damage_source)
-		log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
+		log_wound(owner, new_wound, damage, wound_bonus, exposed_wound_bonus, base_roll) // dismembering wounds are logged in the apply_wound() for loss wounds since they delete themselves immediately, these will be immediately returned
 		return new_wound
 
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
@@ -236,18 +236,19 @@
 /**
  * check_wounding_mods() is where we handle the various modifiers of a wound roll
  *
- * A short list of things we consider: any armor a human target may be wearing, and if they have no wound armor on the limb, if we have a bare_wound_bonus to apply, plus the plain wound_bonus
+ * A short list of things we consider: any armor a human target may be wearing, and if they have no wound armor on the limb, and add the plain wound_bonus if there is any value to add
  * We also flick through all of the wounds we currently have on this limb and add their threshold penalties, so that having lots of bad wounds makes you more liable to get hurt worse
- * Lastly, we add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound), and a small bonus if the limb is already disabled
+ * We add the inherent wound_resistance variable the bodypart has (heads and chests are slightly harder to wound) as an armor bonus unless the limb is mangled, and a small wound bonus if the limb is already disabled
+ * Once we have everything, we then check if we have acquired any armor. If so, reduce our value by the percentage value of that armour. If not, we add our exposed_wound_bonus as a final bonus to our roll.
  *
  * Arguments:
- * * It's the same ones on [/obj/item/bodypart/proc/receive_damage]
+ * * It's the same ones on [/obj/item/bodypart/proc/receive_damage] except injury_roll, which is fed to this proc.
  */
-/obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus, wound_clothing)
+/obj/item/bodypart/proc/check_woundings_mods(wounding_type, injury_roll, damage, wound_bonus, exposed_wound_bonus, wound_clothing)
 	SHOULD_CALL_PARENT(TRUE)
 
 	var/armor_ablation = 0
-	var/injury_mod = 0
+	var/injury_mod = injury_roll
 
 	if(owner && ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
@@ -262,20 +263,21 @@
 				else if(wounding_type == WOUND_BURN)
 					clothes.take_damage_zone(body_zone, damage, BURN)
 
-		if(!armor_ablation)
-			injury_mod += bare_wound_bonus
-
-	injury_mod -= armor_ablation
 	injury_mod += wound_bonus
 
 	for(var/datum/wound/wound as anything in wounds)
 		injury_mod += wound.threshold_penalty
 
-	var/part_mod = -wound_resistance
-	if(get_damage() >= max_damage)
-		part_mod += disabled_wound_penalty
+	if(!get_mangled_state())
+		armor_ablation += wound_resistance
 
-	injury_mod += part_mod
+	if(get_damage() >= max_damage)
+		injury_mod += disabled_wound_penalty
+
+	if(!armor_ablation)
+		injury_mod += exposed_wound_bonus
+	else
+		injury_mod *= ((100 - armor_ablation) /100)
 
 	return injury_mod
 
