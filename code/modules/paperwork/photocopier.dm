@@ -701,7 +701,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			return ITEM_INTERACT_FAILURE
 
 		if(paper.is_empty()) // if not empty it gets inserted as an object to be copied
-			if(!is_room_for_paper())
+			if(!has_room_for_paper())
 				balloon_alert(user, "cannot hold more paper!")
 				return ITEM_INTERACT_FAILURE
 
@@ -719,7 +719,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		var/paper_inserted = 0
 		for(var/obj/item/paper/stacked_paper in paper_bin.paper_stack) // insert all paper that is already initialized
 			var/is_empty = stacked_paper.is_empty()
-			var/is_room = is_room_for_paper()
+			var/is_room = has_room_for_paper()
 			if(!is_empty || !is_room)
 				continue
 
@@ -737,7 +737,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 				paper_inserted += paper_to_take
 				paper_bin.total_paper -= (paper_to_take)
 
-		if(!paper_inserted && !is_room_for_paper()) // no paper was inserted because it was full
+		if(!paper_inserted && !has_room_for_paper()) // no paper was inserted because it was full
 			balloon_alert(user, "cannot hold more paper!")
 			return ITEM_INTERACT_FAILURE
 
@@ -753,7 +753,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	return NONE
 
 /// Check if there is enough room to insert paper
-/obj/machinery/photocopier/proc/is_room_for_paper(mob/user, amount = 1)
+/obj/machinery/photocopier/proc/has_room_for_paper(mob/user, amount = 1)
 	return get_paper_count() < max_paper_capacity
 
 /// Proc that handles insertion of empty paper, useful for copying later.
