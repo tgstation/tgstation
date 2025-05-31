@@ -820,3 +820,11 @@
   - qol: Replace hardcoded atmos values for virtual domain turfs
   - bugfix: Fix `map_export` admin verb not blacklisting `obj/effects`
   - bugfix: Fix map linter conditional rule crashing
+2025-05-31:
+  Ezel/Improvedname, Toriate, JohnFulpWillard:
+  - rscadd: Re-added the Dragoon Tomb lair, now has a Skybulge spear and Drachen armor.
+  - balance: Ice whelps now spit out cold fire.
+  JohnFulpWillard:
+  - qol: Info buttons previously at the top right of your screen (Changelog, wiki,
+      forums) is now in the Escape menu.
+  - qol: Fullscreen is now a preferences and will follow you through rounds.
