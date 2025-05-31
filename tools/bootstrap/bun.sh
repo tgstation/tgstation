@@ -20,10 +20,6 @@ BunFullVersion="bun-v$BunVersion"
 if ! command -v bun >/dev/null 2>&1; then
     echo "Bun not found, installing with official installer..."
     curl -fsSL https://bun.sh/install | bash -s $BunFullVersion
-    if ! command -v bun >/dev/null 2>&1; then
-        echo "Bun installation failed or bun not found in PATH."
-        exit 1
-    fi
 fi
 
 echo "Using Bun $(bun --version)"
