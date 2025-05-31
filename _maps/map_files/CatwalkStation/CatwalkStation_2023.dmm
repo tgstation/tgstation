@@ -42525,7 +42525,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/effect/turf_decal/trimline/purple/filled,
 /turf/open/floor/iron/dark,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "mHf" = (
 /turf/closed/wall,
 /area/station/security/checkpoint/supply)
@@ -71464,10 +71464,6 @@
 /obj/structure/transport/linear,
 /turf/open/openspace,
 /area/station/science/robotics/lab)
-"vpH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
-/turf/closed/wall/r_wall,
-/area/station/science/ordnance/burnchamber)
 "vqa" = (
 /obj/structure/transport/linear,
 /turf/open/openspace,
@@ -74170,7 +74166,7 @@
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/trimline/purple/filled,
 /turf/open/floor/iron/dark,
-/area/station/science/ordnance/burnchamber)
+/area/station/science/ordnance)
 "wga" = (
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -80152,7 +80148,7 @@
 	pixel_y = 3
 	},
 /turf/open/floor/plating,
-/area/station/science/ordnance/burnchamber)
+/area/station/maintenance/starboard/aft)
 "xWS" = (
 /obj/effect/turf_decal/trimline/dark_blue/corner{
 	dir = 4
@@ -182869,7 +182865,7 @@ fHc
 kwQ
 mHd
 wfY
-vpH
+pAH
 aut
 gqz
 pAH
@@ -184409,9 +184405,9 @@ tpe
 kwe
 mIK
 pMY
-kMj
+cWU
 xWM
-kMj
+cWU
 jqw
 qGZ
 cWU
