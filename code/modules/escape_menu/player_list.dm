@@ -75,10 +75,10 @@
 		)
 	)
 	vertical_amount -= 20
-	horizontal_amount = -250 //players will get 4 ckeys per line so we can fit more.
+	horizontal_amount = -170 //players will get 4 ckeys per line so we can fit more.
 	for(var/client/player as anything in GLOB.clients)// - GLOB.admins - client)
-		if(horizontal_amount >= 350)
-			horizontal_amount = -250
+		if(horizontal_amount >= 280)
+			horizontal_amount = -170
 			vertical_amount -= 20
 		page_holder.give_screen_object(
 			new /atom/movable/screen/escape_menu/text/clickable/ignoring(
