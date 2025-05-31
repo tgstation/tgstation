@@ -149,6 +149,11 @@
 /// From /datum/component/tether/UnregisterFromParent()
 #define COMSIG_ATOM_TETHER_SNAPPED "atom_tether_snapped"
 
+/// From /atom/finalize_material_effects(): (list/materials, datum/material/main_material)
+#define COMSIG_ATOM_FINALIZE_MATERIAL_EFFECTS "atom_finalize_material_effects"
+/// From /atom/finalize_remove_material_effects(): (list/materials, datum/material/main_material)
+#define COMSIG_ATOM_FINALIZE_REMOVE_MATERIAL_EFFECTS "atom_finalize_remove_material_effects"
+
 /// From /atom/proc/update_atom_colour() : (color_changed)
 #define COMSIG_ATOM_COLOR_UPDATED "atom_color_updated"
 	/// Cancels update_appearance call in case you are somehow forced to call it manually to prevent dupe calls

@@ -24,6 +24,14 @@
 	if(prob(DONUT_SPRINKLE_CHANCE))
 		decorate_donut()
 
+// It is so stupid that we have to do this but because food crafting clears all reagents that got added during init,
+// here we are adding it again (but only for crafting, maploaded and spawned donuts work fine).
+// Until the issues with crafted items' reagents are resolved this will have to do
+/obj/item/food/donut/plain/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	. = ..()
+	if(is_decorated)
+		reagents.add_reagent(/datum/reagent/consumable/sprinkles, 1)
+
 ///Override for checkliked callback
 /obj/item/food/donut/make_edible()
 	. = ..()
@@ -92,6 +100,7 @@
 	foodtypes = GRAIN|DAIRY|JUNKFOOD|FRIED|BREAKFAST|MEAT|GORE
 	is_decorated = TRUE
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/donut/berry
 	name = "pink donut"
