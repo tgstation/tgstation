@@ -111,7 +111,6 @@
 	name = "\improper Captive Aliens"
 	///The first member of this team, presumably the queen.
 	var/datum/mind/progenitor
-	var/xenobio_cell_occupant_count = 0
 
 /datum/team/xeno/captive/roundend_report()
 	var/list/parts = list()
