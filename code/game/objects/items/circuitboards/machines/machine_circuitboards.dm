@@ -787,7 +787,7 @@
 	req_components = list(
 		/datum/stock_part/scanning_module = 1,
 		/datum/stock_part/micro_laser = 1,
-		/datum/stock_part/servo = 1
+		/datum/stock_part/matter_bin = 1
 	)
 
 //Medical
