@@ -27756,9 +27756,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/command/corporate_showroom)
-"joh" = (
-/turf/closed/wall/r_wall,
-/area/station/science/xenobiology/cell)
 "joH" = (
 /obj/structure/table/reinforced,
 /obj/item/paper_bin{
@@ -39483,6 +39480,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/prison)
+"ngQ" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "nhk" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -62515,15 +62515,6 @@
 /obj/machinery/airalarm/directional/north,
 /turf/open/floor/stone,
 /area/station/command/heads_quarters/hos)
-"uNB" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "Xenolab";
-	name = "Test Chamber Blast Door"
-	},
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/station/science/xenobiology/cell)
 "uNK" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -71537,6 +71528,15 @@
 /obj/item/stack/sheet/glass/fifty,
 /turf/open/floor/plating,
 /area/station/maintenance/department/science/xenobiology)
+"xtC" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "Xenolab";
+	name = "Test Chamber Blast Door"
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/station/science/xenobiology/cell)
 "xtD" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -116654,15 +116654,15 @@ wML
 oOw
 keP
 qrb
-joh
+ngQ
 svz
-joh
+ngQ
 kRt
 mjN
 eFt
-joh
+ngQ
 tJw
-joh
+ngQ
 eWI
 brZ
 vlV
@@ -116913,11 +116913,11 @@ rOX
 sYa
 omW
 nYl
-joh
-joh
-joh
-joh
-joh
+ngQ
+ngQ
+ngQ
+ngQ
+ngQ
 sjl
 nlC
 eWI
@@ -117684,11 +117684,11 @@ xre
 sYa
 rtI
 dXU
-joh
+ngQ
 deQ
 tst
 deQ
-joh
+ngQ
 iMI
 tTT
 eWI
@@ -117941,11 +117941,11 @@ ufe
 sYa
 xlM
 qrB
-uNB
-uNB
+xtC
+xtC
 riq
-uNB
-uNB
+xtC
+xtC
 qrB
 bjc
 eWI

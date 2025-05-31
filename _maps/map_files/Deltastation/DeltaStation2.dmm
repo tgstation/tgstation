@@ -15800,12 +15800,6 @@
 /obj/effect/spawner/random/armory/barrier_grenades,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
-"dQH" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/science/xenobiology/cell)
 "dQN" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/food_or_drink/donkpockets,
@@ -19653,6 +19647,12 @@
 	dir = 1
 	},
 /area/station/service/bar)
+"eRk" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/science/xenobiology/cell)
 "eRr" = (
 /obj/effect/spawner/random/trash/moisture_trap,
 /turf/open/floor/plating,
@@ -31135,14 +31135,6 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
-"hKU" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/dark,
-/area/station/science/xenobiology)
 "hKZ" = (
 /obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/bot,
@@ -70580,7 +70572,7 @@
 "rIb" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /turf/closed/wall/r_wall,
-/area/station/science/xenobiology)
+/area/station/science/xenobiology/cell)
 "rIh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -76922,6 +76914,11 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
+"tkD" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/station/science/xenobiology/cell)
 "tkF" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
@@ -88236,11 +88233,6 @@
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den/gaming)
-"wam" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/science/xenobiology/cell)
 "wan" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
@@ -93525,6 +93517,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/hallway)
+"xqU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/dark,
+/area/station/science/xenobiology)
 "xqW" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/secure_closet/engineering_electrical,
@@ -116533,8 +116533,8 @@ rIb
 xdn
 gCt
 etv
-uhb
-uhb
+xTs
+xTs
 nCi
 sAi
 lqa
@@ -117815,8 +117815,8 @@ xTs
 oHO
 aqF
 rqy
-dQH
-wam
+eRk
+tkD
 tuk
 pen
 hvl
@@ -118331,7 +118331,7 @@ ncJ
 rYE
 jKx
 rTW
-hKU
+xqU
 dco
 gZx
 ddW
