@@ -59,4 +59,4 @@ apt-get install -y unzip
 # compile tgui
 echo "Compiling tgui..."
 cd "$1"
-env TG_BOOTSTRAP_CACHE="$original_dir" TG_BOOTSTRAP_BUN_LINUX=1 CBT_BUILD_MODE="TGS" tools/bootstrap/bun.sh tools/build/build.js
+env TG_BOOTSTRAP_CACHE="$original_dir" CBT_BUILD_MODE="TGS" tools/bootstrap/bun.sh tools/build/build.js
