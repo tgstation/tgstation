@@ -5845,7 +5845,9 @@
 /area/station/medical/virology)
 "ccK" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 4
+	color = "#FFFF00";
+	dir = 4;
+	name = "plasma mixer"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -8361,10 +8363,6 @@
 "daC" = (
 /turf/open/floor/wood,
 /area/station/service/lawoffice)
-"daT" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "dbh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -21959,7 +21957,11 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "hTq" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow/visible,
+/obj/machinery/atmospherics/components/trinary/mixer{
+	color = "#FFFF00";
+	dir = 4;
+	name = "no2 mixer"
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "hTE" = (
@@ -30082,9 +30084,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "kEe" = (
-/obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
-	dir = 1
+/obj/machinery/atmospherics/components/trinary/mixer{
+	color = "#FFFF00";
+	dir = 4;
+	name = "air mixer"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -38873,6 +38876,13 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
 /area/station/service/hydroponics/garden)
+"nMO" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "Mix Outlet Pump"
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "nMP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -42968,10 +42978,7 @@
 /turf/open/floor/engine,
 /area/station/science/xenobiology)
 "plD" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	name = "Pure to Mix"
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "pma" = (
@@ -46264,8 +46271,10 @@
 /turf/open/floor/carpet,
 /area/station/command/corporate_showroom)
 "qua" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
-	dir = 1
+/obj/machinery/atmospherics/components/trinary/mixer{
+	color = "#FFFF00";
+	dir = 4;
+	name = "oxygen mixer"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -60451,8 +60460,10 @@
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
 "vmx" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 6
+/obj/machinery/atmospherics/components/trinary/mixer{
+	color = "#FFFF00";
+	dir = 4;
+	name = "nitrogen mixer"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -67615,6 +67626,14 @@
 	},
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
+"xLX" = (
+/obj/machinery/atmospherics/components/trinary/mixer{
+	color = "#FFFF00";
+	dir = 4;
+	name = "co2 mixer"
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "xMl" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=15-Court";
@@ -114434,7 +114453,7 @@ jms
 sCW
 fzM
 sCW
-qua
+xLX
 hnn
 kBh
 qKR
@@ -116488,8 +116507,8 @@ kgV
 hed
 jgt
 jZz
-jaq
-daT
+nnD
+cyW
 hTq
 dnW
 kBh
@@ -116745,8 +116764,8 @@ boD
 qwi
 jvj
 pul
-cyW
-cyW
+jaq
+nMO
 plD
 hyD
 oIM

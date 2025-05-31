@@ -11917,7 +11917,8 @@
 /area/station/security/checkpoint/medical/medsci)
 "cSr" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
-	color = "#FFFF00"
+	color = "#FFFF00";
+	name = "n2 mixer"
 	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -12663,6 +12664,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
+"dcu" = (
+/obj/machinery/atmospherics/components/trinary/mixer{
+	color = "#FFFF00";
+	name = "co2 mixer"
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "dcz" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch"
@@ -44560,8 +44568,9 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/medical/break_room)
 "lcA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
-	dir = 4
+/obj/machinery/atmospherics/components/trinary/mixer{
+	color = "#FFFF00";
+	name = "no2 mixer"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -75181,8 +75190,9 @@
 /turf/open/floor/iron,
 /area/station/science/research/abandoned)
 "sLV" = (
-/obj/machinery/atmospherics/pipe/smart/simple/yellow/visible{
-	dir = 10
+/obj/machinery/atmospherics/components/trinary/mixer{
+	color = "#FFFF00";
+	name = "o2 mixer"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -91737,6 +91747,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
+"wSK" = (
+/obj/machinery/atmospherics/components/trinary/mixer{
+	color = "#FFFF00";
+	name = "air mixer"
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "wSR" = (
 /turf/closed/wall,
 /area/station/maintenance/disposal/incinerator)
@@ -119549,11 +119566,11 @@ iMf
 iMf
 iVz
 iMf
-lcA
+wSK
 hgs
 jXN
 sXb
-lcA
+dcu
 ltD
 iMf
 qJb

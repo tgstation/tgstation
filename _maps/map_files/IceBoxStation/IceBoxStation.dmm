@@ -26809,6 +26809,14 @@
 	},
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/engineering/storage/tech)
+"hDS" = (
+/obj/machinery/atmospherics/components/trinary/mixer{
+	color = "#FFFF00";
+	dir = 4;
+	name = "nitrogen mixer"
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "hDU" = (
 /turf/closed/wall/r_wall,
 /area/station/command/gateway)
@@ -43564,8 +43572,10 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/command/storage/eva)
 "mvG" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
-	dir = 8
+/obj/machinery/atmospherics/components/trinary/mixer{
+	dir = 1;
+	name = "co2 mixer";
+	color = "#FFFF00"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -61716,7 +61726,8 @@
 "ruw" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
 	dir = 1;
-	name = "plasma mixer"
+	name = "plasma mixer";
+	color = "#FFFF00"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -62149,8 +62160,10 @@
 /turf/open/floor/plating,
 /area/station/commons/dorms/laundry)
 "rBQ" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
-	dir = 1
+/obj/machinery/atmospherics/components/trinary/mixer{
+	color = "#FFFF00";
+	dir = 4;
+	name = "o2 mixer"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -70377,6 +70390,14 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics/garden)
+"tTB" = (
+/obj/machinery/atmospherics/components/trinary/mixer/flipped{
+	dir = 4;
+	color = "#FFFF00";
+	name = "no2 mixer"
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "tTK" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -249032,7 +249053,7 @@ cEw
 woc
 fwq
 hHN
-lRR
+hDS
 bpR
 skx
 gkY
@@ -250563,7 +250584,7 @@ aSe
 kFH
 aen
 hIA
-rBQ
+tTB
 fQc
 fQc
 noY
