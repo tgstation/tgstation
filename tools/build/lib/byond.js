@@ -1,13 +1,14 @@
-import fs from "node:fs";
-import path from "node:path";
+import fs from "fs";
+import path from "path";
 import Juke from "../juke/index.js";
-import { regQuery } from "./winreg";
-import Bun from "bun";
+import { regQuery } from "./winreg.js";
 
-/** Cached path to DM compiler */
+/**
+ * Cached path to DM compiler
+ */
 let dmPath;
 
-async function getDmPath(namedVersion?: string | null): Promise<string> {
+const getDmPath = async (namedVersion) => {
   // Use specific named version
   if (namedVersion) {
     return getNamedByondVersionPath(namedVersion);
@@ -19,7 +20,7 @@ async function getDmPath(namedVersion?: string | null): Promise<string> {
     // Search in array of paths
     const paths = [
       ...((process.env.DM_EXE && process.env.DM_EXE.split(",")) || []),
-      ...(await getDefaultNamedByondVersionPath()),
+      ...getDefaultNamedByondVersionPath(),
       "C:\\Program Files\\BYOND\\bin\\dm.exe",
       "C:\\Program Files (x86)\\BYOND\\bin\\dm.exe",
       ["reg", "HKLM\\Software\\Dantom\\BYOND", "installpath"],
@@ -35,8 +36,8 @@ async function getDmPath(namedVersion?: string | null): Promise<string> {
     for (let path of paths) {
       // Resolve a registry key
       if (Array.isArray(path)) {
-        const [_type, ...args] = path;
-        path = (await regQuery(args[0], args[1])) || "";
+        const [type, ...args] = path;
+        path = await regQuery(...args);
       }
       if (!path) {
         continue;
@@ -56,10 +57,10 @@ async function getDmPath(namedVersion?: string | null): Promise<string> {
     return (process.platform === "win32" && "dm.exe") || "DreamMaker";
   })();
   return dmPath;
-}
+};
 
-async function getNamedByondVersionPath(namedVersion: string): Promise<string> {
-  const all_entries = await getAllNamedDmVersions(true);
+const getNamedByondVersionPath = (namedVersion) => {
+  const all_entries = getAllNamedDmVersions(true);
   const map_entry = all_entries.find((x) => x.name === namedVersion);
   if (map_entry === undefined) {
     Juke.logger.error(
@@ -68,27 +69,20 @@ async function getNamedByondVersionPath(namedVersion: string): Promise<string> {
     throw new Juke.ExitCode(1);
   }
   return map_entry.path;
-}
+};
 
-async function getDefaultNamedByondVersionPath(): Promise<string[]> {
-  const all_entries = await getAllNamedDmVersions(false);
+const getDefaultNamedByondVersionPath = () => {
+  const all_entries = getAllNamedDmVersions(false);
   const map_entry = all_entries.find((x) => x.default == true);
   if (map_entry === undefined) return [];
   return [map_entry.path];
-}
-
-type NamedDmVersion = {
-  name: string;
-  path: string;
-  default: boolean;
 };
 
-let namedDmVersionList: NamedDmVersion[];
+/** @type {[{ name, path, default }]} */
+let namedDmVersionList;
 export const NamedVersionFile = "tools/build/dm_versions.json";
 
-async function getAllNamedDmVersions(
-  throw_on_fail: boolean,
-): Promise<NamedDmVersion[]> {
+const getAllNamedDmVersions = (throw_on_fail) => {
   if (!namedDmVersionList) {
     if (!fs.existsSync(NamedVersionFile)) {
       if (throw_on_fail) {
@@ -99,7 +93,7 @@ async function getAllNamedDmVersions(
       return namedDmVersionList;
     }
     try {
-      namedDmVersionList = await Bun.file(NamedVersionFile).json();
+      namedDmVersionList = JSON.parse(fs.readFileSync(NamedVersionFile));
     } catch (err) {
       if (throw_on_fail) {
         Juke.logger.error(`Failed to parse byond version map file. ${err}`);
@@ -110,19 +104,17 @@ async function getAllNamedDmVersions(
     }
   }
   return namedDmVersionList;
-}
+};
 
-type Option = Partial<{
-  defines: string[];
-  warningsAsErrors: boolean;
-  namedDmVersion: string | null;
-  ignoreWarningCodes: string[];
-}>;
-
-export async function DreamMaker(
-  dmeFile: string,
-  options: Option = {},
-): Promise<void> {
+/**
+ * @param {string} dmeFile
+ * @param {{
+ *   defines?: string[];
+ *   warningsAsErrors?: boolean;
+ *   namedDmVersion?: string;
+ * }} options
+ */
+export const DreamMaker = async (dmeFile, options = {}) => {
   if (options.namedDmVersion !== null) {
     Juke.logger.info("Using named byond version:", options.namedDmVersion);
   }
@@ -192,9 +184,7 @@ export async function DreamMaker(
         );
       }
       const base_regex = "\\d+:warning( \\([a-z_]*\\))?:";
-      const with_ignores = `\\d+:warning( \\([a-z_]*\\))?:(?!(${ignoredWarningCodes
-        .map((x) => `.*${x}.*$`)
-        .join("|")}))`;
+      const with_ignores = `\\d+:warning( \\([a-z_]*\\))?:(?!(${ignoredWarningCodes.map((x) => `.*${x}.*$`).join("|")}))`;
       const reg =
         ignoredWarningCodes.length > 0
           ? new RegExp(with_ignores, "m")
@@ -207,7 +197,7 @@ export async function DreamMaker(
     return execReturn;
   };
   // Compile
-  const { defines = [] } = options;
+  const { defines } = options;
   if (defines && defines.length > 0) {
     Juke.logger.info("Using defines:", defines.join(", "));
   }
@@ -216,7 +206,7 @@ export async function DreamMaker(
     ...defines.map((def) => `-D${def}`),
     dmeFile,
   ]);
-}
+};
 
 /**
  * @param {{
