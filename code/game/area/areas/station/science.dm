@@ -31,8 +31,6 @@
 /area/station/science/xenobiology/cell
 	name = "\improper Xenobiology Cell"
 	icon_state = "xenobio"
-	requires_power = FALSE
-	area_flags = BLOBS_ALLOWED | UNIQUE_AREA
 
 /area/station/science/cytology
 	name = "\improper Cytology Lab"
