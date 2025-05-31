@@ -199,7 +199,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	balloon_alert(user, "unpacking bible...")
 	if(!do_after(user, 15 SECONDS, new_altar_area))
 		return
-	new /obj/structure/altar_of_gods(new_altar_area)
+	new /obj/structure/altar/of_gods(new_altar_area)
 	qdel(src)
 
 /obj/item/book/bible/proc/bless(mob/living/blessed, mob/living/user)
@@ -280,42 +280,40 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	log_combat(user, target_mob, "attacked", src)
 
 /obj/item/book/bible/interact_with_atom(atom/bible_smacked, mob/living/user, list/modifiers)
+	if(!user.mind?.holy_role)
+		return
 	if(SEND_SIGNAL(bible_smacked, COMSIG_BIBLE_SMACKED, user) & COMSIG_END_BIBLE_CHAIN)
 		return ITEM_INTERACT_SUCCESS
 	if(isfloorturf(bible_smacked))
-		if(user.mind?.holy_role)
-			var/area/current_area = get_area(bible_smacked)
-			if(!GLOB.chaplain_altars.len && istype(current_area, /area/station/service/chapel))
-				make_new_altar(bible_smacked, user)
-				return ITEM_INTERACT_SUCCESS
-			for(var/obj/effect/rune/nearby_runes in range(2, user))
-				nearby_runes.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
+		var/area/current_area = get_area(bible_smacked)
+		if(!GLOB.chaplain_altars.len && istype(current_area, /area/station/service/chapel))
+			make_new_altar(bible_smacked, user)
+			return ITEM_INTERACT_SUCCESS
+		for(var/obj/effect/rune/nearby_runes in range(2, user))
+			nearby_runes.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
 		bible_smacked.balloon_alert(user, "floor smacked!")
 		return ITEM_INTERACT_SUCCESS
 
-	if(user.mind?.holy_role)
-		if(bible_smacked.reagents?.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
-			bible_smacked.balloon_alert(user, "blessed")
-			var/water2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/water)
-			bible_smacked.reagents.del_reagent(/datum/reagent/water)
-			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,water2holy)
-			. = ITEM_INTERACT_SUCCESS
-		if(bible_smacked.reagents?.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
-			bible_smacked.balloon_alert(user, "purified")
-			var/unholy2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
-			bible_smacked.reagents.del_reagent(/datum/reagent/fuel/unholywater)
-			bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,unholy2holy)
-			. = ITEM_INTERACT_SUCCESS
-		if(istype(bible_smacked, /obj/item/book/bible) && !istype(bible_smacked, /obj/item/book/bible/syndicate))
-			bible_smacked.balloon_alert(user, "converted")
-			var/obj/item/book/bible/other_bible = bible_smacked
-			other_bible.name = name
-			other_bible.icon_state = icon_state
-			other_bible.inhand_icon_state = inhand_icon_state
-			other_bible.deity_name = deity_name
-			. = ITEM_INTERACT_SUCCESS
-		if(.)
-			return .
+	if(bible_smacked.reagents?.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
+		bible_smacked.balloon_alert(user, "blessed")
+		var/water2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/water)
+		bible_smacked.reagents.del_reagent(/datum/reagent/water)
+		bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,water2holy)
+		return ITEM_INTERACT_SUCCESS
+	if(bible_smacked.reagents?.has_reagent(/datum/reagent/fuel/unholywater)) // yeah yeah, copy pasted code - sue me
+		bible_smacked.balloon_alert(user, "purified")
+		var/unholy2holy = bible_smacked.reagents.get_reagent_amount(/datum/reagent/fuel/unholywater)
+		bible_smacked.reagents.del_reagent(/datum/reagent/fuel/unholywater)
+		bible_smacked.reagents.add_reagent(/datum/reagent/water/holywater,unholy2holy)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(bible_smacked, /obj/item/book/bible) && !istype(bible_smacked, /obj/item/book/bible/syndicate))
+		bible_smacked.balloon_alert(user, "converted")
+		var/obj/item/book/bible/other_bible = bible_smacked
+		other_bible.name = name
+		other_bible.icon_state = icon_state
+		other_bible.inhand_icon_state = inhand_icon_state
+		other_bible.deity_name = deity_name
+		return ITEM_INTERACT_SUCCESS
 
 	if(istype(bible_smacked, /obj/item/melee/cultblade/haunted) && !IS_CULTIST(user))
 		var/obj/item/melee/cultblade/haunted/sword_smacked = bible_smacked

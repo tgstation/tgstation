@@ -96,6 +96,8 @@
 
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
+/// from base of mob/living/updatestamina()
+#define COMSIG_LIVING_STAMINA_UPDATE "living_stamina_update"
 ///from base of mob/living/death(): (gibbed)
 #define COMSIG_LIVING_DEATH "living_death"
 
@@ -291,8 +293,10 @@
 	///cancel post eating
 	#define COMSIG_MOB_TERMINATE_EAT (1<<0)
 
-///From mob/living/carbon/proc/throw_mode_on and throw_mode_off
+///From mob/living/proc/throw_mode_on and throw_mode_off
 #define COMSIG_LIVING_THROW_MODE_TOGGLE "living_throw_mode_toggle"
+///from /atom/movable/screen/alert/give/proc/handle_transfer(): (taker, item)
+#define COMSIG_LIVING_ITEM_GIVEN "living_item_given"
 /// From mob/living/proc/on_fall
 #define COMSIG_LIVING_THUD "living_thud"
 ///From /datum/component/happiness()

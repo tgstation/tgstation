@@ -127,6 +127,10 @@
 /// Meaning that if the message is visual, and sourced from a blind mob, they will not see it.
 /// This flag skips that behavior, and will always show the self message to the mob.
 #define ALWAYS_SHOW_SELF_MESSAGE (1<<1)
+/// Applies emphasis formatting to the message.
+#define WITH_EMPHASIS_MESSAGE (1<<2)
+/// Blocks chat highlighting from being applied to the message sent to the self.
+#define BLOCK_SELF_HIGHLIGHT_MESSAGE (1<<3)
 
 ///Defines for priorities for the bubble_icon_override comp
 #define BUBBLE_ICON_PRIORITY_ACCESSORY 2

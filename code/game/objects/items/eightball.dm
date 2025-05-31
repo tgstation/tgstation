@@ -142,7 +142,7 @@
 	if (!(src in user.held_items))
 		return FALSE
 	notify_ghosts(
-		"[user] is shaking [src], hoping to get an answer to \"[selected_message]\"",
+		"[user.real_name] is shaking [src], hoping to get an answer to \"[selected_message]\"",
 		source = src,
 		header = "Magic eightball",
 		click_interact = TRUE,

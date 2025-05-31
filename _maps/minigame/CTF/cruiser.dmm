@@ -56,11 +56,6 @@
 /obj/item/ctf_flag/green,
 /turf/open/floor/circuit/green/anim,
 /area/centcom/ctf)
-"dq" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle/indestructible,
-/obj/effect/spawner/structure/window/reinforced/shuttle/indestructible,
-/turf/open/floor/plating,
-/area/centcom/ctf)
 "ds" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -3062,7 +3057,7 @@ hc
 fU
 cK
 cK
-dq
+cK
 cK
 cK
 cK

@@ -245,7 +245,7 @@
 	if(drowsy)
 		adjust_drowsiness(drowsy)
 	if(eyeblur)
-		adjust_eye_blur(eyeblur)
+		adjust_eye_blur_up_to(eyeblur, eyeblur)
 	if(jitter && !check_stun_immunity(CANSTUN))
 		adjust_jitter(jitter)
 	if(slur)

@@ -22,6 +22,11 @@
 	max_slots = 4
 	max_specific_storage = WEIGHT_CLASS_BULKY
 
+///Monkey Guncase toolbox
+/datum/storage/toolbox/guncase/monkey/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
+	. = ..()
+	set_locked(STORAGE_SOFT_LOCKED)
+
 ///Doublesword toolbox
 /datum/storage/toolbox/guncase/doublesword
 	max_slots = 5
@@ -35,3 +40,8 @@
 ///Fishing toolbox small
 /datum/storage/toolbox/fishing/small
 	max_specific_storage = WEIGHT_CLASS_SMALL //It can still hold a fishing rod
+
+///Crafter toolbox
+/datum/storage/toolbox/crafter
+	max_total_storage = 20
+	max_slots = 11

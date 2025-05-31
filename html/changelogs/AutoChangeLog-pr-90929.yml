@@ -1,4 +1,0 @@
-author: "NamelessFairy"
-delete-after: True
-changes:
-  - bugfix: "Wizard spawned demons can now leave their blood crawls and are not stuck in the blood realm forever."

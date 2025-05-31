@@ -16,6 +16,8 @@
 /// it represents the sides of our directional border object that have a neighbor
 /// Is incompatible with SMOOTH_DIAGONAL_CORNERS because border objects don't have corners
 #define SMOOTH_BORDER_OBJECT (1<<6)
+/// Atom overrides smoothing_allowed() to on a more granular level filter out connections
+#define SMOOTH_PROC_FILTER (1<<7)
 
 #define USES_SMOOTHING (SMOOTH_BITMASK|SMOOTH_BITMASK_CARDINALS)
 

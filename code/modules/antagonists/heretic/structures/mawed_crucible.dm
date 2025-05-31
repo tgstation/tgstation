@@ -77,37 +77,37 @@
 /obj/structure/destructible/eldritch_crucible/rust_heretic_act()
 	return
 
-/obj/structure/destructible/eldritch_crucible/attacked_by(obj/item/weapon, mob/living/user)
-	if(!iscarbon(user))
-		return ..()
-
-	if(!IS_HERETIC_OR_MONSTER(user))
-		bite_the_hand(user)
-		return TRUE
-
-	if(isbodypart(weapon))
-
-		var/obj/item/bodypart/consumed = weapon
+/obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(isbodypart(tool))
+		var/obj/item/bodypart/consumed = tool
 		if(!IS_ORGANIC_LIMB(consumed))
 			balloon_alert(user, "not organic!")
-			return
-
+			return ITEM_INTERACT_BLOCKING
+		if(!IS_HERETIC_OR_MONSTER(user))
+			if(user.combat_mode)
+				return ITEM_INTERACT_SKIP_TO_ATTACK
+			bite_the_hand(user)
+			return ITEM_INTERACT_SUCCESS
 		consume_fuel(user, consumed)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(isorgan(weapon))
-		var/obj/item/organ/consumed = weapon
+	if(isorgan(tool))
+		var/obj/item/organ/consumed = tool
 		if(!IS_ORGANIC_ORGAN(consumed))
 			balloon_alert(user, "not organic!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(consumed.organ_flags & ORGAN_VITAL) // Basically, don't eat organs like brains
 			balloon_alert(user, "invalid organ!")
-			return
-
+			return ITEM_INTERACT_BLOCKING
+		if(!IS_HERETIC_OR_MONSTER(user))
+			if(user.combat_mode)
+				return ITEM_INTERACT_SKIP_TO_ATTACK
+			bite_the_hand(user)
+			return ITEM_INTERACT_SUCCESS
 		consume_fuel(user, consumed)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/structure/destructible/eldritch_crucible/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/codex_cicatrix) || istype(tool, /obj/item/melee/touch_attack/mansus_fist))
@@ -124,7 +124,7 @@
 			balloon_alert(user, "flask is full!")
 			return ITEM_INTERACT_SUCCESS
 		to_fill.reagents.add_reagent(/datum/reagent/eldritch, 50)
-		do_item_attack_animation(src, used_item = tool)
+		do_item_attack_animation(src, used_item = tool, animation_type = ATTACK_ANIMATION_BLUNT)
 		current_mass--
 		balloon_alert(user, "refilled flask")
 		return ITEM_INTERACT_SUCCESS
@@ -213,7 +213,7 @@
 	if(QDELETED(arm))
 		return
 
-	to_chat(user, span_userdanger("[src] grabs your [arm.name]!"))
+	to_chat(user, span_userdanger("[src] grabs your [arm.plaintext_zone]!"))
 	arm.dismember()
 	consume_fuel(consumed = arm)
 

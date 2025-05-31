@@ -22,12 +22,12 @@
 
 	// Same
 	RegisterSignal(owner, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(update_diminishing_return))
-	RegisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_remove))
+	RegisterSignal(owner, COMSIG_LIVING_STAMINA_UPDATE, PROC_REF(check_remove))
 
 /datum/status_effect/incapacitating/stamcrit/on_apply()
 	if(owner.stat == DEAD)
 		return FALSE
-	if(owner.check_stun_immunity(CANKNOCKDOWN))
+	if(owner.check_stun_immunity(CANSTUN))
 		return FALSE
 	if(SEND_SIGNAL(owner, COMSIG_LIVING_ENTER_STAMCRIT) & STAMCRIT_CANCELLED)
 		return FALSE
@@ -72,7 +72,13 @@
 
 	return COMPONENT_IGNORE_CHANGE
 
-/datum/status_effect/incapacitating/stamcrit/proc/check_remove(datum/source, ...)
+/datum/status_effect/incapacitating/stamcrit/proc/check_remove(datum/source)
 	SIGNAL_HANDLER
+	if (isbasicmob(owner))
+		var/mob/living/basic/basic_owner = owner
+		if(basic_owner.staminaloss < basic_owner.stamina_crit_threshold)
+			qdel(src)
+		return
+
 	if(owner.maxHealth - owner.getStaminaLoss() > owner.crit_threshold)
 		qdel(src)

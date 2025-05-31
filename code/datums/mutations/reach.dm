@@ -17,7 +17,7 @@
 
 /datum/mutation/human/telekinesis/on_acquiring(mob/living/carbon/human/homan)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	RegisterSignal(homan, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_ranged_attack))
 
@@ -51,7 +51,7 @@
 
 /datum/mutation/human/elastic_arms/on_acquiring(mob/living/carbon/human/homan)
 	. = ..()
-	if(.)
+	if(!.)
 		return
 	RegisterSignal(homan, COMSIG_ATOM_CANREACH, PROC_REF(on_canreach))
 	RegisterSignal(homan, COMSIG_LIVING_TRY_PUT_IN_HAND, PROC_REF(on_owner_equipping_item))

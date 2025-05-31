@@ -559,3 +559,23 @@ RANDOM_LOOT_WEIGHT_MODIFIER 1
 ## Custom shuttle spam prevention. Changine these numbers allows you to change the maxsize and amount of custom shuttles.
 MAX_SHUTTLE_COUNT 6
 MAX_SHUTTLE_SIZE 300
+
+### Spy config
+## Changes refresh period between bounties - in deciseconds
+SPY_BOUNTY_REFRESH_TIMER 7200
+## Changes amount of easy bounties offered at once. Limit = 8
+SPY_BOUNTY_MAX_EASY 4
+## Changes amount of medium bounties offered at once. Limit = 6
+SPY_BOUNTY_MAX_MEDIUM 2
+## Changes amount of hard bounties offered at once. Limit = 4
+SPY_BOUNTY_MAX_HARD 2
+## Changes amount of refreshes necessary per each hard bounty
+## 1 = A hard bounty is added per refresh (until the max)
+## 0.5 = A hard bounty is added every 2 refreshes (until the max).
+SPY_BOUNTY_HARD_BOUNTIES_PER_REFRESH 1
+## Easy bounties grant uplink rewards that cost this much TC (or lower).
+## Also functions as the lower end for medium bounties.
+SPY_EASY_REWARD_TC_THRESHOLD 5
+## Hard bounties grant uplink rewards that cost this much TC (or higher).
+## Also functions as the upper end for medium bounties.
+SPY_HARD_REWARD_TC_THRESHOLD 15

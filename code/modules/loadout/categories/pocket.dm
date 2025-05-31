@@ -55,14 +55,10 @@
 
 /datum/loadout_item/pocket_items/plush/carp
 	name = "Plush (Carp)"
-	ui_icon = 'icons/obj/fluff/previews.dmi'
-	ui_icon_state = "plushie_carp"
 	item_path = /obj/item/toy/plush/carpplushie
 
 /datum/loadout_item/pocket_items/plush/lizard_greyscale
 	name = "Plush (Lizard, Colorable)"
-	ui_icon = 'icons/obj/fluff/previews.dmi'
-	ui_icon_state = "plushie_lizard"
 	item_path = /obj/item/toy/plush/lizard_plushie/greyscale
 
 /datum/loadout_item/pocket_items/plush/lizard_random
@@ -98,9 +94,11 @@
 
 /datum/loadout_item/pocket_items/plush/snake
 	name = "Plush (Snake)"
-	ui_icon = 'icons/obj/fluff/previews.dmi'
-	ui_icon_state = "plushie_snake"
 	item_path = /obj/item/toy/plush/snakeplushie
+
+/datum/loadout_item/pocket_items/plush/horse
+	name = "Plush (Horse)"
+	item_path = /obj/item/toy/plush/horse
 
 /datum/loadout_item/pocket_items/dice
 	group = "Dice"
@@ -306,20 +304,20 @@
 		return
 
 	var/obj/item/storage/wallet/wallet = new(equipper)
-	if(istype(id_card))
-		equipper.temporarilyRemoveItemFromInventory(id_card, force = TRUE)
-		equipper.equip_to_slot_if_possible(wallet, ITEM_SLOT_ID, initial = TRUE)
-		id_card.forceMove(wallet)
-
-		for(var/obj/item/thing in equipper?.back)
-			// leaves a slot free for whatever they may want
-			if(length(wallet.contents) >= wallet.atom_storage.max_slots - 1)
-				break
-			if(thing.w_class > wallet.atom_storage.max_specific_storage)
-				continue
-			wallet.atom_storage.attempt_insert(thing, override = TRUE, force = STORAGE_FULLY_LOCKED, messages = FALSE)
-
-	else
+	if(!istype(id_card))
 		// They must have a PDA or some other thing in their ID slot, abort
-		if(!equipper.equip_to_slot_if_possible(wallet, slot = ITEM_SLOT_BACKPACK, initial = TRUE))
+		if(!equipper.equip_to_storage(wallet, ITEM_SLOT_BACK, indirect_action = TRUE))
 			wallet.forceMove(equipper.drop_location())
+		return
+
+	equipper.temporarilyRemoveItemFromInventory(id_card, force = TRUE)
+	equipper.equip_to_slot_if_possible(wallet, ITEM_SLOT_ID, initial = TRUE)
+	id_card.forceMove(wallet)
+
+	for(var/obj/item/thing in equipper?.back)
+		// leaves a slot free for whatever they may want
+		if(length(wallet.contents) >= wallet.atom_storage.max_slots - 1)
+			break
+		if(thing.w_class > wallet.atom_storage.max_specific_storage)
+			continue
+		wallet.atom_storage.attempt_insert(thing, override = TRUE, force = STORAGE_FULLY_LOCKED, messages = FALSE)

@@ -1,42 +1,42 @@
 .column {
-    float: left;
-    flex-wrap: wrap;
+  float: left;
+  flex-wrap: wrap;
 }
 
 .left {
-    width: 280px;
+  width: 280px;
 }
 
 .spacer {
-	margin-left: 100px;
+  margin-left: 100px;
 }
 
 .row {
-    content: '';
-    display: table;
-    clear: both;
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .inputbox {
-    position: absolute;
-    top: 0px;
-    left: 4px;
-    width: 14px;
-    height: 14px;
-    background: #e6e6e6;
+  position: absolute;
+  top: 0px;
+  left: 4px;
+  width: 14px;
+  height: 14px;
+  background: #e6e6e6;
 }
 
 .select {
-    position: relative;
-    display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .textbox {
-    resize: none;
-    min-height: 40px;
-    width: 340px;
+  resize: none;
+  min-height: 40px;
+  width: 340px;
 }

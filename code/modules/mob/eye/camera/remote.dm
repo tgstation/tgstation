@@ -51,6 +51,7 @@
 
 /mob/eye/camera/remote/proc/assign_user(mob/living/new_user)
 	var/mob/living/old_user = user_ref?.resolve()
+	SEND_SIGNAL(src, COMSIG_REMOTE_CAMERA_ASSIGN_USER, new_user, old_user)
 	if(old_user)
 		old_user.remote_control = null
 		old_user.reset_perspective(null)
@@ -70,6 +71,8 @@
 		var/client/new_user_client = GetViewerClient()
 		if(user_image && new_user_client)
 			new_user_client.images += user_image
+		if(use_visibility)
+			update_visibility()
 
 /**
  * Sets the camera's user image to this icon and state.

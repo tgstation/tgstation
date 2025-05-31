@@ -16,7 +16,7 @@
 
 /datum/brain_trauma/severe/split_personality/on_gain()
 	var/mob/living/brain_owner = owner
-	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner)) //No use assigning people to a corpse or braindead
+	if(brain_owner.stat == DEAD || !GET_CLIENT(brain_owner) || istype(get_area(brain_owner), /area/deathmatch)) //No use assigning people to a corpse or braindead
 		return FALSE
 	. = ..()
 	make_backseats()
@@ -275,7 +275,7 @@
 
 	RegisterSignal(owner, COMSIG_ATOM_SPLASHED, PROC_REF(on_splashed))
 	notify_ghosts(
-		"[owner] is blacking out!",
+		"[owner.real_name] is blacking out!",
 		source = owner,
 		header = "Bro I'm not even drunk right now",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,

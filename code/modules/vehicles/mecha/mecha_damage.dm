@@ -24,6 +24,7 @@
 
 ///tries to deal internal damaget depending on the damage amount
 /obj/vehicle/sealed/mecha/proc/try_deal_internal_damage(damage)
+	var/internal_damage_threshold = (max_integrity/10) /// Mech internal damage can only occur if the resulting hit exceeds a tenth of the mecha's maximum integrity in a single blow.
 	if(damage < internal_damage_threshold)
 		return
 	if(!prob(internal_damage_probability))

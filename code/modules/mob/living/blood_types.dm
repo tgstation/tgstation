@@ -13,7 +13,7 @@
 	/// The cached color matrix for blood with a lightness_mult. We only need to calculate this once since blood types are singletons
 	var/list/blood_color_matrix
 	/// Blood types that are safe to use with people that have this blood type (for blood transfusions)
-	var/compatible_types = list()
+	var/list/compatible_types = list()
 	/// What reagent is represented by this blood type?
 	var/datum/reagent/reagent_type = /datum/reagent/blood
 	/// What chem is used to restore this blood type (outside of itself, of course)?
@@ -229,20 +229,3 @@
 
 /datum/blood_type/random_chemical/type_key()
 	return reagent_type
-
-// Similar to the random reagents bloodtype, this one creates a 'but evil' bloodtype
-/datum/blood_type/evil
-	root_abstract_type = /datum/blood_type/evil
-
-/datum/blood_type/evil/New(datum/blood_type/real_blood_type, list/real_compatible_types)
-	src.name = real_blood_type.name
-	. = ..()
-	id = type_key()
-	src.color = BLOOD_COLOR_BLACK // why it gotta be black though
-	src.reagent_type = real_blood_type.reagent_type
-	src.restoration_chem = real_blood_type.reagent_type
-	src.compatible_types = LAZYCOPY(real_compatible_types)
-	src.root_abstract_type = null
-
-/datum/blood_type/evil/type_key()
-	return "[name]_but_evil"

@@ -155,7 +155,12 @@
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/custom/checkLandingTurf(turf/T, list/overlappers)
 	. = ..()
+	if(. != SHUTTLE_DOCKER_LANDING_CLEAR)
+		return
+	var/obj/docking_port/mobile/M = SSshuttle.getShuttle(shuttleId)
 	var/area/area = get_area(T)
+	if(M.shuttle_areas[area])
+		area = M.underlying_areas_by_turf[T]
 	if(!area.allow_shuttle_docking)
 		return SHUTTLE_DOCKER_BLOCKED
 

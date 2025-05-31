@@ -121,12 +121,14 @@
 	chassis = null
 	return ..()
 
-/obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
+/obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mecha_to_attach, attach_right = FALSE)
+	if(!mecha_to_attach.can_be_tracked)
+		return
 	if(!..())
 		return
-	M.trackers += src
-	M.diag_hud_set_mechtracking()
-	chassis = M
+	mecha_to_attach.trackers += src
+	mecha_to_attach.diag_hud_set_mechtracking()
+	chassis = mecha_to_attach
 
 /**
  * Attempts to EMP mech that the tracker is attached to, if there is one and tracker is not on cooldown
@@ -149,16 +151,3 @@
 	name = "exosuit AI control beacon"
 	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
 	ai_beacon = TRUE
-
-/obj/item/storage/box/mechabeacons
-	name = "exosuit tracking beacons"
-
-/obj/item/storage/box/mechabeacons/PopulateContents()
-	..()
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
