@@ -582,10 +582,13 @@
 		return
 	return attempt_pickup(user)
 
-/obj/item/proc/attempt_pickup(mob/user, skip_grav = FALSE)
+/obj/item/proc/attempt_pickup(mob/living/user, skip_grav = FALSE)
 	. = TRUE
 
 	if(!(interaction_flags_item & INTERACT_ITEM_ATTACK_HAND_PICKUP)) //See if we're supposed to auto pickup.
+		return
+
+	if(!(user.mobility_flags & MOBILITY_PICKUP))
 		return
 
 	if(!skip_grav)
