@@ -184,7 +184,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	object_copy?.forceMove(drop_location())
 
 	QDEL_NULL(toner_cartridge)
-	QDEL_LIST(paper_stack)
+	paper_stack = null
 	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
 	return ..()
 
@@ -776,7 +776,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /obj/machinery/photocopier/atom_break(damage_flag)
 	. = ..()
-	if(. && toner_cartridge.charges)
+	if(. && toner_cartridge?.charges)
 		new /obj/effect/decal/cleanable/oil(get_turf(src))
 		toner_cartridge.charges = 0
 
