@@ -37,3 +37,10 @@
 
 /datum/experiment/autopsy/xenomorph/is_valid_autopsy(mob/target)
 	return isalien(target)
+
+/datum/experiment/autopsy/xenomorph_queen
+	name = "Xenomorph Queen Autopsy Experiment"
+	description = "We need to understand the queen's biology to better combat the xenomorph threat. Send us research from dissecting a xenomorph queen."
+
+/datum/experiment/autopsy/xenomorph_queen/is_valid_autopsy(mob/target)
+	return isalienqueen(target)

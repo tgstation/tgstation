@@ -120,3 +120,4 @@
 #define TECHWEB_NODE_TELECOMS "telecoms"
 #define TECHWEB_NODE_UNREGULATED_BLUESPACE "unregulated_bluespace"
 #define TECHWEB_NODE_XENOBIOLOGY "xenobiology"
+#define TECHWEB_NODE_XENOMORPH_RESEARCH "xenomorph_research"

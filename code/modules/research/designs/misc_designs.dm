@@ -1162,3 +1162,19 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/artificial_hive_node
+	name = "Artificial Hive Node"
+	id = "artificial_hive_node"
+	desc = "A device that can immitate a xenomorph hive node."
+	build_type = PROTOLATHE | AWAY_LATHE
+	build_path = /obj/item/organ/alien/hivenode/artificial
+	materials = list(
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 5,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT,
+		/datum/material/bluespace = SMALL_MATERIAL_AMOUNT,
+	)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SCIENCE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
