@@ -2843,6 +2843,7 @@
 #include "code\game\objects\structures\mystery_box.dm"
 #include "code\game\objects\structures\noticeboard.dm"
 #include "code\game\objects\structures\ore_containers.dm"
+#include "code\game\objects\structures\outfit_wardrobe.dm"
 #include "code\game\objects\structures\petrified_statue.dm"
 #include "code\game\objects\structures\pinatas.dm"
 #include "code\game\objects\structures\plasticflaps.dm"
