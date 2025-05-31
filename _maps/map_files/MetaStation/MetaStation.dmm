@@ -11122,13 +11122,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/cargo/storage)
-"dZH" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron/white,
-/area/station/science/xenobiology)
 "eaa" = (
 /obj/structure/sign/painting/library{
 	pixel_y = -32
@@ -13045,6 +13038,9 @@
 /obj/effect/spawner/random/vending/colavend,
 /turf/open/floor/iron,
 /area/station/hallway/primary/port)
+"eHH" = (
+/turf/closed/wall/r_wall,
+/area/station/science/xenobiology/cell)
 "eHR" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -35338,9 +35334,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 1
-	},
 /turf/open/floor/iron,
 /area/station/science/xenobiology/cell)
 "mCJ" = (
@@ -51636,9 +51629,6 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology/hallway)
-"slu" = (
-/turf/closed/wall/r_wall,
-/area/station/science/xenobiology/cell)
 "sly" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -56550,6 +56540,13 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
+"tVI" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/station/science/xenobiology)
 "tVP" = (
 /obj/machinery/light/no_nightlight/directional/east,
 /turf/open/floor/iron/dark,
@@ -115261,8 +115258,8 @@ jCO
 caf
 tgm
 gKD
-dZH
-dZH
+tVI
+tVI
 fdZ
 iMR
 bnQ
@@ -116801,13 +116798,13 @@ oyj
 goW
 msN
 xiL
-slu
+eHH
 kGR
 lyL
 mao
 mCu
 kgW
-slu
+eHH
 xiL
 qxr
 lmn
@@ -117058,13 +117055,13 @@ rDf
 rDf
 uhs
 fjd
-slu
+eHH
 oGj
 sZN
 msR
 xkv
 nET
-slu
+eHH
 iOJ
 lmn
 rDf
@@ -117572,13 +117569,13 @@ hbK
 hbK
 mgS
 hbK
-slu
+eHH
 kcu
 kcu
 gyK
 kcu
 kcu
-slu
+eHH
 hbK
 mTg
 hbK
@@ -117829,13 +117826,13 @@ hbK
 tmU
 fGy
 wyo
-slu
+eHH
 dLm
 kcu
 gyK
 kcu
 kcu
-slu
+eHH
 qgn
 mCV
 wyo
@@ -118086,13 +118083,13 @@ hbK
 pWT
 rDf
 uLa
-slu
+eHH
 kcu
 kcu
 jQz
 nJr
 kcu
-slu
+eHH
 lUS
 pHt
 rDf
@@ -118343,13 +118340,13 @@ bPB
 hbK
 wrc
 wrc
-slu
+eHH
 kcu
 kcu
 kcu
 kcu
 kcu
-slu
+eHH
 wrc
 wrc
 hbK
@@ -118600,13 +118597,13 @@ aaa
 aaa
 aaa
 lMJ
-slu
-slu
+eHH
+eHH
 kcu
 aYl
 kcu
-slu
-slu
+eHH
+eHH
 lMJ
 aaa
 aaa
@@ -118858,11 +118855,11 @@ rrt
 lMJ
 lMJ
 lMJ
-slu
-slu
-slu
-slu
-slu
+eHH
+eHH
+eHH
+eHH
+eHH
 lMJ
 aaa
 aaa
