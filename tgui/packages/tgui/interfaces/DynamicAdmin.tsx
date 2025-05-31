@@ -48,7 +48,7 @@ type Data = {
     name: string;
   };
   ruleset_count?: RulesetCount;
-  full_config: DynamicConfig;
+  full_config?: DynamicConfig;
   queued_rulesets: RulesetReport[];
   active_rulesets: RulesetReport[];
   all_rulesets: Record<string, RulesetType[]>;
@@ -387,6 +387,14 @@ const ConfigPanel = () => {
   const { full_config } = data;
   // Config given to us is basically just a big json object so we can just... throw it out there
   // Future TODO make this a whole functional config editor
+
+  if (!full_config) {
+    return (
+      <NoticeBox>
+        No config loaded - refer to repo defaults for reference.
+      </NoticeBox>
+    );
+  }
 
   const configKeys = Object.keys(full_config);
   const [shownConfig, setShownConfig] = useState(configKeys[0]);
