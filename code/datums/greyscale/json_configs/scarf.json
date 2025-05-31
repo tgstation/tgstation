@@ -4,13 +4,13 @@
 			"type": "icon_state",
 			"icon_state": "scarf_stripe",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "scarf_base",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	],
 	"large_scarf": [
@@ -18,13 +18,13 @@
 			"type": "icon_state",
 			"icon_state": "large_scarf_stripe",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "large_scarf_base",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	]
 }

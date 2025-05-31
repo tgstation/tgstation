@@ -21,6 +21,7 @@
 	. = ..()
 
 	register_context()
+	update_icon_state()
 
 ///screentips for lockboxes
 /obj/item/storage/lockbox/add_context(atom/source, list/context, obj/item/held_item, mob/user)

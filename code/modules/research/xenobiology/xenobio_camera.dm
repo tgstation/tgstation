@@ -187,6 +187,7 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		stored_slime.visible_message(span_notice("[stored_slime] is spat out!"))
 		stored_slimes -= stored_slime
 		REMOVE_TRAIT(stored_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
+		stored_slime.handle_slime_stasis(0)
 	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 
 ///Places every slime not controlled by a player into the internal storage, respecting its limits

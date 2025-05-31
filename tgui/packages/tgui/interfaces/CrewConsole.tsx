@@ -205,7 +205,6 @@ const CrewTable = () => {
               height="22px"
               placeholder="Search name..."
               onChange={setSearchQuery}
-              expensive
               value={searchQuery}
             />
           </Flex.Item>
