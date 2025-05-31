@@ -1,0 +1,4 @@
+author: "hry-gh"
+delete-after: True
+changes:
+  - bugfix: "fixes the ominous black squares appearing over tgui windows, sometimes"
