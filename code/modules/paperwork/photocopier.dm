@@ -160,6 +160,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 	// object_copy can be a traitor objective, don't qdel
 	object_copy?.forceMove(dump_location)
+	toner_cartridge?.forceMove(dump_location)
 
 	for(var/paper_path in paper_stack)
 		var/paper_amount = paper_stack[paper_path]
@@ -175,9 +176,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 				new_paper.pixel_x = rand(-3,3)
 
 		paper_stack.Remove(paper_path)
-	if(toner_cartridge)
-		toner_cartridge.forceMove(dump_location)
-		toner_cartridge = null
+
 	update_appearance()
 
 /obj/machinery/photocopier/Destroy()
