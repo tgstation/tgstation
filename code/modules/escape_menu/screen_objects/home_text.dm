@@ -29,6 +29,9 @@
 
 	vis_contents += home_button_text
 
+/atom/movable/screen/escape_menu/home_button/proc/update_text()
+	home_button_text.update_text()
+
 /atom/movable/screen/escape_menu/home_button/Destroy()
 	escape_menu = null
 	on_click_callback = null

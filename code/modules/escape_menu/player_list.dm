@@ -72,6 +72,35 @@
 		)
 		horizontal_amount += 150
 
+	vertical_amount -= 30
+	if(length(client.prefs.ignoring))
+		page_holder.give_screen_object(
+			new /atom/movable/screen/escape_menu/text(
+				null,
+				/* hud_owner = */ null,
+				"Ignored",
+				/* offset = */ list("[vertical_amount]", 80),
+			)
+		)
+	vertical_amount -= 20
+	horizontal_amount = -250 //players will get 4 ckeys per line so we can fit more.
+	for(var/ignored_key in client.prefs.ignoring - GLOB.directory) //ignored offline people
+		if(horizontal_amount >= 350)
+			horizontal_amount = -250
+			vertical_amount -= 20
+		page_holder.give_screen_object(
+			new /atom/movable/screen/escape_menu/home_button/player_list/offline(
+				null,
+				/* hud_owner = */ null,
+				/* escape_menu = */ src,
+				/* button_text = */ ignored_key,
+				/* offset = */ "NORTH:[vertical_amount],CENTER:[horizontal_amount]",
+				CALLBACK(src, PROC_REF(ignore_or_unignore), ignored_key),
+				/* font_size = */ 12,
+			)
+		)
+		horizontal_amount += 150
+
 /datum/escape_menu/proc/ignore_or_unignore(ckey, atom/movable/screen/escape_menu/home_button/player_list/source)
 	var/adding = FALSE
 	if(ckey in client?.prefs.ignoring)
@@ -80,8 +109,8 @@
 		client?.prefs.ignoring.Add(ckey)
 		adding = TRUE
 	client?.prefs.save_preferences()
-	source.home_button_text.update_text()
-	to_chat(client, span_notice("[ckey] has been [adding ? "ignored" : "unignored"]."))
+	source.update_text()
+	to_chat(client, span_notice("[ckey] has been [adding ? "ignored" : "unignored"] in OOC."))
 
 /atom/movable/screen/escape_menu/home_button/player_list
 	var/player_ckey
@@ -128,3 +157,6 @@
 	admin_button_text.maptext_x = 60
 	admin_button_text.maptext_y = -15
 	vis_contents += admin_button_text
+
+/atom/movable/screen/escape_menu/home_button/player_list/offline/update_text()
+	qdel(src)
