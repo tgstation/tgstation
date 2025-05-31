@@ -194,8 +194,7 @@
 	heat_reagents(seconds_per_tick)
 
 	//send updates to ui. faster than SStgui.update_uis
-	for(var/datum/tgui/ui in src.open_uis)
-		ui.send_update()
+	update_data_for_all_viewers()
 
 /obj/machinery/chem_heater/process(seconds_per_tick)
 	//is_reacting is handled in reaction_step()
@@ -207,8 +206,7 @@
 		beaker.reagents.handle_reactions()
 
 	//send updates to ui. faster than SStgui.update_uis
-	for(var/datum/tgui/ui in src.open_uis)
-		ui.send_update()
+	update_data_for_all_viewers()
 
 /obj/machinery/chem_heater/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

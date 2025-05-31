@@ -156,6 +156,10 @@
 	. = ..()
 	ui?.set_autoupdate(FALSE)
 
+/datum/antagonist/heretic/ui_data(mob/user)
+	var/list/data = list("charges" = knowledge_points)
+	return data
+
 /datum/antagonist/heretic/ui_static_data(mob/user)
 	var/list/data = list()
 
@@ -164,15 +168,7 @@
 
 	for(var/datum/heretic_knowledge_tree_column/path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
 		path = new path()
-		data["paths"] += list(list(
-			"route" = path.route,
-			"icon" = path.icon.Copy(),
-			"complexity" = path.complexity,
-			"description" = path.description.Copy(),
-			"pros" = path.pros.Copy(),
-			"cons" = path.cons.Copy(),
-			"tips" = path.tips.Copy(),
-		))
+		data["paths"] += list(path.get_ui_data(src))
 		qdel(path)
 
 	data["charges"] = knowledge_points
@@ -193,6 +189,8 @@
 		tiers[heretic_knowledge_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
 
 	for(var/datum/heretic_knowledge/knowledge as anything in get_researchable_knowledge())
+		if(ispath(knowledge, /datum/heretic_knowledge/limited_amount/starting))
+			continue
 		var/list/knowledge_data = get_knowledge_data(knowledge, FALSE)
 
 		// Final knowledge can't be learned until all objectives are complete.
@@ -228,10 +226,10 @@
 			var/datum/heretic_knowledge/researched_path = text2path(params["path"])
 			if(!ispath(researched_path, /datum/heretic_knowledge))
 				CRASH("Heretic attempted to learn non-heretic_knowledge path! (Got: [researched_path || "invalid path"])")
-			if(!(researched_path in get_researchable_knowledge()))
+			if(!researchable_knowledge(researched_path))
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn knowledge they can't learn!")
 				CRASH("Heretic attempted to learn knowledge they can't learn! (Got: [researched_path])")
-			if(ispath(researched_path, /datum/heretic_knowledge/ultimate) && !can_ascend())
+			if(ispath(researched_path, /datum/heretic_knowledge/ultimate))
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn ascension knowledge without completing objectives!")
 				CRASH("Heretic attempted to learn a final knowledge despite not being able to ascend!")
 			if(initial(researched_path.cost) > knowledge_points)
@@ -242,6 +240,14 @@
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
 			adjust_knowledge_points(initial(researched_path.cost))
 			return TRUE
+
+/datum/antagonist/heretic/proc/researchable_knowledge(datum/heretic_knowledge/knowledge_path)
+	if(knowledge_path in get_researchable_knowledge())
+		return TRUE
+	for(var/list/tier in side_knowledges)
+		if(knowledge_path in tier)
+			return TRUE
+	return FALSE
 
 /datum/antagonist/heretic/submit_player_objective(retain_existing = FALSE, retain_escape = TRUE, force = FALSE)
 	if (isnull(owner) || isnull(owner.current))
@@ -651,13 +657,13 @@
  */
 /datum/antagonist/heretic/proc/passive_influence_gain()
 	adjust_knowledge_points(1)
-	if(owner.current.stat <= SOFT_CRIT)
+	if(owner?.current?.stat <= SOFT_CRIT)
 		to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer)
 
 /datum/antagonist/heretic/proc/adjust_knowledge_points(amount)
 	knowledge_points += max(0, amount) // Don't allow negative knowledge points
-	update_static_data_for_all_viewers()
+	update_data_for_all_viewers()
 
 /datum/antagonist/heretic/roundend_report()
 	var/list/parts = list()

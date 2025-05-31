@@ -62,10 +62,6 @@ type Knowledge = {
   ascension: BooleanLike;
 };
 
-type KnowledgeInfo = {
-  knowledge_tiers: KnowledgeTier[];
-};
-
 type KnowledgeTier = {
   nodes: Knowledge[];
 };
@@ -73,10 +69,12 @@ type KnowledgeTier = {
 type HereticPath = {
   route: string;
   complexity: string;
+  complexity_color: string;
   description: string[];
   pros: string[];
   cons: string[];
   tips: string[];
+  starting_knowledge: Knowledge;
 };
 
 type Info = {
@@ -87,6 +85,7 @@ type Info = {
   can_change_objective: BooleanLike;
   paths: HereticPath[];
   knowledge_shop: Knowledge[][];
+  knowledge_tiers: KnowledgeTier[];
 };
 
 const IntroductionSection = (props) => {
@@ -251,7 +250,7 @@ const InformationSection = () => {
 };
 
 const KnowledgeTree = (props) => {
-  const { data, act } = useBackend<KnowledgeInfo>();
+  const { data, act } = useBackend<Info>();
   const { knowledge_tiers } = data;
 
   return (
@@ -366,9 +365,6 @@ const KnowledgeShop = () => {
   );
 
   function Knowledges() {
-    if (!knowledge_shop.length) {
-      return 'None!';
-    }
     return knowledge_shop?.map((tier, index) => (
       <Stack.Item key={`tier-${index}`}>
         Tier {index + 1}
@@ -387,7 +383,7 @@ const KnowledgeShop = () => {
 
 const ResearchInfo = () => {
   const { data } = useBackend<Info>();
-  const { charges } = data;
+  const { charges, knowledge_shop } = data;
 
   return (
     <>
@@ -402,9 +398,11 @@ const ResearchInfo = () => {
         <Stack.Item grow>
           <KnowledgeTree />
         </Stack.Item>
-        <Stack.Item grow>
-          <KnowledgeShop />
-        </Stack.Item>
+        {knowledge_shop?.length && (
+          <Stack.Item grow>
+            <KnowledgeShop />
+          </Stack.Item>
+        )}
       </Stack>
     </>
   );
@@ -439,11 +437,31 @@ const PathInfo = () => {
 };
 
 const TabContent = ({ path }: { path: HereticPath }) => {
+  // const isCurrentPath = (route: string) => {
+  //   return path.starting_knowledge.path ===
+  // };
   return (
-    <Section title={path.route} fill scrollable>
+    <Section
+      title={
+        <h1 style={{ padding: 0, margin: 0, textAlign: 'center' }}>
+          {path.route}
+        </h1>
+      }
+      textAlign="center"
+      fill
+      scrollable
+    >
       <Stack vertical>
-        <Stack.Item>
-          <b>Complexity:</b> {path.complexity}
+        <Stack.Item verticalAlign="center" textAlign="center">
+          <h1>Choose Path:</h1> <KnowledgeNode node={path.starting_knowledge} />
+          <div>
+            <h3>
+              Complexity:{' '}
+              <span style={{ color: path.complexity_color }}>
+                {path.complexity}
+              </span>
+            </h3>
+          </div>
         </Stack.Item>
         <Stack.Item>
           <b>Description:</b>{' '}
@@ -455,7 +473,7 @@ const TabContent = ({ path }: { path: HereticPath }) => {
           <b>Pros:</b>
           <ul>
             {path.pros.map((pro, index) => (
-              <li key={index}>{pro}</li>
+              <p key={index}>{pro}</p>
             ))}
           </ul>
         </Stack.Item>
@@ -463,7 +481,7 @@ const TabContent = ({ path }: { path: HereticPath }) => {
           <b>Cons:</b>
           <ul>
             {path.cons.map((con, index) => (
-              <li key={index}>{con}</li>
+              <p key={index}>{con}</p>
             ))}
           </ul>
         </Stack.Item>
@@ -484,7 +502,13 @@ export const AntagInfoHeretic = () => {
   const { data } = useBackend<Info>();
   const { ascended } = data;
 
-  const [currentTab, setTab] = useState(2);
+  const [currentTab, setTab] = useState(1);
+
+  const tabs = [
+    { label: 'Information', icon: 'info', content: <IntroductionSection /> },
+    { label: 'Path Info', icon: 'info', content: <PathInfo /> },
+    { label: 'Research', icon: 'book', content: <ResearchInfo /> },
+  ];
 
   return (
     <Window width={750} height={635}>
@@ -499,34 +523,19 @@ export const AntagInfoHeretic = () => {
         <Stack vertical fill>
           <Stack.Item>
             <Tabs fluid>
-              <Tabs.Tab
-                icon="info"
-                selected={currentTab === 0}
-                onClick={() => setTab(0)}
-              >
-                Information
-              </Tabs.Tab>
-              <Tabs.Tab
-                icon={currentTab === 1 ? 'book-open' : 'book'}
-                selected={currentTab === 1}
-                onClick={() => setTab(1)}
-              >
-                Research
-              </Tabs.Tab>
-              <Tabs.Tab
-                icon="info"
-                selected={currentTab === 2}
-                onClick={() => setTab(2)}
-              >
-                Path Info
-              </Tabs.Tab>
+              {tabs.map((tab, index) => (
+                <Tabs.Tab
+                  key={index}
+                  icon={tab.icon}
+                  selected={currentTab === index}
+                  onClick={() => setTab(index)}
+                >
+                  {tab.label}
+                </Tabs.Tab>
+              ))}
             </Tabs>
           </Stack.Item>
-          <Stack.Item grow>
-            {(currentTab === 0 && <IntroductionSection />) ||
-              (currentTab === 1 && <ResearchInfo />) ||
-              (currentTab === 2 && <PathInfo />)}
-          </Stack.Item>
+          <Stack.Item grow>{tabs[currentTab].content}</Stack.Item>
         </Stack>
       </Window.Content>
     </Window>

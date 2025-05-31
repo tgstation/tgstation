@@ -9,6 +9,7 @@ GLOBAL_LIST(heretic_research_tree)
 	var/route
 	var/icon_state = "dark_blade"
 	var/complexity = "Insane"
+	var/complexity_color = "#FF0000" // Red
 	var/list/description = list("A heretic knowledge tree column, used to define a path of knowledge.")
 	var/list/icon = list(
 		"icon" = 'icons/obj/weapons/khopesh.dmi',
@@ -49,6 +50,20 @@ GLOBAL_LIST(heretic_research_tree)
 	var/guaranteed_side_tier2
 	/// Knowledge guaranteed to show up in the third draft
 	var/guaranteed_side_tier3
+
+
+/datum/heretic_knowledge_tree_column/proc/get_ui_data(datum/antagonist/heretic/our_heretic)
+	return list(
+		"route" = route,
+		"icon" = icon.Copy(),
+		"complexity" = complexity,
+		"complexity_color" = complexity_color,
+		"description" = description.Copy(),
+		"pros" = pros.Copy(),
+		"cons" = cons.Copy(),
+		"tips" = tips.Copy(),
+		"starting_knowledge" = our_heretic.get_knowledge_data(start),
+	)
 
 /proc/generate_heretic_research_tree()
 	var/list/heretic_research_tree = list()

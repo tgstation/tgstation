@@ -1,6 +1,8 @@
 /datum/heretic_knowledge_tree_column/ash
 	route = PATH_ASH
 	ui_bgr = "node_ash"
+	complexity = "Easy"
+	complexity_color = "#0ff007" // Orange
 	icon = list(
 		"icon" = 'icons/obj/weapons/khopesh.dmi',
 		"state" = "ash_blade",

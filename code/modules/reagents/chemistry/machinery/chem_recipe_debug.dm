@@ -189,8 +189,7 @@
 		target_reagents.handle_reactions()
 
 	//send updates to ui. faster than SStgui.update_uis
-	for(var/datum/tgui/ui in src.open_uis)
-		ui.send_update()
+	update_data_for_all_viewers()
 
 /obj/machinery/chem_recipe_debug/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)
 	SIGNAL_HANDLER
@@ -198,9 +197,7 @@
 	adjust_environment(seconds_per_tick)
 
 	//send updates to ui. faster than SStgui.update_uis
-	for(var/datum/tgui/ui in src.open_uis)
-		ui.send_update()
-
+	update_data_for_all_viewers()
 /**
  * Decodes the ui reaction var into its original name
  * Arguments
