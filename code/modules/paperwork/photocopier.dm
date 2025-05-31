@@ -181,10 +181,14 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(object_copy)
 		object_copy.forceMove(drop_location())
 
-	dump_contents()
 	QDEL_NULL(toner_cartridge)
 	QDEL_LIST(paper_stack)
 	ass = null //the mob isn't actually contained and just referenced, no need to delete it.
+	return ..()
+
+/obj/machinery/photocopier/on_deconstruction(disassembled)
+	if(disassembled)
+		dump_contents()
 	return ..()
 
 /obj/machinery/photocopier/examine(mob/user)
