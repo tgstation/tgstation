@@ -850,13 +850,24 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		attacking_bodypart = brain.get_attacking_limb(target)
 	if(!attacking_bodypart)
 		attacking_bodypart = user.get_active_hand()
+
+	// Whether or not we get some protein for a successful attack. Nom.
+	var/biting = FALSE
+
 	var/atk_verb = pick(attacking_bodypart.unarmed_attack_verbs)
 	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 	if(atk_effect == ATTACK_EFFECT_BITE)
-		if(user.is_mouth_covered(ITEM_SLOT_MASK))
-			to_chat(user, span_warning("You can't [atk_verb] with your mouth covered!"))
+		if(!user.is_mouth_covered(ITEM_SLOT_MASK))
+			biting = TRUE
+		else if(user.get_active_hand()) //In the event we can't bite, emergency swap to see if we can attack with a hand.
+			attacking_bodypart = user.get_active_hand()
+			atk_verb = pick(attacking_bodypart.unarmed_attack_verbs)
+			atk_effect = attacking_bodypart.unarmed_attack_effect
+		else  //Nothing? Okay. Fail.
+			user.balloon_alert(user, "can't attack!")
 			return FALSE
+
 	user.do_attack_animation(target, atk_effect)
 
 	//has our target been shoved recently? If so, they're staggered and we get an easy hit.
@@ -867,6 +878,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
 	var/limb_accuracy = attacking_bodypart.unarmed_effectiveness
+	var/limb_sharpness = attacking_bodypart.unarmed_sharpness
 
 	if(grappled)
 		var/pummel_bonus = attacking_bodypart.unarmed_pummeling_bonus
@@ -956,14 +968,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.force_say()
 		log_combat(user, target, grappled ? "grapple punched" : "kicked")
 		final_armor_block -= limb_accuracy
-		target.apply_damage(damage, attack_type, affecting, final_armor_block, attack_direction = attack_direction)
+		target.apply_damage(damage, attack_type, affecting, final_armor_block, attack_direction = attack_direction, sharpness = limb_sharpness)
 	else // Normal attacks do not gain the benefit of armor penetration.
-		target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
+		target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction, sharpness = limb_sharpness)
 		if(damage >= 9)
 			target.force_say()
 		log_combat(user, target, "punched")
 
-	SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting, final_armor_block, kicking)
+	if(biting && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
+		var/datum/reagents/tasty_meal = new()
+		tasty_meal.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
+		tasty_meal.trans_to(user, tasty_meal.total_volume, transferred_by = user, methods = INGEST)
+
+	SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting, final_armor_block, kicking, limb_sharpness)
 
 	// If our target is staggered and has sustained enough damage, we can apply a randomly determined status effect to inflict when we punch them.
 	// The effects are based on the punching effectiveness of our attacker. Some effects are not reachable by the average human, and require augmentation to reach or being a species with a heavy punch effectiveness.

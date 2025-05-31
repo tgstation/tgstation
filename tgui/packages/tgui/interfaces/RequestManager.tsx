@@ -94,7 +94,6 @@ export const RequestManager = (props) => {
                   value={searchText}
                   onChange={setSearchText}
                   placeholder="Search..."
-                  expensive
                   mr={1}
                 />
               </Stack.Item>

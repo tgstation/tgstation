@@ -172,12 +172,7 @@ const CategoryViewer = (props: CategoryViewerProps) => {
       }`}
       buttons={
         <>
-          <Input
-            placeholder="Search"
-            value={search}
-            onChange={setSearch}
-            expensive
-          />
+          <Input placeholder="Search" value={search} onChange={setSearch} />
           <Button
             icon="code"
             tooltip="RegEx Search"

@@ -77,10 +77,12 @@
 /obj/item/clothing/under/rank/civilian/clown/jester
 	name = "jester suit"
 	desc = "A jolly dress, well suited to entertain your master, nuncle."
-	icon_state = "jester_map"
-	greyscale_colors = "#00ff00#ff0000"
+	icon = 'icons/map_icons/clothing/under/_under.dmi'
+	icon_state = "/obj/item/clothing/under/rank/civilian/clown/jester"
+	post_init_icon_state = "jester_map"
 	greyscale_config = /datum/greyscale_config/jester_suit
 	greyscale_config_worn = /datum/greyscale_config/jester_suit/worn
+	greyscale_colors = "#00ff00#ff0000"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/under/rank/civilian/clown/jesteralt

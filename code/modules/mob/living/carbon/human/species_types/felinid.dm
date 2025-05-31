@@ -262,6 +262,12 @@
 			SPECIES_PERK_NAME = "Hydrophobia",
 			SPECIES_PERK_DESC = "Felinids don't like getting soaked with water.",
 		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = FA_ICON_ANGRY,
+			SPECIES_PERK_NAME = "'Fight or Flight' Defense Response",
+			SPECIES_PERK_DESC = "Felinids who become mentally unstable (and deprived of food) exhibit an \
+				extreme 'fight or flight' response against aggressors. They sometimes bite people. Violently.",
+		),
 	)
-
 	return to_add

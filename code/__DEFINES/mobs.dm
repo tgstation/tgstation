@@ -914,7 +914,7 @@ GLOBAL_LIST_INIT(layers_to_offset, list(
 #define HEAL_LIMBS (1<<6)
 /// Heals all organs from failing.
 #define HEAL_ORGANS (1<<7)
-/// A "super" heal organs, this refreshes all organs entirely, deleting old and replacing them with new.
+/// replaces any organ with ORGAN_HAZARDOUS in organ_flags with species defaults
 #define HEAL_REFRESH_ORGANS (1<<8)
 /// Removes all wounds.
 #define HEAL_WOUNDS (1<<9)

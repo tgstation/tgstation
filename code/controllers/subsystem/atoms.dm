@@ -162,6 +162,7 @@ SUBSYSTEM_DEF(atoms)
 		initialized = base_initialized
 		base_initialized = INITIALIZATION_INNEW_REGULAR
 		return
+
 	initialized = initialized_state[length(initialized_state)][2]
 
 /// Returns TRUE if anything is currently being initialized
