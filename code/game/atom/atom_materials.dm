@@ -10,7 +10,7 @@
 /// Sets the custom materials for an atom. This is what you want to call, since most of the ones below are mainly internal.
 /atom/proc/set_custom_materials(list/materials, multiplier = 1)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	if(custom_materials == materials && multiplier == 1) //Easy way to know no changes are being made.
+	if((custom_materials == materials) && multiplier == 1) //Easy way to know no changes are being made.
 		return
 
 	var/replace_mats = length(materials)

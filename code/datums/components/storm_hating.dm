@@ -22,11 +22,10 @@
 
 /datum/component/storm_hating/UnregisterFromParent()
 	. = ..()
-	var/area/old_area = get_area(parent)
-	if(!old_area)
-		return
-	on_area_exited(parent, old_area)
 	UnregisterSignal(parent, list(COMSIG_ENTER_AREA, COMSIG_EXIT_AREA))
+	var/area/old_area = get_area(parent)
+	if(old_area)
+		on_area_exited(parent, old_area)
 
 /datum/component/storm_hating/proc/on_area_entered(atom/source, area/new_area)
 	SIGNAL_HANDLER
