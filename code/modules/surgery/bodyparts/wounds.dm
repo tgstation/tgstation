@@ -70,7 +70,7 @@
 	if(HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) && !HAS_TRAIT(owner, TRAIT_NODISMEMBER))
 		damage *= 1.1
 
-	if(HAS_TRAIT(owner, TRAIT_EASYBLEED) && !HAS_TRAIT(owner, TRAIT_NOBLOOD) && ((woundtype == WOUND_PIERCE) || (woundtype == WOUND_SLASH)))
+	if(HAS_TRAIT(owner, TRAIT_EASYBLEED) && owner.can_bleed() && ((woundtype == WOUND_PIERCE) || (woundtype == WOUND_SLASH)))
 		damage *= 1.5
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))

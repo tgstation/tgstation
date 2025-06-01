@@ -166,16 +166,16 @@
 /datum/component/two_handed/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
 
-	if(require_twohands && (slot & ITEM_SLOT_HANDS)) // force equip the item
+	if(HAS_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS) && (slot & ITEM_SLOT_HANDS)) // force equip the item
 		wield(user)
-	if(!user.is_holding(parent) && wielded && !require_twohands)
+	if(!user.is_holding(parent) && wielded && !HAS_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS))
 		unwield(user)
 
 /// Triggered on drop of item containing the component
 /datum/component/two_handed/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(require_twohands) //Don't let the item fall to the ground and cause bugs if it's actually being equipped on another slot.
+	if(HAS_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS)) //Don't let the item fall to the ground and cause bugs if it's actually being equipped on another slot.
 		unwield(user, FALSE, FALSE)
 	if(wielded)
 		unwield(user)
@@ -192,7 +192,7 @@
 /datum/component/two_handed/proc/on_attack_self(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(!require_twohands)
+	if(!HAS_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS))
 		if(wielded)
 			unwield(user)
 		else if(user.is_holding(parent))
@@ -210,21 +210,21 @@
 
 	var/atom/atom_parent = parent
 	if(HAS_TRAIT(user, TRAIT_NO_TWOHANDING))
-		if(require_twohands)
+		if(HAS_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS))
 			atom_parent.balloon_alert(user, "can't wield!")
 			user.dropItemToGround(parent, force = TRUE)
 		else
 			atom_parent.balloon_alert(user, "can't wield with both hands!")
 		return COMPONENT_EQUIPPED_FAILED
 	if(user.get_inactive_held_item())
-		if(require_twohands)
+		if(HAS_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS))
 			atom_parent.balloon_alert(user, "can't carry in one hand!")
 			user.dropItemToGround(parent, force = TRUE)
 		else
 			atom_parent.balloon_alert(user, "holding something in other hand!")
 		return COMPONENT_EQUIPPED_FAILED
 	if(user.usable_hands < 2)
-		if(require_twohands)
+		if(HAS_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS))
 			user.dropItemToGround(parent, force = TRUE)
 		atom_parent.balloon_alert(user, "not enough hands!")
 		return COMPONENT_EQUIPPED_FAILED
@@ -313,14 +313,14 @@
 			user.update_held_items()
 
 		// if the item requires two handed drop the item on unwield
-		if(require_twohands && can_drop)
+		if(HAS_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS) && can_drop)
 			user.dropItemToGround(parent, force=TRUE)
 
 		// Show message if requested
 		if(show_message)
 			if(iscyborg(user))
 				to_chat(user, span_notice("You free up your module."))
-			else if(require_twohands)
+			else if(HAS_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS))
 				to_chat(user, span_notice("You drop [parent]."))
 			else
 				to_chat(user, span_notice("You are now carrying [parent] with one hand."))

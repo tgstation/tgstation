@@ -72,8 +72,8 @@
 	height += shitcode[2]
 	apply()
 
-/datum/view_data/proc/setTo(toAdd)
-	var/list/shitcode = getviewsize(toAdd)  //Backward compatibility to account
+/datum/view_data/proc/setTo(to_set)
+	var/list/shitcode = getviewsize(to_set)  //Backward compatibility to account
 	width = shitcode[1] //for a change in how sizes get calculated. we used to include world.view in
 	height = shitcode[2] //this, but it was jank, so I had to move it
 	apply()

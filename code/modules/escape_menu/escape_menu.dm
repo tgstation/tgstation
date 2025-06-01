@@ -25,11 +25,15 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	VAR_PRIVATE
 		ckey
 
+		static/atom/movable/screen/fullscreen/dimmer/dim_screen
+
 		datum/screen_object_holder/base_holder
 		datum/screen_object_holder/page_holder
 
 		atom/movable/plane_master_controller/plane_master_controller
 
+		list/resource_panels
+		show_resources = FALSE
 		menu_page = PAGE_HOME
 
 /datum/escape_menu/New(client/client)
@@ -39,6 +43,8 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	src.client = client
 
 	base_holder = new(client)
+	if(isnull(dim_screen))
+		dim_screen = new()
 	populate_base_ui()
 
 	page_holder = new(client)
@@ -59,7 +65,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	QDEL_NULL(page_holder)
 
 	GLOB.escape_menus -= ckey
-	plane_master_controller.remove_filter("escape_menu_blur")
 
 	var/sound/esc_clear = sound(null, repeat = FALSE, channel = CHANNEL_ESCAPEMENU) //yes, I'm doing it like this with a null, no its absolutely intentional, cuts off the sound right as needed.
 	SEND_SOUND(client, esc_clear)
@@ -96,10 +101,7 @@ GLOBAL_LIST_EMPTY(escape_menus)
 /datum/escape_menu/proc/populate_base_ui()
 	PRIVATE_PROC(TRUE)
 
-	base_holder.give_screen_object(new /atom/movable/screen/fullscreen/dimmer)
-	add_blur()
-
-	base_holder.give_protected_screen_object(give_escape_menu_title())
+	base_holder.give_protected_screen_object(dim_screen)
 	base_holder.give_protected_screen_object(give_escape_menu_details())
 
 /datum/escape_menu/proc/open_home_page()
@@ -113,16 +115,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 
 	menu_page = PAGE_LEAVE_BODY
 	show_page()
-
-/datum/escape_menu/proc/add_blur()
-	PRIVATE_PROC(TRUE)
-
-	var/list/plane_master_controllers = client?.mob.hud_used.plane_master_controllers
-	if (isnull(plane_master_controllers))
-		return
-
-	plane_master_controller = plane_master_controllers[PLANE_MASTERS_NON_MASTER]
-	plane_master_controller.add_filter("escape_menu_blur", 1, list("type" = "blur", "size" = 2))
 
 /atom/movable/screen/escape_menu
 	plane = ESCAPE_MENU_PLANE
