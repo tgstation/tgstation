@@ -605,13 +605,13 @@
 	mix_message = span_danger("Expands into a brown mass before shaping itself into a monkey!")
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/mob/living/carbon/M = holder.my_atom
-	var/location = get_turf(M)
-	if(iscarbon(M))
-		if(ismonkey(M))
-			M.gib(DROP_ALL_REMAINS)
+	var/mob/living/carbon/maybe_monkey = holder.my_atom
+	var/location = maybe_monkey.drop_location()
+	if(iscarbon(maybe_monkey))
+		if(ismonkey(maybe_monkey))
+			maybe_monkey.gib(DROP_ALL_REMAINS)
 		else
-			M.vomit(VOMIT_CATEGORY_BLOOD)
+			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
 	new /mob/living/carbon/human/species/monkey(location, TRUE)
 
 /datum/chemical_reaction/angry_monkey
@@ -620,13 +620,13 @@
 	mix_message = span_danger("Expands into a brown mass before shaping itself into a pissed off monkey!")
 
 /datum/chemical_reaction/angry_monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	var/mob/living/carbon/M = holder.my_atom
-	var/location = get_turf(M)
-	if(iscarbon(M))
-		if(ismonkey(M))
-			M.gib(DROP_ALL_REMAINS)
+	var/mob/living/carbon/maybe_monkey = holder.my_atom
+	var/location = maybe_monkey.drop_location()
+	if(iscarbon(maybe_monkey))
+		if(ismonkey(maybe_monkey))
+			maybe_monkey.gib(DROP_ALL_REMAINS)
 		else
-			M.vomit(VOMIT_CATEGORY_BLOOD)
+			maybe_monkey.vomit(VOMIT_CATEGORY_BLOOD)
 	new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
 
 //water electrolysis
