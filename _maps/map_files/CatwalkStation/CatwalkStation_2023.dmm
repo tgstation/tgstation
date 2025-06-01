@@ -62877,7 +62877,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = s
+	dir = 2
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured_edge{
