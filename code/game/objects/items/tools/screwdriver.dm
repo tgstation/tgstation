@@ -1,8 +1,9 @@
 /obj/item/screwdriver
 	name = "screwdriver"
 	desc = "You can be totally screwy with this."
-	icon = 'icons/obj/tools.dmi'
-	icon_state = "screwdriver_map"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/screwdriver"
+	post_init_icon_state = "screwdriver"
 	inhand_icon_state = "screwdriver"
 	worn_icon_state = "screwdriver"
 	inside_belt_icon_state = "screwdriver"
@@ -33,6 +34,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/screwdriver_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/screwdriver_inhand_right
 	greyscale_config_belt = /datum/greyscale_config/screwdriver_belt
+	greyscale_colors = COLOR_TOOL_RED
 	/// If the item should be assigned a random color
 	var/random_color = TRUE
 	/// List of possible random colors
@@ -72,8 +74,10 @@
 	usesound = 'sound/items/pshoom/pshoom.ogg'
 	toolspeed = 0.1
 	random_color = FALSE
+	greyscale_config = null
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
+	greyscale_colors = null
 
 /obj/item/screwdriver/abductor/get_belt_overlay()
 	return mutable_appearance('icons/obj/clothing/belt_overlays.dmi', "screwdriver_alien")
@@ -83,6 +87,7 @@
 	desc = "A simple powered hand drill."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "drill"
+	post_init_icon_state = null
 	inside_belt_icon_state = null
 	inhand_icon_state = "drill"
 	worn_icon_state = "drill"
@@ -104,6 +109,7 @@
 	greyscale_config_belt = null
 	greyscale_config_inhand_left = null
 	greyscale_config_inhand_right = null
+	greyscale_colors = null
 
 /obj/item/screwdriver/power/get_all_tool_behaviours()
 	return list(TOOL_SCREWDRIVER, TOOL_WRENCH)
@@ -152,14 +158,14 @@
 	desc = "A powerful automated screwdriver, designed to be both precise and quick."
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "toolkit_engiborg_screwdriver"
+	post_init_icon_state = null
 	hitsound = 'sound/items/tools/drill_hit.ogg'
 	usesound = 'sound/items/tools/drill_use.ogg'
 	toolspeed = 0.5
 	random_color = FALSE
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/item/screwdriver/red
 	random_color = FALSE
-
-/obj/item/screwdriver/red/Initialize(mapload)
-	. = ..()
-	set_greyscale(colors=list(screwdriver_colors["red"]))
+	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1

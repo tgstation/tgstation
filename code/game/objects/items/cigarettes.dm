@@ -1170,9 +1170,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	flags_1 = NONE
 
 /obj/item/vape/black
-	icon_state = "/obj/item/vape/black"
 	greyscale_colors = "#2e2e2e"
-	flags_1 = NONE
+	flags_1 = NO_NEW_GAGS_PREVIEW_1 // same color as basetype
 
 /obj/item/vape/white
 	icon_state = "/obj/item/vape/white"
