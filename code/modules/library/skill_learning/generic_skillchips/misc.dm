@@ -132,7 +132,7 @@
 
 /obj/item/skillchip/drunken_brawler
 	name = "F0RC3 4DD1CT10N skillchip"
-	desc = "A skillchip reeking of alcohol, said to improve one's fighting prowess while inebriated, as if that can" save you from liver cirrhosis."
+	desc = "A skillchip reeking of alcohol, said to improve one's fighting prowess while inebriated, as if that will save you from liver cirrhosis."
 	auto_traits = list(TRAIT_DRUNKEN_BRAWLER)
 	skill_name = "Drunken Unarmed Proficiency"
 	skill_description = "When intoxicated, you gain increased unarmed effectiveness."
