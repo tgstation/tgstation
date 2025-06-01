@@ -162,6 +162,12 @@
 	actions_types = list(/datum/action/item_action/toggle_nv)
 	forced_glass_color = TRUE
 
+/obj/item/clothing/glasses/night/ninja
+	name = "Spider-Clan Night Vision Goggles"
+	desc = "Advanced night vision goggles designed to protect your eyes from flashes."
+	flash_protect = FLASH_PROTECTION_FLASH
+	forced_glass_color = FALSE
+
 /obj/item/clothing/glasses/night/update_icon_state()
 	. = ..()
 	icon_state = length(color_cutoffs) ? initial(icon_state) : "night_off"
