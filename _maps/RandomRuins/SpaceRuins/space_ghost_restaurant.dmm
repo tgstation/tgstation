@@ -115,7 +115,7 @@
 /turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/space_ghost_restaurant)
 "vs" = (
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /turf/open/floor/iron/showroomfloor/airless,
 /area/ruin/space/space_ghost_restaurant)
 "wF" = (
@@ -150,7 +150,7 @@
 /turf/template_noop,
 /area/template_noop)
 "BA" = (
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/space_ghost_restaurant)
@@ -290,7 +290,7 @@
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/space_ghost_restaurant)
 "Xc" = (
-/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
 /turf/open/floor/iron/cafeteria/airless,
 /area/ruin/space/space_ghost_restaurant)
 "Xn" = (

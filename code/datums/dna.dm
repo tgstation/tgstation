@@ -57,7 +57,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/unique_enzymes
 	///Stores the hashed values of traits such as skin tones, hair style, and gender
 	var/unique_identity
-	/// The singleton blood type
+	///The blood type datum, usually a singleton
 	var/datum/blood_type/blood_type
 	///The type of mutant race the player is if applicable (i.e. potato-man)
 	var/datum/species/species = new /datum/species/human
@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/list/features = list("mcolor" = COLOR_WHITE)
 	///Stores the hashed values of the person's non-human features
 	var/unique_features
-	///Stores the real name of the person who originally got this dna datum. Used primarily for changelings,
+	///Stores the real name of the person who originally got this dna datum. Used primarily for changelings
 	var/real_name
 	///All mutations are from now on here
 	var/list/mutations = list()
@@ -92,12 +92,12 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		holder = new_holder
 
 /datum/dna/Destroy()
-	if(iscarbon(holder))
-		var/mob/living/carbon/cholder = holder
+	if (iscarbon(holder))
+		var/mob/living/carbon/as_carbon = holder
 		for(var/datum/mutation/mutation as anything in mutations)
 			remove_mutation(mutation, mutation.sources) // mutations hold a reference to the dna, we need to delete them.
-		if(cholder.dna == src)
-			cholder.dna = null
+		if(as_carbon.dna == src)
+			as_carbon.dna = null
 	holder = null
 
 	QDEL_NULL(species)
@@ -120,7 +120,9 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.default_mutation_genes = default_mutation_genes
 	//if the new DNA has a holder, transform them immediately, otherwise save it
 	if(new_dna.holder)
-		new_dna.holder.set_blood_type(blood_type)
+		if (iscarbon(new_dna.holder))
+			var/mob/living/carbon/as_carbon = new_dna.holder
+			as_carbon.set_blood_type(blood_type)
 		if(transfer_flags & COPY_DNA_SPECIES)
 			new_dna.holder.set_species(species.type, icon_update = FALSE)
 	else
