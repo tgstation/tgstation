@@ -16,7 +16,7 @@
 /mob/living/basic/guardian/dextrous/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
 	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP), ROUNDSTART_TRAIT)
-	AddElement(/datum/element/dextrous, hud_type = hud_type)
+	AddElement(/datum/element/dextrous, hud_type = hud_type, can_throw = TRUE)
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/basic_inhands)
 

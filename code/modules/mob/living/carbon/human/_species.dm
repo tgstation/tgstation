@@ -45,9 +45,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Never, Optional, or Forced digi legs?
 	var/digitigrade_customization = DIGITIGRADE_NEVER
-	///If your race bleeds something other than bog standard blood, change this to reagent id. For example, ethereals bleed liquid electricity.
-	var/datum/reagent/exotic_blood
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
+	///Reagent that your species bleeds, and what chemical can be used to recover lost blood depend on this
 	var/exotic_bloodtype
 	///The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that
 	var/blood_deficiency_drain_rate = BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER // slightly above the regen rate so it slowly drains instead of regenerates.
@@ -381,17 +380,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(old_species.type != type)
 		replace_body(human_who_gained_species, src)
 
-	if(!human_who_gained_species.dna.blood_type.is_species_universal) // Clown blood is forever.
+	if(!human_who_gained_species.get_bloodtype()?.is_species_universal) // Clown blood is forever.
 		//Assigns exotic blood type if the species has one
-		if(exotic_bloodtype && human_who_gained_species.dna.blood_type != exotic_bloodtype)
+		if(exotic_bloodtype && human_who_gained_species.get_bloodtype()?.id != exotic_bloodtype)
 			human_who_gained_species.set_blood_type(get_blood_type(exotic_bloodtype))
-			// updates the cached organ blood types in case our blood type changed
-			human_who_gained_species.update_cached_blood_dna_info()
 		//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
-		//(why the fuck is blood type not tied to a fucking DNA block?)
 		else if(old_species.exotic_bloodtype && isnull(exotic_bloodtype))
 			human_who_gained_species.set_blood_type(random_human_blood_type())
-			human_who_gained_species.update_cached_blood_dna_info()
 
 	regenerate_organs(human_who_gained_species, old_species, replace_current = FALSE, visual_only = human_who_gained_species.visual_only_organs)
 	// Update locked slots AFTER all organ and body stuff is handled
@@ -746,32 +741,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return
 
 /**
- * Handling special reagent interactions.
- *
- * Return null continue running the normal on_mob_life() for that reagent.
- * Return COMSIG_MOB_STOP_REAGENT_CHECK to not run the normal metabolism effects.
- *
- * NOTE: If you return COMSIG_MOB_STOP_REAGENT_CHECK, that reagent will not be removed liike normal! You must handle it manually.
- **/
-/datum/species/proc/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	SHOULD_CALL_PARENT(TRUE)
-	if(!istype(chem, /datum/reagent/blood)) // the blood reagent handles this itself, this is for exotic blood types
-		var/datum/blood_type/blood_type = affected.dna.blood_type
-		if(chem.type == blood_type?.reagent_type)
-			affected.blood_volume = min(affected.blood_volume + round(chem.volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-			affected.reagents.del_reagent(chem.type)
-			return COMSIG_MOB_STOP_REAGENT_CHECK
-		if(chem.type == blood_type?.restoration_chem && affected.blood_volume < BLOOD_VOLUME_NORMAL)
-			affected.blood_volume += BLOOD_REGEN_FACTOR * seconds_per_tick
-			affected.reagents.remove_reagent(chem.type, chem.metabolization_rate * seconds_per_tick)
-			return COMSIG_MOB_STOP_REAGENT_CHECK
-	if(!chem.overdosed && chem.overdose_threshold && chem.volume >= chem.overdose_threshold && !HAS_TRAIT(affected, TRAIT_OVERDOSEIMMUNE))
-		chem.overdosed = TRUE
-		chem.overdose_start(affected)
-		affected.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
-	return SEND_SIGNAL(affected, COMSIG_SPECIES_HANDLE_CHEMICAL, chem, seconds_per_tick, times_fired)
-
-/**
  * Equip the outfit required for life. Replaces items currently worn.
  */
 /datum/species/proc/give_important_for_life(mob/living/carbon/human/human_to_equip)
@@ -850,13 +819,24 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		attacking_bodypart = brain.get_attacking_limb(target)
 	if(!attacking_bodypart)
 		attacking_bodypart = user.get_active_hand()
+
+	// Whether or not we get some protein for a successful attack. Nom.
+	var/biting = FALSE
+
 	var/atk_verb = pick(attacking_bodypart.unarmed_attack_verbs)
 	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 	if(atk_effect == ATTACK_EFFECT_BITE)
-		if(user.is_mouth_covered(ITEM_SLOT_MASK))
-			to_chat(user, span_warning("You can't [atk_verb] with your mouth covered!"))
+		if(!user.is_mouth_covered(ITEM_SLOT_MASK))
+			biting = TRUE
+		else if(user.get_active_hand()) //In the event we can't bite, emergency swap to see if we can attack with a hand.
+			attacking_bodypart = user.get_active_hand()
+			atk_verb = pick(attacking_bodypart.unarmed_attack_verbs)
+			atk_effect = attacking_bodypart.unarmed_attack_effect
+		else  //Nothing? Okay. Fail.
+			user.balloon_alert(user, "can't attack!")
 			return FALSE
+
 	user.do_attack_animation(target, atk_effect)
 
 	//has our target been shoved recently? If so, they're staggered and we get an easy hit.
@@ -867,6 +847,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
 	var/limb_accuracy = attacking_bodypart.unarmed_effectiveness
+	var/limb_sharpness = attacking_bodypart.unarmed_sharpness
 
 	if(grappled)
 		var/pummel_bonus = attacking_bodypart.unarmed_pummeling_bonus
@@ -956,14 +937,19 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.force_say()
 		log_combat(user, target, grappled ? "grapple punched" : "kicked")
 		final_armor_block -= limb_accuracy
-		target.apply_damage(damage, attack_type, affecting, final_armor_block, attack_direction = attack_direction)
+		target.apply_damage(damage, attack_type, affecting, final_armor_block, attack_direction = attack_direction, sharpness = limb_sharpness)
 	else // Normal attacks do not gain the benefit of armor penetration.
-		target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction)
+		target.apply_damage(damage, attack_type, affecting, armor_block, attack_direction = attack_direction, sharpness = limb_sharpness)
 		if(damage >= 9)
 			target.force_say()
 		log_combat(user, target, "punched")
 
-	SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting, final_armor_block, kicking)
+	if(biting && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
+		var/datum/reagents/tasty_meal = new()
+		tasty_meal.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
+		tasty_meal.trans_to(user, tasty_meal.total_volume, transferred_by = user, methods = INGEST)
+
+	SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting, final_armor_block, kicking, limb_sharpness)
 
 	// If our target is staggered and has sustained enough damage, we can apply a randomly determined status effect to inflict when we punch them.
 	// The effects are based on the punching effectiveness of our attacker. Some effects are not reachable by the average human, and require augmentation to reach or being a species with a heavy punch effectiveness.
@@ -1074,6 +1060,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/handle_environment(mob/living/carbon/human/humi, datum/gas_mixture/environment, seconds_per_tick, times_fired)
 	handle_environment_pressure(humi, environment, seconds_per_tick, times_fired)
+	handle_gas_interaction(humi, environment, seconds_per_tick, times_fired)
 
 /**
  * Body temperature handler for species
@@ -1376,6 +1363,20 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				var/pressure_damage = LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * H.physiology.brute_mod * seconds_per_tick
 				H.adjustBruteLoss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
+
+/**
+ *	Handles exposure to the skin of various gases.
+ */
+/datum/species/proc/handle_gas_interaction(mob/living/carbon/human/human, datum/gas_mixture/environment, seconds_per_tick, times_fired)
+	if((human?.wear_suit?.clothing_flags & STOPSPRESSUREDAMAGE) && (human?.head?.clothing_flags & STOPSPRESSUREDAMAGE))
+		return
+
+	for(var/gas_id in environment.gases)
+		var/gas_amount = environment.gases[gas_id][MOLES]
+		switch(gas_id)
+			if(/datum/gas/antinoblium) // Antinoblium - irradiates the target.
+				if(gas_amount >= MOLES_GAS_VISIBLE && SPT_PROB(1, gas_amount * seconds_per_tick))
+					SSradiation.irradiate(human)
 
 ////////////
 //  Stun  //
@@ -1745,6 +1746,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/create_pref_blood_perks()
 	var/list/to_add = list()
+	var/datum/blood_type/blood_type = exotic_bloodtype ? get_blood_type(exotic_bloodtype) : null
 
 	// TRAIT_NOBLOOD takes priority by default
 	if(TRAIT_NOBLOOD in inherent_traits)
@@ -1756,12 +1758,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		))
 
 	// Otherwise, check if their exotic blood is a valid typepath
-	else if(ispath(exotic_blood))
+	else if(ispath(blood_type?.reagent_type))
 		to_add += list(list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "tint",
-			SPECIES_PERK_NAME = initial(exotic_blood.name),
-			SPECIES_PERK_DESC = "[name] blood is [initial(exotic_blood.name)], which can make receiving medical treatment harder.",
+			SPECIES_PERK_NAME = initial(blood_type.reagent_type.name),
+			SPECIES_PERK_DESC = "[name] blood is [initial(blood_type.reagent_type.name)], which can make receiving medical treatment harder.",
 		))
 
 	// Otherwise otherwise, see if they have an exotic bloodtype set

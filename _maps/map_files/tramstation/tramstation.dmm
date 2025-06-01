@@ -3041,17 +3041,6 @@
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/iron,
 /area/station/tcommsat/computer)
-"aqf" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/oil,
-/obj/item/clothing/glasses/welding,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/area/station/maintenance/port/central)
 "aqg" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/left/directional/west{
@@ -11134,21 +11123,6 @@
 /obj/structure/cable,
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
-"cOe" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/yellow/warning{
-	dir = 8
-	},
-/obj/machinery/power/shuttle_engine/propulsion{
-	name = "inactive propulsion engine";
-	desc = "A standard reliable bluespace engine used by many forms of shuttles. This one has the bluespace core removed."
-	},
-/obj/effect/decal/cleanable/oil,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/station/maintenance/port/central)
 "cOg" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "EVA Storage"
@@ -17252,6 +17226,14 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison)
+"eXj" = (
+/obj/effect/turf_decal/tile/neutral/tram,
+/obj/effect/spawner/random{
+	name = "funny slipper :)";
+	loot = list(/obj/effect/decal/cleanable/blood/oil/slippery=10, /obj/effect/decal/cleanable/blood/oil=90)
+	},
+/turf/open/floor/tram/plate,
+/area/station/hallway/primary/tram/right)
 "eXw" = (
 /obj/effect/turf_decal/tile/neutral/tram,
 /obj/effect/turf_decal/stripes/white/line,
@@ -22050,6 +22032,18 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/station/engineering/engine_smes)
+"gLT" = (
+/obj/effect/turf_decal/trimline/brown/line,
+/obj/effect/turf_decal/stripes,
+/obj/effect/turf_decal/siding/thinplating_new/dark{
+	dir = 1
+	},
+/obj/structure/extinguisher_cabinet/directional/west,
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/obj/effect/landmark/start/bitrunner,
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/cargo/bitrunning/den)
 "gLY" = (
 /obj/structure/table/wood,
 /obj/structure/window/reinforced/spawner/directional/east{
@@ -26249,12 +26243,6 @@
 	},
 /turf/open/misc/asteroid,
 /area/station/asteroid)
-"itH" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/smooth,
-/area/station/security/mechbay)
 "itN" = (
 /obj/effect/turf_decal/stripes/white/corner{
 	dir = 1
@@ -31242,6 +31230,14 @@
 	},
 /turf/open/floor/carpet,
 /area/station/service/chapel/monastery)
+"kce" = (
+/obj/effect/turf_decal/tile/neutral/tram,
+/obj/effect/spawner/random{
+	name = "funny slipper :)";
+	loot = list(/obj/effect/decal/cleanable/blood/oil/slippery=10, /obj/effect/decal/cleanable/blood/oil=90)
+	},
+/turf/open/floor/tram/plate,
+/area/station/hallway/primary/tram/left)
 "kcm" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -34558,6 +34554,12 @@
 	},
 /turf/open/floor/iron/checker,
 /area/station/commons/lounge)
+"lgF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/smooth,
+/area/station/security/mechbay)
 "lgK" = (
 /obj/structure/railing,
 /obj/structure/lattice,
@@ -35044,14 +35046,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/station/security/brig)
-"lpo" = (
-/obj/effect/turf_decal/tile/neutral/tram,
-/obj/effect/spawner/random{
-	name = "funny slipper :)";
-	loot = list(/obj/effect/decal/cleanable/oil/slippery=10, /obj/effect/decal/cleanable/oil=90)
-	},
-/turf/open/floor/tram/plate,
-/area/station/hallway/primary/tram/left)
 "lpu" = (
 /obj/structure/table,
 /obj/item/camera,
@@ -36677,18 +36671,6 @@
 "lQM" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/port/central)
-"lQS" = (
-/obj/effect/turf_decal/trimline/brown/line,
-/obj/effect/turf_decal/stripes,
-/obj/effect/turf_decal/siding/thinplating_new/dark{
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet/directional/west,
-/obj/effect/decal/cleanable/oil/streak,
-/obj/effect/landmark/start/bitrunner,
-/obj/machinery/camera/autoname/directional/west,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/cargo/bitrunning/den)
 "lQT" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
@@ -37532,12 +37514,6 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/lobby)
-"mez" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
-/obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/iron/smooth,
-/area/station/security/mechbay)
 "meA" = (
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/trimline/green/filled/line{
@@ -39615,11 +39591,6 @@
 /obj/structure/window/spawner/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/station/commons/vacant_room)
-"mVo" = (
-/obj/item/book/bible,
-/obj/structure/altar_of_gods,
-/turf/open/floor/iron/dark,
-/area/station/service/chapel)
 "mVp" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /obj/machinery/holopad,
@@ -41596,11 +41567,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
-"nDY" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
-/turf/open/floor/iron/smooth,
-/area/station/maintenance/port/central)
 "nEc" = (
 /obj/structure/table,
 /obj/effect/turf_decal/trimline/red/filled/line,
@@ -44875,6 +44841,17 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/office)
+"oSG" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/oil,
+/obj/item/clothing/glasses/welding,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/maintenance/port/central)
 "oTa" = (
 /obj/structure/railing{
 	dir = 9
@@ -45281,15 +45258,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"pbw" = (
-/obj/effect/decal/cleanable/oil/streak,
-/obj/structure/sign/poster/random/directional/north,
-/obj/machinery/power/apc/auto_name/directional/west,
-/obj/structure/cable,
-/obj/machinery/byteforge,
-/obj/effect/turf_decal/box,
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/cargo/bitrunning/den)
 "pbC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/ladder,
@@ -46194,6 +46162,12 @@
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
+"psd" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/iron/smooth,
+/area/station/security/mechbay)
 "pso" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -46515,6 +46489,11 @@
 /obj/structure/closet/toolcloset,
 /turf/open/floor/iron,
 /area/station/engineering/main)
+"pwY" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil/slippery,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/port/central)
 "pxd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
@@ -56284,6 +56263,7 @@
 	dir = 5
 	},
 /obj/structure/sign/clock/directional/east,
+/obj/structure/sink/directional/west,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "sPK" = (
@@ -57785,6 +57765,15 @@
 /obj/machinery/digital_clock/directional/south,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/fore)
+"trJ" = (
+/obj/effect/decal/cleanable/blood/splatter/oil,
+/obj/structure/sign/poster/random/directional/north,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/machinery/byteforge,
+/obj/effect/turf_decal/box,
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/cargo/bitrunning/den)
 "trK" = (
 /obj/machinery/disposal/bin,
 /obj/item/radio/intercom/directional/west,
@@ -58969,6 +58958,21 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/central)
+"tLJ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 8
+	},
+/obj/machinery/power/shuttle_engine/propulsion{
+	name = "inactive propulsion engine";
+	desc = "A standard reliable bluespace engine used by many forms of shuttles. This one has the bluespace core removed."
+	},
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/port/central)
 "tMb" = (
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 10
@@ -59701,14 +59705,6 @@
 /obj/item/clothing/glasses/meson,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
-"tZM" = (
-/obj/effect/turf_decal/tile/neutral/tram,
-/obj/effect/spawner/random{
-	name = "funny slipper :)";
-	loot = list(/obj/effect/decal/cleanable/oil/slippery=10, /obj/effect/decal/cleanable/oil=90)
-	},
-/turf/open/floor/tram/plate,
-/area/station/hallway/primary/tram/right)
 "tZO" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/nitrous_input{
 	dir = 8
@@ -67970,6 +67966,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom/holding)
+"wOJ" = (
+/obj/item/book/bible,
+/obj/structure/altar/of_gods,
+/turf/open/floor/iron/dark,
+/area/station/service/chapel)
 "wOU" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/disposal/bin,
@@ -89353,7 +89354,7 @@ abM
 abM
 pZW
 mEM
-nDY
+pwY
 jAk
 jAk
 jAk
@@ -89614,7 +89615,7 @@ jAk
 jAk
 jAk
 jAk
-nDY
+pwY
 ahU
 rQp
 wyf
@@ -90896,7 +90897,7 @@ abM
 pZW
 pVD
 xpH
-nDY
+pwY
 jAk
 jAk
 jAk
@@ -91412,8 +91413,8 @@ hkt
 sUf
 sUf
 sUf
-aqf
-cOe
+oSG
+tLJ
 ahV
 pZW
 ygP
@@ -150491,7 +150492,7 @@ aac
 aac
 aaa
 tFk
-mez
+psd
 kIA
 aOW
 xsg
@@ -150753,7 +150754,7 @@ hCO
 jWy
 hCO
 uNJ
-itH
+lgF
 tFk
 aaa
 aaa
@@ -155703,7 +155704,7 @@ jkt
 jkt
 wKP
 piE
-mVo
+wOJ
 aQx
 kUo
 tXn
@@ -161581,7 +161582,7 @@ vFt
 oNG
 cFs
 tcr
-lpo
+kce
 usE
 cFs
 lgK
@@ -177515,7 +177516,7 @@ afy
 afy
 brm
 gay
-tZM
+eXj
 jwH
 brm
 afy
@@ -180059,7 +180060,7 @@ aaa
 aaa
 eSQ
 nwB
-lQS
+gLT
 mgE
 cTU
 vSI
@@ -180828,7 +180829,7 @@ aaa
 aaa
 aaa
 eSQ
-pbw
+trJ
 oWZ
 sNW
 cTU

@@ -126,7 +126,7 @@
 		if(istype(id, /obj/item/card/id/advanced/chameleon))
 			id_gender ||= gender
 			id_species ||= dna.species.name
-			id_blood_type ||= dna.blood_type
+			id_blood_type ||= get_bloodtype()
 
 		if(istype(id, /obj/item/card/id/advanced))
 			var/obj/item/card/id/advanced/advancedID = id
@@ -960,12 +960,6 @@
 	if(!force)
 		return FALSE
 	return ..()
-
-/mob/living/carbon/human/reagent_check(datum/reagent/chem, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	return dna.species.handle_chemical(chem, src, seconds_per_tick, times_fired)
 
 /mob/living/carbon/human/updatehealth()
 	. = ..()

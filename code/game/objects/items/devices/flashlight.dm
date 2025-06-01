@@ -691,6 +691,14 @@
 	trash_type = /obj/effect/decal/cleanable/ash
 	can_be_extinguished = TRUE
 
+/obj/item/flashlight/flare/torch/everburning
+	name = "everburning torch"
+	desc = "A torch which burns continuously, even in the vacuum of space"
+	can_be_extinguished = FALSE
+	fuel = INFINITY
+	randomize_fuel = FALSE
+	start_on = TRUE
+
 /obj/item/flashlight/lantern
 	name = "lantern"
 	icon_state = "lantern"

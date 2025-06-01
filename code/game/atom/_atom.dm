@@ -121,7 +121,11 @@
 	var/datum/ai_controller/ai_controller
 
 	/// forensics datum, contains fingerprints, fibres, blood_dna and hiddenprints on this atom
-	var/datum/forensics/forensics
+	var/datum/forensics/forensics = null
+	/// Cached color for all blood on us to avoid doing constant math
+	var/cached_blood_color = null
+	/// Cached emissive alpha for all blood on us to avoid doing constant math
+	var/cached_blood_emissive = null
 
 	/// How this atom should react to having its astar blocking checked
 	var/can_astar_pass = CANASTARPASS_DENSITY
@@ -488,21 +492,21 @@
 
 ///returns the mob's dna info as a list, to be inserted in an object's blood_DNA list
 /mob/living/proc/get_blood_dna_list()
-	if(get_blood_id() != /datum/reagent/blood)
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
 		return
-	return list("ANIMAL DNA" = get_blood_type(BLOOD_TYPE_ANIMAL))
+
+	return list(blood_type.dna_string = blood_type)
 
 ///Get the mobs dna list
 /mob/living/carbon/get_blood_dna_list()
-	var/list/blood_dna = list()
-	if(dna)
-		blood_dna[dna.unique_enzymes] = dna.blood_type
-	else
-		blood_dna["UNKNOWN DNA"] = get_blood_type(BLOOD_TYPE_XENO)
-	return blood_dna
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if (!blood_type)
+		return
 
-/mob/living/carbon/alien/get_blood_dna_list()
-	return list("UNKNOWN DNA" = get_blood_type(BLOOD_TYPE_XENO))
+	if (dna?.unique_enzymes)
+		return list(dna.unique_enzymes = blood_type)
+	return list(blood_type.dna_string = blood_type)
 
 /mob/living/silicon/get_blood_dna_list()
 	return
