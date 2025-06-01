@@ -25,9 +25,7 @@
 				/* offset = */ list(-10, 0),
 			)
 		)
-		for(var/client/admin as anything in GLOB.admins)// - client) //we list admins first
-//			if(admin.holder.fakekey) //admin's hiding, don't rat them out.
-//				continue
+		for(var/client/admin as anything in GLOB.admins) //we list admins first
 			if(horizontal_amount >= 280)
 				horizontal_amount = -170
 				vertical_amount -= 30 //admins push further down for feedback links to fit
@@ -36,22 +34,22 @@
 					null,
 					/* hud_owner = */ null,
 					/* escape_menu = */ src,
-					/* button_text = */ admin.ckey,
+					/* button_text = */ admin.holder.fakekey ? admin.holder.fakekey : admin.ckey,
 					/* offset = */ list(vertical_amount, horizontal_amount),
 					/* font_size = */ 12,
 					/* on_click_callback = */ CALLBACK(src, PROC_REF(ignore_or_unignore), admin.ckey),
+					/* player_ckey = */ admin.ckey,
 				)
 			)
-			var/ranks = "Maintainer+Coder"//admin.holder.rank_names(),
-			var/feedback_link = "https://github.com/tgstation/tgstation/pull/89250/"//admin.holder.feedback_link()
+			var/ranks = admin.holder.rank_names()
 			page_holder.give_screen_object(
 				new /atom/movable/screen/escape_menu/text(
 					null,
 					/* hud_owner = */ null,
 					/* escape_menu = */ src,
-					/* button_text = */ feedback_link ? "<a href='[feedback_link]'>[ranks]</a>" : "[ranks]",
+					/* button_text = */ admin.holder.feedback_link() ? "<a href='[feedback_link]'>[ranks]</a>" : "[ranks]",
 					/* offset = */ list((vertical_amount - 15), horizontal_amount - 10),
-					/* font_size = */ 10, //smaller than the rest
+					/* font_size = */ 10,
 				)
 			)
 			horizontal_amount += 150
@@ -77,8 +75,8 @@
 		)
 	)
 	vertical_amount -= 20
-	horizontal_amount = -170 //players will get 4 ckeys per line so we can fit more.
-	for(var/client/player as anything in GLOB.clients)// - GLOB.admins - client)
+	horizontal_amount = -170
+	for(var/client/player as anything in GLOB.clients - GLOB.admins)
 		if(horizontal_amount >= 280)
 			horizontal_amount = -170
 			vertical_amount -= 20
@@ -107,10 +105,10 @@
 			)
 		)
 		vertical_amount -= 20
-		horizontal_amount = -250 //players will get 4 ckeys per line so we can fit more.
+		horizontal_amount = -170
 		for(var/ignored_key in client.prefs.ignoring - GLOB.directory) //ignored offline people
-			if(horizontal_amount >= 350)
-				horizontal_amount = -250
+			if(horizontal_amount >= 280)
+				horizontal_amount = -170
 				vertical_amount -= 20
 			page_holder.give_screen_object(
 				new /atom/movable/screen/escape_menu/text/clickable/ignoring/offline(
@@ -154,4 +152,4 @@
 		adding = TRUE
 	client?.prefs.save_preferences()
 	source.update_text()
-	to_chat(client, span_notice("[ckey] has been [adding ? "ignored" : "unignored"] in OOC."))
+	to_chat(client, span_notice("User has been [!adding ? "un" : ""]ignored in OOC."))

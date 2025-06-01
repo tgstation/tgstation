@@ -158,11 +158,6 @@ GLOBAL_PROTECT(href_token)
 	owner.update_special_keybinds()
 	GLOB.admins |= client
 
-	for(var/i in 1 to 12)
-		GLOB.admins |= new /datum/client_interface()
-	for(var/i in 1 to 64)
-		GLOB.clients |= new /datum/client_interface()
-
 	try_give_profiling()
 
 /datum/admins/proc/disassociate()
