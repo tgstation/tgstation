@@ -1,4 +1,4 @@
-import { filter, sortBy } from 'common/collections';
+import { chain, sortBy } from 'common/collections';
 import { useState } from 'react';
 import {
   Box,
@@ -207,36 +207,35 @@ export const PersonalCrafting = (props) => {
   );
   const [tabMode, setTabMode] = useState(0);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
-  let recipes = filter(
-    data.recipes,
-    (recipe) =>
-      // If craftable only is selected, then filter by craftability
-      (!display_craftable_only || Boolean(craftability[recipe.ref])) &&
-      // Ignore categories and types when searching
-      (searchText.length > 0 ||
-        // Is foodtype mode and the active type matches
-        (tabMode === TABS.foodtype &&
-          mode === MODE.cooking &&
-          ((activeType === 'Can Make' && Boolean(craftability[recipe.ref])) ||
-            recipe.foodtypes?.includes(activeType))) ||
-        // Is material mode and the active material or catalysts match
-        (tabMode === TABS.material &&
-          Object.keys(recipe.reqs).includes(activeMaterial)) ||
-        // Is category mode and the active categroy matches
-        (tabMode === TABS.category &&
-          ((activeCategory === 'Can Make' &&
-            Boolean(craftability[recipe.ref])) ||
-            recipe.category === activeCategory))),
-  );
-  recipes = sortBy(recipes, (recipe) => [
-    activeCategory === 'Can Make'
-      ? 99 - Object.keys(recipe.reqs).length
-      : Number(craftability[recipe.ref]),
-    recipe.name.toLowerCase(),
-  ]);
-  if (searchText.length > 0) {
-    recipes = filter(recipes, searchName);
-  }
+  let recipes = chain(data.recipes)
+    .filter(
+      (recipe) =>
+        // If craftable only is selected, then filter by craftability
+        (!display_craftable_only || Boolean(craftability[recipe.ref])) &&
+        // Ignore categories and types when searching
+        (searchText.length > 0 ||
+          // Is foodtype mode and the active type matches
+          (tabMode === TABS.foodtype &&
+            mode === MODE.cooking &&
+            ((activeType === 'Can Make' && Boolean(craftability[recipe.ref])) ||
+              recipe.foodtypes?.includes(activeType))) ||
+          // Is material mode and the active material or catalysts match
+          (tabMode === TABS.material &&
+            Object.keys(recipe.reqs).includes(activeMaterial)) ||
+          // Is category mode and the active categroy matches
+          (tabMode === TABS.category &&
+            ((activeCategory === 'Can Make' &&
+              Boolean(craftability[recipe.ref])) ||
+              recipe.category === activeCategory))),
+    )
+    .sortBy((recipe) => [
+      activeCategory === 'Can Make'
+        ? 99 - Object.keys(recipe.reqs).length
+        : Number(craftability[recipe.ref]),
+      recipe.name.toLowerCase(),
+    ])
+    .if(searchText.length > 0, (x) => x.filter(searchName))
+    .unwrap();
   const canMake = ['Can Make'];
   const categories = canMake
     .concat(data.categories.sort())

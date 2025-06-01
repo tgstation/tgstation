@@ -1,5 +1,4 @@
-import { filter } from 'common/collections';
-import { flow } from 'tgui-core/fp';
+import { chain } from 'common/collections';
 
 import { Supply, SupplyCategory } from './types';
 
@@ -17,19 +16,20 @@ export function searchForSupplies(
 ): Supply[] {
   const lowerSearch = search.toLowerCase();
 
-  return flow([
-    // Flat categories
-    (initialSupplies: SupplyCategory[]) =>
-      initialSupplies.flatMap((category) => category.packs),
-    // Filter by name or desc
-    (flatMapped: Supply[]) =>
-      filter(
-        flatMapped,
+  return (
+    chain(supplies)
+      // Flat categories
+      .mapArray((initialSupplies: SupplyCategory[]) =>
+        initialSupplies.flatMap((category) => category.packs),
+      )
+      // Filter by name or desc
+      .filter(
         (pack: Supply) =>
           pack.name?.toLowerCase().includes(lowerSearch) ||
           pack.desc?.toLowerCase().includes(lowerSearch),
-      ),
-    // Just the first page
-    (filtered: Supply[]) => filtered.slice(0, 25),
-  ])(supplies);
+      )
+      // Just the first page
+      .mapArray((filtered: Supply[]) => filtered.slice(0, 25))
+      .unwrap()
+  );
 }
