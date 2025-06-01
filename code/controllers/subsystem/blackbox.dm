@@ -416,13 +416,13 @@ Versioning
 		query_report_citation.Execute(async = TRUE)
 		qdel(query_report_citation)
 
-/datum/controller/subsystem/blackbox/proc/ReportManifest(ckey, character, job, special, latejoin)
+/datum/controller/subsystem/blackbox/proc/ReportManifest(ckey, character_name, job, special, latejoin)
 	var/datum/db_query/query_report_manifest = SSdbcore.NewQuery({"INSERT INTO [format_table_name("manifest")]
 	(server_ip,
 	server_port,
 	round_id,
 	ckey,
-	character,
+	character_name,
 	job,
 	special,
 	latejoin) VALUES (
@@ -430,7 +430,7 @@ Versioning
 	:port,
 	:round_id,
 	:ckey,
-	:character,
+	:character_name,
 	:job,
 	:special,
 	:latejoin)
@@ -439,7 +439,7 @@ Versioning
 		"port" = "[world.port]",
 		"round_id" = GLOB.round_id,
 		"ckey" = ckey,
-		"character" = character,
+		"character_name" = character_name,
 		"job" = job,
 		"special" = special,
 		"latejoin" = latejoin
