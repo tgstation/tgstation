@@ -892,15 +892,12 @@
 	var/turf/our_turf = get_turf(target)
 	if(!our_turf)
 		return
-	for(var/obj/effect/decal/cleanable/blood/blood_around_us in range(our_turf,2))
-		if(blood_around_us.blood_state != BLOOD_STATE_HUMAN)
-			continue
-		if(blood_around_us.bloodiness == 100) // Bonus for "pristine" bloodpools, also to prevent cheese with footprint spam
-			blood_to_gain += 30
-		else
-			blood_to_gain += max((blood_around_us.bloodiness**2)/800,1)
-		new /obj/effect/temp_visual/cult/turf/floor(get_turf(blood_around_us))
-		qdel(blood_around_us)
+	for(var/obj/effect/decal/cleanable/blood/blood_around_us in range(our_turf, 2))
+		// NON-MODULE CHANGE for blood
+		if(blood_around_us.decal_reagent == /datum/reagent/blood || blood_around_us.reagents?.has_reagent(/datum/reagent/blood))
+			blood_to_gain += max(blood_around_us.bloodiness * 0.6 * BLOOD_TO_UNITS_MULTIPLIER, 1)
+			new /obj/effect/temp_visual/cult/turf/floor(get_turf(blood_around_us))
+			qdel(blood_around_us)
 
 	if(!blood_to_gain)
 		return

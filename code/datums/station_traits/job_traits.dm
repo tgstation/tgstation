@@ -84,7 +84,7 @@
 /datum/station_trait/job/cargorilla
 	name = "Cargo Gorilla"
 	button_desc = "Sign up to become the Cargo Gorilla, a peaceful shepherd of boxes."
-	weight = 0
+	weight = 1
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
 	can_roll_antag = CAN_ROLL_NEVER
 	job_to_add = /datum/job/cargo_gorilla

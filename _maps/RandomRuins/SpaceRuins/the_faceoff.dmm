@@ -120,7 +120,7 @@
 /area/ruin/space)
 "cZ" = (
 /obj/structure/cable,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "de" = (
@@ -138,7 +138,7 @@
 /area/ruin/space)
 "dt" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "eg" = (
@@ -209,7 +209,7 @@
 /area/ruin/space)
 "gh" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
 "gq" = (
@@ -246,7 +246,7 @@
 /turf/open/floor/mineral/plastitanium/airless,
 /area/ruin/space)
 "hA" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/effect/turf_decal/stripes/red/full,
 /turf/open/floor/iron/dark/smooth_large/airless,
 /area/ruin/space)
@@ -493,7 +493,7 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/effect/mob_spawn/corpse/human/pirate/melee/space,
 /obj/effect/decal/cleanable/blood,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/effect/spawner/random/structure/chair_flipped{
 	dir = 1
 	},
@@ -706,7 +706,7 @@
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "CT" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "CY" = (
@@ -790,7 +790,7 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space)
 "FV" = (

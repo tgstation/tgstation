@@ -81,16 +81,16 @@
 /obj/structure/frame/machine/examine(user)
 	. = ..()
 	if(!circuit?.needs_anchored)
-		. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose" : "in place"]")
+		. += span_notice("It can be [EXAMINE_HINT("anchored")] [anchored ? "loose." : "into place."]")
 	if(state == FRAME_STATE_EMPTY)
 		if(!anchored)
 			. += span_notice("It can be [EXAMINE_HINT("welded")] or [EXAMINE_HINT("screwed")] apart.")
-		. += span_warning("It needs [EXAMINE_HINT("5 cable")] pieces to wire it.")
+		. += span_info("It should be [EXAMINE_HINT("wired")] with 5 cables.")
 		return
 	if(state == FRAME_STATE_WIRED)
-		. += span_info("Its wires can be cut with a [EXAMINE_HINT("wirecutter")].")
+		. += span_notice("Its wires can be [EXAMINE_HINT("cut")].")
 	if(state != FRAME_STATE_BOARD_INSTALLED)
-		. += span_warning("Its missing a circuit board..")
+		. += span_warning("It's missing a circuit board!")
 		return
 	if(!length(req_components))
 		. += span_info("It requires no components.")
@@ -103,9 +103,9 @@
 		nice_list += list("[req_components[component]] [req_component_names[component]]\s")
 	. += span_info("It requires [english_list(nice_list, "no more components")].")
 
-	. += span_info("All the components can be [EXAMINE_HINT("pried")] out.")
+	. += span_notice("All the components can be [EXAMINE_HINT("pried")] out.")
 	if(!length(nice_list))
-		. += span_info("The frame can be [EXAMINE_HINT("screwed")] to complete it.")
+		. += span_info("The frame should be [EXAMINE_HINT("screwed")] to complete it.")
 
 /obj/structure/frame/machine/dump_contents()
 	var/atom/drop_loc = drop_location()

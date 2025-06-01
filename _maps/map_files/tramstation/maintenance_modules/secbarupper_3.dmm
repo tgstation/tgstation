@@ -456,7 +456,7 @@
 "Vn" = (
 /obj/effect/turf_decal/sand/plating,
 /obj/effect/spawner/random{
-	loot = list(/obj/effect/decal/cleanable/oil/slippery=10,/obj/effect/decal/cleanable/oil=90);
+	loot = list(/obj/effect/decal/cleanable/blood/oil/slippery=10,/obj/effect/decal/cleanable/blood/oil=90);
 	name = "funny slipper :)"
 	},
 /turf/open/floor/plating,
