@@ -2001,6 +2001,7 @@
 #include "code\datums\storage\subtypes\bags.dm"
 #include "code\datums\storage\subtypes\belts.dm"
 #include "code\datums\storage\subtypes\boxes.dm"
+#include "code\datums\storage\subtypes\cyborg.dm"
 #include "code\datums\storage\subtypes\dufflebags.dm"
 #include "code\datums\storage\subtypes\holsters.dm"
 #include "code\datums\storage\subtypes\lockboxes.dm"

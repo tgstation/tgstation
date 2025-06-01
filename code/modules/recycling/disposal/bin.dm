@@ -141,11 +141,11 @@ GLOBAL_VAR_INIT(animals_spawned, 0)
 			return
 
 	if(!user.combat_mode || (I.item_flags & NOBLUDGEON))
-		if((I.item_flags & ABSTRACT) || !user.temporarilyRemoveItemFromInventory(I))
+		if(I.item_flags & ABSTRACT)
 			return
-		place_item_in_disposal(I, user)
-		update_appearance()
-		return TRUE //no afterattack
+		if(place_item_in_disposal(I, user))
+			update_appearance()
+			return TRUE //no afterattack
 	else
 		return ..()
 
@@ -182,9 +182,14 @@ GLOBAL_VAR_INIT(animals_spawned, 0)
 		visible_message(span_warning("[new_subject] climbs out of [src]!"))
 
 /// Moves an item into the diposal bin
-/obj/machinery/disposal/proc/place_item_in_disposal(obj/item/I, mob/user)
-	I.forceMove(src)
-	user.visible_message(span_notice("[user.name] places \the [I] into \the [src]."), span_notice("You place \the [I] into \the [src]."))
+/obj/machinery/disposal/proc/place_item_in_disposal(obj/item/disposing_item, mob/user)
+	if(!user.transferItemToLoc(disposing_item, newloc = src))
+		return FALSE
+	user.visible_message(
+		span_notice("[user.name] places \the [disposing_item] into \the [src]."),
+		span_notice("You place \the [disposing_item] into \the [src]."),
+	)
+	return TRUE
 
 /// Mouse drop another mob or self
 /obj/machinery/disposal/mouse_drop_receive(atom/target, mob/living/user, params)
@@ -712,7 +717,7 @@ GLOBAL_VAR_INIT(animals_spawned, 0)
 	if(!items_to_sweep)
 		return
 	for (var/obj/item/garbage in items_to_sweep)
-		garbage.forceMove(src)
+		user.transferItemToLoc(garbage, src)
 
 	items_to_sweep.Cut()
 
