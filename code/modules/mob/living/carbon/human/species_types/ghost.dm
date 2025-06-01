@@ -32,7 +32,7 @@
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/ghost,
-		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ghost,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ghost/spirit,
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/ghost,
 		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/ghost,
 	)
@@ -100,6 +100,13 @@
 		TRAIT_MOVE_FLYING,
 		//ghost-unique
 		TRAIT_SEE_BLESSED_TILES,
+	)
+	//they have a different chest.
+	bodypart_overrides = list(
+		BODY_ZONE_HEAD = /obj/item/bodypart/head/ghost,
+		BODY_ZONE_CHEST = /obj/item/bodypart/chest/ghost,
+		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/ghost,
+		BODY_ZONE_R_ARM = /obj/item/bodypart/arm/right/ghost,
 	)
 	changesource_flags = MIRROR_BADMIN | MIRROR_PRIDE | MIRROR_MAGIC
 	halloween_exclusive = FALSE

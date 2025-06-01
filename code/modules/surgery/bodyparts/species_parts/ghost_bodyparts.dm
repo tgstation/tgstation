@@ -25,6 +25,11 @@
 	dmg_overlay_type = null
 	wing_types = null
 
+//slightly different sprite meant to differentiate spirit from ghost.
+/obj/item/bodypart/chest/ghost/spirit
+	icon_state = "spirit_chest"
+	limb_id = SPECIES_SPIRIT
+
 /obj/item/bodypart/arm/left/ghost
 	icon = 'icons/mob/human/species/ghost.dmi'
 	icon_static = 'icons/mob/human/species/ghost.dmi'
