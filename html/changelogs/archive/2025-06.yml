@@ -1,0 +1,10 @@
+2025-06-01:
+  Rhials:
+  - spellcheck: Diamond material statue names are no longer punctuated.
+  carlarctg:
+  - code_imp: Adds support for PVP Bitrunning Domains
+  hry-gh:
+  - bugfix: fixes the ominous black squares appearing over tgui windows, sometimes
+  necromanceranne:
+  - map: Opens up sections of Nebulastation's medical department to allow for greater
+      visibility into and out of medical.

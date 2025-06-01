@@ -31,6 +31,11 @@
 	floor_change.icon = 'icons/hud/screen_midnight.dmi'
 	static_inventory += floor_change
 
+	if(HAS_TRAIT(owner, TRAIT_CAN_THROW_ITEMS))
+		throw_icon = new /atom/movable/screen/throw_catch(null, src)
+		throw_icon.icon = ui_style
+		throw_icon.screen_loc = ui_drop_throw
+		static_inventory += throw_icon
 
 	zone_select = new /atom/movable/screen/zone_sel(null, src)
 	zone_select.icon = ui_style

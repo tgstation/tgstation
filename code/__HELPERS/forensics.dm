@@ -4,7 +4,11 @@
 #define GET_ATOM_HIDDENPRINTS(atom) atom.forensics?.hiddenprints
 /// Returns the blood dna on this atom
 #define GET_ATOM_BLOOD_DNA(atom) atom.forensics?.blood_DNA
+/// Returns visible blood dna on this atom
+#define GET_ATOM_BLOOD_DECALS(atom) atom.forensics?.get_visible_blood()
 /// Returns the fibers on this atom
 #define GET_ATOM_FIBRES(atom) atom.forensics?.fibers
 /// Returns the number of unique blood dna sources on this atom
 #define GET_ATOM_BLOOD_DNA_LENGTH(atom) (isnull(atom.forensics) ? 0 : length(atom.forensics.blood_DNA))
+/// Returns the number of *visible* blood dna on this atom
+#define GET_ATOM_BLOOD_DECAL_LENGTH(atom) (isnull(atom.forensics) ? 0 : length(atom.forensics.get_visible_blood()))

@@ -12,6 +12,11 @@
 	amount_per_transfer_from_this = 20
 	possible_transfer_amounts = list(20,100)
 
+/obj/item/reagent_containers/cup/watering_can/Initialize(mapload, vol)
+	. = ..()
+	if(mapload)
+		AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAIL, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+
 /obj/item/reagent_containers/cup/watering_can/wood
 	name = "wood watering can"
 	desc = "An old metal-made watering can but shoddily painted to look like it was made of wood for some dubious reason..."

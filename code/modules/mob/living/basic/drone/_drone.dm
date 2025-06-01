@@ -181,6 +181,7 @@
 	AddComponent(/datum/component/basic_inhands, y_offset = getItemPixelShiftY())
 	AddComponent(/datum/component/simple_access, SSid_access.get_region_access_list(list(REGION_ALL_GLOBAL)))
 	AddComponent(/datum/component/personal_crafting) // Kind of hard to be a drone and not be able to make tiles
+	LoadComponent(/datum/component/bloodysoles/bot)
 
 	//only shy drones (so all the station ones) gets a camera.
 	if(shy)
