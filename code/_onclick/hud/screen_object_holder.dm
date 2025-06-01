@@ -25,21 +25,28 @@
 
 	screen_objects += screen_object
 	client?.screen += screen_object
+	return screen_object
 
-/// Gives the screen object to the client, but does not qdel it when it's cleared
+/// Gives the screen object to the client, but does not qdel it when it's cleared,
+/// this is used for screen object instances you plan on giving to multiple mobs.
 /datum/screen_object_holder/proc/give_protected_screen_object(atom/screen_object)
 	ASSERT(istype(screen_object))
 
 	protected_screen_objects += screen_object
 	client?.screen += screen_object
+	return screen_object
 
 /datum/screen_object_holder/proc/remove_screen_object(atom/screen_object)
 	ASSERT(istype(screen_object))
 	ASSERT((screen_object in screen_objects) || (screen_object in protected_screen_objects))
 
-	screen_objects -= screen_object
-	protected_screen_objects -= screen_object
 	client?.screen -= screen_object
+	screen_objects -= screen_object
+	//protected objects don't get qdel'ed
+	if(screen_object in protected_screen_objects)
+		protected_screen_objects -= screen_object
+	else
+		qdel(screen_object)
 
 /datum/screen_object_holder/proc/clear()
 	client?.screen -= screen_objects

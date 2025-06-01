@@ -105,15 +105,11 @@
 
 /obj/machinery/recycler/update_overlays()
 	. = ..()
-	if(!bloody)
+	if(!bloody || !GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		return
 
 	var/mutable_appearance/blood_overlay = mutable_appearance(icon, "[icon_state]bld", appearance_flags = RESET_COLOR|KEEP_APART)
-	var/blood_dna = GET_ATOM_BLOOD_DNA(src)
-	if(blood_dna)
-		blood_overlay.color = get_blood_dna_color(blood_dna)
-	else
-		blood_overlay.color = BLOOD_COLOR_RED
+	blood_overlay.color = get_blood_dna_color()
 	. += blood_overlay
 
 /obj/machinery/recycler/CanAllowThrough(atom/movable/mover, border_dir)
@@ -160,7 +156,7 @@
 			continue
 
 		if (thing.resistance_flags & INDESTRUCTIBLE)
-			if (!isturf(thing.loc) && !isliving(thing.loc))
+			if (!isturf(thing.loc) && !recursive_loc_check(thing, /mob/living))
 				thing.forceMove(loc)
 			not_eaten += 1
 			continue
@@ -263,9 +259,9 @@
 	if(iscarbon(living_mob))
 		if(living_mob.stat == CONSCIOUS)
 			living_mob.say("ARRRRRRRRRRRGH!!!", forced= "recycler grinding")
-		add_mob_blood(living_mob)
 
-	if(!bloody && !issilicon(living_mob))
+	if(!issilicon(living_mob))
+		add_mob_blood(living_mob)
 		bloody = TRUE
 
 	// Instantly lie down, also go unconscious from the pain, before you die.

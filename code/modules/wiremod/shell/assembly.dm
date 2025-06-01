@@ -27,9 +27,9 @@
 	RegisterSignals(src, list(COMSIG_ASSEMBLY_ATTACHED, COMSIG_ASSEMBLY_ADDED_TO_BUTTON, COMSIG_ASSEMBLY_ADDED_TO_PRESSURE_PLATE), PROC_REF(on_attached))
 	RegisterSignals(src, list(COMSIG_ASSEMBLY_DETACHED, COMSIG_ASSEMBLY_REMOVED_FROM_BUTTON, COMSIG_ASSEMBLY_REMOVED_FROM_PRESSURE_PLATE), PROC_REF(on_detached))
 
-/obj/item/assembly/wiremod/proc/on_circuit_attached(source, obj/item/integrated_circuit/circuit)
+/obj/item/assembly/wiremod/proc/on_circuit_attached(datum/component/shell/source)
 	SIGNAL_HANDLER
-	RegisterSignal(circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(override_circuit_power_usage))
+	RegisterSignal(source.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(override_circuit_power_usage))
 
 /obj/item/assembly/wiremod/proc/on_circuit_removed(datum/component/shell/source)
 	SIGNAL_HANDLER

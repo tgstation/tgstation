@@ -135,7 +135,7 @@
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
 	},
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /obj/effect/decal/remains/xeno,
 /obj/structure/flora/bush/large/style_random{
 	pixel_y = -3

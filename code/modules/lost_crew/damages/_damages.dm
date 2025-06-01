@@ -88,7 +88,7 @@
 	body_data += decay.type
 
 	// Simulate bloodloss by dragging/moving
-	victim.blood_volume = max(victim.blood_volume - victim.bleedDragAmount() * rand(20, 100), 0)
+	victim.blood_volume = max(victim.blood_volume - victim.bleed_drag_amount() * rand(20, 100), 0)
 	set_death_date(victim)
 
 	death_lore += area_lore + " " + cause_of_death.cause_of_death
