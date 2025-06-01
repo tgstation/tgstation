@@ -327,12 +327,12 @@
 					pda_path = path
 					break
 
-			if(initial(pda_path.greyscale_config) && initial(pda_path.greyscale_colors))
-				stored_pda.set_greyscale(initial(pda_path.greyscale_colors), initial(pda_path.greyscale_config))
+			if(pda_path::greyscale_config && pda_path::greyscale_colors)
+				stored_pda.set_greyscale(pda_path::greyscale_colors, pda_path::greyscale_config)
 			else
-				stored_pda.icon = initial(pda_path.icon)
-			stored_pda.icon_state = initial(pda_path.icon_state)
-			stored_pda.desc = initial(pda_path.desc)
+				stored_pda.icon = pda_path::icon
+			stored_pda.icon_state = pda_path::post_init_icon_state || pda_path::icon_state
+			stored_pda.desc = pda_path::desc
 
 			return TRUE
 		if("reset_pda")

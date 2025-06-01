@@ -63,17 +63,11 @@
 
 /obj/item/clothing/head/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
 	. = ..()
-	if(isinhands)
+	if (isinhands)
 		return
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		if(clothing_flags & LARGE_WORN_ICON)
-			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/64x64.dmi', "helmetblood_large")
-			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
-			. += blood_overlay
-		else
-			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "helmetblood")
-			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
-			. += blood_overlay
+	var/blood_overlay = get_blood_overlay("helmet")
+	if (blood_overlay)
+		. += blood_overlay
 
 /obj/item/clothing/head/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
