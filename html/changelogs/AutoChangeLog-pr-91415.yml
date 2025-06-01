@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed speed potions behaving super inconsistently on magboots, duffelbags and laptops"
