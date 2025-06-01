@@ -1011,12 +1011,17 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	ph = 14
 	metabolization_rate = 0.2 * REM
 	tox_damage = 0
+	/// The martial art we teach (to monkies)
+	var/datum/martial_art/jungle_arts/jungle_arts
 
 /datum/reagent/inverse/bath_salts/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	if(is_simian(affected_mob))
 		affected_mob.gain_trauma(/datum/brain_trauma/special/primal_instincts, TRAUMA_RESILIENCE_ABSOLUTE)
 		affected_mob.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
+		jungle_arts = new(src)
+		jungle_arts.locked_to_use = TRUE
+		jungle_arts.teach(affected_mob)
 
 /datum/reagent/inverse/bath_salts/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
@@ -1024,6 +1029,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		affected_mob.cure_trauma_type(/datum/brain_trauma/special/primal_instincts, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
 		affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
 		affected_mob.Sleeping(30 SECONDS)
+		QDEL_NULL(jungle_arts)
 
 /datum/reagent/inverse/bath_salts/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

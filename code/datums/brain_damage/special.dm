@@ -480,8 +480,6 @@
 	resilience = TRAUMA_RESILIENCE_SURGERY
 	/// Tracks any existing AI controller, so we can restore it when we're cured
 	var/old_ai_controller_type
-	/// The martial art we teach (to monkies)
-	var/datum/martial_art/jungle_arts/jungle_arts
 
 /datum/brain_trauma/special/primal_instincts/on_gain()
 	. = ..()
@@ -494,11 +492,6 @@
 	owner.ai_controller.can_idle = FALSE
 	owner.ai_controller.set_ai_status(AI_STATUS_OFF)
 
-	if(is_simian(owner) && owner.has_reagent(/datum/reagent/inverse/bath_salts))
-		jungle_arts = new(src)
-		jungle_arts.locked_to_use = TRUE
-		jungle_arts.teach(owner)
-
 /datum/brain_trauma/special/primal_instincts/on_lose(silent)
 	. = ..()
 	if(QDELING(owner))
@@ -508,8 +501,6 @@
 	if(old_ai_controller_type)
 		owner.ai_controller = new old_ai_controller_type(owner)
 	owner.remove_language(/datum/language/monkey, UNDERSTOOD_LANGUAGE, TRAUMA_TRAIT)
-	if(is_simian(owner))
-		QDEL_NULL(jungle_arts)
 
 /datum/brain_trauma/special/primal_instincts/on_life(seconds_per_tick, times_fired)
 	if(isnull(owner.ai_controller))
