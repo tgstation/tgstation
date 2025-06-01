@@ -1,4 +1,3 @@
-
 /obj/effect/decal/cleanable/food
 	icon = 'icons/effects/tomatodecal.dmi'
 	gender = NEUTER

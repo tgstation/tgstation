@@ -50,10 +50,9 @@
 	venue_value = FOOD_PRICE_CHEAP
 	slice_type = /obj/item/food/breadslice/plain
 	crafting_complexity = FOOD_COMPLEXITY_1
-
 /obj/item/food/bread/plain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/ingredients_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/breadslice/plain
 	name = "bread slice"
@@ -67,7 +66,7 @@
 
 /obj/item/food/breadslice/plain/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_STACK)
 
 /obj/item/food/breadslice/plain/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/griddle_toast, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
@@ -103,6 +102,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 10,
 		/datum/reagent/consumable/nutriment/protein = 12,
 	)
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	tastes = list("bread" = 10, "meat" = 10)
 	foodtypes = GRAIN | MEAT | DAIRY
 	venue_value = FOOD_PRICE_CHEAP
@@ -135,6 +135,7 @@
 	foodtypes = GRAIN | MEAT
 	slice_type = /obj/item/food/breadslice/sausage
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/breadslice/sausage
 	name = "sausagebread slice"
@@ -153,6 +154,7 @@
 	name = "xenomeatbread loaf"
 	desc = "The culinary base of every self-respecting eloquen/tg/entleman. Extra Heretical."
 	icon_state = "xenomeatbread"
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 20,
 		/datum/reagent/consumable/nutriment/vitamin = 10,
@@ -180,6 +182,7 @@
 	name = "spider meat loaf"
 	desc = "Reassuringly green meatloaf made from spider meat."
 	icon_state = "spidermeatbread"
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 20,
 		/datum/reagent/toxin = 15,
@@ -327,7 +330,7 @@
 
 /obj/item/food/breadslice/empty/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
+	AddComponent(/datum/component/ingredients_holder, null, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
 
 /obj/item/food/baguette
 	name = "baguette"
