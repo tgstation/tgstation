@@ -979,6 +979,10 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	for(var/datum/surgery/surgery as anything in exposed_carbon.surgeries)
 		surgery.speed_modifier = max(0.3, surgery.speed_modifier)
 
+/datum/reagent/inverse/krokodil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy)
+
 /datum/reagent/inverse/krokodil/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	affected_mob.set_jitter_if_lower(10 SECONDS)
@@ -1192,6 +1196,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/baldium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	delayed_burn_damage += (seconds_per_tick * 1)
+	if(holder.has_reagent(/datum/reagent/consumable/salt))
+		holder.remove_reagent(/datum/reagent/inverse/baldium, 3 * REM * seconds_per_tick)
+		holder.remove_reagent(/datum/reagent/consumable/salt, 1 * REM * seconds_per_tick)
 
 	switch(current_cycle)
 		if(5)
