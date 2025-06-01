@@ -238,7 +238,7 @@
 				return FALSE
 
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
-			adjust_knowledge_points(initial(researched_path.cost))
+			adjust_knowledge_points(-initial(researched_path.cost))
 			return TRUE
 
 /datum/antagonist/heretic/proc/researchable_knowledge(datum/heretic_knowledge/knowledge_path)

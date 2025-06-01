@@ -471,19 +471,19 @@ const TabContent = ({ path }: { path: HereticPath }) => {
         </Stack.Item>
         <Stack.Item>
           <b>Pros:</b>
-          <ul>
+          <div>
             {path.pros.map((pro, index) => (
               <p key={index}>{pro}</p>
             ))}
-          </ul>
+          </div>
         </Stack.Item>
         <Stack.Item>
           <b>Cons:</b>
-          <ul>
+          <div>
             {path.cons.map((con, index) => (
               <p key={index}>{con}</p>
             ))}
-          </ul>
+          </div>
         </Stack.Item>
         {/* <Stack.Item>
           <b>Tips:</b>
