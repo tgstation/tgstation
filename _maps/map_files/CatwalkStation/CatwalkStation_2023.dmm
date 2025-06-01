@@ -20924,13 +20924,6 @@
 "gkI" = (
 /obj/structure/sign/poster/official/safety_report/directional/south,
 /obj/effect/turf_decal/trimline/purple/end,
-/obj/item/pushbroom{
-	pixel_y = 10
-	},
-/obj/item/pushbroom,
-/obj/item/pushbroom{
-	pixel_y = 5
-	},
 /obj/structure/mop_bucket/janitorialcart,
 /turf/open/floor/plastic,
 /area/station/science/research)
@@ -23041,9 +23034,7 @@
 /area/station/maintenance/disposal/incinerator)
 "gRZ" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white/textured,
 /area/station/science/robotics/augments)
 "gSg" = (
@@ -26353,6 +26344,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/welded,
 /obj/effect/mapping_helpers/airlock/abandoned,
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron/white/textured,
 /area/station/science/research)
 "hPQ" = (
@@ -26426,13 +26418,6 @@
 /area/station/maintenance/disposal/incinerator)
 "hQD" = (
 /obj/machinery/holopad,
-/obj/item/pushbroom,
-/obj/item/pushbroom{
-	pixel_y = 5
-	},
-/obj/item/pushbroom{
-	pixel_y = 10
-	},
 /turf/open/floor/plastic,
 /area/station/science/research)
 "hQE" = (
@@ -36269,6 +36254,7 @@
 /obj/item/pushbroom{
 	pixel_y = 10
 	},
+/obj/structure/rack,
 /turf/open/floor/plastic,
 /area/station/science/research)
 "kMj" = (
@@ -54669,13 +54655,6 @@
 /area/station/medical/break_room)
 "qpy" = (
 /obj/effect/turf_decal/trimline/purple,
-/obj/item/pushbroom{
-	pixel_y = 5
-	},
-/obj/item/staff/broom{
-	pixel_y = 10
-	},
-/obj/item/pushbroom,
 /mob/living/basic/bot/cleanbot,
 /turf/open/floor/plastic,
 /area/station/science/research)
@@ -62897,7 +62876,9 @@
 "sOn" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = s
+	},
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
@@ -70164,6 +70145,7 @@
 	pixel_y = 10
 	},
 /obj/effect/decal/remains/human,
+/obj/structure/rack,
 /turf/open/floor/plastic,
 /area/station/science/research)
 "uVX" = (
@@ -71627,13 +71609,14 @@
 /obj/effect/turf_decal/trimline/purple/end{
 	dir = 1
 	},
-/obj/item/pushbroom,
+/obj/structure/rack,
+/obj/item/staff/broom{
+	pixel_y = 10
+	},
 /obj/item/pushbroom{
 	pixel_y = 5
 	},
-/obj/item/pushbroom{
-	pixel_y = 10
-	},
+/obj/item/pushbroom,
 /turf/open/floor/plastic,
 /area/station/science/research)
 "vrx" = (
@@ -182932,7 +182915,7 @@ aBO
 jLl
 orJ
 vsC
-lqg
+soU
 uVV
 kMb
 soU
@@ -183446,7 +183429,7 @@ qSk
 tuY
 pKA
 kny
-lqg
+soU
 vrw
 gkI
 soU
@@ -183704,8 +183687,8 @@ fpm
 iEq
 fpm
 arT
-fpm
-fpm
+vFA
+vFA
 arT
 arT
 arT
