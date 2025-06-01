@@ -1,0 +1,4 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - bugfix: "Catwalk ordnance cycling airlocks properly cycle again."
