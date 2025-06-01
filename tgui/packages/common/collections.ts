@@ -141,32 +141,19 @@ export const sort = <T>(array: T[]): T[] => sortBy(array);
 export const range = (start: number, end: number): number[] =>
   new Array(end - start).fill(null).map((_, index) => index + start);
 
-type ReduceFunction = {
-  <T, U>(
-    array: T[],
-    reducerFn: (
-      accumulator: U,
-      currentValue: T,
-      currentIndex: number,
-      array: T[],
-    ) => U,
-    initialValue: U,
-  ): U;
-  <T>(
-    array: T[],
-    reducerFn: (
-      accumulator: T,
-      currentValue: T,
-      currentIndex: number,
-      array: T[],
-    ) => T,
-  ): T;
-};
-
 /**
  * A fast implementation of reduce.
  */
-export const reduce: ReduceFunction = (array, reducerFn, initialValue?) => {
+export function reduce<T, U>(
+  array: T[],
+  reducerFn: (
+    accumulator: U,
+    currentValue: T,
+    currentIndex: number,
+    array: T[],
+  ) => U,
+  initialValue?: U,
+): U {
   const length = array.length;
   let i: number;
   let result;
@@ -181,7 +168,7 @@ export const reduce: ReduceFunction = (array, reducerFn, initialValue?) => {
     result = reducerFn(result, array[i], i, array);
   }
   return result;
-};
+}
 
 /**
  * Creates a duplicate-free version of an array, using SameValueZero for
