@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(narcd_underages)
 GLOBAL_LIST_INIT_TYPED(language_datum_instances, /datum/language, init_language_prototypes())
 /// List if all language typepaths learnable, IE, those with keys
 GLOBAL_LIST_INIT(all_languages, init_all_languages())
-// /List of language prototypes to reference, assoc "name" = typepath
+/// /List of language prototypes to reference, assoc "name" = typepath
 GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 
 /proc/init_language_prototypes()
@@ -113,7 +113,7 @@ GLOBAL_LIST_INIT(language_types_by_name, init_language_types_by_name())
 		lang_list[initial(lang_type.name)] = lang_type
 	return lang_list
 
-// A list of all the possible blood types, keyed by id (which is just the name in most cases)
+/// A list of all the possible blood types, keyed by id (which is just the name in most cases)
 GLOBAL_LIST_INIT(blood_types, init_blood_types())
 
 /// Initializes the list of blood type singletons

@@ -82,7 +82,7 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "fc" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 8
 	},
 /turf/open/misc/asteroid/basalt/airless,
@@ -353,7 +353,7 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "we" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 5
 	},
 /turf/open/misc/asteroid/basalt/airless,
@@ -536,7 +536,7 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "Jj" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 1
 	},
 /mob/living/basic/mining/ice_whelp/ash,
@@ -547,7 +547,7 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "JY" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /turf/open/misc/asteroid/basalt/airless,
@@ -559,7 +559,7 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "Ky" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 6
 	},
 /turf/open/misc/asteroid/basalt/airless,
@@ -719,19 +719,19 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "Qa" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 1
 	},
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "Qg" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 9
 	},
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "QQ" = (
-/obj/effect/decal/cleanable/blood/trails,
+/obj/effect/decal/cleanable/blood/trail_holder,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "QY" = (
@@ -821,7 +821,7 @@
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/unpowered/no_grav)
 "Va" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 10
 	},
 /turf/open/misc/asteroid/basalt/airless,

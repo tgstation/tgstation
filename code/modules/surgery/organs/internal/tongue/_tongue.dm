@@ -614,7 +614,7 @@
 	say_mod = "meows"
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
-	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER)
+	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE)
 	languages_native = list(/datum/language/nekomimetic)
 
 /obj/item/organ/tongue/cat/on_bodypart_insert(obj/item/bodypart/head)
