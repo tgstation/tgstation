@@ -100,6 +100,38 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
     act('update-settings', currentSettings);
   };
 
+  const resetAdvancedSettings = () => {
+    const defaultAmount = 1;
+    const defaultCordsType = 0;
+    const defaultSpawnLocation = 'Current location';
+    const defaultDirection = 0;
+    const defaultObjectName = '';
+    const defaultOffset = '';
+
+    setAmount(defaultAmount);
+    setCordsType(defaultCordsType);
+    setSpawnLocation(defaultSpawnLocation);
+    setDirection(defaultDirection);
+    setObjectName(defaultObjectName);
+    setOffset(defaultOffset);
+
+    storage.set('spawnpanel-object_count', defaultAmount);
+    storage.set('spawnpanel-offset_type', defaultCordsType);
+    storage.set('spawnpanel-where_dropdown_value', defaultSpawnLocation);
+    storage.set('spawnpanel-direction', defaultDirection);
+    storage.set('spawnpanel-object_name', defaultObjectName);
+    storage.set('spawnpanel-offset', defaultOffset);
+
+    sendUpdatedSettings({
+      object_count: defaultAmount,
+      offset_type: defaultCordsType ? 'Absolute offset' : 'Relative offset',
+      where_dropdown_value: defaultSpawnLocation,
+      dir: [1, 2, 4, 8][defaultDirection],
+      offset: defaultOffset,
+      object_name: defaultObjectName,
+    });
+  };
+
   useEffect(() => {
     const loadStoredValues = async () => {
       const storedAmount = await storage.get('spawnpanel-object_count');
@@ -320,6 +352,7 @@ export function CreateObjectSettings(props: CreateObjectSettingsProps) {
                       width: '22px',
                       lineHeight: '22px',
                     }}
+                    onClick={() => resetAdvancedSettings()}
                     tooltip="Reset advanced settings"
                     tooltipPosition="top"
                     disabled={isAnyPreciseModeActive}
