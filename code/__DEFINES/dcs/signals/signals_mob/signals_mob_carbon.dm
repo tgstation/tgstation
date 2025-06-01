@@ -174,3 +174,6 @@
 /// Called at the very end of human character setup
 /// At this point all quirks are assigned and the mob has a mind / client
 #define COMSIG_HUMAN_CHARACTER_SETUP_FINISHED "human_character_setup_finished"
+
+/// From /mob/living/carbon/proc/set_blood_type : (mob/living/carbon/user, datum/blood_type, update_cached_blood_dna_info)
+#define COMSIG_CARBON_CHANGED_BLOOD_TYPE "carbon_set_blood_type"
