@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Certain emotes (like twitching) no longer stop all ontoing animations"
