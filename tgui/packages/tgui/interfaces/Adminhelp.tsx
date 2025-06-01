@@ -71,8 +71,8 @@ export const Adminhelp = (props) => {
                       onChange={(value) => {
                         if (value === confirmationText) {
                           setRequestForAdmin(true);
+                          setCurrentlyInputting(false);
                         }
-                        setCurrentlyInputting(false);
                       }}
                     />
                   </Box>
