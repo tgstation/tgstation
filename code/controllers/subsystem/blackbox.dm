@@ -422,7 +422,7 @@ Versioning
 	server_port,
 	round_id,
 	ckey,
-	character,
+	character_name,
 	job,
 	special,
 	latejoin) VALUES (
@@ -430,16 +430,16 @@ Versioning
 	:port,
 	:round_id,
 	:ckey,
-	:character,
+	:character_name,
 	:job,
 	:special,
 	:latejoin)
 	"}, list(
-		"server_ip" = world.internet_address || "0",
-		"port" = "[world.port]",
+		"server_ip" = world.internet_address || 0,
+		"port" = world.port,
 		"round_id" = GLOB.round_id,
 		"ckey" = ckey,
-		"character" = character,
+		"character_name" = character,
 		"job" = job,
 		"special" = special,
 		"latejoin" = latejoin
