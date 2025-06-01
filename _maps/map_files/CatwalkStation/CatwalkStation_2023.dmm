@@ -26974,9 +26974,7 @@
 /area/station/medical/chemistry)
 "hYO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/bot_white{
-	color = 003879
-	},
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics)
 "hZa" = (
@@ -38511,9 +38509,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/bot_white{
-	color = 003879
-	},
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics)
 "lys" = (
@@ -59624,9 +59620,7 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/eva)
 "rOk" = (
-/obj/effect/turf_decal/bot_white{
-	color = 003879
-	},
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics)
 "rOn" = (
