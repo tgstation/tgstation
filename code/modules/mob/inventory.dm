@@ -334,21 +334,36 @@
  * * If it was, returns the item.
  * If the item can be dropped, it will be forceMove()'d to the ground and the turf's Entered() will be called.
 */
-/mob/proc/dropItemToGround(obj/item/to_drop, force = FALSE, silent = FALSE, invdrop = TRUE, turf/newloc = null)
+/mob/proc/dropItemToGround(obj/item/to_drop, force = FALSE, silent = FALSE, invdrop = TRUE)
 	if(isnull(to_drop))
 		return
 
+	var/x_offset = rand(-6, 6)
+	var/y_offset = rand(-6, 6)
 	SEND_SIGNAL(src, COMSIG_MOB_DROPPING_ITEM)
-	var/try_uneqip = doUnEquip(to_drop, force, newloc ? newloc : drop_location(), FALSE, invdrop = invdrop, silent = silent)
-
-	if(!try_uneqip || !to_drop) //ensure the item exists and that it was dropped properly.
+	if(!transfer_item_to_turf(to_drop, drop_location(), x_offset, y_offset, force, silent, invdrop))
 		return
 
-	if(!(to_drop.item_flags & NO_PIXEL_RANDOM_DROP))
-		to_drop.pixel_x = to_drop.base_pixel_x + rand(-6, 6)
-		to_drop.pixel_y = to_drop.base_pixel_y + rand(-6, 6)
-	to_drop.do_drop_animation(src)
 	return to_drop
+
+/// Unequips and transfers an item to a given turf, if possible.
+/mob/proc/transfer_item_to_turf(
+	obj/item/to_transfer,
+	turf/new_loc,
+	x_offset = 0,
+	y_offset = 0,
+	force = FALSE,
+	silent = FALSE,
+	drop_item_inventory = TRUE,
+)
+	if(!doUnEquip(to_transfer, force, new_loc, no_move = FALSE, invdrop = drop_item_inventory, silent = silent))
+		return FALSE
+	if(QDELETED(to_transfer)) // Some items may get deleted upon getting unequipped.
+		return FALSE
+	to_transfer.pixel_x = to_transfer.base_pixel_x + x_offset
+	to_transfer.pixel_y = to_transfer.base_pixel_y + y_offset
+	to_transfer.do_drop_animation(src)
+	return TRUE
 
 //for when the item will be immediately placed in a loc other than the ground
 /mob/proc/transferItemToLoc(obj/item/I, newloc = null, force = FALSE, silent = TRUE, animated = null)
@@ -368,7 +383,7 @@
 	return doUnEquip(I, force, newloc, TRUE, idrop, silent = TRUE)
 
 //DO NOT CALL THIS PROC
-//use one of the above 3 helper procs
+//use one of the above 4 helper procs
 //you may override it, but do not modify the args
 /mob/proc/doUnEquip(obj/item/I, force, atom/newloc, no_move, invdrop = TRUE, silent = FALSE) //Force overrides TRAIT_NODROP for things like wizarditis and admin undress.
 													//Use no_move if the item is just gonna be immediately moved afterward
