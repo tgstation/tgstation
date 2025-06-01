@@ -130,9 +130,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 4)
 	tox_damage = 0
 
-/datum/reagent/inverse/libitoil/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+/datum/reagent/inverse/libitoil/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * delta_time)
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * seconds_per_tick)
 
 /datum/reagent/inverse/libitoil/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
@@ -223,9 +223,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/amount_of_blur_applied = 1.25 SECONDS
 	tox_damage = 0
 
-/datum/reagent/inverse/aiuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
-	owner.adjustOrganLoss(ORGAN_SLOT_EYES, 0.1 * REM * delta_time)
-	owner.adjust_eye_blur(amount_of_blur_applied * delta_time)
+/datum/reagent/inverse/aiuri/on_mob_life(mob/living/carbon/owner, seconds_per_tick, times_fired)
+	owner.adjustOrganLoss(ORGAN_SLOT_EYES, 0.1 * REM * seconds_per_tick)
+	owner.adjust_eye_blur(amount_of_blur_applied * seconds_per_tick)
 	. = ..()
 	return TRUE
 
@@ -650,6 +650,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 			/datum/brain_trauma/severe/hypnotic_stupor, // These apply the above blacklisted trauma
 			/datum/brain_trauma/severe/hypnotic_trigger,
 			/datum/brain_trauma/special/honorbound, // Designed to be chaplain exclusive
+			/datum/brain_trauma/voided, // Voidwalker exclusive and more of a magical status effect than a trauma
 		)
 
 		// Do give out these traumas but not any of their subtypes, usually because the trauma replaces itself with a subtype

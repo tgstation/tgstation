@@ -4,13 +4,13 @@
 			"type": "icon_state",
 			"icon_state": "appendix",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "appendix_insides",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		}
 	],
 	"brain": [
@@ -18,7 +18,7 @@
 			"type": "icon_state",
 			"icon_state": "brain",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -31,7 +31,7 @@
 			"type": "icon_state",
 			"icon_state": "ears",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -44,19 +44,19 @@
 			"type": "icon_state",
 			"icon_state": "eyes",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "eyes_sclera",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "eyes_pupil",
 			"blend_mode": "overlay",
-			"color_ids": [ 3 ]
+			"color_ids": [3]
 		},
 		{
 			"type": "icon_state",
@@ -69,7 +69,7 @@
 			"type": "icon_state",
 			"icon_state": "heart",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -82,7 +82,7 @@
 			"type": "icon_state",
 			"icon_state": "liver",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -95,7 +95,7 @@
 			"type": "icon_state",
 			"icon_state": "lungs",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
@@ -108,7 +108,7 @@
 			"type": "icon_state",
 			"icon_state": "tongue",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	],
 	"stomach": [
@@ -116,7 +116,7 @@
 			"type": "icon_state",
 			"icon_state": "stomach",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		}
 	]
 }
