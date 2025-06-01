@@ -633,9 +633,6 @@
 /datum/config_entry/string/default_view
 	default = "15x15"
 
-/datum/config_entry/string/default_view_square
-	default = "15x15"
-
 /datum/config_entry/flag/log_pictures
 
 /datum/config_entry/flag/picture_logging_camera
