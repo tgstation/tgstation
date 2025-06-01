@@ -192,6 +192,8 @@
 #define ACCESS_BLOODCULT "bloodcult"
 /// HUNTERS
 #define ACCESS_HUNTER "hunter"
+/// PIRATE
+#define ACCESS_SAPPER_SHIP "sapper_ship"
 
 /// - - - MISC - - -
 	// These don't really fit anywhere else
