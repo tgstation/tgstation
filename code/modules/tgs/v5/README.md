@@ -2,8 +2,8 @@
 
 This DMAPI implements bridge requests using HTTP GET requests to TGS. It has no security restrictions.
 
-- [\_\_interop_version.dm](./__interop_version.dm) contains the version of the API used between the DMAPI and TGS.
-- [\_defines.dm](./_defines.dm) contains constant definitions.
+- [__interop_version.dm](./__interop_version.dm) contains the version of the API used between the DMAPI and TGS.
+- [_defines.dm](./_defines.dm) contains constant definitions.
 - [api.dm](./api.dm) contains the bulk of the API code.
 - [bridge.dm](./bridge.dm) contains functions related to making bridge requests.
 - [chunking.dm](./chunking.dm) contains common function for splitting large raw data sets into chunks BYOND can natively process.
