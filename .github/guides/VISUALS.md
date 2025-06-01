@@ -31,9 +31,9 @@ You'll find links to the relevant reference entries at the heading of each entry
 - [Gliding](#gliding)
 - [Sight](#sight)
 - [BYOND lighting](#byond-lighting)
-	- [Luminosity](#luminosity)
-	- [See in dark](#see-in-dark)
-	- [Infrared](#infrared)
+  - [Luminosity](#luminosity)
+  - [See in dark](#see-in-dark)
+  - [Infrared](#infrared)
 - [Invisibility](#invisibility)
 - [Layers](#layers)
 - [Planes](#planes)
@@ -47,7 +47,7 @@ You'll find links to the relevant reference entries at the heading of each entry
 - [Color](#color)
 - [Transform](#transform)
 - [Lighting](#lighting)
-- [Animate()](#animate())
+- [Animate()](<#animate()>)
 - [GAGS](#gags)
 
 ## Appearances in BYOND
@@ -137,15 +137,16 @@ Be careful of this.
 
 The `vis_contents` list allows you to essentially say "Hey, render this thing ON me".
 
-The definition of "ON" varies significantly with the `vis_flags` value of the *thing* being relayed.
+The definition of "ON" varies significantly with the `vis_flags` value of the _thing_ being relayed.
 See the ref [here](https://www.byond.com/docs/ref/#/atom/var/vis_flags).
 
 Some flags of interest:
+
 - `VIS_INHERIT_ID`: This allows you to link the object DIRECTLY to the thing it's drawn on,
-so clicking on the `vis_contents`'d object is just like clicking on the thing
+  so clicking on the `vis_contents`'d object is just like clicking on the thing
 - `VIS_INHERIT_PLANE`: We will discuss [planes](#planes) more in future, but we use them to both effect rendering order and apply effects as a group.
-This flag changes the plane of any `vis_contents`'d object (while displayed on the source object) to the source's.
-This is occasionally useful, but should be used with care as it breaks any effects that rely on plane.
+  This flag changes the plane of any `vis_contents`'d object (while displayed on the source object) to the source's.
+  This is occasionally useful, but should be used with care as it breaks any effects that rely on plane.
 
 Anything inside a `vis_contents` list will have its loc stored in its `vis_locs` variable.
 We very rarely use this, primarily just for clearing references from `vis_contents`.
@@ -158,7 +159,6 @@ Because it's not a copy, we need to constantly check if it's changed at all, whi
 Careful how much you use it.
 
 ## Images
-
 
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/image)
@@ -199,6 +199,7 @@ We then mirror this group of images into/out of the client's images list, based 
 This is the pattern we use for things like the medihud, or robot trails.
 
 ## View
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/client/var/view)
 
@@ -231,6 +232,7 @@ See the ref for more details, but `normal` is gonna have the sharpest output, `d
 which causes some blur, and `blur` uses bilinear sampling, which causes a LOT of blur.
 
 ## Eye
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/client/var/eye)
 
@@ -241,10 +243,11 @@ It is by default `/client/var/mob` but it can be modified.
 This is how we accomplish ai eyes and ventcrawling, alongside most other effects that involve a player getting "into" something.
 
 ## Client Screen
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/{notes}/HUD)
 
-Similar to client images but not *quite* the same, we can also insert objects onto our client's literal screen
+Similar to client images but not _quite_ the same, we can also insert objects onto our client's literal screen
 
 This is done by giving it an appropriate `screen_loc` value, and inserting it into the client's `screen` list.
 
@@ -271,6 +274,7 @@ This gets into dmf fuckery but you can use [window ids](https://www.byond.com/do
 Useful for creating popup windows and such.
 
 ## Blend Mode
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/blend_mode)
 
@@ -281,6 +285,7 @@ There's a whole bunch of options but really the only one you need to know offhan
 This is how we do lighting effects, since the lighting [plane](#planes) can be used to multiply just normal coloring. If it's all black, the full screen goes black.
 
 ## Appearance Flags
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/appearance_flags)
 
@@ -288,12 +293,14 @@ This is how we do lighting effects, since the lighting [plane](#planes) can be u
 I won't go over all of them, but I will discuss a few.
 
 Flags of interest:
+
 - `LONG_GLIDE`: without this, diagonal movements will automatically take sqrt(2) more time, to account for the greater distance. We do this calculus automatically, and so want this flipped to disable the behavior.
 - `KEEP_TOGETHER`: this allows us to force overlays to render in the same manner as the thing they're overlaid on. Most useful for humans to make alpha changes effect all overlays.
 - `PLANE_MASTER`: I will get into this later, but this allows us to use the [plane](#planes) var to relay renders onto screen objects, so we can apply visual effects and masks and such.
 - `TILE_BOUND`: By default if something is part in one tile and part in another it will display if either is visible. With this set it'll go off its loc value only.
 
 ## Gliding
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/{notes}/gliding)
 
@@ -314,7 +321,7 @@ We will also occasionally use glide size as a way to force a transition between 
 There's extra cruft here.
 
 > Something you should know: Our gliding system attempts to account for time dilation when setting move rates.
-This is done in a very simplistic way however, so a spike in td will lead to jumping around as glide rate is outpaced by mob movement rate.
+> This is done in a very simplistic way however, so a spike in td will lead to jumping around as glide rate is outpaced by mob movement rate.
 
 On that note, it is VERY important that glide rate is the same or near the same as actual move rate.
 Otherwise you will get strange jumping and jitter.
@@ -328,17 +335,18 @@ This is why you'll sometime see a stutter in your step when slowed
 Just so you know, client movement works off `/client/var/move_delay` which sets the next time an input will be accepted. It's typically glide rate, but is in some cases just 1 tick.
 
 ## Sight
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/mob/var/sight)
 
-`/mob/var/sight` is a set of bitflags that *mostly* set what HAS to render on your screen. Be that mobs, turfs, etc.
+`/mob/var/sight` is a set of bitflags that _mostly_ set what HAS to render on your screen. Be that mobs, turfs, etc.
 That said, there is some nuance here so I'ma get into that.
 
 - `SEE_INFRA`: I'll get into this later, but infrared is essentially a copy of BYOND darkness, it's not something we currently use.
 - `SEE_BLACKNESS`: This relates heavily to [planes](#planes), essentially typically the "blackness" (that darkness that masks things that you can't see)
-is rendered separately, out of our control as "users".
-However, if the `SEE_BLACKNESS` flag is set, it will instead render on plane 0, the default BYOND plane.
-This allows us to capture it, and say, blur it, or redraw it elsewhere. This is in theory very powerful, but not possible with the 'side_map' [map format](https://www.byond.com/docs/ref/#/world/var/map_format)
+  is rendered separately, out of our control as "users".
+  However, if the `SEE_BLACKNESS` flag is set, it will instead render on plane 0, the default BYOND plane.
+  This allows us to capture it, and say, blur it, or redraw it elsewhere. This is in theory very powerful, but not possible with the 'side_map' [map format](https://www.byond.com/docs/ref/#/world/var/map_format)
 
 ## BYOND Lighting
 
@@ -354,6 +362,7 @@ sort of like if there was a wall between them. This hiding uses BYOND darkness, 
 I'll use this section to discuss all the little bits that contribute to this behavior
 
 ### Luminosity
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/luminosity)
 
@@ -361,9 +370,10 @@ I'll use this section to discuss all the little bits that contribute to this beh
 It's real simple, just a range of tiles that will be lit, respecting sight-lines and such of course.
 
 > This "light" is how `/proc/view()` knows if something is in view or not. Oh by the by `view()` respects lighting.
-You can actually force it to use a particular mob's sight to avoid aspects of this, this is what `dview()` is
+> You can actually force it to use a particular mob's sight to avoid aspects of this, this is what `dview()` is
 
 ### See in Dark
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/mob/var/see_in_dark)
 
@@ -373,6 +383,7 @@ This is why when you stand in darkness you can see yourself, and why you can see
 It's quite simple, but worth describing.
 
 ### Infrared
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/mob/var/see_infrared)
 
@@ -380,6 +391,7 @@ Infrared vision can be thought of as a hidden copy of standard BYOND darkness.
 It's not something we actually use, but I think you should know about it, because the whole thing is real confusing without context.
 
 ## Invisibility
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/invisibility)
 
@@ -391,6 +403,7 @@ It's also used to hide some more then ghost invisible things, like some timers a
 `/mob/var/see_invisible` is the catcher of invisibility. If a mob's see_invisible is higher then a target/s invisibility, it'll be shown. Really basic stuff.
 
 ## Layers
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/layer)
 
@@ -412,6 +425,7 @@ We can think of this as applying to planes, since we don't want it interlaying w
 This allows us to keep relative layer differences while not needing to make all sources static. Often very useful.
 
 ## Planes
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/plane)
 
@@ -440,12 +454,13 @@ called `/atom/movable/plane_master_controller`.
 This is somewhat outmoded by our use of [render relays](#render-targetsource), but it's still valid and occasionally useful.
 
 > Something you should know: Plane masters effect ONLY the map their screen_loc is on.
-For this reason, we are forced to generate whole copies of the set of plane masters with the proper screen_loc to make subviews look right
+> For this reason, we are forced to generate whole copies of the set of plane masters with the proper screen_loc to make subviews look right
 
 > Warning: Planes have some restrictions on valid values. They NEED to be whole integers, and they NEED to have an absolute value of `10000`.
-This is to support `FLOAT_PLANE`, which lives out at the very edge of the 32 bit int range.
+> This is to support `FLOAT_PLANE`, which lives out at the very edge of the 32 bit int range.
 
 ## Render Target/Source
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/render_target)
 
@@ -454,7 +469,7 @@ The target object is given a `/atom/var/render_target` value, and anything that 
 
 When I say render onto, I mean it literally. It is like adding a second step in the rendering process.
 
-You can even prepend * to the render target value to disable the initial render, and JUST render via the render source.
+You can even prepend \* to the render target value to disable the initial render, and JUST render via the render source.
 
 ### Our Implementation
 
@@ -462,13 +477,14 @@ We use render targets to create "render relays" which can be used to link [plane
 See [the renderer documentation](../../code/_onclick/hud/rendering/_render_readme.md) for visualizations for this.
 
 > Of note: this linking behavior is accomplished by adding a screen object to link onto with a plane value of the desired PM we want to relay onto.
-Layer is VERY important here, and will be set based off the layer of the last plane master.
-This means plane order is not always the absolute order in which different plane masters render. Be careful of this.
+> Layer is VERY important here, and will be set based off the layer of the last plane master.
+> This means plane order is not always the absolute order in which different plane masters render. Be careful of this.
 
 > To edit and display planes and plane connections in game, run the `Edit/Debug Planes` command.
-It will open a ui that allows you to view relay connections, plane master descriptions, and edit their values and effects.
+> It will open a ui that allows you to view relay connections, plane master descriptions, and edit their values and effects.
 
 ## Multiz
+
 - [Table of Contents](#table-of-contents)
 - Reference: Hell of our own creation
 
@@ -483,10 +499,10 @@ Except not, for 2 reasons. One more annoying then the other.
 
 - 1: It looked like dog doo-doo. This pattern destroyed the old planes of everything vis_contents'd, so effects/lighting/dropshadows broke bad.
 - 2: I alluded to this earlier, but it totally breaks the `side_map` [map format](https://www.byond.com/docs/ref/#/world/var/map_format)
-which I need for a massive resprite I'm helping with. This is because `side_map` changes how rendering order works,
-going off "distance" from the front of the frame.
-The issue here is it of course needs a way to group things that are even allowed to overlap, so it uses plane.
-So when you squish everything down onto one plane, this of course breaks horribly and fucks you.
+  which I need for a massive resprite I'm helping with. This is because `side_map` changes how rendering order works,
+  going off "distance" from the front of the frame.
+  The issue here is it of course needs a way to group things that are even allowed to overlap, so it uses plane.
+  So when you squish everything down onto one plane, this of course breaks horribly and fucks you.
 
 Ok then, old way's not workable. What will we do instead?
 
@@ -506,6 +522,7 @@ There are a few edge cases where we need to work in explicitly offsets, but thos
 This is stupid, but it's makable, and what we do.
 
 ## Mouse Opacity
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/mouse_opacity)
 
@@ -519,12 +536,13 @@ We will on occasion use mouse opacity to expand hitboxes, but more often this is
 or just low alpha pixels on the sprite.
 
 > Note: Mouse opacity will only matter if the atom is being rendered on its own. [Overlays](#overlays)(and [images](#images))
-will NOT work as expected with this.
-However, you can still have totally transparent overlays. If you render them onto a [plane master](#planes) with the desired mouse opacity value
-it will work as expected. This is because as a step of the rendering pipeline the overlay is rendered ONTO the plane master, and then the plane
-master's effects are applied.
+> will NOT work as expected with this.
+> However, you can still have totally transparent overlays. If you render them onto a [plane master](#planes) with the desired mouse opacity value
+> it will work as expected. This is because as a step of the rendering pipeline the overlay is rendered ONTO the plane master, and then the plane
+> master's effects are applied.
 
 ## Filters
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/{notes}/filters)
 
@@ -547,9 +565,10 @@ we will need our own management system. This is why we, unlike byond, use a wrap
 This system has the potential to break animations and other such things. Take care.
 
 > We have a debug tool for filters, called filterrific. You can access it in-game by vving an atom, going to the dropdown, and hitting `Edit Filters`
-It'll let you add and tweak *most* of the filters in BYOND.
+> It'll let you add and tweak _most_ of the filters in BYOND.
 
 ## Particles
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/{notes}/particles)
 
@@ -561,9 +580,10 @@ The type is `/obj/effect/abstract/particle_holder`. Interacting with it's real s
 It'll do the rest.
 
 > We have a debug tool for particles. You can access it in-game by vving an atom, going to the dropdown, and hitting `Edit Particles`
-It'll let you add and tweak the particles attached to that atom.
+> It'll let you add and tweak the particles attached to that atom.
 
 ## Pixel Offsets
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/pixel_x)
 
@@ -582,6 +602,7 @@ This doesn't really matter for our current map format, but for anything that tak
 it matters a whole ton. It's kinda a hard idea to get across, but I hope you have at least some idea.
 
 ## Map Formats
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/world/var/map_format)
 
@@ -621,6 +642,7 @@ That's because we use [`LEGACY_MOVEMENT_MODE`](https://www.byond.com/docs/ref/#/
 This means we're almost always doomed to getting weird layering, cascading out from the source of the issue in a way that is quite hard to debug.
 
 Oh right I forgot to mention. Sorta touched on it with [Pixel offsets](#pixel-offsets).
+
 - `pixel_x/y` change something's position in physical space. So if you shoot this real high it'll layer as if it is where it appears to be,
 - `pixel_w/z` change something's VISUAL position. So you can LAYER as if you're at the bottom of the screen, but actually sit at the top.
 
@@ -632,13 +654,14 @@ What follows is a description, from lummox, of how physical conflicts are handle
 From [this post](https://www.byond.com/forum/post/2656961#comment26050050)
 
 For the physical position, Y increases upward relative to the screen; view position has Y going downward. The topological order between two icons goes like this, in order:
-- 1) If the icons don't visually overlap, they don't care which goes first.
-- 2) If the icons do not overlap on the physical Y axis, whichever one is further back is drawn first.
-- 3) If one has a lower layer, it's drawn first.
-- 4) If one's "near" edge (physical Y) is closer to the top of the screen than the other, it gets drawn first.
-- 5) If one's center is left of the other, it's drawn first.
-- 6) If the two physical bounds are identical, whichever icon came first in the original array order is drawn first.
-- 7) All tiebreakers failed so the icons give up and don't care which goes first.
+
+- 1. If the icons don't visually overlap, they don't care which goes first.
+- 2. If the icons do not overlap on the physical Y axis, whichever one is further back is drawn first.
+- 3. If one has a lower layer, it's drawn first.
+- 4. If one's "near" edge (physical Y) is closer to the top of the screen than the other, it gets drawn first.
+- 5. If one's center is left of the other, it's drawn first.
+- 6. If the two physical bounds are identical, whichever icon came first in the original array order is drawn first.
+- 7. All tiebreakers failed so the icons give up and don't care which goes first.
 
 It is worth stating clearly. Things will only "visually overlap" if they sit on the same [plane](#planes).
 This is NOT counting [relays](#render-targetsource)/[plane masters](#planes) (when a plane master is relayed onto something else, you can think of it like drawing the WHOLE PLANE MASTER)
@@ -651,7 +674,7 @@ One more thing. Big icons are fucked
 
 From the byond reference
 
->If you use an icon wider than one tile, the "footprint" of the isometric icon (the actual map tiles it takes up) will always be a square. That is, if your normal tile size is 64 and you want to show a 128x128 icon, the icon is two tiles wide and so it will take up a 2×2-tile area on the map. The height of a big icon is irrelevant--any excess height beyond width/2 is used to show vertical features. To draw this icon properly, other tiles on that same ground will be moved behind it in the drawing order.
+> If you use an icon wider than one tile, the "footprint" of the isometric icon (the actual map tiles it takes up) will always be a square. That is, if your normal tile size is 64 and you want to show a 128x128 icon, the icon is two tiles wide and so it will take up a 2×2-tile area on the map. The height of a big icon is irrelevant--any excess height beyond width/2 is used to show vertical features. To draw this icon properly, other tiles on that same ground will be moved behind it in the drawing order.
 > One important warning about using big icons in isometric mode is that you should only do this with dense atoms. If part of a big mob icon covers the same tile as a tall building for instance, the tall building is moved back and it could be partially covered by other turfs that are actually behind it. A mob walking onto a very large non-dense turf icon would experience similar irregularities.
 
 These can cause very annoying flickering. In fact, MUCH of how rendering works causes flickering. This is because we don't decide on a pixel by pixel case, the engine groups sprites up into a sort of rendering stack, unable to split them up.
@@ -683,6 +706,7 @@ Legacy support for how byond rendering used to work. It essentially locked icon 
 it would be automatically broken down into smaller icon states, which you would need to manually display. Not something we need to care about
 
 ## Color
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/color)
 
@@ -706,9 +730,10 @@ You can accomplish some really fun effects with this trick, it gives you a LOT o
 and leads to some fun vfx.
 
 > We have a debug tool for color matrixes. Just VV an atom, go to the VV dropdown and look for the `Edit Color as Matrix` entry.
-It'll help visualize this process quite well. Play around with it, it's fun.
+> It'll help visualize this process quite well. Play around with it, it's fun.
 
 ## Transform
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/atom/var/transform)
 
@@ -721,12 +746,13 @@ helper procs for pretty much everything it can do.
 It's not totally without explanation, and I figured you might wanna know about it. Not a whole lot more to say tho. Neat tool.
 
 ## Lighting
+
 - [Table of Contents](#table-of-contents)
 - Reference: Hell of our own creation
 
 I wanted to take this chance to briefly explain the essentials of how our lighting system works.
 Essentially, each tile has a lighting [overlay](#overlays) (technically an [underlay](https://www.byond.com/docs/ref/#/atom/var/underlays)
- which is just overlays but drawn under).
+which is just overlays but drawn under).
 Anyway, each underlay is a color gradient, with red green and blue and alpha in each corner.
 Every "corner" (we call them lighting corners) on the map impacts the 4 colors that touch it.
 This is done with color matrixes. This allows us to apply color and lighting in a smooth way, while only needing 1 overlay per tile.
@@ -736,6 +762,7 @@ But it covers the core idea, the rest should be derivable, and you're more quali
 and forget to update this file.
 
 ## Animate()
+
 - [Table of Contents](#table-of-contents)
 - [Reference Entry](https://www.byond.com/docs/ref/#/proc/animate)
 
@@ -750,6 +777,7 @@ parallel. It's got a lot of nuance to it, but it's real useful. Works on filters
 Lets you give radiation glow a warm pulse, that sort of thing.
 
 ## GAGS
+
 - [Table of Contents](#table-of-contents)
 - Reference: Hell of our own creation
 
