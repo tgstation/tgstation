@@ -1,0 +1,5 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Caged mechs cannot accept silicon pilots. AI uploaded pilots, AI control beacons, MMIs or positronics. Malfunctioning AIs can still dominate these mechs."
+  - code_imp: "Allows for a higher degree of granularity for what mechs can and cannot accept by including additoinal mecha flags to block beacon type installations, pilot uploads and so on."
