@@ -15,6 +15,8 @@
 /// Used for HUD objects
 #define APPEARANCE_UI (RESET_COLOR|RESET_TRANSFORM|NO_CLIENT_COLOR|PIXEL_SCALE)
 
+#define DEFAULT_VIEWPORT_SIZE "19x15"
+
 /*
 	These defines specificy screen locations.  For more information, see the byond documentation on the screen_loc var.
 

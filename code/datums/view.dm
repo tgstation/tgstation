@@ -139,4 +139,4 @@
 	setTo(radius)
 
 /proc/getScreenSize()
-	return CONFIG_GET(string/default_view)
+	return DEFAULT_VIEWPORT_SIZE
