@@ -37,7 +37,7 @@
 	if(ispath(cell))
 		cell = new cell(src)
 	SSair.start_processing_machine(src)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	register_context()
 
 /obj/machinery/electrolyzer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -95,21 +95,21 @@
 
 	if((!cell || cell.charge <= 0) && !anchored)
 		on = FALSE
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return PROCESS_KILL
 
 	var/turf/our_turf = loc
 	if(!istype(our_turf))
 		if(mode != ELECTROLYZER_MODE_STANDBY)
 			mode = ELECTROLYZER_MODE_STANDBY
-			update_appearance()
+			update_appearance(UPDATE_ICON)
 		return
 
 	var/new_mode = on ? ELECTROLYZER_MODE_WORKING : ELECTROLYZER_MODE_STANDBY //change the mode to working if the machine is on
 
 	if(mode != new_mode) //check if the mode is set correctly
 		mode = new_mode
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 
 	if(mode == ELECTROLYZER_MODE_STANDBY)
 		return
@@ -149,7 +149,7 @@
 	tool.play_tool_sound(src, 50)
 	toggle_panel_open()
 	balloon_alert(user, "[panel_open ? "opened" : "closed"] panel")
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/machinery/electrolyzer/wrench_act(mob/living/user, obj/item/tool)
@@ -192,7 +192,7 @@
 		return
 	on = !on
 	mode = ELECTROLYZER_MODE_STANDBY
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	if(on)
 		SSair.start_processing_machine(src)

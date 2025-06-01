@@ -500,13 +500,13 @@
 		)
 	return TRUE
 
-
 /obj/machinery/light/proc/flicker(amount = rand(10, 20))
 	set waitfor = FALSE
 	if(flickering)
 		return
 	flickering = TRUE
 	if(on && status == LIGHT_OK)
+		. = TRUE //did we actually flicker? Send this now because we expect immediate response, before sleeping.
 		for(var/i in 1 to amount)
 			if(status != LIGHT_OK || !has_power())
 				break
@@ -518,7 +518,6 @@
 		else
 			on = FALSE
 		update(FALSE)
-		. = TRUE //did we actually flicker?
 	flickering = FALSE
 
 // ai attack - make lights flicker, because why not
