@@ -60,17 +60,11 @@
 
 /obj/item/clothing/shoes/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
 	. = ..()
-	if(isinhands)
+	if (isinhands)
 		return
-	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
-		if(clothing_flags & LARGE_WORN_ICON)
-			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/64x64.dmi', "shoeblood_large")
-			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
-			. += blood_overlay
-		else
-			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "shoeblood")
-			blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
-			. += blood_overlay
+	var/blood_overlay = get_blood_overlay("shoe")
+	if (blood_overlay)
+		. += blood_overlay
 
 /obj/item/clothing/shoes/examine(mob/user)
 	. = ..()

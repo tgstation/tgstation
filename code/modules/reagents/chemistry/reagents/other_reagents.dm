@@ -1,6 +1,6 @@
 /datum/reagent/blood
-	data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
 	name = "Blood"
+	description  = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
 	color = "#C80000" // rgb: 200, 0, 0
 	metabolization_rate = 12.5 * REAGENTS_METABOLISM //fast rate so it disappears fast.
 	taste_description = "iron"
@@ -18,151 +18,24 @@
 	name = "glass of tomato juice"
 	desc = "Are you sure this is tomato juice?"
 
-	// FEED ME
+// FEED ME
 /datum/reagent/blood/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
 	mytray.adjust_pestlevel(rand(2, 3))
 
-/datum/reagent/blood/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
-	. = ..()
-	if(data && data["viruses"])
-		for(var/thing in data["viruses"])
-			var/datum/disease/strain = thing
-
-			if((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
-				continue
-
-			if(methods & INGEST)
-				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_STOMACH))
-					continue
-
-				exposed_mob.ForceContractDisease(strain)
-			else if(methods & (INJECT|PATCH))
-				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_HEART))
-					continue
-
-				exposed_mob.ForceContractDisease(strain)
-			else if((methods & (VAPOR|INHALE)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-				if(!strain.has_required_infectious_organ(exposed_mob, ORGAN_SLOT_LUNGS))
-					continue
-
-				exposed_mob.ContactContractDisease(strain)
-			else if((methods & TOUCH) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-				exposed_mob.ContactContractDisease(strain)
-
-	if(data && data["resistances"])
-		if(methods & (INGEST|INJECT|INHALE)) //have to inject, inhale or ingest it. no curefoam/cheap curesprays
-			for(var/stuff in exposed_mob.diseases)
-				var/datum/disease/infection = stuff
-				if(infection.GetDiseaseID() in data["resistances"])
-					if(!infection.bypasses_immunity)
-						infection.cure(add_resistance = FALSE)
-
-	if(iscarbon(exposed_mob))
-		var/mob/living/carbon/exposed_carbon = exposed_mob
-		var/datum/blood_type/carbon_blood_type = exposed_carbon.dna.blood_type
-		if(carbon_blood_type.reagent_type == type && ((methods & INJECT) || ((methods & INGEST) && HAS_TRAIT(exposed_carbon, TRAIT_DRINKS_BLOOD))))
-			var/datum/blood_type/recipient_blood_type = exposed_carbon.dna.blood_type
-			var/datum/blood_type/donor_blood_type = data["blood_type"]
-			if(!(donor_blood_type.type_key() in recipient_blood_type.compatible_types))
-				exposed_carbon.reagents.add_reagent(/datum/reagent/toxin, reac_volume * 0.5)
-			else
-				exposed_carbon.blood_volume = min(exposed_carbon.blood_volume + round(reac_volume, 0.1), BLOOD_VOLUME_MAXIMUM)
-
-			exposed_carbon.reagents.remove_reagent(type, reac_volume) // Because we don't want blood to just lie around in the patient's blood, makes no sense.
-
-		// covers them and their worn equipment in blood
-		if((methods & (TOUCH|VAPOR)) && reac_volume > 3)
-			if(data["blood_DNA"] && data["blood_type"])
-				exposed_carbon.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
-			else
-				exposed_carbon.add_blood_DNA(list("Non-human DNA" = random_human_blood_type()))
-
 /datum/reagent/blood/on_new(list/data)
 	. = ..()
-	if(!istype(data))
+	// If we were artificially created without blood data, we still want to have the blood_reagent element for exposure effects
+	if(!istype(data) || !data["blood_type"])
+		AddElement(/datum/element/blood_reagent, null, get_blood_type(BLOOD_TYPE_UNIVERSAL))
 		return
-	SetViruses(src, data)
+
 	var/datum/blood_type/blood_type = data["blood_type"]
-	if(!blood_type)
+	if(!istype(blood_type))
 		return
+
 	var/blood_color = blood_type.get_color()
-	if(blood_color != BLOOD_COLOR_RED) // If the blood is default red, just use the darker red color for the reagent.
-		color = blood_color
-
-/datum/reagent/blood/on_merge(list/mix_data)
-	if(data && mix_data)
-		if(data["blood_DNA"] != mix_data["blood_DNA"])
-			data["cloneable"] = 0 //On mix, consider the genetic sampling unviable for pod cloning if the DNA sample doesn't match.
-		if(data["viruses"] || mix_data["viruses"])
-
-			var/list/mix1 = data["viruses"]
-			var/list/mix2 = mix_data["viruses"]
-
-			// Stop issues with the list changing during mixing.
-			var/list/to_mix = list()
-
-			for(var/datum/disease/advance/AD in mix1)
-				to_mix += AD
-			for(var/datum/disease/advance/AD in mix2)
-				to_mix += AD
-
-			var/datum/disease/advance/AD = Advance_Mix(to_mix)
-			if(AD)
-				var/list/preserve = list(AD)
-				for(var/D in data["viruses"])
-					if(!istype(D, /datum/disease/advance))
-						preserve += D
-				data["viruses"] = preserve
-	return 1
-
-/datum/reagent/blood/proc/get_diseases()
-	. = list()
-	if(data && data["viruses"])
-		for(var/thing in data["viruses"])
-			var/datum/disease/D = thing
-			. += D
-
-/datum/reagent/blood/expose_turf(turf/exposed_turf, reac_volume)//splash the blood all over the place
-	. = ..()
-	if(!istype(exposed_turf))
-		return
-	if(reac_volume < 3)
-		return
-
-	var/obj/effect/decal/cleanable/blood/bloodsplatter = locate() in exposed_turf //find some blood here
-	if(!bloodsplatter)
-		bloodsplatter = new(exposed_turf, data["viruses"])
-	if(LAZYLEN(data["viruses"]))
-		var/list/viruses_to_add = list()
-		for(var/datum/disease/virus in data["viruses"])
-			if(virus.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
-				viruses_to_add += virus
-		if(LAZYLEN(viruses_to_add))
-			bloodsplatter.AddComponent(/datum/component/infective, viruses_to_add)
-	if(data["blood_DNA"])
-		bloodsplatter.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
-
-/datum/reagent/blood/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
-	. = ..()
-	if(!istype(exposed_obj))
-		return
-	if(reac_volume < 3)
-		return
-
-	if(!(methods & (VAPOR|TOUCH)))
-		return
-
-	if(LAZYLEN(data["viruses"]))
-		var/list/viruses_to_add = list()
-		for(var/datum/disease/virus in data["viruses"])
-			if(virus.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
-				viruses_to_add += virus
-		if(length(viruses_to_add))
-			exposed_obj.AddComponent(/datum/component/infective, viruses_to_add)
-	if(data["blood_DNA"] && data["blood_type"])
-		exposed_obj.add_blood_DNA(list(data["blood_DNA"] = data["blood_type"]))
-	else
-		exposed_obj.add_blood_DNA(list("Non-human DNA" = random_human_blood_type()))
+	if(blood_color == BLOOD_COLOR_RED) // If the blood is default red, just use the darker red color for the reagent.
+		color = initial(color)
 
 /datum/reagent/blood/get_taste_description(mob/living/taster)
 	if(isnull(taster))
@@ -212,9 +85,10 @@
 			infection.cure(add_resistance = TRUE)
 	LAZYOR(exposed_mob.disease_resistances, data)
 
-/datum/reagent/vaccine/on_merge(list/data)
-	if(istype(data))
-		src.data |= data.Copy()
+/datum/reagent/vaccine/on_merge(list/mix_data, amount)
+	. = ..()
+	if(mix_data)
+		data |= mix_data
 
 /datum/reagent/vaccine/fungal_tb
 	name = "Vaccine (Fungal Tuberculosis)"
@@ -1928,7 +1802,7 @@
 	burning_volume = 0.05 //but has a lot of hydrocarbons
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	addiction_types = null
-	default_container = /obj/effect/decal/cleanable/oil
+	default_container = /obj/effect/decal/cleanable/blood/oil
 
 /datum/reagent/stable_plasma
 	name = "Stable Plasma"

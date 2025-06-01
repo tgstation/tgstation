@@ -50,7 +50,7 @@
 	filth_spawn_types = list(
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/insectguts,
-		/obj/effect/decal/cleanable/oil,
+		/obj/effect/decal/cleanable/blood/oil,
 	)
 
 /datum/round_event/vent_clog/start()
@@ -219,7 +219,7 @@
 		/obj/effect/decal/cleanable/blood,
 		/obj/effect/decal/cleanable/insectguts,
 		/obj/effect/decal/cleanable/fuel_pool,
-		/obj/effect/decal/cleanable/oil,
+		/obj/effect/decal/cleanable/blood/oil,
 	)
 
 /datum/round_event/vent_clog/major/get_mob()
@@ -282,7 +282,7 @@
 	spawn_delay = rand(6, 25)
 	maximum_spawns = rand(MOB_SPAWN_MINIMUM, 10)
 	filth_spawn_types = list(
-		/obj/effect/decal/cleanable/xenoblood,
+		/obj/effect/decal/cleanable/blood/xeno,
 		/obj/effect/decal/cleanable/fuel_pool,
 		/obj/effect/decal/cleanable/greenglow,
 		/obj/effect/decal/cleanable/vomit,
