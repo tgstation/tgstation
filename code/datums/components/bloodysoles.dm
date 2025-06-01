@@ -259,7 +259,9 @@
 		return NONE
 
 	total_bloodiness = 0
-	update_icon()
+	var/obj/item/clothing/shoes/parent_shoes = parent
+	if(!istype(parent_shoes)) // if we are wearing shoes, wash() will already be calling update_worn_shoes() so we don't have to do it twice
+		update_icon()
 	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /**
