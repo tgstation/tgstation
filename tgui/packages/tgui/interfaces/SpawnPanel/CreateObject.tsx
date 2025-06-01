@@ -114,6 +114,7 @@ export function CreateObject(props: CreateObjectProps) {
       const storedHideMapping = await storage.get('spawnpanel-hideMapping');
       const storedShowIcons = await storage.get('spawnpanel-showIcons');
       const storedShowPreview = await storage.get('spawnpanel-showPreview');
+      const storedSelectedObj = await storage.get('spawnpanel-selectedObj');
 
       if (storedSearchText) setQuery(storedSearchText);
       if (storedSearchBy !== undefined) setSearchBy(storedSearchBy);
@@ -121,6 +122,15 @@ export function CreateObject(props: CreateObjectProps) {
       if (storedHideMapping !== undefined) setHideMapping(storedHideMapping);
       if (storedShowIcons !== undefined) setshowIcons(storedShowIcons);
       if (storedShowPreview !== undefined) setshowPreview(storedShowPreview);
+      if (storedSelectedObj) {
+        if (allObjects[storedSelectedObj]) {
+          setSelectedObj(storedSelectedObj);
+          props.onIconSettingsChange?.({
+            icon: allObjects[storedSelectedObj].icon,
+            iconState: allObjects[storedSelectedObj].icon_state,
+          });
+        }
+      }
     };
 
     loadStoredValues();
@@ -129,6 +139,20 @@ export function CreateObject(props: CreateObjectProps) {
   useEffect(() => {
     setSelectedObj(null);
   }, [currentType]);
+
+  useEffect(() => {
+    if (selectedObj !== null) {
+      storage.set('spawnpanel-selectedObj', selectedObj);
+    }
+  }, [selectedObj]);
+
+  useEffect(() => {
+    if (data.selected_object) {
+      setSelectedObj(data.selected_object);
+    } else if (data.copied_type) {
+      setSelectedObj(data.copied_type);
+    }
+  }, [data.selected_object, data.copied_type]);
 
   const sendUpdatedSettings = (
     changedSettings: Partial<Record<string, unknown>> = {},

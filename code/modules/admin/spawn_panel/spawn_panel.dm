@@ -62,8 +62,9 @@ ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CAT
 			if(new_icon)
 				custom_icon = new_icon
 				available_icon_states = icon_states(custom_icon)
-				return TRUE
+			custom_icon_state = available_icon_states[1]
 			SStgui.update_uis(src)
+			return TRUE
 
 		if("reset-icon")
 			custom_icon = null
