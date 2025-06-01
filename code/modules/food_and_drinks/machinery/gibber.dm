@@ -56,7 +56,7 @@
 	if(dirty)
 		var/mutable_appearance/blood_overlay = mutable_appearance(icon, "grinder_bloody", appearance_flags = RESET_COLOR|KEEP_APART)
 		if(blood_dna_info)
-			blood_overlay.color = get_blood_dna_color(blood_dna_info)
+			blood_overlay.color = get_color_from_blood_list(blood_dna_info)
 		else
 			blood_overlay.color = BLOOD_COLOR_RED
 		. += blood_overlay
@@ -134,7 +134,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/gibber/attackby(obj/item/P, mob/user, list/modifiers)
+/obj/machinery/gibber/attackby(obj/item/P, mob/user, list/modifiers, list/attack_modifiers)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", P))
 		return
 
@@ -284,9 +284,7 @@
 	for (var/i in 1 to meat_produced**2) //2 slabs: 4 giblets, 3 slabs: 9, etc.
 		var/turf/gibturf = pick(nearby_turfs)
 		if (!gibturf.density && (src in view(gibturf)))
-			var/obj/effect/decal/cleanable/new_gibs = new gibtype(gibturf, round(1 + i / meat_produced), diseases)
-			if(blood_dna_info)
-				new_gibs.add_blood_DNA(blood_dna_info)
+			new gibtype(gibturf, diseases, blood_dna_info)
 
 	pixel_x = base_pixel_x //return to its spot after shaking
 	operating = FALSE

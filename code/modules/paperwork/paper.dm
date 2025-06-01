@@ -414,9 +414,9 @@
 		user.put_in_hands(new_plane)
 	return new_plane
 
-/obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
-	// Enable picking paper up by clicking on it with the clipboard or folder
-	if(istype(attacking_item, /obj/item/clipboard) || istype(attacking_item, /obj/item/folder) || istype(attacking_item, /obj/item/paper_bin))
+/obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	// Enable picking paper up by clicking on it with the clipboard or paper bin
+	if(istype(attacking_item, /obj/item/clipboard) || istype(attacking_item, /obj/item/paper_bin))
 		attacking_item.attackby(src, user)
 		return
 

@@ -62,7 +62,7 @@
 	RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(start_chemming))
 	return PROCESS_KILL
 
-/obj/structure/geyser/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/structure/geyser/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(item, /obj/item/mining_scanner) && !istype(item, /obj/item/t_scanner/adv_mining_scanner))
 		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
 		return ..() //this runs the plunger code
@@ -143,7 +143,7 @@
 	///What layer we set it to
 	var/target_layer = DUCT_LAYER_DEFAULT
 
-/obj/item/plunger/attack_atom(obj/O, mob/living/user, list/modifiers)
+/obj/item/plunger/attack_atom(obj/O, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(layer_mode)
 		SEND_SIGNAL(O, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, O, target_layer)
 		return ..()
@@ -193,7 +193,3 @@
 	layer_mode_sprite = "reinforced_plunger_layer"
 
 	custom_premium_price = PAYCHECK_CREW * 8
-
-/obj/item/plunger/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)

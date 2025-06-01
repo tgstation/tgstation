@@ -336,7 +336,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	user.visible_message(span_suicide("[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer."))
 	return (TOXLOSS|OXYLOSS)
 
-/obj/item/cigarette/attackby(obj/item/W, mob/user, list/modifiers)
+/obj/item/cigarette/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(lit)
 		return ..()
 
@@ -897,7 +897,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(cig_smoke)
 
-/obj/item/cigarette/pipe/attackby(obj/item/thing, mob/user, list/modifiers)
+/obj/item/cigarette/pipe/attackby(obj/item/thing, mob/user, list/modifiers, list/attack_modifiers)
 	if(!istype(thing, /obj/item/food/grown))
 		return ..()
 
@@ -960,7 +960,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/vape
 	name = "\improper E-Cigarette"
 	desc = "A classy and highly sophisticated electronic cigarette, for classy and dignified gentlemen. A warning label reads \"Warning: Do not fill with flammable materials.\""//<<< i'd vape to that.
-	icon_state = "vape"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/vape"
+	post_init_icon_state = "vape"
 	worn_icon_state = "vape_worn"
 	greyscale_config = /datum/greyscale_config/vape
 	greyscale_config_worn = /datum/greyscale_config/vape/worn
@@ -1008,7 +1010,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		screw = FALSE
 		to_chat(user, span_notice("You close the cap on [src]."))
 		reagents.flags &= ~(OPENCONTAINER)
-		icon_state = initial(icon_state)
+		icon_state = initial(post_init_icon_state) || initial(icon_state)
 		set_greyscale(new_config = initial(greyscale_config))
 
 /obj/item/vape/multitool_act(mob/living/user, obj/item/tool)
@@ -1138,33 +1140,41 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	handle_reagents()
 
 /obj/item/vape/red
+	icon_state = "/obj/item/vape/red"
 	greyscale_colors = "#A02525"
 	flags_1 = NONE
 
 /obj/item/vape/blue
+	icon_state = "/obj/item/vape/blue"
 	greyscale_colors = "#294A98"
 	flags_1 = NONE
 
 /obj/item/vape/purple
+	icon_state = "/obj/item/vape/purple"
 	greyscale_colors = "#9900CC"
 	flags_1 = NONE
 
 /obj/item/vape/green
+	icon_state = "/obj/item/vape/green"
 	greyscale_colors = "#3D9829"
 	flags_1 = NONE
 
 /obj/item/vape/yellow
+	icon_state = "/obj/item/vape/yellow"
 	greyscale_colors = "#DAC20E"
 	flags_1 = NONE
 
 /obj/item/vape/orange
+	icon_state = "/obj/item/vape/orange"
 	greyscale_colors = "#da930e"
 	flags_1 = NONE
 
 /obj/item/vape/black
+	icon_state = "/obj/item/vape/black"
 	greyscale_colors = "#2e2e2e"
 	flags_1 = NONE
 
 /obj/item/vape/white
+	icon_state = "/obj/item/vape/white"
 	greyscale_colors = "#DCDCDC"
 	flags_1 = NONE

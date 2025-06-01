@@ -45,7 +45,6 @@
  */
 /mob/eye/camera/proc/setLoc(destination, force_update = FALSE)
 	SHOULD_NOT_SLEEP(TRUE)
-	SHOULD_CALL_PARENT(TRUE)
 
 	destination = get_turf(destination)
 	if(!force_update && (destination == get_turf(src)))

@@ -610,12 +610,28 @@
 
 /obj/item/organ/tongue/cat
 	name = "felinid tongue"
-	desc = "A fleshy muscle mostly used for meowing."
+	desc = "A fleshy muscle mostly used for meowing. Or biting."
 	say_mod = "meows"
 	liked_foodtypes = SEAFOOD | ORANGES | BUGS | GORE
 	disliked_foodtypes = GROSS | CLOTH | RAW
-	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER)
+	organ_traits = list(TRAIT_WOUND_LICKER, TRAIT_FISH_EATER, TRAIT_CARPOTOXIN_IMMUNE)
 	languages_native = list(/datum/language/nekomimetic)
+
+/obj/item/organ/tongue/cat/on_bodypart_insert(obj/item/bodypart/head)
+	. = ..()
+	head.unarmed_damage_low += 5
+	head.unarmed_damage_high += 10
+	head.unarmed_effectiveness += 10
+	head.unarmed_attack_effect = ATTACK_EFFECT_BITE
+	head.unarmed_sharpness = SHARP_EDGED
+
+/obj/item/organ/tongue/cat/on_bodypart_remove(obj/item/bodypart/head)
+	. = ..()
+	head.unarmed_damage_low -= 5
+	head.unarmed_damage_high -= 10
+	head.unarmed_effectiveness -= 10
+	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
+	head.unarmed_sharpness = initial(head.unarmed_sharpness)
 
 /obj/item/organ/tongue/jelly
 	name = "jelly tongue"

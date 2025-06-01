@@ -8,7 +8,7 @@
 	energy_coeff = 1
 	synchronizer_coeff = 1
 
-/datum/mutation/human/void/modify()
+/datum/mutation/human/void/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/void/cursed/to_modify = .
 	if(!istype(to_modify)) // null or invalid

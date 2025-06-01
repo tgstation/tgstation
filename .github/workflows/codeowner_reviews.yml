@@ -7,7 +7,6 @@ on:
 
 jobs:
   assign-users:
-
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -26,5 +25,5 @@ jobs:
         if: steps.CodeOwnersParser.outputs.owners != ''
         uses: tgstation/RequestReviewFromUser@v1
         with:
-          separator: ' '
+          separator: " "
           users: ${{ steps.CodeOwnersParser.outputs.owners }}

@@ -269,7 +269,7 @@
 
 	return ..()
 
-/mob/living/simple_animal/bot/secbot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
+/mob/living/simple_animal/bot/secbot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	..()
 	if(!(bot_mode_flags & BOT_MODE_ON)) // Bots won't remember if you hit them while they're off.
 		return
@@ -550,7 +550,7 @@
 			new /obj/item/assembly/prox_sensor(Tsec)
 			drop_part(baton_type, Tsec)
 
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /mob/living/simple_animal/bot/secbot/attack_alien(mob/living/carbon/alien/user, list/modifiers)

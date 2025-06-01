@@ -202,7 +202,7 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/space_heater/attackby(obj/item/I, mob/user, list/modifiers)
+/obj/machinery/space_heater/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
@@ -315,8 +315,8 @@
 /obj/machinery/space_heater/improvised_chem_heater
 	icon = 'icons/obj/medical/chemical.dmi'
 	icon_state = "sheater-off"
-	name = "Improvised chem heater"
-	desc = "A space heater hacked to reroute heating to a water bath on the top."
+	name = "improvised chem heater"
+	desc = "A space heater fashioned to reroute heating to a water bath on top."
 	panel_open = TRUE //This is always open - since we've injected wires in the panel
 	//We inherit the cell from the heater prior
 	cell = null
@@ -402,7 +402,7 @@
 			. = TRUE
 
 ///Slightly modified to ignore the open_hatch - it's always open, we hacked it.
-/obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/machinery/space_heater/improvised_chem_heater/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	add_fingerprint(user)
 	if(default_deconstruction_crowbar(item))
 		return

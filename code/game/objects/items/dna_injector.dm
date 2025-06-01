@@ -131,7 +131,7 @@
 			if(!target.dna.previous["UE"])
 				target.dna.previous["UE"] = target.dna.unique_enzymes
 			if(!target.dna.previous["blood_type"])
-				target.dna.previous["blood_type"] = target.dna.blood_type
+				target.dna.previous["blood_type"] = target.get_bloodtype()
 			target.real_name = fields["name"]
 			target.dna.unique_enzymes = fields["UE"]
 			target.name = target.real_name

@@ -24,6 +24,9 @@
 	unsuitable_heat_damage = 0
 	ai_controller = /datum/ai_controller/basic_controller/dark_wizard
 
+/mob/living/basic/dark_wizard/get_save_vars()
+	return ..() - NAMEOF(src, icon_state) // icon_state is applied via apply_dynamic_human_appearance()
+
 /mob/living/basic/dark_wizard/Initialize(mapload)
 	. = ..()
 

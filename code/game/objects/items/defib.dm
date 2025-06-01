@@ -421,14 +421,14 @@
 	return ..()
 
 /obj/item/shockpaddles/dropped(mob/user)
-	. = ..()
+	if(!req_defib)
+		return ..()
 	UnregisterSignal(defib, COMSIG_MOVABLE_MOVED)
 	if(user)
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	if(req_defib)
-		if(user)
-			to_chat(user, span_notice("The paddles snap back into the main unit."))
-		snap_back()
+		to_chat(user, span_notice("The paddles snap back into the main unit."))
+	snap_back()
+	return ..()
 
 /obj/item/shockpaddles/proc/snap_back()
 	if(!defib)
@@ -437,7 +437,7 @@
 	forceMove(defib)
 	defib.update_power()
 
-/obj/item/shockpaddles/attack(mob/M, mob/living/user, list/modifiers)
+/obj/item/shockpaddles/attack(mob/M, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(busy)
 		return
 	defib?.update_power()

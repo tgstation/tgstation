@@ -475,7 +475,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/tcommsat_oldaisat)
 "bT" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating/airless,
 /area/ruin/space/tcommsat_oldaisat)
 "bU" = (

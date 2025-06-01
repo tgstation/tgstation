@@ -559,22 +559,6 @@
 	dir = 8
 	},
 /area/shuttle/escape)
-"hB" = (
-/obj/structure/table/wood/shuttle_bar{
-	boot_dir = 4
-	},
-/obj/item/reagent_containers/cup/rag{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/turf/open/floor/wood/large,
-/area/shuttle/escape)
 "hG" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -959,6 +943,22 @@
 	},
 /obj/effect/turf_decal/stripes/white/line,
 /turf/open/floor/iron/white,
+/area/shuttle/escape)
+"mr" = (
+/obj/structure/table/wood/shuttle_bar{
+	boot_dir = 4
+	},
+/obj/item/rag{
+	pixel_x = -3;
+	pixel_y = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/large,
 /area/shuttle/escape)
 "ms" = (
 /obj/structure/table/reinforced,
@@ -3196,14 +3196,6 @@
 /obj/effect/turf_decal/tile/neutral/half,
 /turf/open/floor/iron/edge,
 /area/shuttle/escape)
-"Ra" = (
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor5"
-	},
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "Rz" = (
 /obj/machinery/door/airlock/shuttle,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
@@ -3391,6 +3383,14 @@
 /turf/open/floor/iron/dark/smooth_corner{
 	dir = 1
 	},
+/area/shuttle/escape)
+"Uf" = (
+/obj/structure/extinguisher_cabinet/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/oil{
+	icon_state = "floor5"
+	},
+/turf/open/floor/iron,
 /area/shuttle/escape)
 "Um" = (
 /obj/structure/sink/directional/west,
@@ -3952,7 +3952,7 @@ qt
 qt
 QQ
 jt
-Ra
+Uf
 vb
 Td
 zP
@@ -3966,7 +3966,7 @@ kd
 jt
 nb
 BD
-hB
+mr
 XP
 Jj
 aD

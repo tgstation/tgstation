@@ -491,7 +491,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		icon_state = base_icon_state
 	return ..()
 
-/obj/item/fish/attackby(obj/item/item, mob/living/user, list/modifiers)
+/obj/item/fish/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!istype(item, /obj/item/reagent_containers/cup/fish_feed))
 		return ..()
 	if(!item.reagents.total_volume)

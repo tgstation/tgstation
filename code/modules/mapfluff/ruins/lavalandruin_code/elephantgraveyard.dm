@@ -105,7 +105,7 @@
 	reagents.expose(user, TOUCH, 20) //Covers target in 20u of oil.
 	to_chat(user, span_notice("You touch the pool of oil, only to get oil all over yourself. It would be wise to wash this off with water."))
 
-/obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, list/modifiers)
+/obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, list/modifiers, list/attack_modifiers)
 	flick("puddle-oil-splash",src)
 	if(O.tool_behaviour == TOOL_SHOVEL) //attempt to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
@@ -128,7 +128,7 @@
 		return ..()
 
 /obj/structure/sink/oil_well/drop_materials()
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 
 //***Grave mounds.
 /// has no items inside unless you use the filled subtype

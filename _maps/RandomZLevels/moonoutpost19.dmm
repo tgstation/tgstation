@@ -109,6 +109,13 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/arrivals)
+"aI" = (
+/obj/effect/decal/cleanable/blood/xeno{
+	desc = "It's green and acidic. Nothing good could come of this..."
+	},
+/obj/structure/fluff/meteor/large,
+/turf/open/misc/asteroid/basalt,
+/area/awaymission/moonoutpost19/main)
 "aJ" = (
 /obj/machinery/door/poddoor{
 	id = "AwayRD";
@@ -417,12 +424,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/mines)
-"cT" = (
-/obj/structure/cable,
-/obj/effect/decal/cleanable/xenoblood,
-/obj/effect/turf_decal/siding/thinplating_new/light,
-/turf/open/floor/iron,
-/area/awaymission/moonoutpost19/arrivals)
 "dd" = (
 /obj/structure/fluff/minepost,
 /obj/item/stack/sheet/mineral/plasma/thirty,
@@ -1066,14 +1067,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/mines)
-"hm" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs,
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/turf/open/floor/iron,
-/area/awaymission/moonoutpost19/arrivals)
 "hq" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -1663,12 +1656,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
-"lp" = (
-/obj/effect/decal/cleanable/xenoblood/xsplatter,
-/turf/open/misc/asteroid/moon{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "lq" = (
 /obj/structure/alien/weeds/node,
 /obj/effect/decal/cleanable/blood,
@@ -2160,8 +2147,8 @@
 /obj/machinery/door/airlock/maintenance,
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/arrivals)
-"od" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,
+"oa" = (
+/obj/effect/decal/cleanable/blood/gibs/xeno/limb,
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
@@ -2523,6 +2510,20 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
+"qk" = (
+/obj/effect/decal/cleanable/blood/xeno,
+/obj/effect/decal/remains/xeno{
+	desc = "They look like the remains of something... alien. The front of skull appears to have been completely obliterated."
+	},
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/awaymission/moonoutpost19/arrivals)
 "qm" = (
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/arrivals)
@@ -2812,6 +2813,11 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
+"rL" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/awaymission/moonoutpost19/research)
 "rM" = (
 /obj/structure/closet/secure_closet/freezer{
 	locked = 0;
@@ -2986,6 +2992,11 @@
 "sO" = (
 /obj/machinery/light/small/directional/west,
 /obj/effect/turf_decal/lunar_sand,
+/turf/open/floor/plating,
+/area/awaymission/moonoutpost19/arrivals)
+"sQ" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/duct,
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/arrivals)
 "sU" = (
@@ -3533,6 +3544,24 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/mines)
+"wC" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/item/storage/medkit/regular{
+	empty = 1;
+	name = "First-Aid (empty)"
+	},
+/obj/item/healthanalyzer{
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/obj/item/assembly/prox_sensor{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/bodypart/arm/left/robot,
+/turf/open/floor/iron/white,
+/area/awaymission/moonoutpost19/research)
 "wD" = (
 /obj/machinery/light/small/broken/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -3729,6 +3758,14 @@
 /area/awaymission/moonoutpost19/arrivals)
 "ym" = (
 /turf/open/floor/iron/freezer,
+/area/awaymission/moonoutpost19/arrivals)
+"yo" = (
+/obj/effect/decal/cleanable/blood/gibs/xeno,
+/obj/effect/turf_decal/tile/bar,
+/obj/effect/turf_decal/tile/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
 /area/awaymission/moonoutpost19/arrivals)
 "yp" = (
 /obj/structure/chair,
@@ -3979,6 +4016,12 @@
 /obj/structure/grille,
 /obj/machinery/duct,
 /turf/open/floor/plating,
+/area/awaymission/moonoutpost19/arrivals)
+"zV" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/xeno,
+/obj/effect/turf_decal/siding/thinplating_new/light,
+/turf/open/floor/iron,
 /area/awaymission/moonoutpost19/arrivals)
 "zY" = (
 /obj/structure/alien/resin/wall,
@@ -4391,6 +4434,18 @@
 /obj/item/clothing/under/shorts/black,
 /turf/open/floor/plastic,
 /area/awaymission/moonoutpost19/arrivals/shed)
+"CF" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/item/rag{
+	pixel_y = 5
+	},
+/obj/machinery/door/poddoor/shutters{
+	id = "awaykitchen";
+	name = "Serving Hatch"
+	},
+/turf/open/floor/carpet,
+/area/awaymission/moonoutpost19/arrivals)
 "CK" = (
 /obj/structure/toilet{
 	dir = 4
@@ -4723,24 +4778,6 @@
 	temperature = 251
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"Ft" = (
-/obj/effect/decal/cleanable/robot_debris,
-/obj/effect/decal/cleanable/oil,
-/obj/item/storage/medkit/regular{
-	empty = 1;
-	name = "First-Aid (empty)"
-	},
-/obj/item/healthanalyzer{
-	pixel_x = 6;
-	pixel_y = -5
-	},
-/obj/item/assembly/prox_sensor{
-	pixel_x = -5;
-	pixel_y = -2
-	},
-/obj/item/bodypart/arm/left/robot,
-/turf/open/floor/iron/white,
-/area/awaymission/moonoutpost19/research)
 "Fw" = (
 /obj/item/pickaxe{
 	pixel_x = -12;
@@ -4879,18 +4916,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/hive)
-"Gl" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/item/reagent_containers/cup/rag{
-	pixel_y = 5
-	},
-/obj/machinery/door/poddoor/shutters{
-	id = "awaykitchen";
-	name = "Serving Hatch"
-	},
-/turf/open/floor/carpet,
-/area/awaymission/moonoutpost19/arrivals)
 "Gm" = (
 /obj/structure/fluff/meteor,
 /turf/open/misc/asteroid/moon{
@@ -5196,6 +5221,12 @@
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/carpet,
 /area/awaymission/moonoutpost19/arrivals)
+"Il" = (
+/obj/effect/decal/cleanable/blood/gibs/xeno/larva/body,
+/turf/open/misc/asteroid/moon{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "Im" = (
 /obj/machinery/door/puzzle/keycard{
 	name = "ATV Shed Door";
@@ -5237,6 +5268,26 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/research)
+"Iv" = (
+/obj/effect/decal/cleanable/blood/splatter/xeno,
+/turf/open/misc/asteroid/moon{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
+"IA" = (
+/obj/structure/mecha_wreckage/ripley/mk2{
+	desc = "Remains of the historical mech that first touched down on Moon Outpost 19. Completely irreparable, but perhaps something can be salvaged.";
+	name = "\improper Historical Ripley MK-II wreckage"
+	},
+/obj/effect/decal/cleanable/blood/oil,
+/obj/item/food/grown/moonflower{
+	pixel_x = 7;
+	pixel_y = -18
+	},
+/turf/open/misc/asteroid/moon{
+	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
+	},
+/area/awaymission/moonoutpost19/main)
 "IB" = (
 /obj/structure/chair/pew/right{
 	dir = 8
@@ -5632,20 +5683,6 @@
 /obj/effect/turf_decal/tile/purple,
 /turf/open/floor/iron/white,
 /area/awaymission/moonoutpost19/research)
-"LW" = (
-/obj/effect/decal/cleanable/xenoblood,
-/obj/effect/decal/remains/xeno{
-	desc = "They look like the remains of something... alien. The front of skull appears to have been completely obliterated."
-	},
-/obj/effect/turf_decal/tile/bar,
-/obj/effect/turf_decal/tile/bar{
-	dir = 1
-	},
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/iron,
-/area/awaymission/moonoutpost19/arrivals)
 "LX" = (
 /obj/structure/closet/secure_closet/personal/cabinet{
 	locked = 0;
@@ -5781,10 +5818,6 @@
 /obj/item/clothing/suit/toggle/labcoat,
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/research)
-"Nm" = (
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
 "No" = (
 /obj/item/reagent_containers/cup/bowl,
 /turf/open/misc/asteroid/moon{
@@ -5836,20 +5869,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating,
 /area/awaymission/moonoutpost19/arrivals/shed)
-"ND" = (
-/obj/structure/mecha_wreckage/ripley/mk2{
-	desc = "Remains of the historical mech that first touched down on Moon Outpost 19. Completely irreparable, but perhaps something can be salvaged.";
-	name = "\improper Historical Ripley MK-II wreckage"
-	},
-/obj/effect/decal/cleanable/oil,
-/obj/item/food/grown/moonflower{
-	pixel_x = 7;
-	pixel_y = -18
-	},
-/turf/open/misc/asteroid/moon{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "NF" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/firedoor/closed,
@@ -6212,13 +6231,6 @@
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
-/area/awaymission/moonoutpost19/main)
-"Pu" = (
-/obj/effect/decal/cleanable/xenoblood{
-	desc = "It's green and acidic. Nothing good could come of this..."
-	},
-/obj/structure/fluff/meteor/large,
-/turf/open/misc/asteroid/basalt,
 /area/awaymission/moonoutpost19/main)
 "Px" = (
 /obj/item/stack/ore/gold{
@@ -7173,11 +7185,6 @@
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
 /area/awaymission/moonoutpost19/main)
-"VW" = (
-/obj/effect/decal/cleanable/oil,
-/obj/machinery/duct,
-/turf/open/floor/plating,
-/area/awaymission/moonoutpost19/arrivals)
 "VX" = (
 /obj/item/stack/ore/iron,
 /obj/effect/decal/cleanable/blood/drip,
@@ -7359,6 +7366,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/arrivals)
+"Xh" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/plating,
+/area/awaymission/moonoutpost19/arrivals)
 "Xj" = (
 /obj/structure/table/optable,
 /obj/structure/alien/weeds,
@@ -7379,11 +7390,6 @@
 /obj/effect/turf_decal/tile/purple,
 /obj/structure/cable,
 /turf/open/floor/iron/white,
-/area/awaymission/moonoutpost19/research)
-"Xr" = (
-/obj/effect/decal/cleanable/oil,
-/obj/structure/cable,
-/turf/open/floor/plating,
 /area/awaymission/moonoutpost19/research)
 "Xu" = (
 /obj/effect/turf_decal/stripes/line{
@@ -7432,12 +7438,6 @@
 	temperature = 273.15
 	},
 /area/awaymission/moonoutpost19/arrivals)
-"XN" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
-/turf/open/misc/asteroid/moon{
-	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
-	},
-/area/awaymission/moonoutpost19/main)
 "XO" = (
 /obj/structure/alien/weeds/node,
 /turf/open/misc/asteroid/moon{
@@ -32641,7 +32641,7 @@ op
 op
 JL
 op
-Xr
+rL
 op
 eI
 My
@@ -33148,7 +33148,7 @@ Uy
 eI
 Zp
 op
-Xr
+rL
 op
 op
 JL
@@ -33914,7 +33914,7 @@ eI
 OO
 op
 op
-Xr
+rL
 zr
 eJ
 JL
@@ -34359,11 +34359,11 @@ My
 My
 My
 My
-od
-XN
+Il
+oa
 My
 My
-lp
+Iv
 Io
 yJ
 ae
@@ -34427,7 +34427,7 @@ My
 eI
 op
 op
-Xr
+rL
 op
 op
 as
@@ -37517,7 +37517,7 @@ gI
 KL
 ea
 Ky
-Ft
+wC
 fk
 fP
 kD
@@ -38461,7 +38461,7 @@ My
 My
 My
 My
-ND
+IA
 My
 My
 My
@@ -40297,7 +40297,7 @@ My
 aL
 ZX
 aL
-Pu
+aI
 aL
 wj
 aL
@@ -40352,7 +40352,7 @@ hJ
 hJ
 CZ
 MG
-cT
+zV
 hI
 LX
 fU
@@ -40874,7 +40874,7 @@ je
 Tg
 Tg
 Tg
-VW
+sQ
 qJ
 Gw
 hJ
@@ -41384,7 +41384,7 @@ Yk
 DZ
 MS
 hJ
-Nm
+Xh
 hI
 hJ
 hI
@@ -43180,7 +43180,7 @@ mZ
 eG
 sL
 sL
-hm
+yo
 sL
 sL
 sL
@@ -43437,7 +43437,7 @@ QQ
 xs
 yt
 xs
-LW
+qk
 pY
 xG
 Bb
@@ -43950,7 +43950,7 @@ hJ
 hJ
 Jl
 BD
-Gl
+CF
 BD
 BD
 hJ
