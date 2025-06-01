@@ -163,7 +163,7 @@
 	forced_glass_color = TRUE
 
 /obj/item/clothing/glasses/night/ninja
-	name = "Spider-Clan Night Vision Goggles"
+	name = "Spider Clan Night Vision Goggles"
 	desc = "Advanced night vision goggles designed to protect your eyes from flashes."
 	flash_protect = FLASH_PROTECTION_FLASH
 	forced_glass_color = FALSE
