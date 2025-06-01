@@ -151,26 +151,6 @@
 	fire = 90
 	acid = 50
 
-/obj/machinery/power/apc/get_save_vars()
-	. = ..()
-	if(!auto_name)
-		. -= NAMEOF(src, name)
-	. += NAMEOF(src, opened)
-	. += NAMEOF(src, coverlocked)
-	. += NAMEOF(src, lighting)
-	. += NAMEOF(src, equipment)
-	. += NAMEOF(src, environ)
-
-	. += NAMEOF(src, cell_type)
-	if(cell_type)
-		start_charge = cell.charge / cell.maxcharge // only used in Initialize() so direct edit is fine
-		. += NAMEOF(src, start_charge)
-
-	// TODO save the wire data but need to include states for cute wires, signalers attached to wires, etc.
-	//. += NAMEOF(src, shorted)
-	//. += NAMEOF(src, locked)
-	return .
-
 /obj/machinery/power/apc/Initialize(mapload, ndir)
 	. = ..()
 	//APCs get added to their own processing tasks for the machines subsystem.

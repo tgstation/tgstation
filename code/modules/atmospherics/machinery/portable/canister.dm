@@ -49,12 +49,6 @@
 	fire = 80
 	acid = 50
 
-/obj/machinery/portable_atmospherics/canister/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, valve_open)
-	. += NAMEOF(src, release_pressure)
-	return .
-
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload)
 	. = ..()
 

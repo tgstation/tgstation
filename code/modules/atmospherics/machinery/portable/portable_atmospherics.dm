@@ -44,13 +44,6 @@
 	fire = 60
 	acid = 30
 
-/obj/machinery/portable_atmospherics/get_save_vars()
-	. = ..()
-	var/datum/gas_mixture/gasmix = air_contents
-	initial_gas_mix = gasmix.to_string()
-	. += NAMEOF(src, initial_gas_mix)
-	return .
-
 /obj/machinery/portable_atmospherics/Initialize(mapload)
 	. = ..()
 	if(initial_gas_mix)

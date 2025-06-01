@@ -35,20 +35,25 @@
 
 	. += list(list("materials" = material_list_string))
 
-/obj/machinery/atmospherics/get_save_vars()
-	. = ..()
-	. += NAMEOF(src, piping_layer)
-	. += NAMEOF(src, pipe_color)
-
 /obj/item/pipe/get_save_vars()
 	. = ..()
 	. += NAMEOF(src, piping_layer)
 	. += NAMEOF(src, pipe_color)
 
-/obj/structure/closet/get_save_vars()
+/obj/docking_port/stationary/get_save_vars()
 	. = ..()
-	. += NAMEOF(src, opened)
-	. += NAMEOF(src, contents_initialized)
-	//basically if this closet has never been opened then don't save its contents cause it will spawn its own stuff
-	if(!opened && contents_initialized)
-		. += NAMEOF(src, contents)
+	. += NAMEOF(src, roundstart_template)
+
+/obj/item/stock_parts/power_store/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, charge)
+	. += NAMEOF(src, rigged)
+	return .
+
+/obj/item/photo/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon)
+
+/obj/effect/decal/cleanable/blood/footprints/get_save_vars()
+	. = ..()
+	. -= NAMEOF(src, icon_state)

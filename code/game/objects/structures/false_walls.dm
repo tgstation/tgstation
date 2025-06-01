@@ -26,11 +26,6 @@
 	var/girder_type = /obj/structure/girder/displaced
 	var/opening = FALSE
 
-/obj/structure/falsewall/get_save_vars()
-	. = ..()
-	. -= NAMEOF(src, icon)
-	return .
-
 /obj/structure/falsewall/Initialize(mapload)
 	. = ..()
 	var/obj/item/stack/initialized_mineral = new mineral // Okay this kinda sucks.
