@@ -602,7 +602,7 @@
 /datum/chemical_reaction/monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/water = 1)
 	reaction_flags = REACTION_INSTANT
-	mix_message = span_danger("Expands into a brown mass before shaping itself into a monkey!.")
+	mix_message = span_danger("Expands into a brown mass before shaping itself into a monkey!")
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/mob/living/carbon/M = holder.my_atom
@@ -617,7 +617,7 @@
 /datum/chemical_reaction/angry_monkey
 	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/inverse/bath_salts = 10)
 	reaction_flags = REACTION_INSTANT
-	mix_message = span_danger("Expands into a brown mass before shaping itself into a pissed off monkey!.")
+	mix_message = span_danger("Expands into a brown mass before shaping itself into a pissed off monkey!")
 
 /datum/chemical_reaction/angry_monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	var/mob/living/carbon/M = holder.my_atom

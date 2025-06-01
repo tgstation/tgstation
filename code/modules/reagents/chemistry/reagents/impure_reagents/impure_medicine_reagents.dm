@@ -1025,11 +1025,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/bath_salts/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
+	QDEL_NULL(jungle_arts)
 	if(is_simian(affected_mob))
 		affected_mob.cure_trauma_type(/datum/brain_trauma/special/primal_instincts, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
 		affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
 		affected_mob.Sleeping(30 SECONDS)
-		QDEL_NULL(jungle_arts)
 
 /datum/reagent/inverse/bath_salts/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
@@ -1239,14 +1239,19 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Dulling Reagent"
 	description = "Extremely drab coloring pigment that is favored by corporations who wish to maximize suffering."
 	color = COLOR_GRAY
-	var/list/random_color_list = list("#1a1a1a","#2e2e2e","#424242","#565656","#6a6a6a","#7e7e7e","#929292","#a6a6a6","#bababa","#cecece")
 	ph = 10
 	metabolization_rate = 0.4 * REM
 	tox_damage = 0
+	/// Whenever this reagent can color mob limbs and organs upon exposure
 	var/can_color_mobs = TRUE
+	/// Whenever this reagent can color mob equipment when they're exposed to it externally
 	var/can_color_clothing = TRUE
+	/// Whenever this reagent can color mob organs when taken internally, false by default as this would cause chaotic flickering of victim's eyes
 	var/can_color_organs = FALSE
+	/// Stores the original color after reagent wears off
 	var/datum/callback/color_callback
+	/// Used when applying colors on valid things
+	var/list/random_color_list = list("#1a1a1a","#2e2e2e","#424242","#565656","#6a6a6a","#7e7e7e","#929292","#a6a6a6","#bababa","#cecece")
 
 /datum/reagent/inverse/colorful_reagent/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
