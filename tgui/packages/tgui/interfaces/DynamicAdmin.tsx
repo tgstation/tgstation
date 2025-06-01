@@ -67,10 +67,14 @@ type Data = {
   heavy_chance_maxxed: BooleanLike;
   latejoin_chance_maxxed: BooleanLike;
   next_dynamic_tick: number;
+  antag_events_enabled: BooleanLike;
 };
 
 function formatTime(seconds: number): string {
   seconds /= 10;
+  if (seconds < 0) {
+    return 'never';
+  }
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
   const secs = Math.round(seconds % 60);
@@ -237,11 +241,7 @@ const StatusPanel = () => {
                 </Box>
               </Flex.Item>
               <Flex.Item>
-                <Button
-                  ml={1}
-                  disabled={latejoin_chance >= 100}
-                  onClick={() => act('max_light_chance')}
-                >
+                <Button ml={1} onClick={() => act('max_light_chance')}>
                   {light_chance_maxxed ? 'Reset' : 'Set to 100%'}
                 </Button>
               </Flex.Item>
@@ -299,11 +299,7 @@ const StatusPanel = () => {
                 </Box>
               </Flex.Item>
               <Flex.Item>
-                <Button
-                  ml={1}
-                  disabled={latejoin_chance >= 100}
-                  onClick={() => act('max_heavy_chance')}
-                >
+                <Button ml={1} onClick={() => act('max_heavy_chance')}>
                   {heavy_chance_maxxed ? 'Reset' : 'Set to 100%'}
                 </Button>
               </Flex.Item>
@@ -365,11 +361,7 @@ const StatusPanel = () => {
                 </Box>
               </Flex.Item>
               <Flex.Item>
-                <Button
-                  ml={1}
-                  disabled={latejoin_chance >= 100}
-                  onClick={() => act('max_latejoin_chance')}
-                >
+                <Button ml={1} onClick={() => act('max_latejoin_chance')}>
                   {latejoin_chance_maxxed ? 'Reset' : 'Set to 100%'}
                 </Button>
               </Flex.Item>
@@ -385,7 +377,7 @@ const StatusPanel = () => {
 const ConfigPanel = () => {
   const { data, act } = useBackend<Data>();
   const { full_config } = data;
-  // Config given to us is basically just a big json object so we can just... throw it out there
+  // Config given to us is basically just a big json object
   // Future TODO make this a whole functional config editor
 
   if (!full_config) {
@@ -410,13 +402,6 @@ const ConfigPanel = () => {
         </NoticeBox>
       </Stack.Item>
       <Stack.Item>
-        {/* <LabeledList>
-          {Object.entries(full_config).map(([config_name, config]) => (
-            <LabeledList.Item key={config_name} label={config_name}>
-              {JSON.stringify(config)}
-            </LabeledList.Item>
-          ))}
-        </LabeledList> */}
         <Dropdown
           options={configKeys}
           selected={shownConfig}
@@ -519,7 +504,8 @@ const RulesetsPanel = () => {
                       <Button.Checkbox
                         checked={ruleset.hidden}
                         icon="times"
-                        tooltip={`${ruleset.hidden ? 'Unhide' : 'Hide'} from roundend report`}
+                        tooltip="If checked, this ruleset
+                          will not show in the roundend report."
                         onClick={() =>
                           act('hide_ruleset', {
                             ruleset_index: ruleset.index,
@@ -623,11 +609,8 @@ const RulesetsPanel = () => {
                                   <Button.Checkbox
                                     ml={0.5}
                                     tooltipPosition="right"
-                                    tooltip={
-                                      ruleset.admin_disabled
-                                        ? 'Enable'
-                                        : 'Disable'
-                                    }
+                                    tooltip="If checked, this ruleset
+                                      will never run randomly."
                                     checked={ruleset.admin_disabled}
                                     color={
                                       ruleset.admin_disabled ? 'bad' : 'grey'
@@ -677,7 +660,7 @@ enum TABS {
 
 export const DynamicAdmin = () => {
   const { act, data } = useBackend<Data>();
-  const { config_even_enabled } = data;
+  const { config_even_enabled, antag_events_enabled } = data;
 
   // disable config tab if config_even_enabled is false
   const tabs_filtered = Object.keys(TABS).filter(
@@ -713,7 +696,24 @@ export const DynamicAdmin = () => {
           title="&nbsp;"
           height="100%"
           width="100%"
-          buttons={<Button onClick={() => act('dynamic_vv')}>VV</Button>}
+          buttons={
+            <>
+              <Button.Checkbox
+                checked={antag_events_enabled}
+                tooltip="If checked, random events that spawn antags
+                  or dynamic rulesets can trigger."
+                onClick={() => act('toggle_antag_events')}
+              >
+                Antag Events
+              </Button.Checkbox>
+              <Button
+                tooltip="Opens the Dynamic subsystem VV panel."
+                onClick={() => act('dynamic_vv')}
+              >
+                VV
+              </Button>
+            </>
+          }
         >
           <Tabs>
             {tabs_filtered.map((tab) => (

@@ -1014,6 +1014,9 @@
 /datum/dynamic_ruleset/midround/from_living/malf_ai/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/malf_ai)
 
+/datum/dynamic_ruleset/midround/from_living/malf_ai/can_be_selected(population_size)
+	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI)
+
 /datum/dynamic_ruleset/midround/from_living/blob
 	name = "Blob Infection"
 	config_tag = "Blob Infection"

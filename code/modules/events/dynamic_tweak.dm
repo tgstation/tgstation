@@ -11,7 +11,7 @@
 	description = "Allows Dynamic to spawn another midround or latejoin. Gives some spice to Greenshifts."
 
 /datum/round_event_control/dynamic_tweak/can_spawn_event(players_amt, allow_magic)
-	return ..() && !EMERGENCY_PAST_POINT_OF_NO_RETURN
+	return ..() && SSdynamic.antag_events_enabled && !EMERGENCY_PAST_POINT_OF_NO_RETURN
 
 /datum/round_event/dynamic_tweak
 	start_when = 1
@@ -19,10 +19,12 @@
 	fakeable = FALSE
 
 /datum/round_event/dynamic_tweak/start()
-	var/new_latejoins = rand(0, 1)
-	var/new_lights = rand(1 - new_latejoins, 1) // guarantee a light if no new latejoin
+	var/new_lights = rand(0, 1)
 	var/new_heavies = rand(1 - new_lights, 1) // guarantee a heavy if no new light
+	var/new_latejoins = rand(1 - new_heavies, 1) // guarantee a latejoin if no new heavy
 
 	SSdynamic.rulesets_to_spawn[LIGHT_MIDROUND] += new_lights
 	SSdynamic.rulesets_to_spawn[HEAVY_MIDROUND] += new_heavies
 	SSdynamic.rulesets_to_spawn[LATEJOIN] += new_latejoins
+
+	message_admins("Event: Dynamic Tweak added [new_latejoins] latejoin\s, [new_lights] light midround\s and [new_heavies] heavy midround\s.")

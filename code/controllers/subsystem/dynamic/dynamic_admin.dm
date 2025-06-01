@@ -37,7 +37,7 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 
 	data["ruleset_count"] = list()
 	for(var/category in SSdynamic.rulesets_to_spawn)
-		data["ruleset_count"][category] = "[max(SSdynamic.rulesets_to_spawn[category], 0)] / [SSdynamic.base_rulesets_to_spawn[category]]"
+		data["ruleset_count"][category] = max(SSdynamic.rulesets_to_spawn[category], 0)
 
 	data["full_config"] = SSdynamic.get_config()
 	data["config_even_enabled"] = CONFIG_GET(flag/dynamic_config_enabled)
@@ -81,7 +81,9 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 	data["heavy_chance_maxxed"] = SSdynamic.admin_forcing_next_heavy
 	data["latejoin_chance_maxxed"] = SSdynamic.admin_forcing_next_latejoin
 
-	data["next_dynamic_tick"] = SSdynamic.next_fire - world.time
+	data["next_dynamic_tick"] = SSdynamic.next_fire ? SSdynamic.next_fire - world.time : SSticker.GetTimeLeft()
+
+	data["antag_events_enabled"] = SSdynamic.antag_events_enabled
 
 	return data
 
@@ -244,4 +246,9 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 				SSdynamic.unreported_rulesets += ruleset
 				message_admins("[key_name_admin(ui.user)] unhid [ruleset] from the roundend report.")
 				log_admin("[key_name_admin(ui.user)] unhid [ruleset] from the roundend report.")
+			return TRUE
+		if("toggle_antag_events")
+			SSdynamic.antag_events_enabled = !SSdynamic.antag_events_enabled
+			message_admins("[key_name_admin(ui.user)] [SSdynamic.antag_events_enabled ? "enabled" : "disabled"] antag events.")
+			log_admin("[key_name_admin(ui.user)] [SSdynamic.antag_events_enabled ? "enabled" : "disabled"] antag events.")
 			return TRUE
