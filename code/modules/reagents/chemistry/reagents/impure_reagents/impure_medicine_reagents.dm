@@ -955,6 +955,14 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	holder.remove_reagent(/datum/reagent/inverse/krokodil, 3 * REM * seconds_per_tick)
 
 	. = ..()
+	if(affected_mob.mob_mood?.get_mood_event("numb"))
+		affected_mob.clear_mood_event("numb")
+		affected_mob.add_mood_event("not numb", /datum/mood_event/antinarcotic_medium)
+
+	if(affected_mob.mob_mood?.get_mood_event("smacked out"))
+		affected_mob.clear_mood_event("smacked out")
+		affected_mob.add_mood_event("not smacked out", /datum/mood_event/antinarcotic_heavy)
+
 	affected_mob.adjust_drowsiness(-5 SECONDS * REM * seconds_per_tick)
 	if(affected_mob.losebreath >= 1)
 		affected_mob.losebreath -= 1 * REM * seconds_per_tick
@@ -1044,7 +1052,6 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	overdose_threshold = 20
 	ph = 6.1
 	tox_damage = 0
-	var/clusterheadache = TRUE
 
 /datum/reagent/inverse/aranesp/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
