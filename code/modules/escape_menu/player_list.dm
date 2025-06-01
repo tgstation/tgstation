@@ -50,7 +50,7 @@
 					/* hud_owner = */ null,
 					/* escape_menu = */ src,
 					/* button_text = */ feedback_link ? "<a href='[feedback_link]'>[ranks]</a>" : "[ranks]",
-					/* offset = */ list((vertical_amount - 15), horizontal_amount - 5),
+					/* offset = */ list((vertical_amount - 15), (horizontal_amount + 5)),
 					/* font_size = */ 10,
 				)
 			)

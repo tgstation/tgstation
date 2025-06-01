@@ -129,12 +129,6 @@ GLOBAL_LIST_EMPTY(escape_menus)
 	plane = ESCAPE_MENU_PLANE
 	clear_with_screen = FALSE
 
-/atom/movable/screen/escape_menu/proc/text_color()
-	return enabled() ? "white" : "gray"
-
-/atom/movable/screen/escape_menu/proc/enabled()
-	return TRUE
-
 // The escape menu can be opened before SSatoms
 INITIALIZE_IMMEDIATE(/atom/movable/screen/escape_menu)
 

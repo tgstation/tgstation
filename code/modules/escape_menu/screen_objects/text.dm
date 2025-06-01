@@ -32,6 +32,12 @@
 	SHOULD_CALL_PARENT(TRUE)
 	maptext = MAPTEXT_PIXELLARI("<span style='font-size: [font_size]px; color: [text_color()]'>[button_text]</span>")
 
+/atom/movable/screen/escape_menu/text/proc/text_color()
+	return enabled() ? "white" : "gray"
+
+/atom/movable/screen/escape_menu/text/proc/enabled()
+	return TRUE
+
 ///Scrolls the text upwards (by lowering maptext_y), called by the UI.
 /atom/movable/screen/escape_menu/text/proc/scroll_up()
 	animate(src,
@@ -92,9 +98,3 @@
 
 	src.hovered = hovered
 	update_text()
-
-/atom/movable/screen/escape_menu/text/clickable/text_color()
-	return enabled() ? "white" : "gray"
-
-/atom/movable/screen/escape_menu/text/clickable/enabled()
-	return TRUE
