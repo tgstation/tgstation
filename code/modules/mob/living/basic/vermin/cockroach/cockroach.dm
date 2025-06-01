@@ -39,7 +39,7 @@
 	/// Command list given to minionised cockroaches
 	var/list/minion_commands
 	/// Cockroach death drops
-	var/list/death_drops = list(/obj/effect/decal/cleanable/insectguts)
+	var/static/list/death_drops = list(/obj/effect/decal/cleanable/insectguts)
 
 /mob/living/basic/cockroach/Initialize(mapload)
 	var/turf/our_turf = get_turf(src)
@@ -99,7 +99,12 @@
 	icon_dead = "bloodroach_no_animation"
 	health = 3
 	maxHealth = 3 // Wow!!
-	death_drops = list(/obj/effect/decal/cleanable/blood/gibs/old)
+	var/static/list/blood_drops = list(/obj/effect/decal/cleanable/blood/gibs/old)
+
+/mob/living/basic/cockroach/bloodroach/Initialize(mapload)
+	. = ..()
+	// Overriding the static drops of parent
+	AddElement(/datum/element/death_drops, blood_drops)
 
 /mob/living/basic/cockroach/bloodroach/death(gibbed)
 	if(HAS_TRAIT(src, TRAIT_BUGKILLER_DEATH))
@@ -108,7 +113,7 @@
 	for(var/turf/messy_turf in view(src, 2))
 		new /obj/effect/decal/cleanable/blood(messy_turf)
 		for(var/mob/living/mob_in_turf in messy_turf)
-			mob_in_turf.visible_message(span_danger("[mob_in_turf] is splattered with blood!"), span_userdanger("You are splattered with blood!"))
+			mob_in_turf.visible_message(span_danger("[mob_in_turf] is splattered with blood!"), span_userdanger("You're splattered with blood!"))
 			mob_in_turf.add_blood_DNA(list("Non-human DNA" = random_human_blood_type()))
 			playsound(mob_in_turf, 'sound/effects/splat.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)
 	return ..()
