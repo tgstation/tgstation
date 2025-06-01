@@ -43,3 +43,6 @@
 	//In case one got stuck and the previous loop didn't clean it, somehow.
 	for(var/key in key_combos_held)
 		keyUp(key_combos_held[key])
+
+	forced_intended_direction = NONE
+	additional_intended_direction = NONE
