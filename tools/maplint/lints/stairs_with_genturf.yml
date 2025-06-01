@@ -1,4 +1,4 @@
 help: "Please replace the genturf with a proper turf."
 /obj/structure/stairs:
   banned_neighbors:
-  - /turf/open/genturf
+    - /turf/open/genturf

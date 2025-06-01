@@ -89,7 +89,7 @@
 /turf/template_noop,
 /area/template_noop)
 "M" = (
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /obj/item/food/meat/slab/meatproduct{
 	pixel_y = 6;
 	pixel_x = 6

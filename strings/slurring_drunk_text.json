@@ -13,8 +13,6 @@
 				".": "  *BURP*."
 			}
 		},
-		"string_additions": [
-			"'"
-		]
+		"string_additions": ["'"]
 	}
 }

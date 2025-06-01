@@ -6,7 +6,7 @@
 /area/centcom/basketball)
 "aw" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "be" = (
@@ -70,7 +70,7 @@
 /area/centcom/basketball)
 "eU" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "fi" = (
@@ -223,7 +223,7 @@
 "qU" = (
 /obj/structure/sign/xenobio_guide/directional/west,
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/xenoblood/xgibs/down,
+/obj/effect/decal/cleanable/blood/gibs/xeno/down,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "rT" = (
@@ -254,7 +254,7 @@
 /area/centcom/basketball)
 "tU" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/xenoblood/xgibs/limb,
+/obj/effect/decal/cleanable/blood/gibs/xeno/limb,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "tX" = (
@@ -279,7 +279,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "wZ" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/larva,
+/obj/effect/decal/cleanable/blood/gibs/xeno/larva,
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "zy" = (
@@ -344,7 +344,7 @@
 /area/centcom/basketball)
 "CD" = (
 /obj/structure/alien/weeds,
-/obj/effect/decal/cleanable/xenoblood/xgibs/core,
+/obj/effect/decal/cleanable/blood/gibs/xeno/core,
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "CV" = (
@@ -398,7 +398,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "IA" = (
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "Jc" = (
@@ -541,7 +541,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "Uv" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/torso,
+/obj/effect/decal/cleanable/blood/gibs/xeno/torso,
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "Uy" = (
