@@ -16,8 +16,6 @@
 	overdose_threshold = 30
 	ph = 9
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	inverse_chem_val = 0.3
-	inverse_chem = /datum/reagent/inverse/space_drugs
 	addiction_types = list(/datum/addiction/hallucinogens = 10) //4 per 2 seconds
 
 /datum/reagent/drug/space_drugs/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
