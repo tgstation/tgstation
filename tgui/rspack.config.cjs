@@ -35,7 +35,7 @@ module.exports = (env = {}, argv) => {
         type: 'persistent',
         storage: {
           type: 'filesystem',
-          directory: path.resolve(__dirname, '.yarn/rspack'),
+          directory: 'node_modules/.cache/rspack',
         },
       },
       css: true,
@@ -59,7 +59,6 @@ module.exports = (env = {}, argv) => {
       assetModuleFilename: '[name][ext]',
     },
     resolve: {
-      pnp: true,
       extensions: ['.tsx', '.ts', '.js', '.jsx'],
       alias: {
         tgui: path.resolve(__dirname, './packages/tgui'),

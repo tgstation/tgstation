@@ -1,4 +1,4 @@
-import { describe, it } from 'vitest';
+import { describe, expect, it } from 'bun:test';
 
 import {
   Action,
@@ -32,12 +32,12 @@ const increment = createAction('INCREMENT');
 const decrement = createAction('DECREMENT');
 
 describe('Redux implementation tests', () => {
-  it('createStore works', ({ expect }) => {
+  it('createStore works', () => {
     const store = createStore(counterReducer);
     expect(store.getState()).toBe(0);
   });
 
-  it('createStore with applyMiddleware works', ({ expect }) => {
+  it('createStore with applyMiddleware works', () => {
     const store = createStore(
       counterReducer,
       applyMiddleware(loggingMiddleware),
@@ -45,7 +45,7 @@ describe('Redux implementation tests', () => {
     expect(store.getState()).toBe(0);
   });
 
-  it('dispatch works', ({ expect }) => {
+  it('dispatch works', () => {
     const store = createStore(counterReducer);
     store.dispatch(increment());
     expect(store.getState()).toBe(1);
@@ -53,7 +53,7 @@ describe('Redux implementation tests', () => {
     expect(store.getState()).toBe(0);
   });
 
-  it('combineReducers works', ({ expect }) => {
+  it('combineReducers works', () => {
     const rootReducer = combineReducers({
       counter: counterReducer,
     });
@@ -61,7 +61,7 @@ describe('Redux implementation tests', () => {
     expect(store.getState()).toEqual({ counter: 0 });
   });
 
-  it('createAction works', ({ expect }) => {
+  it('createAction works', () => {
     const incrementAction = increment();
     expect(incrementAction).toEqual({ type: 'INCREMENT' });
     const decrementAction = decrement();

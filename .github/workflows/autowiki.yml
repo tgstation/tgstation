@@ -32,7 +32,7 @@ jobs:
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
-          tools/build/build --ci autowiki
+          tools/build/build.sh --ci autowiki
       - name: Run Autowiki
         if: steps.secrets_set.outputs.SECRETS_ENABLED
         env:
