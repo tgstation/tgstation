@@ -4,6 +4,14 @@
  * @license MIT
  */
 
+/* ESLint incorrectly flags method overloads as duplicate members.
+ * These rules are safe to disable in TypeScript files.
+ * https://eslint.org/docs/latest/rules/no-dupe-class-members#handled_by_typescript
+ * https://eslint.org/docs/latest/rules/no-redeclare#handled_by_typescript
+ */
+/* eslint-disable no-dupe-class-members */
+/* eslint-disable no-redeclare */
+
 /**
  * Iterates over elements of collection, returning an array of all elements
  * iteratee returns truthy for. The predicate is invoked with three
@@ -217,9 +225,11 @@ export const uniqBy = <T extends unknown>(
 
 export const uniq = <T>(array: T[]): T[] => uniqBy(array);
 
-type Zip<T extends unknown[][]> = {
+type ZipElements<T extends unknown[][]> = {
   [I in keyof T]: T[I] extends (infer U)[] ? U : never;
-}[];
+};
+
+type Zip<T extends unknown[][]> = ZipElements<T>[];
 
 /**
  * Creates an array of grouped elements, the first of which contains
@@ -335,3 +345,149 @@ export const deepMerge = (...objects: any[]): any => {
   }
   return target;
 };
+
+class Monad<T> {
+  protected value: T;
+  constructor(value: T) {
+    this.value = value;
+  }
+  if<U extends Monad<unknown>>(
+    condition: boolean,
+    trueValue: (value: this) => U,
+  ): this | U;
+  if<U extends Monad<unknown>, V extends Monad<unknown>>(
+    condition: boolean,
+    trueValue: (value: this) => U,
+    falseValue: (value: this) => V,
+  ): U | V;
+  if<U extends Monad<unknown>, V extends Monad<unknown>>(
+    condition: boolean,
+    trueValue: (value: this) => U,
+    falseValue?: (value: this) => V,
+  ): this | U | V {
+    if (condition) {
+      return trueValue(this);
+    } else if (falseValue !== undefined) {
+      return falseValue(this);
+    } else {
+      return this;
+    }
+  }
+  unwrap(): T {
+    return this.value;
+  }
+}
+
+class Identity<T> extends Monad<T> {
+  constructor(value: T) {
+    super(value);
+  }
+  ifMap<U>(condition: boolean, trueValue: (value: T) => U): this | Identity<U>;
+  ifMap<U, V>(
+    condition: boolean,
+    trueValue: (value: T) => U,
+    falseValue: (value: T) => V,
+  ): Identity<U> | Identity<V>;
+  ifMap<U, V>(
+    condition: boolean,
+    trueValue: (value: T) => U,
+    falseValue?: (value: T) => V,
+  ): this | Identity<U> | Identity<V> {
+    if (condition) {
+      return new Identity<U>(trueValue(this.value));
+    } else if (falseValue !== undefined) {
+      return new Identity<V>(falseValue(this.value));
+    } else {
+      return this;
+    }
+  }
+  map<U>(fn: (value: T) => U): Identity<U> {
+    return new Identity<U>(fn(this.value));
+  }
+  flatMap<U>(fn: (value: T) => Identity<U>): Identity<U> {
+    return fn(this.value);
+  }
+}
+
+class Enumerable<T> extends Monad<T[]> implements Iterable<T> {
+  constructor(values: T[]) {
+    super(values);
+  }
+  filter(
+    callbackFn: (input: T, index: number, collection: T[]) => boolean,
+  ): Enumerable<T> {
+    return new Enumerable<T>(filter(this.value, callbackFn));
+  }
+  map<U>(
+    callbackFn: (value: T, index: number, collection: T[]) => U,
+  ): Enumerable<U> {
+    return new Enumerable<U>(map(this.value, callbackFn));
+  }
+  sortBy(...callbackFns: ((input: T) => unknown)[]): Enumerable<T> {
+    return new Enumerable<T>(sortBy(this.value, ...callbackFns));
+  }
+  sort(): Enumerable<T> {
+    return new Enumerable<T>(sort(this.value));
+  }
+  reduce<U>(
+    callbackFn: (
+      accumulator: U,
+      currentValue: T,
+      currentIndex: number,
+      array: T[],
+    ) => U,
+    initialValue?: U,
+  ): U {
+    return reduce(this.value, callbackFn, initialValue);
+  }
+  uniqBy(callbackFn: (value: T) => unknown): Enumerable<T> {
+    return new Enumerable<T>(uniqBy(this.value, callbackFn));
+  }
+  uniq() {
+    return new Enumerable<T>(uniq(this.value));
+  }
+  zip<C extends unknown[][]>(
+    ...arrays: C
+  ): Enumerable<ZipElements<[T[], ...C]>> {
+    return new Enumerable<ZipElements<[T[], ...C]>>(zip(this.value, ...arrays));
+  }
+  binaryInsertWith<U = unknown>(
+    value: T,
+    getKey: (value: T) => U,
+  ): Enumerable<T> {
+    return new Enumerable<T>(binaryInsertWith(this.value, value, getKey));
+  }
+  paginate(maxPerPage: number): Enumerable<Enumerable<T>> {
+    const enumerablePages: Enumerable<T>[] = [];
+    const pages = paginate(this.value, maxPerPage);
+    for (let i = 0; i < pages.length; i++) {
+      enumerablePages.push(new Enumerable<T>(pages[i]));
+    }
+    return new Enumerable<Enumerable<T>>(enumerablePages);
+  }
+  // Order matters https://www.typescriptlang.org/docs/handbook/declaration-files/do-s-and-don-ts.html#ordering
+  mapArray<U>(fn: (value: T[]) => U[]): Enumerable<U>;
+  mapArray<U>(fn: (value: T[]) => U): Identity<U>;
+  mapArray<U>(fn: (value: T[]) => U | U[]): Identity<U> | Enumerable<U> {
+    const result = fn(this.value);
+    if (result instanceof Array) {
+      return new Enumerable<U>(result);
+    } else {
+      return new Identity<U>(result);
+    }
+  }
+  *[Symbol.iterator](): IterableIterator<T> {
+    const values = this.value;
+    for (let i = 0; i < values.length; i++) {
+      yield values[i];
+    }
+  }
+}
+
+export function chain<T>(values: T[]): Enumerable<T> {
+  return new Enumerable<T>(values);
+}
+
+export function wrap<T>(value: T): Identity<T> {
+  return new Identity<T>(value);
+}
