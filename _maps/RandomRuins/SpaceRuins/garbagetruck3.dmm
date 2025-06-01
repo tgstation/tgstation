@@ -314,7 +314,7 @@
 /obj/item/restraints/handcuffs/cable/zipties/used,
 /obj/item/toy/brokenradio,
 /obj/effect/spawner/random/engineering/tool,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "rq" = (

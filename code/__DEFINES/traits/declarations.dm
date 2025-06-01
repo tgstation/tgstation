@@ -432,6 +432,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
 /// hnnnnnnnggggg..... you're pretty good....
 #define TRAIT_NICE_SHOT "nice_shot"
+/// trait added if mob is killed with an anti pest reagent
+#define TRAIT_BUGKILLER_DEATH "bugkiller_death"
 /// prevents the damage done by a brain tumor
 #define TRAIT_TUMOR_SUPPRESSED "brain_tumor_suppressed"
 /// Prevents hallucinations from the hallucination brain trauma (RDS)

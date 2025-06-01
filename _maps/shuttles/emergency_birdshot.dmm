@@ -338,7 +338,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /obj/item/reagent_containers/syringe/contraband{
 	pixel_x = -4;
 	pixel_y = -16

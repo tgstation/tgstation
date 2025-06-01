@@ -72,7 +72,7 @@
 "aaX" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
 "aaY" = (
@@ -6053,7 +6053,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/item/shard,
 /obj/effect/decal/cleanable/glass,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "byn" = (
@@ -6359,7 +6359,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "bBz" = (
@@ -8248,7 +8248,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
 "bWH" = (
@@ -8480,7 +8480,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/iron,
 /area/station/medical/abandoned)
 "bZz" = (
@@ -17030,7 +17030,7 @@
 /area/station/service/bar)
 "eit" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "eiw" = (
@@ -30204,7 +30204,7 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "hww" = (
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/wood,
 /area/station/service/library/abandoned)
 "hwB" = (
@@ -41417,7 +41417,7 @@
 /obj/effect/landmark/generic_maintenance_landmark,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating,
 /area/station/service/theater/abandoned)
 "kjG" = (
@@ -58648,7 +58648,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/iron/dark,
 /area/station/service/abandoned_gambling_den)
 "oKr" = (
@@ -81140,7 +81140,7 @@
 "umv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "umz" = (
@@ -84461,7 +84461,7 @@
 /area/station/service/chapel)
 "vba" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)
 "vbb" = (

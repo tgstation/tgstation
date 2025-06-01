@@ -77,6 +77,7 @@
 	var/static/list/mob_list = list(
 		/mob/living/basic/butterfly,
 		/mob/living/basic/cockroach,
+		/mob/living/basic/cockroach/bloodroach,
 		/mob/living/basic/spider/maintenance,
 		/mob/living/basic/mouse,
 		/mob/living/basic/snail,

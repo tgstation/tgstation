@@ -116,7 +116,7 @@
 		else if (prob(danger_chance))
 			dispensed_reagent.add_reagent(get_overflowing_reagent(dangerous = TRUE), reagents_amount)
 			new /mob/living/basic/cockroach(get_turf(vent))
-			new /mob/living/basic/cockroach(get_turf(vent))
+			new /mob/living/basic/cockroach/bloodroach(get_turf(vent))
 		else
 			dispensed_reagent.add_reagent(get_overflowing_reagent(dangerous = FALSE), reagents_amount)
 

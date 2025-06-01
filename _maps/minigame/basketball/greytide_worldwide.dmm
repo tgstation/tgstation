@@ -603,7 +603,7 @@
 /area/centcom/basketball)
 "Ql" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "QC" = (
@@ -624,7 +624,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "SF" = (
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "Tc" = (

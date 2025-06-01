@@ -3217,7 +3217,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "BS" = (
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
 	},
