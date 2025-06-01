@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "internal tanks gives a progress bar when you toggle them, allowing you to see how much you've consumed so far."
