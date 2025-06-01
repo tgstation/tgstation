@@ -1,8 +1,7 @@
 /atom/movable/screen/escape_menu/text
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	maptext_width = 100
-	maptext_height = 18
-	pixel_x = -80
+	maptext_height = 8
 
 	VAR_PRIVATE/datum/escape_menu/escape_menu
 	VAR_PRIVATE/button_text
@@ -23,10 +22,10 @@
 
 	//this decides how far out you can 'click' on this, so it's important to keep it short.
 	//yes even here, maptext can still embed links without using clickable subtype.
-	src.maptext_width = round((max(length(button_text), 20) * (font_size / 2.5)), 1)
+	src.maptext_width = round((max(length(button_text), 20) * (font_size / 2.25)), 1)
+	src.maptext_height = maptext_height * (font_size / 5)
 
 	update_text()
-
 	screen_loc = "NORTH:[offset[1]],CENTER:[offset[2]]"
 
 /atom/movable/screen/escape_menu/text/proc/update_text()
@@ -99,32 +98,3 @@
 
 /atom/movable/screen/escape_menu/text/clickable/enabled()
 	return TRUE
-
-/atom/movable/screen/escape_menu/text/clickable/ignoring
-	///The ckey this targets, this has to be its own thing because of admin fake keys.
-	///otherwise, by default, this is simply button_text.
-	var/player_ckey
-
-/atom/movable/screen/escape_menu/text/clickable/ignoring/Initialize(
-	mapload,
-	datum/hud/hud_owner,
-	datum/escape_menu/escape_menu,
-	button_text,
-	list/offset,
-	font_size,
-	on_click_callback,
-	player_ckey
-)
-	src.player_ckey = player_ckey || button_text
-	return ..()
-
-
-///Ignoring subtype that updates depending on if the ckey in the button text is in the client's ignored list.
-/atom/movable/screen/escape_menu/text/clickable/ignoring/text_color()
-	return (player_ckey in escape_menu.client?.prefs.ignoring) ? "grey" : "white"
-
-///Offline subtype that deletes itself when you unignore, as they aren't online to re-ignore.
-/atom/movable/screen/escape_menu/text/clickable/ignoring/offline/update_text()
-	if(player_ckey in escape_menu.client?.prefs.ignoring)
-		return ..()
-	qdel(src)

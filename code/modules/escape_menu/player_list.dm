@@ -15,6 +15,7 @@
 
 	var/vertical_amount = -30 //we start at -50, add -10 each time we go down.
 	var/horizontal_amount = -170 //increasing by 150, we fit 3 per line this way.
+
 	if(length(GLOB.admins))
 		page_holder.give_screen_object(
 			new /atom/movable/screen/escape_menu/text(
@@ -34,21 +35,22 @@
 					null,
 					/* hud_owner = */ null,
 					/* escape_menu = */ src,
-					/* button_text = */ admin.holder.fakekey ? admin.holder.fakekey : admin.ckey,
+					/* button_text = */ admin.ckey,//admin.holder.fakekey ? admin.holder.fakekey : admin.ckey,
 					/* offset = */ list(vertical_amount, horizontal_amount),
 					/* font_size = */ 12,
 					/* on_click_callback = */ CALLBACK(src, PROC_REF(ignore_or_unignore), admin.ckey),
 					/* player_ckey = */ admin.ckey,
 				)
 			)
-			var/ranks = admin.holder.rank_names()
+			var/ranks = "Admin"//admin.holder.rank_names()
+			var/feedback_link = prob(50) ? "https://google.com/" : null//admin.holder.feedback_link()
 			page_holder.give_screen_object(
 				new /atom/movable/screen/escape_menu/text(
 					null,
 					/* hud_owner = */ null,
 					/* escape_menu = */ src,
-					/* button_text = */ admin.holder.feedback_link() ? "<a href='[feedback_link]'>[ranks]</a>" : "[ranks]",
-					/* offset = */ list((vertical_amount - 15), horizontal_amount - 10),
+					/* button_text = */ feedback_link ? "<a href='[feedback_link]'>[ranks]</a>" : "[ranks]",
+					/* offset = */ list((vertical_amount - 15), horizontal_amount - 5),
 					/* font_size = */ 10,
 				)
 			)
@@ -123,23 +125,23 @@
 			)
 			horizontal_amount += 150
 
-	page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+	page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/scroll(
 		null,
 		/* hud_owner = */ null,
 		/* button_text = */ null,
 		/* tooltip_text = */ null,
-		/* pixel_offset = */ list(280, -150),
+		/* pixel_offset = */ list(280, -10),
 		CALLBACK(page_holder, TYPE_PROC_REF(/datum/screen_object_holder, scroll), TRUE),
-		/* button_overlay = */ "scroll_up",
+		/* button_overlay = */ "arrow-up",
 	))
-	page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
+	page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/scroll(
 		null,
 		/* hud_owner = */ null,
 		/* button_text = */ null,
 		/* tooltip_text = */ null,
-		/* pixel_offset = */ list(280, -220),
+		/* pixel_offset = */ list(280, -110),
 		CALLBACK(page_holder, TYPE_PROC_REF(/datum/screen_object_holder, scroll)),
-		/* button_overlay = */ "scroll_down",
+		/* button_overlay = */ "arrow-down",
 	))
 	page_holder.lowest_point = vertical_amount
 
