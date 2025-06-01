@@ -421,7 +421,7 @@ Versioning
 	for(var/mob_ckey as anything in characters)
 		var/mob/living/new_character = characters[mob_ckey]
 		query_rows += list(list(
-			"server_ip" = world.internet_address ? "INET_ATON([world.internet_address])" : 0,
+			"server_ip" = "INET_ATON([world.internet_address || 0])",
 			"server_port" = world.port,
 			"round_id" = GLOB.round_id,
 			"ckey" = mob_ckey,
