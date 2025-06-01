@@ -418,10 +418,11 @@ Versioning
 
 /datum/controller/subsystem/blackbox/proc/ReportRoundstartManifest(list/characters)
 	var/list/query_rows = list()
+	var/list/special_columns = list("server_ip" = "INET_ATON(?)")
 	for(var/mob_ckey as anything in characters)
 		var/mob/living/new_character = characters[mob_ckey]
 		query_rows += list(list(
-			"server_ip" = "INET_ATON([world.internet_address || 0])",
+			"server_ip" = world.internet_address || 0,
 			"server_port" = world.port,
 			"round_id" = GLOB.round_id,
 			"ckey" = mob_ckey,
@@ -430,7 +431,7 @@ Versioning
 			"special" = new_character.mind?.special_role,
 			"latejoin" = 0,
 		))
-	SSdbcore.MassInsert(format_table_name("manifest"), query_rows)
+	SSdbcore.MassInsert(format_table_name("manifest"), query_rows, special_columns = special_columns)
 
 /datum/controller/subsystem/blackbox/proc/ReportManifest(ckey, character, job, special, latejoin)
 	var/datum/db_query/query_report_manifest = SSdbcore.NewQuery({"INSERT INTO [format_table_name("manifest")]
