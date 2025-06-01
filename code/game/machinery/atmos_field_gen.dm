@@ -89,9 +89,9 @@
 /obj/machinery/atmos_shield_gen/RefreshParts()
 	. = ..()
 	var/datum/stock_part/capacitor/capacitor = locate() in component_parts
-	active_power_usage = initial(active_power_usage) / (capacitor.tier) // 0.25kw per tile at tier 4
+	active_power_usage = initial(active_power_usage) / capacitor.tier // 0.25kw per tile at tier 4
 	var/datum/stock_part/micro_laser/laser = locate() in component_parts
-	max_range = laser.tier+2
+	max_range = laser.tier + 2
 
 /obj/machinery/atmos_shield_gen/update_overlays()
 	. = ..()
