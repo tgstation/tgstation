@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Refactored crafting backend. Report possible pesky bugs."
+  - balance: "the MEAT backpack (from the MEAT cargo pack) may be a smidge different because of code standardization."
