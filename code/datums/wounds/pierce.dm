@@ -341,13 +341,31 @@
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture/eye
 	wound_path_to_generate = /datum/wound/pierce/bleed/severe/eye
-	viable_zones = list(BODY_ZONE_HEAD)
+	viable_zones = list(BODY_ZONE_HEAD )
 	can_be_randomly_generated = FALSE
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture/eye/can_be_applied_to(obj/item/bodypart/limb, list/suggested_wounding_types, datum/wound/old_wound, random_roll, duplicates_allowed, care_about_existing_wounds)
 	if (isnull(locate(/obj/item/organ/eyes) in limb))
 		return FALSE
 	return ..()
+
+/datum/wound/pierce/bleed/severe/magicalearpain //what happens if you try to listen to the heartbeat of a corrupt heart while not a heretic
+	name = "Bleeding Ears"
+	desc = "Patient's ears are bleeding heavily as blood seeps through the inner flesh of the ear through some unknown means."
+	examine_desc = "is covered in blood, black-purple fluid flowing from its ears"
+	occur_text = "is soaked as two spurts of black liquid spray from its ears"
+	internal_bleeding_chance = 0 // just your ears
+
+/datum/wound_pregen_data/flesh_pierce/open_puncture/magicalearpain
+	wound_path_to_generate = /datum/wound/pierce/bleed/severe/magicalearpain
+	viable_zones = list(BODY_ZONE_HEAD)
+	can_be_randomly_generated = FALSE
+
+/datum/wound/pierce/bleed/severe/magicalearpain/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing)
+	var/obj/item/organ/ears/ears = locate() in limb
+	if (!istype(ears))
+		return FALSE
+	. = ..()
 
 /datum/wound/pierce/bleed/critical
 	name = "Ruptured Cavity"

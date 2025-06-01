@@ -7,9 +7,10 @@
 	name = "voltaic combat cyberheart"
 	desc = "A cutting-edge cyberheart, originally designed for Nanotrasen killsquad usage but later declassified for normal research. Voltaic technology allows the heart to keep the body upright in dire circumstances, alongside redirecting anomalous flux energy to fully shield the user from shocks and electro-magnetic pulses. Requires a refined Flux core as a power source."
 	icon_state = "anomalock_heart"
+	beat_noise = "an astonishing <b>BZZZ</b> of immense electrical power"
 	bleed_prevention = TRUE
 	toxification_probability = 0
-
+	
 	COOLDOWN_DECLARE(survival_cooldown)
 	///Cooldown for the activation of the organ
 	var/survival_cooldown_time = 5 MINUTES
@@ -211,4 +212,12 @@
 	icon_state = "anomalock_heart"
 	desc = "Voltaic energy is flooding your muscles, keeping your body upright. You have 30 seconds before it falters!"
 
+/obj/item/organ/heart/cybernetic/anomalock/hear_beat_noise(mob/living/hearer)
+	if(prob(1))
+		to_chat(hearer, span_danger("Yeah. Press a metal disk to the chest of a living arc flash hazard. See what that gets you.")) //the guy is LITERALLY sparking like a tesla coil.
+	else
+		to_chat(hearer, span_danger("An electrical arc strikes your stethoscope, conducting into you!"))
+	if(hearer.electrocute_act(15, "stethoscope", flags = SHOCK_NOGLOVES)) //the stethoscope is in your ears. (returns true if it does damage so we only scream in that case)
+		hearer.emote("scream")	
+	return span_danger(beat_noise)
 #undef DOAFTER_IMPLANTING_HEART
