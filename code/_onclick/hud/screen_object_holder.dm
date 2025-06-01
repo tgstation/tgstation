@@ -1,11 +1,7 @@
 /// A helper instance that will handle adding objects from the client's screen
 /// to easily remove from later.
 /datum/screen_object_holder
-	///The lowest point this can scroll to. 0 disables scrolling.
-	var/lowest_point
 	VAR_PRIVATE
-		///Used for menus with a scrollwheel, this is how much we've scrolled.
-		amount_scrolled = 0
 		client/client
 		list/screen_objects = list()
 		list/protected_screen_objects = list()
@@ -16,7 +12,6 @@
 	src.client = client
 
 	RegisterSignal(client, COMSIG_QDELETING, PROC_REF(on_parent_qdel))
-	RegisterSignal(client.mob, COMSIG_MOUSE_SCROLL_ON, PROC_REF(on_mouse_wheel))
 
 /datum/screen_object_holder/Destroy()
 	clear()
@@ -69,29 +64,3 @@
 
 	clear()
 	client = null
-
-/datum/screen_object_holder/proc/on_mouse_wheel(mob/source_mob, atom/A, delta_x, delta_y, params)
-	SIGNAL_HANDLER
-	if(!lowest_point)
-		return
-
-	if(delta_y < 0)
-		scroll(up = FALSE)
-	else if(delta_y > 0)
-		scroll(up = TRUE)
-
-/datum/screen_object_holder/proc/scroll(up = FALSE)
-	if(up)
-		//going up at highest point.
-		if(amount_scrolled == 0)
-			return
-		for(var/atom/movable/screen/escape_menu/text/screen_atom in screen_objects + protected_screen_objects)
-			screen_atom.scroll_up()
-		amount_scrolled += 120
-		return
-	//scrolling down to rock bottom, plus three scrolls up so they don't just get rid of the UI
-	else if(amount_scrolled < (lowest_point + 360))
-		return
-	for(var/atom/movable/screen/escape_menu/text/screen_atom in screen_objects + protected_screen_objects)
-		screen_atom.scroll_down()
-	amount_scrolled -= 120

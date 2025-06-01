@@ -140,7 +140,3 @@
 		page_holder.remove_screen_object(src)
 
 #undef COLLAPSIBLE_BUTTON_DURATION
-
-/atom/movable/screen/escape_menu/lobby_button/scroll
-	icon = 'icons/hud/scroll.dmi'
-	icon_state = "background"
