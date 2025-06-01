@@ -9925,6 +9925,9 @@
 /area/station/hallway/primary/central)
 "cVE" = (
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "cVG" = (
@@ -23038,6 +23041,9 @@
 /area/station/maintenance/disposal/incinerator)
 "gRZ" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/iron/white/textured,
 /area/station/science/robotics/augments)
 "gSg" = (
@@ -26853,10 +26859,10 @@
 /turf/open/floor/iron/smooth,
 /area/station/science/lower)
 "hXg" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
-/obj/effect/turf_decal/tile/purple/fourcorners,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "hXm" = (
@@ -29750,10 +29756,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "iPq" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "iPt" = (
@@ -33280,6 +33286,8 @@
 	dir = 4
 	},
 /obj/effect/landmark/start/roboticist,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white/textured,
 /area/station/science/robotics/augments)
 "jQL" = (
@@ -52503,6 +52511,7 @@
 /obj/item/mmi{
 	pixel_x = 7
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured_corner,
 /area/station/science/robotics/augments)
 "pJn" = (
@@ -62888,6 +62897,8 @@
 "sOn" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
 	},
@@ -76329,6 +76340,9 @@
 	},
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
 /obj/structure/tank_holder/anesthetic,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
 	},
@@ -76867,7 +76881,6 @@
 /turf/open/floor/glass/reinforced/airless,
 /area/station/solars/starboard/aft)
 "wVA" = (
-/obj/structure/cable,
 /obj/effect/turf_decal/tile/purple/fourcorners,
 /obj/machinery/vending/wardrobe/robo_wardrobe,
 /turf/open/floor/iron,
