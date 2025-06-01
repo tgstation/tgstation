@@ -614,6 +614,21 @@
 			M.vomit(VOMIT_CATEGORY_BLOOD)
 	new /mob/living/carbon/human/species/monkey(location, TRUE)
 
+/datum/chemical_reaction/angry_monkey
+	required_reagents = list(/datum/reagent/monkey_powder = 50, /datum/reagent/inverse/bath_salts = 10)
+	reaction_flags = REACTION_INSTANT
+	mix_message = span_danger("Expands into a brown mass before shaping itself into a pissed off monkey!.")
+
+/datum/chemical_reaction/angry_monkey/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/mob/living/carbon/M = holder.my_atom
+	var/location = get_turf(M)
+	if(iscarbon(M))
+		if(ismonkey(M))
+			M.gib(DROP_ALL_REMAINS)
+		else
+			M.vomit(VOMIT_CATEGORY_BLOOD)
+	new /mob/living/carbon/human/species/monkey/angry(location, TRUE)
+
 //water electrolysis
 /datum/chemical_reaction/electrolysis
 	results = list(/datum/reagent/oxygen = 2.5, /datum/reagent/hydrogen = 5)
