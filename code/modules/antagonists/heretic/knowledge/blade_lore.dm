@@ -1,6 +1,42 @@
 /datum/heretic_knowledge_tree_column/blade
 	route = PATH_BLADE
 	ui_bgr = "node_blade"
+	complexity = "Hard"
+	complexity_color = COLOR_RED
+	icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "dark_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	description = list(
+		"The Path of Blade is as the name suggests.",
+		"You are highly competent at cutting your opponents to ribbons.",
+		"Pick this path if you want to fight, and you want to be the best at fighting.",
+	)
+	pros = list(
+		"Capable of blocking incoming attacks, retaliating with a riposte.",
+		"Rapidly deals damage through dual-wielded blades and channeled strikes.",
+		"High defense against stuns and knockdowns.",
+		"Highly lethal combatant in a direct combat with a single opponent.",
+	)
+	cons = list(
+		"Requires a high degree of skill input.",
+		"Without blades, the path loses most of its fighting power.",
+		"Lacks mobility options.",
+		"Lacks environmental protections.",
+	)
+	tips = list(
+		"Your Mansus Grasp will stun your opponent if they are attacked from behind or while they are prone. This also locks them in the room they are in until the mark is detonated. Triggering the mark will grant you a orbiting knife that will protect you from one melee or ranged attack.",
+		"You have the highest blade cap out of all paths (A total of 4). But since they require silver or titanium to craft, you might be strapped for ingredients if the miners aren't doing their job. If you need materials, shuttle walls and seats are a source of titanium metal, and surgery tables a source of silver.",
+		"You are highly reliant on approaching opponents in melee. Slips, bolas and beartraps are your worst enemy. You can counteract slips by crafting a pair of Greaves Of The Prophet, or remove restraints with Ashen Passage.",
+		"Realignment will pull you out of stuns and knockdowns, but also pacifies you for the duration.",
+		"With Empowered Blades, your offensive power grows considerably. You are able to fight with dual-wielded blades, and can empower them by activating your Mansus Grasp while wielding your blades. Your blades also deal additional damage to objects, silicons and mechs.",
+		"Maintaining a good offense also creates a good defense. With orbiting blades, you are able to block additional incoming attacks.",
+		"With Furious Steel, you can not only produce several knives for defensive purposes, but throw them by clicking with an empty hand. This gives you additional ranged power in a pinch.",
+		"Use Wolves Among Sheep with caution. Not only does it have a significant cooldown, but it also arms anyone trapped in the effect with you with blades of their own. Use it either as a last ditch defense, or when you know you have the upper hand and need an extra edge. Just don't try to flee the area before taking someone out first.",
+	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_blade
 	knowledge_tier1 = /datum/heretic_knowledge/spell/realignment

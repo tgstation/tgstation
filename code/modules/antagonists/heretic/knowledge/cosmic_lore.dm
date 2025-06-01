@@ -1,6 +1,39 @@
 /datum/heretic_knowledge_tree_column/cosmic
 	route = PATH_COSMIC
 	ui_bgr = "node_cosmos"
+	complexity = "Hard"
+	complexity_color = COLOR_RED
+	icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "cosmic_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	description = list(
+		"The Path of Cosmos revolves around area denial, teleporation, and mastery over space.",
+		"Pick this path if you enjoy adapting to your environment and thinking outside (or inside) the box.",
+	)
+	pros = list(
+		"Control the movement of foes with cosmic fields",
+		"Move in and around space with ease.",
+		"Teleport rapidly across the station.",
+		"Confound opponents with barriers upon barriers.",
+	)
+	cons = list(
+		"Requires you spread your star mark to affect opponents with your cosmic fields.",
+		"Relatively low damage.",
+		"Relatively low direct defense, highly reliant on proper use of abilities.",
+	)
+	tips = list(
+		"Your Mansus Grasp will mark your opponent with a star mark, as well as leave a mark that, when detonated, will teleport your opponent back to the place where the mark was applied and briefly paralyze them.",
+		"Your cosmic runes can quickly teleport you from two different locations instantly. Beware, however; non-heretics are also able to travel through them. Be creative and have your opponents teleport right into a trap. They come out star marked!",
+		"When standing on top of a cosmic rune, you can click on yourself with a empty hand to activate it.",
+		"Star marked opponents cannot cross your cosmic fields willingly. But they can be dragged through!",
+		"Star Blast is both a jaunt ability as well as a disabling tool. Use it to catch several people in your cosmic fields at once.",
+		"Star Touch will prevent your target from teleporting away. Should they fail to break the tether, they will be put to sleep and then teleport to your feet.",
+		"It's Always a good idea to leave one cosmic rune near your ritual rune, it will allow you to quickly kidnap your targets to sacrifice them.",
+	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_cosmic
 	knowledge_tier1 = /datum/heretic_knowledge/spell/cosmic_runes

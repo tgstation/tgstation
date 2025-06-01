@@ -8,9 +8,14 @@ GLOBAL_LIST(heretic_research_tree)
 	///Route that symbolizes what path this is
 	var/route
 	var/icon_state = "dark_blade"
+	/*
+	 * Complexity grades:
+	 * Easy = COLOR_GREEN
+	 * Medium = COLOR_YELLOW
+	 * Hard = COLOR_RED
+	*/
 	var/complexity = "Insane"
-	var/complexity_color = "#FF0000" // Red
-	var/list/description = list("A heretic knowledge tree column, used to define a path of knowledge.")
+	var/complexity_color = "#FFFFFF"
 	var/list/icon = list(
 		"icon" = 'icons/obj/weapons/khopesh.dmi',
 		"state" = "dark_blade",
@@ -18,6 +23,7 @@ GLOBAL_LIST(heretic_research_tree)
 		"dir" = SOUTH,
 		"moving" = FALSE,
 	)
+	var/list/description = list("A heretic knowledge tree column, used to define a path of knowledge.")
 	var/list/pros = list("Is bad", "Is very bad", "Is extremely bad")
 	var/list/cons = list("Smells bad", "Looks bad", "Tastes bad")
 	var/list/tips = list("Don't use it", "Don't touch it", "Don't look at it")

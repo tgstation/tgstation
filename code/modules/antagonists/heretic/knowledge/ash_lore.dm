@@ -2,7 +2,7 @@
 	route = PATH_ASH
 	ui_bgr = "node_ash"
 	complexity = "Easy"
-	complexity_color = "#0ff007" // Orange
+	complexity_color = COLOR_GREEN
 	icon = list(
 		"icon" = 'icons/obj/weapons/khopesh.dmi',
 		"state" = "ash_blade",
@@ -12,17 +12,17 @@
 	)
 	description = list(
 		"The Path of Ash revolves around fire, mobility and brutal crowd control against single opponents.",
-		"Play this path if you are new to Heretic, or really enjoy hit and run playstyles."
+		"Play this path if you are new to Heretic, or really enjoy hit and run playstyles.",
 	)
 	pros = list(
 		"Very potent even from the beginning of the path.",
 		"Easy access to a mobility spells and expanded vision.",
-		"Very powerful mark effect."
+		"Very powerful mark effect.",
 	)
 	cons = list(
 		"Has less power than most heretics beyond their starting abilities.",
 		"Lacks durability in long conflicts.",
-		"Reliant on hitting fast and hard before their opponents can mount proper countermeasures."
+		"Reliant on hitting fast and hard before their opponents can mount proper countermeasures.",
 	)
 	tips = list(
 		"Your Mansus Grasp applies a short blind and a mark that puts your opponent into stamina crit when triggered by your blade. The mark can spread to nearby opponents.",
@@ -32,7 +32,7 @@
 		"Volcano blast can make short work of your enemies, should they be foolish enough to stick close to each other. If empowered, it will have no cast time and generate twice the amount of firestacks. Burn the heathens to ashes!",
 		"Do not neglect the Mask of Madness. It will slowly sap the stamina of your enemies and make them hallucinate.",
 		"Make sure to set as many enemies on fire as you possibly can! Nightwatcher's Rebirth will heal you and have its cooldown reduced based on how many mobs you siphon.",
-		"Your ascension grants you complete immunity to environmental hazards, including bombs! But you are still vulnerable to more conventional weaponry. Do not become overconfident."
+		"Your ascension grants you complete immunity to environmental hazards, including bombs! But you are still vulnerable to more conventional weaponry. Do not become overconfident.",
 	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_ash

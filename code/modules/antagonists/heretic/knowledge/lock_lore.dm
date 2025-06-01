@@ -1,6 +1,36 @@
 /datum/heretic_knowledge_tree_column/lock
 	route = PATH_LOCK
 	ui_bgr = "node_lock"
+	complexity = "Medium"
+	complexity_color = COLOR_YELLOW
+	icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "key_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	description = list(
+		"The Path of Lock revolves around access, area denial, theft and gadgets.",
+		"Pick this path if you want a less confrontational playstyle and more interested in being a slippery rat.",
+	)
+	pros = list(
+		"Your mansus grasp can open any lock, unlock every terminal and bypass any access restriction.",
+		"lock heretics get a discount from the knowledge shop, making it the perfect path if you want to experiment with the various trinkets the shop has to offer.",
+	)
+	cons = list(
+		"The weakest heretic path in direct combat, period.",
+		"Very limited direct combat benefits.",
+		"You have no defensive benefits or immunities.",
+		"no mobility or direct additional teleportation",
+		"Highly reliant on sourcing power from other departments, players and the game world.",
+	)
+	tips = list(
+		"Your mansus grasp allows you to access everything, from airlocks, consoles and even exosuits, but it has no additional effects on players. It will however leave a mark that when triggered will make your victim unable to leave the room you are in.",
+		"Your blade also functions as a crowbar! You can store it in utility belts And, in a pitch, use it to force open an airlock.",
+		"Your Eldritch ID can create a portal between 2 different airlocks. Useful if you want to enstablish a secret base.",
+		"Use your labyrinth book to shake off pursuers. It creates impassible walls to anyone but you.",
+	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_knock
 	knowledge_tier1 = /datum/heretic_knowledge/key_ring

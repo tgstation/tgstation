@@ -1,6 +1,42 @@
 /datum/heretic_knowledge_tree_column/moon
 	route = PATH_MOON
 	ui_bgr = "node_moon"
+	complexity = "Hard"
+	complexity_color = COLOR_RED
+	icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "moon_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	description = list(
+		"The Path of Moon revolves around sanity, sowing confusion and discord, and skirting the conventional rules of combat.",
+		"Play this path if you are already experienced with Heretic and want to try something highly unconventional, or simply if you desire to play a pacifist Heretic (Yes, really!)."
+	)
+	pros = list(
+		"High amount of tools to confound foes.",
+		"Sows chaos through the station via lunatics.",
+		"Practically immune to disabling effects while wearing the Resplendent Regalia."
+	)
+	cons = list(
+		"No mobility.",
+		"Mo direct tools to damage your opponents.",
+		"Reliant on misdirection and confusion.",
+		"Lunatics can become liabilities.",
+		"Fairly fragile despite their unique protection mechanics.",
+		"Death while wearing the Resplendent Regalia results in a gorey end.",
+	)
+	tips = list(
+		"Your Mansus Grasp will make your victim briefly hallucinate and apply a mark that, when triggered by your moon blade, will apply confusion and pacify them (the latter will get removed if the victim receives too much damage at once).",
+		"Your moon blade is special compared to the other heretic blades. It can be used even if you are pacified.",
+		"Your passive makes you completely impervious to brain traumas and slowly regenerates your brain health. Makes sure to upgrade it to bolster the regeneration effect.",
+		"Your Resplendent Regalia utterly changes the rules of combat for you and your opponents; You become fully immune to disabling effect, and all damage received (lethal or non lethal) will be converted into brain damage. However. the robes themselves have no armor, and prevent you from using guns as well as pacifying you (you can still use your moon blade).",
+		"Your moon amulette allows you to channel its effects through your moon blade. When toggled on, your Moon blade will no longer do lethal damage, but do sanity damage and become unblockable.",
+		"If the sanity of your opponents goes below  a certain threshold, they'll become a lunatic. Lunatics are prompted to start attacking everyone (including you). Should you want to sacrifice them (or to get them to leave you be), hit them again with your moon blade to put them to sleep.",
+		"Ringleader's Rise summons an army of clones. They do barely any damage, but should they be attacked by non-heretics, they will explode and cause sanity and brain damage to those around them.",
+		"Your ascension will grant you an aura that converts nearby people to loyal lunatics. However, if they have a mindshield implant, their heads will instead detonate after a time.",
+	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_moon
 	knowledge_tier1 = /datum/heretic_knowledge/spell/mind_gate

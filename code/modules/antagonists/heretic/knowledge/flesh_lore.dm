@@ -1,6 +1,41 @@
 /datum/heretic_knowledge_tree_column/flesh
 	route = PATH_FLESH
 	ui_bgr = "node_flesh"
+	complexity = "Varies"
+	complexity_color = COLOR_ORANGE
+	icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "flesh_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	description = list(
+		"The Path of Flesh revolves around summoning ghouls and monstrosities to do your bidding.",
+		"Pick this path if you enjoy the fantasy of being a necromancer commanding legions of allies.",
+	)
+	pros = list(
+		"Can turn dead humanoids into fragile but loyal ghouls.",
+		"Access to a versatile list of summoned minions.",
+		"Your summons are very versatie and can quicky overwhelm the crew should you coordinate your attacks",
+		"Eating organs or being fat grants various boons (depending on the level of your passive).",
+	)
+	cons = list(
+		"A high degree of your progression is obtaining additional summoned monsters.",
+		"You have very little utility beyond your summoned monsters.",
+		"You gain no inherent access to defensive, offensive or mobility spells.",
+		"You are mostly focused around supporting your minions.",
+	)
+	tips = list(
+		"Your Mansus Grasp allows you to turn dead humanoids into ghouls (even mindshielded humanoids like security officers and the captain). It also Leaves a mark that causes heavy bleeding when triggered by your bloody blade.",
+		"As a Flesh Heretic, organs and dead bodies are your best friends! You can use them for rituals, to heal or to gain buffs.",
+		"Your Flesh Surgery spell can heal your summons. Your robes grant you an aura that also heals nearby summons (but not yourself).",
+		"Your Flesh Surgery spell also lets you steal organs from humanoids. Useful if you need a spare liver.",
+		"Raw Prophets can link you and other summons in a telepathic network, allowing for long distance co-ordination.",
+		"Flesh Stalkers are decent combatants with the ability to disguise themselves as small creatures, like beepskies and corgis. They can also utilize an EMP spell, but this can potentially harm them if they transformed into a robot!",
+		"Your success with this path is reliant on how knowledgable or robust your minions are. However, there is always power in numbers; the more minions, the higher your chances of success.",
+		"Your minions are more expendable than you are. Do not be afraid to tell them to go to their deaths. You can just recover them later... maybe.",
+	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_flesh
 	knowledge_tier1 = /datum/heretic_knowledge/limited_amount/flesh_ghoul

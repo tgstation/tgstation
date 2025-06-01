@@ -1,6 +1,39 @@
 /datum/heretic_knowledge_tree_column/void
 	route = PATH_VOID
 	ui_bgr = "node_void"
+	complexity = "Easy"
+	complexity_color = COLOR_GREEN
+	icon = list(
+		"icon" = 'icons/obj/weapons/khopesh.dmi',
+		"state" = "void_blade",
+		"frame" = 1,
+		"dir" = SOUTH,
+		"moving" = FALSE,
+	)
+	description = list(
+		"The Path of Void focuses on stealth, freezing cold, mobility and depressurization.",
+		"Pick this path if you enjoy being a highly mobile assassin who leaves their foes struggling to catch up.",
+	)
+	pros = list(
+		"Protection from the hazards of space.",
+		"Your spells apply a stacking debuff that chills and slows targets.",
+		"High amount of mobility spells.",
+		"Highly stealthy.",
+	)
+	cons = list(
+		"Though protected from space, you are not nearly as mobile in it as you are on foot.",
+		"Has a difficult time fighting opponents immune to cold effects.",
+		"Has a difficult time with silicon-based lifeforms.",
+	)
+	tips = list(
+		"Your Mansus Grasp allows you to mute your targets, making it ideal for silent assassinations (keep in mind that it won't short circuit their suit sensors, make sure you turn them off after you kill them). Yhe grasp also applies a mark that when triggered by the void blade will apply the maximum amount of stacks of void chill to your target, slowing them down to a crawl.",
+		"Void Cloak can be used to hide one of your blades and a Codex Cicatrix when the hood is down,  while acting as a focus when it's up.",
+		"Void chill is a debuff applied by your spells, your grasp, your mark and your blade once you unlock the upgrade. Each stack slows your target movement speed by 10% and make them gradually colder, up to a maximum of 5 stacks.",
+		"At 5 stacks void chill will also prevent your target from heating up.",
+		"You are immune to low pressure and cold damage at the start of the shift. Upgrade your passive to level 2 to no longer need to breathe. Use this to your advantage.",
+		"Void prison can put a target in stasis for 10 seconds. Ideal if you are fighting multiple opponents and need to isolate one target at a time.",
+		"Void Conduit is your signature ability. It slowly destroys windows and airlocks around its area of effect. Use it to depressurize the station and expand your domain.",
+	)
 
 	start = /datum/heretic_knowledge/limited_amount/starting/base_void
 	knowledge_tier1 = /datum/heretic_knowledge/spell/void_phase
