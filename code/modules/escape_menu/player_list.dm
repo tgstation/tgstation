@@ -26,9 +26,11 @@
 			)
 		)
 		for(var/client/admin as anything in GLOB.admins)// - client) //we list admins first
+//			if(admin.holder.fakekey) //admin's hiding, don't rat them out.
+//				continue
 			if(horizontal_amount >= 280)
 				horizontal_amount = -170
-				vertical_amount -= 30 //admins push you further down for their feedback links
+				vertical_amount -= 30 //admins push further down for feedback links to fit
 			page_holder.give_screen_object(
 				new /atom/movable/screen/escape_menu/text/clickable/ignoring(
 					null,
@@ -100,7 +102,7 @@
 				null,
 				/* hud_owner = */ null,
 				/* escape_menu = */ src,
-				/* button_text = */"Ignored",
+				/* button_text = */ "Ignored",
 				/* offset = */ list(vertical_amount, 0),
 			)
 		)
@@ -116,7 +118,7 @@
 					/* hud_owner = */ null,
 					/* escape_menu = */ src,
 					/* button_text = */ ignored_key,
-					/* offset = */ list(vertical_amount,horizontal_amount),
+					/* offset = */ list(vertical_amount, horizontal_amount),
 					/* font_size = */ 12,
 					/* on_click_callback = */ CALLBACK(src, PROC_REF(ignore_or_unignore), ignored_key),
 				)
@@ -127,20 +129,21 @@
 		null,
 		/* hud_owner = */ null,
 		/* button_text = */ null,
-		/* button_text = */ null,
+		/* tooltip_text = */ null,
 		/* pixel_offset = */ list(280, -150),
-		CALLBACK(page_holder, TYPE_PROC_REF(/datum/screen_object_holder, scroll), TRUE, vertical_amount),
-		/* button_overlay = */ "resources",
+		CALLBACK(page_holder, TYPE_PROC_REF(/datum/screen_object_holder, scroll), TRUE),
+		/* button_overlay = */ "scroll_up",
 	))
 	page_holder.give_screen_object(new /atom/movable/screen/escape_menu/lobby_button/small(
 		null,
 		/* hud_owner = */ null,
 		/* button_text = */ null,
-		/* button_text = */ null,
+		/* tooltip_text = */ null,
 		/* pixel_offset = */ list(280, -220),
-		CALLBACK(page_holder, TYPE_PROC_REF(/datum/screen_object_holder, scroll), FALSE, vertical_amount),
-		/* button_overlay = */ "resources",
+		CALLBACK(page_holder, TYPE_PROC_REF(/datum/screen_object_holder, scroll)),
+		/* button_overlay = */ "scroll_down",
 	))
+	page_holder.lowest_point = vertical_amount
 
 /datum/escape_menu/proc/ignore_or_unignore(ckey, atom/movable/screen/escape_menu/text/clickable/ignoring/source)
 	var/adding = FALSE

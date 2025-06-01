@@ -36,7 +36,7 @@
 ///Scrolls the text upwards (by lowering maptext_y), called by the UI.
 /atom/movable/screen/escape_menu/text/proc/scroll_up()
 	animate(src,
-		maptext_y = (maptext_y - 60),
+		maptext_y = (maptext_y - 120),
 		time = (1 SECONDS),
 		easing = CUBIC_EASING|EASE_OUT,
 	)
@@ -44,7 +44,7 @@
 ///Scrolls the text downwards (by increasing maptext_y), called by the UI.
 /atom/movable/screen/escape_menu/text/proc/scroll_down()
 	animate(src,
-		maptext_y = (maptext_y + 60),
+		maptext_y = (maptext_y + 120),
 		time = (1 SECONDS),
 		easing = CUBIC_EASING|EASE_OUT,
 	)
