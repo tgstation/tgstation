@@ -1,0 +1,7 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - server: "increment DB schema version to 5.32"
+  - server: "changed column name in manifest table from character to character_name because the former is a reserved word"
+  - bugfix: "changed round start manifest DB queries from dozens of individual inserts to one mass insert"
+  - bugfix: "hopefully fixed some lag on round start"
