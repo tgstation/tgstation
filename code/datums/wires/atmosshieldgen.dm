@@ -12,4 +12,3 @@
 	if(!generator.anchored)
 		return
 	generator.toggle()
-	..()
