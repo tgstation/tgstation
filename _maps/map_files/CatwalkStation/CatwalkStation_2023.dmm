@@ -5157,9 +5157,6 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "bEB" = (
@@ -5958,6 +5955,7 @@
 	},
 /obj/item/clothing/glasses/welding,
 /obj/structure/table/reinforced,
+/obj/effect/mapping_helpers/mail_sorting/science/xenobiology,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics/lab)
 "bPW" = (
@@ -6743,9 +6741,6 @@
 	},
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 9
 	},
 /obj/machinery/camera/autoname/directional/east,
 /obj/structure/fireaxecabinet/mechremoval/directional/east,
@@ -12382,7 +12377,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/science/xenobiology)
 "dKs" = (
-/obj/structure/disposalpipe/sorting/mail{
+/obj/structure/disposalpipe/junction{
 	dir = 4
 	},
 /turf/open/floor/iron/dark/smooth_large,
@@ -13683,7 +13678,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
-/obj/effect/mapping_helpers/mail_sorting/science/xenobiology,
 /turf/open/floor/iron/dark,
 /area/station/science/xenobiology)
 "ecw" = (
@@ -17419,9 +17413,10 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/junction{
-	dir = 8
+/obj/structure/disposalpipe/segment{
+	dir = 9
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "fmj" = (
@@ -25484,7 +25479,9 @@
 "hDf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail/flip,
+/obj/effect/mapping_helpers/mail_sorting/science/robotics,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics)
 "hDg" = (
@@ -28770,14 +28767,10 @@
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/hallway/primary/central)
 "iCa" = (
-/obj/effect/turf_decal/siding/purple{
+/obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/siding/purple{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics)
 "iCd" = (
 /obj/structure/table/reinforced,
@@ -29647,8 +29640,10 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment,
 /obj/structure/extinguisher_cabinet/directional/east,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "iNI" = (
@@ -35454,7 +35449,6 @@
 /obj/effect/turf_decal/siding/purple/corner{
 	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "kxE" = (
@@ -36408,7 +36402,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/sorting/mail{
+/obj/structure/disposalpipe/junction{
 	dir = 8
 	},
 /turf/open/floor/wood/tile,
@@ -38504,6 +38498,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/bot_white,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/science/robotics)
 "lys" = (
@@ -41284,7 +41279,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/mail_sorting/science/rd_office,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/rd)
 "mmN" = (
@@ -43942,7 +43936,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "nec" = (
@@ -48596,9 +48589,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/disposalpipe/sorting/mail/flip{
-	dir = 2
-	},
+/obj/structure/disposalpipe/junction,
 /turf/open/floor/iron,
 /area/station/science/research)
 "ozw" = (
@@ -52633,7 +52624,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/effect/mapping_helpers/mail_sorting/science/research,
 /turf/open/floor/iron,
 /area/station/science/lobby)
 "pKp" = (
@@ -54000,7 +53990,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/junction/flip,
+/obj/structure/disposalpipe/sorting/mail/flip,
+/obj/effect/mapping_helpers/mail_sorting/science/research,
 /turf/open/floor/iron,
 /area/station/science/lobby)
 "qeG" = (
@@ -62876,9 +62867,7 @@
 "sOn" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/window/reinforced/tinted/spawner/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 2
-	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/cable,
 /turf/open/floor/iron/white/textured_edge{
 	dir = 8
@@ -69233,7 +69222,6 @@
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "uHe" = (
@@ -70372,6 +70360,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "uZV" = (
@@ -70693,7 +70682,6 @@
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/effect/mapping_helpers/mail_sorting/science/robotics,
 /turf/open/floor/iron,
 /area/station/science/robotics)
 "veS" = (
@@ -117132,7 +117120,7 @@ jFH
 jFH
 uGP
 kxo
-iCa
+idj
 lbe
 idj
 idj
@@ -117903,7 +117891,7 @@ akq
 tsJ
 viD
 hYO
-rrF
+iCa
 bEw
 rOk
 rrF
