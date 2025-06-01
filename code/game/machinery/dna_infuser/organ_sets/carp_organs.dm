@@ -70,6 +70,7 @@
 	head.unarmed_damage_high = 15
 	head.unarmed_effectiveness = 15
 	head.unarmed_attack_effect = ATTACK_EFFECT_BITE
+	head.unarmed_sharpness = SHARP_POINTY
 
 /obj/item/organ/tongue/carp/on_mob_remove(mob/living/carbon/tongue_owner)
 	. = ..()
@@ -87,6 +88,7 @@
 	head.unarmed_damage_high = initial(head.unarmed_damage_high)
 	head.unarmed_effectiveness = initial(head.unarmed_effectiveness)
 	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
+	head.unarmed_sharpness = initial(head.unarmed_sharpness)
 
 /obj/item/organ/tongue/carp/on_life(seconds_per_tick, times_fired)
 	. = ..()
