@@ -47,24 +47,12 @@
 	)
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/text/clickable(
-			null,
-			/* hud_owner = */ null,
-			/* escape_menu = */ src,
-			/* button_text = */ "Player List",
-			/* offset = */ list(-296, -240),
-			/* font_size = */ 24,
-			/* on_click_callback = */ CALLBACK(src, PROC_REF(open_player_list)),
-		)
-	)
-
-	page_holder.give_screen_object(
 		new /atom/movable/screen/escape_menu/text/clickable/leave_body(
 			null,
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Leave Body",
-			/* offset = */ list(-336, -240),
+			/* offset = */ list(-296, -240),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(open_leave_body)),
 		)
