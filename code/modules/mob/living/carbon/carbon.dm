@@ -1127,8 +1127,7 @@
 	. = ..()
 	// Wash equipped stuff that cannot be covered
 	for(var/obj/item/held_thing in held_items)
-		if(held_thing.wash(clean_types))
-			. = TRUE
+		. |= held_thing.wash(clean_types)
 
 	// Check and wash stuff that isn't covered
 	var/covered = check_covered_slots()

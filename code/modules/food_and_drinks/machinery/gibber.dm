@@ -304,5 +304,10 @@
 			victim.gib(DROP_ALL_REMAINS)
 
 /obj/machinery/gibber/proc/on_cleaned(obj/source_component, obj/source)
+	SIGNAL_HANDLER
+
+	. = NONE
+
 	dirty = FALSE
 	update_appearance(UPDATE_OVERLAYS)
+	. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
