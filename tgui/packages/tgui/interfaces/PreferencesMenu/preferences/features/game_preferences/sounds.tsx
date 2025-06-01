@@ -116,3 +116,11 @@ export const sound_ai_vox: Feature<number> = {
   description: 'Volume of vocal AI announcements (also known as "VOX").',
   component: FeatureSliderInput,
 };
+
+export const sound_changeling_absorb: FeatureToggle = {
+  name: 'Changeling absorption sound',
+  category: 'SOUND',
+  description:
+    'Enable or disable the sound effect when a changeling absorbs someone.',
+  component: CheckboxInput,
+};

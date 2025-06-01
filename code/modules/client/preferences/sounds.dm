@@ -143,3 +143,9 @@
 /// default value is max/2 because 100 1x modifier, while 200 is 2x
 /datum/preference/numeric/sound_ghost_poll_prompt_volume/create_default_value()
 	return maximum/2
+
+//controls if players hear the changeling absorb affect
+/datum/preference/toggle/sound_changeling_absorb
+	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
+	savefile_key = "sound_changeling_absorb"
+	savefile_identifier = PREFERENCE_PLAYER
