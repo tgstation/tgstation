@@ -322,6 +322,7 @@ SUBSYSTEM_DEF(dynamic)
 		while(!COOLDOWN_FINISHED(src, midround_admin_cancel_period))
 			if(midround_admin_cancel)
 				QDEL_LIST(rulesets_weighted)
+				COOLDOWN_START(src, midround_cooldown, get_ruleset_cooldown(range))
 				return FALSE
 			if(midround_admin_reroll && length(rulesets_weighted) >= 2)
 				midround_admin_reroll = FALSE
