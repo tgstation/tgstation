@@ -48,7 +48,7 @@
 	///How much breath partial pressure is a safe amount of plasma. 0 means that we are immune to plasma.
 	var/safe_plasma_max = 0.05
 	///The required partial pressure of water_vapor for not suffocating.
-	var/safe_water_level = 16 // same as oxygen
+	var/safe_water_level = 0
 	var/n2o_detect_min = 0.08 //Minimum n2o for effects
 	var/n2o_para_min = 1 //Sleeping agent
 	var/n2o_sleep_min = 5 //Sleeping agent
@@ -142,6 +142,8 @@
 		add_gas_reaction(/datum/gas/plasma, always = PROC_REF(breathe_plasma))
 	if(safe_plasma_max)
 		add_gas_reaction(/datum/gas/plasma, while_present = PROC_REF(too_much_plasma), on_loss = PROC_REF(safe_plasma))
+	if(safe_water_level)
+		add_gas_reaction(/datum/gas/water_vapor, always = PROC_REF(breathe_water))
 	add_gas_reaction(/datum/gas/bz, while_present = PROC_REF(too_much_bz))
 	add_gas_reaction(/datum/gas/freon, while_present = PROC_REF(too_much_freon))
 	add_gas_reaction(/datum/gas/halon, while_present = PROC_REF(too_much_halon))

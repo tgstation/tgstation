@@ -267,6 +267,7 @@
 	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
 	food_tastes = list("gross fish" = 1)
 	safe_oxygen_min = 0 //We don't breathe this
+	safe_water_level = 16 //We breathe this
 
 	/// Bodypart overlay applied to the chest where the lungs are in
 	var/datum/bodypart_overlay/simple/gills/gills
