@@ -6,7 +6,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Resume",
-			/* offset = */ list(-136, -240),
+			/* offset = */ list(-136, -260),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_resume)),
 		)
@@ -18,7 +18,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Character",
-			/* offset = */ list(-176, -242),
+			/* offset = */ list(-171, -262),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_open_character_settings)),
 		)
@@ -30,7 +30,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Settings",
-			/* offset = */ list(-216, -240),
+			/* offset = */ list(-206, -260),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_open_game_settings)),
 		)
@@ -42,7 +42,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Admin Help",
-			/* offset = */ list(-256, -240),
+			/* offset = */ list(-241, -260),
 		)
 	)
 
@@ -52,7 +52,7 @@
 			/* hud_owner = */ null,
 			/* escape_menu = */ src,
 			/* button_text = */ "Leave Body",
-			/* offset = */ list(-296, -240),
+			/* offset = */ list(-276, -260),
 			/* font_size = */ 24,
 			/* on_click_callback = */ CALLBACK(src, PROC_REF(open_leave_body)),
 		)
