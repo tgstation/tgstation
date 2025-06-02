@@ -1550,10 +1550,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 /obj/item/fish/proc/undo_petted()
 	fish_flags &= ~FISH_FLAG_PETTED
 
-/obj/item/fish/update_atom_colour()
-	. = ..()
-	aquarium_vc_color = color || initial(aquarium_vc_color)
-
 ///Proc called in trophy_fishes.dm, when a fish is mounted on persistent trophy mounts
 /obj/item/fish/proc/persistence_save(list/data)
 	return
