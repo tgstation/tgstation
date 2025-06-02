@@ -1148,6 +1148,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 	affected_mob.mob_mood.adjust_sanity(-7.5 * REM * seconds_per_tick, minimum = SANITY_INSANE)
 	if(affected_mob.mob_mood != null && affected_mob.mob_mood.sanity < (SANITY_CRAZY))
+		affected_mob.adjust_drowsiness_up_to(5 SECONDS, 30 SECONDS)
 		if(SPT_PROB(25, seconds_per_tick))
 			affected_mob.emote(pick("cry","frown","pout","whimper","sigh"))
 		if(SPT_PROB(3, seconds_per_tick))
