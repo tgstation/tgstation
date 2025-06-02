@@ -34,14 +34,14 @@ interface spawnPreferences {
 }
 
 interface currentList {
-  Atoms: {
+  atoms: {
     [key: string]: AtomData;
   };
 }
 
 export function CreateObject(props: CreateObjectProps) {
   const { act, data } = useBackend<spawnPanelData>();
-  const { setAdvancedSettings, iconSettings, objList = { Atoms: {} } } = props;
+  const { setAdvancedSettings, iconSettings, objList = { atoms: {} } } = props;
 
   const [tooltipIcon, setTooltipIcon] = useState(false);
   const [selectedObj, setSelectedObj] = useState<string | null>(null);
@@ -92,11 +92,11 @@ export function CreateObject(props: CreateObjectProps) {
       setSelectedObj(data.copied_type);
       setQuery(data.copied_type);
 
-      const copiedAtom: AtomData = objList.Atoms[data.copied_type];
+      const copiedAtom: AtomData = objList.atoms[data.copied_type];
       setSortBy(listTypes[copiedAtom.type]);
       setSearchBy(true);
 
-      const list = objList.Atoms;
+      const list = objList.atoms;
       if (list[data.copied_type]) {
         props.onIconSettingsChange?.({
           icon: list[data.copied_type].icon,

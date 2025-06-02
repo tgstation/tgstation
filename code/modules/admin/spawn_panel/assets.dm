@@ -16,10 +16,10 @@
 		/obj/pathfind_guy,
 	))
 
-	data["Atoms"] = list()
+	data["atoms"] = list()
 
 	for(var/obj/each_object as anything in typesof(/obj))
-		data["Atoms"][each_object] = list(
+		data["atoms"][each_object] = list(
 			"icon" = each_object?.icon_preview || each_object?.icon || "none",
 			"icon_state" = each_object?.icon_state_preview || each_object?.icon_state || "none",
 			"name" = each_object.name,
@@ -29,7 +29,7 @@
 		)
 
 	for(var/turf/each_turf as anything in typesof(/turf))
-		data["Atoms"][each_turf] = list(
+		data["atoms"][each_turf] = list(
 			"icon" = each_turf?.icon || "noneturf",
 			"icon_state" = each_turf?.icon_state || "noneturf",
 			"name" = each_turf.name,
@@ -39,7 +39,7 @@
 		)
 
 	for(var/mob/each_mob as anything in typesof(/mob))
-		data["Atoms"][each_mob] = list(
+		data["atoms"][each_mob] = list(
 			"icon" = each_mob?.icon || "nonemob",
 			"icon_state" = each_mob?.icon_state || "nonemob",
 			"name" = each_mob.name,

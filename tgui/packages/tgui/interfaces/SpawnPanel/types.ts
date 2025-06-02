@@ -36,7 +36,7 @@ export type AtomData = {
 };
 
 export interface CreateObjectData {
-  Atoms: {
+  atoms: {
     [key: string]: AtomData;
   };
 }
