@@ -419,12 +419,11 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	actions_types = list(/datum/action/item_action/adjust_style)
 	species_exception = list(/datum/species/golem)
 	fishing_modifier = 0
-	/// List of icons for choosing our mask style
-	var/list/utopiamask_designs = list()
 
 /obj/item/clothing/mask/gas/mime/utopia/Initialize(mapload)
 	. = ..()
-	utopiamask_designs = list(
+	/// List of icons for our mask style
+	mimemask_designs = list(
 		"Tragedy" = image(icon = src.icon, icon_state = "utopia_tragedy"),
 		"Comedy" = image(icon = src.icon, icon_state = "utopia_comedy"),
 		"Anger" = image(icon = src.icon, icon_state = "utopia_anger"),
@@ -446,7 +445,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	options["Cluelessness"] = "[base_icon_state]_clueless"
 	options["Emotionlessness"] = "[base_icon_state]_emotionless"
 
-	var/choice = show_radial_menu(user, src, utopiamask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+	var/choice = show_radial_menu(user, src, mimemask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
 
@@ -454,6 +453,8 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		icon_state = options[choice]
 		user.update_worn_mask()
 		update_item_action_buttons()
+
+		balloon_alert(user, "morphed into [choice]")
 		to_chat(user, span_notice("Your Stage Mask has now morphed into [choice]!"))
 		return TRUE
 
