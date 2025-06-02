@@ -44,6 +44,8 @@
 	var/poll_ignore_define = POLL_IGNORE_HERETIC_MONSTER
 	/// This is used for the drafting system. By default is 0 (Meaning it won't show up in the draft)
 	var/drafting_tier = 0
+	/// Used for determining from which category in the UI this was bought in.
+	var/bought_category = null
 
 /** Called when the knowledge is first researched.
  * This is only ever called once per heretic.

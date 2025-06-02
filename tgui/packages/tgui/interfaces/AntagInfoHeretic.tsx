@@ -11,6 +11,7 @@ import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { logger } from '../logging';
 import {
   Objective,
   ObjectivePrintout,
@@ -57,10 +58,14 @@ type Knowledge = {
   gainFlavor: string;
   cost: number;
   bgr: string;
-  disabled: BooleanLike;
-  finished: BooleanLike;
+  bought_category?: BoughtAt;
   ascension: BooleanLike;
 };
+
+enum BoughtAt {
+  Tree = 'tree',
+  Shop = 'shop',
+}
 
 type KnowledgeTier = {
   nodes: Knowledge[];
@@ -249,17 +254,18 @@ const InformationSection = () => {
   );
 };
 
-const isPowerResearched = (knowledge: Knowledge) => {
+const KnowledgeTree = () => {
   const { data } = useBackend<Info>();
   const { knowledge_tiers } = data;
-  return knowledge_tiers.some((tier) =>
-    tier.nodes.some((node) => node.path === knowledge.path && node.finished),
-  );
-};
 
-const KnowledgeTree = (props) => {
-  const { data } = useBackend<Info>();
-  const { knowledge_tiers } = data;
+  const nodesToShow = knowledge_tiers
+    .map((tier) =>
+      tier.nodes.filter(
+        (node) =>
+          node.bought_category && node.bought_category === BoughtAt.Tree,
+      ),
+    )
+    .filter((tier) => tier.length > 0);
 
   return (
     <Section title="Research Tree" fill scrollable>
@@ -267,9 +273,9 @@ const KnowledgeTree = (props) => {
         <span style={hereticYellow}>DAWN</span>
       </Box>
       <Stack vertical>
-        {knowledge_tiers.length === 0
+        {nodesToShow.length === 0
           ? 'None!'
-          : knowledge_tiers.map((tier, i) => (
+          : nodesToShow.map((tier, i) => (
               <Stack.Item key={i}>
                 <Stack
                   justify="center"
@@ -277,7 +283,7 @@ const KnowledgeTree = (props) => {
                   backgroundColor="transparent"
                   wrap="wrap"
                 >
-                  {tier.nodes.map((node) => (
+                  {tier.map((node) => (
                     <KnowledgeNode key={node.path} node={node} />
                   ))}
                 </Stack>
@@ -291,10 +297,15 @@ const KnowledgeTree = (props) => {
 
 type KnowledgeNodeProps = {
   node: Knowledge;
+  buy_source?: BoughtAt;
 };
 
-const KnowledgeNode = ({ node }: KnowledgeNodeProps) => {
-  const { act } = useBackend();
+const KnowledgeNode = ({
+  node,
+  buy_source = BoughtAt.Tree,
+}: KnowledgeNodeProps) => {
+  const { data, act } = useBackend<Info>();
+  const { charges } = data;
   return (
     <Stack.Item key={node.name}>
       <Button
@@ -302,9 +313,9 @@ const KnowledgeNode = ({ node }: KnowledgeNodeProps) => {
         tooltip={`${node.name}:
           ${node.desc}`}
         onClick={
-          node.disabled || node.finished
-            ? undefined
-            : () => act('research', { path: node.path })
+          node.bought_category
+            ? () => logger.warn('This node has already been bought!')
+            : () => act('research', { path: node.path, source: buy_source })
         }
         width={node.ascension ? '192px' : '64px'}
         height={node.ascension ? '192px' : '64px'}
@@ -316,9 +327,9 @@ const KnowledgeNode = ({ node }: KnowledgeNodeProps) => {
         <DmIcon
           icon="icons/ui_icons/antags/heretic/knowledge.dmi"
           icon_state={
-            node.disabled
+            charges < node.cost
               ? 'node_locked'
-              : node.finished
+              : node.bought_category
                 ? 'node_finished'
                 : node.bgr
           }
@@ -348,7 +359,7 @@ const KnowledgeNode = ({ node }: KnowledgeNodeProps) => {
           textColor="white"
           bold
         >
-          {!node.finished && (node.cost > 0 ? node.cost : 'FREE')}
+          {!node.bought_category && (node.cost > 0 ? node.cost : 'FREE')}
         </Box>
       </Button>
       {!!node.ascension && (
@@ -379,7 +390,7 @@ const KnowledgeShop = () => {
         <Stack fill scrollable wrap="wrap">
           {tier.map((knowledge) => (
             <Stack.Item key={`knowledge-${knowledge.path}`}>
-              <KnowledgeNode node={knowledge} />
+              <KnowledgeNode node={knowledge} buy_source={BoughtAt.Shop} />
             </Stack.Item>
           ))}
         </Stack>
@@ -418,36 +429,59 @@ const ResearchInfo = () => {
 
 const PathInfo = () => {
   const { data } = useBackend<Info>();
-  const { paths } = data;
-  const [currentTab, setCurrentTab] = useState(0);
+  const { paths, knowledge_tiers } = data;
+
+  const boughtPathKnowledge = knowledge_tiers
+    .flatMap((tier) => tier.nodes)
+    .find(
+      (node) =>
+        paths.some((path) => path.starting_knowledge.path === node.path) &&
+        node.bought_category !== undefined,
+    );
+
+  const pathBoughtIndex = paths.findIndex(
+    (path) => path.starting_knowledge.path === boughtPathKnowledge?.path,
+  );
+
+  const [currentTab, setCurrentTab] = useState(
+    pathBoughtIndex !== -1 ? pathBoughtIndex : 0,
+  );
 
   return (
     <Stack fill>
-      <Stack.Item>
-        <Tabs fluid vertical>
-          {paths.map((path, index) => (
-            <Tabs.Tab
-              key={index}
-              icon="info"
-              selected={currentTab === index}
-              onClick={() => setCurrentTab(index)}
-            >
-              {path.route}
-            </Tabs.Tab>
-          ))}
-        </Tabs>
-      </Stack.Item>
+      {!boughtPathKnowledge && (
+        <Stack.Item>
+          <Tabs fluid vertical>
+            {paths.map((path, index) => (
+              <Tabs.Tab
+                key={index}
+                icon="info"
+                selected={currentTab === index}
+                onClick={() => setCurrentTab(index)}
+              >
+                {path.route}
+              </Tabs.Tab>
+            ))}
+          </Tabs>
+        </Stack.Item>
+      )}
       <Stack.Item grow>
-        <TabContent path={paths[currentTab]} />
+        <PathContent
+          path={paths[currentTab]}
+          isPathSelected={!!boughtPathKnowledge}
+        />
       </Stack.Item>
     </Stack>
   );
 };
 
-const TabContent = ({ path }: { path: HereticPath }) => {
-  // const isCurrentPath = (route: string) => {
-  //   return path.starting_knowledge.path ===
-  // };
+const PathContent = ({
+  path,
+  isPathSelected,
+}: {
+  path: HereticPath;
+  isPathSelected: boolean;
+}) => {
   return (
     <Section
       title={
@@ -460,47 +494,58 @@ const TabContent = ({ path }: { path: HereticPath }) => {
       scrollable
     >
       <Stack vertical>
-        <Stack.Item verticalAlign="center" textAlign="center">
-          <h1>Choose Path:</h1> <KnowledgeNode node={path.starting_knowledge} />
-          <div>
-            <h3>
-              Complexity:{' '}
-              <span style={{ color: path.complexity_color }}>
-                {path.complexity}
-              </span>
-            </h3>
-          </div>
-        </Stack.Item>
+        {!isPathSelected && (
+          <Stack.Item verticalAlign="center" textAlign="center">
+            <h1>Choose Path:</h1>{' '}
+            <KnowledgeNode node={path.starting_knowledge} />
+            <div>
+              <h3>
+                Complexity:{' '}
+                <span style={{ color: path.complexity_color }}>
+                  {path.complexity}
+                </span>
+              </h3>
+            </div>
+          </Stack.Item>
+        )}
+
         <Stack.Item>
           <b>Description:</b>{' '}
           {path.description.map((line, index) => (
             <div key={index}>{line}</div>
           ))}
         </Stack.Item>
-        <Stack.Item>
-          <b>Pros:</b>
-          <div>
-            {path.pros.map((pro, index) => (
-              <p key={index}>{pro}</p>
-            ))}
-          </div>
-        </Stack.Item>
-        <Stack.Item>
-          <b>Cons:</b>
-          <div>
-            {path.cons.map((con, index) => (
-              <p key={index}>{con}</p>
-            ))}
-          </div>
-        </Stack.Item>
-        {/* <Stack.Item>
-          <b>Tips:</b>
-          <ul>
-            {path.tips.map((tip, index) => (
-              <li key={index}>{tip}</li>
-            ))}
-          </ul>
-        </Stack.Item> */}
+        {!isPathSelected && (
+          <>
+            <Stack.Item>
+              <b>Pros:</b>
+              <div>
+                {path.pros.map((pro, index) => (
+                  <p key={index}>{pro}</p>
+                ))}
+              </div>
+            </Stack.Item>
+            <Stack.Item>
+              <b>Cons:</b>
+              <div>
+                {path.cons.map((con, index) => (
+                  <p key={index}>{con}</p>
+                ))}
+              </div>
+            </Stack.Item>
+          </>
+        )}
+
+        {isPathSelected && (
+          <Stack.Item textAlign="left" mt={2} mb={1}>
+            <b>Tips:</b>
+            <ul>
+              {path.tips.map((tip, index) => (
+                <li key={index}>{tip}</li>
+              ))}
+            </ul>
+          </Stack.Item>
+        )}
       </Stack>
     </Section>
   );

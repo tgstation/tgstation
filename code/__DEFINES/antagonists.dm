@@ -111,6 +111,10 @@
 #define HERETIC_NO_LIVING_HEART 0
 #define HERETIC_HAS_LIVING_HEART 1
 
+/// Sources of knowledge purchased for heretics, used for positioning in the UI
+#define HERETIC_KNOWLEDGE_TREE "tree"
+#define HERETIC_KNOWLEDGE_SHOP "shop"
+
 /// A define used in ritual priority for heretics.
 #define MAX_KNOWLEDGE_PRIORITY 100
 

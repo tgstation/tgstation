@@ -81,7 +81,7 @@
  * such as when you are not using the auto-update system.
  */
 /datum/proc/update_data_for_all_viewers()
-	for(var/datum/tgui/ui in open_uis)
+	for(var/datum/tgui/ui as anything in open_uis)
 		ui.send_update()
 
 /**

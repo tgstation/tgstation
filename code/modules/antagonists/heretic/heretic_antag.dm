@@ -62,6 +62,8 @@
 	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava, /turf/open/chasm))
+	/// A static list of all paths we can take and related info for the UI
+	var/static/list/path_info = list()
 	/// Controls what types of turf we can spread rust to
 	var/rust_strength = 1
 	/// Wether we are allowed to ascend
@@ -137,17 +139,17 @@
 	knowledge_data["name"] = initial(knowledge.name)
 	knowledge_data["gainFlavor"] = initial(knowledge.gain_text)
 	knowledge_data["cost"] = heretic_knowledge_tree[knowledge][HKT_COST]
-	knowledge_data["disabled"] = (!done) && (initial(knowledge.cost) > knowledge_points)
 	knowledge_data["bgr"] = heretic_knowledge_tree[knowledge][HKT_UI_BGR]
-	knowledge_data["finished"] = done
-	knowledge_data["ascension"] = ispath(knowledge,/datum/heretic_knowledge/ultimate)
+	knowledge_data["ascension"] = ispath(knowledge, /datum/heretic_knowledge/ultimate)
 
 	//description of a knowledge might change, make sure we are not shown the initial() value in that case
 	if(done)
 		var/datum/heretic_knowledge/knowledge_instance = researched_knowledge[knowledge]
 		knowledge_data["desc"] = knowledge_instance.desc
+		knowledge_data["bought_category"] = knowledge_instance.bought_category
 	else
 		knowledge_data["desc"] = initial(knowledge.desc)
+		knowledge_data["bought_category"] = null
 
 	return knowledge_data
 
@@ -166,12 +168,8 @@
 	data["objectives"] = get_objectives()
 	data["can_change_objective"] = can_assign_self_objectives
 
-	for(var/datum/heretic_knowledge_tree_column/path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
-		path = new path()
-		data["paths"] += list(path.get_ui_data(src))
-		qdel(path)
+	data["paths"] = path_info
 
-	data["charges"] = knowledge_points
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
 
@@ -184,7 +182,7 @@
 		var/list/knowledge_data = get_knowledge_data(knowledge, TRUE)
 
 		while(heretic_knowledge_tree[knowledge][HKT_DEPTH] > tiers.len)
-			tiers += list(list("nodes"=list()))
+			tiers += list(list("nodes" = list()))
 
 		tiers[heretic_knowledge_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
 
@@ -209,7 +207,8 @@
 	for(var/index in 1 to length(side_knowledges))
 		shop_knowledge += list(list())
 		for(var/datum/heretic_knowledge/knowledge as anything in side_knowledges[index])
-			var/list/knowledge_data = get_knowledge_data(knowledge, FALSE)
+			var/is_researched = locate(knowledge) in researched_knowledge
+			var/list/knowledge_data = get_knowledge_data(knowledge, is_researched)
 			shop_knowledge[index] += list(knowledge_data)
 
 	data["knowledge_shop"] = shop_knowledge
@@ -232,13 +231,18 @@
 			if(ispath(researched_path, /datum/heretic_knowledge/ultimate))
 				message_admins("Heretic [key_name(owner)] potentially attempted to href exploit to learn ascension knowledge without completing objectives!")
 				CRASH("Heretic attempted to learn a final knowledge despite not being able to ascend!")
-			if(initial(researched_path.cost) > knowledge_points)
-				return FALSE
-			if(!gain_knowledge(researched_path))
+
+			// Check the discounted cost for the knowledge if it's a side knowledge.
+			var/cost = heretic_knowledge_tree["[researched_path]"][HKT_COST]
+			if(cost > knowledge_points)
 				return FALSE
 
+			var/source = params["source"]
+			if(!gain_knowledge(researched_path, source))
+				return FALSE
+			adjust_knowledge_points(-cost, FALSE)
+			update_static_data_for_all_viewers()
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
-			adjust_knowledge_points(-initial(researched_path.cost))
 			return TRUE
 
 /datum/antagonist/heretic/proc/researchable_knowledge(datum/heretic_knowledge/knowledge_path)
@@ -295,13 +299,19 @@
 
 /datum/antagonist/heretic/on_gain()
 	heretic_knowledge_tree = generate_heretic_research_tree()
+	if(!length(path_info))
+		for(var/datum/heretic_knowledge_tree_column/path as anything in subtypesof(/datum/heretic_knowledge_tree_column))
+			path = new path()
+			path_info += list(path.get_ui_data(src))
+			qdel(path)
 
 	if(give_objectives)
 		forge_primary_objectives(heretic_knowledge_tree)
 
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
-		gain_knowledge(starting_knowledge)
+		gain_knowledge(starting_knowledge, update = FALSE)
 
+	update_static_data_for_all_viewers()
 	owner.current.AddElement(/datum/element/leeching_walk/minor)
 
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
@@ -661,9 +671,10 @@
 		to_chat(owner.current, "[span_hear("You hear a whisper...")] [span_hypnophrase(pick_list(HERETIC_INFLUENCE_FILE, "drain_message"))]")
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer)
 
-/datum/antagonist/heretic/proc/adjust_knowledge_points(amount)
-	knowledge_points += max(0, amount) // Don't allow negative knowledge points
-	update_data_for_all_viewers()
+/datum/antagonist/heretic/proc/adjust_knowledge_points(amount, update = TRUE)
+	knowledge_points = max(0, knowledge_points + amount) // Don't allow negative knowledge points
+	if(update)
+		update_data_for_all_viewers()
 
 /datum/antagonist/heretic/roundend_report()
 	var/list/parts = list()
@@ -833,7 +844,7 @@
  *
  * Returns TRUE if the knowledge was added successfully. FALSE otherwise.
  */
-/datum/antagonist/heretic/proc/gain_knowledge(datum/heretic_knowledge/knowledge_type)
+/datum/antagonist/heretic/proc/gain_knowledge(datum/heretic_knowledge/knowledge_type, source = HERETIC_KNOWLEDGE_TREE, update = TRUE)
 	if(!ispath(knowledge_type))
 		stack_trace("[type] gain_knowledge was given an invalid path! (Got: [knowledge_type])")
 		return FALSE
@@ -844,9 +855,12 @@
 		var/choice = tgui_alert(owner.current, "THIS WILL DISABLE BLADE BREAKING, Are you ready to research this?", "Get Final Spell?", list("Yes", "No"))
 		if(choice != "Yes")
 			return FALSE
+	initialized_knowledge.bought_category = source
 	researched_knowledge[knowledge_type] = initialized_knowledge
 	initialized_knowledge.on_research(owner.current, src)
-	update_static_data(owner.current)
+	if(update)
+		update_static_data_for_all_viewers()
+
 	return TRUE
 
 /**
