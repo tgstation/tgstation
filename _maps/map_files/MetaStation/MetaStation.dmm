@@ -14922,6 +14922,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
+"fkF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "fkP" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/airalarm/directional/west,
@@ -17362,6 +17368,10 @@
 	},
 /turf/open/floor/engine,
 /area/station/science/ordnance/burnchamber)
+"giw" = (
+/obj/structure/sign/warning/docking/directional/north,
+/turf/open/space/basic,
+/area/space)
 "giA" = (
 /turf/closed/wall/r_wall,
 /area/station/tcommsat/computer)
@@ -17502,6 +17512,12 @@
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
+"glA" = (
+/obj/effect/turf_decal/bot,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit/departure_lounge)
 "glP" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/sign/poster/contraband/random/directional/east,
@@ -68846,6 +68862,12 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/science/ordnance/testlab)
+"xKd" = (
+/obj/structure/sign/nanotrasen{
+	pixel_y = 32
+	},
+/turf/open/space/basic,
+/area/space)
 "xKh" = (
 /obj/structure/railing{
 	dir = 10
@@ -95216,8 +95238,8 @@ otu
 otu
 otu
 otu
-aaa
-aaa
+otu
+giw
 aaa
 aaa
 aaa
@@ -95471,9 +95493,9 @@ qTJ
 eAe
 mGy
 sou
+fkF
 eem
 wsS
-aaa
 aaa
 aaa
 aaa
@@ -95730,7 +95752,7 @@ hQu
 gRb
 gRb
 gRb
-aaa
+gRb
 aaa
 aaa
 aaa
@@ -95985,9 +96007,9 @@ wRm
 aho
 gAw
 sou
+glA
 lHA
 cSv
-aaa
 aaa
 aaa
 aaa
@@ -96244,7 +96266,7 @@ hQu
 gRb
 gRb
 gRb
-aaa
+gRb
 aaa
 aaa
 aaa
@@ -96755,8 +96777,8 @@ iUm
 aAS
 kJB
 biA
-gRb
-aaa
+iUm
+xKd
 aaf
 aaa
 aaa
@@ -97272,7 +97294,7 @@ hQu
 gRb
 gRb
 gRb
-aaa
+gRb
 aaa
 aaa
 aaa
@@ -97527,10 +97549,10 @@ wRm
 bVB
 gAw
 iBp
+glA
 lHA
 cSv
 qVo
-aaa
 aaa
 aaa
 aaa
@@ -97786,7 +97808,7 @@ hQu
 gRb
 gRb
 gRb
-aaa
+gRb
 aaa
 aaa
 aaa
@@ -98041,9 +98063,9 @@ usD
 jFZ
 oIW
 sou
+glA
 iaQ
 cSv
-aaa
 aaa
 aaa
 aaa
@@ -98298,10 +98320,10 @@ gRb
 iUm
 iUm
 iUm
+gRb
+gRb
 iUm
-iUm
-aaa
-aaa
+giw
 aaa
 aaa
 aaa
