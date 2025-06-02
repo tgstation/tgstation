@@ -143,12 +143,12 @@
 	///What layer we set it to
 	var/target_layer = DUCT_LAYER_DEFAULT
 
-/obj/item/plunger/attack_atom(obj/O, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/plunger/attack_atom(obj/attacked_obj, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(layer_mode)
-		SEND_SIGNAL(O, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, O, target_layer)
+		SEND_SIGNAL(attacked_obj, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, attacked_obj, target_layer)
 		return ..()
 	else
-		if(!O.plunger_act(src, user, reinforced))
+		if(!attacked_obj.plunger_act(src, user, reinforced))
 			return ..()
 
 /obj/item/plunger/throw_impact(atom/hit_atom, datum/thrownthing/tt)

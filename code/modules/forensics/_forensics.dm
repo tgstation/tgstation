@@ -73,29 +73,39 @@
 
 /// Empties the fingerprints list
 /datum/forensics/proc/wipe_fingerprints()
+	if(isnull(fingerprints))
+		return NONE
+
 	fingerprints = null
-	return TRUE
+	return COMPONENT_CLEANED
 
 /// Empties the blood_DNA list
 /datum/forensics/proc/wipe_blood_DNA()
+	if(isnull(blood_DNA))
+		return NONE
+
 	blood_DNA = null
-	return TRUE
+	return COMPONENT_CLEANED
 
 /// Empties the fibers list
 /datum/forensics/proc/wipe_fibers()
+	if(isnull(fibers))
+		return NONE
+
 	fibers = null
-	return TRUE
+	return COMPONENT_CLEANED
 
 /// Handles cleaning up the various forensic types
 /datum/forensics/proc/clean_act(datum/source, clean_types)
 	SIGNAL_HANDLER
 
+	. = NONE
 	if(clean_types & CLEAN_TYPE_FINGERPRINTS)
-		wipe_fingerprints()
+		. |= wipe_fingerprints()
 	if(clean_types & CLEAN_TYPE_BLOOD)
-		wipe_blood_DNA()
+		. |= wipe_blood_DNA()
 	if(clean_types & CLEAN_TYPE_FIBERS)
-		wipe_fibers()
+		. |= wipe_fibers()
 
 /// Adds the given list into fingerprints
 /datum/forensics/proc/add_fingerprint_list(list/fingerprints)

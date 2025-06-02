@@ -61,9 +61,9 @@
 
 /obj/effect/decal/cleanable/wash(clean_types)
 	. = ..()
-	if (. || (clean_types & clean_type))
+	if (. || clean_types & clean_type)
 		qdel(src)
-		return TRUE
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /obj/effect/decal/cleanable/proc/handle_merge_decal(obj/effect/decal/cleanable/merger)
 	if (!reagents && !decal_reagent)

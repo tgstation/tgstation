@@ -947,7 +947,7 @@
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
 		// Should be fine as this gets called before all the important stuff happens
-		if(bodypart_flags & ORGAN_VIRGIN)
+		if(is_creating && !(bodypart_flags & ORGAN_VIRGIN))
 			blood_dna_info = owner.get_blood_dna_list()
 			// need to remove the synethic blood DNA that is initialized
 			// wash also adds the blood dna again
@@ -1019,11 +1019,16 @@
 /// Called when limb's current owner gets washed
 /obj/item/bodypart/proc/on_owner_clean(mob/living/carbon/source, clean_types)
 	SIGNAL_HANDLER
-	wash(clean_types)
+
+	. = NONE
+
+	if(wash(clean_types))
+		. |= COMPONENT_CLEANED
 
 /obj/item/bodypart/wash(clean_types)
 	. = ..()
-
+	if(!.) // Already clean. Nothing to do here.
+		return
 	// always add the original dna to the organ after it's washed
 	if(IS_ORGANIC_LIMB(src) && (clean_types & CLEAN_TYPE_BLOOD))
 		add_blood_DNA(blood_dna_info)
