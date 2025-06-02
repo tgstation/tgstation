@@ -959,7 +959,7 @@
 	name = "surplus prosthetic lungs"
 	desc = "Two fragile, inflatable sacks of air that only barely mimic the function of human lungs. \
 		Offer no protection against EMPs."
-	breath_noise = "a concerningly unstable scratchy whirr. You <b>shouldn't touch this</b> while it's running."
+	breath_noise = "a concerningly unstable scratchy whirr. You <b>shouldn't touch this</b> while it's running"
 	icon_state = "lungs-c-s"
 	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
 	emp_vulnerability = 100
