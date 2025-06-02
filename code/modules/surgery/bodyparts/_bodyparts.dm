@@ -947,7 +947,7 @@
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
 		// Should be fine as this gets called before all the important stuff happens
-		if(is_creating && !bodypart_flags & ORGAN_VIRGIN)
+		if(is_creating && !(bodypart_flags & ORGAN_VIRGIN))
 			blood_dna_info = owner.get_blood_dna_list()
 			// need to remove the synethic blood DNA that is initialized
 			// wash also adds the blood dna again
