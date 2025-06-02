@@ -232,6 +232,24 @@
 		return 0
 	return weight
 
+datum/wound/pierce/bleed/moderate/needle_fail //for blood testamajig
+	name = "Pinprick Pierce"
+	desc = "Patient's skin has been deeply pierced, causing mild bleeding."
+	treat_text_short = "Apply bandaging or suturing."
+	examine_desc = "has a small red pinprick, gently bleeding"
+	initial_flow = 0.5 //very minor, mostly there as fluff and "dont do that idiot" reminder
+	gauzed_clot_rate = 0.1
+	clot_rate = 0.03 // will close quickly on its own
+	internal_bleeding_chance = 0
+	internal_bleeding_coefficient = 1
+	threshold_penalty = 5
+
+
+/datum/wound_pregen_data/flesh_pierce/open_puncture/pinprick
+	wound_path_to_generate = /datum/wound/pierce/bleed/moderate/needle_fail
+	can_be_randomly_generated = FALSE
+	abstract = FALSE
+
 /datum/wound/pierce/bleed/moderate/projectile
 	name = "Minor Skin Penetration"
 	desc = "Patient's skin has been pierced through, causing severe bruising and minor internal bleeding in affected area."
