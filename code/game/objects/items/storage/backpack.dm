@@ -243,27 +243,26 @@
 
 // MEAT MEAT MEAT MEAT MEAT
 
+///This nullifies the force malus from the meat material while not touching other stats.
+#define INVERSE_MEAT_STRENTGH (1 / /datum/material/meat::strength_modifier)
+
 /obj/item/storage/backpack/meat
 	name = "\improper MEAT"
 	desc = "MEAT MEAT MEAT MEAT MEAT MEAT"
 	icon_state = "meatmeatmeat"
 	inhand_icon_state = "meatmeatmeat"
-	force = 15
-	throwforce = 15
+	force = 15 * INVERSE_MEAT_STRENTGH
+	throwforce = 15 * INVERSE_MEAT_STRENTGH
+	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
 	attack_verb_continuous = list("MEATS", "MEAT MEATS")
 	attack_verb_simple = list("MEAT", "MEAT MEAT")
-	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 25) // MEAT
+	custom_materials = list(/datum/material/meat = SHEET_MATERIAL_AMOUNT * 15) // MEAT
 	///Sounds used in the squeak component
 	var/list/meat_sounds = list('sound/effects/blob/blobattack.ogg' = 1)
-	///Reagents added to the edible component, ingested when you EAT the MEAT
+	///Reagents added to the edible component on top of the meat material, ingested when you EAT the MEAT
 	var/list/meat_reagents = list(
-		/datum/reagent/consumable/nutriment/protein = 10,
-		/datum/reagent/consumable/nutriment/vitamin = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 15,
 	)
-	///The food types of the edible component
-	var/foodtypes = MEAT | RAW
-	///How our MEAT tastes. It tastes like MEAT
-	var/list/tastes = list("MEAT" = 1)
 	///Eating verbs when consuming the MEAT
 	var/list/eatverbs = list("MEAT", "absorb", "gnaw", "consume")
 
@@ -273,21 +272,13 @@
 		SOURCE_EDIBLE_INNATE, \
 		/datum/component/edible,\
 		initial_reagents = meat_reagents,\
-		foodtypes = foodtypes,\
-		tastes = tastes,\
+		tastes = list("meat" = 1),\
 		eatverbs = eatverbs,\
 	)
+
 	AddComponent(/datum/component/squeak, meat_sounds)
-	AddComponent(
-		/datum/component/blood_walk,\
-		blood_type = /obj/effect/decal/cleanable/blood,\
-		blood_spawn_chance = 15,\
-		max_blood = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
-	)
-	AddComponent(
-		/datum/component/bloody_spreader,\
-		blood_left = custom_materials[custom_materials[1]] / SHEET_MATERIAL_AMOUNT,\
-	)
+
+#undef INVERSE_MEAT_STRENTGH
 
 /*
  * Satchel Types

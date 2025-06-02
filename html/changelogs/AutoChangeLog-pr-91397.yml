@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "The escape menu no longer blurs the game in the background."
-  - qol: "The escape menu now has a more readable font, and the escape menu's back button is now smaller and in the corner."
