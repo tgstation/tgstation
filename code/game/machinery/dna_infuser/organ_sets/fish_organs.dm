@@ -276,7 +276,6 @@
 
 /obj/item/organ/lungs/fish/Initialize(mapload)
 	. = ..()
-	add_gas_reaction(/datum/gas/water_vapor, always = PROC_REF(breathe_water))
 	respiration_type |= RESPIRATION_OXYGEN //after all, we get oxygen from water
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
 	if(has_gills)
