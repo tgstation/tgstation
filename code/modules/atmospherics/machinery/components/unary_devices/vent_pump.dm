@@ -169,8 +169,7 @@
 	//you cannot unassign from an area we never were assigned to
 	if(isnull(target_area) || assigned_area != target_area)
 		return
-	if(src in assigned_area.excluded_vents)
-		assigned_area.excluded_vents -= src
+	assigned_area.excluded_vents -= src
 	assigned_area.air_vents -= src
 	assigned_area = null
 

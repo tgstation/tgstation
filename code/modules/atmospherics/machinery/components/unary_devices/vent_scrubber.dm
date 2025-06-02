@@ -79,8 +79,7 @@
 	//you cannot unassign from an area we never were assigned to
 	if(isnull(target_area) || assigned_area != target_area)
 		return
-	if(src in assigned_area.excluded_scrubbers)
-		assigned_area.excluded_scrubbers -= src
+	assigned_area.excluded_scrubbers -= src
 	assigned_area.air_scrubbers -= src
 	assigned_area = null
 
