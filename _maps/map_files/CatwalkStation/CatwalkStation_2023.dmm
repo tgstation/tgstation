@@ -13169,10 +13169,8 @@
 /turf/open/floor/iron/textured_large,
 /area/station/security/prison)
 "dVM" = (
-/obj/structure/table,
-/obj/item/t_scanner{
-	pixel_y = 8
-	},
+/obj/structure/rack,
+/obj/effect/spawner/random/techstorage/custom_shuttle,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "dVO" = (
@@ -24132,6 +24130,9 @@
 	},
 /obj/item/multitool{
 	pixel_x = 5
+	},
+/obj/item/t_scanner{
+	pixel_y = 8
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
