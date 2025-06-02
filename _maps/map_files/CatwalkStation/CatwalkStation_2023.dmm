@@ -20161,7 +20161,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/mail_sorting/science/experimentor_lab,
-/obj/structure/disposalpipe/sorting,
+/obj/structure/disposalpipe/sorting/mail,
 /turf/open/floor/iron,
 /area/station/science/research)
 "fZP" = (
