@@ -379,9 +379,9 @@
 /atom/movable/screen/plane_master/rendering_plate/emissive_bloom
 	name = "Emissive bloom plate"
 	documentation = "Plate used to bloom emissives before adding them onto the overlay lighting plane. This relies on game rendering plate,\
-		 which assembles all in-world planes affected by lighting, is above the emissive plane - which allows us to bypass having to fullbright\
-		 the emissive plane on a separate plate before alpha masking the rendering plate copy via multiplying fullbright emissive created here\
-		 with the game plate, which technically achieves the same effect. Odd, but it works, and is significantly graphically cheaper."
+		which assembles all in-world planes affected by lighting, is above the emissive plane - which allows us to bypass having to fullbright\
+		the emissive plane on a separate plate before alpha masking the rendering plate copy via multiplying fullbright emissive created here\
+		with the game plate, which technically achieves the same effect. Odd, but it works, and is significantly graphically cheaper."
 	plane = EMISSIVE_BLOOM_PLATE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
