@@ -339,7 +339,8 @@
 	datum/reagent/source_reagent_typepath,
 	datum/reagent/target_reagent_typepath,
 	multiplier = 1,
-	include_source_subtypes = FALSE
+	include_source_subtypes = FALSE,
+	keep_data = FALSE,
 )
 	if(!ispath(source_reagent_typepath))
 		stack_trace("invalid reagent path passed to convert reagent [source_reagent_typepath]")
@@ -352,6 +353,8 @@
 	var/weighted_purity = 0
 	var/weighted_ph = 0
 	var/reagent_volume = 0
+	///Stores the data value of the reagent to be converted if keep_data is TRUE. Might not work well if include_source_subtypes is TRUE.
+	var/list/reagent_data
 
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
@@ -370,6 +373,8 @@
 
 		//zero the volume out so it gets removed
 		cached_reagent.volume = 0
+		if(keep_data)
+			reagent_data = copy_data(cached_reagent)
 
 		//if we reached here means we have found our specific reagent type so break
 		if(!include_source_subtypes)
@@ -378,7 +383,14 @@
 	//add the new target reagent with the averaged values from the source reagents
 	if(weighted_volume > 0)
 		update_total()
-		add_reagent(target_reagent_typepath, weighted_volume * multiplier, reagtemp = chem_temp, added_purity = (weighted_purity / weighted_volume), added_ph = (weighted_ph / weighted_volume))
+		add_reagent(
+			target_reagent_typepath,
+			weighted_volume * multiplier,
+			data = reagent_data,
+			reagtemp = chem_temp,
+			added_purity = (weighted_purity / weighted_volume),
+			added_ph = (weighted_ph / weighted_volume),
+		)
 
 /// Removes all reagents
 /datum/reagents/proc/clear_reagents()

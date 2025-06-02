@@ -306,7 +306,7 @@ CREATE TABLE `manifest` (
   `server_port` smallint(5) NOT NULL,
   `round_id` int(11) NOT NULL,
   `ckey` text NOT NULL,
-  `character` text NOT NULL,
+  `character_name` text NOT NULL,
   `job` text NOT NULL,
   `special` text DEFAULT NULL,
   `latejoin` tinyint(1) NOT NULL DEFAULT 0,

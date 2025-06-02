@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - bugfix: "If you find a custom shuttle flight control console that was created by an admin or loaded as part of the map, you can dismantle it with a screwdriver."
