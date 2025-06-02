@@ -62526,10 +62526,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/service/abandoned_gambling_den)
-"pBZ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space)
 "pCa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,
@@ -67081,7 +67077,7 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/iron,
-/area/space)
+/area/station/security/checkpoint/escape)
 "qFj" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/blue/filled/line{
@@ -79028,11 +79024,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
-"tDq" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/space)
 "tDs" = (
 /turf/closed/wall,
 /area/station/service/electronic_marketing_den)
@@ -94635,7 +94626,7 @@
 	},
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/iron,
-/area/space)
+/area/station/hallway/secondary/exit/departure_lounge)
 "xum" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/yellow{
@@ -138862,7 +138853,7 @@ fAv
 fvo
 nEa
 nEa
-tDq
+nEa
 aaa
 aaa
 aaa
@@ -139376,7 +139367,7 @@ oDz
 fvo
 nEa
 nEa
-tDq
+nEa
 aaa
 aaa
 aaa
@@ -139890,7 +139881,7 @@ sBJ
 hDl
 hDl
 hDl
-pBZ
+hDl
 aaa
 aaa
 aaa
@@ -140918,7 +140909,7 @@ sEG
 hDl
 hDl
 hDl
-pBZ
+hDl
 aaa
 aaa
 aaa
@@ -141432,7 +141423,7 @@ fLg
 nxb
 hDl
 hDl
-pBZ
+hDl
 aaa
 aaa
 aaa
@@ -141946,7 +141937,7 @@ eWi
 hDl
 hDl
 hDl
-pBZ
+hDl
 aaa
 aaa
 aaa
