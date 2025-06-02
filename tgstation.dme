@@ -2545,7 +2545,6 @@
 #include "code\game\objects\items\AI_modules\zeroth.dm"
 #include "code\game\objects\items\circuitboards\circuitboard.dm"
 #include "code\game\objects\items\circuitboards\computer_circuitboards.dm"
-#include "code\game\objects\items\circuitboards\machines\engine_circuitboards.dm"
 #include "code\game\objects\items\circuitboards\machines\machine_circuitboards.dm"
 #include "code\game\objects\items\devices\aicard.dm"
 #include "code\game\objects\items\devices\aicard_evil.dm"
