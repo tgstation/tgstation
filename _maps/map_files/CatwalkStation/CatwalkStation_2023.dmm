@@ -54651,7 +54651,9 @@
 /area/station/medical/break_room)
 "qpy" = (
 /obj/effect/turf_decal/trimline/purple,
-/mob/living/basic/bot/cleanbot,
+/mob/living/basic/bot/cleanbot{
+	name = "Stanley"
+	},
 /turf/open/floor/plastic,
 /area/station/science/research)
 "qpG" = (
