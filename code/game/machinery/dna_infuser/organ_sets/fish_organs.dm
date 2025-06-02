@@ -267,8 +267,6 @@
 	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
 	food_tastes = list("gross fish" = 1)
 	safe_oxygen_min = 0 //We don't breathe this
-	///The required partial pressure of water_vapor for not suffocating.
-	var/safe_water_level = parent_type::safe_oxygen_min
 
 	/// Bodypart overlay applied to the chest where the lungs are in
 	var/datum/bodypart_overlay/simple/gills/gills
@@ -303,30 +301,6 @@
 /obj/item/organ/lungs/fish/on_mob_remove(mob/living/carbon/owner)
 	. = ..()
 	owner.clear_alert(ALERT_NOT_ENOUGH_WATER)
-
-/// Requires the spaceman to have either water vapor or be wet.
-/obj/item/organ/lungs/fish/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
-	var/need_to_breathe = !HAS_TRAIT(src, TRAIT_SPACEBREATHING) && !HAS_TRAIT(breather, TRAIT_IS_WET)
-	if(water_pp < safe_water_level && need_to_breathe)
-		on_low_water(breather, breath, water_pp)
-		return
-
-	if(old_water_pp < safe_water_level || breather.failed_last_breath)
-		breather.failed_last_breath = FALSE
-		breather.clear_alert(ALERT_NOT_ENOUGH_WATER)
-
-	if(need_to_breathe)
-		breathe_gas_volume(breath, /datum/gas/water_vapor, /datum/gas/carbon_dioxide)
-	// Heal mob if not in crit.
-	if(breather.health >= breather.crit_threshold && breather.oxyloss)
-		breather.adjustOxyLoss(-5)
-
-/// Called when there isn't enough water to breath
-/obj/item/organ/lungs/fish/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp)
-	breather.throw_alert(ALERT_NOT_ENOUGH_WATER, /atom/movable/screen/alert/not_enough_water)
-	var/gas_breathed = handle_suffocation(breather, water_pp, safe_water_level, breath.gases[/datum/gas/water_vapor][MOLES])
-	if(water_pp)
-		breathe_gas_volume(breath, /datum/gas/water_vapor, /datum/gas/carbon_dioxide, volume = gas_breathed)
 
 // Simple overlay so we can add gills to those with fish lungs
 /datum/bodypart_overlay/simple/gills
