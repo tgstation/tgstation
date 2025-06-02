@@ -265,6 +265,8 @@ GLOBAL_LIST_EMPTY_TYPED(active_bets, /datum/active_bet)
 						existing_bets[2] = "[money_betting]"
 						return
 
+	if(better.account_balance < money_betting)
+		return
 	total_amount_bet += money_betting
 	options[option_betting] += list(list(better, "[money_betting]"))
 	better.adjust_money(-money_betting, "Gambling on [name]")
