@@ -1088,7 +1088,6 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	SIGNAL_HANDLER
 	visual.icon = dedicated_in_aquarium_icon || icon
 	visual.icon_state = dedicated_in_aquarium_icon_state || "[initial(icon_state)]_small"
-	visual.color = aquarium_vc_color
 
 /obj/item/fish/proc/randomize_aquarium_position(datum/source, atom/movable/current_aquarium, obj/effect/aquarium/visual)
 	SIGNAL_HANDLER
