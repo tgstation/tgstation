@@ -31,9 +31,9 @@
 	return ..()
 
 /mob/living/carbon/get_gibs_type(drop_bitflags = NONE)
-	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST) || bodyparts[1]
+	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST) || (length(bodyparts) ? bodyparts[1] : null)
 	if (!istype(chest)) // what
-		return /obj/effect/gibspawner/generic
+		return ..()
 
 	if (chest.bodytype & BODYTYPE_ROBOTIC)
 		return /obj/effect/gibspawner/robot
