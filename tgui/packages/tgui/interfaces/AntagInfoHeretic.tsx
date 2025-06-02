@@ -249,8 +249,16 @@ const InformationSection = () => {
   );
 };
 
+const isPowerResearched = (knowledge: Knowledge) => {
+  const { data } = useBackend<Info>();
+  const { knowledge_tiers } = data;
+  return knowledge_tiers.some((tier) =>
+    tier.nodes.some((node) => node.path === knowledge.path && node.finished),
+  );
+};
+
 const KnowledgeTree = (props) => {
-  const { data, act } = useBackend<Info>();
+  const { data } = useBackend<Info>();
   const { knowledge_tiers } = data;
 
   return (
