@@ -201,6 +201,9 @@
 /obj/item/taperecorder,
 /obj/machinery/airalarm/directional/south,
 /obj/machinery/camera/autoname/directional/south,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/science/research)
 "ade" = (
@@ -20157,7 +20160,8 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/mail_sorting/science/experimentor_lab,
+/obj/structure/disposalpipe/sorting,
 /turf/open/floor/iron,
 /area/station/science/research)
 "fZP" = (
@@ -22136,9 +22140,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/holopad,
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /turf/open/floor/iron,
 /area/station/science/research)
 "gEv" = (
@@ -38286,7 +38287,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/disposalpipe/junction/yjunction,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/station/science/research)
 "ltW" = (
@@ -54165,7 +54168,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/trimline/purple/filled/line,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/iron,
 /area/station/science/research)
 "qhE" = (
@@ -58106,6 +58111,9 @@
 "rrT" = (
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/structure/sign/poster/official/work_for_a_future/directional/south,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/science/research)
 "rrY" = (
@@ -76726,6 +76734,9 @@
 /obj/item/disk/tech_disk{
 	pixel_x = 12
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/science/research)
 "wSW" = (
@@ -77017,7 +77028,6 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/tinted/spawner/directional/east,
-/obj/effect/mapping_helpers/mail_sorting/science/experimentor_lab,
 /turf/open/floor/engine,
 /area/station/science/lab)
 "wXD" = (
@@ -181102,7 +181112,7 @@ wEJ
 jLs
 jes
 mRE
-vsK
+orJ
 wSA
 tNP
 oEi
@@ -181359,7 +181369,7 @@ jJX
 jes
 jes
 bvT
-vsK
+orJ
 acV
 jkr
 qyM
@@ -181616,7 +181626,7 @@ cwP
 cwP
 xWT
 dTc
-vsK
+orJ
 rrT
 soU
 qSk
