@@ -9,6 +9,7 @@
 	icon_state = "law_rack"
 	density = TRUE
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
+	interaction_flags_machine = parent_type::interaction_flags_machine & ~INTERACT_MACHINE_ALLOW_SILICON
 	/// Assoc list of modules insalled in the rack to how secure they are
 	/// First slot is always reserved for core modules
 	VAR_FINAL/list/obj/item/ai_module/law_modules
@@ -60,6 +61,7 @@
 	if(gone in law_modules)
 		law_modules -= gone
 	if(!QDELING(src))
+		update_appearance()
 		update_lawset()
 
 /obj/machinery/ai_law_rack/proc/can_link_to(mob/living/silicon/new_bot)
@@ -78,11 +80,17 @@
 	RegisterSignal(new_bot, COMSIG_QDELETING, PROC_REF(clear_silicon_ref))
 	linked_ref = new_bot
 	linked = new_bot.name
+	update_lawset()
 
 /obj/machinery/ai_law_rack/proc/unlink_silicon()
 	if(!linked)
 		return
 
+	if(!QDELING(linked_ref))
+		linked_ref.laws.clear_hacked_laws()
+		linked_ref.laws.clear_inherent_laws()
+		linked_ref.laws.clear_supplied_laws()
+		linked_ref.post_lawchange(TRUE)
 	clear_silicon_ref()
 	linked = null
 
@@ -173,7 +181,11 @@
 
 /obj/machinery/ai_law_rack/examine(mob/user)
 	. = ..()
-	if(get_dist(user, src) > LAW_EXAMINE_RANGE)
+	if(isAI(user))
+		if(linked_ref == user)
+			. += span_notice("This is your law rack.")
+		return
+	if(!isobserver(user) && get_dist(user, src) > LAW_EXAMINE_RANGE)
 		. += span_notice("If you got a bit closer, you could probably [EXAMINE_HINT("examine closer")] to see what law modules are installed.")
 	else
 		. += span_notice("[EXAMINE_HINT("Examine closer")] to see what law modules are installed.")
@@ -188,7 +200,9 @@
 
 /obj/machinery/ai_law_rack/examine_more(mob/user)
 	. = ..()
-	if(get_dist(user, src) > LAW_EXAMINE_RANGE)
+	if(isAI(user))
+		return
+	if(!isobserver(user) && get_dist(user, src) > LAW_EXAMINE_RANGE)
 		. += span_warning("You can't quite make out the modules installed on the rack from here.")
 		return
 	for(var/i in 1 to length(law_modules))
@@ -197,7 +211,7 @@
 /obj/machinery/ai_law_rack/proc/get_slot_examine(slot)
 	var/obj/item/ai_module/module = law_modules[slot]
 	var/list/text = list()
-	text += span_info("&bull;[slot == 1 ? "  Core" : "Slot [slot - 1]"]: [module?.name || "Empty"]")
+	text += span_info("&bull; [slot == 1 ? "  Core" : "Slot [slot - 1]"]: [module?.name || "Empty"]")
 	if(module)
 		var/secure_desc = "Bugged (report this)"
 		switch(law_modules[module])
@@ -225,10 +239,22 @@
 			continue
 		// slot 1 is offset 0 - then 1 pixel break, and 1 slot every 2 pixels
 		var/image/card = image(icon = icon, icon_state = "slot_filled")
-		card.pixel_z = (i == 1 ? 0 : -1) + (i * -2)
+		card.pixel_z = (i == 1 ? 0 : -1) + ((i - 1) * -2)
 		. += card
 
 #undef MAX_SLOT_OVERLAYS
+
+/obj/machinery/ai_law_rack/proc/add_law_module(obj/item/ai_module/module, slot = 1)
+	ASSERT(istype(module))
+	ASSERT(isnum(slot))
+	if(slot < 1 || slot > length(law_modules))
+		return FALSE
+	module.on_install(linked_ref, src)
+	law_modules[slot] = module
+	law_modules[module] = MODULE_UNSECURED
+	update_appearance()
+	update_lawset()
+	return TRUE
 
 /obj/machinery/ai_law_rack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/ai_module))
@@ -273,11 +299,7 @@
 			if(!user.transferItemToLoc(module, src))
 				to_chat(user, span_warning("You can't seem to insert [module.name] into [src]!"))
 				return
-			module.on_install(user, src)
-			law_modules[index] = module
-			law_modules[module] = MODULE_UNSECURED
-			update_lawset()
-			return TRUE
+			return add_law_module(module, index)
 		if("remove_module")
 			var/index = clamp(text2num(params["index"]), 1, length(law_modules))
 			if(index < 1 || index > length(law_modules))
@@ -397,6 +419,7 @@
 
 	if(.)
 		update_lawset()
+	return .
 
 /obj/machinery/ai_law_rack/ai
 	name = "\improper AI law rack"
@@ -415,9 +438,7 @@
 
 	for(var/obj/item/ai_module/core/full/core as anything in subtypesof(/obj/item/ai_module/core/full))
 		if(core::law_id == default_laws::id)
-			var/obj/item/ai_module/core/full/new_core = new core(loc)
-			law_modules[1] = new_core
-			update_lawset()
+			add_law_module(new core(src), 1)
 
 /obj/machinery/ai_law_rack/ai/can_link_to(mob/living/silicon/ai/new_bot)
 	if(!isAI(new_bot))

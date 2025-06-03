@@ -2205,7 +2205,8 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "aOc" = (
-/obj/machinery/holopad/secure,
+/obj/machinery/ai_law_rack/ai,
+/obj/effect/turf_decal/stripes/white/full,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "aOo" = (
@@ -2292,14 +2293,18 @@
 /area/station/command/heads_quarters/captain/private)
 "aPv" = (
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/obj/machinery/holopad/secure,
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "aPw" = (
-/obj/machinery/ai_slipper{
-	uses = 8
-	},
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "aPx" = (
 /obj/effect/turf_decal/bot,
@@ -14662,6 +14667,16 @@
 "fjD" = (
 /turf/closed/wall,
 /area/station/commons/toilet/auxiliary)
+"fjI" = (
+/obj/structure/cable,
+/obj/effect/turf_decal/stripes/white/corner{
+	dir = 1
+	},
+/obj/machinery/ai_slipper{
+	uses = 8
+	},
+/turf/open/floor/iron/dark/smooth_large,
+/area/station/ai_monitored/turret_protected/ai_upload)
 "fkb" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 10
@@ -18179,7 +18194,6 @@
 "gAU" = (
 /obj/structure/table,
 /obj/item/aicard,
-/obj/item/ai_module/reset,
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
 /obj/item/flashlight{
@@ -20150,9 +20164,6 @@
 /obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "High-Risk Modules";
 	req_access = list("captain")
-	},
-/obj/item/ai_module/reset/purge{
-	pixel_y = 11
 	},
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/circuit/red,
@@ -38026,15 +38037,10 @@
 /turf/closed/wall,
 /area/station/engineering/atmos/pumproom)
 "nwL" = (
-/obj/machinery/computer/upload/ai,
-/obj/machinery/door/window/right/directional/south{
-	name = "Upload Console Window";
-	req_access = list("ai_upload")
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 8
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "nwT" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
@@ -60172,15 +60178,10 @@
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "viF" = (
-/obj/machinery/computer/upload/borg,
-/obj/machinery/door/window/left/directional/south{
-	name = "Cyborg Upload Console Window";
-	req_access = list("ai_upload")
+/obj/effect/turf_decal/stripes/white/line{
+	dir = 4
 	},
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/north,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/dark/smooth_large,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "viH" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -61181,10 +61182,6 @@
 /obj/machinery/status_display/ai/directional/west,
 /obj/machinery/flasher/directional/south{
 	id = "AI"
-	},
-/obj/item/ai_module/reset{
-	pixel_x = 2;
-	pixel_y = 8
 	},
 /obj/item/ai_module/supplied/freeform,
 /turf/open/floor/iron/dark,
@@ -94606,7 +94603,7 @@ aJS
 bpu
 wzH
 nwL
-aPv
+fjI
 iIQ
 aRV
 aJS

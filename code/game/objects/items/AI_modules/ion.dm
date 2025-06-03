@@ -15,7 +15,7 @@ CONTAINS:
 /obj/item/ai_module/core/full/damaged/multitool_act(mob/living/user, obj/item/tool)
 	return NONE // no repairs
 
-/obj/item/ai_module/core/full/damaged/on_install(mob/living/user, obj/machinery/ai_law_rack/rack)
+/obj/item/ai_module/core/full/damaged/on_install(obj/machinery/ai_law_rack/rack)
 	laws += generate_ion_law()
 	while(prob(75))
 		laws += generate_ion_law()

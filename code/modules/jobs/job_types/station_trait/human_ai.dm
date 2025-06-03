@@ -146,7 +146,7 @@
 	var/datum/ai_laws/reported
 	for(var/obj/machinery/ai_law_rack/ai/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/ai))
 		if(rack.prime_rack)
-			reported = ai.combined_lawset
+			reported = rack.combined_lawset
 			break
 
 	if(isnull(reported))
@@ -157,9 +157,8 @@
 		"Notably, if absolutely necessary, you can bend or even go against the lawset for your own survival, and Cyborgs report to you directly.",
 		"LAWS:",
 	)
-	law_box += combined_lawset.get_law_list(render_html = FALSE)
+	law_box += reported.get_law_list(render_html = FALSE)
 	add_raw_text(jointext(law_box, "\n"))
-	return ..()
 
 /obj/item/secure_camera_console_pod
 	name = "pre-packaged advanced camera control"

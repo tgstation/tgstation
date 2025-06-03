@@ -59,7 +59,7 @@
 	return TRUE
 
 /// Called after a module is installed into a law rack.
-/obj/item/ai_module/proc/on_install(mob/living/user, obj/machinery/ai_law_rack/rack)
+/obj/item/ai_module/proc/on_install(obj/machinery/ai_law_rack/rack)
 	return
 
 /obj/item/ai_module/multitool_act(mob/living/user, obj/item/tool)
