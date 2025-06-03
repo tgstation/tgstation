@@ -66,7 +66,7 @@
 	if(!ioned)
 		return NONE
 	balloon_alert(user, "repairing ion damage...")
-	if(!tool.use_tool(user, 4 SECONDS, volume = 10))
+	if(!tool.use_tool(src, user, 4 SECONDS, volume = 25))
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "module repaired")
 	set_ioned(FALSE)

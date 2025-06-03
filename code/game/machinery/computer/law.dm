@@ -42,6 +42,7 @@
 	return ..()
 
 /obj/machinery/ai_law_rack/proc/update_lawset()
+	combined_lawset.clear_zeroth_law()
 	combined_lawset.clear_hacked_laws()
 	combined_lawset.clear_inherent_laws()
 	combined_lawset.clear_supplied_laws()
@@ -51,6 +52,7 @@
 
 	if(isnull(linked_ref))
 		return
+	linked_ref.laws.set_zeroth_law(combined_lawset.zeroth_law)
 	linked_ref.laws.hacked = combined_lawset.hacked.Copy()
 	linked_ref.laws.inherent = combined_lawset.inherent.Copy()
 	linked_ref.laws.supplied = combined_lawset.supplied.Copy()
@@ -59,7 +61,8 @@
 /obj/machinery/ai_law_rack/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone in law_modules)
-		law_modules -= gone
+		var/index = law_modules.Find(gone)
+		law_modules[index] = null
 	if(!QDELING(src))
 		update_appearance()
 		update_lawset()
@@ -223,7 +226,7 @@
 				secure_desc = "Welded"
 		text += span_notice(secure_desc)
 	if(module?.ioned)
-		text += span_warning("It's smoking, and looks damaged.")
+		text += span_warning("It's smoking.")
 	return jointext(text, span_info(" - "))
 
 #undef LAW_EXAMINE_RANGE
@@ -244,14 +247,14 @@
 
 #undef MAX_SLOT_OVERLAYS
 
-/obj/machinery/ai_law_rack/proc/add_law_module(obj/item/ai_module/module, slot = 1)
+/obj/machinery/ai_law_rack/proc/add_law_module(obj/item/ai_module/module, slot = 1, security = MODULE_UNSECURED)
 	ASSERT(istype(module))
 	ASSERT(isnum(slot))
 	if(slot < 1 || slot > length(law_modules))
 		return FALSE
 	module.on_install(linked_ref, src)
 	law_modules[slot] = module
-	law_modules[module] = MODULE_UNSECURED
+	law_modules[module] = security
 	update_appearance()
 	update_lawset()
 	return TRUE
@@ -272,6 +275,29 @@
 		ui = new(user, src, "LawRack")
 		ui.open()
 
+/obj/machinery/ai_law_rack/ui_data(mob/user)
+	var/list/data = list()
+
+	var/obj/item/holding = user.get_active_held_item()
+	data["holding_module"] = istype(holding, /obj/item/ai_module)
+	data["holding_screwdriver"] = holding?.tool_behaviour == TOOL_SCREWDRIVER
+	data["holding_welder"] = holding?.tool_behaviour == TOOL_WELDER
+	data["holding_multitool"] = holding?.tool_behaviour == TOOL_MULTITOOL
+	data["linked"] = linked
+
+	data["slots"] = new /list(length(law_modules))
+	for(var/i in 1 to length(law_modules))
+		var/obj/item/ai_module/module = law_modules[i]
+
+		data["slots"][i] = list(
+			"empty" = isnull(module),
+			"name" = module?.name || "Empty",
+			"security" = module ? law_modules[module] : MODULE_UNSECURED,
+			"ioned" = module?.ioned || FALSE,
+		)
+
+	return data
+
 /obj/machinery/ai_law_rack/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -281,7 +307,7 @@
 		return
 	switch(action)
 		if("insert_module")
-			var/index = clamp(text2num(params["index"]), 1, length(law_modules))
+			var/index = clamp(text2num(params["slot"]), 1, length(law_modules))
 			var/obj/item/ai_module/module = user.get_active_held_item()
 			if(!istype(module))
 				to_chat(user, span_warning("You need to hold an AI module to insert it!"))
@@ -290,34 +316,41 @@
 				return
 			if(istype(module, /obj/item/ai_module/core))
 				if(index != 1)
-					to_chat(user, span_warning("You can only install core modules in the core slot!"))
+					to_chat(user, span_warning("You can't install a core module in a non-core slot!"))
 					return
 			else
 				if(index == 1)
-					to_chat(user, span_warning("You can't install a core module in a non-core slot!"))
+					to_chat(user, span_warning("You can only install core modules in the core slot!"))
 					return
 			if(!user.transferItemToLoc(module, src))
 				to_chat(user, span_warning("You can't seem to insert [module.name] into [src]!"))
 				return
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return add_law_module(module, index)
 		if("remove_module")
-			var/index = clamp(text2num(params["index"]), 1, length(law_modules))
-			if(index < 1 || index > length(law_modules))
-				return
+			var/index = clamp(text2num(params["slot"]), 1, length(law_modules))
 			var/obj/item/ai_module/module = law_modules[index]
 			if(isnull(module) || law_modules[module])
 				// These have feedback messages in the UI, the checks are only for sanity
 				return
 			// calls exited which handles updating laws and such
 			try_put_in_hand(module, user)
+			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 			return TRUE
 		if("screw_module")
-			var/index = clamp(text2num(params["index"]), 1, length(law_modules))
-			if(index < 1 || index > length(law_modules))
-				return
+			var/index = clamp(text2num(params["slot"]), 1, length(law_modules))
 			var/obj/item/ai_module/module = law_modules[index]
 			if(isnull(module) || law_modules[module] == MODULE_WELDED)
 				// These have feedback messages in the UI, the checks are only for sanity
+				return
+			var/obj/item/screwer = user.get_active_held_item()
+			if(screwer.tool_behaviour != TOOL_SCREWDRIVER)
+				return
+			balloon_alert_to_viewers("unscrewing slot [index]...")
+			if(!screwer.use_tool(src, user, 3 SECONDS, volume = 25))
+				return
+			module = law_modules[index]
+			if(isnull(module) || law_modules[module] == MODULE_WELDED)
 				return
 			if(law_modules[module] == MODULE_UNSECURED)
 				law_modules[module] = MODULE_SCREWED
@@ -325,17 +358,31 @@
 				law_modules[module] = MODULE_UNSECURED
 			return TRUE
 		if("weld_module")
-			var/index = clamp(text2num(params["index"]), 1, length(law_modules))
-			if(index < 1 || index > length(law_modules))
-				return
+			var/index = clamp(text2num(params["slot"]), 1, length(law_modules))
 			var/obj/item/ai_module/module = law_modules[index]
 			if(isnull(module) || law_modules[module] == MODULE_SCREWED)
 				// These have feedback messages in the UI, the checks are only for sanity
 				return
-			if(law_modules[module] == MODULE_UNSECURED)
+			balloon_alert_to_viewers("unwelding slot [index]...")
+			var/obj/item/welder = user.get_active_held_item()
+			if(welder.tool_behaviour != TOOL_WELDER)
+				return
+			if(!welder.use_tool(src, user, 3 SECONDS, volume = 25, amount = 1))
+				return
+			module = law_modules[index]
+			if(isnull(module) || law_modules[module] == MODULE_UNSECURED)
+				return
+			if(law_modules[module] == MODULE_SCREWED)
 				law_modules[module] = MODULE_WELDED
 			else if(law_modules[module] == MODULE_WELDED)
-				law_modules[module] = MODULE_UNSECURED
+				law_modules[module] = MODULE_SCREWED
+			return TRUE
+		if("multitool_module")
+			var/index = clamp(text2num(params["slot"]), 1, length(law_modules))
+			var/obj/item/ai_module/module = law_modules[index]
+			if(isnull(module))
+				return
+			module.multitool_act(user, user.get_inactive_hand())
 			return TRUE
 
 /**
@@ -438,7 +485,7 @@
 
 	for(var/obj/item/ai_module/core/full/core as anything in subtypesof(/obj/item/ai_module/core/full))
 		if(core::law_id == default_laws::id)
-			add_law_module(new core(src), 1)
+			add_law_module(new core(src), 1, MODULE_WELDED)
 
 /obj/machinery/ai_law_rack/ai/can_link_to(mob/living/silicon/ai/new_bot)
 	if(!isAI(new_bot))
