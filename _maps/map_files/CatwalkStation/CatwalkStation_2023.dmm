@@ -33984,7 +33984,7 @@
 	pixel_x = 9;
 	pixel_y = 9
 	},
-/obj/item/toy/talking/ai{
+/obj/item/ai_module/toy_ai{
 	pixel_x = -13;
 	pixel_y = 9
 	},
