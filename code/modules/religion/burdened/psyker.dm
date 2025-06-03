@@ -13,7 +13,7 @@
 
 /obj/item/organ/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
-	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker, blinding = does_it_blind )
+	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker, blinding = does_it_blind)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
 /obj/item/organ/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
@@ -33,7 +33,7 @@
 	apply_organ_damage(5 * seconds_per_tick, 199)
 
 /obj/organ/brain/psyker/blinding
-	does_it_blind = TRUE
+	var/does_it_blind = TRUE
 
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
