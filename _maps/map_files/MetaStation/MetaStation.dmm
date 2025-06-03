@@ -11019,6 +11019,11 @@
 /obj/machinery/duct,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
+"dVn" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/sign/warning/directional/west,
+/turf/open/space/basic,
+/area/space/nearstation)
 "dVp" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -17385,7 +17390,7 @@
 "giw" = (
 /obj/structure/sign/warning/docking/directional/north,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "giA" = (
 /turf/closed/wall/r_wall,
 /area/station/tcommsat/computer)
@@ -17926,9 +17931,9 @@
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "grx" = (
-/obj/structure/sign/warning/docking/directional/west,
+/obj/structure/sign/warning/directional/west,
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "grZ" = (
 /obj/structure/chair,
 /obj/machinery/camera/directional/north{
@@ -32676,10 +32681,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/security/prison/safe)
-"lnN" = (
-/obj/structure/lattice,
-/turf/closed/wall,
-/area/station/maintenance/aft/lesser)
 "lnP" = (
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
@@ -68934,7 +68935,7 @@
 	pixel_y = 32
 	},
 /turf/open/space/basic,
-/area/space)
+/area/space/nearstation)
 "xKh" = (
 /obj/structure/railing{
 	dir = 10
@@ -100178,7 +100179,7 @@ xhs
 emo
 uSP
 dSJ
-lnN
+dKC
 gAe
 lMJ
 lMJ
@@ -109677,7 +109678,7 @@ aaa
 aaa
 aaa
 lMJ
-aox
+dVn
 dJN
 aox
 lMJ
