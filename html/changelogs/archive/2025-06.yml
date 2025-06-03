@@ -1,0 +1,97 @@
+2025-06-01:
+  Rhials:
+  - spellcheck: Diamond material statue names are no longer punctuated.
+  carlarctg:
+  - code_imp: Adds support for PVP Bitrunning Domains
+  hry-gh:
+  - bugfix: fixes the ominous black squares appearing over tgui windows, sometimes
+  necromanceranne:
+  - map: Opens up sections of Nebulastation's medical department to allow for greater
+      visibility into and out of medical.
+2025-06-02:
+  00-Steven:
+  - bugfix: PDA painters no longer break the visuals of any PDAs painted with them.
+  - bugfix: Placing an item on a table/turf via the alt-click menu actually centers
+      it, again.
+  - bugfix: Certain items, like canvases or syringe guns, are no longer weirdly offset
+      when placed on tables.
+  - bugfix: Placing items on racks, closets, crates, hoops, beds, conveyor belts,
+      and pin the tail corgi posters is animated again, instead of instantly teleporting
+      followed by the pickup animation.
+  - bugfix: Placing a canvas on an easels no longer applies a random offset as if
+      dropped.
+  - bugfix: Tucking in someone else actually animates the bedsheet from you to them,
+      instead of from them to them.
+  - qol: Placing a canvas on an easel is animated.
+  Ezel:
+  - bugfix: Catwalk ordnance cycling airlocks properly cycle again.
+  Ghommie:
+  - refactor: Refactored crafting backend. Report possible pesky bugs.
+  - balance: the MEAT backpack (from the MEAT cargo pack) may be a smidge different
+      because of code standardization.
+  JohnFulpWillard:
+  - qol: internal tanks gives a progress bar when you toggle them, allowing you to
+      see how much you've consumed so far.
+  - refactor: Cyborg's modules now use storage (so opening a bag will close modules
+      instead of overlap one over the other).
+  - qol: Observers can now see Cyborg's inventories (like they can for humans).
+  - bugfix: The title bar is back for non-fullscreen users.
+  - qol: The escape menu no longer blurs the game in the background.
+  - qol: The escape menu now has a more readable font, and the escape menu's back
+      button is now smaller and in the corner.
+  Melbert:
+  - bugfix: Cleaning a mob cleans all of their equipment again
+  SmArtKar:
+  - bugfix: Certain emotes (like twitching) no longer stop all ontoing animations
+  - bugfix: Fixed revolver reloading, again
+  - bugfix: Fixed speed potions behaving super inconsistently on magboots, duffelbags
+      and laptops
+  SmArtKar, MrMelbert:
+  - rscadd: Some bloodtypes now have unique behavior, such as liquid electricity blood
+      glowing in the dark, podpeople "water-blood" not staining items or turfs, and
+      oil not transferring viruses.
+  - rscadd: Non-blood blood now contains DNA, meaning that, for example, Ethereal
+      blood works just fine for making a vaccine in a PANDEMIC machine.
+  - rscadd: Cyborgs and bots can now leave bloody (or oily) tracks if their wheels
+      get stained.
+  - balance: Slimepeople are now capable of bleeding (slime jelly), be careful with
+      knives!
+  - balance: Oil blood now requires welding fuel to be restored, slime jelly can be
+      restored with stable plasma and snail lube with silicon (previously all 3 were
+      affected by iron). Saline solution no longer works on non-iron-based blood.
+  - bugfix: Mindless monkeys and big manipulators should be able to harvest replica
+      pods now.
+  - bugfix: Reagents that went inside of a mob no longer lose some of their properties
+      when sucked back out.
+  - bugfix: Burdened chaplain's blessing now properly plays its SFX and grants a moodlet
+      when successful, instead of doing so upon failure.
+  - code_imp: Optimized human rendering slightly.
+  - refactor: Species reagent interactions now are fully handled by their livers.
+  - refactor: Refactored all blood decals and a lot of mob blood handling code, report
+      if anything is broken!
+  TealSeer:
+  - server: increment DB schema version to 5.32
+  - server: changed column name in manifest table from character to character_name
+      because the former is a reserved word
+  - bugfix: changed round start manifest DB queries from dozens of individual inserts
+      to one mass insert
+  - bugfix: hopefully fixed some lag on round start
+  Y0SH1M4S73R:
+  - bugfix: Fixes assembly shells not taking power from machines/mechs/borgs instead
+      of needing a cell when attached to such things. Did you know this was supposed
+      to be a feature, but didn't work for who-knows-how-long?
+  - bugfix: If you find a custom shuttle flight control console that was created by
+      an admin or loaded as part of the map, you can dismantle it with a screwdriver.
+  necromanceranne:
+  - balance: Caged mechs cannot accept silicon pilots. AI uploaded pilots, AI control
+      beacons, MMIs or positronics. Malfunctioning AIs can still dominate these mechs.
+  - code_imp: Allows for a higher degree of granularity for what mechs can and cannot
+      accept by including additoinal mecha flags to block beacon type installations,
+      pilot uploads and so on.
+2025-06-03:
+  Ezel:
+  - bugfix: fixes a pixel on the HFR fuel input box
+  SyncIt21:
+  - bugfix: create object panel for game admins works again
+  Tostah:
+  - bugfix: Ninja Camera Vision module now correctly applies welding protection.

@@ -712,7 +712,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	for(var/atom/movable/to_clean as anything in src)
 		if(all_contents || HAS_TRAIT(to_clean, TRAIT_MOPABLE))
-			to_clean.wash(clean_types)
+			. |= to_clean.wash(clean_types)
 
 /turf/set_density(new_value)
 	var/old_density = density
