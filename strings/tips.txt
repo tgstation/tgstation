@@ -318,4 +318,4 @@ As the Captain, your sabre deals extra damage to Assistants (as long as they hav
 You can automatically extract and retract arm implants by 'activating' the empty hand they're on. This includes integrated toolsets, cursed katanas, and vorpal scythes.
 You can combine the Carpet reagent with various different reagents, such as Oil and Cyanide, to create unique carpet types.
 You can bake a birthday cake and then microwave it to create a legendary cake hat. You can then combine it with an energy sword to create an energy cake.
-Using Stun Batons can sometimes deconvert Revs/Cultis! Experiment.
+Blunt force trauma to the head may rarely deconvert Revolutionaries. In a pinch, get thwacking.
