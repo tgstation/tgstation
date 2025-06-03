@@ -248,6 +248,15 @@
 	update_appearance(UPDATE_ICON_STATE)
 	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 
+/obj/item/borg/cyborg_omnitool/Click(location, control, params)
+	var/list/modifiers = params2list(params)
+	if(!LAZYACCESS(modifiers, RIGHT_CLICK) || !iscyborg(usr))
+		return ..()
+	var/mob/living/silicon/robot/user = usr
+	if (!(src in user.held_items))
+		attack_self(user)
+	return ..()
+
 /obj/item/borg/cyborg_omnitool/update_icon_state()
 	if (reference)
 		icon_state = reference.icon_state
