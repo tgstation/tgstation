@@ -17,6 +17,7 @@ As a Changeling, taking on someone else's appearance will also give you all of t
 As a Changeling, the Extract DNA sting counts for your genome absorb objective, but does not let you respec your powers.
 As a Changeling, you can absorb someone by strangling them and using the Absorb verb; this gives you the ability to rechoose your powers, the DNA of whoever you absorbed, the memory of the absorbed, and some samples of things the absorbed said.
 As a Chemist, some chemicals can only be synthesized by heating up the contents with a chemical heater or manually with lighters and similar tools.
+As a Wizard, if shuttle is has nearly arrived, Soul Tap is an incredibly useful spell. normally Soul Tap's disadvantage is that if you use it long term you'll become incredibly weak and die, but if shuttle's almost here you dont really have time to get most of the disadvantages from Soul Tap
 As a Chemist, there are dozens of chemicals that can heal, and even more that can cause harm. Experiment!
 As a Chemist, Water and Potassium mixed together will create an explosion, with power scaling by amount used. Don't do it.
 As a Chemist, Holy Water and Potassium mixed together will create a HOLY explosion, with increased power scaling by amount used. If at least 75 units of both are used, the explosion will reveal, ignite, and paralyze any cultists, heretics, and revenants in sight. Do it!
@@ -317,3 +318,4 @@ As the Captain, your sabre deals extra damage to Assistants (as long as they hav
 You can automatically extract and retract arm implants by 'activating' the empty hand they're on. This includes integrated toolsets, cursed katanas, and vorpal scythes.
 You can combine the Carpet reagent with various different reagents, such as Oil and Cyanide, to create unique carpet types.
 You can bake a birthday cake and then microwave it to create a legendary cake hat. You can then combine it with an energy sword to create an energy cake.
+Using Stun Batons can sometimes deconvert Revs/Cultis! Experiment.
