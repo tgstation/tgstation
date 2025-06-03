@@ -45,19 +45,29 @@
 	},
 /turf/open/space/basic,
 /area/shuttle/sapper)
+"hv" = (
+/obj/structure/cable/layer1,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/sapper,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/sapper)
 "hV" = (
 /obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
+"jH" = (
+/obj/effect/landmark/start/sapper,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/sapper)
 "jZ" = (
-/obj/effect/decal/cleanable/wrapping,
+/obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "lZ" = (
-/obj/machinery/light/floor,
-/obj/effect/decal/cleanable/robot_debris/limb,
-/turf/open/floor/mineral/titanium/white,
+/obj/structure/cable,
+/obj/effect/landmark/start/sapper,
+/turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "mE" = (
 /obj/machinery/button/door/directional/north{
@@ -130,6 +140,7 @@
 /obj/item/stock_parts/power_store/cell/high,
 /obj/item/stock_parts/power_store/cell/high,
 /obj/item/stock_parts/power_store/cell/high,
+/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "pH" = (
@@ -144,7 +155,6 @@
 	pixel_x = -9;
 	pixel_y = 9
 	},
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "qq" = (
@@ -162,10 +172,6 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/reagent_containers/cup/soda_cans/sol_dry{
-	pixel_x = -8;
-	pixel_y = 2
-	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "qL" = (
@@ -179,9 +185,12 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "rL" = (
-/obj/machinery/light/floor,
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/mineral/titanium/white,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/sapper)
+"rU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/turf/closed/wall/mineral/titanium,
 /area/shuttle/sapper)
 "sr" = (
 /obj/machinery/computer/monitor,
@@ -194,6 +203,7 @@
 "sM" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/sapper,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "tM" = (
@@ -221,11 +231,8 @@
 /area/shuttle/sapper)
 "uD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/mask/gas/atmos/sapper{
-	pixel_x = -2;
-	pixel_y = -3
-	},
 /obj/effect/landmark/start/sapper,
+/obj/item/toy/crayon/spraycan,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "vB" = (
@@ -308,14 +315,14 @@
 	pixel_x = 6;
 	req_access = list("sapper_ship")
 	},
-/obj/machinery/recharger{
-	pixel_x = -6;
-	pixel_y = 3
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/cup/soda_cans/sol_dry{
+	pixel_x = -5;
+	pixel_y = 4
+	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "BT" = (
@@ -477,8 +484,7 @@
 /turf/open/floor/plating,
 /area/shuttle/sapper)
 "TF" = (
-/obj/effect/decal/cleanable/robot_debris/up,
-/obj/item/toy/crayon/spraycan,
+/obj/effect/decal/cleanable/glass,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "Vt" = (
@@ -491,11 +497,8 @@
 /area/shuttle/sapper)
 "Wo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/mask/gas/atmos/sapper/partner{
-	pixel_x = 2;
-	pixel_y = 4
-	},
 /obj/effect/landmark/start/sapper,
+/obj/effect/decal/cleanable/wrapping,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "WY" = (
@@ -574,9 +577,9 @@ yE
 Ih
 nt
 IH
-hV
+hv
 Zc
-hV
+hv
 Ml
 Xr
 Ih
@@ -600,8 +603,8 @@ XX
 Bp
 uD
 hV
-rL
-Sa
+cz
+lZ
 yt
 xA
 vB
@@ -616,7 +619,7 @@ hV
 DT
 Vt
 WY
-xA
+jH
 fP
 yx
 In
@@ -626,8 +629,8 @@ XX
 qq
 Wo
 hV
+cz
 lZ
-Sa
 cz
 Ds
 BT
@@ -652,13 +655,13 @@ yE
 Ih
 xf
 IH
-hV
+hv
 ns
-hV
+hv
 EE
 pt
-Ih
-yE
+rL
+rU
 "}
 (10,1,1) = {"
 Yx
@@ -666,7 +669,7 @@ FE
 yE
 Ih
 nE
-Sa
+lZ
 JF
 Ih
 yE

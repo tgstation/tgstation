@@ -5,6 +5,8 @@
 	roundend_category = "Sapper Gang"
 	antagpanel_category = "Sapper Gang"
 	show_to_ghosts = TRUE
+	///Variable to determine what mask is given
+	var/mask_no = 0
 	///Boolean on whether the starting equipment should be given to their inventory.
 	var/give_equipment = FALSE
 	///Reference to the team they are part of.
@@ -57,6 +59,10 @@
 		return FALSE
 	var/mob/living/carbon/human/gang_member = owner.current
 	gang_member.equipOutfit(/datum/outfit/sapper)
+	if(mask_no <= 1)
+		gang_member.put_in_hands(new /obj/item/clothing/mask/gas/atmos/sapper)
+	else
+		gang_member.put_in_hands(new /obj/item/clothing/mask/gas/atmos/sapper/partner)
 	return TRUE
 
 /datum/antagonist/sapper/proc/get_spawnpoint()

@@ -10,7 +10,7 @@ const SpaceSapper: Antagonist = {
     Or perhaps work together with the station, crime is optional...
     `,
   ],
-  category: Category.Midround,
+  category: Category.Roundstart,
 };
 
 export default SpaceSapper;

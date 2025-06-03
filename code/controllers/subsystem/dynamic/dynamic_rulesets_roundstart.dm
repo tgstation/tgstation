@@ -800,6 +800,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		var/datum/antagonist/sapper/new_sapper = new antag_datum()
 		new_sapper.gang = main_gang
 		new_sapper.give_equipment = TRUE
+		new_sapper.mask_no++
 		M.add_antag_datum(new_sapper)
 		GLOB.pre_setup_antags -= M
 	main_gang.forge_objectives()
