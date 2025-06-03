@@ -553,14 +553,12 @@
 			greyscale_colors = "#00ff00"
 	return ..()
 
-/obj/item/mod/core/soul/CheckParts(list/parts_list, datum/crafting_recipe/current_recipe)
-	var/obj/item/soulstone/stone = locate() in parts_list
+/obj/item/mod/core/soul/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/soulstone/stone = locate() in components
 	set_theme(stone.theme)
 	for(var/mob/living/basic/shade/shade in stone)
 		shade.forceMove(get_turf(src))
 		shade.visible_message(span_warning("[shade] is ejected from [stone] as it is inserted into [src]!"), span_warning("You are ejected from [stone] as it is inserted into [src]!"))
-	parts_list -= stone
-	qdel(stone)
 	return ..()
 
 /obj/item/mod/core/soul/proc/set_theme(new_theme)
@@ -605,7 +603,7 @@
 
 /obj/item/mod/core/soul/get_chargebar_string()
 	var/mob/living/wearer = mod.wearer
-	if(wearer || HAS_TRAIT(wearer, TRAIT_NO_SOUL))
+	if(!wearer || HAS_TRAIT(wearer, TRAIT_NO_SOUL))
 		return "No power source detected."
 	if(CONFIG_GET(flag/disable_human_mood))
 		return "Infinite"

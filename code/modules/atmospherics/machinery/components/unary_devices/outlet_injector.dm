@@ -59,7 +59,7 @@
 		on = !on
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance()
+		update_appearance(UPDATE_ICON)
 		return CLICK_ACTION_BLOCKING
 	return CLICK_ACTION_SUCCESS
 
@@ -70,7 +70,7 @@
 	volume_rate = MAX_TRANSFER_RATE
 	investigate_log("was set to [volume_rate] L/s by [key_name(user)]", INVESTIGATE_ATMOS)
 	balloon_alert(user, "volume output set to [volume_rate] L/s")
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
@@ -145,7 +145,7 @@
 			if(.)
 				volume_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
 	. = ..()

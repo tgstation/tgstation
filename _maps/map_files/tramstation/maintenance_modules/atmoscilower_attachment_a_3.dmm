@@ -105,7 +105,7 @@
 "y" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/vehicle/sealed/mecha/ripley,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "A" = (
@@ -176,7 +176,7 @@
 /area/station/maintenance/starboard/lesser)
 "Q" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/stock_parts/power_store/cell/empty,
 /obj/item/screwdriver{
 	pixel_y = -10;

@@ -1195,7 +1195,7 @@
 "sv" = (
 /obj/item/book/bible,
 /obj/structure/cable,
-/obj/structure/altar_of_gods,
+/obj/structure/altar/of_gods,
 /turf/open/floor/carpet,
 /area/shuttle/escape)
 "sz" = (

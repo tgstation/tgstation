@@ -212,7 +212,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(!busy && bloody_mess && (clean_types & CLEAN_TYPE_BLOOD))
 		bloody_mess = FALSE
 		update_appearance()
-		. = TRUE
+		. |= COMPONENT_CLEANED
 
 /obj/machinery/washing_machine/proc/wash_cycle(mob/user)
 	for(var/X in contents)

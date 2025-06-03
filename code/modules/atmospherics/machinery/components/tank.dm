@@ -276,7 +276,7 @@
 		var/datum/gas_mixture/gas_share = air_contents.remove_ratio(1 / shares--)
 		air_contents.volume -= leaver.volume
 		leaver.air_contents = gas_share
-		leaver.update_appearance()
+		leaver.update_appearance(UPDATE_ICON)
 
 	for(var/obj/machinery/atmospherics/components/tank/joiner as anything in joining_members)
 		if(joiner == src)
@@ -286,7 +286,7 @@
 			air_contents.merge(joiner_share)
 		joiner.air_contents = air_contents
 		air_contents.volume += joiner.volume
-		joiner.update_appearance()
+		joiner.update_appearance(UPDATE_ICON)
 
 	for(var/dir in GLOB.cardinals)
 		if(dir & initialize_directions & merger.members[src])
@@ -415,7 +415,7 @@
 			break
 		else
 			frame.material_end_product = material
-	frame.update_appearance()
+	frame.update_appearance(UPDATE_ICON)
 
 ///////////////////////////////////////////////////////////////////
 // Gas tank variants
@@ -619,7 +619,7 @@
 
 	material_end_product = stack_mat
 	construction_state = TANK_PLATING_UNSECURED
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 	to_chat(user, span_notice("You finish attaching [stack] to [src]."))
 
 /obj/structure/tank_frame/crowbar_act_secondary(mob/living/user, obj/item/tool)
@@ -633,7 +633,7 @@
 	construction_state = TANK_FRAME
 	new material_end_product.sheet_type(drop_location(), TANK_PLATING_SHEETS)
 	material_end_product = null
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/tank_frame/welder_act(mob/living/user, obj/item/tool)
 	. = ..()

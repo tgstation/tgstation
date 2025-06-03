@@ -118,6 +118,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/security,
 /turf/open/floor/mineral/titanium/tiled/airless,
 /area/ruin/space/prison_shuttle)
+"I" = (
+/obj/effect/turf_decal/tile/brown/fourcorners,
+/obj/effect/decal/cleanable/blood/splatter/xeno,
+/turf/open/floor/iron/dark/airless,
+/area/ruin/space/prison_shuttle)
 "K" = (
 /obj/machinery/modular_computer,
 /turf/closed/mineral/random/stationside/asteroid,
@@ -140,11 +145,6 @@
 /area/ruin/space/prison_shuttle)
 "N" = (
 /obj/effect/turf_decal/tile/brown/fourcorners,
-/turf/open/floor/iron/dark/airless,
-/area/ruin/space/prison_shuttle)
-"O" = (
-/obj/effect/turf_decal/tile/brown/fourcorners,
-/obj/effect/decal/cleanable/xenoblood/xsplatter,
 /turf/open/floor/iron/dark/airless,
 /area/ruin/space/prison_shuttle)
 "P" = (
@@ -268,7 +268,7 @@ x
 z
 N
 N
-O
+I
 Q
 a
 "}
@@ -285,7 +285,7 @@ h
 z
 h
 h
-O
+I
 T
 N
 Q

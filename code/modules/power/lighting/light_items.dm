@@ -127,9 +127,9 @@
 	..()
 	shatter(M)
 
-/obj/item/light/attack_atom(obj/O, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/light/attack_atom(obj/attacked_obj, mob/living/user, list/modifiers, list/attack_modifiers)
 	..()
-	shatter(O)
+	shatter(attacked_obj)
 
 /obj/item/light/proc/shatter(target)
 	if(status == LIGHT_OK || status == LIGHT_BURNED)
