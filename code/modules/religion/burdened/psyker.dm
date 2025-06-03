@@ -9,10 +9,11 @@
 	)
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
+	var/does_it_blind = FALSE
 
 /obj/item/organ/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
-	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
+	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker, blinding = does_it_blind)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
 /obj/item/organ/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
@@ -31,22 +32,15 @@
 	owner.adjust_disgust(33 * seconds_per_tick)
 	apply_organ_damage(5 * seconds_per_tick, 199)
 
+/obj/organ/brain/psyker/blinding
+	does_it_blind = TRUE
+
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
 	head_flags = HEAD_DEBRAIN
-
-/obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, lazy)
-	. = ..()
-	if(!.)
-		return
-	new_head_owner.become_blind(bodypart_trait_source)
-
-/obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
-	owner.cure_blind(bodypart_trait_source)
-	return ..()
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
 /mob/living/carbon/human/proc/slow_psykerize()
@@ -69,7 +63,7 @@
 	emote("scream")
 
 /// Proc with no side effects that turns someone into a psyker. returns FALSE if it could not psykerize.
-/mob/living/carbon/human/proc/psykerize()
+/mob/living/carbon/human/proc/psykerize(is_blinding = FALSE)
 	var/obj/item/bodypart/head/old_head = get_bodypart(BODY_ZONE_HEAD)
 	var/obj/item/organ/brain/old_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/organ/old_eyes = get_organ_slot(ORGAN_SLOT_EYES)
@@ -79,12 +73,15 @@
 	if(!psyker_head.replace_limb(src, special = TRUE))
 		return FALSE
 	qdel(old_head)
-	var/obj/item/organ/brain/psyker/psyker_brain = new()
+	if(is_blinding)
+		var/obj/item/organ/brain/psyker/blinding/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes. Who'da thunk.
+	else
+		var/obj/item/organ/brain/psyker/psyker_brain = new()
 	old_brain.before_organ_replacement(psyker_brain)
 	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
 	psyker_brain.Insert(src, special = TRUE, movement_flags = DELETE_IF_REPLACED)
-	if(old_eyes)
+	if(old_eyes && is_blinding)
 		qdel(old_eyes)
 	return TRUE
 
