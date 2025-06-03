@@ -81,39 +81,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/reset_module
-	name = "Reset Module"
-	desc = "Allows for the construction of a Reset AI Module."
-	id = "reset_module"
-	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/ai_module/reset
-	category = list(
-		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/board/purge_module
-	name = "Purge Module"
-	desc = "Allows for the construction of a Purge AI Module."
-	id = "purge_module"
-	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/reset/purge
-	category = list(
-		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/board/remove_module
-	name = "Law Removal Module"
-	desc = "Allows for the construction of a Law Removal AI Core Module."
-	id = "remove_module"
-	materials = AI_MODULE_MATERIALS_UNUSUAL
-	build_path = /obj/item/ai_module/remove
-	category = list(
-		RND_CATEGORY_AI + RND_SUBCATEGORY_AI_LAW_MANIPULATION
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/freeformcore_module
 	name = "Core Freeform Module"
 	desc = "Allows for the construction of a Core Freeform AI Core Module."

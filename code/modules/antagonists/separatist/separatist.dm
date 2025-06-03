@@ -100,7 +100,6 @@
 	var/mob/living/silicon/ai/united_nations_ai = mob_override || owner.current
 	if(isAI(united_nations_ai))
 		united_nations_ai.laws = new /datum/ai_laws/united_nations()
-		united_nations_ai.laws.associate(united_nations_ai)
 		united_nations_ai.show_laws()
 
 /datum/antagonist/separatist/on_removal()

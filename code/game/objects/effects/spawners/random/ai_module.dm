@@ -39,7 +39,6 @@
 		/obj/item/ai_module/supplied/protect_station,
 		/obj/item/ai_module/supplied/quarantine,
 		/obj/item/ai_module/core/full/yesman,
-		/obj/item/ai_module/remove,
 	)
 
 /obj/effect/spawner/random/aimodule/harmful

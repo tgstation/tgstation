@@ -212,10 +212,11 @@
 	radio = /obj/item/radio/borg/syndicate
 
 /mob/living/silicon/robot/model/syndicate/Initialize(mapload)
-	laws = new /datum/ai_laws/syndicate_override()
-	laws.associate(src)
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 0.5 SECONDS)
+
+/mob/living/silicon/robot/model/syndicate/make_laws()
+	laws = new /datum/ai_laws/syndicate_override()
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)

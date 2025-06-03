@@ -40,8 +40,6 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 
 			borgo.laws.set_zeroth_law(lawtext)
 			borgo.laws.protected_zeroth = TRUE
-		if(LAW_ION)
-			borgo.laws.add_ion_law(lawtext)
 		if(LAW_HACKED)
 			borgo.laws.add_hacked_law(lawtext)
 		if(LAW_INHERENT)
@@ -89,10 +87,8 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			relevant_laws = borgo.laws.supplied
 		if(LAW_HACKED)
 			relevant_laws = borgo.laws.hacked
-		if(LAW_ION)
-			relevant_laws = borgo.laws.ion
 		if(LAW_ZEROTH)
-			borgo.set_zeroth_law(newlaw, announce = FALSE)
+			borgo.laws.set_zeroth_law(newlaw)
 			borgo.laws.protected_zeroth = TRUE
 			return TRUE
 
@@ -186,8 +182,6 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			borgo.laws.remove_supplied_law_by_law(law)
 		if(LAW_HACKED)
 			borgo.laws.remove_hacked_law(law)
-		if(LAW_ION)
-			borgo.laws.remove_ion_law(law)
 		if(LAW_ZEROTH)
 			borgo.laws.clear_zeroth_law(force = TRUE)
 			borgo.laws.protected_zeroth = FALSE
@@ -298,11 +292,9 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			// zeroth law on top
 			if(lawset.zeroth || lawset.zeroth_borg)
 				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_ZEROTH, "law" = lawset.zeroth || lawset.zeroth_borg, "num" = 0))
-			// then goes ion / hacked
+			// then goes hacked
 			for(var/law in lawset.hacked)
 				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_HACKED, "law" = law, "num" = -1))
-			for(var/law in lawset.ion)
-				UNTYPED_LIST_ADD(borg_laws, list("lawtype" = LAW_ION, "law" = law, "num" = -1))
 			// normie laws
 			var/lawnum = 1
 			for(var/law in lawset.inherent)

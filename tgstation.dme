@@ -2540,7 +2540,6 @@
 #include "code\game\objects\items\AI_modules\full_lawsets.dm"
 #include "code\game\objects\items\AI_modules\hacked.dm"
 #include "code\game\objects\items\AI_modules\ion.dm"
-#include "code\game\objects\items\AI_modules\repair.dm"
 #include "code\game\objects\items\AI_modules\supplied.dm"
 #include "code\game\objects\items\AI_modules\zeroth.dm"
 #include "code\game\objects\items\circuitboards\circuitboard.dm"

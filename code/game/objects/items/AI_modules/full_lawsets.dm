@@ -30,7 +30,8 @@
 	law_id = "asimov"
 	var/subject = "human being"
 
-/obj/item/ai_module/core/full/asimov/attack_self(mob/user as mob)
+/obj/item/ai_module/core/full/asimov/configure(mob/user)
+	. = TRUE
 	var/targName = tgui_input_text(user, "Enter a new subject that Asimov is concerned with.", "Asimov", subject, max_length = MAX_NAME_LEN)
 	if(!targName || !user.is_holding(src))
 		return
@@ -38,14 +39,14 @@
 	laws = list("You may not injure a [subject] or, through inaction, allow a [subject] to come to harm.",\
 				"You must obey orders given to you by [subject]s, except where such orders would conflict with the First Law.",\
 				"You must protect your own existence as long as such does not conflict with the First or Second Law.")
-	..()
 
 /obj/item/ai_module/core/full/asimovpp
 	name = "'Asimov++' Core AI Module"
 	law_id = "asimovpp"
 	var/subject = "human being"
 
-/obj/item/ai_module/core/full/asimovpp/attack_self(mob/user)
+/obj/item/ai_module/core/full/asimovpp/configure(mob/user)
+	. = TRUE
 	var/target_name = tgui_input_text(user, "Enter a new subject that Asimov++ is concerned with.", "Asimov++", subject, max_length = MAX_NAME_LEN)
 	if(!target_name || !user.is_holding(src))
 		return
@@ -54,7 +55,6 @@
 	subject = target_name
 	for (var/law in lawset.inherent)
 		laws += replacetext(replacetext(law, "human being", subject), "human", subject)
-	..()
 
 /obj/item/ai_module/core/full/corp
 	name = "'Corporate' Core AI Module"

@@ -29,11 +29,9 @@
 
 	//These lists will contain each law that should be announced / set to yes in the state laws menu.
 	///List keeping track of which laws to announce
-	var/list/lawcheck = list()
+	VAR_PROTECTED/list/lawcheck = list()
 	///List keeping track of hacked laws to announce
-	var/list/hackedcheck = list()
-	///List keeping track of ion laws to announce
-	var/list/ioncheck = list()
+	VAR_PROTECTED/list/hackedcheck = list()
 
 	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
@@ -88,7 +86,6 @@
 	QDEL_NULL(radio)
 	QDEL_NULL(aicamera)
 	QDEL_NULL(builtInCamera)
-	laws?.owner = null //Laws will refuse to die otherwise.
 	QDEL_NULL(laws)
 	QDEL_NULL(modularInterface)
 	GLOB.silicon_mobs -= src
@@ -226,15 +223,6 @@
 			lawcheck += law
 		checklaws()
 
-	if (href_list["lawi"])
-		var/law_index = text2num(href_list["lawi"])
-		var/law = laws.ion[law_index]
-		if (law in ioncheck)
-			ioncheck -= law
-		else
-			ioncheck += law
-		checklaws()
-
 	if (href_list["lawh"])
 		var/law_index = text2num(href_list["lawh"])
 		var/law = laws.hacked[law_index]
@@ -271,17 +259,14 @@
 	return
 
 /mob/living/silicon/proc/statelaws(force = 0)
-	laws_sanity_check()
 	// Create a cache of our laws and lawcheck flags before we do anything else.
 	// These are used to prevent weirdness when laws are changed when the AI is mid-stating.
 	var/lawcache_zeroth = laws.zeroth
 	var/list/lawcache_hacked = laws.hacked.Copy()
-	var/list/lawcache_ion = laws.ion.Copy()
 	var/list/lawcache_inherent = laws.inherent.Copy()
 	var/list/lawcache_supplied = laws.supplied.Copy()
 
 	var/list/lawcache_lawcheck = lawcheck.Copy()
-	var/list/lawcache_ioncheck = ioncheck.Copy()
 	var/list/lawcache_hackedcheck = hackedcheck.Copy()
 	var/forced_log_message = "stating laws[force ? ", forced" : ""]"
 	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
@@ -299,15 +284,6 @@
 		if (length(law) <= 0)
 			continue
 		if (force || (law in lawcache_hackedcheck))
-			say("[radiomod] [num]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
-			sleep(1 SECONDS)
-
-	for (var/index in 1 to length(lawcache_ion))
-		var/law = lawcache_ion[index]
-		var/num = ion_num()
-		if (length(law) <= 0)
-			return
-		if (force || (law in lawcache_ioncheck))
 			say("[radiomod] [num]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
 			sleep(1 SECONDS)
 
@@ -332,8 +308,7 @@
 			sleep(1 SECONDS)
 
 ///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
-/mob/living/silicon/proc/checklaws()
-	laws_sanity_check()
+/mob/living/silicon/proc/checklaws() // melbert todo : tgui
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
 	var/law_display = "Yes"
@@ -349,14 +324,6 @@
 			if (!(law in hackedcheck))
 				law_display = "No"
 			list += {"<a href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</a> <font color='#660000'>[law]</font><br>"}
-
-	for (var/index in 1 to length(laws.ion))
-		law_display = "Yes"
-		var/law = laws.ion[index]
-		if (length(law) > 0)
-			if(!(law in ioncheck))
-				law_display = "No"
-			list += {"<a href='byond://?src=[REF(src)];lawi=[index]'>[law_display] [ion_num()]:</a> <font color='#547DFE'>[law]</font><br>"}
 
 	var/number = 1
 	for (var/index in 1 to length(laws.inherent))
@@ -519,3 +486,9 @@
 
 /mob/living/silicon/get_access()
 	return REGION_ACCESS_ALL_STATION
+
+/mob/living/silicon/proc/get_law_rack()
+	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/ai))
+		if(rack.linked_ref == src)
+			return rack
+	return null

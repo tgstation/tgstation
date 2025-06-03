@@ -18,8 +18,10 @@
 	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.5)
 	/// This is where our laws get put at for the module
 	var/list/laws = list()
-	/// Used to skip laws being checked (for reset & remove boards that have no laws)
-	var/bypass_law_amt_check = FALSE
+	/// The laws list last time save_laws() was called
+	VAR_PRIVATE/list/saved_laws
+	/// If TRUE, this board has sustained damage and must be repaired
+	VAR_FINAL/ioned = FALSE
 
 /obj/item/ai_module/Initialize(mapload)
 	. = ..()
@@ -33,10 +35,60 @@
 	var/examine_laws = display_laws()
 	if(examine_laws)
 		. += "\n" + examine_laws
+	if(ioned)
+		. += "\nThis module has been damaged and should be repaired with a [EXAMINE_HINT("multitool")]."
 
-/obj/item/ai_module/attack_self(mob/user as mob)
-	..()
-	to_chat(user, boxed_message(display_laws()))
+/// Updates the "ioned" stat of the module
+/obj/item/ai_module/proc/set_ioned(new_ioned)
+	var/old_ioned = ioned
+	ioned = new_ioned
+	if(old_ioned != ioned)
+		update_appearance()
+
+/// Saves whatever laws are currently programmed into the module, so they can be restored later.
+/obj/item/ai_module/proc/save_laws()
+	saved_laws = laws.Copy()
+
+/obj/item/ai_module/update_overlays()
+	. = ..()
+	if(ioned)
+		. += "damaged"
+
+/// Called before being installed into a law rack. Return FALSE to block installation.
+/obj/item/ai_module/proc/can_install_to(mob/living/user, obj/machinery/ai_law_rack/rack)
+	return TRUE
+
+/// Called after a module is installed into a law rack.
+/obj/item/ai_module/proc/on_install(mob/living/user, obj/machinery/ai_law_rack/rack)
+	return
+
+/obj/item/ai_module/multitool_act(mob/living/user, obj/item/tool)
+	if(!ioned)
+		return NONE
+	balloon_alert(user, "repairing ion damage...")
+	if(!tool.use_tool(user, 4 SECONDS, volume = 10))
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "module repaired")
+	set_ioned(FALSE)
+	laws = saved_laws
+	saved_laws = null
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/ai_module/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	var/displayed = display_laws()
+	if(displayed)
+		to_chat(user, boxed_message(displayed))
+		. = TRUE
+	if(!ioned && user.is_holding(src))
+		. = configure(user)
+
+/// Allows users to configure aspects of the module, if applicable.
+/obj/item/ai_module/proc/configure(mob/user)
+	return FALSE
 
 /// Returns a text display of the laws for the module.
 /obj/item/ai_module/proc/display_laws()
@@ -54,84 +106,15 @@
 /obj/item/ai_module/proc/handle_unique_ai()
 	return SHOULD_QDEL_MODULE //instead of the roundstart bid to un-unique the AI, there will be a research requirement for it.
 
-//The proc other things should be calling
-/obj/item/ai_module/proc/install(datum/ai_laws/law_datum, mob/user)
-	if(!bypass_law_amt_check && (!laws.len || laws[1] == "")) //So we don't loop trough an empty list and end up with runtimes.
-		to_chat(user, span_warning("ERROR: No laws found on board."))
-		return
-
-	var/overflow = FALSE
-	//Handle the lawcap
-	if(law_datum)
-		var/tot_laws = 0
-		var/included_lawsets = list(law_datum.supplied, law_datum.ion, law_datum.hacked, laws)
-
-		// if the ai module is a core module we don't count inherent laws since they will be replaced
-		// however the freeformcore doesn't replace inherent laws so we check that too
-		if(!istype(src, /obj/item/ai_module/core) || istype(src, /obj/item/ai_module/core/freeformcore))
-			included_lawsets += list(law_datum.inherent)
-
-		for(var/lawlist in included_lawsets)
-			for(var/mylaw in lawlist)
-				if(mylaw != "")
-					tot_laws++
-
-		if(tot_laws > CONFIG_GET(number/silicon_max_law_amount) && !bypass_law_amt_check)//allows certain boards to avoid this check, eg: reset
-			to_chat(user, span_alert("Not enough memory allocated to [law_datum.owner ? law_datum.owner : "the AI core"]'s law processor to handle this amount of laws."))
-			message_admins("[ADMIN_LOOKUPFLW(user)] tried to upload laws to [law_datum.owner ? ADMIN_LOOKUPFLW(law_datum.owner) : "an AI core"] that would exceed the law cap.")
-			log_silicon("[key_name(user)] tried to upload laws to [law_datum.owner ? key_name(law_datum.owner) : "an AI core"] that would exceed the law cap.")
-			overflow = TRUE
-
-	var/law2log = transmitInstructions(law_datum, user, overflow) //Freeforms return something extra we need to log
-	if(law_datum.owner)
-		to_chat(user, span_notice("Upload complete. [law_datum.owner]'s laws have been modified."))
-		law_datum.owner.law_change_counter++
-	else
-		to_chat(user, span_notice("Upload complete."))
-
-	var/time = time2text(world.realtime,"hh:mm:ss", TIMEZONE_UTC)
-	var/ainame = law_datum.owner ? law_datum.owner.name : "empty AI core"
-	var/aikey = law_datum.owner ? law_datum.owner.ckey : "null"
-
-	//affected cyborgs are cyborgs linked to the AI with lawsync enabled
-	var/affected_cyborgs = list()
-	var/list/borg_txt = list()
-	var/list/borg_flw = list()
-	if(isAI(law_datum.owner))
-		var/mob/living/silicon/ai/owner = law_datum.owner
-		for(var/mob/living/silicon/robot/owned_borg as anything in owner.connected_robots)
-			if(owned_borg.connected_ai && owned_borg.lawupdate)
-				affected_cyborgs += owned_borg
-				borg_flw += "[ADMIN_LOOKUPFLW(owned_borg)], "
-				borg_txt += "[owned_borg.name]([owned_borg.key]), "
-
-	borg_txt = borg_txt.Join()
-	GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) used [src.name] on [ainame]([aikey]).[law2log ? " The law specified [law2log]" : ""], [length(affected_cyborgs) ? ", impacting synced borgs [borg_txt]" : ""]")
-	log_silicon("LAW: [key_name(user)] used [src.name] on [key_name(law_datum.owner)] from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""], [length(affected_cyborgs) ? ", impacting synced borgs [borg_txt]" : ""]")
-	message_admins("[ADMIN_LOOKUPFLW(user)] used [src.name] on [ADMIN_LOOKUPFLW(law_datum.owner)] from [AREACOORD(user)].[law2log ? " The law specified [law2log]" : ""] , [length(affected_cyborgs) ? ", impacting synced borgs [borg_flw.Join()]" : ""]")
-	if(law_datum.owner)
-		deadchat_broadcast("<b> changed [span_name("[ainame]")]'s laws at [get_area_name(user, TRUE)].</b>", span_name("[user]"), follow_target=user, message_type=DEADCHAT_LAWCHANGE)
-
-//The proc that actually changes the silicon's laws.
-/obj/item/ai_module/proc/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow = FALSE)
-	if(law_datum.owner)
-		to_chat(law_datum.owner, span_userdanger("[sender] has uploaded a change to the laws you must follow using a [name]."))
+/obj/item/ai_module/proc/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
+	return
 
 /obj/item/ai_module/core
 	desc = "An AI Module for programming core laws to an AI."
 
-/obj/item/ai_module/core/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	for(var/templaw in laws)
-		if(law_datum.owner)
-			if(!overflow)
-				law_datum.owner.add_inherent_law(templaw)
-			else
-				law_datum.owner.replace_random_law(templaw, list(LAW_INHERENT, LAW_SUPPLIED), LAW_INHERENT)
-		else
-			if(!overflow)
-				law_datum.add_inherent_law(templaw)
-			else
-				law_datum.replace_random_law(templaw, list(LAW_INHERENT, LAW_SUPPLIED), LAW_INHERENT)
+/obj/item/ai_module/core/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
+	for(var/law in laws)
+		combined_lawset.add_inherent_law(law)
 
 /obj/item/ai_module/core/full
 	var/law_id // if non-null, loads the laws from the ai_laws datums
@@ -145,15 +128,6 @@
 		return
 	var/datum/ai_laws/core_laws = new lawtype
 	laws = core_laws.inherent
-
-/obj/item/ai_module/core/full/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow) //These boards replace inherent laws.
-	if(law_datum.owner)
-		law_datum.owner.clear_inherent_laws()
-		law_datum.owner.clear_zeroth_law(0)
-	else
-		law_datum.clear_inherent_laws()
-		law_datum.clear_zeroth_law(0)
-	..()
 
 /obj/item/ai_module/core/full/handle_unique_ai()
 	var/datum/ai_laws/default_laws = get_round_default_lawset()

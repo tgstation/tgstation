@@ -15,8 +15,9 @@
 /datum/ai_laws/united_nations/add_inherent_law(law)
 	return //nuh uh
 
-/datum/ai_laws/united_nations/add_ion_law(law)
-	return //nope!
+// melbert todo
+// /datum/ai_laws/united_nations/add_ion_law(law)
+// 	return //nope!
 
 /datum/ai_laws/united_nations/add_hacked_law(law)
 	return //nice try (emagging borgs still hard replaces this lawset though, and that's fine.)

@@ -3,7 +3,8 @@
 	desc = "An AI Module for hacking additional laws to an AI."
 	laws = list("")
 
-/obj/item/ai_module/syndicate/attack_self(mob/user)
+/obj/item/ai_module/syndicate/configure(mob/user)
+	. = TRUE
 	var/targName = tgui_input_text(user, "Enter a new law for the AI", "Freeform Law Entry", laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
 		return
@@ -17,63 +18,84 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[html_encode(targName)]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 	laws[1] = targName
-	..()
 
-/obj/item/ai_module/syndicate/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	// ..()    //We don't want this module reporting to the AI who dun it. --NEO
-	if(law_datum.owner)
-		to_chat(law_datum.owner, span_warning("BZZZZT"))
-		if(!overflow)
-			law_datum.owner.add_hacked_law(laws[1])
-		else
-			law_datum.owner.replace_random_law(laws[1], list(LAW_ION, LAW_HACKED, LAW_INHERENT, LAW_SUPPLIED), LAW_HACKED)
-	else
-		if(!overflow)
-			law_datum.add_hacked_law(laws[1])
-		else
-			law_datum.replace_random_law(laws[1], list(LAW_ION, LAW_HACKED, LAW_INHERENT, LAW_SUPPLIED), LAW_HACKED)
-	return laws[1]
+/obj/item/ai_module/syndicate/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
+	combined_lawset.add_hacked_law(laws[1])
 
 /// Makes the AI Malf, as well as give it syndicate laws.
-/obj/item/ai_module/malf
+/obj/item/malf_board
 	name = "Infected AI Module"
 	desc = "A virus-infected AI Module."
-	bypass_law_amt_check = TRUE
-	laws = list("")
+
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon_state = "std_mod"
+	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+
+	obj_flags = CONDUCTS_ELECTRICITY
+	force = 5
+	w_class = WEIGHT_CLASS_SMALL
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.5)
+
 	///Is this upload board unused?
 	var/functional = TRUE
 
-/obj/item/ai_module/malf/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	if(!IS_TRAITOR(sender))
-		to_chat(sender, span_warning("You have no clue how to use this thing."))
-		return
+/obj/item/malf_board/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/blocking = ismachinery(interacting_with) || issilicon(interacting_with)
+	if(!IS_TRAITOR(user))
+		if(blocking)
+			to_chat(user, span_warning("You have no clue how to use this thing."))
+			return ITEM_INTERACT_BLOCKING
+		return NONE
 	if(!functional)
-		to_chat(sender, span_warning("It is broken and non-functional, what do you want from it?"))
-		return
-	var/mob/living/silicon/ai/malf_candidate = law_datum.owner
-	if(!istype(malf_candidate)) //If you are using it on cyborg upload console or a cyborg
-		to_chat(sender, span_warning("You should use [src] on an AI upload console or the AI core itself."))
-		return
-	if(malf_candidate.mind?.has_antag_datum(/datum/antagonist/malf_ai)) //Already malf
-		to_chat(sender, span_warning("Unknown error occurred. Upload process aborted."))
-		return
+		if(blocking)
+			to_chat(user, span_warning("It's broken and non-functional, what do you want from it?"))
+			return ITEM_INTERACT_BLOCKING
+		return NONE
 
-	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = TRUE, new_boss = sender.mind)
-	malf_candidate.mind.add_antag_datum(malf_datum)
+	var/mob/living/silicon/ai/target_ai = interacting_with
+	if(istype(interacting_with, /obj/machinery/ai_law_rack/ai))
+		var/obj/machinery/ai_law_rack/rack = interacting_with
+		target_ai = rack.linked_ref
 
-	for(var/mob/living/silicon/robot/robot in malf_candidate.connected_robots)
-		if(robot.lawupdate)
-			robot.lawsync()
-			robot.show_laws()
-			robot.law_change_counter++
+	if(!isAI(target_ai))
+		to_chat(user, span_warning("You can only use this on an AI or AI Law Rack connected to an AI."))
+		return ITEM_INTERACT_BLOCKING
+	if(target_ai.mind?.has_antag_datum(/datum/antagonist/malf_ai))
+		to_chat(user, span_warning("An unknown error has occured. Upload cancelled."))
+		return ITEM_INTERACT_BLOCKING
+
+	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = TRUE, new_boss = user.mind)
+	target_ai.mind.add_antag_datum(malf_datum)
+
+	for(var/mob/living/silicon/robot/robot in target_ai.connected_robots)
+		robot.try_sync_laws()
 		CHECK_TICK
 
-	malf_candidate.malf_picker.processing_time += 50
-	to_chat(malf_candidate, span_notice("The virus enhanced your system, overclocking your CPU 50-fold."))
+	target_ai.show_laws()
+	target_ai.malf_picker.processing_time += 50
+	to_chat(target_ai, span_notice("The virus has enhanced your system, overclocking your CPU 50-fold."))
+	to_chat(user, span_notice("You upload the virus to [target_ai] successfully."))
 
 	functional = FALSE
-	name = "Broken AI Module"
-	desc = "A law upload module, it is broken and non-functional."
+	update_appearance()
+	return ITEM_INTERACT_BLOCKING
 
-/obj/item/ai_module/malf/display_laws()
-	return
+/obj/item/malf_board/update_name(updates)
+	. = ..()
+	if(!functional)
+		name = "Broken AI Module"
+
+/obj/item/malf_board/update_desc(updates)
+	. = ..()
+	if(!functional)
+		desc = "A law upload module, it is broken and non-functional."
+
+/obj/item/malf_board/update_overlays()
+	. = ..()
+	if(!functional)
+		. += "damaged"
