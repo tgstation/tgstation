@@ -11,6 +11,8 @@
 	var/fade_out_time = 0.3 SECONDS
 	/// Are images static? If yes, spawns them on the turf and makes them not change location. Otherwise they change location and pixel shift with the original.
 	var/images_are_static = TRUE
+	/// Does this echolocation cause us to go blind?
+	var/blinding = TRUE
 	/// With mobs that have this echo group in their echolocation receiver trait, we share echo images.
 	var/echo_group = null
 	/// This trait blocks us from receiving echolocation.
@@ -32,7 +34,7 @@
 	/// Cooldown for the echolocation.
 	COOLDOWN_DECLARE(cooldown_last)
 
-/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, blocking_trait, echo_group, echo_icon, color_path)
+/datum/component/echolocation/Initialize(echo_range, cooldown_time, image_expiry_time, fade_in_time, fade_out_time, images_are_static, blocking_trait, echo_group, echo_icon, color_path, blinding)
 	. = ..()
 	var/mob/living/echolocator = parent
 	if(!istype(echolocator))
@@ -51,6 +53,8 @@
 		src.fade_in_time = fade_in_time
 	if(!isnull(fade_out_time))
 		src.fade_out_time = fade_out_time
+	if(!isnull(blinding))
+		src.blinding = blinding
 	if(!isnull(images_are_static))
 		src.images_are_static = images_are_static
 	if(!isnull(blocking_trait))
@@ -59,7 +63,8 @@
 	if(ispath(color_path))
 		client_colour = echolocator.add_client_colour(color_path, src.echo_group)
 	echolocator.add_traits(list(TRAIT_ECHOLOCATION_RECEIVER, TRAIT_TRUE_NIGHT_VISION), src.echo_group) //so they see all the tiles they echolocated, even if they are in the dark
-	echolocator.become_blind(ECHOLOCATION_TRAIT)
+	if(blinding)
+		echolocator.become_blind(ECHOLOCATION_TRAIT)
 	echolocator.overlay_fullscreen("echo", /atom/movable/screen/fullscreen/echo, echo_icon)
 	START_PROCESSING(SSfastprocess, src)
 
@@ -68,7 +73,8 @@
 	var/mob/living/echolocator = parent
 	QDEL_NULL(client_colour)
 	echolocator.remove_traits(list(TRAIT_ECHOLOCATION_RECEIVER, TRAIT_TRUE_NIGHT_VISION), echo_group)
-	echolocator.cure_blind(ECHOLOCATION_TRAIT)
+	if(blinding)
+		echolocator.cure_blind(ECHOLOCATION_TRAIT)
 	echolocator.clear_fullscreen("echo")
 	for(var/mob/living/echolocate_receiver as anything in receivers)
 		if(!echolocate_receiver.client)
