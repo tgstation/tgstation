@@ -593,8 +593,7 @@
 		return FALSE
 
 	if(gloves)
-		if(gloves.wash(clean_types))
-			update_worn_gloves()
+		gloves.wash(clean_types)
 	else if((clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0)
 		blood_in_hands = 0
 		update_worn_gloves()
@@ -622,13 +621,13 @@
 /mob/living/carbon/human/wash(clean_types)
 	. = ..()
 	if(!is_mouth_covered() && clean_lips())
-		. = TRUE
+		. |= COMPONENT_CLEANED
 
 	// Wash hands if exposed
 	if(!gloves && (clean_types & CLEAN_TYPE_BLOOD) && blood_in_hands > 0 && !(check_covered_slots() & ITEM_SLOT_GLOVES))
 		blood_in_hands = 0
 		update_worn_gloves()
-		. = TRUE
+		. |= COMPONENT_CLEANED
 
 //Turns a mob black, flashes a skeleton overlay
 //Just like a cartoon!

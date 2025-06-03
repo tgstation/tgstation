@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "PDA painters no longer break the visuals of any PDAs painted with them."

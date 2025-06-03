@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - refactor: "Cyborg's modules now use storage (so opening a bag will close modules instead of overlap one over the other)."
-  - qol: "Observers can now see Cyborg's inventories (like they can for humans)."

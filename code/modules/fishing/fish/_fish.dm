@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	obj_flags = UNIQUE_RENAME
 	item_flags = SLOWS_WHILE_IN_HAND
 	//we handle slowdowns internally, and the fish weight modifier from materials already contributes to it.
-	material_flags = MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_COLOR|MATERIAL_ADD_PREFIX|MATERIAL_NO_SLOWDOWN
+	material_flags = MATERIAL_EFFECTS|MATERIAL_AFFECT_STATISTICS|MATERIAL_COLOR|MATERIAL_ADD_PREFIX|MATERIAL_NO_SLOWDOWN|MATERIAL_NO_EDIBILITY
 
 	/// Flags for fish variables that would otherwise be TRUE/FALSE
 	var/fish_flags = FISH_FLAG_SHOW_IN_CATALOG|FISH_DO_FLOP_ANIM|FISH_FLAG_EXPERIMENT_SCANNABLE

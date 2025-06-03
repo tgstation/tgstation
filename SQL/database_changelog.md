@@ -2,19 +2,29 @@ Any time you make a change to the schema files, remember to increment the databa
 
 Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
 
-The latest database version is 5.31; The query to update the schema revision table is:
+The latest database version is 5.32; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 31);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 32);
 ```
 
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 31);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 32);
 ```
 
 In any query remember to add a prefix to the table names if you use one.
+
+---
+
+Version 5.32, 31 May 2025, by TealSeer
+Change column name of `manifest` table because `character` is a reserved word.
+
+```sql
+ALTER TABLE `manifest`
+	RENAME COLUMN `character` TO `character_name`;
+```
 
 ---
 

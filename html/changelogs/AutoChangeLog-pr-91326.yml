@@ -1,9 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Placing an item on a table/turf via the alt-click menu actually centers it, again."
-  - bugfix: "Certain items, like canvases or syringe guns, are no longer weirdly offset when placed on tables."
-  - bugfix: "Placing items on racks, closets, crates, hoops, beds, conveyor belts, and pin the tail corgi posters is animated again, instead of instantly teleporting followed by the pickup animation."
-  - bugfix: "Placing a canvas on an easels no longer applies a random offset as if dropped."
-  - bugfix: "Tucking in someone else actually animates the bedsheet from you to them, instead of from them to them."
-  - qol: "Placing a canvas on an easel is animated."

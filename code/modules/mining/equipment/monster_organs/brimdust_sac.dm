@@ -137,8 +137,10 @@
 /// When you are cleaned, wash off the buff
 /datum/status_effect/stacking/brimdust_coating/proc/on_cleaned()
 	SIGNAL_HANDLER
-	owner.remove_status_effect(/datum/status_effect/stacking/brimdust_coating)
-	return COMPONENT_CLEANED
+
+	. = NONE
+	if(owner.remove_status_effect(/datum/status_effect/stacking/brimdust_coating))
+		. |= COMPONENT_CLEANED
 
 /// When you take brute damage, schedule an explosion
 /datum/status_effect/stacking/brimdust_coating/proc/on_take_damage(datum/source, damage, damagetype, ...)
