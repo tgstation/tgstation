@@ -31612,7 +31612,6 @@
 /turf/open/floor/circuit,
 /area/station/ai_monitored/turret_protected/ai)
 "kUo" = (
-/obj/structure/cable,
 /obj/structure/closet/crate/engineering/electrical,
 /obj/item/solar_assembly,
 /obj/item/solar_assembly,
