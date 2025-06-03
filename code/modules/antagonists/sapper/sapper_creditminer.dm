@@ -46,10 +46,10 @@
 	. = ..()
 	switch(mode)
 		if(1) //On turning off
-			playsound(src, 'sound/machines/credit_miner/creditminer_stop.wav', 50, FALSE)
+			playsound(src, 'sound/machines/credit_miner/creditminer_stop.ogg', 50, FALSE)
 
 		if(2) //On turning on
-			playsound(src, 'sound/machines/credit_miner/creditminer_start.wav', 50, FALSE)
+			playsound(src, 'sound/machines/credit_miner/creditminer_start.ogg', 50, FALSE)
 
 /obj/item/powersink/creditminer/process()
 	. = ..()
@@ -85,14 +85,14 @@
 	if(cash_pulse >= 1)
 		cash_out += cash_pulse
 		balloon_alert_to_viewers("mined [trunc(cash_pulse)]cr")
-		playsound(src, 'sound/machines/credit_miner/creditminer_drain.wav', 50, FALSE)
+		playsound(src, 'sound/machines/credit_miner/creditminer_drain.ogg', 50, FALSE)
 
 /obj/item/powersink/creditminer/release_heat()
 	. = ..()
 	if(!internal_heat)
 		return
 	if(mode < 2) //sfx if we release heat, but don't overlap the drain sfx
-		playsound(src, 'sound/machines/credit_miner/creditminer_vent.wav', 50, FALSE)
+		playsound(src, 'sound/machines/credit_miner/creditminer_vent.ogg', 50, FALSE)
 	new /obj/effect/temp_visual/mook_dust(get_turf(src))
 
 #undef RADIO_ALERT

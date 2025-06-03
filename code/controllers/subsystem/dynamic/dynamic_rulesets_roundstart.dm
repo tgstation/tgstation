@@ -744,3 +744,63 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 // Scaling adds a fraction of the amount of additional spies rather than the full amount.
 /datum/dynamic_ruleset/roundstart/spies/get_scaling_antag_cap(population)
 	return ceil(..() * fraction_per_scale)
+
+//////////////////////////////////////////////
+//                                          //
+//               SAPPER GANG                //
+//                                          //
+//////////////////////////////////////////////
+/datum/dynamic_ruleset/roundstart/sapper_gang
+	name = "Sapper Gang"
+	antag_datum = /datum/antagonist/sapper
+	antag_flag = ROLE_SPACE_SAPPER
+	ruleset_category = parent_type::ruleset_category |  RULESET_CATEGORY_NO_WITTING_CREW_ANTAGONISTS
+	weight = 4
+	cost = 7
+	minimum_players = 10
+	required_candidates = 1
+	requirements = list(14,10,7,7,7,7,7,7,7,7)
+	restricted_roles = list(
+		JOB_CAPTAIN,
+		JOB_HEAD_OF_SECURITY,
+		JOB_CHIEF_ENGINEER,
+	)
+	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_SAPPER_HIDEOUT)
+	flags = LONE_RULESET
+	var/required_role = ROLE_SPACE_SAPPER
+	///The job type to dress up our nuclear operative as.
+	var/datum/job/job_type = /datum/job/space_sapper
+	var/datum/team/sapper/main_gang
+
+/datum/dynamic_ruleset/roundstart/sapper_gang/acceptable(population, threat_level)
+	if (SSmapping.is_planetary())
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/roundstart/sapper_gang/ready(forced = FALSE)
+	if (!check_candidates())
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/roundstart/sapper_gang/pre_execute(population)
+	. = ..()
+	for(var/applicant_number = 1 to required_candidates)
+		if(candidates.len <= 0)
+			break
+		var/mob/M = pick_n_take(candidates)
+		assigned += M.mind
+		M.mind.set_assigned_role(SSjob.get_job_type(job_type))
+		M.mind.special_role = required_role
+		GLOB.pre_setup_antags += M.mind
+	return TRUE
+
+/datum/dynamic_ruleset/roundstart/sapper_gang/execute()
+	main_gang = new
+	for(var/datum/mind/M in assigned)
+		var/datum/antagonist/sapper/new_sapper = new antag_datum()
+		new_sapper.gang = main_gang
+		new_sapper.give_equipment = TRUE
+		M.add_antag_datum(new_sapper)
+		GLOB.pre_setup_antags -= M
+	main_gang.forge_objectives()
+	return TRUE

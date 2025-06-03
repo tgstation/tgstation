@@ -134,3 +134,7 @@
 /datum/lazy_template/voidwalker_void
 	key = LAZY_TEMPLATE_KEY_VOIDWALKER_VOID
 	map_name = "voidwalker_void"
+
+/datum/lazy_template/sapper_hideout
+	key = LAZY_TEMPLATE_KEY_SAPPER_HIDEOUT
+	map_name = "sapper_hideout"

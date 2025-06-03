@@ -1914,6 +1914,7 @@
 #include "code\datums\shuttles\mining.dm"
 #include "code\datums\shuttles\pirate.dm"
 #include "code\datums\shuttles\ruin.dm"
+#include "code\datums\shuttles\sapper.dm"
 #include "code\datums\shuttles\snowdin.dm"
 #include "code\datums\shuttles\starfury.dm"
 #include "code\datums\shuttles\whiteship.dm"
