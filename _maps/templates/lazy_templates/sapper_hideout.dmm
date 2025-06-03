@@ -153,13 +153,17 @@
 /turf/open/floor/plating,
 /area/sapper_hideout)
 "mO" = (
-/obj/machinery/atmospherics/components/tank/air{
+/obj/machinery/atmospherics/components/tank{
 	piping_layer = 2
 	},
 /turf/open/floor/plating,
 /area/sapper_hideout)
 "mW" = (
 /obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating,
+/area/sapper_hideout)
+"nG" = (
+/obj/machinery/atmospherics/components/tank/air/layer2,
 /turf/open/floor/plating,
 /area/sapper_hideout)
 "nZ" = (
@@ -1743,7 +1747,7 @@ Sb
 od
 mO
 mO
-mO
+nG
 FI
 xD
 Dc

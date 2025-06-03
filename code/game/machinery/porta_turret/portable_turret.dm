@@ -930,8 +930,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	return 10 //shoot everything not in their faction
 
 /obj/machinery/porta_turret/sapper/shuttle
-	always_up = TRUE
-	use_power = NO_POWER_USE
 	mode = TURRET_STUN
 
 ////////////////////////
