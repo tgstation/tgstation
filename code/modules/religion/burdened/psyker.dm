@@ -43,7 +43,7 @@
 	head_flags = HEAD_DEBRAIN
 
 /// flavorful variant of psykerizing that deals damage and sends messages before calling psykerize()
-/mob/living/carbon/human/proc/slow_psykerize()
+/mob/living/carbon/human/proc/slow_psykerize(blind_them = FALSE)
 	if(stat == DEAD || !get_bodypart(BODY_ZONE_HEAD) || istype(get_bodypart(BODY_ZONE_HEAD), /obj/item/bodypart/head/psyker))
 		return
 	to_chat(src, span_userdanger("You feel unwell..."))
@@ -54,7 +54,7 @@
 	emote("scream")
 	apply_damage(30, BRUTE, BODY_ZONE_HEAD)
 	sleep(5 SECONDS)
-	if(!psykerize())
+	if(!psykerize(is_blinding = blind_them))
 		to_chat(src, span_warning("The transformation subsides..."))
 		return
 	apply_damage(50, BRUTE, BODY_ZONE_HEAD)
