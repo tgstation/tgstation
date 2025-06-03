@@ -3421,6 +3421,7 @@
 #include "code\modules\antagonists\santa\santa.dm"
 #include "code\modules\antagonists\sapper\sapper.dm"
 #include "code\modules\antagonists\sapper\sapper_creditminer.dm"
+#include "code\modules\antagonists\sapper\sapper_hideout.dm"
 #include "code\modules\antagonists\sapper\sapper_outfits.dm"
 #include "code\modules\antagonists\sapper\sapper_paper_premade.dm"
 #include "code\modules\antagonists\sapper\sapper_piratepad.dm"

@@ -12,11 +12,11 @@
 /area/shuttle/sapper)
 "fn" = (
 /obj/structure/cable,
-/obj/machinery/door/poddoor/shutters/window{
-	id = "pirate_sapper_shutter_L";
-	dir = 8
-	},
 /obj/structure/fans/tiny/shield,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "pirate_sapper_shutter_L"
+	},
 /turf/open/floor/plating,
 /area/shuttle/sapper)
 "fK" = (
@@ -46,18 +46,13 @@
 /turf/open/space/basic,
 /area/shuttle/sapper)
 "hv" = (
-/obj/structure/cable/layer1,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/landmark/start/sapper,
-/turf/open/floor/catwalk_floor/iron_white,
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "hV" = (
 /obj/structure/cable/layer1,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/catwalk_floor/iron_white,
-/area/shuttle/sapper)
-"jH" = (
-/obj/effect/landmark/start/sapper,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "jZ" = (
@@ -65,9 +60,9 @@
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "lZ" = (
-/obj/structure/cable,
-/obj/effect/landmark/start/sapper,
-/turf/open/floor/catwalk_floor/iron_white,
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/robot_debris/limb,
+/turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "mE" = (
 /obj/machinery/button/door/directional/north{
@@ -119,10 +114,10 @@
 	id = "pirate_sapper_shutter_R";
 	dir = 4
 	},
-/obj/docking_port/mobile/pirate/sapper{
-	dir = 4
-	},
 /obj/structure/fans/tiny/shield,
+/obj/docking_port/mobile/sapper{
+	dir = 8
+	},
 /turf/open/floor/plating,
 /area/shuttle/sapper)
 "pt" = (
@@ -140,7 +135,7 @@
 /obj/item/stock_parts/power_store/cell/high,
 /obj/item/stock_parts/power_store/cell/high,
 /obj/item/stock_parts/power_store/cell/high,
-/obj/machinery/atmospherics/pipe/layer_manifold/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/layer_manifold/general/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "pH" = (
@@ -155,6 +150,7 @@
 	pixel_x = -9;
 	pixel_y = 9
 	},
+/obj/effect/decal/cleanable/oil,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "qq" = (
@@ -175,21 +171,21 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "qL" = (
-/obj/machinery/computer/shuttle/pirate/sapper,
 /obj/machinery/light/floor,
 /obj/structure/cable/layer1,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer/shuttle/sapper,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "rL" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible/layer2,
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/sapper)
 "rU" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible/layer2,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/sapper)
 "sr" = (
@@ -203,7 +199,6 @@
 "sM" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/sapper,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "tM" = (
@@ -231,8 +226,8 @@
 /area/shuttle/sapper)
 "uD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/sapper,
 /obj/item/toy/crayon/spraycan,
+/obj/effect/decal/cleanable/robot_debris/up,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "vB" = (
@@ -245,11 +240,11 @@
 /turf/open/floor/plating,
 /area/shuttle/sapper)
 "wf" = (
-/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/pirate/sapper,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/computer/camera_advanced/shuttle_docker/sapper,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "xf" = (
@@ -341,11 +336,11 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "Dl" = (
-/obj/machinery/door/poddoor/shutters{
-	id = "pirate_sapper_shutter_L";
-	dir = 8
-	},
 /obj/structure/fans/tiny/shield,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "pirate_sapper_shutter_L"
+	},
 /turf/open/floor/plating,
 /area/shuttle/sapper)
 "Ds" = (
@@ -497,7 +492,6 @@
 /area/shuttle/sapper)
 "Wo" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/start/sapper,
 /obj/effect/decal/cleanable/wrapping,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
@@ -577,9 +571,9 @@ yE
 Ih
 nt
 IH
-hv
+hV
 Zc
-hv
+hV
 Ml
 Xr
 Ih
@@ -603,8 +597,8 @@ XX
 Bp
 uD
 hV
-cz
-lZ
+hv
+Sa
 yt
 xA
 vB
@@ -619,7 +613,7 @@ hV
 DT
 Vt
 WY
-jH
+xA
 fP
 yx
 In
@@ -629,8 +623,8 @@ XX
 qq
 Wo
 hV
-cz
 lZ
+Sa
 cz
 Ds
 BT
@@ -655,9 +649,9 @@ yE
 Ih
 xf
 IH
-hv
+hV
 ns
-hv
+hV
 EE
 pt
 rL
@@ -669,7 +663,7 @@ FE
 yE
 Ih
 nE
-lZ
+Sa
 JF
 Ih
 yE

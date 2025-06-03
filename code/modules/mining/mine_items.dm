@@ -30,6 +30,10 @@
 	light_color = COLOR_LIGHT_YELLOW
 	set_cap = 1
 
+/obj/effect/light_emitter/space
+	light_color = COLOR_STARLIGHT
+	set_cap = 1
+
 /**********************Miner Lockers**************************/
 
 /obj/structure/closet/wardrobe/miner
