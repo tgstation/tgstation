@@ -1,5 +1,7 @@
 /area/shuttle/sapper
 	name = "Sapper Shuttle"
+	requires_power = TRUE
+	flags_1 = NONE
 
 /obj/docking_port/mobile/sapper
 	name = "Sapper Shuttle"
@@ -29,11 +31,13 @@
 	jump_to_ports = list("sapper_hideout" = 1, "whiteship_home" = 1)
 	see_hidden = FALSE
 	lock_override = CAMERA_LOCK_STATION
-	view_range = 5
-	x_offset = -6
+	view_range = 5.5
+	x_offset = -5
 
 /mob/living/basic/bot/medbot/sapper
-	name = "Manon"
+	name = "Manón"
+	desc = "A little Medibot, colored orange to portray her specialization in treating burn-wounds."
+	gender = FEMALE //feminine named medibot
 	medkit_type = /obj/item/storage/medkit/fire
 	skin = "burn"
 	health = 40
@@ -42,7 +46,7 @@
 	bot_mode_flags = parent_type::bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED
 	radio_key = /obj/item/encryptionkey/syndicate
 	radio_channel = RADIO_CHANNEL_SYNDICATE
-	faction = list(FACTION_NEUTRAL, ROLE_SPACE_SAPPER)
+	faction = list(ROLE_SPACE_SAPPER, FACTION_NEUTRAL)
 	heal_threshold = 0
 	heal_amount = 5
 

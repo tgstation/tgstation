@@ -22,26 +22,17 @@
 
 /datum/outfit/sapper/post_equip(mob/living/carbon/human/equipped)
 	equipped.faction |= ROLE_SPACE_SAPPER
-
 	var/obj/item/radio/headset/outfit_radio = equipped.ears
 	if(outfit_radio)
 		outfit_radio.keyslot2 = new /obj/item/encryptionkey/syndicate()
 		outfit_radio.special_channels |= RADIO_SPECIAL_SYNDIE
 		outfit_radio.set_frequency(FREQ_SYNDICATE)
 		outfit_radio.recalculateChannels()
-
 	var/obj/item/card/id/outfit_id = equipped.wear_id
 	if(outfit_id)
 		outfit_id.registered_name = equipped.real_name
 		outfit_id.update_label()
 		outfit_id.update_icon()
-
-	var/obj/item/clothing/under/outfit_uniform = equipped.w_uniform
-	if(outfit_uniform)
-		outfit_uniform.has_sensor = NO_SENSORS
-		outfit_uniform.sensor_mode = SENSOR_OFF
-		equipped.update_suit_sensors()
-
 
 /obj/item/clothing/mask/gas/atmos/sapper
 	name = "\improper Sapper Heatsilk gas mask"

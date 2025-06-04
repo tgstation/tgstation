@@ -192,7 +192,8 @@
 #define ACCESS_BLOODCULT "bloodcult"
 /// HUNTERS
 #define ACCESS_HUNTER "hunter"
-/// PIRATE
+/// SAPPER
+	//Sapper shuttle access used for the computers, turrets, the ship itself and Manon.
 #define ACCESS_SAPPER_SHIP "sapper_ship"
 
 /// - - - MISC - - -

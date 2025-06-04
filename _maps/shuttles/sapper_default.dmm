@@ -1,13 +1,20 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "cz" = (
 /obj/machinery/light/floor,
+/obj/item/pizzabox/vegetable{
+	open = 1
+	},
+/turf/open/floor/mineral/titanium/white,
+/area/shuttle/sapper)
+"de" = (
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "dZ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/decal/cleanable/vomit/old,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "fn" = (
@@ -52,11 +59,27 @@
 /area/shuttle/sapper)
 "hV" = (
 /obj/structure/cable/layer1,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/orange/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
+"ju" = (
+/obj/structure/lattice,
+/obj/machinery/atmospherics/pipe/smart/simple/green/visible/layer2,
+/turf/open/space/basic,
+/area/shuttle/sapper)
 "jZ" = (
-/obj/effect/decal/cleanable/vomit/old,
+/obj/structure/cable,
+/obj/item/rcd_ammo/large{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/obj/item/rcd_ammo/large{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/obj/item/rcd_ammo/large{
+	pixel_x = 8
+	},
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "lZ" = (
@@ -72,10 +95,10 @@
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "mL" = (
-/obj/structure/cable/layer1,
 /obj/machinery/space_heater,
 /obj/effect/decal/cleanable/shreds,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/turf_decal/box,
 /turf/open/floor/plating,
 /area/shuttle/sapper)
 "mY" = (
@@ -85,10 +108,6 @@
 /obj/structure/cable/layer1,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/food/canned/beans{
-	pixel_x = -7;
-	pixel_y = 12
-	},
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "nt" = (
@@ -121,7 +140,6 @@
 /turf/open/floor/plating,
 /area/shuttle/sapper)
 "pt" = (
-/obj/structure/cable/layer1,
 /obj/machinery/light/cold/directional/east,
 /obj/structure/sign/warning/directional/south,
 /obj/structure/closet/crate/engineering/electrical,
@@ -136,21 +154,11 @@
 /obj/item/stock_parts/power_store/cell/high,
 /obj/item/stock_parts/power_store/cell/high,
 /obj/machinery/atmospherics/pipe/layer_manifold/general/hidden/layer4,
-/turf/open/floor/catwalk_floor/iron_white,
+/turf/open/floor/plating,
 /area/shuttle/sapper)
 "pH" = (
-/obj/item/rcd_ammo/large{
-	pixel_x = 8
-	},
-/obj/item/rcd_ammo/large{
-	pixel_x = -3;
-	pixel_y = -4
-	},
-/obj/item/rcd_ammo/large{
-	pixel_x = -9;
-	pixel_y = 9
-	},
 /obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "qq" = (
@@ -162,7 +170,9 @@
 	pixel_x = -1;
 	ailock = 1;
 	shoot_cyborgs = 1;
-	control_area = "/area/shuttle/sapper"
+	control_area = "/area/shuttle/sapper";
+	enabled = 0;
+	icon_state = "control_off"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -181,11 +191,19 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "rL" = (
-/obj/machinery/atmospherics/pipe/smart/simple/green/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/simple/green/hidden/layer2,
 /turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/sapper)
+"rT" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 4
+	},
+/obj/structure/lattice,
+/turf/open/space/basic,
 /area/shuttle/sapper)
 "rU" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible/layer2,
+/obj/machinery/meter/layer2,
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/sapper)
 "sr" = (
@@ -203,8 +221,11 @@
 /area/shuttle/sapper)
 "tM" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/machinery/atmospherics/components/tank/air/layer4,
-/obj/structure/cable/layer1,
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/box,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/layer4{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/shuttle/sapper)
 "ua" = (
@@ -231,12 +252,13 @@
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "vB" = (
-/obj/structure/cable/layer1,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/power/port_gen/pacman/pre_loaded{
 	cable_layer = 1;
-	anchored = 1
+	anchored = 1;
+	power_output = 3
 	},
+/obj/structure/cable/layer1,
 /turf/open/floor/plating,
 /area/shuttle/sapper)
 "wf" = (
@@ -275,9 +297,6 @@
 "yt" = (
 /obj/machinery/light/floor,
 /obj/effect/decal/cleanable/plastic,
-/obj/item/pizzabox/vegetable{
-	open = 1
-	},
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "yx" = (
@@ -294,6 +313,10 @@
 /obj/structure/lattice,
 /obj/structure/marker_beacon/yellow,
 /turf/open/space/basic,
+/area/shuttle/sapper)
+"Ap" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
+/turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/sapper)
 "AA" = (
 /obj/structure/cable,
@@ -322,7 +345,9 @@
 /area/shuttle/sapper)
 "BT" = (
 /obj/machinery/power/smes/ship{
-	cable_layer = 1
+	cable_layer = 1;
+	output_level = 10000;
+	input_level = 20000
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/cable/layer1,
@@ -344,9 +369,9 @@
 /turf/open/floor/plating,
 /area/shuttle/sapper)
 "Ds" = (
-/obj/item/food/cornchips/random{
-	pixel_x = 6;
-	pixel_y = 9
+/obj/structure/cable/layer1,
+/obj/item/food/canned/beans{
+	pixel_x = -7
 	},
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
@@ -366,7 +391,6 @@
 /obj/machinery/airalarm/directional/east{
 	req_access = list("sapper_ship")
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/closet/crate/engineering,
 /obj/item/pipe_dispenser,
 /obj/item/pipe_dispenser,
@@ -376,10 +400,13 @@
 /obj/item/airlock_painter/decal,
 /obj/item/airlock_painter/decal/tile,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "FE" = (
-/obj/machinery/porta_turret/sapper/shuttle,
+/obj/machinery/porta_turret/sapper/shuttle{
+	on = 0
+	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/sapper)
 "Ih" = (
@@ -392,10 +419,6 @@
 /area/shuttle/sapper)
 "IH" = (
 /obj/structure/cable/layer1,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/item/stack/sheet/mineral/sandbags{
-	amount = 15
-	},
 /obj/structure/closet{
 	icon_state = "eng";
 	icon_door = "eng_tool"
@@ -411,10 +434,22 @@
 	},
 /obj/item/forcefield_projector,
 /obj/item/gun/energy/laser/empty,
+/obj/item/stack/sheet/mineral/sandbags{
+	amount = 5
+	},
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "JF" = (
 /obj/effect/decal/cleanable/dirt,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/sapper)
+"Lq" = (
+/obj/structure/cable/layer1,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/catwalk_floor/iron_white,
+/area/shuttle/sapper)
+"Mh" = (
+/obj/structure/cable/layer1,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "Mi" = (
@@ -437,7 +472,7 @@
 	pixel_y = 13
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold/orange/hidden/layer2,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "Mz" = (
@@ -449,6 +484,15 @@
 	},
 /turf/open/space/basic,
 /area/shuttle/sapper)
+"Nd" = (
+/obj/structure/cable/layer1,
+/obj/machinery/atmospherics/components/binary/pump/off/supply/hidden/layer4{
+	name = "Tank To Distro";
+	dir = 1
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/shuttle/sapper)
 "NX" = (
 /obj/structure/window/reinforced/spawner/directional/north{
 	pixel_y = 1
@@ -458,6 +502,14 @@
 	dir = 4
 	},
 /turf/open/floor/plating/airless,
+/area/shuttle/sapper)
+"Pw" = (
+/obj/structure/cable/layer1,
+/obj/item/food/cornchips/random{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "Sa" = (
 /obj/structure/cable,
@@ -498,23 +550,23 @@
 "WY" = (
 /obj/machinery/computer/piratepad_control/sapper,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable/layer1,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "Xc" = (
 /obj/structure/cable/layer1,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/decal/cleanable/plastic,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "Xr" = (
-/obj/structure/cable/layer1,
 /obj/machinery/light/cold/directional/west,
 /obj/structure/sign/warning/directional/south,
 /obj/structure/table/reinforced,
 /obj/machinery/microwave/engineering/cell_included,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/food/donkpocket/spicy,
-/turf/open/floor/catwalk_floor/iron_white,
+/obj/machinery/atmospherics/pipe/layer_manifold/general/hidden/layer4,
+/turf/open/floor/plating,
 /area/shuttle/sapper)
 "XX" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -524,11 +576,32 @@
 /obj/structure/cable/layer1,
 /turf/open/floor/plating,
 /area/shuttle/sapper)
+"Ym" = (
+/obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/visible/layer2,
+/obj/machinery/meter/layer2,
+/turf/closed/wall/mineral/titanium,
+/area/shuttle/sapper)
 "Yo" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/effect/turf_decal/arrows/white,
-/turf/open/floor/plating,
+/obj/structure/cable/layer1,
+/obj/item/stack/sheet/mineral/sandbags{
+	amount = 5
+	},
+/obj/structure/closet{
+	icon_state = "eng";
+	icon_door = "eng_tool"
+	},
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/sheet/iron/twenty,
+/obj/item/stack/sheet/rglass{
+	amount = 20
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/item/stack/sheet/mineral/wood{
+	amount = 20
+	},
+/obj/item/forcefield_projector,
+/obj/item/gun/energy/laser/empty,
+/turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 "Yx" = (
 /turf/template_noop,
@@ -536,7 +609,6 @@
 "Zc" = (
 /obj/structure/cable/layer1,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/catwalk_floor/iron_white,
 /area/shuttle/sapper)
 
@@ -564,30 +636,30 @@ xA
 Ih
 yE
 FE
-Yx
+rT
 "}
 (3,1,1) = {"
 yE
 Ih
 nt
 IH
-hV
+Mh
 Zc
 hV
 Ml
 Xr
-Ih
-yE
+Ap
+Ym
 "}
 (4,1,1) = {"
 XX
 wf
 CM
-hV
+Mh
 TF
 AA
 dZ
-jZ
+Mh
 mL
 uz
 Mi
@@ -596,11 +668,11 @@ Mi
 XX
 Bp
 uD
-hV
+Mh
 hv
 Sa
 yt
-xA
+Pw
 vB
 yx
 In
@@ -609,11 +681,11 @@ In
 XX
 qL
 ua
-hV
+Xc
 DT
 Vt
 WY
-xA
+de
 fP
 yx
 In
@@ -622,11 +694,11 @@ In
 XX
 qq
 Wo
-hV
+Mh
 lZ
 Sa
 cz
-Ds
+Mh
 BT
 yx
 In
@@ -635,11 +707,11 @@ In
 XX
 sr
 fK
-Xc
+Ds
 DZ
-Sa
+jZ
 pH
-Yo
+Nd
 tM
 NX
 Tb
@@ -648,10 +720,10 @@ Tb
 yE
 Ih
 xf
-IH
-hV
+Yo
+Lq
 ns
-hV
+Lq
 EE
 pt
 rL
@@ -668,7 +740,7 @@ JF
 Ih
 yE
 FE
-Yx
+ju
 "}
 (11,1,1) = {"
 Yx

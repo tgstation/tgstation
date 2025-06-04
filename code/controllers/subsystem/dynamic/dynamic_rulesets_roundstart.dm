@@ -767,9 +767,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	)
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_SAPPER_HIDEOUT)
 	flags = LONE_RULESET
-	var/required_role = ROLE_SPACE_SAPPER
-	///The job type to dress up our nuclear operative as.
-	var/datum/job/job_type = /datum/job/space_sapper
+	///Variable which holds the team, to be seen in VV
 	var/datum/team/sapper/main_gang
 
 /datum/dynamic_ruleset/roundstart/sapper_gang/acceptable(population, threat_level)
@@ -789,8 +787,8 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 			break
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
-		M.mind.set_assigned_role(SSjob.get_job_type(job_type))
-		M.mind.special_role = required_role
+		M.mind.set_assigned_role(SSjob.get_job_type(/datum/job/space_sapper))
+		M.mind.special_role = ROLE_SPACE_SAPPER
 		GLOB.pre_setup_antags += M.mind
 	return TRUE
 

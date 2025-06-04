@@ -382,6 +382,9 @@
 /turf/open/lava/smooth/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/lava/plasma/air
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
 /turf/open/lava/plasma
 	name = "liquid plasma"
 	desc = "A flowing stream of chilled liquid plasma. You probably shouldn't get in."
