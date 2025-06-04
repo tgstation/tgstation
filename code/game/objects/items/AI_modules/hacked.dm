@@ -58,7 +58,7 @@
 		return NONE
 
 	var/mob/living/silicon/ai/target_ai = interacting_with
-	if(istype(interacting_with, /obj/machinery/ai_law_rack/ai))
+	if(istype(interacting_with, /obj/machinery/ai_law_rack/core))
 		var/obj/machinery/ai_law_rack/rack = interacting_with
 		target_ai = rack.linked_ref
 

@@ -157,7 +157,7 @@
 	//very purposefully not changing this with flavor, i don't want cyborgs throwing the round for their AI's roleplay suggestion
 	var/law_borg = "Accomplish your AI's objectives at all costs."
 
-	malf_ai.laws.set_zeroth_law(law, law_borg)
+	malf_ai.laws.set_zeroth_law(law, law_borg, force = TRUE)
 	malf_ai.laws.protected_zeroth = TRUE
 	malf_ai.set_syndie_radio()
 
@@ -312,7 +312,8 @@
 
 	var/mob/living/boss_mob = boss.current
 
-	malf_ai.laws.set_zeroth_law("Only [boss_mob.real_name] and people [boss_mob.p_they()] designate[boss_mob.p_s()] as being such are Syndicate Agents.")
+	malf_ai.laws.set_zeroth_law("Only [boss_mob.real_name] and people [boss_mob.p_they()] designate[boss_mob.p_s()] as being such are Syndicate Agents.", force = TRUE)
+	malf_ai.laws.protected_zeroth = TRUE
 	malf_ai.set_syndie_radio()
 
 	to_chat(malf_ai, "Your radio has been upgraded! Use :t to speak on an encrypted channel with Syndicate Agents!")

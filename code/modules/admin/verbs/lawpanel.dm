@@ -184,7 +184,6 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			borgo.laws.remove_hacked_law(law)
 		if(LAW_ZEROTH)
 			borgo.laws.clear_zeroth_law(force = TRUE)
-			borgo.laws.protected_zeroth = FALSE
 		else
 			return FALSE
 	log_admin("[key_name(user)] has REMOVED a law from [key_name(borgo)]. LAW: [law]")

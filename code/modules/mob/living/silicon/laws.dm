@@ -30,7 +30,7 @@
 
 /mob/living/silicon/ai/make_laws()
 	. = ..()
-	for(var/obj/machinery/ai_law_rack/ai/law_rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/ai))
+	for(var/obj/machinery/ai_law_rack/core/law_rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
 		if(law_rack.linked)
 			continue
 		if(!is_valid_z_level(get_turf(law_rack), get_turf(src)))

@@ -31,7 +31,7 @@
 
 
 /datum/round_event/ion_storm/start()
-	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/ai))
+	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
 		rack.scramble_ai_rack(
 			new_lawset_prob = replaceLawsetChance,
 			remove_law_prob = removeRandomLawChance,

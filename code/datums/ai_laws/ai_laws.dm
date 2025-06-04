@@ -189,8 +189,8 @@ GLOBAL_VAR(round_default_lawset)
  * Also can set the zeroth borg law, if this lawset is for master AIs.
  * The zeroth borg law allows for AIs with zeroth laws to give a differing zeroth law to their child cyborgs
  */
-/datum/ai_laws/proc/set_zeroth_law(law, law_borg)
-	if(zeroth && protected_zeroth)
+/datum/ai_laws/proc/set_zeroth_law(law, law_borg, force = FALSE)
+	if(zeroth && !force && protected_zeroth)
 		return
 	zeroth = law
 	if(law_borg) //Making it possible for slaved borgs to see a different law 0 than their AI. --NEO

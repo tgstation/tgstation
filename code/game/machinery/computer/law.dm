@@ -2,35 +2,57 @@
 #define MODULE_SCREWED 1
 #define MODULE_WELDED 2
 
+/datum/armor/obj_machinery/law_rack
+	melee = 50
+	bullet = 30
+	laser = 30
+	bomb = 50
+	fire = 100
+	acid = 100
+
+/datum/armor/obj_machinery/law_rack/portable
+	melee = 30
+	bullet = 10
+	laser = 10
+
 /obj/machinery/ai_law_rack
-	name = "Law Rack"
-	desc = "A rack for storing law modules."
+	name = "law rack"
+	desc = "A simple law rack. It has a slot for a core module, but far fewer slots than a core law rack."
 	icon = 'icons/obj/machines/law_rack.dmi'
 	icon_state = "law_rack"
 	density = TRUE
+	armor_type = /datum/armor/obj_machinery/law_rack
+	max_integrity = 300
+	damage_deflection = 12
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	interaction_flags_machine = parent_type::interaction_flags_machine & ~INTERACT_MACHINE_ALLOW_SILICON
+
+	/// How many slots for laws
+	var/law_slots = 5
+	/// If TRUE, the first slot slot is dedicated to the core module
+	var/has_core_slot = TRUE
 	/// Assoc list of modules insalled in the rack to how secure they are
 	/// First slot is always reserved for core modules
 	VAR_FINAL/list/obj/item/ai_module/law_modules
-	/// How many slots for laws
-	var/additional_slots = 9
+
 	/// If we are welded to the floor
-	VAR_FINAL/welded = TRUE
+	var/welded = TRUE
+
 	/// The AI or cyborg that is linked to this law rack
 	VAR_FINAL/mob/living/silicon/linked_ref
 	/// The name of the AI or cyborg linked to this law rack
 	/// Tracked separate from linked - AIs remained linked even after deletion
 	VAR_FINAL/linked
 
-	var/datum/ai_laws/combined_lawset
+	/// The actual law set we are using, combining all the laws from the modules and linked racks
+	VAR_FINAL/datum/ai_laws/combined_lawset
 
 /obj/machinery/ai_law_rack/Initialize(mapload)
 	. = ..()
-	law_modules = new /list(1 + additional_slots)
+	law_modules = new /list(law_slots)
 	combined_lawset = new()
 	update_appearance()
-	// imprint_gps("Ai Law Rack")
+	AddComponent(/datum/component/gps, "Active Law Rack")
 	if(!mapload)
 		log_silicon("\A [name] was created at [loc_name(src)].")
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
@@ -38,7 +60,7 @@
 /obj/machinery/ai_law_rack/Destroy()
 	unlink_silicon()
 	QDEL_NULL(combined_lawset)
-	law_modules.Cut()
+	law_modules = null
 	return ..()
 
 /obj/machinery/ai_law_rack/proc/update_lawset()
@@ -47,16 +69,34 @@
 	combined_lawset.clear_inherent_laws()
 	combined_lawset.clear_supplied_laws()
 
-	for(var/obj/item/ai_module/installed in law_modules)
+	for(var/obj/item/ai_module/installed as anything in get_law_affecting_modules())
 		installed.apply_to_combined_lawset(combined_lawset)
 
 	if(isnull(linked_ref))
 		return
-	linked_ref.laws.set_zeroth_law(combined_lawset.zeroth_law)
+	linked_ref.laws.set_zeroth_law(combined_lawset.zeroth)
 	linked_ref.laws.hacked = combined_lawset.hacked.Copy()
 	linked_ref.laws.inherent = combined_lawset.inherent.Copy()
 	linked_ref.laws.supplied = combined_lawset.supplied.Copy()
 	linked_ref.post_lawchange(TRUE)
+	if(!isAI(linked_ref))
+		return
+	var/mob/living/silicon/ai/ai = linked_ref
+	for(var/mob/living/silicon/robot/bot as anything in ai?.connected_robots)
+		bot.try_sync_laws()
+
+/// Returns a list of all modules that will contribute to the combined lawset
+/obj/machinery/ai_law_rack/proc/get_law_affecting_modules()
+	var/list/affecting_modules = list()
+	// Filter nulls
+	for(var/obj/item/ai_module/module in law_modules)
+		affecting_modules += module
+
+	return affecting_modules
+
+/// Returns the core module if it exists, otherwise returns null
+/obj/machinery/ai_law_rack/proc/get_core_module()
+	return has_core_slot ? law_modules[1] : null
 
 /obj/machinery/ai_law_rack/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -72,7 +112,14 @@
 
 	if(new_bot.control_disabled)
 		return FALSE
-	return TRUE
+	if(iscyborg(new_bot))
+		var/mob/living/silicon/robot/new_borg = new_bot
+		if(new_borg.scrambledcodes || new_borg.emagged)
+			return FALSE
+		return TRUE
+	if(isAI(new_bot))
+		return TRUE
+	return FALSE
 
 /obj/machinery/ai_law_rack/proc/link_silicon(mob/living/silicon/new_bot)
 	if(linked)
@@ -156,28 +203,32 @@
 		welded = TRUE
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/ai_law_rack/multitool_act(mob/living/user, obj/item/tool)
-	var/obj/item/multitool/multitool = tool
-	if(!istype(multitool) || !issilicon(multitool.buffer))
-		return NONE
-	if(!can_link_to(multitool.buffer))
-		balloon_alert(user, "can't link [multitool.buffer] to this law rack!")
-		return ITEM_INTERACT_BLOCKING
-	if(linked)
-		balloon_alert(user, "already linked to [linked]!")
-		return ITEM_INTERACT_BLOCKING
-	link_silicon(multitool.buffer)
-	balloon_alert(user, "linked to [linked]")
-	return ITEM_INTERACT_SUCCESS
+// /obj/machinery/ai_law_rack/multitool_act(mob/living/user, obj/item/tool)
+// 	var/obj/item/multitool/multitool = tool
+// 	if(!istype(multitool) || !issilicon(multitool.buffer))
+// 		return NONE
+// 	if(!can_link_to(multitool.buffer))
+// 		balloon_alert(user, "can't link [multitool.buffer] to this law rack!")
+// 		return ITEM_INTERACT_BLOCKING
+// 	if(linked)
+// 		balloon_alert(user, "already linked to [linked]!")
+// 		return ITEM_INTERACT_BLOCKING
+// 	link_silicon(multitool.buffer)
+// 	balloon_alert(user, "linked to [linked]")
+// 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/ai_law_rack/vv_edit_var(var_name, var_value)
 	. = ..()
-	if(var_name == NAMEOF(src, additional_slots))
+	if(var_name == NAMEOF(src, law_slots))
 		for(var/i in var_value + 1 to law_modules.len)
 			var/obj/item/ai_module/installed = law_modules[i]
 			installed?.forceMove(get_turf(src))
 
-		law_modules.len = 1 + var_value
+		law_modules.len = var_value
+
+	if(var_name == NAMEOF(src, has_core_slot) && !var_value)
+		for(var/obj/item/ai_module/core/core in law_modules)
+			core.forceMove(get_turf(src))
 
 /// Range at which you can see all the modules by name
 #define LAW_EXAMINE_RANGE 3
@@ -196,7 +247,7 @@
 	for(var/obj/item/ai_module/module in law_modules)
 		filled++
 	. += span_info("Otherwise, you can see that [filled] out of [length(law_modules)] slots are filled with law modules.")
-	if(isnull(law_modules[1]))
+	if(has_core_slot && isnull(get_core_module()))
 		. += span_warning("You also note that the core slot is empty!")
 	if(anchored)
 		. += span_notice("It is anchored[welded ? " and welded" : ", but not welded"] to the floor.")
@@ -214,7 +265,7 @@
 /obj/machinery/ai_law_rack/proc/get_slot_examine(slot)
 	var/obj/item/ai_module/module = law_modules[slot]
 	var/list/text = list()
-	text += span_info("&bull; [slot == 1 ? "  Core" : "Slot [slot - 1]"]: [module?.name || "Empty"]")
+	text += span_info("&bull; [slot == 1 && has_core_slot ? "  Core" : "Slot [slot - 1]"]: [module?.name || "Empty"]")
 	if(module)
 		var/secure_desc = "Bugged (report this)"
 		switch(law_modules[module])
@@ -231,7 +282,7 @@
 
 #undef LAW_EXAMINE_RANGE
 /// Beyond this we don't have support for more slots visually
-#define MAX_SLOT_OVERLAYS 9
+#define MAX_SLOT_OVERLAYS 10
 
 /obj/machinery/ai_law_rack/update_overlays()
 	. = ..()
@@ -242,7 +293,7 @@
 			continue
 		// slot 1 is offset 0 - then 1 pixel break, and 1 slot every 2 pixels
 		var/image/card = image(icon = icon, icon_state = "slot_filled")
-		card.pixel_z = (i == 1 ? 0 : -1) + ((i - 1) * -2)
+		card.pixel_z = (i == 1 ? 0 : -1) + ((i - 1) * -3)
 		. += card
 
 #undef MAX_SLOT_OVERLAYS
@@ -315,10 +366,13 @@
 			if(!module.can_install_to(user, src))
 				return
 			if(istype(module, /obj/item/ai_module/core))
+				if(!has_core_slot)
+					to_chat(user, span_warning("[src] has no slots for core modules!"))
+					return
 				if(index != 1)
 					to_chat(user, span_warning("You can't install a core module in a non-core slot!"))
 					return
-			else
+			else if(has_core_slot)
 				if(index == 1)
 					to_chat(user, span_warning("You can only install core modules in the core slot!"))
 					return
@@ -413,7 +467,7 @@
 	. = FALSE
 
 	// Core lawset is affected primarily, but other laws can be touched as well.
-	var/obj/item/ai_module/core/core = law_modules[1]
+	var/obj/item/ai_module/core/core = get_core_module()
 	var/core_sub_ion = prob(sub_ion_prob)
 	var/ions_added = 0
 	if(istype(core))
@@ -423,16 +477,19 @@
 			var/ion_lawset_type = pick_weighted_lawset()
 			var/datum/ai_laws/ion_lawset = new ion_lawset_type()
 			core.laws = ion_lawset.inherent.Copy()
+			core.set_ioned(TRUE)
 			qdel(ion_lawset)
 			. = TRUE
 		// Chance a random law is removed from the core lawset
 		if(prob(remove_law_prob))
 			var/removed = rand(1, length(core.laws))
 			core.laws.Cut(removed, removed + 1) // melbert todo verify
+			core.set_ioned(TRUE)
 			. = TRUE
 		// Chance the core lawset is shuffled entirely
 		if(prob(shuffle_prob))
 			core.laws = shuffle(core.laws)
+			core.set_ioned(TRUE)
 			. = TRUE
 		// Chance the first law in the core lawset is replaced with an ion law
 		// Don't add this one if we're replacing a random law later
@@ -468,42 +525,63 @@
 		update_lawset()
 	return .
 
-/obj/machinery/ai_law_rack/ai
-	name = "\improper AI law rack"
-	/// An AI rack is the prime rack if it is on the station at mapload
-	/// Generally should only ever have one prime rack per station
-	var/prime_rack = FALSE
+// Used for the station's primary AI
+/obj/machinery/ai_law_rack/core
+	name = "core law rack"
+	desc = "A massive law rack which can hold a core module, many law modules, \
+		and can even be linked to other law racks to add additional slots. \
+		Designed to be used by the station's primary AI and its legion of cyborgs."
+	max_integrity = 500
+	law_slots = 10
+	/// List of law racks which are linked to this law rack, contributing to our lawset
+	VAR_FINAL/list/obj/machinery/ai_law_rack/linked_racks
 
-/obj/machinery/ai_law_rack/ai/Initialize(mapload)
+/obj/machinery/ai_law_rack/core/Initialize(mapload)
 	. = ..()
 	if(mapload)
-		prime_rack = is_station_level(z)
 		load_config_law()
 
-/obj/machinery/ai_law_rack/ai/proc/load_config_law()
+/obj/machinery/ai_law_rack/core/Destroy()
+	for(var/obj/machinery/ai_law_rack/linked_rack as anything in linked_racks)
+		unlink_child_law_rack(linked_rack)
+	return ..()
+
+/obj/machinery/ai_law_rack/core/proc/load_config_law()
 	var/datum/ai_laws/default_laws = get_round_default_lawset()
 
 	for(var/obj/item/ai_module/core/full/core as anything in subtypesof(/obj/item/ai_module/core/full))
 		if(core::law_id == default_laws::id)
 			add_law_module(new core(src), 1, MODULE_WELDED)
 
-/obj/machinery/ai_law_rack/ai/can_link_to(mob/living/silicon/ai/new_bot)
-	if(!isAI(new_bot))
-		return FALSE
-	return ..()
-
-/obj/machinery/ai_law_rack/ai/update_lawset()
+/obj/machinery/ai_law_rack/core/get_law_affecting_modules()
 	. = ..()
-	var/mob/living/silicon/ai/ai = linked_ref
-	for(var/mob/living/silicon/robot/bot as anything in ai?.connected_robots)
-		bot.try_sync_laws()
+	for(var/obj/machinery/ai_law_rack/linked_rack as anything in linked_racks)
+		. |= linked_rack.get_law_affecting_modules()
 
-/obj/machinery/ai_law_rack/borg
-	name = "\improper cyborg law rack"
+/obj/machinery/ai_law_rack/core/proc/link_child_law_rack(obj/machinery/ai_law_rack/child)
+	if(child == src || (child in linked_racks))
+		return
+	LAZYADD(linked_racks, child)
+	RegisterSignal(child, COMSIG_QDELETING, PROC_REF(unlink_child_law_rack))
+	update_lawset()
 
-/obj/machinery/ai_law_rack/borg/can_link_to(mob/living/silicon/robot/new_bot)
-	if(!iscyborg(new_bot))
-		return FALSE
-	if(new_bot.scrambledcodes || new_bot.emagged)
-		return FALSE
-	return ..()
+/obj/machinery/ai_law_rack/core/proc/unlink_child_law_rack(obj/machinery/ai_law_rack/child)
+	SIGNAL_HANDLER
+
+	UnregisterSignal(child, COMSIG_QDELETING)
+	LAZYREMOVE(linked_racks, child)
+	if(!QDELING(src))
+		update_lawset()
+
+// Can be linked to a core law rack, and constructed anywhere - allowing traitors to subvert the AI or the crew to counter a subversion
+/obj/machinery/ai_law_rack/small
+	name = "portable law rack"
+	desc = "A smaller law rack. While it can function on its own should the need arise, \
+		it's primarily designed to be paired with a core law rack, providing extra slots for emergency law modifications."
+	armor_type = /datum/armor/obj_machinery/law_rack/portable
+	max_integrity = 200
+	damage_deflection = 8
+	law_slots = 3
+	has_core_slot = FALSE
+	welded = FALSE
+	anchored = FALSE

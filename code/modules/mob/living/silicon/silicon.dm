@@ -488,7 +488,7 @@
 	return REGION_ACCESS_ALL_STATION
 
 /mob/living/silicon/proc/get_law_rack()
-	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/ai))
+	for(var/obj/machinery/ai_law_rack/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
 		if(rack.linked_ref == src)
 			return rack
 	return null

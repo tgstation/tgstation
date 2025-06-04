@@ -23,6 +23,12 @@
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 	laws[1] = targName
 
+/obj/item/ai_module/core/freeformcore/can_install_to(mob/living/user, obj/machinery/ai_law_rack/rack)
+	if(!laws[1])
+		to_chat(user, span_warning("No law entered on module, please enter one."))
+		return FALSE
+	return TRUE
+
 /obj/item/ai_module/supplied/freeform
 	name = "'Freeform' AI Module"
 	laws = list("")
@@ -42,3 +48,9 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[html_encode(targName)]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 	laws[1] = targName
+
+/obj/item/ai_module/supplied/freeform/can_install_to(mob/living/user, obj/machinery/ai_law_rack/rack)
+	if(!laws[1])
+		to_chat(user, span_warning("No law entered on module, please enter one."))
+		return FALSE
+	return TRUE

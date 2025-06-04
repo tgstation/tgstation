@@ -16,6 +16,6 @@
 
 /obj/item/ai_module/zeroth/onehuman/can_install_to(mob/living/user, obj/machinery/ai_law_rack/rack)
 	if(!targetName)
-		to_chat(user, span_alert("No name detected on module, please enter one."))
+		to_chat(user, span_warning("No name detected on module, please enter one."))
 		return FALSE
 	return TRUE

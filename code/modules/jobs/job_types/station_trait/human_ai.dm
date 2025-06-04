@@ -144,10 +144,9 @@
 
 /obj/item/paper/default_lawset_list/LateInitialize()
 	var/datum/ai_laws/reported
-	for(var/obj/machinery/ai_law_rack/ai/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/ai))
-		if(rack.prime_rack)
-			reported = rack.combined_lawset
-			break
+	for(var/obj/machinery/ai_law_rack/core/rack as anything in SSmachines.get_machines_by_type(/obj/machinery/ai_law_rack/core))
+		reported = rack.combined_lawset
+		break
 
 	if(isnull(reported))
 		return
