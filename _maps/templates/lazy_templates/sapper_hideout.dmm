@@ -108,8 +108,10 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/green/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/atmospherics/components/binary/pump/off/green/visible/layer2{
+	dir = 1
+	},
 /turf/open/floor/iron/smooth_large,
 /area/sapper_hideout)
 "hH" = (
@@ -156,10 +158,8 @@
 /turf/open/floor/plating,
 /area/sapper_hideout)
 "mO" = (
-/obj/machinery/atmospherics/components/tank{
-	piping_layer = 2
-	},
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/components/binary/valve,
+/turf/open/misc/asteroid,
 /area/sapper_hideout)
 "mW" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -185,6 +185,7 @@
 "oK" = (
 /obj/structure/cable/layer3,
 /obj/machinery/atmospherics/pipe/smart/simple/green/hidden/layer2,
+/obj/machinery/meter/layer2,
 /turf/open/floor/catwalk_floor/iron_smooth{
 	covered = 0
 	},
@@ -692,12 +693,10 @@
 /turf/open/floor/plating,
 /area/sapper_hideout)
 "ZK" = (
-/obj/machinery/atmospherics/components/tank{
-	piping_layer = 2
-	},
 /obj/effect/light_emitter/space{
 	set_luminosity = 5
 	},
+/obj/machinery/atmospherics/components/tank/air/layer2,
 /turf/open/floor/plating,
 /area/sapper_hideout)
 "ZN" = (
@@ -1749,7 +1748,7 @@ BO
 Sb
 od
 ZK
-mO
+nG
 nG
 FI
 xD
@@ -1778,11 +1777,11 @@ ZN
 ZN
 ZN
 ZN
+mO
 ZN
-ZN
-mO
-mO
-mO
+nG
+nG
+nG
 AO
 BO
 od
