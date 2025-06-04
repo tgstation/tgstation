@@ -336,8 +336,13 @@
 	plane = EMISSIVE_PLANE
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_planes = list(EMISSIVE_RENDER_PLATE, EMISSIVE_BLOOM_PLATE)
+	render_relay_planes = list()
 	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_color = list(1,1,1,0, 1,1,1,0, 1,1,1,0, 0,0,0,1, 0,0,0,0))
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_PLATE, offset), relay_color = list(1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"
