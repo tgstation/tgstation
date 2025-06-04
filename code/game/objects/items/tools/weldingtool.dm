@@ -112,7 +112,7 @@
 	flamethrower_screwdriver(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/weldingtool/attackby(obj/item/tool, mob/user, list/modifiers)
+/obj/item/weldingtool/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(tool, /obj/item/stack/rods))
 		flamethrower_rods(tool, user)
 	else
@@ -123,6 +123,11 @@
 	var/plasmaAmount = reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
 	dyn_explosion(src, plasmaAmount/5, explosion_cause = src) // 20 plasma in a standard welder has a 4 power explosion. no breaches, but enough to kill/dismember holder
 	qdel(src)
+
+/obj/item/weldingtool/cyborg_unequip(mob/user)
+	if(!isOn())
+		return
+	switched_on(user)
 
 /obj/item/weldingtool/use_tool(atom/target, mob/living/user, delay, amount, volume, datum/callback/extra_checks)
 	var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, src, ABOVE_LIGHTING_PLANE)
@@ -170,7 +175,7 @@
 	INVOKE_ASYNC(src, PROC_REF(try_heal_loop), interacting_with, user, TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/weldingtool/afterattack(atom/target, mob/user, list/modifiers)
+/obj/item/weldingtool/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(!isOn())
 		return
 	use(1)
@@ -195,7 +200,7 @@
 
 /// Returns the amount of fuel in the welder
 /obj/item/weldingtool/proc/get_fuel()
-	return reagents.get_reagent_amount(/datum/reagent/fuel)
+	return reagents.get_reagent_amount(/datum/reagent/fuel) + reagents.get_reagent_amount(/datum/reagent/toxin/plasma)
 
 /// Uses fuel from the welding tool.
 /obj/item/weldingtool/use(used = 0)
@@ -343,12 +348,6 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "indwelder_cyborg"
 	toolspeed = 0.5
-
-/obj/item/weldingtool/largetank/cyborg/cyborg_unequip(mob/user)
-	if(!isOn())
-		return
-	switched_on(user)
-
 
 /obj/item/weldingtool/mini
 	name = "emergency welding tool"

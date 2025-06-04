@@ -130,7 +130,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/lead_pipe = 1,
 		/obj/item/reagent_containers/cup/beaker = 1,
 		/obj/item/reagent_containers/cup/bottle/random_buffer = 2,
-		/obj/item/reagent_containers/cup/rag = 1,
+		/obj/item/rag = 1,
 		/obj/item/reagent_containers/hypospray/medipen/pumpup = 2,
 		/obj/item/reagent_containers/syringe = 1,
 		/obj/item/stock_parts/power_store/cell/lead = 1,

@@ -7,6 +7,6 @@ jobs:
   link_rounds:
     runs-on: ubuntu-22.04
     steps:
-    - uses: tgstation/round_linker@master
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: tgstation/round_linker@master
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

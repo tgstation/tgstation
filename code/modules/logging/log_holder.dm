@@ -275,20 +275,8 @@ ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds 
 	category_instance.category_header = category_header
 	init_category_file(category_instance, category_header)
 
-/datum/log_holder/proc/human_readable_timestamp(precision = 3)
-	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss", TIMEZONE_UTC)
-	// now we grab the millis from the rustg timestamp
-	var/rustg_stamp = rustg_unix_timestamp()
-	var/list/timestamp = splittext(rustg_stamp, ".")
-#ifdef UNIT_TESTS
-	if(length(timestamp) != 2)
-		stack_trace("rustg returned illegally formatted string '[rustg_stamp]'")
-		return start
-#endif
-	var/millis = timestamp[2]
-	if(length(millis) > precision)
-		millis = copytext(millis, 1, precision + 1)
-	return "[start].[millis]"
+/datum/log_holder/proc/human_readable_timestamp()
+	return rustg_formatted_timestamp("%Y-%m-%d %H:%M:%S%.3f")
 
 /// Adds an entry to the given category, if the category is disabled it will not be logged.
 /// If the category does not exist, we will CRASH and log to the error category.

@@ -53,7 +53,7 @@
 	else
 		..()
 
-/obj/item/minigunpack/attackby(obj/item/W, mob/user, list/modifiers)
+/obj/item/minigunpack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	if(W == gun) //Don't need armed check, because if you have the gun assume its armed.
 		user.dropItemToGround(gun, TRUE)
 	else

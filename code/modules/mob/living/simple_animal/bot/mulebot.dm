@@ -178,7 +178,7 @@
 	diag_hud_set_mulebotcell()
 	return ITEM_INTERACT_SUCCESS
 
-/mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, list/modifiers)
+/mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(I, /obj/item/stock_parts/power_store/cell) && bot_cover_flags & BOT_COVER_MAINTS_OPEN)
 		if(cell)
 			to_chat(user, span_warning("[src] already has a power cell!"))
@@ -757,7 +757,7 @@
 		cell.forceMove(Tsec)
 		cell = null
 
-	new /obj/effect/decal/cleanable/oil(loc)
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /mob/living/simple_animal/bot/mulebot/remove_air(amount) //To prevent riders suffocating

@@ -34,7 +34,7 @@
 		to_chat(user, span_warning("It seems that the blackbox is missing..."))
 		return
 
-/obj/machinery/blackbox_recorder/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
+/obj/machinery/blackbox_recorder/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/blackbox))
 		if(HAS_TRAIT(attacking_item, TRAIT_NODROP) || !user.transferItemToLoc(attacking_item, src))
 			to_chat(user, span_warning("[attacking_item] is stuck to your hand!"))
@@ -50,7 +50,7 @@
 /obj/machinery/blackbox_recorder/Destroy()
 	if(stored)
 		stored.forceMove(loc)
-		new /obj/effect/decal/cleanable/oil(loc)
+		new /obj/effect/decal/cleanable/blood/oil(loc)
 	return ..()
 
 /obj/machinery/blackbox_recorder/update_icon_state()

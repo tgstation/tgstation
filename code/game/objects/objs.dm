@@ -71,40 +71,47 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	GLOB.objects_by_id_tag -= id_tag
 	. = ..()
 
-/obj/attacked_by(obj/item/attacking_item, mob/living/user)
+/obj/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!attacking_item.force)
-		return
+		return 0
 
 	var/demo_mod = attacking_item.get_demolition_modifier(src)
-	var/total_force = (attacking_item.force * demo_mod)
+	var/total_force = CALCULATE_FORCE(attacking_item, attack_modifiers) * demo_mod
 	var/damage = take_damage(total_force, attacking_item.damtype, MELEE, TRUE, get_dir(src, user), attacking_item.armour_penetration)
 
-	// Sanity in case one is null for some reason
-	var/picked_index = rand(max(length(attacking_item.attack_verb_simple), length(attacking_item.attack_verb_continuous)))
+	if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
+		// Sanity in case one is null for some reason
+		var/picked_index = rand(max(length(attacking_item.attack_verb_simple), length(attacking_item.attack_verb_continuous)))
 
-	var/message_verb_continuous = "attacks"
-	var/message_verb_simple = "attack"
-	// Sanity in case one is... longer than the other?
-	if (picked_index && length(attacking_item.attack_verb_continuous) >= picked_index)
-		message_verb_continuous = attacking_item.attack_verb_continuous[picked_index]
-	if (picked_index && length(attacking_item.attack_verb_simple) >= picked_index)
-		message_verb_simple = attacking_item.attack_verb_simple[picked_index]
+		var/message_verb_continuous = "attacks"
+		var/message_verb_simple = "attack"
+		// Sanity in case one is... longer than the other?
+		if (picked_index && length(attacking_item.attack_verb_continuous) >= picked_index)
+			message_verb_continuous = attacking_item.attack_verb_continuous[picked_index]
+		if (picked_index && length(attacking_item.attack_verb_simple) >= picked_index)
+			message_verb_simple = attacking_item.attack_verb_simple[picked_index]
 
-	if(demo_mod > 1 && prob(damage * 5))
-		if(HAS_TRAIT(src, TRAIT_INVERTED_DEMOLITION))
-			message_verb_simple = "shred"
-			message_verb_continuous = "shreds"
-		else
-			message_verb_simple = "pulverise"
-			message_verb_continuous = "pulverises"
+		if(demo_mod > 1 && prob(damage * 5))
+			if(HAS_TRAIT(src, TRAIT_INVERTED_DEMOLITION))
+				message_verb_simple = "shred"
+				message_verb_continuous = "shreds"
+			else
+				message_verb_simple = "pulverise"
+				message_verb_continuous = "pulverises"
 
-	if(demo_mod < 1)
-		message_verb_simple = "ineffectively " + message_verb_simple
-		message_verb_continuous = "ineffectively " + message_verb_continuous
+		if(demo_mod < 1)
+			message_verb_simple = "ineffectively " + message_verb_simple
+			message_verb_continuous = "ineffectively " + message_verb_continuous
 
-	user.visible_message(span_danger("[user] [message_verb_continuous] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), \
-		span_danger("You [message_verb_simple] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"), null, COMBAT_MESSAGE_RANGE)
+		user.visible_message(
+			span_danger("[user] [message_verb_continuous] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"),
+			span_danger("You [message_verb_simple] [src] with [attacking_item][damage ? "." : ", [no_damage_feedback]!"]"),
+			null,
+			COMBAT_MESSAGE_RANGE,
+		)
+
 	log_combat(user, src, "attacked", attacking_item)
+	return damage
 
 /obj/assume_air(datum/gas_mixture/giver)
 	if(loc)
@@ -319,28 +326,18 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	if(uses_integrity)
-		var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
-		modify_max_integrity(ceil(max_integrity * integrity_mod))
 	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
 	force *= strength_mod
 	throwforce *= strength_mod
-	var/list/armor_mods = material.get_armor_modifiers(multiplier)
-	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
 
 ///This proc is called when the material is removed from an object specifically.
 /obj/remove_single_mat_effect(datum/material/material, mat_amount, multiplier)
 	. = ..()
 	if(!(material_flags & MATERIAL_AFFECT_STATISTICS))
 		return
-	if(uses_integrity)
-		var/integrity_mod = GET_MATERIAL_MODIFIER(material.integrity_modifier, multiplier)
-		modify_max_integrity(floor(max_integrity / integrity_mod))
 	var/strength_mod = GET_MATERIAL_MODIFIER(material.strength_modifier, multiplier)
 	force /= strength_mod
 	throwforce /= strength_mod
-	var/list/armor_mods = material.get_armor_modifiers(1 / multiplier)
-	set_armor(get_armor().generate_new_with_multipliers(armor_mods))
 
 /// Returns modifier to how much damage this object does to a target considered vulnerable to "demolition" (other objects, robots, etc)
 /obj/proc/get_demolition_modifier(obj/target)

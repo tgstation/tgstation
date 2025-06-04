@@ -395,7 +395,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			C.wiringGuiUpdate(user)
 		C.is_empty(user)
 
-/turf/attackby(obj/item/C, mob/user, list/modifiers)
+/turf/attackby(obj/item/C, mob/user, list/modifiers, list/attack_modifiers)
 	if(..())
 		return TRUE
 	if(can_lay_cable() && istype(C, /obj/item/stack/cable_coil))
@@ -712,7 +712,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	. = ..()
 	for(var/atom/movable/to_clean as anything in src)
 		if(all_contents || HAS_TRAIT(to_clean, TRAIT_MOPABLE))
-			to_clean.wash(clean_types)
+			. |= to_clean.wash(clean_types)
 
 /turf/set_density(new_value)
 	var/old_density = density

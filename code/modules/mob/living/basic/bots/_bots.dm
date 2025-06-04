@@ -113,6 +113,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 	add_traits(list(TRAIT_NO_GLIDE, TRAIT_SILICON_EMOTES_ALLOWED), INNATE_TRAIT)
+	LoadComponent(/datum/component/bloodysoles/bot)
 	GLOB.bots_list += src
 
 	// Give bots a fancy new ID card that can hold any access.
@@ -422,7 +423,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	heal_overall_damage(10)
 	user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
 
-/mob/living/basic/bot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers)
+/mob/living/basic/bot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(attacking_item.GetID())
 		unlock_with_id(user)
 		return

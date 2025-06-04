@@ -86,7 +86,8 @@
 	var/turf/new_turf = entering
 
 	//apply debufs for being in gravity
-	if(new_turf.has_gravity())
+	var/area/local_area = get_area(new_turf)
+	if(new_turf.has_gravity() && !is_area_nearby_station(local_area))
 		organ_owner.add_movespeed_modifier(speed_modifier)
 	//remove debufs for not being in gravity
 	else

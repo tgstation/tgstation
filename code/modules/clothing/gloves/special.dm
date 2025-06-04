@@ -140,7 +140,7 @@
 	greyscale_colors = "#15191a"
 	clothing_traits = list(TRAIT_QUICK_CARRY, TRAIT_FASTMED)
 
-/obj/item/clothing/gloves/latex/coroner/add_blood_DNA(list/blood_DNA_to_add)
+/obj/item/clothing/gloves/latex/coroner/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases)
 	return FALSE
 
 /obj/item/clothing/gloves/tinkerer

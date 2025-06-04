@@ -62,7 +62,7 @@
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
 
-/obj/structure/lattice/attackby(obj/item/C, mob/user, list/modifiers)
+/obj/structure/lattice/attackby(obj/item/C, mob/user, list/modifiers, list/attack_modifiers)
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	if(C.tool_behaviour == TOOL_WIRECUTTER)
@@ -174,7 +174,7 @@
 /obj/structure/lattice/lava/deconstruction_hints(mob/user)
 	return span_notice("The rods look like they could be <b>cut</b>, but the <i>heat treatment will shatter off</i>. There's space for a <i>tile</i>.")
 
-/obj/structure/lattice/lava/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/obj/structure/lattice/lava/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!ismetaltile(attacking_item))
 		return

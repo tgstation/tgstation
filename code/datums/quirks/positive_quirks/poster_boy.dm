@@ -11,7 +11,7 @@
 	var/mob/living/carbon/human/posterboy = quirk_holder
 	var/obj/item/storage/box/posterbox/newbox = new()
 	newbox.add_quirk_posters(posterboy.mind)
-	give_item_to_holder(newbox, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(newbox, list(LOCATION_BACKPACK, LOCATION_HANDS))
 
 /obj/item/storage/box/posterbox
 	name = "Box of Posters"

@@ -30,7 +30,7 @@
 	bag.atom_storage.max_total_storage = INFINITY
 
 	var/list/common_noncombat_insertion_items = list(
-		/obj/item/reagent_containers/cup/rag,
+		/obj/item/rag,
 		/obj/item/soap,
 		/obj/item/card/emag,
 		/obj/item/detective_scanner,

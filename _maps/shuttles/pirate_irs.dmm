@@ -36,7 +36,7 @@
 /obj/effect/turf_decal/siding/dark_green{
 	dir = 1
 	},
-/obj/item/reagent_containers/cup/rag,
+/obj/item/rag,
 /turf/open/floor/iron/kitchen,
 /area/shuttle/pirate)
 "bT" = (
