@@ -190,7 +190,6 @@ Due to keyboard shortcuts, the second one is not necessarily the remote eye's lo
 		target_turf.visible_message(span_notice("[stored_slimes.len] slimes are spat out!"))
 	for(var/mob/living/basic/slime/stored_slime in stored_slimes)
 		stored_slime.forceMove(target_turf)
-		stored_slimes -= stored_slime
 		REMOVE_TRAIT(stored_slime, TRAIT_STASIS, XENOBIO_CONSOLE_TRAIT)
 	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
 
