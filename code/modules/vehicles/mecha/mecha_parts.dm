@@ -252,9 +252,10 @@
 	construct_type = /datum/component/construction/unordered/mecha_chassis/phazon
 
 /obj/item/mecha_parts/chassis/phazon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	. = ..()
 	if(istype(tool, /obj/item/assembly/signaler/anomaly) && !istype(tool, /obj/item/assembly/signaler/anomaly/ectoplasm))
 		to_chat(user, "The anomaly core socket only accepts ectoplasm anomaly cores!")
+		return ITEM_INTERACT_BLOCKING
+	return ..()
 
 /obj/item/mecha_parts/part/phazon_torso
 	name="\improper Phazon torso"

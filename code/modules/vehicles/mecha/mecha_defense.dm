@@ -237,7 +237,7 @@
 			balloon_alert(user, "MMI initialization failed!")
 			return ITEM_INTERACT_BLOCKING
 
-		balloon_alert(user, "MMI initialized.")
+		balloon_alert(user, "MMI initialized")
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/mecha_ammo))
@@ -264,7 +264,7 @@
 
 	if(is_wire_tool(tool) && (mecha_flags & PANEL_OPEN))
 		if(wires.interact(user))
-			return  ITEM_INTERACT_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stock_parts))
 		return try_insert_part(tool, user)
@@ -335,6 +335,7 @@
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
 		log_message("[tool] installed", LOG_MECHA)
 		update_part_values()
+		return ITEM_INTERACT_SUCCESS
 
 	return NONE
 
