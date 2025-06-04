@@ -47,7 +47,7 @@
 /area/shuttle/sapper)
 "hv" = (
 /obj/machinery/light/floor,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "hV" = (
@@ -61,7 +61,7 @@
 /area/shuttle/sapper)
 "lZ" = (
 /obj/machinery/light/floor,
-/obj/effect/decal/cleanable/robot_debris/limb,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/limb,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "mE" = (
@@ -150,7 +150,7 @@
 	pixel_x = -9;
 	pixel_y = 9
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "qq" = (
@@ -227,7 +227,7 @@
 "uD" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/toy/crayon/spraycan,
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /turf/open/floor/mineral/titanium/white,
 /area/shuttle/sapper)
 "vB" = (

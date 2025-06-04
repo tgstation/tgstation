@@ -60,9 +60,9 @@
 	var/mob/living/carbon/human/gang_member = owner.current
 	gang_member.equipOutfit(/datum/outfit/sapper)
 	if(mask_no <= 1)
-		gang_member.put_in_hands(new /obj/item/clothing/mask/gas/atmos/sapper)
+		gang_member.put_in_r_hand(new /obj/item/clothing/mask/gas/atmos/sapper)
 	else
-		gang_member.put_in_hands(new /obj/item/clothing/mask/gas/atmos/sapper/partner)
+		gang_member.put_in_r_hand(new /obj/item/clothing/mask/gas/atmos/sapper/partner)
 	return TRUE
 
 /datum/antagonist/sapper/proc/get_spawnpoint()
