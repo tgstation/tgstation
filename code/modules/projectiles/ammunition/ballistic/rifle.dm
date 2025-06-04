@@ -123,7 +123,7 @@
 	/// Amount of drowsiness added per second
 	var/drowsy_per_second = 2 SECONDS
 	/// At what point of drowsiness do we knock out the owner
-	var/drowsy_knockout = 4 SECONDS // Actually more like 80, because you need 3 ticks to reach this + tick after the projectile hits
+	var/drowsy_knockout = 5 SECONDS // Actually more like 80, because you need 4 ticks to reach this
 
 /datum/embedding/rebar_healium/process(seconds_per_tick)
 	. = ..()
