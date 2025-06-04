@@ -234,10 +234,10 @@
 /obj/vehicle/sealed/mecha/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/mmi))
 		if(!mmi_move_inside(tool,user))
-			balloon_alert(user, "MMI initialization failed!")
+			balloon_alert(user, "initialization of MMI failed!")
 			return ITEM_INTERACT_BLOCKING
 
-		balloon_alert(user, "MMI initialized")
+		balloon_alert(user, "initialized MMI")
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/mecha_ammo))
