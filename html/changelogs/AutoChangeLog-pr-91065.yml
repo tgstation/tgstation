@@ -1,0 +1,5 @@
+author: "ArrisFairburne"
+delete-after: True
+changes:
+  - qol: "monkey cube boxes can now be inserted straight into the xenobiology console"
+  - qol: "placing/sucking slimes/monkeys is slightly less text spammy"
