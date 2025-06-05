@@ -43476,11 +43476,15 @@
 "mWq" = (
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty{
-	pixel_x = -9;
-	pixel_y = 9
+	pixel_x = -7;
+	pixel_y = 7
 	},
 /obj/item/stack/sheet/glass/fifty{
-	pixel_y = 13
+	pixel_y = 7
+	},
+/obj/item/stack/sheet/plasteel/fifty{
+	pixel_x = 7;
+	pixel_y = 7
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
@@ -49524,20 +49528,19 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "oMH" = (
-/obj/item/hfr_box/body/waste_output{
-	pixel_x = -15;
-	pixel_y = 13
-	},
 /obj/item/hfr_box/body/interface{
 	pixel_y = 17
 	},
 /obj/item/hfr_box/body/moderator_input{
 	pixel_x = -8;
-	pixel_y = 8
+	pixel_y = 9
+	},
+/obj/item/hfr_box/body/fuel_input{
+	pixel_x = 7;
+	pixel_y = 9
 	},
 /obj/item/hfr_box/body/waste_output{
-	pixel_x = 10;
-	pixel_y = 9
+	pixel_y = 3
 	},
 /obj/structure/table,
 /turf/open/floor/engine,
@@ -60282,23 +60285,23 @@
 "rYz" = (
 /obj/structure/table,
 /obj/item/hfr_box/corner{
-	pixel_x = 3;
-	pixel_y = 10
+	pixel_x = 7;
+	pixel_y = 14
 	},
 /obj/item/hfr_box/corner{
-	pixel_y = 6
+	pixel_y = 14;
+	pixel_x = -8
 	},
-/obj/item/hfr_box/corner{
-	pixel_x = -2;
+/obj/item/hfr_box/core{
 	pixel_y = 8
 	},
 /obj/item/hfr_box/corner{
-	pixel_x = -4;
-	pixel_y = 5
+	pixel_x = -8;
+	pixel_y = 3
 	},
-/obj/item/hfr_box/core{
-	pixel_x = 3;
-	pixel_y = 4
+/obj/item/hfr_box/corner{
+	pixel_x = 7;
+	pixel_y = 3
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
@@ -74664,10 +74667,6 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
-"wmG" = (
-/obj/item/stack/sheet/plasteel/fifty,
-/turf/open/floor/engine,
-/area/station/engineering/atmos/hfr_room)
 "wmK" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4,
@@ -193843,7 +193842,7 @@ xIe
 nlm
 nlm
 ydS
-wmG
+bNX
 ovn
 bNX
 qGp
