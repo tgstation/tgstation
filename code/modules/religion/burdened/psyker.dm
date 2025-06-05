@@ -32,8 +32,8 @@
 	owner.adjust_disgust(33 * seconds_per_tick)
 	apply_organ_damage(5 * seconds_per_tick, 199)
 
-/obj/organ/brain/psyker/blinding
-	var/does_it_blind = TRUE
+/obj/item/organ/brain/psyker/blinding
+	does_it_blind = TRUE
 
 /obj/item/bodypart/head/psyker
 	limb_id = BODYPART_ID_PSYKER
@@ -73,10 +73,10 @@
 	if(!psyker_head.replace_limb(src, special = TRUE))
 		return FALSE
 	qdel(old_head)
+	var/obj/item/organ/brain/psyker/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes. Who'da thunk.
 	if(is_blinding)
-		var/obj/item/organ/brain/psyker/blinding/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes. Who'da thunk.
-	else
-		var/obj/item/organ/brain/psyker/psyker_brain = new()
+		var/obj/item/organ/brain/psyker/blinding/dummy = new()
+		psyker_brain = dummy
 	old_brain.before_organ_replacement(psyker_brain)
 	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
