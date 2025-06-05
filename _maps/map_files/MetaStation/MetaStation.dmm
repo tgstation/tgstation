@@ -1858,7 +1858,7 @@
 	dir = 1
 	},
 /obj/structure/sign/warning/vacuum/external/directional/west,
-/obj/machinery/atmospherics/components/unary/airlock_pump,
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "aIO" = (
@@ -11997,7 +11997,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/airlock_pump{
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -20358,7 +20358,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/airlock_pump{
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -36137,7 +36137,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/airlock_pump{
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
 	dir = 8
 	},
 /obj/machinery/light/small/directional/south,
@@ -39836,7 +39836,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/unary/airlock_pump{
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
 	dir = 8
 	},
 /obj/structure/sign/warning/vacuum/external/directional/south,
@@ -41909,7 +41909,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/airlock_pump{
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -45517,7 +45517,7 @@
 "pOF" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/unary/airlock_pump{
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
 	dir = 1
 	},
 /turf/open/floor/plating,
@@ -46022,7 +46022,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/airlock_pump,
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "pWX" = (
@@ -46497,7 +46497,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/airlock_pump{
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -49333,7 +49333,7 @@
 /area/station/medical/surgery/aft)
 "rdt" = (
 /obj/structure/sign/warning/vacuum/external/directional/north,
-/obj/machinery/atmospherics/components/unary/airlock_pump{
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -54716,7 +54716,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/airlock_pump,
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/fore)
 "sTY" = (
@@ -59149,7 +59149,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/airlock_pump{
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -59477,7 +59477,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/atmospherics/components/unary/airlock_pump{
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only{
 	dir = 4
 	},
 /turf/open/floor/plating,
@@ -69297,7 +69297,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/airlock_pump,
+/obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "xSO" = (
