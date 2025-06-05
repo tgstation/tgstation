@@ -1,0 +1,5 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - bugfix: "fixes wawa ordnance cycle issue"
+  - map: "adds a binary pump to catwalk ordnance\""
