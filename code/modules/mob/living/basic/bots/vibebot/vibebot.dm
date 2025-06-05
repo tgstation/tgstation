@@ -1,6 +1,6 @@
 /mob/living/basic/bot/vibebot
 	name = "\improper Vibebot"
-	desc = "A little robot. [src.p_Theyre()] just vibing, doing [src.p_their()] thing."
+	desc = "A little robot. It's just vibing, doing its thing."
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "vibebot1"
 	base_icon_state = "vibebot"

@@ -1,11 +1,11 @@
 /mob/living/simple_animal/bot/secbot
 	name = "\improper Securitron"
-	desc = "A little security robot. [src.p_They()] looks less than thrilled."
+	desc = "A little security robot. He looks less than thrilled."
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "secbot"
 	light_color = "#f56275"
 	light_power = 0.8
-	gender = MALE //because the old desc said "he"
+	gender = MALE
 	density = FALSE
 	anchored = FALSE
 	health = 25
@@ -68,7 +68,7 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky
 	name = "Commander Beep O'sky"
-	desc = "It's Commander Beep O'sky! Officially the superior officer of all bots on station, Beepsky remains as humble and dedicated to the law as the day [src.p_they()] was first fabricated."
+	desc = "It's Commander Beep O'sky! Officially the superior officer of all bots on station, Beepsky remains as humble and dedicated to the law as the day he was first fabricated."
 	bot_mode_flags = BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED
 	commissioned = TRUE
 
@@ -90,7 +90,7 @@
 
 /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	name = "Sergeant-At-Armsky"
-	desc = "It's Sergeant-At-Armsky! [src.p_Theyre()] a disgruntled assistant to the warden that would probably shoot you if [src.p_they()] had hands."
+	desc = "It's Sergeant-At-Armsky! He's a disgruntled assistant to the warden that would probably shoot you if he had hands."
 	health = 45
 	bot_mode_flags = ~(BOT_MODE_CAN_BE_SAPIENT|BOT_MODE_AUTOPATROL)
 	security_mode_flags = SECBOT_DECLARE_ARRESTS | SECBOT_CHECK_IDS | SECBOT_CHECK_RECORDS

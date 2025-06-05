@@ -5,7 +5,7 @@
 
 /mob/living/basic/bot/dedbot
 	name = "\improper Donk Exenteration Drone" //Exenteration means ripping entrails out, ouch!
-	desc = "A bladed commercial defence drone, often called an 'Ex-Drone' or 'D.E.D.bot'. [src.p_They()] follows a simple programmed patrol route, and slashes at anyone who doesn't have an identity implant."
+	desc = "A bladed commercial defence drone, often called an 'Ex-Drone' or 'D.E.D.bot'. It follows a simple programmed patrol route, and slashes at anyone who doesn't have an identity implant."
 	icon_state = "ded_drone0"
 	base_icon_state = "ded_drone"
 	req_one_access = list(ACCESS_SYNDICATE)

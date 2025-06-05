@@ -1,6 +1,6 @@
 /mob/living/basic/bot/honkbot
 	name = "\improper Honkbot"
-	desc = "A little robot. [src.p_They()] looks happy with [src.p_their()] bike horn."
+	desc = "A little robot. It looks happy with its bike horn."
 	icon_state = "honkbot"
 	base_icon_state = "honkbot"
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)

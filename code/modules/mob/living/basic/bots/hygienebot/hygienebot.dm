@@ -2,13 +2,13 @@
 
 /mob/living/basic/bot/hygienebot
 	name = "\improper Hygienebot"
-	desc = "A flying cleaning robot, [src.p_they()]'ll chase down people who can't shower properly!"
+	desc = "A flying cleaning robot, he'll chase down people who can't shower properly!"
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "hygienebot"
 	base_icon_state = "hygienebot"
-	gender = MALE //because the old desc said "he"
 	pass_flags = parent_type::pass_flags | PASSTABLE
 	layer = MOB_UPPER_LAYER
+	gender = MALE
 	density = FALSE
 	anchored = FALSE
 	health = 100

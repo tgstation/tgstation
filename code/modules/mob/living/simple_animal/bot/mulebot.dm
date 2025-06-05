@@ -799,7 +799,7 @@
 
 /mob/living/simple_animal/bot/mulebot/paranormal//allows ghosts only unless hacked to actually be useful
 	name = "\improper GHOULbot"
-	desc = "A rather ghastly looking... Multiple Utility Load Effector bot? [src.p_They()] only seems to accept paranormal forces, and for this reason is fucking useless."
+	desc = "A rather ghastly looking... Multiple Utility Load Effector bot? It only seems to accept paranormal forces, and for this reason is fucking useless."
 	icon_state = "paranormalmulebot0"
 	base_icon = "paranormalmulebot"
 
