@@ -576,7 +576,6 @@
 	cycle_timeout = initial(cycle_timeout)
 	cycling_set_up = FALSE
 
-
 /obj/machinery/atmospherics/components/unary/airlock_pump/relaymove(mob/living/user, direction)
 	if(initialize_directions & direction)
 		return ..()
@@ -586,6 +585,21 @@
 		user.ventcrawl_layer = clamp(user.ventcrawl_layer - 2, PIPING_LAYER_DEFAULT - 1, PIPING_LAYER_DEFAULT + 1)
 	to_chat(user, "You align yourself with the [user.ventcrawl_layer == 2 ? 1 : 2]\th output.")
 
+/obj/machinery/atmospherics/components/unary/airlock_pump/on_set_is_operational(was_operational)
+	if(was_operational && !is_operational)
+		// unbolt all the doors but don't open them
+		for(var/obj/machinery/door/airlock/airlock as anything in (internal_airlocks + external_airlocks))
+			airlock.unbolt()
+		audible_message(span_notice("[src] whirrs as [p_they()] loses power, disengaging airlock bolts."))
+	else if(!was_operational && is_operational)
+		// upon regaining power, re-bolt relevant airlocks
+		for(var/obj/machinery/door/airlock/airlock as anything in external_airlocks)
+			INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_close))
+		for(var/obj/machinery/door/airlock/airlock as anything in internal_airlocks)
+			if(open_airlock_on_cycle)
+				INVOKE_ASYNC(airlock, TYPE_PROC_REF(/obj/machinery/door/airlock, secure_open))
+		audible_message(span_notice("[src] whirrs as [p_they()] regains power, re-engaging airlock bolts."))
+
 /obj/machinery/atmospherics/components/unary/airlock_pump/unbolt_only
 	open_airlock_on_cycle = FALSE
 
@@ -594,4 +608,3 @@
 
 /obj/machinery/atmospherics/components/unary/airlock_pump/lavaland
 	external_pressure_target = LAVALAND_EQUIPMENT_EFFECT_PRESSURE
-
