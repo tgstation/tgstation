@@ -1,0 +1,5 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - bugfix: "Adds missing HFR fuel input box to catwalk"
+  - map: "Tidies catwalk HFR room a bit"
