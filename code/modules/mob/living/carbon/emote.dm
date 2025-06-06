@@ -53,6 +53,40 @@
 		return
 	var/mob/living/carbon/human/human_user = user
 	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
+	var/area/station/medical/psychology/weekly_session = get_area(human_user)
+	if(isnull(weekly_session))
+		return
+	for(var/mob/living/carbon/shrink in view(7, human_user))
+		if(shrink == human_user)
+			continue
+		if(!HAS_TRAIT(shrink, TRAIT_SUPERMATTER_SOOTHER))
+			continue
+		var/static/list/good_listening_skills = list(
+			"nods sympathetically.",
+			"listens... really listens.",
+			"makes a sympathetic expression.",
+			"checks the remaining time for the session.",
+			"assures that insurance will cover this.",
+			"looks like they might cry, too.",
+			"nods sagely.",
+		)
+		shrink.manual_emote(pick(good_listening_skills))
+		if(isnull(user.mind) || isnull(human_user.mob_mood))
+			return
+		var/datum/mood/psychically_soothed = human_user.mob_mood
+		var/does_therapy_work = FALSE
+		for(var/category in psychically_soothed.mood_events)
+			var/datum/mood_event/the_vibe = psychically_soothed.mood_events[category]
+			if(the_vibe.mood_change >= 0 || the_vibe.category == "nutrition") //MASLOW'S HIERARCHY: INFINITE PSYCHOANALYTIC EXPANSION
+				continue
+			human_user.clear_mood_event(the_vibe.category)
+			does_therapy_work = TRUE
+		if(does_therapy_work)
+			to_chat(user, span_good("You feel better!"))
+		// Early return so we don't end up with something silly for cases like psychologist overflow
+		return
+
+
 
 /datum/emote/living/carbon/cry/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
