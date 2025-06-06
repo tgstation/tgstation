@@ -1182,9 +1182,15 @@
 		return
 
 	var/obj/effect/decal/cleanable/greenglow/glow = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow)
-	if(!QDELETED(glow))
-		glow.lazy_init_reagents()
-		glow.reagents.add_reagent(type, reac_volume)
+	if(!glow)
+		return
+
+	glow.decal_reagent = type
+	var/rounded_volume = round(reac_volume, 1)
+	glow.reagent_amount = rounded_volume
+	if(glow.lazy_init_reagents()) // Decal already has reagents inited, add instead
+		glow.reagents.maximum_volume = min(glow.reagents.maximum_volume + rounded_volume, 300) // Increase reagent holder volume up to a max of 300
+		glow.reagents.add_reagent(type, rounded_volume)
 
 //Mutagenic chem side-effects.
 /datum/reagent/uranium/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -2978,9 +2984,12 @@
 	if(!pests)
 		return
 
-	var/spilled_ants = (round(reac_volume,1) - 5) // To account for ant decals giving 3-5 ants on initialize.
-	pests.lazy_init_reagents()
-	pests.reagents.add_reagent(type, spilled_ants)
+	pests.decal_reagent = type
+	var/rounded_volume = round(reac_volume, 1)
+	pests.reagent_amount = rounded_volume
+	if(pests.lazy_init_reagents()) // Decal already has reagents inited, add instead
+		pests.reagents.maximum_volume = min(pests.reagents.maximum_volume + rounded_volume, 300) // Increase reagent holder volume up to a max of 300
+		pests.reagents.add_reagent(type, rounded_volume)
 	pests.update_ant_damage()
 
 /datum/reagent/ants/fire
