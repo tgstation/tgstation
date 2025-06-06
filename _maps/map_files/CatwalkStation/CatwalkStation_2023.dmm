@@ -16600,6 +16600,11 @@
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/openspace,
 /area/station/science/genetics)
+"eWU" = (
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/security/office)
 "eWW" = (
 /obj/structure/railing,
 /obj/effect/turf_decal/trimline/yellow/warning,
@@ -43984,7 +43989,6 @@
 /area/station/command/heads_quarters/cmo)
 "ndf" = (
 /obj/machinery/light/directional/west,
-/obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
@@ -70165,7 +70169,6 @@
 "uUe" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/machinery/rnd/production/techfab/department/security,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
@@ -164521,7 +164524,7 @@ gRG
 wpQ
 ndf
 xPo
-izs
+eWU
 bwH
 bwH
 nwZ
