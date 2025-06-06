@@ -1183,6 +1183,7 @@
 
 	var/obj/effect/decal/cleanable/greenglow/glow = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow)
 	if(!QDELETED(glow))
+		glow.lazy_init_reagents()
 		glow.reagents.add_reagent(type, reac_volume)
 
 //Mutagenic chem side-effects.
