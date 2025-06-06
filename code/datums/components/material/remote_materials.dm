@@ -122,7 +122,7 @@ handles linking back and forth.
  * old_silo- The silo we are trying to disconnect from
  */
 /datum/component/remote_materials/proc/disconnect_from(obj/machinery/ore_silo/old_silo)
-	if (QDELETED(old_silo) || silo != old_silo)
+	if (silo != old_silo)
 		return
 
 	UnregisterSignal(parent, list(COMSIG_ATOM_ITEM_INTERACTION, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY))
