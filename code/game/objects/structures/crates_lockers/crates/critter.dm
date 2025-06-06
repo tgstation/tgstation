@@ -30,7 +30,7 @@
 	if(tank)
 		tank.forceMove(T)
 		tank = null
-
+	RemoveElement(/datum/element/elevation, pixel_shift = elevation)
 	return ..()
 
 /obj/structure/closet/crate/critter/update_icon_state()
