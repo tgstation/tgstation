@@ -277,7 +277,7 @@
 	desc = "Fucking coders are at it again."
 	icon_state = "eldritch_painting_debug"
 
- //"The Sister and He Who Wept": /obj/structure/sign/painting/eldritch
+//"The Sister and He Who Wept": /obj/structure/sign/painting/eldritch
 /datum/status_effect/eldritch_painting/weeping
 	id = "painting_weeping"
 	alert_type = /atom/movable/screen/alert/status_effect/eldritch_painting/weeping
