@@ -12329,10 +12329,6 @@
 	},
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
-"dHu" = (
-/obj/structure/lattice,
-/turf/closed/wall/r_wall,
-/area/station/ai_monitored/security/armory)
 "dHv" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
@@ -67433,17 +67429,6 @@
 /obj/effect/mapping_helpers/dead_body_placer,
 /turf/open/floor/iron/dark/textured,
 /area/station/medical/morgue)
-"ugl" = (
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 4
-	},
-/obj/structure/closet/secure_closet/security/sec,
-/obj/structure/closet/secure_closet/security/sec,
-/obj/effect/turf_decal/loading_area{
-	dir = 8
-	},
-/turf/open/floor/iron/dark/smooth_large,
-/area/station/security/lockers)
 "ugn" = (
 /obj/structure/table/wood/poker,
 /turf/open/floor/wood/large,
@@ -72125,7 +72110,6 @@
 "vxH" = (
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/office)
 "vxJ" = (
@@ -73285,11 +73269,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/office)
-"vPJ" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/port)
 "vPN" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -73676,14 +73655,11 @@
 "vUx" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable{
-	pixel_x = 0;
-	pixel_y = 0
-	},
 /obj/effect/turf_decal/trimline/red/warning,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/security/brig)
 "vUQ" = (
@@ -164023,7 +163999,7 @@ nlm
 gRG
 gRG
 gRG
-dHu
+gRG
 gRG
 gRG
 gRG
@@ -165579,7 +165555,7 @@ bdT
 xpj
 nUU
 gSg
-ugl
+gSg
 fcJ
 aLI
 gkk
@@ -166606,7 +166582,7 @@ vke
 ppM
 jkw
 dwb
-vPJ
+kUq
 uJi
 dwB
 kUq
