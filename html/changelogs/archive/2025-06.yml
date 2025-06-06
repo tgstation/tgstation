@@ -114,3 +114,11 @@
   carlarctg:
   - rscadd: Added bloodroaches, a rare variant of cockroaches that explode into a
       shower of blood when squashed.
+2025-06-06:
+  Absolucy:
+  - balance: Changeling Void Adaptation no longer fully negates their breathing -
+      instead, it removes their NEED to breathe oxygen, but they will still breathe,
+      meaning they'll still be affected by gases such as N2O and BZ.
+  Bisar:
+  - code_imp: A proc has been added to the subsystem for ID access to serve to standardize
+      the way information is read and returned from a given ID.
