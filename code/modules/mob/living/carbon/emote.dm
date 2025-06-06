@@ -53,13 +53,13 @@
 		return
 	var/mob/living/carbon/human/human_user = user
 	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
-	var/area/station/medical/psychology/weekly_session = get_area(human_user)
-	if(istype(weekly_session))
+	var/area/station/medical/psychology/weekly_session = astype(get_area(human_user))
+	if(isnull(weekly_session))
 		return
 	for(var/mob/living/carbon/shrink in view(7, human_user))
 		if(shrink == human_user)
 			continue
-		if(!HAS_TRAIT(shrink, TRAIT_SUPERMATTER_SOOTHER))
+		if(!HAS_TRAIT(shrink, TRAIT_ACTIVE_LISTENER))
 			continue
 		var/static/list/good_listening_skills = list(
 			"nods sympathetically.",
@@ -85,8 +85,6 @@
 			to_chat(user, span_good("You feel better!"))
 		// Early return so we don't end up with something silly for cases like psychologist overflow
 		return
-
-
 
 /datum/emote/living/carbon/cry/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
