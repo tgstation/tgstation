@@ -4291,7 +4291,6 @@
 	name = "elevator floor"
 	},
 /obj/machinery/newscaster/directional/east,
-/obj/structure/chair/sofa/bench/tram/solo,
 /obj/machinery/camera/directional/north{
 	c_tag = "Elevator"
 	},
@@ -6401,6 +6400,9 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -5;
 	pixel_y = 28
+	},
+/obj/structure/handrail{
+	dir = 2
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
@@ -13001,6 +13003,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden/layer2,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
+"eol" = (
+/obj/structure/handrail{
+	dir = 2
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/maintenance/floor4/starboard/fore)
 "eon" = (
 /obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
@@ -13208,6 +13216,9 @@
 	dir = 8
 	},
 /obj/machinery/computer/security/telescreen/interrogation/directional/west,
+/obj/structure/handrail{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "etx" = (
@@ -17033,6 +17044,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/east,
+/obj/structure/handrail{
+	dir = 8
+	},
 /turf/open/floor/catwalk_floor/iron,
 /area/station/cargo/hanger)
 "fHh" = (
@@ -31354,6 +31368,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/sign/warning/secure_area/directional/north,
+/obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port)
 "kfX" = (
@@ -33891,6 +33906,9 @@
 	name = "elevator floor"
 	},
 /obj/machinery/status_display/ai/directional/west,
+/obj/structure/handrail{
+	dir = 4
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/fore)
 "kQS" = (
@@ -34083,6 +34101,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/west,
 /obj/structure/cable,
+/obj/structure/handrail{
+	dir = 4
+	},
 /turf/open/floor/catwalk_floor/iron,
 /area/station/cargo/hanger)
 "kTX" = (
@@ -38174,6 +38195,9 @@
 	pixel_x = 5;
 	pixel_y = 28
 	},
+/obj/structure/handrail{
+	dir = 2
+	},
 /turf/open/floor/iron/large,
 /area/station/cargo/warehouse/upper)
 "mjS" = (
@@ -40828,6 +40852,15 @@
 	dir = 1
 	},
 /area/station/medical/medbay/lobby)
+"mYY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/handrail{
+	dir = 4
+	},
+/turf/open/floor/catwalk_floor/iron,
+/area/station/cargo/hanger)
 "mYZ" = (
 /obj/structure/railing{
 	dir = 4
@@ -43796,6 +43829,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/firealarm/directional/east,
 /obj/structure/cable,
+/obj/structure/handrail{
+	dir = 8
+	},
 /turf/open/floor/catwalk_floor/iron,
 /area/station/cargo/hanger)
 "nTI" = (
@@ -47890,6 +47926,12 @@
 /obj/structure/lattice,
 /turf/open/openspace,
 /area/station/maintenance/floor5/port/fore)
+"piq" = (
+/obj/structure/handrail{
+	dir = 1
+	},
+/turf/open/floor/iron/large,
+/area/station/cargo/hanger)
 "pir" = (
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/floor3/starboard/fore)
@@ -47909,6 +47951,7 @@
 "piD" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/aft)
 "piI" = (
@@ -56107,6 +56150,7 @@
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard)
 "rRY" = (
@@ -56429,6 +56473,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/flasher/directional/west{
 	id = "perma_flash"
+	},
+/obj/structure/handrail{
+	dir = 4
 	},
 /turf/open/floor/iron/large,
 /area/station/security/prison)
@@ -61132,6 +61179,9 @@
 /obj/structure/noticeboard/hos{
 	pixel_x = -32
 	},
+/obj/structure/handrail{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/security/brig/entrance)
 "tzf" = (
@@ -62008,6 +62058,9 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "tPa" = (
+/obj/structure/handrail{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/maintenance/floor4/port/fore)
 "tPf" = (
@@ -62275,6 +62328,12 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/gravity_generator_command)
+"tTM" = (
+/obj/structure/handrail{
+	dir = 2
+	},
+/turf/open/floor/iron/large,
+/area/station/cargo/hanger)
 "tUf" = (
 /obj/structure/table,
 /obj/machinery/newscaster/directional/north,
@@ -62541,6 +62600,7 @@
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/plating,
 /area/station/maintenance/solars/starboard/aft)
 "tXQ" = (
@@ -71732,7 +71792,6 @@
 	name = "elevator floor"
 	},
 /obj/structure/extinguisher_cabinet/directional/west,
-/obj/structure/chair/sofa/bench/tram/solo,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/fore)
 "wYL" = (
@@ -73288,6 +73347,9 @@
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/lift_indicator/directional/north{
 	linked_elevator_id = "main_lift"
+	},
+/obj/structure/handrail{
+	dir = 2
 	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/fore)
@@ -74907,6 +74969,9 @@
 	name = "elevator floor"
 	},
 /obj/machinery/status_display/evac/directional/east,
+/obj/structure/handrail{
+	dir = 8
+	},
 /turf/open/floor/plating/elevatorshaft,
 /area/station/hallway/floor1/fore)
 "ydg" = (
@@ -103353,7 +103418,7 @@ qsx
 aub
 wYs
 ffD
-aub
+mYY
 aub
 aub
 aub
@@ -107454,7 +107519,7 @@ rXe
 sRj
 sPo
 axi
-nGp
+tTM
 aub
 gni
 kmd
@@ -107480,7 +107545,7 @@ kmd
 kmd
 hrD
 dhG
-nGp
+piq
 dya
 rfu
 lGw
@@ -293790,7 +293855,7 @@ pWp
 pWp
 pWp
 bLq
-uCC
+eol
 bLq
 bLM
 bLM
