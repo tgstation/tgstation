@@ -294,7 +294,7 @@
 
 /atom/movable/screen/alert/status_effect/eldritch_painting/weeping
 	name = "The Sister and He Who Wept"
-	desc = "The weeping echos through your mind like an echo, undoing your psyche!"
+	desc = "The weeping echos through your mind like an echo, undoing your psyche! Maybe if you look at the painting again, it won't hurt so badly..."
 	icon_state = "eldritch_painting_weeping"
 
 //"The First Desire": /obj/structure/sign/painting/eldritch/desire
@@ -333,7 +333,7 @@
 
 /atom/movable/screen/alert/status_effect/eldritch_painting/desire
 	name = "The First Desire"
-	desc = "Your are struck with a ravenous hunger! SATIATE IT AT ANY COST!"
+	desc = "Your are struck with a ravenous hunger! SATIATE IT AT ANY COST! Or maybe just go start at the painting and long for the excellent meal it promises..."
 	icon_state = "eldritch_painting_desire"
 
 /datum/status_effect/eldritch_painting/desire/permanent
@@ -368,7 +368,7 @@
 
 /atom/movable/screen/alert/status_effect/eldritch_painting/beauty
 	name = "Lady Out of Gates"
-	desc = "Your clothing obscures the beauty beneath. Remove it, and reach perfection."
+	desc = "Your clothing obscures the beauty beneath. Remove it, and reach perfection. Or behold perfect for a brief moment of clarity in the painting you saw your ideal image in."
 	icon_state = "eldritch_painting_beauty"
 
 // "Climb over the rusted mountain": /obj/structure/sign/painting/eldritch/rust
@@ -387,5 +387,5 @@
 
 /atom/movable/screen/alert/status_effect/eldritch_painting/rusting
 	name = "Climb Over the Rusted Mountain"
-	desc = "Your every footfall erodes the ground beneath you! Everything crumbles away!"
+	desc = "Your every footfall erodes the ground beneath you! Everything crumbles away! Maybe if you looked closer at the mountain in that painting, the path might be clearer..."
 	icon_state = "eldritch_painting_rust"
