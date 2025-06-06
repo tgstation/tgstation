@@ -334,4 +334,9 @@
 
 ///ovverride to add mob specific cytology mutation effects, returns TRUE if we added a mob specific mutation
 /mob/living/basic/proc/mutate()
-	return SEND_SIGNAL(src, COMSIG_BASICMOB_MUTATED)
+	if(SEND_SIGNAL(src, COMSIG_BASICMOB_MUTATED) & MUTATED_NO_FURTHER_MUTATIONS)
+		//Tells the vat our mob has been mutated by another source and we don't want to add potentially incompatible mutations such as shiny mutation.
+		return TRUE
+	else
+		return FALSE
+

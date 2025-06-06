@@ -51,8 +51,9 @@
 	trash_weapon.forceMove(get_turf(source))
 	trash_weapon.throw_at(attacking, 6, 5, overmind ? overmind : source, TRUE, FALSE, null, 3)
 
-/datum/blobstrain/debris_devourer/blobbernaut_attack(atom/attacking, mob/living/basic/blobbernaut)
-	debris_attack(attacking, blobbernaut)
+/datum/blobstrain/debris_devourer/blobbernaut_attack(mob/living/blobbernaut, atom/victim)
+	..()
+	debris_attack(victim, blobbernaut)
 
 /datum/blobstrain/debris_devourer/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this
 	return round(max((coefficient*damage)-min(coefficient*DEBRIS_DENSITY, 10), 0)) // reduce damage taken by items per blob, up to 10

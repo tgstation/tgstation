@@ -40,7 +40,6 @@
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/damage_threshold, 10)
-	AddComponent(/datum/component/blob_minion, on_strain_changed = CALLBACK(src, PROC_REF(on_strain_updated)), new_death_cloud_size = death_cloud_size, enable_nautlike_brawn = TRUE)
 
 	var/static/list/food_types = list(
 		/obj/item/food/egg,
@@ -76,13 +75,18 @@
 	. = ..()
 	if(new_strain)
 		attack_verb_continuous = new_strain.blobbernaut_message
+		melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_UPPER
+		melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_LOWER
 		vein_overlay?.color = new_strain.complementary_color
 		eyes_overlay?.color = new_strain.complementary_color
 		//revert independent blobbernauts to the pale sprite so they can be recoloured
 		icon_dead = "[base_icon_state]_dead"
 		icon_living = base_icon_state
+		new_strain.RegisterSignal(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, TYPE_PROC_REF(/datum/blobstrain/, blobbernaut_attack))
 	else
 		attack_verb_continuous = initial(attack_verb_continuous)
+		melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_SOLO_UPPER
+		melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_SOLO_LOWER
 		//Our overmind has died and our veins turns a mournful amethyst to complement our pale strainless body.
 		vein_overlay?.color = "#7d6eb4"
 		eyes_overlay?.color = COLOR_WHITE
@@ -119,8 +123,13 @@
 	var/damage_sources = 0
 	var/list/blobs_in_area = range(2, src)
 
-	if (!(locate(/obj/structure/blob) in blobs_in_area))
+
+	var/structure/blob/nearby_blob = locate(/obj/structure/blob) in blobs_in_area
+
+	if(!nearby_blob)
 		damage_sources++
+	else
+		animate(src, time = 0.5 SECONDS, loop = 1, easing = CUBIC_EASING | EASE_OUT, flags = ANIMATION_END_NOW, color = nearby_blob.atom_colours?[FIXED_COLOUR_PRIORITY] || COLOR_BIOLUMINESCENCE_GREEN)
 
 	if (orphaned)
 		damage_sources++
@@ -141,9 +150,13 @@
 
 	// take 2.5% of max health as damage when not near the blob or if the naut has no factory, 5% if both
 	apply_damage(maxHealth * BLOBMOB_BLOBBERNAUT_HEALTH_DECAY * damage_sources * seconds_per_tick, damagetype = TOX) // We reduce brute damage
-	var/mutable_appearance/harming = emissive_appearance('icons/mob/nonhuman-player/blob.dmi', "nautdamage", src)
-	harming.dir = dir
-	flick_overlay_view(harming, 0.8 SECONDS)
+
+	//hopefully this sound won't get too annoying.
+	if(prob(20))
+		playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 10, vary = TRUE)
+	animate(src, time = 4 SECONDS, loop = 1, easing = CUBIC_EASING, color = COLOR_WHITE)
+
+
 	return TRUE
 
 /// Called by the blob creation power to give us a mind and a basic task orientation

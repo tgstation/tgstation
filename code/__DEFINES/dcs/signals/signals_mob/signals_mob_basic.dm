@@ -26,3 +26,5 @@
 
 /// from /mob/living/basic/mutate(): (mob/living/basic/mutated_mob)
 #define COMSIG_BASICMOB_MUTATED "basicmob_mutated"
+	///cancel further mutation modifications to the mob such as shiny mutation.
+	#define MUTATED_NO_FURTHER_MUTATIONS (1 << 0)

@@ -217,7 +217,7 @@
 		return FALSE
 
 	var/mob/living/basic/blob_minion/blobbernaut/minion/blobber = new(get_turf(factory))
-	blobber.AddComponent(/datum/component/blob_minion, new_overmind = src, new_death_cloud_size = blobber.death_cloud_size, enable_nautlike_brawn = TRUE)
+	blobber.AddComponent(/datum/component/blob_minion, new_overmind = src, new_death_cloud_size = blobber.death_cloud_size)
 	factory.assign_blobbernaut(blobber)
 	blobber.assign_key(ghost.key, blobstrain)
 

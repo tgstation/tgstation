@@ -134,11 +134,9 @@
 		ban_type = ROLE_FREE_BLOB,\
 		poll_candidates = TRUE,\
 		poll_ignore_key = POLL_IGNORE_FREE_SPORE,\
+		after_assumed_control = CALLBACK(src, PROC_REF(on_assumed_control)),\
 	)
 
-/mob/living/basic/blob_minion/spore/independent/Login()
-	. = ..()
-	if(!. || !client)
-		return FALSE
+/mob/living/basic/blob_minion/spore/independent/proc/on_assumed_control()
 	to_chat(src, span_blobannounce("You are a spore born free from the shackles of an overmind.\n\nHowever this strange predicament has not muted the hostility you feel towards creatures that are not your kin, this base instinct appears to be a part of your true self."))
 	SEND_SOUND(src, sound('sound/music/antag/blobalert.ogg', volume = 50))

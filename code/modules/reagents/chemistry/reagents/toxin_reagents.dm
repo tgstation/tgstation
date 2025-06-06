@@ -458,9 +458,9 @@
 	if(!(spore_lung_victim.mob_biotypes & (MOB_HUMANOID | MOB_BEAST)))
 		return
 
-	if(prob(min(trans_volume * 10, 70)))
+	if(prob(min(trans_volume * 10, 80)))
 		to_chat(spore_lung_victim, span_danger("[pick("You have a coughing fit!", "You hack and cough!", "Your lungs burn!")]"))
-		spore_lung_victim.Stun(10)
+		spore_lung_victim.Stun(1 SECONDS)
 		spore_lung_victim.emote("cough")
 
 

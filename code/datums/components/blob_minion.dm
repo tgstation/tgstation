@@ -7,14 +7,12 @@
 	var/mob/eye/blob/overmind
 	/// Callback to run if overmind strain changes
 	var/datum/callback/on_strain_changed
-	/// Our straih, we should not acess the overminds strain directly as we may not have one.
+	/// Our strain we should not acess the overminds strain directly as we may not have one.
 	var/datum/blobstrain/our_strain
 	/// Used to determine the size of blob mob death clouds or equivlent strain dependant spore death effects
 	var/death_cloud_size = BLOBMOB_CLOUD_NONE
-	/// Is set to TRUE if we have blobbernaut like attacks and damage characteristics
-	var/nautlike_brawn = FALSE
 
-/datum/component/blob_minion/Initialize(mob/eye/blob/new_overmind, datum/callback/on_strain_changed, new_death_cloud_size, enable_nautlike_brawn)
+/datum/component/blob_minion/Initialize(mob/eye/blob/new_overmind, datum/callback/on_strain_changed, new_death_cloud_size, datum/blobstrain/new_strain)
 	. = ..()
 	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -22,53 +20,50 @@
 	if(isnum(new_death_cloud_size))
 		death_cloud_size = new_death_cloud_size
 
-	if(!isnull(enable_nautlike_brawn))
-		nautlike_brawn = enable_nautlike_brawn
-
 	src.on_strain_changed = on_strain_changed
-	register_overlord(new_overmind)
 
-/datum/component/blob_minion/InheritComponent(datum/component/new_comp, i_am_original, mob/eye/blob/new_overmind, datum/callback/on_strain_changed, new_death_cloud_size, enable_nautlike_brawn)
+	//checking for a lack of overmind to avoid calling strain_properties changed twice.
+	if(new_strain && !new_overmind)
+		strain_properties_changed(null, new_strain)
+
+	if(new_overmind)
+		register_overlord(new_overmind)
+
+/datum/component/blob_minion/InheritComponent(datum/component/new_comp, i_am_original, mob/eye/blob/new_overmind, datum/callback/on_strain_changed, new_death_cloud_size, datum/blobstrain/new_strain)
 	if(isnum(new_death_cloud_size))
 		death_cloud_size = new_death_cloud_size
 
-	if(!isnull(enable_nautlike_brawn))
-		nautlike_brawn = enable_nautlike_brawn
-
 	if (!isnull(on_strain_changed))
 		src.on_strain_changed = on_strain_changed
-	register_overlord(new_overmind)
+
+	if(new_strain && !new_overmind)
+		strain_properties_changed(null, new_strain)
+
+	if(new_overmind)
+		register_overlord(new_overmind)
+
 
 /datum/component/blob_minion/proc/register_overlord(mob/eye/blob/new_overmind)
-	if (isnull(new_overmind))
-		return
 	overmind = new_overmind
 	overmind.register_new_minion(parent)
 	RegisterSignal(overmind, COMSIG_QDELETING, PROC_REF(overmind_deleted))
-	RegisterSignal(overmind, COMSIG_BLOB_SELECTED_STRAIN, PROC_REF(overmind_properties_changed))
-	overmind_properties_changed(overmind, overmind.blobstrain)
+	RegisterSignal(overmind, COMSIG_BLOB_SELECTED_STRAIN, PROC_REF(strain_properties_changed))
+	strain_properties_changed(overmind, overmind.blobstrain)
 
 /// Our overmind is gone, uh oh!
 /datum/component/blob_minion/proc/overmind_deleted()
 	SIGNAL_HANDLER
 	overmind = null
-	our_strain = null
-	overmind_properties_changed()
+	strain_properties_changed()
 
-/// Our overmind has changed colour and properties, or if overmind is null, we have changed strain without an overmind.
-/datum/component/blob_minion/proc/overmind_properties_changed(mob/eye/blob/changed_overmind, datum/blobstrain/new_strain)
+/// Our strain has changed, perhaps because our blob overmind has changed strain, died, or because of a mutation.
+/datum/component/blob_minion/proc/strain_properties_changed(mob/eye/blob/changed_overmind, datum/blobstrain/new_strain)
 	SIGNAL_HANDLER
 	var/mob/living/living_parent = parent
 	if(new_strain)
 		our_strain = new_strain
-		if(nautlike_brawn)
-			living_parent.melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_UPPER
-			living_parent.melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_LOWER
 	else
 		our_strain = null
-		if(nautlike_brawn)
-			living_parent.melee_damage_upper = BLOBMOB_BLOBBERNAUT_DMG_SOLO_UPPER
-			living_parent.melee_damage_lower = BLOBMOB_BLOBBERNAUT_DMG_SOLO_LOWER
 
 	living_parent.update_appearance(UPDATE_ICON)
 	on_strain_changed?.Invoke(changed_overmind, new_strain)
@@ -89,11 +84,10 @@
 	RegisterSignal(parent, COMSIG_MOB_TRY_SPEECH, PROC_REF(on_try_speech))
 	RegisterSignal(parent, COMSIG_MOB_CHANGED_TYPE, PROC_REF(on_transformed))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
-	RegisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(on_boys_attacked))
 	RegisterSignal(parent, COMSIG_BASICMOB_MUTATED, PROC_REF(on_mutated))
 	RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_minion_atom_interacted))
 	if(overmind || our_strain)
-		overmind_properties_changed(overmind, our_strain)
+		strain_properties_changed(overmind, our_strain)
 	GLOB.blob_telepathy_mobs |= parent
 
 /datum/component/blob_minion/UnregisterFromParent()
@@ -115,7 +109,6 @@
 		COMSIG_MOB_MIND_INITIALIZED,
 		COMSIG_MOVABLE_SPACEMOVE,
 		COMSIG_LIVING_DEATH,
-		COMSIG_HOSTILE_POST_ATTACKINGTARGET,
 		COMSIG_BASICMOB_MUTATED,
 		COMSIG_HOSTILE_PRE_ATTACKINGTARGET,
 	))
@@ -188,11 +181,7 @@
 /// Called when a blob minion is transformed into something else, hopefully a spore into a zombie
 /datum/component/blob_minion/proc/on_transformed(mob/living/minion, mob/living/replacement)
 	SIGNAL_HANDLER
-	replacement.TakeComponent(src)
-
-/datum/component/blob_minion/PostTransfer(datum/new_parent)
-	if(!isliving(new_parent))
-		return COMPONENT_INCOMPATIBLE
+	replacement.AddComponent(/datum/component/blob_minion, new_overmind = overmind, new_death_cloud_size = death_cloud_size, new_strain = our_strain)
 
 /datum/component/blob_minion/proc/on_death(mob/living/minion)
 	SIGNAL_HANDLER
@@ -207,29 +196,21 @@
 		do_chem_smoke(range = death_cloud_size, holder = minion, location = get_turf(minion), reagent_type = /datum/reagent/toxin/spore, reagent_volume = BLOBMOB_CLOUD_REAGENT_VOLUME, smoke_type = /datum/effect_system/fluid_spread/smoke/chem/medium)
 		playsound(minion, 'sound/mobs/non-humanoids/blobmob/blob_spore_burst.ogg', vol = 100)
 
-/// When one of our boys attacked something, we sometimes want to perform extra effects
-/datum/component/blob_minion/proc/on_boys_attacked(mob/living/blobbynaut, atom/target, success)
-	SIGNAL_HANDLER
-	if (!success || !nautlike_brawn || !our_strain)
-		return
-
-	our_strain.blobbernaut_attack(target, blobbynaut)
-
 ///When am independent mob with this component mutates, like from a random cytology mutation, give them a strain and modify their name to let the players know they have something special.
 /datum/component/blob_minion/proc/on_mutated(mob/living/minion)
 	SIGNAL_HANDLER
 	if(overmind || our_strain)
-		return FALSE
+		return
 	var/datum/blobstrain/mutant_strain = pick(GLOB.valid_blobstrains)
-	overmind_properties_changed(changed_overmind = null, new_strain = new mutant_strain)
+	strain_properties_changed(changed_overmind = null, new_strain = new mutant_strain)
 	minion.name = "[LOWER_TEXT(our_strain.name)] [minion.name]"
 	//normally the overmind would handle this, but we have none.
 	minion.maxHealth *= our_strain.max_mob_health_multiplier
 	minion.health *= our_strain.max_mob_health_multiplier
 
-	return TRUE
+	return MUTATED_NO_FURTHER_MUTATIONS
 
-///For when we want to trigger effects when a blobmob clicks something, such as clicking on items. I used COMSIG_ATOM_ATTACK_BASIC_MOB, but is there a more general signal for all living?
+///For when we want to trigger effects when a blobmob clicks something, such as clicking on items.
 /datum/component/blob_minion/proc/on_minion_atom_interacted(mob/living/minion, atom/interacted_atom, adjacent, modifiers)
 	SIGNAL_HANDLER
 
