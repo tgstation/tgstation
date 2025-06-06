@@ -1,6 +1,6 @@
 /// GENERAL AIR CONTROL (a.k.a atmos computer)
 /obj/machinery/computer/atmos_control
-	name = "atmospherics monitoring"
+	name = "atmospherics monitoring console"
 	desc = "Used to monitor the station's atmospherics sensors."
 	icon_screen = "tank"
 	icon_keyboard = "atmos_key"

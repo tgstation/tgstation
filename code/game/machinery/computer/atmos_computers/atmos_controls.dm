@@ -1,5 +1,5 @@
 /obj/machinery/computer/atmos_control/nocontrol/master
-	name = "station atmospherics monitoring"
+	name = "station atmospherics monitoring console"
 	circuit = /obj/item/circuitboard/computer/atmos_control/nocontrol/master
 	atmos_chambers = list(
 		ATMOS_GAS_MONITOR_DISTRO = "Distribution Loop",

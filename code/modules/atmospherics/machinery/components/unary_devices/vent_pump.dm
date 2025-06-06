@@ -371,6 +371,13 @@
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 1000
 
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/miningshuttle
+
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/miningshuttle/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+	. = ..()
+	on = !is_mining_level(z)
+	update_appearance()
+
 // mapping
 
 /obj/machinery/atmospherics/components/unary/vent_pump/layer2

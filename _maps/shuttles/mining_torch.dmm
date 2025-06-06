@@ -123,7 +123,6 @@
 /area/shuttle/mining/large)
 "E" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/status_display/shuttle{
 	pixel_x = -32;
 	shuttle_id = "mining_public"
@@ -131,6 +130,7 @@
 /obj/machinery/camera/autoname/directional/west{
 	network = list("mine")
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on/miningshuttle,
 /turf/open/floor/mineral/titanium,
 /area/shuttle/mining/large)
 "G" = (

@@ -743,8 +743,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/handrail/buckle_feedback(mob/living/being_buckled, mob/buckler)
 	buckler.visible_message(
-		span_notice("[buckler] grabs [src] tight, keeping [buckler.p_them()]self upright."),
-		span_notice("You grab [src] tight, keeping yourself upright."),
+		span_notice("[buckler] grabs [src] tight, keeping [being_buckled.p_them()]self [being_buckled.body_position == STANDING_UP ? "upright" : "secure"]."),
+		span_notice("You grab [src] tight, keeping yourself [being_buckled.body_position == STANDING_UP ? "upright" : "secure"]."),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
