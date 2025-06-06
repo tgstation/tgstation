@@ -16,7 +16,7 @@
 	var/precision_coeff = 1
 	var/message_cooldown
 	var/breakout_time = 1200
-	var/obj/machinery/computer/scan_consolenew/linked_console = null
+	var/obj/machinery/computer/dna_console/linked_console = null
 
 /obj/machinery/dna_scannernew/RefreshParts()
 	. = ..()
@@ -197,8 +197,8 @@
 /obj/item/disk/data/debug/Initialize(mapload)
 	. = ..()
 	// Grabs all instances of mutations and adds them to the disk
-	for(var/datum/mutation/human/mut as anything in subtypesof(/datum/mutation/human))
-		var/datum/mutation/human/ref = GET_INITIALIZED_MUTATION(mut)
+	for(var/datum/mutation/mut as anything in subtypesof(/datum/mutation))
+		var/datum/mutation/ref = GET_INITIALIZED_MUTATION(mut)
 		mutations += ref
 
 /obj/item/disk/data/attack_self(mob/user)

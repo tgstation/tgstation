@@ -24809,7 +24809,7 @@
 /turf/open/floor/plating/elevatorshaft,
 /area/station/maintenance/tram/mid)
 "hRa" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /obj/machinery/camera/directional/west{
@@ -39475,7 +39475,7 @@
 /turf/open/misc/asteroid,
 /area/station/science/explab)
 "mRY" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/dark_green/fourcorners,

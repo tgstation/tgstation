@@ -31,8 +31,8 @@
 	if(!HAS_TRAIT(src, TRAIT_STASIS))
 		if(stat != DEAD)
 			//handle active mutations
-			for(var/datum/mutation/human/human_mutation as anything in dna.mutations)
-				human_mutation.on_life(seconds_per_tick, times_fired)
+			for(var/datum/mutation/mutation as anything in dna.mutations)
+				mutation.on_life(seconds_per_tick, times_fired)
 			//heart attack stuff
 			handle_heart(seconds_per_tick, times_fired)
 			//handles liver failure effects, if we lack a liver

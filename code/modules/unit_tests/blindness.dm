@@ -27,7 +27,7 @@
 	// Have to do a transfer here so we don't get a blindfold
 	var/datum/quirk/item_quirk/blindness/quirk = allocate(/datum/quirk/item_quirk/blindness)
 	quirk.add_to_holder(dummy, quirk_transfer = TRUE)
-	dummy.dna.add_mutation(/datum/mutation/human/blind)
+	dummy.dna.add_mutation(/datum/mutation/blind, "TEST")
 
 	// Remove the blindfold. We should remain blinded
 	QDEL_NULL(blindfold)
@@ -36,7 +36,7 @@
 	dummy.remove_quirk(/datum/quirk/item_quirk/blindness)
 	check_if_blind(dummy, status_message = "after removing their quirk BUT still being blinded")
 	// Remove the mutation, this should unblind us
-	dummy.dna.remove_mutation(/datum/mutation/human/blind)
+	dummy.dna.remove_mutation(/datum/mutation/blind, "TEST")
 	check_if_not_blind(dummy, status_message = "after removing their blind mutation and having no sources of blindness left")
 
 	// Temp blindness

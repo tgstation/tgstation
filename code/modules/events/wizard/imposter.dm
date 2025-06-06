@@ -18,7 +18,7 @@
 			return //Sad Trombone
 		new /obj/effect/particle_effect/fluid/smoke(W.loc)
 		var/mob/living/carbon/human/I = new /mob/living/carbon/human(W.loc)
-		W.dna.transfer_identity(I, transfer_SE=1)
+		W.dna.copy_dna(I.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 		I.real_name = I.dna.real_name
 		I.name = I.dna.real_name
 		I.updateappearance(mutcolor_update=1)

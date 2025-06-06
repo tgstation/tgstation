@@ -50,7 +50,7 @@
 	if(has_dna() && desired_mob.has_dna())
 		var/mob/living/carbon/old_mob = src
 		var/mob/living/carbon/new_mob = desired_mob
-		old_mob.dna.transfer_identity(new_mob, transfer_species = FALSE)
+		old_mob.dna.copy_dna(new_mob.dna, NONE)
 		new_mob.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	else if(ishuman(desired_mob) && (!ismonkey(desired_mob)))
 		var/mob/living/carbon/human/new_human = desired_mob

@@ -1,43 +1,43 @@
 //Nearsightedness restricts your vision by several tiles.
-/datum/mutation/human/nearsight
+/datum/mutation/nearsight
 	name = "Near Sightness"
 	desc = "The holder of this mutation has poor eyesight."
 	instability = NEGATIVE_STABILITY_MODERATE
 	quality = MINOR_NEGATIVE
 	text_gain_indication = span_danger("You can't see very well.")
 
-/datum/mutation/human/nearsight/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/nearsight/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	owner.become_nearsighted(GENETIC_MUTATION)
 
-/datum/mutation/human/nearsight/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/nearsight/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.cure_nearsighted(GENETIC_MUTATION)
 
 ///Blind makes you blind. Who knew?
-/datum/mutation/human/blind
+/datum/mutation/blind
 	name = "Blindness"
 	desc = "Renders the subject completely blind."
 	instability = NEGATIVE_STABILITY_MAJOR
 	quality = NEGATIVE
 	text_gain_indication = span_danger("You can't seem to see anything.")
 
-/datum/mutation/human/blind/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/blind/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	owner.become_blind(GENETIC_MUTATION)
 
-/datum/mutation/human/blind/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/blind/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.cure_blind(GENETIC_MUTATION)
 
 ///Thermal Vision lets you see mobs through walls
-/datum/mutation/human/thermal
+/datum/mutation/thermal
 	name = "Thermal Vision"
 	desc = "The user of this genome can visually perceive the unique human thermal signature."
 	quality = POSITIVE
@@ -50,7 +50,7 @@
 	energy_coeff = 1
 	power_path = /datum/action/cooldown/spell/thermal_vision
 
-/datum/mutation/human/thermal/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/thermal/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 
@@ -59,7 +59,7 @@
 		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, GENETIC_MUTATION)
 		owner.update_sight()
 
-/datum/mutation/human/thermal/setup()
+/datum/mutation/thermal/setup()
 	. = ..()
 	var/datum/action/cooldown/spell/thermal_vision/to_modify = .
 	if(!istype(to_modify)) // null or invalid
@@ -110,21 +110,21 @@
 		carbon_cast_on.adjustOrganLoss(ORGAN_SLOT_EYES, eye_damage)
 
 ///X-ray Vision lets you see through walls.
-/datum/mutation/human/xray
+/datum/mutation/xray
 	name = "X Ray Vision"
 	desc = "A strange genome that allows the user to see between the spaces of walls." //actual x-ray would mean you'd constantly be blasting rads, which might be fun for later //hmb
 	text_gain_indication = span_notice("The walls suddenly disappear!")
 	instability = POSITIVE_INSTABILITY_MAJOR
 	locked = TRUE
 
-/datum/mutation/human/xray/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/xray/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
 	owner.update_sight()
 
-/datum/mutation/human/xray/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/xray/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_XRAY_VISION, GENETIC_MUTATION)
@@ -132,7 +132,7 @@
 
 
 ///Laser Eyes lets you shoot lasers from your eyes!
-/datum/mutation/human/laser_eyes
+/datum/mutation/laser_eyes
 	name = "Laser Eyes"
 	desc = "Reflects concentrated light back from the eyes."
 	quality = POSITIVE
@@ -142,28 +142,28 @@
 	layer_used = FRONT_MUTATIONS_LAYER
 	limb_req = BODY_ZONE_HEAD
 
-/datum/mutation/human/laser_eyes/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
+/datum/mutation/laser_eyes/New(datum/mutation/copymut)
 	..()
 	if(!(type in visual_indicators))
 		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "lasereyes", -FRONT_MUTATIONS_LAYER))
 
-/datum/mutation/human/laser_eyes/on_acquiring(mob/living/carbon/human/H)
+/datum/mutation/laser_eyes/on_acquiring(mob/living/carbon/human/H)
 	. = ..()
 	if(!.)
 		return
 	RegisterSignal(H, COMSIG_MOB_ATTACK_RANGED, PROC_REF(on_ranged_attack))
 
-/datum/mutation/human/laser_eyes/on_losing(mob/living/carbon/human/H)
+/datum/mutation/laser_eyes/on_losing(mob/living/carbon/human/H)
 	. = ..()
 	if(.)
 		return
 	UnregisterSignal(H, COMSIG_MOB_ATTACK_RANGED)
 
-/datum/mutation/human/laser_eyes/get_visual_indicator()
+/datum/mutation/laser_eyes/get_visual_indicator()
 	return visual_indicators[type][1]
 
 ///Triggers on COMSIG_MOB_ATTACK_RANGED. Does the projectile shooting.
-/datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, modifiers)
+/datum/mutation/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, modifiers)
 	SIGNAL_HANDLER
 
 	if(!source.combat_mode)
@@ -184,7 +184,7 @@
 	icon = 'icons/mob/effects/genetics.dmi'
 	icon_state = "eyelasers"
 
-/datum/mutation/human/illiterate
+/datum/mutation/illiterate
 	name = "Illiterate"
 	desc = "Causes a severe case of Aphasia that prevents reading or writing."
 	instability = NEGATIVE_STABILITY_MAJOR
@@ -192,13 +192,13 @@
 	text_gain_indication = span_danger("You feel unable to read or write.")
 	text_lose_indication = span_danger("You feel able to read and write again.")
 
-/datum/mutation/human/illiterate/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/illiterate/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
 	ADD_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)
 
-/datum/mutation/human/illiterate/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/illiterate/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_ILLITERATE, GENETIC_MUTATION)

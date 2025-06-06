@@ -30,8 +30,8 @@
 		. += span_notice("It has the genetic makeup of \"[genetic_makeup_buffer["name"]]\" stored inside its buffer")
 
 /obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(istype(interacting_with, /obj/machinery/computer/scan_consolenew))
-		var/obj/machinery/computer/scan_consolenew/console = interacting_with
+	if(istype(interacting_with, /obj/machinery/computer/dna_console))
+		var/obj/machinery/computer/dna_console/console = interacting_with
 		if(console.stored_research)
 			to_chat(user, span_notice("[name] linked to central research database."))
 			discovered = console.stored_research.discovered_mutations
@@ -56,8 +56,8 @@
 	return ITEM_INTERACT_BLOCKING
 
 /obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(istype(interacting_with, /obj/machinery/computer/scan_consolenew))
-		var/obj/machinery/computer/scan_consolenew/console = interacting_with
+	if(istype(interacting_with, /obj/machinery/computer/dna_console))
+		var/obj/machinery/computer/dna_console/console = interacting_with
 		var/buffer_index = tgui_input_number(user, "Slot:", "Which slot to export:", 1, LAZYLEN(console.genetic_makeup_buffer), 1)
 		console.genetic_makeup_buffer[buffer_index] = genetic_makeup_buffer
 		return ITEM_INTERACT_SUCCESS
@@ -96,7 +96,7 @@
 	//dupe list as scanner could modify target data
 	buffer = LAZYLISTDUPLICATE(target.dna.mutation_index)
 	var/list/active_mutations = list()
-	for(var/datum/mutation/human/mutation in target.dna.mutations)
+	for(var/datum/mutation/mutation in target.dna.mutations)
 		LAZYSET(buffer, mutation.type, GET_SEQUENCE(mutation.type))
 		active_mutations.Add(mutation.type)
 
@@ -158,10 +158,10 @@
 	ready = TRUE
 
 /obj/item/sequence_scanner/proc/get_display_name(mutation)
-	var/datum/mutation/human/human_mutation = GET_INITIALIZED_MUTATION(mutation)
-	if(!human_mutation)
+	var/datum/mutation/mutation_instance = GET_INITIALIZED_MUTATION(mutation)
+	if(!mutation_instance)
 		return "ERROR"
 	if(mutation in discovered)
-		return  "[human_mutation.name] ([human_mutation.alias])"
+		return  "[mutation_instance.name] ([mutation_instance.alias])"
 	else
-		return human_mutation.alias
+		return mutation_instance.alias
