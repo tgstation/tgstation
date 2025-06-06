@@ -24,6 +24,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/handrail{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/shuttle/mining_ship/storage)
 "bu" = (
@@ -47,6 +50,9 @@
 "bQ" = (
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/handrail{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/eva)
 "bV" = (
@@ -186,6 +192,9 @@
 /obj/item/radio/intercom/directional/north,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 4
+	},
+/obj/structure/handrail{
+	dir = 2
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/engine_maintenance)
@@ -376,6 +385,9 @@
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 8
 	},
+/obj/structure/handrail{
+	dir = 2
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/atmos_maintenance)
 "lx" = (
@@ -458,6 +470,9 @@
 	dir = 4
 	},
 /obj/machinery/status_display/ai/directional/east,
+/obj/structure/handrail{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/eva)
 "no" = (
@@ -1048,9 +1063,11 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/mining_ship/engine_maintenance)
 "JF" = (
-/obj/structure/chair/comfy/shuttle,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
+	},
+/obj/structure/handrail{
+	dir = 2
 	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/eva)
@@ -1096,6 +1113,9 @@
 "LF" = (
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/siding/thinplating_new/dark,
+/obj/structure/handrail{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured,
 /area/shuttle/mining_ship/eva)
 "LN" = (

@@ -265,7 +265,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_home)
 INITIALIZE_IMMEDIATE(/atom/movable/screen/parallax_layer)
 /atom/movable/screen/parallax_layer
 	// icon = 'icons/effects/parallax.dmi'
-	icon = 'icons/effects/parallax_alt.dmi'
+	icon = 'icons/event/parallax_alt.dmi'
 	var/speed = 1
 	var/offset_x = 0
 	var/offset_y = 0

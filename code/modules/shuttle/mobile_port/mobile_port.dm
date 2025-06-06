@@ -46,8 +46,8 @@
 	var/list/ripples = list()
 	///Whether or not you want your ship to knock people down, and also whether it will throw them several tiles upon launching.
 	var/list/movement_force = list(
-		"KNOCKDOWN" = 3,
-		"THROW" = 0,
+		"KNOCKDOWN" = 24,
+		"THROW" = 1,
 	)
 
 	///if this shuttle can move docking ports other than the one it is docked at

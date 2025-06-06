@@ -329,8 +329,11 @@ All ShuttleMove procs go here
 	. = ..()
 
 	var/knockdown = movement_force["KNOCKDOWN"]
-	if(knockdown)
-		Paralyze(knockdown)
+	if(knockdown > 0)
+		if(buckled)
+			Knockdown(knockdown)
+		else
+			Paralyze(knockdown)
 
 
 /mob/living/simple_animal/hostile/megafauna/onShuttleMove(turf/newT, turf/oldT, list/movement_force, move_dir, obj/docking_port/stationary/old_dock, obj/docking_port/mobile/moving_dock)
