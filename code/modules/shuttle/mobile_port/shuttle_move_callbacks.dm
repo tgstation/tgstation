@@ -139,6 +139,16 @@ All ShuttleMove procs go here
 	var/speed = range/5
 	safe_throw_at(target, range, speed, force = MOVE_FORCE_EXTREMELY_STRONG)
 
+/obj/item/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
+	if(movement_force?["THROW"] <= w_class)
+		return
+	return ..()
+
+/obj/structure/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
+	if(movement_force?["THROW"] <= 3)
+		return
+	return ..()
+
 /////////////////////////////////////////////////////////////////////////////////////
 
 // Called on areas before anything has been moved

@@ -76,8 +76,8 @@ GLOBAL_VAR_INIT(animals_spawned, 0)
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 	ADD_TRAIT(src, TRAIT_COMBAT_MODE_SKIP_INTERACTION, INNATE_TRAIT)
-	if(mapload)
-		spawn_contained_animal()
+	// if(mapload)
+	//	spawn_contained_animal()
 	return INITIALIZE_HINT_LATELOAD //we need turfs to have air
 
 /// Checks if there a connecting trunk diposal pipe under the disposal

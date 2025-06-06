@@ -282,6 +282,11 @@ SUBSYSTEM_DEF(mapping)
 	for (var/ice_z in ice_ruins_underground)
 		spawn_rivers(ice_z, 4, level_trait(ice_z, ZTRAIT_BASETURF), /area/icemoon/underground/unexplored/rivers)
 
+	//
+	for(var/asteroid_z in levels_by_trait(ZTRAIT_MINING))
+		spawn_rivers(asteroid_z, 5, /turf/open/space/basic, /area/asteroid)
+		spawn_rivers(asteroid_z, 2, /turf/open/misc/asteroid/airless, /area/asteroid)
+
 /datum/controller/subsystem/mapping/proc/wipe_reservations(wipe_safety_delay = 100)
 	if(clearing_reserved_turfs || !initialized) //in either case this is just not needed.
 		return

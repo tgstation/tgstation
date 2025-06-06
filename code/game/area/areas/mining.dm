@@ -300,3 +300,48 @@
 
 /area/icemoon/underground/explored/graveyard/chapel
 	name = "Chapel Graveyard"
+
+/area/asteroid
+	name = "Asteroid"
+	icon = 'icons/area/areas_station.dmi'
+	icon_state = "mining"
+	default_gravity = STANDARD_GRAVITY
+	flags_1 = NONE
+	area_flags = UNIQUE_AREA | CAVES_ALLOWED | FLORA_ALLOWED | MOB_SPAWN_ALLOWED
+	ambience_index = AMBIENCE_MINING
+	sound_environment = SOUND_AREA_ASTEROID
+	map_generator = /datum/map_generator/cave_generator/asteroid
+	parallax_movedir = WEST
+	parallax_speed_mod = 0.1
+
+/area/asteroid/nomap
+	map_generator = null
+
+/datum/map_generator/cave_generator/asteroid
+	name = "Asteroid Cave Generator"
+	initial_closed_chance = 50
+	weighted_open_turf_types = list(
+		/turf/open/misc/asteroid/airless = 99,
+		/turf/open/space/basic = 1,
+	)
+	weighted_closed_turf_types = list(
+		/turf/closed/mineral/random = 6,
+		/turf/closed/mineral/random/low_chance = 3,
+		/turf/closed/mineral/random/high_chance = 1,
+	)
+	weighted_mob_spawn_list = list(
+		/mob/living/basic/mining/basilisk = 1,
+		/mob/living/basic/mining/hivelord = 1,
+	)
+	weighted_flora_spawn_list = list(
+		/obj/structure/flora/rock/style_random = 1,
+		/obj/structure/flora/rock/pile/style_random = 1,
+	)
+	weighted_feature_spawn_list = list(
+		/obj/structure/geyser/hollowwater = 24,
+		/obj/structure/geyser/plasma_oxide = 24,
+		/obj/structure/geyser/protozine = 24,
+		/obj/structure/geyser/random = 6,
+		/obj/structure/geyser/wittel = 20,
+		/obj/structure/ore_vent = 2,
+	)
