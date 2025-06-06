@@ -27519,12 +27519,13 @@
 /turf/open/floor/wood,
 /area/station/service/abandoned_gambling_den)
 "ihw" = (
-/obj/machinery/camera/motion{
-	c_tag = "Armory - Space";
-	dir = 4
+/obj/structure/lattice,
+/obj/machinery/camera/directional/east{
+	pixel_x = 0;
+	pixel_y = -10
 	},
 /turf/open/space/openspace,
-/area/space)
+/area/space/nearstation)
 "ihE" = (
 /obj/structure/table/wood,
 /obj/item/clothing/under/misc/burial,
@@ -77922,7 +77923,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
-/obj/machinery/power/apc/auto_name/directional/east,
 /obj/effect/turf_decal/trimline/red/filled/mid_joiner{
 	dir = 4
 	},
@@ -163742,8 +163742,8 @@ nlm
 nlm
 nlm
 nlm
-dDL
 ihw
+nlm
 dcE
 dcE
 mae
