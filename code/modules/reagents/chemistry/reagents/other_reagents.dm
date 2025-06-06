@@ -1182,7 +1182,7 @@
 		return
 
 	var/obj/effect/decal/cleanable/greenglow/glow = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/greenglow)
-	if(!glow)
+	if(QDELETED(glow))
 		return
 
 	glow.decal_reagent = type
@@ -2981,7 +2981,7 @@
 		return
 
 	var/obj/effect/decal/cleanable/ants/pests = exposed_turf.spawn_unique_cleanable(ants_decal)
-	if(!pests)
+	if(QDELETED(pests))
 		return
 
 	pests.decal_reagent = type
