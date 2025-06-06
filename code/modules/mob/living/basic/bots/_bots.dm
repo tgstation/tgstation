@@ -342,7 +342,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 			. += span_info("Alt-click [issilicon(user) ? "" : "or use your ID on "][p_them()] to [bot_access_flags & BOT_COVER_LOCKED ? "un" : ""]lock [p_their()] control panel.")
 	if(isnull(paicard))
 		return
-	. += span_notice("[p_They()] has a pAI device installed.")
+	. += span_notice("[p_They()] [p_have()] a pAI device installed.")
 	if(!(bot_access_flags & BOT_COVER_MAINTS_OPEN))
 		. += span_info("You can use a <b>hemostat</b> to remove it.")
 
