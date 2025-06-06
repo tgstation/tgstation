@@ -437,7 +437,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/snow_biodome)
 "Sj" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/pod/dark,
 /area/ruin/powered/snow_biodome)
 "Ub" = (

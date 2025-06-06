@@ -191,11 +191,12 @@
 		. += smiley
 
 /obj/item/clothing/head/helmet/space/plasmaman/wash(clean_types)
-	. = ..()
+	. = NONE
 	if(smile && (clean_types & CLEAN_TYPE_HARD_DECAL))
 		smile = FALSE
-		update_appearance()
-		return TRUE
+		update_appearance(UPDATE_OVERLAYS)
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
+	. |= ..()
 
 /obj/item/clothing/head/helmet/space/plasmaman/attack_self(mob/user)
 	helmet_on = !helmet_on

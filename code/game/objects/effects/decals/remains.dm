@@ -82,6 +82,6 @@
 	icon = 'icons/mob/silicon/robots.dmi'
 	icon_state = "remainsrobot"
 
-/obj/effect/decal/cleanable/robot_debris/old
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old
 	name = "dusty robot debris"
 	desc = "Looks like nobody has touched this in a while."

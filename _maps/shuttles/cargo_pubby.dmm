@@ -52,7 +52,7 @@
 /area/shuttle/supply)
 "s" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron/chapel{
 	dir = 1
 	},

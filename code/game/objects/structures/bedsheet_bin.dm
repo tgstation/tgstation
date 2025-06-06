@@ -65,10 +65,9 @@ LINEN BINS
 	var/mob/living/to_cover = interacting_with
 	if(to_cover.body_position != LYING_DOWN)
 		return ITEM_INTERACT_BLOCKING
-	if(!user.dropItemToGround(src))
+	if(!user.transfer_item_to_turf(src, get_turf(to_cover)))
 		return ITEM_INTERACT_BLOCKING
 
-	forceMove(get_turf(to_cover))
 	balloon_alert(user, "covered")
 	coverup(to_cover)
 	add_fingerprint(user)
@@ -97,7 +96,7 @@ LINEN BINS
 		return
 	if(user.body_position != LYING_DOWN)
 		return
-	if(!user.dropItemToGround(src))
+	if(!user.transfer_item_to_turf(src, get_turf(src)))
 		return
 
 	coverup(user)

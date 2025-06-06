@@ -204,8 +204,10 @@
 	. = ..()
 	if(!(clean_types & CLEAN_TYPE_BLOOD))
 		return
-	blood_level = 0
-	update_appearance()
+	if(blood_level)
+		blood_level = 0
+		update_appearance()
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 ///Checks whether or not we should clean.
 /obj/item/rag/proc/should_clean(datum/cleaning_source, atom/atom_to_clean, mob/living/cleaner)
@@ -259,8 +261,8 @@
 	if(istype(what, /obj/item/rag))
 		var/obj/item/rag/friend_rag = what
 		return friend_rag.blood_level
-	if(istype(what, /obj/effect/decal/cleanable))
-		var/obj/effect/decal/cleanable/mess = what
+	if(istype(what, /obj/effect/decal/cleanable/blood))
+		var/obj/effect/decal/cleanable/blood/mess = what
 		return round(mess.bloodiness / 20, 1)
 	return 1
 
@@ -284,12 +286,14 @@
 
 /obj/item/rag/update_appearance(updates)
 	. = ..()
-	// v = green and blue color components (reduced as it gets dirtier)
+	// Gets closer to the mixed blood color as we get dirtier
+	var/blood_color = get_blood_dna_color() || COLOR_RED
+	var/list/color_breakdown = rgb2num(blood_color)
 	var/v = max(1 - (0.1 * blood_level), 0)
 	var/list/colormatrix = list(
-		1, 0, 0, 0,
-		0, v, 0, 0,
-		0, 0, v, 0,
+		color_breakdown[1] / 255 + v * (1 - color_breakdown[1] / 255), 0, 0, 0,
+		0, color_breakdown[2] / 255 + v * (1 - color_breakdown[2] / 255), 0, 0,
+		0, 0, color_breakdown[3] / 255 + v * (1 - color_breakdown[3] / 255), 0,
 		0, 0, 0, 1,
 	)
 

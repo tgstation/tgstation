@@ -11,8 +11,7 @@
 			omnitool = tool
 			break
 	TEST_ASSERT_NOTNULL(omnitool, "Could not find /obj/item/borg/cyborg_omnitool/engineering in borg inbuilt modules!")
-	borg.shown_robot_modules = TRUE //stops hud from updating which would runtime cause our mob does not have one
-	borg.equip_module_to_slot(omnitool, 1)
+	borg.put_in_hand(omnitool, 1)
 	borg.select_module(1)
 
 	//these must match
@@ -30,4 +29,4 @@
 	TEST_ASSERT_EQUAL(test_frame.state, FRAME_STATE_EMPTY, "Machine frame's wires were not cut by the borg omnitool wirecutters!")
 
 	//unequip
-	borg.unequip_module_from_slot(omnitool, 1)
+	borg.drop_all_held_items()

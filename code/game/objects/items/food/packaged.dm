@@ -114,6 +114,7 @@
 	tastes = list("dog food" = 5, "狗肉" = 3)
 	foodtypes = MEAT | GROSS
 	crafting_complexity = FOOD_COMPLEXITY_1
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 	food_flags = FOOD_IN_CONTAINER | FOOD_TINY_SNOUT_EDIBLE // Troutstation edit
 	snout_eat_message_category = SNOUT_EAT_MESSAGE_CATEGORY_SLURP // Troutstation edit
 

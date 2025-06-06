@@ -133,7 +133,7 @@
 	. = NONE
 	if(clean_types & required_clean_types)
 		qdel(src)
-		return COMPONENT_CLEANED
+		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /datum/component/infective/proc/try_infect_buckle(datum/source, mob/M, force)
 	SIGNAL_HANDLER

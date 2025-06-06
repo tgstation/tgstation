@@ -466,4 +466,5 @@
 	overlay_state = "meatsicle"
 	foodtypes = RAW | MEAT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 	food_flags = FOOD_FINGER_FOOD // Troutstation edit, make sure this ISN'T snout-edible

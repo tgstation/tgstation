@@ -472,7 +472,7 @@
 /area/awaymission/caves/bmp_asteroid/level_two)
 "cN" = (
 /obj/machinery/door/window/left/directional/east,
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cP" = (
@@ -488,7 +488,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cV" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs,
+/obj/effect/decal/cleanable/blood/gibs/xeno,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cX" = (
@@ -724,7 +724,7 @@
 	},
 /area/awaymission/caves/northblock)
 "eg" = (
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eh" = (
@@ -845,7 +845,7 @@
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eN" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/awaymission/caves/listeningpost)
 "eO" = (
@@ -1749,7 +1749,7 @@
 /area/awaymission/caves/bmp_asteroid/level_three)
 "JP" = (
 /obj/structure/window/reinforced/spawner/directional/east,
-/obj/effect/decal/cleanable/xenoblood,
+/obj/effect/decal/cleanable/blood/xeno,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "Kq" = (

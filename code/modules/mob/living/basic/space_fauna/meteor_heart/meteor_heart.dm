@@ -58,12 +58,7 @@
 	soundloop.pressure_affected = FALSE
 	soundloop.start()
 
-	AddComponent(\
-		/datum/component/bloody_spreader,\
-		blood_left = INFINITY,\
-		blood_dna = list("meaty DNA" = get_blood_type(BLOOD_TYPE_MEAT)),\
-		diseases = null,\
-	)
+	AddComponent(/datum/component/bloody_spreader)
 
 /// Called when we get mad at something, either for attacking us or attacking the nearby area
 /mob/living/basic/meteor_heart/proc/aggro()

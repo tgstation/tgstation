@@ -99,7 +99,7 @@
 		var/obj/item/coin/inserted_coin = inserted
 		if(paymode == COIN)
 			if(prob(2))
-				if(!user.transferItemToLoc(inserted_coin, drop_location(), silent = FALSE))
+				if(!user.transfer_item_to_turf(inserted_coin, drop_location(), silent = FALSE))
 					return ITEM_INTERACT_BLOCKING
 				inserted_coin.throw_at(user, 3, 10)
 				if(prob(10))

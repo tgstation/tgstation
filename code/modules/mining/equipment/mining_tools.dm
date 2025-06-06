@@ -73,27 +73,12 @@
 	hitsound = 'sound/items/weapons/drill.ogg'
 	desc = "An electric mining drill for the especially scrawny."
 
-/obj/item/pickaxe/drill/cyborg
-	name = "cyborg mining drill"
-	desc = "An integrated electric mining drill."
-	flags_1 = NONE
-
-/obj/item/pickaxe/drill/cyborg/Initialize(mapload)
-	. = ..()
-	ADD_TRAIT(src, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
-
 /obj/item/pickaxe/drill/diamonddrill
 	name = "diamond-tipped mining drill"
 	icon_state = "diamonddrill"
 	inhand_icon_state = "diamonddrill"
 	toolspeed = 0.2
 	desc = "Yours is the drill that will pierce the heavens!"
-
-/obj/item/pickaxe/drill/cyborg/diamond //This is the BORG version!
-	name = "diamond-tipped cyborg mining drill" //To inherit the NODROP_1 flag, and easier to change borg specific drill mechanics.
-	icon_state = "diamonddrill"
-	inhand_icon_state = "diamonddrill"
-	toolspeed = 0.2
 
 /obj/item/pickaxe/drill/jackhammer
 	name = "sonic jackhammer"

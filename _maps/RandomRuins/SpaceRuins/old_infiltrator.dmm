@@ -142,7 +142,7 @@
 /turf/open/floor/circuit/red/airless,
 /area/ruin/space/unpowered)
 "jt" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/mineral/plastitanium/red/airless,
 /area/ruin/space/unpowered)

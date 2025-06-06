@@ -56,25 +56,31 @@
 	closeToolTip(usr)
 
 /atom/movable/screen/escape_menu/lobby_button/proc/add_maptext(button_text)
-	SHOULD_CALL_PARENT(TRUE)
 	animate(src,
-		maptext = MAPTEXT_VCR_OSD_MONO("<b style='font-size: [font_size]px; text-align: center'>[button_text]</b>"),
+		maptext = MAPTEXT_PIXELLARI("<b style='font-size: [font_size]px; text-align: center'>[button_text]</b>"),
 		flags = ANIMATION_CONTINUE,
 	)
 
 /atom/movable/screen/escape_menu/lobby_button/small
 	icon = 'icons/hud/escape_menu_icons.dmi'
-	font_size = 9
+	font_size = 6
 	maptext_width = 80
 	maptext_x = -20
 	maptext_y = -14
+
+/atom/movable/screen/escape_menu/lobby_button/small/add_maptext(button_text)
+	//overriding parent for a different font here.
+	animate(src,
+		maptext = MAPTEXT_GRAND9K("<b style='font-size: [font_size]px; text-align: center'>[button_text]</b>"),
+		flags = ANIMATION_CONTINUE,
+	)
 
 ///Amount of time between animations when we fade in and out.
 #define COLLAPSIBLE_BUTTON_DURATION (0.4 SECONDS)
 
 /atom/movable/screen/escape_menu/lobby_button/small/collapsible
 	maptext_width = 48
-	maptext_x = -5
+	maptext_x = -4
 	maptext_y = -44 //we change this during animation to bring it up
 	layer = parent_type::layer - 0.01
 
@@ -97,7 +103,7 @@
 /atom/movable/screen/escape_menu/lobby_button/small/collapsible/add_maptext(button_text)
 	//more than 6 characters, lets bump the maptext down a bit, because we're smaller buttons we would be overlaying over the icon itself otherwise.
 	if(length(button_text) > 6)
-		maptext_y -= 12
+		maptext_y -= 10
 	//let's take the icons out
 	animate(src,
 		transform = transform.Translate(x = end_point, y = 0),

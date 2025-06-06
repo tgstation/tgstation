@@ -71,6 +71,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
 	cooldown_time = 3 SECONDS
 
+
 /obj/item/mod/module/stealth/ninja/on_activation()
 	. = ..()
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
@@ -94,8 +95,18 @@
 
 /obj/item/mod/module/welding/camera_vision/on_part_activation()
 	RegisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK, PROC_REF(can_track))
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
+	if(istype(head_cover))
+		//this is a screen that displays an image, so flash sensitives can use this to protect against flashes.
+		head_cover.flash_protect = FLASH_PROTECTION_WELDER_HYPER_SENSITIVE
+
 
 /obj/item/mod/module/welding/camera_vision/on_part_deactivation(deleting = FALSE)
+	if(deleting)
+		return
+	var/obj/item/clothing/head_cover = mod.get_part_from_slot(ITEM_SLOT_HEAD) || mod.get_part_from_slot(ITEM_SLOT_MASK) || mod.get_part_from_slot(ITEM_SLOT_EYES)
+	if(istype(head_cover))
+		head_cover.flash_protect = initial(head_cover.flash_protect)
 	UnregisterSignal(mod.wearer, COMSIG_LIVING_CAN_TRACK)
 
 /obj/item/mod/module/welding/camera_vision/proc/can_track(datum/source, mob/user)

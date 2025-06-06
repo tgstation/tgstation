@@ -1253,7 +1253,7 @@
 				"UE"=scanner_occupant.dna.unique_enzymes,
 				"UF"=scanner_occupant.dna.unique_features,
 				"name"=scanner_occupant.real_name,
-				"blood_type"=scanner_occupant.dna.blood_type)
+				"blood_type"=scanner_occupant.get_bloodtype()?.name)
 
 			return
 

@@ -644,15 +644,12 @@
 		return
 	attack_paw(ayy, modifiers)
 
-/obj/item/attack_ai(mob/user)
-	if(istype(src.loc, /obj/item/robot_model))
-		//If the item is part of a cyborg module, equip it
-		if(!iscyborg(user))
-			return
-		var/mob/living/silicon/robot/R = user
-		if(!R.low_power_mode) //can't equip modules with an empty cell.
-			R.activate_module(src)
-			R.hud_used.update_robot_modules_display()
+/obj/item/attack_robot(mob/living/silicon/robot/user)
+	if(!istype(loc, /obj/item/robot_model))
+		return
+	if(user.low_power_mode) //can't equip modules with an empty cell.
+		return
+	user.activate_module(src)
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
@@ -1431,6 +1428,8 @@
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
 	. = ..()
+	if(!.) // we don't need mob updates when the item was already clean
+		return
 	if(ismob(loc))
 		var/mob/mob_loc = loc
 		mob_loc.update_clothing(slot_flags)

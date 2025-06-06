@@ -25,6 +25,7 @@
 	habitable_atmos = list("min_oxy" = 5, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	minimum_survivable_temperature = (T0C - 10)
 	maximum_survivable_temperature = (T0C + 100)
+	blood_volume = BLOOD_VOLUME_NORMAL
 	faction = list(FACTION_CLOWN)
 	ai_controller = /datum/ai_controller/basic_controller/clown
 	///list of stuff we drop on death
@@ -63,6 +64,11 @@
 	var/obj/item/food/grown/banana/bunch/unripe_bunch = target
 	unripe_bunch.start_ripening()
 	log_combat(src, target, "explosively ripened")
+
+/mob/living/basic/clown/get_bloodtype()
+	if (check_holidays(APRIL_FOOLS))
+		return get_blood_type(BLOOD_TYPE_CLOWN)
+	return ..()
 
 /mob/living/basic/clown/lube
 	name = "Living Lube"

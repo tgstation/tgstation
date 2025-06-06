@@ -29,7 +29,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/item/lead_pipe,
 /turf/open/floor/plating,
 /area/centcom/basketball)
@@ -121,7 +121,7 @@
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "hB" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "jj" = (
@@ -191,7 +191,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "mV" = (
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/centcom/basketball)
@@ -257,7 +257,7 @@
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "tU" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/floor/plating,
 /area/centcom/basketball)
 "tX" = (
@@ -283,7 +283,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/shard,
 /turf/open/floor/plating,

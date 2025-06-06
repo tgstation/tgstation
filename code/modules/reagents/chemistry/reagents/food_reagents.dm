@@ -95,9 +95,9 @@
 
 	data = counterlist_normalise(supplied_data)
 
-/datum/reagent/consumable/nutriment/on_merge(list/newdata, newvolume)
+/datum/reagent/consumable/nutriment/on_merge(list/mix_data, amount)
 	. = ..()
-	if(!islist(newdata) || !newdata.len)
+	if(!islist(mix_data) || !mix_data.len)
 		return
 
 	// data for nutriment is one or more (flavour -> ratio)
@@ -109,8 +109,8 @@
 
 	counterlist_scale(taste_amounts, volume)
 
-	var/list/other_taste_amounts = newdata.Copy()
-	counterlist_scale(other_taste_amounts, newvolume)
+	var/list/other_taste_amounts = mix_data.Copy()
+	counterlist_scale(other_taste_amounts, amount)
 
 	counterlist_combine(taste_amounts, other_taste_amounts)
 
@@ -172,7 +172,7 @@
 
 	exposed_obj.visible_message(span_warning("[exposed_obj] rapidly fries as it's splashed with hot oil! Somehow."))
 	exposed_obj.AddElement(/datum/element/fried_item, volume SECONDS)
-	exposed_obj.reagents.add_reagent(src.type, reac_volume, reagtemp = holder.chem_temp)
+	exposed_obj.reagents.add_reagent(type, reac_volume, data, holder.chem_temp)
 
 /datum/reagent/consumable/nutriment/fat/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()

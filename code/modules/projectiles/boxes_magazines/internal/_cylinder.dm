@@ -44,7 +44,7 @@
 
 	for(var/i in 1 to stored_ammo.len)
 		var/obj/item/ammo_casing/bullet = stored_ammo[i]
-		if (istype(bullet) && bullet.loaded_projectile)
+		if (!istype(bullet) || bullet.loaded_projectile)
 			continue
 		// found a spent ammo
 		stored_ammo[i] = R

@@ -24,15 +24,6 @@
 	/// Yummy!
 	species_cookie = /obj/item/food/nugget
 
-// Prevents felinids from taking toxin damage from carpotoxin
-/datum/species/human/felinid/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
-	. = ..()
-	if(. & COMSIG_MOB_STOP_REAGENT_CHECK)
-		return
-	if(istype(chem, /datum/reagent/toxin/carpotoxin))
-		var/datum/reagent/toxin/carpotoxin/fish = chem
-		fish.toxpwr = 0
-
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/carbon_being, datum/species/old_species, pref_load, regenerate_icons)
 	if(ishuman(carbon_being))
 		var/mob/living/carbon/human/target_human = carbon_being

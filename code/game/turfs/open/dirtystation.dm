@@ -55,9 +55,9 @@
 			switch (rand(1, 100))
 				if(1 to 35)//35%
 					if(prob(4))
-						new /obj/effect/decal/cleanable/robot_debris/old(src)
+						new /obj/effect/decal/cleanable/blood/gibs/robot_debris/old(src)
 					else
-						new /obj/effect/decal/cleanable/oil(src)
+						new /obj/effect/decal/cleanable/blood/oil(src)
 				if(35 to 95)//60%
 					new /obj/effect/decal/cleanable/dirt(src)
 				if(95 to 100)//5%
@@ -83,7 +83,7 @@
 	var/static/list/oily_areas = typecacheof(/area/station/cargo)
 	if(is_type_in_typecache(A, oily_areas))
 		if(prob(25))
-			new /obj/effect/decal/cleanable/oil(src)
+			new /obj/effect/decal/cleanable/blood/oil(src)
 		else if(prob(20))
 			// or occasionally the signs of opened packages
 			new /obj/effect/decal/cleanable/wrapping(src)

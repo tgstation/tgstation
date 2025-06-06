@@ -392,10 +392,10 @@
 	glass_price = DRINK_PRICE_STOCK
 	default_container = /obj/item/reagent_containers/cup/glass/bottle/wine
 
-/datum/reagent/consumable/ethanol/wine/on_merge(data)
+/datum/reagent/consumable/ethanol/wine/on_merge(list/mix_data, amount)
 	. = ..()
-	if(src.data && data && data["vintage"] != src.data["vintage"])
-		src.data["vintage"] = "mixed wine"
+	if(data && mix_data && data["vintage"] != mix_data["vintage"])
+		data["vintage"] = "mixed wine"
 
 /datum/reagent/consumable/ethanol/wine/get_taste_description(mob/living/taster)
 	if(HAS_TRAIT(taster,TRAIT_WINE_TASTER))
@@ -1971,25 +1971,25 @@
 	color = data["color"]
 	generate_data_info(data)
 
-/datum/reagent/consumable/ethanol/fruit_wine/on_merge(list/data, amount)
-	..()
+/datum/reagent/consumable/ethanol/fruit_wine/on_merge(list/mix_data, amount)
+	. = ..()
 	var/diff = (amount/volume)
 	if(diff < 1)
-		color = BlendRGB(color, data["color"], diff/2) //The percentage difference over two, so that they take average if equal.
+		color = BlendRGB(color, mix_data["color"], diff/2) //The percentage difference over two, so that they take average if equal.
 	else
-		color = BlendRGB(color, data["color"], (1/diff)/2) //Adjust so it's always blending properly.
+		color = BlendRGB(color, mix_data["color"], (1/diff)/2) //Adjust so it's always blending properly.
 	var/oldvolume = volume-amount
 
-	var/list/cachednames = data["names"]
+	var/list/cachednames = mix_data["names"]
 	for(var/name in names | cachednames)
 		names[name] = ((names[name] * oldvolume) + (cachednames[name] * amount)) / volume
 
-	var/list/cachedtastes = data["tastes"]
+	var/list/cachedtastes = mix_data["tastes"]
 	for(var/taste in tastes | cachedtastes)
 		tastes[taste] = ((tastes[taste] * oldvolume) + (cachedtastes[taste] * amount)) / volume
 
 	boozepwr *= oldvolume
-	var/newzepwr = data["boozepwr"] * amount
+	var/newzepwr = mix_data["boozepwr"] * amount
 	boozepwr += newzepwr
 	boozepwr /= volume //Blending boozepwr to volume.
 	generate_data_info(data)

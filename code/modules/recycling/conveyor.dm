@@ -340,7 +340,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		new /obj/machinery/conveyor(target_turf, forwards, id)
 
 	else if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
-		user.transferItemToLoc(attacking_item, drop_location())
+		user.transfer_item_to_turf(attacking_item, drop_location())
 	else
 		return ..()
 

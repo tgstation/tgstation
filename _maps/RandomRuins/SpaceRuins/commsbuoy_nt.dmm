@@ -163,7 +163,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/nt_commsbuoy)
 "lB" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/blood/footprints{
@@ -479,7 +479,7 @@
 /turf/open/floor/mineral/titanium/yellow,
 /area/ruin/space/nt_commsbuoy)
 "Qd" = (
-/obj/effect/decal/cleanable/blood/trails{
+/obj/effect/decal/cleanable/blood/trail_holder{
 	dir = 6
 	},
 /obj/item/paper/fluff/ruins/nt_commsbuoy/torn_page,

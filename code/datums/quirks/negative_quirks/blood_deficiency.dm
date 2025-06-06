@@ -17,11 +17,11 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(!istype(human_holder))
 		return
-	update_mail(human_quirk_holder = human_holder, new_blood_type = human_holder.dna.blood_type) // matches the mail goodies blood bag to our blood type
-	RegisterSignal(quirk_holder, COMSIG_LIVING_CHANGED_BLOOD_TYPE, PROC_REF(update_mail))
+	update_mail(human_quirk_holder = human_holder, new_blood_type = human_holder.get_bloodtype()) // matches the mail goodies blood bag to our blood type
+	RegisterSignal(quirk_holder, COMSIG_CARBON_CHANGED_BLOOD_TYPE, PROC_REF(update_mail))
 
 /datum/quirk/blooddeficiency/remove()
-	UnregisterSignal(quirk_holder, list(COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_LIVING_CHANGED_BLOOD_TYPE))
+	UnregisterSignal(quirk_holder, list(COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_CARBON_CHANGED_BLOOD_TYPE))
 
 /datum/quirk/blooddeficiency/is_species_appropriate(datum/species/mob_species)
 	var/datum/species_traits = GLOB.species_prototypes[mob_species].inherent_traits
@@ -37,20 +37,17 @@
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	if(human_holder.stat == DEAD || human_holder.blood_volume <= min_blood)
 		return
-	// This exotic blood check is solely to snowflake slimepeople into working with this quirk
-	if(HAS_TRAIT(quirk_holder, TRAIT_NOBLOOD) && isnull(human_holder.dna.species.exotic_blood))
-		return
 
-	human_holder.blood_volume = max(min_blood, human_holder.blood_volume - human_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick)
+	if(!HAS_TRAIT(quirk_holder, TRAIT_NOBLOOD))
+		human_holder.blood_volume = max(min_blood, human_holder.blood_volume - human_holder.dna.species.blood_deficiency_drain_rate * seconds_per_tick)
 
 /// Try to update the mail goodies to match the quirk holder's blood type. If we fail for whatever reason then it will just default to the initial O- blood pack that we start with.
 /datum/quirk/blooddeficiency/proc/update_mail(mob/living/carbon/human/human_quirk_holder, datum/blood_type/new_blood_type, update_cached_blood_dna_info)
 	SIGNAL_HANDLER
 
-	if(isnull(human_quirk_holder.dna.species.exotic_blood) && isnull(human_quirk_holder.dna.species.exotic_bloodtype))
-		if(TRAIT_NOBLOOD in human_quirk_holder.dna.species.inherent_traits) // jellypeople have both exotic_blood and TRAIT_NOBLOOD
-			mail_goodies.Cut()
-			return
+	if(TRAIT_NOBLOOD in human_quirk_holder.dna.species.inherent_traits)
+		mail_goodies.Cut()
+		return
 
 	if(isnull(new_blood_type))
 		return

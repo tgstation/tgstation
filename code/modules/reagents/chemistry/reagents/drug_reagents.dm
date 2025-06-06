@@ -152,7 +152,7 @@
 	color = BlendRGB(initial(color), "#FAFAFA", effective_impurity)
 
 //we need to update the color whenever purity gets changed
-/datum/reagent/drug/methamphetamine/on_merge(data, amount)
+/datum/reagent/drug/methamphetamine/on_merge(list/mix_data, amount)
 	. = ..()
 	var/effective_impurity = min(1, (1 - creation_purity)/0.5)
 	color = BlendRGB(initial(color), "#FAFAFA", effective_impurity)

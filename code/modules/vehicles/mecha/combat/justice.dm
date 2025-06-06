@@ -22,7 +22,7 @@
 	wreckage = /obj/structure/mecha_wreckage/justice
 	mech_type = EXOSUIT_MODULE_JUSTICE
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	mecha_flags = ID_LOCK_ON | QUIET_STEPS | QUIET_TURNS | CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE | IS_ENCLOSED
+	mecha_flags = ID_LOCK_ON | QUIET_STEPS | QUIET_TURNS | CAN_STRAFE | HAS_LIGHTS | MMI_COMPATIBLE | IS_ENCLOSED | AI_COMPATIBLE
 	destroy_wall_sound = 'sound/vehicles/mecha/mech_blade_break_wall.ogg'
 	brute_attack_sound = 'sound/vehicles/mecha/mech_blade_attack.ogg'
 	attack_verbs = list("cut", "cuts", "cutting")

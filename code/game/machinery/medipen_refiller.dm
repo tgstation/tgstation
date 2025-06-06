@@ -26,7 +26,7 @@
 	AddComponent(/datum/component/plumbing/simple_demand)
 	AddComponent(/datum/component/simple_rotation)
 	register_context()
-	CheckParts()
+	RefreshParts()
 
 /obj/machinery/medipen_refiller/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -109,7 +109,7 @@
 		cut_overlays()
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/medipen_refiller/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+/obj/machinery/medipen_refiller/plunger_act(obj/item/plunger/attacking_plunger, mob/living/user, reinforced)
 	user.balloon_alert_to_viewers("furiously plunging...", "plunging medipen refiller...")
 	if(do_after(user, 3 SECONDS, target = src))
 		user.balloon_alert_to_viewers("finished plunging")

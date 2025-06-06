@@ -246,7 +246,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/clownplanet)
 "bE" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},

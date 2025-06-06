@@ -119,14 +119,6 @@
 /obj/structure/flora/bush/large/style_random,
 /turf/open/misc/grass/jungle,
 /area/virtual_domain)
-"aZ" = (
-/obj/machinery/airalarm/directional/south,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/decal/cleanable/robot_debris/limb,
-/obj/machinery/exoscanner,
-/obj/effect/turf_decal/bot_red,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "ba" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /obj/effect/decal/cleanable/dirt,
@@ -525,6 +517,12 @@
 /obj/machinery/button/door/directional/south{
 	name = "Gateway Shutter Control"
 	},
+/turf/open/floor/iron,
+/area/virtual_domain)
+"ei" = (
+/obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "ej" = (
@@ -926,6 +924,11 @@
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
+"hT" = (
+/obj/effect/decal/cleanable/blood/gibs/xeno/core,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating,
+/area/virtual_domain)
 "hU" = (
 /obj/structure/frame/computer,
 /turf/open/floor/iron/dark,
@@ -1081,10 +1084,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron,
 /area/virtual_domain)
-"jh" = (
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/wood,
-/area/virtual_domain)
 "jk" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command{
@@ -1167,6 +1166,10 @@
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron,
+/area/virtual_domain)
+"jX" = (
+/obj/machinery/photocopier/prebuilt,
+/turf/open/floor/carpet,
 /area/virtual_domain)
 "kc" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -1277,6 +1280,16 @@
 	name = "E.V.A. Storage Shutter"
 	},
 /obj/effect/turf_decal/delivery,
+/turf/open/floor/iron,
+/area/virtual_domain)
+"kR" = (
+/obj/item/radio/intercom/directional/north,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/oil{
+	icon_state = "floor5"
+	},
 /turf/open/floor/iron,
 /area/virtual_domain)
 "kU" = (
@@ -1683,24 +1696,6 @@
 /obj/item/borg/upgrade/pinpointer,
 /turf/open/floor/iron,
 /area/virtual_domain)
-"ol" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor6"
-	},
-/obj/structure/railing{
-	dir = 8
-	},
-/obj/item/modular_computer/laptop{
-	icon_state = "laptop";
-	pixel_x = 2;
-	pixel_y = 12
-	},
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/iron,
-/area/virtual_domain)
 "on" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/decal/cleanable/dirt,
@@ -1806,6 +1801,24 @@
 /obj/structure/barricade/sandbags,
 /turf/open/floor/plating,
 /area/virtual_domain)
+"pp" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/oil{
+	icon_state = "floor6"
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/item/modular_computer/laptop{
+	icon_state = "laptop";
+	pixel_x = 2;
+	pixel_y = 12
+	},
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "pr" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
@@ -1851,10 +1864,9 @@
 /obj/item/flashlight/lamp/green,
 /turf/open/floor/iron,
 /area/virtual_domain)
-"pI" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/up,
-/obj/structure/alien/weeds,
-/turf/open/floor/plating,
+"pH" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/wood,
 /area/virtual_domain)
 "pJ" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted{
@@ -1875,14 +1887,6 @@
 "pN" = (
 /obj/structure/meateor_fluff/eyeball,
 /turf/open/indestructible/meat,
-/area/virtual_domain)
-"pO" = (
-/obj/effect/decal/cleanable/robot_debris/old,
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/paper/stack{
-	dir = 4
-	},
-/turf/open/floor/iron,
 /area/virtual_domain)
 "pP" = (
 /obj/machinery/button/door/directional/north{
@@ -1928,16 +1932,6 @@
 "pX" = (
 /obj/item/photo/old{
 	pixel_y = 14
-	},
-/turf/open/floor/iron,
-/area/virtual_domain)
-"qa" = (
-/obj/item/radio/intercom/directional/north,
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/oil{
-	icon_state = "floor5"
 	},
 /turf/open/floor/iron,
 /area/virtual_domain)
@@ -2178,10 +2172,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/wood,
 /area/virtual_domain)
-"rX" = (
-/obj/machinery/photocopier/prebuilt,
-/turf/open/floor/carpet,
-/area/virtual_domain)
 "sa" = (
 /obj/machinery/vending/cigarette,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -2334,11 +2324,6 @@
 "tl" = (
 /obj/structure/alien/weeds,
 /obj/structure/alien/resin,
-/turf/open/floor/plating,
-/area/virtual_domain)
-"tn" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/core,
-/obj/structure/alien/weeds,
 /turf/open/floor/plating,
 /area/virtual_domain)
 "to" = (
@@ -2932,6 +2917,11 @@
 "yz" = (
 /turf/closed/indestructible/fakedoor,
 /area/virtual_domain)
+"yB" = (
+/obj/effect/decal/cleanable/blood/gibs/xeno/up,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating,
+/area/virtual_domain)
 "yC" = (
 /obj/structure/showcase/machinery/tv/broken,
 /turf/open/floor/carpet,
@@ -3406,6 +3396,14 @@
 /obj/effect/spawner/random/trash/graffiti,
 /turf/open/floor/iron,
 /area/virtual_domain)
+"Cs" = (
+/obj/machinery/airalarm/directional/south,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/limb,
+/obj/machinery/exoscanner,
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "Cw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/chair/stool/directional/west,
@@ -3483,11 +3481,6 @@
 	},
 /obj/structure/spider/stickyweb,
 /turf/open/floor/iron,
-/area/virtual_domain)
-"CQ" = (
-/obj/effect/decal/cleanable/xenoblood,
-/obj/structure/alien/weeds,
-/turf/open/floor/plating,
 /area/virtual_domain)
 "Dc" = (
 /obj/effect/turf_decal/bot_white/right,
@@ -3756,11 +3749,6 @@
 /obj/structure/table/wood,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/carpet,
-/area/virtual_domain)
-"Fr" = (
-/obj/effect/decal/cleanable/xenoblood/xgibs/down,
-/obj/structure/alien/weeds,
-/turf/open/floor/plating,
 /area/virtual_domain)
 "Fw" = (
 /obj/item/stack/sheet/rglass{
@@ -4121,6 +4109,13 @@
 /obj/item/spear/explosive,
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
+"IB" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
+/turf/open/floor/iron,
+/area/virtual_domain)
 "IC" = (
 /obj/structure/railing{
 	dir = 4
@@ -4185,6 +4180,11 @@
 	},
 /turf/open/floor/plating,
 /area/virtual_domain)
+"IY" = (
+/obj/effect/decal/cleanable/blood/xeno,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating,
+/area/virtual_domain)
 "Jh" = (
 /obj/machinery/door/window/left/directional/north{
 	name = "Captain's Bedroom"
@@ -4230,13 +4230,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/barricade/sandbags,
 /obj/structure/railing,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"JM" = (
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/robot_debris,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "JP" = (
@@ -4790,6 +4783,11 @@
 	dir = 5
 	},
 /turf/open/floor/iron,
+/area/virtual_domain)
+"NW" = (
+/obj/effect/decal/cleanable/blood/gibs/xeno/down,
+/obj/structure/alien/weeds,
+/turf/open/floor/plating,
 /area/virtual_domain)
 "NZ" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -5636,6 +5634,14 @@
 "Vs" = (
 /turf/closed/indestructible/rock,
 /area/virtual_domain)
+"Vt" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper/stack{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/virtual_domain)
 "Vw" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
@@ -5686,12 +5692,6 @@
 	},
 /obj/item/chair,
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/iron,
-/area/virtual_domain)
-"VZ" = (
-/obj/structure/extinguisher_cabinet/directional/south,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/decal/cleanable/oil,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "Wf" = (
@@ -6677,7 +6677,7 @@ uS
 Yf
 nY
 GS
-rX
+jX
 Ue
 ZF
 uS
@@ -6713,7 +6713,7 @@ uz
 HM
 uS
 uS
-ol
+pp
 Mz
 uY
 ps
@@ -6763,7 +6763,7 @@ HM
 uS
 gM
 CL
-aZ
+Cs
 ps
 ps
 Hg
@@ -6809,9 +6809,9 @@ uz
 uz
 HM
 HH
-JM
+IB
 Kl
-VZ
+ei
 ps
 Yi
 vA
@@ -6858,7 +6858,7 @@ uz
 HM
 uS
 nU
-pO
+Vt
 bs
 VO
 ey
@@ -6880,9 +6880,9 @@ Ed
 uS
 kW
 lL
-pI
+yB
 Qc
-Fr
+NW
 DQ
 Pk
 uS
@@ -6905,7 +6905,7 @@ uz
 uz
 HM
 uS
-qa
+kR
 Yt
 uD
 ps
@@ -6977,7 +6977,7 @@ IS
 jm
 cW
 Cd
-CQ
+IY
 Lm
 jD
 IH
@@ -7072,7 +7072,7 @@ tu
 uS
 uS
 dE
-tn
+hT
 cW
 cW
 ps
@@ -7170,7 +7170,7 @@ hZ
 hZ
 uS
 Yo
-jh
+pH
 pK
 ep
 FF

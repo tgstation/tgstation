@@ -386,18 +386,15 @@
 
 	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
 		if(target.blood_volume < BLOOD_VOLUME_SAFE)
-			var/datum/blood_type/target_blood_data = target.dna.blood_type
-			var/datum/blood_type/chaplain_blood_data = chaplain.dna.blood_type
 			var/transferred_blood_amount = min(chaplain.blood_volume, BLOOD_VOLUME_SAFE - target.blood_volume)
-			if(transferred_blood_amount && (chaplain_blood_data.type_key() in target_blood_data.compatible_types))
-				transferred = TRUE
-				chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
-		if(target.blood_volume > BLOOD_VOLUME_EXCESS)
-			target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
+			if(transferred_blood_amount && target.get_blood_compatibility(chaplain))
+				transferred = chaplain.transfer_blood_to(target, transferred_blood_amount, forced = TRUE)
+		else if(target.blood_volume > BLOOD_VOLUME_EXCESS)
+			transferred = target.transfer_blood_to(chaplain, target.blood_volume - BLOOD_VOLUME_EXCESS, forced = TRUE)
 
 	target.update_damage_overlays()
 	chaplain.update_damage_overlays()
-	if(transferred)
+	if(!transferred)
 		to_chat(chaplain, span_warning("They hold no burden!"))
 		return BLESSING_IGNORED
 

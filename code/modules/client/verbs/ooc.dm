@@ -167,7 +167,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "Reset Player OOC Color", "Returns player OOC
 /client/verb/admin_notice()
 	set name = "Adminnotice"
 	set category = "Admin"
-	set desc ="Check the admin notice if it has been set"
+	set desc = "Check the admin notice if it has been set"
 
 	if(GLOB.admin_notice)
 		to_chat(src, "[span_boldnotice("Admin Notice:")]\n \t [GLOB.admin_notice]")

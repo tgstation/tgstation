@@ -64,6 +64,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/fuegoburrito
 	name = "fuego plasma burrito"
@@ -150,6 +151,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/taco/plain
 	name = "plain taco"
@@ -172,6 +174,7 @@
 	tastes = list("taco" = 4, "fish" = 2, "cheese" = 2, "cabbage" = 1)
 	foodtypes = SEAFOOD | DAIRY | GRAIN | VEGETABLES
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = null
 
 /obj/item/food/enchiladas
 	name = "enchiladas"
@@ -189,6 +192,7 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/stuffedlegion
 	name = "stuffed legion"
@@ -206,6 +210,7 @@
 	venue_value = FOOD_PRICE_LEGENDARY
 	crafting_complexity = FOOD_COMPLEXITY_5
 	crafted_food_buff = /datum/status_effect/food/trait/ashstorm_immune
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/chipsandsalsa
 	name = "chips and salsa"
@@ -239,6 +244,7 @@
 	foodtypes = MEAT | GRAIN | VEGETABLES | DAIRY | FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/vegetarian_chimichanga
 	name = "vegetarian chimichanga"
@@ -267,7 +273,7 @@
 
 /obj/item/food/hard_taco_shell/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/customizable_reagent_holder, /obj/item/food/hard_taco_shell/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
+	AddComponent(/datum/component/ingredients_holder, /obj/item/food/hard_taco_shell/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 6)
 
 // empty taco shell for custom tacos
 /obj/item/food/hard_taco_shell/empty
@@ -292,6 +298,7 @@
 	foodtypes = MEAT|VEGETABLES|GRAIN|DAIRY|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/plain_hard_shell_taco
 	name = "plain hard-shell taco"
@@ -307,6 +314,7 @@
 	foodtypes = MEAT|GRAIN|FRIED
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATDISH_MATERIAL_AMOUNT)
 
 /obj/item/food/refried_beans
 	name = "refried beans"

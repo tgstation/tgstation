@@ -40,4 +40,6 @@
 
 /datum/unit_test/washing/proc/clean_caught(...)
 	SIGNAL_HANDLER
+
 	clean_sig_caught += 1
+	return COMPONENT_CLEANED

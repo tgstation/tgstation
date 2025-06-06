@@ -277,7 +277,7 @@
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "iV" = (
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 4
 	},
@@ -901,7 +901,7 @@
 	},
 /area/shuttle/escape)
 "IB" = (
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},

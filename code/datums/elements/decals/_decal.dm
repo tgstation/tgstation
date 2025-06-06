@@ -139,7 +139,7 @@
 
 	if(clean_types & cleanable)
 		Detach(source)
-		return COMPONENT_CLEANED
+		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 	return NONE
 
 /datum/element/decal/proc/examine(datum/source, mob/user, list/examine_list)

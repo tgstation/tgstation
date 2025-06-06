@@ -1121,6 +1121,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			/mob/living/basic/ant,
 			/mob/living/basic/butterfly,
 			/mob/living/basic/cockroach,
+			/mob/living/basic/cockroach/bloodroach,
 			/mob/living/basic/spider/growing/spiderling,
 			/mob/living/basic/bee,
 			/obj/effect/decal/cleanable/ants,
