@@ -13174,7 +13174,7 @@
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/north,
 /obj/item/tank/internals/anesthetic,
-/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/mask/breath/muzzle,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "eFC" = (
@@ -40399,11 +40399,11 @@
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/light/small/directional/east,
-/obj/item/clothing/mask/muzzle/breath{
+/obj/item/clothing/mask/breath/muzzle{
 	pixel_y = -4
 	},
-/obj/item/clothing/mask/muzzle/breath,
-/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/mask/breath/muzzle,
+/obj/item/clothing/mask/breath/muzzle,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery/theatre)
 "oar" = (

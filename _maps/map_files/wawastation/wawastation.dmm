@@ -17340,7 +17340,7 @@
 /obj/structure/table/optable{
 	dir = 4
 	},
-/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/mask/breath/muzzle,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/science/robotics/lab)
 "gfe" = (
@@ -65561,7 +65561,7 @@
 	},
 /obj/effect/turf_decal/tile/blue/full,
 /obj/item/radio/intercom/directional/north,
-/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/mask/breath/muzzle,
 /turf/open/floor/iron/white,
 /area/station/medical/surgery)
 "wIr" = (

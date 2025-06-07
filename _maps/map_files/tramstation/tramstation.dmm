@@ -16866,7 +16866,7 @@
 /obj/item/scalpel{
 	pixel_y = 11
 	},
-/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/mask/breath/muzzle,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "eRb" = (
