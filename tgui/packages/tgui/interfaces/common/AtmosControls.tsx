@@ -24,6 +24,7 @@ export type VentProps = {
   internal: number;
   extdefault: number;
   intdefault: number;
+  allow_automation: BooleanLike;
 };
 
 export type ScrubberProps = {
@@ -32,6 +33,7 @@ export type ScrubberProps = {
   power: BooleanLike;
   scrubbing: BooleanLike;
   widenet: BooleanLike;
+  allow_automation: BooleanLike;
   filter_types: {
     gas_id: string;
     gas_name: string;
@@ -55,6 +57,7 @@ export const Vent = (props: VentProps) => {
     internal,
     extdefault,
     intdefault,
+    allow_automation,
   } = props;
   return (
     <Section
@@ -70,6 +73,16 @@ export const Vent = (props: VentProps) => {
               act('power', {
                 ref: refID,
                 val: Number(!power),
+              })
+            }
+          />
+          <Button
+            icon={allow_automation ? 'check-square-o' : 'square-o'}
+            selected={allow_automation}
+            tooltip={`${allow_automation ? 'Disable' : 'Enable'} mode automation`}
+            onClick={() =>
+              act('automation', {
+                ref: refID,
               })
             }
           />
@@ -197,22 +210,42 @@ export const Vent = (props: VentProps) => {
 
 export const Scrubber = (props: ScrubberProps) => {
   const { act } = useBackend();
-  const { long_name, power, scrubbing, refID, widenet, filter_types } = props;
+  const {
+    long_name,
+    power,
+    scrubbing,
+    refID,
+    widenet,
+    allow_automation,
+    filter_types,
+  } = props;
   return (
     <Section
       title={decodeHtmlEntities(long_name)}
       buttons={
-        <Button
-          icon={power ? 'power-off' : 'times'}
-          content={power ? 'On' : 'Off'}
-          selected={power}
-          onClick={() =>
-            act('power', {
-              ref: refID,
-              val: Number(!power),
-            })
-          }
-        />
+        <>
+          <Button
+            icon={power ? 'power-off' : 'times'}
+            content={power ? 'On' : 'Off'}
+            selected={power}
+            onClick={() =>
+              act('power', {
+                ref: refID,
+                val: Number(!power),
+              })
+            }
+          />
+          <Button
+            icon={allow_automation ? 'check-square-o' : 'square-o'}
+            selected={allow_automation}
+            tooltip={`${allow_automation ? 'Disable' : 'Enable'} mode automation`}
+            onClick={() =>
+              act('automation', {
+                ref: refID,
+              })
+            }
+          />
+        </>
       }
     >
       <LabeledList>

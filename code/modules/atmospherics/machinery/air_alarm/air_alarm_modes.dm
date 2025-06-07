@@ -37,14 +37,14 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	danger = FALSE
 
 /datum/air_alarm_mode/filtering/apply(area/applied)
-	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in (applied.air_vents - applied.excluded_vents))
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE
 		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in (applied.air_scrubbers - applied.excluded_scrubbers))
 		scrubber.on = TRUE
 		scrubber.filter_types = list(/datum/gas/carbon_dioxide)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
@@ -56,7 +56,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	danger = FALSE
 
 /datum/air_alarm_mode/contaminated/apply(area/applied)
-	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in (applied.air_vents - applied.excluded_vents))
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE
@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 
 	var/list/filtered = subtypesof(/datum/gas)
 	filtered -= list(/datum/gas/oxygen, /datum/gas/nitrogen, /datum/gas/pluoxium)
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in (applied.air_scrubbers - applied.excluded_scrubbers))
 		scrubber.on = TRUE
 		scrubber.filter_types = filtered.Copy()
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
@@ -77,14 +77,14 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	danger = FALSE
 
 /datum/air_alarm_mode/draught/apply(area/applied)
-	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in (applied.air_vents - applied.excluded_vents))
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE * 2
 		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in (applied.air_scrubbers - applied.excluded_scrubbers))
 		scrubber.on = TRUE
 		scrubber.set_widenet(FALSE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
@@ -95,14 +95,14 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	danger = TRUE
 
 /datum/air_alarm_mode/refill/apply(area/applied)
-	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in (applied.air_vents - applied.excluded_vents))
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE * 3
 		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in (applied.air_scrubbers - applied.excluded_scrubbers))
 		scrubber.on = TRUE
 
 		scrubber.filter_types = list(/datum/gas/carbon_dioxide)
@@ -116,11 +116,11 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 
 /// Same as [/datum/air_alarm_mode/siphon/apply]
 /datum/air_alarm_mode/cycle/apply(area/applied)
-	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in (applied.air_vents - applied.excluded_vents))
 		vent.on = FALSE
 		vent.update_appearance(UPDATE_ICON)
 
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in (applied.air_scrubbers - applied.excluded_scrubbers))
 		scrubber.on = TRUE
 		scrubber.set_widenet(TRUE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
@@ -131,14 +131,14 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	if(pressure >= ONE_ATMOSPHERE * 0.05)
 		return
 
-	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in (applied.air_vents - applied.excluded_vents))
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_EXTERNAL_BOUND
 		vent.external_pressure_bound = ONE_ATMOSPHERE
 		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in (applied.air_scrubbers - applied.excluded_scrubbers))
 		scrubber.on = TRUE
 		scrubber.filter_types = list(/datum/gas/carbon_dioxide)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SCRUBBING)
@@ -150,11 +150,11 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	danger = TRUE
 
 /datum/air_alarm_mode/siphon/apply(area/applied)
-	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in (applied.air_vents - applied.excluded_vents))
 		vent.on = FALSE
 		vent.update_appearance(UPDATE_ICON)
 
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in (applied.air_scrubbers - applied.excluded_scrubbers))
 		scrubber.on = TRUE
 		scrubber.set_widenet(FALSE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
@@ -165,11 +165,11 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	danger = TRUE
 
 /datum/air_alarm_mode/panic_siphon/apply(area/applied)
-	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in (applied.air_vents - applied.excluded_vents))
 		vent.on = FALSE
 		vent.update_appearance(UPDATE_ICON)
 
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in (applied.air_scrubbers - applied.excluded_scrubbers))
 		scrubber.on = TRUE
 		scrubber.set_widenet(TRUE)
 		scrubber.set_scrubbing(ATMOS_DIRECTION_SIPHONING)
@@ -180,11 +180,11 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	danger = FALSE
 
 /datum/air_alarm_mode/off/apply(area/applied)
-	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in (applied.air_vents - applied.excluded_vents))
 		vent.on = FALSE
 		vent.update_appearance(UPDATE_ICON)
 
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in (applied.air_scrubbers - applied.excluded_scrubbers))
 		scrubber.on = FALSE
 		scrubber.update_appearance(UPDATE_ICON)
 
@@ -195,14 +195,14 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	emag = TRUE
 
 /datum/air_alarm_mode/flood/apply(area/applied)
-	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in (applied.air_vents - applied.excluded_vents))
 		vent.on = TRUE
 		vent.pressure_checks = ATMOS_INTERNAL_BOUND
 		vent.internal_pressure_bound = 0
 		vent.pump_direction = ATMOS_DIRECTION_RELEASING
 		vent.update_appearance(UPDATE_ICON)
 
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in (applied.air_scrubbers - applied.excluded_scrubbers))
 		scrubber.on = FALSE
 		scrubber.update_appearance(UPDATE_ICON)
 
@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 	emag = TRUE // siphoning things with vents can horribly fuck up distro, even if its surprisingly fast
 
 /datum/air_alarm_mode/vent_siphon/apply(area/applied)
-	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in applied.air_vents)
+	for (var/obj/machinery/atmospherics/components/unary/vent_pump/vent as anything in (applied.air_vents - applied.excluded_vents))
 		vent.on = TRUE
 		vent.pressure_checks = NONE
 		vent.internal_pressure_bound = 0
@@ -221,6 +221,6 @@ GLOBAL_LIST_INIT(air_alarm_modes, init_air_alarm_modes())
 		vent.pump_direction = ATMOS_DIRECTION_SIPHONING
 		vent.update_appearance(UPDATE_ICON)
 
-	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in applied.air_scrubbers)
+	for (var/obj/machinery/atmospherics/components/unary/vent_scrubber/scrubber as anything in (applied.air_scrubbers - applied.excluded_scrubbers))
 		scrubber.on = FALSE
 		scrubber.update_appearance(UPDATE_ICON)
