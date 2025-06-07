@@ -26,7 +26,7 @@
 	///Check if the object can be unwrenched
 	var/can_unwrench = FALSE
 	///Bitflag of the initialized directions (NORTH | SOUTH | EAST | WEST)
-	var/initialize_directions = NONE
+	var/initialize_directions = ALL_CARDINALS
 	///The color of the pipe
 	var/pipe_color = ATMOS_COLOR_OMNI
 	///What layer the pipe is in (from 1 to 5, default 3)
@@ -82,15 +82,13 @@
 	acid = 70
 
 /obj/machinery/atmospherics/Initialize(mapload, process = TRUE, setdir, init_dir = initialize_directions)
-	if(!init_dir)
-		init_dir = ALL_CARDINALS
 	if(!isnull(setdir))
 		setDir(setdir)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
 		normalize_cardinal_directions()
 	nodes = new(device_type)
 	init_processing = process
-	set_init_directions(init_dir)
+	set_init_directions(initialize_directions)
 
 	if(mapload && name != initial(name))
 		override_naming = TRUE
