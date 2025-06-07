@@ -47,6 +47,8 @@
 	var/safe_plasma_min = 0
 	///How much breath partial pressure is a safe amount of plasma. 0 means that we are immune to plasma.
 	var/safe_plasma_max = 0.05
+	///The required partial pressure of water_vapor for not suffocating.
+	var/safe_water_level = 0
 	var/n2o_detect_min = 0.08 //Minimum n2o for effects
 	var/n2o_para_min = 1 //Sleeping agent
 	var/n2o_sleep_min = 5 //Sleeping agent
@@ -140,6 +142,8 @@
 		add_gas_reaction(/datum/gas/plasma, always = PROC_REF(breathe_plasma))
 	if(safe_plasma_max)
 		add_gas_reaction(/datum/gas/plasma, while_present = PROC_REF(too_much_plasma), on_loss = PROC_REF(safe_plasma))
+	if(safe_water_level)
+		add_gas_reaction(/datum/gas/water_vapor, always = PROC_REF(breathe_water))
 	add_gas_reaction(/datum/gas/bz, while_present = PROC_REF(too_much_bz))
 	add_gas_reaction(/datum/gas/freon, while_present = PROC_REF(too_much_freon))
 	add_gas_reaction(/datum/gas/halon, while_present = PROC_REF(too_much_halon))
@@ -577,6 +581,30 @@
 	if(zauker_pp > gas_stimulation_min)
 		var/existing = breather.reagents.get_reagent_amount(/datum/reagent/zauker)
 		breather.reagents.add_reagent(/datum/reagent/zauker, max(0, 1 - existing))
+
+/// Requires the spaceman to have either water vapor or be wet.
+/obj/item/organ/lungs/proc/breathe_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp, old_water_pp)
+	var/need_to_breathe = !HAS_TRAIT(src, TRAIT_SPACEBREATHING) && !HAS_TRAIT(breather, TRAIT_IS_WET)
+	if(water_pp < safe_water_level && need_to_breathe)
+		on_low_water(breather, breath, water_pp)
+		return
+
+	if(old_water_pp < safe_water_level || breather.failed_last_breath)
+		breather.failed_last_breath = FALSE
+		breather.clear_alert(ALERT_NOT_ENOUGH_WATER)
+
+	if(need_to_breathe)
+		breathe_gas_volume(breath, /datum/gas/water_vapor, /datum/gas/carbon_dioxide)
+	// Heal mob if not in crit.
+	if(breather.health >= breather.crit_threshold && breather.oxyloss)
+		breather.adjustOxyLoss(-5)
+
+/// Called when there isn't enough water to breath
+/obj/item/organ/lungs/proc/on_low_water(mob/living/carbon/breather, datum/gas_mixture/breath, water_pp)
+	breather.throw_alert(ALERT_NOT_ENOUGH_WATER, /atom/movable/screen/alert/not_enough_water)
+	var/gas_breathed = handle_suffocation(breather, water_pp, safe_water_level, breath.gases[/datum/gas/water_vapor][MOLES])
+	if(water_pp)
+		breathe_gas_volume(breath, /datum/gas/water_vapor, /datum/gas/carbon_dioxide, volume = gas_breathed)
 
 /**
  * This proc tests if the lungs can breathe, if they can breathe a given gas mixture, and throws/clears gas alerts.
