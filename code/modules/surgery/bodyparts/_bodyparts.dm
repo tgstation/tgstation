@@ -186,6 +186,8 @@
 	var/unarmed_effectiveness = 10
 	/// Multiplier applied to effectiveness and damage when attacking a grabbed target.
 	var/unarmed_pummeling_bonus = 1
+	/// The 'sharpness' of the limb. Could indicate claws, teeth or spines. Should default to NONE, or blunt.
+	var/unarmed_sharpness = NONE
 
 	/// Traits that are given to the holder of the part. This does not update automatically on life(), only when the organs are initially generated or inserted!
 	var/list/bodypart_traits = list()
@@ -243,7 +245,7 @@
 	if(!IS_ORGANIC_LIMB(src))
 		grind_results = null
 	else
-		blood_dna_info = list("UNKNOWN DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
+		blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
 
 	name = "[limb_id] [parse_zone(body_zone)]"
 	update_icon_dropped()
@@ -595,7 +597,7 @@
 			update_disabled()
 		if(updating_health)
 			owner.updatehealth()
-	return update_bodypart_damage_state() || .
+	return update_bodypart_damage_state()
 
 /// Returns a bitflag using ANATOMY_EXTERIOR or ANATOMY_INTERIOR. Used to determine if we as a whole have a interior or exterior biostate, or both.
 /obj/item/bodypart/proc/get_bio_state_status()
@@ -945,7 +947,7 @@
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
 		// Should be fine as this gets called before all the important stuff happens
-		if(!(bodypart_flags & ORGAN_VIRGIN) && owner?.dna?.blood_type)
+		if(is_creating && !(bodypart_flags & ORGAN_VIRGIN))
 			blood_dna_info = owner.get_blood_dna_list()
 			// need to remove the synethic blood DNA that is initialized
 			// wash also adds the blood dna again
@@ -1017,11 +1019,16 @@
 /// Called when limb's current owner gets washed
 /obj/item/bodypart/proc/on_owner_clean(mob/living/carbon/source, clean_types)
 	SIGNAL_HANDLER
-	wash(clean_types)
+
+	. = NONE
+
+	if(wash(clean_types))
+		. |= COMPONENT_CLEANED
 
 /obj/item/bodypart/wash(clean_types)
 	. = ..()
-
+	if(!.) // Already clean. Nothing to do here.
+		return
 	// always add the original dna to the organ after it's washed
 	if(IS_ORGANIC_LIMB(src) && (clean_types & CLEAN_TYPE_BLOOD))
 		add_blood_DNA(blood_dna_info)
@@ -1075,7 +1082,7 @@
 		if(brutestate)
 			// divided into two overlays: one that gets colored and one that doesn't.
 			var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER)
-			brute_blood_overlay.color = get_blood_dna_color(update_on ? update_on.get_blood_dna_list() : blood_dna_info) // living mobs can just get it fresh, dropped limbs use blood_dna_info
+			brute_blood_overlay.color = get_color_from_blood_list(update_on ? update_on.get_blood_dna_list() : blood_dna_info) // living mobs can just get it fresh, dropped limbs use blood_dna_info
 			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
 			if(brute_damage_overlay)
 				brute_blood_overlay.overlays += brute_damage_overlay
@@ -1340,7 +1347,7 @@
 /obj/item/bodypart/proc/can_bleed()
 	SHOULD_BE_PURE(TRUE)
 
-	return ((biological_state & BIO_BLOODED) && (!owner || !HAS_TRAIT(owner, TRAIT_NOBLOOD)))
+	return ((biological_state & BIO_BLOODED) && (!owner || owner.can_bleed()))
 
 /**
  * apply_gauze() is used to- well, apply gauze to a bodypart

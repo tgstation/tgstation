@@ -213,8 +213,7 @@ const SetupDisplay = (props) => {
             fluid
             height="3rem"
             maxLength={42}
-            expensive
-            onChange={(value) => {
+            onBlur={(value) => {
               value?.length > 3 && act('rename', { name: value });
             }}
             placeholder={decodeHtmlEntities(name)}

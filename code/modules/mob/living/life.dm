@@ -61,8 +61,6 @@
 
 		handle_gravity(seconds_per_tick, times_fired)
 
-	handle_wounds(seconds_per_tick, times_fired)
-
 	if(living_flags & QUEUE_NUTRITION_UPDATE)
 		mob_mood?.update_nutrition_moodlets()
 		hud_used?.hunger?.update_hunger_bar()
@@ -79,9 +77,6 @@
 	return
 
 /mob/living/proc/handle_diseases(seconds_per_tick, times_fired)
-	return
-
-/mob/living/proc/handle_wounds(seconds_per_tick, times_fired)
 	return
 
 // Base mob environment handler for body temperature
@@ -148,5 +143,14 @@
 
 	var/grav_strength = gravity - GRAVITY_DAMAGE_THRESHOLD
 	adjustBruteLoss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
+
+/// Proc used for custom metabolization of reagents, if any
+/mob/living/proc/reagent_tick(datum/reagent/chem, seconds_per_tick, times_fired)
+	SHOULD_CALL_PARENT(TRUE)
+	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_TICK, chem, seconds_per_tick, times_fired)
+
+/// Proc used for custom reagent exposure effects, if any
+/mob/living/proc/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
+	return
 
 #undef BODYTEMP_DIVISOR

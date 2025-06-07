@@ -48,7 +48,6 @@ export const OreContainer = (props) => {
                 placeholder="Search Ore..."
                 value={searchItem}
                 onChange={setSearchItem}
-                expensive
                 fluid
               />
             </Section>

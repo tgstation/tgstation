@@ -1,7 +1,7 @@
 help: "Custom mobile docking_port sizes detected. This is done automatically and should not be varedits."
 /obj/docking_port/mobile:
   banned_variables:
-  - width
-  - height
-  - dwidth
-  - dheight
+    - width
+    - height
+    - dwidth
+    - dheight

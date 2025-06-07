@@ -115,13 +115,17 @@
 	return ..()
 
 /obj/vehicle/sealed/mecha/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit) //wrapper
-	//allows bullets to hit the pilot of open-canopy mechs
-	if(!(mecha_flags & IS_ENCLOSED) \
+
+	// Determine our potential to shoot through the mech and into the cockpit, hitting the pilot
+	var/kill_the_meat = clamp(hitting_projectile.armour_penetration - get_armor_rating(hitting_projectile.armor_flag), 0, 100)
+
+	//allows bullets to hit the pilot of open-canopy mechs, or if the bullet penetrates to the pilot, or the bullet can pass through structures
+	if((!(mecha_flags & IS_ENCLOSED) || kill_the_meat && prob(kill_the_meat) && !(mecha_flags & CANNOT_OVERPENETRATE) || hitting_projectile.pass_flags & (PASSSTRUCTURE|PASSVEHICLE)) \
 		&& LAZYLEN(occupants) \
 		&& !(mecha_flags & SILICON_PILOT) \
 		&& (def_zone == BODY_ZONE_HEAD || def_zone == BODY_ZONE_CHEST))
 		var/mob/living/hitmob = pick(occupants)
-		return hitmob.projectile_hit(hitting_projectile, def_zone, piercing_hit) //If the sides are open, the occupant can be hit
+		return hitmob.projectile_hit(hitting_projectile, def_zone, piercing_hit) //If we've passed any of the above conditions, the pilot can be hit
 
 	. = ..()
 
@@ -219,6 +223,14 @@
 
 /obj/vehicle/sealed/mecha/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(user.combat_mode)
+		//If our weapon that we are hitting the mech with has armour penetration, we could potentially get a hit in on the occupant
+		var/peeling_the_onion = clamp(weapon.armour_penetration - (get_armor_rating(MELEE)/2), 0, 100)
+
+		if(peeling_the_onion && prob(peeling_the_onion) && !(mecha_flags & CANNOT_OVERPENETRATE) \
+			&& LAZYLEN(occupants) \
+			&& !(mecha_flags & SILICON_PILOT))
+			var/mob/living/hitmob = pick(occupants)
+			weapon.melee_attack_chain(user, hitmob, modifiers, list("[FORCE_MULTIPLIER]" = (peeling_the_onion/100), "[SILENCE_DEFAULT_MESSAGES]" = TRUE)) //Perform an extra attack on the occupant if all the above conditions pass
 		return ..()
 	if(istype(weapon, /obj/item/mmi))
 		if(mmi_move_inside(weapon,user))
@@ -398,7 +410,7 @@
 		if(!(locate(part_to_remove) in contents))
 			return
 		user.put_in_hands(part_to_remove)
-		CheckParts()
+		locate_parts()
 		diag_hud_set_mechcell()
 		tool.play_tool_sound(src)
 		return

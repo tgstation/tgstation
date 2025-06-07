@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Users with runechat disabled now get their balloon alerts in chat instead."
