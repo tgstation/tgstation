@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - bugfix: "fixed runtimes with splashing ants and uranium onto tiles"
