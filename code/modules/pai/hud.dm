@@ -216,6 +216,11 @@
 	using.screen_loc = ui_pai_language_menu
 	static_inventory += using
 
+// Language menu
+	using = new /atom/movable/screen/memories(null, src)
+	using.screen_loc = ui_pai_memories_menu
+	static_inventory += using
+
 // Navigation
 	using = new /atom/movable/screen/navigate(null, src)
 	using.screen_loc = ui_pai_navigate_menu
