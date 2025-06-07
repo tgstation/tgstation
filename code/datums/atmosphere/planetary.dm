@@ -50,3 +50,25 @@
 	minimum_temp = ICEBOX_MIN_TEMPERATURE
 	maximum_temp = ICEBOX_MIN_TEMPERATURE
 
+/datum/atmosphere/rainworld
+	id = RAINWORLD_DEFAULT_ATMOS
+
+	base_gases = list(
+		/datum/gas/pluoxium=5,
+		/datum/gas/nitrogen=10,
+		/datum/gas/water_vapor=0.25,
+	)
+	normal_gases = list(
+		/datum/gas/nitrogen=10,
+		/datum/gas/oxygen=10,
+	)
+	restricted_gases = list(
+		/datum/gas/hydrogen=0.3,
+	)
+	restricted_chance = 30
+
+	minimum_pressure = HAZARD_LOW_PRESSURE + 10
+	maximum_pressure = LAVALAND_EQUIPMENT_EFFECT_PRESSURE - 1
+
+	minimum_temp = BODYTEMP_COLD_DAMAGE_LIMIT + 10
+	maximum_temp = LAVALAND_MAX_TEMPERATURE

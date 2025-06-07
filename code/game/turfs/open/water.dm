@@ -139,7 +139,7 @@
 	icon_state = "deep_riverwater_motion"
 	immerse_overlay = "immerse_deep"
 	planetary_atmos = TRUE
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	initial_gas_mix = RAINWORLD_DEFAULT_ATMOS
 	baseturfs = /turf/open/water/no_planet_atmos/deep/rainworld
 	stamina_entry_cost = 15
 	ticking_stamina_cost = 10

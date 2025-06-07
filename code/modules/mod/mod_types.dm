@@ -288,6 +288,7 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/hat_stabilizer/syndicate,
 		/obj/item/mod/module/quick_cuff,
+		/obj/item/mod/module/diving/,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
@@ -325,6 +326,7 @@
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/hat_stabilizer/syndicate,
 		/obj/item/mod/module/quick_cuff,
+		/obj/item/mod/module/diving/,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
@@ -345,6 +347,7 @@
 		/obj/item/mod/module/hat_stabilizer/syndicate,
 		/obj/item/mod/module/flamethrower,
 		/obj/item/mod/module/quick_cuff,
+		/obj/item/mod/module/diving/,
 	)
 	default_pins = list(
 		/obj/item/mod/module/armor_booster,
@@ -364,6 +367,7 @@
 		/obj/item/mod/module/visor/diaghud,
 		/obj/item/mod/module/hat_stabilizer/syndicate,
 		/obj/item/mod/module/quick_cuff,
+		/obj/item/mod/module/diving/,
 	)
 
 /obj/item/mod/control/pre_equipped/infiltrator/Initialize(mapload, new_theme, new_skin, new_core)
@@ -385,6 +389,7 @@
 		/obj/item/mod/module/hat_stabilizer/syndicate,
 		/obj/item/mod/module/tether,
 		/obj/item/mod/module/quick_cuff,
+		/obj/item/mod/module/diving/,
 	)
 
 /obj/item/mod/control/pre_equipped/enchanted
@@ -396,6 +401,7 @@
 		/obj/item/mod/module/energy_shield/wizard,
 		/obj/item/mod/module/emp_shield/advanced,
 		/obj/item/mod/module/quick_cuff,
+		/obj/item/mod/module/diving/,
 	)
 
 /obj/item/mod/control/pre_equipped/ninja
@@ -411,6 +417,7 @@
 		/obj/item/mod/module/dna_lock/reinforced,
 		/obj/item/mod/module/emp_shield/pulse,
 		/obj/item/mod/module/quick_cuff,
+		/obj/item/mod/module/diving/,
 	)
 	default_pins = list(
 		/obj/item/mod/module/stealth/ninja,
@@ -466,6 +473,7 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/flashlight,
 		/obj/item/mod/module/quick_cuff,
+		/obj/item/mod/module/diving/,
 	)
 	/// The insignia type, insignias show what sort of member of the ERT you're dealing with.
 	var/insignia_type = /obj/item/mod/module/insignia

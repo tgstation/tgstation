@@ -465,7 +465,7 @@
 	defer_change = TRUE
 	turf_type = /turf/open/misc/ashplanet/wateryrock/rainworld
 	baseturfs = /turf/open/misc/ashplanet/wateryrock/rainworld
-	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	initial_gas_mix = RAINWORLD_DEFAULT_ATMOS
 	weak_turf = TRUE
 	mineralChance = 35
 

@@ -692,7 +692,7 @@
 /obj/item/mod/module/diving
 	name = "MOD diving module"
 	desc = "Allows the user to swim while wearing the modsuit"
-	complexity = 1
+	complexity = 0
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET)
 	icon_state = "ash_accretion"
