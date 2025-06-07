@@ -52,14 +52,11 @@
 		if(!M.mob_negates_gravity())
 			step_towards(M,src)
 	for(var/obj/O in range(0,src))
-		if(!O.anchored)
-			if(isturf(O.loc))
-				var/turf/T = O.loc
-				if(T.underfloor_accessibility < UNDERFLOOR_INTERACTABLE && HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
-					continue
-			var/mob/living/target = locate() in view(4,src)
-			if(target && !target.stat)
-				O.throw_at(target, 5, 10)
+		if(O.anchored || HAS_TRAIT(O, TRAIT_UNDERFLOOR))
+			continue
+		var/mob/living/target = locate() in view(4,src)
+		if(target && !target.stat)
+			O.throw_at(target, 5, 10)
 
 	//anomaly quickly contracts then slowly expands its ring
 	animate(warp, time = seconds_per_tick*3, transform = matrix().Scale(0.5,0.5))
