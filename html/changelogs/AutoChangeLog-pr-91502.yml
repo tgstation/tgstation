@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed holy hoverboards being able to gain speed boosts via move intent changing while in space"
