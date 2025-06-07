@@ -123,13 +123,8 @@
 	var/damage_sources = 0
 	var/list/blobs_in_area = range(2, src)
 
-
-	var/structure/blob/nearby_blob = locate(/obj/structure/blob) in blobs_in_area
-
-	if(!nearby_blob)
+	if(!(locate(/obj/structure/blob) in blobs_in_area))
 		damage_sources++
-	else
-		animate(src, time = 0.5 SECONDS, loop = 1, easing = CUBIC_EASING | EASE_OUT, flags = ANIMATION_END_NOW, color = nearby_blob.atom_colours?[FIXED_COLOUR_PRIORITY] || COLOR_BIOLUMINESCENCE_GREEN)
 
 	if (orphaned)
 		damage_sources++
@@ -153,9 +148,27 @@
 
 	//hopefully this sound won't get too annoying.
 	if(prob(20))
-		playsound(src, 'sound/machines/fryer/deep_fryer_emerge.ogg', 10, vary = TRUE)
-	animate(src, time = 4 SECONDS, loop = 1, easing = CUBIC_EASING, color = COLOR_WHITE)
+		playsound(src, 'sound/items/weapons/sear.ogg', 5, vary = TRUE)
 
+	var/mutable_appearance/naut_damage_overlay = mutable_appearance(icon, "[base_icon_state]_veins", appearance_flags = RESET_COLOR | KEEP_APART)
+	naut_damage_overlay.alpha = 0
+	naut_damage_overlay.color = RotateHue(vein_overlay.color, 180)
+
+	var/atom/movable/flick_visual/naut_damage_animation = flick_overlay_view(naut_damage_overlay, 0.8 SECONDS)
+
+	naut_damage_animation.vis_flags |= VIS_INHERIT_DIR
+
+	animate(naut_damage_animation, 0.8 SECONDS, easing = SINE_EASING | EASE_OUT,loop = 1, alpha = 255)
+	animate(naut_damage_animation, 0.8 SECONDS, easing = SINE_EASING | EASE_IN, loop = 1, alpha = 0)
+
+	var/mutable_appearance/naut_emissive_overlay =  emissive_appearance(icon, "[base_icon_state]_veins", src, alpha = src.alpha)
+	naut_emissive_overlay.alpha = 0
+
+	//this part of the code does not work.
+	var/atom/movable/flick_visual/naut_emissive_animation = flick_overlay_view(naut_emissive_overlay, 0.8 SECONDS)
+	naut_emissive_animation.vis_flags |= VIS_INHERIT_DIR
+	animate(naut_emissive_animation, 0.8 SECONDS, easing = SINE_EASING | EASE_OUT,loop = 1, alpha = 255)
+	animate(naut_emissive_animation, 0.8 SECONDS, easing = SINE_EASING | EASE_IN, loop = 1, alpha = 0)
 
 	return TRUE
 
