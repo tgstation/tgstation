@@ -24,9 +24,6 @@
 	// Indestructible until someone wants to make these constructible, with all the chaos that implies
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
-	/// Were we instantiated at mapload? Used to determine when we should link / throw errors
-	var/maploaded = FALSE
-
 	/// A weakref to the transport_controller datum we control
 	var/datum/weakref/lift_weakref
 	/// What specific_transport_id do we link with?
@@ -61,7 +58,6 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	AddElement(/datum/element/contextual_screentip_bare_hands, lmb_text = "Send Elevator")
 
-	maploaded = mapload
 	// Maploaded panels link in post_machine_initialize...
 	if(mapload)
 		return
@@ -72,7 +68,7 @@
 /obj/machinery/elevator_control_panel/post_machine_initialize()
 	. = ..()
 	// If we weren't maploaded, we probably already linked (or tried to link) in Initialize().
-	if(!maploaded)
+	if(!(flags_1 & MAPLOADED_1))
 		return
 
 	// This is exclusively for linking in mapload, just to ensure all elevator parts are created,

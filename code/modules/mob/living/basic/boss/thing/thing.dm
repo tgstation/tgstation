@@ -36,8 +36,6 @@
 
 	// ruin logic
 
-	/// if true, this boss may only be killed proper in its ruin by the associated machines as part of the bossfight.
-	var/maploaded = TRUE
 	/// where we spawned. not set if not maploaded
 	var/turf/spawn_loc
 	/// return timer
@@ -56,8 +54,7 @@
 	grant_actions_by_list(innate_actions)
 	AddElement(/datum/element/relay_attackers) // used to immediately aggro if shot from outside aggro range
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(immediate_aggro))
-	maploaded = mapload
-	if(maploaded)
+	if(mapload)
 		spawn_loc = loc
 		RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_gained))
 		RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_lost))
@@ -89,7 +86,7 @@
 	if(phase_invulnerability_timer)
 		return //wtf?
 
-	if(!maploaded || client)
+	if(!(flags_1 & MAPLOADED_1) || client)
 		phase_successfully_depleted()
 		return
 	if(!client && istype(get_area(src), /area/station)) //retreat to station if AI controlled
