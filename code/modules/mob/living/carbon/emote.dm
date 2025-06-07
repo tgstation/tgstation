@@ -53,8 +53,8 @@
 		return
 	var/mob/living/carbon/human/human_user = user
 	QDEL_IN(human_user.give_emote_overlay(/datum/bodypart_overlay/simple/emote/cry), 12.8 SECONDS)
-	var/area/station/medical/psychology/weekly_session = astype(get_area(human_user))
-	if(isnull(weekly_session))
+	var/area/home = get_area(human_user)
+	if(!istype(home, /area/station/medical/psychology))
 		return
 	for(var/mob/living/carbon/shrink in view(7, human_user))
 		if(shrink == human_user)
