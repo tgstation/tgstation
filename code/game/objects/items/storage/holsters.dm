@@ -82,7 +82,6 @@
 	worn_icon_state = "syndicate_holster"
 	w_class = WEIGHT_CLASS_NORMAL
 	actions_types = list(/datum/action/item_action/chameleon/change/belt)
-	action_slots = ALL
 	storage_type = /datum/storage/holster/chameleon
 
 /obj/item/storage/belt/holster/nukie
