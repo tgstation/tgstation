@@ -161,9 +161,7 @@
 		return
 	var/turf/target_turf = get_turf(interacting_with)
 	var/obj/machinery/door/firedoor/firelock = locate() in target_turf
-	if(!firelock)
-		return
-	firelock.open()
+	firelock?.open()
 
 /obj/item/holosign_creator/atmos/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
