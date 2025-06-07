@@ -63,8 +63,6 @@
 
 	var/obj/item/food/meat/slab/type_of_meat = /obj/item/food/meat/slab
 
-	var/gib_type = /obj/effect/decal/cleanable/blood/gibs
-
 	rotate_on_lying = TRUE
 
 	/// Gets filled up in [/datum/species/proc/replace_body].
