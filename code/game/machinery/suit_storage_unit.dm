@@ -72,6 +72,11 @@
 	helmet_type = /obj/item/clothing/head/helmet/space/eva
 	mask_type = /obj/item/clothing/mask/breath
 
+/obj/machinery/suit_storage_unit/diving
+	suit_type = /obj/item/clothing/suit/diving
+	helmet_type = /obj/item/clothing/head/helmet/diving
+	mask_type = /obj/item/clothing/mask/breath
+
 /obj/machinery/suit_storage_unit/spaceruin
 	suit_type = /obj/item/clothing/suit/space
 	helmet_type = /obj/item/clothing/head/helmet/space
@@ -113,6 +118,10 @@
 
 /obj/machinery/suit_storage_unit/mining
 	suit_type = /obj/item/clothing/suit/hooded/explorer
+	mask_type = /obj/item/clothing/mask/gas/explorer
+
+/obj/machinery/suit_storage_unit/mining/diving
+	suit_type = /obj/item/clothing/suit/hooded/explorer/diving
 	mask_type = /obj/item/clothing/mask/gas/explorer
 
 /obj/machinery/suit_storage_unit/mining/eva
