@@ -1,0 +1,8 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Androids and fully augmented humans now drop robotic gibs instead of meat"
+  - rscadd: "Improved gibber VFX"
+  - bugfix: "Fixed gibber overlays being darker than intended"
+  - bugfix: "Fixed xenomorph and lizard meat leaving orange trails behind"
+  - code_imp: "Improved gibs and gibspawner code"
