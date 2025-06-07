@@ -123,7 +123,7 @@
 	/// Amount of drowsiness added per second
 	var/drowsy_per_second = 2 SECONDS
 	/// At what point of drowsiness do we knock out the owner
-	var/drowsy_knockout = 5 SECONDS // Actually more like 80, because you need 4 ticks to reach this
+	var/drowsy_knockout = 5 SECONDS // Actually more like 8 seconds, because you need 4 ticks to reach this
 
 /datum/embedding/rebar_healium/process(seconds_per_tick)
 	. = ..()
@@ -131,17 +131,17 @@
 	casing.heals_left -= seconds_per_tick * 1 SECONDS
 	var/update_health = FALSE
 	var/healing = healing_per_second * seconds_per_tick
-	update_health ||= owner.adjustBruteLoss(healing, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-	update_health ||= owner.adjustFireLoss(healing, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
-	update_health ||= owner.adjustToxLoss(healing, updating_health = FALSE, required_biotype = BODYTYPE_ORGANIC)
-	update_health ||= owner.adjustOxyLoss(healing, updating_health = FALSE, required_biotype = BODYTYPE_ORGANIC)
+	update_health += owner.adjustBruteLoss(healing, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+	update_health += owner.adjustFireLoss(healing, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC)
+	update_health += owner.adjustToxLoss(healing, updating_health = FALSE, required_biotype = BODYTYPE_ORGANIC)
+	update_health += owner.adjustOxyLoss(healing, updating_health = FALSE, required_biotype = BODYTYPE_ORGANIC)
 	if (update_health)
 		owner.updatehealth()
 	if (owner.mob_biotypes & MOB_ORGANIC)
 		owner.adjust_drowsiness(drowsy_per_second * seconds_per_tick)
 		var/datum/status_effect/drowsiness/drowsiness = owner.has_status_effect(/datum/status_effect/drowsiness)
 		if (drowsiness?.duration - world.time >= drowsy_knockout)
-			owner.SetSleeping(3 SECONDS)
+			owner.Sleeping(3 SECONDS)
 	if (casing.heals_left <= 0)
 		qdel(casing)
 
