@@ -95,3 +95,30 @@
   - bugfix: create object panel for game admins works again
   Tostah:
   - bugfix: Ninja Camera Vision module now correctly applies welding protection.
+2025-06-05:
+  ArrisFairburne:
+  - qol: monkey cube boxes can now be inserted straight into the xenobiology console
+  - qol: placing/sucking slimes/monkeys is slightly less text spammy
+  Ezel:
+  - bugfix: Adds missing HFR fuel input box to catwalk
+  - map: Tidies catwalk HFR room a bit
+  - bugfix: fixes wawa ordnance cycle issue
+  - map: adds a binary pump to catwalk ordnance"
+  TealSeer:
+  - bugfix: fixed infinite credit exploit in spacebet app
+  TheRealSpriteMan1337:
+  - image: Changes the footstep sprite from Unconsciousness and Blindness.
+  Y0SH1M4S73R:
+  - map: Catwalk Station's tech storage now has the same collection of shuttle parts
+      that other stations do.
+  carlarctg:
+  - rscadd: Added bloodroaches, a rare variant of cockroaches that explode into a
+      shower of blood when squashed.
+2025-06-06:
+  Absolucy:
+  - balance: Changeling Void Adaptation no longer fully negates their breathing -
+      instead, it removes their NEED to breathe oxygen, but they will still breathe,
+      meaning they'll still be affected by gases such as N2O and BZ.
+  Bisar:
+  - code_imp: A proc has been added to the subsystem for ID access to serve to standardize
+      the way information is read and returned from a given ID.
