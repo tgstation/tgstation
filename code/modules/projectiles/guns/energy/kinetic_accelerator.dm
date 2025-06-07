@@ -291,8 +291,10 @@
 	model_flags = BORG_MODEL_MINER
 	//Most modkits are supposed to allow duplicates. The ones that don't should be blocked by PKA code anyways.
 	allow_duplicates = TRUE
+	// If defined with a type of mod, prevents paring this mod with another of the same mod in the same PKA
 	var/denied_type = null
-	var/maximum_of_type = 1
+	// If defined, limits the number of a mod to this value in a single PKA. If denied_type is not defined. but this value is above 1, it will default to types of itself.
+	var/maximum_of_type = 0
 	var/cost = 30
 	var/modifier = 1 //For use in any mod kit that has numerical modifiers
 	var/minebot_upgrade = TRUE
@@ -323,14 +325,21 @@
 	else if(istype(KA.loc, /mob/living/basic/mining_drone))
 		to_chat(user, span_notice("The modkit you're trying to install is not rated for minebot use."))
 		return FALSE
-	if(denied_type)
+
+	var/type_to_limit = denied_type
+
+	if(!type_to_limit && maximum_of_type)
+		type_to_limit = src
+
+	if(type_to_limit)
 		var/number_of_denied = 0
 		for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
-			if(istype(modkit_upgrade, denied_type))
+			if(istype(modkit_upgrade, type_to_limit))
 				number_of_denied++
-			if(number_of_denied >= maximum_of_type)
+			if(maximum_of_type && number_of_denied >= maximum_of_type || !maximum_of_type && number_of_denied) //if we denied a type, or we have a maximum to reach, break
 				. = FALSE
 				break
+
 	if(KA.get_remaining_mod_capacity() >= cost)
 		if(.)
 			if(transfer_to_loc && !user.transferItemToLoc(src, KA))
@@ -428,6 +437,7 @@
 /obj/item/borg/upgrade/modkit/aoe
 	modifier = 0
 	cost = 10
+	denied_type = /obj/item/borg/upgrade/modkit/aoe
 	maximum_of_type = 1
 	var/turf_aoe = FALSE
 	var/stats_stolen = FALSE
@@ -476,7 +486,6 @@
 /obj/item/borg/upgrade/modkit/aoe/turfs
 	name = "mining explosion"
 	desc = "Causes the kinetic accelerator to destroy rock in an AoE."
-	denied_type = /obj/item/borg/upgrade/modkit/aoe/turfs
 	turf_aoe = TRUE
 
 /obj/item/borg/upgrade/modkit/aoe/mobs
@@ -614,7 +623,6 @@
 	name = "decrease pressure penalty"
 	desc = "A syndicate modification kit that increases the damage a kinetic accelerator does in high pressure environments."
 	modifier = 2
-	denied_type = /obj/item/borg/upgrade/modkit/indoors
 	maximum_of_type = 2
 	cost = 35
 
