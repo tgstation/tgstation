@@ -92,6 +92,124 @@
 	. = ..()
 	upgradeMotion()
 
+///////////////////////////////////////
+// Normal Camera Presets below here. //
+///////////////////////////////////////
+
+//Departmental Cameras
+/obj/machinery/camera/preset/medbay
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_MEDBAY)
+
+/obj/machinery/camera/preset/cargo
+	network = list(CAMERANET_NETWORK_SS13, CAMERA_NETWORK_CARGO)
+
+/obj/machinery/camera/preset/science
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_RD)
+
+/obj/machinery/camera/preset/engineering
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ENGINEERING)
+
+/obj/machinery/camera/preset/security
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_SECURITY)
+
+/obj/machinery/camera/preset/service
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_SECURITY)
+
+/obj/machinery/camera/preset/engine
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ENGINE)
+
+/obj/machinery/camera/preset/xenobiology
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_XENOBIOLOGY)
+
+//Vault preset
+/obj/machinery/camera/preset/vault
+	network = list(CAMERANET_NETWORK_VAULT)
+
+//AI satalite preset
+/obj/machinery/camera/preset/minisat
+	network = list(CAMERANET_NETWORK_MINISAT)
+
+/obj/machinery/camera/preset/telecomms
+	network = list(CAMERANET_NETWORK_TELECOMMS)
+
+/obj/machinery/camera/preset/aiupload
+	network = list(CAMERANET_NETWORK_AI_UPLOAD)
+
+/obj/machinery/camera/preset/aicore
+	network = list(CAMERANET_NETWORK_AI_CORE)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/medbay, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/engineering, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/cargo, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/service, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/science, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/security, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/xenobiology, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/engine, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/vault, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/minisat, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/telecomms, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/aiupload, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/aicore, 0)
+
+////////////////////////////////////////
+// Autoname camera presets below here.//
+////////////////////////////////////////
+/obj/machinery/camera/autoname/preset/medbay
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_MEDBAY)
+
+/obj/machinery/camera/autoname/preset/cargo
+	network = list(CAMERANET_NETWORK_SS13, CAMERA_NETWORK_CARGO)
+
+/obj/machinery/camera/autoname/preset/science
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_RD)
+
+/obj/machinery/camera/autoname/preset/engineering
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ENGINEERING)
+
+/obj/machinery/camera/autoname/preset/security
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_SECURITY)
+
+/obj/machinery/camera/autoname/preset/service
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_SECURITY)
+
+/obj/machinery/camera/autoname/preset/engine
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_ENGINE)
+
+/obj/machinery/camera/autoname/preset/xenobiology
+	network = list(CAMERANET_NETWORK_SS13, CAMERANET_NETWORK_XENOBIOLOGY)
+
+//Vault preset
+/obj/machinery/camera/autoname/preset/vault
+	network = list(CAMERANET_NETWORK_VAULT)
+
+//AI satalite preset
+/obj/machinery/camera/autoname/preset/minisat
+	network = list(CAMERANET_NETWORK_MINISAT)
+
+/obj/machinery/camera/autoname/preset/telecomms
+	network = list(CAMERANET_NETWORK_TELECOMMS)
+
+/obj/machinery/camera/autoname/preset/aiupload
+	network = list(CAMERANET_NETWORK_AI_UPLOAD)
+
+/obj/machinery/camera/autoname/preset/aicore
+	network = list(CAMERANET_NETWORK_AI_CORE)
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/medbay, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/engineering, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/cargo, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/service, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/science, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/security, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/xenobiology, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/engine, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/vault, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/minisat, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/telecomms, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/aiupload, 0)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/autoname/preset/aicore, 0)
+
 /**
  * Bomb preset
  * Can't be disabled, sees further, doesn't cost power, can be seen by ordnance
@@ -106,6 +224,8 @@
 	resistance_flags = parent_type::resistance_flags | INDESTRUCTIBLE
 	light_range = 10
 	start_active = TRUE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/preset/ordnance, 0)
 
 ///The internal camera object for exosuits, applied by the camera upgrade
 /obj/machinery/camera/exosuit
