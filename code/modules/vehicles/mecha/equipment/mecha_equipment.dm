@@ -50,13 +50,13 @@
 /obj/item/mecha_parts/mecha_equipment/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right = FALSE)
 	if(can_attach(M, attach_right, user))
 		if(!user.temporarilyRemoveItemFromInventory(src))
-			return FALSE
+			return ITEM_INTERACT_BLOCKING
 		if(special_attaching_interaction(attach_right, M, user))
-			return TRUE //The rest is handled in the special interactions proc
+			return ITEM_INTERACT_SUCCESS //The rest is handled in the special interactions proc
 		attach(M, attach_right)
 		user.visible_message(span_notice("[user] attaches [src] to [M]."), span_notice("You attach [src] to [M]."))
-		return TRUE
-	return FALSE
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/mecha_parts/mecha_equipment/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
