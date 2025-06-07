@@ -40,3 +40,10 @@ Don't get to celebrating just yet, though. The recipe to crafting the machine is
 <br>
 But you're not going to return empty-handed, <i>right?</i>
 	"}
+
+/obj/item/paper/fluff/marooned_mc
+	desc = "A dusty piece of paper."
+	default_raw_text = {"
+	<br>
+	<br>
+	<br> "}
