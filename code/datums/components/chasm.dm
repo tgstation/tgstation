@@ -10,6 +10,7 @@
 	var/static/list/forbidden_types = typecacheof(list(
 		/obj/docking_port,
 		/obj/effect/abstract,
+		/obj/effect/atmos_shield,
 		/obj/effect/collapse,
 		/obj/effect/constructing_effect,
 		/obj/effect/dummy/phased_mob,
