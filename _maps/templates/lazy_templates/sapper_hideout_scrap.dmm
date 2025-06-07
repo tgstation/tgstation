@@ -1,0 +1,567 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/space/basic,
+/area/space)
+"b" = (
+/obj/structure/fluff/minepost,
+/obj/item/paper,
+/turf/open/misc/asteroid,
+/area/space)
+"c" = (
+/obj/item/fishing_line/reinforced{
+	pixel_y = -9;
+	pixel_x = 8
+	},
+/turf/open/misc/asteroid,
+/area/space)
+"e" = (
+/turf/open/lava/plasma/air,
+/area/space)
+"g" = (
+/obj/structure/fluff/minepost,
+/turf/open/misc/asteroid,
+/area/space)
+"i" = (
+/obj/structure/frame/machine/secured,
+/obj/item/circuitboard/machine/rtg/advanced,
+/obj/item/stack/cable_coil/five,
+/obj/item/stock_parts/capacitor/quadratic,
+/obj/item/stock_parts/micro_laser/quadultra,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/space)
+"o" = (
+/turf/closed/mineral,
+/area/space)
+"p" = (
+/obj/machinery/power/rtg/advanced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/space)
+"s" = (
+/obj/structure/cable,
+/obj/machinery/power/rtg/advanced,
+/turf/open/floor/plating,
+/area/space)
+"v" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/girder/displaced,
+/turf/open/floor/iron/tgmcemblem{
+	dir = 1
+	},
+/area/space)
+"A" = (
+/turf/open/misc/asteroid,
+/area/space)
+"B" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid,
+/area/space)
+"C" = (
+/obj/structure/lattice,
+/turf/open/lava/plasma/air,
+/area/space)
+"D" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/girder/displaced,
+/turf/open/floor/iron/tgmcemblem{
+	dir = 9
+	},
+/area/space)
+"F" = (
+/obj/effect/turf_decal/sand,
+/obj/structure/cable/layer3,
+/turf/open/floor/iron/tgmcemblem{
+	dir = 4
+	},
+/area/space)
+"H" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/effect/mapping_helpers/mob_buckler,
+/obj/effect/mob_spawn/corpse/human/skeleton{
+	name = "Boney Corpsman";
+	mob_name = "Boney Corpsman"
+	},
+/obj/item/clothing/head/costume/tmc,
+/turf/open/misc/asteroid,
+/area/space)
+"Q" = (
+/obj/structure/lattice,
+/turf/open/misc/asteroid,
+/area/space)
+"R" = (
+/obj/structure/cable,
+/turf/open/floor/plating/foam,
+/area/space)
+"T" = (
+/obj/structure/girder/displaced,
+/obj/effect/turf_decal/sand,
+/turf/open/floor/iron/tgmcemblem,
+/area/space)
+"U" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/iron/tgmcemblem{
+	dir = 5
+	},
+/area/space)
+"V" = (
+/obj/item/reagent_containers/cup/bucket/wooden{
+	pixel_x = -6;
+	pixel_y = -11
+	},
+/obj/item/food/bait/worm,
+/turf/open/misc/asteroid,
+/area/space)
+"W" = (
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 10
+	},
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/structure/closet/crate/miningcar{
+	anchored = 1
+	},
+/turf/open/misc/asteroid/dug,
+/area/space)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+e
+e
+e
+s
+C
+p
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+R
+R
+R
+R
+R
+R
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+e
+e
+e
+i
+C
+p
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+A
+V
+B
+o
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+c
+H
+g
+o
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+W
+b
+o
+o
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+A
+o
+o
+o
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+D
+o
+o
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+v
+o
+T
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+U
+F
+Q
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
