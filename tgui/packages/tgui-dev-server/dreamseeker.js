@@ -7,7 +7,7 @@
 import { exec } from 'node:child_process';
 import { promisify } from 'node:util';
 
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
 
 import { createLogger } from './logging.js';
 
@@ -45,7 +45,15 @@ export class DreamSeeker {
     logger.log(
       `topic call at ${this.client.defaults.baseURL}/dummy.htm?${query}`,
     );
-    return this.client.get('/dummy.htm?' + query);
+    return this.client.get('/dummy.htm?' + query).catch((e) => {
+      if (isAxiosError(e) && e.code === 'ECONNREFUSED') {
+        // Client exited, remove from list
+        instanceByPid.delete(this.pid);
+        logger.log(`client disconnected`);
+      } else {
+        throw e;
+      }
+    });
   }
 
   /**
