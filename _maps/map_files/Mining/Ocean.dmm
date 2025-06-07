@@ -8,7 +8,9 @@
 	shuttle_id = "lavaland_common_away";
 	width = 7
 	},
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/lowpressure{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/mine/production)
 "ak" = (
 /obj/effect/decal/cleanable/dirt,
@@ -198,7 +200,9 @@
 	name = "infinite-capacity power cell"
 	},
 /obj/structure/rack,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/lowpressure{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/mine/production)
 "eq" = (
 /obj/effect/turf_decal/siding/white{
@@ -983,7 +987,9 @@
 /turf/open/floor/iron/dark,
 /area/mine/mechbay)
 "rX" = (
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/lowpressure{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/mine/production)
 "sg" = (
 /obj/structure/cable,
@@ -1014,7 +1020,9 @@
 /area/mine/production)
 "sR" = (
 /obj/machinery/light/floor,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/lowpressure{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/mine/production)
 "tg" = (
 /obj/structure/table,
@@ -1314,7 +1322,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/lowpressure{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/mine/production)
 "zd" = (
 /turf/open/floor/iron/dark/smooth_large,
@@ -1846,7 +1856,9 @@
 "JU" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/toolcloset,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/lowpressure{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/mine/production)
 "Kd" = (
 /obj/machinery/conveyor{
@@ -2277,7 +2289,9 @@
 /area/mine/mechbay)
 "Th" = (
 /obj/structure/cable,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/lowpressure{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/mine/production)
 "Tj" = (
 /obj/structure/ore_box,
@@ -2393,7 +2407,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/lowpressure{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/mine/production)
 "Vo" = (
 /obj/effect/spawner/structure/window/survival_pod,
@@ -2554,7 +2570,9 @@
 	shuttle_id = "mining_away";
 	width = 7
 	},
-/turf/open/floor/plating/lowpressure,
+/turf/open/floor/plating/lowpressure{
+	initial_gas_mix = "RAINWORLD_ATMOS"
+	},
 /area/mine/production)
 "Yu" = (
 /turf/closed/wall/mineral/titanium/survival/nodiagonal,
@@ -45712,7 +45730,7 @@ jo
 lt
 uS
 Ul
-zg
+gf
 gf
 JA
 JA
@@ -46731,8 +46749,8 @@ zg
 zg
 zg
 zg
-zg
-zg
+gf
+gf
 TX
 cV
 EH
@@ -46989,7 +47007,7 @@ zg
 zg
 zg
 zg
-zg
+gf
 EY
 YU
 YU
@@ -47766,7 +47784,7 @@ Vw
 YU
 Wm
 EY
-zg
+gf
 zg
 zg
 zg
