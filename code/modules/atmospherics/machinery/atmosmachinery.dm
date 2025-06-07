@@ -88,7 +88,7 @@
 		normalize_cardinal_directions()
 	nodes = new(device_type)
 	init_processing = process
-	set_init_directions(initialize_directions)
+	set_init_directions(init_dir)
 
 	if(mapload && name != initial(name))
 		override_naming = TRUE
