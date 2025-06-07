@@ -81,7 +81,9 @@
 	fire = 100
 	acid = 70
 
-/obj/machinery/atmospherics/Initialize(mapload, process = TRUE, setdir, init_dir = ALL_CARDINALS | initialize_directions)
+/obj/machinery/atmospherics/Initialize(mapload, process = TRUE, setdir, init_dir = initialize_directions)
+	if(!init_dir)
+		init_dir = ALL_CARDINALS
 	if(!isnull(setdir))
 		setDir(setdir)
 	if(pipe_flags & PIPING_CARDINAL_AUTONORMALIZE)
