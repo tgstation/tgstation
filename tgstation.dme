@@ -5097,6 +5097,7 @@
 #include "code\modules\mob\living\basic\jungle\seedling\seedling.dm"
 #include "code\modules\mob\living\basic\jungle\seedling\seedling_ai.dm"
 #include "code\modules\mob\living\basic\jungle\seedling\seedling_projectiles.dm"
+#include "code\modules\mob\living\basic\lavaland\faithless_mining.dm"
 #include "code\modules\mob\living\basic\lavaland\mining.dm"
 #include "code\modules\mob\living\basic\lavaland\basilisk\basilisk.dm"
 #include "code\modules\mob\living\basic\lavaland\basilisk\basilisk_overheat.dm"

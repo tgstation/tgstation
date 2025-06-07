@@ -56,7 +56,6 @@
 	base_gases = list(
 		/datum/gas/pluoxium=5,
 		/datum/gas/nitrogen=10,
-		/datum/gas/water_vapor=0.25,
 	)
 	normal_gases = list(
 		/datum/gas/nitrogen=10,

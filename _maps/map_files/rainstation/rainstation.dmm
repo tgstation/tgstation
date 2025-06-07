@@ -4619,7 +4619,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	initial_gas_mix = "RAINWORLD_ATMOS"
 	},
 /area/rainworld/surface/outdoors/nospawn)
 "anG" = (
@@ -30644,7 +30644,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	initial_gas_mix = "RAINWORLD_ATMOS"
 	},
 /area/rainworld/surface/outdoors/nospawn)
 "cce" = (
@@ -35917,7 +35917,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	initial_gas_mix = "RAINWORLD_ATMOS"
 	},
 /area/rainworld/surface/outdoors/nospawn)
 "cNL" = (
@@ -59254,7 +59254,7 @@
 /obj/machinery/power/tracker,
 /obj/structure/cable,
 /turf/open/floor/iron/solarpanel{
-	initial_gas_mix = "o2=14;n2=30;TEMP=293.15"
+	initial_gas_mix = "RAINWORLD_ATMOS"
 	},
 /area/rainworld/surface/outdoors/nospawn)
 "xcw" = (
