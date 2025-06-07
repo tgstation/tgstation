@@ -171,7 +171,7 @@
 			return FALSE
 		else if(user.client && !(get_turf(target) in get_hear(user.client.view, user)))
 			return FALSE
-		else if(!(get_turf(target) in get_hear(CONFIG_GET(string/default_view), user)))
+		else if(!(get_turf(target) in get_hear(DEFAULT_VIEWPORT_SIZE, user)))
 			return FALSE
 	else if(isliving(loc))
 		if(!(get_turf(target) in view(world.view, loc)))
