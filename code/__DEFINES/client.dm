@@ -11,5 +11,5 @@
 /// Update this whenever https://www.byond.com/forum/post/2967731 is fixed.
 #define MAX_BYOND_BUILD_DISABLE_SCREENTIP_ICONS 1699
 
-/// Aghosting sets your ckey/key == "@[old_key]" because it hates me. this detects that
-#define IS_AGHOSTED_KEY(key) (key && key[1] == "@")
+/// Aghosting AND APPERANTLY STEALTHMINNING sets your ckey/key == "@[old_key]" because it hates me. this detects that
+#define IS_FAKE_KEY(key) (key && key[1] == "@")
