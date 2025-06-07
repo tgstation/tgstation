@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IGNORE_TURF_PIXEL_OFFSET_1 (1<<18)
 /// This atom does not need to generate its own preview icon for GAGS
 #define NO_NEW_GAGS_PREVIEW_1 (1<<19)
-/// This atom was maploaded. atoms created during round start don't have this flag
+/// This atom was maploaded. atoms created after round start don't have this flag
 #define MAPLOADED_1 (1<<20)
 
 // Update flags for [/atom/proc/update_appearance]
