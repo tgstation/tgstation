@@ -99,13 +99,13 @@
 
 /datum/reagent/inverse/cryostylane/on_transfer(atom/transfered_thing, methods, trans_volume)
 	. = ..()
+	if(methods & INGEST)
+		return
+
 	if(!ishuman(transfered_thing))
 		return
 
 	var/mob/living/carbon/human/human_thing = transfered_thing
-
-	if(methods & INGEST)
-		return
 
 	if(HAS_TRAIT(human_thing, TRAIT_RESISTCOLD))
 		holder.remove_reagent(type, volume)
