@@ -65,6 +65,7 @@
 	description = "This reagent is known to swap the handedness of a patient."
 	ph = 3.3
 	tox_damage = 0
+	chemical_flags = NONE
 
 /datum/reagent/inverse/eigenswap/on_mob_life(mob/living/carbon/affected_mob)
 	. = ..()

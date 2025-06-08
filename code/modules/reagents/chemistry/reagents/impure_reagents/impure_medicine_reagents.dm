@@ -9,15 +9,15 @@
 /datum/reagent/impurity/healing
 	name = "Healing Impure Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
-	addiction_types = list(/datum/addiction/medicine = 3.5)
 	chemical_flags = NONE
+	addiction_types = list(/datum/addiction/medicine = 3.5)
 	liver_damage = 0
 
 /datum/reagent/inverse/healing
 	name = "Healing Inverse Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
-	addiction_types = list(/datum/addiction/medicine = 3)
 	chemical_flags = NONE
+	addiction_types = list(/datum/addiction/medicine = 3)
 	tox_damage = 0
 
 // END SUBTYPES
