@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Cryogelidia can no longer freeze things arbitrarily forever."
