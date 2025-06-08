@@ -179,7 +179,7 @@ GLOBAL_LIST_EMPTY(dummy_mob_list)
 
 	if(iscarbon(target))
 		var/mob/living/carbon/carbon_target = target
-		carbon_target.dna.transfer_identity(copycat, transfer_SE = TRUE)
+		carbon_target.dna.copy_dna(copycat.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
 		if(ishuman(target))
 			var/mob/living/carbon/human/human_target = target

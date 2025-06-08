@@ -5693,7 +5693,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage/gas)
 "buo" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /obj/effect/turf_decal/bot/left,
@@ -18289,7 +18289,7 @@
 /turf/open/floor/iron,
 /area/station/construction/mining/aux_base)
 "eAq" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /obj/machinery/status_display/ai/directional/east,
@@ -37767,7 +37767,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office/private_investigators_office)
 "jpB" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /obj/effect/turf_decal/bot,
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
