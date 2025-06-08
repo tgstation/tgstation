@@ -1508,4 +1508,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to colorblind mobs
 #define TRAIT_COLORBLIND "colorblind"
 
+/// Trait that signals to objects on this turf that its open (has UNDERFLOOR_INTERACTIBLE) but still covers them
+#define TRAIT_UNCOVERED_TURF "uncovered_turf"
+
 // END TRAIT DEFINES

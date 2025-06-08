@@ -120,7 +120,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon_nopipes()
 	cut_overlays()
-	if(showpipe)
+	if(underfloor_state)
 		var/image/cap = get_pipe_image(icon, "scrub_cap", initialize_directions)
 		add_overlay(cap)
 	else
