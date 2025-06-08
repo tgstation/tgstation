@@ -44,7 +44,7 @@
 		return
 	new_head_owner.become_blind(bodypart_trait_source)
 
-/obj/item/bodypart/head/psyker/drop_limb(special, dismembered)
+/obj/item/bodypart/head/psyker/drop_limb(special, dismembered, move_to_floor = TRUE)
 	owner.cure_blind(bodypart_trait_source)
 	return ..()
 
@@ -182,7 +182,7 @@
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25)
+	AddElement(/datum/element/bane, mob_biotypes = MOB_SPIRIT, damage_multiplier = 0, added_damage = 25)
 	name = pick(possible_names)
 	desc = possible_names[name]
 
