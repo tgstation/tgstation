@@ -114,7 +114,7 @@
 
 	//Split up the reagent if it's in a mob
 	if(flags & REAGENT_HOLDER_ALIVE)
-		amount = process_mob_reagent_purity(glob_reagent, amount, added_purity)
+		amount = process_mob_reagent_purity(glob_reagent, amount, added_purity, reagent_added)
 		if(amount <= 0) //Inverse or nothing was added. return true amount
 			return amount * -1
 
