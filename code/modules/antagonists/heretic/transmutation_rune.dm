@@ -117,7 +117,7 @@
 				continue
 			// If req_type is a list of types, check all of them for one match.
 			if(islist(req_type))
-				if(!(is_type_in_list(nearby_atom, req_type)))
+				if(!is_type_in_list(nearby_atom, req_type))
 					continue
 			else if(!istype(nearby_atom, req_type))
 				continue
@@ -175,7 +175,7 @@
 	if(length(stack_reqs))
 		for(var/obj/item/stack/nearby_stack in atoms_in_range)
 			for(var/stack_path in stack_reqs)
-				if(!istype(nearby_stack, stack_path))
+				if(!istype(nearby_stack, stack_path) && (!islist(stack_path) || !is_type_in_list(nearby_stack, stack_path)))
 					continue
 				var/amount_to_give = min(nearby_stack.amount || stack_reqs[stack_path])
 				var/obj/item/stack/our_stack = locate(nearby_stack.merge_type) in selected_atoms
