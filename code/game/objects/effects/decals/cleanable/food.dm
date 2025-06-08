@@ -1,4 +1,3 @@
-
 /obj/effect/decal/cleanable/food
 	icon = 'icons/effects/tomatodecal.dmi'
 	gender = NEUTER
@@ -35,6 +34,13 @@
 	icon_state = "salt_pile"
 	var/safepasses = 3 //how many times can this salt pile be passed before dissipating
 
+/obj/effect/decal/cleanable/food/salt/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	var/static/list/loc_connections = list(
+		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
 /obj/effect/decal/cleanable/food/salt/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(is_species(mover, /datum/species/snail))
@@ -45,14 +51,17 @@
 	if(is_species(AM, /datum/species/snail))
 		to_chat(AM, span_danger("Your path is obstructed by [span_phobia("salt")]."))
 
-/obj/effect/decal/cleanable/food/salt/on_entered(datum/source, atom/movable/AM)
-	. = ..()
+/obj/effect/decal/cleanable/food/salt/proc/on_entered(datum/source, atom/movable/AM)
+	SIGNAL_HANDLER
+
 	if(!isliving(AM))
 		return
+
 	if(iscarbon(AM))
 		var/mob/living/carbon/C = AM
 		if(C.move_intent == MOVE_INTENT_WALK)
 			return
+
 	safepasses--
 	if(safepasses <= 0 && !QDELETED(src))
 		qdel(src)
@@ -65,7 +74,7 @@
 /obj/effect/decal/cleanable/food/squid_ink
 	name = "ink smear"
 	desc = "a smear from some inky substance..."
-	icon = 'icons/mob/silicon/robots.dmi'
+	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
 	color = COLOR_DARK
 

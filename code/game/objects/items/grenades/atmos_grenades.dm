@@ -37,12 +37,12 @@
 
 	update_mob()
 	playsound(src, 'sound/effects/spray2.ogg', 100, TRUE)
-	var/list/connected_turfs = detect_room(origin = get_turf(src), max_size = fix_range)
+	var/list/turf_list = RANGE_TURFS(fix_range, src)
 	var/datum/gas_mixture/base_mix = SSair.parse_gas_string(OPENTURF_DEFAULT_ATMOS)
-	for(var/turf/open/turf_fix in connected_turfs)
+	for(var/turf/open/turf_fix in turf_list)
 		if(turf_fix.blocks_air)
 			continue
-		turf_fix.assume_air(base_mix)
+		turf_fix.copy_air(base_mix.copy())
 	qdel(src)
 
 /obj/item/grenade/gas_crystal/proto_nitrate_crystal

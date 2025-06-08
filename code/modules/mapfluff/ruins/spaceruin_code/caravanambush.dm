@@ -10,10 +10,13 @@
 /obj/item/screwdriver/caravan
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "screwdriver_caravan"
+	post_init_icon_state = null
 	desc = "A prototype of a new screwdriver design, allegedly the red color scheme makes it go faster."
 	name = "experimental screwdriver"
 	toolspeed = 0.3
 	random_color = FALSE
+	greyscale_config = null
+	greyscale_colors = null
 
 /obj/item/wirecutters/caravan
 	icon = 'icons/obj/tools.dmi'

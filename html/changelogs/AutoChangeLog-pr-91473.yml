@@ -1,0 +1,4 @@
+author: "Ezel"
+delete-after: True
+changes:
+  - bugfix: "Replaces 2 instances of the traitor AI toy with the real toy on Wawastation"

@@ -614,21 +614,22 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!broken)
 		bust_open()
 
-/obj/structure/closet/CheckParts(list/parts_list)
-	var/obj/item/electronics/airlock/access_control = locate() in parts_list
+/obj/structure/closet/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/electronics/airlock/access_control = locate() in components
 	if(QDELETED(access_control))
-		return
+		return ..()
 
+	inherit_airlock_electronics_access(access_control)
+
+	return ..()
+
+/obj/structure/closet/proc/inherit_airlock_electronics_access(obj/item/electronics/airlock/access_control)
 	if (access_control.one_access)
 		req_one_access = access_control.accesses
 		req_access = null
 	else
 		req_access = access_control.accesses
 		req_one_access = null
-	access_control.moveToNullspace()
-
-	parts_list -= access_control
-	qdel(access_control)
 
 /obj/structure/closet/multitool_act(mob/living/user, obj/item/tool)
 	if(!secure || !card_reader_installed || broken || locked || opened)
@@ -742,7 +743,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		if(!user.transferItemToLoc(weapon, src))
 			return
 
-		CheckParts(list(weapon))
+		inherit_airlock_electronics_access(weapon)
+		qdel(weapon)
 		secure = TRUE
 		balloon_alert(user, "electronics installed")
 
@@ -884,7 +886,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				return
 		if (user.combat_mode)
 			return
-		if(user.transferItemToLoc(weapon, drop_location())) // so we put in unlit welder too
+		if(user.transfer_item_to_turf(weapon, drop_location())) // so we put in unlit welder too
 			return
 
 	else if(weapon.tool_behaviour == TOOL_WELDER && can_weld_shut)

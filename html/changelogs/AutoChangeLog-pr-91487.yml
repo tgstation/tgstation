@@ -1,0 +1,4 @@
+author: "OrbisAnima, necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "PKA's can no longer have multiple offensive AOE modkits installed at once, which was not intended."
