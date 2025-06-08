@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - bugfix: "Small stacking mobs like mice and bees will attempt to spread out visually within their tile as soon as they spawn rather than just when moving"

@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Adds airlock pumps to all external airlocks on Metastation"
-  - qol: "Airlock pumps work on L shaped airlocks, assuming [the airlocks] are already linked."
