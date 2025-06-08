@@ -290,7 +290,7 @@
 
 	switch(action)
 		if("power")
-			set_on(FALSE)
+			set_on(!on)
 			update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
 			investigate_log("was turned [on ? "on" : "off"] by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
@@ -322,7 +322,7 @@
 	if(!is_operational)
 		return CLICK_ACTION_BLOCKING
 
-	set_on(FALSE)
+	set_on(!on)
 	balloon_alert(user, "turned [on ? "on" : "off"]")
 	investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
 	return CLICK_ACTION_SUCCESS
