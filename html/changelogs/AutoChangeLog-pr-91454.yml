@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed vents and pipes partially poking out from under glass and catwalk floors"
