@@ -25695,14 +25695,14 @@
 "jbM" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/reinforced,
-/obj/item/ai_module/toy_ai{
-	pixel_x = 16;
-	pixel_y = 8
-	},
 /obj/item/paper_bin/construction{
 	pixel_y = 6
 	},
 /obj/item/pen,
+/obj/item/toy/talking/ai{
+	pixel_x = 18;
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "jbP" = (
@@ -60303,13 +60303,13 @@
 /area/station/maintenance/department/science)
 "uOs" = (
 /obj/structure/table/wood,
-/obj/item/ai_module/toy_ai{
-	pixel_x = 9;
-	pixel_y = -6
-	},
 /obj/item/food/carneburrito{
 	pixel_x = -2;
 	pixel_y = 5
+	},
+/obj/item/toy/talking/ai{
+	pixel_x = 9;
+	pixel_y = -6
 	},
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room)
