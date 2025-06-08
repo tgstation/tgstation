@@ -48,6 +48,8 @@
 	var/broadcasting = FALSE
 	/// Cooldown between being able to toggle broadcasting
 	COOLDOWN_DECLARE(broadcast_toggle_cd)
+	/// Cooldown for how often you're allowed to harass deadchat for PVP domains
+	COOLDOWN_DECLARE(polling_cooldown)
 
 
 /obj/machinery/quantum_server/post_machine_initialize()

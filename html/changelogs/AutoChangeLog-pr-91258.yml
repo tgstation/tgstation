@@ -1,0 +1,11 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Photocopiers can now be emagged to disable the payment system that charges you for printing copies"
+  - rscadd: "Photocopiers are now affected by stock part upgrades. Matter bins affect paper capacity, lasers affect toner usage, and scanning module affects time to print. The servo stock part was replaced with matter bin."
+  - rscadd: "Photocopiers can now be loaded with regular, carbon, construction, and natural paper. You can select which kind to use in the UI when printing copies if any are stored."
+  - qol: "Photocopiers can now be loaded with paper bins"
+  - bugfix: "Photocopiers now display the correct amount of stored paper"
+  - bugfix: "Photocopiers now drop toner and paper when machine is deconstructed"
+  - code_imp: "Paper subtypes (carbon, construction, natural) were given proper names to use with photocopiers UI menu."
+  - refactor: "Photocopier code was refactored to not spawn paper when it is initialized. Instead it stores blank papers as a numeric value. Also switched the `attackby()` code handling to use the modern `item_interaction()` proc."

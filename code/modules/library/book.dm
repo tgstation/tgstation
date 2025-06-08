@@ -18,8 +18,10 @@
 	var/due_date = 0
 	/// false - Normal book, true - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/unique = FALSE
-	/// whether or not we have been carved out
+	/// Whether or not we have been carved out.
 	var/carved = FALSE
+	/// The typepath for the storage datum we use when carved out.
+	var/carved_storage_type = /datum/storage/carved_book
 
 	/// The initial title, for use in var editing and such
 	var/starting_title
@@ -36,11 +38,38 @@
 
 	AddElement(/datum/element/falling_hazard, damage = 5, wound_bonus = 0, hardhat_safety = TRUE, crushes = FALSE, impact_sound = drop_sound)
 	AddElement(/datum/element/burn_on_item_ignition)
+	register_context()
 
 /obj/item/book/examine(mob/user)
 	. = ..()
 	if(carved)
 		. += span_notice("[src] has been hollowed out.")
+
+/obj/item/book/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item == src)
+		var/attack_self_context = get_attack_self_context(user)
+		if(!attack_self_context)
+			return NONE
+		context[SCREENTIP_CONTEXT_LMB] = attack_self_context
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(IS_WRITING_UTENSIL(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Vandalize"
+		if(is_carving_tool(held_item))
+			context[SCREENTIP_CONTEXT_RMB] = "Carve out"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(is_carving_tool(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = "Carve out"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+/// Gets the context to add for clicking the book inhand. Returns null if none.
+/obj/item/book/proc/get_attack_self_context(mob/living/user)
+	return "Read"
 
 /obj/item/book/ui_static_data(mob/user)
 	var/list/data = list()
@@ -98,116 +127,131 @@
 	user.visible_message(span_notice("[user] opens a book titled \"[book_data.title]\" and begins reading intently."))
 	display_content(user)
 
-/obj/item/book/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(IS_WRITING_UTENSIL(attacking_item))
-		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
-			return
-		if(user.is_blind())
-			to_chat(user, span_warning("As you are trying to write on the book, you suddenly feel very stupid!"))
-			return
-		if(unique)
-			to_chat(user, span_warning("These pages don't seem to take the ink well! Looks like you can't modify it."))
-			return
-		if(carved)
-			to_chat(user, span_warning("The book has been carved out! There is nothing to be vandalized."))
-			return
+/obj/item/book/proc/is_carving_tool(obj/item/tool)
+	PRIVATE_PROC(TRUE)
+	if(tool.get_sharpness() & SHARP_EDGED)
+		return TRUE
+	if(tool.tool_behaviour == TOOL_WIRECUTTER)
+		return TRUE
+	return FALSE
 
-		var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
-		if(isnull(choice))
-			return
-		if(!user.can_perform_action(src) || !user.can_write(attacking_item))
-			return
-		switch(choice)
-			if("Title")
-				var/newtitle = reject_bad_text(tgui_input_text(user, "Write a new title", "Book Title", max_length = 30))
-				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
-					return
-				if (length_char(newtitle) > 30)
-					to_chat(user, span_warning("That title won't fit on the cover!"))
-					return
-				if(!newtitle)
-					to_chat(user, span_warning("That title is invalid."))
-					return
-				name = newtitle
-				playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-				book_data.set_title(html_decode(newtitle)) //Don't want to double encode here
-			if("Contents")
-				var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", max_length = MAX_PAPER_LENGTH, multiline = TRUE)
-				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
-					return
-				if(!content)
-					to_chat(user, span_warning("The content is invalid."))
-					return
-				book_data.set_content(html_decode(content))
-				playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
-			if("Author")
-				var/author = tgui_input_text(user, "Write the author's name", "Author Name", max_length = MAX_NAME_LEN)
-				if(!user.can_perform_action(src) || !user.can_write(attacking_item))
-					return
-				if(!author)
-					to_chat(user, span_warning("The name is invalid."))
-					return
-				book_data.set_author(html_decode(author)) //Setting this encodes, don't want to double up
-				playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+/// Checks for whether we can vandalize this book, to ensure we still can after each input.
+/// Uses to_chat over balloon alerts to give more detailed information as to why.
+/obj/item/book/proc/can_vandalize(mob/living/user, obj/item/tool)
+	if(!user.can_perform_action(src) || !user.can_write(tool))
+		return FALSE
+	if(user.is_blind())
+		to_chat(user, span_warning("As you are trying to write on the book, you suddenly feel very stupid!"))
+		return FALSE
+	if(unique)
+		to_chat(user, span_warning("These pages don't seem to take the ink well! Looks like you can't modify it."))
+		return FALSE
+	if(carved)
+		to_chat(user, span_warning("The book has been carved out! There is nothing to be vandalized."))
+		return FALSE
+	return TRUE
 
-	else if(istype(attacking_item, /obj/item/barcodescanner))
-		var/obj/item/barcodescanner/scanner = attacking_item
-		var/obj/machinery/computer/libraryconsole/bookmanagement/computer = scanner.computer_ref?.resolve()
-		if(!computer)
-			user.balloon_alert(user, "not connected to computer!")
-			return
+/obj/item/book/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	// Items can both be carving tools and writing utensils.
+	// Because of this, we flip interaction priority on secondary.
+	// This means pure writing utensils have writing as their primary action,
+	// pure carving tools have carving as their primary action,
+	// but items with both have primary write secondary carve.
+	if(IS_WRITING_UTENSIL(tool))
+		return writing_utensil_act(user, tool)
+	if(is_carving_tool(tool))
+		return carving_act(user, tool)
+	return NONE
 
-		switch(scanner.scan_mode)
-			if(BARCODE_SCANNER_CHECKIN)
-				var/list/checkouts = computer.checkouts
-				for(var/checkout_ref in checkouts)
-					var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
-					if(!book_data.compare(maybe_ours.book_data))
-						continue
-					checkouts -= checkout_ref
-					computer.checkout_update()
-					user.balloon_alert(user, "book checked in")
-					playsound(loc, 'sound/items/barcodebeep.ogg', 20, FALSE)
-					return
+/obj/item/book/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(is_carving_tool(tool))
+		return carving_act(user, tool)
+	if(IS_WRITING_UTENSIL(tool))
+		return writing_utensil_act(user, tool)
+	return NONE
 
-				user.balloon_alert(user, "book not checked out!")
-				return
-			if(BARCODE_SCANNER_INVENTORY)
-				var/datum/book_info/our_copy = book_data.return_copy()
-				computer.inventory[ref(our_copy)] = our_copy
-				computer.inventory_update()
-				user.balloon_alert(user, "book added to inventory")
-				playsound(loc, 'sound/items/barcodebeep.ogg', 20, FALSE)
+/// Called when user clicks on the book with a writing utensil. Attempts to vandalize the book.
+/obj/item/book/proc/writing_utensil_act(mob/living/user, obj/item/tool)
+	if(!can_vandalize(user, tool))
+		return ITEM_INTERACT_BLOCKING
 
-	else if(try_carve(attacking_item, user, modifiers))
-		return
-	return ..()
+	var/choice = tgui_input_list(usr, "What would you like to change?", "Book Alteration", list("Title", "Contents", "Author", "Cancel"))
+	if(isnull(choice))
+		return ITEM_INTERACT_BLOCKING
+	if(!can_vandalize(user, tool))
+		return ITEM_INTERACT_BLOCKING
+
+	switch(choice)
+		if("Title")
+			return vandalize_title(user, tool)
+		if("Contents")
+			return vandalize_contents(user, tool)
+		if("Author")
+			return vandalize_author(user, tool)
+
+	return NONE
+
+/obj/item/book/proc/vandalize_title(mob/living/user, obj/item/tool)
+	var/newtitle = reject_bad_text(tgui_input_text(user, "Write a new title", "Book Title", max_length = 30))
+	if(!newtitle)
+		balloon_alert(user, "invalid input!")
+		return ITEM_INTERACT_BLOCKING
+	if(length_char(newtitle) > 30)
+		balloon_alert(user, "too long!")
+		return ITEM_INTERACT_BLOCKING
+	if(!can_vandalize(user, tool))
+		return ITEM_INTERACT_BLOCKING
+
+	name = newtitle
+	book_data.set_title(html_decode(newtitle)) //Don't want to double encode here
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/book/proc/vandalize_contents(mob/living/user, obj/item/tool)
+	var/content = tgui_input_text(user, "Write your book's contents (HTML NOT allowed)", "Book Contents", max_length = MAX_PAPER_LENGTH, multiline = TRUE)
+	if(!content)
+		balloon_alert(user, "invalid input!")
+		return ITEM_INTERACT_BLOCKING
+	if(!can_vandalize(user, tool))
+		return ITEM_INTERACT_BLOCKING
+
+	book_data.set_content(html_decode(content))
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/book/proc/vandalize_author(mob/living/user, obj/item/tool)
+	var/author = tgui_input_text(user, "Write the author's name", "Author Name", max_length = MAX_NAME_LEN)
+	if(!author)
+		balloon_alert(user, "invalid input!")
+		return ITEM_INTERACT_BLOCKING
+	if(!can_vandalize(user, tool))
+		return ITEM_INTERACT_BLOCKING
+
+	book_data.set_author(html_decode(author)) //Setting this encodes, don't want to double up
+	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	return ITEM_INTERACT_SUCCESS
+
+/// Called when user clicks on the book with a carving utensil. Attempts to carve the book.
+/obj/item/book/proc/carving_act(mob/living/user, obj/item/tool)
+	if(carved)
+		balloon_alert(user, "already carved!")
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "carving out...")
+	if(!do_after(user, 3 SECONDS, target = src))
+		balloon_alert(user, "interrupted!")
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "carved out")
+	playsound(src, 'sound/effects/cloth_rip.ogg', vol = 75, vary = TRUE)
+	carve_out()
+	return ITEM_INTERACT_SUCCESS
+
+/// Handles setting everything a carved book needs.
+/obj/item/book/proc/carve_out()
+	carved = TRUE
+	create_storage(storage_type = carved_storage_type)
 
 /// Generates a random icon state for the book
 /obj/item/book/proc/gen_random_icon_state()
 	icon_state = "book[rand(1, maximum_book_state)]"
-
-/// Called when user attempts to carve the book with an item
-/obj/item/book/proc/try_carve(obj/item/carving_item, mob/living/user, list/modifiers)
-	if(carved)
-		return FALSE
-	if(!user.combat_mode)
-		return FALSE
-	//special check for wirecutter's because they don't have a sharp edge
-	if((carving_item.get_sharpness() & SHARP_EDGED) || (carving_item.tool_behaviour == TOOL_WIRECUTTER))
-		balloon_alert(user, "carving out...")
-		if(!do_after(user, 3 SECONDS, target = src))
-			balloon_alert(user, "interrupted!")
-			return FALSE
-		carve_out(carving_item, user)
-		return TRUE
-	return FALSE
-
-/// Called when the book gets carved successfully
-/obj/item/book/proc/carve_out(obj/item/carving_item, mob/living/user)
-	if(user)
-		balloon_alert(user, "carved out")
-		playsound(src, 'sound/effects/cloth_rip.ogg', vol = 75, vary = TRUE)
-	carved = TRUE
-	create_storage(max_slots = 1)
-	return TRUE

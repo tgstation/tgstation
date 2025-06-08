@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Emissive objects now have a bit of a colored bloom around them."

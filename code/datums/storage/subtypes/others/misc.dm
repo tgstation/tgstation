@@ -270,3 +270,10 @@
 /datum/storage/toiletbong/New(atom/parent, max_slots, max_specific_storage, max_total_storage)
 	. = ..()
 	set_holdable(/obj/item/food)
+
+/// Carved Books
+/datum/storage/carved_book
+	max_slots = 1
+
+/datum/storage/carved_book/bible
+	max_specific_storage = WEIGHT_CLASS_SMALL
