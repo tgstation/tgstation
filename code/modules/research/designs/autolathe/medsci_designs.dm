@@ -15,7 +15,7 @@
 	name = "Reflex Hammer"
 	id = "reflex_hammer"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
-	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.75, /datum/material/plastic=SMALL_MATERIAL_AMOUNT*0.5)
+	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.75, /datum/material/plastic =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/reflexhammer
 	category = list(
 		RND_CATEGORY_INITIAL,

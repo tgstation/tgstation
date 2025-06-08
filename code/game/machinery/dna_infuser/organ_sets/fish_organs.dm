@@ -261,7 +261,7 @@
 	desc = "Fish DNA infused on what once was a normal pair of lungs that now require spacemen to breathe water vapor, or keep themselves covered in water."
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
 	icon_state = "gills"
-
+	breath_noise = "the dribbling of water"
 	organ_traits = list(TRAIT_NODROWN)
 	// Seafood instead of meat, because it's a fish organ. Additionally gross for being gills
 	foodtype_flags = RAW | SEAFOOD | GORE | GROSS
