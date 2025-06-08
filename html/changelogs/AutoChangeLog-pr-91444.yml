@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed fishing lines bugging out if the target falls down a z-level.\nfix Fixed offspring fish not showing the colors of the material they're made of."

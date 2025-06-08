@@ -2787,7 +2787,7 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "aVq" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /obj/machinery/light_switch/directional/north,
 /obj/effect/turf_decal/siding/purple,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2909,7 +2909,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "aYS" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /obj/item/toy/figure/geneticist{
 	pixel_y = 18
 	},
@@ -36862,7 +36862,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "mPl" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /obj/structure/railing,

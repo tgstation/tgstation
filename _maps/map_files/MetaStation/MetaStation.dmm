@@ -4713,7 +4713,7 @@
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "bEC" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/purple{
@@ -13658,7 +13658,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "eOo" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/purple{
@@ -26867,7 +26867,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/cryo)
 "jrb" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/purple{

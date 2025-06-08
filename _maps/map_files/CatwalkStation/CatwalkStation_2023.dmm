@@ -6321,7 +6321,7 @@
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
 "bUa" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "bUf" = (
@@ -78907,7 +78907,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "xDB" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,

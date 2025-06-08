@@ -1,4 +1,0 @@
-author: "carpotoxin"
-delete-after: True
-changes:
-  - code_imp: "bots use their correct pronouns, if given any, in their tooltips"
