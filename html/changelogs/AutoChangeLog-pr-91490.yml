@@ -1,0 +1,5 @@
+author: "throwawayuseless"
+delete-after: True
+changes:
+  - bugfix: "blind psykers are not blinded twice by two different sources, head and brain."
+  - qol: "Psyker bounty hunters and chaplains are no longer blinded by default, so as to reduce the amount of eye strain from the echolocation effect. The echolocation virtual domains remain as they are."

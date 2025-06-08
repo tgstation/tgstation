@@ -99,6 +99,9 @@
 	if(!length(data["locations"]))
 		data["locked"] = TRUE
 		data["status"] = "Locked"
+	if(!mobile_docking_port.canMove())
+		data["locked"] = TRUE
+		data["status"] = "Immobile"
 	return data
 
 /**

@@ -2,9 +2,9 @@
 
 ## About
 
-Random spawners are an organized tool primarily for mapping to enhance replayability.  The spawners can create objects, effects, and structures with different tweakable settings to get the desired outcome.  You can make a spawner determine direction, rarity, number of items to spawn, pixel spacing between items, and even spread it over a large tile radius.  This lets you control the atmosphere of a location.  You could for instance spawn different piles of trash in maint or spawn decoration items for a room to give it more randomized flavor.  The choice is yours!
+Random spawners are an organized tool primarily for mapping to enhance replayability. The spawners can create objects, effects, and structures with different tweakable settings to get the desired outcome. You can make a spawner determine direction, rarity, number of items to spawn, pixel spacing between items, and even spread it over a large tile radius. This lets you control the atmosphere of a location. You could for instance spawn different piles of trash in maint or spawn decoration items for a room to give it more randomized flavor. The choice is yours!
 
-*(note the audience of this README is directed towards mappers who lack knowledge of coding)*
+_(note the audience of this README is directed towards mappers who lack knowledge of coding)_
 
 ## Variables
 
@@ -36,7 +36,7 @@ These variables are set to the following default values for the base `random.dm`
 	var/spawn_scatter_radius = 0 // by default the spawner will spawn the items ONLY on the tile it is on
 ```
 
-However there are some categories that overwrite these default values so pay attention to the folder or category you group your spawner in.  For instance the `obj/effect/spawner/random/techstorage` category overwrites the `spawn_all_loot` and the `spawn_loot_split` variables.
+However there are some categories that overwrite these default values so pay attention to the folder or category you group your spawner in. For instance the `obj/effect/spawner/random/techstorage` category overwrites the `spawn_all_loot` and the `spawn_loot_split` variables.
 
 ```dm
 // Tech storage circuit board spawners
@@ -46,7 +46,7 @@ However there are some categories that overwrite these default values so pay att
 	spawn_all_loot = TRUE
 ```
 
-This means any spawner you create under the techstorage will also have those variables set to that by default.  This can be overridden quite easily just be resetting the variables back to the normal state like so:
+This means any spawner you create under the techstorage will also have those variables set to that by default. This can be overridden quite easily just be resetting the variables back to the normal state like so:
 
 ```dm
 /obj/effect/spawner/random/techstorage/data_disk
@@ -84,11 +84,11 @@ All the capitalized code is the parts where you are supposed to swap out with yo
 	)
 ```
 
-Find the path to different objects and add them to the list but try to be consistent with the types of the object and the spawner.  For example a medical spawner shouldn't have a emag in the loot list. (use an antag spawner for that instead!)
+Find the path to different objects and add them to the list but try to be consistent with the types of the object and the spawner. For example a medical spawner shouldn't have a emag in the loot list. (use an antag spawner for that instead!)
 
 ## Probability
 
-Be aware that the `loot` list uses a *weighted chance* formula to determine probability.  So if there are no numbers set in the `loot` list then each object defaults to 1 and has the same probability to be selected. For our above example for the `minor_healing` spawner each medical item has a 1/3 chance to be spawned.  But if we rearranged the values to this:
+Be aware that the `loot` list uses a _weighted chance_ formula to determine probability. So if there are no numbers set in the `loot` list then each object defaults to 1 and has the same probability to be selected. For our above example for the `minor_healing` spawner each medical item has a 1/3 chance to be spawned. But if we rearranged the values to this:
 
 ```dm
 /obj/effect/spawner/random/medical/minor_healing
@@ -100,7 +100,7 @@ Be aware that the `loot` list uses a *weighted chance* formula to determine prob
 	)
 ```
 
-Then now `suture` has a 50% chance of being spawned (2/4), `mesh` has a 25% chance of being spawned (1/4), and `gauze` also has a 25% chance of being spawned (1/4).  If we add another item into the mix then we get the following:
+Then now `suture` has a 50% chance of being spawned (2/4), `mesh` has a 25% chance of being spawned (1/4), and `gauze` also has a 25% chance of being spawned (1/4). If we add another item into the mix then we get the following:
 
 ```dm
 /obj/effect/spawner/random/medical/minor_healing
@@ -113,7 +113,7 @@ Then now `suture` has a 50% chance of being spawned (2/4), `mesh` has a 25% chan
 	)
 ```
 
-Suture is 40% (2/5), Mesh is 20% (1/5), Gauze is 20% (1/5), and Syringe is 20% (1/5).  A weighted list has the advantage of not needing to update every item in the list when adding a new item.  If the list was based on a straight percent values, then each new item would require to manually go and edit ALL the items in the list.  For big lists that would become very tedious.  This is why we use weighted lists to determine probability!
+Suture is 40% (2/5), Mesh is 20% (1/5), Gauze is 20% (1/5), and Syringe is 20% (1/5). A weighted list has the advantage of not needing to update every item in the list when adding a new item. If the list was based on a straight percent values, then each new item would require to manually go and edit ALL the items in the list. For big lists that would become very tedious. This is why we use weighted lists to determine probability!
 
 ## Style
 
@@ -162,10 +162,9 @@ Bad:
 	)
 ```
 
-
 ### Sort the list from highest probability to lowest
 
-Sort from top to bottom.  The rarest items for your spawner should be at the bottom of the list.
+Sort from top to bottom. The rarest items for your spawner should be at the bottom of the list.
 
 Good:
 
@@ -263,7 +262,7 @@ Bad:
 
 ### Keep the same tab formatting for the `loot` list (unless there is only one item)
 
-Again, this is just good code organization.  If there is only one item, then encase that item in `loot = list(item)`
+Again, this is just good code organization. If there is only one item, then encase that item in `loot = list(item)`
 
 Good:
 
@@ -311,7 +310,7 @@ Also Bad:
 
 ### Try to keep the total combined weight of your `loot` list to sane values (Aim for 5, 10, 20, 50, or 100)
 
-This makes the math probability easier for people to calculate.  (this is recommended, but not always possible)
+This makes the math probability easier for people to calculate. (this is recommended, but not always possible)
 
 Good:
 
@@ -368,7 +367,6 @@ Good:
 	loot = list(/obj/structure/closet/crate/secure/loot)
 ```
 
-
 Bad:
 
 ```dm
@@ -382,7 +380,7 @@ Bad:
 
 ### Avoid making a spawner that is a duplicate
 
-We don't want copy-cat spawners that are almost identical.  Instead merge spawners together if possible.
+We don't want copy-cat spawners that are almost identical. Instead merge spawners together if possible.
 
 Good:
 
@@ -400,7 +398,6 @@ Good:
 		/obj/item/gun/ballistic/revolver/mateba,
 	)
 ```
-
 
 Bad:
 

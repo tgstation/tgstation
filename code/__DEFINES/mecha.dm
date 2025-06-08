@@ -17,8 +17,16 @@
 #define CANNOT_INTERACT (1<<9)
 /// posibrains can drive this mecha
 #define MMI_COMPATIBLE (1<<10)
+/// AI's can be placed inside this mech. This only prevents direct uploads. It does not prevent mech domination on the mech.
+#define AI_COMPATIBLE (1<<11)
 /// Can click from any direction and perform stuff
-#define OMNIDIRECTIONAL_ATTACKS (1<<11)
+#define OMNIDIRECTIONAL_ATTACKS (1<<12)
+/// Prevents overpenetrating through the mecha and into the cockpit using an armour penetrating weapon
+#define CANNOT_OVERPENETRATE (1<<13)
+/// Can have a tracking beacon placed into the mech
+#define BEACON_TRACKABLE (1<<14)
+/// Can have an AI control beacon placed into the mech
+#define BEACON_CONTROLLABLE (1<<15)
 
 #define MECHA_MELEE (1 << 0)
 #define MECHA_RANGED (1 << 1)
@@ -60,3 +68,7 @@
 #define MECHA_AMMO_PUNCHING_GLOVE "Punching glove"
 #define MECHA_AMMO_BANANA_PEEL "Banana peel"
 #define MECHA_AMMO_MOUSETRAP "Mousetrap"
+
+/// Values to determine the effects on a mech should it suffer an EMP
+#define MECH_EMP_DAMAGE_LOWER 100
+#define MECH_EMP_DAMAGE_UPPER 180

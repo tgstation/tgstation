@@ -320,15 +320,14 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	if(get_paper_count() < paper_use * copies_amount)
 		copies_amount = FLOOR(get_paper_count() / paper_use, 1)
 		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Not enough paper to perform [copies_amount >= 1 ? "full " : ""]operation.\"")
+	if(copies_amount > 0 && (attempt_charge(src, user, (copies_amount - 1) * PHOTOCOPIER_FEE) & COMPONENT_OBJ_CANCEL_CHARGE))
+		copies_amount = 0
+		error_message = span_warning("An error message flashes across \the [src]'s screen: \"Failed to charge bank account. Aborting.\"")
 
 	copies_left = copies_amount
 
 	if(copies_amount <= 0)
 		to_chat(user, error_message)
-		reset_busy()
-		return
-
-	if(attempt_charge(src, user, (copies_amount - 1) * PHOTOCOPIER_FEE) & COMPONENT_OBJ_CANCEL_CHARGE)
 		reset_busy()
 		return
 
@@ -547,7 +546,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/photocopier/attackby(obj/item/object, mob/user, list/modifiers)
+/obj/machinery/photocopier/attackby(obj/item/object, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(object, /obj/item/paper) || istype(object, /obj/item/photo) || istype(object, /obj/item/documents))
 		if(istype(object, /obj/item/paper))
 			var/obj/item/paper/paper = object
@@ -601,7 +600,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/atom_break(damage_flag)
 	. = ..()
 	if(. && toner_cartridge.charges)
-		new /obj/effect/decal/cleanable/oil(get_turf(src))
+		new /obj/effect/decal/cleanable/blood/oil(get_turf(src))
 		toner_cartridge.charges = 0
 
 /obj/machinery/photocopier/mouse_drop_receive(mob/target, mob/user, params)

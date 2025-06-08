@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "The HoP's winter coat now uses the correct suit storage options (like the HoP's firearm). The hood now also shares the chest piece's armor values."

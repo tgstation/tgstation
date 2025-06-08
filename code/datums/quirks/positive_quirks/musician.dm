@@ -10,4 +10,4 @@
 	mail_goodies = list(/obj/effect/spawner/random/entertainment/musical_instrument, /obj/item/instrument/piano_synth/headphones)
 
 /datum/quirk/item_quirk/musician/add_unique(client/client_source)
-	give_item_to_holder(/obj/item/choice_beacon/music, list(LOCATION_BACKPACK = ITEM_SLOT_BACKPACK, LOCATION_HANDS = ITEM_SLOT_HANDS))
+	give_item_to_holder(/obj/item/choice_beacon/music, list(LOCATION_BACKPACK, LOCATION_HANDS))

@@ -30,6 +30,28 @@
 		visible_message(span_danger("[M] bursts out of [src]!"))
 	return ..()
 
+/mob/living/carbon/get_gibs_type(drop_bitflags = NONE)
+	var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST) || (length(bodyparts) ? bodyparts[1] : null)
+	if (!istype(chest)) // what
+		return ..()
+
+	if (chest.bodytype & BODYTYPE_ROBOTIC)
+		return /obj/effect/gibspawner/robot
+
+	if (chest.bodytype & BODYTYPE_LARVA_PLACEHOLDER)
+		if (drop_bitflags & DROP_BODYPARTS)
+			return /obj/effect/gibspawner/larva
+		return /obj/effect/gibspawner/larva/bodypartless
+
+	if (chest.bodytype & BODYTYPE_ALIEN)
+		if (drop_bitflags & DROP_BODYPARTS)
+			return /obj/effect/gibspawner/xeno
+		return /obj/effect/gibspawner/xeno/bodypartless
+
+	if (drop_bitflags & DROP_BODYPARTS)
+		return /obj/effect/gibspawner/human
+	return /obj/effect/gibspawner/human/bodypartless
+
 /mob/living/carbon/spill_organs(drop_bitflags=NONE)
 	var/atom/Tsec = drop_location()
 

@@ -60,6 +60,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CLUMSY "clumsy"
 /// Trait that means you are capable of holding items in some form
 #define TRAIT_CAN_HOLD_ITEMS "can_hold_items"
+/// Trait that means you're capable of throwing things
+#define TRAIT_CAN_THROW_ITEMS "can_throw_items"
 /// Trait which lets you clamber over a barrier
 #define TRAIT_FENCE_CLIMBER "can_climb_fences"
 /// means that you can't use weapons with normal trigger guards.
@@ -137,6 +139,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_UNHUSKABLE "trait_unhuskable"
 /// Reduces the chance viruses will spread to this mob, and if the mob has a virus, slows its advancement
 #define TRAIT_VIRUS_RESISTANCE "virus_resistance"
+/// Causes viruses, infected burns, and parasites to spread more effectively and faster, like an inverse of the above.
+#define TRAIT_IMMUNODEFICIENCY "immunodeficiency"
 #define TRAIT_GENELESS "geneless"
 #define TRAIT_PIERCEIMMUNE "pierce_immunity"
 #define TRAIT_NODISMEMBER "dismember_immunity"
@@ -187,7 +191,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOBREATH "no_breath"
 /// Mob doesn't take oxygen damage in deep water
 #define TRAIT_NODROWN "amphibious"
-/// Mob doesn't take stamina damage from deep water
+/// Mob doesn't take stamina damage from deep water and doesn't get slowdown from swimming
 #define TRAIT_SWIMMER "swimmer"
 /// Mob is currently disguised as something else (like a morph being another mob or an object). Holds a reference to the thing that applied the trait.
 #define TRAIT_DISGUISED "disguised"
@@ -428,6 +432,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_SILENT_FOOTSTEPS "silent_footsteps"
 /// hnnnnnnnggggg..... you're pretty good....
 #define TRAIT_NICE_SHOT "nice_shot"
+/// trait added if mob is killed with an anti pest reagent
+#define TRAIT_BUGKILLER_DEATH "bugkiller_death"
 /// prevents the damage done by a brain tumor
 #define TRAIT_TUMOR_SUPPRESSED "brain_tumor_suppressed"
 /// Prevents hallucinations from the hallucination brain trauma (RDS)
@@ -792,6 +798,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_T_RAY_VISIBLE "t-ray-visible"
 /// If this item's been fried
 #define TRAIT_FOOD_FRIED "food_fried"
+/// Has the ingredients_holder component
+#define TRAIT_INGREDIENTS_HOLDER "ingredients_holder"
 /// If this item's been bbq grilled
 #define TRAIT_FOOD_BBQ_GRILLED "food_bbq_grilled"
 /// This is a silver slime created item
@@ -943,8 +951,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DRYABLE "trait_dryable"
 ///Trait for dried items
 #define TRAIT_DRIED "trait_dried"
-/// Trait for customizable reagent holder
-#define TRAIT_CUSTOMIZABLE_REAGENT_HOLDER "customizable_reagent_holder"
 /// Trait for allowing an item that isn't food into the customizable reagent holder
 #define TRAIT_ODD_CUSTOMIZABLE_FOOD_INGREDIENT "odd_customizable_food_ingredient"
 
@@ -1492,5 +1498,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Demolition modifier when hitting this object is inverted (ie, 1 / demolition)
 #define TRAIT_INVERTED_DEMOLITION "demolition_inverted"
+
+/// Makes the mob immune to carpotoxin
+#define TRAIT_CARPOTOXIN_IMMUNE "carpotoxin_immune"
+
+/// Trait given when we escape into our shell
+#define TRAIT_SHELL_RETREATED "shell_retreated"
+
+/// Trait given to colorblind mobs
+#define TRAIT_COLORBLIND "colorblind"
+
+/// Trait that signals to objects on this turf that its open (has UNDERFLOOR_INTERACTIBLE) but still covers them
+#define TRAIT_UNCOVERED_TURF "uncovered_turf"
 
 // END TRAIT DEFINES

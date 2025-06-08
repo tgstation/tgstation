@@ -257,7 +257,7 @@
 	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_r", -BODY_LAYER, parent)
 	var/list/overlays = list(eye_left, eye_right)
 
-	var/obscured = parent.check_obscured_slots(TRUE)
+	var/obscured = parent.check_obscured_slots()
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
 		overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -BODY_LAYER, alpha = eye_left.alpha)
 		overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, -BODY_LAYER, alpha = eye_right.alpha)

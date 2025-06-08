@@ -644,15 +644,12 @@
 		return
 	attack_paw(ayy, modifiers)
 
-/obj/item/attack_ai(mob/user)
-	if(istype(src.loc, /obj/item/robot_model))
-		//If the item is part of a cyborg module, equip it
-		if(!iscyborg(user))
-			return
-		var/mob/living/silicon/robot/R = user
-		if(!R.low_power_mode) //can't equip modules with an empty cell.
-			R.activate_module(src)
-			R.hud_used.update_robot_modules_display()
+/obj/item/attack_robot(mob/living/silicon/robot/user)
+	if(!istype(loc, /obj/item/robot_model))
+		return
+	if(user.low_power_mode) //can't equip modules with an empty cell.
+		return
+	user.activate_module(src)
 
 // afterattack() and attack() prototypes moved to _onclick/item_attack.dm for consistency
 
@@ -783,7 +780,9 @@
 
 /// Sometimes we only want to grant the item's action if it's equipped in a specific slot.
 /obj/item/proc/item_action_slot_check(slot, mob/user, datum/action/action)
-	if(slot & (ITEM_SLOT_BACKPACK|ITEM_SLOT_LEGCUFFED)) //these aren't true slots, so avoid granting actions there
+	if(!slot) // Equipped into storage
+		return FALSE
+	if(slot & (ITEM_SLOT_HANDCUFFED|ITEM_SLOT_LEGCUFFED)) // These aren't true slots, so avoid granting actions there
 		return FALSE
 	if(!isnull(action_slots))
 		return (slot & action_slots)
@@ -1429,6 +1428,8 @@
 // Update icons if this is being carried by a mob
 /obj/item/wash(clean_types)
 	. = ..()
+	if(!.) // we don't need mob updates when the item was already clean
+		return
 	if(ismob(loc))
 		var/mob/mob_loc = loc
 		mob_loc.update_clothing(slot_flags)
@@ -1438,28 +1439,35 @@
 	stack_trace("Undefined handle_openspace_click() behaviour. Ascertain the openspace_item_click_handler element has been attached to the right item and that its proc override doesn't call parent.")
 
 /**
- * * An interrupt for offering an item to other people, called mainly from [/mob/living/carbon/proc/give], in case you want to run your own offer behavior instead.
+ * * An interrupt for offering an item to other people, called mainly from [/mob/living/proc/give], in case you want to run your own offer behavior instead.
  *
  * * Return TRUE if you want to interrupt the offer.
  *
  * * Arguments:
- * * offerer - The person offering the item.
- * * offered - The person being offered the item.
+ * * offerer - The living mob offering the item.
+ * * offered - The living mob being offered the item.
  */
-/obj/item/proc/on_offered(mob/living/carbon/offerer, mob/living/carbon/offered)
+/obj/item/proc/on_offered(mob/living/offerer, mob/living/offered)
+	if(!offered) // item has just been offered to anyone around
+		if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS)))
+			return TRUE
+	else if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && HAS_TRAIT(offered, TRAIT_CAN_HOLD_ITEMS)))
+		return TRUE // both must be able to hold items for this to make sense
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 
 /**
- * * An interrupt for someone trying to accept an offered item, called mainly from [/mob/living/carbon/proc/take], in case you want to run your own take behavior instead.
+ * * An interrupt for someone trying to accept an offered item, called mainly from [/mob/living/proc/take], in case you want to run your own take behavior instead.
  *
  * * Return TRUE if you want to interrupt the taking.
  *
  * * Arguments:
- * * offerer - the person offering the item
- * * taker - the person trying to accept the offer
+ * * offerer - the living mob offering the item
+ * * taker - the living mob trying to accept the offer
  */
-/obj/item/proc/on_offer_taken(mob/living/carbon/offerer, mob/living/carbon/taker)
+/obj/item/proc/on_offer_taken(mob/living/offerer, mob/living/taker)
+	if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS)))
+		return TRUE // both must be able to hold items for this to make sense
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
 
@@ -1544,38 +1552,63 @@
 	// This is instant on byond's end, but to our clients this looks like a quick drop
 	animate(src, alpha = old_alpha, pixel_x = old_x, pixel_y = old_y, transform = old_transform, time = 3, easing = CUBIC_EASING)
 
-/atom/movable/proc/do_item_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, animation_type = ATTACK_ANIMATION_BLUNT)
-	if (visual_effect_icon)
-		var/image/attack_image = image(icon = 'icons/effects/effects.dmi', icon_state = visual_effect_icon)
-		attack_image.plane = attacked_atom.plane + 1
-		// Scale the icon.
-		attack_image.transform *= 0.4
-		// The icon should not rotate.
-		attack_image.appearance_flags = APPEARANCE_UI
-		var/atom/movable/flick_visual/attack = attacked_atom.flick_overlay_view(attack_image, 1 SECONDS)
-		var/matrix/copy_transform = new(transform)
-		animate(attack, alpha = 175, transform = copy_transform.Scale(0.75), time = 0.3 SECONDS)
-		animate(time = 0.1 SECONDS)
-		animate(alpha = 0, time = 0.3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+/atom/movable/proc/do_item_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, animation_type)
+	if (!visual_effect_icon)
+		if (used_item)
+			used_item.animate_attack(src, attacked_atom, animation_type)
 		return
 
-	if (isnull(used_item))
-		return
-
-	var/image/attack_image = isnull(used_item.attack_icon) ? image(icon = used_item) : image(icon = used_item.attack_icon, icon_state = used_item.attack_icon_state)
+	var/image/attack_image = image(icon = 'icons/effects/effects.dmi', icon_state = visual_effect_icon)
 	attack_image.plane = attacked_atom.plane + 1
-	attack_image.pixel_w = used_item.base_pixel_x + used_item.base_pixel_w
-	attack_image.pixel_z = used_item.base_pixel_y + used_item.base_pixel_z
+	// Scale the icon.
+	attack_image.transform *= 0.4
+	// The icon should not rotate.
+	attack_image.appearance_flags = APPEARANCE_UI
+	var/atom/movable/flick_visual/attack = attacked_atom.flick_overlay_view(attack_image, 1 SECONDS)
+	var/matrix/copy_transform = new(transform)
+	animate(attack, alpha = 175, transform = copy_transform.Scale(0.75), time = 0.3 SECONDS)
+	animate(time = 0.1 SECONDS)
+	animate(alpha = 0, time = 0.3 SECONDS, easing = CIRCULAR_EASING|EASE_OUT)
+
+/obj/item/proc/animate_attack(atom/movable/attacker, atom/attacked_atom, animation_type)
+	var/list/image_override = list()
+	var/list/animation_override = list()
+	var/used_icon_angle = icon_angle
+	var/list/angle_override = list()
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_ANIMATION, attacker, attacked_atom, animation_type, image_override, animation_override, angle_override)
+	var/image/attack_image = null
+	if (!length(image_override))
+		attack_image = isnull(attack_icon) ? image(icon = src) : image(icon = attack_icon, icon_state = attack_icon_state)
+	else
+		attack_image = image_override[1]
+
+	if (length(animation_override))
+		animation_type = animation_override[1]
+	else if (!animation_type)
+		switch (get_sharpness())
+			if (SHARP_EDGED)
+				animation_type = ATTACK_ANIMATION_SLASH
+			if (SHARP_POINTY)
+				animation_type = ATTACK_ANIMATION_PIERCE
+			else
+				animation_type = ATTACK_ANIMATION_BLUNT
+
+	if (length(angle_override))
+		used_icon_angle = angle_override[1]
+
+	attack_image.plane = attacked_atom.plane + 1
+	attack_image.pixel_w = attacker.base_pixel_x + attacker.base_pixel_w - attacked_atom.base_pixel_x - attacked_atom.base_pixel_w
+	attack_image.pixel_z = attacker.base_pixel_y + attacker.base_pixel_z - attacked_atom.base_pixel_y - attacked_atom.base_pixel_z
 	// Scale the icon.
 	attack_image.transform *= 0.5
 	// The icon should not rotate.
 	attack_image.appearance_flags = APPEARANCE_UI
 
 	var/atom/movable/flick_visual/attack = attacked_atom.flick_overlay_view(attack_image, 1 SECONDS)
-	var/matrix/copy_transform = new(transform)
+	var/matrix/copy_transform = new(attacker.transform)
 	var/x_sign = 0
 	var/y_sign = 0
-	var/direction = get_dir(src, attacked_atom)
+	var/direction = get_dir(attacker, attacked_atom)
 	if (direction & NORTH)
 		y_sign = -1
 	else if (direction & SOUTH)
@@ -1606,7 +1639,7 @@
 		if (ATTACK_ANIMATION_PIERCE)
 			var/attack_angle = dir2angle(direction) + rand(-7, 7)
 			// Deducting 90 because we're assuming that icon_angle of 0 means an east-facing sprite
-			var/anim_angle = attack_angle - 90 - used_item.icon_angle
+			var/anim_angle = attack_angle - 90 - used_icon_angle
 			var/angle_mult = 1
 			if (x_sign && y_sign)
 				angle_mult = 1.4
@@ -1644,7 +1677,7 @@
 			var/x_rot_sign = 0
 			var/y_rot_sign = 0
 			var/attack_dir = (prob(50) ? 1 : -1)
-			var/anim_angle = dir2angle(direction) - 90 - used_item.icon_angle
+			var/anim_angle = dir2angle(direction) - 90 - used_icon_angle
 
 			if (x_sign)
 				y_rot_sign = attack_dir

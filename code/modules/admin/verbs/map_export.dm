@@ -74,44 +74,70 @@ ADMIN_VERB(map_export, R_DEBUG, "Map Export", "Select a part of the map by coord
 **/
 
 /atom/proc/get_save_vars()
-	return list(
-		NAMEOF(src, color),
-		NAMEOF(src, dir),
-		NAMEOF(src, icon),
-		NAMEOF(src, icon_state),
-		NAMEOF(src, name),
-		NAMEOF(src, pixel_x),
-		NAMEOF(src, pixel_y),
-	)
+	. = list()
+	. += NAMEOF(src, color)
+	. += NAMEOF(src, dir)
+	. += NAMEOF(src, icon)
+	. += NAMEOF(src, icon_state)
+	. += NAMEOF(src, name)
+	. += NAMEOF(src, pixel_x)
+	. += NAMEOF(src, pixel_y)
+	. += NAMEOF(src, density)
+	. += NAMEOF(src, opacity)
+
+	if(uses_integrity)
+		if(atom_integrity != max_integrity) // Only save if atom_integrity differs from max_integrity to avoid redundant saving
+			. += NAMEOF(src, atom_integrity)
+		. += NAMEOF(src, max_integrity)
+		. += NAMEOF(src, integrity_failure)
+		. += NAMEOF(src, damage_deflection)
+		. += NAMEOF(src, resistance_flags)
+
+	return .
+
+/atom/movable/get_save_vars()
+	. = ..()
+	. += NAMEOF(src, anchored)
+	return .
+
+/turf/open/get_save_vars()
+	. = ..()
+	var/datum/gas_mixture/turf_gasmix = return_air()
+	initial_gas_mix = turf_gasmix.to_string()
+	. += NAMEOF(src, initial_gas_mix)
+	return .
 
 /obj/get_save_vars()
-	return ..() + list(NAMEOF(src, req_access), NAMEOF(src, id_tag))
+	. = ..()
+	. += NAMEOF(src, req_access)
+	. += NAMEOF(src, id_tag)
+	return .
 
 /obj/item/stack/get_save_vars()
-	return ..() + NAMEOF(src, amount)
+	. = ..()
+	. += NAMEOF(src, amount)
+	return .
 
 /obj/docking_port/get_save_vars()
-	return ..() + list(
-		NAMEOF(src, dheight),
-		NAMEOF(src, dwidth),
-		NAMEOF(src, height),
-		NAMEOF(src, shuttle_id),
-		NAMEOF(src, width),
-	)
-/obj/docking_port/stationary/get_save_vars()
-	return ..() + NAMEOF(src, roundstart_template)
+	. = ..()
+	. += NAMEOF(src, dheight)
+	. += NAMEOF(src, dwidth)
+	. += NAMEOF(src, height)
+	. += NAMEOF(src, shuttle_id)
+	. += NAMEOF(src, width)
+	return .
 
 /obj/machinery/atmospherics/get_save_vars()
-	return ..() + list(
-		NAMEOF(src, piping_layer),
-		NAMEOF(src, pipe_color),
-	)
+	. = ..()
+	. += NAMEOF(src, piping_layer)
+	. += NAMEOF(src, pipe_color)
+	return .
 
 /obj/item/pipe/get_save_vars()
-	return ..() + list(
-		NAMEOF(src, piping_layer),
-		NAMEOF(src, pipe_color),
-	)
+	. = ..()
+	. += NAMEOF(src, piping_layer)
+	. += NAMEOF(src, pipe_color)
+	return .
 
 GLOBAL_LIST_INIT(save_file_chars, list(
 	"a","b","c","d","e",
@@ -176,11 +202,19 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	maxz,
 	save_flag = ALL,
 	shuttle_area_flag = SAVE_SHUTTLEAREA_DONTCARE,
-	list/obj_blacklist = list(),
+	list/obj_blacklist = typecacheof(/obj/effect),
 )
 	var/width = maxx - minx
 	var/height = maxy - miny
 	var/depth = maxz - minz
+
+	if(!islist(obj_blacklist))
+		CRASH("Non-list being used as object blacklist for map writing")
+
+	// we want to keep crayon writings, blood splatters, cobwebs, etc.
+	obj_blacklist -= typecacheof(/obj/effect/decal)
+	obj_blacklist -= typecacheof(/obj/effect/turf_decal)
+	obj_blacklist -= typecacheof(/obj/effect/landmark) // most landmarks get deleted except for latejoin arrivals shuttle
 
 	//Step 0: Calculate the amount of letters we need (26 ^ n > turf count)
 	var/turfs_needed = width * height
@@ -221,6 +255,10 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 					place = /turf/template_noop
 					location = /area/template_noop
 					pull_from = null
+				//====Saving holodeck areas====
+				// All hologram objects get skipped and floor tiles get replaced with empty plating
+				if(ispath(location, /area/station/holodeck) && istype(place, /turf/open/floor/holofloor))
+					place = /turf/open/floor/holofloor/plating
 				//====For toggling not saving areas and turfs====
 				if(!(save_flag & SAVE_AREAS))
 					location = /area/template_noop
@@ -239,6 +277,11 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 						CHECK_TICK
 						if(obj_blacklist[thing.type])
 							continue
+						if(thing.flags_1 & HOLOGRAM_1)
+							continue
+						if(is_multi_tile_object(thing) && (thing.loc != pull_from))
+							continue
+
 						var/metadata = generate_tgm_metadata(thing)
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
 						empty = FALSE
@@ -256,7 +299,12 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 						var/metadata = generate_tgm_metadata(thing)
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
 						empty = FALSE
-				current_header += "[empty ? "" : ",\n"][place],\n[location])\n"
+				current_header += "[empty ? "" : ",\n"][place]"
+				//====SAVING ATMOS====
+				if((save_flag & SAVE_TURFS) && (save_flag & SAVE_ATMOS) && !isspaceturf(pull_from))
+					var/metadata = generate_tgm_metadata(pull_from)
+					current_header += "[metadata]"
+				current_header += ",\n[location])\n"
 				//====Fill the contents file====
 				var/textiftied_header = current_header.Join()
 				// If we already know this header just use its key, otherwise we gotta make a new one
@@ -272,14 +320,16 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 
 /proc/generate_tgm_metadata(atom/object)
 	var/list/data_to_add = list()
-
 	var/list/vars_to_save = object.get_save_vars()
+
 	for(var/variable in vars_to_save)
 		CHECK_TICK
 		var/value = object.vars[variable]
 		if(value == initial(object.vars[variable]) || !issaved(object.vars[variable]))
 			continue
 		if(variable == "icon_state" && object.smoothing_flags)
+			continue
+		if(variable == "icon" && object.smoothing_flags)
 			continue
 
 		var/text_value = tgm_encode(value)

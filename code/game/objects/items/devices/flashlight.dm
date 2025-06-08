@@ -145,7 +145,7 @@
 		else
 			. += "<span class='notice ml-1'>[M.p_Their()] pupils narrow.</span>\n"//they're okay :D
 
-		if(M.dna && M.dna.check_mutation(/datum/mutation/human/xray))
+		if(M.dna && M.dna.check_mutation(/datum/mutation/xray))
 			. += "<span class='danger ml-1'>[M.p_Their()] pupils give an eerie glow!</span>\n"//mob has X-ray vision
 
 	return .
@@ -554,6 +554,7 @@
 	randomize_fuel = FALSE
 	trash_type = /obj/item/trash/candle
 	can_be_extinguished = TRUE
+	custom_materials = null //candles are made of wax (which doesn't exists as a material type as of 2025) and not plastic
 	/// The current wax level, used for drawing the correct icon
 	var/current_wax_level = 1
 	/// The previous wax level, remembered so we only have to make 3 update_appearance calls total as opposed to every tick
@@ -690,6 +691,14 @@
 	slot_flags = null
 	trash_type = /obj/effect/decal/cleanable/ash
 	can_be_extinguished = TRUE
+
+/obj/item/flashlight/flare/torch/everburning
+	name = "everburning torch"
+	desc = "A torch which burns continuously, even in the vacuum of space"
+	can_be_extinguished = FALSE
+	fuel = INFINITY
+	randomize_fuel = FALSE
+	start_on = TRUE
 
 /obj/item/flashlight/lantern
 	name = "lantern"

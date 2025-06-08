@@ -52,13 +52,13 @@
 	GLOB.ash_storm_sounds += weak_sounds
 	return ..()
 
-/datum/weather/ash_storm/can_weather_act_mob(mob/living/mob_to_check)
+/datum/weather/ash_storm/recursive_weather_protection_check(atom/to_check)
 	. = ..()
-	if(!. || !ishuman(mob_to_check))
+	if(. || !ishuman(to_check))
 		return
-	var/mob/living/carbon/human/human_to_check = mob_to_check
+	var/mob/living/carbon/human/human_to_check = to_check
 	if(human_to_check.get_thermal_protection() >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
-		return FALSE
+		return TRUE
 
 /datum/weather/ash_storm/weather_act_mob(mob/living/victim)
 	victim.adjustFireLoss(4, required_bodytype = BODYTYPE_ORGANIC)

@@ -29,6 +29,7 @@
 	lighting_cutoff_blue = 50
 
 	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile_obstacles
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	var/static/list/migo_sounds
 	/// Odds migo will dodge
 	var/dodge_prob = 10

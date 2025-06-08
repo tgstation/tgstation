@@ -508,7 +508,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		return
 
 	//Fuck you
-	if(cached_gases[/datum/gas/hypernoblium] && cached_gases[/datum/gas/hypernoblium][MOLES] >= REACTION_OPPRESSION_THRESHOLD && temperature > 20)
+	if(cached_gases[/datum/gas/hypernoblium] && cached_gases[/datum/gas/hypernoblium][MOLES] >= REACTION_OPPRESSION_THRESHOLD && temperature > REACTION_OPPRESSION_MIN_TEMP)
 		return STOP_REACTIONS
 
 	reaction_results = new
@@ -726,3 +726,43 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	output_air.merge(removed)
 	return TRUE
+
+/**
+ * Calls for electrolyzer_reaction reactions on the gas_mixture.
+ * Arguments:
+ * * working_power - working_power to use for the electrolyzer_reaction reactions.
+ * * electrolyzer_args - electrolysis arguments to use for the electrolyzer_reaction reactions.
+ */
+/datum/gas_mixture/proc/electrolyze(working_power = 0, electrolyzer_args = list())
+	for(var/reaction in GLOB.electrolyzer_reactions)
+		var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
+
+		if(!current_reaction.reaction_check(air_mixture = src, electrolyzer_args = electrolyzer_args))
+			continue
+
+		current_reaction.react(air_mixture = src, working_power = working_power, electrolyzer_args = electrolyzer_args)
+
+	garbage_collect()
+
+/// Convert a gas mixture to a string (ie. "o2=22;n2=82;TEMP=180")
+/// Rounds all temperature and gases to 0.01 and skips any gases less than that amount
+/datum/gas_mixture/proc/to_string()
+	var/list/cached_gases = gases
+	var/rounded_temp = round(temperature, 0.01)
+
+	var/list/atmos_contents = list()
+	var/temperature_str = "TEMP=[num2text(rounded_temp)]"
+
+	if(!length(cached_gases) || total_moles() < 0.01)
+		return temperature_str
+
+	for(var/gas_path in cached_gases)
+		var/gas_moles = cached_gases[gas_path][MOLES]
+		var/gas_id = cached_gases[gas_path][GAS_META][META_GAS_ID]
+
+		gas_moles = round(gas_moles, 0.01)
+		if(gas_moles >= 0.01)
+			atmos_contents += "[gas_id]=[num2text(gas_moles)]"
+
+	atmos_contents += temperature_str
+	return atmos_contents.Join(";")

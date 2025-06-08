@@ -80,6 +80,8 @@
  * * added_purity - override to force a purity when added
  * * added_ph - override to force a pH when added
  * * override_base_ph - ingore the present pH of the reagent, and instead use the default (i.e. if buffers/reactions alter it)
+ * * list/reagent_added - If not null use this as an holder to store and retrive the reagent datum that was just added without having to locate it after this proc returns. Clear the list to erase old values
+ * * creation_callback - Callback to invoke when the reagent is created
  */
 /datum/reagents/proc/add_reagent(
 	datum/reagent/reagent_type,
@@ -87,9 +89,11 @@
 	list/data = null,
 	reagtemp = DEFAULT_REAGENT_TEMPERATURE,
 	added_purity = null,
-	added_ph,
+	added_ph = null,
 	no_react = FALSE,
 	override_base_ph = FALSE,
+	list/reagent_added = null,
+	datum/callback/creation_callback = null,
 )
 	if(!ispath(reagent_type))
 		stack_trace("invalid reagent passed to add reagent [reagent_type]")
@@ -149,6 +153,8 @@
 				else
 					set_temperature(reagtemp)
 
+			if(!isnull(reagent_added))
+				reagent_added += iter_reagent
 			if(!no_react && !is_reacting) //To reduce the amount of calculations for a reaction the reaction list is only updated on a reagents addition.
 				handle_reactions()
 			return amount
@@ -164,6 +170,8 @@
 	new_reagent.purity = added_purity
 	new_reagent.creation_purity = added_purity
 	new_reagent.ph = added_ph
+	if (creation_callback)
+		creation_callback.Invoke(new_reagent)
 	new_reagent.on_new(data)
 
 	if(isliving(my_atom))
@@ -177,6 +185,8 @@
 		else
 			set_temperature(reagtemp)
 
+	if(!isnull(reagent_added))
+		reagent_added += new_reagent
 	if(!no_react)
 		handle_reactions()
 	return amount
@@ -323,7 +333,8 @@
 	datum/reagent/source_reagent_typepath,
 	datum/reagent/target_reagent_typepath,
 	multiplier = 1,
-	include_source_subtypes = FALSE
+	include_source_subtypes = FALSE,
+	keep_data = FALSE,
 )
 	if(!ispath(source_reagent_typepath))
 		stack_trace("invalid reagent path passed to convert reagent [source_reagent_typepath]")
@@ -336,6 +347,8 @@
 	var/weighted_purity = 0
 	var/weighted_ph = 0
 	var/reagent_volume = 0
+	///Stores the data value of the reagent to be converted if keep_data is TRUE. Might not work well if include_source_subtypes is TRUE.
+	var/list/reagent_data
 
 	var/list/cached_reagents = reagent_list
 	for(var/datum/reagent/cached_reagent as anything in cached_reagents)
@@ -354,6 +367,8 @@
 
 		//zero the volume out so it gets removed
 		cached_reagent.volume = 0
+		if(keep_data)
+			reagent_data = copy_data(cached_reagent)
 
 		//if we reached here means we have found our specific reagent type so break
 		if(!include_source_subtypes)
@@ -362,7 +377,14 @@
 	//add the new target reagent with the averaged values from the source reagents
 	if(weighted_volume > 0)
 		update_total()
-		add_reagent(target_reagent_typepath, weighted_volume * multiplier, reagtemp = chem_temp, added_purity = (weighted_purity / weighted_volume), added_ph = (weighted_ph / weighted_volume))
+		add_reagent(
+			target_reagent_typepath,
+			weighted_volume * multiplier,
+			data = reagent_data,
+			reagtemp = chem_temp,
+			added_purity = (weighted_purity / weighted_volume),
+			added_ph = (weighted_ph / weighted_volume),
+		)
 
 /// Removes all reagents
 /datum/reagents/proc/clear_reagents()
@@ -447,8 +469,8 @@
 		transfer_reactions(target_holder)
 
 	var/trans_data = null
+	var/list/r_to_send = methods ? list() : null // Validated list of reagents to be exposed
 	var/list/transfer_log = list()
-	var/list/r_to_send = list()	// Validated list of reagents to be exposed
 	var/list/reagents_to_remove = list()
 
 	var/part = isnull(target_id) ? (amount / total_volume) : 1
@@ -476,11 +498,9 @@
 			update_total()
 			target_holder.update_total()
 			continue
-		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE) //we only handle reaction after every reagent has been transferred.
+		transfered_amount = target_holder.add_reagent(reagent.type, transfer_amount * multiplier, trans_data, chem_temp, reagent.purity, reagent.ph, no_react = TRUE, reagent_added = r_to_send, creation_callback = CALLBACK(src, PROC_REF(_on_transfer_creation), reagent, target_holder)) //we only handle reaction after every reagent has been transferred.
 		if(!transfered_amount)
 			continue
-		if(methods)
-			r_to_send += reagent
 		reagents_to_remove[reagent] = transfer_amount
 		total_transfered_amount += transfered_amount
 
@@ -517,6 +537,12 @@
 		handle_reactions()
 
 	return total_transfered_amount
+
+///For internal purposes. Sends a signal when a new reagent has been created in the target reagent holder upon transfer
+/datum/reagents/proc/_on_transfer_creation(datum/reagent/reagent, datum/reagents/target_holder, datum/reagent/new_reagent)
+	PRIVATE_PROC(TRUE)
+
+	SEND_SIGNAL(reagent, COMSIG_REAGENT_ON_TRANSFER, target_holder, new_reagent)
 
 /**
  * Copies the reagents to the target object
@@ -698,8 +724,10 @@
 	// that could possibly eat up a lot of memory needlessly
 	// if most data lists are read-only.
 	if(trans_data["viruses"])
-		var/list/v = trans_data["viruses"]
-		trans_data["viruses"] = v.Copy()
+		var/list/viruses = list()
+		for (var/datum/disease/disease as anything in trans_data["viruses"])
+			viruses += disease.Copy()
+		trans_data["viruses"] = viruses
 
 	return trans_data
 

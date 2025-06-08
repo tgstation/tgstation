@@ -303,7 +303,7 @@
 			damage_overlay.color = iter_part.damage_overlay_color
 		if(iter_part.brutestate)
 			var/mutable_appearance/blood_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0", appearance_flags = RESET_COLOR) //we're adding icon_states of the base image as overlays
-			blood_damage_overlay.color = dna.blood_type.get_color()
+			blood_damage_overlay.color = get_bloodtype()?.get_damage_color(src)
 			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0_overlay", appearance_flags = RESET_COLOR)
 			blood_damage_overlay.overlays += brute_damage_overlay
 			damage_overlay.add_overlay(blood_damage_overlay)
@@ -316,17 +316,19 @@
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 	apply_overlay(DAMAGE_LAYER)
 
-/mob/living/carbon/update_wound_overlays()
+/// Handles bleeding overlays
+/mob/living/carbon/proc/update_wound_overlays()
 	remove_overlay(WOUND_LAYER)
 
-	if(dna?.blood_type.no_bleed_overlays)
+	var/datum/blood_type/blood_type = get_bloodtype()
+	if(!blood_type || !can_bleed())
 		return
 
 	var/mutable_appearance/wound_overlay
 	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
 		if(iter_part.bleed_overlay_icon)
 			var/mutable_appearance/blood_overlay = mutable_appearance('icons/mob/effects/bleed_overlays.dmi', "blank", -WOUND_LAYER, appearance_flags = KEEP_TOGETHER)
-			blood_overlay.color = dna.blood_type.get_color()
+			blood_overlay.color = blood_type.get_wound_color(src)
 			wound_overlay ||= blood_overlay
 			wound_overlay.add_overlay(iter_part.bleed_overlay_icon)
 
@@ -402,7 +404,7 @@
 	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
 		return
 
-	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_BACK) + 1])
+	if(client && hud_used?.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1])
 		var/atom/movable/screen/inventory/inv = hud_used.inv_slots[TOBITSHIFT(ITEM_SLOT_HEAD) + 1]
 		inv.update_appearance()
 
@@ -511,7 +513,6 @@
 		else
 			new_limbs += limb_icon_cache[icon_render_keys[limb.body_zone]] //Pulls existing sprites from the cache
 
-
 	remove_overlay(BODYPARTS_LAYER)
 
 	if(new_limbs.len)
@@ -612,7 +613,7 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
  * * limb_overlay - The limb image being masked, not necessarily the original limb image as it could be an overlay on top of it
  * Returns the list of masked images, or `null` if the limb_overlay didn't exist
  */
-/obj/item/bodypart/leg/proc/generate_masked_leg(mutable_appearance/limb_overlay)
+/obj/item/bodypart/leg/proc/generate_masked_leg(image/limb_overlay)
 	RETURN_TYPE(/list)
 	if(!limb_overlay)
 		return
@@ -638,11 +639,11 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
 	new_leg_icon_lower = GLOB.masked_leg_icons_cache[icon_cache_key][2]
 
 	//this could break layering in oddjob cases, but i'm sure it will work fine most of the time... right?
-	var/mutable_appearance/new_leg_appearance = new(limb_overlay)
+	var/image/new_leg_appearance = new(limb_overlay)
 	new_leg_appearance.icon = new_leg_icon
 	new_leg_appearance.layer = -BODYPARTS_LAYER
 	. += new_leg_appearance
-	var/mutable_appearance/new_leg_appearance_lower = new(limb_overlay)
+	var/image/new_leg_appearance_lower = new(limb_overlay)
 	new_leg_appearance_lower.icon = new_leg_icon_lower
 	new_leg_appearance_lower.layer = -BODYPARTS_LOW_LAYER
 	. += new_leg_appearance_lower

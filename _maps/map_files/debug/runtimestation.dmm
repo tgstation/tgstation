@@ -1114,10 +1114,6 @@
 /obj/item/paper/guides/jobs/security/labor_camp,
 /turf/open/floor/iron,
 /area/station/security/brig)
-"gW" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall/r_wall,
-/area/station/engineering/gravity_generator)
 "hm" = (
 /obj/machinery/airalarm/directional/west,
 /obj/effect/mapping_helpers/airalarm/unlocked,
@@ -1885,7 +1881,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/storage)
 "DW" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
@@ -7945,7 +7941,7 @@ aa
 aa
 aa
 ak
-gW
+ak
 Lb
 aX
 Qi

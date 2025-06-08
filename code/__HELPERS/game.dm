@@ -1,6 +1,3 @@
-///Time before being allowed to select a new cult leader again
-#define CULT_POLL_WAIT (240 SECONDS)
-
 /// Returns either the error landmark or the location of the room. Needless to say, if this is used, it means things have gone awry.
 #define GET_ERROR_ROOM ((locate(/obj/effect/landmark/error) in GLOB.landmarks_list) || locate(4,4,1))
 
@@ -204,7 +201,14 @@
 		return
 	winset(flashed_client, "mainwindow", "flash=5")
 
-///Recursively checks if an item is inside a given type/atom, even through layers of storage. Returns the atom if it finds it.
+/**
+ * Recursively checks if an item is inside a given type/atom, even through layers of storage.
+ * Returns the atom if it finds it.
+ *
+ * Arguments
+ * * atom/movable/target - the atom whos loc we are checking for
+ * * type - the location(typepath or solid atom) the target maybe stored in
+ */
 /proc/recursive_loc_check(atom/movable/target, type)
 	var/atom/atom_to_find = null
 

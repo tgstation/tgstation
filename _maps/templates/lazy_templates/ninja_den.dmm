@@ -76,7 +76,7 @@
 /turf/open/floor/bamboo/tatami/purple,
 /area/centcom/central_command_areas/holding)
 "bH" = (
-/obj/machinery/photocopier,
+/obj/machinery/photocopier/prebuilt,
 /turf/open/floor/catwalk_floor,
 /area/centcom/central_command_areas/holding)
 "bO" = (

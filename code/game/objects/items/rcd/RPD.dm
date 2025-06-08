@@ -122,10 +122,6 @@
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
 	return ..()
 
-/obj/item/pipe_dispenser/cyborg_unequip(mob/user)
-	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
-	return ..()
-
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
 

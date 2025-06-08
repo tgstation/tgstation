@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "impure chems(cryostylane below 50% purity) will now expose the mob to their inverse chems(cryogelidia) after transfer"
