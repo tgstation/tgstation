@@ -10,12 +10,14 @@
 	name = "Healing Impure Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	addiction_types = list(/datum/addiction/medicine = 3.5)
+	chemical_flags = NONE
 	liver_damage = 0
 
 /datum/reagent/inverse/healing
 	name = "Healing Inverse Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
 	addiction_types = list(/datum/addiction/medicine = 3)
+	chemical_flags = NONE
 	tox_damage = 0
 
 // END SUBTYPES
@@ -123,6 +125,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/libitoil
 	name = "Libitoil"
 	description = "Temporarily interferes with a patient's ability to process alcohol."
+	chemical_flags = NONE
 	ph = 13.5
 	addiction_types = list(/datum/addiction/medicine = 4)
 	tox_damage = 0
@@ -394,6 +397,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Technetium 99"
 	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will poison the patient when present very slowly, purging or using a low dose is recommended after use."
 	metabolization_rate = 0.3 * REM
+	chemical_flags = NONE //Do show this on scanner
 	tox_damage = 0
 
 	var/time_until_next_poison = 0
