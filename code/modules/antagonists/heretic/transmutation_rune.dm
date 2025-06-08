@@ -174,16 +174,16 @@
 	//Everything's good, proceed and collect from the available stacks what's needed if needed.
 	if(length(stack_reqs))
 		for(var/obj/item/stack/nearby_stack in atoms_in_range)
-			for(var/stack_path as anything in stack_reqs)
-				if(!istype(nearby_atom, req_type))
+			for(var/stack_path in stack_reqs)
+				if(!istype(nearby_stack, stack_path))
 					continue
-				var/amount_to_give = min(picked_stack.amount || requirements_list[req_type])
+				var/amount_to_give = min(nearby_stack.amount || stack_reqs[stack_path])
 				var/obj/item/stack/our_stack = locate(nearby_stack.merge_type) in selected_atoms
 				if(!our_stack)
-					our_stack = picked_stack.split_stack(amount = amount_to_give)
+					our_stack = nearby_stack.split_stack(amount = amount_to_give)
 					selected_atoms |= our_stack
 				else
-					picked_stack.merge(our_stack, limit = our_stack.amount + amount_to_give)
+					nearby_stack.merge(our_stack, limit = our_stack.amount + amount_to_give)
 
 	// If we made it here, the ritual had all necessary components, and we can try to cast it.
 	// This doesn't necessarily mean the ritual will succeed, but it's valid!
