@@ -1,0 +1,8 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - refactor: "Refactored the book interaction chain. Please report any issues."
+  - bugfix: "You can no longer vandalize carved out books if you carve it after opening the input menu but before entering anything."
+  - qol: "Added screentips to book interactions."
+  - qol: "Added screentips to barcode scanner interactions."
+  - qol: "Carving out books no longer uses combat mode, instead using left-click by default and right-click if your tool can also write. Screentips account for this."
