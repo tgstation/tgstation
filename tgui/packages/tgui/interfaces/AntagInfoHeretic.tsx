@@ -80,6 +80,7 @@ type HereticPath = {
   cons: string[];
   tips: string[];
   starting_knowledge: Knowledge;
+  preview_abilities: Knowledge[];
 };
 
 type Info = {
@@ -298,11 +299,13 @@ const KnowledgeTree = () => {
 type KnowledgeNodeProps = {
   node: Knowledge;
   buy_source?: BoughtAt;
+  can_buy?: BooleanLike;
 };
 
 const KnowledgeNode = ({
   node,
   buy_source = BoughtAt.Tree,
+  can_buy = true,
 }: KnowledgeNodeProps) => {
   const { data, act } = useBackend<Info>();
   const { charges } = data;
@@ -313,8 +316,8 @@ const KnowledgeNode = ({
         tooltip={`${node.name}:
           ${node.desc}`}
         onClick={
-          node.bought_category
-            ? () => logger.warn('This node has already been bought!')
+          !can_buy || node.bought_category
+            ? () => logger.warn(`Cannot buy ${node.name}`)
             : () => act('research', { path: node.path, source: buy_source })
         }
         width={node.ascension ? '192px' : '64px'}
@@ -359,7 +362,9 @@ const KnowledgeNode = ({
           textColor="white"
           bold
         >
-          {!node.bought_category && (node.cost > 0 ? node.cost : 'FREE')}
+          {!node.bought_category &&
+            can_buy &&
+            (node.cost > 0 ? node.cost : 'FREE')}
         </Box>
       </Button>
       {!!node.ascension && (
@@ -514,6 +519,16 @@ const PathContent = ({
           {path.description.map((line, index) => (
             <div key={index}>{line}</div>
           ))}
+        </Stack.Item>
+        <Stack.Item>
+          <b>Guaranteed Abilities:</b>
+          <Stack wrap="wrap" justify="center">
+            {path.preview_abilities.map((ability) => (
+              <Stack.Item key={`guaranteed_${ability.name}`} m={1}>
+                <KnowledgeNode node={ability} can_buy={false} />
+              </Stack.Item>
+            ))}
+          </Stack>
         </Stack.Item>
         {!isPathSelected && (
           <>

@@ -270,7 +270,7 @@
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
 	/// The status effect of our passive
-	var/eldritch_passive = /datum/status_effect/heretic_passive
+	var/datum/status_effect/heretic_passive/eldritch_passive = /datum/status_effect/heretic_passive
 
 /datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()

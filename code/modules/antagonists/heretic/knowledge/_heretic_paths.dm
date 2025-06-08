@@ -34,7 +34,7 @@ GLOBAL_LIST(heretic_research_tree)
 
 	//-- Knowledge in order of unlocking
 	///Starting knowledge - first thing you pick. Gives you access to blades, grasp, mark and passive
-	var/start
+	var/datum/heretic_knowledge/limited_amount/starting/start
 	///Tier1 knowledge
 	var/knowledge_tier1
 	///Tier2 knowledge
@@ -59,7 +59,7 @@ GLOBAL_LIST(heretic_research_tree)
 
 
 /datum/heretic_knowledge_tree_column/proc/get_ui_data(datum/antagonist/heretic/our_heretic)
-	return list(
+	var/list/data = list(
 		"route" = route,
 		"icon" = icon.Copy(),
 		"complexity" = complexity,
@@ -70,6 +70,24 @@ GLOBAL_LIST(heretic_research_tree)
 		"tips" = tips.Copy(),
 		"starting_knowledge" = our_heretic.get_knowledge_data(start),
 	)
+
+	data["preview_abilities"] = list(
+		our_heretic.get_knowledge_data(knowledge_tier1),
+		our_heretic.get_knowledge_data(knowledge_tier2),
+		our_heretic.get_knowledge_data(knowledge_tier3),
+		our_heretic.get_knowledge_data(ascension),
+	)
+
+	var/datum/status_effect/heretic_passive/passive = start.eldritch_passive
+	data["passive"] = list(
+		"name" = initial(passive.name),
+		"tier_1_description" = initial(passive.tier_1_description),
+		"tier_2_description" = initial(passive.tier_2_description),
+		"tier_3_description" = initial(passive.tier_3_description),
+		"level" = passive ? passive.passive_level : 0,
+	)
+
+	return data
 
 /proc/generate_heretic_research_tree()
 	var/list/heretic_research_tree = list()

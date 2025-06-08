@@ -10,6 +10,10 @@
 	on_remove_on_mob_delete = TRUE
 	///What level is our passive currently on
 	var/passive_level = HERETIC_LEVEL_START
+	var/name = "Heretic Passive"
+	var/tier_1_description = "Grants you a passive ability based on your heretic type. This ability will upgrade as you gain more power."
+	var/tier_2_description = "Your passive ability has been upgraded, doing something else."
+	var/tier_3_description = "Your passive ability has been upgraded to its final form, granting you a powerful new ability."
 
 /datum/status_effect/heretic_passive/on_apply()
 	. = ..()
