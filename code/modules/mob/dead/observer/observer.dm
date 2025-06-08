@@ -259,7 +259,7 @@ Works together with spawning an observer, noted above.
 /mob/proc/ghostize(can_reenter_corpse = TRUE, admin_ghost = FALSE)
 	if(!key)
 		return
-	if(key[1] == "@") // Skip aghosts.
+	if(IS_FAKE_KEY(key)) // Skip aghosts.
 		return
 
 	if(HAS_TRAIT(src, TRAIT_CORPSELOCKED) && !admin_ghost)
@@ -370,7 +370,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!can_reenter_corpse)
 		to_chat(src, span_warning("You cannot re-enter your body."))
 		return
-	if(mind.current.key && mind.current.key[1] != "@") //makes sure we don't accidentally kick any clients
+	if(mind.current.key && !IS_FAKE_KEY(mind.current.key)) //makes sure we don't accidentally kick any clients
 		to_chat(usr, span_warning("Another consciousness is in your body...It is resisting you."))
 		return
 	client.view_size.setDefault(getScreenSize(client.prefs.read_preference(/datum/preference/toggle/widescreen)))//Let's reset so people can't become allseeing gods

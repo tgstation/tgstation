@@ -26,7 +26,7 @@
 /mob/Destroy()
 	if(client)
 		stack_trace("Mob with client has been deleted.")
-	else if(ckey)
+	else if(ckey && !IS_FAKE_KEY(ckey)) // FUCK YOU AGHOST CODE FUCK YOU
 		stack_trace("Mob without client but with associated ckey, [ckey], has been deleted.")
 
 	persistent_client?.set_mob(null)

@@ -885,7 +885,7 @@
 	if (current_brain.suicided || (current_brain.brainmob && HAS_TRAIT(current_brain.brainmob, TRAIT_SUICIDED)))
 		return DEFIB_FAIL_NO_INTELLIGENCE
 
-	if(key && key[1] == "@") // Adminghosts
+	if(IS_FAKE_KEY(key))
 		return DEFIB_NOGRAB_AGHOST
 
 	return DEFIB_POSSIBLE
