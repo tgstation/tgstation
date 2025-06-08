@@ -974,7 +974,7 @@ ADMIN_VERB(count_instances, R_DEBUG, "Count Atoms/Datums", "Count how many atom 
 		fdel(tmp_path)
 		rustg_file_write(json_encode(result, JSON_PRETTY_PRINT), tmp_path)
 		var/exportable_json = file(tmp_path)
-		DIRECT_OUTPUT(user, ftp(exportable_json, "[lowertext(option)]_instance_count_round_[GLOB.round_id].json"))
+		DIRECT_OUTPUT(user, ftp(exportable_json, "[LOWER_TEXT(option)]_instance_count_round_[GLOB.round_id].json"))
 		fdel(tmp_path)
 
 #ifndef OPENDREAM
