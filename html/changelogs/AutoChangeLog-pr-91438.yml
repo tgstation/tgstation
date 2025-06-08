@@ -1,0 +1,4 @@
+author: "NanoCats, Arturlang"
+delete-after: True
+changes:
+  - map: "Heavily changes catwalkstation's science department, including moving the protolathe downstairs and north of the cupboard it is currently in, and adds a second exofabber for robotics."
