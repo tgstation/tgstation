@@ -68909,7 +68909,6 @@
 /area/station/medical/pharmacy)
 "xJK" = (
 /obj/structure/table,
-/obj/item/stack/sheet/plasteel/fifty,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "xJQ" = (

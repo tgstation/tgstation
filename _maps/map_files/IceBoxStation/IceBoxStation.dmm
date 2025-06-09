@@ -17567,10 +17567,6 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/stack/sheet/plasteel/twenty{
-	pixel_x = 3;
-	pixel_y = -2
-	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/storage)

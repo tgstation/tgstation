@@ -23238,6 +23238,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/stack/sheet/plasteel/twenty{
+	pixel_x = -3
+	},
 /obj/item/circuitboard/machine/crystallizer,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)

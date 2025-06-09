@@ -5517,7 +5517,6 @@
 	pixel_x = 2;
 	pixel_y = -2
 	},
-/obj/item/stack/sheet/plasteel/twenty,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -67797,11 +67796,14 @@
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm/directional/south,
 /obj/machinery/light/directional/south,
-/obj/item/stack/sheet/plasteel/fifty,
 /obj/item/stack/sheet/rglass{
 	amount = 20;
 	pixel_x = 2;
 	pixel_y = -2
+	},
+/obj/item/stack/sheet/plasteel/twenty{
+	pixel_x = 2;
+	pixel_y = 3
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/hfr_room)

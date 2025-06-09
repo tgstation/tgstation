@@ -49588,7 +49588,6 @@
 /area/station/security/prison/shower)
 "rkp" = (
 /obj/effect/turf_decal/stripes,
-/obj/item/stack/sheet/plasteel/fifty,
 /obj/item/stack/cable_coil{
 	pixel_x = -1;
 	pixel_y = -3

@@ -43481,11 +43481,8 @@
 	pixel_y = 7
 	},
 /obj/item/stack/sheet/glass/fifty{
-	pixel_y = 7
-	},
-/obj/item/stack/sheet/plasteel/fifty{
-	pixel_x = 7;
-	pixel_y = 7
+	pixel_y = 7;
+	pixel_x = 6
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
