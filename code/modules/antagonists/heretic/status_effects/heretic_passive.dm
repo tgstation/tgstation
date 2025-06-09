@@ -180,7 +180,8 @@
 /datum/status_effect/heretic_passive/cosmic/tick(seconds_between_ticks)
 	. = ..()
 	if(locate(/obj/effect/forcefield/cosmic_field) in get_turf(owner))
-		owner.adjustStaminaLoss(-15 * delta_time * seconds_between_ticks, updating_stamina = FALSE)
+		var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
+		owner.adjustStaminaLoss(-15 * delta_time, updating_stamina = FALSE)
 
 /**
  * Creates a cosmic field at a given loc

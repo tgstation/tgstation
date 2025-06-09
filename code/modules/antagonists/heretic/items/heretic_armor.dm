@@ -584,10 +584,18 @@
 	var/mutable_appearance/rust_appearance
 	/// identifier for the overlay
 	var/static/overlay_id = 0
+	/// Overlay for the armor object
+	var/image/object_overlay
+	/// Overlay for the hood object
+	var/image/hood_object_overlay
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/Initialize(mapload)
 	. = ..()
 	overlay_id++
+	if(!object_overlay)
+		object_overlay = image(icon, icon_state = "rust_armor_overlay")
+	if(!hood_object_overlay)
+		hood_object_overlay = image('icons/obj/clothing/head/helmet.dmi', icon_state = "rust_armor_overlay")
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/equipped(mob/living/user, slot)
 	. = ..()
@@ -595,6 +603,9 @@
 		UnregisterSignal(user, list(COMSIG_MOVABLE_MOVED))
 		user.vis_contents -= rust_overlay
 		rusted = FALSE
+		armor_type = /datum/armor/eldritch_armor/rust
+		REMOVE_TRAIT(user, TRAIT_PIERCEIMMUNE, REF(src))
+		cut_overlay(object_overlay)
 		QDEL_NULL(rust_overlay)
 		QDEL_NULL(rust_appearance)
 		return
@@ -615,6 +626,7 @@
 	var/mob/wearer = loc
 	UnregisterSignal(wearer, list(COMSIG_MOVABLE_MOVED))
 	wearer.vis_contents -= rust_overlay
+	REMOVE_TRAIT(wearer, TRAIT_PIERCEIMMUNE, REF(src))
 	QDEL_NULL(rust_overlay)
 	QDEL_NULL(rust_appearance)
 	rusted = FALSE
@@ -659,19 +671,23 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/proc/update_rust()
 	// Animation + Update the overlay sprite on our armor
 	if(rusted)
-		rust_overlay.icon_state = "[worn_icon_state]" + "_overlay"
+		rust_overlay?.icon_state = "[worn_icon_state]" + "_overlay"
 		flick("[worn_icon_state]"+"_on", rust_overlay)
+		add_overlay(object_overlay)
+		hood?.add_overlay(hood_object_overlay)
 	else
-		rust_overlay.icon_state = null
+		rust_overlay?.icon_state = null
 		flick("[worn_icon_state]"+"_off", rust_overlay)
+		cut_overlay(object_overlay)
+		hood?.cut_overlay(hood_object_overlay)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/worn_overlays(mutable_appearance/standing, isinhands)
 	. = ..()
 	// Should basically catch toggling the hood on/off while standing on rust
 	if(rusted)
-		rust_overlay.icon_state = "[worn_icon_state]" + "_overlay"
+		rust_overlay?.icon_state = "[worn_icon_state]" + "_overlay"
 	else
-		rust_overlay.icon_state = null
+		rust_overlay?.icon_state = null
 	. += rust_appearance
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
