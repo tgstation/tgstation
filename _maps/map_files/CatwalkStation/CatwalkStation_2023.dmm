@@ -6321,7 +6321,7 @@
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
 "bUa" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "bUf" = (
@@ -33976,10 +33976,6 @@
 	pixel_x = 1;
 	pixel_y = -2
 	},
-/obj/item/ai_module/toy_ai{
-	pixel_x = -13;
-	pixel_y = 9
-	},
 /obj/machinery/camera/motion/directional/south{
 	c_tag = "AI Upload Chamber - Lower";
 	network = list("aiupload")
@@ -33987,6 +33983,10 @@
 /obj/machinery/airalarm/directional/south,
 /obj/item/phone{
 	pixel_x = 9;
+	pixel_y = 9
+	},
+/obj/item/ai_module/toy_ai{
+	pixel_x = -13;
 	pixel_y = 9
 	},
 /turf/open/floor/carpet,
@@ -78907,7 +78907,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "xDB" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,

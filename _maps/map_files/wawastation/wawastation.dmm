@@ -2787,7 +2787,7 @@
 /turf/open/floor/iron,
 /area/station/command/gateway)
 "aVq" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /obj/machinery/light_switch/directional/north,
 /obj/effect/turf_decal/siding/purple,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -2909,7 +2909,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
 "aYS" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /obj/item/toy/figure/geneticist{
 	pixel_y = 18
 	},
@@ -25695,14 +25695,14 @@
 "jbM" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/table/reinforced,
-/obj/item/ai_module/toy_ai{
-	pixel_x = 16;
-	pixel_y = 8
-	},
 /obj/item/paper_bin/construction{
 	pixel_y = 6
 	},
 /obj/item/pen,
+/obj/item/toy/talking/ai{
+	pixel_x = 18;
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/foyer)
 "jbP" = (
@@ -36862,7 +36862,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "mPl" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /obj/structure/railing,
@@ -60303,13 +60303,13 @@
 /area/station/maintenance/department/science)
 "uOs" = (
 /obj/structure/table/wood,
-/obj/item/ai_module/toy_ai{
-	pixel_x = 9;
-	pixel_y = -6
-	},
 /obj/item/food/carneburrito{
 	pixel_x = -2;
 	pixel_y = 5
+	},
+/obj/item/toy/talking/ai{
+	pixel_x = 9;
+	pixel_y = -6
 	},
 /turf/open/floor/carpet/executive,
 /area/station/command/meeting_room)

@@ -52385,7 +52385,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "oPP" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
@@ -78206,7 +78206,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/genetics)
 "wnR" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /obj/machinery/status_display/evac/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)

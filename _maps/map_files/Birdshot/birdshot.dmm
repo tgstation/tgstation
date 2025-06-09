@@ -201,7 +201,7 @@
 /area/station/command/corporate_showroom)
 "aeD" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/purple{
@@ -23145,7 +23145,7 @@
 /area/station/hallway/primary/aft)
 "hVY" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/purple{
@@ -68289,7 +68289,7 @@
 /area/station/security/checkpoint/customs)
 "wyy" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 8
 	},
 /obj/effect/turf_decal/siding/purple{
