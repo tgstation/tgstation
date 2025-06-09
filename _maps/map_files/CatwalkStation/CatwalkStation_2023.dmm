@@ -6321,7 +6321,7 @@
 /turf/open/floor/iron/large,
 /area/station/hallway/primary/central)
 "bUa" = (
-/obj/machinery/computer/scan_consolenew,
+/obj/machinery/computer/dna_console,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/science/genetics)
 "bUf" = (
@@ -13112,7 +13112,7 @@
 	chamber_id = "ordnanceburn"
 	},
 /obj/effect/mapping_helpers/airalarm/tlv_no_checks,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/atmospherics/components/binary/pump/on/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "dUW" = (
@@ -13169,10 +13169,8 @@
 /turf/open/floor/iron/textured_large,
 /area/station/security/prison)
 "dVM" = (
-/obj/structure/table,
-/obj/item/t_scanner{
-	pixel_y = 8
-	},
+/obj/structure/rack,
+/obj/effect/spawner/random/techstorage/custom_shuttle,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "dVO" = (
@@ -24133,6 +24131,9 @@
 /obj/item/multitool{
 	pixel_x = 5
 	},
+/obj/item/t_scanner{
+	pixel_y = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "hiW" = (
@@ -33975,10 +33976,6 @@
 	pixel_x = 1;
 	pixel_y = -2
 	},
-/obj/item/ai_module/toy_ai{
-	pixel_x = -13;
-	pixel_y = 9
-	},
 /obj/machinery/camera/motion/directional/south{
 	c_tag = "AI Upload Chamber - Lower";
 	network = list("aiupload")
@@ -33986,6 +33983,10 @@
 /obj/machinery/airalarm/directional/south,
 /obj/item/phone{
 	pixel_x = 9;
+	pixel_y = 9
+	},
+/obj/item/ai_module/toy_ai{
+	pixel_x = -13;
 	pixel_y = 9
 	},
 /turf/open/floor/carpet,
@@ -43476,11 +43477,15 @@
 "mWq" = (
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty{
-	pixel_x = -9;
-	pixel_y = 9
+	pixel_x = -7;
+	pixel_y = 7
 	},
 /obj/item/stack/sheet/glass/fifty{
-	pixel_y = 13
+	pixel_y = 7
+	},
+/obj/item/stack/sheet/plasteel/fifty{
+	pixel_x = 7;
+	pixel_y = 7
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
@@ -49524,20 +49529,19 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "oMH" = (
-/obj/item/hfr_box/body/waste_output{
-	pixel_x = -15;
-	pixel_y = 13
-	},
 /obj/item/hfr_box/body/interface{
 	pixel_y = 17
 	},
 /obj/item/hfr_box/body/moderator_input{
 	pixel_x = -8;
-	pixel_y = 8
+	pixel_y = 9
+	},
+/obj/item/hfr_box/body/fuel_input{
+	pixel_x = 7;
+	pixel_y = 9
 	},
 /obj/item/hfr_box/body/waste_output{
-	pixel_x = 10;
-	pixel_y = 9
+	pixel_y = 3
 	},
 /obj/structure/table,
 /turf/open/floor/engine,
@@ -60282,23 +60286,23 @@
 "rYz" = (
 /obj/structure/table,
 /obj/item/hfr_box/corner{
-	pixel_x = 3;
-	pixel_y = 10
+	pixel_x = 7;
+	pixel_y = 14
 	},
 /obj/item/hfr_box/corner{
-	pixel_y = 6
+	pixel_y = 14;
+	pixel_x = -8
 	},
-/obj/item/hfr_box/corner{
-	pixel_x = -2;
+/obj/item/hfr_box/core{
 	pixel_y = 8
 	},
 /obj/item/hfr_box/corner{
-	pixel_x = -4;
-	pixel_y = 5
+	pixel_x = -8;
+	pixel_y = 3
 	},
-/obj/item/hfr_box/core{
-	pixel_x = 3;
-	pixel_y = 4
+/obj/item/hfr_box/corner{
+	pixel_x = 7;
+	pixel_y = 3
 	},
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
@@ -74664,10 +74668,6 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
-"wmG" = (
-/obj/item/stack/sheet/plasteel/fifty,
-/turf/open/floor/engine,
-/area/station/engineering/atmos/hfr_room)
 "wmK" = (
 /obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/pipe/multiz/supply/visible/layer4,
@@ -78907,7 +78907,7 @@
 /turf/open/floor/catwalk_floor,
 /area/station/engineering/main)
 "xDB" = (
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -193843,7 +193843,7 @@ xIe
 nlm
 nlm
 ydS
-wmG
+bNX
 ovn
 bNX
 qGp

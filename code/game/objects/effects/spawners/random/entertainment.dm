@@ -151,6 +151,7 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 1,
 		/obj/item/storage/fancy/cigarettes/cigpack_midori = 1,
 		/obj/item/storage/fancy/cigarettes/cigpack_candy = 1,
+		/obj/item/storage/fancy/cigarettes/cigpack_greytide = 1,
 	)
 
 /obj/effect/spawner/random/entertainment/cigarette
@@ -165,6 +166,7 @@
 		/obj/item/cigarette/robust = 2,
 		/obj/item/cigarette/carp = 1,
 		/obj/item/cigarette/robustgold = 1,
+		/obj/item/cigarette/greytide = 3,
 	)
 
 /obj/effect/spawner/random/entertainment/cigar

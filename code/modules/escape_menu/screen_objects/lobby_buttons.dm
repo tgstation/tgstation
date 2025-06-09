@@ -24,9 +24,10 @@
 	src.on_click_callback = on_click_callback
 	src.tooltip_text = tooltip_text
 
-	add_overlay(button_overlay)
-
-	add_maptext(button_text)
+	if(button_overlay)
+		add_overlay(button_overlay)
+	if(button_text)
+		add_maptext(button_text)
 
 	screen_loc = "CENTER:[pixel_offset[1]],CENTER:[pixel_offset[2]]"
 
@@ -39,7 +40,7 @@
 	on_click_callback?.InvokeAsync()
 
 /atom/movable/screen/escape_menu/lobby_button/MouseEntered(location, control, params)
-	if (hovered)
+	if (hovered || isnull(tooltip_text))
 		return
 
 	hovered = TRUE

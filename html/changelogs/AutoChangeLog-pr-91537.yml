@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - bugfix: "Deltastation rounds can now once again end as expected, as the shuttle will once again dock."

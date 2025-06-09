@@ -75,7 +75,7 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon_nopipes()
 	cut_overlays()
-	if(showpipe)
+	if(underfloor_state)
 		// everything is already shifted so don't shift the cap
 		var/image/cap = get_pipe_image(icon, "inje_cap", initialize_directions, pipe_color)
 		cap.appearance_flags |= RESET_COLOR|KEEP_APART
