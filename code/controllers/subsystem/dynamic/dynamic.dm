@@ -109,9 +109,6 @@ SUBSYSTEM_DEF(dynamic)
 			along with 'return to lobby if job is unavailable' enabled and has [player.client.prefs.be_special.len] antag preferences enabled. \
 			They will be unable to qualify for any roundstart antagonist role. These are their job preferences - [job_data.Join(" | ")]")
 
-	// we got what we needed, reset so we can do real job selection later
-	SSjob.reset_occupations()
-
 	var/num_real_players = length(antag_candidates)
 	// now select a tier (if admins didn't)
 	// this also calculates the number of rulesets to spawn
@@ -121,6 +118,9 @@ SUBSYSTEM_DEF(dynamic)
 	// this will even handle the case in which the tier wants 0 roundstart rulesets
 	if(!length(queued_rulesets))
 		queued_rulesets += pick_roundstart_rulesets(antag_candidates)
+	// we got what we needed, reset so we can do real job selection later
+	// reset only happens AFTER roundstart selection so we can verify stuff like "can we get 3 heads of staff for revs?"
+	SSjob.reset_occupations()
 	// finally, run through the queue and prepare rulesets for execution
 	// (actual execution, ie assigning antags, will happen after job assignment)
 	for(var/datum/dynamic_ruleset/roundstart/ruleset in queued_rulesets)
@@ -383,8 +383,9 @@ SUBSYSTEM_DEF(dynamic)
  * As an example, this allows you to only spawn 1 traitor rather than the ruleset's default of 3
  * Can't be set to 0 (why are you forcing a ruleset that spawns 0 antags?)
  * * alert_admins_on_fail - If TRUE, alert admins if the ruleset fails to prepare/execute
+ * * mob/admin - The admin who is forcing the ruleset, used for configuring the ruleset if possible
  */
-/datum/controller/subsystem/dynamic/proc/force_run_midround(midround_typepath, forced_max_cap, alert_admins_on_fail = FALSE)
+/datum/controller/subsystem/dynamic/proc/force_run_midround(midround_typepath, forced_max_cap, alert_admins_on_fail = FALSE, mob/admin)
 	if(!ispath(midround_typepath, /datum/dynamic_ruleset/midround))
 		CRASH("force_run_midround() was called with an invalid midround type: [midround_typepath]")
 
@@ -392,6 +393,11 @@ SUBSYSTEM_DEF(dynamic)
 	if(isnum(forced_max_cap) && forced_max_cap > 0)
 		running.min_antag_cap = min(forced_max_cap, running.min_antag_cap)
 		running.max_antag_cap = forced_max_cap
+
+	if(admin && (running.ruleset_flags & RULESET_ADMIN_CONFIGURABLE))
+		if(running.configure_ruleset(admin) == RULESET_CONFIG_CANCEL)
+			qdel(running)
+			return FALSE
 
 	// NOTE: !! THIS CAN SLEEP !!
 	if(!running.prepare_execution(get_active_player_count(afk_check = TRUE), running.collect_candidates()))
@@ -645,6 +651,7 @@ SUBSYSTEM_DEF(dynamic)
 		data += "\[\"[tier.config_tag]\"\]\n"
 		data += "name = \"[tier.name]\"\n"
 		data += "min_pop = [tier.min_pop]\n"
+		data += "weight = [tier.weight]\n"
 		data += "advisory_report = \"[tier.advisory_report]\"\n"
 		for(var/range in tier.ruleset_type_settings)
 			data += "ruleset_type_settings.[range].[LOW_END] = [tier.ruleset_type_settings[range]?[LOW_END] || 0]\n"

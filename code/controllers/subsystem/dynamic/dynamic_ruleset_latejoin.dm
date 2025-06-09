@@ -42,7 +42,7 @@
 	pref_flag = ROLE_HERETIC_SMUGGLER
 	jobban_flag = ROLE_HERETIC
 	weight = 3
-	min_pop = 15
+	min_pop = 30 // Ensures good spread of sacrifice targets
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_HERETIC_SACRIFICE)
 	blacklisted_roles = list(
 		JOB_HEAD_OF_PERSONNEL,
@@ -78,9 +78,9 @@
 	/// How many heads of staff are required to be on the station for this to be selected
 	var/heads_necessary = 3
 
-/datum/dynamic_ruleset/latejoin/revolution/can_be_selected(population_size)
+/datum/dynamic_ruleset/latejoin/revolution/can_be_selected()
 	var/head_check = 0
-	for(var/mob/player as anything in GLOB.alive_player_list)
+	for(var/mob/player as anything in get_active_player_list(alive_check = TRUE, afk_check = TRUE))
 		if (player.mind.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 			head_check++
 	return head_check >= heads_necessary
@@ -100,12 +100,25 @@
 
 /datum/dynamic_ruleset/latejoin/revolution/proc/reveal_head(datum/mind/candidate)
 	LAZYREMOVE(candidate.special_roles, "Dormant Head Revolutionary")
+
+	var/head_check = 0
+	for(var/mob/player as anything in get_active_player_list(alive_check = TRUE, afk_check = TRUE))
+		if(player.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
+			head_check++
+
+	if(head_check < heads_necessary - 1) // little bit of leeway
+		SSdynamic.unreported_rulesets += src
+		name += " (Canceled)"
+		log_dynamic("[config_tag]: Not enough heads of staff were present to start a revolution.")
+		return
+
 	if(!can_be_headrev(candidate))
 		SSdynamic.unreported_rulesets += src
 		name += " (Canceled)"
 		log_dynamic("[config_tag]: [key_name(candidate)] was ineligible after the timer expired. Ruleset canceled.")
 		message_admins("[config_tag]: [key_name(candidate)] was ineligible after the timer expired. Ruleset canceled.")
 		return
+
 	GLOB.revolution_handler ||= new()
 	var/datum/antagonist/rev/head/new_head = new()
 	new_head.give_flash = TRUE

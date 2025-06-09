@@ -3,7 +3,6 @@
 	name = "\improper Fugitive"
 	roundend_category = "Fugitive"
 	pref_flag = ROLE_FUGITIVE
-	silent = TRUE //greet called by the event
 	show_in_antagpanel = FALSE
 	show_to_ghosts = TRUE
 	antagpanel_category = ANTAG_GROUP_FUGITIVES
@@ -37,10 +36,14 @@
 
 	return fugitive_icon
 
-
 /datum/antagonist/fugitive/on_gain()
 	forge_objectives()
 	. = ..()
+	owner.set_assigned_role(SSjob.get_job_type(/datum/job/fugitive))
+
+/datum/antagonist/fugitive/on_removal()
+	. = ..()
+	owner?.set_assigned_role(SSjob.get_job_type(/datum/job/unassigned))
 
 /datum/antagonist/fugitive/forge_objectives() //this isn't the actual survive objective because it's about who in the team survives
 	var/datum/objective/survive = new /datum/objective
@@ -48,9 +51,8 @@
 	survive.explanation_text = "Avoid capture from the fugitive hunters."
 	objectives += survive
 
-/datum/antagonist/fugitive/greet(back_story)
+/datum/antagonist/fugitive/greet()
 	. = ..()
-	backstory = back_story
 	var/message = "<span class='warningplain'>"
 	switch(backstory)
 		if(FUGITIVE_BACKSTORY_PRISONER)

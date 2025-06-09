@@ -106,7 +106,7 @@
 	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "nukietalkie"
 	/// The name of the special role given to the recruit
-	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
+	var/special_role_name = ROLE_OPERATIVE
 	/// The applied outfit
 	var/datum/outfit/syndicate/outfit = /datum/outfit/syndicate/reinforcement
 	/// The antag datum applied

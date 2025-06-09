@@ -68,8 +68,8 @@ GLOBAL_LIST_INIT(non_ruleset_antagonists, list(
 	var/list/antag_bans = list()
 
 	var/is_banned_from_all = is_banned_from(preferences.parent.ckey, ROLE_SYNDICATE)
-	for(var/antag_flag in get_all_antag_flags())
-		if(is_banned_from_all || is_banned_from(preferences.parent.ckey, antag_flag))
+	for (var/antag_flag in get_all_antag_flags())
+		if (is_banned_from_all || is_banned_from(preferences.parent.ckey, antag_flag))
 			antag_bans += serialize_antag_name(antag_flag)
 
 	return antag_bans

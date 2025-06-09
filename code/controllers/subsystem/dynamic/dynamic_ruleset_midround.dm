@@ -37,7 +37,7 @@
 	/// Determines how many eggs to create - can take a formula like antag_cap
 	var/egg_count = 2
 
-/datum/dynamic_ruleset/midround/spiders/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/spiders/can_be_selected()
 	return ..() && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
 
 /datum/dynamic_ruleset/midround/spiders/execute()
@@ -63,19 +63,28 @@
 	config_tag = "Light Pirates"
 	midround_type = LIGHT_MIDROUND
 	jobban_flag = ROLE_TRAITOR
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE
 	weight = 3
 	min_pop = 15
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
 
-/datum/dynamic_ruleset/midround/pirates/can_be_selected(population_size)
-	return ..() && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && !SSmapping.is_planetary() && length(pirate_pool()) > 0
+	/// Pool to pick pirates from
+	var/list/datum/pirate_gang/pirate_pool
+
+/datum/dynamic_ruleset/midround/pirates/New(list/dynamic_config)
+	. = ..()
+	pirate_pool = default_pirate_pool()
+
+/datum/dynamic_ruleset/midround/pirates/can_be_selected()
+	return ..() && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && !SSmapping.is_planetary() && length(default_pirate_pool()) > 0
 
 // An abornmal ruleset that selects no players, but just spawns a pirate ship
 /datum/dynamic_ruleset/midround/pirates/execute()
-	send_pirate_threat(pirate_pool())
+	send_pirate_threat(pirate_pool)
 
-/datum/dynamic_ruleset/midround/pirates/proc/pirate_pool()
+/// Returns what pool of pirates to drawn from
+/// Returned list is mutated by the ruleset
+/datum/dynamic_ruleset/midround/pirates/proc/default_pirate_pool()
 	return GLOB.light_pirate_gangs
 
 /datum/dynamic_ruleset/midround/pirates/heavy
@@ -88,8 +97,25 @@
 	min_pop = 25
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
 
-/datum/dynamic_ruleset/midround/pirates/heavy/pirate_pool()
+/datum/dynamic_ruleset/midround/pirates/heavy/default_pirate_pool()
 	return GLOB.heavy_pirate_gangs
+
+#define RANDOM_PIRATE_POOL "Random"
+
+/datum/dynamic_ruleset/midround/pirates/configure_ruleset(mob/admin)
+	var/list/admin_pool = list("[RULESET_CONFIG_CANCEL]" = TRUE, "[RANDOM_PIRATE_POOL]" = TRUE)
+	for(var/datum/pirate_gang/gang as anything in default_pirate_pool())
+		admin_pool[gang.name] = gang
+	var/picked = tgui_input_list(admin, "Select a pirate gang", "Pirate Gang Selection", admin_pool)
+	if(!picked || picked == RULESET_CONFIG_CANCEL)
+		return RULESET_CONFIG_CANCEL
+	if(picked == RANDOM_PIRATE_POOL)
+		return null
+
+	pirate_pool = list(admin_pool[picked])
+	return null
+
+#undef RANDOM_PIRATE_POOL
 
 #define NO_ANSWER 0
 #define POSITIVE_ANSWER 1
@@ -191,7 +217,7 @@
 	/// Text shown in the candidate poll. Optional, if unset uses pref_flag. (Though required if pref_flag is unset)
 	var/candidate_role
 
-/datum/dynamic_ruleset/midround/from_ghosts/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/can_be_selected()
 	SHOULD_CALL_PARENT(TRUE)
 	return ..() && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT)
 
@@ -266,7 +292,7 @@
 	midround_type = HEAVY_MIDROUND
 	candidate_role = "Operative"
 	pref_flag = ROLE_OPERATIVE_MIDROUND
-	jobban_flag = ROLE_NUCLEAR_OPERATIVE
+	jobban_flag = ROLE_OPERATIVE
 	ruleset_flags = RULESET_INVADER
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -402,7 +428,7 @@
 	. = ..()
 	max_antag_cap += prob(50) // 50% chance to get a second xeno, free!
 
-/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/xenomorph/can_be_selected()
 	return ..() && length(find_vents()) > 0
 
 /datum/dynamic_ruleset/midround/from_ghosts/xenomorph/execute()
@@ -456,7 +482,7 @@
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/item/light_eater
 
-/datum/dynamic_ruleset/midround/from_ghosts/nightmare/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/nightmare/can_be_selected()
 	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = TRUE))
 
 /datum/dynamic_ruleset/midround/from_ghosts/nightmare/assign_role(datum/mind/candidate)
@@ -484,7 +510,7 @@
 	repeatable_weight_decrease = 3
 	signup_atom_appearance = /mob/living/basic/space_dragon
 
-/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/can_be_selected()
 	return ..() && !isnull(find_space_spawn())
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_dragon/create_ruleset_body()
@@ -519,7 +545,7 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_ABDUCTOR_SHIPS)
 	signup_atom_appearance = /obj/item/melee/baton/abductor
 
-/datum/dynamic_ruleset/midround/from_ghosts/abductors/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/abductors/can_be_selected()
 	if(!..())
 		return FALSE
 	var/num_abductors = 0
@@ -555,7 +581,7 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NINJA_HOLDING_FACILITY)
 	signup_atom_appearance = /obj/item/energy_katana
 
-/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/space_ninja/can_be_selected()
 	return ..() && !isnull(find_space_spawn())
 
 /datum/dynamic_ruleset/midround/from_ghosts/space_ninja/assign_role(datum/mind/candidate)
@@ -584,7 +610,7 @@
 	/// Remember there's usually 2-3 that spawn in the Morgue roundstart, so adjust this accordingly
 	var/required_station_corpses = 10
 
-/datum/dynamic_ruleset/midround/from_ghosts/revenant/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/revenant/can_be_selected()
 	if(!..())
 		return FALSE
 	var/num_station_corpses = 0
@@ -650,7 +676,7 @@
 	max_antag_cap = 1
 	signup_atom_appearance = /obj/effect/bluespace_stream
 
-/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/can_be_selected()
 	return ..() && !isnull(find_clone()) && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/create_ruleset_body()
@@ -690,12 +716,12 @@
 	pref_flag = ROLE_VOIDWALKER
 	ruleset_flags = RULESET_INVADER
 	weight = 5
-	min_pop = 15
+	min_pop = 30 // Ensures there's a lot of people near windows
 	max_antag_cap = 1
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_VOIDWALKER_VOID)
 	signup_atom_appearance = /obj/item/clothing/head/helmet/skull/cosmic
 
-/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/can_be_selected()
 	return ..() && !SSmapping.is_planetary() && !isnull(find_space_spawn())
 
 /datum/dynamic_ruleset/midround/from_ghosts/voidwalker/assign_role(datum/mind/candidate)
@@ -710,7 +736,7 @@
 	preview_antag_datum = /datum/antagonist/fugitive
 	midround_type = LIGHT_MIDROUND
 	pref_flag = ROLE_FUGITIVE
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE
 	weight = 3
 	min_pop = 20
 	max_antag_cap = 4
@@ -722,7 +748,7 @@
 	/// What backstory is the hunter(s)?
 	VAR_FINAL/hunter_backstory
 
-/datum/dynamic_ruleset/midround/from_ghosts/fugitives/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/can_be_selected()
 	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 
 // If less than a certain number of candidates accept the poll, it varies how many antags are spawned
@@ -733,22 +759,61 @@
 		max_antag_cap = 1
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/create_execute_args()
-	return list(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+	return list(
+		find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE),
+		new /datum/team/fugitive(),
+	)
+
+#define RANDOM_BACKSTORY "Random"
+
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/configure_ruleset(mob/admin)
+	var/list/fugitive_backstories = list(
+		FUGITIVE_BACKSTORY_CULTIST,
+		FUGITIVE_BACKSTORY_INVISIBLE,
+		FUGITIVE_BACKSTORY_PRISONER,
+		FUGITIVE_BACKSTORY_SYNTH,
+		FUGITIVE_BACKSTORY_WALDO,
+		RANDOM_BACKSTORY,
+		RULESET_CONFIG_CANCEL,
+	)
+	var/list/hunter_backstories = list(
+		HUNTER_PACK_BOUNTY,
+		HUNTER_PACK_COPS,
+		HUNTER_PACK_MI13,
+		HUNTER_PACK_PSYKER,
+		HUNTER_PACK_RUSSIAN,
+		RANDOM_BACKSTORY,
+		RULESET_CONFIG_CANCEL,
+	)
+
+	var/picked_fugitive_backstory = tgui_input_list(admin, "Select a fugitive backstory", "Fugitive Backstory", fugitive_backstories)
+	if(!picked_fugitive_backstory || picked_fugitive_backstory == RULESET_CONFIG_CANCEL)
+		return RULESET_CONFIG_CANCEL
+	if(picked_fugitive_backstory != RANDOM_BACKSTORY)
+		fugitive_backstory = picked_fugitive_backstory
+
+	var/picked_hunter_backstory = tgui_input_list(admin, "Select a hunter backstory", "Hunter Backstory", hunter_backstories)
+	if(!picked_hunter_backstory || picked_hunter_backstory == RULESET_CONFIG_CANCEL)
+		return RULESET_CONFIG_CANCEL
+	if(picked_hunter_backstory != RANDOM_BACKSTORY)
+		hunter_backstory = picked_hunter_backstory
+
+	return null
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/execute()
 	if(length(selected_minds) == 1)
-		fugitive_backstory = pick(
+		fugitive_backstory ||= pick(
 			FUGITIVE_BACKSTORY_INVISIBLE,
 			FUGITIVE_BACKSTORY_WALDO,
 		)
 	else
-		fugitive_backstory = pick(
+		fugitive_backstory ||= pick(
 			FUGITIVE_BACKSTORY_CULTIST,
 			FUGITIVE_BACKSTORY_PRISONER,
 			FUGITIVE_BACKSTORY_SYNTH,
 		)
 
-	hunter_backstory = pick(
+	hunter_backstory ||= pick(
 		HUNTER_PACK_COPS,
 		HUNTER_PACK_RUSSIAN,
 		HUNTER_PACK_BOUNTY,
@@ -758,18 +823,18 @@
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), hunter_backstory, 10 MINUTES), 1 MINUTES)
 
-/datum/dynamic_ruleset/midround/from_ghosts/fugitives/assign_role(datum/mind/candidate, turf/team_spawn)
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/assign_role(datum/mind/candidate, turf/team_spawn, datum/team/fugitive/team)
 	candidate.current.forceMove(team_spawn)
-	equip_fugitive(candidate.current)
+	equip_fugitive(candidate.current, team)
 	if(length(selected_minds) > 1 && candidate == selected_minds[1])
 		equip_fugitive_leader(candidate.current)
 	playsound(candidate.current, 'sound/items/weapons/emitter.ogg', 50, TRUE)
 
-/datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/equip_fugitive(mob/living/carbon/human/fugitive)
-	fugitive.mind.set_assigned_role(SSjob.get_job_type(/datum/job/fugitive))
-	var/datum/antagonist/fugitive/antag = fugitive.mind.add_antag_datum(/datum/antagonist/fugitive)
-	antag.greet(fugitive_backstory)
-
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/equip_fugitive(mob/living/carbon/human/fugitive, datum/team/fugitive/team)
+	var/datum/antagonist/fugitive/fugitive = new()
+	fugitive.backstory = fugitive_backstory
+	fugitive.mind.add_antag_datum(fugitive, team)
+	// Should really datumize this at some point
 	switch(fugitive_backstory)
 		if(FUGITIVE_BACKSTORY_PRISONER)
 			fugitive.equipOutfit(/datum/outfit/prisoner)
@@ -784,10 +849,13 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/equip_fugitive_leader(mob/living/carbon/human/fugitive)
 	var/turf/leader_turf = get_turf(fugitive)
-	var/obj/item/choice_beacon/augments/augment_beacon = new(leader_turf)
-	fugitive.put_in_hands(augment_beacon)
-	new /obj/item/autosurgeon(leader_turf)
-	new /obj/item/storage/toolbox/mechanical(leader_turf)
+	var/obj/item/storage/toolbox/mechanical/toolbox = new(leader_turf)
+	fugitive.put_in_hands(toolbox)
+
+	switch(fugitive_backstory)
+		if(FUGITIVE_BACKSTORY_SYNTH)
+			new /obj/item/choice_beacon/augments(leader_turf)
+			new /obj/item/autosurgeon(leader_turf)
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/check_spawn_hunters(remaining_time)
 	//if the emergency shuttle has been called, spawn hunters now to give them a chance
@@ -887,7 +955,7 @@
 	max_antag_cap = 1
 	signup_atom_appearance = /mob/living/basic/morph
 
-/datum/dynamic_ruleset/midround/from_ghosts/morph/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/morph/can_be_selected()
 	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 
 /datum/dynamic_ruleset/midround/from_ghosts/morph/create_ruleset_body()
@@ -910,7 +978,7 @@
 	max_antag_cap = 1
 	signup_atom_appearance = /mob/living/basic/demon/slaughter
 
-/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/can_be_selected()
 	return ..() && !isnull(find_space_spawn())
 
 /datum/dynamic_ruleset/midround/from_ghosts/slaughter_demon/create_ruleset_body()
@@ -1014,7 +1082,7 @@
 /datum/dynamic_ruleset/midround/from_living/malf_ai/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/malf_ai)
 
-/datum/dynamic_ruleset/midround/from_living/malf_ai/can_be_selected(population_size)
+/datum/dynamic_ruleset/midround/from_living/malf_ai/can_be_selected()
 	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI)
 
 /datum/dynamic_ruleset/midround/from_living/blob

@@ -16,6 +16,23 @@
 		return FALSE
 	return ..()
 
+/// Helpful proc - to use if your ruleset forces a job - which ensures a candidate can play the passed job typepath
+/datum/dynamic_ruleset/roundstart/proc/ruleset_forced_job_check(mob/candidate, client/candidate_client, datum/job/job_typepath)
+	// Malf AI can only go to people who want to be AI
+	if(!candidate_client.prefs.job_preferences[job_typepath::title])
+		return FALSE
+	// And only to people who can actually be AI this round
+	if(SSjob.check_job_eligibility(candidate, SSjob.get_job_type(job_typepath), "[name] Candidacy") != JOB_AVAILABLE)
+		return FALSE
+	// (Something else forced us to play a job that isn't AI)
+	var/forced_job = LAZYACCESS(SSjob.forced_occupations, candidate)
+	if(forced_job && forced_job != job_typepath::title)
+		return FALSE
+	// (Something else forced us NOT to play AI)
+	if(job_typepath::title in LAZYACCESS(SSjob.prevented_occupations, candidate))
+		return FALSE
+	return TRUE
+
 /datum/dynamic_ruleset/roundstart/traitor
 	name = "Traitors"
 	config_tag = "Roundstart Traitor"
@@ -32,6 +49,7 @@
 	name = "Malfunctioning AI"
 	config_tag = "Roundstart Malfunctioning AI"
 	pref_flag = ROLE_MALF
+	preview_antag_datum = /datum/antagonist/malf_ai
 	ruleset_flags = RULESET_HIGH_IMPACT
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -47,13 +65,7 @@
 	return list()
 
 /datum/dynamic_ruleset/roundstart/malf_ai/is_valid_candidate(mob/candidate, client/candidate_client)
-	// Malf AI can only go to people who want to be AI
-	if(!candidate_client.prefs.job_preferences[/datum/job/ai::title])
-		return FALSE
-	// And only to people who can actually be AI this round
-	if(SSjob.check_job_eligibility(candidate, SSjob.get_job_type(/datum/job/ai), "[name] Candidacy") != JOB_AVAILABLE)
-		return FALSE
-	return ..()
+	return ..() && ruleset_forced_job_check(candidate, candidate_client, /datum/job/ai)
 
 /datum/dynamic_ruleset/roundstart/malf_ai/prepare_for_role(datum/mind/candidate)
 	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/ai::title)
@@ -61,7 +73,7 @@
 /datum/dynamic_ruleset/roundstart/malf_ai/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/malf_ai)
 
-/datum/dynamic_ruleset/roundstart/malf_ai/can_be_selected(population_size)
+/datum/dynamic_ruleset/roundstart/malf_ai/can_be_selected()
 	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI)
 
 /datum/dynamic_ruleset/roundstart/blood_brother
@@ -95,7 +107,7 @@
 	pref_flag = ROLE_HERETIC
 	weight = 3
 	max_antag_cap = list("denominator" = 24)
-	min_pop = 15
+	min_pop = 30 // Ensures good spread of sacrifice targets
 
 /datum/dynamic_ruleset/roundstart/heretic/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/heretic)
@@ -190,7 +202,7 @@
 	name = "Nuclear Operatives"
 	config_tag = "Roundstart Nukeops"
 	preview_antag_datum = /datum/antagonist/nukeop
-	pref_flag = ROLE_NUCLEAR_OPERATIVE
+	pref_flag = ROLE_OPERATIVE
 	ruleset_flags = RULESET_INVADER|RULESET_HIGH_IMPACT
 	weight = list(
 		DYNAMIC_TIER_LOW = 0,
@@ -279,10 +291,10 @@
 	/// How many heads of staff are required to be on the station for this to be selected
 	var/heads_necessary = 3
 
-/datum/dynamic_ruleset/roundstart/revolution/can_be_selected(population_size)
+/datum/dynamic_ruleset/roundstart/revolution/can_be_selected()
 	var/head_check = 0
-	for(var/mob/player as anything in GLOB.alive_player_list)
-		if (player.mind.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
+	for(var/mob/player as anything in GLOB.player_list) // doesn't use active_player_list because no players are "active" at roundstart
+		if(player.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 			head_check++
 	return head_check >= heads_necessary
 
@@ -302,10 +314,22 @@
 /// Reveals the headrev after a set amount of time
 /datum/dynamic_ruleset/roundstart/revolution/proc/reveal_head(datum/mind/candidate)
 	LAZYREMOVE(candidate.special_roles, "Dormant Head Revolutionary")
+
+	var/head_check = 0
+	for(var/mob/player as anything in get_active_player_list(alive_check = TRUE, afk_check = TRUE))
+		if(player.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
+			head_check++
+
+	if(head_check < heads_necessary - 1) // little bit of leeway
+		log_dynamic("[config_tag]: Not enough heads of staff were present to start a revolution.")
+		addtimer(CALLBACK(src, PROC_REF(revs_execution_failed)), 1 MINUTES, TIMER_UNIQUE|TIMER_DELETE_ME)
+		return
+
 	if(!can_be_headrev(candidate))
 		log_dynamic("[config_tag]: [key_name(candidate)] was not eligible to be a headrev after the timer expired - finding a replacement.")
 		find_another_headrev()
 		return
+
 	GLOB.revolution_handler ||= new()
 	var/datum/antagonist/rev/head/new_head = new()
 	new_head.give_flash = TRUE

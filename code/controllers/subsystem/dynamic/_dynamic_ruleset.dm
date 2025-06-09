@@ -162,7 +162,7 @@
 /**
  * Any additional checks to see if this ruleset can be selected
  */
-/datum/dynamic_ruleset/proc/can_be_selected(population_size)
+/datum/dynamic_ruleset/proc/can_be_selected()
 	return TRUE
 
 /**
@@ -170,12 +170,12 @@
  *
  * * population_size - How many players are alive
  */
-/datum/dynamic_ruleset/proc/get_weight(population_size = 0, tier)
+/datum/dynamic_ruleset/proc/get_weight(population_size = 0, tier = DYNAMIC_TIER_LOW)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(type in SSdynamic.admin_disabled_rulesets)
 		return 0
-	if(!can_be_selected(population_size))
+	if(!can_be_selected())
 		return 0
 	var/final_minpop = islist(min_pop) ? min_pop[tier] : min_pop
 	if(final_minpop > population_size)
@@ -218,7 +218,7 @@
 	load_templates()
 
 	// This is (mostly) redundant, buuuut the (potential) sleep above makes it iffy, so let's just be safe
-	if(!can_be_selected(population_size))
+	if(!can_be_selected())
 		return FALSE
 
 	var/max_candidates = get_antag_cap(population_size, max_antag_cap || min_antag_cap)
@@ -359,3 +359,12 @@
  */
 /datum/dynamic_ruleset/proc/round_result()
 	return FALSE
+
+/**
+ * Allows admins to configure rulesets before prepare_execution() is called.
+ *
+ * Only called if RULESET_ADMIN_CONFIGURABLE is set in ruleset_flags.
+ * Also only called by midrounds currently.
+ */
+/datum/dynamic_ruleset/proc/configure_ruleset(mob/admin)
+	stack_trace("Ruleset [type] sets flag RULESET_ADMIN_CONFIGURABLE but does not implement configure_ruleset!")

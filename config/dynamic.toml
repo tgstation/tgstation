@@ -91,6 +91,7 @@ ruleset_type_settings.latejoin.execution_cooldown_high = 15
 ["Medium-High Chaos"]
 name = "Medium-High Chaos"
 min_pop = 0
+weight = 52
 advisory_report = "Advisory Level: <b>Black Orbit</b></center><BR>Your sector's advisory level is Black Orbit. Your sector's local communications network is currently undergoing a blackout, and we are therefore unable to accurately judge enemy movements within the region. However, information passed to us by GDI suggests a high amount of enemy activity in the sector, indicative of an impending attack. Remain on high alert and vigilant against any other potential threats."
 ruleset_type_settings.roundstart.low = 2
 ruleset_type_settings.roundstart.high = 3

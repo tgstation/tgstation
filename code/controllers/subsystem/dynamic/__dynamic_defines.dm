@@ -40,6 +40,9 @@
 #define RULESET_INVADER (1<<0)
 /// Multiple high impact rulesets cannot be selected unless we're at the highest tier
 #define RULESET_HIGH_IMPACT (1<<1)
+/// Ruleset can be configured by admins (implements /proc/configure_ruleset)
+/// Only implemented for midrounds currently
+#define RULESET_ADMIN_CONFIGURABLE (1<<2)
 
 /// Href for cancelling midround rulesets before execution
 #define MIDROUND_CANCEL_HREF(...) "(<a href='byond://?src=[REF(src)];admin_cancel_midround=[REF(picked_ruleset)]'>CANCEL</a>)"
@@ -48,3 +51,5 @@
 	? "(<a href='byond://?src=[REF(src)];admin_reroll=[REF(picked_ruleset)]'>SOMETHING ELSE</a>)" \
 	: "([span_tooltip("There are no more rulesets to pick from!", "NOTHING ELSE")])"\
 ]"
+
+#define RULESET_CONFIG_CANCEL "Cancel"

@@ -149,6 +149,11 @@ const StatusPanel = () => {
         <Box>
           <b>{current_tier.number}</b> ({current_tier.name})
         </Box>
+        {!roundstarted && (
+          <Button ml={1} onClick={() => act('set_tier')}>
+            (Change)
+          </Button>
+        )}
       </LabeledList.Item>
       {ruleset_count &&
         Object.entries(ruleset_count).map(([name, count]) => (

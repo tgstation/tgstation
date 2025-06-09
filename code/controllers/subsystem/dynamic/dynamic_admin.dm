@@ -156,7 +156,7 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 			message_admins("[key_name_admin(ui.user)] executed the ruleset [initial(ruleset_path.config_tag)].")
 			log_admin("[key_name_admin(ui.user)] executed the ruleset [initial(ruleset_path.config_tag)].")
 			ASYNC
-				SSdynamic.force_run_midround(ruleset_path, alert_admins_on_fail = TRUE)
+				SSdynamic.force_run_midround(ruleset_path, alert_admins_on_fail = TRUE, admin = ui.user)
 			return TRUE
 		if("disable_ruleset")
 			var/ruleset_path = text2path(params["ruleset_type"])
@@ -180,13 +180,13 @@ ADMIN_VERB(dynamic_panel, R_ADMIN, "Dynamic Panel", "Mess with dynamic.", ADMIN_
 			message_admins("[key_name_admin(ui.user)] re-enabled all rulesets.")
 			log_admin("[key_name_admin(ui.user)] re_enabled all rulesets.")
 		if("set_tier")
-			if(SSdynamic.current_tier)
+			if(SSdynamic.current_tier && SSticker.HasRoundStarted())
 				return TRUE
 			var/list/tiers = list()
 			for(var/datum/dynamic_tier/tier as anything in subtypesof(/datum/dynamic_tier))
 				tiers[initial(tier.name)] = tier
 			var/datum/dynamic_tier/picked = tgui_input_list(ui.user, "Pick a dynamic tier before the game starts", "Pick tier", tiers, ui_state = ADMIN_STATE(R_ADMIN))
-			if(picked && !SSdynamic.current_tier)
+			if(picked && !SSticker.HasRoundStarted())
 				SSdynamic.set_tier(tiers[picked])
 				message_admins("[key_name_admin(ui.user)] set the dynamic tier to [initial(picked.tier)].")
 				log_admin("[key_name_admin(ui.user)] set the dynamic tier to [initial(picked.tier)].")
