@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - code_imp: "Atmos machines turns on/off correctly from the code perspective"
