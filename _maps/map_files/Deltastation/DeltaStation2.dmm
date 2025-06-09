@@ -61084,7 +61084,7 @@
 	dir = 2;
 	dwidth = 11;
 	height = 18;
-	name = "MetaStation emergency evac bay";
+	name = "Deltastation emergency evac bay";
 	shuttle_id = "emergency_home";
 	width = 30
 	},
