@@ -1506,4 +1506,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to colorblind mobs
 #define TRAIT_COLORBLIND "colorblind"
 
+/// Trait that blocks invisibility (uh as of writing only the space camo but might expand later idk)
+#define TRAIT_INVISIBILITY_BLOCKED "invisibility_blocked"
+
 // END TRAIT DEFINES

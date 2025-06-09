@@ -989,7 +989,7 @@
 	var/datum/mind/player_mind = new /datum/mind(applicant.key)
 	player_mind.active = TRUE
 
-	var/mob/living/carbon/human/voidwalker = new (space_turf)
+	var/mob/living/basic/voidwalker/voidwalker = new (space_turf)
 	player_mind.transfer_to(voidwalker)
 	player_mind.set_assigned_role(SSjob.get_job_type(/datum/job/voidwalker))
 	player_mind.special_role = antag_flag

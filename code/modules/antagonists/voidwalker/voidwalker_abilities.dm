@@ -10,6 +10,7 @@
 	cast_range = 9
 	active_msg = "You prepare to stare down a target..."
 	deactive_msg = "You refocus your eyes..."
+
 	/// how long we need to stare at someone to unsettle them (woooooh)
 	var/stare_time = 8 SECONDS
 	/// how long we stun someone on successful cast
@@ -65,3 +66,29 @@
 	button_icon = 'icons/mob/actions/actions_voidwalker.dmi'
 	button_icon_state = "voidwalker_telepathy"
 	panel = null
+
+/datum/action/cooldown/spell/list_target/telepathy/voidwalker/sunwalker
+	background_icon_state = "bg_star"
+
+/datum/action/cooldown/mob_cooldown/charge/sunwalker
+	name = "Stellar Charge"
+	background_icon_state = "bg_star"
+	charge_past = 1
+	charge_damage = 30
+	cooldown_time = 8 SECONDS
+	destroy_objects = FALSE
+
+/datum/action/cooldown/mob_cooldown/charge/sunwalker/on_move(atom/source, atom/new_loc, atom/target)
+	. = ..()
+
+	new /obj/effect/hotspot(get_turf(owner))
+
+/datum/action/cooldown/mob_cooldown/charge/sunwalker/charge_end(datum/source)
+	. = ..()
+
+	for(var/turf/open/tile in range(1, owner))
+		new /obj/effect/hotspot(tile)
+
+/datum/action/cooldown/mob_cooldown/charge/sunwalker/do_charge_indicator(atom/charger, atom/charge_target)
+	return
+
