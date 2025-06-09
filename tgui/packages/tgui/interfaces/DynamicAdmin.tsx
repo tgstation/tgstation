@@ -609,7 +609,7 @@ const RulesetsPanel = () => {
                               </Flex.Item>
                             )}
                             {ruleset_category !== 'roundstart' &&
-                              roundstarted && (
+                              !!roundstarted && (
                                 <Flex.Item>
                                   <Button.Checkbox
                                     ml={0.5}
