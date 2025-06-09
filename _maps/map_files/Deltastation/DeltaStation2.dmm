@@ -61079,6 +61079,17 @@
 /mob/living/basic/carp/pet/lia,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
+"piU" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 11;
+	height = 18;
+	name = "Deltastation emergency evac bay";
+	shuttle_id = "emergency_home";
+	width = 30
+	},
+/turf/open/space/basic,
+/area/space)
 "pjb" = (
 /obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt,
@@ -141167,7 +141178,7 @@ sbe
 xPu
 rDr
 xuk
-aaa
+piU
 aaa
 aaa
 aaa
