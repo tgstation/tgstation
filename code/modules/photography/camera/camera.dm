@@ -272,7 +272,7 @@
 	var/clone_area = SSmapping.request_turf_block_reservation(size_x * 2 + 1, size_y * 2 + 1, 1)
 	///list of human names taken on picture
 	var/list/names = list()
-	var/cameranet_user = isAI(user) || istype(viewc, /mob/eye/camera/remote)
+	var/cameranet_user = isAI(user) || istype(viewc, /mob/eye/camera)
 
 	var/width = size_x * 2 + 1
 	var/height = size_y * 2 + 1
