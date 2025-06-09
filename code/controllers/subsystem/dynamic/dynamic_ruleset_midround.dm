@@ -800,6 +800,8 @@
 
 	return null
 
+#undef RANDOM_BACKSTORY
+
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/execute()
 	if(length(selected_minds) == 1)
 		fugitive_backstory ||= pick(
