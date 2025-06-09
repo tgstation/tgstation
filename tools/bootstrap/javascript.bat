@@ -7,9 +7,9 @@ if %errorlevel%==0 (
     set "powershellCmd=pwsh"
 )
 
-call %powershellCmd% -NoLogo -ExecutionPolicy Bypass -File "%~dp0\bun_.ps1" Download-Bun
+call %powershellCmd% -NoLogo -ExecutionPolicy Bypass -File "%~dp0\javascript_.ps1" Download-Bun
 for /f "tokens=* USEBACKQ" %%s in (`
-    call %powershellCmd% -NoLogo -ExecutionPolicy Bypass -File "%~dp0\bun_.ps1" Get-Path
+    call %powershellCmd% -NoLogo -ExecutionPolicy Bypass -File "%~dp0\javascript_.ps1" Get-Path
 `) do (
     set "PATH=%%s;%PATH%"
 )
@@ -20,7 +20,7 @@ if %errorlevel% == 0 (
     call bun.exe %*
     goto exit_with_last_error_level
 )
-echo "bun.bat: Failed to bootstrap Bun!"
+echo "javascript.bat: Failed to bootstrap Bun!"
 %COMSPEC% /c exit 1
 
 :exit_with_last_error_level
