@@ -1,6 +1,10 @@
-#define GENERATOR_INACTIVE 0 // off
-#define GENERATOR_WANTPOWER 1 // waiting for power/retrying, will activate and do things if powered
-#define GENERATOR_ACTIVE 2 // active
+/// off
+#define GENERATOR_INACTIVE 0
+/// waiting for power/retrying, will activate and do things if powered
+#define GENERATOR_WANTPOWER 1
+/// active
+#define GENERATOR_ACTIVE 2
+
 /obj/machinery/atmos_shield_gen
 	name = "Atmospheric Shield Generator"
 	desc = "Produces an atmos shield in a line between itself and another generator with both facing the other, while active. Powered by APC. Field must not be obstructed by wall, or an atmos shield field. Will turn on after gaining power if turned off due to power loss."
@@ -130,7 +134,7 @@
 	if(!anchored)
 		balloon_alert(user, "not anchored!")
 		return
-	if(locked)
+	if(locked && !issilicon(user))
 		balloon_alert(user, "locked!")
 		return
 	toggle(user)
@@ -279,6 +283,7 @@
 	light_range = 1.8
 	light_power = 2
 	light_color = COLOR_ENGINEERING_ORANGE
+	/// the atmos shield generator that made us, used to turn it off sometimes
 	var/obj/machinery/atmos_shield_gen/owner
 
 /obj/effect/atmos_shield/Initialize(mapload, owner)
