@@ -7,8 +7,8 @@
 	antagpanel_category = "Voidwalker"
 	show_name_in_check_antagonists = TRUE
 	show_to_ghosts = TRUE
-	ui_name = "AntagInfoVoidwalker"
-	suicide_cry = "FOR THE VOID!!"
+	ui_name = "AntagInfoSunwalker"
+	suicide_cry = "FOR THE SUN!!"
 
 /datum/antagonist/sunwalker/greet()
 	. = ..()
@@ -18,10 +18,6 @@
 	. = ..()
 
 	forge_objectives()
-
-/datum/antagonist/sunwalker/get_preview_icon()
-	var/mob/living/basic/voidwalker/sunwalker/walker_type = /mob/living/basic/voidwalker/sunwalker
-	finish_preview_icon(icon(walker_type::icon, walker_type::icon_state))
 
 /datum/antagonist/sunwalker/forge_objectives()
 	var/datum/objective/sunwalker/objective = new

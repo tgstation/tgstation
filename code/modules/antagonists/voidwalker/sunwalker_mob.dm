@@ -3,6 +3,8 @@
 	name = "Heliarch"
 	desc = "A cosmic entity covered in stellar corona. You DEFINITELY shouldn't stare."
 
+	icon_state = "sunwalker"
+
 	melee_damage_type = BURN
 	melee_damage_lower = 25
 	melee_damage_upper = 25
@@ -36,6 +38,7 @@
 /mob/living/basic/voidwalker/sunwalker/unique_setup()
 	AddComponent(/datum/component/igniter)
 	AddComponent(/datum/component/vision_hurting, damage_per_second = 0.1, message = null, silent = TRUE)
+	AddComponent(/datum/component/space_dive, /obj/effect/dummy/phased_mob/space_dive/sunwalker)
 
 	create_reagents(1) // Needed for the water reagent interactions to work
 

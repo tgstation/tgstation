@@ -20,11 +20,11 @@
 	width = 100
 	height = 300
 	count = 100
-	spawning = 3
+	spawning = 1
 	lifespan = 3 SECONDS
 	fade = 2 SECONDS
 	velocity = list(0, 0.1, 0)
 	position = generator(GEN_SPHERE, 6, 6, NORMAL_RAND)
 	drift = generator(GEN_SPHERE, 0, 0.05, NORMAL_RAND)
 	friction = 0.1
-	gravity = list(0.95, 0)
+	gravity = list(0, 0.50)

@@ -5,8 +5,8 @@
 /mob/living/basic/voidwalker
 	name = "voidwalker"
 	desc = "A glass-like entity from the void between stars. You probably shouldn't stare."
-	icon = 'icons/mob/simple/carp.dmi'
-	icon_state = "base"
+	icon = 'icons/mob/simple/voidwalker.dmi'
+	icon_state = "voidwalker"
 
 	mob_biotypes = MOB_SPECIAL
 	maxHealth = 150
@@ -23,8 +23,8 @@
 
 	melee_damage_type = OXY
 
-	attack_sound = 'sound/items/weapons/slash.ogg'
-	attack_vis_effect = ATTACK_EFFECT_SLASH
+	attack_sound = 'sound/items/weapons/shrink_hit.ogg'
+	attack_vis_effect = ATTACK_EFFECT_VOID
 
 	faction = list(FACTION_CARP)
 
@@ -82,17 +82,23 @@
 
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour, regen_check = CALLBACK(src, PROC_REF(can_regen)))
 	AddComponent(/datum/component/glass_passer, deform_glass = 5 SECONDS)
-	AddComponent(/datum/component/space_dive)
 	AddComponent(/datum/component/planet_allergy)
 
 	AddElement(/datum/element/dextrous, hud_type = hud_type, can_throw = TRUE)
 	AddComponent(/datum/component/personal_crafting, ui_combat_toggle)
-	AddComponent(/datum/component/basic_inhands)
+	AddComponent(/datum/component/basic_inhands, x_offset = 2)
 
 	AddElement(/datum/element/glass_bleeder)
 
 	// Glass passing is handled by the glass passer component
 	passtable_on(src, type)
+
+	// Voidwalker lore is that radio's actually attracted them, so they should be able to listen to it
+	var/obj/item/radio/internal_radio = new /obj/item/radio(src)
+	internal_radio.keyslot = /obj/item/encryptionkey/heads/captain
+	internal_radio.subspace_transmission = TRUE
+	internal_radio.canhear_range = 0 // anything greater will have the bot broadcast the channel as if it were saying it out loud.
+	internal_radio.recalculateChannels()
 
 	telepathy =  new telepathy(src)
 	telepathy.Grant(src)
@@ -101,7 +107,8 @@
 
 /// Stuff you might want different on subtypes
 /mob/living/basic/voidwalker/proc/unique_setup()
-	AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 5 SECONDS)
+	AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 5 SECONDS, image(icon, icon_state + "_stealthed", ABOVE_LIGHTING_PLANE))
+	AddComponent(/datum/component/space_dive, /obj/effect/dummy/phased_mob/space_dive/voidwalker)
 
 	unsettle = new(src)
 	unsettle.Grant(src)
@@ -191,7 +198,7 @@
 	if(!victim.incapacitated)
 		return
 
-	if(!istype((get_turf(victim), kidnapping_turf)) && !(locate(kidnapping_decal) in get_turf(victim)))
+	if(!istype(get_turf(victim), kidnapping_turf) && !(locate(kidnapping_decal) in get_turf(victim)))
 		victim.balloon_alert(src, "not in space!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 

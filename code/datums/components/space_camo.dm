@@ -6,6 +6,8 @@
 	var/non_space_alpha
 	/// How long we can't enter camo after hitting or being hit
 	var/reveal_after_combat
+	/// Icon override for our camouflage
+	var/image/camo_icon
 	/// The world time after we can camo again
 	VAR_PRIVATE/next_camo
 	/// Image we show to our jaunter so they can see where they are
@@ -13,13 +15,14 @@
 	/// The alpha we see ourselves at when in camo
 	var/alpha_to_self = 120
 
-/datum/component/space_camo/Initialize(space_alpha, non_space_alpha, reveal_after_combat)
+/datum/component/space_camo/Initialize(space_alpha, non_space_alpha, reveal_after_combat, camo_icon)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.space_alpha = space_alpha
 	src.non_space_alpha = non_space_alpha
 	src.reveal_after_combat = reveal_after_combat
+	src.camo_icon = camo_icon
 
 /datum/component/space_camo/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
@@ -27,7 +30,9 @@
 		return
 
 	var/mob/living/living_parent = parent
-	position_indicator = image(living_parent, ABOVE_LIGHTING_PLANE)
+
+	position_indicator = camo_icon ? camo_icon : image(living_parent, ABOVE_LIGHTING_PLANE)
+
 	position_indicator.loc = living_parent
 
 	SET_PLANE_EXPLICIT(position_indicator, ABOVE_LIGHTING_PLANE, living_parent)

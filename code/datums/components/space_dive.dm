@@ -13,9 +13,11 @@
 	/// A decal we can dive from, and escape into (but only one enter)
 	var/diveable_decal = /obj/effect/decal/cleanable/vomit/nebula
 
-/datum/component/space_dive/Initialize(...)
+/datum/component/space_dive/Initialize(jaunt_type, ...)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
+
+	src.jaunt_type = jaunt_type
 
 	RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(bump))
 	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_unarmed_attack))
@@ -44,6 +46,9 @@
 
 /datum/component/space_dive/proc/dive(atom/bumped)
 	var/obj/effect/dummy/phased_mob/jaunt = new jaunt_type(get_turf(bumped), parent)
+
+	var/mob/living/diver = parent
+	diver.drop_all_held_items()
 
 	RegisterSignal(jaunt, COMSIG_MOB_EJECTED_FROM_JAUNT, PROC_REF(surface))
 	RegisterSignal(jaunt, COMSIG_MOB_PHASED_CHECK, PROC_REF(move_check))
@@ -109,3 +114,14 @@
 /obj/effect/dummy/phased_mob/space_dive
 	movespeed = 1
 	phased_mob_icon_state = "solarflare"
+
+/obj/effect/dummy/phased_mob/space_dive/voidwalker
+	phased_mob_icon = /mob/living/basic/voidwalker::icon
+	phased_mob_icon_state = /mob/living/basic/voidwalker::icon_state + "_stealthed"
+	alpha = 120
+
+/obj/effect/dummy/phased_mob/space_dive/sunwalker
+	phased_mob_icon = /mob/living/basic/voidwalker/sunwalker::icon
+	phased_mob_icon_state = /mob/living/basic/voidwalker/sunwalker::icon_state + "_stealthed"
+	alpha = 120
+

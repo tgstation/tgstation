@@ -999,3 +999,31 @@
 	message_admins("[ADMIN_LOOKUPFLW(voidwalker)] has been made into a Voidwalker by the midround ruleset.")
 	log_dynamic("[key_name(voidwalker)] was spawned as a Voidwalker by the midround ruleset.")
 	return voidwalker
+
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker
+	name = "Sunwalker"
+	antag_datum = /datum/antagonist/sunwalker
+
+	antag_flag = ROLE_SUNWALKER
+	antag_flag_override = ROLE_VOIDWALKER
+
+	weight = 0.5
+	cost = 10
+	minimum_players = 50
+
+	ruleset_lazy_templates = null
+
+/datum/dynamic_ruleset/midround/from_ghosts/voidwalker/sunwalker/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
+
+	var/mob/living/basic/voidwalker/sunwalker/voidwalker = new (space_turf)
+	player_mind.transfer_to(voidwalker)
+	player_mind.set_assigned_role(SSjob.get_job_type(/datum/job/voidwalker))
+	player_mind.special_role = antag_flag
+	player_mind.add_antag_datum(antag_datum)
+
+	playsound(voidwalker, 'sound/effects/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(voidwalker)] has been made into a Sunwalker by the midround ruleset.")
+	log_dynamic("[key_name(voidwalker)] was spawned as a Sunwalker by the midround ruleset.")
+	return voidwalker

@@ -21,7 +21,7 @@
 
 /datum/antagonist/voidwalker/get_preview_icon()
 	var/mob/living/basic/voidwalker/walker_type = /mob/living/basic/voidwalker
-	finish_preview_icon(icon(walker_type::icon, walker_type::icon_state))
+	return finish_preview_icon(icon(walker_type::icon, walker_type::icon_state))
 
 /datum/antagonist/voidwalker/forge_objectives()
 	var/datum/objective/voidwalker_objective/objective = new
