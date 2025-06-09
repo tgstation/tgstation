@@ -17,6 +17,21 @@
 	weed_overlay = mutable_appearance('icons/obj/watercloset.dmi', "[base_icon_state]_overlay")
 	START_PROCESSING(SSobj, src)
 
+/obj/structure/toiletbong/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/structure/toilet/toilet = locate(/obj/structure/toilet) in components
+	if(toilet)
+		for(var/obj/item/cistern_item in toilet.contents)
+			cistern_item.forceMove(crafter.drop_location())
+			to_chat(crafter, span_warning("[cistern_item] falls out of the toilet!"))
+		setDir(toilet.dir)
+		forceMove(toilet.loc)
+
+	crafter.visible_message(
+		span_notice("[crafter] attaches the flamethrower to the repurposed toilet."),
+		span_notice("You attach the flamethrower to the repurposed toilet."),
+	)
+	return ..()
+
 /obj/structure/toiletbong/update_overlays()
 	. = ..()
 	if (LAZYLEN(contents))
@@ -96,7 +111,7 @@
 		to_chat(user, span_boldwarning("The [emag_card] falls into the toilet. You fish it back out. Looks like you broke the toilet."))
 	return TRUE
 
-/obj/structure/toiletbong/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/obj/structure/toiletbong/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	if(istype(attacking_item, /obj/item/card/emag))
 		return
 	return ..()

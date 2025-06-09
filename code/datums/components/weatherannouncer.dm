@@ -159,7 +159,7 @@
 		var/list/mining_z_levels = SSmapping.levels_by_trait(ZTRAIT_MINING)
 		for(var/mining_level in mining_z_levels)
 			if(mining_level in check_weather.impacted_z_levels)
-				is_weather_dangerous = !(check_weather.weather_flags & FUNCTIONAL_WEATHER)
+				is_weather_dangerous = (check_weather.weather_flags & FUNCTIONAL_WEATHER)
 				return
 
 /datum/component/weather_announcer/proc/on_examine(atom/radio, mob/examiner, list/examine_texts)

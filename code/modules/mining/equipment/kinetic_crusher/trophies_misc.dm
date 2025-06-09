@@ -44,10 +44,15 @@
 	pkc.current_inhand_icon_state = active_skin.retool_inhand_icon
 	if (active_skin.retool_projectile_icon)
 		pkc.projectile_icon = active_skin.retool_projectile_icon
+	if (active_skin.retool_projectile_icon_state)
+		pkc.projectile_icon_state = active_skin.retool_projectile_icon_state
 	// Should either have both, or neither
 	if (active_skin.retool_lefthand_file)
 		pkc.lefthand_file = active_skin.retool_lefthand_file
 		pkc.righthand_file = active_skin.retool_righthand_file
+	if(active_skin.retool_worn_file)
+		pkc.worn_icon = active_skin.retool_worn_file
+		pkc.worn_icon_state = active_skin::retool_icon_state
 	if (active_skin.retool_inhand_x)
 		pkc.inhand_x_dimension = active_skin.retool_inhand_x
 	if (active_skin.retool_inhand_y)
@@ -63,8 +68,11 @@
 	pkc.icon_state = initial(pkc.icon_state)
 	pkc.current_inhand_icon_state = initial(pkc.current_inhand_icon_state)
 	pkc.projectile_icon = initial(pkc.projectile_icon)
+	pkc.projectile_icon_state = initial(pkc.projectile_icon_state)
 	pkc.lefthand_file = initial(pkc.lefthand_file)
 	pkc.righthand_file = initial(pkc.righthand_file)
+	pkc.worn_icon = initial(pkc.worn_icon)
+	pkc.worn_icon_state = initial(pkc.worn_icon_state)
 	pkc.inhand_x_dimension = initial(pkc.inhand_x_dimension)
 	pkc.inhand_y_dimension = initial(pkc.inhand_y_dimension)
 	pkc.update_appearance()
@@ -76,17 +84,21 @@
 	/// Name of the modification
 	var/name = "error that should be reported to coders"
 	/// Specifies the icon file in which the crusher's new state is stored.
-	var/retool_icon = null
+	var/retool_icon = 'icons/obj/mining.dmi'
 	///Specifies the sprite/icon state which the crusher is changed to as an item. Should appear in the icons/obj/mining.dmi file with accompanying "lit" and "recharging" sprites
 	var/retool_icon_state = "ipickaxe"
 	///Specifies the icon state for the crusher's appearance in hand. Should appear in both retool_lefthand_file and retool_righthand_file.
 	var/retool_inhand_icon = "ipickaxe"
-	///For if the retool kit changes the projectile's appearance. The sprite should be in icons/obj/weapons/guns/projectiles.dmi.
-	var/retool_projectile_icon = null
+	/// Specifies the icon file in which the crusher's projectile sprite is located.
+	var/retool_projectile_icon = 'icons/obj/weapons/guns/projectiles.dmi'
+	///For if the retool kit changes the projectile's appearance.
+	var/retool_projectile_icon_state = null
 	/// Specifies the left hand inhand icon file. Don't forget to set the right hand file as well.
 	var/retool_lefthand_file = null
 	/// Specifies the right hand inhand icon file. Don't forget to set the left hand file as well.
 	var/retool_righthand_file = null
+	/// Specifies the worn icon file.
+	var/retool_worn_file = null
 	/// Specifies the X dimensions of the new inhand, only relevant with different inhand files.
 	var/retool_inhand_x = null
 	/// Specifies the Y dimensions of the new inhand, only relevant with different inhand files.
@@ -113,7 +125,7 @@
 	name = "harpoon"
 	retool_icon_state = "crusher_harpoon"
 	retool_inhand_icon = "crusher_harpoon"
-	retool_projectile_icon = "pulse_harpoon"
+	retool_projectile_icon_state = "pulse_harpoon"
 
 /datum/crusher_skin/harpoon/New(obj/item/kinetic_crusher/new_crusher)
 	. = ..()
@@ -195,5 +207,5 @@
 /datum/crusher_skin/ashen_skull
 	retool_icon_state = "crusher_skull"
 	retool_inhand_icon = "crusher_skull"
-	retool_projectile_icon = "pulse_skull"
+	retool_projectile_icon_state = "pulse_skull"
 	normal_skin = FALSE

@@ -60,11 +60,17 @@
 
 	if(!ismovable(to_wrap) || to_wrap == owner)
 		return FALSE
-
-	if(isspider(to_wrap))
-		owner.balloon_alert(owner, "can't wrap spiders!")
-		return FALSE
-
+	if(isliving(to_wrap))
+		var/mob/living/living_target = to_wrap
+		if(living_target.mob_biotypes & MOB_SPECIAL)
+			owner.balloon_alert(owner, "can't wrap, too strong!")
+			return FALSE
+		if(living_target.mob_biotypes & MOB_SPIRIT)
+			owner.balloon_alert(owner, "can't wrap ghosts!")
+			return FALSE
+		if(isspider(living_target))
+			owner.balloon_alert(owner, "can't wrap spiders!")
+			return FALSE
 	var/atom/movable/target_movable = to_wrap
 	if(target_movable.anchored)
 		return FALSE
@@ -85,7 +91,7 @@
 	else
 		owner.balloon_alert(owner, "interrupted!")
 
-/datum/action/cooldown/mob_cooldown/wrap/proc/wrap_target(atom/movable/to_wrap)
+/datum/action/cooldown/mob_cooldown/wrap/proc/wrap_target(mob/living/to_wrap)
 	var/obj/structure/spider/cocoon/casing = new(to_wrap.loc)
 	if(isliving(to_wrap))
 		var/mob/living/living_wrapped = to_wrap
@@ -108,5 +114,7 @@
 			to_chat(owner, span_warning("[living_wrapped] is not edible!"))
 
 	to_wrap.forceMove(casing)
-	if(to_wrap.density || ismob(to_wrap))
+	if(isliving(to_wrap)&& (to_wrap.mob_biotypes & MOB_HUMANOID))
 		casing.icon_state = pick("cocoon_large1", "cocoon_large2", "cocoon_large3")
+	else
+		casing.icon_state = pick("cocoon1", "cocoon2", "cocoon3")

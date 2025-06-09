@@ -120,7 +120,6 @@ function PanelOptions(props) {
           onChange={setSearchQuery}
           placeholder="Search..."
           value={searchQuery}
-          expensive
         />
       </Stack.Item>
       <Stack.Item>

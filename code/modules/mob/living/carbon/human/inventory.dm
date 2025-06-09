@@ -52,9 +52,6 @@
 	if(looking_for == belt)
 		return ITEM_SLOT_BELT
 
-	if(belt && (looking_for in belt))
-		return ITEM_SLOT_BELTPACK
-
 	if(looking_for == wear_id)
 		return ITEM_SLOT_ID
 
@@ -175,9 +172,7 @@
 		if(ITEM_SLOT_OCLOTHING)
 			if(wear_suit)
 				return
-
 			wear_suit = equipping
-
 			if(wear_suit.breakouttime) //when equipping a straightjacket
 				ADD_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
 				stop_pulling() //can't pull if restrained
@@ -200,32 +195,25 @@
 				return
 			s_store = equipping
 			update_suit_storage()
-		if(ITEM_SLOT_BELTPACK)
-			if(!belt || !belt.atom_storage?.attempt_insert(equipping, src, override = TRUE, force = indirect_action ? STORAGE_SOFT_LOCKED : STORAGE_NOT_LOCKED))
-				not_handled = TRUE
 		else
 			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
+			not_handled = TRUE
 
 	//Item is handled and in slot, valid to call callback, for this proc should always be true
 	if(!not_handled)
 		has_equipped(equipping, slot, initial)
-		hud_used?.update_locked_slots()
-
-		// Send a signal for when we equip an item that used to cover our feet/shoes. Used for bloody feet
-		if(equipping.body_parts_covered & FEET || (equipping.flags_inv | equipping.transparent_protection) & HIDESHOES)
-			SEND_SIGNAL(src, COMSIG_CARBON_EQUIP_SHOECOVER, equipping, slot, initial, redraw_mob)
 
 	return not_handled //For future deeper overrides
 
 /mob/living/carbon/human/get_equipped_speed_mod_items()
 	return ..() - list(l_store, r_store, s_store)
 
-/mob/living/carbon/human/doUnEquip(obj/item/I, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
+/mob/living/carbon/human/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
-	if(!. || !I)
+	if(!. || !item_dropping)
 		return
 	var/not_handled = FALSE //if we actually unequipped an item, this is because we dont want to run this proc twice, once for carbons and once for humans
-	if(I == wear_suit)
+	if(item_dropping == wear_suit)
 		if(s_store && invdrop)
 			dropItemToGround(s_store, TRUE) //It makes no sense for your suit storage to stay on you if you drop your suit.
 		if(wear_suit.breakouttime) //when unequipping a straightjacket
@@ -235,7 +223,7 @@
 		wear_suit = null
 		if(!QDELETED(src)) //no need to update we're getting deleted anyway
 			update_worn_oversuit()
-	else if(I == w_uniform)
+	else if(item_dropping == w_uniform)
 		w_uniform = null
 		update_suit_sensors()
 		if(!QDELETED(src))
@@ -249,58 +237,54 @@
 				dropItemToGround(wear_id)
 			if(belt && !can_equip(belt, ITEM_SLOT_BELT, TRUE, ignore_equipped = TRUE))
 				dropItemToGround(belt)
-	else if(I == gloves)
+	else if(item_dropping == gloves)
 		gloves = null
 		if(!QDELETED(src))
 			update_worn_gloves()
-	else if(I == glasses)
+	else if(item_dropping == glasses)
 		glasses = null
-		var/obj/item/clothing/glasses/old_glasses = I
+		var/obj/item/clothing/glasses/old_glasses = item_dropping
 		if(old_glasses.vision_flags || old_glasses.invis_override || old_glasses.invis_view || !isnull(old_glasses.lighting_cutoff))
 			update_sight()
 		if(!QDELETED(src))
 			update_worn_glasses()
-	else if(I == ears)
+	else if(item_dropping == ears)
 		ears = null
 		if(!QDELETED(src))
 			update_worn_ears()
-	else if(I == shoes)
+	else if(item_dropping == shoes)
 		shoes = null
 		if(!QDELETED(src))
 			update_worn_shoes()
-	else if(I == belt)
+	else if(item_dropping == belt)
 		belt = null
 		if(!QDELETED(src))
 			update_worn_belt()
-	else if(I == wear_id)
+	else if(item_dropping == wear_id)
 		wear_id = null
 		sec_hud_set_ID()
 		if(!QDELETED(src))
 			update_worn_id()
-	else if(I == r_store)
+	else if(item_dropping == r_store)
 		r_store = null
 		if(!QDELETED(src))
 			update_pockets()
-	else if(I == l_store)
+	else if(item_dropping == l_store)
 		l_store = null
 		if(!QDELETED(src))
 			update_pockets()
-	else if(I == s_store)
+	else if(item_dropping == s_store)
 		s_store = null
 		if(!QDELETED(src))
 			update_suit_storage()
 	else
 		not_handled = TRUE
 
-	// Send a signal for when we unequip an item that used to cover our feet/shoes. Used for bloody feet
-	if((I.body_parts_covered & FEET) || (I.flags_inv | I.transparent_protection) & HIDESHOES)
-		SEND_SIGNAL(src, COMSIG_CARBON_UNEQUIP_SHOECOVER, I, force, newloc, no_move, invdrop, silent)
-
 	if(not_handled)
 		return
 
 	update_equipment_speed_mods()
-	update_obscured_slots(I.flags_inv)
+	update_obscured_slots(item_dropping.flags_inv)
 	hud_used?.update_locked_slots()
 
 /mob/living/carbon/human/toggle_internals(obj/item/tank, is_external = FALSE)

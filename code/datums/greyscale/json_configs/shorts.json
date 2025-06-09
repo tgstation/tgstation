@@ -4,19 +4,19 @@
 			"type": "icon_state",
 			"icon_state": "buckle",
 			"blend_mode": "overlay",
-			"color_ids": [ 1 ]
+			"color_ids": [1]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "belt",
 			"blend_mode": "overlay",
-			"color_ids": [ 2 ]
+			"color_ids": [2]
 		},
 		{
 			"type": "icon_state",
 			"icon_state": "shorts",
 			"blend_mode": "overlay",
-			"color_ids": [ 3 ]
+			"color_ids": [3]
 		}
 	]
 }

@@ -4,3 +4,6 @@
 	logger.Log(LOG_CATEGORY_MANIFEST, message, list(
 		"mind" = mind, "body" = body, "latejoin" = latejoin
 	))
+	// Roundstart happens with SSblackbox.ReportRoundstartManifest
+	if(latejoin)
+		SSblackbox.ReportManifest(ckey, body.real_name, mind.assigned_role.title, mind.special_role, latejoin)

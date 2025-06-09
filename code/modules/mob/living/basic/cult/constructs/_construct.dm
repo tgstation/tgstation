@@ -8,6 +8,7 @@
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
 	maximum_survivable_temperature = INFINITY
+	status_flags = CANPUSH
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	pressure_resistance = 100
 	speed = 0

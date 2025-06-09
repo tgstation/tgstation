@@ -6,4 +6,4 @@ Loosely adapted from /vg/. This is an entity component system for adding behavio
 
 ### [HackMD page for an introduction to the system as a whole.](https://hackmd.io/@tgstation/SignalsComponentsElements)
 
-### See/Define signals and their arguments in [__DEFINES\components.dm](../../__DEFINES/components.dm)
+### See/Define signals and their arguments in [\_\_DEFINES\components.dm](../../__DEFINES/components.dm)

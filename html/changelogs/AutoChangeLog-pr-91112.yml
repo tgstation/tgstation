@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "You can now attach anesthetic tanks and breathing masks to surgical tables."

@@ -214,18 +214,24 @@
 	icon_state = "bus"
 	},
 /area/ruin/space)
+"hZ" = (
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
 "iE" = (
 /obj/structure/table,
 /obj/item/pai_card,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"jH" = (
-/obj/item/storage/toolbox/mechanical,
-/obj/effect/decal/cleanable/oil,
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "kn" = (
 /obj/item/clothing/head/helmet/space,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
+"mS" = (
+/obj/structure/fluff/bus/dense{
+	icon_state = "frontwallbottom"
+	},
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "sl" = (
@@ -243,10 +249,6 @@
 	},
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"uO" = (
-/obj/item/reagent_containers/cup/rag,
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
 "wc" = (
 /obj/structure/table,
 /obj/item/reagent_containers/cup/glass/coffee,
@@ -257,10 +259,6 @@
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "yY" = (
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
-"Bw" = (
-/obj/effect/decal/cleanable/oil,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "CO" = (
@@ -323,15 +321,17 @@
 /obj/item/clothing/head/collectable/swat,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
+"GK" = (
+/obj/item/rag,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
 "Hb" = (
 /obj/item/clothing/head/cone,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
-"IQ" = (
-/obj/structure/fluff/bus/dense{
-	icon_state = "frontwallbottom"
-	},
-/obj/effect/decal/cleanable/oil,
+"JI" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "KK" = (
@@ -349,6 +349,10 @@
 /obj/item/reagent_containers/condiment/saltshaker,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
+"OD" = (
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/misc/asteroid/airless,
+/area/ruin/space)
 "Qd" = (
 /obj/effect/decal/cleanable/shreds,
 /turf/open/misc/asteroid/airless,
@@ -363,10 +367,6 @@
 /obj/structure/fluff/bus/passable{
 	icon_state = "wheredahoodat"
 	},
-/turf/open/misc/asteroid/airless,
-/area/ruin/space)
-"Wn" = (
-/obj/effect/decal/cleanable/robot_debris/old,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space)
 "WQ" = (
@@ -442,7 +442,7 @@ ab
 ab
 yY
 yY
-Bw
+OD
 yY
 yY
 yY
@@ -461,7 +461,7 @@ ab
 ab
 ab
 yY
-Bw
+OD
 yY
 yY
 Ne
@@ -502,12 +502,12 @@ yY
 yY
 yY
 yY
-Bw
+OD
 yY
 Ne
 aV
 az
-IQ
+mS
 yY
 yY
 "}
@@ -583,7 +583,7 @@ Ne
 ba
 aA
 KK
-uO
+GK
 yY
 Qd
 yY
@@ -604,7 +604,7 @@ ap
 aB
 KK
 yY
-jH
+JI
 yY
 yY
 Hb
@@ -622,7 +622,7 @@ yY
 Ne
 aq
 aC
-IQ
+mS
 yY
 yY
 Gf
@@ -664,7 +664,7 @@ aU
 aD
 KK
 yY
-Wn
+hZ
 yY
 yY
 yY
@@ -742,7 +742,7 @@ ab
 ab
 yY
 yY
-Wn
+hZ
 yY
 yY
 yY

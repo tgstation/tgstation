@@ -1,4 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/effect/decal/cleanable/blood/oil,
+/obj/machinery/button/door/directional/south{
+	id = "BeachGarage"
+	},
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
 "al" = (
 /obj/structure/flora/coconuts{
 	pixel_x = -5;
@@ -242,6 +249,27 @@
 "cO" = (
 /turf/open/water/beach,
 /area/virtual_domain/fullbright)
+"cT" = (
+/obj/structure/closet,
+/obj/item/key/atv{
+	pixel_x = -4
+	},
+/obj/item/key/atv{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/key/atv{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/soft/black,
+/obj/item/clothing/head/soft/black,
+/obj/item/clothing/head/soft/black,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/heat,
+/turf/open/floor/iron/dark/herringbone,
+/area/virtual_domain)
 "cW" = (
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/islander,
 /turf/open/floor/carpet/cyan,
@@ -300,15 +328,6 @@
 	},
 /turf/open/water/beach,
 /area/virtual_domain/fullbright)
-"dv" = (
-/obj/structure/table,
-/obj/item/wrench{
-	pixel_y = 4
-	},
-/obj/item/storage/toolbox/emergency,
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/iron/dark/herringbone,
-/area/virtual_domain)
 "dA" = (
 /obj/structure/table/bronze,
 /obj/item/paper_bin/carbon{
@@ -336,6 +355,15 @@
 "dH" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/wood,
+/area/virtual_domain)
+"dR" = (
+/obj/structure/table,
+/obj/item/wrench{
+	pixel_y = 4
+	},
+/obj/item/storage/toolbox/emergency,
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/iron/dark/herringbone,
 /area/virtual_domain)
 "dS" = (
 /obj/structure/table/bronze,
@@ -647,13 +675,6 @@
 	},
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
-"hD" = (
-/obj/effect/decal/cleanable/oil,
-/obj/machinery/button/door/directional/south{
-	id = "BeachGarage"
-	},
-/turf/open/floor/iron/dark/herringbone,
-/area/virtual_domain)
 "hM" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -2169,27 +2190,6 @@
 /obj/structure/fluff/beach_umbrella/cap,
 /turf/open/misc/beach/sand,
 /area/virtual_domain/fullbright)
-"Bz" = (
-/obj/structure/closet,
-/obj/item/key/atv{
-	pixel_x = -4
-	},
-/obj/item/key/atv{
-	pixel_x = 5;
-	pixel_y = 3
-	},
-/obj/item/key/atv{
-	pixel_x = 1;
-	pixel_y = 1
-	},
-/obj/item/clothing/head/soft/black,
-/obj/item/clothing/head/soft/black,
-/obj/item/clothing/head/soft/black,
-/obj/effect/decal/cleanable/oil,
-/obj/item/clothing/glasses/sunglasses,
-/obj/item/clothing/glasses/heat,
-/turf/open/floor/iron/dark/herringbone,
-/area/virtual_domain)
 "BB" = (
 /obj/item/toy/plush/moth{
 	pixel_y = 5
@@ -2635,6 +2635,13 @@
 	pixel_x = 2
 	},
 /turf/open/floor/wood/large,
+/area/virtual_domain)
+"Hq" = (
+/obj/vehicle/ridden/atv{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/oil,
+/turf/open/floor/iron/dark/herringbone,
 /area/virtual_domain)
 "HE" = (
 /obj/machinery/griddle,
@@ -3296,18 +3303,6 @@
 /obj/structure/sink/kitchen/directional/east,
 /turf/open/floor/plastic,
 /area/virtual_domain)
-"Pq" = (
-/obj/structure/table/bronze,
-/obj/item/reagent_containers/cup/rag{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/condiment/coconut_milk{
-	pixel_y = 14;
-	pixel_x = 5
-	},
-/obj/machinery/light/directional/east,
-/turf/open/floor/wood/large,
-/area/virtual_domain)
 "PD" = (
 /obj/item/kirbyplants/organic/plant8{
 	pixel_y = 9;
@@ -3883,13 +3878,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/virtual_domain)
-"UJ" = (
-/obj/vehicle/ridden/atv{
-	dir = 4
-	},
-/obj/effect/decal/cleanable/oil,
-/turf/open/floor/iron/dark/herringbone,
-/area/virtual_domain)
 "UO" = (
 /obj/machinery/vending/cola/pwr_game,
 /turf/open/floor/eighties,
@@ -3945,6 +3933,18 @@
 	pixel_y = 3;
 	pixel_x = 10
 	},
+/turf/open/floor/wood/large,
+/area/virtual_domain)
+"Vz" = (
+/obj/structure/table/bronze,
+/obj/item/rag{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/condiment/coconut_milk{
+	pixel_y = 14;
+	pixel_x = 5
+	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/wood/large,
 /area/virtual_domain)
 "VD" = (
@@ -8101,7 +8101,7 @@ si
 Co
 Mb
 Fp
-Pq
+Vz
 Sz
 Fx
 ka
@@ -10622,7 +10622,7 @@ ka
 ka
 eK
 jV
-dv
+dR
 Bq
 KH
 uu
@@ -10704,7 +10704,7 @@ th
 ka
 eK
 Tq
-hD
+ac
 Bq
 Bq
 xO
@@ -10785,9 +10785,9 @@ oa
 ka
 ka
 eK
-Bz
+cT
 Tb
-UJ
+Hq
 Bq
 aE
 uu

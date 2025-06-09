@@ -217,7 +217,7 @@
 	else
 		. += span_notice("The wires are just dangling from it, you need some sort of <i> activating assembly</i>.")
 
-/obj/item/sliced_pipe/attackby(obj/item/item, mob/user, list/modifiers)
+/obj/item/sliced_pipe/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
 	if(!wires_are_in)
 		// here we can stuff in additional objects for a cooler effect
 		if(is_type_in_typecache(item, allowed) && contents.len < MAX_STUFFINGS)
@@ -225,8 +225,9 @@
 			var/atom/movable/to_put = item
 			if(isstack(item))
 				var/obj/item/stack/as_stack = item
-				to_put = as_stack.split_stack(user = null, amount = 1)
-				as_stack.merge_type = null //prevent them from merging inside for contents.len
+				var/obj/item/stack/new_stack = as_stack.split_stack(1)
+				new_stack.merge_type = null //prevent them from merging inside for contents.len
+				to_put = new_stack
 			to_put.forceMove(src)
 			return
 
