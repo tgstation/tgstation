@@ -6367,9 +6367,6 @@
 "IK" = (
 /obj/structure/table,
 /obj/item/construction/plumbing,
-/obj/item/paper{
-	info = "NOTICE - Due to the Air tank's extreme susceptibility to sabotage, Engineering has been supplied one chemistry plumberer to help curate more air in case of emergencies - Just remember to use smoke machines!"
-	},
 /obj/machinery/atmospherics/pipe/smart/simple/orange/visible{
 	dir = 8
 	},
@@ -7787,6 +7784,10 @@
 	dir = 4
 	},
 /turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/waystation/cargobay)
+"Qj" = (
+/obj/machinery/atmospherics/components/unary/passive_vent,
+/turf/open/floor/engine/air,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Qk" = (
 /obj/effect/spawner/random/vending/colavend,
@@ -14418,7 +14419,7 @@ XD
 Dx
 jB
 iU
-lM
+Qj
 gz
 fb
 cG
@@ -14621,8 +14622,8 @@ Hu
 Vk
 aQ
 jB
-iU
-iU
+lM
+Qj
 Eb
 TE
 nh
