@@ -14,7 +14,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold/supply/hidden/layer4,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ag" = (
 /obj/structure/cable,
@@ -98,6 +98,9 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "aA" = (
 /obj/machinery/computer/security,
+/obj/effect/turf_decal/tile/dark_red/half{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "aC" = (
@@ -228,8 +231,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "bd" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room";
-	req_one_access_txt = "10;24"
+	name = "Supermatter Engine Room"
 	},
 /obj/structure/cable/layer3,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -246,9 +248,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "bo" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
@@ -264,12 +264,14 @@
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/ruin/space/has_grav/waystation/cargobay)
 "bq" = (
-/obj/structure/closet/secure_closet/hop,
+/obj/effect/spawner/random/exotic/languagebook,
+/obj/structure/closet/secure_closet,
+/obj/item/card/id/advanced/black,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/cargobay)
 "bs" = (
-/obj/effect/spawner/structure/window,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "bx" = (
@@ -483,8 +485,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "cL" = (
 /obj/machinery/door/airlock/research{
-	name = "Xenobiology Lab";
-	req_access_txt = "55"
+	name = "Xenobiology Lab"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -653,6 +654,7 @@
 /area/rainworld/surface/outdoors)
 "dD" = (
 /obj/structure/table/reinforced,
+/obj/item/aicard/aitater,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "dF" = (
@@ -737,12 +739,11 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "eg" = (
 /obj/machinery/door/airlock/research{
-	name = "Production";
-	req_access_txt = "47"
+	name = "Production"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -820,9 +821,7 @@
 	},
 /area/ruin/space/has_grav/waystation/cargobay)
 "ez" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
@@ -999,9 +998,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "fr" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
@@ -1218,8 +1215,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "gv" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room";
-	req_one_access_txt = "10;24"
+	name = "Supermatter Engine Room"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
@@ -1260,7 +1256,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/item/gun/energy/laser/retro/old,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "gH" = (
@@ -1405,7 +1400,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "hj" = (
 /obj/structure/cable,
@@ -1419,6 +1414,7 @@
 	dir = 6
 	},
 /obj/effect/mapping_helpers/burnt_floor,
+/obj/item/book/granter/crafting_recipe/combat_baking,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/waystation/cargobay)
 "hn" = (
@@ -1594,8 +1590,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "ip" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Office";
-	req_one_access_txt = "31;48"
+	name = "Cargo Office"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -1605,6 +1600,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "iq" = (
@@ -1624,6 +1620,9 @@
 "iu" = (
 /obj/item/shard,
 /obj/structure/frame/computer,
+/obj/effect/turf_decal/tile/dark_red/half{
+	dir = 1
+	},
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "iv" = (
@@ -1757,7 +1756,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jk" = (
 /obj/effect/turf_decal/tile/purple/half{
@@ -1818,7 +1817,7 @@
 "jy" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jA" = (
 /obj/structure/closet/crate/freezer/blood,
@@ -1867,12 +1866,9 @@
 /turf/open/water/no_planet_atmos/deep/rainworld,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jP" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/turf/open/floor/iron/white/side{
-	dir = 1
-	},
+/obj/structure/table,
+/obj/item/skillchip/master_angler,
+/turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jU" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -1888,8 +1884,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "jX" = (
 /obj/machinery/door/airlock/virology/glass{
-	name = "Virology";
-	req_access_txt = "39"
+	name = "Virology"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -1911,6 +1906,7 @@
 "kd" = (
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/spawner/structure/window/hollow/survival_pod,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ke" = (
@@ -1923,13 +1919,9 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "kf" = (
 /obj/machinery/door/airlock/security/glass{
-	id_tag = "outerbrig";
-	name = "Brig";
-	req_access_txt = "63"
+	name = "Brig"
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrance"
-	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "kg" = (
@@ -2049,8 +2041,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "le" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "head of personnel's office maintenance";
-	req_access_txt = "57"
+	name = "head of personnel's office maintenance"
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/siding/wood,
@@ -2072,6 +2063,7 @@
 /obj/structure/barricade/wooden/crude,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/command,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "lq" = (
@@ -2122,12 +2114,11 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "lD" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Medbay";
-	req_access_txt = "5"
+	name = "Medbay"
 	},
 /obj/machinery/door/firedoor,
 /obj/item/stack/cable_coil/five,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "lE" = (
@@ -2430,7 +2421,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "np" = (
 /obj/effect/turf_decal/plaque{
@@ -2537,8 +2528,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "of" = (
 /obj/machinery/door/airlock/external{
-	name = "Mining Dock";
-	req_access_txt = "48"
+	name = "Mining Dock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -2610,7 +2600,7 @@
 	dir = 6
 	},
 /mob/living/basic/mining/faithless_mining,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "oA" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -2829,9 +2819,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "pG" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
@@ -2857,6 +2845,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "pN" = (
 /obj/machinery/door/firedoor,
+/obj/effect/spawner/structure/window/hollow/survival_pod,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "pP" = (
@@ -2989,8 +2978,7 @@
 "qs" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering{
-	name = "Gravity Generator Chamber";
-	req_one_access_txt = "19; 61"
+	name = "Gravity Generator Chamber"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -3172,7 +3160,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/spawner/random/maintenance,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "rr" = (
 /obj/structure/window/reinforced/plasma{
@@ -3356,7 +3344,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/barricade/wooden,
 /obj/structure/barricade/wooden/crude,
-/obj/effect/spawner/structure/window/reinforced/tinted,
+/obj/effect/spawner/structure/window/survival_pod,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "so" = (
@@ -3371,15 +3359,11 @@
 	},
 /area/ruin/space/has_grav/waystation/cargobay)
 "sq" = (
-/obj/machinery/door/airlock/security/glass{
-	id_tag = "innerbrig";
-	name = "Brig";
-	req_access_txt = "63"
+/obj/effect/turf_decal/tile/green/half{
+	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
-	cycle_id = "brig-entrance"
-	},
-/turf/open/floor/mineral/plastitanium,
+/mob/living/basic/mining/faithless_mining,
+/turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "su" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
@@ -3406,8 +3390,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Emitter Room";
-	req_one_access_txt = "10;24"
+	name = "Emitter Room"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -3494,7 +3477,10 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
 "tt" = (
-/obj/structure/closet/secure_closet/security,
+/obj/structure/closet/secure_closet/labor_camp_security{
+	name = "security officer's locker"
+	},
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "tu" = (
@@ -3509,8 +3495,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "tv" = (
 /obj/machinery/door/airlock/research{
-	name = "Ordnance Lab";
-	req_access_txt = "8"
+	name = "Ordnance Lab"
 	},
 /obj/machinery/door/firedoor/heavy,
 /obj/structure/cable,
@@ -3540,7 +3525,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "tA" = (
 /obj/machinery/door/airlock/hatch,
@@ -3548,6 +3533,7 @@
 	cycle_id = "bridge"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "tC" = (
@@ -3837,14 +3823,14 @@
 "vt" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	name = "Detective's Office";
-	req_access_txt = "4"
+	name = "Detective's Office"
 	},
 /obj/effect/turf_decal/siding/thinplating,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/cargobay)
 "vv" = (
@@ -3938,6 +3924,7 @@
 /obj/structure/barricade/wooden/crude,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/command,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "vY" = (
@@ -3979,8 +3966,7 @@
 "wg" = (
 /obj/machinery/door/airlock/engineering/glass/critical{
 	heat_proof = 1;
-	name = "Supermatter Chamber";
-	req_one_access_txt = "10;24"
+	name = "Supermatter Chamber"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -4273,8 +4259,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "xC" = (
 /obj/machinery/door/airlock/medical{
-	name = "Surgery";
-	req_access_txt = "5"
+	name = "Surgery"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -4358,8 +4343,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "xZ" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	name = "Cargo Bay"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -4485,8 +4469,7 @@
 /obj/machinery/door/window/brigdoor{
 	base_state = "rightsecure";
 	icon_state = "rightsecure";
-	name = "Head of Personnel's Desk";
-	req_access_txt = "57"
+	name = "Head of Personnel's Desk"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -4602,8 +4585,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "zc" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room";
-	req_one_access_txt = "10;24"
+	name = "Supermatter Engine Room"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -4650,7 +4632,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron/textured_large,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/waystation/cargobay)
 "zn" = (
 /obj/effect/turf_decal/stripes/line{
@@ -4767,7 +4749,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "zY" = (
 /obj/effect/spawner/random/vending/snackvend,
@@ -5016,8 +4998,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Bj" = (
 /obj/machinery/door/airlock/medical/glass{
-	name = "Pharmacy";
-	req_access_txt = "69"
+	name = "Pharmacy"
 	},
 /obj/structure/cable,
 /obj/effect/mapping_helpers/airlock/abandoned,
@@ -5033,10 +5014,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Bp" = (
-/obj/machinery/door/airlock/research{
-	name = "Research Division Access";
-	req_access_txt = "47"
-	},
+/obj/machinery/door/airlock/research,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
@@ -5049,6 +5027,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/white/side{
 	dir = 4
 	},
@@ -5060,6 +5039,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Br" = (
@@ -5226,7 +5206,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Cn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -5513,8 +5493,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "DL" = (
 /obj/machinery/door/airlock/external{
-	name = "Engineering External Access";
-	req_one_access_txt = "10;24"
+	name = "Engineering External Access"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /turf/open/floor/plating,
@@ -5594,8 +5573,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Eh" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Cargo Bay";
-	req_one_access_txt = "31;48"
+	name = "Cargo Bay"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/firelock_frame,
@@ -5644,7 +5622,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "EB" = (
 /obj/structure/closet/crate/bin,
@@ -5839,7 +5817,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "FP" = (
 /obj/effect/spawner/random/maintenance,
@@ -5850,7 +5828,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 10
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "FW" = (
 /obj/machinery/door/airlock/maintenance{
@@ -6004,7 +5982,12 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "GH" = (
-/turf/open/floor/iron/white/side,
+/obj/effect/turf_decal/tile/green/half{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/gun/ballistic/revolver/peashooter,
+/turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "GI" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
@@ -6356,7 +6339,7 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "It" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -6478,7 +6461,10 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ja" = (
-/obj/effect/spawner/structure/window,
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
+	cycle_id = "engimaintport"
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Je" = (
@@ -6583,13 +6569,12 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "JU" = (
 /obj/machinery/door/airlock/medical/glass{
-	id_tag = "MedbayFoyer";
-	name = "Medbay";
-	req_access_txt = "5"
+	name = "Medbay"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "JV" = (
@@ -6680,8 +6665,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "KA" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Telecommunications";
-	req_access_txt = "61"
+	name = "Telecommunications"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -6719,10 +6703,7 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "KN" = (
-/obj/machinery/door/airlock/research{
-	name = "Research Division Access";
-	req_access_txt = "47"
-	},
+/obj/machinery/door/airlock/research,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
@@ -6735,6 +6716,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/white/side{
 	dir = 8
 	},
@@ -6908,14 +6890,14 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "LJ" = (
 /obj/machinery/door/airlock/command{
-	name = "Head of Personnel";
-	req_access_txt = "57"
+	name = "Head of Personnel"
 	},
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/cargobay)
 "LM" = (
@@ -7217,9 +7199,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Nc" = (
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -7274,8 +7254,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Nm" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Mining Dock";
-	req_access_txt = "48"
+	name = "Mining Dock"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/mineral/plastitanium,
@@ -7299,12 +7278,12 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ns" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Engineering Foyer";
-	req_one_access_txt = "32;19"
+	name = "Engineering Foyer"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Nv" = (
@@ -7510,7 +7489,7 @@
 	dir = 1
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Oy" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
@@ -7521,7 +7500,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "OA" = (
 /obj/effect/decal/cleanable/blood/tracks,
@@ -7539,7 +7518,10 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "OG" = (
 /obj/machinery/computer/crew,
-/turf/open/floor/iron/white/side,
+/obj/effect/turf_decal/tile/dark_red/half{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "OH" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
@@ -7891,8 +7873,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Qt" = (
 /obj/machinery/door/airlock/mining/glass{
-	name = "Mining Dock";
-	req_access_txt = "48"
+	name = "Mining Dock"
 	},
 /obj/structure/firelock_frame,
 /turf/open/floor/mineral/plastitanium,
@@ -8064,8 +8045,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ri" = (
 /obj/machinery/door/airlock/medical{
-	name = "Cryogenic";
-	req_access_txt = "5"
+	name = "Cryogenic"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -8196,8 +8176,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Emitter Room";
-	req_one_access_txt = "10;24"
+	name = "Emitter Room"
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/engine,
@@ -8813,6 +8792,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/structure/firelock_frame,
+/obj/effect/spawner/structure/window/survival_pod,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Vr" = (
@@ -8950,9 +8930,8 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "We" = (
-/turf/open/floor/iron/white/side{
-	dir = 1
-	},
+/obj/effect/spawner/structure/window/hollow/survival_pod,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Wf" = (
 /obj/effect/turf_decal/stripes/line{
@@ -9039,6 +9018,7 @@
 /obj/machinery/light/broken/directional/east,
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt/dust,
+/obj/item/tattoo_kit,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Wy" = (
@@ -9129,8 +9109,7 @@
 "WM" = (
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
-	name = "Medbay";
-	req_access_txt = "5"
+	name = "Medbay"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -9148,8 +9127,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "WR" = (
 /obj/machinery/door/airlock/external{
-	name = "Mining Dock";
-	req_access_txt = "48"
+	name = "Mining Dock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
@@ -9212,8 +9190,7 @@
 "Xs" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
-	name = "Medbay Storage";
-	req_access_txt = "5"
+	name = "Medbay Storage"
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -9397,8 +9374,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Yj" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room";
-	req_one_access_txt = "10;24"
+	name = "Supermatter Engine Room"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/engine,
@@ -9496,6 +9472,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "YF" = (
 /obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/mining/hivelord,
 /turf/open/floor/iron/freezer,
 /area/ruin/space/has_grav/waystation/cargobay)
 "YL" = (
@@ -9580,8 +9557,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "YZ" = (
 /obj/machinery/door/airlock/external{
-	name = "Engineering External Access";
-	req_one_access_txt = "10;24"
+	name = "Engineering External Access"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -9679,7 +9655,6 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "ZH" = (
 /obj/structure/table/reinforced,
-/obj/item/aicard,
 /obj/item/multitool,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -11851,7 +11826,7 @@ bD
 bD
 nn
 QN
-zr
+Ja
 jB
 jB
 jC
@@ -13037,7 +13012,7 @@ XT
 QN
 tD
 bs
-Ja
+su
 Ol
 HQ
 ED
@@ -13226,7 +13201,7 @@ OR
 OR
 OR
 su
-mx
+ZY
 Qe
 kL
 Ed
@@ -13430,8 +13405,8 @@ OR
 OR
 OR
 su
-GH
-jP
+ZY
+Qe
 zi
 gD
 xH
@@ -13533,7 +13508,7 @@ OR
 OR
 su
 OG
-We
+mx
 xH
 nE
 dF
@@ -13851,9 +13826,9 @@ QN
 QK
 iz
 jB
-sq
+kf
 YS
-sq
+kf
 jB
 oL
 iz
@@ -15006,7 +14981,7 @@ xH
 gX
 Pk
 IR
-Pk
+GH
 oT
 QN
 QN
@@ -15108,7 +15083,7 @@ xH
 VH
 Wo
 KI
-Wo
+sq
 Vd
 QN
 bD
@@ -16016,7 +15991,7 @@ PE
 pr
 un
 pP
-iz
+We
 CK
 mO
 vv
@@ -16118,7 +16093,7 @@ TX
 Lg
 un
 Uk
-iz
+We
 qg
 DN
 vC
@@ -16632,7 +16607,7 @@ xC
 QN
 QN
 QN
-iz
+We
 Ri
 QN
 jX
@@ -16809,7 +16784,7 @@ xQ
 oO
 rS
 QN
-VB
+jP
 UF
 VB
 QN
