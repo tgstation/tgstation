@@ -1949,7 +1949,7 @@
 				mutation_data["Scrambled"] = stored.scrambled
 				mut_class = get_mutation_class(stored)
 				mutation_data["CanChromo"] = stored.can_chromosome
-				mutation_data["ByondRef"] = REF(mutation)
+				mutation_data["ByondRef"] = REF(stored)
 				mutation_data["Type"] = stored.type
 				if(stored.can_chromosome)
 					mutation_data["ValidChromos"] = jointext(stored.valid_chrom_list, ", ")
