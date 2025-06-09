@@ -49,7 +49,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "aD" = (
-/obj/effect/decal/cleanable/robot_debris/old,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/old,
 /obj/item/assembly/igniter{
 	pixel_x = -7;
 	pixel_y = -11
@@ -160,7 +160,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/office)
 "bt" = (
 /obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/oil/streak{
+/obj/effect/decal/cleanable/blood/splatter/oil{
 	pixel_y = -7
 	},
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
@@ -247,7 +247,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "ca" = (
 /obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/machinery/camera/xray/directional/west,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/breakroom)
@@ -297,7 +297,7 @@
 "ct" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave,
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/structure/cable/layer1,
 /obj/effect/overloader_trap{
 	trigger_delay = 10
@@ -675,7 +675,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
 "fZ" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /obj/structure/cable/layer1,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
@@ -1265,7 +1265,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/maint)
 "kE" = (
 /obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/robot_debris/limb,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/limb,
 /obj/structure/sign/departments/cargo/directional/east,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /obj/structure/reagent_dispensers/water_cooler,
@@ -1556,7 +1556,7 @@
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/corridor)
 "nk" = (
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /obj/machinery/duct,
 /obj/machinery/firealarm/directional/south,
 /obj/item/food/deadmouse,
@@ -1896,7 +1896,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toystorage)
 "qF" = (
 /obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/robot_debris/down,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/down,
 /obj/item/ammo_casing/foam_dart{
 	pixel_x = 2
 	},
@@ -2909,7 +2909,7 @@
 /area/ruin/space/has_grav/hauntedtradingpost/maint/toolstorage)
 "zg" = (
 /obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/blood/oil,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/ruin/space/has_grav/hauntedtradingpost/aicore)
 "zi" = (
@@ -3217,7 +3217,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hauntedtradingpost/public)
 "BS" = (
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 8
 	},
@@ -4029,9 +4029,9 @@
 /area/ruin/space/has_grav/hauntedtradingpost/public/corridor)
 "IQ" = (
 /obj/structure/cable/layer1,
-/obj/effect/decal/cleanable/robot_debris,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris,
 /mob/living/basic/mouse/rat,
-/obj/effect/decal/cleanable/oil/streak{
+/obj/effect/decal/cleanable/blood/splatter/oil{
 	pixel_y = -7
 	},
 /turf/open/floor/catwalk_floor/iron_dark,
@@ -4040,7 +4040,7 @@
 /obj/structure/closet/cardboard{
 	desc = "A typical example of the ubiquitous cardboard box. Handy if you want to store things. This box is labelled 'OUTLET 6013' and has the Donk Co. logo stamped on it."
 	},
-/obj/effect/decal/cleanable/oil/slippery,
+/obj/effect/decal/cleanable/blood/oil/slippery,
 /obj/item/trash/popcorn/salty,
 /obj/item/ammo_casing/shotgun/flechette/donk{
 	pixel_x = 8;
@@ -4357,7 +4357,7 @@
 /turf/open/floor/carpet/orange,
 /area/ruin/space/has_grav/hauntedtradingpost/office/meetingroom)
 "LM" = (
-/obj/effect/decal/cleanable/robot_debris/up,
+/obj/effect/decal/cleanable/blood/gibs/robot_debris/up,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/duct,
 /turf/open/floor/carpet/donk,
@@ -5402,7 +5402,7 @@
 	pixel_y = 8;
 	pixel_x = 14
 	},
-/obj/effect/decal/cleanable/oil/slippery{
+/obj/effect/decal/cleanable/blood/oil/slippery{
 	pixel_y = 6;
 	pixel_x = 6
 	},
@@ -5513,7 +5513,7 @@
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees/workstation)
 "VA" = (
-/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/blood/splatter/oil,
 /turf/open/floor/carpet/donk,
 /area/ruin/space/has_grav/hauntedtradingpost/employees)
 "VJ" = (

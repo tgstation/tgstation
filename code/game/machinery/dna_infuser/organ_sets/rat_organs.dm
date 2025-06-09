@@ -19,9 +19,10 @@
 	eye_color_left = COLOR_BLACK
 	eye_color_right = COLOR_BLACK
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "eyes"
 	iris_overlay = null
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/eyes/night_vision/rat"
+	post_init_icon_state = "eyes"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
 	low_light_cutoff = list(16, 11, 0)
@@ -39,8 +40,9 @@
 	desc = "Rat DNA infused into what was once a normal stomach."
 	disgust_metabolism = 3
 
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "stomach"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/stomach/rat"
+	post_init_icon_state = "stomach"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
 	hunger_modifier = 10
@@ -54,8 +56,9 @@
 /obj/item/organ/heart/rat
 	name = "mutated rat-heart"
 	desc = "Rat DNA infused into what was once a normal heart."
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "heart"
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/heart/rat"
+	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
 
@@ -71,7 +74,7 @@
 		return
 	var/mob/living/carbon/human/human_receiver = receiver
 	if(human_receiver.can_mutate())
-		human_receiver.dna.add_mutation(/datum/mutation/human/dwarfism)
+		human_receiver.dna.add_mutation(/datum/mutation/dwarfism, MUTATION_SOURCE_RAT_HEART)
 	//but 1.5 damage
 	human_receiver.physiology?.damage_resistance -= 50
 
@@ -80,18 +83,18 @@
 	if(!ishuman(heartless))
 		return
 	var/mob/living/carbon/human/human_heartless = heartless
-	if(human_heartless.can_mutate())
-		human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
+	human_heartless.dna.remove_mutation(/datum/mutation/dwarfism, MUTATION_SOURCE_RAT_HEART)
 	human_heartless.physiology?.damage_resistance += 50
 
 /// you occasionally squeak, and have some rat related verbal tics
 /obj/item/organ/tongue/rat
 	name = "mutated rat-tongue"
 	desc = "Rat DNA infused into what was once a normal tongue."
-	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
-	icon_state = "tongue"
 	say_mod = "squeaks"
 	modifies_speech = TRUE
+	icon = 'icons/map_icons/items/_item.dmi'
+	icon_state = "/obj/item/organ/tongue/rat"
+	post_init_icon_state = "tongue"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
 	liked_foodtypes = DAIRY //mmm, cheese. doesn't especially like anything else
@@ -113,11 +116,11 @@
 
 /obj/item/organ/tongue/rat/on_mob_insert(mob/living/carbon/tongue_owner, special, movement_flags)
 	. = ..()
-	RegisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN, PROC_REF(its_on_the_mouse))
+	RegisterSignal(tongue_owner, COMSIG_LIVING_ITEM_GIVEN, PROC_REF(its_on_the_mouse))
 
 /obj/item/organ/tongue/rat/on_mob_remove(mob/living/carbon/tongue_owner)
 	. = ..()
-	UnregisterSignal(tongue_owner, COMSIG_CARBON_ITEM_GIVEN)
+	UnregisterSignal(tongue_owner, COMSIG_LIVING_ITEM_GIVEN)
 
 /obj/item/organ/tongue/rat/proc/on_item_given(mob/living/carbon/offerer, mob/living/taker, obj/item/given)
 	SIGNAL_HANDLER

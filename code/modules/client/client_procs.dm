@@ -260,12 +260,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(GLOB.persistent_clients_by_ckey[ckey])
 		reconnecting = TRUE
 		persistent_client = GLOB.persistent_clients_by_ckey[ckey]
-		persistent_client.byond_build = byond_build
-		persistent_client.byond_version = byond_version
 	else
 		persistent_client = new(ckey)
-		persistent_client.byond_build = byond_build
-		persistent_client.byond_version = byond_version
+	persistent_client.set_client(src)
 
 	if(byond_version >= 516)
 		winset(src, null, list("browser-options" = "find,refresh,byondstorage"))
@@ -562,6 +559,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	loot_panel = new(src)
 
 	view_size = new(src, getScreenSize(prefs.read_preference(/datum/preference/toggle/widescreen)))
+	set_fullscreen(logging_in = TRUE)
 	view_size.resetFormat()
 	view_size.setZoomMode()
 	Master.UpdateTickRate()
@@ -594,7 +592,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	GLOB.clients -= src
 	GLOB.directory -= ckey
-	persistent_client.client = null
+	persistent_client.set_client(null)
 
 	log_access("Logout: [key_name(src)]")
 	GLOB.ahelp_tickets.ClientLogout(src)
@@ -1200,8 +1198,18 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	set name = "Toggle Fullscreen"
 	set category = "OOC"
 
-	fullscreen = !fullscreen
+	var/is_on = prefs.read_preference(/datum/preference/toggle/fullscreen_mode)
+	prefs.write_preference(GLOB.preference_entries[/datum/preference/toggle/fullscreen_mode], !is_on)
+	set_fullscreen()
 
+/client/proc/set_fullscreen(logging_in = FALSE)
+	var/fullscreen = prefs?.read_preference(/datum/preference/toggle/fullscreen_mode)
+	//no need to set every login to not fullscreen, they already aren't.
+	//we also dont need to call attempt_auto_fit_viewport, Login does that for us.
+	if(logging_in)
+		if(fullscreen)
+			winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
+		return
 	winset(src, "mainwindow", "menu=;is-fullscreen=[fullscreen ? "true" : "false"]")
 	attempt_auto_fit_viewport()
 
