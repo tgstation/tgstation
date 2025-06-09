@@ -160,10 +160,6 @@
 
 /datum/antagonist/heretic/ui_data(mob/user)
 	var/list/data = list("charges" = knowledge_points)
-	return data
-
-/datum/antagonist/heretic/ui_static_data(mob/user)
-	var/list/data = list()
 
 	data["objectives"] = get_objectives()
 	data["can_change_objective"] = can_assign_self_objectives
@@ -241,7 +237,7 @@
 			if(!gain_knowledge(researched_path, source))
 				return FALSE
 			adjust_knowledge_points(-cost, FALSE)
-			update_static_data_for_all_viewers()
+			update_data_for_all_viewers()
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
 			return TRUE
 
@@ -311,7 +307,6 @@
 	for(var/starting_knowledge in GLOB.heretic_start_knowledge)
 		gain_knowledge(starting_knowledge, update = FALSE)
 
-	update_static_data_for_all_viewers()
 	owner.current.AddElement(/datum/element/leeching_walk/minor)
 
 	addtimer(CALLBACK(src, PROC_REF(passive_influence_gain)), passive_gain_timer) // Gain +1 knowledge every 20 minutes.
@@ -859,7 +854,7 @@
 	researched_knowledge[knowledge_type] = initialized_knowledge
 	initialized_knowledge.on_research(owner.current, src)
 	if(update)
-		update_static_data_for_all_viewers()
+		update_data_for_all_viewers()
 
 	return TRUE
 

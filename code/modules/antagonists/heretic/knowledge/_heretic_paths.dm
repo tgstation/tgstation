@@ -75,16 +75,18 @@ GLOBAL_LIST(heretic_research_tree)
 		our_heretic.get_knowledge_data(knowledge_tier1),
 		our_heretic.get_knowledge_data(knowledge_tier2),
 		our_heretic.get_knowledge_data(knowledge_tier3),
-		our_heretic.get_knowledge_data(ascension),
+		our_heretic.get_knowledge_data(knowledge_tier4),
 	)
 
 	var/datum/status_effect/heretic_passive/passive = start.eldritch_passive
 	data["passive"] = list(
 		"name" = initial(passive.name),
-		"tier_1_description" = initial(passive.tier_1_description),
-		"tier_2_description" = initial(passive.tier_2_description),
-		"tier_3_description" = initial(passive.tier_3_description),
 		"level" = passive ? passive.passive_level : 0,
+		"description" = list(
+			initial(passive.tier_1_description),
+			initial(passive.tier_2_description),
+			initial(passive.tier_3_description),
+		)
 	)
 
 	return data
