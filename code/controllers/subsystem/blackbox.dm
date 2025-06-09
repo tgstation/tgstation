@@ -428,7 +428,7 @@ Versioning
 			"ckey" = mob_ckey,
 			"character_name" = new_character.real_name,
 			"job" = new_character.mind?.assigned_role?.title,
-			"special" = new_character.mind?.special_role,
+			"special" = english_list(new_character.mind?.get_special_roles(), nothing_text = "NONE"),
 			"latejoin" = 0,
 		))
 	SSdbcore.MassInsert(format_table_name("manifest"), query_rows, special_columns = special_columns)

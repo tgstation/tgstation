@@ -831,9 +831,9 @@
 	playsound(candidate.current, 'sound/items/weapons/emitter.ogg', 50, TRUE)
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/equip_fugitive(mob/living/carbon/human/fugitive, datum/team/fugitive/team)
-	var/datum/antagonist/fugitive/fugitive = new()
-	fugitive.backstory = fugitive_backstory
-	fugitive.mind.add_antag_datum(fugitive, team)
+	var/datum/antagonist/fugitive/antag = new()
+	antag.backstory = fugitive_backstory
+	fugitive.mind.add_antag_datum(antag, team)
 	// Should really datumize this at some point
 	switch(fugitive_backstory)
 		if(FUGITIVE_BACKSTORY_PRISONER)
