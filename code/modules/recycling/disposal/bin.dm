@@ -1,4 +1,4 @@
-/// Number of animals infesting Disposal bins and Delivery chutes.
+/// Number of animals infesting disposal bins.
 GLOBAL_VAR_INIT(disposals_animals_spawned, 0)
 
 #define CONTAINS_ANIMAL_CHANCE 5
