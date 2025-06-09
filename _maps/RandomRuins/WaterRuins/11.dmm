@@ -895,11 +895,6 @@
 /obj/structure/table,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/multitool,
-/obj/machinery/requests_console/directional/north{
-	department = "Cargo Bay";
-	departmentType = 2;
-	name = "Cargo Bay Requests Console"
-	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "eQ" = (
@@ -1842,7 +1837,7 @@
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jC" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jE" = (
@@ -1852,8 +1847,7 @@
 	},
 /obj/machinery/button/door/directional/south{
 	id = "engsm";
-	name = "Radiation Shutters Control";
-	req_access_txt = "10"
+	name = "Radiation Shutters Control"
 	},
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -1883,7 +1877,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "jU" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/cable/layer3,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -2668,15 +2662,6 @@
 /obj/item/radio/intercom/directional/north,
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
-"oL" = (
-/obj/machinery/requests_console/directional/north{
-	department = "Security";
-	departmentType = 3;
-	name = "Security Requests Console"
-	},
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/waystation/cargobay)
 "oN" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
@@ -3359,17 +3344,6 @@
 /obj/effect/spawner/structure/window/survival_pod,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
-"so" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/iron/cafeteria{
-	dir = 8
-	},
-/area/ruin/space/has_grav/waystation/cargobay)
 "sq" = (
 /obj/effect/turf_decal/tile/green/half{
 	dir = 1
@@ -3516,13 +3490,9 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/waystation/cargobay)
 "tw" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
 /obj/machinery/light/broken/directional/west,
-/turf/open/floor/iron/white/corner{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ty" = (
 /obj/structure/cable,
@@ -3814,7 +3784,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
 "vf" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/structure/cable/multilayer/connected,
 /obj/machinery/power/terminal{
 	dir = 1
@@ -4249,17 +4219,6 @@
 	},
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
 /turf/open/floor/iron/dark/diagonal,
-/area/ruin/space/has_grav/waystation/cargobay)
-"xA" = (
-/obj/structure/cable,
-/obj/machinery/requests_console/directional/south{
-	announcementConsole = 1;
-	department = "Bridge";
-	departmentType = 5;
-	name = "Bridge Requests Console"
-	},
-/obj/effect/turf_decal/tile/dark_red/half,
-/turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "xB" = (
 /obj/effect/turf_decal/siding/thinplating/dark{
@@ -4713,7 +4672,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
 "zK" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
@@ -4987,12 +4946,8 @@
 /turf/open/floor/iron/grimy,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Bd" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/turf/open/floor/iron/white/corner{
-	dir = 8
-	},
+/obj/effect/turf_decal/tile/red/diagonal_centre,
+/turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Be" = (
 /obj/structure/window/reinforced/spawner,
@@ -5842,8 +5797,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "FW" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Mining Maintenance";
-	req_access_txt = "48"
+	name = "Mining Maintenance"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -5916,9 +5870,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Gl" = (
-/obj/structure/closet/secure_closet/bar{
-	req_access_txt = "25"
-	},
+/obj/structure/closet/secure_closet/bar,
 /obj/item/gun/ballistic/shotgun/doublebarrel,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood,
@@ -5942,8 +5894,7 @@
 	id = "bridge blast";
 	name = "Bridge Blast Door Control";
 	pixel_x = 28;
-	pixel_y = -2;
-	req_access_txt = "19"
+	pixel_y = -2
 	},
 /obj/structure/chair/comfy/black,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -6208,7 +6159,7 @@
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Hw" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible{
 	dir = 10
 	},
@@ -7010,12 +6961,6 @@
 /obj/effect/turf_decal/tile/purple/half{
 	dir = 8
 	},
-/obj/machinery/requests_console/directional/west{
-	department = "Science";
-	departmentType = 2;
-	name = "Science Requests Console";
-	receive_ore_updates = 1
-	},
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 8
 	},
@@ -7026,7 +6971,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Mj" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/effect/mapping_helpers/damaged_window,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -7335,7 +7280,7 @@
 /turf/open/floor/engine,
 /area/ruin/space/has_grav/waystation/cargobay)
 "ND" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden{
 	dir = 9
 	},
@@ -7533,11 +7478,11 @@
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "OH" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /turf/open/floor/plating,
 /area/rainworld/surface/outdoors)
 "OL" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
@@ -7571,15 +7516,13 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/cargobay)
 "OW" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "OY" = (
-/obj/structure/closet/secure_closet/freezer/fridge{
-	req_access = list(25)
-	},
+/obj/structure/closet/secure_closet/freezer/money,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Pa" = (
@@ -7904,7 +7847,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "QB" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
+/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/machinery/atmospherics/pipe/layer_manifold/scrubbers/visible{
 	dir = 4
 	},
@@ -8340,15 +8283,6 @@
 /turf/open/floor/iron/dark/side{
 	dir = 4
 	},
-/area/ruin/space/has_grav/waystation/cargobay)
-"SD" = (
-/obj/machinery/requests_console/directional/north{
-	department = "Cargo Bay";
-	departmentType = 2;
-	name = "Cargo Bay Requests Console"
-	},
-/obj/structure/closet/emcloset,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "SE" = (
 /obj/machinery/rnd/production/protolathe/department/engineering,
@@ -9079,11 +9013,6 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "WB" = (
 /obj/structure/closet/crate/bin,
-/obj/machinery/requests_console/directional/south{
-	department = "Medbay";
-	departmentType = 1;
-	name = "Medbay Requests Console"
-	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "WE" = (
@@ -9561,10 +9490,6 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "YX" = (
 /obj/structure/tank_dispenser/oxygen,
-/obj/machinery/requests_console/directional/west{
-	department = "Mining";
-	name = "Mining Requests Console"
-	},
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/waystation/cargobay)
 "YZ" = (
@@ -9607,8 +9532,7 @@
 /area/rainworld/surface/outdoors)
 "Zo" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Engineering Maintenance";
-	req_one_access_txt = "10;24"
+	name = "Engineering Maintenance"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -10791,7 +10715,7 @@ OR
 OR
 OR
 QN
-so
+SQ
 SQ
 SQ
 rt
@@ -11901,7 +11825,7 @@ dF
 MY
 xH
 QN
-SD
+yp
 HQ
 HQ
 QE
@@ -13524,7 +13448,7 @@ mx
 xH
 nE
 dF
-xA
+vF
 QN
 QN
 QN
@@ -13842,7 +13766,7 @@ kf
 YS
 kf
 jB
-oL
+Pa
 iz
 xH
 Cq
