@@ -20163,12 +20163,12 @@
 /turf/open/floor/iron/dark/small,
 /area/station/science/breakroom)
 "bnq" = (
-/obj/machinery/computer/scan_consolenew{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/purple{
 	dir = 10
+	},
+/obj/machinery/computer/dna_console{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
@@ -38502,7 +38502,6 @@
 /obj/structure/disposalpipe/junction/flip{
 	dir = 1
 	},
-/obj/machinery/computer/scan_consolenew,
 /obj/machinery/button/door{
 	id = "genetics_shutters";
 	name = "Shutters Control Button";
@@ -38514,6 +38513,7 @@
 /obj/effect/turf_decal/siding/purple{
 	dir = 1
 	},
+/obj/machinery/computer/dna_console,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "eNl" = (
@@ -50621,13 +50621,13 @@
 /turf/open/floor/iron/white/herringbone,
 /area/station/science/xenobiology)
 "puy" = (
-/obj/machinery/computer/scan_consolenew,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/turf_decal/siding/purple{
 	dir = 9
 	},
+/obj/machinery/computer/dna_console,
 /turf/open/floor/iron/dark,
 /area/station/science/genetics)
 "puB" = (

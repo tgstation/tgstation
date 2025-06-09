@@ -313,22 +313,22 @@
 "bH" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	name = "Custodial Closet";
-	req_access_txt = "26"
+	name = "Custodial Closet"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "bL" = (
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
-	name = "Custodial Maintenance";
-	req_access_txt = "26"
+	name = "Custodial Maintenance"
 	},
 /obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
 "bN" = (
@@ -436,6 +436,18 @@
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
+/area/ruin/space/has_grav/waystation/cargobay)
+"cy" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/basic/mining/faithless_mining,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "cz" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -2202,12 +2214,12 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock{
-	name = "Bar";
-	req_access_txt = "25"
+	name = "Bar"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/cargobay)
 "mk" = (
@@ -2857,8 +2869,7 @@
 	dir = 8
 	},
 /obj/machinery/door/airlock{
-	name = "Bar";
-	req_access_txt = "25"
+	name = "Bar"
 	},
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
@@ -2866,6 +2877,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/cargobay)
 "pU" = (
@@ -3362,7 +3374,7 @@
 /obj/effect/turf_decal/tile/green/half{
 	dir = 1
 	},
-/mob/living/basic/mining/faithless_mining,
+/mob/living/basic/mining/mook,
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
 "su" = (
@@ -3682,6 +3694,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
+/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "uA" = (
@@ -3741,8 +3754,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "uO" = (
 /obj/machinery/door/airlock/engineering/glass{
-	name = "Supermatter Engine Room";
-	req_one_access_txt = "10;24"
+	name = "Supermatter Engine Room"
 	},
 /obj/structure/firelock_frame,
 /turf/open/floor/engine,
@@ -3965,7 +3977,6 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "wg" = (
 /obj/machinery/door/airlock/engineering/glass/critical{
-	heat_proof = 1;
 	name = "Supermatter Chamber"
 	},
 /turf/open/floor/engine,
@@ -3980,10 +3991,10 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock{
-	name = "Bar";
-	req_access_txt = "25"
+	name = "Bar"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/cargobay)
 "wl" = (
@@ -5770,8 +5781,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Ft" = (
 /obj/machinery/door/airlock/external{
-	name = "Supply Dock Airlock";
-	req_access_txt = "31"
+	name = "Supply Dock Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /turf/open/floor/plating,
@@ -6187,14 +6197,14 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Hu" = (
 /obj/machinery/door/airlock{
-	name = "Service Hall";
-	req_one_access_txt = "73"
+	name = "Service Hall"
 	},
 /obj/structure/cable,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/effect/mapping_helpers/airlock/abandoned,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/iron/smooth_large,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Hw" = (
@@ -7357,8 +7367,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "NZ" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Medbay Maintenance";
-	req_access_txt = "5"
+	name = "Medbay Maintenance"
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
@@ -7778,6 +7787,10 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
+/area/ruin/space/has_grav/waystation/cargobay)
+"PU" = (
+/obj/structure/fireaxecabinet/empty/directional/east,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "PW" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
@@ -8909,12 +8922,11 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "Wc" = (
 /obj/effect/turf_decal/siding/wood,
-/obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "25"
-	},
+/obj/machinery/door/airlock/maintenance,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/waystation/cargobay)
 "Wd" = (
@@ -13021,7 +13033,7 @@ QN
 QN
 QN
 xH
-ED
+cy
 HQ
 XM
 QN
@@ -14797,7 +14809,7 @@ Sr
 Mk
 mp
 HQ
-Kg
+PU
 jB
 OR
 OR
@@ -15081,9 +15093,9 @@ HQ
 qb
 xH
 VH
-Wo
-KI
 sq
+KI
+Wo
 Vd
 QN
 bD
