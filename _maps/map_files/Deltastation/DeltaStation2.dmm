@@ -43883,7 +43883,7 @@
 	pixel_x = -10;
 	pixel_y = -4
 	},
-/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/mask/breath/muzzle,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
 "kSa" = (
@@ -61079,6 +61079,17 @@
 /mob/living/basic/carp/pet/lia,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/hos)
+"piU" = (
+/obj/docking_port/stationary{
+	dir = 2;
+	dwidth = 11;
+	height = 18;
+	name = "Deltastation emergency evac bay";
+	shuttle_id = "emergency_home";
+	width = 30
+	},
+/turf/open/space/basic,
+/area/space)
 "pjb" = (
 /obj/machinery/duct,
 /obj/effect/decal/cleanable/dirt,
@@ -72633,11 +72644,11 @@
 	req_access = list("surgery")
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/clothing/mask/muzzle/breath{
+/obj/item/clothing/mask/breath/muzzle{
 	pixel_y = -4
 	},
-/obj/item/clothing/mask/muzzle/breath,
-/obj/item/clothing/mask/muzzle/breath,
+/obj/item/clothing/mask/breath/muzzle,
+/obj/item/clothing/mask/breath/muzzle,
 /turf/open/floor/iron/dark,
 /area/station/medical/surgery/theatre)
 "rZf" = (
@@ -141167,7 +141178,7 @@ sbe
 xPu
 rDr
 xuk
-aaa
+piU
 aaa
 aaa
 aaa
