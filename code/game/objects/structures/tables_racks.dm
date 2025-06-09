@@ -98,6 +98,7 @@
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/climb_walkable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 //proc that adds elements present in normal tables
@@ -124,6 +125,7 @@
 /obj/structure/table/proc/flip_table(new_dir = SOUTH)
 	playsound(src, 'sound/items/trayhit/trayhit1.ogg', 100)
 	RemoveElement(/datum/element/climbable)
+	RemoveElement(/datum/element/climb_walkable)
 	RemoveElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	RemoveElement(/datum/element/give_turf_traits, turf_traits)
 	RemoveElement(/datum/element/elevation, pixel_shift = 12)
@@ -242,6 +244,7 @@
 		return FALSE
 	if(border_dir == dir)
 		return FALSE
+
 	return TRUE
 
 /obj/structure/table/update_icon(updates=ALL)
@@ -332,16 +335,6 @@
 /obj/structure/table/attack_tk(mob/user)
 	return
 
-/obj/structure/table/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	if(.)
-		return
-	if(mover.throwing)
-		return TRUE
-	for(var/obj/structure/table/table in get_turf(mover))
-		if(!table.is_flipped)
-			return TRUE
-
 /obj/structure/table/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
 	if(!density)
 		return TRUE
@@ -369,7 +362,7 @@
 	passtable_off(pushed_mob, passtable_key)
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
-	pushed_mob.Knockdown(30)
+	pushed_mob.Knockdown(3 SECONDS)
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
 	playsound(pushed_mob, 'sound/effects/tableslam.ogg', 90, TRUE)
@@ -1529,3 +1522,4 @@
 		R.add_fingerprint(user)
 		qdel(src)
 	building = FALSE
+
