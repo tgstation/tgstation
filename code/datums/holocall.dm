@@ -10,8 +10,6 @@
 	var/mob/eye/camera/remote/eye = user.remote_control
 	if(!istype(eye))
 		CRASH("Attempted to remove eye control from non-camera eye. Something has gone horribly wrong.")
-	for(var/datum/camerachunk/camerachunk_left as anything in eye.visibleCameraChunks)
-		camerachunk_left.remove(eye)
 	eye.assign_user(null)
 
 //this datum manages its own references
