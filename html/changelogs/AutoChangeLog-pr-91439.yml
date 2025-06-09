@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - balance: "Buffed the acrobatics skillchip (the one that disables spinning and flipping cooldowns). Gave new item descriptions to skillchips that were missing one."
