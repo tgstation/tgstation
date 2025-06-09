@@ -165,3 +165,67 @@
   - bugfix: Healium crystals properly work in a 7 range AOE
   carpotoxin:
   - code_imp: bots use their correct pronouns, if given any, in their tooltips
+2025-06-09:
+  00-Steven:
+  - refactor: Refactored the book interaction chain. Please report any issues.
+  - bugfix: You can no longer vandalize carved out books if you carve it after opening
+      the input menu but before entering anything.
+  - qol: Added screentips to book interactions.
+  - qol: Added screentips to barcode scanner interactions.
+  - qol: Carving out books no longer uses combat mode, instead using left-click by
+      default and right-click if your tool can also write. Screentips account for
+      this.
+  Arturlang:
+  - bugfix: fix duffels making you fast as fuck
+  EnterTheJake:
+  - bugfix: removed a stray white pixel in the Miku Outfit.
+  Ezel:
+  - bugfix: Replaces 2 instances of the traitor AI toy with the real toy on Wawastation
+  Ghommie:
+  - refactor: Refactored mutation code backend. Report any issue.
+  JohnFulpWillard:
+  - code_imp: The escape menu has a slightly different UI, again.
+  NanoCats, Arturlang:
+  - map: Heavily changes catwalkstation's science department, including moving the
+      protolathe downstairs and north of the cupboard it is currently in, and adds
+      a second exofabber for robotics.
+  OrbisAnima, necromanceranne:
+  - bugfix: PKA's can no longer have multiple offensive AOE modkits installed at once,
+      which was not intended.
+  SmArtKar:
+  - rscadd: Emissive objects now have a bit of a colored bloom around them.
+  - bugfix: Fixed vents and pipes partially poking out from under glass and catwalk
+      floors
+  SyncIt21:
+  - bugfix: lathes don't break on ore silo deletion
+  - bugfix: impure chems(cryostylane below 50% purity) will now expose the mob to
+      their inverse chems(cryogelidia) after transfer
+  Xander3359:
+  - qol: Atmos holofans automatically open firelocks
+  moocowswag:
+  - bugfix: fixed conveyors running away after being crowbarred
+  necromanceranne:
+  - bugfix: Cryogelidia can no longer freeze things arbitrarily forever.
+  throwawayuseless:
+  - bugfix: blind psykers are not blinded twice by two different sources, head and
+      brain.
+  - qol: Psyker bounty hunters and chaplains are no longer blinded by default, so
+      as to reduce the amount of eye strain from the echolocation effect. The echolocation
+      virtual domains remain as they are.
+  timothymtorres:
+  - rscadd: Photocopiers can now be emagged to disable the payment system that charges
+      you for printing copies
+  - rscadd: Photocopiers are now affected by stock part upgrades. Matter bins affect
+      paper capacity, lasers affect toner usage, and scanning module affects time
+      to print. The servo stock part was replaced with matter bin.
+  - rscadd: Photocopiers can now be loaded with regular, carbon, construction, and
+      natural paper. You can select which kind to use in the UI when printing copies
+      if any are stored.
+  - qol: Photocopiers can now be loaded with paper bins
+  - bugfix: Photocopiers now display the correct amount of stored paper
+  - bugfix: Photocopiers now drop toner and paper when machine is deconstructed
+  - code_imp: Paper subtypes (carbon, construction, natural) were given proper names
+      to use with photocopiers UI menu.
+  - refactor: Photocopier code was refactored to not spawn paper when it is initialized.
+      Instead it stores blank papers as a numeric value. Also switched the `attackby()`
+      code handling to use the modern `item_interaction()` proc.

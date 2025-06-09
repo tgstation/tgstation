@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - refactor: "Refactored mutation code backend. Report any issue."
