@@ -734,7 +734,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/datum/mutation/mutation = get_mutation(mutation_path)
 	if(check_block_string(mutation_path))
 		if(!mutation)
-			. = add_mutation(mutation_path, MUTATION_SOURCE_ACTIVATED)
+			add_mutation(mutation_path, MUTATION_SOURCE_ACTIVATED)
 		return
 	if(MUTATION_SOURCE_ACTIVATED in mutation?.sources)
 		remove_mutation(mutation, MUTATION_SOURCE_ACTIVATED)
