@@ -365,10 +365,14 @@
 /// Feedback displayed to nearby players after a mob is unbuckled from src.
 /atom/movable/proc/unbuckle_feedback(mob/living/unbuckled_mob, mob/unbuckler)
 	if(unbuckled_mob == unbuckler)
-		unbuckler.visible_message(span_notice("[unbuckler] unbuckles [unbuckler.p_them()]self from [src]."),\
-			span_notice("You unbuckle yourself from [src]."),\
-			span_hear("You hear metal clanking."))
+		unbuckler.visible_message(
+			span_notice("[unbuckler] unbuckles [unbuckler.p_them()]self from [src]."),
+			span_notice("You unbuckle yourself from [src]."),
+			span_hear("You hear metal clanking."),
+		)
 	else
-		unbuckler.visible_message(span_notice("[unbuckler] unbuckles [unbuckled_mob] from [src]."),\
-			span_notice("[unbuckler] unbuckles you from [src]."),\
-			span_hear("You hear metal clanking."))
+		unbuckler.visible_message(
+			span_notice("[unbuckler] unbuckles [unbuckled_mob] from [src]."),
+			span_notice("[unbuckler] unbuckles you from [src]."),
+			span_hear("You hear metal clanking."),
+		)
