@@ -4,7 +4,7 @@
 /datum/component/climb_walkable/RegisterWithParent()
 	var/static/list/turf_connections = list(
 		COMSIG_ATOM_ENTERED = PROC_REF(on_enter),
-		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_enter)
+		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON = PROC_REF(on_enter),
 		COMSIG_ATOM_EXITED = PROC_REF(on_exit),
 	)
 	AddComponent(/datum/component/connect_loc_behalf, parent, turf_connections)
