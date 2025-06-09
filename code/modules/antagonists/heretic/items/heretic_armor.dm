@@ -284,6 +284,23 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
 	armor_type = /datum/armor/eldritch_armor/lock
 
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/equipped(mob/living/user, slot)
+	. = ..()
+	if(!(slot_flags & slot))
+		user.RemoveElement(/datum/element/digitalcamo)
+		user.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), REF(src))
+		return
+	user.AddElement(/datum/element/digitalcamo)
+	user.add_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), REF(src))
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/Destroy()
+	if(!ismob(loc))
+		return ..()
+	var/mob/wearer = loc
+	wearer.RemoveElement(/datum/element/digitalcamo)
+	wearer.remove_traits(list(TRAIT_SILENT_FOOTSTEPS, TRAIT_UNKNOWN), REF(src))
+	return ..()
+
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
 	icon_state = "lock_armor"
 	armor_type = /datum/armor/eldritch_armor/lock

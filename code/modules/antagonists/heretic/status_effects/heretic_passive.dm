@@ -180,8 +180,7 @@
 /datum/status_effect/heretic_passive/cosmic/tick(seconds_between_ticks)
 	. = ..()
 	if(locate(/obj/effect/forcefield/cosmic_field) in get_turf(owner))
-		var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
-		owner.adjustStaminaLoss(-15 * delta_time, updating_stamina = FALSE)
+		owner.adjustStaminaLoss(-15 * delta_time * seconds_between_ticks, updating_stamina = FALSE)
 
 /**
  * Creates a cosmic field at a given loc
@@ -352,7 +351,7 @@
 
 /datum/status_effect/heretic_passive/moon/tick(seconds_between_ticks)
 	. = ..()
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, ((world.time > last_attack + 5 SECONDS) ? (-5 * passive_level / 2) : -5 * passive_level))
+	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, ((world.time > last_attack + 5 SECONDS) ? 0 : -5 * passive_level * seconds_between_ticks))
 
 	var/obj/item/organ/brain/our_brain = owner.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(!our_brain)
