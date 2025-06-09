@@ -174,13 +174,13 @@
 	/// Indicates if there are moles of gas in the breath.
 	var/has_moles = breath.total_moles() != 0
 
-	var/obj/item/organ/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
+	var/obj/item/organ/lungs/lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
 	// Indicates if lungs can breathe without gas.
 	var/can_breathe_vacuum = FALSE
 	if(lungs)
 		// Breathing with lungs.
 		// Check for vacuum-adapted lungs.
-		can_breathe_vacuum = HAS_TRAIT(lungs, TRAIT_SPACEBREATHING)
+		can_breathe_vacuum = lungs.is_space_breather(src)
 	else
 		// Lungs are missing! Can't breathe.
 		// Simulates breathing zero moles of gas.
