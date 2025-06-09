@@ -507,13 +507,7 @@ const PathContent = ({
   path: HereticPath;
   isPathSelected: boolean;
 }) => {
-  const {
-    level,
-    name,
-    tier_1_description,
-    tier_2_description,
-    tier_3_description,
-  } = path.passive;
+  const { level, name, description } = path.passive;
   return (
     <Section
       title={
