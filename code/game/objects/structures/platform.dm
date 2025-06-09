@@ -36,24 +36,37 @@
 
 /obj/structure/platform/Initialize(mapload)
 	. = ..()
+
+	update_appearance(UPDATE_OVERLAYS)
+	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/climbable)
-	AddElement(/datum/component/climb_walkable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 	AddElement(/datum/element/give_turf_traits, turf_traits)
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 
+/obj/structure/platform/update_overlays()
+	. = ..()
+	if (frame_icon)
+		. += mutable_appearance(frame_icon, "[base_icon_state]-[smoothing_junction]", appearance_flags = KEEP_APART)
+
+/obj/structure/platform/set_smoothed_icon_state(new_junction)
+	. = ..()
+	update_appearance(UPDATE_OVERLAYS)
+
 /obj/structure/platform/pizza
 	icon = 'icons/obj/smooth_structures/platform/window_frame_pizza.dmi'
+	frame_icon = 'icons/obj/smooth_structures/platform/frame_faces/window_frame_pizza.dmi'
 	icon_state = "window_frame_pizza-0"
 	base_icon_state = "window_frame_pizza"
 
 /obj/structure/platform/stone
 	icon = 'icons/obj/smooth_structures/platform/window_frame_sandstone.dmi'
+	frame_icon = 'icons/obj/smooth_structures/platform/frame_faces/window_frame_sandstone.dmi'
 	icon_state = "window_frame_sandstone-0"
 	base_icon_state = "window_frame_sandstone"
 
-
 /obj/structure/platform/shuttle
 	icon = 'icons/obj/smooth_structures/platform/window_frame_shuttle.dmi'
+	frame_icon = 'icons/obj/smooth_structures/platform/frame_faces/window_frame_shuttle.dmi'
 	icon_state = "window_frame_shuttle-0"
 	base_icon_state = "window_frame_shuttle"
