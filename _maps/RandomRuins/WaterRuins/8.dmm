@@ -323,7 +323,6 @@
 /area/ruin/syndielab)
 "tb" = (
 /obj/machinery/light/warm/directional/north,
-/obj/effect/decal/cleanable/oil/streak,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/hidden,
 /obj/structure/cable/layer1,
 /turf/open/floor/iron/dark/textured,
