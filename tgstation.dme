@@ -1304,6 +1304,7 @@
 #include "code\datums\components\surgery_initiator.dm"
 #include "code\datums\components\swabbing.dm"
 #include "code\datums\components\swarming.dm"
+#include "code\datums\components\table_smash.dm"
 #include "code\datums\components\tackle.dm"
 #include "code\datums\components\tactical.dm"
 #include "code\datums\components\takes_reagent_appearance.dm"
