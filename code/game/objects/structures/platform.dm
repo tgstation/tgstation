@@ -42,6 +42,7 @@
 /obj/structure/platform/Initialize(mapload)
 	. = ..()
 
+	register_context()
 	update_appearance(UPDATE_OVERLAYS)
 	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/climbable)
@@ -49,6 +50,34 @@
 	AddElement(/datum/element/give_turf_traits, turf_traits)
 	AddElement(/datum/element/footstep_override, footstep = footstep, priority = STEP_SOUND_TABLE_PRIORITY)
 	AddComponent(/datum/component/table_smash)
+
+/obj/structure/platform/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(isnull(held_item))
+		return NONE
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_RMB] = "Disassemble"
+		. = CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		. = CONTEXTUAL_SCREENTIP_SET
+
+	return . || NONE
+
+/obj/structure/platform/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	to_chat(user, span_notice("You start disassembling [src]..."))
+	if(tool.use_tool(src, user, 2 SECONDS, volume=50))
+		deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/platform/wrench_act_secondary(mob/living/user, obj/item/tool)
+	to_chat(user, span_notice("You start deconstructing [src]..."))
+	if(tool.use_tool(src, user, 4 SECONDS, volume=50))
+		playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+		deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/platform/update_overlays()
 	. = ..()
@@ -58,6 +87,14 @@
 /obj/structure/platform/set_smoothed_icon_state(new_junction)
 	. = ..()
 	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/platform/atom_deconstruct(disassembled = TRUE)
+	var/turf/target_turf = get_turf(src)
+	if(sheet_type)
+		new sheet_type(target_turf, sheet_amount)
+	else
+		for(var/datum/material/mat in custom_materials)
+			new mat.sheet_type(target_turf, FLOOR(custom_materials[mat] / SHEET_MATERIAL_AMOUNT, 1))
 
 /obj/structure/platform/rusty
 	icon = 'icons/obj/smooth_structures/platform/window_frame_rusty.dmi'
