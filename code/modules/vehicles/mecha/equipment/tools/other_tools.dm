@@ -406,11 +406,11 @@
 	active_label = "Thrusters"
 	var/effect_type = /obj/effect/particle_effect/sparks
 
-/obj/item/mecha_parts/mecha_equipment/thrusters/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M, attach_right)
-	for(var/obj/item/I in M.equip_by_category[MECHA_UTILITY])
-		if(istype(I, src))
-			to_chat(user, span_warning("[M] already has this thruster package!"))
-			return FALSE
+/obj/item/mecha_parts/mecha_equipment/thrusters/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mecha, attach_right)
+	for(var/obj/item/part in mecha.equip_by_category[MECHA_UTILITY])
+		if(istype(part, src))
+			to_chat(user, span_warning("[mecha] already has this thruster package!"))
+			return ITEM_INTERACT_BLOCKING
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/thrusters/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right = FALSE)
@@ -502,7 +502,7 @@
 /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/try_attach_part(mob/user, obj/vehicle/sealed/mecha/M)
 	if(M.mech_type & EXOSUIT_MODULE_COMBAT)
 		to_chat(user, span_warning("[M] does not have the correct bolt configuration!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay/special_attaching_interaction(attach_right = FALSE, obj/vehicle/sealed/mecha/mech, mob/user, checkonly = FALSE)
@@ -544,7 +544,7 @@
 /obj/item/mecha_parts/camera_kit/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mech, attach_right)
 	if(mech.chassis_camera)
 		balloon_alert(user, "already has a camera!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 
 	. = ..()
 
