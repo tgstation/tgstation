@@ -15,6 +15,8 @@
 	maxHealth = 40
 	melee_damage_lower = 6
 	melee_damage_upper = 9
+	response_help_continuous = "pets"
+	response_help_simple = "pet"
 	verb_say = "chips"
 	verb_ask = "chips curiously"
 	verb_exclaim = "chips loudly"
