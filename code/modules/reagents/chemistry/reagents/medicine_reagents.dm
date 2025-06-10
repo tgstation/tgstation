@@ -1178,7 +1178,8 @@
 	var/mob/living/carbon/human/human_mob = affected_mob
 	if (ismonkey(human_mob))
 		if (!HAS_TRAIT(human_mob, TRAIT_BORN_MONKEY))
-			human_mob.dna.remove_mutation(/datum/mutation/human/race, mutadone = FALSE) // This is the only time mutadone should remove monkeyism
+			//This is the only time mutadone should remove monkeyism
+			human_mob.dna.remove_mutation(/datum/mutation/race, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
 	else if (HAS_TRAIT(human_mob, TRAIT_BORN_MONKEY))
 		human_mob.monkeyize()
 
@@ -1187,7 +1188,8 @@
 	. = ..()
 	affected_mob.remove_status_effect(/datum/status_effect/jitter)
 	if(affected_mob.has_dna())
-		affected_mob.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA), TRUE)
+		affected_mob.dna.remove_mutation_group(affected_mob.dna.mutations - /datum/mutation/race, GLOB.standard_mutation_sources)
+		affected_mob.dna.scrambled = FALSE
 
 /datum/reagent/medicine/antihol
 	name = "Antihol"

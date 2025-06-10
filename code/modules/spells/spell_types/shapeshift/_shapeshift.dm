@@ -121,7 +121,7 @@
 		our_pipeline = pipenets
 
 	to_chat(cast_on, span_userdanger("Casting [src] inside of [pipe_you_die_in] quickly turns you into a bloody mush!"))
-	var/obj/effect/gib_type = isalien(cast_on) ? /obj/effect/gibspawner/xeno : /obj/effect/gibspawner/generic
+	var/obj/effect/gib_type = cast_on.get_gibs_type()
 
 	for(var/obj/machinery/atmospherics/components/unary/possible_vent in range(10, get_turf(cast_on)))
 		if(length(possible_vent.parents) && possible_vent.parents[1] == our_pipeline)

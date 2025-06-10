@@ -19,24 +19,7 @@
 		if(src == carbon_user.wear_mask)
 			to_chat(user, span_warning("You need help taking this off!"))
 			return
-	..()
-
-/obj/item/clothing/mask/muzzle/breath
-	name = "surgery mask"
-	desc = "To silence those pesky patients before putting them under."
-	icon_state = "breathmuzzle"
-	inhand_icon_state = "breathmuzzle"
-	lefthand_file = 'icons/mob/inhands/clothing/masks_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
-	body_parts_covered = NONE
-	flags_cover = NONE
-	clothing_flags = MASKINTERNALS
-	armor_type = /datum/armor/muzzle_breath
-	equip_delay_other = 25 // my sprite has 4 straps, a-la a head harness. takes a while to equip, longer than a muzzle
-
-/obj/item/clothing/mask/muzzle/breath/examine_tags(mob/user)
-	. = ..()
-	.["surgical"] = "Does not block surgery on covered bodyparts."
+	return ..()
 
 /obj/item/clothing/mask/muzzle/tape
 	name = "tape piece"
@@ -57,9 +40,6 @@
 	var/harmful_strip = FALSE
 	///The ammount of damage dealt when the tape piece is ripped off of someone.
 	var/stripping_damage = 0
-
-/datum/armor/muzzle_breath
-	bio = 100
 
 /obj/item/clothing/mask/muzzle/tape/examine(mob/user)
 	. = ..()
