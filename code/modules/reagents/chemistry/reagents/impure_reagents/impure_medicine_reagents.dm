@@ -1131,7 +1131,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	affected_mob.clear_mood_event("sadness_inverse")
 
-/datum/reagent/inverse/happiness/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)//Splashing people with plasma is stronger than fuel!
+/datum/reagent/inverse/happiness/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
 	if(methods & (TOUCH|VAPOR))
 		exposed_mob.emote("cry")
