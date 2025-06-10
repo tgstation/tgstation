@@ -18,7 +18,7 @@
 	user.setStaminaLoss(0)
 	user.set_resting(FALSE, instant = TRUE)
 
-	user.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 4) //20 seconds
+	user.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 4) //Tank 5 consecutive baton hits
 
 	to_chat(user, span_changeling("The staggering rush of a stimulant honed precisely to our biology is INVIGORATING. We will not be subdued."))
 
