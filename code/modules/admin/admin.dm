@@ -34,8 +34,10 @@
 		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
 		dat += "<hr/>"
 
+	dat += "<a href='byond://?src=[REF(src)];[HrefToken()];spawn_panel=1'>Spawn Panel/a><br>"
+
 	if(marked_datum && istype(marked_datum, /atom))
-		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
+		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</a><br>"
 
 	var/datum/browser/browser = new(usr, "admin2", "Game Panel", 240, 280)
 	browser.set_content(dat)

@@ -1100,6 +1100,9 @@
 		GLOB.player_ticket_history.ui_interact(usr)
 		return
 
+	else if(href_list["spawn_panel"])
+		SSadmin_verbs.dynamic_invoke_verb(usr, /datum/admin_verb/spawn_panel)
+
 	else if(href_list["dupe_marked_datum"])
 		if(!check_rights(R_SPAWN))
 			return

@@ -15,11 +15,6 @@
 #define OFFSET_ABSOLUTE "Absolute offset"
 #define OFFSET_RELATIVE "Relative offset"
 
-ADMIN_VERB(spawn_panel, R_SPAWN, "Spawn Panel", "Spawn Panel (TGUI).", ADMIN_CATEGORY_GAME)
-	var/static/datum/spawnpanel/ui = new
-	ui.ui_interact(user.mob)
-	BLACKBOX_LOG_ADMIN_VERB("Spawn Panel")
-
 /datum/spawnpanel
 	var/where_dropdown_value = WHERE_FLOOR_BELOW_MOB
 	var/selected_object = ""
