@@ -9,6 +9,8 @@
 	butcher_results = list(/obj/item/food/meat/slab = 1)
 	mob_biotypes = MOB_ORGANIC
 	mob_size = MOB_SIZE_SMALL
+	pass_flags = PASSTABLE | PASSMOB
+	density = FALSE
 	health = 40
 	maxHealth = 40
 	melee_damage_lower = 6

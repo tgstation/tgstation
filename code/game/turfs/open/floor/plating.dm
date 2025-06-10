@@ -102,7 +102,28 @@
 				balloon_alert(user, "too damaged, use a welding tool!")
 			else
 				balloon_alert(user, "too damaged, use a welding or plating repair tool!")
-
+	else if(istype(C, /obj/item/stack/sheet/mineral/plastitanium) && attachment_holes)
+		if(broken || burnt)
+			if(!iscyborg(user))
+				to_chat(user, span_warning("Repair the plating first! Use a welding tool to fix the damage."))
+			else
+				to_chat(user, span_warning("Repair the plating first! Use a welding tool or a plating repair tool to fix the damage."))
+			return
+		var/obj/item/stack/sheet/mineral/plastitanium/sheet = C
+		if (sheet.get_amount() < 1)
+			to_chat(user, span_warning("You are literally holding nothing."))
+			return
+		else
+			balloon_alert(user, "insulating flooring...")
+			if(!do_after(user, 1.5 SECONDS, target = src))
+				return
+			if(sheet.get_amount() < 1 || istype(src, /turf/open/floor/engine/insulation))
+				return
+			place_on_top(/turf/open/floor/engine/insulation, flags = CHANGETURF_INHERIT_AIR)
+			playsound(src, 'sound/items/deconstruct.ogg', 80, TRUE)
+			sheet.use(1)
+			to_chat(user, span_notice("You insulate the floor."))
+			balloon_alert(user, "insulated!")
 
 /turf/open/floor/plating/welder_act(mob/living/user, obj/item/I)
 	..()

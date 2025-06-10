@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Fixed mutation injectors."
+  - bugfix: "Fixed mutadone turning actual monkeys into humonkeys."

@@ -1,4 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - code_imp: "removes action_slots when not needed"
