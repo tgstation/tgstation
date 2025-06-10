@@ -144,7 +144,8 @@
 	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
 	var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot(loc)
 
-	new_borg.gender = gender
+	if(client)
+		new_borg.set_gender(client)
 	new_borg.SetInvisibility(INVISIBILITY_NONE)
 
 	if(client?.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)

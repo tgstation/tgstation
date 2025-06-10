@@ -1,23 +1,23 @@
 {
-    "sombrero": [
-        {
-            "type": "reference",
-            "reference_type": "/datum/greyscale_config/sombrero/base_worn",
-            "blend_mode": "overlay",
-            "color_ids": [ 1, 2 ]
-        }
-    ],
-    "shamebrero": [
-        {
-            "type": "reference",
-            "reference_type": "/datum/greyscale_config/sombrero/base_worn",
-            "blend_mode": "overlay",
-            "color_ids": [ 1, 2 ]
-        },
-        {
-            "type": "icon_state",
-            "icon_state": "dongles_worn",
-            "blend_mode": "overlay"
-        }
-    ]
+	"sombrero": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/sombrero/base_worn",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2]
+		}
+	],
+	"shamebrero": [
+		{
+			"type": "reference",
+			"reference_type": "/datum/greyscale_config/sombrero/base_worn",
+			"blend_mode": "overlay",
+			"color_ids": [1, 2]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "dongles_worn",
+			"blend_mode": "overlay"
+		}
+	]
 }

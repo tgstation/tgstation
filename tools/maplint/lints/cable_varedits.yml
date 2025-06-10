@@ -3,5 +3,5 @@
 
 /obj/structure/pipe_cleaner:
   banned_variables:
-  - d1
-  - d2
+    - d1
+    - d2

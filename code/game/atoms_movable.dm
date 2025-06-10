@@ -1499,14 +1499,7 @@
 
 /atom/movable/proc/do_attack_animation(atom/attacked_atom, visual_effect_icon, obj/item/used_item, no_effect, fov_effect = TRUE, item_animation_override = null)
 	if(!no_effect && (visual_effect_icon || used_item))
-		var/animation_type = item_animation_override || ATTACK_ANIMATION_BLUNT
-		if (used_item && !item_animation_override)
-			switch(used_item.get_sharpness())
-				if (SHARP_EDGED)
-					animation_type = ATTACK_ANIMATION_SLASH
-				if (SHARP_POINTY)
-					animation_type = ATTACK_ANIMATION_PIERCE
-		do_item_attack_animation(attacked_atom, visual_effect_icon, used_item, animation_type = animation_type)
+		do_item_attack_animation(attacked_atom, visual_effect_icon, used_item, animation_type = item_animation_override)
 
 	if(attacked_atom == src)
 		return //don't do an animation if attacking self
@@ -1773,6 +1766,11 @@
 */
 /atom/movable/proc/keybind_face_direction(direction)
 	setDir(direction)
+
+///This handles special behavior that happens when the movable is used in crafting (slapcrafting and UI, not sheets or lathes or processing with a tool)
+/atom/movable/proc/used_in_craft(atom/result, datum/crafting_recipe/current_recipe)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ATOM_USED_IN_CRAFT, result)
 
 /**
  * Check if the other atom/movable has any factions the same as us. Defined at the atom/movable level so it can be defined for just about anything.

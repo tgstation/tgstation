@@ -89,11 +89,11 @@
 	scoreboard.add_overlay(tens_overlay)
 	scoreboard.add_overlay(emissive_tens_overlay)
 
-/obj/structure/hoop/attackby(obj/item/ball, mob/living/baller, list/modifiers)
+/obj/structure/hoop/attackby(obj/item/ball, mob/living/baller, list/modifiers, list/attack_modifiers)
 	if(!baller.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
 		return // TK users aren't allowed to dunk
 
-	if(!baller.transferItemToLoc(ball, drop_location()))
+	if(!baller.transfer_item_to_turf(ball, drop_location()))
 		return
 
 	var/dunk_dir = get_dir(baller, src)

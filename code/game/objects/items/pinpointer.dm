@@ -188,16 +188,6 @@
 		. += "Its pair is being held by [mob_holder]."
 		return
 
-/obj/item/storage/box/pinpointer_pairs
-	name = "pinpointer pair box"
-
-/obj/item/storage/box/pinpointer_pairs/PopulateContents()
-	var/obj/item/pinpointer/pair/A = new(src)
-	var/obj/item/pinpointer/pair/B = new(src)
-
-	A.other_pair = B
-	B.other_pair = A
-
 /obj/item/pinpointer/shuttle
 	name = "bounty shuttle pinpointer"
 	desc = "A handheld tracking device that locates the bounty hunter shuttle for quick escapes."

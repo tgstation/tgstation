@@ -5,7 +5,7 @@
 #define ATTACK_CLOAK "Dark Cloak"
 #define ATTACK_SHATTER "Shatter"
 
-/obj/item/organ/cyberimp/arm/shard
+/obj/item/organ/cyberimp/arm/toolkit/shard
 	name = "dark spoon shard"
 	desc = "An eerie metal shard surrounded by dark energies...of soup drinking. You probably don't think you should have been able to find this."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
@@ -15,7 +15,7 @@
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
 
-/obj/item/organ/cyberimp/arm/shard/attack_self(mob/user, modifiers)
+/obj/item/organ/cyberimp/arm/toolkit/shard/attack_self(mob/user, modifiers)
 	. = ..()
 	to_chat(user, span_userdanger("The mass goes up your arm and goes inside it!"))
 	playsound(user, 'sound/effects/magic/demon_consume.ogg', 50, TRUE)
@@ -24,15 +24,15 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/cyberimp/arm/shard/screwdriver_act(mob/living/user, obj/item/screwtool)
+/obj/item/organ/cyberimp/arm/toolkit/shard/screwdriver_act(mob/living/user, obj/item/screwtool)
 	return
 
-/obj/item/organ/cyberimp/arm/shard/katana
+/obj/item/organ/cyberimp/arm/toolkit/shard/katana
 	name = "dark shard"
 	desc = "An eerie metal shard surrounded by dark energies."
 	items_to_create = list(/obj/item/cursed_katana)
 
-/obj/item/organ/cyberimp/arm/shard/katana/Retract()
+/obj/item/organ/cyberimp/arm/toolkit/shard/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item
 	if(!katana || katana.shattered)
 		return FALSE
@@ -99,7 +99,7 @@
 	if(isturf(loc))
 		qdel(src)
 
-/obj/item/cursed_katana/attack(mob/living/target, mob/user, list/modifiers)
+/obj/item/cursed_katana/attack(mob/living/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(target.stat < DEAD && target != user)
 		drew_blood = TRUE
 		if(ismining(target))

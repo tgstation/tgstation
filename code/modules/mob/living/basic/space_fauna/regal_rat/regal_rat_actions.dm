@@ -4,15 +4,21 @@
 
 /datum/action/cooldown/mob_cooldown/domain
 	name = "Rat King's Domain"
-	desc = "Corrupts this area to be more suitable for your rat army."
+	desc = "While enabled, continuously corrupt the surrounding area to be more suitable for your rat army."
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_INCAPACITATED
 	click_to_activate = FALSE
-	cooldown_time = 6 SECONDS
+	cooldown_time = 1 SECONDS
 	button_icon = 'icons/mob/actions/actions_animal.dmi'
 	background_icon_state = "bg_clock"
 	overlay_icon_state = "bg_clock_border"
-	button_icon_state = "coffer"
+	button_icon_state = "coffer_off"
 	shared_cooldown = NONE
+	/// Are we currently ticking?
+	var/is_active = FALSE
+	/// How often do we make a mess?
+	var/mess_interval = 6 SECONDS
+	/// Don't do anything if we're on this cooldown
+	COOLDOWN_DECLARE(mess_cooldown)
 
 /datum/action/cooldown/mob_cooldown/domain/IsAvailable(feedback = FALSE)
 	. = ..()
@@ -23,24 +29,64 @@
 			owner.balloon_alert(owner, "can't use while ventcrawling!")
 		return FALSE
 
-/datum/action/cooldown/mob_cooldown/domain/proc/domain()
-	var/turf/location = get_turf(owner)
-	location.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
-	switch (rand(1,10))
-		if (8)
-			new /obj/effect/decal/cleanable/vomit(location)
-		if (9)
-			new /obj/effect/decal/cleanable/vomit/old(location)
-		if (10)
-			new /obj/effect/decal/cleanable/oil/slippery(location)
-		else
-			new /obj/effect/decal/cleanable/dirt(location)
-	StartCooldown()
-
 /datum/action/cooldown/mob_cooldown/domain/Activate(atom/target)
 	StartCooldown(10 SECONDS)
-	domain()
+	set_domain_active(!is_active)
 	StartCooldown()
+
+/datum/action/cooldown/mob_cooldown/domain/Remove(mob/removed_from)
+	set_domain_active(FALSE)
+	return ..()
+
+/datum/action/cooldown/mob_cooldown/domain/update_status_on_signal(datum/source, new_stat, old_stat)
+	. = ..()
+	if (!IsAvailable())
+		set_domain_active(FALSE)
+
+/// Enable or disable the ability
+/datum/action/cooldown/mob_cooldown/domain/proc/set_domain_active(should_active)
+	if (is_active == should_active || isnull(owner))
+		return
+	is_active = should_active
+
+	if (is_active)
+		RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_MOVE_VENTCRAWLING), PROC_REF(cancel_on_signal))
+		button_icon_state = "coffer"
+		spread_domain()
+	else
+		UnregisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_MOVE_VENTCRAWLING))
+		button_icon_state = "coffer_off"
+
+	build_all_button_icons(update_flags = UPDATE_BUTTON_ICON)
+
+/// Stop spreading shit when one of these events happens
+/datum/action/cooldown/mob_cooldown/domain/proc/cancel_on_signal()
+	SIGNAL_HANDLER
+	set_domain_active(FALSE)
+
+/// Create gas and spawn mess
+/datum/action/cooldown/mob_cooldown/domain/proc/spread_domain()
+	if (!is_active || !COOLDOWN_FINISHED(src, mess_cooldown) || !owner)
+		return
+
+	var/turf/our_location = get_turf(owner)
+	our_location.atmos_spawn_air("[GAS_MIASMA]=4;[TURF_TEMPERATURE(T20C)]")
+
+	var/list/available_spots = list(our_location) + get_adjacent_open_turfs(owner)
+	var/turf/mess_location = pick(available_spots)
+
+	switch (rand(1,10))
+		if (8)
+			new /obj/effect/decal/cleanable/vomit(mess_location)
+		if (9)
+			new /obj/effect/decal/cleanable/vomit/old(mess_location)
+		if (10)
+			new /obj/effect/decal/cleanable/blood/oil/slippery(mess_location)
+		else
+			new /obj/effect/decal/cleanable/dirt(mess_location)
+
+	COOLDOWN_START(src, mess_cooldown, mess_interval) // We use a cooldown AND timer because of the toggle
+	addtimer(CALLBACK(src, PROC_REF(spread_domain)), mess_interval, TIMER_DELETE_ME)
 
 /**
  * This action checks some nearby maintenance animals and makes them your minions.
@@ -59,22 +105,6 @@
 	shared_cooldown = NONE
 	/// How close does something need to be for us to recruit it?
 	var/range = 5
-	/// Commands you can give to your mouse army
-	var/static/list/mouse_commands = list(
-		/datum/pet_command/idle,
-		/datum/pet_command/free,
-		/datum/pet_command/protect_owner,
-		/datum/pet_command/follow,
-		/datum/pet_command/attack/mouse
-	)
-	/// Commands you can give to glockroaches
-	var/static/list/glockroach_commands = list(
-		/datum/pet_command/idle,
-		/datum/pet_command/free,
-		/datum/pet_command/protect_owner/glockroach,
-		/datum/pet_command/follow,
-		/datum/pet_command/attack/glockroach
-	)
 
 /datum/action/cooldown/mob_cooldown/riot/IsAvailable(feedback = FALSE)
 	. = ..()
@@ -98,117 +128,15 @@
  * * Spawn a single mouse if below the mouse cap.
  */
 /datum/action/cooldown/mob_cooldown/riot/proc/riot()
-	var/uplifted_mice = FALSE
-	for (var/mob/living/basic/mouse/nearby_mouse in oview(owner, range))
-		uplifted_mice = convert_mouse(nearby_mouse) || uplifted_mice
-	if (uplifted_mice)
-		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into rats!"))
-		return
+	playsound(owner, 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg', vol = 150, frequency = 10000)
 
-	var/static/list/converted_check_list = list(FACTION_RAT)
-	var/uplifted_roach = FALSE
-	for (var/mob/living/basic/cockroach/nearby_roach in oview(owner, range))
-		uplifted_roach = convert_roach(nearby_roach, converted_check_list) || uplifted_roach
-	if (uplifted_roach)
-		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into sewer roaches!"))
-		return
+	new /obj/effect/temp_visual/circle_wave/brown(get_turf(owner))
+	for (var/mob/living/possible_minion in oview(owner, range))
+		SEND_SIGNAL(possible_minion, COMSIG_REGAL_RAT_RIOTED, owner)
 
-	var/uplifted_frog = FALSE
-	for (var/mob/living/basic/frog/nearby_frog in oview(owner, range))
-		uplifted_frog = convert_frog(nearby_frog, converted_check_list) || uplifted_frog
-	if (uplifted_frog)
-		owner.visible_message(span_warning("[owner] commands their army to action, mutating them into trash frogs!"))
-		return
-
-	var/rat_cap = CONFIG_GET(number/ratcap)
-	if (LAZYLEN(SSmobs.cheeserats) >= rat_cap)
-		to_chat(owner,span_warning("There's too many mice on this station to beckon a new one! Find them first!"))
-		return
-	new /mob/living/basic/mouse(owner.loc)
-	owner.visible_message(span_warning("[owner] commands a mouse to their side!"))
-
-/// Makes a passed mob into our minion
-/datum/action/cooldown/mob_cooldown/riot/proc/make_minion(mob/living/new_minion, minion_desc, list/command_list = mouse_commands)
-	if (isbasicmob(new_minion))
-		new_minion.AddComponent(/datum/component/obeys_commands, command_list)
-		qdel(new_minion.GetComponent(/datum/component/tameable)) // Rats don't share
-	new_minion.befriend(owner)
-	new_minion.faction = owner.faction.Copy()
-	// Give a hint in description too
-	new_minion.desc += minion_desc
-	new_minion.balloon_alert_to_viewers("squeak")
-
-/// Turns a mouse into an angry mouse
-/datum/action/cooldown/mob_cooldown/riot/proc/convert_mouse(mob/living/basic/mouse/nearby_mouse)
-	// This mouse is already rat controlled, let's not bother with it.
-	if (istype(nearby_mouse.ai_controller, /datum/ai_controller/basic_controller/mouse/rat))
-		return FALSE
-
-	var/mob/living/basic/mouse/rat/rat_path = /mob/living/basic/mouse/rat
-	// Change name
-	if (nearby_mouse.name == "mouse")
-		nearby_mouse.name = initial(rat_path.name)
-	// Buffs our combat stats to that of a rat
-	nearby_mouse.melee_damage_lower = initial(rat_path.melee_damage_lower)
-	nearby_mouse.melee_damage_upper = initial(rat_path.melee_damage_upper)
-	nearby_mouse.obj_damage = initial(rat_path.obj_damage)
-	nearby_mouse.maxHealth = initial(rat_path.maxHealth)
-	nearby_mouse.health = initial(rat_path.health)
-	// Replace our AI with a rat one
-	nearby_mouse.ai_controller = new /datum/ai_controller/basic_controller/mouse/rat(nearby_mouse)
-	make_minion(nearby_mouse, " ...Except this one looks corrupted and aggressive.")
-	return TRUE
-
-/// Turns a roach into an angry roach
-/datum/action/cooldown/mob_cooldown/riot/proc/convert_roach(mob/living/basic/cockroach/nearby_roach, list/converted_check_list)
-	// No need to convert when not on the same team.
-	if (faction_check(nearby_roach.faction, converted_check_list))
-		return FALSE
-
-	var/list/minion_commands = mouse_commands
-	if (!findtext(nearby_roach.name, "sewer"))
-		nearby_roach.name = "sewer [nearby_roach.name]"
-
-	if (istype(nearby_roach, /mob/living/basic/cockroach/glockroach) || istype(nearby_roach, /mob/living/basic/cockroach/hauberoach))
-		if (istype(nearby_roach, /mob/living/basic/cockroach/glockroach))
-			minion_commands = glockroach_commands
-		nearby_roach.melee_damage_lower += 0.5
-		nearby_roach.melee_damage_upper += 2
-	else
-		nearby_roach.melee_damage_lower += 2
-		nearby_roach.melee_damage_upper += 4
-		nearby_roach.obj_damage += 5
-		nearby_roach.ai_controller = new /datum/ai_controller/basic_controller/cockroach/sewer(nearby_roach)
-		nearby_roach.melee_attack_cooldown = 0.8 SECONDS
-
-	nearby_roach.icon_state += "_sewer"
-	nearby_roach.maxHealth += 1
-	nearby_roach.health += 1
-	make_minion(nearby_roach, " <br>This one looks extra robust.", minion_commands)
-	return TRUE
-
-/// Turns a frog into a crazy frog. This doesn't do anything interesting and should when it becomes a basic mob.
-/datum/action/cooldown/mob_cooldown/riot/proc/convert_frog(mob/living/basic/frog/nearby_frog, list/converted_check_list)
-	// No need to convert when not on the same team.
-	if(faction_check(nearby_frog.faction, converted_check_list) || nearby_frog.stat == DEAD)
-		return FALSE
-
-	var/list/minion_commands = mouse_commands
-	if (!findtext(nearby_frog.name, "trash"))
-		nearby_frog.name = replacetext(nearby_frog.name, "frog", "trash frog")
-
-	nearby_frog.icon_state += "_trash"
-	nearby_frog.icon_living += "_trash"
-	nearby_frog.icon_dead = nearby_frog.icon_state + "_dead"
-	nearby_frog.maxHealth += 10
-	nearby_frog.health += 10
-	nearby_frog.melee_damage_lower += 1
-	nearby_frog.melee_damage_upper += 5
-	nearby_frog.obj_damage += 10
-	nearby_frog.ai_controller = new /datum/ai_controller/basic_controller/frog/trash(nearby_frog)
-	var/crazy_frog_desc = " ...[findtext(nearby_frog.name, "rare") ? "even though" : "perhaps because"] they live in a trash bag."
-	make_minion(nearby_frog, crazy_frog_desc, minion_commands)
-	return TRUE
+/obj/effect/temp_visual/circle_wave/brown
+	color = COLOR_BROWN
+	amount_to_scale = 4
 
 // Command you can give to a mouse to make it kill someone
 /datum/pet_command/attack/mouse

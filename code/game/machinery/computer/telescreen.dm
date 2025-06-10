@@ -35,7 +35,8 @@
 	name = "entertainment monitor"
 	desc = "Damn, they better have the /tg/ channel on these things."
 	icon = 'icons/obj/machines/status_display.dmi'
-	icon_state = "entertainment_blank"
+	icon_state = "entertainment_frame"
+	icon_screen = "entertainment_blank"
 	network = list()
 	density = FALSE
 	circuit = null
@@ -60,8 +61,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/item/wallframe/telescreen/entertainment
 	name = "entertainment telescreen frame"
 	icon = 'icons/obj/machines/status_display.dmi'
-	icon_state = "entertainment_blank"
+	icon_state = "entertainment_frame"
 	result_path = /obj/machinery/computer/security/telescreen/entertainment
+
+/obj/item/wallframe/telescreen/entertainment/Initialize(mapload, ...)
+	. = ..()
+	transform.Scale(0.8)
 
 /obj/machinery/computer/security/telescreen/entertainment/Initialize(mapload)
 	. = ..()
@@ -96,7 +101,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	var/can_range = FALSE
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		if(carbon_user.dna?.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(user, src))
+		if(carbon_user.dna?.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(user, src))
 			can_range = TRUE
 	if(HAS_SILICON_ACCESS(user) || (user.interaction_range && user.interaction_range >= get_dist(user, src)))
 		can_range = TRUE
@@ -138,10 +143,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 
 /// Sets the monitor's icon to the selected state, and says an announcement
 /obj/machinery/computer/security/telescreen/entertainment/proc/notify(on, announcement)
-	if(on && icon_state == icon_state_off)
-		icon_state = icon_state_on
+	if(on)
+		icon_screen = icon_state_on
 	else
-		icon_state = icon_state_off
+		icon_screen = icon_state_off
+	update_appearance(UPDATE_OVERLAYS)
 	if(announcement)
 		say(announcement)
 

@@ -110,11 +110,11 @@
 			return host.loc
 	return null
 
-/obj/item/borg/projectile_dampen/dropped()
+/obj/item/borg/projectile_dampen/equipped()
 	host = loc
 	return ..()
 
-/obj/item/borg/projectile_dampen/equipped()
+/obj/item/borg/projectile_dampen/dropped()
 	host = loc
 	return ..()
 
@@ -182,6 +182,21 @@
 
 	return ..()
 
+/**
+ * Sets the new internal tool to be used
+ * Arguments
+ *
+ * * obj/item/ref - typepath for the new internal omnitool
+ */
+/obj/item/borg/cyborg_omnitool/proc/set_internal_tool(obj/item/tool)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
+	for(var/obj/item/internal_tool as anything in omni_toolkit)
+		if(internal_tool == tool)
+			reference = internal_tool
+			tool_behaviour = initial(internal_tool.tool_behaviour)
+			break
+
 /obj/item/borg/cyborg_omnitool/get_all_tool_behaviours()
 	. = list()
 	for(var/obj/item/tool as anything in omni_toolkit)
@@ -209,27 +224,29 @@
 
 	//if all else fails just make a new one from scratch
 	tool = new reference(user)
-	ADD_TRAIT(tool, TRAIT_NODROP, CYBORG_ITEM_TRAIT)
+	//the internal tool is considered part of the tool itself.
+	tool.item_flags |= ABSTRACT
 	atoms[reference] = tool
 	return tool
 
 /obj/item/borg/cyborg_omnitool/attack_self(mob/user)
 	//build the radial menu options
 	var/list/radial_menu_options = list()
+	var/list/tool_map = list()
 	for(var/obj/item as anything in omni_toolkit)
-		radial_menu_options[initial(item.name)] = image(icon = initial(item.icon), icon_state = initial(item.icon_state))
+		var/tool_name = initial(item.name)
+		radial_menu_options[tool_name] = image(icon = initial(item.icon), icon_state = initial(item.icon_state))
+		tool_map[tool_name] = item
 
 	//assign the new tool behaviour
-	var/toolkit_menu = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
+	var/internal_tool_name = show_radial_menu(user, src, radial_menu_options, require_near = TRUE, tooltips = TRUE)
+	if(!internal_tool_name)
+		return
 
 	//set the reference & update icons
-	for(var/obj/item/tool as anything in omni_toolkit)
-		if(initial(tool.name) == toolkit_menu)
-			reference = tool
-			tool_behaviour = initial(tool.tool_behaviour)
-			update_appearance(UPDATE_ICON_STATE)
-			playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
-			break
+	set_internal_tool(tool_map[internal_tool_name])
+	update_appearance(UPDATE_ICON_STATE)
+	playsound(src, 'sound/items/tools/change_jaws.ogg', 50, TRUE)
 
 /obj/item/borg/cyborg_omnitool/update_icon_state()
 	if (reference)

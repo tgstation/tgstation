@@ -22,9 +22,9 @@
 	glasses_type = GLOB.nearsighted_glasses[glasses_name]
 
 	give_item_to_holder(glasses_type, list(
-		LOCATION_EYES = ITEM_SLOT_EYES,
-		LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
-		LOCATION_HANDS = ITEM_SLOT_HANDS,
+		LOCATION_EYES,
+		LOCATION_BACKPACK,
+		LOCATION_HANDS,
 	))
 
 /datum/quirk/item_quirk/nearsighted/add(client/client_source)

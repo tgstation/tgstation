@@ -51,23 +51,19 @@
 #define ITEM_SLOT_NECK (1<<12)
 /// A character's hand slots
 #define ITEM_SLOT_HANDS (1<<13)
-/// Inside of a character's backpack
-#define ITEM_SLOT_BACKPACK (1<<14)
 /// Suit Storage slot
-#define ITEM_SLOT_SUITSTORE (1<<15)
+#define ITEM_SLOT_SUITSTORE (1<<14)
 /// Left Pocket slot
-#define ITEM_SLOT_LPOCKET (1<<16)
+#define ITEM_SLOT_LPOCKET (1<<15)
 /// Right Pocket slot
-#define ITEM_SLOT_RPOCKET (1<<17)
+#define ITEM_SLOT_RPOCKET (1<<16)
 /// Handcuff slot
-#define ITEM_SLOT_HANDCUFFED (1<<18)
+#define ITEM_SLOT_HANDCUFFED (1<<17)
 /// Legcuff slot (bolas, beartraps)
-#define ITEM_SLOT_LEGCUFFED (1<<19)
-/// Inside of a character's BELT.........
-#define ITEM_SLOT_BELTPACK (1<<20)
+#define ITEM_SLOT_LEGCUFFED (1<<18)
 
 /// Total amount of slots
-#define SLOTS_AMT 20 // Keep this up to date!
+#define SLOTS_AMT 19 // Keep this up to date!
 
 ///Inventory slots that can be blacklisted by a species from being equipped into
 DEFINE_BITFIELD(no_equip_flags, list(
@@ -124,9 +120,9 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define HAIR_APPENDAGE_ALL (HAIR_APPENDAGE_FRONT|HAIR_APPENDAGE_LEFT|HAIR_APPENDAGE_RIGHT|HAIR_APPENDAGE_REAR|HAIR_APPENDAGE_TOP|HAIR_APPENDAGE_HANGING_FRONT|HAIR_APPENDAGE_HANGING_REAR)
 
 //bitflags for clothing coverage - also used for limbs
-#define HEAD (1<<0)
-#define CHEST (1<<1)
-#define GROIN (1<<2)
+#define CHEST (1<<0)
+#define GROIN (1<<1)
+#define HEAD (1<<2)
 #define LEG_LEFT (1<<3)
 #define LEG_RIGHT (1<<4)
 #define LEGS (LEG_LEFT | LEG_RIGHT)
@@ -318,21 +314,24 @@ GLOBAL_LIST_INIT(tool_items, list(
 	/obj/item/spess_knife,
 ))
 
-/// String for items placed into the left pocket.
+// Keys for equip_in_one_of_slots, if you add new ones update the assoc lists in equip_in_one_of_slots
+/// Items placed into the left pocket.
 #define LOCATION_LPOCKET "in your left pocket"
-/// String for items placed into the right pocket
+/// Items placed into the right pocket
 #define LOCATION_RPOCKET "in your right pocket"
-/// String for items placed into the backpack.
+/// Items placed into the backpack.
 #define LOCATION_BACKPACK "in your backpack"
-/// String for items placed into the hands.
+/// Items placed into the hands.
 #define LOCATION_HANDS "in your hands"
-/// String for items placed in the glove slot.
+/// Items placed in the glove slot.
 #define LOCATION_GLOVES "on your hands"
-/// String for items placed in the eye/glasses slot.
+/// Items placed in the eye/glasses slot.
 #define LOCATION_EYES "covering your eyes"
-/// String for items placed on the head/hat slot.
+/// Items placed in the mask slot.
+#define LOCATION_MASK "covering your face"
+/// Items placed on the head/hat slot.
 #define LOCATION_HEAD "on your head"
-/// String for items placed in the neck slot.
+/// Items placed in the neck slot.
 #define LOCATION_NECK "around your neck"
-/// String for items placed in the id slot
+/// Items placed in the id slot
 #define LOCATION_ID "in your ID slot"

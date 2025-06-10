@@ -165,7 +165,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/armor/anticcw_armor_booster
-	name = "Impact Cushion Plates"
+	name = "exosuit impact cushion plates"
 	desc = "Boosts exosuit armor against melee attacks"
 	icon_state = "mecha_abooster_ccw"
 	iconstate_name = "melee"
@@ -176,7 +176,7 @@
 	melee = 20
 
 /obj/item/mecha_parts/mecha_equipment/armor/antiproj_armor_booster
-	name = "Projectile Shielding"
+	name = "exosuit projectile shielding"
 	desc = "Boosts exosuit armor against ranged kinetic and energy projectiles. Completely blocks taser shots."
 	icon_state = "mecha_abooster_proj"
 	iconstate_name = "range"
@@ -186,6 +186,36 @@
 /datum/armor/mecha_equipment_ranged_boost
 	bullet = 15
 	laser = 15
+
+/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster
+	name = "exosuit ablative insulation"
+	desc = "Boosts exosuit armor against energy-based attacks. Also shields the exosuit's internal wiring from hostile EMP attacks. However, this may leave the \
+		exosuit slightly more vulnerable to kinetic blows due to taking up valuable hull cushioning."
+	icon_state = "mecha_abooster_emp"
+	iconstate_name = "range"
+	protect_name = "EMP and Energy Armor"
+	armor_mod = /datum/armor/mecha_equipment_energy_boost
+
+/datum/armor/mecha_equipment_energy_boost
+	melee = -5
+	bullet = -10
+	energy = 15
+
+/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/attach(obj/vehicle/sealed/mecha/new_mecha, attach_right)
+	. = ..()
+	chassis.AddElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+
+/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/detach(atom/moveto)
+	chassis.RemoveElement(/datum/element/empprotection, EMP_PROTECT_WIRES)
+	return ..()
+
+/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/clandestine
+	name = "exosuit hardened ablative insulation"
+	desc = "Boosts exosuit armor against energy-based attacks. Also shields the exosuit's internal wiring from hostile EMP attacks."
+	armor_mod = /datum/armor/mecha_equipment_improved_energy_boost
+
+/datum/armor/mecha_equipment_improved_energy_boost
+	energy = 20
 
 ////////////////////////////////// REPAIR DROID //////////////////////////////////////////////////
 
@@ -317,7 +347,7 @@
 			log_message("Deactivated.", LOG_MECHA)
 		return TRUE
 
-/obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/weapon, mob/user, list/modifiers)
+/obj/item/mecha_parts/mecha_equipment/generator/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(weapon, fuel))
 		return FALSE
@@ -521,4 +551,3 @@
 	mech.chassis_camera = new /obj/machinery/camera/exosuit(mech)
 	mech.chassis_camera.update_c_tag(mech)
 	mech.diag_hud_set_camera()
-

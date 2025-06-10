@@ -570,6 +570,19 @@
 	inhand_icon_state = null
 	worn_icon_state = "cummerbund"
 
+/obj/item/storage/belt/fannypack/yellow/bee_terrorist/PopulateContents()
+	new /obj/item/grenade/c4 (src)
+	new /obj/item/reagent_containers/applicator/pill/cyanide(src)
+	new /obj/item/grenade/chem_grenade/facid(src)
+
+/obj/item/storage/belt/fannypack/black/rogue
+	name = "fannypack of ULTIMATE DESPAIR"
+
+/obj/item/storage/belt/fannypack/black/rogue/PopulateContents()
+	new /obj/item/food/drug/saturnx(src)
+	new /obj/item/reagent_containers/cup/blastoff_ampoule(src)
+	new /obj/item/reagent_containers/hypospray/medipen/methamphetamine(src)
+
 /obj/item/storage/belt/sabre
 	name = "sabre sheath"
 	desc = "An ornate sheath designed to hold an officer's blade."

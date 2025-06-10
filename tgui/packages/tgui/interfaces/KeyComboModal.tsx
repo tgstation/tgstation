@@ -35,7 +35,7 @@ const KEY_CODE_TO_BYOND: Record<string, string> = {
   PAGEDOWN: 'Southeast',
   PAGEUP: 'Northeast',
   RIGHT: 'East',
-  SPACEBAR: 'Space',
+  ' ': 'Space',
   UP: 'North',
 };
 

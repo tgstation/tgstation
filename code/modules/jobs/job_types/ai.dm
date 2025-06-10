@@ -31,6 +31,8 @@
 			if(!R.connected_ai)
 				R.TryConnectToAI()
 	var/mob/living/silicon/ai/ai_spawn = spawned
+	if(player_client)
+		ai_spawn.set_gender(player_client)
 	ai_spawn.log_current_laws()
 
 
