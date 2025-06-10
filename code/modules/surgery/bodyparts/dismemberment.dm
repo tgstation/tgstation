@@ -131,7 +131,8 @@
 
 	if(bodypart_flags & BODYPART_PSEUDOPART)
 		drop_organs(phantom_owner) //Psuedoparts shouldn't have organs, but just in case
-		qdel(src)
+		if(!QDELING(src)) // we might be removed as a part of something qdeling us
+			qdel(src)
 		return
 
 	if(move_to_floor)
