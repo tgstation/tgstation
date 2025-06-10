@@ -1,0 +1,7 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - qol: "You can walk through stoats and snails"
+  - balance: "Stoats and snails can climb tables"
+  - image: "Stoats inside disposals are a little less rowdy"
+  - image: "Snails are rounder"
