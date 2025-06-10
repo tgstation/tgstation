@@ -1,7 +1,7 @@
 /datum/action/changeling/adrenaline
 	name = "Gene Stim"
 	desc = "We concentrate our chemicals into a potent stimulant, rendering our form stupendously robust against being incapacitated. Costs 25 chemicals."
-	helptext = "Doses you with Changeling Adrenaline: Restore a massive amount of stamina per tick, and no-sell stamcrit while the reagent is inside you."
+	helptext = "Resets your stun/knockdown state and doses you with Changeling Adrenaline: Restore a massive amount of stamina per tick, resist batons and damage slowdown, and no-sell stamcrit while the reagent is inside you. Be aware: Only four units per use!"
 	button_icon_state = "adrenaline"
 	chemical_cost = 25 // similar cost to biodegrade, as they serve similar purposes
 	dna_cost = 2
@@ -18,7 +18,8 @@
 	user.setStaminaLoss(0)
 	user.set_resting(FALSE, instant = TRUE)
 
-	// Add fast reagents to go fast.
 	user.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 4) //20 seconds
+
+	to_chat(user, span_changeling("The staggering rush of a stimulant honed precisely to our biology is INVIGORATING. We will not be subdued."))
 
 	return TRUE
