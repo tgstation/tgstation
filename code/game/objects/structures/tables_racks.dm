@@ -1077,6 +1077,40 @@
 	breath_mask = null
 	return ..()
 
+/obj/structure/table/optable/buckle_feedback(mob/living/being_buckled, mob/buckler)
+	if(HAS_TRAIT(being_buckled, TRAIT_RESTRAINED))
+		return ..()
+
+	if(being_buckled == buckler)
+		being_buckled.visible_message(
+			span_notice("[buckler] lays down on [src]."),
+			span_notice("You lay down on [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_buckled.visible_message(
+			span_notice("[buckler] lays [being_buckled] down on [src]."),
+			span_notice("[buckler] lays you down on [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+
+/obj/structure/table/optable/unbuckle_feedback(mob/living/being_unbuckled, mob/unbuckler)
+	if(HAS_TRAIT(being_unbuckled, TRAIT_RESTRAINED))
+		return ..()
+
+	if(being_unbuckled == unbuckler)
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] gets up from [src]."),
+			span_notice("You get up from [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+	else
+		being_unbuckled.visible_message(
+			span_notice("[unbuckler] pulls [being_unbuckled] up from [src]."),
+			span_notice("[unbuckler] pulls you up from [src]."),
+			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
+		)
+
 /obj/structure/table/optable/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 	if(isnull(held_item))

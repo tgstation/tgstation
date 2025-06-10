@@ -1,0 +1,7 @@
+author: "Melbert, sprites from Baystation / Aurorastation"
+delete-after: True
+changes:
+  - rscadd: "Adds grabbable handrails (mapper only for now)"
+  - image: "Adds a visual effect to buckling to shuttle seats"
+  - qol: "Different objects have different chat messages for buckling."
+  - qol: "If you're buckled in on a violent shuttle ride, you will be knocked down and immobilized, but not fully stunned (ie: can still use hands)."
