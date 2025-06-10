@@ -291,6 +291,7 @@
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN || buildstage != FIRE_ALARM_BUILD_SECURED)
 		return .
+	add_fingerprint(user)
 	reset(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
