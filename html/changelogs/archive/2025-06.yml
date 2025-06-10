@@ -229,3 +229,29 @@
   - refactor: Photocopier code was refactored to not spawn paper when it is initialized.
       Instead it stores blank papers as a numeric value. Also switched the `attackby()`
       code handling to use the modern `item_interaction()` proc.
+2025-06-10:
+  Ghommie:
+  - bugfix: Non-abductors can yet again NOT use abductor batons.
+  - bugfix: Fixed DNA consoles.
+  - balance: Buffed the acrobatics skillchip (the one that disables spinning and flipping
+      cooldowns). Gave new item descriptions to skillchips that were missing one.
+  Melbert, sprites from Baystation / Aurorastation:
+  - rscadd: Adds grabbable handrails (mapper only for now)
+  - image: Adds a visual effect to buckling to shuttle seats
+  - qol: Different objects have different chat messages for buckling.
+  - qol: 'If you''re buckled in on a violent shuttle ride, you will be knocked down
+      and immobilized, but not fully stunned (ie: can still use hands).'
+  SmArtKar:
+  - rscadd: You can now attach anesthetic tanks and breathing masks to surgical tables.
+  Steve-Cambridge:
+  - bugfix: create mob and create turf both function correctly again.
+  SyncIt21:
+  - code_imp: Atmos machines turns on/off correctly from the code perspective
+  Xander3359:
+  - code_imp: removes action_slots when not needed
+  massaheartsu:
+  - rscadd: Added a new brand of cigarettes to hacked & syndicate vending machines+spawner
+      list.
+  necromanceranne:
+  - bugfix: Deltastation rounds can now once again end as expected, as the shuttle
+      will once again dock.
