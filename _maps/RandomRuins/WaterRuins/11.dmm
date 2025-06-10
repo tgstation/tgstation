@@ -661,9 +661,6 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/waystation/cargobay)
-"dC" = (
-/turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/rainworld/surface/outdoors)
 "dD" = (
 /obj/structure/table/reinforced,
 /obj/item/aicard/aitater,
@@ -3663,7 +3660,6 @@
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/waystation/cargobay)
 "uA" = (
@@ -4693,7 +4689,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
+/area/ruin/space/has_grav/waystation/cargobay)
 "zR" = (
 /obj/machinery/firealarm/directional/south,
 /obj/effect/mapping_helpers/broken_floor,
@@ -5029,7 +5025,7 @@
 	dir = 8
 	},
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
-/area/rainworld/surface/outdoors)
+/area/ruin/space/has_grav/waystation/cargobay)
 "BA" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 8
@@ -5934,7 +5930,7 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
+/area/ruin/space/has_grav/waystation/cargobay)
 "GG" = (
 /obj/machinery/atmospherics/pipe/smart/simple/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/hidden/layer2,
@@ -7473,10 +7469,6 @@
 	},
 /turf/open/floor/iron/dark/textured_half,
 /area/ruin/space/has_grav/waystation/cargobay)
-"OH" = (
-/obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
-/turf/open/floor/plating,
-/area/rainworld/surface/outdoors)
 "OL" = (
 /obj/effect/spawner/structure/window/reinforced/plasma/plastitanium,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -12493,12 +12485,12 @@ jB
 jB
 jB
 By
-dC
-OH
+jB
+jC
 By
-OH
-OH
-dC
+jC
+jC
+jB
 OR
 OR
 OR
@@ -13715,7 +13707,7 @@ Dh
 Md
 bZ
 ZJ
-dC
+jB
 GC
 zM
 GC
@@ -13748,7 +13740,7 @@ da
 da
 OR
 OR
-TL
+QN
 QN
 Ih
 Kg

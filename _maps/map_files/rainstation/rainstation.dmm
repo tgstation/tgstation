@@ -3666,6 +3666,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 6
 	},
+/obj/item/holosign_creator/robot_seat/restaurant,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "akT" = (
@@ -9444,8 +9445,8 @@
 	c_tag = "Gateway"
 	},
 /obj/structure/table,
-/obj/structure/sign/warning/biohazard/directional/west,
 /obj/item/paper/pamphlet/gateway,
+/obj/machinery/vending/wallmed/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/command/gateway)
 "aES" = (
@@ -14055,7 +14056,7 @@
 /area/station/service/kitchen)
 "aSP" = (
 /obj/machinery/smartfridge,
-/turf/open/floor/plating,
+/turf/closed/wall,
 /area/station/service/kitchen)
 "aSR" = (
 /obj/machinery/hydroponics/constructable,
@@ -58578,6 +58579,13 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/hallway/secondary/exit/departure_lounge)
+"wtr" = (
+/obj/machinery/restaurant_portal/restaurant,
+/obj/effect/turf_decal/delivery/red,
+/turf/open/floor/iron/smooth_corner{
+	dir = 1
+	},
+/area/station/hallway/primary/starboard)
 "wtU" = (
 /turf/closed/wall,
 /area/station/maintenance/central/lesser)
@@ -100058,7 +100066,7 @@ aVH
 aXn
 aYN
 aum
-bbz
+wtr
 aYV
 gVZ
 bdb
