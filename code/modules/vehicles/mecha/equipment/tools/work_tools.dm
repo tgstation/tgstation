@@ -134,9 +134,10 @@
 						span_userdanger("[chassis] squeezes you!"),\
 						span_hear("You hear something crack."))
 	log_combat(source, victim, "attacked", "[name]", "(Combat mode: [source.combat_mode ? "On" : "Off"]) (DAMTYPE: [uppertext(damtype)])")
+	var/final_damage = isalien(victim) ? clamp_damage * 3 : clamp_damage
 	chassis.do_attack_animation(victim)
 	playsound(chassis, clampsound, 30, FALSE, -6)
-	victim.apply_damage(clamp_damage, BRUTE, blocked = armor_check, spread_damage = TRUE)
+	victim.apply_damage(final_damage, BRUTE, blocked = armor_check, spread_damage = TRUE)
 	return ..()
 
 //This is pretty much just for the death-ripley
