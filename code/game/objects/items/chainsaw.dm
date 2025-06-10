@@ -49,10 +49,10 @@
 		butcher_sound = 'sound/items/weapons/chainsawhit.ogg', \
 		disabled = TRUE, \
 	)
-	AddElement(/datum/element/prosthetic_icon, "mounted")
+	AddElement(/datum/element/prosthetic_icon, "mounted", 180, TRUE)
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-	RegisterSignal(src, COMSIG_ITEM_USED_AS_PROSTHETIC, PROC_REF(disable_twohanded_comp))
+	RegisterSignal(src, COMSIG_ITEM_PRE_USED_AS_PROSTHETIC, PROC_REF(disable_twohanded_comp))
 	RegisterSignal(src, COMSIG_ITEM_DROPPED_FROM_PROSTHETIC, PROC_REF(enable_twohanded_comp))
 
 /obj/item/chainsaw/proc/on_transform(obj/item/source, mob/user, active)

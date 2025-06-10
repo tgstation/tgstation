@@ -47,6 +47,8 @@
 		return FALSE
 	if(isbodypart(tool))
 		return TRUE // auto pass
+	if(istype(tool, /obj/item/chainsaw) || istype(tool, /obj/item/melee/synthetic_arm_blade))
+		return TRUE // snowflaked for soul
 	if(tool.w_class < WEIGHT_CLASS_NORMAL || tool.w_class > WEIGHT_CLASS_BULKY)
 		return FALSE
 	return TRUE
@@ -171,7 +173,7 @@
 		user, target,
 		span_notice("You [thing.singular_name] [limb] to [target]'s body."),
 		span_notice("[user] [thing.singular_name] [limb] to [target]'s body!"),
-		span_notice("[user] [thing.singular_name]\s something to [target]'s body!"),
+		span_notice("[user] [thing.singular_name][plural_s(thing.singular_name)] something to [target]'s body!"),
 	)
-	display_pain(target, "[user] [thing.singular_name]\s [limb] to your body!", TRUE)
+	display_pain(target, "[user] [thing.singular_name][plural_s(thing.singular_name)] [limb] to your body!", TRUE)
 	return TRUE

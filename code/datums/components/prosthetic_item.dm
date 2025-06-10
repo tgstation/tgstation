@@ -29,6 +29,7 @@
 	src.drop_prob = drop_prob
 
 /datum/component/item_as_prosthetic_limb/proc/register_item(obj/item/prosthetic_item)
+	SEND_SIGNAL(prosthetic_item, COMSIG_ITEM_PRE_USED_AS_PROSTHETIC, parent)
 	item_limb = prosthetic_item
 	RegisterSignal(prosthetic_item, COMSIG_QDELETING, PROC_REF(qdel_limb))
 	RegisterSignal(prosthetic_item, COMSIG_MOVABLE_MOVED, PROC_REF(limb_moved))
@@ -48,7 +49,7 @@
 			bodyparent.name = "left [prosthetic_item.name]"
 			bodyparent.plaintext_zone = "left [prosthetic_item.name]"
 			bodyparent.owner.put_in_l_hand(prosthetic_item)
-	SEND_SIGNAL(prosthetic_item, COMSIG_ITEM_USED_AS_PROSTHETIC, parent)
+	SEND_SIGNAL(prosthetic_item, COMSIG_ITEM_POST_USED_AS_PROSTHETIC, parent)
 
 /datum/component/item_as_prosthetic_limb/proc/unregister_item(obj/item/prosthetic_item)
 	item_limb = null
@@ -140,6 +141,7 @@
 	existing?.drop_limb(special = TRUE)
 
 	var/obj/item/bodypart/bodypart_to_attach = newBodyPart(target_zone)
+	bodypart_to_attach.change_appearance(icon = 'icons/mob/augmentation/surplus_augments.dmi', id = BODYPART_ID_ROBOTIC, greyscale = FALSE, dimorphic = FALSE)
 	bodypart_to_attach.try_attach_limb(src)
 	bodypart_to_attach.AddComponent(/datum/component/item_as_prosthetic_limb, some_thing, fall_prob)
 
