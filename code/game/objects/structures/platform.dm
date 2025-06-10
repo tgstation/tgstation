@@ -47,7 +47,7 @@
 	AddComponent(/datum/component/climb_walkable)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
-	AddElement(/datum/element/give_turf_traits, turf_traits)
+	AddElement(/datum/element/give_turf_traits, string_list(turf_traits))
 	AddElement(/datum/element/footstep_override, footstep = footstep, priority = STEP_SOUND_TABLE_PRIORITY)
 	AddComponent(/datum/component/table_smash)
 

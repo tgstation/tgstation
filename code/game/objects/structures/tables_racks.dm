@@ -83,7 +83,7 @@
 		return
 
 	make_climbable()
-	AddElement(/datum/element/give_turf_traits, turf_traits)
+	AddElement(/datum/element/give_turf_traits, string_list(turf_traits))
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	AddComponent(/datum/component/table_smash, gentle_push = slam_gently, after_smash = CALLBACK(src, PROC_REF(after_smash)))
 
