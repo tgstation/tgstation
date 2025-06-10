@@ -149,7 +149,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	var/list/sources_to_add = sources.Copy() //make sure not to modify the original if it's stored in a variable outside this proc
 	if(!actual_mutation)
 		if(istype(mutation_to_add, /datum/mutation))
-			var/datum/mutation/mutation_instance
+			var/datum/mutation/mutation_instance = mutation_to_add
 			actual_mutation = mutation_instance.make_copy()
 		else
 			actual_mutation = new mutation_to_add
@@ -206,7 +206,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /datum/dna/proc/remove_mutation_group(list/group, sources = GLOB.standard_mutation_sources)
 	if(!group)
 		return
-	for(var/datum/mutation/mutation in group)
+	for(var/mutation in group)
 		remove_mutation(mutation, sources)
 
 /datum/dna/proc/generate_unique_identity()
