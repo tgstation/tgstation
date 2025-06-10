@@ -94,7 +94,7 @@
 	frame_icon = 'icons/obj/smooth_structures/platform/frame_faces/window_frame_material.dmi'
 	icon_state = "window_frame_material-0"
 	base_icon_state = "window_frame_material"
-	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_GREYSCALE | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_EFFECTS | MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	smoothing_groups = SMOOTH_GROUP_PLATFORMS_MATERIAL
 	canSmoothWith = SMOOTH_GROUP_PLATFORMS_MATERIAL
 
@@ -121,7 +121,7 @@
 	canSmoothWith = SMOOTH_GROUP_PLATFORMS_MATERIAL
 
 /obj/structure/platform/gold
-	name = "gold platform"
+	name = "golden platform"
 	icon = 'icons/obj/smooth_structures/platform/window_frame_gold.dmi'
 	frame_icon = 'icons/obj/smooth_structures/platform/frame_faces/window_frame_gold.dmi'
 	icon_state = "window_frame_gold-0"
