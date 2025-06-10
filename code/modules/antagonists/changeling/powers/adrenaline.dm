@@ -1,7 +1,7 @@
 /datum/action/changeling/adrenaline
 	name = "Gene Stim"
 	desc = "We concentrate our chemicals into a potent stimulant, rendering our form stupendously robust against being incapacitated. Costs 25 chemicals."
-	helptext = "Disregard any condition that has stunned us and suffuse our form with FOUR units of Changeling Adrenaline; our form recovers massive stamina and plainly disregards any pain or fatigue during its effects."
+	helptext = "Disregard any condition that has stunned us and suffuse our form with FOUR units of Changeling Adrenaline; our form recovers massive stamina and simply disregards any pain or fatigue during its effects."
 	button_icon_state = "adrenaline"
 	chemical_cost = 25 // similar cost to biodegrade, as they serve similar purposes
 	dna_cost = 2
