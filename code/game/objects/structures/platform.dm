@@ -89,7 +89,7 @@
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/platform/atom_deconstruct(disassembled = TRUE)
-	var/turf/target_turf = get_turf(src)
+	var/turf/target_turf = drop_location()
 	if(sheet_type)
 		new sheet_type(target_turf, sheet_amount)
 	else
