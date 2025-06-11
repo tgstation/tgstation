@@ -31,7 +31,7 @@
 #define NOBLUDGEON (1<<7) // when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
 /**
  * for all things that are technically items but don't want to be treated as such, given on a case-by-case basis
- * examples of use are hand items, omni-toolsets, non-limb limb items (hand eater, chainsaw), borg modules, bodyparts, organs, etc.
+ * examples of use are hand items, omni-toolsets, non-limb limbs (hand eater, mounted chainsaw, many null rods), borg modules, bodyparts, organs, etc.
  * This is used for general exclusion, such as preventing insertions into other items
  * Basically, these aren't "real" items. <= wow thanks for the fucking insight sherlock
 */
