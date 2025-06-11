@@ -55,7 +55,6 @@
 #define MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC "ballistic_weapon_snowflake"
 #define MECHA_SNOWFLAKE_ID_GENERATOR "generator_snowflake"
 #define MECHA_SNOWFLAKE_ID_ORE_SCANNER "orescanner_snowflake"
-#define MECHA_SNOWFLAKE_ID_CLAW "lawclaw_snowflake"
 #define MECHA_SNOWFLAKE_ID_RCD "rcd_snowflake"
 
 #define MECHA_AMMO_INCENDIARY "Incendiary bullet"
