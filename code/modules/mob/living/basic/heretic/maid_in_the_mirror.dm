@@ -2,7 +2,7 @@
 /mob/living/basic/heretic_summon/maid_in_the_mirror
 	name = "\improper Maid in the Mirror"
 	real_name = "Maid in the Mirror"
-	desc = "A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly."
+	desc = "A floating and flowing wisp of chilled air."
 	icon = 'icons/mob/simple/mob.dmi'
 	icon_state = "stand"
 	icon_living = "stand" // Placeholder sprite... still
@@ -33,48 +33,16 @@
 	)
 	AddElement(/datum/element/death_drops, loot)
 	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/mirror_walk)
+	ADD_TRAIT(src, TRAIT_UNHITTABLE_BY_LASERS, INNATE_TRAIT)
 
 /mob/living/basic/heretic_summon/maid_in_the_mirror/death(gibbed)
 	var/turf/death_turf = get_turf(src)
 	death_turf.TakeTemperature(-40) // Spooky
 	return ..()
 
-// Examining them will harm them, on a cooldown.
-/mob/living/basic/heretic_summon/maid_in_the_mirror/examine(mob/user)
+/mob/living/basic/heretic_summon/maid_in_the_mirror/melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!harmed_by_examine || user == src || user.stat == DEAD || !isliving(user) || IS_HERETIC_OR_MONSTER(user))
+	if(!. || !isliving(target))
 		return
-
-	var/user_ref = REF(user)
-	if(user_ref in recent_examiner_refs)
-		return
-
-	// If we have health, we take some damage
-	if(health > (maxHealth * 0.125))
-		visible_message(
-				span_warning("[src] seems to fade in and out slightly."),
-				span_userdanger("[user]'s gaze pierces your every being!"),
-		)
-
-		recent_examiner_refs += user_ref
-		apply_damage(maxHealth * 0.1) // We take 10% of our health as damage upon being examined
-		playsound(src, 'sound/effects/ghost2.ogg', 40, TRUE)
-		addtimer(CALLBACK(src, PROC_REF(clear_recent_examiner), user_ref), recent_examine_damage_cooldown, TIMER_DELETE_ME)
-		animate(src, alpha = 120, time = 0.5 SECONDS, easing = ELASTIC_EASING, loop = 2, flags = ANIMATION_PARALLEL)
-		animate(alpha = 255, time = 0.5 SECONDS, easing = ELASTIC_EASING)
-
-	// If we're examined on low enough health we die straight up
-	else
-		visible_message(
-				span_danger("[src] vanishes from existence!"),
-				span_userdanger("[user]'s gaze shatters your form, destroying you!"),
-		)
-
-		death()
-
-/mob/living/basic/heretic_summon/maid_in_the_mirror/proc/clear_recent_examiner(mob_ref)
-	if(!(mob_ref in recent_examiner_refs))
-		return
-
-	recent_examiner_refs -= mob_ref
-	heal_overall_damage(5)
+	var/mob/living/living_target = target
+	living_target.apply_status_effect(/datum/status_effect/void_chill, 1)

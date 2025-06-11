@@ -1,13 +1,13 @@
 /datum/heretic_knowledge/armor
 	name = "Armorer's Ritual"
-	desc = "Allows you to transmute a table and a gas mask to create Eldritch Armor. \
+	desc = "Allows you to transmute a table (or a suit) and a mask to create Eldritch Armor. \
 		Eldritch Armor provides great protection while also acting as a focus when hooded."
 	gain_text = "The Rusted Hills welcomed the Blacksmith in their generosity. And the Blacksmith \
 		returned their generosity in kind."
 
 	required_atoms = list(
-		/obj/structure/table = 1,
-		/obj/item/clothing/mask/gas = 1,
+		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
+		/obj/item/clothing/mask = 1,
 	)
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
 	cost = 1

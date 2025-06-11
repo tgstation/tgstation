@@ -225,7 +225,7 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh)
 	research_tree_icon_state = "eldritch_armor"
 	required_atoms = list(
-		/obj/structure/table = 1,
+		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
 		/obj/item/clothing/mask = 1,
 		/obj/effect/decal/cleanable/blood = 1,
 	)

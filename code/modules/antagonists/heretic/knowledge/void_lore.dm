@@ -107,7 +107,7 @@
 	drafting_tier = 5
 
 /datum/heretic_knowledge/armor/void
-	desc = "Allows you to transmute a table and a mask in sub-zero temperatures to create a Hollow Weave. \
+	desc = "Allows you to transmute a table (or a suit) and a mask in sub-zero temperatures to create a Hollow Weave. \
 			Acts as a focus while hooded."
 	gain_text = "Stepping through the cold air, I am shocked by a new sensation. \
 				Thousands of almost imperceivable threads cling to my form. \
@@ -116,7 +116,7 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/void)
 	research_tree_icon_state = "void_armor"
 	required_atoms = list(
-		/obj/structure/table = 1,
+		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
 		/obj/item/clothing/mask = 1,
 	)
 

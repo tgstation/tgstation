@@ -127,7 +127,7 @@
 	cost = 2
 
 /datum/heretic_knowledge/armor/rust
-	desc = "Allows you to transmute a table, a mask and any trash item to create a Salvaged Remains. \
+	desc = "Allows you to transmute a table (or a suit), a mask and any trash item to create a Salvaged Remains. \
 			Has extra armor and syringe immunity while standing on rust. \
 			Acts as a focus while hooded."
 	gain_text = "From beneath warped scrap, the Blacksmith pulls forth an ancient fabric. \
@@ -135,7 +135,7 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/rust)
 	research_tree_icon_state = "rust_armor"
 	required_atoms = list(
-		/obj/structure/table = 1,
+		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
 		/obj/item/clothing/mask = 1,
 		/obj/item/trash = 1,
 	)

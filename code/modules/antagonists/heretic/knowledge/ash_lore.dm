@@ -109,7 +109,7 @@
 	research_tree_icon_frame = 7
 
 /datum/heretic_knowledge/armor/ash
-	desc = "Allows you to transmute a table, a mask and a match to create a scorched mantle. \
+	desc = "Allows you to transmute a table (or a suit), a mask and a match to create a scorched mantle. \
 		It provides completes protection from fire, and is able to produce more flames passively. \
 		When you have enough fire, you may cast empowered versions of your ashen spells. \
 		Acts as a focus while hooded."
@@ -118,7 +118,7 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/ash)
 	research_tree_icon_state = "ash_armor"
 	required_atoms = list(
-		/obj/structure/table = 1,
+		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
 		/obj/item/clothing/mask = 1,
 		/obj/item/match = 1,
 	)

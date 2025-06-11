@@ -168,7 +168,7 @@
 #undef BLOOD_FLOW_PER_SEVEIRTY
 
 /datum/heretic_knowledge/armor/blade
-	desc = "Allows you to transmute a table, a mask and a sheet of titanium or silver to create a Shattered Panoply. \
+	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of titanium or silver to create a Shattered Panoply. \
 			Provides baton resistance and shock insulation while worn. \
 			Acts as a focus while hooded."
 	gain_text = "The echoing, directionless cacophony of violence reverberates about me. \
@@ -176,7 +176,7 @@
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/blade)
 	research_tree_icon_state = "blade_armor"
 	required_atoms = list(
-		/obj/structure/table = 1,
+		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
 		/obj/item/clothing/mask = 1,
 		list(/obj/item/stack/sheet/mineral/silver, /obj/item/stack/sheet/mineral/titanium) = 1,
 	)

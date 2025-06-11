@@ -92,14 +92,14 @@
 
 /datum/heretic_knowledge/armor/cosmic
 
-	desc = "Allows you to transmute a table, a mask and a sheet of plasma to create a Starwoven Cloak. \
+	desc = "Allows you to transmute a table (or a suit), a mask and a sheet of plasma to create a Starwoven Cloak. \
 			Acts as a focus while hooded."
 	gain_text = "Like radiant cords, the stars shone in union across the silken shape of a billowing cloak, that at once does and does not drape my shoulders. \
 				The eyes of the Beast rested upon me, and through me."
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic)
 	research_tree_icon_state = "cosmic_armor"
 	required_atoms = list(
-		/obj/structure/table = 1,
+		list(/obj/structure/table, /obj/item/clothing/suit) = 1,
 		/obj/item/clothing/mask = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
