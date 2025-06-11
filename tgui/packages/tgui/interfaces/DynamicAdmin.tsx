@@ -608,8 +608,8 @@ const RulesetsPanel = () => {
                                 />
                               </Flex.Item>
                             )}
-                            {ruleset_category !== 'roundstart' &&
-                              !!roundstarted && (
+                            {ruleset_category !== 'roundstart' ||
+                              (!!roundstarted && (
                                 <Flex.Item>
                                   <Button.Checkbox
                                     ml={0.5}
@@ -631,7 +631,7 @@ const RulesetsPanel = () => {
                                     }
                                   />
                                 </Flex.Item>
-                              )}
+                              ))}
                             <Flex.Item
                               style={{
                                 borderBottom:
