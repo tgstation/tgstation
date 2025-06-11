@@ -123,7 +123,7 @@
 	bullet = 0
 	laser = 0
 	energy = 0
-	bomb = 20
+	bomb = -20
 	fire = 100
 	acid = 100
 
