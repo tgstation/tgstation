@@ -662,6 +662,7 @@
 	eye_color_right = "#2f3032"
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	penlight_message = "are low grade cybernetics, poorly compensating for the light"
+
 /obj/item/organ/eyes/robotic/basic/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
