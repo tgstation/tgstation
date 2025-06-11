@@ -1,10 +1,3 @@
-GLOBAL_LIST_INIT(ghost_lighting_options, list(
-	"Fullbright" = LIGHTING_CUTOFF_FULLBRIGHT,
-	"Night Vision" = LIGHTING_CUTOFF_HIGH,
-	"Darker" = LIGHTING_CUTOFF_MEDIUM,
-	"Normal" = LIGHTING_CUTOFF_VISIBLE,
-))
-
 /// How bright a ghost's lighting plane is
 /datum/preference/choiced/ghost_lighting
 	category = PREFERENCE_CATEGORY_GAME_PREFERENCES
@@ -16,8 +9,8 @@ GLOBAL_LIST_INIT(ghost_lighting_options, list(
 
 /datum/preference/choiced/ghost_lighting/init_possible_values()
 	var/list/values = list()
-	for(var/option_name in GLOB.ghost_lighting_options)
-		values += option_name
+	for(var/option_name in GLOB.ghost_lightings)
+		values += GLOB.ghost_lightings[option_name]
 	return values
 
 /datum/preference/choiced/ghost_lighting/apply_to_client(client/client, value)
