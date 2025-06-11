@@ -900,7 +900,7 @@
 				return
 
 			// Saving temporary or unobtainable mutations leads to gratuitous abuse
-			if(!(MUTATION_SOURCE_ACTIVATED in mutation.sources))
+			if(length(mutation.sources) && !(MUTATION_SOURCE_ACTIVATED in mutation.sources))
 				say("ERROR: This mutation is anomalous, and cannot be saved.")
 				return
 
