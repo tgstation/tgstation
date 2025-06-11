@@ -23,9 +23,7 @@
 	payment_department = ACCOUNT_MED
 	var/obj/item/scanner_wand
 	/// How much it costs to use the kiosk by default.
-	var/default_price = 15          //I'm defaulting to a low price on this, but in the future I wouldn't have an issue making it more or less expensive.
-	/// How much it currently costs to use the kiosk.
-	var/active_price = 15           //Change by using a multitool on the board.
+	var/default_price = 15
 	/// Makes the TGUI display gibberish and/or incorrect/erratic information.
 	var/pandemonium = FALSE //AKA: Emag mode.
 
