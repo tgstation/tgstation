@@ -8,11 +8,8 @@
 	density = FALSE
 	input_attempt = FALSE
 	output_attempt = FALSE
-
 	show_display_lights = FALSE
 
-	capacity = 1 // solely to avoid div by zero
-	charge = 0
 	var/obj/machinery/power/smesbank/connected_smes
 
 /obj/machinery/power/smes/connector/RefreshParts()
@@ -27,11 +24,6 @@
 	// prevent UI interactions if there's no SMES
 	if(!connected_smes)
 		balloon_alert(usr, "needs a connected SMES!")
-		return FALSE
-	return ..()
-
-/obj/machinery/power/smes/connector/display_ready()
-	if(!connected_smes)
 		return FALSE
 	return ..()
 
@@ -75,27 +67,18 @@
 
 /// connects the actual portable SMES once it's assigned, adjusting charge/maxcharge
 /obj/machinery/power/smes/connector/proc/on_connect_smes()
-	charge = connected_smes.charge
-	capacity = connected_smes.capacity
 	update_appearance()
 
 /// disconnects the portable SMES, resetting internal charge + capacity
 /obj/machinery/power/smes/connector/proc/on_disconnect_smes()
 	input_attempt = FALSE
 	output_attempt = FALSE
-	charge = initial(charge)
-	capacity = initial(capacity)
 	update_appearance()
 
 // we really should only be adjusting charge when there's a connected SMES bank.
 /obj/machinery/power/smes/connector/adjust_charge(charge_adjust)
 	. = ..()
-	connected_smes?.charge += charge_adjust
-
-// same as above - if we have to set charge, affect the connected SMES bank as well
-/obj/machinery/power/smes/connector/set_charge(charge_set)
-	. = ..()
-	connected_smes?.charge = charge_set
+	connected_smes?.adjust_charge(charge_adjust)
 
 /obj/machinery/power/smes/connector/Destroy()
 	connected_smes?.disconnect_port() // in the unlikely but possible case a SMES is connected and this explodes
@@ -247,17 +230,11 @@
 /obj/machinery/power/smesbank/proc/adjust_charge(charge_adjust)
 	charge += charge_adjust
 
-/// Sets the charge of the portable SMES. See SMES code.
-/obj/machinery/power/smesbank/proc/set_charge(charge_set)
-	charge = charge_set
-
 /obj/machinery/power/smesbank/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	adjust_charge(-STANDARD_BATTERY_CHARGE/severity) // EMP'd banks double-dip on draining if connected. too bad, i guess
-	if (charge < 0)
-		set_charge(0)
 	update_appearance()
 
 /// Attempt to locate, connect to, and activate a portable connector, for pre-mapped portable SMESes.

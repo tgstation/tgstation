@@ -17251,7 +17251,6 @@
 "gbf" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/power/smes{
-	capacity = 1.8e+008;
 	charge = 2e+005
 	},
 /obj/structure/cable,
