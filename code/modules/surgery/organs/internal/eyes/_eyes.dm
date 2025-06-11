@@ -68,6 +68,7 @@
 	var/pupils_name = "pupils"
 	/// do these eyes have pupils (or equivalent) that react to light when penlighted.
 	var/light_reactive = TRUE
+
 /obj/item/organ/eyes/Initialize(mapload)
 	. = ..()
 	if (blink_animation)
