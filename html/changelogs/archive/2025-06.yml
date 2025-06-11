@@ -255,3 +255,24 @@
   necromanceranne:
   - bugfix: Deltastation rounds can now once again end as expected, as the shuttle
       will once again dock.
+2025-06-11:
+  Ben10Omintrix:
+  - bugfix: fixes stoats not having dead sprites
+  - bugfix: fixes stoats not following pet commands
+  Ghommie:
+  - bugfix: Fixed mutation injectors.
+  - bugfix: Fixed mutadone turning actual monkeys into humonkeys.
+  Jacquerel:
+  - qol: You can walk through stoats and snails
+  - balance: Stoats and snails can climb tables
+  - image: Stoats inside disposals are a little less rowdy
+  - image: Snails are rounder
+  Kuricityy:
+  - map: Heavily changes Catwalk Station's security department; almost completely
+      altering the brig.
+  Xander3359:
+  - rscadd: Hyper-insulated flooring, made from 1 plastitanium sheet
+  mc-oofert:
+  - rscadd: atmospherics shield generator, unlocked by Holographics research
+  vinylspiders:
+  - bugfix: stops stack merging from causing spurious CI runtimes
