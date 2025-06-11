@@ -103,6 +103,7 @@
 	var/lastkey = holder.my_atom?.fingerprintslast
 	if(!lastkey)
 		return
+	var/mob/living/user = get_user_by_ckey(lastkey)
 	if(!istype(user) || user.stat || !is_in_sight(user, holder.my_atom))
 		return
 	user.add_mood_event("why_on_earth_are_you_making_chocolate_pudding", /datum/mood_event/lost_control_of_life)
