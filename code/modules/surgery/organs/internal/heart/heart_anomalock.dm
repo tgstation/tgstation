@@ -10,7 +10,6 @@
 	beat_noise = "an astonishing <b>BZZZ</b> of immense electrical power"
 	bleed_prevention = TRUE
 	toxification_probability = 0
-	
 	COOLDOWN_DECLARE(survival_cooldown)
 	///Cooldown for the activation of the organ
 	var/survival_cooldown_time = 5 MINUTES
@@ -218,6 +217,6 @@
 	else
 		to_chat(hearer, span_danger("An electrical arc strikes your stethoscope, conducting into you!"))
 	if(hearer.electrocute_act(15, "stethoscope", flags = SHOCK_NOGLOVES)) //the stethoscope is in your ears. (returns true if it does damage so we only scream in that case)
-		hearer.emote("scream")	
+		hearer.emote("scream")
 	return span_danger(beat_noise)
 #undef DOAFTER_IMPLANTING_HEART
