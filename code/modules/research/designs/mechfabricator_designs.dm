@@ -1095,18 +1095,6 @@
 		RND_CATEGORY_MECHFAB_RIPLEY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
 	)
 
-/datum/design/mech_hydraulic_claw
-	name = "Hydraulic Claw"
-	id = "mech_hydraulic_claw"
-	build_type = MECHFAB
-	build_path = /obj/item/mecha_parts/mecha_equipment/weapon/paddy_claw
-	materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*5)
-	construction_time = 10 SECONDS
-	category = list(
-		RND_CATEGORY_MECHFAB_EQUIPMENT + RND_SUBCATEGORY_MECHFAB_EQUIPMENT_MISC,
-		RND_CATEGORY_MECHFAB_PADDY + RND_SUBCATEGORY_MECHFAB_SUPPORTED_EQUIPMENT,
-	)
-
 /datum/design/mech_drill
 	name = "Mining Drill"
 	id = "mech_drill"
