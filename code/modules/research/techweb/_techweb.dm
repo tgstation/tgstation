@@ -381,7 +381,8 @@
 	datum/techweb_node/node,
 	force = FALSE, auto_adjust_cost = TRUE,
 	get_that_dosh = TRUE,
-	researcher = null)
+	researcher = null,
+	alist/provided_log_details = null)
 	if(!istype(node))
 		return FALSE
 	update_node_status(node)
@@ -432,7 +433,7 @@
 
 	// Dequeue
 	if(node.id in research_queue_nodes)
-		if(!force)
+		if(isnull(provided_log_details))
 			var/user = research_queue_nodes[node.id]["user"]
 			var/queued_time = research_queue_nodes[node.id]["time"]
 			var/location = research_queue_nodes[node.id]["location"]
@@ -443,14 +444,19 @@
 				queued_time = queued_time,
 				researcher_location = location
 			)
+		else
+			SSresearch._InCharacter_log_research(log_details = provided_log_details)
 		research_queue_nodes.Remove(node.id)
 		return TRUE
 	if(!force)
-		SSresearch._InCharacter_log_research(
-			researcher_atom = researcher,
-			logged_node = node,
-			techweb_logged_to = src,
-		)
+		if(isnull(provided_log_details))
+			SSresearch._InCharacter_log_research(
+				logged_node = node,
+				researcher_atom = researcher,
+				techweb_logged_to = src,
+			)
+		else
+			SSresearch._InCharacter_log_research(log_details = provided_log_details)
 	return TRUE
 
 

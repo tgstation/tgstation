@@ -366,14 +366,14 @@ SUBSYSTEM_DEF(research)
 	turf/researcher_location = null,
 	queued_time = null
 	)
-	if(!istype(logged_node))
-		CRASH("Invalid node fed to SSresearch._InCharacter_log_research: [isnull(logged_node) ? "NULL!" : logged_node]")
-	if(!istype(techweb_logged_to))
-		CRASH("Invalid techweb fed to SSresearch._InCharacter_log_research: [isnull(techweb_logged_to) ? "NULL!" : techweb_logged_to]")
 	if(isnull(log_details))
+		if(!istype(logged_node))
+			CRASH("Invalid node fed to SSresearch._InCharacter_log_research: [isnull(logged_node) ? "NULL!" : logged_node]")
 		if(isnull(researcher_atom))
 			CRASH("SSresearch._InCharacter_log_research received erroneous parameters:\
 			NULL log_details and NULL researcher")
+		if(!istype(techweb_logged_to))
+			CRASH("Invalid techweb fed to SSresearch._InCharacter_log_research: [isnull(techweb_logged_to) ? "NULL!" : techweb_logged_to]")
 		log_details = _InCharacter_form_research_logs(
 			researcher_atom = researcher_atom,
 			logged_node = logged_node,
