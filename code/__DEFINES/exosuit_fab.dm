@@ -33,10 +33,8 @@
 #define EXOSUIT_MODULE_RETICENCE (1<<9)
 /// Module is compatible with Marauder models
 #define EXOSUIT_MODULE_MARAUDER (1<<10)
-/// Module is compatible with Paddy models
-#define EXOSUIT_MODULE_PADDY (1<<11)
 /// Module is compatible with Justice models
-#define EXOSUIT_MODULE_JUSTICE (1<<12)
+#define EXOSUIT_MODULE_JUSTICE (1<<11)
 
 /// Module is compatible with "Working" Exosuit models - Ripley and Clarke
 #define EXOSUIT_MODULE_WORKING (EXOSUIT_MODULE_RIPLEY | EXOSUIT_MODULE_CLARKE)
