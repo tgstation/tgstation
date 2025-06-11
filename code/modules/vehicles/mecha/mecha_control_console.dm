@@ -85,6 +85,8 @@
 	var/recharging = FALSE
 	/// The Mecha that this tracking beacon is attached to
 	var/obj/vehicle/sealed/mecha/chassis
+	/// The type of flag this part checks before being able to be installed into the mech
+	var/flag_to_check = BEACON_TRACKABLE
 
 /**
  * Returns a html formatted string describing attached mech status
@@ -122,7 +124,7 @@
 	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/try_attach_part(mob/user, obj/vehicle/sealed/mecha/mecha_to_attach, attach_right = FALSE)
-	if(!mecha_to_attach.can_be_tracked)
+	if(!(mecha_to_attach.mecha_flags & flag_to_check))
 		return
 	if(!..())
 		return
@@ -151,3 +153,4 @@
 	name = "exosuit AI control beacon"
 	desc = "A device used to transmit exosuit data. Also allows active AI units to take control of said exosuit."
 	ai_beacon = TRUE
+	flag_to_check = BEACON_CONTROLLABLE

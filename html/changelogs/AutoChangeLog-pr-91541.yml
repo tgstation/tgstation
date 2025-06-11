@@ -1,0 +1,4 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "map exported APC's now locate the terminals under them & attach to it thus enabling charging & stuff"

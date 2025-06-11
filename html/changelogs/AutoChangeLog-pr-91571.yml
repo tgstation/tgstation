@@ -1,0 +1,4 @@
+author: "Absolucy, PowerfulBacon"
+delete-after: True
+changes:
+  - bugfix: "Screentip icons work on the latest BYOND 516 again."

@@ -1,0 +1,2596 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bM" = (
+/obj/structure/flora/ash/stem_shroom,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"cW" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"db" = (
+/obj/item/clothing/under/plasmaman/clown,
+/obj/item/clothing/shoes/clown_shoes,
+/obj/item/clothing/mask/gas/clown_hat,
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"dJ" = (
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"dK" = (
+/obj/item/reagent_containers/hypospray/medipen/survival,
+/obj/effect/decal/remains/human,
+/obj/item/clothing/under/rank/cargo/miner/lavaland,
+/obj/item/clothing/mask/gas/explorer,
+/obj/item/clothing/shoes/workboots/mining,
+/obj/item/clothing/gloves/color/black,
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/item/borg/sight/meson,
+/obj/item/pickaxe/improvised,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"dQ" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"dZ" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"em" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/item/relic/lavaland,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"en" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 0
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"fc" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"fJ" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/item/clothing/under/color/grey,
+/obj/item/clothing/shoes/sneakers/black,
+/obj/item/clothing/mask/gas,
+/obj/item/spear,
+/obj/item/gps/spaceruin,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"fK" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 0
+	},
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/statue/dragonman,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"fP" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/statue/dragonman,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"fY" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"gc" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/block,
+/obj/item/flashlight/flare/torch/everburning,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"gz" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"gF" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"hk" = (
+/obj/item/storage/bag/ore,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"hm" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"hu" = (
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"hL" = (
+/obj/structure/statue/bone/rib,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"iB" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/item/knife/hunting,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"iE" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"jx" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"mM" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/flora/ash/fireblossom,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"nd" = (
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"nk" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"nm" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"nw" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"ov" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"oP" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"pg" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 6
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"py" = (
+/mob/living/basic/mining/ice_whelp/ash,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"pR" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 6
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -12;
+	pixel_y = -6
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = -12;
+	pixel_y = 6
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"sS" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"te" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"tm" = (
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"tv" = (
+/obj/structure/flora/rock/pile/style_3,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"tH" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"tW" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"ul" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"uA" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"uJ" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"we" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"wh" = (
+/obj/structure/stone_tile/block,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"wD" = (
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"xl" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 6
+	},
+/obj/item/flashlight/flare/torch/everburning,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"xq" = (
+/obj/item/clothing/head/helmet/space/eva,
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"xG" = (
+/obj/item/stack/ore/glass/basalt,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"yy" = (
+/obj/structure/altar,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_y = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"zZ" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center/cracked,
+/obj/structure/stone_tile/surrounding_tile,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Bi" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/item/shovel/serrated/dull,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"BJ" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"BP" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/statue/dragonman,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"BU" = (
+/turf/open/space,
+/area/space)
+"BX" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Cm" = (
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Cq" = (
+/obj/structure/stone_tile/center/cracked,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"CB" = (
+/obj/structure/stone_tile/slab,
+/obj/structure/closet/crate/coffin,
+/obj/effect/mob_spawn/corpse/human/charredskeleton/dragoon,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Ds" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"DR" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Ef" = (
+/obj/structure/ore_box,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Ew" = (
+/obj/structure/stone_tile/slab,
+/obj/item/relic/lavaland,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Fh" = (
+/obj/structure/stone_tile,
+/obj/item/flashlight/flare/candle/infinite,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Fo" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Gi" = (
+/obj/effect/mapping_helpers/bombable_wall,
+/turf/closed/wall/tomb,
+/area/ruin/unpowered/no_grav)
+"Hj" = (
+/obj/structure/flora/ash/leaf_shroom,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Hv" = (
+/obj/structure/fluff/drake_statue/falling,
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Id" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/effect/decal/remains/human/smokey,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Is" = (
+/obj/structure/flora/ash/fireblossom,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Iz" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"IW" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/block/cracked,
+/obj/item/flashlight/flare/torch/everburning,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Jj" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 1
+	},
+/mob/living/basic/mining/ice_whelp/ash,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"JE" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"JY" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Kt" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Ky" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 6
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"KA" = (
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/structure/statue/drake,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"KI" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/statue/dragonman,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"La" = (
+/obj/structure/statue/bone/rib{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Lj" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Lv" = (
+/obj/structure/flora/rock/pile/style_random,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Lx" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"LC" = (
+/obj/structure/flora/rock/style_3,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"LG" = (
+/obj/structure/flora/rock/style_4,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"LQ" = (
+/obj/structure/flora/rock/style_2,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"LU" = (
+/obj/item/bikehorn,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Mu" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/statue/drake,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"MI" = (
+/obj/structure/stone_tile/surrounding_tile/cracked,
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/center,
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"NI" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/item/spear,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"NJ" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/item/spear/bonespear,
+/obj/item/clothing/under/costume/gladiator/ash_walker,
+/obj/item/clothing/head/helmet/gladiator,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"NW" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"OE" = (
+/obj/structure/statue/drake,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"OM" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"PS" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/item/relic/lavaland,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"PW" = (
+/obj/structure/flora/rock/pile,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"PX" = (
+/obj/structure/necropolis_gate,
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Qa" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Qg" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 9
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"QQ" = (
+/obj/effect/decal/cleanable/blood/trail_holder,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"QY" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Rh" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Rl" = (
+/obj/structure/stone_tile/surrounding_tile/cracked{
+	dir = 8
+	},
+/obj/item/toy/eldritch_book,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Rp" = (
+/turf/closed/mineral/volcanic/airless,
+/area/ruin/unpowered/no_grav)
+"SG" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/statue/drake,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"SP" = (
+/obj/effect/mapping_helpers/bombable_wall,
+/turf/closed/mineral/volcanic/airless,
+/area/ruin/unpowered/no_grav)
+"Tg" = (
+/obj/structure/stone_tile/burnt,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Tt" = (
+/obj/item/pickaxe,
+/obj/structure/flora/rock/pile/style_2,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Tu" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"TO" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/crayon/rune4,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"TP" = (
+/turf/open/space/basic,
+/area/space)
+"Ue" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"UK" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Va" = (
+/obj/effect/decal/cleanable/blood/trail_holder{
+	dir = 10
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Vd" = (
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Vn" = (
+/obj/structure/stone_tile/slab/cracked{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"VX" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/item/spear,
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"VZ" = (
+/obj/item/clothing/suit/space/eva,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Wm" = (
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"WL" = (
+/turf/closed/wall/tomb,
+/area/ruin/unpowered/no_grav)
+"WP" = (
+/obj/item/relic/lavaland,
+/obj/structure/stone_tile/slab,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Xg" = (
+/obj/structure/stone_tile/surrounding/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/center/burnt,
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 12;
+	pixel_y = -6
+	},
+/obj/item/flashlight/flare/candle/infinite{
+	pixel_x = 12;
+	pixel_y = 6
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"Yf" = (
+/obj/effect/mob_spawn/corpse/human/charredskeleton,
+/obj/item/organ/legion_tumour,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"YC" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"YG" = (
+/turf/closed/mineral/gibtonite/volcanic/airless,
+/area/ruin/unpowered/no_grav)
+"Zm" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+"ZW" = (
+/obj/structure/closet/crate/grave/filled,
+/turf/open/misc/asteroid/basalt/airless,
+/area/ruin/unpowered/no_grav)
+
+(1,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+"}
+(2,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+"}
+(3,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+wD
+wD
+Rp
+Rp
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+"}
+(4,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+wD
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+"}
+(5,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+BU
+"}
+(6,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+wD
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+PW
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+PW
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+"}
+(7,1,1) = {"
+BU
+BU
+BU
+BU
+wD
+wD
+wD
+wD
+wD
+wD
+wD
+Rp
+wD
+Rp
+Rp
+Rp
+Rp
+wD
+wD
+wD
+Qg
+QQ
+QQ
+Va
+Rp
+Rp
+Rp
+Rp
+Rp
+fJ
+Va
+py
+wD
+VZ
+Rp
+Rp
+Rp
+BU
+BU
+BU
+"}
+(8,1,1) = {"
+BU
+BU
+BU
+wD
+wD
+wD
+Rp
+Rp
+wD
+wD
+wD
+wD
+wD
+wD
+Rp
+Rp
+Rp
+wD
+dJ
+wD
+JY
+Rp
+Rp
+we
+Va
+Rp
+Rp
+YG
+Rp
+Rp
+we
+Va
+wD
+wD
+Rp
+Rp
+Rp
+BU
+BU
+BU
+"}
+(9,1,1) = {"
+BU
+BU
+BU
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Lv
+wD
+wD
+Rp
+Rp
+Rp
+wD
+wD
+py
+JY
+wD
+Rp
+Rp
+JY
+JE
+Rp
+Rp
+Rp
+Rp
+Rp
+JY
+xq
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+"}
+(10,1,1) = {"
+BU
+BU
+BU
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+wD
+Rp
+Rp
+Rp
+dK
+Qa
+Qa
+Ky
+wD
+Rp
+Rp
+we
+Qa
+wD
+Rp
+Rp
+Rp
+Rp
+JY
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+"}
+(11,1,1) = {"
+BU
+BU
+BU
+BU
+Rp
+Rp
+Rp
+Rp
+wD
+wD
+wD
+Rp
+Rp
+wD
+wD
+Rp
+Rp
+Rp
+wD
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+tv
+wD
+wD
+Rp
+JE
+QQ
+Ky
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+"}
+(12,1,1) = {"
+BU
+BU
+BU
+wD
+Rp
+Rp
+Rp
+LC
+wD
+py
+wD
+Rp
+Rp
+wD
+wD
+Lv
+Rp
+Rp
+WL
+WL
+WL
+WL
+WL
+WL
+WL
+Rp
+wD
+wD
+wD
+wD
+Is
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+BU
+BU
+"}
+(13,1,1) = {"
+BU
+BU
+BU
+wD
+Rp
+Rp
+Rp
+wD
+Qg
+QQ
+Va
+Is
+Rp
+Rp
+JE
+wD
+Rp
+WL
+WL
+fP
+OM
+Rh
+PS
+NW
+WL
+WL
+Rp
+wD
+Lv
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+BU
+BU
+"}
+(14,1,1) = {"
+BU
+BU
+wD
+wD
+Rp
+Rp
+Rp
+wD
+JY
+Rp
+we
+Va
+wD
+Rp
+JY
+wD
+Rp
+WL
+oP
+Wm
+Tu
+sS
+tW
+Id
+gc
+WL
+mM
+La
+Zm
+La
+wD
+Rp
+Rp
+Rp
+Rp
+wD
+wD
+BU
+BU
+BU
+"}
+(15,1,1) = {"
+BU
+BU
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+db
+Rp
+Rp
+fc
+LU
+Rp
+JY
+wD
+Rp
+WL
+BP
+iB
+dQ
+NI
+zZ
+BX
+WL
+WL
+dZ
+Zm
+wD
+wD
+wD
+wD
+Rp
+Rp
+Rp
+wD
+wD
+BU
+BU
+TP
+"}
+(16,1,1) = {"
+BU
+BU
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+we
+Qa
+Qa
+Ky
+Rp
+Rp
+WL
+NW
+Ue
+hm
+gF
+iE
+Ds
+uA
+PX
+wD
+YC
+te
+Iz
+QY
+wD
+Rp
+Rp
+wD
+wD
+wD
+BU
+BU
+BU
+"}
+(17,1,1) = {"
+BU
+BU
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+wD
+wD
+wD
+Rp
+Rp
+Rp
+WL
+fK
+jx
+MI
+VX
+ov
+en
+WL
+WL
+gz
+hu
+Vd
+Is
+wD
+wD
+Rp
+Rp
+wD
+wD
+wD
+BU
+BU
+BU
+"}
+(18,1,1) = {"
+BU
+BU
+BU
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+JE
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+WL
+ul
+em
+nw
+uJ
+nk
+Lx
+IW
+WL
+hu
+hL
+wD
+hL
+wD
+Is
+Rp
+Rp
+wD
+wD
+wD
+BU
+BU
+BU
+"}
+(19,1,1) = {"
+BU
+BU
+BU
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+we
+Va
+Lv
+Rp
+Rp
+Rp
+YG
+Rp
+WL
+WL
+KI
+Lj
+UK
+nk
+YC
+WL
+WL
+Rp
+wD
+wD
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+wD
+wD
+BU
+BU
+BU
+"}
+(20,1,1) = {"
+BU
+BU
+BU
+wD
+Rp
+Rp
+wD
+Rp
+Rp
+Rp
+we
+Va
+Qg
+Va
+Rp
+Rp
+Rp
+Rp
+WL
+WL
+WL
+Cm
+WL
+WL
+WL
+Rp
+wD
+Is
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+BU
+BU
+BU
+"}
+(21,1,1) = {"
+BU
+BU
+BU
+BU
+Rp
+Rp
+wD
+bM
+LQ
+Rp
+Rp
+we
+Ky
+we
+Va
+Rp
+Rp
+Rp
+Rp
+WL
+Mu
+DR
+SG
+WL
+Rp
+Rp
+Ef
+wD
+wD
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+wD
+BU
+BU
+"}
+(22,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+Rl
+TO
+wD
+SP
+wD
+Qg
+Qa
+Ky
+Rp
+Rp
+Rp
+Rp
+WL
+WL
+hu
+WL
+WL
+Rp
+Rp
+xG
+wD
+Rp
+wD
+wD
+PW
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+"}
+(23,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+Ew
+Fh
+wD
+Rp
+wD
+fc
+Lv
+WL
+WL
+WL
+WL
+WL
+WL
+OE
+wD
+BJ
+WL
+Rp
+Rp
+wD
+wD
+Rp
+Rp
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+"}
+(24,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+wD
+Rp
+nm
+Hj
+Rp
+Rp
+wD
+fc
+WL
+WL
+Vn
+ZW
+wD
+yy
+WL
+WL
+Fo
+WL
+WL
+Rp
+Rp
+hk
+xG
+Rp
+Rp
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+"}
+(25,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+wD
+Rp
+Rp
+Rp
+Rp
+wD
+wD
+fc
+WL
+pg
+Cm
+cW
+Cq
+ZW
+WL
+hu
+nd
+KA
+WL
+Rp
+Rp
+xG
+Rp
+Rp
+Lv
+wD
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+"}
+(26,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+wD
+wD
+Rp
+Rp
+wD
+LG
+Qg
+Ky
+Gi
+Cm
+Ds
+Xg
+wD
+wD
+WL
+WL
+Vd
+WL
+WL
+Rp
+Rp
+Tt
+Rp
+Rp
+wD
+wD
+Rp
+Rp
+Lv
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+"}
+(27,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+wD
+wD
+Rp
+Lv
+Qg
+Jj
+Ky
+Rp
+WL
+xl
+Hv
+CB
+hm
+Kt
+Ds
+wh
+tH
+WL
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+wD
+wD
+Rp
+Rp
+wD
+wD
+wD
+wD
+wD
+BU
+BU
+"}
+(28,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+wD
+Rp
+wD
+fc
+wD
+Lv
+Rp
+WL
+Cm
+Cm
+pR
+wD
+wD
+WL
+WL
+WL
+WL
+Rp
+Rp
+tm
+Lv
+Rp
+wD
+wD
+Rp
+Rp
+Rp
+wD
+wD
+wD
+wD
+wD
+BU
+BU
+"}
+(29,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+we
+Va
+Rp
+Rp
+WL
+nm
+Cm
+hu
+wD
+ZW
+WL
+Rp
+Rp
+Rp
+Rp
+Hj
+Bi
+Rp
+Rp
+wD
+wD
+wD
+Rp
+wD
+wD
+wD
+Rp
+Rp
+BU
+BU
+BU
+"}
+(30,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+Yf
+Rp
+Rp
+WL
+WL
+fY
+ZW
+Tg
+yy
+WL
+Rp
+Rp
+Rp
+YG
+tv
+WP
+Rp
+Rp
+tv
+wD
+wD
+wD
+wD
+wD
+Rp
+Rp
+wD
+wD
+BU
+BU
+"}
+(31,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+Rp
+Rp
+Rp
+WL
+WL
+WL
+WL
+WL
+WL
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+LG
+wD
+wD
+wD
+Rp
+Rp
+wD
+BU
+BU
+BU
+"}
+(32,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Qg
+Qa
+Qa
+Qa
+Va
+Rp
+Rp
+Rp
+wD
+Qg
+JE
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+"}
+(33,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Qg
+Qa
+Qa
+Ky
+wD
+Lv
+wD
+fc
+wD
+Rp
+wD
+wD
+fc
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+"}
+(34,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+fc
+wD
+wD
+wD
+Rp
+Rp
+wD
+we
+Va
+wD
+Qg
+QQ
+Ky
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+"}
+(35,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+TP
+Rp
+Rp
+Rp
+Rp
+py
+fc
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+we
+QQ
+Ky
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+BU
+"}
+(36,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+TP
+TP
+TP
+Rp
+Rp
+Rp
+NJ
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+wD
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+BU
+BU
+"}
+(37,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+BU
+BU
+BU
+"}
+(38,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+Rp
+Rp
+Rp
+Rp
+BU
+BU
+BU
+BU
+Rp
+Rp
+Rp
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+"}
+(39,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+Rp
+Rp
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+"}
+(40,1,1) = {"
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+BU
+"}

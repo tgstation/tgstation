@@ -594,3 +594,6 @@
 
 /// Sent from /obj/item/kinetic_crusher/proc/fire_kinetic_blast() : (atom/target, mob/living/user, obj/projectile/destabilizer/destabilizer)
 #define COMSIG_CRUSHER_FIRED_BLAST "crusher_fired_blast"
+
+/// Sent from /obj/machinert/console/camera_advanced/attack_hand() : (mob/eye/camera/remote/new_camera)
+#define COMSIG_ADVANCED_CAMERA_EYE_CREATED "advanced_camera_eye_created"
