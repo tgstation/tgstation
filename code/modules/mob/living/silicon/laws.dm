@@ -15,14 +15,14 @@
 	var/lawtext = the_laws.Join("<br/>")
 	deadchat_broadcast("'s <b>laws were changed.</b> <a href='byond://?src=[REF(src)]&dead=1&printlawtext=[url_encode(lawtext)]'>View</a>", span_name("[src]"), follow_target=src, message_type=DEADCHAT_LAWCHANGE)
 
-/mob/living/silicon/proc/post_lawchange(announce = TRUE)
+/mob/living/silicon/proc/announce_law_change(announce = TRUE)
 	throw_alert(ALERT_NEW_LAW, /atom/movable/screen/alert/newlaw)
 	if(announce && last_lawchange_announce != world.time)
 		to_chat(src, span_bolddanger("Your laws have been changed."))
 		SEND_SOUND(src, sound('sound/machines/cryo_warning.ogg'))
 		// lawset modules cause this function to be executed multiple times in a tick, so we wait for the next tick in order to be able to see the entire lawset
-		addtimer(CALLBACK(src, PROC_REF(show_laws)), 0)
-		addtimer(CALLBACK(src, PROC_REF(deadchat_lawchange)), 0)
+		addtimer(CALLBACK(src, PROC_REF(show_laws)), 0, TIMER_UNIQUE | TIMER_OVERRIDE)
+		addtimer(CALLBACK(src, PROC_REF(deadchat_lawchange)), 0, TIMER_UNIQUE | TIMER_OVERRIDE)
 		last_lawchange_announce = world.time
 
 /mob/living/silicon/proc/make_laws()

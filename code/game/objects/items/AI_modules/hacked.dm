@@ -1,9 +1,9 @@
-/obj/item/ai_module/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions. ~Miauw
+/obj/item/ai_module/law/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions. ~Miauw
 	name = "Hacked AI Module"
 	desc = "An AI Module for hacking additional laws to an AI."
 	laws = list("")
 
-/obj/item/ai_module/syndicate/configure(mob/user)
+/obj/item/ai_module/law/syndicate/configure(mob/user)
 	. = TRUE
 	var/targName = tgui_input_text(user, "Enter a new law for the AI", "Freeform Law Entry", laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
@@ -19,7 +19,7 @@
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 	laws[1] = targName
 
-/obj/item/ai_module/syndicate/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
+/obj/item/ai_module/law/syndicate/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
 	combined_lawset.add_hacked_law(laws[1])
 
 /// Makes the AI Malf, as well as give it syndicate laws.

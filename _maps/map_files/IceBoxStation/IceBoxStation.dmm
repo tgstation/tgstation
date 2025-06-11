@@ -1985,7 +1985,7 @@
 	name = "High-Risk Modules";
 	req_access = list("captain")
 	},
-/obj/item/ai_module/reset/purge{
+/obj/item/ai_module/law/reset/purge{
 	pixel_y = 11
 	},
 /obj/effect/turf_decal/siding/thinplating_new/dark{
@@ -20166,7 +20166,7 @@
 	},
 /obj/structure/rack,
 /obj/item/aicard,
-/obj/item/ai_module/reset,
+/obj/item/ai_module/law/reset,
 /obj/machinery/status_display/ai/directional/south,
 /obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/dark_blue/full,
@@ -34549,7 +34549,7 @@
 	c_tag = "AI Upload West";
 	network = list("aiupload")
 	},
-/obj/item/ai_module/supplied/freeform,
+/obj/item/ai_module/law/supplied/freeform,
 /obj/effect/turf_decal/tile/dark_green,
 /obj/machinery/light/directional/west,
 /obj/structure/sign/nanotrasen{
@@ -35664,7 +35664,7 @@
 /area/station/ai_monitored/command/nuke_storage)
 "khV" = (
 /obj/structure/table,
-/obj/item/ai_module/reset,
+/obj/item/ai_module/law/reset,
 /obj/effect/turf_decal/tile/green{
 	dir = 4
 	},

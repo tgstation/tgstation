@@ -361,8 +361,6 @@
 		mmi_type = new/obj/item/mmi/posibrain(src, /* autoping = */ FALSE)
 	else
 		mmi_type = new/obj/item/mmi(src)
-	if(hack_software)
-		new/obj/item/malf_upgrade(get_turf(src))
 	the_mmi = mmi_type
 	the_mmi.brain = new /obj/item/organ/brain(the_mmi)
 	the_mmi.brain.organ_flags |= ORGAN_FROZEN

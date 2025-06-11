@@ -1730,7 +1730,7 @@
 /obj/item/sticker/syndicate/apc,
 /obj/item/grenade/empgrenade,
 /obj/item/book/granter/crafting_recipe/donk_secret_recipe,
-/obj/item/ai_module/core/full/cybersun,
+/obj/item/ai_module/law/core/full/cybersun,
 /obj/item/reagent_containers/condiment/donksauce,
 /mob/living/basic/cybersun_ai_core{
 	donk_ai_master = 1
@@ -4297,7 +4297,7 @@
 "Lz" = (
 /obj/structure/cable/layer1,
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/supplied/protect_station{
+/obj/item/ai_module/law/supplied/protect_station{
 	pixel_x = 2;
 	pixel_y = 5
 	},

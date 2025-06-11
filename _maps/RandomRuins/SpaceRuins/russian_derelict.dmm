@@ -4050,7 +4050,7 @@
 	pixel_x = 6;
 	pixel_y = 6
 	},
-/obj/item/ai_module/core/full/drone,
+/obj/item/ai_module/law/core/full/drone,
 /turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "DL" = (

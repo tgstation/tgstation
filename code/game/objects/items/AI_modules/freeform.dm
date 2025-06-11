@@ -1,13 +1,13 @@
 /* CONTAINS:
- * /obj/item/ai_module/core/freeformcore
- * /obj/item/ai_module/supplied/freeform
+ * /obj/item/ai_module/law/core/freeformcore
+ * /obj/item/ai_module/law/supplied/freeform
 **/
 
-/obj/item/ai_module/core/freeformcore
+/obj/item/ai_module/law/core/freeformcore
 	name = "'Freeform' Core AI Module"
 	laws = list("")
 
-/obj/item/ai_module/core/freeformcore/configure(mob/user)
+/obj/item/ai_module/law/core/freeformcore/configure(mob/user)
 	. = TRUE
 	var/targName = tgui_input_text(user, "Enter a new core law for the AI.", "Freeform Law Entry", laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
@@ -23,17 +23,17 @@
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 	laws[1] = targName
 
-/obj/item/ai_module/core/freeformcore/can_install_to(mob/living/user, obj/machinery/ai_law_rack/rack)
+/obj/item/ai_module/law/core/freeformcore/can_install_to_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
 	if(!laws[1])
 		to_chat(user, span_warning("No law entered on module, please enter one."))
 		return FALSE
 	return TRUE
 
-/obj/item/ai_module/supplied/freeform
+/obj/item/ai_module/law/supplied/freeform
 	name = "'Freeform' AI Module"
 	laws = list("")
 
-/obj/item/ai_module/supplied/freeform/configure(mob/user)
+/obj/item/ai_module/law/supplied/freeform/configure(mob/user)
 	. = TRUE
 	var/targName = tgui_input_text(user, "Enter a new law for the AI.", "Freeform Law Entry", laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
@@ -49,7 +49,7 @@
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 	laws[1] = targName
 
-/obj/item/ai_module/supplied/freeform/can_install_to(mob/living/user, obj/machinery/ai_law_rack/rack)
+/obj/item/ai_module/law/supplied/freeform/can_install_to_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
 	if(!laws[1])
 		to_chat(user, span_warning("No law entered on module, please enter one."))
 		return FALSE

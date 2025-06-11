@@ -28,6 +28,10 @@
 	else
 		to_chat(src, span_bold("Remember, you are not bound to any AI, you are not required to listen to them."))
 
+/**
+ * For AIs, iterates over connected cyborg and calls try_sync_laws
+ * FOr cyborgs, checks if we have a master AI and, if lawupdate is set, syncs law and misc. with it
+ */
 /mob/living/silicon/proc/try_sync_laws()
 
 /mob/living/silicon/robot/try_sync_laws()
@@ -35,7 +39,6 @@
 		return FALSE
 
 	sync_to_ai()
-	law_change_counter++
 	return TRUE
 
 /mob/living/silicon/robot/proc/sync_to_ai()
@@ -56,6 +59,6 @@
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	program?.computer?.update_static_data_for_all_viewers()
 
-/mob/living/silicon/robot/post_lawchange(announce = TRUE)
+/mob/living/silicon/robot/announce_law_change()
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(logevent),"Law update processed."), 0, TIMER_UNIQUE | TIMER_OVERRIDE) //Post_Lawchange gets spammed by some law boards, so let's wait it out

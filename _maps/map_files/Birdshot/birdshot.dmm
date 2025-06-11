@@ -23875,7 +23875,7 @@
 /obj/structure/rack,
 /obj/item/aicard,
 /obj/item/clothing/gloves/color/yellow,
-/obj/item/ai_module/reset,
+/obj/item/ai_module/law/reset,
 /obj/effect/turf_decal/siding/dark,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
@@ -68967,11 +68967,11 @@
 "wKc" = (
 /obj/structure/table,
 /obj/machinery/airalarm/directional/west,
-/obj/item/ai_module/reset{
+/obj/item/ai_module/law/reset{
 	pixel_x = 2;
 	pixel_y = 8
 	},
-/obj/item/ai_module/supplied/freeform,
+/obj/item/ai_module/law/supplied/freeform,
 /obj/machinery/flasher/directional/north,
 /obj/item/radio/intercom/directional/north{
 	broadcasting = 1;
@@ -74324,7 +74324,7 @@
 /obj/structure/table,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/item/ai_module/reset/purge{
+/obj/item/ai_module/law/reset/purge{
 	pixel_x = -4;
 	pixel_y = 7
 	},

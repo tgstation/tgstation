@@ -220,7 +220,7 @@ ADMIN_VERB(law_panel, R_ADMIN, "Law Panel", "View the AI laws.", ADMIN_CATEGORY_
 			return FALSE
 
 		if("laws_updated_alert")
-			borgo.post_lawchange()
+			borgo.announce_law_change()
 			return FALSE
 
 		if("give_law_datum")

@@ -1089,7 +1089,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "vR" = (
-/obj/item/ai_module/core/full/cybersun,
+/obj/item/ai_module/law/core/full/cybersun,
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)

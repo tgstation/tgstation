@@ -14058,7 +14058,7 @@
 "dNT" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/wood/fancy/blue,
-/obj/item/ai_module/supplied/freeform,
+/obj/item/ai_module/law/supplied/freeform,
 /obj/effect/spawner/random/aimodule/neutral,
 /obj/machinery/door/window/left/directional/east{
 	name = "Neutral Modules";
@@ -23345,7 +23345,7 @@
 "hkF" = (
 /obj/structure/table,
 /obj/item/aicard,
-/obj/item/ai_module/reset,
+/obj/item/ai_module/law/reset,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "hkN" = (
@@ -40861,7 +40861,7 @@
 "nrf" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/table/wood/fancy/red,
-/obj/item/ai_module/reset/purge,
+/obj/item/ai_module/law/reset/purge,
 /obj/effect/spawner/random/aimodule/harmful,
 /obj/machinery/door/window/left/directional/east{
 	name = "Dangerous Modules";
@@ -58179,11 +58179,11 @@
 "typ" = (
 /obj/structure/table/wood/fancy/green,
 /obj/effect/spawner/random/aimodule/harmless,
-/obj/item/ai_module/supplied/freeform{
+/obj/item/ai_module/law/supplied/freeform{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/ai_module/reset,
+/obj/item/ai_module/law/reset,
 /obj/item/radio/intercom/directional/east{
 	name = "ai intercom";
 	frequency = 1447

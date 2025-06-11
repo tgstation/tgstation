@@ -218,7 +218,7 @@
 	dir = 4
 	},
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/ai_module/malf,
+/obj/item/ai_module/law/malf,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "bR" = (
