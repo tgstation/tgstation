@@ -20,7 +20,7 @@
 		return FALSE
 	if(HAS_TRAIT(equip_target, TRAIT_NODROP))
 		if(!disable_warning)
-			to_chat(src, span_warning("[equip_target] it won't budge, it's impossible to put it on!"))
+			to_chat(src, span_warning("[equip_target] won't budge, it's impossible to put it on!"))
 		return FALSE
 	return dna.species.can_equip(equip_target, slot, disable_warning, src, bypass_equip_delay_self, ignore_equipped, indirect_action)
 
