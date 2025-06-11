@@ -99,6 +99,9 @@
 	max_temperature = 20000
 	max_integrity = 250
 	mech_type = EXOSUIT_MODULE_PADDY
+	movedelay = 5
+	slow_pressure_step_in = 5
+	fast_pressure_step_in = 3
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	armor_type = /datum/armor/mecha_paddy
