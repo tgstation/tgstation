@@ -876,7 +876,7 @@
 
 /obj/item/organ/lungs/plasmaman
 	name = "plasma filter"
-	desc = "spongy rib-shaped mass for filtering plasma from the air."
+	desc = "A spongy rib-shaped mass for filtering plasma from the air."
 	icon_state = "lungs-plasma"
 	organ_traits = list(TRAIT_NOHUNGER) // A fresh breakfast of plasma is a great start to any morning.
 	breath_noise = "a crackle, like crushed foam"
