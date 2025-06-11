@@ -1,11 +1,6 @@
 // the SMES
 // stores power
 
-///The total charge of this smes
-#define SMES_CHARGE "charge"
-/// The total capacity of this smes
-#define SMES_CAPACITY "capacity"
-
 /obj/machinery/power/smes
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
@@ -17,6 +12,8 @@
 
 	/// The initial charge of this smes.
 	var/charge = 0
+	/// Max capacity of all cells in this smes
+	VAR_PRIVATE/total_capacity = 0
 
 	/// TRUE = attempting to charge, FALSE = not attempting to charge
 	var/input_attempt = TRUE
@@ -54,15 +51,16 @@
 				if(term && term.dir == REVERSE_DIR(direction))
 					terminal = term
 					break dir_loop
-
-	if(charge)
-		adjust_charge(charge)
-
 	if(!terminal)
 		atom_break()
 		return
 	terminal.master = src
-	update_appearance()
+
+	if(charge)
+		adjust_charge(-total_capacity) //drain existing charge if the cells have any
+		adjust_charge(charge) //now put the new charge
+
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/power/smes/Destroy()
 	if(SSticker.IsRoundInProgress())
@@ -94,26 +92,17 @@
 
 /obj/machinery/power/smes/get_save_vars()
 	. = ..()
-	charge = get_property(SMES_CHARGE)
+	charge = total_charge()
 	. += NAMEOF(src, charge)
 	. += NAMEOF(src, input_level)
 	. += NAMEOF(src, output_level)
 
-/**
- * Returns some property of this smes
- * Arguments
- *
- * * property the property
- */
-/obj/machinery/power/smes/proc/get_property(property)
+/// Returns the total charge of this smes
+/obj/machinery/power/smes/proc/total_charge()
 	PRIVATE_PROC(TRUE)
 
 	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
-		switch(property)
-			if(SMES_CHARGE)
-				. += power_cell.charge()
-			if(SMES_CAPACITY)
-				. += power_cell.max_charge()
+		. += power_cell.charge()
 
 /**
  * Adjusts the total charge of this smes
@@ -145,6 +134,10 @@
 	input_level_max = initial(input_level_max) * power_coefficient
 	output_level_max = initial(output_level_max) * power_coefficient
 
+	total_capacity = 0
+	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
+		total_capacity += power_cell.max_charge()
+
 /obj/machinery/power/smes/should_have_node()
 	return TRUE
 
@@ -164,7 +157,7 @@
 /obj/machinery/power/smes/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
-		update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
 //changing direction using wrench
@@ -183,7 +176,7 @@
 			to_chat(user, span_alert("No power terminal found."))
 			return ITEM_INTERACT_SUCCESS
 		set_machine_stat(machine_stat & ~BROKEN)
-		update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
 //building and linking a terminal
@@ -293,7 +286,7 @@
 /obj/machinery/power/smes/proc/chargedisplay()
 	PRIVATE_PROC(TRUE)
 
-	return clamp(round(5 * (get_property(SMES_CHARGE) / get_property(SMES_CAPACITY))), 0, 5)
+	return clamp(round(5 * (total_charge() / total_capacity)), 0, 5)
 
 /obj/machinery/power/smes/process(seconds_per_tick)
 	if(!is_operational)
@@ -330,7 +323,7 @@
 		outputting = FALSE
 
 	//inputting
-	if(terminal && input_attempt)
+	if(input_attempt && terminal)
 		input_available = terminal.surplus()
 
 		if(input_energy <= 0)
@@ -349,7 +342,7 @@
 
 	// only update icon if state changed
 	if(last_disp != chargedisplay() || last_chrg != inputting || last_onln != outputting)
-		update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
 
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
@@ -372,7 +365,7 @@
 	output_used -= excess
 
 	if(clev != chargedisplay() ) //if needed updates the icons overlay
-		update_appearance()
+		update_appearance(UPDATE_OVERLAYS)
 	return
 
 
@@ -383,12 +376,11 @@
 		ui.open()
 
 /obj/machinery/power/smes/ui_data()
-	var/smes_charge = get_property(SMES_CHARGE)
-	var/smes_capacity = get_property(SMES_CAPACITY)
+	var/smes_charge = total_charge()
 
 	var/list/data = list(
-		"capacity" = smes_capacity,
-		"capacityPercent" = round(100* smes_charge/smes_capacity, 0.1),
+		"capacity" = total_capacity,
+		"capacityPercent" = round(100 * (smes_charge / total_capacity), 0.1),
 		"charge" = smes_charge,
 		"inputAttempt" = input_attempt,
 		"inputting" = inputting,
@@ -403,22 +395,24 @@
 		"outputLevelMax" = output_level_max,
 		"outputUsed" = energy_to_power(output_used),
 	)
+
 	return data
 
 /obj/machinery/power/smes/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
+
 	switch(action)
 		if("tryinput")
 			input_attempt = !input_attempt
 			log_smes(ui.user)
-			update_appearance()
+			update_appearance(UPDATE_OVERLAYS)
 			. = TRUE
 		if("tryoutput")
 			output_attempt = !output_attempt
 			log_smes(ui.user)
-			update_appearance()
+			update_appearance(UPDATE_OVERLAYS)
 			. = TRUE
 		if("input")
 			var/target = params["target"]
@@ -461,7 +455,7 @@
 /obj/machinery/power/smes/proc/log_smes(mob/user)
 	PRIVATE_PROC(TRUE)
 
-	investigate_log("Input/Output: [input_level]/[output_level] | Charge: [get_property(SMES_CHARGE)] | Output-mode: [output_attempt?"ON":"OFF"] | Input-mode: [input_attempt?"AUTO":"OFF"] by [user ? key_name(user) : "outside forces"]", INVESTIGATE_ENGINE)
+	investigate_log("Input/Output: [input_level]/[output_level] | Charge: [total_charge()] | Output-mode: [output_attempt?"ON":"OFF"] | Input-mode: [input_attempt?"AUTO":"OFF"] by [user ? key_name(user) : "outside forces"]", INVESTIGATE_ENGINE)
 
 /obj/machinery/power/smes/emp_act(severity)
 	. = ..()
@@ -474,7 +468,7 @@
 	output_level = rand(0, output_level_max)
 	input_level = rand(0, input_level_max)
 	adjust_charge(-STANDARD_BATTERY_CHARGE / severity)
-	update_appearance()
+	update_appearance(UPDATE_OVERLAYS)
 	log_smes()
 
 // Variant of SMES that starts with super power cells for higher longevity
@@ -506,6 +500,3 @@
 		return abs(charge_adjust)
 	//no point charging this already infinite smes
 	return 0
-
-#undef SMES_CHARGE
-#undef SMES_CAPACITY
