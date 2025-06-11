@@ -96,9 +96,6 @@
 	name = "\improper APLU \"Paddy\""
 	icon_state = "paddy"
 	base_icon_state = "paddy"
-	movedelay = 5
-	slow_pressure_step_in = 5
-	fast_pressure_step_in = 3
 	max_temperature = 20000
 	max_integrity = 250
 	mech_type = EXOSUIT_MODULE_PADDY
@@ -122,11 +119,11 @@
 	var/datum/looping_sound/siren/weewooloop
 
 /datum/armor/mecha_paddy
-	melee = 40
-	bullet = 20
-	laser = 10
-	energy = 20
-	bomb = 40
+	melee = 30
+	bullet = 0
+	laser = 0
+	energy = 0
+	bomb = 20
 	fire = 100
 	acid = 100
 
@@ -134,6 +131,8 @@
 	. = ..()
 	weewooloop = new(src, FALSE, FALSE)
 	weewooloop.volume = 100
+	weewooloop.extra_range = 14 // 2 additional screens away
+	weewooloop.falloff_exponent = 3
 
 /obj/vehicle/sealed/mecha/ripley/paddy/generate_actions()
 	. = ..()
@@ -148,9 +147,15 @@
 
 /obj/vehicle/sealed/mecha/ripley/paddy/proc/togglesiren(force_off = FALSE)
 	if(force_off || siren)
+		movedelay = 5
+		slow_pressure_step_in = 5
+		fast_pressure_step_in = 3
 		weewooloop.stop()
 		siren = FALSE
 	else
+		movedelay = 1.5
+		slow_pressure_step_in = 2
+		fast_pressure_step_in = 1.5
 		weewooloop.start()
 		siren = TRUE
 	for(var/mob/occupant as anything in occupants)
