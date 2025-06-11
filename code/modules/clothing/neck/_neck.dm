@@ -16,10 +16,11 @@
 
 /obj/item/clothing/neck/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file)
 	. = ..()
-	if (isinhands || !(body_parts_covered & HEAD))
+	if(isinhands || !(body_parts_covered & HEAD))
 		return
-	var/blood_overlay = get_blood_overlay("mask")
-	if (blood_overlay)
+	if(GET_ATOM_BLOOD_DNA_LENGTH(src))
+		var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "maskblood")
+		blood_overlay.color = get_blood_dna_color(GET_ATOM_BLOOD_DNA(src))
 		. += blood_overlay
 
 /obj/item/clothing/neck/bowtie
