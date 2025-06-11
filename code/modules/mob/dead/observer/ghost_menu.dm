@@ -51,10 +51,10 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 			if(isnull(darkness_type))
 				return FALSE
 			for(var/lighting_types in GLOB.ghost_lightings)
-				if(darkness_type != GLOB.ghost_lightings[lighting_types])
+				if(darkness_type != lighting_types)
 					continue
 				//our selected one is the one we already have enabled.
-				if(dead_user.lighting_cutoff == GLOB.ghost_lightings[lighting_types])
+				if(dead_user.lighting_cutoff == GLOB.ghost_lightings[darkness_type])
 					return FALSE
 				toggle_darkness(dead_user, darkness_type)
 				return TRUE
@@ -92,7 +92,9 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 	data["can_boo"] = COOLDOWN_FINISHED(user, bootime)
 	data["has_fun"] = user.fun_verbs
 	data["body_name"] = (user.mind.current && user.can_reenter_corpse) ? user.mind.current.real_name : FALSE
-	data["current_darkness"] = GLOB.ghost_lightings["[user.lighting_cutoff]"]
+	for(var/level in GLOB.ghost_lightings)
+		if(GLOB.ghost_lightings[level] == user.lighting_cutoff)
+			data["current_darkness"] = level
 	data["notification_data"] = list()
 	for(var/key in GLOB.poll_ignore_desc)
 		data["notification_data"] += list(list(
@@ -141,7 +143,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 	data["max_extra_view"] = (user.client.prefs.unlock_content ? GHOST_MAX_VIEW_RANGE_MEMBER : GHOST_MAX_VIEW_RANGE_DEFAULT) - GHOST_MIN_VIEW_RANGE
 	data["darkness_levels"] = list()
 	for(var/level in GLOB.ghost_lightings)
-		data["darkness_levels"] += GLOB.ghost_lightings[level]
+		data["darkness_levels"] += level
 	data["lag_switch_on"] = !!(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !user.client?.holder)
 	return data
 

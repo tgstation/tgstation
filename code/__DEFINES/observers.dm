@@ -13,8 +13,8 @@
 
 ///Assoc List of types of ghost lightings & the player-facing name.
 GLOBAL_LIST_INIT(ghost_lightings, list(
-	"[LIGHTING_CUTOFF_VISIBLE]" = "Normal",
-	"[LIGHTING_CUTOFF_MEDIUM]" = "Darker",
-	"[LIGHTING_CUTOFF_HIGH]" = "Night Vision",
-	"[LIGHTING_CUTOFF_FULLBRIGHT]" = "Fullbright",
+	"Normal" = LIGHTING_CUTOFF_VISIBLE,
+	"Darker" = LIGHTING_CUTOFF_MEDIUM,
+	"Night Vision" = LIGHTING_CUTOFF_HIGH,
+	"Fullbright" = LIGHTING_CUTOFF_FULLBRIGHT,
 ))

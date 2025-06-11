@@ -10,7 +10,7 @@
 /datum/preference/choiced/ghost_lighting/init_possible_values()
 	var/list/values = list()
 	for(var/option_name in GLOB.ghost_lightings)
-		values += GLOB.ghost_lightings[option_name]
+		values += option_name
 	return values
 
 /datum/preference/choiced/ghost_lighting/apply_to_client(client/client, value)
