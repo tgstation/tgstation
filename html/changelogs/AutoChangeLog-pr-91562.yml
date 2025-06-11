@@ -1,0 +1,4 @@
+author: "Bisar"
+delete-after: True
+changes:
+  - balance: "Repurposed Glands is now instead Gene Stim; simply put, your stuns are reset and you are dosed with 4 units of Changeling Adrenaline on use. This ability cannot be used while on fire. /:cl:"
