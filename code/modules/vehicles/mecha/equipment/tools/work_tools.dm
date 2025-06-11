@@ -389,16 +389,3 @@
 		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, newmech)
 	qdel(markone)
 	playsound(get_turf(newmech),'sound/items/tools/ratchet.ogg',50,TRUE)
-
-/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy
-	name = "Paddy Conversion Kit"
-	desc = "A hardpoint modification kit for an Autonomous Power Loader Unit \"Ripley\" MK-I exosuit, to convert it to the Paddy lightweight security design. This kit cannot be removed, once applied."
-	icon_state = "paddyupgrade"
-	mech_flags = EXOSUIT_MODULE_RIPLEY
-	result = /obj/vehicle/sealed/mecha/ripley/paddy
-
-/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy/can_attach(obj/vehicle/sealed/mecha/ripley/mecha, attach_right = FALSE, mob/user)
-	if(mecha.equip_by_category[MECHA_L_ARM] || mecha.equip_by_category[MECHA_R_ARM]) //Paddys can't use RIPLEY-type equipment
-		to_chat(user, span_warning("This kit cannot be applied with hardpoint equipment attached."))
-		return FALSE
-	return ..()
