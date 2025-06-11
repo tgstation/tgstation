@@ -367,22 +367,28 @@
 /datum/techweb/proc/research_node_id(
 	id,
 	force,
+	bypass_logging,
 	auto_update_points,
 	get_that_dosh_id,
 	researcher = null)
 	return research_node(
 		SSresearch.techweb_node_by_id(id),
 		force,
+		bypass_logging,
 		auto_update_points,
 		get_that_dosh_id,
-		researcher)
+		research_interface,
+		researcher
+		)
 
 /datum/techweb/proc/research_node(
 	datum/techweb_node/node,
-	force = FALSE, auto_adjust_cost = TRUE,
+	force = FALSE,
+	auto_adjust_cost = TRUE,
+	bypass_logging = FALSE,
 	get_that_dosh = TRUE,
 	researcher = null,
-	alist/provided_log_details = null)
+	alist/included_log_details = null)
 	if(!istype(node))
 		return FALSE
 	update_node_status(node)
@@ -433,7 +439,7 @@
 
 	// Dequeue
 	if(node.id in research_queue_nodes)
-		if(isnull(provided_log_details))
+		if(isnull(included_log_details))
 			var/user = research_queue_nodes[node.id]["user"]
 			var/queued_time = research_queue_nodes[node.id]["time"]
 			var/location = research_queue_nodes[node.id]["location"]
@@ -445,18 +451,18 @@
 				researcher_location = location
 			)
 		else
-			SSresearch._InCharacter_log_research(log_details = provided_log_details)
+			SSresearch._InCharacter_log_research(log_details = included_log_details)
 		research_queue_nodes.Remove(node.id)
 		return TRUE
-	if(!force)
-		if(isnull(provided_log_details))
+	if(!bypass_logging)
+		if(isnull(included_log_details))
 			SSresearch._InCharacter_log_research(
 				logged_node = node,
 				researcher_atom = researcher,
 				techweb_logged_to = src,
 			)
 		else
-			SSresearch._InCharacter_log_research(log_details = provided_log_details)
+			SSresearch._InCharacter_log_research(log_details = included_log_details)
 	return TRUE
 
 

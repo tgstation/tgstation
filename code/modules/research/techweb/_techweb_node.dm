@@ -115,11 +115,11 @@
 	return techweb_point_display_generic(get_price(TN))
 
 ///Proc called when the Station (Science techweb specific) researches a node.
-/datum/techweb_node/proc/on_station_research(atom/research_source)
+/datum/techweb_node/proc/on_station_research(atom/research_interface)
 	SHOULD_CALL_PARENT(TRUE)
 	var/channels_to_use = announce_channels
-	if(istype(research_source, /obj/machinery/computer/rdconsole))
-		var/obj/machinery/computer/rdconsole/console = research_source
+	if(istype(research_interface, /obj/machinery/computer/rdconsole))
+		var/obj/machinery/computer/rdconsole/console = research_interface
 		var/obj/item/circuitboard/computer/rdconsole/board = console.circuit
 		if(board.silence_announcements)
 			return
