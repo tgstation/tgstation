@@ -232,7 +232,7 @@
 		return 0
 	return weight
 
-datum/wound/pierce/bleed/moderate/needle_fail //for blood testamajig
+/datum/wound/pierce/bleed/moderate/needle_fail //for blood testamajig
 	name = "Pinprick Pierce"
 	desc = "Patient's skin has been deeply pierced, causing mild bleeding."
 	treat_text_short = "Apply bandaging or suturing."
