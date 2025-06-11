@@ -6,7 +6,7 @@
 	worn_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	desc = "God this is a comically long name why"
+	desc = "This Me-Lo Tech branded medical device"
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
@@ -40,9 +40,19 @@
 		if(oxy_loss > 50)//if they have knockout levels of suffocation damage
 			render_list += "<span class='danger ml-1'>Warning: Hypoxic blood oxygen levels.</span>\n"
 		if(poked_guy.blood_volume <= BLOOD_VOLUME_SAFE)
-			render_list += "<span class='danger ml-1'>Warning: Dangerously low blood pressure.</span>\n"
+			render_list += "<span class='danger ml-1'>Warning: Dangerously low blood flow.</span>\n"
 		if(tox_loss > 10)
 			render_list += "<span class='danger ml-1'>Warning: Toxic buildup detected in bloodstream.</span>\n"
+		if(poked_guy.has_status_effect(/datum/status_effect/eigenstasium))
+			render_list += "<span class='danger ml-1'>Warning: Dimensional instability detected. Administer stabilizers.</span>\n"
+		if(poked_guy.has_reagent(/datum/reagent/gold/cursed) || poked_guy.has_status_effect(/datum/status_effect/midas_blight))
+			render_list += "<span class='danger ml-1'>Warning: Hemo-aurificating hexes present.</span>\n" //can it detect normal things? barely. But ancient greed-cursed magicks? Spot on.
+		if(HAS_TRAIT_FROM(poked_guy, TRAIT_NODEATH, /datum/reagent/inverse/penthrite))
+			render_list += "<span class='danger ml-1'>Warning: Frankensteinian revivification in progress.</span>\n" //patient is currently an immortal drug-zombie
+		if(poked_guy.has_status_effect(/datum/status_effect/high_blood_pressure))
+			render_list += "<span class='danger ml-1'>Warning: Dangerously high blood pressure.</span>\n"
+		if(HAS_TRAIT(poked_guy, TRAIT_IMMUNODEFICIENCY))
+			render_list += "<span class='danger ml-1'>Warning: Low immune cell concentration.</span>\n" //it doe
 		to_chat(user, boxed_message(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 
 	else

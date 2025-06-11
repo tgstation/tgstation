@@ -1,8 +1,8 @@
 /datum/quirk/item_quirk/immunodeficiency
 	name = "Immunodeficiency"
-	desc = "Whiether by chronic illness or genetic happenstance, your body is a 24/7 Bed and Breakfast for bacteria, viruses, and parasites of all kinds. Even with your prescribed immunity boosters, you'll fare worse than most others."
+	desc = "Whether by chronic illness or genetic happenstance, your body is a 24/7 Bed and Breakfast for bacteria, viruses, and parasites of all kinds. Even with your prescribed immunity boosters, you'll fare worse than most others."
 	icon = FA_ICON_MASK_FACE
-	value = -10
+	value = -8
 	mob_trait = TRAIT_IMMUNODEFICIENCY
 	gain_text = span_danger("Just the thought of illness makes you feverish.")
 	lose_text = span_notice("Your immune system miraculously reasserts itself.")

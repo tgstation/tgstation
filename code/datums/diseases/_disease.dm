@@ -150,9 +150,10 @@
 			else
 				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_NONTHREAT)
 		peaked_cycles += stage/max_stages //every cycle we spend sick counts towards eventually curing the virus, faster at higher stages
-		recovery_prob += DISEASE_RECOVERY_CONSTANT + (peaked_cycles / (cycles_to_beat / DISEASE_RECOVERY_SCALING)) //more severe viruses are beaten back more aggressively after the peak
-		if(stage_peaked)
-			recovery_prob *= DISEASE_PEAKED_RECOVERY_MULTIPLIER
+		if(bad_immune == 1) //unfortunately, you cannot sleep off the flu if you have crippling immunodeficiency. Well you can but you'd have to use spaceacillin or get miraculously lucky
+			recovery_prob += DISEASE_RECOVERY_CONSTANT + (peaked_cycles / (cycles_to_beat / DISEASE_RECOVERY_SCALING)) //more severe viruses are beaten back more aggressively after the peak
+			if(stage_peaked)
+				recovery_prob *= DISEASE_PEAKED_RECOVERY_MULTIPLIER
 		if(slowdown != 1) //using spaceacillin can help get them over the finish line to kill a virus with decreasing effect over time
 			recovery_prob += clamp((((1 - slowdown)*(DISEASE_SLOWDOWN_RECOVERY_BONUS * 2)) * ((DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION - chemical_offsets) / DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION)), 0, DISEASE_SLOWDOWN_RECOVERY_BONUS)
 			chemical_offsets = min(chemical_offsets + 1, DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION)

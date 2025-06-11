@@ -52,7 +52,7 @@
 		if(reagent.chemical_flags & REAGENT_AFFECTS_WOUNDS)
 			reagent.on_burn_wound_processing(src)
 
-	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
+	if(HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE) && !HAS_TRAIT(victim, TRAIT_IMMUNODEFICIENCY))
 		sanitization += 0.9
 	if(HAS_TRAIT(victim, TRAIT_IMMUNODEFICIENCY) && !HAS_TRAIT(victim, TRAIT_VIRUS_RESISTANCE))
 		infestation += 0.05
