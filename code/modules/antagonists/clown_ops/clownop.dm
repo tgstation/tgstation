@@ -34,11 +34,12 @@
 		ADD_TRAIT(liver, TRAIT_COMEDY_METABOLISM, CLOWNOP_TRAIT)
 
 /datum/antagonist/nukeop/leader/clownop/give_alias()
-	title = pick("Head Honker", "Slipmaster", "Clown King", "Honkbearer")
-	if(nuke_team?.syndicate_name)
-		owner.current.real_name = "[nuke_team.syndicate_name] [title]"
+	title ||= pick("Head Honker", "Slipmaster", "Clown King", "Honkbearer")
+	. = ..()
+	if(ishuman(owner.current))
+		owner.current.fully_replace_character_name(owner.current.real_name, "[title] [owner.current.real_name]")
 	else
-		owner.current.real_name = "Syndicate [title]"
+		owner.current.fully_replace_character_name(owner.current.real_name, "[nuke_team.syndicate_name] [title]")
 
 /datum/antagonist/nukeop/leader/clownop
 	name = "Clown Operative Leader"

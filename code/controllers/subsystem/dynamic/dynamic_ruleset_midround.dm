@@ -307,10 +307,13 @@
 	signup_atom_appearance = /obj/machinery/nuclearbomb/syndicate
 
 /datum/dynamic_ruleset/midround/from_ghosts/nukies/create_execute_args()
-	return list(new /datum/team/nuclear)
+	return list(
+		new /datum/team/nuclear(),
+		get_most_experienced(selected_minds, pref_flag),
+	)
 
-/datum/dynamic_ruleset/midround/from_ghosts/nukies/assign_role(datum/mind/candidate, datum/team/nuclear/nuke_team)
-	if(get_most_experienced(selected_minds, pref_flag) == candidate)
+/datum/dynamic_ruleset/midround/from_ghosts/nukies/assign_role(datum/mind/candidate, datum/team/nuclear/nuke_team, datum/mind/most_experienced)
+	if(most_experienced == candidate)
 		candidate.add_antag_datum(/datum/antagonist/nukeop/leader, nuke_team) // moves to nuke base for us
 	else
 		candidate.add_antag_datum(/datum/antagonist/nukeop, nuke_team) // moves to nuke base for us
@@ -361,8 +364,8 @@
 	weight = 0
 	signup_atom_appearance = /obj/machinery/nuclearbomb/syndicate/bananium
 
-/datum/dynamic_ruleset/midround/from_ghosts/nukies/clown/assign_role(datum/mind/candidate, datum/team/nuclear/nuke_team)
-	if(get_most_experienced(selected_minds, pref_flag) == candidate)
+/datum/dynamic_ruleset/midround/from_ghosts/nukies/clown/assign_role(datum/mind/candidate, datum/team/nuclear/nuke_team, datum/mind/most_experienced)
+	if(most_experienced == candidate)
 		candidate.add_antag_datum(/datum/antagonist/nukeop/leader/clownop, nuke_team) // moves to nuke base for us
 	else
 		candidate.add_antag_datum(/datum/antagonist/nukeop/clownop, nuke_team) // moves to nuke base for us
@@ -554,7 +557,7 @@
 	return num_abductors < 4
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/create_execute_args()
-	return list(new /datum/team/abductor_team)
+	return list(new /datum/team/abductor_team())
 
 /datum/dynamic_ruleset/midround/from_ghosts/abductors/assign_role(datum/mind/candidate, datum/team/abductor_team/team)
 	if(candidate == selected_minds[1])
@@ -760,8 +763,8 @@
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/create_execute_args()
 	return list(
-		find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE),
 		new /datum/team/fugitive(),
+		find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE),
 	)
 
 #define RANDOM_BACKSTORY "Random"
@@ -825,7 +828,7 @@
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(check_spawn_hunters), hunter_backstory, 10 MINUTES), 1 MINUTES)
 
-/datum/dynamic_ruleset/midround/from_ghosts/fugitives/assign_role(datum/mind/candidate, turf/team_spawn, datum/team/fugitive/team)
+/datum/dynamic_ruleset/midround/from_ghosts/fugitives/assign_role(datum/mind/candidate, datum/team/fugitive/team, turf/team_spawn)
 	candidate.current.forceMove(team_spawn)
 	equip_fugitive(candidate.current, team)
 	if(length(selected_minds) > 1 && candidate == selected_minds[1])

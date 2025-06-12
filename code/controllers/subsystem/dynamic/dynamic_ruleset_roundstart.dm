@@ -12,8 +12,6 @@
 	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in SSdynamic.queued_rulesets)
 		if(candidate.mind in ruleset.selected_minds)
 			return FALSE
-	if(candidate.mind.assigned_role.title in get_blacklisted_roles())
-		return FALSE
 	return ..()
 
 /// Helpful proc - to use if your ruleset forces a job - which ensures a candidate can play the passed job typepath
@@ -168,7 +166,10 @@
 	return ..() | JOB_CHAPLAIN
 
 /datum/dynamic_ruleset/roundstart/blood_cult/create_execute_args()
-	return list(new /datum/team/cult)
+	return list(
+		new /datum/team/cult(),
+		get_most_experienced(selected_minds, pref_flag),
+	)
 
 /datum/dynamic_ruleset/roundstart/blood_cult/execute()
 	. = ..()
@@ -176,11 +177,11 @@
 	var/datum/team/cult/main_cult = locate() in GLOB.antagonist_teams
 	main_cult.setup_objectives()
 
-/datum/dynamic_ruleset/roundstart/blood_cult/assign_role(datum/mind/candidate, datum/team/cult/cult)
+/datum/dynamic_ruleset/roundstart/blood_cult/assign_role(datum/mind/candidate, datum/team/cult/cult, datum/mind/most_experienced)
 	var/datum/antagonist/cult/cultist = new()
 	cultist.give_equipment = TRUE
 	candidate.add_antag_datum(cultist, cult)
-	if(get_most_experienced(selected_minds, pref_flag) == candidate)
+	if(most_experienced == candidate)
 		cultist.make_cult_leader()
 
 /datum/dynamic_ruleset/roundstart/blood_cult/round_result()
@@ -222,10 +223,13 @@
 	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/nuclear_operative)
 
 /datum/dynamic_ruleset/roundstart/nukies/create_execute_args()
-	return list(new /datum/team/nuclear)
+	return list(
+		new /datum/team/nuclear(),
+		get_most_experienced(selected_minds, pref_flag),
+	)
 
-/datum/dynamic_ruleset/roundstart/nukies/assign_role(datum/mind/candidate, datum/team/nuke_team)
-	if(get_most_experienced(selected_minds, pref_flag) == candidate)
+/datum/dynamic_ruleset/roundstart/nukies/assign_role(datum/mind/candidate, datum/team/nuke_team, datum/mind/most_experienced)
+	if(most_experienced == candidate)
 		candidate.add_antag_datum(/datum/antagonist/nukeop/leader, nuke_team)
 	else
 		candidate.add_antag_datum(/datum/antagonist/nukeop, nuke_team)
@@ -273,11 +277,11 @@
 	pref_flag = ROLE_CLOWN_OPERATIVE
 	weight = 0
 
-/datum/dynamic_ruleset/roundstart/nukies/prepare_for_role(datum/mind/candidate)
+/datum/dynamic_ruleset/roundstart/nukies/clown/prepare_for_role(datum/mind/candidate)
 	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/nuclear_operative/clown_operative)
 
-/datum/dynamic_ruleset/roundstart/nukies/clown/assign_role(datum/mind/candidate, datum/team/nuke_team)
-	if(get_most_experienced(selected_minds, pref_flag) == candidate)
+/datum/dynamic_ruleset/roundstart/nukies/clown/assign_role(datum/mind/candidate, datum/team/nuke_team, datum/mind/most_experienced)
+	if(most_experienced == candidate)
 		candidate.add_antag_datum(/datum/antagonist/nukeop/leader/clownop)
 	else
 		candidate.add_antag_datum(/datum/antagonist/nukeop/clownop)
