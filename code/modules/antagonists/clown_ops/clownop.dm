@@ -4,7 +4,7 @@
 	roundend_category = "clown operatives"
 	antagpanel_category = ANTAG_GROUP_CLOWNOPS
 	nukeop_outfit = /datum/outfit/syndicate/clownop
-	job_type = /datum/job/clown_operative
+	job_type = /datum/job/nuclear_operative/clown_operative
 	suicide_cry = "HAPPY BIRTHDAY!!"
 
 	preview_outfit = /datum/outfit/clown_operative_elite

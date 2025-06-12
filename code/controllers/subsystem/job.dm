@@ -877,7 +877,7 @@ SUBSYSTEM_DEF(job)
 		var/mob/dead/new_player = mind.current
 		// Eligibility checks already carried out as part of the dynamic ruleset trim_candidates proc.
 		// However no guarantee of game state between then and now, so don't skip eligibility checks on assign_role.
-		assign_role(new_player, get_job(LAZYACCESS(forced_occupations, mind)))
+		assign_role(new_player, get_job_type(LAZYACCESS(forced_occupations, mind)))
 
 	// Get JP_HIGH department Heads of Staff in place. Indirectly useful for the Revolution ruleset to have as many Heads as possible.
 	job_debug("APP: Assigning all JP_HIGH head of staff roles.")

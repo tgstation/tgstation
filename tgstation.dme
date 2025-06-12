@@ -4533,7 +4533,6 @@
 #include "code\modules\jobs\job_types\antagonists\abductor_agent.dm"
 #include "code\modules\jobs\job_types\antagonists\abductor_scientist.dm"
 #include "code\modules\jobs\job_types\antagonists\abductor_solo.dm"
-#include "code\modules\jobs\job_types\antagonists\clown_operative.dm"
 #include "code\modules\jobs\job_types\antagonists\lone_operative.dm"
 #include "code\modules\jobs\job_types\antagonists\morph.dm"
 #include "code\modules\jobs\job_types\antagonists\nightmare.dm"

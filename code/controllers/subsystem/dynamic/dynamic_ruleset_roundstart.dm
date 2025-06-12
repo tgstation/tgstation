@@ -26,7 +26,7 @@
 		return FALSE
 	// (Something else forced us to play a job that isn't AI)
 	var/forced_job = LAZYACCESS(SSjob.forced_occupations, candidate)
-	if(forced_job && forced_job != job_typepath::title)
+	if(forced_job && forced_job != job_typepath)
 		return FALSE
 	// (Something else forced us NOT to play AI)
 	if(job_typepath::title in LAZYACCESS(SSjob.prevented_occupations, candidate))
@@ -68,7 +68,7 @@
 	return ..() && ruleset_forced_job_check(candidate, candidate_client, /datum/job/ai)
 
 /datum/dynamic_ruleset/roundstart/malf_ai/prepare_for_role(datum/mind/candidate)
-	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/ai::title)
+	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/ai)
 
 /datum/dynamic_ruleset/roundstart/malf_ai/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/malf_ai)
@@ -128,6 +128,9 @@
 	min_pop = 30
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_WIZARDDEN)
 	repeatable = FALSE
+
+/datum/dynamic_ruleset/roundstart/wizard/prepare_for_role(datum/mind/candidate)
+	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/space_wizard)
 
 /datum/dynamic_ruleset/roundstart/wizard/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/wizard) // moves to lair for us
@@ -215,6 +218,9 @@
 	ruleset_lazy_templates = list(LAZY_TEMPLATE_KEY_NUKIEBASE)
 	repeatable = FALSE
 
+/datum/dynamic_ruleset/roundstart/nukies/prepare_for_role(datum/mind/candidate)
+	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/nuclear_operative)
+
 /datum/dynamic_ruleset/roundstart/nukies/create_execute_args()
 	return list(new /datum/team/nuclear)
 
@@ -266,6 +272,9 @@
 	preview_antag_datum = /datum/antagonist/nukeop/clownop
 	pref_flag = ROLE_CLOWN_OPERATIVE
 	weight = 0
+
+/datum/dynamic_ruleset/roundstart/nukies/prepare_for_role(datum/mind/candidate)
+	LAZYSET(SSjob.forced_occupations, candidate, /datum/job/nuclear_operative/clown_operative)
 
 /datum/dynamic_ruleset/roundstart/nukies/clown/assign_role(datum/mind/candidate, datum/team/nuke_team)
 	if(get_most_experienced(selected_minds, pref_flag) == candidate)
