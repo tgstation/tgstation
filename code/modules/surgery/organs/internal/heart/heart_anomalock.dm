@@ -10,6 +10,7 @@
 	beat_noise = "an astonishing <b>BZZZ</b> of immense electrical power"
 	bleed_prevention = TRUE
 	toxification_probability = 0
+
 	COOLDOWN_DECLARE(survival_cooldown)
 	///Cooldown for the activation of the organ
 	var/survival_cooldown_time = 5 MINUTES
