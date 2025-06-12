@@ -148,7 +148,7 @@
 
 	set_machine_stat(machine_stat & ~BROKEN)
 	atom_integrity = max_integrity
-	balloon_alert(user, "repaired!")
+	balloon_alert(user, "repaired")
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/pdapainter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -185,7 +185,7 @@
 
 	if(stored_pda)
 		eject_pda(user)
-		balloon_alert(user, "swapped!")
+		balloon_alert(user, "swapped")
 
 	stored_pda = new_pda
 	new_pda.add_fingerprint(user)
@@ -230,7 +230,7 @@
 
 	if(stored_id_card)
 		eject_id_card(user)
-		balloon_alert(user, "swapped!")
+		balloon_alert(user, "swapped")
 
 	stored_id_card = new_id_card
 	new_id_card.add_fingerprint(user)
