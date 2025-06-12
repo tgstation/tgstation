@@ -24,7 +24,7 @@
 /obj/structure/bed/nest/buckle_feedback(mob/living/being_buckled, mob/buckler)
 	if(being_buckled == buckler)
 		being_buckled.visible_message(
-			span_notice("[buckler] lays down onon [src], wrapping [buckler.p_them()]self in a thick, sticky resin."),
+			span_notice("[buckler] lays down on [src], wrapping [buckler.p_them()]self in a thick, sticky resin."),
 			span_notice("You lay down on [src], wrapping yourself in a thick, sticky resin."),
 			visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		)

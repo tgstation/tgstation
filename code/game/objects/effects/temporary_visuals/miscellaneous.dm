@@ -1,11 +1,12 @@
 //unsorted miscellaneous temporary visuals
 /obj/effect/temp_visual/dir_setting/bloodsplatter
 	icon = 'icons/effects/blood.dmi'
+	icon_state = "splatter1"
+	base_icon_state = "splatter"
 	duration = 5
 	randomdir = FALSE
 	layer = BELOW_MOB_LAYER
 	plane = GAME_PLANE
-	var/splatter_type = "splatter"
 
 // set_color arg can be either a color string or a singleton /datum/blood_type to pull the color from
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, set_dir, set_color = BLOOD_COLOR_RED)
@@ -16,9 +17,9 @@
 		else
 			color = set_color
 	if(ISDIAGONALDIR(set_dir))
-		icon_state = "[splatter_type][pick(1, 2, 6)]"
+		icon_state = "[base_icon_state][pick(1, 2, 6)]"
 	else
-		icon_state = "[splatter_type][pick(3, 4, 5)]"
+		icon_state = "[base_icon_state][pick(3, 4, 5)]"
 	. = ..()
 	var/target_pixel_x = 0
 	var/target_pixel_y = 0
@@ -46,13 +47,7 @@
 			target_pixel_x = -16
 			target_pixel_y = -16
 			layer = ABOVE_MOB_LAYER
-	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration)
-
-/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter
-	splatter_type = "splatter"
-
-/obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter/Initialize(mapload, set_dir, set_color = get_blood_type(/datum/blood_type/xeno::name))
-	return ..()
+	animate(src, pixel_x = target_pixel_x, pixel_y = target_pixel_y, alpha = 0, time = duration, flags = CUBIC_EASING | EASE_OUT)
 
 /obj/effect/temp_visual/dir_setting/speedbike_trail
 	name = "speedbike trails"

@@ -1,12 +1,8 @@
 /obj/machinery/computer/shuttle/custom_shuttle
 	desc = "A shuttle control computer."
-	icon_screen = "shuttle"
-	icon_keyboard = "tech_key"
 	shuttleId = ""
-	light_color = LIGHT_COLOR_CYAN
-	req_access = list()
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
 	possible_destinations = "whiteship_home;"
+	circuit = /obj/item/circuitboard/computer/shuttle/flight_control
 	var/static/list/connections = list(COMSIG_TURF_ADDED_TO_SHUTTLE = PROC_REF(on_loc_added_to_shuttle))
 
 /obj/machinery/computer/shuttle/custom_shuttle/on_construction(mob/user)

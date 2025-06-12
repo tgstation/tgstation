@@ -298,10 +298,10 @@
 /obj/structure/chair/comfy/shuttle/update_overlays()
 	. = ..()
 	if(has_buckled_mobs())
-		. += mutable_appearance('icons/event/chairs.dmi', "[icon_state]_down_front", ABOVE_MOB_LAYER + 0.01)
-		. += mutable_appearance('icons/event/chairs.dmi', "[icon_state]_down_behind", src.layer + 0.01)
+		. += mutable_appearance(icon, "[icon_state]_down_front", ABOVE_MOB_LAYER + 0.01)
+		. += mutable_appearance(icon, "[icon_state]_down_behind", src.layer + 0.01)
 	else
-		. += mutable_appearance('icons/event/chairs.dmi', "[icon_state]_up", src.layer + 0.01)
+		. += mutable_appearance(icon, "[icon_state]_up", src.layer + 0.01)
 
 /obj/structure/chair/comfy/shuttle/tactical
 	name = "tactical chair"
@@ -695,7 +695,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/structure/handrail
 	name = "handrail"
 	desc = "Hold on tight!"
-	icon = 'icons/event/handrail.dmi'
+	icon = 'icons/obj/handrail.dmi'
 	icon_state = "handrail"
 	anchored = TRUE
 	can_buckle = TRUE
@@ -743,8 +743,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 
 /obj/structure/handrail/buckle_feedback(mob/living/being_buckled, mob/buckler)
 	buckler.visible_message(
-		span_notice("[buckler] grabs [src] tight, keeping [being_buckled.p_them()]self [being_buckled.body_position == STANDING_UP ? "upright" : "secure"]."),
-		span_notice("You grab [src] tight, keeping yourself [being_buckled.body_position == STANDING_UP ? "upright" : "secure"]."),
+		span_notice("[buckler] grabs [src] tight, keeping [buckler.p_them()]self upright."),
+		span_notice("You grab [src] tight, keeping yourself upright."),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE,
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)

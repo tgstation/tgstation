@@ -214,122 +214,130 @@
 			cookedalive.adjust_fire_stacks(1)
 			cookedalive.ignite_mob()
 
-/obj/vehicle/sealed/mecha/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/mecha_parts))
-		var/obj/item/mecha_parts/parts = weapon
-		parts.try_attach_part(user, src, TRUE)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+/obj/vehicle/sealed/mecha/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/mecha_parts))
+		var/obj/item/mecha_parts/parts = tool
+		return parts.try_attach_part(user, src, TRUE)
 	return ..()
 
 /obj/vehicle/sealed/mecha/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(user.combat_mode)
-		//If our weapon that we are hitting the mech with has armour penetration, we could potentially get a hit in on the occupant
-		var/peeling_the_onion = clamp(weapon.armour_penetration - (get_armor_rating(MELEE)/2), 0, 100)
+	. = ..()
+	//If our weapon that we are hitting the mech with has armour penetration, we could potentially get a hit in on the occupant
+	var/peeling_the_onion = clamp(weapon.armour_penetration - (get_armor_rating(MELEE)/2), 0, 100)
 
-		if(peeling_the_onion && prob(peeling_the_onion) && !(mecha_flags & CANNOT_OVERPENETRATE) \
-			&& LAZYLEN(occupants) \
-			&& !(mecha_flags & SILICON_PILOT))
-			var/mob/living/hitmob = pick(occupants)
-			weapon.melee_attack_chain(user, hitmob, modifiers, list("[FORCE_MULTIPLIER]" = (peeling_the_onion/100), "[SILENCE_DEFAULT_MESSAGES]" = TRUE)) //Perform an extra attack on the occupant if all the above conditions pass
-		return ..()
-	if(istype(weapon, /obj/item/mmi))
-		if(mmi_move_inside(weapon,user))
-			balloon_alert(user, "weapon initialized.")
-		else
-			balloon_alert(user, "weapon initialization failed!")
-		return
+	if(peeling_the_onion && prob(peeling_the_onion) && !(mecha_flags & CANNOT_OVERPENETRATE) \
+		&& LAZYLEN(occupants) \
+		&& !(mecha_flags & SILICON_PILOT))
+		var/mob/living/hitmob = pick(occupants)
+		weapon.melee_attack_chain(user, hitmob, modifiers, list("[FORCE_MULTIPLIER]" = (peeling_the_onion/100), "[SILENCE_DEFAULT_MESSAGES]" = TRUE)) //Perform an extra attack on the occupant if all the above conditions pass
 
-	if(istype(weapon, /obj/item/mecha_ammo))
-		ammo_resupply(weapon, user)
-		return
+/obj/vehicle/sealed/mecha/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/mmi))
+		if(!mmi_move_inside(tool,user))
+			balloon_alert(user, "initialization of MMI failed!")
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(weapon, /obj/item/rcd_upgrade))
-		upgrade_rcd(weapon, user)
-		return
+		balloon_alert(user, "initialized MMI")
+		return ITEM_INTERACT_SUCCESS
 
-	if(weapon.GetID())
+	if(istype(tool, /obj/item/mecha_ammo))
+		if(ammo_resupply(tool, user))
+			return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/rcd_upgrade))
+		return upgrade_rcd(tool, user)
+
+	if(tool.GetID())
 		if(!allowed(user))
 			if(mecha_flags & ID_LOCK_ON)
 				balloon_alert(user, "access denied!")
 			else
 				balloon_alert(user, "unable to set id lock!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		mecha_flags ^= ID_LOCK_ON
-		balloon_alert(user, "[mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"] id lock !")
-		return
+		balloon_alert(user, "[mecha_flags & ID_LOCK_ON ? "enabled" : "disabled"] id lock!")
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(weapon, /obj/item/mecha_parts))
-		var/obj/item/mecha_parts/part = weapon
-		part.try_attach_part(user, src, FALSE)
-		return
+	if(istype(tool, /obj/item/mecha_parts))
+		var/obj/item/mecha_parts/part = tool
+		return part.try_attach_part(user, src, FALSE)
 
-	if(is_wire_tool(weapon) && (mecha_flags & PANEL_OPEN))
-		wires.interact(user)
-		return
+	if(is_wire_tool(tool) && (mecha_flags & PANEL_OPEN))
+		if(wires.interact(user))
+			return ITEM_INTERACT_SUCCESS
 
-	if(istype(weapon, /obj/item/stock_parts))
-		try_insert_part(weapon, user)
-		return
+	if(istype(tool, /obj/item/stock_parts))
+		return try_insert_part(tool, user)
 
-	return ..()
+	return NONE
 
 /// Try to insert a stock part into the mech
-/obj/vehicle/sealed/mecha/proc/try_insert_part(obj/item/stock_parts/weapon, mob/living/user)
+/obj/vehicle/sealed/mecha/proc/try_insert_part(obj/item/stock_parts/tool, mob/living/user)
 	if(!(mecha_flags & PANEL_OPEN))
 		balloon_alert(user, "open the panel first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(weapon, /obj/item/stock_parts/power_store/cell))
-		if(!cell)
-			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
-				return
-			cell = weapon
-			balloon_alert(user, "installed power cell")
-			diag_hud_set_mechcell()
-			playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
-			log_message("Power cell installed", LOG_MECHA)
-		else
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
+		if(cell)
 			balloon_alert(user, "already installed!")
-		return
+			return ITEM_INTERACT_BLOCKING
 
-	if(istype(weapon, /obj/item/stock_parts/scanning_module))
-		if(!scanmod)
-			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
-				return
-			scanmod = weapon
-			balloon_alert(user, "installed scanning module")
-			playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
-			log_message("[weapon] installed", LOG_MECHA)
-			update_part_values()
-		else
-			balloon_alert(user, "already installed!")
-		return
+		if(!user.transferItemToLoc(tool, src, silent = FALSE))
+			return  ITEM_INTERACT_BLOCKING
 
-	if(istype(weapon, /obj/item/stock_parts/capacitor))
-		if(!capacitor)
-			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
-				return
-			capacitor = weapon
-			balloon_alert(user, "installed capacitor")
-			playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
-			log_message("[weapon] installed", LOG_MECHA)
-			update_part_values()
-		else
-			balloon_alert(user, "already installed!")
-		return
+		cell = tool
+		balloon_alert(user, "installed power cell")
+		diag_hud_set_mechcell()
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+		log_message("Power cell installed", LOG_MECHA)
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(weapon, /obj/item/stock_parts/servo))
-		if(!servo)
-			if(!user.transferItemToLoc(weapon, src, silent = FALSE))
-				return
-			servo = weapon
-			balloon_alert(user, "installed servo")
-			playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
-			log_message("[weapon] installed", LOG_MECHA)
-			update_part_values()
-		else
+	if(istype(tool, /obj/item/stock_parts/scanning_module))
+		if(scanmod)
 			balloon_alert(user, "already installed!")
-		return
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src, silent = FALSE))
+			return ITEM_INTERACT_BLOCKING
+
+		scanmod = tool
+		balloon_alert(user, "installed scanning module")
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+		log_message("[tool] installed", LOG_MECHA)
+		update_part_values()
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stock_parts/capacitor))
+		if(capacitor)
+			balloon_alert(user, "already installed!")
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src, silent = FALSE))
+			return ITEM_INTERACT_BLOCKING
+
+		capacitor = tool
+		balloon_alert(user, "installed capacitor")
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+		log_message("[tool] installed", LOG_MECHA)
+		update_part_values()
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stock_parts/servo))
+		if(servo)
+			balloon_alert(user, "already installed!")
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src, silent = FALSE))
+			return ITEM_INTERACT_BLOCKING
+
+		servo = tool
+		balloon_alert(user, "installed servo")
+		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
+		log_message("[tool] installed", LOG_MECHA)
+		update_part_values()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/vehicle/sealed/mecha/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	var/final_force = CALCULATE_FORCE(attacking_item, attack_modifiers) * attacking_item.get_demolition_modifier(src)
@@ -410,7 +418,7 @@
 		if(!(locate(part_to_remove) in contents))
 			return
 		user.put_in_hands(part_to_remove)
-		CheckParts()
+		locate_parts()
 		diag_hud_set_mechcell()
 		tool.play_tool_sound(src)
 		return
@@ -541,4 +549,5 @@
 /obj/vehicle/sealed/mecha/proc/upgrade_rcd(obj/item/rcd_upgrade/rcd_upgrade, mob/user)
 	for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd_equip in flat_equipment)
 		if(rcd_equip.internal_rcd.install_upgrade(rcd_upgrade, user))
-			return
+			return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
