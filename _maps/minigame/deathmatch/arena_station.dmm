@@ -899,7 +899,7 @@
 /area/deathmatch)
 "KS" = (
 /obj/effect/mapping_helpers/broken_floor,
-/obj/item/spear/explosive,
+/obj/item/spear/explosive/grenade,
 /obj/effect/spawner/random/trash/box,
 /turf/open/indestructible/plating,
 /area/deathmatch)

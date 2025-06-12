@@ -101,6 +101,14 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
+/datum/crafting_recipe/elance
+	name = "Extra Long Anti-Nemesis Charged Explosive"
+	result = /obj/item/spear/explosive/elance
+	reqs = list(
+		/obj/item/spear = 1,
+		/obj/item/assembly/signaler/anomaly/vortex = 1,
+	)
+
 /datum/crafting_recipe/toysword
 	name = "Toy Sword"
 	reqs = list(

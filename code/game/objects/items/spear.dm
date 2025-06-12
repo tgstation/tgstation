@@ -126,36 +126,6 @@
 	icon_state = "spearbomb0"
 	base_icon_state = "spearbomb"
 	icon_prefix = "spearbomb"
-	var/obj/item/grenade/explosive = null
-
-/obj/item/spear/explosive/Initialize(mapload)
-	. = ..()
-	set_explosive(new /obj/item/grenade/iedcasing/spawned()) //For admin-spawned explosive lances
-
-/obj/item/spear/explosive/proc/set_explosive(obj/item/grenade/G)
-	if(explosive)
-		QDEL_NULL(explosive)
-	G.forceMove(src)
-	explosive = G
-	desc = "A makeshift spear with [G] attached to it"
-
-/obj/item/spear/explosive/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
-	var/obj/item/grenade/nade = locate() in components
-	if(nade)
-		var/obj/item/spear/lancePart = locate() in components
-		throwforce = lancePart.throwforce
-		icon_prefix = lancePart.icon_prefix
-		set_explosive(nade)
-	return ..()
-
-/obj/item/spear/explosive/suicide_act(mob/living/carbon/user)
-	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
-	user.say("[war_cry]", forced="spear warcry")
-	explosive.forceMove(user)
-	explosive.detonate()
-	user.gib(DROP_ALL_REMAINS)
-	qdel(src)
-	return BRUTELOSS
 
 /obj/item/spear/explosive/examine(mob/user)
 	. = ..()
@@ -167,9 +137,8 @@
 		war_cry = input
 	return CLICK_ACTION_SUCCESS
 
-
-/obj/item/spear/explosive/afterattack(atom/movable/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(!HAS_TRAIT(src, TRAIT_WIELDED) || !istype(target))
+/obj/item/spear/explosive/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(!HAS_TRAIT(src, TRAIT_WIELDED) || !ismovable(target) || !isliving(user))
 		return
 	if(target.resistance_flags & INDESTRUCTIBLE) //due to the lich incident of 2021, embedding grenades inside of indestructible structures is forbidden
 		return
@@ -178,14 +147,76 @@
 	if(iseffect(target)) //and no accidentally wasting your moment of glory on graffiti
 		return
 	user.say("[war_cry]", forced="spear warcry")
-	if(isliving(user))
-		var/mob/living/living_user = user
-		living_user.set_resting(new_resting = TRUE, silent = TRUE, instant = TRUE)
-		living_user.Move(get_turf(target))
-		explosive.forceMove(get_turf(living_user))
-		explosive.detonate(lanced_by=user)
-		if(!QDELETED(living_user))
-			living_user.set_resting(new_resting = FALSE, silent = TRUE, instant = TRUE)
+	explode(target, user)
+	qdel(src)
+
+/obj/item/spear/explosive/proc/explode(atom/target, mob/living/user)
+	return
+
+/obj/item/spear/explosive/grenade
+	/// Grenade stored in this lance to be detonated
+	var/obj/item/grenade/explosive = null
+
+/obj/item/spear/explosive/grenade/Initialize(mapload)
+	. = ..()
+	set_explosive(new /obj/item/grenade/iedcasing/spawned()) //For admin-spawned explosive lances
+
+/obj/item/spear/explosive/grenade/proc/set_explosive(obj/item/grenade/G)
+	if(explosive)
+		QDEL_NULL(explosive)
+	G.forceMove(src)
+	explosive = G
+	desc = "A makeshift spear with [G] attached to it"
+
+/obj/item/spear/explosive/grenade/explode(atom/target, mob/living/user)
+	user.set_resting(new_resting = TRUE, silent = TRUE, instant = TRUE)
+	user.Move(get_turf(target))
+	explosive.forceMove(get_turf(user))
+	explosive.detonate(lanced_by = user)
+	if(!QDELETED(user))
+		user.set_resting(new_resting = FALSE, silent = TRUE, instant = TRUE)
+
+/obj/item/spear/explosive/grenade/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/grenade/nade = locate() in components
+	if(nade)
+		var/obj/item/spear/lancePart = locate() in components
+		throwforce = lancePart.throwforce
+		icon_prefix = lancePart.icon_prefix
+		set_explosive(nade)
+	return ..()
+
+/obj/item/spear/explosive/grenade/suicide_act(mob/living/carbon/user)
+	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.say("[war_cry]", forced="spear warcry")
+	explosive.forceMove(user)
+	explosive.detonate()
+	user.gib(DROP_ALL_REMAINS)
+	qdel(src)
+	return BRUTELOSS
+
+/obj/item/spear/explosive/elance
+	name = "Extra Long Anti-Nemesis Charged Explosive"
+	desc = "ELANCE for short. A spear with a rigged anomaly core that packs an explosive punch."
+	icon_state = "spearbomb0"
+	base_icon_state = "spearbomb"
+	reach = 2
+	w_class = WEIGHT_CLASS_HUGE
+
+/obj/item/spear/explosive/elance/afterattack(atom/movable/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(loc != user)
+		return
+	return ..()
+
+/obj/item/spear/explosive/elance/explode(atom/target, mob/living/user)
+	explosion(
+		origin = get_turf(target),
+		devastation_range = 3,
+		heavy_impact_range = 4,
+		light_impact_range = 6,
+		flash_range = 12,
+		smoke = TRUE,
+		explosion_cause = src,
+	)
 	qdel(src)
 
 //GREY TIDE
