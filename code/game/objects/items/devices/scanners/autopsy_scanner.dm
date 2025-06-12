@@ -121,4 +121,4 @@
 	inhand_icon_state = "cruelautopsy"
 	worn_icon_state = "cruelautopsy"
 	item_flags = CRUEL_IMPLEMENT
-	custom_price = PAYCHECK_COMMAND * 1.2
+	custom_price = PAYCHECK_COMMAND * 2
