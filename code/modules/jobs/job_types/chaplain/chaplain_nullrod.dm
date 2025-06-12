@@ -442,6 +442,12 @@
 /obj/item/nullrod/chainsaw/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/prosthetic_icon, "mounted", 180)
+	AddComponent(/datum/component/butchering, \
+		speed = 3 SECONDS, \
+		effectiveness = 100, \
+		bonus_modifier = 0, \
+		butcher_sound = hitsound, \
+	)
 
 /obj/item/nullrod/chainsaw/on_selected(obj/item/nullrod/old_weapon, mob/living/picker)
 	if(!iscarbon(picker))
