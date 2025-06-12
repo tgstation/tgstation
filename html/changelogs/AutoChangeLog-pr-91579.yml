@@ -1,0 +1,4 @@
+author: "Maximal08"
+delete-after: True
+changes:
+  - bugfix: "items with TRAIT_NODROP can no longer be worn"
