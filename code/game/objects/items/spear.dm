@@ -199,7 +199,6 @@
 	desc = "ELANCE for short. A spear with a rigged anomaly core that packs an explosive punch."
 	icon_state = "spearbomb0"
 	base_icon_state = "spearbomb"
-	reach = 2
 	w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/spear/explosive/elance/afterattack(atom/movable/target, mob/user, list/modifiers, list/attack_modifiers)
@@ -210,8 +209,8 @@
 /obj/item/spear/explosive/elance/explode(atom/target, mob/living/user)
 	explosion(
 		origin = get_turf(target),
-		devastation_range = 3,
-		heavy_impact_range = 4,
+		devastation_range = 2,
+		heavy_impact_range = 3,
 		light_impact_range = 6,
 		flash_range = 12,
 		smoke = TRUE,
