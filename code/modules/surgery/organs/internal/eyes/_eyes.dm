@@ -645,6 +645,7 @@
 	failing_desc = "seems to be broken."
 	pupils_name = "apertures"
 	penlight_message = "are cybernetic, click-whirring as they refocus"
+
 /obj/item/organ/eyes/robotic/emp_act(severity)
 	. = ..()
 	if((. & EMP_PROTECT_SELF) || !owner)
