@@ -197,8 +197,6 @@
 /obj/item/spear/explosive/elance
 	name = "Extra Long Anti-Nemesis Charged Explosive"
 	desc = "ELANCE for short. A spear with a rigged anomaly core that packs an explosive punch."
-	icon_state = "spearbomb0"
-	base_icon_state = "spearbomb"
 	w_class = WEIGHT_CLASS_HUGE
 
 /obj/item/spear/explosive/elance/afterattack(atom/movable/target, mob/user, list/modifiers, list/attack_modifiers)
