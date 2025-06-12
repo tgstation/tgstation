@@ -304,6 +304,7 @@
 				return
 
 			materials.eject_sheets(material_ref = material, eject_amount = amount, user_data = ID_DATA(usr))
+			materials.eject_sheets(material_ref = material, eject_amount = amount, user_data = ID_DATA(usr))
 			return TRUE
 
 		if("build")
