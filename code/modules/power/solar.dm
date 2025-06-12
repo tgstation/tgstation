@@ -313,10 +313,18 @@
 	randomise_offset(anchored ? 0 : random_offset)
 
 /obj/item/solar_assembly/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)
+	var/turf/solarturf = get_turf(src)
+
 	if(item_used.tool_behaviour == TOOL_WRENCH && isturf(loc))
 		if(isinspace())
-			to_chat(user, span_warning("You can't secure [src] here."))
+			balloon_alert(user, "can't secure in space!")
 			return
+		for(var/obj/stuff_in_the_way in solarturf) //prevent anchoring on other machinery or solar assemblies
+			if(stuff_in_the_way == src)
+				continue
+			if((stuff_in_the_way.density || stuff_in_the_way.anchored) && !(stuff_in_the_way.flags_1 & ON_BORDER_1))
+				balloon_alert(user, "something in the way!")
+				return
 		set_anchored(!anchored)
 		user.visible_message(
 			span_notice("[user] [anchored ? null : "un"]wrenches the solar assembly[anchored ? " into place" : null]."),
@@ -371,7 +379,6 @@
 		//an else statement can be put here if you want something to happen to all the misc items that make it this far
 		return
 
-	var/turf/solarturf = get_turf(src)
 	if(locate(/obj/machinery/power/solar) in solarturf)
 		to_chat(user, span_warning("A solar panel is already assembled here."))
 		return
