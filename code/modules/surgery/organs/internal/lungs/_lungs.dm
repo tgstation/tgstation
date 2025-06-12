@@ -105,6 +105,7 @@
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
 	var/breath_noise = "steady in- and exhalation"
+
 // assign the respiration_type
 /obj/item/organ/lungs/Initialize(mapload)
 	. = ..()
