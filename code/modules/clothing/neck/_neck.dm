@@ -285,7 +285,7 @@
 				lung_noises = FALSE
 
 			else if(lungs.damage > 10)//if breathing, check for lung damage
-				render_list += "<span class='notice ml-1'>You hear fluid in [target.p_their()] lungs!</span>\n"
+				render_list += "<span class='danger ml-1'>You hear fluid in [target.p_their()] lungs!</span>\n"
 			else if(oxy_loss > 10)//if they have suffocation damage
 				render_list += "<span class='danger ml-1'>[target.p_Theyre()] breathing heavily!</span>\n"
 			else
