@@ -608,30 +608,30 @@ const RulesetsPanel = () => {
                                 />
                               </Flex.Item>
                             )}
-                            {ruleset_category !== 'roundstart' ||
-                              (!!roundstarted && (
-                                <Flex.Item>
-                                  <Button.Checkbox
-                                    ml={0.5}
-                                    tooltipPosition="right"
-                                    tooltip="If checked, this ruleset
+                            {(ruleset_category !== 'roundstart' ||
+                              !roundstarted) && (
+                              <Flex.Item>
+                                <Button.Checkbox
+                                  ml={0.5}
+                                  tooltipPosition="right"
+                                  tooltip="If checked, this ruleset
                                       will never run randomly."
-                                    checked={ruleset.admin_disabled}
-                                    color={
-                                      ruleset.admin_disabled ? 'bad' : 'grey'
-                                    }
-                                    disabled={
-                                      ruleset_category === 'roundstart' &&
-                                      roundstarted
-                                    }
-                                    onClick={() =>
-                                      act('disable_ruleset', {
-                                        ruleset_type: ruleset.typepath,
-                                      })
-                                    }
-                                  />
-                                </Flex.Item>
-                              ))}
+                                  checked={ruleset.admin_disabled}
+                                  color={
+                                    ruleset.admin_disabled ? 'bad' : 'grey'
+                                  }
+                                  disabled={
+                                    ruleset_category === 'roundstart' &&
+                                    roundstarted
+                                  }
+                                  onClick={() =>
+                                    act('disable_ruleset', {
+                                      ruleset_type: ruleset.typepath,
+                                    })
+                                  }
+                                />
+                              </Flex.Item>
+                            )}
                             <Flex.Item
                               style={{
                                 borderBottom:
