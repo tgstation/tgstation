@@ -36,8 +36,9 @@ type UserData = {
   Account_Holder: string;
   Account_Assignment: string;
   Accesses: string[];
-  CHAMELEON_OVERRIDE?: string;
-  SILICON_OVERRIDE?: string;
+  chamelon_override: string | null;
+  silicon_override: string | null;
+  id_read_failure: string | null;
 };
 
 type Log = {
@@ -73,7 +74,7 @@ export const OreSilo = (props: any) => {
 
   return (
     <Window title="Ore Silo" width={620} height={600}>
-      <Window.Content>
+      <Window.Content className="OreSilo">
         <Stack vertical fill>
           <Stack.Item>
             <Tabs fluid>
@@ -243,7 +244,7 @@ const EntryTitle = (log: Log) => {
   const { action, amount, noun, user_data } = log;
 
   const Verb = (
-    <Box as="span" className="actionPart">
+    <Box as="span" className="__actionPart">
       {action}
     </Box>
   );
@@ -259,7 +260,7 @@ const EntryTitle = (log: Log) => {
   };
 
   const Noun = (
-    <Box as="span" className="nounPart">
+    <Box as="span" className="__nounPart">
       {noun}
     </Box>
   );
@@ -300,30 +301,32 @@ const UserItem = (user_data: UserData) => {
     Account_Holder,
     Account_Assignment,
     Accesses,
-    CHAMELEON_OVERRIDE,
-    SILICON_OVERRIDE,
+    chamelon_override,
+    silicon_override,
+    id_read_failure,
   } = user_data;
   const { act, data } = useBackend<Data>();
   const { banned_users } = data;
-  const className = '__UserItem';
   return (
-    <>
-      <Box inline className="__Name">
-        {Name}
-        {', '};
-      </Box>
-      <Box inline className="__Assignment">
-        {Assignment};
-      </Box>
-      <Button
-        inline
-        className="__AntiRoboticistButton" /* we have fun here*/
-        color={banned_users.includes(Account_ID) ? 'bad' : 'good'}
-        onClick={() => act('toggle_ban', { user_data: user_data })}
-      >
-        {banned_users.includes(Account_ID) ? 'Unban' : 'Ban'} User
-      </Button>
-    </>
+    <Stack align="center" className="__UserItem">
+      <Stack.Item>
+        <Box className="__Name">{Name}</Box>
+      </Stack.Item>
+      <Stack.Item>
+        <Box className="__Assignment">{Assignment}</Box>
+      </Stack.Item>
+      {(!id_read_failure && !silicon_override) ? (
+        <Stack.Item>
+          <Button
+            className="__AntiRoboticistButton"
+            color={banned_users.includes(Account_ID) ? 'bad' : 'good'}
+            onClick={() => act('toggle_ban', { user_data: user_data })}
+          >
+            {banned_users.includes(Account_ID) ? 'Unban' : 'Ban'} User?
+          </Button>
+        </Stack.Item>
+      ) : null}
+    </Stack>
   );
 };
 
@@ -332,7 +335,7 @@ const LogEntry = (props: Log) => {
     props;
   return (
     <Collapsible title={EntryTitle(props)}>
-      <Section>
+      <Section className="__LogEntry">
         <LabeledList>
           <LabeledList.Item label="Time">{time}</LabeledList.Item>
           <LabeledList.Item label="Machine">

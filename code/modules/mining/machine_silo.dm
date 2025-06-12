@@ -18,10 +18,19 @@
 	var/datum/component/material_container/materials
 	/// A list of names of bank account IDs that are banned from using this ore silo.
 	var/list/banned_users = list()
+	///The machine's internal radio, used to broadcast alerts.
+	var/obj/item/radio/radio
+	///The channel we announce a siphon over.
+	var/list/radio_channels = list(
+		RADIO_CHANNEL_COMMON = NONE,
+		RADIO_CHANNEL_COMMAND = NONE,
+		RADIO_CHANNEL_SUPPLY = NONE,
+		RADIO_CHANNEL_SECURITY = NONE,
+	)
+
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
-
 	materials = AddComponent( \
 		/datum/component/material_container, \
 		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
@@ -36,6 +45,12 @@
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
 		GLOB.ore_silo_default = src
 	register_context()
+	radio = new(src)
+	radio.subspace_transmission = TRUE
+	radio.canhear_range = 0
+	radio.set_listening(FALSE)
+	radio.recalculateChannels()
+	configure_default_announcements_policy()
 
 /obj/machinery/ore_silo/Destroy()
 	if (GLOB.ore_silo_default == src)
@@ -239,6 +254,68 @@
 
 			materials.retrieve_sheets(amount, ejecting, drop_location(), user_data = ID_DATA(usr))
 			return TRUE
+		if("toggle_ban")
+			var/list/banned_user_data = params["user_data"]
+			attempt_ban_toggle(usr, banned_user_data)
+			return TRUE
+
+#define ALWAYS_ANNOUNCE (ALL)
+#define BAN_ATTEMPT_FAILURE_NO_ACCESS (1<<1)
+#define BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF (1<<2)
+#define BAN_ATTEMPT_FAILURE_SOULLESS_MACHINE (1<<3)
+#define BAN_CONFIRMATION (1<<4)
+#define UNBAN_CONFIRMATION (1<<5)
+/obj/machinery/ore_silo/proc/attempt_ban_toggle(mob/living/user, list/banned_user_data)
+	if(!istype(user) || !istype(banned_user_data))
+		CRASH("Bad arguments passed to [callee]")
+	if(isAI(user) || iscyborg(user) || isdrone(user))
+		to_chat(user, span_warning("A flash of red text occludes your vision: ACCESS ENFORCEMENT _disabled_ for SILICON INTERFACE."))
+	if(astype(banned_user_data["Accesses"], /list)?.Find(ACCESS_QM))
+		to_chat(user, span_warning("You press the button to ban the account."))
+		// LOUD AS FUCK BOY!!! Why would you try to ban the QM from their own silo?
+		playsound(source = src, soundin = 'sound/machines/scanner/scanbuzz.ogg', vol = 100, vary = TRUE, extrarange = 21/*Three screen lengths away*/, frequency = 0.2)
+		return
+	var/alist/current_user_data = ID_DATA(user)
+	if(!(astype(current_user_data["Accesses"], /list)?.Find(ACCESS_QM)))
+		to_chat(user, span_warning("You press the button to ban the account."))
+		playsound(source = src, soundin = 'sound/machines/scanner/scanbuzz.ogg', vol = 100, vary = TRUE, frequency = 1.8)
+		return
+	if(!isnum(banned_user_data["Account ID"]) || !banned_user_data["Account ID"])
+		to_chat(user, span_warning("You press the button to ban the account."))
+		return
+	if(banned_users.Find(banned_user_data["Account ID"]))
+		to_chat(user, span_warning("You press the button to unban the account."))
+		banned_users -= banned_user_data["Account ID"]
+		return
+	if(!isnull(banned_user_data[CHAMELEON_OVERRIDE]))
+		to_chat(user, span_warning("You press the button to ban the account but... nothing happens."))
+		playsound(source = src, soundin = 'sound/effects/adminhelp.ogg', vol = 50, vary = TRUE, frequency = 2)
+		return
+	to_chat(user, span_warning("You press the button to ban the account."))
+	banned_users += banned_user_data["Account ID"]
+	playsound(src, 'sound/machines/chime.ogg', 50, FALSE)
+
+
+#define DEFAULT_COMMON_POLICY BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF
+#define DEFAULT_COMMAND_POLICY BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF | BAN_ATTEMPT_FAILURE_NO_ACCESS | BAN_ATTEMPT_FAILURE_SOULLESS_MACHINE
+#define DEFAULT_SECURITY_POLICY BAN_ATTEMPT_FAILURE_CHALLENGING_DA_CHIEF | BAN_ATTEMPT_FAILURE_NO_ACCESS
+#define DEFAULT_SUPPLY_POLICY DEFAULT_COMMAND_POLICY | BAN_CONFIRMATION | UNBAN_CONFIRMATION
+/obj/machinery/ore_silo/proc/configure_default_announcements_policy()
+	radio_channels[RADIO_CHANNEL_COMMON] = DEFAULT_COMMON_POLICY
+	radio_channels[RADIO_CHANNEL_COMMAND] = DEFAULT_COMMAND_POLICY
+	radio_channels[RADIO_CHANNEL_SECURITY] = DEFAULT_SECURITY_POLICY
+	radio_channels[RADIO_CHANNEL_SUPPLY] = DEFAULT_SUPPLY_POLICY
+#undef DEFAULT_COMMON_POLICY
+#undef DEFAULT_COMMAND_POLICY
+#undef DEFAULT_SECURITY_POLICY
+#undef DEFAULT_SUPPLY_POLICY
+
+/obj/machinery/ore_silo/proc/handle_announcing(action, alist/silo_user_data, list/banned_user_data)
+	/*say("ACCESS ENFORCEMENT APPLICATION: [banned_user_data["Name"]] banned from ore silo access.")
+	say("WARNING. Possible COMMAND AUTHORITY SUBVERSIVE present at [get_area(src)].", channel)
+	say("ACCESS ENFORCEMENT REPRIEVE: [banned_user_data["Name"]] granted UNRESTRICTED status.")
+	say("ACCESS ENFORCEMENT FAILURE: [current_user_data["Name"]] lacks SUPPLY_COMMAND_AUTHORITY.")*/
+
 
 /**
  * Creates a log entry for depositing/withdrawing from the silo both ingame and in text based log
