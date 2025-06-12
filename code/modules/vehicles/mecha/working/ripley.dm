@@ -59,6 +59,9 @@
 /obj/vehicle/sealed/mecha/ripley/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate, 3, /obj/item/stack/sheet/animalhide/goliath_hide, /datum/armor/armor_plate_ripley_goliath)
+	movedelay = CONFIG_GET(number/movedelay/run_delay)
+	fast_pressure_step_in = CONFIG_GET(number/movedelay/run_delay)
+	slow_pressure_step_in = CONFIG_GET(number/movedelay/run_delay) + 0.5
 
 /datum/armor/armor_plate_ripley_goliath
 	melee = 10
@@ -156,9 +159,9 @@
 		weewooloop.stop()
 		siren = FALSE
 	else
-		movedelay = 1.5
-		slow_pressure_step_in = 2
-		fast_pressure_step_in = 1.5
+		movedelay = CONFIG_GET(number/movedelay/run_delay)
+		fast_pressure_step_in = CONFIG_GET(number/movedelay/run_delay)
+		slow_pressure_step_in = CONFIG_GET(number/movedelay/run_delay) + 0.5
 		weewooloop.start()
 		siren = TRUE
 	for(var/mob/occupant as anything in occupants)
