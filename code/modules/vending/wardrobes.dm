@@ -364,6 +364,10 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/hemostat/cruel = 1,
 		/obj/item/retractor/cruel = 1,
 		/obj/item/scalpel/cruel = 1,
+		/obj/item/surgicaldrill/cruel = 1,
+		/obj/item/circular_saw/cruel = 1,
+		/obj/item/bonesetter/cruel = 1,
+		/obj/item/blood_filter/cruel = 1,
 		/obj/item/storage/backpack/coroner = 1,
 		/obj/item/storage/backpack/duffelbag/coroner = 1,
 		/obj/item/storage/backpack/messenger/coroner = 1,
@@ -377,6 +381,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/scythe = 1,
 		/obj/item/storage/fancy/pickles_jar = 1,
 		/obj/item/table_clock = 1,
+		/obj/item/autopsy_scanner/cruel = 1,
 	)
 	premium = list(
 		/obj/item/autopsy_scanner = 1,

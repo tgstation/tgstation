@@ -52,7 +52,7 @@
 	box = /obj/item/storage/box/survival/medical
 	backpack_contents = list(
 		/obj/item/storage/box/bodybags = 1,
-		/obj/item/autopsy_scanner = 1,
+		/obj/item/autopsy_scanner/cruel = 1,
 		/obj/item/storage/medkit/coroner = 1,
 	)
 

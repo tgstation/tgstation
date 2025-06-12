@@ -113,3 +113,12 @@
 	user.put_in_hands(autopsy_report)
 	user.balloon_alert(user, "report printed")
 	return TRUE
+
+/obj/item/autopsy_scanner/cruel
+	name = "twisted autopsy scanner"
+	desc = "A twisted and modified scanner designed for analyzing corpses. Can also scan the health of cadavers like an advanced health analyzer!"
+	icon_state = "cruelautopsy"
+	inhand_icon_state = "cruelautopsy"
+	worn_icon_state = "cruelautopsy"
+	item_flags = CRUEL_IMPLEMENT
+	custom_price = PAYCHECK_COMMAND * 1.2
