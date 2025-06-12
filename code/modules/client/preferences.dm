@@ -335,6 +335,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /// A preview of a character for use in the preferences menu
 /atom/movable/screen/map_view/char_preview
 	name = "character_preview"
+	plane = HUD_PLANE
 
 	/// The body that is displayed
 	var/mob/living/carbon/human/dummy/body
@@ -361,6 +362,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		body.wipe_state()
 
 	appearance = preferences.render_new_preview_appearance(body, show_job_clothes)
+	plane = HUD_PLANE
 
 /atom/movable/screen/map_view/char_preview/proc/create_body()
 	QDEL_NULL(body)
