@@ -344,6 +344,10 @@
 			user.visible_message(span_notice("[user] takes out the electronics from the solar assembly."), span_notice("You take out the electronics from the solar assembly."))
 			return TRUE
 
+		//prevent construction if something dense's on our tile
+		if(solarturf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+			balloon_alert(user, "something in the way!")
+			return
 		if(!istype(item_used, /obj/item/stack/sheet/glass))
 			to_chat(user, span_warning("The tracker only accepts standard, un-reinforced glass."))
 			return
@@ -353,8 +357,8 @@
 			return
 		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
 		user.visible_message(span_notice("[user] places the glass on the solar assembly."),span_notice("You place the glass on the solar assembly."))
-		new /obj/machinery/power/tracker/(get_turf(src))
-		return
+		new /obj/machinery/power/tracker/(get_turf(src), src)
+		return TRUE
 
 	if(!tracker)
 		if(istype(item_used, /obj/item/electronics/tracker))
@@ -382,8 +386,9 @@
 		//an else statement can be put here if you want something to happen to all the misc items that make it this far
 		return
 
-	if(locate(/obj/machinery/power/solar) in solarturf)
-		to_chat(user, span_warning("A solar panel is already assembled here."))
+	//prevent construction if something dense's on our tile
+	if(solarturf.is_blocked_turf(exclude_mobs = TRUE, source_atom = src))
+		balloon_alert(user, "something in the way!")
 		return
 
 	if(is_glass_sheet(item_used))
