@@ -42,6 +42,8 @@
 	var/fast_pressure_step_in = 1.5
 	/// How fast the mech is in normal pressure
 	var/slow_pressure_step_in = 2
+	/// Should we update our move delay to the config on init?
+	var/mirror_config_speed_init = TRUE
 
 /datum/armor/mecha_ripley
 	melee = 40
@@ -59,9 +61,10 @@
 /obj/vehicle/sealed/mecha/ripley/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/armor_plate, 3, /obj/item/stack/sheet/animalhide/goliath_hide, /datum/armor/armor_plate_ripley_goliath)
-	movedelay = CONFIG_GET(number/movedelay/run_delay)
-	fast_pressure_step_in = CONFIG_GET(number/movedelay/run_delay)
-	slow_pressure_step_in = CONFIG_GET(number/movedelay/run_delay) + 0.5
+	if(mirror_config_speed_init)
+		movedelay = CONFIG_GET(number/movedelay/run_delay)
+		fast_pressure_step_in = CONFIG_GET(number/movedelay/run_delay)
+		slow_pressure_step_in = CONFIG_GET(number/movedelay/run_delay) + 0.5
 
 /datum/armor/armor_plate_ripley_goliath
 	melee = 10
@@ -75,6 +78,7 @@
 	base_icon_state = "ripleymkii"
 	fast_pressure_step_in = 2 //step_in while in low pressure conditions
 	slow_pressure_step_in = 4 //step_in while in normal pressure conditions
+	mirror_config_speed_init = FALSE
 	movedelay = 4
 	max_temperature = 30000
 	max_integrity = 250
@@ -105,6 +109,7 @@
 	movedelay = 5
 	slow_pressure_step_in = 5
 	fast_pressure_step_in = 3
+	mirror_config_speed_init = FALSE
 	possible_int_damage = MECHA_INT_FIRE|MECHA_INT_CONTROL_LOST|MECHA_INT_SHORT_CIRCUIT
 	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_MECH_SECURITY)
 	armor_type = /datum/armor/mecha_paddy
