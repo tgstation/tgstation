@@ -316,7 +316,7 @@
 	var/turf/solarturf = get_turf(src)
 
 	if(item_used.tool_behaviour == TOOL_WRENCH && isturf(loc))
-		if(isinspace())
+		if(!solarturf.can_have_cabling()) //allows catwalks
 			balloon_alert(user, "can't secure in space!")
 			return
 		for(var/obj/stuff_in_the_way in solarturf) //prevent anchoring on other machinery or solar assemblies
