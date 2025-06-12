@@ -518,6 +518,7 @@ SUBSYSTEM_DEF(id_access)
 			tally++
 
 	return tally
+
 /**
  * Helper proc for creating a copy of the in-character information you could render from scanning for an ID card.
  * Accounts for chameleon cards, silicons, and ID read failures.

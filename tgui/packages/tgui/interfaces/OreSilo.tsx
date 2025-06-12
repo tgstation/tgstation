@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Box,
+  Button,
   Collapsible,
   Icon,
   Image,
@@ -27,6 +28,18 @@ type Machine = {
   location: string;
 };
 
+type UserData = {
+  Name: string;
+  Age: number;
+  Assignment: string;
+  Account_ID: number;
+  Account_Holder: string;
+  Account_Assignment: string;
+  Accesses: string[];
+  CHAMELEON_OVERRIDE?: string;
+  SILICON_OVERRIDE?: string;
+};
+
 type Log = {
   rawMaterials: string;
   machineName: string;
@@ -35,7 +48,7 @@ type Log = {
   amount: number;
   time: string;
   noun: string;
-  user_data: Record<string, string | number | null>;
+  user_data: UserData;
 };
 
 enum Tab {
@@ -48,6 +61,8 @@ type Data = {
   materials: Material[];
   machines: Machine[];
   logs: Log[];
+  // Banned users is a list of bank account datum IDs
+  banned_users: number[];
 };
 
 export const OreSilo = (props: any) => {
@@ -225,7 +240,7 @@ const LogsList = (props: LogsListProps) => {
 };
 
 const EntryTitle = (log: Log) => {
-  const { action, amount, noun, user_data, areaName } = log;
+  const { action, amount, noun, user_data } = log;
 
   const Verb = (
     <Box as="span" className="actionPart">
@@ -276,17 +291,45 @@ const EntryTitle = (log: Log) => {
   );
 };
 
-const LogEntry = (props: Log) => {
+const UserItem = (user_data: UserData) => {
   const {
-    rawMaterials,
-    machineName,
-    areaName,
-    action,
-    amount,
-    time,
-    noun,
-    user_data,
-  } = props;
+    Name,
+    Age,
+    Assignment,
+    Account_ID,
+    Account_Holder,
+    Account_Assignment,
+    Accesses,
+    CHAMELEON_OVERRIDE,
+    SILICON_OVERRIDE,
+  } = user_data;
+  const { act, data } = useBackend<Data>();
+  const { banned_users } = data;
+  const className = '__UserItem';
+  return (
+    <>
+      <Box inline className="__Name">
+        {Name}
+        {', '};
+      </Box>
+      <Box inline className="__Assignment">
+        {Assignment};
+      </Box>
+      <Button
+        inline
+        className="__AntiRoboticistButton" /* we have fun here*/
+        color={banned_users.includes(Account_ID) ? 'bad' : 'good'}
+        onClick={() => act('toggle_ban', { user_data: user_data })}
+      >
+        {banned_users.includes(Account_ID) ? 'Unban' : 'Ban'} User
+      </Button>
+    </>
+  );
+};
+
+const LogEntry = (props: Log) => {
+  const { rawMaterials, machineName, areaName, amount, time, user_data } =
+    props;
   return (
     <Collapsible title={EntryTitle(props)}>
       <Section>
@@ -303,7 +346,7 @@ const LogEntry = (props: Log) => {
             {rawMaterials}
           </LabeledList.Item>
           <LabeledList.Item label="User">
-            {user_data['Name']} {user_data['Assignment']}
+            <UserItem {...user_data} />
           </LabeledList.Item>
         </LabeledList>
       </Section>

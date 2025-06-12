@@ -16,7 +16,7 @@
 	var/list/datum/component/remote_materials/ore_connected_machines = list()
 	/// Material Container
 	var/datum/component/material_container/materials
-	/// A list of names of people (and other crew) who are banned from silo materials
+	/// A list of names of bank account IDs that are banned from using this ore silo.
 	var/list/banned_users = list()
 
 /obj/machinery/ore_silo/Initialize(mapload)
@@ -124,7 +124,12 @@
 		CRASH("Invalid data passed to check_permitted")
 	if(user_data[SILICON_OVERRIDE] || user_data[CHAMELEON_OVERRIDE] || astype(user_data["Accesses"], /list)?.Find(ACCESS_QM))
 		return COMPONENT_ORE_SILO_ALLOW
-	if(!user_data["Account ID"])
+	if(user_data[ID_READ_FAILURE])
+		physical_receptacle.say("SILO ERR: ID interface failure. Please contact the Head of Personnel.")
+		return COMPONENT_ORE_SILO_DENY
+	if(!user_data["Account ID"] || !isnum(user_data["Account ID"]))
+		if(prob(5))
+			physical_receptacle.say("SILO ERR: Bank account ID not found. Initiating anti-communist silo-access policy.")
 		physical_receptacle.say("SILO ERR: No account ID found. Please contact a banker.")
 		return COMPONENT_ORE_SILO_DENY
 	if(banned_users.Find(user_data["Account ID"]))
@@ -177,6 +182,7 @@
 				"user_data" = entry.user_data,
 			)
 		)
+	data["banned_users"] = banned_users;
 
 	return data
 
@@ -328,7 +334,7 @@
 	var/list/msg = list()
 	for(var/key in materials)
 		var/datum/material/M = key
-		var/val = round(materials[key])
+		var/val = round(materials[key]) / 100
 		msg += separator
 		separator = ", "
 		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"
