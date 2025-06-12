@@ -36,7 +36,6 @@ type Log = {
   time: string;
   noun: string;
   user_data: Record<string, string | number | null>;
-  user_data: Record<string, string | number | null>;
 };
 
 enum Tab {
@@ -277,17 +276,6 @@ const EntryTitle = (log: Log) => {
   );
 };
 
-const LogEntry = (props: Log) => {
-  const {
-    rawMaterials,
-    machineName,
-    areaName,
-    action,
-    amount,
-    time,
-    noun,
-    user_data,
-  } = props;
 const LogEntry = (props: Log) => {
   const {
     rawMaterials,

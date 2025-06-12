@@ -10,16 +10,12 @@
 
 	/// By default, an ore silo requires you to be wearing an ID to pull materials from it.
 	var/ID_required = TRUE
-	/// By default, an ore silo requires you to be wearing an ID to pull materials from it.
-	var/ID_required = TRUE
 	/// List of all connected components that are on hold from accessing materials.
 	var/list/holds = list()
 	/// List of all components that are sharing ores with this silo.
 	var/list/datum/component/remote_materials/ore_connected_machines = list()
 	/// Material Container
 	var/datum/component/material_container/materials
-	/// A list of names of people (and other crew) who are banned from silo materials
-	var/list/banned_users = list()
 	/// A list of names of people (and other crew) who are banned from silo materials
 	var/list/banned_users = list()
 
@@ -46,7 +42,7 @@
 		GLOB.ore_silo_default = null
 
 	for(var/datum/component/remote_materials/mats as anything in ore_connected_machines)
-		mats.disconnect()
+		mats.disconnect_from(src)
 
 	ore_connected_machines = null
 	materials = null
@@ -84,7 +80,6 @@
 
 	SEND_SIGNAL(context, COMSIG_SILO_ITEM_CONSUMED, container, item_inserted, last_inserted_id, mats_consumed, amount_inserted)
 
-/obj/machinery/ore_silo/proc/log_sheets_ejected(datum/component/material_container/container, obj/item/stack/sheet/sheets, atom/context, alist/user_data)
 /obj/machinery/ore_silo/proc/log_sheets_ejected(datum/component/material_container/container, obj/item/stack/sheet/sheets, atom/context, alist/user_data)
 	SIGNAL_HANDLER
 
@@ -204,7 +199,7 @@
 			if(isnull(remote))
 				return
 
-			remote.disconnect()
+			remote.disconnect_from(src)
 			return TRUE
 
 		if("hold")

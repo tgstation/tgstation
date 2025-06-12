@@ -113,9 +113,14 @@ handles linking back and forth.
 	if (!silo && mat_container)
 		mat_container.max_amount = size
 
-///Disconnects this component from the silo
-/datum/component/remote_materials/proc/disconnect()
-	if(isnull(silo))
+/**
+ * Disconnect this component from the remote silo
+ *
+ * Arguments
+ * old_silo- The silo we are trying to disconnect from
+ */
+/datum/component/remote_materials/proc/disconnect_from(obj/machinery/ore_silo/old_silo)
+	if (QDELETED(old_silo) || silo != old_silo)
 		return
 
 	UnregisterSignal(parent, list(COMSIG_ATOM_ITEM_INTERACTION, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY))
