@@ -335,7 +335,7 @@ GLOBAL_LIST(heretic_research_tree)
 					var/chosen_tier = pick_weight(probabilities)
 					selected_knowledge = pick_n_take(elligible_knowledge[chosen_tier])
 			if(isnull(selected_knowledge))
-				stack_trace("Failed to select a knowledge for heretic path [heretic_path] at depth [depth] after 10 attempts. This is a bug, please report it.")
+				stack_trace("Failed to select a knowledge for heretic path [heretic_path] at depth [depth] after 10 attempts. This should never happen.")
 				continue
 
 			heretic_research_tree[parent_knowledge_path][HKT_NEXT] += selected_knowledge
