@@ -13,7 +13,7 @@
 	/// The initial charge of this smes.
 	var/charge = 0
 	/// Max capacity of all cells in this smes
-	VAR_PRIVATE/total_capacity = 0
+	VAR_PROTECTED/total_capacity = 0
 
 	/// TRUE = attempting to charge, FALSE = not attempting to charge
 	var/input_attempt = TRUE
@@ -99,7 +99,7 @@
 
 /// Returns the total charge of this smes
 /obj/machinery/power/smes/proc/total_charge()
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
 		. += power_cell.charge()
@@ -284,7 +284,7 @@
 
 ///Returns the charge level this smes is at 0->5 for display purposes
 /obj/machinery/power/smes/proc/chargedisplay()
-	PRIVATE_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
 
 	return clamp(round(5 * (total_charge() / total_capacity)), 0, 5)
 
