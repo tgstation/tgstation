@@ -61,6 +61,7 @@
 /mob/living/basic/blob_minion/blobbernaut/death(gibbed)
 	flick("[icon_state]_death", src)
 	playsound(src, 'sound/mobs/non-humanoids/blobmob/blobbernaut_death.ogg', 100, TRUE)
+	update_overlays()
 	return ..()
 
 /mob/living/basic/blob_minion/blobbernaut/create_mob_hud()
@@ -150,25 +151,21 @@
 	if(prob(20))
 		playsound(src, 'sound/items/weapons/sear.ogg', 5, vary = TRUE)
 
+	//create aooearances for the naut damage effect
 	var/mutable_appearance/naut_damage_overlay = mutable_appearance(icon, "[base_icon_state]_veins", appearance_flags = RESET_COLOR | KEEP_APART)
-	naut_damage_overlay.alpha = 0
-	naut_damage_overlay.color = RotateHue(vein_overlay.color, 180)
 
-	var/atom/movable/flick_visual/naut_damage_animation = flick_overlay_view(naut_damage_overlay, 0.8 SECONDS)
+	//modify appearances to intitially have no effect
+	naut_damage_overlay.color = vein_overlay.color
 
+	//flick naut damage overlays
+	var/atom/movable/flick_visual/naut_damage_animation = flick_overlay_view(naut_damage_overlay, seconds_per_tick)
+
+	//make flick objects obey dirs
 	naut_damage_animation.vis_flags |= VIS_INHERIT_DIR
 
-	animate(naut_damage_animation, 0.8 SECONDS, easing = SINE_EASING | EASE_OUT,loop = 1, alpha = 255)
-	animate(naut_damage_animation, 0.8 SECONDS, easing = SINE_EASING | EASE_IN, loop = 1, alpha = 0)
-
-	var/mutable_appearance/naut_emissive_overlay =  emissive_appearance(icon, "[base_icon_state]_veins", src, alpha = src.alpha)
-	naut_emissive_overlay.alpha = 0
-
-	//this part of the code does not work.
-	var/atom/movable/flick_visual/naut_emissive_animation = flick_overlay_view(naut_emissive_overlay, 0.8 SECONDS)
-	naut_emissive_animation.vis_flags |= VIS_INHERIT_DIR
-	animate(naut_emissive_animation, 0.8 SECONDS, easing = SINE_EASING | EASE_OUT,loop = 1, alpha = 255)
-	animate(naut_emissive_animation, 0.8 SECONDS, easing = SINE_EASING | EASE_IN, loop = 1, alpha = 0)
+	//animate the naut damage overlays to fade in the 180 vein hue shift and emsissive.
+	animate(naut_damage_animation, time = seconds_per_tick / 2, easing = SINE_EASING, color = RotateHue(vein_overlay.color, 180))
+	animate(time = seconds_per_tick / 2, easing = SINE_EASING, color = vein_overlay.color)
 
 	return TRUE
 
