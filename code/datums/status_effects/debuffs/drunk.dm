@@ -18,6 +18,7 @@
 	alert_type = null
 	/// The level of drunkness we are currently at.
 	var/drunk_value = 0
+	var/iron_liver = FALSE // for when we blackout and need to keep the liver healthy temporarily
 
 /datum/status_effect/inebriated/on_creation(mob/living/new_owner, drunk_value = 0)
 	. = ..()
@@ -57,7 +58,8 @@
 /datum/status_effect/inebriated/proc/set_drunk_value(set_to)
 	if(!isnum(set_to))
 		CRASH("[type] - invalid value passed to set_drunk_value. (Got: [set_to])")
-
+	if(drunk_value >= 51 && iron_liver)
+		return
 	drunk_value = set_to
 	if(drunk_value <= 0)
 		qdel(src)
