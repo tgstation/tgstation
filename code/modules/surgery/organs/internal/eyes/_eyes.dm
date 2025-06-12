@@ -536,7 +536,7 @@
 
 /// by default, returns the eyes' penlight_message var as a notice span. May do other things when overridden, such as eldritch insanity, or eye damage, or whatnot. Whatever you want, really.
 /obj/item/organ/eyes/proc/penlight_examine(mob/living/viewer)
-	return span_notice(penlight_message)
+	return span_notice("[owner.p_Their()] eyes [penlight_message].")
 
 #define NIGHTVISION_LIGHT_OFF 0
 #define NIGHTVISION_LIGHT_LOW 1
@@ -1143,7 +1143,7 @@
 	if(!owner.is_blind())
 		to_chat(owner, span_danger("Your eyes sizzle agonizingly as light is shone on them!"))
 		apply_organ_damage(20 * examtool.light_power) //that's 0.5 lightpower for a penlight, so one penlight shining is equivalent to two seconds in a lit area
-	return span_danger(penlight_message)
+	return span_danger("[owner.p_Their()] eyes [penlight_message].")
 
 /obj/item/organ/eyes/night_vision/maintenance_adapted/on_mob_insert(mob/living/carbon/eye_owner)
 	. = ..()

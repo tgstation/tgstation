@@ -151,7 +151,7 @@
 
 /// by default, returns the hearts beat_noise var as a notice span. May do other things when overridden, such as eldritch insanity or electrocution. Whatever you want, really.
 /obj/item/organ/heart/proc/hear_beat_noise(mob/living/hearer)
-	return span_notice(beat_noise)
+	return span_notice("[owner.p_Their()] heart produces [beat_noise].")
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"
@@ -308,7 +308,7 @@
 	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
 /obj/item/organ/heart/cybernetic/surplus/hear_beat_noise(mob/living/hearer)
-	return span_danger(beat_noise)
+	return span_danger("[owner.p_Their()] heart produces [beat_noise].")
 
 /obj/item/organ/heart/freedom
 	name = "heart of freedom"

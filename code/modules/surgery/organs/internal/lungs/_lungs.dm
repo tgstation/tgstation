@@ -869,7 +869,7 @@
 
 /// by default, returns the lungs' breath_noise var as a notice. called when stethoscope is used on chest, uses the return as a message for stethoscope user.
 /obj/item/organ/lungs/proc/hear_breath_noise(mob/living/hearer)
-	return span_notice(breath_noise)
+	return span_notice("[owner.p_Their()] lungs emit [breath_noise].")
 
 #define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
 #define SMOKER_LUNG_HEALING (STANDARD_ORGAN_HEALING * 0.75)
@@ -970,7 +970,7 @@
 	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
 /obj/item/organ/lungs/cybernetic/surplus/hear_breath_noise(mob/living/hearer)
-	return span_danger(breath_noise)
+	return span_danger("[owner.p_Their()] lungs emit [breath_noise].")
 
 /obj/item/organ/lungs/lavaland
 	name = "blackened frilled lungs" // blackened from necropolis exposure

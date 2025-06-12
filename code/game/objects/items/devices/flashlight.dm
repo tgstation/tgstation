@@ -152,7 +152,7 @@
 		if(HAS_TRAIT(patient, TRAIT_XRAY_VISION))
 			. += span_danger_ml("[patient.p_Their()] [eyes.pupils_name] give an eerie glow!\n")//mob has X-ray vision
 		if(eyes.penlight_message != /obj/item/organ/eyes::penlight_message) //prevent default eyes from cluttering text, if this still happens somehow it displays "default message please report"
-			. += span_notice_ml("[patient.p_Their()] eyes [eyes.penlight_examine(user, src)].\n")
+			. += span_notice_ml("[eyes.penlight_examine(user, src)]\n")
 		if(braaaainz)
 			. += span_danger_ml("<b>[patient.p_Their()] eyes are webbed by fibrous black tendrils!</b>\n")
 		if(patient.has_status_effect(/datum/status_effect/drugginess) || patient.has_status_effect(/datum/status_effect/trance))

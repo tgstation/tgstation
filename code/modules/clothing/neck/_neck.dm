@@ -254,8 +254,6 @@
 	var/heart_strength
 	var/pulse_pressure
 
-	var/breath_sound
-	var/beat_sound
 	var/heart_noises = TRUE
 
 	var/obj/item/organ/heart/heart = carbon_patient.get_organ_slot(ORGAN_SLOT_HEART)
@@ -293,8 +291,7 @@
 			else
 				render_list += "<span class='notice ml-1'>[target.p_Theyre()] breathing normally.</span>\n"//they're okay :D
 			if(lung_noises)
-				breath_sound = lungs.hear_breath_noise(user)
-				render_list += "<span class='notice ml-1'>[target.p_Their()] lungs produce [breath_sound].</span>\n"
+				render_list += "<span class='notice ml-1'>[lungs.hear_breath_noise(user)]</span>\n"
 			//assess heart
 			if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
 				if(isnull(heart) || !heart.is_beating() || carbon_patient.stat == DEAD)
@@ -305,8 +302,8 @@
 				else
 					render_list += "<span class='notice ml-1'>You hear a healthy heartbeat.</span>\n"//they're okay :D
 				if(heart_noises)
-					beat_sound = heart.hear_beat_noise(user)
-					render_list += "<span class='notice ml-1'>Their heart produces [beat_sound]. </span>\n"
+					render_list += "<span class='notice ml-1'>[heart.hear_beat_noise(user)]</span>\n"
+
 		if(BODY_ZONE_PRECISE_GROIN)//If we're targeting the groin
 			render_list += span_info("You carefully press down on [carbon_patient]'s abdomen:\n")
 			user.visible_message(span_notice("[user] presses their hands against [carbon_patient]'s abdomen."), ignored_mobs = user)

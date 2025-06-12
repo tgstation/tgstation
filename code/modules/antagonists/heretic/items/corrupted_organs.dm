@@ -48,9 +48,10 @@
 		viewer.emote("scream")
 		viewer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 		viewer.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
+		viewer.adjust_timed_status_effect(5 SECONDS, /datum/status_effect/temporary_blindness) //debounce basically.
 		var/obj/item/organ/eyes/parboiled = viewer.get_organ_slot(ORGAN_SLOT_EYES)
-		parboiled?.apply_organ_damage(40) //enough to blind, so not spammable, but not enough to blind *permanently* so will slowly fix with time
-	return span_hypnophrase(penlight_message)
+		parboiled?.apply_organ_damage(40) //enough to blind, but not enough to blind *permanently*
+	return "[owner.p_Their()] eyes [span_hypnophrase(penlight_message)]"
 
 /// Sometimes speak in incomprehensible tongues
 /obj/item/organ/tongue/corrupt
@@ -195,7 +196,7 @@
 /obj/item/organ/heart/corrupt
 	name = "corrupt heart"
 	desc = "What corruption is this spreading along with the blood?"
-	beat_noise = "THE THUMPTHUMPTHUMPING OF THE CHISEL ON THE GLASS. OPEN THE FUTURE SHATTER THE PAST"
+	beat_noise = "THE THUMPTHUMPTHUMPING OF THE CHISEL ON THE GLASS. OPEN THE FUTURE SHATTER THE-"
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
 	/// How long until the next heart?
 	COOLDOWN_DECLARE(hand_cooldown)
@@ -219,14 +220,14 @@
 		hearer.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		var/obj/item/bodypart/head/regret = hearer.get_bodypart(BODY_ZONE_HEAD)
 		regret?.force_wound_upwards(/datum/wound/pierce/bleed/severe/magicalearpain, wound_source = "stethoscoped a corrupted heart")
-	return span_hypnophrase(beat_noise)
+	return "[owner.p_Their()] heart produces [span_hypnophrase(beat_noise)]"
 
 /// Sometimes cough out some kind of dangerous gas
 /obj/item/organ/lungs/corrupt
 	name = "corrupt lungs"
 	desc = "Some things SHOULD be drowned in tar."
 	organ_flags = parent_type::organ_flags | ORGAN_HAZARDOUS
-	breath_noise = "SECRET SONGS OF THE BREAKING OF THE MAKING OF THE WAKING OF THE-"
+	breath_noise = "SECRET SONGS OF THE BREAKING OF THE MAKING OF THE WAKING FROM THE-"
 	/// How likely are we not to cough every time we take a breath?
 	var/cough_chance = 15
 	/// How much gas to emit?
@@ -264,7 +265,7 @@
 		hearer.add_mood_event("gates_of_mansus", /datum/mood_event/gates_of_mansus)
 		var/obj/item/organ/ears/regret = hearer.get_organ_slot(ORGAN_SLOT_EARS)
 		regret?.adjustEarDamage(10,20)
-	return span_hypnophrase(breath_noise)
+	return "[owner.p_Their()] lungs emit [span_hypnophrase(breath_noise)]"
 
 /// It's full of worms
 /obj/item/organ/appendix/corrupt
