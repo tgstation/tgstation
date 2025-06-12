@@ -32,6 +32,7 @@
 	/// whether the heart's been operated on to fix some of its damages
 	var/operated = FALSE
 	var/beat_noise = "a rhythmic thumping"
+
 /obj/item/organ/heart/update_icon_state()
 	. = ..()
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
