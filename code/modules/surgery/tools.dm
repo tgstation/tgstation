@@ -617,9 +617,10 @@
 	attack_verb_simple = list("correct", "properly set")
 	tool_behaviour = TOOL_BONESET
 	toolspeed = 1
+	var/surgical_tray_overlay = "bonesetter"
 
 /obj/item/bonesetter/get_surgery_tool_overlay(tray_extended)
-	return "bonesetter" + (tray_extended ? "" : "_out")
+	return surgical_tray_overlay + (tray_extended ? "" : "_out")
 
 /obj/item/bonesetter/cyborg
 	icon = 'icons/mob/silicon/robot_items.dmi'
@@ -642,9 +643,10 @@
 	toolspeed = 1
 	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
 	var/list/whitelist = list()
+	var/surgical_tray_overlay = "filter"
 
 /obj/item/blood_filter/get_surgery_tool_overlay(tray_extended)
-	return "filter"
+	return surgical_tray_overlay
 
 /obj/item/blood_filter/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -745,10 +747,11 @@
 	name = "harsh bonesetter"
 	desc = "We shall make you whole once more..."
 	icon_state = "cruelbonesetter"
+	surgical_tray_overlay = "bonesetter_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 
-/obj/item/bonesetter/cruel/get_surgery_tool_overlay(tray_extended)
-	return "bonesetter_cruel" + (tray_extended ? "" : "_out")
+//obj/item/bonesetter/cruel/get_surgery_tool_overlay(tray_extended)
+	//return "bonesetter_cruel" + (tray_extended ? "" : "_out")
 
 /obj/item/blood_filter/cruel
 	name = "malignant blood filter"
