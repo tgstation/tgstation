@@ -592,6 +592,7 @@
 	high_light_cutoff = list(0, 40, 50)
 	pupils_name = "photosensory openings"
 	penlight_message = "are attached to fungal stalks"
+
 /obj/item/organ/eyes/zombie
 	name = "undead eyes"
 	desc = "Somewhat counterintuitively, these half-rotten eyes actually have superior vision to those of a living human."
