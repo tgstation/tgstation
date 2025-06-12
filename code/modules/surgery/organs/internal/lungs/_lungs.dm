@@ -899,7 +899,6 @@
 	breath_noise = "a low burbling"
 	safe_plasma_max = 0 //We breathe this to gain POWER.
 
-
 /obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather_slime)
 	. = ..()
 	if (breath?.gases[/datum/gas/plasma])
