@@ -284,7 +284,7 @@
 		header = "Bro I'm not even drunk right now",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
-	inebriation = has_status_effect(/datum/status_effect/inebriated)
+	inebriation = owner.has_status_effect(/datum/status_effect/inebriated)
 	inebriation.iron_liver = TRUE
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
