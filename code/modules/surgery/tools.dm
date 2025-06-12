@@ -730,12 +730,14 @@
 	AddElement(/datum/element/bane, mob_biotypes = MOB_UNDEAD, damage_multiplier = 1) //Just in case one of the tennants get uppity
 
 /obj/item/surgicaldrill/cruel
+	name = "tearing drill"
 	desc = "What secrets do they keep buried within those pearls..."
 	icon_state = "crueldrill"
 	surgical_tray_overlay = "drill_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 
 /obj/item/circular_saw/cruel
+	name = "jagged bonesaw"
 	desc = "A twisted blade for twisted purpose. Rip sinew and bone until your work is done."
 	icon_state = "cruelsaw"
 	inhand_icon_state = "cruelsaw"
@@ -749,9 +751,6 @@
 	icon_state = "cruelbonesetter"
 	surgical_tray_overlay = "bonesetter_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
-
-//obj/item/bonesetter/cruel/get_surgery_tool_overlay(tray_extended)
-	//return "bonesetter_cruel" + (tray_extended ? "" : "_out")
 
 /obj/item/blood_filter/cruel
 	name = "malignant blood filter"
