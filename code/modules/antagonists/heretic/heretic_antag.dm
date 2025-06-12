@@ -130,7 +130,7 @@
 	result_parameters["moving"] = icon_moving
 	return result_parameters
 
-/datum/antagonist/heretic/proc/get_knowledge_data(datum/heretic_knowledge/knowledge, done)
+/datum/antagonist/heretic/proc/get_knowledge_data(datum/heretic_knowledge/knowledge, done = FALSE)
 
 	var/list/knowledge_data = list()
 
@@ -142,15 +142,14 @@
 	knowledge_data["bgr"] = heretic_knowledge_tree[knowledge][HKT_UI_BGR]
 	knowledge_data["ascension"] = ispath(knowledge, /datum/heretic_knowledge/ultimate)
 
+	knowledge_data["done"] = done
+	knowledge_data["category"] = heretic_knowledge_tree[knowledge][HKT_CATEGORY]
 	//description of a knowledge might change, make sure we are not shown the initial() value in that case
 	if(done)
 		var/datum/heretic_knowledge/knowledge_instance = researched_knowledge[knowledge]
 		knowledge_data["desc"] = knowledge_instance.desc
-		knowledge_data["bought_category"] = knowledge_instance.bought_category
 	else
 		knowledge_data["desc"] = initial(knowledge.desc)
-		knowledge_data["bought_category"] = null
-
 	return knowledge_data
 
 
@@ -165,6 +164,7 @@
 	data["can_change_objective"] = can_assign_self_objectives
 
 	data["paths"] = path_info
+	data["passive_level"] = passive_level
 
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
@@ -175,6 +175,9 @@
 	// has to update its disabled state based on whether all objectives are complete,
 	// makes this very difficult. I'll figure it out one day maybe
 	for(var/datum/heretic_knowledge/knowledge as anything in researched_knowledge)
+		/// draft knowledges are only shown post-research
+		if(heretic_knowledge_tree[knowledge][HKT_CATEGORY] == HERETIC_KNOWLEDGE_DRAFT)
+			continue
 		var/list/knowledge_data = get_knowledge_data(knowledge, TRUE)
 
 		while(heretic_knowledge_tree[knowledge][HKT_DEPTH] > tiers.len)
@@ -192,7 +195,7 @@
 			knowledge_data["disabled"] ||= !can_ascend()
 
 		while(heretic_knowledge_tree[knowledge][HKT_DEPTH] > tiers.len)
-			tiers += list(list("nodes"=list()))
+			tiers += list(list("nodes" = list()))
 
 		tiers[heretic_knowledge_tree[knowledge][HKT_DEPTH]]["nodes"] += list(knowledge_data)
 
@@ -203,7 +206,7 @@
 	for(var/index in 1 to length(side_knowledges))
 		shop_knowledge += list(list())
 		for(var/datum/heretic_knowledge/knowledge as anything in side_knowledges[index])
-			var/is_researched = locate(knowledge) in researched_knowledge
+			var/is_researched = !!researched_knowledge[knowledge]
 			var/list/knowledge_data = get_knowledge_data(knowledge, is_researched)
 			shop_knowledge[index] += list(knowledge_data)
 
@@ -233,8 +236,7 @@
 			if(cost > knowledge_points)
 				return FALSE
 
-			var/source = params["source"]
-			if(!gain_knowledge(researched_path, source))
+			if(!gain_knowledge(researched_path))
 				return FALSE
 			adjust_knowledge_points(-cost, FALSE)
 			update_data_for_all_viewers()
@@ -839,18 +841,19 @@
  *
  * Returns TRUE if the knowledge was added successfully. FALSE otherwise.
  */
-/datum/antagonist/heretic/proc/gain_knowledge(datum/heretic_knowledge/knowledge_type, source = HERETIC_KNOWLEDGE_TREE, update = TRUE)
+/datum/antagonist/heretic/proc/gain_knowledge(datum/heretic_knowledge/knowledge_type, update = TRUE)
 	if(!ispath(knowledge_type))
 		stack_trace("[type] gain_knowledge was given an invalid path! (Got: [knowledge_type])")
+		return FALSE
+	if(!heretic_knowledge_tree[knowledge_type])
+		stack_trace("[type] gain_knowledge was given a path that doesn't exist in the heretic knowledge tree! (Got: [knowledge_type])")
 		return FALSE
 	if(get_knowledge(knowledge_type))
 		return FALSE
 	var/datum/heretic_knowledge/initialized_knowledge = new knowledge_type()
-	if(initialized_knowledge.is_final_knowledge)
-		var/choice = tgui_alert(owner.current, "THIS WILL DISABLE BLADE BREAKING, Are you ready to research this?", "Get Final Spell?", list("Yes", "No"))
-		if(choice != "Yes")
-			return FALSE
-	initialized_knowledge.bought_category = source
+	if(!initialized_knowledge.pre_research(owner.current, src))
+		return FALSE
+	initialized_knowledge.bought_category = heretic_knowledge_tree[knowledge_type][HKT_CATEGORY]
 	researched_knowledge[knowledge_type] = initialized_knowledge
 	initialized_knowledge.on_research(owner.current, src)
 	if(update)

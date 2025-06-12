@@ -47,6 +47,19 @@
 	/// Used for determining from which category in the UI this was bought in.
 	var/bought_category = null
 
+/**
+ * Called before the knowledge is researched,
+ * use this for any checks that should happen before the knowledge is researched.
+ * Returns TRUE if the knowledge can be researched, FALSE otherwise.
+ */
+/datum/heretic_knowledge/proc/pre_research(mob/user, datum/antagonist/heretic/our_heretic)
+	// consider moving this check to a type instead
+	if(is_final_knowledge)
+		var/choice = tgui_alert(user, "THIS WILL DISABLE BLADE BREAKING, Are you ready to research this?", "Get Final Spell?", list("Yes", "No"))
+		if(choice != "Yes")
+			return FALSE
+	return TRUE
+
 /** Called when the knowledge is first researched.
  * This is only ever called once per heretic.
  *

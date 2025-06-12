@@ -58,13 +58,15 @@ type Knowledge = {
   gainFlavor: string;
   cost: number;
   bgr: string;
-  bought_category?: BoughtAt;
+  category?: ShopCategory;
+  done: BooleanLike;
   ascension: BooleanLike;
 };
 
-enum BoughtAt {
+enum ShopCategory {
   Tree = 'tree',
   Shop = 'shop',
+  Draft = 'draft',
 }
 
 type KnowledgeTier = {
@@ -74,7 +76,6 @@ type KnowledgeTier = {
 type HereticPassive = {
   name: string;
   description: string[];
-  level: number;
 };
 
 type HereticPath = {
@@ -99,6 +100,7 @@ type Info = {
   paths: HereticPath[];
   knowledge_shop: Knowledge[][];
   knowledge_tiers: KnowledgeTier[];
+  passive_level: number;
 };
 
 const IntroductionSection = (props) => {
@@ -266,15 +268,7 @@ const KnowledgeTree = () => {
   const { data } = useBackend<Info>();
   const { knowledge_tiers } = data;
 
-  const nodesToShow = knowledge_tiers
-    .map((tier) =>
-      tier.nodes.filter(
-        (node) =>
-          (node.bought_category && node.bought_category === BoughtAt.Tree) ||
-          !node.bought_category,
-      ),
-    )
-    .filter((tier) => tier.length > 0);
+  const nodesToShow = knowledge_tiers.filter((tier) => tier.nodes.length > 0);
 
   return (
     <Section title="Research Tree" fill scrollable>
@@ -292,12 +286,8 @@ const KnowledgeTree = () => {
                   backgroundColor="transparent"
                   wrap="wrap"
                 >
-                  {tier.map((node) => (
-                    <KnowledgeNode
-                      key={node.path}
-                      node={node}
-                      buy_source={undefined}
-                    />
+                  {tier.nodes.map((node) => (
+                    <KnowledgeNode key={node.path} node={node} />
                   ))}
                 </Stack>
                 <hr />
@@ -310,25 +300,20 @@ const KnowledgeTree = () => {
 
 type KnowledgeNodeProps = {
   node: Knowledge;
-  buy_source?: BoughtAt;
   can_buy?: BooleanLike;
 };
 
-const KnowledgeNode = ({
-  node,
-  buy_source,
-  can_buy = true,
-}: KnowledgeNodeProps) => {
+const KnowledgeNode = ({ node, can_buy = true }: KnowledgeNodeProps) => {
   const { data, act } = useBackend<Info>();
   const { charges } = data;
 
-  const isBuyable = can_buy && !node.bought_category;
+  const isBuyable = can_buy && !node.done;
 
   const iconState = () => {
     if (!can_buy) {
       return node.bgr;
     }
-    if (node.bought_category) {
+    if (node.done) {
       return 'node_finished';
     }
     if (charges < node.cost) {
@@ -346,7 +331,7 @@ const KnowledgeNode = ({
         onClick={
           !isBuyable
             ? () => logger.warn(`Cannot buy ${node.name}`)
-            : () => act('research', { path: node.path, source: buy_source })
+            : () => act('research', { path: node.path })
         }
         width={node.ascension ? '192px' : '64px'}
         height={node.ascension ? '192px' : '64px'}
@@ -415,7 +400,7 @@ const KnowledgeShop = () => {
         <Stack fill scrollable wrap="wrap">
           {tier.map((knowledge) => (
             <Stack.Item key={`knowledge-${knowledge.path}`}>
-              <KnowledgeNode node={knowledge} buy_source={BoughtAt.Shop} />
+              <KnowledgeNode node={knowledge} />
             </Stack.Item>
           ))}
         </Stack>
@@ -461,7 +446,7 @@ const PathInfo = () => {
     .find(
       (node) =>
         paths.some((path) => path.starting_knowledge.path === node.path) &&
-        node.bought_category !== undefined,
+        node.done,
     );
 
   const pathBoughtIndex = paths.findIndex(
@@ -507,7 +492,9 @@ const PathContent = ({
   path: HereticPath;
   isPathSelected: boolean;
 }) => {
-  const { level, name, description } = path.passive;
+  const { data } = useBackend<Info>();
+  const { passive_level } = data;
+  const { name, description } = path.passive;
   return (
     <Section
       title={
@@ -541,9 +528,45 @@ const PathContent = ({
             <div key={index}>{line}</div>
           ))}
         </Stack.Item>
-        <Stack.Item>
-          <b>Starting Passive Bonus:</b>
-        </Stack.Item>
+        {(!isPathSelected && (
+          <Stack.Item style={{ justifyItems: 'center' }}>
+            <b>Passive: {name}</b>
+            <p
+              style={{
+                margin: '0.5em 0',
+                backgroundColor: '#808080',
+                borderRadius: '5px',
+                width: '50%',
+              }}
+            >
+              {description[0]}
+            </p>
+          </Stack.Item>
+        )) || (
+          <Stack.Item>
+            <b>
+              Passive: {name}, level: {passive_level}
+            </b>
+            <Stack>
+              {description.map((line, index) => (
+                <Stack.Item
+                  key={index}
+                  style={{
+                    margin: '0.5em 0',
+                    backgroundColor:
+                      passive_level >= index + 1 ? '#62cc67' : '#808080',
+                    borderRadius: '5px',
+                    padding: '0.5em',
+                  }}
+                >
+                  Level {index + 1}
+                  <br />
+                  {line}
+                </Stack.Item>
+              ))}
+            </Stack>
+          </Stack.Item>
+        )}
         <Stack.Item>
           {!isPathSelected && (
             <>
@@ -551,11 +574,7 @@ const PathContent = ({
               <Stack wrap="wrap" justify="center">
                 {path.preview_abilities.map((ability) => (
                   <Stack.Item key={`guaranteed_${ability.name}`} m={1}>
-                    <KnowledgeNode
-                      node={ability}
-                      can_buy={false}
-                      buy_source={BoughtAt.Tree}
-                    />
+                    <KnowledgeNode node={ability} can_buy={false} />
                   </Stack.Item>
                 ))}
               </Stack>
