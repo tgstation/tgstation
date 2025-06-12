@@ -296,13 +296,12 @@
 	var/last_disp = chargedisplay()
 	var/last_chrg = inputting
 	var/last_onln = outputting
-	var/input_energy = power_to_energy(input_level)
-	var/output_energy = power_to_energy(output_level)
 
 	//outputting
 	if(output_attempt && powernet)
-		output_used = 0
+		var/output_energy = power_to_energy(output_level)
 
+		output_used = 0
 		if(output_energy <= 0)
 			outputting = FALSE
 		else
@@ -324,8 +323,9 @@
 
 	//inputting
 	if(input_attempt && terminal)
-		input_available = terminal.surplus()
+		var/input_energy = power_to_energy(input_level)
 
+		input_available = terminal.surplus()
 		if(input_energy <= 0)
 			inputting = FALSE
 		else
@@ -364,7 +364,7 @@
 
 	output_used -= excess
 
-	if(clev != chargedisplay() ) //if needed updates the icons overlay
+	if(clev != chargedisplay()) //if needed updates the icons overlay
 		update_appearance(UPDATE_OVERLAYS)
 	return
 
