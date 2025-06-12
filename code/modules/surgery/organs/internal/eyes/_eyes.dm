@@ -684,6 +684,7 @@
 	eye_color_right = "#3cb8a5"
 	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 	penlight_message = "replaced by small radiation emitters and detectors"
+
 /obj/item/organ/eyes/robotic/xray/on_mob_insert(mob/living/carbon/eye_owner)
 	. = ..()
 	ADD_TRAIT(eye_owner, TRAIT_XRAY_VISION, ORGAN_TRAIT)
