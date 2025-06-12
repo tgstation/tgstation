@@ -9,6 +9,10 @@
 	activate_message = span_notice("You realize there's nothing stopping you from performing surgery on yourself.")
 	deactivate_message = span_notice("You suddenly feel like you should never perform surgery on yourself.")
 
+/obj/item/skillchip/self_surgery/Initialize(mapload, is_removable)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_CONTRABAND, INNATE_TRAIT)
+
 /obj/item/skillchip/self_surgery/on_activate(mob/living/carbon/user, silent)
 	. = ..()
 	RegisterSignal(user, COMSIG_LIVING_INITIATE_SURGERY_STEP, PROC_REF(apply_surgery_penalty))
