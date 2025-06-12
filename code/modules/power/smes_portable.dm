@@ -11,7 +11,7 @@
 	show_display_lights = FALSE
 
 	///The smes this connector is connected with
-	var/obj/machinery/power/smesbank/connected_smes
+	var/obj/machinery/smesbank/connected_smes
 
 /obj/machinery/power/smes/connector/Destroy()
 	connected_smes?.disconnect_port() // in the unlikely but possible case a SMES is connected and this explodes
@@ -64,7 +64,7 @@
  *
  * * obj/machinery/power/smesbank/bank - the bank to connect
  */
-/obj/machinery/power/smes/connector/proc/connect_smes(obj/machinery/power/smesbank/bank)
+/obj/machinery/power/smes/connector/proc/connect_smes(obj/machinery/smesbank/bank)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	connected_smes = bank
@@ -89,7 +89,7 @@
 	return ..()
 
 /// The actual portable part of the portable SMES system. Pretty useless without an actual connector.
-/obj/machinery/power/smesbank
+/obj/machinery/smesbank
 	name = "portable power storage unit"
 	desc = "A portable, high-capacity superconducting magnetic energy storage (SMES) unit. Requires a separate power connector port to actually interface with power networks."
 	icon_state = "port_smes"
@@ -97,13 +97,13 @@
 	use_power = NO_POWER_USE // well, technically
 	density = TRUE
 	anchored = FALSE
-	can_change_cable_layer = FALSE // cable layering is handled via connector port
-	/// The initial charge of this smes current charge.
+
+	/// The initial charge of this smes charge.
 	var/charge = 0
 	/// The port this is connected to.
 	var/obj/machinery/power/smes/connector/connected_port
 
-/obj/machinery/power/smesbank/Initialize(mapload)
+/obj/machinery/smesbank/Initialize(mapload)
 	. = ..()
 
 	///Initial connection for mapload
@@ -117,27 +117,27 @@
 		possible_connector.output_attempt = TRUE
 
 	///Initial charge
-	var/charge_adjust = charge
-	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
-		power_cell.use(power_cell.max_charge(), TRUE)
-		charge_adjust -= power_cell.give(charge_adjust)
-		if(!charge_adjust)
-			break
+	if(charge)
+		var/charge_adjust = charge
+		for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
+			charge_adjust -= power_cell.give(charge_adjust)
+			if(!charge_adjust)
+				break
 
-/obj/machinery/power/smesbank/on_construction(mob/user)
+/obj/machinery/smesbank/on_construction(mob/user)
 	. = ..()
 	set_anchored(FALSE)
 
-/obj/machinery/power/smesbank/Destroy()
+/obj/machinery/smesbank/Destroy()
 	disconnect_port()
 	return ..()
 
-/obj/machinery/power/smesbank/examine(user)
+/obj/machinery/smesbank/examine(user)
 	. = ..()
 	if(!connected_port)
 		. += span_warning("This SMES has no connector port!")
 
-/obj/machinery/power/smesbank/update_overlays()
+/obj/machinery/smesbank/update_overlays()
 	. = ..()
 	if(panel_open || !is_operational)
 		return
@@ -149,12 +149,12 @@
 		if(clevel > 0)
 			. += "smes-og[clevel]"
 
-/obj/machinery/power/smesbank/interact(mob/user)
+/obj/machinery/smesbank/interact(mob/user)
 	. = ..()
 	connected_port?.interact(user)
 
 // adapted from portable atmos connection code
-/obj/machinery/power/smesbank/wrench_act(mob/living/user, obj/item/wrench)
+/obj/machinery/smesbank/wrench_act(mob/living/user, obj/item/wrench)
 	if(connected_port)
 		wrench.play_tool_sound(src)
 		if(!wrench.use_tool(src, user, 8 SECONDS))
@@ -186,13 +186,13 @@
 	investigate_log("was connected to [possible_connector] by [key_name(user)].", INVESTIGATE_ENGINE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/smesbank/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/machinery/smesbank/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_FAILURE
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
 		update_appearance(UPDATE_OVERLAYS)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/power/smesbank/default_deconstruction_crowbar(obj/item/crowbar/crowbar)
+/obj/machinery/smesbank/default_deconstruction_crowbar(obj/item/crowbar/crowbar)
 	if(istype(crowbar) && connected_port)
 		balloon_alert(usr, "disconnect from [connected_port] first!")
 		return ITEM_INTERACT_FAILURE
@@ -204,7 +204,7 @@
  * Arguments
  * * obj/machinery/power/smes/connector/possible_connector - the connector we are trying to link with
  */
-/obj/machinery/power/smesbank/proc/connect_port(obj/machinery/power/smes/connector/possible_connector)
+/obj/machinery/smesbank/proc/connect_port(obj/machinery/power/smes/connector/possible_connector)
 	PRIVATE_PROC(TRUE)
 
 	//Make sure not already connected to something else
@@ -223,7 +223,7 @@
 	return TRUE
 
 /// Disconnects the portable SMES from its assigned connector, if it has any. Also adapted from portable atmos connection code.
-/obj/machinery/power/smesbank/proc/disconnect_port()
+/obj/machinery/smesbank/proc/disconnect_port()
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(!connected_port)
@@ -234,7 +234,7 @@
 	set_anchored(FALSE)
 	update_appearance(UPDATE_OVERLAYS)
 
-/obj/machinery/power/smesbank/emp_act(severity)
+/obj/machinery/smesbank/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
@@ -246,10 +246,10 @@
 		if(!charge_adjust)
 			break
 
-/obj/machinery/power/smesbank/super
+/obj/machinery/smesbank/super
 	name = "super capacity power storage unit"
 	desc = "A portable, super-capacity, superconducting magnetic energy storage (SMES) unit. Relatively rare, and typically installed in long-range outposts where minimal maintenance is expected."
 	circuit = /obj/item/circuitboard/machine/smesbank/super
 
-/obj/machinery/power/smesbank/super/full
+/obj/machinery/smesbank/super/full
 	charge = 100 * STANDARD_BATTERY_CHARGE
