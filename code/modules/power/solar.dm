@@ -322,7 +322,10 @@
 		for(var/obj/stuff_in_the_way in solarturf) //prevent anchoring on other machinery or solar assemblies
 			if(stuff_in_the_way == src)
 				continue
-			if((stuff_in_the_way.density || stuff_in_the_way.anchored) && !(stuff_in_the_way.flags_1 & ON_BORDER_1))
+			if(istype(stuff_in_the_way, /obj/item/solar_assembly) && stuff_in_the_way.anchored)
+				balloon_alert(user, "secured assembly in the way!")
+				return
+			if((stuff_in_the_way.density) && !(stuff_in_the_way.flags_1 & ON_BORDER_1))
 				balloon_alert(user, "something in the way!")
 				return
 		set_anchored(!anchored)
