@@ -92,6 +92,7 @@
 /obj/machinery/smesbank
 	name = "portable power storage unit"
 	desc = "A portable, high-capacity superconducting magnetic energy storage (SMES) unit. Requires a separate power connector port to actually interface with power networks."
+	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "port_smes"
 	circuit = /obj/item/circuitboard/machine/smesbank
 	use_power = NO_POWER_USE // well, technically
