@@ -747,6 +747,9 @@
 	icon_state = "cruelbonesetter"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 
+/obj/item/bonesetter/cruel/get_surgery_tool_overlay(tray_extended)
+	return "bonesetter_cruel" + (tray_extended ? "" : "_out")
+
 /obj/item/blood_filter/cruel
 	name = "malignant blood filter"
 	desc = "You must be made pure..."
