@@ -170,6 +170,8 @@
 	var/being_drained = FALSE
 	/// The icon state applied to the image created for this influence.
 	var/real_icon_state = "reality_smash"
+	/// Proximity monitor that gives any nearby heretics x-ray vision
+	var/datum/proximity_monitor/influence_monitor/monitor
 
 /obj/effect/heretic_influence/Initialize(mapload)
 	. = ..()
@@ -182,12 +184,14 @@
 	AddElement(/datum/element/block_turf_fingerprints)
 	AddComponent(/datum/component/redirect_attack_hand_from_turf, interact_check = CALLBACK(src, PROC_REF(verify_user_can_see)))
 	AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/dimensional_rift])
+	monitor = new(src, 7)
 
 /obj/effect/heretic_influence/proc/verify_user_can_see(mob/user)
 	return (user.mind in GLOB.reality_smash_track.tracked_heretics)
 
 /obj/effect/heretic_influence/Destroy()
 	GLOB.reality_smash_track.smashes -= src
+	QDEL_NULL(monitor)
 	return ..()
 
 /obj/effect/heretic_influence/attack_hand_secondary(mob/user, list/modifiers)
@@ -269,3 +273,14 @@
 /datum/atom_hud/alternate_appearance/basic/has_antagonist/heretic
 	antag_datum_type = /datum/antagonist/heretic
 	add_ghost_version = TRUE
+
+/datum/proximity_monitor/influence_monitor
+
+/datum/proximity_monitor/influence_monitor/on_entered(atom/source, atom/movable/arrived, turf/old_loc)
+	. = ..()
+	if(!isliving(arrived))
+		return
+	var/mob/living/arrived_living = arrived
+	if(!IS_HERETIC(arrived_living))
+		return
+	arrived_living.apply_status_effect(/datum/status_effect/temporary_xray)

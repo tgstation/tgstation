@@ -240,6 +240,45 @@ GLOBAL_LIST(heretic_research_tree)
 	QDEL_LIST_ASSOC_VAL(paths)
 	return heretic_research_tree
 
+/datum/heretic_knowledge/drafted_knowledge
+	// None of the flavor text should be visible
+	name = "Drafted Knowledge"
+	desc = "Drafted description"
+	gain_text = "Drafted Gain Text"
+	abstract_parent_type = /datum/heretic_knowledge/drafted_knowledge
+	/// What knowledge do we redirect to. What are we pretending to be?
+	var/datum/heretic_knowledge/redirect
+
+/// Proc that diguises our drafted knowledge as another existing knowledge. Researches that knowledge
+/datum/heretic_knowledge/drafted_knowledge/proc/take_draft_information(datum/heretic_knowledge/to_become)
+	if(isnull(to_become))
+		CRASH("take_draft_information called with no knowledge to take the values of")
+	redirect = to_become
+	name = to_become.name
+	desc = to_become.desc
+	gain_text = to_become.gain_text
+	research_tree_icon_path = to_become.research_tree_icon_path
+	research_tree_icon_state = to_become.research_tree_icon_state
+	research_tree_icon_frame = to_become.research_tree_icon_frame
+	research_tree_icon_dir = to_become.research_tree_icon_dir
+
+/datum/heretic_knowledge/drafted_knowledge/on_research(mob/user, datum/antagonist/heretic/our_heretic)
+	. = ..()
+	our_heretic.gain_knowledge(redirect)
+
+/datum/heretic_knowledge/drafted_knowledge/one
+/datum/heretic_knowledge/drafted_knowledge/two
+/datum/heretic_knowledge/drafted_knowledge/three
+/datum/heretic_knowledge/drafted_knowledge/four
+/datum/heretic_knowledge/drafted_knowledge/five
+/datum/heretic_knowledge/drafted_knowledge/six
+/datum/heretic_knowledge/drafted_knowledge/seven
+/datum/heretic_knowledge/drafted_knowledge/eight
+/datum/heretic_knowledge/drafted_knowledge/nine
+/datum/heretic_knowledge/drafted_knowledge/ten
+/datum/heretic_knowledge/drafted_knowledge/eleven
+/datum/heretic_knowledge/drafted_knowledge/twelve
+
 /**
  * Each heretic has a few drafted knowledges within their heretic knowledge tree.
  * This is not during the knowledge tree creation because we want to know what path our heretic picks so we filter out dupe knowledges.
@@ -271,9 +310,6 @@ GLOBAL_LIST(heretic_research_tree)
 		// Don't add the knowledge if it's obtainable later in the path
 		if(is_path_in_list(potential_knowledge.type, list(knowledge_tier1, knowledge_tier2, knowledge_tier3, knowledge_tier4)))
 			continue
-		// Don't add the knowledge if it's guaranteed to show up during a specific draft
-		if(is_path_in_list(potential_knowledge.type, list(guaranteed_draft_t1, guaranteed_draft_t2, guaranteed_draft_t3)))
-			continue
 		elligible_knowledge["[potential_knowledge.drafting_tier]"] += potential_knowledge
 
 	// Once we've selected the path, let's let them know what to put in the knowledge shop
@@ -291,13 +327,14 @@ GLOBAL_LIST(heretic_research_tree)
 			else
 				var/chosen_tier = pick_weight(list("1" = 80, "2" = 5, "3" = 5, "4" = 5, "5" = 5))
 				selected_knowledge = pick_n_take(elligible_knowledge[chosen_tier])
-		heretic_research_tree[knowledge_tier1][HKT_NEXT] += selected_knowledge
-		heretic_research_tree[selected_knowledge][HKT_NEXT] = list()
-		heretic_research_tree[selected_knowledge][HKT_ROUTE] = heretic_path
-		heretic_research_tree[selected_knowledge][HKT_DEPTH] = 4
-		heretic_research_tree[selected_knowledge][HKT_UI_BGR] = current_path.ui_bgr
-		heretic_research_tree[selected_knowledge][HKT_COST] = 0
-		draft_blacklist += selected_knowledge
+		var/list/draft_knowledge = list(/datum/heretic_knowledge/drafted_knowledge/one, /datum/heretic_knowledge/drafted_knowledge/two, /datum/heretic_knowledge/drafted_knowledge/three)
+		heretic_research_tree[knowledge_tier1][HKT_NEXT] += draft_knowledge[cycle]
+		heretic_research_tree[draft_knowledge[cycle]][HKT_NEXT] = list()
+		heretic_research_tree[draft_knowledge[cycle]][HKT_ROUTE] = heretic_path
+		heretic_research_tree[draft_knowledge[cycle]][HKT_DEPTH] = 4
+		heretic_research_tree[draft_knowledge[cycle]][HKT_UI_BGR] = current_path.ui_bgr
+		heretic_research_tree[draft_knowledge[cycle]][HKT_COST] = 0
+		draft_blacklist += draft_knowledge[cycle]
 		selected_knowledge = null
 	for(var/blacklist as anything in draft_blacklist)
 		heretic_research_tree[blacklist][HKT_BAN] += (draft_blacklist - blacklist)
@@ -310,13 +347,14 @@ GLOBAL_LIST(heretic_research_tree)
 			else
 				var/chosen_tier = pick_weight(list("1" = 80, "2" = 5, "3" = 5, "4" = 5, "5" = 5))
 				selected_knowledge = pick_n_take(elligible_knowledge[chosen_tier])
-		heretic_research_tree[knowledge_tier2][HKT_NEXT] += selected_knowledge
-		heretic_research_tree[selected_knowledge][HKT_NEXT] = list()
-		heretic_research_tree[selected_knowledge][HKT_ROUTE] = heretic_path
-		heretic_research_tree[selected_knowledge][HKT_DEPTH] = 6
-		heretic_research_tree[selected_knowledge][HKT_UI_BGR] = current_path.ui_bgr
-		heretic_research_tree[selected_knowledge][HKT_COST] = 0
-		draft_blacklist += selected_knowledge
+		var/list/draft_knowledge = list(/datum/heretic_knowledge/drafted_knowledge/four, /datum/heretic_knowledge/drafted_knowledge/five, /datum/heretic_knowledge/drafted_knowledge/six)
+		heretic_research_tree[knowledge_tier2][HKT_NEXT] += draft_knowledge[cycle]
+		heretic_research_tree[draft_knowledge[cycle]][HKT_NEXT] = list()
+		heretic_research_tree[draft_knowledge[cycle]][HKT_ROUTE] = heretic_path
+		heretic_research_tree[draft_knowledge[cycle]][HKT_DEPTH] = 6
+		heretic_research_tree[draft_knowledge[cycle]][HKT_UI_BGR] = current_path.ui_bgr
+		heretic_research_tree[draft_knowledge[cycle]][HKT_COST] = 0
+		draft_blacklist += draft_knowledge[cycle]
 		selected_knowledge = null
 	for(var/blacklist as anything in draft_blacklist)
 		heretic_research_tree[blacklist][HKT_BAN] += (draft_blacklist - blacklist)
@@ -329,13 +367,14 @@ GLOBAL_LIST(heretic_research_tree)
 			else
 				var/chosen_tier = pick_weight(list("1" = 80, "2" = 5, "3" = 5, "4" = 5, "5" = 5))
 				selected_knowledge = pick_n_take(elligible_knowledge[chosen_tier])
-		heretic_research_tree[knowledge_tier3][HKT_NEXT] += selected_knowledge
-		heretic_research_tree[selected_knowledge][HKT_NEXT] = list()
-		heretic_research_tree[selected_knowledge][HKT_ROUTE] = heretic_path
-		heretic_research_tree[selected_knowledge][HKT_DEPTH] = 9
-		heretic_research_tree[selected_knowledge][HKT_UI_BGR] = current_path.ui_bgr
-		heretic_research_tree[selected_knowledge][HKT_COST] = 0
-		draft_blacklist += selected_knowledge
+		var/list/draft_knowledge = list(/datum/heretic_knowledge/drafted_knowledge/seven, /datum/heretic_knowledge/drafted_knowledge/eight, /datum/heretic_knowledge/drafted_knowledge/nine)
+		heretic_research_tree[knowledge_tier3][HKT_NEXT] += draft_knowledge[cycle]
+		heretic_research_tree[draft_knowledge[cycle]][HKT_NEXT] = list()
+		heretic_research_tree[draft_knowledge[cycle]][HKT_ROUTE] = heretic_path
+		heretic_research_tree[draft_knowledge[cycle]][HKT_DEPTH] = 9
+		heretic_research_tree[draft_knowledge[cycle]][HKT_UI_BGR] = current_path.ui_bgr
+		heretic_research_tree[draft_knowledge[cycle]][HKT_COST] = 0
+		draft_blacklist += draft_knowledge[cycle]
 		selected_knowledge = null
 	for(var/blacklist as anything in draft_blacklist)
 		heretic_research_tree[blacklist][HKT_BAN] += (draft_blacklist - blacklist)
@@ -345,13 +384,14 @@ GLOBAL_LIST(heretic_research_tree)
 		while(isnull(selected_knowledge))
 			var/chosen_tier = pick_weight(list("1" = 10, "2" = 10, "3" = 10, "4" = 10, "5" = 60))
 			selected_knowledge = pick_n_take(elligible_knowledge[chosen_tier])
-		heretic_research_tree[knowledge_tier4][HKT_NEXT] += selected_knowledge
-		heretic_research_tree[selected_knowledge][HKT_NEXT] = list()
-		heretic_research_tree[selected_knowledge][HKT_ROUTE] = heretic_path
-		heretic_research_tree[selected_knowledge][HKT_DEPTH] = 12
-		heretic_research_tree[selected_knowledge][HKT_UI_BGR] = current_path.ui_bgr
-		heretic_research_tree[selected_knowledge][HKT_COST] = 0
-		draft_blacklist += selected_knowledge
+		var/list/draft_knowledge = list(/datum/heretic_knowledge/drafted_knowledge/ten, /datum/heretic_knowledge/drafted_knowledge/eleven, /datum/heretic_knowledge/drafted_knowledge/twelve)
+		heretic_research_tree[knowledge_tier4][HKT_NEXT] += draft_knowledge[cycle]
+		heretic_research_tree[draft_knowledge[cycle]][HKT_NEXT] = list()
+		heretic_research_tree[draft_knowledge[cycle]][HKT_ROUTE] = heretic_path
+		heretic_research_tree[draft_knowledge[cycle]][HKT_DEPTH] = 12
+		heretic_research_tree[draft_knowledge[cycle]][HKT_UI_BGR] = current_path.ui_bgr
+		heretic_research_tree[draft_knowledge[cycle]][HKT_COST] = 0
+		draft_blacklist += draft_knowledge[cycle]
 		selected_knowledge = null
 	for(var/blacklist as anything in draft_blacklist)
 		heretic_research_tree[blacklist][HKT_BAN] += (draft_blacklist - blacklist)

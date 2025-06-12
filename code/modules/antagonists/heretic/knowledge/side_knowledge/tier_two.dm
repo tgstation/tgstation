@@ -21,7 +21,7 @@
 		/mob/living/carbon/human = 1,
 	)
 	result_atoms = list(/obj/item/codex_cicatrix/morbus)
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "book_morbus"
 	drafting_tier = 2
@@ -52,7 +52,7 @@
 		list(/obj/item/stack/sheet/mineral/titanium = 2, /obj/item/stack/sheet/mineral/silver = 2)
 	)
 	result_atoms = list(/obj/item/clothing/shoes/greaves_of_the_prophet)
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/obj/clothing/shoes.dmi'
 	research_tree_icon_state = "hereticgreaves"
 	drafting_tier = 2
@@ -65,7 +65,7 @@
 	gain_text = "My shackles undone in dark fury, their feeble bindings crumble before my power."
 
 	action_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
-	cost = 1
+	cost = 2
 	drafting_tier = 2
 
 /datum/heretic_knowledge/rune_carver
@@ -81,7 +81,7 @@
 		/obj/item/paper = 1,
 	)
 	result_atoms = list(/obj/item/melee/rune_carver)
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "rune_carver"
 	drafting_tier = 2
@@ -98,7 +98,7 @@
 		/obj/effect/decal/cleanable/vomit = 1,
 	)
 	result_atoms = list(/obj/item/ether)
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/obj/antags/eldritch.dmi'
 	research_tree_icon_state = "poison_flask"
 	drafting_tier = 2
@@ -116,7 +116,7 @@
 				They yearn for mortal eyes, so I shall give them an audience."
 	required_atoms = list(/obj/item/canvas = 1)
 	result_atoms = list(/obj/item/canvas)
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/obj/signs.dmi'
 	research_tree_icon_state = "eldritch_painting_weeping"
 	drafting_tier = 2

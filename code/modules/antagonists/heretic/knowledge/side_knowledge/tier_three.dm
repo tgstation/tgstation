@@ -13,7 +13,7 @@
 		/obj/item/stack/cable_coil = 15,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/rust_walker
-	cost = 1
+	cost = 2
 	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT
 	drafting_tier = 3
 
@@ -30,7 +30,7 @@
 		/obj/item/clothing/suit = 1,
 		/obj/item/organ/lungs = 1,
 	)
-	cost = 1
+	cost = 2
 
 	mob_to_summon = /mob/living/basic/heretic_summon/maid_in_the_mirror
 	poll_ignore_define = POLL_IGNORE_MAID_IN_MIRROR
@@ -48,7 +48,7 @@
 		/obj/item/book = 1,
 		)
 	mob_to_summon = /mob/living/basic/heretic_summon/ash_spirit
-	cost = 1
+	cost = 2
 
 	poll_ignore_define = POLL_IGNORE_ASH_SPIRIT
 	drafting_tier = 3
@@ -71,7 +71,7 @@
 		/obj/item/clothing/gloves/latex = 1,
 	)
 	limit = 1
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "ghoul_shattered"
 	drafting_tier = 3
@@ -169,7 +169,7 @@
 		/obj/item/stack/sheet/mineral/plasma = 1,
 	)
 	mob_to_summon = /mob/living/basic/heretic_summon/fire_shark
-	cost = 1
+	cost = 2
 
 	poll_ignore_define = POLL_IGNORE_FIRE_SHARK
 

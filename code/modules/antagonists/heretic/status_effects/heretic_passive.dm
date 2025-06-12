@@ -10,6 +10,7 @@
 	on_remove_on_mob_delete = TRUE
 	///What level is our passive currently on
 	var/passive_level = HERETIC_LEVEL_START
+	/// Name of the passive, used by the UI
 	var/name = "Heretic Passive"
 	var/tier_1_description = "Grants you a passive ability based on your heretic type. This ability will upgrade as you gain more power."
 	var/tier_2_description = "Your passive ability has been upgraded, doing something else."
@@ -48,6 +49,9 @@
 // Level 1 grants heat and ash storm immunity
 // Level 2 grants lava immunity
 // Level 3 grants resistance to high pressure
+/datum/status_effect/heretic_passive/ash
+	name = "Vow of Destruction"
+
 /datum/status_effect/heretic_passive/ash/on_apply()
 	. = ..()
 	owner.add_traits(list(TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), REF(src))
@@ -71,6 +75,7 @@
 // Level 2 Makes you immune to fall damage/stun from falling
 // Level 3 only has the cooldown reduction (nothing else added)
 /datum/status_effect/heretic_passive/blade
+	name = "Dance of the Brand"
 	/// The cooldown before we can riposte again
 	var/base_cooldown = 20 SECONDS
 	/// The cooldown reduction gained from upgrading
@@ -176,6 +181,7 @@
 // Level 2 Cosmic fields will disable any nearby bombs/TTVs/Syndicate Bombs
 // Level 3 Cosmic fields will temporarily slow down bullets that pass through them
 /datum/status_effect/heretic_passive/cosmic
+	name = "Chosen of the Stars"
 
 /datum/status_effect/heretic_passive/cosmic/tick(seconds_between_ticks)
 	. = ..()
@@ -211,8 +217,11 @@
 
 //---- Flesh Passive
 // Makes you never get disgust, virus immune and immune to damage from space ants
-// Level 2, organs and raw meat heals you. You also become a voracious glutton who likes all food
-// Level 3, no slowdown from being fat, being fat gives damage resistance
+// Level 2, organs and raw meat heals you. You also become a voracious glutton who likes all food. No slowdown from being fat
+// Level 3, being fat gives damage resistance
+/datum/status_effect/heretic_passive/flesh
+	name = "Ravenous Hunger"
+
 /datum/status_effect/heretic_passive/flesh/on_apply()
 	. = ..()
 	owner.add_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY), REF(src))
@@ -289,12 +298,14 @@
 	var/mob/living/carbon/human/heretic = owner
 	if(HAS_TRAIT(heretic, TRAIT_FAT))
 		heretic.physiology.damage_resistance += 15
+		ADD_TRAIT(heretic, TRAIT_BATON_RESISTANCE, REF(src))
 	else
 		heretic.physiology.damage_resistance -= 15
+		REMOVE_TRAIT(heretic, TRAIT_BATON_RESISTANCE, REF(src))
 
 /datum/status_effect/heretic_passive/flesh/on_remove()
 	. = ..()
-	owner.remove_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY, TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON), REF(src))
+	owner.remove_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY, TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON, TRAIT_BATON_RESISTANCE), REF(src))
 	UnregisterSignal(owner, list(COMSIG_FOOD_BIT, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT)))
 	if(!ishuman(owner))
 		return
@@ -309,6 +320,9 @@
 // Level 1 Hand insulation + Side knowledge is cheaper
 // Level 2 Gains X-ray Vision
 // Level 3 your grasp no longer goes on cooldown when opening things
+/datum/status_effect/heretic_passive/lock
+	name = "Open Invitation"
+
 /datum/status_effect/heretic_passive/lock/on_apply()
 	. = ..()
 	ADD_TRAIT(owner, TRAIT_SHOCKIMMUNE, REF(src))
@@ -333,6 +347,7 @@
 // Level 2 grants sleep immunity
 // Level 3, Mind gate + Ringleader's rise will channel the moon amulet effects
 /datum/status_effect/heretic_passive/moon
+	name = "Do You Hear The Voices Too?"
 	/// Built-in moon amulet which channels through your spells
 	var/obj/item/clothing/neck/heretic_focus/moon_amulet/amulet
 	/// When were we last attacked?
@@ -382,6 +397,9 @@
 // Level 1 provides healing and baton resist when standing on rust
 // Level 2 will heal wounds when standing on rust
 // Level 3 will restore lost limbs when standing on rust
+/datum/status_effect/heretic_passive/rust
+	name = "Leeching Walk"
+
 /datum/status_effect/heretic_passive/rust/on_apply()
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
@@ -463,6 +481,9 @@
 // Level 1 Cold and Low pressure resist
 // Level 2 No breathe
 // Level 3 No slip on water/ice
+/datum/status_effect/heretic_passive/void
+	name = "Aristocrat's Way"
+
 /datum/status_effect/heretic_passive/void/on_apply()
 	. = ..()
 	owner.add_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE), REF(src))

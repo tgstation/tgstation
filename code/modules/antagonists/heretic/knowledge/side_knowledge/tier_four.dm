@@ -9,7 +9,7 @@
 	gain_text = "You feel like your body can move through space as if you where dust."
 
 	action_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
-	cost = 1
+	cost = 2
 	research_tree_icon_frame = 6
 	drafting_tier = 4
 
@@ -27,7 +27,7 @@
 		/obj/item/storage/belt = 1,
 	)
 	result_atoms = list(/obj/item/storage/belt/unfathomable_curio)
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/obj/clothing/belts.dmi'
 	research_tree_icon_state = "unfathomable_curio"
 	drafting_tier = 4
@@ -41,7 +41,7 @@
 		/obj/item/organ/liver = 1,
 	)
 	result_atoms = list(/obj/item/grenade/chem_grenade/rust_sower)
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/obj/weapons/grenade.dmi'
 	research_tree_icon_state = "rustgrenade"
 	drafting_tier = 4
@@ -52,7 +52,7 @@
 	gain_text = "At first I didn't understand these instruments of war, but the Priest \
 				told me to use them regardless. Soon, he said, I would know them well."
 	action_to_add = /datum/action/cooldown/spell/pointed/crimson_cleave
-	cost = 1
+	cost = 2
 	drafting_tier = 4
 
 /datum/heretic_knowledge/rifle
@@ -71,7 +71,7 @@
 		/obj/item/camera = 1,
 	)
 	result_atoms = list(/obj/item/gun/ballistic/rifle/lionhunter)
-	cost = 1
+	cost = 2
 	research_tree_icon_path = 'icons/obj/weapons/guns/ballistic.dmi'
 	research_tree_icon_state = "goldrevolver"
 	drafting_tier = 4

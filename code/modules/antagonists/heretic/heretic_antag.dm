@@ -613,7 +613,7 @@
 	var/datum/objective/minor_sacrifice/sac_objective = new()
 	sac_objective.owner = owner
 	if(num_heads < 2) // They won't get major sacrifice, so bump up minor sacrifice a bit
-		sac_objective.target_amount += 2
+		sac_objective.target_amount = 5
 		sac_objective.update_explanation_text()
 	objectives += sac_objective
 
@@ -944,7 +944,7 @@
 
 /datum/objective/minor_sacrifice/New(text)
 	. = ..()
-	target_amount = rand(3, 4)
+	target_amount = 4
 	update_explanation_text()
 
 /datum/objective/minor_sacrifice/update_explanation_text()
