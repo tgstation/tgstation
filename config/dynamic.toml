@@ -561,8 +561,8 @@ weight.3 = 3
 weight.4 = 3
 min_pop = 30
 blacklisted_roles = []
-min_antag_cap = 3
-# max_antag_cap = min_antag_cap
+min_antag_cap = 1
+max_antag_cap = 3
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
@@ -610,5 +610,3 @@ min_antag_cap = 0
 repeatable_weight_decrease = 2
 repeatable = 0
 minimum_required_age = 0
-
-

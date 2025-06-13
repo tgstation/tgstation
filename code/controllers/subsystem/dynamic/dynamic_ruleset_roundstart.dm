@@ -299,7 +299,8 @@
 		DYNAMIC_TIER_HIGH = 3,
 	)
 	min_pop = 30
-	min_antag_cap = 3
+	min_antag_cap = 1
+	max_antag_cap = 3
 	repeatable = FALSE
 	/// How many heads of staff are required to be on the station for this to be selected
 	var/heads_necessary = 3
@@ -316,9 +317,6 @@
 	for(var/datum/job/job as anything in SSjob.all_occupations)
 		if(job.job_flags & JOB_HEAD_OF_STAFF)
 			. |= job.title
-
-/datum/dynamic_ruleset/roundstart/revolution/is_valid_candidate(mob/candidate, client/candidate_client)
-	return ..() && can_be_headrev(candidate.mind)
 
 /datum/dynamic_ruleset/roundstart/revolution/assign_role(datum/mind/candidate)
 	LAZYADD(candidate.special_roles, "Dormant Head Revolutionary")

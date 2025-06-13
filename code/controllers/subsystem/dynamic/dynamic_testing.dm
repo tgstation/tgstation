@@ -92,7 +92,7 @@ ADMIN_VERB(dynamic_tester, R_DEBUG, "Dynamic Tester", "See dynamic probabilities
 
 		roundstart_ruleset_report[ruleset] = list(
 			"name" = ruleset.name,
-			"weight" = ruleset.get_weight(GLOB.player_list, tier),
+			"weight" = ruleset.get_weight(num_players, tier),
 			"max_candidates" = ruleset.get_antag_cap(num_players, ruleset.max_antag_cap || ruleset.min_antag_cap),
 			"min_candidates" = ruleset.get_antag_cap(num_players, ruleset.min_antag_cap),
 			"comment" = comment,
@@ -102,7 +102,7 @@ ADMIN_VERB(dynamic_tester, R_DEBUG, "Dynamic Tester", "See dynamic probabilities
 	for(var/datum/dynamic_ruleset/midround/ruleset as anything in midround_rulesets)
 		midround_ruleset_report[ruleset] = list(
 			"name" = ruleset.name,
-			"weight" = ruleset.get_weight(list(), tier),
+			"weight" = ruleset.get_weight(num_players, tier),
 			"max_candidates" = ruleset.get_antag_cap(num_players, ruleset.max_antag_cap || ruleset.min_antag_cap),
 			"min_candidates" = ruleset.get_antag_cap(num_players, ruleset.min_antag_cap),
 			"comment" = ruleset.midround_type,
