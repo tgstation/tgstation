@@ -113,12 +113,3 @@
 	user.put_in_hands(autopsy_report)
 	user.balloon_alert(user, "report printed")
 	return TRUE
-
-/obj/item/autopsy_scanner/cruel
-	name = "malevolent autopsy scanner"
-	desc = "An old, twisted, and modified scanner designed for analyzing corpses. This one holds the information of countless bodies, and for one of certain...curiosities they may find it easier to find the secrets of the dead when using it."
-	icon_state = "cruelautopsy"
-	inhand_icon_state = "cruelautopsy"
-	worn_icon_state = "cruelautopsy"
-	item_flags = CRUEL_IMPLEMENT
-	custom_price = PAYCHECK_COMMAND * 2

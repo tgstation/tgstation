@@ -381,7 +381,6 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/scythe = 1,
 		/obj/item/storage/fancy/pickles_jar = 1,
 		/obj/item/table_clock = 1,
-		/obj/item/autopsy_scanner/cruel = 1,
 	)
 	premium = list(
 		/obj/item/autopsy_scanner = 1,
