@@ -116,7 +116,7 @@
 	if(HAS_TRAIT(target, TRAIT_SURGICALLY_ANALYZED))
 		speed_mod *= SURGERY_SPEED_DISSECTION_MODIFIER
 
-	if(check_morbid_curiosity(user, tool, surgery))
+	if(check_morbid_curiosity(user, target, tool, surgery))
 		speed_mod *= SURGERY_SPEED_MORBID_CURIOSITY
 
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
@@ -142,7 +142,10 @@
 
 		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
-				update_surgery_mood(target, SURGERY_STATE_SUCCESS)
+				if(tool.item_flags & CRUEL_IMPLEMENT)
+					update_surgery_mood(target, SURGERY_STATE_FAILURE)
+				else
+					update_surgery_mood(target, SURGERY_STATE_SUCCESS)
 				play_success_sound(user, target, target_zone, tool, surgery)
 				advance = TRUE
 		else
@@ -294,8 +297,8 @@
 	return english_list(chems, and_text = require_all_chems ? " and " : " or ")
 
 // Check if we are entitled to morbid bonuses
-/datum/surgery_step/proc/check_morbid_curiosity(mob/user, obj/item/tool, datum/surgery/surgery)
-	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
+/datum/surgery_step/proc/check_morbid_curiosity(mob/user, mob/living/target, obj/item/tool, datum/surgery/surgery)
+	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY) || target.stat != DEAD)
 		return FALSE
 	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
 		return FALSE
