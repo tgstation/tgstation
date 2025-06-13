@@ -101,7 +101,7 @@ const RoundSection = (props) => {
           onClick={() => act('return_to_body')}
           fontSize="11px"
           buttons={
-            <Button.Confirm
+            <Button
               icon="ghost"
               tooltip="Become unable to be resusitated, permanently leaving your corpse behind."
               onClick={() => act('DNR')}
