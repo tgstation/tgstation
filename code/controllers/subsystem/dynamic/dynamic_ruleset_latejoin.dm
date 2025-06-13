@@ -79,6 +79,8 @@
 	var/heads_necessary = 3
 
 /datum/dynamic_ruleset/latejoin/revolution/can_be_selected()
+	if(GLOB.revolution_handler)
+		return FALSE
 	var/head_check = 0
 	for(var/mob/player as anything in get_active_player_list(alive_check = TRUE, afk_check = TRUE))
 		if (player.mind.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
