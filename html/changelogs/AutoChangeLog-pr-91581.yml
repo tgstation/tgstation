@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Borgs can't drop their omnitool's tools on conveyor belts & into closets."
