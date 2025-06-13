@@ -1,0 +1,10 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - refactor: "Refactored tablet/ID painter item interactions. Please report any issues."
+  - bugfix: "You can no longer circumvent the block on inserting chameleon IDs into tablet/ID painters by inserting them via the UI."
+  - bugfix: "You can no longer insert non-advanced IDs into the tablet/ID painter and change their trims."
+  - sound: "Inserting IDs into tablet/ID painters is no longer silent."
+  - qol: "You can repair tablet/ID painters when they're damaged, instead of just when they're broken."
+  - qol: "Improved feedback for tablet/ID painter interactions."
+  - qol: "Added screentips to tablet/ID painters."
