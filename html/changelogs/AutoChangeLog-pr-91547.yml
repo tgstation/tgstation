@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "The static from holocalls no longer stays even after exiting the holocall."

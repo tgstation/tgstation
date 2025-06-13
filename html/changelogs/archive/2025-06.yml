@@ -286,3 +286,21 @@
   SyncIt21:
   - bugfix: map exported APC's now locate the terminals under them & attach to it
       thus enabling charging & stuff
+2025-06-13:
+  00-Steven:
+  - bugfix: The static from holocalls no longer stays even after exiting the holocall.
+  Absolucy:
+  - admin: Added a "Count Atoms/Datums" debug verb.
+  Ghommie:
+  - bugfix: fixed gene disks and chromosomes.
+  JohnFulpWillard:
+  - bugfix: Borgs can't drop their omnitool's tools on conveyor belts & into closets.
+  Maximal08:
+  - bugfix: items with TRAIT_NODROP can no longer be worn
+  Melbert:
+  - qol: Mappers can put recharge floors on any floor type
+  TealSeer:
+  - code_imp: the russian derelict vault computer now uses a variable for the door
+      id
+  carlarctg:
+  - bugfix: Fixed cockroach spawners not doing anything
