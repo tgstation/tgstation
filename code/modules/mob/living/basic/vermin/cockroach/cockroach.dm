@@ -74,7 +74,7 @@
 	return FALSE
 
 // Roach goop is the gibs to drop
-/mob/living/basic/cockroach/spawn_gibs()
+/mob/living/basic/cockroach/get_gibs_type(drop_bitflags = NONE)
 	return
 
 /// Roach which tries to ineffectually attack you
