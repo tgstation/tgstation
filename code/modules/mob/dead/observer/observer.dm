@@ -75,11 +75,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 /mob/dead/observer/Initialize(mapload)
 	set_invisibility(GLOB.observer_default_invisibility)
-	add_verb(src, list(
-		/mob/dead/observer/proc/dead_tele,
-		/mob/dead/observer/proc/tray_view,
-	))
-
 	if(icon_state in GLOB.ghost_forms_with_directions_list)
 		ghostimage_default = image(src.icon,src,src.icon_state + "_nodir")
 	else
@@ -387,7 +382,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.client.init_verbs()
 	return TRUE
 
-/mob/dead/observer/verb/stay_dead()
+/mob/dead/observer/verb/do_not_resuscitate()
 	set name = "Do Not Resuscitate"
 
 	if(!can_reenter_corpse)
@@ -395,8 +390,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return FALSE
 
 	var/response = tgui_alert(usr, "Are you sure you want to prevent (almost) all means of resuscitation? This cannot be undone.", "Are you sure you want to stay dead?", list("DNR","Save Me"))
-	if(response != "DNR")
-		return
+	if(response == "DNR")
+		stay_dead()
+
+/mob/dead/observer/proc/stay_dead()
+	if(!can_reenter_corpse)
+		to_chat(usr, span_warning("You're already stuck out of your body!"))
+		return FALSE
 
 	can_reenter_corpse = FALSE
 	var/mob/living/current_mob = mind.current
@@ -435,7 +435,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(sound)
 		SEND_SOUND(src, sound(sound))
 
-/mob/dead/observer/proc/dead_tele()
+/mob/dead/observer/verb/dead_tele()
 	set name = "Teleport"
 
 	if(!isobserver(usr))
@@ -572,7 +572,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	do_observe(chosen_target)
 
-/mob/dead/observer/proc/tray_view()
+/mob/dead/observer/verb/tray_view()
 	set name = "T-ray scan"
 
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
