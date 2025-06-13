@@ -1,7 +1,7 @@
 SUBSYSTEM_DEF(dynamic)
 	name = "Dynamic"
 	flags = SS_NO_INIT
-	wait = 2.5 MINUTES
+	wait = 5 MINUTES
 
 	// These vars just exist for admins interfacing with dynamic
 	/// Cooldown between "we're going to spawn a midround" and "we're actually spawning a midround", to give admins a chance to cancel
