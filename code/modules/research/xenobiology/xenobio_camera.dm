@@ -82,16 +82,16 @@
 /obj/machinery/computer/camera_advanced/xenobio/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
-	if(istype(tool, /obj/item/slimepotion/slime))
+	if(istype(held_item, /obj/item/slimepotion/slime))
 		context[SCREENTIP_CONTEXT_LMB] = "[current_potion ? "Swap" : "Insert"] potion"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(tool, /obj/item/food/monkeycube))
+	if(istype(held_item, /obj/item/food/monkeycube))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert monkey cubes"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(tool, /obj/item/storage/bag) || istype(tool, /obj/item/storage/box/monkeycubes))
+	if(istype(held_item, /obj/item/storage/bag) || istype(held_item, /obj/item/storage/box/monkeycubes))
 		context[SCREENTIP_CONTEXT_LMB] = "Load monkey cubes"
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(tool, /obj/item/multitool))
+	if(istype(held_item, /obj/item/multitool))
 		context[SCREENTIP_CONTEXT_LMB] = "Link monkey recycler"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -134,7 +134,7 @@
 	if(.)
 		return .
 
-	if(istype(tool, /obj/item/slimepotion/slime)))
+	if(istype(tool, /obj/item/slimepotion/slime))
 		return slimepotion_act(user, tool)
 	if(istype(tool, /obj/item/food/monkeycube))
 		return monkeycube_act(user, tool)
@@ -143,7 +143,7 @@
 	return NONE
 
 /// Handles inserting a slime potion into the console, potentially swapping out an existing one.
-/obj/machinery/computer/camera_advanced/xenobio/proc/slimepotion_act(mob/living/user, /obj/item/slimepotion/slime/used_potion)
+/obj/machinery/computer/camera_advanced/xenobio/proc/slimepotion_act(mob/living/user, obj/item/slimepotion/slime/used_potion)
 	if(!user.transferItemToLoc(used_potion, src))
 		balloon_alert(user, "can't insert!")
 		return ITEM_INTERACT_BLOCKING
@@ -159,7 +159,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /// Handles inserting a monkey cube into the console.
-/obj/machinery/computer/camera_advanced/xenobio/proc/monkeycube_act(mob/living/user, /obj/item/food/monkeycube/used_cube)
+/obj/machinery/computer/camera_advanced/xenobio/proc/monkeycube_act(mob/living/user, obj/item/food/monkeycube/used_cube)
 	stored_monkeys += 1
 	balloon_alert(user, "inserted")
 	to_chat(user, span_notice("You feed [used_cube] to [src]. It now has [stored_monkeys] monkey cubes stored."))
@@ -180,22 +180,22 @@
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "loaded monkey cubes")
-	to_chat(user, span_notice("You fill [src] with the monkey cubes stored in [used_item]. [src] now has [monkeys] monkey cubes stored."))
-	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), monkeys, max_slimes)
+	to_chat(user, span_notice("You fill [src] with the monkey cubes stored in [tool]. [src] now has [stored_monkeys] monkey cubes stored."))
+	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/camera_advanced/xenobio/multitool_act(mob/living/user, obj/item/multitool/tool)
 	if(!istype(tool)) // Needed as long as this uses a var on the multitool.
 		return ITEM_INTERACT_BLOCKING
-	if(QDELETED(used_multitool.buffer))
+	if(QDELETED(tool.buffer))
 		balloon_alert(user, "buffer empty!")
 		return ITEM_INTERACT_BLOCKING
-	if(!istype(used_multitool.buffer, /obj/machinery/monkey_recycler))
+	if(!istype(tool.buffer, /obj/machinery/monkey_recycler))
 		balloon_alert(user, "can only link recyclers!")
 		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "linked recycler")
-	connected_recycler = WEAKREF(used_multitool.buffer)
+	connected_recycler_ref = WEAKREF(tool.buffer)
 	return ITEM_INTERACT_SUCCESS
 
 /// Validates whether the target turf can be interacted with.
@@ -252,7 +252,7 @@
 /obj/machinery/computer/camera_advanced/xenobio/proc/feed_slime(mob/living/user, turf/open/target_turf)
 	if(stored_monkeys < 1)
 		to_chat(user, span_warning("[src] needs to have at least 1 monkey stored. Currently has [stored_monkeys] stored_monkeys stored."))
-		target_turf.balloon_alert(user, "not enough stored_monkeys")
+		target_turf.balloon_alert(user, "not enough monkeys")
 		return
 
 	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE, user)
@@ -272,7 +272,7 @@
 	if(isnull(connected_recycler))
 		to_chat(user, span_warning("There is no connected monkey recycler. Use a multitool to link one."))
 		if(target_atom)
-			target_atom.balloon_alert(user, "error!")
+			target_atom.balloon_alert(user, "no recycler linked!")
 		return FALSE
 	return TRUE
 
