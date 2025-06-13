@@ -12,11 +12,6 @@
 /obj/effect/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
 	if(SEND_SIGNAL(weapon, COMSIG_ITEM_ATTACK_EFFECT, src, user, modifiers, attack_modifiers) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
-
-	// I'm not sure why these are snowflaked to early return but they are
-	if(istype(weapon, /obj/item/mop) || istype(weapon, /obj/item/soap))
-		return
-
 	return ..()
 
 /obj/effect/attack_generic(mob/user, damage_amount, damage_type, damage_flag, sound_effect, armor_penetration)

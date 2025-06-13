@@ -1,4 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - bugfix: "Fixes assembly shells not taking power from machines/mechs/borgs instead of needing a cell when attached to such things. Did you know this was supposed to be a feature, but didn't work for who-knows-how-long?"

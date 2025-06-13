@@ -350,3 +350,16 @@
 //don't use this in subtypes, just add 1000 brute yourself. that being said, this is a type that has 1000 brute. it doesn't really have a home anywhere else, it just needs to exist
 /obj/effect/mob_spawn/corpse/human/damaged
 	brute_damage = 1000
+
+/obj/effect/mob_spawn/cockroach
+	name = "Cockroach Spawner"
+	desc = "A spawner for cockroaches, the most common vermin in the station. Small chance to spawn a bloodroach."
+	mob_type = /mob/living/basic/cockroach
+	var/bloodroach_chance = 1 // 1% chance to spawn a bloodroach
+
+/obj/effect/mob_spawn/cockroach/Initialize(mapload)
+	if(prob(bloodroach_chance))
+		mob_type = /mob/living/basic/cockroach/bloodroach
+	. = ..()
+	INVOKE_ASYNC(src, PROC_REF(create))
+	qdel(src)
