@@ -74,8 +74,13 @@
 				ADD_TRAIT(source, invisibility_trait, ELEMENT_TRAIT(type))
 
 	else
-		SET_PLANE_IMPLICIT(source, initial(source.plane))
-		source.layer = initial(source.layer)
+		if(!HAS_TRAIT(source.loc, TRAIT_UNCOVERED_TURF))
+			SET_PLANE_IMPLICIT(source, initial(source.plane))
+			source.layer = initial(source.layer)
+		else
+			SET_PLANE_IMPLICIT(source, FLOOR_PLANE)
+			source.layer = BELOW_CATWALK_LAYER
+
 		REMOVE_TRAIT(source, TRAIT_UNDERFLOOR, REF(src))
 
 		if(invisibility_trait)

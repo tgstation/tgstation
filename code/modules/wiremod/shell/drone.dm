@@ -9,6 +9,7 @@
 	icon_state = "setup_medium_med"
 	maxHealth = 300
 	health = 300
+	mob_biotypes = MOB_ROBOTIC
 	living_flags = NONE
 	light_system = OVERLAY_LIGHT_DIRECTIONAL
 	light_on = FALSE
@@ -43,9 +44,6 @@
 	if(tool.use_tool(src, user, 1 SECONDS, volume = 50))
 		heal_overall_damage(50, 50)
 	return TRUE
-
-/mob/living/circuit_drone/spawn_gibs()
-	new /obj/effect/gibspawner/robot(drop_location(), src, get_static_viruses())
 
 /obj/item/circuit_component/bot_circuit
 	display_name = "Drone"

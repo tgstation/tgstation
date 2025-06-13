@@ -67,7 +67,7 @@
 	subject.voice = voice
 	subject.voice_filter = voice_filter
 
-	dna.transfer_identity(subject, TRUE)
+	dna.copy_dna(subject.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 
 	for (var/quirk_type as anything in quirks)
 		subject.add_quirk(quirk_type, add_unique = FALSE)

@@ -379,7 +379,7 @@ Return to step 11 of normal process."}
 
 /obj/item/melee/baton/abductor/can_baton(mob/living/target, mob/living/user)
 	if(!AbductorCheck(user))
-		return TRUE
+		return FALSE
 	return ..()
 
 /obj/item/melee/baton/abductor/baton_effect(mob/living/target, mob/living/user, modifiers, stun_override)

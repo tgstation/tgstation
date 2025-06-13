@@ -44,7 +44,7 @@
 		return FALSE
 	var/inst_total = 0
 	for(var/pot_mut in mutator.add_mutations)
-		var/datum/mutation/human/mutation = pot_mut
+		var/datum/mutation/mutation = pot_mut
 		if(initial(mutation.quality) != POSITIVE)
 			continue
 		inst_total += mutation.instability

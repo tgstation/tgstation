@@ -44,7 +44,7 @@
 /area/ruin/space/oldteleporter)
 "l" = (
 /obj/structure/table,
-/obj/item/stock_parts/power_store/cell/high,
+/obj/item/stock_parts/power_store/battery/high,
 /turf/open/floor/iron/airless,
 /area/ruin/space/oldteleporter)
 "n" = (

@@ -163,7 +163,7 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 
 	if (prob(75))
 		var/static/list/permitted_heights = list(HUMAN_HEIGHT_SHORTEST, HUMAN_HEIGHT_SHORT, HUMAN_HEIGHT_MEDIUM, HUMAN_HEIGHT_TALL, HUMAN_HEIGHT_TALLER, HUMAN_HEIGHT_TALLEST)
-		new_clone.dna.remove_mutation(/datum/mutation/human/dwarfism)
+		new_clone.dna.remove_mutation(/datum/mutation/dwarfism, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
 		new_clone.set_mob_height(pick(permitted_heights - loaded_record.height)) // To differentiate the clones
 
 	return new_clone

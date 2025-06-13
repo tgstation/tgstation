@@ -156,12 +156,12 @@
  * * reagent - the added reagent datum/object
  * * added_volume - the volume of the reagent that was added (since it can already exist in a mob)
  * * added_purity - the purity of the added volume
+ * * list/reagent_datum - a holder that will contain the inverse reagent datum that got added if this returns FALSE
  * returns the volume of the original, pure, reagent to add / keep
  */
-/datum/reagents/proc/process_mob_reagent_purity(datum/reagent/reagent, added_volume, added_purity)
-	if(!reagent)
-		stack_trace("Attempted to process a mob's reagent purity for a null reagent!")
-		return FALSE
+/datum/reagents/proc/process_mob_reagent_purity(datum/reagent/reagent, added_volume, added_purity, list/reagent_datum)
+	PRIVATE_PROC(TRUE)
+
 	if(added_purity == 1)
 		return added_volume
 	if(reagent.chemical_flags & REAGENT_DONOTSPLIT)
@@ -170,11 +170,13 @@
 		stack_trace("Purity below 0 for chem on mob splitting: [reagent.type]!")
 		added_purity = 0
 
-	if((reagent.inverse_chem_val > added_purity) && (reagent.inverse_chem))//Turns all of a added reagent into the inverse chem
-		add_reagent(reagent.inverse_chem, added_volume, FALSE, added_purity = reagent.get_inverse_purity(reagent.creation_purity))
-		var/datum/reagent/inverse_reagent = has_reagent(reagent.inverse_chem)
+	if(reagent.inverse_chem_val > added_purity && reagent.inverse_chem)//Turns all of a added reagent into the inverse chem
+		if(isnull(reagent_datum))
+			reagent_datum = list()
+		add_reagent(reagent.inverse_chem, added_volume, FALSE, added_purity = reagent.get_inverse_purity(reagent.creation_purity), reagent_added = reagent_datum)
+		var/datum/reagent/inverse_reagent = reagent_datum[reagent_datum.len]
 		if(inverse_reagent.chemical_flags & REAGENT_SNEAKYNAME)
-			inverse_reagent.name = reagent.name//Negative effects are hidden
+			inverse_reagent.name = reagent.name //Negative effects are hidden
 		return FALSE //prevent addition
 	return added_volume
 

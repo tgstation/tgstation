@@ -1,56 +1,60 @@
 /datum/escape_menu/proc/show_home_page()
 	page_holder.give_protected_screen_object(give_escape_menu_title())
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/home_button(
+		new /atom/movable/screen/escape_menu/text/clickable(
 			null,
 			/* hud_owner = */ null,
-			src,
-			"Resume",
-			/* offset = */ 1,
-			CALLBACK(src, PROC_REF(home_resume)),
+			/* escape_menu = */ src,
+			/* button_text = */ "Resume",
+			/* offset = */ list(-136, -260),
+			/* font_size = */ 24,
+			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_resume)),
 		)
 	)
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/home_button(
+		new /atom/movable/screen/escape_menu/text/clickable(
 			null,
 			/* hud_owner = */ null,
-			src,
-			"Character",
-			/* offset = */ 2,
-			CALLBACK(src, PROC_REF(home_open_character_settings)),
+			/* escape_menu = */ src,
+			/* button_text = */ "Character",
+			/* offset = */ list(-171, -262),
+			/* font_size = */ 24,
+			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_open_character_settings)),
 		)
 	)
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/home_button(
+		new /atom/movable/screen/escape_menu/text/clickable(
 			null,
 			/* hud_owner = */ null,
-			src,
-			"Settings",
-			/* offset = */ 3,
-			CALLBACK(src, PROC_REF(home_open_game_settings)),
+			/* escape_menu = */ src,
+			/* button_text = */ "Settings",
+			/* offset = */ list(-206, -260),
+			/* font_size = */ 24,
+			/* on_click_callback = */ CALLBACK(src, PROC_REF(home_open_game_settings)),
 		)
 	)
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/home_button/admin_help(
+		new /atom/movable/screen/escape_menu/text/clickable/admin_help(
 			null,
 			/* hud_owner = */ null,
-			src,
-			"Admin Help",
-			/* offset = */ 4,
+			/* escape_menu = */ src,
+			/* button_text = */ "Admin Help",
+			/* offset = */ list(-241, -260),
 		)
 	)
 
 	page_holder.give_screen_object(
-		new /atom/movable/screen/escape_menu/home_button/leave_body(
+		new /atom/movable/screen/escape_menu/text/clickable/leave_body(
 			null,
 			/* hud_owner = */ null,
-			src,
-			"Leave Body",
-			/* offset = */ 5,
-			CALLBACK(src, PROC_REF(open_leave_body)),
+			/* escape_menu = */ src,
+			/* button_text = */ "Leave Body",
+			/* offset = */ list(-276, -260),
+			/* font_size = */ 24,
+			/* on_click_callback = */ CALLBACK(src, PROC_REF(open_leave_body)),
 		)
 	)
 

@@ -145,7 +145,7 @@
 		else
 			. += "<span class='notice ml-1'>[M.p_Their()] pupils narrow.</span>\n"//they're okay :D
 
-		if(M.dna && M.dna.check_mutation(/datum/mutation/human/xray))
+		if(M.dna && M.dna.check_mutation(/datum/mutation/xray))
 			. += "<span class='danger ml-1'>[M.p_Their()] pupils give an eerie glow!</span>\n"//mob has X-ray vision
 
 	return .

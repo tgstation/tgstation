@@ -41,15 +41,22 @@
 		underfloor_accessibility = UNDERFLOOR_INTERACTABLE
 		layer = LOW_FLOOR_LAYER
 		icon_state = "[catwalk_type]_below"
+		ADD_TRAIT(src, TRAIT_UNCOVERED_TURF, INNATE_TRAIT)
 	else
 		underfloor_accessibility = UNDERFLOOR_VISIBLE
-		layer = CATWALK_LAYER
 		icon_state = "[catwalk_type]_above"
+		layer = initial(layer)
+		REMOVE_TRAIT(src, TRAIT_UNCOVERED_TURF, INNATE_TRAIT)
 
 	levelupdate()
 	user.balloon_alert(user, "[!covered ? "cover removed" : "cover added"]")
 	tool.play_tool_sound(src)
 	update_appearance()
+
+/turf/open/floor/catwalk_floor/update_overlays()
+	. = ..()
+	if (!covered)
+		. += mutable_appearance(icon, "[catwalk_type]_overlay", CATWALK_LAYER, src, FLOOR_PLANE, appearance_flags = KEEP_APART)
 
 /turf/open/floor/catwalk_floor/crowbar_act(mob/user, obj/item/crowbar)
 	if(covered)

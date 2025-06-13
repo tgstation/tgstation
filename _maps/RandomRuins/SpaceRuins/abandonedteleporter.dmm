@@ -48,7 +48,7 @@
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "l" = (
-/obj/item/stock_parts/power_store/cell,
+/obj/item/stock_parts/power_store/battery,
 /turf/open/floor/plating/airless,
 /area/ruin/space/abandoned_tele)
 "m" = (

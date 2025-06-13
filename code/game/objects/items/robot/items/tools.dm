@@ -224,8 +224,9 @@
 
 	//if all else fails just make a new one from scratch
 	tool = new reference(user)
-	//the internal tool is considered part of the tool itself.
+	//the internal tool is considered part of the tool itself, so don't let it be dropped.
 	tool.item_flags |= ABSTRACT
+	ADD_TRAIT(tool, TRAIT_NODROP, INNATE_TRAIT)
 	atoms[reference] = tool
 	return tool
 

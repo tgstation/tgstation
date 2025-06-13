@@ -10,6 +10,8 @@
 	icon = 'icons/mob/simple/pets.dmi'
 	butcher_results = list(/obj/item/food/meat/slab/bugmeat = 1)
 	mob_biotypes = MOB_ORGANIC
+	density = FALSE
+	pass_flags = PASSTABLE | PASSMOB
 	health = 30
 	maxHealth = 30
 	speed = 6

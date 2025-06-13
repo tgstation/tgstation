@@ -8,6 +8,7 @@
 	base_icon_state = "hygienebot"
 	pass_flags = parent_type::pass_flags | PASSTABLE
 	layer = MOB_UPPER_LAYER
+	gender = MALE
 	density = FALSE
 	anchored = FALSE
 	health = 100

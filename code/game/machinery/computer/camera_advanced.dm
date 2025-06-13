@@ -124,8 +124,6 @@
 
 	for(var/datum/action/actions_removed as anything in actions)
 		actions_removed.Remove(user)
-	for(var/datum/camerachunk/camerachunks_gone as anything in eyeobj.visibleCameraChunks)
-		camerachunks_gone.remove(eyeobj)
 
 	eyeobj.assign_user(null)
 	current_user = null

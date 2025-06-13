@@ -11,7 +11,7 @@
 	RegisterSignal(dummy, COMSIG_ATOM_HULK_ATTACK, PROC_REF(hulk_sig_fire))
 	RegisterSignal(dummy, COMSIG_ATOM_ATTACK_HAND, PROC_REF(hand_sig_fire))
 
-	hulk.dna.add_mutation(/datum/mutation/human/hulk)
+	hulk.dna.add_mutation(/datum/mutation/hulk, "TEST")
 	hulk.set_combat_mode(TRUE)
 	hulk.ClickOn(dummy)
 
@@ -36,7 +36,7 @@
 	var/obj/item/clothing/gloves/rapid/fotns = allocate(/obj/item/clothing/gloves/rapid)
 
 	hulk.equip_to_appropriate_slot(fotns)
-	hulk.dna.add_mutation(/datum/mutation/human/hulk)
+	hulk.dna.add_mutation(/datum/mutation/hulk, "TEST")
 	hulk.set_combat_mode(TRUE)
 	hulk.ClickOn(dummy)
 

@@ -206,6 +206,7 @@
 	description = "Use of holographic technology for signage and barriers."
 	prereq_ids = list(TECHWEB_NODE_ENERGY_MANIPULATION)
 	design_ids = list(
+		"atmosshieldgen",
 		"forcefield_projector",
 		"holosign",
 		"holosignsec",

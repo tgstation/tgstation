@@ -85,11 +85,10 @@
 	visible_message(span_alertalien("[src] lays an egg!"))
 	new /obj/structure/alien/egg(loc)
 
-/mob/living/basic/alien/spawn_gibs(drop_bitflags=NONE)
-	if(drop_bitflags & DROP_BODYPARTS)
-		new /obj/effect/gibspawner/xeno(drop_location(), src)
-	else
-		new /obj/effect/gibspawner/xeno/bodypartless(drop_location(), src)
-
 /mob/living/basic/alien/get_bloodtype()
 	return get_blood_type(BLOOD_TYPE_XENO)
+
+/mob/living/basic/alien/get_gibs_type(drop_bitflags = NONE)
+	if(drop_bitflags & DROP_BODYPARTS)
+		return /obj/effect/gibspawner/xeno
+	return /obj/effect/gibspawner/xeno/bodypartless

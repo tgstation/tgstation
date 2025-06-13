@@ -46,7 +46,7 @@
 		return
 
 	user.real_name = H.dna.real_name
-	H.dna.transfer_identity(user, transfer_SE=1)
+	H.dna.copy_dna(user.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	user.updateappearance(mutcolor_update=1)
 	user.domutcheck()
 	user.visible_message(span_warning("[user]'s appearance shifts into [H]'s!"), \

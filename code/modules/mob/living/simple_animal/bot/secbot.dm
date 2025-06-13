@@ -5,6 +5,7 @@
 	icon_state = "secbot"
 	light_color = "#f56275"
 	light_power = 0.8
+	gender = MALE
 	density = FALSE
 	anchored = FALSE
 	health = 25

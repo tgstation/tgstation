@@ -60,6 +60,7 @@
 		var/client/old_user_client = GetViewerClient()
 		if(user_image && old_user_client)
 			old_user_client.images -= user_image
+		clear_camera_chunks()
 
 	user_ref = WEAKREF(new_user) //The user_ref can still be null!
 

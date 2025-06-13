@@ -1,9 +1,9 @@
 # Alien guts and oil spills are now blood decals
 /obj/effect/decal/cleanable/blood/trails : /obj/effect/decal/cleanable/blood/trail_holder{@OLD}
-/obj/effect/decal/cleanable/robot_debris : /obj/effect/decal/cleanable/blood/gibs/robot_debris{@OLD}
+/obj/effect/decal/cleanable/robot_debris/@SUBTYPES : /obj/effect/decal/cleanable/blood/gibs/robot_debris/@SUBTYPES {@OLD}
 /obj/effect/decal/cleanable/oil/streak : /obj/effect/decal/cleanable/blood/splatter/oil{@OLD}
-/obj/effect/decal/cleanable/oil : /obj/effect/decal/cleanable/blood/oil{@OLD}
-/obj/effect/decal/cleanable/xenoblood/xsplatter : /obj/effect/decal/cleanable/blood/splatter/xeno{@OLD}
-/obj/effect/decal/cleanable/xenoblood/xgibs : /obj/effect/decal/cleanable/blood/gibs/xeno{@OLD}
-/obj/effect/decal/cleanable/xenoblood : /obj/effect/decal/cleanable/blood/xeno{@OLD}
-/obj/effect/decal/cleanable/blood/tracks/xeno: /obj/effect/decal/cleanable/blood/tracks/xeno{@OLD}
+/obj/effect/decal/cleanable/oil/@SUBTYPES : /obj/effect/decal/cleanable/blood/oil/@SUBTYPES {@OLD}
+/obj/effect/decal/cleanable/xenoblood/xsplatter/@SUBTYPES : /obj/effect/decal/cleanable/blood/splatter/xeno/@SUBTYPES {@OLD}
+/obj/effect/decal/cleanable/xenoblood/xgibs/@SUBTYPES : /obj/effect/decal/cleanable/blood/gibs/xeno/@SUBTYPES {@OLD}
+/obj/effect/decal/cleanable/xenoblood/@SUBTYPES : /obj/effect/decal/cleanable/blood/xeno/@SUBTYPES {@OLD}
+/obj/effect/decal/cleanable/blood/xtracks/@SUBTYPES : /obj/effect/decal/cleanable/blood/tracks/xeno/@SUBTYPES {@OLD}

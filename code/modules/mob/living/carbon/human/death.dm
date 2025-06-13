@@ -2,14 +2,6 @@ GLOBAL_LIST_EMPTY(dead_players_during_shift)
 /mob/living/carbon/human/gib_animation()
 	new /obj/effect/temp_visual/gib_animation(loc, dna.species.gib_anim)
 
-/mob/living/carbon/human/spawn_gibs(drop_bitflags=NONE)
-	if(flags_1 & HOLOGRAM_1)
-		return
-	if(drop_bitflags & DROP_BODYPARTS)
-		new /obj/effect/gibspawner/human(drop_location(), src, get_static_viruses())
-	else
-		new /obj/effect/gibspawner/human/bodypartless(drop_location(), src, get_static_viruses())
-
 /mob/living/carbon/human/spawn_dust(just_ash)
 	if(just_ash)
 		return ..()

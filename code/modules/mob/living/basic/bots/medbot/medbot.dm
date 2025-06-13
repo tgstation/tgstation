@@ -360,7 +360,7 @@
 	patient.visible_message(span_notice("[src] tends the wounds of [patient]!"), "[span_infoplain(span_green("[src] tends your wounds!"))]")
 
 	if(done_healing)
-		visible_message(span_infoplain("[src] places its tools back into itself."))
+		visible_message(span_infoplain("[src] places [p_their()] tools back into [p_themselves()]."))
 		to_chat(src, "[patient] is now healthy!")
 		update_bot_mode(new_mode = BOT_IDLE)
 		return

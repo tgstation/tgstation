@@ -60,7 +60,7 @@
 				to_chat(affected_mob, span_danger("You don't feel like yourself.."))
 				var/datum/dna/transform_dna = strain_data["dna"]
 
-				transform_dna.transfer_identity(affected_mob, transfer_SE = 1)
+				transform_dna.copy_dna(affected_mob.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 				affected_mob.real_name = affected_mob.dna.real_name
 				affected_mob.updateappearance(mutcolor_update=1)
 				affected_mob.domutcheck()
@@ -71,7 +71,7 @@
 
 /datum/disease/dnaspread/Destroy()
 	if (original_dna && transformed && affected_mob)
-		original_dna.transfer_identity(affected_mob, transfer_SE = 1)
+		original_dna.copy_dna(affected_mob.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 		affected_mob.real_name = affected_mob.dna.real_name
 		affected_mob.updateappearance(mutcolor_update=1)
 		affected_mob.domutcheck()

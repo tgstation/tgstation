@@ -63,7 +63,7 @@
 
 	var/mob/living/carbon/human/dummy/consistent/dummy = new() // For manifest rendering, unfortunately
 	dummy.physique = user.physique
-	user.dna.transfer_identity(dummy, transfer_SE = TRUE)
+	user.dna.copy_dna(dummy.dna, COPY_DNA_SE|COPY_DNA_SPECIES)
 	user.copy_clothing_prefs(dummy)
 	dummy.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
 	dummy.dress_up_as_job(job, visual_only = TRUE, player_client = user.client)

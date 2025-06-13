@@ -74,7 +74,7 @@
 		return
 	var/mob/living/carbon/human/human_receiver = receiver
 	if(human_receiver.can_mutate())
-		human_receiver.dna.add_mutation(/datum/mutation/human/dwarfism)
+		human_receiver.dna.add_mutation(/datum/mutation/dwarfism, MUTATION_SOURCE_RAT_HEART)
 	//but 1.5 damage
 	human_receiver.physiology?.damage_resistance -= 50
 
@@ -83,8 +83,7 @@
 	if(!ishuman(heartless))
 		return
 	var/mob/living/carbon/human/human_heartless = heartless
-	if(human_heartless.can_mutate())
-		human_heartless.dna.remove_mutation(/datum/mutation/human/dwarfism)
+	human_heartless.dna.remove_mutation(/datum/mutation/dwarfism, MUTATION_SOURCE_RAT_HEART)
 	human_heartless.physiology?.damage_resistance += 50
 
 /// you occasionally squeak, and have some rat related verbal tics

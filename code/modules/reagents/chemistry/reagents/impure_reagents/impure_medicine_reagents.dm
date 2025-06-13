@@ -588,20 +588,20 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!affected_carbon.dna)
 		return
 	var/list/speech_options = list(
-		/datum/mutation/human/swedish,
-		/datum/mutation/human/unintelligible,
-		/datum/mutation/human/stoner,
-		/datum/mutation/human/medieval,
-		/datum/mutation/human/wacky,
-		/datum/mutation/human/piglatin,
-		/datum/mutation/human/nervousness,
-		/datum/mutation/human/mute,
+		/datum/mutation/swedish,
+		/datum/mutation/unintelligible,
+		/datum/mutation/stoner,
+		/datum/mutation/medieval,
+		/datum/mutation/wacky,
+		/datum/mutation/piglatin,
+		/datum/mutation/nervousness,
+		/datum/mutation/mute,
 		)
 	speech_options = shuffle(speech_options)
 	for(var/option in speech_options)
-		if(affected_carbon.dna.get_mutation(option))
+		if(affected_carbon.dna.get_mutation(option, MUTATION_SOURCE_MANNITOIL))
 			continue
-		affected_carbon.dna.add_mutation(option)
+		affected_carbon.dna.add_mutation(option, MUTATION_SOURCE_MANNITOIL)
 		speech_option = option
 		return
 
@@ -610,7 +610,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	if(!iscarbon(affected_mob))
 		return
 	var/mob/living/carbon/carbon = affected_mob
-	carbon.dna?.remove_mutation(speech_option)
+	carbon.dna?.remove_mutation(speech_option, MUTATION_SOURCE_MANNITOIL)
 
 /datum/reagent/inverse/neurine
 	name = "Neruwhine"

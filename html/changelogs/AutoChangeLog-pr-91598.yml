@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Some old cells in space ruins reliant on replacing an APC's power cell have been replaced with their megacell counterparts."
