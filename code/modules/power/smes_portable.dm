@@ -34,6 +34,13 @@
 		else
 			. += "bp-d"
 
+/obj/machinery/power/smes/connector/RefreshParts()
+	. = ..()
+
+	//happens if the terminal gets rped without a bank attached. No division by zero error
+	if(!total_capacity)
+		total_capacity = 1
+
 /obj/machinery/power/smes/connector/wrench_act(mob/living/user, obj/item/tool)
 	if(!connector_free(user))
 		return ITEM_INTERACT_BLOCKING
