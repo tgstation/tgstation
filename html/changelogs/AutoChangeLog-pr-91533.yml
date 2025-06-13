@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Some external airlocks - particularly solar arrays - on Metastation and Deltastation are now 1-3 tiles larger, allowing for crates to pass through without venting the room."
+  - qol: "External airlock supply pipes on Metastation and Deltastation now run on layer 5 instead of layer 3 where possible"
