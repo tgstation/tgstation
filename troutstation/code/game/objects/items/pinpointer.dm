@@ -39,8 +39,8 @@
 		else
 			var/turf/here = get_turf(src)
 			if (here && /obj/item/relic::existing_relics.len > 0)
-				var/obj/item/relic/target_relic = /obj/item/relic::existing_relics[0]
-				var/dist_to_beat = get_dist(here, get_turf(target_relic))
+				var/obj/item/relic/target_relic = null;
+				var/dist_to_beat = 1000000;
 				for (var/obj/item/relic/relic_inst as anything in /obj/item/relic::existing_relics)
 					if (target_relic == relic_inst)
 						continue
@@ -49,11 +49,13 @@
 					if (new_dist < dist_to_beat)
 						dist_to_beat = new_dist
 						target_relic = relic_inst
-				target_relic.current_node.check_trans(null, /datum/relic_trans/tracked)
-				if (istype(target_relic.current_node, /datum/relic_node/emp))
-					target = null
-				else
-					target = target_relic
+				if (target_relic != null)
+					if (target_relic.current_node != null)
+						target_relic.current_node.check_trans(null, /datum/relic_trans/tracked)
+					if (istype(target_relic.current_node, /datum/relic_node/emp))
+						target = null
+					else
+						target = target_relic
 	return (target && istype(target, /obj/item/relic) && trackable(target))
 
 /obj/item/pinpointer/relic/pre_attack(atom/O, mob/user, list/modifiers)
@@ -66,11 +68,9 @@
 
 /obj/item/pinpointer/relic/pre_attack_secondary(atom/target, mob/living/user, list/modifiers)
 	scan_type = SCAN_SWEEP
-	if (target == src)
-		target = null
-		balloon_alert(user, "The pinpointer starts tracking the nearest relic.")
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-	return ..()
+	target = null
+	balloon_alert(user, "The pinpointer starts tracking the nearest relic.")
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /datum/crafting_recipe/relic_pinpointer
 	name = "Relic Pinpointer"

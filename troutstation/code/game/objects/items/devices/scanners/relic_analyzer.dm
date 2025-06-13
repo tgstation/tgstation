@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(relic_nodes_scanned)
 	if (scanned_relic_nodes.Find(R.current_node.node_id))
 		text += "\n<font color= '#bb0000'>This state has already been logged.</font>"
 	else
-		text += "\n<font color='#3322ff'>Examine with this scanner to log this relic's state!</font>"
+		text += "\n<font color='#7b6fff'>Examine with this scanner to log this relic's state!</font>"
 	text += "\n[R.current_node.desc]"
 	text += "\nPotential fruitful stimuli to the relic includes:"
 	for (var/datum/relic_trans/i as anything in R.current_node.relic_transes)
@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY(relic_nodes_scanned)
 
 	user.visible_message(span_notice("[user] analyzes [R]"))
 	balloon_alert(user, "analyzing [R]")
-	playsound(user.loc, 'sound/items/healthanalyzer.ogg', 50)
+	playsound(user.loc, pick('sound/items/healthanalyzer.ogg', 'sound/effects/industrial_scan/industrial_scan1.ogg', 'sound/effects/industrial_scan/industrial_scan2.ogg', 'sound/effects/industrial_scan/industrial_scan3.ogg'), 50)
 
 	if (!R.activated)
 		visible_message(span_notice("[user] scans the [R], revealing its true nature!"))

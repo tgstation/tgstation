@@ -3,10 +3,12 @@
 	var/desc = "An unknown stimulus."
 
 /datum/relic_trans/proc/check_cond(...)
-		return TRUE
+	return TRUE
 /datum/relic_trans/proc/get_user(mob/user)
-		return user
+	return user
 
+/datum/relic_trans/proc/on_triggered()
+	return
 /datum/relic_trans/none //Automatically passes - lowest priority (checks other conditions, only procs if nothing has gone on)
 	desc = "None, it is unstable!"
 /datum/relic_trans/touch
@@ -39,11 +41,14 @@
 /datum/relic_trans/fire
 	desc = "Lighting on fire."
 /datum/relic_trans/paint
-	desc = "Applying artistic expression."
+	desc = "Applying a new coat of paint."
 /datum/relic_trans/irradiate
 	desc = "Exposing to ionizing radiation."
 /datum/relic_trans/hear
 	desc = "Having casual conversation."
+/datum/relic_trans/hear/on_triggered()
+	playsound(next_node.parent_relic, SFX_MUFFLED_SPEECH, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return
 /datum/relic_trans/tracked
 	desc = "Keeping a close eye with a pinpointer."
 
@@ -89,6 +94,7 @@
 			_pot_trans.Add(_trans)
 	if (_pot_trans.len > 0)
 		var/datum/relic_trans/_trans = pick(_pot_trans)
+		_trans.on_triggered()
 		parent_relic.current_node = _trans.next_node
 		parent_relic.current_node.run_effect(_trans.get_user(user))
 	return
@@ -119,7 +125,7 @@
 	return
 
 /datum/relic_node/reagent/reaction_power(mob/user)
-	to_chat(user, span_warning("[parent_relic] leaks [units] units of [reagent.name]!"))
+	to_chat(user, span_warning("[parent_relic] leaks [reagent.name] everywhere!"))
 	playsound(get_turf(parent_relic), 'sound/effects/slosh.ogg', 25, TRUE)
 	var/turf/src_turf = get_turf(parent_relic)
 	var/datum/reagents/tmp_holder = new(units)
@@ -152,8 +158,18 @@
 	desc = "This node made it release some animals!"
 	var/mob/living/basic/animal_type
 	var/count
+	// removing types that should be in admin hands
+	var/list/invalid_types = list(/mob/living/basic/heretic_summon/star_gazer,
+								/mob/living/basic/construct/harvester,
+								/mob/living/basic/space_dragon,
+								/mob/living/basic/revenant,
+								/mob/living/basic/alien/queen)
 /datum/relic_node/animal/on_generate()
-	animal_type = pick(subtypesof(/mob/living/basic))
+	var/list/valid_types = subtypesof(/mob/living/basic);
+	if (!parent_relic.very_dangerous)
+		for (var/i as anything in invalid_types)
+			valid_types.Remove(i)
+	animal_type = pick(valid_types)
 	count = rand(1,4)
 	return
 
@@ -213,7 +229,7 @@
 	return
 
 /datum/relic_node/explode/reaction_power(mob/user)
-	to_chat(user, span_boldwarning("[parent_relic] starts hissing!"))
+	to_chat(user, span_danger("[parent_relic] starts hissing!"))
 	playsound(parent_relic, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	addtimer(CALLBACK(src, PROC_REF(cause_explosion), user), rand(3.5 SECONDS, 6 SECONDS))
 	return
@@ -249,6 +265,7 @@
 	var/amount
 	var/range
 	var/stunner
+
 /datum/relic_node/charge/on_generate()
 	amount = rand(1,500)
 	range = rand(1, 6)
@@ -257,7 +274,7 @@
 
 /datum/relic_node/charge/reaction_power(mob/user)
 	to_chat(user, span_notice("Things near [parent_relic] surge with power!"))
-	for(var/atom/target in oview(range, parent_relic))
+	for(var/atom/target in view(range, parent_relic))
 		if (istype(target, /obj/machinery))
 			var/obj/machinery/mach = target
 			for (var/each as anything in mach.component_parts)
@@ -295,7 +312,7 @@
 					var/mob/living/livign = target
 					livign.electrocute_act(15, parent_relic, flags = SHOCK_NOGLOVES)
 				parent_relic.lightning_fx(target, stunner)
-				to_chat(target, span_danger("You feel surged!"))
+				to_chat(target, span_bolddanger("You feel surged!"))
 
 /datum/relic_node/harm
 	desc = "This node made it change its implements..."
@@ -358,8 +375,8 @@
 /datum/relic_node/sound/on_generate()
 		mood_effect = rand(-20, 20)
 		range = rand(1,6)
-		lowlow_sound = pick('sound/items/geiger/high4.ogg', 'sound/effects/alert.ogg', 'sound/items/nuke_toy_lowpower.ogg')
-		low_sound = pick('sound/items/airhorn/airhorn.ogg', 'sound/items/haunted/ghostitemattack.ogg')
+		lowlow_sound = pick('sound/items/geiger/high4.ogg', 'sound/effects/alert.ogg', 'sound/items/nuke_toy_lowpower.ogg', 'sound/misc/scary_horn.ogg')
+		low_sound = pick('sound/items/airhorn/airhorn.ogg', 'sound/items/haunted/ghostitemattack.ogg', 'sound/misc/metal_creak.ogg')
 		high_sound = pick('sound/machines/ding.ogg', 'sound/items/can/can_open1.ogg', 'sound/items/rattling_keys.ogg')
 		highhigh_sound = pick('sound/effects/achievement/tada_fanfare.ogg')
 		return
@@ -374,7 +391,7 @@
 			playsound(parent_relic, high_sound, 40, TRUE)
 		if (10 to 20)
 			playsound(parent_relic, highhigh_sound, 40, TRUE)
-	for(var/mob/living/m in oview(parent_relic, range))
+	for(var/mob/living/m in view(range, parent_relic))
 		if (HAS_TRAIT(m, TRAIT_DEAF))
 			continue
 		switch (mood_effect)
@@ -412,10 +429,13 @@
 /datum/relic_node/teleport
 	desc = "This node made it teleport somewhere else!!"
 /datum/relic_node/teleport/reaction_power(mob/user)
-	for(var/mob/living/m in oview(parent_relic, 3))
+	for(var/mob/living/m in view(3, parent_relic))
 		to_chat(m, span_notice("[parent_relic] vanishes into thin air!"))
-	do_teleport(teleatom = parent_relic, destination = find_safe_turf(zlevel = parent_relic.z))
-	for(var/mob/living/m in oview(parent_relic, 3))
+	var/turf/t = find_safe_turf(zlevel = parent_relic.z)
+	for (var/mob/living/m in range(0, parent_relic))
+		do_teleport(teleatom = m, destination = t)
+	do_teleport(teleatom = parent_relic, destination = t)
+	for(var/mob/living/m in view(3, parent_relic))
 		to_chat(m, span_notice("[parent_relic] appears out of nowhere!"))
 
 /datum/relic_node/dimensional_shift
@@ -438,33 +458,34 @@
 	var/amount = 0
 
 /datum/relic_node/blood/on_generate()
-	amount = rand(100, 400)
+	amount = rand(10, 200)
 
 /datum/relic_node/blood/reaction_power(mob/user)
 	new /obj/effect/decal/cleanable/blood/old(get_turf(src))
-	for(var/mob/living/m in oview(parent_relic, 1))
+	for(var/mob/living/m in view(1, parent_relic))
 		new /obj/effect/decal/cleanable/blood/old(get_turf(m))
 		if (istype(m, /mob/living/carbon/))
 			var/mob/living/carbon/c = m
+			playsound(parent_relic, SFX_DESECRATION, 50, TRUE)
 			if (prob(80)) // Just blood.. blood..
 				c.blood_volume -= amount
-				to_chat(c, span_warning("[parent_relic] lashes out!"))
+				to_chat(c, span_bolddanger("[parent_relic] drains some of your succulent lifeforce!"))
 			else if (prob(95)) // Steal a non-brain organ
 				var/obj/item/organ/remove_organ = pick(GLOB.bioscrambler_valid_organs)
 				if (c.organs_slot.Find(remove_organ.slot))
 					c.organs_slot[remove_organ.slot].mob_remove(c)
-					to_chat(c, span_boldwarning("[parent_relic] demands something more, and you feel a little hollow."))
+					to_chat(c, span_bolddanger("[parent_relic] demands something more, and you feel a little hollow."))
 				else
 					to_chat(c, span_warning("[parent_relic] demands something more, but you do not have what it wants."))
 			else // get a gift :)
-				to_chat(c, span_boldwarning("[parent_relic] offers a gift, and you feel your insides change to accept!"))
+				to_chat(c, span_bolddanger("[parent_relic] offers a gift, and you feel your insides change to accept!"))
 				var/gland_type = subtypesof(/obj/item/organ/heart/gland)
 				var/obj/item/organ/heart/gland/new_gland = new gland_type()
 				if (new_gland)
 					new_gland.replace_into(c)
 		else
 			m.blood_volume -= amount
-			to_chat(m, span_warning("[parent_relic] lashes out!"))
+			to_chat(m, span_danger("[parent_relic] drains some of your lifeforce!"))
 
 /datum/relic_node/rosetta
 	desc = "This node offers thesaurical knowledge..."
@@ -475,10 +496,27 @@
 	language = pick(subtypesof(/datum/language/))
 	percent = rand(1, 100)
 
+/datum/relic_node/tabled
+	desc = "This node slammed things onto a table!"
+	var/grapple_range
+	var/table_range
+
+/datum/relic_node/tabled/on_generate()
+	grapple_range = rand(1, 4)
+	table_range = rand(6, 15)
+
+/datum/relic_node/tabled/reaction_power(mob/user)
+	var/list/table_list = list()
+	for (var/obj/structure/table/t in range(table_range, parent_relic))
+		table_list.Add(t)
+	var/obj/structure/table/chosen_one = pick(table_list)
+	for (var/mob/living/m in view(table_range, parent_relic))
+		chosen_one.tablepush(m, m)
+
 /obj/item/relic
 	desc = "What mysteries could this hold? Maybe Research & Development knows how to analyze it...."
 	//Minimum possible cooldown.
-	min_cooldown = 1 SECONDS
+	min_cooldown = 2 SECONDS
 	//Max possible cooldown.
 	max_cooldown = 12 SECONDS
 	w_class = 3
@@ -486,6 +524,7 @@
 	var/node_limit = 0
 	var/list/relic_nodes = list()
 	var/datum/relic_node/current_node
+	var/very_dangerous = FALSE
 	var/reacting_when_off_cooldown = FALSE //has a pending reaction
 	var/static/list/existing_relics = list()
 
@@ -506,6 +545,7 @@
 		/datum/relic_node/dimensional_shift = 10,
 		/datum/relic_node/blood		= 10,
 		/datum/relic_node/rosetta	= 10,
+		/datum/relic_node/tabled	= 10,
 	)
 
 	var/static/list/relic_trans_types = list(
@@ -519,7 +559,7 @@
 		/datum/relic_trans/irradiate= 10,
 		/datum/relic_trans/explode	= 10,
 		/datum/relic_trans/tracked	= 10,
-		/datum/relic_trans/hear		= 10
+		/datum/relic_trans/hear		= 10,
 	)
 
 /obj/item/relic/Initialize()
