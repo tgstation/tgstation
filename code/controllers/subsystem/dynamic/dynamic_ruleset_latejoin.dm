@@ -91,9 +91,6 @@
 		if(job.job_flags & JOB_HEAD_OF_STAFF)
 			. |= job.title
 
-/datum/dynamic_ruleset/latejoin/revolution/is_valid_candidate(mob/candidate, client/candidate_client)
-	return ..() && can_be_headrev(candidate.mind)
-
 /datum/dynamic_ruleset/latejoin/revolution/assign_role(datum/mind/candidate)
 	LAZYADD(candidate.special_roles, "Dormant Head Revolutionary")
 	addtimer(CALLBACK(src, PROC_REF(reveal_head), candidate), 1 MINUTES, TIMER_DELETE_ME)
