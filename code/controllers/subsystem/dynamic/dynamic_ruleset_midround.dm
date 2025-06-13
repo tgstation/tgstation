@@ -76,7 +76,7 @@
 	pirate_pool = default_pirate_pool()
 
 /datum/dynamic_ruleset/midround/pirates/can_be_selected()
-	return ..() && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && !SSmapping.is_planetary() && length(default_pirate_pool()) > 0
+	return ..() && !SSmapping.is_planetary() && (GLOB.ghost_role_flags & GHOSTROLE_MIDROUND_EVENT) && length(default_pirate_pool()) > 0
 
 // An abornmal ruleset that selects no players, but just spawns a pirate ship
 /datum/dynamic_ruleset/midround/pirates/execute()
@@ -752,7 +752,7 @@
 	VAR_FINAL/hunter_backstory
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/can_be_selected()
-	return ..() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
+	return ..() && !SSmapping.is_planetary() && !isnull(find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE))
 
 // If less than a certain number of candidates accept the poll, it varies how many antags are spawned
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/collect_candidates()
@@ -836,6 +836,9 @@
 	playsound(candidate.current, 'sound/items/weapons/emitter.ogg', 50, TRUE)
 
 /datum/dynamic_ruleset/midround/from_ghosts/fugitives/proc/equip_fugitive(mob/living/carbon/human/fugitive, datum/team/fugitive/team)
+	fugitive.set_species(/datum/species/human)
+	randomize_human_normie(fugitive)
+
 	var/datum/antagonist/fugitive/antag = new()
 	antag.backstory = fugitive_backstory
 	fugitive.mind.add_antag_datum(antag, team)
