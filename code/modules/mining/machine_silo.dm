@@ -80,7 +80,8 @@
 	radio.recalculateChannels()
 	configure_default_announcements_policy()
 	// Setting up a global list for this static list of sound parameters would be a waste
-	feedback_sound_params['INITIALIZED'] || configure_feedback_sound_params()
+	if(!feedback_sound_params['INITIALIZED'])
+		configure_feedback_sound_params()
 
 /obj/machinery/ore_silo/proc/configure_feedback_sound_params()
 	feedback_sound_params[BAN_ATTEMPT_FAILURE_NO_ACCESS] = alist(
