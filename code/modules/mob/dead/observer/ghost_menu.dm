@@ -95,7 +95,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 
 	data["can_boo"] = COOLDOWN_FINISHED(user, bootime)
 	data["has_fun"] = user.fun_verbs
-	data["body_name"] = user.can_reenter_corpse ? user.mind.current.real_name : FALSE
+	data["body_name"] = user.can_reenter_corpse ? (user.mind?.current?.real_name || FALSE) : FALSE
 	data["current_darkness"] = ghost_lightings["[user.lighting_cutoff]"]
 	data["notification_data"] = list()
 	for(var/key in GLOB.poll_ignore_desc)
