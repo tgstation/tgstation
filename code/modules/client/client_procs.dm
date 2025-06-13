@@ -561,7 +561,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	loot_panel = new(src)
 
-	view_size = new(src, getScreenSize())
+	view_size = new(src)
 	set_fullscreen(logging_in = TRUE)
 	view_size.resetFormat()
 	view_size.setZoomMode()
