@@ -955,3 +955,46 @@ ADMIN_VERB_CUSTOM_EXIST_CHECK(queue_tracy)
 ADMIN_VERB(debug_mc_dependencies, R_DEBUG, "Debug MC Dependencies", "Debug MC dependencies.", ADMIN_CATEGORY_DEBUG)
 	var/datum/mc_dependency_ui/data = new /datum/mc_dependency_ui()
 	data.ui_interact(usr)
+
+ADMIN_VERB(count_instances, R_DEBUG, "Count Atoms/Datums", "Count how many atom or datum instances there are of each type, then output it to a JSON to download.", ADMIN_CATEGORY_DEBUG)
+	var/option = tgui_alert(user, "What type of instances do you wish to count?", "Instance Count", list("Atoms", "Datums"))
+	if(!option)
+		return
+	var/list/result
+	to_chat(user, span_notice("Beginning instance count ([option])"), type = MESSAGE_TYPE_DEBUG)
+	switch(option)
+		if("Atoms")
+			result = count_atoms()
+		if("Datums")
+			result = count_datums()
+
+	if(result)
+		to_chat(user, span_adminnotice("Counted [length(result)] instances, sending compiled JSON file now."), type = MESSAGE_TYPE_DEBUG)
+		var/tmp_path = "tmp/instance_count_[user.ckey].json"
+		fdel(tmp_path)
+		rustg_file_write(json_encode(result, JSON_PRETTY_PRINT), tmp_path)
+		var/exportable_json = file(tmp_path)
+		DIRECT_OUTPUT(user, ftp(exportable_json, "[LOWER_TEXT(option)]_instance_count_round_[GLOB.round_id].json"))
+		fdel(tmp_path)
+
+#ifndef OPENDREAM
+/proc/count_atoms()
+	. = list()
+	for(var/datum/thing in world) //atoms (don't believe its lies)
+		.[thing.type]++
+	sortTim(., cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+
+/proc/count_datums()
+	. = list()
+	for(var/datum/thing)
+		.[thing.type]++
+	sortTim(., cmp = GLOBAL_PROC_REF(cmp_numeric_dsc), associative = TRUE)
+#else
+/proc/count_atoms()
+	. = list()
+	CRASH("count_atoms not supported on OpenDream")
+
+/proc/count_datums()
+	. = list()
+	CRASH("count_datums not supported on OpenDream")
+#endif

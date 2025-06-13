@@ -255,3 +255,52 @@
   necromanceranne:
   - bugfix: Deltastation rounds can now once again end as expected, as the shuttle
       will once again dock.
+2025-06-11:
+  Ben10Omintrix:
+  - bugfix: fixes stoats not having dead sprites
+  - bugfix: fixes stoats not following pet commands
+  Ghommie:
+  - bugfix: Fixed mutation injectors.
+  - bugfix: Fixed mutadone turning actual monkeys into humonkeys.
+  Jacquerel:
+  - qol: You can walk through stoats and snails
+  - balance: Stoats and snails can climb tables
+  - image: Stoats inside disposals are a little less rowdy
+  - image: Snails are rounder
+  Kuricityy:
+  - map: Heavily changes Catwalk Station's security department; almost completely
+      altering the brig.
+  Xander3359:
+  - rscadd: Hyper-insulated flooring, made from 1 plastitanium sheet
+  mc-oofert:
+  - rscadd: atmospherics shield generator, unlocked by Holographics research
+  vinylspiders:
+  - bugfix: stops stack merging from causing spurious CI runtimes
+2025-06-12:
+  Absolucy, PowerfulBacon:
+  - bugfix: Screentip icons work on the latest BYOND 516 again.
+  Bisar:
+  - balance: 'Repurposed Glands is now instead Gene Stim; simply put, your stuns are
+      reset and you are dosed with 4 units of Changeling Adrenaline on use. This ability
+      cannot be used while on fire. /:cl:'
+  SyncIt21:
+  - bugfix: map exported APC's now locate the terminals under them & attach to it
+      thus enabling charging & stuff
+2025-06-13:
+  00-Steven:
+  - bugfix: The static from holocalls no longer stays even after exiting the holocall.
+  Absolucy:
+  - admin: Added a "Count Atoms/Datums" debug verb.
+  Ghommie:
+  - bugfix: fixed gene disks and chromosomes.
+  JohnFulpWillard:
+  - bugfix: Borgs can't drop their omnitool's tools on conveyor belts & into closets.
+  Maximal08:
+  - bugfix: items with TRAIT_NODROP can no longer be worn
+  Melbert:
+  - qol: Mappers can put recharge floors on any floor type
+  TealSeer:
+  - code_imp: the russian derelict vault computer now uses a variable for the door
+      id
+  carlarctg:
+  - bugfix: Fixed cockroach spawners not doing anything
