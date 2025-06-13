@@ -553,7 +553,7 @@ SUBSYSTEM_DEF(id_access)
 		return .
 	var/mob/living/target = astype(target_of_record, /mob/living)
 	if(target)
-		if(!issilicon(target))
+		if(!issilicon(target) && !isdrone(target))
 			. = __in_character_record_id_information(astype(target.get_idcard(), /obj/item/card/id/advanced))
 			return .
 		.["Name"] = target.name
