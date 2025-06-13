@@ -302,15 +302,8 @@
 	min_antag_cap = 1
 	max_antag_cap = 3
 	repeatable = FALSE
-	/// How many heads of staff are required to be on the station for this to be selected
-	var/heads_necessary = 3
-
-/datum/dynamic_ruleset/roundstart/revolution/can_be_selected()
-	var/head_check = 0
-	for(var/mob/player as anything in GLOB.player_list) // doesn't use active_player_list because no players are "active" at roundstart
-		if(player.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
-			head_check++
-	return head_check >= heads_necessary
+	/// If we have fewer heads of staff than this 7 minutes into the round, we'll cancel the revolution
+	var/heads_necessary = 2
 
 /datum/dynamic_ruleset/roundstart/revolution/get_always_blacklisted_roles()
 	. = ..()
@@ -331,7 +324,7 @@
 		if(player.mind?.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 			head_check++
 
-	if(head_check < heads_necessary - 1) // little bit of leeway
+	if(head_check < heads_necessary)
 		log_dynamic("[config_tag]: Not enough heads of staff were present to start a revolution.")
 		addtimer(CALLBACK(src, PROC_REF(revs_execution_failed)), 1 MINUTES, TIMER_UNIQUE|TIMER_DELETE_ME)
 		return
