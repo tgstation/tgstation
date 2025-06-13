@@ -733,6 +733,7 @@
 	name = "tearing drill"
 	desc = "What secrets do they keep buried within those pearls..."
 	icon_state = "crueldrill"
+	inhand_icon_state = "crueldrill"
 	surgical_tray_overlay = "drill_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 
@@ -749,6 +750,7 @@
 	name = "harsh bonesetter"
 	desc = "We shall make you whole once more..."
 	icon_state = "cruelbonesetter"
+	inhand_icon_state = "cruelbonesetter"
 	surgical_tray_overlay = "bonesetter_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
 
@@ -756,5 +758,6 @@
 	name = "malignant blood filter"
 	desc = "You must be made pure..."
 	icon_state = "cruelbloodfilter"
+	inhand_icon_state = "cruelbloodfilter"
 	surgical_tray_overlay = "filter_cruel"
 	item_flags = SURGICAL_TOOL | CRUEL_IMPLEMENT
