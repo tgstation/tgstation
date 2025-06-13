@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscadd: "Ghost verbs are back in the chatbar, you can now type out things like \"Orbit\" or \"T-ray-scan\" once again as a ghost."
