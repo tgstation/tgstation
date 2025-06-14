@@ -43,7 +43,7 @@
 		if(!length(tool.contents))
 			return FALSE
 		tool = tool.contents[1]
-	if(tool.item_flags & (ABSTRACT|HAND_ITEM|DROPDEL))
+	if((tool.item_flags & (ABSTRACT|HAND_ITEM|DROPDEL)) || HAS_TRAIT(tool, TRAIT_WIELDED))
 		return FALSE
 	if(isbodypart(tool))
 		return TRUE // auto pass
