@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Critter crates no longer re-attain their ability to lift you despite being open if you move one after opening it, and neither does this lifting field stay after you destroy it."

@@ -358,14 +358,14 @@
 
 	return ..()
 
-/mob/living/silicon/robot/proc/self_destruct(mob/usr)
+/mob/living/silicon/robot/proc/self_destruct(mob/user)
 	var/turf/groundzero = get_turf(src)
-	message_admins(span_notice("[ADMIN_LOOKUPFLW(usr)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
-	usr.log_message("detonated [key_name(src)]!", LOG_ATTACK)
-	log_message("was detonated by [key_name(usr)]!", LOG_ATTACK, log_globally = FALSE)
+	message_admins(span_notice("[ADMIN_LOOKUPFLW(user)] detonated [key_name_admin(src, client)] at [ADMIN_VERBOSEJMP(groundzero)]!"))
+	user.log_message("detonated [key_name(src)]!", LOG_ATTACK)
+	log_message("was detonated by [key_name(user)]!", LOG_ATTACK, log_globally = FALSE)
 
-	log_combat(usr, src, "detonated cyborg")
-	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(usr)].")
+	log_combat(user, src, "detonated cyborg")
+	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(user)].")
 	if(connected_ai)
 		to_chat(connected_ai, "<br><br>[span_alert("ALERT - Cyborg detonation detected: [name]")]<br>")
 
