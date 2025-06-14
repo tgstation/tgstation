@@ -17,4 +17,4 @@ PROCESSING_SUBSYSTEM_DEF(projectiles)
 	 * assume that 1 speed = 1 tile per decisecond, but this is a variable so that admins/debuggers can edit
 	 * in order to debug projectile behavior by evenly slowing or speeding all of them up.
 	 */
-	var/pixels_per_decisecond = ICON_SIZE_ALL
+	var/pixels_per_decisecond = ICON_SIZE_ALL * 2
