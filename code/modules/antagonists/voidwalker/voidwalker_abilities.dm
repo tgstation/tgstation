@@ -78,7 +78,6 @@
 
 /datum/action/cooldown/spell/list_target/telepathy/voidwalker
 	name = "Transmit"
-	background_icon_state = "bg_void"
 	button_icon = 'icons/mob/actions/actions_voidwalker.dmi'
 	button_icon_state = "voidwalker_telepathy"
 	panel = null
