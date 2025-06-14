@@ -6011,7 +6011,7 @@
 /turf/closed/indestructible/reinforced/titanium/nodiagonal,
 /area/awaymission/museum)
 "Yg" = (
-/mob/living/basic/cockroach,
+/obj/effect/mob_spawn/cockroach,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)

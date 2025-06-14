@@ -36,13 +36,8 @@
 			icon_file = style.icon
 			icon_state = style.icon_state
 
-	if(preview_item.greyscale_config)
-		var/datum/greyscale_config/greyscale_config = preview_item::greyscale_config
-		icon_file ||= preview_item::icon_preview || greyscale_config::icon_file
-		icon_state ||= preview_item::icon_state_preview || preview_item::post_init_icon_state || preview_item::icon_state
-	else
-		icon_file ||= preview_item::icon_preview || preview_item::icon
-		icon_state ||= preview_item::icon_state_preview || preview_item::icon_state
+	icon_file ||= preview_item::icon_preview || preview_item::icon
+	icon_state ||= preview_item::icon_state_preview || preview_item::icon_state
 
 	if(PERFORM_ALL_TESTS(focus_only/bad_cooking_crafting_icons))
 		if(!icon_exists_or_scream(icon_file, icon_state))
