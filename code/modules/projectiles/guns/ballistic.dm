@@ -286,9 +286,9 @@
 	update_appearance()
 	update_item_action_buttons()
 
-#define CASING_CATCH_NO_ATTEMPT		0
-#define CASING_CATCH_FAILED			1
-#define CASING_CATCH_SUCCESSFUL		2
+#define CASING_CATCH_NO_ATTEMPT	0
+#define CASING_CATCH_FAILED	1
+#define CASING_CATCH_SUCCESSFUL	2
 
 /obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
@@ -324,7 +324,8 @@
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
 
-/// Used to check if the mob `wielder` can catch an ejected casing. Returns -1 if not trying, FALSE if failed, TRUE if successful.
+/// Used to check if the mob `wielder` can catch an ejected casing.
+/// Returns CASING_CATCH_NO_ATTEMPT if not trying, CASING_CATCH_FAILED if failed, CASING_CATCH_SUCCESSFUL if successful.
 /obj/item/gun/ballistic/proc/can_catch_casing(obj/item/ammo_casing/casing, mob/wielder)
 	if(!wielder.throw_mode) // if they're not in throw mode, don't bother
 		return CASING_CATCH_NO_ATTEMPT
