@@ -35,8 +35,10 @@ SUBSYSTEM_DEF(job)
 
 	var/list/level_order = list(JP_HIGH, JP_MEDIUM, JP_LOW)
 
-	/// Lazylist of mob:occupation_string pairs.
-	var/list/dynamic_forced_occupations
+	/// Lazylist of mob:occupation_string pairs. Forces mobs into certain occupations with highest priority.
+	var/list/forced_occupations
+	/// Lazylist of mob:list(occupation_string) pairs. Prevents mobs from taking certain occupations at all.
+	var/list/prevented_occupations
 
 	/**
 	 * Keys should be assigned job roles. Values should be >= 1.
@@ -316,7 +318,6 @@ SUBSYSTEM_DEF(job)
 		if(!player?.mind)
 			continue
 		player.mind.set_assigned_role(get_job_type(/datum/job/unassigned))
-		player.mind.special_role = null
 	setup_occupations()
 	unassigned = list()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
@@ -409,9 +410,8 @@ SUBSYSTEM_DEF(job)
 	SEND_SIGNAL(src, COMSIG_OCCUPATIONS_DIVIDED, pure, allow_all)
 
 	//Get the players who are ready
-	for(var/i in GLOB.new_player_list)
-		var/mob/dead/new_player/player = i
-		if(player.ready == PLAYER_READY_TO_PLAY && player.check_preferences() && player.mind && is_unassigned_job(player.mind.assigned_role))
+	for(var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+		if(player.ready == PLAYER_READY_TO_PLAY && player.check_job_preferences(!pure) && player.mind && is_unassigned_job(player.mind.assigned_role))
 			unassigned += player
 
 	initial_players_to_assign = length(unassigned)
@@ -698,9 +698,10 @@ SUBSYSTEM_DEF(job)
 	return 0
 
 /datum/controller/subsystem/job/proc/try_reject_player(mob/dead/new_player/player)
-	if(player.mind && player.mind.special_role)
-		job_debug("RJCT: Player unable to be rejected due to special_role, Player: [player], SpecialRole: [player.mind.special_role]")
-		return FALSE
+	for(var/datum/dynamic_ruleset/roundstart/ruleset in SSdynamic.queued_rulesets)
+		if(player.mind in ruleset.selected_minds)
+			job_debug("RJCT: Player unable to be rejected due to being selected by dynamic, Player: [player], Ruleset: [ruleset]")
+			return FALSE
 
 	job_debug("RJCT: Player rejected, Player: [player]")
 	unassigned -= player
@@ -871,11 +872,12 @@ SUBSYSTEM_DEF(job)
 /// Assigns roles that are considered high priority, either due to dynamic needing to force a specific role for a specific ruleset
 /// or making sure roles critical to round progression exist where possible every shift.
 /datum/controller/subsystem/job/proc/assign_priority_positions()
-	job_debug("APP: Assigning Dynamic ruleset forced occupations: [length(dynamic_forced_occupations)]")
-	for(var/mob/new_player in dynamic_forced_occupations)
+	job_debug("APP: Assigning Dynamic ruleset forced occupations: [LAZYLEN(forced_occupations)]")
+	for(var/datum/mind/mind as anything in forced_occupations)
+		var/mob/dead/new_player = mind.current
 		// Eligibility checks already carried out as part of the dynamic ruleset trim_candidates proc.
 		// However no guarantee of game state between then and now, so don't skip eligibility checks on assign_role.
-		assign_role(new_player, get_job(dynamic_forced_occupations[new_player]))
+		assign_role(new_player, get_job_type(LAZYACCESS(forced_occupations, mind)))
 
 	// Get JP_HIGH department Heads of Staff in place. Indirectly useful for the Revolution ruleset to have as many Heads as possible.
 	job_debug("APP: Assigning all JP_HIGH head of staff roles.")
@@ -940,7 +942,7 @@ SUBSYSTEM_DEF(job)
 		job_debug("[debug_prefix]: Player has no mind, Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_GENERIC
 
-	if(possible_job.title in player.mind.restricted_roles)
+	if(possible_job.title in LAZYACCESS(prevented_occupations, player.mind))
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_ANTAG_INCOMPAT, possible_job.title)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_ANTAG_INCOMPAT
 
@@ -959,7 +961,8 @@ SUBSYSTEM_DEF(job)
 		return JOB_UNAVAILABLE_BANNED
 
 	// Check for character age
-	if(possible_job.required_character_age > player.client.prefs.read_preference(/datum/preference/numeric/age) && possible_job.required_character_age != null)
+	var/client/player_client = GET_CLIENT(player)
+	if(isnum(possible_job.required_character_age) && possible_job.required_character_age > player_client.prefs.read_preference(/datum/preference/numeric/age))
 		job_debug("[debug_prefix] Error: [get_job_unavailable_error_message(JOB_UNAVAILABLE_AGE)], Player: [player][add_job_to_log ? ", Job: [possible_job]" : ""]")
 		return JOB_UNAVAILABLE_AGE
 

@@ -5,7 +5,7 @@
 	show_name_in_check_antagonists = TRUE
 	can_elimination_hijack = ELIMINATION_ENABLED
 	suicide_cry = "FOR SCOTLAND!!" // If they manage to lose their no-drop stuff somehow
-	count_against_dynamic_roll_chance = FALSE
+	antag_flags = ANTAG_FAKE|ANTAG_SKIP_GLOBAL_LIST
 	/// Traits we apply/remove to our target on-demand.
 	var/static/list/applicable_traits = list(
 		TRAIT_NOBREATH,
@@ -38,7 +38,6 @@
 
 /datum/antagonist/highlander/on_gain()
 	forge_objectives()
-	owner.special_role = "highlander"
 	give_equipment()
 	. = ..()
 

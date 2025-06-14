@@ -1,29 +1,31 @@
 /datum/antagonist/nukeop/leader
 	name = "Nuclear Operative Leader"
 	nukeop_outfit = /datum/outfit/syndicate/leader
-	always_new_team = TRUE
 	/// Randomly chosen honorific, for distinction
 	var/title
 	/// The nuclear challenge remote we will spawn this player with.
 	var/challengeitem = /obj/item/nuclear_challenge
 
 /datum/antagonist/nukeop/leader/memorize_code()
-	..()
-	if(nuke_team?.memorized_code)
-		var/obj/item/paper/nuke_code_paper = new
-		nuke_code_paper.add_raw_text("The nuclear authorization code is: <b>[nuke_team.memorized_code]</b>")
-		nuke_code_paper.name = "nuclear bomb code"
-		var/mob/living/carbon/human/H = owner.current
-		if(!istype(H))
-			nuke_code_paper.forceMove(get_turf(H))
-		else
-			H.put_in_hands(nuke_code_paper, TRUE)
-			H.update_icons()
+	. = ..()
+	var/obj/item/paper/nuke_code_paper = new(get_turf(owner.current))
+	nuke_code_paper.add_raw_text("The nuclear authorization code is: <b>[nuke_team.memorized_code]</b>")
+	nuke_code_paper.name = "nuclear bomb code"
+	nuke_code_paper.update_appearance()
+	owner.current.put_in_hands(nuke_code_paper)
+
+/datum/antagonist/nukeop/leader/give_alias()
+	title ||= pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord")
+	. = ..()
+	if(ishuman(owner.current))
+		owner.current.fully_replace_character_name(owner.current.real_name, "[title] [owner.current.real_name]")
+	else
+		owner.current.fully_replace_character_name(owner.current.real_name, "[nuke_team.syndicate_name] [title]")
 
 /datum/antagonist/nukeop/leader/greet()
 	play_stinger()
-	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding the team and your ID is the only one who can open the launch bay doors.</B></span>")
-	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, give your ID and radio to another operative.</B></span>")
+	to_chat(owner, "<span class='warningplain'><B>You are the Syndicate [title] for this mission. You are responsible for guiding your team.</B></span>")
+	to_chat(owner, "<span class='warningplain'><B>If you feel you are not up to this task, trade your headset with another operative.</B></span>")
 	if(!CONFIG_GET(flag/disable_warops))
 		to_chat(owner, "<span class='warningplain'><B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B></span>")
 	owner.announce_objectives()
@@ -59,3 +61,9 @@
 			newname = randomname
 
 	return capitalize(newname)
+
+/datum/antagonist/nukeop/leader/create_team(datum/team/nuclear/new_team)
+	if(new_team)
+		return ..()
+	// Leaders always make new teams
+	nuke_team = new /datum/team/nuclear()
