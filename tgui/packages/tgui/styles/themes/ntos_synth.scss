@@ -24,6 +24,7 @@
     --button-background-default: var(--synth-cyan);
     --button-background-selected: hsl(227, 37%, 45%);
     --button-background-caution: hsl(30, 88%, 39%);
+    --button-background-disabled: var(--synth-purple);
     --tooltip-background: hsla(36, 100%, 50%, 0.75);
   }
 
@@ -36,9 +37,12 @@
     );
   }
 
-  .Button {
+  :where(.Button) {
     background-color: var(--synth-purple);
     color: var(--synth-cyan);
+  }
+
+  .Button {
     outline: var(--border-thickness-small) outset var(--synth-pink);
   }
 

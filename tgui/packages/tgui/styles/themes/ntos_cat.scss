@@ -26,6 +26,7 @@
     --button-background-default: hsl(from var(--color-kitty) h s 66);
     --button-background-selected: hsl(227.5, 37.5%, 45%);
     --button-background-caution: hsl(30, 87.5%, 340%);
+    --button-background-disabled: hsl(0, 0%, 100%);
     --input-background: hsl(0, 0%, 100%);
     --input-color: hsl(from var(--color-kitty) h s calc(l - 10));
     --tooltip-background-lightness: 50;
@@ -41,9 +42,13 @@
     outline: var(--border-thickness-small) solid var(--color-cuttie);
   }
 
-  .Button {
+  :where(.Button) {
     background-color: hsl(0, 0%, 100%);
     color: var(--color-cuttie);
+  }
+
+  .Button--disabled {
+    color: var(--color-cuttie) !important;
   }
 
   .NtosWindow__header {
