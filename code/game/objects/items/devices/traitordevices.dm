@@ -92,7 +92,7 @@
 
 	//knocking & logging everyone knocked.
 	var/log_message
-	for(var/mob/living/affected in get_hear(CONFIG_GET(string/default_view), user) - user)
+	for(var/mob/living/affected in hearers(7, get_turf(user)) - user)
 		if(HAS_TRAIT(affected, TRAIT_DEAF))
 			continue
 		affected.Knockdown(
