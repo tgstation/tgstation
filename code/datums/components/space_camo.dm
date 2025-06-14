@@ -14,6 +14,8 @@
 	var/image/position_indicator
 	/// The alpha we see ourselves at when in camo
 	var/alpha_to_self
+	/// Are we currently camouflaged?
+	var/is_camouflaged = FALSE
 
 /datum/component/space_camo/Initialize(space_alpha, non_space_alpha, alpha_to_self = 120, reveal_after_combat, camo_icon)
 	if(!ismovable(parent))
@@ -73,7 +75,9 @@
 	if(!isspaceturf(get_turf(parent)) || next_camo > world.time || HAS_TRAIT(parent, TRAIT_INVISIBILITY_BLOCKED))
 		return FALSE
 
-	enter_camo(parent)
+	if(!is_camouflaged)
+		enter_camo(parent)
+
 	return TRUE
 
 /datum/component/space_camo/proc/force_exit_camo()
@@ -89,12 +93,18 @@
 		if (position_indicator)
 			animate(position_indicator, alpha = alpha_to_self, time = 0.5 SECONDS)
 	parent.remove_from_all_data_huds()
+	is_camouflaged = TRUE
 
 /datum/component/space_camo/proc/exit_camo(atom/movable/parent)
+	if(!is_camouflaged)
+		return
+
 	animate(parent, alpha = non_space_alpha, time = 0.5 SECONDS)
 	if (position_indicator)
 		animate(position_indicator, alpha = 0, time = 0.5 SECONDS)
 	parent.add_to_all_human_data_huds()
+	DO_FLOATING_ANIM(parent)
+	is_camouflaged = FALSE
 
 /datum/component/space_camo/proc/show_client_image(mob/show_to)
 	SIGNAL_HANDLER

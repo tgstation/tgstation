@@ -26,7 +26,7 @@
 	/// Temperature we move our surroundings towards
 	var/hotspot_temperature = 1000
 	/// Gas volume passively exposed to our temperature
-	var/hotspot_volume = 10
+	var/hotspot_volume = 100
 
 	/// Water damage we take on any exposure
 	var/water_damage = 10

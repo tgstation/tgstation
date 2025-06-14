@@ -1007,7 +1007,7 @@
 	antag_flag = ROLE_SUNWALKER
 	antag_flag_override = ROLE_VOIDWALKER
 
-	weight = 0.5
+	weight = 0
 	cost = 10
 	minimum_players = 50
 

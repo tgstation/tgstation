@@ -4,6 +4,7 @@
 	desc = "Stare directly into someone who doesn't see you. Remain in their view for a bit to stun them for 2 seconds and announce your presence to them. "
 	button_icon_state = "terrify"
 	background_icon_state = "bg_void"
+	overlay_icon_state = null
 	panel = null
 	spell_requirements = NONE
 	cooldown_time = 12 SECONDS
@@ -31,7 +32,7 @@
 		owner.balloon_alert(owner, "cannot see you!")
 		return FALSE
 
-	return TRUE
+	return .
 
 /datum/action/cooldown/spell/pointed/unsettle/cast(mob/living/carbon/human/cast_on)
 	. = ..()
@@ -81,6 +82,7 @@
 	button_icon = 'icons/mob/actions/actions_voidwalker.dmi'
 	button_icon_state = "voidwalker_telepathy"
 	panel = null
+	overlay_icon_state = null
 
 /datum/action/cooldown/spell/list_target/telepathy/voidwalker/sunwalker
 	background_icon_state = "bg_star"
@@ -111,13 +113,24 @@
 	name = "Cosmic Dash"
 	button_icon_state = "void_dash"
 	charge_past = 0
-	charge_damage = 10
-	cooldown_time = 3 SECONDS
+	charge_damage = 20
+	cooldown_time = 8 SECONDS
 	destroy_objects = FALSE
-	charge_distance = 4
+	charge_distance = 40
+
+	/// Turfs that are valid to target
+	var/turf/valid_target_turf = /turf/open/space
 
 /datum/action/cooldown/mob_cooldown/charge/voidwalker/do_charge_indicator(atom/charger, atom/charge_target)
+	playsound(owner, 'sound/effects/curse/curse1.ogg', 100)
 	return
 
 /datum/action/cooldown/mob_cooldown/charge/voidwalker/on_moved(atom/source)
 	return
+
+/datum/action/cooldown/mob_cooldown/charge/voidwalker/PreActivate(atom/target)
+	if(istype(get_turf(target), valid_target_turf))
+		return ..()
+
+	owner.balloon_alert(owner, "must target space!")
+	return FALSE
