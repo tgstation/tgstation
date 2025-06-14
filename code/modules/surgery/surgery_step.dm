@@ -121,7 +121,7 @@
 	if(check_morbid_curiosity(user, target, tool, surgery))
 		speed_mod *= SURGERY_SPEED_MORBID_CURIOSITY
 
-	if(check_morbid_living(user, target, tool, surgery))
+	if(check_morbid_living(user, target, tool))
 		speed_mod *= SURGERY_SPEED_CRUEL_PENALTY
 
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
@@ -313,13 +313,15 @@
 		return FALSE
 	return TRUE
 
-//Check if we are using cruel tools for non-morbid surgeries on living target
-/datum/surgery_step/proc/check_morbid_living(mob/user, mob/living/target, obj/item/tool, datum/surgery/surgery)
+//Check if we are using cruel tools for non-morbid surgeries on living target without anesthetic, by someone without the morbid trait
+/datum/surgery_step/proc/check_morbid_living(mob/user, mob/living/target, obj/item/tool)
+	if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
+		return FALSE
 	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
 		return FALSE
 	if(target.stat == DEAD)
 		return FALSE
-	if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
+	if(HAS_TRAIT(target, TRAIT_ANALGESIA)
 		return FALSE
 	return TRUE
 
