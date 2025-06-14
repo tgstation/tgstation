@@ -48,7 +48,7 @@
 		BB_TIME_TO_GIVE_UP_ON_VENT_PATHING = 30 SECONDS,
 	)
 
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 

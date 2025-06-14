@@ -18,7 +18,6 @@
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
 
 /datum/ai_controller/basic_controller/bot/honkbot/TryPossessPawn(atom/new_pawn)
 	. = ..()

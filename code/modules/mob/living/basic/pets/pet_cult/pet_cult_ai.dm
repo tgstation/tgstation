@@ -16,7 +16,6 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
 
 ///if target gets pulled away, unset him
 /datum/ai_controller/basic_controller/pet_cult/proc/delete_pull_target(datum/source, atom/movable/was_pulling)

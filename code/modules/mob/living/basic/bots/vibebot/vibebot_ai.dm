@@ -16,7 +16,6 @@
 		BB_VIBEBOT_PARTY_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
 
 /datum/ai_controller/basic_controller/bot/vibebot/TryPossessPawn(atom/new_pawn)
 	. = ..()

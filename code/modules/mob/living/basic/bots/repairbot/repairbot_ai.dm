@@ -25,7 +25,6 @@
 		BB_WELDER_TARGET,
 		BB_WINDOW_FRAMETARGET,
 	)
-	ai_traits = PAUSE_DURING_DO_AFTER
 	minimum_distance = 1
 
 ///subtree to refill our stacks

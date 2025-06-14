@@ -66,7 +66,7 @@
 		BB_TARGET_PRIORITY_TRAIT = TRAIT_SCARY_FISHERMAN,
 		BB_CARPS_FEAR_FISHERMAN = TRUE,
 	)
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
@@ -112,7 +112,7 @@
 		BB_CARPS_FEAR_FISHERMAN = TRUE,
 		BB_TARGET_ONLY_WITH_TRAITS = list(TRAIT_SCARY_FISHERMAN),
 	)
-	ai_traits = STOP_MOVING_WHEN_PULLED
+	ai_traits = PASSIVE_AI_FLAGS
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target/to_flee, // This should only find master fishermen because of the targeting strategy
