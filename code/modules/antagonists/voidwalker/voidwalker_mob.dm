@@ -127,9 +127,9 @@
 /mob/living/basic/voidwalker/Destroy()
 	. = ..()
 
-	qdel(unsettle)
-	qdel(telepathy)
-	qdel(charge)
+	QDEL_NULL(unsettle)
+	QDEL_NULL(telepathy)
+	QDEL_NULL(charge)
 
 /// Called on COMSIG_LIVING_UNARMED_ATTACK
 /mob/living/basic/voidwalker/proc/on_attack(mob/living/source, atom/target, proximity, modifiers)
