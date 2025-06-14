@@ -62,7 +62,6 @@
 	. = ..()
 	//Add to the early process queue to prioritize power draw
 	SSmachines.processing_early += src
-	RefreshParts()
 	set_wires(new /datum/wires/emitter(src))
 	if(welded)
 		if(!anchored)
