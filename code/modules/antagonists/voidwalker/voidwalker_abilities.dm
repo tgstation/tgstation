@@ -84,9 +84,6 @@
 	panel = null
 	overlay_icon_state = null
 
-/datum/action/cooldown/spell/list_target/telepathy/voidwalker/sunwalker
-	background_icon_state = "bg_star"
-
 /datum/action/cooldown/mob_cooldown/charge/sunwalker
 	name = "Stellar Charge"
 	background_icon_state = "bg_star"

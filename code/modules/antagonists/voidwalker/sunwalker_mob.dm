@@ -18,7 +18,6 @@
 	maximum_survivable_temperature = INFINITY
 	pressure_resistance = INFINITY
 
-	telepathy = /datum/action/cooldown/spell/list_target/telepathy/voidwalker/sunwalker
 	charge = /datum/action/cooldown/mob_cooldown/charge/sunwalker
 
 	regenerate_colour = COLOR_BLUE
