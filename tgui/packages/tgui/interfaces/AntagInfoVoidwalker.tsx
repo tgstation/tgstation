@@ -32,20 +32,23 @@ export const AntagInfoVoidwalker = (props) => {
                   You have unrivaled freedom. Remain in space and no one can
                   stop you. You can move through windows, so stay near them to
                   always have a way out.
-                  <br /><br />
+                  <br />
+                  <br />
                   <span style={tipstyle}>Hunt:&ensp;</span>
                   Pick unfair fights. Look for inattentive targets and strike at
                   them when they don&apos;t expect you.
-                  <br /><br />
+                  <br />
+                  <br />
                   <span style={tipstyle}>Abduct:&ensp;</span>
                   Your Unsettle ability stuns and drains your targets. Knock
                   them out with your draining slash, take them to space and
                   enlighten them.
-                  <br /><br />
+                  <br />
+                  <br />
                   <span style={tipstyle}>Reap:&ensp;</span>
-                  Our students expell our essence regularly. We can use this
-                  to go where we could otherwise not, but we reabsorb this
-                  when we use it to leave. (You can dive in space vomit.)
+                  Our students expell our essence regularly. We can use this to
+                  go where we could otherwise not, but we reabsorb this when we
+                  use it to leave. (You can dive in space vomit.)
                 </Stack.Item>
               </Stack>
             </Section>
@@ -58,14 +61,14 @@ export const AntagInfoVoidwalker = (props) => {
                   and get to isolated sections of space.
                 </LabeledList.Item>
                 <LabeledList.Item label="Draining Slash">
-                  You take the breath right from their lungs and quickly
-                  take down even the strongest opponents. Should they resist,
+                  You take the breath right from their lungs and quickly take
+                  down even the strongest opponents. Should they resist,
                   right-click allows you to do some raw damage.
                 </LabeledList.Item>
                 <LabeledList.Item label="Cosmic Physiology">
-                  Your natural camouflage makes you  invisible in space,
-                  as well as mending any wounds your body might have sustained.
-                  You can move through glass freely, but are slowed in gravity.
+                  Your natural camouflage makes you invisible in space, as well
+                  as mending any wounds your body might have sustained. You can
+                  move through glass freely, but are slowed in gravity.
                 </LabeledList.Item>
                 <LabeledList.Item label="Unsettle">
                   Target a victim while remaining only partially in their view

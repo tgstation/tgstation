@@ -25,8 +25,8 @@ export const AntagInfoSunwalker = (props) => {
                     supernova. You are altered, and hateful.
                   </BlockQuote>
                   <BlockQuote>
-                    There will be no lessons or enlightenment, they wont
-                    survive to learn from it.
+                    There will be no lessons or enlightenment, they wont survive
+                    to learn from it.
                   </BlockQuote>
                 </Stack.Item>
                 <Stack.Divider />
@@ -44,10 +44,9 @@ export const AntagInfoSunwalker = (props) => {
                   Your attacks deal great burn damage and ignite those hit.
                 </LabeledList.Item>
                 <LabeledList.Item label="Burning Physiology">
-                  Your very skin heats the air around you, while the
-                  vacuum of space mends any wounds your body might
-                  have sustained. You can move through glass freely,
-                  but are slowed in gravity.
+                  Your very skin heats the air around you, while the vacuum of
+                  space mends any wounds your body might have sustained. You can
+                  move through glass freely, but are slowed in gravity.
                 </LabeledList.Item>
                 <LabeledList.Item label="Stellar Charge">
                   With an exploding burning speed, charge forwards, dealing
