@@ -1,4 +1,4 @@
-import { filter, sortBy } from 'common/collections';
+import { chain } from 'common/collections';
 import { useState } from 'react';
 import {
   Box,
@@ -69,22 +69,22 @@ export const NtosNetDownloader = (props) => {
     searchItem,
     (program) => program.filedesc,
   );
-  let items =
-    searchItem.length > 0
-      ? // If we have a query, search everything for it.
-        filter(programs, search)
-      : // Otherwise, show respective programs for the category.
-        filter(programs, (program) => program.category === selectedCategory);
-  // This sorts all programs in the lists by name and compatibility
-  items = sortBy(
-    items,
-    (program: ProgramData) => !program.compatible,
-    (program: ProgramData) => program.filedesc,
-  );
-  if (!emagged) {
+  let items = chain(programs)
+    .filter(
+      searchItem.length > 0
+        ? // If we have a query, search everything for it.
+          search
+        : // Otherwise, show respective programs for the category.
+          (program) => program.category === selectedCategory,
+    )
+    // This sorts all programs in the lists by name and compatibility
+    .sortBy(
+      (program: ProgramData) => !program.compatible,
+      (program: ProgramData) => program.filedesc,
+    )
     // This filters the list to only contain verified programs
-    items = filter(items, (program) => program.verifiedsource === 1);
-  }
+    .if(!emagged, (x) => x.filter((program) => program.verifiedsource === 1))
+    .unwrap();
   const disk_free_space = downloading
     ? disk_size - Number(toFixed(disk_used + downloadcompletion))
     : disk_size - disk_used;

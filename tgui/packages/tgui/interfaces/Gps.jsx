@@ -1,4 +1,4 @@
-import { map, sortBy } from 'common/collections';
+import { chain, map } from 'common/collections';
 import { vecLength, vecSubtract } from 'common/vector';
 import {
   Box,
@@ -8,7 +8,6 @@ import {
   Section,
   Table,
 } from 'tgui-core/components';
-import { flow } from 'tgui-core/fp';
 import { clamp } from 'tgui-core/math';
 
 import { useBackend } from '../backend';
@@ -19,32 +18,31 @@ const coordsToVec = (coords) => map(coords.split(', '), parseFloat);
 export const Gps = (props) => {
   const { act, data } = useBackend();
   const { currentArea, currentCoords, globalmode, power, tag, updating } = data;
-  const signals = flow([
-    (signals) =>
-      map(signals, (signal, index) => {
-        // Calculate distance to the target. BYOND distance is capped to 127,
-        // that's why we roll our own calculations here.
-        const dist =
-          signal.dist &&
-          Math.round(
-            vecLength(
-              vecSubtract(
-                coordsToVec(currentCoords),
-                coordsToVec(signal.coords),
+  const signals = !data.signals
+    ? []
+    : chain(data.signals)
+        .map((signal, index) => {
+          // Calculate distance to the target. BYOND distance is capped to 127,
+          // that's why we roll our own calculations here.
+          const dist =
+            signal.dist &&
+            Math.round(
+              vecLength(
+                vecSubtract(
+                  coordsToVec(currentCoords),
+                  coordsToVec(signal.coords),
+                ),
               ),
-            ),
-          );
-        return { ...signal, dist, index };
-      }),
-    (signals) =>
-      sortBy(
-        signals,
-        // Signals with distance metric go first
-        (signal) => signal.dist === undefined,
-        // Sort alphabetically
-        (signal) => signal.entrytag,
-      ),
-  ])(data.signals || []);
+            );
+          return { ...signal, dist, index };
+        })
+        .sortBy(
+          // Signals with distance metric go first
+          (signal) => signal.dist === undefined,
+          // Sort alphabetically
+          (signal) => signal.entrytag,
+        )
+        .unwrap();
   return (
     <Window title="Global Positioning System" width={470} height={700}>
       <Window.Content scrollable>

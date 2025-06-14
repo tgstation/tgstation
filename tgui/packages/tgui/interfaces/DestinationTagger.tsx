@@ -1,4 +1,4 @@
-import { map, sortBy } from 'common/collections';
+import { chain } from 'common/collections';
 import { Button, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -24,17 +24,16 @@ type DestinationInfo = {
  * @returns The alphetically sorted list of destinations.
  */
 const sortDestinations = (locations: string[]): DestinationInfo[] => {
-  return sortBy(
-    map(
-      locations,
+  return chain(locations)
+    .map(
       (name, index) =>
         ({
           name: name.toUpperCase(),
           sorting_id: index + 1,
         }) as DestinationInfo,
-    ),
-    (dest) => dest.name,
-  );
+    )
+    .sortBy((dest) => dest.name)
+    .unwrap();
 };
 
 export const DestinationTagger = (props) => {
