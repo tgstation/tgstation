@@ -62,7 +62,6 @@
 			extra_registration_callback = PROC_REF(register_usb_port), \
 			extra_unregistration_callback = PROC_REF(unregister_usb_port) \
 		)
-	register_context()
 
 /obj/machinery/computer/camera_advanced/Destroy()
 	unset_machine()
@@ -70,12 +69,6 @@
 	QDEL_LIST(actions)
 	current_user = null
 	return ..()
-
-/obj/machinery/computer/camera_advanced/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(isnull(held_item))
-		context[SCREENTIP_CONTEXT_LMB] = "Use console"
-		return CONTEXTUAL_SCREENTIP_SET
-	return NONE
 
 /obj/machinery/computer/camera_advanced/process()
 	if(!can_use(current_user) || (issilicon(current_user) && !HAS_SILICON_ACCESS(current_user)))

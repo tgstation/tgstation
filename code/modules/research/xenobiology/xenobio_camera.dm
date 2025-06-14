@@ -621,6 +621,7 @@
 		pixel_y = 64
 		alpha = 0
 		shoot_out(shatter)
+	register_context()
 
 /// Shoots the mob visual upwards into the pipe then deletes it
 /obj/effect/abstract/sucked_atom/proc/suck_up()
