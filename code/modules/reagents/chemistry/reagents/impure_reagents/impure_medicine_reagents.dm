@@ -9,14 +9,14 @@
 /datum/reagent/impurity/healing
 	name = "Healing Impure Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
-	chemical_flags = REAGENT_DONOTSPLIT
+	chemical_flags = NONE
 	addiction_types = list(/datum/addiction/medicine = 3.5)
 	liver_damage = 0
 
 /datum/reagent/inverse/healing
 	name = "Healing Inverse Reagent"
 	description = "Not all impure reagents are bad! Sometimes you might want to specifically make these!"
-	chemical_flags = REAGENT_DONOTSPLIT
+	chemical_flags = NONE
 	addiction_types = list(/datum/addiction/medicine = 3)
 	tox_damage = 0
 
@@ -125,7 +125,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 /datum/reagent/inverse/libitoil
 	name = "Libitoil"
 	description = "Temporarily interferes with a patient's ability to process alcohol."
-	chemical_flags = REAGENT_DONOTSPLIT
+	chemical_flags = NONE
 	ph = 13.5
 	addiction_types = list(/datum/addiction/medicine = 4)
 	tox_damage = 0
@@ -277,7 +277,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "This will send the patient to sleep, adding a bonus to the efficacy of all reagents administered."
 	ph = 12.5 //sleeping is a basic need of all lifeformsa
 	self_consuming = TRUE //No pesky liver shenanigans
-	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
+	chemical_flags = REAGENT_DEAD_PROCESS
 	var/cached_reagent_list = list()
 	addiction_types = list(/datum/addiction/medicine = 5)
 
@@ -397,7 +397,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Technetium 99"
 	description = "A radioactive tracer agent that can improve a scanner's ability to detect internal organ damage. Will poison the patient when present very slowly, purging or using a low dose is recommended after use."
 	metabolization_rate = 0.3 * REM
-	chemical_flags = REAGENT_DONOTSPLIT //Do show this on scanner
+	chemical_flags = NONE //Do show this on scanner
 	tox_damage = 0
 
 	var/time_until_next_poison = 0
@@ -417,7 +417,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	name = "Syrinifergus"
 	description = "This reagent reduces the impurity of all non medicines within the patient, reducing their negative effects."
 	self_consuming = TRUE //No pesky liver shenanigans
-	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
+	chemical_flags = REAGENT_DEAD_PROCESS
 	///The list of reagents we've affected
 	var/cached_reagent_list = list()
 	addiction_types = list(/datum/addiction/medicine = 1.75)
@@ -480,7 +480,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	addiction_types = list(/datum/addiction/medicine = 12)
 	overdose_threshold = 20
 	self_consuming = TRUE //No pesky liver shenanigans
-	chemical_flags = REAGENT_DONOTSPLIT | REAGENT_DEAD_PROCESS
+	chemical_flags = REAGENT_DEAD_PROCESS
 	affected_organ_flags = NONE
 	///If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
