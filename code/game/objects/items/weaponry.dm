@@ -1236,7 +1236,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	force = 10
 	wound_bonus = 25
-	bare_wound_bonus = 50
+	exposed_wound_bonus = 50
 	throwforce = 25
 	throw_speed = 4
 	attack_speed = CLICK_CD_HYPER_RAPID
@@ -1318,7 +1318,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	playsound(src, 'sound/items/weapons/zapbang.ogg', 50, vary = TRUE)
 	if(isliving(target))
 		var/mob/living/living_target = target
-		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, def_zone = user.zone_selected)
+		living_target.apply_damage(force*damage_mod, BRUTE, sharpness = SHARP_EDGED, wound_bonus = wound_bonus, exposed_wound_bonus = exposed_wound_bonus, def_zone = user.zone_selected)
 		log_combat(user, living_target, "slashed", src)
 		if(living_target.stat == DEAD && prob(force*damage_mod*0.5))
 			living_target.visible_message(span_danger("[living_target] explodes in a shower of gore!"), blind_message = span_hear("You hear organic matter ripping and tearing!"))
@@ -1368,7 +1368,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 8
 	throwforce = 20
 	wound_bonus = 20
-	bare_wound_bonus = 25
+	exposed_wound_bonus = 25
 
 /obj/item/highfrequencyblade/wizard/attack_self(mob/user, modifiers)
 	if(!HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED))

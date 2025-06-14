@@ -23,7 +23,7 @@
 	max_integrity = 200
 	armor_type = /datum/armor/item_spear
 	wound_bonus = -15
-	bare_wound_bonus = 15
+	exposed_wound_bonus = 15
 	/// For explosive spears, what we cry out when we use this to bap someone
 	var/war_cry = "AAAAARGH!!!"
 	/// The icon prefix for this flavor of spear
@@ -112,7 +112,7 @@
 			throw_speed = 5
 			custom_materials = list(/datum/material/iron= HALF_SHEET_MATERIAL_AMOUNT, /datum/material/alloy/plastitaniumglass= HALF_SHEET_MATERIAL_AMOUNT * 2)
 			wound_bonus = -10
-			bare_wound_bonus = 20
+			exposed_wound_bonus = 20
 			force_unwielded = 13
 			force_wielded = 20
 			icon_prefix = "spearplastitanium"
@@ -222,7 +222,7 @@
 	throwforce = 30
 	demolition_mod = 1
 	wound_bonus = 5
-	bare_wound_bonus = 25
+	exposed_wound_bonus = 25
 	throw_range = 9
 	throw_speed = 5
 	sharpness = NONE // we break bones instead of cutting flesh
