@@ -11,7 +11,7 @@
 	RegisterSignal(target, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, PROC_REF(on_adjust_brute_damage))
 
 /datum/element/glass_bleeder/Detach(datum/source, ...)
-	UnregisterSignal(source, COMSIG_LIVING_HEALTH_UPDATE)
+	UnregisterSignal(source, COMSIG_LIVING_ADJUST_BRUTE_DAMAGE )
 	return ..()
 
 /datum/element/glass_bleeder/proc/on_adjust_brute_damage(mob/living/liver, damage_type, amount)
