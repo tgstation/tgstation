@@ -9783,20 +9783,20 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     tgui: "workspace:*"
-    tgui-core: "npm:^4.1.2"
+    tgui-core: "npm:^4.1.3"
   languageName: unknown
   linkType: soft
 
-"tgui-core@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "tgui-core@npm:4.1.2"
+"tgui-core@npm:^4.1.3":
+  version: 4.1.3
+  resolution: "tgui-core@npm:4.1.3"
   dependencies:
     "@floating-ui/react": "npm:^0.27.12"
     "@nozbe/microfuzz": "npm:^1.0.0"
   peerDependencies:
     react: ^19.1.0
     react-dom: ^19.1.0
-  checksum: 10c0/45297150fb2daf39f64215580677ffc0730670a00fedaa99b63cb1690576b8428de3f19b811ebdc23cc0580a06e540bea45d228d7d23fd423b64085e34360647
+  checksum: 10c0/4fcfc000c40cf79845b76fea91a7ba0b34244e91b024f6cd9d8e02aa0438d45d77f756872924a73cb7a9a2a83bd76ee2ed230cad3e039fc89379423b1a1e0dd2
   languageName: node
   linkType: hard
 
@@ -9824,7 +9824,7 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     tgui: "workspace:*"
-    tgui-core: "npm:^4.1.2"
+    tgui-core: "npm:^4.1.3"
     tgui-dev-server: "workspace:*"
   languageName: unknown
   linkType: soft
@@ -9839,7 +9839,7 @@ __metadata:
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
     tgui: "workspace:*"
-    tgui-core: "npm:^4.1.2"
+    tgui-core: "npm:^4.1.3"
     vitest: "npm:^3.1.1"
   languageName: unknown
   linkType: soft
@@ -9899,7 +9899,7 @@ __metadata:
     marked-smartypants: "npm:^1.1.9"
     react: "npm:^19.1.0"
     react-dom: "npm:^19.1.0"
-    tgui-core: "npm:^4.1.2"
+    tgui-core: "npm:^4.1.3"
     tgui-dev-server: "workspace:*"
     vitest: "npm:^3.1.1"
   languageName: unknown
