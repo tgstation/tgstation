@@ -91,7 +91,7 @@ GLOBAL_DATUM_INIT(ghost_menu, /datum/ghost_menu, new)
 
 	data["can_boo"] = COOLDOWN_FINISHED(user, bootime)
 	data["has_fun"] = user.fun_verbs
-	data["body_name"] = (user.mind.current && user.can_reenter_corpse) ? user.mind.current.real_name : FALSE
+	data["body_name"] = (user.can_reenter_corpse && user?.mind.current) ? user.mind.current.real_name : FALSE
 	for(var/level in GLOB.ghost_lightings)
 		if(GLOB.ghost_lightings[level] == user.lighting_cutoff)
 			data["current_darkness"] = level
