@@ -56,10 +56,7 @@
 
 	if(isnull(board))
 		return ITEM_INTERACT_BLOCKING
-	if(loc == user)
-		balloon_alert(user, "can't deploy in hand")
-		return ITEM_INTERACT_BLOCKING
-	else if(!isturf(loc))
+	if(!isturf(loc))
 		balloon_alert(user, "must deploy on the floor")
 		return ITEM_INTERACT_BLOCKING
 	var/turf/location = loc
