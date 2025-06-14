@@ -1069,8 +1069,6 @@
 		// We don't really have space-proof gloves, so even if we're checking them we ignore the flags
 		if ((equipped.body_parts_covered & HANDS) && num_hands >= default_num_hands)
 			hands_covered = TRUE
-		if (!isnull(additional_flags) && !(equipped.clothing_flags & additional_flags))
-			continue
 		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | additional_flags)) && (equipped.body_parts_covered & CHEST))
 			chest_covered = TRUE
 		if ((equipped.clothing_flags & (STOPSPRESSUREDAMAGE | additional_flags)) && (equipped.body_parts_covered & HEAD))

@@ -148,7 +148,7 @@
 	var/fire_stacks_loss = 1.66
 
 /datum/status_effect/grouped/bodypart_effect/plasma_based/tick(seconds_between_ticks)
-	if (!ishuman(owner)) // No xenos, sorry
+	if (!ishuman(owner) || !owner.loc) // No xenos, sorry
 		return
 
 	var/mob/living/carbon/human/as_human = owner
