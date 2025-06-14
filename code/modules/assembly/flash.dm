@@ -291,6 +291,7 @@
 
 /obj/item/assembly/flash/cyborg/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return
+
 /obj/item/assembly/flash/cyborg/screwdriver_act(mob/living/user, obj/item/I)
 	return
 

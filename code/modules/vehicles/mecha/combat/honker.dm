@@ -13,7 +13,7 @@
 	exit_delay = 40
 	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
 	wreckage = /obj/structure/mecha_wreckage/honker
-	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 	mech_type = EXOSUIT_MODULE_HONK
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
@@ -51,7 +51,7 @@
 	max_temperature = 35000
 	accesses = list(ACCESS_SYNDICATE)
 	wreckage = /obj/structure/mecha_wreckage/honker/dark
-	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	mecha_flags = ID_LOCK_ON | CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | AI_COMPATIBLE
 	max_equip_by_category = list(
 		MECHA_L_ARM = 1,
 		MECHA_R_ARM = 1,
