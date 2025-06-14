@@ -199,6 +199,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	slot_flags = ITEM_SLOT_MASK
 	grind_results = list()
 	heat = 1000
+	light_range = 1
+	light_color = LIGHT_COLOR_FIRE
+	light_system = OVERLAY_LIGHT
+	light_on = FALSE
 	throw_verb = "flick"
 	/// Whether this cigarette has been lit.
 	VAR_FINAL/lit = FALSE
@@ -407,6 +411,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	lit = TRUE
 	playsound(src.loc, 'sound/items/lighter/cig_light.ogg', 100, 1)
 	make_cig_smoke()
+	set_light_on(TRUE)
 	if(!(flags_1 & INITIALIZED_1))
 		update_appearance(UPDATE_ICON)
 		return
@@ -456,6 +461,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	lit = FALSE
 	playsound(src.loc, 'sound/items/lighter/cig_snuff.ogg', 100, 1)
 	update_appearance(UPDATE_ICON)
+	set_light_on(FALSE)
 	if(ismob(loc))
 		to_chat(loc, span_notice("Your [name] goes out."))
 	QDEL_NULL(cig_smoke)
@@ -928,6 +934,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			to_chat(user, span_notice("Your [name] goes out."))
 		packeditem = null
 	update_appearance(UPDATE_ICON)
+	set_light_on(FALSE)
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(cig_smoke)
 
