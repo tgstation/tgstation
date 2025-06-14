@@ -321,7 +321,7 @@
 		return FALSE
 	if(target.stat == DEAD)
 		return FALSE
-	if(HAS_TRAIT(target, TRAIT_ANALGESIA)
+	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
 		return FALSE
 	return TRUE
 
