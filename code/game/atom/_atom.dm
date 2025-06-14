@@ -229,6 +229,8 @@
 		return TRUE
 	if(mover.throwing && (pass_flags_self & LETPASSTHROW))
 		return TRUE
+	if(SEND_SIGNAL(src, COMSIG_ATOM_CAN_ALLOW_THROUGH, mover, border_dir) & COMSIG_FORCE_ALLOW_THROUGH)
+		return TRUE
 	return !density
 
 /**
