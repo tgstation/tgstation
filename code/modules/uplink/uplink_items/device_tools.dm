@@ -175,6 +175,15 @@
 	cost = 1
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
+/datum/uplink_item/device_tools/mind_batterer
+	name = "Mind Batterer"
+	desc = "A device with antennaes and a speaker that emits a specific frequency meant to disorient everyone nearby, \
+			with inconsistent functionality to each person it affects. Has a cooldown of 20 seconds between each use, \
+			coming with 2 charges by default, but can be recharged with 2 TC for each additional use."
+	item = /obj/item/batterer
+	cost = 4
+	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
+
 /datum/uplink_item/device_tools/rad_laser
 	name = "Radioactive Microlaser"
 	desc = "A radioactive microlaser disguised as a standard Nanotrasen health analyzer. When used, it emits a \

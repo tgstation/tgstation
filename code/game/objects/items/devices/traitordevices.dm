@@ -1,27 +1,30 @@
 /*
+ * ## Miscellaneous traitor devices
+ * - Mind Batterer
+ * - Radioactive Microlaser
+ * - Cloaker Belt
+ * - Radio Jammer
+ * - Syndicate Turret in a Toolbox
+ */
 
-Miscellaneous traitor devices
-
-BATTERER
-
-RADIOACTIVE MICROLASER
-
-*/
-
-/*
-
-The Batterer, like a flashbang but 50% chance to knock people over. Can be either very
-effective or pretty fucking useless.
-
-*/
-
+/**
+ * The Mind Batterer
+ * Like a traitor variant of a Flashbang,
+ * stronger in its ability to bypass anything but total deafness
+ * weaker in it doesn't stun, only knockdown, and it's inconsistent
+ * compared to flashbang's distance-based affects.
+ * This can be a great way to evade arrest or throw someone under the bus
+ * to make your own getaway.
+ * Can be charged for additional uses with 2TC per use.
+ */
 /obj/item/batterer
 	name = "mind batterer"
 	desc = "A strange device with twin antennas."
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "batterer"
-	throwforce = 5
+	base_icon_state = "batterer"
 	w_class = WEIGHT_CLASS_TINY
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 7
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -29,33 +32,88 @@ effective or pretty fucking useless.
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 
-	var/times_used = 0 //Number of times it's been used.
-	var/max_uses = 2
+	///How many uses we can use the item before it burns out.
+	var/uses_left = 2
+	///The cooldown between uses so you can't use both immediately.
+	COOLDOWN_DECLARE(mind_batterer_cooldown)
 
+/obj/item/batterer/Initialize(mapload)
+	. = ..()
+	register_context()
 
-/obj/item/batterer/attack_self(mob/living/carbon/user, flag = 0, emp = 0)
-	if(!user) return
+/obj/item/batterer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(isnull(held_item) && uses_left)
+		context[SCREENTIP_CONTEXT_LMB] = "Bat Minds"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/stack/telecrystal))
+		context[SCREENTIP_CONTEXT_LMB] = "Recharge"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
 
-	if(times_used >= max_uses)
-		to_chat(user, span_danger("The mind batterer has been burnt out!"))
+/obj/item/batterer/update_desc(updates)
+	. = ..()
+	desc = initial(desc)
+	if(uses_left)
+		desc += " It has [uses_left] uses left."
+	else
+		desc += " It appears to have burned out. It can be repaired with some [EXAMINE_HINT("telecrystals")]."
+
+/obj/item/batterer/update_icon_state()
+	. = ..()
+	if(!uses_left)
+		icon_state = "[base_icon_state]burnt"
+	else
+		icon_state = base_icon_state
+
+/obj/item/batterer/item_interaction(mob/living/user, obj/item/interacting_item, list/modifiers)
+	if(!istype(interacting_item, /obj/item/stack/telecrystal))
+		return NONE
+	var/obj/item/stack/telecrystal/crystals = interacting_item
+
+	var/charges_gained = crystals.amount
+	crystals.use(charges_gained)
+	uses_left += charges_gained
+	user.balloon_alert(user, "[charges_gained] uses added")
+
+	update_appearance(UPDATE_ICON)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/batterer/attack_self(mob/user, modifiers)
+	. = ..()
+	if(.)
+		return TRUE
+
+	if(!uses_left)
+		user.balloon_alert(user, "burnt out!")
+		return
+	if(!COOLDOWN_FINISHED(src, mind_batterer_cooldown))
+		user.balloon_alert(user, "on cooldown!")
 		return
 
-	log_combat(user, null, "knocked down people in the area", src)
-
-	for(var/mob/living/carbon/human/M in urange(10, user, 1))
-		if(prob(50))
-
-			M.Paralyze(rand(200,400))
-			to_chat(M, span_userdanger("You feel a tremendous, paralyzing wave flood your mind."))
-
+	//knocking & logging everyone knocked.
+	var/log_message
+	for(var/mob/living/affected in get_hear(CONFIG_GET(string/default_view), user) - user)
+		if(HAS_TRAIT(affected, TRAIT_DEAF))
+			continue
+		affected.Knockdown(
+			amount = rand(10 SECONDS, 20 SECONDS),
+			daze_amount = (10 SECONDS),
+		)
+		to_chat(affected, span_userdanger("You feel a tremendous, paralyzing wave flood your mind."))
+		//we don't log user here because it'll flood its combat logs,
+		//instead we'll batch it up and send one log for user below.
+		log_combat(user, affected, "knocked down", src, log_user = FALSE)
+		if(isnull(log_message))
+			log_message = "Used [src], affecting: [affected]"
 		else
-			to_chat(M, span_userdanger("You feel a sudden, electric jolt travel through your head."))
+			log_message += ", [affected]"
 
-	playsound(src.loc, 'sound/misc/interference.ogg', 50, TRUE)
-	to_chat(user, span_notice("You trigger [src]."))
-	times_used += 1
-	if(times_used >= max_uses)
-		icon_state = "battererburnt"
+	log_combat(user, user, log_message, src)
+	playsound(loc, 'sound/misc/interference.ogg', 50, TRUE)
+	uses_left--
+	user.balloon_alert(user, "[uses_left] use\s left")
+	update_appearance(UPDATE_ICON)
+	COOLDOWN_START(src, mind_batterer_cooldown, 20 SECONDS)
 
 /*
 		The radioactive microlaser, a device disguised as a health analyzer used to irradiate people.
