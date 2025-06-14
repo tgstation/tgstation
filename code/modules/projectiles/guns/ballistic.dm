@@ -333,6 +333,10 @@
 		return CASING_CATCH_FAILED
 	return CASING_CATCH_SUCCESSFUL
 
+#undef CASING_CATCH_NO_ATTEMPT
+#undef CASING_CATCH_FAILED
+#undef CASING_CATCH_SUCCESSFUL
+
 ///Used to chamber a new round and eject the old one
 /obj/item/gun/ballistic/proc/chamber_round(spin_cylinder, replace_new_round)
 	if (chambered || !magazine)
