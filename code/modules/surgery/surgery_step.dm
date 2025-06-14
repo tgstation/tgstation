@@ -319,9 +319,7 @@
 		return FALSE
 	if(target.stat == DEAD)
 		return FALSE
-	if(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY)
-		return FALSE
-	if(!HAS_MIND_TRAIT(user, TRAIT_MORBID))
+	if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 		return FALSE
 	return TRUE
 
