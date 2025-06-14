@@ -104,6 +104,8 @@
 
 	var/crit_stabilizing_reagent = /datum/reagent/medicine/epinephrine
 
+	var/breath_noise = "steady in- and exhalation"
+
 // assign the respiration_type
 /obj/item/organ/lungs/Initialize(mapload)
 	. = ..()
@@ -866,6 +868,10 @@
 		return span_boldwarning("Your lungs feel extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
 	return span_boldwarning("It feels extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
 
+/// by default, returns the lungs' breath_noise var as a notice. called when stethoscope is used on chest, uses the return as a message for stethoscope user.
+/obj/item/organ/lungs/proc/hear_breath_noise(mob/living/hearer)
+	return span_notice("[owner.p_Their()] lungs emit [breath_noise].")
+
 #define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
 #define SMOKER_LUNG_HEALING (STANDARD_ORGAN_HEALING * 0.75)
 
@@ -874,7 +880,7 @@
 	desc = "A spongy rib-shaped mass for filtering plasma from the air."
 	icon_state = "lungs-plasma"
 	organ_traits = list(TRAIT_NOHUNGER) // A fresh breakfast of plasma is a great start to any morning.
-
+	breath_noise = "a crackle, like crushed foam"
 	safe_oxygen_min = 0 //We don't breathe this
 	safe_plasma_min = 4 //We breathe THIS!
 	safe_plasma_max = 0
@@ -883,14 +889,14 @@
 	name = "smoker plasma filter"
 	desc = "A plasma filter that look discolored, a result from smoking a lot."
 	icon_state = "lungs_plasma_smoker"
-
+	breath_noise = "a wheezing crackle, like crushed foam"
 	maxHealth = SMOKER_ORGAN_HEALTH
 	healing_factor = SMOKER_LUNG_HEALING
 
 /obj/item/organ/lungs/slime
 	name = "slime vacuole"
 	desc = "A large organelle designed to store oxygen and other important gasses."
-
+	breath_noise = "a low burbling"
 	safe_plasma_max = 0 //We breathe this to gain POWER.
 
 /obj/item/organ/lungs/slime/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/breather_slime)
@@ -903,7 +909,7 @@
 	name = "smoker lungs"
 	desc = "A pair of lungs that look sickly, a result from smoking a lot."
 	icon_state = "lungs_smoker"
-
+	breath_noise = "an unsteady, wheezing rhythm"
 	maxHealth = SMOKER_ORGAN_HEALTH
 	healing_factor = SMOKER_LUNG_HEALING
 
@@ -912,6 +918,7 @@
 	desc = "A basic cybernetic version of the lungs found in traditional humanoid entities."
 	failing_desc = "seems to be broken."
 	icon_state = "lungs-c"
+	breath_noise = "a steady whirr"
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
@@ -952,6 +959,7 @@
 	name = "surplus prosthetic lungs"
 	desc = "Two fragile, inflatable sacks of air that only barely mimic the function of human lungs. \
 		Offer no protection against EMPs."
+	breath_noise = "a concerningly unstable scratchy whirr. You <b>shouldn't touch this</b> while it's running"
 	icon_state = "lungs-c-s"
 	maxHealth = 0.35 * STANDARD_ORGAN_THRESHOLD
 	emp_vulnerability = 100
@@ -961,10 +969,14 @@
 	. = ..()
 	AddElement(/datum/element/dangerous_organ_removal, /*surgical = */ TRUE)
 
+/obj/item/organ/lungs/cybernetic/surplus/hear_breath_noise(mob/living/hearer)
+	return span_danger("[owner.p_Their()] lungs emit [breath_noise].")
+
 /obj/item/organ/lungs/lavaland
 	name = "blackened frilled lungs" // blackened from necropolis exposure
 	desc = "Exposure to the necropolis has mutated these lungs to breathe the air of Indecipheres, the lava-covered moon."
 	icon_state = "lungs-ashwalker"
+	breath_noise = "a throbbing smoke-like hiss"
 
 // Normal oxygen is 21 kPa partial pressure, but SS13 humans can tolerate down
 // to 16 kPa. So it follows that ashwalkers, as humanoids, follow the same rules.
@@ -1025,6 +1037,7 @@
 	name = "aeration reticulum"
 	desc = "These exotic lungs seem crunchier than most."
 	icon_state = "lungs_ethereal"
+	breath_noise = "a low fluorescent hum"
 	heat_level_1_threshold = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // 150C or 433k, in line with ethereal max safe body temperature
 	heat_level_2_threshold = 473
 	heat_level_3_threshold = 1073
@@ -1033,7 +1046,7 @@
 	name = "smoker aeration reticulum"
 	desc = "A pair of exotic lungs that look pale and sickly, a result from smoking a lot."
 	icon_state = "lungs_ethereal_smoker"
-
+	breath_noise = "a spotty hum, like a broken lightbulb"
 	maxHealth = SMOKER_ORGAN_HEALTH
 	healing_factor = SMOKER_LUNG_HEALING
 
@@ -1053,6 +1066,7 @@
 /obj/item/organ/lungs/pod
 	name = "pod vacuole"
 	desc = "A large organelle designed to store oxygen and other important gasses."
+	breath_noise = "a humid hiss"
 	foodtype_flags = PODPERSON_ORGAN_FOODTYPES
 	color = COLOR_LIME
 
