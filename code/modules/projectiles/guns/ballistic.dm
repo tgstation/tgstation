@@ -311,9 +311,10 @@
 							hitting_ground = TRUE
 						if(CASING_CATCH_FAILED)
 							hitting_ground = TRUE
-							wielder.visible_message("[wielder] reaches out for [casing] as it ejects from [src] and fumbles it due to [wielder.p_their()] full hands. Uncool!",
+							wielder.visible_message(\
+							span_warning("[wielder] reaches out for [casing] as it ejects from [src] and fumbles it due to [wielder.p_their()] full hands. Uncool!"),
 							span_warning("You try and reach out for [casing] as it ejects from [src], and fumble it because your hands are full. Uncool!"),
-							span_notice("You hear someone reaching for something before a sigh of disappointment."))
+							span_notice("You hear someone reaching for something, before a metallic clattering."))
 						if(CASING_CATCH_SUCCESSFUL)
 							hitting_ground = FALSE
 							to_chat(wielder, span_notice("You reach out and catch [casing] as it ejects from [src]. Awesome."))
