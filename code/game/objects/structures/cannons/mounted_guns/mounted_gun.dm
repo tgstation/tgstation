@@ -230,7 +230,7 @@
 	shots_in_gun = 10
 	fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
 	last_fire_sound = 'sound/items/weapons/lasercannonfire.ogg'
-	projectile_type = /obj/projectile/beam/laser/musket/prime
+	projectile_type = /obj/projectile/beam/laser/musket/
 	loaded_gun = TRUE
 	fully_loaded_gun = TRUE
 	fire_delay = 1
@@ -268,7 +268,7 @@
 	is_firing = TRUE
 	for(var/times_fired = 1, times_fired <= shots_in_gun, times_fired++) //The normal DM for loop structure since the times it has fired is changing in the loop itself.
 		if(loaded_gun)
-
+			icon_state = icon_state_fire
 			if (times_fired < shots_in_gun)
 				playsound(src, fire_sound, 50, FALSE, 5)
 			else
