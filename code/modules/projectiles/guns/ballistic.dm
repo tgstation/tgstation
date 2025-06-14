@@ -286,6 +286,10 @@
 	update_appearance()
 	update_item_action_buttons()
 
+#define CASING_CATCH_NO_ATTEMPT		0
+#define CASING_CATCH_FAILED			1
+#define CASING_CATCH_SUCCESSFUL		2
+
 /obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
 		return
@@ -297,12 +301,36 @@
 		else if(casing_ejector || !from_firing)
 			casing.forceMove(drop_location()) //Eject casing onto ground.
 			if(!QDELETED(casing))
-				casing.bounce_away(TRUE)
 				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
+				var/hitting_ground = TRUE
+				if(ismob(loc))
+					var/mob/wielder = loc
+					var/caught_casing = can_catch_casing(casing, wielder)
+					switch(caught_casing)
+						if(CASING_CATCH_NO_ATTEMPT)
+							hitting_ground = TRUE
+						if(CASING_CATCH_FAILED)
+							hitting_ground = TRUE
+							wielder.visible_message("[wielder] reaches out for [casing] as it ejects from [src] and fumbles it due to [wielder.p_their()] full hands. Uncool!",
+							span_warning("You try and reach out for [casing] as it ejects from [src], and fumble it because your hands are full. Uncool!"),
+							span_notice("You hear someone reaching for something before a sigh of disappointment."))
+						if(CASING_CATCH_SUCCESSFUL)
+							hitting_ground = FALSE
+							to_chat(wielder, span_notice("You reach out and catch [casing] as it ejects from [src]. Awesome."))
+				if(hitting_ground)
+					casing.bounce_away(TRUE)
 		else if(empty_chamber)
 			clear_chambered()
 	if (chamber_next_round && (magazine?.max_ammo > 1))
 		chamber_round()
+
+/// Used to check if the mob `wielder` can catch an ejected casing. Returns -1 if not trying, FALSE if failed, TRUE if successful.
+/obj/item/gun/ballistic/proc/can_catch_casing(obj/item/ammo_casing/casing, mob/wielder)
+	if(!wielder.throw_mode) // if they're not in throw mode, don't bother
+		return CASING_CATCH_NO_ATTEMPT
+	if(!wielder.put_in_hands(casing)) // if we fail in putting it in hand
+		return CASING_CATCH_FAILED
+	return CASING_CATCH_SUCCESSFUL
 
 ///Used to chamber a new round and eject the old one
 /obj/item/gun/ballistic/proc/chamber_round(spin_cylinder, replace_new_round)
