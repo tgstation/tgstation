@@ -8,7 +8,7 @@
 	worn_icon = 'icons/mob/clothing/under/plasmaman.dmi'
 	clothing_flags = PLASMAMAN_PREVENT_IGNITION
 	armor_type = /datum/armor/clothing_under/plasmaman
-	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	can_adjust = FALSE
 	strip_delay = 80
 	COOLDOWN_DECLARE(extinguish_timer)
