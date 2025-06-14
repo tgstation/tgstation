@@ -71,6 +71,10 @@ export const AntagInfoVoidwalker = (props) => {
                   Target a victim while remaining only partially in their view
                   to stun and weaken them, but also announce them your presence.
                 </LabeledList.Item>
+                <LabeledList.Item label="Cosmic Dash">
+                  With a short range and negligible damage, it makes for a poor
+                  offensive tool, but great for quick escapes and repositions.
+                </LabeledList.Item>
                 <LabeledList.Item label="Expand">
                   For every lesson we teach, we grow in power. We can convert
                   walls into glass to allow us to reach even further.

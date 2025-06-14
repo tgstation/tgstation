@@ -50,6 +50,8 @@
 	var/datum/action/cooldown/spell/pointed/unsettle/unsettle
 	/// Our means of communicating with the world
 	var/datum/action/cooldown/spell/list_target/telepathy/voidwalker/telepathy = /datum/action/cooldown/spell/list_target/telepathy/voidwalker
+	/// Our cool charge ability
+	var/datum/action/cooldown/mob_cooldown/charge/charge = /datum/action/cooldown/mob_cooldown/charge/voidwalker
 
 	/// Alpha we have in space
 	var/space_alpha = 0
@@ -86,9 +88,12 @@
 
 	AddElement(/datum/element/dextrous, hud_type = hud_type, can_throw = TRUE)
 	AddComponent(/datum/component/personal_crafting, ui_combat_toggle)
-	AddComponent(/datum/component/basic_inhands, x_offset = 2)
+	AddComponent(/datum/component/basic_inhands, x_offset = -2)
 
 	AddElement(/datum/element/glass_bleeder)
+
+	charge = new charge(src)
+	charge.Grant(src)
 
 	// Glass passing is handled by the glass passer component
 	passtable_on(src, type)
@@ -107,7 +112,7 @@
 
 /// Stuff you might want different on subtypes
 /mob/living/basic/voidwalker/proc/unique_setup()
-	AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 5 SECONDS, image(icon, icon_state + "_stealthed", ABOVE_LIGHTING_PLANE))
+	AddComponent(/datum/component/space_camo, space_alpha, non_space_alpha, 255, 5 SECONDS, image(icon, icon_state + "_stealthed", ABOVE_LIGHTING_PLANE))
 	AddComponent(/datum/component/space_dive, /obj/effect/dummy/phased_mob/space_dive/voidwalker)
 
 	unsettle = new(src)

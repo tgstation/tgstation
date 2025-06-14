@@ -21,7 +21,9 @@
 
 /datum/antagonist/voidwalker/get_preview_icon()
 	var/mob/living/basic/voidwalker/walker_type = /mob/living/basic/voidwalker
-	return finish_preview_icon(icon(walker_type::icon, walker_type::icon_state))
+	var/icon/icon = icon(walker_type::icon, walker_type::icon_state)
+	icon.Crop(5, 18, 30, 44)
+	return finish_preview_icon(icon)
 
 /datum/antagonist/voidwalker/forge_objectives()
 	var/datum/objective/voidwalker_objective/objective = new

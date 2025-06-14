@@ -13,9 +13,9 @@
 	/// Image we show to our jaunter so they can see where they are
 	var/image/position_indicator
 	/// The alpha we see ourselves at when in camo
-	var/alpha_to_self = 120
+	var/alpha_to_self
 
-/datum/component/space_camo/Initialize(space_alpha, non_space_alpha, reveal_after_combat, camo_icon)
+/datum/component/space_camo/Initialize(space_alpha, non_space_alpha, alpha_to_self = 120, reveal_after_combat, camo_icon)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -23,6 +23,7 @@
 	src.non_space_alpha = non_space_alpha
 	src.reveal_after_combat = reveal_after_combat
 	src.camo_icon = camo_icon
+	src.alpha_to_self = alpha_to_self
 
 /datum/component/space_camo/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))

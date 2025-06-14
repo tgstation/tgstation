@@ -118,10 +118,7 @@
 /obj/effect/dummy/phased_mob/space_dive/voidwalker
 	phased_mob_icon = /mob/living/basic/voidwalker::icon
 	phased_mob_icon_state = /mob/living/basic/voidwalker::icon_state + "_stealthed"
-	alpha = 120
 
 /obj/effect/dummy/phased_mob/space_dive/sunwalker
 	phased_mob_icon = /mob/living/basic/voidwalker/sunwalker::icon
 	phased_mob_icon_state = /mob/living/basic/voidwalker/sunwalker::icon_state + "_stealthed"
-	alpha = 120
-
