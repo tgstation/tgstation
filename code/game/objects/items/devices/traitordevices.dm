@@ -17,7 +17,7 @@
  * to make your own getaway.
  * Can be charged for additional uses with 2TC per use.
  */
-/obj/item/batterer
+/obj/item/mind_batterer
 	name = "mind batterer"
 	desc = "A strange device with twin antennas."
 	icon = 'icons/obj/devices/syndie_gadget.dmi'
@@ -37,11 +37,11 @@
 	///The cooldown between uses so you can't use both immediately.
 	COOLDOWN_DECLARE(mind_batterer_cooldown)
 
-/obj/item/batterer/Initialize(mapload)
+/obj/item/mind_batterer/Initialize(mapload)
 	. = ..()
 	register_context()
 
-/obj/item/batterer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+/obj/item/mind_batterer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item) && uses_left)
 		context[SCREENTIP_CONTEXT_LMB] = "Bat Minds"
 		return CONTEXTUAL_SCREENTIP_SET
@@ -50,7 +50,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	return NONE
 
-/obj/item/batterer/update_desc(updates)
+/obj/item/mind_batterer/update_desc(updates)
 	. = ..()
 	desc = initial(desc)
 	if(uses_left)
@@ -58,14 +58,14 @@
 	else
 		desc += " It appears to have burned out. It can be repaired with some [EXAMINE_HINT("telecrystals")]."
 
-/obj/item/batterer/update_icon_state()
+/obj/item/mind_batterer/update_icon_state()
 	. = ..()
 	if(!uses_left)
 		icon_state = "[base_icon_state]burnt"
 	else
 		icon_state = base_icon_state
 
-/obj/item/batterer/item_interaction(mob/living/user, obj/item/interacting_item, list/modifiers)
+/obj/item/mind_batterer/item_interaction(mob/living/user, obj/item/interacting_item, list/modifiers)
 	if(!istype(interacting_item, /obj/item/stack/telecrystal))
 		return NONE
 	var/obj/item/stack/telecrystal/crystals = interacting_item
@@ -78,7 +78,7 @@
 	update_appearance(UPDATE_ICON)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/batterer/attack_self(mob/user, modifiers)
+/obj/item/mind_batterer/attack_self(mob/user, modifiers)
 	. = ..()
 	if(.)
 		return TRUE

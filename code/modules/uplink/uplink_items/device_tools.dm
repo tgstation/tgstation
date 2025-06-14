@@ -180,7 +180,7 @@
 	desc = "A device with antennaes and a speaker that emits a specific frequency meant to disorient everyone nearby, \
 			with inconsistent functionality to each person it affects. Has a cooldown of 20 seconds between each use, \
 			coming with 2 charges by default, but can be recharged with 2 TC for each additional use."
-	item = /obj/item/batterer
+	item = /obj/item/mind_batterer
 	cost = 4
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
