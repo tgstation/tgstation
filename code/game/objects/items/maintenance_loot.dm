@@ -61,7 +61,7 @@
 	if(!avatar.can_mutate())
 		return BITRUNNER_GEAR_LOAD_FAILED
 
-	if(avatar.dna.mutation_in_sequence(/datum/mutation/human/shock))
-		avatar.dna.activate_mutation(/datum/mutation/human/shock)
+	if(avatar.dna.mutation_in_sequence(/datum/mutation/shock))
+		avatar.dna.activate_mutation(/datum/mutation/shock)
 	else
-		avatar.dna.add_mutation(/datum/mutation/human/shock, MUT_EXTRA)
+		avatar.dna.add_mutation(/datum/mutation/shock, MUTATION_SOURCE_MUTATOR)

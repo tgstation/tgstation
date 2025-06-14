@@ -1,0 +1,4 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - bugfix: "Mines will now properly behave when placed under lights or other wallmounts."

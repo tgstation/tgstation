@@ -1,5 +1,5 @@
 //Chameleon causes the owner to slowly become transparent when not moving.
-/datum/mutation/human/chameleon
+/datum/mutation/chameleon
 	name = "Chameleon"
 	desc = "A genome that causes the holder's skin to become transparent over time."
 	quality = POSITIVE
@@ -9,7 +9,7 @@
 	instability = POSITIVE_INSTABILITY_MAJOR
 	power_coeff = 1
 
-/datum/mutation/human/chameleon/on_acquiring(mob/living/carbon/human/owner)
+/datum/mutation/chameleon/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
 	if(!.)
 		return
@@ -17,11 +17,11 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
-/datum/mutation/human/chameleon/on_life(seconds_per_tick, times_fired)
+/datum/mutation/chameleon/on_life(seconds_per_tick, times_fired)
 	owner.alpha = max(owner.alpha - (12.5 * (GET_MUTATION_POWER(src)) * seconds_per_tick), 0)
 
 //Upgraded mutation of the base variant, used for changelings. No instability and better power_coeff
-/datum/mutation/human/chameleon/changeling
+/datum/mutation/chameleon/changeling
 	instability = 0
 	power_coeff = 2.5
 	locked = TRUE
@@ -36,7 +36,7 @@
  * - forced: Whether the movement was caused by a forceMove or moveToNullspace.
  * - [old_locs][/list/atom]: The locations the host mob used to be in.
  */
-/datum/mutation/human/chameleon/proc/on_move(atom/movable/source, atom/old_loc, move_dir, forced, list/atom/old_locs)
+/datum/mutation/chameleon/proc/on_move(atom/movable/source, atom/old_loc, move_dir, forced, list/atom/old_locs)
 	SIGNAL_HANDLER
 
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
@@ -50,14 +50,14 @@
  * - proximity: Whether the host mob can physically reach the thing that they clicked on.
  * - [modifiers][/list]: The set of click modifiers associated with this attack chain call.
  */
-/datum/mutation/human/chameleon/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, list/modifiers)
+/datum/mutation/chameleon/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(!proximity) //stops tk from breaking chameleon
 		return
 	owner.alpha = CHAMELEON_MUTATION_DEFAULT_TRANSPARENCY
 
-/datum/mutation/human/chameleon/on_losing(mob/living/carbon/human/owner)
+/datum/mutation/chameleon/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
 	owner.alpha = 255

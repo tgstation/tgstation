@@ -99,6 +99,8 @@
 
 	/// Trim datum associated with the card. Controls which job icon is displayed on the card and which accesses do not require wildcards.
 	var/datum/id_trim/trim
+	/// Whether the trim on this card can be changed.
+	var/trim_changeable = FALSE
 
 	/// Access levels held by this card.
 	var/list/access = list()
@@ -1101,6 +1103,7 @@
 
 	wildcard_slots = WILDCARD_LIMIT_GREY
 	flags_1 = UNPAINTABLE_1
+	trim_changeable = TRUE
 
 	/// An overlay icon state for when the card is assigned to a name. Usually manifests itself as a little scribble to the right of the job icon.
 	var/assigned_icon_state = "assigned"
@@ -1651,6 +1654,7 @@
 		Has special magnetic properties which force it to the front of wallets."
 	trim = /datum/id_trim/chameleon
 	wildcard_slots = WILDCARD_LIMIT_GOLD
+	trim_changeable = FALSE
 	actions_types = list(/datum/action/item_action/chameleon/change/id, /datum/action/item_action/chameleon/change/id_trim)
 	action_slots = ALL
 

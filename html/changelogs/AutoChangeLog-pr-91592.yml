@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Changing your ghost lighting in the ghost menu now saves between rounds."
