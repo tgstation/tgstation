@@ -24,17 +24,22 @@
 	if(!do_after(user, 10 SECONDS, src))
 		return
 
-	var/mob/living/carbon/human/starer = user
-	starer.cure_trauma_type(/datum/brain_trauma/voided) //this wouldn't make much sense to have anymore
-
-	starer.gain_trauma(/datum/brain_trauma/voided/stable)
-	to_chat(user, span_purple("And a whole world opens up to you."))
-	playsound(get_turf(user), 'sound/effects/curse/curse5.ogg', 60)
-
 	uses--
 	if(uses <= 0)
 		icon_state = drained_icon_state
 		light_on = FALSE
+
+	var/mob/living/carbon/human/starer = user
+
+	if(starer.has_trauma_type(/datum/brain_trauma/voided/stable))
+		starer.put_in_hands(new /obj/item/void_eater(), TRUE, forced = TRUE)
+		playsound(starer, 'sound/effects/blob/blobattack.ogg', 60, TRUE)
+	else
+		starer.cure_trauma_type(/datum/brain_trauma/voided) //this wouldn't make much sense to have anymore
+		starer.gain_trauma(/datum/brain_trauma/voided/stable)
+
+	to_chat(user, span_purple("And a whole world opens up to you."))
+	playsound(get_turf(user), 'sound/effects/curse/curse5.ogg', 60)
 
 /**
  * An armblade that pops windows
