@@ -49,12 +49,14 @@
 
 		blomperize(structure)
 
+/// Make the window temporarily passable
 /datum/component/glass_passer/proc/blomperize(obj/structure/structure)
 	structure.density = FALSE
 	apply_wibbly_filters(structure)
 
 	addtimer(CALLBACK(src, PROC_REF(unblomperize), structure), deform_glass)
 
+/// Reset the windows passability
 /datum/component/glass_passer/proc/unblomperize(obj/structure/structure)
 	structure.density = initial(structure.density)
 	remove_wibbly_filters(structure, 0.5 SECONDS)
