@@ -304,3 +304,32 @@
       id
   carlarctg:
   - bugfix: Fixed cockroach spawners not doing anything
+2025-06-14:
+  00-Steven:
+  - refactor: Refactored tablet/ID painter item interactions. Please report any issues.
+  - bugfix: You can no longer circumvent the block on inserting chameleon IDs into
+      tablet/ID painters by inserting them via the UI.
+  - bugfix: You can no longer insert non-advanced IDs into the tablet/ID painter and
+      change their trims.
+  - sound: Inserting IDs into tablet/ID painters is no longer silent.
+  - qol: You can repair tablet/ID painters when they're damaged, instead of just when
+      they're broken.
+  - qol: Improved feedback for tablet/ID painter interactions.
+  - qol: Added screentips to tablet/ID painters.
+  Ben10Omintrix:
+  - bugfix: moving away from the surgery table with its mask no longer causes lag
+  Hatterhat:
+  - bugfix: Some old cells in space ruins reliant on replacing an APC's power cell
+      have been replaced with their megacell counterparts.
+  Melbert:
+  - qol: Some external airlocks - particularly solar arrays - on Metastation and Deltastation
+      are now 1-3 tiles larger, allowing for crates to pass through without venting
+      the room.
+  - qol: External airlock supply pipes on Metastation and Deltastation now run on
+      layer 5 instead of layer 3 where possible
+  SmArtKar:
+  - balance: Ripley goliath plating now takes up an armor slot on the mech
+  - rscadd: Ghost verbs are back in the chatbar, you can now type out things like
+      "Orbit" or "T-ray-scan" once again as a ghost.
+  throwawayuseless:
+  - qol: Posibrains have EAL.
