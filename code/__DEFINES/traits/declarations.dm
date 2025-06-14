@@ -511,6 +511,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Being close enough to the supermatter makes it heal at higher temperatures
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
+// If people cry in the psychologist's office with a person that possesses this trait
+// present, their negative mood events get cleared
+#define TRAIT_ACTIVE_LISTENER "active_listener"
 /// Mob has fov applied to it
 #define TRAIT_FOV_APPLIED "fov_applied"
 /// Mob is using the scope component
