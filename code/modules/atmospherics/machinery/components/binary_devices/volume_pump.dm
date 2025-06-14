@@ -38,7 +38,6 @@
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
-		update_appearance(UPDATE_ICON)
 		return CLICK_ACTION_SUCCESS
 	return CLICK_ACTION_BLOCKING
 
@@ -154,11 +153,10 @@
 	if(!overclocked)
 		overclocked = TRUE
 		to_chat(user, "The pump makes a grinding noise and air starts to hiss out as you disable its pressure limits.")
-		update_icon()
 	else
 		overclocked = FALSE
 		to_chat(user, "The pump quiets down as you turn its limiters back on.")
-		update_icon()
+	update_appearance(UPDATE_ICON)
 	return TRUE
 
 // mapping

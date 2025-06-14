@@ -315,6 +315,13 @@
 	base_icon_state = "robustg"
 	spawn_type = /obj/item/cigarette/robustgold
 
+/obj/item/storage/fancy/cigarettes/cigpack_greytide
+	name = "\improper Mainthol Grey packet"
+	desc = "The thin grey line."
+	icon_state = "greytide"
+	base_icon_state = "greytide"
+	spawn_type = /obj/item/cigarette/greytide
+
 /obj/item/storage/fancy/cigarettes/cigpack_carp
 	name = "\improper Carp Classic packet"
 	desc = "Since 2313."
