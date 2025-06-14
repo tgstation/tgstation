@@ -1,0 +1,32 @@
+{
+	"version": 1,
+	"map_name": "RainStation",
+	"map_path": "map_files/rainstation",
+	"map_file": "rainstation.dmm",
+	"space_ruin_levels": 0,
+	"space_empty_levels": 0,
+	"planetary": 1,
+	"shuttles": {
+		"cargo": "cargo_box",
+		"ferry": "ferry_fancy",
+		"whiteship": "whiteship_meta",
+		"emergency": "emergency_meta"
+	},
+	"traits": [
+		{
+			"Mining": false,
+			"Linkage": "Self",
+			"Gravity": true,
+			"Ocean Ruins": true,
+			"Weather_Rainstorm": true,
+			"Baseturf": "/turf/open/water/no_planet_atmos/deep/rainworld",
+			"No Parallax": true
+		}
+	],
+	"minetype": "ocean",
+	"job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/bar", "/area/station/commons/lounge"]
+		}
+	}
+}

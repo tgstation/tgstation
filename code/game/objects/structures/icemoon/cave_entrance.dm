@@ -111,6 +111,18 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	mob_types = list(/mob/living/basic/mining/legion/snow/spawner_made)
 	mob_gps_id = "LG|S" // legion | snow
 
+/obj/structure/spawner/ice_moon/demonic_portal/lobstrocity
+	mob_types = list(/mob/living/basic/mining/hivelord)
+	mob_gps_id = "L"
+
+/obj/structure/spawner/ice_moon/demonic_portal/hivelord
+	mob_types = list(/mob/living/basic/mining/lobstrosity)
+	mob_gps_id = "H"
+
+/obj/structure/spawner/ice_moon/demonic_portal/basilisk
+	mob_types = list(/mob/living/basic/mining/basilisk)
+	mob_gps_id = "B"
+
 /obj/effect/collapsing_demonic_portal
 	name = "collapsing demonic portal"
 	desc = "It's slowly fading!"
