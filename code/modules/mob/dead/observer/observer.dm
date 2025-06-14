@@ -986,8 +986,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/datum/preferences/prefs = client?.prefs
 	if(!prefs || (client?.combo_hud_enabled && prefs.toggles & COMBOHUD_LIGHTING))
 		return ..()
-	return GLOB.ghost_lighting_options[prefs.read_preference(/datum/preference/choiced/ghost_lighting)]
-
+	return GLOB.ghost_lightings[prefs.read_preference(/datum/preference/choiced/ghost_lighting)]
 
 /// Called when we exit the orbiting state
 /mob/dead/observer/proc/on_deorbit(datum/source)
