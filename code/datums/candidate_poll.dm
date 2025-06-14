@@ -78,6 +78,9 @@
 		return FALSE
 
 	signed_up += candidate
+
+	log_game("[candidate.key] signed candidate poll [role ? "for [role]" : "\"[question]\""]")
+
 	if(!silent)
 		to_chat(candidate, span_notice(response_messages[POLL_RESPONSE_SIGNUP]))
 		// Sign them up for any other polls with the same mob type
@@ -102,6 +105,9 @@
 		return FALSE
 
 	signed_up -= candidate
+
+	log_game("[candidate.key] removed their candidacy for candidate poll [role ? "for [role]" : "\"[question]\""]")
+
 	if(!silent)
 		to_chat(candidate, span_danger(response_messages[POLL_RESPONSE_UNREGISTERED]))
 
