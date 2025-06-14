@@ -120,9 +120,13 @@
 
 	/// List of all air vents in the area
 	var/list/obj/machinery/atmospherics/components/unary/vent_pump/air_vents = list()
+	/// List of air vents in the area, that shouldn't be touched by air alarm modes
+	var/list/obj/machinery/atmospherics/components/unary/vent_pump/excluded_vents = list()
 
 	/// List of all air scrubbers in the area
 	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
+	/// List of air scrubbers in the area, that shouldn't be touched by air alarm modes
+	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/excluded_scrubbers = list()
 
 	/// Are shuttles allowed to dock in this area
 	var/allow_shuttle_docking = FALSE
@@ -367,7 +371,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	//atmos cleanup
 	firealarms = null
 	air_vents = null
+	excluded_vents = null
 	air_scrubbers = null
+	excluded_scrubbers = null
 	//turf cleanup
 	turfs_by_zlevel = null
 	turfs_to_uncontain_by_zlevel = null
