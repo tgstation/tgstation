@@ -62,6 +62,7 @@
 	stored_slimes = list()
 	xeno_hud = new(null, src)
 	xeno_hud.on_update_hud(LAZYLEN(stored_slimes), stored_monkeys, max_slimes)
+	register_context()
 
 /obj/machinery/computer/camera_advanced/xenobio/post_machine_initialize()
 	. = ..()
@@ -621,7 +622,6 @@
 		pixel_y = 64
 		alpha = 0
 		shoot_out(shatter)
-	register_context()
 
 /// Shoots the mob visual upwards into the pipe then deletes it
 /obj/effect/abstract/sucked_atom/proc/suck_up()
