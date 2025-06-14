@@ -83,7 +83,7 @@
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/glass_pacifist)
 
-	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour, regen_check = CALLBACK(src, PROC_REF(can_regen)))
+	AddComponent(/datum/component/regenerator, brute_per_second = 2, burn_per_second = 2, outline_colour = regenerate_colour, regen_check = CALLBACK(src, PROC_REF(can_regen)))
 	AddComponent(/datum/component/glass_passer, deform_glass = 5 SECONDS)
 	AddComponent(/datum/component/planet_allergy)
 
