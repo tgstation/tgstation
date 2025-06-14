@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Adds airlock pumps to all external airlocks on Deltastation"
-  - qol: "Airlock pumps will unbolt their linked airlocks on losing power, allowing them to be forced through"

@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - spellcheck: "PR announcements should now say \"X merged by Y: ...\" instead of \"X merged Y: ...\""

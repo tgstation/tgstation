@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - qol: "ghost candidates for blackout drunk are selected more quickly"
