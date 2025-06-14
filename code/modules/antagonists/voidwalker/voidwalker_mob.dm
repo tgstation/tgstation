@@ -124,6 +124,13 @@
 
 	fully_replace_character_name(null, pick(GLOB.voidwalker_names))
 
+/mob/living/basic/voidwalker/Destroy()
+	. = ..()
+
+	qdel(unsettle)
+	qdel(telepathy)
+	qdel(charge)
+
 /// Called on COMSIG_LIVING_UNARMED_ATTACK
 /mob/living/basic/voidwalker/proc/on_attack(mob/living/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
