@@ -16,6 +16,10 @@
 /obj/item/clothing/head/helmet/skull/cosmic/attack_self(mob/user, modifiers)
 	. = ..()
 
+	if(istype(user, /mob/living/basic/voidwalker))
+		to_chat(user, span_bolddanger("OH GOD NOO!!!! WHYYYYYYYYY??!!! WHO WOULD DO THIS?!!"))
+		return
+
 	if(!uses || !ishuman(user))
 		return
 
