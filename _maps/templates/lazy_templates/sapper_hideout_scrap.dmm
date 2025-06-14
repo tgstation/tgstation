@@ -14,12 +14,33 @@
 	},
 /turf/open/misc/asteroid,
 /area/space)
+"d" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/effect/mapping_helpers/apc/unlocked,
+/obj/effect/mapping_helpers/apc/cut_AI_wire,
+/obj/effect/mapping_helpers/apc/full_charge,
+/obj/effect/mapping_helpers/apc/cell_5k,
+/obj/structure/cable/layer3,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/space)
 "e" = (
 /turf/open/lava/plasma/air,
+/area/space)
+"f" = (
+/turf/open/floor/iron/smooth,
 /area/space)
 "g" = (
 /obj/structure/fluff/minepost,
 /turf/open/misc/asteroid,
+/area/space)
+"h" = (
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
 /area/space)
 "i" = (
 /obj/structure/frame/machine/secured,
@@ -30,6 +51,18 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/space)
+"j" = (
+/obj/effect/mapping_helpers/wall_dent{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/effect/mapping_helpers/wall_dent,
+/turf/closed/wall,
+/area/space)
+"l" = (
+/obj/effect/decal/remains/xeno,
+/turf/open/misc/asteroid,
+/area/space)
 "o" = (
 /turf/closed/mineral,
 /area/space)
@@ -38,9 +71,28 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/space)
+"q" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth,
+/area/space)
+"r" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/plating,
+/area/space)
 "s" = (
 /obj/structure/cable,
 /obj/machinery/power/rtg/advanced,
+/turf/open/floor/plating,
+/area/space)
+"t" = (
+/obj/item/trash/flare,
+/obj/effect/decal/cleanable/ash,
+/turf/open/misc/asteroid,
+/area/space)
+"u" = (
+/obj/structure/girder,
 /turf/open/floor/plating,
 /area/space)
 "v" = (
@@ -49,6 +101,17 @@
 /turf/open/floor/iron/tgmcemblem{
 	dir = 1
 	},
+/area/space)
+"y" = (
+/obj/item/wallframe/airalarm,
+/obj/item/electronics/airalarm,
+/obj/item/stack/cable_coil/five,
+/turf/open/misc/asteroid,
+/area/space)
+"z" = (
+/obj/structure/cable/layer3,
+/obj/structure/lattice,
+/turf/open/misc/asteroid,
 /area/space)
 "A" = (
 /turf/open/misc/asteroid,
@@ -68,6 +131,10 @@
 	dir = 9
 	},
 /area/space)
+"E" = (
+/obj/structure/flora/rock/style_random,
+/turf/open/misc/asteroid,
+/area/space)
 "F" = (
 /obj/effect/turf_decal/sand,
 /obj/structure/cable/layer3,
@@ -86,6 +153,44 @@
 	},
 /obj/item/clothing/head/costume/tmc,
 /turf/open/misc/asteroid,
+/area/space)
+"I" = (
+/turf/closed/wall,
+/area/space)
+"J" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/space)
+"L" = (
+/obj/effect/turf_decal/tile/red/half{
+	dir = 4
+	},
+/obj/item/ammo_casing{
+	dir = 5;
+	pixel_y = -6;
+	pixel_x = 4
+	},
+/obj/item/ammo_casing,
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/space)
+"N" = (
+/obj/effect/turf_decal/tile/red/half{
+	dir = 4
+	},
+/turf/open/floor/iron/smooth_edge{
+	dir = 4
+	},
+/area/space)
+"O" = (
+/obj/structure/cable/layer3,
+/turf/open/misc/asteroid,
+/area/space)
+"P" = (
+/obj/structure/girder,
+/obj/item/stack/sheet/iron/five,
+/turf/open/floor/plating,
 /area/space)
 "Q" = (
 /obj/structure/lattice,
@@ -124,6 +229,23 @@
 	},
 /turf/open/misc/asteroid/dug,
 /area/space)
+"X" = (
+/turf/open/floor/plating,
+/area/space)
+"Y" = (
+/obj/structure/cable/layer3,
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/plating,
+/area/space)
+"Z" = (
+/obj/effect/turf_decal/tile/red/anticorner{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/smooth_corner{
+	dir = 8
+	},
+/area/space)
 
 (1,1,1) = {"
 a
@@ -156,14 +278,14 @@ s
 C
 p
 a
-a
-a
-a
-a
-a
-a
-a
-a
+X
+X
+f
+X
+f
+f
+f
+f
 a
 a
 a
@@ -178,14 +300,14 @@ R
 R
 R
 a
-a
-a
-a
-a
-a
-a
-a
-a
+o
+Q
+f
+f
+f
+f
+f
+f
 a
 a
 a
@@ -200,14 +322,14 @@ i
 C
 p
 a
-a
-a
-a
-a
-a
-a
-a
-a
+o
+o
+X
+X
+f
+f
+f
+r
 a
 a
 a
@@ -222,14 +344,14 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
+o
+Q
+N
+q
+f
+f
+J
+Q
 a
 a
 a
@@ -244,15 +366,15 @@ V
 B
 o
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+o
+o
+I
+h
+q
+z
+O
+O
+Y
 a
 a
 a
@@ -266,15 +388,15 @@ H
 g
 o
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+o
+l
+u
+I
+Z
+d
+o
+Q
+J
 a
 a
 a
@@ -288,15 +410,15 @@ b
 o
 o
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+A
+E
+A
+I
+P
+I
+o
+o
+u
 a
 a
 a
@@ -310,15 +432,15 @@ o
 o
 o
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+t
+B
+A
+A
+A
+A
+A
+E
+A
 a
 a
 a
@@ -354,9 +476,9 @@ D
 o
 o
 a
+L
 a
-a
-a
+Q
 a
 a
 a
@@ -376,9 +498,9 @@ v
 o
 T
 a
+j
 a
-a
-a
+y
 a
 a
 a
