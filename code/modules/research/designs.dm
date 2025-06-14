@@ -113,7 +113,7 @@ other types of metals and chemistry for reagents).
  * Args:
  * - stored_research - The techweb that's storing us.
  */
-/obj/item/disk/design_disk/proc/on_upload(datum/techweb/stored_research, atom/research_source)
+/obj/item/disk/design_disk/proc/on_upload(datum/techweb/stored_research, atom/research_source, alist/included_log_details = null)
 	return
 
 /obj/item/disk/design_disk/bepis
@@ -134,7 +134,7 @@ other types of metals and chemistry for reagents).
 		blueprints += new_entry
 
 ///Unhide and research our node so we show up in the R&D console.
-/obj/item/disk/design_disk/bepis/on_upload(datum/techweb/stored_research, atom/research_source)
+/obj/item/disk/design_disk/bepis/on_upload(datum/techweb/stored_research, atom/research_interface, alist/included_log_details = null)
 	stored_research.hidden_nodes -= bepis_node.id
 	stored_research.research_node(bepis_node, force = TRUE, auto_adjust_cost = FALSE, research_source = research_source)
 
