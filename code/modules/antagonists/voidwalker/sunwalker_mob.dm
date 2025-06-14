@@ -39,6 +39,10 @@
 
 	create_reagents(1) // Needed for the water reagent interactions to work
 
+	var/static/list/ray_filter = list(type = "rays", size = 32, color = COLOR_BLUE_LIGHT, flags = FILTER_OVERLAY)
+	add_filter("sunwalker_rays", 3, ray_filter)
+	animate(get_filter("sunwalker_rays"), time = 5 SECONDS, loop = -1)
+
 /mob/living/basic/voidwalker/sunwalker/examine(mob/user)
 	. = ..()
 
