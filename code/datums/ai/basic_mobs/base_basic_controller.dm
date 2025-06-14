@@ -33,7 +33,7 @@
 	if(. & AI_UNABLE_TO_RUN)
 		return .
 	var/mob/living/living_pawn = pawn
-	if (!living_pawn.stat && !(ai_traits & CAN_ACT_WHILE_DEAD))
+	if (living_pawn.stat && !(ai_traits & CAN_ACT_WHILE_DEAD))
 		return AI_UNABLE_TO_RUN
 
 	var/ignore_incap_flags = NONE
