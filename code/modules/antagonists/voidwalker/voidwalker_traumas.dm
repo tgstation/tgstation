@@ -15,8 +15,10 @@
 	var/list/traits_to_apply = list(TRAIT_PACIFISM)
 	/// Do we ban the person from entering space?
 	var/ban_from_space = TRUE
+	/// Chance we'll get a color from space_colors
+	var/coloring_chance = 50
 	/// Statis list of all possible space colors
-	var/static/list/space_colors = list("#ffffff", "#00ccff","#b12bff","#ff7f3a","#ff1c55","#ff7597","#28ff94","#0fcfff","#ff8b4c","#ffc425","#2dff96","#1770ff","#ff3f31","#ffba3b")
+	var/static/list/space_colors = list("#00ccff","#b12bff","#ff7f3a","#ff1c55","#ff7597","#28ff94","#0fcfff","#ff8b4c","#ffc425","#2dff96","#1770ff","#ff3f31","#ffba3b")
 	/// Frequency at which we do a space vomit
 	var/vomit_frequency = 2
 	/// We take a little extra damage, cause we're like glass or something
@@ -24,7 +26,10 @@
 
 /datum/brain_trauma/voided/on_gain()
 	. = ..()
-	space_color = pick(space_colors)
+
+	if(prob(coloring_chance))
+		space_color = pick(space_colors)
+
 	owner.add_traits(traits_to_apply, REF(src))
 	if(ban_from_space)
 		owner.AddComponent(/datum/component/banned_from_space)

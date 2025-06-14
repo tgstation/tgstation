@@ -41,11 +41,11 @@
 
 	if(do_after(owner, stare_time, cast_on, IGNORE_TARGET_LOC_CHANGE | IGNORE_USER_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(check_if_staring), cast_on), hidden = TRUE))
 		spookify(cast_on)
-		return
+
+	else
+		. = SPELL_NO_IMMEDIATE_COOLDOWN
 
 	UnregisterSignal(owner, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_ATTACK_ATOM))
-
-	return SPELL_NO_IMMEDIATE_COOLDOWN
 
 /datum/action/cooldown/spell/pointed/unsettle/proc/check_if_staring(mob/living/carbon/human/target)
 	SIGNAL_HANDLER
@@ -77,11 +77,16 @@
 	color = COLOR_PURPLE
 
 /datum/action/cooldown/spell/list_target/telepathy/voidwalker
-	name = "Transmit"
+	name = "Cosmic Transmit"
+	background_icon_state = "bg_void"
 	button_icon = 'icons/mob/actions/actions_voidwalker.dmi'
 	button_icon_state = "voidwalker_telepathy"
 	panel = null
 	overlay_icon_state = null
+
+/datum/action/cooldown/spell/list_target/telepathy/voidwalker/sunwalker
+	name = "Stellar Transmit"
+	background_icon_state = "bg_star"
 
 /datum/action/cooldown/mob_cooldown/charge/sunwalker
 	name = "Stellar Charge"
