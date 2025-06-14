@@ -102,9 +102,7 @@
 
   &__Title,
   &__Button {
-    @include button.button-color(var(--color-base));
-    background-color: hsl(from var(--color-base) h s l / 0);
-    color: button.$color-transparent-text;
+    @include button.button-color-transparent();
     position: relative;
 
     display: flex;
