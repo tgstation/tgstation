@@ -110,8 +110,6 @@
 		"mech_ccw_armor",
 		"mech_proj_armor",
 		"mech_emp_armor",
-		"paddyupgrade",
-		"mech_hydraulic_claw",
 		"mech_disabler",
 		"mech_repair_droid",
 	)
