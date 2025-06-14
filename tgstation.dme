@@ -2217,6 +2217,7 @@
 #include "code\game\machinery\computer\launchpad_control.dm"
 #include "code\game\machinery\computer\law.dm"
 #include "code\game\machinery\computer\mechlaunchpad.dm"
+#include "code\game\machinery\computer\modular_shield.dm"
 #include "code\game\machinery\computer\operating_computer.dm"
 #include "code\game\machinery\computer\pod.dm"
 #include "code\game\machinery\computer\robot.dm"
