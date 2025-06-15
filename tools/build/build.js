@@ -325,14 +325,6 @@ export const BunTarget = new Juke.Target({
   },
 });
 
-export const BunPmTarget = new Juke.Target({
-  parameters: [BunTarget],
-  inputs: ["tgui/**/package.json"],
-  executes: () => {
-    return bun("pm", "untrusted");
-  },
-});
-
 export const TgFontTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: [
@@ -358,7 +350,7 @@ export const TgFontTarget = new Juke.Target({
 });
 
 export const TguiTarget = new Juke.Target({
-  dependsOn: [BunTarget, BunPmTarget],
+  dependsOn: [BunTarget],
   inputs: [
     "tgui/rspack.config.cjs",
     "tgui/**/package.json",
