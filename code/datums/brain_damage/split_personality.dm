@@ -269,7 +269,6 @@
 	poll_time = 10 SECONDS
 	/// Duration of effect, tracked in seconds, not deciseconds. qdels when reaching 0.
 	var/duration_in_seconds = 180
-	var/datum/status_effect/inebriated/inebriation
 
 /datum/brain_trauma/severe/split_personality/blackout/on_gain()
 	. = ..()
@@ -284,14 +283,15 @@
 		header = "Bro I'm not even drunk right now",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
-	inebriation = owner.has_status_effect(/datum/status_effect/inebriated)
-	inebriation.iron_liver = TRUE
+	var/datum/status_effect/inebriated/inebriation = owner.has_status_effect(/datum/status_effect/inebriated)
+	inebriation?.iron_liver = TRUE
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
 	. = ..()
 	owner.add_mood_event("hang_over", /datum/mood_event/hang_over)
 	UnregisterSignal(owner, COMSIG_ATOM_SPLASHED)
-	inebriation.iron_liver = FALSE
+	var/datum/status_effect/inebriated/inebriation = owner.has_status_effect(/datum/status_effect/inebriated)
+	inebriation?.iron_liver = FALSE
 
 /datum/brain_trauma/severe/split_personality/blackout/proc/on_splashed()
 	SIGNAL_HANDLER
