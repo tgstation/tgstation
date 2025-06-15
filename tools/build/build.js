@@ -358,7 +358,7 @@ export const TgFontTarget = new Juke.Target({
 });
 
 export const TguiTarget = new Juke.Target({
-  dependsOn: [BunPMTarget],
+  dependsOn: [BunTarget, BunPMTarget],
   inputs: [
     "tgui/rspack.config.cjs",
     "tgui/**/package.json",
