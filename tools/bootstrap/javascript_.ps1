@@ -15,7 +15,7 @@ function Get-VariableFromFile {
 
 function Get-Bun {
     if (Test-Path $BunTarget -PathType Leaf) {
-        Test-BunHash
+        # Bun already exists
         return
     }
 
@@ -28,6 +28,18 @@ function Get-Bun {
 
     Write-Output "Extracting Bun archive"
     Expand-Archive -Path $BunZip -DestinationPath $BunTargetDir -Force
+
+    # Move the exe out of the subdirectory
+    if (Test-Path "$BunTargetDir\$BunPlatform\bun.exe") {
+        Move-Item "$BunTargetDir\$BunPlatform\bun.exe" $BunTargetDir -Force
+    }
+    else {
+        Write-Output "Failed to find bun.exe in the extracted directory."
+        exit 1
+    }
+
+    Remove-Item $BunZip -Force
+    Remove-Item "$BunTargetDir\$BunPlatform" -Recurse -Force
 }
 
 function Test-BunHash {
@@ -77,12 +89,12 @@ $BunVersion = Get-VariableFromFile -Path "$BaseDir\..\..\dependencies.sh" -Key "
 $BunPlatform = "bun-windows-x64"
 $BunSource = "https://github.com/oven-sh/bun/releases/download/bun-v$BunVersion/$BunPlatform.zip"
 $BunTargetDir = "$Cache\bun-v$BunVersion-x64"
-$BunTarget = "$BunTargetDir\$BunPlatform\bun.exe"
+$BunTarget = "$BunTargetDir\bun.exe"
 $BunZip = "$BunTargetDir\bun.zip"
 
 ## Just print the path and exit
 if ($Args.length -eq 1 -and $Args[0] -eq "Get-Path") {
-    Write-Output "$BunTargetDir\$BunPlatform"
+    Write-Output "$BunTargetDir"
     exit 0
 }
 
@@ -96,7 +108,7 @@ if ($Args.length -eq 1 -and $Args[0] -eq "Download-Bun") {
 Get-Bun
 
 ## Set PATH so that recursive calls find it
-$Env:PATH = "$BunTargetDir\$BunPlatform;$ENV:Path"
+$Env:PATH = "$BunTargetDir;$ENV:Path"
 
 ## Invoke Bun with all command-line arguments
 $ErrorActionPreference = "Continue"
