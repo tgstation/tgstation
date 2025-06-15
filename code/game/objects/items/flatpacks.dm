@@ -56,17 +56,16 @@
 
 	if(isnull(board))
 		return ITEM_INTERACT_BLOCKING
-	if(loc == user)
-		balloon_alert(user, "can't deploy in hand")
+	if(!isturf(loc))
+		balloon_alert(user, "must deploy on the floor")
 		return ITEM_INTERACT_BLOCKING
-	else if(isturf(loc))
-		var/turf/location = loc
-		if(!isopenturf(location))
-			balloon_alert(user, "can't deploy here")
-			return ITEM_INTERACT_BLOCKING
-		else if(location.is_blocked_turf(source_atom = src))
-			balloon_alert(user, "no space for deployment")
-			return ITEM_INTERACT_BLOCKING
+	var/turf/location = loc
+	if(!isopenturf(location))
+		balloon_alert(user, "can't deploy here")
+		return ITEM_INTERACT_BLOCKING
+	else if(location.is_blocked_turf(source_atom = src))
+		balloon_alert(user, "no space for deployment")
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert_to_viewers("deploying!")
 	if(!do_after(user, 1 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
