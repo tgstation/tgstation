@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - qol: "Cyborgs can right-click their stored omnitools to pull out a specific tool instead of having to use it in-hand after selecting it to do so."
