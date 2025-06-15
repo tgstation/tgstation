@@ -333,3 +333,19 @@
       "Orbit" or "T-ray-scan" once again as a ghost.
   throwawayuseless:
   - qol: Posibrains have EAL.
+2025-06-15:
+  00-Steven:
+  - bugfix: Critter crates no longer re-attain their ability to lift you despite being
+      open if you move one after opening it, and neither does this lifting field stay
+      after you destroy it.
+  JohnFulpWillard:
+  - qol: Changing your ghost lighting in the ghost menu now saves between rounds.
+  Melbert:
+  - bugfix: Cargo request consoles can't loan the shuttle
+  Rhials:
+  - bugfix: Mines will now properly behave when placed under lights or other wallmounts.
+  SmArtKar:
+  - bugfix: Fixed black character previews
+  - bugfix: Fixed xenomorphs being able to infinitely vomit out the same person
+  SyncIt21:
+  - code_imp: removed `REAGENT_NOSPLIT` flag

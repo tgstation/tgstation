@@ -345,7 +345,8 @@
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_color = list(1,1,1,0, 1,1,1,0, 1,1,1,0, 0,0,0,1, 0,0,0,0))
 	/// But for the bloom plate we convert only the red color into full white, this way we can have emissives in green channel unaffected by bloom
 	/// which allows us to selectively bloom only a part of our emissives
-	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_PLATE, offset), relay_color = list(1,1,1,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_PLATE, offset), relay_color = list(255,255,255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_BLOOM_MASK_PLATE, offset), relay_color = list(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0))
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"
