@@ -435,3 +435,13 @@
 	build_path = /obj/item/shuttle_blueprints
 	category = list(RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING)
 	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/shuttle_remote
+	name = "Shuttle Remote Control"
+	desc = "A remote which can send away or try to dock shuttles once linked to a navigation console."
+	id = "shuttle_remote"
+	build_path = /obj/item/shuttle_remote
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
