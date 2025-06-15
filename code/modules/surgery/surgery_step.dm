@@ -304,8 +304,6 @@
 		return FALSE
 	if(!HAS_MIND_TRAIT(user, TRAIT_MORBID))
 		return FALSE
-	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
-		return FALSE
 	return TRUE
 
 //Replaces visible_message during operations so only people looking over the surgeon can see them.
