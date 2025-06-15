@@ -11,8 +11,9 @@
  * * what_done - is a verb describing the action (e.g. punched, throwed, kicked, etc.)
  * * atom/object - is a tool with which the action was made (usually an item)
  * * addition - is any additional text, which will be appended to the rest of the log line
+ * * log_user - Whether the user should get a log, FALSE to log just the target.
  */
-/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null)
+/proc/log_combat(atom/user, atom/target, what_done, atom/object=null, addition=null, log_user = TRUE)
 	var/ssource = key_name(user)
 	var/starget = key_name(target)
 
@@ -28,8 +29,9 @@
 
 	var/postfix = "[sobject][saddition][hp]"
 
-	var/message = "[what_done] [starget][postfix]"
-	user.log_message(message, LOG_ATTACK, color="red")
+	if(log_user)
+		var/message = "[what_done] [starget][postfix]"
+		user.log_message(message, LOG_ATTACK, color="red")
 
 	if(user != target)
 		var/reverse_message = "was [what_done] by [ssource][postfix]"
