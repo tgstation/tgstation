@@ -44,6 +44,7 @@
 		"@types/node": "^22.14.0",
 		"@types/webpack-env": "^1.18.8",
 		"@types/wicg-file-system-access": "^2023.10.6",
+		"tgui-core": "^4.2.3",
 		"vitest": "^3.1.1"
 	}
 }
