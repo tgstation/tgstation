@@ -321,8 +321,15 @@ export const BunTarget = new Juke.Target({
   parameters: [CiParameter],
   inputs: ["tgui/**/package.json"],
   executes: ({ get }) => {
-    bun("install", get(CiParameter));
-    return bun("pm untrusted");
+    return bun("install", get(CiParameter));
+  },
+});
+
+export const BunPMTarget = new Juke.Target({
+  parameters: [CiParameter],
+  inputs: ["tgui/**/package.json"],
+  executes: ({ get }) => {
+    return bun("pm", "untrusted", get(CiParameter));
   },
 });
 
@@ -351,7 +358,7 @@ export const TgFontTarget = new Juke.Target({
 });
 
 export const TguiTarget = new Juke.Target({
-  dependsOn: [BunTarget],
+  dependsOn: [BunTarget, BunPMTarget],
   inputs: [
     "tgui/rspack.config.cjs",
     "tgui/**/package.json",
