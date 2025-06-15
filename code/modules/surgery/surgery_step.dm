@@ -116,7 +116,7 @@
 	if(HAS_TRAIT(target, TRAIT_SURGICALLY_ANALYZED))
 		speed_mod *= SURGERY_SPEED_DISSECTION_MODIFIER
 
-	if(check_morbid_curiosity(user, target, tool, surgery))
+	if(check_morbid_curiosity(user, tool, surgery))
 		speed_mod *= SURGERY_SPEED_MORBID_CURIOSITY
 
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
@@ -297,7 +297,7 @@
 	return english_list(chems, and_text = require_all_chems ? " and " : " or ")
 
 // Check if we are entitled to morbid bonuses
-/datum/surgery_step/proc/check_morbid_curiosity(mob/user, mob/living/target, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/proc/check_morbid_curiosity(mob/user, obj/item/tool, datum/surgery/surgery)
 	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
 		return FALSE
 	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
