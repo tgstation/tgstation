@@ -27,7 +27,7 @@
 	var/mob/living/monky_master
 
 /datum/objective/syndicate_monkey/check_completion()
-	return monky_master.stat != DEAD
+	return monky_master && monky_master.stat != DEAD
 
 /datum/antagonist/syndicate_monkey/forge_objectives(mob/monky_master)
 	var/datum/objective/syndicate_monkey/objective = new
