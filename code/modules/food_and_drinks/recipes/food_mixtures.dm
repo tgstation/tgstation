@@ -95,6 +95,19 @@
 	results = list(/datum/reagent/consumable/chocolatepudding = 20)
 	required_reagents = list(/datum/reagent/consumable/cream = 5, /datum/reagent/consumable/coco = 5, /datum/reagent/consumable/eggyolk = 2)
 
+/datum/chemical_reaction/food/chocolatepudding/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	. = ..()
+	var/station_time = station_time()
+	if(!ISINRANGE(station_time, 3 HOURS + 45 MINUTES, 4 HOURS + 15 MINUTES))
+		return
+	var/lastkey = holder.my_atom?.fingerprintslast
+	if(!lastkey)
+		return
+	var/mob/living/user = get_mob_by_ckey(lastkey)
+	if(!istype(user) || user.stat || !is_in_sight(user, holder.my_atom))
+		return
+	user.add_mood_event("why_on_earth_are_you_making_chocolate_pudding", /datum/mood_event/lost_control_of_life)
+
 /datum/chemical_reaction/food/vanillapudding
 	results = list(/datum/reagent/consumable/vanillapudding = 20)
 	required_reagents = list(/datum/reagent/consumable/vanilla = 5, /datum/reagent/consumable/cream = 5, /datum/reagent/consumable/eggyolk = 2)
