@@ -41,8 +41,8 @@ export const AntagInfoVoidwalker = (props) => {
                   <br />
                   <span style={tipstyle}>Abduct:&ensp;</span>
                   Your Unsettle ability stuns and drains your targets. Knock
-                  them out with your draining slash, take them to space and
-                  enlighten them.
+                  them out with your draining slash, take them to space (or
+                  nebula vomit) and enlighten them.
                   <br />
                   <br />
                   <span style={tipstyle}>Reap:&ensp;</span>
