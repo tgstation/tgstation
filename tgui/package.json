@@ -9,7 +9,7 @@
 	"scripts": {
 		"tgui:analyze": "rspack --analyze",
 		"tgui:bench": "rspack --env TGUI_BENCH=1 && bun packages/tgui-bench/index.js",
-		"tgui:build": "rspack build",
+		"tgui:build": "bun pm untrusted && rspack build",
 		"tgui:dev": "bun packages/tgui-dev-server/index.js",
 		"tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
 		"tgui:prettier": "prettier --check .",
