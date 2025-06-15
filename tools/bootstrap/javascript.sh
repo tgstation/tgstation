@@ -17,6 +17,7 @@ BunVersion="$BUN_VERSION"
 BunFullVersion="bun-v$BunVersion"
 
 # If Bun is not present, install using the official installer.
+echo $PATH
 if ! command -v bun >/dev/null 2>&1; then
     echo "Bun not found, installing with official installer..."
     curl -fsSL https://bun.sh/install | bash -s $BunFullVersion
