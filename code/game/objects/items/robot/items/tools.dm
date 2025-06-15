@@ -173,6 +173,10 @@
 	//is the toolset upgraded or not
 	var/upgraded = FALSE
 
+/obj/item/borg/cyborg_omnitool/Initialize(mapload)
+	. = ..()
+	register_context()
+
 /obj/item/borg/cyborg_omnitool/Destroy(force)
 	for(var/obj/item/tool_path as anything in atoms)
 		var/obj/item/tool = atoms[tool_path]
@@ -181,6 +185,15 @@
 	atoms.Cut()
 
 	return ..()
+
+/obj/item/borg/cyborg_omnitool/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if (!issilicon(user))
+		return
+	var/mob/living/silicon/robot/as_cyborg = user
+	if (!(src in as_cyborg.held_items))
+		context[SCREENTIP_CONTEXT_RMB] = "Select Tool"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /**
  * Sets the new internal tool to be used
