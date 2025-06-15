@@ -11,8 +11,9 @@
 @include meta.load-css('./reset.scss');
 @include meta.load-css('./css-variables.scss');
 
-// Atomic styles
-@include meta.load-css('~tgui-core/styles/atomic.scss');
+// Tgui core bulk imports
+@include meta.load-css('~tgui-core/styles/all-atomic.scss');
+@include meta.load-css('~tgui-core/styles/all-themes.scss');
 
 // Interfaces
 @include meta.load-css('./interfaces/AlertModal.scss');
@@ -54,7 +55,7 @@
 
 // NT Theme
 .Layout__content {
-  background-image: url('../assets/bg-nanotrasen.svg');
+  background-image: url('tgui-core/assets/bg-nanotrasen.svg');
   background-size: 70% 70%;
   background-position: center;
   background-repeat: no-repeat;
