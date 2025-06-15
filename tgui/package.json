@@ -47,6 +47,6 @@
 	},
 	"trustedDependencies": [
 		"@parcel/watcher",
-		"@rspack/core"
+		"@rspack/binding"
 	]
 }
