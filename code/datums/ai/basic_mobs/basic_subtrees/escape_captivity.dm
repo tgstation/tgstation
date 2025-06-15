@@ -37,7 +37,7 @@
 			controller.queue_behavior(/datum/ai_behavior/resist)
 			return SUBTREE_RETURN_FINISH_PLANNING
 
-	if (living_pawn.on_fire || HAS_TRAIT(living_pawn, TRAIT_RESTRAINED))
+	if (HAS_TRAIT(living_pawn, TRAIT_RESTRAINED))
 		controller.queue_behavior(/datum/ai_behavior/resist)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
