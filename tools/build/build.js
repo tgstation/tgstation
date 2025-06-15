@@ -321,7 +321,7 @@ export const BunTarget = new Juke.Target({
   parameters: [CiParameter],
   inputs: ["tgui/**/package.json"],
   executes: ({ get }) => {
-    return bun("install", "--ignore-scripts", get(CiParameter));
+    return bun("install", get(CiParameter));
   },
 });
 
