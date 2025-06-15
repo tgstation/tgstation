@@ -320,7 +320,7 @@
 	. = TRUE
 	cutter.play_tool_sound(src)
 	to_chat(user, span_notice("You cut the wires out of [src]."))
-	new /obj/item/stack/cable_coil(drop_location())
+	new /obj/item/stack/cable_coil(drop_location(), 1)
 	wired = FALSE
 
 /obj/item/bodypart/chest/robot/screwdriver_act(mob/living/user, obj/item/screwtool)
