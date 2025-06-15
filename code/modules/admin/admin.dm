@@ -21,27 +21,23 @@
 
 	var/dat
 	if(SSticker.current_state <= GAME_STATE_PREGAME)
-		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
-		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</A><br>"
+		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</a><br>"
+		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart=1'>(Force Roundstart Rulesets)</a><br>"
 		if (GLOB.dynamic_forced_roundstart_ruleset.len > 0)
 			for(var/datum/dynamic_ruleset/roundstart/rule in GLOB.dynamic_forced_roundstart_ruleset)
-				dat += {"<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=[text_ref(rule)]'>-> [rule.name] <-</A><br>"}
-			dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</A><br>"
-		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</A><br>"
+				dat += {"<a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_remove=[text_ref(rule)]'>-> [rule.name] <-</a><br>"}
+			dat += "<a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_roundstart_clear=1'>(Clear Rulesets)</a><br>"
+		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_options=1'>(Dynamic mode options)</a><br>"
 		dat += "<hr/>"
 	if(SSticker.IsRoundInProgress())
 		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
-		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
+		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</a><br>"
 		dat += "<hr/>"
-	dat += {"
-		<A href='byond://?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>
-		<A href='byond://?src=[REF(src)];[HrefToken()];quick_create_object=1'>Quick Create Object</A><br>
-		<A href='byond://?src=[REF(src)];[HrefToken()];create_turf=1'>Create Turf</A><br>
-		<A href='byond://?src=[REF(src)];[HrefToken()];create_mob=1'>Create Mob</A><br>
-		"}
+
+	dat += "<a href='byond://?src=[REF(src)];[HrefToken()];spawn_panel=1'>Spawn Panel</a><br>"
 
 	if(marked_datum && istype(marked_datum, /atom))
-		dat += "<A href='byond://?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</A><br>"
+		dat += "<a href='byond://?src=[REF(src)];[HrefToken()];dupe_marked_datum=1'>Duplicate Marked Datum</a><br>"
 
 	var/datum/browser/browser = new(usr, "admin2", "Game Panel", 240, 280)
 	browser.set_content(dat)
