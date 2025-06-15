@@ -535,7 +535,7 @@
 		new /obj/item/robot_suit(drop_to)
 		new /obj/item/bodypart/leg/left/robot(drop_to)
 		new /obj/item/bodypart/leg/right/robot(drop_to)
-		new /obj/item/stack/cable_coil(drop_to, 1)
+		new /obj/item/stack/cable_coil(drop_to)
 		new /obj/item/bodypart/chest/robot(drop_to)
 		new /obj/item/bodypart/arm/left/robot(drop_to)
 		new /obj/item/bodypart/arm/right/robot(drop_to)
