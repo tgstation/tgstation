@@ -35,4 +35,4 @@
 	duration = 1.3 SECONDS
 
 /obj/effect/temp_visual/dir_setting/ash_shift/out
-	icon_state = "ash_shift"
+	icon_state = "ash_shift2"
