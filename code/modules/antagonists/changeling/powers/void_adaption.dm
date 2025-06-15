@@ -8,7 +8,7 @@
 	dna_cost = 2
 
 	/// Traits we apply to become immune to the environment
-	var/static/list/gain_traits = list(TRAIT_SPACEBREATHING, TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_SNOWSTORM_IMMUNE)
+	var/static/list/gain_traits = list(TRAIT_NO_BREATHLESS_DAMAGE, TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_SNOWSTORM_IMMUNE)
 	/// How much we slow chemical regeneration while active, in chems per second
 	var/recharge_slowdown = 0.25
 	/// Are we currently protecting our user?

@@ -235,7 +235,7 @@
 
 /// Handles oxygen breathing. Always called by things that need o2, no matter what
 /obj/item/organ/lungs/proc/breathe_oxygen(mob/living/carbon/breather, datum/gas_mixture/breath, o2_pp, old_o2_pp)
-	if(o2_pp < safe_oxygen_min && !HAS_TRAIT(src, TRAIT_SPACEBREATHING))
+	if(o2_pp < safe_oxygen_min && !HAS_TRAIT(breather, TRAIT_NO_BREATHLESS_DAMAGE))
 		// Not safe to check the old pp because of can_breath_vacuum
 		breather.throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 
@@ -282,7 +282,7 @@
 
 /// If the lungs need Nitrogen to breathe properly, N2 is exchanged with CO2.
 /obj/item/organ/lungs/proc/breathe_nitro(mob/living/carbon/breather, datum/gas_mixture/breath, nitro_pp, old_nitro_pp)
-	if(nitro_pp < safe_nitro_min && !HAS_TRAIT(src, TRAIT_SPACEBREATHING))
+	if(nitro_pp < safe_nitro_min && !HAS_TRAIT(breather, TRAIT_NO_BREATHLESS_DAMAGE))
 		// Suffocation side-effects.
 		// Not safe to check the old pp because of can_breath_vacuum
 		if(!HAS_TRAIT(breather, TRAIT_ANOSMIA))
@@ -337,7 +337,7 @@
 /// If the lungs need Plasma to breathe properly, Plasma is exchanged with CO2.
 /obj/item/organ/lungs/proc/breathe_plasma(mob/living/carbon/breather, datum/gas_mixture/breath, plasma_pp, old_plasma_pp)
 	// Suffocation side-effects.
-	if(plasma_pp < safe_plasma_min && !HAS_TRAIT(src, TRAIT_SPACEBREATHING))
+	if(plasma_pp < safe_plasma_min && !HAS_TRAIT(breather, TRAIT_NO_BREATHLESS_DAMAGE))
 		// Could check old_plasma_pp but vacuum breathing hates me
 		if(!HAS_TRAIT(breather, TRAIT_ANOSMIA))
 			breather.throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
@@ -614,7 +614,7 @@
 		if(istype(breather.wear_mask) && (breather.wear_mask.clothing_flags & GAS_FILTERING) && breather.wear_mask.has_filter)
 			breath = breather.wear_mask.consume_filter(breath)
 	// Breath has 0 moles of gas, and we can breathe space
-	else if(HAS_TRAIT(src, TRAIT_SPACEBREATHING))
+	else if(HAS_TRAIT(breather, TRAIT_NO_BREATHLESS_DAMAGE))
 		// The lungs can breathe anyways. What are you? Some bottom-feeding, scum-sucking algae eater?
 		breather.failed_last_breath = FALSE
 		// Vacuum-adapted lungs regenerate oxyloss even when breathing nothing.
