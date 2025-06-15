@@ -60,7 +60,7 @@
 	robot = loc
 	if(!istype(robot))
 		stack_trace("Robot model initialized outside of a robot at [AREACOORD(robot)]! \
-			This should never happen, make sure this item is never map-placed.")
+			This should never happen, make sure this item is not map-placed.")
 		return INITIALIZE_HINT_QDEL
 	create_storage(storage_type = /datum/storage/cyborg_internal_storage)
 	//src is what we store items visible to borgs, we'll store things in the bot itself otherwise.
