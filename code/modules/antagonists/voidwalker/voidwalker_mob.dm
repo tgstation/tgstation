@@ -11,7 +11,7 @@
 	mob_biotypes = MOB_SPECIAL
 	maxHealth = 150
 	health = 150
-	damage_coeff = list(BRUTE = 1, BURN = 0.66, TOX = 1, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 0.66, TOX = 1, STAMINA = 1, OXY = 0)
 
 	pressure_resistance = 200
 	combat_mode = TRUE
@@ -222,13 +222,18 @@
 /// Start kidnapping the victim
 /mob/living/basic/voidwalker/proc/kidnap(mob/living/parent, mob/living/victim)
 	victim.Paralyze(kidnap_time) //so they don't get up if we already got em
-	var/obj/particles = new /obj/effect/abstract/particle_holder (victim, /particles/void_kidnap)
+
+	var/static/list/wave_filter = list(type = "wave", x = 2, size = 4)
+	victim.add_filter("wave_filter_kidnap", 3, wave_filter)
+	animate(victim.get_filter("wave_filter_kidnap"), offset = 32, time = kidnap_time)
+
 	kidnapping = TRUE
 
 	if(do_after(parent, kidnap_time, victim, extra_checks = CALLBACK(src, PROC_REF(check_incapacitated), victim)))
 		take_them(victim)
 
-	qdel(particles)
+	victim.remove_filter("wave_filter_kidnap")
+
 	kidnapping = FALSE
 
 /// Woosh! You got takened
@@ -264,7 +269,7 @@
 /// Attempt to convert a wall into passable voidwalker windows
 /mob/living/basic/voidwalker/proc/try_convert_wall(turf/closed/wall/our_wall)
 	if(!conversions_remaining)
-		balloon_alert(src, "must refresh void eater!")
+		balloon_alert(src, "need more kidnaps!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!COOLDOWN_FINISHED(src, wall_conversion))

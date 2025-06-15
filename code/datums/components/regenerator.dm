@@ -75,6 +75,10 @@
 
 	if (damagetype in ignore_damage_types)
 		return
+
+	reset_regeneration_timer()
+
+/datum/component/regenerator/proc/reset_regeneration_timer()
 	stop_regenerating()
 	regeneration_start_timer = addtimer(CALLBACK(src, PROC_REF(start_regenerating)), regeneration_delay, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 
@@ -135,6 +139,7 @@
 		return FALSE
 
 	if(regen_check && !regen_check.Invoke(who))
+		reset_regeneration_timer()
 		return FALSE
 
 	if(heals_wounds && iscarbon(who))
