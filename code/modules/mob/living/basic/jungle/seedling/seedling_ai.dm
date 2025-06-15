@@ -9,6 +9,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/find_and_hunt_target/watering_can,
 		/datum/ai_planning_subtree/find_and_hunt_target/fill_watercan,
@@ -150,6 +151,7 @@
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/targeted_mob_ability/seedling_rapid,
