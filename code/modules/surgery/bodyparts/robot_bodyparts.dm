@@ -349,7 +349,7 @@
 /obj/item/bodypart/chest/robot/drop_organs(mob/user, violent_removal)
 	var/atom/drop_loc = drop_location()
 	if(wired)
-		new /obj/item/stack/cable_coil(drop_loc)
+		new /obj/item/stack/cable_coil(drop_loc, 1)
 		wired = FALSE
 	cell?.forceMove(drop_loc)
 	return ..()
