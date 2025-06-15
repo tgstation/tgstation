@@ -72,3 +72,5 @@
 /// Values to determine the effects on a mech should it suffer an EMP
 #define MECH_EMP_DAMAGE_LOWER 100
 #define MECH_EMP_DAMAGE_UPPER 180
+
+#define MECH_EMP_BEACON_DESTRUCTION_PROB 40

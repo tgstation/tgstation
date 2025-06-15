@@ -111,11 +111,6 @@
 
 	return jointext(output, "\n")
 
-/obj/item/mecha_parts/mecha_tracking/emp_act(severity)
-	. = ..()
-	if(!(. & EMP_PROTECT_SELF))
-		qdel(src)
-
 /obj/item/mecha_parts/mecha_tracking/Destroy()
 	if(chassis)
 		if(src in chassis.trackers)
@@ -128,6 +123,9 @@
 		return
 	if(!..())
 		return
+	for(var/obj/item/mecha_parts/mecha_tracking/tracker in chassis.trackers)
+		if(tracker.flag_to_check == flag_to_check)
+			return //there can only be one...type of this tracker
 	mecha_to_attach.trackers += src
 	mecha_to_attach.diag_hud_set_mechtracking()
 	chassis = mecha_to_attach
