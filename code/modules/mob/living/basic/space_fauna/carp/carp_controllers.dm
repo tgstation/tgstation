@@ -19,8 +19,8 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
 		/datum/ai_planning_subtree/find_target_prioritize_traits,
 		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
@@ -43,8 +43,8 @@
 		BB_CARPS_FEAR_FISHERMAN = FALSE,
 	)
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/escape_captivity,
+		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
 		/datum/ai_planning_subtree/make_carp_rift/panic_teleport,
 		/datum/ai_planning_subtree/flee_target,
@@ -87,6 +87,7 @@
  */
 /datum/ai_controller/basic_controller/carp/ranged
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/simple_find_nearest_target_to_flee,
 		/datum/ai_planning_subtree/find_target_prioritize_traits,

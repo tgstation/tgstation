@@ -21,6 +21,7 @@
 /// AI controller for aggressive roach
 /datum/ai_controller/basic_controller/cockroach/aggro
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,
@@ -31,6 +32,7 @@
 /// AI controller for roach who can shoot at you
 /datum/ai_controller/basic_controller/cockroach/glockroach
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,
@@ -47,6 +49,7 @@
 /// roach who shoots at you slightly slower
 /datum/ai_controller/basic_controller/cockroach/mobroach
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/pet_planning,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/simple_find_target,

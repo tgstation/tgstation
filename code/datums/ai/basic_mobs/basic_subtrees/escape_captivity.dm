@@ -2,12 +2,14 @@
 /datum/ai_planning_subtree/escape_captivity
 	/// Targeting strategy for use deciding if we can attack a mob grabbing us
 	var/targeting_strategy_key = BB_TARGETING_STRATEGY
+	/// If true we will never attack objects
+	var/pacifist = FALSE
 
 /datum/ai_planning_subtree/escape_captivity/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
 
 	if (living_pawn.buckled && !ismob(living_pawn.buckled))
-		if (!living_pawn.can_hold_items() || living_pawn.usable_hands < 1) // If we don't have hands then prioritise slapping the shit out of whatever we are attached to
+		if (!pacifist && !living_pawn.can_hold_items() || living_pawn.usable_hands < 1) // If we don't have hands then prioritise slapping the shit out of whatever we are attached to
 			controller.queue_behavior(/datum/ai_behavior/break_out_of_object, living_pawn.buckled)
 		else
 			controller.queue_behavior(/datum/ai_behavior/resist)
@@ -16,11 +18,14 @@
 	if (!isturf(living_pawn.loc) && !ismob(living_pawn.loc))
 		var/atom/contained_in = living_pawn.loc
 		var/attack_effective = FALSE
-		if (isbasicmob(living_pawn)) // Currently this literally only works for basic mobs because it's hard to check for anyone else but it's ok because only they use this subtree
-			var/mob/living/basic/basic_pawn = living_pawn
-			attack_effective = basic_pawn.obj_damage > contained_in.damage_deflection
+		if (!pacifist)
+			if (isbasicmob(living_pawn)) // Currently this literally only works for basic mobs because it's hard to check for anyone else but it's ok because only they use this subtree
+				var/mob/living/basic/basic_pawn = living_pawn
+				attack_effective = basic_pawn.obj_damage > contained_in.damage_deflection
 		if (attack_effective)
 			controller.queue_behavior(/datum/ai_behavior/break_out_of_object, contained_in)
+		else
+			controller.queue_behavior(/datum/ai_behavior/resist)
 			return SUBTREE_RETURN_FINISH_PLANNING
 
 	var/mob/puller = living_pawn.pulledby
@@ -58,3 +63,6 @@
 	if (!pawn.CanReach(target))
 		return FALSE
 	return pawn.loc == target || pawn.buckled == target
+
+/datum/ai_planning_subtree/escape_captivity/pacifist
+	pacifist = TRUE

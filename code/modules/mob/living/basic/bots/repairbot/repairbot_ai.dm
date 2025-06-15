@@ -2,6 +2,7 @@
 
 /datum/ai_controller/basic_controller/bot/repairbot
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/repairbot_speech,
 		/datum/ai_planning_subtree/mug_robot,
 		/datum/ai_planning_subtree/refill_materials,

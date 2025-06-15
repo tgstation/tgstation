@@ -54,6 +54,7 @@
 
 	// We understand that vents are nice little hidey holes through epigenetic inheritance, so we'll use them.
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/random_speech/legion,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/attack_obstacle_in_path,

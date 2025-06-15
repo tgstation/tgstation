@@ -8,6 +8,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/befriend_cultists,
 		/datum/ai_planning_subtree/find_occupied_rune,
 		/datum/ai_planning_subtree/find_dead_cultist,

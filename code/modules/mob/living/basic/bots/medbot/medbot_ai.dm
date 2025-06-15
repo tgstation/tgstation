@@ -1,6 +1,7 @@
 #define BOT_PATIENT_PATH_LIMIT 20
 /datum/ai_controller/basic_controller/bot/medbot
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/handle_medbot_speech,
 		/datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit,

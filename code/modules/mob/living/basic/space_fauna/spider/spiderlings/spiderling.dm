@@ -72,6 +72,7 @@
 
 	// We understand that vents are nice little hidey holes through epigenetic inheritance, so we'll use them.
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/target_retaliate/to_flee,
 		/datum/ai_planning_subtree/flee_target/from_flee_key,
 		/datum/ai_planning_subtree/opportunistic_ventcrawler,

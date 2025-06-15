@@ -23,6 +23,7 @@
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/hoard_fingers,
 		/datum/ai_planning_subtree/pet_planning,
@@ -57,6 +58,7 @@
 		BB_OWNER_SELF_HARM_RESPONSES = SHRIMP_HARM_RESPONSES,
 	)
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/hoard_fingers,
 		/datum/ai_planning_subtree/pet_planning,
@@ -73,6 +75,7 @@
 ///A subtype of juvenile lobster AI that has the target_retaliate behaviour instead of simple_find_target
 /datum/ai_controller/basic_controller/lobstrosity/juvenile/calm
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity/pacifist,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/hoard_fingers,
 		/datum/ai_planning_subtree/pet_planning,
@@ -89,6 +92,7 @@
 ///A subtype of juvenile lobster AI that has the capricious_retaliate behaviour instead of simple_find_target
 /datum/ai_controller/basic_controller/lobstrosity/juvenile/capricious
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/escape_captivity,
 		/datum/ai_planning_subtree/random_speech/insect,
 		/datum/ai_planning_subtree/hoard_fingers,
 		/datum/ai_planning_subtree/pet_planning,
