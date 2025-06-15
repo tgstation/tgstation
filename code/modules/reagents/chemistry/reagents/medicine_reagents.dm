@@ -1837,3 +1837,38 @@
 		if(affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE))
 			. = UPDATE_MOB_HEALTH
 	affected_mob.adjust_disgust(-10 * REM * seconds_per_tick)
+
+/datum/reagent/medicine/naloxone
+	name = "Naloxone"
+	description = "Opioid antagonist that purges drowsiness and narcotics from the patient, restores breath loss and accelerates addiction recovery."
+	color = "#f5f5dc"
+	metabolization_rate = 0.2 * REM
+	ph = 4
+	penetrates_skin = TOUCH|VAPOR
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_ADDICTIONRESILIENT)
+	var/static/list/opiates_to_clear = list(
+		/datum/reagent/medicine/morphine,
+		/datum/reagent/impedrezene,
+		/datum/reagent/toxin/fentanyl,
+		/datum/reagent/drug/krokodil,
+		/datum/reagent/inverse/krokodil,
+	)
+
+/datum/reagent/medicine/naloxone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	for(var/opiate in opiates_to_clear)
+		holder.remove_reagent(opiate, 3 * REM * seconds_per_tick)
+
+	if(affected_mob.mob_mood?.get_mood_event("numb"))
+		affected_mob.clear_mood_event("numb")
+		affected_mob.add_mood_event("not numb", /datum/mood_event/antinarcotic_medium)
+
+	if(affected_mob.mob_mood?.get_mood_event("smacked out"))
+		affected_mob.clear_mood_event("smacked out")
+		affected_mob.add_mood_event("not smacked out", /datum/mood_event/antinarcotic_heavy)
+
+	affected_mob.adjust_drowsiness(-5 SECONDS * REM * seconds_per_tick)
+	if(affected_mob.losebreath >= 1)
+		affected_mob.losebreath -= 1 * REM * seconds_per_tick
+		return UPDATE_MOB_HEALTH
