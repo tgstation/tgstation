@@ -291,7 +291,7 @@
 	occur_text = "breaks out with violent red burns"
 	severity = WOUND_SEVERITY_MODERATE
 	damage_multiplier_penalty = 1.1
-	series_threshold_penalty = 15 // burns cause significant decrease in limb integrity compared to other wounds
+	series_threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
 	status_effect_type = /datum/status_effect/wound/burn/flesh/moderate
 	flesh_damage = 5
 	scar_keyword = "burnmoderate"
@@ -319,7 +319,7 @@
 	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
 	severity = WOUND_SEVERITY_SEVERE
 	damage_multiplier_penalty = 1.2
-	series_threshold_penalty = 20
+	series_threshold_penalty = 40
 	status_effect_type = /datum/status_effect/wound/burn/flesh/severe
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
 	infestation_rate = 0.07 // appx 9 minutes to reach sepsis without any treatment
@@ -350,7 +350,7 @@
 	severity = WOUND_SEVERITY_CRITICAL
 	damage_multiplier_penalty = 1.3
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'
-	threshold_penalty = 20
+	threshold_penalty = 25
 	status_effect_type = /datum/status_effect/wound/burn/flesh/critical
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
 	infestation_rate = 0.075 // appx 4.33 minutes to reach sepsis without any treatment
