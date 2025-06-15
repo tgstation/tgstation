@@ -1,0 +1,4 @@
+author: "plsleavemealon"
+delete-after: True
+changes:
+  - rscadd: "Adds new morbid themed tools for the coroners enjoyment. Coroners now perform autopsies slightly faster."
