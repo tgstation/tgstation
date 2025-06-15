@@ -104,7 +104,7 @@
 		//instead we'll batch it up and send one log for user below.
 		log_combat(user, affected, "knocked down", src, log_user = FALSE)
 		if(isnull(log_message))
-			log_message = "Used [src], affecting: [affected]"
+			log_message = "Knocked down: [affected]"
 		else
 			log_message += ", [affected]"
 
