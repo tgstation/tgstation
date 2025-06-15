@@ -328,8 +328,8 @@ export const BunTarget = new Juke.Target({
 export const BunPMTarget = new Juke.Target({
   parameters: [BunTarget],
   inputs: ["tgui/bun.lock"],
-  executes: ({ get }) => {
-    return bun("pm", "untrusted", get(CiParameter));
+  executes: () => {
+    return bun("pm", "untrusted");
   },
 });
 
