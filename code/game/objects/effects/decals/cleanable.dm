@@ -78,6 +78,7 @@
 
 /// Returns reagents datum if it exists, or lazyloads one if it doesn't
 /obj/effect/decal/cleanable/proc/lazy_init_reagents()
+	RETURN_TYPE(/datum/reagents)
 	if (reagents)
 		return reagents
 
@@ -86,6 +87,7 @@
 
 	create_reagents(reagent_amount)
 	reagents.add_reagent(decal_reagent, reagent_amount)
+	return reagents
 
 /obj/effect/decal/cleanable/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Why are rags cups???
