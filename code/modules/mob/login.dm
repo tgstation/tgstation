@@ -105,10 +105,7 @@
 		stop_sound_channel(CHANNEL_AMBIENCE)
 
 	if(client)
-		if(client.view_size)
-			client.view_size.resetToDefault() // Resets the client.view in case it was changed.
-		else
-			client.change_view(getScreenSize(client.prefs.read_preference(/datum/preference/toggle/widescreen)))
+		client.view_size.resetToDefault() // Resets the client.view in case it was changed.
 
 		for(var/datum/action/A as anything in persistent_client.player_actions)
 			A.Grant(src)
