@@ -86,24 +86,28 @@
 	id = "photosynthesis"
 
 /datum/status_effect/grouped/bodypart_effect/photosynthesis/tick(seconds_between_ticks)
-	var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
+	var/light_amount = 0 // How much light there is in the place, affects receiving nutrition and healing
 	var/bodypart_coefficient = GET_BODYPART_COEFFICIENT(bodyparts)
 
-	if(isturf(owner.loc)) //else, there's considered to be no light
-		var/turf/turf_loc = owner.loc
-		light_amount = min(1, turf_loc.get_lumcount()) - 0.5
+	if(!isturf(owner.loc)) // There's considered to be no light inside of objects
+		if(owner.nutrition < NUTRITION_LEVEL_STARVING + 50)
+			owner.take_overall_damage(brute = 1 * bodypart_coefficient, required_bodytype = BODYTYPE_PLANT)
+		return
 
-		if(owner.nutrition < NUTRITION_LEVEL_ALMOST_FULL)
-			owner.adjust_nutrition(5 * light_amount * bodypart_coefficient)
+	var/turf/turf_loc = owner.loc
+	light_amount = min(1, turf_loc.get_lumcount()) - 0.5
 
-		if(light_amount > 0.2) //if there's enough light, heal
-			var/need_mob_update = FALSE
-			need_mob_update += owner.heal_overall_damage(brute = 0.5 * bodypart_coefficient, \
-				burn = 0.5 * bodypart_coefficient, updating_health = FALSE, required_bodytype = BODYTYPE_PLANT)
-			need_mob_update += owner.adjustToxLoss(-0.5 * bodypart_coefficient, updating_health = FALSE)
-			need_mob_update += owner.adjustOxyLoss(-0.5 * bodypart_coefficient, updating_health = FALSE)
-			if(need_mob_update)
-				owner.updatehealth()
+	if(owner.nutrition < NUTRITION_LEVEL_ALMOST_FULL)
+		owner.adjust_nutrition(5 * light_amount * bodypart_coefficient)
+
+	if(light_amount > 0.2) // If there's enough light, heal
+		var/need_mob_update = FALSE
+		need_mob_update += owner.heal_overall_damage(brute = 0.5 * bodypart_coefficient, \
+			burn = 0.5 * bodypart_coefficient, updating_health = FALSE, required_bodytype = BODYTYPE_PLANT)
+		need_mob_update += owner.adjustToxLoss(-0.5 * bodypart_coefficient, updating_health = FALSE)
+		need_mob_update += owner.adjustOxyLoss(-0.5 * bodypart_coefficient, updating_health = FALSE)
+		if(need_mob_update)
+			owner.updatehealth()
 
 	if(owner.nutrition < NUTRITION_LEVEL_STARVING + 50)
 		owner.take_overall_damage(brute = 1 * bodypart_coefficient, required_bodytype = BODYTYPE_PLANT)
@@ -118,17 +122,66 @@
 	var/turf/owner_turf = owner.loc
 	if(!isturf(owner_turf))
 		return
-	var/light_amount = owner_turf.get_lumcount()
 
+	var/light_amount = owner_turf.get_lumcount()
 	var/bodypart_coefficient = GET_BODYPART_COEFFICIENT(bodyparts)
 
-	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
-		owner.heal_overall_damage(brute = 0.5 * bodypart_coefficient, burn = 0.5 * bodypart_coefficient, required_bodytype = BODYTYPE_SHADOW)
-		if(!owner.has_status_effect(/datum/status_effect/shadow/nightmare)) //somewhat awkward, but let's not duplicate the alerts
-			//this only appears when in shadows, don't move to bodypart effect so people with nightvision can still tell if they're in light or not
-			owner.apply_status_effect(/datum/status_effect/shadow)
-	else
+	if (light_amount >= SHADOW_SPECIES_LIGHT_THRESHOLD)
 		owner.take_overall_damage(brute = 1 * bodypart_coefficient, burn = 1 * bodypart_coefficient, required_bodytype = BODYTYPE_SHADOW)
+		return
+
+	// Heal in the dark
+	owner.heal_overall_damage(brute = 0.5 * bodypart_coefficient, burn = 0.5 * bodypart_coefficient, required_bodytype = BODYTYPE_SHADOW)
+	if(!owner.has_status_effect(/datum/status_effect/shadow/nightmare)) // Somewhat awkward, but let's not duplicate the alerts
+		// This only appears when in shadows, don't move to bodypart effect so people with nightvision can still tell if they're in light or not
+		owner.apply_status_effect(/datum/status_effect/shadow)
+
+/// Causes the owner to spontaneously combust when exposed to oxygen
+/datum/status_effect/grouped/bodypart_effect/plasma_based
+	tick_interval = 1 SECONDS
+	id = "plasmaman_limbs"
+	/// How many fire stacks do we apply per second?
+	/// Default value is 0.25 / 6 (default amount of limbs)
+	var/fire_stacks_per_second = 0.0416
+	/// How many fire stacks are removed per second when we're exposed to hypernoblium
+	/// Default value is 10 / 6 (default amount of limbs)
+	var/fire_stacks_loss = 1.66
+
+/datum/status_effect/grouped/bodypart_effect/plasma_based/tick(seconds_between_ticks)
+	if (!ishuman(owner) || !owner.loc) // No xenos, sorry
+		return
+
+	var/mob/living/carbon/human/as_human = owner
+	if (HAS_TRAIT(owner, TRAIT_STASIS) || as_human.is_atmos_sealed(additional_flags = PLASMAMAN_PREVENT_IGNITION, check_hands = TRUE))
+		if (!owner.on_fire)
+			REMOVE_TRAIT(owner, TRAIT_IGNORE_FIRE_PROTECTION, type)
+		return
+
+	var/datum/gas_mixture/environment = owner.loc.return_air()
+	if (!environment?.total_moles())
+		if (!owner.on_fire)
+			REMOVE_TRAIT(owner, TRAIT_IGNORE_FIRE_PROTECTION, type)
+		return
+
+	if(environment.gases[/datum/gas/hypernoblium] && environment.gases[/datum/gas/hypernoblium][MOLES] >= 5)
+		if(owner.on_fire && owner.fire_stacks > 0)
+			owner.adjust_fire_stacks(-fire_stacks_loss * seconds_between_ticks * length(bodyparts))
+		else
+			REMOVE_TRAIT(owner, TRAIT_IGNORE_FIRE_PROTECTION, type)
+		return
+
+	if (HAS_TRAIT(owner, TRAIT_NOFIRE))
+		REMOVE_TRAIT(owner, TRAIT_IGNORE_FIRE_PROTECTION, type)
+		return
+
+	ADD_TRAIT(owner, TRAIT_IGNORE_FIRE_PROTECTION, type)
+
+	if(!environment.gases[/datum/gas/oxygen] || environment.gases[/datum/gas/oxygen][MOLES] < 1) //Same threshhold that extinguishes fire
+		return
+
+	owner.adjust_fire_stacks(fire_stacks_per_second * seconds_between_ticks * length(bodyparts))
+	if(owner.ignite_mob())
+		owner.visible_message(span_danger("[owner]'s body reacts with the atmosphere and bursts into flames!"), span_userdanger("Your body reacts with the atmosphere and bursts into flame!"))
 
 #undef GET_BODYPART_COEFFICIENT
 #undef IS_FULL_BODY
