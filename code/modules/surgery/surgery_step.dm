@@ -86,8 +86,6 @@
 #define SURGERY_SPEED_MORBID_CURIOSITY 0.7
 ///Modifier given to patients with TRAIT_ANALGESIA
 #define SURGERY_SPEED_TRAIT_ANALGESIA 0.8
-///Modifier given to users using tools with CRUEL_IMPLEMENT for surgeries on living targets without anesthesia.
-#define SURGERY_SPEED_CRUEL_PENALTY 1.1
 
 /datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
@@ -120,9 +118,6 @@
 
 	if(check_morbid_curiosity(user, target, tool, surgery))
 		speed_mod *= SURGERY_SPEED_MORBID_CURIOSITY
-
-	if(check_morbid_living(user, target, tool))
-		speed_mod *= SURGERY_SPEED_CRUEL_PENALTY
 
 	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
 		speed_mod *= SURGERY_SPEED_TRAIT_ANALGESIA
@@ -303,23 +298,13 @@
 
 // Check if we are entitled to morbid bonuses
 /datum/surgery_step/proc/check_morbid_curiosity(mob/user, mob/living/target, obj/item/tool, datum/surgery/surgery)
+	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
+		return FALSE
 	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
 		return FALSE
 	if(!HAS_MIND_TRAIT(user, TRAIT_MORBID))
 		return FALSE
-	if (target.stat == DEAD)
-		return TRUE
 	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
-		return FALSE
-	return TRUE
-
-//Check if we are using cruel tools on living target without anesthetic
-/datum/surgery_step/proc/check_morbid_living(mob/user, mob/living/target, obj/item/tool)
-	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
-		return FALSE
-	if(target.stat == DEAD)
-		return FALSE
-	if(HAS_TRAIT(target, TRAIT_ANALGESIA))
 		return FALSE
 	return TRUE
 
@@ -362,7 +347,6 @@
 			if(prob(30) && !mechanical_surgery)
 				target.emote("scream")
 
-#undef SURGERY_SPEED_CRUEL_PENALTY
 #undef SURGERY_SPEED_TRAIT_ANALGESIA
 #undef SURGERY_SPEED_DISSECTION_MODIFIER
 #undef SURGERY_SPEED_MORBID_CURIOSITY
