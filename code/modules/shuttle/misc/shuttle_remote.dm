@@ -5,7 +5,7 @@
 	icon_state = "shuttleremote"
 	w_class = WEIGHT_CLASS_SMALL
 	///if the docks may be changed
-	var/may_change_docks = TRUE
+	var/may_change_docks = TRUE //if this is set to FALSE make sure the shuttle it will be linked to does get to have multiple instances of itself
 	///the port where the shuttle leaves to
 	var/shuttle_away_id = "whiteship_away"
 	///the port where the shuttle returns to
@@ -80,6 +80,9 @@
 				destination = "[our_computer.shuttleId]_custom"
 
 	if(!destination || !can_use(user))
+		return
+	if(!our_port.canDock(SSshuttle.getDock(destination)))
+		balloon_alert(user, "destination occupied!")
 		return
 	transit_shuttle(user, destination)
 
