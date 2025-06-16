@@ -13,7 +13,7 @@
 		"marked-smartypants": "^1.1.9",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
-		"tgui-core": "^4.0.2",
+		"tgui-core": "^4.2.3",
 		"tgui-dev-server": "workspace:*"
 	},
 	"private": true
