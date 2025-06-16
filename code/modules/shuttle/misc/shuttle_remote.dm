@@ -99,6 +99,7 @@
 		LAZYADD(destination_names, destination_data["name"])
 		LAZYADDASSOC(destination_ids, destination_data["name"], destination_data["id"])
 	if(destination_names.len < 1)
+		balloon_alert(user, "no valid destinations!")
 		return NONE
 	var/picked_home = tgui_input_list(user, "choose which dock to designate as the shuttle's home point...", "Choose Home Dock", destination_names)
 	var/picked_away = tgui_input_list(user, "choose which dock to designate as the shuttle's away point...", "Choose Away Dock", destination_names)
@@ -112,7 +113,7 @@
 	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
 	if(user.stat != CONSCIOUS)
 		return FALSE
-	if(!user.is_holding_item_of_type(type))
+	if(user.get_active_held_item() != src)
 		return FALSE
 	if(is_reserved_level(loc.z))
 		balloon_alert(user, "can't use here!")
