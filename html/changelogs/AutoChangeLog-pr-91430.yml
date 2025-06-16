@@ -1,0 +1,6 @@
+author: "MGO"
+delete-after: True
+changes:
+  - rscadd: "Introduces new inverse reagents for Krokodil, Bath Salts, Aranesp, Happiness, Baldium, Colorful Reagent and Gravitum!"
+  - rscadd: "An alternate reaction output has been added for Monkey Powder. Instead of 1u Water, add 10u Monkey Dust to make an angry monkey!"
+  - rscadd: "Adds a medicine: Naloxone! Requires equal parts Morphine, Hydrogen Peroxide, Bromine and Ethanol to be made. Purges opioid-class reagents, can also help with mitigating drowsiness and breath loss. Also purges good moodlets associated with opiates and replaces them with negative moodlets, so don't expect your patient to be happy about losing their high!"
