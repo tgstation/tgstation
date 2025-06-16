@@ -1037,6 +1037,12 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 	if(affected_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 		need_mob_update += affected_mob.blood_volume += min(3 * seconds_per_tick, BLOOD_VOLUME_NORMAL)
+	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
+		if(iter_wound.blood_flow)
+			if(holder.has_reagent(/datum/reagent/medicine/coagulant, 3))
+				return
+			else
+				holder.add_reagent(/datum/reagent/medicine/coagulant, 0.2 * REM * seconds_per_tick)
 
 	switch(current_cycle)
 		if(10)
