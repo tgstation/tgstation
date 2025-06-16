@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - bugfix: "You can no longer deploy flatpacks in places that aren't turfs."
