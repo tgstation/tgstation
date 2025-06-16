@@ -939,7 +939,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/krokodil
 	name = "Permonid"
-	description = "Highly potent sedative that provides the best painkilling effects, but is also extremely addictive."
+	description = "Highly potent sedative that provides the best benefits for pain management and surgery. Extremely addictive."
 	color = "#15b5dd55"
 	metabolization_rate = 0.1 * REM
 	overdose_threshold = 20
@@ -1021,7 +1021,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/aranesp
 	name = "Epoetin Alfa"
-	description = "Synthetic medication that induces blood regeneration, heals liver damage and clots wounds efficiently in patients. Causes adverse side effects if no treatable conditions are present."
+	description = "Synthetic medication that induces blood regeneration and liver regeneration in patients. Causes adverse side effects when excessively used over time."
 	color = "#dee4ff"
 	metabolization_rate = 0.25 * REM
 	overdose_threshold = 20
@@ -1067,16 +1067,16 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 		if(46 to INFINITY)
 			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_warning("It feels like your head is going to implode!!"))
+				to_chat(affected_mob, span_warning("It feels like your head is going to implode!"))
 				affected_mob.adjust_eye_blur(10 SECONDS * REM * seconds_per_tick)
 				affected_mob.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
 				affected_mob.adjust_hallucinations(30 SECONDS)
 			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_warning("You can't bring yourself to focus at all!!"))
+				to_chat(affected_mob, span_warning("You can't bring yourself to focus at all!"))
 				affected_mob.Stun(5 SECONDS)
 				affected_mob.emote(pick("stare","drool","tremble","shake"))
 			if(SPT_PROB(5, seconds_per_tick))
-				to_chat(affected_mob, span_warning("Your breathing becomes weak and raspy, you can barely stay conscious!!"))
+				to_chat(affected_mob, span_warning("Your breathing becomes weak and raspy, you can barely stay conscious!"))
 				holder.add_reagent(/datum/reagent/toxin/histamine, 6 * REM * seconds_per_tick)
 				affected_mob.losebreath += 3
 				need_mob_update = TRUE
@@ -1088,16 +1088,16 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	var/need_mob_update
 	if(SPT_PROB(10, seconds_per_tick))
-		to_chat(affected_mob, span_warning("It feels like your head is going to implode!!"))
+		to_chat(affected_mob, span_warning("It feels like your head is going to implode!"))
 		affected_mob.adjust_eye_blur(10 SECONDS * REM * seconds_per_tick)
 		affected_mob.adjust_confusion_up_to(10 SECONDS, 20 SECONDS)
 		affected_mob.adjust_hallucinations(30 SECONDS)
 	if(SPT_PROB(10, seconds_per_tick))
-		to_chat(affected_mob, span_warning("You can't bring yourself to focus at all!!"))
+		to_chat(affected_mob, span_warning("You can't bring yourself to focus at all!"))
 		affected_mob.Stun(50)
 		affected_mob.emote(pick("stare","drool","tremble","shake"))
 	if(SPT_PROB(10, seconds_per_tick))
-		to_chat(affected_mob, span_warning("Your breathing becomes weak and raspy, you can barely stay conscious!!"))
+		to_chat(affected_mob, span_warning("Your breathing becomes weak and raspy, you can barely stay conscious!"))
 		holder.add_reagent(/datum/reagent/toxin/histamine, 6 * REM * seconds_per_tick)
 		affected_mob.losebreath += 3
 		need_mob_update = TRUE
