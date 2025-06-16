@@ -349,3 +349,14 @@
   - bugfix: Fixed xenomorphs being able to infinitely vomit out the same person
   SyncIt21:
   - code_imp: removed `REAGENT_NOSPLIT` flag
+2025-06-16:
+  SmArtKar:
+  - bugfix: Plasmamen no longer should get perpetually stuck ablaze in rare edge case
+      scenarios
+  - bugfix: Plasmamen need to wear gloves once again
+  - code_imp: Updated plasmamen limb tracking/effects to be more performant
+  - qol: Cyborgs can right-click their stored omnitools to pull out a specific tool
+      instead of having to use it in-hand after selecting it to do so.
+  plsleavemealon:
+  - rscadd: Adds new morbid themed tools for the coroners enjoyment. Coroners now
+      perform autopsies slightly faster.
