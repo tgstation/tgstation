@@ -1521,6 +1521,10 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Research Lab Desk";
+	req_access = list("science")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "azi" = (
@@ -12781,6 +12785,10 @@
 	dir = 8;
 	id = "scistores";
 	name = "Science Store Shutters"
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Research Lab Desk";
+	req_access = list("science")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
@@ -61573,6 +61581,10 @@
 	id = "scistores";
 	name = "Science Store Shutters"
 	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Research Lab Desk";
+	req_access = list("science")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "ssa" = (
@@ -74682,6 +74694,25 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/service/kitchen)
+"wmk" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/tile/purple/fourcorners,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "scistores";
+	name = "Science Store Shutters"
+	},
+/obj/machinery/door/window/left/directional/south{
+	req_access = list("science");
+	name = "Research Lab Desk"
+	},
+/obj/item/newspaper{
+	pixel_y = 7;
+	pixel_x = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/science/lobby)
 "wmm" = (
 /obj/structure/railing{
 	dir = 4
@@ -78474,6 +78505,10 @@
 	id = "scistores";
 	name = "Science Store Shutters"
 	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Research Lab Desk";
+	req_access = list("science")
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "xuP" = (
@@ -79427,6 +79462,10 @@
 	id = "scistores";
 	name = "Science Store Shutters"
 	},
+/obj/machinery/door/window/left/directional/south{
+	req_access = list("science");
+	name = "Research Lab Desk"
+	},
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
 "xKr" = (
@@ -79893,6 +79932,10 @@
 	dir = 8;
 	id = "scistores";
 	name = "Science Store Shutters"
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Research Lab Desk";
+	req_access = list("science")
 	},
 /turf/open/floor/iron/dark,
 /area/station/science/lobby)
@@ -116864,7 +116907,7 @@ fLr
 aKc
 aZs
 fLr
-xKq
+wmk
 afL
 kzm
 kFt
