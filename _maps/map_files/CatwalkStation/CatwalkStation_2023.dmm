@@ -43590,9 +43590,9 @@
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
 "mVV" = (
-/obj/structure/lattice/catwalk,
 /obj/structure/ladder,
-/turf/open/openspace,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "mWq" = (
 /obj/structure/table,
@@ -72901,11 +72901,11 @@
 /area/station/maintenance/starboard/aft)
 "vGm" = (
 /obj/structure/ladder,
-/obj/structure/lattice/catwalk,
 /obj/structure/railing{
 	dir = 1
 	},
-/turf/open/openspace,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos/project)
 "vGr" = (
 /obj/effect/turf_decal/trimline/green/filled/line,
